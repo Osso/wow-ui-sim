@@ -1,0 +1,25 @@
+{
+  "observed": "2026-10-09T22:40:32.812656+00:00",
+  "unit": "wow-linker-controlled-rebuild-20261009t2238",
+  "argv": [
+    "systemd-run",
+    "--user",
+    "--no-block",
+    "--unit=wow-linker-controlled-rebuild-20261009t2238",
+    "--property=Type=oneshot",
+    "--property=RemainAfterExit=yes",
+    "--property=WorkingDirectory=/home/osso/Projects/wow/wow-ui-sim",
+    "--property=StandardInput=file:/home/osso/.local/state/wow-ui-sim/verification/linker-controlled-rebuild/request.jsonl",
+    "--property=StandardOutput=append:/home/osso/.local/state/wow-ui-sim/verification/linker-controlled-rebuild/controller.stdout",
+    "--property=StandardError=append:/home/osso/.local/state/wow-ui-sim/verification/linker-controlled-rebuild/controller.stderr",
+    "/home/osso/.worktrees/build-lock.sh",
+    "/home/osso/.local/bin/pyrun-jsonl"
+  ],
+  "exit": 0,
+  "stdout": "",
+  "stderr": "Running as unit: wow-linker-controlled-rebuild-20261009t2238.service\n",
+  "worker_sha256": "130197c9f7274e7d2f94972ec1488feb36a3291a500f9b3eed7c2806b7856d55",
+  "request_sha256": "e655e9187c1a0db3c5668eab32cdbc00bb2a91f5bbbe8ee479a001405e97caf9",
+  "scope": "Atomic build-lock acquisition; thresholds checked afterlock; thenexact6generatedpaths onlyinvalidated andcontrolledsamecommand rebuild. No source/toolchain/linker/packageinstall/power/service changes.",
+  "prior_invalidation": "none performed; EAGAIN at nonblockinglockattempt"
+}

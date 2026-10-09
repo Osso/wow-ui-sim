@@ -1,0 +1,70 @@
+{
+  "3282a118e07cdd18-lib-wow_ui_sim.json": {
+    "rustc_fingerprint": 13444744534853132663,
+    "rustflags": [
+      "-C",
+      "target-cpu=native",
+      "-C",
+      "link-arg=-fuse-ld=mold",
+      "-C",
+      "link-arg=-Wl,--thread-count=4"
+    ],
+    "features": [
+      "aura-containers",
+      "aura-instance-enumeration",
+      "aura-xml-widgets",
+      "base-spell-relationships",
+      "casc",
+      "client-retail",
+      "default",
+      "forbidden-aspects",
+      "gui",
+      "native-duration-formatting",
+      "numeric-rule-formatters",
+      "on-update-modes",
+      "player-cast-durations",
+      "profile-retail",
+      "retail-12-0-0",
+      "retail-12-0-5",
+      "retail-12-0-7",
+      "retail-12-1-0",
+      "rodio",
+      "sound"
+    ],
+    "config_fingerprint": 12296471850835478129
+  },
+  "bcad23723a7b3b0d-test-lib-wow_ui_sim.json": {
+    "rustc_fingerprint": 13444744534853132663,
+    "rustflags": [
+      "-C",
+      "target-cpu=native",
+      "-C",
+      "link-arg=-fuse-ld=mold",
+      "-C",
+      "link-arg=-Wl,--thread-count=4"
+    ],
+    "features": [
+      "aura-containers",
+      "aura-instance-enumeration",
+      "aura-xml-widgets",
+      "base-spell-relationships",
+      "casc",
+      "client-retail",
+      "default",
+      "forbidden-aspects",
+      "gui",
+      "native-duration-formatting",
+      "numeric-rule-formatters",
+      "on-update-modes",
+      "player-cast-durations",
+      "profile-retail",
+      "retail-12-0-0",
+      "retail-12-0-5",
+      "retail-12-0-7",
+      "retail-12-1-0",
+      "rodio",
+      "sound"
+    ],
+    "config_fingerprint": 12296471850835478129
+  }
+}

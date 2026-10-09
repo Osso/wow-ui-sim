@@ -1,0 +1,17 @@
+{
+  "unit": "wow-proof-case2-20261009t225558z",
+  "argv": [
+    "/usr/bin/timeout",
+    "90",
+    "/home/osso/Projects/wow/wow-ui-sim/target/debug/deps/integration-1db16289b0998b2a",
+    "blizzard_ui_blizzard_achievementui::behavior_search_filter::search_box_text_changed_calls_set_achievement_search_string_when_query_meets_min_length",
+    "--exact",
+    "--nocapture",
+    "--test-threads=1"
+  ],
+  "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+  "artifact_sha256": "168fea2c7aaf7d0d9993f1283b2ddd3e7238eaa1356f1103016e8c575f1d303e",
+  "environment_overrides": {},
+  "started": "2026-10-09T23:01:21.846239+00:00",
+  "source_revision": "1fac15bd0e477cd0fdf1f03dd0219dbbedfd4111"
+}

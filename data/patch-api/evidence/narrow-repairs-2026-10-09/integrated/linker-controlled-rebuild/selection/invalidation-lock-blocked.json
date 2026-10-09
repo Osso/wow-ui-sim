@@ -1,0 +1,6 @@
+{
+  "observed": "2026-10-09T22:37:48.967938+00:00",
+  "errno": 11,
+  "status": "sharedbuildlockbusy; no invalidation performed; allsixpaths stillpresent",
+  "attempt": "fcntl LOCK_EX|LOCK_NB returnedEAGAIN"
+}

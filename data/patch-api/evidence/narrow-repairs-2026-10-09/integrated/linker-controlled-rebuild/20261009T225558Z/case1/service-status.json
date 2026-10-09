@@ -1,0 +1,13 @@
+{
+  "observed": "2026-10-09T23:03:27.964519+00:00",
+  "argv": [
+    "systemctl",
+    "--user",
+    "show",
+    "wow-proof-case1-20261009t225558z",
+    "--property=LoadState,ActiveState,SubState,Result,ExecMainCode,ExecMainStatus,ExecMainStartTimestamp,ExecMainExitTimestamp"
+  ],
+  "exit": 0,
+  "stdout": "LoadState=loaded\nActiveState=active\nSubState=exited\nResult=success\nExecMainStartTimestamp=Fri 2026-10-09 18:01:21 CDT\nExecMainExitTimestamp=Fri 2026-10-09 18:01:23 CDT\nExecMainCode=1\nExecMainStatus=0\n",
+  "stderr": ""
+}

@@ -1,0 +1,1 @@
+{"code": "from pathlib import Path\nexec(compile(Path('/home/osso/.local/state/wow-ui-sim/verification/linker-controlled-rebuild/worker.py').read_text(), '/home/osso/.local/state/wow-ui-sim/verification/linker-controlled-rebuild/worker.py', 'exec'))"}

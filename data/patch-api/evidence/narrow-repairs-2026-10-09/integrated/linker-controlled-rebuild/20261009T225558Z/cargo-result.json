@@ -1,0 +1,17 @@
+{
+  "argv": [
+    "/usr/bin/cargo",
+    "test",
+    "--offline",
+    "--locked",
+    "--lib",
+    "--test",
+    "integration",
+    "--no-run",
+    "--message-format=json"
+  ],
+  "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+  "ended": "2026-10-09T22:59:03.224752+00:00",
+  "exit": 0,
+  "stream_encoding": "CLI spawn text streams, separately persisted and flushed per line"
+}

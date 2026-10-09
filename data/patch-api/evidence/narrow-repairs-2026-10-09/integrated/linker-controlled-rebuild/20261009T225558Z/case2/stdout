@@ -1,0 +1,6 @@
+
+running 1 test
+test blizzard_ui_blizzard_achievementui::behavior_search_filter::search_box_text_changed_calls_set_achievement_search_string_when_query_meets_min_length ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10697 filtered out; finished in 1.72s
+

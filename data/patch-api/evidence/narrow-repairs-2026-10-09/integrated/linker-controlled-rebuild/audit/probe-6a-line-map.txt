@@ -1,0 +1,30 @@
+1: local traceDebugGettersEnabled = true
+2: 
+3:                 local function traceDebugGetters(phase)
+4:                     if not traceDebugGettersEnabled then return end
+5:                     print("[DebugGetterProbe]", phase, "GetCallstackHeight",
+6:                         type(_G.GetCallstackHeight), tostring(_G.GetCallstackHeight))
+7:                     print("[DebugGetterProbe]", phase, "GetErrorCallstackHeight",
+8:                         type(_G.GetErrorCallstackHeight), tostring(_G.GetErrorCallstackHeight))
+9:                 end
+10:                 traceDebugGetters("probe_start")
+11:                 local marker = function() return "wrapped" end
+12:                 if CreateSecureDelegate(marker)() ~= "wrapped" then return "secure_delegate" end
+13:                 traceDebugGetters("after_secure_delegate")
+14:                 if type(GetButtonMetatable()) ~= "table" then return "button_metatable" end
+15:                 traceDebugGetters("after_button_metatable")
+16:                 if type(GetEditBoxMetatable()) ~= "table" then return "editbox_metatable" end
+17:                 traceDebugGetters("after_editbox_metatable")
+18:                 if secretwrap(marker)() ~= "wrapped" then return "secretwrap" end
+19:                 traceDebugGetters("after_secretwrap")
+20:                 traceDebugGetters("before_callstack_height")
+21:                 if GetCallstackHeight() ~= 0 then return "callstack_height" end
+22:                 if GetErrorCallstackHeight() ~= 0 then return "error_callstack_height" end
+23:                 if type(debugstack) ~= "function" then return "debugstack_type" end
+24:                 if not string.find(debugstack(1), "in main chunk", 1, true) then return "debugstack_value" end
+25:                 if type(debuglocals) ~= "function" then return "debuglocals_type" end
+26:                 if type(debuglocals(1)) ~= "string" then return "debuglocals_value" end
+27:                 SetErrorCallstackHeight(4)
+28:                 AddSourceLocationExclude("example.lua")
+29:                 return "ok"
+30:                 

@@ -1,0 +1,9 @@
+{
+  "exclusions": [
+    "external path dependencies",
+    "inherited environment",
+    "untracked .code-index.db"
+  ],
+  "revision": "1fac15bd0e477cd0fdf1f03dd0219dbbedfd4111",
+  "scope_equal_to_failed_epoch": true
+}

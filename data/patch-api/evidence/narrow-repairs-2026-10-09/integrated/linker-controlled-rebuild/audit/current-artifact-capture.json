@@ -1,0 +1,29 @@
+{
+  "captured_utc": "2026-10-09T23:06:04.652946+00:00",
+  "artifacts": {
+    "wow-sim": {
+      "path": "/home/osso/Projects/wow/wow-ui-sim/target/debug/wow-sim",
+      "sha256": "a5e7c397129ec917ea32eb081bf5631b3cdccb8ae69c5e8c997cac981885988d",
+      "recorded_sha256": "a5e7c397129ec917ea32eb081bf5631b3cdccb8ae69c5e8c997cac981885988d",
+      "matches_epoch": true,
+      "bytes": 406841416,
+      "mtime_ns": 1791586719589487122
+    },
+    "wow_ui_sim": {
+      "path": "/home/osso/Projects/wow/wow-ui-sim/target/debug/deps/wow_ui_sim-bcad23723a7b3b0d",
+      "sha256": "b9ad2547283fb1390df2c52c39271d3972a3b105f17a5dde686bcfde67ff0a2d",
+      "recorded_sha256": "b9ad2547283fb1390df2c52c39271d3972a3b105f17a5dde686bcfde67ff0a2d",
+      "matches_epoch": true,
+      "bytes": 390474464,
+      "mtime_ns": 1791586721056478973
+    },
+    "integration": {
+      "path": "/home/osso/Projects/wow/wow-ui-sim/target/debug/deps/integration-1db16289b0998b2a",
+      "sha256": "168fea2c7aaf7d0d9993f1283b2ddd3e7238eaa1356f1103016e8c575f1d303e",
+      "recorded_sha256": "168fea2c7aaf7d0d9993f1283b2ddd3e7238eaa1356f1103016e8c575f1d303e",
+      "matches_epoch": true,
+      "bytes": 466702624,
+      "mtime_ns": 1791586743061387147
+    }
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "observed": "2026-10-09T22:35:57.954583+00:00",
+  "argv": [
+    "/home/osso/.worktrees/build-lock.sh",
+    "/usr/bin/cargo",
+    "clean",
+    "--offline",
+    "--locked",
+    "--package",
+    "wow-ui-sim",
+    "--profile",
+    "dev",
+    "--target-dir",
+    "target",
+    "--dry-run",
+    "--verbose"
+  ],
+  "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+  "exit": 0,
+  "affected_package_artifacts": [
+    {
+      "path": "/home/osso/Projects/wow/wow-ui-sim/target/debug/deps/libwow_ui_sim-3282a118e07cdd18.rlib",
+      "bytes": 429344436,
+      "sha256": "fb02818717c67bbf1dc6f0628559c89f0749b1b636b8932c540a33739b90a12b"
+    },
+    {
+      "path": "/home/osso/Projects/wow/wow-ui-sim/target/debug/deps/libwow_ui_sim-3282a118e07cdd18.rmeta",
+      "bytes": 135442075,
+      "sha256": "5187df4ee900d0482df48dbba334b46485216f36049213f7f2f33ef00ea5fcac"
+    }
+  ],
+  "hypothesis": "Incremental/object inconsistency plausible afterSIGTERM, notproven; controlledpackage-onlyinvalidation planned, no source/toolchain/linker/configchanges",
+  "exclusions": [
+    "dependencycache preserved",
+    "separatetarget/mists-wrapper-durable preserved",
+    "no source/evidence deletion"
+  ]
+}

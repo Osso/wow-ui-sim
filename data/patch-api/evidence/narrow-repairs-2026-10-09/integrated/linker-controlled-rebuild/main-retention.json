@@ -1,0 +1,446 @@
+{
+  "boundaries": [
+    "Original receipts copied byte-identically; original seals unchanged.",
+    "Audit present at retention checkpoint; no pending gate invented.",
+    "Six-path artifact-state attribution is not precise linker fault cause or runtime fix.",
+    "00a838a2e/a3fd30987 marker/wrapper follow-up unexecuted in this epoch; later enum/render correction 21b513f3e has no execution credit here.",
+    "Parent OPEN."
+  ],
+  "bytes": 2490261,
+  "count": 70,
+  "epoch": "20261009T225558Z",
+  "files": [
+    {
+      "bytes": 5700,
+      "path": "worker.py",
+      "sha256": "130197c9f7274e7d2f94972ec1488feb36a3291a500f9b3eed7c2806b7856d55",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/linker-controlled-rebuild/worker.py"
+    },
+    {
+      "bytes": 252,
+      "path": "request.jsonl",
+      "sha256": "e655e9187c1a0db3c5668eab32cdbc00bb2a91f5bbbe8ee479a001405e97caf9",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/linker-controlled-rebuild/request.jsonl"
+    },
+    {
+      "bytes": 1426,
+      "path": "submission.json",
+      "sha256": "18ff679287ffe42bc3ff0c6c418b058d3d2bc789863361b5fc1e6155519d8ddf",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/linker-controlled-rebuild/submission.json"
+    },
+    {
+      "bytes": 392,
+      "path": "controller.stdout",
+      "sha256": "f4b61f7196267034538515c92452427704a43181f6022ba8764161a36e0dea32",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/linker-controlled-rebuild/controller.stdout"
+    },
+    {
+      "bytes": 73,
+      "path": "controller.stderr",
+      "sha256": "d796c7a808fd11f66721401433ea742538d43bad632ec56eda361ec3c8d0cc40",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/linker-controlled-rebuild/controller.stderr"
+    },
+    {
+      "bytes": 170,
+      "path": "20261009T225558Z/acquired-lock-thresholds.json",
+      "sha256": "ca5febc0fc7528443881cf35b2e5f60ffece0af0d86041a95e47cc8702e63829",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/linker-controlled-rebuild/20261009T225558Z/acquired-lock-thresholds.json"
+    },
+    {
+      "bytes": 4811,
+      "path": "20261009T225558Z/artifact-identities.json",
+      "sha256": "b0829042631f1c8d0067da06a3058cdd71c6e134f05b60e5d8bfe4712c95bdf0",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/linker-controlled-rebuild/20261009T225558Z/artifact-identities.json"
+    },
+    {
+      "bytes": 350,
+      "path": "20261009T225558Z/cargo-process.json",
+      "sha256": "b62ce61dd16da07934885b9b06e0ad10685035c3956922d0883b23c411b653e0",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/linker-controlled-rebuild/20261009T225558Z/cargo-process.json"
+    },
+    {
+      "bytes": 373,
+      "path": "20261009T225558Z/cargo-result.json",
+      "sha256": "64191de5b1ffcde271480199b907aee17d8ec8291cd7d62cd31de515773c0037",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/linker-controlled-rebuild/20261009T225558Z/cargo-result.json"
+    },
+    {
+      "bytes": 561,
+      "path": "20261009T225558Z/case1/selector.json",
+      "sha256": "322b88c37e5c599da54d19a394fdf70d632f22851e9cde282c0fa34bb9edf152",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/linker-controlled-rebuild/20261009T225558Z/case1/selector.json"
+    },
+    {
+      "bytes": 533,
+      "path": "20261009T225558Z/case1/service-status.json",
+      "sha256": "a0bac04f41430ab5456e5701e507fb90c32c2e37d8138275f62ab640925ec8e7",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/linker-controlled-rebuild/20261009T225558Z/case1/service-status.json"
+    },
+    {
+      "bytes": 640,
+      "path": "20261009T225558Z/case1/stderr",
+      "sha256": "71372c9c001764f432af00a8b7e2580280f85c345e3eb6c495f58c7f6fe9240b",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/linker-controlled-rebuild/20261009T225558Z/case1/stderr"
+    },
+    {
+      "bytes": 283,
+      "path": "20261009T225558Z/case1/stdout",
+      "sha256": "bea168b7c475c89e48e8687ee58e09997b8fc28dc06b2c798355838464602b02",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/linker-controlled-rebuild/20261009T225558Z/case1/stdout"
+    },
+    {
+      "bytes": 688,
+      "path": "20261009T225558Z/case1/submission.json",
+      "sha256": "81e9eb2a00d6277f2e231bdd83fbf375e0fbe41c3f4bcfda81e3512b65d483e0",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/linker-controlled-rebuild/20261009T225558Z/case1/submission.json"
+    },
+    {
+      "bytes": 989,
+      "path": "20261009T225558Z/case1/submit-result.json",
+      "sha256": "f32718492332081c6648c8dec564c4b368bafb29ef5e9aea93f7ac501b4f75b5",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/linker-controlled-rebuild/20261009T225558Z/case1/submit-result.json"
+    },
+    {
+      "bytes": 547,
+      "path": "20261009T225558Z/case2/selector.json",
+      "sha256": "989a4a3c3578769d8b7ed04b7c48ea3efbd887b552d084b9c71cc13dc556308b",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/linker-controlled-rebuild/20261009T225558Z/case2/selector.json"
+    },
+    {
+      "bytes": 533,
+      "path": "20261009T225558Z/case2/service-status.json",
+      "sha256": "52e43dcbbfd5255402eb3af3980dd511701e1a16c95320f437d40f786f764286",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/linker-controlled-rebuild/20261009T225558Z/case2/service-status.json"
+    },
+    {
+      "bytes": 639,
+      "path": "20261009T225558Z/case2/stderr",
+      "sha256": "6336f75f290c31b6f7ec750e5b41aef512a6f6c174f2f67b994404302a732b7d",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/linker-controlled-rebuild/20261009T225558Z/case2/stderr"
+    },
+    {
+      "bytes": 276,
+      "path": "20261009T225558Z/case2/stdout",
+      "sha256": "4260581ae2cf4f0c85f99682d06db4705b22735b7aab10855726ed8df32570cc",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/linker-controlled-rebuild/20261009T225558Z/case2/stdout"
+    },
+    {
+      "bytes": 681,
+      "path": "20261009T225558Z/case2/submission.json",
+      "sha256": "56ca5b12cad20c28bcbd966385bf8180189a2e9c5feae4ee24d698cc060e9832",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/linker-controlled-rebuild/20261009T225558Z/case2/submission.json"
+    },
+    {
+      "bytes": 982,
+      "path": "20261009T225558Z/case2/submit-result.json",
+      "sha256": "63a23b0caebb1cee71ae0ec76fc6e48c7ef9f2361d40397b1ae96a247ea7365c",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/linker-controlled-rebuild/20261009T225558Z/case2/submit-result.json"
+    },
+    {
+      "bytes": 458,
+      "path": "20261009T225558Z/case3/selector.json",
+      "sha256": "87647b0ede7b57cba25f567b8ad1c6f4775a256396cb16d1d6dae402431a1295",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/linker-controlled-rebuild/20261009T225558Z/case3/selector.json"
+    },
+    {
+      "bytes": 537,
+      "path": "20261009T225558Z/case3/service-status.json",
+      "sha256": "c4a7180ff73a0370a3bd025bc016b961eb83583b1eda22207698809fb29af72a",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/linker-controlled-rebuild/20261009T225558Z/case3/service-status.json"
+    },
+    {
+      "bytes": 4882,
+      "path": "20261009T225558Z/case3/stderr",
+      "sha256": "fe876928a0c08295fc84d5f29caf8d336122806e6b5d0bfbbb51c37ba8bfe8f3",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/linker-controlled-rebuild/20261009T225558Z/case3/stderr"
+    },
+    {
+      "bytes": 369,
+      "path": "20261009T225558Z/case3/stdout",
+      "sha256": "fb0ca6e61b43b5f240b0f50ff4f5d2c5bfa92cdd3b26c451e18a5e736bde19bd",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/linker-controlled-rebuild/20261009T225558Z/case3/stdout"
+    },
+    {
+      "bytes": 678,
+      "path": "20261009T225558Z/case3/submission.json",
+      "sha256": "a2c4da74fe0a58f35ed33ad63c0b8c616e451caf76d294e5c37eafa7c3bef130",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/linker-controlled-rebuild/20261009T225558Z/case3/submission.json"
+    },
+    {
+      "bytes": 983,
+      "path": "20261009T225558Z/case3/submit-result.json",
+      "sha256": "2cc104ab00871b039b7ea7f523a93199a8e7c3bf2fa15fbf305d11dc5a53ccaa",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/linker-controlled-rebuild/20261009T225558Z/case3/submit-result.json"
+    },
+    {
+      "bytes": 1275,
+      "path": "20261009T225558Z/compile.stderr",
+      "sha256": "fae7c235326c50ee1af7027edc0cfaa62d7396562db7928c24543cab5f5d375a",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/linker-controlled-rebuild/20261009T225558Z/compile.stderr"
+    },
+    {
+      "bytes": 573439,
+      "path": "20261009T225558Z/compile.stdout",
+      "sha256": "f8ec9c2039b9483ed590a7be769b6a5106451959e1f7812e986a725b031ffbd6",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/linker-controlled-rebuild/20261009T225558Z/compile.stdout"
+    },
+    {
+      "bytes": 410,
+      "path": "20261009T225558Z/entry.json",
+      "sha256": "a95c40534b6f23fc08ac0908e693387cc5be568d26b93c364690f75d28a1eeef",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/linker-controlled-rebuild/20261009T225558Z/entry.json"
+    },
+    {
+      "bytes": 161,
+      "path": "20261009T225558Z/invalidation-after.json",
+      "sha256": "daef32f0447eef4d93ca223a9990ce0ed98c885c3d59a50abf2729a7120362ab",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/linker-controlled-rebuild/20261009T225558Z/invalidation-after.json"
+    },
+    {
+      "bytes": 1255,
+      "path": "20261009T225558Z/invalidation-before.json",
+      "sha256": "7997bf2a2d854b015e0fca89ceccf1ed4e6e2d30cd74af87e5fa7abb0d84f216",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/linker-controlled-rebuild/20261009T225558Z/invalidation-before.json"
+    },
+    {
+      "bytes": 218,
+      "path": "20261009T225558Z/outcome.json",
+      "sha256": "3e0219b81db1da923fbf8fd2b3c5e72173cd236ee1c2837e4cc40a7b8cf33435",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/linker-controlled-rebuild/20261009T225558Z/outcome.json"
+    },
+    {
+      "bytes": 453054,
+      "path": "20261009T225558Z/source-after.json",
+      "sha256": "8e5f62d667dc8f7a6ac124a5494886117f8c3a8fe9402c77ffe859b8836ee7e9",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/linker-controlled-rebuild/20261009T225558Z/source-after.json"
+    },
+    {
+      "bytes": 453054,
+      "path": "20261009T225558Z/source-before.json",
+      "sha256": "8e5f62d667dc8f7a6ac124a5494886117f8c3a8fe9402c77ffe859b8836ee7e9",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/linker-controlled-rebuild/20261009T225558Z/source-before.json"
+    },
+    {
+      "bytes": 216,
+      "path": "20261009T225558Z/source-revision.json",
+      "sha256": "5c4d76e14cf8259bef27c575e6db527f5feeddf756de0e72d91ecb331a8ae2bd",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/linker-controlled-rebuild/20261009T225558Z/source-revision.json"
+    },
+    {
+      "bytes": 1237,
+      "path": "audit/current-artifact-capture.json",
+      "sha256": "ecc9485e40b83e028ce9762e26342ce3f38afd31e4733de01936d8e8910804ec",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/linker-controlled-rebuild/audit/current-artifact-capture.json"
+    },
+    {
+      "bytes": 15515,
+      "path": "audit/evidence.json",
+      "sha256": "58c7cfc469f45f6a8d0a3051a2b345e954bf6fae75854000a51c150901d83156",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/linker-controlled-rebuild/audit/evidence.json"
+    },
+    {
+      "bytes": 7017,
+      "path": "audit/fixture-611.diff",
+      "sha256": "086576c2b562d31fd7ddfdae137b8cea02d4988e3d9f1be5d30c8a5fcfb07e2a",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/linker-controlled-rebuild/audit/fixture-611.diff"
+    },
+    {
+      "bytes": 1630,
+      "path": "audit/flags-before.json",
+      "sha256": "4b9d96259d7988d199693a348afbedb004fc8c005253fd6b65d38a836fb3e394",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/linker-controlled-rebuild/audit/flags-before.json"
+    },
+    {
+      "bytes": 14033,
+      "path": "audit/hashmanifest.sha256",
+      "sha256": "810b839d51a2c5b0a6b00a06d176691b08f7a14b158117757570e419c99e0c29",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/linker-controlled-rebuild/audit/hashmanifest.sha256"
+    },
+    {
+      "bytes": 391447,
+      "path": "audit/prior-linker-message-730.txt",
+      "sha256": "17d5ff2df5f93cc582113182dbb356e54373a7d7685090041616360db13921ee",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/linker-controlled-rebuild/audit/prior-linker-message-730.txt"
+    },
+    {
+      "bytes": 330603,
+      "path": "audit/prior-linker-message-731.txt",
+      "sha256": "5ca6777a3051a885a10335ba684e18e7408ebb3b1e17bae8ab4c900b4f216778",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/linker-controlled-rebuild/audit/prior-linker-message-731.txt"
+    },
+    {
+      "bytes": 521,
+      "path": "audit/privacy.json",
+      "sha256": "946026efe8cfebb40b209f8d564b8c378e46df2455427db1fb7e67eb4891fff5",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/linker-controlled-rebuild/audit/privacy.json"
+    },
+    {
+      "bytes": 2091,
+      "path": "audit/probe-6a-line-map.txt",
+      "sha256": "1948a51a7d14792050589f18697d9c83aa86f8d62f7f18563cae3852c69f2fd3",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/linker-controlled-rebuild/audit/probe-6a-line-map.txt"
+    },
+    {
+      "bytes": 12271,
+      "path": "audit/report.md",
+      "sha256": "62235117e851ed80f994609701018b77acd57068e43c8c94a3ae7dd77bf3082b",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/linker-controlled-rebuild/audit/report.md"
+    },
+    {
+      "bytes": 756,
+      "path": "audit/rustfmt-611-snapshots.json",
+      "sha256": "962c6a164ee48a7785c90e0b7158d8651a33ece43c951b32d3842af5be1b8cec",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/linker-controlled-rebuild/audit/rustfmt-611-snapshots.json"
+    },
+    {
+      "bytes": 3225,
+      "path": "audit/selectedstate.json",
+      "sha256": "7d429001856435428ed76870b45d89deba8b3af543b9ad4214a4b6da37f00a0a",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/linker-controlled-rebuild/audit/selectedstate.json"
+    },
+    {
+      "bytes": 15595,
+      "path": "audit/source/1fac15bd0e477cd0fdf1f03dd0219dbbedfd4111/src/lua_api/env_init/mod.rs",
+      "sha256": "6367e275b39c12e3001ecf382d6c3bacd7ecf831a7632ac91f4f51aba90bc1bc",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/linker-controlled-rebuild/audit/source/1fac15bd0e477cd0fdf1f03dd0219dbbedfd4111/src/lua_api/env_init/mod.rs"
+    },
+    {
+      "bytes": 8406,
+      "path": "audit/source/1fac15bd0e477cd0fdf1f03dd0219dbbedfd4111/src/lua_api/workarounds/temporary/debug_environment_defaults.rs",
+      "sha256": "245882cd75ab453dd90d9a72668c75c4869ce989c66feb806b55b0b0ecb58103",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/linker-controlled-rebuild/audit/source/1fac15bd0e477cd0fdf1f03dd0219dbbedfd4111/src/lua_api/workarounds/temporary/debug_environment_defaults.rs"
+    },
+    {
+      "bytes": 15411,
+      "path": "audit/source/1fac15bd0e477cd0fdf1f03dd0219dbbedfd4111/tests/blizzard_ui/blizzard_accountstore/behavior_currency_format.rs",
+      "sha256": "d7d4d775bbe0401286087c73c83350f8a6405a83990b498a5a15d26548decba4",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/linker-controlled-rebuild/audit/source/1fac15bd0e477cd0fdf1f03dd0219dbbedfd4111/tests/blizzard_ui/blizzard_accountstore/behavior_currency_format.rs"
+    },
+    {
+      "bytes": 20216,
+      "path": "audit/source/1fac15bd0e477cd0fdf1f03dd0219dbbedfd4111/tests/blizzard_ui/blizzard_achievementui/behavior_search_filter.rs",
+      "sha256": "375e8efe232d4b84bc3586b3714e6f00323a07fbe4aaa046306cab982a23d333",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/linker-controlled-rebuild/audit/source/1fac15bd0e477cd0fdf1f03dd0219dbbedfd4111/tests/blizzard_ui/blizzard_achievementui/behavior_search_filter.rs"
+    },
+    {
+      "bytes": 15595,
+      "path": "audit/source/611e10d2d76b368d01f0c61b006fe2d787746f37/src/lua_api/env_init/mod.rs",
+      "sha256": "6367e275b39c12e3001ecf382d6c3bacd7ecf831a7632ac91f4f51aba90bc1bc",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/linker-controlled-rebuild/audit/source/611e10d2d76b368d01f0c61b006fe2d787746f37/src/lua_api/env_init/mod.rs"
+    },
+    {
+      "bytes": 7384,
+      "path": "audit/source/611e10d2d76b368d01f0c61b006fe2d787746f37/src/lua_api/workarounds/temporary/debug_environment_defaults.rs",
+      "sha256": "69570e5c65029b2342962d47722269f339e3d5a0088a164b526e168806cf1e03",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/linker-controlled-rebuild/audit/source/611e10d2d76b368d01f0c61b006fe2d787746f37/src/lua_api/workarounds/temporary/debug_environment_defaults.rs"
+    },
+    {
+      "bytes": 15411,
+      "path": "audit/source/611e10d2d76b368d01f0c61b006fe2d787746f37/tests/blizzard_ui/blizzard_accountstore/behavior_currency_format.rs",
+      "sha256": "d7d4d775bbe0401286087c73c83350f8a6405a83990b498a5a15d26548decba4",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/linker-controlled-rebuild/audit/source/611e10d2d76b368d01f0c61b006fe2d787746f37/tests/blizzard_ui/blizzard_accountstore/behavior_currency_format.rs"
+    },
+    {
+      "bytes": 20216,
+      "path": "audit/source/611e10d2d76b368d01f0c61b006fe2d787746f37/tests/blizzard_ui/blizzard_achievementui/behavior_search_filter.rs",
+      "sha256": "375e8efe232d4b84bc3586b3714e6f00323a07fbe4aaa046306cab982a23d333",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/linker-controlled-rebuild/audit/source/611e10d2d76b368d01f0c61b006fe2d787746f37/tests/blizzard_ui/blizzard_achievementui/behavior_search_filter.rs"
+    },
+    {
+      "bytes": 15595,
+      "path": "audit/source/6a4d43fc16008a9346eaad927b871354f184cc55/src/lua_api/env_init/mod.rs",
+      "sha256": "6367e275b39c12e3001ecf382d6c3bacd7ecf831a7632ac91f4f51aba90bc1bc",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/linker-controlled-rebuild/audit/source/6a4d43fc16008a9346eaad927b871354f184cc55/src/lua_api/env_init/mod.rs"
+    },
+    {
+      "bytes": 8406,
+      "path": "audit/source/6a4d43fc16008a9346eaad927b871354f184cc55/src/lua_api/workarounds/temporary/debug_environment_defaults.rs",
+      "sha256": "245882cd75ab453dd90d9a72668c75c4869ce989c66feb806b55b0b0ecb58103",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/linker-controlled-rebuild/audit/source/6a4d43fc16008a9346eaad927b871354f184cc55/src/lua_api/workarounds/temporary/debug_environment_defaults.rs"
+    },
+    {
+      "bytes": 15411,
+      "path": "audit/source/6a4d43fc16008a9346eaad927b871354f184cc55/tests/blizzard_ui/blizzard_accountstore/behavior_currency_format.rs",
+      "sha256": "d7d4d775bbe0401286087c73c83350f8a6405a83990b498a5a15d26548decba4",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/linker-controlled-rebuild/audit/source/6a4d43fc16008a9346eaad927b871354f184cc55/tests/blizzard_ui/blizzard_accountstore/behavior_currency_format.rs"
+    },
+    {
+      "bytes": 20216,
+      "path": "audit/source/6a4d43fc16008a9346eaad927b871354f184cc55/tests/blizzard_ui/blizzard_achievementui/behavior_search_filter.rs",
+      "sha256": "375e8efe232d4b84bc3586b3714e6f00323a07fbe4aaa046306cab982a23d333",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/linker-controlled-rebuild/audit/source/6a4d43fc16008a9346eaad927b871354f184cc55/tests/blizzard_ui/blizzard_achievementui/behavior_search_filter.rs"
+    },
+    {
+      "bytes": 1181,
+      "path": "selection/dry-run.json",
+      "sha256": "4e92d93126c6fb709c4ea4eb3f6a7cf238f958d63a1f432a79a2ba14cfdf6b1c",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/linker-package-invalidation/dry-run.json"
+    },
+    {
+      "bytes": 112,
+      "path": "selection/dry-run.stderr",
+      "sha256": "e4f654d9502913c82ff9cc2c729323799c7be003b069f87ce056d177d8496b50",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/linker-package-invalidation/dry-run.stderr"
+    },
+    {
+      "bytes": 2,
+      "path": "selection/incremental-object-suffix-map.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/linker-package-invalidation/incremental-object-suffix-map.json"
+    },
+    {
+      "bytes": 208,
+      "path": "selection/invalidation-lock-blocked.json",
+      "sha256": "87281f729664dac053a749ca191a4f5fb955481d168955827edaa3eb76e65a5a",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/linker-package-invalidation/invalidation-lock-blocked.json"
+    },
+    {
+      "bytes": 1480,
+      "path": "selection/invalidation-before.json",
+      "sha256": "c9846e29772f30d160a59c57c4fc0e4d0472378246f294a411f626a5550ffee7",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/linker-package-invalidation/invalidation-before.json"
+    },
+    {
+      "bytes": 4035,
+      "path": "selection/incremental-directories.json",
+      "sha256": "51be9466876806fce9f30354c5e282d98e1e5be7a245442445ec9b93049a6078",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/linker-package-invalidation/incremental-directories.json"
+    },
+    {
+      "bytes": 504,
+      "path": "selection/failing-cgu-directory-map.json",
+      "sha256": "ba720d70b37dda46fb642b7c1c2ed81af287762102213d48eb39bea0f27d19cb",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/linker-package-invalidation/failing-cgu-directory-map.json"
+    },
+    {
+      "bytes": 4616,
+      "path": "selection/fingerprints-before/3282a118e07cdd18-lib-wow_ui_sim.json",
+      "sha256": "981c9a5666567f3a6ee93232f11af72ac444aecc4d2c11139a75201449e7168f",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/linker-package-invalidation/fingerprints-before/3282a118e07cdd18-lib-wow_ui_sim.json"
+    },
+    {
+      "bytes": 4740,
+      "path": "selection/fingerprints-before/bcad23723a7b3b0d-test-lib-wow_ui_sim.json",
+      "sha256": "3163bfce19c0defa1b6b896c635d566a21399cf5be850caee084eadff217697e",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/linker-package-invalidation/fingerprints-before/bcad23723a7b3b0d-test-lib-wow_ui_sim.json"
+    },
+    {
+      "bytes": 3287,
+      "path": "corrections/enum-and-render-main-errata.md",
+      "sha256": "9e530c25868d67ba7d6ef3468a7796cad6fbff7960c8e3fb93ac036e8738a770",
+      "source": "/home/osso/.local/state/wow-ui-sim/handoff/enum-and-render-main-errata.md"
+    }
+  ],
+  "privacy": {
+    "credential_candidates": [],
+    "excluded": [
+      "binaries",
+      "raw whole-cache inventories outside selected source-scope receipts",
+      "broad clean verbose path listing",
+      "other secrets",
+      "separate fresh-startup 230718 epoch"
+    ],
+    "limits": "Bounded pattern scan, not exhaustive secret detection or public-redaction approval. Local paths/usernames, boot IDs, process/service IDs, VM identities and compiler/source metadata retained.",
+    "scan": "complete selected UTF-8 files; private-key, common-token, credential-assignment and Bearer patterns"
+  }
+}

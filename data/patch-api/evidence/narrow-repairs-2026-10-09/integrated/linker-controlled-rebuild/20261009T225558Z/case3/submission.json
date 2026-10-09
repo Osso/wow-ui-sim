@@ -1,0 +1,19 @@
+{
+  "unit": "wow-proof-case3-20261009t225558z",
+  "argv": [
+    "/usr/bin/timeout",
+    "90",
+    "/home/osso/Projects/wow/wow-ui-sim/target/debug/deps/wow_ui_sim-bcad23723a7b3b0d",
+    "lua_api::workarounds::temporary::debug_environment_defaults::tests::installs_debug_environment_defaults",
+    "--exact",
+    "--nocapture",
+    "--test-threads=1"
+  ],
+  "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+  "artifact_sha256": "b9ad2547283fb1390df2c52c39271d3972a3b105f17a5dde686bcfde67ff0a2d",
+  "environment_overrides": {
+    "WOW_SIM_TRACE_DEBUG_GETTERS": "1"
+  },
+  "started": "2026-10-09T23:01:21.864037+00:00",
+  "source_revision": "1fac15bd0e477cd0fdf1f03dd0219dbbedfd4111"
+}

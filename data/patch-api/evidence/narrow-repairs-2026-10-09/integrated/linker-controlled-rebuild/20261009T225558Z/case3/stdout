@@ -1,0 +1,11 @@
+
+running 1 test
+test lua_api::workarounds::temporary::debug_environment_defaults::tests::installs_debug_environment_defaults ... FAILED
+
+failures:
+
+failures:
+    lua_api::workarounds::temporary::debug_environment_defaults::tests::installs_debug_environment_defaults
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 1977 filtered out; finished in 0.16s
+

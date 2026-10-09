@@ -1,0 +1,11 @@
+{
+  "scope": "selected original evidence and audit outputs; regex scan, not exhaustive secret detection",
+  "files_scanned": 75,
+  "credential_pattern_candidates": [],
+  "private_metadata": [
+    "absolute home/repo paths and local username",
+    "boot ID, process IDs, service names, timestamps, artifact hashes",
+    "compiler paths and source snippets"
+  ],
+  "sharing": "Local-only unsanitized evidence; redact private metadata before external publication. No credential candidate values copied into this receipt."
+}

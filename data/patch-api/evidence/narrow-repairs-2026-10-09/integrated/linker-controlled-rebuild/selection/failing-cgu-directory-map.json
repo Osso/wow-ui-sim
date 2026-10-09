@@ -1,0 +1,22 @@
+[
+  {
+    "target_tag": "3282a118e07cdd18",
+    "failed_cgu_stems": 73,
+    "matches": [
+      {
+        "path": "/home/osso/Projects/wow/wow-ui-sim/target/debug/incremental/wow_ui_sim-04lvz7pej7y93",
+        "matching_cgu_count": 73
+      }
+    ]
+  },
+  {
+    "target_tag": "bcad23723a7b3b0d",
+    "failed_cgu_stems": 48,
+    "matches": [
+      {
+        "path": "/home/osso/Projects/wow/wow-ui-sim/target/debug/incremental/wow_ui_sim-35s05hzg2gmxy",
+        "matching_cgu_count": 48
+      }
+    ]
+  }
+]

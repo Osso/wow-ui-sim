@@ -1,0 +1,11 @@
+{
+  "exit": 0,
+  "stdout": "blizzard_ui_blizzard_accountstore::behavior_currency_format::format_currency_display_returns_amount_space_texture_markup_with_size_twelve_twelve_zero_zero: test\n\n1 test, 0 benchmarks\n",
+  "stderr": "",
+  "argv": [
+    "/home/osso/Projects/wow/wow-ui-sim/target/debug/deps/integration-1db16289b0998b2a",
+    "blizzard_ui_blizzard_accountstore::behavior_currency_format::format_currency_display_returns_amount_space_texture_markup_with_size_twelve_twelve_zero_zero",
+    "--list"
+  ],
+  "cwd": "/home/osso/Projects/wow/wow-ui-sim"
+}

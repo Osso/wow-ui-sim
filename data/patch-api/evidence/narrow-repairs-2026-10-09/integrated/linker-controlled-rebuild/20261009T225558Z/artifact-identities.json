@@ -1,0 +1,170 @@
+{
+  "wow-sim": {
+    "record": {
+      "reason": "compiler-artifact",
+      "package_id": "path+file:///home/osso/Projects/wow/wow-ui-sim#0.1.0",
+      "manifest_path": "/home/osso/Projects/wow/wow-ui-sim/Cargo.toml",
+      "target": {
+        "kind": [
+          "bin"
+        ],
+        "crate_types": [
+          "bin"
+        ],
+        "name": "wow-sim",
+        "src_path": "/home/osso/Projects/wow/wow-ui-sim/src/bin/wow_sim/main.rs",
+        "edition": "2024",
+        "doc": true,
+        "doctest": false,
+        "test": true
+      },
+      "profile": {
+        "opt_level": "1",
+        "debuginfo": "line-tables-only",
+        "debug_assertions": true,
+        "overflow_checks": true,
+        "test": false
+      },
+      "features": [
+        "aura-containers",
+        "aura-instance-enumeration",
+        "aura-xml-widgets",
+        "base-spell-relationships",
+        "casc",
+        "client-retail",
+        "default",
+        "forbidden-aspects",
+        "gui",
+        "native-duration-formatting",
+        "numeric-rule-formatters",
+        "on-update-modes",
+        "player-cast-durations",
+        "profile-retail",
+        "retail-12-0-0",
+        "retail-12-0-5",
+        "retail-12-0-7",
+        "retail-12-1-0",
+        "rodio",
+        "sound"
+      ],
+      "filenames": [
+        "/home/osso/Projects/wow/wow-ui-sim/target/debug/wow-sim"
+      ],
+      "executable": "/home/osso/Projects/wow/wow-ui-sim/target/debug/wow-sim",
+      "fresh": false
+    },
+    "sha256": "a5e7c397129ec917ea32eb081bf5631b3cdccb8ae69c5e8c997cac981885988d"
+  },
+  "wow_ui_sim": {
+    "record": {
+      "reason": "compiler-artifact",
+      "package_id": "path+file:///home/osso/Projects/wow/wow-ui-sim#0.1.0",
+      "manifest_path": "/home/osso/Projects/wow/wow-ui-sim/Cargo.toml",
+      "target": {
+        "kind": [
+          "lib"
+        ],
+        "crate_types": [
+          "lib"
+        ],
+        "name": "wow_ui_sim",
+        "src_path": "/home/osso/Projects/wow/wow-ui-sim/src/lib.rs",
+        "edition": "2024",
+        "doc": true,
+        "doctest": true,
+        "test": true
+      },
+      "profile": {
+        "opt_level": "1",
+        "debuginfo": "line-tables-only",
+        "debug_assertions": true,
+        "overflow_checks": true,
+        "test": true
+      },
+      "features": [
+        "aura-containers",
+        "aura-instance-enumeration",
+        "aura-xml-widgets",
+        "base-spell-relationships",
+        "casc",
+        "client-retail",
+        "default",
+        "forbidden-aspects",
+        "gui",
+        "native-duration-formatting",
+        "numeric-rule-formatters",
+        "on-update-modes",
+        "player-cast-durations",
+        "profile-retail",
+        "retail-12-0-0",
+        "retail-12-0-5",
+        "retail-12-0-7",
+        "retail-12-1-0",
+        "rodio",
+        "sound"
+      ],
+      "filenames": [
+        "/home/osso/Projects/wow/wow-ui-sim/target/debug/deps/wow_ui_sim-bcad23723a7b3b0d"
+      ],
+      "executable": "/home/osso/Projects/wow/wow-ui-sim/target/debug/deps/wow_ui_sim-bcad23723a7b3b0d",
+      "fresh": false
+    },
+    "sha256": "b9ad2547283fb1390df2c52c39271d3972a3b105f17a5dde686bcfde67ff0a2d"
+  },
+  "integration": {
+    "record": {
+      "reason": "compiler-artifact",
+      "package_id": "path+file:///home/osso/Projects/wow/wow-ui-sim#0.1.0",
+      "manifest_path": "/home/osso/Projects/wow/wow-ui-sim/Cargo.toml",
+      "target": {
+        "kind": [
+          "test"
+        ],
+        "crate_types": [
+          "bin"
+        ],
+        "name": "integration",
+        "src_path": "/home/osso/Projects/wow/wow-ui-sim/tests/integration.rs",
+        "edition": "2024",
+        "doc": false,
+        "doctest": false,
+        "test": true
+      },
+      "profile": {
+        "opt_level": "1",
+        "debuginfo": "line-tables-only",
+        "debug_assertions": true,
+        "overflow_checks": true,
+        "test": true
+      },
+      "features": [
+        "aura-containers",
+        "aura-instance-enumeration",
+        "aura-xml-widgets",
+        "base-spell-relationships",
+        "casc",
+        "client-retail",
+        "default",
+        "forbidden-aspects",
+        "gui",
+        "native-duration-formatting",
+        "numeric-rule-formatters",
+        "on-update-modes",
+        "player-cast-durations",
+        "profile-retail",
+        "retail-12-0-0",
+        "retail-12-0-5",
+        "retail-12-0-7",
+        "retail-12-1-0",
+        "rodio",
+        "sound"
+      ],
+      "filenames": [
+        "/home/osso/Projects/wow/wow-ui-sim/target/debug/deps/integration-1db16289b0998b2a"
+      ],
+      "executable": "/home/osso/Projects/wow/wow-ui-sim/target/debug/deps/integration-1db16289b0998b2a",
+      "fresh": false
+    },
+    "sha256": "168fea2c7aaf7d0d9993f1283b2ddd3e7238eaa1356f1103016e8c575f1d303e"
+  }
+}

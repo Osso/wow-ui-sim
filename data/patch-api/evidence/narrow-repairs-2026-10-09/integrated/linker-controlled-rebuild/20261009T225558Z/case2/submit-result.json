@@ -1,0 +1,23 @@
+{
+  "exit": 0,
+  "stdout": "",
+  "stderr": "Running as unit: wow-proof-case2-20261009t225558z.service\n",
+  "argv": [
+    "systemd-run",
+    "--user",
+    "--no-block",
+    "--unit=wow-proof-case2-20261009t225558z",
+    "--property=Type=oneshot",
+    "--property=RemainAfterExit=yes",
+    "--property=WorkingDirectory=/home/osso/Projects/wow/wow-ui-sim",
+    "--property=StandardOutput=append:/home/osso/.local/state/wow-ui-sim/verification/linker-controlled-rebuild/20261009T225558Z/case2/stdout",
+    "--property=StandardError=append:/home/osso/.local/state/wow-ui-sim/verification/linker-controlled-rebuild/20261009T225558Z/case2/stderr",
+    "/usr/bin/timeout",
+    "90",
+    "/home/osso/Projects/wow/wow-ui-sim/target/debug/deps/integration-1db16289b0998b2a",
+    "blizzard_ui_blizzard_achievementui::behavior_search_filter::search_box_text_changed_calls_set_achievement_search_string_when_query_meets_min_length",
+    "--exact",
+    "--nocapture",
+    "--test-threads=1"
+  ]
+}

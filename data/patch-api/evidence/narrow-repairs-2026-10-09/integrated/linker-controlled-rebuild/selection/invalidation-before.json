@@ -1,0 +1,20 @@
+{
+  "observed": "2026-10-09T22:37:31.785070+00:00",
+  "paths": [
+    "/home/osso/Projects/wow/wow-ui-sim/target/debug/incremental/wow_ui_sim-04lvz7pej7y93",
+    "/home/osso/Projects/wow/wow-ui-sim/target/debug/incremental/wow_ui_sim-35s05hzg2gmxy",
+    "/home/osso/Projects/wow/wow-ui-sim/target/debug/.fingerprint/wow-ui-sim-3282a118e07cdd18",
+    "/home/osso/Projects/wow/wow-ui-sim/target/debug/.fingerprint/wow-ui-sim-bcad23723a7b3b0d",
+    "/home/osso/Projects/wow/wow-ui-sim/target/debug/deps/libwow_ui_sim-3282a118e07cdd18.rlib",
+    "/home/osso/Projects/wow/wow-ui-sim/target/debug/deps/libwow_ui_sim-3282a118e07cdd18.rmeta"
+  ],
+  "selection": "Two failed targettags mapped uniquely toincrementalroots by73/73production and48/48libtestCGUstems; correspondingexactfingerprints +failedproducedrlib/rmeta only.",
+  "rejected": "cargo packageclean dryrun woulddelete13570files29.8GiB; notperformed",
+  "protected_artifacts_before": {
+    "/home/osso/Projects/wow/wow-ui-sim/target/debug/deps/prefork_full_ui-21dd5c807fe7a7b6": "98130da61450a476eb81dcd353a2ce3839d63fa97730d25cd1cc421f65717547",
+    "/home/osso/Projects/wow/wow-ui-sim/target/mists-wrapper-durable/debug/deps/integration-f15e4c1da9a8b8f4": "fa359d740be335938c91be89a6d3fb530360c4f46189ed3ab420bd49e2cce5b5"
+  },
+  "source_toolchain_linker_config_changed": false,
+  "hypothesis": "Controlledartifactstateinvalidation; cause notyetproven",
+  "lock": "/home/osso/.worktrees/.builder.lock exclusive nonblocking"
+}

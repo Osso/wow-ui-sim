@@ -1,0 +1,7 @@
+{
+  "boot_id": "931d4a8a-2178-4666-bf53-776e5eac97be",
+  "lock": "/home/osso/.worktrees/.builder.lock already held by parent build-lock.sh",
+  "purpose": "controlled exact generated-artifact invalidation followed by same-source rebuild; no source/toolchain/linker changes",
+  "started": "2026-10-09T22:55:58.548630+00:00",
+  "worker_sha256": "130197c9f7274e7d2f94972ec1488feb36a3291a500f9b3eed7c2806b7856d55"
+}

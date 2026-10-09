@@ -1,0 +1,17 @@
+{
+  "argv": [
+    "rustfmt",
+    "--check",
+    "--edition",
+    "2024",
+    "--config",
+    "skip_children=true",
+    "/home/osso/.local/state/wow-ui-sim/verification/linker-controlled-rebuild/audit/source/611e10d2d76b368d01f0c61b006fe2d787746f37/tests/blizzard_ui/blizzard_accountstore/behavior_currency_format.rs",
+    "/home/osso/.local/state/wow-ui-sim/verification/linker-controlled-rebuild/audit/source/611e10d2d76b368d01f0c61b006fe2d787746f37/tests/blizzard_ui/blizzard_achievementui/behavior_search_filter.rs"
+  ],
+  "source_revision": "611e10d2d76b368d01f0c61b006fe2d787746f37",
+  "scope": "Two isolated Git-object fixture snapshots only; no compilation, tests, Cargo check or working-tree changes",
+  "exit": 0,
+  "stdout": "",
+  "stderr": ""
+}

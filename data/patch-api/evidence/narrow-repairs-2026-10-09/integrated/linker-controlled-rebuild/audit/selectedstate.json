@@ -1,0 +1,68 @@
+{
+  "observed_utc": "2026-10-09T23:08:00.808530+00:00",
+  "epoch": "20261009T225558Z",
+  "paths_equal_to_epoch": true,
+  "selected_paths": [
+    {
+      "path": "/home/osso/Projects/wow/wow-ui-sim/target/debug/incremental/wow_ui_sim-04lvz7pej7y93",
+      "exists_now": true,
+      "historical_removal_proof": "epoch invalidation-after.json; paths may be recreated by successful build"
+    },
+    {
+      "path": "/home/osso/Projects/wow/wow-ui-sim/target/debug/incremental/wow_ui_sim-35s05hzg2gmxy",
+      "exists_now": true,
+      "historical_removal_proof": "epoch invalidation-after.json; paths may be recreated by successful build"
+    },
+    {
+      "path": "/home/osso/Projects/wow/wow-ui-sim/target/debug/.fingerprint/wow-ui-sim-3282a118e07cdd18",
+      "exists_now": true,
+      "historical_removal_proof": "epoch invalidation-after.json; paths may be recreated by successful build"
+    },
+    {
+      "path": "/home/osso/Projects/wow/wow-ui-sim/target/debug/.fingerprint/wow-ui-sim-bcad23723a7b3b0d",
+      "exists_now": true,
+      "historical_removal_proof": "epoch invalidation-after.json; paths may be recreated by successful build"
+    },
+    {
+      "path": "/home/osso/Projects/wow/wow-ui-sim/target/debug/deps/libwow_ui_sim-3282a118e07cdd18.rlib",
+      "exists_now": true,
+      "historical_removal_proof": "epoch invalidation-after.json; paths may be recreated by successful build"
+    },
+    {
+      "path": "/home/osso/Projects/wow/wow-ui-sim/target/debug/deps/libwow_ui_sim-3282a118e07cdd18.rmeta",
+      "exists_now": true,
+      "historical_removal_proof": "epoch invalidation-after.json; paths may be recreated by successful build"
+    }
+  ],
+  "protected_current": {
+    "/home/osso/Projects/wow/wow-ui-sim/target/debug/deps/prefork_full_ui-21dd5c807fe7a7b6": {
+      "sha256": "98130da61450a476eb81dcd353a2ce3839d63fa97730d25cd1cc421f65717547",
+      "recorded_sha256": "98130da61450a476eb81dcd353a2ce3839d63fa97730d25cd1cc421f65717547",
+      "matches_record": true
+    },
+    "/home/osso/Projects/wow/wow-ui-sim/target/mists-wrapper-durable/debug/deps/integration-f15e4c1da9a8b8f4": {
+      "sha256": "fa359d740be335938c91be89a6d3fb530360c4f46189ed3ab420bd49e2cce5b5",
+      "recorded_sha256": "fa359d740be335938c91be89a6d3fb530360c4f46189ed3ab420bd49e2cce5b5",
+      "matches_record": true
+    }
+  },
+  "fixtures": [
+    {
+      "path": "tests/blizzard_ui/blizzard_accountstore/behavior_currency_format.rs",
+      "before_test_count": 4,
+      "after_test_count": 4,
+      "test_names_equal": true,
+      "snapshot_sha256": "d7d4d775bbe0401286087c73c83350f8a6405a83990b498a5a15d26548decba4",
+      "epoch_sha256": "d7d4d775bbe0401286087c73c83350f8a6405a83990b498a5a15d26548decba4"
+    },
+    {
+      "path": "tests/blizzard_ui/blizzard_achievementui/behavior_search_filter.rs",
+      "before_test_count": 2,
+      "after_test_count": 2,
+      "test_names_equal": true,
+      "snapshot_sha256": "375e8efe232d4b84bc3586b3714e6f00323a07fbe4aaa046306cab982a23d333",
+      "epoch_sha256": "375e8efe232d4b84bc3586b3714e6f00323a07fbe4aaa046306cab982a23d333"
+    }
+  ],
+  "cache_evidence_limit": "Only prior cache-before.json exists: no epoch cache-after snapshot; cannot prove whole-cache equality."
+}
