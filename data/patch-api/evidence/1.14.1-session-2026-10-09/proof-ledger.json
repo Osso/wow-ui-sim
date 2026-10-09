@@ -1,0 +1,20 @@
+{
+  "source": {
+    "command": [
+      "python3",
+      "-B",
+      "/home/osso/.worktrees/wow-ui-sim-p1141-page/data/patch-api/evidence/1.14.1-session-2026-10-09/test_source_accounting.py"
+    ],
+    "scope": "literal SOURCE8 and353 omission controls at implementation bytes retained by original seals; development run before first commit",
+    "revision_containing_same_test_and_adapter": "4c388584092fbd8dea5438f7048c7257945928a2",
+    "exit_code": 0,
+    "log": "green.log",
+    "later_changes_invalidate": false
+  },
+  "portable": {
+    "scope": "RED3 failures retained; GREEN pending"
+  },
+  "runtime": {
+    "scope": "direct existing getter-state probe pending; no native or source-contract closure"
+  }
+}

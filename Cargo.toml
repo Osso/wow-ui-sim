@@ -305,6 +305,11 @@ quote = "1"
 iced_wgpu = { path = "iced-wgpu-patched" }
 
 [[test]]
+name = "patch_1_14_1_text_scale"
+path = "patch-tests/patch_1_14_1_text_scale.rs"
+required-features = ["client-era"]
+
+[[test]]
 name = "patch_2_4_2_factory"
 path = "tests/patch_2_4_2_factory.rs"
 required-features = ["client-retail"]
