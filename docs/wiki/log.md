@@ -1090,3 +1090,7 @@ Own exact body/response/manifest-linked registry101 verified before derivation. 
 ## 2026-10-09 | Patch 1.8.0 SOURCE GREEN and immutable archive
 
 SOURCE GREEN5/5 at44ebe2cb2; copied own-base defaults/errors retained. Original source/evidence seals and data-only replay archive frozen; portable GREEN pending.
+
+## 2026-10-09 | Patch 1.8.0 portable SOURCE receipts
+
+Fresh immutable copied validator/SOURCE5/portable3 ata3e47eb41; exact default bytes/errors, both serialized ledger/log rejection/restoration. Original40 seals and41-member52,231-byte archive unchanged; later actual receipts separately sealed. Zero meaningful model/runtime/native subset. [Audit](investigations/patch-1-8-0-api-audit.md); main owns ordered integration/independent/final gates.

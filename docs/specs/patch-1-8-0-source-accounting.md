@@ -8,8 +8,8 @@ Bounded accounting of page360905/revision3476931/timestamp2020-04-05T21:06:17Z. 
 - [x] Account every literal row/link/header/template/prose/signature/default; reject omissions, mutated counts, invented declarations and model/runtime/native credit.
 - [x] Keep the redirect target unexpanded and contracts UNPROVEN; zero meaningful modeled subset.
 - [x] Separate original historical Retail from Era/Forever; retain task-start newer1.9.0 queue separately/unapplied.
-- [ ] Preserve own SOURCE RED/GREEN and copied own-base default bytes/error behavior. Replay an immutable archive without Git/target/current tools/network; reject serialized ledger/log tampering and restore exact bytes without resealing.
-- [ ] Retain immutable original seals/archive separately from actual later revision/cwd/argv/times/full-stream/scoped-hash receipts. Inspect credential patterns/environment key names, not values.
+- [x] Preserve own SOURCE RED/GREEN and copied own-base default bytes/error behavior. Replay an immutable archive without Git/target/current tools/network; reject serialized ledger/log tampering and restore exact bytes without resealing.
+- [ ] Retain immutable original seals/archive separately from actual later revision/cwd/argv/times/full-stream/scoped-hash receipts. Inspect credential patterns/environment key names, not values. Recorded receipts retained; independent metadata acceptance belongs to main.
 
 ## How it works
 
