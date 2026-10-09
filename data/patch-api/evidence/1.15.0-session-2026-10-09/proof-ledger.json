@@ -1,0 +1,55 @@
+{
+  "scope": "SOURCE development only; no final gate",
+  "runs": [
+    {
+      "phase": "SOURCE RED",
+      "revision": "b3dbc542baa5e5698efd3f87d72afeb6e790c13d",
+      "command": [
+        "python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p1150-page/data/patch-api/evidence/1.15.0-session-2026-10-09/test_source_accounting.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1150-page",
+      "exit_code": 1,
+      "result": "10 expected assertion failures against empty scaffold",
+      "log": "red.log"
+    },
+    {
+      "phase": "PORTABLE RED",
+      "revision": "b3dbc542baa5e5698efd3f87d72afeb6e790c13d",
+      "command": [
+        "python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p1150-page/data/patch-api/evidence/1.15.0-session-2026-10-09/test_portable.py",
+        "--archive",
+        "/home/osso/.worktrees/wow-ui-sim-p1150-page/data/patch-api/evidence/1.15.0-session-2026-10-09/replay-archive.tar.gz",
+        "--scratch",
+        "/home/osso/.worktrees/wow-ui-sim-p1150-page/target/p1150-source-red",
+        "--receipts",
+        "/home/osso/.worktrees/wow-ui-sim-p1150-page/data/patch-api/evidence/1.15.0-session-2026-10-09/portable-red-controls.json"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1150-page",
+      "exit_code": 1,
+      "result": "3 expected absent-archive failures",
+      "log": "portable-red.log"
+    },
+    {
+      "phase": "historical default generator capture",
+      "revision": "precommit working adapter; generator bytes frozen from base0b64e636c",
+      "command": [
+        "python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p1150-page/data/patch-api/evidence/1.15.0-session-2026-10-09/historical-tools/gen_patch_wikitext_register.py",
+        "1.15.0",
+        "/home/osso/.worktrees/wow-ui-sim-p1150-page/data/patch-api/evidence/1.15.0-session-2026-10-09/source.wikitext",
+        "5950848",
+        "/home/osso/.worktrees/wow-ui-sim-p1150-page/data/patch-api/evidence/1.15.0-session-2026-10-09/default-register.json"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1150-page",
+      "exit_code": 0,
+      "generator_flags": [],
+      "result": "empty default inventory; explicit prose C_Engraving preserved only in own ledger",
+      "log": "default-generator.log"
+    }
+  ]
+}
