@@ -34,14 +34,14 @@ Frozen page 233195, revision 2259594, timestamp 2013-05-22T17:34:42Z. [Implement
 
 ## Integration status — 2026-10-09
 
-Integrated at `614402d56`, pushed (main handoff). Actual retail 3.2.0, 3.3.0, 3.3.3, 3.3.5 and 4.0.1 successors are applied; `IsPlayerResolutionAvailable` is removed from the current gap list. Fresh runtime verification remains pending. Original 49/61 and implementer-current 51/59 are immutable historical receipts, not integrated-head counts; inferred 52/58 is not an observed result. The getter reuses the nullable facing-radians read, with no input producer, native default or native parity credit.
+Integrated at `614402d56`, pushed (main handoff). Actual retail 3.2.0, 3.3.0, 3.3.3, 3.3.5 and 4.0.1 successors are applied; `IsPlayerResolutionAvailable` is removed from the current gap list. [Current bounded proof and retained reports](../wiki/investigations/patch-3-1-0-api-audit.md#main-successor-integration--2026-10-09) are the status SSOT: retail 2/2 observes 52/58 at `614402d56`, default/Mists checks exit 0 with six inherited iced warnings, startup `[]` exit 0 and negative 58→59; source 3/3 at `6a84c2b09`. Full suite at `614402d56` FAIL: 23 integration, one Garrison prefork, six lib failures, same sets as `c17f1b4bb`, zero new delta. 74 exact sweeps plus two other passing cases are not acceptance. Original 49/61 and implementer-current 51/59 remain immutable historical receipts; no broader latest-HEAD proof. The getter reuses the nullable facing-radians read, with no input producer, native default or native parity credit.
 
 ## Known gaps (current cycle)
 
-- [ ] Fresh integrated publication/model verification; implementer-current 51 matches/59 mismatches remain historical presence/absence evidence only. No placeholder or Wrath Classic supersession credit.
+- [x] Bounded integrated publication/configured-radians verification at `614402d56`; historical 51/59 receipts preserved. No placeholder or Wrath Classic supersession credit.
 - [ ] 51 raw prose/context rows remain pending; 31 literal fragments have no modeled credit. Two player-facing fragments have only configured-current-state credit and still retain native/historical limits. All full native contracts remain UNPROVEN.
 - [ ] Historical talent/glyph group/preview state, controller-token aura ordering/legacy tuple, secure restoration/hover cancellation/noncombat lifecycle, item-location table encoding/mutation, slash-command/macro dispatch and native PTR corrections remain unsupported.
-- [ ] Fresh verification, cross-profile compilation, all-publication/affected callers, lint/check/startup/full-suite/CI and final acceptance gates remain main-owned and pending; integration/push is not acceptance.
+- [ ] Broader profile-runtime, latest integrated scope, affected callers and final acceptance remain main-owned. Bounded checks/startup pass; retained full suite fails, not acceptance.
 
 ## Out of scope
 

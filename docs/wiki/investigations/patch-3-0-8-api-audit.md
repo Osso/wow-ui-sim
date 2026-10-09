@@ -56,7 +56,7 @@ Validation derives row/status/gap/header/signature/successor/receipt totals and 
 
 ## Main successor integration — 2026-10-09
 
-Actual retail 3.1.0, 3.2.0 and 3.3.0 now replace the queued placeholder. Exact symbol comparison finds 3.1.0 `GetGlyphLink` changed, 3.3.3 `UninviteUnit` changed and 4.0.1 `RestoreVideoStereoDefaults` removed; 3.2.0/3.3.0/3.3.5 have no overlap. The latter two actual successors were already applied in the historical slice. Ownerless `SetUpAnimation` prose remains unexpanded, with no registered successor identity. Fresh integrated observations and parser/replay gates pending; historical 25 seals remain untouched. No runtime changes or native credit.
+Actual retail 3.1.0, 3.2.0 and 3.3.0 now replace the queued placeholder. Exact symbol comparison finds 3.1.0 `GetGlyphLink` changed, 3.3.3 `UninviteUnit` changed and 4.0.1 `RestoreVideoStereoDefaults` removed; 3.2.0/3.3.0/3.3.5 have no overlap. The latter two actual successors were already applied in the historical slice. Ownerless `SetUpAnimation` prose remains unexpanded, with no registered successor identity. [Retained independent report](../../../data/patch-api/evidence/3.0.8-session-2026-10-09/integrated/p308-independent-report.md): fresh runtime at `dd8ca0f19` passes 2/2; all 56 rows unchanged, 22 matches/34 gaps, 25 historical seals unchanged. Recorded-option replay at `98f2ef228`: 81/81 registers exact, 78/81 extracts exact, three inherited extract failures. Default comparison at `efbe97f20`: 82 outcomes unchanged, 79 byte-identical outputs and three same errors. These are revision-bounded receipts, not broader replay at latest HEAD or final acceptance. No runtime changes or native credit.
 
 ## Sources
 

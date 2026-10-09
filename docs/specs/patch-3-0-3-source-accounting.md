@@ -24,6 +24,10 @@ Bounded audit of frozen page 560990/revision 5407654 (2010-03-28T14:26:47Z), fro
 - `tools/test_patch_3_0_3_source.py`: literal serialized contracts, malformed-definition boundary and bounded recorded-output compatibility.
 - `tools/test_patch_3_0_3_validator.py`: copied historical replay and tamper/restoration boundary.
 
+## Current bounded proof — 2026-10-09
+
+[Audit status and retained report](../wiki/investigations/patch-3-0-3-api-audit.md#main-successor-integration--2026-10-09) are the SSOT: source 3/3, history 2/2 and 16 seals pass at `1ba5b6673`; synchronization semantics remain UNPROVEN. Separate new factory measurement (one match/two gaps) is still UNMERGED, not current integrated proof or native acceptance.
+
 ## Known gaps (current cycle)
 
 - [ ] Three publication observations UNPROVEN: source accounting is not runtime measurement.

@@ -24,10 +24,14 @@ Frozen page 482353/revision 4638841 (`2020-02-23T21:55:29Z`) is historical retai
 - `tools/test_patch_3_0_2_source.py`: concrete serialized inventory, 346 labeled rows, occurrence preservation and unchanged defaults.
 - Evidence `test_accounting.py`: complete omission controls, false-credit/foreign-history rejection, relocated serialized tamper/restoration controls.
 
+## Current bounded proof — 2026-10-09
+
+[Audit status and retained report](../wiki/investigations/patch-3-0-2-api-audit.md#main-successor-integration--2026-10-09) are the SSOT: source/accounting/history and preserved 3.2 conflict fixture pass at `323fc333e`, 36+1+2 seals unchanged. All 373 inventory occurrences/all behavior remain UNPROVEN; own factory work pending. No latest-HEAD replay or native/final acceptance.
+
 ## Known gaps (current cycle)
 - [ ] All 373 inventory, 80 prose/qualification and 367 signature contracts remain UNPROVEN behaviorally; runtime publication and native absence were not measured.
 - [ ] No historical 3.0.2 profile/runtime/native capture; existing modern-retail names do not establish old return or storage contracts.
-- [ ] Main replaces queued placeholders with actual ordered registers and owns native/integration acceptance.
+- [ ] Main owns native/integration acceptance; actual ordered registers are applied separately from immutable historical queued placeholders.
 
 ## Out of scope
 Classic 3.4.x/TBC/Era supersession, linked-source expansion, guessed contracts, shims/fallbacks, vendor/cache/Wowless edits, push/merge/deploy/delegation and broad/final gates. No runtime changes or retirement claims.
