@@ -1,0 +1,59 @@
+{
+  "scope": "Byte-preserved historical receipts; retention is not a new validator or runtime execution.",
+  "files": [
+    {
+      "source": "/tmp/validator-discovery-independent-report.md",
+      "retained": "validator-discovery-independent-report.md",
+      "bytes": 5992,
+      "sha256": "46725df1f07ae1c2eec53ebc2bc9dc5532b67b9292c0d22d17a684652c797170"
+    },
+    {
+      "source": "/tmp/validator-discovery-independent-global-result.json",
+      "retained": "validator-discovery-independent-global-result.json",
+      "bytes": 192360,
+      "sha256": "8be89c5eabbedf80f99d00d63fac6927da7642b088ccc6b0b844364c18df9bcf"
+    },
+    {
+      "source": "/tmp/validator-discovery-independent-global.log",
+      "retained": "validator-discovery-independent-global.log",
+      "bytes": 160510,
+      "sha256": "fbca042d70b5e59043750666993e735b49b39610e4d0aab48c3eb8f7f222cc1f"
+    },
+    {
+      "source": "/tmp/validator-discovery-independent-discovery.json",
+      "retained": "validator-discovery-independent-discovery.json",
+      "bytes": 772,
+      "sha256": "62ca5a292daa4898fc76133801bdfce0224c337394d823c9a185a45db5f03d8a"
+    },
+    {
+      "source": "/tmp/validator-discovery-red-result.json",
+      "retained": "validator-discovery-red-result.json",
+      "bytes": 3486,
+      "sha256": "553e90aabc265c0706cc7ca09a381c70b06ae6e37b87d0007c376b6c18ec5495"
+    },
+    {
+      "source": "/tmp/validator-discovery-red.log",
+      "retained": "validator-discovery-red.log",
+      "bytes": 2067,
+      "sha256": "6e5e6a13fd9fb89397fe14ea6e1df9ce55cae00afc6113698c5d2eaa997d6bed"
+    },
+    {
+      "source": "/tmp/validator-discovery-green-result.json",
+      "retained": "validator-discovery-green-result.json",
+      "bytes": 1307,
+      "sha256": "adb1fcc63c48d7dea331054e9c44a94e5c41582e668d3d3c49e79372bed3c7a5"
+    },
+    {
+      "source": "/tmp/validator-discovery-green.log",
+      "retained": "validator-discovery-green.log",
+      "bytes": 106,
+      "sha256": "52d270759c6f62c567c100e534734a43aa4d45c4655162e30fbf65563148a10b"
+    },
+    {
+      "source": "/tmp/forever-api-cfg-map.md",
+      "retained": "forever-api-cfg-map.md",
+      "bytes": 5761,
+      "sha256": "025b5fe3631c3b99eb714676d6cf897ae496f4bc30141b52c0ca2e89bb6b3cb1"
+    }
+  ]
+}

@@ -1,0 +1,4212 @@
+{
+  "schema": "patch-api-wikitext-register/v1",
+  "patch": "11.2.7",
+  "source": {
+    "path": "data/patch-api/sources/11.2.7-api-changes.wikitext",
+    "revid": 6726771,
+    "sha256": "1538a9bdf49a0e09102b4f9c3905aada48e9e1aafdf9c4b9c780a1127179e324"
+  },
+  "header_counts": [
+    {
+      "section": "global-api",
+      "direction": "added",
+      "header_count": 299,
+      "parsed_count": 299
+    },
+    {
+      "section": "global-api",
+      "direction": "removed",
+      "header_count": 7,
+      "parsed_count": 7
+    },
+    {
+      "section": "widgets",
+      "direction": "added",
+      "header_count": 4,
+      "parsed_count": 4
+    },
+    {
+      "section": "widgets",
+      "direction": "removed",
+      "header_count": 0,
+      "parsed_count": 0
+    },
+    {
+      "section": "events",
+      "direction": "added",
+      "header_count": 117,
+      "parsed_count": 117
+    },
+    {
+      "section": "events",
+      "direction": "removed",
+      "header_count": 1,
+      "parsed_count": 1
+    },
+    {
+      "section": "cvars",
+      "direction": "added",
+      "header_count": 65,
+      "parsed_count": 65
+    },
+    {
+      "section": "cvars",
+      "direction": "removed",
+      "header_count": 1,
+      "parsed_count": 1
+    },
+    {
+      "section": "commands",
+      "direction": "added",
+      "header_count": 10,
+      "parsed_count": 10
+    },
+    {
+      "section": "commands",
+      "direction": "removed",
+      "header_count": 0,
+      "parsed_count": 0
+    }
+  ],
+  "entries": [
+    {
+      "id": "wt-global-api-C_ActionBar.IsInterruptAction-22",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ActionBar.IsInterruptAction",
+      "annotation": "",
+      "wikitext_line": 22
+    },
+    {
+      "id": "wt-global-api-C_BattleNet.InstallHighResTextures-23",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_BattleNet.InstallHighResTextures",
+      "annotation": "",
+      "wikitext_line": 23
+    },
+    {
+      "id": "wt-global-api-C_CurrencyInfo.GetPlayerCurrencyCategoryInfo-24",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_CurrencyInfo.GetPlayerCurrencyCategoryInfo",
+      "annotation": "",
+      "wikitext_line": 24
+    },
+    {
+      "id": "wt-global-api-C_DyeColor.GetAllDyeColorCategories-25",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_DyeColor.GetAllDyeColorCategories",
+      "annotation": "",
+      "wikitext_line": 25
+    },
+    {
+      "id": "wt-global-api-C_DyeColor.GetAllDyeColors-26",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_DyeColor.GetAllDyeColors",
+      "annotation": "",
+      "wikitext_line": 26
+    },
+    {
+      "id": "wt-global-api-C_DyeColor.GetDyeColorCategoryInfo-27",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_DyeColor.GetDyeColorCategoryInfo",
+      "annotation": "",
+      "wikitext_line": 27
+    },
+    {
+      "id": "wt-global-api-C_DyeColor.GetDyeColorForItemLocation-28",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_DyeColor.GetDyeColorForItemLocation",
+      "annotation": "",
+      "wikitext_line": 28
+    },
+    {
+      "id": "wt-global-api-C_DyeColor.GetDyeColorForItem-29",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_DyeColor.GetDyeColorForItem",
+      "annotation": "",
+      "wikitext_line": 29
+    },
+    {
+      "id": "wt-global-api-C_DyeColor.GetDyeColorInfo-30",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_DyeColor.GetDyeColorInfo",
+      "annotation": "",
+      "wikitext_line": 30
+    },
+    {
+      "id": "wt-global-api-C_DyeColor.GetDyeColorsInCategory-31",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_DyeColor.GetDyeColorsInCategory",
+      "annotation": "",
+      "wikitext_line": 31
+    },
+    {
+      "id": "wt-global-api-C_DyeColor.IsDyeColorOwned-32",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_DyeColor.IsDyeColorOwned",
+      "annotation": "",
+      "wikitext_line": 32
+    },
+    {
+      "id": "wt-global-api-C_EncounterJournal.StartArathiRPE-33",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_EncounterJournal.StartArathiRPE",
+      "annotation": "",
+      "wikitext_line": 33
+    },
+    {
+      "id": "wt-global-api-C_GameRules.IsClassAllowedForGameMode-34",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_GameRules.IsClassAllowedForGameMode",
+      "annotation": "",
+      "wikitext_line": 34
+    },
+    {
+      "id": "wt-global-api-C_GameRules.IsGameModeEnabled-35",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_GameRules.IsGameModeEnabled",
+      "annotation": "",
+      "wikitext_line": 35
+    },
+    {
+      "id": "wt-global-api-C_GameRules.IsMultiActionBarVisibilityForced-36",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_GameRules.IsMultiActionBarVisibilityForced",
+      "annotation": "",
+      "wikitext_line": 36
+    },
+    {
+      "id": "wt-global-api-C_GameRules.IsPlunderstorm-37",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_GameRules.IsPlunderstorm",
+      "annotation": "",
+      "wikitext_line": 37
+    },
+    {
+      "id": "wt-global-api-C_GameRules.IsStandard-38",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_GameRules.IsStandard",
+      "annotation": "",
+      "wikitext_line": 38
+    },
+    {
+      "id": "wt-global-api-C_GameRules.IsWoWHack-39",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_GameRules.IsWoWHack",
+      "annotation": "",
+      "wikitext_line": 39
+    },
+    {
+      "id": "wt-global-api-C_HouseEditor.ActivateHouseEditorMode-40",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HouseEditor.ActivateHouseEditorMode",
+      "annotation": "",
+      "wikitext_line": 40
+    },
+    {
+      "id": "wt-global-api-C_HouseEditor.EnterHouseEditor-41",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HouseEditor.EnterHouseEditor",
+      "annotation": "",
+      "wikitext_line": 41
+    },
+    {
+      "id": "wt-global-api-C_HouseEditor.GetActiveHouseEditorMode-42",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HouseEditor.GetActiveHouseEditorMode",
+      "annotation": "",
+      "wikitext_line": 42
+    },
+    {
+      "id": "wt-global-api-C_HouseEditor.GetHouseEditorAvailability-43",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HouseEditor.GetHouseEditorAvailability",
+      "annotation": "",
+      "wikitext_line": 43
+    },
+    {
+      "id": "wt-global-api-C_HouseEditor.GetHouseEditorModeAvailability-44",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HouseEditor.GetHouseEditorModeAvailability",
+      "annotation": "",
+      "wikitext_line": 44
+    },
+    {
+      "id": "wt-global-api-C_HouseEditor.IsHouseEditorActive-45",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HouseEditor.IsHouseEditorActive",
+      "annotation": "",
+      "wikitext_line": 45
+    },
+    {
+      "id": "wt-global-api-C_HouseEditor.IsHouseEditorModeActive-46",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HouseEditor.IsHouseEditorModeActive",
+      "annotation": "",
+      "wikitext_line": 46
+    },
+    {
+      "id": "wt-global-api-C_HouseEditor.IsHouseEditorStatusAvailable-47",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HouseEditor.IsHouseEditorStatusAvailable",
+      "annotation": "",
+      "wikitext_line": 47
+    },
+    {
+      "id": "wt-global-api-C_HouseEditor.LeaveHouseEditor-48",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HouseEditor.LeaveHouseEditor",
+      "annotation": "",
+      "wikitext_line": 48
+    },
+    {
+      "id": "wt-global-api-C_HouseExterior.CancelActiveExteriorEditing-49",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HouseExterior.CancelActiveExteriorEditing",
+      "annotation": "",
+      "wikitext_line": 49
+    },
+    {
+      "id": "wt-global-api-C_HouseExterior.GetCoreFixtureOptionsInfo-50",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HouseExterior.GetCoreFixtureOptionsInfo",
+      "annotation": "",
+      "wikitext_line": 50
+    },
+    {
+      "id": "wt-global-api-C_HouseExterior.GetCurrentHouseExteriorSize-51",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HouseExterior.GetCurrentHouseExteriorSize",
+      "annotation": "",
+      "wikitext_line": 51
+    },
+    {
+      "id": "wt-global-api-C_HouseExterior.GetCurrentHouseExteriorTypeName-52",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HouseExterior.GetCurrentHouseExteriorTypeName",
+      "annotation": "",
+      "wikitext_line": 52
+    },
+    {
+      "id": "wt-global-api-C_HouseExterior.GetSelectedFixturePointInfo-53",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HouseExterior.GetSelectedFixturePointInfo",
+      "annotation": "",
+      "wikitext_line": 53
+    },
+    {
+      "id": "wt-global-api-C_HouseExterior.HasHoveredFixture-54",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HouseExterior.HasHoveredFixture",
+      "annotation": "",
+      "wikitext_line": 54
+    },
+    {
+      "id": "wt-global-api-C_HouseExterior.HasSelectedFixturePoint-55",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HouseExterior.HasSelectedFixturePoint",
+      "annotation": "",
+      "wikitext_line": 55
+    },
+    {
+      "id": "wt-global-api-C_HouseExterior.RemoveFixtureFromSelectedPoint-56",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HouseExterior.RemoveFixtureFromSelectedPoint",
+      "annotation": "",
+      "wikitext_line": 56
+    },
+    {
+      "id": "wt-global-api-C_HouseExterior.SelectCoreFixtureOption-57",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HouseExterior.SelectCoreFixtureOption",
+      "annotation": "",
+      "wikitext_line": 57
+    },
+    {
+      "id": "wt-global-api-C_HouseExterior.SelectFixtureOption-58",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HouseExterior.SelectFixtureOption",
+      "annotation": "",
+      "wikitext_line": 58
+    },
+    {
+      "id": "wt-global-api-C_Housing.AcceptNeighborhoodOwnership-59",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Housing.AcceptNeighborhoodOwnership",
+      "annotation": "",
+      "wikitext_line": 59
+    },
+    {
+      "id": "wt-global-api-C_Housing.CanEditCharter-60",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Housing.CanEditCharter",
+      "annotation": "",
+      "wikitext_line": 60
+    },
+    {
+      "id": "wt-global-api-C_Housing.CanTakeReportScreenshot-61",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Housing.CanTakeReportScreenshot",
+      "annotation": "",
+      "wikitext_line": 61
+    },
+    {
+      "id": "wt-global-api-C_Housing.CreateGuildNeighborhood-62",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Housing.CreateGuildNeighborhood",
+      "annotation": "",
+      "wikitext_line": 62
+    },
+    {
+      "id": "wt-global-api-C_Housing.CreateNeighborhoodCharter-63",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Housing.CreateNeighborhoodCharter",
+      "annotation": "",
+      "wikitext_line": 63
+    },
+    {
+      "id": "wt-global-api-C_Housing.DeclineNeighborhoodOwnership-64",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Housing.DeclineNeighborhoodOwnership",
+      "annotation": "",
+      "wikitext_line": 64
+    },
+    {
+      "id": "wt-global-api-C_Housing.DoesFactionMatchNeighborhood-65",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Housing.DoesFactionMatchNeighborhood",
+      "annotation": "",
+      "wikitext_line": 65
+    },
+    {
+      "id": "wt-global-api-C_Housing.EditNeighborhoodCharter-66",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Housing.EditNeighborhoodCharter",
+      "annotation": "",
+      "wikitext_line": 66
+    },
+    {
+      "id": "wt-global-api-C_Housing.GetCurrentHouseInfo-67",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Housing.GetCurrentHouseInfo",
+      "annotation": "",
+      "wikitext_line": 67
+    },
+    {
+      "id": "wt-global-api-C_Housing.GetCurrentHouseLevelFavor-68",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Housing.GetCurrentHouseLevelFavor",
+      "annotation": "",
+      "wikitext_line": 68
+    },
+    {
+      "id": "wt-global-api-C_Housing.GetCurrentHouseRefundAmount-69",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Housing.GetCurrentHouseRefundAmount",
+      "annotation": "",
+      "wikitext_line": 69
+    },
+    {
+      "id": "wt-global-api-C_Housing.GetCurrentNeighborhoodGUID-70",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Housing.GetCurrentNeighborhoodGUID",
+      "annotation": "",
+      "wikitext_line": 70
+    },
+    {
+      "id": "wt-global-api-C_Housing.GetHouseLevelFavorForLevel-71",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Housing.GetHouseLevelFavorForLevel",
+      "annotation": "",
+      "wikitext_line": 71
+    },
+    {
+      "id": "wt-global-api-C_Housing.GetHouseLevelRewardsForLevel-72",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Housing.GetHouseLevelRewardsForLevel",
+      "annotation": "",
+      "wikitext_line": 72
+    },
+    {
+      "id": "wt-global-api-C_Housing.GetHousingAccessFlags-73",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Housing.GetHousingAccessFlags",
+      "annotation": "",
+      "wikitext_line": 73
+    },
+    {
+      "id": "wt-global-api-C_Housing.GetMaxHouseLevel-74",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Housing.GetMaxHouseLevel",
+      "annotation": "",
+      "wikitext_line": 74
+    },
+    {
+      "id": "wt-global-api-C_Housing.GetNeighborhoodTextureSuffix-75",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Housing.GetNeighborhoodTextureSuffix",
+      "annotation": "",
+      "wikitext_line": 75
+    },
+    {
+      "id": "wt-global-api-C_Housing.GetOthersOwnedHouses-76",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Housing.GetOthersOwnedHouses",
+      "annotation": "",
+      "wikitext_line": 76
+    },
+    {
+      "id": "wt-global-api-C_Housing.GetPlayerOwnedHouses-77",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Housing.GetPlayerOwnedHouses",
+      "annotation": "",
+      "wikitext_line": 77
+    },
+    {
+      "id": "wt-global-api-C_Housing.GetTrackedHouseGuid-78",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Housing.GetTrackedHouseGuid",
+      "annotation": "",
+      "wikitext_line": 78
+    },
+    {
+      "id": "wt-global-api-C_Housing.GetUIMapIDForNeighborhood-79",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Housing.GetUIMapIDForNeighborhood",
+      "annotation": "",
+      "wikitext_line": 79
+    },
+    {
+      "id": "wt-global-api-C_Housing.GetVisitCooldownInfo-80",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Housing.GetVisitCooldownInfo",
+      "annotation": "",
+      "wikitext_line": 80
+    },
+    {
+      "id": "wt-global-api-C_Housing.HasHousingExpansionAccess-81",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Housing.HasHousingExpansionAccess",
+      "annotation": "",
+      "wikitext_line": 81
+    },
+    {
+      "id": "wt-global-api-C_Housing.HouseFinderDeclineNeighborhoodInvitation-82",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Housing.HouseFinderDeclineNeighborhoodInvitation",
+      "annotation": "",
+      "wikitext_line": 82
+    },
+    {
+      "id": "wt-global-api-C_Housing.HouseFinderRequestNeighborhoods-83",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Housing.HouseFinderRequestNeighborhoods",
+      "annotation": "",
+      "wikitext_line": 83
+    },
+    {
+      "id": "wt-global-api-C_Housing.HouseFinderRequestReservationAndPort-84",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Housing.HouseFinderRequestReservationAndPort",
+      "annotation": "",
+      "wikitext_line": 84
+    },
+    {
+      "id": "wt-global-api-C_Housing.IsHousingMarketEnabled-85",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Housing.IsHousingMarketEnabled",
+      "annotation": "",
+      "wikitext_line": 85
+    },
+    {
+      "id": "wt-global-api-C_Housing.IsHousingServiceEnabled-86",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Housing.IsHousingServiceEnabled",
+      "annotation": "",
+      "wikitext_line": 86
+    },
+    {
+      "id": "wt-global-api-C_Housing.IsInsideHouseOrPlot-87",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Housing.IsInsideHouseOrPlot",
+      "annotation": "",
+      "wikitext_line": 87
+    },
+    {
+      "id": "wt-global-api-C_Housing.IsInsideHouse-88",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Housing.IsInsideHouse",
+      "annotation": "",
+      "wikitext_line": 88
+    },
+    {
+      "id": "wt-global-api-C_Housing.IsInsideOwnHouse-89",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Housing.IsInsideOwnHouse",
+      "annotation": "",
+      "wikitext_line": 89
+    },
+    {
+      "id": "wt-global-api-C_Housing.IsInsidePlot-90",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Housing.IsInsidePlot",
+      "annotation": "",
+      "wikitext_line": 90
+    },
+    {
+      "id": "wt-global-api-C_Housing.IsOnNeighborhoodMap-91",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Housing.IsOnNeighborhoodMap",
+      "annotation": "",
+      "wikitext_line": 91
+    },
+    {
+      "id": "wt-global-api-C_Housing.LeaveHouse-92",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Housing.LeaveHouse",
+      "annotation": "",
+      "wikitext_line": 92
+    },
+    {
+      "id": "wt-global-api-C_Housing.OnCharterConfirmationAccepted-93",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Housing.OnCharterConfirmationAccepted",
+      "annotation": "",
+      "wikitext_line": 93
+    },
+    {
+      "id": "wt-global-api-C_Housing.OnCharterConfirmationClosed-94",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Housing.OnCharterConfirmationClosed",
+      "annotation": "",
+      "wikitext_line": 94
+    },
+    {
+      "id": "wt-global-api-C_Housing.OnCreateCharterNeighborhoodClosed-95",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Housing.OnCreateCharterNeighborhoodClosed",
+      "annotation": "",
+      "wikitext_line": 95
+    },
+    {
+      "id": "wt-global-api-C_Housing.OnCreateGuildNeighborhoodClosed-96",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Housing.OnCreateGuildNeighborhoodClosed",
+      "annotation": "",
+      "wikitext_line": 96
+    },
+    {
+      "id": "wt-global-api-C_Housing.OnRequestSignatureClicked-97",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Housing.OnRequestSignatureClicked",
+      "annotation": "",
+      "wikitext_line": 97
+    },
+    {
+      "id": "wt-global-api-C_Housing.OnSignCharterClicked-98",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Housing.OnSignCharterClicked",
+      "annotation": "",
+      "wikitext_line": 98
+    },
+    {
+      "id": "wt-global-api-C_Housing.RelinquishHouse-99",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Housing.RelinquishHouse",
+      "annotation": "",
+      "wikitext_line": 99
+    },
+    {
+      "id": "wt-global-api-C_Housing.RequestCurrentHouseInfo-100",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Housing.RequestCurrentHouseInfo",
+      "annotation": "",
+      "wikitext_line": 100
+    },
+    {
+      "id": "wt-global-api-C_Housing.RequestHouseFinderNeighborhoodData-101",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Housing.RequestHouseFinderNeighborhoodData",
+      "annotation": "",
+      "wikitext_line": 101
+    },
+    {
+      "id": "wt-global-api-C_Housing.RequestPlayerCharacterList-102",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Housing.RequestPlayerCharacterList",
+      "annotation": "",
+      "wikitext_line": 102
+    },
+    {
+      "id": "wt-global-api-C_Housing.ReturnAfterVisitingHouse-103",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Housing.ReturnAfterVisitingHouse",
+      "annotation": "",
+      "wikitext_line": 103
+    },
+    {
+      "id": "wt-global-api-C_Housing.SaveHouseSettings-104",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Housing.SaveHouseSettings",
+      "annotation": "",
+      "wikitext_line": 104
+    },
+    {
+      "id": "wt-global-api-C_Housing.SearchBNetFriendNeighborhoodsByID-105",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Housing.SearchBNetFriendNeighborhoodsByID",
+      "annotation": "",
+      "wikitext_line": 105
+    },
+    {
+      "id": "wt-global-api-C_Housing.SearchBNetFriendNeighborhoods-106",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Housing.SearchBNetFriendNeighborhoods",
+      "annotation": "",
+      "wikitext_line": 106
+    },
+    {
+      "id": "wt-global-api-C_Housing.SetTrackedHouseGuid-107",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Housing.SetTrackedHouseGuid",
+      "annotation": "",
+      "wikitext_line": 107
+    },
+    {
+      "id": "wt-global-api-C_Housing.StartTutorial-108",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Housing.StartTutorial",
+      "annotation": "",
+      "wikitext_line": 108
+    },
+    {
+      "id": "wt-global-api-C_Housing.TeleportHome-109",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Housing.TeleportHome",
+      "annotation": "",
+      "wikitext_line": 109
+    },
+    {
+      "id": "wt-global-api-C_Housing.TryRenameNeighborhood-110",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Housing.TryRenameNeighborhood",
+      "annotation": "",
+      "wikitext_line": 110
+    },
+    {
+      "id": "wt-global-api-C_Housing.ValidateCreateGuildNeighborhoodSize-111",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Housing.ValidateCreateGuildNeighborhoodSize",
+      "annotation": "",
+      "wikitext_line": 111
+    },
+    {
+      "id": "wt-global-api-C_Housing.ValidateNeighborhoodName-112",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Housing.ValidateNeighborhoodName",
+      "annotation": "",
+      "wikitext_line": 112
+    },
+    {
+      "id": "wt-global-api-C_Housing.VisitHouse-113",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Housing.VisitHouse",
+      "annotation": "",
+      "wikitext_line": 113
+    },
+    {
+      "id": "wt-global-api-C_HousingBasicMode.CancelActiveEditing-114",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingBasicMode.CancelActiveEditing",
+      "annotation": "",
+      "wikitext_line": 114
+    },
+    {
+      "id": "wt-global-api-C_HousingBasicMode.CommitDecorMovement-115",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingBasicMode.CommitDecorMovement",
+      "annotation": "",
+      "wikitext_line": 115
+    },
+    {
+      "id": "wt-global-api-C_HousingBasicMode.CommitHouseExteriorPosition-116",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingBasicMode.CommitHouseExteriorPosition",
+      "annotation": "",
+      "wikitext_line": 116
+    },
+    {
+      "id": "wt-global-api-C_HousingBasicMode.FinishPlacingNewDecor-117",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingBasicMode.FinishPlacingNewDecor",
+      "annotation": "",
+      "wikitext_line": 117
+    },
+    {
+      "id": "wt-global-api-C_HousingBasicMode.GetHoveredDecorInfo-118",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingBasicMode.GetHoveredDecorInfo",
+      "annotation": "",
+      "wikitext_line": 118
+    },
+    {
+      "id": "wt-global-api-C_HousingBasicMode.GetSelectedDecorInfo-119",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingBasicMode.GetSelectedDecorInfo",
+      "annotation": "",
+      "wikitext_line": 119
+    },
+    {
+      "id": "wt-global-api-C_HousingBasicMode.IsDecorSelected-120",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingBasicMode.IsDecorSelected",
+      "annotation": "",
+      "wikitext_line": 120
+    },
+    {
+      "id": "wt-global-api-C_HousingBasicMode.IsGridSnapEnabled-121",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingBasicMode.IsGridSnapEnabled",
+      "annotation": "",
+      "wikitext_line": 121
+    },
+    {
+      "id": "wt-global-api-C_HousingBasicMode.IsGridVisible-122",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingBasicMode.IsGridVisible",
+      "annotation": "",
+      "wikitext_line": 122
+    },
+    {
+      "id": "wt-global-api-C_HousingBasicMode.IsHouseExteriorHovered-123",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingBasicMode.IsHouseExteriorHovered",
+      "annotation": "",
+      "wikitext_line": 123
+    },
+    {
+      "id": "wt-global-api-C_HousingBasicMode.IsHouseExteriorSelected-124",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingBasicMode.IsHouseExteriorSelected",
+      "annotation": "",
+      "wikitext_line": 124
+    },
+    {
+      "id": "wt-global-api-C_HousingBasicMode.IsHoveringDecor-125",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingBasicMode.IsHoveringDecor",
+      "annotation": "",
+      "wikitext_line": 125
+    },
+    {
+      "id": "wt-global-api-C_HousingBasicMode.IsNudgeEnabled-126",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingBasicMode.IsNudgeEnabled",
+      "annotation": "",
+      "wikitext_line": 126
+    },
+    {
+      "id": "wt-global-api-C_HousingBasicMode.IsPlacingNewDecor-127",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingBasicMode.IsPlacingNewDecor",
+      "annotation": "",
+      "wikitext_line": 127
+    },
+    {
+      "id": "wt-global-api-C_HousingBasicMode.RemoveSelectedDecor-128",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingBasicMode.RemoveSelectedDecor",
+      "annotation": "",
+      "wikitext_line": 128
+    },
+    {
+      "id": "wt-global-api-C_HousingBasicMode.RotateDecor-129",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingBasicMode.RotateDecor",
+      "annotation": "",
+      "wikitext_line": 129
+    },
+    {
+      "id": "wt-global-api-C_HousingBasicMode.RotateHouseExterior-130",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingBasicMode.RotateHouseExterior",
+      "annotation": "",
+      "wikitext_line": 130
+    },
+    {
+      "id": "wt-global-api-C_HousingBasicMode.SetGridSnapEnabled-131",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingBasicMode.SetGridSnapEnabled",
+      "annotation": "",
+      "wikitext_line": 131
+    },
+    {
+      "id": "wt-global-api-C_HousingBasicMode.SetGridVisible-132",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingBasicMode.SetGridVisible",
+      "annotation": "",
+      "wikitext_line": 132
+    },
+    {
+      "id": "wt-global-api-C_HousingBasicMode.SetNudgeEnabled-133",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingBasicMode.SetNudgeEnabled",
+      "annotation": "",
+      "wikitext_line": 133
+    },
+    {
+      "id": "wt-global-api-C_HousingBasicMode.StartPlacingNewDecor-134",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingBasicMode.StartPlacingNewDecor",
+      "annotation": "",
+      "wikitext_line": 134
+    },
+    {
+      "id": "wt-global-api-C_HousingCatalog.CanDestroyEntry-135",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingCatalog.CanDestroyEntry",
+      "annotation": "",
+      "wikitext_line": 135
+    },
+    {
+      "id": "wt-global-api-C_HousingCatalog.CreateCatalogSearcher-136",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingCatalog.CreateCatalogSearcher",
+      "annotation": "",
+      "wikitext_line": 136
+    },
+    {
+      "id": "wt-global-api-C_HousingCatalog.DestroyEntry-137",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingCatalog.DestroyEntry",
+      "annotation": "",
+      "wikitext_line": 137
+    },
+    {
+      "id": "wt-global-api-C_HousingCatalog.GetAllFilterTagGroups-138",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingCatalog.GetAllFilterTagGroups",
+      "annotation": "",
+      "wikitext_line": 138
+    },
+    {
+      "id": "wt-global-api-C_HousingCatalog.GetCatalogCategoryInfo-139",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingCatalog.GetCatalogCategoryInfo",
+      "annotation": "",
+      "wikitext_line": 139
+    },
+    {
+      "id": "wt-global-api-C_HousingCatalog.GetCatalogEntryDebugInfoForID-140",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingCatalog.GetCatalogEntryDebugInfoForID",
+      "annotation": "",
+      "wikitext_line": 140
+    },
+    {
+      "id": "wt-global-api-C_HousingCatalog.GetCatalogEntryInfoByItem-141",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingCatalog.GetCatalogEntryInfoByItem",
+      "annotation": "",
+      "wikitext_line": 141
+    },
+    {
+      "id": "wt-global-api-C_HousingCatalog.GetCatalogEntryInfoByRecordID-142",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingCatalog.GetCatalogEntryInfoByRecordID",
+      "annotation": "",
+      "wikitext_line": 142
+    },
+    {
+      "id": "wt-global-api-C_HousingCatalog.GetCatalogEntryInfo-143",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingCatalog.GetCatalogEntryInfo",
+      "annotation": "",
+      "wikitext_line": 143
+    },
+    {
+      "id": "wt-global-api-C_HousingCatalog.GetCatalogSubcategoryInfo-144",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingCatalog.GetCatalogSubcategoryInfo",
+      "annotation": "",
+      "wikitext_line": 144
+    },
+    {
+      "id": "wt-global-api-C_HousingCatalog.GetDecorMaxOwnedCount-145",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingCatalog.GetDecorMaxOwnedCount",
+      "annotation": "",
+      "wikitext_line": 145
+    },
+    {
+      "id": "wt-global-api-C_HousingCatalog.GetDecorTotalOwnedCount-146",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingCatalog.GetDecorTotalOwnedCount",
+      "annotation": "",
+      "wikitext_line": 146
+    },
+    {
+      "id": "wt-global-api-C_HousingCatalog.GetFeaturedBundles-147",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingCatalog.GetFeaturedBundles",
+      "annotation": "",
+      "wikitext_line": 147
+    },
+    {
+      "id": "wt-global-api-C_HousingCatalog.GetFeaturedDecor-148",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingCatalog.GetFeaturedDecor",
+      "annotation": "",
+      "wikitext_line": 148
+    },
+    {
+      "id": "wt-global-api-C_HousingCatalog.RequestHousingMarketInfoRefresh-149",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingCatalog.RequestHousingMarketInfoRefresh",
+      "annotation": "",
+      "wikitext_line": 149
+    },
+    {
+      "id": "wt-global-api-C_HousingCatalog.SearchCatalogCategories-150",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingCatalog.SearchCatalogCategories",
+      "annotation": "",
+      "wikitext_line": 150
+    },
+    {
+      "id": "wt-global-api-C_HousingCatalog.SearchCatalogSubcategories-151",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingCatalog.SearchCatalogSubcategories",
+      "annotation": "",
+      "wikitext_line": 151
+    },
+    {
+      "id": "wt-global-api-C_HousingCleanupMode.GetHoveredDecorInfo-152",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingCleanupMode.GetHoveredDecorInfo",
+      "annotation": "",
+      "wikitext_line": 152
+    },
+    {
+      "id": "wt-global-api-C_HousingCleanupMode.IsHoveringDecor-153",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingCleanupMode.IsHoveringDecor",
+      "annotation": "",
+      "wikitext_line": 153
+    },
+    {
+      "id": "wt-global-api-C_HousingCleanupMode.RemoveSelectedDecor-154",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingCleanupMode.RemoveSelectedDecor",
+      "annotation": "",
+      "wikitext_line": 154
+    },
+    {
+      "id": "wt-global-api-C_HousingCustomizeMode.ApplyDyeToSelectedDecor-155",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingCustomizeMode.ApplyDyeToSelectedDecor",
+      "annotation": "",
+      "wikitext_line": 155
+    },
+    {
+      "id": "wt-global-api-C_HousingCustomizeMode.ApplyThemeToRoom-156",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingCustomizeMode.ApplyThemeToRoom",
+      "annotation": "",
+      "wikitext_line": 156
+    },
+    {
+      "id": "wt-global-api-C_HousingCustomizeMode.ApplyThemeToSelectedRoomComponent-157",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingCustomizeMode.ApplyThemeToSelectedRoomComponent",
+      "annotation": "",
+      "wikitext_line": 157
+    },
+    {
+      "id": "wt-global-api-C_HousingCustomizeMode.ApplyWallpaperToAllWalls-158",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingCustomizeMode.ApplyWallpaperToAllWalls",
+      "annotation": "",
+      "wikitext_line": 158
+    },
+    {
+      "id": "wt-global-api-C_HousingCustomizeMode.ApplyWallpaperToSelectedRoomComponent-159",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingCustomizeMode.ApplyWallpaperToSelectedRoomComponent",
+      "annotation": "",
+      "wikitext_line": 159
+    },
+    {
+      "id": "wt-global-api-C_HousingCustomizeMode.CancelActiveEditing-160",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingCustomizeMode.CancelActiveEditing",
+      "annotation": "",
+      "wikitext_line": 160
+    },
+    {
+      "id": "wt-global-api-C_HousingCustomizeMode.ClearDyesForSelectedDecor-161",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingCustomizeMode.ClearDyesForSelectedDecor",
+      "annotation": "",
+      "wikitext_line": 161
+    },
+    {
+      "id": "wt-global-api-C_HousingCustomizeMode.ClearTargetRoomComponent-162",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingCustomizeMode.ClearTargetRoomComponent",
+      "annotation": "",
+      "wikitext_line": 162
+    },
+    {
+      "id": "wt-global-api-C_HousingCustomizeMode.CommitDyesForSelectedDecor-163",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingCustomizeMode.CommitDyesForSelectedDecor",
+      "annotation": "",
+      "wikitext_line": 163
+    },
+    {
+      "id": "wt-global-api-C_HousingCustomizeMode.GetHoveredDecorInfo-164",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingCustomizeMode.GetHoveredDecorInfo",
+      "annotation": "",
+      "wikitext_line": 164
+    },
+    {
+      "id": "wt-global-api-C_HousingCustomizeMode.GetHoveredRoomComponentInfo-165",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingCustomizeMode.GetHoveredRoomComponentInfo",
+      "annotation": "",
+      "wikitext_line": 165
+    },
+    {
+      "id": "wt-global-api-C_HousingCustomizeMode.GetNumDyesToRemoveOnSelectedDecor-166",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingCustomizeMode.GetNumDyesToRemoveOnSelectedDecor",
+      "annotation": "",
+      "wikitext_line": 166
+    },
+    {
+      "id": "wt-global-api-C_HousingCustomizeMode.GetNumDyesToSpendOnSelectedDecor-167",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingCustomizeMode.GetNumDyesToSpendOnSelectedDecor",
+      "annotation": "",
+      "wikitext_line": 167
+    },
+    {
+      "id": "wt-global-api-C_HousingCustomizeMode.GetPreviewDyesOnSelectedDecor-168",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingCustomizeMode.GetPreviewDyesOnSelectedDecor",
+      "annotation": "",
+      "wikitext_line": 168
+    },
+    {
+      "id": "wt-global-api-C_HousingCustomizeMode.GetRecentlyUsedDyes-169",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingCustomizeMode.GetRecentlyUsedDyes",
+      "annotation": "",
+      "wikitext_line": 169
+    },
+    {
+      "id": "wt-global-api-C_HousingCustomizeMode.GetRecentlyUsedThemeSets-170",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingCustomizeMode.GetRecentlyUsedThemeSets",
+      "annotation": "",
+      "wikitext_line": 170
+    },
+    {
+      "id": "wt-global-api-C_HousingCustomizeMode.GetRecentlyUsedWallpapers-171",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingCustomizeMode.GetRecentlyUsedWallpapers",
+      "annotation": "",
+      "wikitext_line": 171
+    },
+    {
+      "id": "wt-global-api-C_HousingCustomizeMode.GetSelectedDecorInfo-172",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingCustomizeMode.GetSelectedDecorInfo",
+      "annotation": "",
+      "wikitext_line": 172
+    },
+    {
+      "id": "wt-global-api-C_HousingCustomizeMode.GetSelectedRoomComponentInfo-173",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingCustomizeMode.GetSelectedRoomComponentInfo",
+      "annotation": "",
+      "wikitext_line": 173
+    },
+    {
+      "id": "wt-global-api-C_HousingCustomizeMode.GetThemeSetInfo-174",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingCustomizeMode.GetThemeSetInfo",
+      "annotation": "",
+      "wikitext_line": 174
+    },
+    {
+      "id": "wt-global-api-C_HousingCustomizeMode.GetWallpapersForRoomComponentType-175",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingCustomizeMode.GetWallpapersForRoomComponentType",
+      "annotation": "",
+      "wikitext_line": 175
+    },
+    {
+      "id": "wt-global-api-C_HousingCustomizeMode.IsDecorSelected-176",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingCustomizeMode.IsDecorSelected",
+      "annotation": "",
+      "wikitext_line": 176
+    },
+    {
+      "id": "wt-global-api-C_HousingCustomizeMode.IsHoveringDecor-177",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingCustomizeMode.IsHoveringDecor",
+      "annotation": "",
+      "wikitext_line": 177
+    },
+    {
+      "id": "wt-global-api-C_HousingCustomizeMode.IsHoveringRoomComponent-178",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingCustomizeMode.IsHoveringRoomComponent",
+      "annotation": "",
+      "wikitext_line": 178
+    },
+    {
+      "id": "wt-global-api-C_HousingCustomizeMode.IsRoomComponentSelected-179",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingCustomizeMode.IsRoomComponentSelected",
+      "annotation": "",
+      "wikitext_line": 179
+    },
+    {
+      "id": "wt-global-api-C_HousingCustomizeMode.RoomComponentSupportsVariant-180",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingCustomizeMode.RoomComponentSupportsVariant",
+      "annotation": "",
+      "wikitext_line": 180
+    },
+    {
+      "id": "wt-global-api-C_HousingCustomizeMode.SetRoomComponentCeilingType-181",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingCustomizeMode.SetRoomComponentCeilingType",
+      "annotation": "",
+      "wikitext_line": 181
+    },
+    {
+      "id": "wt-global-api-C_HousingCustomizeMode.SetRoomComponentDoorType-182",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingCustomizeMode.SetRoomComponentDoorType",
+      "annotation": "",
+      "wikitext_line": 182
+    },
+    {
+      "id": "wt-global-api-C_HousingDecor.CancelActiveEditing-183",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingDecor.CancelActiveEditing",
+      "annotation": "",
+      "wikitext_line": 183
+    },
+    {
+      "id": "wt-global-api-C_HousingDecor.CommitDecorMovement-184",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingDecor.CommitDecorMovement",
+      "annotation": "",
+      "wikitext_line": 184
+    },
+    {
+      "id": "wt-global-api-C_HousingDecor.GetAllPlacedDecor-185",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingDecor.GetAllPlacedDecor",
+      "annotation": "",
+      "wikitext_line": 185
+    },
+    {
+      "id": "wt-global-api-C_HousingDecor.GetDecorDebugInfoForGUID-186",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingDecor.GetDecorDebugInfoForGUID",
+      "annotation": "",
+      "wikitext_line": 186
+    },
+    {
+      "id": "wt-global-api-C_HousingDecor.GetDecorIcon-187",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingDecor.GetDecorIcon",
+      "annotation": "",
+      "wikitext_line": 187
+    },
+    {
+      "id": "wt-global-api-C_HousingDecor.GetDecorInstanceInfoForGUID-188",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingDecor.GetDecorInstanceInfoForGUID",
+      "annotation": "",
+      "wikitext_line": 188
+    },
+    {
+      "id": "wt-global-api-C_HousingDecor.GetDecorName-189",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingDecor.GetDecorName",
+      "annotation": "",
+      "wikitext_line": 189
+    },
+    {
+      "id": "wt-global-api-C_HousingDecor.GetHoveredDecorDebugInfo-190",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingDecor.GetHoveredDecorDebugInfo",
+      "annotation": "",
+      "wikitext_line": 190
+    },
+    {
+      "id": "wt-global-api-C_HousingDecor.GetHoveredDecorInfo-191",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingDecor.GetHoveredDecorInfo",
+      "annotation": "",
+      "wikitext_line": 191
+    },
+    {
+      "id": "wt-global-api-C_HousingDecor.GetMaxDecorPlaced-192",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingDecor.GetMaxDecorPlaced",
+      "annotation": "",
+      "wikitext_line": 192
+    },
+    {
+      "id": "wt-global-api-C_HousingDecor.GetMaxPlacementBudget-193",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingDecor.GetMaxPlacementBudget",
+      "annotation": "",
+      "wikitext_line": 193
+    },
+    {
+      "id": "wt-global-api-C_HousingDecor.GetNumDecorPlaced-194",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingDecor.GetNumDecorPlaced",
+      "annotation": "",
+      "wikitext_line": 194
+    },
+    {
+      "id": "wt-global-api-C_HousingDecor.GetSelectedDecorDebugInfo-195",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingDecor.GetSelectedDecorDebugInfo",
+      "annotation": "",
+      "wikitext_line": 195
+    },
+    {
+      "id": "wt-global-api-C_HousingDecor.GetSelectedDecorInfo-196",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingDecor.GetSelectedDecorInfo",
+      "annotation": "",
+      "wikitext_line": 196
+    },
+    {
+      "id": "wt-global-api-C_HousingDecor.GetSpentPlacementBudget-197",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingDecor.GetSpentPlacementBudget",
+      "annotation": "",
+      "wikitext_line": 197
+    },
+    {
+      "id": "wt-global-api-C_HousingDecor.HasMaxPlacementBudget-198",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingDecor.HasMaxPlacementBudget",
+      "annotation": "",
+      "wikitext_line": 198
+    },
+    {
+      "id": "wt-global-api-C_HousingDecor.IsDecorSelected-199",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingDecor.IsDecorSelected",
+      "annotation": "",
+      "wikitext_line": 199
+    },
+    {
+      "id": "wt-global-api-C_HousingDecor.IsGridVisible-200",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingDecor.IsGridVisible",
+      "annotation": "",
+      "wikitext_line": 200
+    },
+    {
+      "id": "wt-global-api-C_HousingDecor.IsHouseExteriorDoorHovered-201",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingDecor.IsHouseExteriorDoorHovered",
+      "annotation": "",
+      "wikitext_line": 201
+    },
+    {
+      "id": "wt-global-api-C_HousingDecor.IsHouseExteriorHovered-202",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingDecor.IsHouseExteriorHovered",
+      "annotation": "",
+      "wikitext_line": 202
+    },
+    {
+      "id": "wt-global-api-C_HousingDecor.IsHoveringDecor-203",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingDecor.IsHoveringDecor",
+      "annotation": "",
+      "wikitext_line": 203
+    },
+    {
+      "id": "wt-global-api-C_HousingDecor.RemovePlacedDecorEntry-204",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingDecor.RemovePlacedDecorEntry",
+      "annotation": "",
+      "wikitext_line": 204
+    },
+    {
+      "id": "wt-global-api-C_HousingDecor.RemoveSelectedDecor-205",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingDecor.RemoveSelectedDecor",
+      "annotation": "",
+      "wikitext_line": 205
+    },
+    {
+      "id": "wt-global-api-C_HousingDecor.SetGridVisible-206",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingDecor.SetGridVisible",
+      "annotation": "",
+      "wikitext_line": 206
+    },
+    {
+      "id": "wt-global-api-C_HousingDecor.SetPlacedDecorEntryHovered-207",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingDecor.SetPlacedDecorEntryHovered",
+      "annotation": "",
+      "wikitext_line": 207
+    },
+    {
+      "id": "wt-global-api-C_HousingDecor.SetPlacedDecorEntrySelected-208",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingDecor.SetPlacedDecorEntrySelected",
+      "annotation": "",
+      "wikitext_line": 208
+    },
+    {
+      "id": "wt-global-api-C_HousingExpertMode.CancelActiveEditing-209",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingExpertMode.CancelActiveEditing",
+      "annotation": "",
+      "wikitext_line": 209
+    },
+    {
+      "id": "wt-global-api-C_HousingExpertMode.CommitDecorMovement-210",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingExpertMode.CommitDecorMovement",
+      "annotation": "",
+      "wikitext_line": 210
+    },
+    {
+      "id": "wt-global-api-C_HousingExpertMode.CommitHouseExteriorPosition-211",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingExpertMode.CommitHouseExteriorPosition",
+      "annotation": "",
+      "wikitext_line": 211
+    },
+    {
+      "id": "wt-global-api-C_HousingExpertMode.GetHoveredDecorInfo-212",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingExpertMode.GetHoveredDecorInfo",
+      "annotation": "",
+      "wikitext_line": 212
+    },
+    {
+      "id": "wt-global-api-C_HousingExpertMode.GetPrecisionSubmodeRestriction-213",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingExpertMode.GetPrecisionSubmodeRestriction",
+      "annotation": "",
+      "wikitext_line": 213
+    },
+    {
+      "id": "wt-global-api-C_HousingExpertMode.GetPrecisionSubmode-214",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingExpertMode.GetPrecisionSubmode",
+      "annotation": "",
+      "wikitext_line": 214
+    },
+    {
+      "id": "wt-global-api-C_HousingExpertMode.GetSelectedDecorInfo-215",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingExpertMode.GetSelectedDecorInfo",
+      "annotation": "",
+      "wikitext_line": 215
+    },
+    {
+      "id": "wt-global-api-C_HousingExpertMode.IsDecorSelected-216",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingExpertMode.IsDecorSelected",
+      "annotation": "",
+      "wikitext_line": 216
+    },
+    {
+      "id": "wt-global-api-C_HousingExpertMode.IsGridVisible-217",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingExpertMode.IsGridVisible",
+      "annotation": "",
+      "wikitext_line": 217
+    },
+    {
+      "id": "wt-global-api-C_HousingExpertMode.IsHouseExteriorHovered-218",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingExpertMode.IsHouseExteriorHovered",
+      "annotation": "",
+      "wikitext_line": 218
+    },
+    {
+      "id": "wt-global-api-C_HousingExpertMode.IsHouseExteriorSelected-219",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingExpertMode.IsHouseExteriorSelected",
+      "annotation": "",
+      "wikitext_line": 219
+    },
+    {
+      "id": "wt-global-api-C_HousingExpertMode.IsHoveringDecor-220",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingExpertMode.IsHoveringDecor",
+      "annotation": "",
+      "wikitext_line": 220
+    },
+    {
+      "id": "wt-global-api-C_HousingExpertMode.RemoveSelectedDecor-221",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingExpertMode.RemoveSelectedDecor",
+      "annotation": "",
+      "wikitext_line": 221
+    },
+    {
+      "id": "wt-global-api-C_HousingExpertMode.ResetPrecisionChanges-222",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingExpertMode.ResetPrecisionChanges",
+      "annotation": "",
+      "wikitext_line": 222
+    },
+    {
+      "id": "wt-global-api-C_HousingExpertMode.SelectNextRotationAxis-223",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingExpertMode.SelectNextRotationAxis",
+      "annotation": "",
+      "wikitext_line": 223
+    },
+    {
+      "id": "wt-global-api-C_HousingExpertMode.SetGridVisible-224",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingExpertMode.SetGridVisible",
+      "annotation": "",
+      "wikitext_line": 224
+    },
+    {
+      "id": "wt-global-api-C_HousingExpertMode.SetPrecisionIncrementingActive-225",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingExpertMode.SetPrecisionIncrementingActive",
+      "annotation": "",
+      "wikitext_line": 225
+    },
+    {
+      "id": "wt-global-api-C_HousingExpertMode.SetPrecisionSubmode-226",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingExpertMode.SetPrecisionSubmode",
+      "annotation": "",
+      "wikitext_line": 226
+    },
+    {
+      "id": "wt-global-api-C_HousingLayout.AnyRoomsOnFloor-227",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingLayout.AnyRoomsOnFloor",
+      "annotation": "",
+      "wikitext_line": 227
+    },
+    {
+      "id": "wt-global-api-C_HousingLayout.CancelActiveLayoutEditing-228",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingLayout.CancelActiveLayoutEditing",
+      "annotation": "",
+      "wikitext_line": 228
+    },
+    {
+      "id": "wt-global-api-C_HousingLayout.ConfirmStairChoice-229",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingLayout.ConfirmStairChoice",
+      "annotation": "",
+      "wikitext_line": 229
+    },
+    {
+      "id": "wt-global-api-C_HousingLayout.DeselectFloorplan-230",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingLayout.DeselectFloorplan",
+      "annotation": "",
+      "wikitext_line": 230
+    },
+    {
+      "id": "wt-global-api-C_HousingLayout.DeselectRoomOrDoor-231",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingLayout.DeselectRoomOrDoor",
+      "annotation": "",
+      "wikitext_line": 231
+    },
+    {
+      "id": "wt-global-api-C_HousingLayout.GetNumActiveRooms-232",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingLayout.GetNumActiveRooms",
+      "annotation": "",
+      "wikitext_line": 232
+    },
+    {
+      "id": "wt-global-api-C_HousingLayout.GetRoomPlacementBudget-233",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingLayout.GetRoomPlacementBudget",
+      "annotation": "",
+      "wikitext_line": 233
+    },
+    {
+      "id": "wt-global-api-C_HousingLayout.GetSelectedDoor-234",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingLayout.GetSelectedDoor",
+      "annotation": "",
+      "wikitext_line": 234
+    },
+    {
+      "id": "wt-global-api-C_HousingLayout.GetSelectedFloorplan-235",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingLayout.GetSelectedFloorplan",
+      "annotation": "",
+      "wikitext_line": 235
+    },
+    {
+      "id": "wt-global-api-C_HousingLayout.GetSelectedRoom-236",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingLayout.GetSelectedRoom",
+      "annotation": "",
+      "wikitext_line": 236
+    },
+    {
+      "id": "wt-global-api-C_HousingLayout.GetSelectedStairwellRoomCount-237",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingLayout.GetSelectedStairwellRoomCount",
+      "annotation": "",
+      "wikitext_line": 237
+    },
+    {
+      "id": "wt-global-api-C_HousingLayout.GetSpentPlacementBudget-238",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingLayout.GetSpentPlacementBudget",
+      "annotation": "",
+      "wikitext_line": 238
+    },
+    {
+      "id": "wt-global-api-C_HousingLayout.GetViewedFloor-239",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingLayout.GetViewedFloor",
+      "annotation": "",
+      "wikitext_line": 239
+    },
+    {
+      "id": "wt-global-api-C_HousingLayout.HasAnySelections-240",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingLayout.HasAnySelections",
+      "annotation": "",
+      "wikitext_line": 240
+    },
+    {
+      "id": "wt-global-api-C_HousingLayout.HasRoomPlacementBudget-241",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingLayout.HasRoomPlacementBudget",
+      "annotation": "",
+      "wikitext_line": 241
+    },
+    {
+      "id": "wt-global-api-C_HousingLayout.HasSelectedDoor-242",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingLayout.HasSelectedDoor",
+      "annotation": "",
+      "wikitext_line": 242
+    },
+    {
+      "id": "wt-global-api-C_HousingLayout.HasSelectedFloorplan-243",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingLayout.HasSelectedFloorplan",
+      "annotation": "",
+      "wikitext_line": 243
+    },
+    {
+      "id": "wt-global-api-C_HousingLayout.HasSelectedRoom-244",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingLayout.HasSelectedRoom",
+      "annotation": "",
+      "wikitext_line": 244
+    },
+    {
+      "id": "wt-global-api-C_HousingLayout.HasStairs-245",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingLayout.HasStairs",
+      "annotation": "",
+      "wikitext_line": 245
+    },
+    {
+      "id": "wt-global-api-C_HousingLayout.HasValidConnection-246",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingLayout.HasValidConnection",
+      "annotation": "",
+      "wikitext_line": 246
+    },
+    {
+      "id": "wt-global-api-C_HousingLayout.IsBaseRoom-247",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingLayout.IsBaseRoom",
+      "annotation": "",
+      "wikitext_line": 247
+    },
+    {
+      "id": "wt-global-api-C_HousingLayout.IsDraggingRoom-248",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingLayout.IsDraggingRoom",
+      "annotation": "",
+      "wikitext_line": 248
+    },
+    {
+      "id": "wt-global-api-C_HousingLayout.MoveDraggedRoom-249",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingLayout.MoveDraggedRoom",
+      "annotation": "",
+      "wikitext_line": 249
+    },
+    {
+      "id": "wt-global-api-C_HousingLayout.MoveLayoutCamera-250",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingLayout.MoveLayoutCamera",
+      "annotation": "",
+      "wikitext_line": 250
+    },
+    {
+      "id": "wt-global-api-C_HousingLayout.RemoveRoom-251",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingLayout.RemoveRoom",
+      "annotation": "",
+      "wikitext_line": 251
+    },
+    {
+      "id": "wt-global-api-C_HousingLayout.RotateFocusedRoom-252",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingLayout.RotateFocusedRoom",
+      "annotation": "",
+      "wikitext_line": 252
+    },
+    {
+      "id": "wt-global-api-C_HousingLayout.RotateRoom-253",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingLayout.RotateRoom",
+      "annotation": "",
+      "wikitext_line": 253
+    },
+    {
+      "id": "wt-global-api-C_HousingLayout.SelectFloorplan-254",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingLayout.SelectFloorplan",
+      "annotation": "",
+      "wikitext_line": 254
+    },
+    {
+      "id": "wt-global-api-C_HousingLayout.SetViewedFloor-255",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingLayout.SetViewedFloor",
+      "annotation": "",
+      "wikitext_line": 255
+    },
+    {
+      "id": "wt-global-api-C_HousingLayout.StartDrag-256",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingLayout.StartDrag",
+      "annotation": "",
+      "wikitext_line": 256
+    },
+    {
+      "id": "wt-global-api-C_HousingLayout.StopDraggingRoom-257",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingLayout.StopDraggingRoom",
+      "annotation": "",
+      "wikitext_line": 257
+    },
+    {
+      "id": "wt-global-api-C_HousingLayout.StopDrag-258",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingLayout.StopDrag",
+      "annotation": "",
+      "wikitext_line": 258
+    },
+    {
+      "id": "wt-global-api-C_HousingLayout.ZoomLayoutCamera-259",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingLayout.ZoomLayoutCamera",
+      "annotation": "",
+      "wikitext_line": 259
+    },
+    {
+      "id": "wt-global-api-C_HousingNeighborhood.CanReturnAfterVisitingHouse-260",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingNeighborhood.CanReturnAfterVisitingHouse",
+      "annotation": "",
+      "wikitext_line": 260
+    },
+    {
+      "id": "wt-global-api-C_HousingNeighborhood.CancelInviteToNeighborhood-261",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingNeighborhood.CancelInviteToNeighborhood",
+      "annotation": "",
+      "wikitext_line": 261
+    },
+    {
+      "id": "wt-global-api-C_HousingNeighborhood.DemoteToResident-262",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingNeighborhood.DemoteToResident",
+      "annotation": "",
+      "wikitext_line": 262
+    },
+    {
+      "id": "wt-global-api-C_HousingNeighborhood.GetCornerstoneHouseInfo-263",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingNeighborhood.GetCornerstoneHouseInfo",
+      "annotation": "",
+      "wikitext_line": 263
+    },
+    {
+      "id": "wt-global-api-C_HousingNeighborhood.GetCornerstoneNeighborhoodInfo-264",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingNeighborhood.GetCornerstoneNeighborhoodInfo",
+      "annotation": "",
+      "wikitext_line": 264
+    },
+    {
+      "id": "wt-global-api-C_HousingNeighborhood.GetCornerstonePurchaseMode-265",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingNeighborhood.GetCornerstonePurchaseMode",
+      "annotation": "",
+      "wikitext_line": 265
+    },
+    {
+      "id": "wt-global-api-C_HousingNeighborhood.GetCurrentNeighborhoodTextureSuffix-266",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingNeighborhood.GetCurrentNeighborhoodTextureSuffix",
+      "annotation": "",
+      "wikitext_line": 266
+    },
+    {
+      "id": "wt-global-api-C_HousingNeighborhood.GetDiscountedMovePrice-267",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingNeighborhood.GetDiscountedMovePrice",
+      "annotation": "",
+      "wikitext_line": 267
+    },
+    {
+      "id": "wt-global-api-C_HousingNeighborhood.GetMoveCooldownTime-268",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingNeighborhood.GetMoveCooldownTime",
+      "annotation": "",
+      "wikitext_line": 268
+    },
+    {
+      "id": "wt-global-api-C_HousingNeighborhood.GetNeighborhoodMapData-269",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingNeighborhood.GetNeighborhoodMapData",
+      "annotation": "",
+      "wikitext_line": 269
+    },
+    {
+      "id": "wt-global-api-C_HousingNeighborhood.GetNeighborhoodName-270",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingNeighborhood.GetNeighborhoodName",
+      "annotation": "",
+      "wikitext_line": 270
+    },
+    {
+      "id": "wt-global-api-C_HousingNeighborhood.GetNeighborhoodPlotName-271",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingNeighborhood.GetNeighborhoodPlotName",
+      "annotation": "",
+      "wikitext_line": 271
+    },
+    {
+      "id": "wt-global-api-C_HousingNeighborhood.GetPreviousHouseIdentifier-272",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingNeighborhood.GetPreviousHouseIdentifier",
+      "annotation": "",
+      "wikitext_line": 272
+    },
+    {
+      "id": "wt-global-api-C_HousingNeighborhood.HasPermissionToPurchase-273",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingNeighborhood.HasPermissionToPurchase",
+      "annotation": "",
+      "wikitext_line": 273
+    },
+    {
+      "id": "wt-global-api-C_HousingNeighborhood.InvitePlayerToNeighborhood-274",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingNeighborhood.InvitePlayerToNeighborhood",
+      "annotation": "",
+      "wikitext_line": 274
+    },
+    {
+      "id": "wt-global-api-C_HousingNeighborhood.IsNeighborhoodManager-275",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingNeighborhood.IsNeighborhoodManager",
+      "annotation": "",
+      "wikitext_line": 275
+    },
+    {
+      "id": "wt-global-api-C_HousingNeighborhood.IsNeighborhoodOwner-276",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingNeighborhood.IsNeighborhoodOwner",
+      "annotation": "",
+      "wikitext_line": 276
+    },
+    {
+      "id": "wt-global-api-C_HousingNeighborhood.IsPlayerInOtherPlayersPlot-277",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingNeighborhood.IsPlayerInOtherPlayersPlot",
+      "annotation": "",
+      "wikitext_line": 277
+    },
+    {
+      "id": "wt-global-api-C_HousingNeighborhood.IsPlotAvailableForPurchase-278",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingNeighborhood.IsPlotAvailableForPurchase",
+      "annotation": "",
+      "wikitext_line": 278
+    },
+    {
+      "id": "wt-global-api-C_HousingNeighborhood.IsPlotOwnedByPlayer-279",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingNeighborhood.IsPlotOwnedByPlayer",
+      "annotation": "",
+      "wikitext_line": 279
+    },
+    {
+      "id": "wt-global-api-C_HousingNeighborhood.OnBulletinBoardClosed-280",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingNeighborhood.OnBulletinBoardClosed",
+      "annotation": "",
+      "wikitext_line": 280
+    },
+    {
+      "id": "wt-global-api-C_HousingNeighborhood.PromoteToManager-281",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingNeighborhood.PromoteToManager",
+      "annotation": "",
+      "wikitext_line": 281
+    },
+    {
+      "id": "wt-global-api-C_HousingNeighborhood.RequestNeighborhoodInfo-282",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingNeighborhood.RequestNeighborhoodInfo",
+      "annotation": "",
+      "wikitext_line": 282
+    },
+    {
+      "id": "wt-global-api-C_HousingNeighborhood.RequestNeighborhoodRoster-283",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingNeighborhood.RequestNeighborhoodRoster",
+      "annotation": "",
+      "wikitext_line": 283
+    },
+    {
+      "id": "wt-global-api-C_HousingNeighborhood.RequestPendingNeighborhoodInvites-284",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingNeighborhood.RequestPendingNeighborhoodInvites",
+      "annotation": "",
+      "wikitext_line": 284
+    },
+    {
+      "id": "wt-global-api-C_HousingNeighborhood.TransferNeighborhoodOwnership-285",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingNeighborhood.TransferNeighborhoodOwnership",
+      "annotation": "",
+      "wikitext_line": 285
+    },
+    {
+      "id": "wt-global-api-C_HousingNeighborhood.TryEvictPlayer-286",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingNeighborhood.TryEvictPlayer",
+      "annotation": "",
+      "wikitext_line": 286
+    },
+    {
+      "id": "wt-global-api-C_HousingNeighborhood.TryMoveHouse-287",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingNeighborhood.TryMoveHouse",
+      "annotation": "",
+      "wikitext_line": 287
+    },
+    {
+      "id": "wt-global-api-C_HousingNeighborhood.TryPurchasePlot-288",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingNeighborhood.TryPurchasePlot",
+      "annotation": "",
+      "wikitext_line": 288
+    },
+    {
+      "id": "wt-global-api-C_Item.IsDecorItem-289",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Item.IsDecorItem",
+      "annotation": "",
+      "wikitext_line": 289
+    },
+    {
+      "id": "wt-global-api-C_KeyBindings.ActivateBindingContext-290",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_KeyBindings.ActivateBindingContext",
+      "annotation": "",
+      "wikitext_line": 290
+    },
+    {
+      "id": "wt-global-api-C_KeyBindings.DeactivateBindingContext-291",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_KeyBindings.DeactivateBindingContext",
+      "annotation": "",
+      "wikitext_line": 291
+    },
+    {
+      "id": "wt-global-api-C_KeyBindings.GetBindingByKey-292",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_KeyBindings.GetBindingByKey",
+      "annotation": "",
+      "wikitext_line": 292
+    },
+    {
+      "id": "wt-global-api-C_KeyBindings.GetBindingContextForAction-293",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_KeyBindings.GetBindingContextForAction",
+      "annotation": "",
+      "wikitext_line": 293
+    },
+    {
+      "id": "wt-global-api-C_KeyBindings.GetSearchTagsForAction-294",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_KeyBindings.GetSearchTagsForAction",
+      "annotation": "",
+      "wikitext_line": 294
+    },
+    {
+      "id": "wt-global-api-C_KeyBindings.GetTurnStrafeStyle-295",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_KeyBindings.GetTurnStrafeStyle",
+      "annotation": "",
+      "wikitext_line": 295
+    },
+    {
+      "id": "wt-global-api-C_KeyBindings.IsBindingContextActive-296",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_KeyBindings.IsBindingContextActive",
+      "annotation": "",
+      "wikitext_line": 296
+    },
+    {
+      "id": "wt-global-api-C_KeyBindings.SetTurnStrafeStyle-297",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_KeyBindings.SetTurnStrafeStyle",
+      "annotation": "",
+      "wikitext_line": 297
+    },
+    {
+      "id": "wt-global-api-C_KeyBindings.UpdateTurnStrafeBindingsForCharacter-298",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_KeyBindings.UpdateTurnStrafeBindingsForCharacter",
+      "annotation": "",
+      "wikitext_line": 298
+    },
+    {
+      "id": "wt-global-api-C_PaperDollInfo.IsRangedSlotShown-299",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PaperDollInfo.IsRangedSlotShown",
+      "annotation": "",
+      "wikitext_line": 299
+    },
+    {
+      "id": "wt-global-api-C_PetJournal.GetNonBattlePetLinkByIndex-300",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PetJournal.GetNonBattlePetLinkByIndex",
+      "annotation": "",
+      "wikitext_line": 300
+    },
+    {
+      "id": "wt-global-api-C_PlayerInfo.IsPlayerInRPE-301",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PlayerInfo.IsPlayerInRPE",
+      "annotation": "",
+      "wikitext_line": 301
+    },
+    {
+      "id": "wt-global-api-C_PlayerInfo.IsReturningCharacter-302",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PlayerInfo.IsReturningCharacter",
+      "annotation": "",
+      "wikitext_line": 302
+    },
+    {
+      "id": "wt-global-api-C_PlayerInfo.IsTutorialsTabAvailable-303",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PlayerInfo.IsTutorialsTabAvailable",
+      "annotation": "",
+      "wikitext_line": 303
+    },
+    {
+      "id": "wt-global-api-C_PvP.JoinBattlefield-304",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PvP.JoinBattlefield",
+      "annotation": "",
+      "wikitext_line": 304
+    },
+    {
+      "id": "wt-global-api-C_ReportSystem.RequiresScreenshotForReportType-305",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ReportSystem.RequiresScreenshotForReportType",
+      "annotation": "",
+      "wikitext_line": 305
+    },
+    {
+      "id": "wt-global-api-C_ReportSystem.SetScreenshotPreviewTexture-306",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ReportSystem.SetScreenshotPreviewTexture",
+      "annotation": "",
+      "wikitext_line": 306
+    },
+    {
+      "id": "wt-global-api-C_ReportSystem.TakeReportScreenshot-307",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ReportSystem.TakeReportScreenshot",
+      "annotation": "",
+      "wikitext_line": 307
+    },
+    {
+      "id": "wt-global-api-C_Spell.GetAuraStatChanges-308",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Spell.GetAuraStatChanges",
+      "annotation": "",
+      "wikitext_line": 308
+    },
+    {
+      "id": "wt-global-api-C_Spell.GetItemModifiedAppearancesApplied-309",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Spell.GetItemModifiedAppearancesApplied",
+      "annotation": "",
+      "wikitext_line": 309
+    },
+    {
+      "id": "wt-global-api-C_Texture.GetAtlasExists-310",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Texture.GetAtlasExists",
+      "annotation": "",
+      "wikitext_line": 310
+    },
+    {
+      "id": "wt-global-api-C_UnitAuras.GetUnitAuras-311",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_UnitAuras.GetUnitAuras",
+      "annotation": "",
+      "wikitext_line": 311
+    },
+    {
+      "id": "wt-global-api-C_VideoOptions.IsSpellVisualDensitySystemSupported-312",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_VideoOptions.IsSpellVisualDensitySystemSupported",
+      "annotation": "",
+      "wikitext_line": 312
+    },
+    {
+      "id": "wt-global-api-CanUpgradeToCurrentExpansion-313",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CanUpgradeToCurrentExpansion",
+      "annotation": "",
+      "wikitext_line": 313
+    },
+    {
+      "id": "wt-global-api-ClearOutage-314",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "ClearOutage",
+      "annotation": "",
+      "wikitext_line": 314
+    },
+    {
+      "id": "wt-global-api-GetAutoDeclineNeighborhoodInvites-315",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetAutoDeclineNeighborhoodInvites",
+      "annotation": "",
+      "wikitext_line": 315
+    },
+    {
+      "id": "wt-global-api-GetUpgradeExpansionLevel-316",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetUpgradeExpansionLevel",
+      "annotation": "",
+      "wikitext_line": 316
+    },
+    {
+      "id": "wt-global-api-OutageDetected-317",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "OutageDetected",
+      "annotation": "",
+      "wikitext_line": 317
+    },
+    {
+      "id": "wt-global-api-SetAutoDeclineNeighborhoodInvites-318",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "SetAutoDeclineNeighborhoodInvites",
+      "annotation": "",
+      "wikitext_line": 318
+    },
+    {
+      "id": "wt-global-api-SetCursorByMode-319",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "SetCursorByMode",
+      "annotation": "",
+      "wikitext_line": 319
+    },
+    {
+      "id": "wt-global-api-ShouldShowExpansionUpgradeBanner-320",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "ShouldShowExpansionUpgradeBanner",
+      "annotation": "",
+      "wikitext_line": 320
+    },
+    {
+      "id": "wt-global-api-C_CharacterServices.RPEResetCharacter-323",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_CharacterServices.RPEResetCharacter",
+      "annotation": "",
+      "wikitext_line": 323
+    },
+    {
+      "id": "wt-global-api-C_ReturningPlayerUI.AcceptPrompt-324",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_ReturningPlayerUI.AcceptPrompt",
+      "annotation": "",
+      "wikitext_line": 324
+    },
+    {
+      "id": "wt-global-api-C_ReturningPlayerUI.DeclinePrompt-325",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_ReturningPlayerUI.DeclinePrompt",
+      "annotation": "",
+      "wikitext_line": 325
+    },
+    {
+      "id": "wt-global-api-CanUpgradeExpansion-326",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "CanUpgradeExpansion",
+      "annotation": "",
+      "wikitext_line": 326
+    },
+    {
+      "id": "wt-global-api-GetBindingByKey-327",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetBindingByKey",
+      "annotation": "",
+      "wikitext_line": 327
+    },
+    {
+      "id": "wt-global-api-GetSpecChangeCost-328",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetSpecChangeCost",
+      "annotation": "",
+      "wikitext_line": 328
+    },
+    {
+      "id": "wt-global-api-JoinBattlefield-329",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "JoinBattlefield",
+      "annotation": "",
+      "wikitext_line": 329
+    },
+    {
+      "id": "wt-global-api-C_CatalogShop.OpenCatalogShopInteraction-332",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "C_CatalogShop.OpenCatalogShopInteraction",
+      "annotation": "+ arg 1: shouldAllowMovement",
+      "wikitext_line": 332
+    },
+    {
+      "id": "wt-scriptobjects-HousingCatalogSearcher-338",
+      "section": "scriptobjects",
+      "direction": "added",
+      "symbol": "HousingCatalogSearcher",
+      "annotation": "",
+      "wikitext_line": 338
+    },
+    {
+      "id": "wt-scriptobjects-HousingFixturePointFrame-339",
+      "section": "scriptobjects",
+      "direction": "added",
+      "symbol": "HousingFixturePointFrame",
+      "annotation": "",
+      "wikitext_line": 339
+    },
+    {
+      "id": "wt-scriptobjects-HousingLayoutPinFrame-340",
+      "section": "scriptobjects",
+      "direction": "added",
+      "symbol": "HousingLayoutPinFrame",
+      "annotation": "",
+      "wikitext_line": 340
+    },
+    {
+      "id": "wt-widgets-Model:SetGradientMask-350",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "Model:SetGradientMask",
+      "annotation": "",
+      "wikitext_line": 350
+    },
+    {
+      "id": "wt-widgets-ModelSceneActorBase:IsPreferringModelCollisionBounds-351",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "ModelSceneActorBase:IsPreferringModelCollisionBounds",
+      "annotation": "",
+      "wikitext_line": 351
+    },
+    {
+      "id": "wt-widgets-ModelSceneActorBase:SetGradientMask-352",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "ModelSceneActorBase:SetGradientMask",
+      "annotation": "",
+      "wikitext_line": 352
+    },
+    {
+      "id": "wt-widgets-ModelSceneActorBase:SetPreferModelCollisionBounds-353",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "ModelSceneActorBase:SetPreferModelCollisionBounds",
+      "annotation": "",
+      "wikitext_line": 353
+    },
+    {
+      "id": "wt-events-ACCOUNT_STORE_FRONT_UPDATED-366",
+      "section": "events",
+      "direction": "added",
+      "symbol": "ACCOUNT_STORE_FRONT_UPDATED",
+      "annotation": "",
+      "wikitext_line": 366
+    },
+    {
+      "id": "wt-events-ACCOUNT_STORE_TRANSACTION_ERROR-367",
+      "section": "events",
+      "direction": "added",
+      "symbol": "ACCOUNT_STORE_TRANSACTION_ERROR",
+      "annotation": "",
+      "wikitext_line": 367
+    },
+    {
+      "id": "wt-events-ADD_NEIGHBORHOOD_CHARTER_SIGNATURE-368",
+      "section": "events",
+      "direction": "added",
+      "symbol": "ADD_NEIGHBORHOOD_CHARTER_SIGNATURE",
+      "annotation": "",
+      "wikitext_line": 368
+    },
+    {
+      "id": "wt-events-AVAILABLE_GAME_MODES_UPDATED-369",
+      "section": "events",
+      "direction": "added",
+      "symbol": "AVAILABLE_GAME_MODES_UPDATED",
+      "annotation": "",
+      "wikitext_line": 369
+    },
+    {
+      "id": "wt-events-B_NET_NEIGHBORHOOD_LIST_UPDATED-370",
+      "section": "events",
+      "direction": "added",
+      "symbol": "B_NET_NEIGHBORHOOD_LIST_UPDATED",
+      "annotation": "",
+      "wikitext_line": 370
+    },
+    {
+      "id": "wt-events-BINDINGS_LOADED-371",
+      "section": "events",
+      "direction": "added",
+      "symbol": "BINDINGS_LOADED",
+      "annotation": "",
+      "wikitext_line": 371
+    },
+    {
+      "id": "wt-events-CANCEL_NEIGHBORHOOD_INVITE_RESPONSE-372",
+      "section": "events",
+      "direction": "added",
+      "symbol": "CANCEL_NEIGHBORHOOD_INVITE_RESPONSE",
+      "annotation": "",
+      "wikitext_line": 372
+    },
+    {
+      "id": "wt-events-CHALLENGE_MODE_LEADERBOARD_RESULT-373",
+      "section": "events",
+      "direction": "added",
+      "symbol": "CHALLENGE_MODE_LEADERBOARD_RESULT",
+      "annotation": "",
+      "wikitext_line": 373
+    },
+    {
+      "id": "wt-events-CLOSE_CHARTER_CONFIRMATION_UI-374",
+      "section": "events",
+      "direction": "added",
+      "symbol": "CLOSE_CHARTER_CONFIRMATION_UI",
+      "annotation": "",
+      "wikitext_line": 374
+    },
+    {
+      "id": "wt-events-CLOSE_CREATE_CHARTER_NEIGHBORHOOD_UI-375",
+      "section": "events",
+      "direction": "added",
+      "symbol": "CLOSE_CREATE_CHARTER_NEIGHBORHOOD_UI",
+      "annotation": "",
+      "wikitext_line": 375
+    },
+    {
+      "id": "wt-events-CLOSE_CREATE_GUILD_NEIGHBORHOOD_UI-376",
+      "section": "events",
+      "direction": "added",
+      "symbol": "CLOSE_CREATE_GUILD_NEIGHBORHOOD_UI",
+      "annotation": "",
+      "wikitext_line": 376
+    },
+    {
+      "id": "wt-events-CLOSE_PLOT_CORNERSTONE-377",
+      "section": "events",
+      "direction": "added",
+      "symbol": "CLOSE_PLOT_CORNERSTONE",
+      "annotation": "",
+      "wikitext_line": 377
+    },
+    {
+      "id": "wt-events-CREATE_NEIGHBORHOOD_RESULT-378",
+      "section": "events",
+      "direction": "added",
+      "symbol": "CREATE_NEIGHBORHOOD_RESULT",
+      "annotation": "",
+      "wikitext_line": 378
+    },
+    {
+      "id": "wt-events-CURRENT_HOUSE_INFO_RECIEVED-379",
+      "section": "events",
+      "direction": "added",
+      "symbol": "CURRENT_HOUSE_INFO_RECIEVED",
+      "annotation": "",
+      "wikitext_line": 379
+    },
+    {
+      "id": "wt-events-CURRENT_HOUSE_INFO_UPDATED-380",
+      "section": "events",
+      "direction": "added",
+      "symbol": "CURRENT_HOUSE_INFO_UPDATED",
+      "annotation": "",
+      "wikitext_line": 380
+    },
+    {
+      "id": "wt-events-DECLINE_NEIGHBORHOOD_INVITATION_RESPONSE-381",
+      "section": "events",
+      "direction": "added",
+      "symbol": "DECLINE_NEIGHBORHOOD_INVITATION_RESPONSE",
+      "annotation": "",
+      "wikitext_line": 381
+    },
+    {
+      "id": "wt-events-DYE_COLOR_CATEGORY_UPDATED-382",
+      "section": "events",
+      "direction": "added",
+      "symbol": "DYE_COLOR_CATEGORY_UPDATED",
+      "annotation": "",
+      "wikitext_line": 382
+    },
+    {
+      "id": "wt-events-DYE_COLOR_UPDATED-383",
+      "section": "events",
+      "direction": "added",
+      "symbol": "DYE_COLOR_UPDATED",
+      "annotation": "",
+      "wikitext_line": 383
+    },
+    {
+      "id": "wt-events-FORCE_REFRESH_HOUSE_FINDER-384",
+      "section": "events",
+      "direction": "added",
+      "symbol": "FORCE_REFRESH_HOUSE_FINDER",
+      "annotation": "",
+      "wikitext_line": 384
+    },
+    {
+      "id": "wt-events-GAME_MODE_DISPLAY_MODE_TOGGLE_DISABLED-385",
+      "section": "events",
+      "direction": "added",
+      "symbol": "GAME_MODE_DISPLAY_MODE_TOGGLE_DISABLED",
+      "annotation": "",
+      "wikitext_line": 385
+    },
+    {
+      "id": "wt-events-HOUSE_DECOR_ADDED_TO_CHEST-386",
+      "section": "events",
+      "direction": "added",
+      "symbol": "HOUSE_DECOR_ADDED_TO_CHEST",
+      "annotation": "",
+      "wikitext_line": 386
+    },
+    {
+      "id": "wt-events-HOUSE_EDITOR_AVAILABILITY_CHANGED-387",
+      "section": "events",
+      "direction": "added",
+      "symbol": "HOUSE_EDITOR_AVAILABILITY_CHANGED",
+      "annotation": "",
+      "wikitext_line": 387
+    },
+    {
+      "id": "wt-events-HOUSE_EDITOR_MODE_CHANGE_FAILURE-388",
+      "section": "events",
+      "direction": "added",
+      "symbol": "HOUSE_EDITOR_MODE_CHANGE_FAILURE",
+      "annotation": "",
+      "wikitext_line": 388
+    },
+    {
+      "id": "wt-events-HOUSE_EDITOR_MODE_CHANGED-389",
+      "section": "events",
+      "direction": "added",
+      "symbol": "HOUSE_EDITOR_MODE_CHANGED",
+      "annotation": "",
+      "wikitext_line": 389
+    },
+    {
+      "id": "wt-events-HOUSE_EXTERIOR_POSITION_FAILURE-390",
+      "section": "events",
+      "direction": "added",
+      "symbol": "HOUSE_EXTERIOR_POSITION_FAILURE",
+      "annotation": "",
+      "wikitext_line": 390
+    },
+    {
+      "id": "wt-events-HOUSE_EXTERIOR_POSITION_SUCCESS-391",
+      "section": "events",
+      "direction": "added",
+      "symbol": "HOUSE_EXTERIOR_POSITION_SUCCESS",
+      "annotation": "",
+      "wikitext_line": 391
+    },
+    {
+      "id": "wt-events-HOUSE_FINDER_NEIGHBORHOOD_DATA_RECIEVED-392",
+      "section": "events",
+      "direction": "added",
+      "symbol": "HOUSE_FINDER_NEIGHBORHOOD_DATA_RECIEVED",
+      "annotation": "",
+      "wikitext_line": 392
+    },
+    {
+      "id": "wt-events-HOUSE_INFO_UPDATED-393",
+      "section": "events",
+      "direction": "added",
+      "symbol": "HOUSE_INFO_UPDATED",
+      "annotation": "",
+      "wikitext_line": 393
+    },
+    {
+      "id": "wt-events-HOUSE_LEVEL_CHANGED-394",
+      "section": "events",
+      "direction": "added",
+      "symbol": "HOUSE_LEVEL_CHANGED",
+      "annotation": "",
+      "wikitext_line": 394
+    },
+    {
+      "id": "wt-events-HOUSE_LEVEL_FAVOR_UPDATED-395",
+      "section": "events",
+      "direction": "added",
+      "symbol": "HOUSE_LEVEL_FAVOR_UPDATED",
+      "annotation": "",
+      "wikitext_line": 395
+    },
+    {
+      "id": "wt-events-HOUSE_PLOT_ENTERED-396",
+      "section": "events",
+      "direction": "added",
+      "symbol": "HOUSE_PLOT_ENTERED",
+      "annotation": "",
+      "wikitext_line": 396
+    },
+    {
+      "id": "wt-events-HOUSE_PLOT_EXITED-397",
+      "section": "events",
+      "direction": "added",
+      "symbol": "HOUSE_PLOT_EXITED",
+      "annotation": "",
+      "wikitext_line": 397
+    },
+    {
+      "id": "wt-events-HOUSE_RESERVATION_RESPONSE_RECIEVED-398",
+      "section": "events",
+      "direction": "added",
+      "symbol": "HOUSE_RESERVATION_RESPONSE_RECIEVED",
+      "annotation": "",
+      "wikitext_line": 398
+    },
+    {
+      "id": "wt-events-HOUSING_BASIC_MODE_HOVERED_TARGET_CHANGED-399",
+      "section": "events",
+      "direction": "added",
+      "symbol": "HOUSING_BASIC_MODE_HOVERED_TARGET_CHANGED",
+      "annotation": "",
+      "wikitext_line": 399
+    },
+    {
+      "id": "wt-events-HOUSING_BASIC_MODE_PLACEMENT_FLAGS_UPDATED-400",
+      "section": "events",
+      "direction": "added",
+      "symbol": "HOUSING_BASIC_MODE_PLACEMENT_FLAGS_UPDATED",
+      "annotation": "",
+      "wikitext_line": 400
+    },
+    {
+      "id": "wt-events-HOUSING_BASIC_MODE_SELECTED_TARGET_CHANGED-401",
+      "section": "events",
+      "direction": "added",
+      "symbol": "HOUSING_BASIC_MODE_SELECTED_TARGET_CHANGED",
+      "annotation": "",
+      "wikitext_line": 401
+    },
+    {
+      "id": "wt-events-HOUSING_CATALOG_CATEGORY_UPDATED-402",
+      "section": "events",
+      "direction": "added",
+      "symbol": "HOUSING_CATALOG_CATEGORY_UPDATED",
+      "annotation": "",
+      "wikitext_line": 402
+    },
+    {
+      "id": "wt-events-HOUSING_CATALOG_SEARCHER_RELEASED-403",
+      "section": "events",
+      "direction": "added",
+      "symbol": "HOUSING_CATALOG_SEARCHER_RELEASED",
+      "annotation": "",
+      "wikitext_line": 403
+    },
+    {
+      "id": "wt-events-HOUSING_CATALOG_SUBCATEGORY_UPDATED-404",
+      "section": "events",
+      "direction": "added",
+      "symbol": "HOUSING_CATALOG_SUBCATEGORY_UPDATED",
+      "annotation": "",
+      "wikitext_line": 404
+    },
+    {
+      "id": "wt-events-HOUSING_CLEANUP_MODE_HOVERED_TARGET_CHANGED-405",
+      "section": "events",
+      "direction": "added",
+      "symbol": "HOUSING_CLEANUP_MODE_HOVERED_TARGET_CHANGED",
+      "annotation": "",
+      "wikitext_line": 405
+    },
+    {
+      "id": "wt-events-HOUSING_CLEANUP_MODE_TARGET_SELECTED-406",
+      "section": "events",
+      "direction": "added",
+      "symbol": "HOUSING_CLEANUP_MODE_TARGET_SELECTED",
+      "annotation": "",
+      "wikitext_line": 406
+    },
+    {
+      "id": "wt-events-HOUSING_CORE_FIXTURE_CHANGED-407",
+      "section": "events",
+      "direction": "added",
+      "symbol": "HOUSING_CORE_FIXTURE_CHANGED",
+      "annotation": "",
+      "wikitext_line": 407
+    },
+    {
+      "id": "wt-events-HOUSING_CUSTOMIZE_MODE_HOVERED_TARGET_CHANGED-408",
+      "section": "events",
+      "direction": "added",
+      "symbol": "HOUSING_CUSTOMIZE_MODE_HOVERED_TARGET_CHANGED",
+      "annotation": "",
+      "wikitext_line": 408
+    },
+    {
+      "id": "wt-events-HOUSING_CUSTOMIZE_MODE_SELECTED_TARGET_CHANGED-409",
+      "section": "events",
+      "direction": "added",
+      "symbol": "HOUSING_CUSTOMIZE_MODE_SELECTED_TARGET_CHANGED",
+      "annotation": "",
+      "wikitext_line": 409
+    },
+    {
+      "id": "wt-events-HOUSING_DECOR_CUSTOMIZATION_CHANGED-410",
+      "section": "events",
+      "direction": "added",
+      "symbol": "HOUSING_DECOR_CUSTOMIZATION_CHANGED",
+      "annotation": "",
+      "wikitext_line": 410
+    },
+    {
+      "id": "wt-events-HOUSING_DECOR_DYE_FAILURE-411",
+      "section": "events",
+      "direction": "added",
+      "symbol": "HOUSING_DECOR_DYE_FAILURE",
+      "annotation": "",
+      "wikitext_line": 411
+    },
+    {
+      "id": "wt-events-HOUSING_DECOR_GRID_SNAP_OCCURRED-412",
+      "section": "events",
+      "direction": "added",
+      "symbol": "HOUSING_DECOR_GRID_SNAP_OCCURRED",
+      "annotation": "",
+      "wikitext_line": 412
+    },
+    {
+      "id": "wt-events-HOUSING_DECOR_GRID_SNAP_STATUS_CHANGED-413",
+      "section": "events",
+      "direction": "added",
+      "symbol": "HOUSING_DECOR_GRID_SNAP_STATUS_CHANGED",
+      "annotation": "",
+      "wikitext_line": 413
+    },
+    {
+      "id": "wt-events-HOUSING_DECOR_GRID_VISIBILITY_STATUS_CHANGED-414",
+      "section": "events",
+      "direction": "added",
+      "symbol": "HOUSING_DECOR_GRID_VISIBILITY_STATUS_CHANGED",
+      "annotation": "",
+      "wikitext_line": 414
+    },
+    {
+      "id": "wt-events-HOUSING_DECOR_NUDGE_STATUS_CHANGED-415",
+      "section": "events",
+      "direction": "added",
+      "symbol": "HOUSING_DECOR_NUDGE_STATUS_CHANGED",
+      "annotation": "",
+      "wikitext_line": 415
+    },
+    {
+      "id": "wt-events-HOUSING_DECOR_PLACE_FAILURE-416",
+      "section": "events",
+      "direction": "added",
+      "symbol": "HOUSING_DECOR_PLACE_FAILURE",
+      "annotation": "",
+      "wikitext_line": 416
+    },
+    {
+      "id": "wt-events-HOUSING_DECOR_PLACE_SUCCESS-417",
+      "section": "events",
+      "direction": "added",
+      "symbol": "HOUSING_DECOR_PLACE_SUCCESS",
+      "annotation": "",
+      "wikitext_line": 417
+    },
+    {
+      "id": "wt-events-HOUSING_DECOR_PRECISION_MANIPULATION_EVENT-418",
+      "section": "events",
+      "direction": "added",
+      "symbol": "HOUSING_DECOR_PRECISION_MANIPULATION_EVENT",
+      "annotation": "",
+      "wikitext_line": 418
+    },
+    {
+      "id": "wt-events-HOUSING_DECOR_PRECISION_MANIPULATION_STATUS_CHANGED-419",
+      "section": "events",
+      "direction": "added",
+      "symbol": "HOUSING_DECOR_PRECISION_MANIPULATION_STATUS_CHANGED",
+      "annotation": "",
+      "wikitext_line": 419
+    },
+    {
+      "id": "wt-events-HOUSING_DECOR_PRECISION_SUBMODE_CHANGED-420",
+      "section": "events",
+      "direction": "added",
+      "symbol": "HOUSING_DECOR_PRECISION_SUBMODE_CHANGED",
+      "annotation": "",
+      "wikitext_line": 420
+    },
+    {
+      "id": "wt-events-HOUSING_DECOR_REMOVED-421",
+      "section": "events",
+      "direction": "added",
+      "symbol": "HOUSING_DECOR_REMOVED",
+      "annotation": "",
+      "wikitext_line": 421
+    },
+    {
+      "id": "wt-events-HOUSING_DECOR_SELECT_RESPONSE-422",
+      "section": "events",
+      "direction": "added",
+      "symbol": "HOUSING_DECOR_SELECT_RESPONSE",
+      "annotation": "",
+      "wikitext_line": 422
+    },
+    {
+      "id": "wt-events-HOUSING_EXPERT_MODE_HOVERED_TARGET_CHANGED-423",
+      "section": "events",
+      "direction": "added",
+      "symbol": "HOUSING_EXPERT_MODE_HOVERED_TARGET_CHANGED",
+      "annotation": "",
+      "wikitext_line": 423
+    },
+    {
+      "id": "wt-events-HOUSING_EXPERT_MODE_SELECTED_TARGET_CHANGED-424",
+      "section": "events",
+      "direction": "added",
+      "symbol": "HOUSING_EXPERT_MODE_SELECTED_TARGET_CHANGED",
+      "annotation": "",
+      "wikitext_line": 424
+    },
+    {
+      "id": "wt-events-HOUSING_FIXTURE_HOVER_CHANGED-425",
+      "section": "events",
+      "direction": "added",
+      "symbol": "HOUSING_FIXTURE_HOVER_CHANGED",
+      "annotation": "",
+      "wikitext_line": 425
+    },
+    {
+      "id": "wt-events-HOUSING_FIXTURE_POINT_FRAME_ADDED-426",
+      "section": "events",
+      "direction": "added",
+      "symbol": "HOUSING_FIXTURE_POINT_FRAME_ADDED",
+      "annotation": "",
+      "wikitext_line": 426
+    },
+    {
+      "id": "wt-events-HOUSING_FIXTURE_POINT_FRAME_RELEASED-427",
+      "section": "events",
+      "direction": "added",
+      "symbol": "HOUSING_FIXTURE_POINT_FRAME_RELEASED",
+      "annotation": "",
+      "wikitext_line": 427
+    },
+    {
+      "id": "wt-events-HOUSING_FIXTURE_POINT_FRAMES_RELEASED-428",
+      "section": "events",
+      "direction": "added",
+      "symbol": "HOUSING_FIXTURE_POINT_FRAMES_RELEASED",
+      "annotation": "",
+      "wikitext_line": 428
+    },
+    {
+      "id": "wt-events-HOUSING_FIXTURE_POINT_SELECTION_CHANGED-429",
+      "section": "events",
+      "direction": "added",
+      "symbol": "HOUSING_FIXTURE_POINT_SELECTION_CHANGED",
+      "annotation": "",
+      "wikitext_line": 429
+    },
+    {
+      "id": "wt-events-HOUSING_LAYOUT_DOOR_SELECTED-430",
+      "section": "events",
+      "direction": "added",
+      "symbol": "HOUSING_LAYOUT_DOOR_SELECTED",
+      "annotation": "",
+      "wikitext_line": 430
+    },
+    {
+      "id": "wt-events-HOUSING_LAYOUT_DOOR_SELECTION_CHANGED-431",
+      "section": "events",
+      "direction": "added",
+      "symbol": "HOUSING_LAYOUT_DOOR_SELECTION_CHANGED",
+      "annotation": "",
+      "wikitext_line": 431
+    },
+    {
+      "id": "wt-events-HOUSING_LAYOUT_DRAG_TARGET_CHANGED-432",
+      "section": "events",
+      "direction": "added",
+      "symbol": "HOUSING_LAYOUT_DRAG_TARGET_CHANGED",
+      "annotation": "",
+      "wikitext_line": 432
+    },
+    {
+      "id": "wt-events-HOUSING_LAYOUT_FLOORPLAN_SELECTION_CHANGED-433",
+      "section": "events",
+      "direction": "added",
+      "symbol": "HOUSING_LAYOUT_FLOORPLAN_SELECTION_CHANGED",
+      "annotation": "",
+      "wikitext_line": 433
+    },
+    {
+      "id": "wt-events-HOUSING_LAYOUT_NUM_FLOORS_CHANGED-434",
+      "section": "events",
+      "direction": "added",
+      "symbol": "HOUSING_LAYOUT_NUM_FLOORS_CHANGED",
+      "annotation": "",
+      "wikitext_line": 434
+    },
+    {
+      "id": "wt-events-HOUSING_LAYOUT_PIN_FRAME_ADDED-435",
+      "section": "events",
+      "direction": "added",
+      "symbol": "HOUSING_LAYOUT_PIN_FRAME_ADDED",
+      "annotation": "",
+      "wikitext_line": 435
+    },
+    {
+      "id": "wt-events-HOUSING_LAYOUT_PIN_FRAME_RELEASED-436",
+      "section": "events",
+      "direction": "added",
+      "symbol": "HOUSING_LAYOUT_PIN_FRAME_RELEASED",
+      "annotation": "",
+      "wikitext_line": 436
+    },
+    {
+      "id": "wt-events-HOUSING_LAYOUT_PIN_FRAMES_RELEASED-437",
+      "section": "events",
+      "direction": "added",
+      "symbol": "HOUSING_LAYOUT_PIN_FRAMES_RELEASED",
+      "annotation": "",
+      "wikitext_line": 437
+    },
+    {
+      "id": "wt-events-HOUSING_LAYOUT_ROOM_COMPONENT_THEME_SET_CHANGED-438",
+      "section": "events",
+      "direction": "added",
+      "symbol": "HOUSING_LAYOUT_ROOM_COMPONENT_THEME_SET_CHANGED",
+      "annotation": "",
+      "wikitext_line": 438
+    },
+    {
+      "id": "wt-events-HOUSING_LAYOUT_ROOM_MOVE_INVALID-439",
+      "section": "events",
+      "direction": "added",
+      "symbol": "HOUSING_LAYOUT_ROOM_MOVE_INVALID",
+      "annotation": "",
+      "wikitext_line": 439
+    },
+    {
+      "id": "wt-events-HOUSING_LAYOUT_ROOM_MOVED-440",
+      "section": "events",
+      "direction": "added",
+      "symbol": "HOUSING_LAYOUT_ROOM_MOVED",
+      "annotation": "",
+      "wikitext_line": 440
+    },
+    {
+      "id": "wt-events-HOUSING_LAYOUT_ROOM_RECEIVED-441",
+      "section": "events",
+      "direction": "added",
+      "symbol": "HOUSING_LAYOUT_ROOM_RECEIVED",
+      "annotation": "",
+      "wikitext_line": 441
+    },
+    {
+      "id": "wt-events-HOUSING_LAYOUT_ROOM_REMOVED-442",
+      "section": "events",
+      "direction": "added",
+      "symbol": "HOUSING_LAYOUT_ROOM_REMOVED",
+      "annotation": "",
+      "wikitext_line": 442
+    },
+    {
+      "id": "wt-events-HOUSING_LAYOUT_ROOM_RETURNED-443",
+      "section": "events",
+      "direction": "added",
+      "symbol": "HOUSING_LAYOUT_ROOM_RETURNED",
+      "annotation": "",
+      "wikitext_line": 443
+    },
+    {
+      "id": "wt-events-HOUSING_LAYOUT_ROOM_SELECTION_CHANGED-444",
+      "section": "events",
+      "direction": "added",
+      "symbol": "HOUSING_LAYOUT_ROOM_SELECTION_CHANGED",
+      "annotation": "",
+      "wikitext_line": 444
+    },
+    {
+      "id": "wt-events-HOUSING_LAYOUT_ROOM_SNAPPED-445",
+      "section": "events",
+      "direction": "added",
+      "symbol": "HOUSING_LAYOUT_ROOM_SNAPPED",
+      "annotation": "",
+      "wikitext_line": 445
+    },
+    {
+      "id": "wt-events-HOUSING_LAYOUT_VIEWED_FLOOR_CHANGED-446",
+      "section": "events",
+      "direction": "added",
+      "symbol": "HOUSING_LAYOUT_VIEWED_FLOOR_CHANGED",
+      "annotation": "",
+      "wikitext_line": 446
+    },
+    {
+      "id": "wt-events-HOUSING_MARKET_AVAILABILITY_UPDATED-447",
+      "section": "events",
+      "direction": "added",
+      "symbol": "HOUSING_MARKET_AVAILABILITY_UPDATED",
+      "annotation": "",
+      "wikitext_line": 447
+    },
+    {
+      "id": "wt-events-HOUSING_NUM_DECOR_PLACED_CHANGED-448",
+      "section": "events",
+      "direction": "added",
+      "symbol": "HOUSING_NUM_DECOR_PLACED_CHANGED",
+      "annotation": "",
+      "wikitext_line": 448
+    },
+    {
+      "id": "wt-events-HOUSING_ROOM_COMPONENT_CUSTOMIZATION_CHANGE_FAILED-449",
+      "section": "events",
+      "direction": "added",
+      "symbol": "HOUSING_ROOM_COMPONENT_CUSTOMIZATION_CHANGE_FAILED",
+      "annotation": "",
+      "wikitext_line": 449
+    },
+    {
+      "id": "wt-events-HOUSING_ROOM_COMPONENT_CUSTOMIZATION_CHANGED-450",
+      "section": "events",
+      "direction": "added",
+      "symbol": "HOUSING_ROOM_COMPONENT_CUSTOMIZATION_CHANGED",
+      "annotation": "",
+      "wikitext_line": 450
+    },
+    {
+      "id": "wt-events-HOUSING_SERVICES_AVAILABILITY_UPDATED-451",
+      "section": "events",
+      "direction": "added",
+      "symbol": "HOUSING_SERVICES_AVAILABILITY_UPDATED",
+      "annotation": "",
+      "wikitext_line": 451
+    },
+    {
+      "id": "wt-events-HOUSING_STORAGE_ENTRY_UPDATED-452",
+      "section": "events",
+      "direction": "added",
+      "symbol": "HOUSING_STORAGE_ENTRY_UPDATED",
+      "annotation": "",
+      "wikitext_line": 452
+    },
+    {
+      "id": "wt-events-HOUSING_STORAGE_UPDATED-453",
+      "section": "events",
+      "direction": "added",
+      "symbol": "HOUSING_STORAGE_UPDATED",
+      "annotation": "",
+      "wikitext_line": 453
+    },
+    {
+      "id": "wt-events-MOVE_OUT_RESERVATION_UPDATED-454",
+      "section": "events",
+      "direction": "added",
+      "symbol": "MOVE_OUT_RESERVATION_UPDATED",
+      "annotation": "",
+      "wikitext_line": 454
+    },
+    {
+      "id": "wt-events-NEIGHBORHOOD_GUILD_SIZE_VALIDATED-455",
+      "section": "events",
+      "direction": "added",
+      "symbol": "NEIGHBORHOOD_GUILD_SIZE_VALIDATED",
+      "annotation": "",
+      "wikitext_line": 455
+    },
+    {
+      "id": "wt-events-NEIGHBORHOOD_INFO_UPDATED-456",
+      "section": "events",
+      "direction": "added",
+      "symbol": "NEIGHBORHOOD_INFO_UPDATED",
+      "annotation": "",
+      "wikitext_line": 456
+    },
+    {
+      "id": "wt-events-NEIGHBORHOOD_INVITE_RESPONSE-457",
+      "section": "events",
+      "direction": "added",
+      "symbol": "NEIGHBORHOOD_INVITE_RESPONSE",
+      "annotation": "",
+      "wikitext_line": 457
+    },
+    {
+      "id": "wt-events-NEIGHBORHOOD_LIST_UPDATED-458",
+      "section": "events",
+      "direction": "added",
+      "symbol": "NEIGHBORHOOD_LIST_UPDATED",
+      "annotation": "",
+      "wikitext_line": 458
+    },
+    {
+      "id": "wt-events-NEIGHBORHOOD_MAP_DATA_UPDATED-459",
+      "section": "events",
+      "direction": "added",
+      "symbol": "NEIGHBORHOOD_MAP_DATA_UPDATED",
+      "annotation": "",
+      "wikitext_line": 459
+    },
+    {
+      "id": "wt-events-NEIGHBORHOOD_NAME_UPDATED-460",
+      "section": "events",
+      "direction": "added",
+      "symbol": "NEIGHBORHOOD_NAME_UPDATED",
+      "annotation": "",
+      "wikitext_line": 460
+    },
+    {
+      "id": "wt-events-NEIGHBORHOOD_NAME_VALIDATED-461",
+      "section": "events",
+      "direction": "added",
+      "symbol": "NEIGHBORHOOD_NAME_VALIDATED",
+      "annotation": "",
+      "wikitext_line": 461
+    },
+    {
+      "id": "wt-events-NEW_HOUSING_ITEM_ACQUIRED-462",
+      "section": "events",
+      "direction": "added",
+      "symbol": "NEW_HOUSING_ITEM_ACQUIRED",
+      "annotation": "",
+      "wikitext_line": 462
+    },
+    {
+      "id": "wt-events-NOTIFY_TURN_STRAFE_CHANGE-463",
+      "section": "events",
+      "direction": "added",
+      "symbol": "NOTIFY_TURN_STRAFE_CHANGE",
+      "annotation": "",
+      "wikitext_line": 463
+    },
+    {
+      "id": "wt-events-OPEN_CHARTER_CONFIRMATION_UI-464",
+      "section": "events",
+      "direction": "added",
+      "symbol": "OPEN_CHARTER_CONFIRMATION_UI",
+      "annotation": "",
+      "wikitext_line": 464
+    },
+    {
+      "id": "wt-events-OPEN_CREATE_CHARTER_NEIGHBORHOOD_UI-465",
+      "section": "events",
+      "direction": "added",
+      "symbol": "OPEN_CREATE_CHARTER_NEIGHBORHOOD_UI",
+      "annotation": "",
+      "wikitext_line": 465
+    },
+    {
+      "id": "wt-events-OPEN_CREATE_GUILD_NEIGHBORHOOD_UI-466",
+      "section": "events",
+      "direction": "added",
+      "symbol": "OPEN_CREATE_GUILD_NEIGHBORHOOD_UI",
+      "annotation": "",
+      "wikitext_line": 466
+    },
+    {
+      "id": "wt-events-OPEN_NEIGHBORHOOD_CHARTER_SIGNATURE_REQUEST-467",
+      "section": "events",
+      "direction": "added",
+      "symbol": "OPEN_NEIGHBORHOOD_CHARTER_SIGNATURE_REQUEST",
+      "annotation": "",
+      "wikitext_line": 467
+    },
+    {
+      "id": "wt-events-OPEN_NEIGHBORHOOD_CHARTER-468",
+      "section": "events",
+      "direction": "added",
+      "symbol": "OPEN_NEIGHBORHOOD_CHARTER",
+      "annotation": "",
+      "wikitext_line": 468
+    },
+    {
+      "id": "wt-events-OPEN_PLOT_CORNERSTONE-469",
+      "section": "events",
+      "direction": "added",
+      "symbol": "OPEN_PLOT_CORNERSTONE",
+      "annotation": "",
+      "wikitext_line": 469
+    },
+    {
+      "id": "wt-events-PENDING_NEIGHBORHOOD_INVITES_RECIEVED-470",
+      "section": "events",
+      "direction": "added",
+      "symbol": "PENDING_NEIGHBORHOOD_INVITES_RECIEVED",
+      "annotation": "",
+      "wikitext_line": 470
+    },
+    {
+      "id": "wt-events-PLAYER_CHARACTER_LIST_UPDATED-471",
+      "section": "events",
+      "direction": "added",
+      "symbol": "PLAYER_CHARACTER_LIST_UPDATED",
+      "annotation": "",
+      "wikitext_line": 471
+    },
+    {
+      "id": "wt-events-PLAYER_HOUSE_LIST_UPDATED-472",
+      "section": "events",
+      "direction": "added",
+      "symbol": "PLAYER_HOUSE_LIST_UPDATED",
+      "annotation": "",
+      "wikitext_line": 472
+    },
+    {
+      "id": "wt-events-PURCHASE_PLOT_RESULT-473",
+      "section": "events",
+      "direction": "added",
+      "symbol": "PURCHASE_PLOT_RESULT",
+      "annotation": "",
+      "wikitext_line": 473
+    },
+    {
+      "id": "wt-events-RECEIVED_HOUSE_LEVEL_REWARDS-474",
+      "section": "events",
+      "direction": "added",
+      "symbol": "RECEIVED_HOUSE_LEVEL_REWARDS",
+      "annotation": "",
+      "wikitext_line": 474
+    },
+    {
+      "id": "wt-events-REPORT_SCREENSHOT_READY-475",
+      "section": "events",
+      "direction": "added",
+      "symbol": "REPORT_SCREENSHOT_READY",
+      "annotation": "",
+      "wikitext_line": 475
+    },
+    {
+      "id": "wt-events-SHOW_NEIGHBORHOOD_OWNERSHIP_TRANSFER_DIALOG-476",
+      "section": "events",
+      "direction": "added",
+      "symbol": "SHOW_NEIGHBORHOOD_OWNERSHIP_TRANSFER_DIALOG",
+      "annotation": "",
+      "wikitext_line": 476
+    },
+    {
+      "id": "wt-events-SHOW_PLAYER_EVICTED_DIALOG-477",
+      "section": "events",
+      "direction": "added",
+      "symbol": "SHOW_PLAYER_EVICTED_DIALOG",
+      "annotation": "",
+      "wikitext_line": 477
+    },
+    {
+      "id": "wt-events-SHOW_STAIR_DIRECTION_CONFIRMATION-478",
+      "section": "events",
+      "direction": "added",
+      "symbol": "SHOW_STAIR_DIRECTION_CONFIRMATION",
+      "annotation": "",
+      "wikitext_line": 478
+    },
+    {
+      "id": "wt-events-TRACKED_HOUSE_CHANGED-479",
+      "section": "events",
+      "direction": "added",
+      "symbol": "TRACKED_HOUSE_CHANGED",
+      "annotation": "",
+      "wikitext_line": 479
+    },
+    {
+      "id": "wt-events-UPDATE_BULLETIN_BOARD_ROSTER_STATUSES-480",
+      "section": "events",
+      "direction": "added",
+      "symbol": "UPDATE_BULLETIN_BOARD_ROSTER_STATUSES",
+      "annotation": "",
+      "wikitext_line": 480
+    },
+    {
+      "id": "wt-events-UPDATE_BULLETIN_BOARD_ROSTER-481",
+      "section": "events",
+      "direction": "added",
+      "symbol": "UPDATE_BULLETIN_BOARD_ROSTER",
+      "annotation": "",
+      "wikitext_line": 481
+    },
+    {
+      "id": "wt-events-VIEW_HOUSES_LIST_RECIEVED-482",
+      "section": "events",
+      "direction": "added",
+      "symbol": "VIEW_HOUSES_LIST_RECIEVED",
+      "annotation": "",
+      "wikitext_line": 482
+    },
+    {
+      "id": "wt-events-RETURNING_PLAYER_PROMPT-485",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "RETURNING_PLAYER_PROMPT",
+      "annotation": "",
+      "wikitext_line": 485
+    },
+    {
+      "id": "wt-cvars-accountNeedsTurnStrafeDialog-496",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "accountNeedsTurnStrafeDialog",
+      "annotation": "",
+      "wikitext_line": 496,
+      "page_default": "1"
+    },
+    {
+      "id": "wt-cvars-ActionCombatCameraEnable-497",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "ActionCombatCameraEnable",
+      "annotation": "",
+      "wikitext_line": 497,
+      "page_default": "0"
+    },
+    {
+      "id": "wt-cvars-assistedCombatHighlightRPE-498",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "assistedCombatHighlightRPE",
+      "annotation": "",
+      "wikitext_line": 498,
+      "page_default": "0"
+    },
+    {
+      "id": "wt-cvars-cameraDistanceFixedValue-499",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "cameraDistanceFixedValue",
+      "annotation": "",
+      "wikitext_line": 499,
+      "page_default": "-1.000000"
+    },
+    {
+      "id": "wt-cvars-characterNeedsTurnStrafeDialog-500",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "characterNeedsTurnStrafeDialog",
+      "annotation": "",
+      "wikitext_line": 500,
+      "page_default": "1"
+    },
+    {
+      "id": "wt-cvars-ClientSettings_LowVramActions-501",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "ClientSettings_LowVramActions",
+      "annotation": "",
+      "wikitext_line": 501
+    },
+    {
+      "id": "wt-cvars-collapseExpandBuffs-502",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "collapseExpandBuffs",
+      "annotation": "",
+      "wikitext_line": 502,
+      "page_default": "1"
+    },
+    {
+      "id": "wt-cvars-housingDecorFreePlaceEnabled-503",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "housingDecorFreePlaceEnabled",
+      "annotation": "",
+      "wikitext_line": 503,
+      "page_default": "0"
+    },
+    {
+      "id": "wt-cvars-housingDecorGridSnapEnabled-504",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "housingDecorGridSnapEnabled",
+      "annotation": "",
+      "wikitext_line": 504,
+      "page_default": "0"
+    },
+    {
+      "id": "wt-cvars-housingDecorGridVisible-505",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "housingDecorGridVisible",
+      "annotation": "",
+      "wikitext_line": 505,
+      "page_default": "1"
+    },
+    {
+      "id": "wt-cvars-housingExpertGizmos_Rotation_BaseOrbScale-506",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "housingExpertGizmos_Rotation_BaseOrbScale",
+      "annotation": "",
+      "wikitext_line": 506,
+      "page_default": "0.080000"
+    },
+    {
+      "id": "wt-cvars-housingExpertGizmos_Rotation_BaseRingScale-507",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "housingExpertGizmos_Rotation_BaseRingScale",
+      "annotation": "",
+      "wikitext_line": 507,
+      "page_default": "0.080000"
+    },
+    {
+      "id": "wt-cvars-housingExpertGizmos_Rotation_DistScaleMax-508",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "housingExpertGizmos_Rotation_DistScaleMax",
+      "annotation": "",
+      "wikitext_line": 508,
+      "page_default": "2.250000"
+    },
+    {
+      "id": "wt-cvars-housingExpertGizmos_Rotation_DistScaleMin-509",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "housingExpertGizmos_Rotation_DistScaleMin",
+      "annotation": "",
+      "wikitext_line": 509,
+      "page_default": "1.000000"
+    },
+    {
+      "id": "wt-cvars-housingExpertGizmos_Rotation_HighlightDefault-510",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "housingExpertGizmos_Rotation_HighlightDefault",
+      "annotation": "",
+      "wikitext_line": 510,
+      "page_default": "0.800000"
+    },
+    {
+      "id": "wt-cvars-housingExpertGizmos_Rotation_HighlightDragging-511",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "housingExpertGizmos_Rotation_HighlightDragging",
+      "annotation": "",
+      "wikitext_line": 511,
+      "page_default": "1.000000"
+    },
+    {
+      "id": "wt-cvars-housingExpertGizmos_Rotation_HighlightHovered-512",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "housingExpertGizmos_Rotation_HighlightHovered",
+      "annotation": "",
+      "wikitext_line": 512,
+      "page_default": "0.900000"
+    },
+    {
+      "id": "wt-cvars-housingExpertGizmos_Rotation_HighlightKeybind-513",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "housingExpertGizmos_Rotation_HighlightKeybind",
+      "annotation": "",
+      "wikitext_line": 513,
+      "page_default": "1.000000"
+    },
+    {
+      "id": "wt-cvars-housingExpertGizmos_Rotation_HighlightSelected-514",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "housingExpertGizmos_Rotation_HighlightSelected",
+      "annotation": "",
+      "wikitext_line": 514,
+      "page_default": "1.000000"
+    },
+    {
+      "id": "wt-cvars-housingExpertGizmos_Rotation_OrbPosOffset-515",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "housingExpertGizmos_Rotation_OrbPosOffset",
+      "annotation": "",
+      "wikitext_line": 515,
+      "page_default": "-0.800000"
+    },
+    {
+      "id": "wt-cvars-housingExpertGizmos_Rotation_ScaleDistanceMax-516",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "housingExpertGizmos_Rotation_ScaleDistanceMax",
+      "annotation": "",
+      "wikitext_line": 516,
+      "page_default": "60.000000"
+    },
+    {
+      "id": "wt-cvars-housingExpertGizmos_Rotation_ScaleDistanceMin-517",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "housingExpertGizmos_Rotation_ScaleDistanceMin",
+      "annotation": "",
+      "wikitext_line": 517,
+      "page_default": "0.000000"
+    },
+    {
+      "id": "wt-cvars-housingExpertGizmos_Rotation_SnapDegrees-518",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "housingExpertGizmos_Rotation_SnapDegrees",
+      "annotation": "",
+      "wikitext_line": 518,
+      "page_default": "15.000000"
+    },
+    {
+      "id": "wt-cvars-housingExpertGizmos_Rotation_TextMode-519",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "housingExpertGizmos_Rotation_TextMode",
+      "annotation": "",
+      "wikitext_line": 519,
+      "page_default": "1"
+    },
+    {
+      "id": "wt-cvars-housingExpertGizmos_Rotation_XRayCheckerSize-520",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "housingExpertGizmos_Rotation_XRayCheckerSize",
+      "annotation": "",
+      "wikitext_line": 520,
+      "page_default": "7"
+    },
+    {
+      "id": "wt-cvars-housingExpertGizmos_Rotation_XRayDarkAlpha-521",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "housingExpertGizmos_Rotation_XRayDarkAlpha",
+      "annotation": "",
+      "wikitext_line": 521,
+      "page_default": "0.100000"
+    },
+    {
+      "id": "wt-cvars-housingExpertGizmos_Rotation_XRayLightAlpha-522",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "housingExpertGizmos_Rotation_XRayLightAlpha",
+      "annotation": "",
+      "wikitext_line": 522,
+      "page_default": "0.250000"
+    },
+    {
+      "id": "wt-cvars-housingExpertGizmos_Scale_FrameOffset-523",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "housingExpertGizmos_Scale_FrameOffset",
+      "annotation": "",
+      "wikitext_line": 523,
+      "page_default": "0.500000"
+    },
+    {
+      "id": "wt-cvars-housingExpertGizmos_Scale_Snap-524",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "housingExpertGizmos_Scale_Snap",
+      "annotation": "",
+      "wikitext_line": 524,
+      "page_default": "0.100000"
+    },
+    {
+      "id": "wt-cvars-housingExpertGizmos_SnapOnHold-525",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "housingExpertGizmos_SnapOnHold",
+      "annotation": "",
+      "wikitext_line": 525,
+      "page_default": "1"
+    },
+    {
+      "id": "wt-cvars-housingExpertGizmos_Translation_BaseArrowHeadScale-526",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "housingExpertGizmos_Translation_BaseArrowHeadScale",
+      "annotation": "",
+      "wikitext_line": 526,
+      "page_default": "0.250000"
+    },
+    {
+      "id": "wt-cvars-housingExpertGizmos_Translation_BaseArrowStemScale-527",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "housingExpertGizmos_Translation_BaseArrowStemScale",
+      "annotation": "",
+      "wikitext_line": 527,
+      "page_default": "0.300000"
+    },
+    {
+      "id": "wt-cvars-housingExpertGizmos_Translation_BaseCubeScale-528",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "housingExpertGizmos_Translation_BaseCubeScale",
+      "annotation": "",
+      "wikitext_line": 528,
+      "page_default": "0.050000"
+    },
+    {
+      "id": "wt-cvars-housingExpertGizmos_Translation_DistScaleMax-529",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "housingExpertGizmos_Translation_DistScaleMax",
+      "annotation": "",
+      "wikitext_line": 529,
+      "page_default": "8.000000"
+    },
+    {
+      "id": "wt-cvars-housingExpertGizmos_Translation_DistScaleMin-530",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "housingExpertGizmos_Translation_DistScaleMin",
+      "annotation": "",
+      "wikitext_line": 530,
+      "page_default": "1.000000"
+    },
+    {
+      "id": "wt-cvars-housingExpertGizmos_Translation_HighlightDefault-531",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "housingExpertGizmos_Translation_HighlightDefault",
+      "annotation": "",
+      "wikitext_line": 531,
+      "page_default": "0.800000"
+    },
+    {
+      "id": "wt-cvars-housingExpertGizmos_Translation_HighlightDragging-532",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "housingExpertGizmos_Translation_HighlightDragging",
+      "annotation": "",
+      "wikitext_line": 532,
+      "page_default": "1.000000"
+    },
+    {
+      "id": "wt-cvars-housingExpertGizmos_Translation_HighlightHovered-533",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "housingExpertGizmos_Translation_HighlightHovered",
+      "annotation": "",
+      "wikitext_line": 533,
+      "page_default": "0.900000"
+    },
+    {
+      "id": "wt-cvars-housingExpertGizmos_Translation_HighlightKeybind-534",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "housingExpertGizmos_Translation_HighlightKeybind",
+      "annotation": "",
+      "wikitext_line": 534,
+      "page_default": "1.000000"
+    },
+    {
+      "id": "wt-cvars-housingExpertGizmos_Translation_HighlightSelected-535",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "housingExpertGizmos_Translation_HighlightSelected",
+      "annotation": "",
+      "wikitext_line": 535,
+      "page_default": "1.000000"
+    },
+    {
+      "id": "wt-cvars-housingExpertGizmos_Translation_MaxDistanceFromCamera-536",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "housingExpertGizmos_Translation_MaxDistanceFromCamera",
+      "annotation": "",
+      "wikitext_line": 536,
+      "page_default": "1000.000000"
+    },
+    {
+      "id": "wt-cvars-housingExpertGizmos_Translation_Padding-537",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "housingExpertGizmos_Translation_Padding",
+      "annotation": "",
+      "wikitext_line": 537,
+      "page_default": "0.050000"
+    },
+    {
+      "id": "wt-cvars-housingExpertGizmos_Translation_ScaleDistanceMax-538",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "housingExpertGizmos_Translation_ScaleDistanceMax",
+      "annotation": "",
+      "wikitext_line": 538,
+      "page_default": "60.000000"
+    },
+    {
+      "id": "wt-cvars-housingExpertGizmos_Translation_ScaleDistanceMin-539",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "housingExpertGizmos_Translation_ScaleDistanceMin",
+      "annotation": "",
+      "wikitext_line": 539,
+      "page_default": "0.000000"
+    },
+    {
+      "id": "wt-cvars-housingExpertGizmos_Translation_XRayCheckerSize-540",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "housingExpertGizmos_Translation_XRayCheckerSize",
+      "annotation": "",
+      "wikitext_line": 540,
+      "page_default": "7"
+    },
+    {
+      "id": "wt-cvars-housingExpertGizmos_Translation_XRayDarkAlpha-541",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "housingExpertGizmos_Translation_XRayDarkAlpha",
+      "annotation": "",
+      "wikitext_line": 541,
+      "page_default": "0.600000"
+    },
+    {
+      "id": "wt-cvars-housingExpertGizmos_Translation_XRayLightAlpha-542",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "housingExpertGizmos_Translation_XRayLightAlpha",
+      "annotation": "",
+      "wikitext_line": 542,
+      "page_default": "0.250000"
+    },
+    {
+      "id": "wt-cvars-housingLayout_Camera_DefaultDistance-543",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "housingLayout_Camera_DefaultDistance",
+      "annotation": "",
+      "wikitext_line": 543,
+      "page_default": "50.000000"
+    },
+    {
+      "id": "wt-cvars-housingLayout_Camera_DragFriction-544",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "housingLayout_Camera_DragFriction",
+      "annotation": "",
+      "wikitext_line": 544,
+      "page_default": "8.000000"
+    },
+    {
+      "id": "wt-cvars-housingLayout_Camera_DragMomentum-545",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "housingLayout_Camera_DragMomentum",
+      "annotation": "",
+      "wikitext_line": 545,
+      "page_default": "0.300000"
+    },
+    {
+      "id": "wt-cvars-housingLayout_Camera_MaxDistanceIncr-546",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "housingLayout_Camera_MaxDistanceIncr",
+      "annotation": "",
+      "wikitext_line": 546,
+      "page_default": "5.000000"
+    },
+    {
+      "id": "wt-cvars-housingLayout_Camera_MaxDistance-547",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "housingLayout_Camera_MaxDistance",
+      "annotation": "",
+      "wikitext_line": 547,
+      "page_default": "80.000000"
+    },
+    {
+      "id": "wt-cvars-housingLayout_Camera_MinDistance-548",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "housingLayout_Camera_MinDistance",
+      "annotation": "",
+      "wikitext_line": 548,
+      "page_default": "30.000000"
+    },
+    {
+      "id": "wt-cvars-housingLayout_Camera_Smoothness-549",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "housingLayout_Camera_Smoothness",
+      "annotation": "",
+      "wikitext_line": 549,
+      "page_default": "15.000000"
+    },
+    {
+      "id": "wt-cvars-housingLayout_Camera_Speed-550",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "housingLayout_Camera_Speed",
+      "annotation": "",
+      "wikitext_line": 550,
+      "page_default": "15.000000"
+    },
+    {
+      "id": "wt-cvars-housingStoragePanelCollapsed-551",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "housingStoragePanelCollapsed",
+      "annotation": "",
+      "wikitext_line": 551,
+      "page_default": "0"
+    },
+    {
+      "id": "wt-cvars-housingStoragePanelHeight-552",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "housingStoragePanelHeight",
+      "annotation": "",
+      "wikitext_line": 552,
+      "page_default": "615.000000"
+    },
+    {
+      "id": "wt-cvars-housingStoragePanelWidth-553",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "housingStoragePanelWidth",
+      "annotation": "",
+      "wikitext_line": 553,
+      "page_default": "530.000000"
+    },
+    {
+      "id": "wt-cvars-housingTutorialsEnabled-554",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "housingTutorialsEnabled",
+      "annotation": "",
+      "wikitext_line": 554,
+      "page_default": "1"
+    },
+    {
+      "id": "wt-cvars-InvalidateDeactivatedHandles-555",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "InvalidateDeactivatedHandles",
+      "annotation": "",
+      "wikitext_line": 555,
+      "page_default": "1"
+    },
+    {
+      "id": "wt-cvars-RenderScaleDowngradeBackgroundMinSize-556",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "RenderScaleDowngradeBackgroundMinSize",
+      "annotation": "",
+      "wikitext_line": 556,
+      "page_default": "720"
+    },
+    {
+      "id": "wt-cvars-RenderScaleDowngradeForegroundMinSize-557",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "RenderScaleDowngradeForegroundMinSize",
+      "annotation": "",
+      "wikitext_line": 557,
+      "page_default": "1080"
+    },
+    {
+      "id": "wt-cvars-TerrainBlendBakeEnable-558",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "TerrainBlendBakeEnable",
+      "annotation": "",
+      "wikitext_line": 558,
+      "page_default": "0"
+    },
+    {
+      "id": "wt-cvars-TerrainUnlitShaderEnable-559",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "TerrainUnlitShaderEnable",
+      "annotation": "",
+      "wikitext_line": 559,
+      "page_default": "0"
+    },
+    {
+      "id": "wt-cvars-UnitNameFocused-560",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "UnitNameFocused",
+      "annotation": "",
+      "wikitext_line": 560,
+      "page_default": "1"
+    },
+    {
+      "id": "wt-cvars-alwaysShowActionBars-563",
+      "section": "cvars",
+      "direction": "removed",
+      "symbol": "alwaysShowActionBars",
+      "annotation": "",
+      "wikitext_line": 563,
+      "page_default": "0"
+    },
+    {
+      "id": "wt-cvars-NeighborhoodAddManager-574",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "NeighborhoodAddManager",
+      "annotation": "",
+      "wikitext_line": 574,
+      "kind": "command"
+    },
+    {
+      "id": "wt-cvars-NeighborhoodCancelInvitation-575",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "NeighborhoodCancelInvitation",
+      "annotation": "",
+      "wikitext_line": 575,
+      "kind": "command"
+    },
+    {
+      "id": "wt-cvars-NeighborhoodGetInvites-576",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "NeighborhoodGetInvites",
+      "annotation": "",
+      "wikitext_line": 576,
+      "kind": "command"
+    },
+    {
+      "id": "wt-cvars-NeighborhoodInviteResident-577",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "NeighborhoodInviteResident",
+      "annotation": "",
+      "wikitext_line": 577,
+      "kind": "command"
+    },
+    {
+      "id": "wt-cvars-NeighborhoodRemoveManager-578",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "NeighborhoodRemoveManager",
+      "annotation": "",
+      "wikitext_line": 578,
+      "kind": "command"
+    },
+    {
+      "id": "wt-cvars-NeighborhoodSetName-579",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "NeighborhoodSetName",
+      "annotation": "",
+      "wikitext_line": 579,
+      "kind": "command"
+    },
+    {
+      "id": "wt-cvars-NeighborhoodSetPublic-580",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "NeighborhoodSetPublic",
+      "annotation": "",
+      "wikitext_line": 580,
+      "kind": "command"
+    },
+    {
+      "id": "wt-cvars-OfferNeighborhoodOwnership-581",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "OfferNeighborhoodOwnership",
+      "annotation": "",
+      "wikitext_line": 581,
+      "kind": "command"
+    },
+    {
+      "id": "wt-cvars-PlayerDeclineHousingInvitation-582",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "PlayerDeclineHousingInvitation",
+      "annotation": "",
+      "wikitext_line": 582,
+      "kind": "command"
+    },
+    {
+      "id": "wt-cvars-PlayerGetHousingInvitation-583",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "PlayerGetHousingInvitation",
+      "annotation": "",
+      "wikitext_line": 583,
+      "kind": "command"
+    }
+  ]
+}

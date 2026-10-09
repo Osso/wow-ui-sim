@@ -1,0 +1,5265 @@
+{
+  "schema": "patch-api-wikitext-register/v1",
+  "patch": "10.0.0",
+  "source": {
+    "path": "data/patch-api/sources/10.0.0-api-changes.wikitext",
+    "revid": 6789768,
+    "sha256": "511e12f2dc5ffa02b49dbfec8132cdeffc3f5ea4e8f2ac11d2cf4c338d357f9c"
+  },
+  "header_counts": [
+    {
+      "section": "global-api",
+      "direction": "added",
+      "header_count": 277,
+      "parsed_count": 277
+    },
+    {
+      "section": "global-api",
+      "direction": "removed",
+      "header_count": 64,
+      "parsed_count": 64
+    },
+    {
+      "section": "widgets",
+      "direction": "added",
+      "header_count": 56,
+      "parsed_count": 56
+    },
+    {
+      "section": "widgets",
+      "direction": "removed",
+      "header_count": 29,
+      "parsed_count": 29
+    },
+    {
+      "section": "events",
+      "direction": "added",
+      "header_count": 63,
+      "parsed_count": 62
+    },
+    {
+      "section": "events",
+      "direction": "removed",
+      "header_count": 26,
+      "parsed_count": 25
+    },
+    {
+      "section": "cvars",
+      "direction": "added",
+      "header_count": 93,
+      "parsed_count": 93
+    },
+    {
+      "section": "cvars",
+      "direction": "removed",
+      "header_count": 16,
+      "parsed_count": 16
+    }
+  ],
+  "entries": [
+    {
+      "id": "wt-global-api-C_AchievementInfo.IsGuildAchievement-226",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_AchievementInfo.IsGuildAchievement",
+      "annotation": "",
+      "wikitext_line": 226
+    },
+    {
+      "id": "wt-global-api-C_ActionBar.GetItemActionOnEquipSpellID-227",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ActionBar.GetItemActionOnEquipSpellID",
+      "annotation": "",
+      "wikitext_line": 227
+    },
+    {
+      "id": "wt-global-api-C_BarberShop.GetViewingChrModel-228",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_BarberShop.GetViewingChrModel",
+      "annotation": "",
+      "wikitext_line": 228
+    },
+    {
+      "id": "wt-global-api-C_BarberShop.SetViewingChrModel-229",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_BarberShop.SetViewingChrModel",
+      "annotation": "",
+      "wikitext_line": 229
+    },
+    {
+      "id": "wt-global-api-C_CameraDefaults.GetCameraFOVDefaults-230",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_CameraDefaults.GetCameraFOVDefaults",
+      "annotation": "",
+      "wikitext_line": 230
+    },
+    {
+      "id": "wt-global-api-C_CampaignInfo.SortAsNormalQuest-231",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_CampaignInfo.SortAsNormalQuest",
+      "annotation": "",
+      "wikitext_line": 231
+    },
+    {
+      "id": "wt-global-api-C_ClassTalents.CanChangeTalents-232",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ClassTalents.CanChangeTalents",
+      "annotation": "",
+      "wikitext_line": 232
+    },
+    {
+      "id": "wt-global-api-C_ClassTalents.CanCreateNewConfig-233",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ClassTalents.CanCreateNewConfig",
+      "annotation": "",
+      "wikitext_line": 233
+    },
+    {
+      "id": "wt-global-api-C_ClassTalents.CommitConfig-234",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ClassTalents.CommitConfig",
+      "annotation": "",
+      "wikitext_line": 234
+    },
+    {
+      "id": "wt-global-api-C_ClassTalents.DeleteConfig-235",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ClassTalents.DeleteConfig",
+      "annotation": "",
+      "wikitext_line": 235
+    },
+    {
+      "id": "wt-global-api-C_ClassTalents.GetActiveConfigID-236",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ClassTalents.GetActiveConfigID",
+      "annotation": "",
+      "wikitext_line": 236
+    },
+    {
+      "id": "wt-global-api-C_ClassTalents.GetConfigIDsBySpecID-237",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ClassTalents.GetConfigIDsBySpecID",
+      "annotation": "",
+      "wikitext_line": 237
+    },
+    {
+      "id": "wt-global-api-C_ClassTalents.GetHasStarterBuild-238",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ClassTalents.GetHasStarterBuild",
+      "annotation": "",
+      "wikitext_line": 238
+    },
+    {
+      "id": "wt-global-api-C_ClassTalents.GetLastSelectedSavedConfigID-239",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ClassTalents.GetLastSelectedSavedConfigID",
+      "annotation": "",
+      "wikitext_line": 239
+    },
+    {
+      "id": "wt-global-api-C_ClassTalents.GetNextStarterBuildPurchase-240",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ClassTalents.GetNextStarterBuildPurchase",
+      "annotation": "",
+      "wikitext_line": 240
+    },
+    {
+      "id": "wt-global-api-C_ClassTalents.GetStarterBuildActive-241",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ClassTalents.GetStarterBuildActive",
+      "annotation": "",
+      "wikitext_line": 241
+    },
+    {
+      "id": "wt-global-api-C_ClassTalents.HasUnspentTalentPoints-242",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ClassTalents.HasUnspentTalentPoints",
+      "annotation": "",
+      "wikitext_line": 242
+    },
+    {
+      "id": "wt-global-api-C_ClassTalents.ImportLoadout-243",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ClassTalents.ImportLoadout",
+      "annotation": "",
+      "wikitext_line": 243
+    },
+    {
+      "id": "wt-global-api-C_ClassTalents.IsConfigPopulated-244",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ClassTalents.IsConfigPopulated",
+      "annotation": "",
+      "wikitext_line": 244
+    },
+    {
+      "id": "wt-global-api-C_ClassTalents.LoadConfig-245",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ClassTalents.LoadConfig",
+      "annotation": "",
+      "wikitext_line": 245
+    },
+    {
+      "id": "wt-global-api-C_ClassTalents.RenameConfig-246",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ClassTalents.RenameConfig",
+      "annotation": "",
+      "wikitext_line": 246
+    },
+    {
+      "id": "wt-global-api-C_ClassTalents.RequestNewConfig-247",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ClassTalents.RequestNewConfig",
+      "annotation": "",
+      "wikitext_line": 247
+    },
+    {
+      "id": "wt-global-api-C_ClassTalents.SaveConfig-248",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ClassTalents.SaveConfig",
+      "annotation": "",
+      "wikitext_line": 248
+    },
+    {
+      "id": "wt-global-api-C_ClassTalents.SetStarterBuildActive-249",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ClassTalents.SetStarterBuildActive",
+      "annotation": "",
+      "wikitext_line": 249
+    },
+    {
+      "id": "wt-global-api-C_ClassTalents.SetUsesSharedActionBars-250",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ClassTalents.SetUsesSharedActionBars",
+      "annotation": "",
+      "wikitext_line": 250
+    },
+    {
+      "id": "wt-global-api-C_ClassTalents.UpdateLastSelectedSavedConfigID-251",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ClassTalents.UpdateLastSelectedSavedConfigID",
+      "annotation": "",
+      "wikitext_line": 251
+    },
+    {
+      "id": "wt-global-api-C_Container.GetBagSlotFlag-252",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Container.GetBagSlotFlag",
+      "annotation": "",
+      "wikitext_line": 252
+    },
+    {
+      "id": "wt-global-api-C_Container.SetBagSlotFlag-253",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Container.SetBagSlotFlag",
+      "annotation": "",
+      "wikitext_line": 253
+    },
+    {
+      "id": "wt-global-api-C_CraftingOrders.CloseCustomerCraftingOrders-254",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_CraftingOrders.CloseCustomerCraftingOrders",
+      "annotation": "",
+      "wikitext_line": 254
+    },
+    {
+      "id": "wt-global-api-C_CraftingOrders.GetCustomerCategories-255",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_CraftingOrders.GetCustomerCategories",
+      "annotation": "",
+      "wikitext_line": 255
+    },
+    {
+      "id": "wt-global-api-C_CraftingOrders.GetCustomerOptions-256",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_CraftingOrders.GetCustomerOptions",
+      "annotation": "",
+      "wikitext_line": 256
+    },
+    {
+      "id": "wt-global-api-C_CraftingOrders.HasFavoriteCustomerOptions-257",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_CraftingOrders.HasFavoriteCustomerOptions",
+      "annotation": "",
+      "wikitext_line": 257
+    },
+    {
+      "id": "wt-global-api-C_CraftingOrders.IsCustomerOptionFavorited-258",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_CraftingOrders.IsCustomerOptionFavorited",
+      "annotation": "",
+      "wikitext_line": 258
+    },
+    {
+      "id": "wt-global-api-C_CraftingOrders.ParseCustomerOptions-259",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_CraftingOrders.ParseCustomerOptions",
+      "annotation": "",
+      "wikitext_line": 259
+    },
+    {
+      "id": "wt-global-api-C_CraftingOrders.SetCustomerOptionFavorited-260",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_CraftingOrders.SetCustomerOptionFavorited",
+      "annotation": "",
+      "wikitext_line": 260
+    },
+    {
+      "id": "wt-global-api-C_CurrencyInfo.GetCurrencyDescription-261",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_CurrencyInfo.GetCurrencyDescription",
+      "annotation": "",
+      "wikitext_line": 261
+    },
+    {
+      "id": "wt-global-api-C_Debug.PrintToDebugWindow-262",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Debug.PrintToDebugWindow",
+      "annotation": "",
+      "wikitext_line": 262
+    },
+    {
+      "id": "wt-global-api-C_EditMode.ConvertLayoutInfoToString-263",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_EditMode.ConvertLayoutInfoToString",
+      "annotation": "",
+      "wikitext_line": 263
+    },
+    {
+      "id": "wt-global-api-C_EditMode.ConvertStringToLayoutInfo-264",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_EditMode.ConvertStringToLayoutInfo",
+      "annotation": "",
+      "wikitext_line": 264
+    },
+    {
+      "id": "wt-global-api-C_EditMode.GetAccountSettings-265",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_EditMode.GetAccountSettings",
+      "annotation": "",
+      "wikitext_line": 265
+    },
+    {
+      "id": "wt-global-api-C_EditMode.GetLayouts-266",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_EditMode.GetLayouts",
+      "annotation": "",
+      "wikitext_line": 266
+    },
+    {
+      "id": "wt-global-api-C_EditMode.OnEditModeExit-267",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_EditMode.OnEditModeExit",
+      "annotation": "",
+      "wikitext_line": 267
+    },
+    {
+      "id": "wt-global-api-C_EditMode.OnLayoutAdded-268",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_EditMode.OnLayoutAdded",
+      "annotation": "",
+      "wikitext_line": 268
+    },
+    {
+      "id": "wt-global-api-C_EditMode.OnLayoutDeleted-269",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_EditMode.OnLayoutDeleted",
+      "annotation": "",
+      "wikitext_line": 269
+    },
+    {
+      "id": "wt-global-api-C_EditMode.SaveLayouts-270",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_EditMode.SaveLayouts",
+      "annotation": "",
+      "wikitext_line": 270
+    },
+    {
+      "id": "wt-global-api-C_EditMode.SetAccountSetting-271",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_EditMode.SetAccountSetting",
+      "annotation": "",
+      "wikitext_line": 271
+    },
+    {
+      "id": "wt-global-api-C_EditMode.SetActiveLayout-272",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_EditMode.SetActiveLayout",
+      "annotation": "",
+      "wikitext_line": 272
+    },
+    {
+      "id": "wt-global-api-C_EventUtils.IsEventValid-273",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_EventUtils.IsEventValid",
+      "annotation": "",
+      "wikitext_line": 273
+    },
+    {
+      "id": "wt-global-api-C_EventUtils.NotifySettingsLoaded-274",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_EventUtils.NotifySettingsLoaded",
+      "annotation": "",
+      "wikitext_line": 274
+    },
+    {
+      "id": "wt-global-api-C_FunctionContainers.CreateCallback-275",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_FunctionContainers.CreateCallback",
+      "annotation": "",
+      "wikitext_line": 275
+    },
+    {
+      "id": "wt-global-api-C_GossipInfo.GetFriendshipReputationRanks-276",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_GossipInfo.GetFriendshipReputationRanks",
+      "annotation": "",
+      "wikitext_line": 276
+    },
+    {
+      "id": "wt-global-api-C_GossipInfo.GetFriendshipReputation-277",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_GossipInfo.GetFriendshipReputation",
+      "annotation": "",
+      "wikitext_line": 277
+    },
+    {
+      "id": "wt-global-api-C_Item.GetItemIDByGUID-278",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Item.GetItemIDByGUID",
+      "annotation": "",
+      "wikitext_line": 278
+    },
+    {
+      "id": "wt-global-api-C_Item.GetItemLocation-279",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Item.GetItemLocation",
+      "annotation": "",
+      "wikitext_line": 279
+    },
+    {
+      "id": "wt-global-api-C_Item.GetItemMaxStackSizeByID-280",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Item.GetItemMaxStackSizeByID",
+      "annotation": "",
+      "wikitext_line": 280
+    },
+    {
+      "id": "wt-global-api-C_Item.GetItemMaxStackSize-281",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Item.GetItemMaxStackSize",
+      "annotation": "",
+      "wikitext_line": 281
+    },
+    {
+      "id": "wt-global-api-C_Item.IsItemGUIDInInventory-282",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Item.IsItemGUIDInInventory",
+      "annotation": "",
+      "wikitext_line": 282
+    },
+    {
+      "id": "wt-global-api-C_KeyBindings.GetBindingIndex-283",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_KeyBindings.GetBindingIndex",
+      "annotation": "",
+      "wikitext_line": 283
+    },
+    {
+      "id": "wt-global-api-C_MajorFactions.GetCovenantIDForMajorFaction-284",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_MajorFactions.GetCovenantIDForMajorFaction",
+      "annotation": "",
+      "wikitext_line": 284
+    },
+    {
+      "id": "wt-global-api-C_MajorFactions.GetCurrentRenownLevel-285",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_MajorFactions.GetCurrentRenownLevel",
+      "annotation": "",
+      "wikitext_line": 285
+    },
+    {
+      "id": "wt-global-api-C_MajorFactions.GetFeatureAbilities-286",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_MajorFactions.GetFeatureAbilities",
+      "annotation": "",
+      "wikitext_line": 286
+    },
+    {
+      "id": "wt-global-api-C_MajorFactions.GetMajorFactionData-287",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_MajorFactions.GetMajorFactionData",
+      "annotation": "",
+      "wikitext_line": 287
+    },
+    {
+      "id": "wt-global-api-C_MajorFactions.GetMajorFactionIDs-288",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_MajorFactions.GetMajorFactionIDs",
+      "annotation": "",
+      "wikitext_line": 288
+    },
+    {
+      "id": "wt-global-api-C_MajorFactions.GetRenownLevels-289",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_MajorFactions.GetRenownLevels",
+      "annotation": "",
+      "wikitext_line": 289
+    },
+    {
+      "id": "wt-global-api-C_MajorFactions.GetRenownNPCFactionID-290",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_MajorFactions.GetRenownNPCFactionID",
+      "annotation": "",
+      "wikitext_line": 290
+    },
+    {
+      "id": "wt-global-api-C_MajorFactions.GetRenownRewardsForLevel-291",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_MajorFactions.GetRenownRewardsForLevel",
+      "annotation": "",
+      "wikitext_line": 291
+    },
+    {
+      "id": "wt-global-api-C_MajorFactions.HasMaximumRenown-292",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_MajorFactions.HasMaximumRenown",
+      "annotation": "",
+      "wikitext_line": 292
+    },
+    {
+      "id": "wt-global-api-C_MajorFactions.IsMajorFaction-293",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_MajorFactions.IsMajorFaction",
+      "annotation": "",
+      "wikitext_line": 293
+    },
+    {
+      "id": "wt-global-api-C_MajorFactions.IsPlayerInRenownCatchUpMode-294",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_MajorFactions.IsPlayerInRenownCatchUpMode",
+      "annotation": "",
+      "wikitext_line": 294
+    },
+    {
+      "id": "wt-global-api-C_MajorFactions.IsWeeklyRenownCapped-295",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_MajorFactions.IsWeeklyRenownCapped",
+      "annotation": "",
+      "wikitext_line": 295
+    },
+    {
+      "id": "wt-global-api-C_MajorFactions.RequestCatchUpState-296",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_MajorFactions.RequestCatchUpState",
+      "annotation": "",
+      "wikitext_line": 296
+    },
+    {
+      "id": "wt-global-api-C_Minimap.CanTrackBattlePets-297",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Minimap.CanTrackBattlePets",
+      "annotation": "",
+      "wikitext_line": 297
+    },
+    {
+      "id": "wt-global-api-C_Minimap.ClearAllTracking-298",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Minimap.ClearAllTracking",
+      "annotation": "",
+      "wikitext_line": 298
+    },
+    {
+      "id": "wt-global-api-C_Minimap.GetNumQuestPOIWorldEffects-299",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Minimap.GetNumQuestPOIWorldEffects",
+      "annotation": "",
+      "wikitext_line": 299
+    },
+    {
+      "id": "wt-global-api-C_Minimap.GetNumTrackingTypes-300",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Minimap.GetNumTrackingTypes",
+      "annotation": "",
+      "wikitext_line": 300
+    },
+    {
+      "id": "wt-global-api-C_Minimap.GetObjectIconTextureCoords-301",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Minimap.GetObjectIconTextureCoords",
+      "annotation": "",
+      "wikitext_line": 301
+    },
+    {
+      "id": "wt-global-api-C_Minimap.GetPOITextureCoords-302",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Minimap.GetPOITextureCoords",
+      "annotation": "",
+      "wikitext_line": 302
+    },
+    {
+      "id": "wt-global-api-C_Minimap.GetTrackingFilter-303",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Minimap.GetTrackingFilter",
+      "annotation": "",
+      "wikitext_line": 303
+    },
+    {
+      "id": "wt-global-api-C_Minimap.GetTrackingInfo-304",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Minimap.GetTrackingInfo",
+      "annotation": "",
+      "wikitext_line": 304
+    },
+    {
+      "id": "wt-global-api-C_Minimap.IsFilteredOut-305",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Minimap.IsFilteredOut",
+      "annotation": "",
+      "wikitext_line": 305
+    },
+    {
+      "id": "wt-global-api-C_Minimap.IsTrackingBattlePets-306",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Minimap.IsTrackingBattlePets",
+      "annotation": "",
+      "wikitext_line": 306
+    },
+    {
+      "id": "wt-global-api-C_Minimap.IsTrackingHiddenQuests-307",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Minimap.IsTrackingHiddenQuests",
+      "annotation": "",
+      "wikitext_line": 307
+    },
+    {
+      "id": "wt-global-api-C_Minimap.SetTracking-308",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Minimap.SetTracking",
+      "annotation": "",
+      "wikitext_line": 308
+    },
+    {
+      "id": "wt-global-api-C_MountJournal.GetCollectedDragonridingMounts-309",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_MountJournal.GetCollectedDragonridingMounts",
+      "annotation": "",
+      "wikitext_line": 309
+    },
+    {
+      "id": "wt-global-api-C_MountJournal.GetDisplayedMountID-310",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_MountJournal.GetDisplayedMountID",
+      "annotation": "",
+      "wikitext_line": 310
+    },
+    {
+      "id": "wt-global-api-C_MountJournal.GetMountLink-311",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_MountJournal.GetMountLink",
+      "annotation": "",
+      "wikitext_line": 311
+    },
+    {
+      "id": "wt-global-api-C_MythicPlus.GetCurrentUIDisplaySeason-312",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_MythicPlus.GetCurrentUIDisplaySeason",
+      "annotation": "",
+      "wikitext_line": 312
+    },
+    {
+      "id": "wt-global-api-C_PaperDollInfo.GetInspectRatedSoloShuffleData-313",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PaperDollInfo.GetInspectRatedSoloShuffleData",
+      "annotation": "",
+      "wikitext_line": 313
+    },
+    {
+      "id": "wt-global-api-C_PetJournal.HasFavoritePets-314",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PetJournal.HasFavoritePets",
+      "annotation": "",
+      "wikitext_line": 314
+    },
+    {
+      "id": "wt-global-api-C_PetJournal.SpellTargetBattlePet-315",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PetJournal.SpellTargetBattlePet",
+      "annotation": "",
+      "wikitext_line": 315
+    },
+    {
+      "id": "wt-global-api-C_PlayerInteractionManager.ClearInteraction-316",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PlayerInteractionManager.ClearInteraction",
+      "annotation": "",
+      "wikitext_line": 316
+    },
+    {
+      "id": "wt-global-api-C_PlayerInteractionManager.ConfirmationInteraction-317",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PlayerInteractionManager.ConfirmationInteraction",
+      "annotation": "",
+      "wikitext_line": 317
+    },
+    {
+      "id": "wt-global-api-C_PlayerInteractionManager.InteractUnit-318",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PlayerInteractionManager.InteractUnit",
+      "annotation": "",
+      "wikitext_line": 318
+    },
+    {
+      "id": "wt-global-api-C_PlayerInteractionManager.IsInteractingWithNpcOfType-319",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PlayerInteractionManager.IsInteractingWithNpcOfType",
+      "annotation": "",
+      "wikitext_line": 319
+    },
+    {
+      "id": "wt-global-api-C_PlayerInteractionManager.IsReplacingUnit-320",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PlayerInteractionManager.IsReplacingUnit",
+      "annotation": "",
+      "wikitext_line": 320
+    },
+    {
+      "id": "wt-global-api-C_PlayerInteractionManager.IsValidNPCInteraction-321",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PlayerInteractionManager.IsValidNPCInteraction",
+      "annotation": "",
+      "wikitext_line": 321
+    },
+    {
+      "id": "wt-global-api-C_PlayerInteractionManager.ReopenInteraction-322",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PlayerInteractionManager.ReopenInteraction",
+      "annotation": "",
+      "wikitext_line": 322
+    },
+    {
+      "id": "wt-global-api-C_ProfSpecs.CanRefundPath-323",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ProfSpecs.CanRefundPath",
+      "annotation": "",
+      "wikitext_line": 323
+    },
+    {
+      "id": "wt-global-api-C_ProfSpecs.CanUnlockTab-324",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ProfSpecs.CanUnlockTab",
+      "annotation": "",
+      "wikitext_line": 324
+    },
+    {
+      "id": "wt-global-api-C_ProfSpecs.GetChildrenForPath-325",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ProfSpecs.GetChildrenForPath",
+      "annotation": "",
+      "wikitext_line": 325
+    },
+    {
+      "id": "wt-global-api-C_ProfSpecs.GetConfigIDForSkillLine-326",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ProfSpecs.GetConfigIDForSkillLine",
+      "annotation": "",
+      "wikitext_line": 326
+    },
+    {
+      "id": "wt-global-api-C_ProfSpecs.GetDefaultSpecSkillLine-327",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ProfSpecs.GetDefaultSpecSkillLine",
+      "annotation": "",
+      "wikitext_line": 327
+    },
+    {
+      "id": "wt-global-api-C_ProfSpecs.GetDescriptionForPath-328",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ProfSpecs.GetDescriptionForPath",
+      "annotation": "",
+      "wikitext_line": 328
+    },
+    {
+      "id": "wt-global-api-C_ProfSpecs.GetDescriptionForPerk-329",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ProfSpecs.GetDescriptionForPerk",
+      "annotation": "",
+      "wikitext_line": 329
+    },
+    {
+      "id": "wt-global-api-C_ProfSpecs.GetEntryIDForPerk-330",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ProfSpecs.GetEntryIDForPerk",
+      "annotation": "",
+      "wikitext_line": 330
+    },
+    {
+      "id": "wt-global-api-C_ProfSpecs.GetPerksForPath-331",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ProfSpecs.GetPerksForPath",
+      "annotation": "",
+      "wikitext_line": 331
+    },
+    {
+      "id": "wt-global-api-C_ProfSpecs.GetRootPathForTab-332",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ProfSpecs.GetRootPathForTab",
+      "annotation": "",
+      "wikitext_line": 332
+    },
+    {
+      "id": "wt-global-api-C_ProfSpecs.GetSourceTextForPath-333",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ProfSpecs.GetSourceTextForPath",
+      "annotation": "",
+      "wikitext_line": 333
+    },
+    {
+      "id": "wt-global-api-C_ProfSpecs.GetSpecTabIDsForSkillLine-334",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ProfSpecs.GetSpecTabIDsForSkillLine",
+      "annotation": "",
+      "wikitext_line": 334
+    },
+    {
+      "id": "wt-global-api-C_ProfSpecs.GetSpecTabInfo-335",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ProfSpecs.GetSpecTabInfo",
+      "annotation": "",
+      "wikitext_line": 335
+    },
+    {
+      "id": "wt-global-api-C_ProfSpecs.GetSpendCurrencyForPath-336",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ProfSpecs.GetSpendCurrencyForPath",
+      "annotation": "",
+      "wikitext_line": 336
+    },
+    {
+      "id": "wt-global-api-C_ProfSpecs.GetSpendEntryForPath-337",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ProfSpecs.GetSpendEntryForPath",
+      "annotation": "",
+      "wikitext_line": 337
+    },
+    {
+      "id": "wt-global-api-C_ProfSpecs.GetStateForPath-338",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ProfSpecs.GetStateForPath",
+      "annotation": "",
+      "wikitext_line": 338
+    },
+    {
+      "id": "wt-global-api-C_ProfSpecs.GetStateForPerk-339",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ProfSpecs.GetStateForPerk",
+      "annotation": "",
+      "wikitext_line": 339
+    },
+    {
+      "id": "wt-global-api-C_ProfSpecs.GetStateForTab-340",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ProfSpecs.GetStateForTab",
+      "annotation": "",
+      "wikitext_line": 340
+    },
+    {
+      "id": "wt-global-api-C_ProfSpecs.GetTabInfo-341",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ProfSpecs.GetTabInfo",
+      "annotation": "",
+      "wikitext_line": 341
+    },
+    {
+      "id": "wt-global-api-C_ProfSpecs.GetUnlockEntryForPath-342",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ProfSpecs.GetUnlockEntryForPath",
+      "annotation": "",
+      "wikitext_line": 342
+    },
+    {
+      "id": "wt-global-api-C_ProfSpecs.GetUnlockRankForPerk-343",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ProfSpecs.GetUnlockRankForPerk",
+      "annotation": "",
+      "wikitext_line": 343
+    },
+    {
+      "id": "wt-global-api-C_ProfSpecs.GetUnspentPointsForSkillLine-344",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ProfSpecs.GetUnspentPointsForSkillLine",
+      "annotation": "",
+      "wikitext_line": 344
+    },
+    {
+      "id": "wt-global-api-C_ProfSpecs.ShouldShowSpecTab-345",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ProfSpecs.ShouldShowSpecTab",
+      "annotation": "",
+      "wikitext_line": 345
+    },
+    {
+      "id": "wt-global-api-C_ProfSpecs.SkillLineHasSpecialization-346",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ProfSpecs.SkillLineHasSpecialization",
+      "annotation": "",
+      "wikitext_line": 346
+    },
+    {
+      "id": "wt-global-api-C_PvP.GetPersonalRatedSoloShuffleSpecStats-347",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PvP.GetPersonalRatedSoloShuffleSpecStats",
+      "annotation": "",
+      "wikitext_line": 347
+    },
+    {
+      "id": "wt-global-api-C_PvP.GetRatedSoloShuffleMinItemLevel-348",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PvP.GetRatedSoloShuffleMinItemLevel",
+      "annotation": "",
+      "wikitext_line": 348
+    },
+    {
+      "id": "wt-global-api-C_PvP.GetRatedSoloShuffleRewards-349",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PvP.GetRatedSoloShuffleRewards",
+      "annotation": "",
+      "wikitext_line": 349
+    },
+    {
+      "id": "wt-global-api-C_PvP.IsBrawlSoloShuffle-350",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PvP.IsBrawlSoloShuffle",
+      "annotation": "",
+      "wikitext_line": 350
+    },
+    {
+      "id": "wt-global-api-C_PvP.IsRatedSoloShuffle-351",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PvP.IsRatedSoloShuffle",
+      "annotation": "",
+      "wikitext_line": 351
+    },
+    {
+      "id": "wt-global-api-C_QuestItemUse.CanUseQuestItemOnObject-352",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_QuestItemUse.CanUseQuestItemOnObject",
+      "annotation": "",
+      "wikitext_line": 352
+    },
+    {
+      "id": "wt-global-api-C_QuestLog.GetQuestLogMajorFactionReputationRewards-353",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_QuestLog.GetQuestLogMajorFactionReputationRewards",
+      "annotation": "",
+      "wikitext_line": 353
+    },
+    {
+      "id": "wt-global-api-C_QuestLog.UnitIsRelatedToActiveQuest-354",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_QuestLog.UnitIsRelatedToActiveQuest",
+      "annotation": "",
+      "wikitext_line": 354
+    },
+    {
+      "id": "wt-global-api-C_QuestOffer.GetHideRequiredItemsOnTurnIn-355",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_QuestOffer.GetHideRequiredItemsOnTurnIn",
+      "annotation": "",
+      "wikitext_line": 355
+    },
+    {
+      "id": "wt-global-api-C_QuestOffer.GetQuestOfferMajorFactionReputationRewards-356",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_QuestOffer.GetQuestOfferMajorFactionReputationRewards",
+      "annotation": "",
+      "wikitext_line": 356
+    },
+    {
+      "id": "wt-global-api-C_Reputation.IsMajorFaction-357",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Reputation.IsMajorFaction",
+      "annotation": "",
+      "wikitext_line": 357
+    },
+    {
+      "id": "wt-global-api-C_Reputation.SetWatchedFaction-358",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Reputation.SetWatchedFaction",
+      "annotation": "",
+      "wikitext_line": 358
+    },
+    {
+      "id": "wt-global-api-C_ReturningPlayerUI.AcceptPrompt-359",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ReturningPlayerUI.AcceptPrompt",
+      "annotation": "",
+      "wikitext_line": 359
+    },
+    {
+      "id": "wt-global-api-C_ReturningPlayerUI.DeclinePrompt-360",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ReturningPlayerUI.DeclinePrompt",
+      "annotation": "",
+      "wikitext_line": 360
+    },
+    {
+      "id": "wt-global-api-C_Sound.GetSoundScaledVolume-361",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Sound.GetSoundScaledVolume",
+      "annotation": "",
+      "wikitext_line": 361
+    },
+    {
+      "id": "wt-global-api-C_Sound.IsPlaying-362",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Sound.IsPlaying",
+      "annotation": "",
+      "wikitext_line": 362
+    },
+    {
+      "id": "wt-global-api-C_Sound.PlayItemSound-363",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Sound.PlayItemSound",
+      "annotation": "",
+      "wikitext_line": 363
+    },
+    {
+      "id": "wt-global-api-C_SpellBook.GetDeadlyDebuffInfo-364",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_SpellBook.GetDeadlyDebuffInfo",
+      "annotation": "",
+      "wikitext_line": 364
+    },
+    {
+      "id": "wt-global-api-C_SpellBook.GetOverrideSpell-365",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_SpellBook.GetOverrideSpell",
+      "annotation": "",
+      "wikitext_line": 365
+    },
+    {
+      "id": "wt-global-api-C_SpellBook.GetTrackedNameplateCooldownSpells-366",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_SpellBook.GetTrackedNameplateCooldownSpells",
+      "annotation": "",
+      "wikitext_line": 366
+    },
+    {
+      "id": "wt-global-api-C_Texture.GetFilenameFromFileDataID-367",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Texture.GetFilenameFromFileDataID",
+      "annotation": "",
+      "wikitext_line": 367
+    },
+    {
+      "id": "wt-global-api-C_Timer.NewTicker-368",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Timer.NewTicker",
+      "annotation": "",
+      "wikitext_line": 368
+    },
+    {
+      "id": "wt-global-api-C_Timer.NewTimer-369",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Timer.NewTimer",
+      "annotation": "",
+      "wikitext_line": 369
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.CancelCraftingOrder-370",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.CancelCraftingOrder",
+      "annotation": "",
+      "wikitext_line": 370
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.CompleteCraftingOrder-371",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.CompleteCraftingOrder",
+      "annotation": "",
+      "wikitext_line": 371
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.ContinueRecast-372",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.ContinueRecast",
+      "annotation": "",
+      "wikitext_line": 372
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.CraftEnchant-373",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.CraftEnchant",
+      "annotation": "",
+      "wikitext_line": 373
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.CraftSalvage-374",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.CraftSalvage",
+      "annotation": "",
+      "wikitext_line": 374
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.DeclineCraftingOrder-375",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.DeclineCraftingOrder",
+      "annotation": "",
+      "wikitext_line": 375
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.DoesRecraftingRecipeAcceptItem-376",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.DoesRecraftingRecipeAcceptItem",
+      "annotation": "",
+      "wikitext_line": 376
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.GetAllFilterableInventorySlotsCount-377",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.GetAllFilterableInventorySlotsCount",
+      "annotation": "",
+      "wikitext_line": 377
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.GetBaseProfessionInfo-378",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.GetBaseProfessionInfo",
+      "annotation": "",
+      "wikitext_line": 378
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.GetChildProfessionInfos-379",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.GetChildProfessionInfos",
+      "annotation": "",
+      "wikitext_line": 379
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.GetChildProfessionInfo-380",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.GetChildProfessionInfo",
+      "annotation": "",
+      "wikitext_line": 380
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.GetCraftableCount-381",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.GetCraftableCount",
+      "annotation": "",
+      "wikitext_line": 381
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.GetCraftingOperationInfo-382",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.GetCraftingOperationInfo",
+      "annotation": "",
+      "wikitext_line": 382
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.GetCraftingOrders-383",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.GetCraftingOrders",
+      "annotation": "",
+      "wikitext_line": 383
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.GetCraftingReagentBonusText-384",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.GetCraftingReagentBonusText",
+      "annotation": "",
+      "wikitext_line": 384
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.GetCurrentOrder-385",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.GetCurrentOrder",
+      "annotation": "",
+      "wikitext_line": 385
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.GetEnchantItems-386",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.GetEnchantItems",
+      "annotation": "",
+      "wikitext_line": 386
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.GetFactionSpecificOutputItem-387",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.GetFactionSpecificOutputItem",
+      "annotation": "",
+      "wikitext_line": 387
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.GetFilterableInventorySlotName-388",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.GetFilterableInventorySlotName",
+      "annotation": "",
+      "wikitext_line": 388
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.GetGatheringOperationInfo-389",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.GetGatheringOperationInfo",
+      "annotation": "",
+      "wikitext_line": 389
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.GetHideUnownedFlags-390",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.GetHideUnownedFlags",
+      "annotation": "",
+      "wikitext_line": 390
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.GetItemCraftedQualityByItemInfo-391",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.GetItemCraftedQualityByItemInfo",
+      "annotation": "",
+      "wikitext_line": 391
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.GetItemReagentQualityByItemInfo-392",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.GetItemReagentQualityByItemInfo",
+      "annotation": "",
+      "wikitext_line": 392
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.GetItemSlotModifications-393",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.GetItemSlotModifications",
+      "annotation": "",
+      "wikitext_line": 393
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.GetOnlyShowFirstCraftRecipes-394",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.GetOnlyShowFirstCraftRecipes",
+      "annotation": "",
+      "wikitext_line": 394
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.GetOriginalCraftRecipeID-395",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.GetOriginalCraftRecipeID",
+      "annotation": "",
+      "wikitext_line": 395
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.GetProfessionChildSkillLineID-396",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.GetProfessionChildSkillLineID",
+      "annotation": "",
+      "wikitext_line": 396
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.GetProfessionInfoBySkillLineID-397",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.GetProfessionInfoBySkillLineID",
+      "annotation": "",
+      "wikitext_line": 397
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.GetProfessionSkillLineID-398",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.GetProfessionSkillLineID",
+      "annotation": "",
+      "wikitext_line": 398
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.GetProfessionSlots-399",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.GetProfessionSlots",
+      "annotation": "",
+      "wikitext_line": 399
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.GetProfessionSpells-400",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.GetProfessionSpells",
+      "annotation": "",
+      "wikitext_line": 400
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.GetReagentDifficultyText-401",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.GetReagentDifficultyText",
+      "annotation": "",
+      "wikitext_line": 401
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.GetReagentSlotStatus-402",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.GetReagentSlotStatus",
+      "annotation": "",
+      "wikitext_line": 402
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.GetRecipeFixedReagentItemLink-403",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.GetRecipeFixedReagentItemLink",
+      "annotation": "",
+      "wikitext_line": 403
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.GetRecipeOutputItemData-404",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.GetRecipeOutputItemData",
+      "annotation": "",
+      "wikitext_line": 404
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.GetRecipeQualityReagentItemLink-405",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.GetRecipeQualityReagentItemLink",
+      "annotation": "",
+      "wikitext_line": 405
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.GetRecipeSchematic-406",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.GetRecipeSchematic",
+      "annotation": "",
+      "wikitext_line": 406
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.GetRecipesTracked-407",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.GetRecipesTracked",
+      "annotation": "",
+      "wikitext_line": 407
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.GetRecraftItems-408",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.GetRecraftItems",
+      "annotation": "",
+      "wikitext_line": 408
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.GetSalvagableItemIDs-409",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.GetSalvagableItemIDs",
+      "annotation": "",
+      "wikitext_line": 409
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.GetShowLearned-410",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.GetShowLearned",
+      "annotation": "",
+      "wikitext_line": 410
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.GetShowUnlearned-411",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.GetShowUnlearned",
+      "annotation": "",
+      "wikitext_line": 411
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.HasCraftingOrderFavorites-412",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.HasCraftingOrderFavorites",
+      "annotation": "",
+      "wikitext_line": 412
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.HasMaxCraftingOrderFavorites-413",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.HasMaxCraftingOrderFavorites",
+      "annotation": "",
+      "wikitext_line": 413
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.HasRecipesTracked-414",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.HasRecipesTracked",
+      "annotation": "",
+      "wikitext_line": 414
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.IsCraftingOrderFavorite-415",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.IsCraftingOrderFavorite",
+      "annotation": "",
+      "wikitext_line": 415
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.IsOriginalCraftRecipeLearned-416",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.IsOriginalCraftRecipeLearned",
+      "annotation": "",
+      "wikitext_line": 416
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.IsRecipeInSkillLine-417",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.IsRecipeInSkillLine",
+      "annotation": "",
+      "wikitext_line": 417
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.IsRecipeProfessionLearned-418",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.IsRecipeProfessionLearned",
+      "annotation": "",
+      "wikitext_line": 418
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.IsRecipeTracked-419",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.IsRecipeTracked",
+      "annotation": "",
+      "wikitext_line": 419
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.IsRuneforging-420",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.IsRuneforging",
+      "annotation": "",
+      "wikitext_line": 420
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.ListCraftingOrder-421",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.ListCraftingOrder",
+      "annotation": "",
+      "wikitext_line": 421
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.OpenRecipe-422",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.OpenRecipe",
+      "annotation": "",
+      "wikitext_line": 422
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.QueryCraftingOrdersFavorites-423",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.QueryCraftingOrdersFavorites",
+      "annotation": "",
+      "wikitext_line": 423
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.QueryCraftingOrders-424",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.QueryCraftingOrders",
+      "annotation": "",
+      "wikitext_line": 424
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.RecipeCanBeRecrafted-425",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.RecipeCanBeRecrafted",
+      "annotation": "",
+      "wikitext_line": 425
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.RecraftRecipe-426",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.RecraftRecipe",
+      "annotation": "",
+      "wikitext_line": 426
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.SetCraftingOrderFavorite-427",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.SetCraftingOrderFavorite",
+      "annotation": "",
+      "wikitext_line": 427
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.SetOnlyShowFirstCraftRecipes-428",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.SetOnlyShowFirstCraftRecipes",
+      "annotation": "",
+      "wikitext_line": 428
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.SetProfessionChildSkillLineID-429",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.SetProfessionChildSkillLineID",
+      "annotation": "",
+      "wikitext_line": 429
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.SetRecipeTracked-430",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.SetRecipeTracked",
+      "annotation": "",
+      "wikitext_line": 430
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.SetShowLearned-431",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.SetShowLearned",
+      "annotation": "",
+      "wikitext_line": 431
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.SetShowUnlearned-432",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.SetShowUnlearned",
+      "annotation": "",
+      "wikitext_line": 432
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.SetTooltipRecipeResultItem-433",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.SetTooltipRecipeResultItem",
+      "annotation": "",
+      "wikitext_line": 433
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.StartCraftingOrder-434",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.StartCraftingOrder",
+      "annotation": "",
+      "wikitext_line": 434
+    },
+    {
+      "id": "wt-global-api-C_Traits.CanPurchaseRank-435",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Traits.CanPurchaseRank",
+      "annotation": "",
+      "wikitext_line": 435
+    },
+    {
+      "id": "wt-global-api-C_Traits.CanRefundRank-436",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Traits.CanRefundRank",
+      "annotation": "",
+      "wikitext_line": 436
+    },
+    {
+      "id": "wt-global-api-C_Traits.CascadeRepurchaseRanks-437",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Traits.CascadeRepurchaseRanks",
+      "annotation": "",
+      "wikitext_line": 437
+    },
+    {
+      "id": "wt-global-api-C_Traits.ClearCascadeRepurchaseHistory-438",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Traits.ClearCascadeRepurchaseHistory",
+      "annotation": "",
+      "wikitext_line": 438
+    },
+    {
+      "id": "wt-global-api-C_Traits.CloseTraitSystemInteraction-439",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Traits.CloseTraitSystemInteraction",
+      "annotation": "",
+      "wikitext_line": 439
+    },
+    {
+      "id": "wt-global-api-C_Traits.CommitConfig-440",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Traits.CommitConfig",
+      "annotation": "",
+      "wikitext_line": 440
+    },
+    {
+      "id": "wt-global-api-C_Traits.ConfigHasStagedChanges-441",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Traits.ConfigHasStagedChanges",
+      "annotation": "",
+      "wikitext_line": 441
+    },
+    {
+      "id": "wt-global-api-C_Traits.GetConditionInfo-442",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Traits.GetConditionInfo",
+      "annotation": "",
+      "wikitext_line": 442
+    },
+    {
+      "id": "wt-global-api-C_Traits.GetConfigIDBySystemID-443",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Traits.GetConfigIDBySystemID",
+      "annotation": "",
+      "wikitext_line": 443
+    },
+    {
+      "id": "wt-global-api-C_Traits.GetConfigIDByTreeID-444",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Traits.GetConfigIDByTreeID",
+      "annotation": "",
+      "wikitext_line": 444
+    },
+    {
+      "id": "wt-global-api-C_Traits.GetConfigInfo-445",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Traits.GetConfigInfo",
+      "annotation": "",
+      "wikitext_line": 445
+    },
+    {
+      "id": "wt-global-api-C_Traits.GetConfigsByType-446",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Traits.GetConfigsByType",
+      "annotation": "",
+      "wikitext_line": 446
+    },
+    {
+      "id": "wt-global-api-C_Traits.GetDefinitionInfo-447",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Traits.GetDefinitionInfo",
+      "annotation": "",
+      "wikitext_line": 447
+    },
+    {
+      "id": "wt-global-api-C_Traits.GetEntryInfo-448",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Traits.GetEntryInfo",
+      "annotation": "",
+      "wikitext_line": 448
+    },
+    {
+      "id": "wt-global-api-C_Traits.GetNodeCost-449",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Traits.GetNodeCost",
+      "annotation": "",
+      "wikitext_line": 449
+    },
+    {
+      "id": "wt-global-api-C_Traits.GetNodeInfo-450",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Traits.GetNodeInfo",
+      "annotation": "",
+      "wikitext_line": 450
+    },
+    {
+      "id": "wt-global-api-C_Traits.GetStagedChangesCost-451",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Traits.GetStagedChangesCost",
+      "annotation": "",
+      "wikitext_line": 451
+    },
+    {
+      "id": "wt-global-api-C_Traits.GetStagedPurchases-452",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Traits.GetStagedPurchases",
+      "annotation": "",
+      "wikitext_line": 452
+    },
+    {
+      "id": "wt-global-api-C_Traits.GetTraitCurrencyInfo-453",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Traits.GetTraitCurrencyInfo",
+      "annotation": "",
+      "wikitext_line": 453
+    },
+    {
+      "id": "wt-global-api-C_Traits.GetTraitDescription-454",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Traits.GetTraitDescription",
+      "annotation": "",
+      "wikitext_line": 454
+    },
+    {
+      "id": "wt-global-api-C_Traits.GetTreeCurrencyInfo-455",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Traits.GetTreeCurrencyInfo",
+      "annotation": "",
+      "wikitext_line": 455
+    },
+    {
+      "id": "wt-global-api-C_Traits.GetTreeHash-456",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Traits.GetTreeHash",
+      "annotation": "",
+      "wikitext_line": 456
+    },
+    {
+      "id": "wt-global-api-C_Traits.GetTreeInfo-457",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Traits.GetTreeInfo",
+      "annotation": "",
+      "wikitext_line": 457
+    },
+    {
+      "id": "wt-global-api-C_Traits.GetTreeNodes-458",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Traits.GetTreeNodes",
+      "annotation": "",
+      "wikitext_line": 458
+    },
+    {
+      "id": "wt-global-api-C_Traits.HasValidInspectData-459",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Traits.HasValidInspectData",
+      "annotation": "",
+      "wikitext_line": 459
+    },
+    {
+      "id": "wt-global-api-C_Traits.PurchaseRank-460",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Traits.PurchaseRank",
+      "annotation": "",
+      "wikitext_line": 460
+    },
+    {
+      "id": "wt-global-api-C_Traits.RefundAllRanks-461",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Traits.RefundAllRanks",
+      "annotation": "",
+      "wikitext_line": 461
+    },
+    {
+      "id": "wt-global-api-C_Traits.RefundRank-462",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Traits.RefundRank",
+      "annotation": "",
+      "wikitext_line": 462
+    },
+    {
+      "id": "wt-global-api-C_Traits.ResetTree-463",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Traits.ResetTree",
+      "annotation": "",
+      "wikitext_line": 463
+    },
+    {
+      "id": "wt-global-api-C_Traits.RollbackConfig-464",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Traits.RollbackConfig",
+      "annotation": "",
+      "wikitext_line": 464
+    },
+    {
+      "id": "wt-global-api-C_Traits.SetSelection-465",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Traits.SetSelection",
+      "annotation": "",
+      "wikitext_line": 465
+    },
+    {
+      "id": "wt-global-api-C_Traits.StageConfig-466",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Traits.StageConfig",
+      "annotation": "",
+      "wikitext_line": 466
+    },
+    {
+      "id": "wt-global-api-C_Traits.TalentTestUnlearnSpells-467",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Traits.TalentTestUnlearnSpells",
+      "annotation": "",
+      "wikitext_line": 467
+    },
+    {
+      "id": "wt-global-api-C_UIColor.GetColors-468",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_UIColor.GetColors",
+      "annotation": "",
+      "wikitext_line": 468
+    },
+    {
+      "id": "wt-global-api-C_UIWidgetManager.GetFillUpFramesWidgetVisualizationInfo-469",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_UIWidgetManager.GetFillUpFramesWidgetVisualizationInfo",
+      "annotation": "",
+      "wikitext_line": 469
+    },
+    {
+      "id": "wt-global-api-C_UnitAuras.GetAuraDataByAuraInstanceID-470",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_UnitAuras.GetAuraDataByAuraInstanceID",
+      "annotation": "",
+      "wikitext_line": 470
+    },
+    {
+      "id": "wt-global-api-C_UnitAuras.GetAuraDataBySlot-471",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_UnitAuras.GetAuraDataBySlot",
+      "annotation": "",
+      "wikitext_line": 471
+    },
+    {
+      "id": "wt-global-api-C_UnitAuras.GetCooldownAuraBySpellID-472",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_UnitAuras.GetCooldownAuraBySpellID",
+      "annotation": "",
+      "wikitext_line": 472
+    },
+    {
+      "id": "wt-global-api-C_UnitAuras.GetPlayerAuraBySpellID-473",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_UnitAuras.GetPlayerAuraBySpellID",
+      "annotation": "",
+      "wikitext_line": 473
+    },
+    {
+      "id": "wt-global-api-C_UnitAuras.IsAuraFilteredOutByInstanceID-474",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_UnitAuras.IsAuraFilteredOutByInstanceID",
+      "annotation": "",
+      "wikitext_line": 474
+    },
+    {
+      "id": "wt-global-api-C_UnitAuras.WantsAlteredForm-475",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_UnitAuras.WantsAlteredForm",
+      "annotation": "",
+      "wikitext_line": 475
+    },
+    {
+      "id": "wt-global-api-C_VideoOptions.GetCurrentGameWindowSize-476",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_VideoOptions.GetCurrentGameWindowSize",
+      "annotation": "",
+      "wikitext_line": 476
+    },
+    {
+      "id": "wt-global-api-C_VideoOptions.GetDefaultGameWindowSize-477",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_VideoOptions.GetDefaultGameWindowSize",
+      "annotation": "",
+      "wikitext_line": 477
+    },
+    {
+      "id": "wt-global-api-C_VideoOptions.GetGameWindowSizes-478",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_VideoOptions.GetGameWindowSizes",
+      "annotation": "",
+      "wikitext_line": 478
+    },
+    {
+      "id": "wt-global-api-C_VideoOptions.SetGameWindowSize-479",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_VideoOptions.SetGameWindowSize",
+      "annotation": "",
+      "wikitext_line": 479
+    },
+    {
+      "id": "wt-global-api-C_VoiceChat.IsVoiceChatConnected-480",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_VoiceChat.IsVoiceChatConnected",
+      "annotation": "",
+      "wikitext_line": 480
+    },
+    {
+      "id": "wt-global-api-C_WeeklyRewards.IsWeeklyChestRetired-481",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_WeeklyRewards.IsWeeklyChestRetired",
+      "annotation": "",
+      "wikitext_line": 481
+    },
+    {
+      "id": "wt-global-api-C_XMLUtil.GetTemplateInfo-482",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_XMLUtil.GetTemplateInfo",
+      "annotation": "",
+      "wikitext_line": 482
+    },
+    {
+      "id": "wt-global-api-C_XMLUtil.GetTemplates-483",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_XMLUtil.GetTemplates",
+      "annotation": "",
+      "wikitext_line": 483
+    },
+    {
+      "id": "wt-global-api-CombatLogShowCurrentEntry-484",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CombatLogShowCurrentEntry",
+      "annotation": "",
+      "wikitext_line": 484
+    },
+    {
+      "id": "wt-global-api-GetGraphicsCVarValueForQualityLevel-485",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetGraphicsCVarValueForQualityLevel",
+      "annotation": "",
+      "wikitext_line": 485
+    },
+    {
+      "id": "wt-global-api-GetUnitEmpowerHoldAtMaxTime-486",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetUnitEmpowerHoldAtMaxTime",
+      "annotation": "",
+      "wikitext_line": 486
+    },
+    {
+      "id": "wt-global-api-GetUnitEmpowerMinHoldTime-487",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetUnitEmpowerMinHoldTime",
+      "annotation": "",
+      "wikitext_line": 487
+    },
+    {
+      "id": "wt-global-api-GetUnitEmpowerStageDuration-488",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetUnitEmpowerStageDuration",
+      "annotation": "",
+      "wikitext_line": 488
+    },
+    {
+      "id": "wt-global-api-IsGraphicsCVarValueSupported-489",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "IsGraphicsCVarValueSupported",
+      "annotation": "",
+      "wikitext_line": 489
+    },
+    {
+      "id": "wt-global-api-IsGraphicsSettingValueSupported-490",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "IsGraphicsSettingValueSupported",
+      "annotation": "",
+      "wikitext_line": 490
+    },
+    {
+      "id": "wt-global-api-IsPlayerInGuildFromGUID-491",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "IsPlayerInGuildFromGUID",
+      "annotation": "",
+      "wikitext_line": 491
+    },
+    {
+      "id": "wt-global-api-IsPressHoldReleaseSpell-492",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "IsPressHoldReleaseSpell",
+      "annotation": "",
+      "wikitext_line": 492
+    },
+    {
+      "id": "wt-global-api-IsSpecializationActivateSpell-493",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "IsSpecializationActivateSpell",
+      "annotation": "",
+      "wikitext_line": 493
+    },
+    {
+      "id": "wt-global-api-IsTargetLoose-494",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "IsTargetLoose",
+      "annotation": "",
+      "wikitext_line": 494
+    },
+    {
+      "id": "wt-global-api-JoinRatedSoloShuffle-495",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "JoinRatedSoloShuffle",
+      "annotation": "",
+      "wikitext_line": 495
+    },
+    {
+      "id": "wt-global-api-ReleaseAction-496",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "ReleaseAction",
+      "annotation": "",
+      "wikitext_line": 496
+    },
+    {
+      "id": "wt-global-api-SetUnitCursorTexture-497",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "SetUnitCursorTexture",
+      "annotation": "",
+      "wikitext_line": 497
+    },
+    {
+      "id": "wt-global-api-TargetToggle-498",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "TargetToggle",
+      "annotation": "",
+      "wikitext_line": 498
+    },
+    {
+      "id": "wt-global-api-UnitIsBossMob-499",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "UnitIsBossMob",
+      "annotation": "",
+      "wikitext_line": 499
+    },
+    {
+      "id": "wt-global-api-UnitIsGameObject-500",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "UnitIsGameObject",
+      "annotation": "",
+      "wikitext_line": 500
+    },
+    {
+      "id": "wt-global-api-UnitIsInteractable-501",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "UnitIsInteractable",
+      "annotation": "",
+      "wikitext_line": 501
+    },
+    {
+      "id": "wt-global-api-WorldLootObjectExists-502",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "WorldLootObjectExists",
+      "annotation": "",
+      "wikitext_line": 502
+    },
+    {
+      "id": "wt-global-api-AcceptXPLoss-505",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "AcceptXPLoss",
+      "annotation": "",
+      "wikitext_line": 505
+    },
+    {
+      "id": "wt-global-api-C_AlliedRaces.ClearAlliedRaceDetailsGiver-506",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_AlliedRaces.ClearAlliedRaceDetailsGiver",
+      "annotation": "",
+      "wikitext_line": 506
+    },
+    {
+      "id": "wt-global-api-C_AzeriteEmpoweredItem.CloseAzeriteEmpoweredItemRespec-507",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_AzeriteEmpoweredItem.CloseAzeriteEmpoweredItemRespec",
+      "annotation": "",
+      "wikitext_line": 507
+    },
+    {
+      "id": "wt-global-api-C_GossipInfo.GetNumOptions-508",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_GossipInfo.GetNumOptions",
+      "annotation": "",
+      "wikitext_line": 508
+    },
+    {
+      "id": "wt-global-api-C_PlayerInfo.IsPlayerInGuildFromGUID-509",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_PlayerInfo.IsPlayerInGuildFromGUID",
+      "annotation": "",
+      "wikitext_line": 509
+    },
+    {
+      "id": "wt-global-api-C_ScrappingMachineUI.SetScrappingMachine-510",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_ScrappingMachineUI.SetScrappingMachine",
+      "annotation": "",
+      "wikitext_line": 510
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.GetOnlyShowLearnedRecipes-511",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_TradeSkillUI.GetOnlyShowLearnedRecipes",
+      "annotation": "",
+      "wikitext_line": 511
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.GetOnlyShowUnlearnedRecipes-512",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_TradeSkillUI.GetOnlyShowUnlearnedRecipes",
+      "annotation": "",
+      "wikitext_line": 512
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.GetOptionalReagentBonusText-513",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_TradeSkillUI.GetOptionalReagentBonusText",
+      "annotation": "",
+      "wikitext_line": 513
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.GetOptionalReagentInfo-514",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_TradeSkillUI.GetOptionalReagentInfo",
+      "annotation": "",
+      "wikitext_line": 514
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.GetRecipeNumItemsProduced-515",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_TradeSkillUI.GetRecipeNumItemsProduced",
+      "annotation": "",
+      "wikitext_line": 515
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.GetRecipeNumReagents-516",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_TradeSkillUI.GetRecipeNumReagents",
+      "annotation": "",
+      "wikitext_line": 516
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.GetRecipeReagentInfo-517",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_TradeSkillUI.GetRecipeReagentInfo",
+      "annotation": "",
+      "wikitext_line": 517
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.GetRecipeReagentItemLink-518",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_TradeSkillUI.GetRecipeReagentItemLink",
+      "annotation": "",
+      "wikitext_line": 518
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.GetTradeSkillLineInfoByID-519",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_TradeSkillUI.GetTradeSkillLineInfoByID",
+      "annotation": "",
+      "wikitext_line": 519
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.GetTradeSkillLine-520",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_TradeSkillUI.GetTradeSkillLine",
+      "annotation": "",
+      "wikitext_line": 520
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.IsEmptySkillLineCategory-521",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_TradeSkillUI.IsEmptySkillLineCategory",
+      "annotation": "",
+      "wikitext_line": 521
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.SetOnlyShowLearnedRecipes-522",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_TradeSkillUI.SetOnlyShowLearnedRecipes",
+      "annotation": "",
+      "wikitext_line": 522
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.SetOnlyShowUnlearnedRecipes-523",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_TradeSkillUI.SetOnlyShowUnlearnedRecipes",
+      "annotation": "",
+      "wikitext_line": 523
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.SetRecipeRepeatCount-524",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_TradeSkillUI.SetRecipeRepeatCount",
+      "annotation": "",
+      "wikitext_line": 524
+    },
+    {
+      "id": "wt-global-api-CanTrackBattlePets-525",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "CanTrackBattlePets",
+      "annotation": "",
+      "wikitext_line": 525
+    },
+    {
+      "id": "wt-global-api-CheckBinderDist-526",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "CheckBinderDist",
+      "annotation": "",
+      "wikitext_line": 526
+    },
+    {
+      "id": "wt-global-api-CheckSpiritHealerDist-527",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "CheckSpiritHealerDist",
+      "annotation": "",
+      "wikitext_line": 527
+    },
+    {
+      "id": "wt-global-api-CheckTalentMasterDist-528",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "CheckTalentMasterDist",
+      "annotation": "",
+      "wikitext_line": 528
+    },
+    {
+      "id": "wt-global-api-ClearAllTracking-529",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "ClearAllTracking",
+      "annotation": "",
+      "wikitext_line": 529
+    },
+    {
+      "id": "wt-global-api-CloseVoidStorageFrame-530",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "CloseVoidStorageFrame",
+      "annotation": "",
+      "wikitext_line": 530
+    },
+    {
+      "id": "wt-global-api-ConfirmBinder-531",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "ConfirmBinder",
+      "annotation": "",
+      "wikitext_line": 531
+    },
+    {
+      "id": "wt-global-api-GetBagSlotFlag-532",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetBagSlotFlag",
+      "annotation": "",
+      "wikitext_line": 532
+    },
+    {
+      "id": "wt-global-api-GetBankBagSlotFlag-533",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetBankBagSlotFlag",
+      "annotation": "",
+      "wikitext_line": 533
+    },
+    {
+      "id": "wt-global-api-GetCurrentResolution-534",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetCurrentResolution",
+      "annotation": "",
+      "wikitext_line": 534
+    },
+    {
+      "id": "wt-global-api-GetCVarSettingValidity-535",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetCVarSettingValidity",
+      "annotation": "",
+      "wikitext_line": 535
+    },
+    {
+      "id": "wt-global-api-GetDefaultGraphicsQuality-536",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetDefaultGraphicsQuality",
+      "annotation": "",
+      "wikitext_line": 536
+    },
+    {
+      "id": "wt-global-api-GetDefaultVideoOptions-537",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetDefaultVideoOptions",
+      "annotation": "",
+      "wikitext_line": 537
+    },
+    {
+      "id": "wt-global-api-GetDefaultVideoOption-538",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetDefaultVideoOption",
+      "annotation": "",
+      "wikitext_line": 538
+    },
+    {
+      "id": "wt-global-api-GetDefaultVideoQualityOption-539",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetDefaultVideoQualityOption",
+      "annotation": "",
+      "wikitext_line": 539
+    },
+    {
+      "id": "wt-global-api-GetFriendshipReputationRanks-540",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetFriendshipReputationRanks",
+      "annotation": "",
+      "wikitext_line": 540
+    },
+    {
+      "id": "wt-global-api-GetFriendshipReputation-541",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetFriendshipReputation",
+      "annotation": "",
+      "wikitext_line": 541
+    },
+    {
+      "id": "wt-global-api-GetGraphicsDropdownIndexByMasterIndex-542",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetGraphicsDropdownIndexByMasterIndex",
+      "annotation": "",
+      "wikitext_line": 542
+    },
+    {
+      "id": "wt-global-api-GetNumQuestPOIWorldEffects-543",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetNumQuestPOIWorldEffects",
+      "annotation": "",
+      "wikitext_line": 543
+    },
+    {
+      "id": "wt-global-api-GetNumTrackingTypes-544",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetNumTrackingTypes",
+      "annotation": "",
+      "wikitext_line": 544
+    },
+    {
+      "id": "wt-global-api-GetObjectIconTextureCoords-545",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetObjectIconTextureCoords",
+      "annotation": "",
+      "wikitext_line": 545
+    },
+    {
+      "id": "wt-global-api-GetPlayerAuraBySpellID-546",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetPlayerAuraBySpellID",
+      "annotation": "",
+      "wikitext_line": 546
+    },
+    {
+      "id": "wt-global-api-GetPOITextureCoords-547",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetPOITextureCoords",
+      "annotation": "",
+      "wikitext_line": 547
+    },
+    {
+      "id": "wt-global-api-GetScreenResolutions-548",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetScreenResolutions",
+      "annotation": "",
+      "wikitext_line": 548
+    },
+    {
+      "id": "wt-global-api-GetToolTipInfo-549",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetToolTipInfo",
+      "annotation": "",
+      "wikitext_line": 549
+    },
+    {
+      "id": "wt-global-api-GetTrackingInfo-550",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetTrackingInfo",
+      "annotation": "",
+      "wikitext_line": 550
+    },
+    {
+      "id": "wt-global-api-GetVideoOptions-551",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetVideoOptions",
+      "annotation": "",
+      "wikitext_line": 551
+    },
+    {
+      "id": "wt-global-api-InteractUnit-552",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "InteractUnit",
+      "annotation": "",
+      "wikitext_line": 552
+    },
+    {
+      "id": "wt-global-api-IsBagSlotFlagEnabledOnOtherBags-553",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "IsBagSlotFlagEnabledOnOtherBags",
+      "annotation": "",
+      "wikitext_line": 553
+    },
+    {
+      "id": "wt-global-api-IsBagSlotFlagEnabledOnOtherBankBags-554",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "IsBagSlotFlagEnabledOnOtherBankBags",
+      "annotation": "",
+      "wikitext_line": 554
+    },
+    {
+      "id": "wt-global-api-IsReplacingUnit-555",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "IsReplacingUnit",
+      "annotation": "",
+      "wikitext_line": 555
+    },
+    {
+      "id": "wt-global-api-IsTrackingBattlePets-556",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "IsTrackingBattlePets",
+      "annotation": "",
+      "wikitext_line": 556
+    },
+    {
+      "id": "wt-global-api-IsTrackingHiddenQuests-557",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "IsTrackingHiddenQuests",
+      "annotation": "",
+      "wikitext_line": 557
+    },
+    {
+      "id": "wt-global-api-ReopenInteraction-558",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "ReopenInteraction",
+      "annotation": "",
+      "wikitext_line": 558
+    },
+    {
+      "id": "wt-global-api-SetBagSlotFlag-559",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "SetBagSlotFlag",
+      "annotation": "",
+      "wikitext_line": 559
+    },
+    {
+      "id": "wt-global-api-SetBankBagSlotFlag-560",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "SetBankBagSlotFlag",
+      "annotation": "",
+      "wikitext_line": 560
+    },
+    {
+      "id": "wt-global-api-SetDefaultVideoOptions-561",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "SetDefaultVideoOptions",
+      "annotation": "",
+      "wikitext_line": 561
+    },
+    {
+      "id": "wt-global-api-SetInventoryPortraitTexture-562",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "SetInventoryPortraitTexture",
+      "annotation": "",
+      "wikitext_line": 562
+    },
+    {
+      "id": "wt-global-api-SetScreenResolution-563",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "SetScreenResolution",
+      "annotation": "",
+      "wikitext_line": 563
+    },
+    {
+      "id": "wt-global-api-SetTracking-564",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "SetTracking",
+      "annotation": "",
+      "wikitext_line": 564
+    },
+    {
+      "id": "wt-global-api-ShowInventorySellCursor-565",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "ShowInventorySellCursor",
+      "annotation": "",
+      "wikitext_line": 565
+    },
+    {
+      "id": "wt-global-api-VehicleAimGetAngle-566",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "VehicleAimGetAngle",
+      "annotation": "",
+      "wikitext_line": 566
+    },
+    {
+      "id": "wt-global-api-VehicleAimGetNormAngle-567",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "VehicleAimGetNormAngle",
+      "annotation": "",
+      "wikitext_line": 567
+    },
+    {
+      "id": "wt-global-api-VehicleAimRequestNormAngle-568",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "VehicleAimRequestNormAngle",
+      "annotation": "",
+      "wikitext_line": 568
+    },
+    {
+      "id": "wt-global-api-C_CVar.SetCVar-571",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "C_CVar.SetCVar",
+      "annotation": "- arg 3: scriptCVar",
+      "wikitext_line": 571
+    },
+    {
+      "id": "wt-global-api-C_CVar.SetCVarBitfield-573",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "C_CVar.SetCVarBitfield",
+      "annotation": "- arg 4: scriptCVar",
+      "wikitext_line": 573
+    },
+    {
+      "id": "wt-global-api-C_GossipInfo.SelectActiveQuest-575",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "C_GossipInfo.SelectActiveQuest",
+      "annotation": "+ arg 1: optionID\n- arg 1: index",
+      "wikitext_line": 575
+    },
+    {
+      "id": "wt-global-api-C_GossipInfo.SelectAvailableQuest-575",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "C_GossipInfo.SelectAvailableQuest",
+      "annotation": "+ arg 1: optionID\n- arg 1: index",
+      "wikitext_line": 575
+    },
+    {
+      "id": "wt-global-api-C_GossipInfo.SelectOption-575",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "C_GossipInfo.SelectOption",
+      "annotation": "+ arg 1: optionID\n- arg 1: index",
+      "wikitext_line": 575
+    },
+    {
+      "id": "wt-global-api-C_Item.GetItemGUID-578",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "C_Item.GetItemGUID",
+      "annotation": "+ ret 1: itemGUID\n- ret 1: itemGuid",
+      "wikitext_line": 578
+    },
+    {
+      "id": "wt-global-api-C_LegendaryCrafting.GetRuneforgeModifierInfo-581",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "C_LegendaryCrafting.GetRuneforgeModifierInfo",
+      "annotation": "# ret 2: description, Type: string -> table",
+      "wikitext_line": 581
+    },
+    {
+      "id": "wt-global-api-C_MountJournal.GetMountInfoByID-583",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "C_MountJournal.GetMountInfoByID",
+      "annotation": "+ ret 13: isForDragonriding",
+      "wikitext_line": 583
+    },
+    {
+      "id": "wt-global-api-C_MountJournal.GetDisplayedMountInfo-583",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "C_MountJournal.GetDisplayedMountInfo",
+      "annotation": "+ ret 13: isForDragonriding",
+      "wikitext_line": 583
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.CraftRecipe-585",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "C_TradeSkillUI.CraftRecipe",
+      "annotation": "+ arg 3: craftingReagents\n- arg 3: optionalReagents",
+      "wikitext_line": 585
+    },
+    {
+      "id": "wt-global-api-C_VoiceChat.GetCurrentVoiceChatConnectionStatusCode-588",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "C_VoiceChat.GetCurrentVoiceChatConnectionStatusCode",
+      "annotation": "# ret 1: statusCode, Nilable: false -> true",
+      "wikitext_line": 588
+    },
+    {
+      "id": "wt-global-api-SetPortraitTexture-590",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "SetPortraitTexture",
+      "annotation": "+ arg 3: disableMasking",
+      "wikitext_line": 590
+    },
+    {
+      "id": "wt-widgets-Object:GetParentKey-603",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "Object:GetParentKey",
+      "annotation": "",
+      "wikitext_line": 603
+    },
+    {
+      "id": "wt-widgets-Object:SetParentKey-604",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "Object:SetParentKey",
+      "annotation": "",
+      "wikitext_line": 604
+    },
+    {
+      "id": "wt-widgets-ScriptRegionResizing:ClearPoint-605",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "ScriptRegionResizing:ClearPoint",
+      "annotation": "",
+      "wikitext_line": 605
+    },
+    {
+      "id": "wt-widgets-ScriptRegion:SetPassThroughButtons-606",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "ScriptRegion:SetPassThroughButtons",
+      "annotation": "",
+      "wikitext_line": 606
+    },
+    {
+      "id": "wt-widgets-TextureBase:IsBlockingLoadRequested-607",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "TextureBase:IsBlockingLoadRequested",
+      "annotation": "",
+      "wikitext_line": 607
+    },
+    {
+      "id": "wt-widgets-TextureBase:SetBlockingLoadsRequested-608",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "TextureBase:SetBlockingLoadsRequested",
+      "annotation": "",
+      "wikitext_line": 608
+    },
+    {
+      "id": "wt-widgets-AnimationGroup:GetAnimationSpeedMultiplier-609",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "AnimationGroup:GetAnimationSpeedMultiplier",
+      "annotation": "",
+      "wikitext_line": 609
+    },
+    {
+      "id": "wt-widgets-AnimationGroup:IsReverse-610",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "AnimationGroup:IsReverse",
+      "annotation": "",
+      "wikitext_line": 610
+    },
+    {
+      "id": "wt-widgets-AnimationGroup:SetAnimationSpeedMultiplier-611",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "AnimationGroup:SetAnimationSpeedMultiplier",
+      "annotation": "",
+      "wikitext_line": 611
+    },
+    {
+      "id": "wt-widgets-Animation:SetTargetName-612",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "Animation:SetTargetName",
+      "annotation": "",
+      "wikitext_line": 612
+    },
+    {
+      "id": "wt-widgets-Animation:SetTargetParent-613",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "Animation:SetTargetParent",
+      "annotation": "",
+      "wikitext_line": 613
+    },
+    {
+      "id": "wt-widgets-Scale:GetScaleFrom-614",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "Scale:GetScaleFrom",
+      "annotation": "",
+      "wikitext_line": 614
+    },
+    {
+      "id": "wt-widgets-Scale:GetScaleTo-615",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "Scale:GetScaleTo",
+      "annotation": "",
+      "wikitext_line": 615
+    },
+    {
+      "id": "wt-widgets-Scale:SetScaleFrom-616",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "Scale:SetScaleFrom",
+      "annotation": "",
+      "wikitext_line": 616
+    },
+    {
+      "id": "wt-widgets-Scale:SetScaleTo-617",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "Scale:SetScaleTo",
+      "annotation": "",
+      "wikitext_line": 617
+    },
+    {
+      "id": "wt-widgets-Path:GetCurveType-618",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "Path:GetCurveType",
+      "annotation": "",
+      "wikitext_line": 618
+    },
+    {
+      "id": "wt-widgets-Path:GetMaxControlPointOrder-619",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "Path:GetMaxControlPointOrder",
+      "annotation": "",
+      "wikitext_line": 619
+    },
+    {
+      "id": "wt-widgets-Path:SetCurveType-620",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "Path:SetCurveType",
+      "annotation": "",
+      "wikitext_line": 620
+    },
+    {
+      "id": "wt-widgets-FlipBook:GetFlipBookColumns-621",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "FlipBook:GetFlipBookColumns",
+      "annotation": "",
+      "wikitext_line": 621
+    },
+    {
+      "id": "wt-widgets-FlipBook:GetFlipBookFrameHeight-622",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "FlipBook:GetFlipBookFrameHeight",
+      "annotation": "",
+      "wikitext_line": 622
+    },
+    {
+      "id": "wt-widgets-FlipBook:GetFlipBookFrameWidth-623",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "FlipBook:GetFlipBookFrameWidth",
+      "annotation": "",
+      "wikitext_line": 623
+    },
+    {
+      "id": "wt-widgets-FlipBook:GetFlipBookFrames-624",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "FlipBook:GetFlipBookFrames",
+      "annotation": "",
+      "wikitext_line": 624
+    },
+    {
+      "id": "wt-widgets-FlipBook:GetFlipBookRows-625",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "FlipBook:GetFlipBookRows",
+      "annotation": "",
+      "wikitext_line": 625
+    },
+    {
+      "id": "wt-widgets-FlipBook:SetFlipBookColumns-626",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "FlipBook:SetFlipBookColumns",
+      "annotation": "",
+      "wikitext_line": 626
+    },
+    {
+      "id": "wt-widgets-FlipBook:SetFlipBookFrameHeight-627",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "FlipBook:SetFlipBookFrameHeight",
+      "annotation": "",
+      "wikitext_line": 627
+    },
+    {
+      "id": "wt-widgets-FlipBook:SetFlipBookFrameWidth-628",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "FlipBook:SetFlipBookFrameWidth",
+      "annotation": "",
+      "wikitext_line": 628
+    },
+    {
+      "id": "wt-widgets-FlipBook:SetFlipBookFrames-629",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "FlipBook:SetFlipBookFrames",
+      "annotation": "",
+      "wikitext_line": 629
+    },
+    {
+      "id": "wt-widgets-FlipBook:SetFlipBookRows-630",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "FlipBook:SetFlipBookRows",
+      "annotation": "",
+      "wikitext_line": 630
+    },
+    {
+      "id": "wt-widgets-Frame:GetResizeBounds-631",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "Frame:GetResizeBounds",
+      "annotation": "",
+      "wikitext_line": 631
+    },
+    {
+      "id": "wt-widgets-Frame:SetIsFrameBuffer-632",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "Frame:SetIsFrameBuffer",
+      "annotation": "",
+      "wikitext_line": 632
+    },
+    {
+      "id": "wt-widgets-Frame:SetResizeBounds-633",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "Frame:SetResizeBounds",
+      "annotation": "",
+      "wikitext_line": 633
+    },
+    {
+      "id": "wt-widgets-Browser:NavigateTo-634",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "Browser:NavigateTo",
+      "annotation": "",
+      "wikitext_line": 634
+    },
+    {
+      "id": "wt-widgets-Button:ClearDisabledTexture-635",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "Button:ClearDisabledTexture",
+      "annotation": "",
+      "wikitext_line": 635
+    },
+    {
+      "id": "wt-widgets-Button:ClearHighlightTexture-636",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "Button:ClearHighlightTexture",
+      "annotation": "",
+      "wikitext_line": 636
+    },
+    {
+      "id": "wt-widgets-Button:ClearNormalTexture-637",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "Button:ClearNormalTexture",
+      "annotation": "",
+      "wikitext_line": 637
+    },
+    {
+      "id": "wt-widgets-Button:ClearPushedTexture-638",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "Button:ClearPushedTexture",
+      "annotation": "",
+      "wikitext_line": 638
+    },
+    {
+      "id": "wt-widgets-Button:SetHighlightLocked-639",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "Button:SetHighlightLocked",
+      "annotation": "",
+      "wikitext_line": 639
+    },
+    {
+      "id": "wt-widgets-ColorSelect:ClearColorWheelTexture-640",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "ColorSelect:ClearColorWheelTexture",
+      "annotation": "",
+      "wikitext_line": 640
+    },
+    {
+      "id": "wt-widgets-Cooldown:SetTexCoordRange-641",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "Cooldown:SetTexCoordRange",
+      "annotation": "",
+      "wikitext_line": 641
+    },
+    {
+      "id": "wt-widgets-EditBox:HasText-642",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "EditBox:HasText",
+      "annotation": "",
+      "wikitext_line": 642
+    },
+    {
+      "id": "wt-widgets-GameTooltip:AddTraitEntry-643",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "GameTooltip:AddTraitEntry",
+      "annotation": "",
+      "wikitext_line": 643
+    },
+    {
+      "id": "wt-widgets-GameTooltip:SetItemByGUID-644",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "GameTooltip:SetItemByGUID",
+      "annotation": "",
+      "wikitext_line": 644
+    },
+    {
+      "id": "wt-widgets-GameTooltip:SetItemByIDWithQuality-645",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "GameTooltip:SetItemByIDWithQuality",
+      "annotation": "",
+      "wikitext_line": 645
+    },
+    {
+      "id": "wt-widgets-GameTooltip:SetQualityReagentSlotItemByID-646",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "GameTooltip:SetQualityReagentSlotItemByID",
+      "annotation": "",
+      "wikitext_line": 646
+    },
+    {
+      "id": "wt-widgets-GameTooltip:SetUnitBuffByAuraInstanceID-647",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "GameTooltip:SetUnitBuffByAuraInstanceID",
+      "annotation": "",
+      "wikitext_line": 647
+    },
+    {
+      "id": "wt-widgets-GameTooltip:SetUnitDebuffByAuraInstanceID-648",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "GameTooltip:SetUnitDebuffByAuraInstanceID",
+      "annotation": "",
+      "wikitext_line": 648
+    },
+    {
+      "id": "wt-widgets-MovieFrame:StartMovieByName-649",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "MovieFrame:StartMovieByName",
+      "annotation": "",
+      "wikitext_line": 649
+    },
+    {
+      "id": "wt-widgets-OffScreenFrame:TestPrintToFile-650",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "OffScreenFrame:TestPrintToFile",
+      "annotation": "",
+      "wikitext_line": 650
+    },
+    {
+      "id": "wt-widgets-StatusBar:GetStatusBarDesaturation-651",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "StatusBar:GetStatusBarDesaturation",
+      "annotation": "",
+      "wikitext_line": 651
+    },
+    {
+      "id": "wt-widgets-StatusBar:IsStatusBarDesaturated-652",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "StatusBar:IsStatusBarDesaturated",
+      "annotation": "",
+      "wikitext_line": 652
+    },
+    {
+      "id": "wt-widgets-StatusBar:SetColorFill-653",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "StatusBar:SetColorFill",
+      "annotation": "",
+      "wikitext_line": 653
+    },
+    {
+      "id": "wt-widgets-StatusBar:SetStatusBarDesaturated-654",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "StatusBar:SetStatusBarDesaturated",
+      "annotation": "",
+      "wikitext_line": 654
+    },
+    {
+      "id": "wt-widgets-StatusBar:SetStatusBarDesaturation-655",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "StatusBar:SetStatusBarDesaturation",
+      "annotation": "",
+      "wikitext_line": 655
+    },
+    {
+      "id": "wt-widgets-WorldFrame:OnModelCleared-656",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "WorldFrame:OnModelCleared",
+      "annotation": "",
+      "wikitext_line": 656
+    },
+    {
+      "id": "wt-widgets-ModelSceneActor:SetModelByHyperlink-657",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "ModelSceneActor:SetModelByHyperlink",
+      "annotation": "",
+      "wikitext_line": 657
+    },
+    {
+      "id": "wt-widgets-ModelSceneActor OnModelCleared-659",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "ModelSceneActor OnModelCleared",
+      "annotation": "",
+      "wikitext_line": 659,
+      "kind": "widget-script"
+    },
+    {
+      "id": "wt-widgets-Region:ClearPointByName-662",
+      "section": "widgets",
+      "direction": "removed",
+      "symbol": "Region:ClearPointByName",
+      "annotation": "",
+      "wikitext_line": 662
+    },
+    {
+      "id": "wt-widgets-Texture:GetNonBlocking-663",
+      "section": "widgets",
+      "direction": "removed",
+      "symbol": "Texture:GetNonBlocking",
+      "annotation": "",
+      "wikitext_line": 663
+    },
+    {
+      "id": "wt-widgets-Texture:GetRotation-664",
+      "section": "widgets",
+      "direction": "removed",
+      "symbol": "Texture:GetRotation",
+      "annotation": "",
+      "wikitext_line": 664
+    },
+    {
+      "id": "wt-widgets-Texture:GetVertexColor-665",
+      "section": "widgets",
+      "direction": "removed",
+      "symbol": "Texture:GetVertexColor",
+      "annotation": "",
+      "wikitext_line": 665
+    },
+    {
+      "id": "wt-widgets-Texture:SetGradientAlpha-666",
+      "section": "widgets",
+      "direction": "removed",
+      "symbol": "Texture:SetGradientAlpha",
+      "annotation": "",
+      "wikitext_line": 666
+    },
+    {
+      "id": "wt-widgets-Texture:SetNonBlocking-667",
+      "section": "widgets",
+      "direction": "removed",
+      "symbol": "Texture:SetNonBlocking",
+      "annotation": "",
+      "wikitext_line": 667
+    },
+    {
+      "id": "wt-widgets-Texture:SetRotation-668",
+      "section": "widgets",
+      "direction": "removed",
+      "symbol": "Texture:SetRotation",
+      "annotation": "",
+      "wikitext_line": 668
+    },
+    {
+      "id": "wt-widgets-Scale:GetFromScale-669",
+      "section": "widgets",
+      "direction": "removed",
+      "symbol": "Scale:GetFromScale",
+      "annotation": "",
+      "wikitext_line": 669
+    },
+    {
+      "id": "wt-widgets-Scale:GetToScale-670",
+      "section": "widgets",
+      "direction": "removed",
+      "symbol": "Scale:GetToScale",
+      "annotation": "",
+      "wikitext_line": 670
+    },
+    {
+      "id": "wt-widgets-Scale:SetFromScale-671",
+      "section": "widgets",
+      "direction": "removed",
+      "symbol": "Scale:SetFromScale",
+      "annotation": "",
+      "wikitext_line": 671
+    },
+    {
+      "id": "wt-widgets-Scale:SetToScale-672",
+      "section": "widgets",
+      "direction": "removed",
+      "symbol": "Scale:SetToScale",
+      "annotation": "",
+      "wikitext_line": 672
+    },
+    {
+      "id": "wt-widgets-Path:GetCurve-673",
+      "section": "widgets",
+      "direction": "removed",
+      "symbol": "Path:GetCurve",
+      "annotation": "",
+      "wikitext_line": 673
+    },
+    {
+      "id": "wt-widgets-Path:GetMaxOrder-674",
+      "section": "widgets",
+      "direction": "removed",
+      "symbol": "Path:GetMaxOrder",
+      "annotation": "",
+      "wikitext_line": 674
+    },
+    {
+      "id": "wt-widgets-Path:SetCurve-675",
+      "section": "widgets",
+      "direction": "removed",
+      "symbol": "Path:SetCurve",
+      "annotation": "",
+      "wikitext_line": 675
+    },
+    {
+      "id": "wt-widgets-Frame:GetDepth-676",
+      "section": "widgets",
+      "direction": "removed",
+      "symbol": "Frame:GetDepth",
+      "annotation": "",
+      "wikitext_line": 676
+    },
+    {
+      "id": "wt-widgets-Frame:GetEffectiveDepth-677",
+      "section": "widgets",
+      "direction": "removed",
+      "symbol": "Frame:GetEffectiveDepth",
+      "annotation": "",
+      "wikitext_line": 677
+    },
+    {
+      "id": "wt-widgets-Frame:GetMaxResize-678",
+      "section": "widgets",
+      "direction": "removed",
+      "symbol": "Frame:GetMaxResize",
+      "annotation": "",
+      "wikitext_line": 678
+    },
+    {
+      "id": "wt-widgets-Frame:GetMinResize-679",
+      "section": "widgets",
+      "direction": "removed",
+      "symbol": "Frame:GetMinResize",
+      "annotation": "",
+      "wikitext_line": 679
+    },
+    {
+      "id": "wt-widgets-Frame:IgnoreDepth-680",
+      "section": "widgets",
+      "direction": "removed",
+      "symbol": "Frame:IgnoreDepth",
+      "annotation": "",
+      "wikitext_line": 680
+    },
+    {
+      "id": "wt-widgets-Frame:IsIgnoringDepth-681",
+      "section": "widgets",
+      "direction": "removed",
+      "symbol": "Frame:IsIgnoringDepth",
+      "annotation": "",
+      "wikitext_line": 681
+    },
+    {
+      "id": "wt-widgets-Frame:SetDepth-682",
+      "section": "widgets",
+      "direction": "removed",
+      "symbol": "Frame:SetDepth",
+      "annotation": "",
+      "wikitext_line": 682
+    },
+    {
+      "id": "wt-widgets-Frame:SetFrameBuffer-683",
+      "section": "widgets",
+      "direction": "removed",
+      "symbol": "Frame:SetFrameBuffer",
+      "annotation": "",
+      "wikitext_line": 683
+    },
+    {
+      "id": "wt-widgets-Frame:SetMaxResize-684",
+      "section": "widgets",
+      "direction": "removed",
+      "symbol": "Frame:SetMaxResize",
+      "annotation": "",
+      "wikitext_line": 684
+    },
+    {
+      "id": "wt-widgets-Frame:SetMinResize-685",
+      "section": "widgets",
+      "direction": "removed",
+      "symbol": "Frame:SetMinResize",
+      "annotation": "",
+      "wikitext_line": 685
+    },
+    {
+      "id": "wt-widgets-GameTooltip:SetRecipeResultItem-686",
+      "section": "widgets",
+      "direction": "removed",
+      "symbol": "GameTooltip:SetRecipeResultItem",
+      "annotation": "",
+      "wikitext_line": 686
+    },
+    {
+      "id": "wt-widgets-Minimap:SetQuestBlobOutsideSelectedTexture-687",
+      "section": "widgets",
+      "direction": "removed",
+      "symbol": "Minimap:SetQuestBlobOutsideSelectedTexture",
+      "annotation": "",
+      "wikitext_line": 687
+    },
+    {
+      "id": "wt-widgets-Minimap:SetTaskBlobOutsideSelectedTexture-688",
+      "section": "widgets",
+      "direction": "removed",
+      "symbol": "Minimap:SetTaskBlobOutsideSelectedTexture",
+      "annotation": "",
+      "wikitext_line": 688
+    },
+    {
+      "id": "wt-widgets-StatusBar:GetStatusBarAtlas-689",
+      "section": "widgets",
+      "direction": "removed",
+      "symbol": "StatusBar:GetStatusBarAtlas",
+      "annotation": "",
+      "wikitext_line": 689
+    },
+    {
+      "id": "wt-widgets-StatusBar:SetStatusBarAtlas-690",
+      "section": "widgets",
+      "direction": "removed",
+      "symbol": "StatusBar:SetStatusBarAtlas",
+      "annotation": "",
+      "wikitext_line": 690
+    },
+    {
+      "id": "wt-events-ACTIVE_COMBAT_CONFIG_CHANGED-701",
+      "section": "events",
+      "direction": "added",
+      "symbol": "ACTIVE_COMBAT_CONFIG_CHANGED",
+      "annotation": "",
+      "wikitext_line": 701
+    },
+    {
+      "id": "wt-events-ACTIVE_PLAYER_SPECIALIZATION_CHANGED-702",
+      "section": "events",
+      "direction": "added",
+      "symbol": "ACTIVE_PLAYER_SPECIALIZATION_CHANGED",
+      "annotation": "",
+      "wikitext_line": 702
+    },
+    {
+      "id": "wt-events-BAG_CONTAINER_UPDATE-703",
+      "section": "events",
+      "direction": "added",
+      "symbol": "BAG_CONTAINER_UPDATE",
+      "annotation": "",
+      "wikitext_line": 703
+    },
+    {
+      "id": "wt-events-BATTLEFIELD_AUTO_QUEUE_EJECT-704",
+      "section": "events",
+      "direction": "added",
+      "symbol": "BATTLEFIELD_AUTO_QUEUE_EJECT",
+      "annotation": "",
+      "wikitext_line": 704
+    },
+    {
+      "id": "wt-events-BATTLEFIELD_AUTO_QUEUE-705",
+      "section": "events",
+      "direction": "added",
+      "symbol": "BATTLEFIELD_AUTO_QUEUE",
+      "annotation": "",
+      "wikitext_line": 705
+    },
+    {
+      "id": "wt-events-CONFIG_COMMIT_FAILED-706",
+      "section": "events",
+      "direction": "added",
+      "symbol": "CONFIG_COMMIT_FAILED",
+      "annotation": "",
+      "wikitext_line": 706
+    },
+    {
+      "id": "wt-events-CRAFTING_DETAILS_UPDATE-707",
+      "section": "events",
+      "direction": "added",
+      "symbol": "CRAFTING_DETAILS_UPDATE",
+      "annotation": "",
+      "wikitext_line": 707
+    },
+    {
+      "id": "wt-events-CRAFTINGORDERS_CUSTOMER_FAVORITES_CHANGED-708",
+      "section": "events",
+      "direction": "added",
+      "symbol": "CRAFTINGORDERS_CUSTOMER_FAVORITES_CHANGED",
+      "annotation": "",
+      "wikitext_line": 708
+    },
+    {
+      "id": "wt-events-CRAFTINGORDERS_CUSTOMER_OPTIONS_PARSED-709",
+      "section": "events",
+      "direction": "added",
+      "symbol": "CRAFTINGORDERS_CUSTOMER_OPTIONS_PARSED",
+      "annotation": "",
+      "wikitext_line": 709
+    },
+    {
+      "id": "wt-events-CRAFTINGORDERS_HIDE_CRAFTER-710",
+      "section": "events",
+      "direction": "added",
+      "symbol": "CRAFTINGORDERS_HIDE_CRAFTER",
+      "annotation": "",
+      "wikitext_line": 710
+    },
+    {
+      "id": "wt-events-CRAFTINGORDERS_HIDE_CUSTOMER-711",
+      "section": "events",
+      "direction": "added",
+      "symbol": "CRAFTINGORDERS_HIDE_CUSTOMER",
+      "annotation": "",
+      "wikitext_line": 711
+    },
+    {
+      "id": "wt-events-CRAFTINGORDERS_SHOW_CRAFTER-712",
+      "section": "events",
+      "direction": "added",
+      "symbol": "CRAFTINGORDERS_SHOW_CRAFTER",
+      "annotation": "",
+      "wikitext_line": 712
+    },
+    {
+      "id": "wt-events-CRAFTINGORDERS_SHOW_CUSTOMER-713",
+      "section": "events",
+      "direction": "added",
+      "symbol": "CRAFTINGORDERS_SHOW_CUSTOMER",
+      "annotation": "",
+      "wikitext_line": 713
+    },
+    {
+      "id": "wt-events-EDIT_MODE_LAYOUTS_UPDATED-714",
+      "section": "events",
+      "direction": "added",
+      "symbol": "EDIT_MODE_LAYOUTS_UPDATED",
+      "annotation": "",
+      "wikitext_line": 714
+    },
+    {
+      "id": "wt-events-EXPAND_BAG_BAR_CHANGED-715",
+      "section": "events",
+      "direction": "added",
+      "symbol": "EXPAND_BAG_BAR_CHANGED",
+      "annotation": "",
+      "wikitext_line": 715
+    },
+    {
+      "id": "wt-events-ITEM_COUNT_CHANGED-716",
+      "section": "events",
+      "direction": "added",
+      "symbol": "ITEM_COUNT_CHANGED",
+      "annotation": "",
+      "wikitext_line": 716
+    },
+    {
+      "id": "wt-events-MAJOR_FACTION_INTERACTION_ENDED-717",
+      "section": "events",
+      "direction": "added",
+      "symbol": "MAJOR_FACTION_INTERACTION_ENDED",
+      "annotation": "",
+      "wikitext_line": 717
+    },
+    {
+      "id": "wt-events-MAJOR_FACTION_INTERACTION_STARTED-718",
+      "section": "events",
+      "direction": "added",
+      "symbol": "MAJOR_FACTION_INTERACTION_STARTED",
+      "annotation": "",
+      "wikitext_line": 718
+    },
+    {
+      "id": "wt-events-MAJOR_FACTION_RENOWN_CATCH_UP_STATE_UPDATE-719",
+      "section": "events",
+      "direction": "added",
+      "symbol": "MAJOR_FACTION_RENOWN_CATCH_UP_STATE_UPDATE",
+      "annotation": "",
+      "wikitext_line": 719
+    },
+    {
+      "id": "wt-events-MAJOR_FACTION_RENOWN_LEVEL_CHANGED-720",
+      "section": "events",
+      "direction": "added",
+      "symbol": "MAJOR_FACTION_RENOWN_LEVEL_CHANGED",
+      "annotation": "",
+      "wikitext_line": 720
+    },
+    {
+      "id": "wt-events-MAJOR_FACTION_UNLOCKED-721",
+      "section": "events",
+      "direction": "added",
+      "symbol": "MAJOR_FACTION_UNLOCKED",
+      "annotation": "",
+      "wikitext_line": 721
+    },
+    {
+      "id": "wt-events-OPEN_RECIPE_RESPONSE-722",
+      "section": "events",
+      "direction": "added",
+      "symbol": "OPEN_RECIPE_RESPONSE",
+      "annotation": "",
+      "wikitext_line": 722
+    },
+    {
+      "id": "wt-events-PLAYER_INTERACTION_MANAGER_FRAME_HIDE-723",
+      "section": "events",
+      "direction": "added",
+      "symbol": "PLAYER_INTERACTION_MANAGER_FRAME_HIDE",
+      "annotation": "",
+      "wikitext_line": 723
+    },
+    {
+      "id": "wt-events-PLAYER_INTERACTION_MANAGER_FRAME_SHOW-724",
+      "section": "events",
+      "direction": "added",
+      "symbol": "PLAYER_INTERACTION_MANAGER_FRAME_SHOW",
+      "annotation": "",
+      "wikitext_line": 724
+    },
+    {
+      "id": "wt-events-PLAYER_SOFT_ENEMY_CHANGED-725",
+      "section": "events",
+      "direction": "added",
+      "symbol": "PLAYER_SOFT_ENEMY_CHANGED",
+      "annotation": "",
+      "wikitext_line": 725
+    },
+    {
+      "id": "wt-events-PLAYER_SOFT_FRIEND_CHANGED-726",
+      "section": "events",
+      "direction": "added",
+      "symbol": "PLAYER_SOFT_FRIEND_CHANGED",
+      "annotation": "",
+      "wikitext_line": 726
+    },
+    {
+      "id": "wt-events-PLAYER_SOFT_INTERACT_CHANGED-727",
+      "section": "events",
+      "direction": "added",
+      "symbol": "PLAYER_SOFT_INTERACT_CHANGED",
+      "annotation": "",
+      "wikitext_line": 727
+    },
+    {
+      "id": "wt-events-PROFESSION_EQUIPMENT_CHANGED-728",
+      "section": "events",
+      "direction": "added",
+      "symbol": "PROFESSION_EQUIPMENT_CHANGED",
+      "annotation": "",
+      "wikitext_line": 728
+    },
+    {
+      "id": "wt-events-RETURNING_PLAYER_PROMPT-729",
+      "section": "events",
+      "direction": "added",
+      "symbol": "RETURNING_PLAYER_PROMPT",
+      "annotation": "",
+      "wikitext_line": 729
+    },
+    {
+      "id": "wt-events-RUNE_TYPE_UPDATE-730",
+      "section": "events",
+      "direction": "added",
+      "symbol": "RUNE_TYPE_UPDATE",
+      "annotation": "",
+      "wikitext_line": 730
+    },
+    {
+      "id": "wt-events-SETTINGS_LOADED-731",
+      "section": "events",
+      "direction": "added",
+      "symbol": "SETTINGS_LOADED",
+      "annotation": "",
+      "wikitext_line": 731
+    },
+    {
+      "id": "wt-events-SKILL_LINE_SPECS_UNLOCKED-732",
+      "section": "events",
+      "direction": "added",
+      "symbol": "SKILL_LINE_SPECS_UNLOCKED",
+      "annotation": "",
+      "wikitext_line": 732
+    },
+    {
+      "id": "wt-events-SPECIALIZATION_CHANGE_CAST_FAILED-733",
+      "section": "events",
+      "direction": "added",
+      "symbol": "SPECIALIZATION_CHANGE_CAST_FAILED",
+      "annotation": "",
+      "wikitext_line": 733
+    },
+    {
+      "id": "wt-events-STARTER_BUILD_ACTIVATION_FAILED-734",
+      "section": "events",
+      "direction": "added",
+      "symbol": "STARTER_BUILD_ACTIVATION_FAILED",
+      "annotation": "",
+      "wikitext_line": 734
+    },
+    {
+      "id": "wt-events-TRACKED_RECIPE_UPDATE-735",
+      "section": "events",
+      "direction": "added",
+      "symbol": "TRACKED_RECIPE_UPDATE",
+      "annotation": "",
+      "wikitext_line": 735
+    },
+    {
+      "id": "wt-events-TRADE_SKILL_CRAFT_BEGIN-736",
+      "section": "events",
+      "direction": "added",
+      "symbol": "TRADE_SKILL_CRAFT_BEGIN",
+      "annotation": "",
+      "wikitext_line": 736
+    },
+    {
+      "id": "wt-events-TRADE_SKILL_CRAFTING_REAGENT_BONUS_TEXT_UPDATED-737",
+      "section": "events",
+      "direction": "added",
+      "symbol": "TRADE_SKILL_CRAFTING_REAGENT_BONUS_TEXT_UPDATED",
+      "annotation": "",
+      "wikitext_line": 737
+    },
+    {
+      "id": "wt-events-TRADE_SKILL_CURRENCY_REWARD_RESULT-738",
+      "section": "events",
+      "direction": "added",
+      "symbol": "TRADE_SKILL_CURRENCY_REWARD_RESULT",
+      "annotation": "",
+      "wikitext_line": 738
+    },
+    {
+      "id": "wt-events-TRADE_SKILL_ITEM_CRAFTED_RESULT-739",
+      "section": "events",
+      "direction": "added",
+      "symbol": "TRADE_SKILL_ITEM_CRAFTED_RESULT",
+      "annotation": "",
+      "wikitext_line": 739
+    },
+    {
+      "id": "wt-events-TRADE_SKILL_ITEM_UPDATE-740",
+      "section": "events",
+      "direction": "added",
+      "symbol": "TRADE_SKILL_ITEM_UPDATE",
+      "annotation": "",
+      "wikitext_line": 740
+    },
+    {
+      "id": "wt-events-TRAIT_COND_INFO_CHANGED-741",
+      "section": "events",
+      "direction": "added",
+      "symbol": "TRAIT_COND_INFO_CHANGED",
+      "annotation": "",
+      "wikitext_line": 741
+    },
+    {
+      "id": "wt-events-TRAIT_CONFIG_CREATED-742",
+      "section": "events",
+      "direction": "added",
+      "symbol": "TRAIT_CONFIG_CREATED",
+      "annotation": "",
+      "wikitext_line": 742
+    },
+    {
+      "id": "wt-events-TRAIT_CONFIG_DELETED-743",
+      "section": "events",
+      "direction": "added",
+      "symbol": "TRAIT_CONFIG_DELETED",
+      "annotation": "",
+      "wikitext_line": 743
+    },
+    {
+      "id": "wt-events-TRAIT_CONFIG_LIST_UPDATED-744",
+      "section": "events",
+      "direction": "added",
+      "symbol": "TRAIT_CONFIG_LIST_UPDATED",
+      "annotation": "",
+      "wikitext_line": 744
+    },
+    {
+      "id": "wt-events-TRAIT_CONFIG_UPDATED-745",
+      "section": "events",
+      "direction": "added",
+      "symbol": "TRAIT_CONFIG_UPDATED",
+      "annotation": "",
+      "wikitext_line": 745
+    },
+    {
+      "id": "wt-events-TRAIT_NODE_CHANGED_PARTIAL-746",
+      "section": "events",
+      "direction": "added",
+      "symbol": "TRAIT_NODE_CHANGED_PARTIAL",
+      "annotation": "",
+      "wikitext_line": 746
+    },
+    {
+      "id": "wt-events-TRAIT_NODE_CHANGED-747",
+      "section": "events",
+      "direction": "added",
+      "symbol": "TRAIT_NODE_CHANGED",
+      "annotation": "",
+      "wikitext_line": 747
+    },
+    {
+      "id": "wt-events-TRAIT_NODE_ENTRY_UPDATED-748",
+      "section": "events",
+      "direction": "added",
+      "symbol": "TRAIT_NODE_ENTRY_UPDATED",
+      "annotation": "",
+      "wikitext_line": 748
+    },
+    {
+      "id": "wt-events-TRAIT_SYSTEM_INTERACTION_STARTED-749",
+      "section": "events",
+      "direction": "added",
+      "symbol": "TRAIT_SYSTEM_INTERACTION_STARTED",
+      "annotation": "",
+      "wikitext_line": 749
+    },
+    {
+      "id": "wt-events-TRAIT_SYSTEM_NPC_CLOSED-750",
+      "section": "events",
+      "direction": "added",
+      "symbol": "TRAIT_SYSTEM_NPC_CLOSED",
+      "annotation": "",
+      "wikitext_line": 750
+    },
+    {
+      "id": "wt-events-TRAIT_TREE_CHANGED-751",
+      "section": "events",
+      "direction": "added",
+      "symbol": "TRAIT_TREE_CHANGED",
+      "annotation": "",
+      "wikitext_line": 751
+    },
+    {
+      "id": "wt-events-TRAIT_TREE_CURRENCY_INFO_UPDATED-752",
+      "section": "events",
+      "direction": "added",
+      "symbol": "TRAIT_TREE_CURRENCY_INFO_UPDATED",
+      "annotation": "",
+      "wikitext_line": 752
+    },
+    {
+      "id": "wt-events-UNIT_FORM_CHANGED-753",
+      "section": "events",
+      "direction": "added",
+      "symbol": "UNIT_FORM_CHANGED",
+      "annotation": "",
+      "wikitext_line": 753
+    },
+    {
+      "id": "wt-events-UNIT_SPELLCAST_EMPOWER_START-754",
+      "section": "events",
+      "direction": "added",
+      "symbol": "UNIT_SPELLCAST_EMPOWER_START",
+      "annotation": "",
+      "wikitext_line": 754
+    },
+    {
+      "id": "wt-events-UNIT_SPELLCAST_EMPOWER_STOP-755",
+      "section": "events",
+      "direction": "added",
+      "symbol": "UNIT_SPELLCAST_EMPOWER_STOP",
+      "annotation": "",
+      "wikitext_line": 755
+    },
+    {
+      "id": "wt-events-UNIT_SPELLCAST_EMPOWER_UPDATE-756",
+      "section": "events",
+      "direction": "added",
+      "symbol": "UNIT_SPELLCAST_EMPOWER_UPDATE",
+      "annotation": "",
+      "wikitext_line": 756
+    },
+    {
+      "id": "wt-events-UPDATE_TRADESKILL_CAST_COMPLETE-757",
+      "section": "events",
+      "direction": "added",
+      "symbol": "UPDATE_TRADESKILL_CAST_COMPLETE",
+      "annotation": "",
+      "wikitext_line": 757
+    },
+    {
+      "id": "wt-events-USE_COMBINED_BAGS_CHANGED-758",
+      "section": "events",
+      "direction": "added",
+      "symbol": "USE_COMBINED_BAGS_CHANGED",
+      "annotation": "",
+      "wikitext_line": 758
+    },
+    {
+      "id": "wt-events-VOICE_CHAT_VAD_SETTINGS_UPDATED-759",
+      "section": "events",
+      "direction": "added",
+      "symbol": "VOICE_CHAT_VAD_SETTINGS_UPDATED",
+      "annotation": "",
+      "wikitext_line": 759
+    },
+    {
+      "id": "wt-events-WEAPON_ENCHANT_CHANGED-760",
+      "section": "events",
+      "direction": "added",
+      "symbol": "WEAPON_ENCHANT_CHANGED",
+      "annotation": "",
+      "wikitext_line": 760
+    },
+    {
+      "id": "wt-events-WEAPON_SLOT_CHANGED-761",
+      "section": "events",
+      "direction": "added",
+      "symbol": "WEAPON_SLOT_CHANGED",
+      "annotation": "",
+      "wikitext_line": 761
+    },
+    {
+      "id": "wt-events-WORLD_PVP_QUEUE-762",
+      "section": "events",
+      "direction": "added",
+      "symbol": "WORLD_PVP_QUEUE",
+      "annotation": "",
+      "wikitext_line": 762
+    },
+    {
+      "id": "wt-events-CHROMIE_TIME_CLOSE-765",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "CHROMIE_TIME_CLOSE",
+      "annotation": "",
+      "wikitext_line": 765
+    },
+    {
+      "id": "wt-events-CHROMIE_TIME_OPEN-766",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "CHROMIE_TIME_OPEN",
+      "annotation": "",
+      "wikitext_line": 766
+    },
+    {
+      "id": "wt-events-CONTRIBUTION_COLLECTOR_CLOSE-767",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "CONTRIBUTION_COLLECTOR_CLOSE",
+      "annotation": "",
+      "wikitext_line": 767
+    },
+    {
+      "id": "wt-events-CONTRIBUTION_COLLECTOR_OPEN-768",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "CONTRIBUTION_COLLECTOR_OPEN",
+      "annotation": "",
+      "wikitext_line": 768
+    },
+    {
+      "id": "wt-events-COVENANT_RENOWN_INTERACTION_ENDED-769",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "COVENANT_RENOWN_INTERACTION_ENDED",
+      "annotation": "",
+      "wikitext_line": 769
+    },
+    {
+      "id": "wt-events-COVENANT_RENOWN_INTERACTION_STARTED-770",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "COVENANT_RENOWN_INTERACTION_STARTED",
+      "annotation": "",
+      "wikitext_line": 770
+    },
+    {
+      "id": "wt-events-COVENANT_SANCTUM_INTERACTION_ENDED-771",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "COVENANT_SANCTUM_INTERACTION_ENDED",
+      "annotation": "",
+      "wikitext_line": 771
+    },
+    {
+      "id": "wt-events-COVENANT_SANCTUM_INTERACTION_STARTED-772",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "COVENANT_SANCTUM_INTERACTION_STARTED",
+      "annotation": "",
+      "wikitext_line": 772
+    },
+    {
+      "id": "wt-events-CURSOR_UPDATE-773",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "CURSOR_UPDATE",
+      "annotation": "",
+      "wikitext_line": 773
+    },
+    {
+      "id": "wt-events-ITEM_INTERACTION_CLOSE-774",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "ITEM_INTERACTION_CLOSE",
+      "annotation": "",
+      "wikitext_line": 774
+    },
+    {
+      "id": "wt-events-ITEM_INTERACTION_OPEN-775",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "ITEM_INTERACTION_OPEN",
+      "annotation": "",
+      "wikitext_line": 775
+    },
+    {
+      "id": "wt-events-ITEM_UPGRADE_MASTER_CLOSED-776",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "ITEM_UPGRADE_MASTER_CLOSED",
+      "annotation": "",
+      "wikitext_line": 776
+    },
+    {
+      "id": "wt-events-ITEM_UPGRADE_MASTER_OPENED-777",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "ITEM_UPGRADE_MASTER_OPENED",
+      "annotation": "",
+      "wikitext_line": 777
+    },
+    {
+      "id": "wt-events-OBLITERUM_FORGE_CLOSE-778",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "OBLITERUM_FORGE_CLOSE",
+      "annotation": "",
+      "wikitext_line": 778
+    },
+    {
+      "id": "wt-events-OBLITERUM_FORGE_SHOW-779",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "OBLITERUM_FORGE_SHOW",
+      "annotation": "",
+      "wikitext_line": 779
+    },
+    {
+      "id": "wt-events-RESPEC_AZERITE_EMPOWERED_ITEM_CLOSED-780",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "RESPEC_AZERITE_EMPOWERED_ITEM_CLOSED",
+      "annotation": "",
+      "wikitext_line": 780
+    },
+    {
+      "id": "wt-events-RESPEC_AZERITE_EMPOWERED_ITEM_OPENED-781",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "RESPEC_AZERITE_EMPOWERED_ITEM_OPENED",
+      "annotation": "",
+      "wikitext_line": 781
+    },
+    {
+      "id": "wt-events-SCRAPPING_MACHINE_CLOSE-782",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "SCRAPPING_MACHINE_CLOSE",
+      "annotation": "",
+      "wikitext_line": 782
+    },
+    {
+      "id": "wt-events-SCRAPPING_MACHINE_SHOW-783",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "SCRAPPING_MACHINE_SHOW",
+      "annotation": "",
+      "wikitext_line": 783
+    },
+    {
+      "id": "wt-events-TRADE_SKILL_OPTIONAL_REAGENT_BONUS_TEXT_UPDATED-784",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "TRADE_SKILL_OPTIONAL_REAGENT_BONUS_TEXT_UPDATED",
+      "annotation": "",
+      "wikitext_line": 784
+    },
+    {
+      "id": "wt-events-VOID_STORAGE_CLOSE-785",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "VOID_STORAGE_CLOSE",
+      "annotation": "",
+      "wikitext_line": 785
+    },
+    {
+      "id": "wt-events-VOID_STORAGE_OPEN-786",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "VOID_STORAGE_OPEN",
+      "annotation": "",
+      "wikitext_line": 786
+    },
+    {
+      "id": "wt-events-WEEKLY_REWARDS_HIDE-787",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "WEEKLY_REWARDS_HIDE",
+      "annotation": "",
+      "wikitext_line": 787
+    },
+    {
+      "id": "wt-events-WEEKLY_REWARDS_SHOW-788",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "WEEKLY_REWARDS_SHOW",
+      "annotation": "",
+      "wikitext_line": 788
+    },
+    {
+      "id": "wt-events-WORLD_MAP_CLOSE-789",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "WORLD_MAP_CLOSE",
+      "annotation": "",
+      "wikitext_line": 789
+    },
+    {
+      "id": "wt-events-GOSSIP_CONFIRM-792",
+      "section": "events",
+      "direction": "changed",
+      "symbol": "GOSSIP_CONFIRM",
+      "annotation": "+ 1: gossipID\n- 1: gossipIndex",
+      "wikitext_line": 792
+    },
+    {
+      "id": "wt-events-GOSSIP_ENTER_CODE-792",
+      "section": "events",
+      "direction": "changed",
+      "symbol": "GOSSIP_ENTER_CODE",
+      "annotation": "+ 1: gossipID\n- 1: gossipIndex",
+      "wikitext_line": 792
+    },
+    {
+      "id": "wt-events-PVP_TYPES_ENABLED-795",
+      "section": "events",
+      "direction": "changed",
+      "symbol": "PVP_TYPES_ENABLED",
+      "annotation": "+ 4: ratedSoloShuffle",
+      "wikitext_line": 795
+    },
+    {
+      "id": "wt-events-REPORT_PLAYER_RESULT-797",
+      "section": "events",
+      "direction": "changed",
+      "symbol": "REPORT_PLAYER_RESULT",
+      "annotation": "+ 2: reportType",
+      "wikitext_line": 797
+    },
+    {
+      "id": "wt-events-UNIT_AURA-799",
+      "section": "events",
+      "direction": "changed",
+      "symbol": "UNIT_AURA",
+      "annotation": "+ 2: updateInfo\n- 2: isFullUpdate\n- 3: updatedAuras",
+      "wikitext_line": 799
+    },
+    {
+      "id": "wt-cvars-ActionButtonUseKeyHeldSpell-811",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "ActionButtonUseKeyHeldSpell",
+      "annotation": "",
+      "wikitext_line": 811,
+      "page_default": "0"
+    },
+    {
+      "id": "wt-cvars-AdvFlyingDynamicFOVEnabled-812",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "AdvFlyingDynamicFOVEnabled",
+      "annotation": "",
+      "wikitext_line": 812,
+      "page_default": "1"
+    },
+    {
+      "id": "wt-cvars-calendarShowResets-813",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "calendarShowResets",
+      "annotation": "",
+      "wikitext_line": 813,
+      "page_default": "0"
+    },
+    {
+      "id": "wt-cvars-CMAA2HalfFloat-814",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "CMAA2HalfFloat",
+      "annotation": "",
+      "wikitext_line": 814,
+      "page_default": "0"
+    },
+    {
+      "id": "wt-cvars-combinedBags-815",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "combinedBags",
+      "annotation": "",
+      "wikitext_line": 815,
+      "page_default": "0"
+    },
+    {
+      "id": "wt-cvars-dragonRidingPitchSensitivity-816",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "dragonRidingPitchSensitivity",
+      "annotation": "",
+      "wikitext_line": 816,
+      "page_default": "2.5"
+    },
+    {
+      "id": "wt-cvars-dragonRidingTurnSensitivity-817",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "dragonRidingTurnSensitivity",
+      "annotation": "",
+      "wikitext_line": 817,
+      "page_default": "5"
+    },
+    {
+      "id": "wt-cvars-DynamicVRSSensitivityThreshold-818",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "DynamicVRSSensitivityThreshold",
+      "annotation": "",
+      "wikitext_line": 818,
+      "page_default": "0"
+    },
+    {
+      "id": "wt-cvars-EmpowerMinHoldStagePercent-819",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "EmpowerMinHoldStagePercent",
+      "annotation": "",
+      "wikitext_line": 819,
+      "page_default": "1.000000"
+    },
+    {
+      "id": "wt-cvars-EmpowerTapControlsReleaseThreshold-820",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "EmpowerTapControlsReleaseThreshold",
+      "annotation": "",
+      "wikitext_line": 820,
+      "page_default": "300"
+    },
+    {
+      "id": "wt-cvars-empowerTapControls-821",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "empowerTapControls",
+      "annotation": "",
+      "wikitext_line": 821,
+      "page_default": "0"
+    },
+    {
+      "id": "wt-cvars-expandBagBar-822",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "expandBagBar",
+      "annotation": "",
+      "wikitext_line": 822,
+      "page_default": "1"
+    },
+    {
+      "id": "wt-cvars-ForceGenerateSlug-823",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "ForceGenerateSlug",
+      "annotation": "",
+      "wikitext_line": 823,
+      "page_default": "0"
+    },
+    {
+      "id": "wt-cvars-fstack_enabled-824",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "fstack_enabled",
+      "annotation": "",
+      "wikitext_line": 824,
+      "page_default": "0"
+    },
+    {
+      "id": "wt-cvars-GameDataVisualizer-825",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "GameDataVisualizer",
+      "annotation": "",
+      "wikitext_line": 825,
+      "page_default": "0"
+    },
+    {
+      "id": "wt-cvars-GamePadOverlapMouseMs-826",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "GamePadOverlapMouseMs",
+      "annotation": "",
+      "wikitext_line": 826,
+      "page_default": "2000"
+    },
+    {
+      "id": "wt-cvars-GamePadRunThreshold-827",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "GamePadRunThreshold",
+      "annotation": "",
+      "wikitext_line": 827,
+      "page_default": "0.5"
+    },
+    {
+      "id": "wt-cvars-GxAllowCachelessShaderMode-828",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "GxAllowCachelessShaderMode",
+      "annotation": "",
+      "wikitext_line": 828,
+      "page_default": "0"
+    },
+    {
+      "id": "wt-cvars-interactQuestItems-829",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "interactQuestItems",
+      "annotation": "",
+      "wikitext_line": 829,
+      "page_default": "1"
+    },
+    {
+      "id": "wt-cvars-lastRenownForMajorFaction2503-830",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "lastRenownForMajorFaction2503",
+      "annotation": "",
+      "wikitext_line": 830,
+      "page_default": "0"
+    },
+    {
+      "id": "wt-cvars-lastRenownForMajorFaction2507-831",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "lastRenownForMajorFaction2507",
+      "annotation": "",
+      "wikitext_line": 831,
+      "page_default": "0"
+    },
+    {
+      "id": "wt-cvars-lastRenownForMajorFaction2510-832",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "lastRenownForMajorFaction2510",
+      "annotation": "",
+      "wikitext_line": 832,
+      "page_default": "0"
+    },
+    {
+      "id": "wt-cvars-lastRenownForMajorFaction2511-833",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "lastRenownForMajorFaction2511",
+      "annotation": "",
+      "wikitext_line": 833,
+      "page_default": "0"
+    },
+    {
+      "id": "wt-cvars-LowLatencyMode-834",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "LowLatencyMode",
+      "annotation": "",
+      "wikitext_line": 834,
+      "page_default": "0"
+    },
+    {
+      "id": "wt-cvars-luaErrorExceptions-835",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "luaErrorExceptions",
+      "annotation": "",
+      "wikitext_line": 835,
+      "page_default": "1"
+    },
+    {
+      "id": "wt-cvars-maxLevelSpecsUsed-836",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "maxLevelSpecsUsed",
+      "annotation": "",
+      "wikitext_line": 836,
+      "page_default": "0"
+    },
+    {
+      "id": "wt-cvars-minimapTrackedInfov3-837",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "minimapTrackedInfov3",
+      "annotation": "",
+      "wikitext_line": 837,
+      "page_default": "1006319"
+    },
+    {
+      "id": "wt-cvars-minimapTrackingClosestOnly-838",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "minimapTrackingClosestOnly",
+      "annotation": "",
+      "wikitext_line": 838,
+      "page_default": "1"
+    },
+    {
+      "id": "wt-cvars-minimapTrackingShowAll-839",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "minimapTrackingShowAll",
+      "annotation": "",
+      "wikitext_line": 839,
+      "page_default": "0"
+    },
+    {
+      "id": "wt-cvars-nameplateHideHealthAndPower-840",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "nameplateHideHealthAndPower",
+      "annotation": "",
+      "wikitext_line": 840,
+      "page_default": "0"
+    },
+    {
+      "id": "wt-cvars-nameplatePlayerLargerScale-841",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "nameplatePlayerLargerScale",
+      "annotation": "",
+      "wikitext_line": 841,
+      "page_default": "1.8"
+    },
+    {
+      "id": "wt-cvars-nameplatePlayerMaxDistance-842",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "nameplatePlayerMaxDistance",
+      "annotation": "",
+      "wikitext_line": 842
+    },
+    {
+      "id": "wt-cvars-nameplateShowFriendlyBuffs-843",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "nameplateShowFriendlyBuffs",
+      "annotation": "",
+      "wikitext_line": 843,
+      "page_default": "0"
+    },
+    {
+      "id": "wt-cvars-nameplateShowPersonalCooldowns-844",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "nameplateShowPersonalCooldowns",
+      "annotation": "",
+      "wikitext_line": 844,
+      "page_default": "0"
+    },
+    {
+      "id": "wt-cvars-outlineSoftInteractFadeDuration-845",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "outlineSoftInteractFadeDuration",
+      "annotation": "",
+      "wikitext_line": 845,
+      "page_default": "0.3"
+    },
+    {
+      "id": "wt-cvars-professionGearSlotsExampleShown-846",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "professionGearSlotsExampleShown",
+      "annotation": "",
+      "wikitext_line": 846,
+      "page_default": "0"
+    },
+    {
+      "id": "wt-cvars-professionsAllocateBestQualityReagents-847",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "professionsAllocateBestQualityReagents",
+      "annotation": "",
+      "wikitext_line": 847,
+      "page_default": "1"
+    },
+    {
+      "id": "wt-cvars-professionsFlyoutHideUnowned-848",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "professionsFlyoutHideUnowned",
+      "annotation": "",
+      "wikitext_line": 848,
+      "page_default": "0"
+    },
+    {
+      "id": "wt-cvars-professionsOrderDurationDropdown-849",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "professionsOrderDurationDropdown",
+      "annotation": "",
+      "wikitext_line": 849,
+      "page_default": "2"
+    },
+    {
+      "id": "wt-cvars-professionsOrderRecipientDropdown-850",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "professionsOrderRecipientDropdown",
+      "annotation": "",
+      "wikitext_line": 850,
+      "page_default": "1"
+    },
+    {
+      "id": "wt-cvars-raidFramesDisplayDebuffs-851",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "raidFramesDisplayDebuffs",
+      "annotation": "",
+      "wikitext_line": 851,
+      "page_default": "1"
+    },
+    {
+      "id": "wt-cvars-raidFramesDisplayIncomingHeals-852",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "raidFramesDisplayIncomingHeals",
+      "annotation": "",
+      "wikitext_line": 852,
+      "page_default": "1"
+    },
+    {
+      "id": "wt-cvars-reloadUIOnAspectChange-853",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "reloadUIOnAspectChange",
+      "annotation": "",
+      "wikitext_line": 853,
+      "page_default": "0"
+    },
+    {
+      "id": "wt-cvars-SlugOpticalWeight-854",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "SlugOpticalWeight",
+      "annotation": "",
+      "wikitext_line": 854,
+      "page_default": "0"
+    },
+    {
+      "id": "wt-cvars-SlugSupersampling-855",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "SlugSupersampling",
+      "annotation": "",
+      "wikitext_line": 855,
+      "page_default": "1"
+    },
+    {
+      "id": "wt-cvars-SoftTargetEnemyArc-856",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "SoftTargetEnemyArc",
+      "annotation": "",
+      "wikitext_line": 856,
+      "page_default": "2"
+    },
+    {
+      "id": "wt-cvars-SoftTargetEnemyRange-857",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "SoftTargetEnemyRange",
+      "annotation": "",
+      "wikitext_line": 857,
+      "page_default": "45"
+    },
+    {
+      "id": "wt-cvars-SoftTargetEnemy-858",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "SoftTargetEnemy",
+      "annotation": "",
+      "wikitext_line": 858,
+      "page_default": "1"
+    },
+    {
+      "id": "wt-cvars-SoftTargetForce-859",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "SoftTargetForce",
+      "annotation": "",
+      "wikitext_line": 859,
+      "page_default": "1"
+    },
+    {
+      "id": "wt-cvars-SoftTargetFriendArc-860",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "SoftTargetFriendArc",
+      "annotation": "",
+      "wikitext_line": 860,
+      "page_default": "2"
+    },
+    {
+      "id": "wt-cvars-SoftTargetFriendRange-861",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "SoftTargetFriendRange",
+      "annotation": "",
+      "wikitext_line": 861,
+      "page_default": "45"
+    },
+    {
+      "id": "wt-cvars-SoftTargetFriend-862",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "SoftTargetFriend",
+      "annotation": "",
+      "wikitext_line": 862,
+      "page_default": "0"
+    },
+    {
+      "id": "wt-cvars-SoftTargetIconEnemy-863",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "SoftTargetIconEnemy",
+      "annotation": "",
+      "wikitext_line": 863,
+      "page_default": "0"
+    },
+    {
+      "id": "wt-cvars-SoftTargetIconFriend-864",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "SoftTargetIconFriend",
+      "annotation": "",
+      "wikitext_line": 864,
+      "page_default": "0"
+    },
+    {
+      "id": "wt-cvars-SoftTargetIconGameObject-865",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "SoftTargetIconGameObject",
+      "annotation": "",
+      "wikitext_line": 865,
+      "page_default": "0"
+    },
+    {
+      "id": "wt-cvars-SoftTargetIconInteract-866",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "SoftTargetIconInteract",
+      "annotation": "",
+      "wikitext_line": 866,
+      "page_default": "1"
+    },
+    {
+      "id": "wt-cvars-SoftTargetInteractArc-867",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "SoftTargetInteractArc",
+      "annotation": "",
+      "wikitext_line": 867,
+      "page_default": "0"
+    },
+    {
+      "id": "wt-cvars-SoftTargetInteractRangeIsHard-868",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "SoftTargetInteractRangeIsHard",
+      "annotation": "",
+      "wikitext_line": 868,
+      "page_default": "0"
+    },
+    {
+      "id": "wt-cvars-SoftTargetInteractRange-869",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "SoftTargetInteractRange",
+      "annotation": "",
+      "wikitext_line": 869,
+      "page_default": "10"
+    },
+    {
+      "id": "wt-cvars-SoftTargetInteract-870",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "SoftTargetInteract",
+      "annotation": "",
+      "wikitext_line": 870,
+      "page_default": "1"
+    },
+    {
+      "id": "wt-cvars-SoftTargetLowPriorityIcons-871",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "SoftTargetLowPriorityIcons",
+      "annotation": "",
+      "wikitext_line": 871,
+      "page_default": "0"
+    },
+    {
+      "id": "wt-cvars-SoftTargetMatchLocked-872",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "SoftTargetMatchLocked",
+      "annotation": "",
+      "wikitext_line": 872,
+      "page_default": "1"
+    },
+    {
+      "id": "wt-cvars-SoftTargetNameplateEnemy-873",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "SoftTargetNameplateEnemy",
+      "annotation": "",
+      "wikitext_line": 873,
+      "page_default": "1"
+    },
+    {
+      "id": "wt-cvars-SoftTargetNameplateFriend-874",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "SoftTargetNameplateFriend",
+      "annotation": "",
+      "wikitext_line": 874,
+      "page_default": "0"
+    },
+    {
+      "id": "wt-cvars-SoftTargetNameplateInteract-875",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "SoftTargetNameplateInteract",
+      "annotation": "",
+      "wikitext_line": 875,
+      "page_default": "0"
+    },
+    {
+      "id": "wt-cvars-SoftTargetNameplateSize-876",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "SoftTargetNameplateSize",
+      "annotation": "",
+      "wikitext_line": 876,
+      "page_default": "19"
+    },
+    {
+      "id": "wt-cvars-softTargettingInteractKeySound-877",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "softTargettingInteractKeySound",
+      "annotation": "",
+      "wikitext_line": 877,
+      "page_default": "0"
+    },
+    {
+      "id": "wt-cvars-SoftTargetTooltipDurationMs-878",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "SoftTargetTooltipDurationMs",
+      "annotation": "",
+      "wikitext_line": 878,
+      "page_default": "2000"
+    },
+    {
+      "id": "wt-cvars-SoftTargetTooltipEnemy-879",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "SoftTargetTooltipEnemy",
+      "annotation": "",
+      "wikitext_line": 879,
+      "page_default": "0"
+    },
+    {
+      "id": "wt-cvars-SoftTargetTooltipFriend-880",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "SoftTargetTooltipFriend",
+      "annotation": "",
+      "wikitext_line": 880,
+      "page_default": "0"
+    },
+    {
+      "id": "wt-cvars-SoftTargetTooltipInteract-881",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "SoftTargetTooltipInteract",
+      "annotation": "",
+      "wikitext_line": 881,
+      "page_default": "0"
+    },
+    {
+      "id": "wt-cvars-SoftTargetTooltipLocked-882",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "SoftTargetTooltipLocked",
+      "annotation": "",
+      "wikitext_line": 882,
+      "page_default": "0"
+    },
+    {
+      "id": "wt-cvars-SoftTargetWithLocked-883",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "SoftTargetWithLocked",
+      "annotation": "",
+      "wikitext_line": 883,
+      "page_default": "1"
+    },
+    {
+      "id": "wt-cvars-SoftTargetWorldtextFarDist-884",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "SoftTargetWorldtextFarDist",
+      "annotation": "",
+      "wikitext_line": 884,
+      "page_default": "40"
+    },
+    {
+      "id": "wt-cvars-SoftTargetWorldtextNearDist-885",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "SoftTargetWorldtextNearDist",
+      "annotation": "",
+      "wikitext_line": 885,
+      "page_default": "4"
+    },
+    {
+      "id": "wt-cvars-SoftTargetWorldtextNearScale-886",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "SoftTargetWorldtextNearScale",
+      "annotation": "",
+      "wikitext_line": 886,
+      "page_default": "1"
+    },
+    {
+      "id": "wt-cvars-SoftTargetWorldtextSize-887",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "SoftTargetWorldtextSize",
+      "annotation": "",
+      "wikitext_line": 887,
+      "page_default": "32"
+    },
+    {
+      "id": "wt-cvars-TargetAutoEnemy-888",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "TargetAutoEnemy",
+      "annotation": "",
+      "wikitext_line": 888,
+      "page_default": "1"
+    },
+    {
+      "id": "wt-cvars-TargetAutoFriend-889",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "TargetAutoFriend",
+      "annotation": "",
+      "wikitext_line": 889,
+      "page_default": "1"
+    },
+    {
+      "id": "wt-cvars-TargetEnemyAttacker-890",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "TargetEnemyAttacker",
+      "annotation": "",
+      "wikitext_line": 890,
+      "page_default": "1"
+    },
+    {
+      "id": "wt-cvars-textureErrorColors-891",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "textureErrorColors",
+      "annotation": "",
+      "wikitext_line": 891,
+      "page_default": "1"
+    },
+    {
+      "id": "wt-cvars-trackedProfessionRecipes-892",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "trackedProfessionRecipes",
+      "annotation": "",
+      "wikitext_line": 892
+    },
+    {
+      "id": "wt-cvars-uieditor_enabled-893",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "uieditor_enabled",
+      "annotation": "",
+      "wikitext_line": 893,
+      "page_default": "0"
+    },
+    {
+      "id": "wt-cvars-UseKeyHeldSpellErrorPollTime-894",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "UseKeyHeldSpellErrorPollTime",
+      "annotation": "",
+      "wikitext_line": 894,
+      "page_default": "500"
+    },
+    {
+      "id": "wt-cvars-useMaxFPSBk-895",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "useMaxFPSBk",
+      "annotation": "",
+      "wikitext_line": 895,
+      "page_default": "1"
+    },
+    {
+      "id": "wt-cvars-useMaxFPS-896",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "useMaxFPS",
+      "annotation": "",
+      "wikitext_line": 896,
+      "page_default": "0"
+    },
+    {
+      "id": "wt-cvars-UseSlug-897",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "UseSlug",
+      "annotation": "",
+      "wikitext_line": 897,
+      "page_default": "1"
+    },
+    {
+      "id": "wt-cvars-useTargetFPS-898",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "useTargetFPS",
+      "annotation": "",
+      "wikitext_line": 898,
+      "page_default": "1"
+    },
+    {
+      "id": "wt-cvars-validateFrameXML-899",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "validateFrameXML",
+      "annotation": "",
+      "wikitext_line": 899,
+      "page_default": "1"
+    },
+    {
+      "id": "wt-cvars-WorldTextMinAlpha-900",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "WorldTextMinAlpha",
+      "annotation": "",
+      "wikitext_line": 900,
+      "page_default": "0.5"
+    },
+    {
+      "id": "wt-cvars-WorldTextMinSize-901",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "WorldTextMinSize",
+      "annotation": "",
+      "wikitext_line": 901,
+      "page_default": "0"
+    },
+    {
+      "id": "wt-cvars-LogFps-904",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "LogFps",
+      "annotation": "",
+      "wikitext_line": 904,
+      "kind": "command"
+    },
+    {
+      "id": "wt-cvars-WriteCustomizationOptions-905",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "WriteCustomizationOptions",
+      "annotation": "",
+      "wikitext_line": 905,
+      "kind": "command"
+    },
+    {
+      "id": "wt-cvars-bspcache-908",
+      "section": "cvars",
+      "direction": "removed",
+      "symbol": "bspcache",
+      "annotation": "",
+      "wikitext_line": 908
+    },
+    {
+      "id": "wt-cvars-fullSizeFocusFrame-909",
+      "section": "cvars",
+      "direction": "removed",
+      "symbol": "fullSizeFocusFrame",
+      "annotation": "",
+      "wikitext_line": 909
+    },
+    {
+      "id": "wt-cvars-GamePadAbbreviatedBindingReverse-910",
+      "section": "cvars",
+      "direction": "removed",
+      "symbol": "GamePadAbbreviatedBindingReverse",
+      "annotation": "",
+      "wikitext_line": 910
+    },
+    {
+      "id": "wt-cvars-GamePadEmulateEsc-911",
+      "section": "cvars",
+      "direction": "removed",
+      "symbol": "GamePadEmulateEsc",
+      "annotation": "",
+      "wikitext_line": 911
+    },
+    {
+      "id": "wt-cvars-multiBarRightVerticalLayout-912",
+      "section": "cvars",
+      "direction": "removed",
+      "symbol": "multiBarRightVerticalLayout",
+      "annotation": "",
+      "wikitext_line": 912
+    },
+    {
+      "id": "wt-cvars-physDraw-913",
+      "section": "cvars",
+      "direction": "removed",
+      "symbol": "physDraw",
+      "annotation": "",
+      "wikitext_line": 913
+    },
+    {
+      "id": "wt-cvars-physDrawBroadphase-914",
+      "section": "cvars",
+      "direction": "removed",
+      "symbol": "physDrawBroadphase",
+      "annotation": "",
+      "wikitext_line": 914
+    },
+    {
+      "id": "wt-cvars-physDrawCenterOfMass-915",
+      "section": "cvars",
+      "direction": "removed",
+      "symbol": "physDrawCenterOfMass",
+      "annotation": "",
+      "wikitext_line": 915
+    },
+    {
+      "id": "wt-cvars-physDrawContacts-916",
+      "section": "cvars",
+      "direction": "removed",
+      "symbol": "physDrawContacts",
+      "annotation": "",
+      "wikitext_line": 916
+    },
+    {
+      "id": "wt-cvars-physDrawDMStats-917",
+      "section": "cvars",
+      "direction": "removed",
+      "symbol": "physDrawDMStats",
+      "annotation": "",
+      "wikitext_line": 917
+    },
+    {
+      "id": "wt-cvars-physDrawFixtures-918",
+      "section": "cvars",
+      "direction": "removed",
+      "symbol": "physDrawFixtures",
+      "annotation": "",
+      "wikitext_line": 918
+    },
+    {
+      "id": "wt-cvars-physDrawJoints-919",
+      "section": "cvars",
+      "direction": "removed",
+      "symbol": "physDrawJoints",
+      "annotation": "",
+      "wikitext_line": 919
+    },
+    {
+      "id": "wt-cvars-physDrawStats-920",
+      "section": "cvars",
+      "direction": "removed",
+      "symbol": "physDrawStats",
+      "annotation": "",
+      "wikitext_line": 920
+    },
+    {
+      "id": "wt-cvars-physDrawTransparent-921",
+      "section": "cvars",
+      "direction": "removed",
+      "symbol": "physDrawTransparent",
+      "annotation": "",
+      "wikitext_line": 921
+    },
+    {
+      "id": "wt-cvars-showPartyBackground-922",
+      "section": "cvars",
+      "direction": "removed",
+      "symbol": "showPartyBackground",
+      "annotation": "",
+      "wikitext_line": 922
+    },
+    {
+      "id": "wt-cvars-worldEntityLinkMode-923",
+      "section": "cvars",
+      "direction": "removed",
+      "symbol": "worldEntityLinkMode",
+      "annotation": "",
+      "wikitext_line": 923
+    }
+  ]
+}

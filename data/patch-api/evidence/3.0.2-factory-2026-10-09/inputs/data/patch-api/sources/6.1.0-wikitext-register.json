@@ -1,0 +1,44 @@
+{
+  "schema": "patch-api-wikitext-register/v1",
+  "patch": "6.1.0",
+  "source": {
+    "path": "data/patch-api/sources/6.1.0-api-changes.wikitext",
+    "revid": 1216027,
+    "sha256": "18c268e83e6e34c72e99eaf5318beaaec6b3b097d07fe85d88c2eced94583449"
+  },
+  "header_counts": [],
+  "entries": [
+    {
+      "id": "wt-global-api-SendChatMessage-14",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "SendChatMessage",
+      "annotation": "* [[API SendChatMessage|SendChatMessage()]] no longer accepts non-UTF8 characters.",
+      "wikitext_line": 14
+    },
+    {
+      "id": "wt-global-api-DeathRecap_HasEvents-7",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "DeathRecap_HasEvents",
+      "annotation": "",
+      "wikitext_line": 7
+    },
+    {
+      "id": "wt-global-api-DeathRecap_GetEvents-8",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "DeathRecap_GetEvents",
+      "annotation": "",
+      "wikitext_line": 8
+    },
+    {
+      "id": "wt-global-api-GetDeathRecapLink-9",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetDeathRecapLink",
+      "annotation": "",
+      "wikitext_line": 9
+    }
+  ]
+}

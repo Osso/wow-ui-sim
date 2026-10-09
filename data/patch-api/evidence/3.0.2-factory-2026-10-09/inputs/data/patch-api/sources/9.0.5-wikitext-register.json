@@ -1,0 +1,236 @@
+{
+  "schema": "patch-api-wikitext-register/v1",
+  "patch": "9.0.5",
+  "source": {
+    "path": "data/patch-api/sources/9.0.5-api-changes.wikitext",
+    "revid": 4298844,
+    "sha256": "9c62ac72650f7c6b90761a9640555508e0deb3b07321f863d2a9cfe0dfc95673"
+  },
+  "header_counts": [],
+  "entries": [
+    {
+      "id": "wt-global-api-C_ChallengeMode.CanUseKeystoneInCurrentMap-14",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ChallengeMode.CanUseKeystoneInCurrentMap",
+      "annotation": "",
+      "wikitext_line": 14
+    },
+    {
+      "id": "wt-global-api-C_CovenantSanctumUI.HasMaximumRenown-15",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_CovenantSanctumUI.HasMaximumRenown",
+      "annotation": "",
+      "wikitext_line": 15
+    },
+    {
+      "id": "wt-global-api-C_CovenantSanctumUI.IsPlayerInRenownCatchUpMode-16",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_CovenantSanctumUI.IsPlayerInRenownCatchUpMode",
+      "annotation": "",
+      "wikitext_line": 16
+    },
+    {
+      "id": "wt-global-api-C_CovenantSanctumUI.IsWeeklyRenownCapped-17",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_CovenantSanctumUI.IsWeeklyRenownCapped",
+      "annotation": "",
+      "wikitext_line": 17
+    },
+    {
+      "id": "wt-global-api-C_CovenantSanctumUI.RequestCatchUpState-18",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_CovenantSanctumUI.RequestCatchUpState",
+      "annotation": "",
+      "wikitext_line": 18
+    },
+    {
+      "id": "wt-global-api-C_Garrison.IsFollowerOnCompletedMission-19",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Garrison.IsFollowerOnCompletedMission",
+      "annotation": "",
+      "wikitext_line": 19
+    },
+    {
+      "id": "wt-global-api-C_GossipInfo.GetCustomGossipDescriptionString-20",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_GossipInfo.GetCustomGossipDescriptionString",
+      "annotation": "",
+      "wikitext_line": 20
+    },
+    {
+      "id": "wt-global-api-C_GuildInfo.QueryGuildMembersForRecipe-21",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_GuildInfo.QueryGuildMembersForRecipe",
+      "annotation": "",
+      "wikitext_line": 21
+    },
+    {
+      "id": "wt-global-api-C_ItemUpgrade.CanUpgradeItem-22",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ItemUpgrade.CanUpgradeItem",
+      "annotation": "",
+      "wikitext_line": 22
+    },
+    {
+      "id": "wt-global-api-C_LFGList.GetFilteredSearchResults-23",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_LFGList.GetFilteredSearchResults",
+      "annotation": "",
+      "wikitext_line": 23
+    },
+    {
+      "id": "wt-global-api-C_QuestLog.ShouldDisplayTimeRemaining-24",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_QuestLog.ShouldDisplayTimeRemaining",
+      "annotation": "",
+      "wikitext_line": 24
+    },
+    {
+      "id": "wt-global-api-C_WeeklyRewards.AreRewardsForCurrentRewardPeriod-25",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_WeeklyRewards.AreRewardsForCurrentRewardPeriod",
+      "annotation": "",
+      "wikitext_line": 25
+    },
+    {
+      "id": "wt-global-api-C_WeeklyRewards.GetActivityEncounterInfo-26",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_WeeklyRewards.GetActivityEncounterInfo",
+      "annotation": "",
+      "wikitext_line": 26
+    },
+    {
+      "id": "wt-global-api-C_WeeklyRewards.GetNextMythicPlusIncrease-27",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_WeeklyRewards.GetNextMythicPlusIncrease",
+      "annotation": "",
+      "wikitext_line": 27
+    },
+    {
+      "id": "wt-global-api-C_WeeklyRewards.HasInteraction-28",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_WeeklyRewards.HasInteraction",
+      "annotation": "",
+      "wikitext_line": 28
+    },
+    {
+      "id": "wt-global-api-SpellIsPriorityAura-29",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "SpellIsPriorityAura",
+      "annotation": "",
+      "wikitext_line": 29
+    },
+    {
+      "id": "wt-global-api-C_Soulbinds.GetConduitItemLevel-32",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_Soulbinds.GetConduitItemLevel",
+      "annotation": "",
+      "wikitext_line": 32
+    },
+    {
+      "id": "wt-global-api-QueryGuildMembersForRecipe-33",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "QueryGuildMembersForRecipe",
+      "annotation": "",
+      "wikitext_line": 33
+    },
+    {
+      "id": "wt-widgets-GameTooltip:SetAllowShowWithNoLines-43",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "GameTooltip:SetAllowShowWithNoLines",
+      "annotation": "",
+      "wikitext_line": 43
+    },
+    {
+      "id": "wt-events-COVENANT_RENOWN_CATCH_UP_STATE_UPDATE-53",
+      "section": "events",
+      "direction": "added",
+      "symbol": "COVENANT_RENOWN_CATCH_UP_STATE_UPDATE",
+      "annotation": "",
+      "wikitext_line": 53
+    },
+    {
+      "id": "wt-cvars-CursorFreelookStartDelta-64",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "CursorFreelookStartDelta",
+      "annotation": "",
+      "wikitext_line": 64
+    },
+    {
+      "id": "wt-cvars-ffxLingeringVenari-65",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "ffxLingeringVenari",
+      "annotation": "",
+      "wikitext_line": 65
+    },
+    {
+      "id": "wt-cvars-ffxVenari-66",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "ffxVenari",
+      "annotation": "",
+      "wikitext_line": 66
+    },
+    {
+      "id": "wt-cvars-GamePadFaceMovementThreshold-67",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "GamePadFaceMovementThreshold",
+      "annotation": "",
+      "wikitext_line": 67
+    },
+    {
+      "id": "wt-cvars-GamePadSmoothFacing-68",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "GamePadSmoothFacing",
+      "annotation": "",
+      "wikitext_line": 68
+    },
+    {
+      "id": "wt-cvars-GamePadStickAxisButtons-69",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "GamePadStickAxisButtons",
+      "annotation": "",
+      "wikitext_line": 69
+    },
+    {
+      "id": "wt-cvars-GamePadFaceAngleThreshold-72",
+      "section": "cvars",
+      "direction": "removed",
+      "symbol": "GamePadFaceAngleThreshold",
+      "annotation": "",
+      "wikitext_line": 72
+    },
+    {
+      "id": "wt-cvars-GamePadFaceMovement-73",
+      "section": "cvars",
+      "direction": "removed",
+      "symbol": "GamePadFaceMovement",
+      "annotation": "",
+      "wikitext_line": 73
+    }
+  ]
+}

@@ -1,0 +1,580 @@
+{
+  "schema": "patch-api-wikitext-register/v1",
+  "patch": "5.1.0",
+  "source": {
+    "path": "data/patch-api/sources/5.1.0-api-changes.wikitext",
+    "revid": 2736212,
+    "sha256": "6f6f3ce35868a731d2eede70c0ba839c02aba6ad870a608d65a8e68e56a1ca26"
+  },
+  "header_counts": [
+    {
+      "section": "global-api",
+      "direction": "added",
+      "header_count": 24,
+      "parsed_count": 24
+    },
+    {
+      "section": "global-api",
+      "direction": "removed",
+      "header_count": 3,
+      "parsed_count": 3
+    },
+    {
+      "section": "framexml",
+      "direction": "added",
+      "header_count": 6,
+      "parsed_count": 6
+    },
+    {
+      "section": "framexml",
+      "direction": "removed",
+      "header_count": 1,
+      "parsed_count": 1
+    },
+    {
+      "section": "events",
+      "direction": "added",
+      "header_count": 6,
+      "parsed_count": 6
+    },
+    {
+      "section": "events",
+      "direction": "removed",
+      "header_count": 2,
+      "parsed_count": 2
+    },
+    {
+      "section": "widgets",
+      "direction": "added",
+      "header_count": 7,
+      "parsed_count": 7
+    },
+    {
+      "section": "widgets",
+      "direction": "removed",
+      "header_count": 0,
+      "parsed_count": 0
+    },
+    {
+      "section": "widgets",
+      "direction": "added",
+      "header_count": 0,
+      "parsed_count": 0
+    },
+    {
+      "section": "widgets",
+      "direction": "removed",
+      "header_count": 2,
+      "parsed_count": 2
+    }
+  ],
+  "entries": [
+    {
+      "id": "wt-global-api-UnitIsBattlePet-9",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "UnitIsBattlePet",
+      "annotation": "* {{api|UnitIsBattlePet}} and {{api|UnitBattlePetSpeciesID}} added, and can be used to identify battle pets.",
+      "wikitext_line": 9
+    },
+    {
+      "id": "wt-global-api-UnitBattlePetSpeciesID-9",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "UnitBattlePetSpeciesID",
+      "annotation": "* {{api|UnitIsBattlePet}} and {{api|UnitBattlePetSpeciesID}} added, and can be used to identify battle pets.",
+      "wikitext_line": 9
+    },
+    {
+      "id": "wt-global-api-HasVehicleActionBar-11",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "HasVehicleActionBar",
+      "annotation": "** {{api|HasVehicleActionBar}}",
+      "wikitext_line": 11
+    },
+    {
+      "id": "wt-global-api-HasOverrideActionBar-12",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "HasOverrideActionBar",
+      "annotation": "** {{api|HasOverrideActionBar}}",
+      "wikitext_line": 12
+    },
+    {
+      "id": "wt-global-api-HasTempShapeshiftActionBar-13",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "HasTempShapeshiftActionBar",
+      "annotation": "** {{api|HasTempShapeshiftActionBar}}",
+      "wikitext_line": 13
+    },
+    {
+      "id": "wt-global-api-HasOverrideUI-14",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "HasOverrideUI",
+      "annotation": "** {{api|HasOverrideUI}}",
+      "wikitext_line": 14
+    },
+    {
+      "id": "wt-global-api-GetVehicleBarIndex-15",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetVehicleBarIndex",
+      "annotation": "** {{api|GetVehicleBarIndex}}",
+      "wikitext_line": 15
+    },
+    {
+      "id": "wt-global-api-GetOverrideBarIndex-16",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetOverrideBarIndex",
+      "annotation": "** {{api|GetOverrideBarIndex}}",
+      "wikitext_line": 16
+    },
+    {
+      "id": "wt-global-api-HasExtraActionBar-17",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "HasExtraActionBar",
+      "annotation": "** {{api|HasExtraActionBar}}",
+      "wikitext_line": 17
+    },
+    {
+      "id": "wt-global-api-GetTempShapeshiftBarIndex-18",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetTempShapeshiftBarIndex",
+      "annotation": "** {{api|GetTempShapeshiftBarIndex}}",
+      "wikitext_line": 18
+    },
+    {
+      "id": "wt-global-api-CanExitVehicle-19",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CanExitVehicle",
+      "annotation": "** {{api|CanExitVehicle}}",
+      "wikitext_line": 19
+    },
+    {
+      "id": "wt-widgets-Cooldown:SetCooldown-20",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "Cooldown:SetCooldown",
+      "annotation": "* The {{api|t=w|Cooldown:SetCooldown}} function now automatically shows/hides the Cooldown widget when the cooldown animation is active and when it completes.",
+      "wikitext_line": 20
+    },
+    {
+      "id": "diff-wt-global-api-C_LossOfControl.GetEventInfo-10",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_LossOfControl.GetEventInfo",
+      "annotation": "",
+      "wikitext_line": 10
+    },
+    {
+      "id": "diff-wt-global-api-C_LossOfControl.GetNumEvents-11",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_LossOfControl.GetNumEvents",
+      "annotation": "",
+      "wikitext_line": 11
+    },
+    {
+      "id": "diff-wt-global-api-C_PetJournal.FindPetIDByName-12",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PetJournal.FindPetIDByName",
+      "annotation": "",
+      "wikitext_line": 12
+    },
+    {
+      "id": "diff-wt-global-api-C_PetJournal.GetNumCollectedInfo-13",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PetJournal.GetNumCollectedInfo",
+      "annotation": "",
+      "wikitext_line": 13
+    },
+    {
+      "id": "diff-wt-global-api-C_PetJournal.GetOwnedBattlePetString-14",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PetJournal.GetOwnedBattlePetString",
+      "annotation": "",
+      "wikitext_line": 14
+    },
+    {
+      "id": "diff-wt-global-api-C_PetJournal.GetPetSortParameter-15",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PetJournal.GetPetSortParameter",
+      "annotation": "",
+      "wikitext_line": 15
+    },
+    {
+      "id": "diff-wt-global-api-C_PetJournal.GetPetTeamAverageLevel-16",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PetJournal.GetPetTeamAverageLevel",
+      "annotation": "",
+      "wikitext_line": 16
+    },
+    {
+      "id": "diff-wt-global-api-C_PetJournal.GetSummonedPetGUID-17",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PetJournal.GetSummonedPetGUID",
+      "annotation": "",
+      "wikitext_line": 17
+    },
+    {
+      "id": "diff-wt-global-api-C_PetJournal.SetPetSortParameter-18",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PetJournal.SetPetSortParameter",
+      "annotation": "",
+      "wikitext_line": 18
+    },
+    {
+      "id": "diff-wt-global-api-C_PetJournal.SummonPetByGUID-19",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PetJournal.SummonPetByGUID",
+      "annotation": "",
+      "wikitext_line": 19
+    },
+    {
+      "id": "diff-wt-global-api-C_PetJournal.SummonRandomPet-20",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PetJournal.SummonRandomPet",
+      "annotation": "",
+      "wikitext_line": 20
+    },
+    {
+      "id": "diff-wt-global-api-FlyoutHasSpell-21",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "FlyoutHasSpell",
+      "annotation": "",
+      "wikitext_line": 21
+    },
+    {
+      "id": "diff-wt-global-api-GetActionLossOfControlCooldown-22",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetActionLossOfControlCooldown",
+      "annotation": "",
+      "wikitext_line": 22
+    },
+    {
+      "id": "diff-wt-global-api-GetFriendshipReputationRanks-23",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetFriendshipReputationRanks",
+      "annotation": "",
+      "wikitext_line": 23
+    },
+    {
+      "id": "diff-wt-global-api-GetHomePartyInfo-24",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetHomePartyInfo",
+      "annotation": "",
+      "wikitext_line": 24
+    },
+    {
+      "id": "diff-wt-global-api-GetPvpPowerDamage-25",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetPvpPowerDamage",
+      "annotation": "",
+      "wikitext_line": 25
+    },
+    {
+      "id": "diff-wt-global-api-GetPvpPowerHealing-26",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetPvpPowerHealing",
+      "annotation": "",
+      "wikitext_line": 26
+    },
+    {
+      "id": "diff-wt-global-api-InActiveBattlefield-27",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "InActiveBattlefield",
+      "annotation": "",
+      "wikitext_line": 27
+    },
+    {
+      "id": "diff-wt-global-api-IsLFGComplete-28",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "IsLFGComplete",
+      "annotation": "",
+      "wikitext_line": 28
+    },
+    {
+      "id": "diff-wt-global-api-IsTradeSkillRepeating-29",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "IsTradeSkillRepeating",
+      "annotation": "",
+      "wikitext_line": 29
+    },
+    {
+      "id": "diff-wt-global-api-PickupPetSpell-30",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "PickupPetSpell",
+      "annotation": "",
+      "wikitext_line": 30
+    },
+    {
+      "id": "diff-wt-global-api-SetTradeSkillRepeatCount-31",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "SetTradeSkillRepeatCount",
+      "annotation": "",
+      "wikitext_line": 31
+    },
+    {
+      "id": "diff-wt-global-api-UnitBattlePetSpeciesID-32",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "UnitBattlePetSpeciesID",
+      "annotation": "",
+      "wikitext_line": 32
+    },
+    {
+      "id": "diff-wt-global-api-UnitIsBattlePet-33",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "UnitIsBattlePet",
+      "annotation": "",
+      "wikitext_line": 33
+    },
+    {
+      "id": "diff-wt-global-api-C_PetJournal.GetSummonedPetID-36",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_PetJournal.GetSummonedPetID",
+      "annotation": "",
+      "wikitext_line": 36
+    },
+    {
+      "id": "diff-wt-global-api-C_PetJournal.SummonPetByID-37",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_PetJournal.SummonPetByID",
+      "annotation": "",
+      "wikitext_line": 37
+    },
+    {
+      "id": "diff-wt-global-api-GetFriendshipReputationByID-38",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetFriendshipReputationByID",
+      "annotation": "",
+      "wikitext_line": 38
+    },
+    {
+      "id": "diff-wt-framexml-ConfirmOrLeaveBattlefield-50",
+      "section": "framexml",
+      "direction": "added",
+      "symbol": "ConfirmOrLeaveBattlefield",
+      "annotation": "",
+      "wikitext_line": 50
+    },
+    {
+      "id": "diff-wt-framexml-ConfirmOrLeaveLFGParty-51",
+      "section": "framexml",
+      "direction": "added",
+      "symbol": "ConfirmOrLeaveLFGParty",
+      "annotation": "",
+      "wikitext_line": 51
+    },
+    {
+      "id": "diff-wt-framexml-GetRelativeDifficultyColor-52",
+      "section": "framexml",
+      "direction": "added",
+      "symbol": "GetRelativeDifficultyColor",
+      "annotation": "",
+      "wikitext_line": 52
+    },
+    {
+      "id": "diff-wt-framexml-IsLFGModeActive-53",
+      "section": "framexml",
+      "direction": "added",
+      "symbol": "IsLFGModeActive",
+      "annotation": "",
+      "wikitext_line": 53
+    },
+    {
+      "id": "diff-wt-framexml-ShowFriendshipReputationTooltip-54",
+      "section": "framexml",
+      "direction": "added",
+      "symbol": "ShowFriendshipReputationTooltip",
+      "annotation": "",
+      "wikitext_line": 54
+    },
+    {
+      "id": "diff-wt-framexml-ShowStatInCategory-55",
+      "section": "framexml",
+      "direction": "added",
+      "symbol": "ShowStatInCategory",
+      "annotation": "",
+      "wikitext_line": 55
+    },
+    {
+      "id": "diff-wt-framexml-CheckForMapInBlacklist-58",
+      "section": "framexml",
+      "direction": "removed",
+      "symbol": "CheckForMapInBlacklist",
+      "annotation": "",
+      "wikitext_line": 58
+    },
+    {
+      "id": "diff-wt-events-CHAT_MSG_INSTANCE_CHAT_LEADER-70",
+      "section": "events",
+      "direction": "added",
+      "symbol": "CHAT_MSG_INSTANCE_CHAT_LEADER",
+      "annotation": "",
+      "wikitext_line": 70
+    },
+    {
+      "id": "diff-wt-events-CHAT_MSG_INSTANCE_CHAT-71",
+      "section": "events",
+      "direction": "added",
+      "symbol": "CHAT_MSG_INSTANCE_CHAT",
+      "annotation": "",
+      "wikitext_line": 71
+    },
+    {
+      "id": "diff-wt-events-GROUP_JOINED-72",
+      "section": "events",
+      "direction": "added",
+      "symbol": "GROUP_JOINED",
+      "annotation": "",
+      "wikitext_line": 72
+    },
+    {
+      "id": "diff-wt-events-LOSS_OF_CONTROL_ADDED-73",
+      "section": "events",
+      "direction": "added",
+      "symbol": "LOSS_OF_CONTROL_ADDED",
+      "annotation": "",
+      "wikitext_line": 73
+    },
+    {
+      "id": "diff-wt-events-LOSS_OF_CONTROL_UPDATE-74",
+      "section": "events",
+      "direction": "added",
+      "symbol": "LOSS_OF_CONTROL_UPDATE",
+      "annotation": "",
+      "wikitext_line": 74
+    },
+    {
+      "id": "diff-wt-events-PET_BATTLE_LOOT_RECEIVED-75",
+      "section": "events",
+      "direction": "added",
+      "symbol": "PET_BATTLE_LOOT_RECEIVED",
+      "annotation": "",
+      "wikitext_line": 75
+    },
+    {
+      "id": "diff-wt-events-CHAT_MSG_BATTLEGROUND-78",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "CHAT_MSG_BATTLEGROUND",
+      "annotation": "",
+      "wikitext_line": 78
+    },
+    {
+      "id": "diff-wt-events-CHAT_MSG_BATTLEGROUND_LEADER-79",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "CHAT_MSG_BATTLEGROUND_LEADER",
+      "annotation": "",
+      "wikitext_line": 79
+    },
+    {
+      "id": "diff-wt-widgets-Cooldown:SetLossOfControlCooldown-91",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "Cooldown:SetLossOfControlCooldown",
+      "annotation": "",
+      "wikitext_line": 91
+    },
+    {
+      "id": "diff-wt-widgets-GameTooltip:SetUpgradeItem-92",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "GameTooltip:SetUpgradeItem",
+      "annotation": "",
+      "wikitext_line": 92
+    },
+    {
+      "id": "diff-wt-widgets-Path:CreateControlPoint-93",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "Path:CreateControlPoint",
+      "annotation": "",
+      "wikitext_line": 93
+    },
+    {
+      "id": "diff-wt-widgets-Path:GetControlPoints-94",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "Path:GetControlPoints",
+      "annotation": "",
+      "wikitext_line": 94
+    },
+    {
+      "id": "diff-wt-widgets-Path:GetCurve-95",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "Path:GetCurve",
+      "annotation": "",
+      "wikitext_line": 95
+    },
+    {
+      "id": "diff-wt-widgets-Path:GetMaxOrder-96",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "Path:GetMaxOrder",
+      "annotation": "",
+      "wikitext_line": 96
+    },
+    {
+      "id": "diff-wt-widgets-Path:SetCurve-97",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "Path:SetCurve",
+      "annotation": "",
+      "wikitext_line": 97
+    },
+    {
+      "id": "diff-wt-widgets-Animation OnEvent-115",
+      "section": "widgets",
+      "direction": "removed",
+      "symbol": "Animation OnEvent",
+      "annotation": "",
+      "wikitext_line": 115,
+      "kind": "widget-script"
+    },
+    {
+      "id": "diff-wt-widgets-AnimationGroup OnEvent-116",
+      "section": "widgets",
+      "direction": "removed",
+      "symbol": "AnimationGroup OnEvent",
+      "annotation": "",
+      "wikitext_line": 116,
+      "kind": "widget-script"
+    }
+  ],
+  "client_line": "retail"
+}

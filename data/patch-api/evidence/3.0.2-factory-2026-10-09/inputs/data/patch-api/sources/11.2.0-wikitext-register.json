@@ -1,0 +1,1372 @@
+{
+  "schema": "patch-api-wikitext-register/v1",
+  "patch": "11.2.0",
+  "source": {
+    "path": "data/patch-api/sources/11.2.0-api-changes.wikitext",
+    "revid": 6726773,
+    "sha256": "eea31d2692950b42d6e2395b0fc2d031757a41fb5f9acd63a082e540127b1af2"
+  },
+  "header_counts": [
+    {
+      "section": "global-api",
+      "direction": "added",
+      "header_count": 55,
+      "parsed_count": 55
+    },
+    {
+      "section": "global-api",
+      "direction": "removed",
+      "header_count": 46,
+      "parsed_count": 46
+    },
+    {
+      "section": "widgets",
+      "direction": "added",
+      "header_count": 15,
+      "parsed_count": 15
+    },
+    {
+      "section": "widgets",
+      "direction": "removed",
+      "header_count": 1,
+      "parsed_count": 1
+    },
+    {
+      "section": "events",
+      "direction": "added",
+      "header_count": 14,
+      "parsed_count": 14
+    },
+    {
+      "section": "events",
+      "direction": "removed",
+      "header_count": 10,
+      "parsed_count": 10
+    },
+    {
+      "section": "cvars",
+      "direction": "added",
+      "header_count": 15,
+      "parsed_count": 15
+    },
+    {
+      "section": "cvars",
+      "direction": "removed",
+      "header_count": 2,
+      "parsed_count": 2
+    }
+  ],
+  "entries": [
+    {
+      "id": "wt-global-api-C_Bank.AreAnyBankTypesViewable-37",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Bank.AreAnyBankTypesViewable",
+      "annotation": "",
+      "wikitext_line": 37
+    },
+    {
+      "id": "wt-global-api-C_Bank.DoesBankTypeSupportAutoDeposit-38",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Bank.DoesBankTypeSupportAutoDeposit",
+      "annotation": "",
+      "wikitext_line": 38
+    },
+    {
+      "id": "wt-global-api-C_Bank.DoesBankTypeSupportMoneyTransfer-39",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Bank.DoesBankTypeSupportMoneyTransfer",
+      "annotation": "",
+      "wikitext_line": 39
+    },
+    {
+      "id": "wt-global-api-C_Bank.FetchBankLockedReason-40",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Bank.FetchBankLockedReason",
+      "annotation": "",
+      "wikitext_line": 40
+    },
+    {
+      "id": "wt-global-api-C_Bank.FetchNextPurchasableBankTabData-41",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Bank.FetchNextPurchasableBankTabData",
+      "annotation": "",
+      "wikitext_line": 41
+    },
+    {
+      "id": "wt-global-api-C_Bank.FetchViewableBankTypes-42",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Bank.FetchViewableBankTypes",
+      "annotation": "",
+      "wikitext_line": 42
+    },
+    {
+      "id": "wt-global-api-C_ChallengeMode.GetLeaverPenaltyWarningTimeLeft-43",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ChallengeMode.GetLeaverPenaltyWarningTimeLeft",
+      "annotation": "",
+      "wikitext_line": 43
+    },
+    {
+      "id": "wt-global-api-C_ChallengeMode.GetStartTime-44",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ChallengeMode.GetStartTime",
+      "annotation": "",
+      "wikitext_line": 44
+    },
+    {
+      "id": "wt-global-api-C_ChallengeMode.IsChallengeModeResettable-45",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ChallengeMode.IsChallengeModeResettable",
+      "annotation": "",
+      "wikitext_line": 45
+    },
+    {
+      "id": "wt-global-api-C_ChatInfo.SendChatMessage-46",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ChatInfo.SendChatMessage",
+      "annotation": "",
+      "wikitext_line": 46
+    },
+    {
+      "id": "wt-global-api-C_Club.AreMembersReady-47",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Club.AreMembersReady",
+      "annotation": "",
+      "wikitext_line": 47
+    },
+    {
+      "id": "wt-global-api-C_Club.FocusMembers-48",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Club.FocusMembers",
+      "annotation": "",
+      "wikitext_line": 48
+    },
+    {
+      "id": "wt-global-api-C_Club.UnfocusMembers-49",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Club.UnfocusMembers",
+      "annotation": "",
+      "wikitext_line": 49
+    },
+    {
+      "id": "wt-global-api-C_Container.HasContainerItem-50",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Container.HasContainerItem",
+      "annotation": "",
+      "wikitext_line": 50
+    },
+    {
+      "id": "wt-global-api-C_Container.SortBank-51",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Container.SortBank",
+      "annotation": "",
+      "wikitext_line": 51
+    },
+    {
+      "id": "wt-global-api-C_InstanceLeaver.IsPlayerLeaver-52",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_InstanceLeaver.IsPlayerLeaver",
+      "annotation": "",
+      "wikitext_line": 52
+    },
+    {
+      "id": "wt-global-api-C_LFGInfo.GetLevelUpInstances-53",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_LFGInfo.GetLevelUpInstances",
+      "annotation": "",
+      "wikitext_line": 53
+    },
+    {
+      "id": "wt-global-api-C_LFGList.GetGroupLeaverCountsByRole-54",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_LFGList.GetGroupLeaverCountsByRole",
+      "annotation": "",
+      "wikitext_line": 54
+    },
+    {
+      "id": "wt-global-api-C_PaperDollInfo.GetInspectRatedBGData-55",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PaperDollInfo.GetInspectRatedBGData",
+      "annotation": "",
+      "wikitext_line": 55
+    },
+    {
+      "id": "wt-global-api-C_PaperDollInfo.IsInventorySlotEnabled-56",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PaperDollInfo.IsInventorySlotEnabled",
+      "annotation": "",
+      "wikitext_line": 56
+    },
+    {
+      "id": "wt-global-api-C_PartyInfo.CanStartInstanceAbandonVote-57",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PartyInfo.CanStartInstanceAbandonVote",
+      "annotation": "",
+      "wikitext_line": 57
+    },
+    {
+      "id": "wt-global-api-C_PartyInfo.ChallengeModeRestrictionsActive-58",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PartyInfo.ChallengeModeRestrictionsActive",
+      "annotation": "",
+      "wikitext_line": 58
+    },
+    {
+      "id": "wt-global-api-C_PartyInfo.GetAvailableLootMethods-59",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PartyInfo.GetAvailableLootMethods",
+      "annotation": "",
+      "wikitext_line": 59
+    },
+    {
+      "id": "wt-global-api-C_PartyInfo.GetInstanceAbandonShutdownTime-60",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PartyInfo.GetInstanceAbandonShutdownTime",
+      "annotation": "",
+      "wikitext_line": 60
+    },
+    {
+      "id": "wt-global-api-C_PartyInfo.GetInstanceAbandonVoteRequirements-61",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PartyInfo.GetInstanceAbandonVoteRequirements",
+      "annotation": "",
+      "wikitext_line": 61
+    },
+    {
+      "id": "wt-global-api-C_PartyInfo.GetInstanceAbandonVoteResponse-62",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PartyInfo.GetInstanceAbandonVoteResponse",
+      "annotation": "",
+      "wikitext_line": 62
+    },
+    {
+      "id": "wt-global-api-C_PartyInfo.GetInstanceAbandonVoteTime-63",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PartyInfo.GetInstanceAbandonVoteTime",
+      "annotation": "",
+      "wikitext_line": 63
+    },
+    {
+      "id": "wt-global-api-C_PartyInfo.GetLootMethod-64",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PartyInfo.GetLootMethod",
+      "annotation": "",
+      "wikitext_line": 64
+    },
+    {
+      "id": "wt-global-api-C_PartyInfo.GetNumInstanceAbandonGroupVoteResponses-65",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PartyInfo.GetNumInstanceAbandonGroupVoteResponses",
+      "annotation": "",
+      "wikitext_line": 65
+    },
+    {
+      "id": "wt-global-api-C_PartyInfo.IsChallengeModeActive-66",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PartyInfo.IsChallengeModeActive",
+      "annotation": "",
+      "wikitext_line": 66
+    },
+    {
+      "id": "wt-global-api-C_PartyInfo.IsChallengeModeKeystoneOwner-67",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PartyInfo.IsChallengeModeKeystoneOwner",
+      "annotation": "",
+      "wikitext_line": 67
+    },
+    {
+      "id": "wt-global-api-C_PartyInfo.SetInstanceAbandonVoteResponse-68",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PartyInfo.SetInstanceAbandonVoteResponse",
+      "annotation": "",
+      "wikitext_line": 68
+    },
+    {
+      "id": "wt-global-api-C_PartyInfo.SetLootMethod-69",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PartyInfo.SetLootMethod",
+      "annotation": "",
+      "wikitext_line": 69
+    },
+    {
+      "id": "wt-global-api-C_PartyInfo.StartInstanceAbandonVote-70",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PartyInfo.StartInstanceAbandonVote",
+      "annotation": "",
+      "wikitext_line": 70
+    },
+    {
+      "id": "wt-global-api-C_PetJournal.DismissSummonedPet-71",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PetJournal.DismissSummonedPet",
+      "annotation": "",
+      "wikitext_line": 71
+    },
+    {
+      "id": "wt-global-api-C_PetJournal.IsCurrentlySummoned-72",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PetJournal.IsCurrentlySummoned",
+      "annotation": "",
+      "wikitext_line": 72
+    },
+    {
+      "id": "wt-global-api-C_PlayerInfo.IsAccountBankEnabled-73",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PlayerInfo.IsAccountBankEnabled",
+      "annotation": "",
+      "wikitext_line": 73
+    },
+    {
+      "id": "wt-global-api-C_PlayerInfo.IsCharacterBankEnabled-74",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PlayerInfo.IsCharacterBankEnabled",
+      "annotation": "",
+      "wikitext_line": 74
+    },
+    {
+      "id": "wt-global-api-C_SpecializationInfo.GetActiveSpecGroup-75",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_SpecializationInfo.GetActiveSpecGroup",
+      "annotation": "",
+      "wikitext_line": 75
+    },
+    {
+      "id": "wt-global-api-C_SpecializationInfo.GetSpecializationInfo-76",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_SpecializationInfo.GetSpecializationInfo",
+      "annotation": "",
+      "wikitext_line": 76
+    },
+    {
+      "id": "wt-global-api-C_SpecializationInfo.GetSpecializationMasterySpells-77",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_SpecializationInfo.GetSpecializationMasterySpells",
+      "annotation": "",
+      "wikitext_line": 77
+    },
+    {
+      "id": "wt-global-api-C_SpecializationInfo.GetSpecialization-78",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_SpecializationInfo.GetSpecialization",
+      "annotation": "",
+      "wikitext_line": 78
+    },
+    {
+      "id": "wt-global-api-C_SpecializationInfo.GetTalentInfo-79",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_SpecializationInfo.GetTalentInfo",
+      "annotation": "",
+      "wikitext_line": 79
+    },
+    {
+      "id": "wt-global-api-C_Spell.CancelSpellByID-80",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Spell.CancelSpellByID",
+      "annotation": "",
+      "wikitext_line": 80
+    },
+    {
+      "id": "wt-global-api-C_SpellActivationOverlay.IsSpellOverlayed-81",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_SpellActivationOverlay.IsSpellOverlayed",
+      "annotation": "",
+      "wikitext_line": 81
+    },
+    {
+      "id": "wt-global-api-C_SpellBook.IsSpellInSpellBook-82",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_SpellBook.IsSpellInSpellBook",
+      "annotation": "",
+      "wikitext_line": 82
+    },
+    {
+      "id": "wt-global-api-C_SpellBook.IsSpellKnownOrInSpellBook-83",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_SpellBook.IsSpellKnownOrInSpellBook",
+      "annotation": "",
+      "wikitext_line": 83
+    },
+    {
+      "id": "wt-global-api-C_SpellBook.IsSpellKnown-84",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_SpellBook.IsSpellKnown",
+      "annotation": "",
+      "wikitext_line": 84
+    },
+    {
+      "id": "wt-global-api-C_TradeInfo.PickupTradeMoney-85",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeInfo.PickupTradeMoney",
+      "annotation": "",
+      "wikitext_line": 85
+    },
+    {
+      "id": "wt-global-api-C_Transmog.IsTransmogEnabled-86",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Transmog.IsTransmogEnabled",
+      "annotation": "",
+      "wikitext_line": 86
+    },
+    {
+      "id": "wt-global-api-CreateFromMixins-87",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CreateFromMixins",
+      "annotation": "",
+      "wikitext_line": 87
+    },
+    {
+      "id": "wt-global-api-GetExpertisePercent-88",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetExpertisePercent",
+      "annotation": "",
+      "wikitext_line": 88
+    },
+    {
+      "id": "wt-global-api-HasLootSpecializations-89",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "HasLootSpecializations",
+      "annotation": "",
+      "wikitext_line": 89
+    },
+    {
+      "id": "wt-global-api-Mixin-90",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "Mixin",
+      "annotation": "",
+      "wikitext_line": 90
+    },
+    {
+      "id": "wt-global-api-PlayerIsInCombat-91",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "PlayerIsInCombat",
+      "annotation": "",
+      "wikitext_line": 91
+    },
+    {
+      "id": "wt-global-api-BankButtonIDToInvSlotID-94",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "BankButtonIDToInvSlotID",
+      "annotation": "",
+      "wikitext_line": 94
+    },
+    {
+      "id": "wt-global-api-BuyReagentBank-95",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "BuyReagentBank",
+      "annotation": "",
+      "wikitext_line": 95
+    },
+    {
+      "id": "wt-global-api-C_Bank.FetchNextPurchasableBankTabCost-96",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_Bank.FetchNextPurchasableBankTabCost",
+      "annotation": "",
+      "wikitext_line": 96
+    },
+    {
+      "id": "wt-global-api-C_Container.SortReagentBankBags-97",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_Container.SortReagentBankBags",
+      "annotation": "",
+      "wikitext_line": 97
+    },
+    {
+      "id": "wt-global-api-C_TooltipInfo.GetVoidDepositItem-98",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_TooltipInfo.GetVoidDepositItem",
+      "annotation": "",
+      "wikitext_line": 98
+    },
+    {
+      "id": "wt-global-api-C_TooltipInfo.GetVoidItem-99",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_TooltipInfo.GetVoidItem",
+      "annotation": "",
+      "wikitext_line": 99
+    },
+    {
+      "id": "wt-global-api-C_TooltipInfo.GetVoidWithdrawalItem-100",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_TooltipInfo.GetVoidWithdrawalItem",
+      "annotation": "",
+      "wikitext_line": 100
+    },
+    {
+      "id": "wt-global-api-CanUseVoidStorage-101",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "CanUseVoidStorage",
+      "annotation": "",
+      "wikitext_line": 101
+    },
+    {
+      "id": "wt-global-api-ClearVoidTransferDepositSlot-102",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "ClearVoidTransferDepositSlot",
+      "annotation": "",
+      "wikitext_line": 102
+    },
+    {
+      "id": "wt-global-api-ClickVoidStorageSlot-103",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "ClickVoidStorageSlot",
+      "annotation": "",
+      "wikitext_line": 103
+    },
+    {
+      "id": "wt-global-api-ClickVoidTransferDepositSlot-104",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "ClickVoidTransferDepositSlot",
+      "annotation": "",
+      "wikitext_line": 104
+    },
+    {
+      "id": "wt-global-api-ClickVoidTransferWithdrawalSlot-105",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "ClickVoidTransferWithdrawalSlot",
+      "annotation": "",
+      "wikitext_line": 105
+    },
+    {
+      "id": "wt-global-api-DepositReagentBank-106",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "DepositReagentBank",
+      "annotation": "",
+      "wikitext_line": 106
+    },
+    {
+      "id": "wt-global-api-ExecuteVoidTransfer-107",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "ExecuteVoidTransfer",
+      "annotation": "",
+      "wikitext_line": 107
+    },
+    {
+      "id": "wt-global-api-GetActiveSpecGroup-108",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetActiveSpecGroup",
+      "annotation": "",
+      "wikitext_line": 108
+    },
+    {
+      "id": "wt-global-api-GetBankSlotCost-109",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetBankSlotCost",
+      "annotation": "",
+      "wikitext_line": 109
+    },
+    {
+      "id": "wt-global-api-GetInspectRatedBGData-110",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetInspectRatedBGData",
+      "annotation": "",
+      "wikitext_line": 110
+    },
+    {
+      "id": "wt-global-api-GetLootMethod-111",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetLootMethod",
+      "annotation": "",
+      "wikitext_line": 111
+    },
+    {
+      "id": "wt-global-api-GetNumBankSlots-112",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetNumBankSlots",
+      "annotation": "",
+      "wikitext_line": 112
+    },
+    {
+      "id": "wt-global-api-GetNumVoidTransferDeposit-113",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetNumVoidTransferDeposit",
+      "annotation": "",
+      "wikitext_line": 113
+    },
+    {
+      "id": "wt-global-api-GetNumVoidTransferWithdrawal-114",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetNumVoidTransferWithdrawal",
+      "annotation": "",
+      "wikitext_line": 114
+    },
+    {
+      "id": "wt-global-api-GetReagentBankCost-115",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetReagentBankCost",
+      "annotation": "",
+      "wikitext_line": 115
+    },
+    {
+      "id": "wt-global-api-GetSpecializationInfo-116",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetSpecializationInfo",
+      "annotation": "",
+      "wikitext_line": 116
+    },
+    {
+      "id": "wt-global-api-GetSpecializationMasterySpells-117",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetSpecializationMasterySpells",
+      "annotation": "",
+      "wikitext_line": 117
+    },
+    {
+      "id": "wt-global-api-GetSpecialization-118",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetSpecialization",
+      "annotation": "",
+      "wikitext_line": 118
+    },
+    {
+      "id": "wt-global-api-GetTalentInfo-119",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetTalentInfo",
+      "annotation": "",
+      "wikitext_line": 119
+    },
+    {
+      "id": "wt-global-api-GetVoidItemHyperlinkString-120",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetVoidItemHyperlinkString",
+      "annotation": "",
+      "wikitext_line": 120
+    },
+    {
+      "id": "wt-global-api-GetVoidItemInfo-121",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetVoidItemInfo",
+      "annotation": "",
+      "wikitext_line": 121
+    },
+    {
+      "id": "wt-global-api-GetVoidStorageSlotPageIndex-122",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetVoidStorageSlotPageIndex",
+      "annotation": "",
+      "wikitext_line": 122
+    },
+    {
+      "id": "wt-global-api-GetVoidTransferCost-123",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetVoidTransferCost",
+      "annotation": "",
+      "wikitext_line": 123
+    },
+    {
+      "id": "wt-global-api-GetVoidTransferDepositInfo-124",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetVoidTransferDepositInfo",
+      "annotation": "",
+      "wikitext_line": 124
+    },
+    {
+      "id": "wt-global-api-GetVoidTransferWithdrawalInfo-125",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetVoidTransferWithdrawalInfo",
+      "annotation": "",
+      "wikitext_line": 125
+    },
+    {
+      "id": "wt-global-api-GetVoidUnlockCost-126",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetVoidUnlockCost",
+      "annotation": "",
+      "wikitext_line": 126
+    },
+    {
+      "id": "wt-global-api-IsPlayerSpell-127",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "IsPlayerSpell",
+      "annotation": "",
+      "wikitext_line": 127
+    },
+    {
+      "id": "wt-global-api-IsReagentBankUnlocked-128",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "IsReagentBankUnlocked",
+      "annotation": "",
+      "wikitext_line": 128
+    },
+    {
+      "id": "wt-global-api-IsSpellKnownOrOverridesKnown-129",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "IsSpellKnownOrOverridesKnown",
+      "annotation": "",
+      "wikitext_line": 129
+    },
+    {
+      "id": "wt-global-api-IsSpellKnown-130",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "IsSpellKnown",
+      "annotation": "",
+      "wikitext_line": 130
+    },
+    {
+      "id": "wt-global-api-IsSpellOverlayed-131",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "IsSpellOverlayed",
+      "annotation": "",
+      "wikitext_line": 131
+    },
+    {
+      "id": "wt-global-api-IsVoidStorageReady-132",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "IsVoidStorageReady",
+      "annotation": "",
+      "wikitext_line": 132
+    },
+    {
+      "id": "wt-global-api-PickupTradeMoney-133",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "PickupTradeMoney",
+      "annotation": "",
+      "wikitext_line": 133
+    },
+    {
+      "id": "wt-global-api-PurchaseSlot-134",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "PurchaseSlot",
+      "annotation": "",
+      "wikitext_line": 134
+    },
+    {
+      "id": "wt-global-api-ReagentBankButtonIDToInvSlotID-135",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "ReagentBankButtonIDToInvSlotID",
+      "annotation": "",
+      "wikitext_line": 135
+    },
+    {
+      "id": "wt-global-api-SendChatMessage-136",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "SendChatMessage",
+      "annotation": "",
+      "wikitext_line": 136
+    },
+    {
+      "id": "wt-global-api-SetLootMethod-137",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "SetLootMethod",
+      "annotation": "",
+      "wikitext_line": 137
+    },
+    {
+      "id": "wt-global-api-ShowBossFrameWhenUninteractable-138",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "ShowBossFrameWhenUninteractable",
+      "annotation": "",
+      "wikitext_line": 138
+    },
+    {
+      "id": "wt-global-api-UnlockVoidStorage-139",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "UnlockVoidStorage",
+      "annotation": "",
+      "wikitext_line": 139
+    },
+    {
+      "id": "wt-global-api-C_ChallengeMode.GetMapUIInfo-142",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "C_ChallengeMode.GetMapUIInfo",
+      "annotation": "+ ret 6: mapID",
+      "wikitext_line": 142
+    },
+    {
+      "id": "wt-global-api-C_Garrison.GetTalentTreeTalentPointResearchInfo-144",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "C_Garrison.GetTalentTreeTalentPointResearchInfo",
+      "annotation": "# arg 5: isRespec, Type: number -> bool",
+      "wikitext_line": 144
+    },
+    {
+      "id": "wt-global-api-C_SpecializationInfo.GetNumSpecializationsForClassID-146",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "C_SpecializationInfo.GetNumSpecializationsForClassID",
+      "annotation": "# arg 1: specID -> classID",
+      "wikitext_line": 146
+    },
+    {
+      "id": "wt-widgets-FrameScriptObject:SetToDefaults-156",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "FrameScriptObject:SetToDefaults",
+      "annotation": "",
+      "wikitext_line": 156
+    },
+    {
+      "id": "wt-widgets-ScriptRegion:ClearScripts-157",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "ScriptRegion:ClearScripts",
+      "annotation": "",
+      "wikitext_line": 157
+    },
+    {
+      "id": "wt-widgets-ScriptRegion:ShouldButtonPassThrough-158",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "ScriptRegion:ShouldButtonPassThrough",
+      "annotation": "",
+      "wikitext_line": 158
+    },
+    {
+      "id": "wt-widgets-Font:GetFontHeight-159",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "Font:GetFontHeight",
+      "annotation": "",
+      "wikitext_line": 159
+    },
+    {
+      "id": "wt-widgets-FontString:ClearAlphaGradient-160",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "FontString:ClearAlphaGradient",
+      "annotation": "",
+      "wikitext_line": 160
+    },
+    {
+      "id": "wt-widgets-FontString:GetAlphaGradient-161",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "FontString:GetAlphaGradient",
+      "annotation": "",
+      "wikitext_line": 161
+    },
+    {
+      "id": "wt-widgets-FontString:GetFontHeight-162",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "FontString:GetFontHeight",
+      "annotation": "",
+      "wikitext_line": 162
+    },
+    {
+      "id": "wt-widgets-FontString:SetFontHeight-163",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "FontString:SetFontHeight",
+      "annotation": "",
+      "wikitext_line": 163
+    },
+    {
+      "id": "wt-widgets-TextureBase:ClearVertexOffsets-164",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "TextureBase:ClearVertexOffsets",
+      "annotation": "",
+      "wikitext_line": 164
+    },
+    {
+      "id": "wt-widgets-Frame:ClearAttribute-165",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "Frame:ClearAttribute",
+      "annotation": "",
+      "wikitext_line": 165
+    },
+    {
+      "id": "wt-widgets-Frame:ClearAttributes-166",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "Frame:ClearAttributes",
+      "annotation": "",
+      "wikitext_line": 166
+    },
+    {
+      "id": "wt-widgets-Frame:HasAlphaGradient-167",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "Frame:HasAlphaGradient",
+      "annotation": "",
+      "wikitext_line": 167
+    },
+    {
+      "id": "wt-widgets-Frame:IsFrameBuffer-168",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "Frame:IsFrameBuffer",
+      "annotation": "",
+      "wikitext_line": 168
+    },
+    {
+      "id": "wt-widgets-Frame:IsHighlightLocked-169",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "Frame:IsHighlightLocked",
+      "annotation": "",
+      "wikitext_line": 169
+    },
+    {
+      "id": "wt-widgets-Cooldown:SetEdgeColor-170",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "Cooldown:SetEdgeColor",
+      "annotation": "",
+      "wikitext_line": 170
+    },
+    {
+      "id": "wt-widgets-Browser:NavigateTo-173",
+      "section": "widgets",
+      "direction": "removed",
+      "symbol": "Browser:NavigateTo",
+      "annotation": "",
+      "wikitext_line": 173
+    },
+    {
+      "id": "wt-events-CHALLENGE_MODE_COMPLETED_REWARDS-184",
+      "section": "events",
+      "direction": "added",
+      "symbol": "CHALLENGE_MODE_COMPLETED_REWARDS",
+      "annotation": "",
+      "wikitext_line": 184
+    },
+    {
+      "id": "wt-events-CHALLENGE_MODE_LEAVER_TIMER_ENDED-185",
+      "section": "events",
+      "direction": "added",
+      "symbol": "CHALLENGE_MODE_LEAVER_TIMER_ENDED",
+      "annotation": "",
+      "wikitext_line": 185
+    },
+    {
+      "id": "wt-events-CHALLENGE_MODE_LEAVER_TIMER_STARTED-186",
+      "section": "events",
+      "direction": "added",
+      "symbol": "CHALLENGE_MODE_LEAVER_TIMER_STARTED",
+      "annotation": "",
+      "wikitext_line": 186
+    },
+    {
+      "id": "wt-events-CHALLENGE_MODE_NEW_RECORD-187",
+      "section": "events",
+      "direction": "added",
+      "symbol": "CHALLENGE_MODE_NEW_RECORD",
+      "annotation": "",
+      "wikitext_line": 187
+    },
+    {
+      "id": "wt-events-CLUB_MEMBERS_UPDATED-188",
+      "section": "events",
+      "direction": "added",
+      "symbol": "CLUB_MEMBERS_UPDATED",
+      "annotation": "",
+      "wikitext_line": 188
+    },
+    {
+      "id": "wt-events-CURRENCY_TRANSFER_SUCCESS-189",
+      "section": "events",
+      "direction": "added",
+      "symbol": "CURRENCY_TRANSFER_SUCCESS",
+      "annotation": "",
+      "wikitext_line": 189
+    },
+    {
+      "id": "wt-events-DELVE_ASSIST_ACTION-190",
+      "section": "events",
+      "direction": "added",
+      "symbol": "DELVE_ASSIST_ACTION",
+      "annotation": "",
+      "wikitext_line": 190
+    },
+    {
+      "id": "wt-events-INSTANCE_ABANDON_VOTE_FINISHED-191",
+      "section": "events",
+      "direction": "added",
+      "symbol": "INSTANCE_ABANDON_VOTE_FINISHED",
+      "annotation": "",
+      "wikitext_line": 191
+    },
+    {
+      "id": "wt-events-INSTANCE_ABANDON_VOTE_STARTED-192",
+      "section": "events",
+      "direction": "added",
+      "symbol": "INSTANCE_ABANDON_VOTE_STARTED",
+      "annotation": "",
+      "wikitext_line": 192
+    },
+    {
+      "id": "wt-events-INSTANCE_ABANDON_VOTE_UPDATED-193",
+      "section": "events",
+      "direction": "added",
+      "symbol": "INSTANCE_ABANDON_VOTE_UPDATED",
+      "annotation": "",
+      "wikitext_line": 193
+    },
+    {
+      "id": "wt-events-INSTANCE_LEAVER_STATUS_CHANGED-194",
+      "section": "events",
+      "direction": "added",
+      "symbol": "INSTANCE_LEAVER_STATUS_CHANGED",
+      "annotation": "",
+      "wikitext_line": 194
+    },
+    {
+      "id": "wt-events-ITEM_UPGRADE_MASTER_UPDATE-195",
+      "section": "events",
+      "direction": "added",
+      "symbol": "ITEM_UPGRADE_MASTER_UPDATE",
+      "annotation": "",
+      "wikitext_line": 195
+    },
+    {
+      "id": "wt-events-PLAYER_IN_COMBAT_CHANGED-196",
+      "section": "events",
+      "direction": "added",
+      "symbol": "PLAYER_IN_COMBAT_CHANGED",
+      "annotation": "",
+      "wikitext_line": 196
+    },
+    {
+      "id": "wt-events-UNIT_GUILD_LEVEL-197",
+      "section": "events",
+      "direction": "added",
+      "symbol": "UNIT_GUILD_LEVEL",
+      "annotation": "",
+      "wikitext_line": 197
+    },
+    {
+      "id": "wt-events-PLAYERBANKBAGSLOTS_CHANGED-200",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "PLAYERBANKBAGSLOTS_CHANGED",
+      "annotation": "",
+      "wikitext_line": 200
+    },
+    {
+      "id": "wt-events-PLAYERREAGENTBANKSLOTS_CHANGED-201",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "PLAYERREAGENTBANKSLOTS_CHANGED",
+      "annotation": "",
+      "wikitext_line": 201
+    },
+    {
+      "id": "wt-events-REAGENTBANK_PURCHASED-202",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "REAGENTBANK_PURCHASED",
+      "annotation": "",
+      "wikitext_line": 202
+    },
+    {
+      "id": "wt-events-REAGENTBANK_UPDATE-203",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "REAGENTBANK_UPDATE",
+      "annotation": "",
+      "wikitext_line": 203
+    },
+    {
+      "id": "wt-events-VOID_DEPOSIT_WARNING-204",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "VOID_DEPOSIT_WARNING",
+      "annotation": "",
+      "wikitext_line": 204
+    },
+    {
+      "id": "wt-events-VOID_STORAGE_CONTENTS_UPDATE-205",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "VOID_STORAGE_CONTENTS_UPDATE",
+      "annotation": "",
+      "wikitext_line": 205
+    },
+    {
+      "id": "wt-events-VOID_STORAGE_DEPOSIT_UPDATE-206",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "VOID_STORAGE_DEPOSIT_UPDATE",
+      "annotation": "",
+      "wikitext_line": 206
+    },
+    {
+      "id": "wt-events-VOID_STORAGE_UPDATE-207",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "VOID_STORAGE_UPDATE",
+      "annotation": "",
+      "wikitext_line": 207
+    },
+    {
+      "id": "wt-events-VOID_TRANSFER_DONE-208",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "VOID_TRANSFER_DONE",
+      "annotation": "",
+      "wikitext_line": 208
+    },
+    {
+      "id": "wt-events-VOID_TRANSFER_SUCCESS-209",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "VOID_TRANSFER_SUCCESS",
+      "annotation": "",
+      "wikitext_line": 209
+    },
+    {
+      "id": "wt-events-LEAVE_PARTY_CONFIRMATION-212",
+      "section": "events",
+      "direction": "changed",
+      "symbol": "LEAVE_PARTY_CONFIRMATION",
+      "annotation": "+ 1: reason",
+      "wikitext_line": 212
+    },
+    {
+      "id": "wt-cvars-AsyncAssistActions-222",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "AsyncAssistActions",
+      "annotation": "",
+      "wikitext_line": 222,
+      "page_default": "0"
+    },
+    {
+      "id": "wt-cvars-ClientSettings_ASYNC_COMPUTE-223",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "ClientSettings_ASYNC_COMPUTE",
+      "annotation": "",
+      "wikitext_line": 223
+    },
+    {
+      "id": "wt-cvars-ClientSettings_SpellClutter-224",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "ClientSettings_SpellClutter",
+      "annotation": "",
+      "wikitext_line": 224
+    },
+    {
+      "id": "wt-cvars-DeprecatedWarningThrottle-225",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "DeprecatedWarningThrottle",
+      "annotation": "",
+      "wikitext_line": 225,
+      "page_default": "0"
+    },
+    {
+      "id": "wt-cvars-GxCompatAsyncComputeQueue-226",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "GxCompatAsyncComputeQueue",
+      "annotation": "",
+      "wikitext_line": 226,
+      "page_default": "1"
+    },
+    {
+      "id": "wt-cvars-lastRenownForMajorFaction2658-227",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "lastRenownForMajorFaction2658",
+      "annotation": "",
+      "wikitext_line": 227,
+      "page_default": "0"
+    },
+    {
+      "id": "wt-cvars-lastRenownForMajorFaction2736-228",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "lastRenownForMajorFaction2736",
+      "annotation": "",
+      "wikitext_line": 228,
+      "page_default": "0"
+    },
+    {
+      "id": "wt-cvars-Sound_EnableGameplaySFX-229",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "Sound_EnableGameplaySFX",
+      "annotation": "",
+      "wikitext_line": 229,
+      "page_default": "1"
+    },
+    {
+      "id": "wt-cvars-Sound_GameplaySFX-230",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "Sound_GameplaySFX",
+      "annotation": "",
+      "wikitext_line": 230,
+      "page_default": "1.000000"
+    },
+    {
+      "id": "wt-cvars-spellVisualDensityFilterSetting-231",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "spellVisualDensityFilterSetting",
+      "annotation": "",
+      "wikitext_line": 231,
+      "page_default": "4"
+    },
+    {
+      "id": "wt-cvars-userFontScale-232",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "userFontScale",
+      "annotation": "",
+      "wikitext_line": 232,
+      "page_default": "1"
+    },
+    {
+      "id": "wt-cvars-volumeFogDisableLightScattering-233",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "volumeFogDisableLightScattering",
+      "annotation": "",
+      "wikitext_line": 233,
+      "page_default": "0"
+    },
+    {
+      "id": "wt-cvars-volumeFogDisableNoise-234",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "volumeFogDisableNoise",
+      "annotation": "",
+      "wikitext_line": 234,
+      "page_default": "0"
+    },
+    {
+      "id": "wt-cvars-volumeFogDisableShadows-235",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "volumeFogDisableShadows",
+      "annotation": "",
+      "wikitext_line": 235,
+      "page_default": "0"
+    },
+    {
+      "id": "wt-cvars-volumeFogUse16BitTexture-236",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "volumeFogUse16BitTexture",
+      "annotation": "",
+      "wikitext_line": 236,
+      "page_default": "0"
+    },
+    {
+      "id": "wt-cvars-predictedHealth-239",
+      "section": "cvars",
+      "direction": "removed",
+      "symbol": "predictedHealth",
+      "annotation": "",
+      "wikitext_line": 239,
+      "page_default": "1"
+    },
+    {
+      "id": "wt-cvars-UseOldVolumeFog-240",
+      "section": "cvars",
+      "direction": "removed",
+      "symbol": "UseOldVolumeFog",
+      "annotation": "",
+      "wikitext_line": 240,
+      "page_default": "0.000000"
+    }
+  ]
+}

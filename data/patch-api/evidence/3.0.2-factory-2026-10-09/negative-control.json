@@ -1,0 +1,11 @@
+{
+  "rows": 373,
+  "retained_id": "wt-global-api-AutoLootMailItem-103",
+  "original_symbol": "AutoLootMailItem",
+  "replacement_symbol": "P302_FABRICATED_UNKNOWN_GLOBAL",
+  "expected_gaps_before": 188,
+  "expected_gaps_after": 189,
+  "historical_credit": 0,
+  "native_credit": 0,
+  "model_credit": 0
+}

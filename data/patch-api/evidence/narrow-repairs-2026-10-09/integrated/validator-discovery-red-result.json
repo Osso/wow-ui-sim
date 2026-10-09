@@ -1,0 +1,49 @@
+{
+  "exit": 1,
+  "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+  "argv": [
+    "python3",
+    "-B",
+    "tools/test_check_patch_validators.py",
+    "CheckPatchValidatorsTests.test_template_inputs_are_not_executed_but_nested_current_proofs_run",
+    "CheckPatchValidatorsTests.test_missing_seal_in_real_current_proof_is_not_hidden"
+  ],
+  "env_overrides": {
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "scope_start": {
+    "timestamp": "2026-10-09T14:09:02.408374+00:00",
+    "head": {
+      "exit": 0,
+      "stdout": "7d91acfd5bec7eafa927b90dc7d9bf3a34b20c07\n",
+      "stderr": ""
+    },
+    "status": {
+      "exit": 0,
+      "stdout": "?? .code-index.db\n",
+      "stderr": ""
+    },
+    "tracked_input_diff_exit": 0,
+    "tracked_input_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "tracked_input_diff_stderr": ""
+  },
+  "scope_end": {
+    "timestamp": "2026-10-09T14:09:02.703451+00:00",
+    "head": {
+      "exit": 0,
+      "stdout": "7d91acfd5bec7eafa927b90dc7d9bf3a34b20c07\n",
+      "stderr": ""
+    },
+    "status": {
+      "exit": 0,
+      "stdout": "?? .code-index.db\n",
+      "stderr": ""
+    },
+    "tracked_input_diff_exit": 0,
+    "tracked_input_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "tracked_input_diff_stderr": ""
+  },
+  "scope_unchanged": true,
+  "stdout": "",
+  "stderr": "FF\n======================================================================\nFAIL: test_template_inputs_are_not_executed_but_nested_current_proofs_run (__main__.CheckPatchValidatorsTests.test_template_inputs_are_not_executed_but_nested_current_proofs_run)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/home/osso/Projects/wow/wow-ui-sim/tools/test_check_patch_validators.py\", line 98, in test_template_inputs_are_not_executed_but_nested_current_proofs_run\n    self.assertEqual(result.returncode, 0, result.stderr)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: 1 != 0 : \n\n======================================================================\nFAIL: test_missing_seal_in_real_current_proof_is_not_hidden (__main__.CheckPatchValidatorsTests.test_missing_seal_in_real_current_proof_is_not_hidden)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/home/osso/Projects/wow/wow-ui-sim/tools/test_check_patch_validators.py\", line 113, in test_missing_seal_in_real_current_proof_is_not_hidden\n    self.assertEqual(report['summary'], {'clean': {'passed': 1, 'failed': 1},\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n                                         'later_audit': {'passed': 2, 'failed': 1}})\n                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: {'clean': {'failed': 2, 'passed': 1}, 'later_audit': {'failed': 2, 'passed': 2}} != {'clean': {'passed': 1, 'failed': 1}, 'later_audit': {'passed': 2, 'failed': 1}}\n- {'clean': {'failed': 2, 'passed': 1}, 'later_audit': {'failed': 2, 'passed': 2}}\n?                      ^                                          ^\n\n+ {'clean': {'failed': 1, 'passed': 1}, 'later_audit': {'failed': 1, 'passed': 2}}\n?                      ^                                          ^\n\n\n----------------------------------------------------------------------\nRan 2 tests in 0.250s\n\nFAILED (failures=2)\n"
+}

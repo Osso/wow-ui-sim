@@ -1,0 +1,31 @@
+{
+  "protected_file_count": 65,
+  "protected_unchanged": true,
+  "discovered": 90,
+  "excluded": [
+    "data/patch-api/evidence/2.5.2-session-2026-10-09/template-inputs/2.5.5/validate.py",
+    "data/patch-api/evidence/2.5.2-session-2026-10-09/template-inputs/2.5.6/validate.py",
+    "data/patch-api/evidence/2.5.2-session-2026-10-09/template-inputs/3.4.3/validate.py"
+  ],
+  "expected_genuine": 87,
+  "phases": {
+    "clean": {
+      "executed": 87,
+      "unique": 87,
+      "pass": 87,
+      "fail": 0,
+      "missing": [],
+      "unexpected": [],
+      "excluded_executed": []
+    },
+    "later_audit": {
+      "executed": 88,
+      "unique": 88,
+      "pass": 88,
+      "fail": 0,
+      "missing": [],
+      "unexpected": [],
+      "excluded_executed": []
+    }
+  }
+}

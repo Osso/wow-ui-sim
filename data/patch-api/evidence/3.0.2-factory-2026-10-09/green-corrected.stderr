@@ -1,0 +1,132 @@
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition
+warning: `iced_wgpu` (manifest) generated 6 warnings
+   Compiling wow-ui-sim v0.1.0 (/home/osso/.worktrees/wow-ui-sim-p302-factory)
+warning: constant `PROVENANCE_SCHEMA` is never used
+  --> src/blizzard_ui_sync.rs:28:7
+   |
+28 | const PROVENANCE_SCHEMA: &str = "1";
+   |       ^^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: associated function `new` is never used
+   --> src/blizzard_ui_sync.rs:180:8
+    |
+179 | impl CacheProvenance {
+    | -------------------- associated function in this implementation
+180 |     fn new(
+    |        ^^^
+
+warning: function `remove_missing_marker` is never used
+   --> src/blizzard_ui_sync.rs:663:4
+    |
+663 | fn remove_missing_marker(path: &Path) {
+    |    ^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `ensure_known_asset_cached` is never used
+  --> src/casc_asset_fallback.rs:93:15
+   |
+93 | pub(crate) fn ensure_known_asset_cached(_path: &str, _out_path: &Path) -> Option<PathBuf> {
+   |               ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: field `encoding_key_hex` is never read
+  --> src/render/font.rs:44:5
+   |
+41 | struct WowFontFile {
+   |        ----------- field in this struct
+...
+44 |     encoding_key_hex: Option<&'static str>,
+   |     ^^^^^^^^^^^^^^^^
+
+warning: `wow-ui-sim` (lib) generated 5 warnings
+warning: unused import: `wow_ui_sim::saved_variables::SavedVariablesManager`
+  --> src/bin/wow_sim/main.rs:20:5
+   |
+20 | use wow_ui_sim::saved_variables::SavedVariablesManager;
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: `wow-ui-sim` (bin "wow-sim") generated 1 warning (run `cargo fix --bin "wow-sim" -p wow-ui-sim` to apply 1 suggestion)
+    Finished `test` profile [optimized + debuginfo] target(s) in 13.60s
+     Running tests/patch_3_0_2_factory.rs (/tmp/wow-ui-sim-p302-factory-target/debug/deps/patch_3_0_2_factory-75e0b4e7bd1c61d7)
+[  0.000s] [Startup] WowLuaEnv::new begin
+[  0.000s] [Startup] WowLuaEnv::new begin
+[  0.000s] [Startup] WowLuaEnv::new begin
+[  0.000s] [Startup] WowLuaEnv::new begin
+[  0.000s] [Startup] WowLuaEnv::new begin
+[  0.000s] [Startup] WowLuaEnv::new begin
+[  0.002s] [Startup] SimState::default complete in 1.66ms
+[  0.002s] [Startup] SimState::default complete in 1.70ms
+[  0.002s] [Startup] SimState::default complete in 1.70ms
+[  0.002s] [Startup] SimState::default complete in 1.73ms
+[  0.002s] [Startup] SimState::default complete in 1.73ms
+[  0.002s] [Startup] SimState::default complete in 1.76ms
+[  0.002s] [Startup] rilua VM created in 109.59µs
+[  0.002s] [Startup] rilua VM created in 108.86µs
+[  0.002s] [Startup] rilua VM created in 109.14µs
+[  0.002s] [Startup] rilua VM created in 103.81µs
+[  0.002s] [Startup] rilua VM created in 106.46µs
+[  0.002s] [Startup] rilua VM created in 76.21µs
+[  0.002s] [Startup] builtin frames initialized in 79.46µs
+[  0.002s] [Startup] builtin frames initialized in 76.97µs
+[  0.002s] [Startup] builtin frames initialized in 75.36µs
+[  0.002s] [Startup] builtin frames initialized in 80.27µs
+[  0.002s] [Startup] builtin frames initialized in 88.44µs
+[  0.002s] [Startup] template registry cleared in 5.63µs
+[  0.002s] [Startup] template registry cleared in 5.84µs
+[  0.002s] [Startup] template registry cleared in 8.00µs
+[  0.002s] [Startup] template registry cleared in 9.26µs
+[  0.002s] [Startup] template registry cleared in 12.00µs
+[  0.002s] [Startup] intrinsic templates registered in 4.04µs
+[  0.002s] [Startup] intrinsic templates registered in 2.69µs
+[  0.002s] [Startup] initial app_data lua handle installed in 331.00ns
+[  0.002s] [Startup] initial app_data lua handle installed in 411.00ns
+[  0.002s] [Startup] intrinsic templates registered in 5.01µs
+[  0.002s] [Startup] initial app_data lua handle installed in 140.00ns
+[  0.002s] [Startup] intrinsic templates registered in 2.46µs
+[  0.002s] [Startup] builtin frames initialized in 61.13µs
+[  0.002s] [Startup] initial app_data lua handle installed in 160.00ns
+[  0.002s] [Startup] intrinsic templates registered in 2.68µs
+[  0.002s] [Startup] template registry cleared in 1.36µs
+[  0.002s] [Startup] initial app_data lua handle installed in 130.00ns
+[  0.002s] [Startup] intrinsic templates registered in 2.58µs
+[  0.002s] [Startup] initial app_data lua handle installed in 100.00ns
+[  0.120s] [Startup] init_lua_state complete in 117.87ms
+[  0.120s] [Startup] final app_data lua handle installed in 291.00ns
+[  0.120s] [Startup] initial screen globals installed in 121.13µs
+[  0.120s] [Startup] WowLuaEnv::new complete
+
+thread 'factory_rejects_classic_before_reading_cache' (2917586) panicked at tests/common/publication_sweep.rs:546:5:
+register client line does not match active profile
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+[  0.120s] [Startup] init_lua_state complete in 118.06ms
+[  0.120s] [Startup] final app_data lua handle installed in 171.00ns
+[  0.120s] [Startup] init_lua_state complete in 118.08ms
+[  0.120s] [Startup] final app_data lua handle installed in 210.00ns
+[  0.120s] [Startup] initial screen globals installed in 81.50µs
+[  0.120s] [Startup] WowLuaEnv::new complete
+[  0.120s] [Startup] initial screen globals installed in 80.76µs
+[  0.120s] [Startup] WowLuaEnv::new complete
+current-retail interface: 120100
+FrameXML/handler/shared-method control: ("nil", "nil", false, "GameTooltip", "function")
+[  0.120s] [Startup] init_lua_state complete in 118.42ms
+[  0.120s] [Startup] final app_data lua handle installed in 210.00ns
+[  0.120s] [Startup] init_lua_state complete in 118.42ms
+[  0.120s] [Startup] final app_data lua handle installed in 211.00ns
+[  0.121s] [Startup] initial screen globals installed in 81.24µs
+[  0.121s] [Startup] WowLuaEnv::new complete
+[  0.121s] [Startup] initial screen globals installed in 79.68µs
+[  0.121s] [Startup] WowLuaEnv::new complete
+click modifier control: ("NONE", "NONE")
+retail event catalog control: (false, true, true, true, true)
+[  0.121s] [Startup] init_lua_state complete in 118.72ms
+[  0.121s] [Startup] final app_data lua handle installed in 181.00ns
+[  0.121s] [Startup] initial screen globals installed in 74.92µs
+[  0.121s] [Startup] WowLuaEnv::new complete
+console catalog control: (true, false, 14)

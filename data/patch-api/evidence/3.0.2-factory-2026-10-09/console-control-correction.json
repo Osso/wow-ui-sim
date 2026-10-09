@@ -1,0 +1,6 @@
+{
+  "path": "tests/patch_3_0_2_factory.rs",
+  "snapshot": "final-code/tests/patch_3_0_2_factory.rs",
+  "sha256": "78e614b10a370ed6d21c5ae8ac6465a14adabfd2166ae9299f39d5d0b992b0dd",
+  "scope": "Test only: measure real retail command count and distinguish CVar/Command record kinds; no runtime changes"
+}
