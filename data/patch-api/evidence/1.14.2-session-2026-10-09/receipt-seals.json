@@ -1,0 +1,19 @@
+{
+  "HANDOFF.md": "13f97ab243790457c78f40feeb1cdd69ec7f50de1b1354ceb4d60c3b5671c99a",
+  "REPLAY.md": "93b018cc245ff3c7c886760dafe835b4fc71aae15a58bbbb70a5a8cc4306920a",
+  "archive-pin.json": "c6d4faaecba310094a5a4ea5dffbd364d923dd445067d6d23188f909783a5e69",
+  "current-era-getters-final.log": "4b87231062603cc81d6c42a052953f238f00944e13dad43d52c9f55d2c0b943e",
+  "current-era-getters.log": "9d279851d58ecca7eb514aa3b38a809a306805276a22d7ef5488377c37b90b52",
+  "current-era-observations.json": "93398e418efd9bacb7adb21986b4af16d56966cdc838c1613ea2ed90cb6158bc",
+  "current-inputs/Cargo.toml": "1d4b58d8a0b8b905374e4bfce1596349e4ead7953313add4c36f1ca7eeba8432",
+  "current-inputs/patch-tests/patch_1_14_2_cvars.rs": "610cb9d98639c7f2955dba614cad6f1ac8620ae6069791acd78808e1f1cd081a",
+  "current-inputs/src/lua_api/globals/set_cvar_verb.rs": "e3f5df9076269e557e11ea63ecce0ab03174937df5c0e10b8b13b13f169f08a0",
+  "portable-controls.json": "5d47a5171aa14400025a45d0a154ece3b16437395d7b2994efe67e6a58f9fee8",
+  "portable-green.log": "3916e33e008065d3e309e49ddb592514308605286c34dcf9706dfd2211d76f16",
+  "portable-red-controls.json": "5c03ddae0de167055904da0941233fb40d5e8ebb9c362dc4c55c3c8adbb2c5ed",
+  "portable-red.log": "734e9fd9375b9538e8ea72b703dc59c065d63c788796fda853fa71dee20dacef",
+  "proof-ledger.json": "91512950ba4eddb1d1df2a7a7e8df9b683ebd50caafbf868b2bf860d817a9baf",
+  "replay-archive.tar.gz": "bf61f4a232ec08e396e45ede7a713cb646e921a6ad7e1a1d2ea047c01c0998d8",
+  "seals.json": "168e02a20cc5b9e628dbe1707628f60a83fc4da141fcbdbfc7085fa10ab55c6e",
+  "test_portable.py": "ee98d4e10c147d22d66be88af9ce8010208baf0aeac4c4adf1e51fe076ff8795"
+}

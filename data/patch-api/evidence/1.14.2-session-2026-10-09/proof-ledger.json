@@ -1,0 +1,37 @@
+{
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p1142-page",
+  "runs": [
+    {
+      "command": "python -B test_source_accounting.py",
+      "revision": "ff741823a",
+      "scope": "original SOURCE code/fixtures",
+      "result": "RED8 failures then GREEN8/8",
+      "log": "green.log",
+      "invalidated": false
+    },
+    {
+      "command": "python -B test_portable.py --archive replay-archive.tar.gz --scratch <own build/p1142-portable> --receipts portable-controls.json",
+      "revision": "02df0b0e0",
+      "scope": "same committed portable test bytes; original sealed SOURCE archive",
+      "result": "RED3 archive absent then GREEN3/3; copied SOURCE8/default byte replay; both serialized controls reject/restore",
+      "invalidated": false
+    },
+    {
+      "command": "cargo test --no-default-features --features client-era --test patch_1_14_2_cvars -- --nocapture",
+      "revision": "55c6fe1a9",
+      "scope": "initial getter probe, since changed only unknown-page-default logging",
+      "result": "1/1 passed, 7 existing warnings",
+      "log": "current-era-getters.log",
+      "invalidated": "test output changed; superseded by final scoped run"
+    },
+    {
+      "command": "cargo test --no-default-features --features client-era --test patch_1_14_2_cvars -- --nocapture",
+      "revision": "02df0b0e0",
+      "scope": "final current Era getter probe",
+      "result": "1/1 passed, 7 existing warnings",
+      "log": "current-era-getters-final.log",
+      "invalidated": false
+    }
+  ],
+  "gates": "No broad/check/lint/type/coverage/final acceptance; main owns integration/native/gates"
+}

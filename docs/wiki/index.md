@@ -3027,3 +3027,11 @@ The three retail 12.0.0 changed globals `LE_GAME_ERR_HOUSING_RESULT_MISSING_EXPA
 ## [2026-10-09] investigation | Frozen Era Patch 1.14.3
 
 [Audit](investigations/patch-1-14-3-api-audit.md): page480026/revision4615755, source11403/build43639 distinct from configured11507.412 literal inventory occurrences,463 nonblank rows,188 unspecified signatures,14 headers/14 prose limits/27 unexpanded links. Qualified TBC2.5.4 sync comparison is not foreign supersession. SOURCE GREEN8/8 at1ce4359e9; portable GREEN3/3 at7c2a251e8,54 immutable seals. Current bare Era factory286 direction matches/126 strict mismatches; exact126-ID fixture RED/GREEN1 ata6a10d654 and generic-fallback negative control GREEN1. Raw registration/generic lookup and nonsense-event acceptance remain distinct from model/native proof. Main owns integration/native/final gates.
+
+## [2026-10-09] investigation | Patch 1.14.2 frozen SOURCE audit
+
+[Audit](investigations/patch-1-14-2-api-audit.md): frozen236101/2290155, source11402 vs configuredEra11507;36 nonblank/seven inventory/14 UNPROVEN contracts/four unspecified signatures/three hidden defaults. Own SOURCE RED8/GREEN8; no runtime/model/native credit. Portable controls and separate current CVar getters pending; main owns integration/native/gates.
+
+## [2026-10-09] proof | Patch 1.14.2 portable SOURCE and current Era getters
+
+[Audit](investigations/patch-1-14-2-api-audit.md):72 original seals unchanged,73-member145111-byte archive;portable RED3/GREEN3 and copied SOURCE8/default-byte replay,serialized ledger/log rejection/restoration. Separate Era11507 getter1/1 at02df0b0e0:two exact `1` defaults/current values;telemetry and unknown nil/nil. Seven existing warnings;no LED/native/runtime repair. Main owns successors/integration/native/final gates.

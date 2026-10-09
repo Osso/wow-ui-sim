@@ -1,0 +1,124 @@
+test_every_omission_and_fabrication_rejected (__main__.SourceAccounting.test_every_omission_and_fabrication_rejected) ... FAIL
+test_headers_caption_navigation (__main__.SourceAccounting.test_headers_caption_navigation) ... FAIL
+test_hidden_defaults_and_prose (__main__.SourceAccounting.test_hidden_defaults_and_prose) ... FAIL
+test_inventory_and_unspecified_signatures (__main__.SourceAccounting.test_inventory_and_unspecified_signatures) ... FAIL
+test_links_examples_and_credit (__main__.SourceAccounting.test_links_examples_and_credit) ... FAIL
+test_profiles_successors (__main__.SourceAccounting.test_profiles_successors) ... FAIL
+test_response_identity_and_content_tamper (__main__.SourceAccounting.test_response_identity_and_content_tamper) ... FAIL
+test_rows_lossless (__main__.SourceAccounting.test_rows_lossless) ... FAIL
+
+======================================================================
+FAIL: test_every_omission_and_fabrication_rejected (__main__.SourceAccounting.test_every_omission_and_fabrication_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p1142-page/data/patch-api/evidence/1.14.2-session-2026-10-09/test_source_accounting.py", line 46, in test_every_omission_and_fabrication_rejected
+    self.assertIn('contracts',original)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'contracts' not found in {}
+
+======================================================================
+FAIL: test_headers_caption_navigation (__main__.SourceAccounting.test_headers_caption_navigation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p1142-page/data/patch-api/evidence/1.14.2-session-2026-10-09/test_source_accounting.py", line 25, in test_headers_caption_navigation
+    self.assertEqual(ledger.get('caption'), '1.14.1 (41030) &rarr; 1.14.2 (42214) Feb 3 2022')
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: None != '1.14.1 (41030) &rarr; 1.14.2 (42214) Feb 3 2022'
+
+======================================================================
+FAIL: test_hidden_defaults_and_prose (__main__.SourceAccounting.test_hidden_defaults_and_prose)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p1142-page/data/patch-api/evidence/1.14.2-session-2026-10-09/test_source_accounting.py", line 21, in test_hidden_defaults_and_prose
+    self.assertEqual([(c['symbol'], c['default'], c['description']) for c in audit.build().get('cvars', [])], [('GamePadFactionColor','1',"Enable setting GamePad's led color to match current faction"),('GamePadVibrationStrength','1','GamePad vibration effect strength'),('telemetryTargetPackage','Blizzard.Telemetry.Wow_Mainline','The Package we want to send telemetry to e.g. Wow_Mainline or Wow_Classic')])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: [] != [('GamePadFactionColor', '1', "Enable sett[258 chars]ic')]
+
+Second list contains 3 additional elements.
+First extra element 0:
+('GamePadFactionColor', '1', "Enable setting GamePad's led color to match current faction")
+
+- []
++ [('GamePadFactionColor',
++   '1',
++   "Enable setting GamePad's led color to match current faction"),
++  ('GamePadVibrationStrength', '1', 'GamePad vibration effect strength'),
++  ('telemetryTargetPackage',
++   'Blizzard.Telemetry.Wow_Mainline',
++   'The Package we want to send telemetry to e.g. Wow_Mainline or Wow_Classic')]
+
+======================================================================
+FAIL: test_inventory_and_unspecified_signatures (__main__.SourceAccounting.test_inventory_and_unspecified_signatures)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p1142-page/data/patch-api/evidence/1.14.2-session-2026-10-09/test_source_accounting.py", line 16, in test_inventory_and_unspecified_signatures
+    self.assertEqual([i['symbol'] for i in ledger.get('inventory', [])], ['C_GamePad.ClearLedColor', 'C_GamePad.GetLedColor', 'C_GamePad.SetLedColor', 'TradeSkillOnlyShowMakeable', 'GamePadFactionColor', 'GamePadVibrationStrength', 'telemetryTargetPackage'])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: [] != ['C_GamePad.ClearLedColor', 'C_GamePad.Get[137 chars]age']
+
+Second list contains 7 additional elements.
+First extra element 0:
+'C_GamePad.ClearLedColor'
+
+- []
++ ['C_GamePad.ClearLedColor',
++  'C_GamePad.GetLedColor',
++  'C_GamePad.SetLedColor',
++  'TradeSkillOnlyShowMakeable',
++  'GamePadFactionColor',
++  'GamePadVibrationStrength',
++  'telemetryTargetPackage']
+
+======================================================================
+FAIL: test_links_examples_and_credit (__main__.SourceAccounting.test_links_examples_and_credit)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p1142-page/data/patch-api/evidence/1.14.2-session-2026-10-09/test_source_accounting.py", line 33, in test_links_examples_and_credit
+    self.assertEqual(len(ledger.get('links',[])),7)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 != 7
+
+======================================================================
+FAIL: test_profiles_successors (__main__.SourceAccounting.test_profiles_successors)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p1142-page/data/patch-api/evidence/1.14.2-session-2026-10-09/test_source_accounting.py", line 40, in test_profiles_successors
+    self.assertEqual([(p['feature'],p['configured_interface']) for p in ledger.get('configured_profiles',[])],[('client-era',11507),('client-anniversary',11507)])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: [] != [('client-era', 11507), ('client-anniversary', 11507)]
+
+Second list contains 2 additional elements.
+First extra element 0:
+('client-era', 11507)
+
+- []
++ [('client-era', 11507), ('client-anniversary', 11507)]
+
+======================================================================
+FAIL: test_response_identity_and_content_tamper (__main__.SourceAccounting.test_response_identity_and_content_tamper)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p1142-page/data/patch-api/evidence/1.14.2-session-2026-10-09/test_source_accounting.py", line 56, in test_response_identity_and_content_tamper
+    self.assertIn('source',audit.build())
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'source' not found in {}
+
+======================================================================
+FAIL: test_rows_lossless (__main__.SourceAccounting.test_rows_lossless)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p1142-page/data/patch-api/evidence/1.14.2-session-2026-10-09/test_source_accounting.py", line 12, in test_rows_lossless
+    self.assertEqual([(r['line'], r['literal']) for r in audit.build().get('source_rows', [])], expected)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: [] != [(1, '{{apichanges|1.14.2|prev=1.14.1|next[2729 chars]|}')]
+
+Second list contains 36 additional elements.
+First extra element 0:
+(1, '{{apichanges|1.14.2|prev=1.14.1|next=1.14.3}}')
+
+Diff is 3104 characters long. Set self.maxDiff to None to see it.
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.002s
+
+FAILED (failures=8)

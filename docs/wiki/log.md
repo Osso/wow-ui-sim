@@ -950,3 +950,10 @@ Patch 2.5.4 copied historical replay at `ae9cb498a`: 27 original seals/28 copied
 ## [2026-10-09] investigation | Patch 1.14.3 bounded evidence retained
 
 [Audit](investigations/patch-1-14-3-api-audit.md): SOURCE8/portable3 GREEN,54 original seals unchanged; current factory286 matches/126 mismatches and exact126-ID regression GREEN1 at a6a10d654. No model/native credit or production changes. Shared-classifier import adds18 dead-code warnings; seven simulator/six vendor warnings retained unsuppressed. Main owns final gates.
+## [2026-10-09] investigation | Patch 1.14.2 frozen SOURCE audit
+
+[Audit](investigations/patch-1-14-2-api-audit.md): frozen236101/2290155, source11402 vs configuredEra11507;36 nonblank/seven inventory/14 UNPROVEN contracts/four unspecified signatures/three hidden defaults. Own SOURCE RED8/GREEN8; no runtime/model/native credit. Portable controls and separate current CVar getters pending; main owns integration/native/gates.
+
+## [2026-10-09] proof | Patch 1.14.2 portable SOURCE and current Era getters
+
+[Audit](investigations/patch-1-14-2-api-audit.md):72 original seals unchanged,73-member145111-byte archive;portable RED3/GREEN3 and copied SOURCE8/default-byte replay,serialized ledger/log rejection/restoration. Separate Era11507 getter1/1 at02df0b0e0:two exact `1` defaults/current values;telemetry and unknown nil/nil. Seven existing warnings;no LED/native/runtime repair. Main owns successors/integration/native/final gates.

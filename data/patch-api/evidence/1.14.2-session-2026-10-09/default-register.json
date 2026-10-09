@@ -1,0 +1,96 @@
+{
+  "schema": "patch-api-wikitext-register/v1",
+  "patch": "1.14.2",
+  "source": {
+    "path": "source.wikitext",
+    "revid": 2290155,
+    "sha256": "1b5752c3d35f2b39e52d7dc594e50d79fbe74104a9f8c2a2051599cb22ddaa37"
+  },
+  "header_counts": [
+    {
+      "section": "global-api",
+      "direction": "added",
+      "header_count": 4,
+      "parsed_count": 4
+    },
+    {
+      "section": "global-api",
+      "direction": "removed",
+      "header_count": 0,
+      "parsed_count": 0
+    },
+    {
+      "section": "cvars",
+      "direction": "added",
+      "header_count": 3,
+      "parsed_count": 3
+    },
+    {
+      "section": "cvars",
+      "direction": "removed",
+      "header_count": 0,
+      "parsed_count": 0
+    }
+  ],
+  "entries": [
+    {
+      "id": "wt-global-api-C_GamePad.ClearLedColor-17",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_GamePad.ClearLedColor",
+      "annotation": "",
+      "wikitext_line": 17
+    },
+    {
+      "id": "wt-global-api-C_GamePad.GetLedColor-18",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_GamePad.GetLedColor",
+      "annotation": "",
+      "wikitext_line": 18
+    },
+    {
+      "id": "wt-global-api-C_GamePad.SetLedColor-19",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_GamePad.SetLedColor",
+      "annotation": "",
+      "wikitext_line": 19
+    },
+    {
+      "id": "wt-global-api-TradeSkillOnlyShowMakeable-20",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "TradeSkillOnlyShowMakeable",
+      "annotation": "",
+      "wikitext_line": 20
+    },
+    {
+      "id": "wt-cvars-GamePadFactionColor-33",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "GamePadFactionColor",
+      "annotation": "",
+      "wikitext_line": 33,
+      "page_default": "1"
+    },
+    {
+      "id": "wt-cvars-GamePadVibrationStrength-34",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "GamePadVibrationStrength",
+      "annotation": "",
+      "wikitext_line": 34,
+      "page_default": "1"
+    },
+    {
+      "id": "wt-cvars-telemetryTargetPackage-35",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "telemetryTargetPackage",
+      "annotation": "",
+      "wikitext_line": 35,
+      "page_default": "Blizzard.Telemetry.Wow_Mainline"
+    }
+  ]
+}
