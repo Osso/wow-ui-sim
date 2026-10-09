@@ -1,0 +1,17 @@
+{
+  "sha256": {
+    "validate.py": "512efb4e316d10f19a0488e1a84700ab3bcd6a85adffd78f334f157dfd62a594",
+    "historical-validator.py.txt": "79b72b7404388238958ce2e8a89b2c18bca74b65bd00b0f5a82ffbb3c773d03d",
+    "p501-context.json": "ee724e8287796e9a1c229cf3cd7e8c473e73bf8af31c4a3c4fc96c0e96b05157",
+    "rebase-mapping.json": "5b40444483c7d8e67adde025ca2a152ceef9e5157387da4349ca87298cad566a",
+    "portability.md": "9d59f548d2627cb8de22298dc24ab4cc1c868b2bc5dc9c46f0b5a46505c61a50",
+    "historical-blobs/136645e3eab845f7ea414fa040a08c9eb48a5b31.gz": "418c3e7c484837c884880c59bb058bab0ec7525bfb69708ce95e0b20dca4a1df",
+    "historical-blobs/3b2c42b5738e040b436754e6edf841478801e7e1.gz": "b9838a46f84a9ecbc64f519ea1ea0d0ea808a2ce778297e83c7d6c2e6efc06f0",
+    "historical-blobs/3bf73f0b4c9cdc085ef88e8f5f7877780d70d26d.gz": "9449bff8fcc4bde0dca445184492081506e2ece6689a3bbf62e0d9d6dcac4f86",
+    "historical-blobs/7f9d98cae9a1d751a60e9404adc69e4ee3b68587.gz": "3c1f006857a2ee3aaedd25974b48c79e78e6e0dbc406e56ea1886c662e7e3a8f",
+    "historical-blobs/9b8806c7a2d00d7459c6c5cb949ba3be8208e473.gz": "04e3b21ab0b7c767092aedb90a98d341eaa28a4bc3b3d556d669b1709e1b5908",
+    "historical-blobs/ada607c38c2bb60d2d4d0dad789cb230beddc7bc.gz": "ba9bca885f9fbe7bb1e90a5bba230a6f10de673d3fc4134746dde658102df028",
+    "historical-blobs/b9692dfb0b164b26299a7394260e8eef00a88b2a.gz": "5b137a8b163faf9bdf714d13d8c2c8da3d0b32bc7f15e0a87ade07932810e0cc",
+    "historical-blobs/fa91f822f66c41e3b4f0fb862cfd878c18d6d53f.gz": "6e6e18e639e3037f35ba8219e9ef3e283085be3bd27bcbf452533d213eba4f07"
+  }
+}

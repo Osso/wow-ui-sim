@@ -1,0 +1,280 @@
+{
+  "original_tip": "09a832bbbe148257bce6fa7efff55528cd82dc76",
+  "rebased_tip": "4cfd86bb2f7692959697983ee62e4f11a212fda3",
+  "master": "60c2039075ada1216d9f0e5f038d87baeab785eb",
+  "revision_pins": {
+    "83e5d3c3b2643a360bf32e73f343faa987eeb39b": {
+      "revision": "60c2039075ada1216d9f0e5f038d87baeab785eb",
+      "snapshot": {
+        "recorded_tree": "d5e10cc5d7a9035c2bc615fbbbad9d8aef302886",
+        "rebased_tree": "f1bc93991ff0cbeb301b7dc22be871d65af435f1",
+        "excluded": [
+          "data/patch-api/evidence/4.4.0-session-2026-10-08",
+          "data/patch-api/evidence/4.4.1-session-2026-10-08",
+          "data/patch-api/evidence/4.4.2-session-2026-10-08",
+          "data/patch-api/evidence/5.0.4-session-2026-10-08",
+          "data/patch-api/sources/4.4.0-api-changes.txt",
+          "data/patch-api/sources/4.4.0-api-changes.wikitext",
+          "data/patch-api/sources/4.4.0-page-coverage.json",
+          "data/patch-api/sources/4.4.1-api-changes.txt",
+          "data/patch-api/sources/4.4.1-api-changes.wikitext",
+          "data/patch-api/sources/4.4.1-page-coverage.json",
+          "data/patch-api/sources/4.4.2-api-changes.txt",
+          "data/patch-api/sources/4.4.2-api-changes.wikitext",
+          "data/patch-api/sources/4.4.2-page-coverage.json",
+          "data/patch-api/sources/5.0.4-api-changes.provenance.json",
+          "data/patch-api/sources/5.0.4-api-changes.txt",
+          "data/patch-api/sources/5.0.4-api-changes.wikitext",
+          "data/patch-api/sources/5.0.4-page-coverage.json",
+          "data/patch-api/sources/5.0.4-wikitext-register.json",
+          "docs/specs/patch-4-4-0-source-accounting.md",
+          "docs/specs/patch-4-4-1-source-accounting.md",
+          "docs/specs/patch-4-4-2-source-accounting.md",
+          "docs/specs/patch-5-0-4-publication-sweep.md",
+          "docs/specs/pet-battle-pet-type.md",
+          "docs/wiki/investigations/patch-4-4-0-api-audit.md",
+          "docs/wiki/investigations/patch-4-4-1-api-audit.md",
+          "docs/wiki/investigations/patch-4-4-2-api-audit.md",
+          "docs/wiki/investigations/patch-5-0-4-api-audit.md",
+          "tests/data/patch_5_0_4_sweep_known_gaps.json",
+          "tests/patch_5_0_4_behavior.rs",
+          "tests/patch_5_0_4_publication_sweep.rs",
+          "tools/test_patch_mists_prepatch.py"
+        ],
+        "overrides": {
+          "data/patch-api/evidence/5.0.1-session-2026-10-08/source-pin.json": [
+            "100644",
+            "blob",
+            "e3fec1e18123fed07e1d073ad9bac978f0ae175e"
+          ],
+          "data/patch-api/evidence/5.0.1-session-2026-10-08/source-response.json": [
+            "100644",
+            "blob",
+            "c2e4f959e8507d7e3f262b3f974b247bdbfa1351"
+          ],
+          "data/patch-api/sources/5.0.1-api-changes.wikitext": [
+            "100644",
+            "blob",
+            "f3ab6ed3286604cd593fa826db7bf3c24428343d"
+          ],
+          "docs/wiki/index.md": [
+            "100644",
+            "blob",
+            "3b2c42b5738e040b436754e6edf841478801e7e1"
+          ],
+          "docs/wiki/log.md": [
+            "100644",
+            "blob",
+            "fa91f822f66c41e3b4f0fb862cfd878c18d6d53f"
+          ],
+          "src/c_api/c_pet_battles.rs": [
+            "100644",
+            "blob",
+            "ada607c38c2bb60d2d4d0dad789cb230beddc7bc"
+          ],
+          "tools/gen_patch_wikitext_register.py": [
+            "100644",
+            "blob",
+            "136645e3eab845f7ea414fa040a08c9eb48a5b31"
+          ]
+        }
+      }
+    },
+    "f86fe61ebef0c9cbcff753ae83ef607656e736da": {
+      "revision": "53572338871bca37c182713f09a04a9331d3e9e6",
+      "snapshot": {
+        "recorded_tree": "28b324ed18f9587b303beaff3ca73ac7cbf7304f",
+        "rebased_tree": "4eb3353a10238abfecaee6d13a711a80304fc319",
+        "excluded": [
+          "data/patch-api/evidence/4.4.0-session-2026-10-08",
+          "data/patch-api/evidence/4.4.1-session-2026-10-08",
+          "data/patch-api/evidence/4.4.2-session-2026-10-08",
+          "data/patch-api/evidence/5.0.4-session-2026-10-08",
+          "data/patch-api/sources/4.4.0-api-changes.txt",
+          "data/patch-api/sources/4.4.0-api-changes.wikitext",
+          "data/patch-api/sources/4.4.0-page-coverage.json",
+          "data/patch-api/sources/4.4.1-api-changes.txt",
+          "data/patch-api/sources/4.4.1-api-changes.wikitext",
+          "data/patch-api/sources/4.4.1-page-coverage.json",
+          "data/patch-api/sources/4.4.2-api-changes.txt",
+          "data/patch-api/sources/4.4.2-api-changes.wikitext",
+          "data/patch-api/sources/4.4.2-page-coverage.json",
+          "data/patch-api/sources/5.0.4-api-changes.provenance.json",
+          "data/patch-api/sources/5.0.4-api-changes.txt",
+          "data/patch-api/sources/5.0.4-api-changes.wikitext",
+          "data/patch-api/sources/5.0.4-page-coverage.json",
+          "data/patch-api/sources/5.0.4-wikitext-register.json",
+          "docs/specs/patch-4-4-0-source-accounting.md",
+          "docs/specs/patch-4-4-1-source-accounting.md",
+          "docs/specs/patch-4-4-2-source-accounting.md",
+          "docs/specs/patch-5-0-4-publication-sweep.md",
+          "docs/specs/pet-battle-pet-type.md",
+          "docs/wiki/investigations/patch-4-4-0-api-audit.md",
+          "docs/wiki/investigations/patch-4-4-1-api-audit.md",
+          "docs/wiki/investigations/patch-4-4-2-api-audit.md",
+          "docs/wiki/investigations/patch-5-0-4-api-audit.md",
+          "tests/data/patch_5_0_4_sweep_known_gaps.json",
+          "tests/patch_5_0_4_behavior.rs",
+          "tests/patch_5_0_4_publication_sweep.rs",
+          "tools/test_patch_mists_prepatch.py"
+        ],
+        "overrides": {
+          "docs/wiki/index.md": [
+            "100644",
+            "blob",
+            "7f9d98cae9a1d751a60e9404adc69e4ee3b68587"
+          ],
+          "docs/wiki/log.md": [
+            "100644",
+            "blob",
+            "b9692dfb0b164b26299a7394260e8eef00a88b2a"
+          ],
+          "src/c_api/c_pet_battles.rs": [
+            "100644",
+            "blob",
+            "ada607c38c2bb60d2d4d0dad789cb230beddc7bc"
+          ],
+          "tools/gen_patch_wikitext_register.py": [
+            "100644",
+            "blob",
+            "136645e3eab845f7ea414fa040a08c9eb48a5b31"
+          ]
+        }
+      }
+    },
+    "59140d35dc3a63ea2e9cb771029c5f49641e4e5b": {
+      "revision": "5fcf45981ad1a8b692fdbde6fc7cc8bec2ffebcb",
+      "snapshot": {
+        "recorded_tree": "edf543226e450f98f2e67c467c453e50640f68c4",
+        "rebased_tree": "1039c99ebe8f0d31631e9a2557e326c7efaa0db0",
+        "excluded": [
+          "data/patch-api/evidence/4.4.0-session-2026-10-08",
+          "data/patch-api/evidence/4.4.1-session-2026-10-08",
+          "data/patch-api/evidence/4.4.2-session-2026-10-08",
+          "data/patch-api/evidence/5.0.4-session-2026-10-08",
+          "data/patch-api/sources/4.4.0-api-changes.txt",
+          "data/patch-api/sources/4.4.0-api-changes.wikitext",
+          "data/patch-api/sources/4.4.0-page-coverage.json",
+          "data/patch-api/sources/4.4.1-api-changes.txt",
+          "data/patch-api/sources/4.4.1-api-changes.wikitext",
+          "data/patch-api/sources/4.4.1-page-coverage.json",
+          "data/patch-api/sources/4.4.2-api-changes.txt",
+          "data/patch-api/sources/4.4.2-api-changes.wikitext",
+          "data/patch-api/sources/4.4.2-page-coverage.json",
+          "data/patch-api/sources/5.0.4-api-changes.provenance.json",
+          "data/patch-api/sources/5.0.4-api-changes.txt",
+          "data/patch-api/sources/5.0.4-api-changes.wikitext",
+          "data/patch-api/sources/5.0.4-page-coverage.json",
+          "data/patch-api/sources/5.0.4-wikitext-register.json",
+          "docs/specs/patch-4-4-0-source-accounting.md",
+          "docs/specs/patch-4-4-1-source-accounting.md",
+          "docs/specs/patch-4-4-2-source-accounting.md",
+          "docs/specs/patch-5-0-4-publication-sweep.md",
+          "docs/specs/pet-battle-pet-type.md",
+          "docs/wiki/investigations/patch-4-4-0-api-audit.md",
+          "docs/wiki/investigations/patch-4-4-1-api-audit.md",
+          "docs/wiki/investigations/patch-4-4-2-api-audit.md",
+          "docs/wiki/investigations/patch-5-0-4-api-audit.md",
+          "tests/data/patch_5_0_4_sweep_known_gaps.json",
+          "tests/patch_5_0_4_behavior.rs",
+          "tests/patch_5_0_4_publication_sweep.rs",
+          "tools/test_patch_mists_prepatch.py"
+        ],
+        "overrides": {
+          "docs/wiki/index.md": [
+            "100644",
+            "blob",
+            "7f9d98cae9a1d751a60e9404adc69e4ee3b68587"
+          ],
+          "docs/wiki/log.md": [
+            "100644",
+            "blob",
+            "b9692dfb0b164b26299a7394260e8eef00a88b2a"
+          ],
+          "src/c_api/c_pet_battles.rs": [
+            "100644",
+            "blob",
+            "ada607c38c2bb60d2d4d0dad789cb230beddc7bc"
+          ],
+          "tools/gen_patch_wikitext_register.py": [
+            "100644",
+            "blob",
+            "136645e3eab845f7ea414fa040a08c9eb48a5b31"
+          ]
+        }
+      }
+    },
+    "e1653e5c79bcbdb1844a406ea5e332fef04afbe4": {
+      "revision": "582777f0dfef2570872bec5d02f6620409c872b0",
+      "snapshot": {
+        "recorded_tree": "0c642ba8c52a3d2319e6fa014a385614e875fa12",
+        "rebased_tree": "aebc272ba553b450317901cc111d3e2b4514f988",
+        "excluded": [
+          "data/patch-api/evidence/4.4.0-session-2026-10-08",
+          "data/patch-api/evidence/4.4.1-session-2026-10-08",
+          "data/patch-api/evidence/4.4.2-session-2026-10-08",
+          "data/patch-api/evidence/5.0.4-session-2026-10-08",
+          "data/patch-api/sources/4.4.0-api-changes.txt",
+          "data/patch-api/sources/4.4.0-api-changes.wikitext",
+          "data/patch-api/sources/4.4.0-page-coverage.json",
+          "data/patch-api/sources/4.4.1-api-changes.txt",
+          "data/patch-api/sources/4.4.1-api-changes.wikitext",
+          "data/patch-api/sources/4.4.1-page-coverage.json",
+          "data/patch-api/sources/4.4.2-api-changes.txt",
+          "data/patch-api/sources/4.4.2-api-changes.wikitext",
+          "data/patch-api/sources/4.4.2-page-coverage.json",
+          "data/patch-api/sources/5.0.4-api-changes.provenance.json",
+          "data/patch-api/sources/5.0.4-api-changes.txt",
+          "data/patch-api/sources/5.0.4-api-changes.wikitext",
+          "data/patch-api/sources/5.0.4-page-coverage.json",
+          "data/patch-api/sources/5.0.4-wikitext-register.json",
+          "docs/specs/patch-4-4-0-source-accounting.md",
+          "docs/specs/patch-4-4-1-source-accounting.md",
+          "docs/specs/patch-4-4-2-source-accounting.md",
+          "docs/specs/patch-5-0-4-publication-sweep.md",
+          "docs/specs/pet-battle-pet-type.md",
+          "docs/wiki/investigations/patch-4-4-0-api-audit.md",
+          "docs/wiki/investigations/patch-4-4-1-api-audit.md",
+          "docs/wiki/investigations/patch-4-4-2-api-audit.md",
+          "docs/wiki/investigations/patch-5-0-4-api-audit.md",
+          "tests/data/patch_5_0_4_sweep_known_gaps.json",
+          "tests/patch_5_0_4_behavior.rs",
+          "tests/patch_5_0_4_publication_sweep.rs",
+          "tools/test_patch_mists_prepatch.py"
+        ],
+        "overrides": {
+          "docs/wiki/index.md": [
+            "100644",
+            "blob",
+            "3bf73f0b4c9cdc085ef88e8f5f7877780d70d26d"
+          ],
+          "docs/wiki/log.md": [
+            "100644",
+            "blob",
+            "9b8806c7a2d00d7459c6c5cb949ba3be8208e473"
+          ],
+          "src/c_api/c_pet_battles.rs": [
+            "100644",
+            "blob",
+            "ada607c38c2bb60d2d4d0dad789cb230beddc7bc"
+          ],
+          "tools/gen_patch_wikitext_register.py": [
+            "100644",
+            "blob",
+            "136645e3eab845f7ea414fa040a08c9eb48a5b31"
+          ]
+        }
+      }
+    }
+  },
+  "archived_blobs": {
+    "136645e3eab845f7ea414fa040a08c9eb48a5b31": "historical-blobs/136645e3eab845f7ea414fa040a08c9eb48a5b31.gz",
+    "3b2c42b5738e040b436754e6edf841478801e7e1": "historical-blobs/3b2c42b5738e040b436754e6edf841478801e7e1.gz",
+    "3bf73f0b4c9cdc085ef88e8f5f7877780d70d26d": "historical-blobs/3bf73f0b4c9cdc085ef88e8f5f7877780d70d26d.gz",
+    "7f9d98cae9a1d751a60e9404adc69e4ee3b68587": "historical-blobs/7f9d98cae9a1d751a60e9404adc69e4ee3b68587.gz",
+    "9b8806c7a2d00d7459c6c5cb949ba3be8208e473": "historical-blobs/9b8806c7a2d00d7459c6c5cb949ba3be8208e473.gz",
+    "ada607c38c2bb60d2d4d0dad789cb230beddc7bc": "historical-blobs/ada607c38c2bb60d2d4d0dad789cb230beddc7bc.gz",
+    "b9692dfb0b164b26299a7394260e8eef00a88b2a": "historical-blobs/b9692dfb0b164b26299a7394260e8eef00a88b2a.gz",
+    "fa91f822f66c41e3b4f0fb862cfd878c18d6d53f": "historical-blobs/fa91f822f66c41e3b4f0fb862cfd878c18d6d53f.gz"
+  }
+}

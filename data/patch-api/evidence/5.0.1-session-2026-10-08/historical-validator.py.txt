@@ -3,22 +3,21 @@ import hashlib
 import json
 from pathlib import Path
 import re
+import subprocess
 import sys
 
 sys.dont_write_bytecode = True
 ROOT = Path(__file__).resolve().parents[4]
 HERE = Path(__file__).resolve().parent
 PREFIX = 'data/patch-api/sources/5.0.1-'
-sys.path.insert(0, str(ROOT / 'tools'))
-from patch_audit_pin_trees import ProofGit
 
 
 def git(*args):
-    return PROOF_GIT(*args).strip()
+    return subprocess.check_output(['git', *args], cwd=ROOT).strip()
 
 
 def blob(revision, path):
-    return PROOF_GIT('show', revision + ':' + path)
+    return subprocess.check_output(['git', 'show', revision + ':' + path], cwd=ROOT)
 
 
 def digest(data):
@@ -38,7 +37,7 @@ def names(revision, path):
 
 
 def check_seals(context):
-    assert digest((HERE / 'historical-validator.py.txt').read_bytes()) == context['validator_sha256'], 'historical validator seal'
+    assert digest(Path(__file__).read_bytes()) == context['validator_sha256'], 'validator seal'
     for name, expected in context['session_sha256'].items():
         assert digest((HERE / name).read_bytes()) == expected, 'session seal: ' + name
     revision = context['source_revision']
@@ -179,11 +178,6 @@ def check_preservation(context):
 
 
 def main():
-    global PROOF_GIT
-    pins = read_json(HERE / 'pins.json')
-    for name, expected in pins['sha256'].items():
-        assert digest((HERE / name).read_bytes()) == expected, 'portability seal: ' + name
-    PROOF_GIT = ProofGit(ROOT, HERE, read_json(HERE / 'rebase-mapping.json'))
     context = read_json(HERE / 'p501-context.json')
     check_seals(context)
     check_source(context)
