@@ -1,0 +1,27 @@
+{
+  "src/lua_api/globals/real/bnet_friend_index.rs": {
+    "historical_sha256": "7a8932152c77b0b7699eb9cc4a500853298c632302ba6035fa82c9b2e88b8e0d",
+    "current_sha256": "7a8932152c77b0b7699eb9cc4a500853298c632302ba6035fa82c9b2e88b8e0d",
+    "same": true
+  },
+  "src/lua_api/globals/real/mod.rs": {
+    "historical_sha256": "81248fd66386282d13273ad25e8b9c17c722014e755a94a8c599e3a0c6362d4c",
+    "current_sha256": "81248fd66386282d13273ad25e8b9c17c722014e755a94a8c599e3a0c6362d4c",
+    "same": true
+  },
+  "src/lua_api/globals/register.rs": {
+    "historical_sha256": "a75f1facee5e178b0d0b56c31a77fa338a433b2dab7abf1078a9bb98df6ff11b",
+    "current_sha256": "e37bafa16cf0c12d1ac7d902fba63e80eea174d99d6468ff7daf4498d3d13ac0",
+    "same": false
+  },
+  "tests/patch_4_2_0_behavior.rs": {
+    "historical_sha256": "46361a0af8fcb305e9bff5d6e944e76f33dd26d553c802df2e646bb3c4df0e21",
+    "current_sha256": "46361a0af8fcb305e9bff5d6e944e76f33dd26d553c802df2e646bb3c4df0e21",
+    "same": true
+  },
+  "tests/patch_4_2_0_publication_sweep.rs": {
+    "historical_sha256": "e8603edd15c929a2f883d41be7139763d5653d70322ef417b5a456bdd2cb1dc9",
+    "current_sha256": "d47efe248a255e6699c299048dd2d56151d5f22665a8e43f1c246e5313df1dd6",
+    "same": false
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "revision": "39d076c31995878450d8622825d3cc6128fb2d8e",
+  "argv": [
+    "python3",
+    "tools/check_patch_validators.py",
+    "39d076c31995878450d8622825d3cc6128fb2d8e"
+  ],
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p420-source",
+  "env": {}
+}

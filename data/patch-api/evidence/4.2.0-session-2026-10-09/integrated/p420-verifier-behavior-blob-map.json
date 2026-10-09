@@ -1,0 +1,32 @@
+{
+  "6b89034a3": {
+    "build.rs": "af69ee82c00f65702dd691a97bd6b47d5ba39148",
+    "src/c_api/c_battle_net.rs": "a923e4e2897ee07019c5cadabf778f4d3ef3ec19",
+    "src/lua_api/globals/real/bnet_friend_index.rs": "294872bea114a0aed83cc122fae029be3422e80c",
+    "src/lua_api/state.rs": "493b9090c70071c7a2e4d9f7a15a4e3313b048d2",
+    "src/lua_api/state/defaults/friends.rs": "8eddc81570b920c2774909201830fa2d65a10413",
+    "src/lua_api/state/sim_state.rs": "c2d6b47b9c15eceed60b4eda00bf052c94091508",
+    "tests/integration.rs": "efcb3c959894206655eca3a5945c572ebb7bb896",
+    "tests/patch_4_2_0_behavior.rs": "1f6d646ae87fc7aae0c47d73603c10f4f4b64d97"
+  },
+  "566ce85d7fdc448d8ef32b42d9f8e551078c885a": {
+    "build.rs": "af69ee82c00f65702dd691a97bd6b47d5ba39148",
+    "src/c_api/c_battle_net.rs": "a923e4e2897ee07019c5cadabf778f4d3ef3ec19",
+    "src/lua_api/globals/real/bnet_friend_index.rs": "294872bea114a0aed83cc122fae029be3422e80c",
+    "src/lua_api/state.rs": "493b9090c70071c7a2e4d9f7a15a4e3313b048d2",
+    "src/lua_api/state/defaults/friends.rs": "8eddc81570b920c2774909201830fa2d65a10413",
+    "src/lua_api/state/sim_state.rs": "c2d6b47b9c15eceed60b4eda00bf052c94091508",
+    "tests/integration.rs": "efcb3c959894206655eca3a5945c572ebb7bb896",
+    "tests/patch_4_2_0_behavior.rs": "1f6d646ae87fc7aae0c47d73603c10f4f4b64d97"
+  },
+  "HEAD": {
+    "build.rs": "af69ee82c00f65702dd691a97bd6b47d5ba39148",
+    "src/c_api/c_battle_net.rs": "a923e4e2897ee07019c5cadabf778f4d3ef3ec19",
+    "src/lua_api/globals/real/bnet_friend_index.rs": "294872bea114a0aed83cc122fae029be3422e80c",
+    "src/lua_api/state.rs": "493b9090c70071c7a2e4d9f7a15a4e3313b048d2",
+    "src/lua_api/state/defaults/friends.rs": "8eddc81570b920c2774909201830fa2d65a10413",
+    "src/lua_api/state/sim_state.rs": "c2d6b47b9c15eceed60b4eda00bf052c94091508",
+    "tests/integration.rs": "efcb3c959894206655eca3a5945c572ebb7bb896",
+    "tests/patch_4_2_0_behavior.rs": "1f6d646ae87fc7aae0c47d73603c10f4f4b64d97"
+  }
+}

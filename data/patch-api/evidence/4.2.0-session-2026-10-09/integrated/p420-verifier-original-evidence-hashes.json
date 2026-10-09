@@ -1,0 +1,142 @@
+[
+  {
+    "path": "data/patch-api/evidence/4.2.0-session-2026-10-09/accounting-green.log",
+    "sha256": "612f0f11e001c067432c617f1d536837924050a61c2d13bbb779c7bb01258fca",
+    "seal_matches": true,
+    "ebf7_blob": "204ac6a9bd3a483a24473647464a522db6700e7d",
+    "same_original": true
+  },
+  {
+    "path": "data/patch-api/evidence/4.2.0-session-2026-10-09/accounting-red.log",
+    "sha256": "a69ba6242a635114556cc1f0cdb5d723e4f15e8a94934439041cc4c8a0cd56a7",
+    "seal_matches": true,
+    "ebf7_blob": "0994c1127853d8103c81638bfa8a01468b8881a9",
+    "same_original": true
+  },
+  {
+    "path": "data/patch-api/evidence/4.2.0-session-2026-10-09/behavior-green.log",
+    "sha256": "917c09a356cc6acdbe7eb12915a39775ad21c61f3621ca35ffc7e47b8b942abc",
+    "seal_matches": true,
+    "ebf7_blob": "f0b9b4aeaa4d8c1dc60891146ed39ed2e4313eb8",
+    "same_original": true
+  },
+  {
+    "path": "data/patch-api/evidence/4.2.0-session-2026-10-09/behavior-red.log",
+    "sha256": "c8b6c5aa00a8de1f936c601fcd9da5702a083e270a826793f525e6533dc914be",
+    "seal_matches": true,
+    "ebf7_blob": "f1e4a5782996a63a0cddfd3c8a3463f2e9aa1ac2",
+    "same_original": true
+  },
+  {
+    "path": "data/patch-api/evidence/4.2.0-session-2026-10-09/caller-scan.json",
+    "sha256": "f7fcf87925a07b8c37718c112859b52d187909de95b75f1033c31db6c3f7eb8a",
+    "seal_matches": true,
+    "ebf7_blob": "4b94c909c80b87f2beb6c6bac40679d00c2ff7a6",
+    "same_original": true
+  },
+  {
+    "path": "data/patch-api/evidence/4.2.0-session-2026-10-09/development-green.log",
+    "sha256": "81a2057d92e64a924c997d3d33a2d090499846a50c9e09c18fbfce47a5bb9963",
+    "seal_matches": true,
+    "ebf7_blob": "7b21c9b478537dcb48296a01b376428c4713b567",
+    "same_original": true
+  },
+  {
+    "path": "data/patch-api/evidence/4.2.0-session-2026-10-09/development-proof.json",
+    "sha256": "041555c5cfad21494f73ec699f82b5ea0ba141f561b1965eacee8f3c1d073dbb",
+    "seal_matches": true,
+    "ebf7_blob": "58c1f4ac53f9e2fc553e937277db66ae5910b6a5",
+    "same_original": true
+  },
+  {
+    "path": "data/patch-api/evidence/4.2.0-session-2026-10-09/development-results.json",
+    "sha256": "3608ea203eb394e5835de2b6e6f4685f9dff08b9e1d1463c0cb7e8e8d70eadc0",
+    "seal_matches": true,
+    "ebf7_blob": "9571ab3dee07805898c74d3112b53eea856508c3",
+    "same_original": true
+  },
+  {
+    "path": "data/patch-api/evidence/4.2.0-session-2026-10-09/development-summary.json",
+    "sha256": "944252540ba278926ae5623cbc5993bac9300f133341562705dadff5cf5e8af4",
+    "seal_matches": true,
+    "ebf7_blob": "21438addbf878e72aa4babf140cc04e2ab4fd4cd",
+    "same_original": true
+  },
+  {
+    "path": "data/patch-api/evidence/4.2.0-session-2026-10-09/later-register-pins.json",
+    "sha256": "23438517c64e2f48575dc72462b4e0e391811ceb00481a060e029bbefadc243e",
+    "seal_matches": true,
+    "ebf7_blob": "e076c661e7f51cd278cff83fa5dc370e4c533eaf",
+    "same_original": true
+  },
+  {
+    "path": "data/patch-api/evidence/4.2.0-session-2026-10-09/negative-added-row-register.json",
+    "sha256": "98061e2bd220071cfa793c98327bad9a7001e493ae61b28883684b68190d9b44",
+    "seal_matches": true,
+    "ebf7_blob": "9d25fabbc23b01b4095c90bb5eb0d85a71910af4",
+    "same_original": true
+  },
+  {
+    "path": "data/patch-api/evidence/4.2.0-session-2026-10-09/negative-count-boundary.log",
+    "sha256": "da295068d97b81641c651a5b01957c5bae15598dcd469cf69d69959cadf0b5e6",
+    "seal_matches": true,
+    "ebf7_blob": "e46d9a00da0fc3bd5fd943fd859265c941605d43",
+    "same_original": true
+  },
+  {
+    "path": "data/patch-api/evidence/4.2.0-session-2026-10-09/negative-register.json",
+    "sha256": "4dd367696f0d65b3d1b55fcc569ddef384243207eaef79a0aba8f75fc222283f",
+    "seal_matches": true,
+    "ebf7_blob": "c4f149dd393a2e3ec7633a60cca059186de05090",
+    "same_original": true
+  },
+  {
+    "path": "data/patch-api/evidence/4.2.0-session-2026-10-09/negative-results.json",
+    "sha256": "f8b2cf2bb62f27e87155ce5118f40adc2a7c36e7a82b968dc23f2298b57015fd",
+    "seal_matches": true,
+    "ebf7_blob": "12de0c7066560e394ebc0da97f1c504d8157b368",
+    "same_original": true
+  },
+  {
+    "path": "data/patch-api/evidence/4.2.0-session-2026-10-09/negative.log",
+    "sha256": "17f6068450e3ea87d7a743674edf173dfcf798112fff031a9c7801c7843cf91c",
+    "seal_matches": true,
+    "ebf7_blob": "e0923c4ec3f333131490defe65de390d89075259",
+    "same_original": true
+  },
+  {
+    "path": "data/patch-api/evidence/4.2.0-session-2026-10-09/red-results.json",
+    "sha256": "2769cba60674611fcc679a6473875a477c55a9b9733ad9d30a46670bbe9cac64",
+    "seal_matches": true,
+    "ebf7_blob": "45bcde6351ca250b11c17cfd8a441dfa0fa5b335",
+    "same_original": true
+  },
+  {
+    "path": "data/patch-api/evidence/4.2.0-session-2026-10-09/red.log",
+    "sha256": "3dd289e8db0a5563257d6e5333ee2c54cd057c9187cc6b844f1d63bd0e9874cf",
+    "seal_matches": true,
+    "ebf7_blob": "9f8eaf62e96c7923a3e667c8d75db08d6218ca3f",
+    "same_original": true
+  },
+  {
+    "path": "data/patch-api/evidence/4.2.0-session-2026-10-09/setup-red-tail.log",
+    "sha256": "b223fe50dcf96ea5092997be4b8f53f43082bde7b5fdf43e4586ac3bd21ed816",
+    "seal_matches": true,
+    "ebf7_blob": "33da5569d564546c853c2c165402e4bba3f27fcf",
+    "same_original": true
+  },
+  {
+    "path": "data/patch-api/evidence/4.2.0-session-2026-10-09/source-pin.json",
+    "sha256": "cfbf13cf4f77a6929127f81cc0ea3cec20750efe420efe36e5c9fe9ee623487b",
+    "seal_matches": true,
+    "ebf7_blob": "02d4f894a140ca56944ff351c191830c0ac0a7e2",
+    "same_original": true
+  },
+  {
+    "path": "data/patch-api/evidence/4.2.0-session-2026-10-09/source-response.json",
+    "sha256": "aa978b9359b288b25f29d93f07b54c7791cc6114c90d17e8f79cb7fec128d770",
+    "seal_matches": true,
+    "ebf7_blob": "a611a722dc1570cfac2fbcedb08384f806e4b009",
+    "same_original": true
+  }
+]

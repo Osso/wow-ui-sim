@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "python3",
+    "-I",
+    "/home/osso/.worktrees/wow-ui-sim-p420-source/data/patch-api/evidence/4.2.0-session-2026-10-09/validate.py"
+  ],
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p420-source",
+  "exit": 0,
+  "stdout": "{\n  \"inventory_rows\": 65,\n  \"historical_gaps\": 31,\n  \"negative_gaps\": 32,\n  \"ledger_rows\": 66,\n  \"later_registers\": 64,\n  \"pending_later_registers\": [\n    \"4.3.0\",\n    \"4.3.4\"\n  ],\n  \"status\": \"PASS\",\n  \"source_replay\": \"byte-identical\",\n  \"receipt_artifact_seals\": 19,\n  \"snapshot_members\": 73,\n  \"native_runtime_replay\": false,\n  \"scope\": \"Historical source replay and retained receipt integrity only; no current integration or native/runtime acceptance.\"\n}\n",
+  "stderr": "",
+  "validator_sha256": "f8665144c0ab968040556d48c733ca131d757f091d2015f96ab7a5f11be50b0a"
+}
