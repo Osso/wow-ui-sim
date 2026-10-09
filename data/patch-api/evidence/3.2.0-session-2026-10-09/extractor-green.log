@@ -1,0 +1,6 @@
+test_numbered_reference_is_opt_in_and_keeps_full_prose (tools.test_patch_3_2_extract.NumberedReferenceTests.test_numbered_reference_is_opt_in_and_keeps_full_prose) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+OK

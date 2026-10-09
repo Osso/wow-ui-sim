@@ -1,0 +1,6 @@
+test_opt_in_retains_signatures_arrays_and_uncertain_removal (tools.test_patch_3_2_register.WrathRetailBulletsTests.test_opt_in_retains_signatures_arrays_and_uncertain_removal) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.101s
+
+OK

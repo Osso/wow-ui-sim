@@ -766,3 +766,7 @@ Added [[patch-4-0-1-api-audit]]: exact supplied source, opt-in labeled inventori
 ## [2026-10-09] source audit | Historical retail Patch 3.2.0
 
 [Audit](investigations/patch-3-2-0-api-audit.md): supplied page499137/rev4812266 identity and hashes verified; opt-in labelled bullets preserve literal misspelling, signatures, arrays and uncertain removal. Retail queued 3.3.0/3.3.3/3.3.5/4.0.1 slots; actual 4.1+ successors, never Wrath Classic. Accounting and runtime development proof remain open.
+
+## [2026-10-09] development | Historical retail 3.2.0 accounting and receipts
+
+[Audit](investigations/patch-3-2-0-api-audit.md): 43 API/event/array occurrences, 74 full-extract rows, 24 signatures and four slash-tool claims; 145 IDs (30 bounded/88 pending/27 metadata). Own prefork GREEN 1/1, negative 13 → 14 rejected; no model closures or runtime/Classic/vendor changes. Literal typo and uncertain removal retained. Original ledger/gaps/parsers/logs sealed independently of future closures; 81-blob archive, 22 external seals. Fresh-process validator GREEN remains pending; main owns integration/final gates.

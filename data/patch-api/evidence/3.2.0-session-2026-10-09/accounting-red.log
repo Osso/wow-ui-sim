@@ -1,0 +1,17 @@
+test_fresh_process_archive_ignores_future_closure_rejects_tampering (tools.test_patch_3_2_accounting.SourceAccountingTests.test_fresh_process_archive_ignores_future_closure_rejects_tampering) ... FAIL
+test_literal_inventory_and_full_extract_reproduce (tools.test_patch_3_2_accounting.SourceAccountingTests.test_literal_inventory_and_full_extract_reproduce) ... ok
+test_original_ledger_exact_id_set_and_negative_boundary (tools.test_patch_3_2_accounting.SourceAccountingTests.test_original_ledger_exact_id_set_and_negative_boundary) ... ok
+
+======================================================================
+FAIL: test_fresh_process_archive_ignores_future_closure_rejects_tampering (tools.test_patch_3_2_accounting.SourceAccountingTests.test_fresh_process_archive_ignores_future_closure_rejects_tampering)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p320-source/tools/test_patch_3_2_accounting.py", line 67, in test_fresh_process_archive_ignores_future_closure_rejects_tampering
+    self.assertTrue(script.is_file(), 'portable historical validator missing')
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : portable historical validator missing
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.072s
+
+FAILED (failures=1)

@@ -1,0 +1,168 @@
+{
+  "policy": "Targeted development only; revisions identify committed scope, test-first uncommitted fixtures are identified explicitly. No model/native/final acceptance credit. Read archived artifacts instead of rerunning milestones.",
+  "commands": [
+    {
+      "artifact": "parser-red.log",
+      "argv": [
+        "python3",
+        "-B",
+        "-m",
+        "unittest",
+        "tools.test_patch_3_2_register",
+        "-v"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p320-source",
+      "revision": "9ff195d19564bd93fe34546ae97d4ce5660906d2",
+      "exit": 1,
+      "scope": "New opt-in missing; own test file uncommitted, archived separately.",
+      "environment": {},
+      "later_changes_invalidate": false
+    },
+    {
+      "artifact": "parser-green.log",
+      "argv": [
+        "python3",
+        "-B",
+        "-m",
+        "unittest",
+        "tools.test_patch_3_2_register",
+        "-v"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p320-source",
+      "revision": "6171d9819",
+      "exit": 0,
+      "scope": "Labelled bullets and default byte-identity control.",
+      "environment": {},
+      "later_changes_invalidate": false
+    },
+    {
+      "artifact": "extractor-red.log",
+      "argv": [
+        "python3",
+        "-B",
+        "-m",
+        "unittest",
+        "tools.test_patch_3_2_extract",
+        "-v"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p320-source",
+      "revision": "6171d9819",
+      "exit": 1,
+      "scope": "Numbered reference flag missing; own test file uncommitted, archived separately.",
+      "environment": {},
+      "later_changes_invalidate": false
+    },
+    {
+      "artifact": "extractor-green.log",
+      "argv": [
+        "python3",
+        "-B",
+        "-m",
+        "unittest",
+        "tools.test_patch_3_2_extract",
+        "-v"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p320-source",
+      "revision": "b1d953d90",
+      "exit": 0,
+      "scope": "Numbered reference opt-in; old unnumbered marker unchanged.",
+      "environment": {},
+      "later_changes_invalidate": false
+    },
+    {
+      "artifact": "formatter.log",
+      "argv": [
+        "cargo",
+        "fmt",
+        "--all"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p320-source",
+      "revision": "5dd3557c1",
+      "exit": 0,
+      "scope": "Sweep source formatted before commit; no later Rust change.",
+      "environment": {},
+      "later_changes_invalidate": false
+    },
+    {
+      "artifact": "own-sweep-red.log",
+      "argv": [
+        "cargo",
+        "test",
+        "--offline",
+        "--test",
+        "prefork_full_ui",
+        "patch_3_2_0_publication_sweep",
+        "--",
+        "--nocapture"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p320-source",
+      "revision": "5dd3557c1",
+      "exit": 1,
+      "scope": "Own empty-known-gap RED: exact thirteen gaps discovered.",
+      "environment": {
+        "P320_SWEEP_OUT": "own-sweep-red-results.json"
+      },
+      "later_changes_invalidate": false
+    },
+    {
+      "artifact": "own-sweep-green.log",
+      "argv": [
+        "cargo",
+        "test",
+        "--offline",
+        "--test",
+        "prefork_full_ui",
+        "patch_3_2_0_publication_sweep",
+        "--",
+        "--nocapture"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p320-source",
+      "revision": "07f502057",
+      "exit": 0,
+      "scope": "Own reviewed-known-gap GREEN: exact original inventory/current retail successors.",
+      "environment": {
+        "P320_SWEEP_OUT": "own-sweep-green-results.json"
+      },
+      "later_changes_invalidate": false
+    },
+    {
+      "artifact": "negative.log",
+      "argv": [
+        "cargo",
+        "test",
+        "--offline",
+        "--test",
+        "prefork_full_ui",
+        "patch_3_2_0_publication_sweep",
+        "--",
+        "--nocapture"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p320-source",
+      "revision": "07f502057",
+      "exit": 1,
+      "scope": "Serialized fabricated identity changes thirteen gaps to fourteen; committed register unchanged.",
+      "environment": {
+        "P320_SWEEP_REGISTER": "negative-register.json",
+        "P320_SWEEP_OUT": "negative-results.json"
+      },
+      "later_changes_invalidate": false
+    },
+    {
+      "artifact": "accounting-red.log",
+      "argv": [
+        "python3",
+        "-B",
+        "-m",
+        "unittest",
+        "tools.test_patch_3_2_accounting",
+        "-v"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p320-source",
+      "revision": "07f502057",
+      "exit": 1,
+      "scope": "Two accounting fixtures pass; portable validator not yet implemented.",
+      "environment": {},
+      "later_changes_invalidate": false
+    }
+  ]
+}

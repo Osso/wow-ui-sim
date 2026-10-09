@@ -1,0 +1,423 @@
+{
+  "schema": "p320-historical-inputs/v1",
+  "patch": "3.2.0",
+  "client_line": "retail",
+  "base_revision": "9ff195d19564bd93fe34546ae97d4ce5660906d2",
+  "archive_sha256": "9b88b4899bdc1f2ecd723cda35b5caba7548cd7402013ab4eed9f79ad5385ffe",
+  "archived": {
+    "data/patch-api/sources/10.0.0-wikitext-register.json": {
+      "sha256": "c093335505ec54e96dda556f6011facd7c7616d80636843413fc193a25b7a1ca",
+      "bytes": 150825
+    },
+    "data/patch-api/sources/10.0.2-wikitext-register.json": {
+      "sha256": "84941b2b96c7c3a20e972045487ff66c5ede5845be7e453c5806669a18c85059",
+      "bytes": 100265
+    },
+    "data/patch-api/sources/10.0.5-wikitext-register.json": {
+      "sha256": "336973622327eddaf6d21111354402b4b1faf424a0701e34a99c3a56640be0b1",
+      "bytes": 23709
+    },
+    "data/patch-api/sources/10.0.7-wikitext-register.json": {
+      "sha256": "64ef0166fa31a83460312cb97ac2d0f4b65113779b4d6904c43283dc0854ad1e",
+      "bytes": 17541
+    },
+    "data/patch-api/sources/10.1.0-wikitext-register.json": {
+      "sha256": "9ef8625ab492bdc51b1a010b859044987e63f72dd89c65c878f447948edacd76",
+      "bytes": 32016
+    },
+    "data/patch-api/sources/10.1.5-wikitext-register.json": {
+      "sha256": "cbd9a9de7fff6b6e8d77e352dccbe96b21caed7650577d432eaa24673fb8746f",
+      "bytes": 25256
+    },
+    "data/patch-api/sources/10.1.7-wikitext-register.json": {
+      "sha256": "d0db70aa76a3aa2b01e39227420f3fb5c3874b8c3b2457847ae4fa913299c01c",
+      "bytes": 12650
+    },
+    "data/patch-api/sources/10.2.0-wikitext-register.json": {
+      "sha256": "beaf8a6dd57229712abf3366b8ffc29163e75aa827533e108d59b89f6c56b979",
+      "bytes": 35246
+    },
+    "data/patch-api/sources/10.2.5-wikitext-register.json": {
+      "sha256": "38bf561f25edb63ab3f34e17aef9e088471cc85844c3ca9d5c269c3b206723b8",
+      "bytes": 14602
+    },
+    "data/patch-api/sources/10.2.6-wikitext-register.json": {
+      "sha256": "922d9173720213392dc4c228881539cf59a45fd7b3f0a3155176c36d68deb772",
+      "bytes": 50860
+    },
+    "data/patch-api/sources/10.2.7-wikitext-register.json": {
+      "sha256": "f5415c7991f08f5cf958648d0b2aa8f62f43647be819b44156963c0f9a2ad045",
+      "bytes": 25807
+    },
+    "data/patch-api/sources/11.0.0-wikitext-register.json": {
+      "sha256": "628e96cf4efca59242d3a6c093f5d7fa09657b47c2d71e39563ea62ea56a0186",
+      "bytes": 119913
+    },
+    "data/patch-api/sources/11.0.2-wikitext-register.json": {
+      "sha256": "a5edb6c195e1ccc9722aa1358fc0a392b772563a43bf5c4abf4d45446e6bf9ca",
+      "bytes": 9176
+    },
+    "data/patch-api/sources/11.0.5-wikitext-register.json": {
+      "sha256": "ba4d8add87e00805279188fc091f2b4dc3ded5b12a436d2d579768943280c4fd",
+      "bytes": 12806
+    },
+    "data/patch-api/sources/11.0.7-wikitext-register.json": {
+      "sha256": "0e3807e89614ed0cca38ba8d80c803a5cbab8df45d6213255512f952f03071ae",
+      "bytes": 25372
+    },
+    "data/patch-api/sources/11.1.0-wikitext-register.json": {
+      "sha256": "97a4d016518760cdbd1ff671c7f566747d9601d19785e84486eed2fdd84d9280",
+      "bytes": 29019
+    },
+    "data/patch-api/sources/11.1.5-wikitext-register.json": {
+      "sha256": "3d2d199167a33cb25baa1e83f4003897f271e06645b78bc636c83fcaf5c6b703",
+      "bytes": 30829
+    },
+    "data/patch-api/sources/11.1.7-wikitext-register.json": {
+      "sha256": "966516954a173cbbbfb3ad982982b1af4165535284b5f842837970fd964f7439",
+      "bytes": 12380
+    },
+    "data/patch-api/sources/11.2.0-wikitext-register.json": {
+      "sha256": "2a147afc5d7940f5d02c28817e224b504cd710277cc0a934f1bffef4a9c691e8",
+      "bytes": 38613
+    },
+    "data/patch-api/sources/11.2.5-wikitext-register.json": {
+      "sha256": "6d12d274d66f73fb8dedc45ba40f9036ac74a99a5721f3dab1bb9bd3dc10c46a",
+      "bytes": 39973
+    },
+    "data/patch-api/sources/11.2.7-wikitext-register.json": {
+      "sha256": "a45643efaf16dfeb58006019535ed43c304bb504d14697f7460f180ab8eb1986",
+      "bytes": 127629
+    },
+    "data/patch-api/sources/12.0.0-wikitext-register.json": {
+      "sha256": "2149b28b9165ecaa346b03a7192b775b77bd6bf9921851acc920bfefe412cf5d",
+      "bytes": 248164
+    },
+    "data/patch-api/sources/12.0.1-wikitext-register.json": {
+      "sha256": "3ae13ba41a6583c1d05c00552aa444501386fcf5484884d2395aa77cecd9a8cb",
+      "bytes": 56712
+    },
+    "data/patch-api/sources/12.0.5-wikitext-register.json": {
+      "sha256": "a87c2c978086e8b6c62fb560aa764556213c6b19735a4be35e12311ec42d6e23",
+      "bytes": 95943
+    },
+    "data/patch-api/sources/12.0.7-wikitext-register.json": {
+      "sha256": "aad4af3207d4585ed8494c837f253a23607bf1f8e752e0b52d39dd7e533189e7",
+      "bytes": 44521
+    },
+    "data/patch-api/sources/12.1.0-wikitext-register.json": {
+      "sha256": "924774ddea912d58af87211b41549d550a12594cc2b5de0b8b3de7574e9e8311",
+      "bytes": 187828
+    },
+    "data/patch-api/sources/3.2.0-api-changes.provenance.json": {
+      "sha256": "a96dc75dfe50161effa3ecb2fae1c1d33f0a91b9d75ba410538e87e98ebcd09e",
+      "bytes": 708
+    },
+    "data/patch-api/sources/3.2.0-api-changes.txt": {
+      "sha256": "580a691695ac1c2f535231b8972b0746ada43b6b642bc0ccbb2be971b10523b8",
+      "bytes": 3546
+    },
+    "data/patch-api/sources/3.2.0-api-changes.wikitext": {
+      "sha256": "5a6674fd08ffd867e894196ed1abf2a599a3a25d32d5db5819387dcda0ad9f71",
+      "bytes": 4948
+    },
+    "data/patch-api/sources/3.2.0-wikitext-register.json": {
+      "sha256": "69aa203697a58b43c936098568b7c44d051e9be045156c5b266ce2789552b21b",
+      "bytes": 15990
+    },
+    "data/patch-api/sources/4.1.0-api-changes.provenance.json": {
+      "sha256": "22074e44a5b627c48cd45926c0fd5f37ab940d6ca5abef51d1b8ba68ac221b2b",
+      "bytes": 681
+    },
+    "data/patch-api/sources/4.1.0-api-changes.txt": {
+      "sha256": "756288f8a23a1b6f45db9f54398f05a4daaf20a6838485ca650fc05f30ed332d",
+      "bytes": 3076
+    },
+    "data/patch-api/sources/4.1.0-api-changes.wikitext": {
+      "sha256": "8d21143deb4422f937bcec0ed3469e02c64115b48ceec5cb9239e2cd0752df1c",
+      "bytes": 3728
+    },
+    "data/patch-api/sources/4.1.0-wikitext-register.json": {
+      "sha256": "86b5f4bd40ece2633fc9720690a85fcfee52c8d6b750643238aa3d5a4d667eaf",
+      "bytes": 22015
+    },
+    "data/patch-api/sources/4.2.0-wikitext-register.json": {
+      "sha256": "28c494994d05f69c41bb6c914fb416bf5bfe22a062bde0cdc0c388ea317b8225",
+      "bytes": 14354
+    },
+    "data/patch-api/sources/4.3.0-wikitext-register.json": {
+      "sha256": "a3315f75e518d010f3b3e67043db5a7b2f9ecd1406462557fae8ccd45f9a7f67",
+      "bytes": 18471
+    },
+    "data/patch-api/sources/4.3.4-wikitext-register.json": {
+      "sha256": "0e9cd6e45cb995566422e9cf1245745a9ff3506a4a15d60a163f6ede55b6e25b",
+      "bytes": 2925
+    },
+    "data/patch-api/sources/5.0.1-wikitext-register.json": {
+      "sha256": "2e9a294c4c1f984b039f61abcad1f787d39f179471ebfb83375499343e204431",
+      "bytes": 296
+    },
+    "data/patch-api/sources/5.0.4-wikitext-register.json": {
+      "sha256": "11dc172ca4569ca08b2c3bc0a542e840be5d2f88a9f28f23ca6f355a4e290e4e",
+      "bytes": 150235
+    },
+    "data/patch-api/sources/5.1.0-wikitext-register.json": {
+      "sha256": "cbff1b9930302a83a78f9fb9c58dbeef8fa80769e08919f4833cee792992fe52",
+      "bytes": 16217
+    },
+    "data/patch-api/sources/5.2.0-wikitext-register.json": {
+      "sha256": "6cc143520773f5902a580d84379845ce9291c34dd6c3a8f4932853ffde2fe93f",
+      "bytes": 37899
+    },
+    "data/patch-api/sources/5.3.0-wikitext-register.json": {
+      "sha256": "562d9a12ac47de6d7c64275ab049e5dad16c6bb7521d7eda14481f4a035e8b4c",
+      "bytes": 11234
+    },
+    "data/patch-api/sources/5.4.0-wikitext-register.json": {
+      "sha256": "913268dda4b67403586fd5c76f922f37e423ddeb208e493314792a9841f95da1",
+      "bytes": 28149
+    },
+    "data/patch-api/sources/5.4.1-wikitext-register.json": {
+      "sha256": "c24d0f45a77aa4123ac9af977ad75bd710aa272657aa3e15f5e2b2128ad593d5",
+      "bytes": 4007
+    },
+    "data/patch-api/sources/5.4.2-wikitext-register.json": {
+      "sha256": "d079278f9323c1139b7772224e40b28fa482206f3fc7400e70fb969cc672fc87",
+      "bytes": 15040
+    },
+    "data/patch-api/sources/5.4.7-wikitext-register.json": {
+      "sha256": "4a7912b4684667480123d7ebc2004832405e7ba37bedcfad7485fa09b911bf09",
+      "bytes": 2499
+    },
+    "data/patch-api/sources/5.4.8-wikitext-register.json": {
+      "sha256": "bff0a33a4df525cac8e73899cb318947358d699ffacbb2e736fed948b21c49e5",
+      "bytes": 7475
+    },
+    "data/patch-api/sources/6.0.1-wikitext-register.json": {
+      "sha256": "32a4b6b7db6b7fbb2bc3156514dce47e8679d057b8d911264430d81e5d0186c7",
+      "bytes": 294
+    },
+    "data/patch-api/sources/6.0.2-wikitext-register.json": {
+      "sha256": "9c4e83c1306ca3e8143840afbc5c3981a64fa37ed332e05dadc0457faa1566e0",
+      "bytes": 203730
+    },
+    "data/patch-api/sources/6.1.0-wikitext-register.json": {
+      "sha256": "707e1512c0591afe8037d53c79f21ca197b01a8922ee3eb377a636ce4dd05418",
+      "bytes": 1220
+    },
+    "data/patch-api/sources/6.2.0-wikitext-register.json": {
+      "sha256": "b4662f1f6b4abbed24dee47d8fe8f50de184788f93e6798c8e853c011a91e76c",
+      "bytes": 296
+    },
+    "data/patch-api/sources/6.2.2-wikitext-register.json": {
+      "sha256": "4eee04950b20e3bd79f4fd3b724b5c0d4d531c796534e810c090c168f6cbd6f0",
+      "bytes": 296
+    },
+    "data/patch-api/sources/6.2.4-wikitext-register.json": {
+      "sha256": "ddcdfcec25740fed9c531a2a602323d9534ef3a44aa02edf045a7ad338bb6d64",
+      "bytes": 8627
+    },
+    "data/patch-api/sources/7.0.1-wikitext-register.json": {
+      "sha256": "0e3321174be76f59454f4257cd2a69b2c878d58409c4a003ee63d004371bcc16",
+      "bytes": 296
+    },
+    "data/patch-api/sources/7.0.3-wikitext-register.json": {
+      "sha256": "7c10a7a2a07b37ab1f92792de89ee28913aed9d12cf37c967f91d1f6fc026660",
+      "bytes": 44046
+    },
+    "data/patch-api/sources/7.1.0-wikitext-register.json": {
+      "sha256": "b7e2779fc45c104a7ca6a33e321a2672b0a2d5b1844d98595f189db7c9b25e83",
+      "bytes": 2745
+    },
+    "data/patch-api/sources/7.2.0-wikitext-register.json": {
+      "sha256": "2b0589b9d07639b02e420dce174f8e373758bb6d86475c5305de745499a32973",
+      "bytes": 1074
+    },
+    "data/patch-api/sources/7.2.5-wikitext-register.json": {
+      "sha256": "753351c0b4616c5259fd9ec2ef3980248c83f0e3de88ae5c40a88b4ad8399bdd",
+      "bytes": 5829
+    },
+    "data/patch-api/sources/7.3.0-wikitext-register.json": {
+      "sha256": "b0f06f6e0f8ce4fd8be89845fce0fa0ef5ac2ddf71de7885b8adcd49af3daa10",
+      "bytes": 895
+    },
+    "data/patch-api/sources/7.3.2-wikitext-register.json": {
+      "sha256": "32b35ec0157db219051eeddc58d5e8d0ab34afe0f7d99690c1c3e112bfac1a35",
+      "bytes": 1214
+    },
+    "data/patch-api/sources/8.0.1-wikitext-register.json": {
+      "sha256": "df597a39c9802be51ad66720abb7dfb1b58e5c155b7735a0d9ce99a784a7ae83",
+      "bytes": 59151
+    },
+    "data/patch-api/sources/8.1.0-wikitext-register.json": {
+      "sha256": "2b14287b5e8eba20cfc674184f2838ba87c551382eed782dfe39661c2807e147",
+      "bytes": 33875
+    },
+    "data/patch-api/sources/8.1.5-wikitext-register.json": {
+      "sha256": "8eacfb4ecb374f539aecc39bc64cfe5d117e243d19f89f45600289cae72a33fb",
+      "bytes": 15038
+    },
+    "data/patch-api/sources/8.2.0-wikitext-register.json": {
+      "sha256": "0755a978c7c9821a87431337fc2ae834f5fdfc139180f38af3bf613168b21203",
+      "bytes": 46353
+    },
+    "data/patch-api/sources/8.2.5-wikitext-register.json": {
+      "sha256": "9068d2c59c69fa49a3bc0a257707597d4a9d98a971187e374fc92c20f46f9f4c",
+      "bytes": 47370
+    },
+    "data/patch-api/sources/8.3.0-wikitext-register.json": {
+      "sha256": "372ee6b18ee3a47ec80c7886621a7686cf90381f113e50caed4594b6d18dcbef",
+      "bytes": 53281
+    },
+    "data/patch-api/sources/8.3.7-wikitext-register.json": {
+      "sha256": "12c1c3a4d678b3a4ba2c1ae808fc3831a672375eebb2158b0e25261bb0a7e175",
+      "bytes": 708
+    },
+    "data/patch-api/sources/9.0.1-wikitext-register.json": {
+      "sha256": "b61d5965061e199bd4149093e5fd2b5b03ee82a2bdabd18070a7b449454fa665",
+      "bytes": 174766
+    },
+    "data/patch-api/sources/9.0.2-wikitext-register.json": {
+      "sha256": "e9c69d02cbd34aab19236d82b52a6ae574312ef8e4f6ee9c07896a8dddef8e6b",
+      "bytes": 18468
+    },
+    "data/patch-api/sources/9.0.5-wikitext-register.json": {
+      "sha256": "c9852dbae8b4cf0ccfa46810e571fe4bfe8f3435d9680855845a70979c819b13",
+      "bytes": 6906
+    },
+    "data/patch-api/sources/9.1.0-wikitext-register.json": {
+      "sha256": "deeaaed02589405b31b89341c48081a72890118cce878e802bd01df8cef1abdb",
+      "bytes": 43970
+    },
+    "data/patch-api/sources/9.1.5-wikitext-register.json": {
+      "sha256": "f47c868a2a650f6119ade3f755c02c1c6d352330ed0cef1e7c5cb067e4df6f6f",
+      "bytes": 41278
+    },
+    "data/patch-api/sources/9.2.0-wikitext-register.json": {
+      "sha256": "69dd92fb3a392bb6c73917fa4c7917a787a57299bf5eb584061d0de542b48191",
+      "bytes": 20318
+    },
+    "data/patch-api/sources/9.2.5-wikitext-register.json": {
+      "sha256": "de6a6208e1989a5a811e6706c6a8d42e5c2f730e96be75293b48c43741e1a0b0",
+      "bytes": 22001
+    },
+    "data/patch-api/sources/9.2.7-wikitext-register.json": {
+      "sha256": "c349d4a3d3f5dba40f60e2a9739a7467322effc7111188aab5bb15b040b39fc7",
+      "bytes": 1165
+    },
+    "tests/common/publication_sweep.rs": {
+      "sha256": "9806ecce8fad716f3c3c0e3faaec53573b881c8630da8f6b2fe8caebc2247837",
+      "bytes": 22783
+    },
+    "tests/patch_3_2_0_publication_sweep.rs": {
+      "sha256": "352f257e539fa1e4f8bb99ef1aa2ef70684014ee897010009536d16053b4a30f",
+      "bytes": 6816
+    },
+    "tools/extract_patch_non_inventory.py": {
+      "sha256": "0a8a0c8863304d8378b98eeeed50b6217031584bc6bd75bf58300daca0e490a2",
+      "bytes": 22426
+    },
+    "tools/gen_patch_wikitext_register.py": {
+      "sha256": "1b53f13d64e8e036788c49c2aad85f8997aaaad754b19d6d3fd51c0eb42e5ad3",
+      "bytes": 49841
+    },
+    "tools/test_patch_3_2_extract.py": {
+      "sha256": "969b786271721bcc6d9ec57104850c0d178254d29fef58d432b63057fd83ef22",
+      "bytes": 1123
+    },
+    "tools/test_patch_3_2_register.py": {
+      "sha256": "df4d7792278679c9fd5932de4e33eb3958c449d8582817fd67ba45081be6f2aa",
+      "bytes": 3051
+    }
+  },
+  "external": {
+    "accounting-red.log": {
+      "sha256": "905273b61b3a7c02e32ce536fe11308fc3187131b0e938a3123198c0b50a7ec0",
+      "bytes": 1432
+    },
+    "command-ledger.json": {
+      "sha256": "f526ed25ba21f02bb8398c5f4e6f21e9fbbd7aa95cd0771273d0a1ff7b553009",
+      "bytes": 4749
+    },
+    "extractor-green.log": {
+      "sha256": "c899789cbc91ea3680fc5fbd616e55d5eb7e9427a66a887a27d099f83876671f",
+      "bytes": 268
+    },
+    "extractor-red.log": {
+      "sha256": "49c7c28adeed294a7126da22021d1b8653ed7b125d89a6dde7f524b70b665558",
+      "bytes": 980
+    },
+    "formatter.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "historical-known-gaps.json": {
+      "sha256": "e54811d355b56cb68378c8eeb25f738b5c4e2a9e330846495761bc00d652b389",
+      "bytes": 565
+    },
+    "historical-page-coverage.json": {
+      "sha256": "459654c11e17cb1c24f422c2e77835a5af344486cb7e85fd85745d8e726f2115",
+      "bytes": 62501
+    },
+    "later-register-pins.json": {
+      "sha256": "d41dfc248d0c4549fc32b08f5e47ee12ef499e53834e3db339db3a9f90a77ce7",
+      "bytes": 12994
+    },
+    "literal-inventory.json": {
+      "sha256": "2b8806d9afe2b8e0231a56988241eeaebadbb90afd5a38b0e9d79c65595dd56c",
+      "bytes": 12541
+    },
+    "negative-register.json": {
+      "sha256": "e50e317a37c3a262661c14136ae604d8ccb7ff9ea45ebe4e2790139307bea848",
+      "bytes": 15982
+    },
+    "negative-results.json": {
+      "sha256": "e7ebfbec535ddd366dfb0e6fe99d5ae1463161a538ea6b9d77258f3627d14db0",
+      "bytes": 21330
+    },
+    "negative.log": {
+      "sha256": "c9464a5a727248eea28318783bab37a39a50da58ff6ac67e7b6f9356f1a1814e",
+      "bytes": 13116
+    },
+    "own-sweep-green-results.json": {
+      "sha256": "0e353a75d4f266b03a6fb13d9e2018452a010bb247cdbbd62dfe8674d2aefd0e",
+      "bytes": 21347
+    },
+    "own-sweep-green.log": {
+      "sha256": "947f39dc3c48a1974b40845792c62af41cd7dea1a15ce57973672aaa32ef53e6",
+      "bytes": 10301
+    },
+    "own-sweep-red-results.json": {
+      "sha256": "0e353a75d4f266b03a6fb13d9e2018452a010bb247cdbbd62dfe8674d2aefd0e",
+      "bytes": 21347
+    },
+    "own-sweep-red.log": {
+      "sha256": "3894773d499d098d0f3af6b849a760246aba122fbc0369bca25214644f106cd8",
+      "bytes": 31851
+    },
+    "parser-green.log": {
+      "sha256": "03bc44e294e0af5234e9e805daf01610bacd26de308464def4740fffc9d978bd",
+      "bytes": 280
+    },
+    "parser-red.log": {
+      "sha256": "7e85b83317c56084e7abe221309e9be9f24448f43a98b89f1a77989aad089466",
+      "bytes": 3208
+    },
+    "retirement-scans.json": {
+      "sha256": "5ee7a96f845d8aa281d0e6eccaf0e7a83c0e657eb00648873ff34dd141861612",
+      "bytes": 812
+    },
+    "source-pin.json": {
+      "sha256": "08ffb19f63c6f9e6aa13b82f5a11705bfe2a74ce7901fa92dabe948ccbfd918a",
+      "bytes": 726
+    },
+    "source-response.json": {
+      "sha256": "0b2cee11a2b724abaaf682a32b87e4501911dc30807329a2496534666ec1b6a2",
+      "bytes": 5364
+    },
+    "surface-scans.json": {
+      "sha256": "cb52d3e6f28294989be3444fc0d50636fbc19ffe83aa1d44b8e15fe84db9dd3a",
+      "bytes": 47721
+    }
+  }
+}
