@@ -644,3 +644,7 @@ Retail-only `BNGetFriendIndex` reads the existing ordered friend list; two missi
 ## 2026-10-09 — Patch 4.2.0 bounded publication accounting
 
 Own sweep 1/1; ledger 34 bounded/31 gaps/one metadata. Local friend-index 2/2; same-size negative rejects 31 → 32 gaps. Full caller/cache scan retained; no retirements or native parity. Pending 4.3.0/4.3.4 remain coordinator-owned. [Audit](investigations/patch-4-2-0-api-audit.md).
+
+## 2026-10-09 — Patch 4.2.0 development receipts
+
+Source/accounting fixtures 6/6 at `a0db0fa0d`; compact per-command scope/revision ledger and SHA seals retained. Runtime proof remains 2/2 model and 1/1 own sweep; no redundant reruns or final-gate claim. [Audit](investigations/patch-4-2-0-api-audit.md).

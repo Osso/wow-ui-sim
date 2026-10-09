@@ -1,0 +1,215 @@
+{
+  "schema": "patch-api-development-proof/v1",
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p420-source",
+  "source_revision": "a0db0fa0dc54e74d30327919e09c45d3332ae929",
+  "scope": "Targeted development only, not final acceptance. Docs-only receipts below do not invalidate existing runtime/source proof. Later source/register/runtime/fixture changes require coordinator reassessment.",
+  "runtime_input_hashes": {
+    "src/lua_api/globals/real/bnet_friend_index.rs": "7a8932152c77b0b7699eb9cc4a500853298c632302ba6035fa82c9b2e88b8e0d",
+    "src/lua_api/globals/real/mod.rs": "81248fd66386282d13273ad25e8b9c17c722014e755a94a8c599e3a0c6362d4c",
+    "src/lua_api/globals/register.rs": "a75f1facee5e178b0d0b56c31a77fa338a433b2dab7abf1078a9bb98df6ff11b",
+    "tests/patch_4_2_0_behavior.rs": "46361a0af8fcb305e9bff5d6e944e76f33dd26d553c802df2e646bb3c4df0e21",
+    "tests/patch_4_2_0_publication_sweep.rs": "e8603edd15c929a2f883d41be7139763d5653d70322ef417b5a456bdd2cb1dc9"
+  },
+  "accounting_input_hashes": {
+    "data/patch-api/sources/4.2.0-api-changes.wikitext": "699e1b8b9794a244f8421929cd4603ee04f4686a03cc1cd8b5478b31d7316bcd",
+    "data/patch-api/sources/4.2.0-wikitext-register.json": "28c494994d05f69c41bb6c914fb416bf5bfe22a062bde0cdc0c388ea317b8225",
+    "data/patch-api/sources/4.2.0-api-changes.txt": "1a7d47a325b4900a816b9c3373c3fd9e7a1850e790db02101d1e5591ec6e0577",
+    "data/patch-api/sources/4.2.0-page-coverage.json": "54d9d43103c44a815e11a232c9e4b1d21afe859949bfca8ed3634913b1db785a",
+    "tools/test_patch_4_2_0_accounting.py": "a9a6e78da531702a9994c325f67251a734ab3f95ce269b081fd46c8fb40f1abe",
+    "tests/data/patch_4_2_0_sweep_known_gaps.json": "d5e40530d66e567ce5d865be1c7820653be5f9a708fbad49d4fc2ba964afe755"
+  },
+  "steps": [
+    {
+      "command": [
+        "cargo",
+        "test",
+        "--test",
+        "prefork_full_ui",
+        "--",
+        "patch_4_2_0_publication_sweep",
+        "--nocapture"
+      ],
+      "revision": "8ee1500ed",
+      "exit": 1,
+      "scope": "Initial setup failed before observation because copied row_count was zero. Not a publication RED.",
+      "log": "setup-red-tail.log",
+      "validity": "Superseded by data-derived row count in 129d60264."
+    },
+    {
+      "command": [
+        "cargo",
+        "test",
+        "--test",
+        "prefork_full_ui",
+        "--",
+        "patch_4_2_0_publication_sweep",
+        "--nocapture"
+      ],
+      "revision": "129d60264",
+      "env": {
+        "P420_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p420-source/data/patch-api/evidence/4.2.0-session-2026-10-09/red-results.json"
+      },
+      "exit": 1,
+      "scope": "Publication RED: all 65 IDs classified, 32 mismatches against empty known set.",
+      "log": "red.log",
+      "results": "red-results.json",
+      "validity": "Historical only: friend-index model changed afterward."
+    },
+    {
+      "command": [
+        "cargo",
+        "test",
+        "--test",
+        "integration",
+        "patch_4_2_0_friend_index",
+        "--",
+        "--nocapture"
+      ],
+      "revision": "129d60264 + new behavior test file",
+      "exit": 101,
+      "scope": "Two local model RED tests fail on missing global.",
+      "log": "behavior-red.log",
+      "validity": "Historical only; implementation added in 6b89034a3."
+    },
+    {
+      "command": [
+        "cargo",
+        "test",
+        "--test",
+        "integration",
+        "patch_4_2_0_friend_index",
+        "--",
+        "--nocapture"
+      ],
+      "revision": "6b89034a3",
+      "exit": 0,
+      "scope": "2/2 local model tests: IDs, list order, cross-check C_BattleNet, removal, unknown, empty. No native/error parity.",
+      "log": "behavior-green.log",
+      "validity": "Runtime inputs unchanged afterward."
+    },
+    {
+      "command": [
+        "cargo",
+        "test",
+        "--test",
+        "prefork_full_ui",
+        "--",
+        "patch_4_2_0_publication_sweep",
+        "--nocapture"
+      ],
+      "revision": "f3bdb8a26",
+      "env": {
+        "P420_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p420-source/data/patch-api/evidence/4.2.0-session-2026-10-09/development-results.json"
+      },
+      "exit": 0,
+      "scope": "1/1 own cached Game sweep; exact 31-gap set across 65 IDs.",
+      "log": "development-green.log",
+      "results": "development-results.json",
+      "validity": "Runtime/register/sweep/known-gap inputs unchanged afterward."
+    },
+    {
+      "command": [
+        "target/debug/deps/prefork_full_ui-21dd5c807fe7a7b6",
+        "patch_4_2_0_publication_sweep",
+        "--nocapture"
+      ],
+      "revision": "f3bdb8a26 built binary",
+      "env": {
+        "P420_SWEEP_REGISTER": "/home/osso/.worktrees/wow-ui-sim-p420-source/data/patch-api/evidence/4.2.0-session-2026-10-09/negative-added-row-register.json"
+      },
+      "exit": 1,
+      "scope": "Added-row negative rejects at 66 versus 65 count, before output.",
+      "log": "negative-count-boundary.log",
+      "validity": "Historical negative only; genuine source untouched."
+    },
+    {
+      "command": [
+        "target/debug/deps/prefork_full_ui-21dd5c807fe7a7b6",
+        "patch_4_2_0_publication_sweep",
+        "--nocapture"
+      ],
+      "revision": "f3bdb8a26 built binary",
+      "env": {
+        "P420_SWEEP_REGISTER": "/home/osso/.worktrees/wow-ui-sim-p420-source/data/patch-api/evidence/4.2.0-session-2026-10-09/negative-register.json",
+        "P420_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p420-source/data/patch-api/evidence/4.2.0-session-2026-10-09/negative-results.json"
+      },
+      "exit": 1,
+      "scope": "Same-size replacement negative reaches classifier: exact extra missing-global ID, gaps 31 \u2192 32.",
+      "log": "negative.log",
+      "results": "negative-results.json",
+      "validity": "Historical negative only; genuine source untouched."
+    },
+    {
+      "command": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools",
+        "-p",
+        "test_patch_4_2_0_accounting.py",
+        "-v"
+      ],
+      "revision": "129d60264 + source fixture",
+      "exit": 1,
+      "scope": "4 fixtures, only exact gap/coverage accounting fails against empty known set.",
+      "log": "accounting-red.log",
+      "validity": "Historical RED; current fixture uses post-model results and adds successor/negative cases."
+    },
+    {
+      "command": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools",
+        "-p",
+        "test_patch_4_2_0_accounting.py",
+        "-v"
+      ],
+      "revision": "a0db0fa0dc54e74d30327919e09c45d3332ae929",
+      "exit": 0,
+      "scope": "6/6 own fixtures: pinned response/source, literal inventory generation/counts, navigation-only extraction, ordered retail successor expectations, exact per-ID gap/credit set, same-size negative difference.",
+      "log": "accounting-green.log",
+      "validity": "Fixture and asserted source/result/ledger inputs unchanged by final documentation/receipt commit."
+    },
+    {
+      "command": [
+        "rustfmt",
+        "--edition",
+        "2024",
+        "src/lua_api/globals/real/bnet_friend_index.rs",
+        "src/lua_api/globals/real/mod.rs",
+        "src/lua_api/globals/register.rs",
+        "tests/patch_4_2_0_behavior.rs"
+      ],
+      "revision": "pre-6b89034a3 format",
+      "exit": 0,
+      "scope": "Changed Rust files only; sweep separately formatted before 129d60264.",
+      "validity": "Changed Rust inputs unchanged afterward."
+    }
+  ],
+  "artifact_seals": {
+    "accounting-green.log": "612f0f11e001c067432c617f1d536837924050a61c2d13bbb779c7bb01258fca",
+    "accounting-red.log": "a69ba6242a635114556cc1f0cdb5d723e4f15e8a94934439041cc4c8a0cd56a7",
+    "behavior-green.log": "917c09a356cc6acdbe7eb12915a39775ad21c61f3621ca35ffc7e47b8b942abc",
+    "behavior-red.log": "c8b6c5aa00a8de1f936c601fcd9da5702a083e270a826793f525e6533dc914be",
+    "caller-scan.json": "f7fcf87925a07b8c37718c112859b52d187909de95b75f1033c31db6c3f7eb8a",
+    "development-green.log": "81a2057d92e64a924c997d3d33a2d090499846a50c9e09c18fbfce47a5bb9963",
+    "development-results.json": "3608ea203eb394e5835de2b6e6f4685f9dff08b9e1d1463c0cb7e8e8d70eadc0",
+    "development-summary.json": "944252540ba278926ae5623cbc5993bac9300f133341562705dadff5cf5e8af4",
+    "later-register-pins.json": "23438517c64e2f48575dc72462b4e0e391811ceb00481a060e029bbefadc243e",
+    "negative-added-row-register.json": "98061e2bd220071cfa793c98327bad9a7001e493ae61b28883684b68190d9b44",
+    "negative-count-boundary.log": "da295068d97b81641c651a5b01957c5bae15598dcd469cf69d69959cadf0b5e6",
+    "negative-register.json": "4dd367696f0d65b3d1b55fcc569ddef384243207eaef79a0aba8f75fc222283f",
+    "negative-results.json": "f8b2cf2bb62f27e87155ce5118f40adc2a7c36e7a82b968dc23f2298b57015fd",
+    "negative.log": "17f6068450e3ea87d7a743674edf173dfcf798112fff031a9c7801c7843cf91c",
+    "red-results.json": "2769cba60674611fcc679a6473875a477c55a9b9733ad9d30a46670bbe9cac64",
+    "red.log": "3dd289e8db0a5563257d6e5333ee2c54cd057c9187cc6b844f1d63bd0e9874cf",
+    "setup-red-tail.log": "b223fe50dcf96ea5092997be4b8f53f43082bde7b5fdf43e4586ac3bd21ed816",
+    "source-pin.json": "cfbf13cf4f77a6929127f81cc0ea3cec20750efe420efe36e5c9fe9ee623487b",
+    "source-response.json": "aa978b9359b288b25f29d93f07b54c7791cc6114c90d17e8f79cb7fec128d770"
+  }
+}

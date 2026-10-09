@@ -1,0 +1,12 @@
+
+test_accounting_matches_development_observations (test_patch_4_2_0_accounting.Patch420Accounting.test_accounting_matches_development_observations) ... ok
+test_extracted_boundary_has_only_navigation_not_prose_or_signatures (test_patch_4_2_0_accounting.Patch420Accounting.test_extracted_boundary_has_only_navigation_not_prose_or_signatures) ... ok
+test_later_retail_history_drives_expected_publication (test_patch_4_2_0_accounting.Patch420Accounting.test_later_retail_history_drives_expected_publication) ... ok
+test_negative_control_adds_exactly_one_publication_gap (test_patch_4_2_0_accounting.Patch420Accounting.test_negative_control_adds_exactly_one_publication_gap) ... ok
+test_response_and_pin_match_literal_source (test_patch_4_2_0_accounting.Patch420Accounting.test_response_and_pin_match_literal_source) ... ok
+test_saved_register_reproduces_every_literal_inventory_reference (test_patch_4_2_0_accounting.Patch420Accounting.test_saved_register_reproduces_every_literal_inventory_reference) ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.017s
+
+OK

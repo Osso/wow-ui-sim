@@ -2826,4 +2826,4 @@ The three retail 12.0.0 changed globals `LE_GAME_ERR_HOUSING_RESULT_MISSING_EXPA
 
 ## [2026-10-09] investigation | Patch 4.2.0 API audit
 
-[Audit](investigations/patch-4-2-0-api-audit.md): pinned revision 3045158; 65 global inventory IDs, one navigation metadata row, no prose/signatures. Own targeted development probe passes 1/1: 34 bounded publication rows, 31 retained gaps. Retail friend-index model tests pass 2/2; no native parity. 4.3.0/4.3.4 successors deferred to coordinator.
+[Audit](investigations/patch-4-2-0-api-audit.md): pinned revision 3045158; 65 global inventory IDs, one navigation metadata row, no prose/signatures. Own targeted development probe passes 1/1: 34 bounded publication rows, 31 retained gaps. Retail friend-index model tests pass 2/2; source/accounting fixtures 6/6 and negative 31 → 32 rejected. No native parity. 4.3.0/4.3.4 successors deferred to coordinator.

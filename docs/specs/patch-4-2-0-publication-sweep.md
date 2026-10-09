@@ -9,7 +9,7 @@ Account for the pinned historical retail page without inventing missing signatur
 - [x] Reproduce all 65 inventory IDs and both source counts using recorded existing flags.
 - [x] Account for the sole navigation metadata row and zero prose/signatures.
 - [x] Probe every inventory occurrence; require the exact retained gap set.
-- [ ] Apply actual later retail registers, with explicit pending 4.3.0/4.3.4 placeholders; exclude Classic histories.
+- [x] Apply actual available later retail registers, with explicit pending 4.3.0/4.3.4 placeholders; exclude Classic histories.
 
 ## How it works
 
