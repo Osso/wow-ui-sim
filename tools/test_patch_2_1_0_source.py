@@ -36,7 +36,9 @@ class LiteralSourceTests(unittest.TestCase):
                          ('PLAYER_LEAVING_WORLD', 172), ('ScrollFrame:SetScrollChild', 173),
                          ('SecureGroupPetHeaderTemplate', 105), ('GetWorldStateUIInfo', 176)]:
                 self.assertIn(pair, pairs)
-            self.assertEqual(len(pairs), len(set(pairs)))
+            self.assertNotIn(('/name', 131), pairs)
+            self.assertEqual(pairs.count(('/equip', 116)), 2)
+            self.assertEqual(sum(row['symbol'] == 'IsFeignDeath' for row in rows), 2)
             self.assertEqual(len(rows), len({row['id'] for row in rows}))
             self.assertTrue(all(row['annotation'] == (CACHE / '2.1.0-wikitext.txt').read_text().splitlines()[row['wikitext_line'] - 1] for row in rows))
             self.assertTrue(all('page_default' not in row for row in rows))

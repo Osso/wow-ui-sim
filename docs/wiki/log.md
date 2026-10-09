@@ -799,3 +799,7 @@ Initial checkpoint: [audit](investigations/patch-3-0-3-api-audit.md), frozen pag
 ## [2026-10-09] evidence | Patch 3.0.3 bounded source development proof
 
 [Audit/proof ledger](investigations/patch-3-0-3-api-audit.md#historical-replay): source GREEN3/3 at `ce0a0e863`, copied original replay/accounting GREEN2/2 at `e50955ee3`; 16 frozen seals/93 snapshots, 17 serialized tamper/restoration controls, 17 omission controls and two literal/credit controls. Eight IDs remain two metadata/six UNPROVEN; zero meaningful closures/runtime edits. Full101-page registry through1.0.0 preserved. Main owns ordered queued retail inputs, integration and native acceptance; no broad/final gates.
+
+## 2026-10-09 — historical retail 2.1.0 source ingest
+
+[Audit](investigations/patch-2-1-0-api-audit.md) and [spec](../specs/patch-2-1-0-source-accounting.md): full raw/default-rendered accounting; profiling/secure/template/macro/layout/fix boundaries preserved; no linked expansion or runtime/native observations. Source-only targeted proof pending.

@@ -1,0 +1,333 @@
+{
+  "later_registers": [
+    "data/patch-api/sources/3.1.0-wikitext-register.json",
+    "data/patch-api/sources/3.2.0-wikitext-register.json",
+    "data/patch-api/sources/3.3.0-wikitext-register.json",
+    "data/patch-api/sources/3.3.3-wikitext-register.json",
+    "data/patch-api/sources/3.3.5-wikitext-register.json",
+    "data/patch-api/sources/4.0.1-wikitext-register.json",
+    "data/patch-api/sources/4.1.0-wikitext-register.json",
+    "data/patch-api/sources/4.2.0-wikitext-register.json",
+    "data/patch-api/sources/4.3.0-wikitext-register.json",
+    "data/patch-api/sources/4.3.4-wikitext-register.json",
+    "data/patch-api/sources/5.0.1-wikitext-register.json",
+    "data/patch-api/sources/5.0.4-wikitext-register.json",
+    "data/patch-api/sources/5.1.0-wikitext-register.json",
+    "data/patch-api/sources/5.2.0-wikitext-register.json",
+    "data/patch-api/sources/5.3.0-wikitext-register.json",
+    "data/patch-api/sources/5.4.0-wikitext-register.json",
+    "data/patch-api/sources/5.4.1-wikitext-register.json",
+    "data/patch-api/sources/5.4.2-wikitext-register.json",
+    "data/patch-api/sources/5.4.7-wikitext-register.json",
+    "data/patch-api/sources/5.4.8-wikitext-register.json",
+    "data/patch-api/sources/6.0.1-wikitext-register.json",
+    "data/patch-api/sources/6.0.2-wikitext-register.json",
+    "data/patch-api/sources/6.1.0-wikitext-register.json",
+    "data/patch-api/sources/6.2.0-wikitext-register.json",
+    "data/patch-api/sources/6.2.2-wikitext-register.json",
+    "data/patch-api/sources/6.2.4-wikitext-register.json",
+    "data/patch-api/sources/7.0.1-wikitext-register.json",
+    "data/patch-api/sources/7.0.3-wikitext-register.json",
+    "data/patch-api/sources/7.1.0-wikitext-register.json",
+    "data/patch-api/sources/7.2.0-wikitext-register.json",
+    "data/patch-api/sources/7.2.5-wikitext-register.json",
+    "data/patch-api/sources/7.3.0-wikitext-register.json",
+    "data/patch-api/sources/7.3.2-wikitext-register.json",
+    "data/patch-api/sources/8.0.1-wikitext-register.json",
+    "data/patch-api/sources/8.1.0-wikitext-register.json",
+    "data/patch-api/sources/8.1.5-wikitext-register.json",
+    "data/patch-api/sources/8.2.0-wikitext-register.json",
+    "data/patch-api/sources/8.2.5-wikitext-register.json",
+    "data/patch-api/sources/8.3.0-wikitext-register.json",
+    "data/patch-api/sources/8.3.7-wikitext-register.json",
+    "data/patch-api/sources/9.0.1-wikitext-register.json",
+    "data/patch-api/sources/9.0.2-wikitext-register.json",
+    "data/patch-api/sources/9.0.5-wikitext-register.json",
+    "data/patch-api/sources/9.1.0-wikitext-register.json",
+    "data/patch-api/sources/9.1.5-wikitext-register.json",
+    "data/patch-api/sources/9.2.0-wikitext-register.json",
+    "data/patch-api/sources/9.2.5-wikitext-register.json",
+    "data/patch-api/sources/9.2.7-wikitext-register.json",
+    "data/patch-api/sources/10.0.0-wikitext-register.json",
+    "data/patch-api/sources/10.0.2-wikitext-register.json",
+    "data/patch-api/sources/10.0.5-wikitext-register.json",
+    "data/patch-api/sources/10.0.7-wikitext-register.json",
+    "data/patch-api/sources/10.1.0-wikitext-register.json",
+    "data/patch-api/sources/10.1.5-wikitext-register.json",
+    "data/patch-api/sources/10.1.7-wikitext-register.json",
+    "data/patch-api/sources/10.2.0-wikitext-register.json",
+    "data/patch-api/sources/10.2.5-wikitext-register.json",
+    "data/patch-api/sources/10.2.6-wikitext-register.json",
+    "data/patch-api/sources/10.2.7-wikitext-register.json",
+    "data/patch-api/sources/11.0.0-wikitext-register.json",
+    "data/patch-api/sources/11.0.2-wikitext-register.json",
+    "data/patch-api/sources/11.0.5-wikitext-register.json",
+    "data/patch-api/sources/11.0.7-wikitext-register.json",
+    "data/patch-api/sources/11.1.0-wikitext-register.json",
+    "data/patch-api/sources/11.1.5-wikitext-register.json",
+    "data/patch-api/sources/11.1.7-wikitext-register.json",
+    "data/patch-api/sources/11.2.0-wikitext-register.json",
+    "data/patch-api/sources/11.2.5-wikitext-register.json",
+    "data/patch-api/sources/11.2.7-wikitext-register.json",
+    "data/patch-api/sources/12.0.0-wikitext-register.json",
+    "data/patch-api/sources/12.0.1-wikitext-register.json",
+    "data/patch-api/sources/12.0.5-wikitext-register.json",
+    "data/patch-api/sources/12.0.7-wikitext-register.json",
+    "data/patch-api/sources/12.1.0-wikitext-register.json"
+  ],
+  "queued_registers": [
+    {
+      "patch": "2.2.0",
+      "path": "data/patch-api/sources/2.2.0-wikitext-register.json",
+      "client_line": "retail",
+      "state": "queued-placeholder-main-adds-ordered",
+      "supersession_credit": false
+    },
+    {
+      "patch": "2.3.0",
+      "path": "data/patch-api/sources/2.3.0-wikitext-register.json",
+      "client_line": "retail",
+      "state": "queued-placeholder-main-adds-ordered",
+      "supersession_credit": false
+    },
+    {
+      "patch": "2.4.0",
+      "path": "data/patch-api/sources/2.4.0-wikitext-register.json",
+      "client_line": "retail",
+      "state": "queued-placeholder-main-adds-ordered",
+      "supersession_credit": false
+    },
+    {
+      "patch": "2.4.2",
+      "path": "data/patch-api/sources/2.4.2-wikitext-register.json",
+      "client_line": "retail",
+      "state": "queued-placeholder-main-adds-ordered",
+      "supersession_credit": false
+    },
+    {
+      "patch": "3.0.2",
+      "path": "data/patch-api/sources/3.0.2-wikitext-register.json",
+      "client_line": "retail",
+      "state": "queued-placeholder-main-adds-ordered",
+      "supersession_credit": false
+    },
+    {
+      "patch": "3.0.3",
+      "path": "data/patch-api/sources/3.0.3-wikitext-register.json",
+      "client_line": "retail",
+      "state": "queued-placeholder-main-adds-ordered",
+      "supersession_credit": false
+    },
+    {
+      "patch": "3.0.8",
+      "path": "data/patch-api/sources/3.0.8-wikitext-register.json",
+      "client_line": "retail",
+      "state": "queued-placeholder-main-adds-ordered",
+      "supersession_credit": false
+    }
+  ],
+  "actual_same_symbol_overlaps": [
+    {
+      "register": "data/patch-api/sources/3.1.0-wikitext-register.json",
+      "entry": {
+        "id": "wt-global-api-UnitBuff-168",
+        "section": "global-api",
+        "direction": "changed",
+        "symbol": "UnitBuff",
+        "annotation": "name, rank, icon, count, debuffType, duration, expirationTime, caster, isStealable = UnitBuff(\"unit\", index or [\"name\", \"rank\"][, \"filter\"])",
+        "wikitext_line": 168
+      }
+    },
+    {
+      "register": "data/patch-api/sources/3.1.0-wikitext-register.json",
+      "entry": {
+        "id": "wt-global-api-UnitDebuff-169",
+        "section": "global-api",
+        "direction": "changed",
+        "symbol": "UnitDebuff",
+        "annotation": "name, rank, icon, count, debuffType, duration, expirationTime, caster, isStealable = UnitDebuff(\"unit\", index or [\"name\", \"rank\"][, \"filter\"])",
+        "wikitext_line": 169
+      }
+    },
+    {
+      "register": "data/patch-api/sources/3.2.0-wikitext-register.json",
+      "entry": {
+        "id": "wt-global-api-IsFlyableArea-67",
+        "section": "global-api",
+        "direction": "changed",
+        "symbol": "IsFlyableArea",
+        "annotation": "* ''updated'' {{api|IsFlyableArea()}} -- updated to work properly in dalaran (returning 1 in Karsus landing)<ref name=\"Gello\">[http://forums.worldofwarcraft.com/thread.html?topicId=18031134556&postId=182652553198#182652553198 Gello on Wow 3.2 API Changes topic]</ref>",
+        "wikitext_line": 67,
+        "source_signature": "IsFlyableArea()",
+        "source_change": "updated"
+      }
+    },
+    {
+      "register": "data/patch-api/sources/4.3.4-wikitext-register.json",
+      "entry": {
+        "id": "wt-global-api-ComplainChat-22",
+        "section": "global-api",
+        "direction": "removed",
+        "symbol": "ComplainChat",
+        "annotation": "",
+        "wikitext_line": 22
+      }
+    },
+    {
+      "register": "data/patch-api/sources/5.0.4-wikitext-register.json",
+      "entry": {
+        "id": "wt-global-api-UnitIsRaidOfficer-15",
+        "section": "global-api",
+        "direction": "removed",
+        "symbol": "UnitIsRaidOfficer",
+        "annotation": "*: <code>IsRaidOfficer, UnitIsRaidOfficer</code> &rarr; {{api|UnitIsGroupAssistant}}",
+        "wikitext_line": 15
+      }
+    },
+    {
+      "register": "data/patch-api/sources/5.0.4-wikitext-register.json",
+      "entry": {
+        "id": "diff-wt-global-api-GetMaxDailyQuests-335",
+        "section": "global-api",
+        "direction": "removed",
+        "symbol": "GetMaxDailyQuests",
+        "annotation": "",
+        "wikitext_line": 335
+      }
+    },
+    {
+      "register": "data/patch-api/sources/6.0.2-wikitext-register.json",
+      "entry": {
+        "id": "diff-wt-widgets-GameTooltip:SetHyperlinkCompareItem-674",
+        "section": "widgets",
+        "direction": "removed",
+        "symbol": "GameTooltip:SetHyperlinkCompareItem",
+        "annotation": "",
+        "wikitext_line": 674,
+        "source_path": "data/patch-api/sources/6.0.2-api-changes.diff.wikitext"
+      }
+    },
+    {
+      "register": "data/patch-api/sources/9.2.5-wikitext-register.json",
+      "entry": {
+        "id": "wt-global-api-ComplainInboxItem-130",
+        "section": "global-api",
+        "direction": "removed",
+        "symbol": "ComplainInboxItem",
+        "annotation": "",
+        "wikitext_line": 130
+      }
+    },
+    {
+      "register": "data/patch-api/sources/10.0.2-wikitext-register.json",
+      "entry": {
+        "id": "wt-widgets-GameTooltip:GetUnit-435",
+        "section": "widgets",
+        "direction": "removed",
+        "symbol": "GameTooltip:GetUnit",
+        "annotation": "",
+        "wikitext_line": 435
+      }
+    },
+    {
+      "register": "data/patch-api/sources/10.1.0-wikitext-register.json",
+      "entry": {
+        "id": "wt-global-api-GetEventCPUUsage-311",
+        "section": "global-api",
+        "direction": "removed",
+        "symbol": "GetEventCPUUsage",
+        "annotation": "",
+        "wikitext_line": 311
+      }
+    },
+    {
+      "register": "data/patch-api/sources/10.1.0-wikitext-register.json",
+      "entry": {
+        "id": "wt-global-api-GetFunctionCPUUsage-312",
+        "section": "global-api",
+        "direction": "removed",
+        "symbol": "GetFunctionCPUUsage",
+        "annotation": "",
+        "wikitext_line": 312
+      }
+    },
+    {
+      "register": "data/patch-api/sources/10.1.0-wikitext-register.json",
+      "entry": {
+        "id": "wt-global-api-GetScriptCPUUsage-322",
+        "section": "global-api",
+        "direction": "removed",
+        "symbol": "GetScriptCPUUsage",
+        "annotation": "",
+        "wikitext_line": 322
+      }
+    },
+    {
+      "register": "data/patch-api/sources/10.2.5-wikitext-register.json",
+      "entry": {
+        "id": "wt-global-api-UnitBuff-122",
+        "section": "global-api",
+        "direction": "removed",
+        "symbol": "UnitBuff",
+        "annotation": "",
+        "wikitext_line": 122
+      }
+    },
+    {
+      "register": "data/patch-api/sources/10.2.5-wikitext-register.json",
+      "entry": {
+        "id": "wt-global-api-UnitDebuff-123",
+        "section": "global-api",
+        "direction": "removed",
+        "symbol": "UnitDebuff",
+        "annotation": "",
+        "wikitext_line": 123
+      }
+    },
+    {
+      "register": "data/patch-api/sources/10.2.6-wikitext-register.json",
+      "entry": {
+        "id": "wt-global-api-GetItemGem-170",
+        "section": "global-api",
+        "direction": "removed",
+        "symbol": "GetItemGem",
+        "annotation": "",
+        "wikitext_line": 170
+      }
+    },
+    {
+      "register": "data/patch-api/sources/12.0.7-wikitext-register.json",
+      "entry": {
+        "id": "wt-global-api-GetEventCPUUsage-161",
+        "section": "global-api",
+        "direction": "added",
+        "symbol": "GetEventCPUUsage",
+        "annotation": "",
+        "wikitext_line": 161
+      }
+    },
+    {
+      "register": "data/patch-api/sources/12.0.7-wikitext-register.json",
+      "entry": {
+        "id": "wt-global-api-GetFunctionCPUUsage-162",
+        "section": "global-api",
+        "direction": "added",
+        "symbol": "GetFunctionCPUUsage",
+        "annotation": "",
+        "wikitext_line": 162
+      }
+    },
+    {
+      "register": "data/patch-api/sources/12.0.7-wikitext-register.json",
+      "entry": {
+        "id": "wt-global-api-GetScriptCPUUsage-164",
+        "section": "global-api",
+        "direction": "added",
+        "symbol": "GetScriptCPUUsage",
+        "annotation": "",
+        "wikitext_line": 164
+      }
+    }
+  ],
+  "source_only_no_closures": true
+}
