@@ -7,7 +7,7 @@ Audit pinned page 25049/revision 247986 (2010-07-10T15:47:20Z). [Audit](../wiki/
 - [x] Validate frozen manifest identity and literal response/wikitext hashes before copying.
 - [x] Opt-in parser retains sectioned colon lists, changed prose identity and explicit signature/return fragments at original lines; original outputs remain byte-identical.
 - [x] Account every inventory, retained prose/heading and explicit signature independently; publication never proves behavior.
-- [x] Own retail sweep uses actual 4.1.0+ retail registers; 4.0.1 remains an integration placeholder. Wrath Classic 3.4.x cannot supersede historical retail.
+- [x] Own retail sweep uses actual 4.0.1+ retail registers. Main confirmed no section/symbol overlap between 4.0.1 and the 124 own inventory occurrences; historical proof stays frozen. Wrath Classic 3.4.x cannot supersede historical retail.
 - [x] Portable historical replay derives totals from immutable archived ledger/gaps/receipts, independent of Git, target or future current closures; source/log/ledger tampering rejected.
 
 ## Implementation and tests

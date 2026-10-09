@@ -17,7 +17,7 @@ Existing section/bullet flags do not parse `New API functions`, `New FrameXML AP
 ## See Also
 
 - [[patch-4-1-0-api-audit]] — actual later retail successor.
-- 4.0.1 source audit is queued separately; main adds its actual register at integration. No placeholder supersession credit.
+- [[patch-4-0-1-api-audit]] — actual integrated retail successor; no section/symbol overlap with the 124 own occurrences.
 
 ## Proof boundary
 
@@ -35,7 +35,7 @@ Parser RED fails on the missing opt-in flag; GREEN fixture passes at 1658d0e36. 
 
 [Ledger](../../../data/patch-api/sources/3.3.5-page-coverage.json): 324 IDs = 124 inventory + 130 full-extract + 70 signature/return. Dispositions: 32 publication-only, two absence-only, 46 superseded-publication, 44 publication-gap, 129 metadata-only, one semantic-gap, 70 signature-gap. Later-removal credit explains current absence, not historical behavior. Existing BNGetFriendInfo inert binding remains a later-removal mismatch; it is not a removal on this page, and no existing wrapper/default is deleted. Existing chat geometry remains temporary session-local Lua state, not account persistence.
 
-[Consumer scans](../../../data/patch-api/evidence/3.3.5-session-2026-10-09/consumer-scans.json) retain Lua/Rust source/test/cache hits for every inventory identity. Separate [whole-tree removal scans](../../../data/patch-api/evidence/3.3.5-session-2026-10-09/whole-tree-retirement-scans.json) read all UTF-8 files without extension filters: 1,653 src, 2,159 tests, 4,040 cache files; binary filenames are explicitly recorded. Both removed names have zero consumers. All identities are unqualified, so qualified/bare searches coincide. No vendor/cache or runtime writes. Actual retail 4.1.0+ successors only; main adds queued 4.0.1 later. Native 2010-client parity and current coordinator acceptance remain unproven.
+[Consumer scans](../../../data/patch-api/evidence/3.3.5-session-2026-10-09/consumer-scans.json) retain Lua/Rust source/test/cache hits for every inventory identity. Separate [whole-tree removal scans](../../../data/patch-api/evidence/3.3.5-session-2026-10-09/whole-tree-retirement-scans.json) read all UTF-8 files without extension filters: 1,653 src, 2,159 tests, 4,040 cache files; binary filenames are explicitly recorded. Both removed names have zero consumers. All identities are unqualified, so qualified/bare searches coincide. No vendor/cache or runtime writes. Current sweep uses actual retail 4.0.1+ successors only. Main added 4.0.1 after rebase onto `9b932d3f8`; its inventory has no section/symbol overlap with this page. Original 4.1.0+ capture and all historical seals remain unchanged. Native 2010-client parity and current coordinator acceptance remain unproven.
 
 ## Targeted development evidence and frozen replay
 

@@ -17,7 +17,7 @@ fn patch_3_3_5_publication_sweep(env: &WowLuaEnv) {
         register_env: "P335_SWEEP_REGISTER",
         out_env: "P335_SWEEP_OUT",
         later_registers: &[
-            // 4.0.1 queued: coordinator adds its actual retail register at integration.
+            include_str!("../data/patch-api/sources/4.0.1-wikitext-register.json"),
             include_str!("../data/patch-api/sources/4.1.0-wikitext-register.json"),
             include_str!("../data/patch-api/sources/4.2.0-wikitext-register.json"),
             include_str!("../data/patch-api/sources/4.3.0-wikitext-register.json"),
