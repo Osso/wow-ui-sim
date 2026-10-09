@@ -1,0 +1,8 @@
+--- 911c980fc^:tests/blizzard_player_spells_loads.rs
++++ HEAD:tests/blizzard_player_spells_loads.rs
+@@ -1,4 +1,4 @@
+-fn load_runtime_game_ui() -> WowLuaEnv {
++pub(crate) fn load_runtime_game_ui() -> WowLuaEnv {
+     let env = WowLuaEnv::new().expect("Failed to create Lua environment");
+     env.set_screen_size(1024.0, 768.0);
+     env.set_screen_mode(ScreenKind::Game);

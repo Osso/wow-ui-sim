@@ -1,0 +1,9 @@
+--- 911c980fc^:tests/blizzard_player_spells_loads.rs
++++ HEAD:tests/blizzard_player_spells_loads.rs
+@@ -1,5 +1,4 @@
+-fn mainline_spellbook_keybind_opens_and_closes_without_runtime_errors() {
+-    let env = load_runtime_game_ui();
++fn mainline_spellbook_keybind_opens_and_closes_without_runtime_errors(env: &WowLuaEnv) {
+     env.state().borrow_mut().lua_errors.clear();
+ 
+     env.send_key_press("S", None)

@@ -1,0 +1,90 @@
+{
+  "retained_at": "2026-10-09T17:47:03.770302+00:00",
+  "scope": "Selected report/ledger/hash/preservation/diff artifacts only, byte-identical. Process-list streams and copied-source subtrees deliberately not published. Check exit/streams missing, no compile/type/runtime success credited. Main process scan found no old PID or dedicated-target processes before one terminal capture retry.",
+  "files": [
+    {
+      "source": "/tmp/mists-wrapper-independent/report.md",
+      "retained": "data/test-perf/evidence/prefork-exact-fixtures-2026-10-09/mists-capture-failure/report.md",
+      "sha256": "229d0e206ed1c73ad640b31ea021f0362cca2651469e5f114984b86f07fe6094",
+      "bytes": 6340
+    },
+    {
+      "source": "/tmp/mists-wrapper-independent/ledger.json",
+      "retained": "data/test-perf/evidence/prefork-exact-fixtures-2026-10-09/mists-capture-failure/ledger.json",
+      "sha256": "1499d0e306371974a1fabc0358a753e1abf24207bd856f2c3bfee2c21e522ce3",
+      "bytes": 2405
+    },
+    {
+      "source": "/tmp/mists-wrapper-independent/initial-scope.json",
+      "retained": "data/test-perf/evidence/prefork-exact-fixtures-2026-10-09/mists-capture-failure/initial-scope.json",
+      "sha256": "eb004c594759c9fe3498c912e7e5604626051cf99c88271e6b157dfc3b8759c2",
+      "bytes": 939
+    },
+    {
+      "source": "/tmp/mists-wrapper-independent/final-scope.json",
+      "retained": "data/test-perf/evidence/prefork-exact-fixtures-2026-10-09/mists-capture-failure/final-scope.json",
+      "sha256": "c674fc1436664eb8938878e2c4921d4e6ce12d10f529599d9b34046447b1120a",
+      "bytes": 939
+    },
+    {
+      "source": "/tmp/mists-wrapper-independent/preservation-audit.json",
+      "retained": "data/test-perf/evidence/prefork-exact-fixtures-2026-10-09/mists-capture-failure/preservation-audit.json",
+      "sha256": "f082968dab3535c6dae7e23f16fcd1af518fcaab52c9cf0e83996e6eb23a36ff",
+      "bytes": 2781
+    },
+    {
+      "source": "/tmp/mists-wrapper-independent/mainline_spellbook_keybind_opens_and_closes_without_runtime_errors.diff",
+      "retained": "data/test-perf/evidence/prefork-exact-fixtures-2026-10-09/mists-capture-failure/mainline_spellbook_keybind_opens_and_closes_without_runtime_errors.diff",
+      "sha256": "cdda1b8dc7a1b9e49e72737a73746118996b43e899000da79601035bad06afc6",
+      "bytes": 407
+    },
+    {
+      "source": "/tmp/mists-wrapper-independent/load_runtime_game_ui.diff",
+      "retained": "data/test-perf/evidence/prefork-exact-fixtures-2026-10-09/mists-capture-failure/load_runtime_game_ui.diff",
+      "sha256": "1ccb6e22e1e47c17d5472b8b4a67b2c6f3187e5dd01e1a09a92a4b7d63435471",
+      "bytes": 372
+    },
+    {
+      "source": "/tmp/mists-wrapper-independent/cast_bar_respects_edit_mode_lock_setting_after_startup_fix.diff",
+      "retained": "data/test-perf/evidence/prefork-exact-fixtures-2026-10-09/mists-capture-failure/cast_bar_respects_edit_mode_lock_setting_after_startup_fix.diff",
+      "sha256": "3351308fb8b36bf211b286e6239a01a3cf0051b3cd2b6fd92528cd535ddd07a4",
+      "bytes": 614
+    },
+    {
+      "source": "/tmp/mists-wrapper-independent/env_with_blizzard_ui_from.diff",
+      "retained": "data/test-perf/evidence/prefork-exact-fixtures-2026-10-09/mists-capture-failure/env_with_blizzard_ui_from.diff",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "source": "/tmp/mists-wrapper-independent/env_with_full_blizzard_ui.diff",
+      "retained": "data/test-perf/evidence/prefork-exact-fixtures-2026-10-09/mists-capture-failure/env_with_full_blizzard_ui.diff",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "source": "/tmp/mists-wrapper-independent/test_chat_editbox_text_color_after_activation.diff",
+      "retained": "data/test-perf/evidence/prefork-exact-fixtures-2026-10-09/mists-capture-failure/test_chat_editbox_text_color_after_activation.diff",
+      "sha256": "88464d120e7230674782175ebf29c7c0127015968675012e92d75ac0d8422125",
+      "bytes": 523
+    },
+    {
+      "source": "/tmp/mists-wrapper-independent/test_chat_editbox_click_type_and_submit.diff",
+      "retained": "data/test-perf/evidence/prefork-exact-fixtures-2026-10-09/mists-capture-failure/test_chat_editbox_click_type_and_submit.diff",
+      "sha256": "932a20d5580703ace2c0012a0847b68b1032820b001cc48b6d2c61a68627aea6",
+      "bytes": 578
+    },
+    {
+      "source": "/tmp/mists-wrapper-independent/fire_startup_events.diff",
+      "retained": "data/test-perf/evidence/prefork-exact-fixtures-2026-10-09/mists-capture-failure/fire_startup_events.diff",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "source": "/tmp/mists-wrapper-independent/setup_env.diff",
+      "retained": "data/test-perf/evidence/prefork-exact-fixtures-2026-10-09/mists-capture-failure/setup_env.diff",
+      "sha256": "9b84c12271de8016d597e10db282631e7ecc163b76432fb96e104ce7949a3ddf",
+      "bytes": 272
+    }
+  ]
+}

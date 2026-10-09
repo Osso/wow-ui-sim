@@ -1,0 +1,17 @@
+--- 29e48f225^:tests/chat_frame.rs
++++ HEAD:tests/chat_frame.rs
+@@ -1,7 +1,4 @@
+-fn test_chat_editbox_text_color_after_activation() {
+-    test_timeout! {
+-        let env = setup_env();
+-
++fn test_chat_editbox_text_color_after_activation(env: &WowLuaEnv) {
+         click_chat_editbox(&env);
+ 
+         // After activation, ActivateChat should have called UpdateHeader
+@@ -22,5 +19,4 @@
+             (alpha - 1.0).abs() < 0.01,
+             "EditBox alpha should be 1.0 after activation, got {alpha}"
+         );
+-    }
+ }

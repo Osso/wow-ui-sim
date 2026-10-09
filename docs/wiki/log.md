@@ -1,3 +1,7 @@
+## [2026-10-09] investigation | Mists wrapper proof capture incident
+
+[Proof SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#exact-startup-fixtures-retained-redgreen-epoch) links selected static preservation receipts and lost check-result evidence. No Mists type/runtime gate closed; no old process remained before one terminal capture retry. Process-list streams excluded from publication.
+
 ## [2026-10-09] ingest | Retail TOC fixture independent proof
 
 [Proof SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#retail-toc-fixtures--bounded-pass-at-41f1abbeb) records three exact passing cases, formatting/compile/readability and actual concurrent docs-only epoch. 29 artifacts retained byte-for-byte; no reruns or full-suite/native/profile expansion.

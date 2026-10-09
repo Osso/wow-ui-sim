@@ -1,0 +1,12 @@
+{
+  "docs/wiki/index.md": "d4c14cae59f1b3f0faac483dfdc6af1b2865f7aae8938b69d51e1751d789725c",
+  "docs/specs/prefork-test-harness.md": "c97737956813f586145d201d3214ad5b4799d4c7f27e5678f6b61679b5b05d3b",
+  "tests/common/mod.rs": "cef6dfddeb305bc296794b66af8096e83df8c7727b96e5c49a578fc6754d374f",
+  "tests/chat_frame.rs": "04a28365393696de25d0f40942fb46339872993b154b5f172ff7ab6ad213f998",
+  "tests/spell_casting.rs": "b846e9b3a80a51537c960d5375a7d4fca8eaaa81ee0d280fe582e9e8ee86bc2f",
+  "tests/blizzard_player_spells_loads.rs": "91032d21eb390665f0702419aa19a0e5f1634ffaf073f05880a682a8f2d26a19",
+  "tests/integration.rs": "b85b734b56914dffc909ff95ba3c7b24f9ba4c175fcf10b8c5b680fd4159d981",
+  "Cargo.toml": "b1fd7660e2562019c74a063fe82b2d3ba15937b36636c828277b33f8f38a8f7b",
+  "Cargo.lock": "859f258fa21eb92f7f0c83c77d526ea0ce3e7535b0970df2e39c459023c0b9cf",
+  "build.rs": "df6b286152daa948557c17c4abb8776af2aed573c45f1fcb4901fd2b4a8ccde2"
+}

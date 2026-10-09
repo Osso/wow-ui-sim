@@ -1,0 +1,17 @@
+--- 29e48f225^:tests/chat_frame.rs
++++ HEAD:tests/chat_frame.rs
+@@ -1,7 +1,4 @@
+-fn test_chat_editbox_click_type_and_submit() {
+-    test_timeout! {
+-        let env = setup_env();
+-
++fn test_chat_editbox_click_type_and_submit(env: &WowLuaEnv) {
+         let exists: bool = env
+             .eval("return ChatFrame1EditBox ~= nil")
+             .expect("eval failed");
+@@ -41,5 +38,4 @@
+             .eval("return ChatFrame1EditBox:GetText() or ''")
+             .expect("GetText failed");
+         assert_eq!(text_after, "", "EditBox should be cleared after submit");
+-    }
+ }

@@ -1,0 +1,8 @@
+--- 29e48f225^:tests/chat_frame.rs
++++ HEAD:tests/chat_frame.rs
+@@ -1,4 +1,4 @@
+-fn setup_env() -> WowLuaEnv {
++pub(crate) fn setup_env() -> WowLuaEnv {
+     let env = WowLuaEnv::new().expect("Failed to create Lua environment");
+     env.set_screen_size(1024.0, 768.0);
+ 

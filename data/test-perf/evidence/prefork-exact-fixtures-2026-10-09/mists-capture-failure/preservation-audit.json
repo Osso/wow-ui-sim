@@ -1,0 +1,46 @@
+[
+  {
+    "case": "test_chat_editbox_click_type_and_submit",
+    "source": "tests/chat_frame.rs",
+    "constructor": "setup_env",
+    "marker_line": 353,
+    "wrapper_line": 398,
+    "body_byte_equal_after_removing_only_original_harness_constructor": true,
+    "original_body_sha256": "aca7e66f4b741629f4bf0afd78d517b432430745a1af791c088e594e328065cb",
+    "current_body_sha256": "aca7e66f4b741629f4bf0afd78d517b432430745a1af791c088e594e328065cb",
+    "wrapper_source": "fn test_chat_editbox_click_type_and_submit() {\n    test_timeout! {\n        let env = setup_env();\n        test_chat_editbox_click_type_and_submit::run(&env);\n    }\n}"
+  },
+  {
+    "case": "test_chat_editbox_text_color_after_activation",
+    "source": "tests/chat_frame.rs",
+    "constructor": "setup_env",
+    "marker_line": 442,
+    "wrapper_line": 468,
+    "body_byte_equal_after_removing_only_original_harness_constructor": true,
+    "original_body_sha256": "e105a2cc5f630d7f2e73a9f5bfbc35859a7fa6c0762205bb83c54ab9a4649381",
+    "current_body_sha256": "e105a2cc5f630d7f2e73a9f5bfbc35859a7fa6c0762205bb83c54ab9a4649381",
+    "wrapper_source": "fn test_chat_editbox_text_color_after_activation() {\n    test_timeout! {\n        let env = setup_env();\n        test_chat_editbox_text_color_after_activation::run(&env);\n    }\n}"
+  },
+  {
+    "case": "cast_bar_respects_edit_mode_lock_setting_after_startup_fix",
+    "source": "tests/spell_casting.rs",
+    "constructor": "env_with_full_blizzard_ui",
+    "marker_line": 391,
+    "wrapper_line": 475,
+    "body_byte_equal_after_removing_only_original_harness_constructor": true,
+    "original_body_sha256": "daa5527fb9e038110b717a77b5910b5fe0b091382e29711145e11f2449aac4e7",
+    "current_body_sha256": "daa5527fb9e038110b717a77b5910b5fe0b091382e29711145e11f2449aac4e7",
+    "wrapper_source": "fn cast_bar_respects_edit_mode_lock_setting_after_startup_fix() {\n    test_timeout! {\n        let env = env_with_full_blizzard_ui();\n        cast_bar_respects_edit_mode_lock_setting_after_startup_fix::run(&env);\n    }\n}"
+  },
+  {
+    "case": "mainline_spellbook_keybind_opens_and_closes_without_runtime_errors",
+    "source": "tests/blizzard_player_spells_loads.rs",
+    "constructor": "load_runtime_game_ui",
+    "marker_line": 210,
+    "wrapper_line": 256,
+    "body_byte_equal_after_removing_only_original_harness_constructor": true,
+    "original_body_sha256": "456c2a2c0f889df24c434c6d60efa622bde02c6bbc6fc191b6792c0728668256",
+    "current_body_sha256": "456c2a2c0f889df24c434c6d60efa622bde02c6bbc6fc191b6792c0728668256",
+    "wrapper_source": "fn mainline_spellbook_keybind_opens_and_closes_without_runtime_errors() {\n    let env = load_runtime_game_ui();\n    mainline_spellbook_keybind_opens_and_closes_without_runtime_errors::run(&env);\n}"
+  }
+]

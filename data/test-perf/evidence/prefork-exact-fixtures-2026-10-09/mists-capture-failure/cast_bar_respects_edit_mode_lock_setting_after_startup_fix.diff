@@ -1,0 +1,16 @@
+--- 911c980fc^:tests/spell_casting.rs
++++ HEAD:tests/spell_casting.rs
+@@ -1,6 +1,4 @@
+-fn cast_bar_respects_edit_mode_lock_setting_after_startup_fix() {
+-    test_timeout! {
+-        let env = env_with_full_blizzard_ui();
++fn cast_bar_respects_edit_mode_lock_setting_after_startup_fix(env: &WowLuaEnv) {
+ 
+         let (lock_value, attached_after_post_event, parent_after_post_event): (i64, bool, String) = env
+             .eval(
+@@ -79,5 +77,4 @@
+             "locked cast-bar edit-mode anchor path should attach to PlayerFrame"
+         );
+         assert_eq!(parent_after_cast_anchor, "PlayerFrame");
+-    }
+ }
