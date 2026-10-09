@@ -1,0 +1,25 @@
+running 3 tests
+test conformance::exact_group_selection ... FAILED (panic: assertion `left == right` failed
+  left: []
+ right: ["test group-contract::chat::pass ... ok"])
+---- conformance::exact_group_selection stderr ----
+
+thread 'main' (40752) panicked at tests/prefork_full_ui.rs:818:9:
+assertion `left == right` failed
+  left: []
+ right: ["test group-contract::chat::pass ... ok"]
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+test conformance::exact_group_failure ... FAILED (panic: driver unexpectedly succeeded)
+---- conformance::exact_group_failure stderr ----
+
+thread 'main' (40763) panicked at tests/prefork_full_ui.rs:1522:5:
+driver unexpectedly succeeded
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+test conformance::exact_group_timeout ... FAILED (panic: driver unexpectedly succeeded)
+---- conformance::exact_group_timeout stderr ----
+
+thread 'main' (40781) panicked at tests/prefork_full_ui.rs:1522:5:
+driver unexpectedly succeeded
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+test result: FAILED. 0 passed; 3 failed; 3 total

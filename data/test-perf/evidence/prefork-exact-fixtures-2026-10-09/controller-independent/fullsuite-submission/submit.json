@@ -1,0 +1,14 @@
+{
+  "argv": [
+    "python3",
+    "tools/full_suite.py",
+    "submit",
+    "96e88494a6844833b79a574d37a2115dc03b44eb"
+  ],
+  "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+  "sha": "96e88494a6844833b79a574d37a2115dc03b44eb",
+  "started": "2026-10-09T21:02:02.267456+00:00",
+  "ended": "2026-10-09T21:02:02.293578+00:00",
+  "exit": 0,
+  "scope": "Async submission only; not compilation or suite outcome. Tracked worker has shared build lock, jobs4 offline/locked."
+}

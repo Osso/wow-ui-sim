@@ -1,0 +1,5 @@
+{
+  "audit": "Complete file-byte text scan and JSON key/env review before copy; no credential fields, secret values or raw process inventory identified. Explicit env is only PREFORK_CONFORMANCE_SUITE=1. Build stdout is Cargo compiler-artifact/diagnostic JSON. Paths, hashes, feature names, timestamps and bounded incident wrapper/flock PIDs retained unchanged.",
+  "red_build_incident": "Not present in this directory; separately retained development narrative.",
+  "sanitized_derivatives": []
+}

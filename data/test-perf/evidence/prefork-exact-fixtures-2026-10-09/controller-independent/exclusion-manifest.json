@@ -1,0 +1,4 @@
+{
+  "excluded": [],
+  "scope": "All regular files in supplied receipt directory retained. No external process inventory or inherited environment captured/copied. Missing incident exit/timestamps/streams remain missing."
+}

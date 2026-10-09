@@ -1,0 +1,309 @@
+diff --git a/tests/prefork_full_ui.rs b/tests/prefork_full_ui.rs
+index 9cd299f8e..7451f6711 100644
+--- a/tests/prefork_full_ui.rs
++++ b/tests/prefork_full_ui.rs
+@@ -31,6 +31,16 @@ use wow_ui_sim::lua_api::WowLuaEnv;
+ 
+ const CONFORMANCE_MODE_ENV: &str = "PREFORK_CONFORMANCE_SUITE";
+ const EXACT_FIXTURE_GROUP_ENV: &str = "PREFORK_EXACT_FIXTURE_GROUP";
++const GROUP_CONTROLLER_FIXTURE_ENV: &str = "PREFORK_GROUP_CONTROLLER_FIXTURE";
++const GROUP_FAILURE_ENV: &str = "PREFORK_GROUP_FAILURE";
++const GROUP_TIMEOUT_ENV: &str = "PREFORK_GROUP_TIMEOUT";
++const CONTROLLER_GROUPS: &[&str] = &[
++    #[cfg(feature = "gui")]
++    "chat",
++    "cast-bar",
++    #[cfg(any(feature = "retail-12-1-0", feature = "client-wowforever"))]
++    "spellbook",
++];
+ const DRIVER_MODE_ENV: &str = "PREFORK_CONFORMANCE_DRIVER";
+ const TREE_CHILD_MODE_ENV: &str = "PREFORK_CONFORMANCE_TREE_CHILD";
+ const START_THREAD_ENV: &str = "PREFORK_CONFORMANCE_START_THREAD";
+@@ -109,6 +119,9 @@ const CONFORMANCE_CASES: &[Case<ConformanceState>] = &[
+         "conformance::exact_fixture_groups_list_each_case_once",
+         exact_fixture_groups_list_each_case_once,
+     ),
++    Case::new("conformance::exact_group_selection", exact_group_selection),
++    Case::new("conformance::exact_group_failure", exact_group_failure),
++    Case::new("conformance::exact_group_timeout", exact_group_timeout),
+     Case::new(
+         "conformance::environment_cleanup_restore_errors_are_contextual",
+         environment_cleanup_restore_errors_are_contextual,
+@@ -332,6 +345,9 @@ fn run_exact_fixture_subprocess(group: &str) -> ExitCode {
+ }
+ 
+ fn run_exact_fixture_group(group: &std::ffi::OsStr, config: Config) -> ExitCode {
++    if env::var_os(GROUP_CONTROLLER_FIXTURE_ENV).is_some() {
++        return run_controller_fixture_group(group, config);
++    }
+     match group.to_str() {
+         #[cfg(feature = "gui")]
+         Some("chat") => run_exact_fixture(CHAT_FIXTURE_CASES, config, chat_frame::setup_env),
+@@ -353,18 +369,95 @@ fn run_exact_fixture_group(group: &std::ffi::OsStr, config: Config) -> ExitCode
+     }
+ }
+ 
++// Local conformance substitution only; normal fixture registries/constructors stay above.
++fn run_controller_fixture_group(group: &std::ffi::OsStr, config: Config) -> ExitCode {
++    let Some(group) = group
++        .to_str()
++        .filter(|group| CONTROLLER_GROUPS.contains(group))
++    else {
++        eprintln!("unsupported exact prefork fixture group");
++        return ExitCode::FAILURE;
++    };
++    let names = match group {
++        "chat" => ["group-contract::chat::pass", "group-contract::chat::other"],
++        "cast-bar" => [
++            "group-contract::cast-bar::pass",
++            "group-contract::cast-bar::other",
++        ],
++        "spellbook" => [
++            "group-contract::spellbook::pass",
++            "group-contract::spellbook::other",
++        ],
++        _ => unreachable!("enabled controller group must have deterministic cases"),
++    };
++    let cases = names.map(|name| Case::new(name, controller_fixture_child));
++    let config = Config {
++        timeout: duration_from_env(DRIVER_TIMEOUT_MS_ENV, 2_000),
++        ..config
++    };
++    run_exact_fixture(&cases, config, create_controller_fixture_env)
++}
++
++fn create_controller_fixture_env() -> WowLuaEnv {
++    let env = WowLuaEnv::new().expect("create controlled exact fixture environment");
++    env.exec("__prefork_group_parent = true")
++        .expect("initialize controlled parent");
++    env
++}
++
++fn controller_fixture_child(env: &WowLuaEnv) {
++    assert!(
++        env.eval::<bool>("return __prefork_group_parent")
++            .expect("read inherited parent state")
++    );
++    let group = std::env::var(EXACT_FIXTURE_GROUP_ENV).expect("controlled group name");
++    let state = FixtureState {
++        cow_value: AtomicUsize::new(7),
++    };
++    if std::env::var(GROUP_FAILURE_ENV).ok().as_deref() == Some(&group) {
++        fixture_output_panic(&state);
++    }
++    if std::env::var(GROUP_TIMEOUT_ENV).ok().as_deref() == Some(&group) {
++        let pid_path = PathBuf::from(std::env::var_os(TREE_PID_ENV).expect("tree pid path"));
++        std::fs::write(
++            pid_path.with_extension("parent"),
++            std::process::id().to_string(),
++        )
++        .expect("write direct prefork child pid");
++        fixture_timeout_tree(&state);
++    }
++    fixture_pass(&state);
++}
++
+ fn run_exact_fixture(
+     cases: &[Case<WowLuaEnv>],
+     config: Config,
+     create_env: fn() -> WowLuaEnv,
+ ) -> ExitCode {
+     prefork::run_with_setup(cases, config, || {
+-        run_conformance_subprocess()?;
++        let controlled = std::env::var_os(GROUP_CONTROLLER_FIXTURE_ENV).is_some();
++        // Controller conformance already runs in the suite; re-entering it would recurse.
++        if !controlled {
++            run_conformance_subprocess()?;
++        }
+         enter_bytecode_cache_parent_bypass_mode();
+         let env = create_env();
+-        release_prefork_parent_bytecode_cache_memory().map_err(|error| {
++        let released = release_prefork_parent_bytecode_cache_memory().map_err(|error| {
+             format!("release exact-fixture parent bytecode cache memory: {error}")
+         })?;
++        if controlled {
++            let root = PathBuf::from(
++                std::env::var_os(DRIVER_SETUP_MARKER_ENV)
++                    .ok_or("controlled setup marker directory missing")?,
++            );
++            let group =
++                std::env::var(EXACT_FIXTURE_GROUP_ENV).map_err(|error| error.to_string())?;
++            std::fs::write(
++                root.join(group),
++                format!("{} sealed={released}", std::process::id()),
++            )
++            .map_err(|error| format!("write controlled setup marker: {error}"))?;
++        }
+         Ok::<_, String>(env)
+     })
+ }
+@@ -766,6 +859,169 @@ fn exact_fixture_groups_list_each_case_once(state: &ConformanceState) {
+     }
+ }
+ 
++// These commands enter the public controller, not the generic conformance driver.
++fn group_controller_command(state: &ConformanceState, root: &Path) -> Command {
++    let mut command = driver_command(state);
++    command
++        .env_remove(DRIVER_MODE_ENV)
++        .env_remove(CONFORMANCE_MODE_ENV)
++        .env_remove(EXACT_FIXTURE_GROUP_ENV)
++        .env_remove(GROUP_FAILURE_ENV)
++        .env_remove(GROUP_TIMEOUT_ENV)
++        .env(GROUP_CONTROLLER_FIXTURE_ENV, "1")
++        .env(DRIVER_SETUP_MARKER_ENV, root)
++        .env("XDG_CACHE_HOME", root.join("cache"))
++        .env("WOW_SIM_ENABLE_BYTECODE_CACHE", "1");
++    command
++}
++
++fn group_setup_pid(root: &Path, group: &str) -> u32 {
++    let marker = std::fs::read_to_string(root.join(group)).expect("read sealed group setup marker");
++    let (pid, sealed) = marker
++        .trim()
++        .split_once(' ')
++        .expect("setup pid and sealing result");
++    assert_eq!(sealed, "sealed=0", "group must seal an empty bypass cache");
++    pid.parse().expect("parse setup process pid")
++}
++
++fn exact_group_selection(state: &ConformanceState) {
++    for group in CONTROLLER_GROUPS {
++        let name = format!("group-contract::{group}::pass");
++        let selected = TempDir::new().expect("create selection markers");
++        let output = group_controller_command(state, selected.path())
++            .args([&name, "--exact"])
++            .output()
++            .expect("run exact group selection");
++        assert_success(&output);
++        let text = stdout(&output);
++        assert_eq!(
++            text.lines()
++                .filter(|line| line.starts_with("test group-contract::"))
++                .collect::<Vec<_>>(),
++            vec![format!("test {name} ... ok")]
++        );
++        group_setup_pid(selected.path(), group);
++        for other in CONTROLLER_GROUPS.iter().filter(|other| *other != group) {
++            assert!(
++                !selected.path().join(other).exists(),
++                "unselected group {other} initialized"
++            );
++        }
++
++        for args in [
++            vec![name.as_str(), "--exact", "--skip", name.as_str()],
++            vec!["group-contract::unmatched", "--exact"],
++        ] {
++            let empty = TempDir::new().expect("create zero-selection markers");
++            let output = group_controller_command(state, empty.path())
++                .args(args)
++                .output()
++                .expect("run zero-selection group controller");
++            assert_success(&output);
++            assert_eq!(
++                stdout(&output).matches("running 0 tests").count(),
++                CONTROLLER_GROUPS.len() + 1
++            );
++            for group in CONTROLLER_GROUPS {
++                assert!(
++                    !empty.path().join(group).exists(),
++                    "zero selection initialized {group}"
++                );
++            }
++            assert!(
++                !empty.path().join("cache").exists(),
++                "zero selection initialized cache"
++            );
++        }
++    }
++}
++
++fn exact_group_failure(state: &ConformanceState) {
++    for failing in CONTROLLER_GROUPS {
++        let root = TempDir::new().expect("create failure markers");
++        let output = group_controller_command(state, root.path())
++            .args(["group-contract::", "--skip=::other", "--test-threads=1"])
++            .env(GROUP_FAILURE_ENV, failing)
++            .output()
++            .expect("run failing exact group controller");
++        assert_failure(&output);
++        let text = stdout(&output);
++        assert!(
++            text.contains(&format!(
++                "test group-contract::{failing}::pass ... FAILED (panic: deliberate panic text)"
++            )),
++            "{text}"
++        );
++        assert!(text.contains("child stdout marker"));
++        assert!(text.contains("child stderr marker"));
++        let mut pids = Vec::new();
++        for group in CONTROLLER_GROUPS {
++            pids.push(group_setup_pid(root.path(), group));
++            if group != failing {
++                assert!(
++                    text.contains(&format!("test group-contract::{group}::pass ... ok")),
++                    "later/sibling group missing: {text}"
++                );
++            }
++        }
++        pids.sort_unstable();
++        pids.dedup();
++        assert_eq!(
++            pids.len(),
++            CONTROLLER_GROUPS.len(),
++            "groups must use fresh processes"
++        );
++    }
++}
++
++fn exact_group_timeout(state: &ConformanceState) {
++    for group in CONTROLLER_GROUPS {
++        let root = TempDir::new().expect("create timeout markers");
++        let cache = root.path().join("cache/wow-ui-sim/lua-bytecode");
++        std::fs::create_dir_all(&cache).expect("create cache sentinel directory");
++        std::fs::write(
++            cache.join("pack.bin"),
++            b"untouched group-controller cache sentinel",
++        )
++        .expect("write cache sentinel");
++        let before = snapshot_cache_tree(&cache);
++        let pid_path = root.path().join("tree.pid");
++        let name = format!("group-contract::{group}::pass");
++        let output = group_controller_command(state, root.path())
++            .args([&name, "--exact"])
++            .env(GROUP_TIMEOUT_ENV, group)
++            .env(DRIVER_TIMEOUT_MS_ENV, "120")
++            .env(TREE_PID_ENV, &pid_path)
++            .output()
++            .expect("run timed out exact group controller");
++        assert_failure(&output);
++        assert!(stdout(&output).contains("FAILED (timeout after 120ms)"));
++        for path in [&pid_path, &pid_path.with_extension("parent")] {
++            let pid = std::fs::read_to_string(path)
++                .expect("read timed-out tree pid")
++                .trim()
++                .parse()
++                .expect("parse timed-out tree pid");
++            assert_process_disappears(pid);
++        }
++        let old_pid = group_setup_pid(root.path(), group);
++        assert_eq!(snapshot_cache_tree(&cache), before);
++        let fresh = group_controller_command(state, root.path())
++            .args([&name, "--exact"])
++            .output()
++            .expect("run fresh group after timeout");
++        assert_success(&fresh);
++        assert!(stdout(&fresh).contains(&format!("test {name} ... ok")));
++        assert_ne!(group_setup_pid(root.path(), group), old_pid);
++        assert_eq!(
++            snapshot_cache_tree(&cache),
++            before,
++            "timeout/fresh setup must not mutate disk cache"
++        );
++    }
++}
++
+ fn generated_registry_lists_nested_marker_case(state: &ConformanceState) {
+     const CASE_NAME: &str =
+         "prefork_full_ui_nested::fixture::preloaded_parent_has_normal_game_startup";

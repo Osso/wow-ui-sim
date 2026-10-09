@@ -1,0 +1,83 @@
+running 3 tests
+test conformance::exact_group_selection ... FAILED (panic: driver failed
+stdout:
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 total
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 total
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 total
+
+stderr:
+[  0.000s] [Startup] WowLuaEnv::new begin
+[  0.001s] [Startup] SimState::default complete in 1.47ms
+[  0.002s] [Startup] rilua VM created in 84.70µs
+[  0.002s] [Startup] builtin frames initialized in 60.91µs
+[  0.002s] [Startup] template registry cleared in 7.16µs
+[  0.002s] [Startup] intrinsic templates registered in 46.83µs
+[  0.002s] [Startup] initial app_data lua handle installed in 1.08µs
+[  0.094s] [Startup] init_lua_state complete in 92.27ms
+[  0.094s] [Startup] final app_data lua handle installed in 170.00ns
+[  0.094s] [Startup] initial screen globals installed in 56.68µs
+[  0.094s] [Startup] WowLuaEnv::new complete
+
+thread 'main' (72486) panicked at tests/prefork_full_ui.rs:404:10:
+initialize controlled parent: Lua(Syntax(SyntaxError { message: "'end' expected (to close 'function' at line 1) near '='", source: "=(string)", line: 2, raw_message: None }))
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+)
+---- conformance::exact_group_selection stderr ----
+
+thread 'main' (72484) panicked at tests/prefork_full_ui.rs:1594:5:
+driver failed
+stdout:
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 total
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 total
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 total
+
+stderr:
+[  0.000s] [Startup] WowLuaEnv::new begin
+[  0.001s] [Startup] SimState::default complete in 1.47ms
+[  0.002s] [Startup] rilua VM created in 84.70µs
+[  0.002s] [Startup] builtin frames initialized in 60.91µs
+[  0.002s] [Startup] template registry cleared in 7.16µs
+[  0.002s] [Startup] intrinsic templates registered in 46.83µs
+[  0.002s] [Startup] initial app_data lua handle installed in 1.08µs
+[  0.094s] [Startup] init_lua_state complete in 92.27ms
+[  0.094s] [Startup] final app_data lua handle installed in 170.00ns
+[  0.094s] [Startup] initial screen globals installed in 56.68µs
+[  0.094s] [Startup] WowLuaEnv::new complete
+
+thread 'main' (72486) panicked at tests/prefork_full_ui.rs:404:10:
+initialize controlled parent: Lua(Syntax(SyntaxError { message: "'end' expected (to close 'function' at line 1) near '='", source: "=(string)", line: 2, raw_message: None }))
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+test conformance::exact_group_failure ... FAILED (panic: running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 total
+)
+---- conformance::exact_group_failure stderr ----
+
+thread 'main' (72504) panicked at tests/prefork_full_ui.rs:950:9:
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 total
+
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+test conformance::exact_group_timeout ... FAILED (panic: assertion failed: stdout(&output).contains("FAILED (timeout after 120ms)"))
+---- conformance::exact_group_timeout stderr ----
+
+thread 'main' (72523) panicked at tests/prefork_full_ui.rs:999:9:
+assertion failed: stdout(&output).contains("FAILED (timeout after 120ms)")
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+test result: FAILED. 0 passed; 3 failed; 3 total

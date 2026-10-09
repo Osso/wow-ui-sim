@@ -1,0 +1,24 @@
+[
+  {
+    "label": "red-format",
+    "argv": [
+      "rustfmt",
+      "--edition",
+      "2024",
+      "--config",
+      "skip_children=true",
+      "/home/osso/Projects/wow/wow-ui-sim/tests/prefork_full_ui.rs"
+    ],
+    "env": null,
+    "revision": "aa9004aca92a4ef09592bf4b98753b32ebea0f78",
+    "hashes": {
+      "tests/prefork_full_ui.rs": "20cab6fc63fd23866b900f06d1b97088f736245d4b67f094fe44be213edc5cb5",
+      "Cargo.toml": "1c56b9a80149ea739d8fc647391b4c45dc32ad70cf5ec7a3576dba92989f3341",
+      "Cargo.lock": "859f258fa21eb92f7f0c83c77d526ea0ce3e7535b0970df2e39c459023c0b9cf",
+      "build.rs": "df6b286152daa948557c17c4abb8776af2aed573c45f1fcb4901fd2b4a8ccde2"
+    },
+    "start": "2026-10-09T15:26:07.103489-05:00",
+    "end": "2026-10-09T15:26:07.124299-05:00",
+    "exit": 0
+  }
+]

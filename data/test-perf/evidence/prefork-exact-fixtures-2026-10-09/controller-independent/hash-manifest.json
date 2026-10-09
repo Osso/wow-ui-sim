@@ -1,0 +1,43 @@
+{
+  "source_directory": "/tmp/prefork-controller-independent",
+  "files": [
+    {
+      "file": "report.md",
+      "bytes": 7074,
+      "source_sha256": "c29bee49ad749e2a9a1e1a2946ac81bd65b74ab5f9a6a8cbda9a24edbc794330",
+      "retained_sha256": "c29bee49ad749e2a9a1e1a2946ac81bd65b74ab5f9a6a8cbda9a24edbc794330"
+    },
+    {
+      "file": "result.json",
+      "bytes": 2892,
+      "source_sha256": "adfb3b7dd5eec33fa7ebb6db6e8456fcdb1233809c36d3274562309c5d142459",
+      "retained_sha256": "adfb3b7dd5eec33fa7ebb6db6e8456fcdb1233809c36d3274562309c5d142459"
+    },
+    {
+      "file": "source.diff",
+      "bytes": 12710,
+      "source_sha256": "1cfb05315db613be8e223c74baa2790455db7e24fcb050c0b106840373a4c261",
+      "retained_sha256": "1cfb05315db613be8e223c74baa2790455db7e24fcb050c0b106840373a4c261"
+    },
+    {
+      "file": "start.json",
+      "bytes": 2578,
+      "source_sha256": "d00047c42fd86257c450682d21fb00efce5dd2410e6ee0ef6a4d3968bc9094f0",
+      "retained_sha256": "d00047c42fd86257c450682d21fb00efce5dd2410e6ee0ef6a4d3968bc9094f0"
+    },
+    {
+      "file": "suite.stderr",
+      "bytes": 0,
+      "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "retained_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "file": "suite.stdout",
+      "bytes": 199,
+      "source_sha256": "4e442a8ea679daeac450cef990b3b2c355ffbefbf0c2837d22b333228b274e7e",
+      "retained_sha256": "4e442a8ea679daeac450cef990b3b2c355ffbefbf0c2837d22b333228b274e7e"
+    }
+  ],
+  "total_files": 6,
+  "total_bytes": 25453
+}

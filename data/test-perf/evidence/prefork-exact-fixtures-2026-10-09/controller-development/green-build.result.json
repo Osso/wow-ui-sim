@@ -1,0 +1,27 @@
+{
+  "argv": [
+    "/home/osso/.worktrees/build-lock.sh",
+    "cargo",
+    "test",
+    "--offline",
+    "--locked",
+    "--jobs",
+    "4",
+    "--test",
+    "prefork_full_ui",
+    "--no-run",
+    "--message-format=json"
+  ],
+  "revision": "6e6f8cb5b675897be4bf249cbe66a1607d8de1d7",
+  "hashes": {
+    "tests/prefork_full_ui.rs": "98a36eb341024efcab2057ee4f7da972d2876f834c0da66383f0476b0825269a",
+    "Cargo.toml": "1c56b9a80149ea739d8fc647391b4c45dc32ad70cf5ec7a3576dba92989f3341",
+    "Cargo.lock": "859f258fa21eb92f7f0c83c77d526ea0ce3e7535b0970df2e39c459023c0b9cf",
+    "build.rs": "df6b286152daa948557c17c4abb8776af2aed573c45f1fcb4901fd2b4a8ccde2",
+    "docs/specs/prefork-test-harness.md": "de60fad4e3bbb5d44fe39711c1d9cf1f96428dc65dad164cd0420205b460b1f4",
+    "docs/wiki/systems/prefork-test-harness.md": "31debda1bb27b0b0a8e787703bda868a20da10032e10b2b1029c159657fcdf53"
+  },
+  "start": "2026-10-09T15:46:03.441514-05:00",
+  "exit": 0,
+  "end": "2026-10-09T15:52:48.279522-05:00"
+}

@@ -1,0 +1,16 @@
+{
+  "sha": "96e88494a6844833b79a574d37a2115dc03b44eb",
+  "captured_at": "2026-10-09T21:02:42.235031+00:00",
+  "status": 200,
+  "runs": [
+    {
+      "id": 37990879626,
+      "name": "Test",
+      "head_sha": "96e88494a6844833b79a574d37a2115dc03b44eb",
+      "status": "in_progress",
+      "conclusion": null,
+      "created_at": "2026-10-09T21:01:42Z",
+      "updated_at": "2026-10-09T21:01:52Z"
+    }
+  ]
+}

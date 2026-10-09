@@ -1,0 +1,1 @@
+Initial red-build evaluation lost response/state while shared build-lock was queued. Inspected PID 4169793 (wrapper), 4169798 (flock); cancelled both before retry. No build/test result or retained compile streams. RED format receipt remains valid. New attempt must persist start/streams before command completion.

@@ -1,0 +1,18 @@
+{
+  "argv": [
+    "timeout",
+    "90",
+    "/home/osso/Projects/wow/wow-ui-sim/target/debug/deps/prefork_full_ui-21dd5c807fe7a7b6",
+    "conformance::exact_group_",
+    "--test-threads=1"
+  ],
+  "revision": "6e6f8cb5b675897be4bf249cbe66a1607d8de1d7",
+  "source_sha256": "98a36eb341024efcab2057ee4f7da972d2876f834c0da66383f0476b0825269a",
+  "binary_sha256": "c2e5b8889bb50e4fe1e456fb273665441665b3ff80bc98521b808f6fdf7a42f8",
+  "env": {
+    "PREFORK_CONFORMANCE_SUITE": "1"
+  },
+  "start": "2026-10-09T15:52:48.518764-05:00",
+  "exit": 1,
+  "end": "2026-10-09T15:52:49.102079-05:00"
+}

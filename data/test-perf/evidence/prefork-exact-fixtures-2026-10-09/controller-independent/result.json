@@ -1,0 +1,86 @@
+{
+  "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+  "argv": [
+    "timeout",
+    "90",
+    "/home/osso/Projects/wow/wow-ui-sim/target/debug/deps/prefork_full_ui-21dd5c807fe7a7b6",
+    "conformance::exact_group_",
+    "--test-threads=1"
+  ],
+  "env": {
+    "PREFORK_CONFORMANCE_SUITE": "1"
+  },
+  "revision": "96e88494a6844833b79a574d37a2115dc03b44eb",
+  "compile_revision": "2de36e2b36a7643c53864b1bfddb317e206b9528",
+  "compile_artifact": {
+    "reason": "compiler-artifact",
+    "package_id": "path+file:///home/osso/Projects/wow/wow-ui-sim#0.1.0",
+    "manifest_path": "/home/osso/Projects/wow/wow-ui-sim/Cargo.toml",
+    "target": {
+      "kind": [
+        "test"
+      ],
+      "crate_types": [
+        "bin"
+      ],
+      "name": "prefork_full_ui",
+      "src_path": "/home/osso/Projects/wow/wow-ui-sim/tests/prefork_full_ui.rs",
+      "edition": "2024",
+      "required-features": [
+        "client-retail"
+      ],
+      "doc": false,
+      "doctest": false,
+      "test": true
+    },
+    "profile": {
+      "opt_level": "1",
+      "debuginfo": "line-tables-only",
+      "debug_assertions": true,
+      "overflow_checks": true,
+      "test": true
+    },
+    "features": [
+      "aura-containers",
+      "aura-instance-enumeration",
+      "aura-xml-widgets",
+      "base-spell-relationships",
+      "casc",
+      "client-retail",
+      "default",
+      "forbidden-aspects",
+      "gui",
+      "native-duration-formatting",
+      "numeric-rule-formatters",
+      "on-update-modes",
+      "player-cast-durations",
+      "profile-retail",
+      "retail-12-0-0",
+      "retail-12-0-5",
+      "retail-12-0-7",
+      "retail-12-1-0",
+      "rodio",
+      "sound"
+    ],
+    "filenames": [
+      "/home/osso/Projects/wow/wow-ui-sim/target/debug/deps/prefork_full_ui-21dd5c807fe7a7b6"
+    ],
+    "executable": "/home/osso/Projects/wow/wow-ui-sim/target/debug/deps/prefork_full_ui-21dd5c807fe7a7b6",
+    "fresh": false
+  },
+  "docs_only_non_docs_diff": "",
+  "start_utc": "2026-10-09T21:02:34.640102+00:00",
+  "artifact_sha256_before": "98130da61450a476eb81dcd353a2ce3839d63fa97730d25cd1cc421f65717547",
+  "source_sha256_before": "d3414b70ad02c2cf5cd73e971cfdfc8053b9e786c20df645ee2e30414ef85df0",
+  "compile_inputs": {
+    "tests/prefork_full_ui.rs": "d3414b70ad02c2cf5cd73e971cfdfc8053b9e786c20df645ee2e30414ef85df0",
+    "Cargo.toml": "1c56b9a80149ea739d8fc647391b4c45dc32ad70cf5ec7a3576dba92989f3341",
+    "Cargo.lock": "859f258fa21eb92f7f0c83c77d526ea0ce3e7535b0970df2e39c459023c0b9cf",
+    "build.rs": "df6b286152daa948557c17c4abb8776af2aed573c45f1fcb4901fd2b4a8ccde2"
+  },
+  "end_utc": "2026-10-09T21:02:39.214120+00:00",
+  "exit": 0,
+  "artifact_sha256_after": "98130da61450a476eb81dcd353a2ce3839d63fa97730d25cd1cc421f65717547",
+  "source_sha256_after": "d3414b70ad02c2cf5cd73e971cfdfc8053b9e786c20df645ee2e30414ef85df0",
+  "revision_after": "96e88494a6844833b79a574d37a2115dc03b44eb"
+}

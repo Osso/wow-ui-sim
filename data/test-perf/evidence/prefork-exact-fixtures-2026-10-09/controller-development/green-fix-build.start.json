@@ -1,0 +1,23 @@
+{
+  "argv": [
+    "/home/osso/.worktrees/build-lock.sh",
+    "cargo",
+    "test",
+    "--offline",
+    "--locked",
+    "--jobs",
+    "4",
+    "--test",
+    "prefork_full_ui",
+    "--no-run",
+    "--message-format=json"
+  ],
+  "revision": "2de36e2b36a7643c53864b1bfddb317e206b9528",
+  "hashes": {
+    "tests/prefork_full_ui.rs": "d3414b70ad02c2cf5cd73e971cfdfc8053b9e786c20df645ee2e30414ef85df0",
+    "Cargo.toml": "1c56b9a80149ea739d8fc647391b4c45dc32ad70cf5ec7a3576dba92989f3341",
+    "Cargo.lock": "859f258fa21eb92f7f0c83c77d526ea0ce3e7535b0970df2e39c459023c0b9cf",
+    "build.rs": "df6b286152daa948557c17c4abb8776af2aed573c45f1fcb4901fd2b4a8ccde2"
+  },
+  "start": "2026-10-09T15:53:27.878200-05:00"
+}

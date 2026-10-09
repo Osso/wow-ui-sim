@@ -1,0 +1,3 @@
+{
+  "audit": "All four complete files inspected; only argv/cwd/revision/UTC/exit, unit invocation identity and public CI status; no credentials or inherited environment."
+}

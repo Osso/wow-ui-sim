@@ -1,0 +1,30 @@
+{
+  "source_directory": "/tmp/wow-fullsuite-current",
+  "files": [
+    {
+      "file": "submit.json",
+      "bytes": 463,
+      "source_sha256": "a5ce2f7150bcd50ab9d72ac94efcca55526e8f3e8181a5ab168243c69a6a30d5",
+      "retained_sha256": "a5ce2f7150bcd50ab9d72ac94efcca55526e8f3e8181a5ab168243c69a6a30d5"
+    },
+    {
+      "file": "submit.stdout",
+      "bytes": 22,
+      "source_sha256": "ff97f3740d8aa09313469c23c6bef97508d85eda1d1cddeebc2f531319ae2920",
+      "retained_sha256": "ff97f3740d8aa09313469c23c6bef97508d85eda1d1cddeebc2f531319ae2920"
+    },
+    {
+      "file": "submit.stderr",
+      "bytes": 96,
+      "source_sha256": "ecb1a369975717bf11fbcac51713c09e58ac189c1b600defffd41138033f6940",
+      "retained_sha256": "ecb1a369975717bf11fbcac51713c09e58ac189c1b600defffd41138033f6940"
+    },
+    {
+      "file": "ci.json",
+      "bytes": 408,
+      "source_sha256": "39647c5ad41b54d0f5e4767854ca0b42d1356399b6e7be490e77aa4ec77a1735",
+      "retained_sha256": "39647c5ad41b54d0f5e4767854ca0b42d1356399b6e7be490e77aa4ec77a1735"
+    }
+  ],
+  "scope": "Submission and captured CI only; no suite outcome."
+}

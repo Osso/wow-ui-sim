@@ -1,0 +1,14 @@
+{
+  "argv": [
+    "rustfmt",
+    "--edition",
+    "2024",
+    "--config",
+    "skip_children=true",
+    "/home/osso/Projects/wow/wow-ui-sim/tests/prefork_full_ui.rs"
+  ],
+  "exit": 0,
+  "stdout": "",
+  "stderr": "",
+  "source_sha256": "d3414b70ad02c2cf5cd73e971cfdfc8053b9e786c20df645ee2e30414ef85df0"
+}
