@@ -32,7 +32,7 @@
 
 ## [2026-10-08] investigation | Patch 5.4.0 API audit
 
-[Audit](investigations/patch-5-4-0-api-audit.md): retail TOC 50400/build 17345; pinned page/diff revisions 6200158/3741686. All 159 IDs accounted (114 inventory, 45 extract); 22 exact publication gaps, 27 pending substantive extract contracts, two bounded existing-model cases and 31 pre-existing absences. No runtime changes or new retirements. Complete grep scans, preserved sources, 56 register/53 extract reproductions and 88 Python fixtures pass; 57 publication/factory, 2 prefork/2 standalone, 24 caller/6 source-unit cases, format and warning-clean non-vendor Mists pass. Portable gate PASS 39/39 clean, 40/40 later-audit; own-log tampering rejected and exact bytes restored.
+[Audit](investigations/patch-5-4-0-api-audit.md): integrated against 3c60ac0ea; securerandom 5.4.2 removal changes exact gaps 22 → 21, all other observations unchanged. 211 historical artifacts preserved with 14 own/three external mappings; shared parser now master-owned 5.4.2. All 63 registers/60 main extracts and separate diff reproduce; three inherited failures unchanged. Fresh retail sweeps pass on branch and pinned master; all 9832 observations on 62 other pages, including all Classic sweeps, equal master. Own prefork/integration behavior cases, all 94 Python fixtures, format and zero-non-vendor-warning Mists check pass. Negative rejects exactly 21 → 22 gaps. Portable gate PASS at 4e006fb15493e10c9a02081d7921e08af5ec5ea1: clean 51/51, synthetic later audit 52/52; zero failures. Historical/integrated own-log tampering rejected and all bytes restored. Relocated replay passes without all 17 original pre-rebase objects.
 
 ## [2026-10-08] integration | Patch 6.0.2 API audit
 

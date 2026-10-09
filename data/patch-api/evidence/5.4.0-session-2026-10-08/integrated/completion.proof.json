@@ -1,0 +1,17 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "/home/osso/.worktrees/wow-ui-sim-p540-page/data/patch-api/evidence/5.4.0-session-2026-10-08/integrated/resume_gates.py"
+  ],
+  "revision": "51481d6da1714a6b3c1bc95b7819fc617f50be56",
+  "scope": "completion",
+  "cwd": ".",
+  "target": "dedicated p540-page target (external to repository)",
+  "environment": {},
+  "exit": 1,
+  "log": "completion.txt",
+  "log_sha256": "b69c9da9fdfe18ba190d9d044f002d8f03c39717430c244ba5621b86ce968341",
+  "seconds": 254.3586384750015,
+  "invalidated": false
+}
