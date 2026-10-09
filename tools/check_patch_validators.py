@@ -1,4 +1,8 @@
-"""Run retained patch proofs in a clean revision and after unrelated later work."""
+"""Run retained patch proofs in a clean revision and after unrelated later work.
+
+Skip template-inputs snapshots: their validate.py files are archived code inputs,
+not standalone proofs. Other nested validators, including current proofs, run.
+"""
 import argparse
 import json
 import os
@@ -24,7 +28,10 @@ def oversized_evidence(root):
 
 def run_validators(root):
     results = []
-    for path in sorted((root / 'data/patch-api/evidence').rglob('validate.py')):
+    evidence = root / 'data/patch-api/evidence'
+    validators = (path for path in evidence.rglob('validate.py')
+                  if 'template-inputs' not in path.relative_to(evidence).parts)
+    for path in sorted(validators):
         result = subprocess.run([sys.executable, '-B', str(path)], cwd=root,
                                 env=dict(os.environ, PYTHONDONTWRITEBYTECODE='1'),
                                 capture_output=True, text=True)
