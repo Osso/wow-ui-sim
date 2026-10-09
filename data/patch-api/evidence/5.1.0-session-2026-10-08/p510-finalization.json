@@ -1,0 +1,33 @@
+{
+  "gate_revision": "460f599815b9c6104d22743b6dc48bc6a6e08093",
+  "gate_status": "PASS",
+  "gate_summary": {
+    "clean": {
+      "failed": 0,
+      "passed": 47
+    },
+    "later_audit": {
+      "failed": 0,
+      "passed": 48
+    }
+  },
+  "owned_branch": "p510-page",
+  "inventory": 63,
+  "extract": 21,
+  "pending_api_occurrences": 17,
+  "retirements": [
+    "C_PetJournal.GetSummonedPetID",
+    "C_PetJournal.SummonPetByID"
+  ],
+  "remaining_limits": "17 API occurrences, fifteen prose contracts, three inherited extract failures, 505 inherited startup errors. No new native gameplay model; existing state-backed interval proved.",
+  "gate_artifact_hashes": {
+    "p510-validator-gate.json": "cbb15bbf923e92d744993b01e926f59ba875448d184b9e3cc1e00e8a4958e8fc",
+    "p510-validator-gate.log": "cbb15bbf923e92d744993b01e926f59ba875448d184b9e3cc1e00e8a4958e8fc",
+    "p510-validator-gate.proof.json": "e622475bbe7bc5bf47c480d0b10d13012a25007abffe1d55636f4d32ff8aefa4",
+    "p510-own-log-tamper.json": "ebc709cfefcfbab24a3850066a0289907a4141e336a545cb594fcbefd32e6628"
+  },
+  "wiki_lines": {
+    "docs/wiki/index.md": 2751,
+    "docs/wiki/log.md": 508
+  }
+}

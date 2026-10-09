@@ -1,0 +1,7 @@
+{
+  "tampered_exit": 1,
+  "rejected_at": "own input changed: p510-own.log",
+  "original_sha256": "3d1250fd4b9b35ab18c7b95620d312c3f5d39710fd6f78263a589549f0dca41b",
+  "restored_sha256": "3d1250fd4b9b35ab18c7b95620d312c3f5d39710fd6f78263a589549f0dca41b",
+  "restored_exit": 0
+}

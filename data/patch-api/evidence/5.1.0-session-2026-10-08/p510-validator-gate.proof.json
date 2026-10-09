@@ -1,0 +1,14 @@
+{
+  "revision": "460f59981",
+  "command": [
+    "python3",
+    "-B",
+    "tools/check_patch_validators.py",
+    "460f59981"
+  ],
+  "exit": 0,
+  "elapsed_seconds": 163.09141635894775,
+  "log": "p510-validator-gate.log",
+  "log_sha256": "cbb15bbf923e92d744993b01e926f59ba875448d184b9e3cc1e00e8a4958e8fc",
+  "env": {}
+}

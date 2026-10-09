@@ -480,7 +480,7 @@ Pinned pageid 3058 revision 31159 without following redirect to 6.0.2; empty reg
 
 ## [2026-10-08] verification | Patch 5.4.8 bounded combat models
 
-[Audit](investigations/patch-5-4-8-api-audit.md): 60 IDs accounted, 14 meaningful models, seven publication gaps/14 inactive historical contracts. All 54 sweeps/factory and targeted callers pass; all 52 prior pages unchanged. 82 Python fixtures, format and warning-clean non-vendor Mists pass; addons-enabled startup matches master `[]`. 53 registers/50 extracts reproduce, three inherited failures retained. Portable gate pending.
+[Audit](investigations/patch-5-4-8-api-audit.md): 60 IDs accounted, 14 meaningful models, seven publication gaps/14 inactive historical contracts. All 54 sweeps/factory and targeted callers pass; all 52 prior pages unchanged. 82 Python fixtures, format and warning-clean non-vendor Mists pass; addons-enabled startup matches master `[]`. 53 registers/50 extracts reproduce, three inherited failures retained. Portable gate PASS: clean 47/47, later 48/48; own-log tampering rejected/restored.
 
 ## [2026-10-08] gate | Patch 5.4.8 API audit
 
@@ -557,4 +557,4 @@ Integrated real 5.3.0–5.4.2 registers against pinned master 5e4e82ef6. Exact 5
 
 ## 2026-10-08 — Retail Patch 5.1.0 audit
 
-Pinned retail 2012 source/diff, added exhaustive ledger and prefork sweep. Two no-consumer C_PetJournal ID spellings retired at namespace synthesis boundary; existing interval model gets bounded behavior coverage. See [[patch-5-1-0-api-audit]]; targeted proofs pass, including exact same-root/full-frozen-addon startup comparison to master (505 inherited errors), 61 register/58 extract reproductions and 92 Python fixtures. Portable gate pending.
+Pinned retail 2012 source/diff, added exhaustive ledger and prefork sweep. Two no-consumer C_PetJournal ID spellings retired at namespace synthesis boundary; existing interval model gets bounded behavior coverage. See [[patch-5-1-0-api-audit]]; targeted proofs pass, including exact same-root/full-frozen-addon startup comparison to master (505 inherited errors), 61 register/58 extract reproductions and 92 Python fixtures. Portable gate PASS: clean 47/47, later 48/48; own-log tampering rejected/restored.
