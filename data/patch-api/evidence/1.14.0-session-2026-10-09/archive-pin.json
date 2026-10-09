@@ -1,0 +1,10 @@
+{
+  "archive_sha256": "3b16de6f0589170fd3cd469ade6cbc957f0ea21a1deeb4126e26148b746c68a6",
+  "original_map_sha256": "95ba4fff0eeff9b31cec31c9fb5a912a132ab0bbcde00d3f59ecbc402f9bb797",
+  "original_seals": 92,
+  "original_bytes": 1857298,
+  "archive_members": 93,
+  "archive_bytes": 215960,
+  "source_green_revision": "66a5448b0",
+  "omission_controls": 2983
+}

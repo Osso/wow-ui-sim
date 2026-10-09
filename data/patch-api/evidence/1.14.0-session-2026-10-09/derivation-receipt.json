@@ -1,0 +1,61 @@
+{
+  "base_revision": "fc6956cd9",
+  "generator_flags": [
+    "--skip-plain-scripts-label"
+  ],
+  "extractor_flags": [],
+  "shared_tools_changed": false,
+  "runs": [
+    {
+      "command": [
+        "python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p1140-page/data/patch-api/evidence/1.14.0-session-2026-10-09/audit.py",
+        "capture"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1140-page",
+      "exit_code": 0,
+      "log": "capture.log"
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p1140-page/data/patch-api/evidence/1.14.0-session-2026-10-09/historical-tools/gen_patch_wikitext_register.py",
+        "1.14.0",
+        "/home/osso/.worktrees/wow-ui-sim-p1140-page/data/patch-api/evidence/1.14.0-session-2026-10-09/source.wikitext",
+        "710568",
+        "/home/osso/.worktrees/wow-ui-sim-p1140-page/data/patch-api/evidence/1.14.0-session-2026-10-09/default-register.json"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1140-page",
+      "exit_code": 1,
+      "log": "default-generator.log"
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p1140-page/data/patch-api/evidence/1.14.0-session-2026-10-09/historical-tools/gen_patch_wikitext_register.py",
+        "1.14.0",
+        "/home/osso/.worktrees/wow-ui-sim-p1140-page/data/patch-api/evidence/1.14.0-session-2026-10-09/source.wikitext",
+        "710568",
+        "/home/osso/.worktrees/wow-ui-sim-p1140-page/data/patch-api/evidence/1.14.0-session-2026-10-09/opt-in-register.json",
+        "--skip-plain-scripts-label"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1140-page",
+      "exit_code": 0,
+      "log": "opt-in-generator.log"
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p1140-page/data/patch-api/evidence/1.14.0-session-2026-10-09/audit.py",
+        "extract"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1140-page",
+      "exit_code": 0,
+      "log": "extract.log"
+    }
+  ]
+}

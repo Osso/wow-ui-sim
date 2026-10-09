@@ -1,3 +1,7 @@
+## [2026-10-09] investigation | Patch 1.14.0 literal SOURCE accounting
+
+[Audit](investigations/patch-1-14-0-api-audit.md): exact frozen identity verified before derivation; own SOURCE RED10/portable RED3 retained.723 inventory occurrences and every row/header/prose/template/link boundary accounted without invented defaults/aliases/models. SOURCE GREEN10/10 at66a5448b0:2983 omissions; portable GREEN3/3 at4e3739d4f: copied SOURCE10/validator, opt-in register/default extractor bytes and both serialized ledger/log rejection/restoration.92 original seals/map unchanged; five separate current receipt seals/93-member archive. Implementation committed before GREEN; zero runtime/model/native credit; main owns integration/native/final gates.
+
 ## [2026-10-09] investigation | Patch 1.15.0 literal SOURCE accounting
 
 [Audit](investigations/patch-1-15-0-api-audit.md): exact source verified before derivation; own inputs and RED fixtures retained. Seasonal-rune namespace addition and distinct Wrath/Dragonflight claims fully accounted without linked/native/runtime proof. Own SOURCE GREEN10/10 atba551827d; portable GREEN3/3 ate6bf4be1c includes copied SOURCE/default-byte replay and serialized ledger/log rejection/exact restoration. Original64 seals unchanged, five separate current receipt seals and65-member archive. No runtime edits or final gates.

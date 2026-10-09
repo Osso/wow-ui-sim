@@ -1,0 +1,34 @@
+{
+  "scope": "static source inspection, not executed behavior",
+  "candidates": [
+    {
+      "symbol": "C_CVar.GetCVar / SetCVar",
+      "source": "state-inputs/src/lua_api/globals/set_cvar_verb.rs",
+      "state": "SimState.cvars read/write registration",
+      "source_contract": "identity and added/removed lists only",
+      "decision": "UNPROVEN: page has no input/output, default, storage, event or security contract; no fabricated value test"
+    },
+    {
+      "symbol": "EditBox:ClearHighlightText",
+      "source": "state-inputs/src/lua_api/frame/methods/widgets/editbox/selection.rs",
+      "state": "editbox_highlight_range set None",
+      "source_contract": "added identity only",
+      "decision": "UNPROVEN: page does not specify highlight range transition, argument/return/default rules"
+    },
+    {
+      "symbol": "Frame:SetFixedFrameLevel / HasFixedFrameLevel",
+      "source": "state-inputs/src/lua_api/frame/methods/core_state/strata_level.rs",
+      "state": "has_fixed_frame_level and protected-access policy",
+      "source_contract": "added identities only",
+      "decision": "UNPROVEN: no supplied flag domain/default/propagation/security contract"
+    }
+  ],
+  "all_inventory_limit": "All 723 literal entries provide identity/direction only. Same-baseline 2.5.2 claim and API documentation templates remain unexpanded. Cannot promote existing state, successful publication or method-name inference into explicit behavioral contract.",
+  "measurements": {
+    "runtime": 0,
+    "model": 0,
+    "native": 0
+  },
+  "production_proposal": "none: no explicit state contract",
+  "retirements": "none: historical removal listing alone does not authorize changing current Era/shared surface"
+}

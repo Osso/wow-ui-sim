@@ -1,0 +1,118 @@
+test_all_literal_rows (__main__.SourceAccounting.test_all_literal_rows) ... FAIL
+test_all_reference_and_template_boundaries (__main__.SourceAccounting.test_all_reference_and_template_boundaries) ... FAIL
+test_baseline_is_not_successor_or_imported_behavior (__main__.SourceAccounting.test_baseline_is_not_successor_or_imported_behavior) ... FAIL
+test_complete_totals (__main__.SourceAccounting.test_complete_totals) ... FAIL
+test_every_omission_rejected (__main__.SourceAccounting.test_every_omission_rejected) ... FAIL
+test_fabricated_credit_and_normalization_rejected (__main__.SourceAccounting.test_fabricated_credit_and_normalization_rejected) ... FAIL
+test_headers_caption_and_navigation (__main__.SourceAccounting.test_headers_caption_and_navigation) ... FAIL
+test_inventory_columns_and_literal_identities (__main__.SourceAccounting.test_inventory_columns_and_literal_identities) ... FAIL
+test_no_invented_signatures_defaults_or_credit (__main__.SourceAccounting.test_no_invented_signatures_defaults_or_credit) ... FAIL
+test_source_identity_and_content_rejection (__main__.SourceAccounting.test_source_identity_and_content_rejection) ... FAIL
+
+======================================================================
+FAIL: test_all_literal_rows (__main__.SourceAccounting.test_all_literal_rows)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p1140-page/data/patch-api/evidence/1.14.0-session-2026-10-09/test_source_accounting.py", line 14, in test_all_literal_rows
+    self.assertEqual([(x['line'], x['literal']) for x in audit.build().get('source_rows', [])], expected)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: [] != [(1, '{{apichanges|1.14.0|prev=1.13.7|next[37986 chars]|}')]
+
+Second list contains 776 additional elements.
+First extra element 0:
+(1, '{{apichanges|1.14.0|prev=1.13.7|next=1.14.1|like=2.5.2}}')
+
+Diff is 40533 characters long. Set self.maxDiff to None to see it.
+
+======================================================================
+FAIL: test_all_reference_and_template_boundaries (__main__.SourceAccounting.test_all_reference_and_template_boundaries)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p1140-page/data/patch-api/evidence/1.14.0-session-2026-10-09/test_source_accounting.py", line 46, in test_all_reference_and_template_boundaries
+    self.assertEqual(len(ledger.get('templates',[])),720)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 != 720
+
+======================================================================
+FAIL: test_baseline_is_not_successor_or_imported_behavior (__main__.SourceAccounting.test_baseline_is_not_successor_or_imported_behavior)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p1140-page/data/patch-api/evidence/1.14.0-session-2026-10-09/test_source_accounting.py", line 39, in test_baseline_is_not_successor_or_imported_behavior
+    self.assertEqual([(p['line'],p['scope'],p['expanded_members']) for p in ledger.get('prose',[])],[(7,'foreign-2.5.2-baseline-synchronization-claim',[])])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: [] != [(7, 'foreign-2.5.2-baseline-synchronization-claim', [])]
+
+Second list contains 1 additional elements.
+First extra element 0:
+(7, 'foreign-2.5.2-baseline-synchronization-claim', [])
+
+- []
++ [(7, 'foreign-2.5.2-baseline-synchronization-claim', [])]
+
+======================================================================
+FAIL: test_complete_totals (__main__.SourceAccounting.test_complete_totals)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p1140-page/data/patch-api/evidence/1.14.0-session-2026-10-09/test_source_accounting.py", line 63, in test_complete_totals
+    self.assertEqual(audit.build().get('totals'),dict(physical_lines=781,nonblank_rows=776,inventory=723,api_templates=719,widget_scripts=4,category_labels=1,headers=5,count_headers=8,count_conflicts=0,prose=1,links=10,templates=720,signature_limits=560,default_limits=163))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: None != {'physical_lines': 781, 'nonblank_rows': [229 chars] 163}
+
+======================================================================
+FAIL: test_every_omission_rejected (__main__.SourceAccounting.test_every_omission_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p1140-page/data/patch-api/evidence/1.14.0-session-2026-10-09/test_source_accounting.py", line 67, in test_every_omission_rejected
+    self.assertIn('inventory',original)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'inventory' not found in {}
+
+======================================================================
+FAIL: test_fabricated_credit_and_normalization_rejected (__main__.SourceAccounting.test_fabricated_credit_and_normalization_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p1140-page/data/patch-api/evidence/1.14.0-session-2026-10-09/test_source_accounting.py", line 74, in test_fabricated_credit_and_normalization_rejected
+    original=audit.build(); self.assertIn('inventory',original)
+                            ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'inventory' not found in {}
+
+======================================================================
+FAIL: test_headers_caption_and_navigation (__main__.SourceAccounting.test_headers_caption_and_navigation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p1140-page/data/patch-api/evidence/1.14.0-session-2026-10-09/test_source_accounting.py", line 31, in test_headers_caption_and_navigation
+    self.assertEqual(ledger.get('source_toc'),11400)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: None != 11400
+
+======================================================================
+FAIL: test_inventory_columns_and_literal_identities (__main__.SourceAccounting.test_inventory_columns_and_literal_identities)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p1140-page/data/patch-api/evidence/1.14.0-session-2026-10-09/test_source_accounting.py", line 20, in test_inventory_columns_and_literal_identities
+    self.assertEqual(len(entries), 723)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 != 723
+
+======================================================================
+FAIL: test_no_invented_signatures_defaults_or_credit (__main__.SourceAccounting.test_no_invented_signatures_defaults_or_credit)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p1140-page/data/patch-api/evidence/1.14.0-session-2026-10-09/test_source_accounting.py", line 55, in test_no_invented_signatures_defaults_or_credit
+    self.assertEqual(len(ledger.get('signature_limits',[])),560)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 != 560
+
+======================================================================
+FAIL: test_source_identity_and_content_rejection (__main__.SourceAccounting.test_source_identity_and_content_rejection)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p1140-page/data/patch-api/evidence/1.14.0-session-2026-10-09/test_source_accounting.py", line 83, in test_source_identity_and_content_rejection
+    self.assertIn('source',audit.build())
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'source' not found in {}
+
+----------------------------------------------------------------------
+Ran 10 tests in 0.004s
+
+FAILED (failures=10)
