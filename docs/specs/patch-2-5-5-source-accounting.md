@@ -4,11 +4,11 @@ Bounded frozen SOURCE/contract audit, separate Classic/TBC history within the fu
 
 ## What it must do
 
-- [ ] Validate frozen page 686953/revision 6838475/time 2026-08-20T15:48:09Z, response/raw hashes, returned content, complete manifest and registry identity before granting accounting credit.
-- [ ] Preserve all five nonblank rows, one summary, literal linked targets, source TOC 20505, and absence of explicit API/signature/header/removal/transclusion inventories.
-- [ ] Keep four linked/state/native contracts UNPROVEN with unspecified members, arguments, returns, event triggers/payloads, transitions, security and native equivalence.
-- [ ] Derive seven configured profiles from copied code/features/manifests; Anniversary 11507 must not become TBC 20505 by name. Missing matching interface is not an unsupported-client diagnosis.
-- [ ] Keep 2.5.6 same-line frozen reference pending main integration, with no supersession credit. Reject retail 3.x/Cata 4.x/Wrath Classic 3.4/Era 1.x successors and positive empty-inventory parity.
+- [x] Validate frozen page 686953/revision 6838475/time 2026-08-20T15:48:09Z, response/raw hashes, returned content, complete manifest and registry identity before granting accounting credit.
+- [x] Preserve all five nonblank rows, one summary, literal linked targets, source TOC 20505, and absence of explicit API/signature/header/removal/transclusion inventories.
+- [x] Keep four linked/state/native contracts UNPROVEN with unspecified members, arguments, returns, event triggers/payloads, transitions, security and native equivalence.
+- [x] Derive seven configured profiles from copied code/features/manifests; Anniversary 11507 must not become TBC 20505 by name. Missing matching interface is not an unsupported-client diagnosis.
+- [x] Keep 2.5.6 same-line frozen reference pending main integration, with no supersession credit. Reject retail 3.x/Cata 4.x/Wrath Classic 3.4/Era 1.x successors and positive empty-inventory parity.
 - [ ] Replay sealed original source/tools/configuration/ledger/proof in a fresh copied process without Git, target, current tools or current runtime; reject serialized ledger/log tampering and restore original bytes/hashes.
 
 ## How it works

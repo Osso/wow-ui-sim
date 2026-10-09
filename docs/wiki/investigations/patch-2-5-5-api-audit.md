@@ -50,7 +50,7 @@ Copied generator supports retail/mists-classic/classic-era; copied publication c
 
 ## Historical proof and ownership
 
-Own source tests exercise external serialized accounting, not runtime implementation shape. RED retained: required derived summary fails against the exact empty validator; test/stub/hash/log scope saved. Implementation, seals and source fixtures committed before GREEN verification. Targeted source-only proof receipts will record exact revision/commands/results; no broad or final gate is run.
+Own source tests exercise external serialized accounting, not runtime implementation shape. RED retained: required derived summary fails against the exact empty validator; test/stub/hash/log scope saved. Implementation, seals and source fixtures committed before GREEN verification. At `6566d762f`, SOURCE fixtures GREEN **10/10**, own historical validator exit **0** with **29 seals**. [Source proof ledger](../../../data/patch-api/evidence/2.5.5-session-2026-10-09/source-proof.json) records full tested revision, argv/cwd/logs and exact tested input hashes. Receipts add three seals (32 total) without changing tested bytes; no fresh test rerun or broad/final gate claimed.
 
 Historical replay uses relocated `__file__`, copied original source/tools/configuration/ledger/proof and byte seals, not original Git objects, target, current tools/source/runtime or live cache. Serialized ledger and GREEN-log tamper controls must fail at their exact seals and restore original bytes/hashes. Archive freezes its own seal map; later receipt additions do not retroactively change proof scope.
 
