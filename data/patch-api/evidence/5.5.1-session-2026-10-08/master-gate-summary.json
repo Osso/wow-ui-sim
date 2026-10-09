@@ -1,0 +1,17 @@
+{
+  "status": "PASS",
+  "revision": "0469e5592fa74e051d9b01d85368b351f24e7d09",
+  "summary": {
+    "clean": {
+      "failed": 0,
+      "passed": 44
+    },
+    "later_audit": {
+      "failed": 0,
+      "passed": 45
+    }
+  },
+  "prior_set_count": 44,
+  "exact_prior_sets": true,
+  "output_recovered_from_original_process": true
+}
