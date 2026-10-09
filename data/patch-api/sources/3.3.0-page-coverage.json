@@ -1,0 +1,332 @@
+{
+  "patch": "3.3.0",
+  "source_revid": 6055853,
+  "proof_policy": "Current-retail publication/absence only; original model/signature/prose gaps remain frozen independently of future closures.",
+  "source_rows": [
+    {
+      "source_id": "wt-global-api-QueryQuestsCompleted-8",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "wikitext_line": 8,
+      "note": "Current cached-retail publication/absence only, with recorded later Retail supersession; no historical model, argument, result, event payload or native parity credit."
+    },
+    {
+      "source_id": "wt-events-QUEST_QUERY_COMPLETE-8",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "wikitext_line": 8,
+      "note": "Current cached-retail publication/absence only, with recorded later Retail supersession; no historical model, argument, result, event payload or native parity credit."
+    },
+    {
+      "source_id": "wt-global-api-GetQuestsCompleted-9",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "wikitext_line": 9,
+      "note": "Current cached-retail publication/absence only, with recorded later Retail supersession; no historical model, argument, result, event payload or native parity credit."
+    },
+    {
+      "source_id": "wt-widgets-Frame:GetFrameType-15",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "wikitext_line": 15,
+      "note": "Current cached-retail publication/absence only, with recorded later Retail supersession; no historical model, argument, result, event payload or native parity credit."
+    },
+    {
+      "source_id": "wt-widgets-Frame:GetObjectType-15",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "wikitext_line": 15,
+      "note": "Current cached-retail publication/absence only, with recorded later Retail supersession; no historical model, argument, result, event payload or native parity credit."
+    },
+    {
+      "source_id": "wt-widgets-Region:IsMouseOver-18",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "wikitext_line": 18,
+      "note": "Current cached-retail publication/absence only, with recorded later Retail supersession; no historical model, argument, result, event payload or native parity credit."
+    },
+    {
+      "source_id": "wt-framexml-MouseIsOver-18",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "wikitext_line": 18,
+      "note": "Current cached-retail publication/absence only, with recorded later Retail supersession; no historical model, argument, result, event payload or native parity credit."
+    },
+    {
+      "source_id": "wt-widgets-Button:SetMotionScriptsWhileDisabled-21",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "wikitext_line": 21,
+      "note": "Current cached-retail publication/absence only, with recorded later Retail supersession; no historical model, argument, result, event payload or native parity credit."
+    },
+    {
+      "source_id": "wt-widgets-Button:GetMotionScriptsWhileDisabled-22",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "wikitext_line": 22,
+      "note": "Current cached-retail publication/absence only, with recorded later Retail supersession; no historical model, argument, result, event payload or native parity credit."
+    },
+    {
+      "source_id": "wt-widgets-Texture:GetFileWidth-27",
+      "status": "audit-pending",
+      "capabilities": [],
+      "wikitext_line": 27,
+      "note": "No Texture file-dimension methods or synchronous source-image dimension contract; widget layout size is not source-file size. Requires decoded-asset metadata and unavailable-file semantics; do not substitute GetWidth/GetHeight or return a constant zero."
+    },
+    {
+      "source_id": "wt-widgets-Texture:GetFileHeight-28",
+      "status": "audit-pending",
+      "capabilities": [],
+      "wikitext_line": 28,
+      "note": "No Texture file-dimension methods or synchronous source-image dimension contract; widget layout size is not source-file size. Requires decoded-asset metadata and unavailable-file semantics; do not substitute GetWidth/GetHeight or return a constant zero."
+    },
+    {
+      "source_id": "source-context-001",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial/source/build context or external resource link; no runtime credit."
+    },
+    {
+      "source_id": "prose-undated-002",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Source attribution/unexpanded linked diff boundary; no runtime credit."
+    },
+    {
+      "source_id": "source-context-004",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "source-context-005",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "prose-undated-006",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Addon private namespace exists in loader varargs, but no page-owned multi-file isolation/mutation behavioral proof yet; callable inventory cannot establish the private-table lifetime."
+    },
+    {
+      "source_id": "source-context-008",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "prose-undated-009",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Historical server query timing, QUEST_QUERY_COMPLETE payload and frequency limit unspecified. QueryQuestsCompleted and event removed by 5.0.4; current quest state does not establish historical transport behavior."
+    },
+    {
+      "source_id": "prose-undated-010",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Historical optional-table identity and numeric-key true-set contract has no page-owned behavior proof. GetQuestsCompleted removed by 9.0.1; do not restore on retail merely to satisfy historical prose."
+    },
+    {
+      "source_id": "source-context-012",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "prose-undated-013",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Historical packed NPC GUID bit shift differs from modern hyphenated GUID representation; no historical-format generator/decoder contract. Exact sample retained, no speculative encoder."
+    },
+    {
+      "source_id": "source-context-015",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "prose-undated-016",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "GetFrameType absence/GetObjectType publication proven only; same-result type identity is not behavior-proven by publication."
+    },
+    {
+      "source_id": "source-context-018",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "prose-undated-019",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Region method is published; historical hit geometry, visibility and disabled-input behavior not proven by source accounting. MouseIsOver removed by 12.1.0."
+    },
+    {
+      "source_id": "source-context-021",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "prose-undated-022",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Existing button state and dispatch model has motion_scripts_while_disabled; no page-owned disabled OnEnter/OnLeave dispatch assertion at this original capture boundary."
+    },
+    {
+      "source_id": "prose-undated-023",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Existing button flag getter is published; return arity/default/toggle behavior not part of publication probe."
+    },
+    {
+      "source_id": "prose-undated-024",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Inline XML motionScriptsWhileDisabled is ignored: FrameXml lacks field and direct setup does not apply it. Existing widget flag/dispatch model supports a cheap literal attribute closure."
+    },
+    {
+      "source_id": "prose-undated-025",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "XML registerForClicks is ignored: FrameXml lacks field; existing registered_click_buttons model supports the attribute but source does not specify token/delimiter contract. Avoid guessing syntax."
+    },
+    {
+      "source_id": "source-context-027",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "prose-undated-028",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Texture:GetFileWidth lacks registration/source-file dimension model; page explicitly permits inaccessible-file zero and warns some Blizzard images return wrong values. Layout/atlas display size cannot stand in for actual file dimensions."
+    },
+    {
+      "source_id": "prose-undated-029",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Texture:GetFileHeight lacks registration and synchronous actual-file dimension state. No speculative zero stub or GetHeight alias."
+    },
+    {
+      "source_id": "source-context-031",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "prose-undated-032",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "No page-owned macro target-parser behavior proof for @focus versus target=focus; raw macro example retained, not executed."
+    },
+    {
+      "source_id": "prose-undated-033",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Macro conditional introduction is retained without model credit; concrete vehicle UI branches below require behavioral proof."
+    },
+    {
+      "source_id": "prose-undated-034",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Player vehicle-UI state exists, but macro vehicleui condition has no page-owned true/false evaluation proof."
+    },
+    {
+      "source_id": "prose-undated-035",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Target-specific unithasvehicleui evaluation has no established per-unit vehicle-UI model; current player-only vehicle flags cannot prove arbitrary target semantics."
+    },
+    {
+      "source_id": "source-context-037",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "prose-undated-038",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Source attribution/unexpanded linked diff boundary; no runtime credit."
+    },
+    {
+      "source_id": "signature-QueryQuestsCompleted-8",
+      "status": "audit-pending",
+      "capabilities": [],
+      "wikitext_line": 8,
+      "signature": "* NEW - QueryQuestsCompleted() requests that the server send the client a list of completed quest ids. Once the list is received the QUEST_QUERY_COMPLETE event is fired. (There is a limit on how frequently this can be called)",
+      "note": "Literal inputs/output notation retained; publication probe does not establish arity, argument validation or historical/native result semantics. Current cached-retail publication/absence only, with recorded later Retail supersession; no historical model, argument, result, event payload or native parity credit."
+    },
+    {
+      "source_id": "signature-GetQuestsCompleted-9",
+      "status": "audit-pending",
+      "capabilities": [],
+      "wikitext_line": 9,
+      "signature": "* NEW - tbl = GetQuestsCompleted([tbl]) populates a table (creating one if necessary) with the ids of completed quests as keys with true values.",
+      "note": "Literal inputs/output notation retained; publication probe does not establish arity, argument validation or historical/native result semantics. Current cached-retail publication/absence only, with recorded later Retail supersession; no historical model, argument, result, event payload or native parity credit."
+    },
+    {
+      "source_id": "signature-Region:IsMouseOver-18",
+      "status": "audit-pending",
+      "capabilities": [],
+      "wikitext_line": 18,
+      "signature": "* NEW - isOver = region:IsMouseOver()",
+      "note": "Literal inputs/output notation retained; publication probe does not establish arity, argument validation or historical/native result semantics. Current cached-retail publication/absence only, with recorded later Retail supersession; no historical model, argument, result, event payload or native parity credit."
+    },
+    {
+      "source_id": "signature-Button:SetMotionScriptsWhileDisabled-21",
+      "status": "audit-pending",
+      "capabilities": [],
+      "wikitext_line": 21,
+      "signature": "* NEW - Button:SetMotionScriptsWhileDisabled(enable)",
+      "note": "Literal inputs/output notation retained; publication probe does not establish arity, argument validation or historical/native result semantics. Current cached-retail publication/absence only, with recorded later Retail supersession; no historical model, argument, result, event payload or native parity credit."
+    },
+    {
+      "source_id": "signature-Button:GetMotionScriptsWhileDisabled-22",
+      "status": "audit-pending",
+      "capabilities": [],
+      "wikitext_line": 22,
+      "signature": "* NEW - isEnabled = Button:GetMotionScriptsWhileDisabled()",
+      "note": "Literal inputs/output notation retained; publication probe does not establish arity, argument validation or historical/native result semantics. Current cached-retail publication/absence only, with recorded later Retail supersession; no historical model, argument, result, event payload or native parity credit."
+    },
+    {
+      "source_id": "signature-Texture:GetFileWidth-27",
+      "status": "audit-pending",
+      "capabilities": [],
+      "wikitext_line": 27,
+      "signature": "* NEW - width = Texture:GetFileWidth()",
+      "note": "Literal inputs/output notation retained; publication probe does not establish arity, argument validation or historical/native result semantics. No Texture file-dimension methods or synchronous source-image dimension contract; widget layout size is not source-file size. Requires decoded-asset metadata and unavailable-file semantics; do not substitute GetWidth/GetHeight or return a constant zero."
+    },
+    {
+      "source_id": "signature-Texture:GetFileHeight-28",
+      "status": "audit-pending",
+      "capabilities": [],
+      "wikitext_line": 28,
+      "signature": "* NEW - height = Texture:GetFileHeight()",
+      "note": "Literal inputs/output notation retained; publication probe does not establish arity, argument validation or historical/native result semantics. No Texture file-dimension methods or synchronous source-image dimension contract; widget layout size is not source-file size. Requires decoded-asset metadata and unavailable-file semantics; do not substitute GetWidth/GetHeight or return a constant zero."
+    }
+  ]
+}
