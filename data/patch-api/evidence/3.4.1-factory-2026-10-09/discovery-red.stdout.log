@@ -1,0 +1,11 @@
+
+running 1 test
+test patch_3_4_1_exact_factory_publication_gaps ... FAILED
+
+failures:
+
+failures:
+    patch_3_4_1_exact_factory_publication_gaps
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.19s
+

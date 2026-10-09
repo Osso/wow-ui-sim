@@ -1,0 +1,11 @@
+
+running 6 tests
+test console_cvar_record_does_not_publish_logfps_command ... ok
+test cvar_default_differences_are_not_publication_failures ... ok
+test factory_rejects_foreign_client_before_reading_cache - should panic ... ok
+test literal_inventory_retains_every_historical_occurrence ... ok
+test patch_3_4_1_exact_factory_publication_gaps ... ok
+test wrath_event_acceptance_cannot_discriminate_native_names ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.43s
+
