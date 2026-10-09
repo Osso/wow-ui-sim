@@ -1,0 +1,163 @@
+{
+  "date": "2026-10-09",
+  "scope": "Nine specified persistent comparison/public CI artifacts; byte-identical, no raw log, source excerpts or reconstructed /tmp Mists streams.",
+  "files": [
+    {
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/fullsuite-96-comparison/report.md",
+      "retained": "report.md",
+      "bytes": 16782,
+      "source_sha256": "1e28f8e33637fc858a94cf8fa54dba581a1bae1cfa0fb9b56ef28966e8d1d7a6",
+      "retained_sha256": "1e28f8e33637fc858a94cf8fa54dba581a1bae1cfa0fb9b56ef28966e8d1d7a6",
+      "scan_counts": {
+        "private_key": 0,
+        "token_shape": 0,
+        "credential_assignment": 0,
+        "email": 0
+      },
+      "sensitive_json_keys": [],
+      "home_path_mentions": 7,
+      "http_url_mentions": 0
+    },
+    {
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/fullsuite-96-comparison/data.json",
+      "retained": "data.json",
+      "bytes": 9245425,
+      "source_sha256": "19999421f4ab5d7027788f65f9d929d65882f98a9508f32e4e64e13ae8a34469",
+      "retained_sha256": "19999421f4ab5d7027788f65f9d929d65882f98a9508f32e4e64e13ae8a34469",
+      "scan_counts": {
+        "private_key": 0,
+        "token_shape": 0,
+        "credential_assignment": 0,
+        "email": 0
+      },
+      "sensitive_json_keys": [],
+      "home_path_mentions": 70,
+      "http_url_mentions": 0
+    },
+    {
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/fullsuite-96-comparison/failure-diagnostics.json",
+      "retained": "failure-diagnostics.json",
+      "bytes": 32019,
+      "source_sha256": "160578d93d14d44dd82a937f79f5ba5270ece7ed5a02d9ae30cf47415be8e19a",
+      "retained_sha256": "160578d93d14d44dd82a937f79f5ba5270ece7ed5a02d9ae30cf47415be8e19a",
+      "scan_counts": {
+        "private_key": 0,
+        "token_shape": 0,
+        "credential_assignment": 0,
+        "email": 0
+      },
+      "sensitive_json_keys": [],
+      "home_path_mentions": 17,
+      "http_url_mentions": 0
+    },
+    {
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/fullsuite-96-comparison/manifest-static-check.json",
+      "retained": "manifest-static-check.json",
+      "bytes": 1064,
+      "source_sha256": "bb0679912a34dd97628a062d18bdf24969d4780a7bef2b7c9db4b145b42eacdd",
+      "retained_sha256": "bb0679912a34dd97628a062d18bdf24969d4780a7bef2b7c9db4b145b42eacdd",
+      "scan_counts": {
+        "private_key": 0,
+        "token_shape": 0,
+        "credential_assignment": 0,
+        "email": 0
+      },
+      "sensitive_json_keys": [],
+      "home_path_mentions": 0,
+      "http_url_mentions": 0
+    },
+    {
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/fullsuite-96-comparison/selected-evidence.txt",
+      "retained": "selected-evidence.txt",
+      "bytes": 19346,
+      "source_sha256": "5672d463df81b52415f162b9f851d9f9591f500143a9b54a60df5009e232e91d",
+      "retained_sha256": "5672d463df81b52415f162b9f851d9f9591f500143a9b54a60df5009e232e91d",
+      "scan_counts": {
+        "private_key": 0,
+        "token_shape": 0,
+        "credential_assignment": 0,
+        "email": 0
+      },
+      "sensitive_json_keys": [],
+      "home_path_mentions": 3,
+      "http_url_mentions": 0
+    },
+    {
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/ci-20261009/7e8acd2bd9e9a4d2f5c2885a0ec00d75d8f916bd.public-api.json",
+      "retained": "7e8acd2bd9e9a4d2f5c2885a0ec00d75d8f916bd.public-api.json",
+      "bytes": 11608,
+      "source_sha256": "23b72c64e0944d2c1cf2968577cd666097d607478aa69e11914f66b6edc573e2",
+      "retained_sha256": "23b72c64e0944d2c1cf2968577cd666097d607478aa69e11914f66b6edc573e2",
+      "scan_counts": {
+        "private_key": 0,
+        "token_shape": 0,
+        "credential_assignment": 0,
+        "email": 2
+      },
+      "sensitive_json_keys": [],
+      "home_path_mentions": 0,
+      "http_url_mentions": 133
+    },
+    {
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/ci-20261009/7e8acd2bd9e9a4d2f5c2885a0ec00d75d8f916bd.public-receipt.json",
+      "retained": "7e8acd2bd9e9a4d2f5c2885a0ec00d75d8f916bd.public-receipt.json",
+      "bytes": 270,
+      "source_sha256": "13fe01e7297637defddab69af4fefc739ce829edeb1de2726593c0646f41dbae",
+      "retained_sha256": "13fe01e7297637defddab69af4fefc739ce829edeb1de2726593c0646f41dbae",
+      "scan_counts": {
+        "private_key": 0,
+        "token_shape": 0,
+        "credential_assignment": 0,
+        "email": 0
+      },
+      "sensitive_json_keys": [],
+      "home_path_mentions": 0,
+      "http_url_mentions": 1
+    },
+    {
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/ci-20261009/96e88494a6844833b79a574d37a2115dc03b44eb.public-api.json",
+      "retained": "96e88494a6844833b79a574d37a2115dc03b44eb.public-api.json",
+      "bytes": 11602,
+      "source_sha256": "f6398bd6471f69d8dcc45a65928a79b81653047bea60d5a1e8035616b55a9c73",
+      "retained_sha256": "f6398bd6471f69d8dcc45a65928a79b81653047bea60d5a1e8035616b55a9c73",
+      "scan_counts": {
+        "private_key": 0,
+        "token_shape": 0,
+        "credential_assignment": 0,
+        "email": 2
+      },
+      "sensitive_json_keys": [],
+      "home_path_mentions": 0,
+      "http_url_mentions": 133
+    },
+    {
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/ci-20261009/96e88494a6844833b79a574d37a2115dc03b44eb.public-receipt.json",
+      "retained": "96e88494a6844833b79a574d37a2115dc03b44eb.public-receipt.json",
+      "bytes": 270,
+      "source_sha256": "218900812cd4e0f0af0c69daf68b0618aed421be5ffce33e3866ca4a43dec89c",
+      "retained_sha256": "218900812cd4e0f0af0c69daf68b0618aed421be5ffce33e3866ca4a43dec89c",
+      "scan_counts": {
+        "private_key": 0,
+        "token_shape": 0,
+        "credential_assignment": 0,
+        "email": 0
+      },
+      "sensitive_json_keys": [],
+      "home_path_mentions": 0,
+      "http_url_mentions": 1
+    }
+  ],
+  "total_bytes": 9338386,
+  "privacy": {
+    "method": "Full UTF-8 text regex scan before retention; recursive JSON key inspection. Patterns recorded below. No truncation or size cutoff.",
+    "patterns": {
+      "private_key": "-----BEGIN (?:[A-Z ]*PRIVATE KEY)-----",
+      "token_shape": "\\b(?:gh[pousr]_[A-Za-z0-9]{20,}|github_pat_[A-Za-z0-9_]{20,}|AKIA[A-Z0-9]{16}|sk-[A-Za-z0-9]{20,})\\b",
+      "credential_assignment": "(?i)(?:password|passwd|api[_-]?key|access[_-]?token|authorization|cookie|client[_-]?secret)\\s*[=:]\\s*[\"\\']?[^\\s\"\\',;}]{6,}",
+      "email": "[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}"
+    },
+    "adjudication": "Zero credential assignment/private-key/common-token matches and sensitive JSON keys. Four email matches are public Git commit author/committer email (two per CI API payload). Public GitHub actor/repository/URL metadata, local usernames/paths, process IDs, test identities and synthetic fixture diagnostics deliberately retained.",
+    "limits": "Pattern/key scan is not exhaustive secret detection or a guarantee against arbitrary secrets, personal/game content, encoded secrets or contextual disclosure. No raw log, environment dump, network, session store or post-restart runtime scan performed; upstream raw-log scan claims are not a fresh scan here."
+  },
+  "excluded": "Raw approximately 2 MB suite log and unrequested comparison-directory source excerpts; recent /tmp-only Mists streams lost on restart, not reconstructed."
+}

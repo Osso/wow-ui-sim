@@ -1,3 +1,7 @@
+## [2026-10-09] ingest | Completed saved 96 fullsuite comparison
+
+[Proof SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#completed-saved-fullsuite-96-comparison--fail-parent-open) retains independent completed FAIL15+1+1, zero new exact failures against fixed3de/dd, all original fixtures/groups executed, exactEditMode3/3 formatter7/7 OnUpdate5/5 and manifest pass. Five disappeared identities absent-not-pass; conformance source-gated without individual transcripts; tooltip416.7 in400. Nine byte-identical comparison/public-CI files with SHA256/privacy manifest; CI96/7e8 success not runtime acceptance. Historical attempts immutable; lost recent /tmp Mists streams not reconstructed. Parent OPEN. Docs/evidence only, no execution gates or operations.
+
 ## [2026-10-09] fix | Generated constants manifest metrics
 
 [Proof SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#generated-file-metrics--stale-manifest-corrected-bounded-green) records exact0/1 RED and prior intentional fallback removal374c2c6c7. Only constants manifest byte/line/hash metrics updated to actual output; enums/Lua/discovery/method snapshots unchanged. Independent exact disk-reading GREEN1/1 at149795f16, identified unchanged artifact/test; twelve RED/GREEN/diff receipts retained. No regeneration/native proof.

@@ -1,0 +1,127 @@
+1: ===== integration: /home/osso/.worktrees/build-lock.sh cargo nextest run --test integration --no-fail-fast --test-threads 16 --offline --locked (exit 100)
+4: warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition
+5: warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition
+6: warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition
+7: warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition
+8: warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition
+9: warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition
+10: warning: `iced_wgpu` (manifest) generated 6 warnings
+15:     Starting 10679 tests across 1 binary (19 tests skipped)
+969:         PASS [   0.168s] (  954/10679) wow-ui-sim::integration aura_spell_identifier::unit_target_query_uses_actual_builtin_harmful_fixture_not_invented_state
+2877:         PASS [   2.590s] ( 2821/10679) wow-ui-sim::integration blizzard_ui_blizzard_accountstore::behavior_currency_warning::is_currency_at_warning_threshold_returns_false_when_max_quantity_is_nil_for_uncapped_currency
+2878:         PASS [   2.682s] ( 2822/10679) wow-ui-sim::integration blizzard_ui_blizzard_accountstore::behavior_currency_warning::is_currency_at_warning_threshold_returns_false_when_currency_info_is_nil
+2879:         PASS [   2.641s] ( 2823/10679) wow-ui-sim::integration blizzard_ui_blizzard_accountstore::behavior_currency_warning::is_currency_at_warning_threshold_uses_amount_field_not_plan_named_displayed_amount_field
+2880:         PASS [   2.675s] ( 2824/10679) wow-ui-sim::integration blizzard_ui_blizzard_accountstore::behavior_currency_warning::is_currency_at_warning_threshold_returns_true_when_amount_meets_or_exceeds_two_thirds_of_max_quantity
+3197:         PASS [   2.429s] ( 3110/10679) wow-ui-sim::integration blizzard_ui_blizzard_addonperformance::behavior_check_records_per_addon_warning::check_records_per_addon_warning_and_query_reports_it
+3201:         PASS [   2.439s] ( 3114/10679) wow-ui-sim::integration blizzard_ui_blizzard_addonperformance::behavior_check_skips_addon_list_refresh_after_first_warning::check_skips_addon_list_refresh_after_first_warning_for_addon
+3205:         PASS [   2.606s] ( 3118/10679) wow-ui-sim::integration blizzard_ui_blizzard_addonperformance::behavior_display_specific_chat_warning::display_specific_chat_warning_formats_and_forwards_system_message
+3597:         PASS [   0.323s] ( 3510/10679) wow-ui-sim::integration break_up_large_numbers::locale_and_input_fixtures_are_isolated_between_environments
+5658:         PASS [   0.304s] ( 5542/10679) wow-ui-sim::integration duration_text_binding_copy::duration_binding_assign_preserves_receiver_and_configuration_handles
+5659:         PASS [   0.290s] ( 5543/10679) wow-ui-sim::integration duration_text_binding_copy::duration_binding_copies_mutable_format_components_without_cloning_formatter_handles
+5660:         PASS [   0.313s] ( 5544/10679) wow-ui-sim::integration duration_text_binding_copy::duration_binding_assign_validates_atomically_clears_absent_values_and_handles_self_assignment
+5661:         PASS [   0.280s] ( 5545/10679) wow-ui-sim::integration duration_text_binding_copy::duration_binding_copy_updates_text_with_independent_configuration
+5662:         PASS [   0.302s] ( 5546/10679) wow-ui-sim::integration duration_text_binding_copy::duration_binding_survives_secure_option_copy_without_losing_handle_identity
+5663:         PASS [   0.344s] ( 5547/10679) wow-ui-sim::integration duration_text_binding_copy::duration_binding_userdata_copy_retains_resources_through_collection
+5717:         PASS [   0.815s] ( 5570/10679) wow-ui-sim::integration duration_text_binding_copy::duration_binding_assignment_supports_actual_custom_aura_button_duration_text
+5728:         PASS [   0.276s] ( 5581/10679) wow-ui-sim::integration editbox_stub_family::max_letters::editbox_set_text_max_letters_matches_recorded_ascii_fixture
+5767:         PASS [   0.304s] ( 5620/10679) wow-ui-sim::integration enum_diff_coverage::housing_fixture_decor_action_is_available_with_expected_values
+6016:         PASS [   0.012s] ( 5869/10679) wow-ui-sim::integration generated_data_refresh_coverage::generated_lua_refresh_manifest_matches_current_file_contents
+6307:         PASS [   0.309s] ( 6160/10679) wow-ui-sim::integration house_exterior_attached_decor::modern::fixture_both_original_selectors_authenticate_before_types_or_model
+6310:         PASS [   0.295s] ( 6163/10679) wow-ui-sim::integration house_exterior_attached_decor::modern::fixture_detach_changes_only_affected_placements
+6311:         PASS [   0.282s] ( 6164/10679) wow-ui-sim::integration house_exterior_attached_decor::modern::fixture_invalid_types_and_domains_reject_atomically
+6312:         PASS [   0.282s] ( 6165/10679) wow-ui-sim::integration house_exterior_attached_decor::modern::fixture_omitted_changes_only_affected_placements
+6313:         PASS [   0.296s] ( 6166/10679) wow-ui-sim::integration house_exterior_attached_decor::modern::fixture_public_addon_call_preserves_taint
+6315:         PASS [   0.329s] ( 6168/10679) wow-ui-sim::integration house_exterior_attached_decor::modern::fixture_secure_actual_secret_numbers_are_accepted
+6316:         PASS [   0.330s] ( 6169/10679) wow-ui-sim::integration house_exterior_attached_decor::modern::fixture_synchronous_storage_then_response_observe_committed_state
+6317:         PASS [   0.351s] ( 6170/10679) wow-ui-sim::integration house_exterior_attached_decor::modern::fixture_store_changes_only_affected_placements
+6318:         PASS [   0.292s] ( 6171/10679) wow-ui-sim::integration house_exterior_attached_decor::modern::fixture_unknown_locked_or_invalid_option_has_no_inventory_effect
+6327:         PASS [   0.440s] ( 6180/10679) wow-ui-sim::integration house_exterior_attached_decor::modern::remove_no_attachments_clears_fixture_with_one_success_response
+6331:         PASS [   0.262s] ( 6184/10679) wow-ui-sim::integration house_exterior_attached_decor::modern::remove_store_clears_only_fixture_and_returns_selected_owner_attachments
+6337:         PASS [   0.558s] ( 6190/10679) wow-ui-sim::integration house_exterior_attached_decor::modern::remove_storage_and_response_gc_reentry_keep_new_fixture_and_original_payload
+6358:         PASS [   1.580s] ( 6211/10679) wow-ui-sim::integration house_exterior_attached_decor::modern::remove_missing_fixture_point_and_ineligible_host_fail_without_events
+6364:         PASS [   0.938s] ( 6217/10679) wow-ui-sim::integration house_exterior_attached_decor::modern::same_size_type_and_fixture_never_touch_existing_attachments
+6367:         PASS [   0.268s] ( 6220/10679) wow-ui-sim::integration house_exterior_core_fixture::core_authenticates_original_arguments_before_parsing_or_lookup
+6369:         PASS [   0.261s] ( 6222/10679) wow-ui-sim::integration house_exterior_core_fixture::core_detach_preserves_placements_and_inventory
+6370:         PASS [   0.236s] ( 6223/10679) wow-ui-sim::integration house_exterior_core_fixture::core_mixed_variants_reject_before_storing_the_valid_stack
+6371:         PASS [   0.239s] ( 6224/10679) wow-ui-sim::integration house_exterior_core_fixture::core_same_selection_does_not_store_or_detach_attachments
+6372:         PASS [   0.255s] ( 6225/10679) wow-ui-sim::integration house_exterior_core_fixture::core_storage_callbacks_reenter_committed_selection_without_outer_overwrite
+6379:         PASS [   0.538s] ( 6232/10679) wow-ui-sim::integration house_exterior_core_fixture::core_different_style_default_and_explicit_store_commit_inventory
+6381:         PASS [   0.535s] ( 6234/10679) wow-ui-sim::integration house_exterior_core_fixture::core_host_updates_empty_defaults_and_environment_isolation
+6382:         PASS [   0.518s] ( 6235/10679) wow-ui-sim::integration house_exterior_core_fixture::core_recolor_reparents_even_when_store_is_requested
+6384:         PASS [   0.232s] ( 6237/10679) wow-ui-sim::integration housing::housing_market_and_fixture_debug_return_contracts
+6385:         PASS [   0.531s] ( 6238/10679) wow-ui-sim::integration house_exterior_core_fixture::core_store_validates_all_counts_before_mutating_any_placement
+6457:         PASS [   2.080s] ( 6310/10679) wow-ui-sim::integration house_exterior_core_fixture::core_rejections_are_atomic_and_do_not_publish_events
+6460:         PASS [   0.275s] ( 6313/10679) wow-ui-sim::integration housing_catalog_variants::housing_variant_list_uses_explicit_fixture_records
+7306:     GameTooltip:ResizeToBoundsRect
+7932:         PASS [   0.133s] ( 7111/10679) wow-ui-sim::integration numeric_rule_formatter::numeric_rule_formatter_updates_duration_binding_text
+7954:         PASS [   0.547s] ( 7133/10679) wow-ui-sim::integration on_update_modes::on_update_modes_process_actual_managed_aura_dirty_phases
+7971:         PASS [   0.223s] ( 7150/10679) wow-ui-sim::integration p1127_housing_queries::p1127_housing_queries_read_empty_state_without_legacy_fixtures
+8697:         PASS [   0.366s] ( 7847/10679) wow-ui-sim::integration private_aura_anchors::optional_icon_and_duration_bindings_validate_every_required_field_atomically
+9720:         PASS [   0.121s] ( 8812/10679) wow-ui-sim::integration startup_targeted_regressions::damage_meter::damage_meter_missing_selectors_do_not_alias_fixture_data
+10164:         PASS [   2.157s] ( 9255/10679) wow-ui-sim::integration test_showuipanel_lod_fixtures::load_addon_with_error_handling_seam_records_broadcaster_failure
+10171:         PASS [   7.796s] ( 9262/10679) wow-ui-sim::integration test_showuipanel_lod_fixtures::action_button_util_fixture_drives_all_action_bar_statuses
+10266:         PASS [   0.014s] ( 9354/10679) wow-ui-sim::integration timeout_reexec::fixtures::concurrency_case::a_records_concurrency
+10267:         PASS [   0.014s] ( 9355/10679) wow-ui-sim::integration timeout_reexec::fixtures::concurrency_case::b_records_concurrency
+10269:         PASS [   0.015s] ( 9357/10679) wow-ui-sim::integration timeout_reexec::fixtures::concurrency_case::c_records_concurrency
+10270:         PASS [   0.014s] ( 9358/10679) wow-ui-sim::integration timeout_reexec::fixtures::concurrency_case::d_records_concurrency
+10271:         PASS [   0.014s] ( 9359/10679) wow-ui-sim::integration timeout_reexec::fixtures::concurrency_case::f_records_concurrency
+10272:         PASS [   0.014s] ( 9360/10679) wow-ui-sim::integration timeout_reexec::fixtures::concurrency_case::e_records_concurrency
+10273:         PASS [   0.020s] ( 9361/10679) wow-ui-sim::integration timeout_reexec::fixtures::exact_selection_case::selected_target
+10274:         PASS [   0.021s] ( 9362/10679) wow-ui-sim::integration timeout_reexec::fixtures::exact_selection_case::selected_target_suffix
+10277:         PASS [   0.026s] ( 9365/10679) wow-ui-sim::integration timeout_reexec::fixtures::nested_case::nested_guards_run_both_closures
+10278:         PASS [   0.025s] ( 9366/10679) wow-ui-sim::integration timeout_reexec::fixtures::panic_case::a_panics
+10279:         PASS [   0.022s] ( 9367/10679) wow-ui-sim::integration timeout_reexec::fixtures::panic_case::b_records_completion
+10280:         PASS [   0.022s] ( 9368/10679) wow-ui-sim::integration timeout_reexec::fixtures::permit_release_case::a_times_out_holding_permit
+10281:         PASS [   0.026s] ( 9369/10679) wow-ui-sim::integration timeout_reexec::fixtures::permit_release_case::b_holds_other_permit
+10282:         PASS [   0.026s] ( 9370/10679) wow-ui-sim::integration timeout_reexec::fixtures::timeout_case::a_times_out_with_descendant
+10283:         PASS [   0.026s] ( 9371/10679) wow-ui-sim::integration timeout_reexec::fixtures::permit_release_case::c_waits_for_released_permit
+10285:         PASS [   0.026s] ( 9373/10679) wow-ui-sim::integration timeout_reexec::fixtures::timeout_case::b_records_completion
+10319:         PASS [   0.140s] ( 9407/10679) wow-ui-sim::integration tooltip::tooltip_basic::test_gametooltip_exists_and_has_correct_type
+10345:         PASS [   0.220s] ( 9433/10679) wow-ui-sim::integration tooltip::tooltip_cursor_dirty::adding_visible_tooltip_line_dirties_tooltip_rect
+10347:         PASS [   0.238s] ( 9435/10679) wow-ui-sim::integration tooltip::tooltip_cursor_dirty::inventory_tooltip_population_dirties_tooltip_rect
+10408:         PASS [   0.186s] ( 9496/10679) wow-ui-sim::integration tooltip::tooltip_text::test_get_left_line_has_correct_text
+10410:         PASS [   0.184s] ( 9498/10679) wow-ui-sim::integration tooltip::tooltip_text::test_get_right_line_has_correct_text
+10468:         PASS [   0.179s] ( 9556/10679) wow-ui-sim::integration tooltip_basic::test_gametooltip_exists_and_has_correct_type
+10493:         PASS [   0.177s] ( 9581/10679) wow-ui-sim::integration tooltip_cursor_dirty::adding_visible_tooltip_line_dirties_tooltip_rect
+10496:         PASS [   0.196s] ( 9584/10679) wow-ui-sim::integration tooltip_cursor_dirty::inventory_tooltip_population_dirties_tooltip_rect
+10629:         PASS [   0.178s] ( 9717/10679) wow-ui-sim::integration tooltip_spell_mount_identifiers::original_frame_identifier_routes_match_direct_dto_and_actual_rendered_lines
+10656:         PASS [   0.184s] ( 9744/10679) wow-ui-sim::integration tooltip_text::test_get_left_line_has_correct_text
+10659:         PASS [   0.207s] ( 9747/10679) wow-ui-sim::integration tooltip_text::test_get_right_line_has_correct_text
+10713:     Tooltip right edge is outside viewport: rect=LayoutRect { x: 0.0, y: 0.0, width: 416.7, height: 58.0 }, screen=400x300, right=416.7
+10736:         PASS [   0.236s] ( 9788/10679) wow-ui-sim::integration tooltip_unit_buff_security::rooted_host_secret_gc_preserves_identity_secrecy_trust_and_fixture_state
+10746:         PASS [   0.174s] ( 9798/10679) wow-ui-sim::integration tooltip_unit_debuff_security::distinct_live_units_select_harmful_rows_from_correct_stores
+11042:         PASS [   0.361s] (10036/10679) wow-ui-sim::integration unit_frame_layer_probe::unit_layer_controls_capture_three_phases_and_clean_only_owned_fixtures
+11438:         PASS [   0.016s] (10403/10679) wow-ui-sim::integration workload_gate::process_fixture
+11772:         PASS [  52.543s] (10679/10679) wow-ui-sim::integration timeout_reexec::timeout_fixtures_can_run_concurrently
+11774:      Summary [ 621.279s] 10679 tests run: 10664 passed (8 slow), 15 failed, 19 skipped
+11792: ===== prefork: /home/osso/.worktrees/build-lock.sh cargo test --test prefork_full_ui --offline --locked (exit 1)
+12905: test blizzard_housing_event_handler_loads::blizzard_housing_event_handler_fixture_dialog_uses_select_callback_by_index ... ok
+14322: test prefork_full_ui_nested::fixture::preloaded_parent_has_normal_game_startup ... ok
+14364: test result: FAILED. 2320 passed; 1 failed; 2321 total
+14369: test result: ok. 2 passed; 0 failed; 2 total
+14373: test result: ok. 1 passed; 0 failed; 1 total
+14377: test result: ok. 1 passed; 0 failed; 1 total
+14380: warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition
+14381: warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition
+14382: warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition
+14383: warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition
+14384: warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition
+14385: warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition
+14386: warning: `iced_wgpu` (manifest) generated 6 warnings
+14875: ===== lib: /home/osso/.worktrees/build-lock.sh cargo nextest run --lib --no-fail-fast --test-threads 16 --offline --locked (exit 100)
+14878: warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition
+14879: warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition
+14880: warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition
+14881: warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition
+14882: warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition
+14883: warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition
+14884: warning: `iced_wgpu` (manifest) generated 6 warnings
+14889:     Starting 1978 tests across 1 binary
+14953:         PASS [   0.242s] (  64/1978) wow-ui-sim c_api::duration_text_binding::tests::duration_binding_availability_preserves_client_versions
+15866:         PASS [   0.259s] ( 977/1978) wow-ui-sim loader::tests::wow_api_globals::startup_globals::test_patch_12_1_duration_binding_reference_lifetime_and_identity
+16026:         PASS [   0.022s] (1137/1978) wow-ui-sim lua_api::frame::methods::widgets::tooltip::sizing::tests::refresh_tooltip_geometry_marks_rect_dirty_when_size_is_unchanged
+16416:         PASS [   0.239s] (1498/1978) wow-ui-sim lua_api::workarounds::temporary::macro_defaults::tests::installs_macro_ui_fixture_defaults
+16619:         PASS [   0.239s] (1701/1978) wow-ui-sim lua_api::workarounds_editmode::tests::apply_system_anchors::cast_and_player::apply_system_anchors_replays_player_frame_size_without_cast_bar_side_effect
+16626:         PASS [   0.250s] (1708/1978) wow-ui-sim lua_api::workarounds_editmode::tests::apply_system_anchors::singletons::apply_system_anchors_falls_back_to_minus_one_for_nil_singletons
+16633:         PASS [   0.255s] (1715/1978) wow-ui-sim lua_api::workarounds_editmode::tests::apply_system_anchors::unit_frames::apply_system_anchors_batches_compact_unit_frame_startup_refreshes
+16898:      Summary [  35.557s] 1978 tests run: 1977 passed, 1 failed, 0 skipped
