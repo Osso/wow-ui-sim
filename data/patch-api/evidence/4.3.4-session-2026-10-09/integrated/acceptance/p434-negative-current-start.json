@@ -1,0 +1,17 @@
+{
+  "revision": "25db3691d",
+  "argv": [
+    "cargo",
+    "test",
+    "--test",
+    "prefork_full_ui",
+    "patch_4_3_4_publication_sweep",
+    "--",
+    "--nocapture"
+  ],
+  "env": {
+    "P434_SWEEP_REGISTER": "/home/osso/.worktrees/wow-ui-sim-p434-source/data/patch-api/evidence/4.3.4-session-2026-10-09/negative-register.json",
+    "P434_SWEEP_OUT": "/tmp/p434-current-negative-results.json"
+  },
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p434-source"
+}

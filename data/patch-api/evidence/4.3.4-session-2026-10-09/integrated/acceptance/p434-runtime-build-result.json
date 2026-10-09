@@ -1,0 +1,15 @@
+{
+  "revision": "575a93e30abb6b33a20bbf4e6972f2b97c348587",
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p434-source",
+  "argv": [
+    "cargo",
+    "build",
+    "--bin",
+    "wow-sim"
+  ],
+  "env": [],
+  "target": "p434-runtime-build",
+  "pane_state": "1 0",
+  "log": "/tmp/p434-runtime-build.log",
+  "log_sha256": "8c3c0305ca6854dd1e8b4901fc3db8a288b40e69e7160fdd74dccee07bb372d5"
+}

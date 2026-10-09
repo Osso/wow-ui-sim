@@ -1,0 +1,7 @@
+{
+  "exit": 0,
+  "exit_evidence": "/tmp/pi-tool-36a8ff3cd3058b1d.log CommandResult exit_code=0",
+  "revision": "575a93e30abb6b33a20bbf4e6972f2b97c348587",
+  "stdout": "[]\n",
+  "stderr_sha256": "f0778a985f95f19879975e6fb26d9afadd5b07255aebdc094a4bd426d6645fdc"
+}

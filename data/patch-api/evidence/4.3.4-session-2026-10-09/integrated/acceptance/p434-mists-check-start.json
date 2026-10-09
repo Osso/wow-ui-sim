@@ -1,0 +1,14 @@
+{
+  "revision": "575a93e30abb6b33a20bbf4e6972f2b97c348587",
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p434-source",
+  "argv": [
+    "cargo",
+    "check",
+    "--no-default-features",
+    "--features",
+    "sound,gui,casc,client-mists",
+    "--tests"
+  ],
+  "env": [],
+  "target": "p434-mists-check"
+}

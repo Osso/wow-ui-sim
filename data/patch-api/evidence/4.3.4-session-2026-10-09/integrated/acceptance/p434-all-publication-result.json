@@ -1,0 +1,20 @@
+{
+  "revision": "575a93e30abb6b33a20bbf4e6972f2b97c348587",
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p434-source",
+  "argv": [
+    "cargo",
+    "test",
+    "--test",
+    "prefork_full_ui",
+    "publication_sweep",
+    "--",
+    "--nocapture"
+  ],
+  "env": [
+    "P434_SWEEP_OUT=/tmp/p434-integrated-publication-results.json"
+  ],
+  "target": "p434-all-publication",
+  "pane_state": "1 0",
+  "log": "/tmp/p434-all-publication.log",
+  "log_sha256": "e578fef74a3877d1326726a88d54d8d9b42cfd62006720dc08cec30ea98845f2"
+}
