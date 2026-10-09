@@ -1,0 +1,24 @@
+{
+  "scope": "external source bytes and serialized source-only ledger; no runtime API proof",
+  "verified": "2026-10-08",
+  "tested_revision": "b5ee99e5b",
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p442-page",
+  "commands": [
+    {
+      "argv": ["python3", "/home/osso/.worktrees/wow-ui-sim-p442-page/data/patch-api/evidence/4.4.2-session-2026-10-08/validate.py"],
+      "exit_code": 0,
+      "tests_passed": 5,
+      "proof": "Exact returned revision/content/hash and six serialized rows; in-memory negative controls reject changed revision, changed source bytes, namespace coverage credit and missing external boundary row."
+    },
+    {
+      "argv": ["python3", "/home/osso/.worktrees/wow-ui-sim-p442-page/tools/extract_patch_non_inventory.py", "--patch", "4.4.2", "--text-only", "--canonical-patch-navigation", "--check"],
+      "exit_code": 0,
+      "output": {"patch": "4.4.2", "rows": 6, "statuses": {"metadata-only": 5, "audit-pending": 1}},
+      "proof": "Plaintext reproduces byte-identically. Generic seed status audit-pending is not the audited ledger: named C_AuctionHouse row is explicitly UNPROVEN."
+    }
+  ],
+  "row_counts": {"total": 6, "metadata-only": 5, "UNPROVEN": 1},
+  "runtime_proof": null,
+  "native_proof": null,
+  "validity": "Later documentation/proof receipt changes do not invalidate this unchanged source, plaintext, ledger, validator or extractor scope."
+}
