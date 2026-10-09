@@ -1,0 +1,2321 @@
+{
+  "schema": "patch-page-coverage/v1",
+  "patch": "3.3.5",
+  "client_line": "retail",
+  "source_sha256": "be6929e3c4d56eab671d5b23149f4a6cca0e625d06c656e6ac3d0cd031c60eea",
+  "non_inventory_source": {
+    "path": "data/patch-api/sources/3.3.5-api-changes.txt",
+    "sha256": "90264a874817543bed83d3f2b4306e99296587214309b25db3b33ce03e89872b"
+  },
+  "proof_policy": "Historical retail 2010; complete publication/prose/header/signature accounting. No new model closures/native parity. Full-page cross-references are metadata, not duplicate proof. No Classic successor credit. Original historical ledger/gap sidecars independent of future current closures.",
+  "source_rows": [
+    {
+      "source_id": "wt-global-api-BNAcceptFriendInvite-4",
+      "capabilities": [],
+      "status": "publication-gap",
+      "note": "No invitation acceptance/deletion lifecycle over account invite state.",
+      "source_line": 4
+    },
+    {
+      "source_id": "wt-global-api-BNConnected-5",
+      "capabilities": [
+        "publication"
+      ],
+      "status": "publication-only",
+      "note": "Callable current binding/default only; legacy presence identities, output arity and online/authentication/server lifecycle unproven. BNConnected pretends connected while features probes return false; no coherent Battle.net connection model.",
+      "source_line": 5
+    },
+    {
+      "source_id": "wt-global-api-BNCreateConversation-6",
+      "capabilities": [],
+      "status": "superseded-publication",
+      "note": "Actual later retail removal wt-global-api-BNCreateConversation-27 explains current absence/deprecation publication. Historical behavior and literal signature remain unproven; no new retirement or Classic credit.",
+      "source_line": 6
+    },
+    {
+      "source_id": "wt-global-api-BNDeclineFriendInvite-7",
+      "capabilities": [],
+      "status": "publication-gap",
+      "note": "No invitation decline/deletion lifecycle over account invite state.",
+      "source_line": 7
+    },
+    {
+      "source_id": "wt-global-api-BNFeaturesEnabled-8",
+      "capabilities": [
+        "publication"
+      ],
+      "status": "publication-only",
+      "note": "Callable current binding/default only; legacy presence identities, output arity and online/authentication/server lifecycle unproven. BNConnected pretends connected while features probes return false; no coherent Battle.net connection model.",
+      "source_line": 8
+    },
+    {
+      "source_id": "wt-global-api-BNFeaturesEnabledAndConnected-9",
+      "capabilities": [
+        "publication"
+      ],
+      "status": "publication-only",
+      "note": "Callable current binding/default only; legacy presence identities, output arity and online/authentication/server lifecycle unproven. BNConnected pretends connected while features probes return false; no coherent Battle.net connection model.",
+      "source_line": 9
+    },
+    {
+      "source_id": "wt-global-api-BNGetBlockedInfo-10",
+      "capabilities": [],
+      "status": "publication-gap",
+      "note": "No indexed account-block list and block identity/name model.",
+      "source_line": 10
+    },
+    {
+      "source_id": "wt-global-api-BNGetBlockedToonInfo-11",
+      "capabilities": [],
+      "status": "superseded-publication",
+      "note": "Actual later retail removal wt-global-api-BNGetBlockedToonInfo-28 explains current absence/deprecation publication. Historical behavior and literal signature remain unproven; no new retirement or Classic credit.",
+      "source_line": 11
+    },
+    {
+      "source_id": "wt-global-api-BNGetConversationInfo-12",
+      "capabilities": [],
+      "status": "superseded-publication",
+      "note": "Actual later retail removal wt-global-api-BNGetConversationInfo-29 explains current absence/deprecation publication. Historical behavior and literal signature remain unproven; no new retirement or Classic credit.",
+      "source_line": 12
+    },
+    {
+      "source_id": "wt-global-api-BNGetConversationMemberInfo-13",
+      "capabilities": [],
+      "status": "superseded-publication",
+      "note": "Actual later retail removal wt-global-api-BNGetConversationMemberInfo-30 explains current absence/deprecation publication. Historical behavior and literal signature remain unproven; no new retirement or Classic credit.",
+      "source_line": 13
+    },
+    {
+      "source_id": "wt-global-api-BNGetCustomMessageTable-14",
+      "capabilities": [],
+      "status": "superseded-publication",
+      "note": "Actual later retail removal wt-global-api-BNGetCustomMessageTable-31 explains current absence/deprecation publication. Historical behavior and literal signature remain unproven; no new retirement or Classic credit.",
+      "source_line": 14
+    },
+    {
+      "source_id": "wt-global-api-BNGetFOFInfo-15",
+      "capabilities": [],
+      "status": "publication-gap",
+      "note": "No mutual/potential friend discovery result cache or server request lifecycle.",
+      "source_line": 15
+    },
+    {
+      "source_id": "wt-global-api-BNGetFriendInfo-16",
+      "capabilities": [],
+      "status": "publication-gap",
+      "note": "Actual later retail removal expects nil, but temporary inert default still publishes this global. No own-source removal authority; retained without deleting existing compatibility/default behavior.",
+      "source_line": 16
+    },
+    {
+      "source_id": "wt-global-api-BNGetFriendInfoByID-17",
+      "capabilities": [],
+      "status": "superseded-publication",
+      "note": "Actual later retail removal wt-global-api-BNGetFriendInfoByID-132 explains current absence/deprecation publication. Historical behavior and literal signature remain unproven; no new retirement or Classic credit.",
+      "source_line": 17
+    },
+    {
+      "source_id": "wt-global-api-BNGetFriendInviteInfo-18",
+      "capabilities": [],
+      "status": "superseded-publication",
+      "note": "Actual later retail removal wt-global-api-BNGetFriendInviteInfo-563 explains current absence/deprecation publication. Historical behavior and literal signature remain unproven; no new retirement or Classic credit.",
+      "source_line": 18
+    },
+    {
+      "source_id": "wt-global-api-BNGetFriendToonInfo-19",
+      "capabilities": [],
+      "status": "superseded-publication",
+      "note": "Actual later retail removal wt-global-api-BNGetFriendToonInfo-32 explains current absence/deprecation publication. Historical behavior and literal signature remain unproven; no new retirement or Classic credit.",
+      "source_line": 19
+    },
+    {
+      "source_id": "wt-global-api-BNGetInfo-20",
+      "capabilities": [
+        "publication"
+      ],
+      "status": "publication-only",
+      "note": "Callable current binding/default only; legacy presence identities, output arity and online/authentication/server lifecycle unproven. BNConnected pretends connected while features probes return false; no coherent Battle.net connection model.",
+      "source_line": 20
+    },
+    {
+      "source_id": "wt-global-api-BNGetMatureLanguageFilter-21",
+      "capabilities": [],
+      "status": "superseded-publication",
+      "note": "Actual later retail removal wt-global-api-BNGetMatureLanguageFilter-33 explains current absence/deprecation publication. Historical behavior and literal signature remain unproven; no new retirement or Classic credit.",
+      "source_line": 21
+    },
+    {
+      "source_id": "wt-global-api-BNGetMaxPlayersInConversation-22",
+      "capabilities": [],
+      "status": "superseded-publication",
+      "note": "Actual later retail removal wt-global-api-BNGetMaxPlayersInConversation-35 explains current absence/deprecation publication. Historical behavior and literal signature remain unproven; no new retirement or Classic credit.",
+      "source_line": 22
+    },
+    {
+      "source_id": "wt-global-api-BNGetNumBlocked-23",
+      "capabilities": [],
+      "status": "publication-gap",
+      "note": "No mutable account-block list/count model.",
+      "source_line": 23
+    },
+    {
+      "source_id": "wt-global-api-BNGetNumBlockedToons-24",
+      "capabilities": [],
+      "status": "superseded-publication",
+      "note": "Actual later retail removal wt-global-api-BNGetNumBlockedToons-36 explains current absence/deprecation publication. Historical behavior and literal signature remain unproven; no new retirement or Classic credit.",
+      "source_line": 24
+    },
+    {
+      "source_id": "wt-global-api-BNGetNumConversationMembers-25",
+      "capabilities": [],
+      "status": "superseded-publication",
+      "note": "Actual later retail removal wt-global-api-BNGetNumConversationMembers-37 explains current absence/deprecation publication. Historical behavior and literal signature remain unproven; no new retirement or Classic credit.",
+      "source_line": 25
+    },
+    {
+      "source_id": "wt-global-api-BNGetNumFOF-26",
+      "capabilities": [],
+      "status": "publication-gap",
+      "note": "No mutual/potential friend discovery cache and counts.",
+      "source_line": 26
+    },
+    {
+      "source_id": "wt-global-api-BNGetNumFriendInvites-27",
+      "capabilities": [
+        "publication"
+      ],
+      "status": "publication-only",
+      "note": "Callable current binding/default only; legacy presence identities, output arity and online/authentication/server lifecycle unproven. BNConnected pretends connected while features probes return false; no coherent Battle.net connection model.",
+      "source_line": 27
+    },
+    {
+      "source_id": "wt-global-api-BNGetNumFriendToons-28",
+      "capabilities": [],
+      "status": "superseded-publication",
+      "note": "Actual later retail removal wt-global-api-BNGetNumFriendToons-38 explains current absence/deprecation publication. Historical behavior and literal signature remain unproven; no new retirement or Classic credit.",
+      "source_line": 28
+    },
+    {
+      "source_id": "wt-global-api-BNGetNumFriends-29",
+      "capabilities": [
+        "publication"
+      ],
+      "status": "publication-only",
+      "note": "Callable current binding/default only; legacy presence identities, output arity and online/authentication/server lifecycle unproven. BNConnected pretends connected while features probes return false; no coherent Battle.net connection model.",
+      "source_line": 29
+    },
+    {
+      "source_id": "wt-global-api-BNGetSelectedFriend-30",
+      "capabilities": [],
+      "status": "publication-gap",
+      "note": "No selected Battle.net friend row state/selection lifecycle.",
+      "source_line": 30
+    },
+    {
+      "source_id": "wt-global-api-BNGetSelectedToonBlock-31",
+      "capabilities": [],
+      "status": "superseded-publication",
+      "note": "Actual later retail removal wt-global-api-BNGetSelectedToonBlock-39 explains current absence/deprecation publication. Historical behavior and literal signature remain unproven; no new retirement or Classic credit.",
+      "source_line": 31
+    },
+    {
+      "source_id": "wt-global-api-BNGetToonInfo-32",
+      "capabilities": [],
+      "status": "superseded-publication",
+      "note": "Actual later retail removal wt-global-api-BNGetToonInfo-40 explains current absence/deprecation publication. Historical behavior and literal signature remain unproven; no new retirement or Classic credit.",
+      "source_line": 32
+    },
+    {
+      "source_id": "wt-global-api-BNInviteToConversation-33",
+      "capabilities": [],
+      "status": "superseded-publication",
+      "note": "Actual later retail removal wt-global-api-BNInviteToConversation-41 explains current absence/deprecation publication. Historical behavior and literal signature remain unproven; no new retirement or Classic credit.",
+      "source_line": 33
+    },
+    {
+      "source_id": "wt-global-api-BNIsBlocked-34",
+      "capabilities": [],
+      "status": "publication-gap",
+      "note": "No account-block membership model; page omits arguments.",
+      "source_line": 34
+    },
+    {
+      "source_id": "wt-global-api-BNIsFriend-35",
+      "capabilities": [],
+      "status": "publication-gap",
+      "note": "No legacy presence-ID-to-account friendship contract; existing bnet account IDs do not prove 2010 presence identities.",
+      "source_line": 35
+    },
+    {
+      "source_id": "wt-global-api-BNIsSelf-36",
+      "capabilities": [],
+      "status": "publication-gap",
+      "note": "No modeled own legacy presence identity; local player GUID/account character is not a presence ID.",
+      "source_line": 36
+    },
+    {
+      "source_id": "wt-global-api-BNIsToonBlocked-37",
+      "capabilities": [],
+      "status": "superseded-publication",
+      "note": "Actual later retail removal wt-global-api-BNIsToonBlocked-43 explains current absence/deprecation publication. Historical behavior and literal signature remain unproven; no new retirement or Classic credit.",
+      "source_line": 37
+    },
+    {
+      "source_id": "wt-global-api-BNLeaveConversation-38",
+      "capabilities": [],
+      "status": "superseded-publication",
+      "note": "Actual later retail removal wt-global-api-BNLeaveConversation-44 explains current absence/deprecation publication. Historical behavior and literal signature remain unproven; no new retirement or Classic credit.",
+      "source_line": 38
+    },
+    {
+      "source_id": "wt-global-api-BNListConversation-39",
+      "capabilities": [],
+      "status": "superseded-publication",
+      "note": "Actual later retail removal wt-global-api-BNListConversation-45 explains current absence/deprecation publication. Historical behavior and literal signature remain unproven; no new retirement or Classic credit.",
+      "source_line": 39
+    },
+    {
+      "source_id": "wt-global-api-BNRemoveFriend-40",
+      "capabilities": [],
+      "status": "publication-gap",
+      "note": "No friend removal and associated account-list event lifecycle for legacy presence IDs.",
+      "source_line": 40
+    },
+    {
+      "source_id": "wt-global-api-BNReportFriendInvite-41",
+      "capabilities": [],
+      "status": "superseded-publication",
+      "note": "Actual later retail removal wt-global-api-BNReportFriendInvite-46 explains current absence/deprecation publication. Historical behavior and literal signature remain unproven; no new retirement or Classic credit.",
+      "source_line": 41
+    },
+    {
+      "source_id": "wt-global-api-BNReportPlayer-42",
+      "capabilities": [],
+      "status": "publication-gap",
+      "note": "No report submission/target/category/service-effects model.",
+      "source_line": 42
+    },
+    {
+      "source_id": "wt-global-api-BNRequestFOFInfo-43",
+      "capabilities": [],
+      "status": "publication-gap",
+      "note": "No server friend-of-friend request/result lifecycle.",
+      "source_line": 43
+    },
+    {
+      "source_id": "wt-global-api-BNSendConversationMessage-44",
+      "capabilities": [],
+      "status": "superseded-publication",
+      "note": "Actual later retail removal wt-global-api-BNSendConversationMessage-47 explains current absence/deprecation publication. Historical behavior and literal signature remain unproven; no new retirement or Classic credit.",
+      "source_line": 44
+    },
+    {
+      "source_id": "wt-global-api-BNSendFriendInvite-45",
+      "capabilities": [],
+      "status": "publication-gap",
+      "note": "No invitation creation, pending list and send-result service lifecycle.",
+      "source_line": 45
+    },
+    {
+      "source_id": "wt-global-api-BNSendFriendInviteByID-46",
+      "capabilities": [],
+      "status": "publication-gap",
+      "note": "No presence-ID invitation and send-result service lifecycle.",
+      "source_line": 46
+    },
+    {
+      "source_id": "wt-global-api-BNSendWhisper-47",
+      "capabilities": [],
+      "status": "superseded-publication",
+      "note": "Actual later retail removal wt-global-api-BNSendWhisper-483 explains current absence/deprecation publication. Historical behavior and literal signature remain unproven; no new retirement or Classic credit.",
+      "source_line": 47
+    },
+    {
+      "source_id": "wt-global-api-BNSetAFK-48",
+      "capabilities": [],
+      "status": "superseded-publication",
+      "note": "Actual later retail removal wt-global-api-BNSetAFK-303 explains current absence/deprecation publication. Historical behavior and literal signature remain unproven; no new retirement or Classic credit.",
+      "source_line": 48
+    },
+    {
+      "source_id": "wt-global-api-BNSetBlocked-49",
+      "capabilities": [],
+      "status": "publication-gap",
+      "note": "No account-block insertion/removal model.",
+      "source_line": 49
+    },
+    {
+      "source_id": "wt-global-api-BNSetCustomMessage-50",
+      "capabilities": [],
+      "status": "superseded-publication",
+      "note": "Actual later retail removal wt-global-api-BNSetCustomMessage-484 explains current absence/deprecation publication. Historical behavior and literal signature remain unproven; no new retirement or Classic credit.",
+      "source_line": 50
+    },
+    {
+      "source_id": "wt-global-api-BNSetDND-51",
+      "capabilities": [],
+      "status": "superseded-publication",
+      "note": "Actual later retail removal wt-global-api-BNSetDND-304 explains current absence/deprecation publication. Historical behavior and literal signature remain unproven; no new retirement or Classic credit.",
+      "source_line": 51
+    },
+    {
+      "source_id": "wt-global-api-BNSetFocus-52",
+      "capabilities": [],
+      "status": "superseded-publication",
+      "note": "Actual later retail removal wt-global-api-BNSetFocus-48 explains current absence/deprecation publication. Historical behavior and literal signature remain unproven; no new retirement or Classic credit.",
+      "source_line": 52
+    },
+    {
+      "source_id": "wt-global-api-BNSetFriendNote-53",
+      "capabilities": [],
+      "status": "publication-gap",
+      "note": "No legacy presence-to-account friend-note storage contract.",
+      "source_line": 53
+    },
+    {
+      "source_id": "wt-global-api-BNSetMatureLanguageFilter-54",
+      "capabilities": [],
+      "status": "superseded-publication",
+      "note": "Actual later retail removal wt-global-api-BNSetMatureLanguageFilter-49 explains current absence/deprecation publication. Historical behavior and literal signature remain unproven; no new retirement or Classic credit.",
+      "source_line": 54
+    },
+    {
+      "source_id": "wt-global-api-BNSetSelectedFriend-55",
+      "capabilities": [],
+      "status": "publication-gap",
+      "note": "No selected Battle.net friend row state/selection lifecycle.",
+      "source_line": 55
+    },
+    {
+      "source_id": "wt-global-api-BNSetSelectedToonBlock-56",
+      "capabilities": [],
+      "status": "superseded-publication",
+      "note": "Actual later retail removal wt-global-api-BNSetSelectedToonBlock-50 explains current absence/deprecation publication. Historical behavior and literal signature remain unproven; no new retirement or Classic credit.",
+      "source_line": 56
+    },
+    {
+      "source_id": "wt-global-api-BNSetToonBlocked-57",
+      "capabilities": [],
+      "status": "superseded-publication",
+      "note": "Actual later retail removal wt-global-api-BNSetToonBlocked-51 explains current absence/deprecation publication. Historical behavior and literal signature remain unproven; no new retirement or Classic credit.",
+      "source_line": 57
+    },
+    {
+      "source_id": "wt-global-api-CommentatorGetSkirmishMode-58",
+      "capabilities": [],
+      "status": "superseded-publication",
+      "note": "Actual later retail removal diff-wt-global-api-CommentatorGetSkirmishMode-51 explains current absence/deprecation publication. Historical behavior and literal signature remain unproven; no new retirement or Classic credit.",
+      "source_line": 58
+    },
+    {
+      "source_id": "wt-global-api-CommentatorGetSkirmishQueueCount-59",
+      "capabilities": [],
+      "status": "superseded-publication",
+      "note": "Actual later retail removal diff-wt-global-api-CommentatorGetSkirmishQueueCount-52 explains current absence/deprecation publication. Historical behavior and literal signature remain unproven; no new retirement or Classic credit.",
+      "source_line": 59
+    },
+    {
+      "source_id": "wt-global-api-CommentatorGetSkirmishQueuePlayerInfo-60",
+      "capabilities": [],
+      "status": "superseded-publication",
+      "note": "Actual later retail removal diff-wt-global-api-CommentatorGetSkirmishQueuePlayerInfo-53 explains current absence/deprecation publication. Historical behavior and literal signature remain unproven; no new retirement or Classic credit.",
+      "source_line": 60
+    },
+    {
+      "source_id": "wt-global-api-CommentatorRequestSkirmishMode-61",
+      "capabilities": [],
+      "status": "superseded-publication",
+      "note": "Actual later retail removal diff-wt-global-api-CommentatorRequestSkirmishMode-55 explains current absence/deprecation publication. Historical behavior and literal signature remain unproven; no new retirement or Classic credit.",
+      "source_line": 61
+    },
+    {
+      "source_id": "wt-global-api-CommentatorRequestSkirmishQueueData-62",
+      "capabilities": [],
+      "status": "superseded-publication",
+      "note": "Actual later retail removal diff-wt-global-api-CommentatorRequestSkirmishQueueData-56 explains current absence/deprecation publication. Historical behavior and literal signature remain unproven; no new retirement or Classic credit.",
+      "source_line": 62
+    },
+    {
+      "source_id": "wt-global-api-CommentatorSetSkirmishMatchmakingMode-63",
+      "capabilities": [],
+      "status": "superseded-publication",
+      "note": "Actual later retail removal diff-wt-global-api-CommentatorSetSkirmishMatchmakingMode-58 explains current absence/deprecation publication. Historical behavior and literal signature remain unproven; no new retirement or Classic credit.",
+      "source_line": 63
+    },
+    {
+      "source_id": "wt-global-api-CommentatorStartSkirmishMatch-64",
+      "capabilities": [],
+      "status": "superseded-publication",
+      "note": "Actual later retail removal diff-wt-global-api-CommentatorStartSkirmishMatch-60 explains current absence/deprecation publication. Historical behavior and literal signature remain unproven; no new retirement or Classic credit.",
+      "source_line": 64
+    },
+    {
+      "source_id": "wt-global-api-GetAutoCompletePresenceID-65",
+      "capabilities": [],
+      "status": "superseded-publication",
+      "note": "Actual later retail removal wt-global-api-GetAutoCompletePresenceID-345 explains current absence/deprecation publication. Historical behavior and literal signature remain unproven; no new retirement or Classic credit.",
+      "source_line": 65
+    },
+    {
+      "source_id": "wt-global-api-GetChatWindowSavedDimensions-66",
+      "capabilities": [
+        "publication"
+      ],
+      "status": "publication-only",
+      "note": "Existing temporary Lua table stores session-local geometry. Source signature names/order retained; cross-window isolation, account persistence, validation/coercion and native saved-layout lifecycle not proved. Not promoted to a real account model.",
+      "source_line": 66
+    },
+    {
+      "source_id": "wt-global-api-GetChatWindowSavedPosition-67",
+      "capabilities": [
+        "publication"
+      ],
+      "status": "publication-only",
+      "note": "Existing temporary Lua table stores session-local geometry. Source signature names/order retained; cross-window isolation, account persistence, validation/coercion and native saved-layout lifecycle not proved. Not promoted to a real account model.",
+      "source_line": 67
+    },
+    {
+      "source_id": "wt-global-api-IsBNLogin-68",
+      "capabilities": [],
+      "status": "publication-gap",
+      "note": "No Battle.net authentication/channel state; page omits argument/result signature.",
+      "source_line": 68
+    },
+    {
+      "source_id": "wt-global-api-SendSystemMessage-69",
+      "capabilities": [],
+      "status": "publication-gap",
+      "note": "No specified message routing/recipient/event contract; choosing CHAT_MSG_SYSTEM would invent linked behavior.",
+      "source_line": 69
+    },
+    {
+      "source_id": "wt-global-api-SetChatWindowSavedDimensions-70",
+      "capabilities": [
+        "publication"
+      ],
+      "status": "publication-only",
+      "note": "Existing temporary Lua table stores session-local geometry. Source signature names/order retained; cross-window isolation, account persistence, validation/coercion and native saved-layout lifecycle not proved. Not promoted to a real account model.",
+      "source_line": 70
+    },
+    {
+      "source_id": "wt-global-api-SetChatWindowSavedPosition-71",
+      "capabilities": [
+        "publication"
+      ],
+      "status": "publication-only",
+      "note": "Existing temporary Lua table stores session-local geometry. Source signature names/order retained; cross-window isolation, account persistence, validation/coercion and native saved-layout lifecycle not proved. Not promoted to a real account model.",
+      "source_line": 71
+    },
+    {
+      "source_id": "wt-framexml-BNGetSelectedBlock-74",
+      "capabilities": [],
+      "status": "publication-gap",
+      "note": "No FrameXML block selection state or pinned implementation body.",
+      "source_line": 74
+    },
+    {
+      "source_id": "wt-framexml-BNSetSelectedBlock-75",
+      "capabilities": [],
+      "status": "publication-gap",
+      "note": "No FrameXML block selection state or pinned implementation body.",
+      "source_line": 75
+    },
+    {
+      "source_id": "wt-framexml-CanCooperateWithToon-76",
+      "capabilities": [],
+      "status": "publication-gap",
+      "note": "No legacy toon identity, faction/realm eligibility model; page supplies no result contract.",
+      "source_line": 76
+    },
+    {
+      "source_id": "wt-framexml-SynchronizeBNetStatus-77",
+      "capabilities": [],
+      "status": "publication-gap",
+      "note": "No FrameXML implementation body or modeled status synchronization lifecycle.",
+      "source_line": 77
+    },
+    {
+      "source_id": "wt-framexml-BetterDate-78",
+      "capabilities": [],
+      "status": "superseded-publication",
+      "note": "Actual later retail removal wt-framexml-BetterDate-967 explains current absence/deprecation publication. Historical behavior and literal signature remain unproven; no new retirement or Classic credit.",
+      "source_line": 78
+    },
+    {
+      "source_id": "wt-framexml-GetFixedLink-79",
+      "capabilities": [
+        "publication"
+      ],
+      "status": "publication-only",
+      "note": "Loaded FrameXML callable only; source text/link does not pin body, hyperlink transformation or input/output/native parity.",
+      "source_line": 79
+    },
+    {
+      "source_id": "wt-events-BN_BLOCK_LIST_UPDATED-83",
+      "capabilities": [
+        "publication"
+      ],
+      "status": "publication-only",
+      "note": "Current registration succeeds. No historical producer, payload ordering, delivery/timing or native-service parity proved.",
+      "source_line": 83
+    },
+    {
+      "source_id": "wt-events-BN_CHAT_CHANNEL_CLOSED-84",
+      "capabilities": [],
+      "status": "publication-gap",
+      "note": "No current registration or legacy Battle.net conversation/channel membership/message producer; no later audited retail retirement of this exact event. Accepting an inert event would not model its lifecycle.",
+      "source_line": 84
+    },
+    {
+      "source_id": "wt-events-BN_CHAT_CHANNEL_CREATE_FAILED-85",
+      "capabilities": [],
+      "status": "publication-gap",
+      "note": "No current registration or legacy Battle.net conversation/channel membership/message producer; no later audited retail retirement of this exact event. Accepting an inert event would not model its lifecycle.",
+      "source_line": 85
+    },
+    {
+      "source_id": "wt-events-BN_CHAT_CHANNEL_CREATE_SUCCEEDED-86",
+      "capabilities": [],
+      "status": "publication-gap",
+      "note": "No current registration or legacy Battle.net conversation/channel membership/message producer; no later audited retail retirement of this exact event. Accepting an inert event would not model its lifecycle.",
+      "source_line": 86
+    },
+    {
+      "source_id": "wt-events-BN_CHAT_CHANNEL_INVITE_FAILED-87",
+      "capabilities": [],
+      "status": "publication-gap",
+      "note": "No current registration or legacy Battle.net conversation/channel membership/message producer; no later audited retail retirement of this exact event. Accepting an inert event would not model its lifecycle.",
+      "source_line": 87
+    },
+    {
+      "source_id": "wt-events-BN_CHAT_CHANNEL_INVITE_SUCCEEDED-88",
+      "capabilities": [],
+      "status": "publication-gap",
+      "note": "No current registration or legacy Battle.net conversation/channel membership/message producer; no later audited retail retirement of this exact event. Accepting an inert event would not model its lifecycle.",
+      "source_line": 88
+    },
+    {
+      "source_id": "wt-events-BN_CHAT_CHANNEL_JOINED-89",
+      "capabilities": [],
+      "status": "publication-gap",
+      "note": "No current registration or legacy Battle.net conversation/channel membership/message producer; no later audited retail retirement of this exact event. Accepting an inert event would not model its lifecycle.",
+      "source_line": 89
+    },
+    {
+      "source_id": "wt-events-BN_CHAT_CHANNEL_LEFT-90",
+      "capabilities": [],
+      "status": "publication-gap",
+      "note": "No current registration or legacy Battle.net conversation/channel membership/message producer; no later audited retail retirement of this exact event. Accepting an inert event would not model its lifecycle.",
+      "source_line": 90
+    },
+    {
+      "source_id": "wt-events-BN_CHAT_CHANNEL_MEMBER_JOINED-91",
+      "capabilities": [],
+      "status": "publication-gap",
+      "note": "No current registration or legacy Battle.net conversation/channel membership/message producer; no later audited retail retirement of this exact event. Accepting an inert event would not model its lifecycle.",
+      "source_line": 91
+    },
+    {
+      "source_id": "wt-events-BN_CHAT_CHANNEL_MEMBER_LEFT-92",
+      "capabilities": [],
+      "status": "publication-gap",
+      "note": "No current registration or legacy Battle.net conversation/channel membership/message producer; no later audited retail retirement of this exact event. Accepting an inert event would not model its lifecycle.",
+      "source_line": 92
+    },
+    {
+      "source_id": "wt-events-BN_CHAT_CHANNEL_MEMBER_UPDATED-93",
+      "capabilities": [],
+      "status": "publication-gap",
+      "note": "No current registration or legacy Battle.net conversation/channel membership/message producer; no later audited retail retirement of this exact event. Accepting an inert event would not model its lifecycle.",
+      "source_line": 93
+    },
+    {
+      "source_id": "wt-events-BN_CHAT_CHANNEL_MESSAGE_BLOCKED-94",
+      "capabilities": [],
+      "status": "publication-gap",
+      "note": "No current registration or legacy Battle.net conversation/channel membership/message producer; no later audited retail retirement of this exact event. Accepting an inert event would not model its lifecycle.",
+      "source_line": 94
+    },
+    {
+      "source_id": "wt-events-BN_CHAT_CHANNEL_MESSAGE_UNDELIVERABLE-95",
+      "capabilities": [],
+      "status": "publication-gap",
+      "note": "No current registration or legacy Battle.net conversation/channel membership/message producer; no later audited retail retirement of this exact event. Accepting an inert event would not model its lifecycle.",
+      "source_line": 95
+    },
+    {
+      "source_id": "wt-events-BN_CHAT_WHISPER_UNDELIVERABLE-96",
+      "capabilities": [
+        "publication"
+      ],
+      "status": "publication-only",
+      "note": "Current registration succeeds. No historical producer, payload ordering, delivery/timing or native-service parity proved.",
+      "source_line": 96
+    },
+    {
+      "source_id": "wt-events-BN_CONNECTED-97",
+      "capabilities": [
+        "publication"
+      ],
+      "status": "publication-only",
+      "note": "Current registration succeeds. No historical producer, payload ordering, delivery/timing or native-service parity proved.",
+      "source_line": 97
+    },
+    {
+      "source_id": "wt-events-BN_CUSTOM_MESSAGE_CHANGED-98",
+      "capabilities": [
+        "publication"
+      ],
+      "status": "publication-only",
+      "note": "Current registration succeeds. No historical producer, payload ordering, delivery/timing or native-service parity proved.",
+      "source_line": 98
+    },
+    {
+      "source_id": "wt-events-BN_CUSTOM_MESSAGE_LOADED-99",
+      "capabilities": [
+        "publication"
+      ],
+      "status": "publication-only",
+      "note": "Current registration succeeds. No historical producer, payload ordering, delivery/timing or native-service parity proved.",
+      "source_line": 99
+    },
+    {
+      "source_id": "wt-events-BN_DISCONNECTED-100",
+      "capabilities": [
+        "publication"
+      ],
+      "status": "publication-only",
+      "note": "Current registration succeeds. No historical producer, payload ordering, delivery/timing or native-service parity proved.",
+      "source_line": 100
+    },
+    {
+      "source_id": "wt-events-BN_FRIEND_ACCOUNT_OFFLINE-101",
+      "capabilities": [
+        "publication"
+      ],
+      "status": "publication-only",
+      "note": "Current registration succeeds. No historical producer, payload ordering, delivery/timing or native-service parity proved.",
+      "source_line": 101
+    },
+    {
+      "source_id": "wt-events-BN_FRIEND_ACCOUNT_ONLINE-102",
+      "capabilities": [
+        "publication"
+      ],
+      "status": "publication-only",
+      "note": "Current registration succeeds. No historical producer, payload ordering, delivery/timing or native-service parity proved.",
+      "source_line": 102
+    },
+    {
+      "source_id": "wt-events-BN_FRIEND_INFO_CHANGED-103",
+      "capabilities": [
+        "publication"
+      ],
+      "status": "publication-only",
+      "note": "Current registration succeeds. No historical producer, payload ordering, delivery/timing or native-service parity proved.",
+      "source_line": 103
+    },
+    {
+      "source_id": "wt-events-BN_FRIEND_INVITE_ADDED-104",
+      "capabilities": [
+        "publication"
+      ],
+      "status": "publication-only",
+      "note": "Current registration succeeds. No historical producer, payload ordering, delivery/timing or native-service parity proved.",
+      "source_line": 104
+    },
+    {
+      "source_id": "wt-events-BN_FRIEND_INVITE_LIST_INITIALIZED-105",
+      "capabilities": [
+        "publication"
+      ],
+      "status": "publication-only",
+      "note": "Current registration succeeds. No historical producer, payload ordering, delivery/timing or native-service parity proved.",
+      "source_line": 105
+    },
+    {
+      "source_id": "wt-events-BN_FRIEND_INVITE_REMOVED-106",
+      "capabilities": [
+        "publication"
+      ],
+      "status": "publication-only",
+      "note": "Current registration succeeds. No historical producer, payload ordering, delivery/timing or native-service parity proved.",
+      "source_line": 106
+    },
+    {
+      "source_id": "wt-events-BN_FRIEND_INVITE_SEND_RESULT-107",
+      "capabilities": [],
+      "status": "superseded-publication",
+      "note": "Actual later retail removal wt-events-BN_FRIEND_INVITE_SEND_RESULT-214 explains current absence/deprecation publication. Historical behavior and literal signature remain unproven; no new retirement or Classic credit.",
+      "source_line": 107
+    },
+    {
+      "source_id": "wt-events-BN_FRIEND_LIST_SIZE_CHANGED-108",
+      "capabilities": [
+        "publication"
+      ],
+      "status": "publication-only",
+      "note": "Current registration succeeds. No historical producer, payload ordering, delivery/timing or native-service parity proved.",
+      "source_line": 108
+    },
+    {
+      "source_id": "wt-events-BN_FRIEND_TOON_OFFLINE-109",
+      "capabilities": [],
+      "status": "publication-gap",
+      "note": "No current registration or legacy toon online/name-change identity event producer. Current account/game-account structures do not establish this 2010 payload.",
+      "source_line": 109
+    },
+    {
+      "source_id": "wt-events-BN_FRIEND_TOON_ONLINE-110",
+      "capabilities": [],
+      "status": "publication-gap",
+      "note": "No current registration or legacy toon online/name-change identity event producer. Current account/game-account structures do not establish this 2010 payload.",
+      "source_line": 110
+    },
+    {
+      "source_id": "wt-events-BN_MATURE_LANGUAGE_FILTER-111",
+      "capabilities": [],
+      "status": "publication-gap",
+      "note": "No current registration or mature-language-filter setting transition producer; source names the event without a payload contract.",
+      "source_line": 111
+    },
+    {
+      "source_id": "wt-events-BN_NEW_PRESENCE-112",
+      "capabilities": [],
+      "status": "superseded-publication",
+      "note": "Actual later retail removal wt-events-BN_NEW_PRESENCE-215 explains current absence/deprecation publication. Historical behavior and literal signature remain unproven; no new retirement or Classic credit.",
+      "source_line": 112
+    },
+    {
+      "source_id": "wt-events-BN_REQUEST_FOF_FAILED-113",
+      "capabilities": [],
+      "status": "superseded-publication",
+      "note": "Actual later retail removal wt-events-BN_REQUEST_FOF_FAILED-216 explains current absence/deprecation publication. Historical behavior and literal signature remain unproven; no new retirement or Classic credit.",
+      "source_line": 113
+    },
+    {
+      "source_id": "wt-events-BN_REQUEST_FOF_SUCCEEDED-114",
+      "capabilities": [
+        "publication"
+      ],
+      "status": "publication-only",
+      "note": "Current registration succeeds. No historical producer, payload ordering, delivery/timing or native-service parity proved.",
+      "source_line": 114
+    },
+    {
+      "source_id": "wt-events-BN_SELF_OFFLINE-115",
+      "capabilities": [],
+      "status": "superseded-publication",
+      "note": "Actual later retail removal wt-events-BN_SELF_OFFLINE-217 explains current absence/deprecation publication. Historical behavior and literal signature remain unproven; no new retirement or Classic credit.",
+      "source_line": 115
+    },
+    {
+      "source_id": "wt-events-BN_SELF_ONLINE-116",
+      "capabilities": [],
+      "status": "superseded-publication",
+      "note": "Actual later retail removal wt-events-BN_SELF_ONLINE-218 explains current absence/deprecation publication. Historical behavior and literal signature remain unproven; no new retirement or Classic credit.",
+      "source_line": 116
+    },
+    {
+      "source_id": "wt-events-BN_SYSTEM_MESSAGE-117",
+      "capabilities": [],
+      "status": "superseded-publication",
+      "note": "Actual later retail removal wt-events-BN_SYSTEM_MESSAGE-219 explains current absence/deprecation publication. Historical behavior and literal signature remain unproven; no new retirement or Classic credit.",
+      "source_line": 117
+    },
+    {
+      "source_id": "wt-events-BN_TOON_NAME_UPDATED-118",
+      "capabilities": [],
+      "status": "publication-gap",
+      "note": "No current registration or legacy toon online/name-change identity event producer. Current account/game-account structures do not establish this 2010 payload.",
+      "source_line": 118
+    },
+    {
+      "source_id": "wt-events-CHAT_MSG_BN_CONVERSATION-119",
+      "capabilities": [],
+      "status": "publication-gap",
+      "note": "No current registration or legacy Battle.net conversation/channel membership/message producer; no later audited retail retirement of this exact event. Accepting an inert event would not model its lifecycle.",
+      "source_line": 119
+    },
+    {
+      "source_id": "wt-events-CHAT_MSG_BN_CONVERSATION_LIST-120",
+      "capabilities": [],
+      "status": "publication-gap",
+      "note": "No current registration or legacy Battle.net conversation/channel membership/message producer; no later audited retail retirement of this exact event. Accepting an inert event would not model its lifecycle.",
+      "source_line": 120
+    },
+    {
+      "source_id": "wt-events-CHAT_MSG_BN_CONVERSATION_NOTICE-121",
+      "capabilities": [],
+      "status": "publication-gap",
+      "note": "No current registration or legacy Battle.net conversation/channel membership/message producer; no later audited retail retirement of this exact event. Accepting an inert event would not model its lifecycle.",
+      "source_line": 121
+    },
+    {
+      "source_id": "wt-events-CHAT_MSG_BN_INLINE_TOAST_ALERT-122",
+      "capabilities": [
+        "publication"
+      ],
+      "status": "publication-only",
+      "note": "Current registration succeeds. No historical producer, payload ordering, delivery/timing or native-service parity proved.",
+      "source_line": 122
+    },
+    {
+      "source_id": "wt-events-CHAT_MSG_BN_INLINE_TOAST_BROADCAST-123",
+      "capabilities": [
+        "publication"
+      ],
+      "status": "publication-only",
+      "note": "Current registration succeeds. No historical producer, payload ordering, delivery/timing or native-service parity proved.",
+      "source_line": 123
+    },
+    {
+      "source_id": "wt-events-CHAT_MSG_BN_INLINE_TOAST_BROADCAST_INFORM-124",
+      "capabilities": [
+        "publication"
+      ],
+      "status": "publication-only",
+      "note": "Current registration succeeds. No historical producer, payload ordering, delivery/timing or native-service parity proved.",
+      "source_line": 124
+    },
+    {
+      "source_id": "wt-events-CHAT_MSG_BN_INLINE_TOAST_CONVERSATION-125",
+      "capabilities": [
+        "publication"
+      ],
+      "status": "publication-only",
+      "note": "Current registration succeeds. No historical producer, payload ordering, delivery/timing or native-service parity proved.",
+      "source_line": 125
+    },
+    {
+      "source_id": "wt-events-CHAT_MSG_BN_WHISPER-126",
+      "capabilities": [
+        "publication"
+      ],
+      "status": "publication-only",
+      "note": "Current registration succeeds. No historical producer, payload ordering, delivery/timing or native-service parity proved.",
+      "source_line": 126
+    },
+    {
+      "source_id": "wt-events-CHAT_MSG_BN_WHISPER_INFORM-127",
+      "capabilities": [
+        "publication"
+      ],
+      "status": "publication-only",
+      "note": "Current registration succeeds. No historical producer, payload ordering, delivery/timing or native-service parity proved.",
+      "source_line": 127
+    },
+    {
+      "source_id": "wt-events-COMMENTATOR_SKIRMISH_MODE_REQUEST-128",
+      "capabilities": [],
+      "status": "superseded-publication",
+      "note": "Actual later retail removal diff-wt-events-COMMENTATOR_SKIRMISH_MODE_REQUEST-117 explains current absence/deprecation publication. Historical behavior and literal signature remain unproven; no new retirement or Classic credit.",
+      "source_line": 128
+    },
+    {
+      "source_id": "wt-events-COMMENTATOR_SKIRMISH_QUEUE_REQUEST-129",
+      "capabilities": [],
+      "status": "superseded-publication",
+      "note": "Actual later retail removal diff-wt-events-COMMENTATOR_SKIRMISH_QUEUE_REQUEST-118 explains current absence/deprecation publication. Historical behavior and literal signature remain unproven; no new retirement or Classic credit.",
+      "source_line": 129
+    },
+    {
+      "source_id": "wt-global-api-NotifyInspect-132",
+      "capabilities": [
+        "publication"
+      ],
+      "status": "publication-only",
+      "note": "Callable inventory-backed binding only. Historical server throttling and withheld availability events not modeled; unconditional inspectable request delivery is not guaranteed native behavior.",
+      "source_line": 132
+    },
+    {
+      "source_id": "wt-framexml-UIFrameFlashSwitch-135",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "status": "absence-only",
+      "note": "Already raw/lookup absent; complete bare/qualified cached-retail/src/tests scans find no consumers. No runtime removal, wrapper deletion or non-retail change.",
+      "source_line": 135
+    },
+    {
+      "source_id": "wt-framexml-ToggleCombatLog-136",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "status": "absence-only",
+      "note": "Already raw/lookup absent; complete bare/qualified cached-retail/src/tests scans find no consumers. No runtime removal, wrapper deletion or non-retail change.",
+      "source_line": 136
+    },
+    {
+      "source_id": "source-context-001",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial/source/build context or external resource link; no runtime credit."
+    },
+    {
+      "source_id": "source-context-003",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "prose-undated-004",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Full-extract cross-reference to wt-global-api-BNAcceptFriendInvite-4; inventory and explicit signature audited separately. No duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-005",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Full-extract cross-reference to wt-global-api-BNConnected-5; inventory and explicit signature audited separately. No duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-006",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Full-extract cross-reference to wt-global-api-BNCreateConversation-6; inventory and explicit signature audited separately. No duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-007",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Full-extract cross-reference to wt-global-api-BNDeclineFriendInvite-7; inventory and explicit signature audited separately. No duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-008",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Full-extract cross-reference to wt-global-api-BNFeaturesEnabled-8; inventory and explicit signature audited separately. No duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-009",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Full-extract cross-reference to wt-global-api-BNFeaturesEnabledAndConnected-9; inventory and explicit signature audited separately. No duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-010",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Full-extract cross-reference to wt-global-api-BNGetBlockedInfo-10; inventory and explicit signature audited separately. No duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-011",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Full-extract cross-reference to wt-global-api-BNGetBlockedToonInfo-11; inventory and explicit signature audited separately. No duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-012",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Full-extract cross-reference to wt-global-api-BNGetConversationInfo-12; inventory and explicit signature audited separately. No duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-013",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Full-extract cross-reference to wt-global-api-BNGetConversationMemberInfo-13; inventory and explicit signature audited separately. No duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-014",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Full-extract cross-reference to wt-global-api-BNGetCustomMessageTable-14; inventory and explicit signature audited separately. No duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-015",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Full-extract cross-reference to wt-global-api-BNGetFOFInfo-15; inventory and explicit signature audited separately. No duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-016",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Full-extract cross-reference to wt-global-api-BNGetFriendInfo-16; inventory and explicit signature audited separately. No duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-017",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Full-extract cross-reference to wt-global-api-BNGetFriendInfoByID-17; inventory and explicit signature audited separately. No duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-018",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Full-extract cross-reference to wt-global-api-BNGetFriendInviteInfo-18; inventory and explicit signature audited separately. No duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-019",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Full-extract cross-reference to wt-global-api-BNGetFriendToonInfo-19; inventory and explicit signature audited separately. No duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-020",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Full-extract cross-reference to wt-global-api-BNGetInfo-20; inventory and explicit signature audited separately. No duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-021",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Full-extract cross-reference to wt-global-api-BNGetMatureLanguageFilter-21; inventory and explicit signature audited separately. No duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-022",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Full-extract cross-reference to wt-global-api-BNGetMaxPlayersInConversation-22; inventory and explicit signature audited separately. No duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-023",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Full-extract cross-reference to wt-global-api-BNGetNumBlocked-23; inventory and explicit signature audited separately. No duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-024",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Full-extract cross-reference to wt-global-api-BNGetNumBlockedToons-24; inventory and explicit signature audited separately. No duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-025",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Full-extract cross-reference to wt-global-api-BNGetNumConversationMembers-25; inventory and explicit signature audited separately. No duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-026",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Full-extract cross-reference to wt-global-api-BNGetNumFOF-26; inventory and explicit signature audited separately. No duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-027",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Full-extract cross-reference to wt-global-api-BNGetNumFriendInvites-27; inventory and explicit signature audited separately. No duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-028",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Full-extract cross-reference to wt-global-api-BNGetNumFriendToons-28; inventory and explicit signature audited separately. No duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-029",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Full-extract cross-reference to wt-global-api-BNGetNumFriends-29; inventory and explicit signature audited separately. No duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-030",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Full-extract cross-reference to wt-global-api-BNGetSelectedFriend-30; inventory and explicit signature audited separately. No duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-031",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Full-extract cross-reference to wt-global-api-BNGetSelectedToonBlock-31; inventory and explicit signature audited separately. No duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-032",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Full-extract cross-reference to wt-global-api-BNGetToonInfo-32; inventory and explicit signature audited separately. No duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-033",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Full-extract cross-reference to wt-global-api-BNInviteToConversation-33; inventory and explicit signature audited separately. No duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-034",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Full-extract cross-reference to wt-global-api-BNIsBlocked-34; inventory and explicit signature audited separately. No duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-035",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Full-extract cross-reference to wt-global-api-BNIsFriend-35; inventory and explicit signature audited separately. No duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-036",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Full-extract cross-reference to wt-global-api-BNIsSelf-36; inventory and explicit signature audited separately. No duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-037",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Full-extract cross-reference to wt-global-api-BNIsToonBlocked-37; inventory and explicit signature audited separately. No duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-038",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Full-extract cross-reference to wt-global-api-BNLeaveConversation-38; inventory and explicit signature audited separately. No duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-039",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Full-extract cross-reference to wt-global-api-BNListConversation-39; inventory and explicit signature audited separately. No duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-040",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Full-extract cross-reference to wt-global-api-BNRemoveFriend-40; inventory and explicit signature audited separately. No duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-041",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Full-extract cross-reference to wt-global-api-BNReportFriendInvite-41; inventory and explicit signature audited separately. No duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-042",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Full-extract cross-reference to wt-global-api-BNReportPlayer-42; inventory and explicit signature audited separately. No duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-043",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Full-extract cross-reference to wt-global-api-BNRequestFOFInfo-43; inventory and explicit signature audited separately. No duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-044",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Full-extract cross-reference to wt-global-api-BNSendConversationMessage-44; inventory and explicit signature audited separately. No duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-045",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Full-extract cross-reference to wt-global-api-BNSendFriendInvite-45; inventory and explicit signature audited separately. No duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-046",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Full-extract cross-reference to wt-global-api-BNSendFriendInviteByID-46; inventory and explicit signature audited separately. No duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-047",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Full-extract cross-reference to wt-global-api-BNSendWhisper-47; inventory and explicit signature audited separately. No duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-048",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Full-extract cross-reference to wt-global-api-BNSetAFK-48; inventory and explicit signature audited separately. No duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-049",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Full-extract cross-reference to wt-global-api-BNSetBlocked-49; inventory and explicit signature audited separately. No duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-050",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Full-extract cross-reference to wt-global-api-BNSetCustomMessage-50; inventory and explicit signature audited separately. No duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-051",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Full-extract cross-reference to wt-global-api-BNSetDND-51; inventory and explicit signature audited separately. No duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-052",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Full-extract cross-reference to wt-global-api-BNSetFocus-52; inventory and explicit signature audited separately. No duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-053",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Full-extract cross-reference to wt-global-api-BNSetFriendNote-53; inventory and explicit signature audited separately. No duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-054",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Full-extract cross-reference to wt-global-api-BNSetMatureLanguageFilter-54; inventory and explicit signature audited separately. No duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-055",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Full-extract cross-reference to wt-global-api-BNSetSelectedFriend-55; inventory and explicit signature audited separately. No duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-056",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Full-extract cross-reference to wt-global-api-BNSetSelectedToonBlock-56; inventory and explicit signature audited separately. No duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-057",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Full-extract cross-reference to wt-global-api-BNSetToonBlocked-57; inventory and explicit signature audited separately. No duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-058",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Full-extract cross-reference to wt-global-api-CommentatorGetSkirmishMode-58; inventory and explicit signature audited separately. No duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-059",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Full-extract cross-reference to wt-global-api-CommentatorGetSkirmishQueueCount-59; inventory and explicit signature audited separately. No duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-060",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Full-extract cross-reference to wt-global-api-CommentatorGetSkirmishQueuePlayerInfo-60; inventory and explicit signature audited separately. No duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-061",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Full-extract cross-reference to wt-global-api-CommentatorRequestSkirmishMode-61; inventory and explicit signature audited separately. No duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-062",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Full-extract cross-reference to wt-global-api-CommentatorRequestSkirmishQueueData-62; inventory and explicit signature audited separately. No duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-063",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Full-extract cross-reference to wt-global-api-CommentatorSetSkirmishMatchmakingMode-63; inventory and explicit signature audited separately. No duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-064",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Full-extract cross-reference to wt-global-api-CommentatorStartSkirmishMatch-64; inventory and explicit signature audited separately. No duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-065",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Full-extract cross-reference to wt-global-api-GetAutoCompletePresenceID-65; inventory and explicit signature audited separately. No duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-066",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Full-extract cross-reference to wt-global-api-GetChatWindowSavedDimensions-66; inventory and explicit signature audited separately. No duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-067",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Full-extract cross-reference to wt-global-api-GetChatWindowSavedPosition-67; inventory and explicit signature audited separately. No duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-068",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Full-extract cross-reference to wt-global-api-IsBNLogin-68; inventory and explicit signature audited separately. No duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-069",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Full-extract cross-reference to wt-global-api-SendSystemMessage-69; inventory and explicit signature audited separately. No duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-070",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Full-extract cross-reference to wt-global-api-SetChatWindowSavedDimensions-70; inventory and explicit signature audited separately. No duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-071",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Full-extract cross-reference to wt-global-api-SetChatWindowSavedPosition-71; inventory and explicit signature audited separately. No duplicate behavioral credit."
+    },
+    {
+      "source_id": "source-context-073",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "prose-undated-074",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Full-extract cross-reference to wt-framexml-BNGetSelectedBlock-74; inventory and explicit signature audited separately. No duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-075",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Full-extract cross-reference to wt-framexml-BNSetSelectedBlock-75; inventory and explicit signature audited separately. No duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-076",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Full-extract cross-reference to wt-framexml-CanCooperateWithToon-76; inventory and explicit signature audited separately. No duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-077",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Full-extract cross-reference to wt-framexml-SynchronizeBNetStatus-77; inventory and explicit signature audited separately. No duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-078",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Full-extract cross-reference to wt-framexml-BetterDate-78; inventory and explicit signature audited separately. No duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-079",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Full-extract cross-reference to wt-framexml-GetFixedLink-79; inventory and explicit signature audited separately. No duplicate behavioral credit."
+    },
+    {
+      "source_id": "source-context-082",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "prose-undated-083",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Full-extract cross-reference to wt-events-BN_BLOCK_LIST_UPDATED-83; inventory and explicit signature audited separately. No duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-084",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Full-extract cross-reference to wt-events-BN_CHAT_CHANNEL_CLOSED-84; inventory and explicit signature audited separately. No duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-085",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Full-extract cross-reference to wt-events-BN_CHAT_CHANNEL_CREATE_FAILED-85; inventory and explicit signature audited separately. No duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-086",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Full-extract cross-reference to wt-events-BN_CHAT_CHANNEL_CREATE_SUCCEEDED-86; inventory and explicit signature audited separately. No duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-087",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Full-extract cross-reference to wt-events-BN_CHAT_CHANNEL_INVITE_FAILED-87; inventory and explicit signature audited separately. No duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-088",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Full-extract cross-reference to wt-events-BN_CHAT_CHANNEL_INVITE_SUCCEEDED-88; inventory and explicit signature audited separately. No duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-089",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Full-extract cross-reference to wt-events-BN_CHAT_CHANNEL_JOINED-89; inventory and explicit signature audited separately. No duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-090",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Full-extract cross-reference to wt-events-BN_CHAT_CHANNEL_LEFT-90; inventory and explicit signature audited separately. No duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-091",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Full-extract cross-reference to wt-events-BN_CHAT_CHANNEL_MEMBER_JOINED-91; inventory and explicit signature audited separately. No duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-092",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Full-extract cross-reference to wt-events-BN_CHAT_CHANNEL_MEMBER_LEFT-92; inventory and explicit signature audited separately. No duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-093",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Full-extract cross-reference to wt-events-BN_CHAT_CHANNEL_MEMBER_UPDATED-93; inventory and explicit signature audited separately. No duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-094",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Full-extract cross-reference to wt-events-BN_CHAT_CHANNEL_MESSAGE_BLOCKED-94; inventory and explicit signature audited separately. No duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-095",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Full-extract cross-reference to wt-events-BN_CHAT_CHANNEL_MESSAGE_UNDELIVERABLE-95; inventory and explicit signature audited separately. No duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-096",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Full-extract cross-reference to wt-events-BN_CHAT_WHISPER_UNDELIVERABLE-96; inventory and explicit signature audited separately. No duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-097",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Full-extract cross-reference to wt-events-BN_CONNECTED-97; inventory and explicit signature audited separately. No duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-098",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Full-extract cross-reference to wt-events-BN_CUSTOM_MESSAGE_CHANGED-98; inventory and explicit signature audited separately. No duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-099",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Full-extract cross-reference to wt-events-BN_CUSTOM_MESSAGE_LOADED-99; inventory and explicit signature audited separately. No duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-100",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Full-extract cross-reference to wt-events-BN_DISCONNECTED-100; inventory and explicit signature audited separately. No duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-101",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Full-extract cross-reference to wt-events-BN_FRIEND_ACCOUNT_OFFLINE-101; inventory and explicit signature audited separately. No duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-102",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Full-extract cross-reference to wt-events-BN_FRIEND_ACCOUNT_ONLINE-102; inventory and explicit signature audited separately. No duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-103",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Full-extract cross-reference to wt-events-BN_FRIEND_INFO_CHANGED-103; inventory and explicit signature audited separately. No duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-104",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Full-extract cross-reference to wt-events-BN_FRIEND_INVITE_ADDED-104; inventory and explicit signature audited separately. No duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-105",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Full-extract cross-reference to wt-events-BN_FRIEND_INVITE_LIST_INITIALIZED-105; inventory and explicit signature audited separately. No duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-106",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Full-extract cross-reference to wt-events-BN_FRIEND_INVITE_REMOVED-106; inventory and explicit signature audited separately. No duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-107",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Full-extract cross-reference to wt-events-BN_FRIEND_INVITE_SEND_RESULT-107; inventory and explicit signature audited separately. No duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-108",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Full-extract cross-reference to wt-events-BN_FRIEND_LIST_SIZE_CHANGED-108; inventory and explicit signature audited separately. No duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-109",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Full-extract cross-reference to wt-events-BN_FRIEND_TOON_OFFLINE-109; inventory and explicit signature audited separately. No duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-110",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Full-extract cross-reference to wt-events-BN_FRIEND_TOON_ONLINE-110; inventory and explicit signature audited separately. No duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-111",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Full-extract cross-reference to wt-events-BN_MATURE_LANGUAGE_FILTER-111; inventory and explicit signature audited separately. No duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-112",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Full-extract cross-reference to wt-events-BN_NEW_PRESENCE-112; inventory and explicit signature audited separately. No duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-113",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Full-extract cross-reference to wt-events-BN_REQUEST_FOF_FAILED-113; inventory and explicit signature audited separately. No duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-114",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Full-extract cross-reference to wt-events-BN_REQUEST_FOF_SUCCEEDED-114; inventory and explicit signature audited separately. No duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-115",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Full-extract cross-reference to wt-events-BN_SELF_OFFLINE-115; inventory and explicit signature audited separately. No duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-116",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Full-extract cross-reference to wt-events-BN_SELF_ONLINE-116; inventory and explicit signature audited separately. No duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-117",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Full-extract cross-reference to wt-events-BN_SYSTEM_MESSAGE-117; inventory and explicit signature audited separately. No duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-118",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Full-extract cross-reference to wt-events-BN_TOON_NAME_UPDATED-118; inventory and explicit signature audited separately. No duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-119",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Full-extract cross-reference to wt-events-CHAT_MSG_BN_CONVERSATION-119; inventory and explicit signature audited separately. No duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-120",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Full-extract cross-reference to wt-events-CHAT_MSG_BN_CONVERSATION_LIST-120; inventory and explicit signature audited separately. No duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-121",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Full-extract cross-reference to wt-events-CHAT_MSG_BN_CONVERSATION_NOTICE-121; inventory and explicit signature audited separately. No duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-122",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Full-extract cross-reference to wt-events-CHAT_MSG_BN_INLINE_TOAST_ALERT-122; inventory and explicit signature audited separately. No duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-123",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Full-extract cross-reference to wt-events-CHAT_MSG_BN_INLINE_TOAST_BROADCAST-123; inventory and explicit signature audited separately. No duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-124",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Full-extract cross-reference to wt-events-CHAT_MSG_BN_INLINE_TOAST_BROADCAST_INFORM-124; inventory and explicit signature audited separately. No duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-125",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Full-extract cross-reference to wt-events-CHAT_MSG_BN_INLINE_TOAST_CONVERSATION-125; inventory and explicit signature audited separately. No duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-126",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Full-extract cross-reference to wt-events-CHAT_MSG_BN_WHISPER-126; inventory and explicit signature audited separately. No duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-127",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Full-extract cross-reference to wt-events-CHAT_MSG_BN_WHISPER_INFORM-127; inventory and explicit signature audited separately. No duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-128",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Full-extract cross-reference to wt-events-COMMENTATOR_SKIRMISH_MODE_REQUEST-128; inventory and explicit signature audited separately. No duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-129",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Full-extract cross-reference to wt-events-COMMENTATOR_SKIRMISH_QUEUE_REQUEST-129; inventory and explicit signature audited separately. No duplicate behavioral credit."
+    },
+    {
+      "source_id": "source-context-131",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "prose-undated-132",
+      "capabilities": [],
+      "status": "semantic-gap",
+      "note": "Historical server may throttle NotifyInspect and withhold availability events. Existing simulator request handler queues INSPECT_READY for inspectable units; no server throttle/response state or pinned policy to implement a faithful limit. Callable inventory identity does not close this prose contract; no guaranteed event assertion."
+    },
+    {
+      "source_id": "source-context-134",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "prose-undated-135",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Full-extract cross-reference to wt-framexml-UIFrameFlashSwitch-135; inventory and explicit signature audited separately. No duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-136",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Full-extract cross-reference to wt-framexml-ToggleCombatLog-136; inventory and explicit signature audited separately. No duplicate behavioral credit."
+    },
+    {
+      "source_id": "signature-wt-global-api-BNAcceptFriendInvite-4",
+      "source_line": 4,
+      "literal_signature": "(inviteId)",
+      "capabilities": [],
+      "status": "signature-gap",
+      "note": "Literal source fragment only; historical validation/coercion, arity and outputs unproved. No invitation acceptance/deletion lifecycle over account invite state. Linked contracts not expanded."
+    },
+    {
+      "source_id": "signature-wt-global-api-BNConnected-5",
+      "source_line": 5,
+      "literal_signature": "()",
+      "capabilities": [],
+      "status": "signature-gap",
+      "note": "Literal source fragment only; historical validation/coercion, arity and outputs unproved. Callable current binding/default only; legacy presence identities, output arity and online/authentication/server lifecycle unproven. BNConnected pretends connected while features probes return false; no coherent Battle.net connection model. Linked contracts not expanded.",
+      "literal_returns": "isConnected"
+    },
+    {
+      "source_id": "signature-wt-global-api-BNCreateConversation-6",
+      "source_line": 6,
+      "literal_signature": "(player1, player2)",
+      "capabilities": [],
+      "status": "signature-gap",
+      "note": "Literal source fragment only; historical validation/coercion, arity and outputs unproved. Actual later retail removal wt-global-api-BNCreateConversation-27 explains current absence/deprecation publication. Historical behavior and literal signature remain unproven; no new retirement or Classic credit. Linked contracts not expanded."
+    },
+    {
+      "source_id": "signature-wt-global-api-BNDeclineFriendInvite-7",
+      "source_line": 7,
+      "literal_signature": "(inviteId)",
+      "capabilities": [],
+      "status": "signature-gap",
+      "note": "Literal source fragment only; historical validation/coercion, arity and outputs unproved. No invitation decline/deletion lifecycle over account invite state. Linked contracts not expanded."
+    },
+    {
+      "source_id": "signature-wt-global-api-BNFeaturesEnabledAndConnected-9",
+      "source_line": 9,
+      "literal_signature": "()",
+      "capabilities": [],
+      "status": "signature-gap",
+      "note": "Literal source fragment only; historical validation/coercion, arity and outputs unproved. Callable current binding/default only; legacy presence identities, output arity and online/authentication/server lifecycle unproven. BNConnected pretends connected while features probes return false; no coherent Battle.net connection model. Linked contracts not expanded.",
+      "literal_returns": "isEnabledAndConnected"
+    },
+    {
+      "source_id": "signature-wt-global-api-BNGetBlockedInfo-10",
+      "source_line": 10,
+      "literal_signature": "(blockId)",
+      "capabilities": [],
+      "status": "signature-gap",
+      "note": "Literal source fragment only; historical validation/coercion, arity and outputs unproved. No indexed account-block list and block identity/name model. Linked contracts not expanded.",
+      "literal_returns": "presenceId, blockName"
+    },
+    {
+      "source_id": "signature-wt-global-api-BNGetBlockedToonInfo-11",
+      "source_line": 11,
+      "literal_signature": "(blockId or index)",
+      "capabilities": [],
+      "status": "signature-gap",
+      "note": "Literal source fragment only; historical validation/coercion, arity and outputs unproved. Actual later retail removal wt-global-api-BNGetBlockedToonInfo-28 explains current absence/deprecation publication. Historical behavior and literal signature remain unproven; no new retirement or Classic credit. Linked contracts not expanded.",
+      "literal_returns": "blockID, blockName"
+    },
+    {
+      "source_id": "signature-wt-global-api-BNGetConversationInfo-12",
+      "source_line": 12,
+      "literal_signature": "(conversationId)",
+      "capabilities": [],
+      "status": "signature-gap",
+      "note": "Literal source fragment only; historical validation/coercion, arity and outputs unproved. Actual later retail removal wt-global-api-BNGetConversationInfo-29 explains current absence/deprecation publication. Historical behavior and literal signature remain unproven; no new retirement or Classic credit. Linked contracts not expanded.",
+      "literal_returns": "conversationType"
+    },
+    {
+      "source_id": "signature-wt-global-api-BNGetConversationMemberInfo-13",
+      "source_line": 13,
+      "literal_signature": "(conversationId, participantId)",
+      "capabilities": [],
+      "status": "signature-gap",
+      "note": "Literal source fragment only; historical validation/coercion, arity and outputs unproved. Actual later retail removal wt-global-api-BNGetConversationMemberInfo-30 explains current absence/deprecation publication. Historical behavior and literal signature remain unproven; no new retirement or Classic credit. Linked contracts not expanded.",
+      "literal_returns": "accountId, toonId, name"
+    },
+    {
+      "source_id": "signature-wt-global-api-BNGetCustomMessageTable-14",
+      "source_line": 14,
+      "literal_signature": "([BNetBroadcasts])",
+      "capabilities": [],
+      "status": "signature-gap",
+      "note": "Literal source fragment only; historical validation/coercion, arity and outputs unproved. Actual later retail removal wt-global-api-BNGetCustomMessageTable-31 explains current absence/deprecation publication. Historical behavior and literal signature remain unproven; no new retirement or Classic credit. Linked contracts not expanded.",
+      "literal_returns": "BNetBroadcasts, numOnlineBroadcasts, numOfflineBroadcasts"
+    },
+    {
+      "source_id": "signature-wt-global-api-BNGetFOFInfo-15",
+      "source_line": 15,
+      "literal_signature": "(presenceId, showMutual, showPotential, friendsIndex)",
+      "capabilities": [],
+      "status": "signature-gap",
+      "note": "Literal source fragment only; historical validation/coercion, arity and outputs unproved. No mutual/potential friend discovery result cache or server request lifecycle. Linked contracts not expanded.",
+      "literal_returns": "friendID, givenName, surname, isMutual"
+    },
+    {
+      "source_id": "signature-wt-global-api-BNGetFriendInfo-16",
+      "source_line": 16,
+      "literal_signature": "(friendId)",
+      "capabilities": [],
+      "status": "signature-gap",
+      "note": "Literal source fragment only; historical validation/coercion, arity and outputs unproved. Actual later retail removal expects nil, but temporary inert default still publishes this global. No own-source removal authority; retained without deleting existing compatibility/default behavior. Linked contracts not expanded.",
+      "literal_returns": "presenceID, givenName, surname"
+    },
+    {
+      "source_id": "signature-wt-global-api-BNGetFriendInfoByID-17",
+      "source_line": 17,
+      "literal_signature": "(presenceID)",
+      "capabilities": [],
+      "status": "signature-gap",
+      "note": "Literal source fragment only; historical validation/coercion, arity and outputs unproved. Actual later retail removal wt-global-api-BNGetFriendInfoByID-132 explains current absence/deprecation publication. Historical behavior and literal signature remain unproven; no new retirement or Classic credit. Linked contracts not expanded.",
+      "literal_returns": "presenceID, givenName, surname, toonName, toonID, client, isOnline, lastOnline, isAFK, isDND, messageText, noteText"
+    },
+    {
+      "source_id": "signature-wt-global-api-BNGetFriendInviteInfo-18",
+      "source_line": 18,
+      "literal_signature": "(offset)",
+      "capabilities": [],
+      "status": "signature-gap",
+      "note": "Literal source fragment only; historical validation/coercion, arity and outputs unproved. Actual later retail removal wt-global-api-BNGetFriendInviteInfo-563 explains current absence/deprecation publication. Historical behavior and literal signature remain unproven; no new retirement or Classic credit. Linked contracts not expanded.",
+      "literal_returns": "inviteId, name, surname, message, timeSent, days"
+    },
+    {
+      "source_id": "signature-wt-global-api-BNGetFriendToonInfo-19",
+      "source_line": 19,
+      "literal_signature": "(friendId, toonIdx)",
+      "capabilities": [],
+      "status": "signature-gap",
+      "note": "Literal source fragment only; historical validation/coercion, arity and outputs unproved. Actual later retail removal wt-global-api-BNGetFriendToonInfo-32 explains current absence/deprecation publication. Historical behavior and literal signature remain unproven; no new retirement or Classic credit. Linked contracts not expanded.",
+      "literal_returns": "hasFocus, toonName, client, realmName, faction, race, class, guild, zoneName, level, gameText"
+    },
+    {
+      "source_id": "signature-wt-global-api-BNGetInfo-20",
+      "source_line": 20,
+      "literal_signature": "()",
+      "capabilities": [],
+      "status": "signature-gap",
+      "note": "Literal source fragment only; historical validation/coercion, arity and outputs unproved. Callable current binding/default only; legacy presence identities, output arity and online/authentication/server lifecycle unproven. BNConnected pretends connected while features probes return false; no coherent Battle.net connection model. Linked contracts not expanded.",
+      "literal_returns": "presenceID, toonID, broadcastText, bnetAFK, bnetDND"
+    },
+    {
+      "source_id": "signature-wt-global-api-BNGetMatureLanguageFilter-21",
+      "source_line": 21,
+      "literal_signature": "()",
+      "capabilities": [],
+      "status": "signature-gap",
+      "note": "Literal source fragment only; historical validation/coercion, arity and outputs unproved. Actual later retail removal wt-global-api-BNGetMatureLanguageFilter-33 explains current absence/deprecation publication. Historical behavior and literal signature remain unproven; no new retirement or Classic credit. Linked contracts not expanded.",
+      "literal_returns": "isEnabled"
+    },
+    {
+      "source_id": "signature-wt-global-api-BNGetMaxPlayersInConversation-22",
+      "source_line": 22,
+      "literal_signature": "()",
+      "capabilities": [],
+      "status": "signature-gap",
+      "note": "Literal source fragment only; historical validation/coercion, arity and outputs unproved. Actual later retail removal wt-global-api-BNGetMaxPlayersInConversation-35 explains current absence/deprecation publication. Historical behavior and literal signature remain unproven; no new retirement or Classic credit. Linked contracts not expanded.",
+      "literal_returns": "maxPlayers"
+    },
+    {
+      "source_id": "signature-wt-global-api-BNGetNumBlocked-23",
+      "source_line": 23,
+      "literal_signature": "()",
+      "capabilities": [],
+      "status": "signature-gap",
+      "note": "Literal source fragment only; historical validation/coercion, arity and outputs unproved. No mutable account-block list/count model. Linked contracts not expanded.",
+      "literal_returns": "numBlocks"
+    },
+    {
+      "source_id": "signature-wt-global-api-BNGetNumBlockedToons-24",
+      "source_line": 24,
+      "literal_signature": "()",
+      "capabilities": [],
+      "status": "signature-gap",
+      "note": "Literal source fragment only; historical validation/coercion, arity and outputs unproved. Actual later retail removal wt-global-api-BNGetNumBlockedToons-36 explains current absence/deprecation publication. Historical behavior and literal signature remain unproven; no new retirement or Classic credit. Linked contracts not expanded.",
+      "literal_returns": "numToonBlocks"
+    },
+    {
+      "source_id": "signature-wt-global-api-BNGetNumConversationMembers-25",
+      "source_line": 25,
+      "literal_signature": "(conversationId)",
+      "capabilities": [],
+      "status": "signature-gap",
+      "note": "Literal source fragment only; historical validation/coercion, arity and outputs unproved. Actual later retail removal wt-global-api-BNGetNumConversationMembers-37 explains current absence/deprecation publication. Historical behavior and literal signature remain unproven; no new retirement or Classic credit. Linked contracts not expanded.",
+      "literal_returns": "numMembers"
+    },
+    {
+      "source_id": "signature-wt-global-api-BNGetNumFOF-26",
+      "source_line": 26,
+      "literal_signature": "(presenceId)",
+      "capabilities": [],
+      "status": "signature-gap",
+      "note": "Literal source fragment only; historical validation/coercion, arity and outputs unproved. No mutual/potential friend discovery cache and counts. Linked contracts not expanded.",
+      "literal_returns": "numMutual, numPotential"
+    },
+    {
+      "source_id": "signature-wt-global-api-BNGetNumFriendInvites-27",
+      "source_line": 27,
+      "literal_signature": "()",
+      "capabilities": [],
+      "status": "signature-gap",
+      "note": "Literal source fragment only; historical validation/coercion, arity and outputs unproved. Callable current binding/default only; legacy presence identities, output arity and online/authentication/server lifecycle unproven. BNConnected pretends connected while features probes return false; no coherent Battle.net connection model. Linked contracts not expanded.",
+      "literal_returns": "numPendingInvites"
+    },
+    {
+      "source_id": "signature-wt-global-api-BNGetNumFriendToons-28",
+      "source_line": 28,
+      "literal_signature": "(friendId)",
+      "capabilities": [],
+      "status": "signature-gap",
+      "note": "Literal source fragment only; historical validation/coercion, arity and outputs unproved. Actual later retail removal wt-global-api-BNGetNumFriendToons-38 explains current absence/deprecation publication. Historical behavior and literal signature remain unproven; no new retirement or Classic credit. Linked contracts not expanded.",
+      "literal_returns": "numToons"
+    },
+    {
+      "source_id": "signature-wt-global-api-BNGetNumFriends-29",
+      "source_line": 29,
+      "literal_signature": "()",
+      "capabilities": [],
+      "status": "signature-gap",
+      "note": "Literal source fragment only; historical validation/coercion, arity and outputs unproved. Callable current binding/default only; legacy presence identities, output arity and online/authentication/server lifecycle unproven. BNConnected pretends connected while features probes return false; no coherent Battle.net connection model. Linked contracts not expanded.",
+      "literal_returns": "numTotal, numOnline"
+    },
+    {
+      "source_id": "signature-wt-global-api-BNGetSelectedFriend-30",
+      "source_line": 30,
+      "literal_signature": "()",
+      "capabilities": [],
+      "status": "signature-gap",
+      "note": "Literal source fragment only; historical validation/coercion, arity and outputs unproved. No selected Battle.net friend row state/selection lifecycle. Linked contracts not expanded.",
+      "literal_returns": "friendId"
+    },
+    {
+      "source_id": "signature-wt-global-api-BNGetSelectedToonBlock-31",
+      "source_line": 31,
+      "literal_signature": "()",
+      "capabilities": [],
+      "status": "signature-gap",
+      "note": "Literal source fragment only; historical validation/coercion, arity and outputs unproved. Actual later retail removal wt-global-api-BNGetSelectedToonBlock-39 explains current absence/deprecation publication. Historical behavior and literal signature remain unproven; no new retirement or Classic credit. Linked contracts not expanded.",
+      "literal_returns": "blockIndex"
+    },
+    {
+      "source_id": "signature-wt-global-api-BNGetToonInfo-32",
+      "source_line": 32,
+      "literal_signature": "(toonId)",
+      "capabilities": [],
+      "status": "signature-gap",
+      "note": "Literal source fragment only; historical validation/coercion, arity and outputs unproved. Actual later retail removal wt-global-api-BNGetToonInfo-40 explains current absence/deprecation publication. Historical behavior and literal signature remain unproven; no new retirement or Classic credit. Linked contracts not expanded.",
+      "literal_returns": "hasFocus, toonName, client, realmName, faction, race, class, guild, zoneName, level, gameText, broadcastText, broadcastTime, ?"
+    },
+    {
+      "source_id": "signature-wt-global-api-BNInviteToConversation-33",
+      "source_line": 33,
+      "literal_signature": "(conversationId, player)",
+      "capabilities": [],
+      "status": "signature-gap",
+      "note": "Literal source fragment only; historical validation/coercion, arity and outputs unproved. Actual later retail removal wt-global-api-BNInviteToConversation-41 explains current absence/deprecation publication. Historical behavior and literal signature remain unproven; no new retirement or Classic credit. Linked contracts not expanded."
+    },
+    {
+      "source_id": "signature-wt-global-api-BNIsFriend-35",
+      "source_line": 35,
+      "literal_signature": "(presenceId)",
+      "capabilities": [],
+      "status": "signature-gap",
+      "note": "Literal source fragment only; historical validation/coercion, arity and outputs unproved. No legacy presence-ID-to-account friendship contract; existing bnet account IDs do not prove 2010 presence identities. Linked contracts not expanded.",
+      "literal_returns": "isFriend"
+    },
+    {
+      "source_id": "signature-wt-global-api-BNIsSelf-36",
+      "source_line": 36,
+      "literal_signature": "(presenceId)",
+      "capabilities": [],
+      "status": "signature-gap",
+      "note": "Literal source fragment only; historical validation/coercion, arity and outputs unproved. No modeled own legacy presence identity; local player GUID/account character is not a presence ID. Linked contracts not expanded.",
+      "literal_returns": "isSelf"
+    },
+    {
+      "source_id": "signature-wt-global-api-BNIsToonBlocked-37",
+      "source_line": 37,
+      "literal_signature": "(presenceId)",
+      "capabilities": [],
+      "status": "signature-gap",
+      "note": "Literal source fragment only; historical validation/coercion, arity and outputs unproved. Actual later retail removal wt-global-api-BNIsToonBlocked-43 explains current absence/deprecation publication. Historical behavior and literal signature remain unproven; no new retirement or Classic credit. Linked contracts not expanded.",
+      "literal_returns": "isBlocked"
+    },
+    {
+      "source_id": "signature-wt-global-api-BNLeaveConversation-38",
+      "source_line": 38,
+      "literal_signature": "(conversationId)",
+      "capabilities": [],
+      "status": "signature-gap",
+      "note": "Literal source fragment only; historical validation/coercion, arity and outputs unproved. Actual later retail removal wt-global-api-BNLeaveConversation-44 explains current absence/deprecation publication. Historical behavior and literal signature remain unproven; no new retirement or Classic credit. Linked contracts not expanded."
+    },
+    {
+      "source_id": "signature-wt-global-api-BNListConversation-39",
+      "source_line": 39,
+      "literal_signature": "(conversationId)",
+      "capabilities": [],
+      "status": "signature-gap",
+      "note": "Literal source fragment only; historical validation/coercion, arity and outputs unproved. Actual later retail removal wt-global-api-BNListConversation-45 explains current absence/deprecation publication. Historical behavior and literal signature remain unproven; no new retirement or Classic credit. Linked contracts not expanded."
+    },
+    {
+      "source_id": "signature-wt-global-api-BNRemoveFriend-40",
+      "source_line": 40,
+      "literal_signature": "(presenceId)",
+      "capabilities": [],
+      "status": "signature-gap",
+      "note": "Literal source fragment only; historical validation/coercion, arity and outputs unproved. No friend removal and associated account-list event lifecycle for legacy presence IDs. Linked contracts not expanded."
+    },
+    {
+      "source_id": "signature-wt-global-api-BNReportFriendInvite-41",
+      "source_line": 41,
+      "literal_signature": "(inviteId)",
+      "capabilities": [],
+      "status": "signature-gap",
+      "note": "Literal source fragment only; historical validation/coercion, arity and outputs unproved. Actual later retail removal wt-global-api-BNReportFriendInvite-46 explains current absence/deprecation publication. Historical behavior and literal signature remain unproven; no new retirement or Classic credit. Linked contracts not expanded."
+    },
+    {
+      "source_id": "signature-wt-global-api-BNReportPlayer-42",
+      "source_line": 42,
+      "literal_signature": "(presenceId, reportType, comments)",
+      "capabilities": [],
+      "status": "signature-gap",
+      "note": "Literal source fragment only; historical validation/coercion, arity and outputs unproved. No report submission/target/category/service-effects model. Linked contracts not expanded."
+    },
+    {
+      "source_id": "signature-wt-global-api-BNRequestFOFInfo-43",
+      "source_line": 43,
+      "literal_signature": "(presenceId)",
+      "capabilities": [],
+      "status": "signature-gap",
+      "note": "Literal source fragment only; historical validation/coercion, arity and outputs unproved. No server friend-of-friend request/result lifecycle. Linked contracts not expanded."
+    },
+    {
+      "source_id": "signature-wt-global-api-BNSendConversationMessage-44",
+      "source_line": 44,
+      "literal_signature": "(target, text)",
+      "capabilities": [],
+      "status": "signature-gap",
+      "note": "Literal source fragment only; historical validation/coercion, arity and outputs unproved. Actual later retail removal wt-global-api-BNSendConversationMessage-47 explains current absence/deprecation publication. Historical behavior and literal signature remain unproven; no new retirement or Classic credit. Linked contracts not expanded."
+    },
+    {
+      "source_id": "signature-wt-global-api-BNSendFriendInvite-45",
+      "source_line": 45,
+      "literal_signature": "(name, note)",
+      "capabilities": [],
+      "status": "signature-gap",
+      "note": "Literal source fragment only; historical validation/coercion, arity and outputs unproved. No invitation creation, pending list and send-result service lifecycle. Linked contracts not expanded."
+    },
+    {
+      "source_id": "signature-wt-global-api-BNSendFriendInviteByID-46",
+      "source_line": 46,
+      "literal_signature": "(presenceId, note)",
+      "capabilities": [],
+      "status": "signature-gap",
+      "note": "Literal source fragment only; historical validation/coercion, arity and outputs unproved. No presence-ID invitation and send-result service lifecycle. Linked contracts not expanded."
+    },
+    {
+      "source_id": "signature-wt-global-api-BNSendWhisper-47",
+      "source_line": 47,
+      "literal_signature": "(presenceId, text)",
+      "capabilities": [],
+      "status": "signature-gap",
+      "note": "Literal source fragment only; historical validation/coercion, arity and outputs unproved. Actual later retail removal wt-global-api-BNSendWhisper-483 explains current absence/deprecation publication. Historical behavior and literal signature remain unproven; no new retirement or Classic credit. Linked contracts not expanded."
+    },
+    {
+      "source_id": "signature-wt-global-api-BNSetAFK-48",
+      "source_line": 48,
+      "literal_signature": "(isAFK)",
+      "capabilities": [],
+      "status": "signature-gap",
+      "note": "Literal source fragment only; historical validation/coercion, arity and outputs unproved. Actual later retail removal wt-global-api-BNSetAFK-303 explains current absence/deprecation publication. Historical behavior and literal signature remain unproven; no new retirement or Classic credit. Linked contracts not expanded."
+    },
+    {
+      "source_id": "signature-wt-global-api-BNSetBlocked-49",
+      "source_line": 49,
+      "literal_signature": "(presenceId, isBlocked)",
+      "capabilities": [],
+      "status": "signature-gap",
+      "note": "Literal source fragment only; historical validation/coercion, arity and outputs unproved. No account-block insertion/removal model. Linked contracts not expanded."
+    },
+    {
+      "source_id": "signature-wt-global-api-BNSetCustomMessage-50",
+      "source_line": 50,
+      "literal_signature": "(text)",
+      "capabilities": [],
+      "status": "signature-gap",
+      "note": "Literal source fragment only; historical validation/coercion, arity and outputs unproved. Actual later retail removal wt-global-api-BNSetCustomMessage-484 explains current absence/deprecation publication. Historical behavior and literal signature remain unproven; no new retirement or Classic credit. Linked contracts not expanded."
+    },
+    {
+      "source_id": "signature-wt-global-api-BNSetDND-51",
+      "source_line": 51,
+      "literal_signature": "(isDND)",
+      "capabilities": [],
+      "status": "signature-gap",
+      "note": "Literal source fragment only; historical validation/coercion, arity and outputs unproved. Actual later retail removal wt-global-api-BNSetDND-304 explains current absence/deprecation publication. Historical behavior and literal signature remain unproven; no new retirement or Classic credit. Linked contracts not expanded."
+    },
+    {
+      "source_id": "signature-wt-global-api-BNSetFriendNote-53",
+      "source_line": 53,
+      "literal_signature": "(presenceId, note)",
+      "capabilities": [],
+      "status": "signature-gap",
+      "note": "Literal source fragment only; historical validation/coercion, arity and outputs unproved. No legacy presence-to-account friend-note storage contract. Linked contracts not expanded."
+    },
+    {
+      "source_id": "signature-wt-global-api-BNSetMatureLanguageFilter-54",
+      "source_line": 54,
+      "literal_signature": "(enable)",
+      "capabilities": [],
+      "status": "signature-gap",
+      "note": "Literal source fragment only; historical validation/coercion, arity and outputs unproved. Actual later retail removal wt-global-api-BNSetMatureLanguageFilter-49 explains current absence/deprecation publication. Historical behavior and literal signature remain unproven; no new retirement or Classic credit. Linked contracts not expanded."
+    },
+    {
+      "source_id": "signature-wt-global-api-BNSetSelectedFriend-55",
+      "source_line": 55,
+      "literal_signature": "(id)",
+      "capabilities": [],
+      "status": "signature-gap",
+      "note": "Literal source fragment only; historical validation/coercion, arity and outputs unproved. No selected Battle.net friend row state/selection lifecycle. Linked contracts not expanded."
+    },
+    {
+      "source_id": "signature-wt-global-api-BNSetSelectedToonBlock-56",
+      "source_line": 56,
+      "literal_signature": "(id)",
+      "capabilities": [],
+      "status": "signature-gap",
+      "note": "Literal source fragment only; historical validation/coercion, arity and outputs unproved. Actual later retail removal wt-global-api-BNSetSelectedToonBlock-50 explains current absence/deprecation publication. Historical behavior and literal signature remain unproven; no new retirement or Classic credit. Linked contracts not expanded."
+    },
+    {
+      "source_id": "signature-wt-global-api-BNSetToonBlocked-57",
+      "source_line": 57,
+      "literal_signature": "(presenceId, block)",
+      "capabilities": [],
+      "status": "signature-gap",
+      "note": "Literal source fragment only; historical validation/coercion, arity and outputs unproved. Actual later retail removal wt-global-api-BNSetToonBlocked-51 explains current absence/deprecation publication. Historical behavior and literal signature remain unproven; no new retirement or Classic credit. Linked contracts not expanded."
+    },
+    {
+      "source_id": "signature-wt-global-api-GetAutoCompletePresenceID-65",
+      "source_line": 65,
+      "literal_signature": "(name)",
+      "capabilities": [],
+      "status": "signature-gap",
+      "note": "Literal source fragment only; historical validation/coercion, arity and outputs unproved. Actual later retail removal wt-global-api-GetAutoCompletePresenceID-345 explains current absence/deprecation publication. Historical behavior and literal signature remain unproven; no new retirement or Classic credit. Linked contracts not expanded."
+    },
+    {
+      "source_id": "signature-wt-global-api-GetChatWindowSavedDimensions-66",
+      "source_line": 66,
+      "literal_signature": "(chatFrameId)",
+      "capabilities": [],
+      "status": "signature-gap",
+      "note": "Literal source fragment only; historical validation/coercion, arity and outputs unproved. Existing temporary Lua table stores session-local geometry. Source signature names/order retained; cross-window isolation, account persistence, validation/coercion and native saved-layout lifecycle not proved. Not promoted to a real account model. Linked contracts not expanded.",
+      "literal_returns": "width, height"
+    },
+    {
+      "source_id": "signature-wt-global-api-GetChatWindowSavedPosition-67",
+      "source_line": 67,
+      "literal_signature": "(chatFrameId)",
+      "capabilities": [],
+      "status": "signature-gap",
+      "note": "Literal source fragment only; historical validation/coercion, arity and outputs unproved. Existing temporary Lua table stores session-local geometry. Source signature names/order retained; cross-window isolation, account persistence, validation/coercion and native saved-layout lifecycle not proved. Not promoted to a real account model. Linked contracts not expanded.",
+      "literal_returns": "point, xOfs, yOfs"
+    },
+    {
+      "source_id": "signature-wt-global-api-SendSystemMessage-69",
+      "source_line": 69,
+      "literal_signature": "(message)",
+      "capabilities": [],
+      "status": "signature-gap",
+      "note": "Literal source fragment only; historical validation/coercion, arity and outputs unproved. No specified message routing/recipient/event contract; choosing CHAT_MSG_SYSTEM would invent linked behavior. Linked contracts not expanded."
+    },
+    {
+      "source_id": "signature-wt-global-api-SetChatWindowSavedDimensions-70",
+      "source_line": 70,
+      "literal_signature": "(chatFrameId, width, height)",
+      "capabilities": [],
+      "status": "signature-gap",
+      "note": "Literal source fragment only; historical validation/coercion, arity and outputs unproved. Existing temporary Lua table stores session-local geometry. Source signature names/order retained; cross-window isolation, account persistence, validation/coercion and native saved-layout lifecycle not proved. Not promoted to a real account model. Linked contracts not expanded."
+    },
+    {
+      "source_id": "signature-wt-global-api-SetChatWindowSavedPosition-71",
+      "source_line": 71,
+      "literal_signature": "(chatFrameId, point, xOfs, yOfs)",
+      "capabilities": [],
+      "status": "signature-gap",
+      "note": "Literal source fragment only; historical validation/coercion, arity and outputs unproved. Existing temporary Lua table stores session-local geometry. Source signature names/order retained; cross-window isolation, account persistence, validation/coercion and native saved-layout lifecycle not proved. Not promoted to a real account model. Linked contracts not expanded."
+    },
+    {
+      "source_id": "signature-wt-framexml-BNGetSelectedBlock-74",
+      "source_line": 74,
+      "literal_signature": "()",
+      "capabilities": [],
+      "status": "signature-gap",
+      "note": "Literal source fragment only; historical validation/coercion, arity and outputs unproved. No FrameXML block selection state or pinned implementation body. Linked contracts not expanded.",
+      "literal_returns": "ignoreId"
+    },
+    {
+      "source_id": "signature-wt-framexml-BNSetSelectedBlock-75",
+      "source_line": 75,
+      "literal_signature": "(id)",
+      "capabilities": [],
+      "status": "signature-gap",
+      "note": "Literal source fragment only; historical validation/coercion, arity and outputs unproved. No FrameXML block selection state or pinned implementation body. Linked contracts not expanded."
+    },
+    {
+      "source_id": "signature-wt-framexml-CanCooperateWithToon-76",
+      "source_line": 76,
+      "literal_signature": "(toonId)",
+      "capabilities": [],
+      "status": "signature-gap",
+      "note": "Literal source fragment only; historical validation/coercion, arity and outputs unproved. No legacy toon identity, faction/realm eligibility model; page supplies no result contract. Linked contracts not expanded."
+    },
+    {
+      "source_id": "signature-wt-framexml-SynchronizeBNetStatus-77",
+      "source_line": 77,
+      "literal_signature": "()",
+      "capabilities": [],
+      "status": "signature-gap",
+      "note": "Literal source fragment only; historical validation/coercion, arity and outputs unproved. No FrameXML implementation body or modeled status synchronization lifecycle. Linked contracts not expanded."
+    },
+    {
+      "source_id": "signature-wt-framexml-BetterDate-78",
+      "source_line": 78,
+      "literal_signature": "(format, time)",
+      "capabilities": [],
+      "status": "signature-gap",
+      "note": "Literal source fragment only; historical validation/coercion, arity and outputs unproved. Actual later retail removal wt-framexml-BetterDate-967 explains current absence/deprecation publication. Historical behavior and literal signature remain unproven; no new retirement or Classic credit. Linked contracts not expanded."
+    },
+    {
+      "source_id": "signature-wt-framexml-GetFixedLink-79",
+      "source_line": 79,
+      "literal_signature": "(text)",
+      "capabilities": [],
+      "status": "signature-gap",
+      "note": "Literal source fragment only; historical validation/coercion, arity and outputs unproved. Loaded FrameXML callable only; source text/link does not pin body, hyperlink transformation or input/output/native parity. Linked contracts not expanded.",
+      "literal_returns": "link"
+    },
+    {
+      "source_id": "signature-wt-events-BN_CUSTOM_MESSAGE_CHANGED-98",
+      "source_line": 98,
+      "literal_signature": "(presenceId)",
+      "capabilities": [],
+      "status": "signature-gap",
+      "note": "Literal source fragment only; historical validation/coercion, arity and outputs unproved. Current registration succeeds. No historical producer, payload ordering, delivery/timing or native-service parity proved. Linked contracts not expanded."
+    },
+    {
+      "source_id": "signature-wt-events-BN_FRIEND_ACCOUNT_OFFLINE-101",
+      "source_line": 101,
+      "literal_signature": "(presenceId)",
+      "capabilities": [],
+      "status": "signature-gap",
+      "note": "Literal source fragment only; historical validation/coercion, arity and outputs unproved. Current registration succeeds. No historical producer, payload ordering, delivery/timing or native-service parity proved. Linked contracts not expanded."
+    },
+    {
+      "source_id": "signature-wt-events-BN_FRIEND_ACCOUNT_ONLINE-102",
+      "source_line": 102,
+      "literal_signature": "(presenceId)",
+      "capabilities": [],
+      "status": "signature-gap",
+      "note": "Literal source fragment only; historical validation/coercion, arity and outputs unproved. Current registration succeeds. No historical producer, payload ordering, delivery/timing or native-service parity proved. Linked contracts not expanded."
+    },
+    {
+      "source_id": "signature-wt-events-BN_FRIEND_INFO_CHANGED-103",
+      "source_line": 103,
+      "literal_signature": "(presenceId)",
+      "capabilities": [],
+      "status": "signature-gap",
+      "note": "Literal source fragment only; historical validation/coercion, arity and outputs unproved. Current registration succeeds. No historical producer, payload ordering, delivery/timing or native-service parity proved. Linked contracts not expanded."
+    },
+    {
+      "source_id": "signature-wt-events-BN_NEW_PRESENCE-112",
+      "source_line": 112,
+      "literal_signature": "(presenceId, name)",
+      "capabilities": [],
+      "status": "signature-gap",
+      "note": "Literal source fragment only; historical validation/coercion, arity and outputs unproved. Actual later retail removal wt-events-BN_NEW_PRESENCE-215 explains current absence/deprecation publication. Historical behavior and literal signature remain unproven; no new retirement or Classic credit. Linked contracts not expanded."
+    },
+    {
+      "source_id": "signature-wt-events-BN_TOON_NAME_UPDATED-118",
+      "source_line": 118,
+      "literal_signature": "(presenceId, name)",
+      "capabilities": [],
+      "status": "signature-gap",
+      "note": "Literal source fragment only; historical validation/coercion, arity and outputs unproved. No current registration or legacy toon online/name-change identity event producer. Current account/game-account structures do not establish this 2010 payload. Linked contracts not expanded."
+    },
+    {
+      "source_id": "signature-wt-global-api-BNFeaturesEnabled-8",
+      "source_line": 8,
+      "literal_returns": "isEnabled",
+      "capabilities": [],
+      "status": "signature-gap",
+      "note": "Literal return fragment without parentheses; source does not specify a call signature. Current constant false probe is not a Battle.net feature/connection model or historical output proof. Linked contracts not expanded."
+    }
+  ]
+}

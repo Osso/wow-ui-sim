@@ -1,0 +1,15 @@
+{
+  "base_revision": "9ff195d19564bd93fe34546ae97d4ce5660906d2",
+  "captured_revision": "89f37f0f6b005399ffdb83a754ddca9e26b41a3b",
+  "command": [
+    "git",
+    "diff",
+    "--name-status",
+    "9ff195d19564bd93fe34546ae97d4ce5660906d2",
+    "--",
+    "data/patch-api/sources"
+  ],
+  "stdout": "A\tdata/patch-api/sources/3.3.5-api-changes.provenance.json\nA\tdata/patch-api/sources/3.3.5-api-changes.txt\nA\tdata/patch-api/sources/3.3.5-api-changes.wikitext\nA\tdata/patch-api/sources/3.3.5-page-coverage.json\nA\tdata/patch-api/sources/3.3.5-wikitext-register.json\n",
+  "exit": 0,
+  "scope": "149 previous literal register/extract paths in original-output-hashes.json unchanged; only new own source paths. No all-publication or broad generator gate."
+}

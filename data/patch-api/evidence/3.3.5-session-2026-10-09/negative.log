@@ -1,0 +1,163 @@
+running 1 tests
+test patch_3_3_5_publication_sweep::patch_3_3_5_publication_sweep ... FAILED (panic: assertion `left == right` failed: new gaps: ["p335-negative-control"]; resolved/stale gaps: []
+  left: {"p335-negative-control", "wt-events-BN_CHAT_CHANNEL_CLOSED-84", "wt-events-BN_CHAT_CHANNEL_CREATE_FAILED-85", "wt-events-BN_CHAT_CHANNEL_CREATE_SUCCEEDED-86", "wt-events-BN_CHAT_CHANNEL_INVITE_FAILED-87", "wt-events-BN_CHAT_CHANNEL_INVITE_SUCCEEDED-88", "wt-events-BN_CHAT_CHANNEL_JOINED-89", "wt-events-BN_CHAT_CHANNEL_LEFT-90", "wt-events-BN_CHAT_CHANNEL_MEMBER_JOINED-91", "wt-events-BN_CHAT_CHANNEL_MEMBER_LEFT-92", "wt-events-BN_CHAT_CHANNEL_MEMBER_UPDATED-93", "wt-events-BN_CHAT_CHANNEL_MESSAGE_BLOCKED-94", "wt-events-BN_CHAT_CHANNEL_MESSAGE_UNDELIVERABLE-95", "wt-events-BN_FRIEND_TOON_OFFLINE-109", "wt-events-BN_FRIEND_TOON_ONLINE-110", "wt-events-BN_MATURE_LANGUAGE_FILTER-111", "wt-events-BN_TOON_NAME_UPDATED-118", "wt-events-CHAT_MSG_BN_CONVERSATION-119", "wt-events-CHAT_MSG_BN_CONVERSATION_LIST-120", "wt-events-CHAT_MSG_BN_CONVERSATION_NOTICE-121", "wt-framexml-BNGetSelectedBlock-74", "wt-framexml-BNSetSelectedBlock-75", "wt-framexml-CanCooperateWithToon-76", "wt-framexml-SynchronizeBNetStatus-77", "wt-global-api-BNAcceptFriendInvite-4", "wt-global-api-BNDeclineFriendInvite-7", "wt-global-api-BNGetBlockedInfo-10", "wt-global-api-BNGetFOFInfo-15", "wt-global-api-BNGetFriendInfo-16", "wt-global-api-BNGetNumBlocked-23", "wt-global-api-BNGetNumFOF-26", "wt-global-api-BNGetSelectedFriend-30", "wt-global-api-BNIsBlocked-34", "wt-global-api-BNIsFriend-35", "wt-global-api-BNIsSelf-36", "wt-global-api-BNRemoveFriend-40", "wt-global-api-BNReportPlayer-42", "wt-global-api-BNRequestFOFInfo-43", "wt-global-api-BNSendFriendInvite-45", "wt-global-api-BNSendFriendInviteByID-46", "wt-global-api-BNSetBlocked-49", "wt-global-api-BNSetFriendNote-53", "wt-global-api-BNSetSelectedFriend-55", "wt-global-api-IsBNLogin-68", "wt-global-api-SendSystemMessage-69"}
+ right: {"wt-events-BN_CHAT_CHANNEL_CLOSED-84", "wt-events-BN_CHAT_CHANNEL_CREATE_FAILED-85", "wt-events-BN_CHAT_CHANNEL_CREATE_SUCCEEDED-86", "wt-events-BN_CHAT_CHANNEL_INVITE_FAILED-87", "wt-events-BN_CHAT_CHANNEL_INVITE_SUCCEEDED-88", "wt-events-BN_CHAT_CHANNEL_JOINED-89", "wt-events-BN_CHAT_CHANNEL_LEFT-90", "wt-events-BN_CHAT_CHANNEL_MEMBER_JOINED-91", "wt-events-BN_CHAT_CHANNEL_MEMBER_LEFT-92", "wt-events-BN_CHAT_CHANNEL_MEMBER_UPDATED-93", "wt-events-BN_CHAT_CHANNEL_MESSAGE_BLOCKED-94", "wt-events-BN_CHAT_CHANNEL_MESSAGE_UNDELIVERABLE-95", "wt-events-BN_FRIEND_TOON_OFFLINE-109", "wt-events-BN_FRIEND_TOON_ONLINE-110", "wt-events-BN_MATURE_LANGUAGE_FILTER-111", "wt-events-BN_TOON_NAME_UPDATED-118", "wt-events-CHAT_MSG_BN_CONVERSATION-119", "wt-events-CHAT_MSG_BN_CONVERSATION_LIST-120", "wt-events-CHAT_MSG_BN_CONVERSATION_NOTICE-121", "wt-framexml-BNGetSelectedBlock-74", "wt-framexml-BNSetSelectedBlock-75", "wt-framexml-CanCooperateWithToon-76", "wt-framexml-SynchronizeBNetStatus-77", "wt-global-api-BNAcceptFriendInvite-4", "wt-global-api-BNDeclineFriendInvite-7", "wt-global-api-BNGetBlockedInfo-10", "wt-global-api-BNGetFOFInfo-15", "wt-global-api-BNGetFriendInfo-16", "wt-global-api-BNGetNumBlocked-23", "wt-global-api-BNGetNumFOF-26", "wt-global-api-BNGetSelectedFriend-30", "wt-global-api-BNIsBlocked-34", "wt-global-api-BNIsFriend-35", "wt-global-api-BNIsSelf-36", "wt-global-api-BNRemoveFriend-40", "wt-global-api-BNReportPlayer-42", "wt-global-api-BNRequestFOFInfo-43", "wt-global-api-BNSendFriendInvite-45", "wt-global-api-BNSendFriendInviteByID-46", "wt-global-api-BNSetBlocked-49", "wt-global-api-BNSetFriendNote-53", "wt-global-api-BNSetSelectedFriend-55", "wt-global-api-IsBNLogin-68", "wt-global-api-SendSystemMessage-69"})
+
+test result: FAILED. 0 passed; 1 failed; 1 total
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition
+warning: `iced_wgpu` (manifest) generated 6 warnings
+    Finished `test` profile [optimized + debuginfo] target(s) in 0.27s
+     Running tests/prefork_full_ui.rs (target/debug/deps/prefork_full_ui-21dd5c807fe7a7b6)
+[  0.000s] [Startup] WowLuaEnv::new begin
+[  0.002s] [Startup] SimState::default complete in 2.07ms
+[  0.002s] [Startup] rilua VM created in 97.57µs
+[  0.002s] [Startup] builtin frames initialized in 80.25µs
+[  0.002s] [Startup] template registry cleared in 10.02µs
+[  0.002s] [Startup] intrinsic templates registered in 13.18µs
+[  0.002s] [Startup] initial app_data lua handle installed in 761.00ns
+[  0.119s] [Startup] init_lua_state complete in 116.69ms
+[  0.119s] [Startup] final app_data lua handle installed in 170.00ns
+[  0.119s] [Startup] initial screen globals installed in 89.55µs
+[  0.119s] [Startup] WowLuaEnv::new complete
+[  2.207s] [Startup] apply_post_load_workarounds: begin
+[  2.207s] [Workarounds] starting patch_edit_mode_manager
+[  2.208s] [Workarounds] finished patch_edit_mode_manager in 268.78µs
+[  2.208s] [Workarounds] starting init_edit_mode_layout
+[  2.208s] [EditMode] starting setup_layout_info
+[  2.211s] [EditMode] finished setup_layout_info in 2.81ms
+[  2.211s] [EditMode] starting apply_system_anchors
+[  2.325s] [EditMode] finished apply_system_anchors in 114.83ms
+[  2.325s] [EditMode] starting finalize_action_bar_positions
+[  2.327s] [EditMode] finished finalize_action_bar_positions in 1.50ms
+[  2.327s] [EditMode] starting invoke_anchor_changed_hooks
+[  2.327s] [EditMode] finished invoke_anchor_changed_hooks in 388.57µs
+[  2.327s] [EditMode] starting fix_action_bar_nan_size
+[  2.327s] [EditMode] finished fix_action_bar_nan_size in 33.82µs
+[  2.327s] [EditMode] starting fix_action_bar_scale
+[  2.327s] [EditMode] finished fix_action_bar_scale in 3.92µs
+[  2.327s] [Workarounds] finished init_edit_mode_layout in 119.59ms
+[  2.327s] [Workarounds] starting patch_ui_parent_panel_toggles
+[  2.328s] [Workarounds] finished patch_ui_parent_panel_toggles in 195.33µs
+[  2.328s] [Workarounds] starting patch_uiparent_onupdate_worklists
+[  2.328s] [Workarounds] finished patch_uiparent_onupdate_worklists in 83.70µs
+[  2.328s] [Workarounds] starting init_chat_type_colors
+[  2.328s] [Workarounds] finished init_chat_type_colors in 104.20µs
+[  2.328s] [Workarounds] starting patch_chat_voice_button_surface
+[  2.328s] [Workarounds] finished patch_chat_voice_button_surface in 94.93µs
+[  2.328s] [Workarounds] starting patch_item_socketing_tooltips
+[  2.328s] [Workarounds] finished patch_item_socketing_tooltips in 48.21µs
+[  2.328s] [Workarounds] starting patch_character_select_selected_name
+[  2.328s] [Workarounds] finished patch_character_select_selected_name in 25.09µs
+[  2.328s] [Workarounds] starting patch_character_create_defaults
+[  2.328s] [Workarounds] finished patch_character_create_defaults in 184.60µs
+[  2.328s] [Workarounds] starting patch_character_frame_title_refresh
+[  2.333s] [Workarounds] finished patch_character_frame_title_refresh in 4.84ms
+[  2.333s] [Workarounds] starting patch_vignette_pin_template
+[  2.333s] [Workarounds] finished patch_vignette_pin_template in 75.90µs
+[  2.333s] [Workarounds] starting patch_fog_of_war_pin_mixin
+[  2.333s] [Workarounds] finished patch_fog_of_war_pin_mixin in 232.81µs
+[  2.333s] [Workarounds] starting patch_map_exploration_pin_mixin
+[  2.338s] [Workarounds] finished patch_map_exploration_pin_mixin in 4.58ms
+[  2.338s] [Workarounds] starting patch_map_canvas_data_provider_attachment
+[  2.338s] [Workarounds] finished patch_map_canvas_data_provider_attachment in 54.62µs
+[  2.338s] [Workarounds] starting ensure_adventure_map_frame_surface
+[  2.338s] [Workarounds] finished ensure_adventure_map_frame_surface in 373.83µs
+[  2.338s] [Workarounds] starting patch_action_bar_button_event_fanout
+[  2.338s] [Workarounds] finished patch_action_bar_button_event_fanout in 84.71µs
+[  2.338s] [Workarounds] starting patch_paging_controls_page_text
+[  2.338s] [Workarounds] finished patch_paging_controls_page_text in 32.26µs
+[  2.338s] [Workarounds] starting patch_talent_edge_frame_level_sync
+[  2.338s] [Workarounds] finished patch_talent_edge_frame_level_sync in 25.03µs
+[  2.338s] [Workarounds] starting patch_catalog_shop_product_card_defaults
+[  2.338s] [Workarounds] finished patch_catalog_shop_product_card_defaults in 52.10µs
+[  2.338s] [Workarounds] starting patch_game_time_defaults
+[  2.338s] [Workarounds] finished patch_game_time_defaults in 6.15µs
+[  2.338s] [Workarounds] starting patch_tooltip_nineslice_surface
+[  2.338s] [Workarounds] finished patch_tooltip_nineslice_surface in 35.86µs
+[  2.338s] [Workarounds] starting patch_container_frame_token_tracker
+[  2.339s] [Workarounds] finished patch_container_frame_token_tracker in 34.19µs
+[  2.339s] [Workarounds] starting patch_achievement_display_set_achievements
+[  2.339s] [Workarounds] finished patch_achievement_display_set_achievements in 6.84µs
+[  2.339s] [Workarounds] starting patch_housing_dashboard_preload
+[  2.339s] [Workarounds] finished patch_housing_dashboard_preload in 136.21µs
+[  2.339s] [Workarounds] starting patch_lfg_lock_list
+[  2.339s] [Workarounds] finished patch_lfg_lock_list in 31.64µs
+[  2.339s] [Workarounds] starting patch_auction_house_browse_results_event
+[  2.339s] [Workarounds] finished patch_auction_house_browse_results_event in 53.78µs
+[  2.339s] [Workarounds] starting patch_auction_house_search_context_aliases
+[  2.339s] [Workarounds] finished patch_auction_house_search_context_aliases in 24.19µs
+[  2.339s] [Workarounds] starting patch_auth_challenge_frame_parent
+[  2.339s] [Workarounds] finished patch_auth_challenge_frame_parent in 59.30µs
+[  2.339s] [Workarounds] starting patch_settings_surface_defaults
+[  2.339s] [Workarounds] finished patch_settings_surface_defaults in 287.12µs
+[  2.339s] [Workarounds] starting patch_settings_canvas_layout_visibility
+[  2.339s] [Workarounds] finished patch_settings_canvas_layout_visibility in 96.13µs
+[  2.339s] [Startup] apply_post_load_workarounds: workarounds complete
+[  2.403s] [Startup] apply_post_load_workarounds: globals restored
+[  2.403s] [Startup] apply_post_load_workarounds: patch 12.1 compatibility restored
+[  2.403s] [Startup] apply_post_load_workarounds: seterrorhandler restored
+[  2.539s] [Startup] begin login sequence
+[  2.539s] [Startup] Firing ADDON_LOADED
+[  2.540s] [Startup] Firing VARIABLES_LOADED
+[  2.629s] [Startup] Firing DISPLAY_SIZE_CHANGED
+[  2.677s] [Startup] Firing UI_SCALE_CHANGED
+[  2.678s] [Startup] Firing PLAYER_LOGIN
+[  2.678s] [Startup] end login sequence in 138.37ms
+[  2.678s] [Startup] begin world enter sequence
+[  2.678s] [Startup] Skipping EDIT_MODE_LAYOUTS_UPDATED
+[  2.678s] [Startup] Firing TIME_PLAYED_MSG via RequestTimePlayed
+[  2.678s] [Startup] Firing PLAYER_ENTERING_WORLD
+[  2.888s] [EditMode] starting setup_layout_info
+[  2.891s] [EditMode] finished setup_layout_info in 3.30ms
+[  2.891s] [EditMode] starting apply_system_anchors
+[  3.013s] [EditMode] finished apply_system_anchors in 121.32ms
+[  3.013s] [EditMode] starting finalize_action_bar_positions
+[  3.015s] [EditMode] finished finalize_action_bar_positions in 2.07ms
+[  3.015s] [EditMode] starting invoke_anchor_changed_hooks
+[  3.020s] [EditMode] finished invoke_anchor_changed_hooks in 4.90ms
+[  3.020s] [EditMode] starting fix_action_bar_nan_size
+[  3.020s] [EditMode] finished fix_action_bar_nan_size in 55.60µs
+[  3.020s] [EditMode] starting fix_action_bar_scale
+[  3.020s] [EditMode] finished fix_action_bar_scale in 3.87µs
+[  3.020s] [EditMode] starting reapply_player_frame_anchor
+[  3.021s] [EditMode] finished reapply_player_frame_anchor in 1.27ms
+[  3.029s] [Startup] end world enter sequence in 351.13ms
+[  3.029s] [Startup] begin post-login events
+[  3.030s] [Startup] Firing UNIT_AURA
+[  3.031s] [Startup] Firing PET_UI_UPDATE
+[  3.032s] [Startup] Firing BAG_UPDATE_DELAYED
+[  3.034s] [Startup] Firing QUEST_LOG_UPDATE
+[  3.035s] [Startup] Firing GROUP_ROSTER_UPDATE
+[  3.115s] [Startup] Firing ACTIONBAR_UPDATE_STATE
+[  3.115s] [Startup] Firing ACTIONBAR_UPDATE_COOLDOWN
+[  3.116s] [Startup] Firing UPDATE_BONUS_ACTIONBAR
+[  3.125s] [Startup] Firing PLAYER_CAN_GLIDE_CHANGED
+[  3.125s] [Startup] Firing PLAYER_IS_GLIDING_CHANGED
+[  3.125s] [Startup] Firing UPDATE_BINDINGS
+[  3.128s] [Startup] Firing UPDATE_CHAT_WINDOWS
+[  3.131s] [Startup] Firing LFG_UPDATE_RANDOM_INFO
+[  3.131s] [Startup] end post-login events in 102.31ms
+[  3.131s] [Startup] begin close startup special windows
+[  3.132s] [Startup] end close startup special windows in 237.48µs
+[  3.132s] [Startup] begin FIRST_FRAME_RENDERED
+[  3.132s] [Startup] Firing FIRST_FRAME_RENDERED
+[  3.132s] [Startup] end FIRST_FRAME_RENDERED in 145.81µs
+[  3.132s] [Startup] begin unblock hidden splash alerts
+[  3.132s] [Startup] end unblock hidden splash alerts in 12.73µs
+[  3.132s] [Startup] begin post-event workarounds
+[  3.132s] [Startup] end post-event workarounds in 751.00ns
+
+thread 'main' (2079647) panicked at /home/osso/.worktrees/wow-ui-sim-p335-source/tests/common/publication_sweep.rs:544:5:
+assertion `left == right` failed: new gaps: ["p335-negative-control"]; resolved/stale gaps: []
+  left: {"p335-negative-control", "wt-events-BN_CHAT_CHANNEL_CLOSED-84", "wt-events-BN_CHAT_CHANNEL_CREATE_FAILED-85", "wt-events-BN_CHAT_CHANNEL_CREATE_SUCCEEDED-86", "wt-events-BN_CHAT_CHANNEL_INVITE_FAILED-87", "wt-events-BN_CHAT_CHANNEL_INVITE_SUCCEEDED-88", "wt-events-BN_CHAT_CHANNEL_JOINED-89", "wt-events-BN_CHAT_CHANNEL_LEFT-90", "wt-events-BN_CHAT_CHANNEL_MEMBER_JOINED-91", "wt-events-BN_CHAT_CHANNEL_MEMBER_LEFT-92", "wt-events-BN_CHAT_CHANNEL_MEMBER_UPDATED-93", "wt-events-BN_CHAT_CHANNEL_MESSAGE_BLOCKED-94", "wt-events-BN_CHAT_CHANNEL_MESSAGE_UNDELIVERABLE-95", "wt-events-BN_FRIEND_TOON_OFFLINE-109", "wt-events-BN_FRIEND_TOON_ONLINE-110", "wt-events-BN_MATURE_LANGUAGE_FILTER-111", "wt-events-BN_TOON_NAME_UPDATED-118", "wt-events-CHAT_MSG_BN_CONVERSATION-119", "wt-events-CHAT_MSG_BN_CONVERSATION_LIST-120", "wt-events-CHAT_MSG_BN_CONVERSATION_NOTICE-121", "wt-framexml-BNGetSelectedBlock-74", "wt-framexml-BNSetSelectedBlock-75", "wt-framexml-CanCooperateWithToon-76", "wt-framexml-SynchronizeBNetStatus-77", "wt-global-api-BNAcceptFriendInvite-4", "wt-global-api-BNDeclineFriendInvite-7", "wt-global-api-BNGetBlockedInfo-10", "wt-global-api-BNGetFOFInfo-15", "wt-global-api-BNGetFriendInfo-16", "wt-global-api-BNGetNumBlocked-23", "wt-global-api-BNGetNumFOF-26", "wt-global-api-BNGetSelectedFriend-30", "wt-global-api-BNIsBlocked-34", "wt-global-api-BNIsFriend-35", "wt-global-api-BNIsSelf-36", "wt-global-api-BNRemoveFriend-40", "wt-global-api-BNReportPlayer-42", "wt-global-api-BNRequestFOFInfo-43", "wt-global-api-BNSendFriendInvite-45", "wt-global-api-BNSendFriendInviteByID-46", "wt-global-api-BNSetBlocked-49", "wt-global-api-BNSetFriendNote-53", "wt-global-api-BNSetSelectedFriend-55", "wt-global-api-IsBNLogin-68", "wt-global-api-SendSystemMessage-69"}
+ right: {"wt-events-BN_CHAT_CHANNEL_CLOSED-84", "wt-events-BN_CHAT_CHANNEL_CREATE_FAILED-85", "wt-events-BN_CHAT_CHANNEL_CREATE_SUCCEEDED-86", "wt-events-BN_CHAT_CHANNEL_INVITE_FAILED-87", "wt-events-BN_CHAT_CHANNEL_INVITE_SUCCEEDED-88", "wt-events-BN_CHAT_CHANNEL_JOINED-89", "wt-events-BN_CHAT_CHANNEL_LEFT-90", "wt-events-BN_CHAT_CHANNEL_MEMBER_JOINED-91", "wt-events-BN_CHAT_CHANNEL_MEMBER_LEFT-92", "wt-events-BN_CHAT_CHANNEL_MEMBER_UPDATED-93", "wt-events-BN_CHAT_CHANNEL_MESSAGE_BLOCKED-94", "wt-events-BN_CHAT_CHANNEL_MESSAGE_UNDELIVERABLE-95", "wt-events-BN_FRIEND_TOON_OFFLINE-109", "wt-events-BN_FRIEND_TOON_ONLINE-110", "wt-events-BN_MATURE_LANGUAGE_FILTER-111", "wt-events-BN_TOON_NAME_UPDATED-118", "wt-events-CHAT_MSG_BN_CONVERSATION-119", "wt-events-CHAT_MSG_BN_CONVERSATION_LIST-120", "wt-events-CHAT_MSG_BN_CONVERSATION_NOTICE-121", "wt-framexml-BNGetSelectedBlock-74", "wt-framexml-BNSetSelectedBlock-75", "wt-framexml-CanCooperateWithToon-76", "wt-framexml-SynchronizeBNetStatus-77", "wt-global-api-BNAcceptFriendInvite-4", "wt-global-api-BNDeclineFriendInvite-7", "wt-global-api-BNGetBlockedInfo-10", "wt-global-api-BNGetFOFInfo-15", "wt-global-api-BNGetFriendInfo-16", "wt-global-api-BNGetNumBlocked-23", "wt-global-api-BNGetNumFOF-26", "wt-global-api-BNGetSelectedFriend-30", "wt-global-api-BNIsBlocked-34", "wt-global-api-BNIsFriend-35", "wt-global-api-BNIsSelf-36", "wt-global-api-BNRemoveFriend-40", "wt-global-api-BNReportPlayer-42", "wt-global-api-BNRequestFOFInfo-43", "wt-global-api-BNSendFriendInvite-45", "wt-global-api-BNSendFriendInviteByID-46", "wt-global-api-BNSetBlocked-49", "wt-global-api-BNSetFriendNote-53", "wt-global-api-BNSetSelectedFriend-55", "wt-global-api-IsBNLogin-68", "wt-global-api-SendSystemMessage-69"}
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+error: test failed, to rerun pass `--test prefork_full_ui`
+
+Caused by:
+  process didn't exit successfully: `/home/osso/.worktrees/wow-ui-sim-p335-source/target/debug/deps/prefork_full_ui-21dd5c807fe7a7b6 patch_3_3_5_publication_sweep --nocapture` (exit status: 1)

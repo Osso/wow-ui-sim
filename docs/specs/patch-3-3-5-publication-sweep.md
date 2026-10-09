@@ -16,7 +16,12 @@ Audit pinned page 25049/revision 247986 (2010-07-10T15:47:20Z). [Audit](../wiki/
 - `tools/test_patch_3_3_5_register.py`: concrete serialized inventory/signatures and default compatibility.
 - `data/patch-api/sources/3.3.5-*`: frozen source, register, full-page extraction and 324-ID accounting.
 - `tests/patch_3_3_5_publication_sweep.rs`: own cached retail publication/absence.
-- `tools/test_patch_3_3_5_validator.py`: relocated replay/tamper fixture; implementation follows.
+- `tools/test_patch_3_3_5_validator.py`: relocated replay/current-closure independence and source/log/ledger/gaps/bundle tamper controls.
+- Own `data/patch-api/evidence/3.3.5-session-2026-10-09/validate.py`: sealed archived replay, no Git/target/current-head dependencies.
+
+## Recorded development boundary
+
+Own publication GREEN 1/1 (80 matches / 44 known gaps), parser 1/1, existing temporary chat state 1/1; negative rejects 44 → 45 gaps. Full ledger has 324 IDs and no new modeled closures. Portable validator GREEN remains a separate targeted development receipt; main owns current coordinator/final proof.
 
 ## Limits
 

@@ -1,0 +1,30 @@
+{
+  "src": {
+    "root": "/home/osso/.worktrees/wow-ui-sim-p335-source/src",
+    "scanned_utf8_files": 1653,
+    "binary_files_not_text_consumers": [],
+    "whole_word_bare_and_qualified": "Unqualified names: bare and qualified identity searches coincide. All UTF-8 files without extension filter, no truncation.",
+    "hits": []
+  },
+  "tests": {
+    "root": "/home/osso/.worktrees/wow-ui-sim-p335-source/tests",
+    "scanned_utf8_files": 2159,
+    "binary_files_not_text_consumers": [
+      "fixtures/casc-installed-products.db"
+    ],
+    "whole_word_bare_and_qualified": "Unqualified names: bare and qualified identity searches coincide. All UTF-8 files without extension filter, no truncation.",
+    "hits": []
+  },
+  "retail-cache": {
+    "root": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns",
+    "scanned_utf8_files": 4040,
+    "binary_files_not_text_consumers": [
+      "Blizzard_SharedTalentUI/talents-diamond-mask.png",
+      "Blizzard_SharedTalentUI/talents-hexagon-mask.png",
+      "Blizzard_SharedTalentUI/talents-octagon-mask-half.png",
+      "Blizzard_SharedTalentUI/talents-octagon-mask.png"
+    ],
+    "whole_word_bare_and_qualified": "Unqualified names: bare and qualified identity searches coincide. All UTF-8 files without extension filter, no truncation.",
+    "hits": []
+  }
+}
