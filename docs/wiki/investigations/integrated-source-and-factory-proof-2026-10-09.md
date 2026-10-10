@@ -1,5 +1,13 @@
 # Integrated source and factory proof — 2026-10-09
 
+## Cooldown epoch and explicit charge fixtures — proof pending
+
+Docs-only audit: `40d2beb9a` changes the category spec and epoch-selected fixtures, not runtime code. The [category contract](../../specs/forever-cooldown-categories.md) matches actual wiring: `env_init` selects `ptr::compat_bootstrap::init` under `retail-12-1-0`; `init` calls the shared enum publisher unconditionally. The `client-ptr` guards select bootstrap strings, not a PTR-only publisher.
+
+Main-reported queued compiler receipt `40d2epochverification/marker-and-three-fixtures/20261009T233707Z`: exit0, source equal. Compiler success is not fixture GREEN; marker and three-fixture results remain pending main results. Later source `0769f7b99` is not included in this epoch.
+
+`0769f7b99` changes only `tests/spell_api.rs`: the existing table-type test seeds explicit spell19750 charge input instead of querying unconfigured spell100. No runtime modification, new coverage credit or source claim. The existing [charge contract](../../specs/spell-charge-state.md) already requires explicit input; no duplicated spec needed. Current fixture GREEN and parent acceptance remain pending.
+
 ## Mists diagnostic epoch — FAIL, native oracle conflict
 
 [Independent audit](../../../data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/mists-cast-diagnostic/audit/report.md) covers new diagnostic source at `7e8acd2bd9e9a4d2f5c2885a0ec00d75d8f916bd`, not reconstruction of lost `/tmp` receipts. Cargo JSON confirms build success; compile OS exit was not retained after transient-unit collection. Installed Cargo/rustc 1.99.0 differs from documented 1.98.1; six manifest deprecations remain. Artifact SHA256 `fa359d740be335938c91be89a6d3fb530360c4f46189ed3ab420bd49e2cce5b5`; 3,845 source and 3,982 cache hashes unchanged across build. External dependency contents and inherited environment excluded.

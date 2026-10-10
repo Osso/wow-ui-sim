@@ -1,3 +1,7 @@
+## [2026-10-09] audit | Cooldown epoch and charge fixture proof pending
+
+[Proof SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#cooldown-epoch-and-explicit-charge-fixtures--proof-pending): category spec matches epoch-gated initialization/unconditional publisher; charge commit is tests-only and matches existing explicit-input contract. Main-reported `40d2epochverification/marker-and-three-fixtures/20261009T233707Z` compiler exit0/source equal excludes later `0769f7b99`. Fixture GREEN awaits main results; no new coverage/source credit. Docs only; `.code-index.db` preserved.
+
 ## [2026-10-09] ingest | Bounded Lua/startup warning audit
 
 [Proof SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#luastartup-warning-audit--retained-diagnostics-startup-status-unproven): fresh Mists targeted-test epoch20261009T221327Z has seven distinct Lua headlines each twice, not occurrence totals; saved96 suite has13 presentations/five distinct messages. Six manifest deprecations separate; no current standalone clean startup or complete LoadResult warning summary. Stored/conditional loader warnings and lua-errors stderr suppression forbid zero-warning claims. Three byte-identical audit files/14,438bytes plus hash/privacy manifest retained; no raw logs copied, bounded credential review clear, local paths retained. Exact epochs unchanged; no cast-assertion causal/runtime-fix claim. Parent OPEN; docs/evidence only, no tests/builds/operations or other agents' source/fixture work touched.
