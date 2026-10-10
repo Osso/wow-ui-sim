@@ -10,19 +10,21 @@ struct DefaultMapSeed {
 }
 
 const DEFAULT_MAP_SEEDS: &[DefaultMapSeed] = &[
+    // UiMap.db2: 946 is Cosmic (type 0, no parent), 947 is Azeroth (type 1,
+    // parent 946). They were swapped here for a long time.
     DefaultMapSeed {
-        ui_map_id: 947,
+        ui_map_id: 946,
         name: "Cosmic",
         map_type: 0,
         parent_map_id: 0,
         art_id: 0,
-        child_map_ids: &[946],
+        child_map_ids: &[947],
     },
     DefaultMapSeed {
-        ui_map_id: 946,
+        ui_map_id: 947,
         name: "Azeroth",
         map_type: 1,
-        parent_map_id: 947,
+        parent_map_id: 946,
         art_id: 0,
         child_map_ids: &[13],
     },
@@ -30,7 +32,7 @@ const DEFAULT_MAP_SEEDS: &[DefaultMapSeed] = &[
         ui_map_id: 13,
         name: "Eastern Kingdoms",
         map_type: 2,
-        parent_map_id: 946,
+        parent_map_id: 947,
         art_id: 62,
         child_map_ids: &[84],
     },
@@ -310,7 +312,7 @@ const DEFAULT_MAP_SEEDS: &[DefaultMapSeed] = &[
         ui_map_id: 2248,
         name: "Isle of Dorn",
         map_type: 3,
-        parent_map_id: 947,
+        parent_map_id: 947, // Azeroth: the nearest seeded ancestor (UiMap.db2 says 2274 Khaz Algar, not seeded)
         art_id: 5920,
         child_map_ids: &[],
     },
@@ -366,7 +368,7 @@ const DEFAULT_MAP_SEEDS: &[DefaultMapSeed] = &[
         ui_map_id: 1550,
         name: "The Shadowlands",
         map_type: 2,
-        parent_map_id: 946,
+        parent_map_id: 946, // Cosmic, as in UiMap.db2
         art_id: 0,
         child_map_ids: &[],
     },

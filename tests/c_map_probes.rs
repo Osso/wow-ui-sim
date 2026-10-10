@@ -31,7 +31,7 @@ fn get_map_art_id_returns_seeded_art_id() {
             r#"
             return C_Map.GetMapArtID(84),
                    C_Map.GetMapArtID(13),
-                   C_Map.GetMapArtID(946)
+                   C_Map.GetMapArtID(947)
             "#,
         )
         .unwrap();
@@ -82,7 +82,7 @@ fn get_map_children_info_with_all_descendants_walks_tree() {
                 for i = 1, #tbl do out[i] = tbl[i][key] end
                 return out
             end
-            local children = C_Map.GetMapChildrenInfo(946, nil, true)
+            local children = C_Map.GetMapChildrenInfo(947, nil, true)
             return #children, array(children, "mapID")
             "#,
         )
@@ -99,26 +99,26 @@ fn get_map_info_exposes_cosmic_parent_for_seeded_world_maps() {
     let (cosmic_type, azeroth_parent, dorn_parent): (i32, i32, i32) = env
         .eval(
             r#"
-            return C_Map.GetMapInfo(947).mapType,
-                   C_Map.GetMapInfo(946).parentMapID,
+            return C_Map.GetMapInfo(946).mapType,
+                   C_Map.GetMapInfo(947).parentMapID,
                    C_Map.GetMapInfo(2248).parentMapID
             "#,
         )
         .unwrap();
-    assert_eq!(cosmic_type, 0, "947 should be the Cosmic map root");
-    assert_eq!(azeroth_parent, 947);
-    assert_eq!(dorn_parent, 947);
+    assert_eq!(cosmic_type, 0, "946 is the Cosmic map root (UiMap.db2)");
+    assert_eq!(azeroth_parent, 946, "947 Azeroth hangs off Cosmic");
+    assert_eq!(dorn_parent, 947, "Isle of Dorn's nearest seeded ancestor");
 }
 
 #[test]
 fn get_map_children_info_filters_by_map_type() {
     let env = env();
-    // Azeroth (946) has a Continent (13) and Stormwind (84, Zone).
+    // Azeroth (947) has a Continent (13) and Stormwind (84, Zone).
     // Ask for Zones only with allDescendants=true — we should get 84.
     let (count, first_id, first_type): (i32, i32, i32) = env
         .eval(
             r#"
-            local zones = C_Map.GetMapChildrenInfo(946, 3, true)
+            local zones = C_Map.GetMapChildrenInfo(947, 3, true)
             return #zones, zones[1].mapID, zones[1].mapType
             "#,
         )
@@ -285,7 +285,7 @@ fn get_map_info_at_position_picks_first_rect_when_overlapping() {
     let env = env();
     {
         let mut state = env.state().borrow_mut();
-        let azeroth = state.maps.get_mut(&946).unwrap();
+        let azeroth = state.maps.get_mut(&947).unwrap();
         azeroth.child_rects = vec![
             MapChildRect {
                 map_id: 13,
@@ -305,7 +305,7 @@ fn get_map_info_at_position_picks_first_rect_when_overlapping() {
     }
 
     let map_id: i32 = env
-        .eval("return C_Map.GetMapInfoAtPosition(946, 0.5, 0.5).mapID")
+        .eval("return C_Map.GetMapInfoAtPosition(947, 0.5, 0.5).mapID")
         .unwrap();
     assert_eq!(
         map_id, 13,
@@ -383,7 +383,7 @@ fn get_map_rect_on_map_composes_rect_up_through_grandparent() {
     seed_stormwind_in_eastern_kingdoms_in_azeroth(&env);
 
     let (l, r, t, b): (f64, f64, f64, f64) =
-        env.eval("return C_Map.GetMapRectOnMap(84, 946)").unwrap();
+        env.eval("return C_Map.GetMapRectOnMap(84, 947)").unwrap();
     let span_x = 0.40 - 0.20;
     let span_y = 0.50 - 0.10;
     let expected_l = 0.20 + 0.40 * span_x;
@@ -433,7 +433,7 @@ fn get_map_rect_on_map_returns_nothing_when_chain_link_missing_rect() {
         state.maps.get_mut(&13).unwrap().rect_on_parent = None;
     }
     let nret: i32 = env
-        .eval("return select('#', C_Map.GetMapRectOnMap(84, 946))")
+        .eval("return select('#', C_Map.GetMapRectOnMap(84, 947))")
         .unwrap();
     assert_eq!(nret, 0, "Eastern Kingdoms missing rect must abort the walk");
 }
@@ -442,7 +442,7 @@ fn get_map_rect_on_map_returns_nothing_when_chain_link_missing_rect() {
 fn get_map_rect_on_map_returns_nothing_for_unknown_ui_map_id() {
     let env = env();
     let nret: i32 = env
-        .eval("return select('#', C_Map.GetMapRectOnMap(999999, 946))")
+        .eval("return select('#', C_Map.GetMapRectOnMap(999999, 947))")
         .unwrap();
     assert_eq!(nret, 0);
 }
