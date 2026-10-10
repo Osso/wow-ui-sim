@@ -1,0 +1,55 @@
+{
+  "verified": "2026-10-10",
+  "proof": "literal current cached generated contract and simulator/caller source inspection; no runtime/native query result",
+  "profile": "retail",
+  "cache_recorded_version": "12.1.0.69933",
+  "generated_file": "Blizzard_APIDocumentationGenerated/CalendarDocumentation.lua",
+  "sha256": "a8b9f1fb596089c1322c3851e100751dcd4ca0e5051993599ddcb82a6cc1a1b9",
+  "declaration_lines": [
+    582,
+    597
+  ],
+  "structure_lines": [
+    1033,
+    1041
+  ],
+  "query": {
+    "name": "C_Calendar.GetEventIndexInfo",
+    "arguments": [
+      {
+        "name": "eventID",
+        "type": "CalendarEventID",
+        "nilable": false
+      },
+      {
+        "name": "monthOffset",
+        "type": "number",
+        "nilable": true
+      },
+      {
+        "name": "monthDay",
+        "type": "number",
+        "nilable": true
+      }
+    ],
+    "return": "nilable CalendarEventIndexInfo",
+    "fields": {
+      "offsetMonths": "number",
+      "monthDay": "luaIndex",
+      "eventIndex": "luaIndex"
+    },
+    "secret_arguments_metadata": "AllowedWhenUntainted"
+  },
+  "unknown": [
+    "optional-hint omission/combination/matching",
+    "security enforcement",
+    "native query results",
+    "historical8.1 signature"
+  ],
+  "model": "no event identity/index relation identified; GetEventInfo selected/open query separate",
+  "gap_totals_unchanged": {
+    "ok": 87,
+    "gaps": 58
+  },
+  "payload_not_retained": true
+}

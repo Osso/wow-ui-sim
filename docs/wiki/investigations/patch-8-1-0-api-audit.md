@@ -36,6 +36,12 @@ Retained: **GetConfigurationWarningString**, **GetConfigurationWarnings**, **Set
 
 Friend/ignore/who mutations and selection require coherent identity/index/request state; read-only fixture lists are insufficient. Calendar club/current/next-event IDs require editor ownership and staging. Channel reset/swap and club stream joins need ordered channel state and transitions. Achievement supersession, bounty maps, mount/pet item relations, currency bonuses, item scrap/power eligibility, mission environment counters and PvP reward/area rules require actual relation/policy metadata. Summons, party referrals, questline requests and reports need pending identities and completion lifecycles. Debug dashboard is a native-client diagnostics domain. `gxMTOpaque` has no pinned default/control contract. Three later-page absence expectations remain lookup-fabrication gaps; this audit does not silently implement those later pages' retirements.
 
+## Current Retail calendar query contract — 2026-10-10
+
+[Sanitized contract receipt](../../../data/patch-api/evidence/8.1.0-session-2026-10-08/calendar-current-contract-20261010/receipt.json) pins the inspected active Retail cache's generated `CalendarDocumentation.lua` hash/lines and cache-recorded version, separate from the frozen **8.1.0 name-only** source above. `C_Calendar.GetEventIndexInfo(eventID, optional monthOffset, optional monthDay)` returns a nilable `CalendarEventIndexInfo` DTO with required fields `offsetMonths`, `monthDay`, and `eventIndex`. This is an event-identity-to-calendar-position query, not selected/opened-event state; no-argument `GetEventInfo()` is a separate query. DateAndTime receipts are not Calendar provenance.
+
+The inspected simulator has no event identity/index model or implementation of these queries. Optional-hint omission, combination or matching policy, security enforcement, and native lookup semantics remain unproven; generated security metadata does not establish behavior. Current contract evidence neither enriches the historical 8.1.0 statement nor closes a gap: **87 OK / 58 gaps** remains unchanged, with no behavioral PASS claimed.
+
 ## Proof and integration
 
 [Evidence directory](../../../data/patch-api/evidence/8.1.0-session-2026-10-08/) contains streamed command logs, receipts, discovery/negative controls, reproduction and accounting scripts. Long Cargo work runs asynchronously with the dedicated p810 target; no polling waits, full integration suite, agents/models, session-cwd changes, push or merge.
