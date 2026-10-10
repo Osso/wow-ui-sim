@@ -448,3 +448,17 @@ Warning-report source/docs commit `a2d301531` is separate and **compiled proof p
 
 - [3.0.2 audit](patch-3-0-2-api-audit.md), [3.0.3 audit](patch-3-0-3-api-audit.md).
 - [Forever failure/functions gates](forever-cfg-failure-and-function-gates.md).
+
+## Owner-budget error metadata — source audit only, goal OPEN
+
+Verified 2026-10-09 local: inspected commit `1f50ffbcbe542fee767784360ea0d85292ceae93` and current `src/lua_api/execution_budget.rs` / `handler_timing.rs`. Failed owner-budgeted frame callbacks emit `[handler-budget-error]` through `eprintln!` (stderr) only when the existing `WOW_SIM_LOG_HANDLER_TIMINGS` flag is enabled. Duration threshold does not gate this error record. Successful callbacks and ownerless callbacks do not emit it; owner resolution errors occur before this logging path.
+
+Owner is the actual frame owner addon folder, excluding built-in/Blizzard addons; frame is the numeric ID; event is the supplied optional event name, not payload. Limit comes from the before-call public `instruction_budget` snapshot; `used_before` and `used_after` are cumulative owner instruction counters sampled around the protected call. Missing snapshots print `unavailable`; unlimited limit prints `none`. Owner/event strings are debug-escaped. No Lua arguments, payloads or error text are emitted. An error record does **not** establish budget exhaustion or native cause: any failed callback on this path qualifies. Counts can distinguish exhausted entry from consumption but are not elapsed time, Rust work or native quota-period parity.
+
+The diff leaves quota, reset, exemption and timer behavior unchanged and returns the original error result: no error suppression. Added formatter tests were source-inspected only. **Compiled proof and startup stderr capture remain pending; source goal OPEN.** No test, build, check, runtime, network or operations executed for this docs audit.
+
+## Retained private VNC frame metadata — bounded completed evidence
+
+Existing local `/home/osso/.local/state/wow-ui-sim/verification/private-vnc-frame-proof/report.md` and `proof.json` retained unchanged. [Hash/privacy manifest](../../../data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/private-vnc-frame-metadata-manifest.json) seals both files without copying pixels or private content. Receipt timestamp `2026-10-10T00:41:53.051363+00:00` is UTC (2026-10-09 US local), not a new capture in this audit.
+
+**SAFE metadata-only local receipt completed:** loopback `127.0.0.1:5903`, 1920×1080 Raw frame, 8,294,400 pixel bytes, one announced/complete rectangle, 1.233 seconds. Stored SHA-256 describes received pixels; no pixels retained. Existing report states no desktop name, account content, credentials or input events saved/sent. None security is **not authentication**. No remote-viewer, tunnel or user-acceptance proof. Older browser navigation200 evidence remains separately scoped in [browser readiness](#browser-readiness-handoff); it proves neither this frame nor source acceptance. Source goal remains **OPEN**.

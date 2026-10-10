@@ -3128,3 +3128,7 @@ The three retail 12.0.0 changed globals `LE_GAME_ERR_HOUSING_RESULT_MISSING_EXPA
 ## [2026-10-09] investigation | Patch 1.0.0 frozen literal SOURCE audit
 
 [Audit](investigations/patch-1-0-0-api-audit.md): frozen67688/5580410,37407bytes;854 name-only inventory/854 unspecified signatures,859raw rows/859UNPROVEN contracts,856unexpanded links,2headers/0counts,2prose,1template. Registry101 endpoint is not parent closure. Own SOURCE RED8/portable RED3 retained; SOURCE GREEN8/8 at039cfa29d (4287 omissions); fresh copied SOURCE8/portable3 atf616d6481, default bytes/errors and both serialized ledger/log rejection/exact restoration.42original seals/43-member155329-byte archive unchanged;14later receipt artifacts separately sealed. No model/runtime/native credit; queued1.1.0/1.3.0/1.4.0/1.5.0 separate/unapplied; main owns target research/integration/full acceptance.
+
+## [2026-10-09] evidence | Owner-budget metadata audit and retained local frame
+
+[SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#owner-budget-error-metadata--source-audit-only-goal-open): `1f50ffbc` source-only stderr failure metadata under existing timing flag; actual owner/event and public limit/usage snapshots, not native cause. No quota change/error suppression; compilation/startup capture pending, source goal OPEN. Separate SAFE metadata-only loopback5903 Raw1920×1080/8294400B/one rectangle/1.233s receipt retained with hash/privacy manifest; no pixels/authentication/input/remote-viewer/tunnel credit. Older browser200 separate. Docs/evidence only.

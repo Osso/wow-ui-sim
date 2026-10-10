@@ -1,0 +1,40 @@
+{
+  "scope": "SAFE metadata-only retained local framebuffer receipt; not source-goal acceptance",
+  "artifacts": [
+    {
+      "path": "/home/osso/.local/state/wow-ui-sim/verification/private-vnc-frame-proof/report.md",
+      "bytes": 1570,
+      "sha256": "726d1426a90468d4cefdaff5cc2e7ef1f383dddbae5f8466f4add853f30d4142"
+    },
+    {
+      "path": "/home/osso/.local/state/wow-ui-sim/verification/private-vnc-frame-proof/proof.json",
+      "bytes": 2123,
+      "sha256": "82994008e8433407a86bda0c3402c3694bebddb3ba890d7a3c835c4e360cd9ee"
+    }
+  ],
+  "privacy": {
+    "retained": "Existing report and JSON metadata only; originals unchanged",
+    "excluded": [
+      "pixels",
+      "desktop name/account content",
+      "credentials",
+      "input events",
+      "private profiles",
+      "raw logs"
+    ],
+    "limitations": "Metadata inspection, not exhaustive privacy certification"
+  },
+  "claims": {
+    "completed": "Local loopback5903 Raw framebuffer receipt: 1920x1080, 8294400 bytes, one complete rectangle, 1.233 seconds",
+    "not_proven": [
+      "authentication",
+      "remote viewer",
+      "SSH tunnel",
+      "source compilation",
+      "startup capture",
+      "native error cause"
+    ],
+    "browser_old_200": "Separate historical browser reachability evidence; no frame/source acceptance credit"
+  },
+  "source_goal": "OPEN"
+}
