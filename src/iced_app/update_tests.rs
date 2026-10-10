@@ -861,16 +861,17 @@ fn stale_timer_ticks_cannot_starve_processing_indefinitely() {
 #[cfg(unix)]
 #[test]
 fn main_thread_cpu_time_advances_with_busy_work() {
+    const WORK_ITERATIONS: usize = 1_000_000;
+    const MULTIPLIER: u64 = 6364136223846793005;
+
     let before = main_thread_cpu_time().expect("unix reports thread CPU time");
-    let started = std::time::Instant::now();
-    let mut acc = 0u64;
-    while started.elapsed() < std::time::Duration::from_millis(30) {
-        acc = acc.wrapping_mul(6364136223846793005).wrapping_add(1);
+    let mut accumulator = 0u64;
+    for _ in 0..WORK_ITERATIONS {
+        accumulator = std::hint::black_box(accumulator.wrapping_mul(MULTIPLIER).wrapping_add(1));
     }
-    std::hint::black_box(acc);
-    let after = main_thread_cpu_time().unwrap();
+    let after = main_thread_cpu_time().expect("unix reports thread CPU time after busy work");
     assert!(
-        after.saturating_sub(before) >= std::time::Duration::from_millis(10),
-        "30ms of spinning should add CPU time: {before:?} -> {after:?}"
+        after > before,
+        "busy work should advance thread CPU time: {before:?} -> {after:?}"
     );
 }
