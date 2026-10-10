@@ -6,6 +6,10 @@
 
 [Recorder status](investigations/integrated-source-and-factory-proof-2026-10-09.md#garrison-manual-capture-readiness--bounded-recorder-pass-native-rows-unknown): manual mode prepared at `9e7af4de0`; preserved RED ten failures/one exclusion PASS, independent recorder53/53 PASS. Formatted runner rebuild matches executed binary; VM source-to-rlib provenance remains unestablished. [Native catalog blocker](investigations/integrated-source-and-factory-proof-2026-10-09.md#native-garrison-evidence-boundary) unchanged; actual rows/native acceptance UNKNOWN, saved three failures and original Mists assertions preserved.
 
+## [2026-10-10] audit | Exact1200 retry — runtime PENDING
+
+[Exact1200 audit](investigations/patch-12-0-0-api-audit.md#current-prose-proof--test-boundaries-and-count-model-gate-2026-10-10): actual163526 compile101/source_equaltrue, five errors, no selected execution. Storage historical; `ee21cd9cc` test-boundary repairs source-only. Existing cfg125 count map at that revision is a model-gate blocker, not absent checkout data; separate production changes uncredited.
+
 ## [2026-10-10] audit | Exact-ref public CI — compile-only success
 
 [CI SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#exact-ref-public-ci--2026-10-10-compile-only-success): main observed run38041575805 at3d9f1c247, completed/success through unauthenticated public API. Retail compile and Mists build/check succeeded; runtime tests/smoke/release proof skipped. Reading this run no longer credential-blocked; suite/runtime/native acceptance unchanged, parent OPEN.

@@ -4,11 +4,19 @@ Authored 2026-10-01. Batch67 covers only Retail12.0.5 exact source301 `C_Spell.G
 
 Primary evidence: profile cache `~/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/SpellDocumentation.lua`, lines216–230 and339–355. Cast: `SecretArguments = "AllowedWhenTainted"`, non-nil `SpellIdentifier` → non-nil number; docs say “Returns 0 if spell is not found”. Display: `SecretArguments = "AllowedWhenUntainted"`, identifier, number default9999, cstring default`*` → non-nil string. Both declare `SecretWhenCooldownsRestricted = true`. Display docs say “either the use count or number of charges” and “beyond the display count parameter”. These do not establish native priority, formatting, missing-source, coercion, width, or VM opaque-type behavior.
 
+## Exact1200 model preparation — 2026-10-10, after `3c36b2454`
+
+Source inspection only: `SimState.spell_cast_counts: HashMap<u32,u32>` and its empty initializer are now gated by `retail-12-0-0`, not `retail-12-0-5`. This explicit map is internal simulator input, not native backing or count acquisition. The 12.0.0 retirement row establishes cast-successor presence only; it does not establish a meaningful quantity producer.
+
+`tests/patch_12_0_0_prose.rs::prose_spell_cast_count_reads_live_explicit_inputs` is gated by `retail-12-0-0 && !retail-12-0-5`. It requires ordinary single-number cast results for19750→7/642→2, charge independence, live replacement/removal/clear, missing0 and environment isolation. Its assertions describe required behavior, not executed proof. Authentic exact1200 RED and producer repair remain pending; no earlier producer implementation or PASS is claimed.
+
+Producers/registration, display formatting/maximum and secret behavior remain Retail125-scoped. The historical125 acceptance below does not establish exact1200 display, threshold, output restriction or secret-input rules and must not be applied retroactively.
+
 ## What it must do
 
 ### Explicit inputs and scalar domains
 
-- [ ] Add only Retail125-gated `spell_cast_counts: HashMap<u32,u32>` with an empty default, shared by Retail/PTR feature composition. No new Cargo feature or per-slot wrapper reuse.
+- [ ] Use `spell_cast_counts: HashMap<u32,u32>` with an empty default, now Retail1200-gated; producer behavior below remains Retail125-scoped pending authentic exact1200 RED/repair. No new Cargo feature or per-slot wrapper reuse.
 - [ ] Cast returns exactly one number from the public resolved spell identifier's explicit count, otherwise0. Never derive cast count from charges.
 - [ ] Display returns exactly one string: valid typed charge state with `max_charges > 0` supplies `current_charges`; otherwise explicit count supplies quantity. This priority is inferred, not native-verified.
 - [ ] Inferred display absence is empty string; explicitly supplied0 is `"0"`. Missing cast is0. Local u32 maximum4294967295 must remain exactly representable, not claimed as native maximum.
@@ -46,8 +54,8 @@ Primary evidence: profile cache `~/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/B
 
 ## Implementation inventory
 
-- `src/lua_api/state/sim_state.rs`: literal C API spell-keyed input field, Retail125 gated.
-- `src/lua_api/state.rs`: matching empty initialization, same gate.
+- `src/lua_api/state/sim_state.rs`: literal internal simulator spell-keyed input field, now Retail1200 gated; not native backing.
+- `src/lua_api/state.rs`: matching empty initialization, same Retail1200 gate.
 - `tests/spell_count_outputs.rs`: grouped autodiscovery scaffold, Retail125 plus Retail/PTR only; no additional Cargo test binary.
 - `src/c_api/c_spell_counts.rs`: Retail125-only real producers. Cast conservatively validates public identifiers, copies explicit quantity/restriction without charge reads, then immediately pushes ordinary or typed host-secret NUM. Display authenticates all three original arguments before validation/model access, resolves the authenticated value, copies quantity/restriction under one immutable snapshot borrow, then immediately pushes ordinary or typed host-secret STR. Original wrappers remain rooted and untouched. No new state or acquisition.
 - `src/c_api/mod.rs`: only the Retail125 module declaration.
