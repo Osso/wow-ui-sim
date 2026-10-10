@@ -681,6 +681,14 @@ Original014 stderr already contains panic locations and field values; prior with
 Docs/evidence only: no source, AGENTS, tests, build, push, operations or delegation. Code-index artifacts preserved; other actors' C API, Mists bootstrap, currency tests and new spec untouched.
 
 
+## Mists CombatLog prefix and profession anchor — bounded correction, 2026-10-10
+
+Saved authentic CombatLog prefix RED: `/home/osso/.local/state/wow-ui-sim/verification/mists-combatlog-startup-red/20261010T070350Z/execution/{stdout,stderr,result.json}`. Exact `mists_combat_log_base_loads::mists_combat_log_base_school_colors_load_from_toc` fails, exit101. Startup positions are FrameXMLBase12, FrameXML39, CombatLogBase consumer78; pre-consumer school masks include None0 and Fire4. Main reports cache bypass still fails. Earlier missing-legacy-mask/late-load hypothesis is **not justified**; no alias code fix follows from this evidence. Actual nil-key producer remains unknown.
+
+Actual profession probe receipts: `/home/osso/.local/state/wow-ui-sim/verification/mists-cache-guard-timed-build/20261010T064922Z/profession-anchor-candidate-probe/{invocation.json,stdout,stderr,result.json}`. Main reports successful `ProfessionStatusBarTemplate` creation with `RIGHT` → owner `LEFT`, offsets0,2. This bounded success does not explain the startup self-anchor failure. Overall command exit1 and startup40 unique/44 occurrences remain; no clean-startup credit.
+
+Authentic named `CASTBAR` color values remain **unverified**. Source-history worker996 produced no artifact: no evidence credit. Main's archived old Shared source already uses the names; naming alone does not establish a new source transition or authentic values. No user/spec requirements inferred. Parent **OPEN**; existing-investigation-only update, no baseline, generated-data, code-index or code changes, staging, commit, push or delegation.
+
 ## Current bounded native workflow correction — 2026-10-10
 
 **Current instruction:** these bounded native Cargo units run directly through `/home/osso/.local/bin/pyrun-jsonl`, not with the whole Pyrun worker wrapped in `/home/osso/.worktrees/build-lock.sh`. The shared lead identified the earlier wrapper as incorrect: the script comment scopes serialization to the shared buildkit container; agent rules distinguish native execution without that container lock. This supersedes any shared-lock-required instruction for these native units only, not native/container release policy.
