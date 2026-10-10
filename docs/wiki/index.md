@@ -1,3 +1,7 @@
+## [2026-10-09] audit | Mists fixture and finite probe source verification
+
+[Proof SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#later-mists-oracle-and-finite-budget-probe--source-only-runtime-pending): independent source/format, fixture preservation, finite budgets, shared initialization and settle-helper checks complete; runtime pending. Initial-event scope only; quota errors not asserted absent, reset counters not startup totals. Retained pre-quota capture has zero successful EnhanceQoL handlers before first GroupTools failure; prior9,986,831 instructions unassigned. Private reports/streams remain local; docs-only, parent OPEN.
+
 ## [2026-10-09] audit | Completed fc824 bounded proof
 
 [Proof SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#completed-fc824-bounded-proof--parent-open): independent compiler/exact-case/startup audits retained; later TOC repairs excluded, parent OPEN. Later [TOC runtime epoch](investigations/integrated-source-and-factory-proof-2026-10-09.md#completed-86f272-toc-runtime-audit--parent-open) and [source-only follow-ups](investigations/integrated-source-and-factory-proof-2026-10-09.md#later-mists-oracle-and-finite-budget-probe--source-only-runtime-pending) remain separately scoped.
