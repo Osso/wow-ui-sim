@@ -71,8 +71,8 @@ mod tests {
         const OWNERS: [&str; 3] = ["EnhanceQoL", "AllTheThings", "EnhanceQoLSharedMedia"];
         const EARLY_OWNERS: [&str; 2] = ["EnhanceQoL", "AllTheThings"];
         let env = run_trusted_finite_budget_probe(&OWNERS, &EARLY_OWNERS, TEST_LIMIT);
-        // SharedMedia loads during PLAYER_LOGIN, not initial addon loading.
-        // Settle ticks may reset usage: inspect actual loaded state instead.
+        // LoadOnDemand triggers depend on the installed addon/event sequence.
+        // Settle ticks may reset usage: inspect loaded state without inferring its trigger.
         let sim = env.state().borrow();
         let shared_media = sim
             .addons
@@ -89,7 +89,7 @@ mod tests {
         );
         assert!(
             loaded,
-            "SharedMedia was not loaded after normal login settle"
+            "SharedMedia was not loaded after normal headless settle"
         );
     }
 
