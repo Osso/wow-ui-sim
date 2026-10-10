@@ -47,6 +47,21 @@ Forever additionally accepts `CHAT_MSG_COLLECTED_APPEARANCE` and `UNIT_AURA_BLOC
 
 `forever_finite_events_register_deliver_and_reject_unknown` tests registration, injected callback delivery with payload preservation, unregistration, and unknown-name rejection in the existing grouped integration module. Injection proves simulator dispatch, not native event production or payload secrecy. The frozen pre-patch binary rejects both names (RED, isolated ledger `/tmp/forever-addon-audit/forever-finite-events-red-ww5p10a5/ledger.json`); compiled GREEN and addon replay remain pending.
 
+### Aura block-list cleared registration — current contract, proof pending
+
+Source-inspected 2026-10-10: the Forever profile cache's `Blizzard_APIDocumentationGenerated/UnitAuraDocumentation.lua:631–638` declares `UNIT_AURA_BLOCK_LIST_CLEARED`, synchronous, with one required `unitTarget: UnitTokenVariant` payload. This is a source declaration, not native firing or payload-parity proof.
+
+- [ ] Accept this exact event through the finite Forever registration override for both `RegisterEvent` and `RegisterUnitEvent`; do not make event validation permissive.
+- [ ] Preserve rejection of arbitrary unknown names through both registration methods, without retaining a failed registration.
+- [ ] Preserve default-mainline non-registerable event policy, including `COMBAT_LOG_EVENT` and `COMBAT_LOG_EVENT_UNFILTERED`; this Forever addition must not broaden other profiles' registration policy.
+- [ ] In simulator-injected fixtures, deliver one unit payload, filter `RegisterUnitEvent` by its registered unit, and suppress delivery after unregistration. Injection is not native parity.
+
+`src/event/valid_events.rs` now includes this name in the finite `FOREVER_REGISTERABLE_EVENTS` override; it already appears in the separately gated `PATCH_12_1_REGISTERABLE_EVENTS`. The current `NON_REGISTERABLE_EVENTS` contains only the two combat-log names above. The earlier private applicability handoff's claim that the cleared event is in that non-registerable table does not describe the inspected current source. The intended repair is a finite Forever override, not removal of mainline non-registerable entries.
+
+Fresh test-stage assertions in `tests/wowforever_finite_constants.rs`: `forever_aura_block_list_cleared_register_event_delivers_unit_payload`, `forever_aura_block_list_cleared_register_unit_event_filters_target`, and `forever_aura_block_list_cleared_unknown_event_control_rejects_both_methods`. These assert registration/injected delivery, unit filtering/unregistration, and actual unknown-name rejection respectively; source inspection alone does not establish their runtime results or default-mainline preservation.
+
+Authentic test RED at `20e808b94`, epoch `20261010T190445Z`: compilation exit0/source equality; both registration/delivery positives fail at unknown `UNIT_AURA_BLOCK_LIST_CLEARED`, while the unrelated-unknown control passes (2FAIL/1PASS, execution101). Earlier epoch `20261010T190145Z` was resource-blocked, not behavioral RED. Requirements stay unchecked until GREEN proof. The separate stock baseline remains19unique/36occurrences, including16unknown-event occurrences; native firing/payload parity and whole-startup acceptance remain open.
+
 ## Guild Discord event and aura sound trigger enum
 
 Forever also accepts `CHAT_MSG_GUILD_DISCORD`, explicitly published by cached `ChatInfoDocumentation.lua:1676–1680` and consumed by Chattynator. Registration, injected delivery, unregister suppression, and arbitrary-name rejection are covered by the existing finite-event regression. Other documented residual events are not added by this change.
