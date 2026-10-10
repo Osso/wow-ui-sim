@@ -1,0 +1,15 @@
+{
+  "algorithm": "sha256",
+  "scope": "Additive correction retention; historical report, main-review, retention-manifest and original hashmanifest unchanged. Sanitized review only; no raw streams/vendor payloads.",
+  "source": "/home/osso/.local/state/wow-ui-sim/verification/mists-currency-observer-current/20261010T043019Z/audit/main-review.json",
+  "files": {
+    "main-review-corrected.json": {
+      "sha256": "ade261718077806c5985df661502aa9d5adc9436d7b1b5f1f3dc5d7930116004",
+      "bytes": 1691
+    },
+    "correction.md": {
+      "sha256": "3f67172321e57f8100670e6296917f70c4930460bb73cac43364823f670909fb",
+      "bytes": 2126
+    }
+  }
+}

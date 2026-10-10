@@ -1,0 +1,32 @@
+{
+  "observed": "2026-10-10T04:41:39.808887+00:00",
+  "accepted": [
+    "compile/artifact/source-map integrity",
+    "target counts26PASS4FAIL",
+    "Honor/Dialog singleton negative assertions pass",
+    "no is_enabled compiler warning in saved Mists epoch"
+  ],
+  "withheld": [
+    "currency failed-test assertion location, exact observed field values and successful-name assertions are not directly established by saved streams lacking panic diagnostics",
+    "exact existing TokenFrame_Update failing callee remains unobserved"
+  ],
+  "source_grounded": [
+    "list projection omits watched/max fields; adapter emits false/nil",
+    "cached vendor line63 HybridScrollFrame_GetOffset precedes currency calls"
+  ],
+  "next_proof": "source2e46082d0 adds bounded diagnostics; run targeted currency artifact after fresh compile, no production fix yet",
+  "correction": {
+    "observed": "2026-10-10T05:09:47.111205+00:00",
+    "cause": "Main parser expected thread-name followed immediately by panicked; actual Rust diagnostic includes parenthesized thread ID. Original stderr DID contain panic locations and left/right values.",
+    "accepted_original_red": [
+      "cap assertion149 observednil/nil vs90/90",
+      "watched assertion120 observednil/false vs true/true",
+      "positivewrapper failure192 genericnilcallLua63 aftersizeequality",
+      "negative assertion46 genericnilcallLua63 afterfailurestatusassertion"
+    ],
+    "still_unproven": [
+      "exact failing TokenFrame_Update callee without source/cache attribution beyond genericLua63"
+    ],
+    "extra_diagnostic_epoch": "518 preserves further bounded diagnostics; earlier claim missing original output was incorrect"
+  }
+}
