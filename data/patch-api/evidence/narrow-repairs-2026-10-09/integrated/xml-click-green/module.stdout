@@ -1,0 +1,14 @@
+
+running 9 tests
+test iced_app::mouse::mouse_test_modules::registration_tests::left_button_up_fires_mouse_up_before_click ... ok
+test iced_app::mouse::mouse_test_modules::registration_tests::lua_create_frame_applies_xml_template_click_edges_before_onload_and_dispatch ... ok
+test iced_app::mouse::mouse_test_modules::registration_tests::register_for_clicks_any_up_matches_addon_lowercase_spelling ... ok
+test iced_app::mouse::mouse_test_modules::registration_tests::register_for_clicks_left_button_down_fires_click_on_mouse_down_only ... ok
+test iced_app::mouse::mouse_test_modules::registration_tests::register_for_mouse_matches_addon_lowercase_spelling ... ok
+test iced_app::mouse::mouse_test_modules::registration_tests::register_for_mouse_restricts_physical_mouse_button_events ... ok
+test iced_app::mouse::mouse_test_modules::registration_tests::right_click_handlers_see_held_alt_modifier ... ok
+test iced_app::mouse::mouse_test_modules::registration_tests::xml_click_templates_replace_inherited_edges_before_onload_and_physical_dispatch ... ok
+test iced_app::mouse::mouse_test_modules::registration_tests::xml_register_for_clicks_applies_literal_edges_preserves_default_and_allows_lua_mutation ... ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 1987 filtered out; finished in 0.86s
+

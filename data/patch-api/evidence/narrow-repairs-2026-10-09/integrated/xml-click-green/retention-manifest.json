@@ -1,0 +1,14 @@
+{
+  "source_receipt_directory": "/home/osso/.local/state/wow-ui-sim/verification/xml-click-green-current/20261010T163159Z",
+  "revision": "c6bc87c120e43199dadeb299691511b03a81408a",
+  "scope": "Six byte-identical bounded XML GREEN receipts plus independent read-only audit; no binary, source snapshots, compile payload or vendor stderr retained. No dependency provenance or broad-suite acceptance.",
+  "sha256": {
+    "module.stdout": "17ce3317a60dda5d6849d9241caa507fa70ef0a92f896010fa330557c95cca93",
+    "artifact.json": "89174d619d499f19bf1df0415127d72c9e2db59b737eef59f290dc5e012e5c51",
+    "execution-results.json": "f640335e62cc9887d4fb9d41292d5072961c1d4ef24277d4faa3c1df2acdbad2",
+    "compile-result.json": "27e344ef47ce70c39240239908b372967ffb5c3e32206cda667fc1e675196480",
+    "checks/fmt.json": "872b8f95aa0fe0249fddaf89d6d7b217129e47010bcfb8814126a27f155e8279",
+    "checks/default-check.json": "b5f6e9cee48dd7fd540ff73558b375904d8310e953df6ba3e6d10664d7ac7d13",
+    "resumed-audit.md": "018182a66b3f4e1e49889b70df64ed1b04993ce3923c3dde944570333b3d0a2d"
+  }
+}

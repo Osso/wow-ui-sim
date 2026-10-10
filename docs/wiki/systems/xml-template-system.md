@@ -10,6 +10,10 @@ Every WoW XML file has a `<Ui>` root deserializing into `UiXml { elements: Vec<X
 
 **FrameXml** key attributes: `name`, `parent`, `parentKey` (property on parent), `inherits` (comma-separated templates), `mixin`, `virtual/intrinsic` (template-only), `toplevel`, `hidden`, `alpha`, `setAllPoints`, `enableMouse`, `parentArray` (appends to parent array). Child elements via `FrameChildElement`: Size, Anchors, Layers, Frames, Scripts, Animations, button-specific textures, widget-specific fields. XML intrinsic widget types prepend their intrinsic template to the explicit `inherits` chain.
 
+## Declarative click registration
+
+`FrameXml.register_for_clicks: Option<String>` feeds the shared inherited/instance setter before scripts in direct XML and Lua-created template paths (`33d62d705`). Comma-separated tokens are trimmed; later declarations replace inherited registration, omission preserves it, and later Lua mutation remains authoritative. Existing mouse dispatch policy is unchanged. [Contract](../../specs/xml-button-click-registration.md), [implementation details](../../xml-template-system.md#declarative-click-registration) and [bounded default-Retail GREEN SSOT](../investigations/integrated-source-and-factory-proof-2026-10-09.md#xml-click-registration--bounded-default-retail-green) separate current simulator proof from native grammar/parity and all-profile acceptance. Earlier RED/zero-test history remains in the [3.3.0 audit](../investigations/patch-3-3-0-api-audit.md#current-bounded-reconciliation).
+
 ## Template Registry
 
 Virtual/intrinsic frames are registered in a process-global `OnceLock<RwLock<HashMap<String, TemplateEntry>>>` and not instantiated:

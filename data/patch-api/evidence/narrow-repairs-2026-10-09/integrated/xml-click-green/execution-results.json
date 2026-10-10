@@ -1,0 +1,16 @@
+[
+  {
+    "argv": [
+      "/usr/bin/timeout",
+      "90",
+      "/home/osso/.local/state/wow-ui-sim/verification/xml-click-green-current/20261010T163159Z/lib-tests-sealed",
+      "iced_app::mouse::mouse_test_modules::registration_tests::",
+      "--nocapture",
+      "--test-threads=1"
+    ],
+    "artifact_unchanged": true,
+    "exit": 0,
+    "reached_tests": 9,
+    "selector": "iced_app::mouse::mouse_test_modules::registration_tests::"
+  }
+]

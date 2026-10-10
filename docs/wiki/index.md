@@ -1,3 +1,7 @@
+## [2026-10-10] audit | XML click registration — bounded default-Retail GREEN
+
+[Proof SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#xml-click-registration--bounded-default-retail-green): independently checked saved `c6bc87c12` receipts for implementation `33d62d705`, actual9/9 (three new cases/six controls), compile/fmt/default-check exit0; source equality and sealed-artifact hash checked. [Contract](../specs/xml-button-click-registration.md) and [XML system](systems/xml-template-system.md#declarative-click-registration) cross-linked. Prior resource-blocked/RED/zero-test histories preserved; no native/all-profile/broad-suite or dependency-provenance claim, parent OPEN.
+
 ## [2026-10-10] audit | Garrison recorder53 PASS; native capture pending
 
 [Recorder status](investigations/integrated-source-and-factory-proof-2026-10-09.md#garrison-manual-capture-readiness--bounded-recorder-pass-native-rows-unknown): manual mode prepared at `9e7af4de0`; preserved RED ten failures/one exclusion PASS, independent recorder53/53 PASS. Formatted runner rebuild matches executed binary; VM source-to-rlib provenance remains unestablished. [Native catalog blocker](investigations/integrated-source-and-factory-proof-2026-10-09.md#native-garrison-evidence-boundary) unchanged; actual rows/native acceptance UNKNOWN, saved three failures and original Mists assertions preserved.

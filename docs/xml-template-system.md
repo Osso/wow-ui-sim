@@ -94,7 +94,7 @@ Child frames inside `<Frames>` containers use a parallel enum `FrameElement` wit
 
 Commit `33d62d705` adds `registerForClicks` initialization through `template::direct::apply_xml_register_for_clicks`, shared by direct XML loading (`loader/xml_frame/setup.rs`) and Lua-created XML templates (`create_frame/template_chain/runtime.rs`) before scripts. The setter resolves inherited declarations followed by the instance declaration, splits commas, trims tokens and drops empty tokens, then writes `registered_click_buttons`. Omission leaves existing registration unchanged; later Lua `RegisterForClicks` remains authoritative. Mouse dispatch policy is unchanged.
 
-This documents the implementation, not complete native grammar or parity. Requirements and test scope live in the [click-registration spec](specs/xml-button-click-registration.md); RED receipts and pending GREEN/final verification live in the [3.3.0 reconciliation](wiki/investigations/patch-3-3-0-api-audit.md#current-bounded-reconciliation).
+This documents the implementation, not complete native grammar or parity. Requirements and test scope live in the [click-registration spec](specs/xml-button-click-registration.md); Preserved RED/zero-test history lives in the [3.3.0 reconciliation](wiki/investigations/patch-3-3-0-api-audit.md#current-bounded-reconciliation); independently checked saved default-Retail 9/9 GREEN and compile/fmt/default-check exit0 at `c6bc87c12` live in the [integrated proof SSOT](wiki/investigations/integrated-source-and-factory-proof-2026-10-09.md#xml-click-registration--bounded-default-retail-green). No native/all-profile or broad-suite acceptance follows.
 
 ### Child Elements via FrameChildElement
 **File:** `src/xml/types.rs:307-375`
