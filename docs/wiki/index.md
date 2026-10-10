@@ -1,3 +1,7 @@
+## [2026-10-09] audit | Source gates and current live artifact
+
+[Missing-method SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#missing-method-source-gates--shared-snapshot-safety-unresolved) distinguishes positive Retail12.0.0 and negative12.0.5 registration gates; native/profile snapshot safety remains unknown. [Provider SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#pi-provider-provenance--historical-aggregate-only) records current live-main/installed `785726…` byte match; exact source and failure linkage unproven, `c39b…` historical only.
+
 ## [2026-10-09] audit | Mists fixture and finite probe source verification
 
 [Proof SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#later-mists-oracle-and-finite-budget-probe--source-only-runtime-pending): independent source/format, fixture preservation, finite budgets, shared initialization and settle-helper checks complete; runtime pending. Initial-event scope only; quota errors not asserted absent, reset counters not startup totals. Retained pre-quota capture has zero successful EnhanceQoL handlers before first GroupTools failure; prior9,986,831 instructions unassigned. Private reports/streams remain local; docs-only, parent OPEN.

@@ -246,6 +246,14 @@ Copied SOURCE **8/8 each**, corrected portable **3/3 each**; original/current se
 
 [Retention manifest](../../../data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era-helper/main-retention.json) preserves 32 original files / 1,155,904 bytes byte-identically, including report, receipts, both hash scopes, comparison, observations, successful and failed streams, and reused consumer logs. Original seals untouched; scratch fixture trees and recording helper excluded. These are bounded proof epochs, not latest-HEAD blanket acceptance.
 
+## Missing-method source gates — shared snapshot safety unresolved
+
+Supplied local `missing-method-profile-gates-current.md` establishes literal simulator registration, not native presence. The five exact rows—`FontString:GetAlphaGradient`, `FontString:GetScaleAnimationMode`, `FontString:SetScaleAnimationMode`, `FontString:SetVertexColorFromBoolean`, `Texture:SetVertexColorFromBoolean`—require **`retail-12-0-0`**. Default Retail/PTR enables that capability; non-Retail bundles do not. The gate selects a compilation epoch, not a client channel.
+
+The 16 reviewed `SetPreventSecretValues` rows inherit common-frame registration under **`not(retail-12-0-5)`**, without widget narrowing. This permits non-Retail and older Retail builds lacking that feature; it is not an exact native 12.0.1 removal gate. See [existing retirement accounting](patch-12-0-1-api-audit.md#root-causes-and-fixes) and [client-profile SSOT](../systems/client-profiles.md).
+
+Retained Retail metatable proof is not a profile matrix. Discovery interface120001 lacks exact client-build provenance and establishes no other profile/epoch. **Exact native presence and cross-profile shared-snapshot safety remain unknown**; source gates do not authorize blanket missing-method snapshot edits. This source-only conclusion adds no runtime/native proof to the [saved suite](#saved-full-suite-fail-broader-goal-open).
+
 ## Saved full suite: FAIL, broader goal open
 
 [Full-suite report](../../../data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/fullsuite-dd/fullsuite-dd-independent-report.md) and [exact comparison](../../../data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/fullsuite-dd/fullsuite-dd-independent-comparison.json) retain **FAIL at `dd710c6fc`**: 23 integration + one Garrison prefork + six library failures, same identities/boundaries as `614402d56`. 29/30 raw assertion payloads equal; the remaining payload differs only a random missing-directory suffix. No newly failing identity against that baseline; no root-cause repair inferred. This is saved-run proof, not execution at later HEAD.
@@ -400,7 +408,11 @@ Current candidate SHA-256 `f7c73112a06f01008c14beb3c608704d3c43e83caf4497a83e5da
 
 ## Pi provider provenance — historical aggregate only
 
-Verified from screened handoff receipts: 2026-10-09. [Safe summary](../../../data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/provider-provenance/safe-summary.json) records installed executable and both eligible live-main executables matching **97,035,464 bytes**, SHA-256 **`c39b724bec926a87cc99a2ef8197f0e0836617261b86c3dd5771d63561429469`**. Receipt observed **23:22:13Z**; executable **source revision UNPROVEN**. Adjacent checkout/package metadata is not binary provenance; no new live inspection performed.
+Current supplied execution receipt, **2026-10-10 02:55:54Z (October 9 US local)**: live main executable and installed artifact share SHA-256 **`7857263eff5f02519246ba62f77a2ed10f04926c4f2b635da9746637b834883c`**. This establishes matching bytes at that observation, not exact source revision or failure-record linkage; both remain **UNPROVEN**. Checkout revision/package version cannot supply binary provenance. The earlier installed-only check's live-mapping unknown is superseded solely for this observed main, not other sessions or later execution.
+
+Sources: supplied local `provider-live-epoch-current.md` and `provider-current-main-execution.json` handoffs; conclusions only retained, no private payloads or process/boot identities. No new live inspection performed. The **`c39b724b…` receipt below is historical, not current artifact identity**; its screened aggregate remains separately scoped.
+
+Verified from screened historical handoff receipts: 2026-10-09. [Safe summary](../../../data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/provider-provenance/safe-summary.json) records installed executable and both eligible live-main executables matching **97,035,464 bytes**, SHA-256 **`c39b724bec926a87cc99a2ef8197f0e0836617261b86c3dd5771d63561429469`**. Receipt observed **23:22:13Z**; executable **source revision UNPROVEN**. Adjacent checkout/package metadata is not binary provenance; no new live inspection performed.
 
 Screened allowlisted historical input: **37 records**, window **07:27:23.800Z–07:34:17.654Z** on October 9. **19 errors /18 retries**; errors comprise **18 API `server_error` +1 aborted**, cached websocket transport19; session retry layer18. HTTP status absent37; retry transport/failure kind absent18. Request identifiers present18 but omitted. Last record precedes receipt by about **16h48**. No supplied current-boot timestamp or process-to-record linkage: synthetic classification, current-boot overlap, current-artifact emission and emission cause remain **UNPROVEN**. Upstream cause unknown; no quota-failure or current-model-configuration claim.
 
