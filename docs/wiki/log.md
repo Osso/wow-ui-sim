@@ -1,3 +1,7 @@
+## [2026-10-10] audit | Prefork Retail/Mists admission — source-only
+
+Updated [contract](../specs/prefork-test-harness.md#retail-and-mists-target-eligibility), [system status](systems/prefork-test-harness.md#retailmists-target-admission-2026-10-10-verification-pending) and index. Retail/Mists capability and profile partitions inspected; unsupported manual capability rejection remains unverified. Saved old-target Cargo RED exit101 retained; no post-change GREEN. Historical Retail proofs and unverified non-Retail cases unchanged. Docs only; no code edits, builds, delegation or commit; integrated-source investigation untouched.
+
 ## [2026-10-09] audit | Auto-hide vendor source correction
 
 [Canonical correction](investigations/patch-3-1-0-api-audit.md#auto-hide-source-correction--2026-10-09) retains sanitized cached Retail/Mists source paths/roles and supersedes Rust-only missing-driver claims. Integrated SSOT/index link the correction; runtime/native prerequisites unproved, historic buggy caveat preserved, no behavioral PASS. Proposed fixture/source014 RED tests unexecuted. Docs only; no source/AGENTS/tests/builds/push/operations/delegation; `.code-index.db*` preserved.

@@ -75,6 +75,7 @@ The Linux prefork test harness provides a reusable custom test-runner contract f
 ### Retail and Mists target eligibility
 
 - [ ] Admit `prefork_full_ui` for the Retail and Mists client bundles without admitting other profiles through their bundles.
+- [ ] Reject unsupported profiles when `prefork-full-ui` is manually enabled; capability admission must not imply profile support.
 - [ ] Preserve Retail's default full-UI registry/preload and exact fixture groups.
 - [ ] Under Mists, list and dispatch only the original chat pair when GUI is enabled and the original cast-bar case; do not run Retail full-UI preload or registry checks.
 - [ ] Preserve each original constructor, assertion, process isolation and cache contract. Listing/admission is not original-case execution proof.
