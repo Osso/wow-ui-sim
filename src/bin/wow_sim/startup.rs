@@ -25,6 +25,10 @@ type InitResult = Result<
 
 pub(super) fn init_and_load(args: &Args, screen: ScreenKind) -> InitResult {
     let env = WowLuaEnv::new().expect("failed to create Lua env");
+    initialize_and_load_env(args, screen, env)
+}
+
+fn initialize_and_load_env(args: &Args, screen: ScreenKind, env: WowLuaEnv) -> InitResult {
     configure_screen_size(&env, args);
     let font_system = create_font_system(args);
     init_environment(args, &env, &font_system)?;
@@ -43,6 +47,102 @@ pub(super) fn init_and_load(args: &Args, screen: ScreenKind) -> InitResult {
 
     restart_gc_after_bootstrap(&env);
     Ok((env, font_system, saved_vars))
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use clap::Parser;
+
+    #[test]
+    #[ignore = "private host-budget probe; external no-sound setting and 90s process bound required"]
+    fn trusted_finite_budget_for_selected_addons() {
+        // Explicit trusted test input, NOT a production default or native policy.
+        const TEST_LIMIT: u64 = 100_000_000;
+        const OWNERS: [&str; 2] = ["EnhanceQoL", "AllTheThings"];
+        assert!(
+            std::env::var("WOW_SIM_NO_SOUND")
+                .is_ok_and(|value| value == "1" || value.eq_ignore_ascii_case("true")),
+            "caller must supply WOW_SIM_NO_SOUND; probe never mutates process environment"
+        );
+        let args = Args::try_parse_from(["wow-sim", "--no-saved-vars", "dump-tree"])
+            .unwrap_or_else(|_| panic!("probe arguments must parse"));
+        assert!(args.no_saved_vars);
+        assert!(!args.no_addons && !args.skip_addons() && !args.is_test_command());
+        assert_eq!(command_screen_size(&args.command), (1600.0, 1200.0));
+        let screen = args.effective_screen();
+        assert_eq!(screen, ScreenKind::Game);
+        let env = WowLuaEnv::new().unwrap_or_else(|_| panic!("probe environment creation failed"));
+        env.loader_env()
+            .with_state(|state| {
+                for owner in OWNERS {
+                    state.set_instruction_budget(owner, Some(TEST_LIMIT));
+                }
+                Ok::<_, std::convert::Infallible>(())
+            })
+            .unwrap();
+
+        let snapshot = |env: &WowLuaEnv, phase: &str| {
+            env.loader_env()
+                .with_state(|state| {
+                    for owner in OWNERS {
+                        match state.instruction_budget(owner) {
+                            Some(budget) => {
+                                eprintln!(
+                                    "[trusted-budget-probe] test_input phase={phase} owner={owner} limit={:?} used={}",
+                                    budget.limit, budget.used
+                                );
+                                assert_eq!(budget.limit, Some(TEST_LIMIT));
+                            }
+                            None => {
+                                eprintln!(
+                                    "[trusted-budget-probe] phase={phase} owner={owner} limit=unavailable used=unavailable"
+                                );
+                                panic!("configured probe owner budget missing");
+                            }
+                        }
+                    }
+                    Ok::<_, std::convert::Infallible>(())
+                })
+                .unwrap();
+            // Count recorded quota errors only; never publish messages or payloads.
+            let sim = env.state().borrow();
+            for owner in OWNERS {
+                let marker = format!("instruction budget exhausted for owner '{owner}'");
+                let quota_errors: usize = sim
+                    .lua_error_counts
+                    .iter()
+                    .filter(|(message, _)| message.contains(&marker))
+                    .map(|(_, count)| *count)
+                    .sum();
+                eprintln!(
+                    "[trusted-budget-probe] phase={phase} owner={owner} quota_errors={quota_errors}"
+                );
+            }
+        };
+        snapshot(&env, "before_init");
+        let (env, _font_system, _saved_vars) = initialize_and_load_env(&args, screen, env)
+            .unwrap_or_else(|_| panic!("probe initialization pipeline failed"));
+        snapshot(&env, "after_load_and_gc");
+        // Check real startup consumption before frame ticks can reset owner usage.
+        env.loader_env()
+            .with_state(|state| {
+                for owner in OWNERS {
+                    assert!(
+                        state
+                            .instruction_budget(owner)
+                            .is_some_and(|budget| budget.used > 0),
+                        "selected probe owner was not encountered in a metered startup scope"
+                    );
+                }
+                Ok::<_, std::convert::Infallible>(())
+            })
+            .unwrap();
+        // EXACT helper used by normal run_dump_tree, including its settle ticks.
+        super::super::settle_headless_startup(&env);
+        snapshot(&env, "after_headless_settle");
+        // Reaching this boundary proves pipeline return, not clean startup or native parity.
+    }
 }
 
 fn configure_screen_size(env: &WowLuaEnv, args: &Args) {
