@@ -180,6 +180,9 @@ pub struct FrameXml {
     pub enable_mouse: Option<bool>,
     #[serde(rename = "@motionScriptsWhileDisabled")]
     pub motion_scripts_while_disabled: Option<bool>,
+    /// Comma-separated button click registrations observed in Blizzard XML.
+    #[serde(rename = "@registerForClicks")]
+    pub register_for_clicks: Option<String>,
     #[serde(rename = "@enableKeyboard")]
     pub enable_keyboard: Option<bool>,
     #[serde(rename = "@clampedToScreen")]

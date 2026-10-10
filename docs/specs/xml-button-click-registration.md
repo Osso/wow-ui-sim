@@ -25,11 +25,12 @@ Patch3.3.0 says Button `registerForClicks` can be set from XML. Current cached R
 
 ## Tests asserting this spec
 
-`src/iced_app/mouse_registration_tests.rs` contains three actual TOC/XML/template and windowless physical-input cases, plus existing Lua registration controls. Test-only `OnLoad` observations query the existing dispatch predicate; they are not native-client or physical-click receipts during `OnLoad`. Current test compilation and behavioral RED/GREEN are pending; unchecked requirements above are not accepted proof.
+`src/iced_app/mouse_registration_tests.rs` contains three actual TOC/XML/template and windowless physical-input cases, plus existing Lua registration controls. Test-only `OnLoad` observations query the existing dispatch predicate; they are not native-client or physical-click receipts during `OnLoad`. Main observed all three committed cases reaching their intended behavioral RED boundaries on the source-equal sealed default-Retail library artifact at `fbb502900`: missing right-button receipt and missing registration during instance/Lua-template `OnLoad`. Earlier wrong-selector zero-test attempts are preserved and are not proof. The shared attribute/application implementation is present; GREEN and independent acceptance remain pending, so requirements above stay unchecked.
 
 ## Known gaps (current cycle)
 
-- [ ] Observe behavioral RED for the committed cases, then implement and independently verify GREEN on the current relevant source.
+- [x] Observe behavioral RED for all three committed cases at the intended registration/dispatch boundaries.
+- [ ] Independently verify GREEN for the shared implementation on the current relevant source.
 - [ ] Retain exact profile/features, source/artifact scope, input results and applicable integration evidence.
 - [ ] Complete grammar, invalid/empty token behavior and historical/native-client parity remain unverified beyond the cited declarations and existing simulator policy.
 

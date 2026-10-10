@@ -530,6 +530,32 @@ pub fn apply_xml_motion_scripts_while_disabled(
     }
 }
 
+/// Apply inherited button click registrations before frame scripts run.
+pub fn apply_xml_register_for_clicks(
+    state: &Rc<RefCell<SimState>>,
+    frame_id: u64,
+    frame: &FrameXml,
+    inherits: &str,
+) {
+    let mut registration = None;
+    for entry in &*crate::xml::get_template_chain(inherits) {
+        registration = entry.frame.register_for_clicks.clone().or(registration);
+    }
+    registration = frame.register_for_clicks.clone().or(registration);
+    let Some(registration) = registration else {
+        return;
+    };
+    let buttons = registration
+        .split(',')
+        .map(str::trim)
+        .filter(|button| !button.is_empty())
+        .map(str::to_owned)
+        .collect();
+    if let Some(frame) = state.borrow_mut().widgets.get_mut(frame_id) {
+        frame.registered_click_buttons = buttons;
+    }
+}
+
 /// Resolve and apply enableKeyboard from template chain + instance XML.
 pub fn apply_xml_enable_keyboard(
     state: &Rc<RefCell<SimState>>,
