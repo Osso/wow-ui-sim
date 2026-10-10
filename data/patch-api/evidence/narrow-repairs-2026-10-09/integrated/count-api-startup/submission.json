@@ -1,0 +1,23 @@
+{
+  "argv": [
+    "/usr/bin/cargo",
+    "build",
+    "--bin",
+    "wow-sim",
+    "--offline",
+    "--locked",
+    "--message-format=json",
+    "--timings",
+    "-j",
+    "12"
+  ],
+  "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+  "exclusions": [
+    "external dependencies/source-to-artifact provenance",
+    "untracked files/index",
+    "inherited environment",
+    "runtime assets outside fixture inputs"
+  ],
+  "purpose": "required default API-registration Lua-errors and normal-startup capture after cast countregistration; no native/allprofileclaim",
+  "revision": "9635468d994be53d1f3571a8005115a49864c18a"
+}

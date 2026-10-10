@@ -1,0 +1,26 @@
+{
+  "source_artifact_revision": "9635468d994be53d1f3571a8005115a49864c18a",
+  "diagnostic_submission_revision": "d6f767b11b11a072a3bc3e8a1dd3395e7c4d97df",
+  "dispatch_instruction_limit": 10000000,
+  "records": 104,
+  "entered_exhausted": 102,
+  "consumed_remaining": 2,
+  "first_EnhanceQoL_file": {
+    "file": "Settings/GroupTools.lua",
+    "used_before": 9994637,
+    "used_after": 10000000,
+    "delta": 5363
+  },
+  "EnhanceQoL_callbacks": {
+    "records": 96,
+    "all_used_before": 10000000,
+    "all_used_after": 10000000
+  },
+  "first_AllTheThings_callback": {
+    "event": "PLAYER_LOGIN",
+    "used_before": 770081,
+    "used_after": 10000000,
+    "delta": 9229919
+  },
+  "scope": "ownercumulativedispatchcharges notexclusiveinstruction/cause/nativequota/walltime; priorEnhanceQoLworkunassigned"
+}

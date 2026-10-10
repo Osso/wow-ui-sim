@@ -1,0 +1,36 @@
+{
+  "epoch": "20261010T172719Z",
+  "lua-errors": {
+    "exit": 0,
+    "runtime_diagnostics": 0,
+    "completion_marker_count": 0,
+    "marker_requested": false
+  },
+  "normal-startup": {
+    "exit": 0,
+    "runtime_diagnostics": 0,
+    "completion_marker_count": 1,
+    "marker_stderr_line": 251,
+    "frame_tree_stderr_line": 283
+  },
+  "runtime": {
+    "Blizzard_addons": 291,
+    "bytecode_hits": "1569/1569",
+    "third_party_addons_disabled": true,
+    "SavedVariables_disabled": true,
+    "existing_WTF_EditMode_layout_cache_read": true
+  },
+  "build": {
+    "exit": 0,
+    "fresh_artifact_reused": true,
+    "distinct_manifest_warnings": 6,
+    "aggregate_warning_lines": 1
+  },
+  "private_stream_sha256": {
+    "compile.stdout": "666a89f2a092b325dc75556968c64072279da9494f46c0690d205da3f127ce7b",
+    "compile.stderr": "715f035bca5e35e6a0a979dffc4b6615e86e168aabbae07309fafee562c0236d",
+    "lua-errors.stderr": "ed482f4e57a6f592f40495d3c146e815cd6b5eba129d4d54f0ef137789960914",
+    "normal-startup.stdout": "3c9fdad351ae6657a4dac106430e0a935e0b7477fe88f2e1815756a7f2b36f9e",
+    "normal-startup.stderr": "5b6592c078eb20179ef44d325783a6882e9cd48888f9ad1d44239ec50971f7e3"
+  }
+}

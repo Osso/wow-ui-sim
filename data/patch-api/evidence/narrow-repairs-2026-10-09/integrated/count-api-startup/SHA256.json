@@ -1,0 +1,42 @@
+{
+  "algorithm": "SHA-256",
+  "parent_report_sha256": "aa4053f0d930fcfc5b3b8c1140daf6ab7e19ddf53be799c5f667ebfb0d952582",
+  "files": {
+    "artifact.json": {
+      "bytes": 764,
+      "sha256": "862d82e36dda49e744272d8cf51c9999a1d913e1ff2e614bf4fa7aff9c5f3a0e"
+    },
+    "cargo-result.json": {
+      "bytes": 38,
+      "sha256": "863360b60e35e8cc7ebc63166a824170aa9c92bf9bccec2d71fbb92a6daac267"
+    },
+    "compile-result.json": {
+      "bytes": 39,
+      "sha256": "27e344ef47ce70c39240239908b372967ffb5c3e32206cda667fc1e675196480"
+    },
+    "execution-results.json": {
+      "bytes": 847,
+      "sha256": "bccb12e39df25e5b6d1759d315735a494b2bd36c60aa9b366bfecf5d4532b49e"
+    },
+    "independent-report.md": {
+      "bytes": 8380,
+      "sha256": "6abe228e9de9f44e123e7906c5230e0608769956a49b2b2630dd13bf0bc974f3"
+    },
+    "lua-errors.stdout": {
+      "bytes": 3,
+      "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+    },
+    "marker-summary.json": {
+      "bytes": 1187,
+      "sha256": "ec13d2bc27500cd39322f6bdc16cc94c4b6020e9776ad8ac4b88f793abc4ae18"
+    },
+    "outcome.json": {
+      "bytes": 107,
+      "sha256": "001e3e308890f0e9d328e17551e96698c8ca0fb82d8198c386a423c1bc1e0eef"
+    },
+    "submission.json": {
+      "bytes": 613,
+      "sha256": "2acf019587e2b94c8d54c9206f719bec71699c4bd8a15b8af69463b7c7a8a244"
+    }
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "parent_private_report_sha256": "33cf0ccedfec16a438ac8b350552be2be9f90d6e918938d97f1d10386bdb7090",
+  "sha256": {
+    "independent-report.md": "33cf0ccedfec16a438ac8b350552be2be9f90d6e918938d97f1d10386bdb7090",
+    "outcome.json": "cccffbe5058a1bb44621126bb8cd3af1753f1aedb1abc9fbc6af9bae8f1983d0",
+    "summary.json": "716a0836ce0f1bac8b61aa85b29fc205079f208f89210aa0c30b6502b4d344ad"
+  },
+  "scope": "sanitizedmetadata/audit only; no rawvendor/runtimepayload or privatecharacter/cache selection"
+}

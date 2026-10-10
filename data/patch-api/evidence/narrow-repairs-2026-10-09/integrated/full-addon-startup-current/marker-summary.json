@@ -1,0 +1,23 @@
+{
+  "receipt": "20261010T173544Z",
+  "completion": "PASS",
+  "errorless_full_third_party_startup": "FAIL",
+  "marker": "[FullAddonStartupComplete]",
+  "shapes": {
+    "IsUsingGamepad": "nil",
+    "C_GamePad": "table",
+    "raw_C_GamePad_IsEnabled": "nil"
+  },
+  "addon_attempts": 79,
+  "addons_loaded": 49,
+  "lua_occurrences": 105,
+  "displayed_signatures": 7,
+  "owner_budget_occurrences": 104,
+  "nil_call_occurrences": 1,
+  "runtime_warnings": 4,
+  "runtime_warning_details": "unavailable",
+  "native_input_semantics": "unknown",
+  "sealed_executable_sha256": "c9dd3209fbc3c10e8c40dc930cdf3890e8725b4bbe7a0ff8704fe0168956c552",
+  "original_stdout_sha256": "761c9192d17a878d870478e0d36d2731afe4d63c8fd56a257fb7932c5c46171c",
+  "original_stderr_sha256": "d9a7e958df61de9744e21c73ceb735db9c23b874caef258b7a00af8b0142e6b9"
+}
