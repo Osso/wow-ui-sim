@@ -72,6 +72,8 @@ const C_MAP_METHODS: &[(&str, RustLuaFn)] = &[
     ("GetMapArtID", c_map_get_map_art_id),
     ("GetMapArtLayerTextures", c_map_get_map_art_layer_textures),
     ("GetMapArtLayers", c_map_get_map_art_layers),
+    #[cfg(feature = "retail-12-1-0")]
+    ("GetMapDisplayInfo", c_map_get_map_display_info),
     ("GetMapInfo", c_map_get_map_info),
     ("GetMapInfoAtPosition", c_map_get_map_info_at_position),
     ("GetMapRectOnMap", c_map_get_map_rect_on_map),
@@ -184,6 +186,20 @@ fn c_map_get_map_art_layer_textures(state: &mut LuaState) -> LuaResult<u32> {
         );
     }
     state.push(texture_ids);
+    Ok(1)
+}
+
+#[cfg(feature = "retail-12-1-0")]
+fn c_map_get_map_display_info(state: &mut LuaState) -> LuaResult<u32> {
+    let ui_map_id = i32::from_stack(state, 1)?;
+    let hide_icons = borrow_state(state)?
+        .map_display_hide_icons
+        .get(&ui_map_id)
+        .copied();
+    let Some(hide_icons) = hide_icons else {
+        return Ok(0);
+    };
+    state.push(Val::Bool(hide_icons));
     Ok(1)
 }
 
