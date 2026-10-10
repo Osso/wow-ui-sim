@@ -1,5 +1,6 @@
 //! Tests for spell_api.rs: C_SpellBook, C_Spell, C_Traits.
 
+use wow_ui_sim::c_api::charge_state::SpellChargeState;
 use wow_ui_sim::lua_api::WowLuaEnv;
 
 fn env() -> WowLuaEnv {
@@ -369,8 +370,18 @@ fn test_spell_get_spell_info_has_name() {
 #[test]
 fn test_spell_get_spell_charges() {
     let env = env();
+    env.state().borrow_mut().spell_charges.insert(
+        19750,
+        SpellChargeState {
+            current_charges: 1,
+            max_charges: 2,
+            recharge_start: 12.0,
+            recharge_duration: 40.0,
+            charge_mod_rate: 2.0,
+        },
+    );
     let is_table: bool = env
-        .eval("return type(C_Spell.GetSpellCharges(100)) == 'table'")
+        .eval("return type(C_Spell.GetSpellCharges(19750)) == 'table'")
         .unwrap();
     assert!(is_table);
 }
