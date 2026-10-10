@@ -1,0 +1,14 @@
+{
+  "observed_at": "2026-10-10T15:22:19.607964+00:00",
+  "runs": [
+    {
+      "id": 38041575805,
+      "name": "Test",
+      "head_sha": "3d9f1c24760db4ab42093ce7395dcf059e14ffe1",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-10-10T09:29:40Z",
+      "updated_at": "2026-10-10T09:33:44Z"
+    }
+  ]
+}

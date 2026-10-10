@@ -724,7 +724,7 @@ Each records submission exit0, no shared container lock and preserved resource g
 
 **Current installed full-suite runner:** committed/deployed `488cd43ec` supersedes the historical `aa9004` wrapper proof as current artifact/source evidence; that older proof remains historical, not invalidated. Independent private report `/home/osso/.local/state/wow-ui-sim/verification/fullsuite-native-installed/verify-488cd43ec-private.md` inspected commit/installed bytes and installation receipt: source equals `/home/osso/bin/full-suite`, SHA256 `6a4ea7958598a3efb09f8763b8d46523d7880c66dd46902d802160b5d268a2a1`, mode0755. Its scoped PASS reuses six passing subprocess fixtures with fake Cargo/systemd, **not a real suite PASS**. Native Cargo uses jobs12, `--offline --locked`; result lock remains unchanged. Submission wiring specifies `agents.slice`, `CPUQuota=1200%`, MemoryHigh/MemoryMax16G. Main's saved `verification/fullsuite-native-installed/live-unit-properties.json` observes the running unit in that slice with CPUQuotaPerSecUSec12s and both memory properties17,179,869,184 bytes; configured properties are not compiler utilization or admission-safety proof. Load/admission guard remains absent under the existing design; no user-authored resource claim or admission-safety credit.
 
-Completed actual async suite: revision `bc58b43b5`, unit `full-suite-1791621531`; **FAIL**, detailed below. Current CI unverified: reported installed `github` has no token and `gh` is unavailable. These submission/CI facts are reported, not independently inspected here. No native/full-suite acceptance; parent OPEN.
+Completed actual async suite: revision `bc58b43b5`, unit `full-suite-1791621531`; **FAIL**, detailed below. Earlier credential/tool availability blocked that CI-reading route only; main subsequently observed the exact-ref run through the unauthenticated public API, recorded [below](#exact-ref-public-ci--2026-10-10-compile-only-success). No native/full-suite acceptance; parent OPEN.
 
 ## Mists separate cast fade probe — PASS, original cast RED
 
@@ -740,8 +740,20 @@ Inspected [separate probe](../../../tests/mists_cast_fade.rs) uses the original 
 
 Primary cached `Blizzard_UIPanels_Game/Shared/CastingBarFrameTemplates.xml` specifies FadeOutAnim delay0.2s plus duration0.3s. Its OnFinished binds `CastingBarAnim_OnFadeOutFinish`; inspected sibling Lua callback calls Hide on the animation's parent. This supports source-sequencing explanation, **not native-client timing parity**. Vendor payloads remain private.
 
-**Acceptance boundary:** no original body change. [Original cast fixture](../../../tests/spell_casting.rs) still asserts immediate hidden startup state; original cast remains **RED**, not repaired by this separate PASS. Fixture correction is a pending user decision, not authorized here. Preserve earlier `20261010T084353Z` epoch2 chat PASS as separate evidence; broader goal is **not3/3**, parent OPEN. Existing [failed self-anchor baseline](#mists-globalcolor-rows--independently-checked-source-rgb-only-correction), Garrison/method-snapshot full-suite gaps and CI uncertainty remain unchanged. Independent runtime audit: `verification/mists-cast-fade-independent/runtime-report.md`. This docs-only update runs no build/test, changes no code/spec contract, creates no commit and delegates nothing.
+**Acceptance boundary:** no original body change. [Original cast fixture](../../../tests/spell_casting.rs) still asserts immediate hidden startup state; original cast remains **RED**, not repaired by this separate PASS. Fixture correction is a pending user decision, not authorized here. Preserve earlier `20261010T084353Z` epoch2 chat PASS as separate evidence; broader goal is **not3/3**, parent OPEN. Existing [failed self-anchor baseline](#mists-globalcolor-rows--independently-checked-source-rgb-only-correction), Garrison/method-snapshot full-suite gaps remain unchanged; [later public CI observation](#exact-ref-public-ci--2026-10-10-compile-only-success) resolves reading that run only, not runtime acceptance. Independent runtime audit: `verification/mists-cast-fade-independent/runtime-report.md`. This docs-only update runs no build/test, changes no code/spec contract, creates no commit and delegates nothing.
 
+
+## Exact-ref public CI — 2026-10-10, compile-only success
+
+Main independently observed the unauthenticated GitHub exact-ref API for HEAD `3d9f1c24760db4ab42093ce7395dcf059e14ffe1`: Test run `38041575805`, created `2026-10-10T09:29:40Z`, completed/success, updated `2026-10-10T09:33:44Z`. Retained sanitized [run receipt](../../../data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/current-ci-3d9f1c247/runs-sanitized.json) and [job/step receipt](../../../data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/current-ci-3d9f1c247/jobs-sanitized.json) were observed at 15:22:19 and 15:22:27 UTC respectively. This docs audit reads main's receipts, not a fresh API request.
+
+| Scope | Successful executed step | Skipped runtime step |
+|---|---|---|
+| Retail | Compile-all-targets (receipt label: Compile tests without WoW install) | Run cargo test |
+| Mists build/smoke | cargo build wow-sim; cargo check --tests | lua-errors smoke, baseline diff, zero-error/panel parity guard |
+| Mists release proof | Job completed/success | Run Mists release proof |
+
+Public read-only access works without tokens for **this run**; the prior credential blocker no longer blocks reading it. Green job/workflow conclusions do not turn skipped commands or successful artifact-upload steps into runtime proof. No runtime/profile/native or current-suite readiness established. Saved [bc58 suite](#completed-native-full-suite-bc58--fail-parent-open) remains three failures; original Mists cast failure and startup self-anchor remain unresolved. Sanitized receipts only, no raw API records, actors/accounts/tokens or vendor payloads retained. Parent OPEN.
 
 ## Completed native full suite bc58 — FAIL, parent OPEN
 

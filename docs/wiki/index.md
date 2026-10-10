@@ -1,3 +1,7 @@
+## [2026-10-10] audit | Exact-ref public CI — compile-only success
+
+[CI SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#exact-ref-public-ci--2026-10-10-compile-only-success): main observed run38041575805 at3d9f1c247, completed/success through unauthenticated public API. Retail compile and Mists build/check succeeded; runtime tests/smoke/release proof skipped. Reading this run no longer credential-blocked; suite/runtime/native acceptance unchanged, parent OPEN.
+
 ## [2026-10-10] audit | Completed default suite — FAIL
 
 [Current suite SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#completed-native-full-suite-bc58--fail-parent-open): bc58 has14,996PASS/3FAIL/19skips; same three failing selectors as6751, two new AutoHide passes. Exact epoch, not current-HEAD/all-profile/native acceptance. Original Mists cast still RED; separate source-timed fade probe passes.

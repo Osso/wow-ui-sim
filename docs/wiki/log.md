@@ -1,3 +1,7 @@
+## [2026-10-10] audit | Exact-ref public CI reading unblocked
+
+Updated [existing CI SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#exact-ref-public-ci--2026-10-10-compile-only-success) and index from main's independently observed public exact-ref receipts. Retained two byte-identical sanitized JSON files in the narrowly scoped linked evidence directory; no raw API/private/vendor records. Run38041575805 at3d9f1c247 succeeded with runtime steps skipped; no suite/profile/native readiness credit. bc58 three failures, original Mists cast RED and startup self-anchor unresolved. Docs/evidence only; no builds/checks/operations/delegation/commit/push, parent OPEN.
+
 ## [2026-10-10] audit | Completed default suite and separate fade proof
 
 [Suite SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#completed-native-full-suite-bc58--fail-parent-open) retains bc58's three unchanged failures, two new AutoHide passes and exact source/input limits. [Fade scope](investigations/integrated-source-and-factory-proof-2026-10-09.md#mists-separate-cast-fade-probe--pass-original-cast-red) is separate from original cast RED; fixture decision pending, parent OPEN.
