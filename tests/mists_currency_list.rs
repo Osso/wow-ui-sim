@@ -2,6 +2,55 @@
 
 use wow_ui_sim::lua_api::WowLuaEnv;
 
+fn bounded_field(value: &str) -> String {
+    value.chars().take(96).collect()
+}
+
+fn nil_symbol_keys(first_line: &str) -> Vec<String> {
+    ["global", "field", "method", "local", "upvalue"]
+        .into_iter()
+        .filter_map(|kind| {
+            let marker = format!("{kind} '");
+            let tail = first_line.split_once(&marker)?.1;
+            let key = tail.split_once('\'')?.0;
+            let valid_key = !key.is_empty()
+                && key.len() <= 64
+                && key.chars().all(|c| c.is_ascii_alphanumeric() || c == '_');
+            valid_key.then(|| format!("{kind}:{key}"))
+        })
+        .collect()
+}
+
+fn log_error_boundary(case: &str, error: &str) {
+    // Inspect only a bounded first line; never emit error text or source excerpts.
+    let first_line: String = error
+        .lines()
+        .next()
+        .unwrap_or("")
+        .chars()
+        .take(512)
+        .collect();
+    let nil_access = first_line.contains("nil value");
+    let class = if nil_access {
+        "nil-access"
+    } else if first_line.contains("convert") || first_line.contains("conversion") {
+        "conversion"
+    } else {
+        "other"
+    };
+    let line = first_line.split(':').find(|part| {
+        !part.is_empty() && part.len() <= 10 && part.bytes().all(|c| c.is_ascii_digit())
+    });
+    let keys = if nil_access {
+        nil_symbol_keys(&first_line)
+    } else {
+        Vec::new()
+    };
+    eprintln!(
+        "[currency-diagnostic] case={case} error_class={class} lua_line={line:?} nil_symbol_keys={keys:?}"
+    );
+}
+
 fn read_mists_token_ui_lua() -> String {
     std::fs::read_to_string(
         wow_ui_sim::client_profile::blizzard_ui_addons_dir_under(std::path::Path::new(env!(
@@ -40,8 +89,13 @@ fn token_frame_update_reproduces_missing_currency_list_size() {
             return ok, tostring(err)
             "#,
         )
+        .inspect_err(|err| log_error_boundary("missing-size-eval", &err.to_string()))
         .expect("TokenFrame_Update pcall should return a status");
 
+    eprintln!("[currency-diagnostic] case=missing-size pcall_ok={ok}");
+    if !ok {
+        log_error_boundary("missing-size-pcall", &err);
+    }
     assert!(!ok, "TokenFrame_Update should reproduce the nil global");
     assert!(
         err.contains("GetCurrencyListSize"),
@@ -111,8 +165,20 @@ fn currency_list_info_preserves_watched_flags_in_namespace_and_legacy_tuple() {
                 tostring(unwatched.isShowInBackpack), tostring(legacyUnwatched)
             "#,
         )
+        .inspect_err(|err| log_error_boundary("watched-eval", &err.to_string()))
         .expect("currency list info should expose watched flags at both API boundaries");
 
+    eprintln!(
+        "[currency-diagnostic] case=watched namespace_names={:?}/{:?} legacy_names={:?}/{:?} namespace_watched={:?}/{:?} legacy_watched={:?}/{:?}",
+        bounded_field(&watched_name),
+        bounded_field(&unwatched_name),
+        bounded_field(&legacy_watched_name),
+        bounded_field(&legacy_unwatched_name),
+        bounded_field(&watched),
+        bounded_field(&unwatched),
+        bounded_field(&legacy_watched),
+        bounded_field(&legacy_unwatched),
+    );
     assert_eq!(watched_name, "Valorstones");
     assert_eq!(legacy_watched_name, "Valorstones");
     assert_eq!(unwatched_name, "Weathered Harbinger Crest");
@@ -142,8 +208,16 @@ fn currency_list_info_preserves_max_quantity_in_namespace_and_legacy_tuple() {
                 tostring(info.maxQuantity), tostring(legacyMaxQuantity)
             "#,
         )
+        .inspect_err(|err| log_error_boundary("cap-eval", &err.to_string()))
         .expect("currency list info should expose maximum quantity at both API boundaries");
 
+    eprintln!(
+        "[currency-diagnostic] case=cap namespace_name={:?} legacy_name={:?} namespace_cap={:?} legacy_cap={:?}",
+        bounded_field(&name),
+        bounded_field(&legacy_name),
+        bounded_field(&max_quantity),
+        bounded_field(&legacy_max_quantity),
+    );
     assert_eq!(name, "Weathered Harbinger Crest");
     assert_eq!(legacy_name, "Weathered Harbinger Crest");
     assert_eq!(
@@ -183,8 +257,13 @@ fn legacy_currency_list_size_wraps_c_currency_info() {
             return legacySize, namespacedSize, ok, tostring(err)
             "#,
         )
+        .inspect_err(|err| log_error_boundary("wrapper-eval", &err.to_string()))
         .expect("legacy currency wrapper should support TokenFrame_Update");
 
+    eprintln!("[currency-diagnostic] case=wrapper pcall_ok={update_ok}");
+    if !update_ok {
+        log_error_boundary("wrapper-pcall", &err);
+    }
     assert_eq!(
         legacy_size, namespaced_size,
         "legacy GetCurrencyListSize should delegate to C_CurrencyInfo.GetCurrencyListSize"
