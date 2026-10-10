@@ -106,7 +106,7 @@ fn get_spell_aura_secrecy(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 /// Whether a spell's aura stays public while auras are secret.
-#[cfg(feature = "aura-containers")]
+#[cfg(feature = "retail-12-1-0")]
 pub(crate) fn is_never_secret_aura(spell_id: i32) -> LuaResult<bool> {
     match u32::try_from(spell_id) {
         Ok(spell_id) => Ok(classify_aura_secrecy(spell_id)? == NEVER_SECRET),
