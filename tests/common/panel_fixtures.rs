@@ -10,10 +10,7 @@
 use std::path::PathBuf;
 use wow_ui_sim::lua_api::WowLuaEnv;
 
-pub fn blizzard_ui_dir() -> PathBuf {
-    wow_ui_sim::paths::default_blizzard_ui_addons_path()
-        .expect("Blizzard UI cache should be available")
-}
+pub use super::blizzard_addon_harness::blizzard_ui_dir;
 
 /// Required panel roots; discovery orders these and their dependencies.
 pub const PANEL_ADDONS: &[&str] = &[

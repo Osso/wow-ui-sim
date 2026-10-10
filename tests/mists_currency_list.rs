@@ -1,6 +1,7 @@
 #![cfg(feature = "client-mists")]
 
-mod common;
+#[path = "common/blizzard_addon_closure.rs"]
+mod blizzard_addon_closure;
 
 use wow_ui_sim::loader::BlizzardAddonOverride;
 use wow_ui_sim::lua_api::WowLuaEnv;
@@ -31,8 +32,8 @@ fn log_error_boundary(case: &str, error: &str) {
 
 fn load_mists_token_ui_env() -> WowLuaEnv {
     // TokenUI's bare TOC omits its implicit Game startup dependencies.
-    let (env, _) = common::blizzard_addon_harness::build_blizzard_addon_closure_env(
-        &common::panel_fixtures::blizzard_ui_dir(),
+    let (env, _) = blizzard_addon_closure::build_blizzard_addon_closure_env(
+        &blizzard_addon_closure::blizzard_ui_dir(),
         &["Blizzard_TokenUI"],
         &[BlizzardAddonOverride {
             addon: "Blizzard_TokenUI",
