@@ -1,0 +1,43 @@
+{
+  "observed": "2026-10-09T23:23:47.191820+00:00",
+  "input_sha256": "f29ab9068b0a7d94da5246fe906de7341aaae94648a221433e6f833c59fa1d83",
+  "rows": 37,
+  "first_utc": "2026-10-09T07:27:23.800Z",
+  "last_utc": "2026-10-09T07:34:17.654Z",
+  "aggregates": {
+    "phase": {
+      "error": 19,
+      "retry": 18
+    },
+    "transport": {
+      "websocket-cached": 19,
+      "<absent>": 18
+    },
+    "failureKind": {
+      "api": 18,
+      "<absent>": 18,
+      "aborted": 1
+    },
+    "httpStatus": {
+      "<absent>": 37
+    },
+    "upstreamErrorCode": {
+      "server_error": 18,
+      "<absent>": 19
+    },
+    "retryLayer": {
+      "<absent>": 19,
+      "session": 18
+    }
+  },
+  "records_with_requestId": 18,
+  "scope": "all 37 records; no session identifiers or raw records included",
+  "limits": "Historical records precede receipt by about 16h48. Synthetic classification, current-boot linkage, current-artifact emission, upstream cause, quota failure and current model configuration are UNPROVEN. Historical diagnostics/deployment acceptance remain separate; main full goal OPEN.",
+  "live_receipt_utc": "2026-10-09T23:22:13.005282+00:00",
+  "executable": {
+    "sha256": "c39b724bec926a87cc99a2ef8197f0e0836617261b86c3dd5771d63561429469",
+    "bytes": 97035464,
+    "installed_and_both_main_match": true,
+    "source_revision": "UNPROVEN"
+  }
+}

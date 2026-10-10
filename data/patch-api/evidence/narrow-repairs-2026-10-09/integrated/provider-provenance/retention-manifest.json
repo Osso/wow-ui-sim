@@ -1,0 +1,34 @@
+{
+  "retained": [
+    {
+      "path": "safe-summary.json",
+      "bytes": 1352,
+      "sha256": "315aa7547ac390787180aa2fed28f622b2ff57f42bbee943c92e37ddafc29910",
+      "representation": "derived allowlisted aggregate and executable identity; not raw receipt"
+    }
+  ],
+  "source_hashes_only": [
+    {
+      "name": "provider-safe-records.md",
+      "bytes": 1565,
+      "sha256": "d1e95cf8f970c5ab91abcdf43413d53734b7be2c2f7436bab363345a2cba9fa0"
+    },
+    {
+      "name": "provider-safe-aggregate.json",
+      "bytes": 992,
+      "sha256": "ecabacce887cde79c166338bb92de8d113d5afed75cce755cc7aae23362fd5cc"
+    },
+    {
+      "name": "provider-live-main-receipt.json",
+      "bytes": 678,
+      "sha256": "6bb7370884d3a3cf5a7d3d25326cc18e2924c3ca0594333e2a52a3e6d0a358ba"
+    },
+    {
+      "name": "pi-install-receipt.md",
+      "bytes": 2147,
+      "sha256": "0dd759db12edace0e84b04a0f57f4322a3fa4befacff3016e766564e9f30e088"
+    }
+  ],
+  "privacy": "Only screened aggregate fields, timestamps, executable size/hash and source file hashes retained. No raw private JSONL read or copied; no process/session/request IDs, credentials, messages, command lines, environments or raw receipt payloads retained. input_sha256 identifies excluded input, not payload. Manifest excludes itself from retained-file count.",
+  "proof_scope": "Supplied independent screening/receipts only; no new live inspection, source provenance, tests, builds, checks, network or operations."
+}
