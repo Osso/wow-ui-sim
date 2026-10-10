@@ -223,8 +223,9 @@ mod tests {
         );
 
         let trace_enabled = std::env::var("WOW_SIM_TRACE_DEBUG_GETTERS").as_deref() == Ok("1");
+        let retail_secret_values = cfg!(feature = "retail-12-1-0");
         let probe = format!(
-            "local traceDebugGettersEnabled = {trace_enabled}\n{}",
+            "local traceDebugGettersEnabled = {trace_enabled}\nlocal retailSecretValues = {retail_secret_values}\n{}",
             r#"
                 local function traceDebugGetters(phase, marker)
                     if not traceDebugGettersEnabled then return end
@@ -244,7 +245,11 @@ mod tests {
                 traceDebugGetters("after_button_metatable", marker)
                 if type(GetEditBoxMetatable()) ~= "table" then return "editbox_metatable" end
                 traceDebugGetters("after_editbox_metatable", marker)
-                if secretwrap(marker)() ~= "wrapped" then return "secretwrap" end
+                -- secretwrap converts to secret values; secretunwrap restores regular values.
+                local wrapped = secretwrap(marker)
+                if retailSecretValues then assert(issecretvalue(wrapped)) end
+                if secretunwrap(wrapped) ~= marker then return "secretunwrap_identity" end
+                if secretunwrap(wrapped)() ~= "wrapped" then return "secretwrap" end
                 traceDebugGetters("after_secretwrap", marker)
                 traceDebugGetters("before_callstack_height", marker)
                 if GetCallstackHeight() ~= 0 then return "callstack_height" end
