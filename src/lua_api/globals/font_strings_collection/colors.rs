@@ -68,6 +68,19 @@ pub(super) const NAMED_COLOR_GLOBALS: &[(&'static str, (f64, f64, f64, f64))] = 
     ("DEBUFF_TYPE_POISON_COLOR", (0.0, 0.6, 0.0, 1.0)),
     ("DEBUFF_TYPE_BLEED_COLOR", (1.0, 0.0, 0.0, 1.0)),
     ("DEBUFF_TYPE_NONE_COLOR", (1.0, 1.0, 1.0, 0.0)),
+    // Mists 5.5.4.70268 GlobalColor rows 395–398, literal AARRGGBB.
+    // Preserve encoded alpha 0; native GetRGBA parity remains unproven.
+    #[cfg(feature = "client-mists")]
+    ("CASTBAR_CLASSIC_YELLOW", (1.0, 179.0 / 255.0, 0.0, 0.0)), // 0x00ffb300
+    #[cfg(feature = "client-mists")]
+    ("CASTBAR_CLASSIC_GREEN", (0.0, 1.0, 0.0, 0.0)), // 0x0000ff00
+    #[cfg(feature = "client-mists")]
+    (
+        "CASTBAR_CLASSIC_GRAY",
+        (179.0 / 255.0, 179.0 / 255.0, 179.0 / 255.0, 0.0),
+    ), // 0x00b3b3b3
+    #[cfg(feature = "client-mists")]
+    ("CASTBAR_CLASSIC_RED", (1.0, 0.0, 0.0, 0.0)), // 0x00ff0000
 ];
 
 pub(super) const RAID_CLASS_COLORS_DATA: &[(&'static str, (f64, f64, f64, f64))] = &[

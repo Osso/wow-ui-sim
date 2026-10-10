@@ -1,3 +1,7 @@
+## [2026-10-10] audit | Mists GlobalColor source rows; runtime pending
+
+[Existing proof SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#mists-globalcolor-rows--independently-checked-source-rgb-only-correction) records four actual70268 rows and independent extraction/reader checks. Literal AARRGGBB is RGB-only correction; encoded alpha0 retained, native GetRGBA/alpha parity unproven. Tests committed4cc371997; two actual RED cases exit101. Mists-only producer added; GREEN/startup proof pending. Private vendor payloads not published; no PASS or clean-startup claim.
+
 ## [2026-10-09] audit | Settings, prefork, browser and timing boundaries
 
 [Existing proof SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#settings-registration-trace--static-candidate-only): repeated growing-page control sort is static, not measured cause; no vendor optimization authorized. Recovered controlled prefork3/3 at96 remains distinct from generic21/21; original non-Retail target blocked by Retail gate, ordinary Mists not substitute. Current browser DOM/CDP access grants no HTTP/auth/remote acceptance. Timing6751 source/format/readability PASS, compilation PENDING; private report path retained. Sanitized findings only; no raw source/payload or long-ledger duplication.
