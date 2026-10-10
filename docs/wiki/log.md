@@ -1353,3 +1353,7 @@ Updated existing [proof SSOT](investigations/integrated-source-and-factory-proof
 ## [2026-10-10] correction | Current Mists source-refresh summaries
 
 [Current SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#mists-globalcolor-rows--independently-checked-source-rgb-only-correction) now names committed `8fda45877` and final independent source/cache/baseline continuity proof. Index points to that current scope; incomplete-sync and38/42 startup epochs remain historical. Corrected bounded-GREEN headline; startup/native limits unchanged. Wiki-only audit; no evidence copies, commits, builds or delegation.
+
+## [2026-10-10] correction | Installed native full-suite runner
+
+[Current workflow SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#current-bounded-native-workflow-correction--2026-10-10) records independent installed/source receipt proof for `488cd43ec`; historical `aa9004` wrapper proof preserved. Six subprocess fixtures are not real-suite acceptance. Reported `bc58b43b5` unit `full-suite-1791621531` has no result/PASS; CI unverified. Existing absent admission guard and live-enforcement limits explicit. Docs only; no builds, delegation or commits.

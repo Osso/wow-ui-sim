@@ -3188,7 +3188,7 @@ The three retail 12.0.0 changed globals `LE_GAME_ERR_HOUSING_RESULT_MISSING_EXPA
 
 ## [2026-10-10] correction | Bounded native units do not require container lock
 
-[Current bounded native workflow](investigations/integrated-source-and-factory-proof-2026-10-09.md#current-bounded-native-workflow-correction--2026-10-10) supersedes the native shared-lock instruction; historical epochs remain unchanged. Exact submission receipts, unchanged jobs12/CPU12/memory16GiB/resource guards and required Mists sealed-copy artifact recorded there. Three old units finished without cancellation; no runtime PASS claim. SSOT/index/log only; code-index preserved.
+[Current bounded native workflow](investigations/integrated-source-and-factory-proof-2026-10-09.md#current-bounded-native-workflow-correction--2026-10-10) supersedes the native shared-lock instruction; historical epochs remain unchanged. Bounded-unit receipts and Mists sealed-copy requirement remain historical. Current installed `488cd43ec` source/receipt proof is separate from six subprocess fixtures and reported pending real suite `bc58b43b5`; CI unverified, no admission guard or native/full-suite acceptance. Three old units finished without cancellation; no runtime PASS claim. SSOT/index/log only; code-index preserved.
 
 ## [2026-10-10] audit | Mists source refresh committed; startup FAIL
 
