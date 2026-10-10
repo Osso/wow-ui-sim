@@ -190,8 +190,26 @@ fn c_map_get_map_art_layer_textures(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 #[cfg(feature = "retail-12-1-0")]
+fn read_map_display_id(state: &LuaState) -> LuaResult<i32> {
+    let value = rilua::table_security::unwrap_secret(state, stack_val(state, 1))?;
+    let Val::Num(number) = value else {
+        return Err(rilua::runtime_error(
+            "map display selector #1 requires a number",
+        ));
+    };
+    let is_exact_integer = number.is_finite() && number.fract() == 0.0;
+    let is_in_range = (i32::MIN as f64..=i32::MAX as f64).contains(&number);
+    if !is_exact_integer || !is_in_range {
+        return Err(rilua::runtime_error(
+            "map display selector #1 requires an integer representable as i32",
+        ));
+    }
+    Ok(number as i32)
+}
+
+#[cfg(feature = "retail-12-1-0")]
 fn c_map_get_map_display_info(state: &mut LuaState) -> LuaResult<u32> {
-    let ui_map_id = i32::from_stack(state, 1)?;
+    let ui_map_id = read_map_display_id(state)?;
     let hide_icons = borrow_state(state)?
         .map_display_hide_icons
         .get(&ui_map_id)
