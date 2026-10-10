@@ -6,8 +6,6 @@
 
 use crate::common::game_menu_fixture::setup_game_menu_env;
 
-use iced::Point;
-
 // ── Existence ───────────────────────────────────────────────────────────────
 
 #[test]
@@ -244,8 +242,8 @@ fn test_game_menu_options_button_hitbox_matches_visual_center() {
                 .get(button_id)
                 .and_then(|frame| frame.layout_rect)
                 .expect("Options game-menu button should have a resolved rect");
-            let center = Point::new(rect.x + rect.width / 2.0, rect.y + rect.height / 2.0);
-            state.set_mouse_position(Some((center.x, center.y)));
+            let center = (rect.x + rect.width / 2.0, rect.y + rect.height / 2.0);
+            state.set_mouse_position(Some(center));
             state.hovered_frame = Some(button_id);
             center
         };
@@ -272,7 +270,7 @@ fn test_game_menu_options_button_hitbox_matches_visual_center() {
         assert_eq!(
             result, "ok",
             "Options visual center should hit and hover its button at ({}, {}) for widget id {button_id}: {result}",
-            center.x, center.y
+            center.0, center.1
         );
     }
 }

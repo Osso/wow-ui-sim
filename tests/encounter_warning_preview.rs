@@ -55,7 +55,8 @@ fn warning_preview_has_complete_independent_records() {
 #[test]
 fn warning_preview_rejects_invalid_severity_without_state() {
     let env = WowLuaEnv::new().unwrap();
-    env.exec(r#"
+    env.exec(
+        r#"
         for _, severity in ipairs({-1, 3, 0.5, math.huge, -math.huge, 0/0, "1", false, {}}) do
             local ok, err = pcall(C_EncounterWarnings.GetEditModeWarningInfo, severity)
             assert(not ok and tostring(err):find("severity"), tostring(err))
@@ -64,7 +65,9 @@ fn warning_preview_rejects_invalid_severity_without_state() {
         assert(not pcall(C_EncounterWarnings.GetEditModeWarningInfo, nil))
         assert(C_EncounterWarnings.GetEditModeWarningInfo(2).severity == 2)
         assert(EncounterWarningInfo == nil)
-    "#).unwrap();
+    "#,
+    )
+    .unwrap();
 }
 
 #[cfg(all(feature = "profile-retail", not(feature = "retail-12-1-0")))]
@@ -72,7 +75,8 @@ fn warning_preview_rejects_invalid_severity_without_state() {
 fn warning_preview_preserves_earlier_retail_record() {
     let env = WowLuaEnv::new().unwrap();
     for _ in 0..2 {
-        env.exec(r#"
+        env.exec(
+            r#"
             local cases = {
                 {0, "Encounter Warning", false, 1, 1},
                 {1, "Encounter Warning", false, 1, 1},
@@ -90,8 +94,9 @@ fn warning_preview_preserves_earlier_retail_record() {
                 local r, actual_g, actual_b, a = info.color:GetRGBA()
                 assert(r == 1 and actual_g == g and actual_b == b and a == 1)
             end
-        "#).unwrap();
-        wow_ui_sim::ptr::compat_bootstrap::apply_post_load(&env);
+        "#,
+        )
+        .unwrap();
     }
 }
 
@@ -128,9 +133,15 @@ fn severity_color_matches_preview_and_is_fresh_per_call() {
 fn load_warning_view() -> WowLuaEnv {
     let ui = wow_ui_sim::paths::default_blizzard_ui_addons_path().unwrap();
     let (env, loaded) = crate::common::blizzard_addon_harness::build_blizzard_addon_closure_env(
-        &ui, &["Blizzard_EncounterWarnings"], &[],
+        &ui,
+        &["Blizzard_EncounterWarnings"],
+        &[],
     );
-    assert!(loaded.iter().any(|name| name == "Blizzard_EncounterWarnings"));
+    assert!(
+        loaded
+            .iter()
+            .any(|name| name == "Blizzard_EncounterWarnings")
+    );
     env.state().borrow_mut().mouse_position = Some((-1000.0, -1000.0));
     env
 }
@@ -139,7 +150,8 @@ fn load_warning_view() -> WowLuaEnv {
 #[test]
 fn warning_preview_uses_loaded_blizzard_color_mixin() {
     let env = load_warning_view();
-    env.exec(r#"
+    env.exec(
+        r#"
         local first = C_EncounterWarnings.GetEditModeWarningInfo(Enum.EncounterEventSeverity.High)
         local second = C_EncounterWarnings.GetEditModeWarningInfo(Enum.EncounterEventSeverity.High)
         first.color:SetRGBA(0.2, 0.3, 0.4, 0.5)
@@ -148,13 +160,20 @@ fn warning_preview_uses_loaded_blizzard_color_mixin() {
         r, g, b, a = second.color:GetRGBA()
         assert(r == 1 and g == 0.15 and b == 0.05 and a == 1)
         assert(first.color:IsEqualTo(CreateColor(0.2, 0.3, 0.4, 0.5)))
-    "#).unwrap();
+    "#,
+    )
+    .unwrap();
 }
 
 #[cfg(feature = "retail-12-1-0")]
 fn expire_warning_timer(env: &WowLuaEnv, id: u64) {
-    env.state().borrow_mut().rilua_timers.iter_mut().find(|timer| timer.id == id)
-        .expect("queued warning timer").fire_at = std::time::Instant::now();
+    env.state()
+        .borrow_mut()
+        .rilua_timers
+        .iter_mut()
+        .find(|timer| timer.id == id)
+        .expect("queued warning timer")
+        .fire_at = std::time::Instant::now();
     env.process_timers().unwrap();
     env.fire_on_update(0.5).unwrap();
 }
@@ -183,18 +202,22 @@ fn warning_preview_real_blizzard_frame_expires_cancels_and_reuses() {
     "#).unwrap();
     let first_timer = env.state().borrow().rilua_timers.back().unwrap().id;
     env.fire_on_update(0.5).unwrap();
-    env.exec(r#"
+    env.exec(
+        r#"
         second = C_EncounterWarnings.GetEditModeWarningInfo(Enum.EncounterEventSeverity.Low)
         view:ShowWarning(second)
         assert(view:GetCurrentWarning() == second and view.Text:GetText() == second.text)
         assert(view.LeftIcon.NormalOverlay:IsShown() and not view.LeftIcon.DeadlyOverlay:IsShown())
-    "#).unwrap();
+    "#,
+    )
+    .unwrap();
     let second_timer = env.state().borrow().rilua_timers.back().unwrap().id;
     assert_ne!(first_timer, second_timer);
     expire_warning_timer(&env, first_timer);
     env.exec("assert(view:IsShown() and view:GetCurrentWarning() == second and view.expirationTimer ~= nil)").unwrap();
     expire_warning_timer(&env, second_timer);
-    env.exec(r#"
+    env.exec(
+        r#"
         assert(not view:IsShown() and not view:HasCurrentWarning() and view.expirationTimer == nil)
         assert(view.Text:GetText() == "" and view.LeftIcon.Icon:GetTexture() == nil)
         third = C_EncounterWarnings.GetEditModeWarningInfo(Enum.EncounterEventSeverity.Medium)
@@ -202,7 +225,9 @@ fn warning_preview_real_blizzard_frame_expires_cancels_and_reuses() {
         assert(view:IsShown() and view:GetCurrentWarning() == third and view.expirationTimer ~= nil)
         view:ClearWarning()
         assert(not view:IsShown() and not view:HasCurrentWarning() and view.expirationTimer == nil)
-    "#).unwrap();
+    "#,
+    )
+    .unwrap();
     let third_timer = env.state().borrow().rilua_timers.back().unwrap().id;
     expire_warning_timer(&env, third_timer);
     env.exec(r#"
@@ -211,8 +236,13 @@ fn warning_preview_real_blizzard_frame_expires_cancels_and_reuses() {
         assert(view:IsShown() and view:HasCurrentWarning() and view.expirationTimer ~= nil)
         view:ClearWarning()
     "#).unwrap();
-    let errors: Vec<_> = env.state().borrow().lua_errors.iter()
+    let errors: Vec<_> = env
+        .state()
+        .borrow()
+        .lua_errors
+        .iter()
         .filter(|message| message.contains("EncounterWarnings"))
-        .cloned().collect();
+        .cloned()
+        .collect();
     assert!(errors.is_empty(), "warning consumer errors: {errors:#?}");
 }

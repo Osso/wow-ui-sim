@@ -81,6 +81,7 @@ fn advanced_filter_parent_and_playstyle_roundtrip() {
     );
 }
 
+#[cfg(feature = "retail-12-0-5")]
 #[test]
 fn appearance_parent_and_old_casing_absence() {
     use wow_ui_sim::lua_api::state::AppearanceSourceInfo;
