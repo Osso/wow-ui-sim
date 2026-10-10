@@ -26,7 +26,11 @@ Unassigned PROSE-MODELABLE extract rows from the [scout](../../data/patch-api/ev
 
 ## Known gaps (current cycle)
 
-Current native/cached registration and retirement proof passes; exact-12.0.0 execution remains blocked by the master-reproduced `on_update.rs:61` / `private_aura_sounds` feature-gate error. See the per-source report for revision scope.
+Historical native/cached registration and retirement results remain revision-scoped in the per-source report; they do not establish current exact-12.0.0 acceptance. Source inspected 2026-10-10: `on_update.rs` guards `private_aura_sounds::playback::tick` with `retail-12-0-5`; `Cargo.toml` already supports exact epoch selection with `profile-retail,retail-12-0-0` and default features disabled. The older feature-gate failure is historical, not the current blocker.
+
+Current proof is **storage-blocked**. Main unit `wow-retail-1200-prose-20261010t154144z`, submitted for `9e7af4de09c607adb1841a7335e9b0b69672be1d`, reached compilation but failed writing `target/debug/deps/rustcXtklhi/lib.rmeta`: `No space left on device (os error 28)`; `build-finished.success=false`. Worker final receipts are missing and `source-after.json` is zero bytes, so source equality is not established. No usable test artifact or selected test execution is established; this is neither behavioral RED nor compile PASS nor native parity.
+
+Inspected receipts under `/home/osso/.local/state/wow-ui-sim/verification/retail-1200-prose-current/`: `storage-failure-main.json`, `20261010T154144Z/compile.stdout`, and `20261010T154144Z/submission.json`. The main receipt's later observation records target cache absent and 78,797,254,656 free bytes (~73 GiB); neither explains the earlier ENOSPC or establishes why the target was removed. Historical failure, RED and ledger records remain unchanged. See the [current wiki correction](../wiki/investigations/patch-12-0-0-api-audit.md#current-prose-proof--storage-blocked-2026-10-10).
 - [ ] General secret operations lack an operation-specific authoritative oracle in the captured prose. VM/dependency changes outside this worktree are unauthorized.
 
 ## Out of scope
