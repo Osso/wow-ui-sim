@@ -1,0 +1,706 @@
+{
+  "mode": "existing-proof-only; no command reruns, delegation or backend",
+  "source_revision": "86f27272a560b66201a66bede301d4c39a40910c",
+  "source_scope": {
+    "compiler_seal_reference": "compiler-report.md",
+    "source_mappings_equal": 3839,
+    "source_snapshot_bytes_equal": true,
+    "exclusions": [
+      "external path dependencies",
+      "data inputs outside captured tracked src/tests/build/config scope",
+      "inherited environment",
+      "runtime cache/addon files outside source scope",
+      "untracked index"
+    ]
+  },
+  "privacy": {
+    "method": "Complete local reads and linewise candidate screening; output schema allowlists static source identifiers, counts, receipt metadata and hashes. Keyword screening is not a proof that raw streams contain no private data; all arbitrary log text, arguments, stacks and payloads withheld.",
+    "streams": {
+      "current": {
+        "stdout": {
+          "bytes": 315150,
+          "lines": 4635,
+          "full_read": true,
+          "candidate_counts": {},
+          "raw_content_published": false
+        },
+        "stderr": {
+          "bytes": 1515008,
+          "lines": 11835,
+          "full_read": true,
+          "candidate_counts": {},
+          "raw_content_published": false
+        }
+      },
+      "prior": {
+        "stdout": {
+          "bytes": 314605,
+          "lines": 4606,
+          "full_read": true,
+          "candidate_counts": {},
+          "raw_content_published": false
+        },
+        "stderr": {
+          "bytes": 33928,
+          "lines": 454,
+          "full_read": true,
+          "candidate_counts": {},
+          "raw_content_published": false
+        }
+      }
+    },
+    "case_streams": {
+      "exact-cases/case01/stdout": {
+        "bytes": 191,
+        "lines": 6,
+        "full_read": true
+      },
+      "exact-cases/case01/stderr": {
+        "bytes": 0,
+        "lines": 0,
+        "full_read": true
+      },
+      "exact-cases/case02/stdout": {
+        "bytes": 188,
+        "lines": 6,
+        "full_read": true
+      },
+      "exact-cases/case02/stderr": {
+        "bytes": 0,
+        "lines": 0,
+        "full_read": true
+      },
+      "exact-cases/case03/stdout": {
+        "bytes": 197,
+        "lines": 6,
+        "full_read": true
+      },
+      "exact-cases/case03/stderr": {
+        "bytes": 0,
+        "lines": 0,
+        "full_read": true
+      },
+      "exact-cases/case04/stdout": {
+        "bytes": 200,
+        "lines": 6,
+        "full_read": true
+      },
+      "exact-cases/case04/stderr": {
+        "bytes": 0,
+        "lines": 0,
+        "full_read": true
+      },
+      "exact-cases/case05/stdout": {
+        "bytes": 217,
+        "lines": 6,
+        "full_read": true
+      },
+      "exact-cases/case05/stderr": {
+        "bytes": 639,
+        "lines": 11,
+        "full_read": true
+      },
+      "exact-cases/case06/stdout": {
+        "bytes": 207,
+        "lines": 6,
+        "full_read": true
+      },
+      "exact-cases/case06/stderr": {
+        "bytes": 641,
+        "lines": 11,
+        "full_read": true
+      },
+      "exact-cases/case07/stdout": {
+        "bytes": 199,
+        "lines": 6,
+        "full_read": true
+      },
+      "exact-cases/case07/stderr": {
+        "bytes": 0,
+        "lines": 0,
+        "full_read": true
+      },
+      "exact-cases/case08/stdout": {
+        "bytes": 216,
+        "lines": 6,
+        "full_read": true
+      },
+      "exact-cases/case08/stderr": {
+        "bytes": 639,
+        "lines": 11,
+        "full_read": true
+      },
+      "exact-cases/case09/stdout": {
+        "bytes": 116,
+        "lines": 5,
+        "full_read": true
+      },
+      "exact-cases/case09/stderr": {
+        "bytes": 0,
+        "lines": 0,
+        "full_read": true
+      },
+      "exact-cases/case10/stdout": {
+        "bytes": 224,
+        "lines": 6,
+        "full_read": true
+      },
+      "exact-cases/case10/stderr": {
+        "bytes": 1035,
+        "lines": 17,
+        "full_read": true
+      },
+      "exact-cases/case11/stdout": {
+        "bytes": 161,
+        "lines": 6,
+        "full_read": true
+      },
+      "exact-cases/case11/stderr": {
+        "bytes": 0,
+        "lines": 0,
+        "full_read": true
+      },
+      "exact-cases/case12/stdout": {
+        "bytes": 240,
+        "lines": 6,
+        "full_read": true
+      },
+      "exact-cases/case12/stderr": {
+        "bytes": 644,
+        "lines": 11,
+        "full_read": true
+      }
+    },
+    "payload_publication": false
+  },
+  "cases": [
+    {
+      "case": "case01",
+      "selector": "toc::tests::test_parse_text_locale_excludes_production_template",
+      "selected": 1,
+      "passed": 1,
+      "failed": 0,
+      "exit": 0,
+      "credit": true,
+      "artifact_key": "wow_ui_sim-test",
+      "artifact_sha256": "3e1f1a61cc506193565f638d9295edd6390ac65f28f08d270526edd2020b93a6",
+      "compiled_source_revision": "86f27272a560b66201a66bede301d4c39a40910c",
+      "receipt_artifact_hash_unchanged": true,
+      "streams": {
+        "stdout": {
+          "bytes": 191,
+          "lines": 6,
+          "full_read": true
+        },
+        "stderr": {
+          "bytes": 0,
+          "lines": 0,
+          "full_read": true
+        }
+      }
+    },
+    {
+      "case": "case02",
+      "selector": "toc::tests::test_parse_text_locale_includes_exact_enus_token",
+      "selected": 1,
+      "passed": 1,
+      "failed": 0,
+      "exit": 0,
+      "credit": true,
+      "artifact_key": "wow_ui_sim-test",
+      "artifact_sha256": "3e1f1a61cc506193565f638d9295edd6390ac65f28f08d270526edd2020b93a6",
+      "compiled_source_revision": "86f27272a560b66201a66bede301d4c39a40910c",
+      "receipt_artifact_hash_unchanged": true,
+      "streams": {
+        "stdout": {
+          "bytes": 188,
+          "lines": 6,
+          "full_read": true
+        },
+        "stderr": {
+          "bytes": 0,
+          "lines": 0,
+          "full_read": true
+        }
+      }
+    },
+    {
+      "case": "case03",
+      "selector": "toc::tests::test_parse_text_locale_ignores_enus_outside_locale_tokens",
+      "selected": 1,
+      "passed": 1,
+      "failed": 0,
+      "exit": 0,
+      "credit": true,
+      "artifact_key": "wow_ui_sim-test",
+      "artifact_sha256": "3e1f1a61cc506193565f638d9295edd6390ac65f28f08d270526edd2020b93a6",
+      "compiled_source_revision": "86f27272a560b66201a66bede301d4c39a40910c",
+      "receipt_artifact_hash_unchanged": true,
+      "streams": {
+        "stdout": {
+          "bytes": 197,
+          "lines": 6,
+          "full_read": true
+        },
+        "stderr": {
+          "bytes": 0,
+          "lines": 0,
+          "full_read": true
+        }
+      }
+    },
+    {
+      "case": "case04",
+      "selector": "toc::tests::test_parse_text_locale_unannotated_template_remains_selected",
+      "selected": 1,
+      "passed": 1,
+      "failed": 0,
+      "exit": 0,
+      "credit": true,
+      "artifact_key": "wow_ui_sim-test",
+      "artifact_sha256": "3e1f1a61cc506193565f638d9295edd6390ac65f28f08d270526edd2020b93a6",
+      "compiled_source_revision": "86f27272a560b66201a66bede301d4c39a40910c",
+      "receipt_artifact_hash_unchanged": true,
+      "streams": {
+        "stdout": {
+          "bytes": 200,
+          "lines": 6,
+          "full_read": true
+        },
+        "stderr": {
+          "bytes": 0,
+          "lines": 0,
+          "full_read": true
+        }
+      }
+    },
+    {
+      "case": "case05",
+      "selector": "loader::tests::lua_loading::toc_text_locale_excluded_template_has_no_missing_file_warning",
+      "selected": 1,
+      "passed": 1,
+      "failed": 0,
+      "exit": 0,
+      "credit": true,
+      "artifact_key": "wow_ui_sim-test",
+      "artifact_sha256": "3e1f1a61cc506193565f638d9295edd6390ac65f28f08d270526edd2020b93a6",
+      "compiled_source_revision": "86f27272a560b66201a66bede301d4c39a40910c",
+      "receipt_artifact_hash_unchanged": true,
+      "streams": {
+        "stdout": {
+          "bytes": 217,
+          "lines": 6,
+          "full_read": true
+        },
+        "stderr": {
+          "bytes": 639,
+          "lines": 11,
+          "full_read": true
+        }
+      }
+    },
+    {
+      "case": "case06",
+      "selector": "loader::tests::lua_loading::toc_text_locale_included_template_loads_before_core",
+      "selected": 1,
+      "passed": 1,
+      "failed": 0,
+      "exit": 0,
+      "credit": true,
+      "artifact_key": "wow_ui_sim-test",
+      "artifact_sha256": "3e1f1a61cc506193565f638d9295edd6390ac65f28f08d270526edd2020b93a6",
+      "compiled_source_revision": "86f27272a560b66201a66bede301d4c39a40910c",
+      "receipt_artifact_hash_unchanged": true,
+      "streams": {
+        "stdout": {
+          "bytes": 207,
+          "lines": 6,
+          "full_read": true
+        },
+        "stderr": {
+          "bytes": 641,
+          "lines": 11,
+          "full_read": true
+        }
+      }
+    },
+    {
+      "case": "case07",
+      "selector": "toc::tests::test_parse_utf8_bom_preserves_first_metadata_and_file_order",
+      "selected": 1,
+      "passed": 1,
+      "failed": 0,
+      "exit": 0,
+      "credit": true,
+      "artifact_key": "wow_ui_sim-test",
+      "artifact_sha256": "3e1f1a61cc506193565f638d9295edd6390ac65f28f08d270526edd2020b93a6",
+      "compiled_source_revision": "86f27272a560b66201a66bede301d4c39a40910c",
+      "receipt_artifact_hash_unchanged": true,
+      "streams": {
+        "stdout": {
+          "bytes": 199,
+          "lines": 6,
+          "full_read": true
+        },
+        "stderr": {
+          "bytes": 0,
+          "lines": 0,
+          "full_read": true
+        }
+      }
+    },
+    {
+      "case": "case08",
+      "selector": "loader::tests::lua_loading::toc_utf8_bom_metadata_does_not_become_a_missing_file_warning",
+      "selected": 1,
+      "passed": 1,
+      "failed": 0,
+      "exit": 0,
+      "credit": true,
+      "artifact_key": "wow_ui_sim-test",
+      "artifact_sha256": "3e1f1a61cc506193565f638d9295edd6390ac65f28f08d270526edd2020b93a6",
+      "compiled_source_revision": "86f27272a560b66201a66bede301d4c39a40910c",
+      "receipt_artifact_hash_unchanged": true,
+      "streams": {
+        "stdout": {
+          "bytes": 216,
+          "lines": 6,
+          "full_read": true
+        },
+        "stderr": {
+          "bytes": 639,
+          "lines": 11,
+          "full_read": true
+        }
+      }
+    },
+    {
+      "case": "case09",
+      "selector": "loader::tests::xml_basics_extra::xml_file_locale_annotations_load_only_selected_scripts_and_includes",
+      "selected": 0,
+      "passed": 0,
+      "failed": 0,
+      "exit": 0,
+      "credit": false,
+      "artifact_key": "wow_ui_sim-test",
+      "artifact_sha256": "3e1f1a61cc506193565f638d9295edd6390ac65f28f08d270526edd2020b93a6",
+      "compiled_source_revision": "86f27272a560b66201a66bede301d4c39a40910c",
+      "receipt_artifact_hash_unchanged": true,
+      "streams": {
+        "stdout": {
+          "bytes": 116,
+          "lines": 5,
+          "full_read": true
+        },
+        "stderr": {
+          "bytes": 0,
+          "lines": 0,
+          "full_read": true
+        }
+      }
+    },
+    {
+      "case": "case10",
+      "selector": "loader::lua_file::tests::startup_file_budget_error_preserves_cumulative_usage_and_loader_outcome",
+      "selected": 1,
+      "passed": 1,
+      "failed": 0,
+      "exit": 0,
+      "credit": true,
+      "artifact_key": "wow_ui_sim-test",
+      "artifact_sha256": "3e1f1a61cc506193565f638d9295edd6390ac65f28f08d270526edd2020b93a6",
+      "compiled_source_revision": "86f27272a560b66201a66bede301d4c39a40910c",
+      "receipt_artifact_hash_unchanged": true,
+      "streams": {
+        "stdout": {
+          "bytes": 224,
+          "lines": 6,
+          "full_read": true
+        },
+        "stderr": {
+          "bytes": 1035,
+          "lines": 17,
+          "full_read": true
+        }
+      }
+    },
+    {
+      "case": "case11",
+      "selector": "toc::tests::test_parse_simple_toc",
+      "selected": 1,
+      "passed": 1,
+      "failed": 0,
+      "exit": 0,
+      "credit": true,
+      "artifact_key": "wow_ui_sim-test",
+      "artifact_sha256": "3e1f1a61cc506193565f638d9295edd6390ac65f28f08d270526edd2020b93a6",
+      "compiled_source_revision": "86f27272a560b66201a66bede301d4c39a40910c",
+      "receipt_artifact_hash_unchanged": true,
+      "streams": {
+        "stdout": {
+          "bytes": 161,
+          "lines": 6,
+          "full_read": true
+        },
+        "stderr": {
+          "bytes": 0,
+          "lines": 0,
+          "full_read": true
+        }
+      }
+    },
+    {
+      "case": "case12",
+      "selector": "loader::tests::xml_basics::xml_basics_extra::xml_file_locale_annotations_load_only_selected_scripts_and_includes",
+      "selected": 1,
+      "passed": 1,
+      "failed": 0,
+      "exit": 0,
+      "credit": true,
+      "artifact_key": "wow_ui_sim-test",
+      "artifact_sha256": "3e1f1a61cc506193565f638d9295edd6390ac65f28f08d270526edd2020b93a6",
+      "compiled_source_revision": "86f27272a560b66201a66bede301d4c39a40910c",
+      "receipt_artifact_hash_unchanged": true,
+      "streams": {
+        "stdout": {
+          "bytes": 240,
+          "lines": 6,
+          "full_read": true
+        },
+        "stderr": {
+          "bytes": 644,
+          "lines": 11,
+          "full_read": true
+        }
+      }
+    }
+  ],
+  "case_totals": {
+    "credited_cases": 11,
+    "selected_tests": 11,
+    "passed": 11,
+    "failed": 0,
+    "zero_selection_cases": [
+      "case09"
+    ],
+    "corrected_xml_control": "case12",
+    "listing_records": 1
+  },
+  "startup": {
+    "artifact_sha256": "ea546119f359abfe146b767eab510e69a514ddb50449263e3914ff182e079b93",
+    "artifact_kind": "normal wow-sim bin; compiler profile.test=false",
+    "source_revision": "86f27272a560b66201a66bede301d4c39a40910c",
+    "exit": 0,
+    "stream_errors": [],
+    "receipt_artifact_hash_unchanged": true,
+    "environment_overrides": {
+      "WOW_SIM_NO_SOUND": "1",
+      "WOW_SIM_VERBOSE": "1",
+      "WOW_SIM_DEBUG_NIL_GLOBALS": "1",
+      "WOW_SIM_LOG_HANDLER_TIMINGS": "0"
+    },
+    "completion_stderr_line": 11501,
+    "warning_count": 4,
+    "warning_failure_stdout_lines": [
+      4440,
+      4441,
+      4442,
+      4443
+    ],
+    "remaining_warning_class": "instruction-budget-exhausted",
+    "file_budget_records": [
+      {
+        "stderr_line": 2372,
+        "owner": "EnhanceQoL",
+        "source_addon_relative": "EnhanceQoL/Settings/GroupTools.lua",
+        "limit": 10000000,
+        "used_before": 9986831,
+        "used_after": 10000000
+      },
+      {
+        "stderr_line": 2376,
+        "owner": "EnhanceQoL",
+        "source_addon_relative": "EnhanceQoL/Modules/Aura/FocusInterruptTracker.lua",
+        "limit": 10000000,
+        "used_before": 10000000,
+        "used_after": 10000000
+      },
+      {
+        "stderr_line": 2380,
+        "owner": "EnhanceQoL",
+        "source_addon_relative": "EnhanceQoL/Modules/Mouse/Init.lua",
+        "limit": 10000000,
+        "used_before": 10000000,
+        "used_after": 10000000
+      },
+      {
+        "stderr_line": 2384,
+        "owner": "EnhanceQoL",
+        "source_addon_relative": "EnhanceQoL/Modules/Food/Init.lua",
+        "limit": 10000000,
+        "used_before": 10000000,
+        "used_after": 10000000
+      }
+    ],
+    "handler_budget_records": 91,
+    "handler_duration_records": 11381,
+    "lua_unique_signatures": 7,
+    "lua_runtime_occurrences": 96,
+    "lua_signatures": [
+      {
+        "id": "L1",
+        "source_addon_relative": "EnhanceQoL/Settings/GroupTools.lua",
+        "class": "instruction-budget-exhausted",
+        "signature_sha256": "4c757dfd495cf42ec5d7e8de893745ad0ff044b9c0a3c3ae8e7ffec975aa0993",
+        "stderr_first_line": 2373,
+        "prior_stderr_first_line": 165,
+        "initial_records": 1,
+        "suppressed_additional": 0,
+        "runtime_occurrences": 1,
+        "prior_runtime_occurrences": 1,
+        "stdout_warning_restatements": 1
+      },
+      {
+        "id": "L2",
+        "source_addon_relative": "EnhanceQoL/Modules/Aura/FocusInterruptTracker.lua",
+        "class": "instruction-budget-exhausted",
+        "signature_sha256": "c94641f71f58be29450f357adeee7027c4e242028101549e14c857eea9113dff",
+        "stderr_first_line": 2377,
+        "prior_stderr_first_line": 169,
+        "initial_records": 1,
+        "suppressed_additional": 0,
+        "runtime_occurrences": 1,
+        "prior_runtime_occurrences": 1,
+        "stdout_warning_restatements": 1
+      },
+      {
+        "id": "L3",
+        "source_addon_relative": "EnhanceQoL/Modules/Mouse/Init.lua",
+        "class": "instruction-budget-exhausted",
+        "signature_sha256": "1f537c41566bf136bd5ff51297e1c95fca5bffc31788ee17f5bf9c898850d6f4",
+        "stderr_first_line": 2381,
+        "prior_stderr_first_line": 173,
+        "initial_records": 1,
+        "suppressed_additional": 0,
+        "runtime_occurrences": 1,
+        "prior_runtime_occurrences": 1,
+        "stdout_warning_restatements": 1
+      },
+      {
+        "id": "L4",
+        "source_addon_relative": "EnhanceQoL/Modules/Food/Init.lua",
+        "class": "instruction-budget-exhausted",
+        "signature_sha256": "0195cc84171b663449d6f1a53e6c0b3d80c5f1e8a39d3649a67ea8c1236b8dce",
+        "stderr_first_line": 2385,
+        "prior_stderr_first_line": 177,
+        "initial_records": 1,
+        "suppressed_additional": 0,
+        "runtime_occurrences": 1,
+        "prior_runtime_occurrences": 1,
+        "stdout_warning_restatements": 1
+      },
+      {
+        "id": "L5",
+        "source_addon_relative": "EnhanceQoL/Core/DynamicAnchors.lua:997",
+        "class": "instruction-budget-exhausted",
+        "signature_sha256": "85204c86676544e33f60ef7505755455d13857c3ff20271238976b39842c37ad",
+        "stderr_first_line": 2437,
+        "prior_stderr_first_line": 181,
+        "initial_records": 1,
+        "suppressed_additional": 87,
+        "runtime_occurrences": 88,
+        "prior_runtime_occurrences": 88,
+        "stdout_warning_restatements": 0
+      },
+      {
+        "id": "L6",
+        "source_addon_relative": "AllTheThings/lib/EventRegistration.lua:26",
+        "class": "instruction-budget-exhausted",
+        "signature_sha256": "f569dfeb86b5cd6328b934aaafb0c4bf16e95638ba8da7718e23c001cbf78086",
+        "stderr_first_line": 3148,
+        "prior_stderr_first_line": 335,
+        "initial_records": 1,
+        "suppressed_additional": 2,
+        "runtime_occurrences": 3,
+        "prior_runtime_occurrences": 3,
+        "stdout_warning_restatements": 0
+      },
+      {
+        "id": "L7",
+        "source_addon_relative": "EllesmereUI/EllesmereUI_UICore.lua:1073",
+        "class": "nil-call",
+        "signature_sha256": "309bfe368e6accb3e5dbcad2c30db462c0b8332755832b1417d9b93d9aaa6cee",
+        "stderr_first_line": 4141,
+        "prior_stderr_first_line": 412,
+        "initial_records": 1,
+        "suppressed_additional": 0,
+        "runtime_occurrences": 1,
+        "prior_runtime_occurrences": 1,
+        "stdout_warning_restatements": 0
+      }
+    ],
+    "load_summary": {
+      "loaded_addons": "48/78",
+      "failed_during_loading": 1,
+      "load_failures": 0,
+      "loaded_with_lua_errors_during_loading": 1,
+      "lua_files": 2934,
+      "xml_files": 149
+    },
+    "native_toc_inputs": [
+      {
+        "addon": "EXBOSS-Locale",
+        "bytes": 406,
+        "sha256": "2a5de6e4c1a3e99f22c1f907d905762277284886199cb4f7dc00853a6dac3c9b",
+        "matches_compiler_input_receipt": true,
+        "runtime_receipt_unchanged": true,
+        "local_input_hash_read_only": true
+      },
+      {
+        "addon": "EXBOSS-LocaleBase",
+        "bytes": 416,
+        "sha256": "973af1c202aae181d2e9b9fa4c60f70ec3d1675c55a5e862273d4d0d52e789a8",
+        "matches_compiler_input_receipt": true,
+        "runtime_receipt_unchanged": true,
+        "local_input_hash_read_only": true
+      },
+      {
+        "addon": "EXBossData",
+        "bytes": 797,
+        "sha256": "c1f31fd314f83546cf28efadae5e8cbabff41f47a4018bb58c0bba72f3ef8af8",
+        "matches_compiler_input_receipt": true,
+        "runtime_receipt_unchanged": true,
+        "local_input_hash_read_only": true
+      },
+      {
+        "addon": "ExtraQuestButton",
+        "bytes": 787,
+        "sha256": "89f08ed8bc9da60d4929006ce2756fccc5a47ae25887f97fd5d5f18f38793ace",
+        "matches_compiler_input_receipt": true,
+        "runtime_receipt_unchanged": true,
+        "local_input_hash_read_only": true
+      }
+    ]
+  },
+  "comparison": {
+    "prior_epoch": "/home/osso/.local/state/wow-ui-sim/verification/startup-diagnostics-and-visible-tooltip/20261010T013017Z",
+    "prior_source_revision": "fc824cb921342c06f506eb92e8c81d52bdf28fcd",
+    "prior_artifact_sha256": "4c4730adbd8bc1c4b92988b138d6f941e325ffe7207c64ba73db264548fc8ecc",
+    "prior_exit": 0,
+    "prior_timing_flag": "1000",
+    "current_timing_flag": "0",
+    "prior_warnings": 8,
+    "current_warnings": 4,
+    "removed_bom_metadata_warnings": 3,
+    "removed_locale_missing_file_warnings": 1,
+    "ordered_signatures_equal": true,
+    "signature_runtime_counts_equal": true,
+    "timing_counts_not_comparable": "Different thresholds 1000 vs 0; no performance or causal timing claim."
+  },
+  "limits": [
+    "Historical artifact/source scopes only; no acceptance of current or future code.",
+    "Local native TOC input hashes do not establish native execution or parity.",
+    "Startup completed with errors; not a clean startup or all-profile/full-suite proof.",
+    "No policy, quota, vendor code or input changes; no raw payload publication."
+  ]
+}

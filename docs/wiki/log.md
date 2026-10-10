@@ -1278,3 +1278,7 @@ Added [audit](investigations/patch-1-3-0-api-audit.md) and [spec](../specs/patch
 ## [2026-10-09] confirmation | BOM source implemented, GREEN pending
 
 Updated [SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#toc-locale-selection-and-bom-metadata--later-runtime-green-pending), pipeline and linked sanitized aggregate after inspecting `958ea1ad0`. Preserved epoch-specific proof; compile planning remains main-owned after integration. Docs only; no native/raw/private copies, builds/tests/delegation/operations.
+
+## [2026-10-09] confirmation | Completed TOC runtime audit retained
+
+[Proof SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#completed-86f272-toc-runtime-audit--parent-open) links three byte-identical sanitized audit outputs; historical proof and remaining startup failures stay epoch-bound. [Later source-only changes](investigations/integrated-source-and-factory-proof-2026-10-09.md#later-mists-oracle-and-finite-budget-probe--source-only-runtime-pending) receive no runtime acceptance. No raw/private streams, builds, pushes or delegation.

@@ -1,6 +1,6 @@
 ## [2026-10-09] audit | Completed fc824 bounded proof
 
-[Proof SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#completed-fc824-bounded-proof--parent-open): independent compiler/exact-case/startup audits retained; later TOC repairs excluded, parent OPEN.
+[Proof SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#completed-fc824-bounded-proof--parent-open): independent compiler/exact-case/startup audits retained; later TOC repairs excluded, parent OPEN. Later [TOC runtime epoch](investigations/integrated-source-and-factory-proof-2026-10-09.md#completed-86f272-toc-runtime-audit--parent-open) and [source-only follow-ups](investigations/integrated-source-and-factory-proof-2026-10-09.md#later-mists-oracle-and-finite-budget-probe--source-only-runtime-pending) remain separately scoped.
 
 # [2026-10-09] investigation | Patch 1.5.0 bounded frozen SOURCE audit
 
