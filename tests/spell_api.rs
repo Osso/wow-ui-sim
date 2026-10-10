@@ -485,11 +485,15 @@ fn test_spell_get_spell_name_unknown() {
 }
 
 #[test]
-fn test_spell_get_maw_power_border_atlas_by_spell_id_is_stubbed() {
+fn test_spell_get_maw_power_border_atlas_by_spell_id_follows_retirement_epoch() {
     let env = env();
-    let is_nil: bool = env
-        .eval("return C_Spell.GetMawPowerBorderAtlasBySpellID(12345) == nil")
-        .unwrap();
+    // The 12.0.7 source register removes this member from the native surface.
+    let expression = if cfg!(feature = "retail-12-0-7") {
+        "return C_Spell.GetMawPowerBorderAtlasBySpellID == nil"
+    } else {
+        "return C_Spell.GetMawPowerBorderAtlasBySpellID(12345) == nil"
+    };
+    let is_nil: bool = env.eval(expression).unwrap();
     assert!(is_nil);
 }
 
