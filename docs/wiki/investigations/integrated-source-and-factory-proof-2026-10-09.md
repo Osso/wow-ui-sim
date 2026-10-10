@@ -627,6 +627,16 @@ Original `903711…` nameplate **0PASS/2FAIL/exit101** and currency **0PASS/2FAI
 
 **Unproven:** native parity/CVar registration/defaults; OnLoad/event lifetime; class resource bars; real frame/render state; other sizes/styles; complete Mists suite/profile. External path dependencies, uncaptured data, inherited environment, runtime cache/addon inputs and untracked index remain excluded. Source-only predecessor is superseded solely for this target's saved compile/execution gate; parent **OPEN**. Sanitized counts/hashes/static locations/metadata only, no raw streams, payloads, stacks, snapshots or vendor copies published. Docs-only retention; no source/AGENTS changes, tests/builds, push, deployment or delegation; `.code-index.db` variants preserved.
 
+## Mists source refresh — matched source, incomplete runtime sync
+
+Recorded 2026-10-10. Main refreshed **Mists only** from Gethe `classic` revision `ea620b2f7a2ec8e9c446db102cc74641931e674e`, version **5.5.4.70268**, matching the retained local `wow_classic` receipt read with pinned shared parser `758d8dbfbc64d500b2f8f5b5c133d9f82fa79a48`. Other six manifests equal the pre-refresh Git baseline; acquisition freshness was not independently rechecked.
+
+Exact manifest sets: **3,981 → 2,974 paths; 591 added, 1,598 removed, 2,383 common**. Git numstat's649/1656 is not the path-set delta. All2,974 map; Character addon30 paths and Shared Achievement helpers are now available in the source enumeration. Source checkout/enumeration cache equality does **not** establish runtime-cache completeness. Recovery audit remains **FAIL** against the originally requested delta, despite passing exact source/tree/mapping checks.
+
+Native sync execution **055426 FAIL: 129 of2,974 failed; runtime cache incomplete**. No baseline acceptance or clean-runtime claim. Archived old **3,982-file runtime cache** remains preserved; its file count is not the old3,981-path manifest count. Original18-error and source-seven-test proof epochs remain historical and separate from subsequent runtime receipts. Fresh cache/vendor inputs invalidate their applicability to current inputs until rerun; no rerun performed here. Resource and credit claims remain unchanged/unverified.
+
+Private evidence SSOT: `/home/osso/.local/state/wow-ui-sim/verification/mists-source-refresh-current/{installed-mists-product.json,gethe-source-identity.json,audit-complete/report.md}` and native055426 sync result. Product receipt/audit verifies recorded identity, not a new database read; no raw code, binaries or authentication/product database published. Baseline recapture, runtime validation and native parity remain **OPEN**.
+
 ## Saved three-owner, timing, full-suite and Mists evidence — bounded 881
 
 Saved October 10, 2026 UTC receipts (October 9 US local), retained without new execution. [Retention manifest](../evidence/bounded-881/retention-manifest.json) distinguishes original from derivative hashes. Each directory retains sanitized report/aggregate/original hash manifest; original manifests seal original local bytes, not rewritten derivatives. Raw streams, source payloads and per-selector full-suite inventories remain private.
