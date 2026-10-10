@@ -1,4 +1,5 @@
 use crate::common;
+use crate::common::blizzard_addon_harness::build_blizzard_addon_closure_env;
 
 use std::path::PathBuf;
 use wow_ui_sim::loader::{discover_blizzard_addons, load_addon};
@@ -93,5 +94,152 @@ fn secure_group_pet_header_spawns_pet_child() {
         ).expect("pet header should update through Blizzard native Lua");
 
         assert_eq!(unit, "pet,nil");
+    }
+}
+
+fn assert_auto_hide_no_lua_errors(env: &WowLuaEnv, stage: &str) {
+    // Counts only: do not dump cached-addon errors or arbitrary Lua payloads.
+    assert_eq!(
+        env.state().borrow().lua_errors.len(),
+        0,
+        "{stage}: Lua error count"
+    );
+}
+
+fn load_auto_hide_fixture() -> (WowLuaEnv, (f32, f32), (f32, f32)) {
+    let ui = wow_ui_sim::paths::default_blizzard_ui_addons_path()
+        .expect("auto-hide fixture requires the active profile Blizzard UI cache");
+    let (env, loaded) =
+        build_blizzard_addon_closure_env(&ui, &["Blizzard_RestrictedAddOnEnvironment"], &[]);
+    for prerequisite in ["Blizzard_FrameXML", "Blizzard_RestrictedAddOnEnvironment"] {
+        assert!(
+            loaded.iter().any(|name| name == prerequisite),
+            "missing {prerequisite}"
+        );
+        assert!(
+            env.state()
+                .borrow()
+                .addons
+                .iter()
+                .any(|addon| { addon.folder_name == prerequisite && addon.loaded }),
+            "{prerequisite} did not finish loading"
+        );
+    }
+    assert_auto_hide_no_lua_errors(&env, "cached dependency closure");
+    assert!(env.exec(r#"
+        assert(type(RegisterAutoHide) == 'function', 'registration unavailable')
+        assert(type(UnregisterAutoHide) == 'function', 'unregistration unavailable')
+        assert(SecureHoverDriverManager, 'vendor manager unavailable')
+        assert(SecureHoverDriverManager:GetScript('OnUpdate'), 'vendor update unavailable')
+        assert(SecureHoverDriverManager:GetScript('OnAttributeChanged'), 'vendor request handler unavailable')
+
+        AutoHideRuntimeTarget = CreateFrame('Frame', nil, UIParent)
+        AutoHideRuntimeTarget:SetScale(1)
+        AutoHideRuntimeTarget:SetSize(120, 80)
+        AutoHideRuntimeTarget:SetPoint('BOTTOMLEFT', UIParent, 'BOTTOMLEFT', 200, 200)
+        AutoHideRuntimeTarget:Hide()
+        AutoHideRuntimeTarget:Show()
+        assert(AutoHideRuntimeTarget:IsShown() and AutoHideRuntimeTarget:IsVisible(), 'target not visible')
+
+        local function register()
+            assert(not issecure(), 'registration requires the fixture addon caller')
+            RegisterAutoHide(AutoHideRuntimeTarget, 1.0)
+        end
+        local function unregister()
+            assert(not issecure(), 'unregistration requires the fixture addon caller')
+            UnregisterAutoHide(AutoHideRuntimeTarget)
+        end
+        debug.setobjecttaint(register, 'AutoHideRuntimeFixture')
+        debug.setobjecttaint(unregister, 'AutoHideRuntimeFixture')
+        AutoHideRuntimeRegister = register
+        AutoHideRuntimeUnregister = unregister
+    "#).is_ok(), "prepare actual vendor auto-hide fixture");
+    assert_auto_hide_no_lua_errors(&env, "frame and caller preparation");
+
+    // GetRect resolves dirty layout. Normalize the observed rectangle exactly
+    // as the vendor does; do not assume the requested anchor was resolved.
+    let (left, right, bottom, top): (f64, f64, f64, f64) = env.eval(r#"
+        local left, bottom, width, height = AutoHideRuntimeTarget:GetRect()
+        local scale = AutoHideRuntimeTarget:GetEffectiveScale()
+        assert(left and bottom and width > 0 and height > 0 and scale > 0, 'target geometry unavailable')
+        return left * scale, (left + width) * scale, bottom * scale, (bottom + height) * scale
+    "#).unwrap_or_else(|_| panic!("observe resolved auto-hide target geometry"));
+    assert!(
+        [left, right, bottom, top]
+            .iter()
+            .all(|edge| edge.is_finite()),
+        "finite target rectangle"
+    );
+    assert!(right > left && top > bottom, "nonempty target rectangle");
+    let interior = (((left + right) / 2.0) as f32, ((bottom + top) / 2.0) as f32);
+    let exterior = ((right + 32.0) as f32, (top + 32.0) as f32);
+    (env, interior, exterior)
+}
+
+fn tick_auto_hide_at(env: &WowLuaEnv, cursor: (f32, f32), elapsed: f64) {
+    {
+        let mut state = env.state().borrow_mut();
+        let renderer_y = state.screen_height - cursor.1;
+        state.set_mouse_position(Some((cursor.0, renderer_y)));
+    }
+    assert!(
+        env.fire_on_update(elapsed).is_ok(),
+        "auto-hide runtime tick failed"
+    );
+    assert_auto_hide_no_lua_errors(env, "registered OnUpdate dispatch");
+}
+
+fn register_auto_hide_from_addon(env: &WowLuaEnv) {
+    assert!(
+        env.exec("AutoHideRuntimeRegister()").is_ok(),
+        "actual addon registration failed"
+    );
+    assert_auto_hide_no_lua_errors(env, "registration attribute dispatch");
+    let manager_visible: bool = env
+        .eval("return SecureHoverDriverManager:IsVisible()")
+        .unwrap_or_else(|_| panic!("observe vendor manager visibility"));
+    assert!(
+        manager_visible,
+        "registration must activate the vendor manager"
+    );
+}
+
+fn assert_auto_hide_target_shown(env: &WowLuaEnv, expected: bool, stage: &str) {
+    let shown: bool = env
+        .eval("return AutoHideRuntimeTarget:IsShown()")
+        .unwrap_or_else(|_| panic!("{stage}: observe target visibility"));
+    assert_eq!(shown, expected, "{stage}: target shown");
+}
+
+#[test]
+fn cached_auto_hide_enter_leave_expires_after_duration() {
+    test_timeout! {
+        let (env, interior, exterior) = load_auto_hide_fixture();
+        register_auto_hide_from_addon(&env);
+        tick_auto_hide_at(&env, interior, 0.05);
+        assert_auto_hide_target_shown(&env, true, "cursor entered");
+        // The leave tick starts the vendor TTL; subsequent ticks consume it.
+        tick_auto_hide_at(&env, exterior, 0.05);
+        assert_auto_hide_target_shown(&env, true, "cursor left");
+        tick_auto_hide_at(&env, exterior, 0.75);
+        assert_auto_hide_target_shown(&env, true, "before duration 1.0");
+        tick_auto_hide_at(&env, exterior, 0.30);
+        assert_auto_hide_target_shown(&env, false, "strictly after duration 1.0");
+    }
+}
+
+#[test]
+fn cached_auto_hide_unregister_cancels_pending_expiry() {
+    test_timeout! {
+        let (env, interior, exterior) = load_auto_hide_fixture();
+        register_auto_hide_from_addon(&env);
+        tick_auto_hide_at(&env, interior, 0.05);
+        tick_auto_hide_at(&env, exterior, 0.05);
+        tick_auto_hide_at(&env, exterior, 0.25);
+        assert_auto_hide_target_shown(&env, true, "pending expiry before unregister");
+        assert!(env.exec("AutoHideRuntimeUnregister()").is_ok(), "actual addon unregistration failed");
+        assert_auto_hide_no_lua_errors(&env, "unregistration attribute dispatch");
+        tick_auto_hide_at(&env, exterior, 1.25);
+        assert_auto_hide_target_shown(&env, true, "past cancelled deadline");
     }
 }
