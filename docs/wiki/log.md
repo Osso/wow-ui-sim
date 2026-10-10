@@ -1266,3 +1266,7 @@ Added [audit](investigations/patch-1-3-0-api-audit.md) and [spec](../specs/patch
 ## [2026-10-09] evidence | Owner-budget metadata audit and retained local frame
 
 [SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#owner-budget-error-metadata--source-audit-only-goal-open): `1f50ffbc` source-only stderr failure metadata under existing timing flag; actual owner/event and public limit/usage snapshots, not native cause. No quota change/error suppression; compilation/startup capture pending, source goal OPEN. Separate SAFE metadata-only loopback5903 Raw1920×1080/8294400B/one rectangle/1.233s receipt retained with hash/privacy manifest; no pixels/authentication/input/remote-viewer/tunnel credit. Older browser200 separate. Docs/evidence only.
+
+## [2026-10-09] investigation | TOC locale root and pending BOM repair
+
+[SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#toc-locale-selection-and-bom-metadata--later-runtime-green-pending) records inspected `9131dd8f9`, main-reported fresh startup/BOM evidence, and separate pending BOM implementation/runtime proof. Existing fc824 14-case PASS remains epoch-bound; next combined build not queued. Docs only; no raw payload copies or execution credit.

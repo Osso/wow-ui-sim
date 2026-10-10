@@ -36,7 +36,7 @@ pub struct TocFile {
 
 **File Processing** (lines 69-104):
 - Skips `#` comment lines
-- Filters `[AllowLoadTextLocale]` entries to enUS and strips trailing annotations from selected paths
+- Filters `[AllowLoadTextLocale]` entries using exact comma/whitespace-delimited `enUS` tokens inside the annotation only, then strips trailing annotations; filename tokens do not select a locale. This is the existing modeled enUS gate, not implicit locale selection or native parity. See [locale/BOM investigation and proof boundary](wiki/investigations/integrated-source-and-factory-proof-2026-10-09.md#toc-locale-selection-and-bom-metadata--later-runtime-green-pending) for the separate pending TOC BOM fix.
 - Splits `[AllowLoadGameType]` values on commas or whitespace, then keeps files matching the active profile (for example, `vanilla tbc mainline` includes retail `mainline`)
 - Replaces placeholders: `[Family]` -> "Mainline", `[Game]` -> "Standard"
 - Normalizes backslashes, strips inline annotations

@@ -471,6 +471,14 @@ Local audit SSOT: `/home/osso/.local/state/wow-ui-sim/verification/startup-file-
 
 Inspected `fc824cb92` adds the loader record described in the [pipeline diagnostic SSOT](../../addon-loading-pipeline.md#top-level-file-error-diagnostics). Source inspection is not compiled/current-startup acceptance. Per user handoff, queued compiler epoch `20261010T013017Z` is **NOW RUNNING**, source edits frozen; this docs audit did not inspect or operate that job. New diagnostic/runtime proof remains **PENDING**, parent OPEN. Only the audit report was read; no raw streams or private copies retained here.
 
+## TOC locale selection and BOM metadata — later runtime GREEN pending
+
+Inspected `9131dd8f9` fixes the actual locale-selection root: `selected_file_path` searched the whole line for `enUS`, so that token in a filename falsely admitted a non-enUS annotation. Selection now checks exact comma/whitespace-delimited tokens only inside `[AllowLoadTextLocale ...]`, then strips annotations. This preserves the existing modeled enUS gate shared by TOC and XML references; it introduces neither implicit locale selection nor native-client parity credit. Added parser/loader cases are source evidence here, not executed proof.
+
+Main handoff reports the fresh `fc824cb92` startup's eight warning details: three EXBOSS BOM-prefixed TOC metadata lines misclassified as filenames, one ExtraQuest locale warning, and four quota errors. Main verified all three native TOCs start with bytes `efbbbf232320496e`; current stdout lines3665/3866/3881 contain BOM-prefixed `##`. This identifies a separate TOC parsing boundary, not three missing addon files. No raw payload copied into this page.
+
+The BOM fix is forthcoming in a separate main commit; no implementation commit was inspected and no completed-fix claim is made. The existing 14-case **PASS** belongs only to the `fc824cb92` epoch and is preserved unchanged, not transferred to `9131dd8f9` or future BOM code. Later combined runtime **GREEN PENDING**; next combined build is not yet queued per handoff. This supersedes the earlier running-build handoff only for current scheduling, without rewriting its historical epoch. Parent OPEN.
+
 ## Retail/Mists count fixture delta — SOURCE only, runtime pending
 
 Local source-report SSOT: `/home/osso/.local/state/wow-ui-sim/verification/count-fixture-source/report.md`. `3a4f54da4` removes only `count` from the earlier-profile extension-absence loop; `29307f243` fixes its Rust raw-string delimiter with Lua `select('#', ...)`. Cached native Retail/Mists documentation supports three returns for the dense fixture: total3, array2, maximum2. The test selects `retail-12-1-0` or `client-mists`; PTR/Forever retain their separate one-return override path. Other-profile nil baseline is preserved, not native absence proof; the unconditional base writer suggests a source conflict there if no later removal intervenes.
