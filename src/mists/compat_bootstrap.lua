@@ -708,15 +708,6 @@ if rawget(_G, "GetPVPRoles") == nil then
   function GetPVPRoles() return false, false, false end
 end
 
-if rawget(_G, "GetCurrencyListSize") == nil then
-  function GetCurrencyListSize()
-    if C_CurrencyInfo and type(C_CurrencyInfo.GetCurrencyListSize) == "function" then
-      return C_CurrencyInfo.GetCurrencyListSize()
-    end
-    return 0
-  end
-end
-
 local selectedGuildRosterIndex = 0
 
 if rawget(_G, "SetGuildRosterSelection") == nil then
