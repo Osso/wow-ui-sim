@@ -11,17 +11,24 @@ fn mists_idle_cast_bar_hides_after_source_fade_finishes() {
         assert_eq!(released, 0);
         wow_ui_sim::loader::enter_bytecode_cache_read_only_mode();
 
-        let initial: (bool, bool, bool) = env
+        let (shown, playing, idle, owns_animation): (bool, bool, bool, bool) = env
             .eval(
                 "local cast = PlayerCastingBarFrame; return cast:IsShown(), \
                  cast.FadeOutAnim:IsPlaying(), \
-                 UnitCastingInfo('player') == nil and UnitChannelInfo('player') == nil",
+                 UnitCastingInfo('player') == nil and UnitChannelInfo('player') == nil, \
+                 cast.FadeOutAnim:GetParent() == cast",
             )
-            .expect("read actual idle cast and source animation state");
-        eprintln!("MISTS_CAST_FADE initial: {initial:?}");
-        assert!(initial.2, "backing player state must be idle");
-        assert!(initial.1, "source FinishSpell must start FadeOutAnim");
-        assert!(initial.0, "source fade has not completed before any tick");
+            .expect("read actual idle cast, animation state and owner");
+        eprintln!(
+            "MISTS_CAST_FADE initial: shown={shown} playing={playing} idle={idle} owner={owns_animation}"
+        );
+        assert!(idle, "backing player state must be idle");
+        assert!(
+            owns_animation,
+            "source fade must belong to the actual cast bar"
+        );
+        assert!(playing, "source FinishSpell must start FadeOutAnim");
+        assert!(shown, "source fade has not completed before any tick");
 
         // Actual XML: 0.2-second delay, then 0.3-second alpha fade.
         env.fire_on_update(0.25)
