@@ -1,0 +1,35 @@
+{
+  "verified": "2026-10-10",
+  "scope": "new documentation only; no raw vendor logs",
+  "private_inputs": [
+    {
+      "path": "/home/osso/.local/state/wow-ui-sim/verification/fullsuite-5aa-independent/report.md",
+      "sha256": "c57f083c98897d94e53f6b2fe4cfa818c924703aa9ea6d4a005b590ff91e1a42",
+      "bytes": 8194
+    },
+    {
+      "path": "/home/osso/Projects/wow/full-suite-results/5aa6cb277eb5919e9276100c023f1c98809c7bc9.json",
+      "sha256": "6680bd99f1fac9754217eea06f3492e39b021368291936bb4a19540bf60dac6b",
+      "bytes": 972
+    }
+  ],
+  "published": [
+    {
+      "path": "/home/osso/Projects/wow/wow-ui-sim/docs/wiki/investigations/fullsuite-5aa-2026-10-10.md",
+      "sha256": "829faf2dc63213d6567cf27df01fb71d35de346d87fa858ec0fa11c332a2cb21",
+      "bytes": 2011
+    },
+    {
+      "path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/fullsuite-5aa/audit.md",
+      "sha256": "6f02b750a09ac7fa9db1d7415c95566018fcb0fcd29ad3de108fc246bf0c7cd7",
+      "bytes": 3250
+    },
+    {
+      "path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/fullsuite-5aa/receipt.json",
+      "sha256": "e97abff7bd6f6c8479a313f1017bfb2a4c708fbb2790106ecdae6bea01b9dfb3",
+      "bytes": 1966
+    }
+  ],
+  "self_hash": "omitted to avoid recursive hash",
+  "evidence_boundary": "Log hashes and line references in audit are attributed to independent report; raw logs not read or copied in this publication."
+}

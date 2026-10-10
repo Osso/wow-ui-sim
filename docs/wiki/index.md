@@ -1,3 +1,7 @@
+## [2026-10-10] audit | Saved 5aa suite and startup boundaries
+
+[Saved 5aa suite](investigations/fullsuite-5aa-2026-10-10.md):15,001PASS/3unchangedFAIL/19skips, including TOC and AutoHide additions; later party changes excluded. [Startup SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#stock-versus-full-addon-startup--observed-results-not-native-parity) separates clean stock runs from105 full-addon errors and unassigned earlier budget consumption. Parent OPEN.
+
 ## [2026-10-10] audit | Auto-hide child and prefork negative acceptance
 
 [Bounded proof](investigations/integrated-source-and-factory-proof-2026-10-09.md#auto-hide-child-rectangle-and-manual-prefork-rejection--bounded-acceptance): AutoHide actual3/3 uses genuine driver/treatment/control, no vendor change; manual unsupported prefork capability reaches its exact target error with valid Retail profile. [c6bc suite](investigations/fullsuite-c6bc-2026-10-10.md) remains14,999PASS/3unchangedFAIL/19skips; current-source5aa suite queued async. No native/all-profile or parent completion.

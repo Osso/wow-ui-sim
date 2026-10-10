@@ -1,3 +1,7 @@
+## [2026-10-10] audit | Saved 5aa suite and startup scope retained
+
+[Saved suite](investigations/fullsuite-5aa-2026-10-10.md) retains15,001PASS/3unchangedFAIL/19skips and two actual added identities; party production changes excluded. [Startup SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#stock-versus-full-addon-startup--observed-results-not-native-parity) links clean stock, failing full-addon and existing-budget diagnostic evidence without native/all-profile acceptance. No reruns; parent OPEN.
+
 ## [2026-10-10] audit | Count receipt retention — bounded PASS
 
 Updated existing count spec, exact1200 proof SSOT, audit, Lua inventory and index from authoritative final receipts: actual5/5 earlier +40/40 current-default PASS, code84dcf2723/submission095081101, compile/check/fmt0. Not warning-free:10 preexisting headless project warnings + six iced deprecations. BARE21 absence only; independently located cached successor PASS atc6bc line13804, separate historical scope, not current84 acceptance. Retained small sanitized JSON/stdout/check/audit and SHA256 manifest under `data/patch-api/evidence/12.0.0-session-2026-10-05/count-green-20261010`; no binaries/source maps/vendor stderr. RED, inferred ordinary pre125/native secrecy unknown preserved; later AutoHide test963 excluded. Docs/evidence only; no builds, delegation, operations or commits; main owns commits.

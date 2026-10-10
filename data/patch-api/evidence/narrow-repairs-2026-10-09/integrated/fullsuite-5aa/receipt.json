@@ -1,0 +1,72 @@
+{
+  "verified": "2026-10-10",
+  "kind": "sanitized-saved-artifact-receipt",
+  "saved_json": {
+    "ref": "5aa6cb277eb5919e9276100c023f1c98809c7bc9",
+    "sha": "5aa6cb277eb5919e9276100c023f1c98809c7bc9",
+    "started": "2026-10-10T12:30:04-0500",
+    "steps": {
+      "integration": {
+        "exit": 100,
+        "seconds": 1039.1
+      },
+      "prefork": {
+        "exit": 1,
+        "seconds": 165.5
+      },
+      "lib": {
+        "exit": 0,
+        "seconds": 204.1
+      }
+    },
+    "failures": {
+      "integration": [
+        "method_diff_coverage::diff_methods_extra_snapshot_matches_current_metatable_surface",
+        "method_diff_coverage::diff_methods_missing_snapshot_matches_current_metatable_surface"
+      ],
+      "prefork": [
+        "blizzard_garrison_ui_loads::blizzard_garrison_ui_loads_explicitly_via_load_addon_without_errors"
+      ],
+      "lib": []
+    },
+    "finished": "2026-10-10T12:53:33-0500",
+    "new_failures": {
+      "integration": [],
+      "prefork": [
+        "blizzard_garrison_ui_loads::blizzard_garrison_ui_loads_explicitly_via_load_addon_without_errors"
+      ],
+      "lib": []
+    }
+  },
+  "overall": "FAIL",
+  "counts_source": "independent report; saved JSON contains exits/failures, not counts",
+  "counts": {
+    "integration": {
+      "pass": 10680,
+      "fail": 2,
+      "skip": 19
+    },
+    "prefork_including_auxiliary": {
+      "pass": 2324,
+      "fail": 1
+    },
+    "library": {
+      "pass": 1997,
+      "fail": 0
+    },
+    "total": {
+      "pass": 15001,
+      "fail": 3,
+      "executed": 15004
+    }
+  },
+  "comparison": {
+    "source": "c6bc87c120e43199dadeb299691511b03a81408a",
+    "added_pass": 2,
+    "removed": 0,
+    "shared_status_changes": 0,
+    "unchanged_fail": 3,
+    "skipped_identity_equality": "unproven"
+  },
+  "interpretation": "Garrison new_failures label is preserved verbatim but is not new versus c6bc. Prior Minimap substitution and current-party 439/40 coverage excluded."
+}
