@@ -77,6 +77,83 @@ fn legacy_currency_list_size_returns_one_numeric_backing_count() {
 }
 
 #[test]
+fn currency_list_info_preserves_watched_flags_in_namespace_and_legacy_tuple() {
+    let env = WowLuaEnv::new().expect("Lua environment should initialize");
+
+    let (
+        watched_name,
+        legacy_watched_name,
+        watched,
+        legacy_watched,
+        unwatched_name,
+        legacy_unwatched_name,
+        unwatched,
+        legacy_unwatched,
+    ): (
+        String,
+        String,
+        String,
+        String,
+        String,
+        String,
+        String,
+        String,
+    ) = env
+        .eval(
+            r#"
+            local watched = C_CurrencyInfo.GetCurrencyListInfo(2)
+            local unwatched = C_CurrencyInfo.GetCurrencyListInfo(3)
+            local legacyWatchedName, _, _, _, legacyWatched = GetCurrencyListInfo(2)
+            local legacyUnwatchedName, _, _, _, legacyUnwatched = GetCurrencyListInfo(3)
+            return watched.name, legacyWatchedName,
+                tostring(watched.isShowInBackpack), tostring(legacyWatched),
+                unwatched.name, legacyUnwatchedName,
+                tostring(unwatched.isShowInBackpack), tostring(legacyUnwatched)
+            "#,
+        )
+        .expect("currency list info should expose watched flags at both API boundaries");
+
+    assert_eq!(watched_name, "Valorstones");
+    assert_eq!(legacy_watched_name, "Valorstones");
+    assert_eq!(unwatched_name, "Weathered Harbinger Crest");
+    assert_eq!(legacy_unwatched_name, "Weathered Harbinger Crest");
+    assert_eq!(
+        (watched.as_str(), legacy_watched.as_str()),
+        ("true", "true"),
+        "Valorstones must be watched in namespace isShowInBackpack and legacy position 5"
+    );
+    assert_eq!(
+        (unwatched.as_str(), legacy_unwatched.as_str()),
+        ("false", "false"),
+        "Weathered Harbinger Crest must not be watched at either API boundary"
+    );
+}
+
+#[test]
+fn currency_list_info_preserves_max_quantity_in_namespace_and_legacy_tuple() {
+    let env = WowLuaEnv::new().expect("Lua environment should initialize");
+
+    let (name, legacy_name, max_quantity, legacy_max_quantity): (String, String, String, String) =
+        env.eval(
+            r#"
+            local info = C_CurrencyInfo.GetCurrencyListInfo(3)
+            local legacyName, _, _, _, _, _, _, legacyMaxQuantity = GetCurrencyListInfo(3)
+            return info.name, legacyName,
+                tostring(info.maxQuantity), tostring(legacyMaxQuantity)
+            "#,
+        )
+        .expect("currency list info should expose maximum quantity at both API boundaries");
+
+    assert_eq!(name, "Weathered Harbinger Crest");
+    assert_eq!(legacy_name, "Weathered Harbinger Crest");
+    assert_eq!(
+        (max_quantity.as_str(), legacy_max_quantity.as_str()),
+        ("90", "90"),
+        "crest cap must be 90 in namespace maxQuantity and legacy position 8"
+    );
+}
+
+#[test]
 fn legacy_currency_list_size_wraps_c_currency_info() {
     let env = WowLuaEnv::new().expect("Lua environment should initialize");
 
