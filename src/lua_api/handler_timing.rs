@@ -9,6 +9,10 @@ use rilua::vm::state::LuaState;
 const BUILTIN_ADDON_NAME: &str = "__BuiltIn";
 const HANDLER_TIMING_ENV: &str = "WOW_SIM_LOG_HANDLER_TIMINGS";
 
+pub(crate) fn is_enabled() -> bool {
+    min_duration_ms().is_some()
+}
+
 pub(crate) fn should_log(duration: Duration) -> bool {
     let Some(min_duration_ms) = min_duration_ms() else {
         return false;

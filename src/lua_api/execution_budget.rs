@@ -2,7 +2,7 @@
 //! Quotas and reset periods are host policy, not native elapsed-time parity.
 
 use super::methods::borrow_state;
-use rilua::vm::state::LuaState;
+use rilua::vm::state::{InstructionBudget, LuaState};
 use rilua::{LuaResult, Val};
 
 const DEFAULT_INSTRUCTION_LIMIT: u64 = 10_000_000;
@@ -44,11 +44,60 @@ pub(crate) fn call_frame_handler(
                 .map_err(rilua::runtime_error)
         };
         let result = match owner {
-            Some(owner) => with_addon_budget(state, &owner, call),
+            Some(owner) => with_addon_budget(state, &owner, |state| {
+                let logging = super::handler_timing::is_enabled();
+                let before = logging.then(|| state.instruction_budget(&owner)).flatten();
+                let result = call(state);
+                if logging && result.is_err() {
+                    eprintln!(
+                        "{}",
+                        format_budget_error(
+                            &owner,
+                            frame_id,
+                            event,
+                            before,
+                            state.instruction_budget(&owner),
+                        )
+                    );
+                }
+                result
+            }),
             None => call(state),
         };
         result.map_err(|error| error.to_string())
     })
+}
+
+fn format_budget_error(
+    owner: &str,
+    frame_id: u64,
+    event: Option<&str>,
+    before: Option<InstructionBudget>,
+    after: Option<InstructionBudget>,
+) -> String {
+    let mut line = format!("[handler-budget-error] owner={owner:?} frame=#{frame_id}");
+    if let Some(event) = event {
+        line.push_str(&format!(" event={event:?}"));
+    }
+    let limit = match before {
+        Some(InstructionBudget {
+            limit: Some(limit), ..
+        }) => limit.to_string(),
+        Some(InstructionBudget { limit: None, .. }) => "none".to_owned(),
+        None => "unavailable".to_owned(),
+    };
+    let usage = |budget: Option<InstructionBudget>| {
+        budget.map_or_else(
+            || "unavailable".to_owned(),
+            |budget| budget.used.to_string(),
+        )
+    };
+    line.push_str(&format!(
+        " limit={limit} used_before={} used_after={}",
+        usage(before),
+        usage(after),
+    ));
+    line
 }
 
 fn frame_addon_owner(state: &LuaState, frame_id: u64) -> LuaResult<Option<String>> {
@@ -78,4 +127,64 @@ pub(crate) fn reset_frame_budgets(state: &mut LuaState) -> LuaResult<()> {
         }
     }
     Ok(())
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn budget_error_log_distinguishes_exhausted_entry_from_callback_consumption() {
+        let before = InstructionBudget {
+            limit: Some(10),
+            used: 10,
+        };
+        let after = before;
+        assert_eq!(
+            format_budget_error(
+                "DynamicAnchors",
+                42,
+                Some("PLAYER_LOGIN"),
+                Some(before),
+                Some(after)
+            ),
+            "[handler-budget-error] owner=\"DynamicAnchors\" frame=#42 event=\"PLAYER_LOGIN\" limit=10 used_before=10 used_after=10"
+        );
+        assert_eq!(
+            format_budget_error(
+                "DynamicAnchors",
+                42,
+                Some("PLAYER_LOGIN"),
+                Some(InstructionBudget { used: 3, ..before }),
+                Some(after)
+            ),
+            "[handler-budget-error] owner=\"DynamicAnchors\" frame=#42 event=\"PLAYER_LOGIN\" limit=10 used_before=3 used_after=10"
+        );
+    }
+
+    #[test]
+    fn budget_error_log_labels_unavailable_snapshots_without_inventing_counts() {
+        assert_eq!(
+            format_budget_error("Example", 7, None, None, None),
+            "[handler-budget-error] owner=\"Example\" frame=#7 limit=unavailable used_before=unavailable used_after=unavailable"
+        );
+    }
+
+    #[test]
+    fn budget_error_log_reports_unlimited_meter_and_escapes_event_metadata() {
+        let budget = InstructionBudget {
+            limit: None,
+            used: 23,
+        };
+        assert_eq!(
+            format_budget_error(
+                "Example",
+                7,
+                Some("CUSTOM\nEVENT"),
+                Some(budget),
+                Some(budget)
+            ),
+            "[handler-budget-error] owner=\"Example\" frame=#7 event=\"CUSTOM\\nEVENT\" limit=none used_before=23 used_after=23"
+        );
+    }
 }
