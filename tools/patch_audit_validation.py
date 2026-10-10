@@ -8,6 +8,10 @@ import subprocess
 # and after blobs from 7ff3dc540^ and that audit endpoint, respectively.
 # No row-level or whitespace drift beyond those committed bytes is accepted.
 LATER_AUDIT_REPLACEMENTS = {
+    'tests/data/patch_8_0_1_sweep_known_gaps.json': (
+        'bad5e7e4e77494f4e506684fb63b97d5b0d8ff9dd8279f714fbf00ad32bac55a',
+        '618f9a1c663f16ce1df4613ff953e69b322e2cd04fe2868ad099189ab669e1b1',
+    ),
     'data/patch-api/sources/9.2.5-page-coverage.json': (
         'd022e992c195f5756620fc4534430cb4f2bf372cbb7b9ee3d9075f17ad5524df',
         '64896487daebe0b4710259a861edd9fe17a2114a8822e00e4363f0aa4c284e97',

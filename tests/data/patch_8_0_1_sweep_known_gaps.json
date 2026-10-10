@@ -13,7 +13,6 @@
   "wt-global-api-C_ChatInfo.SendAddonMessage-16",
   "wt-global-api-C_ChatInfo.SendAddonMessageLogged-17",
   "wt-global-api-C_Map.GetMapArtHelpTextPosition-24",
-  "wt-global-api-C_Map.GetMapDisplayInfo-30",
   "wt-global-api-C_Map.GetMapHighlightInfoAtPosition-33",
   "wt-global-api-C_Map.GetMapLevels-36"
 ]
