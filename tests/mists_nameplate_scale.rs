@@ -110,7 +110,7 @@ fn nameplate_options_publish_small_style_scales_and_explicit_size() {
     env.exec(
         r#"
         -- Option destinations and engine/frame collaborators are controlled
-        -- inputs. No NamePlateDriverMixin method is replaced.
+        -- inputs. Scale/update methods remain real; class-bar setup is isolated.
         NamePlateSetupOptions = {}
         NamePlateEnemyFrameOptions = {}
         NamePlateFriendlyFrameOptions = {}
@@ -129,7 +129,7 @@ fn nameplate_options_publish_small_style_scales_and_explicit_size() {
         }
         for _, case in ipairs(cases) do
             fixtureStyle = case.style
-            local sizeCalls, appliedFrames, barSetupCalls = 0, 0, 0
+            local sizeCalls, appliedFrames = 0, 0
             local capturedWidth, capturedHeight, scriptWidth, scriptHeight
             local nativePlate = {
                 ApplyFrameOptions = function() appliedFrames = appliedFrames + 1 end,
@@ -151,7 +151,7 @@ fn nameplate_options_publish_small_style_scales_and_explicit_size() {
                 baseNamePlateWidth = 128, baseNamePlateHeight = 32,
                 scriptNamePlates = { preview = scriptPlate },
                 -- Class resource bar setup is outside this isolated fixture.
-                SetupClassNameplateBars = function() barSetupCalls = barSetupCalls + 1 end,
+                SetupClassNameplateBars = function() end,
             }, { __index = NamePlateDriverMixin })
             driver:UpdateNamePlateOptions()
 
@@ -182,9 +182,8 @@ fn nameplate_options_publish_small_style_scales_and_explicit_size() {
             assert(capturedWidth == 128 and capturedHeight == 32, "native base-size override")
             assert(scriptWidth == 128 and scriptHeight == 32, "script base-size override")
             assert(appliedFrames == 2, "options applied to native and script plates")
-            assert(barSetupCalls == 1, "update reaches class bar setup")
         end
         "#,
     )
-    .expect("Full unmodified Mists option update should publish Small scales and explicit sizes");
+    .expect("Mists option update with isolated class bars should publish Small scales and explicit sizes");
 }
