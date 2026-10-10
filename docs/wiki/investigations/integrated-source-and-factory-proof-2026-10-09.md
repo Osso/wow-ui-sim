@@ -651,9 +651,17 @@ Saved 2026-10-10 evidence SSOT: `/home/osso/.local/state/wow-ui-sim/verification
 | `sync-execution` | Exit0; **2,974 extracted / 0 already present** | Successful sync at this epoch, not clean startup or native parity |
 | `startup-only` | Exit1; JSON **40 records / 44 occurrences**: **20 primary records / 22 occurrences**, plus matching wrappers | Startup remains failing; wrappers are not another20 independent primary errors |
 | `native-currency-flow` | Success marker: **19 populated rows / 3 checked rows**; namespace/legacy watched=true and cap=90 | Original strict source script retains every assertion before the marker; overall exit1 with the same startup errors, not a clean command PASS |
-| Tests | **Not run**, resource-blocked at load **27.15** | No cache-guard fixture GREEN or test-suite credit |
+| Tests at timed-build checkpoint | **Not run**, resource-blocked at load **27.15** | Historical blocked attempt retained; later focused proof below is a separate epoch |
 
 The strict currency script checks row identities, boolean watched fields, numeric caps, namespace/legacy size agreement, CharacterFrame/TokenFrame/currency-tab visibility, actual populated buttons and watched checkmarks, and backpack population before printing its marker. This establishes the bounded simulator flow through the native-source UI script, not fresh native-client parity or broad CurrencyGREEN. Earlier field RED, NotFound,129-extraction-failure,2-cache-preparation-failure, original18-error and source-seven-test receipts remain historical and separately scoped. No baseline modified or recaptured; **no clean baseline claim; parent OPEN**. Saved receipts inspected only: no new builds/tests, sync, delegation or operations performed for this wiki update.
+
+### Later focused cache-guard libtest proof — independently audited
+
+Saved evidence SSOT: `/home/osso/.local/state/wow-ui-sim/verification/mists-cache-guard-tests/20261010T065645Z`. Submission revision **ae42b23d11a56568ffc0b445afee951d11d0646d**; Mists library test compilation **154s, exit0, source_equal=true**. Selected `blizzard_ui_sync::profile_cache::tests` execution **6 PASS / 0 FAIL, exit0**, with **1,835 filtered out**. Cases cover current MicroMenu Lua callback/TOC contracts, rejection of missing max-level helper and legacy experience-bar scripts, required-manifest entries, and binary text-cache rejection. This supersedes only the focused fixture-pending status, not full-suite/profile or startup acceptance. Earlier resource-blocked attempts remain retained.
+
+Captured-source equality has the submission's exclusions: external path dependencies, uncaptured data, inherited environment, runtime cache/addon inputs and untracked index. The refreshed **uncommitted Mists manifest/listfile dependency** noted above remains; commit identity alone is not the complete proof input. **Independent verifier988 audit PASS** at `/home/osso/.local/state/wow-ui-sim/verification/cache-tests-epoch-independent/report.md`: sealed hashes match, all3,849 captured source hashes unchanged, six focused tests pass; six dependency-manifest warnings and no test-source warnings. Acceptance remains limited to this boundary.
+
+Existing native-flow-independent report remains separately scoped: **13 assertions, 19 populated rows, 3 checked rows, overall exit1**, with the same startup failures. Neither focused tests nor the bounded flow establish clean startup, native parity or full-scope completion; parent **OPEN**. Only this existing investigation amended; no source/data/baseline changes, staging, commit, push, delegation or new execution.
 
 ## Saved three-owner, timing, full-suite and Mists evidence — bounded 881
 
