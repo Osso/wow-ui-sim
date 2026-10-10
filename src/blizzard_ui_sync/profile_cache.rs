@@ -53,14 +53,13 @@ pub(super) const MISTS_REQUIRED_PROFILE_CACHE_ENTRIES: &[&str] = &[
     "Blizzard_ChatFrameBase/Classic/FriendFrameButtonMixin.lua",
     "Blizzard_ChatFrameBase/Classic/SlashCommandsOverrides.lua",
     "Blizzard_ChatFrameBase/Shared/ChatFrameUtil.lua",
-    "Blizzard_FrameXMLUtil/Blizzard_FrameXMLUtil_Classic.toc",
+    "Blizzard_FrameXMLUtil/Blizzard_FrameXMLUtil.toc",
     "Blizzard_FrameXMLUtil/Classic/ArenaUtil.lua",
     "Blizzard_FrameXMLUtil/Classic/AuraUtil.lua",
     "Blizzard_FrameXMLUtil/Classic/Cooldown.xml",
     "Blizzard_FrameXMLUtil/Classic/MapUtil.lua",
     "Blizzard_FrameXMLUtil/Classic/QuestUtils.lua",
     "Blizzard_FrameXMLUtil/Classic/RaidWarning.lua",
-    "Blizzard_FrameXMLUtil/Classic/TransmogUtil.lua",
     "Blizzard_Fonts_Shared/Classic/FontStyles.xml",
     "Blizzard_Fonts_Shared/Classic/Fonts.xml",
     "Blizzard_Fonts_Shared/Classic/GameFontStyles.xml",
@@ -212,7 +211,7 @@ pub(super) const MISTS_REQUIRED_PROFILE_CACHE_ENTRIES: &[&str] = &[
     "Blizzard_SharedXML/Wrath/SoundKitConstants.lua",
     "Blizzard_FrameXMLBase/Classic/Constants.lua",
     "Blizzard_FrameXMLBase/Classic/FrameLocks.lua",
-    "Blizzard_FrameXMLBase/Classic/IconDataProvider.lua",
+    "Blizzard_FrameXMLBase/IconDataProvider.lua",
     "Blizzard_FrameXMLBase/TBC/Localization.lua",
     "Blizzard_FrameXMLBase/Wrath/Constants.lua",
     "Blizzard_FrameXML/Classic/AlertFrameSystems.lua",
@@ -240,8 +239,7 @@ pub(super) const MISTS_REQUIRED_PROFILE_CACHE_ENTRIES: &[&str] = &[
     "Blizzard_UIPanelTemplates/Classic/AutoCastTemplates.xml",
     "Blizzard_UIPanelTemplates/Classic/UIPanelTemplates.lua",
     "Blizzard_UIPanelTemplates/Classic/UIPanelTemplates.xml",
-    "Blizzard_UIPanels_Game/Blizzard_UIPanels_Game_Mists.toc",
-    "Blizzard_UIPanels_Game/Classic/CastingBarFrame.lua",
+    "Blizzard_UIPanels_Game/Blizzard_UIPanels_Game_Classic.toc",
     "Blizzard_UIPanels_Game/Classic/CastingBarFrame.xml",
     "Blizzard_UIPanels_Game/Shared/CastingBarFrame.lua",
     "Blizzard_WorldMap/Blizzard_WorldMapTooltip.xml",
@@ -283,7 +281,6 @@ pub(super) const MISTS_REQUIRED_PROFILE_CACHE_ENTRIES: &[&str] = &[
     "Blizzard_UnitFrame/Mists/PriestBar.xml",
     "Blizzard_UnitFrame/Mists/ShardBar.lua",
     "Blizzard_UnitFrame/Mists/ShardBar.xml",
-    "Blizzard_UnitFrame/Mists/TotemFrame.lua",
     "Blizzard_UnitFrame/Wrath/AlternatePowerBar.lua",
 ];
 
@@ -407,10 +404,11 @@ fn mists_core_cache_entry_is_usable(entry: &str, path: &Path) -> Option<bool> {
         "Blizzard_ChatFrame/Classic/ChatConfigFrame.xml" => mists_chat_config_is_usable(path),
         "Blizzard_MicroMenu/Blizzard_MicroMenu_Classic.toc" => file_contains(
             path,
-            r#"Cata\MainMenuBarMicroButtons.xml [AllowLoadGameType mists]"#,
+            r#"[Game]\MicroMenuContainerOverrides.lua [AllowLoadGameType wrath, cata, mists]"#,
         ),
         "Blizzard_MicroMenu/Shared/MicroMenuContainer.lua" => {
-            !file_contains(path, "PostAddButtonCallback")
+            file_contains(path, "function MicroMenuMixin:AddButton(button)")
+                && file_contains(path, "button:PostAddButtonCallback();")
         }
         "Blizzard_Fonts_Shared/Classic/GameFonts.xml" => {
             file_contains(path, r#"FontFamily name="PriceFont""#)
@@ -480,7 +478,11 @@ fn file_contains(path: &Path, needle: &str) -> bool {
 #[cfg(test)]
 mod tests {
     use super::cache_entry_is_usable;
-    #[cfg(any(feature = "profile-retail", feature = "client-ptr"))]
+    #[cfg(any(
+        feature = "profile-retail",
+        feature = "client-ptr",
+        feature = "client-mists"
+    ))]
     use super::required_profile_cache_entries;
     use std::path::PathBuf;
     use std::time::{SystemTime, UNIX_EPOCH};
@@ -583,6 +585,125 @@ mod tests {
         );
 
         std::fs::remove_dir_all(root).expect("remove temp root");
+    }
+
+    #[test]
+    #[cfg(feature = "client-mists")]
+    fn mists_required_entries_match_current_source_manifest() {
+        let manifest: std::collections::HashSet<_> =
+            include_str!("../../data/blizzard-ui-files/mists.txt")
+                .lines()
+                .filter(|line| !line.is_empty() && !line.starts_with('#'))
+                .collect();
+        let required = required_profile_cache_entries();
+        for entry in required {
+            assert!(
+                manifest.contains(entry),
+                "required entry absent from source: {entry}"
+            );
+            assert!(super::sync_entry_belongs_to_active_profile(entry));
+        }
+        assert_eq!(
+            required.len(),
+            required
+                .iter()
+                .collect::<std::collections::HashSet<_>>()
+                .len(),
+            "consolidated files must be required only once"
+        );
+        for entry in [
+            "Blizzard_FrameXMLUtil/Blizzard_FrameXMLUtil.toc",
+            "Blizzard_FrameXMLBase/IconDataProvider.lua",
+            "Blizzard_UIPanels_Game/Blizzard_UIPanels_Game_Classic.toc",
+            "Blizzard_UIPanels_Game/Shared/CastingBarFrame.lua",
+            "Blizzard_UnitFrame/Classic/TotemFrame.lua",
+        ] {
+            assert!(
+                required.contains(&entry),
+                "current source entry not required: {entry}"
+            );
+        }
+    }
+
+    #[test]
+    #[cfg(feature = "client-mists")]
+    fn mists_micro_menu_toc_accepts_current_game_override_and_rejects_stale_files() {
+        // Complete concrete TOC fixtures for the 5.5.4.70268 include contract.
+        let current = r#"## Title: MicroMenuCacheFixture
+## AllowLoadGameType: classic
+## AllowLoad: Game
+Shared\MicroMenuUtil.lua
+Classic\MainMenuBarMicroButtons.lua
+Classic\MainMenuBarMicroButtons.xml
+Shared\MicroMenuContainer.lua
+Vanilla\MicroMenuContainerOverrides.lua [AllowLoadGameType vanilla, tbc]
+[Game]\MicroMenuContainerOverrides.lua [AllowLoadGameType wrath, cata, mists]
+Classic\MicroMenuContainer.xml
+"#;
+        let stale = r#"## Title: MicroMenuCacheFixture
+## AllowLoadGameType: classic
+## AllowLoad: Game
+Shared\MicroMenuContainer.lua
+Cata\MainMenuBarMicroButtons.xml [AllowLoadGameType mists]
+"#;
+        let entry = "Blizzard_MicroMenu/Blizzard_MicroMenu_Classic.toc";
+        let root = unique_temp_dir("mists-micro-menu-toc");
+        std::fs::create_dir_all(&root).expect("create cache root");
+        let path = root.join("MicroMenu.toc");
+        for (contents, expected) in [(current, true), (stale, false), ("", false)] {
+            std::fs::write(&path, contents).expect("write TOC fixture");
+            assert_eq!(cache_entry_is_usable(entry, &path), expected);
+        }
+        std::fs::write(&path, [0xff, 0xfe]).expect("write binary TOC fixture");
+        assert!(!cache_entry_is_usable(entry, &path));
+        std::fs::remove_file(&path).expect("remove TOC fixture");
+        assert!(!cache_entry_is_usable(entry, &path));
+        std::fs::remove_dir_all(root).expect("remove cache root");
+    }
+
+    #[test]
+    #[cfg(feature = "client-mists")]
+    fn mists_micro_menu_lua_requires_current_button_callback_contract() {
+        // Complete Lua fixtures, not isolated marker strings. Current source's
+        // AddButton calls PostAddButtonCallback; the old negative guard rejects it.
+        let current = r#"MicroMenuMixin = {};
+function MicroMenuMixin:AddButton(button)
+    self.numButtons = (self.numButtons or 0) + 1;
+    button.layoutIndex = self.numButtons;
+    button:SetParent(self);
+    button:PostAddButtonCallback();
+    self:MarkDirty();
+end
+"#;
+        let stale = r#"MicroMenuMixin = {};
+function MicroMenuMixin:AddButton(button)
+    button:SetParent(self);
+    self:MarkDirty();
+end
+"#;
+        let wrong_method = r#"MicroMenuMixin = {};
+function MicroMenuMixin:InitializeButton(button)
+    button:PostAddButtonCallback();
+end
+"#;
+        let entry = "Blizzard_MicroMenu/Shared/MicroMenuContainer.lua";
+        let root = unique_temp_dir("mists-micro-menu-lua");
+        std::fs::create_dir_all(&root).expect("create cache root");
+        let path = root.join("MicroMenuContainer.lua");
+        for (contents, expected) in [
+            (current, true),
+            (stale, false),
+            (wrong_method, false),
+            ("", false),
+        ] {
+            std::fs::write(&path, contents).expect("write Lua fixture");
+            assert_eq!(cache_entry_is_usable(entry, &path), expected);
+        }
+        std::fs::write(&path, [0xff, 0xfe]).expect("write binary Lua fixture");
+        assert!(!cache_entry_is_usable(entry, &path));
+        std::fs::remove_file(&path).expect("remove Lua fixture");
+        assert!(!cache_entry_is_usable(entry, &path));
+        std::fs::remove_dir_all(root).expect("remove cache root");
     }
 
     #[test]
