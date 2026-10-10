@@ -225,16 +225,17 @@ fn execute_budgeted_addon_file(
             .then(|| state.instruction_budget(ctx.name))
             .flatten();
         let result = exec_addon_func(state, func, ctx);
-        if logging && result.is_err() {
-            eprintln!(
-                "{}",
-                crate::lua_api::execution_budget::format_file_budget_error(
-                    ctx.name,
-                    chunk_name,
-                    before,
-                    state.instruction_budget(ctx.name),
-                )
-            );
+        if logging {
+            let after = state.instruction_budget(ctx.name);
+            let line = match &result {
+                Ok(_) => crate::lua_api::execution_budget::format_file_budget_success(
+                    ctx.name, chunk_name, before, after,
+                ),
+                Err(_) => crate::lua_api::execution_budget::format_file_budget_error(
+                    ctx.name, chunk_name, before, after,
+                ),
+            };
+            eprintln!("{line}");
         }
         result.map_err(|error| rilua::runtime_error(error.to_string()))
     })

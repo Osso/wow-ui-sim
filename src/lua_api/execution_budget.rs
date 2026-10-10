@@ -95,6 +95,18 @@ pub(crate) fn format_file_budget_error(
     )
 }
 
+pub(crate) fn format_file_budget_success(
+    owner: &str,
+    chunk_name: &str,
+    before: Option<InstructionBudget>,
+    after: Option<InstructionBudget>,
+) -> String {
+    format!(
+        "[file-budget-success] owner={owner:?} file={chunk_name:?}{}",
+        format_budget_counters(before, after),
+    )
+}
+
 fn format_budget_counters(
     before: Option<InstructionBudget>,
     after: Option<InstructionBudget>,
@@ -151,6 +163,50 @@ pub(crate) fn reset_frame_budgets(state: &mut LuaState) -> LuaResult<()> {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn file_budget_success_log_reports_cumulative_counters_and_escaped_identity() {
+        let before = InstructionBudget {
+            limit: Some(1_000),
+            used: 27,
+        };
+        let after = InstructionBudget { used: 53, ..before };
+        assert_eq!(
+            format_file_budget_success(
+                "Example\"\n",
+                "@Interface/AddOns/Example/Group\"Tools\n.lua",
+                Some(before),
+                Some(after),
+            ),
+            "[file-budget-success] owner=\"Example\\\"\\n\" file=\"@Interface/AddOns/Example/Group\\\"Tools\\n.lua\" limit=1000 used_before=27 used_after=53"
+        );
+    }
+
+    #[test]
+    fn file_budget_success_log_labels_missing_snapshots() {
+        assert_eq!(
+            format_file_budget_success("Example", "@Interface/AddOns/Example/Main.lua", None, None),
+            "[file-budget-success] owner=\"Example\" file=\"@Interface/AddOns/Example/Main.lua\" limit=unavailable used_before=unavailable used_after=unavailable"
+        );
+    }
+
+    #[test]
+    fn file_budget_success_log_reports_unlimited_meter() {
+        let before = InstructionBudget {
+            limit: None,
+            used: 23,
+        };
+        let after = InstructionBudget { used: 41, ..before };
+        assert_eq!(
+            format_file_budget_success(
+                "Example",
+                "@Interface/AddOns/Example/Main.lua",
+                Some(before),
+                Some(after),
+            ),
+            "[file-budget-success] owner=\"Example\" file=\"@Interface/AddOns/Example/Main.lua\" limit=none used_before=23 used_after=41"
+        );
+    }
 
     #[test]
     fn file_budget_error_log_distinguishes_exhausted_entry_from_file_consumption() {
