@@ -30,6 +30,7 @@ fn fixture_aura(spell_id: i32, instance_id: i32, helpful: bool, expiration: f64)
 
 fn fixture_party(expiration: f64) -> PartyMember {
     PartyMember {
+        map_position: None,
         name: "Duration fixture member".into(),
         name_cached: true,
         connected: true,

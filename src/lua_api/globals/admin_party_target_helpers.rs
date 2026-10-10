@@ -58,6 +58,7 @@ pub(super) fn make_target_info(
 /// party beyond the seeded roster.
 pub(super) fn default_party_member() -> PartyMember {
     PartyMember {
+        map_position: None,
         name: "Unknown".to_string(),
         name_cached: true,
         connected: true,

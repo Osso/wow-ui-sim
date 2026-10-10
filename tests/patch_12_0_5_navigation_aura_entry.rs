@@ -246,6 +246,7 @@ fn aura_entry_admin_global_and_loader_dispatch_use_the_same_transition() {
 fn aura_entry_rekeys_party_helpful_and_harmful_stores_without_changing_members() {
     let env = aura_env();
     env.state().borrow_mut().party_members = vec![wow_ui_sim::lua_api::state::PartyMember {
+        map_position: None,
         name: "Thrynn".into(),
         name_cached: true,
         connected: true,

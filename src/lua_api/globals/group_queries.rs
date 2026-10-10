@@ -330,6 +330,7 @@ fn group_has_offline_member(state: &mut LuaState) -> LuaResult<u32> {
 
 fn player_as_raid_member(st: &crate::lua_api::state::SimState) -> PartyMember {
     PartyMember {
+        map_position: None,
         name: st.player.name.clone(),
         // INFERRED: the local player's name is already cached.
         name_cached: true,

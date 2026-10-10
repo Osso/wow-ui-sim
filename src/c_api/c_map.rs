@@ -53,6 +53,13 @@ use std::collections::HashSet;
 type LuaTableRef = GcRef<Table>;
 type RustLuaFn = rilua::vm::closure::RustFn;
 
+/// Explicit normalized position associated with one UI map.
+#[derive(Clone, Copy, Debug)]
+pub struct UnitMapPosition {
+    pub ui_map_id: i32,
+    pub position: (f64, f64),
+}
+
 const MAP_ART_LAYER_HASH_FIELDS: usize = 7;
 
 const C_MAP_METHODS: &[(&str, RustLuaFn)] = &[

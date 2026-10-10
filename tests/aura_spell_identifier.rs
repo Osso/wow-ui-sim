@@ -29,6 +29,7 @@ fn fixture_aura(spell_id: i32, instance_id: i32, helpful: bool) -> AuraInfo {
 
 fn fixture_party() -> PartyMember {
     PartyMember {
+        map_position: None,
         name: "Aura lookup fixture member".into(),
         name_cached: true,
         connected: true,

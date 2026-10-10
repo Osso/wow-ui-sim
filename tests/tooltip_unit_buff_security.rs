@@ -43,6 +43,7 @@ fn aura(id: i32, name: &str, helpful: bool, player_source: bool) -> AuraInfo {
 
 fn member(name: &str, buffs: Vec<AuraInfo>) -> PartyMember {
     PartyMember {
+        map_position: None,
         name: name.into(),
         name_cached: true,
         connected: true,

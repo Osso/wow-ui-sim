@@ -49,6 +49,8 @@ pub struct TargetInfo {
 /// A simulated party member.
 #[derive(Clone)]
 pub struct PartyMember {
+    /// Explicit normalized map input; absent until supplied by simulator state.
+    pub map_position: Option<crate::c_api::c_map::UnitMapPosition>,
     pub name: String,
     /// Whether the member's name is available in the name cache.
     /// INFERRED initialization: existing named fixtures start cached (true).
@@ -502,6 +504,7 @@ pub fn default_party() -> Vec<PartyMember> {
             )| {
                 let (buffs, debuffs) = default_party_auras(i);
                 PartyMember {
+                    map_position: None,
                     name: name.to_string(),
                     name_cached: true,
                     connected: true,

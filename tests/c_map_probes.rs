@@ -194,6 +194,67 @@ fn get_player_map_position_reflects_sim_state_mutation() {
     assert_eq!(y, 0.75);
 }
 
+#[cfg(feature = "client-retail")]
+#[test]
+fn get_player_map_position_uses_independent_active_party_member_input() {
+    use wow_ui_sim::c_api::c_map::UnitMapPosition;
+
+    let env = env();
+    env.exec("A_Admin.SetPartySize(2)").unwrap();
+    {
+        let mut state = env.state().borrow_mut();
+        assert!(state.party_group_active);
+        assert!(state.maps.contains_key(&2248));
+        state.player_map_position = (0.4, 0.6);
+        state.party_members[0].map_position = Some(UnitMapPosition {
+            ui_map_id: 2248,
+            position: (0.2, 0.8),
+        });
+        state.party_members[1].map_position = Some(UnitMapPosition {
+            ui_map_id: 2248,
+            position: (0.7, 0.3),
+        });
+    }
+
+    env.exec(
+        r#"
+        local party1 = C_Map.GetPlayerMapPosition(2248, "party1")
+        assert(party1 ~= nil, "active party1 position must be present")
+        assert(party1.x == 0.2 and party1.y == 0.8)
+        local x, y = party1:GetXY()
+        assert(x == 0.2 and y == 0.8)
+        local party2 = C_Map.GetPlayerMapPosition(2248, "party2")
+        assert(party2 ~= nil, "active party2 position must be present")
+        local x2, y2 = party2:GetXY()
+        assert(party2.x == 0.7 and party2.y == 0.3)
+        assert(x2 == 0.7 and y2 == 0.3)
+        local player = C_Map.GetPlayerMapPosition(2248, "player")
+        local px, py = player:GetXY()
+        assert(px == 0.4 and py == 0.6)
+        "#,
+    )
+    .unwrap();
+
+    env.state().borrow_mut().party_members[0].map_position = Some(UnitMapPosition {
+        ui_map_id: 2248,
+        position: (0.1, 0.9),
+    });
+    env.exec(
+        r#"
+        local party1 = C_Map.GetPlayerMapPosition(2248, "party1")
+        local x, y = party1:GetXY()
+        assert(x == 0.1 and y == 0.9)
+        local party2 = C_Map.GetPlayerMapPosition(2248, "party2")
+        local x2, y2 = party2:GetXY()
+        assert(x2 == 0.7 and y2 == 0.3)
+        local player = C_Map.GetPlayerMapPosition(2248, "player")
+        local px, py = player:GetXY()
+        assert(px == 0.4 and py == 0.6)
+        "#,
+    )
+    .unwrap();
+}
+
 #[test]
 fn get_player_map_position_returns_nil_for_unknown_map() {
     let env = env();

@@ -30,6 +30,7 @@ fn set_group(env: &WowLuaEnv, members: usize) {
     sim.party_group_active = members > 0;
     sim.party_members = (0..members)
         .map(|index| PartyMember {
+            map_position: None,
             name: format!("MessageMember{index}"),
             name_cached: true,
             connected: true,
