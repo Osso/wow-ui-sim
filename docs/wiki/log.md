@@ -1,3 +1,7 @@
+## [2026-10-10] audit | Garrison recorder53 PASS; native capture pending
+
+Updated [existing proof SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#garrison-manual-capture-readiness--bounded-recorder-pass-native-rows-unknown) and index after `9e7af4de0`: preserved RED10 failures/one exclusion PASS; independent recorder53/53 PASS. Runner source-seal repair rebuild produced the same executed binary; no fixture rerun, VM source-to-rlib provenance still unestablished. Native rows/acceptance UNKNOWN; catalog blocker, three saved failures and original Mists assertions unchanged. Docs only; no native execution claim, model repair, builds, operations, delegation or commit.
+
 ## [2026-10-10] audit | Exact-ref public CI reading unblocked
 
 Updated [existing CI SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#exact-ref-public-ci--2026-10-10-compile-only-success) and index from main's independently observed public exact-ref receipts. Retained two byte-identical sanitized JSON files in the narrowly scoped linked evidence directory; no raw API/private/vendor records. Run38041575805 at3d9f1c247 succeeded with runtime steps skipped; no suite/profile/native readiness credit. bc58 three failures, original Mists cast RED and startup self-anchor unresolved. Docs/evidence only; no builds/checks/operations/delegation/commit/push, parent OPEN.
