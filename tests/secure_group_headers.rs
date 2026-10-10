@@ -239,6 +239,100 @@ fn assert_auto_hide_target_shown(env: &WowLuaEnv, expected: bool, stage: &str) {
     assert_eq!(shown, expected, "{stage}: target shown");
 }
 
+fn prepare_auto_hide_child_and_caller(env: &WowLuaEnv) {
+    env.exec(r#"
+        assert(type(AddToAutoHide) == 'function', 'child registration unavailable')
+        AutoHideRuntimeChild = CreateFrame('Frame', nil, UIParent)
+        AutoHideRuntimeChild:SetScale(1)
+        AutoHideRuntimeChild:SetSize(80, 60)
+        AutoHideRuntimeChild:SetPoint('BOTTOMLEFT', UIParent, 'BOTTOMLEFT', 500, 200)
+        AutoHideRuntimeChild:Show()
+        assert(AutoHideRuntimeChild:IsShown() and AutoHideRuntimeChild:IsVisible(), 'child not visible')
+
+        local function addChild()
+            assert(not issecure(), 'child registration requires the fixture addon caller')
+            AddToAutoHide(AutoHideRuntimeTarget, AutoHideRuntimeChild)
+        end
+        debug.setobjecttaint(addChild, 'AutoHideRuntimeFixture')
+        AutoHideRuntimeAddChild = addChild
+    "#).expect("prepare child rectangle and tainted normal caller");
+    assert_auto_hide_no_lua_errors(env, "child and caller preparation");
+}
+
+fn observe_auto_hide_child_cursor_points(env: &WowLuaEnv) -> [(f32, f32); 3] {
+    let (target_x, target_y, child_x, child_y, outside_x, outside_y):
+        (f64, f64, f64, f64, f64, f64) = env.eval(r#"
+        local function rectangle(frame)
+            local left, bottom, width, height = frame:GetRect()
+            local scale = frame:GetEffectiveScale()
+            assert(left and bottom and width > 0 and height > 0 and scale > 0, 'geometry unavailable')
+            return left * scale, (left + width) * scale, bottom * scale, (bottom + height) * scale
+        end
+        local tl, tr, tb, tt = rectangle(AutoHideRuntimeTarget)
+        local cl, cr, cb, ct = rectangle(AutoHideRuntimeChild)
+        assert(tr < cl or cr < tl or tt < cb or ct < tb, 'target and child rectangles must be disjoint')
+        return (tl + tr) / 2, (tb + tt) / 2,
+            (cl + cr) / 2, (cb + ct) / 2,
+            math.max(tr, cr) + 32, math.max(tt, ct) + 32
+    "#).expect("observe disjoint resolved target and child rectangles");
+    let points = [
+        (target_x as f32, target_y as f32),
+        (child_x as f32, child_y as f32),
+        (outside_x as f32, outside_y as f32),
+    ];
+    assert!(points.iter().all(|(x, y)| x.is_finite() && y.is_finite()));
+    assert_auto_hide_no_lua_errors(env, "resolved child geometry");
+    points
+}
+
+fn assert_auto_hide_child_boundary(env: &WowLuaEnv, expected: bool, stage: &str) {
+    assert_auto_hide_target_shown(env, expected, stage);
+    assert_auto_hide_no_lua_errors(env, stage);
+}
+
+#[test]
+fn cached_auto_hide_child_rectangle_extends_hover_set() {
+    test_timeout! {
+        for include_child in [true, false] {
+            let case = if include_child { "treatment" } else { "control" };
+            let env = load_auto_hide_real_dependencies();
+            prepare_auto_hide_real_frame_and_caller(&env);
+            prepare_auto_hide_child_and_caller(&env);
+            let [target, child, exterior] = observe_auto_hide_child_cursor_points(&env);
+
+            register_auto_hide_from_addon(&env);
+            if include_child {
+                // The cached driver accepts children only before the first update.
+                env.exec("AutoHideRuntimeAddChild()")
+                    .expect("tainted normal caller adds child immediately after registration");
+            }
+            assert_auto_hide_child_boundary(&env, true, &format!("{case}: registration"));
+
+            for (cursor, elapsed, shown, stage) in [
+                (target, 0.05, true, "target dwell"),
+                (child, 0.05, true, "child-only entry"),
+                (child, 0.75, true, "child-only dwell before TTL"),
+                (child, 0.30, include_child, "child-only dwell past TTL"),
+            ] {
+                tick_auto_hide_at(&env, cursor, elapsed);
+                assert_auto_hide_child_boundary(&env, shown, &format!("{case}: {stage}"));
+            }
+
+            if include_child {
+                // Leaving both rectangles starts a fresh TTL in the treatment.
+                for (elapsed, shown, stage) in [
+                    (0.05, true, "outside both entry"),
+                    (0.75, true, "outside both before TTL"),
+                    (0.30, false, "outside both past TTL"),
+                ] {
+                    tick_auto_hide_at(&env, exterior, elapsed);
+                    assert_auto_hide_child_boundary(&env, shown, stage);
+                }
+            }
+        }
+    }
+}
+
 #[test]
 fn cached_auto_hide_enter_leave_expires_after_duration() {
     test_timeout! {
