@@ -9,6 +9,8 @@ The event system connects WoW-style game events (PLAYER_LOGIN, ADDON_LOADED, etc
 
 Script handlers are stored by binding in the Lua registry: `__scripts_pre`, `__scripts`, and `__scripts_post`. Named-event frame delivery runs precall, normal, then postcall bindings through a shared unit-filtered dispatcher. Synchronous `FireEvent` and `A_Admin.FireEvent` preserve global callbacks first, then each frame's independently filtered callbacks, then that frame's script bindings. `A_Admin.AddBuff`/`RemoveBuff` use the named-event dispatcher directly. A frame-script unit mismatch must not suppress its separately registered callback. See the [synchronous dispatch contract](specs/synchronous-event-dispatch.md).
 
+Frame callback budget-error metadata and its proof boundary are documented in the [owner-budget SSOT](wiki/investigations/integrated-source-and-factory-proof-2026-10-09.md#owner-budget-error-metadata--source-audit-only-goal-open). Top-level Lua file errors are a separate [loader diagnostic path](addon-loading-pipeline.md#top-level-file-error-diagnostics), not event-dispatch evidence.
+
 ## Event Types and the Event Queue
 
 **File:** `src/event/mod.rs:1-71`

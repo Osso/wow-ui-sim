@@ -6,6 +6,10 @@
 
 [Audit](investigations/patch-1-4-0-api-audit.md): frozen316397/3052898,2670bytes;34 literal rows/27 inventory/25 signatures/25 prose/6 headers/3 links/2 navigation/28 templates/32UNPROVEN contracts. Not a redirect; optional-unit/default/native limits explicit. Own SOURCE RED7/portableRED3 and default-byte/error captures retained; SOURCE GREEN7/7 at5c4bde798 with197 omission/count controls. Static single-argument AcceptBattlefieldPort candidate reported; no runtime/model/native credit. Original44-seal archive/copy SOURCE7/portable3 atedbe7d9a1 retained; separate category-reset correction RED3/GREEN3 at8bfc74ee9 with55 controls and sealed replay extension. Queued1.5.0 separately unapplied, main owns integration/independent acceptance.
 
+## [2026-10-09] audit | File-error diagnostics and count fixture
+
+[File-error evidence/status](investigations/integrated-source-and-factory-proof-2026-10-09.md#startup-file-budget-diagnostic--preserved-red-source-change-runtime-pending) and [count-fixture delta](investigations/integrated-source-and-factory-proof-2026-10-09.md#retailmists-count-fixture-delta--source-only-runtime-pending): source-only updates; runtime proof pending. Diagnostic contract lives in the [loading pipeline](../addon-loading-pipeline.md#top-level-file-error-diagnostics).
+
 ## [2026-10-09] investigation | Patch 1.1.0 literal SOURCE audit
 
 [Audit](investigations/patch-1-1-0-api-audit.md): frozen271516/5913060,701bytes;17physical/15nonblank rows,11API additions/11unspecified signatures,12links/13UNPROVEN contracts,2headers/1template/1attribution. Own RED7/portableRED3 retained; SOURCE GREEN7/7 at515c84bd6 with66omission controls; default generator0 entries/extractor106bytes unchanged. Current CVar default/override lifecycle candidate grounded but unexecuted; ranged-attack level approximation rejected. Queue1.3/1.4/1.5 separately unapplied; navigation1.2 has no registry pin. Copied SOURCE7/portable3/default-byte/error replay at5b3aec985 retains both serialized tamper rejections/exact restoration;50original seals/51-member64,435byte archive unchanged, later receipts separate. Main owns integration/acceptance.

@@ -1,3 +1,7 @@
+## [2026-10-09] audit | File-error diagnostics and count fixture
+
+Updated [pipeline diagnostic SSOT](../addon-loading-pipeline.md#top-level-file-error-diagnostics), [preserved RED/source status](investigations/integrated-source-and-factory-proof-2026-10-09.md#startup-file-budget-diagnostic--preserved-red-source-change-runtime-pending), and [count-fixture delta](investigations/integrated-source-and-factory-proof-2026-10-09.md#retailmists-count-fixture-delta--source-only-runtime-pending) for `fc824cb92`, `3a4f54da4`/`29307f243`. Runtime pending; compiler-running status is handoff only. Docs-only inspection, no builds/tests/delegation/operations or raw/private copies.
+
 ## [2026-10-09] audit | Required table hint and standalone Maw epoch — runtime pending
 
 [Proof SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#required-table-hint-and-standalone-maw-retirement--runtime-proof-pending): `693bac033` cached Retail/Forever required array hint, missing-hint rejection and four preserved empty/mutable cases; independent source/format report only. `ddc07fbd6` separate standalone Maw retirement selector; independent source report pending. Both runtime proofs PENDING existing queued compiler; older failures/native-four-case epoch unchanged. Docs only, no API/spec scope change, execution gates, operations, delegation or raw/private retention.

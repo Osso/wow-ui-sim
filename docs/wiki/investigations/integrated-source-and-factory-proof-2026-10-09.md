@@ -465,6 +465,18 @@ Owner is the actual frame owner addon folder, excluding built-in/Blizzard addons
 
 The diff leaves quota, reset, exemption and timer behavior unchanged and returns the original error result: no error suppression. Added formatter tests were source-inspected only. **Compiled proof and startup stderr capture remain pending; source goal OPEN.** No test, build, check, runtime, network or operations executed for this docs audit.
 
+## Startup file-budget diagnostic — preserved RED, source change, runtime pending
+
+Local audit SSOT: `/home/osso/.local/state/wow-ui-sim/verification/startup-file-budget-red/20261010T012410Z/audit/report.md`. Preserved capture completed October 10, 2026 01:24:23 UTC (October 9 US local), exit0, but **clean startup FAIL**. First emitted Lua failure is stderr:164, owner EnhanceQoL, `Settings/GroupTools.lua`, instruction-budget exhaustion during top-level file loading. Both streams contain zero file-budget tags despite `WOW_SIM_LOG_HANDLER_TIMINGS=1000`; absence of handler tags gives no callback-outcome proof. Six initial budget emissions plus89 suppression-accounted occurrences are reporter accounting, not reconstructed executions. The executable provenance points to `1fac15bd0`, not the later diagnostic change.
+
+Inspected `fc824cb92` adds the loader record described in the [pipeline diagnostic SSOT](../../addon-loading-pipeline.md#top-level-file-error-diagnostics). Source inspection is not compiled/current-startup acceptance. Per user handoff, queued compiler epoch `20261010T013017Z` is **NOW RUNNING**, source edits frozen; this docs audit did not inspect or operate that job. New diagnostic/runtime proof remains **PENDING**, parent OPEN. Only the audit report was read; no raw streams or private copies retained here.
+
+## Retail/Mists count fixture delta — SOURCE only, runtime pending
+
+Local source-report SSOT: `/home/osso/.local/state/wow-ui-sim/verification/count-fixture-source/report.md`. `3a4f54da4` removes only `count` from the earlier-profile extension-absence loop; `29307f243` fixes its Rust raw-string delimiter with Lua `select('#', ...)`. Cached native Retail/Mists documentation supports three returns for the dense fixture: total3, array2, maximum2. The test selects `retail-12-1-0` or `client-mists`; PTR/Forever retain their separate one-return override path. Other-profile nil baseline is preserved, not native absence proof; the unconditional base writer suggests a source conflict there if no later removal intervenes.
+
+Report verdict is corrected fixture **SOURCE/format PASS only**; initial commit's parser/format failure is retained. No production change, compiled-profile, executed-test, fresh native-client or general compatibility credit. Runtime proof remains **PENDING** in the compiler epoch above; no builds/tests repeated by this docs audit.
+
 ## Retained private VNC frame metadata — bounded completed evidence
 
 Existing local `/home/osso/.local/state/wow-ui-sim/verification/private-vnc-frame-proof/report.md` and `proof.json` retained unchanged. [Hash/privacy manifest](../../../data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/private-vnc-frame-metadata-manifest.json) seals both files without copying pixels or private content. Receipt timestamp `2026-10-10T00:41:53.051363+00:00` is UTC (2026-10-09 US local), not a new capture in this audit.

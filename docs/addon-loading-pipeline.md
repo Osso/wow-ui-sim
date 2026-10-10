@@ -119,6 +119,16 @@ Each addon file receives `...` = `(addonName, addonTable)`. Addons unpack as: `l
 
 ---
 
+### Top-level file-error diagnostics
+
+`fc824cb92` adds `[file-budget-error]` on stderr for failed tainted top-level Lua execution under `retail-12-0-5`, when the existing `WOW_SIM_LOG_HANDLER_TIMINGS` flag is present. Its duration threshold does not gate this error-only record. Successful execution, untainted files, compilation failures and setup errors before the protected call are outside this path.
+
+The record contains debug-escaped `owner` and `file` (chunk name), plus public instruction-budget snapshots: `limit`, cumulative `used_before` and `used_after`. Missing snapshots print `unavailable`; unlimited limit prints `none`. No Lua arguments, payloads or error text are included. `wow_chunk_name` normalizes paths containing `AddOns/` to `@Interface/AddOns/...`; its other-path fallback can retain an absolute path. Output is not generally absolute-path-free.
+
+Counters distinguish already-exhausted entry from instructions consumed by the call; they are not elapsed time, Rust work, native quota-period parity or proof of the error cause. **Non-quota execution errors can also emit this tag.** Quota/reset/exemption/timer policy and loader error propagation are unchanged. Frame callbacks use the separate `[handler-budget-error]` path; see the [bounded source/evidence status](wiki/investigations/integrated-source-and-factory-proof-2026-10-09.md#startup-file-budget-diagnostic--preserved-red-source-change-runtime-pending).
+
+---
+
 ## XML File Loading & Processing
 
 ### XML Parsing

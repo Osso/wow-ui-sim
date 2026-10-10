@@ -1,5 +1,7 @@
 # OnUpdate Handlers and render_dirty
 
+For timing-flag error diagnostics, see [callback metadata](wiki/investigations/integrated-source-and-factory-proof-2026-10-09.md#owner-budget-error-metadata--source-audit-only-goal-open) and the separate [top-level file path](addon-loading-pipeline.md#top-level-file-error-diagnostics). Instruction counters are not handler-duration measurements.
+
 ## Problem
 
 `handle_process_timers()` in `update.rs:363-369` blanket-discards `render_dirty` after firing OnUpdate handlers:
