@@ -4,25 +4,19 @@ Refactor of frame method dispatch to fix runtime pollution (wrong-type methods e
 
 ## Current State (Fixed)
 
-The runtime pollution bug is fixed. `frame.Method` lookup goes through the shared FrameRef metatable wrapper in `src/lua_api/frame/metatable.rs`, which:
+Verified by source inspection on 2026-10-09: `env_init/frames.rs` registers method groups on a base frame metatable, then builds a shallow shared `__index` without `__*` keys. `methods/frame_metatable.rs` clones that index into cached per-widget metatables, excluding explicitly named scroll/message methods and `SetStatusBarAtlas` for StatusBar. WorldFrame uses the base metatable. No `is_method_allowed` registry or positive per-type allowlist exists.
 
-1. Checks per-frame mixin overrides and custom fields (fenv table — Lua fields first)
-2. Rejects shared Rust methods not allowed for the frame's widget type
-3. Falls through to mlua's registered method table only for allowed methods
+`methods.rs::attach_frame_metatable` attaches the selected metatable to each Lua frame table. Its filtered `__index` therefore participates in ordinary lookup, not just introspection. Shared registration does not prove all-type dispatch. These inspected files do not support the former introspection-only filter claim; no invocation tests or native parity proof were run for this correction.
 
-Allow-list source: `src/lua_api/frame/method_registry/*.rs`. The visible `getmetatable(frame).__index` tables (used by Wowless for method enumeration) are still built from the same registry in `src/lua_api/globals_legacy.rs`.
+The reported historical **491-row delta across 31 names** and the **11,985-row baseline file total** measure different scopes, not contradictory totals. The historical delta was not independently reproduced here. Neither count alone justifies snapshot replacement, a native allowlist, or a new publication contract.
 
-**Key behavioral change**: `__index` now checks the per-frame fenv table (Lua fields/mixin overrides) **before** Rust methods. This matches real WoW. Side effect: EditMode method overrides (`SetPointOverride` etc.) now take effect — see [[editmode-layout]].
+## Current Source Representation
 
-## Architectural Split
+- Shared registration/index construction: `src/lua_api/env_init/frames.rs`
+- Named per-widget exclusions/index cloning: `src/lua_api/methods/frame_metatable.rs`
+- Frame-table metatable attachment: `src/lua_api/methods.rs`
 
-- Runtime lookup: `src/lua_api/frame/metatable.rs`
-- Per-type method ownership: `src/lua_api/frame/method_registry/*.rs`
-- Per-type metatable exposure for tests/discovery: `src/lua_api/globals_legacy.rs`
-
-There is still one shared mlua UserData method table for `FrameRef` — not yet the "direct Rust dispatch" end state.
-
-## Target Architecture
+## Historical Target Architecture
 
 ```
 __index(ud, key):
@@ -34,7 +28,7 @@ __index(ud, key):
 
 Step 4 resolves methods directly from widget type + name via a `HashMap<(WidgetType, &str), mlua::Function>`. No intermediate Lua table, no shared-method fallback.
 
-## Remaining Work
+## Historical Proposed Work (Not Current Requirements)
 
 - Trim `diff_methods_extra.txt` (types still exposing too many methods in discovery)
 - Add diff-driven coverage so unintentional method-surface changes fail tests
@@ -42,7 +36,10 @@ Step 4 resolves methods directly from widget type + name via a `HashMap<(WidgetT
 
 ## Sources
 
-- [method-dispatch-refactor.md](../../method-dispatch-refactor.md) — design and current state
+- [frame_metatable.rs](../../../src/lua_api/methods/frame_metatable.rs) — named exclusions and cached metatable clones
+- [frames.rs](../../../src/lua_api/env_init/frames.rs) — shared registration and method-index construction
+- [methods.rs](../../../src/lua_api/methods.rs) — attaches the selected metatable to frame tables
+- [method-dispatch-refactor.md](../../method-dispatch-refactor.md) — historical design
 
 ## See Also
 

@@ -3152,3 +3152,7 @@ The three retail 12.0.0 changed globals `LE_GAME_ERR_HOUSING_RESULT_MISSING_EXPA
 ## [2026-10-09] investigation | TOC locale/BOM source repairs, GREEN pending
 
 [SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#toc-locale-selection-and-bom-metadata--later-runtime-green-pending) owns source status, verified native-byte root and pending proof; [sanitized startup aggregate](../local/startup-hidden-warning-roots-current.md) links back. Docs only; parent OPEN.
+
+## [2026-10-09] docs | Frame metatable source correction
+
+[Current source representation](investigations/method-dispatch-refactor.md#current-state-fixed): shared registration, attached filtered `__index` clones, no `is_method_allowed` registry or established all-type dispatch. Historical491-row/31-name delta differs from11,985-row baseline total; docs-only source inspection, no runtime/native proof.

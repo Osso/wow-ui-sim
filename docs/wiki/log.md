@@ -1294,3 +1294,7 @@ Updated [SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#
 ## [2026-10-09] confirmation | Completed TOC runtime audit retained
 
 [Proof SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#completed-86f272-toc-runtime-audit--parent-open) links three byte-identical sanitized audit outputs; historical proof and remaining startup failures stay epoch-bound. [Later source-only changes](investigations/integrated-source-and-factory-proof-2026-10-09.md#later-mists-oracle-and-finite-budget-probe--source-only-runtime-pending) receive no runtime acceptance. No raw/private streams, builds, pushes or delegation.
+
+## [2026-10-09] docs | Frame metatable source correction
+
+[Current source representation](investigations/method-dispatch-refactor.md#current-state-fixed): shared registration, attached filtered `__index` clones, no `is_method_allowed` registry or established all-type dispatch. Historical491-row/31-name delta differs from11,985-row baseline total; docs-only source inspection, no runtime/native proof.

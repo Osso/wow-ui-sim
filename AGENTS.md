@@ -155,7 +155,7 @@ The image is optimized for headless test commands (`run-tests`, `self-test`, `lu
 
 ### Method/Property Lookup on UserData
 
-All frame methods (`Hide`, `Show`, `IsVisible`, etc.) are registered once on `FrameRef` via the shared rilua method/metatable path, so runtime dispatch resolves them for ALL widget types regardless of `WidgetType`. The per-type method registry (`is_method_allowed`) only gates `getmetatable()` results, not actual method calls. Verified by `test_message_frame_has_global_methods` in `src/loader/tests/mod.rs`. If runtime errors report global methods as nil, the problem is the Lua value not being a `FrameRef` (e.g., overwritten by a table), not a missing method registration.
+`env_init/frames.rs` registers method groups on one base frame metatable and clones its method entries into a shared `__index`, excluding `__*` keys. `methods/frame_metatable.rs` caches per-widget metatable clones whose `__index` omits named scroll/message methods and `SetStatusBarAtlas` for StatusBar; WorldFrame uses the base metatable. `methods.rs::attach_frame_metatable` attaches the selected metatable to the Lua frame table, so the filtered index participates in ordinary method lookup as well as `getmetatable(frame).__index` enumeration. There is no `is_method_allowed` registry. Shared registration alone does not establish that every method dispatches on every widget type; inspect the attached index and instance fields when diagnosing a nil method.
 
 ### UserData vs Table: rawset/rawget
 
