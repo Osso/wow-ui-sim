@@ -127,6 +127,80 @@ fn get_map_display_info_absence_and_removal_return_zero_values_sim_input_policy(
     assert_map_display_bool(&env, 84, true);
 }
 
+#[cfg(feature = "retail-12-1-0")]
+fn seed_map_display_secret_env() -> WowLuaEnv {
+    use rilua::LuaApiMut;
+    use rilua::table_security::wrap_host_secret_number;
+
+    let env = env();
+    seed_map_display_inputs(&env);
+    {
+        let loader = env.loader_env();
+        let mut lua = loader.rilua_mut();
+        rilua::table_security::register_table_security(&mut lua).expect("actual VM security helpers");
+        let secret = wrap_host_secret_number(lua.state_mut(), 84.0);
+        lua.state_mut().push(secret);
+        let inserted = lua.set_global_val("MapDisplaySecret84", secret);
+        lua.state_mut().pop();
+        inserted.expect("root authentic host VM secret map ID");
+    }
+    env
+}
+
+#[cfg(feature = "retail-12-1-0")]
+#[test]
+fn get_map_display_info_untainted_secret_returns_one_supplied_bool() {
+    let env = seed_map_display_secret_env();
+    env.exec(
+        r#"
+        assert(issecure(), 'untainted caller')
+        assert(issecretvalue(MapDisplaySecret84), 'authentic host VM secret')
+        local function capture(...)
+            assert(select('#', ...) == 1, 'exactly one result')
+            local value = ...
+            assert(type(value) == 'boolean' and value == true, 'supplied hideIcons')
+        end
+        capture(C_Map.GetMapDisplayInfo(MapDisplaySecret84))
+        assert(issecretvalue(MapDisplaySecret84), 'wrapper stays secret')
+        assert(issecure(), 'untainted caller preserved')
+        "#,
+    )
+    .expect("AllowedWhenUntainted accepts authentic secret map ID");
+}
+
+#[cfg(feature = "retail-12-1-0")]
+#[test]
+fn get_map_display_info_tainted_caller_accepts_ordinary_and_rejects_secret() {
+    let env = seed_map_display_secret_env();
+    env.exec(
+        r#"
+        assert(issecure(), 'secure parent')
+        local parent_taint = debug.getstacktaint()
+        local function addon()
+            assert(debug.getstacktaint() == 'MapDisplayFixture', 'authentic addon taint')
+            local function capture(...)
+                assert(select('#', ...) == 1, 'ordinary ID returns exactly one result')
+                local value = ...
+                assert(type(value) == 'boolean' and value == true, 'supplied hideIcons')
+            end
+            capture(C_Map.GetMapDisplayInfo(84))
+            assert(debug.getstacktaint() == 'MapDisplayFixture', 'ordinary query preserves taint')
+            assert(issecretvalue(MapDisplaySecret84), 'authentic host VM secret')
+            local ok = pcall(C_Map.GetMapDisplayInfo, MapDisplaySecret84)
+            assert(not ok, 'tainted secret query must reject')
+            assert(debug.getstacktaint() == 'MapDisplayFixture', 'rejection preserves taint')
+            assert(issecretvalue(MapDisplaySecret84), 'wrapper stays secret')
+        end
+        debug.setobjecttaint(addon, 'MapDisplayFixture')
+        addon()
+        assert(debug.getstacktaint() == parent_taint, 'parent taint restored')
+        assert(issecure(), 'secure parent restored')
+        assert(issecretvalue(MapDisplaySecret84), 'wrapper remains secret in parent')
+        "#,
+    )
+    .expect("addon permits ordinary map ID but rejects authentic secret map ID");
+}
+
 #[test]
 fn get_map_art_id_returns_seeded_art_id() {
     let env = env();
