@@ -203,7 +203,7 @@ fn execute_compiled_lua_file(
     crate::lua_api::loader_env::apply_loading_scoped_fenv_state(state, &func)
         .map_err(|e| report_lua_load_error(state, e))?;
     let result = if ctx.taint {
-        execute_budgeted_addon_file(state, func, ctx)
+        execute_budgeted_addon_file(state, func, ctx, chunk_name)
     } else {
         crate::loader::stack_taint::with_secure_stack(state, |state| {
             exec_addon_func(state, func, ctx)
@@ -216,10 +216,27 @@ fn execute_budgeted_addon_file(
     state: &mut LuaState,
     func: rilua::Function,
     ctx: &AddonContext,
+    _chunk_name: &str,
 ) -> Result<rilua::Val, LoadError> {
     #[cfg(feature = "retail-12-0-5")]
     return crate::lua_api::execution_budget::with_addon_budget(state, ctx.name, |state| {
-        exec_addon_func(state, func, ctx).map_err(|error| rilua::runtime_error(error.to_string()))
+        let logging = crate::lua_api::handler_timing::is_enabled();
+        let before = logging
+            .then(|| state.instruction_budget(ctx.name))
+            .flatten();
+        let result = exec_addon_func(state, func, ctx);
+        if logging && result.is_err() {
+            eprintln!(
+                "{}",
+                crate::lua_api::execution_budget::format_file_budget_error(
+                    ctx.name,
+                    _chunk_name,
+                    before,
+                    state.instruction_budget(ctx.name),
+                )
+            );
+        }
+        result.map_err(|error| rilua::runtime_error(error.to_string()))
     })
     .map_err(|error| LoadError::Lua(error.to_string()));
     #[cfg(not(feature = "retail-12-0-5"))]
@@ -357,6 +374,73 @@ mod tests {
             .expect("system time before unix epoch")
             .as_nanos();
         format!("@{prefix}_{}_{}", std::process::id(), nanos)
+    }
+
+    #[cfg(feature = "retail-12-0-5")]
+    #[test]
+    fn startup_file_budget_error_preserves_cumulative_usage_and_loader_outcome() {
+        let env = crate::lua_api::WowLuaEnv::new().unwrap();
+        let ctx = AddonContext {
+            name: "FileBudgetProbe",
+            table: env.create_addon_table().unwrap(),
+            addon_root: Path::new("Interface/AddOns/FileBudgetProbe"),
+            use_secure_env: false,
+            taint: true,
+        };
+        let mut lua = env.rilua_mut();
+        let state = lua.state_mut();
+        state.set_instruction_budget(ctx.name, Some(100));
+        let chunk = "@Interface/AddOns/FileBudgetProbe/Settings/GroupTools.lua";
+        let first = compile_from_source(state, b"return 42", chunk).unwrap();
+        assert_eq!(
+            execute_compiled_lua_file(state, first, &ctx, chunk).unwrap(),
+            rilua::Val::Num(42.0)
+        );
+        let before = state.instruction_budget(ctx.name).unwrap();
+        assert!(before.used > 0 && before.used < 100);
+
+        let failing = compile_from_source(
+            state,
+            b"local _, addon = ...; addon.entered = true; while true do end; addon.completed = true",
+            chunk,
+        ).unwrap();
+        let error = execute_compiled_lua_file(state, failing, &ctx, chunk).unwrap_err();
+        let LoadError::Lua(message) = error else {
+            panic!("file exhaustion must remain a Lua load error");
+        };
+        assert!(message.starts_with(&format!("{chunk}: ")));
+        assert!(message.contains("instruction budget exhausted for owner 'FileBudgetProbe'"));
+        let after = state.instruction_budget(ctx.name).unwrap();
+        assert_eq!(after.limit, Some(100));
+        assert_eq!(after.used, 100);
+
+        let next = compile_from_source(
+            state,
+            b"local _, addon = ...; addon.next_file = true",
+            chunk,
+        )
+        .unwrap();
+        assert!(matches!(
+            execute_compiled_lua_file(state, next, &ctx, chunk),
+            Err(LoadError::Lua(_))
+        ));
+        assert_eq!(state.instruction_budget(ctx.name).unwrap().used, after.used);
+        drop(lua);
+        assert_eq!(env.eval::<i32>("return 7").unwrap(), 7);
+        let rilua::Val::Table(table_ref) = ctx.table else {
+            panic!("expected addon private table");
+        };
+        let mut lua = env.rilua_mut();
+        let state = lua.state_mut();
+        let table = rilua::Table::from_gc_ref(table_ref);
+        for (key, expected) in [
+            ("entered", rilua::Val::Bool(true)),
+            ("completed", rilua::Val::Nil),
+            ("next_file", rilua::Val::Nil),
+        ] {
+            let key = create_string(state, key);
+            assert_eq!(table.raw_get(state, key).unwrap(), expected);
+        }
     }
 
     #[test]

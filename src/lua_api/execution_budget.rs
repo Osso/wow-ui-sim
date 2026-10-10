@@ -79,6 +79,26 @@ fn format_budget_error(
     if let Some(event) = event {
         line.push_str(&format!(" event={event:?}"));
     }
+    line.push_str(&format_budget_counters(before, after));
+    line
+}
+
+pub(crate) fn format_file_budget_error(
+    owner: &str,
+    chunk_name: &str,
+    before: Option<InstructionBudget>,
+    after: Option<InstructionBudget>,
+) -> String {
+    format!(
+        "[file-budget-error] owner={owner:?} file={chunk_name:?}{}",
+        format_budget_counters(before, after),
+    )
+}
+
+fn format_budget_counters(
+    before: Option<InstructionBudget>,
+    after: Option<InstructionBudget>,
+) -> String {
     let limit = match before {
         Some(InstructionBudget {
             limit: Some(limit), ..
@@ -92,12 +112,11 @@ fn format_budget_error(
             |budget| budget.used.to_string(),
         )
     };
-    line.push_str(&format!(
+    format!(
         " limit={limit} used_before={} used_after={}",
         usage(before),
         usage(after),
-    ));
-    line
+    )
 }
 
 fn frame_addon_owner(state: &LuaState, frame_id: u64) -> LuaResult<Option<String>> {
@@ -132,6 +151,56 @@ pub(crate) fn reset_frame_budgets(state: &mut LuaState) -> LuaResult<()> {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn file_budget_error_log_distinguishes_exhausted_entry_from_file_consumption() {
+        let exhausted = InstructionBudget {
+            limit: Some(100),
+            used: 100,
+        };
+        let chunk = "@Interface/AddOns/Example/Settings/GroupTools.lua";
+        assert_eq!(
+            format_file_budget_error("Example", chunk, Some(exhausted), Some(exhausted)),
+            "[file-budget-error] owner=\"Example\" file=\"@Interface/AddOns/Example/Settings/GroupTools.lua\" limit=100 used_before=100 used_after=100"
+        );
+        assert_eq!(
+            format_file_budget_error(
+                "Example",
+                chunk,
+                Some(InstructionBudget {
+                    used: 27,
+                    ..exhausted
+                }),
+                Some(exhausted),
+            ),
+            "[file-budget-error] owner=\"Example\" file=\"@Interface/AddOns/Example/Settings/GroupTools.lua\" limit=100 used_before=27 used_after=100"
+        );
+    }
+
+    #[test]
+    fn file_budget_error_log_labels_missing_snapshots() {
+        assert_eq!(
+            format_file_budget_error("Example", "@Interface/AddOns/Example/Main.lua", None, None),
+            "[file-budget-error] owner=\"Example\" file=\"@Interface/AddOns/Example/Main.lua\" limit=unavailable used_before=unavailable used_after=unavailable"
+        );
+    }
+
+    #[test]
+    fn file_budget_error_log_escapes_metadata_and_reports_unlimited_meter() {
+        let budget = InstructionBudget {
+            limit: None,
+            used: 23,
+        };
+        assert_eq!(
+            format_file_budget_error(
+                "Example\"\n",
+                "@Interface/AddOns/Example/Settings/Group\"Tools\n.lua",
+                Some(budget),
+                Some(budget),
+            ),
+            "[file-budget-error] owner=\"Example\\\"\\n\" file=\"@Interface/AddOns/Example/Settings/Group\\\"Tools\\n.lua\" limit=none used_before=23 used_after=23"
+        );
+    }
 
     #[test]
     fn budget_error_log_distinguishes_exhausted_entry_from_callback_consumption() {
