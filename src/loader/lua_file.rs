@@ -381,6 +381,66 @@ mod tests {
 
     #[cfg(feature = "retail-12-0-5")]
     #[test]
+    fn startup_file_budget_success_preserves_meter_continuity_returns_and_effects() {
+        let env = crate::lua_api::WowLuaEnv::new().unwrap();
+        let ctx = AddonContext {
+            name: "SuccessfulFileBudgetProbe",
+            table: env.create_addon_table().unwrap(),
+            addon_root: Path::new("Interface/AddOns/SuccessfulFileBudgetProbe"),
+            use_secure_env: false,
+            taint: true,
+        };
+        let mut lua = env.rilua_mut();
+        let state = lua.state_mut();
+        state.set_instruction_budget(ctx.name, Some(1_000));
+        let first_chunk = "@Interface/AddOns/SuccessfulFileBudgetProbe/First.lua";
+        let first = compile_from_source(
+            state,
+            b"local _, addon = ...; addon.total = 19; return addon.total",
+            first_chunk,
+        )
+        .unwrap();
+        let first_before = state.instruction_budget(ctx.name).unwrap();
+        assert_eq!(first_before.used, 0);
+        assert_eq!(
+            execute_compiled_lua_file(state, first, &ctx, first_chunk).unwrap(),
+            rilua::Val::Num(19.0)
+        );
+        let first_after = state.instruction_budget(ctx.name).unwrap();
+        assert_eq!(first_after.limit, Some(1_000));
+        assert!(first_after.used > first_before.used);
+
+        let second_chunk = "@Interface/AddOns/SuccessfulFileBudgetProbe/Second.lua";
+        let second = compile_from_source(
+            state,
+            b"local _, addon = ...; local function add() addon.total = addon.total + 23 end; add(); return addon.total",
+            second_chunk,
+        )
+        .unwrap();
+        let second_before = state.instruction_budget(ctx.name).unwrap();
+        assert_eq!(second_before.used, first_after.used);
+        assert_eq!(second_before.limit, first_after.limit);
+        assert_eq!(
+            execute_compiled_lua_file(state, second, &ctx, second_chunk).unwrap(),
+            rilua::Val::Num(42.0)
+        );
+        let second_after = state.instruction_budget(ctx.name).unwrap();
+        assert_eq!(second_after.limit, Some(1_000));
+        assert!(second_after.used > second_before.used);
+        assert!(second_after.used < 1_000);
+        let rilua::Val::Table(table_ref) = ctx.table else {
+            panic!("expected addon private table");
+        };
+        let table = rilua::Table::from_gc_ref(table_ref);
+        let total_key = create_string(state, "total");
+        assert_eq!(
+            table.raw_get(state, total_key).unwrap(),
+            rilua::Val::Num(42.0)
+        );
+    }
+
+    #[cfg(feature = "retail-12-0-5")]
+    #[test]
     fn startup_file_budget_error_preserves_cumulative_usage_and_loader_outcome() {
         let env = crate::lua_api::WowLuaEnv::new().unwrap();
         let ctx = AddonContext {
