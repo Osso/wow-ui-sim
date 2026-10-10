@@ -84,6 +84,17 @@ fn c_currency_get_list_info(state: &mut LuaState) -> LuaResult<u32> {
         "iconFileID",
         Val::Num(entry.icon_file_id as f64),
     );
+    write_currency_list_status_fields(state, info, entry);
+    table_set_static(state, info, "quality", Val::Num(entry.quality as f64));
+    state.push(info);
+    Ok(1)
+}
+
+fn write_currency_list_status_fields(
+    state: &mut LuaState,
+    info: Val,
+    entry: &currency_data::CurrencyEntry,
+) {
     table_set_static(state, info, "isHeader", Val::Bool(entry.is_header));
     table_set_static(
         state,
@@ -91,7 +102,6 @@ fn c_currency_get_list_info(state: &mut LuaState) -> LuaResult<u32> {
         "isHeaderExpanded",
         Val::Bool(entry.is_header_expanded),
     );
-    table_set_static(state, info, "quality", Val::Num(entry.quality as f64));
     table_set_static(
         state,
         info,
@@ -104,8 +114,6 @@ fn c_currency_get_list_info(state: &mut LuaState) -> LuaResult<u32> {
         "maxQuantity",
         Val::Num(entry.max_quantity as f64),
     );
-    state.push(info);
-    Ok(1)
 }
 
 fn c_currency_get_coin_texture_string(state: &mut LuaState) -> LuaResult<u32> {
