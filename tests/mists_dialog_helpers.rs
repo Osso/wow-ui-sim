@@ -33,21 +33,38 @@ fn money_frame_set_type_reproduces_missing_basic_message_dialog_helper() {
     let env = WowLuaEnv::new().expect("Lua environment should initialize");
     load_money_frame_lua(&env);
 
-    let (ok, err): (bool, String) = env
-        .eval(
-            r#"
-            rawset(_G, "SetBasicMessageDialogText", nil)
-            local ok, err = pcall(MoneyFrame_SetType, {}, "INVALID")
-            return ok, tostring(err)
-            "#,
-        )
-        .expect("MoneyFrame_SetType pcall should return a status");
+    // Exclude bootstrap/source-load observations from the fault-injection interval.
+    let previous_accesses = std::mem::take(&mut env.state().borrow_mut().nil_symbol_accesses);
+    let result = env.eval::<(bool, String)>(
+        r#"
+        rawset(_G, "SetBasicMessageDialogText", nil)
+        local handler = MoneyFrame_SetType
+        local frame = {}
+        local previousDedupe = rawget(_G, "__wow_logged_nil_symbols")
+        rawset(_G, "__wow_logged_nil_symbols", {})
+        local ok, err = pcall(handler, frame, "INVALID")
+        rawset(_G, "__wow_logged_nil_symbols", previousDedupe)
+        return ok, tostring(err)
+        "#,
+    );
+    let accesses = std::mem::replace(
+        &mut env.state().borrow_mut().nil_symbol_accesses,
+        previous_accesses,
+    );
+    let (ok, err) = result.expect("MoneyFrame_SetType pcall should return a status");
 
     assert!(!ok, "MoneyFrame_SetType should reproduce the nil global");
     assert!(
-        err.contains("SetBasicMessageDialogText"),
-        "expected SetBasicMessageDialogText nil failure, got: {err}"
+        err.contains("attempt to call a nil value"),
+        "expected a nil-call failure, got: {err}"
     );
+    assert_eq!(
+        accesses.len(),
+        1,
+        "expected only the injected global lookup during MoneyFrame_SetType: {accesses:?}"
+    );
+    assert_eq!(accesses[0].container, "_G");
+    assert_eq!(accesses[0].key, "SetBasicMessageDialogText");
 }
 
 #[test]

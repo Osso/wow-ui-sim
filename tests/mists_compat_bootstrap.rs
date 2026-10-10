@@ -367,21 +367,37 @@ fn mists_honor_frame_shared_reproduces_missing_honor_system_enabled() {
     env.exec(&source)
         .expect("HonorFrame_Shared.lua should define functions before OnLoad runs");
 
-    let (ok, err): (bool, String) = env
-        .eval(
-            r#"
-            local frame = { RegisterEvent = function() end }
-            local ok, err = pcall(HonorFrame_OnLoad, frame)
-            return ok, tostring(err)
-            "#,
-        )
-        .expect("HonorFrame_OnLoad pcall should return a status");
+    // Exclude bootstrap/source-load observations from the fault-injection interval.
+    let previous_accesses = std::mem::take(&mut env.state().borrow_mut().nil_symbol_accesses);
+    let result = env.eval::<(bool, String)>(
+        r#"
+        local frame = { RegisterEvent = function() end }
+        local handler = HonorFrame_OnLoad
+        local previousDedupe = rawget(_G, "__wow_logged_nil_symbols")
+        rawset(_G, "__wow_logged_nil_symbols", {})
+        local ok, err = pcall(handler, frame)
+        rawset(_G, "__wow_logged_nil_symbols", previousDedupe)
+        return ok, tostring(err)
+        "#,
+    );
+    let accesses = std::mem::replace(
+        &mut env.state().borrow_mut().nil_symbol_accesses,
+        previous_accesses,
+    );
+    let (ok, err) = result.expect("HonorFrame_OnLoad pcall should return a status");
 
     assert!(!ok, "HonorFrame_OnLoad should reproduce the nil global");
     assert!(
-        err.contains("HonorSystemEnabled"),
-        "expected HonorSystemEnabled nil failure, got: {err}"
+        err.contains("attempt to call a nil value"),
+        "expected a nil-call failure, got: {err}"
     );
+    assert_eq!(
+        accesses.len(),
+        1,
+        "expected only the injected global lookup during HonorFrame_OnLoad: {accesses:?}"
+    );
+    assert_eq!(accesses[0].container, "_G");
+    assert_eq!(accesses[0].key, "HonorSystemEnabled");
 }
 
 #[test]
