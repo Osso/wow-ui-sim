@@ -1,24 +1,12 @@
 #![cfg(feature = "client-mists")]
 
+mod common;
+
+use wow_ui_sim::loader::BlizzardAddonOverride;
 use wow_ui_sim::lua_api::WowLuaEnv;
 
 fn bounded_field(value: &str) -> String {
     value.chars().take(96).collect()
-}
-
-fn nil_symbol_keys(first_line: &str) -> Vec<String> {
-    ["global", "field", "method", "local", "upvalue"]
-        .into_iter()
-        .filter_map(|kind| {
-            let marker = format!("{kind} '");
-            let tail = first_line.split_once(&marker)?.1;
-            let key = tail.split_once('\'')?.0;
-            let valid_key = !key.is_empty()
-                && key.len() <= 64
-                && key.chars().all(|c| c.is_ascii_alphanumeric() || c == '_');
-            valid_key.then(|| format!("{kind}:{key}"))
-        })
-        .collect()
 }
 
 fn log_error_boundary(case: &str, error: &str) {
@@ -38,57 +26,57 @@ fn log_error_boundary(case: &str, error: &str) {
     } else {
         "other"
     };
-    let line = first_line.split(':').find(|part| {
-        !part.is_empty() && part.len() <= 10 && part.bytes().all(|c| c.is_ascii_digit())
-    });
-    let keys = if nil_access {
-        nil_symbol_keys(&first_line)
-    } else {
-        Vec::new()
-    };
-    eprintln!(
-        "[currency-diagnostic] case={case} error_class={class} lua_line={line:?} nil_symbol_keys={keys:?}"
-    );
+    eprintln!("[currency-diagnostic] case={case} error_class={class}");
 }
 
-fn read_mists_token_ui_lua() -> String {
-    std::fs::read_to_string(
-        wow_ui_sim::client_profile::blizzard_ui_addons_dir_under(std::path::Path::new(env!(
-            "CARGO_MANIFEST_DIR"
-        )))
-        .join("Blizzard_TokenUI/Blizzard_TokenUI.lua"),
+fn load_mists_token_ui_env() -> WowLuaEnv {
+    // TokenUI's bare TOC omits its implicit Game startup dependencies.
+    let (env, _) = common::blizzard_addon_harness::build_blizzard_addon_closure_env(
+        &common::panel_fixtures::blizzard_ui_dir(),
+        &["Blizzard_TokenUI"],
+        &[BlizzardAddonOverride {
+            addon: "Blizzard_TokenUI",
+            extra_roots: &["Blizzard_UIPanels_Game", "Blizzard_MoneyFrame"],
+        }],
+    );
+    env.exec(
+        r#"
+        assert(C_AddOns.IsAddOnLoaded("Blizzard_TokenUI"))
+        assert(TokenFrame:GetObjectType() == "Frame")
+        assert(TokenFrameContainer:GetObjectType() == "ScrollFrame")
+        assert(type(HybridScrollFrame_GetOffset) == "function")
+        assert(type(HybridScrollFrame_Update) == "function")
+        assert(#TokenFrameContainer.buttons > 0)
+        "#,
     )
-    .expect("Mists TokenUI Lua should be available in the profile UI source")
+    .expect("profile addon closure should create TokenUI and HybridScroll widgets");
+    env
 }
 
 #[test]
 fn token_frame_update_reproduces_missing_currency_list_size() {
-    let env = WowLuaEnv::new().expect("Lua environment should initialize");
+    let env = load_mists_token_ui_env();
 
-    env.exec(
+    // Exclude bootstrap/addon-load observations from the fault-injection interval.
+    let previous_accesses = std::mem::take(&mut env.state().borrow_mut().nil_symbol_accesses);
+    let result = env.eval::<(bool, String)>(
         r#"
+        local handler = TokenFrame_Update
+        local previousSize = rawget(_G, "GetCurrencyListSize")
+        local previousDedupe = rawget(_G, "__wow_logged_nil_symbols")
         rawset(_G, "GetCurrencyListSize", nil)
-        UIPanelWindows = {}
-        CharacterFrameTab4 = {
-            Hide = function() end,
-            Show = function() end,
-        }
-        TokenFrameContainer = {}
+        rawset(_G, "__wow_logged_nil_symbols", {})
+        local ok, err = pcall(handler)
+        rawset(_G, "GetCurrencyListSize", previousSize)
+        rawset(_G, "__wow_logged_nil_symbols", previousDedupe)
+        return ok, tostring(err)
         "#,
-    )
-    .expect("install TokenFrame reproduction fixtures");
-
-    let source = read_mists_token_ui_lua();
-    env.exec(&source)
-        .expect("Mists TokenUI Lua should define TokenFrame helpers");
-
-    let (ok, err): (bool, String) = env
-        .eval(
-            r#"
-            local ok, err = pcall(TokenFrame_Update)
-            return ok, tostring(err)
-            "#,
-        )
+    );
+    let accesses = std::mem::replace(
+        &mut env.state().borrow_mut().nil_symbol_accesses,
+        previous_accesses,
+    );
+    let (ok, err) = result
         .inspect_err(|err| log_error_boundary("missing-size-eval", &err.to_string()))
         .expect("TokenFrame_Update pcall should return a status");
 
@@ -98,9 +86,16 @@ fn token_frame_update_reproduces_missing_currency_list_size() {
     }
     assert!(!ok, "TokenFrame_Update should reproduce the nil global");
     assert!(
-        err.contains("GetCurrencyListSize"),
-        "expected GetCurrencyListSize nil failure, got: {err}"
+        err.contains("attempt to call a nil value"),
+        "expected a nil-call failure"
     );
+    assert_eq!(
+        accesses.len(),
+        1,
+        "expected only the injected global lookup"
+    );
+    assert_eq!(accesses[0].container, "_G");
+    assert_eq!(accesses[0].key, "GetCurrencyListSize");
 }
 
 #[test]
@@ -159,6 +154,10 @@ fn currency_list_info_preserves_watched_flags_in_namespace_and_legacy_tuple() {
             local unwatched = C_CurrencyInfo.GetCurrencyListInfo(3)
             local legacyWatchedName, _, _, _, legacyWatched = GetCurrencyListInfo(2)
             local legacyUnwatchedName, _, _, _, legacyUnwatched = GetCurrencyListInfo(3)
+            assert(type(watched.isShowInBackpack) == "boolean")
+            assert(type(unwatched.isShowInBackpack) == "boolean")
+            assert(type(legacyWatched) == "boolean")
+            assert(type(legacyUnwatched) == "boolean")
             return watched.name, legacyWatchedName,
                 tostring(watched.isShowInBackpack), tostring(legacyWatched),
                 unwatched.name, legacyUnwatchedName,
@@ -169,15 +168,11 @@ fn currency_list_info_preserves_watched_flags_in_namespace_and_legacy_tuple() {
         .expect("currency list info should expose watched flags at both API boundaries");
 
     eprintln!(
-        "[currency-diagnostic] case=watched namespace_names={:?}/{:?} legacy_names={:?}/{:?} namespace_watched={:?}/{:?} legacy_watched={:?}/{:?}",
+        "[currency-diagnostic] case=watched namespace_names={:?}/{:?} legacy_names={:?}/{:?}",
         bounded_field(&watched_name),
         bounded_field(&unwatched_name),
         bounded_field(&legacy_watched_name),
         bounded_field(&legacy_unwatched_name),
-        bounded_field(&watched),
-        bounded_field(&unwatched),
-        bounded_field(&legacy_watched),
-        bounded_field(&legacy_unwatched),
     );
     assert_eq!(watched_name, "Valorstones");
     assert_eq!(legacy_watched_name, "Valorstones");
@@ -204,6 +199,8 @@ fn currency_list_info_preserves_max_quantity_in_namespace_and_legacy_tuple() {
             r#"
             local info = C_CurrencyInfo.GetCurrencyListInfo(3)
             local legacyName, _, _, _, _, _, _, legacyMaxQuantity = GetCurrencyListInfo(3)
+            assert(type(info.maxQuantity) == "number")
+            assert(type(legacyMaxQuantity) == "number")
             return info.name, legacyName,
                 tostring(info.maxQuantity), tostring(legacyMaxQuantity)
             "#,
@@ -212,11 +209,9 @@ fn currency_list_info_preserves_max_quantity_in_namespace_and_legacy_tuple() {
         .expect("currency list info should expose maximum quantity at both API boundaries");
 
     eprintln!(
-        "[currency-diagnostic] case=cap namespace_name={:?} legacy_name={:?} namespace_cap={:?} legacy_cap={:?}",
+        "[currency-diagnostic] case=cap namespace_name={:?} legacy_name={:?}",
         bounded_field(&name),
         bounded_field(&legacy_name),
-        bounded_field(&max_quantity),
-        bounded_field(&legacy_max_quantity),
     );
     assert_eq!(name, "Weathered Harbinger Crest");
     assert_eq!(legacy_name, "Weathered Harbinger Crest");
@@ -229,24 +224,7 @@ fn currency_list_info_preserves_max_quantity_in_namespace_and_legacy_tuple() {
 
 #[test]
 fn legacy_currency_list_size_wraps_c_currency_info() {
-    let env = WowLuaEnv::new().expect("Lua environment should initialize");
-
-    env.exec(
-        r#"
-        UIPanelWindows = {}
-        local tab_visible = nil
-        CharacterFrameTab4 = {
-            Hide = function() tab_visible = false end,
-            Show = function() tab_visible = true end,
-        }
-        TokenFrameContainer = {}
-        "#,
-    )
-    .expect("install TokenFrame compatibility fixtures");
-
-    let source = read_mists_token_ui_lua();
-    env.exec(&source)
-        .expect("Mists TokenUI Lua should define TokenFrame helpers");
+    let env = load_mists_token_ui_env();
 
     let (legacy_size, namespaced_size, update_ok, err): (i32, i32, bool, String) = env
         .eval(
@@ -254,6 +232,17 @@ fn legacy_currency_list_size_wraps_c_currency_info() {
             local legacySize = GetCurrencyListSize()
             local namespacedSize = C_CurrencyInfo.GetCurrencyListSize()
             local ok, err = pcall(TokenFrame_Update)
+            if ok then
+                local populatedRows = 0
+                for _, button in ipairs(TokenFrameContainer.buttons) do
+                    local name = button.name:GetText()
+                    if button:IsShown() and name and name ~= "" then
+                        populatedRows = populatedRows + 1
+                    end
+                end
+                assert(populatedRows > 0, "TokenFrame should populate currency rows")
+                assert(TokenFrameContainer.totalHeight > 0)
+            end
             return legacySize, namespacedSize, ok, tostring(err)
             "#,
         )
@@ -270,6 +259,6 @@ fn legacy_currency_list_size_wraps_c_currency_info() {
     );
     assert!(
         update_ok,
-        "TokenFrame_Update should use the legacy compatibility wrapper: {err}"
+        "TokenFrame_Update should complete with the legacy compatibility wrapper"
     );
 }
