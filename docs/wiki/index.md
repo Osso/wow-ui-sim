@@ -1,8 +1,12 @@
+## [2026-10-10] audit | Completed default suite — FAIL
+
+[Current suite SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#completed-native-full-suite-bc58--fail-parent-open): bc58 has14,996PASS/3FAIL/19skips; same three failing selectors as6751, two new AutoHide passes. Exact epoch, not current-HEAD/all-profile/native acceptance. Original Mists cast still RED; separate source-timed fade probe passes.
+
 ## [2026-10-10] audit | Prefork saved Mists post-fix proof — cast-bar RED
 
 [Current contract](../specs/prefork-test-harness.md#retail-and-mists-target-eligibility) and [system status](systems/prefork-test-harness.md#retailmists-target-admission-2026-10-10-bounded-mists-proof-cast-bar-red): saved084353/source845bea6d5 compile exit0, captured-source equality, public list3; original chat pair each actual1 PASS exit0, original cast-bar actual1 FAIL exit1 after conformance passes. Captured cache paths unchanged. Earlier083406 Cargo RED and083809 conformance17/18 RED preserved. No3/3, clean-startup/native or preserved-Retail-runtime/unsupported-manual-feature fresh-compile credit; main investigates root cause. Integrated SSOT untouched.
 
-## [2026-10-10] audit | Mists GlobalColor source rows; runtime pending
+## [2026-10-10] audit | Mists GlobalColor source rows; bounded GREEN, startup FAIL
 
 [Existing proof SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#mists-globalcolor-rows--independently-checked-source-rgb-only-correction) records four actual70268 rows and independent extraction/reader checks. Literal AARRGGBB is RGB-only correction; encoded alpha0 retained, native GetRGBA/alpha parity unproven. Tests committed4cc371997; two RED cases exit101, unchanged GREEN2/2 exit0 at46dedc057. Startup still FAIL: one self-anchor plus wrapper. Matching2974-path inputs and failed baseline reconciled together; no native parity or startup acceptance. Private vendor payloads not published.
 
@@ -3197,3 +3201,7 @@ The three retail 12.0.0 changed globals `LE_GAME_ERR_HOUSING_RESULT_MISSING_EXPA
 ## [2026-10-10] audit | Mists source refresh committed; startup FAIL
 
 [Current proof SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#mists-globalcolor-rows--independently-checked-source-rgb-only-correction): `8fda45877` source-refresh inputs, cache continuity and failed baseline independently verified; color GREEN2/2. Startup retains one self-anchor plus wrapper; native RGBA unproven, Retail control resource-blocked. [Earlier incomplete sync epochs](investigations/integrated-source-and-factory-proof-2026-10-09.md#mists-source-refresh--matched-source-historical-incomplete-runtime-sync) remain historical; no clean-startup or parent acceptance.
+
+## [2026-10-10] audit | Separate Mists fade PASS; original cast RED
+
+[Proof SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#mists-separate-cast-fade-probe--pass-original-cast-red) records inspected091411 build/source-equality/exact exit0 receipts and normal0.25/0.55s fade observations. Original immediate-hidden assertion remains RED; fixture decision pending, not3/3/native parity. Earlier0854 epoch2 chat PASS, self-anchor baseline and Garrison/snapshot full-suite gaps preserved. Docs only; no code, commits, builds or delegation.

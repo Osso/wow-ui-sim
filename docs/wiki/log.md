@@ -1,3 +1,7 @@
+## [2026-10-10] audit | Completed default suite and separate fade proof
+
+[Suite SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#completed-native-full-suite-bc58--fail-parent-open) retains bc58's three unchanged failures, two new AutoHide passes and exact source/input limits. [Fade scope](investigations/integrated-source-and-factory-proof-2026-10-09.md#mists-separate-cast-fade-probe--pass-original-cast-red) is separate from original cast RED; fixture decision pending, parent OPEN.
+
 ## [2026-10-10] audit | Prefork saved post-fix Mists proof — cast-bar RED
 
 Read saved084353 artifacts at source845bea6d5; updated existing [contract](../specs/prefork-test-harness.md#retail-and-mists-target-eligibility), [system](systems/prefork-test-harness.md#retailmists-target-admission-2026-10-10-bounded-mists-proof-cast-bar-red) and index. Compile exit0/source_equal, public list3; original chat pair each actual1 PASS exit0, original cast-bar actual1 FAIL exit1 after conformance passes (`Mists startup cast bar should remain hidden`). All captured cache paths unchanged. Preserved083406 Cargo RED and083809 conformance17/18 RED. Mists listing/dispatch requirement checked only; no3/3, clean-startup/native or preserved-Retail-runtime/unsupported-manual-feature fresh-compile acceptance. Main investigates root cause. Docs only; no code, commit, builds or delegation; integrated SSOT untouched.
@@ -1361,3 +1365,7 @@ Updated existing [proof SSOT](investigations/integrated-source-and-factory-proof
 ## [2026-10-10] correction | Installed native full-suite runner
 
 [Current workflow SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#current-bounded-native-workflow-correction--2026-10-10) records independent installed/source receipt proof for `488cd43ec`; historical `aa9004` wrapper proof preserved. Six subprocess fixtures are not real-suite acceptance. Reported `bc58b43b5` unit `full-suite-1791621531` has no result/PASS; CI unverified. Existing absent admission guard and live-enforcement limits explicit. Docs only; no builds, delegation or commits.
+
+## [2026-10-10] docs | Separate Mists fade PASS; original cast RED
+
+[Proof SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#mists-separate-cast-fade-probe--pass-original-cast-red) records inspected091411 build/source-equality/exact exit0 receipts and normal0.25/0.55s fade observations. Original immediate-hidden assertion remains RED; fixture decision pending, not3/3/native parity. Earlier0854 epoch2 chat PASS, self-anchor baseline and Garrison/snapshot full-suite gaps preserved. Docs only; no code, commits, builds or delegation.
