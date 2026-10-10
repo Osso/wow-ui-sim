@@ -1,1 +1,10 @@
-[]
+[
+  {
+    "message": "Failed to create frame __Blizzard_UIPanels_Game_20279: Lua error: layer children on __Blizzard_UIPanels_Game_20279: Action[SetPoint] failed because[Cannot anchor to itself]: attempted from: Frame:SetPoint.\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: Failed to create frame __Blizzard_UIPanels_Game_20279: Lua error: layer children on __Blizzard_UIPanels_Game_20279: Action[SetPoint] failed because[Cannot anchor to itself]: attempted from: Frame:SetPoint.\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  }
+]

@@ -1,6 +1,6 @@
 ## [2026-10-10] audit | Mists GlobalColor source rows; runtime pending
 
-[Existing proof SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#mists-globalcolor-rows--independently-checked-source-rgb-only-correction) records four actual70268 rows and independent extraction/reader checks. Literal AARRGGBB is RGB-only correction; encoded alpha0 retained, native GetRGBA/alpha parity unproven. Tests committed4cc371997; two actual RED cases exit101. Mists-only producer added; GREEN/startup proof pending. Private vendor payloads not published; no PASS or clean-startup claim.
+[Existing proof SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#mists-globalcolor-rows--independently-checked-source-rgb-only-correction) records four actual70268 rows and independent extraction/reader checks. Literal AARRGGBB is RGB-only correction; encoded alpha0 retained, native GetRGBA/alpha parity unproven. Tests committed4cc371997; two RED cases exit101, unchanged GREEN2/2 exit0 at46dedc057. Startup still FAIL: one self-anchor plus wrapper. Matching2974-path inputs and failed baseline reconciled together; no native parity or startup acceptance. Private vendor payloads not published.
 
 ## [2026-10-09] audit | Settings, prefork, browser and timing boundaries
 
