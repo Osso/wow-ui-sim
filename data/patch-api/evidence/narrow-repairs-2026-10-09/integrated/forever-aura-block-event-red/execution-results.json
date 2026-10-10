@@ -1,0 +1,18 @@
+[
+  {
+    "argv": [
+      "/usr/bin/timeout",
+      "90",
+      "/home/osso/.local/state/wow-ui-sim/verification/forever-aura-block-event-red-current/20261010T190445Z/integration-sealed",
+      "wowforever_finite_constants::forever_aura_block_list_cleared_",
+      "--nocapture",
+      "--test-threads=1"
+    ],
+    "artifact_unchanged": true,
+    "exit": 101,
+    "expected_tests": 3,
+    "label": "cleared-event",
+    "reached_tests": 3,
+    "selector": "wowforever_finite_constants::forever_aura_block_list_cleared_"
+  }
+]

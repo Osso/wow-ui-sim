@@ -1,3 +1,7 @@
+## [2026-10-10] audit | Forever post-event stock — bounded PASS
+
+[Integrated SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#forever-post-event-repair-stock--bounded-normal-completion-and-distinct-cli-zero): saved192210Z/ef55 normal completion marker/exit0; distinct CLI exact `[]`/exit0, 0unique/0occurrences, different CASC mode/pool. Sanitized small receipts/report/hash manifest retained. Cached normal-artifact reuse explicit; historical19/36 and422/514 preserved, no causal attribute/pool claim or native/GUI/all-profile completion. Parent OPEN.
+
 ## [2026-10-10] audit | Profile capture/error-state evidence retained
 
 [Proof SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#ptr-and-forever-stock-captures--exact-profiles-different-outcomes) retains exact PTR and Forever source/artifact/cache/toolchain/command scopes; separate public-stateCLI proof cannot overwrite precedingdump's in-memory limitation. PTR[]PASS; Forever19/36FAIL. Private-helper729 compilerproof retained, no suppressions. Native/cache-key/GUI acceptance and original historical baselines remain unchanged.

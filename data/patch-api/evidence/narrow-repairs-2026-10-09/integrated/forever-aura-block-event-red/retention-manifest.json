@@ -1,0 +1,46 @@
+{
+  "verified": "2026-10-10",
+  "files": {
+    "submission.json": {
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/forever-aura-block-event-red-current/20261010T190445Z/submission.json",
+      "sha256": "2dfe3e802d352630c98c34b90d45b460f49e04e84246f6b31c063992b1fd1a0a",
+      "byte_identical": true
+    },
+    "compile-result.json": {
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/forever-aura-block-event-red-current/20261010T190445Z/compile-result.json",
+      "sha256": "27e344ef47ce70c39240239908b372967ffb5c3e32206cda667fc1e675196480",
+      "byte_identical": true
+    },
+    "artifact.json": {
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/forever-aura-block-event-red-current/20261010T190445Z/artifact.json",
+      "sha256": "4509083b58fbf7e872437dacbf984bae8b3d15f5332d33895e71da9be984e4ea",
+      "byte_identical": true
+    },
+    "execution-results.json": {
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/forever-aura-block-event-red-current/20261010T190445Z/execution-results.json",
+      "sha256": "9120e2940456e234989f6db6cdf99f865e53d49d027e65f408eb2634ce4a70c5",
+      "byte_identical": true
+    },
+    "outcome.json": {
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/forever-aura-block-event-red-current/20261010T190445Z/outcome.json",
+      "sha256": "35e8764aef89935f2b4b386c9bcee59883100ff53697b4aa74f8c7cc4fcb9d8d",
+      "byte_identical": true
+    },
+    "cleared-event.stdout": {
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/forever-aura-block-event-red-current/20261010T190445Z/cleared-event.stdout",
+      "sha256": "f00b4ebed07deda386042bdb2ed23969d285b07f703c0a0945313c957ee0e21c",
+      "byte_identical": true
+    },
+    "historical-blocked-report.md": {
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/forever-aura-block-event-red-current/independent-report.md",
+      "sha256": "3ef5824e6c2ce4f77dbdcfa162a22cf14980cced85310366944339c2716e9600",
+      "byte_identical": true
+    }
+  },
+  "omitted": [
+    "sealed binaries",
+    "source maps",
+    "raw compile/runtime stderr",
+    "vendor payload"
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "epoch": "20261010T192210Z",
+  "files": [
+    {
+      "file": "compile-result.json",
+      "source_sha256": "1f67c6161475250ec69698b1b6663d2d09927e8fbab3dcf0a25c9a41f4a2055d",
+      "retained_sha256": "1f67c6161475250ec69698b1b6663d2d09927e8fbab3dcf0a25c9a41f4a2055d",
+      "bytes": 63,
+      "sanitization": "byte-identical"
+    },
+    {
+      "file": "runtime-result.json",
+      "source_sha256": "13fa99ec99500ec5d8a2d2b473ebb4700fd471ea091d7d01b1d4c97c6b95f909",
+      "retained_sha256": "13fa99ec99500ec5d8a2d2b473ebb4700fd471ea091d7d01b1d4c97c6b95f909",
+      "bytes": 329,
+      "sanitization": "byte-identical"
+    },
+    {
+      "file": "lua-errors-result.json",
+      "source_sha256": "8ffbe6cdecc04f295bc4cdc00b7aa80a5ab48a856a20b2ef359dddd693e95113",
+      "retained_sha256": "e9075bb0d2224ed42421fe335ab21e4834539035df21c8cf92edbf4e278d15b6",
+      "bytes": 516,
+      "sanitization": "local verification root replaced; otherwise unchanged"
+    },
+    {
+      "file": "artifact.json",
+      "source_sha256": "6599bd5542e42027c7f1af22f2df1e8119415a1f80afe6c62f14f2ae3856eac1",
+      "retained_sha256": "e4cdd1de97eff653fa649411244e0f58605d311b1cc45aa9a7d567338698b4ad",
+      "bytes": 750,
+      "sanitization": "local verification root replaced; otherwise unchanged"
+    },
+    {
+      "file": "outcome.json",
+      "source_sha256": "b5f7a838df0d6ebe64300a393ba00e754274f2c38367626472da08333d747540",
+      "retained_sha256": "b5f7a838df0d6ebe64300a393ba00e754274f2c38367626472da08333d747540",
+      "bytes": 122,
+      "sanitization": "byte-identical"
+    },
+    {
+      "file": "lua-errors.stdout",
+      "source_sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+      "retained_sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+      "bytes": 3,
+      "sanitization": "byte-identical"
+    },
+    {
+      "file": "independent-report.md",
+      "source_sha256": "d735bfef7c7acd6a501befc3de66cd07a4013deec4ffd932a6b2bac897f2b451",
+      "retained_sha256": "d735bfef7c7acd6a501befc3de66cd07a4013deec4ffd932a6b2bac897f2b451",
+      "bytes": 8176,
+      "sanitization": "byte-identical"
+    }
+  ],
+  "excluded": "Binaries, raw startup/stderr, compiler streams, source/cache inventories, private payloads and WTF/EditMode state are not retained."
+}

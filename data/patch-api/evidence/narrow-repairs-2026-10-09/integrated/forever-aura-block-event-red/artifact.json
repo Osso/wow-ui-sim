@@ -1,0 +1,23 @@
+{
+  "features": [
+    "aura-containers",
+    "aura-instance-enumeration",
+    "aura-xml-widgets",
+    "base-spell-relationships",
+    "casc",
+    "client-wowforever",
+    "forbidden-animation-aspects",
+    "forbidden-aspects",
+    "gui",
+    "native-duration-formatting",
+    "numeric-rule-formatters",
+    "on-update-modes",
+    "player-cast-durations",
+    "rodio",
+    "sound",
+    "timed-signal-maps"
+  ],
+  "original": "/home/osso/Projects/wow/wow-ui-sim/target/debug/deps/integration-27a709ca98dc0dbb",
+  "sealed": "/home/osso/.local/state/wow-ui-sim/verification/forever-aura-block-event-red-current/20261010T190445Z/integration-sealed",
+  "sha256": "4a6e87d83ae076b89b678ca1478b9e8da8db97f507cd61b87c1d2b0ddc1362dd"
+}

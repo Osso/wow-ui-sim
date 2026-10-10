@@ -1,0 +1,18 @@
+{
+  "argv": [
+    "/usr/bin/env",
+    "-u",
+    "WOW_SIM_LOG_HANDLER_TIMINGS",
+    "/usr/bin/timeout",
+    "90",
+    "LOCAL_VERIFICATION/forever-aura-block-event-stock-green-current/20261010T192210Z/wow-sim-sealed",
+    "--no-addons",
+    "--no-saved-vars",
+    "lua-errors"
+  ],
+  "artifact_unchanged": true,
+  "exit": 0,
+  "json_record_count": 0,
+  "scope": "distinct requested Lua-error-state CLI command, not same in-memory pool as precedingdump; zero requires actual JSON/exit proof",
+  "stdout_empty": false
+}

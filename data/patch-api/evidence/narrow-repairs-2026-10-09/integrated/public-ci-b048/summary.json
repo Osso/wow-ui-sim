@@ -1,0 +1,191 @@
+{
+  "verified": "2026-10-10",
+  "run_id": 38076557621,
+  "revision": "b048251f38b2d53e33b3365590cd227d40fc07d0",
+  "status": "completed",
+  "conclusion": "success",
+  "updated_at": "2026-10-10T18:42:22Z",
+  "scope": "b048 containscode0e4; laterprivatehelper729/eventd5 excluded; successiscompileonly",
+  "jobs": [
+    {
+      "name": "cargo test (retail)",
+      "conclusion": "success",
+      "steps": [
+        {
+          "name": "Set up job",
+          "conclusion": "success"
+        },
+        {
+          "name": "Checkout",
+          "conclusion": "success"
+        },
+        {
+          "name": "Install mold",
+          "conclusion": "success"
+        },
+        {
+          "name": "Fetch Blizzard UI source (retail)",
+          "conclusion": "skipped"
+        },
+        {
+          "name": "Use CI cargo config",
+          "conclusion": "success"
+        },
+        {
+          "name": "Rust cache",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run cargo test (requires WoW install)",
+          "conclusion": "skipped"
+        },
+        {
+          "name": "Compile tests without WoW install",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Rust cache",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Checkout",
+          "conclusion": "success"
+        },
+        {
+          "name": "Complete job",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "name": "Mists release proof",
+      "conclusion": "success",
+      "steps": [
+        {
+          "name": "Set up job",
+          "conclusion": "success"
+        },
+        {
+          "name": "Checkout",
+          "conclusion": "success"
+        },
+        {
+          "name": "Install mold",
+          "conclusion": "success"
+        },
+        {
+          "name": "Fetch Blizzard UI source (mists)",
+          "conclusion": "skipped"
+        },
+        {
+          "name": "Use CI cargo config",
+          "conclusion": "success"
+        },
+        {
+          "name": "Install Linux dependencies",
+          "conclusion": "success"
+        },
+        {
+          "name": "Rust cache",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run Mists release proof",
+          "conclusion": "skipped"
+        },
+        {
+          "name": "Upload Mists release proof artifacts",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Rust cache",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Checkout",
+          "conclusion": "success"
+        },
+        {
+          "name": "Complete job",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "name": "mists build + lua-errors smoke",
+      "conclusion": "success",
+      "steps": [
+        {
+          "name": "Set up job",
+          "conclusion": "success"
+        },
+        {
+          "name": "Checkout",
+          "conclusion": "success"
+        },
+        {
+          "name": "Install mold",
+          "conclusion": "success"
+        },
+        {
+          "name": "Fetch Blizzard UI source (mists)",
+          "conclusion": "skipped"
+        },
+        {
+          "name": "Use CI cargo config",
+          "conclusion": "success"
+        },
+        {
+          "name": "Rust cache",
+          "conclusion": "success"
+        },
+        {
+          "name": "cargo build wow-sim",
+          "conclusion": "success"
+        },
+        {
+          "name": "cargo check --tests (catch profile-gated test rot)",
+          "conclusion": "success"
+        },
+        {
+          "name": "lua-errors smoke (requires WoW install)",
+          "conclusion": "skipped"
+        },
+        {
+          "name": "Diff against committed baseline",
+          "conclusion": "skipped"
+        },
+        {
+          "name": "Enforce Mists zero-error and panel parity guard",
+          "conclusion": "skipped"
+        },
+        {
+          "name": "Upload error baseline",
+          "conclusion": "success"
+        },
+        {
+          "name": "Upload Mists panel parity artifacts",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Rust cache",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Checkout",
+          "conclusion": "success"
+        },
+        {
+          "name": "Complete job",
+          "conclusion": "success"
+        }
+      ]
+    }
+  ],
+  "primary_receipt_hashes": {
+    "main-exact-runs.json": "0dd5fdabb941c6d22a2b76a9f144f22158a27e5ed4f567cda6aa51cb60624a9a",
+    "main-exact-jobs.json": "3fa0c59a00a3977c3eec5272872df3a1b21748dc40e14e1fa30e0b4f119109b2"
+  },
+  "source": "publicunauthenticatedGitHubAPI",
+  "earlier_agent_report": "historicalinprogressobservation, supersededbycompletedmainreceipt; no tokenrequired"
+}

@@ -1,0 +1,14 @@
+
+running 3 tests
+test wowforever_finite_constants::forever_aura_block_list_cleared_register_event_delivers_unit_payload ... FAILED
+test wowforever_finite_constants::forever_aura_block_list_cleared_register_unit_event_filters_target ... FAILED
+test wowforever_finite_constants::forever_aura_block_list_cleared_unknown_event_control_rejects_both_methods ... ok
+
+failures:
+
+failures:
+    wowforever_finite_constants::forever_aura_block_list_cleared_register_event_delivers_unit_payload
+    wowforever_finite_constants::forever_aura_block_list_cleared_register_unit_event_filters_target
+
+test result: FAILED. 1 passed; 2 failed; 0 ignored; 0 measured; 8331 filtered out; finished in 0.27s
+

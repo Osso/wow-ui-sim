@@ -1,0 +1,27 @@
+{
+  "argv": [
+    "/usr/bin/cargo",
+    "test",
+    "--no-run",
+    "--test",
+    "integration",
+    "--no-default-features",
+    "--features",
+    "sound,gui,casc,client-wowforever",
+    "--offline",
+    "--locked",
+    "--message-format=json",
+    "--timings",
+    "-j",
+    "12"
+  ],
+  "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+  "exclusions": [
+    "external dependencies/source-to-artifact provenance",
+    "untracked files/index",
+    "inherited environment",
+    "runtime assets outside fixture inputs"
+  ],
+  "purpose": "source-declaredForever cleared-aura event registration RED; two positives should fail atunknown event, separateunknowncontrol staysPASS",
+  "revision": "20e808b945188ce2b952f3dd81f2aa6547bc8587"
+}

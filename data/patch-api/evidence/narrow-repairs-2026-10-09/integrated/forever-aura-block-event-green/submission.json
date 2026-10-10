@@ -1,0 +1,27 @@
+{
+  "argv": [
+    "/usr/bin/cargo",
+    "test",
+    "--no-run",
+    "--test",
+    "integration",
+    "--no-default-features",
+    "--features",
+    "sound,gui,casc,client-wowforever",
+    "--offline",
+    "--locked",
+    "--message-format=json",
+    "--timings",
+    "-j",
+    "12"
+  ],
+  "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+  "exclusions": [
+    "external dependencies/source-to-artifact provenance",
+    "untracked files/index",
+    "inherited environment",
+    "runtime assets outside fixture inputs"
+  ],
+  "purpose": "Foreverfiniteevent module GREEN: unchanged3newregistration/unit/unknowncases plus15originalcontrols; no nativegeneration/parityclaim",
+  "revision": "ef55bf873ce7c9bcca3d88a3d690d447edf7a897"
+}

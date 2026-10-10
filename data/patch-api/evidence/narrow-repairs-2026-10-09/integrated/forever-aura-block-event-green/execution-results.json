@@ -1,0 +1,18 @@
+[
+  {
+    "argv": [
+      "/usr/bin/timeout",
+      "90",
+      "/home/osso/.local/state/wow-ui-sim/verification/forever-aura-block-event-green-current/20261010T191909Z/integration-sealed",
+      "wowforever_finite_constants::",
+      "--nocapture",
+      "--test-threads=1"
+    ],
+    "artifact_unchanged": true,
+    "exit": 0,
+    "expected_tests": 18,
+    "label": "finite-events",
+    "reached_tests": 18,
+    "selector": "wowforever_finite_constants::"
+  }
+]

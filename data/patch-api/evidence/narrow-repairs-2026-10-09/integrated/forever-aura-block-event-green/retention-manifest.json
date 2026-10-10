@@ -1,0 +1,61 @@
+{
+  "verified": "2026-10-10",
+  "files": {
+    "submission.json": {
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/forever-aura-block-event-green-current/20261010T191909Z/submission.json",
+      "sha256": "fa1151d09fb0a07d34eb51273d50d281652c5116cad9f564a7b9437df0155c73",
+      "byte_identical": true
+    },
+    "compile-result.json": {
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/forever-aura-block-event-green-current/20261010T191909Z/compile-result.json",
+      "sha256": "27e344ef47ce70c39240239908b372967ffb5c3e32206cda667fc1e675196480",
+      "byte_identical": true
+    },
+    "artifact.json": {
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/forever-aura-block-event-green-current/20261010T191909Z/artifact.json",
+      "sha256": "25ed2942d183eec79be0134ca68cbfc06f6be0b95be3baf01f702bce81fa8cf4",
+      "byte_identical": true
+    },
+    "execution-results.json": {
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/forever-aura-block-event-green-current/20261010T191909Z/execution-results.json",
+      "sha256": "d0bf4c082509c945155f04526b6b91ae3eb66e247baa3678799932e85c5c6d83",
+      "byte_identical": true
+    },
+    "outcome.json": {
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/forever-aura-block-event-green-current/20261010T191909Z/outcome.json",
+      "sha256": "35e8764aef89935f2b4b386c9bcee59883100ff53697b4aa74f8c7cc4fcb9d8d",
+      "byte_identical": true
+    },
+    "finite-events.stdout": {
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/forever-aura-block-event-green-current/20261010T191909Z/finite-events.stdout",
+      "sha256": "4f0fa52bb807ed2bfc73bb793bed87ae69b92b4a9c8221046c9602abfa5a8c25",
+      "byte_identical": true
+    },
+    "checks/fmt.json": {
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/forever-aura-block-event-green-current/20261010T191909Z/checks/fmt.json",
+      "sha256": "d57d12f81b6f519be65d56de2def3b95692ac19d05a70da02fa3e12a666cfe1c",
+      "byte_identical": true
+    },
+    "checks/default-check.json": {
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/forever-aura-block-event-green-current/20261010T191909Z/checks/default-check.json",
+      "sha256": "86919f2b383d97cb7698fa7f1949dbc4f2fec75f2b0c8b3d75a55ef353ec5fb8",
+      "byte_identical": true
+    },
+    "checks/forever-check.json": {
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/forever-aura-block-event-green-current/20261010T191909Z/checks/forever-check.json",
+      "sha256": "e40a1766563ba6d4f66dbca9612c7905840b3f72a9aa56a7308839d6f967ff7a",
+      "byte_identical": true
+    },
+    "independent-report.md": {
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/forever-aura-block-event-green-current/independent-report.md",
+      "sha256": "17713c7abb9d77cfa8de8c721e9fcd369de03dde9ae8e8224efef112c4624a11",
+      "byte_identical": true
+    }
+  },
+  "omitted": [
+    "sealed binaries",
+    "source maps",
+    "raw compile/runtime stderr",
+    "vendor payload"
+  ]
+}

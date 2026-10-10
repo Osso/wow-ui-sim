@@ -1,0 +1,23 @@
+
+running 18 tests
+test wowforever_finite_constants::forever_aura_block_list_cleared_register_event_delivers_unit_payload ... ok
+test wowforever_finite_constants::forever_aura_block_list_cleared_register_unit_event_filters_target ... ok
+test wowforever_finite_constants::forever_aura_block_list_cleared_unknown_event_control_rejects_both_methods ... ok
+test wowforever_finite_constants::forever_aura_sound_trigger_values_survive_cleanup ... ok
+test wowforever_finite_constants::forever_bag_index_enumerates_disjoint_bank_tabs ... ok
+test wowforever_finite_constants::forever_bag_index_preserves_non_bank_values_and_exact_metadata ... ok
+test wowforever_finite_constants::forever_finite_constants_camelot_talent_unlock_without_config ... ok
+test wowforever_finite_constants::forever_finite_constants_construct_minimap_filters ... ok
+test wowforever_finite_constants::forever_finite_constants_load_ping_and_transmog_consumers ... ok
+test wowforever_finite_constants::forever_finite_constants_publish_legacy_and_level_values ... ok
+test wowforever_finite_constants::forever_finite_constants_publish_source_values ... ok
+test wowforever_finite_constants::forever_finite_events_register_deliver_and_reject_unknown ... ok
+test wowforever_finite_constants::forever_player_swing_enum_and_registration_survive_bootstrap_cleanup ... ok
+test wowforever_finite_constants::forever_player_swing_preserves_payload_order_and_rejects_unknown_events ... ok
+test wowforever_finite_constants::forever_player_swing_range_preserves_boolean_payloads ... ok
+test wowforever_finite_constants::forever_stable_slot_constants_preserve_common_pet_values ... ok
+test wowforever_finite_constants::forever_stable_slot_constants_survive_bootstrap_restore ... ok
+test wowforever_finite_constants::forever_stance_override_initializes_vendor_mapping ... ok
+
+test result: ok. 18 passed; 0 failed; 0 ignored; 0 measured; 8316 filtered out; finished in 1.43s
+
