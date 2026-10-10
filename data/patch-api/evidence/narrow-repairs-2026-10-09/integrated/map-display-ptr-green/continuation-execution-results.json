@@ -1,0 +1,20 @@
+[
+  {
+    "label": "map-api-controls",
+    "exit": 0,
+    "expected_tests": 51,
+    "reached_tests": 51,
+    "started": "2026-10-10T20:09:01.323201+00:00",
+    "ended": "2026-10-10T20:09:05.840957+00:00",
+    "artifact_unchanged": true
+  },
+  {
+    "label": "lua-errors",
+    "exit": 0,
+    "expected_tests": null,
+    "reached_tests": null,
+    "started": "2026-10-10T20:09:06.649679+00:00",
+    "ended": "2026-10-10T20:09:12.167155+00:00",
+    "artifact_unchanged": true
+  }
+]

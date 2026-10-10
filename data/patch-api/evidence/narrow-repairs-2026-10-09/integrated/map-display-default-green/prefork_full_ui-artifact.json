@@ -1,0 +1,29 @@
+{
+  "features": [
+    "aura-containers",
+    "aura-instance-enumeration",
+    "aura-xml-widgets",
+    "base-spell-relationships",
+    "casc",
+    "client-retail",
+    "default",
+    "forbidden-aspects",
+    "gui",
+    "native-duration-formatting",
+    "numeric-rule-formatters",
+    "on-update-modes",
+    "player-cast-durations",
+    "prefork-full-ui",
+    "profile-retail",
+    "retail-12-0-0",
+    "retail-12-0-5",
+    "retail-12-0-7",
+    "retail-12-1-0",
+    "rodio",
+    "sound"
+  ],
+  "fresh": false,
+  "original": "[repository]/target/debug/deps/prefork_full_ui-d84a52f78dca94c5",
+  "sealed": "[private-green-epoch]/prefork_full_ui-sealed",
+  "sha256": "de2baed5988c35baab675a7ea50db22d446c4e562785291fb0c3335c0b75c242"
+}

@@ -1,0 +1,10 @@
+[
+  {
+    "artifact_unchanged": true,
+    "exit": 0,
+    "expected_tests": 35,
+    "label": "map-probes",
+    "reached_tests": 33,
+    "selector": "c_map_probes::"
+  }
+]

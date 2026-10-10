@@ -1,0 +1,32 @@
+{
+  "date": "2026-10-10",
+  "evidence_level": "Summary of two private reports; no new measurement or independent artifact verification",
+  "revision": "d80ee1b7f5fc0aed8e868c593dc84c71ca3ef817",
+  "workload": "optimized test profile, --lib + --test integration",
+  "cargo_wall_seconds": 117.5,
+  "library_seconds": 60.3,
+  "library_frontend_seconds": 17.09,
+  "library_codegen_seconds": 43.21,
+  "library_test_harness_seconds": 104.3,
+  "integration_seconds": 52.92,
+  "duration_boundary": "Concurrent unit rows are not additive wall phases",
+  "cargo_jobs_limit": 12,
+  "observed_peak_concurrent_cargo_units": 8,
+  "cpu_quota_cpus": 12,
+  "cgroup_cpu_seconds": 985.701681,
+  "coarse_average_cpus": 8.39,
+  "memory_peak_bytes": 14447693824,
+  "memory_peak_gib_approx": 13.45,
+  "sampler_boundary": "Partial samples; elapsed zero is sampler's own monotonic origin; Cargo-start offset and compiler-phase attribution not established",
+  "comparison": "Prior 125.2 seconds integration-only measured different work/source; no normalized speedup or measured optimization claimed",
+  "toolchain": "Reported timing-HTML rustc 1.99.0; no independent Rustc/ABI proof; dependencies and source-to-artifact provenance not hermetically sealed",
+  "hash_receipts": {
+    "directly_hashed_reports_sha256": {
+      "map-compile-final-timing-grounded.md": "677ef20dac729523ecdeeeb2a6d24175b4205b103a75fd2b857c18d3d1d07f13",
+      "map-compile-timing-errata.md": "2723138fea2c5f529ad15fedd8bbd4ce156630cf0fc0e41e3f77a6e201931da1"
+    },
+    "report_transcribed_sampler_sha256_not_independently_verified": "4c0a2c6c7f195c67ec5d2717415d5b88c1f7add739a39bb5114d83218fab46e6"
+  },
+  "retention": "Summary and hash receipts only; no raw compiler streams, binaries, source inventories, PIDs or private payloads",
+  "native_goal": "open"
+}

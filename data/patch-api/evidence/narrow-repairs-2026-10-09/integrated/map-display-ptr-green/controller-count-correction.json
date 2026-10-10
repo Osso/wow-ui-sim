@@ -1,0 +1,12 @@
+{
+  "original_expected": 35,
+  "actual_passed": 33,
+  "original_runtime_exit": 0,
+  "excluded_by_client_retail": [
+    "get_player_map_position_uses_independent_active_party_member_input",
+    "get_player_map_position_party_input_controls_and_roster_reset"
+  ],
+  "original_record_unchanged_sha256": "37e2cdd4fdc4a6c8a38ca34ea84d629b6590f5bd2e1d44bd04faedea898a3580",
+  "behavioral_failure": false,
+  "policy": "Do not rerun successful33 probes; continue omittedcontrols andCLI fromsealedartifacts"
+}

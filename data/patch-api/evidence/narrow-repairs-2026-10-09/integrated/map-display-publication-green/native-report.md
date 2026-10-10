@@ -1,0 +1,3 @@
+# Saved native test-binary P801 receipt
+
+Epoch `20261010T195723Z`, revision `63f3a8a7373c8e52ffcc005bb443a9cf64b59fbf`: exact P801 reached 1/1, exit 0, 1 PASS / 0 FAIL; artifact unchanged. Compile exit 0; source equality true. Inventory 269 rows / 253 OK / 16 gaps; MapDisplay OK, raw/lookup function. Independent report confirms live residual IDs and zero captured-source hash mismatches. Simulator publication only, not native WoW semantics or dependency provenance. PTR runtime was pending at this publication audit epoch; later finalized independent PTR audit admits84/84 PASS (see ../map-display-ptr-green/independent-report.md). No execution rerun.

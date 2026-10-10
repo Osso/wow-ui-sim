@@ -1,0 +1,14 @@
+{
+  "argv": [
+    "/usr/bin/timeout",
+    "90",
+    "[private-green-epoch]/prefork_full_ui-sealed",
+    "patch_8_0_1_publication_sweep::patch_8_0_1_publication_sweep",
+    "--exact",
+    "--nocapture",
+    "--test-threads=1"
+  ],
+  "artifact_unchanged": true,
+  "exit": 1,
+  "purpose": "live row observation; fixture intentionally still17; overall failure not PASS"
+}

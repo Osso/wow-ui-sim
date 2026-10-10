@@ -1,0 +1,15 @@
+{
+  "argv": [
+    "<system-bin>/timeout",
+    "90",
+    "<private-verification>/map-display-security-red-current/20261010T193717Z/lib-sealed",
+    "iced_app::update::update_tests::main_thread_cpu_time_advances_with_busy_work",
+    "--exact",
+    "--nocapture",
+    "--test-threads=1"
+  ],
+  "artifact_unchanged": true,
+  "exit": 0,
+  "expected_tests": 1,
+  "reached_tests": 1
+}

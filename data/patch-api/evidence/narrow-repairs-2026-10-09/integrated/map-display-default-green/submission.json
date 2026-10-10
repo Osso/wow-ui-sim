@@ -1,0 +1,26 @@
+{
+  "argv": [
+    "/usr/bin/cargo",
+    "test",
+    "--no-run",
+    "--test",
+    "integration",
+    "--test",
+    "prefork_full_ui",
+    "--offline",
+    "--locked",
+    "--message-format=json",
+    "--timings",
+    "-j",
+    "12"
+  ],
+  "cwd": "[repository]",
+  "exclusions": [
+    "external dependencies/source-to-artifact provenance",
+    "untracked files/index",
+    "inherited environment",
+    "runtime assets outside fixture inputs"
+  ],
+  "purpose": "MapDisplay ordinary/security GREEN controls and live P801 resolved-row observation; final Rust checks and stock Lua errors",
+  "revision": "0979952073b64581903283c87d38ba2eae29f2b5"
+}

@@ -1,0 +1,34 @@
+[
+  {
+    "argv": [
+      "/usr/bin/timeout",
+      "90",
+      "[private-green-epoch]/integration-sealed",
+      "c_map_probes::",
+      "--nocapture",
+      "--test-threads=1"
+    ],
+    "artifact_unchanged": true,
+    "exit": 0,
+    "expected_tests": 35,
+    "label": "map-probes",
+    "reached_tests": 35,
+    "selector": "c_map_probes::"
+  },
+  {
+    "argv": [
+      "/usr/bin/timeout",
+      "90",
+      "[private-green-epoch]/integration-sealed",
+      "c_map_api::",
+      "--nocapture",
+      "--test-threads=1"
+    ],
+    "artifact_unchanged": true,
+    "exit": 0,
+    "expected_tests": 51,
+    "label": "map-api-controls",
+    "reached_tests": 51,
+    "selector": "c_map_api::"
+  }
+]

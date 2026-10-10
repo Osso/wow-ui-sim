@@ -1,0 +1,28 @@
+{
+  "features": [
+    "aura-containers",
+    "aura-instance-enumeration",
+    "aura-xml-widgets",
+    "base-spell-relationships",
+    "casc",
+    "client-retail",
+    "default",
+    "forbidden-aspects",
+    "gui",
+    "native-duration-formatting",
+    "numeric-rule-formatters",
+    "on-update-modes",
+    "player-cast-durations",
+    "prefork-full-ui",
+    "profile-retail",
+    "retail-12-0-0",
+    "retail-12-0-5",
+    "retail-12-0-7",
+    "retail-12-1-0",
+    "rodio",
+    "sound"
+  ],
+  "original": "[repository]/target/debug/deps/integration-6fa7ee1f035abc08",
+  "sealed": "[private-green-epoch]/integration-sealed",
+  "sha256": "69b8729f6594ba8607859c58f5fb5ee8037cdcf8302a2b3999d48c95aeda32d4"
+}

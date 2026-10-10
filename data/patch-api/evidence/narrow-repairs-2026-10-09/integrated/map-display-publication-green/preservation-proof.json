@@ -1,0 +1,18 @@
+{
+  "historical_revision": "d142860059e816cb15ebefcbd12e75bc8cdc8372",
+  "head": "63f3a8a7373c8e52ffcc005bb443a9cf64b59fbf",
+  "historical_count": 17,
+  "live_count": 16,
+  "historical_sha256": "bad5e7e4e77494f4e506684fb63b97d5b0d8ff9dd8279f714fbf00ad32bac55a",
+  "live_sha256": "618f9a1c663f16ce1df4613ff953e69b322e2cd04fe2868ad099189ab669e1b1",
+  "removed": [
+    "wt-global-api-C_Map.GetMapDisplayInfo-30"
+  ],
+  "added": [],
+  "accepted_digest_pair": [
+    "bad5e7e4e77494f4e506684fb63b97d5b0d8ff9dd8279f714fbf00ad32bac55a",
+    "618f9a1c663f16ce1df4613ff953e69b322e2cd04fe2868ad099189ab669e1b1"
+  ],
+  "exact_pair_matches": true,
+  "prior_frozen_diff": ""
+}

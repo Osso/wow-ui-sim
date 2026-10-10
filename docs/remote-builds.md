@@ -44,6 +44,14 @@ Normal desktop GUI failed before its first frame: `target/native-desktop-gui-lon
 
 The actual local `wow-cli` helper built and printed `--help` in 0.35 seconds: bounded local CLI proof, not GUI acceptance or a local server pass. Local capability remains supported; actual local runtime acceptance is deferred, not required now for the current gate. User rejected local server build attempts; actual local server proof is deferred and its no-local-compile guard remains. Corrected source gate passed: two repaired fixtures, zero Ruff diagnostics across 14 files, and pycompile for nine changed files. The prior 94 passing fixtures retain revision-scoped credit; this is not a fresh 96-test run. Evidence: engine `target/native-migration-corrected-verify.md`. Historical focused-test/check reports are not a fresh current-tree gate. Normal desktop GUI remains unresolved; source-gate success would not complete the whole workflow.
 
+### Measured jobs12 compile — October 10, 2026
+
+Reported Cargo timing: **117.5 s**, optimized test-profile `--lib` + `--test integration`, revision `d80ee1b7f5fc0aed8e868c593dc84c71ca3ef817`. Library: **60.3 s** (frontend **17.09 s**, codegen **43.21 s**); distinct library-test harness: **104.3 s**; integration: **52.92 s**. Concurrent unit durations are not additive wall phases. Prior **125.2 s integration-only** measured different work/source; no normalized speedup or measured optimization is claimed.
+
+Cargo job limit **12**, observed peak **8 concurrent Cargo units**; cgroup ceiling **12 CPUs**, consumption **985.701681 CPU-s** (~**8.39 CPUs coarse average** over 117.5 s), memory peak ~**13.45 GiB**. Process samples are partial: their elapsed clock has its own monotonic origin, with no established Cargo-start offset or compiler-phase attribution. These observations do not establish saturation or a bottleneck.
+
+Toolchain label: **reported timing-HTML rustc 1.99.0**, not independent Rustc/ABI proof or hermetic dependency provenance. See the [existing compile brief](rust-integration-test-target-size-brief.md) and [sanitized timing summary and hash receipts](../data/test-perf/evidence/jobs12-map-display-2026-10-10/summary.json). Native goal remains open; this retention adds no acceptance gate.
+
 ## Asynchronous full suite
 
 `python3 tools/full_suite.py submit [REF]` schedules the detached worker;

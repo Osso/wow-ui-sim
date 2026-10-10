@@ -1,0 +1,30 @@
+{
+  "verified": "2026-10-10",
+  "receipt_epoch": "20261010T194147Z",
+  "revision": "0979952073b64581903283c87d38ba2eae29f2b5",
+  "source_receipts": {
+    "source-before.json": {
+      "original_path": "/home/osso/.local/state/wow-ui-sim/verification/map-display-prepublication-green-current/20261010T194147Z/source-before.json",
+      "sha256": "b32953d0b862b3894b9c49436f90cf49a525b18f869f2c27925abb8d7de1d224"
+    },
+    "source-after.json": {
+      "original_path": "/home/osso/.local/state/wow-ui-sim/verification/map-display-prepublication-green-current/20261010T194147Z/source-after.json",
+      "sha256": "b32953d0b862b3894b9c49436f90cf49a525b18f869f2c27925abb8d7de1d224"
+    }
+  },
+  "clock_scope": {
+    "src/iced_app/update_tests.rs": {
+      "before_sha256": "6eda0b1c4fe45080ac54672ed4af5a6da40834535a50c3c2d5fe8225acf5cd77",
+      "after_sha256": "6eda0b1c4fe45080ac54672ed4af5a6da40834535a50c3c2d5fe8225acf5cd77",
+      "native_193717_sha256": "6eda0b1c4fe45080ac54672ed4af5a6da40834535a50c3c2d5fe8225acf5cd77",
+      "unchanged": true
+    },
+    "src/iced_app/update.rs": {
+      "before_sha256": "7d4418a54226a0631fd9a98ca87bc0854ed6484db2802427fa0a863c7dd72bf4",
+      "after_sha256": "7d4418a54226a0631fd9a98ca87bc0854ed6484db2802427fa0a863c7dd72bf4",
+      "native_193717_sha256": "7d4418a54226a0631fd9a98ca87bc0854ed6484db2802427fa0a863c7dd72bf4",
+      "unchanged": true
+    }
+  },
+  "boundary": "Scoped PASS: earlier native 1/1 PASS preserved; saved fmt/default-check exit 0 reconciled to unchanged clock test/helper. Five-profile checks unrelated and pending; P801 fixture-only changes do not invalidate clock-file proof. No fullsuite/current-checkout acceptance; b048 FAIL unchanged. No commands/tests/builds/checks rerun."
+}

@@ -1,3 +1,7 @@
+## [2026-10-10] audit | MapDisplay bounded Retail/PTR GREEN
+
+[MapDisplay SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#mapdisplay-supplied-input--bounded-retailptr-and-p801-green): independent default86 PASS/fmt+default+PTRcheck0/CLIzero; P8011 PASS with validatorPASS/frozen17/live16. PTR main-observed33+51=84 PASS/five targets/CLI[]0; original count error corrected without rewriting receipts. Final PTR independent audit admits84/84 PASS; five other shared-state compile checks exit0/source equality, getter excluded and six dependency deprecations each. Native/runtime acceptance unknown; parent OPEN.
+
 ## [2026-10-10] audit | Saved b048 suite — FAIL
 
 [Saved b048 investigation](investigations/fullsuite-b048-2026-10-10.md):15,006PASS/4FAIL/19skips;15,010executions, no deduplication. Three historical failures plus newly observed CPU threshold, not proven regression. Sanitized report/results/hashes retained; later helper/event/map excluded, collected service not acceptance. Older receipts preserved; parent OPEN.

@@ -1,0 +1,27 @@
+{
+  "epoch": "20261010T194147Z",
+  "revision": "0979952073b64581903283c87d38ba2eae29f2b5",
+  "note": "Hashes of exact original private inputs before sanitization; not hashes of retained copies.",
+  "sha256": {
+    "submission.json": "7e0fdabddd346badb5d931fa5289df39c6b0862406d2a2716aa4ec9db4b9f993",
+    "compile-result.json": "27e344ef47ce70c39240239908b372967ffb5c3e32206cda667fc1e675196480",
+    "outcome.json": "001e3e308890f0e9d328e17551e96698c8ca0fb82d8198c386a423c1bc1e0eef",
+    "execution-results.json": "c5d361f8266183deec4af283a074b61b468521c10d3a28ae780c1e8389212889",
+    "artifact.json": "330ad907c074173a7c390fb1017eff5449dbf1c241f50d14f75923ea6c31916b",
+    "prefork_full_ui-artifact.json": "17cd079eb0ebd5224cd0fff1a0506e1fb9ab7583d70bcec0896c40c1985f766b",
+    "wow-sim-artifact.json": "f5826e5f249a99f6157194f1d298adb4ecf9e56a2b23d076cf248d068112af96",
+    "lua-errors-result.json": "81b4dac8a0b559be0541d9ff4c7f37d66aa81c048f703830b61a8c82f9c78f28",
+    "checks/fmt.json": "c7013930135b8acf4d6769c8733fd91ae912963296d5473f963f22704dc2ca6c",
+    "checks/default-check.json": "edd934989255b1afaa7a63ca7b2600521c3dc9c4a464fdc9ad0aa57382498e3c",
+    "checks/ptr-check.json": "d6213e0c3e8c66f1a41a21b1d8eb6f8af3188b6386d103c64477f9d8e509c5bc",
+    "p801-sweep-result.json": "fb178bf8d9d00b63973812e21b7db7be76af3bdd97b39f1034ca7dc80687c27c",
+    "independent-report.md": "0f1974d8b617841f9c1f7659c784bd2e14f50200018ca70159e43ebfc6b79177",
+    "map-probes.stdout": "30c5337700efe8b099e72eabf095f6ee76373392273fb15850bfd4f872a54b8c",
+    "map-api-controls.stdout": "6139bb9daecb32ae4f5a7e1a9342221296a4c5e5d4f188476c6843453bb330a0",
+    "lua-errors.stdout": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+    "lua-errors.stderr": "c69418bbe2182b863f7bc2e8dd27864b8a9f79f1ee2bbdd4cd5cf23aba6db03e",
+    "p801-sweep.stdout": "bfeac5e83fb2d78faac79eb1021c1ae0b04199408362a52cd9cd97972bd8b19c",
+    "p801-sweep.stderr": "70cf601a61c82c77364c89493f22ad8ed358a4df1bce797dde31a90a852b3fc1",
+    "p801-sweep-results.json": "87c797c01e96de842d3ecd8a58b30bdc55e2aa44ad6aa4d9005f1ad3d46f7985"
+  }
+}

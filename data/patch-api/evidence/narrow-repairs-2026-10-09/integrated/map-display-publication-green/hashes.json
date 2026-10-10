@@ -1,0 +1,60 @@
+{
+  "execution-results.json": {
+    "bytes": 214,
+    "sha256": "ee27ea8c785efa301093870984ca07c2f86905c0a505bbf8c11f5ad71988c641",
+    "source": "/home/osso/.local/state/wow-ui-sim/verification/map-display-publication-green-current/20261010T195723Z/execution-results.json",
+    "source_sha256": "713e74a41551c98c62dd0a1b75f5d61e9ba4b6f0a7975e000fe9a2b9e201f1e1"
+  },
+  "historical-validation-status.json": {
+    "bytes": 60,
+    "sha256": "459ce266d926f5f1241823190f5ac9d3e4de74493419f2e156192080380a3cfb",
+    "source": "/home/osso/.local/state/wow-ui-sim/verification/p801-live-input-current/historical-validation-status.json",
+    "source_sha256": "f2e0c51dbba997572c4fb7fcde24bdbd0de65290b4c3ca47039472e79ba19438"
+  },
+  "historical-validation.stdout": {
+    "bytes": 903,
+    "sha256": "68a3cbed73487cea5d5b53c5cf063189d8c2b65ee3e413709f1a9b4b3d447ac4",
+    "source": "/home/osso/.local/state/wow-ui-sim/verification/p801-live-input-current/historical-validation.stdout",
+    "source_sha256": "68a3cbed73487cea5d5b53c5cf063189d8c2b65ee3e413709f1a9b4b3d447ac4"
+  },
+  "independent-green-report.md": {
+    "bytes": 4190,
+    "sha256": "4ad304532d478573585f6f1dedd6b33964a953c516967c69be6bb9da18a9e8e7",
+    "source": "/home/osso/.local/state/wow-ui-sim/verification/p801-live-input-current/independent-green-report.md",
+    "source_sha256": "5e12e849c3907d9686224e6fa9de113c7c82918b19a55539e9d5c9a5c13e7510"
+  },
+  "map-display-publication-row.json": {
+    "bytes": 462,
+    "sha256": "aeb06731018f42a3d4b2cbe0eef16c0f1e298e0ce63d962bf524616573c86a55",
+    "source": "/home/osso/.local/state/wow-ui-sim/verification/map-display-publication-green-current/20261010T195723Z/p801-sweep-results.json",
+    "source_sha256": "87c797c01e96de842d3ecd8a58b30bdc55e2aa44ad6aa4d9005f1ad3d46f7985"
+  },
+  "native-report.md": {
+    "bytes": 655,
+    "sha256": "9309459aeab6825aeba8a593704a5d06d1ece88a7c525c6f53b5f80b20a14ef0"
+  },
+  "outcome.json": {
+    "bytes": 107,
+    "sha256": "35e8764aef89935f2b4b386c9bcee59883100ff53697b4aa74f8c7cc4fcb9d8d",
+    "source": "/home/osso/.local/state/wow-ui-sim/verification/map-display-publication-green-current/20261010T195723Z/outcome.json",
+    "source_sha256": "35e8764aef89935f2b4b386c9bcee59883100ff53697b4aa74f8c7cc4fcb9d8d"
+  },
+  "p801-sweep.stdout": {
+    "bytes": 321,
+    "sha256": "c963fa555841bdd6fc39798aaba10399e27904d74f34525faca667f90acdf10c",
+    "source": "/home/osso/.local/state/wow-ui-sim/verification/map-display-publication-green-current/20261010T195723Z/p801-sweep.stdout",
+    "source_sha256": "c963fa555841bdd6fc39798aaba10399e27904d74f34525faca667f90acdf10c"
+  },
+  "preservation-proof.json": {
+    "bytes": 663,
+    "sha256": "a9941f9cda8e4e432041c60abd95a3c64f773eea0bc4fa87647b8b274bd677dc",
+    "source": "/home/osso/.local/state/wow-ui-sim/verification/p801-live-input-current/preservation-proof.json",
+    "source_sha256": "a9941f9cda8e4e432041c60abd95a3c64f773eea0bc4fa87647b8b274bd677dc"
+  },
+  "publication-summary.json": {
+    "bytes": 134,
+    "sha256": "660f7328bb934e8945cb0c28255d56f57c4fdfec56256a7f9dd361583eea1315",
+    "source": "/home/osso/.local/state/wow-ui-sim/verification/map-display-publication-green-current/20261010T195723Z/p801-sweep-results.json",
+    "source_sha256": "87c797c01e96de842d3ecd8a58b30bdc55e2aa44ad6aa4d9005f1ad3d46f7985"
+  }
+}

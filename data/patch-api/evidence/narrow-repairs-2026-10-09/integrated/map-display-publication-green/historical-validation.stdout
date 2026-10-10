@@ -1,0 +1,36 @@
+{
+  "status": "PASS",
+  "sealed_artifacts": 158,
+  "inventory_rows": 269,
+  "inventory_ok": 252,
+  "inventory_gaps": 17,
+  "extract_rows": 26,
+  "ledger_rows": 295,
+  "ledger_statuses": {
+    "partial-development-green": 151,
+    "audit-pending": 27,
+    "bounded-coverage": 104,
+    "metadata-only": 13
+  },
+  "pending_prose": 10,
+  "discovery_closures": [
+    "wt-global-api-C_ChatInfo.ReportPlayer-15",
+    "wt-global-api-C_Map.GetBountySetIDForMap-21",
+    "wt-global-api-C_Map.GetMapPosFromWorldPos-38"
+  ],
+  "sweeps": 41,
+  "sweep_inventory_rows": 8848,
+  "reproduced_registers": 41,
+  "reproduced_extracts": 38,
+  "inherited_extract_failures": [
+    "12.0.5",
+    "12.0.7",
+    "12.1.0"
+  ],
+  "scanned_removal_identities": 98,
+  "proof_receipts": 18,
+  "historical_preserved_inputs": 199,
+  "integrated_required_receipts": 12,
+  "non_vendor_mists_warnings": 0,
+  "integrated_gap_closures": 1
+}

@@ -1,0 +1,5 @@
+
+running 1 test
+test iced_app::update::update_tests::main_thread_cpu_time_advances_with_busy_work ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 2000 filtered out; finished in 0.00s

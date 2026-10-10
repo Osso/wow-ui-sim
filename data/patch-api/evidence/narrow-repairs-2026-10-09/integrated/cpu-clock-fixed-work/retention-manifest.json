@@ -1,0 +1,51 @@
+{
+  "verified": "2026-10-10",
+  "repair_revision": "b8b6be5384ef519e6a2462fab40711905dcc3245",
+  "saved_submission_revision": "d80ee1b7f5fc0aed8e868c593dc84c71ca3ef817",
+  "receipt_epoch": "20261010T193717Z",
+  "files": [
+    {
+      "path": "independent-report.md",
+      "bytes": 8400,
+      "sha256": "0de1e5a0bd9fdb085ae3b42872cd8a74a74d0f6bec29d391d6684cea5c26e5dd",
+      "source_sha256": "c4faa8265a116f197aa8c8db3d9ef7b9ce70bb28f2c8ce943e764710743887b9"
+    },
+    {
+      "path": "cpu-clock-result.json",
+      "bytes": 377,
+      "sha256": "2f29daf5f25f17c3e7c9a84cc724cf8bbeb5956e2c284ef585461681579a710c",
+      "source_sha256": "7efd52fe80e254a31bc52ac33a041c8f8d9d433bda81a844eee3f95a8202aa1d"
+    },
+    {
+      "path": "cpu-clock.stdout",
+      "bytes": 203,
+      "sha256": "93b5f4b16bcad21f806145b15d602e5d488e3a2ae7f9948b826b4399827f3187",
+      "source_sha256": "a763d573e808678c9b7d6a42e4386b4829720795e6f781c4a1d966b178d5f345"
+    },
+    {
+      "path": "lib-artifact.json",
+      "bytes": 745,
+      "sha256": "e48c113c6d98e67692fcbdd0b0430c7c565f30a7ad060060a166efcd60563a32",
+      "source_sha256": "36aae03fb2d646707c23624dfa27cb4c0add37215536b124ddf7027b2b0036dd"
+    },
+    {
+      "path": "fmt.json",
+      "bytes": 161,
+      "sha256": "c7013930135b8acf4d6769c8733fd91ae912963296d5473f963f22704dc2ca6c",
+      "source_sha256": "c7013930135b8acf4d6769c8733fd91ae912963296d5473f963f22704dc2ca6c"
+    },
+    {
+      "path": "default-check.json",
+      "bytes": 201,
+      "sha256": "edd934989255b1afaa7a63ca7b2600521c3dc9c4a464fdc9ad0aa57382498e3c",
+      "source_sha256": "edd934989255b1afaa7a63ca7b2600521c3dc9c4a464fdc9ad0aa57382498e3c"
+    },
+    {
+      "path": "scope-check-reconciliation.json",
+      "bytes": 1750,
+      "sha256": "29e20c79613537af8b446aaad3e306c7a9a46553bbb90245e5036d36e1600289"
+    }
+  ],
+  "sanitization": "Absolute host paths replaced with labeled placeholders. Complete latest independent report and three small receipts retained; no binary, raw suite log, source snapshot or vendor payload copied. No commands, tests, builds or checks executed. Saved small fmt/default-check receipts retained byte-identically; source manifests retained only as original hashes and clock-file reconciliation, not full snapshots. Retained CPU stdout removes one trailing blank line; original source_sha256 remains unchanged.",
+  "proof_boundary": "Scoped PASS: earlier native 1/1 PASS preserved; saved fmt/default-check exit 0 reconciled to unchanged clock test/helper. Later five-profile shared-state checks passed but remain unrelated to this clock test; P801 fixture-only changes do not invalidate clock-file proof. No fullsuite/current-checkout acceptance; b048 FAIL unchanged. No commands/tests/builds/checks rerun."
+}

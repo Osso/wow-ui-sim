@@ -1,0 +1,29 @@
+{
+  "features": [
+    "aura-containers",
+    "aura-instance-enumeration",
+    "aura-xml-widgets",
+    "base-spell-relationships",
+    "casc",
+    "client-retail",
+    "default",
+    "forbidden-aspects",
+    "gui",
+    "native-duration-formatting",
+    "numeric-rule-formatters",
+    "on-update-modes",
+    "player-cast-durations",
+    "prefork-full-ui",
+    "profile-retail",
+    "retail-12-0-0",
+    "retail-12-0-5",
+    "retail-12-0-7",
+    "retail-12-1-0",
+    "rodio",
+    "sound"
+  ],
+  "fresh": false,
+  "original": "[repository]/target/debug/wow-sim",
+  "sealed": "[private-green-epoch]/wow-sim-sealed",
+  "sha256": "fc0d2267a91fe28cfc8d1c1ac0e0ad1062aa3336ca51609e52e65b0bf2ca0600"
+}

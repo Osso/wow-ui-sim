@@ -1,14 +1,14 @@
 # Map display info
 
-`C_Map.GetMapDisplayInfo` must expose supplied per-map `hideIcons` input from `SimState`. Preparation revision `1ee814f895d5b3f262bd4576745d41add0da47cb` has admitted behavioral RED. Getter work in `src/c_api/c_map.rs` is in progress separately; no GREEN evidence is admitted here. See [Lua API architecture](../lua-api.md).
+`C_Map.GetMapDisplayInfo` exposes supplied per-map `hideIcons` input from `SimState`. Bounded default simulator GREEN is admitted at producer `0979952073b64581903283c87d38ba2eae29f2b5`, epoch `20261010T194147Z`: 86 targeted tests PASS. Later exact P801 simulator publication passes 1/1; PTR finalized independent audit admits 84 actual simulator tests PASS. Neither is complete handoff or authenticated native WoW proof. See [Lua API architecture](../lua-api.md).
 
 ## What it must do
 
-- [ ] Current Retail/PTR API accepts required non-nil numeric `uiMapID`; a supplied result is exactly one non-nil boolean `hideIcons`, never a DTO.
-- [ ] Explicit inputs for maps 84/85 return supplied true/false, including false as one result rather than no result.
-- [ ] Queries reflect input updates independently across maps and simulator environments.
-- [ ] Simulator-input policy: empty input or removal returns zero values, not one nil or false. Map catalog presence alone supplies no display input.
-- [ ] Canonical input starts empty; no guessed defaults, derivation from map flags, or new Lua setter.
+- [x] Required numeric `uiMapID` selects supplied input; a supplied result is exactly one non-nil boolean `hideIcons`, never a DTO. Current parser accepts finite integral i32 values; native fractional/out-of-range parity is unestablished.
+- [x] Explicit inputs for maps 84/85 return supplied true/false, including false as one result; updates remain independent across maps and environments.
+- [x] Simulator-input policy: empty input/removal returns zero values. Map catalog presence alone supplies no display input.
+- [x] Canonical input starts empty, without guessed defaults, map-flag derivation, or a new Lua setter.
+- [x] Tested simulator security: untainted authentic-secret input succeeds; tainted ordinary input succeeds and tainted authentic-secret input rejects.
 
 ## How it works
 
@@ -16,13 +16,11 @@
 
 ## Implementation inventory
 
-- `src/lua_api/state/sim_state.rs`: explicit `map_display_hide_icons: HashMap<i32, bool>` input.
-- `src/lua_api/state.rs`: empty canonical initialization.
-- `src/c_api/c_map.rs`: input-backed getter/registration implemented at `e8c8ced9c`, not verified GREEN.
+`src/lua_api/state/sim_state.rs` stores `map_display_hide_icons: HashMap<i32, bool>`; `src/lua_api/state.rs` initializes it empty. `src/c_api/c_map.rs` registers the getter, unwraps authorized secrets before numeric validation, and returns zero values for absent input or one boolean for supplied input. Current 097 parser requires finite integral i32 range. Literal declarations say number; these tests do not establish malformed-number native parity.
 
 ## Current feature applicability
 
-`cfg(feature = "retail-12-1-0")` is the current capability gate. In `Cargo.toml`, `client-retail` includes `retail-12-1-0`; `client-ptr` includes `retail-12-1-5`, which includes `retail-12-1-0`. That closure includes `retail-12-0-7` and earlier cumulative capabilities. Earlier epoch features alone do not enable this gate; any build explicitly enabling it also qualifies. Cached Retail/PTR declarations establish source applicability, not earlier-profile or native-build parity.
+`retail-12-1-0` gates this surface. `client-retail` includes it; `client-ptr` includes `retail-12-1-5`, which includes it. Earlier epoch features alone do not enable the getter. Cached Retail/PTR declarations establish source applicability; separate PTR runtime receipts below establish bounded simulator execution, not earlier-profile/native parity.
 
 ## Tests asserting this spec
 
@@ -34,24 +32,38 @@
 - `get_map_display_info_untainted_secret_returns_one_supplied_bool`
 - `get_map_display_info_tainted_caller_accepts_ordinary_and_rejects_secret`
 
-The last two tests use an authentic host-secret numeric map ID and stamped addon closure. Their compiled RED/GREEN remains pending; expected failures are not proof.
+All five executed PASS in the saved default integration artifact. Security tests use an authentic host-secret number and stamped addon closure; taint/wrapper preservation is asserted. Map 85 is a test-only catalog fixture, not a native map fact.
 
-Admitted RED, 2026-10-10: `/home/osso/.local/state/wow-ui-sim/verification/map-display-red-current/20261010T193141Z`. `submission.json` pins preparation revision `1ee814f895d5b3f262bd4576745d41add0da47cb`; `outcome.json` records compile exit 0 and `source_equal = true`. `execution-results.json` records all three selected tests reached, unchanged sealed artifact, and execution exit 101. `map-display.stdout` reports three actual FAILED tests, zero passed.
+## Admitted evidence
 
-- Absence/removal test failed at its initial empty-input boundary: actual arity 1, expected 0 (`map-display.stderr`, line assertion at `tests/c_map_probes.rs:111`). Removal behavior was not reached/proved.
-- Both positive tests failed at the supplied map-84 type assertion: actual `"nil"`, expected `"boolean"` (`tests/c_map_probes.rs:51`). Later false/update/isolation assertions were not reached/proved.
+Exact private report: `/home/osso/.local/state/wow-ui-sim/verification/map-display-prepublication-green-current/independent-report.md`.
 
-No GREEN execution is admitted. Map 85 is explicitly seeded as a test-only catalog fixture; fixture metadata and supplied booleans are not native map facts. Zero returns for empty/removed input is simulator-input policy, not a native unknown-ID claim.
+Exact epoch: `/home/osso/.local/state/wow-ui-sim/verification/map-display-prepublication-green-current/20261010T194147Z`.
+
+[Sanitized bounded report](../../data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/map-display-default-green/independent-report.md) and adjacent receipts/hashes retain default evidence without binaries, complete source manifests, or full sweep output.
+
+| Boundary | Saved result | Limit |
+|---|---|---|
+| Map probes / C_Map controls | 35 / 51 PASS, exits 0 | 86 actual simulator test executions; sealed artifact unchanged |
+| Stock stored-error CLI | Exit 0, stdout `[]` | No addons/saved variables; CASC disabled by mode |
+| fmt / default / PTR check | Exits 0, source_equal true | Saved revision; PTR compile check only |
+| P801 sweep | Exit 1, 0 PASS / 1 FAIL | Only stale MapDisplay gap; no new gaps |
+| MapDisplay publication row | `ok: true`, raw/lookup function | Presence/lookup only, not behavior |
+
+Saved checks retain six iced_wgpu manifest deprecation warnings; exit 0 does not mean warning-free. Exact executed compiler version is unsealed. Earlier ordinary/security RED epochs remain historical failures, superseded only for the bounded current behavior above.
+
+## Later P801 and PTR receipts — 2026-10-10
+
+Exact independent P801 report: `/home/osso/.local/state/wow-ui-sim/verification/p801-live-input-current/independent-green-report.md`. Saved native simulator test-binary epoch `20261010T195723Z` at `63f3a8a7373c8e52ffcc005bb443a9cf64b59fbf`: 1 PASS, exit 0; current publication 269 rows / 253 OK / 16 gaps. Historical validator PASS preserves frozen 269 / 252 OK / 17 gaps, sources and receipts unchanged; exact frozen/live digest pair retained in the [model investigation](../wiki/investigations/map-display-info-model.md). This supersedes current P801 pending status, not the older failed sweep receipt above.
+
+[Sanitized PTR receipts/correction/hashes](../../data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/map-display-ptr-green/README.md): exact epoch `/home/osso/.local/state/wow-ui-sim/verification/map-display-ptr-green-current/20261010T200242Z`, initial33 PASS + continuation51 PASS = **84 actual PASS**, all five MapDisplay targets PASS. Compile exit0/source equality true; unchanged artifacts; separate stored-error CLI `[]`, exit0, CASC disabled. Controller expected35 was wrong because two party tests are Retail-only; original error and correction JSON preserved. Final [independent PTR audit](../../data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/map-display-ptr-green/independent-report.md) admits bounded **84/84 PASS**; earlier PENDING inspection is superseded, not rewritten.
 
 ## Known gaps (current cycle)
 
-- [ ] Finish getter/registration and establish behavioral GREEN plus applicable controls/checks; admitted RED does not satisfy runtime requirements.
-- [ ] **NOT VERIFIED — security behavior:** cached Retail and PTR `Blizzard_APIDocumentationGenerated/MapDocumentation.lua:216` declare `SecretArguments = "AllowedWhenUntainted"`. This source annotation is separate from supplied-input behavior. Simulator enforcement and native ordinary/secret-argument behavior under tainted/untainted calls are unverified. No `SecretReturns` annotation appears; that absence does not prove runtime return secrecy. Typed numeric extraction alone is not security proof.
-
-Security/feature evidence: `/home/osso/.local/state/wow-ui-sim/handoff/map-display-security-recovered.md` (2026-10-10). No native security result is claimed.
+- [x] Final PTR independent audit admits 84 actual PASS, including all five MapDisplay targets.
+- [x] Wrath/Mists/Era/Anniversary/Forever shared-state compile checks exit 0 with source equality; current getter excluded. Six dependency manifest deprecations per profile remain. No runtime/native acceptance.
+- [ ] Authenticated native WoW ordinary/secret behavior and runtime return secrecy unverified. `SecretArguments = "AllowedWhenUntainted"` is declaration evidence, not runtime secrecy proof.
 
 ## Out of scope
 
-Native unknown-map-ID behavior is unestablished. Cached Retail/PTR `MapDocumentation.lua` declarations pin `MayReturnNothing = true` and one `bool hideIcons`, but do not identify which IDs yield zero results. Missing simulator input is not equivalent to an unknown native map. Current cached consumer truthiness does not establish that boundary.
-
-Earlier historical/profile applicability and publication reconciliation remain separate. No native catalog-completeness prerequisite is imposed on this supplied-input slice.
+No complete handoff or broad-suite/profile readiness claim. Native unknown-ID/no-return selection, malformed-number and revoked-context parity remain unestablished. Missing simulator input is not an unknown native map. Cached declarations/content hashes do not authenticate cache origin or seal assets/dependency linkage. CASC feature presence and stock CLI `[]` do not establish CASC-backed CLI parity. No tests, checks, builds, or native execution were run for this retention update.

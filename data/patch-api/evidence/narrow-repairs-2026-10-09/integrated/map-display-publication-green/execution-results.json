@@ -1,0 +1,10 @@
+[
+  {
+    "artifact_unchanged": true,
+    "exit": 0,
+    "expected_tests": 1,
+    "label": "p801-sweep",
+    "reached_tests": 1,
+    "selector": "patch_8_0_1_publication_sweep::patch_8_0_1_publication_sweep"
+  }
+]

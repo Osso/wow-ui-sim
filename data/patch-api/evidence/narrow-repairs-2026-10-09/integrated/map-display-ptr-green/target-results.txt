@@ -1,0 +1,7 @@
+test c_map_probes::get_map_display_info_absence_and_removal_return_zero_values_sim_input_policy ... ok
+test c_map_probes::get_map_display_info_returns_one_supplied_bool ... ok
+test c_map_probes::get_map_display_info_tainted_caller_accepts_ordinary_and_rejects_secret ... ok
+test c_map_probes::get_map_display_info_tracks_updates_with_map_and_environment_isolation ... ok
+test c_map_probes::get_map_display_info_untainted_secret_returns_one_supplied_bool ... ok
+test result: ok. 33 passed; 0 failed; 0 ignored; 0 measured; 9854 filtered out; finished in 2.24s
+test result: ok. 51 passed; 0 failed; 0 ignored; 0 measured; 9836 filtered out; finished in 4.50s

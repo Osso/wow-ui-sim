@@ -1,0 +1,18 @@
+{
+  "artifact.json": "b04b12e68e2887500323e1b43870d429092d26302f35d4911b7e6d0beda550a2",
+  "checks/default-check.json": "edd934989255b1afaa7a63ca7b2600521c3dc9c4a464fdc9ad0aa57382498e3c",
+  "checks/fmt.json": "c7013930135b8acf4d6769c8733fd91ae912963296d5473f963f22704dc2ca6c",
+  "checks/ptr-check.json": "d6213e0c3e8c66f1a41a21b1d8eb6f8af3188b6386d103c64477f9d8e509c5bc",
+  "compile-result.json": "27e344ef47ce70c39240239908b372967ffb5c3e32206cda667fc1e675196480",
+  "execution-excerpts.md": "0a00e6aa351e6c15599b10736b0ff554581680ada306b86efeecc4d175109e12",
+  "execution-results.json": "5685a443e6d5465ccdf985f857f516ae1cd5338f17213fd0585e0504f9a2d5db",
+  "independent-report.md": "b0c17d160443530d2277ed7c4c8642ef42fb82e6d00a426b0961ea55d6205062",
+  "lua-errors-result.json": "3d88786befaf563b4f212cafb4df6c655595cc9cbceb9f6b7b580a589627df43",
+  "outcome.json": "001e3e308890f0e9d328e17551e96698c8ca0fb82d8198c386a423c1bc1e0eef",
+  "p801-sweep-result.json": "61af5ae81281588fdaffca7f4e2a8a2ff67f2836779878b172f7379f34e340bf",
+  "prefork_full_ui-artifact.json": "38727c137e8a086f3c675419b5dd1868a4dd8eea278005c825437fa4d2cef1b4",
+  "publication-row.json": "9dcc4e257c5e027ae469cc9b17b95251a3eeef210acdde3586760c86b39dcfc3",
+  "source-receipt-sha256.json": "9f93a7664dd87990ef167e74c64e49e6e0c5228b66442b0992027436c53b9e8b",
+  "submission.json": "0bdbd0fe69ad05b183cde49b85dcfe0f8763feb911cd370293d18152f0c97016",
+  "wow-sim-artifact.json": "e1d56e4b8a1c97a84f8c83303b8f4bdaaabecb3c32b4c14353dd080fd863942e"
+}

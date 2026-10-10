@@ -1,0 +1,13 @@
+{
+  "argv": [
+    "/usr/bin/timeout",
+    "90",
+    "[private-green-epoch]/wow-sim-sealed",
+    "--no-addons",
+    "--no-saved-vars",
+    "lua-errors"
+  ],
+  "artifact_unchanged": true,
+  "exit": 0,
+  "mode": "separate stored-error CLI disables CASC; stock noaddons noSV"
+}

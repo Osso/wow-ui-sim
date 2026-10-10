@@ -1,0 +1,55 @@
+{
+  "artifact.json": {
+    "features": [
+      "aura-containers",
+      "aura-instance-enumeration",
+      "aura-xml-widgets",
+      "base-spell-relationships",
+      "casc",
+      "client-ptr",
+      "forbidden-animation-aspects",
+      "forbidden-aspects",
+      "gui",
+      "native-duration-formatting",
+      "numeric-rule-formatters",
+      "on-update-modes",
+      "player-cast-durations",
+      "retail-12-0-0",
+      "retail-12-0-5",
+      "retail-12-0-7",
+      "retail-12-1-0",
+      "retail-12-1-5",
+      "rodio",
+      "sound",
+      "timed-signal-maps"
+    ],
+    "sha256": "26c3a0dd5716207f7d009b7feb073c08dea726c0e0e23d065280fcc28890f8b5"
+  },
+  "normal-artifact.json": {
+    "features": [
+      "aura-containers",
+      "aura-instance-enumeration",
+      "aura-xml-widgets",
+      "base-spell-relationships",
+      "casc",
+      "client-ptr",
+      "forbidden-animation-aspects",
+      "forbidden-aspects",
+      "gui",
+      "native-duration-formatting",
+      "numeric-rule-formatters",
+      "on-update-modes",
+      "player-cast-durations",
+      "retail-12-0-0",
+      "retail-12-0-5",
+      "retail-12-0-7",
+      "retail-12-1-0",
+      "retail-12-1-5",
+      "rodio",
+      "sound",
+      "timed-signal-maps"
+    ],
+    "fresh": false,
+    "sha256": "70a1ba6261d67311a2420ac062b706c14dc52dd0edbae2e5e2d73bd40ecb2479"
+  }
+}

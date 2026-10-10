@@ -1429,3 +1429,7 @@ Updated [existing private-table row](investigations/patch-3-3-0-api-audit.md#cur
 ## [2026-10-10] audit | Saved b048 receipt retention — FAIL
 
 Updated [saved b048 investigation](investigations/fullsuite-b048-2026-10-10.md), integrated SSOT and scoped index/log statements from external independent report/handoff:15,006PASS/4FAIL/19skips,15,010executions without deduplication. Original3 failures historical; newly observed CPU threshold not proven regression. Later helper/event/map excluded. Collected service cannot prove invocation/acceptance or erase saved successful executions. Sanitized report and byte-identical results JSON sealed under `data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/fullsuite-b048/`; older receipts preserved. Docs/receipt update only; no builds/checks/tests/commits/delegation/cwd change/Bash. Main owns commit; parent OPEN.
+
+## 2026-10-10 — MapDisplay bounded docs/retention
+
+Reconciled [contract](../specs/map-display-info.md), [existing model investigation](investigations/map-display-info-model.md), integrated SSOT/index with independent default86 PASS and P8011 PASS/historical validatorPASS; retained sanitized PTR33+51=84 receipts/correction/hashes. Final PTR independent audit admits84/84 PASS; other five shared-state compile checks exit0/source equality, current getter excluded, six dependency manifest deprecations each. Native/runtime acceptance unknown; parent OPEN. No tests/check/build/source edits/commit/delegation; frozen history untouched.

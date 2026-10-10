@@ -1,0 +1,107 @@
+{
+  "proof_scope": "compile-only; default/PTR existing checks retained without rerun",
+  "results": [
+    {
+      "argv": [
+        "/usr/bin/cargo",
+        "check",
+        "--offline",
+        "--locked",
+        "--no-default-features",
+        "--features",
+        "sound,gui,casc,client-wrath",
+        "-j",
+        "12"
+      ],
+      "command_performed": true,
+      "ended": "2026-10-10T20:15:17.052472+00:00",
+      "exit": 0,
+      "profile": "wrath",
+      "source_equal": true,
+      "started": "2026-10-10T20:14:38.922805+00:00",
+      "stream_errors": []
+    },
+    {
+      "argv": [
+        "/usr/bin/cargo",
+        "check",
+        "--offline",
+        "--locked",
+        "--no-default-features",
+        "--features",
+        "sound,gui,casc,client-mists",
+        "-j",
+        "12"
+      ],
+      "command_performed": true,
+      "ended": "2026-10-10T20:15:49.158729+00:00",
+      "exit": 0,
+      "profile": "mists",
+      "source_equal": true,
+      "started": "2026-10-10T20:15:17.095333+00:00",
+      "stream_errors": []
+    },
+    {
+      "argv": [
+        "/usr/bin/cargo",
+        "check",
+        "--offline",
+        "--locked",
+        "--no-default-features",
+        "--features",
+        "sound,gui,casc,client-era",
+        "-j",
+        "12"
+      ],
+      "command_performed": true,
+      "ended": "2026-10-10T20:16:24.867762+00:00",
+      "exit": 0,
+      "profile": "era",
+      "source_equal": true,
+      "started": "2026-10-10T20:15:49.204988+00:00",
+      "stream_errors": []
+    },
+    {
+      "argv": [
+        "/usr/bin/cargo",
+        "check",
+        "--offline",
+        "--locked",
+        "--no-default-features",
+        "--features",
+        "sound,gui,casc,client-anniversary",
+        "-j",
+        "12"
+      ],
+      "command_performed": true,
+      "ended": "2026-10-10T20:16:56.564670+00:00",
+      "exit": 0,
+      "profile": "anniversary",
+      "source_equal": true,
+      "started": "2026-10-10T20:16:24.911286+00:00",
+      "stream_errors": []
+    },
+    {
+      "argv": [
+        "/usr/bin/cargo",
+        "check",
+        "--offline",
+        "--locked",
+        "--no-default-features",
+        "--features",
+        "sound,gui,casc,client-wowforever",
+        "-j",
+        "12"
+      ],
+      "command_performed": true,
+      "ended": "2026-10-10T20:17:16.188044+00:00",
+      "exit": 0,
+      "profile": "wowforever",
+      "source_equal": true,
+      "started": "2026-10-10T20:16:56.607966+00:00",
+      "stream_errors": []
+    }
+  ],
+  "source_equal": true,
+  "status": "COMPLETED"
+}

@@ -1,0 +1,16 @@
+{
+  "argv": [
+    "/usr/bin/cargo",
+    "check",
+    "--no-default-features",
+    "--features",
+    "sound,gui,casc,client-ptr",
+    "--offline",
+    "--locked",
+    "-j",
+    "12"
+  ],
+  "exit": 0,
+  "revision": "0979952073b64581903283c87d38ba2eae29f2b5",
+  "source_equal": true
+}

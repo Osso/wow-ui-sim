@@ -1,0 +1,28 @@
+{
+  "row_id": "wt-global-api-C_Map.GetMapDisplayInfo-30",
+  "row": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_Map.GetMapDisplayInfo"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "sweep_counts": {
+    "total": 269,
+    "ok": 253,
+    "non_ok": 16
+  },
+  "whole_sweep_exit": 1,
+  "closure_at_63f": "Pending at this saved sweep epoch; later publication-green independent report admits actual simulator test-binary 1 PASS"
+}
