@@ -30,11 +30,13 @@ The first unqualified exact selector ran **0 tests**. Listing identified `spell_
 
 [Exact revision-bound Lua line map](../../../data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/mists-cast-diagnostic/corrections/debug-probe-line-map.json) records saved96 test bytes equal the pre-diagnostic test; textual line7 calls **GetCallstackHeight**, while GetErrorCallstackHeight is line8. The controlled stage trace below falsifies inferring the failing callee from `(string):7`: VM PC reporting can point to the next instruction's line. The actual observed boundary precedes both getters at `secretwrap(marker)()`. No getter overwrite or fallback change made; initialization tracing remains diagnostic work, not acceptance.
 
-## Tooltip clamp fixture — explicit wrap precondition, GREEN unexecuted
+## Tooltip clamp fixture — hidden sizing cause, corrected GREEN pending
 
-Verified 2026-10-09: actual diff `ce485eb623` changes only the clamp fixture's long `AddLine` to explicit `wrap=true` and adds its explanatory comment. Owned 400×300 viewport, owner geometry/anchors and all four edge-containment assertions remain unchanged. The local read-only handoff `/home/osso/.local/state/wow-ui-sim/handoff/tooltip-wrap-contract.md` distinguishes wrapped-content sizing from reposition-only clamping; it does not establish a native guarantee that arbitrary nonwrapped tooltips fit the viewport. No production width/clamp change or native overflow guarantee follows from this fixture correction.
+The earlier `ce485eb623` wrap-only change was ineffective: the [completed four-case audit](#native-four-case-audit--3-pass--1-tooltip-fail) at `2d6d314bd` still fails with the explicitly wrapped row. That failure is not proof that a production viewport-width cap is needed. The original unwrapped RED and later wrapped RED are separate, preserved epochs; compiler `40d2` excludes `ce`/`0769`/`1fb`/`f448`.
 
-The original unwrapped rectangle epoch remains **RED**: width/right416.7 in viewport400×300. This later precondition does not rewrite that receipt or the earlier unexecuted diagnostic attempt. Compiler receipt `40d2` excludes `ce485eb623` and source corrections `0769`/`1fb`/`f448`; current corrected clamp **GREEN not executed**. Parent remains OPEN.
+Source inspection explains the failed precondition: `SetOwner` calls `record_tooltip_owner`, which explicitly hides the tooltip; `AddLine` does not show it; renderer `update_tooltip_sizes` skips invisible tooltips. Thus glyph-backed sizing never runs. The eager estimate `51 * 14 * .55 + 24 = 416.7` and `17 + 15 + 2 + 24 = 58` exactly reproduces the failed rectangle, rather than demonstrating a glyph-measured wrapped overflow.
+
+Inspected fixture-only `96baf069c` restores the **original nonwrapped long row** and explicitly shows **both** right/bottom and top/left clamp controls before sizing. Owned400×300, owner geometry/anchors and every geometry/edge assertion remain unchanged; no production change. Its latest GREEN remains **pending**, not supplied by the older `2d6` audit. Native-client overflow guarantees and parent acceptance remain unproven; parent OPEN.
 
 Actual diff `93d100546` is whitespace-only formatting of the existing `tests/spell_api.rs` spell-texture assertion, addressing its preexisting format failure; no assertion or behavior change. Direct main file-check exit0 is reported, not independently confirmed here: neither supplied handoff nor inspected commit diff is an execution receipt. No formatting command rerun or new check/test credit.
 
@@ -418,6 +420,25 @@ Old marker **RED preserved**: probe_start marker=nil/secretwrap=function; after 
 [Retention manifest](../../../data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/marker-and-three-fixtures/retention-manifest.json) binds **33 files /54,638 bytes**, excluding itself: byte-identical screened audit report/proof, 30 selected runtime receipts/listings/technical stdout files and one [allowlisted compiler receipt](../../../data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/marker-and-three-fixtures/compiler-selected.json). Per-file SHA256/size/origin/privacy decisions retained. Credential/email/private-path screening found zero candidates; bounded screening is not exhaustive privacy certification or external-publication approval. Raw stderr/identity traces, binaries, whole compiler streams, snapshots, private addons/WTF/profiles/account payload not copied; excluded aggregate hashes remain. External dependencies, inherited environment and runtime cache/addons stay outside provenance scope.
 
 No previous-run recertification, full-suite, other-profile, real-WoW/native or current-HEAD claim. **Source-goal OPEN**. Docs/evidence only; no tests/builds/checks/network/operations/delegation/push.
+
+## Native four-case audit — 3 PASS / 1 Tooltip FAIL
+
+[Completed report](../../../data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/native-four-case/audit/report.md) and [proof](../../../data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/native-four-case/audit/proof.json): epoch `20261010T003551Z`, audited **October 10, 2026 00:50:21 UTC**, recorded source `2d6d314bd7f5a94d5cf6527a376b75f6d9eff21d`. “Native” is the workflow label: these are compiled simulator tests, **not native WoW-client execution**.
+
+| Exact selector | Selected / result / exit |
+|---|---|
+| `spell_api::test_spell_get_spell_charges` | 1 / PASS / 0 |
+| `c_spell_static_fallbacks::test_spell_override_maw_epoch_and_explicit_charge_state` | 1 / PASS / 0 |
+| `lua_api::workarounds::temporary::debug_environment_defaults::tests::installs_debug_environment_defaults` | 1 / PASS / 0 |
+| `tooltip_text_layout::test_tooltip_layout_is_clamped_to_viewport_edges` | 1 / FAIL / 101 |
+
+Wrapped Tooltip fails the unchanged right-edge assertion: `LayoutRect { x: 0.0, y: 0.0, width: 416.7, height: 58.0 }`, viewport400×300, right416.7; bottom assertion not reached. The audit itself leaves cause unresolved; later [source/fixture correction](#tooltip-clamp-fixture--hidden-sizing-cause-corrected-green-pending) identifies skipped invisible glyph sizing. This epoch gives bounded PASS to the explicit-charge, Maw/charge and secret round-trip cases, not the later shown-tooltip correction `96baf069c`.
+
+Compiler exit0,739 JSON records/no parse errors/build-finished success; **six manifest deprecations**, not warning-free. Source snapshots3,839/3,839 are byte/parsed equal; only10 listed text files match recorded commit, remaining3,829 un-compared. All34 epoch inputs unchanged through audit. Audit-time executable hashes match saved before/after case hashes; compiler records corroborate executable paths, not sealed compile-time binary hashes or past execution bytes. External dependencies, uncaptured data/cache/addons, inherited environment and untracked index excluded. No full-suite/all-profile/current-HEAD/native-client acceptance.
+
+[Retention manifest](../../../data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/native-four-case/retention-manifest.json): **two byte-identical screened audit receipts /24,211 bytes**, excluding manifest; per-file SHA256/size/origin/privacy decisions. Bounded credential/email/private-payload-path screening found zero candidates; technical local paths/PID remain, not exhaustive privacy certification or publication approval. No raw logs/compiler streams/snapshots/binaries/private payload copied.
+
+Warning-report source/docs commit `a2d301531` is separate and **compiled proof pending**; existing debug-warning flag remains documented. Neither this earlier audit nor the fixture correction establishes clean startup. Historical startup-warning failure remains unchanged. Source-goal **OPEN**; docs/evidence only, no builds/tests/checks/network/operations/delegation/push.
 
 ## Sources
 

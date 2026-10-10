@@ -1,0 +1,459 @@
+{
+  "audited_at_utc": "2026-10-10T00:50:21.946561+00:00",
+  "epoch": "/home/osso/.local/state/wow-ui-sim/verification/native-fixture-roundtrip/20261010T003551Z",
+  "mode": "Existing artifacts only; no reexecution/build/check/network/operations/delegation/repo edits",
+  "revision": "2d6d314bd7f5a94d5cf6527a376b75f6d9eff21d",
+  "source_snapshot": {
+    "before_count": 3839,
+    "after_count": 3839,
+    "parsed_equal": true,
+    "byte_equal": true,
+    "receipt_equal": true
+  },
+  "commit_comparison": {
+    "scope_count": 10,
+    "comparison": [
+      {
+        "path": ".cargo/config.toml",
+        "git_show_exit": 0,
+        "commit_blob_sha256": "77d5c6fce277bdfc1a97ed3425170f552e5db6143d64e45abf1f6b522b973ead",
+        "snapshot_sha256": "77d5c6fce277bdfc1a97ed3425170f552e5db6143d64e45abf1f6b522b973ead",
+        "matches": true
+      },
+      {
+        "path": "Cargo.toml",
+        "git_show_exit": 0,
+        "commit_blob_sha256": "1c56b9a80149ea739d8fc647391b4c45dc32ad70cf5ec7a3576dba92989f3341",
+        "snapshot_sha256": "1c56b9a80149ea739d8fc647391b4c45dc32ad70cf5ec7a3576dba92989f3341",
+        "matches": true
+      },
+      {
+        "path": "Cargo.lock",
+        "git_show_exit": 0,
+        "commit_blob_sha256": "859f258fa21eb92f7f0c83c77d526ea0ce3e7535b0970df2e39c459023c0b9cf",
+        "snapshot_sha256": "859f258fa21eb92f7f0c83c77d526ea0ce3e7535b0970df2e39c459023c0b9cf",
+        "matches": true
+      },
+      {
+        "path": "src/lua_api/globals/spell_api.rs",
+        "git_show_exit": 0,
+        "commit_blob_sha256": "1867c14029a9de0a1a97ad2fbd51d93bb7c8e65dea1be08e77ba25c5138207dd",
+        "snapshot_sha256": "1867c14029a9de0a1a97ad2fbd51d93bb7c8e65dea1be08e77ba25c5138207dd",
+        "matches": true
+      },
+      {
+        "path": "src/lua_api/globals/utility_system_spell/spell_api.rs",
+        "git_show_exit": 0,
+        "commit_blob_sha256": "278d6ba9820355cc186fd113b680eb5a0a7a4ffbb80720c1dfadbc9a5869101c",
+        "snapshot_sha256": "278d6ba9820355cc186fd113b680eb5a0a7a4ffbb80720c1dfadbc9a5869101c",
+        "matches": true
+      },
+      {
+        "path": "src/lua_api/workarounds/temporary/debug_environment_defaults.rs",
+        "git_show_exit": 0,
+        "commit_blob_sha256": "3074d23b34caeb84498ef50652887b915d4b94359648d11bcb6a8d368806247f",
+        "snapshot_sha256": "3074d23b34caeb84498ef50652887b915d4b94359648d11bcb6a8d368806247f",
+        "matches": true
+      },
+      {
+        "path": "tests/integration.rs",
+        "git_show_exit": 0,
+        "commit_blob_sha256": "b85b734b56914dffc909ff95ba3c7b24f9ba4c175fcf10b8c5b680fd4159d981",
+        "snapshot_sha256": "b85b734b56914dffc909ff95ba3c7b24f9ba4c175fcf10b8c5b680fd4159d981",
+        "matches": true
+      },
+      {
+        "path": "tests/spell_api.rs",
+        "git_show_exit": 0,
+        "commit_blob_sha256": "d281fd3909e89dc70830d2cfc644aaed478ea377b8ca39c0cc5f66c6d6de9fc0",
+        "snapshot_sha256": "d281fd3909e89dc70830d2cfc644aaed478ea377b8ca39c0cc5f66c6d6de9fc0",
+        "matches": true
+      },
+      {
+        "path": "tests/c_spell_static_fallbacks.rs",
+        "git_show_exit": 0,
+        "commit_blob_sha256": "d9a6cb7b6c057f89896b862ddd62f14da2211b7ae8967b1b1c11c1557accbeef",
+        "snapshot_sha256": "d9a6cb7b6c057f89896b862ddd62f14da2211b7ae8967b1b1c11c1557accbeef",
+        "matches": true
+      },
+      {
+        "path": "tests/tooltip_text_layout.rs",
+        "git_show_exit": 0,
+        "commit_blob_sha256": "32953f3cd598adfd6919e199320ba385318caac0b4ef04f0f77a831ac28618ee",
+        "snapshot_sha256": "32953f3cd598adfd6919e199320ba385318caac0b4ef04f0f77a831ac28618ee",
+        "matches": true
+      }
+    ],
+    "full_commit_comparison_performed": false,
+    "limits": "Only listed UTF-8 text blobs compared using individual git show against recorded source SHA256. Remaining 3829 snapshot entries not compared with commit; source snapshot equality does not prove full-commit equality. No current HEAD acceptance."
+  },
+  "compiler": {
+    "argv": [
+      "/usr/bin/cargo",
+      "test",
+      "--offline",
+      "--locked",
+      "--lib",
+      "--test",
+      "integration",
+      "--no-run",
+      "--message-format=json"
+    ],
+    "argv_matches_receipt": true,
+    "cwd_matches_receipt": true,
+    "exit": 0,
+    "outcome_exit": 0,
+    "json_records": 739,
+    "json_parse_error_lines": [],
+    "build_finished": [
+      {
+        "reason": "build-finished",
+        "success": true
+      }
+    ],
+    "manifest_warning_count": 6
+  },
+  "artifacts": [
+    {
+      "kind": "lib",
+      "path": "/home/osso/Projects/wow/wow-ui-sim/target/debug/deps/wow_ui_sim-bcad23723a7b3b0d",
+      "recorded_sha256": "6d2e6db638d72595b7a6f6cdc29155dbe406b3b07430e1622c973e7c064a6b37",
+      "audit_before_sha256": "6d2e6db638d72595b7a6f6cdc29155dbe406b3b07430e1622c973e7c064a6b37",
+      "compiler_record_present": true,
+      "executable_matches": true,
+      "profile": {
+        "opt_level": "1",
+        "debuginfo": "line-tables-only",
+        "debug_assertions": true,
+        "overflow_checks": true,
+        "test": true
+      },
+      "features": [
+        "aura-containers",
+        "aura-instance-enumeration",
+        "aura-xml-widgets",
+        "base-spell-relationships",
+        "casc",
+        "client-retail",
+        "default",
+        "forbidden-aspects",
+        "gui",
+        "native-duration-formatting",
+        "numeric-rule-formatters",
+        "on-update-modes",
+        "player-cast-durations",
+        "profile-retail",
+        "retail-12-0-0",
+        "retail-12-0-5",
+        "retail-12-0-7",
+        "retail-12-1-0",
+        "rodio",
+        "sound"
+      ],
+      "audit_after_sha256": "6d2e6db638d72595b7a6f6cdc29155dbe406b3b07430e1622c973e7c064a6b37",
+      "audit_hash_equal": true,
+      "current_artifact_matches_recorded": true
+    },
+    {
+      "kind": "integration",
+      "path": "/home/osso/Projects/wow/wow-ui-sim/target/debug/deps/integration-1db16289b0998b2a",
+      "recorded_sha256": "2824b6994960d09eb4a7b8990b8987b8b9fe21ed9cc804672bfb042a389a4dc2",
+      "audit_before_sha256": "2824b6994960d09eb4a7b8990b8987b8b9fe21ed9cc804672bfb042a389a4dc2",
+      "compiler_record_present": true,
+      "executable_matches": true,
+      "profile": {
+        "opt_level": "1",
+        "debuginfo": "line-tables-only",
+        "debug_assertions": true,
+        "overflow_checks": true,
+        "test": true
+      },
+      "features": [
+        "aura-containers",
+        "aura-instance-enumeration",
+        "aura-xml-widgets",
+        "base-spell-relationships",
+        "casc",
+        "client-retail",
+        "default",
+        "forbidden-aspects",
+        "gui",
+        "native-duration-formatting",
+        "numeric-rule-formatters",
+        "on-update-modes",
+        "player-cast-durations",
+        "profile-retail",
+        "retail-12-0-0",
+        "retail-12-0-5",
+        "retail-12-0-7",
+        "retail-12-1-0",
+        "rodio",
+        "sound"
+      ],
+      "audit_after_sha256": "2824b6994960d09eb4a7b8990b8987b8b9fe21ed9cc804672bfb042a389a4dc2",
+      "audit_hash_equal": true,
+      "current_artifact_matches_recorded": true
+    }
+  ],
+  "cases": [
+    {
+      "case": 1,
+      "selector": "spell_api::test_spell_get_spell_charges",
+      "argv": [
+        "/usr/bin/timeout",
+        "90",
+        "/home/osso/Projects/wow/wow-ui-sim/target/debug/deps/integration-1db16289b0998b2a",
+        "--exact",
+        "spell_api::test_spell_get_spell_charges",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "exit": 0,
+      "selector_exit": 0,
+      "selected_tests": [
+        "spell_api::test_spell_get_spell_charges"
+      ],
+      "selector_count": 1,
+      "selector_matches": true,
+      "selector_stderr_empty": true,
+      "summary_lines": [
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10697 filtered out; finished in 0.10s"
+      ],
+      "counts": {
+        "passed": 1,
+        "failed": 0,
+        "ignored": 0,
+        "measured": 0,
+        "filtered_out": 10697
+      },
+      "summary_receipt_matches": true,
+      "aggregate_receipt_matches": true,
+      "stdout_hash_matches": true,
+      "stderr_hash_matches": true,
+      "compiled_revision_matches": true,
+      "artifact_sha256_before": "2824b6994960d09eb4a7b8990b8987b8b9fe21ed9cc804672bfb042a389a4dc2",
+      "artifact_sha256_after": "2824b6994960d09eb4a7b8990b8987b8b9fe21ed9cc804672bfb042a389a4dc2",
+      "run_hash_equal": true,
+      "artifact_receipt_matches": true,
+      "environment_overrides": {}
+    },
+    {
+      "case": 2,
+      "selector": "c_spell_static_fallbacks::test_spell_override_maw_epoch_and_explicit_charge_state",
+      "argv": [
+        "/usr/bin/timeout",
+        "90",
+        "/home/osso/Projects/wow/wow-ui-sim/target/debug/deps/integration-1db16289b0998b2a",
+        "--exact",
+        "c_spell_static_fallbacks::test_spell_override_maw_epoch_and_explicit_charge_state",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "exit": 0,
+      "selector_exit": 0,
+      "selected_tests": [
+        "c_spell_static_fallbacks::test_spell_override_maw_epoch_and_explicit_charge_state"
+      ],
+      "selector_count": 1,
+      "selector_matches": true,
+      "selector_stderr_empty": true,
+      "summary_lines": [
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10697 filtered out; finished in 0.10s"
+      ],
+      "counts": {
+        "passed": 1,
+        "failed": 0,
+        "ignored": 0,
+        "measured": 0,
+        "filtered_out": 10697
+      },
+      "summary_receipt_matches": true,
+      "aggregate_receipt_matches": true,
+      "stdout_hash_matches": true,
+      "stderr_hash_matches": true,
+      "compiled_revision_matches": true,
+      "artifact_sha256_before": "2824b6994960d09eb4a7b8990b8987b8b9fe21ed9cc804672bfb042a389a4dc2",
+      "artifact_sha256_after": "2824b6994960d09eb4a7b8990b8987b8b9fe21ed9cc804672bfb042a389a4dc2",
+      "run_hash_equal": true,
+      "artifact_receipt_matches": true,
+      "environment_overrides": {}
+    },
+    {
+      "case": 3,
+      "selector": "lua_api::workarounds::temporary::debug_environment_defaults::tests::installs_debug_environment_defaults",
+      "argv": [
+        "/usr/bin/timeout",
+        "90",
+        "/home/osso/Projects/wow/wow-ui-sim/target/debug/deps/wow_ui_sim-bcad23723a7b3b0d",
+        "--exact",
+        "lua_api::workarounds::temporary::debug_environment_defaults::tests::installs_debug_environment_defaults",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "exit": 0,
+      "selector_exit": 0,
+      "selected_tests": [
+        "lua_api::workarounds::temporary::debug_environment_defaults::tests::installs_debug_environment_defaults"
+      ],
+      "selector_count": 1,
+      "selector_matches": true,
+      "selector_stderr_empty": true,
+      "summary_lines": [
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 1977 filtered out; finished in 0.11s"
+      ],
+      "counts": {
+        "passed": 1,
+        "failed": 0,
+        "ignored": 0,
+        "measured": 0,
+        "filtered_out": 1977
+      },
+      "summary_receipt_matches": true,
+      "aggregate_receipt_matches": true,
+      "stdout_hash_matches": true,
+      "stderr_hash_matches": true,
+      "compiled_revision_matches": true,
+      "artifact_sha256_before": "6d2e6db638d72595b7a6f6cdc29155dbe406b3b07430e1622c973e7c064a6b37",
+      "artifact_sha256_after": "6d2e6db638d72595b7a6f6cdc29155dbe406b3b07430e1622c973e7c064a6b37",
+      "run_hash_equal": true,
+      "artifact_receipt_matches": true,
+      "environment_overrides": {
+        "WOW_SIM_TRACE_DEBUG_GETTERS": "1"
+      }
+    },
+    {
+      "case": 4,
+      "selector": "tooltip_text_layout::test_tooltip_layout_is_clamped_to_viewport_edges",
+      "argv": [
+        "/usr/bin/timeout",
+        "90",
+        "/home/osso/Projects/wow/wow-ui-sim/target/debug/deps/integration-1db16289b0998b2a",
+        "--exact",
+        "tooltip_text_layout::test_tooltip_layout_is_clamped_to_viewport_edges",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "exit": 101,
+      "selector_exit": 0,
+      "selected_tests": [
+        "tooltip_text_layout::test_tooltip_layout_is_clamped_to_viewport_edges"
+      ],
+      "selector_count": 1,
+      "selector_matches": true,
+      "selector_stderr_empty": true,
+      "summary_lines": [
+        "test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 10697 filtered out; finished in 0.10s"
+      ],
+      "counts": {
+        "passed": 0,
+        "failed": 1,
+        "ignored": 0,
+        "measured": 0,
+        "filtered_out": 10697
+      },
+      "summary_receipt_matches": true,
+      "aggregate_receipt_matches": true,
+      "stdout_hash_matches": true,
+      "stderr_hash_matches": true,
+      "compiled_revision_matches": true,
+      "artifact_sha256_before": "2824b6994960d09eb4a7b8990b8987b8b9fe21ed9cc804672bfb042a389a4dc2",
+      "artifact_sha256_after": "2824b6994960d09eb4a7b8990b8987b8b9fe21ed9cc804672bfb042a389a4dc2",
+      "run_hash_equal": true,
+      "artifact_receipt_matches": true,
+      "environment_overrides": {},
+      "failure_lines": [
+        "thread 'tooltip_text_layout::test_tooltip_layout_is_clamped_to_viewport_edges' (518635) panicked at /home/osso/Projects/wow/wow-ui-sim/tests/tooltip_text_layout.rs:191:5:",
+        "Tooltip right edge is outside viewport: rect=LayoutRect { x: 0.0, y: 0.0, width: 416.7, height: 58.0 }, screen=400x300, right=416.7"
+      ]
+    }
+  ],
+  "input_artifact_hashes_before": {
+    "cargo-result.json": "0af51bd8ecd3e03e8ca62ae0a747db92fe33e154287452a847fe45c64466db31",
+    "case1/outcome.json": "0b36eaec00cc57c75c5cf31afbdac7ee9e9ba1bc464ea9a017563cc5d8a08541",
+    "case1/selector-list.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "case1/selector-list.stdout": "cb070d9d9d4a5d083fcc40cbea54f77d218b4a2a3c14f27742587f80b3b65575",
+    "case1/stderr": "a5874f314b50c934c858cf2fa55bb8ac0f83ba721e569572d6f60fce8e97d3cb",
+    "case1/stdout": "086775f321b11811be4f57eba116c9f3350cadab06f951b100d7e3ef8e932ddc",
+    "case1/submission.json": "a0814ffbc5e76eb22b71eb9542262753f1fbe20c52bf8647c3c3d40f8f1817f5",
+    "case2/outcome.json": "f064ddbb5a46d1c94fc656cbb241f32abc4ca3d16db284860cb96efcc35d304d",
+    "case2/selector-list.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "case2/selector-list.stdout": "7e3738b34bdd39a05ac988664f3289b8aa466b786399e68af65e3905dcc15818",
+    "case2/stderr": "c5d9fa39e7c1c6cd13c4129504eb04cb21e6d222e1b0d11989612b4913664751",
+    "case2/stdout": "1ed35e1bea68889645766cd06c559cac612581d739339783ae8911453097e1c3",
+    "case2/submission.json": "ff16d32716db2f2187737dfa7c6af1718af2dbaff4b3935d480b3114af30c45a",
+    "case3/outcome.json": "e56de64e71f83bd93d2fd4652d256e24ec810addee12e848298d325799d74feb",
+    "case3/selector-list.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "case3/selector-list.stdout": "7a82e80f8d9ece17b496d0d8385986fe53b77fc3bea066a156bd766f21f8e99d",
+    "case3/stderr": "3c4d008a08d70a9e6fc61c5f6e77892be14fa0bbee5b00301cfef626cf6ceee5",
+    "case3/stdout": "fecd83d423b8c60986bc12a06888d3464d1ad6ec1e40def3d931559fbf293712",
+    "case3/submission.json": "f27a479ece40bbd9b384f54d14380bf65e770c169894a708e6ca19fffd36fa89",
+    "case4/outcome.json": "d5a6989652a979a15cd4202627590654a26597d775737ad0a7bc7b517600de24",
+    "case4/selector-list.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "case4/selector-list.stdout": "c491a799938f1be2feaea0ce77d7e00b341631a0edeb9ea1ec2a7fe89238d823",
+    "case4/stderr": "28e4c5577ba8d92af7a38cfd6107503a5aa655f668fce8e5d71b85b8031dcb31",
+    "case4/stdout": "4243539c687648766abdc40e478bf1fe9c88e518fa043c1225f588ca15f9ff07",
+    "case4/submission.json": "f0d85aee0db6b769d186f6e8d9fef1ab5d450f251dbdf22f9e4a4c2a99736fca",
+    "compile.stderr": "945a890f22342f4ec3c87c99b403faff3bc17c66a87a1e4c77c01836150801ba",
+    "compile.stdout": "34cfd59b74438fe500ab9a7798c3ffd9cfe7fdcab1c17b57bbf28d3b1276295b",
+    "four-case-results.json": "f2336c7ce9af0f3558b10585c07f7c38254333f69f30a9d4a31dbe9c36ebb51e",
+    "outcome.json": "ed5dc444f02d09cb0fc8d060ab17b74252d3879051cb9a7886f25c9c60ddac56",
+    "resources.json": "b805df004dcc119e053da78985cd00ca1f3c97982e2937e1ca490bb3ab6d9063",
+    "run-artifacts.json": "572c13c45cdfc471662a9e9f09462db108559691de309482bb234e576eedcdfb",
+    "source-after.json": "92dc4750ef450c76ed27d55b5544fe2d688cc2da2218d77abd9a96347d125ba1",
+    "source-before.json": "92dc4750ef450c76ed27d55b5544fe2d688cc2da2218d77abd9a96347d125ba1",
+    "submission.json": "25d78e988ee36c0fb8bbe0773443bb5346dc641d2afad43cec20aa8573f55e95"
+  },
+  "input_artifact_hashes_after": {
+    "cargo-result.json": "0af51bd8ecd3e03e8ca62ae0a747db92fe33e154287452a847fe45c64466db31",
+    "case1/outcome.json": "0b36eaec00cc57c75c5cf31afbdac7ee9e9ba1bc464ea9a017563cc5d8a08541",
+    "case1/selector-list.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "case1/selector-list.stdout": "cb070d9d9d4a5d083fcc40cbea54f77d218b4a2a3c14f27742587f80b3b65575",
+    "case1/stderr": "a5874f314b50c934c858cf2fa55bb8ac0f83ba721e569572d6f60fce8e97d3cb",
+    "case1/stdout": "086775f321b11811be4f57eba116c9f3350cadab06f951b100d7e3ef8e932ddc",
+    "case1/submission.json": "a0814ffbc5e76eb22b71eb9542262753f1fbe20c52bf8647c3c3d40f8f1817f5",
+    "case2/outcome.json": "f064ddbb5a46d1c94fc656cbb241f32abc4ca3d16db284860cb96efcc35d304d",
+    "case2/selector-list.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "case2/selector-list.stdout": "7e3738b34bdd39a05ac988664f3289b8aa466b786399e68af65e3905dcc15818",
+    "case2/stderr": "c5d9fa39e7c1c6cd13c4129504eb04cb21e6d222e1b0d11989612b4913664751",
+    "case2/stdout": "1ed35e1bea68889645766cd06c559cac612581d739339783ae8911453097e1c3",
+    "case2/submission.json": "ff16d32716db2f2187737dfa7c6af1718af2dbaff4b3935d480b3114af30c45a",
+    "case3/outcome.json": "e56de64e71f83bd93d2fd4652d256e24ec810addee12e848298d325799d74feb",
+    "case3/selector-list.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "case3/selector-list.stdout": "7a82e80f8d9ece17b496d0d8385986fe53b77fc3bea066a156bd766f21f8e99d",
+    "case3/stderr": "3c4d008a08d70a9e6fc61c5f6e77892be14fa0bbee5b00301cfef626cf6ceee5",
+    "case3/stdout": "fecd83d423b8c60986bc12a06888d3464d1ad6ec1e40def3d931559fbf293712",
+    "case3/submission.json": "f27a479ece40bbd9b384f54d14380bf65e770c169894a708e6ca19fffd36fa89",
+    "case4/outcome.json": "d5a6989652a979a15cd4202627590654a26597d775737ad0a7bc7b517600de24",
+    "case4/selector-list.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "case4/selector-list.stdout": "c491a799938f1be2feaea0ce77d7e00b341631a0edeb9ea1ec2a7fe89238d823",
+    "case4/stderr": "28e4c5577ba8d92af7a38cfd6107503a5aa655f668fce8e5d71b85b8031dcb31",
+    "case4/stdout": "4243539c687648766abdc40e478bf1fe9c88e518fa043c1225f588ca15f9ff07",
+    "case4/submission.json": "f0d85aee0db6b769d186f6e8d9fef1ab5d450f251dbdf22f9e4a4c2a99736fca",
+    "compile.stderr": "945a890f22342f4ec3c87c99b403faff3bc17c66a87a1e4c77c01836150801ba",
+    "compile.stdout": "34cfd59b74438fe500ab9a7798c3ffd9cfe7fdcab1c17b57bbf28d3b1276295b",
+    "four-case-results.json": "f2336c7ce9af0f3558b10585c07f7c38254333f69f30a9d4a31dbe9c36ebb51e",
+    "outcome.json": "ed5dc444f02d09cb0fc8d060ab17b74252d3879051cb9a7886f25c9c60ddac56",
+    "resources.json": "b805df004dcc119e053da78985cd00ca1f3c97982e2937e1ca490bb3ab6d9063",
+    "run-artifacts.json": "572c13c45cdfc471662a9e9f09462db108559691de309482bb234e576eedcdfb",
+    "source-after.json": "92dc4750ef450c76ed27d55b5544fe2d688cc2da2218d77abd9a96347d125ba1",
+    "source-before.json": "92dc4750ef450c76ed27d55b5544fe2d688cc2da2218d77abd9a96347d125ba1",
+    "submission.json": "25d78e988ee36c0fb8bbe0773443bb5346dc641d2afad43cec20aa8573f55e95"
+  },
+  "input_artifacts_unchanged": true,
+  "limits": [
+    "external path dependencies",
+    "data inputs outside captured tracked src/tests/build/config scope",
+    "inherited environment",
+    "runtime cache/addon files outside source scope",
+    "untracked index",
+    "Recorded four exact simulator tests only; not native-client behavior, current HEAD, all profiles, or full-scope PASS.",
+    "Compiler success is not warning-free: six recorded manifest deprecation warnings."
+  ],
+  "overall": "FAIL: case4, 3 passed / 1 failed",
+  "wrapped_tooltip_source": {
+    "explicit_wrap_true_present": true,
+    "source_reference": "tests/tooltip_text_layout.rs:161-163",
+    "assertion_reference": "tests/tooltip_text_layout.rs:191-196",
+    "assertion_unchanged_by_audit": true
+  }
+}

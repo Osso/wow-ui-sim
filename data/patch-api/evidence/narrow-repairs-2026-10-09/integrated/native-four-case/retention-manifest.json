@@ -1,0 +1,30 @@
+{
+  "epoch": "20261010T003551Z",
+  "recorded_revision": "2d6d314bd7f5a94d5cf6527a376b75f6d9eff21d",
+  "scope": "Two byte-identical screened audit receipts only; manifest excluded from count. Existing-artifact retention, no execution or current-HEAD acceptance.",
+  "file_count": 2,
+  "total_bytes": 24211,
+  "files": [
+    {
+      "path": "audit/report.md",
+      "origin": "/home/osso/.local/state/wow-ui-sim/verification/native-fixture-roundtrip/20261010T003551Z/audit/report.md",
+      "bytes": 3471,
+      "sha256": "d51cb7b2c3798f026cd319baeaefbf11876bde00e0b044d712142e1105a2031d",
+      "privacy": "Bounded credential/email/private-payload-path screening: zero candidates. Technical local paths and PID retained; no raw stream/private payload copied."
+    },
+    {
+      "path": "audit/proof.json",
+      "origin": "/home/osso/.local/state/wow-ui-sim/verification/native-fixture-roundtrip/20261010T003551Z/audit/proof.json",
+      "bytes": 20740,
+      "sha256": "d341a2422361fc90b79f8fa01b2594de14eae226f668ddc184b97e74307b1c91",
+      "privacy": "Bounded credential/email/private-payload-path screening: zero candidates. Technical local paths and PID retained; no raw stream/private payload copied."
+    }
+  ],
+  "excluded": [
+    "raw stdout/stderr and compiler streams",
+    "source snapshots",
+    "binaries",
+    "private addon/WTF/profile/account payload"
+  ],
+  "screening_limits": "Bounded screening, not exhaustive privacy certification or publication approval."
+}
