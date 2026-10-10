@@ -65,10 +65,7 @@ pub(crate) fn establish_child_process_group(setup_fd: RawFd) -> Result<(), Strin
     Ok(())
 }
 
-pub(crate) fn verify_and_release_child(
-    pid: libc::pid_t,
-    setup_fd: OwnedFd,
-) -> Result<(), String> {
+pub(crate) fn verify_and_release_child(pid: libc::pid_t, setup_fd: OwnedFd) -> Result<(), String> {
     await_child_process_group(pid, &setup_fd)?;
     verify_child_process_group(pid)?;
     send_all_socket(

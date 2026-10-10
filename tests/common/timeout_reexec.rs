@@ -1,9 +1,9 @@
+use super::TIMEOUT_FIXTURE_CAPACITY_ENV;
 use super::prefork_process::{
     configure_command_process_group, kill_process_group_and_child, signal_process_group,
     terminate_and_reap_child,
 };
 use super::workload_gate::{self, Mode};
-use super::TIMEOUT_FIXTURE_CAPACITY_ENV;
 use std::env;
 use std::fs::{self, File, OpenOptions};
 use std::io::{self, Read, Write};
@@ -143,7 +143,10 @@ fn execute_timeout_child(test_name: &str, secs: u64) -> ChildExecution {
 
 fn spawn_child_drains(
     child: &mut Child,
-) -> (JoinHandle<io::Result<Vec<u8>>>, JoinHandle<io::Result<Vec<u8>>>) {
+) -> (
+    JoinHandle<io::Result<Vec<u8>>>,
+    JoinHandle<io::Result<Vec<u8>>>,
+) {
     let stdout = child
         .stdout
         .take()
@@ -198,9 +201,9 @@ fn timeout_child_failure(
             "timeout child for `{test_name}` failed ({}){handshake_detail}",
             describe_status(status)
         )),
-        Ok(Completion::TimedOut) => {
-            Some(format!("test `{test_name}` timed out after {secs}s{handshake_detail}"))
-        }
+        Ok(Completion::TimedOut) => Some(format!(
+            "test `{test_name}` timed out after {secs}s{handshake_detail}"
+        )),
         Err(error) => Some(format!(
             "timeout child for `{test_name}` could not be collected: {error}"
         )),
