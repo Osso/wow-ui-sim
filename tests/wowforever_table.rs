@@ -49,7 +49,7 @@ fn wowforever_table_does_not_leak_into_earlier_profiles() {
     let count_contract = if cfg!(any(feature = "retail-12-1-0", feature = "client-mists")) {
         r#"
         local entries = {[1] = "array", [2] = false, named = "hash"}
-        assert(select("#", table.count(entries)) == 3)
+        assert(select('#', table.count(entries)) == 3)
         local total, array, maximum = table.count(entries)
         assert(total == 3 and array == 2 and maximum == 2)
         "#
