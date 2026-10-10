@@ -216,7 +216,7 @@ fn execute_budgeted_addon_file(
     state: &mut LuaState,
     func: rilua::Function,
     ctx: &AddonContext,
-    _chunk_name: &str,
+    chunk_name: &str,
 ) -> Result<rilua::Val, LoadError> {
     #[cfg(feature = "retail-12-0-5")]
     return crate::lua_api::execution_budget::with_addon_budget(state, ctx.name, |state| {
@@ -230,7 +230,7 @@ fn execute_budgeted_addon_file(
                 "{}",
                 crate::lua_api::execution_budget::format_file_budget_error(
                     ctx.name,
-                    _chunk_name,
+                    chunk_name,
                     before,
                     state.instruction_budget(ctx.name),
                 )
@@ -240,7 +240,10 @@ fn execute_budgeted_addon_file(
     })
     .map_err(|error| LoadError::Lua(error.to_string()));
     #[cfg(not(feature = "retail-12-0-5"))]
-    exec_addon_func(state, func, ctx)
+    {
+        let _ = chunk_name;
+        exec_addon_func(state, func, ctx)
+    }
 }
 
 fn contextual_lua_load_error(
