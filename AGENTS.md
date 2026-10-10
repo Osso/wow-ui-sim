@@ -153,21 +153,17 @@ The image is optimized for headless test commands (`run-tests`, `self-test`, `lu
 
 **Texture Coordinates**: 8 values - `tlx, tly, blx, bly, trx, try, brx, bry` (top-left, bottom-left, top-right, bottom-right)
 
-### Method/Property Lookup on UserData
+### Method/Property Lookup on Frame Tables
 
 `env_init/frames.rs` registers method groups on one base frame metatable and clones its method entries into a shared `__index`, excluding `__*` keys. `methods/frame_metatable.rs` caches per-widget metatable clones whose `__index` omits named scroll/message methods and `SetStatusBarAtlas` for StatusBar; WorldFrame uses the base metatable. `methods.rs::attach_frame_metatable` attaches the selected metatable to the Lua frame table, so the filtered index participates in ordinary method lookup as well as `getmetatable(frame).__index` enumeration. There is no `is_method_allowed` registry. Shared registration alone does not establish that every method dispatches on every widget type; inspect the attached index and instance fields when diagnosing a nil method.
 
-### UserData vs Table: rawset/rawget
+### Frame Representation and Debug Fields
 
-`FrameRef` is a UserData that `type()` reports as `"table"` (custom metamethod), but it is NOT a Lua table. `rawset(frame, key, val)` and `rawget(frame, key)` will **fail** with "table expected, got userdata". To access or clear per-frame fields (children, mixin overrides, custom properties), use `debug.getfenv(frame)[1]`:
+Source-inspected 2026-10-09: [`methods.rs::frame_ref`](src/lua_api/methods.rs) caches and returns actual `Val::Table` values. [`table_builder.rs::create_frame_table`](src/lua_bridge/table_builder.rs) allocates a Lua table with native `(index, generation)` backing and a separate identity token at slot `[0]`; the frame itself is not userdata. [`from_stack.rs::FrameRef<A>`](src/lua_bridge/from_stack.rs) is a Rust-side typed handle/extraction abstraction, not the Lua value type. Method lookup evidence lives in the [method-dispatch wiki](docs/wiki/investigations/method-dispatch-refactor.md).
 
-```lua
--- Clear a field from a frame's per-instance table
-local env = debug.getfenv(frame)
-if env and env[1] then rawset(env[1], "SetPoint", nil) end
-```
+`methods.rs::get_frame_env_for_debug`, registered as `__wow_get_frame_env`, returns a new envelope table whose slot `[1]` contains the per-frame fields table. `env_init/frames.rs::frame_newindex` writes assignments handled by this metamethod to both the frame table and the fields table. This does not prove that clearing the fields mirror clears the raw frame entry.
 
-This is the table checked by `__index` (in `PATCH_INDEX_LUA` in `metatable.rs`). EditMode overrides like `SetPointOverride`, `SetScaleOverride`, `ClearAllPointsOverride` are stored here by `OnSystemLoad` and shadow the Rust methods.
+Public `rawget`, `rawset`, `type`, and `debug.getfenv` wrapper behavior is unverified here, including the public `debug.getfenv(frame)[1]` path. Table representation invalidates the old userdata-failure rationale; it does not establish unconditional raw-operation success, exact public `type` output, or native WoW parity.
 
 ## Lua + Rust Architecture
 
@@ -179,35 +175,17 @@ WoW frames exist in **two parallel systems** that must stay in sync:
 - Parent-child via `children: Vec<u64>` and `children_keys: HashMap<String, u64>`
 
 ### Lua Side (WoW API)
-- `FrameHandle` userdata with metatables
+- Frame-backed Lua tables with widget-specific metatables (see [representation](#frame-representation-and-debug-fields))
 - Used for running actual addon Lua code
 - Parent-child via Lua table properties: `parent.TitleContainer = frame`
 
 ### How They Connect
 
-Each `FrameHandle` stores an `id: u64` pointing to the Rust `Frame`. Method calls like `:SetText()` use this ID to update Rust state:
-
-```rust
-methods.add_method("SetText", |_, this, text: String| {
-    let mut state = this.state.borrow_mut();
-    state.widgets.get_mut(this.id).text = Some(text);  // Updates Rust via ID
-});
-```
+`methods.rs::frame_id_from_val` requires a frame-backed Lua table and resolves its widget ID from the slot `[0]` identity token, or the table's native backing when that token is missing or invalid. `pack_id` combines the backing pair into a `u64` ID used to address Rust widget state.
 
 ### Automatic Sync via `__newindex`
 
-When Lua assigns a frame to a property (`parent.Child = frame`), the `__newindex` metamethod automatically syncs to Rust `children_keys`:
-
-```rust
-// In FrameHandle's __newindex metamethod (globals.rs)
-if let Value::UserData(child_ud) = &value {
-    if let Ok(child_handle) = child_ud.borrow::<FrameHandle>() {
-        parent_frame.children_keys.insert(key, child_handle.id);
-    }
-}
-```
-
-This allows Rust methods like `SetTitle()` to find child frames via fast HashMap lookup instead of querying Lua. Test: `test_lua_property_syncs_to_rust_children_keys`.
+[`env_init/frames.rs::frame_newindex`](src/lua_api/env_init/frames.rs) mirrors assignments it handles into the frame table and per-frame fields. For string keys, it resolves a frame-valued assignment with `extract_frame_id` and inserts the child ID into the parent's Rust `children_keys`; non-frame values remove that key. `sync_child_key` also sets the child's `parent_key` when absent. This describes the inspected metamethod path, not proof that every public assignment or raw operation traverses it.
 
 ### XML Script Inheritance (`inherit="prepend"` / `inherit="append"`)
 
