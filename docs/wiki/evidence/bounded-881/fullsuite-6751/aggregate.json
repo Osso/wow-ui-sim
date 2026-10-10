@@ -1,0 +1,71 @@
+{
+  "audit_kind": "saved-artifact independent comparison; no commands or test execution",
+  "baseline_current_reference": {
+    "historical_attestation": false,
+    "path": "/home/osso/bin/full-suite",
+    "relevant_lines": [
+      11,
+      83,
+      86,
+      87,
+      90,
+      91,
+      112
+    ]
+  },
+  "baseline_semantics": "Receipt new_failures is declared relative to the runner master-latest.json baseline, not the retained 8e run. Baseline bytes/SHA at 6751 execution are not archived in the receipt. Garrison fails in both actual saved runs; its declared-new entry does not establish a regression versus 8e. Current runner reference corroborates calculation, not historical installed-runner provenance.",
+  "limitations": [
+    "Skipped-selector identities unavailable; only aggregate counts proven.",
+    "Selectors unchanged is not proof assertions, fixtures, executable bytes or environment are unchanged.",
+    "Hashes bind current saved bytes, not historical immutability or executable/source linkage.",
+    "Logs concatenate streams; line order is not event chronology."
+  ],
+  "parent_ready": false,
+  "raw_payloads_published": false,
+  "retained_8e_checks": {
+    "counts_match": true,
+    "hash_matches": {
+      "/home/osso/.local/state/wow-ui-sim/verification/fullsuite-8e-comparison/aggregate.json": true,
+      "/home/osso/.local/state/wow-ui-sim/verification/fullsuite-8e-comparison/report.md": true,
+      "/home/osso/Projects/wow/full-suite-results/8e6bc113f4c2c47ad693fa7fcb19ddf6bef48476.json": true,
+      "/home/osso/Projects/wow/full-suite-results/8e6bc113f4c2c47ad693fa7fcb19ddf6bef48476.log": true
+    }
+  },
+  "retention_note": "Compact derivative; per-selector inventories remain private.",
+  "runs": {
+    "6751": {
+      "counts": {
+        "executed": 14997,
+        "failed": 3,
+        "passed": 14994,
+        "skipped": 19
+      },
+      "sha": "6751c0f37088de11d0cc864f9313922a5b9cbdab",
+      "status": "FAIL",
+      "wall_seconds": 1176.0
+    },
+    "8e": {
+      "counts": {
+        "executed": 14997,
+        "failed": 3,
+        "passed": 14994,
+        "skipped": 19
+      },
+      "sha": "8e6bc113f4c2c47ad693fa7fcb19ddf6bef48476",
+      "status": "FAIL",
+      "wall_seconds": 1049.0
+    }
+  },
+  "selector_comparison": {
+    "added": 0,
+    "newly_failing_vs_8e": 0,
+    "removed": 0,
+    "status_changes": 0
+  },
+  "source_scope": {
+    "comparison_sha": "8e6bc113f4c2c47ad693fa7fcb19ddf6bef48476",
+    "excludes": "Current HEAD, 518/2e currency diagnostics, autohide targeted proof, other profiles and native parity.",
+    "frozen_source_sha": "6751c0f37088de11d0cc864f9313922a5b9cbdab"
+  },
+  "status": "FAIL"
+}

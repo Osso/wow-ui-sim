@@ -1,0 +1,76 @@
+{
+  "algorithm": "sha256",
+  "epoch": "/home/osso/.local/state/wow-ui-sim/verification/sharedmedia-three-owner-current/20261010T042920Z",
+  "files": {
+    "audit/aggregate.json": {
+      "bytes": 10085,
+      "sha256": "df373faff342fa4d8bbf3edac9222a61072b0d23e14cf292e1ea994309cfce51"
+    },
+    "audit/report.md": {
+      "bytes": 5027,
+      "sha256": "da00fa743eb674a1dfe0a01d9dbed7213094e052bb068f747c80cf7d5e37bd9e"
+    },
+    "build-cgroup-after.json": {
+      "bytes": 482,
+      "sha256": "59f8ae01ecaa0a93fd2baec1c6395811040526bedf87d9a2435ba1c40e3ca95b"
+    },
+    "build-cgroup-before.json": {
+      "bytes": 276,
+      "sha256": "187b80739d3fd06c207b9f4e5eca17ad41f23055e09c9865e12851e5b8ea0932"
+    },
+    "build-end-artifact-seals.json": {
+      "bytes": 894,
+      "sha256": "c60c7c9b9581cf317c2e135eba5815e9ac95d5ac8d2ef93c504f84e2678e0f0a"
+    },
+    "cargo-result.json": {
+      "bytes": 350,
+      "sha256": "ce88b7b1e2ccaf81ee28b8ace7106ba7618911559427ea759a02c3132c67622d"
+    },
+    "compile.stderr": {
+      "bytes": 1275,
+      "sha256": "8004d0a1ce1310bf7d64a4ed98325ed99c53901fd56c58026b00aaf3c36b0fac"
+    },
+    "compile.stdout": {
+      "bytes": 566272,
+      "sha256": "94892cc0da44eb3f5685ef14db5c4f94f022a242cc474fa753dcf2376c370bee"
+    },
+    "outcome.json": {
+      "bytes": 178,
+      "sha256": "ec89d353cf68c8ae299d981a0ac0767accff9dbbc861d9fee1f8e189d8ebb1cb"
+    },
+    "probe-execution/invocation.json": {
+      "bytes": 914,
+      "sha256": "ac5c707c0e3291d5b8a900ff7b7c969d01fbe2f2dbde675ad923bd766d4c29ac"
+    },
+    "probe-execution/result.json": {
+      "bytes": 340,
+      "sha256": "cb3fefdd52ece67df16fa7496e027f6bde2b66fc7c5573245e0a8aeb51163a2a"
+    },
+    "probe-execution/stderr": {
+      "bytes": 1499270,
+      "sha256": "6af1387adffe8cfd8d12e446632973edeb8e16a5a27fd04af03d25c27b215de1"
+    },
+    "probe-execution/stdout": {
+      "bytes": 317318,
+      "sha256": "e601c1914ca4e1c39793767e4858993ce932c450c9e5ccb39412d2f744bd4401"
+    },
+    "resources.json": {
+      "bytes": 140,
+      "sha256": "59038ae390dc0dcc899554707c80fda4336c6dd82a003d3de7a98f0b998b97f2"
+    },
+    "source-after.json": {
+      "bytes": 452396,
+      "sha256": "bac8c2638486a10eff96eff59794f92d6e02c5dd2f170e2c0d1f4af17d194650"
+    },
+    "source-before.json": {
+      "bytes": 452396,
+      "sha256": "bac8c2638486a10eff96eff59794f92d6e02c5dd2f170e2c0d1f4af17d194650"
+    },
+    "submission.json": {
+      "bytes": 940,
+      "sha256": "cddfbce7a4d30810c11e230f3d55839291e253a2cefa6cc470c34cf8f25aca5c"
+    }
+  },
+  "schema": 1,
+  "scope": "all supplied input files and generated report/aggregate; excludes this manifest itself; no historical executable/cache content rehash"
+}

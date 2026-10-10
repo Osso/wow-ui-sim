@@ -602,9 +602,9 @@ Private `handoff/settings-helper-trace-current.md` and `handoff/control-registra
 
 Repeated page sorting is a source-complexity candidate, **not measured instruction attribution or the established cause of file-budget exhaustion**. Exact iterations, page distribution, branch counts, elapsed cost and runtime-byte identity remain unknown. No vendor optimization authorized; no raw source or payload copied.
 
-## Timing helper gate — bounded source PASS, compilation PENDING
+## Timing helper gate — historical source PASS, later bounded compilation below
 
-Private report `/home/osso/.local/state/wow-ui-sim/verification/timing-gate-current/report.md` scopes `6751c0f37088de11d0cc864f9313922a5b9cbdab`: only `is_enabled` gains `retail-12-0-5` cfg, matching its two callers' gates. Source, saved formatting and changed-line readability **PASS**; shared timing behavior unchanged by this delta. Historical unused-function warning/build success predates the insertion and supplies no compilation proof for6751. Current warning elimination/profile compilation **PENDING**; no new build/check/test performed by this docs update.
+Private report `/home/osso/.local/state/wow-ui-sim/verification/timing-gate-current/report.md` scopes `6751c0f37088de11d0cc864f9313922a5b9cbdab`: only `is_enabled` gains `retail-12-0-5` cfg, matching its two callers' gates. Source, saved formatting and changed-line readability **PASS**; shared timing behavior unchanged by this delta. Historical unused-function warning/build success predates the insertion and supplies no compilation proof for6751. At this checkpoint warning elimination/profile compilation was **PENDING**; [later saved bounded compiler evidence](#saved-three-owner-timing-full-suite-and-mists-evidence--bounded-881) closes only that gate. No new build/check/test performed by this docs update.
 
 ## Saved Mists nameplate postaudit — bounded PASS, parent OPEN
 
@@ -626,3 +626,18 @@ Original `903711…` nameplate **0PASS/2FAIL/exit101** and currency **0PASS/2FAI
 **Warnings retained:** unused `is_enabled` at `src/lua_api/handler_timing.rs:12`; one compiler warning record and seven repeated stderr warning lines, not seven unique diagnostics or warning-free proof. Both compile observations used jobs8, unchanged CPU quota `800000 100000` /16GiB cap. Cgroup lifetime peaks and differing revisions/cache warmth/workloads do not establish isolated compiler RSS or controlled speedup. Jobs12 is only a recorded, unapplied future choice, not measured acceptance.
 
 **Unproven:** native parity/CVar registration/defaults; OnLoad/event lifetime; class resource bars; real frame/render state; other sizes/styles; complete Mists suite/profile. External path dependencies, uncaptured data, inherited environment, runtime cache/addon inputs and untracked index remain excluded. Source-only predecessor is superseded solely for this target's saved compile/execution gate; parent **OPEN**. Sanitized counts/hashes/static locations/metadata only, no raw streams, payloads, stacks, snapshots or vendor copies published. Docs-only retention; no source/AGENTS changes, tests/builds, push, deployment or delegation; `.code-index.db` variants preserved.
+
+## Saved three-owner, timing, full-suite and Mists evidence — bounded 881
+
+Saved October 10, 2026 UTC receipts (October 9 US local), retained without new execution. [Retention manifest](../evidence/bounded-881/retention-manifest.json) distinguishes original from derivative hashes. Each directory retains sanitized report/aggregate/original hash manifest; original manifests seal original local bytes, not rewritten derivatives. Raw streams, source payloads and per-selector full-suite inventories remain private.
+
+| Coverage / exact epoch | Accepted proof | Remaining limits |
+|---|---|---|
+| [Three-owner report](../evidence/bounded-881/three-owner/report.md), `0148437a…` | Default Retail ignored target **1 PASS**, three selected owners at100M, zero owner quota errors; SharedMedia **18,488,983** load instructions, encountered/loaded | One GLOBAL EllesmereUI UICore1224 nil-call, callee unknown. Final counters0 are resets, not zero work; production10M unchanged. Not globally clean startup/native acceptance. |
+| [Timing gate report](../evidence/bounded-881/timing-gate/report.md), default `2e46082d0…` / Mists `0148437a…` | Both compile exit0; zero `is_enabled` warning; historical6751 formatting separately scoped | Six external manifest deprecation diagnostics remain per compile. Compiler gate only, not runtime/full-profile/current-HEAD proof. |
+| [Frozen full-suite report](../evidence/bounded-881/fullsuite-6751/report.md), `6751c0f…` versus `8e6bc113…` | **14,994 PASS / 3 FAIL / 19 skipped** in both; same executed selectors/statuses | Two method snapshots and explicit Garrison load still fail. Runner `new_failures` uses a different unavailable historical baseline; Garrison is not a new regression versus8e. Not current-head proof or readiness. |
+| [Mists report](../evidence/bounded-881/mists-currency/report.md), `0148437a…` | **26 PASS / 4 FAIL**: currency1/4, Honor23/0, Dialog2/0. Exact singleton negative assertions pass for `_G/HonorSystemEnabled` and `_G/SetBasicMessageDialogText` | [Main review](../evidence/bounded-881/mists-currency/main-review.json) withholds initial precise assertion locations/values and successful-name claims pending diagnostics. Exact failing callee unknown. |
+
+Currency source omission/adapter constants are source-grounded only, not accepted observed field values. Fresh518 diagnostics belong to a separate pending audit and are **not imported**. Source518 autohide tests remain unchecked/unexecuted; **current CurrencyGREEN not proven**. Compile-window tracked-map equality and recorded artifact seals have their report-specific exclusions; no complete compiler/runtime cache input seal inferred. Earlier two-owner and NotFound receipts remain unchanged. Parent **OPEN**.
+
+Docs/evidence only: no source, AGENTS, tests, build, push, operations or delegation. Code-index artifacts preserved; other actors' C API, Mists bootstrap, currency tests and new spec untouched.

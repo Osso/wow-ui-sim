@@ -1,0 +1,549 @@
+{
+  "default_compiler": {
+    "build_end_artifact_seals": [],
+    "build_finished": [
+      {
+        "reason": "build-finished",
+        "success": true
+      }
+    ],
+    "cargo_result": {
+      "argv": [
+        "/usr/bin/cargo",
+        "check",
+        "--offline",
+        "--locked",
+        "--lib",
+        "--message-format=json"
+      ],
+      "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+      "ended": "2026-10-10T04:41:02.236736+00:00",
+      "exit": 0,
+      "pid": 1428896,
+      "streams": "CLI spawn text streams separately flushed per line"
+    },
+    "cgroup_after": {
+      "cpu.max": "1200000 100000",
+      "cpu.stat": "usage_usec 56093107\nuser_usec 53485466\nsystem_usec 2607640\nnice_usec 0\ncore_sched.force_idle_usec 0\nnr_periods 652\nnr_throttled 0\nthrottled_usec 0\nnr_bursts 0\nburst_usec 0",
+      "memory.current": "1143042048",
+      "memory.max": "17179869184",
+      "memory.peak": "5730381824",
+      "path": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/agents.slice/wow-timing-gate-default-check-j12-20261010t041634z.service"
+    },
+    "cgroup_before": {
+      "cpu.max": "1200000 100000",
+      "memory.current": "49770496",
+      "memory.max": "17179869184",
+      "memory.peak": "49770496",
+      "path": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/agents.slice/wow-timing-gate-default-check-j12-20261010t041634z.service"
+    },
+    "compiler_messages": [],
+    "epoch": "/home/osso/.local/state/wow-ui-sim/verification/timing-gate-default-check/20261010T043957Z",
+    "external_summary_count": 1,
+    "external_unique_manifest_diagnostics": 6,
+    "is_enabled_warning_count": 0,
+    "json_records": 727,
+    "lib_artifacts": [
+      {
+        "executable": null,
+        "features": [
+          "aura-containers",
+          "aura-instance-enumeration",
+          "aura-xml-widgets",
+          "base-spell-relationships",
+          "casc",
+          "client-retail",
+          "default",
+          "forbidden-aspects",
+          "gui",
+          "native-duration-formatting",
+          "numeric-rule-formatters",
+          "on-update-modes",
+          "player-cast-durations",
+          "profile-retail",
+          "retail-12-0-0",
+          "retail-12-0-5",
+          "retail-12-0-7",
+          "retail-12-1-0",
+          "rodio",
+          "sound"
+        ],
+        "filenames": [
+          "/home/osso/Projects/wow/wow-ui-sim/target/debug/deps/libwow_ui_sim-a3bb853687ecbfea.rmeta"
+        ],
+        "fresh": false,
+        "manifest_path": "/home/osso/Projects/wow/wow-ui-sim/Cargo.toml",
+        "package_id": "path+file:///home/osso/Projects/wow/wow-ui-sim#0.1.0",
+        "profile": {
+          "debug_assertions": true,
+          "debuginfo": "line-tables-only",
+          "opt_level": "1",
+          "overflow_checks": true,
+          "test": false
+        },
+        "reason": "compiler-artifact",
+        "target": {
+          "crate_types": [
+            "lib"
+          ],
+          "doc": true,
+          "doctest": true,
+          "edition": "2024",
+          "kind": [
+            "lib"
+          ],
+          "name": "wow_ui_sim",
+          "src_path": "/home/osso/Projects/wow/wow-ui-sim/src/lib.rs",
+          "test": true
+        }
+      }
+    ],
+    "outcome": {
+      "boot_id_after": "931d4a8a-2178-4666-bf53-776e5eac97be",
+      "build_performed": true,
+      "cargo_exit": 0,
+      "ended": "2026-10-10T04:41:02.589430+00:00",
+      "source_equal": true
+    },
+    "raw_stderr_warning_lines": [
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition",
+      "warning: `iced_wgpu` (manifest) generated 6 warnings"
+    ],
+    "raw_warning_line_count": 7,
+    "reason_counts": {
+      "build-finished": 1,
+      "build-script-executed": 74,
+      "compiler-artifact": 652
+    },
+    "resources": {
+      "available_gib": 34.010032653808594,
+      "load_one": 8.53,
+      "lock_already_held": true,
+      "observed": "2026-10-10T04:39:57.226786+00:00"
+    },
+    "source_map_count": 3839,
+    "source_maps_equal_recomputed": true,
+    "submission": {
+      "argv": [
+        "/usr/bin/cargo",
+        "check",
+        "--offline",
+        "--locked",
+        "--lib",
+        "--message-format=json"
+      ],
+      "boot_id": "931d4a8a-2178-4666-bf53-776e5eac97be",
+      "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+      "environment_overrides": {
+        "CARGO_BUILD_JOBS": "12"
+      },
+      "exclusions": [
+        "external path dependencies",
+        "data inputs outside captured tracked src/tests/build/config scope",
+        "inherited environment",
+        "runtime cache/addon files outside source scope",
+        "untracked index"
+      ],
+      "purpose": "Timing helper cfg check diagnostic e8fa+538 phase correction; previous2ownerprobe immutable/no rerun; user chose12nativejobs withinexisting12CPUagentcap, memory16G unchanged",
+      "revision": "2e46082d0dc9c719134aa490c44d97b0da657157",
+      "started": "2026-10-10T04:39:57.438030+00:00",
+      "worker_sha256": "89d58154dd377ecd1cc1e2ad4a6c1beb055d38950a257124323dcf8e7fea5a5a"
+    }
+  },
+  "excluded_claims": [
+    "current HEAD identity or acceptance",
+    "API acceptance",
+    "CurrencyGreen or runtime acceptance",
+    "native parity",
+    "full profile or full suite acceptance",
+    "speedup",
+    "full compiler input closure including inherited environment and external dependencies"
+  ],
+  "formatting_proof": {
+    "command_recorded": "cargo fmt --check",
+    "exit_recorded": 0,
+    "revision": "6751c0f37088de11d0cc864f9313922a5b9cbdab",
+    "scope": "Historical bounded formatting only; no formatting claim for later revisions or entire current checkout",
+    "source": "/home/osso/.local/state/wow-ui-sim/verification/timing-gate-current/report.md",
+    "stderr_recorded": "empty",
+    "stdout_recorded": "empty"
+  },
+  "method": "Saved-artifact audit; no subprocess, command, build, check, test, delegation or operational action invoked",
+  "mists_014_compiler_only": {
+    "build_end_artifact_seals": [
+      {
+        "executable": "/home/osso/Projects/wow/wow-ui-sim/target/debug/panel-visual-metrics",
+        "features": [
+          "casc",
+          "client-mists",
+          "gui",
+          "rodio",
+          "sound"
+        ],
+        "profile": {
+          "debug_assertions": true,
+          "debuginfo": "line-tables-only",
+          "opt_level": "1",
+          "overflow_checks": true,
+          "test": false
+        },
+        "sha256": "f986e9c785b9ca3a77a070306acdc439f9844024c6ba0efb4b2cdbccadd0fc9f",
+        "target": "panel-visual-metrics"
+      },
+      {
+        "executable": "/home/osso/Projects/wow/wow-ui-sim/target/debug/bench_steady_state",
+        "features": [
+          "casc",
+          "client-mists",
+          "gui",
+          "rodio",
+          "sound"
+        ],
+        "profile": {
+          "debug_assertions": true,
+          "debuginfo": "line-tables-only",
+          "opt_level": "1",
+          "overflow_checks": true,
+          "test": false
+        },
+        "sha256": "f809184de09c83754523c01ddba6a86a7940f2ce3e36bcafa89e6ab6aa346cd2",
+        "target": "bench_steady_state"
+      },
+      {
+        "executable": "/home/osso/Projects/wow/wow-ui-sim/target/debug/bench_talents",
+        "features": [
+          "casc",
+          "client-mists",
+          "gui",
+          "rodio",
+          "sound"
+        ],
+        "profile": {
+          "debug_assertions": true,
+          "debuginfo": "line-tables-only",
+          "opt_level": "1",
+          "overflow_checks": true,
+          "test": false
+        },
+        "sha256": "f332dc6dac99489ffa67d9ce7f82581cff5716e1959b6001166c89c331865779",
+        "target": "bench_talents"
+      },
+      {
+        "executable": "/home/osso/Projects/wow/wow-ui-sim/target/debug/bench_spellbook",
+        "features": [
+          "casc",
+          "client-mists",
+          "gui",
+          "rodio",
+          "sound"
+        ],
+        "profile": {
+          "debug_assertions": true,
+          "debuginfo": "line-tables-only",
+          "opt_level": "1",
+          "overflow_checks": true,
+          "test": false
+        },
+        "sha256": "09fa16c8a6889863fbbe06d536365cbb9ff1c775bb5b699f36b1c57ec254a6a2",
+        "target": "bench_spellbook"
+      },
+      {
+        "executable": "/home/osso/Projects/wow/wow-ui-sim/target/debug/wow-sim",
+        "features": [
+          "casc",
+          "client-mists",
+          "gui",
+          "rodio",
+          "sound"
+        ],
+        "profile": {
+          "debug_assertions": true,
+          "debuginfo": "line-tables-only",
+          "opt_level": "1",
+          "overflow_checks": true,
+          "test": false
+        },
+        "sha256": "8ec723ec898b97ab6fe7b96a8cec7b3a13c7ea99d0e9e8d8d3b7608ce2c64866",
+        "target": "wow-sim"
+      },
+      {
+        "executable": "/home/osso/Projects/wow/wow-ui-sim/target/debug/deps/mists_currency_list-43b74ef9e0f23ac4",
+        "features": [
+          "casc",
+          "client-mists",
+          "gui",
+          "rodio",
+          "sound"
+        ],
+        "profile": {
+          "debug_assertions": true,
+          "debuginfo": "line-tables-only",
+          "opt_level": "1",
+          "overflow_checks": true,
+          "test": true
+        },
+        "sha256": "eef13993805ae8616016b053888d603e42b8b7986b6bf32af49c699621c8b04b",
+        "target": "mists_currency_list"
+      },
+      {
+        "executable": "/home/osso/Projects/wow/wow-ui-sim/target/debug/deps/mists_dialog_helpers-ec9786fa01af7347",
+        "features": [
+          "casc",
+          "client-mists",
+          "gui",
+          "rodio",
+          "sound"
+        ],
+        "profile": {
+          "debug_assertions": true,
+          "debuginfo": "line-tables-only",
+          "opt_level": "1",
+          "overflow_checks": true,
+          "test": true
+        },
+        "sha256": "60d4ac6b30f8b9d0aed51fd92a4efc55e58a9555924ac2c21f1eaaded752b12e",
+        "target": "mists_dialog_helpers"
+      },
+      {
+        "executable": "/home/osso/Projects/wow/wow-ui-sim/target/debug/wow-cli",
+        "features": [
+          "casc",
+          "client-mists",
+          "gui",
+          "rodio",
+          "sound"
+        ],
+        "profile": {
+          "debug_assertions": true,
+          "debuginfo": "line-tables-only",
+          "opt_level": "1",
+          "overflow_checks": true,
+          "test": false
+        },
+        "sha256": "a75bc090bef2c573a51625acd2aed5c147b3e3a60c6e6b69d6ff14d7b984057b",
+        "target": "wow-cli"
+      },
+      {
+        "executable": "/home/osso/Projects/wow/wow-ui-sim/target/debug/deps/mists_compat_bootstrap-c15dadd74a574f6c",
+        "features": [
+          "casc",
+          "client-mists",
+          "gui",
+          "rodio",
+          "sound"
+        ],
+        "profile": {
+          "debug_assertions": true,
+          "debuginfo": "line-tables-only",
+          "opt_level": "1",
+          "overflow_checks": true,
+          "test": true
+        },
+        "sha256": "9f63be784737aaed10a0b977a9ce760860801f805de3873ed06835c2b08ed96b",
+        "target": "mists_compat_bootstrap"
+      }
+    ],
+    "build_finished": [
+      {
+        "reason": "build-finished",
+        "success": true
+      }
+    ],
+    "cargo_result": {
+      "argv": [
+        "/usr/bin/cargo",
+        "test",
+        "--offline",
+        "--locked",
+        "--no-default-features",
+        "--features",
+        "sound,gui,casc,client-mists",
+        "--test",
+        "mists_currency_list",
+        "--test",
+        "mists_compat_bootstrap",
+        "--test",
+        "mists_dialog_helpers",
+        "--no-run",
+        "--message-format=json"
+      ],
+      "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+      "ended": "2026-10-10T04:30:57.747144+00:00",
+      "exit": 0,
+      "pid": 1387627,
+      "streams": "CLI spawn text streams separately flushed per line"
+    },
+    "cgroup_after": {
+      "cpu.max": "1200000 100000",
+      "cpu.stat": "usage_usec 175444055\nuser_usec 149210731\nsystem_usec 26233323\nnice_usec 0\ncore_sched.force_idle_usec 0\nnr_periods 388\nnr_throttled 49\nthrottled_usec 31766076\nnr_bursts 0\nburst_usec 0",
+      "memory.current": "5730181120",
+      "memory.max": "17179869184",
+      "memory.peak": "9613074432",
+      "path": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/agents.slice/wow-mists-currency-observer-current-j12-20261010t040823z.service"
+    },
+    "cgroup_before": {
+      "cpu.max": "1200000 100000",
+      "memory.current": "24137728",
+      "memory.max": "17179869184",
+      "memory.peak": "27828224",
+      "path": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/agents.slice/wow-mists-currency-observer-current-j12-20261010t040823z.service"
+    },
+    "compiler_messages": [],
+    "epoch": "/home/osso/.local/state/wow-ui-sim/verification/mists-currency-observer-current/20261010T043019Z",
+    "external_summary_count": 1,
+    "external_unique_manifest_diagnostics": 6,
+    "is_enabled_warning_count": 0,
+    "json_records": 740,
+    "lib_artifacts": [
+      {
+        "executable": null,
+        "features": [
+          "casc",
+          "client-mists",
+          "gui",
+          "rodio",
+          "sound"
+        ],
+        "filenames": [
+          "/home/osso/Projects/wow/wow-ui-sim/target/debug/deps/libwow_ui_sim-7714dc024f05e9b0.rlib",
+          "/home/osso/Projects/wow/wow-ui-sim/target/debug/deps/libwow_ui_sim-7714dc024f05e9b0.rmeta"
+        ],
+        "fresh": false,
+        "manifest_path": "/home/osso/Projects/wow/wow-ui-sim/Cargo.toml",
+        "package_id": "path+file:///home/osso/Projects/wow/wow-ui-sim#0.1.0",
+        "profile": {
+          "debug_assertions": true,
+          "debuginfo": "line-tables-only",
+          "opt_level": "1",
+          "overflow_checks": true,
+          "test": false
+        },
+        "reason": "compiler-artifact",
+        "target": {
+          "crate_types": [
+            "lib"
+          ],
+          "doc": true,
+          "doctest": true,
+          "edition": "2024",
+          "kind": [
+            "lib"
+          ],
+          "name": "wow_ui_sim",
+          "src_path": "/home/osso/Projects/wow/wow-ui-sim/src/lib.rs",
+          "test": true
+        }
+      }
+    ],
+    "outcome": {
+      "boot_id_after": "931d4a8a-2178-4666-bf53-776e5eac97be",
+      "build_performed": true,
+      "cargo_exit": 0,
+      "ended": "2026-10-10T04:30:59.544149+00:00",
+      "source_equal": true
+    },
+    "raw_stderr_warning_lines": [
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition",
+      "warning: `iced_wgpu` (manifest) generated 6 warnings"
+    ],
+    "raw_warning_line_count": 7,
+    "reason_counts": {
+      "build-finished": 1,
+      "build-script-executed": 74,
+      "compiler-artifact": 665
+    },
+    "resources": {
+      "available_gib": 29.652015686035156,
+      "load_one": 21.88,
+      "lock_already_held": true,
+      "observed": "2026-10-10T04:30:19.270206+00:00"
+    },
+    "source_map_count": 3839,
+    "source_maps_equal_recomputed": true,
+    "submission": {
+      "argv": [
+        "/usr/bin/cargo",
+        "test",
+        "--offline",
+        "--locked",
+        "--no-default-features",
+        "--features",
+        "sound,gui,casc,client-mists",
+        "--test",
+        "mists_currency_list",
+        "--test",
+        "mists_compat_bootstrap",
+        "--test",
+        "mists_dialog_helpers",
+        "--no-run",
+        "--message-format=json"
+      ],
+      "boot_id": "931d4a8a-2178-4666-bf53-776e5eac97be",
+      "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+      "environment_overrides": {
+        "CARGO_BUILD_JOBS": "12"
+      },
+      "exclusions": [
+        "external path dependencies",
+        "data inputs outside captured tracked src/tests/build/config scope",
+        "inherited environment",
+        "runtime cache/addon files outside source scope",
+        "untracked index"
+      ],
+      "purpose": "New realMistscurrency size/acfe fallbackremoval02dd andexactdependencyobserver63 source; previous profilefailuresretained; user chose12nativejobs withinexisting12CPUagentcap, memory16G unchanged",
+      "revision": "0148437a7868b0a25d0ce2fca504378d4558b5ee",
+      "started": "2026-10-10T04:30:19.343075+00:00",
+      "worker_sha256": "71f15efa2fdff7b3ef67bfa023ce757fa6b19881f19db489321747216546421f"
+    }
+  },
+  "source_bindings": [
+    {
+      "matches_default_source_map": true,
+      "matches_mists_source_map": true,
+      "path": "Cargo.toml",
+      "sha256": "1c56b9a80149ea739d8fc647391b4c45dc32ad70cf5ec7a3576dba92989f3341"
+    },
+    {
+      "matches_default_source_map": true,
+      "matches_mists_source_map": true,
+      "path": "src/lua_api/handler_timing.rs",
+      "sha256": "c02d54c19cdda2961421cc2b00c1d7ac651a0aab629f3e28357aef15c7041a08"
+    },
+    {
+      "matches_default_source_map": true,
+      "matches_mists_source_map": true,
+      "path": "src/loader/lua_file.rs",
+      "sha256": "dab2a50ea2152f1f94b74881689c12778371f817696dfc07e2ac922b772b955c"
+    },
+    {
+      "matches_default_source_map": true,
+      "matches_mists_source_map": true,
+      "path": "src/lua_api/mod.rs",
+      "sha256": "04461a0e3f1b4c861d09a8849f400820248e6216a9cc5c66b1f1cb43fa1b78cf"
+    },
+    {
+      "matches_default_source_map": true,
+      "matches_mists_source_map": true,
+      "path": "src/lua_api/execution_budget.rs",
+      "sha256": "861975f99c721d58d956ab0340da79f27cfab6a49375e42752de8ac82a24bfd5"
+    }
+  ],
+  "source_wiring": {
+    "default_feature_present": "retail-12-0-5",
+    "handler_caller": "src/lua_api/execution_budget.rs:48; module cfg src/lua_api/mod.rs:19-20",
+    "helper": "src/lua_api/handler_timing.rs:12 cfg(retail-12-0-5); function at 13",
+    "loader_caller": "src/loader/lua_file.rs:223; expression cfg at 221",
+    "mists_feature_absent": "retail-12-0-5"
+  },
+  "status": "PASS bounded timing-helper gate only"
+}

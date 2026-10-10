@@ -1,0 +1,156 @@
+{
+  "algorithm": "sha256",
+  "files": {
+    "/home/osso/.local/state/wow-ui-sim/verification/mists-currency-observer-current/20261010T043019Z/build-cgroup-after.json": {
+      "bytes": 489,
+      "lines": 8,
+      "sha256": "d390e48b475739db692c9a1ccd6111db31e16b8d4bf7356529fdf6b829e49c88"
+    },
+    "/home/osso/.local/state/wow-ui-sim/verification/mists-currency-observer-current/20261010T043019Z/build-cgroup-before.json": {
+      "bytes": 276,
+      "lines": 7,
+      "sha256": "eb7b37b4c5fbbb388fa37eb5e14e7c7e19a3133e1c2e6c5dfb815b7554d8551f"
+    },
+    "/home/osso/.local/state/wow-ui-sim/verification/mists-currency-observer-current/20261010T043019Z/build-end-artifact-seals.json": {
+      "bytes": 4406,
+      "lines": 173,
+      "sha256": "753a3b0a4d4794fded7d27bcba5c54adcb86fef3974c052028868fe48f7e0991"
+    },
+    "/home/osso/.local/state/wow-ui-sim/verification/mists-currency-observer-current/20261010T043019Z/cargo-result.json": {
+      "bytes": 531,
+      "lines": 24,
+      "sha256": "c57d326f4f0db7d47d653ef2a0fa5708f4f6e8224c9ca56f072738b4b79796ee"
+    },
+    "/home/osso/.local/state/wow-ui-sim/verification/mists-currency-observer-current/20261010T043019Z/compile.stderr": {
+      "bytes": 1275,
+      "lines": 9,
+      "sha256": "832bcdb327a34a74ed7601752ccde26a5532158b2ce832b681162f18d8142df6"
+    },
+    "/home/osso/.local/state/wow-ui-sim/verification/mists-currency-observer-current/20261010T043019Z/compile.stdout": {
+      "bytes": 571239,
+      "lines": 740,
+      "sha256": "200d6c1db31a1502451b31db20cc3ab9270e2e1731c75186d3380ee8402d893a"
+    },
+    "/home/osso/.local/state/wow-ui-sim/verification/mists-currency-observer-current/20261010T043019Z/outcome.json": {
+      "bytes": 178,
+      "lines": 7,
+      "sha256": "cc8f4e7515fdeb1007a2049b92c1bffe52df902688a5ec1d8c166762b8ec57bb"
+    },
+    "/home/osso/.local/state/wow-ui-sim/verification/mists-currency-observer-current/20261010T043019Z/resources.json": {
+      "bytes": 141,
+      "lines": 6,
+      "sha256": "7d5b32d32af148ee953feb3a847e35d295329cf26935e88b610d2d8bebda48ca"
+    },
+    "/home/osso/.local/state/wow-ui-sim/verification/mists-currency-observer-current/20261010T043019Z/source-after.json": {
+      "bytes": 452396,
+      "lines": 3841,
+      "sha256": "bac8c2638486a10eff96eff59794f92d6e02c5dd2f170e2c0d1f4af17d194650"
+    },
+    "/home/osso/.local/state/wow-ui-sim/verification/mists-currency-observer-current/20261010T043019Z/source-before.json": {
+      "bytes": 452396,
+      "lines": 3841,
+      "sha256": "bac8c2638486a10eff96eff59794f92d6e02c5dd2f170e2c0d1f4af17d194650"
+    },
+    "/home/osso/.local/state/wow-ui-sim/verification/mists-currency-observer-current/20261010T043019Z/submission.json": {
+      "bytes": 1142,
+      "lines": 35,
+      "sha256": "8093c5a1c6368d83230b8843b3bbd2424ecfacaea8c12885c63ce348bbd7c131"
+    },
+    "/home/osso/.local/state/wow-ui-sim/verification/timing-gate-current/report.md": {
+      "bytes": 3218,
+      "lines": 71,
+      "sha256": "ae1796baa462d729755d26c8e672d922e608005fd517c3bb6f1baaccd8df69bf"
+    },
+    "/home/osso/.local/state/wow-ui-sim/verification/timing-gate-default-check/20261010T043957Z/audit/aggregate.json": {
+      "bytes": 19976,
+      "lines": 549,
+      "sha256": "65ee6c09669c91609c8bf465b2b645758b40ed5dd51b87d1e9ed85bc6f5f737f"
+    },
+    "/home/osso/.local/state/wow-ui-sim/verification/timing-gate-default-check/20261010T043957Z/audit/report.md": {
+      "bytes": 7657,
+      "lines": 64,
+      "sha256": "19e1cb477a58bf367068c56ac09e7431a0fd2e8a6c347e6fa8ea7e7fad8b9b75"
+    },
+    "/home/osso/.local/state/wow-ui-sim/verification/timing-gate-default-check/20261010T043957Z/build-cgroup-after.json": {
+      "bytes": 472,
+      "lines": 8,
+      "sha256": "d61b338ebb3912d8253c28269a674d35b6eb843057028a538862b7e5371ca157"
+    },
+    "/home/osso/.local/state/wow-ui-sim/verification/timing-gate-default-check/20261010T043957Z/build-cgroup-before.json": {
+      "bytes": 270,
+      "lines": 7,
+      "sha256": "f437c2542b3463869e86866051a19803a3c055674a62d981384f2249d56ef464"
+    },
+    "/home/osso/.local/state/wow-ui-sim/verification/timing-gate-default-check/20261010T043957Z/build-end-artifact-seals.json": {
+      "bytes": 2,
+      "lines": 1,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "/home/osso/.local/state/wow-ui-sim/verification/timing-gate-default-check/20261010T043957Z/cargo-result.json": {
+      "bytes": 320,
+      "lines": 15,
+      "sha256": "06acdf894f5769146e1a2bd07692957410a934849f2e3d9272219587572e9241"
+    },
+    "/home/osso/.local/state/wow-ui-sim/verification/timing-gate-default-check/20261010T043957Z/compile.stderr": {
+      "bytes": 1274,
+      "lines": 9,
+      "sha256": "2277411dc5e3947edafae271571e93eb7f5061aa150783299776295596cb291f"
+    },
+    "/home/osso/.local/state/wow-ui-sim/verification/timing-gate-default-check/20261010T043957Z/compile.stdout": {
+      "bytes": 516702,
+      "lines": 727,
+      "sha256": "99f5080e21a4863c8aa8acfcf9b17725d0bab3d339cddbe266f39ef5021e5c17"
+    },
+    "/home/osso/.local/state/wow-ui-sim/verification/timing-gate-default-check/20261010T043957Z/outcome.json": {
+      "bytes": 178,
+      "lines": 7,
+      "sha256": "71f127f4f11d5f45e305a7367fa99ba4a14a341802fec80945a1f699b42c8f10"
+    },
+    "/home/osso/.local/state/wow-ui-sim/verification/timing-gate-default-check/20261010T043957Z/resources.json": {
+      "bytes": 140,
+      "lines": 6,
+      "sha256": "8a613739e83298b3b62bbe73f242d488ff6f0efd968ac5316ea302b4b0db1618"
+    },
+    "/home/osso/.local/state/wow-ui-sim/verification/timing-gate-default-check/20261010T043957Z/source-after.json": {
+      "bytes": 452396,
+      "lines": 3841,
+      "sha256": "c39c8511acf50cf047109f161e20c4e290b96333b8a30990e30f66c4388b63d5"
+    },
+    "/home/osso/.local/state/wow-ui-sim/verification/timing-gate-default-check/20261010T043957Z/source-before.json": {
+      "bytes": 452396,
+      "lines": 3841,
+      "sha256": "c39c8511acf50cf047109f161e20c4e290b96333b8a30990e30f66c4388b63d5"
+    },
+    "/home/osso/.local/state/wow-ui-sim/verification/timing-gate-default-check/20261010T043957Z/submission.json": {
+      "bytes": 910,
+      "lines": 26,
+      "sha256": "263e28c621d77569f6aada1b6d017f29c45ce339fc54ce37312851ea5ac0b987"
+    },
+    "/home/osso/Projects/wow/wow-ui-sim/Cargo.toml": {
+      "bytes": 12238,
+      "lines": 350,
+      "sha256": "1c56b9a80149ea739d8fc647391b4c45dc32ad70cf5ec7a3576dba92989f3341"
+    },
+    "/home/osso/Projects/wow/wow-ui-sim/src/loader/lua_file.rs": {
+      "bytes": 22422,
+      "lines": 628,
+      "sha256": "dab2a50ea2152f1f94b74881689c12778371f817696dfc07e2ac922b772b955c"
+    },
+    "/home/osso/Projects/wow/wow-ui-sim/src/lua_api/execution_budget.rs": {
+      "bytes": 8579,
+      "lines": 259,
+      "sha256": "861975f99c721d58d956ab0340da79f27cfab6a49375e42752de8ac82a24bfd5"
+    },
+    "/home/osso/Projects/wow/wow-ui-sim/src/lua_api/handler_timing.rs": {
+      "bytes": 5387,
+      "lines": 197,
+      "sha256": "c02d54c19cdda2961421cc2b00c1d7ac651a0aab629f3e28357aef15c7041a08"
+    },
+    "/home/osso/Projects/wow/wow-ui-sim/src/lua_api/mod.rs": {
+      "bytes": 3451,
+      "lines": 99,
+      "sha256": "04461a0e3f1b4c861d09a8849f400820248e6216a9cc5c66b1f1cb43fa1b78cf"
+    }
+  },
+  "scope": "Consumed saved evidence and hash-bound inspected source; generated report/aggregate; excludes self"
+}

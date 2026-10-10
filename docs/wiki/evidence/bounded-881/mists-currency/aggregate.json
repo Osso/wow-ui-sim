@@ -1,0 +1,284 @@
+{
+  "audit_integrity": "PASS",
+  "build": {
+    "argv": [
+      "/usr/bin/cargo",
+      "test",
+      "--offline",
+      "--locked",
+      "--no-default-features",
+      "--features",
+      "sound,gui,casc,client-mists",
+      "--test",
+      "mists_currency_list",
+      "--test",
+      "mists_compat_bootstrap",
+      "--test",
+      "mists_dialog_helpers",
+      "--no-run",
+      "--message-format=json"
+    ],
+    "compiler_json_records": 740,
+    "compiler_message_records": 0,
+    "exit": 0,
+    "jobs": "12",
+    "source_equal_independently_verified": true
+  },
+  "epoch": "/home/osso/.local/state/wow-ui-sim/verification/mists-currency-observer-current/20261010T043019Z",
+  "functional_result": "FAIL: four saved currency test failures remain; two expected RED, two existing failures",
+  "limits": [
+    "No new execution, build, tests, polling, source edits, delegation, or operations performed.",
+    "No native WoW or prefork proof claimed. Direct saved compiled-test receipts only.",
+    "Runtime vendor/cache and external path dependencies are excluded from captured source scope; current vendor inspection supports source-order inference only.",
+    "Stringified nil/false comparisons reflect real API field values; no replacement or weakening of original tests."
+  ],
+  "main_review": {
+    "accepted": [
+      "compile/artifact/source-map integrity",
+      "target counts26PASS4FAIL",
+      "Honor/Dialog singleton negative assertions pass",
+      "no is_enabled compiler warning in saved Mists epoch"
+    ],
+    "next_proof": "source2e46082d0 adds bounded diagnostics; run targeted currency artifact after fresh compile, no production fix yet",
+    "observed": "2026-10-10T04:41:39.808887+00:00",
+    "source_grounded": [
+      "list projection omits watched/max fields; adapter emits false/nil",
+      "cached vendor line63 HybridScrollFrame_GetOffset precedes currency calls"
+    ],
+    "withheld": [
+      "currency failed-test assertion location, exact observed field values and successful-name assertions are not directly established by saved streams lacking panic diagnostics",
+      "exact existing TokenFrame_Update failing callee remains unobserved"
+    ]
+  },
+  "mode": "saved_artifact_audit_only",
+  "observer_cases": [
+    {
+      "actually_ran_and_passed": true,
+      "assertions": [
+        "pcall status false",
+        "error contains attempt to call a nil value",
+        "interval observer count exactly 1",
+        "container and key equal injected global"
+      ],
+      "isolation": "prior observer entries removed before interval and restored afterward; dedupe table reset for interval and restored afterward; handler bound before measured call",
+      "singleton": {
+        "container": "_G",
+        "key": "HonorSystemEnabled"
+      },
+      "sources": [
+        "tests/mists_compat_bootstrap.rs:371-400"
+      ],
+      "target": "mists_compat_bootstrap",
+      "test": "mists_honor_frame_shared_reproduces_missing_honor_system_enabled"
+    },
+    {
+      "actually_ran_and_passed": true,
+      "assertions": [
+        "pcall status false",
+        "error contains attempt to call a nil value",
+        "interval observer count exactly 1",
+        "container and key equal injected global"
+      ],
+      "isolation": "prior observer entries removed before interval and restored afterward; dedupe table reset for interval and restored afterward; handler bound before measured call",
+      "singleton": {
+        "container": "_G",
+        "key": "SetBasicMessageDialogText"
+      },
+      "sources": [
+        "tests/mists_dialog_helpers.rs:37-67"
+      ],
+      "target": "mists_dialog_helpers",
+      "test": "money_frame_set_type_reproduces_missing_basic_message_dialog_helper"
+    }
+  ],
+  "retention_note": "Initial precise assertion locations/values withheld by main review; no fresh 518 audit imported.",
+  "revision": "0148437a7868b0a25d0ce2fca504378d4558b5ee",
+  "source_evidence": {
+    "src/c_api/item_spell/c_currency.rs": {
+      "matches_epoch_source": true,
+      "sha256": "88e4cbcbe7ab5386416f0aaf2ddb31d16ba88b70ea54bf0af81124239f9e4682"
+    },
+    "src/lua_api/env_init/runtime_surface_bootstrap.lua": {
+      "matches_epoch_source": true,
+      "sha256": "4c3c5d165643e025e754e681fe4b9b271b73a6ec46c6ec70d5f76075a4b879f5"
+    },
+    "src/lua_api/globals/compat_overrides.rs": {
+      "matches_epoch_source": true,
+      "sha256": "685274947d90435795d0aa7984a5bc6261c2f164f417a1e544963ee79beedb8c"
+    },
+    "src/lua_api/globals/currency_data.rs": {
+      "matches_epoch_source": true,
+      "sha256": "5ba0a32cca4b7df3bf95acb3fd2d87e14ab754c4d772429d756da5a2c3ec1c1a"
+    },
+    "src/lua_api/handler_timing.rs": {
+      "matches_epoch_source": true,
+      "sha256": "c02d54c19cdda2961421cc2b00c1d7ac651a0aab629f3e28357aef15c7041a08"
+    },
+    "src/mists/compat_bootstrap.lua": {
+      "matches_epoch_source": true,
+      "sha256": "1b7e8e4323ae97144923856754272ae50968b908c82d21ab54a5cd51c3cd5953"
+    },
+    "tests/mists_compat_bootstrap.rs": {
+      "matches_epoch_source": true,
+      "sha256": "3c9e13becc9351ac8e58bfb8da9e94d994fe51b61d8b0d00f7e300417111f934"
+    },
+    "tests/mists_currency_list.rs": {
+      "matches_epoch_source": true,
+      "sha256": "5483ab5948e2237bc0e698aab110f09359a4b018423ac8dc299dbf2e8760ba8f"
+    },
+    "tests/mists_dialog_helpers.rs": {
+      "matches_epoch_source": true,
+      "sha256": "881991c2acdaa86df5f8c5fdf6e207477c0d72c97c086a22e3764c877a841145"
+    }
+  },
+  "targets": {
+    "mists_compat_bootstrap": {
+      "artifact_seal_chain_matches": true,
+      "counts": {
+        "failed": 0,
+        "filtered_out": 0,
+        "ignored": 0,
+        "measured": 0,
+        "passed": 23
+      },
+      "ended": "2026-10-10T04:33:18.976213+00:00",
+      "exit": 0,
+      "features": [
+        "casc",
+        "client-mists",
+        "gui",
+        "rodio",
+        "sound"
+      ],
+      "outcomes": {
+        "mists_bootstrap_exposes_classic_addon_compatibility_globals": "ok",
+        "mists_bootstrap_exposes_raid_marker_system_probe": "ok",
+        "mists_bootstrap_registers_startup_cvar_defaults": "ok",
+        "mists_bootstrap_reports_pandaria_as_the_current_classic_expansion": "ok",
+        "mists_bootstrap_supplies_hidden_non_priest_priest_bar_mixins": "ok",
+        "mists_bootstrap_supplies_legacy_bank_and_aura_shapes": "ok",
+        "mists_bootstrap_supplies_legacy_startup_api_shapes": "ok",
+        "mists_bootstrap_supplies_pvp_currency_and_debugbar_shapes": "ok",
+        "mists_bootstrap_supplies_settings_label_globals": "ok",
+        "mists_create_forbidden_frame_forwards_to_create_frame": "ok",
+        "mists_honor_frame_shared_reproduces_missing_honor_system_enabled": "ok",
+        "mists_honor_pvp_api_contract_matches_classic_shapes": "ok",
+        "mists_honor_system_enabled_matches_disabled_legacy_honor_surface": "ok",
+        "mists_intrinsic_templates_supply_legacy_item_button_template_children": "ok",
+        "mists_loads_money_frame_before_uipanels_game": "ok",
+        "mists_money_input_template_runtime_syncs_coin_parent_keys": "ok",
+        "mists_money_input_template_xml_wires_gold_silver_copper_parent_keys": "ok",
+        "mists_selected_skill_api_matches_skill_frame_tuple_shape": "ok",
+        "mists_skill_line_zero_selection_still_returns_numeric_rank": "ok",
+        "mists_toc_game_token_resolves_to_mists_subdirectory": "ok",
+        "mists_trade_money_frame_onload_reproduces_missing_copper_child": "ok",
+        "mists_trade_player_input_money_frame_widget_has_copper_child": "ok",
+        "mists_world_map_set_opacity_reproduces_nil_opacity_arithmetic": "ok"
+      },
+      "revision": "0148437a7868b0a25d0ce2fca504378d4558b5ee",
+      "started": "2026-10-10T04:33:14.655028+00:00",
+      "stream_hashes_match": {
+        "stderr": true,
+        "stdout": true
+      }
+    },
+    "mists_currency_list": {
+      "artifact_seal_chain_matches": true,
+      "counts": {
+        "failed": 4,
+        "filtered_out": 0,
+        "ignored": 0,
+        "measured": 0,
+        "passed": 1
+      },
+      "ended": "2026-10-10T04:33:14.224730+00:00",
+      "exit": 101,
+      "features": [
+        "casc",
+        "client-mists",
+        "gui",
+        "rodio",
+        "sound"
+      ],
+      "outcomes": {
+        "currency_list_info_preserves_max_quantity_in_namespace_and_legacy_tuple": "FAILED",
+        "currency_list_info_preserves_watched_flags_in_namespace_and_legacy_tuple": "FAILED",
+        "legacy_currency_list_size_returns_one_numeric_backing_count": "ok",
+        "legacy_currency_list_size_wraps_c_currency_info": "FAILED",
+        "token_frame_update_reproduces_missing_currency_list_size": "FAILED"
+      },
+      "revision": "0148437a7868b0a25d0ce2fca504378d4558b5ee",
+      "started": "2026-10-10T04:33:12.904425+00:00",
+      "stream_hashes_match": {
+        "stderr": true,
+        "stdout": true
+      }
+    },
+    "mists_dialog_helpers": {
+      "artifact_seal_chain_matches": true,
+      "counts": {
+        "failed": 0,
+        "filtered_out": 0,
+        "ignored": 0,
+        "measured": 0,
+        "passed": 2
+      },
+      "ended": "2026-10-10T04:33:19.710074+00:00",
+      "exit": 0,
+      "features": [
+        "casc",
+        "client-mists",
+        "gui",
+        "rodio",
+        "sound"
+      ],
+      "outcomes": {
+        "basic_message_dialog_helper_updates_text": "ok",
+        "money_frame_set_type_reproduces_missing_basic_message_dialog_helper": "ok"
+      },
+      "revision": "0148437a7868b0a25d0ce2fca504378d4558b5ee",
+      "started": "2026-10-10T04:33:19.225385+00:00",
+      "stream_hashes_match": {
+        "stderr": true,
+        "stdout": true
+      }
+    }
+  },
+  "totals": {
+    "failed": 4,
+    "passed": 26
+  },
+  "warnings": {
+    "external_manifest_deprecations": [
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition"
+    ],
+    "external_manifest_deprecations_count": 6,
+    "historical_file": "/home/osso/.local/state/wow-ui-sim/verification/mists-final-profile-check/20261010T031637Z/compile.stdout",
+    "historical_is_enabled_diagnostics": [
+      {
+        "message": "function `is_enabled` is never used",
+        "source_locations": [
+          {
+            "file": "src/lua_api/handler_timing.rs",
+            "line": 12
+          }
+        ]
+      },
+      {
+        "message": "function `is_enabled` is never used",
+        "source_locations": [
+          {
+            "file": "src/lua_api/handler_timing.rs",
+            "line": 12
+          }
+        ]
+      }
+    ],
+    "is_enabled_absent_in_epoch_compiler_JSON": true
+  }
+}

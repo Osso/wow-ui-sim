@@ -1,0 +1,163 @@
+{
+  "algorithm": "sha256",
+  "epoch": "/home/osso/.local/state/wow-ui-sim/verification/mists-currency-observer-current/20261010T043019Z",
+  "original_epoch_files": {
+    "artifact-selection.json": {
+      "bytes": 1540,
+      "sha256": "ea8ef0331c619c5f6b26396c6ad7452dc2ee42a467fd8af137a038655a55754f"
+    },
+    "build-cgroup-after.json": {
+      "bytes": 489,
+      "sha256": "d390e48b475739db692c9a1ccd6111db31e16b8d4bf7356529fdf6b829e49c88"
+    },
+    "build-cgroup-before.json": {
+      "bytes": 276,
+      "sha256": "eb7b37b4c5fbbb388fa37eb5e14e7c7e19a3133e1c2e6c5dfb815b7554d8551f"
+    },
+    "build-end-artifact-seals.json": {
+      "bytes": 4406,
+      "sha256": "753a3b0a4d4794fded7d27bcba5c54adcb86fef3974c052028868fe48f7e0991"
+    },
+    "cargo-result.json": {
+      "bytes": 531,
+      "sha256": "c57d326f4f0db7d47d653ef2a0fa5708f4f6e8224c9ca56f072738b4b79796ee"
+    },
+    "compile.stderr": {
+      "bytes": 1275,
+      "sha256": "832bcdb327a34a74ed7601752ccde26a5532158b2ce832b681162f18d8142df6"
+    },
+    "compile.stdout": {
+      "bytes": 571239,
+      "sha256": "200d6c1db31a1502451b31db20cc3ab9270e2e1731c75186d3380ee8402d893a"
+    },
+    "outcome.json": {
+      "bytes": 178,
+      "sha256": "cc8f4e7515fdeb1007a2049b92c1bffe52df902688a5ec1d8c166762b8ec57bb"
+    },
+    "profile-execution/mists_compat_bootstrap/invocation.json": {
+      "bytes": 564,
+      "sha256": "c138aaa6f05774d8c926a88a43f464e69598cb7f0e7d862478b80e9a7c1b9dd1"
+    },
+    "profile-execution/mists_compat_bootstrap/result.json": {
+      "bytes": 340,
+      "sha256": "a7b0ade169fe274ad2b0793869d4c24e32e14b27ae65a8e0e276cc4a719e7994"
+    },
+    "profile-execution/mists_compat_bootstrap/stderr": {
+      "bytes": 12857,
+      "sha256": "a6e9a08a2e1d9ded233c5bbb29a40b063e6e95a8bc2321dc45461bd1b3772ca7"
+    },
+    "profile-execution/mists_compat_bootstrap/stdout": {
+      "bytes": 1716,
+      "sha256": "b6a2e814faaddd2efe44032d57c3f4d02b8fdb214098cf29e817ddb81f7191b1"
+    },
+    "profile-execution/mists_currency_list/invocation.json": {
+      "bytes": 620,
+      "sha256": "3ac4f0007d407f94e81651518093b01c977f8c8cea870c4e98b10ef696cbeded"
+    },
+    "profile-execution/mists_currency_list/result.json": {
+      "bytes": 342,
+      "sha256": "df4a126b0b90f2c8140e6ac0669ead5a60a266c4681003f1293e44b51f45df14"
+    },
+    "profile-execution/mists_currency_list/stderr": {
+      "bytes": 4308,
+      "sha256": "06482130a324b4f12a924b9acaa7d9bf12b5be111785470dd1b731e8b49ab85a"
+    },
+    "profile-execution/mists_currency_list/stdout": {
+      "bytes": 791,
+      "sha256": "850aa1ce002766f7bb703eec5c4c756dd100eee58e77fd27139ec45c5eaf137f"
+    },
+    "profile-execution/mists_dialog_helpers/invocation.json": {
+      "bytes": 562,
+      "sha256": "c9348b9fd98ca0f1b11bfc62232fd4c1d5bd0dab9119e822ded1f96f716c5e0c"
+    },
+    "profile-execution/mists_dialog_helpers/result.json": {
+      "bytes": 340,
+      "sha256": "48f4231c5d6a728cc8662183d552fabd01518ca65b5ac39e8ea3325733875426"
+    },
+    "profile-execution/mists_dialog_helpers/stderr": {
+      "bytes": 1282,
+      "sha256": "2bc0ff02202f8e2a84d3a88b4522aee3704862bb9ce22359267d661eacdef01b"
+    },
+    "profile-execution/mists_dialog_helpers/stdout": {
+      "bytes": 246,
+      "sha256": "448e1d2fc99b71ec5e9f151cf3957d8d69149be582618aad6961db7bcc8111d9"
+    },
+    "resources.json": {
+      "bytes": 141,
+      "sha256": "7d5b32d32af148ee953feb3a847e35d295329cf26935e88b610d2d8bebda48ca"
+    },
+    "source-after.json": {
+      "bytes": 452396,
+      "sha256": "bac8c2638486a10eff96eff59794f92d6e02c5dd2f170e2c0d1f4af17d194650"
+    },
+    "source-before.json": {
+      "bytes": 452396,
+      "sha256": "bac8c2638486a10eff96eff59794f92d6e02c5dd2f170e2c0d1f4af17d194650"
+    },
+    "submission.json": {
+      "bytes": 1142,
+      "sha256": "8093c5a1c6368d83230b8843b3bbd2424ecfacaea8c12885c63ce348bbd7c131"
+    }
+  },
+  "supporting_sources": {
+    "tests/mists_currency_list.rs": {
+      "sha256": "5483ab5948e2237bc0e698aab110f09359a4b018423ac8dc299dbf2e8760ba8f",
+      "matches_epoch_source": true
+    },
+    "tests/mists_compat_bootstrap.rs": {
+      "sha256": "3c9e13becc9351ac8e58bfb8da9e94d994fe51b61d8b0d00f7e300417111f934",
+      "matches_epoch_source": true
+    },
+    "tests/mists_dialog_helpers.rs": {
+      "sha256": "881991c2acdaa86df5f8c5fdf6e207477c0d72c97c086a22e3764c877a841145",
+      "matches_epoch_source": true
+    },
+    "src/mists/compat_bootstrap.lua": {
+      "sha256": "1b7e8e4323ae97144923856754272ae50968b908c82d21ab54a5cd51c3cd5953",
+      "matches_epoch_source": true
+    },
+    "src/c_api/item_spell/c_currency.rs": {
+      "sha256": "88e4cbcbe7ab5386416f0aaf2ddb31d16ba88b70ea54bf0af81124239f9e4682",
+      "matches_epoch_source": true
+    },
+    "src/lua_api/globals/currency_data.rs": {
+      "sha256": "5ba0a32cca4b7df3bf95acb3fd2d87e14ab754c4d772429d756da5a2c3ec1c1a",
+      "matches_epoch_source": true
+    },
+    "src/lua_api/handler_timing.rs": {
+      "sha256": "c02d54c19cdda2961421cc2b00c1d7ac651a0aab629f3e28357aef15c7041a08",
+      "matches_epoch_source": true
+    },
+    "src/lua_api/globals/compat_overrides.rs": {
+      "sha256": "685274947d90435795d0aa7984a5bc6261c2f164f417a1e544963ee79beedb8c",
+      "matches_epoch_source": true
+    },
+    "src/lua_api/env_init/runtime_surface_bootstrap.lua": {
+      "sha256": "4c3c5d165643e025e754e681fe4b9b271b73a6ec46c6ec70d5f76075a4b879f5",
+      "matches_epoch_source": true
+    }
+  },
+  "historical_evidence": {
+    "/home/osso/.local/state/wow-ui-sim/verification/mists-final-profile-check/20261010T031637Z/compile.stdout": {
+      "bytes": 537533,
+      "sha256": "a931a0d379afbf494aa7e54878099607002995688c111f558db18b1b7d937085"
+    }
+  },
+  "supplemental_unsealed_vendor": {
+    "/home/osso/.cache/wow-ui-sim/blizzard-ui/mists/AddOns/Blizzard_TokenUI/Blizzard_TokenUI.lua": {
+      "bytes": 9612,
+      "sha256": "f6e7084a5ea56b14608e40f48ef5e8669d547ad8dd11ecf723abe6f1ee9c5e83"
+    }
+  },
+  "audit_outputs": {
+    "report.md": {
+      "bytes": 5588,
+      "sha256": "39da66b81fd1244b512e7677e0613324e617416e311e2e90ce895672b2a86cb0"
+    },
+    "aggregate.json": {
+      "bytes": 13543,
+      "sha256": "ba8edd349c3a30295e49b38d3a613dc54e37b272d814a329fe50712271dbc830"
+    }
+  },
+  "self_hash_excluded": true
+}

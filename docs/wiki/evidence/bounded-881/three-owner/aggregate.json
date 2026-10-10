@@ -1,0 +1,304 @@
+{
+  "artifact": {
+    "executable": "/home/osso/Projects/wow/wow-ui-sim/target/debug/deps/wow_sim-e99132585a38db9e",
+    "features": [
+      "aura-containers",
+      "aura-instance-enumeration",
+      "aura-xml-widgets",
+      "base-spell-relationships",
+      "casc",
+      "client-retail",
+      "default",
+      "forbidden-aspects",
+      "gui",
+      "native-duration-formatting",
+      "numeric-rule-formatters",
+      "on-update-modes",
+      "player-cast-durations",
+      "profile-retail",
+      "retail-12-0-0",
+      "retail-12-0-5",
+      "retail-12-0-7",
+      "retail-12-1-0",
+      "rodio",
+      "sound"
+    ],
+    "fresh": false,
+    "hash_proof": "recorded compile-end / runtime-before / runtime-after equality; historical executable not remeasured",
+    "profile": {
+      "debug_assertions": true,
+      "debuginfo": "line-tables-only",
+      "opt_level": "1",
+      "overflow_checks": true,
+      "test": true
+    },
+    "sha256": "b48a89c7985bb7b42e77db8f6d05ccbc95264a43c7adc90160125d61e69ebb6d",
+    "target": {
+      "crate_types": [
+        "bin"
+      ],
+      "doc": true,
+      "doctest": false,
+      "edition": "2024",
+      "kind": [
+        "bin"
+      ],
+      "name": "wow-sim",
+      "src_path": "/home/osso/Projects/wow/wow-ui-sim/src/bin/wow_sim/main.rs",
+      "test": true
+    }
+  },
+  "cache_sealing": {
+    "cache_audit_performed": false,
+    "interpretation": "No contemporaneous Blizzard UI/addon/cache content inventory or run seals in this epoch. A later cache audit would measure later state, not establish these run inputs. Bytecode-cache statistics are not content seals.",
+    "runtime_input_seals_supplied": false
+  },
+  "cargo": {
+    "exit": 0,
+    "manifest_deprecation_warnings": 6,
+    "reason_counts": {
+      "build-finished": 1,
+      "build-script-executed": 74,
+      "compiler-artifact": 657
+    }
+  },
+  "checks": {
+    "artifact_seal_matches_cargo": true,
+    "build_own_cpu1200_mem16G": true,
+    "cargo_build_finished_success": true,
+    "cargo_exit_zero": true,
+    "jobs12": true,
+    "load_counts_exact": true,
+    "one_selected_cargo_artifact": true,
+    "one_test_passed": true,
+    "owners_limit_100M_all_phases": true,
+    "quota_errors_zero_all_phases": true,
+    "recorded_artifact_hash_unchanged": true,
+    "revision_metadata": true,
+    "runtime_exit_zero": true,
+    "runtime_stream_hashes_match": true,
+    "settle_counters_zero": true,
+    "sharedmedia_encountered_loaded": true,
+    "source_maps_equal": true
+  },
+  "epoch": "20261010T042920Z",
+  "global_startup_errors": {
+    "budget_error_tag_count": 0,
+    "distinct_safe_signatures": 1,
+    "exhaustion_marker_count": 0,
+    "nil_global_debug_interpretation": "327 diagnostic nil-lookups are not 327 thrown errors",
+    "nil_global_debug_lines": 327,
+    "observed_raw_stream_occurrences": 1,
+    "scope": "all saved runtime stdout/stderr, not selected-owner filtering; raw payloads withheld; no complete serialized final lua_error_counts inventory supplied",
+    "signatures": [
+      {
+        "callee": "unidentified; no gamepad callee inference",
+        "class": "attempt to call a nil value",
+        "count": 1,
+        "line": 4165,
+        "signature": "Interface/AddOns/EllesmereUI/EllesmereUI_UICore.lua:1224",
+        "stream": "probe-execution/stderr"
+      }
+    ]
+  },
+  "mode": "saved artifact audit only",
+  "prohibited_claims": [
+    "native behavior",
+    "parity",
+    "full startup clean",
+    "production budget adequacy",
+    "speedup"
+  ],
+  "raw_streams": {
+    "compile.stderr": {
+      "bytes": 1275,
+      "fully_read_privately": true,
+      "lines": 9,
+      "sha256": "8004d0a1ce1310bf7d64a4ed98325ed99c53901fd56c58026b00aaf3c36b0fac"
+    },
+    "compile.stdout": {
+      "bytes": 566272,
+      "fully_read_privately": true,
+      "lines": 732,
+      "sha256": "94892cc0da44eb3f5685ef14db5c4f94f022a242cc474fa753dcf2376c370bee"
+    },
+    "probe-execution/stderr": {
+      "bytes": 1499270,
+      "fully_read_privately": true,
+      "lines": 11739,
+      "sha256": "6af1387adffe8cfd8d12e446632973edeb8e16a5a27fd04af03d25c27b215de1"
+    },
+    "probe-execution/stdout": {
+      "bytes": 317318,
+      "fully_read_privately": true,
+      "lines": 4714,
+      "sha256": "e601c1914ca4e1c39793767e4858993ce932c450c9e5ccb39412d2f744bd4401"
+    }
+  },
+  "resources": {
+    "build_cgroup_after": {
+      "cpu.max": "1200000 100000",
+      "cpu.stat": "usage_usec 174713534\nuser_usec 166706291\nsystem_usec 8007242\nnice_usec 0\ncore_sched.force_idle_usec 0\nnr_periods 590\nnr_throttled 2\nthrottled_usec 729\nnr_bursts 0\nburst_usec 0",
+      "memory.current": "4525625344",
+      "memory.max": "17179869184",
+      "memory.peak": "9959763968",
+      "path": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/agents.slice/wow-sharedmedia-three-owner-current-j12-20261010t040823z.service"
+    },
+    "build_cgroup_before": {
+      "cpu.max": "1200000 100000",
+      "memory.current": "24477696",
+      "memory.max": "17179869184",
+      "memory.peak": "27291648",
+      "path": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/agents.slice/wow-sharedmedia-three-owner-current-j12-20261010t040823z.service"
+    },
+    "jobs": 12,
+    "parent_cap": "not sealed here; may now be 20 rather than 12; not re-inspected",
+    "runtime_cgroup_snapshot": "not supplied",
+    "speedup_claim": false
+  },
+  "result": "PASS bounded saved target evidence",
+  "revision": "0148437a7868b0a25d0ce2fca504378d4558b5ee",
+  "runtime": {
+    "argv": [
+      "/usr/bin/timeout",
+      "90",
+      "/home/osso/Projects/wow/wow-ui-sim/target/debug/deps/wow_sim-e99132585a38db9e",
+      "startup::tests::trusted_finite_budget_for_selected_addons_with_shared_media",
+      "--exact",
+      "--ignored",
+      "--nocapture",
+      "--test-threads=1"
+    ],
+    "environment_overrides": {
+      "WOW_SIM_DEBUG_NIL_GLOBALS": "1",
+      "WOW_SIM_LOG_HANDLER_TIMINGS": "0",
+      "WOW_SIM_NO_SOUND": "1",
+      "WOW_SIM_VERBOSE": "1"
+    },
+    "exit": 0,
+    "phases": {
+      "after_headless_settle": {
+        "AllTheThings": {
+          "counter_line": 11734,
+          "limit": 100000000,
+          "quota_errors": 0,
+          "quota_line": 11737,
+          "used": 0
+        },
+        "EnhanceQoL": {
+          "counter_line": 11733,
+          "limit": 100000000,
+          "quota_errors": 0,
+          "quota_line": 11736,
+          "used": 0
+        },
+        "EnhanceQoLSharedMedia": {
+          "counter_line": 11735,
+          "limit": 100000000,
+          "quota_errors": 0,
+          "quota_line": 11738,
+          "used": 0
+        }
+      },
+      "after_load_and_gc": {
+        "AllTheThings": {
+          "counter_line": 2849,
+          "limit": 100000000,
+          "quota_errors": 0,
+          "quota_line": 2852,
+          "used": 771025
+        },
+        "EnhanceQoL": {
+          "counter_line": 2848,
+          "limit": 100000000,
+          "quota_errors": 0,
+          "quota_line": 2851,
+          "used": 12645062
+        },
+        "EnhanceQoLSharedMedia": {
+          "counter_line": 2850,
+          "limit": 100000000,
+          "quota_errors": 0,
+          "quota_line": 2853,
+          "used": 18488983
+        }
+      },
+      "before_init": {
+        "AllTheThings": {
+          "counter_line": 13,
+          "limit": 100000000,
+          "quota_errors": 0,
+          "quota_line": 16,
+          "used": 0
+        },
+        "EnhanceQoL": {
+          "counter_line": 12,
+          "limit": 100000000,
+          "quota_errors": 0,
+          "quota_line": 15,
+          "used": 0
+        },
+        "EnhanceQoLSharedMedia": {
+          "counter_line": 14,
+          "limit": 100000000,
+          "quota_errors": 0,
+          "quota_line": 17,
+          "used": 0
+        }
+      }
+    },
+    "reset_interpretation": "After-settle used=0 reflects reset counters, not zero work; positive load counters precede settle. No cumulative settle work total supplied.",
+    "saved_invocations": 1,
+    "sharedmedia": {
+      "encountered": true,
+      "evidence": "probe-execution/stderr:11739",
+      "loaded": true
+    },
+    "test_counts": {
+      "failed": 0,
+      "filtered_out": 30,
+      "ignored": 0,
+      "measured": 0,
+      "passed": 1
+    }
+  },
+  "schema": 1,
+  "separation": "Old two-owner proof untouched, not read, merged, replaced, or used as evidence. This one compiled epoch and one three-owner invocation stand separately.",
+  "source_inspection": {
+    "default_caller_compiled": "CargoJSON features include default, client-retail, retail-12-0-5; main target built, startup.rs:26-28 default env caller retained. Test uses initialize_and_load_env and ordinary settle helper; does not run normal main() itself.",
+    "hash_matched_files": [
+      "src/bin/wow_sim/startup.rs",
+      "src/bin/wow_sim/main.rs",
+      "src/bin/wow_sim/startup_trace.rs",
+      "src/lua_api/execution_budget.rs",
+      "src/loader/lua_file.rs",
+      "src/startup.rs",
+      "src/lua_api/handler_timing.rs",
+      "src/loader/xml_lifecycle.rs"
+    ],
+    "helper_gate": "src/loader/lua_file.rs:223-228 and src/lua_api/execution_budget.rs:48-51 use handler_timing::is_enabled; handler_timing.rs:12-14 is gated on retail-12-0-5",
+    "reset_function": "src/lua_api/execution_budget.rs reset_frame_budgets resets configured owner usage; settle invokes update ticks",
+    "revision": "0148437a7868b0a25d0ce2fca504378d4558b5ee"
+  },
+  "source_maps": {
+    "entries": 3839,
+    "equal": true,
+    "exclusions": [
+      "external path dependencies",
+      "data inputs outside captured tracked src/tests/build/config scope",
+      "inherited environment",
+      "runtime cache/addon files outside source scope",
+      "untracked index"
+    ],
+    "revision_binding": "saved revision metadata plus independently hash-matched selected revision sources; not a whole-tree revision rehash",
+    "run_time_source_seal": "not supplied; before/after maps bracket compile, not runtime",
+    "scope_top_level": [
+      ".cargo",
+      "Cargo.lock",
+      "Cargo.toml",
+      "build.rs",
+      "src",
+      "tests"
+    ]
+  }
+}

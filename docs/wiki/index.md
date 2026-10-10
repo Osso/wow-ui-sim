@@ -3176,3 +3176,7 @@ The three retail 12.0.0 changed globals `LE_GAME_ERR_HOUSING_RESULT_MISSING_EXPA
 ## [2026-10-09] docs | Frame metatable source correction
 
 [Current source representation](investigations/method-dispatch-refactor.md#current-state-fixed): shared registration, attached filtered `__index` clones, no `is_method_allowed` registry or established all-type dispatch. Historical491-row/31-name delta differs from11,985-row baseline total; docs-only source inspection, no runtime/native proof.
+
+## [2026-10-09] audit | Bounded881 saved evidence retention
+
+[Existing proof SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#saved-three-owner-timing-full-suite-and-mists-evidence--bounded-881) retains sanitized three-owner, timing, frozen6751 comparison and Mists014 reports/aggregates/hashes. Main review controls withheld currency claims; fresh518 audit excluded, autohide unchecked/unexecuted, current CurrencyGREEN unproven. Historical failures and production10M unchanged; parent OPEN. UTC October10 receipts are October9 US local. Docs only; code-index preserved.

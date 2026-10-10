@@ -1,0 +1,59 @@
+{
+  "algorithm": "SHA-256",
+  "audited_at_utc": "2026-10-10T04:53:03.387029+00:00",
+  "inputs": [
+    {
+      "bytes": 9059,
+      "path": "/home/osso/.local/state/wow-ui-sim/verification/fullsuite-8e-comparison/report.md",
+      "sha256": "4e1b7e46a6bedc1ec91ffeb49d29ba71be028687802b900459d576e5749bc4e3"
+    },
+    {
+      "bytes": 27191,
+      "path": "/home/osso/.local/state/wow-ui-sim/verification/fullsuite-8e-comparison/aggregate.json",
+      "sha256": "44828cd55801b509077dee0c49078396b17287cee46775895ed673d912d7bd01"
+    },
+    {
+      "bytes": 10161,
+      "path": "/home/osso/.local/state/wow-ui-sim/verification/fullsuite-8e-comparison/hashmanifest.json",
+      "sha256": "3fce75e8c18affb8ed9cc49802899e7861f41f074567aa760da815c6550842a0"
+    },
+    {
+      "bytes": 970,
+      "path": "/home/osso/Projects/wow/full-suite-results/6751c0f37088de11d0cc864f9313922a5b9cbdab.json",
+      "sha256": "176c52bfbd3f70755297d7aa0987470503e25616e4041e46eba16d23426dfcc2"
+    },
+    {
+      "bytes": 2097355,
+      "path": "/home/osso/Projects/wow/full-suite-results/6751c0f37088de11d0cc864f9313922a5b9cbdab.log",
+      "sha256": "505250f3d410a2928c8052df04cb868e85be5b1982eb7abd55d599a1697d4bdb"
+    },
+    {
+      "bytes": 970,
+      "path": "/home/osso/Projects/wow/full-suite-results/8e6bc113f4c2c47ad693fa7fcb19ddf6bef48476.json",
+      "sha256": "8cf2ecd3ff0ddadf250ec7bb9c64bf76f48e559e31d9336992f6d9e7d07c838e"
+    },
+    {
+      "bytes": 2095677,
+      "path": "/home/osso/Projects/wow/full-suite-results/8e6bc113f4c2c47ad693fa7fcb19ddf6bef48476.log",
+      "sha256": "4feca2fbb4a560b140e932e881905be003f335861781444f5396189fd33190bd"
+    },
+    {
+      "bytes": 5126,
+      "path": "/home/osso/bin/full-suite",
+      "sha256": "0ac303eac456c237375c89d7f96f5c3123cfaaa0d3bee78f865dadf446995908"
+    }
+  ],
+  "note": "No raw payload copies. Current runner read-only reference, not historical attestation. Manifest self-hash excluded.",
+  "outputs": [
+    {
+      "bytes": 4268,
+      "path": "/home/osso/.local/state/wow-ui-sim/verification/fullsuite-6751-comparison/report.md",
+      "sha256": "18a90d0bcde4441b3192661172c6f34a23e2fae20aac4f4d2bb65569e69bd873"
+    },
+    {
+      "bytes": 7541895,
+      "path": "/home/osso/.local/state/wow-ui-sim/verification/fullsuite-6751-comparison/aggregate.json",
+      "sha256": "446f350b47da6b6cbf54e838b9499c15f158aa587213d61e380ba051662fbafa"
+    }
+  ]
+}
