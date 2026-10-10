@@ -264,8 +264,11 @@ fn test_table_create_returns_empty_mutable_tables_for_capacity_variants() {
     let result: String = env
         .eval(
             r#"
+            if pcall(table.create) then
+                return "missing-array-hint-accepted"
+            end
             local tables = {
-                table.create(),
+                table.create(0),
                 table.create(3),
                 table.create(0, 4),
                 table.create(3, 4),
