@@ -4,9 +4,17 @@
 
 Docs-only audit: `40d2beb9a` changes the category spec and epoch-selected fixtures, not runtime code. The [category contract](../../specs/forever-cooldown-categories.md) matches actual wiring: `env_init` selects `ptr::compat_bootstrap::init` under `retail-12-1-0`; `init` calls the shared enum publisher unconditionally. The `client-ptr` guards select bootstrap strings, not a PTR-only publisher.
 
-Main-reported queued compiler receipt `40d2epochverification/marker-and-three-fixtures/20261009T233707Z`: exit0, source equal. Compiler success is not fixture GREEN; marker and three-fixture results remain pending main results. Later source `0769f7b99` is not included in this epoch.
+Main-reported queued compiler receipt `40d2epochverification/marker-and-three-fixtures/20261009T233707Z`: exit0, source equal. Compiler success is not fixture GREEN; marker and three-fixture results remain pending main results. Later source `0769f7b99`, `1fb759a05` and `f4480b993` is not included in this epoch.
 
 `0769f7b99` changes only `tests/spell_api.rs`: the existing table-type test seeds explicit spell19750 charge input instead of querying unconfigured spell100. No runtime modification, new coverage credit or source claim. The existing [charge contract](../../specs/spell-charge-state.md) already requires explicit input; no duplicated spec needed. Current fixture GREEN and parent acceptance remain pending.
+
+## Combined Maw/charge and secret round-trip fixtures — proof pending
+
+`1fb759a05` replaces selector `test_spell_static_fallback_shims_return_inert_values` with `test_spell_override_maw_epoch_and_explicit_charge_state`. The [12.0.7 source register](../../../data/patch-api/sources/12.0.7-wikitext-register.json) records Maw API removal at wikitext line176: that epoch checks function absence, not a call returning nil. The earlier-profile call/nil baseline remains unchanged in meaning; it is not native historical proof. Known spell19750 receives explicit charge input and asserts `1/2/12/40/2` (current/max/start/duration/rate), replacing invalid unseeded spell116 zero-field expectations under the existing [explicit-input contract](../../specs/spell-charge-state.md).
+
+`f4480b993` corrects only the existing debug-environment test: public `secretwrap(marker)` → `issecretvalue(wrapped)` under `retail-12-1-0` → public `secretunwrap(wrapped)` → marker identity and callable result `"wrapped"`. Active retail cache `~/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/FrameScriptDocumentation.lua` describes conversion to secret values and conversion back to regular values; both accept secrets `AllowedWhenUntainted`, and unwrap has restrictions. This grounds the round-trip expectation, not a claim that native forbids all wrapped-function calls. The retained old failure is the wrapper-call expression before getters, not getter failure or demonstrated local mutation. No VM, production security or getter changes; no runtime contract/spec change.
+
+Earlier RED/FAIL epochs remain intact; neither commit has new PASS credit here. The `40d2` compiler receipt excludes both commits and `0769`; main owns the later batch build. Main-reported five-case GREEN still awaits independent audit560 and is not upgraded to accepted proof. No new raw logs/private payload retained; parent OPEN.
 
 ## Mists diagnostic epoch — FAIL, native oracle conflict
 

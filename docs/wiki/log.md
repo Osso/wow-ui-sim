@@ -1,3 +1,7 @@
+## [2026-10-09] audit | Combined fixtures and secret round-trip — pending proof
+
+[Proof SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#combined-mawcharge-and-secret-round-trip-fixtures--proof-pending): inspected `1fb759a05` combined selector/epoch absence/explicit19750 charges and `f4480b993` public secret round-trip against active-cache FrameScript documentation. Old wrapper-call failure precedes getters; no VM/production security/getter changes or native blanket-call prohibition claimed. Earlier-profile baseline is not native history; RED epochs retained. `40d2` compile excludes `0769`/`1fb`/`f448`; later batch main-owned, five-case GREEN audit560 pending. No new PASS/spec/runtime credit, raw logs/private payload, tests/builds/checks/network/operations/delegation/push. Docs/proof SSOT/log only.
+
 ## [2026-10-09] ingest | Browser blocker resolved — bounded public-page proof
 
 [Proof SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#browser-readiness-handoff): sibling's user-requested permanent Chromium153/display21/existing-profile setup; fresh agent561 navigation200 and main URL/title/article snapshot establish readable Patch1.0.0 page without challenge. Public screenshot and small main RFB003.008/types[1] receipt retained; handshake is not authentication/framebuffer/remote viewer/tunnel proof. No operations or historical/native acceptance; six-case count unchanged pending independent audit.
