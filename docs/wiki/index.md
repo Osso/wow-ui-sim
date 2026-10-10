@@ -1,3 +1,7 @@
+## [2026-10-09] audit | Settings, prefork, browser and timing boundaries
+
+[Existing proof SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#settings-registration-trace--static-candidate-only): repeated growing-page control sort is static, not measured cause; no vendor optimization authorized. Recovered controlled prefork3/3 at96 remains distinct from generic21/21; original non-Retail target blocked by Retail gate, ordinary Mists not substitute. Current browser DOM/CDP access grants no HTTP/auth/remote acceptance. Timing6751 source/format/readability PASS, compilation PENDING; private report path retained. Sanitized findings only; no raw source/payload or long-ledger duplication.
+
 ## [2026-10-09] audit | Saved 8e fullsuite remains FAIL
 
 [Fullsuite SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#completed-saved-fullsuite-8e-comparison--fail-parent-open):8e FAIL3 (two method snapshots/Garrison), versus96 FAIL17; integration10,677/2, prefork2,324/1, library1,993/0,19 skips.11 same-selector revised-fixture passes/3 passing replacements, not unchanged-contract repairs; zero new exact failures versus96. Three sanitized static files retained; runner discrepancy is not deployment authorization. Later Mists/source epochs separate, current HEAD readiness unproven, parent OPEN.

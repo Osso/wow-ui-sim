@@ -1,3 +1,9 @@
+## [2026-10-09] audit | Settings, prefork, browser and timing boundaries
+
+[Existing proof SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#settings-registration-trace--static-candidate-only): repeated growing-page control sort is static, not measured cause; no vendor optimization authorized. Recovered controlled prefork3/3 at96 remains distinct from generic21/21; original non-Retail target blocked by Retail gate, ordinary Mists not substitute. Current browser DOM/CDP access grants no HTTP/auth/remote acceptance. Timing6751 source/format/readability PASS, compilation PENDING; private report path retained. Sanitized findings only; no raw source/payload or long-ledger duplication.
+
+Updated existing SSOT/index/log only; private inputs remain local. No source/AGENTS changes, tests/builds, push, operations or delegation; `.code-index.db*` preserved.
+
 ## [2026-10-09] audit | Saved Mists nameplate bounded proof retained
 
 Updated [existing proof SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#saved-mists-nameplate-postaudit--bounded-pass-parent-open), index and log; retained sanitized report/aggregate with explicit identity/boundary correction, byte-identical original hash manifest and separate retention manifest. Submission revision `acfe6322f91cb936db2c41f263370e815dcdf37f`, NOT `53863d18e`. Saved compile/execute exit0, four tests/eight cases, jobs8; 3,839 tracked mappings equal during compile window only, not current-HEAD or execution-time cache seal. Original four NotFound records, warning, resource caveats and exclusions preserved; no native/full-profile credit, parent OPEN. Receipts October10 UTC/October9 US local. No raw payloads, source/AGENTS changes, tests/builds, push, deployment or delegation; `.code-index.db` variants preserved.
