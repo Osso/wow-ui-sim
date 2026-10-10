@@ -95,7 +95,7 @@ const SPELL_QUERY_METHODS: &[(&str, SpellScriptFn)] = &[
     ("GetSpellName", get_spell_name),
     ("GetSpellCooldown", get_spell_cooldown),
     ("GetSpellCharges", get_spell_charges),
-    #[cfg(feature = "retail-12-0-5")]
+    #[cfg(feature = "retail-12-0-0")]
     (
         "GetSpellCastCount",
         super::c_spell_counts::get_spell_cast_count,

@@ -168,7 +168,7 @@ pub(crate) mod c_spell_activation_overlay;
 pub mod c_spell_book;
 #[cfg(feature = "retail-12-0-0")]
 pub mod c_spell_classification;
-#[cfg(feature = "retail-12-0-5")]
+#[cfg(feature = "retail-12-0-0")]
 pub(crate) mod c_spell_counts;
 pub mod c_spell_diminish;
 pub mod c_stable_info;
