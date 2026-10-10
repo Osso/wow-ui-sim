@@ -88,6 +88,86 @@ fn forever_finite_events_register_deliver_and_reject_unknown() {
 }
 
 #[test]
+fn forever_aura_block_list_cleared_register_event_delivers_unit_payload() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        local event = "UNIT_AURA_BLOCK_LIST_CLEARED"
+        local frame = CreateFrame("Frame")
+        local received = {}
+        frame:SetScript("OnEvent", function(self, name, ...)
+            assert(self == frame and name == event)
+            assert(select('#', ...) == 1, "cleared event must deliver one unit")
+            received[#received + 1] = ...
+        end)
+        frame:RegisterEvent(event)
+        assert(frame:IsEventRegistered(event), "cleared event registration missing")
+        A_Admin.FireEvent(event, "player")
+        A_Admin.FireEvent(event, "target")
+        assert(#received == 2, "unfiltered cleared event must deliver both units")
+        assert(received[1] == "player" and received[2] == "target")
+        frame:UnregisterEvent(event)
+        assert(not frame:IsEventRegistered(event))
+        A_Admin.FireEvent(event, "player")
+        assert(#received == 2, "cleared event delivered after unregister")
+        "#,
+    )
+    .expect("Forever RegisterEvent must accept and deliver the declared cleared event");
+    assert!(env.state().borrow().lua_errors.is_empty());
+}
+
+#[test]
+fn forever_aura_block_list_cleared_register_unit_event_filters_target() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        local event = "UNIT_AURA_BLOCK_LIST_CLEARED"
+        local frame = CreateFrame("Frame")
+        local received = {}
+        frame:SetScript("OnEvent", function(self, name, ...)
+            assert(self == frame and name == event)
+            assert(select('#', ...) == 1, "cleared event must deliver one unit")
+            received[#received + 1] = ...
+        end)
+        frame:RegisterUnitEvent(event, "player")
+        local registered, unit = frame:IsEventRegistered(event)
+        assert(registered and unit == "player", "player unit registration missing")
+        A_Admin.FireEvent(event, "target")
+        assert(#received == 0, "player registration received mismatched target")
+        A_Admin.FireEvent(event, "player")
+        assert(#received == 1 and received[1] == "player", "player delivery missing")
+        A_Admin.FireEvent(event, "target")
+        assert(#received == 1, "player registration received subsequent target")
+        frame:UnregisterEvent(event)
+        assert(not frame:IsEventRegistered(event))
+        A_Admin.FireEvent(event, "player")
+        assert(#received == 1, "unit event delivered after unregister")
+        "#,
+    )
+    .expect("Forever RegisterUnitEvent must accept the cleared event and filter units");
+    assert!(env.state().borrow().lua_errors.is_empty());
+}
+
+#[test]
+fn forever_aura_block_list_cleared_unknown_event_control_rejects_both_methods() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        local unknown = "WOW_SIM_INVENTED_FOREVER_REGISTRATION_CONTROL"
+        for _, method in ipairs({"RegisterEvent", "RegisterUnitEvent"}) do
+            local frame = CreateFrame("Frame")
+            local ok, message = pcall(frame[method], frame, unknown, "player")
+            assert(not ok, method .. " must reject unrelated unknown events")
+            assert(type(message) == "string" and string.find(message, unknown, 1, true),
+                method .. " rejection must identify the unknown name")
+            assert(not frame:IsEventRegistered(unknown), "unknown registration retained")
+        end
+        "#,
+    )
+    .expect("Forever registration must remain strict for unrelated unknown events");
+}
+
+#[test]
 fn forever_player_swing_preserves_payload_order_and_rejects_unknown_events() {
     let env = WowLuaEnv::new().unwrap();
     env.exec(
