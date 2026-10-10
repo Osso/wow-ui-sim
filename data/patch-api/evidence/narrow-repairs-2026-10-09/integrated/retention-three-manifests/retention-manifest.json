@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "date": "2026-10-09",
+  "scope": "Selected audit evidence only; no new execution or acceptance",
+  "files": [
+    {
+      "path": "report.md",
+      "bytes": 6657,
+      "sha256": "9e090d05ee242183626797b0aba360d2187d3bef3e5e401ac2d6bee9601ae831",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/retention-three-manifests/report.md",
+      "retention": "byte-identical screened audit"
+    },
+    {
+      "path": "proof.json",
+      "bytes": 53909,
+      "sha256": "40dc8e2aa544a2d3fffdbc99a60c07b3412ce2bf13550b311b3e1303c242e185",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/retention-three-manifests/proof.json",
+      "retention": "byte-identical screened audit"
+    }
+  ],
+  "count": 2,
+  "total_bytes": 60566,
+  "manifest_excluded_from_totals": true,
+  "raw_streams_addon_source_private_profiles_account_payload_retained": false,
+  "publication_approval": false
+}

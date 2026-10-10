@@ -1,0 +1,24 @@
+{
+  "schema": 1,
+  "published_content": "Selected fixed diagnostic, completion marker, sanitized nil-call headline, source call, hash/count aggregates and proof limits only.",
+  "raw_streams_copied": false,
+  "raw_streams_modified": false,
+  "private_payload_published": false,
+  "excluded": [
+    "Raw stdout/stderr",
+    "Account and character identities",
+    "WTF/cache payloads and layout values",
+    "Unrelated startup diagnostics and tracebacks",
+    "Environment payloads and full metadata dumps"
+  ],
+  "filesystem_boundary": {
+    "capture_directory_mode": "0700",
+    "state_ancestor_mode": "0700",
+    "raw_stream_modes": {
+      "stdout": "0644",
+      "stderr": "0644"
+    },
+    "note": "Private through restrictive ancestor directories; stream modes alone do not enforce privacy. No permissions changed."
+  },
+  "operations": "Only local artifact/candidate/binary reads, hashes, and requested audit writes; no execution of simulator, build, tests, checks, network, delegation, repository edits, or operational mutation."
+}

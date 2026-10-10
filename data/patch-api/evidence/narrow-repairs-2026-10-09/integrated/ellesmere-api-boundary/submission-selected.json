@@ -1,0 +1,8 @@
+{
+  "started": "2026-10-09T23:24:33.796953+00:00",
+  "compiled_source_revision": "1fac15bd0e477cd0fdf1f03dd0219dbbedfd4111",
+  "binary_sha256": "a5e7c397129ec917ea32eb081bf5631b3cdccb8ae69c5e8c997cac981885988d",
+  "addon_sha256_before": "f7c73112a06f01008c14beb3c608704d3c43e83caf4497a83e5da5fb7ad08ff1",
+  "purpose": "New producer types and candidate-addon byte identity; prior startup capture did not retain these. Not repeated acceptance or prior-capture provenance.",
+  "selection_note": "Candidate path, argv, cwd, resources and override metadata omitted; selected root unproven."
+}

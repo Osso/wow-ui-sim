@@ -1,0 +1,47 @@
+{
+  "schema": 1,
+  "date": "2026-10-09",
+  "scope": "Selected audit evidence only; no new execution or acceptance",
+  "files": [
+    {
+      "path": "audit/report.md",
+      "bytes": 2767,
+      "sha256": "4d9d17ee5d8eed1b97ad9917664db936002d4a4c30202a18154d9a2be4ed04a6",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/ellesmere-api-boundary/20261009T232433Z/audit/report.md",
+      "retention": "byte-identical screened audit"
+    },
+    {
+      "path": "audit/proof.json",
+      "bytes": 3373,
+      "sha256": "16beff55264cf94ca9cc81cdabb81f7b35bc54cbe93b3f947fc051c2e9e9d3fa",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/ellesmere-api-boundary/20261009T232433Z/audit/proof.json",
+      "retention": "byte-identical screened audit"
+    },
+    {
+      "path": "audit/privacy.json",
+      "bytes": 1040,
+      "sha256": "9af7bacf4e95dd82bd35919ca11e4a2a2e385daf616ede73a224abe8445b0c33",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/ellesmere-api-boundary/20261009T232433Z/audit/privacy.json",
+      "retention": "byte-identical screened audit"
+    },
+    {
+      "path": "submission-selected.json",
+      "bytes": 588,
+      "sha256": "25f5b77adcaebec03ac6be075285218be738c74281b2b2064d85a2ead1c8a141",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/ellesmere-api-boundary/20261009T232433Z/submission.json",
+      "retention": "private-safe field selection; not original byte identity"
+    },
+    {
+      "path": "outcome-selected.json",
+      "bytes": 708,
+      "sha256": "0b2988a3563b8b88bd61958b313dbf5cd65b94923b1d53524f2cb1a3327a02d0",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/ellesmere-api-boundary/20261009T232433Z/outcome.json",
+      "retention": "private-safe field selection; not original byte identity"
+    }
+  ],
+  "count": 5,
+  "total_bytes": 8476,
+  "manifest_excluded_from_totals": true,
+  "raw_streams_addon_source_private_profiles_account_payload_retained": false,
+  "publication_approval": false
+}

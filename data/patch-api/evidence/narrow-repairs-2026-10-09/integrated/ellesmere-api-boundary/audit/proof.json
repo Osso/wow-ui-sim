@@ -1,0 +1,77 @@
+{
+  "schema": 1,
+  "verdict": "PASS bounded saved-artifact diagnostic; selected-root provenance unproven",
+  "audited_at_utc": "2026-10-09T23:28:38.472225+00:00",
+  "capture": "20261009T232433Z",
+  "recorded_exit": 0,
+  "stream_sha256": {
+    "stdout": "278a0d047bf95244fc0800908b227b500b633f98daff4f557a3638bf3ac0adc1",
+    "stderr": "0bb2259e98d1ec5c5e7730e6906069bd9ea116d87a6f7aa2c030daccc883ef0d"
+  },
+  "stream_hashes_match_outcome": true,
+  "counts": {
+    "stdout": {
+      "diagnostic": 0,
+      "completion_marker": 0,
+      "selected_nil_call_headline": 0
+    },
+    "stderr": {
+      "diagnostic": 1,
+      "completion_marker": 1,
+      "selected_nil_call_headline": 1
+    }
+  },
+  "selected_evidence": [
+    {
+      "stream": "stderr",
+      "line": 317,
+      "kind": "selected_nil_call_headline",
+      "text": "EllesmereUI_UICore.lua:1073: attempt to call a nil value"
+    },
+    {
+      "stream": "stderr",
+      "line": 320,
+      "kind": "diagnostic",
+      "text": "[EllesmereAPIBoundary]\tIsUsingGamepad\tnil\tC_GamePad\ttable\tIsEnabled\tfunction"
+    },
+    {
+      "stream": "stderr",
+      "line": 321,
+      "kind": "completion_marker",
+      "text": "[EllesmereBoundaryComplete]"
+    }
+  ],
+  "candidate": {
+    "name": "EllesmereUI_UICore.lua",
+    "line": 1073,
+    "selected_call": "return IsUsingGamepad() and C_GamePad.IsEnabled() or false",
+    "recorded_before_sha256": "f7c73112a06f01008c14beb3c608704d3c43e83caf4497a83e5da5fb7ad08ff1",
+    "recorded_after_sha256": "f7c73112a06f01008c14beb3c608704d3c43e83caf4497a83e5da5fb7ad08ff1",
+    "audit_before_sha256": "f7c73112a06f01008c14beb3c608704d3c43e83caf4497a83e5da5fb7ad08ff1",
+    "audit_after_sha256": "f7c73112a06f01008c14beb3c608704d3c43e83caf4497a83e5da5fb7ad08ff1",
+    "hashes_equal": true,
+    "actual_selected_root_proven": false
+  },
+  "binary_receipt": {
+    "compiled_source_revision": "1fac15bd0e477cd0fdf1f03dd0219dbbedfd4111",
+    "recorded_before_sha256": "a5e7c397129ec917ea32eb081bf5631b3cdccb8ae69c5e8c997cac981885988d",
+    "recorded_after_sha256": "a5e7c397129ec917ea32eb081bf5631b3cdccb8ae69c5e8c997cac981885988d",
+    "audit_sha256": "a5e7c397129ec917ea32eb081bf5631b3cdccb8ae69c5e8c997cac981885988d",
+    "existing_receipt_sha256": "a5e7c397129ec917ea32eb081bf5631b3cdccb8ae69c5e8c997cac981885988d",
+    "compiler_record_reason": "compiler-artifact",
+    "compiler_record_fresh": false,
+    "all_hashes_equal": true
+  },
+  "metadata_sha256": {
+    "submission.json": "e71e34d735b700067ec8251614631515a590fc9c3065d102c9631c2ca4d9fad3",
+    "outcome.json": "a7e2c5ed4dbebfb4ec121b0c78f513ac7460023cf4b08046ec31eba7a52f8992",
+    "existing_binary_source_receipt": "7d660385770d5a05959591cdf6ec953217aa041844cae3b9dca8b066896456b9"
+  },
+  "limits": [
+    "Actual selected addon root and exact loaded addon bytes are not proven; candidate identity is not load provenance.",
+    "Current candidate hashes do not retroactively prove addon bytes in the older startup capture.",
+    "Producer types were observed after the selected nil call, not instrumented at the failure instant.",
+    "Binary/source association rests on the existing recorded compiler-artifact receipt, not independent rebuild or pristine-tree attestation.",
+    "Bounded saved-artifact diagnostic only: no native parity, runtime fix, broad startup recertification, or current HEAD acceptance."
+  ]
+}
