@@ -8,7 +8,7 @@
 
 ## [2026-10-10] audit | Success-file diagnostics and attribution retained
 
-[Proof SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#successful-file-budget-diagnostics--bounded-green-and-attribution-startup-unfixed) links authentic external RED, bounded GREEN and fresh full-addon attribution. Small sanitized receipts/reports retained; raw stderr, owner/file joins and vendor content stay private. Existing startup errors/native unknowns remain; integrated suiteb048 asynchronously queued.
+[Proof SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#successful-file-budget-diagnostics--bounded-green-and-attribution-startup-unfixed) links authentic external RED, bounded GREEN and fresh full-addon attribution. Small sanitized receipts/reports retained; raw stderr, owner/file joins and vendor content stay private. Existing startup errors/native unknowns remain; [saved b048 suite](investigations/fullsuite-b048-2026-10-10.md) subsequently completed15,006PASS/4FAIL/19skips (15,010executions, no deduplication), not acceptance. Original3 failures historical; CPU threshold newly observed/not proven regression; later helper/event/map excluded.
 
 ## [2026-10-10] audit | Party map receipt acceptance retained
 
@@ -1425,3 +1425,7 @@ Updated [existing private-table row](investigations/patch-3-3-0-api-audit.md#cur
 ## [2026-10-10] audit | Child auto-hide and manual prefork guard
 
 [Bounded acceptance](investigations/integrated-source-and-factory-proof-2026-10-09.md#auto-hide-child-rectangle-and-manual-prefork-rejection--bounded-acceptance): genuine-driver AutoHide3/3, original cases unchanged; unsupported manual capability reaches exact target compile_error with valid Retail profile. [c6bc suite delta](investigations/fullsuite-c6bc-2026-10-10.md) retains14,999PASS/3unchangedFAIL/19skips and corrected cached21 PASS. Current-source5aa suite queued asynchronously; native/profile/parent gates remain open.
+
+## [2026-10-10] audit | Saved b048 receipt retention — FAIL
+
+Updated [saved b048 investigation](investigations/fullsuite-b048-2026-10-10.md), integrated SSOT and scoped index/log statements from external independent report/handoff:15,006PASS/4FAIL/19skips,15,010executions without deduplication. Original3 failures historical; newly observed CPU threshold not proven regression. Later helper/event/map excluded. Collected service cannot prove invocation/acceptance or erase saved successful executions. Sanitized report and byte-identical results JSON sealed under `data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/fullsuite-b048/`; older receipts preserved. Docs/receipt update only; no builds/checks/tests/commits/delegation/cwd change/Bash. Main owns commit; parent OPEN.

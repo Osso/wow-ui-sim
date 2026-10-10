@@ -1,3 +1,7 @@
+## [2026-10-10] audit | Saved b048 suite — FAIL
+
+[Saved b048 investigation](investigations/fullsuite-b048-2026-10-10.md):15,006PASS/4FAIL/19skips;15,010executions, no deduplication. Three historical failures plus newly observed CPU threshold, not proven regression. Sanitized report/results/hashes retained; later helper/event/map excluded, collected service not acceptance. Older receipts preserved; parent OPEN.
+
 ## [2026-10-10] audit | Forever post-event stock — bounded PASS
 
 [Integrated SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#forever-post-event-repair-stock--bounded-normal-completion-and-distinct-cli-zero): saved192210Z/ef55 normal completion marker/exit0; distinct CLI exact `[]`/exit0, 0unique/0occurrences, different CASC mode/pool. Sanitized small receipts/report/hash manifest retained. Cached normal-artifact reuse explicit; historical19/36 and422/514 preserved, no causal attribute/pool claim or native/GUI/all-profile completion. Parent OPEN.
@@ -8,7 +12,7 @@
 
 ## [2026-10-10] audit | Successful-file budget proof and attribution
 
-[Proof SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#successful-file-budget-diagnostics--bounded-green-and-attribution-startup-unfixed): diagnostic RED→GREEN,12executions/11distinctPASS and fresh3064-success-record attribution; quota/vendor unchanged, startup unfixed. Current integrated suiteb048 queued async, not PASS; parent OPEN.
+[Proof SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#successful-file-budget-diagnostics--bounded-green-and-attribution-startup-unfixed): diagnostic RED→GREEN,12executions/11distinctPASS and fresh3064-success-record attribution; quota/vendor unchanged, startup unfixed. [Completed saved b048](investigations/fullsuite-b048-2026-10-10.md):15,006PASS/4FAIL/19skips,15,010executions without deduplication; original3 historical, CPU threshold newly observed/not proven regression. Later helper/event/map excluded; parent OPEN.
 
 ## [2026-10-10] audit | Party map supplied input — bounded GREEN
 

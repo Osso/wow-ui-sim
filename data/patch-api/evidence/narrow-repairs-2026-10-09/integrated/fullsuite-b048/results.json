@@ -1,0 +1,41 @@
+{
+  "ref": "b048251f38b2d53e33b3365590cd227d40fc07d0",
+  "sha": "b048251f38b2d53e33b3365590cd227d40fc07d0",
+  "started": "2026-10-10T13:40:14-0500",
+  "steps": {
+    "integration": {
+      "exit": 100,
+      "seconds": 963.3
+    },
+    "prefork": {
+      "exit": 1,
+      "seconds": 183.0
+    },
+    "lib": {
+      "exit": 100,
+      "seconds": 142.6
+    }
+  },
+  "failures": {
+    "integration": [
+      "method_diff_coverage::diff_methods_extra_snapshot_matches_current_metatable_surface",
+      "method_diff_coverage::diff_methods_missing_snapshot_matches_current_metatable_surface"
+    ],
+    "prefork": [
+      "blizzard_garrison_ui_loads::blizzard_garrison_ui_loads_explicitly_via_load_addon_without_errors"
+    ],
+    "lib": [
+      "iced_app::update::update_tests::main_thread_cpu_time_advances_with_busy_work"
+    ]
+  },
+  "finished": "2026-10-10T14:01:43-0500",
+  "new_failures": {
+    "integration": [],
+    "prefork": [
+      "blizzard_garrison_ui_loads::blizzard_garrison_ui_loads_explicitly_via_load_addon_without_errors"
+    ],
+    "lib": [
+      "iced_app::update::update_tests::main_thread_cpu_time_advances_with_busy_work"
+    ]
+  }
+}

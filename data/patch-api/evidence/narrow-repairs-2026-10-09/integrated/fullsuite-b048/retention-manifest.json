@@ -1,0 +1,20 @@
+{
+  "verified": "2026-10-10",
+  "revision": "b048251f38b2d53e33b3365590cd227d40fc07d0",
+  "files": [
+    {
+      "path": "independent-report.md",
+      "bytes": 9273,
+      "sha256": "dbfbe1af10dcd0b62a63551dd5c27da2920ff8d8b28756e7afd29ead1a48728e"
+    },
+    {
+      "path": "results.json",
+      "bytes": 1153,
+      "sha256": "9538e34a7543d1fa8bff7cecfa5d87007fbe5613df506fef5ecf79f74be468e3"
+    }
+  ],
+  "report_source_sha256": "604401830fe6f93b740a9eb85abc3b29bc29d3e5e3841f67289a5ba08a3fb892",
+  "sanitization": "Report absolute host paths replaced with repository/saved-artifact labels; results JSON byte-identical. No raw log, vendor payload, binary or source snapshot retained.",
+  "external_log_sha256": "e326b07a64ef4d723d7a75f0cd759f3fa8f84b7685188994ee3f5b4e24670398",
+  "external_log_hash_proof": "Recorded by independent audit; log not copied or re-audited in this docs update."
+}
