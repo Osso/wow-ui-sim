@@ -29,7 +29,8 @@
 //!   matching the filter.
 //! - `C_Map.GetPlayerMapPosition(uiMapID, unitToken)` — returns
 //!   `{x, y}` vector2 from `SimState.player_map_position` for any
-//!   known map, or `nil` for an unknown map / non-player unit.
+//!   known map, or matching explicit input for an active party member.
+//!   Returns `nil` when no position is available.
 //! - `C_Map.GetBestMapForUnit(unitToken)` — returns the seeded player
 //!   map id (`2248`) for `"player"`.
 //! - `C_Map.GetFallbackWorldMapID()` — returns the seeded player map
@@ -38,6 +39,7 @@
 //! - `C_Map.RequestPreloadMap(uiMapID)` — queues map art + overlay textures.
 
 use super::helpers::{ensure_namespace, set_table_array};
+use crate::lua_api::globals::unit_api::parse_party_index;
 use crate::lua_api::methods::{
     borrow_state, borrow_state_mut, create_string, create_table, create_table_with_capacity,
     table_get, table_set, table_set_static, val_to_string,
@@ -445,10 +447,18 @@ fn c_map_get_player_map_position(state: &mut LuaState) -> LuaResult<u32> {
 
     let position = {
         let sim = borrow_state(state)?;
-        if !sim.maps.contains_key(&ui_map_id) || !is_player {
+        if !sim.maps.contains_key(&ui_map_id) {
             None
-        } else {
+        } else if is_player {
             Some(sim.player_map_position)
+        } else if sim.party_group_active {
+            parse_party_index(&unit_token)
+                .and_then(|index| sim.party_members.get(index))
+                .and_then(|member| member.map_position)
+                .filter(|input| input.ui_map_id == ui_map_id)
+                .map(|input| input.position)
+        } else {
+            None
         }
     };
 

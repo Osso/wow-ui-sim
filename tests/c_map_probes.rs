@@ -255,6 +255,60 @@ fn get_player_map_position_uses_independent_active_party_member_input() {
     .unwrap();
 }
 
+#[cfg(feature = "client-retail")]
+#[test]
+fn get_player_map_position_party_input_controls_and_roster_reset() {
+    use wow_ui_sim::c_api::c_map::UnitMapPosition;
+
+    let env = env();
+    env.exec("A_Admin.SetPartySize(1)").unwrap();
+    env.exec(
+        r#"
+        assert(C_Map.GetPlayerMapPosition(2248, "party1") == nil,
+               "new party member has no position input")
+        "#,
+    )
+    .unwrap();
+
+    env.state().borrow_mut().party_members[0].map_position = Some(UnitMapPosition {
+        ui_map_id: 2248,
+        position: (0.2, 0.8),
+    });
+    env.exec(
+        r#"
+        local position = C_Map.GetPlayerMapPosition(2248, "party1")
+        assert(position ~= nil and position.x == 0.2 and position.y == 0.8)
+        assert(C_Map.GetMapInfo(84) ~= nil, "mismatched map must be known")
+        assert(C_Map.GetPlayerMapPosition(84, "party1") == nil,
+               "input for another known map is not projected")
+        assert(C_Map.GetPlayerMapPosition(999999, "party1") == nil,
+               "unknown map has no position")
+        "#,
+    )
+    .unwrap();
+
+    env.state().borrow_mut().party_group_active = false;
+    env.exec(
+        r#"
+        assert(C_Map.GetPlayerMapPosition(2248, "party1") == nil,
+               "inactive group does not expose populated position input")
+        A_Admin.SetPartySize(1)
+        assert(C_Map.GetPlayerMapPosition(2248, "party1") ~= nil)
+        A_Admin.SetPartySize(0)
+        assert(C_Map.GetPlayerMapPosition(2248, "party1") == nil,
+               "removed slot has no position")
+        A_Admin.SetPartySize(1)
+        assert(C_Map.GetPlayerMapPosition(2248, "party1") == nil,
+               "regrown slot must not retain old position input")
+        "#,
+    )
+    .unwrap();
+    let state = env.state().borrow();
+    assert!(state.party_group_active);
+    assert_eq!(state.party_members.len(), 1);
+    assert!(state.party_members[0].map_position.is_none());
+}
+
 #[test]
 fn get_player_map_position_returns_nil_for_unknown_map() {
     let env = env();
