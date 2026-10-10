@@ -1381,3 +1381,7 @@ Updated existing [proof SSOT](investigations/integrated-source-and-factory-proof
 ## [2026-10-10] docs | Separate Mists fade PASS; original cast RED
 
 [Proof SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#mists-separate-cast-fade-probe--pass-original-cast-red) records inspected091411 build/source-equality/exact exit0 receipts and normal0.25/0.55s fade observations. Original immediate-hidden assertion remains RED; fixture decision pending, not3/3/native parity. Earlier0854 epoch2 chat PASS, self-anchor baseline and Garrison/snapshot full-suite gaps preserved. Docs only; no code, commits, builds or delegation.
+
+## [2026-10-10] audit | Patch 3.3.0 normal-file TOC varargs coverage
+
+Updated [existing private-table row](investigations/patch-3-3-0-api-audit.md#current-bounded-reconciliation) after test commit `9d074f6a8`: direct-helper proof separate from actual TOC-driven normal-file name/shared-table/isolation assertions. New runtime PENDING; bootstrap-to-normal identity unknown per existing spec. XML acceptance and broader SSOT unchanged; no native/all-profile claim. Docs only; no builds, operations or commits.
