@@ -1,0 +1,23 @@
+{
+  "argv": [
+    "/usr/bin/cargo",
+    "test",
+    "--no-run",
+    "--lib",
+    "--offline",
+    "--locked",
+    "--message-format=json",
+    "--timings",
+    "-j",
+    "12"
+  ],
+  "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+  "exclusions": [
+    "external dependencies/source-to-artifact provenance",
+    "untracked files/index",
+    "inherited environment",
+    "runtime assets outside fixture inputs"
+  ],
+  "purpose": "shared XML click-registration GREEN plus existing physical-input controls; no full suite or native WoW claim",
+  "revision": "c6bc87c120e43199dadeb299691511b03a81408a"
+}

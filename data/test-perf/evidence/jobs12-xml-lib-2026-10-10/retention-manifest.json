@@ -1,0 +1,11 @@
+{
+  "revision": "c6bc87c120e43199dadeb299691511b03a81408a",
+  "scope": "Captured XML lib-test compilation, jobs12; aligned cgroup delta plus recorded Cargo timing analysis, not measured12 busy cores or speedup/native parity",
+  "sha256": {
+    "cgroup-before.json": "be642ad3c01e1dd8686de700406c27a9818153ef2f58cef59954c556567b7b5a",
+    "cgroup-after.json": "9f8d53f1c197f8dcf351ab3a9c8bef39d9f77e32083eb687ef7de25dd204ae17",
+    "submission.json": "981bd805dbb1a5e6b1070df5632e6f90419f7064dfbbaab1b0fe62324c7818fc",
+    "compile-result.json": "27e344ef47ce70c39240239908b372967ffb5c3e32206cda667fc1e675196480",
+    "report.md": "7bfc1bb15465806b0d8dd57429b16d245fce98a886b53c8e34ce9d043e0deb39"
+  }
+}

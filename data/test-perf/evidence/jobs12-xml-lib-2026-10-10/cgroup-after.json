@@ -1,0 +1,7 @@
+{
+  "cpu.max": "1200000 100000",
+  "cpu.stat": "usage_usec 421315347\nuser_usec 404509613\nsystem_usec 16805734\nnice_usec 0\ncore_sched.force_idle_usec 0\nnr_periods 676\nnr_throttled 28\nthrottled_usec 30744\nnr_bursts 0\nburst_usec 0",
+  "memory.max": "17179869184",
+  "memory.peak": "10735443968",
+  "path": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/agents.slice/wow-xml-click-green-admission-20261010t163159z.service"
+}
