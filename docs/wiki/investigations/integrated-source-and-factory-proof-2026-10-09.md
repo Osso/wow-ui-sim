@@ -641,3 +641,16 @@ Saved October 10, 2026 UTC receipts (October 9 US local), retained without new e
 Original014 stderr already contains panic locations and field values; prior withholding for absent evidence was mistaken. [Corrected retention](../evidence/bounded-881/mists-currency/correction.md) preserves historical review/report and original seals, with separately hashed updated main review. Supplemental518 audit is a separate **1 PASS / 4 FAIL** diagnostic epoch confirming field loss, not reconstruction of missing output. Current production field fix4231 and fixture4b are **GREEN unverified**; source518 autohide remains **pending**; **current CurrencyGREEN not proven**. Compile-window tracked-map equality and recorded artifact seals have their report-specific exclusions; no complete compiler/runtime cache input seal inferred. Earlier two-owner and NotFound receipts remain unchanged. Parent **OPEN**.
 
 Docs/evidence only: no source, AGENTS, tests, build, push, operations or delegation. Code-index artifacts preserved; other actors' C API, Mists bootstrap, currency tests and new spec untouched.
+
+
+## Current bounded native workflow correction — 2026-10-10
+
+**Current instruction:** these bounded native Cargo units run directly through `/home/osso/.local/bin/pyrun-jsonl`, not with the whole Pyrun worker wrapped in `/home/osso/.worktrees/build-lock.sh`. The shared lead identified the earlier wrapper as incorrect: the script comment scopes serialization to the shared buildkit container; agent rules distinguish native execution without that container lock. This supersedes any shared-lock-required instruction for these native units only, not native/container release policy.
+
+All three earlier units finished and remain preserved; none was cancelled. Their historical lock usage and epoch-specific jobs/CPU/memory caps remain facts, not current requirements. Future units retain jobs12, CPU12 (`CPUQuota=1200%`), memory16GiB and existing resource guards. Exact new submission receipts:
+
+- `/home/osso/.local/state/wow-ui-sim/verification/autohide-postaudit-native/queue-submission.json`
+- `/home/osso/.local/state/wow-ui-sim/verification/mists-currency-native-build/queue-submission.json`
+- `/home/osso/.local/state/wow-ui-sim/verification/currency-default-check-native/queue-submission.json`
+
+Each records submission exit0, no shared container lock and preserved resource guard. Submission success is not compiler completion or runtime PASS. Mists needs a sealed-copy artifact for its normal binary because the default build overwrote the normal Mists slot; this is artifact preservation, not permission for stale reuse. Current runtime acceptance remains OPEN. No source, AGENTS, spec or release-policy change; no raw payloads retained.

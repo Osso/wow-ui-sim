@@ -3180,3 +3180,8 @@ The three retail 12.0.0 changed globals `LE_GAME_ERR_HOUSING_RESULT_MISSING_EXPA
 ## [2026-10-09] audit | Bounded881 saved evidence retention
 
 [Existing proof SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#saved-three-owner-timing-full-suite-and-mists-evidence--bounded-881) retains sanitized three-owner, timing, frozen6751 comparison and Mists014 reports/aggregates/hashes. [Correction](evidence/bounded-881/mists-currency/correction.md): original014 panic evidence was missed by main parser thread-ID handling; original860 assertion120 nil/false versus true/true and149 nil/nil versus90/90 accepted RED. Supplemental518 remains separate diagnostic RED; current field fix4231/fixture4b GREEN unverified, autohide518 pending, current CurrencyGREEN unproven. Historical failures and production10M unchanged; parent OPEN. UTC October10 receipts are October9 US local. Docs only; code-index preserved.
+
+
+## [2026-10-10] correction | Bounded native units do not require container lock
+
+[Current bounded native workflow](investigations/integrated-source-and-factory-proof-2026-10-09.md#current-bounded-native-workflow-correction--2026-10-10) supersedes the native shared-lock instruction; historical epochs remain unchanged. Exact submission receipts, unchanged jobs12/CPU12/memory16GiB/resource guards and required Mists sealed-copy artifact recorded there. Three old units finished without cancellation; no runtime PASS claim. SSOT/index/log only; code-index preserved.

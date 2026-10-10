@@ -1332,3 +1332,8 @@ Updated existing [proof SSOT](investigations/integrated-source-and-factory-proof
 ## [2026-10-10] correction | Mists014 original panic evidence
 
 [SSOT correction](evidence/bounded-881/mists-currency/correction.md) supersedes prior absent-evidence withholding: main regex missed parenthesized thread IDs. Original860 field RED accepted at120 nil/false versus true/true and149 nil/nil versus90/90; supplemental518 confirms values in a separate RED epoch. Historical entry/reports/review and original seals retained unchanged; updated main review retained separately with new hashes. Field fix4231/fixture4b GREEN unverified; autohide518 pending; parent OPEN. Docs only, no raw streams/vendor payloads; code-index preserved.
+
+
+## [2026-10-10] correction | Bounded native units do not require container lock
+
+[Current bounded native workflow](investigations/integrated-source-and-factory-proof-2026-10-09.md#current-bounded-native-workflow-correction--2026-10-10) supersedes the native shared-lock instruction; historical epochs remain unchanged. Exact submission receipts, unchanged jobs12/CPU12/memory16GiB/resource guards and required Mists sealed-copy artifact recorded there. Three old units finished without cancellation; no runtime PASS claim. SSOT/index/log only; code-index preserved.
