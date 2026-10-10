@@ -1,0 +1,8 @@
+{
+  "build_performed": true,
+  "check_exit": 101,
+  "expected_diagnostic_reached": true,
+  "negative_compile_acceptance": true,
+  "source_equal": true,
+  "test_execution_performed": false
+}

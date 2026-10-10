@@ -1,0 +1,22 @@
+{
+  "receipt_epoch": "20261010T172442Z",
+  "revision": "9635468d994be53d1f3571a8005115a49864c18a",
+  "source_equal": true,
+  "entry_count": 23691,
+  "snapshot_sha256": {
+    "source-before.json": "1f8eb81cefeefa5d73c75f69cf5ce4e6206beba880924b55fdfdab2355e99b54",
+    "source-after.json": "1f8eb81cefeefa5d73c75f69cf5ce4e6206beba880924b55fdfdab2355e99b54"
+  },
+  "audited_source_sha256": {
+    "Cargo.toml": "f439cb619c2bff21706e7c0f175cfb63701a0383c1dac732b2308ef759285961",
+    "src/client_profile.rs": "8f603ce85c8b4d67f2fdbc15194d47f0d3365f0c96d7dd85ce21e3a893554839",
+    "tests/prefork_full_ui.rs": "28b4ec6a021f116c2aac62f8ac89e5da6294832b42777877accaa4edfeb56638"
+  },
+  "exclusions": [
+    "GUI-gated src/iced_app files (gui disabled)",
+    "untracked files/index",
+    "external dependencies/source-to-artifact provenance",
+    "inherited environment",
+    "runtime assets/addons not loaded by selected bare-environment cases"
+  ]
+}
