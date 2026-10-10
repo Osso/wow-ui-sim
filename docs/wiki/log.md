@@ -1401,3 +1401,7 @@ Updated [existing private-table row](investigations/patch-3-3-0-api-audit.md#cur
 ## [2026-10-10] audit | Normal TOC private-table exact bounded PASS
 
 [Proof SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#normal-toc-private-table--exact-bounded-pass): saved164122/test9d074f6a8 compile0/source equality, exact reached1/PASS1 exit0, artifact hash/unchanged and fmt0 independently checked; sanitized receipts sealed. Later count-map3c36 separate; no current whole-checkout/bootstrap/native/all-profile acceptance. Docs/evidence only; no builds, operations, delegation or commits.
+
+## [2026-10-10] audit | Child auto-hide and manual prefork guard
+
+[Bounded acceptance](investigations/integrated-source-and-factory-proof-2026-10-09.md#auto-hide-child-rectangle-and-manual-prefork-rejection--bounded-acceptance): genuine-driver AutoHide3/3, original cases unchanged; unsupported manual capability reaches exact target compile_error with valid Retail profile. [c6bc suite delta](investigations/fullsuite-c6bc-2026-10-10.md) retains14,999PASS/3unchangedFAIL/19skips and corrected cached21 PASS. Current-source5aa suite queued asynchronously; native/profile/parent gates remain open.

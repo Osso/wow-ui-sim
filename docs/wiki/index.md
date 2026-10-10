@@ -1,3 +1,7 @@
+## [2026-10-10] audit | Auto-hide child and prefork negative acceptance
+
+[Bounded proof](investigations/integrated-source-and-factory-proof-2026-10-09.md#auto-hide-child-rectangle-and-manual-prefork-rejection--bounded-acceptance): AutoHide actual3/3 uses genuine driver/treatment/control, no vendor change; manual unsupported prefork capability reaches its exact target error with valid Retail profile. [c6bc suite](investigations/fullsuite-c6bc-2026-10-10.md) remains14,999PASS/3unchangedFAIL/19skips; current-source5aa suite queued async. No native/all-profile or parent completion.
+
 ## [2026-10-10] audit | Count receipts — bounded PASS
 
 [Count proof SSOT](../specs/patch-12-0-0-prose-models.md#bounded-count-receipt-pass--2026-10-10) and [audit](investigations/patch-12-0-0-api-audit.md#authentic-count-red-bounded-receipt-green): actual5/5 earlier +40/40 current-default PASS, code84dcf2723/submission095081101, compile/check/fmt0. Not warning-free:10 preexisting headless project warnings + six iced deprecations. BARE21 absence ONLY; cached successor PASS atc6bc line13804 separate, not current84 acceptance. RED retained; pre125 ordinary policy inferred/native secrecy unknown; later AutoHide test963 excluded. Sanitized receipts/audit/hash manifest retained.
