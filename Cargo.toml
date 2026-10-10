@@ -141,15 +141,17 @@ forbidden-aspects = []
 forbidden-animation-aspects = ["forbidden-aspects"]
 # Shared modeled numeric formatting rules for Retail 12.1+ and Forever.
 numeric-rule-formatters = []
+# Dedicated prefork target admission for its supported Retail/Mists fixtures.
+prefork-full-ui = []
 
 # Client profile features — exactly one profile marker must be enabled. The
 # public client-retail bundle preserves the current retail epoch; profile-retail
 # allows historical retail epoch tests against the same retail source cache.
 profile-retail = []
-client-retail = ["profile-retail", "retail-12-1-0"]
+client-retail = ["profile-retail", "retail-12-1-0", "prefork-full-ui"]
 client-ptr = ["retail-12-1-5"]
 client-wrath = []
-client-mists = []
+client-mists = ["prefork-full-ui"]
 client-era = []
 client-anniversary = []
 client-wowforever = ["timed-signal-maps", "aura-xml-widgets", "on-update-modes", "player-cast-durations", "forbidden-animation-aspects", "numeric-rule-formatters", "aura-containers", "native-duration-formatting", "base-spell-relationships"]
@@ -179,7 +181,7 @@ path = "tests/integration.rs"
 name = "prefork_full_ui"
 path = "tests/prefork_full_ui.rs"
 harness = false
-required-features = ["client-retail"]
+required-features = ["prefork-full-ui"]
 
 [[test]]
 name = "patch_1_13_3_npc_health"

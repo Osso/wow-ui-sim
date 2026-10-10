@@ -1,12 +1,16 @@
 #[cfg(not(target_os = "linux"))]
 compile_error!("prefork_full_ui is Linux-only");
+#[cfg(not(any(feature = "client-retail", feature = "client-mists")))]
+compile_error!("prefork_full_ui requires client-retail or client-mists");
 
 #[path = "common/prefork.rs"]
 mod prefork;
+#[cfg(feature = "client-retail")]
 #[path = "common/prefork_full_ui_preload.rs"]
 mod prefork_full_ui_preload;
 #[path = "common/workload_gate_core.rs"]
 mod prefork_workload_gate;
+#[cfg(feature = "client-retail")]
 #[path = "test_keybindings_panels_detail.rs"]
 mod test_keybindings_panels_detail;
 
@@ -91,26 +95,32 @@ static BYTECODE_CHILD_SETUP_RAN: AtomicBool = AtomicBool::new(false);
 
 const CONFORMANCE_CASES: &[Case<ConformanceState>] = &[
     Case::new("conformance::filtering_and_listing", filtering_and_listing),
+    #[cfg(feature = "client-retail")]
     Case::new(
         "conformance::generated_registry_lists_nested_marker_case",
         generated_registry_lists_nested_marker_case,
     ),
+    #[cfg(feature = "client-retail")]
     Case::new(
         "conformance::generated_registry_lists_path_declared_marker_case",
         generated_registry_lists_path_declared_marker_case,
     ),
+    #[cfg(feature = "client-retail")]
     Case::new(
         "conformance::generated_registry_lists_foundation_batch",
         generated_registry_lists_foundation_batch,
     ),
+    #[cfg(feature = "client-retail")]
     Case::new(
         "conformance::generated_registry_lists_post_start_explicit_batch",
         generated_registry_lists_post_start_explicit_batch,
     ),
+    #[cfg(feature = "client-retail")]
     Case::new(
         "conformance::generated_registry_lists_post_start_housing_batch",
         generated_registry_lists_post_start_housing_batch,
     ),
+    #[cfg(feature = "client-retail")]
     Case::new(
         "conformance::generated_registry_lists_post_start_generic_batch",
         generated_registry_lists_post_start_generic_batch,
@@ -122,6 +132,12 @@ const CONFORMANCE_CASES: &[Case<ConformanceState>] = &[
     Case::new("conformance::exact_group_selection", exact_group_selection),
     Case::new("conformance::exact_group_failure", exact_group_failure),
     Case::new("conformance::exact_group_timeout", exact_group_timeout),
+    #[cfg(feature = "client-mists")]
+    Case::new(
+        "conformance::mists_registry_lists_only_original_fixtures",
+        mists_registry_lists_only_original_fixtures,
+    ),
+    #[cfg(feature = "client-retail")]
     Case::new(
         "conformance::environment_cleanup_restore_errors_are_contextual",
         environment_cleanup_restore_errors_are_contextual,
@@ -163,6 +179,7 @@ const BYTECODE_FIXTURE_CASES: &[Case<BytecodeFixtureState>] = &[Case::new(
     fixture_read_only_bytecode_cache,
 )];
 
+#[cfg(feature = "client-retail")]
 const MANUAL_FULL_UI_CASES: &[Case<WowLuaEnv>] = &[
     Case::new(
         "test_keybindings_panels_detail::keybind_m_opens_world_map",
@@ -202,6 +219,7 @@ const MANUAL_FULL_UI_CASES: &[Case<WowLuaEnv>] = &[
     ),
 ];
 
+#[cfg(feature = "client-retail")]
 const GENERATED_FULL_UI_CASES: &[Case<WowLuaEnv>] =
     include!(concat!(env!("OUT_DIR"), "/prefork_full_ui_cases.rs"));
 
@@ -228,6 +246,7 @@ const SPELLBOOK_FIXTURE_CASES: &[Case<WowLuaEnv>] = &[Case::new(
     blizzard_player_spells_loads::mainline_spellbook_keybind_opens_and_closes_without_runtime_errors::run,
 )];
 
+#[cfg(feature = "client-retail")]
 fn full_ui_cases() -> Vec<Case<WowLuaEnv>> {
     MANUAL_FULL_UI_CASES
         .iter()
@@ -237,8 +256,10 @@ fn full_ui_cases() -> Vec<Case<WowLuaEnv>> {
 }
 
 fn listed_full_ui_cases() -> Vec<Case<WowLuaEnv>> {
+    #[cfg(feature = "client-retail")]
     let default_cases = full_ui_cases();
     let groups = [
+        #[cfg(feature = "client-retail")]
         default_cases.as_slice(),
         #[cfg(feature = "gui")]
         CHAT_FIXTURE_CASES,
@@ -305,8 +326,10 @@ fn run_full_ui_and_exact_fixtures(config: Config) -> ExitCode {
             Err::<WowLuaEnv, _>("listing must not initialize fixtures")
         });
     }
+    #[cfg(feature = "client-retail")]
     let full_ui_cases = full_ui_cases();
     let results = [
+        #[cfg(feature = "client-retail")]
         prefork::run_with_setup(&full_ui_cases, config, || {
             run_conformance_subprocess()?;
             prefork_full_ui_preload::preload_full_game_ui()
@@ -837,9 +860,12 @@ fn filtering_and_listing(state: &ConformanceState) {
 
 fn exact_fixture_groups_list_each_case_once(state: &ConformanceState) {
     const NAMES: &[&str] = &[
+        #[cfg(feature = "gui")]
         "chat_frame::test_chat_editbox_click_type_and_submit",
+        #[cfg(feature = "gui")]
         "chat_frame::test_chat_editbox_text_color_after_activation",
         "spell_casting::cast_bar_respects_edit_mode_lock_setting_after_startup_fix",
+        #[cfg(any(feature = "retail-12-1-0", feature = "client-wowforever"))]
         "blizzard_player_spells_loads::mainline_spellbook_keybind_opens_and_closes_without_runtime_errors",
     ];
     for name in NAMES {
@@ -857,6 +883,34 @@ fn exact_fixture_groups_list_each_case_once(state: &ConformanceState) {
             format!("{name}: test\n\n1 test, 0 benchmarks\n")
         );
     }
+}
+
+#[cfg(feature = "client-mists")]
+fn mists_registry_lists_only_original_fixtures(state: &ConformanceState) {
+    let output = Command::new(&state.executable)
+        .arg("--list")
+        .env_remove(CONFORMANCE_MODE_ENV)
+        .env_remove(EXACT_FIXTURE_GROUP_ENV)
+        .env_remove(DRIVER_MODE_ENV)
+        .env_remove(TREE_CHILD_MODE_ENV)
+        .output()
+        .expect("list Mists exact-fixture target");
+    assert_success(&output);
+    let listed = stdout(&output);
+    let names: Vec<_> = listed
+        .lines()
+        .filter_map(|line| line.strip_suffix(": test"))
+        .collect();
+    assert_eq!(
+        names,
+        [
+            #[cfg(feature = "gui")]
+            "chat_frame::test_chat_editbox_click_type_and_submit",
+            #[cfg(feature = "gui")]
+            "chat_frame::test_chat_editbox_text_color_after_activation",
+            "spell_casting::cast_bar_respects_edit_mode_lock_setting_after_startup_fix",
+        ]
+    );
 }
 
 // These commands enter the public controller, not the generic conformance driver.
@@ -1022,6 +1076,7 @@ fn exact_group_timeout(state: &ConformanceState) {
     }
 }
 
+#[cfg(feature = "client-retail")]
 fn generated_registry_lists_nested_marker_case(state: &ConformanceState) {
     const CASE_NAME: &str =
         "prefork_full_ui_nested::fixture::preloaded_parent_has_normal_game_startup";
@@ -1040,6 +1095,7 @@ fn generated_registry_lists_nested_marker_case(state: &ConformanceState) {
     );
 }
 
+#[cfg(feature = "client-retail")]
 fn generated_registry_lists_path_declared_marker_case(state: &ConformanceState) {
     const CASE_NAME: &str =
         "blizzard_ui_blizzard_addonlist::surface_globals::addon_list_publishes_module_constants";
@@ -1058,6 +1114,7 @@ fn generated_registry_lists_path_declared_marker_case(state: &ConformanceState) 
     );
 }
 
+#[cfg(feature = "client-retail")]
 fn generated_registry_lists_foundation_batch(state: &ConformanceState) {
     const MODULE_COUNTS: &[(&str, usize)] = &[
         ("blizzard_shared_xml_base_loads::", 16),
@@ -1098,6 +1155,7 @@ fn generated_registry_lists_foundation_batch(state: &ConformanceState) {
     assert_eq!(total, 68);
 }
 
+#[cfg(feature = "client-retail")]
 fn generated_registry_lists_post_start_explicit_batch(state: &ConformanceState) {
     const MODULE_COUNTS: &[(&str, usize)] = &[
         ("blizzard_hud_inventory_templates_loads::", 11),
@@ -1142,6 +1200,7 @@ fn generated_registry_lists_post_start_explicit_batch(state: &ConformanceState) 
     assert_eq!(total, 111);
 }
 
+#[cfg(feature = "client-retail")]
 fn generated_registry_lists_post_start_housing_batch(state: &ConformanceState) {
     const MODULE_COUNTS: &[(&str, usize)] = &[
         ("blizzard_housing_bulletin_board_loads::", 15),
@@ -1188,6 +1247,7 @@ fn generated_registry_lists_post_start_housing_batch(state: &ConformanceState) {
     assert_eq!(total, 189);
 }
 
+#[cfg(feature = "client-retail")]
 fn generated_registry_lists_post_start_generic_batch(state: &ConformanceState) {
     const MODULE_COUNTS: &[(&str, usize)] = &[
         ("blizzard_gm_chat_ui_loads::", 6),
@@ -1238,6 +1298,7 @@ fn generated_registry_lists_post_start_generic_batch(state: &ConformanceState) {
     assert_eq!(total, 159);
 }
 
+#[cfg(feature = "client-retail")]
 fn environment_cleanup_restore_errors_are_contextual(_: &ConformanceState) {
     let temp = TempDir::new().expect("create EnvironmentCleanup failure fixture");
     let addon_dir = temp.path().join("Blizzard_EnvironmentCleanup");

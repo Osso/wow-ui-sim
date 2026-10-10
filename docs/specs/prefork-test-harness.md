@@ -72,6 +72,15 @@ The Linux prefork test harness provides a reusable custom test-runner contract f
 
 [Bounded proof SSOT](../wiki/investigations/integrated-source-and-factory-proof-2026-10-09.md#exact-startup-fixtures-retained-redgreen-epoch) links immutable RED/GREEN reports and byte retention. At `3de874658`, four original bodies pass after fork; prefork lists 2,325 names with each selected case once, Retail integration lists 10,681 with all four absent. These counts are a new epoch, not replacements for historical sealed counts. Fresh single-fixture parent processes preserve one-shot global bytecode sealing; no reset, normalization or callback framework. Original constructors, bodies and gates remain unchanged. Non-Retail execution is UNVERIFIED; no speedup or parent completion credit. Full suite `unitfull-suite-1791563703.service` completed FAIL; proof SSOT records unchanged failure sets and saved-log execution of all four migrated cases, reported separately from the base-group summary. Bounded proof is not full-suite acceptance.
 
+### Retail and Mists target eligibility
+
+- [ ] Admit `prefork_full_ui` for the Retail and Mists client bundles without admitting other profiles through their bundles.
+- [ ] Preserve Retail's default full-UI registry/preload and exact fixture groups.
+- [ ] Under Mists, list and dispatch only the original chat pair when GUI is enabled and the original cast-bar case; do not run Retail full-UI preload or registry checks.
+- [ ] Preserve each original constructor, assertion, process isolation and cache contract. Listing/admission is not original-case execution proof.
+
+Current source uses the `prefork-full-ui` Cargo capability because `required-features` is conjunctive, not a profile OR. Retail-only conformance checks remain enabled for Retail; Mists checks its complete public list against its original fixture names. Cargo admission RED at `verification/mists-prefork-admission-red/20261010T083406Z` exits101 because the old target requires `client-retail`; post-change compile/list/execution remain pending. Historical Retail epochs above remain separate.
+
 ### Bytecode-cache child contract
 
 - [x] Keep the Lua bytecode cache writable by default in production; use process-local parent-bypass mode only for the dedicated prefork preload.

@@ -1,5 +1,11 @@
 # Prefork Test Harness
 
+## Retail/Mists target admission (2026-10-10, verification pending)
+
+`client-retail` and `client-mists` enable the target-only `prefork-full-ui` capability; other profile bundles do not. The custom target explicitly rejects unsupported manually combined profile/capability builds. Retail retains its ordinary generated/manual registry, full-UI preload and existing exact groups. Mists registers only the GUI-enabled chat pair and cast-bar fixture, using their unchanged constructors and bodies; Retail registry/preload conformance is not a Mists requirement. A Mists conformance case compares the complete public listing to those original names. Shared runner/controller/cache conformance remains active.
+
+Cargo admission RED exits101 on the former `client-retail` requirement. Source/configuration change is not compile, original-fixture execution or native acceptance; see [current contract](../../specs/prefork-test-harness.md#retail-and-mists-target-eligibility).
+
 Linux-only custom test-runner core for reusing immutable parent-owned test state across isolated child cases without entering libtest worker threads. Migrated cases use explicit `prefork_full_ui_case!` marker bodies and a build-generated stable `<module>::<function>` registry.
 
 ## Content
