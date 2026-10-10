@@ -85,9 +85,16 @@ Child frames inside `<Frames>` containers use a parallel enum `FrameElement` wit
 | `frameStrata` | `frame_strata` | `Option<String>` | Initial strata token. In the retail capture, base `HIGH` + derived literal `LOW` reported `LOW`, while base `HIGH` + derived `PARENT` reported `HIGH` under an actual `DIALOG` parent. All reported non-fixed state; `GetFrameStrata()` does not expose the original `PARENT` token or the client's internal resolution mechanism |
 | `setAllPoints` | `set_all_points` | `Option<bool>` | Fill parent |
 | `enableMouse` | `enable_mouse` | `Option<bool>` | Accept mouse input |
+| `registerForClicks` | `register_for_clicks` | `Option<String>` | Declarative click-registration tokens; see lifecycle note below |
 | `text` | `text` | `Option<String>` | Button text (localization key or literal) |
 | `parentArray` | `parent_array` | `Option<String>` | Append to parent's array property |
 | `id` | `xml_id` | `Option<i32>` | Numeric ID (SetID) |
+
+### Declarative Click Registration
+
+Commit `33d62d705` adds `registerForClicks` initialization through `template::direct::apply_xml_register_for_clicks`, shared by direct XML loading (`loader/xml_frame/setup.rs`) and Lua-created XML templates (`create_frame/template_chain/runtime.rs`) before scripts. The setter resolves inherited declarations followed by the instance declaration, splits commas, trims tokens and drops empty tokens, then writes `registered_click_buttons`. Omission leaves existing registration unchanged; later Lua `RegisterForClicks` remains authoritative. Mouse dispatch policy is unchanged.
+
+This documents the implementation, not complete native grammar or parity. Requirements and test scope live in the [click-registration spec](specs/xml-button-click-registration.md); RED receipts and pending GREEN/final verification live in the [3.3.0 reconciliation](wiki/investigations/patch-3-3-0-api-audit.md#current-bounded-reconciliation).
 
 ### Child Elements via FrameChildElement
 **File:** `src/xml/types.rs:307-375`
