@@ -47,6 +47,13 @@ pub(super) fn register_c_currency_info(state: &mut LuaState) -> LuaResult<()> {
     for &(name, func) in CURRENCY_INFO_METHODS {
         table_set_rust_fn_static(state, table_ref, name, func)?;
     }
+    #[cfg(feature = "client-mists")]
+    table_set_rust_fn_static(
+        state,
+        state.global,
+        "GetCurrencyListSize",
+        c_currency_get_list_size,
+    )?;
     Ok(())
 }
 

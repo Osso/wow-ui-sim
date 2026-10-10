@@ -2,12 +2,12 @@
 
 use wow_ui_sim::lua_api::WowLuaEnv;
 
-fn token_ui_cata_lua() -> String {
+fn read_mists_token_ui_lua() -> String {
     std::fs::read_to_string(
         wow_ui_sim::client_profile::blizzard_ui_addons_dir_under(std::path::Path::new(env!(
             "CARGO_MANIFEST_DIR"
         )))
-        .join("Blizzard_TokenUI/Cata/Blizzard_TokenUI.lua"),
+        .join("Blizzard_TokenUI/Blizzard_TokenUI.lua"),
     )
     .expect("Mists TokenUI Lua should be available in the profile UI source")
 }
@@ -29,9 +29,9 @@ fn token_frame_update_reproduces_missing_currency_list_size() {
     )
     .expect("install TokenFrame reproduction fixtures");
 
-    let source = token_ui_cata_lua();
+    let source = read_mists_token_ui_lua();
     env.exec(&source)
-        .expect("Mists Cata TokenUI Lua should define TokenFrame helpers");
+        .expect("Mists TokenUI Lua should define TokenFrame helpers");
 
     let (ok, err): (bool, String) = env
         .eval(
@@ -46,6 +46,33 @@ fn token_frame_update_reproduces_missing_currency_list_size() {
     assert!(
         err.contains("GetCurrencyListSize"),
         "expected GetCurrencyListSize nil failure, got: {err}"
+    );
+}
+
+#[test]
+fn legacy_currency_list_size_returns_one_numeric_backing_count() {
+    let env = WowLuaEnv::new().expect("Lua environment should initialize");
+
+    let (size_type, arity, legacy_size, namespaced_size): (String, i32, i32, i32) = env
+        .eval(
+            r#"
+            return type(GetCurrencyListSize()),
+                select('#', GetCurrencyListSize()),
+                GetCurrencyListSize(), C_CurrencyInfo.GetCurrencyListSize()
+            "#,
+        )
+        .expect("legacy currency size should return the backing count");
+
+    assert_eq!(size_type, "number");
+    assert_eq!(
+        arity, 1,
+        "legacy currency size must return exactly one value"
+    );
+    assert_eq!(legacy_size, namespaced_size);
+    assert_eq!(
+        legacy_size,
+        wow_ui_sim::lua_api::globals::currency_data::currency_list_size(),
+        "legacy currency size must match the existing currency backing"
     );
 }
 
@@ -66,9 +93,9 @@ fn legacy_currency_list_size_wraps_c_currency_info() {
     )
     .expect("install TokenFrame compatibility fixtures");
 
-    let source = token_ui_cata_lua();
+    let source = read_mists_token_ui_lua();
     env.exec(&source)
-        .expect("Mists Cata TokenUI Lua should define TokenFrame helpers");
+        .expect("Mists TokenUI Lua should define TokenFrame helpers");
 
     let (legacy_size, namespaced_size, update_ok, err): (i32, i32, bool, String) = env
         .eval(
