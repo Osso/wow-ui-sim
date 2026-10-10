@@ -4,7 +4,11 @@
 
 ## [2026-10-09] audit | Fresh default Retail probe and Mists receipts retained
 
-[Proof SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#fresh-default-probe-and-mists-runtime-audits--exact-epochs-parent-open) links sanitized compiler/runtime reports and retention manifest. Exact9cf Retail probe1PASS;903 Mists3 ordinary nestedPASS (not6/prefork), eight profiles37PASS/6FAIL. Selected owner quota errors0; three global errors remain, production10M unchanged.741 Nameplate fixture runtime PENDING; old two NotFound receipts not behavior RED. No native/work legitimacy/build-end attestation/whole-input seal; parent OPEN.
+[Proof SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#fresh-default-probe-and-mists-runtime-audits--exact-epochs-parent-open) links sanitized compiler/runtime reports and retention manifest. Exact9cf Retail probe1PASS;903 Mists3 ordinary nestedPASS (not6/prefork), eight profiles37PASS/6FAIL. Selected owner quota errors0; three global errors remain, production10M unchanged.741 Nameplate fixture runtime was pending at that checkpoint; [later saved exact-target PASS](investigations/integrated-source-and-factory-proof-2026-10-09.md#saved-mists-nameplate-postaudit--bounded-pass-parent-open) separately scoped; old two NotFound receipts not behavior RED. No native/work legitimacy/build-end attestation/whole-input seal; parent OPEN.
+
+## [2026-10-09] audit | Saved Mists nameplate bounded proof retained
+
+[Existing proof SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#saved-mists-nameplate-postaudit--bounded-pass-parent-open): submission `acfe6322f91cb936db2c41f263370e815dcdf37f`, not `53863d18e`; saved compile/execute exit0, four tests/eight cases, jobs8. Tracked-scope compile-window equality only, not current-HEAD or execution-time cache seal. Original four NotFound records, warning and exclusions preserved; no native/full-profile acceptance, parent OPEN. Corrected sanitized report/aggregate, original hash manifest and derivative retention manifest retained; raw payloads private.
 
 ## [2026-10-09] audit | Independent method source gates retained
 

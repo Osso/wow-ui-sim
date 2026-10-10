@@ -1,0 +1,554 @@
+{
+  "actions": "Read-only audit of existing evidence plus requested audit file writes; no build/test/backend/delegation/operational action.",
+  "cache_inputs": [
+    {
+      "bytes": 3826,
+      "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/mists/AddOns/Blizzard_NamePlates/Blizzard_NamePlateConstants.lua",
+      "role": "raw Lua read and executed",
+      "sha256": "dc032e268b108b90e3319e5f68415cc2e8a17031acad6da2e6341bfad9f9f04c",
+      "time_boundary": "audit-time read; not execution-time sealed"
+    },
+    {
+      "bytes": 28991,
+      "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/mists/AddOns/Blizzard_NamePlates/Blizzard_NamePlates.lua",
+      "role": "raw Lua read and executed",
+      "sha256": "4aa4a84ab2da7420698c642e2c5335070f7c5cbcb33be0395d2db8b2f54c4299",
+      "time_boundary": "audit-time read; not execution-time sealed"
+    },
+    {
+      "bytes": 5320,
+      "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/mists/AddOns/Blizzard_APIDocumentationGenerated/NamePlateConstantsDocumentation.lua",
+      "role": "enum grounding only; not executed by fixture",
+      "sha256": "67666eeb52447346132c0cbe1b692937d83a4a358a9544bcc75c418912379692",
+      "time_boundary": "audit-time read; not execution-time sealed"
+    }
+  ],
+  "cargo_result": {
+    "argv": [
+      "/usr/bin/cargo",
+      "test",
+      "--offline",
+      "--locked",
+      "--no-default-features",
+      "--features",
+      "sound,gui,casc,client-mists",
+      "--test",
+      "mists_nameplate_scale",
+      "--no-run",
+      "--message-format=json"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "ended": "2026-10-10T03:59:19.274693+00:00",
+    "exit": 0,
+    "pid": 1241572,
+    "streams": "CLI spawn text streams separately flushed per line"
+  },
+  "checks": {
+    "artifact_hash_unchanged_receipt": true,
+    "artifact_slots_match_cargo": true,
+    "build_finished_success": true,
+    "cargo_exit_zero": true,
+    "execution_exit_zero": true,
+    "four_named_tests_pass": true,
+    "runtime_stream_hashes_match_receipt": true,
+    "runtime_summary_matches_receipt": true,
+    "selected_artifact_matches_seal_and_invocation": true,
+    "source_current_relevant_files_match_epoch": {
+      "Cargo.toml": true,
+      "src/blizzard_ui_sync.rs": true,
+      "src/client_profile.rs": true,
+      "tests/mists_nameplate_scale.rs": true
+    },
+    "source_maps_equal": true,
+    "source_path_count": 3839
+  },
+  "compile": {
+    "artifact_fresh_counts": {
+      "fresh": 655,
+      "not_fresh": 8
+    },
+    "build_end_seals": [
+      {
+        "executable": "/home/osso/Projects/wow/wow-ui-sim/target/debug/panel-visual-metrics",
+        "features": [
+          "casc",
+          "client-mists",
+          "gui",
+          "rodio",
+          "sound"
+        ],
+        "profile": {
+          "debug_assertions": true,
+          "debuginfo": "line-tables-only",
+          "opt_level": "1",
+          "overflow_checks": true,
+          "test": false
+        },
+        "sha256": "f986e9c785b9ca3a77a070306acdc439f9844024c6ba0efb4b2cdbccadd0fc9f",
+        "target": "panel-visual-metrics"
+      },
+      {
+        "executable": "/home/osso/Projects/wow/wow-ui-sim/target/debug/bench_talents",
+        "features": [
+          "casc",
+          "client-mists",
+          "gui",
+          "rodio",
+          "sound"
+        ],
+        "profile": {
+          "debug_assertions": true,
+          "debuginfo": "line-tables-only",
+          "opt_level": "1",
+          "overflow_checks": true,
+          "test": false
+        },
+        "sha256": "f206587ed8fdcd982ad38433025ea4693c77df61751df729f362dbe21e942ae6",
+        "target": "bench_talents"
+      },
+      {
+        "executable": "/home/osso/Projects/wow/wow-ui-sim/target/debug/bench_spellbook",
+        "features": [
+          "casc",
+          "client-mists",
+          "gui",
+          "rodio",
+          "sound"
+        ],
+        "profile": {
+          "debug_assertions": true,
+          "debuginfo": "line-tables-only",
+          "opt_level": "1",
+          "overflow_checks": true,
+          "test": false
+        },
+        "sha256": "39de114d4266782f9fce15b66c2dfeff3245fbe49dfd12de935b0b4b9a3351bb",
+        "target": "bench_spellbook"
+      },
+      {
+        "executable": "/home/osso/Projects/wow/wow-ui-sim/target/debug/deps/mists_nameplate_scale-7b616f0b74b8ec9e",
+        "features": [
+          "casc",
+          "client-mists",
+          "gui",
+          "rodio",
+          "sound"
+        ],
+        "profile": {
+          "debug_assertions": true,
+          "debuginfo": "line-tables-only",
+          "opt_level": "1",
+          "overflow_checks": true,
+          "test": true
+        },
+        "sha256": "a510a1f341d43353f0881513318c4aaa12c11a8a3b788eda13f088da003580b3",
+        "target": "mists_nameplate_scale"
+      },
+      {
+        "executable": "/home/osso/Projects/wow/wow-ui-sim/target/debug/wow-sim",
+        "features": [
+          "casc",
+          "client-mists",
+          "gui",
+          "rodio",
+          "sound"
+        ],
+        "profile": {
+          "debug_assertions": true,
+          "debuginfo": "line-tables-only",
+          "opt_level": "1",
+          "overflow_checks": true,
+          "test": false
+        },
+        "sha256": "9cd6abdc8f3c61a4311028af44a1f3ed8cd1a223522cb03b5ade43884de99f8b",
+        "target": "wow-sim"
+      },
+      {
+        "executable": "/home/osso/Projects/wow/wow-ui-sim/target/debug/bench_steady_state",
+        "features": [
+          "casc",
+          "client-mists",
+          "gui",
+          "rodio",
+          "sound"
+        ],
+        "profile": {
+          "debug_assertions": true,
+          "debuginfo": "line-tables-only",
+          "opt_level": "1",
+          "overflow_checks": true,
+          "test": false
+        },
+        "sha256": "94eb64a3f1dd5222557361cdf8a54c5181129c3de0d0cf5d9308de9defcef51b",
+        "target": "bench_steady_state"
+      },
+      {
+        "executable": "/home/osso/Projects/wow/wow-ui-sim/target/debug/wow-cli",
+        "features": [
+          "casc",
+          "client-mists",
+          "gui",
+          "rodio",
+          "sound"
+        ],
+        "profile": {
+          "debug_assertions": true,
+          "debuginfo": "line-tables-only",
+          "opt_level": "1",
+          "overflow_checks": true,
+          "test": false
+        },
+        "sha256": "d3820b8eca92813009b2e6175abf9032a9970742f472d78a521db8062804eb93",
+        "target": "wow-cli"
+      }
+    ],
+    "executable_slot_count": 7,
+    "message_counts": {
+      "build-finished": 1,
+      "build-script-executed": 74,
+      "compiler-artifact": 663,
+      "compiler-message": 1
+    },
+    "selected_artifact": {
+      "executable": "/home/osso/Projects/wow/wow-ui-sim/target/debug/deps/mists_nameplate_scale-7b616f0b74b8ec9e",
+      "features": [
+        "casc",
+        "client-mists",
+        "gui",
+        "rodio",
+        "sound"
+      ],
+      "profile": {
+        "debug_assertions": true,
+        "debuginfo": "line-tables-only",
+        "opt_level": "1",
+        "overflow_checks": true,
+        "test": true
+      },
+      "sha256": "a510a1f341d43353f0881513318c4aaa12c11a8a3b788eda13f088da003580b3",
+      "target": "mists_nameplate_scale"
+    },
+    "stderr_warning_lines": 7,
+    "streams": {
+      "compile.stderr": {
+        "bytes": 1275,
+        "lines": 9,
+        "path": "/home/osso/.local/state/wow-ui-sim/verification/mists-nameplate-current-postaudit/20261010T035834Z/compile.stderr",
+        "sha256": "9a54a58ca5c89428eccba480525452c1686813724eccd13f3c19fe39c0efa2cb"
+      },
+      "compile.stdout": {
+        "bytes": 570887,
+        "lines": 739,
+        "path": "/home/osso/.local/state/wow-ui-sim/verification/mists-nameplate-current-postaudit/20261010T035834Z/compile.stdout",
+        "sha256": "1349e63184e079e3874f60f3932d199df5649c2764171c5c6e8baccfa531a40e"
+      }
+    },
+    "warnings": [
+      {
+        "code": {
+          "code": "dead_code",
+          "explanation": null
+        },
+        "locations": [
+          {
+            "file": "src/lua_api/handler_timing.rs",
+            "line": 12
+          }
+        ],
+        "message": "function `is_enabled` is never used"
+      }
+    ]
+  },
+  "epoch": "/home/osso/.local/state/wow-ui-sim/verification/mists-nameplate-current-postaudit/20261010T035834Z",
+  "exclusions": [
+    "external path dependencies",
+    "data inputs outside captured tracked src/tests/build/config scope",
+    "inherited environment",
+    "runtime cache/addon files outside source scope",
+    "untracked index",
+    "execution-time runtime cache bytes were not independently sealed",
+    "native parity/defaults, complete Mists profile, GUI/rendering, event/OnLoad lifecycle, other sizes/styles, dimensions without explicit overrides, class resource bar behavior"
+  ],
+  "execution": {
+    "counts": {
+      "failed": 0,
+      "filtered_out": 0,
+      "ignored": 0,
+      "measured": 0,
+      "passed": 4,
+      "style_cases": 8
+    },
+    "coverage": [
+      {
+        "asserted_outputs": {
+          "Classic": [
+            0.8,
+            0.8,
+            0.8,
+            0.8,
+            1.0
+          ],
+          "Modern": [
+            0.75,
+            0.8,
+            0.8,
+            0.75,
+            1.0
+          ]
+        },
+        "style_cases": 2,
+        "test": "nameplate_small_scale_selects_modern_and_classic_style"
+      },
+      {
+        "asserted_outputs": "size 99 returns Medium tuple [1,1,1,1,1] for Modern and Classic",
+        "style_cases": 2,
+        "test": "nameplate_unsupported_size_99_uses_medium_scale_for_both_styles"
+      },
+      {
+        "asserted_outputs": "explicit base dimensions [128,32] returned for both styles",
+        "style_cases": 2,
+        "test": "nameplate_explicit_base_dimensions_override_small_scale_for_both_styles"
+      },
+      {
+        "asserted_outputs": "published scales, health/cast heights, Classic flags/borders, enemy/friendly color/level/selection/mouseover options; native size once and script size [128,32]; aggregate ApplyFrameOptions count 2, not unique per-frame behavior",
+        "style_cases": 2,
+        "test": "nameplate_options_publish_small_style_scales_and_explicit_size"
+      }
+    ],
+    "invocation": {
+      "argv": [
+        "/usr/bin/timeout",
+        "90",
+        "/home/osso/Projects/wow/wow-ui-sim/target/debug/deps/mists_nameplate_scale-7b616f0b74b8ec9e",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "artifact_sha256": "a510a1f341d43353f0881513318c4aaa12c11a8a3b788eda13f088da003580b3",
+      "compiled_revision": "acfe6322f91cb936db2c41f263370e815dcdf37f",
+      "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+      "environment_overrides": {
+        "WOW_SIM_NO_SOUND": "1"
+      },
+      "raw_streams_private": true,
+      "started": "2026-10-10T04:07:41.667354+00:00"
+    },
+    "passed_test_names": [
+      "nameplate_explicit_base_dimensions_override_small_scale_for_both_styles",
+      "nameplate_options_publish_small_style_scales_and_explicit_size",
+      "nameplate_small_scale_selects_modern_and_classic_style",
+      "nameplate_unsupported_size_99_uses_medium_scale_for_both_styles"
+    ],
+    "result": {
+      "artifact_hash_unchanged": true,
+      "ended": "2026-10-10T04:07:41.979497+00:00",
+      "exit": 0,
+      "stderr_sha256": "dd5e4bc13fb5314d100b0fdca4e338b39415da1b365e3cc202df3b835e0e6100",
+      "stdout_sha256": "a4b843141020f973d963b6407df59c994a12ddca30d498fb622529505e47674e",
+      "summaries": [
+        "test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.30s"
+      ]
+    },
+    "streams": {
+      "execution/stderr": {
+        "bytes": 2557,
+        "lines": 44,
+        "path": "/home/osso/.local/state/wow-ui-sim/verification/mists-nameplate-current-postaudit/20261010T035834Z/execution/stderr",
+        "sha256": "dd5e4bc13fb5314d100b0fdca4e338b39415da1b365e3cc202df3b835e0e6100"
+      },
+      "execution/stdout": {
+        "bytes": 415,
+        "lines": 9,
+        "path": "/home/osso/.local/state/wow-ui-sim/verification/mists-nameplate-current-postaudit/20261010T035834Z/execution/stdout",
+        "sha256": "a4b843141020f973d963b6407df59c994a12ddca30d498fb622529505e47674e"
+      }
+    }
+  },
+  "fixture_sha256": "2c731f0f6629072113e6e8eac2876f81fcc3683990cf25ff083c7b92064b5a6f",
+  "historical_failures": [
+    {
+      "NotFound_occurrences": 2,
+      "exit": 101,
+      "hashes_match_receipt": true,
+      "revision": "903711da8b9d6472f718e407af350c576fe4a7e0",
+      "status": "original evidence retained unchanged; pre-behavior source-reader failure",
+      "stderr": {
+        "bytes": 1882,
+        "lines": 29,
+        "path": "/home/osso/.local/state/wow-ui-sim/verification/mists-hidden-cast-build/20261010T030705Z/profile-execution/mists_nameplate_scale/stderr",
+        "sha256": "75f9c0aae8cc5a63f3e8b1173412905fa82371a8267073ee46135c55e049ccbd"
+      },
+      "stdout": {
+        "bytes": 405,
+        "lines": 13,
+        "path": "/home/osso/.local/state/wow-ui-sim/verification/mists-hidden-cast-build/20261010T030705Z/profile-execution/mists_nameplate_scale/stdout",
+        "sha256": "7b328baf9c9ce5d7a45f85aae59e0728c516de290cc17193b79b8b30a23932d4"
+      },
+      "summaries": [
+        "test result: FAILED. 0 passed; 2 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.17s"
+      ],
+      "target": "mists_nameplate_scale"
+    },
+    {
+      "NotFound_occurrences": 2,
+      "exit": 101,
+      "hashes_match_receipt": true,
+      "revision": "903711da8b9d6472f718e407af350c576fe4a7e0",
+      "status": "original evidence retained unchanged; pre-behavior source-reader failure",
+      "stderr": {
+        "bytes": 1867,
+        "lines": 29,
+        "path": "/home/osso/.local/state/wow-ui-sim/verification/mists-hidden-cast-build/20261010T030705Z/profile-execution/mists_currency_list/stderr",
+        "sha256": "abdf8b1c4a04f49ea1f73a34e8bca0929163232ad72428f6fb85aa5757857de1"
+      },
+      "stdout": {
+        "bytes": 389,
+        "lines": 13,
+        "path": "/home/osso/.local/state/wow-ui-sim/verification/mists-hidden-cast-build/20261010T030705Z/profile-execution/mists_currency_list/stdout",
+        "sha256": "5c8b312e4abc5546bbefa57dd703dbab5eea13bde9b07d67beeecd4d133778da"
+      },
+      "summaries": [
+        "test result: FAILED. 0 passed; 2 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.26s"
+      ],
+      "target": "mists_currency_list"
+    }
+  ],
+  "manifest_slots": {
+    "/home/osso/.cache/wow-ui-sim/blizzard-ui/mists/AddOns/Blizzard_APIDocumentationGenerated/NamePlateConstantsDocumentation.lua": [
+      314
+    ],
+    "/home/osso/.cache/wow-ui-sim/blizzard-ui/mists/AddOns/Blizzard_NamePlates/Blizzard_NamePlateConstants.lua": [
+      2313
+    ],
+    "/home/osso/.cache/wow-ui-sim/blizzard-ui/mists/AddOns/Blizzard_NamePlates/Blizzard_NamePlates.lua": [
+      2318
+    ]
+  },
+  "outcome": {
+    "boot_id_after": "931d4a8a-2178-4666-bf53-776e5eac97be",
+    "build_performed": true,
+    "cargo_exit": 0,
+    "ended": "2026-10-10T03:59:20.319259+00:00",
+    "source_equal": true
+  },
+  "resources": {
+    "benchmark_rerun": false,
+    "caps_changed": false,
+    "future_jobs_choice": 12,
+    "future_jobs_choice_applied": false,
+    "postaudit": {
+      "cargo_exit": 0,
+      "cgroup_after": {
+        "cpu.max": "800000 100000",
+        "cpu.stat": "usage_usec 213244396\nuser_usec 204741653\nsystem_usec 8502742\nnice_usec 0\ncore_sched.force_idle_usec 0\nnr_periods 449\nnr_throttled 57\nthrottled_usec 23946415\nnr_bursts 0\nburst_usec 0",
+        "memory.current": "6814674944",
+        "memory.max": "17179869184",
+        "memory.peak": "10066337792",
+        "path": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/agents.slice/wow-mists-nameplate-postaudit-j8-20261010t035238z.service"
+      },
+      "cgroup_before": {
+        "cpu.max": "800000 100000",
+        "memory.current": "20754432",
+        "memory.max": "17179869184",
+        "memory.peak": "24133632",
+        "path": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/agents.slice/wow-mists-nameplate-postaudit-j8-20261010t035238z.service"
+      },
+      "epoch": "/home/osso/.local/state/wow-ui-sim/verification/mists-nameplate-current-postaudit/20261010T035834Z",
+      "interpretation": "resource observation only; cgroup lifetime peak, not isolated compiler RSS; not a controlled speedup comparison",
+      "jobs": "8",
+      "memory_peak_bytes": 10066337792,
+      "memory_peak_gib": 9.375007629394531,
+      "revision": "acfe6322f91cb936db2c41f263370e815dcdf37f",
+      "source_equal_recomputed": true,
+      "submission_to_cargo_end_seconds": 44.935463,
+      "submission_to_outcome_end_seconds": 45.980029
+    },
+    "previous_compile_message_counts": {
+      "build-finished": 1,
+      "build-script-executed": 74,
+      "compiler-artifact": 663,
+      "compiler-message": 1
+    },
+    "previous_compile_streams": {
+      "compile.stderr": {
+        "bytes": 1275,
+        "lines": 9,
+        "path": "/home/osso/.local/state/wow-ui-sim/verification/mists-nameplate-current/20261010T034853Z/compile.stderr",
+        "sha256": "b1ef81e08d7bfb111170b3f260224fc0cbd6a27746b69f1186ecba9dbb23b3a5"
+      },
+      "compile.stdout": {
+        "bytes": 570887,
+        "lines": 739,
+        "path": "/home/osso/.local/state/wow-ui-sim/verification/mists-nameplate-current/20261010T034853Z/compile.stdout",
+        "sha256": "488cd2330f33cd13426d93938fedbb15f4cd24c9ba13b9c1701669ec002b3090"
+      }
+    },
+    "previous_jobs8": {
+      "cargo_exit": 0,
+      "cgroup_after": {
+        "cpu.max": "800000 100000",
+        "cpu.stat": "usage_usec 51499479\nuser_usec 37087940\nsystem_usec 14411539\nnice_usec 0\ncore_sched.force_idle_usec 0\nnr_periods 241\nnr_throttled 38\nthrottled_usec 34795820\nnr_bursts 0\nburst_usec 0",
+        "memory.current": "6264750080",
+        "memory.max": "17179869184",
+        "memory.peak": "8844390400",
+        "path": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/agents.slice/wow-mists-nameplate-j8-20261010t034123z.service"
+      },
+      "cgroup_before": {
+        "cpu.max": "800000 100000",
+        "memory.current": "67493888",
+        "memory.max": "17179869184",
+        "memory.peak": "67493888",
+        "path": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/agents.slice/wow-mists-nameplate-j8-20261010t034123z.service"
+      },
+      "epoch": "/home/osso/.local/state/wow-ui-sim/verification/mists-nameplate-current/20261010T034853Z",
+      "interpretation": "resource observation only; cgroup lifetime peak, not isolated compiler RSS; not a controlled speedup comparison",
+      "jobs": "8",
+      "memory_peak_bytes": 8844390400,
+      "memory_peak_gib": 8.236980438232422,
+      "revision": "be6d677fece6118b500b15d38eb6e829d6960aed",
+      "source_equal_recomputed": true,
+      "submission_to_cargo_end_seconds": 23.720628,
+      "submission_to_outcome_end_seconds": 25.026939
+    }
+  },
+  "retention_correction": {
+    "current_relevant_file_checks": "historical audit-time observations only; not reattested by retention",
+    "not_submission_revision": "53863d18e",
+    "original_hashmanifest_scope": "original consumed evidence and audit outputs; retained derivatives bound by retention-manifest.json",
+    "original_local_evidence_unchanged": true,
+    "source_equality_scope": "3839 tracked mappings during compile window only; not current HEAD, execution-window source snapshot or execution-time cache seal",
+    "submission_revision": "acfe6322f91cb936db2c41f263370e815dcdf37f"
+  },
+  "revision": "acfe6322f91cb936db2c41f263370e815dcdf37f",
+  "status": "PASS \u2014 bounded saved compile and four-test execution evidence",
+  "submission": {
+    "argv": [
+      "/usr/bin/cargo",
+      "test",
+      "--offline",
+      "--locked",
+      "--no-default-features",
+      "--features",
+      "sound,gui,casc,client-mists",
+      "--test",
+      "mists_nameplate_scale",
+      "--no-run",
+      "--message-format=json"
+    ],
+    "boot_id": "931d4a8a-2178-4666-bf53-776e5eac97be",
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "environment_overrides": {
+      "CARGO_BUILD_JOBS": "8"
+    },
+    "exclusions": [
+      "external path dependencies",
+      "data inputs outside captured tracked src/tests/build/config scope",
+      "inherited environment",
+      "runtime cache/addon files outside source scope",
+      "untracked index"
+    ],
+    "purpose": "Compile current-Mists nameplate fixture206fa after removing construction-only assertion; prior7417 compile is retained separately; single required build using existing helper jobs8 setting inside agents.slice, no global CPU/memory cap or release policy changes",
+    "revision": "acfe6322f91cb936db2c41f263370e815dcdf37f",
+    "started": "2026-10-10T03:58:34.339230+00:00",
+    "worker_sha256": "73773dd209420432ddb55f70d27cbecb3b71e9f6c43229d0149f5f937a5ee075"
+  }
+}

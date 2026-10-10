@@ -1,0 +1,37 @@
+{
+  "corrections": "report and aggregate clarify submission revision and proof boundary; original local evidence unchanged; original hashmanifest retained byte-identically and does not seal corrected derivatives",
+  "files": [
+    {
+      "byte_identical": false,
+      "file": "report.md",
+      "retained_bytes": 10005,
+      "retained_sha256": "f0768b0392c5d28d048c6d752da6fc30111e2286715e2f31d6cd743115c7bb7d",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/mists-nameplate-current-postaudit/20261010T035834Z/audit/report.md",
+      "source_sha256": "f3637df7e36c01ad1d41e9cadc676e24ce3cacc16c3fb91ef1b9cb529551c372"
+    },
+    {
+      "byte_identical": false,
+      "file": "aggregate.json",
+      "retained_bytes": 20910,
+      "retained_sha256": "6a549cfbd7b9c75d204ee9db3e88506c88dee311ef39d18116d3b8b42b5dc6fc",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/mists-nameplate-current-postaudit/20261010T035834Z/audit/aggregate.json",
+      "source_sha256": "ce511ea89fd50c7cc1285fce84cfc3c3986f359e8056fa67d9b36b9230023918"
+    },
+    {
+      "byte_identical": true,
+      "file": "hashmanifest.json",
+      "retained_bytes": 11748,
+      "retained_sha256": "835230d2fe7584abbd3cb34216b5d6074cb93f6b88f2b05b3224b3c471cf403b",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/mists-nameplate-current-postaudit/20261010T035834Z/audit/hashmanifest.json",
+      "source_sha256": "835230d2fe7584abbd3cb34216b5d6074cb93f6b88f2b05b3224b3c471cf403b"
+    }
+  ],
+  "scope": "sanitized saved audit evidence only; no raw streams, source snapshots, vendor payloads or executable copies",
+  "self_excluded": true,
+  "submission_reference": {
+    "copied": false,
+    "path": "/home/osso/.local/state/wow-ui-sim/verification/mists-nameplate-current-postaudit/20261010T035834Z/submission.json",
+    "revision": "acfe6322f91cb936db2c41f263370e815dcdf37f",
+    "sha256": "5dc7668d458340b4e0a0b4c2c4fbf77fc342fa48b96e76e80d5462fa090a48d4"
+  }
+}
