@@ -643,6 +643,8 @@ Private evidence SSOT: `/home/osso/.local/state/wow-ui-sim/verification/mists-so
 
 ## Mists cache-guard timed build and strict currency flow — bounded proof, parent OPEN
 
+[Sanitized three-report retention](../../../data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/mists-current-cache-and-flow/report.md) and [digest manifest](../../../data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/mists-current-cache-and-flow/retention-manifest.json): dirty Mists manifest/listfile-dependent builds; strict13-assertion flow scopedPASS19rows/3checked, overall exit1; cache6PASS; startup20primary/22occurrences; parent **OPEN**. Summaries/hashes only, no new execution.
+
 Saved 2026-10-10 evidence SSOT: `/home/osso/.local/state/wow-ui-sim/verification/mists-cache-guard-timed-build/20261010T064922Z`. Submission revision **15b7dac2e2914555d2ae5e393060474f57eb8b46**; saved Cargo build exit0 in approximately **91s**, `source_equal=true`. Equality covers the captured tracked source/config/profile/listfile scope, not external path dependencies, uncaptured data, inherited environment, runtime cache/addon inputs or untracked index. Sealed normal binary copies identify the later executions; this does not seal every runtime input. The build includes refreshed **uncommitted** Mists manifest/listfile inputs: bare15b7 is not the same build input and lacks three new required manifest entries. Commit identity alone cannot reproduce this proof.
 
 | Saved boundary | Observed result | Proof limit |

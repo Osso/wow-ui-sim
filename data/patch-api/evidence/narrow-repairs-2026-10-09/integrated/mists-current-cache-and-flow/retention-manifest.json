@@ -1,0 +1,38 @@
+{
+  "schema": 1,
+  "date": "2026-10-10",
+  "scope": "Three current saved independent reports; sanitized summary and hashes only; parent OPEN",
+  "original_reports": [
+    {
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/native-flow-current-independent/report.md",
+      "bytes": 8989,
+      "sha256": "c5fc38cda8d87333e5e0f6ca7b7b9cab760c31c5875fd7768718cdfc4e8dac6e",
+      "retention": "sanitized summary only; original not copied"
+    },
+    {
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/cache-tests-epoch-independent/report.md",
+      "bytes": 11849,
+      "sha256": "88065ca42b9019b76394dc6f09da87a60b4338d3909ef4870643eb813a0a9979",
+      "retention": "sanitized summary only; original not copied"
+    },
+    {
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/cache-guard-independent/report.md",
+      "bytes": 13011,
+      "sha256": "509b3ef58669b16d9665b6a67673c727751a5035e5025b94713ff67244597f77",
+      "retention": "sanitized summary only; original not copied"
+    }
+  ],
+  "files": [
+    {
+      "path": "report.md",
+      "bytes": 3550,
+      "sha256": "2cdfccb07bc5a82352fe5d7b60826c5f420d8f7cc9e71947fe066cee266c4c4f",
+      "retention": "sanitized derivative"
+    }
+  ],
+  "count": 1,
+  "total_bytes": 3550,
+  "manifest_excluded_from_totals": true,
+  "raw_payload_retained": false,
+  "publication_approval": false
+}
