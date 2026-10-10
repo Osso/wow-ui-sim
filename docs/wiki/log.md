@@ -1270,3 +1270,7 @@ Added [audit](investigations/patch-1-3-0-api-audit.md) and [spec](../specs/patch
 ## [2026-10-09] investigation | TOC locale root and pending BOM repair
 
 [SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#toc-locale-selection-and-bom-metadata--later-runtime-green-pending) records inspected `9131dd8f9`, main-reported fresh startup/BOM evidence, and separate pending BOM implementation/runtime proof. Existing fc824 14-case PASS remains epoch-bound; next combined build not queued. Docs only; no raw payload copies or execution credit.
+
+## [2026-10-09] confirmation | BOM source implemented, GREEN pending
+
+Updated [SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#toc-locale-selection-and-bom-metadata--later-runtime-green-pending), pipeline and linked sanitized aggregate after inspecting `958ea1ad0`. Preserved epoch-specific proof; compile planning remains main-owned after integration. Docs only; no native/raw/private copies, builds/tests/delegation/operations.
