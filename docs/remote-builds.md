@@ -49,22 +49,39 @@ The actual local `wow-cli` helper built and printed `--help` in 0.35 seconds: bo
 `python3 tools/full_suite.py submit [REF]` schedules the detached worker;
 `python3 tools/full_suite.py status [REF]` reads stored results. The worker keeps
 its existing suite lock and dedicated checkout/results under `~/Projects/wow/`.
-Each actual Cargo step runs through the required installed
-`/home/osso/.worktrees/build-lock.sh`, sharing the builder lock with sibling
-builds for the entire child lifetime, including unsuccessful exits. Locking the
-submit launcher alone does not coordinate detached workloads. A missing wrapper
-fails explicitly; there is no unlocked execution path.
+The results `.lock` serializes revision resolution, checkout preparation and all
+three child lifetimes, including unsuccessful exits. Each step invokes native
+Cargo directly; the obsolete external builder-lock wrapper is not a dependency
+and its lock does not block these children.
 
-Cargo steps use `--offline --locked` and `CARGO_BUILD_JOBS=4`; dependencies must
+Cargo steps use `--offline --locked` and `CARGO_BUILD_JOBS=12`; dependencies must
 already be cached and the lockfile current. `FULL_SUITE_JOBS` controls nextest
-test workers only (default 16), independently of compilation jobs. Nonzero Cargo
-exits and parsed test failures remain in the stored JSON and log, and later
-steps still run. Submission/status behavior is unchanged.
+test workers only (default 16), independently of compilation jobs. Complete
+integration and library scopes use nextest with `--no-fail-fast`; the complete
+`prefork_full_ui` scope uses `cargo test`. Nonzero Cargo exits, parsed failures
+and both stdout/stderr remain in the stored JSON/log; later steps still run.
+Submission/status behavior is unchanged.
 
-Bounded worker regression tests (temporary executable fixtures and a real flock,
-no actual builds or systemd): `python3 -m unittest tools.test_full_suite -v`.
-Changes to the tracked runner do not update `/home/osso/bin/full-suite`;
-installation is a separate deployment step.
+Submit resource policy aligned October 10, 2026: detached `systemd-run --user`
+uses `agents.slice`, `CPUQuota=1200%`, `MemoryHigh=16G` and `MemoryMax=16G`,
+matching the bounded native units' operational CPU/memory limits. Unlike the guarded units in the
+[bounded native-unit handoff](wiki/investigations/integrated-source-and-factory-proof-2026-10-09.md#current-bounded-native-workflow-correction--2026-10-10),
+this controller has no available-memory/load admission guard. That remaining
+mismatch is reported, not redesigned; submission still returns without waiting
+for the worker.
+
+Bounded worker regression tests (temporary git/Cargo executable fixtures and real
+flocks, no actual builds or systemd) prove children execute while the old builder
+lock remains held, independent jobs/flags, all-scope failure/stream retention,
+and controller serialization before checkout and through child execution:
+`python3 -m unittest tools.test_full_suite -v`. Fake-systemd coverage checks the
+detached worker argv/resource limits; installation coverage writes only to a
+temporary home.
+
+Main deploys with `./deploy.sh` from the repository root (a Python installer,
+not Bash). It installs only `tools/full_suite.py` as executable
+`~/bin/full-suite`; no simulator build, service restart or suite submission.
+Tracked edits alone do not update `/home/osso/bin/full-suite`.
 
 ## Related
 

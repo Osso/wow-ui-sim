@@ -25,7 +25,6 @@ REPO = ROOT / "wow-ui-sim"
 CHECKOUT = ROOT / "full-suite-checkout"
 RESULTS = ROOT / "full-suite-results"
 LOCK = RESULTS / ".lock"
-BUILD_LOCK = Path("/home/osso/.worktrees/build-lock.sh")
 JOBS = os.environ.get("FULL_SUITE_JOBS", "16")
 FAILED = re.compile(
     r"^\s*(?:FAIL|SIGSEGV|SIGABRT|TIMEOUT) \[.*?\] (?:\(\s*\d+/\d+\) )?\S+ (\S+)", re.M
@@ -55,9 +54,7 @@ def prepare_checkout(sha):
 
 
 def run_step(name, cmd, log, env):
-    if not BUILD_LOCK.is_file():
-        raise FileNotFoundError(f"Required shared build wrapper missing: {BUILD_LOCK}")
-    cmd = [str(BUILD_LOCK), *cmd, "--offline", "--locked"]
+    cmd = [*cmd, "--offline", "--locked"]
     start = time.monotonic()
     proc = subprocess.run(cmd, cwd=CHECKOUT, env=env, capture_output=True, text=True)
     output = proc.stdout + proc.stderr
@@ -78,7 +75,7 @@ def run(ref):
         fcntl.flock(lock, fcntl.LOCK_EX)
         sha = resolve(ref)
         prepare_checkout(sha)
-        env = dict(os.environ, CARGO_BUILD_JOBS="4", CARGO_TERM_COLOR="never")
+        env = dict(os.environ, CARGO_BUILD_JOBS="12", CARGO_TERM_COLOR="never")
         result = {
             "ref": ref,
             "sha": sha,
@@ -157,10 +154,13 @@ def submit(ref):
             "--user",
             f"--unit={unit}",
             "--collect",
+            "--slice=agents.slice",
             "-p",
-            "MemoryHigh=28G",
+            "CPUQuota=1200%",
             "-p",
-            "MemoryMax=34G",
+            "MemoryHigh=16G",
+            "-p",
+            "MemoryMax=16G",
             sys.executable,
             os.path.abspath(__file__),
             "run",
