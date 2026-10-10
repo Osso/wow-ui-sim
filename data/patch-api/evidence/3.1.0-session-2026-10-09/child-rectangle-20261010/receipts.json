@@ -1,0 +1,29 @@
+{
+  "revision": "9635468d994be53d1f3571a8005115a49864c18a",
+  "verified": "2026-10-10",
+  "receipt_id": "20261010T172332Z",
+  "profile": "retail",
+  "selector": "secure_group_headers::cached_auto_hide_",
+  "reached_tests": 3,
+  "runtime_exit": 0,
+  "artifact_unchanged": true,
+  "artifact_sha256": "378a8ce08ea0afcbc8d5ab0defa756939f4f2102c26f582e2ed0c33373a494a9",
+  "compile": {
+    "exit": 0,
+    "source_equal": true
+  },
+  "cargo": {
+    "exit": 0,
+    "stream_errors": []
+  },
+  "format": {
+    "argv": [
+      "/usr/bin/cargo",
+      "fmt",
+      "--check"
+    ],
+    "exit": 0,
+    "revision": "9635468d994be53d1f3571a8005115a49864c18a",
+    "source_equal": true
+  }
+}

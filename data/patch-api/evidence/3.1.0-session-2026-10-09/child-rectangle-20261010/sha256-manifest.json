@@ -1,0 +1,8 @@
+{
+  "algorithm": "sha256",
+  "files": {
+    "audit.md": "e0eede0fd28351733cb057235acce3e9b469e66c623e94c5be9ed7d0047430ff",
+    "module.stdout": "4b6c6e0c5fc3caf4940b64f6bd9c9f2e66af6e83afb88d18f4ea9a4d3991fda4",
+    "receipts.json": "9b51528dc50bc9a10aad702b6c97d5759feb1df37388001244ac88b06d6ae614"
+  }
+}

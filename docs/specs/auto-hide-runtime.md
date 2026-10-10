@@ -4,8 +4,10 @@ Bounded simulator coverage of the active profile's cached `Blizzard_RestrictedAd
 
 ## What it must do
 
-- [ ] A normal/insecure caller, explicitly closure-tainted as `AutoHideRuntimeFixture`, can call the registered `RegisterAutoHide` for a shown frame with duration 1.0. With host cursor input selected from observed resolved geometry, real OnUpdate ticks enter then leave the frame; it stays shown before the duration and hides strictly after it.
-- [ ] Calling the registered `UnregisterAutoHide` from that caller while expiry is pending leaves the frame shown after more than duration 1.0 has elapsed outside.
+- [x] A normal/insecure caller, explicitly closure-tainted as `AutoHideRuntimeFixture`, can call the registered `RegisterAutoHide` for a shown frame with duration 1.0. With host cursor input selected from observed resolved geometry, real OnUpdate ticks enter then leave the frame; it stays shown before the duration and hides strictly after it.
+- [x] Calling the registered `UnregisterAutoHide` from that caller while expiry is pending leaves the frame shown after more than duration 1.0 has elapsed outside.
+
+- [x] Before the first update, the insecure caller adds a disjoint child rectangle with `AddToAutoHide`. At the child-only cursor point, treatment stays shown while otherwise equivalent control expires; after treatment exits both rectangles, its countdown expires normally.
 
 ## How it works
 
@@ -25,6 +27,7 @@ Bounded simulator coverage of the active profile's cached `Blizzard_RestrictedAd
 
 Target `integration`, module `secure_group_headers` (registered by `build.rs` top-level test discovery):
 
+- `secure_group_headers::cached_auto_hide_child_rectangle_extends_hover_set`
 - `secure_group_headers::cached_auto_hide_enter_leave_expires_after_duration`
 - `secure_group_headers::cached_auto_hide_unregister_cancels_pending_expiry`
 
@@ -34,8 +37,10 @@ Prerequisites: populated active-profile Blizzard UI cache resolved by `default_b
 
 ## Known gaps (current cycle)
 
-- [ ] Both cases are unexecuted. First compile/runtime outcome belongs to main; no passing proof is claimed.
+Saved retail receipts at `9635468d994be53d1f3571a8005115a49864c18a`, verified 2026-10-10: three distinct cases passed, zero failed/ignored, runtime/compile/fmt exit 0. Both original cases remain byte-identical. [Sanitized audit](/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/3.1.0-session-2026-10-09/child-rectangle-20261010/audit.md), [receipts](/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/3.1.0-session-2026-10-09/child-rectangle-20261010/receipts.json), and [SHA manifest](/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/3.1.0-session-2026-10-09/child-rectangle-20261010/sha256-manifest.json) retain the scoped proof. Compile retains six existing manifest deprecation warnings; no cargo check or warning-clean claim.
+
+Runtime vendor-cache inputs and explicit host/cache provenance guard are not sealed. This proves the saved cached-driver simulator assertions, not clean startup, native/historical parity, installed third-party addon loading, all-profile/full-suite acceptance or publication/count credit. Main owns suite integration and accounting.
 
 ## Out of scope
 
-Native/security/historical parity, combat behavior, exact deadline equality, child rectangles, re-entry, re-registration, movement cancellation, other profiles' acceptance, and production/vendor changes. Scope is exactly the two cases above.
+Native/security/historical buggy/largely-unusable parity, clean startup, combat behavior, exact deadline equality, re-entry, re-registration, movement cancellation, other profiles' acceptance, and production/vendor changes. Scope is exactly the three cases above.
