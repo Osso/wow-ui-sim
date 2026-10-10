@@ -1,3 +1,7 @@
+## [2026-10-09] audit | Independent method source gates retained
+
+[Metadata-snapshot SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#method-metadata-snapshots--independent-source-gates-only): byte-identical sanitized verifier report retained;31 gates, standard R31/P31/each C4/F9. Historical491 additions/96 removals differ from11,985 baseline rows. Shared second CanBe registrar/Forever transitive capability corrected;9cf/903 relevant code equals96. Handoff hashes seal original inspected pre-correction bytes, not current private reports. Source-only; no native/current runtime/full-suite acceptance, parent OPEN. Docs/report only; no source edits, builds/tests, delegation, operations or push.
+
 ## [2026-10-09] lint | Patch 1.0.0 broken audit links
 
 Repointed two source-spec links and existing index/log audit references to the [canonical integrated SOURCE SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#final-literal-retail-pages--integrated-source-pass-only). Literal audit target and `/home/osso/.worktrees/wow-ui-sim-p100-page` are absent; original page remains readable at Git revision `f616d6481`, not duplicated here. Existing evidence/replay paths and SSOT section confirmed present. Original RED/GREEN/copied epochs and all859 UNPROVEN contracts unchanged; no model/native/parent credit or new requirements. Docs only; no source/snapshot edits, builds/tests/delegation/operations or push; `.code-index.db` preserved.

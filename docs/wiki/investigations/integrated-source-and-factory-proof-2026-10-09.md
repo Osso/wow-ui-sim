@@ -252,7 +252,19 @@ Supplied local `missing-method-profile-gates-current.md` establishes literal sim
 
 The 16 reviewed `SetPreventSecretValues` rows inherit common-frame registration under **`not(retail-12-0-5)`**, without widget narrowing. This permits non-Retail and older Retail builds lacking that feature; it is not an exact native 12.0.1 removal gate. See [existing retirement accounting](patch-12-0-1-api-audit.md#root-causes-and-fixes) and [client-profile SSOT](../systems/client-profiles.md).
 
-Retained Retail metatable proof is not a profile matrix. Discovery interface120001 lacks exact client-build provenance and establishes no other profile/epoch. **Exact native presence and cross-profile shared-snapshot safety remain unknown**; source gates do not authorize blanket missing-method snapshot edits. This source-only conclusion adds no runtime/native proof to the [saved suite](#saved-full-suite-fail-broader-goal-open).
+Retained Retail metatable proof is not a profile matrix. Discovery interface120001 lacks exact client-build provenance and establishes no other profile/epoch. **Exact native presence and cross-profile shared-snapshot safety remain unknown**; source gates do not authorize blanket missing-method snapshot edits. This source-only conclusion adds no runtime/native proof to the [saved suite](#saved-full-suite-fail-broader-goal-open). The [method metadata snapshot audit](#method-metadata-snapshots--independent-source-gates-only) separately retains the31-row source matrix and historical delta/count distinction.
+
+## Method metadata snapshots — independent source gates only
+
+[Retained independent verifier report](../../../data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/method-gates-source/report.md) traces all **31 named source gates** through common registration and the attached filtered metatable. Standard bundles: **Retail31 / PTR31 / each Wrath, Mists, Era, Anniversary4 / Forever9**; not arbitrary optional-feature combinations or measured invocation support. Inspected HEADs `9cf08121a` and `903711da8` have relevant code equal to revision `96e88494a` registrars, Cargo/profile guards, attachment/filter and method-diff test. Source equality does not establish historical executable provenance or current runtime acceptance.
+
+`CanBeAccessedInContext` has a second, shared `forbidden-aspects` registrar; misc registers before text, so Forever's later text registration overwrites its earlier misc entry. Forever enables that shared capability transitively through `forbidden-animation-aspects`. The filtered index is attached for ordinary lookup, not merely introspection; none of these31 names is excluded by its named filter. These corrections do not establish native receiver or behavior parity.
+
+Historical revision96 diagnostics report **491 additions /31 names and96 removals** against **11,985 baseline rows**: different quantities, not competing exposure totals. Reconstructed extra set12,380 is historical diagnostic arithmetic, not a refreshed snapshot. Shared-snapshot/native provenance remains unresolved; no blanket snapshot changes or new requirements follow.
+
+Main corrected private handoff reports after the verifier hashed their inspected pre-correction bytes. Preserve the report unchanged: its handoff hashes identify **original inspected reports**, not promises that current private handoff bytes match. The report's “present bytes” wording is scoped to that inspection, not this retention or a future HEAD.
+
+Retained **one byte-identical report /17,653 bytes**, SHA-256 `9669bc557d9060c7fbfb78edba81726b74b9ca9418b1fdb297043ca9f5e8b5c2`. Complete-file review retains static code references, counts, hashes and evidence-epoch/path metadata only; credential/email pattern scan found zero candidates. No raw streams or private payload copied; bounded review is not blanket publication certification. **Source only: no native, current runtime or current full-suite proof.** Parent OPEN; no source edits, builds/tests, delegation, operations or push.
 
 ## Saved full suite: FAIL, broader goal open
 

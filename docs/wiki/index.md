@@ -1,3 +1,7 @@
+## [2026-10-09] audit | Independent method source gates retained
+
+[Metadata-snapshot SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#method-metadata-snapshots--independent-source-gates-only): byte-identical sanitized verifier report retained;31 gates, standard R31/P31/each C4/F9. Historical491 additions/96 removals differ from11,985 baseline rows. Shared second CanBe registrar/Forever transitive capability corrected;9cf/903 relevant code equals96. Handoff hashes seal original inspected pre-correction bytes, not current private reports. Source-only; no native/current runtime/full-suite acceptance, parent OPEN. Docs/report only; no source edits, builds/tests, delegation, operations or push.
+
 ## [2026-10-09] audit | Source gates and current live artifact
 
 [Missing-method SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#missing-method-source-gates--shared-snapshot-safety-unresolved) distinguishes positive Retail12.0.0 and negative12.0.5 registration gates; native/profile snapshot safety remains unknown. [Provider SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#pi-provider-provenance--historical-aggregate-only) records current live-main/installed `785726…` byte match; exact source and failure linkage unproven, `c39b…` historical only.
