@@ -1,0 +1,16 @@
+{
+  "source_receipt_directory": "/home/osso/.local/state/wow-ui-sim/verification/party-map-red-current/20261010T175747Z",
+  "source_revision": "439260ee585b44f1d07c79ed4ce2ea77649f1ead",
+  "source_equal": true,
+  "source_sha256": {
+    "src/c_api/c_map.rs": "7881e95581d171fbf1d6bbf7e690a67308c28dbb8f80f868fb05975866149ede",
+    "src/lua_api/game_data.rs": "c4a553c29b3516dc61416a1b4cf6ae451a6491c8a36ce2155f9bbc883f42fb0a",
+    "tests/c_map_probes.rs": "41420ba945568c0833a3e20fd7836220586f1980d4de06df694fb5ec8097d3e2"
+  },
+  "assertion": "active party1 position must be present",
+  "observed_result": "party1 returned nil; 1 selected test failed; exit 101",
+  "compile_exit": 0,
+  "producer_boundary": "Current producer present after 40f380170; RED receipt predates producer acceptance.",
+  "green_status": "79 bounded C_Map cases pending; no PASS until independent gate",
+  "excluded": "No binary, raw stderr, or vendor payload retained."
+}

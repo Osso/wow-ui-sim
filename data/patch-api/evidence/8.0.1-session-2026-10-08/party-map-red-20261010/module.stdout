@@ -1,0 +1,11 @@
+
+running 1 test
+test c_map_probes::get_player_map_position_uses_independent_active_party_member_input ... FAILED
+
+failures:
+
+failures:
+    c_map_probes::get_player_map_position_uses_independent_active_party_member_input
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 10701 filtered out; finished in 0.13s
+

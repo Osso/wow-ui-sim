@@ -1,0 +1,61 @@
+{
+  "verified": "2026-10-10",
+  "files": {
+    "artifact.json": {
+      "sha256": "d8094bbd0043b88389824159e44145064c3e6e948903bad2a6c348d6e7bd8898",
+      "byte_identical": true,
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/party-map-green-current/20261010T181344Z/artifact.json"
+    },
+    "compile-result.json": {
+      "sha256": "27e344ef47ce70c39240239908b372967ffb5c3e32206cda667fc1e675196480",
+      "byte_identical": true,
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/party-map-green-current/20261010T181344Z/compile-result.json"
+    },
+    "submission.json": {
+      "sha256": "27e7355d7c923455fd69ebbcd8d987d2b83dd8371622ac3de629b53ad2fbae67",
+      "byte_identical": true,
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/party-map-green-current/20261010T181344Z/submission.json"
+    },
+    "execution-results.json": {
+      "sha256": "4d04af19d39c1e091e77917a42eb44b83146796d06b959766c31823c2da81728",
+      "byte_identical": true,
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/party-map-green-current/20261010T181344Z/execution-results.json"
+    },
+    "checks/fmt.json": {
+      "sha256": "bb4cd5ddd85be8b9e8456c9717fe8aa3181d9b1d65d43fb7ac0cb718aafeaabc",
+      "byte_identical": true,
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/party-map-green-current/20261010T181344Z/checks/fmt.json"
+    },
+    "checks/default-check.json": {
+      "sha256": "b98a0bd460458cf3c760eef080af3d1e02e1f6039ee0c60fca1148d99984dbc4",
+      "byte_identical": true,
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/party-map-green-current/20261010T181344Z/checks/default-check.json"
+    },
+    "map-probes.stdout": {
+      "sha256": "e99ceffffcc2285ff5504caaf83a338efac9b5058c2acb6cdf8f01b947e3893e",
+      "byte_identical": true,
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/party-map-green-current/20261010T181344Z/map-probes.stdout"
+    },
+    "map-api.stdout": {
+      "sha256": "f4b34d6bc929508794c166b2f97ee0e47cc5087a6ca4559a0d7d29564b3db268",
+      "byte_identical": true,
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/party-map-green-current/20261010T181344Z/map-api.stdout"
+    },
+    "controller-count-correction.json": {
+      "sha256": "3fb813a07b5f8e678ae64e439b78fe7d363ca959b131e658ebc11cadb057e50d",
+      "byte_identical": true,
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/party-map-green-current/controller-count-correction.json"
+    },
+    "runtime-report.md": {
+      "sha256": "3515767a4ed83c350da4d9e1f8358e01c24fddd7753d06207b8cc072df61ab39",
+      "byte_identical": true,
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/party-map-green-current/runtime-report.md"
+    }
+  },
+  "omitted": [
+    "binary",
+    "source maps",
+    "raw stderr",
+    "vendor payload"
+  ]
+}

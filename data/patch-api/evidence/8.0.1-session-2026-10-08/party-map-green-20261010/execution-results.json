@@ -1,0 +1,34 @@
+[
+  {
+    "argv": [
+      "/usr/bin/timeout",
+      "90",
+      "/home/osso/.local/state/wow-ui-sim/verification/party-map-green-current/20261010T181344Z/integration-sealed",
+      "c_map_probes::",
+      "--nocapture",
+      "--test-threads=1"
+    ],
+    "artifact_unchanged": true,
+    "exit": 0,
+    "expected_tests": 30,
+    "label": "map-probes",
+    "reached_tests": 30,
+    "selector": "c_map_probes::"
+  },
+  {
+    "argv": [
+      "/usr/bin/timeout",
+      "90",
+      "/home/osso/.local/state/wow-ui-sim/verification/party-map-green-current/20261010T181344Z/integration-sealed",
+      "c_map_api::",
+      "--nocapture",
+      "--test-threads=1"
+    ],
+    "artifact_unchanged": true,
+    "exit": 0,
+    "expected_tests": 49,
+    "label": "map-api",
+    "reached_tests": 51,
+    "selector": "c_map_api::"
+  }
+]

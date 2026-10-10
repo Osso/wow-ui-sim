@@ -1,0 +1,11 @@
+{
+  "cause": "source #[test] count49 missed2 expandedRusttestcases; actualmodule51passed",
+  "scope": "30probe+51API=81actualcases; no rerun/testassertionweakening",
+  "original_controller_expected": 49,
+  "actual_tests": 51,
+  "original_receipts_preserved": true,
+  "missing_commands": [
+    "cargo fmt --check",
+    "cargo check --offline --locked -j12"
+  ]
+}

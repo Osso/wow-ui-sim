@@ -1,0 +1,35 @@
+
+running 30 tests
+test c_map_probes::get_map_art_id_returns_nothing_for_unknown_map ... ok
+test c_map_probes::get_map_art_id_returns_seeded_art_id ... ok
+test c_map_probes::get_map_children_info_filters_by_map_type ... ok
+test c_map_probes::get_map_children_info_returns_direct_children ... ok
+test c_map_probes::get_map_children_info_returns_empty_array_for_childless_map ... ok
+test c_map_probes::get_map_children_info_returns_nothing_for_unknown_map ... ok
+test c_map_probes::get_map_children_info_with_all_descendants_walks_tree ... ok
+test c_map_probes::get_map_info_at_position_is_inclusive_at_rect_edges ... ok
+test c_map_probes::get_map_info_at_position_picks_first_rect_when_overlapping ... ok
+test c_map_probes::get_map_info_at_position_resolves_child_inside_rect ... ok
+test c_map_probes::get_map_info_at_position_returns_nothing_for_unknown_map ... ok
+test c_map_probes::get_map_info_at_position_returns_nothing_outside_any_rect ... ok
+test c_map_probes::get_map_info_at_position_returns_nothing_when_parent_has_no_rects ... ok
+test c_map_probes::get_map_info_at_position_skips_rect_pointing_to_unknown_child ... ok
+test c_map_probes::get_map_info_exposes_cosmic_parent_for_seeded_world_maps ... ok
+test c_map_probes::get_map_rect_on_map_composes_rect_up_through_grandparent ... ok
+test c_map_probes::get_map_rect_on_map_drives_get_map_center_on_map_helper ... ok
+test c_map_probes::get_map_rect_on_map_returns_identity_for_same_map ... ok
+test c_map_probes::get_map_rect_on_map_returns_nothing_for_unknown_ui_map_id ... ok
+test c_map_probes::get_map_rect_on_map_returns_nothing_when_chain_link_missing_rect ... ok
+test c_map_probes::get_map_rect_on_map_returns_nothing_when_top_is_not_an_ancestor ... ok
+test c_map_probes::get_map_rect_on_map_returns_rect_on_direct_parent ... ok
+test c_map_probes::get_player_map_position_party_input_controls_and_roster_reset ... ok
+test c_map_probes::get_player_map_position_reflects_sim_state_mutation ... ok
+test c_map_probes::get_player_map_position_returns_default_center ... ok
+test c_map_probes::get_player_map_position_returns_nil_for_non_player_unit ... ok
+test c_map_probes::get_player_map_position_returns_nil_for_unknown_map ... ok
+test c_map_probes::get_player_map_position_supports_get_xy ... ok
+test c_map_probes::get_player_map_position_uses_independent_active_party_member_input ... ok
+test c_map_probes::set_map_for_quest_log_updates_current_map_id ... ok
+
+test result: ok. 30 passed; 0 failed; 0 ignored; 0 measured; 10673 filtered out; finished in 2.82s
+

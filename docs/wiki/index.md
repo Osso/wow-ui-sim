@@ -1,3 +1,7 @@
+## [2026-10-10] audit | Party map supplied input — bounded GREEN
+
+[Party contract](../specs/party-map-position.md): authentic1RED101, unchanged positive plus roster controls in81actualPASS; fmt/default-check0 independently inspected. Original controller's49 expectation missed two child-module tests; failure history preserved. Native projection/all-profile/full-suite acceptance remains separate.
+
 ## [2026-10-10] audit | Saved 5aa suite and startup boundaries
 
 [Saved 5aa suite](investigations/fullsuite-5aa-2026-10-10.md):15,001PASS/3unchangedFAIL/19skips, including TOC and AutoHide additions; later party changes excluded. [Startup SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#stock-versus-full-addon-startup--observed-results-not-native-parity) separates clean stock runs from105 full-addon errors and unassigned earlier budget consumption. Parent OPEN.

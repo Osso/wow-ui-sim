@@ -1,0 +1,18 @@
+{
+  "observed_original_expected": 49,
+  "actual_api_cases": 51,
+  "actual_probe_cases": 30,
+  "cause": "Parent c_map_api.rs contains49 test markers; explicitly included texture child module adds2 named cases. Not a macro expansion.",
+  "original_controller_success": false,
+  "later_missing_checks": "fmt and default-check exit0; no test rerun",
+  "producer_revision": "40f3801705e2d930dc34c2716e8011234dd67295",
+  "receipt_revision": "d25c1fdb444c2dd1c8b0c45dd4f8032b1ca75289",
+  "warnings": "six preexisting iced manifest deprecations; not warning-free",
+  "exclusions": [
+    "native coordinate acquisition/projection",
+    "all profiles",
+    "whole HEAD/full suite",
+    "external dependency/source-to-artifact provenance",
+    "unsealed environment/runtime assets"
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "argv": [
+    "/usr/bin/cargo",
+    "test",
+    "--no-run",
+    "--test",
+    "integration",
+    "--offline",
+    "--locked",
+    "--message-format=json",
+    "--timings",
+    "-j",
+    "12"
+  ],
+  "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+  "exclusions": [
+    "external dependencies/source-to-artifact provenance",
+    "untracked files/index",
+    "inherited environment",
+    "runtime assets outside fixture inputs"
+  ],
+  "purpose": "party normalizedinput producer GREEN plusCMapprobe/APIcontrols; notnativeprojection or allprofileclaim",
+  "revision": "d25c1fdb444c2dd1c8b0c45dd4f8032b1ca75289"
+}

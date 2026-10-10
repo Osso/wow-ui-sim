@@ -1,0 +1,17 @@
+[
+  {
+    "argv": [
+      "/usr/bin/timeout",
+      "90",
+      "/home/osso/.local/state/wow-ui-sim/verification/party-map-red-current/20261010T175747Z/integration-sealed",
+      "c_map_probes::get_player_map_position_uses_independent_active_party_member_input",
+      "--exact",
+      "--nocapture",
+      "--test-threads=1"
+    ],
+    "artifact_unchanged": true,
+    "exit": 101,
+    "reached_tests": 1,
+    "selector": "c_map_probes::get_player_map_position_uses_independent_active_party_member_input"
+  }
+]

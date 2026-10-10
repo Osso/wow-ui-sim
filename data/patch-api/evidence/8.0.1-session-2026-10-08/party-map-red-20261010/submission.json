@@ -1,0 +1,24 @@
+{
+  "argv": [
+    "/usr/bin/cargo",
+    "test",
+    "--no-run",
+    "--test",
+    "integration",
+    "--offline",
+    "--locked",
+    "--message-format=json",
+    "--timings",
+    "-j",
+    "12"
+  ],
+  "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+  "exclusions": [
+    "external dependencies/source-to-artifact provenance",
+    "untracked files/index",
+    "inherited environment",
+    "runtime assets outside fixture inputs"
+  ],
+  "purpose": "party map-positive actualRED over explicitmember input; no producer/nativeprojection claim",
+  "revision": "439260ee585b44f1d07c79ed4ce2ea77649f1ead"
+}

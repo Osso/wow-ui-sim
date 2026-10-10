@@ -1,0 +1,11 @@
+{
+  "argv": [
+    "/usr/bin/cargo",
+    "fmt",
+    "--check"
+  ],
+  "exit": 0,
+  "revision": "d25c1fdb444c2dd1c8b0c45dd4f8032b1ca75289",
+  "source_equal": true,
+  "reason": "missingaftercontrollercountcalibrationerror; no repeatedtests/build"
+}

@@ -1,3 +1,7 @@
+## [2026-10-10] audit | Party map receipt acceptance retained
+
+[Party contract](../specs/party-map-position.md) and8.0.1 audit now record81actualPASS, authentic unchanged1RED101, later missing-only fmt/default-check0. Sanitized primary receipts and independent report retained; original controller49→51 mismatch remains, with explicit child-module erratum. No rerun/native/all-profile/current full-suite claim.
+
 ## [2026-10-10] audit | Saved 5aa suite and startup scope retained
 
 [Saved suite](investigations/fullsuite-5aa-2026-10-10.md) retains15,001PASS/3unchangedFAIL/19skips and two actual added identities; party production changes excluded. [Startup SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#stock-versus-full-addon-startup--observed-results-not-native-parity) links clean stock, failing full-addon and existing-budget diagnostic evidence without native/all-profile acceptance. No reruns; parent OPEN.
