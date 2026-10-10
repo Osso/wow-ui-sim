@@ -1,0 +1,6 @@
+
+running 1 test
+test loader::lua_file::tests::startup_file_budget_success_preserves_meter_continuity_returns_and_effects ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 1997 filtered out; finished in 0.11s
+

@@ -1,0 +1,21 @@
+{
+  "argv": [
+    "/usr/bin/timeout",
+    "90",
+    "/home/osso/.local/state/wow-ui-sim/verification/success-file-budget-full-addon-current/20261010T183739Z/wow-sim-sealed",
+    "--no-saved-vars",
+    "--exec-lua",
+    "print('[FullAddonStartupComplete]', type(IsUsingGamepad), type(C_GamePad), type(C_GamePad and rawget(C_GamePad,'IsEnabled')))",
+    "dump-tree",
+    "--filter",
+    "__FullAddonStartup_NoMatchingFrame__"
+  ],
+  "environment_allowlist": {
+    "WOW_SIM_LOG_HANDLER_TIMINGS": "1000",
+    "WOW_SIM_NO_SOUND": "1"
+  },
+  "revision": "b048251f38b2d53e33b3365590cd227d40fc07d0",
+  "runtime_asset_limits": "vendor cache sealed; thirdparty files/environment/WTF EditMode cache not fully sealed; no cold/native/GUI claim",
+  "savedvars_disabled": true,
+  "thirdparty_addons_disabled": false
+}

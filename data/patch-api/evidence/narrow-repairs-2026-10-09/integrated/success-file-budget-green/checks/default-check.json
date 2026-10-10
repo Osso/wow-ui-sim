@@ -1,0 +1,13 @@
+{
+  "argv": [
+    "/usr/bin/cargo",
+    "check",
+    "--offline",
+    "--locked",
+    "-j",
+    "12"
+  ],
+  "exit": 0,
+  "revision": "0e4bf4161d58cbbf6572a5be08cac7f5019e316f",
+  "source_equal": true
+}

@@ -1,0 +1,9 @@
+{
+  "actual_tests": 12,
+  "checks": "fmt/default-check0",
+  "distinct_tests": 11,
+  "runtime_invocations": 4,
+  "source_equal": true,
+  "status": "PASS",
+  "success_records_validated": 2
+}

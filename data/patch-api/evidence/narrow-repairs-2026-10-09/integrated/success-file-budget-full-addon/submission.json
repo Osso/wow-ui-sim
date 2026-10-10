@@ -1,0 +1,22 @@
+{
+  "argv": [
+    "/usr/bin/cargo",
+    "build",
+    "--bin",
+    "wow-sim",
+    "--offline",
+    "--locked",
+    "--message-format=json",
+    "--timings",
+    "-j",
+    "12"
+  ],
+  "exclusions": [
+    "external dependencies/source-to-artifact provenance",
+    "untracked files/index",
+    "inherited environment",
+    "runtime assets outside fixture inputs"
+  ],
+  "revision": "b048251f38b2d53e33b3365590cd227d40fc07d0",
+  "scope": "fresh normal defaultRetail binary plus successful file-budget attribution; quota and vendor unchanged; fulladdons noSavedVariables"
+}

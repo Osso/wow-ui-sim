@@ -1,0 +1,62 @@
+{
+  "verified": "2026-10-10",
+  "files": {
+    "submission.json": {
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/success-file-budget-full-addon-current/20261010T183739Z/submission.json",
+      "sha256": "2a44bfdae53599e861fc81b4adf773a8d03dc99d746c57e4b3fdbea3a16f0926",
+      "byte_identical": true
+    },
+    "compile-result.json": {
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/success-file-budget-full-addon-current/20261010T183739Z/compile-result.json",
+      "sha256": "1f67c6161475250ec69698b1b6663d2d09927e8fbab3dcf0a25c9a41f4a2055d",
+      "byte_identical": true
+    },
+    "artifact.json": {
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/success-file-budget-full-addon-current/20261010T183739Z/artifact.json",
+      "sha256": "37b8a15da54c55c5d6568573f514baef796b6fef25c3cf1ac1a29ca28f1f9ef5",
+      "byte_identical": true
+    },
+    "runtime-submission.json": {
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/success-file-budget-full-addon-current/20261010T183739Z/runtime-submission.json",
+      "sha256": "c22adc3a15c622b95c0b9962f2ac25f806ad295b6906a835b5a0390097bedaa5",
+      "byte_identical": true
+    },
+    "runtime-result.json": {
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/success-file-budget-full-addon-current/20261010T183739Z/runtime-result.json",
+      "sha256": "082d6b609f1d715722ee0ff089ef2e4cd8d5270473b95a677c04ff393d92c82c",
+      "byte_identical": true
+    },
+    "outcome.json": {
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/success-file-budget-full-addon-current/20261010T183739Z/outcome.json",
+      "sha256": "fde6c04d3318bf23a82fe9baf95b29725ffc24d4c594efaf2b219d8f8391047d",
+      "byte_identical": true
+    },
+    "parser-result.json": {
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/success-file-budget-full-addon-current/20261010T183739Z/parser-result.json",
+      "sha256": "110c2a199bc8372ee3639b54bb49373a46c72a611e6f608bed64b32804517c84",
+      "byte_identical": true
+    },
+    "parsed/summary.public.json": {
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/success-file-budget-full-addon-current/20261010T183739Z/parsed/summary.public.json",
+      "sha256": "42b53fb51c6b182a4418c9db7c8836e60449688b6c5f9317dd2ba2b8e99a5573",
+      "byte_identical": true
+    },
+    "focus-owner-sanitized-summary.json": {
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/success-file-budget-full-addon-current/20261010T183739Z/focus-owner-sanitized-summary.json",
+      "sha256": "60cd8a8d0ecd54423afbedbb741dffb8abc4565196894788c1722b59313ce62a",
+      "byte_identical": true
+    },
+    "independent-report.md": {
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/success-file-budget-full-addon-current/independent-report.md",
+      "sha256": "23dd0c91fd5b793c055167dd1a3fb489bf9a7087c1657fcc1be7c31eae92fdf0",
+      "byte_identical": true
+    }
+  },
+  "omitted": [
+    "normal binary",
+    "source/cache maps",
+    "raw stdout/stderr",
+    "private owner/file joins",
+    "vendor source payload"
+  ]
+}

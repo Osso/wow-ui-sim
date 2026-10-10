@@ -1,0 +1,5 @@
+[file-budget-success] owner="SuccessfulFileBudgetProbe" file="@Interface/AddOns/SuccessfulFileBudgetProbe/First.lua" limit=1000 used_before=0 used_after=4
+[file-budget-success] owner="SuccessfulFileBudgetProbe" file="@Interface/AddOns/SuccessfulFileBudgetProbe/Second.lua" limit=1000 used_before=4 used_after=16
+[file-budget-success] owner="FileBudgetProbe" file="@Interface/AddOns/FileBudgetProbe/Settings/GroupTools.lua" limit=100 used_before=0 used_after=2
+[file-budget-error] owner="FileBudgetProbe" file="@Interface/AddOns/FileBudgetProbe/Settings/GroupTools.lua" limit=100 used_before=2 used_after=100
+[file-budget-error] owner="FileBudgetProbe" file="@Interface/AddOns/FileBudgetProbe/Settings/GroupTools.lua" limit=100 used_before=100 used_after=100

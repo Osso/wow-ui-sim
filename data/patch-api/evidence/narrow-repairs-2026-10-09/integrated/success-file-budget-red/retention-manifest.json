@@ -1,0 +1,51 @@
+{
+  "verified": "2026-10-10",
+  "files": {
+    "submission.json": {
+      "sha256": "4a588b5d42ddd92420399523f056d6c122b008aee9631e61d9fc576e96458a83",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/success-file-budget-red-current/20261010T183127Z/submission.json",
+      "byte_identical": true
+    },
+    "compile-result.json": {
+      "sha256": "1f67c6161475250ec69698b1b6663d2d09927e8fbab3dcf0a25c9a41f4a2055d",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/success-file-budget-red-current/20261010T183127Z/compile-result.json",
+      "byte_identical": true
+    },
+    "artifact.json": {
+      "sha256": "ea7d94104d7eaf2233c729ad47b3f074b10efd7889f56ff658d8fc36970bde38",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/success-file-budget-red-current/20261010T183127Z/artifact.json",
+      "byte_identical": true
+    },
+    "execution-results.json": {
+      "sha256": "bed4c405a7f60678ef413c789c5b0a6703b6c9fafe5f41946875116b4af03fc7",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/success-file-budget-red-current/20261010T183127Z/execution-results.json",
+      "byte_identical": true
+    },
+    "outcome.json": {
+      "sha256": "d04b8e486559609e0eac194089dd44467cb7790d3dd35d07a1a825c5538f337a",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/success-file-budget-red-current/20261010T183127Z/outcome.json",
+      "byte_identical": true
+    },
+    "fixture.stdout": {
+      "sha256": "d1726eda553041dd113fc0e59fbe3ace6775a5cede53f33c5ea28520ac618b04",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/success-file-budget-red-current/20261010T183127Z/fixture.stdout",
+      "byte_identical": true
+    },
+    "independent-report.md": {
+      "sha256": "424a093fb3ce67c828369be8716186359d29810a55272d61ea611647be18fd46",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/success-file-budget-red-current/independent-report.md",
+      "byte_identical": true
+    },
+    "fixture-diagnostic-lines.txt": {
+      "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "derived": true,
+      "scope": "synthetic fixture diagnostics only; unrelated startupstderr omitted"
+    }
+  },
+  "omitted": [
+    "binary",
+    "source maps",
+    "raw startup/compile stderr",
+    "vendor payload"
+  ]
+}

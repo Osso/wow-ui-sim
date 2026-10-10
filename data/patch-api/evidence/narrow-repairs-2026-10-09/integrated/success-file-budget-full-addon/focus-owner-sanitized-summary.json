@@ -1,0 +1,11 @@
+{
+  "successful_chunks": 114,
+  "first_used_before": 0,
+  "last_success_used_after": 9994637,
+  "first_error_used_before": 9994637,
+  "first_error_used_after": 10000000,
+  "successful_delta_sum": 9994637,
+  "contiguous_samples": true,
+  "largest_completed_file_delta": 5777692,
+  "units": "owner dispatch instructions; not exclusive/self cost; concrete contiguous snapshots permit accounting sum, not generalized nested attribution"
+}

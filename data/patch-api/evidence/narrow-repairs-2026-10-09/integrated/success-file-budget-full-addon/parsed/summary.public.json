@@ -1,0 +1,9 @@
+{
+  "matching_record_count": 3068,
+  "successful_record_count": 3064,
+  "error_record_count": 4,
+  "rejected_record_count": 0,
+  "owner_count": 50,
+  "continuity_anomaly_count": 0,
+  "attribution_note": "Counters are owner-cumulative dispatch instructions. Each file delta includes synchronous dynamic-scope work, not exclusive file cost. Nested intervals can overlap and emit in completion order; do not sum deltas as exclusive totals. Continuity gaps can reflect unlogged work; overlaps can reflect nesting or resets. This log alone does not distinguish those causes. Unavailable values remain null, never zero."
+}

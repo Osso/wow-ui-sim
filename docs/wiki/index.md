@@ -1,3 +1,7 @@
+## [2026-10-10] audit | Successful-file budget proof and attribution
+
+[Proof SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#successful-file-budget-diagnostics--bounded-green-and-attribution-startup-unfixed): diagnostic RED→GREEN,12executions/11distinctPASS and fresh3064-success-record attribution; quota/vendor unchanged, startup unfixed. Current integrated suiteb048 queued async, not PASS; parent OPEN.
+
 ## [2026-10-10] audit | Party map supplied input — bounded GREEN
 
 [Party contract](../specs/party-map-position.md): authentic1RED101, unchanged positive plus roster controls in81actualPASS; fmt/default-check0 independently inspected. Original controller's49 expectation missed two child-module tests; failure history preserved. Native projection/all-profile/full-suite acceptance remains separate.

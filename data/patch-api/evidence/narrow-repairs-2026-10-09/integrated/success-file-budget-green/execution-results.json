@@ -1,0 +1,20 @@
+{
+  "argv": [
+    "/usr/bin/timeout",
+    "90",
+    "/home/osso/.local/state/wow-ui-sim/verification/success-file-budget-green-current/20261010T183607Z/lib-tests-sealed",
+    "loader::lua_file::tests::startup_file_budget_success_preserves_meter_continuity_returns_and_effects",
+    "--exact",
+    "--nocapture",
+    "--test-threads=1"
+  ],
+  "artifact_unchanged": true,
+  "diagnostic_pass": true,
+  "exit": 0,
+  "expected_success_records": 2,
+  "failure_message": null,
+  "optin": "WOW_SIM_LOG_HANDLER_TIMINGS=1000",
+  "reached_tests": 1,
+  "selector": "loader::lua_file::tests::startup_file_budget_success_preserves_meter_continuity_returns_and_effects",
+  "success_records": 2
+}

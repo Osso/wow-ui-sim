@@ -1,0 +1,91 @@
+{
+  "verified": "2026-10-10",
+  "files": {
+    "submission.json": {
+      "sha256": "41f49db4d05694914491cdf5c3b1337bd6fb27bd85e9cad275d1363a0af74dee",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/success-file-budget-green-current/20261010T183607Z/submission.json",
+      "byte_identical": true
+    },
+    "compile-result.json": {
+      "sha256": "1f67c6161475250ec69698b1b6663d2d09927e8fbab3dcf0a25c9a41f4a2055d",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/success-file-budget-green-current/20261010T183607Z/compile-result.json",
+      "byte_identical": true
+    },
+    "artifact.json": {
+      "sha256": "fe62456385a9ccb86dfc259dcc2e6873c6b233e5e85c6624c597fd8446d1c1e1",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/success-file-budget-green-current/20261010T183607Z/artifact.json",
+      "byte_identical": true
+    },
+    "execution-results.json": {
+      "sha256": "2e5a5273cc0cb6c6d305bce64975630dac37f8da12471675186d6c2b0c340929",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/success-file-budget-green-current/20261010T183607Z/execution-results.json",
+      "byte_identical": true
+    },
+    "outcome.json": {
+      "sha256": "9bb350821812a698e514b2b681afe56e75e033f75cc1c52c89f5a4aeef3db32b",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/success-file-budget-green-current/20261010T183607Z/outcome.json",
+      "byte_identical": true
+    },
+    "fixture.stdout": {
+      "sha256": "3c2ef192851dedd9548dca0a8ceaf497509ab86fdbbe27583a19846b69f29462",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/success-file-budget-green-current/20261010T183607Z/fixture.stdout",
+      "byte_identical": true
+    },
+    "control-results.json": {
+      "sha256": "1e48606e54f4cbc544abfcbc902ced04814a27a9a5502aced4aa98dc03c1adfd",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/success-file-budget-green-current/20261010T183607Z/control-results.json",
+      "byte_identical": true
+    },
+    "success-counter-validation.json": {
+      "sha256": "3c3f0539d91dd1215698fdb24e09b67cf19fa39c2a3f40ea23d5d1fcf7dad591",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/success-file-budget-green-current/20261010T183607Z/success-counter-validation.json",
+      "byte_identical": true
+    },
+    "final-gate-outcome.json": {
+      "sha256": "ce1e690bc88c257383c0838a3dc06707141733242ac2fed6f00cf290a395db3b",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/success-file-budget-green-current/20261010T183607Z/final-gate-outcome.json",
+      "byte_identical": true
+    },
+    "optin-off.stdout": {
+      "sha256": "3c2ef192851dedd9548dca0a8ceaf497509ab86fdbbe27583a19846b69f29462",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/success-file-budget-green-current/20261010T183607Z/optin-off.stdout",
+      "byte_identical": true
+    },
+    "error-loader.stdout": {
+      "sha256": "134093231dae4411dc5eddc5443f07e934b2e1d91cc1db26c39b3e058e1b23d7",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/success-file-budget-green-current/20261010T183607Z/error-loader.stdout",
+      "byte_identical": true
+    },
+    "budget-formatters.stdout": {
+      "sha256": "a8ad4b0cbf5f56e08c10ae5d315ca429b0e2014ddff86f8e3ba81283b198a5ce",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/success-file-budget-green-current/20261010T183607Z/budget-formatters.stdout",
+      "byte_identical": true
+    },
+    "checks/fmt.json": {
+      "sha256": "64c90607b690c6891485f3073165abda92422d730a6a63207c3b75599a7edf4b",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/success-file-budget-green-current/20261010T183607Z/checks/fmt.json",
+      "byte_identical": true
+    },
+    "checks/default-check.json": {
+      "sha256": "3260675bb45693499da6f70dbcae2d1f15d4f487f9e52a4536c7acee444b19c8",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/success-file-budget-green-current/20261010T183607Z/checks/default-check.json",
+      "byte_identical": true
+    },
+    "independent-report.md": {
+      "sha256": "8efab07afd8ed26fb5156714a750091865da0dc4a81f963971384449876b5139",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/success-file-budget-green-current/independent-report.md",
+      "byte_identical": true
+    },
+    "fixture-diagnostic-lines.txt": {
+      "sha256": "e8ceb51e0e7865fc1b3242c6c9d7d7939aff5cc613799c0bb06462d473c90261",
+      "derived": true,
+      "scope": "synthetic fixture diagnostics only; unrelated startupstderr omitted"
+    }
+  },
+  "omitted": [
+    "binary",
+    "source maps",
+    "raw startup/compile stderr",
+    "vendor payload"
+  ]
+}

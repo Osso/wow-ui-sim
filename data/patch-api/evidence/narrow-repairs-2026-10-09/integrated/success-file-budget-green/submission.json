@@ -1,0 +1,22 @@
+{
+  "argv": [
+    "/usr/bin/cargo",
+    "test",
+    "--no-run",
+    "--lib",
+    "--offline",
+    "--locked",
+    "--message-format=json",
+    "--timings",
+    "-j",
+    "12"
+  ],
+  "exclusions": [
+    "external dependencies/source-to-artifact provenance",
+    "untracked files/index",
+    "inherited environment",
+    "runtime assets outside fixture inputs"
+  ],
+  "revision": "0e4bf4161d58cbbf6572a5be08cac7f5019e316f",
+  "scope": "success/error opt-in diagnostic contract GREEN and unchanged sequential loader controls"
+}

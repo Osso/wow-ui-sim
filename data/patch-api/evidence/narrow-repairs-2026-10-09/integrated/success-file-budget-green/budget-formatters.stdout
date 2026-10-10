@@ -1,0 +1,14 @@
+
+running 9 tests
+test lua_api::execution_budget::tests::budget_error_log_distinguishes_exhausted_entry_from_callback_consumption ... ok
+test lua_api::execution_budget::tests::budget_error_log_labels_unavailable_snapshots_without_inventing_counts ... ok
+test lua_api::execution_budget::tests::budget_error_log_reports_unlimited_meter_and_escapes_event_metadata ... ok
+test lua_api::execution_budget::tests::file_budget_error_log_distinguishes_exhausted_entry_from_file_consumption ... ok
+test lua_api::execution_budget::tests::file_budget_error_log_escapes_metadata_and_reports_unlimited_meter ... ok
+test lua_api::execution_budget::tests::file_budget_error_log_labels_missing_snapshots ... ok
+test lua_api::execution_budget::tests::file_budget_success_log_labels_missing_snapshots ... ok
+test lua_api::execution_budget::tests::file_budget_success_log_reports_cumulative_counters_and_escaped_identity ... ok
+test lua_api::execution_budget::tests::file_budget_success_log_reports_unlimited_meter ... ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 1992 filtered out; finished in 0.00s
+

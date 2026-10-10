@@ -1,0 +1,22 @@
+{
+  "argv": [
+    "/usr/bin/cargo",
+    "test",
+    "--no-run",
+    "--lib",
+    "--offline",
+    "--locked",
+    "--message-format=json",
+    "--timings",
+    "-j",
+    "12"
+  ],
+  "exclusions": [
+    "external dependencies/source-to-artifact provenance",
+    "untracked files/index",
+    "inherited environment",
+    "runtime assets outside fixture inputs"
+  ],
+  "revision": "12124ded67165a8bb97f0c2d14c7d40f0b078855",
+  "scope": "compile-valid sequential successful tainted chunks; external success-record contract RED, not compile RED"
+}

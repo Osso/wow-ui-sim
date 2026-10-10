@@ -1,3 +1,7 @@
+## [2026-10-10] audit | Success-file diagnostics and attribution retained
+
+[Proof SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#successful-file-budget-diagnostics--bounded-green-and-attribution-startup-unfixed) links authentic external RED, bounded GREEN and fresh full-addon attribution. Small sanitized receipts/reports retained; raw stderr, owner/file joins and vendor content stay private. Existing startup errors/native unknowns remain; integrated suiteb048 asynchronously queued.
+
 ## [2026-10-10] audit | Party map receipt acceptance retained
 
 [Party contract](../specs/party-map-position.md) and8.0.1 audit now record81actualPASS, authentic unchanged1RED101, later missing-only fmt/default-check0. Sanitized primary receipts and independent report retained; original controller49→51 mismatch remains, with explicit child-module erratum. No rerun/native/all-profile/current full-suite claim.

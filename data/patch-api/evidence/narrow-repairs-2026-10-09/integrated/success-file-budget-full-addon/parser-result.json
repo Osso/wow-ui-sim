@@ -1,0 +1,9 @@
+{
+  "argv": [
+    "/usr/bin/python3",
+    "/home/osso/.local/state/wow-ui-sim/verification/success-file-budget-green-current/parse_file_budget_records.py",
+    "/home/osso/.local/state/wow-ui-sim/verification/success-file-budget-full-addon-current/20261010T183739Z/startup.stderr",
+    "/home/osso/.local/state/wow-ui-sim/verification/success-file-budget-full-addon-current/20261010T183739Z/parsed"
+  ],
+  "exit": 0
+}

@@ -40,3 +40,7 @@ Only sanitized report, small outcome, marker summary and derivative SHA-256 mani
 - /home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/full-addon-startup-current/independent-report.md — sanitized retained report.
 - /home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/full-addon-startup-current/marker-summary.json — bounded counts, shapes and original artifact hashes.
 - /home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/full-addon-startup-current/SHA256SUMS — retained derivative hashes.
+
+## New diagnostic capture
+
+Epoch `20261010T183739Z`: [bounded independent attribution report](../../../data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/success-file-budget-full-addon/independent-report.md), submission `b048251f38b2d53e33b3365590cd227d40fc07d0` (diagnostic code `0e4bf4161`). Source/artifact and 4,044 vendor-cache paths bound; completion observed. Records: 3,064 file-success, four file-error, 91 handler-error; exact private file attribution across 50 owners, zero rejected records and zero observed continuity gaps. Raw owner/file joins remain private. Current95 diagnostic error records are not historical105 actual error occurrences or evidence of a numeric count fix. Third-party inputs remain unsealed; full startup remains unfixed/unaccepted.

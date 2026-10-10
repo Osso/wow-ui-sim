@@ -4,10 +4,10 @@ Simulator diagnostics expose successful tainted Lua-file owner-budget snapshots 
 
 ## What it must do
 
-- [ ] Under `retail-12-0-5` and existing `WOW_SIM_LOG_HANDLER_TIMINGS` opt-in, emit one `[file-budget-success]` record per successfully executed tainted top-level Lua chunk; preserve existing `[file-budget-error]` records for failed execution. Duration threshold does not filter these records.
-- [ ] Report debug-escaped owner/chunk identities, limit and cumulative `used_before`/`used_after`; label unavailable snapshots `unavailable` and unlimited limit `none`. No arguments, payloads or error text.
-- [x] Preserve successful return values, private-table effects and cumulative owner-meter continuity between files: concrete sequential loader fixture passed before instrumentation.
-- [ ] Preserve quota initialization, limit/reset/exemption rules, error propagation and opt-in-off behavior. Untainted files, compilation/setup failures and Rust-side work remain outside this logging boundary.
+- [x] Under `retail-12-0-5` and existing `WOW_SIM_LOG_HANDLER_TIMINGS` opt-in, emit one `[file-budget-success]` record per successfully executed tainted top-level Lua chunk; preserve existing `[file-budget-error]` records for failed execution. Duration threshold does not filter these records.
+- [x] Report debug-escaped owner/chunk identities, limit and cumulative `used_before`/`used_after`; label unavailable snapshots `unavailable` and unlimited limit `none`. No arguments, payloads or error text.
+- [x] Preserve successful return values, private-table effects and cumulative owner-meter continuity between files: the same concrete sequential loader fixture passed with instrumentation opt-in on and off.
+- [x] Preserve tested sequential owner limits, error propagation and opt-in-off behavior. Broader quota initialization/reset/exemption preservation and excluded untainted/compilation/setup/Rust-work boundaries have unchanged-source audit evidence, not comprehensive runtime re-execution.
 
 ## How it works
 
@@ -25,12 +25,14 @@ Source audit of `0e4bf4161` (2026-10-10; not runtime proof): environment presenc
 
 - `loader::lua_file::tests::startup_file_budget_success_preserves_meter_continuity_returns_and_effects`: returns19/42, final private total42, nested call and meter continuity.
 - Adjacent original error/exhaustion loader test and `execution_budget::tests`: preserved failure semantics, escaped metadata, unavailable/unlimited counters.
-- Private saved subprocess receipt assertion: exactly two success records for actual sequential loader calls; authentic RED observed0 at12124ded6, compile0/fixture1PASS. GREEN and opt-in-off proof pending.
+- Actual GREEN receipts at epoch `20261010T183607Z`, independently audited for `0e4bf4161d58cbbf6572a5be08cac7f5019e316f`: 12 passing executions / 11 distinct tests across four subprocess invocations (the same success loader fixture runs opt-in on and off). Opt-in1000 emits exactly two success records, limit1000, cumulative counters0→4→16; opt-in off emits no file-budget records. Original error fixture: 1PASS, one prior success0→2 and exactly two error records2→100 and100→100, limit100. Nine formatter/error controls pass, covering escaped metadata, unavailable snapshots and unlimited meters.
+- Independent receipt audit: fmt/default-check exit0; compile exit0; source and invoked artifact sealed and matched. Six vendor `iced_wgpu` manifest deprecation warnings remain; this is not warning-free proof. Preservation of quota rules and excluded logging boundaries is source-audit evidence, not comprehensive runtime quota-policy coverage.
+- Evidence: private actual receipt `/home/osso/.local/state/wow-ui-sim/verification/success-file-budget-green-current/independent-report.md`, epoch `20261010T183607Z`. [Tracked independent report](../../data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/success-file-budget-green/independent-report.md) and [receipt hashes](../../data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/success-file-budget-green/retention-manifest.json) retain the bounded evidence. Provenance is bounded local source/receipt binding, not hermetic attestation or full-addon attribution.
 
 ## Known gaps (current cycle)
 
-- [ ] Execute current success/error/formatter controls and independent fmt/default-check proof.
-- [ ] Capture one sealed full-addon startup to attribute earlier cumulative consumption; prior105errors remain unresolved.
+- [x] Execute current success/error/formatter controls and independent fmt/default-check proof: actual GREEN receipt above covers this bounded diagnostic gate.
+- [x] Capture full-addon startup and verify exact file-record attribution: epoch `20261010T183739Z`, submission `b048251f38b2d53e33b3365590cd227d40fc07d0` with diagnostic code `0e4bf4161`, binds source/artifact and 4,044 vendor-cache paths. [Independent report](../../data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/success-file-budget-full-addon/independent-report.md): 3,064 file-success, four file-error and 91 handler-error records; exact private file joins across 50 owners, zero rejected records and zero observed continuity gaps. Gate covers bounded capture/parser attribution, not sealed third-party inputs or exclusive file costs. Historical105 actual error occurrences remain distinct from current95 diagnostic error records; no count-reduction or startup-fix claim.
 
 ## Out of scope
 

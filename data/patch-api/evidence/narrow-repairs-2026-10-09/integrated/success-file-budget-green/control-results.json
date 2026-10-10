@@ -1,0 +1,58 @@
+[
+  {
+    "argv": [
+      "/usr/bin/env",
+      "-u",
+      "WOW_SIM_LOG_HANDLER_TIMINGS",
+      "/usr/bin/timeout",
+      "90",
+      "/home/osso/.local/state/wow-ui-sim/verification/success-file-budget-green-current/20261010T183607Z/lib-tests-sealed",
+      "loader::lua_file::tests::startup_file_budget_success_preserves_meter_continuity_returns_and_effects",
+      "--nocapture",
+      "--test-threads=1",
+      "--exact"
+    ],
+    "artifact_unchanged": true,
+    "budget_record_count": 0,
+    "exit": 0,
+    "expected_tests": 1,
+    "label": "optin-off",
+    "optin": false,
+    "reached_tests": 1
+  },
+  {
+    "argv": [
+      "/usr/bin/timeout",
+      "90",
+      "/home/osso/.local/state/wow-ui-sim/verification/success-file-budget-green-current/20261010T183607Z/lib-tests-sealed",
+      "loader::lua_file::tests::startup_file_budget_error_preserves_cumulative_usage_and_loader_outcome",
+      "--nocapture",
+      "--test-threads=1",
+      "--exact"
+    ],
+    "artifact_unchanged": true,
+    "error_record_count": 2,
+    "exit": 0,
+    "expected_tests": 1,
+    "label": "error-loader",
+    "optin": true,
+    "reached_tests": 1,
+    "success_record_count": 1
+  },
+  {
+    "argv": [
+      "/usr/bin/timeout",
+      "90",
+      "/home/osso/.local/state/wow-ui-sim/verification/success-file-budget-green-current/20261010T183607Z/lib-tests-sealed",
+      "lua_api::execution_budget::tests::",
+      "--nocapture",
+      "--test-threads=1"
+    ],
+    "artifact_unchanged": true,
+    "exit": 0,
+    "expected_tests": 9,
+    "label": "budget-formatters",
+    "optin": true,
+    "reached_tests": 9
+  }
+]
