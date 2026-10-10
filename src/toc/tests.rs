@@ -275,6 +275,60 @@ fn test_supports_interface_version() {
 }
 
 #[test]
+fn test_parse_text_locale_excludes_production_template() {
+    let toc = TocFile::parse(
+        Path::new("/addons/ExtraQuestButton"),
+        r#"locale\[TextLocale].lua [AllowLoadTextLocale deDE, esES, esMX, frFR, itIT, koKR, ptBR, ruRU, zhCN, zhTW]
+Core.lua
+"#,
+    );
+
+    assert_eq!(toc.files, vec![PathBuf::from("Core.lua")]);
+}
+
+#[test]
+fn test_parse_text_locale_includes_exact_enus_token() {
+    for locales in ["enUS, frFR", "frFR enUS"] {
+        let toc = TocFile::parse(
+            Path::new("/addons/LocaleProbe"),
+            &format!("locale\\[TextLocale].lua [AllowLoadTextLocale {locales}]\nCore.lua\n"),
+        );
+
+        assert_eq!(
+            toc.files,
+            vec![PathBuf::from("locale/enUS.lua"), PathBuf::from("Core.lua")],
+            "{locales}"
+        );
+    }
+}
+
+#[test]
+fn test_parse_text_locale_ignores_enus_outside_locale_tokens() {
+    let toc = TocFile::parse(
+        Path::new("/addons/LocaleProbe"),
+        "locale/enUS.lua [AllowLoadTextLocale frFR]\n\
+         Other.lua [AllowLoadTextLocale enUSExtra, frFR]\n\
+         Annotated.lua [OtherAnnotation enUS] [AllowLoadTextLocale deDE]\n\
+         Core.lua\n",
+    );
+
+    assert_eq!(toc.files, vec![PathBuf::from("Core.lua")]);
+}
+
+#[test]
+fn test_parse_text_locale_unannotated_template_remains_selected() {
+    let toc = TocFile::parse(
+        Path::new("/addons/LocaleProbe"),
+        "locale\\[TextLocale].lua\nCore.lua\n",
+    );
+
+    assert_eq!(
+        toc.files,
+        vec![PathBuf::from("locale/enUS.lua"), PathBuf::from("Core.lua")]
+    );
+}
+
+#[test]
 fn test_parse_inline_annotations() {
     let contents = r#"
 ## Title: TestAddon

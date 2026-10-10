@@ -34,7 +34,13 @@ pub struct TocFile {
 
 /// Apply the simulator's text-locale gate, then remove trailing file annotations.
 pub(crate) fn selected_file_path(line: &str) -> Option<&str> {
-    if line.contains("[AllowLoadTextLocale") && !line.contains("enUS") {
+    if line.contains("[AllowLoadTextLocale")
+        && !annotation_value(line, "[AllowLoadTextLocale").is_some_and(|locales| {
+            locales
+                .split(|character: char| character == ',' || character.is_whitespace())
+                .any(|locale| locale == "enUS")
+        })
+    {
         return None;
     }
     Some(strip_annotations(line))
@@ -75,7 +81,7 @@ fn matches_active_game_type(types: &str) -> bool {
         .any(|game_type| active_game_types().contains(&game_type))
 }
 
-fn game_type_annotation<'a>(line: &'a str, annotation: &str) -> Option<&'a str> {
+fn annotation_value<'a>(line: &'a str, annotation: &str) -> Option<&'a str> {
     let start = line.find(annotation)? + annotation.len();
     let rest = &line[start..];
     Some(&rest[..rest.find(']')?])
@@ -83,10 +89,9 @@ fn game_type_annotation<'a>(line: &'a str, annotation: &str) -> Option<&'a str> 
 
 /// Apply both inline game-type filters used by the profile's TOC files.
 fn is_allowed_game_type(line: &str) -> bool {
-    let allowed =
-        game_type_annotation(line, "[AllowLoadGameType").is_none_or(matches_active_game_type);
+    let allowed = annotation_value(line, "[AllowLoadGameType").is_none_or(matches_active_game_type);
     let excluded =
-        game_type_annotation(line, "[ExcludeLoadGameType").is_some_and(matches_active_game_type);
+        annotation_value(line, "[ExcludeLoadGameType").is_some_and(matches_active_game_type);
     allowed && !excluded
 }
 

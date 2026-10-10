@@ -1,5 +1,61 @@
 use super::*;
 
+#[test]
+fn toc_text_locale_excluded_template_has_no_missing_file_warning() {
+    let env = WowLuaEnv::new().unwrap();
+    let addon = tempfile::tempdir().unwrap();
+    let root = addon.path();
+    std::fs::write(
+        root.join("LocaleProbe.toc"),
+        r#"locale\[TextLocale].lua [AllowLoadTextLocale deDE, esES, esMX, frFR, itIT, koKR, ptBR, ruRU, zhCN, zhTW]
+Core.lua
+"#,
+    )
+    .unwrap();
+    std::fs::write(root.join("Core.lua"), "_G.TOC_LOCALE_ORDER = 'core'\n").unwrap();
+
+    let result = load_addon(&env.loader_env(), &root.join("LocaleProbe.toc")).unwrap();
+
+    assert!(result.warnings.is_empty(), "{:?}", result.warnings);
+    assert_eq!(result.lua_files, 1);
+    assert_eq!(
+        env.eval::<String>("return TOC_LOCALE_ORDER").unwrap(),
+        "core"
+    );
+}
+
+#[test]
+fn toc_text_locale_included_template_loads_before_core() {
+    let env = WowLuaEnv::new().unwrap();
+    let addon = tempfile::tempdir().unwrap();
+    let root = addon.path();
+    std::fs::create_dir(root.join("locale")).unwrap();
+    std::fs::write(
+        root.join("LocaleProbe.toc"),
+        "locale\\[TextLocale].lua [AllowLoadTextLocale enUS, frFR]\nCore.lua\n",
+    )
+    .unwrap();
+    std::fs::write(
+        root.join("locale/enUS.lua"),
+        "_G.TOC_LOCALE_ORDER = 'locale'\n",
+    )
+    .unwrap();
+    std::fs::write(
+        root.join("Core.lua"),
+        "_G.TOC_LOCALE_ORDER = _G.TOC_LOCALE_ORDER .. ',core'\n",
+    )
+    .unwrap();
+
+    let result = load_addon(&env.loader_env(), &root.join("LocaleProbe.toc")).unwrap();
+
+    assert!(result.warnings.is_empty(), "{:?}", result.warnings);
+    assert_eq!(result.lua_files, 2);
+    assert_eq!(
+        env.eval::<String>("return TOC_LOCALE_ORDER").unwrap(),
+        "locale,core"
+    );
+}
+
 const MULTI_FILE_WIDGETS_LUA: &str = r#"
     local _, addon = ...
     local function updateKeyDirection(self) return "updated: " .. tostring(self) end
