@@ -1,5 +1,6 @@
 use super::test_support::*;
 use super::*;
+use crate::iced_app::mouse::frame_click_registration_matches;
 use crate::screen::ScreenKind;
 
 fn load_click_xml_addon(app: &App, xml: &str) {
@@ -38,10 +39,10 @@ fn click_edges_during_xml_onload(state: &mut rilua::vm::state::LuaState) -> rilu
         let sim = crate::lua_api::methods::borrow_state(state)?;
         let frame = sim.widgets.get(id).expect("OnLoad frame exists");
         [
-            super::mouse::frame_click_registration_matches(frame, "LeftButton", true),
-            super::mouse::frame_click_registration_matches(frame, "LeftButton", false),
-            super::mouse::frame_click_registration_matches(frame, "RightButton", true),
-            super::mouse::frame_click_registration_matches(frame, "RightButton", false),
+            frame_click_registration_matches(frame, "LeftButton", true),
+            frame_click_registration_matches(frame, "LeftButton", false),
+            frame_click_registration_matches(frame, "RightButton", true),
+            frame_click_registration_matches(frame, "RightButton", false),
         ]
     };
     for accepted in edges {
