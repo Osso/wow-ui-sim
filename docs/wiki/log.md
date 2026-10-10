@@ -1,3 +1,7 @@
+## [2026-10-09] ingest | Browser blocker resolved — bounded public-page proof
+
+[Proof SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#browser-readiness-handoff): sibling's user-requested permanent Chromium153/display21/existing-profile setup; fresh agent561 navigation200 and main URL/title/article snapshot establish readable Patch1.0.0 page without challenge. Public screenshot and small main RFB003.008/types[1] receipt retained; handshake is not authentication/framebuffer/remote viewer/tunnel proof. No operations or historical/native acceptance; six-case count unchanged pending independent audit.
+
 ## [2026-10-09] audit | Cooldown epoch and charge fixture proof pending
 
 [Proof SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#cooldown-epoch-and-explicit-charge-fixtures--proof-pending): category spec matches epoch-gated initialization/unconditional publisher; charge commit is tests-only and matches existing explicit-input contract. Main-reported `40d2epochverification/marker-and-three-fixtures/20261009T233707Z` compiler exit0/source equal excludes later `0769f7b99`. Fixture GREEN awaits main results; no new coverage/source credit. Docs only; `.code-index.db` preserved.
