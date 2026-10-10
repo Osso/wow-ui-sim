@@ -38,11 +38,24 @@ fn wowforever_table_does_not_leak_into_earlier_profiles() {
     let env = wow_ui_sim::lua_api::WowLuaEnv::new().unwrap();
     env.exec(
         r#"
-        for _, name in ipairs({"indexof", "contains", "count", "isempty",
+        for _, name in ipairs({"indexof", "contains", "isempty",
             "removeunordered", "removevalue", "keys", "values"}) do
             assert(table[name] == nil, name)
         end
         "#,
     )
     .unwrap();
+    // Cached Retail and Mists LuaTableUtil docs already publish three statistics.
+    let count_contract = if cfg!(any(feature = "retail-12-1-0", feature = "client-mists")) {
+        r#"
+        local entries = {[1] = "array", [2] = false, named = "hash"}
+        assert(select("#", table.count(entries)) == 3)
+        local total, array, maximum = table.count(entries)
+        assert(total == 3 and array == 2 and maximum == 2)
+        "#
+    } else {
+        // Preserve the other-profile baseline; native publication is not established.
+        "assert(table.count == nil, 'count')"
+    };
+    env.exec(count_contract).unwrap();
 }
