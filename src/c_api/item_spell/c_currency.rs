@@ -35,7 +35,7 @@ const CURRENCY_INFO_METHODS: &[(&str, rilua::RustFn)] = &[
         c_currency_get_war_resources_currency_id,
     ),
 ];
-const CURRENCY_LIST_INFO_HASH_FIELDS: usize = 7;
+const CURRENCY_LIST_INFO_HASH_FIELDS: usize = 9;
 const CURRENCY_INFO_HASH_FIELDS: usize = 24;
 const CURRENCY_DISPLAY_INFO_HASH_FIELDS: usize = 6;
 const GOLD_COIN_ICON_FILE_ID: i32 = 133784;
@@ -92,6 +92,18 @@ fn c_currency_get_list_info(state: &mut LuaState) -> LuaResult<u32> {
         Val::Bool(entry.is_header_expanded),
     );
     table_set_static(state, info, "quality", Val::Num(entry.quality as f64));
+    table_set_static(
+        state,
+        info,
+        "isShowInBackpack",
+        Val::Bool(entry.is_show_in_backpack),
+    );
+    table_set_static(
+        state,
+        info,
+        "maxQuantity",
+        Val::Num(entry.max_quantity as f64),
+    );
     state.push(info);
     Ok(1)
 }
