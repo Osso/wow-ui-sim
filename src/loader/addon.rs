@@ -544,6 +544,13 @@ fn maybe_replay_blizzard_lua_in_secure_env(
 }
 
 pub(super) fn is_secure_replay_library_addon(folder_name: &str) -> bool {
+    // Mists' Wrath colors use public FrameXML masks; its secure consumer is mainline-only.
+    if folder_name == "Blizzard_CombatLogBase"
+        && crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Mists
+    {
+        return false;
+    }
+
     matches!(
         folder_name,
         "Blizzard_SharedXMLBase"

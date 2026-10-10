@@ -288,6 +288,8 @@ The retained retail RED had a contextual TargetFrame aura region and a correctly
 
 `__secureenv` is separate from public `_G`, so selected Blizzard libraries are re-executed there after normal loading instead of generically mirroring globals. The allowlist includes `Blizzard_FrameXMLUtil`: secure `Blizzard_AuraContainer` needs its `AuraUtil.DefaultAuraCompare` and `AuraUtil.UnitFrameDebuffComparator`. Before commit `93761fdb4`, public-only `AuraUtil` left secureenv stale, aborted TargetFrame aura initialization, and prevented subsequent `FocusFrame` creation. It also includes `Blizzard_RaidWarning`: secure `Blizzard_PrivateAurasUI` resolves its declared dependency's `RaidWarningUtil` through `__secureenv` for secure XML `RaidWarningUtil.MessageType` access. Focused coverage: `loader::tests::lua_loading::blizzard_frame_xml_util_replays_aura_comparators_into_secure_environment` and `tests/blizzard_private_auras_ui_loads.rs::blizzard_private_auras_ui_reads_raid_warning_util_and_publishes_mixins_into_secure_env`.
 
+Mists excludes `Blizzard_CombatLogBase` from automatic secure replay. Its selected Wrath colors consume public FrameXML `SCHOOL_MASK_*` globals; the cached secure `Blizzard_CombatLogProcessor` consumer is mainline-only. Normal TOC execution and explicit secure-environment flags remain unchanged, as do other profiles' replay eligibility. `tests/mists_combat_log_base_loads.rs` exercises the actual Game startup prefix and resulting school colors without supplying masks or clearing errors. This simulator-side correction does not establish native WoW environment parity.
+
 ---
 
 ## Error Handling
