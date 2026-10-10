@@ -158,9 +158,10 @@ fn test_tooltip_layout_is_clamped_to_viewport_edges() {
         owner:SetSize(10, 10)
         owner:SetPoint("TOPLEFT", UIParent, "TOPLEFT", 390, 290)
         GameTooltip:SetOwner(owner, "ANCHOR_RIGHT")
-        -- Explicit wrapping keeps content fitting; clamping only repositions it.
-        GameTooltip:AddLine("A tooltip line wide enough to overflow the viewport", nil, nil, nil, true)
+        GameTooltip:AddLine("A tooltip line wide enough to overflow the viewport")
         GameTooltip:AddLine("Second line to ensure some height")
+        -- SetOwner hides the tooltip; shown state enables glyph-backed sizing.
+        GameTooltip:Show()
     "#,
     )
     .unwrap();
@@ -223,6 +224,7 @@ fn test_tooltip_layout_is_clamped_to_top_left_viewport_edge() {
         GameTooltip:SetOwner(owner, "ANCHOR_TOPLEFT", -20, -15)
         GameTooltip:AddLine("A tooltip line wide enough to overflow the left edge")
         GameTooltip:AddLine("Second line to ensure some height")
+        GameTooltip:Show()
     "#,
     )
     .unwrap();
