@@ -1,5 +1,14 @@
 # API Contract Probe
 
+## Manual auto-combat damage classes
+
+1. In the intended native client, run `/apicontract auto-combat-damage-classes <label>` once; label is user context, not an inferred build/profile.
+2. Reload or log out to flush `ApiContractProbeDB`, then inspect the newest capture's `client` and `autoCombatDamageClasses.locale/query` observations.
+
+This manual-only mode is excluded from `all`. It attempts the documented zero-argument `C_Garrison.GetAutoCombatDamageClassValues()` once, recording tuple status, arity and scalar values. Only the first accessible table return exposes eight positional `entries`; table rows expose guarded `fields.damageClassValue` and `fields.locString`. Holes, nils, malformed values, restrictions and errors remain observations, not default rows. Extra tuple objects remain opaque. A scalar `overflow` observation at index 9 marks truncation when non-nil or uncertain; it does not establish total length or completeness beyond that position.
+
+Bounds: sixteen tuple positions, 256-byte scalar strings, 128-byte labels and ten shared snapshots. No raw objects/error payloads/secret data are saved; no mutations beyond recorder SavedVariables. Cached generated `GarrisonInfoDocumentation.lua` declares a table of `AutoCombatDamageClassString` (`damageClassValue:number`, `locString:cstring`), not actual native rows, ordering, catalog meanings or historical acceptance. Local `tests/auto_combat_damage_classes.lua` fixtures cover recorder mechanics only; native rows and acceptance remain unproven.
+
 ## Manual recipe quality input acceptance
 
 `/apicontract recipe-quality-acceptance <label>` is manual-only and excluded from `all`. It calls `C_TradeSkillUI.GetRecipesTracked(false)` once and reads only positions 1–4 of the first accessible returned table. Each original finite recipe ID independently feeds `GetRecipeSchematic(id, false, nil)` with exactly three arguments. Only the first schematic object supplies `productQuality`; an accessible finite **number** is forwarded unchanged with the **same original recipe ID** to `GetRecipeItemQualityInfo(id, quality)`.

@@ -1,5 +1,14 @@
 # API contract probe
 
+## Manual auto-combat damage classes
+
+- [ ] `auto-combat-damage-classes <label>` is manual-only and excluded from `all`. Attempt accessible callable `C_Garrison.GetAutoCombatDamageClassValues()` exactly once with zero arguments; record `autoCombatDamageClasses.query` and an independent zero-argument `GetLocale()` observation in `.locale`. Shared `client` provenance remains observed, never inferred from the label.
+- [ ] Preserve query status, arity and scalar tuple positions, including zero returns, nils, malformed values, restrictions and opaque errors. Inspect only the first accessible table return's indices 1–8; table rows expose exactly guarded scalar `fields.damageClassValue` and `fields.locString`. Retain positional holes without normalization; extra tuple objects remain opaque.
+- [ ] Observe bounded position 9 as scalar `overflow`; mark truncation for non-nil or uncertain observations, without length/general traversal or a completeness claim. Retain existing sixteen-position tuple, 256-byte string, 128-byte label and ten-snapshot bounds.
+- [ ] Save no raw objects, error payloads or secret data; mutate only recorder SavedVariables. Do not infer namespaces, shims, damage-class catalogs, row order, meanings or native acceptance from generated schema. Cached `GarrisonInfoDocumentation.lua` declares `table<AutoCombatDamageClassString>` with `damageClassValue:number` and `locString:cstring` only.
+
+Backing recorder fixtures: `docs/addons/ApiContractProbe/tests/auto_combat_damage_classes.lua`. Native rows and acceptance remain unproven; the manual recipe is in [the probe README](../addons/ApiContractProbe/README.md#manual-auto-combat-damage-classes).
+
 ## Manual recipe quality input acceptance
 
 - `recipe-quality-acceptance <label>` is manual-only and excluded from `all`. Call `GetRecipesTracked(false)` once; inspect only indices 1–4 of its first accessible table. Each original accessible finite recipe ID independently feeds `GetRecipeSchematic(id, false, nil)` with exactly three arguments. Inspect only the first schematic's `productQuality`; forward an original accessible finite numeric value unchanged with the same original ID to `GetRecipeItemQualityInfo(id, quality)` with exactly two arguments.
