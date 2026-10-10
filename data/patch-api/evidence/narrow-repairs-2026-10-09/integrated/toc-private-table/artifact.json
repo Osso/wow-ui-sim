@@ -1,0 +1,29 @@
+{
+  "features": [
+    "aura-containers",
+    "aura-instance-enumeration",
+    "aura-xml-widgets",
+    "base-spell-relationships",
+    "casc",
+    "client-retail",
+    "default",
+    "forbidden-aspects",
+    "gui",
+    "native-duration-formatting",
+    "numeric-rule-formatters",
+    "on-update-modes",
+    "player-cast-durations",
+    "prefork-full-ui",
+    "profile-retail",
+    "retail-12-0-0",
+    "retail-12-0-5",
+    "retail-12-0-7",
+    "retail-12-1-0",
+    "rodio",
+    "sound"
+  ],
+  "original": "wow_ui_sim-ea7724947ed01504",
+  "sealed": "lib-tests-sealed (not retained)",
+  "sha256": "de271b959e7ee022badcd6f6088f9b28556144e98581c976a1119a44771a803b",
+  "bytes": 390590640
+}

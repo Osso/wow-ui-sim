@@ -1,0 +1,6 @@
+
+running 1 test
+test loader::tests::lua_loading::toc_normal_lua_files_share_varargs_table_only_within_each_addon ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 1996 filtered out; finished in 0.59s
+

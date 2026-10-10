@@ -1389,3 +1389,7 @@ Updated existing [proof SSOT](investigations/integrated-source-and-factory-proof
 ## [2026-10-10] audit | Patch 3.3.0 normal-file TOC varargs coverage
 
 Updated [existing private-table row](investigations/patch-3-3-0-api-audit.md#current-bounded-reconciliation) after test commit `9d074f6a8`: direct-helper proof separate from actual TOC-driven normal-file name/shared-table/isolation assertions. New runtime PENDING; bootstrap-to-normal identity unknown per existing spec. XML acceptance and broader SSOT unchanged; no native/all-profile claim. Docs only; no builds, operations or commits.
+
+## [2026-10-10] audit | Normal TOC private-table exact bounded PASS
+
+[Proof SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#normal-toc-private-table--exact-bounded-pass): saved164122/test9d074f6a8 compile0/source equality, exact reached1/PASS1 exit0, artifact hash/unchanged and fmt0 independently checked; sanitized receipts sealed. Later count-map3c36 separate; no current whole-checkout/bootstrap/native/all-profile acceptance. Docs/evidence only; no builds, operations, delegation or commits.

@@ -3221,3 +3221,7 @@ The three retail 12.0.0 changed globals `LE_GAME_ERR_HOUSING_RESULT_MISSING_EXPA
 ## [2026-10-10] audit | Separate Mists fade PASS; original cast RED
 
 [Proof SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#mists-separate-cast-fade-probe--pass-original-cast-red) records inspected091411 build/source-equality/exact exit0 receipts and normal0.25/0.55s fade observations. Original immediate-hidden assertion remains RED; fixture decision pending, not3/3/native parity. Earlier0854 epoch2 chat PASS, self-anchor baseline and Garrison/snapshot full-suite gaps preserved. Docs only; no code, commits, builds or delegation.
+
+## [2026-10-10] audit | Normal TOC private-table exact bounded PASS
+
+[Proof SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#normal-toc-private-table--exact-bounded-pass): saved164122/test9d074f6a8 compile0/source equality, exact reached1/PASS1 exit0, artifact hash/unchanged and fmt0 independently checked; sanitized receipts sealed. Later count-map3c36 separate; no current whole-checkout/bootstrap/native/all-profile acceptance. Docs/evidence only; no builds, operations, delegation or commits.

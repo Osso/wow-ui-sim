@@ -1,0 +1,17 @@
+[
+  {
+    "argv": [
+      "timeout",
+      "90",
+      "lib-tests-sealed",
+      "loader::tests::lua_loading::toc_normal_lua_files_share_varargs_table_only_within_each_addon",
+      "--exact",
+      "--nocapture",
+      "--test-threads=1"
+    ],
+    "artifact_unchanged": true,
+    "exit": 0,
+    "reached_tests": 1,
+    "selector": "loader::tests::lua_loading::toc_normal_lua_files_share_varargs_table_only_within_each_addon"
+  }
+]
