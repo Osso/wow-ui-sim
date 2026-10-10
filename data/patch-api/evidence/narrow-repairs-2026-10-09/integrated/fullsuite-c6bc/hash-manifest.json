@@ -1,0 +1,16 @@
+{
+  "verified": "2026-10-10",
+  "scope": "Saved receipt accounting only; no execution or historical binary provenance attestation.",
+  "retained": {
+    "independent-report.md": "73c6d7b09c58e2ff8121fc787f80a9237f7e99539638642d4930aeb8e4cd96b1",
+    "main-erratum.md": "d8c14c7eb78ac8e8459ec3e9418d193da80a1ac6ec4b5eee081a89c1e5ba46b4",
+    "receipt.json": "f3be7c02e0b6623425d000fffefbf2c28307e8f253b00b00a3a8f3e13f33bb1f"
+  },
+  "private_sources": {
+    "independent-report.md": "a0c0437667534d3da684269beb38e53987bf9f484dc21ed0f19943f1b02f3d47",
+    "receipt.json": "f3be7c02e0b6623425d000fffefbf2c28307e8f253b00b00a3a8f3e13f33bb1f",
+    "c6bc.log": "d394086d1c3de149fd2fb042505c28631c0708038a39e23f8367d1d748a90d21"
+  },
+  "raw_log_retained": false,
+  "sanitization": "Private absolute roots replaced in original audit; warning banner added. Original erroneous lookup preserved only as historical audit, corrected by main-erratum.md."
+}

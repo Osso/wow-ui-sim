@@ -1,0 +1,37 @@
+{
+  "ref": "c6bc87c120e43199dadeb299691511b03a81408a",
+  "sha": "c6bc87c120e43199dadeb299691511b03a81408a",
+  "started": "2026-10-10T11:36:26-0500",
+  "steps": {
+    "integration": {
+      "exit": 100,
+      "seconds": 1103.6
+    },
+    "prefork": {
+      "exit": 1,
+      "seconds": 166.5
+    },
+    "lib": {
+      "exit": 0,
+      "seconds": 140.3
+    }
+  },
+  "failures": {
+    "integration": [
+      "method_diff_coverage::diff_methods_extra_snapshot_matches_current_metatable_surface",
+      "method_diff_coverage::diff_methods_missing_snapshot_matches_current_metatable_surface"
+    ],
+    "prefork": [
+      "blizzard_garrison_ui_loads::blizzard_garrison_ui_loads_explicitly_via_load_addon_without_errors"
+    ],
+    "lib": []
+  },
+  "finished": "2026-10-10T11:59:56-0500",
+  "new_failures": {
+    "integration": [],
+    "prefork": [
+      "blizzard_garrison_ui_loads::blizzard_garrison_ui_loads_explicitly_via_load_addon_without_errors"
+    ],
+    "lib": []
+  }
+}
