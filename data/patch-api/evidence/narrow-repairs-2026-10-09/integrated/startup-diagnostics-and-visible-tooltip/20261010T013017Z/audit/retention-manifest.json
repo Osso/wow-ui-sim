@@ -1,0 +1,27 @@
+{
+  "epoch": "20261010T013017Z",
+  "compiled_revision": "fc824cb921342c06f506eb92e8c81d52bdf28fcd",
+  "retained": [
+    {
+      "path": "compiler-report.md",
+      "bytes": 8751,
+      "sha256": "e3d8ad3fcf3eb41b32dba3924b40fbe818e7319c1dee0af590e378e5e3f2578d"
+    },
+    {
+      "path": "exact-cases-report.md",
+      "bytes": 9877,
+      "sha256": "e2270f8fa894e637d22904716361ffc49f656d4b4b425ef4b5179097b1157ac8"
+    },
+    {
+      "path": "startup-report.md",
+      "bytes": 10894,
+      "sha256": "e642b0679c50bbc3feffc1bf4b38cc48bbadd59a42ae4d39fe4c389d21281539"
+    },
+    {
+      "path": "startup-aggregate.json",
+      "bytes": 45323,
+      "sha256": "0871c74fe2569ab70d6726353c337c3ad73f4dbd7952192f43eec84aa4cc85ba"
+    }
+  ],
+  "boundary": "Only sanitized independent reports and aggregate; original raw streams, private identity, native files and SavedVariables values excluded. Original input hashes remain references, not copied inputs. No new execution or current-head acceptance."
+}

@@ -1,0 +1,1575 @@
+{
+  "scope": "Existing normal mainline CLI artifacts only; no source/native/other-profile verification or reruns.",
+  "privacy": "Raw logs contain private identity/cache data; only allowlisted addon-relative paths, diagnostic classes, counts and line references exported.",
+  "variants": {
+    "startup-debug": {
+      "artifact_sha256": "4c4730adbd8bc1c4b92988b138d6f941e325ffe7207c64ba73db264548fc8ecc",
+      "compiled_source_revision": "fc824cb921342c06f506eb92e8c81d52bdf28fcd",
+      "started_utc": "2026-10-10T01:36:20.793715+00:00",
+      "ended_utc": "2026-10-10T01:36:33.138006+00:00",
+      "exit": 0,
+      "artifact_hash_unchanged": true,
+      "stream_errors": [],
+      "environment_overrides": {
+        "WOW_SIM_NO_SOUND": "1",
+        "WOW_SIM_VERBOSE": "1",
+        "WOW_SIM_DEBUG_NIL_GLOBALS": "1",
+        "WOW_SIM_LOG_HANDLER_TIMINGS": "1000"
+      },
+      "environment_explicitly_unset": [],
+      "streams": {
+        "stdout": {
+          "bytes": 314605,
+          "lines": 4606,
+          "sha256": "7e2d71045cab7a3f8a21de1659edd0718e27a2e98031c245795767a986070acb"
+        },
+        "stderr": {
+          "bytes": 33928,
+          "lines": 454,
+          "sha256": "60b9fd84355a40ae90889e5aae7844ee67c98f40bbf6fd74965b0028a2e0a22f"
+        }
+      },
+      "completion": {
+        "stream": "stderr",
+        "line": 415,
+        "later_output_exists": true
+      },
+      "load_summary": {
+        "Loaded": {
+          "stdout_line": 4568,
+          "value": "48/78 addons"
+        },
+        "Failed during loading": {
+          "stdout_line": 4569,
+          "value": "1"
+        },
+        "Load failures": {
+          "stdout_line": 4570,
+          "value": "0"
+        },
+        "Loaded with Lua errors during loading": {
+          "stdout_line": 4571,
+          "value": "1"
+        },
+        "Total": {
+          "stdout_line": 4572,
+          "value": "2934 Lua files, 149 XML files, 8 warnings"
+        }
+      },
+      "tag_counts": {
+        "nil-observation": {
+          "stdout": 328,
+          "stderr": 0
+        },
+        "missing-requirement": {
+          "stdout": 210,
+          "stderr": 0
+        },
+        "failure": {
+          "stdout": 8,
+          "stderr": 0
+        },
+        "file-budget-error": {
+          "stdout": 0,
+          "stderr": 4
+        },
+        "handler-budget-error": {
+          "stdout": 0,
+          "stderr": 91
+        },
+        "handler-timing": {
+          "stdout": 0,
+          "stderr": 0
+        },
+        "handler-timings": {
+          "stdout": 0,
+          "stderr": 0
+        }
+      },
+      "lua_unique_signatures": 7,
+      "lua_runtime_occurrences": 96,
+      "lua_signatures": [
+        {
+          "id": "L1",
+          "source_addon_relative": "EnhanceQoL/Settings/GroupTools.lua",
+          "class": "instruction-budget-exhausted",
+          "stderr_first_lines": [
+            165
+          ],
+          "suppression_summaries": [],
+          "stderr_runtime_occurrences": 1,
+          "stdout_warning_restatement_lines": [
+            4448
+          ]
+        },
+        {
+          "id": "L2",
+          "source_addon_relative": "EnhanceQoL/Modules/Aura/FocusInterruptTracker.lua",
+          "class": "instruction-budget-exhausted",
+          "stderr_first_lines": [
+            169
+          ],
+          "suppression_summaries": [],
+          "stderr_runtime_occurrences": 1,
+          "stdout_warning_restatement_lines": [
+            4449
+          ]
+        },
+        {
+          "id": "L3",
+          "source_addon_relative": "EnhanceQoL/Modules/Mouse/Init.lua",
+          "class": "instruction-budget-exhausted",
+          "stderr_first_lines": [
+            173
+          ],
+          "suppression_summaries": [],
+          "stderr_runtime_occurrences": 1,
+          "stdout_warning_restatement_lines": [
+            4450
+          ]
+        },
+        {
+          "id": "L4",
+          "source_addon_relative": "EnhanceQoL/Modules/Food/Init.lua",
+          "class": "instruction-budget-exhausted",
+          "stderr_first_lines": [
+            177
+          ],
+          "suppression_summaries": [],
+          "stderr_runtime_occurrences": 1,
+          "stdout_warning_restatement_lines": [
+            4451
+          ]
+        },
+        {
+          "id": "L5",
+          "source_addon_relative": "EnhanceQoL/Core/DynamicAnchors.lua:997",
+          "class": "instruction-budget-exhausted",
+          "stderr_first_lines": [
+            181
+          ],
+          "suppression_summaries": [
+            {
+              "line": 449,
+              "additional_occurrences": 87
+            }
+          ],
+          "stderr_runtime_occurrences": 88,
+          "stdout_warning_restatement_lines": []
+        },
+        {
+          "id": "L6",
+          "source_addon_relative": "AllTheThings/lib/EventRegistration.lua:26",
+          "class": "instruction-budget-exhausted",
+          "stderr_first_lines": [
+            335
+          ],
+          "suppression_summaries": [
+            {
+              "line": 452,
+              "additional_occurrences": 2
+            }
+          ],
+          "stderr_runtime_occurrences": 3,
+          "stdout_warning_restatement_lines": []
+        },
+        {
+          "id": "L7",
+          "source_addon_relative": "EllesmereUI/EllesmereUI_UICore.lua:1073",
+          "class": "nil-call",
+          "stderr_first_lines": [
+            412
+          ],
+          "suppression_summaries": [],
+          "stderr_runtime_occurrences": 1,
+          "stdout_warning_restatement_lines": []
+        }
+      ],
+      "budget_records": [
+        {
+          "stderr_line": 164,
+          "kind": "file",
+          "owner": "EnhanceQoL",
+          "limit": 10000000,
+          "used_before": 9986831,
+          "used_after": 10000000,
+          "remaining_before": 13169,
+          "consumed": 13169,
+          "source_addon_relative": "EnhanceQoL/Settings/GroupTools.lua"
+        },
+        {
+          "stderr_line": 168,
+          "kind": "file",
+          "owner": "EnhanceQoL",
+          "limit": 10000000,
+          "used_before": 10000000,
+          "used_after": 10000000,
+          "remaining_before": 0,
+          "consumed": 0,
+          "source_addon_relative": "EnhanceQoL/Modules/Aura/FocusInterruptTracker.lua"
+        },
+        {
+          "stderr_line": 172,
+          "kind": "file",
+          "owner": "EnhanceQoL",
+          "limit": 10000000,
+          "used_before": 10000000,
+          "used_after": 10000000,
+          "remaining_before": 0,
+          "consumed": 0,
+          "source_addon_relative": "EnhanceQoL/Modules/Mouse/Init.lua"
+        },
+        {
+          "stderr_line": 176,
+          "kind": "file",
+          "owner": "EnhanceQoL",
+          "limit": 10000000,
+          "used_before": 10000000,
+          "used_after": 10000000,
+          "remaining_before": 0,
+          "consumed": 0,
+          "source_addon_relative": "EnhanceQoL/Modules/Food/Init.lua"
+        },
+        {
+          "stderr_line": 180,
+          "kind": "handler",
+          "owner": "EnhanceQoL",
+          "limit": 10000000,
+          "used_before": 10000000,
+          "used_after": 10000000,
+          "remaining_before": 0,
+          "consumed": 0,
+          "frame_id": 69210,
+          "event_name": "ADDON_LOADED"
+        },
+        {
+          "stderr_line": 184,
+          "kind": "handler",
+          "owner": "EnhanceQoL",
+          "limit": 10000000,
+          "used_before": 10000000,
+          "used_after": 10000000,
+          "remaining_before": 0,
+          "consumed": 0,
+          "frame_id": 69211,
+          "event_name": "ADDON_LOADED"
+        },
+        {
+          "stderr_line": 185,
+          "kind": "handler",
+          "owner": "EnhanceQoL",
+          "limit": 10000000,
+          "used_before": 10000000,
+          "used_after": 10000000,
+          "remaining_before": 0,
+          "consumed": 0,
+          "frame_id": 69225,
+          "event_name": "ADDON_LOADED"
+        },
+        {
+          "stderr_line": 186,
+          "kind": "handler",
+          "owner": "EnhanceQoL",
+          "limit": 10000000,
+          "used_before": 10000000,
+          "used_after": 10000000,
+          "remaining_before": 0,
+          "consumed": 0,
+          "frame_id": 69231,
+          "event_name": "ADDON_LOADED"
+        },
+        {
+          "stderr_line": 187,
+          "kind": "handler",
+          "owner": "EnhanceQoL",
+          "limit": 10000000,
+          "used_before": 10000000,
+          "used_after": 10000000,
+          "remaining_before": 0,
+          "consumed": 0,
+          "frame_id": 69232,
+          "event_name": "ADDON_LOADED"
+        },
+        {
+          "stderr_line": 188,
+          "kind": "handler",
+          "owner": "EnhanceQoL",
+          "limit": 10000000,
+          "used_before": 10000000,
+          "used_after": 10000000,
+          "remaining_before": 0,
+          "consumed": 0,
+          "frame_id": 69233,
+          "event_name": "ADDON_LOADED"
+        },
+        {
+          "stderr_line": 189,
+          "kind": "handler",
+          "owner": "EnhanceQoL",
+          "limit": 10000000,
+          "used_before": 10000000,
+          "used_after": 10000000,
+          "remaining_before": 0,
+          "consumed": 0,
+          "frame_id": 69236,
+          "event_name": "ADDON_LOADED"
+        },
+        {
+          "stderr_line": 190,
+          "kind": "handler",
+          "owner": "EnhanceQoL",
+          "limit": 10000000,
+          "used_before": 10000000,
+          "used_after": 10000000,
+          "remaining_before": 0,
+          "consumed": 0,
+          "frame_id": 69244,
+          "event_name": "ADDON_LOADED"
+        },
+        {
+          "stderr_line": 192,
+          "kind": "handler",
+          "owner": "EnhanceQoL",
+          "limit": 10000000,
+          "used_before": 10000000,
+          "used_after": 10000000,
+          "remaining_before": 0,
+          "consumed": 0,
+          "frame_id": 69210,
+          "event_name": "ADDON_LOADED"
+        },
+        {
+          "stderr_line": 193,
+          "kind": "handler",
+          "owner": "EnhanceQoL",
+          "limit": 10000000,
+          "used_before": 10000000,
+          "used_after": 10000000,
+          "remaining_before": 0,
+          "consumed": 0,
+          "frame_id": 69211,
+          "event_name": "ADDON_LOADED"
+        },
+        {
+          "stderr_line": 194,
+          "kind": "handler",
+          "owner": "EnhanceQoL",
+          "limit": 10000000,
+          "used_before": 10000000,
+          "used_after": 10000000,
+          "remaining_before": 0,
+          "consumed": 0,
+          "frame_id": 69225,
+          "event_name": "ADDON_LOADED"
+        },
+        {
+          "stderr_line": 195,
+          "kind": "handler",
+          "owner": "EnhanceQoL",
+          "limit": 10000000,
+          "used_before": 10000000,
+          "used_after": 10000000,
+          "remaining_before": 0,
+          "consumed": 0,
+          "frame_id": 69231,
+          "event_name": "ADDON_LOADED"
+        },
+        {
+          "stderr_line": 196,
+          "kind": "handler",
+          "owner": "EnhanceQoL",
+          "limit": 10000000,
+          "used_before": 10000000,
+          "used_after": 10000000,
+          "remaining_before": 0,
+          "consumed": 0,
+          "frame_id": 69232,
+          "event_name": "ADDON_LOADED"
+        },
+        {
+          "stderr_line": 197,
+          "kind": "handler",
+          "owner": "EnhanceQoL",
+          "limit": 10000000,
+          "used_before": 10000000,
+          "used_after": 10000000,
+          "remaining_before": 0,
+          "consumed": 0,
+          "frame_id": 69233,
+          "event_name": "ADDON_LOADED"
+        },
+        {
+          "stderr_line": 198,
+          "kind": "handler",
+          "owner": "EnhanceQoL",
+          "limit": 10000000,
+          "used_before": 10000000,
+          "used_after": 10000000,
+          "remaining_before": 0,
+          "consumed": 0,
+          "frame_id": 69236,
+          "event_name": "ADDON_LOADED"
+        },
+        {
+          "stderr_line": 199,
+          "kind": "handler",
+          "owner": "EnhanceQoL",
+          "limit": 10000000,
+          "used_before": 10000000,
+          "used_after": 10000000,
+          "remaining_before": 0,
+          "consumed": 0,
+          "frame_id": 69244,
+          "event_name": "ADDON_LOADED"
+        },
+        {
+          "stderr_line": 201,
+          "kind": "handler",
+          "owner": "EnhanceQoL",
+          "limit": 10000000,
+          "used_before": 10000000,
+          "used_after": 10000000,
+          "remaining_before": 0,
+          "consumed": 0,
+          "frame_id": 69210,
+          "event_name": "ADDON_LOADED"
+        },
+        {
+          "stderr_line": 202,
+          "kind": "handler",
+          "owner": "EnhanceQoL",
+          "limit": 10000000,
+          "used_before": 10000000,
+          "used_after": 10000000,
+          "remaining_before": 0,
+          "consumed": 0,
+          "frame_id": 69211,
+          "event_name": "ADDON_LOADED"
+        },
+        {
+          "stderr_line": 203,
+          "kind": "handler",
+          "owner": "EnhanceQoL",
+          "limit": 10000000,
+          "used_before": 10000000,
+          "used_after": 10000000,
+          "remaining_before": 0,
+          "consumed": 0,
+          "frame_id": 69225,
+          "event_name": "ADDON_LOADED"
+        },
+        {
+          "stderr_line": 204,
+          "kind": "handler",
+          "owner": "EnhanceQoL",
+          "limit": 10000000,
+          "used_before": 10000000,
+          "used_after": 10000000,
+          "remaining_before": 0,
+          "consumed": 0,
+          "frame_id": 69231,
+          "event_name": "ADDON_LOADED"
+        },
+        {
+          "stderr_line": 205,
+          "kind": "handler",
+          "owner": "EnhanceQoL",
+          "limit": 10000000,
+          "used_before": 10000000,
+          "used_after": 10000000,
+          "remaining_before": 0,
+          "consumed": 0,
+          "frame_id": 69232,
+          "event_name": "ADDON_LOADED"
+        },
+        {
+          "stderr_line": 206,
+          "kind": "handler",
+          "owner": "EnhanceQoL",
+          "limit": 10000000,
+          "used_before": 10000000,
+          "used_after": 10000000,
+          "remaining_before": 0,
+          "consumed": 0,
+          "frame_id": 69233,
+          "event_name": "ADDON_LOADED"
+        },
+        {
+          "stderr_line": 207,
+          "kind": "handler",
+          "owner": "EnhanceQoL",
+          "limit": 10000000,
+          "used_before": 10000000,
+          "used_after": 10000000,
+          "remaining_before": 0,
+          "consumed": 0,
+          "frame_id": 69236,
+          "event_name": "ADDON_LOADED"
+        },
+        {
+          "stderr_line": 208,
+          "kind": "handler",
+          "owner": "EnhanceQoL",
+          "limit": 10000000,
+          "used_before": 10000000,
+          "used_after": 10000000,
+          "remaining_before": 0,
+          "consumed": 0,
+          "frame_id": 69244,
+          "event_name": "ADDON_LOADED"
+        },
+        {
+          "stderr_line": 210,
+          "kind": "handler",
+          "owner": "EnhanceQoL",
+          "limit": 10000000,
+          "used_before": 10000000,
+          "used_after": 10000000,
+          "remaining_before": 0,
+          "consumed": 0,
+          "frame_id": 69210,
+          "event_name": "ADDON_LOADED"
+        },
+        {
+          "stderr_line": 211,
+          "kind": "handler",
+          "owner": "EnhanceQoL",
+          "limit": 10000000,
+          "used_before": 10000000,
+          "used_after": 10000000,
+          "remaining_before": 0,
+          "consumed": 0,
+          "frame_id": 69211,
+          "event_name": "ADDON_LOADED"
+        },
+        {
+          "stderr_line": 212,
+          "kind": "handler",
+          "owner": "EnhanceQoL",
+          "limit": 10000000,
+          "used_before": 10000000,
+          "used_after": 10000000,
+          "remaining_before": 0,
+          "consumed": 0,
+          "frame_id": 69225,
+          "event_name": "ADDON_LOADED"
+        },
+        {
+          "stderr_line": 213,
+          "kind": "handler",
+          "owner": "EnhanceQoL",
+          "limit": 10000000,
+          "used_before": 10000000,
+          "used_after": 10000000,
+          "remaining_before": 0,
+          "consumed": 0,
+          "frame_id": 69231,
+          "event_name": "ADDON_LOADED"
+        },
+        {
+          "stderr_line": 214,
+          "kind": "handler",
+          "owner": "EnhanceQoL",
+          "limit": 10000000,
+          "used_before": 10000000,
+          "used_after": 10000000,
+          "remaining_before": 0,
+          "consumed": 0,
+          "frame_id": 69232,
+          "event_name": "ADDON_LOADED"
+        },
+        {
+          "stderr_line": 215,
+          "kind": "handler",
+          "owner": "EnhanceQoL",
+          "limit": 10000000,
+          "used_before": 10000000,
+          "used_after": 10000000,
+          "remaining_before": 0,
+          "consumed": 0,
+          "frame_id": 69233,
+          "event_name": "ADDON_LOADED"
+        },
+        {
+          "stderr_line": 216,
+          "kind": "handler",
+          "owner": "EnhanceQoL",
+          "limit": 10000000,
+          "used_before": 10000000,
+          "used_after": 10000000,
+          "remaining_before": 0,
+          "consumed": 0,
+          "frame_id": 69236,
+          "event_name": "ADDON_LOADED"
+        },
+        {
+          "stderr_line": 217,
+          "kind": "handler",
+          "owner": "EnhanceQoL",
+          "limit": 10000000,
+          "used_before": 10000000,
+          "used_after": 10000000,
+          "remaining_before": 0,
+          "consumed": 0,
+          "frame_id": 69244,
+          "event_name": "ADDON_LOADED"
+        },
+        {
+          "stderr_line": 219,
+          "kind": "handler",
+          "owner": "EnhanceQoL",
+          "limit": 10000000,
+          "used_before": 10000000,
+          "used_after": 10000000,
+          "remaining_before": 0,
+          "consumed": 0,
+          "frame_id": 69210,
+          "event_name": "ADDON_LOADED"
+        },
+        {
+          "stderr_line": 220,
+          "kind": "handler",
+          "owner": "EnhanceQoL",
+          "limit": 10000000,
+          "used_before": 10000000,
+          "used_after": 10000000,
+          "remaining_before": 0,
+          "consumed": 0,
+          "frame_id": 69211,
+          "event_name": "ADDON_LOADED"
+        },
+        {
+          "stderr_line": 221,
+          "kind": "handler",
+          "owner": "EnhanceQoL",
+          "limit": 10000000,
+          "used_before": 10000000,
+          "used_after": 10000000,
+          "remaining_before": 0,
+          "consumed": 0,
+          "frame_id": 69225,
+          "event_name": "ADDON_LOADED"
+        },
+        {
+          "stderr_line": 222,
+          "kind": "handler",
+          "owner": "EnhanceQoL",
+          "limit": 10000000,
+          "used_before": 10000000,
+          "used_after": 10000000,
+          "remaining_before": 0,
+          "consumed": 0,
+          "frame_id": 69231,
+          "event_name": "ADDON_LOADED"
+        },
+        {
+          "stderr_line": 223,
+          "kind": "handler",
+          "owner": "EnhanceQoL",
+          "limit": 10000000,
+          "used_before": 10000000,
+          "used_after": 10000000,
+          "remaining_before": 0,
+          "consumed": 0,
+          "frame_id": 69232,
+          "event_name": "ADDON_LOADED"
+        },
+        {
+          "stderr_line": 224,
+          "kind": "handler",
+          "owner": "EnhanceQoL",
+          "limit": 10000000,
+          "used_before": 10000000,
+          "used_after": 10000000,
+          "remaining_before": 0,
+          "consumed": 0,
+          "frame_id": 69233,
+          "event_name": "ADDON_LOADED"
+        },
+        {
+          "stderr_line": 225,
+          "kind": "handler",
+          "owner": "EnhanceQoL",
+          "limit": 10000000,
+          "used_before": 10000000,
+          "used_after": 10000000,
+          "remaining_before": 0,
+          "consumed": 0,
+          "frame_id": 69236,
+          "event_name": "ADDON_LOADED"
+        },
+        {
+          "stderr_line": 226,
+          "kind": "handler",
+          "owner": "EnhanceQoL",
+          "limit": 10000000,
+          "used_before": 10000000,
+          "used_after": 10000000,
+          "remaining_before": 0,
+          "consumed": 0,
+          "frame_id": 69244,
+          "event_name": "ADDON_LOADED"
+        },
+        {
+          "stderr_line": 228,
+          "kind": "handler",
+          "owner": "EnhanceQoL",
+          "limit": 10000000,
+          "used_before": 10000000,
+          "used_after": 10000000,
+          "remaining_before": 0,
+          "consumed": 0,
+          "frame_id": 69210,
+          "event_name": "ADDON_LOADED"
+        },
+        {
+          "stderr_line": 229,
+          "kind": "handler",
+          "owner": "EnhanceQoL",
+          "limit": 10000000,
+          "used_before": 10000000,
+          "used_after": 10000000,
+          "remaining_before": 0,
+          "consumed": 0,
+          "frame_id": 69211,
+          "event_name": "ADDON_LOADED"
+        },
+        {
+          "stderr_line": 230,
+          "kind": "handler",
+          "owner": "EnhanceQoL",
+          "limit": 10000000,
+          "used_before": 10000000,
+          "used_after": 10000000,
+          "remaining_before": 0,
+          "consumed": 0,
+          "frame_id": 69225,
+          "event_name": "ADDON_LOADED"
+        },
+        {
+          "stderr_line": 231,
+          "kind": "handler",
+          "owner": "EnhanceQoL",
+          "limit": 10000000,
+          "used_before": 10000000,
+          "used_after": 10000000,
+          "remaining_before": 0,
+          "consumed": 0,
+          "frame_id": 69231,
+          "event_name": "ADDON_LOADED"
+        },
+        {
+          "stderr_line": 232,
+          "kind": "handler",
+          "owner": "EnhanceQoL",
+          "limit": 10000000,
+          "used_before": 10000000,
+          "used_after": 10000000,
+          "remaining_before": 0,
+          "consumed": 0,
+          "frame_id": 69232,
+          "event_name": "ADDON_LOADED"
+        },
+        {
+          "stderr_line": 233,
+          "kind": "handler",
+          "owner": "EnhanceQoL",
+          "limit": 10000000,
+          "used_before": 10000000,
+          "used_after": 10000000,
+          "remaining_before": 0,
+          "consumed": 0,
+          "frame_id": 69233,
+          "event_name": "ADDON_LOADED"
+        },
+        {
+          "stderr_line": 234,
+          "kind": "handler",
+          "owner": "EnhanceQoL",
+          "limit": 10000000,
+          "used_before": 10000000,
+          "used_after": 10000000,
+          "remaining_before": 0,
+          "consumed": 0,
+          "frame_id": 69236,
+          "event_name": "ADDON_LOADED"
+        },
+        {
+          "stderr_line": 235,
+          "kind": "handler",
+          "owner": "EnhanceQoL",
+          "limit": 10000000,
+          "used_before": 10000000,
+          "used_after": 10000000,
+          "remaining_before": 0,
+          "consumed": 0,
+          "frame_id": 69244,
+          "event_name": "ADDON_LOADED"
+        },
+        {
+          "stderr_line": 318,
+          "kind": "handler",
+          "owner": "EnhanceQoL",
+          "limit": 10000000,
+          "used_before": 10000000,
+          "used_after": 10000000,
+          "remaining_before": 0,
+          "consumed": 0,
+          "frame_id": 69210,
+          "event_name": "ADDON_LOADED"
+        },
+        {
+          "stderr_line": 319,
+          "kind": "handler",
+          "owner": "EnhanceQoL",
+          "limit": 10000000,
+          "used_before": 10000000,
+          "used_after": 10000000,
+          "remaining_before": 0,
+          "consumed": 0,
+          "frame_id": 69211,
+          "event_name": "ADDON_LOADED"
+        },
+        {
+          "stderr_line": 320,
+          "kind": "handler",
+          "owner": "EnhanceQoL",
+          "limit": 10000000,
+          "used_before": 10000000,
+          "used_after": 10000000,
+          "remaining_before": 0,
+          "consumed": 0,
+          "frame_id": 69225,
+          "event_name": "ADDON_LOADED"
+        },
+        {
+          "stderr_line": 321,
+          "kind": "handler",
+          "owner": "EnhanceQoL",
+          "limit": 10000000,
+          "used_before": 10000000,
+          "used_after": 10000000,
+          "remaining_before": 0,
+          "consumed": 0,
+          "frame_id": 69231,
+          "event_name": "ADDON_LOADED"
+        },
+        {
+          "stderr_line": 322,
+          "kind": "handler",
+          "owner": "EnhanceQoL",
+          "limit": 10000000,
+          "used_before": 10000000,
+          "used_after": 10000000,
+          "remaining_before": 0,
+          "consumed": 0,
+          "frame_id": 69232,
+          "event_name": "ADDON_LOADED"
+        },
+        {
+          "stderr_line": 323,
+          "kind": "handler",
+          "owner": "EnhanceQoL",
+          "limit": 10000000,
+          "used_before": 10000000,
+          "used_after": 10000000,
+          "remaining_before": 0,
+          "consumed": 0,
+          "frame_id": 69233,
+          "event_name": "ADDON_LOADED"
+        },
+        {
+          "stderr_line": 324,
+          "kind": "handler",
+          "owner": "EnhanceQoL",
+          "limit": 10000000,
+          "used_before": 10000000,
+          "used_after": 10000000,
+          "remaining_before": 0,
+          "consumed": 0,
+          "frame_id": 69236,
+          "event_name": "ADDON_LOADED"
+        },
+        {
+          "stderr_line": 325,
+          "kind": "handler",
+          "owner": "EnhanceQoL",
+          "limit": 10000000,
+          "used_before": 10000000,
+          "used_after": 10000000,
+          "remaining_before": 0,
+          "consumed": 0,
+          "frame_id": 69244,
+          "event_name": "ADDON_LOADED"
+        },
+        {
+          "stderr_line": 328,
+          "kind": "handler",
+          "owner": "EnhanceQoL",
+          "limit": 10000000,
+          "used_before": 10000000,
+          "used_after": 10000000,
+          "remaining_before": 0,
+          "consumed": 0,
+          "frame_id": 69230,
+          "event_name": "DISPLAY_SIZE_CHANGED"
+        },
+        {
+          "stderr_line": 329,
+          "kind": "handler",
+          "owner": "EnhanceQoL",
+          "limit": 10000000,
+          "used_before": 10000000,
+          "used_after": 10000000,
+          "remaining_before": 0,
+          "consumed": 0,
+          "frame_id": 69236,
+          "event_name": "DISPLAY_SIZE_CHANGED"
+        },
+        {
+          "stderr_line": 331,
+          "kind": "handler",
+          "owner": "EnhanceQoL",
+          "limit": 10000000,
+          "used_before": 10000000,
+          "used_after": 10000000,
+          "remaining_before": 0,
+          "consumed": 0,
+          "frame_id": 69230,
+          "event_name": "UI_SCALE_CHANGED"
+        },
+        {
+          "stderr_line": 332,
+          "kind": "handler",
+          "owner": "EnhanceQoL",
+          "limit": 10000000,
+          "used_before": 10000000,
+          "used_after": 10000000,
+          "remaining_before": 0,
+          "consumed": 0,
+          "frame_id": 69236,
+          "event_name": "UI_SCALE_CHANGED"
+        },
+        {
+          "stderr_line": 334,
+          "kind": "handler",
+          "owner": "AllTheThings",
+          "limit": 10000000,
+          "used_before": 770564,
+          "used_after": 10000000,
+          "remaining_before": 9229436,
+          "consumed": 9229436,
+          "frame_id": 48610,
+          "event_name": "PLAYER_LOGIN"
+        },
+        {
+          "stderr_line": 338,
+          "kind": "handler",
+          "owner": "AllTheThings",
+          "limit": 10000000,
+          "used_before": 10000000,
+          "used_after": 10000000,
+          "remaining_before": 0,
+          "consumed": 0,
+          "frame_id": 50975,
+          "event_name": "ADDON_LOADED"
+        },
+        {
+          "stderr_line": 339,
+          "kind": "handler",
+          "owner": "EnhanceQoL",
+          "limit": 10000000,
+          "used_before": 10000000,
+          "used_after": 10000000,
+          "remaining_before": 0,
+          "consumed": 0,
+          "frame_id": 69210,
+          "event_name": "ADDON_LOADED"
+        },
+        {
+          "stderr_line": 340,
+          "kind": "handler",
+          "owner": "EnhanceQoL",
+          "limit": 10000000,
+          "used_before": 10000000,
+          "used_after": 10000000,
+          "remaining_before": 0,
+          "consumed": 0,
+          "frame_id": 69211,
+          "event_name": "ADDON_LOADED"
+        },
+        {
+          "stderr_line": 341,
+          "kind": "handler",
+          "owner": "EnhanceQoL",
+          "limit": 10000000,
+          "used_before": 10000000,
+          "used_after": 10000000,
+          "remaining_before": 0,
+          "consumed": 0,
+          "frame_id": 69225,
+          "event_name": "ADDON_LOADED"
+        },
+        {
+          "stderr_line": 342,
+          "kind": "handler",
+          "owner": "EnhanceQoL",
+          "limit": 10000000,
+          "used_before": 10000000,
+          "used_after": 10000000,
+          "remaining_before": 0,
+          "consumed": 0,
+          "frame_id": 69231,
+          "event_name": "ADDON_LOADED"
+        },
+        {
+          "stderr_line": 343,
+          "kind": "handler",
+          "owner": "EnhanceQoL",
+          "limit": 10000000,
+          "used_before": 10000000,
+          "used_after": 10000000,
+          "remaining_before": 0,
+          "consumed": 0,
+          "frame_id": 69232,
+          "event_name": "ADDON_LOADED"
+        },
+        {
+          "stderr_line": 344,
+          "kind": "handler",
+          "owner": "EnhanceQoL",
+          "limit": 10000000,
+          "used_before": 10000000,
+          "used_after": 10000000,
+          "remaining_before": 0,
+          "consumed": 0,
+          "frame_id": 69233,
+          "event_name": "ADDON_LOADED"
+        },
+        {
+          "stderr_line": 345,
+          "kind": "handler",
+          "owner": "EnhanceQoL",
+          "limit": 10000000,
+          "used_before": 10000000,
+          "used_after": 10000000,
+          "remaining_before": 0,
+          "consumed": 0,
+          "frame_id": 69236,
+          "event_name": "ADDON_LOADED"
+        },
+        {
+          "stderr_line": 346,
+          "kind": "handler",
+          "owner": "EnhanceQoL",
+          "limit": 10000000,
+          "used_before": 10000000,
+          "used_after": 10000000,
+          "remaining_before": 0,
+          "consumed": 0,
+          "frame_id": 69244,
+          "event_name": "ADDON_LOADED"
+        },
+        {
+          "stderr_line": 347,
+          "kind": "handler",
+          "owner": "EnhanceQoL",
+          "limit": 10000000,
+          "used_before": 10000000,
+          "used_after": 10000000,
+          "remaining_before": 0,
+          "consumed": 0,
+          "frame_id": 69223,
+          "event_name": "PLAYER_LOGIN"
+        },
+        {
+          "stderr_line": 348,
+          "kind": "handler",
+          "owner": "EnhanceQoL",
+          "limit": 10000000,
+          "used_before": 10000000,
+          "used_after": 10000000,
+          "remaining_before": 0,
+          "consumed": 0,
+          "frame_id": 69225,
+          "event_name": "PLAYER_LOGIN"
+        },
+        {
+          "stderr_line": 349,
+          "kind": "handler",
+          "owner": "EnhanceQoL",
+          "limit": 10000000,
+          "used_before": 10000000,
+          "used_after": 10000000,
+          "remaining_before": 0,
+          "consumed": 0,
+          "frame_id": 69230,
+          "event_name": "PLAYER_LOGIN"
+        },
+        {
+          "stderr_line": 350,
+          "kind": "handler",
+          "owner": "EnhanceQoL",
+          "limit": 10000000,
+          "used_before": 10000000,
+          "used_after": 10000000,
+          "remaining_before": 0,
+          "consumed": 0,
+          "frame_id": 69231,
+          "event_name": "PLAYER_LOGIN"
+        },
+        {
+          "stderr_line": 351,
+          "kind": "handler",
+          "owner": "EnhanceQoL",
+          "limit": 10000000,
+          "used_before": 10000000,
+          "used_after": 10000000,
+          "remaining_before": 0,
+          "consumed": 0,
+          "frame_id": 69232,
+          "event_name": "PLAYER_LOGIN"
+        },
+        {
+          "stderr_line": 352,
+          "kind": "handler",
+          "owner": "EnhanceQoL",
+          "limit": 10000000,
+          "used_before": 10000000,
+          "used_after": 10000000,
+          "remaining_before": 0,
+          "consumed": 0,
+          "frame_id": 69234,
+          "event_name": "PLAYER_LOGIN"
+        },
+        {
+          "stderr_line": 353,
+          "kind": "handler",
+          "owner": "EnhanceQoL",
+          "limit": 10000000,
+          "used_before": 10000000,
+          "used_after": 10000000,
+          "remaining_before": 0,
+          "consumed": 0,
+          "frame_id": 69236,
+          "event_name": "PLAYER_LOGIN"
+        },
+        {
+          "stderr_line": 359,
+          "kind": "handler",
+          "owner": "AllTheThings",
+          "limit": 10000000,
+          "used_before": 10000000,
+          "used_after": 10000000,
+          "remaining_before": 0,
+          "consumed": 0,
+          "frame_id": 50975,
+          "event_name": "ADDON_LOADED"
+        },
+        {
+          "stderr_line": 360,
+          "kind": "handler",
+          "owner": "EnhanceQoL",
+          "limit": 10000000,
+          "used_before": 10000000,
+          "used_after": 10000000,
+          "remaining_before": 0,
+          "consumed": 0,
+          "frame_id": 69210,
+          "event_name": "ADDON_LOADED"
+        },
+        {
+          "stderr_line": 361,
+          "kind": "handler",
+          "owner": "EnhanceQoL",
+          "limit": 10000000,
+          "used_before": 10000000,
+          "used_after": 10000000,
+          "remaining_before": 0,
+          "consumed": 0,
+          "frame_id": 69211,
+          "event_name": "ADDON_LOADED"
+        },
+        {
+          "stderr_line": 362,
+          "kind": "handler",
+          "owner": "EnhanceQoL",
+          "limit": 10000000,
+          "used_before": 10000000,
+          "used_after": 10000000,
+          "remaining_before": 0,
+          "consumed": 0,
+          "frame_id": 69225,
+          "event_name": "ADDON_LOADED"
+        },
+        {
+          "stderr_line": 363,
+          "kind": "handler",
+          "owner": "EnhanceQoL",
+          "limit": 10000000,
+          "used_before": 10000000,
+          "used_after": 10000000,
+          "remaining_before": 0,
+          "consumed": 0,
+          "frame_id": 69231,
+          "event_name": "ADDON_LOADED"
+        },
+        {
+          "stderr_line": 364,
+          "kind": "handler",
+          "owner": "EnhanceQoL",
+          "limit": 10000000,
+          "used_before": 10000000,
+          "used_after": 10000000,
+          "remaining_before": 0,
+          "consumed": 0,
+          "frame_id": 69232,
+          "event_name": "ADDON_LOADED"
+        },
+        {
+          "stderr_line": 365,
+          "kind": "handler",
+          "owner": "EnhanceQoL",
+          "limit": 10000000,
+          "used_before": 10000000,
+          "used_after": 10000000,
+          "remaining_before": 0,
+          "consumed": 0,
+          "frame_id": 69233,
+          "event_name": "ADDON_LOADED"
+        },
+        {
+          "stderr_line": 366,
+          "kind": "handler",
+          "owner": "EnhanceQoL",
+          "limit": 10000000,
+          "used_before": 10000000,
+          "used_after": 10000000,
+          "remaining_before": 0,
+          "consumed": 0,
+          "frame_id": 69236,
+          "event_name": "ADDON_LOADED"
+        },
+        {
+          "stderr_line": 367,
+          "kind": "handler",
+          "owner": "EnhanceQoL",
+          "limit": 10000000,
+          "used_before": 10000000,
+          "used_after": 10000000,
+          "remaining_before": 0,
+          "consumed": 0,
+          "frame_id": 69244,
+          "event_name": "ADDON_LOADED"
+        },
+        {
+          "stderr_line": 368,
+          "kind": "handler",
+          "owner": "EnhanceQoL",
+          "limit": 10000000,
+          "used_before": 10000000,
+          "used_after": 10000000,
+          "remaining_before": 0,
+          "consumed": 0,
+          "frame_id": 69211,
+          "event_name": "PLAYER_ENTERING_WORLD"
+        },
+        {
+          "stderr_line": 369,
+          "kind": "handler",
+          "owner": "EnhanceQoL",
+          "limit": 10000000,
+          "used_before": 10000000,
+          "used_after": 10000000,
+          "remaining_before": 0,
+          "consumed": 0,
+          "frame_id": 69228,
+          "event_name": "PLAYER_ENTERING_WORLD"
+        },
+        {
+          "stderr_line": 370,
+          "kind": "handler",
+          "owner": "EnhanceQoL",
+          "limit": 10000000,
+          "used_before": 10000000,
+          "used_after": 10000000,
+          "remaining_before": 0,
+          "consumed": 0,
+          "frame_id": 69233,
+          "event_name": "PLAYER_ENTERING_WORLD"
+        },
+        {
+          "stderr_line": 371,
+          "kind": "handler",
+          "owner": "EnhanceQoL",
+          "limit": 10000000,
+          "used_before": 10000000,
+          "used_after": 10000000,
+          "remaining_before": 0,
+          "consumed": 0,
+          "frame_id": 69241,
+          "event_name": "PLAYER_ENTERING_WORLD"
+        },
+        {
+          "stderr_line": 391,
+          "kind": "handler",
+          "owner": "EnhanceQoL",
+          "limit": 10000000,
+          "used_before": 10000000,
+          "used_after": 10000000,
+          "remaining_before": 0,
+          "consumed": 0,
+          "frame_id": 69239,
+          "event_name": "BAG_UPDATE_DELAYED"
+        }
+      ],
+      "warning_details": [
+        {
+          "stdout_line": 3665,
+          "resource_addon_relative": "EXBossData/\\uFEFF## Interface: 120100",
+          "class": "missing-file-bom-metadata",
+          "os_error": 2,
+          "lua_signature_id": null
+        },
+        {
+          "stdout_line": 3746,
+          "resource_addon_relative": "ExtraQuestButton/locale/enUS.lua",
+          "class": "missing-file",
+          "os_error": 2,
+          "lua_signature_id": null
+        },
+        {
+          "stdout_line": 3866,
+          "resource_addon_relative": "EXBOSS-LocaleBase/\\uFEFF## Interface: 120100",
+          "class": "missing-file-bom-metadata",
+          "os_error": 2,
+          "lua_signature_id": null
+        },
+        {
+          "stdout_line": 3881,
+          "resource_addon_relative": "EXBOSS-Locale/\\uFEFF## Interface: 120100",
+          "class": "missing-file-bom-metadata",
+          "os_error": 2,
+          "lua_signature_id": null
+        },
+        {
+          "stdout_line": 4448,
+          "resource_addon_relative": "EnhanceQoL/Settings/SettingsUI.xml",
+          "class": "instruction-budget-exhausted",
+          "os_error": null,
+          "lua_signature_id": "L1"
+        },
+        {
+          "stdout_line": 4449,
+          "resource_addon_relative": "EnhanceQoL/Modules/Aura/Aura.xml",
+          "class": "instruction-budget-exhausted",
+          "os_error": null,
+          "lua_signature_id": "L2"
+        },
+        {
+          "stdout_line": 4450,
+          "resource_addon_relative": "EnhanceQoL/Modules/Mouse/Mouse.xml",
+          "class": "instruction-budget-exhausted",
+          "os_error": null,
+          "lua_signature_id": "L3"
+        },
+        {
+          "stdout_line": 4451,
+          "resource_addon_relative": "EnhanceQoL/Modules/Food/Food.xml",
+          "class": "instruction-budget-exhausted",
+          "os_error": null,
+          "lua_signature_id": "L4"
+        }
+      ]
+    },
+    "startup-control": {
+      "artifact_sha256": "4c4730adbd8bc1c4b92988b138d6f941e325ffe7207c64ba73db264548fc8ecc",
+      "compiled_source_revision": "fc824cb921342c06f506eb92e8c81d52bdf28fcd",
+      "started_utc": "2026-10-10T01:37:37.535375+00:00",
+      "ended_utc": "2026-10-10T01:37:50.499038+00:00",
+      "exit": 0,
+      "artifact_hash_unchanged": true,
+      "stream_errors": [],
+      "environment_overrides": {
+        "WOW_SIM_NO_SOUND": "1",
+        "WOW_SIM_VERBOSE": "1"
+      },
+      "environment_explicitly_unset": [
+        "WOW_SIM_DEBUG_NIL_GLOBALS",
+        "WOW_SIM_LOG_HANDLER_TIMINGS"
+      ],
+      "streams": {
+        "stdout": {
+          "bytes": 238178,
+          "lines": 4097,
+          "sha256": "f321ec173b243378a3f74b425497054fc0e3af66e6f0a4fc9dda9b8cd6f4b9c4"
+        },
+        "stderr": {
+          "bytes": 21217,
+          "lines": 359,
+          "sha256": "2606a0ac831abe936096522bafb6aecd00ad4e1248efa7a50a36ac11a52abe51"
+        }
+      },
+      "completion": {
+        "stream": "stderr",
+        "line": 320,
+        "later_output_exists": true
+      },
+      "load_summary": {
+        "Loaded": {
+          "stdout_line": 4022,
+          "value": "48/78 addons"
+        },
+        "Failed during loading": {
+          "stdout_line": 4023,
+          "value": "1"
+        },
+        "Load failures": {
+          "stdout_line": 4024,
+          "value": "0"
+        },
+        "Loaded with Lua errors during loading": {
+          "stdout_line": 4025,
+          "value": "1"
+        },
+        "Total": {
+          "stdout_line": 4026,
+          "value": "2934 Lua files, 149 XML files, 8 warnings"
+        }
+      },
+      "tag_counts": {
+        "nil-observation": {
+          "stdout": 0,
+          "stderr": 0
+        },
+        "missing-requirement": {
+          "stdout": 0,
+          "stderr": 0
+        },
+        "failure": {
+          "stdout": 0,
+          "stderr": 0
+        },
+        "file-budget-error": {
+          "stdout": 0,
+          "stderr": 0
+        },
+        "handler-budget-error": {
+          "stdout": 0,
+          "stderr": 0
+        },
+        "handler-timing": {
+          "stdout": 0,
+          "stderr": 0
+        },
+        "handler-timings": {
+          "stdout": 0,
+          "stderr": 0
+        }
+      },
+      "lua_unique_signatures": 7,
+      "lua_runtime_occurrences": 105,
+      "lua_signatures": [
+        {
+          "id": "L1",
+          "source_addon_relative": "EnhanceQoL/Settings/GroupTools.lua",
+          "class": "instruction-budget-exhausted",
+          "stderr_first_lines": [
+            164
+          ],
+          "suppression_summaries": [],
+          "stderr_runtime_occurrences": 1,
+          "stdout_warning_restatement_lines": []
+        },
+        {
+          "id": "L2",
+          "source_addon_relative": "EnhanceQoL/Modules/Aura/FocusInterruptTracker.lua",
+          "class": "instruction-budget-exhausted",
+          "stderr_first_lines": [
+            167
+          ],
+          "suppression_summaries": [],
+          "stderr_runtime_occurrences": 1,
+          "stdout_warning_restatement_lines": []
+        },
+        {
+          "id": "L3",
+          "source_addon_relative": "EnhanceQoL/Modules/Mouse/Init.lua",
+          "class": "instruction-budget-exhausted",
+          "stderr_first_lines": [
+            170
+          ],
+          "suppression_summaries": [],
+          "stderr_runtime_occurrences": 1,
+          "stdout_warning_restatement_lines": []
+        },
+        {
+          "id": "L4",
+          "source_addon_relative": "EnhanceQoL/Modules/Food/Init.lua",
+          "class": "instruction-budget-exhausted",
+          "stderr_first_lines": [
+            173
+          ],
+          "suppression_summaries": [],
+          "stderr_runtime_occurrences": 1,
+          "stdout_warning_restatement_lines": []
+        },
+        {
+          "id": "L5",
+          "source_addon_relative": "EnhanceQoL/Core/DynamicAnchors.lua:997",
+          "class": "instruction-budget-exhausted",
+          "stderr_first_lines": [
+            176
+          ],
+          "suppression_summaries": [
+            {
+              "line": 354,
+              "additional_occurrences": 95
+            }
+          ],
+          "stderr_runtime_occurrences": 96,
+          "stdout_warning_restatement_lines": []
+        },
+        {
+          "id": "L6",
+          "source_addon_relative": "AllTheThings/lib/EventRegistration.lua:26",
+          "class": "instruction-budget-exhausted",
+          "stderr_first_lines": [
+            270
+          ],
+          "suppression_summaries": [
+            {
+              "line": 357,
+              "additional_occurrences": 3
+            }
+          ],
+          "stderr_runtime_occurrences": 4,
+          "stdout_warning_restatement_lines": []
+        },
+        {
+          "id": "L7",
+          "source_addon_relative": "EllesmereUI/EllesmereUI_UICore.lua:1073",
+          "class": "nil-call",
+          "stderr_first_lines": [
+            317
+          ],
+          "suppression_summaries": [],
+          "stderr_runtime_occurrences": 1,
+          "stdout_warning_restatement_lines": []
+        }
+      ],
+      "budget_records": [],
+      "warning_details": []
+    }
+  },
+  "comparison": {
+    "initial_lua_signatures_identical_ordered": true,
+    "completion_reached_both": true,
+    "runtime_occurrences_equal": false,
+    "control_added_diagnostics_absent": true,
+    "warning_details_debug": 8,
+    "warning_details_control": 0,
+    "reported_warnings_both": 8,
+    "causality": "handler-budget-error identifies a failed owner-budgeted callback, not its cause; no quota reset/parity/timing invariance claim."
+  }
+}

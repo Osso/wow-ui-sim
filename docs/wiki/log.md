@@ -1,3 +1,7 @@
+## [2026-10-09] audit | Completed fc824 bounded proof
+
+Updated [proof SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#completed-fc824-bounded-proof--parent-open) and retained sanitized reports/aggregate with hashes. Supersedes scoped pending checkpoints only; later TOC SOURCE repairs await combined compile/GREEN. No execution, delegation, push, operations or raw/private retention; parent OPEN.
+
 ## [2026-10-09] audit | File-error diagnostics and count fixture
 
 Updated [pipeline diagnostic SSOT](../addon-loading-pipeline.md#top-level-file-error-diagnostics), [preserved RED/source status](investigations/integrated-source-and-factory-proof-2026-10-09.md#startup-file-budget-diagnostic--preserved-red-source-change-runtime-pending), and [count-fixture delta](investigations/integrated-source-and-factory-proof-2026-10-09.md#retailmists-count-fixture-delta--source-only-runtime-pending) for `fc824cb92`, `3a4f54da4`/`29307f243`. Runtime pending; compiler-running status is handoff only. Docs-only inspection, no builds/tests/delegation/operations or raw/private copies.
