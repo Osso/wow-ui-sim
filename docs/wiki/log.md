@@ -1340,8 +1340,12 @@ Updated existing [proof SSOT](investigations/integrated-source-and-factory-proof
 
 ## [2026-10-10] audit | Mists source refresh, runtime incomplete
 
-[Proof SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#mists-source-refresh--matched-source-incomplete-runtime-sync): matched Gethe classic/local product5.5.4.70268; exact path accounting and failed055426 sync recorded separately. Historical proof epochs retained; current vendor-input proof and baseline acceptance OPEN. Resource/credit claims unchanged/unverified.
+[Proof SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#mists-source-refresh--matched-source-historical-incomplete-runtime-sync): matched Gethe classic/local product5.5.4.70268; exact path accounting and failed055426 sync recorded separately. Historical proof epochs retained; current vendor-input proof and baseline acceptance OPEN. Resource/credit claims unchanged/unverified.
 
-## [2026-10-10] audit | Mists GlobalColor source rows; runtime pending
+## [2026-10-10] audit | Mists GlobalColor source rows; bounded GREEN, startup FAIL
 
 [Existing proof SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#mists-globalcolor-rows--independently-checked-source-rgb-only-correction) records four actual70268 rows and independent extraction/reader checks. Literal AARRGGBB is RGB-only correction; encoded alpha0 retained, native GetRGBA/alpha parity unproven. Tests committed4cc371997; two RED cases exit101, unchanged GREEN2/2 exit0 at46dedc057. Startup still FAIL: one self-anchor plus wrapper. Matching2974-path inputs and failed baseline reconciled together; no native parity or startup acceptance. Private vendor payloads not published.
+
+## [2026-10-10] correction | Current Mists source-refresh summaries
+
+[Current SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#mists-globalcolor-rows--independently-checked-source-rgb-only-correction) now names committed `8fda45877` and final independent source/cache/baseline continuity proof. Index points to that current scope; incomplete-sync and38/42 startup epochs remain historical. Corrected bounded-GREEN headline; startup/native limits unchanged. Wiki-only audit; no evidence copies, commits, builds or delegation.
