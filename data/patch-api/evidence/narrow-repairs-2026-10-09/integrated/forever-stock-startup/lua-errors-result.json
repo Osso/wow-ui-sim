@@ -1,0 +1,18 @@
+{
+  "argv": [
+    "/usr/bin/env",
+    "-u",
+    "WOW_SIM_LOG_HANDLER_TIMINGS",
+    "/usr/bin/timeout",
+    "90",
+    "/home/osso/.local/state/wow-ui-sim/verification/forever-stock-startup-current/20261010T184613Z/wow-sim-sealed",
+    "--no-addons",
+    "--no-saved-vars",
+    "lua-errors"
+  ],
+  "artifact_unchanged": true,
+  "exit": 1,
+  "json_record_count": 19,
+  "scope": "distinct requested Lua-error-state CLI command, not same in-memory pool as precedingdump; zero requires actual JSON/exit proof",
+  "stdout_empty": false
+}

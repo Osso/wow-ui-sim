@@ -1,0 +1,30 @@
+{
+  "features": [
+    "aura-containers",
+    "aura-instance-enumeration",
+    "aura-xml-widgets",
+    "base-spell-relationships",
+    "casc",
+    "client-ptr",
+    "forbidden-animation-aspects",
+    "forbidden-aspects",
+    "gui",
+    "native-duration-formatting",
+    "numeric-rule-formatters",
+    "on-update-modes",
+    "player-cast-durations",
+    "retail-12-0-0",
+    "retail-12-0-5",
+    "retail-12-0-7",
+    "retail-12-1-0",
+    "retail-12-1-5",
+    "rodio",
+    "sound",
+    "timed-signal-maps"
+  ],
+  "fresh": false,
+  "original": "/home/osso/Projects/wow/wow-ui-sim/target/debug/wow-sim",
+  "revision": "b048251f38b2d53e33b3365590cd227d40fc07d0",
+  "sealed": "/home/osso/.local/state/wow-ui-sim/verification/ptr-stock-startup-current/20261010T184101Z/wow-sim-sealed",
+  "sha256": "68a834b307bbd1a31af8e84880d8eecee02aeecf4fada526a93583eb6a72ff34"
+}

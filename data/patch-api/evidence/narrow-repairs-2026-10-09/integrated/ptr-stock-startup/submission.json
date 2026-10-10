@@ -1,0 +1,25 @@
+{
+  "argv": [
+    "/usr/bin/cargo",
+    "build",
+    "--bin",
+    "wow-sim",
+    "--no-default-features",
+    "--features",
+    "sound,gui,casc,client-ptr",
+    "--offline",
+    "--locked",
+    "--message-format=json",
+    "--timings",
+    "-j",
+    "12"
+  ],
+  "exclusions": [
+    "external dependencies/source-to-artifact provenance",
+    "untracked files/index",
+    "inherited environment",
+    "runtime assets outside fixture inputs"
+  ],
+  "revision": "b048251f38b2d53e33b3365590cd227d40fc07d0",
+  "scope": "fresh PTR normal binary plus bounded stock startup; thirdparty and SavedVariables disabled; not native/fullprofile acceptance"
+}

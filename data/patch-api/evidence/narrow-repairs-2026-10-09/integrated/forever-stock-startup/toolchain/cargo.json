@@ -1,0 +1,9 @@
+{
+  "argv": [
+    "/usr/bin/cargo",
+    "-V"
+  ],
+  "exit": 0,
+  "stderr": "",
+  "stdout": "cargo 1.99.0 (5f94df478 2026-08-27) (Arch Linux rust 1:1.99.0-1)\n"
+}

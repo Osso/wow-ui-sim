@@ -1,3 +1,7 @@
+## [2026-10-10] audit | PTR/Forever stock profile receipts
+
+[Profile proof SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#ptr-and-forever-stock-captures--exact-profiles-different-outcomes): PTR completed stockcapture and separateCLI[]PASS; Forever capturecomplete but19unique/36occurrencesFAIL. Private aura helper compiler gate independently passes fourchecks. Source eventrepair pending; native/key/wholeprofile acceptance open.
+
 ## [2026-10-10] audit | Successful-file budget proof and attribution
 
 [Proof SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#successful-file-budget-diagnostics--bounded-green-and-attribution-startup-unfixed): diagnostic RED→GREEN,12executions/11distinctPASS and fresh3064-success-record attribution; quota/vendor unchanged, startup unfixed. Current integrated suiteb048 queued async, not PASS; parent OPEN.

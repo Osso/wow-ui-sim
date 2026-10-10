@@ -1,0 +1,25 @@
+{
+  "argv": [
+    "/usr/bin/env",
+    "-u",
+    "WOW_SIM_LOG_HANDLER_TIMINGS",
+    "/usr/bin/timeout",
+    "90",
+    "/home/osso/.local/state/wow-ui-sim/verification/forever-stock-startup-current/20261010T184613Z/wow-sim-sealed",
+    "--no-addons",
+    "--no-saved-vars",
+    "--exec-lua",
+    "print('[ForeverStockStartupComplete]')",
+    "dump-tree",
+    "--filter",
+    "__ForeverStockStartup_NoMatchingFrame__"
+  ],
+  "environment_allowlist": {
+    "WOW_SIM_LOG_HANDLER_TIMINGS": "absent",
+    "WOW_SIM_NO_SOUND": "1"
+  },
+  "revision": "98f625741d01df768af6c3c97324a3cfbc544573",
+  "runtime_asset_limits": "vendor cache sealed; thirdparty files/environment/WTF EditMode cache not fully sealed; no cold/native/GUI claim",
+  "savedvars_disabled": true,
+  "thirdparty_addons_disabled": true
+}

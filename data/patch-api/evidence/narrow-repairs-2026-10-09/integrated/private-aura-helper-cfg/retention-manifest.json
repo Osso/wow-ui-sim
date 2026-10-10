@@ -1,0 +1,24 @@
+{
+  "verified": "2026-10-10",
+  "files": {
+    "results.json": {
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/private-aura-helper-cfg-current/results.json",
+      "sha256": "e188a8c128dd2d994ae777f304ede68ce3595abd5707208b39fc94b0d7f34e83",
+      "byte_identical": true
+    },
+    "outcome.json": {
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/private-aura-helper-cfg-current/outcome.json",
+      "sha256": "556dca9633c35e457141fa185969d16af2c8902b2a5bf71573c66834df7546aa",
+      "byte_identical": true
+    },
+    "independent-report.md": {
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/private-aura-helper-cfg-current/independent-report.md",
+      "sha256": "29e387ad26d48f1c7cdc4e5b104a5edc53280d6e1b0caac861bbfdbc29e60bc6",
+      "byte_identical": true
+    }
+  },
+  "omitted": [
+    "source maps",
+    "raw compiler streams"
+  ]
+}

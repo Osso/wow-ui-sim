@@ -1,3 +1,7 @@
+## [2026-10-10] audit | Profile capture/error-state evidence retained
+
+[Proof SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#ptr-and-forever-stock-captures--exact-profiles-different-outcomes) retains exact PTR and Forever source/artifact/cache/toolchain/command scopes; separate public-stateCLI proof cannot overwrite precedingdump's in-memory limitation. PTR[]PASS; Forever19/36FAIL. Private-helper729 compilerproof retained, no suppressions. Native/cache-key/GUI acceptance and original historical baselines remain unchanged.
+
 ## [2026-10-10] audit | Success-file diagnostics and attribution retained
 
 [Proof SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#successful-file-budget-diagnostics--bounded-green-and-attribution-startup-unfixed) links authentic external RED, bounded GREEN and fresh full-addon attribution. Small sanitized receipts/reports retained; raw stderr, owner/file joins and vendor content stay private. Existing startup errors/native unknowns remain; integrated suiteb048 asynchronously queued.

@@ -1,0 +1,22 @@
+{
+  "verified": "2026-10-10",
+  "distinct_records": 19,
+  "occurrences": 36,
+  "categories": [
+    {
+      "category": "unknown source-declared aura-block event",
+      "occurrences": 16
+    },
+    {
+      "category": "container attribute script already present",
+      "occurrences": 14
+    },
+    {
+      "category": "raid manager divider pool absent",
+      "occurrences": 6
+    }
+  ],
+  "raw_json_sha256": "56ee89fd73d7740bd32951cf5610078f0ae8838d7dea99fec97eba8e68e8fefa",
+  "native_or_clean_acceptance": false,
+  "raw_payload_not_retained": true
+}

@@ -1,0 +1,62 @@
+{
+  "verified": "2026-10-10",
+  "files": {
+    "submission.json": {
+      "sha256": "655101e54deb16fb0a3b583708ed66d2325bcbb3b67c66021819c1782e4d33bb",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/forever-stock-startup-current/20261010T184613Z/submission.json",
+      "byte_identical": true
+    },
+    "compile-result.json": {
+      "sha256": "1f67c6161475250ec69698b1b6663d2d09927e8fbab3dcf0a25c9a41f4a2055d",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/forever-stock-startup-current/20261010T184613Z/compile-result.json",
+      "byte_identical": true
+    },
+    "artifact.json": {
+      "sha256": "bba8a3b654d31f5a7a8ee6b3abfa52b436e3168c3001f315db457e34db396525",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/forever-stock-startup-current/20261010T184613Z/artifact.json",
+      "byte_identical": true
+    },
+    "runtime-submission.json": {
+      "sha256": "fb56c14d66a53e176d589cca40da1a46ad21b218df0611add339806027f17485",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/forever-stock-startup-current/20261010T184613Z/runtime-submission.json",
+      "byte_identical": true
+    },
+    "runtime-result.json": {
+      "sha256": "13fa99ec99500ec5d8a2d2b473ebb4700fd471ea091d7d01b1d4c97c6b95f909",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/forever-stock-startup-current/20261010T184613Z/runtime-result.json",
+      "byte_identical": true
+    },
+    "outcome.json": {
+      "sha256": "b5f7a838df0d6ebe64300a393ba00e754274f2c38367626472da08333d747540",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/forever-stock-startup-current/20261010T184613Z/outcome.json",
+      "byte_identical": true
+    },
+    "toolchain/cargo.json": {
+      "sha256": "d57fd7fe9d34b3634a32dc696e1851cf875e025292f87a10a5ae9a84b89d1930",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/forever-stock-startup-current/20261010T184613Z/toolchain/cargo.json",
+      "byte_identical": true
+    },
+    "toolchain/rustc.json": {
+      "sha256": "a0b57b3b96b52774b880b063c233583b88ced89ff394c8602fcc78d80276b6e5",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/forever-stock-startup-current/20261010T184613Z/toolchain/rustc.json",
+      "byte_identical": true
+    },
+    "lua-errors-result.json": {
+      "sha256": "828279b534c9b6862f93e2b935d53259656321fd04b874e53e33ab5d02f46eb1",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/forever-stock-startup-current/20261010T184613Z/lua-errors-result.json",
+      "byte_identical": true
+    },
+    "independent-report.md": {
+      "sha256": "46328bd72efe5aff6a6dacb2f7a39a394b0357c31042c37e7fb40ccad3f7f3ed",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/forever-stock-startup-current/independent-report.md",
+      "byte_identical": true
+    }
+  },
+  "omitted": [
+    "normal executable",
+    "source/cache maps",
+    "raw runtime/compile stderr",
+    "Forever rawLuaerrorJSON",
+    "vendor/character/provenance-key payload"
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "argv": [
+    "/usr/bin/env",
+    "-u",
+    "WOW_SIM_LOG_HANDLER_TIMINGS",
+    "/usr/bin/timeout",
+    "90",
+    "/home/osso/.local/state/wow-ui-sim/verification/ptr-stock-startup-current/20261010T184101Z/wow-sim-sealed",
+    "--no-addons",
+    "--no-saved-vars",
+    "lua-errors"
+  ],
+  "exit": 0,
+  "artifact_unchanged": true,
+  "artifact_sha256": "68a834b307bbd1a31af8e84880d8eecee02aeecf4fada526a93583eb6a72ff34",
+  "json_record_count": 0,
+  "stdout_empty": false,
+  "purpose": "previousdumpcapturecouldnotestablishstoredLuaerrors; missingrequestedLuaerrorstatecommandonly, no build or repeateddumpstartup"
+}

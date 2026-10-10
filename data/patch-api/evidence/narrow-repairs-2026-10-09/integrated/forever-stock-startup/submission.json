@@ -1,0 +1,25 @@
+{
+  "argv": [
+    "/usr/bin/cargo",
+    "build",
+    "--bin",
+    "wow-sim",
+    "--no-default-features",
+    "--features",
+    "sound,gui,casc,client-wowforever",
+    "--offline",
+    "--locked",
+    "--message-format=json",
+    "--timings",
+    "-j",
+    "12"
+  ],
+  "exclusions": [
+    "external dependencies/source-to-artifact provenance",
+    "untracked files/index",
+    "inherited environment",
+    "runtime assets outside fixture inputs"
+  ],
+  "revision": "98f625741d01df768af6c3c97324a3cfbc544573",
+  "scope": "fresh Forever normal binary plus bounded stock startup; thirdparty and SavedVariables disabled; not native/fullprofile acceptance"
+}

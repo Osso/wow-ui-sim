@@ -1,0 +1,65 @@
+[
+  {
+    "label": "fmt",
+    "argv": [
+      "/usr/bin/cargo",
+      "fmt",
+      "--check"
+    ],
+    "revision": "72971773c5014774471a28ea065aeff2ced099d6",
+    "exit": 0,
+    "source_equal": true,
+    "helper_dead_warning_present": false
+  },
+  {
+    "label": "default-check",
+    "argv": [
+      "/usr/bin/cargo",
+      "check",
+      "--offline",
+      "--locked",
+      "-j",
+      "12"
+    ],
+    "revision": "72971773c5014774471a28ea065aeff2ced099d6",
+    "exit": 0,
+    "source_equal": true,
+    "helper_dead_warning_present": false
+  },
+  {
+    "label": "forever-check",
+    "argv": [
+      "/usr/bin/cargo",
+      "check",
+      "--offline",
+      "--locked",
+      "--no-default-features",
+      "--features",
+      "sound,gui,casc,client-wowforever",
+      "-j",
+      "12"
+    ],
+    "revision": "72971773c5014774471a28ea065aeff2ced099d6",
+    "exit": 0,
+    "source_equal": true,
+    "helper_dead_warning_present": false
+  },
+  {
+    "label": "exact1200-check",
+    "argv": [
+      "/usr/bin/cargo",
+      "check",
+      "--offline",
+      "--locked",
+      "--no-default-features",
+      "--features",
+      "profile-retail,retail-12-0-0",
+      "-j",
+      "12"
+    ],
+    "revision": "72971773c5014774471a28ea065aeff2ced099d6",
+    "exit": 0,
+    "source_equal": true,
+    "helper_dead_warning_present": false
+  }
+]
