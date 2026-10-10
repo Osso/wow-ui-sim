@@ -1,0 +1,13 @@
+
+running 8 tests
+test spell_max_cumulative_aura_applications::invalid_identifier_representations_are_rejected ... ok
+test spell_max_cumulative_aura_applications::maximum_is_independent_of_currently_applied_stacks ... ok
+test spell_max_cumulative_aura_applications::misses_return_one_zero_and_map_changes_are_live ... ok
+test spell_max_cumulative_aura_applications::numeric_alias_takes_precedence_over_numeric_identity ... ok
+test spell_max_cumulative_aura_applications::numeric_and_seeded_name_identifiers_return_the_declared_maximum ... ok
+test spell_max_cumulative_aura_applications::secret_identifiers_are_rejected_as_unmodeled_policy ... ok
+test spell_max_cumulative_aura_applications::tainted_callers_keep_their_taint_and_cannot_open_restricted_results ... ok
+test spell_max_cumulative_aura_applications::unit_aura_restriction_alone_makes_the_result_secret ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 10692 filtered out; finished in 0.76s
+

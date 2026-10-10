@@ -1,0 +1,6 @@
+
+running 1 test
+test spell_cast_count_early_policy::supplied_cast_count_stays_ordinary_when_cooldowns_are_restricted ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 7820 filtered out; finished in 0.15s
+

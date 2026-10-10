@@ -1,6 +1,6 @@
-## [2026-10-10] audit | Exact1200 count RED; repair GREEN pending
+## [2026-10-10] audit | Count receipts — bounded PASS
 
-[Current count proof](../specs/patch-12-0-0-prose-models.md#authentic-count-red-and-source-present-repair--2026-10-10) and [audit](investigations/patch-12-0-0-api-audit.md#authentic-count-red-source-present-repair-green-pending): actual1 FAIL expected7 got0; cast1200-onward source present after84dcf2723, GREEN pending. Pre125 ordinary output is simulator policy, not native proof; display/max/secret125 unchanged. All21 assertions untouched, cached case separate prefork target. Sanitized receipts/audit/hash manifest retained; task not PASS.
+[Count proof SSOT](../specs/patch-12-0-0-prose-models.md#bounded-count-receipt-pass--2026-10-10) and [audit](investigations/patch-12-0-0-api-audit.md#authentic-count-red-bounded-receipt-green): actual5/5 earlier +40/40 current-default PASS, code84dcf2723/submission095081101, compile/check/fmt0. Not warning-free:10 preexisting headless project warnings + six iced deprecations. BARE21 absence ONLY; cached successor PASS atc6bc line13804 separate, not current84 acceptance. RED retained; pre125 ordinary policy inferred/native secrecy unknown; later AutoHide test963 excluded. Sanitized receipts/audit/hash manifest retained.
 
 ## [2026-10-10] audit | XML click registration — bounded default-Retail GREEN
 

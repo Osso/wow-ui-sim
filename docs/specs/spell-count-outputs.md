@@ -8,15 +8,19 @@ Primary evidence: profile cache `~/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/B
 
 Source inspection only: `SimState.spell_cast_counts: HashMap<u32,u32>` and its empty initializer are now gated by `retail-12-0-0`, not `retail-12-0-5`. This explicit map is internal simulator input, not native backing or count acquisition. The 12.0.0 retirement row establishes cast-successor presence only; it does not establish a meaningful quantity producer.
 
-`tests/patch_12_0_0_prose.rs::prose_spell_cast_count_reads_live_explicit_inputs` is gated by `retail-12-0-0 && !retail-12-0-5`. It requires ordinary single-number cast results for19750→7/642→2, charge independence, live replacement/removal/clear, missing0 and environment isolation. Its assertions describe required behavior, not executed proof. Authentic exact1200 RED is retained in the [proof SSOT](patch-12-0-0-prose-models.md#authentic-count-red-and-source-present-repair--2026-10-10): actual1 FAIL, expected7 got0. After `84dcf2723`, cast producer/module/registration are present from Retail1200 onward; post-repair GREEN remains PENDING.
+`tests/patch_12_0_0_prose.rs::prose_spell_cast_count_reads_live_explicit_inputs` is gated by `retail-12-0-0 && !retail-12-0-5`. It requires ordinary single-number cast results for19750→7/642→2, charge independence, live replacement/removal/clear, missing0 and environment isolation. Its assertions describe required behavior, not executed proof. Authentic exact1200 RED is retained in the [proof SSOT](patch-12-0-0-prose-models.md#authentic-count-red-and-source-present-repair--2026-10-10): actual1 FAIL, expected7 got0. After `84dcf2723`, cast producer/module/registration are present from Retail1200 onward; post-repair bounded GREEN is actual5/5 exact1200; see the [receipt SSOT](patch-12-0-0-prose-models.md#bounded-count-receipt-pass--2026-10-10).
 
 Display formatting/maximum and secret-output behavior remain Retail125-scoped. Ordinary cast output before125 is simulator policy, not native proof; older API presence establishes neither internal native backing nor an acquisition requirement. The historical125 acceptance below does not establish exact1200 display, threshold, output restriction or secret-input rules and must not be applied retroactively.
+
+## Current bounded receipts — 2026-10-10
+
+[Proof SSOT](patch-12-0-0-prose-models.md#bounded-count-receipt-pass--2026-10-10) owns actual5/5 earlier +40/40 current-default count/control PASS, code84dcf2723/submission095081101, compile/check/fmt exits0 and retained sanitized evidence. Exact headless scope has10 preexisting project warnings; six iced manifest deprecations remain: not warning-free. BARE21 proves absence only; historical cached21 successor PASS atc6bc line13804 is separate, not current84 acceptance. Later AutoHide test963 is outside this proof. Pre125 ordinary output remains simulator policy; native secrecy/input permission and inferred display policies remain unproved.
 
 ## What it must do
 
 ### Explicit inputs and scalar domains
 
-- [ ] Use `spell_cast_counts: HashMap<u32,u32>` with an empty default, Retail1200-gated, with cast producer available from1200 onward; exact1200 GREEN pending. Display and secret-output policies below remain Retail125-scoped. No new Cargo feature or per-slot wrapper reuse.
+- [ ] Use `spell_cast_counts: HashMap<u32,u32>` with an empty default, Retail1200-gated, with cast producer available from1200 onward; exact1200 bounded GREEN5/5; current-default controls40/40. Display and secret-output policies below remain Retail125-scoped. No new Cargo feature or per-slot wrapper reuse.
 - [ ] Cast returns exactly one number from the public resolved spell identifier's explicit count, otherwise0. Never derive cast count from charges.
 - [ ] Display returns exactly one string: valid typed charge state with `max_charges > 0` supplies `current_charges`; otherwise explicit count supplies quantity. This priority is inferred, not native-verified.
 - [ ] Inferred display absence is empty string; explicitly supplied0 is `"0"`. Missing cast is0. Local u32 maximum4294967295 must remain exactly representable, not claimed as native maximum.

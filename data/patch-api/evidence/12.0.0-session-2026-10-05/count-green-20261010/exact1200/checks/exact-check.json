@@ -1,0 +1,16 @@
+{
+  "argv": [
+    "/usr/bin/cargo",
+    "check",
+    "--offline",
+    "--locked",
+    "--no-default-features",
+    "--features",
+    "profile-retail,retail-12-0-0",
+    "-j",
+    "12"
+  ],
+  "exit": 0,
+  "revision": "095081101f04254270dee6805ac6b8cbb8e9ea3b",
+  "source_equal": true
+}

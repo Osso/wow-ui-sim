@@ -1,0 +1,6 @@
+
+running 1 test
+test patch_12_0_0_deprecated::patch_12_0_0_deprecated_native_retirement ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 7820 filtered out; finished in 0.12s
+

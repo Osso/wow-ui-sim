@@ -1,0 +1,50 @@
+[
+  {
+    "argv": [
+      "/usr/bin/timeout",
+      "90",
+      "/home/osso/.local/state/wow-ui-sim/verification/count125-controls-current/20261010T170731Z/integration-sealed",
+      "spell_count_outputs::",
+      "--nocapture",
+      "--test-threads=1"
+    ],
+    "artifact_unchanged": true,
+    "exit": 0,
+    "expected_tests": 30,
+    "label": "spell-counts",
+    "reached_tests": 30,
+    "selector": "spell_count_outputs::"
+  },
+  {
+    "argv": [
+      "/usr/bin/timeout",
+      "90",
+      "/home/osso/.local/state/wow-ui-sim/verification/count125-controls-current/20261010T170731Z/integration-sealed",
+      "spell_max_cumulative_aura_applications::",
+      "--nocapture",
+      "--test-threads=1"
+    ],
+    "artifact_unchanged": true,
+    "exit": 0,
+    "expected_tests": 8,
+    "label": "max-applications",
+    "reached_tests": 8,
+    "selector": "spell_max_cumulative_aura_applications::"
+  },
+  {
+    "argv": [
+      "/usr/bin/timeout",
+      "90",
+      "/home/osso/.local/state/wow-ui-sim/verification/count125-controls-current/20261010T170731Z/wow_ui_sim-sealed",
+      "spell_metadata_defaults::tests::",
+      "--nocapture",
+      "--test-threads=1"
+    ],
+    "artifact_unchanged": true,
+    "exit": 0,
+    "expected_tests": 2,
+    "label": "metadata-defaults",
+    "reached_tests": 2,
+    "selector": "spell_metadata_defaults::tests::"
+  }
+]

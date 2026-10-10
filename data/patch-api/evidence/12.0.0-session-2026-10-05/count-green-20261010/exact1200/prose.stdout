@@ -1,0 +1,8 @@
+
+running 3 tests
+test patch_12_0_0_prose::prose_callback_event_mechanism_is_separate_from_script_registration ... ok
+test patch_12_0_0_prose::prose_combat_log_registration_errors_without_delivery ... ok
+test patch_12_0_0_prose::prose_spell_cast_count_reads_live_explicit_inputs ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 7818 filtered out; finished in 0.46s
+

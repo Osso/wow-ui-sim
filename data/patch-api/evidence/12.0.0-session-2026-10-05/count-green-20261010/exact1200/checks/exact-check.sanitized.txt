@@ -1,0 +1,170 @@
+    Checking num-traits v0.2.19
+    Checking bytemuck v1.24.0
+    Checking futures-sink v0.3.31
+    Checking zerofrom v0.1.7
+    Checking tokio v1.49.0
+    Checking equator v0.4.2
+    Checking zerocopy v0.8.33
+    Checking getrandom v0.2.16
+    Checking futures-io v0.3.31
+    Checking thiserror v2.0.17
+    Checking tracing v0.1.44
+   Compiling rustix v1.1.3
+    Checking futures-channel v0.3.31
+    Checking serde v1.0.228
+    Checking yoke v0.8.1
+    Checking futures-util v0.3.31
+    Checking ring v0.17.14
+    Checking aligned-vec v0.6.4
+    Checking profiling v1.0.17
+    Checking font-types v0.10.1
+    Checking qoi v0.4.1
+    Checking linux-raw-sys v0.11.0
+    Checking zerovec v0.11.5
+    Checking zerotrie v0.2.3
+    Checking rand_core v0.6.4
+    Checking rand v0.8.5
+    Checking fax v0.2.6
+    Checking read-fonts v0.35.0
+    Checking ttf-parser v0.25.1
+    Checking lazy_static v1.5.0
+    Checking thiserror v1.0.69
+    Checking num-integer v0.1.46
+    Checking v_frame v0.3.9
+    Checking pxfm v0.1.27
+    Checking sharded-slab v0.1.7
+    Checking phf_generator v0.11.3
+    Checking num-bigint v0.4.6
+    Checking digest v0.10.7
+    Checking tinystr v0.8.2
+    Checking potential_utf v0.1.4
+    Checking icu_collections v2.1.1
+    Checking icu_locale_core v2.1.1
+    Checking serde_urlencoded v0.7.1
+    Checking fixed_decimal v0.7.0
+    Checking rustls-webpki v0.103.13
+    Checking smol_str v0.2.2
+    Checking sha2 v0.10.9
+    Checking tracing-subscriber v0.3.22
+    Checking half v2.7.1
+    Checking phf v0.11.3
+    Checking num-rational v0.4.2
+    Checking rustls v0.23.40
+    Checking xattr v1.6.1
+    Checking tar v0.4.45
+    Checking exr v1.74.0
+    Checking tiff v0.10.3
+    Checking icu_provider v2.1.1
+    Checking av-scenechange v0.14.1
+    Checking icu_properties v2.1.2
+    Checking icu_normalizer v2.1.1
+    Checking icu_locale v2.1.1
+    Checking av1-grain v0.2.5
+    Checking fontdb v0.23.0
+    Checking phf_codegen v0.11.3
+    Checking clap v4.5.56
+    Checking quick-xml v0.37.5
+    Checking rav1e v0.8.1
+    Checking moxcms v0.7.11
+    Checking icu_plurals v2.1.1
+    Checking icu_segmenter v2.1.1
+    Checking idna_adapter v1.2.1
+    Checking icu_collator v2.1.1
+    Checking icu_casemap v2.1.1
+    Checking idna v1.1.0
+    Checking hyper v1.9.0
+    Checking url v2.5.8
+    Checking tower v0.5.3
+    Checking tower-http v0.6.10
+    Checking hyper-util v0.1.20
+    Checking image v0.24.9
+    Checking tokio-rustls v0.26.4
+    Checking hyper-rustls v0.27.9
+    Checking reqwest v0.12.28
+    Checking skrifa v0.37.0
+    Checking harfrust v0.3.2
+    Checking image-blp v1.2.0
+    Checking ravif v0.12.0
+    Checking image v0.25.9
+    Checking swash v0.2.6
+    Checking cosmic-text v0.15.0
+    Checking wow-ui-sim v0.1.0 (/home/osso/Projects/wow/wow-ui-sim)
+warning: unused import: `c_item::location_item`
+  --> src/c_api/item_spell/mod.rs:20:16
+   |
+20 | pub(crate) use c_item::location_item;
+   |                ^^^^^^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: constant `PROVENANCE_SCHEMA` is never used
+  --> src/blizzard_ui_sync.rs:28:7
+   |
+28 | const PROVENANCE_SCHEMA: &str = "1";
+   |       ^^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: associated function `new` is never used
+   --> src/blizzard_ui_sync.rs:180:8
+    |
+179 | impl CacheProvenance {
+    | -------------------- associated function in this implementation
+180 |     fn new(
+    |        ^^^
+
+warning: function `remove_missing_marker` is never used
+   --> src/blizzard_ui_sync.rs:663:4
+    |
+663 | fn remove_missing_marker(path: &Path) {
+    |    ^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `read_custom_set_items` is never used
+   --> src/c_api/c_transmog_collection.rs:246:15
+    |
+246 | pub(crate) fn read_custom_set_items(state: &LuaState, id: i32) -> LuaResult<Vec<ItemTransmogInfo>> {
+    |               ^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `ensure_known_asset_cached` is never used
+  --> src/casc_asset_fallback.rs:93:15
+   |
+93 | pub(crate) fn ensure_known_asset_cached(_path: &str, _out_path: &Path) -> Option<PathBuf> {
+   |               ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: field `encoding_key_hex` is never read
+  --> src/render/font.rs:44:5
+   |
+41 | struct WowFontFile {
+   |        ----------- field in this struct
+...
+44 |     encoding_key_hex: Option<&'static str>,
+   |     ^^^^^^^^^^^^^^^^
+
+warning: function `aura_matches_filter_string` is never used
+   --> src/lua_api/globals/auras.rs:251:15
+    |
+251 | pub(crate) fn aura_matches_filter_string(
+    |               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: methods `cooldown_elapsed_since_start` and `cooldown_remaining_seconds` are never used
+   --> src/widget/frame.rs:601:19
+    |
+600 | impl Frame {
+    | ---------- methods in this implementation
+601 |     pub(crate) fn cooldown_elapsed_since_start(&self, elapsed_secs: f64) -> f64 {
+    |                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+...
+610 |     pub(crate) fn cooldown_remaining_seconds(&self, elapsed_secs: f64) -> Option<f64> {
+    |                   ^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: `wow-ui-sim` (lib) generated 9 warnings (run `cargo fix --lib -p wow-ui-sim` to apply 1 suggestion)
+warning: unused import: `wow_ui_sim::saved_variables::SavedVariablesManager`
+  --> src/bin/wow_sim/main.rs:20:5
+   |
+20 | use wow_ui_sim::saved_variables::SavedVariablesManager;
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: `wow-ui-sim` (bin "wow-sim") generated 1 warning (run `cargo fix --bin "wow-sim" -p wow-ui-sim` to apply 1 suggestion)
+    Finished `dev` profile [optimized + debuginfo] target(s) in 37.47s

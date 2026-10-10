@@ -1,4 +1,8 @@
-## [2026-10-10] audit | Exact1200 count RED retained; GREEN pending
+## [2026-10-10] audit | Count receipt retention — bounded PASS
+
+Updated existing count spec, exact1200 proof SSOT, audit, Lua inventory and index from authoritative final receipts: actual5/5 earlier +40/40 current-default PASS, code84dcf2723/submission095081101, compile/check/fmt0. Not warning-free:10 preexisting headless project warnings + six iced deprecations. BARE21 absence only; independently located cached successor PASS atc6bc line13804, separate historical scope, not current84 acceptance. Retained small sanitized JSON/stdout/check/audit and SHA256 manifest under `data/patch-api/evidence/12.0.0-session-2026-10-05/count-green-20261010`; no binaries/source maps/vendor stderr. RED, inferred ordinary pre125/native secrecy unknown preserved; later AutoHide test963 excluded. Docs/evidence only; no builds, delegation, operations or commits; main owns commits.
+
+## [2026-10-10] audit | Exact1200 count RED retained; GREEN pending (historical checkpoint)
 
 Updated [count inventory](../specs/spell-count-outputs.md#implementation-inventory), [proof SSOT](../specs/patch-12-0-0-prose-models.md#authentic-count-red-and-source-present-repair--2026-10-10), existing audit and Lua inventory after84dcf2723. Authentic RED actual1 FAIL expected7 got0; source-present cast1200 repair not runtime PASS. Pre125 policy/native boundary and separate unchanged21-row prefork case explicit. Small sanitized receipts, independent audit and hash manifest retained. Docs only; no builds, delegation, operations or commits; main owns prompt commit before verification.
 

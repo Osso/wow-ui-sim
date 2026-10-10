@@ -1,0 +1,10 @@
+{
+  "argv": [
+    "/usr/bin/cargo",
+    "fmt",
+    "--check"
+  ],
+  "exit": 0,
+  "revision": "095081101f04254270dee6805ac6b8cbb8e9ea3b",
+  "source_equal": true
+}

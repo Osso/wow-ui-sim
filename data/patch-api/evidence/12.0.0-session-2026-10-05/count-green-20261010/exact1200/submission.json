@@ -1,0 +1,28 @@
+{
+  "argv": [
+    "/usr/bin/cargo",
+    "test",
+    "--no-run",
+    "--test",
+    "integration",
+    "--offline",
+    "--locked",
+    "--no-default-features",
+    "--features",
+    "profile-retail,retail-12-0-0",
+    "--message-format=json",
+    "--timings",
+    "-j",
+    "12"
+  ],
+  "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+  "exclusions": [
+    "GUI-gated src/iced_app files (gui disabled)",
+    "untracked files/index",
+    "external dependencies/source-to-artifact provenance",
+    "inherited environment",
+    "runtime assets/addons not loaded by selected bare-environment cases"
+  ],
+  "purpose": "exact1200 cast producer plus originalprose and bare21-retirement absence; canonicalcached21case belongs separatepreforktarget",
+  "revision": "095081101f04254270dee6805ac6b8cbb8e9ea3b"
+}

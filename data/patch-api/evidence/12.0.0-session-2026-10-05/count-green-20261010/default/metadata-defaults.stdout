@@ -1,0 +1,7 @@
+
+running 2 tests
+test lua_api::workarounds::temporary::spell_metadata_defaults::tests::installs_spell_metadata_defaults ... ok
+test lua_api::workarounds::temporary::spell_metadata_defaults::tests::preserves_existing_spell_metadata_provider ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 1995 filtered out; finished in 0.21s
+

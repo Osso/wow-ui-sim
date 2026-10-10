@@ -1,0 +1,172 @@
+[
+  {
+    "level": "warning",
+    "message": "unused import: `c_item::location_item`",
+    "code": {
+      "code": "unused_imports",
+      "explanation": null
+    },
+    "spans": [
+      {
+        "file_name": "src/c_api/item_spell/mod.rs",
+        "line_start": 20,
+        "line_end": 20
+      }
+    ]
+  },
+  {
+    "level": "warning",
+    "message": "constant `PROVENANCE_SCHEMA` is never used",
+    "code": {
+      "code": "dead_code",
+      "explanation": null
+    },
+    "spans": [
+      {
+        "file_name": "src/blizzard_ui_sync.rs",
+        "line_start": 28,
+        "line_end": 28
+      }
+    ]
+  },
+  {
+    "level": "warning",
+    "message": "associated function `new` is never used",
+    "code": {
+      "code": "dead_code",
+      "explanation": null
+    },
+    "spans": [
+      {
+        "file_name": "src/blizzard_ui_sync.rs",
+        "line_start": 179,
+        "line_end": 179
+      },
+      {
+        "file_name": "src/blizzard_ui_sync.rs",
+        "line_start": 180,
+        "line_end": 180
+      }
+    ]
+  },
+  {
+    "level": "warning",
+    "message": "function `remove_missing_marker` is never used",
+    "code": {
+      "code": "dead_code",
+      "explanation": null
+    },
+    "spans": [
+      {
+        "file_name": "src/blizzard_ui_sync.rs",
+        "line_start": 663,
+        "line_end": 663
+      }
+    ]
+  },
+  {
+    "level": "warning",
+    "message": "function `read_custom_set_items` is never used",
+    "code": {
+      "code": "dead_code",
+      "explanation": null
+    },
+    "spans": [
+      {
+        "file_name": "src/c_api/c_transmog_collection.rs",
+        "line_start": 246,
+        "line_end": 246
+      }
+    ]
+  },
+  {
+    "level": "warning",
+    "message": "function `ensure_known_asset_cached` is never used",
+    "code": {
+      "code": "dead_code",
+      "explanation": null
+    },
+    "spans": [
+      {
+        "file_name": "src/casc_asset_fallback.rs",
+        "line_start": 93,
+        "line_end": 93
+      }
+    ]
+  },
+  {
+    "level": "warning",
+    "message": "field `encoding_key_hex` is never read",
+    "code": {
+      "code": "dead_code",
+      "explanation": null
+    },
+    "spans": [
+      {
+        "file_name": "src/render/font.rs",
+        "line_start": 41,
+        "line_end": 41
+      },
+      {
+        "file_name": "src/render/font.rs",
+        "line_start": 44,
+        "line_end": 44
+      }
+    ]
+  },
+  {
+    "level": "warning",
+    "message": "function `aura_matches_filter_string` is never used",
+    "code": {
+      "code": "dead_code",
+      "explanation": null
+    },
+    "spans": [
+      {
+        "file_name": "src/lua_api/globals/auras.rs",
+        "line_start": 251,
+        "line_end": 251
+      }
+    ]
+  },
+  {
+    "level": "warning",
+    "message": "methods `cooldown_elapsed_since_start` and `cooldown_remaining_seconds` are never used",
+    "code": {
+      "code": "dead_code",
+      "explanation": null
+    },
+    "spans": [
+      {
+        "file_name": "src/widget/frame.rs",
+        "line_start": 600,
+        "line_end": 600
+      },
+      {
+        "file_name": "src/widget/frame.rs",
+        "line_start": 601,
+        "line_end": 601
+      },
+      {
+        "file_name": "src/widget/frame.rs",
+        "line_start": 610,
+        "line_end": 610
+      }
+    ]
+  },
+  {
+    "level": "warning",
+    "message": "unused import: `wow_ui_sim::saved_variables::SavedVariablesManager`",
+    "code": {
+      "code": "unused_imports",
+      "explanation": null
+    },
+    "spans": [
+      {
+        "file_name": "src/bin/wow_sim/main.rs",
+        "line_start": 20,
+        "line_end": 20
+      }
+    ]
+  }
+]

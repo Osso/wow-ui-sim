@@ -1,0 +1,50 @@
+[
+  {
+    "argv": [
+      "/usr/bin/timeout",
+      "90",
+      "/home/osso/.local/state/wow-ui-sim/verification/retail-1200-count-green-current/20261010T170526Z/integration-sealed",
+      "patch_12_0_0_prose::",
+      "--nocapture",
+      "--test-threads=1"
+    ],
+    "artifact_unchanged": true,
+    "exit": 0,
+    "expected_tests": 3,
+    "label": "prose",
+    "reached_tests": 3,
+    "selector": "patch_12_0_0_prose::"
+  },
+  {
+    "argv": [
+      "/usr/bin/timeout",
+      "90",
+      "/home/osso/.local/state/wow-ui-sim/verification/retail-1200-count-green-current/20261010T170526Z/integration-sealed",
+      "spell_cast_count_early_policy::",
+      "--nocapture",
+      "--test-threads=1"
+    ],
+    "artifact_unchanged": true,
+    "exit": 0,
+    "expected_tests": 1,
+    "label": "early-policy",
+    "reached_tests": 1,
+    "selector": "spell_cast_count_early_policy::"
+  },
+  {
+    "argv": [
+      "/usr/bin/timeout",
+      "90",
+      "/home/osso/.local/state/wow-ui-sim/verification/retail-1200-count-green-current/20261010T170526Z/integration-sealed",
+      "patch_12_0_0_deprecated::patch_12_0_0_deprecated_native_retirement",
+      "--nocapture",
+      "--test-threads=1"
+    ],
+    "artifact_unchanged": true,
+    "exit": 0,
+    "expected_tests": 1,
+    "label": "bare-retirement",
+    "reached_tests": 1,
+    "selector": "patch_12_0_0_deprecated::patch_12_0_0_deprecated_native_retirement"
+  }
+]

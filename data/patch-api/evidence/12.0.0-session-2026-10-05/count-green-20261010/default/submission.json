@@ -1,0 +1,25 @@
+{
+  "argv": [
+    "/usr/bin/cargo",
+    "test",
+    "--no-run",
+    "--lib",
+    "--test",
+    "integration",
+    "--offline",
+    "--locked",
+    "--message-format=json",
+    "--timings",
+    "-j",
+    "12"
+  ],
+  "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+  "exclusions": [
+    "external dependencies/source-to-artifact provenance",
+    "untracked files/index",
+    "inherited environment",
+    "runtime assets outside fixture inputs"
+  ],
+  "purpose": "default125 cast/display/max policies and metadata controls after earlier cast producer sharing; no allprofile/native/fullsuite claim",
+  "revision": "095081101f04254270dee6805ac6b8cbb8e9ea3b"
+}

@@ -1,0 +1,35 @@
+
+running 30 tests
+test spell_count_outputs::actual_names_and_explicit_aliases_use_same_spell_counts ... ok
+test spell_count_outputs::alias_first_numeric_and_string_overrides_follow_caller_identity ... ok
+test spell_count_outputs::cast_conservatively_rejects_all_six_authentic_secret_kinds_in_both_frames ... ok
+test spell_count_outputs::charges_alone_never_supply_cast_counts ... ok
+test spell_count_outputs::count_replace_and_clear_are_live_without_cast_consumption ... ok
+test spell_count_outputs::decimal_ascii_and_empty_unicode_replacement_preserve_exact_bytes ... ok
+test spell_count_outputs::default_threshold_9999_keeps_digits_10000_replaces ... ok
+test spell_count_outputs::display_authenticates_all_original_args_before_types_lookup_or_no_source ... ok
+test spell_count_outputs::empty_default_inputs_produce_two_positive_spell_keyed_scalar_domains ... ok
+test spell_count_outputs::explicit_zero_displays_zero_not_absence_even_with_negative_threshold ... ok
+test spell_count_outputs::finite_threshold_and_utf8_nul_free_cstring_validate_without_source ... ok
+test spell_count_outputs::local_u32_width_preserves_max_quantity_and_exact_decimal ... ok
+test spell_count_outputs::missing_known_and_unknown_numeric_sources_return_zero_and_empty ... ok
+test spell_count_outputs::omitted_and_nil_format_arguments_use_documented_defaults ... ok
+test spell_count_outputs::output_copy_gc_and_flag_off_keep_old_wrappers_private_and_new_public ... ok
+test spell_count_outputs::public_numeric_identity_can_read_host_count_without_catalog_acquisition ... ok
+test spell_count_outputs::public_tainted_callers_are_not_blanket_denied_and_recover_trust ... ok
+test spell_count_outputs::queries_are_read_only_and_environments_and_result_replacements_isolated ... ok
+test spell_count_outputs::restricted_missing_zero_and_empty_replacement_remain_typed_secret_scalars ... ok
+test spell_count_outputs::restricted_positive_cast_and_charge_display_have_real_num_str_payloads ... ok
+test spell_count_outputs::rooted_input_copies_and_gc_preserve_allocation_secrecy_and_frame_state ... ok
+test spell_count_outputs::same_spell_two_slots_with_99_and_3_cannot_supply_spell_count_seven ... ok
+test spell_count_outputs::secure_display_authenticates_secret_numeric_string_identifier_and_defaults ... ok
+test spell_count_outputs::secure_display_wrong_authenticated_types_report_positions_without_payload ... ok
+test spell_count_outputs::strict_beyond_threshold_equality_fractional_negative_and_charge_quantity ... ok
+test spell_count_outputs::strict_public_identifier_utf8_u32_domain_in_secure_and_tainted_frames ... ok
+test spell_count_outputs::tainted_restricted_outputs_deny_math_concat_len_and_opaque_payload_leaks ... ok
+test spell_count_outputs::typed_valid_charges_override_display_only_cast_stays_seven ... ok
+test spell_count_outputs::unresolved_strings_never_reverse_numeric_keys_or_alias_values ... ok
+test spell_count_outputs::zero_max_is_ignored_and_charge_zero_updates_and_clear_are_live ... ok
+
+test result: ok. 30 passed; 0 failed; 0 ignored; 0 measured; 10670 filtered out; finished in 2.63s
+

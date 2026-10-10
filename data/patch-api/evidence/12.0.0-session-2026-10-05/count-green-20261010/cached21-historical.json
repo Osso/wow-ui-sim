@@ -1,0 +1,8 @@
+{
+  "revision": "c6bc87c120e43199dadeb299691511b03a81408a",
+  "source_log": "/home/osso/Projects/wow/full-suite-results/c6bc87c120e43199dadeb299691511b03a81408a.log",
+  "source_line": 13804,
+  "source_log_sha256": "d394086d1c3de149fd2fb042505c28631c0708038a39e23f8367d1d748a90d21",
+  "verdict": "PASS",
+  "scope": "historical cached retirement/successors only; not current 84dcf2723 count acceptance"
+}
