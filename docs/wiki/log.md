@@ -1,3 +1,7 @@
+## [2026-10-09] audit | Required table hint and standalone Maw epoch — runtime pending
+
+[Proof SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#required-table-hint-and-standalone-maw-retirement--runtime-proof-pending): `693bac033` cached Retail/Forever required array hint, missing-hint rejection and four preserved empty/mutable cases; independent source/format report only. `ddc07fbd6` separate standalone Maw retirement selector; independent source report pending. Both runtime proofs PENDING existing queued compiler; older failures/native-four-case epoch unchanged. Docs only, no API/spec scope change, execution gates, operations, delegation or raw/private retention.
+
 ## [2026-10-09] ingest | Pi provider hashes and historical safe aggregate
 
 [Proof SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#pi-provider-provenance--historical-aggregate-only): installed/both main executable hashes match `c39b724b`; source revision UNPROVEN. Screened37 historical records:18 API server_error/cached-websocket failures with18 session retries, one aborted; last timestamp about16h48 before receipt. Synthetic/current-boot/emission cause, upstream cause, quota failure and current model configuration unproven. Derived aggregate/hash privacy manifest only; no raw payloads/IDs/credentials/messages. Historical diagnostics/deployment acceptance separate; main full goal OPEN. Docs/evidence only, no tests/builds/checks/network/operations/delegation/push.

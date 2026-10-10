@@ -16,6 +16,14 @@ The completed [six-case independent audit](#marker-and-three-fixtures--independe
 
 Earlier RED/FAIL epochs remain intact; neither commit has new PASS credit here. The `40d2` compiler receipt excludes both commits and `0769`; main owns the later batch build. Main-reported five-case GREEN still awaits independent audit560 and is not upgraded to accepted proof. No new raw logs/private payload retained; parent OPEN.
 
+## Required table hint and standalone Maw retirement — runtime proof PENDING
+
+`693bac033` changes only `tests/utility_api.rs`. The independent source report at `/home/osso/.local/state/wow-ui-sim/verification/table-create-fixture-source/report.md` compares cached native Retail `LuaTableUtilDocumentation.lua` and Forever `LuaTableExtensionsDocumentation.lua`: `arraySizeHint` is required/non-nil, while `nodeSizeHint` defaults to zero. The fixture replaces zero-argument success with `(0)`, rejects successful `pcall(table.create)` via a failure sentinel, and preserves empty-table plus array/hash mutation/read-back assertions for `(0)`, `(3)`, `(0, 4)` and `(3, 4)`. Rejection accepts any error; no error-message or allocation-size contract asserted. Report records source/format PASS only, not fresh native-client or runtime proof. Saved96's nil-argument failure remains historical evidence.
+
+`ddc07fbd6` separately changes only `tests/spell_api.rs`: exact selector is now `spell_api::test_spell_get_maw_power_border_atlas_by_spell_id_follows_retirement_epoch`. Under `retail-12-0-7`, it asserts member absence; earlier epochs retain the call-with12345/nil assertion. The existing [12.0.7 source register](../../../data/patch-api/sources/12.0.7-wikitext-register.json) grounds retirement; independent Maw source report remains pending. This standalone probe is not the combined Maw/charge selector or its earlier native-four-case proof epoch.
+
+Both corrected runtime proofs remain **PENDING** in the existing queued compiler, per handoff; no new GREEN or compiler completion inferred. Older failures and prior native-four-case source/result epoch remain unchanged. No runtime/spec/API scope change, builds/tests/operations/delegation, vendor changes or raw/private retention; parent OPEN.
+
 ## Mists diagnostic epoch — FAIL, native oracle conflict
 
 [Independent audit](../../../data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/mists-cast-diagnostic/audit/report.md) covers new diagnostic source at `7e8acd2bd9e9a4d2f5c2885a0ec00d75d8f916bd`, not reconstruction of lost `/tmp` receipts. Cargo JSON confirms build success; compile OS exit was not retained after transient-unit collection. Installed Cargo/rustc 1.99.0 differs from documented 1.98.1; six manifest deprecations remain. Artifact SHA256 `fa359d740be335938c91be89a6d3fb530360c4f46189ed3ab420bd49e2cce5b5`; 3,845 source and 3,982 cache hashes unchanged across build. External dependency contents and inherited environment excluded.
