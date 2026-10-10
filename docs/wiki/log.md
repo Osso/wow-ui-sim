@@ -1,6 +1,10 @@
+## [2026-10-10] audit | Prefork saved post-fix Mists proof — cast-bar RED
+
+Read saved084353 artifacts at source845bea6d5; updated existing [contract](../specs/prefork-test-harness.md#retail-and-mists-target-eligibility), [system](systems/prefork-test-harness.md#retailmists-target-admission-2026-10-10-bounded-mists-proof-cast-bar-red) and index. Compile exit0/source_equal, public list3; original chat pair each actual1 PASS exit0, original cast-bar actual1 FAIL exit1 after conformance passes (`Mists startup cast bar should remain hidden`). All captured cache paths unchanged. Preserved083406 Cargo RED and083809 conformance17/18 RED. Mists listing/dispatch requirement checked only; no3/3, clean-startup/native or preserved-Retail-runtime/unsupported-manual-feature fresh-compile acceptance. Main investigates root cause. Docs only; no code, commit, builds or delegation; integrated SSOT untouched.
+
 ## [2026-10-10] audit | Prefork Retail/Mists admission — source-only
 
-Updated [contract](../specs/prefork-test-harness.md#retail-and-mists-target-eligibility), [system status](systems/prefork-test-harness.md#retailmists-target-admission-2026-10-10-verification-pending) and index. Retail/Mists capability and profile partitions inspected; unsupported manual capability rejection remains unverified. Saved old-target Cargo RED exit101 retained; no post-change GREEN. Historical Retail proofs and unverified non-Retail cases unchanged. Docs only; no code edits, builds, delegation or commit; integrated-source investigation untouched.
+Updated [contract](../specs/prefork-test-harness.md#retail-and-mists-target-eligibility), [system status](systems/prefork-test-harness.md#retailmists-target-admission-2026-10-10-bounded-mists-proof-cast-bar-red) and index. Retail/Mists capability and profile partitions inspected; unsupported manual capability rejection remains unverified. Saved old-target Cargo RED exit101 retained; no post-change GREEN. Historical Retail proofs and unverified non-Retail cases unchanged. Docs only; no code edits, builds, delegation or commit; integrated-source investigation untouched.
 
 ## [2026-10-09] audit | Auto-hide vendor source correction
 
