@@ -467,10 +467,44 @@ fn cast_bar_respects_edit_mode_lock_setting_after_startup_fix(env: &WowLuaEnv) {
             !attached_after_post_event,
             "unlocked startup cast bar should stay under the frame manager"
         );
-        assert_eq!(
-            parent_after_post_event, "BottomManagedFrameContainer",
-            "unlocked startup cast bar should remain frame-manager parented"
-        );
+        if cfg!(feature = "client-mists") {
+            // AddManagedFrame returns before membership and reparenting while hidden.
+            let (
+                hidden,
+                parent_is_ui_parent,
+                layout_parent_is_bottom,
+                absent_from_showing_frames,
+            ): (bool, bool, bool, bool) = env
+                .eval(
+                    r#"
+                    local cast = PlayerCastingBarFrame
+                    local bottom = UIParentBottomManagedFrameContainer
+                    return not cast:IsShown(),
+                        cast:GetParent() == UIParent,
+                        cast.layoutParent == bottom,
+                        bottom.showingFrames[cast] == nil
+                    "#,
+                )
+                .unwrap();
+            assert!(hidden, "Mists startup cast bar should remain hidden");
+            assert!(
+                parent_is_ui_parent,
+                "hidden Mists cast bar should remain parented to UIParent"
+            );
+            assert!(
+                layout_parent_is_bottom,
+                "Mists cast bar layout parent should be UIParentBottomManagedFrameContainer"
+            );
+            assert!(
+                absent_from_showing_frames,
+                "hidden Mists cast bar should not belong to showingFrames"
+            );
+        } else {
+            assert_eq!(
+                parent_after_post_event, "BottomManagedFrameContainer",
+                "unlocked startup cast bar should remain frame-manager parented"
+            );
+        }
 
         let (player_apply_ok, attached_after_player_anchor): (bool, bool) = env
             .eval(
