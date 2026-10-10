@@ -1,5 +1,9 @@
 # Integrated source and factory proof — 2026-10-09
 
+## Auto-hide cached vendor driver — source correction only
+
+[Canonical 3.1.0 correction](patch-3-1-0-api-audit.md#auto-hide-source-correction--2026-10-09) supersedes the Rust-only missing-driver inference: cached Retail/Mists Lua driver and restricted wrappers are substantive and present. Runtime/native primitives and historical parity remain unproved; historical buggy-driver caveat preserved. Publication is not behavior; proposed lifecycle fixture and source014 RED tests were not executed here. No new PASS or parent acceptance credit.
+
 ## Cooldown epoch and explicit charge fixtures — bounded epoch proof
 
 Docs-only audit: `40d2beb9a` changes the category spec and epoch-selected fixtures, not runtime code. The [category contract](../../specs/forever-cooldown-categories.md) matches actual wiring: `env_init` selects `ptr::compat_bootstrap::init` under `retail-12-1-0`; `init` calls the shared enum publisher unconditionally. The `client-ptr` guards select bootstrap strings, not a PTR-only publisher.

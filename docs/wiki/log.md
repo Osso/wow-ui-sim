@@ -1,3 +1,7 @@
+## [2026-10-09] audit | Auto-hide vendor source correction
+
+[Canonical correction](investigations/patch-3-1-0-api-audit.md#auto-hide-source-correction--2026-10-09) retains sanitized cached Retail/Mists source paths/roles and supersedes Rust-only missing-driver claims. Integrated SSOT/index link the correction; runtime/native prerequisites unproved, historic buggy caveat preserved, no behavioral PASS. Proposed fixture/source014 RED tests unexecuted. Docs only; no source/AGENTS/tests/builds/push/operations/delegation; `.code-index.db*` preserved.
+
 ## [2026-10-09] audit | Settings, prefork, browser and timing boundaries
 
 [Existing proof SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#settings-registration-trace--static-candidate-only): repeated growing-page control sort is static, not measured cause; no vendor optimization authorized. Recovered controlled prefork3/3 at96 remains distinct from generic21/21; original non-Retail target blocked by Retail gate, ordinary Mists not substitute. Current browser DOM/CDP access grants no HTTP/auth/remote acceptance. Timing6751 source/format/readability PASS, compilation PENDING; private report path retained. Sanitized findings only; no raw source/payload or long-ledger duplication.
