@@ -75,6 +75,140 @@ fn toc_text_locale_included_template_loads_before_core() {
     );
 }
 
+#[test]
+fn toc_normal_lua_files_share_varargs_table_only_within_each_addon() {
+    let env = WowLuaEnv::new().unwrap();
+    let addons = tempfile::tempdir().unwrap();
+    let first = addons.path().join("First");
+    let second = addons.path().join("Second");
+    std::fs::create_dir(&first).unwrap();
+    std::fs::create_dir(&second).unwrap();
+    std::fs::write(
+        first.join("First.toc"),
+        "## Title: Not the First folder name\nZStart.lua\nAContinue.lua\nMFinish.lua\n",
+    )
+    .unwrap();
+    std::fs::write(
+        second.join("Second.toc"),
+        "## Title: Not the Second folder name\nCore.lua\n",
+    )
+    .unwrap();
+    std::fs::write(
+        first.join("ZStart.lua"),
+        r#"
+        local name, private = ...
+        assert(select('#', ...) == 2)
+        assert(name == "First")
+        assert(type(private) == "table")
+        TocVarargsFirst = private
+        private.marker = "first-only"
+        private.order = "start"
+        private.observations = { select('#', ...) .. ":" .. name .. ":" .. type(private) }
+        "#,
+    )
+    .unwrap();
+    std::fs::write(
+        first.join("AContinue.lua"),
+        r#"
+        local name, private = ...
+        assert(select('#', ...) == 2)
+        assert(name == "First")
+        assert(type(private) == "table")
+        assert(rawequal(private, TocVarargsFirst))
+        assert(private.marker == "first-only")
+        assert(private.order == "start")
+        private.order = private.order .. ",continue"
+        table.insert(private.observations, select('#', ...) .. ":" .. name .. ":" .. type(private))
+        "#,
+    )
+    .unwrap();
+    std::fs::write(
+        first.join("MFinish.lua"),
+        r#"
+        local name, private = ...
+        assert(select('#', ...) == 2)
+        assert(name == "First")
+        assert(type(private) == "table")
+        assert(rawequal(private, TocVarargsFirst))
+        assert(private.marker == "first-only")
+        assert(private.order == "start,continue")
+        private.order = private.order .. ",finish"
+        table.insert(private.observations, select('#', ...) .. ":" .. name .. ":" .. type(private))
+        "#,
+    )
+    .unwrap();
+    std::fs::write(
+        second.join("Core.lua"),
+        r#"
+        local name, private = ...
+        assert(select('#', ...) == 2)
+        assert(name == "Second")
+        assert(type(private) == "table")
+        assert(not rawequal(private, TocVarargsFirst))
+        assert(private.marker == nil)
+        assert(private.order == nil)
+        TocVarargsSecond = private
+        private.secondMarker = "second-only"
+        private.observation = select('#', ...) .. ":" .. name .. ":" .. type(private)
+        "#,
+    )
+    .unwrap();
+
+    let first_result = load_addon(&env.loader_env(), &first.join("First.toc")).unwrap();
+    assert_eq!(first_result.lua_files, 3);
+    assert_eq!(first_result.xml_files, 0);
+    assert!(
+        first_result.warnings.is_empty(),
+        "{:?}",
+        first_result.warnings
+    );
+
+    let second_result = load_addon(&env.loader_env(), &second.join("Second.toc")).unwrap();
+    assert_eq!(second_result.lua_files, 1);
+    assert_eq!(second_result.xml_files, 0);
+    assert!(
+        second_result.warnings.is_empty(),
+        "{:?}",
+        second_result.warnings
+    );
+
+    let first_state: (String, String, String) = env
+        .eval(
+            r#"
+            return TocVarargsFirst.marker, TocVarargsFirst.order,
+                   table.concat(TocVarargsFirst.observations, ",")
+            "#,
+        )
+        .unwrap();
+    assert_eq!(
+        first_state,
+        (
+            "first-only".into(),
+            "start,continue,finish".into(),
+            "2:First:table,2:First:table,2:First:table".into(),
+        )
+    );
+    let second_state: (String, String, bool, bool, bool) = env
+        .eval(
+            r#"
+            return TocVarargsSecond.secondMarker, TocVarargsSecond.observation,
+                   TocVarargsSecond.marker == nil, TocVarargsFirst.secondMarker == nil,
+                   rawequal(TocVarargsFirst, TocVarargsSecond)
+            "#,
+        )
+        .unwrap();
+    assert_eq!(
+        second_state,
+        (
+            "second-only".into(),
+            "2:Second:table".into(),
+            true,
+            true,
+            false
+        )
+    );
+}
+
 const MULTI_FILE_WIDGETS_LUA: &str = r#"
     local _, addon = ...
     local function updateKeyDirection(self) return "updated: " .. tostring(self) end
