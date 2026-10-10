@@ -1,3 +1,7 @@
+## [2026-10-09] audit | Saved 8e fullsuite remains FAIL
+
+[Fullsuite SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#completed-saved-fullsuite-8e-comparison--fail-parent-open):8e FAIL3 (two method snapshots/Garrison), versus96 FAIL17; integration10,677/2, prefork2,324/1, library1,993/0,19 skips.11 same-selector revised-fixture passes/3 passing replacements, not unchanged-contract repairs; zero new exact failures versus96. Three sanitized static files retained; runner discrepancy is not deployment authorization. Later Mists/source epochs separate, current HEAD readiness unproven, parent OPEN.
+
 ## [2026-10-09] audit | Fresh default Retail probe and Mists receipts retained
 
 [Proof SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#fresh-default-probe-and-mists-runtime-audits--exact-epochs-parent-open) links sanitized compiler/runtime reports and retention manifest. Exact9cf Retail probe1PASS;903 Mists3 ordinary nestedPASS (not6/prefork), eight profiles37PASS/6FAIL. Selected owner quota errors0; three global errors remain, production10M unchanged.741 Nameplate fixture runtime PENDING; old two NotFound receipts not behavior RED. No native/work legitimacy/build-end attestation/whole-input seal; parent OPEN.

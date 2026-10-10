@@ -320,6 +320,26 @@ Privacy audited before copying: complete receipt text scan and JSON field/enviro
 
 [Submission-only receipt](../../../data/test-perf/evidence/prefork-exact-fixtures-2026-10-09/controller-independent/fullsuite-submission/submit.json) and complete `submit.stdout`/`submit.stderr` copied from `/tmp/wow-fullsuite-current/submit.*`: main submitted `full-suite-1791579722.service` at `96e88494a`, exit 0, UTC `2026-10-09T21:02:02.267456+00:00`–`21:02:02.293578+00:00`. This is submission success ONLY, not build/test success. [Captured CI](../../../data/test-perf/evidence/prefork-exact-fixtures-2026-10-09/controller-independent/fullsuite-submission/ci.json) at `2026-10-09T21:02:42.235031+00:00`: Test run `37990879626`, `in_progress`, conclusion null, NOT passing. Separate submission hash/privacy/exclusion manifests accompany these four byte-identical files. No suite polling/waiting, tests/builds, source edits, delegation, push/deploy or commit in this docs/retention audit.
 
+## Completed saved fullsuite 8e comparison — FAIL, parent OPEN
+
+[Sanitized audit](../evidence/fullsuite-8e-comparison/report.md), [aggregate](../evidence/fullsuite-8e-comparison/aggregate.json) and [hash manifest](../evidence/fullsuite-8e-comparison/hashmanifest.json) retained byte-identically from local `verification/fullsuite-8e-comparison`: three static files /46,411 bytes only; no raw streams or failure payloads copied. Hashes establish byte integrity, not historical immutability or executable/environment attestation. Audit timestamp October 10, 2026 04:00:13 UTC is October 9 US local.
+
+Saved source `8e6bc113f4c2c47ad693fa7fcb19ddf6bef48476`, run October 9, 2026 **21:54:05–22:11:34 -0500**, remains **FAIL: 3**, versus [saved96 FAIL:17](#completed-saved-fullsuite-96-comparison--fail-parent-open). Default Retail `retail-12-1-0` (including `retail-12-0-7`) is manifest/command inference only, not binary attestation.
+
+| Step | 8e passed / failed | Executed | Skipped | Exit |
+|---|---:|---:|---:|---:|
+| Integration | 10,677 /2 | 10,679 | 19 | 100 |
+| Prefork | 2,324 /1 | 2,325 | 0 | 1 |
+| Library | 1,993 /0 | 1,993 | 0 | 0 |
+
+Total **14,997 executed /14,994 passed /3 failed**, skips separate. Prefork includes main group2,321 (2,320 pass/1 fail) plus passing auxiliary groups2+1+1. Integration selection unchanged; library grows1,978→1,993. Remaining exact failures: `method_diff_coverage::diff_methods_extra_snapshot_matches_current_metatable_surface`, `method_diff_coverage::diff_methods_missing_snapshot_matches_current_metatable_surface`, and `blizzard_garrison_ui_loads::blizzard_garrison_ui_loads_explicitly_via_load_addon_without_errors`.
+
+Of96's17 failures, **11 same-selector revised-fixture passes**, **3 passing replacements with original selectors absent**, **3 persistent failures**. The report enumerates every selector and fixture change. This is not14 unchanged-contract runtime repairs, original-expectation proof, new native capture or zero-selection credit. **Zero new exact failures versus96**. Runner `new_failures` subtracts contemporaneous `master-latest.json`, whose identity/content is unarchived; Garrison's “new” label in both receipts does not mean new versus96.
+
+**Runner-provenance discrepancy recorded, not permission to deploy:**96 commands include build-lock wrapper and `--offline --locked`;8e omits them. Tracked runner snapshots are identical and include the wrapper; current installed runner differs and matches8e command shape. Historical installed bytes/environment/compiler/cache/executable linkage remain unattested. Concatenated stdout/stderr order is not event chronology.
+
+Later Mists code and source/runtime epochs remain [separate](#fresh-default-probe-and-mists-runtime-audits--exact-epochs-parent-open); this receipt does not supersede their failures or pending proofs. **Current HEAD readiness, native/profile parity and parent acceptance remain unproven/OPEN.** Docs/static retention only; no tests, builds, reruns, delegation, operations, source/AGENTS edits or push.
+
 ## Completed saved fullsuite 96 comparison — FAIL, parent OPEN
 
 [Independent comparison](../../../data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/fullsuite-96-comparison/report.md) covers saved `96e88494a6844833b79a574d37a2115dc03b44eb`, started 2026-10-09 16:02:03 -0500 and finished 16:54:27 -0500, before host restart. Integration **10,664 passed /15 failed**, prefork **2,324 passed /1 failed**, library **1,977 passed /1 failed**: completed **FAIL**, not runtime acceptance. Visible 14,982 invocations include 17 failures; 19 integration skips are separate. Against each fixed `3de874658` and `dd710c6fc` anchor, **zero new exact failure identities**. Garrison already failed in both anchors; the saved JSON's prefork “new” label is not comparison authority.

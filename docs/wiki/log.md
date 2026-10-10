@@ -1,3 +1,7 @@
+## [2026-10-09] audit | Saved 8e fullsuite comparison retained
+
+Updated [existing proof SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#completed-saved-fullsuite-8e-comparison--fail-parent-open), index and log; retained three byte-identical sanitized files/46,411bytes, no raw streams.8e FAIL3 versus96 FAIL17: integration10,677/2, prefork2,324/1, library1,993/0,19 skips; two snapshots/Garrison persist.11 revised-fixture same-selector passes and3 passing replacements do not prove unchanged-contract repairs; zero new versus96. Runner discrepancy recorded without deployment authorization; later Mists/source epochs separate, current HEAD unproven, parent OPEN. Main-only docs lane; no source/AGENTS changes, tests/builds/delegation/operations/push; `.code-index.db` variants preserved.
+
 ## [2026-10-09] audit | Independent method source gates retained
 
 [Metadata-snapshot SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#method-metadata-snapshots--independent-source-gates-only): byte-identical sanitized verifier report retained;31 gates, standard R31/P31/each C4/F9. Historical491 additions/96 removals differ from11,985 baseline rows. Shared second CanBe registrar/Forever transitive capability corrected;9cf/903 relevant code equals96. Handoff hashes seal original inspected pre-correction bytes, not current private reports. Source-only; no native/current runtime/full-suite acceptance, parent OPEN. Docs/report only; no source edits, builds/tests, delegation, operations or push.

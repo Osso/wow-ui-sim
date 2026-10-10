@@ -1,0 +1,231 @@
+{
+  "algorithm": "SHA-256",
+  "audited_at_utc": "2026-10-10T04:00:13.765840+00:00",
+  "inputs": [
+    {
+      "bytes": 2362,
+      "mtime_utc": "2026-10-09T21:54:27.375840+00:00",
+      "path": "/home/osso/Projects/wow/full-suite-results/96e88494a6844833b79a574d37a2115dc03b44eb.json",
+      "sha256": "f42e0bea3e86134aca1e62e4a7deaa20927ee977c2a5b7f37bdb9d338633c19f"
+    },
+    {
+      "bytes": 2119194,
+      "mtime_utc": "2026-10-09T21:54:27.372867+00:00",
+      "path": "/home/osso/Projects/wow/full-suite-results/96e88494a6844833b79a574d37a2115dc03b44eb.log",
+      "sha256": "96a9874d9a712839f7d631b666905b552d074c5c8232f22dad026b794a3a5e20"
+    },
+    {
+      "bytes": 970,
+      "mtime_utc": "2026-10-10T03:11:34.721280+00:00",
+      "path": "/home/osso/Projects/wow/full-suite-results/8e6bc113f4c2c47ad693fa7fcb19ddf6bef48476.json",
+      "sha256": "8cf2ecd3ff0ddadf250ec7bb9c64bf76f48e559e31d9336992f6d9e7d07c838e"
+    },
+    {
+      "bytes": 2095677,
+      "mtime_utc": "2026-10-10T03:11:34.717995+00:00",
+      "path": "/home/osso/Projects/wow/full-suite-results/8e6bc113f4c2c47ad693fa7fcb19ddf6bef48476.log",
+      "sha256": "4feca2fbb4a560b140e932e881905be003f335861781444f5396189fd33190bd"
+    },
+    {
+      "bytes": 5126,
+      "mtime_utc": "2026-10-08T11:33:49.306089+00:00",
+      "path": "/home/osso/bin/full-suite",
+      "role": "current reference only; not historical runner attestation",
+      "sha256": "0ac303eac456c237375c89d7f96f5c3123cfaaa0d3bee78f865dadf446995908"
+    },
+    {
+      "bytes": 3347,
+      "mtime_utc": "2026-09-09T05:54:30.062047+00:00",
+      "path": "/home/osso/AgentConfig/skills/verify/SKILL.md",
+      "role": "verifier instructions",
+      "sha256": "2796b694fb7fa6ca0492dc6f4ddef94d1ca1b75d9387ff8e48144aa579924770"
+    }
+  ],
+  "note": "No raw log/payload copies. Manifest self-hash excluded. SHA-256 is byte integrity, not provenance attestation.",
+  "outputs": [
+    {
+      "bytes": 27191,
+      "mtime_utc": "2026-10-10T04:00:13.765775+00:00",
+      "path": "/home/osso/.local/state/wow-ui-sim/verification/fullsuite-8e-comparison/aggregate.json",
+      "sha256": "44828cd55801b509077dee0c49078396b17287cee46775895ed673d912d7bd01"
+    },
+    {
+      "bytes": 9059,
+      "mtime_utc": "2026-10-10T04:00:13.765831+00:00",
+      "path": "/home/osso/.local/state/wow-ui-sim/verification/fullsuite-8e-comparison/report.md",
+      "sha256": "4e1b7e46a6bedc1ec91ffeb49d29ba71be028687802b900459d576e5749bc4e3"
+    }
+  ],
+  "source_snapshots": [
+    {
+      "bytes_utf8": 12238,
+      "git_object": "96e88494a6844833b79a574d37a2115dc03b44eb:Cargo.toml",
+      "sha256_utf8": "1c56b9a80149ea739d8fc647391b4c45dc32ad70cf5ec7a3576dba92989f3341"
+    },
+    {
+      "bytes_utf8": 685,
+      "git_object": "96e88494a6844833b79a574d37a2115dc03b44eb:.cargo/config.toml",
+      "sha256_utf8": "77d5c6fce277bdfc1a97ed3425170f552e5db6143d64e45abf1f6b522b973ead"
+    },
+    {
+      "bytes_utf8": 6270,
+      "git_object": "96e88494a6844833b79a574d37a2115dc03b44eb:tools/full_suite.py",
+      "sha256_utf8": "0158b69453835eb22cf1d0b2cbb0b957c78405aca2853d11e302b7f5c4d06541"
+    },
+    {
+      "bytes_utf8": 1017,
+      "git_object": "96e88494a6844833b79a574d37a2115dc03b44eb:tests/c_spell_static_fallbacks.rs",
+      "sha256_utf8": "459346d3d91c255f26ec8b6c64fa123bd1059641ad4dda5ead618c7b45a5ab00"
+    },
+    {
+      "bytes_utf8": 15091,
+      "git_object": "96e88494a6844833b79a574d37a2115dc03b44eb:tests/spell_api.rs",
+      "sha256_utf8": "405f7564d9068ea502e3c05b992cebd983c0a845e7f2d7922b3122fa118dc6e1"
+    },
+    {
+      "bytes_utf8": 2246,
+      "git_object": "96e88494a6844833b79a574d37a2115dc03b44eb:tests/wowforever_cooldown_categories.rs",
+      "sha256_utf8": "c06dcdc69eb9625cadfc9cfc5bd6117633eafeeeac85c7d054b447112d8fed0b"
+    },
+    {
+      "bytes_utf8": 15011,
+      "git_object": "96e88494a6844833b79a574d37a2115dc03b44eb:tests/blizzard_ui/blizzard_accountstore/behavior_currency_format.rs",
+      "sha256_utf8": "610151d35a5042c71a022d5631b5e8f6336fb8f938ffcfbb8e8425456b1575d4"
+    },
+    {
+      "bytes_utf8": 19890,
+      "git_object": "96e88494a6844833b79a574d37a2115dc03b44eb:tests/blizzard_ui/blizzard_achievementui/behavior_search_filter.rs",
+      "sha256_utf8": "b712d75bec62a0f7dc22a783c31900552cacd511c77eeea1c53a881bb16dfc20"
+    },
+    {
+      "bytes_utf8": 14627,
+      "git_object": "96e88494a6844833b79a574d37a2115dc03b44eb:tests/edit_mode_api/enums.rs",
+      "sha256_utf8": "db3db6c5e6bf0a67927db7edcba30e6b7f412133f1a25c61a0b6e36734802034"
+    },
+    {
+      "bytes_utf8": 17961,
+      "git_object": "96e88494a6844833b79a574d37a2115dc03b44eb:tests/patch_12_0_7_b23_b28.rs",
+      "sha256_utf8": "67f1df98a5bbb198706fdd2c6eaba8e92d3245ef3c60ab4d234e4c4937c5e007"
+    },
+    {
+      "bytes_utf8": 7137,
+      "git_object": "96e88494a6844833b79a574d37a2115dc03b44eb:tests/tooltip_text_layout.rs",
+      "sha256_utf8": "0bf5b907781836da793bb5a7cfd067b74de7500f95bf93e8ec20f3b7eb3cb393"
+    },
+    {
+      "bytes_utf8": 8309,
+      "git_object": "96e88494a6844833b79a574d37a2115dc03b44eb:tests/toplevel_render_groups.rs",
+      "sha256_utf8": "daff142a6270fb91c730b07968bb2dcdd8af4a6a73723099a1aae2791617bb5c"
+    },
+    {
+      "bytes_utf8": 24798,
+      "git_object": "96e88494a6844833b79a574d37a2115dc03b44eb:tests/utility_api.rs",
+      "sha256_utf8": "d81db513e4be2e0b48b4a401da128668e7fadffa618ebf6ce7192a4fe6631585"
+    },
+    {
+      "bytes_utf8": 1808,
+      "git_object": "96e88494a6844833b79a574d37a2115dc03b44eb:tests/wowforever_table.rs",
+      "sha256_utf8": "55501ad4bdf466acf24126d6f2fc1456bf61a7c3a719d54f32d71314f5169814"
+    },
+    {
+      "bytes_utf8": 7209,
+      "git_object": "96e88494a6844833b79a574d37a2115dc03b44eb:src/lua_api/workarounds/temporary/debug_environment_defaults.rs",
+      "sha256_utf8": "d05b9914405e7ebf23cc0585cfabb7aab9e292865112ea9a092e7f8e7780827e"
+    },
+    {
+      "bytes_utf8": 10318,
+      "git_object": "96e88494a6844833b79a574d37a2115dc03b44eb:tests/method_diff_coverage.rs",
+      "sha256_utf8": "a1dc2c865fee737b3746e00d80b44cec5db23b16712ce2ffeda441e1520d324d"
+    },
+    {
+      "bytes_utf8": 25716,
+      "git_object": "96e88494a6844833b79a574d37a2115dc03b44eb:tests/blizzard_garrison_ui_loads.rs",
+      "sha256_utf8": "4be5111ea03c25f3dac29564f39ffd3de1dd861db6fbd78be558beaff4b7beab"
+    },
+    {
+      "bytes_utf8": 12238,
+      "git_object": "8e6bc113f4c2c47ad693fa7fcb19ddf6bef48476:Cargo.toml",
+      "sha256_utf8": "1c56b9a80149ea739d8fc647391b4c45dc32ad70cf5ec7a3576dba92989f3341"
+    },
+    {
+      "bytes_utf8": 685,
+      "git_object": "8e6bc113f4c2c47ad693fa7fcb19ddf6bef48476:.cargo/config.toml",
+      "sha256_utf8": "77d5c6fce277bdfc1a97ed3425170f552e5db6143d64e45abf1f6b522b973ead"
+    },
+    {
+      "bytes_utf8": 6270,
+      "git_object": "8e6bc113f4c2c47ad693fa7fcb19ddf6bef48476:tools/full_suite.py",
+      "sha256_utf8": "0158b69453835eb22cf1d0b2cbb0b957c78405aca2853d11e302b7f5c4d06541"
+    },
+    {
+      "bytes_utf8": 1700,
+      "git_object": "8e6bc113f4c2c47ad693fa7fcb19ddf6bef48476:tests/c_spell_static_fallbacks.rs",
+      "sha256_utf8": "d9a6cb7b6c057f89896b862ddd62f14da2211b7ae8967b1b1c11c1557accbeef"
+    },
+    {
+      "bytes_utf8": 15738,
+      "git_object": "8e6bc113f4c2c47ad693fa7fcb19ddf6bef48476:tests/spell_api.rs",
+      "sha256_utf8": "48f695e9839f06579e0341dd7ea5dd8f6363b15733e0fbb907dcb529a923dac9"
+    },
+    {
+      "bytes_utf8": 3373,
+      "git_object": "8e6bc113f4c2c47ad693fa7fcb19ddf6bef48476:tests/wowforever_cooldown_categories.rs",
+      "sha256_utf8": "9a586fd0e3ac943de15aa93b8a94f285e59695455f41447138303170ecab55b0"
+    },
+    {
+      "bytes_utf8": 15411,
+      "git_object": "8e6bc113f4c2c47ad693fa7fcb19ddf6bef48476:tests/blizzard_ui/blizzard_accountstore/behavior_currency_format.rs",
+      "sha256_utf8": "d7d4d775bbe0401286087c73c83350f8a6405a83990b498a5a15d26548decba4"
+    },
+    {
+      "bytes_utf8": 20216,
+      "git_object": "8e6bc113f4c2c47ad693fa7fcb19ddf6bef48476:tests/blizzard_ui/blizzard_achievementui/behavior_search_filter.rs",
+      "sha256_utf8": "375e8efe232d4b84bc3586b3714e6f00323a07fbe4aaa046306cab982a23d333"
+    },
+    {
+      "bytes_utf8": 14853,
+      "git_object": "8e6bc113f4c2c47ad693fa7fcb19ddf6bef48476:tests/edit_mode_api/enums.rs",
+      "sha256_utf8": "c5bf3ff4448239ac01e89222e660871ec1fd855744127ddb9b689b4c7bacf42b"
+    },
+    {
+      "bytes_utf8": 17906,
+      "git_object": "8e6bc113f4c2c47ad693fa7fcb19ddf6bef48476:tests/patch_12_0_7_b23_b28.rs",
+      "sha256_utf8": "2954cb7a4f1b9672d682c09eeab0eb4ce975a36b863aca49dac1407f23f2ff61"
+    },
+    {
+      "bytes_utf8": 7271,
+      "git_object": "8e6bc113f4c2c47ad693fa7fcb19ddf6bef48476:tests/tooltip_text_layout.rs",
+      "sha256_utf8": "90b9b71c8b087eea1d3b181166ad4289bbd5f855d4afc3df4d3828041bb5c287"
+    },
+    {
+      "bytes_utf8": 9316,
+      "git_object": "8e6bc113f4c2c47ad693fa7fcb19ddf6bef48476:tests/toplevel_render_groups.rs",
+      "sha256_utf8": "d8852841e969bbfc1dbaf9d19354b8d4e8a33ef5849aad4161c3fdd8c8cdfd42"
+    },
+    {
+      "bytes_utf8": 24908,
+      "git_object": "8e6bc113f4c2c47ad693fa7fcb19ddf6bef48476:tests/utility_api.rs",
+      "sha256_utf8": "65a27193e474479fd489e0fe69a3e9962a00d19720f8292d06c4d7ce0b9e36ad"
+    },
+    {
+      "bytes_utf8": 2432,
+      "git_object": "8e6bc113f4c2c47ad693fa7fcb19ddf6bef48476:tests/wowforever_table.rs",
+      "sha256_utf8": "4c7ce90399dbb2e9cc6e3080b451b99fcf707b3a764e1348935596fa25bd3ea7"
+    },
+    {
+      "bytes_utf8": 9132,
+      "git_object": "8e6bc113f4c2c47ad693fa7fcb19ddf6bef48476:src/lua_api/workarounds/temporary/debug_environment_defaults.rs",
+      "sha256_utf8": "3074d23b34caeb84498ef50652887b915d4b94359648d11bcb6a8d368806247f"
+    },
+    {
+      "bytes_utf8": 10318,
+      "git_object": "8e6bc113f4c2c47ad693fa7fcb19ddf6bef48476:tests/method_diff_coverage.rs",
+      "sha256_utf8": "a1dc2c865fee737b3746e00d80b44cec5db23b16712ce2ffeda441e1520d324d"
+    },
+    {
+      "bytes_utf8": 25716,
+      "git_object": "8e6bc113f4c2c47ad693fa7fcb19ddf6bef48476:tests/blizzard_garrison_ui_loads.rs",
+      "sha256_utf8": "4be5111ea03c25f3dac29564f39ffd3de1dd861db6fbd78be558beaff4b7beab"
+    }
+  ]
+}

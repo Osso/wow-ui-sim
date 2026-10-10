@@ -1,0 +1,685 @@
+{
+  "audit_kind": "independent saved-artifact comparison; no execution",
+  "exclusions": [
+    "No reruns, tests, builds, backend calls, delegation, fetch, deployment or operational changes.",
+    "No current HEAD acceptance, Mists/profile matrix acceptance, or full native-client parity claim.",
+    "Fixture changes are not proof of runtime bug repairs or unchanged-contract passes."
+  ],
+  "integrity": {
+    "complete_inputs_consumed": true,
+    "json_log_counts_failures_exits_consistent": true,
+    "provenance_limit": "Hashes establish bytes audited, not historical immutability or cryptographic binding to built executables. Source SHA is receipt attribution plus available Git object, not binary attestation. Environment, compiler version, exact host, vendor cache/assets and run-time baseline not archived. stdout+stderr concatenation is not chronological interleaving.",
+    "runner_difference": "96 commands use build-lock.sh --offline --locked; 8e commands do not. Both source snapshots contain identical tracked runner; current installed /home/osso/bin/full-suite lacks that wrapper/flags and matches 8e command shape, but historical installed bytes are not attested.",
+    "terminal_summaries_present": true,
+    "zero_selection_pass_credit": false
+  },
+  "new_failures_semantics": "Runner subtracts master-latest.json failures at run time, not necessarily 96 failures. Baseline SHA/content not recorded; contemporaneous baseline unavailable. Garrison listed as new by both receipts, but persistent vs 96. Actual newly failing selectors vs 96: zero.",
+  "original_failure_comparison": [
+    {
+      "classification": "same_selector_pass_revised_fixture",
+      "current_original": {
+        "log_line": 2841,
+        "status": "PASS"
+      },
+      "note": "Expected enUS grouping changed from 1234 to 1,234; locale assertion added. Revised local fixture, not new native capture.",
+      "original_pass_credit": true,
+      "original_selected_in_8e": true,
+      "original_selector": "blizzard_ui_blizzard_accountstore::behavior_currency_format::format_currency_display_returns_amount_space_texture_markup_with_size_twelve_twelve_zero_zero",
+      "prior": {
+        "log_line": 2843,
+        "status": "FAIL"
+      },
+      "step": "integration"
+    },
+    {
+      "classification": "same_selector_pass_revised_fixture",
+      "current_original": {
+        "log_line": 2947,
+        "status": "PASS"
+      },
+      "note": "OnTextChanged binding temporarily cleared/restored to avoid double-driving handler after SetText.",
+      "original_pass_credit": true,
+      "original_selected_in_8e": true,
+      "original_selector": "blizzard_ui_blizzard_achievementui::behavior_search_filter::search_box_text_changed_calls_set_achievement_search_string_when_query_meets_min_length",
+      "prior": {
+        "log_line": 2979,
+        "status": "FAIL"
+      },
+      "step": "integration"
+    },
+    {
+      "classification": "replaced_or_epoch_gated_original",
+      "current_original": null,
+      "note": "Renamed/replaced inert shim expectation with seeded charge-state values and retirement-aware Maw surface query.",
+      "original_pass_credit": false,
+      "original_selected_in_8e": false,
+      "original_selector": "c_spell_static_fallbacks::test_spell_static_fallback_shims_return_inert_values",
+      "prior": {
+        "log_line": 4890,
+        "status": "FAIL"
+      },
+      "replacement_pass_credit": true,
+      "replacement_result": {
+        "log_line": 4828,
+        "status": "PASS"
+      },
+      "replacement_selector": "c_spell_static_fallbacks::test_spell_override_maw_epoch_and_explicit_charge_state",
+      "source_path": "tests/c_spell_static_fallbacks.rs",
+      "step": "integration"
+    },
+    {
+      "classification": "same_selector_pass_revised_fixture",
+      "current_original": {
+        "log_line": 5591,
+        "status": "PASS"
+      },
+      "note": "Enum fixture now checks BuffIconSize=22, MaxValue=22, NumValues=23.",
+      "original_pass_credit": true,
+      "original_selected_in_8e": true,
+      "original_selector": "edit_mode_api::enums::unit_frame_edit_mode_setting_meta_includes_big_defensive_icon_size",
+      "prior": {
+        "log_line": 5683,
+        "status": "FAIL"
+      },
+      "step": "integration"
+    },
+    {
+      "classification": "persistent_failure",
+      "current_original": {
+        "log_line": 6878,
+        "status": "FAIL"
+      },
+      "note": "Still FAIL; no repair credit.",
+      "original_pass_credit": false,
+      "original_selected_in_8e": true,
+      "original_selector": "method_diff_coverage::diff_methods_extra_snapshot_matches_current_metatable_surface",
+      "prior": {
+        "log_line": 6947,
+        "status": "FAIL"
+      },
+      "step": "integration"
+    },
+    {
+      "classification": "persistent_failure",
+      "current_original": {
+        "log_line": 6822,
+        "status": "FAIL"
+      },
+      "note": "Still FAIL; no repair credit.",
+      "original_pass_credit": false,
+      "original_selected_in_8e": true,
+      "original_selector": "method_diff_coverage::diff_methods_missing_snapshot_matches_current_metatable_surface",
+      "prior": {
+        "log_line": 7567,
+        "status": "FAIL"
+      },
+      "step": "integration"
+    },
+    {
+      "classification": "same_selector_pass_revised_fixture",
+      "current_original": {
+        "log_line": 8218,
+        "status": "PASS"
+      },
+      "note": "Physical-file fixture uses owned tempdir instead of externally provisioned osso-test audit directory.",
+      "original_pass_credit": true,
+      "original_selected_in_8e": true,
+      "original_selector": "patch_12_0_7_b23_b28::b28_registered_absent_file_and_unregistered_present_file_are_not_io_queries",
+      "prior": {
+        "log_line": 8343,
+        "status": "FAIL"
+      },
+      "step": "integration"
+    },
+    {
+      "classification": "replaced_or_epoch_gated_original",
+      "current_original": null,
+      "note": "Replaced callable-stub expectation with epoch-aware member absence at retail-12-0-7 and later.",
+      "original_pass_credit": false,
+      "original_selected_in_8e": false,
+      "original_selector": "spell_api::test_spell_get_maw_power_border_atlas_by_spell_id_is_stubbed",
+      "prior": {
+        "log_line": 9349,
+        "status": "FAIL"
+      },
+      "replacement_pass_credit": true,
+      "replacement_result": {
+        "log_line": 9194,
+        "status": "PASS"
+      },
+      "replacement_selector": "spell_api::test_spell_get_maw_power_border_atlas_by_spell_id_follows_retirement_epoch",
+      "source_path": "tests/spell_api.rs",
+      "step": "integration"
+    },
+    {
+      "classification": "same_selector_pass_revised_fixture",
+      "current_original": {
+        "log_line": 9198,
+        "status": "PASS"
+      },
+      "note": "Charge fixture explicitly seeds spell 19750 before asserting a table return.",
+      "original_pass_credit": true,
+      "original_selected_in_8e": true,
+      "original_selector": "spell_api::test_spell_get_spell_charges",
+      "prior": {
+        "log_line": 9378,
+        "status": "FAIL"
+      },
+      "step": "integration"
+    },
+    {
+      "classification": "same_selector_pass_revised_fixture",
+      "current_original": {
+        "log_line": 10466,
+        "status": "PASS"
+      },
+      "note": "Tooltip explicitly shown before glyph-backed sizing/clamp assertion.",
+      "original_pass_credit": true,
+      "original_selected_in_8e": true,
+      "original_selector": "tooltip_text_layout::test_tooltip_layout_is_clamped_to_viewport_edges",
+      "prior": {
+        "log_line": 10679,
+        "status": "FAIL"
+      },
+      "step": "integration"
+    },
+    {
+      "classification": "same_selector_pass_revised_fixture",
+      "current_original": {
+        "log_line": 10517,
+        "status": "PASS"
+      },
+      "note": "Tooltip explicitly shown; visibility/order diagnostics strengthened. Model layering fixture, not new native capture.",
+      "original_pass_credit": true,
+      "original_selected_in_8e": true,
+      "original_selector": "toplevel_render_groups::native_controls_keep_unraised_and_raised_groups_in_owner_strata",
+      "prior": {
+        "log_line": 10764,
+        "status": "FAIL"
+      },
+      "step": "integration"
+    },
+    {
+      "classification": "same_selector_pass_revised_fixture",
+      "current_original": {
+        "log_line": 10520,
+        "status": "PASS"
+      },
+      "note": "Tooltip explicitly shown; visibility/order diagnostics strengthened. Model layering fixture, not new native capture.",
+      "original_pass_credit": true,
+      "original_selected_in_8e": true,
+      "original_selector": "toplevel_render_groups::screen_roots_do_not_capture_independent_render_groups",
+      "prior": {
+        "log_line": 10795,
+        "status": "FAIL"
+      },
+      "step": "integration"
+    },
+    {
+      "classification": "same_selector_pass_revised_fixture",
+      "current_original": {
+        "log_line": 10954,
+        "status": "PASS"
+      },
+      "note": "Missing table.create hint rejection checked; valid zero-hint case uses table.create(0).",
+      "original_pass_credit": true,
+      "original_selected_in_8e": true,
+      "original_selector": "utility_api::test_table_create_returns_empty_mutable_tables_for_capacity_variants",
+      "prior": {
+        "log_line": 11257,
+        "status": "FAIL"
+      },
+      "step": "integration"
+    },
+    {
+      "classification": "replaced_or_epoch_gated_original",
+      "current_original": null,
+      "note": "Original remains under a non-retail-12-1-0 cfg; new retail epoch fixture checks categories 0..8 and metadata.",
+      "original_pass_credit": false,
+      "original_selected_in_8e": false,
+      "original_selector": "wowforever_cooldown_categories::forever_cooldown_categories_preserve_other_profiles",
+      "prior": {
+        "log_line": 11454,
+        "status": "FAIL"
+      },
+      "replacement_pass_credit": true,
+      "replacement_result": {
+        "log_line": 11122,
+        "status": "PASS"
+      },
+      "replacement_selector": "wowforever_cooldown_categories::forever_cooldown_categories_preserve_retail_12_1_0_epoch",
+      "source_path": "tests/wowforever_cooldown_categories.rs",
+      "step": "integration"
+    },
+    {
+      "classification": "same_selector_pass_revised_fixture",
+      "current_original": {
+        "log_line": 11133,
+        "status": "PASS"
+      },
+      "note": "table.count checked against retail three-value contract instead of universal absence.",
+      "original_pass_credit": true,
+      "original_selected_in_8e": true,
+      "original_selector": "wowforever_table::wowforever_table_does_not_leak_into_earlier_profiles",
+      "prior": {
+        "log_line": 11496,
+        "status": "FAIL"
+      },
+      "step": "integration"
+    },
+    {
+      "classification": "persistent_failure",
+      "current_original": {
+        "log_line": 12032,
+        "status": "FAIL"
+      },
+      "note": "Still FAIL; no repair credit.",
+      "original_pass_credit": false,
+      "original_selected_in_8e": true,
+      "original_selector": "blizzard_garrison_ui_loads::blizzard_garrison_ui_loads_explicitly_via_load_addon_without_errors",
+      "prior": {
+        "log_line": 12437,
+        "status": "FAIL"
+      },
+      "step": "prefork"
+    },
+    {
+      "classification": "same_selector_pass_revised_fixture",
+      "current_original": {
+        "log_line": 15903,
+        "status": "PASS"
+      },
+      "note": "Debug fixture unwraps secret value before invoking, checks identity/secrecy; tracing added.",
+      "original_pass_credit": true,
+      "original_selected_in_8e": true,
+      "original_selector": "lua_api::workarounds::temporary::debug_environment_defaults::tests::installs_debug_environment_defaults",
+      "prior": {
+        "log_line": 16302,
+        "status": "FAIL"
+      },
+      "step": "lib"
+    }
+  ],
+  "prior_source_scope": "96e88494a6844833b79a574d37a2115dc03b44eb",
+  "runs": {
+    "8e6bc113f4c2c47ad693fa7fcb19ddf6bef48476": {
+      "counts": {
+        "failed": 3,
+        "passed": 14994,
+        "run": 14997,
+        "skipped": 19
+      },
+      "finished": "2026-10-09T22:11:34-0500",
+      "log_lines": 16476,
+      "profile": {
+        "cargo_build_profile_observed": "test [optimized + debuginfo]",
+        "features_from_command": "default (no explicit feature override)",
+        "qualification": "Manifest/command inference, not archived environment or executable feature attestation; not Mists, PTR, current HEAD, or native-client parity.",
+        "source_defaults": [
+          "sound",
+          "gui",
+          "casc",
+          "client-retail"
+        ],
+        "source_epoch": "retail-12-1-0 (includes retail-12-0-7)"
+      },
+      "receipt_new_failures": {
+        "integration": [],
+        "lib": [],
+        "prefork": [
+          "blizzard_garrison_ui_loads::blizzard_garrison_ui_loads_explicitly_via_load_addon_without_errors"
+        ]
+      },
+      "ref": "8e6bc113f4c2c47ad693fa7fcb19ddf6bef48476",
+      "source_commit": {
+        "committed": "2026-10-09T21:48:55-05:00",
+        "sha": "8e6bc113f4c2c47ad693fa7fcb19ddf6bef48476",
+        "tree": "4df0c10e77db716c8e887ed83a3e91843dcc8a00"
+      },
+      "source_sha_receipt": "8e6bc113f4c2c47ad693fa7fcb19ddf6bef48476",
+      "started": "2026-10-09T21:54:05-0500",
+      "status": "FAIL",
+      "steps": {
+        "integration": {
+          "command": "cargo nextest run --test integration --no-fail-fast --test-threads 16",
+          "counts": {
+            "failed": 2,
+            "passed": 10677,
+            "run": 10679,
+            "skipped": 19
+          },
+          "duplicate_execution_records": [],
+          "exit": 100,
+          "failure_source_locations": [
+            "/home/osso/Projects/wow/full-suite-checkout/tests/method_diff_coverage.rs:264:5"
+          ],
+          "failures": [
+            "method_diff_coverage::diff_methods_extra_snapshot_matches_current_metatable_surface",
+            "method_diff_coverage::diff_methods_missing_snapshot_matches_current_metatable_surface"
+          ],
+          "groups": [
+            {
+              "failed": 2,
+              "log_line": 11382,
+              "passed": 10677,
+              "run": 10679,
+              "skipped": 19
+            }
+          ],
+          "seconds": 856.2,
+          "summary_consistent": true,
+          "warning_lines": 7
+        },
+        "lib": {
+          "command": "cargo nextest run --lib --no-fail-fast --test-threads 16",
+          "counts": {
+            "failed": 0,
+            "passed": 1993,
+            "run": 1993,
+            "skipped": 0
+          },
+          "duplicate_execution_records": [],
+          "exit": 0,
+          "failure_source_locations": [],
+          "failures": [],
+          "groups": [
+            {
+              "failed": 0,
+              "log_line": 16475,
+              "passed": 1993,
+              "run": 1993,
+              "skipped": 0
+            }
+          ],
+          "seconds": 102.3,
+          "summary_consistent": true,
+          "warning_lines": 7
+        },
+        "prefork": {
+          "command": "cargo test --test prefork_full_ui",
+          "counts": {
+            "failed": 1,
+            "passed": 2324,
+            "run": 2325,
+            "skipped": 0
+          },
+          "duplicate_execution_records": [],
+          "exit": 1,
+          "failure_source_locations": [
+            "/home/osso/Projects/wow/full-suite-checkout/tests/blizzard_garrison_ui_loads.rs:286:5"
+          ],
+          "failures": [
+            "blizzard_garrison_ui_loads::blizzard_garrison_ui_loads_explicitly_via_load_addon_without_errors"
+          ],
+          "groups": [
+            {
+              "failed": 1,
+              "log_line": 13959,
+              "passed": 2320,
+              "run": 2321,
+              "skipped": 0
+            },
+            {
+              "failed": 0,
+              "log_line": 13964,
+              "passed": 2,
+              "run": 2,
+              "skipped": 0
+            },
+            {
+              "failed": 0,
+              "log_line": 13968,
+              "passed": 1,
+              "run": 1,
+              "skipped": 0
+            },
+            {
+              "failed": 0,
+              "log_line": 13972,
+              "passed": 1,
+              "run": 1,
+              "skipped": 0
+            }
+          ],
+          "seconds": 90.9,
+          "summary_consistent": true,
+          "warning_lines": 7
+        }
+      },
+      "sum_step_seconds": 1049.4,
+      "wall_seconds": 1049.0
+    },
+    "96e88494a6844833b79a574d37a2115dc03b44eb": {
+      "counts": {
+        "failed": 17,
+        "passed": 14965,
+        "run": 14982,
+        "skipped": 19
+      },
+      "finished": "2026-10-09T16:54:27-0500",
+      "log_lines": 16901,
+      "profile": {
+        "cargo_build_profile_observed": "test [optimized + debuginfo]",
+        "features_from_command": "default (no explicit feature override)",
+        "qualification": "Manifest/command inference, not archived environment or executable feature attestation; not Mists, PTR, current HEAD, or native-client parity.",
+        "source_defaults": [
+          "sound",
+          "gui",
+          "casc",
+          "client-retail"
+        ],
+        "source_epoch": "retail-12-1-0 (includes retail-12-0-7)"
+      },
+      "receipt_new_failures": {
+        "integration": [],
+        "lib": [],
+        "prefork": [
+          "blizzard_garrison_ui_loads::blizzard_garrison_ui_loads_explicitly_via_load_addon_without_errors"
+        ]
+      },
+      "ref": "96e88494a6844833b79a574d37a2115dc03b44eb",
+      "source_commit": {
+        "committed": "2026-10-09T15:56:12-05:00",
+        "sha": "96e88494a6844833b79a574d37a2115dc03b44eb",
+        "tree": "571c1561a4930a55681ebeae804e501c0378955c"
+      },
+      "source_sha_receipt": "96e88494a6844833b79a574d37a2115dc03b44eb",
+      "started": "2026-10-09T16:02:03-0500",
+      "status": "FAIL",
+      "steps": {
+        "integration": {
+          "command": "/home/osso/.worktrees/build-lock.sh cargo nextest run --test integration --no-fail-fast --test-threads 16 --offline --locked",
+          "counts": {
+            "failed": 15,
+            "passed": 10664,
+            "run": 10679,
+            "skipped": 19
+          },
+          "duplicate_execution_records": [],
+          "exit": 100,
+          "failure_source_locations": [
+            "/home/osso/Projects/wow/full-suite-checkout/tests/blizzard_ui/blizzard_accountstore/behavior_currency_format.rs:206:9",
+            "/home/osso/Projects/wow/full-suite-checkout/tests/blizzard_ui/blizzard_achievementui/behavior_search_filter.rs:174:9",
+            "/home/osso/Projects/wow/full-suite-checkout/tests/c_spell_static_fallbacks.rs:25:10",
+            "/home/osso/Projects/wow/full-suite-checkout/tests/edit_mode_api/enums.rs:44:5",
+            "/home/osso/Projects/wow/full-suite-checkout/tests/method_diff_coverage.rs:264:5",
+            "/home/osso/Projects/wow/full-suite-checkout/tests/patch_12_0_7_b23_b28.rs:348:10",
+            "/home/osso/Projects/wow/full-suite-checkout/tests/spell_api.rs:375:5",
+            "/home/osso/Projects/wow/full-suite-checkout/tests/spell_api.rs:474:10",
+            "/home/osso/Projects/wow/full-suite-checkout/tests/tooltip_text_layout.rs:190:5",
+            "/home/osso/Projects/wow/full-suite-checkout/tests/toplevel_render_groups.rs:63:64",
+            "/home/osso/Projects/wow/full-suite-checkout/tests/utility_api.rs:286:10",
+            "/home/osso/Projects/wow/full-suite-checkout/tests/wowforever_cooldown_categories.rs:58:6",
+            "/home/osso/Projects/wow/full-suite-checkout/tests/wowforever_table.rs:47:6"
+          ],
+          "failures": [
+            "blizzard_ui_blizzard_accountstore::behavior_currency_format::format_currency_display_returns_amount_space_texture_markup_with_size_twelve_twelve_zero_zero",
+            "blizzard_ui_blizzard_achievementui::behavior_search_filter::search_box_text_changed_calls_set_achievement_search_string_when_query_meets_min_length",
+            "c_spell_static_fallbacks::test_spell_static_fallback_shims_return_inert_values",
+            "edit_mode_api::enums::unit_frame_edit_mode_setting_meta_includes_big_defensive_icon_size",
+            "method_diff_coverage::diff_methods_extra_snapshot_matches_current_metatable_surface",
+            "method_diff_coverage::diff_methods_missing_snapshot_matches_current_metatable_surface",
+            "patch_12_0_7_b23_b28::b28_registered_absent_file_and_unregistered_present_file_are_not_io_queries",
+            "spell_api::test_spell_get_maw_power_border_atlas_by_spell_id_is_stubbed",
+            "spell_api::test_spell_get_spell_charges",
+            "tooltip_text_layout::test_tooltip_layout_is_clamped_to_viewport_edges",
+            "toplevel_render_groups::native_controls_keep_unraised_and_raised_groups_in_owner_strata",
+            "toplevel_render_groups::screen_roots_do_not_capture_independent_render_groups",
+            "utility_api::test_table_create_returns_empty_mutable_tables_for_capacity_variants",
+            "wowforever_cooldown_categories::forever_cooldown_categories_preserve_other_profiles",
+            "wowforever_table::wowforever_table_does_not_leak_into_earlier_profiles"
+          ],
+          "groups": [
+            {
+              "failed": 15,
+              "log_line": 11774,
+              "passed": 10664,
+              "run": 10679,
+              "skipped": 19
+            }
+          ],
+          "seconds": 1477.6,
+          "summary_consistent": true,
+          "warning_lines": 7
+        },
+        "lib": {
+          "command": "/home/osso/.worktrees/build-lock.sh cargo nextest run --lib --no-fail-fast --test-threads 16 --offline --locked",
+          "counts": {
+            "failed": 1,
+            "passed": 1977,
+            "run": 1978,
+            "skipped": 0
+          },
+          "duplicate_execution_records": [],
+          "exit": 100,
+          "failure_source_locations": [
+            "src/lua_api/workarounds/temporary/debug_environment_defaults.rs:240:14"
+          ],
+          "failures": [
+            "lua_api::workarounds::temporary::debug_environment_defaults::tests::installs_debug_environment_defaults"
+          ],
+          "groups": [
+            {
+              "failed": 1,
+              "log_line": 16898,
+              "passed": 1977,
+              "run": 1978,
+              "skipped": 0
+            }
+          ],
+          "seconds": 844.7,
+          "summary_consistent": true,
+          "warning_lines": 7
+        },
+        "prefork": {
+          "command": "/home/osso/.worktrees/build-lock.sh cargo test --test prefork_full_ui --offline --locked",
+          "counts": {
+            "failed": 1,
+            "passed": 2324,
+            "run": 2325,
+            "skipped": 0
+          },
+          "duplicate_execution_records": [],
+          "exit": 1,
+          "failure_source_locations": [
+            "/home/osso/Projects/wow/full-suite-checkout/tests/blizzard_garrison_ui_loads.rs:286:5"
+          ],
+          "failures": [
+            "blizzard_garrison_ui_loads::blizzard_garrison_ui_loads_explicitly_via_load_addon_without_errors"
+          ],
+          "groups": [
+            {
+              "failed": 1,
+              "log_line": 14364,
+              "passed": 2320,
+              "run": 2321,
+              "skipped": 0
+            },
+            {
+              "failed": 0,
+              "log_line": 14369,
+              "passed": 2,
+              "run": 2,
+              "skipped": 0
+            },
+            {
+              "failed": 0,
+              "log_line": 14373,
+              "passed": 1,
+              "run": 1,
+              "skipped": 0
+            },
+            {
+              "failed": 0,
+              "log_line": 14377,
+              "passed": 1,
+              "run": 1,
+              "skipped": 0
+            }
+          ],
+          "seconds": 821.7,
+          "summary_consistent": true,
+          "warning_lines": 7
+        }
+      },
+      "sum_step_seconds": 3144.0,
+      "wall_seconds": 3144.0
+    }
+  },
+  "selector_deltas": {
+    "integration": {
+      "new_failures_vs_96": [],
+      "persistent_failures": [
+        "method_diff_coverage::diff_methods_extra_snapshot_matches_current_metatable_surface",
+        "method_diff_coverage::diff_methods_missing_snapshot_matches_current_metatable_surface"
+      ],
+      "selected_only_in_8e": [
+        "c_spell_static_fallbacks::test_spell_override_maw_epoch_and_explicit_charge_state",
+        "spell_api::test_spell_get_maw_power_border_atlas_by_spell_id_follows_retirement_epoch",
+        "wowforever_cooldown_categories::forever_cooldown_categories_preserve_retail_12_1_0_epoch"
+      ],
+      "selected_only_in_96": [
+        "c_spell_static_fallbacks::test_spell_static_fallback_shims_return_inert_values",
+        "spell_api::test_spell_get_maw_power_border_atlas_by_spell_id_is_stubbed",
+        "wowforever_cooldown_categories::forever_cooldown_categories_preserve_other_profiles"
+      ]
+    },
+    "lib": {
+      "new_failures_vs_96": [],
+      "persistent_failures": [],
+      "selected_only_in_8e": [
+        "loader::lua_file::tests::startup_file_budget_error_preserves_cumulative_usage_and_loader_outcome",
+        "loader::tests::lua_loading::toc_text_locale_excluded_template_has_no_missing_file_warning",
+        "loader::tests::lua_loading::toc_text_locale_included_template_loads_before_core",
+        "loader::tests::lua_loading::toc_utf8_bom_metadata_does_not_become_a_missing_file_warning",
+        "lua_api::execution_budget::tests::budget_error_log_distinguishes_exhausted_entry_from_callback_consumption",
+        "lua_api::execution_budget::tests::budget_error_log_labels_unavailable_snapshots_without_inventing_counts",
+        "lua_api::execution_budget::tests::budget_error_log_reports_unlimited_meter_and_escapes_event_metadata",
+        "lua_api::execution_budget::tests::file_budget_error_log_distinguishes_exhausted_entry_from_file_consumption",
+        "lua_api::execution_budget::tests::file_budget_error_log_escapes_metadata_and_reports_unlimited_meter",
+        "lua_api::execution_budget::tests::file_budget_error_log_labels_missing_snapshots",
+        "toc::tests::test_parse_text_locale_excludes_production_template",
+        "toc::tests::test_parse_text_locale_ignores_enus_outside_locale_tokens",
+        "toc::tests::test_parse_text_locale_includes_exact_enus_token",
+        "toc::tests::test_parse_text_locale_unannotated_template_remains_selected",
+        "toc::tests::test_parse_utf8_bom_preserves_first_metadata_and_file_order"
+      ],
+      "selected_only_in_96": []
+    },
+    "prefork": {
+      "new_failures_vs_96": [],
+      "persistent_failures": [
+        "blizzard_garrison_ui_loads::blizzard_garrison_ui_loads_explicitly_via_load_addon_without_errors"
+      ],
+      "selected_only_in_8e": [],
+      "selected_only_in_96": []
+    }
+  },
+  "source_scope": "8e6bc113f4c2c47ad693fa7fcb19ddf6bef48476",
+  "status": "FAIL",
+  "transition_counts": {
+    "persistent_failure": 3,
+    "replaced_or_epoch_gated_original": 3,
+    "same_selector_pass_revised_fixture": 11
+  }
+}
