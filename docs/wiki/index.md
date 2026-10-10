@@ -1,3 +1,7 @@
+## [2026-10-10] audit | Exact1200 count RED; repair GREEN pending
+
+[Current count proof](../specs/patch-12-0-0-prose-models.md#authentic-count-red-and-source-present-repair--2026-10-10) and [audit](investigations/patch-12-0-0-api-audit.md#authentic-count-red-source-present-repair-green-pending): actual1 FAIL expected7 got0; cast1200-onward source present after84dcf2723, GREEN pending. Pre125 ordinary output is simulator policy, not native proof; display/max/secret125 unchanged. All21 assertions untouched, cached case separate prefork target. Sanitized receipts/audit/hash manifest retained; task not PASS.
+
 ## [2026-10-10] audit | XML click registration — bounded default-Retail GREEN
 
 [Proof SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#xml-click-registration--bounded-default-retail-green): independently checked saved `c6bc87c12` receipts for implementation `33d62d705`, actual9/9 (three new cases/six controls), compile/fmt/default-check exit0; source equality and sealed-artifact hash checked. [Contract](../specs/xml-button-click-registration.md) and [XML system](systems/xml-template-system.md#declarative-click-registration) cross-linked. Prior resource-blocked/RED/zero-test histories preserved; no native/all-profile/broad-suite or dependency-provenance claim, parent OPEN.

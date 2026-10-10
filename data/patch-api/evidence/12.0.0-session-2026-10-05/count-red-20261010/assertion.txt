@@ -1,0 +1,4 @@
+Sanitized excerpt from prose.stderr; startup timings, PID and absolute source path omitted.
+Exact test: patch_12_0_0_prose::prose_spell_cast_count_reads_live_explicit_inputs
+Boundary: tests/patch_12_0_0_prose.rs:22:10
+spell 19750: expected 7, got 0

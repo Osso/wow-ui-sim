@@ -18,7 +18,8 @@ Unassigned PROSE-MODELABLE extract rows from the [scout](../../data/patch-api/ev
 
 - `src/event/valid_events.rs`: 12.0.0 script-registration exclusion; both events remain valid callback names.
 - `tests/patch_12_0_0_prose.rs`: tainted registration and no-delivery boundary.
-- `tests/patch_12_0_0_deprecated.rs`: existing 21-row retirement/successor proof; unchanged.
+- `tests/patch_12_0_0_deprecated.rs`: all21 row assertions untouched. Canonical cached case `patch_12_0_0_deprecated_retirement_and_successors` belongs to separate `prefork_full_ui` target; the prose integration filter does not select these21 rows.
+- Cast model/module/registration from Retail1200 onward: [count inventory](spell-count-outputs.md#implementation-inventory). Display/max/secret125 boundaries unchanged; exact1200 GREEN pending.
 
 ## Tests asserting this spec
 
@@ -36,6 +37,14 @@ Actual retry `20261010T163526Z` under the same receipt root records `compile_exi
 
 Source inspection of `ee21cd9cc` only: tuple coordinates replace `Point`, preserving all game-menu tests in headless builds; the later-only transmog state fixture is gated at `retail-12-0-5`; the earlier encounter-record test removes the inappropriate `retail-12-1-0` PTR helper while retaining its assertions. No post-repair compile or selected runtime proof is claimed: **runtime PENDING**. At this revision `spell_cast_counts` exists in `src/lua_api/state/sim_state.rs:409`, gated by `retail-12-0-5`; it is not absent from the checkout. Production count state/model changes belong to a separate stage and receive no fix or acceptance credit here.
 - [ ] General secret operations lack an operation-specific authoritative oracle in the captured prose. VM/dependency changes outside this worktree are unauthorized.
+
+## Authentic count RED and source-present repair — 2026-10-10
+
+Independent audit of stage `3c36b24546c0901837d4987b86ad33c634a8f671`, receipt `20261010T164918Z`: compile exit0/source_equal true; exact sealed `patch_12_0_0_prose::prose_spell_cast_count_reads_live_explicit_inputs` execution exit101/artifact_unchanged true, **actual1 FAIL / 0 PASS**, expected7 got0 for19750. Both bare environments initialized; arity/numeric/non-secret checks preceded the failing value assertion. Later isolation, charge independence and live mutation/removal/clear assertions were not reached. This is authentic behavioral RED, not a compiler failure, timeout or zero selection. The auditor's PASS means receipt audit passed, not producer runtime acceptance.
+
+After `84dcf2723`, inspected cast implementation/module/registration and inverse shim gates are present from1200 onward. Ordinary pre125 output is simulator policy, not native proof. Display/max/secret125 behavior remains unchanged. Older API presence does not require a specific internal native backing model. **Post-repair GREEN/runtime acceptance PENDING; task not PASS.** All21 retirement row assertions remain untouched; cached canonical case requires the separate prefork target, not prose-filter coverage. Historical failed compilations above remain separate epochs.
+
+[Sanitized receipts and independent audit](../../data/patch-api/evidence/12.0.0-session-2026-10-05/count-red-20261010/independent-report.md), with adjacent SHA-256 manifest, retain this RED without binaries, source snapshots or vendor stderr. Hashes establish retained bytes and the audit's recorded scope, not hermetic native provenance.
 
 ## Out of scope
 

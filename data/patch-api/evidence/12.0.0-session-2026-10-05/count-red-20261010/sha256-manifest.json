@@ -1,0 +1,11 @@
+{
+  "scope": "Sanitized retained RED receipts and byte-identical independent audit only; no binary, source snapshot or vendor stderr. Runtime repair GREEN pending.",
+  "sha256": {
+    "assertion.txt": "197dc6700a94216ed02aade96e5216488b02b46259a4a452a25b4a794989ad9f",
+    "compile-result.json": "27e344ef47ce70c39240239908b372967ffb5c3e32206cda667fc1e675196480",
+    "independent-report.md": "e6ece2acde62150fa381de4a7d99a0018190b1b7e46772e18c8d90d8c0632cab",
+    "outcome.json": "042724495173d1b05f82d673eb8492a77970b94cc232fd58832087855c8312a9",
+    "prose-result.json": "a097a525ae761c3dd2234b96bdc0f8cd748e0c6870ecaed3039ffd49859de7ba",
+    "prose.stdout": "4a36b8ff0a723270aad0d3b884192c13caa7441410e6f69880a5ac9f5bdfe1f1"
+  }
+}

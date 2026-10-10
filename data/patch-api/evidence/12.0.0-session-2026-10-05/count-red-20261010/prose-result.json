@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/usr/bin/timeout",
+    "90",
+    "<private sealed integration artifact>",
+    "patch_12_0_0_prose::prose_spell_cast_count_reads_live_explicit_inputs",
+    "--exact",
+    "--nocapture"
+  ],
+  "artifact_unchanged": true,
+  "exit": 101
+}

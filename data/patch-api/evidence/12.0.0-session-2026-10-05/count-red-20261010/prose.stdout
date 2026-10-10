@@ -1,0 +1,11 @@
+
+running 1 test
+test patch_12_0_0_prose::prose_spell_cast_count_reads_live_explicit_inputs ... FAILED
+
+failures:
+
+failures:
+    patch_12_0_0_prose::prose_spell_cast_count_reads_live_explicit_inputs
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 7819 filtered out; finished in 0.23s
+

@@ -1,3 +1,7 @@
+## [2026-10-10] audit | Exact1200 count RED retained; GREEN pending
+
+Updated [count inventory](../specs/spell-count-outputs.md#implementation-inventory), [proof SSOT](../specs/patch-12-0-0-prose-models.md#authentic-count-red-and-source-present-repair--2026-10-10), existing audit and Lua inventory after84dcf2723. Authentic RED actual1 FAIL expected7 got0; source-present cast1200 repair not runtime PASS. Pre125 policy/native boundary and separate unchanged21-row prefork case explicit. Small sanitized receipts, independent audit and hash manifest retained. Docs only; no builds, delegation, operations or commits; main owns prompt commit before verification.
+
 ## [2026-10-10] audit | Exact1200 retry and test-boundary repairs
 
 Updated [exact1200 audit](investigations/patch-12-0-0-api-audit.md#current-prose-proof--test-boundaries-and-count-model-gate-2026-10-10) and [proof spec](../specs/patch-12-0-0-prose-models.md#known-gaps-current-cycle). Actual163526 retry: compile101/source_equaltrue, five errors, no selected execution; storage failure historical. `ee21cd9cc` source-only test repairs preserve headless game-menu coverage and earlier encounter assertions; count map exists cfg125 at that revision. Separate production model stage uncredited, runtime PENDING. Docs only; no builds, delegation, operations, code or commits; main owns commit.
