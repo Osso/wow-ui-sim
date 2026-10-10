@@ -1,0 +1,11 @@
+{
+  "ended": "2026-10-10T00:16:08.640787+00:00",
+  "exit": 0,
+  "selector": "toplevel_render_groups::screen_roots_do_not_capture_independent_render_groups",
+  "artifact_sha256_after": "1b9ecf472c4456118cb63e874c77a3dadef69228703644d71ef6a53592a1c652",
+  "stdout_sha256": "57ce8b53be797ef826b8d55750728594b29a726ae4a67917b460d3686a4fff0d",
+  "stderr_sha256": "0e1de97d1bc3f7a5b4bf5012f732b97f7aa373cb5ab033b2e2155515e7c851e8",
+  "summary_lines": [
+    "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10697 filtered out; finished in 0.15s"
+  ]
+}

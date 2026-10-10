@@ -1,0 +1,17 @@
+{
+  "started": "2026-10-10T00:16:07.160606+00:00",
+  "compiled_revision": "40d2beb9ad719032b4d345455e5410f2971ded7a",
+  "artifact_sha256": "1b9ecf472c4456118cb63e874c77a3dadef69228703644d71ef6a53592a1c652",
+  "argv": [
+    "/usr/bin/timeout",
+    "90",
+    "/home/osso/Projects/wow/wow-ui-sim/target/debug/deps/integration-1db16289b0998b2a",
+    "--exact",
+    "edit_mode_api::enums::unit_frame_edit_mode_setting_meta_includes_big_defensive_icon_size",
+    "--nocapture",
+    "--test-threads=1"
+  ],
+  "selector_exit": 0,
+  "env_overrides": {},
+  "limits": "Source0769chargefixture notcompiled; no currentHEAD/fullsuite/profile/nativeparityproof"
+}

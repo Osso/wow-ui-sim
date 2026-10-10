@@ -1,0 +1,11 @@
+{
+  "ended": "2026-10-10T00:16:09.068733+00:00",
+  "exit": 101,
+  "selector": "lua_api::workarounds::temporary::debug_environment_defaults::tests::installs_debug_environment_defaults",
+  "artifact_sha256_after": "43d0063f52e052553ca42b83d1270adc770d96e83821316f5d0e4caf6fe7110e",
+  "stdout_sha256": "bb47c9fed43de5ff3639c401d2f744f39f6ddf0a1edc653708e0c8c5826c1faf",
+  "stderr_sha256": "f72f63905f1fb4493181f00a39a1cf8563aeadec4cb0aecd081251cccabdfa27",
+  "summary_lines": [
+    "test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 1977 filtered out; finished in 0.14s"
+  ]
+}

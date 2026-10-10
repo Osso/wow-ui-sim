@@ -1,0 +1,3 @@
+lua_api::workarounds::temporary::debug_environment_defaults::tests::installs_debug_environment_defaults: test
+
+1 test, 0 benchmarks

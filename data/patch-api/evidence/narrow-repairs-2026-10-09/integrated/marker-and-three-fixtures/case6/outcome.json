@@ -1,0 +1,11 @@
+{
+  "ended": "2026-10-10T00:16:09.449757+00:00",
+  "exit": 0,
+  "selector": "wowforever_cooldown_categories::forever_cooldown_categories_preserve_retail_12_1_0_epoch",
+  "artifact_sha256_after": "1b9ecf472c4456118cb63e874c77a3dadef69228703644d71ef6a53592a1c652",
+  "stdout_sha256": "333fc5655237667172c889ec36051ade4e39c583a29a152fa720aafe717e7209",
+  "stderr_sha256": "0d07f8c4bc1d99b244ece0ba222138959dc76d1e315981c31c362c9c20b65093",
+  "summary_lines": [
+    "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10697 filtered out; finished in 0.13s"
+  ]
+}

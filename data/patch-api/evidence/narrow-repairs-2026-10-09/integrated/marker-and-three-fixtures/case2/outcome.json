@@ -1,0 +1,11 @@
+{
+  "ended": "2026-10-10T00:16:07.783680+00:00",
+  "exit": 0,
+  "selector": "patch_12_0_7_b23_b28::b28_registered_absent_file_and_unregistered_present_file_are_not_io_queries",
+  "artifact_sha256_after": "1b9ecf472c4456118cb63e874c77a3dadef69228703644d71ef6a53592a1c652",
+  "stdout_sha256": "e7173e46e34bf0240212bdefc7d018e9683ed301a563acb6f47634c7abf43945",
+  "stderr_sha256": "219c1f9a0a46e29c8695e29f50c3d48b4e8f2b49627afad294160484630fe249",
+  "summary_lines": [
+    "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10697 filtered out; finished in 0.17s"
+  ]
+}

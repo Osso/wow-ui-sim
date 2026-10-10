@@ -1,0 +1,11 @@
+{
+  "ended": "2026-10-10T00:16:07.331045+00:00",
+  "exit": 0,
+  "selector": "edit_mode_api::enums::unit_frame_edit_mode_setting_meta_includes_big_defensive_icon_size",
+  "artifact_sha256_after": "1b9ecf472c4456118cb63e874c77a3dadef69228703644d71ef6a53592a1c652",
+  "stdout_sha256": "18343424e8afe090289b298a86e97cfb3b47368cc9e5b76aa46963e8148cd2f1",
+  "stderr_sha256": "127c8ea5558ece4d1e7ffc234570521ba6d7b36dd0e45588baea973f643a4e15",
+  "summary_lines": [
+    "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10697 filtered out; finished in 0.16s"
+  ]
+}

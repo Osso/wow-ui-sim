@@ -1,0 +1,768 @@
+{
+  "artifacts": {
+    "integration": {
+      "ELF_magic": true,
+      "bytes": 466695912,
+      "compiler_record": {
+        "executable": "/home/osso/Projects/wow/wow-ui-sim/target/debug/deps/integration-1db16289b0998b2a",
+        "features": [
+          "aura-containers",
+          "aura-instance-enumeration",
+          "aura-xml-widgets",
+          "base-spell-relationships",
+          "casc",
+          "client-retail",
+          "default",
+          "forbidden-aspects",
+          "gui",
+          "native-duration-formatting",
+          "numeric-rule-formatters",
+          "on-update-modes",
+          "player-cast-durations",
+          "profile-retail",
+          "retail-12-0-0",
+          "retail-12-0-5",
+          "retail-12-0-7",
+          "retail-12-1-0",
+          "rodio",
+          "sound"
+        ],
+        "filenames": [
+          "/home/osso/Projects/wow/wow-ui-sim/target/debug/deps/integration-1db16289b0998b2a"
+        ],
+        "fresh": false,
+        "manifest_path": "/home/osso/Projects/wow/wow-ui-sim/Cargo.toml",
+        "package_id": "path+file:///home/osso/Projects/wow/wow-ui-sim#0.1.0",
+        "profile": {
+          "debug_assertions": true,
+          "debuginfo": "line-tables-only",
+          "opt_level": "1",
+          "overflow_checks": true,
+          "test": true
+        },
+        "reason": "compiler-artifact",
+        "target": {
+          "crate_types": [
+            "bin"
+          ],
+          "doc": false,
+          "doctest": false,
+          "edition": "2024",
+          "kind": [
+            "test"
+          ],
+          "name": "integration",
+          "src_path": "/home/osso/Projects/wow/wow-ui-sim/tests/integration.rs",
+          "test": true
+        }
+      },
+      "executable_permissions": true,
+      "path": "/home/osso/Projects/wow/wow-ui-sim/target/debug/deps/integration-1db16289b0998b2a",
+      "sha256": "1b9ecf472c4456118cb63e874c77a3dadef69228703644d71ef6a53592a1c652"
+    },
+    "wow_ui_sim": {
+      "ELF_magic": true,
+      "bytes": 390474616,
+      "compiler_record": {
+        "executable": "/home/osso/Projects/wow/wow-ui-sim/target/debug/deps/wow_ui_sim-bcad23723a7b3b0d",
+        "features": [
+          "aura-containers",
+          "aura-instance-enumeration",
+          "aura-xml-widgets",
+          "base-spell-relationships",
+          "casc",
+          "client-retail",
+          "default",
+          "forbidden-aspects",
+          "gui",
+          "native-duration-formatting",
+          "numeric-rule-formatters",
+          "on-update-modes",
+          "player-cast-durations",
+          "profile-retail",
+          "retail-12-0-0",
+          "retail-12-0-5",
+          "retail-12-0-7",
+          "retail-12-1-0",
+          "rodio",
+          "sound"
+        ],
+        "filenames": [
+          "/home/osso/Projects/wow/wow-ui-sim/target/debug/deps/wow_ui_sim-bcad23723a7b3b0d"
+        ],
+        "fresh": false,
+        "manifest_path": "/home/osso/Projects/wow/wow-ui-sim/Cargo.toml",
+        "package_id": "path+file:///home/osso/Projects/wow/wow-ui-sim#0.1.0",
+        "profile": {
+          "debug_assertions": true,
+          "debuginfo": "line-tables-only",
+          "opt_level": "1",
+          "overflow_checks": true,
+          "test": true
+        },
+        "reason": "compiler-artifact",
+        "target": {
+          "crate_types": [
+            "lib"
+          ],
+          "doc": true,
+          "doctest": true,
+          "edition": "2024",
+          "kind": [
+            "lib"
+          ],
+          "name": "wow_ui_sim",
+          "src_path": "/home/osso/Projects/wow/wow-ui-sim/src/lib.rs",
+          "test": true
+        }
+      },
+      "executable_permissions": true,
+      "path": "/home/osso/Projects/wow/wow-ui-sim/target/debug/deps/wow_ui_sim-bcad23723a7b3b0d",
+      "sha256": "43d0063f52e052553ca42b83d1270adc770d96e83821316f5d0e4caf6fe7110e"
+    }
+  },
+  "audit_incident": {
+    "command": "read-only git cat-file --batch source comparison",
+    "result": "Unexpected auto-backgrounding during Pyrun helper batch input/output; reported log absent. Exact blocking cause unproven and full-source commit comparison incomplete. Own git child 410567 cancelled and /proc/410567 absence verified; detached evaluation subsequently reported failed. No batch evidence used and no batch rerun; eleven scoped git show reads supplied source comparisons."
+  },
+  "audited_at_utc": "2026-10-10T00:28:51.545768+00:00",
+  "cases": [
+    {
+      "case": "case1",
+      "changed_commit": "21b513f3ef9eed7a5cea07fb11acf5708ce0327a",
+      "counts": {
+        "failed": 0,
+        "filtered_out": 10697,
+        "ignored": 0,
+        "measured": 0,
+        "passed": 1
+      },
+      "eligible": true,
+      "ended": "2026-10-10T00:16:07.331045+00:00",
+      "env_overrides": {},
+      "files": {
+        "outcome.json": {
+          "bytes": 567,
+          "path": "/home/osso/.local/state/wow-ui-sim/verification/marker-and-three-fixtures/20261009T233707Z/case1/outcome.json",
+          "sha256": "1dd5b53b191e3fbf776bad1f9f59415847880e5dd328b90605de55433e1112b6"
+        },
+        "selector-list.stderr": {
+          "bytes": 0,
+          "path": "/home/osso/.local/state/wow-ui-sim/verification/marker-and-three-fixtures/20261009T233707Z/case1/selector-list.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "selector-list.stdout": {
+          "bytes": 117,
+          "path": "/home/osso/.local/state/wow-ui-sim/verification/marker-and-three-fixtures/20261009T233707Z/case1/selector-list.stdout",
+          "sha256": "083cbe93fe7f651697f0993d384b5d79439cbe15b049357a078ea34ddc846b47"
+        },
+        "stderr": {
+          "bytes": 640,
+          "path": "/home/osso/.local/state/wow-ui-sim/verification/marker-and-three-fixtures/20261009T233707Z/case1/stderr",
+          "sha256": "127c8ea5558ece4d1e7ffc234570521ba6d7b36dd0e45588baea973f643a4e15"
+        },
+        "stdout": {
+          "bytes": 217,
+          "path": "/home/osso/.local/state/wow-ui-sim/verification/marker-and-three-fixtures/20261009T233707Z/case1/stdout",
+          "sha256": "18343424e8afe090289b298a86e97cfb3b47368cc9e5b76aa46963e8148cd2f1"
+        },
+        "submission.json": {
+          "bytes": 648,
+          "path": "/home/osso/.local/state/wow-ui-sim/verification/marker-and-three-fixtures/20261009T233707Z/case1/submission.json",
+          "sha256": "1a95454eef130bd475de5d4f41c692d1418856bef9d6c6277b7e4496f69013ba"
+        }
+      },
+      "integrity_checks": {
+        "binary_before_after_current": true,
+        "compiled_revision": true,
+        "compiler_executable_path": true,
+        "exact_selector": true,
+        "exit_summary_agree": true,
+        "list_selected_one": true,
+        "ran_one": true,
+        "selector_exit_zero": true,
+        "selector_stderr_empty": true,
+        "stderr_sha256": true,
+        "stdout_sha256": true,
+        "summary_receipt_equal": true
+      },
+      "recorded_exit": 0,
+      "selector": "edit_mode_api::enums::unit_frame_edit_mode_setting_meta_includes_big_defensive_icon_size",
+      "source_path": "tests/edit_mode_api/enums.rs",
+      "source_sha256": "c5bf3ff4448239ac01e89222e660871ec1fd855744127ddb9b689b4c7bacf42b",
+      "started": "2026-10-10T00:16:07.160606+00:00",
+      "summary_lines": [
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10697 filtered out; finished in 0.16s"
+      ],
+      "target": "integration"
+    },
+    {
+      "case": "case2",
+      "changed_commit": "21b513f3ef9eed7a5cea07fb11acf5708ce0327a",
+      "counts": {
+        "failed": 0,
+        "filtered_out": 10697,
+        "ignored": 0,
+        "measured": 0,
+        "passed": 1
+      },
+      "eligible": true,
+      "ended": "2026-10-10T00:16:07.783680+00:00",
+      "env_overrides": {},
+      "files": {
+        "outcome.json": {
+          "bytes": 576,
+          "path": "/home/osso/.local/state/wow-ui-sim/verification/marker-and-three-fixtures/20261009T233707Z/case2/outcome.json",
+          "sha256": "62928fc9f0563e110a50464038a36e8813d54b8650492676df350aae6c97ffc2"
+        },
+        "selector-list.stderr": {
+          "bytes": 0,
+          "path": "/home/osso/.local/state/wow-ui-sim/verification/marker-and-three-fixtures/20261009T233707Z/case2/selector-list.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "selector-list.stdout": {
+          "bytes": 126,
+          "path": "/home/osso/.local/state/wow-ui-sim/verification/marker-and-three-fixtures/20261009T233707Z/case2/selector-list.stdout",
+          "sha256": "6614ac45b88167859185570b096dd3abf8294bd420743c8c74790870bd1d791a"
+        },
+        "stderr": {
+          "bytes": 641,
+          "path": "/home/osso/.local/state/wow-ui-sim/verification/marker-and-three-fixtures/20261009T233707Z/case2/stderr",
+          "sha256": "219c1f9a0a46e29c8695e29f50c3d48b4e8f2b49627afad294160484630fe249"
+        },
+        "stdout": {
+          "bytes": 226,
+          "path": "/home/osso/.local/state/wow-ui-sim/verification/marker-and-three-fixtures/20261009T233707Z/case2/stdout",
+          "sha256": "e7173e46e34bf0240212bdefc7d018e9683ed301a563acb6f47634c7abf43945"
+        },
+        "submission.json": {
+          "bytes": 657,
+          "path": "/home/osso/.local/state/wow-ui-sim/verification/marker-and-three-fixtures/20261009T233707Z/case2/submission.json",
+          "sha256": "8021a063d8cd93dd30b31979e2133a04a6a90d7f8e892bcad6d1d671d5cec6dd"
+        }
+      },
+      "integrity_checks": {
+        "binary_before_after_current": true,
+        "compiled_revision": true,
+        "compiler_executable_path": true,
+        "exact_selector": true,
+        "exit_summary_agree": true,
+        "list_selected_one": true,
+        "ran_one": true,
+        "selector_exit_zero": true,
+        "selector_stderr_empty": true,
+        "stderr_sha256": true,
+        "stdout_sha256": true,
+        "summary_receipt_equal": true
+      },
+      "recorded_exit": 0,
+      "selector": "patch_12_0_7_b23_b28::b28_registered_absent_file_and_unregistered_present_file_are_not_io_queries",
+      "source_path": "tests/patch_12_0_7_b23_b28.rs",
+      "source_sha256": "2954cb7a4f1b9672d682c09eeab0eb4ce975a36b863aca49dac1407f23f2ff61",
+      "started": "2026-10-10T00:16:07.598015+00:00",
+      "summary_lines": [
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10697 filtered out; finished in 0.17s"
+      ],
+      "target": "integration"
+    },
+    {
+      "case": "case3",
+      "changed_commit": "21b513f3ef9eed7a5cea07fb11acf5708ce0327a",
+      "counts": {
+        "failed": 0,
+        "filtered_out": 10697,
+        "ignored": 0,
+        "measured": 0,
+        "passed": 1
+      },
+      "eligible": true,
+      "ended": "2026-10-10T00:16:08.212104+00:00",
+      "env_overrides": {},
+      "files": {
+        "outcome.json": {
+          "bytes": 566,
+          "path": "/home/osso/.local/state/wow-ui-sim/verification/marker-and-three-fixtures/20261009T233707Z/case3/outcome.json",
+          "sha256": "21980b0c7605fbd8259c6dcc9197d1550006fddd883d4f05ba66d2d9c031c46d"
+        },
+        "selector-list.stderr": {
+          "bytes": 0,
+          "path": "/home/osso/.local/state/wow-ui-sim/verification/marker-and-three-fixtures/20261009T233707Z/case3/selector-list.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "selector-list.stdout": {
+          "bytes": 116,
+          "path": "/home/osso/.local/state/wow-ui-sim/verification/marker-and-three-fixtures/20261009T233707Z/case3/selector-list.stdout",
+          "sha256": "c88d1d823e61393e650652afbf9a82daf45a1eee2a2b6a714dc8f219f19f3a17"
+        },
+        "stderr": {
+          "bytes": 642,
+          "path": "/home/osso/.local/state/wow-ui-sim/verification/marker-and-three-fixtures/20261009T233707Z/case3/stderr",
+          "sha256": "43214ae8d7ee47d7bd2a5b0430157962faae1307ef791b5e8996b2044cc46278"
+        },
+        "stdout": {
+          "bytes": 216,
+          "path": "/home/osso/.local/state/wow-ui-sim/verification/marker-and-three-fixtures/20261009T233707Z/case3/stdout",
+          "sha256": "0853a6990b7debc42e6eeb14c1f11bf41c6294310246fef640c9ffa40298c604"
+        },
+        "submission.json": {
+          "bytes": 647,
+          "path": "/home/osso/.local/state/wow-ui-sim/verification/marker-and-three-fixtures/20261009T233707Z/case3/submission.json",
+          "sha256": "823b3931cac4b9409600bf10afbe62e2aa720dc745271a47529a197208b2958f"
+        }
+      },
+      "integrity_checks": {
+        "binary_before_after_current": true,
+        "compiled_revision": true,
+        "compiler_executable_path": true,
+        "exact_selector": true,
+        "exit_summary_agree": true,
+        "list_selected_one": true,
+        "ran_one": true,
+        "selector_exit_zero": true,
+        "selector_stderr_empty": true,
+        "stderr_sha256": true,
+        "stdout_sha256": true,
+        "summary_receipt_equal": true
+      },
+      "recorded_exit": 0,
+      "selector": "toplevel_render_groups::native_controls_keep_unraised_and_raised_groups_in_owner_strata",
+      "source_path": "tests/toplevel_render_groups.rs",
+      "source_sha256": "d8852841e969bbfc1dbaf9d19354b8d4e8a33ef5849aad4161c3fdd8c8cdfd42",
+      "started": "2026-10-10T00:16:08.053343+00:00",
+      "summary_lines": [
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10697 filtered out; finished in 0.15s"
+      ],
+      "target": "integration"
+    },
+    {
+      "case": "case4",
+      "changed_commit": "21b513f3ef9eed7a5cea07fb11acf5708ce0327a",
+      "counts": {
+        "failed": 0,
+        "filtered_out": 10697,
+        "ignored": 0,
+        "measured": 0,
+        "passed": 1
+      },
+      "eligible": true,
+      "ended": "2026-10-10T00:16:08.640787+00:00",
+      "env_overrides": {},
+      "files": {
+        "outcome.json": {
+          "bytes": 556,
+          "path": "/home/osso/.local/state/wow-ui-sim/verification/marker-and-three-fixtures/20261009T233707Z/case4/outcome.json",
+          "sha256": "53bddac9fa293d91ecf3d82d23fb18a6d05cd2f21cf29d2c157c62997beb3b0c"
+        },
+        "selector-list.stderr": {
+          "bytes": 0,
+          "path": "/home/osso/.local/state/wow-ui-sim/verification/marker-and-three-fixtures/20261009T233707Z/case4/selector-list.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "selector-list.stdout": {
+          "bytes": 106,
+          "path": "/home/osso/.local/state/wow-ui-sim/verification/marker-and-three-fixtures/20261009T233707Z/case4/selector-list.stdout",
+          "sha256": "0bdf3355636630d2e97e949e371a20ce7c866c496191d8cf43495e5fd6658490"
+        },
+        "stderr": {
+          "bytes": 641,
+          "path": "/home/osso/.local/state/wow-ui-sim/verification/marker-and-three-fixtures/20261009T233707Z/case4/stderr",
+          "sha256": "0e1de97d1bc3f7a5b4bf5012f732b97f7aa373cb5ab033b2e2155515e7c851e8"
+        },
+        "stdout": {
+          "bytes": 206,
+          "path": "/home/osso/.local/state/wow-ui-sim/verification/marker-and-three-fixtures/20261009T233707Z/case4/stdout",
+          "sha256": "57ce8b53be797ef826b8d55750728594b29a726ae4a67917b460d3686a4fff0d"
+        },
+        "submission.json": {
+          "bytes": 637,
+          "path": "/home/osso/.local/state/wow-ui-sim/verification/marker-and-three-fixtures/20261009T233707Z/case4/submission.json",
+          "sha256": "4e3277859e14cac5d24b8b41b5a04890b10fc5fbbdfdb744f2129bc138b31cad"
+        }
+      },
+      "integrity_checks": {
+        "binary_before_after_current": true,
+        "compiled_revision": true,
+        "compiler_executable_path": true,
+        "exact_selector": true,
+        "exit_summary_agree": true,
+        "list_selected_one": true,
+        "ran_one": true,
+        "selector_exit_zero": true,
+        "selector_stderr_empty": true,
+        "stderr_sha256": true,
+        "stdout_sha256": true,
+        "summary_receipt_equal": true
+      },
+      "recorded_exit": 0,
+      "selector": "toplevel_render_groups::screen_roots_do_not_capture_independent_render_groups",
+      "source_path": "tests/toplevel_render_groups.rs",
+      "source_sha256": "d8852841e969bbfc1dbaf9d19354b8d4e8a33ef5849aad4161c3fdd8c8cdfd42",
+      "started": "2026-10-10T00:16:08.481261+00:00",
+      "summary_lines": [
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10697 filtered out; finished in 0.15s"
+      ],
+      "target": "integration"
+    },
+    {
+      "case": "case5",
+      "changed_commit": "00a838a2eb5ea5f9916a3314e0fafc89f023bb2a",
+      "counts": {
+        "failed": 1,
+        "filtered_out": 1977,
+        "ignored": 0,
+        "measured": 0,
+        "passed": 0
+      },
+      "eligible": true,
+      "ended": "2026-10-10T00:16:09.068733+00:00",
+      "env_overrides": {
+        "WOW_SIM_TRACE_DEBUG_GETTERS": "1"
+      },
+      "files": {
+        "outcome.json": {
+          "bytes": 587,
+          "path": "/home/osso/.local/state/wow-ui-sim/verification/marker-and-three-fixtures/20261009T233707Z/case5/outcome.json",
+          "sha256": "01b90f006bd4b2df9e25cfdee5e99ddb2a566f7d55f2b092d82ce6c22e883fd9"
+        },
+        "selector-list.stderr": {
+          "bytes": 0,
+          "path": "/home/osso/.local/state/wow-ui-sim/verification/marker-and-three-fixtures/20261009T233707Z/case5/selector-list.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "selector-list.stdout": {
+          "bytes": 132,
+          "path": "/home/osso/.local/state/wow-ui-sim/verification/marker-and-three-fixtures/20261009T233707Z/case5/selector-list.stdout",
+          "sha256": "7a82e80f8d9ece17b496d0d8385986fe53b77fc3bea066a156bd766f21f8e99d"
+        },
+        "stderr": {
+          "bytes": 5489,
+          "path": "/home/osso/.local/state/wow-ui-sim/verification/marker-and-three-fixtures/20261009T233707Z/case5/stderr",
+          "sha256": "f72f63905f1fb4493181f00a39a1cf8563aeadec4cb0aecd081251cccabdfa27"
+        },
+        "stdout": {
+          "bytes": 369,
+          "path": "/home/osso/.local/state/wow-ui-sim/verification/marker-and-three-fixtures/20261009T233707Z/case5/stdout",
+          "sha256": "bb47c9fed43de5ff3639c401d2f744f39f6ddf0a1edc653708e0c8c5826c1faf"
+        },
+        "submission.json": {
+          "bytes": 704,
+          "path": "/home/osso/.local/state/wow-ui-sim/verification/marker-and-three-fixtures/20261009T233707Z/case5/submission.json",
+          "sha256": "4d15bc5c523be32634dc29e52c8749814975717d49e80ec2b0fe8038725b5029"
+        }
+      },
+      "integrity_checks": {
+        "binary_before_after_current": true,
+        "compiled_revision": true,
+        "compiler_executable_path": true,
+        "exact_selector": true,
+        "exit_summary_agree": true,
+        "list_selected_one": true,
+        "ran_one": true,
+        "selector_exit_zero": true,
+        "selector_stderr_empty": true,
+        "stderr_sha256": true,
+        "stdout_sha256": true,
+        "summary_receipt_equal": true
+      },
+      "recorded_exit": 101,
+      "selector": "lua_api::workarounds::temporary::debug_environment_defaults::tests::installs_debug_environment_defaults",
+      "source_path": "src/lua_api/workarounds/temporary/debug_environment_defaults.rs",
+      "source_sha256": "bbc6057c702ab85594c7365183d38ad6533586c2761024551ade2f5e48f1632e",
+      "started": "2026-10-10T00:16:08.912646+00:00",
+      "summary_lines": [
+        "test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 1977 filtered out; finished in 0.14s"
+      ],
+      "target": "wow_ui_sim"
+    },
+    {
+      "case": "case6",
+      "changed_commit": "40d2beb9ad719032b4d345455e5410f2971ded7a",
+      "counts": {
+        "failed": 0,
+        "filtered_out": 10697,
+        "ignored": 0,
+        "measured": 0,
+        "passed": 1
+      },
+      "eligible": true,
+      "ended": "2026-10-10T00:16:09.449757+00:00",
+      "env_overrides": {},
+      "files": {
+        "outcome.json": {
+          "bytes": 567,
+          "path": "/home/osso/.local/state/wow-ui-sim/verification/marker-and-three-fixtures/20261009T233707Z/case6/outcome.json",
+          "sha256": "9b73a1de68dca34e4747ea4feb8601de950e3c2bacc957e5a87c4d73b97f9663"
+        },
+        "selector-list.stderr": {
+          "bytes": 0,
+          "path": "/home/osso/.local/state/wow-ui-sim/verification/marker-and-three-fixtures/20261009T233707Z/case6/selector-list.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "selector-list.stdout": {
+          "bytes": 117,
+          "path": "/home/osso/.local/state/wow-ui-sim/verification/marker-and-three-fixtures/20261009T233707Z/case6/selector-list.stdout",
+          "sha256": "3a9a017093a84f6ee80be2bd410f3219e279ab58e4997bf2ae9c4ff89f210aed"
+        },
+        "stderr": {
+          "bytes": 640,
+          "path": "/home/osso/.local/state/wow-ui-sim/verification/marker-and-three-fixtures/20261009T233707Z/case6/stderr",
+          "sha256": "0d07f8c4bc1d99b244ece0ba222138959dc76d1e315981c31c362c9c20b65093"
+        },
+        "stdout": {
+          "bytes": 217,
+          "path": "/home/osso/.local/state/wow-ui-sim/verification/marker-and-three-fixtures/20261009T233707Z/case6/stdout",
+          "sha256": "333fc5655237667172c889ec36051ade4e39c583a29a152fa720aafe717e7209"
+        },
+        "submission.json": {
+          "bytes": 648,
+          "path": "/home/osso/.local/state/wow-ui-sim/verification/marker-and-three-fixtures/20261009T233707Z/case6/submission.json",
+          "sha256": "c0f9ec25ca6cd8b7e94804bd4909d44ace25cf85ec7d7f740b27337f84cac14c"
+        }
+      },
+      "integrity_checks": {
+        "binary_before_after_current": true,
+        "compiled_revision": true,
+        "compiler_executable_path": true,
+        "exact_selector": true,
+        "exit_summary_agree": true,
+        "list_selected_one": true,
+        "ran_one": true,
+        "selector_exit_zero": true,
+        "selector_stderr_empty": true,
+        "stderr_sha256": true,
+        "stdout_sha256": true,
+        "summary_receipt_equal": true
+      },
+      "recorded_exit": 0,
+      "selector": "wowforever_cooldown_categories::forever_cooldown_categories_preserve_retail_12_1_0_epoch",
+      "source_path": "tests/wowforever_cooldown_categories.rs",
+      "source_sha256": "9a586fd0e3ac943de15aa93b8a94f285e59695455f41447138303170ecab55b0",
+      "started": "2026-10-10T00:16:09.303839+00:00",
+      "summary_lines": [
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10697 filtered out; finished in 0.13s"
+      ],
+      "target": "integration"
+    }
+  ],
+  "compiler": {
+    "argv": [
+      "/usr/bin/cargo",
+      "test",
+      "--offline",
+      "--locked",
+      "--lib",
+      "--test",
+      "integration",
+      "--no-run",
+      "--message-format=json"
+    ],
+    "build_finished": [
+      {
+        "reason": "build-finished",
+        "success": true
+      }
+    ],
+    "cargo_exit": 0,
+    "compiler_json_records": 739,
+    "ended": "2026-10-09T23:38:01.177239+00:00",
+    "features": [
+      "aura-containers",
+      "aura-instance-enumeration",
+      "aura-xml-widgets",
+      "base-spell-relationships",
+      "casc",
+      "client-retail",
+      "default",
+      "forbidden-aspects",
+      "gui",
+      "native-duration-formatting",
+      "numeric-rule-formatters",
+      "on-update-modes",
+      "player-cast-durations",
+      "profile-retail",
+      "retail-12-0-0",
+      "retail-12-0-5",
+      "retail-12-0-7",
+      "retail-12-1-0",
+      "rodio",
+      "sound"
+    ],
+    "features_equal_between_targets": true,
+    "files": {
+      "cargo-result.json": {
+        "bytes": 367,
+        "path": "/home/osso/.local/state/wow-ui-sim/verification/marker-and-three-fixtures/20261009T233707Z/cargo-result.json",
+        "sha256": "ec5c5745eb676c2cd7bb266d9a43e99a724af7d723e62846a0bf8f3a831d7447"
+      },
+      "compile.stderr": {
+        "bytes": 1275,
+        "path": "/home/osso/.local/state/wow-ui-sim/verification/marker-and-three-fixtures/20261009T233707Z/compile.stderr",
+        "sha256": "a73064cac1191932328678a44487e22a5a6196388c9f89a140336b29585e69df"
+      },
+      "compile.stdout": {
+        "bytes": 573439,
+        "path": "/home/osso/.local/state/wow-ui-sim/verification/marker-and-three-fixtures/20261009T233707Z/compile.stdout",
+        "sha256": "118249fbefa78858acb33a99abbe5e44252b9384894d2124e6d03825a18c539d"
+      },
+      "outcome.json": {
+        "bytes": 178,
+        "path": "/home/osso/.local/state/wow-ui-sim/verification/marker-and-three-fixtures/20261009T233707Z/outcome.json",
+        "sha256": "8af134d533093e581824681392e0eb556268ade2ae09d1aa74366cb2fc60b247"
+      },
+      "resources.json": {
+        "bytes": 139,
+        "path": "/home/osso/.local/state/wow-ui-sim/verification/marker-and-three-fixtures/20261009T233707Z/resources.json",
+        "sha256": "aedb9bd606184792f2714120bd74a8a7a5153ae4ea527bda2fa24a68da34e3aa"
+      },
+      "run-artifacts.json": {
+        "bytes": 3445,
+        "path": "/home/osso/.local/state/wow-ui-sim/verification/marker-and-three-fixtures/20261009T233707Z/run-artifacts.json",
+        "sha256": "bc19a6142438c7a5c0237c013a76f85e63f50bb33dc4ac4fd65f3e8640df4e98"
+      },
+      "six-case-results.json": {
+        "bytes": 3565,
+        "path": "/home/osso/.local/state/wow-ui-sim/verification/marker-and-three-fixtures/20261009T233707Z/six-case-results.json",
+        "sha256": "71ebcd5032356956b3c835a2df326ac0fc62e4afbb5986b2f59997e895c06794"
+      },
+      "source-after.json": {
+        "bytes": 452396,
+        "path": "/home/osso/.local/state/wow-ui-sim/verification/marker-and-three-fixtures/20261009T233707Z/source-after.json",
+        "sha256": "73b3eb21c885066f1fcde90ab34f331ceda504f028e0d4712a1fec7d52182df5"
+      },
+      "source-before.json": {
+        "bytes": 452396,
+        "path": "/home/osso/.local/state/wow-ui-sim/verification/marker-and-three-fixtures/20261009T233707Z/source-before.json",
+        "sha256": "73b3eb21c885066f1fcde90ab34f331ceda504f028e0d4712a1fec7d52182df5"
+      },
+      "submission.json": {
+        "bytes": 835,
+        "path": "/home/osso/.local/state/wow-ui-sim/verification/marker-and-three-fixtures/20261009T233707Z/submission.json",
+        "sha256": "9c1c3e43f7984fa23c1b943bcaf16daf4d720e3ef7f1bf1de8138b8747f8dd2e"
+      }
+    },
+    "invalid_json_lines": 0,
+    "manifest_deprecation_warnings": 6,
+    "outcome_exit": 0,
+    "snapshot_entries": 3839,
+    "source_equal_recomputed": true,
+    "source_equal_recorded": true,
+    "started": "2026-10-09T23:37:07.694939+00:00"
+  },
+  "epoch": "/home/osso/.local/state/wow-ui-sim/verification/marker-and-three-fixtures/20261009T233707Z",
+  "excluded_charge_fixture": {
+    "commit": "0769f7b996e538adf776eaba86fc5ae0dcdfa494",
+    "compiled_source_sha256": "405f7564d9068ea502e3c05b992cebd983c0a845e7f2d7922b3122fa118dc6e1",
+    "eligible": false,
+    "later_source_sha256": "d281fd3909e89dc70830d2cfc644aaed478ea377b8ca39c0cc5f66c6d6de9fc0",
+    "selector": "spell_api::test_spell_get_spell_charges"
+  },
+  "limits": [
+    "3839-entry before/after equality recomputed. Commit-content hashes independently compared for 11 scoped build/test/wiring files only.",
+    "Submission excludes external path dependencies, inherited environment, runtime cache/addon files outside source scope, and untracked index.",
+    "Compiler JSON contains executable paths but no executable hashes. Current binary hashes match retained runtime before/after hashes; there is no separately sealed compile-time binary hash.",
+    "Locally retained receipts are not signed attestations. Runtime stdout/stderr hashes are independently recomputed against receipts; compiler and metadata hashes are pinned at audit time.",
+    "No previous-run recertification, current-HEAD blanket proof, full-suite, other-profile, or native-client parity proof. Current marker file differs from compiled source.",
+    "Raw payloads and identity addresses not copied; only selectors, counts, sanitized marker types/stability and source locations retained."
+  ],
+  "marker_diagnostic": {
+    "after_secretwrap_seen": false,
+    "panic_locations": [
+      "src/lua_api/workarounds/temporary/debug_environment_defaults.rs:263:14"
+    ],
+    "phases": {
+      "after_button_metatable": {
+        "marker": "function",
+        "secretwrap": "function"
+      },
+      "after_editbox_metatable": {
+        "marker": "function",
+        "secretwrap": "function"
+      },
+      "after_secure_delegate": {
+        "marker": "function",
+        "secretwrap": "function"
+      },
+      "probe_start": {
+        "marker": "nil",
+        "secretwrap": "function"
+      }
+    },
+    "raw_identity_addresses_copied": false,
+    "stable_identity_after_secure_delegate": {
+      "marker": true,
+      "secretwrap": true
+    },
+    "userdata_call_failure": true
+  },
+  "mode": "existing artifact audit; no builds/tests/checks/network/reexecution/delegation",
+  "observed_HEAD_earlier_in_audit": "0769f7b996e538adf776eaba86fc5ae0dcdfa494",
+  "source_commit": "40d2beb9ad719032b4d345455e5410f2971ded7a",
+  "source_commit_scoped_checks": {
+    "Cargo.lock": {
+      "commit_comparison": "equal; git show exit 0 observed earlier in this audit",
+      "commit_sha256": "859f258fa21eb92f7f0c83c77d526ea0ce3e7535b0970df2e39c459023c0b9cf",
+      "current_sha256": "859f258fa21eb92f7f0c83c77d526ea0ce3e7535b0970df2e39c459023c0b9cf",
+      "snapshot_sha256": "859f258fa21eb92f7f0c83c77d526ea0ce3e7535b0970df2e39c459023c0b9cf"
+    },
+    "Cargo.toml": {
+      "commit_comparison": "equal; git show exit 0 observed earlier in this audit",
+      "commit_sha256": "1c56b9a80149ea739d8fc647391b4c45dc32ad70cf5ec7a3576dba92989f3341",
+      "current_sha256": "1c56b9a80149ea739d8fc647391b4c45dc32ad70cf5ec7a3576dba92989f3341",
+      "snapshot_sha256": "1c56b9a80149ea739d8fc647391b4c45dc32ad70cf5ec7a3576dba92989f3341"
+    },
+    "build.rs": {
+      "commit_comparison": "equal; git show exit 0 observed earlier in this audit",
+      "commit_sha256": "df6b286152daa948557c17c4abb8776af2aed573c45f1fcb4901fd2b4a8ccde2",
+      "current_sha256": "df6b286152daa948557c17c4abb8776af2aed573c45f1fcb4901fd2b4a8ccde2",
+      "snapshot_sha256": "df6b286152daa948557c17c4abb8776af2aed573c45f1fcb4901fd2b4a8ccde2"
+    },
+    "src/lua_api/workarounds/temporary/debug_environment_defaults.rs": {
+      "commit_comparison": "equal; git show exit 0 observed earlier in this audit",
+      "commit_sha256": "bbc6057c702ab85594c7365183d38ad6533586c2761024551ade2f5e48f1632e",
+      "current_sha256": "3074d23b34caeb84498ef50652887b915d4b94359648d11bcb6a8d368806247f",
+      "snapshot_sha256": "bbc6057c702ab85594c7365183d38ad6533586c2761024551ade2f5e48f1632e"
+    },
+    "tests/edit_mode_api.rs": {
+      "commit_comparison": "equal; git show exit 0 observed earlier in this audit",
+      "commit_sha256": "77dbc34cb41a3e3c857a71f0dc73432ac571ea79778fdbefcf74d839a15c94a1",
+      "current_sha256": "77dbc34cb41a3e3c857a71f0dc73432ac571ea79778fdbefcf74d839a15c94a1",
+      "snapshot_sha256": "77dbc34cb41a3e3c857a71f0dc73432ac571ea79778fdbefcf74d839a15c94a1"
+    },
+    "tests/edit_mode_api/enums.rs": {
+      "commit_comparison": "equal; git show exit 0 observed earlier in this audit",
+      "commit_sha256": "c5bf3ff4448239ac01e89222e660871ec1fd855744127ddb9b689b4c7bacf42b",
+      "current_sha256": "c5bf3ff4448239ac01e89222e660871ec1fd855744127ddb9b689b4c7bacf42b",
+      "snapshot_sha256": "c5bf3ff4448239ac01e89222e660871ec1fd855744127ddb9b689b4c7bacf42b"
+    },
+    "tests/integration.rs": {
+      "commit_comparison": "equal; git show exit 0 observed earlier in this audit",
+      "commit_sha256": "b85b734b56914dffc909ff95ba3c7b24f9ba4c175fcf10b8c5b680fd4159d981",
+      "current_sha256": "b85b734b56914dffc909ff95ba3c7b24f9ba4c175fcf10b8c5b680fd4159d981",
+      "snapshot_sha256": "b85b734b56914dffc909ff95ba3c7b24f9ba4c175fcf10b8c5b680fd4159d981"
+    },
+    "tests/patch_12_0_7_b23_b28.rs": {
+      "commit_comparison": "equal; git show exit 0 observed earlier in this audit",
+      "commit_sha256": "2954cb7a4f1b9672d682c09eeab0eb4ce975a36b863aca49dac1407f23f2ff61",
+      "current_sha256": "2954cb7a4f1b9672d682c09eeab0eb4ce975a36b863aca49dac1407f23f2ff61",
+      "snapshot_sha256": "2954cb7a4f1b9672d682c09eeab0eb4ce975a36b863aca49dac1407f23f2ff61"
+    },
+    "tests/spell_api.rs": {
+      "commit_comparison": "equal; git show exit 0 observed earlier in this audit",
+      "commit_sha256": "405f7564d9068ea502e3c05b992cebd983c0a845e7f2d7922b3122fa118dc6e1",
+      "current_sha256": "d281fd3909e89dc70830d2cfc644aaed478ea377b8ca39c0cc5f66c6d6de9fc0",
+      "snapshot_sha256": "405f7564d9068ea502e3c05b992cebd983c0a845e7f2d7922b3122fa118dc6e1"
+    },
+    "tests/toplevel_render_groups.rs": {
+      "commit_comparison": "equal; git show exit 0 observed earlier in this audit",
+      "commit_sha256": "d8852841e969bbfc1dbaf9d19354b8d4e8a33ef5849aad4161c3fdd8c8cdfd42",
+      "current_sha256": "d8852841e969bbfc1dbaf9d19354b8d4e8a33ef5849aad4161c3fdd8c8cdfd42",
+      "snapshot_sha256": "d8852841e969bbfc1dbaf9d19354b8d4e8a33ef5849aad4161c3fdd8c8cdfd42"
+    },
+    "tests/wowforever_cooldown_categories.rs": {
+      "commit_comparison": "equal; git show exit 0 observed earlier in this audit",
+      "commit_sha256": "9a586fd0e3ac943de15aa93b8a94f285e59695455f41447138303170ecab55b0",
+      "current_sha256": "9a586fd0e3ac943de15aa93b8a94f285e59695455f41447138303170ecab55b0",
+      "snapshot_sha256": "9a586fd0e3ac943de15aa93b8a94f285e59695455f41447138303170ecab55b0"
+    }
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "ended": "2026-10-10T00:16:08.212104+00:00",
+  "exit": 0,
+  "selector": "toplevel_render_groups::native_controls_keep_unraised_and_raised_groups_in_owner_strata",
+  "artifact_sha256_after": "1b9ecf472c4456118cb63e874c77a3dadef69228703644d71ef6a53592a1c652",
+  "stdout_sha256": "0853a6990b7debc42e6eeb14c1f11bf41c6294310246fef640c9ffa40298c604",
+  "stderr_sha256": "43214ae8d7ee47d7bd2a5b0430157962faae1307ef791b5e8996b2044cc46278",
+  "summary_lines": [
+    "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10697 filtered out; finished in 0.15s"
+  ]
+}

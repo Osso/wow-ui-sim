@@ -1,0 +1,403 @@
+{
+  "audit_utc": "2026-10-10T00:28:51.545768+00:00",
+  "bytes_excluding_manifest": 54638,
+  "file_count": 33,
+  "files": [
+    {
+      "bytes": 6432,
+      "path": "audit/report.md",
+      "privacy": "bounded technical receipt; no payload or credential candidates; local technical paths retained",
+      "retention": "byte-identical",
+      "sha256": "c2b0d1a11f58f5782b4a685e83dfa791af1e5fa2ebf60a924944703df4b216d5",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/marker-and-three-fixtures/20261009T233707Z/audit/report.md"
+    },
+    {
+      "bytes": 33662,
+      "path": "audit/proof.json",
+      "privacy": "bounded technical receipt; no payload or credential candidates; local technical paths retained",
+      "retention": "byte-identical",
+      "sha256": "aa4e40e642d88d7a1596660b1a8f5f8e3f346b551b020a9f0efe0a2bb025be87",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/marker-and-three-fixtures/20261009T233707Z/audit/proof.json"
+    },
+    {
+      "bytes": 648,
+      "path": "case1/submission.json",
+      "privacy": "bounded technical receipt; no payload or credential candidates; local technical paths retained",
+      "retention": "byte-identical",
+      "sha256": "1a95454eef130bd475de5d4f41c692d1418856bef9d6c6277b7e4496f69013ba",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/marker-and-three-fixtures/20261009T233707Z/case1/submission.json"
+    },
+    {
+      "bytes": 567,
+      "path": "case1/outcome.json",
+      "privacy": "bounded technical receipt; no payload or credential candidates; local technical paths retained",
+      "retention": "byte-identical",
+      "sha256": "1dd5b53b191e3fbf776bad1f9f59415847880e5dd328b90605de55433e1112b6",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/marker-and-three-fixtures/20261009T233707Z/case1/outcome.json"
+    },
+    {
+      "bytes": 117,
+      "path": "case1/selector-list.stdout",
+      "privacy": "bounded technical receipt; no payload or credential candidates; local technical paths retained",
+      "retention": "byte-identical",
+      "sha256": "083cbe93fe7f651697f0993d384b5d79439cbe15b049357a078ea34ddc846b47",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/marker-and-three-fixtures/20261009T233707Z/case1/selector-list.stdout"
+    },
+    {
+      "bytes": 0,
+      "path": "case1/selector-list.stderr",
+      "privacy": "bounded technical receipt; no payload or credential candidates; local technical paths retained",
+      "retention": "byte-identical",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/marker-and-three-fixtures/20261009T233707Z/case1/selector-list.stderr"
+    },
+    {
+      "bytes": 217,
+      "path": "case1/stdout",
+      "privacy": "bounded technical receipt; no payload or credential candidates; local technical paths retained",
+      "retention": "byte-identical",
+      "sha256": "18343424e8afe090289b298a86e97cfb3b47368cc9e5b76aa46963e8148cd2f1",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/marker-and-three-fixtures/20261009T233707Z/case1/stdout"
+    },
+    {
+      "bytes": 657,
+      "path": "case2/submission.json",
+      "privacy": "bounded technical receipt; no payload or credential candidates; local technical paths retained",
+      "retention": "byte-identical",
+      "sha256": "8021a063d8cd93dd30b31979e2133a04a6a90d7f8e892bcad6d1d671d5cec6dd",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/marker-and-three-fixtures/20261009T233707Z/case2/submission.json"
+    },
+    {
+      "bytes": 576,
+      "path": "case2/outcome.json",
+      "privacy": "bounded technical receipt; no payload or credential candidates; local technical paths retained",
+      "retention": "byte-identical",
+      "sha256": "62928fc9f0563e110a50464038a36e8813d54b8650492676df350aae6c97ffc2",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/marker-and-three-fixtures/20261009T233707Z/case2/outcome.json"
+    },
+    {
+      "bytes": 126,
+      "path": "case2/selector-list.stdout",
+      "privacy": "bounded technical receipt; no payload or credential candidates; local technical paths retained",
+      "retention": "byte-identical",
+      "sha256": "6614ac45b88167859185570b096dd3abf8294bd420743c8c74790870bd1d791a",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/marker-and-three-fixtures/20261009T233707Z/case2/selector-list.stdout"
+    },
+    {
+      "bytes": 0,
+      "path": "case2/selector-list.stderr",
+      "privacy": "bounded technical receipt; no payload or credential candidates; local technical paths retained",
+      "retention": "byte-identical",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/marker-and-three-fixtures/20261009T233707Z/case2/selector-list.stderr"
+    },
+    {
+      "bytes": 226,
+      "path": "case2/stdout",
+      "privacy": "bounded technical receipt; no payload or credential candidates; local technical paths retained",
+      "retention": "byte-identical",
+      "sha256": "e7173e46e34bf0240212bdefc7d018e9683ed301a563acb6f47634c7abf43945",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/marker-and-three-fixtures/20261009T233707Z/case2/stdout"
+    },
+    {
+      "bytes": 647,
+      "path": "case3/submission.json",
+      "privacy": "bounded technical receipt; no payload or credential candidates; local technical paths retained",
+      "retention": "byte-identical",
+      "sha256": "823b3931cac4b9409600bf10afbe62e2aa720dc745271a47529a197208b2958f",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/marker-and-three-fixtures/20261009T233707Z/case3/submission.json"
+    },
+    {
+      "bytes": 566,
+      "path": "case3/outcome.json",
+      "privacy": "bounded technical receipt; no payload or credential candidates; local technical paths retained",
+      "retention": "byte-identical",
+      "sha256": "21980b0c7605fbd8259c6dcc9197d1550006fddd883d4f05ba66d2d9c031c46d",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/marker-and-three-fixtures/20261009T233707Z/case3/outcome.json"
+    },
+    {
+      "bytes": 116,
+      "path": "case3/selector-list.stdout",
+      "privacy": "bounded technical receipt; no payload or credential candidates; local technical paths retained",
+      "retention": "byte-identical",
+      "sha256": "c88d1d823e61393e650652afbf9a82daf45a1eee2a2b6a714dc8f219f19f3a17",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/marker-and-three-fixtures/20261009T233707Z/case3/selector-list.stdout"
+    },
+    {
+      "bytes": 0,
+      "path": "case3/selector-list.stderr",
+      "privacy": "bounded technical receipt; no payload or credential candidates; local technical paths retained",
+      "retention": "byte-identical",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/marker-and-three-fixtures/20261009T233707Z/case3/selector-list.stderr"
+    },
+    {
+      "bytes": 216,
+      "path": "case3/stdout",
+      "privacy": "bounded technical receipt; no payload or credential candidates; local technical paths retained",
+      "retention": "byte-identical",
+      "sha256": "0853a6990b7debc42e6eeb14c1f11bf41c6294310246fef640c9ffa40298c604",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/marker-and-three-fixtures/20261009T233707Z/case3/stdout"
+    },
+    {
+      "bytes": 637,
+      "path": "case4/submission.json",
+      "privacy": "bounded technical receipt; no payload or credential candidates; local technical paths retained",
+      "retention": "byte-identical",
+      "sha256": "4e3277859e14cac5d24b8b41b5a04890b10fc5fbbdfdb744f2129bc138b31cad",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/marker-and-three-fixtures/20261009T233707Z/case4/submission.json"
+    },
+    {
+      "bytes": 556,
+      "path": "case4/outcome.json",
+      "privacy": "bounded technical receipt; no payload or credential candidates; local technical paths retained",
+      "retention": "byte-identical",
+      "sha256": "53bddac9fa293d91ecf3d82d23fb18a6d05cd2f21cf29d2c157c62997beb3b0c",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/marker-and-three-fixtures/20261009T233707Z/case4/outcome.json"
+    },
+    {
+      "bytes": 106,
+      "path": "case4/selector-list.stdout",
+      "privacy": "bounded technical receipt; no payload or credential candidates; local technical paths retained",
+      "retention": "byte-identical",
+      "sha256": "0bdf3355636630d2e97e949e371a20ce7c866c496191d8cf43495e5fd6658490",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/marker-and-three-fixtures/20261009T233707Z/case4/selector-list.stdout"
+    },
+    {
+      "bytes": 0,
+      "path": "case4/selector-list.stderr",
+      "privacy": "bounded technical receipt; no payload or credential candidates; local technical paths retained",
+      "retention": "byte-identical",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/marker-and-three-fixtures/20261009T233707Z/case4/selector-list.stderr"
+    },
+    {
+      "bytes": 206,
+      "path": "case4/stdout",
+      "privacy": "bounded technical receipt; no payload or credential candidates; local technical paths retained",
+      "retention": "byte-identical",
+      "sha256": "57ce8b53be797ef826b8d55750728594b29a726ae4a67917b460d3686a4fff0d",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/marker-and-three-fixtures/20261009T233707Z/case4/stdout"
+    },
+    {
+      "bytes": 704,
+      "path": "case5/submission.json",
+      "privacy": "bounded technical receipt; no payload or credential candidates; local technical paths retained",
+      "retention": "byte-identical",
+      "sha256": "4d15bc5c523be32634dc29e52c8749814975717d49e80ec2b0fe8038725b5029",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/marker-and-three-fixtures/20261009T233707Z/case5/submission.json"
+    },
+    {
+      "bytes": 587,
+      "path": "case5/outcome.json",
+      "privacy": "bounded technical receipt; no payload or credential candidates; local technical paths retained",
+      "retention": "byte-identical",
+      "sha256": "01b90f006bd4b2df9e25cfdee5e99ddb2a566f7d55f2b092d82ce6c22e883fd9",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/marker-and-three-fixtures/20261009T233707Z/case5/outcome.json"
+    },
+    {
+      "bytes": 132,
+      "path": "case5/selector-list.stdout",
+      "privacy": "bounded technical receipt; no payload or credential candidates; local technical paths retained",
+      "retention": "byte-identical",
+      "sha256": "7a82e80f8d9ece17b496d0d8385986fe53b77fc3bea066a156bd766f21f8e99d",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/marker-and-three-fixtures/20261009T233707Z/case5/selector-list.stdout"
+    },
+    {
+      "bytes": 0,
+      "path": "case5/selector-list.stderr",
+      "privacy": "bounded technical receipt; no payload or credential candidates; local technical paths retained",
+      "retention": "byte-identical",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/marker-and-three-fixtures/20261009T233707Z/case5/selector-list.stderr"
+    },
+    {
+      "bytes": 369,
+      "path": "case5/stdout",
+      "privacy": "bounded technical receipt; no payload or credential candidates; local technical paths retained",
+      "retention": "byte-identical",
+      "sha256": "bb47c9fed43de5ff3639c401d2f744f39f6ddf0a1edc653708e0c8c5826c1faf",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/marker-and-three-fixtures/20261009T233707Z/case5/stdout"
+    },
+    {
+      "bytes": 648,
+      "path": "case6/submission.json",
+      "privacy": "bounded technical receipt; no payload or credential candidates; local technical paths retained",
+      "retention": "byte-identical",
+      "sha256": "c0f9ec25ca6cd8b7e94804bd4909d44ace25cf85ec7d7f740b27337f84cac14c",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/marker-and-three-fixtures/20261009T233707Z/case6/submission.json"
+    },
+    {
+      "bytes": 567,
+      "path": "case6/outcome.json",
+      "privacy": "bounded technical receipt; no payload or credential candidates; local technical paths retained",
+      "retention": "byte-identical",
+      "sha256": "9b73a1de68dca34e4747ea4feb8601de950e3c2bacc957e5a87c4d73b97f9663",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/marker-and-three-fixtures/20261009T233707Z/case6/outcome.json"
+    },
+    {
+      "bytes": 117,
+      "path": "case6/selector-list.stdout",
+      "privacy": "bounded technical receipt; no payload or credential candidates; local technical paths retained",
+      "retention": "byte-identical",
+      "sha256": "3a9a017093a84f6ee80be2bd410f3219e279ab58e4997bf2ae9c4ff89f210aed",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/marker-and-three-fixtures/20261009T233707Z/case6/selector-list.stdout"
+    },
+    {
+      "bytes": 0,
+      "path": "case6/selector-list.stderr",
+      "privacy": "bounded technical receipt; no payload or credential candidates; local technical paths retained",
+      "retention": "byte-identical",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/marker-and-three-fixtures/20261009T233707Z/case6/selector-list.stderr"
+    },
+    {
+      "bytes": 217,
+      "path": "case6/stdout",
+      "privacy": "bounded technical receipt; no payload or credential candidates; local technical paths retained",
+      "retention": "byte-identical",
+      "sha256": "333fc5655237667172c889ec36051ade4e39c583a29a152fa720aafe717e7209",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/marker-and-three-fixtures/20261009T233707Z/case6/stdout"
+    },
+    {
+      "bytes": 5019,
+      "path": "compiler-selected.json",
+      "privacy": "technical metadata only; boot/PID omitted",
+      "retention": "derived allowlisted existing fields",
+      "sha256": "5e26c2d20029ff25ccc534ef2c0102d79baa011cda2eed1145974acf574f002c"
+    }
+  ],
+  "hash_only_exclusions": {
+    "binaries": {
+      "integration": {
+        "bytes": 466695912,
+        "path": "/home/osso/Projects/wow/wow-ui-sim/target/debug/deps/integration-1db16289b0998b2a",
+        "sha256": "1b9ecf472c4456118cb63e874c77a3dadef69228703644d71ef6a53592a1c652"
+      },
+      "wow_ui_sim": {
+        "bytes": 390474616,
+        "path": "/home/osso/Projects/wow/wow-ui-sim/target/debug/deps/wow_ui_sim-bcad23723a7b3b0d",
+        "sha256": "43d0063f52e052553ca42b83d1270adc770d96e83821316f5d0e4caf6fe7110e"
+      }
+    },
+    "compiler_files": {
+      "cargo-result.json": {
+        "bytes": 367,
+        "path": "/home/osso/.local/state/wow-ui-sim/verification/marker-and-three-fixtures/20261009T233707Z/cargo-result.json",
+        "sha256": "ec5c5745eb676c2cd7bb266d9a43e99a724af7d723e62846a0bf8f3a831d7447"
+      },
+      "compile.stderr": {
+        "bytes": 1275,
+        "path": "/home/osso/.local/state/wow-ui-sim/verification/marker-and-three-fixtures/20261009T233707Z/compile.stderr",
+        "sha256": "a73064cac1191932328678a44487e22a5a6196388c9f89a140336b29585e69df"
+      },
+      "compile.stdout": {
+        "bytes": 573439,
+        "path": "/home/osso/.local/state/wow-ui-sim/verification/marker-and-three-fixtures/20261009T233707Z/compile.stdout",
+        "sha256": "118249fbefa78858acb33a99abbe5e44252b9384894d2124e6d03825a18c539d"
+      },
+      "outcome.json": {
+        "bytes": 178,
+        "path": "/home/osso/.local/state/wow-ui-sim/verification/marker-and-three-fixtures/20261009T233707Z/outcome.json",
+        "sha256": "8af134d533093e581824681392e0eb556268ade2ae09d1aa74366cb2fc60b247"
+      },
+      "resources.json": {
+        "bytes": 139,
+        "path": "/home/osso/.local/state/wow-ui-sim/verification/marker-and-three-fixtures/20261009T233707Z/resources.json",
+        "sha256": "aedb9bd606184792f2714120bd74a8a7a5153ae4ea527bda2fa24a68da34e3aa"
+      },
+      "run-artifacts.json": {
+        "bytes": 3445,
+        "path": "/home/osso/.local/state/wow-ui-sim/verification/marker-and-three-fixtures/20261009T233707Z/run-artifacts.json",
+        "sha256": "bc19a6142438c7a5c0237c013a76f85e63f50bb33dc4ac4fd65f3e8640df4e98"
+      },
+      "six-case-results.json": {
+        "bytes": 3565,
+        "path": "/home/osso/.local/state/wow-ui-sim/verification/marker-and-three-fixtures/20261009T233707Z/six-case-results.json",
+        "sha256": "71ebcd5032356956b3c835a2df326ac0fc62e4afbb5986b2f59997e895c06794"
+      },
+      "source-after.json": {
+        "bytes": 452396,
+        "path": "/home/osso/.local/state/wow-ui-sim/verification/marker-and-three-fixtures/20261009T233707Z/source-after.json",
+        "sha256": "73b3eb21c885066f1fcde90ab34f331ceda504f028e0d4712a1fec7d52182df5"
+      },
+      "source-before.json": {
+        "bytes": 452396,
+        "path": "/home/osso/.local/state/wow-ui-sim/verification/marker-and-three-fixtures/20261009T233707Z/source-before.json",
+        "sha256": "73b3eb21c885066f1fcde90ab34f331ceda504f028e0d4712a1fec7d52182df5"
+      },
+      "submission.json": {
+        "bytes": 835,
+        "path": "/home/osso/.local/state/wow-ui-sim/verification/marker-and-three-fixtures/20261009T233707Z/submission.json",
+        "sha256": "9c1c3e43f7984fa23c1b943bcaf16daf4d720e3ef7f1bf1de8138b8747f8dd2e"
+      }
+    },
+    "runtime_stderr": {
+      "case1": {
+        "bytes": 640,
+        "path": "/home/osso/.local/state/wow-ui-sim/verification/marker-and-three-fixtures/20261009T233707Z/case1/stderr",
+        "sha256": "127c8ea5558ece4d1e7ffc234570521ba6d7b36dd0e45588baea973f643a4e15"
+      },
+      "case2": {
+        "bytes": 641,
+        "path": "/home/osso/.local/state/wow-ui-sim/verification/marker-and-three-fixtures/20261009T233707Z/case2/stderr",
+        "sha256": "219c1f9a0a46e29c8695e29f50c3d48b4e8f2b49627afad294160484630fe249"
+      },
+      "case3": {
+        "bytes": 642,
+        "path": "/home/osso/.local/state/wow-ui-sim/verification/marker-and-three-fixtures/20261009T233707Z/case3/stderr",
+        "sha256": "43214ae8d7ee47d7bd2a5b0430157962faae1307ef791b5e8996b2044cc46278"
+      },
+      "case4": {
+        "bytes": 641,
+        "path": "/home/osso/.local/state/wow-ui-sim/verification/marker-and-three-fixtures/20261009T233707Z/case4/stderr",
+        "sha256": "0e1de97d1bc3f7a5b4bf5012f732b97f7aa373cb5ab033b2e2155515e7c851e8"
+      },
+      "case5": {
+        "bytes": 5489,
+        "path": "/home/osso/.local/state/wow-ui-sim/verification/marker-and-three-fixtures/20261009T233707Z/case5/stderr",
+        "sha256": "f72f63905f1fb4493181f00a39a1cf8563aeadec4cb0aecd081251cccabdfa27"
+      },
+      "case6": {
+        "bytes": 640,
+        "path": "/home/osso/.local/state/wow-ui-sim/verification/marker-and-three-fixtures/20261009T233707Z/case6/stderr",
+        "sha256": "0d07f8c4bc1d99b244ece0ba222138959dc76d1e315981c31c362c9c20b65093"
+      }
+    }
+  },
+  "incident": {
+    "command": "read-only git cat-file --batch source comparison",
+    "result": "Unexpected auto-backgrounding during Pyrun helper batch input/output; reported log absent. Exact blocking cause unproven and full-source commit comparison incomplete. Own git child 410567 cancelled and /proc/410567 absence verified; detached evaluation subsequently reported failed. No batch evidence used and no batch rerun; eleven scoped git show reads supplied source comparisons."
+  },
+  "later_changes_excluded": [
+    "f4480b993",
+    "0769f7b99",
+    "1fb759a05",
+    "ce485eb623"
+  ],
+  "manifest_self": "Excluded from file count/size/hash to avoid self-reference.",
+  "privacy": {
+    "candidate_matches": 0,
+    "excluded": "No binaries, whole compiler streams, source snapshots, private addons, WTF, profiles, account payload, cache or environment data copied.",
+    "limits": "Not exhaustive privacy certification or external-publication approval; technical local paths and hashes retained.",
+    "method": "Bounded credential-assignment/email/private-path screening plus technical field and runtime stdout allowlisting; audit contains sanitized marker types, no identity addresses.",
+    "patterns": {
+      "credential_assignment": "(?i)(?:password|api[_-]?key|access[_-]?token|authorization)\\s*[:=]\\s*[\"\\x27]?[^\\s\"\\x27,}]+",
+      "email": "[\\w.+-]+@[\\w.-]+\\.[A-Za-z]{2,}",
+      "private_path": "(?i)(?:/WTF/|/SavedVariables/|/Account/|/profiles/|PRIVATE KEY)"
+    },
+    "raw_stderr": "Not copied, including case5 identity traces; sanitized diagnostic remains in audit."
+  },
+  "provenance_limits": [
+    "3839-entry before/after equality recomputed. Commit-content hashes independently compared for 11 scoped build/test/wiring files only.",
+    "Submission excludes external path dependencies, inherited environment, runtime cache/addon files outside source scope, and untracked index.",
+    "Compiler JSON contains executable paths but no executable hashes. Current binary hashes match retained runtime before/after hashes; there is no separately sealed compile-time binary hash.",
+    "Locally retained receipts are not signed attestations. Runtime stdout/stderr hashes are independently recomputed against receipts; compiler and metadata hashes are pinned at audit time.",
+    "No previous-run recertification, current-HEAD blanket proof, full-suite, other-profile, or native-client parity proof. Current marker file differs from compiled source.",
+    "Raw payloads and identity addresses not copied; only selectors, counts, sanitized marker types/stability and source locations retained."
+  ],
+  "retention_date": "2026-10-09",
+  "runtime_date_utc": "2026-10-10",
+  "scope": "Existing audit and selected compiler/runtime receipts; bounded 5 PASS / 1 FAIL. Source goal OPEN.",
+  "source_commit": "40d2beb9ad719032b4d345455e5410f2971ded7a"
+}

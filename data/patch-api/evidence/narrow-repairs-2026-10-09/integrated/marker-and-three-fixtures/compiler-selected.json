@@ -1,0 +1,173 @@
+{
+  "cargo_result": {
+    "argv": [
+      "/usr/bin/cargo",
+      "test",
+      "--offline",
+      "--locked",
+      "--lib",
+      "--test",
+      "integration",
+      "--no-run",
+      "--message-format=json"
+    ],
+    "ended": "2026-10-09T23:38:01.133015+00:00",
+    "exit": 0
+  },
+  "origin": "Selected existing receipt fields and compiler records from audited proof; no missing log reconstruction; boot IDs/PID omitted.",
+  "outcome": {
+    "build_performed": true,
+    "cargo_exit": 0,
+    "ended": "2026-10-09T23:38:01.177239+00:00",
+    "source_equal": true
+  },
+  "selected_compiler_records": {
+    "integration": {
+      "executable": "/home/osso/Projects/wow/wow-ui-sim/target/debug/deps/integration-1db16289b0998b2a",
+      "features": [
+        "aura-containers",
+        "aura-instance-enumeration",
+        "aura-xml-widgets",
+        "base-spell-relationships",
+        "casc",
+        "client-retail",
+        "default",
+        "forbidden-aspects",
+        "gui",
+        "native-duration-formatting",
+        "numeric-rule-formatters",
+        "on-update-modes",
+        "player-cast-durations",
+        "profile-retail",
+        "retail-12-0-0",
+        "retail-12-0-5",
+        "retail-12-0-7",
+        "retail-12-1-0",
+        "rodio",
+        "sound"
+      ],
+      "filenames": [
+        "/home/osso/Projects/wow/wow-ui-sim/target/debug/deps/integration-1db16289b0998b2a"
+      ],
+      "fresh": false,
+      "manifest_path": "/home/osso/Projects/wow/wow-ui-sim/Cargo.toml",
+      "package_id": "path+file:///home/osso/Projects/wow/wow-ui-sim#0.1.0",
+      "profile": {
+        "debug_assertions": true,
+        "debuginfo": "line-tables-only",
+        "opt_level": "1",
+        "overflow_checks": true,
+        "test": true
+      },
+      "reason": "compiler-artifact",
+      "target": {
+        "crate_types": [
+          "bin"
+        ],
+        "doc": false,
+        "doctest": false,
+        "edition": "2024",
+        "kind": [
+          "test"
+        ],
+        "name": "integration",
+        "src_path": "/home/osso/Projects/wow/wow-ui-sim/tests/integration.rs",
+        "test": true
+      }
+    },
+    "wow_ui_sim": {
+      "executable": "/home/osso/Projects/wow/wow-ui-sim/target/debug/deps/wow_ui_sim-bcad23723a7b3b0d",
+      "features": [
+        "aura-containers",
+        "aura-instance-enumeration",
+        "aura-xml-widgets",
+        "base-spell-relationships",
+        "casc",
+        "client-retail",
+        "default",
+        "forbidden-aspects",
+        "gui",
+        "native-duration-formatting",
+        "numeric-rule-formatters",
+        "on-update-modes",
+        "player-cast-durations",
+        "profile-retail",
+        "retail-12-0-0",
+        "retail-12-0-5",
+        "retail-12-0-7",
+        "retail-12-1-0",
+        "rodio",
+        "sound"
+      ],
+      "filenames": [
+        "/home/osso/Projects/wow/wow-ui-sim/target/debug/deps/wow_ui_sim-bcad23723a7b3b0d"
+      ],
+      "fresh": false,
+      "manifest_path": "/home/osso/Projects/wow/wow-ui-sim/Cargo.toml",
+      "package_id": "path+file:///home/osso/Projects/wow/wow-ui-sim#0.1.0",
+      "profile": {
+        "debug_assertions": true,
+        "debuginfo": "line-tables-only",
+        "opt_level": "1",
+        "overflow_checks": true,
+        "test": true
+      },
+      "reason": "compiler-artifact",
+      "target": {
+        "crate_types": [
+          "lib"
+        ],
+        "doc": true,
+        "doctest": true,
+        "edition": "2024",
+        "kind": [
+          "lib"
+        ],
+        "name": "wow_ui_sim",
+        "src_path": "/home/osso/Projects/wow/wow-ui-sim/src/lib.rs",
+        "test": true
+      }
+    }
+  },
+  "source_files": {
+    "cargo-result.json": {
+      "bytes": 367,
+      "path": "/home/osso/.local/state/wow-ui-sim/verification/marker-and-three-fixtures/20261009T233707Z/cargo-result.json",
+      "sha256": "ec5c5745eb676c2cd7bb266d9a43e99a724af7d723e62846a0bf8f3a831d7447"
+    },
+    "outcome.json": {
+      "bytes": 178,
+      "path": "/home/osso/.local/state/wow-ui-sim/verification/marker-and-three-fixtures/20261009T233707Z/outcome.json",
+      "sha256": "8af134d533093e581824681392e0eb556268ade2ae09d1aa74366cb2fc60b247"
+    },
+    "submission.json": {
+      "bytes": 835,
+      "path": "/home/osso/.local/state/wow-ui-sim/verification/marker-and-three-fixtures/20261009T233707Z/submission.json",
+      "sha256": "9c1c3e43f7984fa23c1b943bcaf16daf4d720e3ef7f1bf1de8138b8747f8dd2e"
+    }
+  },
+  "submission": {
+    "argv": [
+      "/usr/bin/cargo",
+      "test",
+      "--offline",
+      "--locked",
+      "--lib",
+      "--test",
+      "integration",
+      "--no-run",
+      "--message-format=json"
+    ],
+    "environment_overrides": {
+      "CARGO_BUILD_JOBS": "4"
+    },
+    "exclusions": [
+      "external path dependencies",
+      "inherited environment",
+      "runtime cache/addon files outside source scope",
+      "untracked index"
+    ],
+    "revision": "40d2beb9ad719032b4d345455e5410f2971ded7a",
+    "started": "2026-10-09T23:37:07.694939+00:00"
+  }
+}
