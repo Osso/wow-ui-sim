@@ -80,7 +80,7 @@ The Linux prefork test harness provides a reusable custom test-runner contract f
 - [ ] Under Mists, list and dispatch only the original chat pair when GUI is enabled and the original cast-bar case; do not run Retail full-UI preload or registry checks.
 - [ ] Preserve each original constructor, assertion, process isolation and cache contract. Listing/admission is not original-case execution proof.
 
-Current source uses the `prefork-full-ui` Cargo capability because `required-features` is conjunctive, not a profile OR. Retail-only conformance checks remain enabled for Retail; Mists checks its complete public list against its original fixture names. Cargo admission RED at `verification/mists-prefork-admission-red/20261010T083406Z` exits101 because the old target requires `client-retail`; post-change compile/list/execution remain pending. Historical Retail epochs above remain separate.
+Current source uses the `prefork-full-ui` Cargo capability because `required-features` is conjunctive, not a profile OR. Retail-only conformance checks remain enabled for Retail; Mists checks its complete public list against its original fixture names. Cargo admission RED at `verification/mists-prefork-admission-red/20261010T083406Z` exits101 because the old target requires `client-retail`. Epoch `20261010T083809Z` compiles and lists the three GUI-enabled Mists names, but original execution is blocked by conformance's obsolete extra Retail-group count (17/18 conformance cases pass). The count now includes that group only for Retail; original constructors/assertions remain unchanged. Post-fix runtime proof remains pending. Historical Retail epochs above remain separate.
 
 ### Bytecode-cache child contract
 

@@ -940,6 +940,8 @@ fn group_setup_pid(root: &Path, group: &str) -> u32 {
 }
 
 fn exact_group_selection(state: &ConformanceState) {
+    let expected_empty_groups =
+        CONTROLLER_GROUPS.len() + usize::from(cfg!(feature = "client-retail"));
     for group in CONTROLLER_GROUPS {
         let name = format!("group-contract::{group}::pass");
         let selected = TempDir::new().expect("create selection markers");
@@ -975,7 +977,7 @@ fn exact_group_selection(state: &ConformanceState) {
             assert_success(&output);
             assert_eq!(
                 stdout(&output).matches("running 0 tests").count(),
-                CONTROLLER_GROUPS.len() + 1
+                expected_empty_groups
             );
             for group in CONTROLLER_GROUPS {
                 assert!(
