@@ -1,0 +1,167 @@
+{
+  "algorithm": "sha256",
+  "artifact_observations": [
+    {
+      "bytes": 366440208,
+      "observed_at": "2026-10-10T03:22:31.758091+00:00",
+      "path": "/home/osso/Projects/wow/wow-ui-sim/target/debug/deps/wow_sim-e99132585a38db9e",
+      "sha256": "6e18e9bf5c9a357ce103c220f99351d5b0c8f80c70a0d5c64a3462c6d0542654",
+      "stable_during_read": true
+    }
+  ],
+  "audited_at": "2026-10-10T03:22:31.758091+00:00",
+  "files": [
+    {
+      "bytes": 1180,
+      "path": "/home/osso/.local/state/wow-ui-sim/verification/mists-finite-probe-build/20261010T030623Z/artifact-selection.json",
+      "sha256": "42001d123c6259492d6ef9e4bbc9976043e2f386b0aa2c3d10fcccaa41748e89",
+      "stable_during_read": true
+    },
+    {
+      "bytes": 5542,
+      "path": "/home/osso/.local/state/wow-ui-sim/verification/mists-finite-probe-build/20261010T030623Z/audit/compiler-report.md",
+      "sha256": "65f477ab55402eeb2e3423001144ffdd359f3a4568c601401e99bf9a51709430",
+      "stable_during_read": true
+    },
+    {
+      "bytes": 3565,
+      "path": "/home/osso/.local/state/wow-ui-sim/verification/mists-finite-probe-build/20261010T030623Z/audit/hash-report.json",
+      "sha256": "f31bd32a46a334fb18d8ef2e7e9492751dcd8103eccd1af09ab348587e753cb7",
+      "stable_during_read": true
+    },
+    {
+      "bytes": 13861,
+      "path": "/home/osso/.local/state/wow-ui-sim/verification/mists-finite-probe-build/20261010T030623Z/audit/runtime-aggregate.json",
+      "sha256": "d1e5aabd2a88476124752e5ce9c245e159a7b57f16665c9c61235808336722f5",
+      "stable_during_read": true
+    },
+    {
+      "bytes": 3973,
+      "path": "/home/osso/.local/state/wow-ui-sim/verification/mists-finite-probe-build/20261010T030623Z/audit/runtime-report.md",
+      "sha256": "d4ca534bc0cdca86f83b08e5c98302c088af0bf15284b17d70c2015c7a711842",
+      "stable_during_read": true
+    },
+    {
+      "bytes": 479928,
+      "path": "/home/osso/.local/state/wow-ui-sim/verification/mists-finite-probe-build/20261010T030623Z/audit/scoped-manifest.json",
+      "sha256": "007f77ea8ccbc0e2370140c7660b68c37ee2baeda7d143a78f0a48d73d0bc298",
+      "stable_during_read": true
+    },
+    {
+      "bytes": 350,
+      "path": "/home/osso/.local/state/wow-ui-sim/verification/mists-finite-probe-build/20261010T030623Z/cargo-result.json",
+      "sha256": "4cd7a3a39ce3706fef601f03097f990876256b1ef98e6e0b3759db4f105073a3",
+      "stable_during_read": true
+    },
+    {
+      "bytes": 1275,
+      "path": "/home/osso/.local/state/wow-ui-sim/verification/mists-finite-probe-build/20261010T030623Z/compile.stderr",
+      "sha256": "0129e6fa783725061f51333122984871bb0a203b867ff5e7682d846f605d55f9",
+      "stable_during_read": true
+    },
+    {
+      "bytes": 566272,
+      "path": "/home/osso/.local/state/wow-ui-sim/verification/mists-finite-probe-build/20261010T030623Z/compile.stdout",
+      "sha256": "a5ba7253a85709e54a661a01d2dc033338f92fd62515526503211cbdc65e6e01",
+      "stable_during_read": true
+    },
+    {
+      "bytes": 178,
+      "path": "/home/osso/.local/state/wow-ui-sim/verification/mists-finite-probe-build/20261010T030623Z/outcome.json",
+      "sha256": "8d3868be0756f1dc976fc30b2157c4182dd72f9f2ef002baf511e21242aa84e0",
+      "stable_during_read": true
+    },
+    {
+      "bytes": 856,
+      "path": "/home/osso/.local/state/wow-ui-sim/verification/mists-finite-probe-build/20261010T030623Z/probe-execution/invocation.json",
+      "sha256": "3932ad0c350385091eca373636030a5125485d3a7b692ca9624bf7f062093872",
+      "stable_during_read": true
+    },
+    {
+      "bytes": 1676,
+      "path": "/home/osso/.local/state/wow-ui-sim/verification/mists-finite-probe-build/20261010T030623Z/probe-execution/result.json",
+      "sha256": "61263bbc3926159a1d4c7b2cd5aff4ca71240f0bff9ce27daaf4243496038f7e",
+      "stable_during_read": true
+    },
+    {
+      "bytes": 1495476,
+      "path": "/home/osso/.local/state/wow-ui-sim/verification/mists-finite-probe-build/20261010T030623Z/probe-execution/stderr",
+      "sha256": "4e366c20a013b90158eee4bcf9616914ceff5786935e071b76791c9c50e49cd9",
+      "stable_during_read": true
+    },
+    {
+      "bytes": 314852,
+      "path": "/home/osso/.local/state/wow-ui-sim/verification/mists-finite-probe-build/20261010T030623Z/probe-execution/stdout",
+      "sha256": "0dd03ac500c17a294678327bb6e97e87d2ada64053e44391fa4170b1bd344b76",
+      "stable_during_read": true
+    },
+    {
+      "bytes": 452396,
+      "path": "/home/osso/.local/state/wow-ui-sim/verification/mists-finite-probe-build/20261010T030623Z/source-after.json",
+      "sha256": "62a9abc419e3ae05565c391578ce94c083a7bf3196754d52bf6939af9940c7fe",
+      "stable_during_read": true
+    },
+    {
+      "bytes": 452396,
+      "path": "/home/osso/.local/state/wow-ui-sim/verification/mists-finite-probe-build/20261010T030623Z/source-before.json",
+      "sha256": "62a9abc419e3ae05565c391578ce94c083a7bf3196754d52bf6939af9940c7fe",
+      "stable_during_read": true
+    },
+    {
+      "bytes": 883,
+      "path": "/home/osso/.local/state/wow-ui-sim/verification/mists-finite-probe-build/20261010T030623Z/submission.json",
+      "sha256": "de64d9ccc61d21c7c33c58b7082b8f85241cef03be01c94178b494204254b6da",
+      "stable_during_read": true
+    },
+    {
+      "bytes": 21473,
+      "path": "/home/osso/.local/state/wow-ui-sim/verification/toc-startup-root-fixes/20261010T021055Z/audit/runtime-aggregate.json",
+      "sha256": "756a9eccee43c7f735423efdd3fb858d7199906857a7b2003f122edbb728e097",
+      "stable_during_read": true
+    },
+    {
+      "bytes": 18394,
+      "path": "/home/osso/.local/state/wow-ui-sim/verification/toc-startup-root-fixes/20261010T021055Z/audit/runtime-hashmanifest.json",
+      "sha256": "7ba654bfe02bc73a8e24000413549ff1e27f4f36dc7efcace1d0398eff12d8b5",
+      "stable_during_read": true
+    },
+    {
+      "bytes": 8970,
+      "path": "/home/osso/.local/state/wow-ui-sim/verification/toc-startup-root-fixes/20261010T021055Z/audit/runtime-report.md",
+      "sha256": "4c907a771cda82e36bdd8e9e462f57ea062921bc1e4b94ea995da572d1a902bb",
+      "stable_during_read": true
+    },
+    {
+      "bytes": 1343,
+      "path": "/home/osso/.local/state/wow-ui-sim/verification/toc-startup-root-fixes/20261010T021055Z/startup-debug/result.json",
+      "sha256": "17ac50579b00f67cab72b03008868c98ae6844dd75ff61456701357b5ff43352",
+      "stable_during_read": true
+    },
+    {
+      "bytes": 1515008,
+      "path": "/home/osso/.local/state/wow-ui-sim/verification/toc-startup-root-fixes/20261010T021055Z/startup-debug/stderr",
+      "sha256": "c62bd3a5d401d32a4647f71e4b2035a06eca9a993db51dce21b56148d07b1dfe",
+      "stable_during_read": true
+    },
+    {
+      "bytes": 315150,
+      "path": "/home/osso/.local/state/wow-ui-sim/verification/toc-startup-root-fixes/20261010T021055Z/startup-debug/stdout",
+      "sha256": "008c05121ef91fd41c1f544e8d61a6c20f7a63771df8a96de4d15d89825740da",
+      "stable_during_read": true
+    },
+    {
+      "bytes": 925,
+      "path": "/home/osso/.local/state/wow-ui-sim/verification/toc-startup-root-fixes/20261010T021055Z/startup-debug/submission.json",
+      "sha256": "e00ed1d169dd99c4465f378b4051df686925f5c1aed15f5d2fcfb31181c811f1",
+      "stable_during_read": true
+    },
+    {
+      "bytes": 11263,
+      "path": "/home/osso/Projects/wow/wow-ui-sim/src/bin/wow_sim/startup.rs",
+      "sha256": "33bc26fd67ff52991b3b734b9eb38268fc38fd424791a9a5779d2ff43e06766f",
+      "stable_during_read": true
+    }
+  ],
+  "schema": 1,
+  "scope": "Existing completed runtime receipts only; manifest intentionally excludes itself. Digests bind inspected bytes, not unrecorded historical inputs."
+}

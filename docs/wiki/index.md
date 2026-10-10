@@ -1,3 +1,7 @@
+## [2026-10-09] audit | Fresh default Retail probe and Mists receipts retained
+
+[Proof SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#fresh-default-probe-and-mists-runtime-audits--exact-epochs-parent-open) links sanitized compiler/runtime reports and retention manifest. Exact9cf Retail probe1PASS;903 Mists3 ordinary nestedPASS (not6/prefork), eight profiles37PASS/6FAIL. Selected owner quota errors0; three global errors remain, production10M unchanged.741 Nameplate fixture runtime PENDING; old two NotFound receipts not behavior RED. No native/work legitimacy/build-end attestation/whole-input seal; parent OPEN.
+
 ## [2026-10-09] audit | Independent method source gates retained
 
 [Metadata-snapshot SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#method-metadata-snapshots--independent-source-gates-only): byte-identical sanitized verifier report retained;31 gates, standard R31/P31/each C4/F9. Historical491 additions/96 removals differ from11,985 baseline rows. Shared second CanBe registrar/Forever transitive capability corrected;9cf/903 relevant code equals96. Handoff hashes seal original inspected pre-correction bytes, not current private reports. Source-only; no native/current runtime/full-suite acceptance, parent OPEN. Docs/report only; no source edits, builds/tests, delegation, operations or push.

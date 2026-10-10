@@ -1,0 +1,89 @@
+{
+  "algorithm": "sha256",
+  "artifact_observations": [
+    {
+      "binding": "current file only; no epoch-time digest exists in saved evidence",
+      "mtime_ns": 1791560984939263318,
+      "observed_at": "2026-10-10T03:17:08.569144+00:00",
+      "path": "/home/osso/Projects/wow/wow-ui-sim/target/debug/build/wow-ui-sim-b14d9782a037bad5/build-script-build",
+      "sha256": "358ce436df7046f3c8510e05a68368dc780a9d3ddc2be00e4e4fdb4ed602f241",
+      "size_bytes": 8738576,
+      "stable_during_read": true
+    },
+    {
+      "binding": "current file only; no epoch-time digest exists in saved evidence",
+      "mtime_ns": 1791601603302403610,
+      "observed_at": "2026-10-10T03:17:08.823704+00:00",
+      "path": "/home/osso/Projects/wow/wow-ui-sim/target/debug/deps/libwow_ui_sim-3282a118e07cdd18.rlib",
+      "sha256": "5e8c819273bdab890b0b83eacc75a7f91420ed07c31a0f398eb39dd0d88b9fca",
+      "size_bytes": 429996548,
+      "stable_during_read": true
+    },
+    {
+      "binding": "current file only; no epoch-time digest exists in saved evidence",
+      "mtime_ns": 1791598267123371272,
+      "observed_at": "2026-10-10T03:17:08.880852+00:00",
+      "path": "/home/osso/Projects/wow/wow-ui-sim/target/debug/deps/libwow_ui_sim-3282a118e07cdd18.rmeta",
+      "sha256": "61cb54334f23cfdd41790e2d37eb5813e462fee621d3a57fd5267952af793ee6",
+      "size_bytes": 135448296,
+      "stable_during_read": true
+    },
+    {
+      "binding": "current file only; no epoch-time digest exists in saved evidence",
+      "mtime_ns": 1791601605694440798,
+      "observed_at": "2026-10-10T03:17:09.033458+00:00",
+      "path": "/home/osso/Projects/wow/wow-ui-sim/target/debug/deps/wow_sim-e99132585a38db9e",
+      "sha256": "6e18e9bf5c9a357ce103c220f99351d5b0c8f80c70a0d5c64a3462c6d0542654",
+      "size_bytes": 366440208,
+      "stable_during_read": true
+    }
+  ],
+  "epoch": "/home/osso/.local/state/wow-ui-sim/verification/mists-finite-probe-build/20261010T030623Z",
+  "evidence_files": {
+    "cargo-result.json": {
+      "sha256": "4cd7a3a39ce3706fef601f03097f990876256b1ef98e6e0b3759db4f105073a3",
+      "size_bytes": 350
+    },
+    "compile.stderr": {
+      "sha256": "0129e6fa783725061f51333122984871bb0a203b867ff5e7682d846f605d55f9",
+      "size_bytes": 1275
+    },
+    "compile.stdout": {
+      "sha256": "a5ba7253a85709e54a661a01d2dc033338f92fd62515526503211cbdc65e6e01",
+      "size_bytes": 566272
+    },
+    "outcome.json": {
+      "sha256": "8d3868be0756f1dc976fc30b2157c4182dd72f9f2ef002baf511e21242aa84e0",
+      "size_bytes": 178
+    },
+    "resources.json": {
+      "sha256": "cd0ca3c9866c8006be8e3417060f49707d6ce23efb163f5d7f1bba38fa6bbee7",
+      "size_bytes": 141
+    },
+    "source-after.json": {
+      "sha256": "62a9abc419e3ae05565c391578ce94c083a7bf3196754d52bf6939af9940c7fe",
+      "size_bytes": 452396
+    },
+    "source-before.json": {
+      "sha256": "62a9abc419e3ae05565c391578ce94c083a7bf3196754d52bf6939af9940c7fe",
+      "size_bytes": 452396
+    },
+    "submission.json": {
+      "sha256": "de64d9ccc61d21c7c33c58b7082b8f85241cef03be01c94178b494204254b6da",
+      "size_bytes": 883
+    }
+  },
+  "generated_metadata": {
+    "compiler-report.md": {
+      "sha256": "65f477ab55402eeb2e3423001144ffdd359f3a4568c601401e99bf9a51709430",
+      "size_bytes": 5542
+    },
+    "scoped-manifest.json": {
+      "sha256": "007f77ea8ccbc0e2370140c7660b68c37ee2baeda7d143a78f0a48d73d0bc298",
+      "size_bytes": 479928
+    }
+  },
+  "historical_artifact_binding": "unproven; audit-time observations only",
+  "source_bytes_equal": true,
+  "source_equal": true
+}

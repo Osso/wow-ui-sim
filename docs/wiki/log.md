@@ -1302,3 +1302,7 @@ Updated [SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#
 ## [2026-10-09] docs | Frame metatable source correction
 
 [Current source representation](investigations/method-dispatch-refactor.md#current-state-fixed): shared registration, attached filtered `__index` clones, no `is_method_allowed` registry or established all-type dispatch. Historical491-row/31-name delta differs from11,985-row baseline total; docs-only source inspection, no runtime/native proof.
+
+## [2026-10-09] audit | Fresh default probe and Mists sanitized retention
+
+Updated existing [proof SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#fresh-default-probe-and-mists-runtime-audits--exact-epochs-parent-open) and index; twelve sanitized audit files retained byte-identically with retention hashes. Exact epochs and bounded acceptance remain separate;741 runtime pending, historical NotFound failures not behavior RED. No raw/private captures, source/AGENTS edits, builds/tests, delegation, operations or push; `.code-index.db` untouched.

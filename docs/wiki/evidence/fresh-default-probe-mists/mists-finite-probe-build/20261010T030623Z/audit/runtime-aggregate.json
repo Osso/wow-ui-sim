@@ -1,0 +1,414 @@
+{
+  "audited_at": "2026-10-10T03:22:31.758091+00:00",
+  "baseline_comparison": {
+    "baseline_epoch": "/home/osso/.local/state/wow-ui-sim/verification/toc-startup-root-fixes/20261010T021055Z",
+    "baseline_file_budget_records": 4,
+    "baseline_handler_budget_records": 91,
+    "baseline_initial_error_records": 7,
+    "baseline_kind": "normal non-test wow-sim startup, not unit-probe execution",
+    "baseline_load_summary": {
+      "failed_during_loading": 1,
+      "load_failures": 0,
+      "loaded_addons": "48/78",
+      "loaded_with_lua_errors_during_loading": 1,
+      "lua_files": 2934,
+      "warning_count": 4,
+      "xml_files": 149
+    },
+    "baseline_reported_runtime_occurrences": 96,
+    "baseline_revision": "86f27272a560b66201a66bede301d4c39a40910c",
+    "baseline_runtime_artifact_sha256": "ea546119f359abfe146b767eab510e69a514ddb50449263e3914ff182e079b93",
+    "causal_or_equivalent_workload_claim": false,
+    "common_exact_signature_count": 1,
+    "current_probe_native_toc_or_addon_boundary_hash_receipt": false,
+    "native_toc_baseline_only": [
+      {
+        "addon": "EXBOSS-Locale",
+        "bytes": 406,
+        "local_input_hash_read_only": true,
+        "matches_compiler_input_receipt": true,
+        "runtime_receipt_unchanged": true,
+        "sha256": "2a5de6e4c1a3e99f22c1f907d905762277284886199cb4f7dc00853a6dac3c9b"
+      },
+      {
+        "addon": "EXBOSS-LocaleBase",
+        "bytes": 416,
+        "local_input_hash_read_only": true,
+        "matches_compiler_input_receipt": true,
+        "runtime_receipt_unchanged": true,
+        "sha256": "973af1c202aae181d2e9b9fa4c60f70ec3d1675c55a5e862273d4d0d52e789a8"
+      },
+      {
+        "addon": "EXBossData",
+        "bytes": 797,
+        "local_input_hash_read_only": true,
+        "matches_compiler_input_receipt": true,
+        "runtime_receipt_unchanged": true,
+        "sha256": "c1f31fd314f83546cf28efadae5e8cbabff41f47a4018bb58c0bba72f3ef8af8"
+      },
+      {
+        "addon": "ExtraQuestButton",
+        "bytes": 787,
+        "local_input_hash_read_only": true,
+        "matches_compiler_input_receipt": true,
+        "runtime_receipt_unchanged": true,
+        "sha256": "89f08ed8bc9da60d4929006ce2756fccc5a47ae25887f97fd5d5f18f38793ace"
+      }
+    ],
+    "new_exact_signature_count": 2,
+    "probe_file_budget_records": 1,
+    "probe_handler_budget_records": 1,
+    "probe_initial_error_records": 3,
+    "probe_load_summary": {
+      "failed_during_loading": 1,
+      "load_failures": 0,
+      "loaded_addons": "48/78",
+      "loaded_with_lua_errors_during_loading": 1,
+      "lua_files": 2974,
+      "warning_count": 0,
+      "xml_files": 153
+    },
+    "reason": "Different source epochs, normal-bin vs ignored-unit-probe boundary, two trusted 100M owner inputs, 40 additional Lua files and four additional XML files. Baseline four TOCs were recorded unchanged in baseline only; probe has no corresponding runtime input seals.",
+    "removed_exact_signature_count": 6,
+    "signature_comparison_rule": "Initial Lua error lines only; suppression restatements excluded. Baseline 89 additional suppressed occurrences remain separately counted in baseline runtime total 96."
+  },
+  "inspected_probe_source_matches_epoch_snapshot": true,
+  "interpretation": {
+    "after_settle_explanation": "Counters reset during settle ticks; nonzero after-load samples are startup consumption. Recorded owner quota error counters are zero only for EnhanceQoL and AllTheThings.",
+    "after_settle_zero_is_zero_startup_work": false,
+    "global_clean_startup": false,
+    "native_parity": false,
+    "pipeline_return_proven": true,
+    "production_policy_changed": false
+  },
+  "limits": [
+    "No reruns/builds/backend/delegation/operations; read-only existing evidence audit.",
+    "No current/future code acceptance, full-suite acceptance, native execution or parity.",
+    "Build-end content hash binding unproven; runtime invocation selection and saved post-execution unchanged claims checked separately.",
+    "Inherited environment, external path dependencies, runtime caches/addons and unrecorded input bytes not sealed.",
+    "Recorded counts do not classify legitimate vs excessive work, elapsed cost, Rust work or native quota/reset semantics."
+  ],
+  "mode": "existing-completed-execution-only",
+  "owner_probe_records": [
+    {
+      "limit": 100000000,
+      "owner": "EnhanceQoL",
+      "phase": "before_init",
+      "used": 0
+    },
+    {
+      "limit": 100000000,
+      "owner": "AllTheThings",
+      "phase": "before_init",
+      "used": 0
+    },
+    {
+      "owner": "EnhanceQoL",
+      "phase": "before_init",
+      "recorded_owner_quota_errors": 0
+    },
+    {
+      "owner": "AllTheThings",
+      "phase": "before_init",
+      "recorded_owner_quota_errors": 0
+    },
+    {
+      "limit": 100000000,
+      "owner": "EnhanceQoL",
+      "phase": "after_load_and_gc",
+      "used": 12635721
+    },
+    {
+      "limit": 100000000,
+      "owner": "AllTheThings",
+      "phase": "after_load_and_gc",
+      "used": 771449
+    },
+    {
+      "owner": "EnhanceQoL",
+      "phase": "after_load_and_gc",
+      "recorded_owner_quota_errors": 0
+    },
+    {
+      "owner": "AllTheThings",
+      "phase": "after_load_and_gc",
+      "recorded_owner_quota_errors": 0
+    },
+    {
+      "limit": 100000000,
+      "owner": "EnhanceQoL",
+      "phase": "after_headless_settle",
+      "used": 0
+    },
+    {
+      "limit": 100000000,
+      "owner": "AllTheThings",
+      "phase": "after_headless_settle",
+      "used": 0
+    },
+    {
+      "owner": "EnhanceQoL",
+      "phase": "after_headless_settle",
+      "recorded_owner_quota_errors": 0
+    },
+    {
+      "owner": "AllTheThings",
+      "phase": "after_headless_settle",
+      "recorded_owner_quota_errors": 0
+    }
+  ],
+  "privacy": {
+    "method": "Every complete raw stream decoded locally and screened linewise. Only static identifiers, count/counter fields, receipt metadata and digests published. Keyword screening is not a proof of public safety. Raw messages, stacks, game/provider payloads withheld.",
+    "raw_payload_publication": false
+  },
+  "probe": {
+    "argv": [
+      "/usr/bin/timeout",
+      "90",
+      "/home/osso/Projects/wow/wow-ui-sim/target/debug/deps/wow_sim-e99132585a38db9e",
+      "startup::tests::trusted_finite_budget_for_selected_addons",
+      "--exact",
+      "--ignored",
+      "--nocapture",
+      "--test-threads=1"
+    ],
+    "artifact_sha256": "6e18e9bf5c9a357ce103c220f99351d5b0c8f80c70a0d5c64a3462c6d0542654",
+    "cargo_profile": {
+      "debug_assertions": true,
+      "debuginfo": "line-tables-only",
+      "opt_level": "1",
+      "overflow_checks": true,
+      "test": true
+    },
+    "case": "probe-execution",
+    "checks": {
+      "cargo_selection_features_profile_match": true,
+      "compiled_revision_matches_epoch": true,
+      "completed_ok_status_records": true,
+      "current_artifact_hash_matches_execution": true,
+      "exact_selector_matches": true,
+      "exit_matches_summary": true,
+      "invocation_hash_matches_selection": true,
+      "nested_or_single_expected_summary": true,
+      "recorded_artifact_hash_unchanged": true,
+      "selected_record_count": true,
+      "stream_hashes_match_receipt": true,
+      "stream_sizes_match_where_recorded": true,
+      "summaries_match_receipt": true
+    },
+    "compiled_revision": "9cf08121af8f0167d5ea4646ba3b4e21e6cabdcf",
+    "ended": "2026-10-10T03:16:41.957688+00:00",
+    "environment_overrides": {
+      "WOW_SIM_DEBUG_NIL_GLOBALS": "1",
+      "WOW_SIM_LOG_HANDLER_TIMINGS": "0",
+      "WOW_SIM_NO_SOUND": "1",
+      "WOW_SIM_VERBOSE": "1"
+    },
+    "evidence_integrity_pass": true,
+    "exit": 0,
+    "failed_distinct": 0,
+    "failure_locations": [],
+    "features": [
+      "aura-containers",
+      "aura-instance-enumeration",
+      "aura-xml-widgets",
+      "base-spell-relationships",
+      "casc",
+      "client-retail",
+      "default",
+      "forbidden-aspects",
+      "gui",
+      "native-duration-formatting",
+      "numeric-rule-formatters",
+      "on-update-modes",
+      "player-cast-durations",
+      "profile-retail",
+      "retail-12-0-0",
+      "retail-12-0-5",
+      "retail-12-0-7",
+      "retail-12-1-0",
+      "rodio",
+      "sound"
+    ],
+    "kind": "probe",
+    "passed_distinct": 1,
+    "selected_distinct": 1,
+    "selector": "startup::tests::trusted_finite_budget_for_selected_addons",
+    "standalone_ok_records": 1,
+    "started": "2026-10-10T03:16:25.482616+00:00",
+    "streams": {
+      "stderr": {
+        "bytes": 1495476,
+        "diagnostic_marker_counts": {
+          "Lua error": 3,
+          "[failure]": 0,
+          "[file-budget-error]": 1,
+          "[handler-budget-error]": 1,
+          "[handler]": 11378,
+          "panicked at": 0,
+          "suppressed": 0
+        },
+        "full_read": true,
+        "lines": 11706,
+        "privacy_candidate_counts": {
+          "credential_keyword": 0,
+          "email": 0,
+          "url": 0
+        },
+        "raw_content_published": false,
+        "sha256": "4e366c20a013b90158eee4bcf9616914ceff5786935e071b76791c9c50e49cd9"
+      },
+      "stdout": {
+        "bytes": 314852,
+        "diagnostic_marker_counts": {
+          "Lua error": 1,
+          "[failure]": 0,
+          "[file-budget-error]": 0,
+          "[handler-budget-error]": 0,
+          "[handler]": 0,
+          "panicked at": 0,
+          "suppressed": 0
+        },
+        "full_read": true,
+        "lines": 4655,
+        "privacy_candidate_counts": {
+          "credential_keyword": 0,
+          "email": 0,
+          "url": 0
+        },
+        "raw_content_published": false,
+        "sha256": "0dd03ac500c17a294678327bb6e97e87d2ada64053e44391fa4170b1bd344b76"
+      }
+    },
+    "summaries": [
+      "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 29 filtered out; finished in 16.36s"
+    ],
+    "summary_records": 1,
+    "target": "wow-sim",
+    "test_records": [],
+    "test_selector_headers": [
+      "startup::tests::trusted_finite_budget_for_selected_addons"
+    ]
+  },
+  "probe_record_receipt_matches": true,
+  "schema": 1,
+  "source_scope": {
+    "artifact_build_end_content_binding": "UNPROVEN: Cargo messages contain paths/features/profile, not build-end content hashes.",
+    "compiler_exit": 0,
+    "compiler_seal_reference": "compiler-report.md",
+    "exclusions": [
+      "external path dependencies",
+      "data inputs outside captured tracked src/tests/build/config scope",
+      "inherited environment",
+      "runtime cache/addon files outside source scope",
+      "untracked index"
+    ],
+    "recorded_revision": "9cf08121af8f0167d5ea4646ba3b4e21e6cabdcf",
+    "revision_binding": "Submission-recorded revision, not independently matched to Git tree. Snapshots seal only listed files.",
+    "source_snapshot_bytes_equal": true,
+    "source_snapshot_entries": 3839,
+    "source_snapshot_maps_equal": true
+  },
+  "startup": {
+    "budgets": [
+      {
+        "counters": {
+          "limit": 10000000,
+          "used_after": 10000000,
+          "used_before": 121549
+        },
+        "kind": "file",
+        "owner": "EnhanceQoLSharedMedia",
+        "static_source": "EnhanceQoLSharedMedia/UI.lua",
+        "stderr_line": 2424
+      },
+      {
+        "counters": {
+          "limit": 10000000,
+          "used_after": 10000000,
+          "used_before": 10000000
+        },
+        "kind": "handler",
+        "owner": "EnhanceQoLSharedMedia",
+        "static_source": null,
+        "stderr_line": 3225
+      }
+    ],
+    "handler_duration_records": 11378,
+    "load_summary": {
+      "failed_during_loading": 1,
+      "load_failures": 0,
+      "loaded_addons": "48/78",
+      "loaded_with_lua_errors_during_loading": 1,
+      "lua_files": 2974,
+      "warning_count": 0,
+      "xml_files": 153
+    },
+    "lua_initial_records": [
+      {
+        "class": "instruction-budget-exhausted",
+        "signature_sha256": "663162d64da69ababb6539cfbf0b17a49f6c74f051fb2d5888e3146605e70244",
+        "static_source": "EnhanceQoLSharedMedia/UI.lua",
+        "stderr_line": 2425
+      },
+      {
+        "class": "instruction-budget-exhausted",
+        "signature_sha256": "3d14a6d8d3b3983932c681c0d350c37fd213e4e0ae1eda35c8d0b87ceba3c01c",
+        "static_source": "EnhanceQoLSharedMedia/Init.lua:39",
+        "stderr_line": 3226
+      },
+      {
+        "class": "nil-call",
+        "signature_sha256": "160d7a7ca6b4f53aad5c33af39527822ca31e7ff18a4b0eda960359e25b91c90",
+        "static_source": "EllesmereUI/EllesmereUI_UICore.lua:1073",
+        "stderr_line": 4164
+      }
+    ],
+    "lua_initial_unique_signatures": 3,
+    "streams": {
+      "stderr": {
+        "bytes": 1495476,
+        "diagnostic_marker_counts": {
+          "Lua error": 3,
+          "[failure]": 0,
+          "[file-budget-error]": 1,
+          "[handler-budget-error]": 1,
+          "[handler]": 11378,
+          "panicked at": 0,
+          "suppressed": 0
+        },
+        "full_read": true,
+        "lines": 11706,
+        "privacy_candidate_counts": {
+          "credential_keyword": 0,
+          "email": 0,
+          "url": 0
+        },
+        "raw_content_published": false,
+        "sha256": "4e366c20a013b90158eee4bcf9616914ceff5786935e071b76791c9c50e49cd9"
+      },
+      "stdout": {
+        "bytes": 314852,
+        "diagnostic_marker_counts": {
+          "Lua error": 1,
+          "[failure]": 0,
+          "[file-budget-error]": 0,
+          "[handler-budget-error]": 0,
+          "[handler]": 0,
+          "panicked at": 0,
+          "suppressed": 0
+        },
+        "full_read": true,
+        "lines": 4655,
+        "privacy_candidate_counts": {
+          "credential_keyword": 0,
+          "email": 0,
+          "url": 0
+        },
+        "raw_content_published": false,
+        "sha256": "0dd03ac500c17a294678327bb6e97e87d2ada64053e44391fa4170b1bd344b76"
+      }
+    },
+    "suppression_summary_lines": 0
+  }
+}

@@ -1,0 +1,1522 @@
+{
+  "audited_at": "2026-10-10T03:22:31.758091+00:00",
+  "baseline_comparison": "Not equivalent to retail 86f272 startup; no Mists full-startup acceptance inferred from ordinary or profile fixture runs.",
+  "limits": [
+    "No reruns/builds/backend/delegation/operations; read-only existing evidence audit.",
+    "No current/future code acceptance, full-suite acceptance, native execution or parity.",
+    "Build-end content hash binding unproven; runtime invocation selection and saved post-execution unchanged claims checked separately.",
+    "Inherited environment, external path dependencies, runtime caches/addons and unrecorded input bytes not sealed.",
+    "Recorded counts do not classify legitimate vs excessive work, elapsed cost, Rust work or native quota/reset semantics."
+  ],
+  "mode": "existing-completed-execution-only",
+  "ordinary": [
+    {
+      "argv": [
+        "/usr/bin/timeout",
+        "90",
+        "/home/osso/Projects/wow/wow-ui-sim/target/debug/deps/integration-f15e4c1da9a8b8f4",
+        "spell_casting::cast_bar_respects_edit_mode_lock_setting_after_startup_fix",
+        "--exact",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "artifact_sha256": "3209569e20c752c771a845422b9a598cb9736c50465b87fe03bb3bacdc7c8c20",
+      "cargo_profile": {
+        "debug_assertions": true,
+        "debuginfo": "line-tables-only",
+        "opt_level": "1",
+        "overflow_checks": true,
+        "test": true
+      },
+      "case": "ordinary-execution/case01",
+      "checks": {
+        "cargo_selection_features_profile_match": true,
+        "compiled_revision_matches_epoch": true,
+        "completed_ok_status_records": true,
+        "current_artifact_hash_matches_execution": true,
+        "exact_selector_matches": true,
+        "exit_matches_summary": true,
+        "invocation_hash_matches_selection": true,
+        "nested_or_single_expected_summary": true,
+        "recorded_artifact_hash_unchanged": true,
+        "selected_record_count": true,
+        "stream_hashes_match_receipt": true,
+        "stream_sizes_match_where_recorded": true,
+        "summaries_match_receipt": true
+      },
+      "compiled_revision": "903711da8b9d6472f718e407af350c576fe4a7e0",
+      "ended": "2026-10-10T03:16:28.289672+00:00",
+      "environment_overrides": {
+        "WOW_SIM_NO_SOUND": "1"
+      },
+      "evidence_integrity_pass": true,
+      "exit": 0,
+      "failed_distinct": 0,
+      "failure_locations": [],
+      "features": [
+        "casc",
+        "client-mists",
+        "gui",
+        "rodio",
+        "sound"
+      ],
+      "kind": "ordinary",
+      "passed_distinct": 1,
+      "selected_distinct": 1,
+      "selector": "spell_casting::cast_bar_respects_edit_mode_lock_setting_after_startup_fix",
+      "standalone_ok_records": 1,
+      "started": "2026-10-10T03:16:25.538199+00:00",
+      "streams": {
+        "stderr": {
+          "bytes": 20547,
+          "diagnostic_marker_counts": {
+            "Lua error": 14,
+            "[failure]": 0,
+            "[file-budget-error]": 0,
+            "[handler-budget-error]": 0,
+            "[handler]": 0,
+            "panicked at": 0,
+            "suppressed": 0
+          },
+          "full_read": true,
+          "lines": 259,
+          "privacy_candidate_counts": {
+            "credential_keyword": 0,
+            "email": 0,
+            "url": 0
+          },
+          "raw_content_published": false,
+          "sha256": "b39b57c96a2a75b58d1cd80c9b0da800c659d2b66ef9fa9f2a4e89ac1c5a4bff"
+        },
+        "stdout": {
+          "bytes": 402,
+          "diagnostic_marker_counts": {
+            "Lua error": 0,
+            "[failure]": 0,
+            "[file-budget-error]": 0,
+            "[handler-budget-error]": 0,
+            "[handler]": 0,
+            "panicked at": 0,
+            "suppressed": 0
+          },
+          "full_read": true,
+          "lines": 12,
+          "privacy_candidate_counts": {
+            "credential_keyword": 0,
+            "email": 0,
+            "url": 0
+          },
+          "raw_content_published": false,
+          "sha256": "b75bb56e2957fb0dcb92a0b74f5630cc7dd7ec14c45cd0e58727cf5f386d63a2"
+        }
+      },
+      "summaries": [
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 8181 filtered out; finished in 2.71s",
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 8181 filtered out; finished in 2.74s"
+      ],
+      "summary_records": 2,
+      "target": "integration",
+      "test_records": [
+        {
+          "selector": "spell_casting::cast_bar_respects_edit_mode_lock_setting_after_startup_fix",
+          "status": "ok"
+        }
+      ],
+      "test_selector_headers": [
+        "spell_casting::cast_bar_respects_edit_mode_lock_setting_after_startup_fix",
+        "spell_casting::cast_bar_respects_edit_mode_lock_setting_after_startup_fix"
+      ]
+    },
+    {
+      "argv": [
+        "/usr/bin/timeout",
+        "90",
+        "/home/osso/Projects/wow/wow-ui-sim/target/debug/deps/integration-f15e4c1da9a8b8f4",
+        "chat_frame::test_chat_editbox_click_type_and_submit",
+        "--exact",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "artifact_sha256": "3209569e20c752c771a845422b9a598cb9736c50465b87fe03bb3bacdc7c8c20",
+      "cargo_profile": {
+        "debug_assertions": true,
+        "debuginfo": "line-tables-only",
+        "opt_level": "1",
+        "overflow_checks": true,
+        "test": true
+      },
+      "case": "ordinary-execution/case02",
+      "checks": {
+        "cargo_selection_features_profile_match": true,
+        "compiled_revision_matches_epoch": true,
+        "completed_ok_status_records": true,
+        "current_artifact_hash_matches_execution": true,
+        "exact_selector_matches": true,
+        "exit_matches_summary": true,
+        "invocation_hash_matches_selection": true,
+        "nested_or_single_expected_summary": true,
+        "recorded_artifact_hash_unchanged": true,
+        "selected_record_count": true,
+        "stream_hashes_match_receipt": true,
+        "stream_sizes_match_where_recorded": true,
+        "summaries_match_receipt": true
+      },
+      "compiled_revision": "903711da8b9d6472f718e407af350c576fe4a7e0",
+      "ended": "2026-10-10T03:16:30.429728+00:00",
+      "environment_overrides": {
+        "WOW_SIM_NO_SOUND": "1"
+      },
+      "evidence_integrity_pass": true,
+      "exit": 0,
+      "failed_distinct": 0,
+      "failure_locations": [],
+      "features": [
+        "casc",
+        "client-mists",
+        "gui",
+        "rodio",
+        "sound"
+      ],
+      "kind": "ordinary",
+      "passed_distinct": 1,
+      "selected_distinct": 1,
+      "selector": "chat_frame::test_chat_editbox_click_type_and_submit",
+      "standalone_ok_records": 1,
+      "started": "2026-10-10T03:16:28.679059+00:00",
+      "streams": {
+        "stderr": {
+          "bytes": 15271,
+          "diagnostic_marker_counts": {
+            "Lua error": 14,
+            "[failure]": 0,
+            "[file-budget-error]": 0,
+            "[handler-budget-error]": 0,
+            "[handler]": 0,
+            "panicked at": 0,
+            "suppressed": 0
+          },
+          "full_read": true,
+          "lines": 253,
+          "privacy_candidate_counts": {
+            "credential_keyword": 0,
+            "email": 0,
+            "url": 0
+          },
+          "raw_content_published": false,
+          "sha256": "fc49dc7bf402f552b06e22835a9b114efec8b5c5d8787d6ccf84d43daa0b443d"
+        },
+        "stdout": {
+          "bytes": 358,
+          "diagnostic_marker_counts": {
+            "Lua error": 0,
+            "[failure]": 0,
+            "[file-budget-error]": 0,
+            "[handler-budget-error]": 0,
+            "[handler]": 0,
+            "panicked at": 0,
+            "suppressed": 0
+          },
+          "full_read": true,
+          "lines": 12,
+          "privacy_candidate_counts": {
+            "credential_keyword": 0,
+            "email": 0,
+            "url": 0
+          },
+          "raw_content_published": false,
+          "sha256": "04c7be6dd989daaa19e5bd0b2c5efa2e974436711178dcab81b38f14441e651b"
+        }
+      },
+      "summaries": [
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 8181 filtered out; finished in 1.71s",
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 8181 filtered out; finished in 1.74s"
+      ],
+      "summary_records": 2,
+      "target": "integration",
+      "test_records": [
+        {
+          "selector": "chat_frame::test_chat_editbox_click_type_and_submit",
+          "status": "ok"
+        }
+      ],
+      "test_selector_headers": [
+        "chat_frame::test_chat_editbox_click_type_and_submit",
+        "chat_frame::test_chat_editbox_click_type_and_submit"
+      ]
+    },
+    {
+      "argv": [
+        "/usr/bin/timeout",
+        "90",
+        "/home/osso/Projects/wow/wow-ui-sim/target/debug/deps/integration-f15e4c1da9a8b8f4",
+        "chat_frame::test_chat_editbox_text_color_after_activation",
+        "--exact",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "artifact_sha256": "3209569e20c752c771a845422b9a598cb9736c50465b87fe03bb3bacdc7c8c20",
+      "cargo_profile": {
+        "debug_assertions": true,
+        "debuginfo": "line-tables-only",
+        "opt_level": "1",
+        "overflow_checks": true,
+        "test": true
+      },
+      "case": "ordinary-execution/case03",
+      "checks": {
+        "cargo_selection_features_profile_match": true,
+        "compiled_revision_matches_epoch": true,
+        "completed_ok_status_records": true,
+        "current_artifact_hash_matches_execution": true,
+        "exact_selector_matches": true,
+        "exit_matches_summary": true,
+        "invocation_hash_matches_selection": true,
+        "nested_or_single_expected_summary": true,
+        "recorded_artifact_hash_unchanged": true,
+        "selected_record_count": true,
+        "stream_hashes_match_receipt": true,
+        "stream_sizes_match_where_recorded": true,
+        "summaries_match_receipt": true
+      },
+      "compiled_revision": "903711da8b9d6472f718e407af350c576fe4a7e0",
+      "ended": "2026-10-10T03:16:32.486270+00:00",
+      "environment_overrides": {
+        "WOW_SIM_NO_SOUND": "1"
+      },
+      "evidence_integrity_pass": true,
+      "exit": 0,
+      "failed_distinct": 0,
+      "failure_locations": [],
+      "features": [
+        "casc",
+        "client-mists",
+        "gui",
+        "rodio",
+        "sound"
+      ],
+      "kind": "ordinary",
+      "passed_distinct": 1,
+      "selected_distinct": 1,
+      "selector": "chat_frame::test_chat_editbox_text_color_after_activation",
+      "standalone_ok_records": 1,
+      "started": "2026-10-10T03:16:30.654065+00:00",
+      "streams": {
+        "stderr": {
+          "bytes": 15268,
+          "diagnostic_marker_counts": {
+            "Lua error": 14,
+            "[failure]": 0,
+            "[file-budget-error]": 0,
+            "[handler-budget-error]": 0,
+            "[handler]": 0,
+            "panicked at": 0,
+            "suppressed": 0
+          },
+          "full_read": true,
+          "lines": 253,
+          "privacy_candidate_counts": {
+            "credential_keyword": 0,
+            "email": 0,
+            "url": 0
+          },
+          "raw_content_published": false,
+          "sha256": "0a60d486a48cffdc9594c292a74a463dd73538bb9a8af91635d790f02deeb93a"
+        },
+        "stdout": {
+          "bytes": 370,
+          "diagnostic_marker_counts": {
+            "Lua error": 0,
+            "[failure]": 0,
+            "[file-budget-error]": 0,
+            "[handler-budget-error]": 0,
+            "[handler]": 0,
+            "panicked at": 0,
+            "suppressed": 0
+          },
+          "full_read": true,
+          "lines": 12,
+          "privacy_candidate_counts": {
+            "credential_keyword": 0,
+            "email": 0,
+            "url": 0
+          },
+          "raw_content_published": false,
+          "sha256": "489e3d32c653d39982856af9b5101426eab67ce070ff2fc1e1084a5c82578c53"
+        }
+      },
+      "summaries": [
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 8181 filtered out; finished in 1.79s",
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 8181 filtered out; finished in 1.82s"
+      ],
+      "summary_records": 2,
+      "target": "integration",
+      "test_records": [
+        {
+          "selector": "chat_frame::test_chat_editbox_text_color_after_activation",
+          "status": "ok"
+        }
+      ],
+      "test_selector_headers": [
+        "chat_frame::test_chat_editbox_text_color_after_activation",
+        "chat_frame::test_chat_editbox_text_color_after_activation"
+      ]
+    }
+  ],
+  "ordinary_totals": {
+    "distinct_passed": 3,
+    "distinct_selected": 3,
+    "kind": "nested child and parent summaries for same selector, not two distinct tests",
+    "original_prefork_proof": false,
+    "summary_records": 6
+  },
+  "privacy": {
+    "method": "Every complete raw stream decoded locally and screened linewise. Only static identifiers, count/counter fields, receipt metadata and digests published. Keyword screening is not a proof of public safety. Raw messages, stacks, game/provider payloads withheld.",
+    "raw_payload_publication": false
+  },
+  "profile": [
+    {
+      "argv": [
+        "/usr/bin/timeout",
+        "90",
+        "/home/osso/Projects/wow/wow-ui-sim/target/debug/deps/pandaria_installed_addons-5c4ab2a050a21582",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "artifact_sha256": "2a525b412d251cc553ebb52de8ee3b504f05baa815a26fae91e34256868faecc",
+      "cargo_profile": {
+        "debug_assertions": true,
+        "debuginfo": "line-tables-only",
+        "opt_level": "1",
+        "overflow_checks": true,
+        "test": true
+      },
+      "case": "profile-execution/pandaria_installed_addons",
+      "checks": {
+        "cargo_selection_features_profile_match": true,
+        "compiled_revision_matches_epoch": true,
+        "current_artifact_hash_matches_execution": true,
+        "exit_matches_summary": true,
+        "invocation_hash_matches_selection": true,
+        "one_summary": true,
+        "per_test_records_match_counts": true,
+        "recorded_artifact_hash_unchanged": true,
+        "stream_hashes_match_receipt": true,
+        "stream_sizes_match_where_recorded": true,
+        "summaries_match_receipt": true,
+        "target_name_matches": true
+      },
+      "compiled_revision": "903711da8b9d6472f718e407af350c576fe4a7e0",
+      "ended": "2026-10-10T03:17:53.921701+00:00",
+      "environment_overrides": {
+        "WOW_SIM_NO_SOUND": "1"
+      },
+      "evidence_integrity_pass": true,
+      "exit": 0,
+      "failed_distinct": 0,
+      "failure_locations": [],
+      "features": [
+        "casc",
+        "client-mists",
+        "gui",
+        "rodio",
+        "sound"
+      ],
+      "kind": "profile",
+      "passed_distinct": 10,
+      "selected_distinct": 10,
+      "selector": null,
+      "standalone_ok_records": 0,
+      "started": "2026-10-10T03:17:53.917333+00:00",
+      "streams": {
+        "stderr": {
+          "bytes": 0,
+          "diagnostic_marker_counts": {
+            "Lua error": 0,
+            "[failure]": 0,
+            "[file-budget-error]": 0,
+            "[handler-budget-error]": 0,
+            "[handler]": 0,
+            "panicked at": 0,
+            "suppressed": 0
+          },
+          "full_read": true,
+          "lines": 0,
+          "privacy_candidate_counts": {
+            "credential_keyword": 0,
+            "email": 0,
+            "url": 0
+          },
+          "raw_content_published": false,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": {
+          "bytes": 631,
+          "diagnostic_marker_counts": {
+            "Lua error": 0,
+            "[failure]": 0,
+            "[file-budget-error]": 0,
+            "[handler-budget-error]": 0,
+            "[handler]": 0,
+            "panicked at": 0,
+            "suppressed": 0
+          },
+          "full_read": true,
+          "lines": 15,
+          "privacy_candidate_counts": {
+            "credential_keyword": 0,
+            "email": 0,
+            "url": 0
+          },
+          "raw_content_published": false,
+          "sha256": "1f64d4d399a69538b508009395e8d13c5d0f31f54f8e918c3b012bb81b37205f"
+        }
+      },
+      "summaries": [
+        "test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s"
+      ],
+      "summary_records": 1,
+      "target": "pandaria_installed_addons",
+      "test_records": [
+        {
+          "selector": "all_the_things_installed_source_contract",
+          "status": "ok"
+        },
+        {
+          "selector": "auctionator_installed_source_contract",
+          "status": "ok"
+        },
+        {
+          "selector": "blizzmove_installed_source_contract",
+          "status": "ok"
+        },
+        {
+          "selector": "demodal_installed_source_contract",
+          "status": "ok"
+        },
+        {
+          "selector": "dialogue_ui_installed_source_contract",
+          "status": "ok"
+        },
+        {
+          "selector": "leatrix_maps_installed_source_contract",
+          "status": "ok"
+        },
+        {
+          "selector": "leatrix_plus_installed_source_contract",
+          "status": "ok"
+        },
+        {
+          "selector": "pandaria_manifest_matches_the_installed_addon_targets",
+          "status": "ok"
+        },
+        {
+          "selector": "plater_installed_source_contract",
+          "status": "ok"
+        },
+        {
+          "selector": "simple_item_level_installed_source_contract",
+          "status": "ok"
+        }
+      ],
+      "test_selector_headers": [
+        "all_the_things_installed_source_contract",
+        "auctionator_installed_source_contract",
+        "blizzmove_installed_source_contract",
+        "demodal_installed_source_contract",
+        "dialogue_ui_installed_source_contract",
+        "leatrix_maps_installed_source_contract",
+        "leatrix_plus_installed_source_contract",
+        "pandaria_manifest_matches_the_installed_addon_targets",
+        "plater_installed_source_contract",
+        "simple_item_level_installed_source_contract"
+      ]
+    },
+    {
+      "argv": [
+        "/usr/bin/timeout",
+        "90",
+        "/home/osso/Projects/wow/wow-ui-sim/target/debug/deps/mists_compat_bootstrap-c15dadd74a574f6c",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "artifact_sha256": "2531d3e45062eee5904704345906e9788ea1b2a8254f6480e23cc476e0d03175",
+      "cargo_profile": {
+        "debug_assertions": true,
+        "debuginfo": "line-tables-only",
+        "opt_level": "1",
+        "overflow_checks": true,
+        "test": true
+      },
+      "case": "profile-execution/mists_compat_bootstrap",
+      "checks": {
+        "cargo_selection_features_profile_match": true,
+        "compiled_revision_matches_epoch": true,
+        "current_artifact_hash_matches_execution": true,
+        "exit_matches_summary": true,
+        "invocation_hash_matches_selection": true,
+        "one_summary": true,
+        "per_test_records_match_counts": true,
+        "recorded_artifact_hash_unchanged": true,
+        "stream_hashes_match_receipt": true,
+        "stream_sizes_match_where_recorded": true,
+        "summaries_match_receipt": true,
+        "target_name_matches": true
+      },
+      "compiled_revision": "903711da8b9d6472f718e407af350c576fe4a7e0",
+      "ended": "2026-10-10T03:17:55.643936+00:00",
+      "environment_overrides": {
+        "WOW_SIM_NO_SOUND": "1"
+      },
+      "evidence_integrity_pass": true,
+      "exit": 101,
+      "failed_distinct": 1,
+      "failure_locations": [
+        {
+          "class": "nil-call",
+          "context_sha256": "b9095b01f52f2b715c3b10105ef1776fe1d4e1648ddce474442e9a3e1f2c9ff6",
+          "selector": "mists_honor_frame_shared_reproduces_missing_honor_system_enabled",
+          "source": "tests/mists_compat_bootstrap.rs:381:5",
+          "stderr_line": 123
+        }
+      ],
+      "features": [
+        "casc",
+        "client-mists",
+        "gui",
+        "rodio",
+        "sound"
+      ],
+      "kind": "profile",
+      "passed_distinct": 22,
+      "selected_distinct": 23,
+      "selector": null,
+      "standalone_ok_records": 0,
+      "started": "2026-10-10T03:17:54.280362+00:00",
+      "streams": {
+        "stderr": {
+          "bytes": 13082,
+          "diagnostic_marker_counts": {
+            "Lua error": 0,
+            "[failure]": 0,
+            "[file-budget-error]": 0,
+            "[handler-budget-error]": 0,
+            "[handler]": 0,
+            "panicked at": 1,
+            "suppressed": 0
+          },
+          "full_read": true,
+          "lines": 224,
+          "privacy_candidate_counts": {
+            "credential_keyword": 0,
+            "email": 0,
+            "url": 0
+          },
+          "raw_content_published": false,
+          "sha256": "420111fafa25cf336141eb5324159a7daf0634b4c2c03ea2fe98922db521e467"
+        },
+        "stdout": {
+          "bytes": 1815,
+          "diagnostic_marker_counts": {
+            "Lua error": 0,
+            "[failure]": 0,
+            "[file-budget-error]": 0,
+            "[handler-budget-error]": 0,
+            "[handler]": 0,
+            "panicked at": 0,
+            "suppressed": 0
+          },
+          "full_read": true,
+          "lines": 33,
+          "privacy_candidate_counts": {
+            "credential_keyword": 0,
+            "email": 0,
+            "url": 0
+          },
+          "raw_content_published": false,
+          "sha256": "71446308ae7932584a8c17f60df3a82a9896e63d08954be0bbae97ec1c58888f"
+        }
+      },
+      "summaries": [
+        "test result: FAILED. 22 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.34s"
+      ],
+      "summary_records": 1,
+      "target": "mists_compat_bootstrap",
+      "test_records": [
+        {
+          "selector": "mists_bootstrap_exposes_classic_addon_compatibility_globals",
+          "status": "ok"
+        },
+        {
+          "selector": "mists_bootstrap_exposes_raid_marker_system_probe",
+          "status": "ok"
+        },
+        {
+          "selector": "mists_bootstrap_registers_startup_cvar_defaults",
+          "status": "ok"
+        },
+        {
+          "selector": "mists_bootstrap_reports_pandaria_as_the_current_classic_expansion",
+          "status": "ok"
+        },
+        {
+          "selector": "mists_bootstrap_supplies_hidden_non_priest_priest_bar_mixins",
+          "status": "ok"
+        },
+        {
+          "selector": "mists_bootstrap_supplies_legacy_bank_and_aura_shapes",
+          "status": "ok"
+        },
+        {
+          "selector": "mists_bootstrap_supplies_legacy_startup_api_shapes",
+          "status": "ok"
+        },
+        {
+          "selector": "mists_bootstrap_supplies_pvp_currency_and_debugbar_shapes",
+          "status": "ok"
+        },
+        {
+          "selector": "mists_bootstrap_supplies_settings_label_globals",
+          "status": "ok"
+        },
+        {
+          "selector": "mists_create_forbidden_frame_forwards_to_create_frame",
+          "status": "ok"
+        },
+        {
+          "selector": "mists_honor_frame_shared_reproduces_missing_honor_system_enabled",
+          "status": "FAILED"
+        },
+        {
+          "selector": "mists_honor_pvp_api_contract_matches_classic_shapes",
+          "status": "ok"
+        },
+        {
+          "selector": "mists_honor_system_enabled_matches_disabled_legacy_honor_surface",
+          "status": "ok"
+        },
+        {
+          "selector": "mists_intrinsic_templates_supply_legacy_item_button_template_children",
+          "status": "ok"
+        },
+        {
+          "selector": "mists_loads_money_frame_before_uipanels_game",
+          "status": "ok"
+        },
+        {
+          "selector": "mists_money_input_template_runtime_syncs_coin_parent_keys",
+          "status": "ok"
+        },
+        {
+          "selector": "mists_money_input_template_xml_wires_gold_silver_copper_parent_keys",
+          "status": "ok"
+        },
+        {
+          "selector": "mists_selected_skill_api_matches_skill_frame_tuple_shape",
+          "status": "ok"
+        },
+        {
+          "selector": "mists_skill_line_zero_selection_still_returns_numeric_rank",
+          "status": "ok"
+        },
+        {
+          "selector": "mists_toc_game_token_resolves_to_mists_subdirectory",
+          "status": "ok"
+        },
+        {
+          "selector": "mists_trade_money_frame_onload_reproduces_missing_copper_child",
+          "status": "ok"
+        },
+        {
+          "selector": "mists_trade_player_input_money_frame_widget_has_copper_child",
+          "status": "ok"
+        },
+        {
+          "selector": "mists_world_map_set_opacity_reproduces_nil_opacity_arithmetic",
+          "status": "ok"
+        }
+      ],
+      "test_selector_headers": [
+        "mists_bootstrap_exposes_classic_addon_compatibility_globals",
+        "mists_bootstrap_exposes_raid_marker_system_probe",
+        "mists_bootstrap_registers_startup_cvar_defaults",
+        "mists_bootstrap_reports_pandaria_as_the_current_classic_expansion",
+        "mists_bootstrap_supplies_hidden_non_priest_priest_bar_mixins",
+        "mists_bootstrap_supplies_legacy_bank_and_aura_shapes",
+        "mists_bootstrap_supplies_legacy_startup_api_shapes",
+        "mists_bootstrap_supplies_pvp_currency_and_debugbar_shapes",
+        "mists_bootstrap_supplies_settings_label_globals",
+        "mists_create_forbidden_frame_forwards_to_create_frame",
+        "mists_honor_frame_shared_reproduces_missing_honor_system_enabled",
+        "mists_honor_pvp_api_contract_matches_classic_shapes",
+        "mists_honor_system_enabled_matches_disabled_legacy_honor_surface",
+        "mists_intrinsic_templates_supply_legacy_item_button_template_children",
+        "mists_loads_money_frame_before_uipanels_game",
+        "mists_money_input_template_runtime_syncs_coin_parent_keys",
+        "mists_money_input_template_xml_wires_gold_silver_copper_parent_keys",
+        "mists_selected_skill_api_matches_skill_frame_tuple_shape",
+        "mists_skill_line_zero_selection_still_returns_numeric_rank",
+        "mists_toc_game_token_resolves_to_mists_subdirectory",
+        "mists_trade_money_frame_onload_reproduces_missing_copper_child",
+        "mists_trade_player_input_money_frame_widget_has_copper_child",
+        "mists_world_map_set_opacity_reproduces_nil_opacity_arithmetic"
+      ]
+    },
+    {
+      "argv": [
+        "/usr/bin/timeout",
+        "90",
+        "/home/osso/Projects/wow/wow-ui-sim/target/debug/deps/mists_forbidden_frames-92ccbb08b3976d61",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "artifact_sha256": "d5d802a6e4ff6571fa5984a6419b17ba389d34ed1eb503deb9bb04aba96c0023",
+      "cargo_profile": {
+        "debug_assertions": true,
+        "debuginfo": "line-tables-only",
+        "opt_level": "1",
+        "overflow_checks": true,
+        "test": true
+      },
+      "case": "profile-execution/mists_forbidden_frames",
+      "checks": {
+        "cargo_selection_features_profile_match": true,
+        "compiled_revision_matches_epoch": true,
+        "current_artifact_hash_matches_execution": true,
+        "exit_matches_summary": true,
+        "invocation_hash_matches_selection": true,
+        "one_summary": true,
+        "per_test_records_match_counts": true,
+        "recorded_artifact_hash_unchanged": true,
+        "stream_hashes_match_receipt": true,
+        "stream_sizes_match_where_recorded": true,
+        "summaries_match_receipt": true,
+        "target_name_matches": true
+      },
+      "compiled_revision": "903711da8b9d6472f718e407af350c576fe4a7e0",
+      "ended": "2026-10-10T03:17:56.206432+00:00",
+      "environment_overrides": {
+        "WOW_SIM_NO_SOUND": "1"
+      },
+      "evidence_integrity_pass": true,
+      "exit": 0,
+      "failed_distinct": 0,
+      "failure_locations": [],
+      "features": [
+        "casc",
+        "client-mists",
+        "gui",
+        "rodio",
+        "sound"
+      ],
+      "kind": "profile",
+      "passed_distinct": 1,
+      "selected_distinct": 1,
+      "selector": null,
+      "standalone_ok_records": 0,
+      "started": "2026-10-10T03:17:56.073042+00:00",
+      "streams": {
+        "stderr": {
+          "bytes": 638,
+          "diagnostic_marker_counts": {
+            "Lua error": 0,
+            "[failure]": 0,
+            "[file-budget-error]": 0,
+            "[handler-budget-error]": 0,
+            "[handler]": 0,
+            "panicked at": 0,
+            "suppressed": 0
+          },
+          "full_read": true,
+          "lines": 11,
+          "privacy_candidate_counts": {
+            "credential_keyword": 0,
+            "email": 0,
+            "url": 0
+          },
+          "raw_content_published": false,
+          "sha256": "8f46901fa4b8116bab6e0aef845984bc554c6fb3b0adeb7d266d90d4e3afc4bf"
+        },
+        "stdout": {
+          "bytes": 181,
+          "diagnostic_marker_counts": {
+            "Lua error": 0,
+            "[failure]": 0,
+            "[file-budget-error]": 0,
+            "[handler-budget-error]": 0,
+            "[handler]": 0,
+            "panicked at": 0,
+            "suppressed": 0
+          },
+          "full_read": true,
+          "lines": 6,
+          "privacy_candidate_counts": {
+            "credential_keyword": 0,
+            "email": 0,
+            "url": 0
+          },
+          "raw_content_published": false,
+          "sha256": "1869fbc2339fe3597b1a7c3bc7b6b6a298933458d9580ccdd0d60da4b2a76957"
+        }
+      },
+      "summaries": [
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.12s"
+      ],
+      "summary_records": 1,
+      "target": "mists_forbidden_frames",
+      "test_records": [
+        {
+          "selector": "mists_create_forbidden_frame_hides_from_enumerate_frames",
+          "status": "ok"
+        }
+      ],
+      "test_selector_headers": [
+        "mists_create_forbidden_frame_hides_from_enumerate_frames"
+      ]
+    },
+    {
+      "argv": [
+        "/usr/bin/timeout",
+        "90",
+        "/home/osso/Projects/wow/wow-ui-sim/target/debug/deps/mists_world_map_opacity-c4e80a81b344dfca",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "artifact_sha256": "08f8efd79e1eb2379221eb9d6790fa77a396bae2afc59a7f75110f0280788cfc",
+      "cargo_profile": {
+        "debug_assertions": true,
+        "debuginfo": "line-tables-only",
+        "opt_level": "1",
+        "overflow_checks": true,
+        "test": true
+      },
+      "case": "profile-execution/mists_world_map_opacity",
+      "checks": {
+        "cargo_selection_features_profile_match": true,
+        "compiled_revision_matches_epoch": true,
+        "current_artifact_hash_matches_execution": true,
+        "exit_matches_summary": true,
+        "invocation_hash_matches_selection": true,
+        "one_summary": true,
+        "per_test_records_match_counts": true,
+        "recorded_artifact_hash_unchanged": true,
+        "stream_hashes_match_receipt": true,
+        "stream_sizes_match_where_recorded": true,
+        "summaries_match_receipt": true,
+        "target_name_matches": true
+      },
+      "compiled_revision": "903711da8b9d6472f718e407af350c576fe4a7e0",
+      "ended": "2026-10-10T03:17:56.780529+00:00",
+      "environment_overrides": {
+        "WOW_SIM_NO_SOUND": "1"
+      },
+      "evidence_integrity_pass": true,
+      "exit": 0,
+      "failed_distinct": 0,
+      "failure_locations": [],
+      "features": [
+        "casc",
+        "client-mists",
+        "gui",
+        "rodio",
+        "sound"
+      ],
+      "kind": "profile",
+      "passed_distinct": 1,
+      "selected_distinct": 1,
+      "selector": null,
+      "standalone_ok_records": 0,
+      "started": "2026-10-10T03:17:56.666033+00:00",
+      "streams": {
+        "stderr": {
+          "bytes": 640,
+          "diagnostic_marker_counts": {
+            "Lua error": 0,
+            "[failure]": 0,
+            "[file-budget-error]": 0,
+            "[handler-budget-error]": 0,
+            "[handler]": 0,
+            "panicked at": 0,
+            "suppressed": 0
+          },
+          "full_read": true,
+          "lines": 11,
+          "privacy_candidate_counts": {
+            "credential_keyword": 0,
+            "email": 0,
+            "url": 0
+          },
+          "raw_content_published": false,
+          "sha256": "4d93327eeacdc2b0d4d2d1c22dd04a4c354e46e54418830f58527a4422efbe31"
+        },
+        "stdout": {
+          "bytes": 168,
+          "diagnostic_marker_counts": {
+            "Lua error": 0,
+            "[failure]": 0,
+            "[file-budget-error]": 0,
+            "[handler-budget-error]": 0,
+            "[handler]": 0,
+            "panicked at": 0,
+            "suppressed": 0
+          },
+          "full_read": true,
+          "lines": 6,
+          "privacy_candidate_counts": {
+            "credential_keyword": 0,
+            "email": 0,
+            "url": 0
+          },
+          "raw_content_published": false,
+          "sha256": "21a796821b9eac9a8f7ab65231fb823d5093a1233882417bd401363204249b51"
+        }
+      },
+      "summaries": [
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.11s"
+      ],
+      "summary_records": 1,
+      "target": "mists_world_map_opacity",
+      "test_records": [
+        {
+          "selector": "world_map_opacity_default_feeds_set_opacity",
+          "status": "ok"
+        }
+      ],
+      "test_selector_headers": [
+        "world_map_opacity_default_feeds_set_opacity"
+      ]
+    },
+    {
+      "argv": [
+        "/usr/bin/timeout",
+        "90",
+        "/home/osso/Projects/wow/wow-ui-sim/target/debug/deps/mists_nameplate_scale-7b616f0b74b8ec9e",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "artifact_sha256": "34e5414fa75ad6eba113acbb01252b696f9f1b194764eafa50f53c24c88bd6b5",
+      "cargo_profile": {
+        "debug_assertions": true,
+        "debuginfo": "line-tables-only",
+        "opt_level": "1",
+        "overflow_checks": true,
+        "test": true
+      },
+      "case": "profile-execution/mists_nameplate_scale",
+      "checks": {
+        "cargo_selection_features_profile_match": true,
+        "compiled_revision_matches_epoch": true,
+        "current_artifact_hash_matches_execution": true,
+        "exit_matches_summary": true,
+        "invocation_hash_matches_selection": true,
+        "one_summary": true,
+        "per_test_records_match_counts": true,
+        "recorded_artifact_hash_unchanged": true,
+        "stream_hashes_match_receipt": true,
+        "stream_sizes_match_where_recorded": true,
+        "summaries_match_receipt": true,
+        "target_name_matches": true
+      },
+      "compiled_revision": "903711da8b9d6472f718e407af350c576fe4a7e0",
+      "ended": "2026-10-10T03:17:57.394910+00:00",
+      "environment_overrides": {
+        "WOW_SIM_NO_SOUND": "1"
+      },
+      "evidence_integrity_pass": true,
+      "exit": 101,
+      "failed_distinct": 2,
+      "failure_locations": [
+        {
+          "class": "missing-profile-source-file",
+          "context_sha256": "b1b60420cbf8f5157cd1866031f82fbad7923b6bff8e05e6b285011d5d7e3e71",
+          "selector": "nameplate_options_default_vertical_scale_updates_sizes",
+          "source": "tests/mists_nameplate_scale.rs:12:6",
+          "stderr_line": 13
+        },
+        {
+          "class": "missing-profile-source-file",
+          "context_sha256": "54190b8d8e5fec6627e34a7a57a39eff751e45c63750ac3420fd62414b387837",
+          "selector": "nameplate_options_reproduce_nil_vertical_scale_arithmetic",
+          "source": "tests/mists_nameplate_scale.rs:12:6",
+          "stderr_line": 28
+        }
+      ],
+      "features": [
+        "casc",
+        "client-mists",
+        "gui",
+        "rodio",
+        "sound"
+      ],
+      "kind": "profile",
+      "passed_distinct": 0,
+      "selected_distinct": 2,
+      "selector": null,
+      "standalone_ok_records": 0,
+      "started": "2026-10-10T03:17:57.214035+00:00",
+      "streams": {
+        "stderr": {
+          "bytes": 1882,
+          "diagnostic_marker_counts": {
+            "Lua error": 0,
+            "[failure]": 0,
+            "[file-budget-error]": 0,
+            "[handler-budget-error]": 0,
+            "[handler]": 0,
+            "panicked at": 2,
+            "suppressed": 0
+          },
+          "full_read": true,
+          "lines": 29,
+          "privacy_candidate_counts": {
+            "credential_keyword": 0,
+            "email": 0,
+            "url": 0
+          },
+          "raw_content_published": false,
+          "sha256": "75f9c0aae8cc5a63f3e8b1173412905fa82371a8267073ee46135c55e049ccbd"
+        },
+        "stdout": {
+          "bytes": 405,
+          "diagnostic_marker_counts": {
+            "Lua error": 0,
+            "[failure]": 0,
+            "[file-budget-error]": 0,
+            "[handler-budget-error]": 0,
+            "[handler]": 0,
+            "panicked at": 0,
+            "suppressed": 0
+          },
+          "full_read": true,
+          "lines": 13,
+          "privacy_candidate_counts": {
+            "credential_keyword": 0,
+            "email": 0,
+            "url": 0
+          },
+          "raw_content_published": false,
+          "sha256": "7b328baf9c9ce5d7a45f85aae59e0728c516de290cc17193b79b8b30a23932d4"
+        }
+      },
+      "summaries": [
+        "test result: FAILED. 0 passed; 2 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.17s"
+      ],
+      "summary_records": 1,
+      "target": "mists_nameplate_scale",
+      "test_records": [
+        {
+          "selector": "nameplate_options_default_vertical_scale_updates_sizes",
+          "status": "FAILED"
+        },
+        {
+          "selector": "nameplate_options_reproduce_nil_vertical_scale_arithmetic",
+          "status": "FAILED"
+        }
+      ],
+      "test_selector_headers": [
+        "nameplate_options_default_vertical_scale_updates_sizes",
+        "nameplate_options_reproduce_nil_vertical_scale_arithmetic"
+      ]
+    },
+    {
+      "argv": [
+        "/usr/bin/timeout",
+        "90",
+        "/home/osso/Projects/wow/wow-ui-sim/target/debug/deps/mists_currency_list-43b74ef9e0f23ac4",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "artifact_sha256": "a8b997761eb0e71641c7f3c10872ca33066cffb7dbe8d7097c85c8242ee233d8",
+      "cargo_profile": {
+        "debug_assertions": true,
+        "debuginfo": "line-tables-only",
+        "opt_level": "1",
+        "overflow_checks": true,
+        "test": true
+      },
+      "case": "profile-execution/mists_currency_list",
+      "checks": {
+        "cargo_selection_features_profile_match": true,
+        "compiled_revision_matches_epoch": true,
+        "current_artifact_hash_matches_execution": true,
+        "exit_matches_summary": true,
+        "invocation_hash_matches_selection": true,
+        "one_summary": true,
+        "per_test_records_match_counts": true,
+        "recorded_artifact_hash_unchanged": true,
+        "stream_hashes_match_receipt": true,
+        "stream_sizes_match_where_recorded": true,
+        "summaries_match_receipt": true,
+        "target_name_matches": true
+      },
+      "compiled_revision": "903711da8b9d6472f718e407af350c576fe4a7e0",
+      "ended": "2026-10-10T03:17:58.148406+00:00",
+      "environment_overrides": {
+        "WOW_SIM_NO_SOUND": "1"
+      },
+      "evidence_integrity_pass": true,
+      "exit": 101,
+      "failed_distinct": 2,
+      "failure_locations": [
+        {
+          "class": "missing-profile-source-file",
+          "context_sha256": "7dbd9e0c58348686556951fc5d9ee78666c2da981a28481d37765c01e6d16f7d",
+          "selector": "legacy_currency_list_size_wraps_c_currency_info",
+          "source": "tests/mists_currency_list.rs:12:6",
+          "stderr_line": 13
+        },
+        {
+          "class": "missing-profile-source-file",
+          "context_sha256": "6fa522c4872ffc1f0dee0c65672b0be959dd990aa6ed4a3860958731d4499ec4",
+          "selector": "token_frame_update_reproduces_missing_currency_list_size",
+          "source": "tests/mists_currency_list.rs:12:6",
+          "stderr_line": 28
+        }
+      ],
+      "features": [
+        "casc",
+        "client-mists",
+        "gui",
+        "rodio",
+        "sound"
+      ],
+      "kind": "profile",
+      "passed_distinct": 0,
+      "selected_distinct": 2,
+      "selector": null,
+      "standalone_ok_records": 0,
+      "started": "2026-10-10T03:17:57.877119+00:00",
+      "streams": {
+        "stderr": {
+          "bytes": 1867,
+          "diagnostic_marker_counts": {
+            "Lua error": 0,
+            "[failure]": 0,
+            "[file-budget-error]": 0,
+            "[handler-budget-error]": 0,
+            "[handler]": 0,
+            "panicked at": 2,
+            "suppressed": 0
+          },
+          "full_read": true,
+          "lines": 29,
+          "privacy_candidate_counts": {
+            "credential_keyword": 0,
+            "email": 0,
+            "url": 0
+          },
+          "raw_content_published": false,
+          "sha256": "abdf8b1c4a04f49ea1f73a34e8bca0929163232ad72428f6fb85aa5757857de1"
+        },
+        "stdout": {
+          "bytes": 389,
+          "diagnostic_marker_counts": {
+            "Lua error": 0,
+            "[failure]": 0,
+            "[file-budget-error]": 0,
+            "[handler-budget-error]": 0,
+            "[handler]": 0,
+            "panicked at": 0,
+            "suppressed": 0
+          },
+          "full_read": true,
+          "lines": 13,
+          "privacy_candidate_counts": {
+            "credential_keyword": 0,
+            "email": 0,
+            "url": 0
+          },
+          "raw_content_published": false,
+          "sha256": "5c8b312e4abc5546bbefa57dd703dbab5eea13bde9b07d67beeecd4d133778da"
+        }
+      },
+      "summaries": [
+        "test result: FAILED. 0 passed; 2 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.26s"
+      ],
+      "summary_records": 1,
+      "target": "mists_currency_list",
+      "test_records": [
+        {
+          "selector": "legacy_currency_list_size_wraps_c_currency_info",
+          "status": "FAILED"
+        },
+        {
+          "selector": "token_frame_update_reproduces_missing_currency_list_size",
+          "status": "FAILED"
+        }
+      ],
+      "test_selector_headers": [
+        "legacy_currency_list_size_wraps_c_currency_info",
+        "token_frame_update_reproduces_missing_currency_list_size"
+      ]
+    },
+    {
+      "argv": [
+        "/usr/bin/timeout",
+        "90",
+        "/home/osso/Projects/wow/wow-ui-sim/target/debug/deps/mists_dialog_helpers-ec9786fa01af7347",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "artifact_sha256": "b8e3827c1b4460c9e6b8c99eb695b89d75925c1f02c36c70695b129114c324ca",
+      "cargo_profile": {
+        "debug_assertions": true,
+        "debuginfo": "line-tables-only",
+        "opt_level": "1",
+        "overflow_checks": true,
+        "test": true
+      },
+      "case": "profile-execution/mists_dialog_helpers",
+      "checks": {
+        "cargo_selection_features_profile_match": true,
+        "compiled_revision_matches_epoch": true,
+        "current_artifact_hash_matches_execution": true,
+        "exit_matches_summary": true,
+        "invocation_hash_matches_selection": true,
+        "one_summary": true,
+        "per_test_records_match_counts": true,
+        "recorded_artifact_hash_unchanged": true,
+        "stream_hashes_match_receipt": true,
+        "stream_sizes_match_where_recorded": true,
+        "summaries_match_receipt": true,
+        "target_name_matches": true
+      },
+      "compiled_revision": "903711da8b9d6472f718e407af350c576fe4a7e0",
+      "ended": "2026-10-10T03:17:58.729149+00:00",
+      "environment_overrides": {
+        "WOW_SIM_NO_SOUND": "1"
+      },
+      "evidence_integrity_pass": true,
+      "exit": 101,
+      "failed_distinct": 1,
+      "failure_locations": [
+        {
+          "class": "nil-call",
+          "context_sha256": "b840facbd908f9c310b37dddf2db6f7d6045a9cc014acbcb6fc202927d523997",
+          "selector": "money_frame_set_type_reproduces_missing_basic_message_dialog_helper",
+          "source": "tests/mists_dialog_helpers.rs:47:5",
+          "stderr_line": 24
+        }
+      ],
+      "features": [
+        "casc",
+        "client-mists",
+        "gui",
+        "rodio",
+        "sound"
+      ],
+      "kind": "profile",
+      "passed_distinct": 1,
+      "selected_distinct": 2,
+      "selector": null,
+      "standalone_ok_records": 0,
+      "started": "2026-10-10T03:17:58.551701+00:00",
+      "streams": {
+        "stderr": {
+          "bytes": 1619,
+          "diagnostic_marker_counts": {
+            "Lua error": 0,
+            "[failure]": 0,
+            "[file-budget-error]": 0,
+            "[handler-budget-error]": 0,
+            "[handler]": 0,
+            "panicked at": 1,
+            "suppressed": 0
+          },
+          "full_read": true,
+          "lines": 26,
+          "privacy_candidate_counts": {
+            "credential_keyword": 0,
+            "email": 0,
+            "url": 0
+          },
+          "raw_content_published": false,
+          "sha256": "60ddad24ffe89d8900a1dd9031b486b60d4dde3f3f1c1b9abf69dba72ebae517"
+        },
+        "stdout": {
+          "bytes": 348,
+          "diagnostic_marker_counts": {
+            "Lua error": 0,
+            "[failure]": 0,
+            "[file-budget-error]": 0,
+            "[handler-budget-error]": 0,
+            "[handler]": 0,
+            "panicked at": 0,
+            "suppressed": 0
+          },
+          "full_read": true,
+          "lines": 12,
+          "privacy_candidate_counts": {
+            "credential_keyword": 0,
+            "email": 0,
+            "url": 0
+          },
+          "raw_content_published": false,
+          "sha256": "a32b82323bd1a59a266e133aa6eceb391e832ef5814737e803dddce3cf3e1ff1"
+        }
+      },
+      "summaries": [
+        "test result: FAILED. 1 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.17s"
+      ],
+      "summary_records": 1,
+      "target": "mists_dialog_helpers",
+      "test_records": [
+        {
+          "selector": "basic_message_dialog_helper_updates_text",
+          "status": "ok"
+        },
+        {
+          "selector": "money_frame_set_type_reproduces_missing_basic_message_dialog_helper",
+          "status": "FAILED"
+        }
+      ],
+      "test_selector_headers": [
+        "basic_message_dialog_helper_updates_text",
+        "money_frame_set_type_reproduces_missing_basic_message_dialog_helper"
+      ]
+    },
+    {
+      "argv": [
+        "/usr/bin/timeout",
+        "90",
+        "/home/osso/Projects/wow/wow-ui-sim/target/debug/deps/mists_class_colors-7e269e94f7d0907e",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "artifact_sha256": "f1510ae361527e2badd4ff4b3bb9dc08f806630675cbc044f672ccf75e5e30af",
+      "cargo_profile": {
+        "debug_assertions": true,
+        "debuginfo": "line-tables-only",
+        "opt_level": "1",
+        "overflow_checks": true,
+        "test": true
+      },
+      "case": "profile-execution/mists_class_colors",
+      "checks": {
+        "cargo_selection_features_profile_match": true,
+        "compiled_revision_matches_epoch": true,
+        "current_artifact_hash_matches_execution": true,
+        "exit_matches_summary": true,
+        "invocation_hash_matches_selection": true,
+        "one_summary": true,
+        "per_test_records_match_counts": true,
+        "recorded_artifact_hash_unchanged": true,
+        "stream_hashes_match_receipt": true,
+        "stream_sizes_match_where_recorded": true,
+        "summaries_match_receipt": true,
+        "target_name_matches": true
+      },
+      "compiled_revision": "903711da8b9d6472f718e407af350c576fe4a7e0",
+      "ended": "2026-10-10T03:17:59.260734+00:00",
+      "environment_overrides": {
+        "WOW_SIM_NO_SOUND": "1"
+      },
+      "evidence_integrity_pass": true,
+      "exit": 0,
+      "failed_distinct": 0,
+      "failure_locations": [],
+      "features": [
+        "casc",
+        "client-mists",
+        "gui",
+        "rodio",
+        "sound"
+      ],
+      "kind": "profile",
+      "passed_distinct": 2,
+      "selected_distinct": 2,
+      "selector": null,
+      "standalone_ok_records": 0,
+      "started": "2026-10-10T03:17:59.084474+00:00",
+      "streams": {
+        "stderr": {
+          "bytes": 1280,
+          "diagnostic_marker_counts": {
+            "Lua error": 0,
+            "[failure]": 0,
+            "[file-budget-error]": 0,
+            "[handler-budget-error]": 0,
+            "[handler]": 0,
+            "panicked at": 0,
+            "suppressed": 0
+          },
+          "full_read": true,
+          "lines": 22,
+          "privacy_candidate_counts": {
+            "credential_keyword": 0,
+            "email": 0,
+            "url": 0
+          },
+          "raw_content_published": false,
+          "sha256": "14c859ab52fe53cf4078d03332903a37e21f8c0b804dbff4f78fd84d002428a2"
+        },
+        "stdout": {
+          "bytes": 229,
+          "diagnostic_marker_counts": {
+            "Lua error": 0,
+            "[failure]": 0,
+            "[file-budget-error]": 0,
+            "[handler-budget-error]": 0,
+            "[handler]": 0,
+            "panicked at": 0,
+            "suppressed": 0
+          },
+          "full_read": true,
+          "lines": 7,
+          "privacy_candidate_counts": {
+            "credential_keyword": 0,
+            "email": 0,
+            "url": 0
+          },
+          "raw_content_published": false,
+          "sha256": "1cfcde237902546ab0a4dd9c61f73ec65eb6768ed1817b78a5d50cb894d0f0a3"
+        }
+      },
+      "summaries": [
+        "test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.17s"
+      ],
+      "summary_records": 1,
+      "target": "mists_class_colors",
+      "test_records": [
+        {
+          "selector": "club_finder_setup_menu_reproduces_missing_class_color",
+          "status": "ok"
+        },
+        {
+          "selector": "mists_visible_classes_have_color_data",
+          "status": "ok"
+        }
+      ],
+      "test_selector_headers": [
+        "club_finder_setup_menu_reproduces_missing_class_color",
+        "mists_visible_classes_have_color_data"
+      ]
+    }
+  ],
+  "profile_totals": {
+    "failed": 6,
+    "missing_targets": [],
+    "passed": 37,
+    "targets_completed": 8,
+    "targets_exit_0": 4,
+    "targets_exit_101": 4,
+    "targets_expected": 8
+  },
+  "schema": 1,
+  "source_scope": {
+    "artifact_build_end_content_binding": "UNPROVEN: Cargo messages contain paths/features/profile, not build-end content hashes.",
+    "compiler_exit": 0,
+    "compiler_seal_reference": "compiler-report.md",
+    "exclusions": [
+      "external path dependencies",
+      "data inputs outside captured tracked src/tests/build/config scope",
+      "inherited environment",
+      "runtime cache/addon files outside source scope",
+      "untracked index"
+    ],
+    "recorded_revision": "903711da8b9d6472f718e407af350c576fe4a7e0",
+    "revision_binding": "Submission-recorded revision, not independently matched to Git tree. Snapshots seal only listed files.",
+    "source_snapshot_bytes_equal": true,
+    "source_snapshot_entries": 3839,
+    "source_snapshot_maps_equal": true
+  }
+}

@@ -1,0 +1,65 @@
+{
+  "scope": "Sanitized audit reports and metadata only; private captures referenced by digest, not copied. Not a whole-input or build-end seal.",
+  "files": [
+    {
+      "path": "mists-finite-probe-build/20261010T030623Z/audit/compiler-report.md",
+      "sha256": "65f477ab55402eeb2e3423001144ffdd359f3a4568c601401e99bf9a51709430",
+      "bytes": 5542
+    },
+    {
+      "path": "mists-finite-probe-build/20261010T030623Z/audit/hash-report.json",
+      "sha256": "f31bd32a46a334fb18d8ef2e7e9492751dcd8103eccd1af09ab348587e753cb7",
+      "bytes": 3565
+    },
+    {
+      "path": "mists-finite-probe-build/20261010T030623Z/audit/runtime-aggregate.json",
+      "sha256": "d1e5aabd2a88476124752e5ce9c245e159a7b57f16665c9c61235808336722f5",
+      "bytes": 13861
+    },
+    {
+      "path": "mists-finite-probe-build/20261010T030623Z/audit/runtime-hashmanifest.json",
+      "sha256": "45a1c7d522576011232f7ea02047a794c4de3c25f00a5c8086e1d2a8ce655ebc",
+      "bytes": 7593
+    },
+    {
+      "path": "mists-finite-probe-build/20261010T030623Z/audit/runtime-report.md",
+      "sha256": "d4ca534bc0cdca86f83b08e5c98302c088af0bf15284b17d70c2015c7a711842",
+      "bytes": 3973
+    },
+    {
+      "path": "mists-finite-probe-build/20261010T030623Z/audit/scoped-manifest.json",
+      "sha256": "007f77ea8ccbc0e2370140c7660b68c37ee2baeda7d143a78f0a48d73d0bc298",
+      "bytes": 479928
+    },
+    {
+      "path": "mists-hidden-cast-build/20261010T030705Z/audit/compiler-report.md",
+      "sha256": "9de70bc4ae7436e683c4687221c15ab40d49af017e68fe89bbe3ab80873c057d",
+      "bytes": 8043
+    },
+    {
+      "path": "mists-hidden-cast-build/20261010T030705Z/audit/hash-report.json",
+      "sha256": "57ba9786a43c5df9264a3078d5c587cfbaab512c5965062c6074a759c82a01be",
+      "bytes": 9706
+    },
+    {
+      "path": "mists-hidden-cast-build/20261010T030705Z/audit/runtime-aggregate.json",
+      "sha256": "1f4b9a58e48fe9e882037ed32895e8657ec9cff91a354f1b1d50865576a23ade",
+      "bytes": 51236
+    },
+    {
+      "path": "mists-hidden-cast-build/20261010T030705Z/audit/runtime-hashmanifest.json",
+      "sha256": "914a464659d056f8da0502054939338fef832af77100cbe3a9f68a5fb816d1c6",
+      "bytes": 20723
+    },
+    {
+      "path": "mists-hidden-cast-build/20261010T030705Z/audit/runtime-report.md",
+      "sha256": "824d5fbaa92dee8638e9fbd1b844f026ac717e45ab5f1de5c40ec687f72303e7",
+      "bytes": 4010
+    },
+    {
+      "path": "mists-hidden-cast-build/20261010T030705Z/audit/scoped-manifest.json",
+      "sha256": "5c8c62cbff6898b8ff08f95b2ca4e94fadcf698d4d95f77ea1180090ef5d4590",
+      "bytes": 502069
+    }
+  ]
+}

@@ -1,0 +1,215 @@
+{
+  "algorithm": "sha256",
+  "artifact_observations": [
+    {
+      "binding": "current file only; no epoch-time digest exists in saved evidence",
+      "mtime_ns": 1791601753254752291,
+      "observed_at": "2026-10-10T03:17:09.258861+00:00",
+      "path": "/home/osso/Projects/wow/wow-ui-sim/target/debug/bench_spellbook",
+      "sha256": "477a131381a5848d9abd581d921e7d9426a2b69562bafc6af7844473dc0e60c5",
+      "size_bytes": 367172200,
+      "stable_during_read": true
+    },
+    {
+      "binding": "current file only; no epoch-time digest exists in saved evidence",
+      "mtime_ns": 1791601753233751960,
+      "observed_at": "2026-10-10T03:17:09.468664+00:00",
+      "path": "/home/osso/Projects/wow/wow-ui-sim/target/debug/bench_steady_state",
+      "sha256": "3f13d0163539add3d2b10b76c6b91f30a7868c970cf9279dd52db2fdd9856709",
+      "size_bytes": 367178104,
+      "stable_during_read": true
+    },
+    {
+      "binding": "current file only; no epoch-time digest exists in saved evidence",
+      "mtime_ns": 1791601754193767100,
+      "observed_at": "2026-10-10T03:17:09.659954+00:00",
+      "path": "/home/osso/Projects/wow/wow-ui-sim/target/debug/bench_talents",
+      "sha256": "79132224d5fb31f953fb617a4b87e0ecd796fdc44052984a0e792b17d6f9080f",
+      "size_bytes": 340796912,
+      "stable_during_read": true
+    },
+    {
+      "binding": "current file only; no epoch-time digest exists in saved evidence",
+      "mtime_ns": 1791601625750752993,
+      "observed_at": "2026-10-10T03:17:09.663607+00:00",
+      "path": "/home/osso/Projects/wow/wow-ui-sim/target/debug/build/wow-ui-sim-e8713a1b9bdf5ce9/build-script-build",
+      "sha256": "9c66a11796ac3ad80565838795d0c2f5ac26bd17e6c0303c5c18dfa4d3a0b884",
+      "size_bytes": 5570816,
+      "stable_during_read": true
+    },
+    {
+      "binding": "current file only; no epoch-time digest exists in saved evidence",
+      "mtime_ns": 1791601805490577754,
+      "observed_at": "2026-10-10T03:17:09.850209+00:00",
+      "path": "/home/osso/Projects/wow/wow-ui-sim/target/debug/deps/integration-f15e4c1da9a8b8f4",
+      "sha256": "3209569e20c752c771a845422b9a598cb9736c50465b87fe03bb3bacdc7c8c20",
+      "size_bytes": 437996056,
+      "stable_during_read": true
+    },
+    {
+      "binding": "current file only; no epoch-time digest exists in saved evidence",
+      "mtime_ns": 1791601751915731176,
+      "observed_at": "2026-10-10T03:17:10.034932+00:00",
+      "path": "/home/osso/Projects/wow/wow-ui-sim/target/debug/deps/libwow_ui_sim-7714dc024f05e9b0.rlib",
+      "sha256": "280f00c5b306519386f16c5aaa9995533f2bbf233748153e0395956b04a54b33",
+      "size_bytes": 408253682,
+      "stable_during_read": true
+    },
+    {
+      "binding": "current file only; no epoch-time digest exists in saved evidence",
+      "mtime_ns": 1791601674272510990,
+      "observed_at": "2026-10-10T03:17:10.093220+00:00",
+      "path": "/home/osso/Projects/wow/wow-ui-sim/target/debug/deps/libwow_ui_sim-7714dc024f05e9b0.rmeta",
+      "sha256": "0114939ac803a2b1e6f94a4b35424f130f1fdf2cc5c35eef6e4fa91b7eb4a268",
+      "size_bytes": 132591673,
+      "stable_during_read": true
+    },
+    {
+      "binding": "current file only; no epoch-time digest exists in saved evidence",
+      "mtime_ns": 1791601755310784717,
+      "observed_at": "2026-10-10T03:17:10.234589+00:00",
+      "path": "/home/osso/Projects/wow/wow-ui-sim/target/debug/deps/mists_class_colors-7e269e94f7d0907e",
+      "sha256": "f1510ae361527e2badd4ff4b3bb9dc08f806630675cbc044f672ccf75e5e30af",
+      "size_bytes": 340922048,
+      "stable_during_read": true
+    },
+    {
+      "binding": "current file only; no epoch-time digest exists in saved evidence",
+      "mtime_ns": 1791601762048891024,
+      "observed_at": "2026-10-10T03:17:10.431463+00:00",
+      "path": "/home/osso/Projects/wow/wow-ui-sim/target/debug/deps/mists_compat_bootstrap-c15dadd74a574f6c",
+      "sha256": "2531d3e45062eee5904704345906e9788ea1b2a8254f6480e23cc476e0d03175",
+      "size_bytes": 341314640,
+      "stable_during_read": true
+    },
+    {
+      "binding": "current file only; no epoch-time digest exists in saved evidence",
+      "mtime_ns": 1791601753300753017,
+      "observed_at": "2026-10-10T03:17:10.573709+00:00",
+      "path": "/home/osso/Projects/wow/wow-ui-sim/target/debug/deps/mists_currency_list-43b74ef9e0f23ac4",
+      "sha256": "a8b997761eb0e71641c7f3c10872ca33066cffb7dbe8d7097c85c8242ee233d8",
+      "size_bytes": 340901960,
+      "stable_during_read": true
+    },
+    {
+      "binding": "current file only; no epoch-time digest exists in saved evidence",
+      "mtime_ns": 1791601760055859574,
+      "observed_at": "2026-10-10T03:17:10.715812+00:00",
+      "path": "/home/osso/Projects/wow/wow-ui-sim/target/debug/deps/mists_dialog_helpers-ec9786fa01af7347",
+      "sha256": "b8e3827c1b4460c9e6b8c99eb695b89d75925c1f02c36c70695b129114c324ca",
+      "size_bytes": 340911112,
+      "stable_during_read": true
+    },
+    {
+      "binding": "current file only; no epoch-time digest exists in saved evidence",
+      "mtime_ns": 1791601761885888452,
+      "observed_at": "2026-10-10T03:17:10.875905+00:00",
+      "path": "/home/osso/Projects/wow/wow-ui-sim/target/debug/deps/mists_forbidden_frames-92ccbb08b3976d61",
+      "sha256": "d5d802a6e4ff6571fa5984a6419b17ba389d34ed1eb503deb9bb04aba96c0023",
+      "size_bytes": 340877952,
+      "stable_during_read": true
+    },
+    {
+      "binding": "current file only; no epoch-time digest exists in saved evidence",
+      "mtime_ns": 1791601755289784386,
+      "observed_at": "2026-10-10T03:17:11.017346+00:00",
+      "path": "/home/osso/Projects/wow/wow-ui-sim/target/debug/deps/mists_nameplate_scale-7b616f0b74b8ec9e",
+      "sha256": "34e5414fa75ad6eba113acbb01252b696f9f1b194764eafa50f53c24c88bd6b5",
+      "size_bytes": 340925064,
+      "stable_during_read": true
+    },
+    {
+      "binding": "current file only; no epoch-time digest exists in saved evidence",
+      "mtime_ns": 1791601760947873649,
+      "observed_at": "2026-10-10T03:17:11.159893+00:00",
+      "path": "/home/osso/Projects/wow/wow-ui-sim/target/debug/deps/mists_world_map_opacity-c4e80a81b344dfca",
+      "sha256": "08f8efd79e1eb2379221eb9d6790fa77a396bae2afc59a7f75110f0280788cfc",
+      "size_bytes": 340893200,
+      "stable_during_read": true
+    },
+    {
+      "binding": "current file only; no epoch-time digest exists in saved evidence",
+      "mtime_ns": 1791601754163766627,
+      "observed_at": "2026-10-10T03:17:11.260514+00:00",
+      "path": "/home/osso/Projects/wow/wow-ui-sim/target/debug/deps/pandaria_installed_addons-5c4ab2a050a21582",
+      "sha256": "2a525b412d251cc553ebb52de8ee3b504f05baa815a26fae91e34256868faecc",
+      "size_bytes": 238052856,
+      "stable_during_read": true
+    },
+    {
+      "binding": "current file only; no epoch-time digest exists in saved evidence",
+      "mtime_ns": 1791601760276863061,
+      "observed_at": "2026-10-10T03:17:11.281392+00:00",
+      "path": "/home/osso/Projects/wow/wow-ui-sim/target/debug/panel-visual-metrics",
+      "sha256": "f986e9c785b9ca3a77a070306acdc439f9844024c6ba0efb4b2cdbccadd0fc9f",
+      "size_bytes": 30947728,
+      "stable_during_read": true
+    },
+    {
+      "binding": "current file only; no epoch-time digest exists in saved evidence",
+      "mtime_ns": 1791601766076954602,
+      "observed_at": "2026-10-10T03:17:11.490235+00:00",
+      "path": "/home/osso/Projects/wow/wow-ui-sim/target/debug/wow-cli",
+      "sha256": "bd3ea93439219279cfd609b17f10d771178ff84f2675bd4f315dd3c70c7dcbf3",
+      "size_bytes": 371121104,
+      "stable_during_read": true
+    },
+    {
+      "binding": "current file only; no epoch-time digest exists in saved evidence",
+      "mtime_ns": 1791601759164845516,
+      "observed_at": "2026-10-10T03:17:11.716992+00:00",
+      "path": "/home/osso/Projects/wow/wow-ui-sim/target/debug/wow-sim",
+      "sha256": "74a5a56a1ccdd679bd13c951d75f283db0371e3b7fda0920cbc8f802c9a6c203",
+      "size_bytes": 398821848,
+      "stable_during_read": true
+    }
+  ],
+  "epoch": "/home/osso/.local/state/wow-ui-sim/verification/mists-hidden-cast-build/20261010T030705Z",
+  "evidence_files": {
+    "cargo-result.json": {
+      "sha256": "f7853710ab81bbbccfd8c02775b2fc9a304a085c07656d19a2e85b9f61f37c9a",
+      "size_bytes": 783
+    },
+    "compile.stderr": {
+      "sha256": "3baeb7dae69c508d0a7f8fa79173bb9437ea157850a4e576e079826d7b9c8f33",
+      "size_bytes": 1275
+    },
+    "compile.stdout": {
+      "sha256": "77379cde3ad8bb0d8f55293b48a2728f2abc9f320e4f09da3fd88f616dcf0071",
+      "size_bytes": 577379
+    },
+    "outcome.json": {
+      "sha256": "2f62e1d7395c16edb2b984bdc5a418464a5b50c063a41ffbf7277043cbcaed01",
+      "size_bytes": 178
+    },
+    "resources.json": {
+      "sha256": "6938e248ae928a5f79ee12da62e32c9cc9fb4873aedddd992cc43c566d96a0ac",
+      "size_bytes": 140
+    },
+    "source-after.json": {
+      "sha256": "62a9abc419e3ae05565c391578ce94c083a7bf3196754d52bf6939af9940c7fe",
+      "size_bytes": 452396
+    },
+    "source-before.json": {
+      "sha256": "62a9abc419e3ae05565c391578ce94c083a7bf3196754d52bf6939af9940c7fe",
+      "size_bytes": 452396
+    },
+    "submission.json": {
+      "sha256": "3173b4281ffc962423e5cccc9ada2ef7e50dcd059641d454783f9352fe3fd2dc",
+      "size_bytes": 1331
+    }
+  },
+  "generated_metadata": {
+    "compiler-report.md": {
+      "sha256": "9de70bc4ae7436e683c4687221c15ab40d49af017e68fe89bbe3ab80873c057d",
+      "size_bytes": 8043
+    },
+    "scoped-manifest.json": {
+      "sha256": "5c8c62cbff6898b8ff08f95b2ca4e94fadcf698d4d95f77ea1180090ef5d4590",
+      "size_bytes": 502069
+    }
+  },
+  "historical_artifact_binding": "unproven; audit-time observations only",
+  "source_bytes_equal": true,
+  "source_equal": true
+}
