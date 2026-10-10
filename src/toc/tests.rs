@@ -1,6 +1,21 @@
 use super::*;
 
 #[test]
+fn test_parse_utf8_bom_preserves_first_metadata_and_file_order() {
+    let contents =
+        "\u{feff}## Interface: 120100\n## Title: BOMProbe\nCore.lua [Bootstrap]\nUI.xml\n";
+    let toc = TocFile::parse(Path::new("/addons/BOMProbe"), contents);
+
+    assert_eq!(toc.interface_versions(), vec![120100]);
+    assert_eq!(toc.name, "BOMProbe");
+    assert_eq!(
+        toc.files,
+        vec![PathBuf::from("Core.lua"), PathBuf::from("UI.xml")]
+    );
+    assert_eq!(toc.file_is_bootstrap, vec![true, false]);
+}
+
+#[test]
 fn test_parse_simple_toc() {
     let contents = r#"
 ## Title: MyAddon

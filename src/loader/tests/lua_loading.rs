@@ -1,6 +1,25 @@
 use super::*;
 
 #[test]
+fn toc_utf8_bom_metadata_does_not_become_a_missing_file_warning() {
+    let env = WowLuaEnv::new().unwrap();
+    let addon = tempfile::tempdir().unwrap();
+    let root = addon.path();
+    let contents = format!(
+        "\u{feff}## Interface: {}\n## Title: BOMProbe\nCore.lua\n",
+        crate::toc::ACTIVE_INTERFACE_VERSION,
+    );
+    std::fs::write(root.join("BOMProbe.toc"), contents).unwrap();
+    std::fs::write(root.join("Core.lua"), "_G.TOC_BOM_EXECUTED = true\n").unwrap();
+
+    let result = load_addon(&env.loader_env(), &root.join("BOMProbe.toc")).unwrap();
+
+    assert!(result.warnings.is_empty(), "{:?}", result.warnings);
+    assert_eq!(result.lua_files, 1);
+    assert!(env.eval::<bool>("return TOC_BOM_EXECUTED").unwrap());
+}
+
+#[test]
 fn toc_text_locale_excluded_template_has_no_missing_file_warning() {
     let env = WowLuaEnv::new().unwrap();
     let addon = tempfile::tempdir().unwrap();

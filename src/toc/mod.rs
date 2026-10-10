@@ -293,6 +293,7 @@ impl TocFile {
     ///   so the `#@debug@` block entry takes precedence.
     /// - `@project-version@` in any value: replaced with `dev`.
     pub fn parse(addon_dir: &Path, contents: &str) -> Self {
+        let contents = contents.strip_prefix('\u{feff}').unwrap_or(contents);
         let mut metadata = HashMap::new();
         let mut file_entries = ParsedFileEntries::default();
 
