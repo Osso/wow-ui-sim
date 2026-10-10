@@ -23,6 +23,110 @@ fn env() -> WowLuaEnv {
     WowLuaEnv::new().expect("Failed to create Lua environment")
 }
 
+#[cfg(feature = "retail-12-1-0")]
+fn seed_map_display_inputs(env: &WowLuaEnv) {
+    let mut state = env.state().borrow_mut();
+    // Map 85 is a test-only catalog fixture, not a native metadata claim.
+    let mut second_map = state.maps.get(&84).unwrap().clone();
+    second_map.ui_map_id = 85;
+    second_map.name = "Map 85 fixture".into();
+    state.maps.insert(85, second_map);
+    state.map_display_hide_icons.insert(84, true);
+    state.map_display_hide_icons.insert(85, false);
+}
+
+#[cfg(feature = "retail-12-1-0")]
+fn assert_map_display_bool(env: &WowLuaEnv, map_id: i32, expected: bool) {
+    let (arity, kind, value): (i32, String, bool) = env
+        .eval(&format!(
+            r#"
+            local function capture(...)
+                return select('#', ...), type((...)), (...)
+            end
+            return capture(C_Map.GetMapDisplayInfo({map_id}))
+            "#,
+        ))
+        .unwrap();
+    assert_eq!(arity, 1, "map {map_id} must return exactly one value");
+    assert_eq!(
+        kind, "boolean",
+        "map {map_id} must return a bool, not a DTO"
+    );
+    assert_eq!(value, expected, "map {map_id} supplied hideIcons");
+}
+
+#[cfg(feature = "retail-12-1-0")]
+#[test]
+fn get_map_display_info_returns_one_supplied_bool() {
+    let env = env();
+    seed_map_display_inputs(&env);
+    assert_map_display_bool(&env, 84, true);
+    assert_map_display_bool(&env, 85, false);
+}
+
+#[cfg(feature = "retail-12-1-0")]
+#[test]
+fn get_map_display_info_tracks_updates_with_map_and_environment_isolation() {
+    let first = env();
+    let second = env();
+    seed_map_display_inputs(&first);
+    seed_map_display_inputs(&second);
+    assert_map_display_bool(&first, 84, true);
+    assert_map_display_bool(&first, 85, false);
+
+    first
+        .state()
+        .borrow_mut()
+        .map_display_hide_icons
+        .insert(84, false);
+    assert_map_display_bool(&first, 84, false);
+    assert_map_display_bool(&first, 85, false);
+    assert_map_display_bool(&second, 84, true);
+    assert_map_display_bool(&second, 85, false);
+
+    first
+        .state()
+        .borrow_mut()
+        .map_display_hide_icons
+        .insert(85, true);
+    assert_map_display_bool(&first, 84, false);
+    assert_map_display_bool(&first, 85, true);
+    assert_map_display_bool(&second, 84, true);
+    assert_map_display_bool(&second, 85, false);
+}
+
+#[cfg(feature = "retail-12-1-0")]
+#[test]
+fn get_map_display_info_absence_and_removal_return_zero_values_sim_input_policy() {
+    let env = env();
+    {
+        let state = env.state().borrow();
+        assert!(state.maps.contains_key(&84));
+        assert!(state.map_display_hide_icons.is_empty());
+    }
+    // Missing supplied input is simulator policy, not native unknown-ID parity.
+    let absent_arity: i32 = env
+        .eval("return select('#', C_Map.GetMapDisplayInfo(84))")
+        .unwrap();
+    assert_eq!(
+        absent_arity, 0,
+        "no input must not return false or explicit nil"
+    );
+
+    seed_map_display_inputs(&env);
+    assert_map_display_bool(&env, 84, true);
+    assert_map_display_bool(&env, 85, false);
+    env.state().borrow_mut().map_display_hide_icons.remove(&85);
+    let removed_arity: i32 = env
+        .eval("return select('#', C_Map.GetMapDisplayInfo(85))")
+        .unwrap();
+    assert_eq!(
+        removed_arity, 0,
+        "removed false input must return zero values"
+    );
+    assert_map_display_bool(&env, 84, true);
+}
+
 #[test]
 fn get_map_art_id_returns_seeded_art_id() {
     let env = env();

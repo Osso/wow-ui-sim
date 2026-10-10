@@ -571,6 +571,8 @@ pub struct SimState {
     pub currency_info: HashMap<i32, CurrencyInfo>,
     pub equipment_manager: EquipmentManagerState,
     pub maps: HashMap<i32, MapData>,
+    /// Explicit per-map hideIcons input; absence is not a native unknown-ID claim.
+    pub map_display_hide_icons: HashMap<i32, bool>,
     /// Explicit continent/world rectangles; never guessed from map art pixels.
     pub map_world_rects: HashMap<i32, crate::c_api::map_world_coordinates::MapWorldRect>,
     pub achievements: HashMap<i32, AchievementInfo>,
