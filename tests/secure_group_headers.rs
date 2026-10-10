@@ -107,6 +107,13 @@ fn assert_auto_hide_no_lua_errors(env: &WowLuaEnv, stage: &str) {
 }
 
 fn load_auto_hide_fixture() -> (WowLuaEnv, (f32, f32), (f32, f32)) {
+    let env = load_auto_hide_real_dependencies();
+    prepare_auto_hide_real_frame_and_caller(&env);
+    let (interior, exterior) = observe_auto_hide_resolved_cursor_points(&env);
+    (env, interior, exterior)
+}
+
+fn load_auto_hide_real_dependencies() -> WowLuaEnv {
     let ui = wow_ui_sim::paths::default_blizzard_ui_addons_path()
         .expect("auto-hide fixture requires the active profile Blizzard UI cache");
     let (env, loaded) =
@@ -126,6 +133,16 @@ fn load_auto_hide_fixture() -> (WowLuaEnv, (f32, f32), (f32, f32)) {
         );
     }
     assert_auto_hide_no_lua_errors(&env, "cached dependency closure");
+    env
+}
+
+fn prepare_auto_hide_real_frame_and_caller(env: &WowLuaEnv) {
+    prepare_auto_hide_real_frame(env);
+    define_auto_hide_tainted_callers(env);
+    assert_auto_hide_no_lua_errors(env, "frame and caller preparation");
+}
+
+fn prepare_auto_hide_real_frame(env: &WowLuaEnv) {
     assert!(env.exec(r#"
         assert(type(RegisterAutoHide) == 'function', 'registration unavailable')
         assert(type(UnregisterAutoHide) == 'function', 'unregistration unavailable')
@@ -140,7 +157,13 @@ fn load_auto_hide_fixture() -> (WowLuaEnv, (f32, f32), (f32, f32)) {
         AutoHideRuntimeTarget:Hide()
         AutoHideRuntimeTarget:Show()
         assert(AutoHideRuntimeTarget:IsShown() and AutoHideRuntimeTarget:IsVisible(), 'target not visible')
+    "#).is_ok(), "prepare actual vendor auto-hide fixture");
+}
 
+fn define_auto_hide_tainted_callers(env: &WowLuaEnv) {
+    assert!(
+        env.exec(
+            r#"
         local function register()
             assert(not issecure(), 'registration requires the fixture addon caller')
             RegisterAutoHide(AutoHideRuntimeTarget, 1.0)
@@ -153,9 +176,14 @@ fn load_auto_hide_fixture() -> (WowLuaEnv, (f32, f32), (f32, f32)) {
         debug.setobjecttaint(unregister, 'AutoHideRuntimeFixture')
         AutoHideRuntimeRegister = register
         AutoHideRuntimeUnregister = unregister
-    "#).is_ok(), "prepare actual vendor auto-hide fixture");
-    assert_auto_hide_no_lua_errors(&env, "frame and caller preparation");
+    "#
+        )
+        .is_ok(),
+        "prepare actual vendor auto-hide fixture"
+    );
+}
 
+fn observe_auto_hide_resolved_cursor_points(env: &WowLuaEnv) -> ((f32, f32), (f32, f32)) {
     // GetRect resolves dirty layout. Normalize the observed rectangle exactly
     // as the vendor does; do not assume the requested anchor was resolved.
     let (left, right, bottom, top): (f64, f64, f64, f64) = env.eval(r#"
@@ -173,7 +201,7 @@ fn load_auto_hide_fixture() -> (WowLuaEnv, (f32, f32), (f32, f32)) {
     assert!(right > left && top > bottom, "nonempty target rectangle");
     let interior = (((left + right) / 2.0) as f32, ((bottom + top) / 2.0) as f32);
     let exterior = ((right + 32.0) as f32, (top + 32.0) as f32);
-    (env, interior, exterior)
+    (interior, exterior)
 }
 
 fn tick_auto_hide_at(env: &WowLuaEnv, cursor: (f32, f32), elapsed: f64) {
