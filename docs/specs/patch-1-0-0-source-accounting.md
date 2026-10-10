@@ -1,6 +1,6 @@
 # Patch 1.0.0 frozen source accounting
 
-Bounded literal accounting of frozen page67688/revision5580410/timestamp2023-10-16T00:50:33Z; revision timestamp is not release date. [Audit](../wiki/investigations/patch-1-0-0-api-audit.md) records methodology and limits.
+Bounded literal accounting of frozen page67688/revision5580410/timestamp2023-10-16T00:50:33Z; revision timestamp is not release date. [Integrated SOURCE proof](../wiki/investigations/integrated-source-and-factory-proof-2026-10-09.md#final-literal-retail-pages--integrated-source-pass-only) records retained evidence and limits; original SOURCE epochs remain separate.
 
 ## What it must do
 
@@ -13,7 +13,7 @@ Bounded literal accounting of frozen page67688/revision5580410/timestamp2023-10-
 
 ## How it works
 
-- [Literal audit and proof epochs](../wiki/investigations/patch-1-0-0-api-audit.md)
+- [Integrated literal SOURCE proof and retained epochs](../wiki/investigations/integrated-source-and-factory-proof-2026-10-09.md#final-literal-retail-pages--integrated-source-pass-only)
 - [Replay instructions](../../data/patch-api/evidence/1.0.0-session-2026-10-09/REPLAY.md)
 
 ## Implementation inventory

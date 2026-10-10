@@ -1,3 +1,7 @@
+## [2026-10-09] lint | Patch 1.0.0 broken audit links
+
+Repointed two source-spec links and existing index/log audit references to the [canonical integrated SOURCE SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#final-literal-retail-pages--integrated-source-pass-only). Literal audit target and `/home/osso/.worktrees/wow-ui-sim-p100-page` are absent; original page remains readable at Git revision `f616d6481`, not duplicated here. Existing evidence/replay paths and SSOT section confirmed present. Original RED/GREEN/copied epochs and all859 UNPROVEN contracts unchanged; no model/native/parent credit or new requirements. Docs only; no source/snapshot edits, builds/tests/delegation/operations or push; `.code-index.db` preserved.
+
 ## [2026-10-09] ingest | Source gates and current live artifact
 
 Updated [source-gate SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#missing-method-source-gates--shared-snapshot-safety-unresolved) and [provider SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#pi-provider-provenance--historical-aggregate-only) from three supplied handoffs. Retained sanitized conclusions only: current `785726…` live/installed match, historical `c39b…` separated; exact source/native and failure linkage unknowns explicit. Docs only; no new gates, private payloads/identities, source/snapshot edits, builds, delegation, operations or push.
@@ -1213,7 +1217,7 @@ Added [audit](investigations/patch-1-3-0-api-audit.md) and [spec](../specs/patch
 
 ## [2026-10-09] investigation | Patch 1.0.0 frozen literal SOURCE audit
 
-[Audit](investigations/patch-1-0-0-api-audit.md): frozen67688/5580410,37407bytes;854 name-only inventory/854 unspecified signatures,859raw rows/859UNPROVEN contracts,856unexpanded links,2headers/0counts,2prose,1template. Registry101 endpoint is not parent closure. Own SOURCE RED8/portable RED3 retained; SOURCE GREEN8/8 at039cfa29d (4287 omissions); fresh copied SOURCE8/portable3 atf616d6481, default bytes/errors and both serialized ledger/log rejection/exact restoration.42original seals/43-member155329-byte archive unchanged;14later receipt artifacts separately sealed. No model/runtime/native credit; queued1.1.0/1.3.0/1.4.0/1.5.0 separate/unapplied; main owns target research/integration/full acceptance.
+[Integrated SOURCE proof](investigations/integrated-source-and-factory-proof-2026-10-09.md#final-literal-retail-pages--integrated-source-pass-only): frozen67688/5580410,37407bytes;854 name-only inventory/854 unspecified signatures,859raw rows/859UNPROVEN contracts,856unexpanded links,2headers/0counts,2prose,1template. Registry101 endpoint is not parent closure. Own SOURCE RED8/portable RED3 retained; SOURCE GREEN8/8 at039cfa29d (4287 omissions); fresh copied SOURCE8/portable3 atf616d6481, default bytes/errors and both serialized ledger/log rejection/exact restoration.42original seals/43-member155329-byte archive unchanged;14later receipt artifacts separately sealed. No model/runtime/native credit; queued1.1.0/1.3.0/1.4.0/1.5.0 separate/unapplied; main owns target research/integration/full acceptance.
 
 ## [2026-10-09] integrated proof | Seven Retail redirect slices
 
