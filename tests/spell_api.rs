@@ -451,7 +451,14 @@ fn test_assisted_combat_is_available_shape() {
 fn test_spell_get_spell_texture() {
     let env = env();
     let (icon, original): (i64, i64) = env.eval("return C_Spell.GetSpellTexture(100)").unwrap();
-    assert_eq!(icon, i64::from(wow_ui_sim::spells::get_spell(100).unwrap().icon_file_data_id));
+    assert_eq!(
+        icon,
+        i64::from(
+            wow_ui_sim::spells::get_spell(100)
+                .unwrap()
+                .icon_file_data_id
+        )
+    );
     assert_eq!(original, icon);
 }
 
