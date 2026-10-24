@@ -73,6 +73,7 @@ fn write_motion_offset(sim: &mut SimState, target_id: u64, offset: [f32; 2]) {
         .is_some_and(|frame| [frame.anim_offset_x, frame.anim_offset_y] != offset);
     if changed && let Some(frame) = sim.widgets.get_mut_visual(target_id) {
         [frame.anim_offset_x, frame.anim_offset_y] = offset;
+        sim.widgets.mark_rect_dirty(target_id);
     }
 }
 
