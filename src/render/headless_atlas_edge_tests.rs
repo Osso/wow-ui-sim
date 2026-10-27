@@ -6,7 +6,7 @@ use std::sync::Arc;
 
 #[test]
 fn adjacent_full_atlas_slots_preserve_edges_for_opaque_and_translucent_texels() {
-    for alpha in [255u8, 96] {
+    for alpha in [255u8, 96, 0] {
         let mut batch = QuadBatch::default();
         let mut textures = Vec::new();
         for (index, rgb) in [[255, 0, 0], [0, 255, 0]].into_iter().enumerate() {
