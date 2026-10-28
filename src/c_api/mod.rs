@@ -388,6 +388,7 @@ pub(crate) mod forever_edit_mode_enums;
 pub(crate) mod forever_finite_constants;
 #[cfg(feature = "client-wowforever")]
 mod gamepad_action_bar_constants;
+mod voice_provider_enum;
 
 pub(crate) mod c_tts_settings;
 mod helpers;

@@ -154,8 +154,9 @@ fn approved_native_defaults_voice_transcription_consumer() {
         local source = debug.getinfo(VoiceTranscriptionFrame_UpdateVisibility, 'S').source:gsub('\\', '/')
         assert(source:find('Shared/VoiceChatTranscriptionFrame.lua', 1, true))
         local frame = CreateFrame('Frame')
-        frame:SetID(1)
+        frame:SetID(4)
         VoiceTranscriptionFrame_UpdateVisibility(frame)
+        assert(Enum.VoiceProviderID.Legacy == 0 and Enum.VoiceProviderID.Discord == 1)
         assert(C_VoiceChat.GetActiveVoiceProviderID() == Enum.VoiceProviderID.Legacy)
     "#).expect("original transcription consumer accepts the approved provider");
 }

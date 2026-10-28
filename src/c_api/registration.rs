@@ -12,6 +12,7 @@ use rilua::LuaResult;
 use rilua::vm::state::LuaState;
 
 pub(crate) fn register_spell_and_widget_tables(state: &mut LuaState) -> LuaResult<()> {
+    super::voice_provider_enum::register(state);
     if matches!(
         crate::client_profile::ACTIVE,
         crate::client_profile::ClientProfile::Ptr
