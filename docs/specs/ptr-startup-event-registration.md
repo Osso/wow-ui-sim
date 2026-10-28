@@ -1,6 +1,10 @@
 # PTR startup event registration
 
-PTR accepts the following event names for frame registration and event validity. This contract does not define event delivery or payloads. An undeclared invented name remains rejected.
+PTR accepts events declared in the pinned PTR `Blizzard_APIDocumentationGenerated` cache for frame registration and event validity, in addition to the shared event catalog. This contract does not define event delivery or payloads. An undeclared invented name remains rejected.
+
+Regenerate the catalog after refreshing the pinned PTR cache with `python3 tools/gen_ptr_documented_events.py`.
+
+Examples include:
 
 The declarations are in the pinned PTR `Blizzard_APIDocumentationGenerated` cache:
 
