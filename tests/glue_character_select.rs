@@ -462,6 +462,17 @@ fn character_create_action_updates_player_name_without_lua_errors() {
 }
 
 #[test]
+fn character_create_records_screen_state() {
+    let env = load_blizzard_screen(ScreenKind::CharacterCreate);
+    env.exec("C_CharacterCreation.SetInCharacterCreate(true)")
+        .unwrap();
+    assert!(env.state().borrow().in_character_create);
+    env.exec("C_CharacterCreation.SetInCharacterCreate(false)")
+        .unwrap();
+    assert!(!env.state().borrow().in_character_create);
+}
+
+#[test]
 fn character_create_screen_can_boot_directly() {
     test_timeout! {
         let env = load_blizzard_screen(ScreenKind::CharacterCreate);
