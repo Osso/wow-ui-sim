@@ -8,6 +8,9 @@ use wow_ui_sim::loader::find_toc_file;
 use wow_ui_sim::screen::ScreenKind;
 use wow_ui_sim::toc::TocFile;
 
+#[path = "common/keybinding_panel_fixtures.rs"]
+mod keybinding_panel_fixtures;
+
 #[test]
 fn approved_native_defaults_quest_story_return_shape() {
     let ui = blizzard_ui_dir();
@@ -28,15 +31,29 @@ fn approved_native_defaults_quest_story_return_shape() {
         &[],
     );
     assert!(loaded.iter().any(|n| n == "Blizzard_UIPanels_Game"));
-    // The isolated closure has no initialized quest-button pools. Its original
-    // update reaches a local display helper that requires an acquired button
-    // before it reaches the story lookup; keep this as a return-shape test.
+    // A prior substitute-pool fixture failed before the story lookup. This
+    // independent check covers only the declared return shape.
     env.exec(r#"
         local source = debug.getinfo(QuestLogQuests_Update, 'S').source:gsub('\\', '/')
         assert(source:find('Mainline/QuestMapFrame.lua', 1, true))
         assert(select('#', C_QuestLog.GetZoneStoryInfo(84)) == 0)
         assert(select('#', C_QuestLog.GetZoneStoryInfo(999999)) == 0)
     "#).expect("unknown zone story returns no values");
+}
+
+#[test]
+fn approved_native_defaults_real_quest_story_consumer() {
+    let env = keybinding_panel_fixtures::setup_env();
+    env.send_key_press("M", None).expect("open world map");
+    env.exec(r#"
+        local source = debug.getinfo(QuestLogQuests_Update, 'S').source:gsub('\\', '/')
+        assert(source:find('Mainline/QuestMapFrame.lua', 1, true))
+        assert(type(QuestMapFrame:GetParent():GetMapID()) == 'number')
+        local header = QuestScrollFrame.Contents.StoryHeader
+        header:Show()
+        QuestLogQuests_Update()
+        assert(not header:IsShown(), 'no story result must hide the header')
+    "#).expect("real quest list consumes the approved no-story default");
 }
 
 #[test]
