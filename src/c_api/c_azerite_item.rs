@@ -48,7 +48,7 @@ pub(crate) fn register_c_azerite_item_surface(state: &mut LuaState) -> LuaResult
         is_azerite_item_at_max_level,
     )?;
     table_set_rust_fn_static(state, ns, "IsAzeriteItemEnabled", is_azerite_item_enabled)?;
-    if matches!(ACTIVE, ClientProfile::Retail) {
+    if matches!(ACTIVE, ClientProfile::Retail | ClientProfile::Ptr) {
         table_set_rust_fn_static(state, ns, "IsAzeriteItem", is_azerite_item)?;
     }
     Ok(())
