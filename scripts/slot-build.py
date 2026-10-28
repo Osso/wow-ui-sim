@@ -931,6 +931,8 @@ def main(argv=None):
     cargo = args.cargo[1:] if args.cargo[:1] == ["--"] else args.cargo
     if not cargo:
         parser.error("provide a Cargo command after --")
+    if Path(cargo[0]).name != "cargo":
+        parser.error(f"the command after -- must start with cargo, got {cargo[0]!r}")
     if not args.worktree.is_absolute() or not args.worktree.is_dir():
         parser.error("--worktree must be an absolute directory path")
     worktree = args.worktree.resolve()

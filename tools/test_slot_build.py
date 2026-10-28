@@ -83,6 +83,15 @@ class SlotBuildTests(unittest.TestCase):
         self.assertEqual(exit_info.exception.code, 2)
         self.assertRegex(stderr.getvalue(), r"--slot: invalid choice: '?2'?")
 
+    def test_command_not_starting_with_cargo_is_rejected_before_launch(self):
+        with contextlib.redirect_stderr(io.StringIO()) as stderr, \
+                self.assertRaises(SystemExit) as exit_info:
+            self.module.main(["--slot", "0", "--worktree", str(self.slot),
+                              "--unit", "bare-test", "--owner", "lane-owner",
+                              "--capacity-id", "cap", "--", "test", "--test", "x"])
+        self.assertEqual(exit_info.exception.code, 2)
+        self.assertIn("must start with cargo", stderr.getvalue())
+
     def test_launch_disables_configured_rustc_wrapper(self):
         argv = self.module.build_argv(0, self.slot, "wrapper-test", ["cargo", "build"])
         self.assertIn("--setenv=RUSTC_WRAPPER=", argv[:argv.index("--")])
