@@ -33,7 +33,7 @@ fn ptr_original_consumers_register_documented_events() {
         ("ClassTrainerFrame", "UNIT_PET_TRAINING_POINTS"),
         ("ChannelFrame", "VOICE_CHAT_VOICE_PROVIDER_CHANGED"),
     ] {
-        env.exec(&format!("assert({frame}:IsEventRegistered('{event}'), '{frame}: {event}'); assert({frame}:RegisterEvent('{event}')); assert({frame}:IsEventRegistered('{event}'))"))
+        env.exec(&format!("assert({frame}:IsEventRegistered('{event}'), '{frame}: {event}'); {frame}:RegisterEvent('{event}'); assert({frame}:IsEventRegistered('{event}'))"))
             .unwrap_or_else(|error| panic!("{frame}: {event}: {error}"));
     }
     let error = env
