@@ -71,14 +71,16 @@ fn allows_screen_value<P: Selection>(value: Option<&str>, screen: P::Screen) -> 
     }
 }
 
+fn matches_text_locale(locales: &str) -> bool {
+    locales
+        .split(|character: char| character == ',' || character.is_whitespace())
+        .any(|locale| locale == "enUS")
+}
+
 /// Apply the simulator's text-locale gate, then remove trailing file annotations.
 pub fn selected_file_path(line: &str) -> Option<&str> {
     if line.contains("[AllowLoadTextLocale")
-        && !annotation_value(line, "[AllowLoadTextLocale").is_some_and(|locales| {
-            locales
-                .split(|character: char| character == ',' || character.is_whitespace())
-                .any(|locale| locale == "enUS")
-        })
+        && !annotation_value(line, "[AllowLoadTextLocale").is_some_and(matches_text_locale)
     {
         return None;
     }
@@ -498,6 +500,13 @@ impl<P: Selection> TocFile<P> {
                 .metadata
                 .get("AllowLoadGameType")
                 .is_some_and(|value| value.split(',').any(|token| token.trim() == "wrath"))
+    }
+
+    /// Whether this addon permits the simulator's text locale.
+    pub fn allows_text_locale(&self) -> bool {
+        self.metadata
+            .get("AllowLoadTextLocale")
+            .is_none_or(|locales| matches_text_locale(locales))
     }
 
     /// Whether this addon should load for the requested screen kind.

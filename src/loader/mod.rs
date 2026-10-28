@@ -782,7 +782,11 @@ fn discover_blizzard_addon_toc_pools_for_screen(
         let Ok(toc) = TocFile::from_file(&toc_path) else {
             continue;
         };
-        if !toc.allows_screen(screen) || toc.is_ptr_only() || toc.is_game_type_restricted() {
+        if !toc.allows_screen(screen)
+            || !toc.allows_text_locale()
+            || toc.is_ptr_only()
+            || toc.is_game_type_restricted()
+        {
             continue;
         }
 
