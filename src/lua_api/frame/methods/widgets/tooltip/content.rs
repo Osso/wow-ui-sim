@@ -225,6 +225,18 @@ pub(super) fn fire_tooltip_script_with_args(
     let _ = call_void_function_state(state, handler, &call_args);
 }
 
+pub(super) fn set_wrath_spell(state: &mut LuaState) -> LuaResult<u32> {
+    let tooltip_id = frame_id_from_stack(state, 1)?;
+    let record = crate::lua_api::globals::real::wrath_spell_slots::find_numeric_spell_slot(
+        state, 2, "SetSpell",
+    )?;
+    if let Some(record) = record {
+        set_tooltip_single_line(state, tooltip_id, record.name, Some(record.spell_id))?;
+    }
+    state.push(Val::Nil);
+    Ok(1)
+}
+
 pub(super) fn set_spell_by_id(state: &mut LuaState) -> LuaResult<u32> {
     let tooltip_id = frame_id_from_stack(state, 1)?;
     let spell_id = stack_val(state, 2);
