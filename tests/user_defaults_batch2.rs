@@ -31,6 +31,27 @@ fn user_defaults_batch2_quest_difficulty_boundaries() {
 }
 
 #[test]
+fn user_defaults_batch2_quest_watch_membership() {
+    let env = keybinding_panel_fixtures::setup_env();
+    let quest_id = env.state().borrow().quest_log_entries.entries[0].quest_id;
+    env.exec(&format!(
+        r#"
+        local id = {quest_id}
+        assert(C_QuestLog.GetQuestWatchType(id) == Enum.QuestWatchType.Manual)
+        local count = C_QuestLog.GetNumQuestWatches()
+        assert(C_QuestLog.RemoveQuestWatch(id))
+        assert(C_QuestLog.GetQuestWatchType(id) == nil)
+        assert(C_QuestLog.GetNumQuestWatches() == count - 1)
+        assert(C_QuestLog.AddQuestWatch(id))
+        assert(C_QuestLog.GetQuestWatchType(id) == Enum.QuestWatchType.Manual)
+        assert(C_QuestLog.GetNumQuestWatches() == count)
+        assert(not C_QuestLog.IsAccountQuest(id))
+    "#
+    ))
+    .expect("quest watch membership must follow changes");
+}
+
+#[test]
 fn user_defaults_batch2_world_map_quest_consumer() {
     let env = keybinding_panel_fixtures::setup_env();
     env.send_key_press("M", None).expect("open world map");
