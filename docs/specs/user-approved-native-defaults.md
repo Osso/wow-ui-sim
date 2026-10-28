@@ -9,4 +9,5 @@ These values are simulator assumptions, not evidence of native behavior. Supplie
 | `C_VoiceChat.GetActiveVoiceProviderID` | `Enum.VoiceProviderID.Legacy` | PTR | VoiceTranscriptionFrame_UpdateVisibility | 2026-10-28 |
 | `C_Bank.ShouldUsePlayerBagsInBank` | `false` | PTR | BankPanelMixin.OnEvent | 2026-10-28 |
 | `C_ExternalEventURL` | `HasURL`, `IsNew`: false; `LaunchURL`: no-op; `CanShow`: false (PTR only) | Retail, PTR | GameMenuFrameMixin.ExternalEventClickCallback; PTR minimap | 2026-10-28 |
+| `C_QuestLog.GetZoneStoryInfo` | No values for unknown map | Retail, PTR | QuestLogQuests_Update | 2026-10-28 |
 | `C_StableInfo.GetAvailablePetSpecInfos` | Empty table when no catalog is supplied | Retail, PTR | StableUI specialization Refresh (Retail), OnLoad and Refresh (PTR) | 2026-10-28 |
