@@ -5,8 +5,8 @@ Wrath's `GameTooltip:SetSpell` reads supplied spellbook slots. The original cons
 ## What it must do
 
 - [ ] Accept a numeric slot and string book type, using the same slot resolution as `GetSpellName` and `GetSpellTexture`.
-- [ ] A resolved slot replaces the tooltip with its supplied name and shows it. The modeled path returns nil.
-- [ ] An unresolved slot returns nil without changing the tooltip.
+- [x] A resolved slot replaces the tooltip with its supplied name and shows it. The modeled path returns nil.
+- [x] An unresolved slot returns nil without changing the tooltip.
 
 The historical 3.3.5a decompilation is a **comparison**, not proof of Wrath Classic parity: `Tooltip.cpp:3148–3301` describes slot validation, unresolved preservation, and conditional cooldown/effect-chance returns. Cost and rank right text are UNKNOWN. Range, cast time, requirements, reagents, cooldown, effect chance and description are not modeled here; their contents and availability are UNKNOWN for supplied slot records.
 
