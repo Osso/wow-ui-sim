@@ -22,9 +22,16 @@ pub struct AuraSpellClassifications {
 
 pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
     let namespace = super::ensure_namespace(state, "C_UnitAuras")?;
-    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Mists
-        || cfg!(feature = "aura-spell-classifications")
-    {
+    use crate::client_profile::ClientProfile;
+    if matches!(
+        crate::client_profile::ACTIVE,
+        ClientProfile::Retail
+            | ClientProfile::Ptr
+            | ClientProfile::Mists
+            | ClientProfile::Era
+            | ClientProfile::Anniversary
+            | ClientProfile::WowForever
+    ) {
         table_set_rust_fn_static(
             state,
             namespace,
