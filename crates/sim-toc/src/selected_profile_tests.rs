@@ -1,6 +1,30 @@
 use super::*;
 
 #[test]
+fn inline_allowload_selects_files_for_screen() {
+    let toc = TocFile::parse(
+        Path::new("/addons/Phases"),
+        "Common.lua\nGlue.lua [AllowLoad glue][ExcludeLoadGameType imaginary]\nGame.lua [AllowLoad GAME]\n",
+    );
+    let selected = |screen| {
+        toc.files
+            .iter()
+            .enumerate()
+            .filter(|(index, _)| toc.file_allows_screen(*index, screen))
+            .map(|(_, path)| path.clone())
+            .collect::<Vec<_>>()
+    };
+    assert_eq!(
+        selected(crate::screen::ScreenKind::CharacterSelect),
+        vec![PathBuf::from("Common.lua"), PathBuf::from("Glue.lua")]
+    );
+    assert_eq!(
+        selected(crate::screen::ScreenKind::Game),
+        vec![PathBuf::from("Common.lua"), PathBuf::from("Game.lua")]
+    );
+}
+
+#[test]
 fn test_parse_utf8_bom_preserves_first_metadata_and_file_order() {
     let contents =
         "\u{feff}## Interface: 120100\n## Title: BOMProbe\nCore.lua [Bootstrap]\nUI.xml\n";
