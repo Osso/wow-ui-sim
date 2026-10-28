@@ -10,7 +10,6 @@ use wow_ui_sim::toc::TocFile;
 fn blizzard_ui_dir() -> PathBuf {
     wow_ui_sim::paths::default_blizzard_ui_addons_path()
         .expect("Blizzard UI cache should be populated for ItemButton load tests")
-
 }
 
 fn item_button_dir() -> PathBuf {
@@ -551,4 +550,32 @@ fn blizzard_item_button_intrinsic_creates_via_create_frame(env: &WowLuaEnv) {
          every ItemButton-intrinsic instance starts with the match-highlight overlay opted in"
     );
 }
+}
+
+#[test]
+fn modified_item_click_routes_by_action_and_modifier() {
+    let env = load_full_game_ui();
+    env.state()
+        .borrow_mut()
+        .set_mouse_button_down("LeftButton", true);
+    let result: String = env
+        .eval(
+            r#"
+        local routes = {}
+        ChatFrameUtil.InsertLink = function() table.insert(routes, "chat"); return true end
+        DressUpItemLocation = function() table.insert(routes, "dress"); return true end
+        DressUpLink = function() table.insert(routes, "dress-link"); return true end
+        A_Admin.SetShiftKeyDown(true)
+        HandleModifiedItemClick("|Hitem:123|h[item]|h")
+        A_Admin.SetShiftKeyDown(false)
+        A_Admin.SetControlKeyDown(true)
+        HandleModifiedItemClick("|Hitem:123|h[item]|h")
+        return table.concat(routes, ",")
+    "#,
+        )
+        .unwrap();
+    assert_eq!(
+        result, "chat,dress",
+        "each modifier must select its bound action"
+    );
 }
