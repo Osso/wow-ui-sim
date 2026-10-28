@@ -29,7 +29,8 @@ unknown.
   (PTR12.1.7.70493, Forever1.60.1.70532). PaperDoll hides AmmoSlot only when
   false; true continues initialization but does not Show a previously hidden
   slot. The Forever stock scenario starts with `Some(false)` as a best guess;
-  PTR remains unset. This is not native proof. No equipment/class/weapon mapping,
+  PTR starts with `Some(false)` as a user-decided scenario default. Neither is
+  native proof. No equipment/class/weapon mapping,
   `UnitUsesAmmo` equivalence or automatic event is inferred.
 - Group-buff rows contain non-null numeric `spellID` and `visualValue` fields;
   `visualValue` uses the documented `VisualAlertType` enum. Linked-rank expansion
