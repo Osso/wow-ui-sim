@@ -835,12 +835,40 @@ fn item_overlay_corruption_admin_input() {
         local button = CreateFrame('Button', nil, UIParent)
         button.IconOverlay = button:CreateTexture(nil, 'OVERLAY')
         button.noProfessionQualityOverlay = true
-        A_Admin.SetItemCorrupted(900021, true)
-        A_Admin.SetItemCorrupted(900022, false)
+        A_Admin.SetItemOverlayFlag(900021, "corrupted", true)
+        A_Admin.SetItemOverlayFlag(900022, "corrupted", false)
         SetItemButtonOverlay(button, 900021, Enum.ItemQuality.Common, false)
         assert(button.IconOverlay:GetAtlas() == 'Nzoth-inventory-icon')
         assert(button.IconOverlay:IsShown())
         SetItemButtonOverlay(button, 900022, Enum.ItemQuality.Common, false)
         assert(not button.IconOverlay:IsShown())
     "#).expect("admin corruption input drives original overlay");
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
+#[test]
+fn item_overlay_supplied_flags_select_distinct_overlays() {
+    let env = setup_env();
+    env.exec(r#"
+        local button = CreateFrame('Button', nil, UIParent)
+        button.IconOverlay = button:CreateTexture(nil, 'OVERLAY')
+        button.IconOverlay2 = button:CreateTexture(nil, 'OVERLAY')
+        button.noProfessionQualityOverlay = true
+        local cases = {
+            {900031, 'cosmetic', 'CosmeticIconFrame'},
+            {900032, 'conduit', 'ConduitIconFrame'},
+            {900033, 'curio', 'delves-curios-icon-border'},
+            {900034, 'relic', 'delves-curios-icon-border'},
+            {900035, 'decor', 'housing-item-wood-frame_64'},
+        }
+        for _, case in ipairs(cases) do
+            A_Admin.SetItemOverlayFlag(case[1], case[2], true)
+            SetItemButtonOverlay(button, case[1], Enum.ItemQuality.Common, false)
+            assert(button.IconOverlay:IsShown())
+            assert(button.IconOverlay:GetAtlas() == case[3], case[2])
+        end
+        A_Admin.SetItemOverlayFlag(900031, 'cosmetic', false)
+        SetItemButtonOverlay(button, 900031, Enum.ItemQuality.Common, false)
+        assert(not button.IconOverlay:IsShown())
+    "#).expect("supplied classifications drive original item overlay");
 }
