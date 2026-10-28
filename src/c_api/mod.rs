@@ -12,6 +12,7 @@ pub(crate) mod classic_startup_data;
 pub(crate) mod currency_list;
 pub mod item_overlay;
 pub(crate) mod ptr_i4_game_rules;
+pub(crate) mod quest_difficulty;
 pub mod quest_objectives;
 pub mod quest_readiness;
 pub(crate) mod quest_reward_currencies;
@@ -78,6 +79,7 @@ pub mod c_calendar;
 pub mod c_catalog_shop;
 pub mod c_catalog_shop_products;
 pub mod c_challenge_mode;
+pub(crate) mod c_character_creation_seen;
 pub mod c_character_services;
 pub mod c_chat_bubbles;
 #[cfg(feature = "retail-12-0-5")]

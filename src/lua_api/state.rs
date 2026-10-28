@@ -154,6 +154,7 @@ macro_rules! build_empty_sim_state {
             physical_screen_width: $runtime.screen_width,
             physical_screen_height: $runtime.screen_height,
             screen_kind: $runtime.screen_kind,
+            in_character_create: false,
             is_logged_in: $runtime.is_logged_in,
             post_event_workarounds_applied: false,
             screen_first_displayed: $runtime.screen_first_displayed,

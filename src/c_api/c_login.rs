@@ -33,8 +33,8 @@ fn c_login_get_state(state: &mut LuaState) -> LuaResult<u32> {
                 Val::Num(f64::from(wow_connection_state)),
             ),
             ("hasRealmList", Val::Bool(has_realm_list)),
+            // User-approved, not native evidence; native login policy is not modeled.
             ("waitingForRealmList", Val::Bool(false)),
-            // User-approved scenario defaults; native login policy is not modeled.
             ("superDistrictChoicePending", Val::Bool(false)),
             ("keepingCharacterListOnRealmJoin", Val::Bool(false)),
             ("waitingForRuleSets", Val::Bool(false)),

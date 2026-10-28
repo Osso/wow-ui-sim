@@ -21,6 +21,15 @@ if rawget(C_VoiceChat, "IsLoggedIn") == nil then
 end
 "#;
 
+// User-approved, not native evidence: preferred datacenter catalogs are empty
+// until account locality preferences are modeled.
+const PTR_DATACENTER_LOCALITIES: &str = r#"
+C_AccountServices = C_AccountServices or {}
+function C_AccountServices.GetPreferredDatacenterLocalities()
+    return {}, {}
+end
+"#;
+
 const CORPSE_LOCATION: &str = r#"
 C_DeathInfo = C_DeathInfo or {}
 -- Missing system: corpse location keyed by UI map, independent of player location.
@@ -64,6 +73,7 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
         ClientProfile::Retail => lua.exec(MODERN_SERVICE_CAPABILITIES)?,
         ClientProfile::Ptr => {
             lua.exec(MODERN_SERVICE_CAPABILITIES)?;
+            lua.exec(PTR_DATACENTER_LOCALITIES)?;
             // User-approved simulator default, not evidence of native behavior.
             lua.exec(ACTIVE_VOICE_PROVIDER)?;
             lua.exec(PREFERRED_LOCALES)?;
