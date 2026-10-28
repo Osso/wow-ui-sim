@@ -3,14 +3,12 @@
 
 #[test]
 fn original_sidepanel_tab_uses_common_sidetab_atlas() {
-    let env = wow_ui_sim::lua_api::WowLuaEnv::new().unwrap();
-    let root = wow_ui_sim::paths::default_blizzard_ui_addons_path().unwrap();
-    let source = root.join("Blizzard_SharedXML/Shared/Tabs/SidePanelTabButton.lua");
-    env.exec(&std::fs::read_to_string(source).unwrap()).unwrap();
+    let env = crate::common::panel_fixtures::setup_env();
     env.exec(
         r#"
-        local width, height = SidePanelTabButtonMixin.CalculateTabSizeBasedOnTabArt()
-        assert(width == 45 and height == 55)
+        local tab = CreateFrame("Frame", nil, UIParent, "LargeSideTabButtonTemplate")
+        assert(tab.Background:GetAtlas() == "common-sidetab")
+        assert(tab.Background:GetWidth() == 45 and tab.Background:GetHeight() == 60)
         local info = assert(C_Texture.GetAtlasInfo("common-sidetab"))
         assert(info.width == 45 and info.height == 60)
         assert(info.filename == "Interface\\common\\commonsidetab.blp")
