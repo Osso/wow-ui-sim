@@ -107,9 +107,44 @@ pub fn is_modifier_key_down(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 pub fn is_modified_click(state: &mut LuaState) -> LuaResult<u32> {
-    let _action = crate::lua_bridge::stack_val(state, 1);
-    let any = borrow_state(state)?.modifier_keys.any_modifier();
-    state.push(Val::Bool(any));
+    use crate::lua_api::methods::{table_get, table_get_static, val_to_string};
+    let action = val_to_string(state, crate::lua_bridge::stack_val(state, 1));
+    let (shift, control, alt) = {
+        let sim = borrow_state(state)?;
+        (
+            sim.modifier_keys.shift,
+            sim.modifier_keys.control,
+            sim.modifier_keys.alt,
+        )
+    };
+    let active = if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Wrath {
+        shift || control || alt
+    } else if let Some(action) = action {
+        let modifiers: Vec<_> = action.split('-').collect();
+        let modifier_down = |part: &str| match part {
+            "SHIFT" => Some(shift),
+            "CTRL" => Some(control),
+            "ALT" => Some(alt),
+            _ => None,
+        };
+        if modifiers.iter().all(|part| modifier_down(part).is_some()) {
+            modifiers
+                .iter()
+                .all(|part| modifier_down(part) == Some(true))
+        } else {
+            let table = table_get_static(state, Val::Table(state.global), "__wow_modified_clicks");
+            let binding = table_get(state, table, &action);
+            val_to_string(state, binding).is_some_and(|binding| {
+                // The current mouse-script button is not tracked; an unset button passes.
+                binding
+                    .split('-')
+                    .any(|part| modifier_down(part) == Some(true))
+            })
+        }
+    } else {
+        shift || control || alt
+    };
+    state.push(Val::Bool(active));
     Ok(1)
 }
 
