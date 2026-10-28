@@ -66,6 +66,7 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
             lua.exec(MODERN_SERVICE_CAPABILITIES)?;
             // User-approved simulator default, not evidence of native behavior.
             lua.exec(ACTIVE_VOICE_PROVIDER)?;
+            lua.exec(PREFERRED_LOCALES)?;
         }
         ClientProfile::Era | ClientProfile::Anniversary => lua.exec(CORPSE_LOCATION)?,
         ClientProfile::WowForever => {
