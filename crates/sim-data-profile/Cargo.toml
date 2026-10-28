@@ -10,6 +10,7 @@ phf = { version = "0.11", features = ["macros"] }
 [features]
 profile-retail = []
 retail-12-1-5 = []
+client-ptr = []
 client-wowforever = []
 client-era = []
 client-mists = []

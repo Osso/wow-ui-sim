@@ -1,0 +1,9 @@
+{
+  "product": "wow_ptr",
+  "version": "12.1.7.70493",
+  "url": "https://wago.tools/db2/GlobalStrings/csv?build=12.1.7.70493",
+  "fetch_time_utc": "2026-10-28T18:22:31.110806+00:00",
+  "csv_sha256": "f375c806d85cabbf9fefb0737082be6f6b62c198c3026056996c9d126b8dde58",
+  "exported_rows": 26753,
+  "scope": "Public wago.tools CSV; build identified by requested URL, not independently authenticated."
+}
