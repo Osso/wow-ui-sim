@@ -11,7 +11,7 @@ fn original_sidepanel_tab_uses_common_sidetab_atlas() {
         assert(tab.Background:GetWidth() == 45 and tab.Background:GetHeight() == 60, "template background geometry")
         local info = assert(C_Texture.GetAtlasInfo("common-sidetab"))
         assert(info.width == 45 and info.height == 60)
-        assert(info.filename == "Interface\\common\\commonsidetab.blp")
+        assert(info.filename == "Interface\\common\\commonsidetab")
         assert(math.abs(info.leftTexCoord - 48/128) < 0.000001)
         assert(math.abs(info.rightTexCoord - 93/128) < 0.000001)
         assert(math.abs(info.topTexCoord - 1/128) < 0.000001)
