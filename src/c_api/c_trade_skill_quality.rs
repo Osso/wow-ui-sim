@@ -47,15 +47,7 @@ pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
         table_set_rust_fn_static(state, ns, "GetRecipeQualityReagentLink", reagent_link)?;
         table_set_rust_fn_static(state, ns, "GetItemCraftedQualityInfo", crafted_item_quality)?;
     }
-    if matches!(
-        ACTIVE,
-        ClientProfile::Retail
-            | ClientProfile::Ptr
-            | ClientProfile::WowForever
-            | ClientProfile::Mists
-    ) {
-        table_set_rust_fn_static(state, ns, "GetItemReagentQualityInfo", reagent_item_quality)?;
-    }
+    table_set_rust_fn_static(state, ns, "GetItemReagentQualityInfo", reagent_item_quality)?;
     Ok(())
 }
 
