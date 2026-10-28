@@ -125,6 +125,7 @@ fn approved_native_defaults_guild_locale_consumer() {
         local dropdown = {SetupMenu=function(self, generator) generator(self, root) end}
         f({LocaleDropdown=dropdown})
         assert(root.count == 0)
+        assert(select('#', C_AccountServices.GetPreferredLocales()) == 2)
         local ids, names = C_AccountServices.GetPreferredLocales()
         assert(type(ids) == 'table' and #ids == 0 and type(names) == 'table' and #names == 0)
     "#,
