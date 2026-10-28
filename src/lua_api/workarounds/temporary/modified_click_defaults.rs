@@ -4,33 +4,34 @@
 //! needs enough state for startup UI paths until input settings are modeled.
 
 const MODIFIED_CLICK_DEFAULTS_LUA: &str = r#"
-local __wow_modified_clicks = __wow_modified_clicks
-if type(__wow_modified_clicks) ~= "table" then
-    -- Same retail defaults the runtime surface bootstrap seeds; keep the two
-    -- installers agreeing on the shared state table.
-    __wow_modified_clicks = {
-        AUTOLOOTTOGGLE = "SHIFT",
-        CHATLINK = "SHIFT",
-        COMPAREITEMS = "SHIFT",
-        DRESSUP = "CTRL",
-        FOCUSCAST = "NONE",
-        SELFCAST = "ALT",
-    }
-    rawset(_G, "__wow_modified_clicks", __wow_modified_clicks)
+if type(rawget(_G, "__wow_modified_clicks")) ~= "table" then
+    rawset(_G, "__wow_modified_clicks", {})
 end
 if GetModifiedClick == nil then
     function GetModifiedClick(action)
-        return __wow_modified_clicks[action] or "NONE"
+        return rawget(_G, "__wow_modified_clicks")[action] or "NONE"
     end
 end
 if SetModifiedClick == nil then
     function SetModifiedClick(action, modifier)
-        __wow_modified_clicks[action] = modifier or "NONE"
+        rawget(_G, "__wow_modified_clicks")[action] = modifier or "NONE"
     end
 end
 "#;
 
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
+    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Wrath {
+        lua.exec(
+            r#"
+            if type(rawget(_G, "__wow_modified_clicks")) ~= "table" then
+                rawset(_G, "__wow_modified_clicks", {
+                    AUTOLOOTTOGGLE = "SHIFT", CHATLINK = "SHIFT", COMPAREITEMS = "SHIFT",
+                    DRESSUP = "CTRL", FOCUSCAST = "NONE", SELFCAST = "ALT",
+                })
+            end
+        "#,
+        )?;
+    }
     lua.exec(MODIFIED_CLICK_DEFAULTS_LUA)?;
     Ok(())
 }
@@ -42,7 +43,7 @@ mod tests {
     #[test]
     fn installs_modified_click_state_defaults() {
         let env = WowLuaEnv::new().expect("lua env should initialize");
-        env.exec("GetModifiedClick = nil; SetModifiedClick = nil")
+        env.exec("GetModifiedClick = nil; SetModifiedClick = nil; __wow_modified_clicks = { SELFCAST = 'ALT' }")
             .expect("fixture should clear modified-click globals");
 
         {
