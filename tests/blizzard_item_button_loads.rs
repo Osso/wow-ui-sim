@@ -556,7 +556,7 @@ fn blizzard_item_button_intrinsic_creates_via_create_frame(env: &WowLuaEnv) {
 fn modified_click_xml_default_and_set_round_trip() {
     let env = load_full_game_ui();
     let default: String = env.eval("return GetModifiedClick('CHATLINK')").unwrap();
-    assert_eq!(default, "SHIFT");
+    assert_eq!(default, "SHIFT-BUTTON1");
     env.exec("SetModifiedClick('CHATLINK', 'CTRL')").unwrap();
     let updated: String = env.eval("return GetModifiedClick('CHATLINK')").unwrap();
     assert_eq!(updated, "CTRL");
