@@ -30,6 +30,7 @@ pub(crate) use helpers::item_class_name;
 
 pub(crate) fn register_item_and_spell_surfaces(state: &mut LuaState) -> LuaResult<()> {
     c_item::register_c_item(state)?;
+    super::item_overlay::register(state)?;
     #[cfg(feature = "retail-12-0-0")]
     {
         super::item_stats::register(state)?;

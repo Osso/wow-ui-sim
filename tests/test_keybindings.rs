@@ -620,7 +620,7 @@ fn character_panel_inventory_tooltip_has_lines_and_closes_without_errors() {
 #[test]
 fn item_button_corruption_uses_supplied_identity() {
     let env = setup_env();
-    env.state().borrow_mut().corrupted_items.insert(900001);
+    env.exec("A_Admin.SetItemOverlayFlag(900001, 'corrupted', true)").unwrap();
     env.exec(
         r#"
         local button = CreateFrame('Button', nil, UIParent)
@@ -810,4 +810,62 @@ fn item_button_queries_authenticate_secret_arguments_by_caller_taint() {
         "#,
     )
     .expect("item button queries authenticate secret arguments");
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
+#[test]
+fn item_overlay_uncorrupted_items_reach_ordinary_path() {
+    let env = setup_env();
+    env.exec(r#"
+        local button = CreateFrame('Button', nil, UIParent)
+        button.IconOverlay = button:CreateTexture(nil, 'OVERLAY')
+        for _, id in ipairs({900011, 900012}) do
+            SetItemButtonOverlay(button, id, Enum.ItemQuality.Common, false)
+            assert(not button.IconOverlay:IsShown())
+        end
+    "#).expect("ordinary items traverse original item overlay");
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
+#[test]
+fn item_overlay_corruption_admin_input() {
+    let env = setup_env();
+    env.exec(r#"
+        local button = CreateFrame('Button', nil, UIParent)
+        button.IconOverlay = button:CreateTexture(nil, 'OVERLAY')
+        A_Admin.SetItemOverlayFlag(900021, "corrupted", true)
+        A_Admin.SetItemOverlayFlag(900022, "corrupted", false)
+        SetItemButtonOverlay(button, 900021, Enum.ItemQuality.Common, false)
+        assert(button.IconOverlay:GetAtlas() == 'Nzoth-inventory-icon')
+        assert(button.IconOverlay:IsShown())
+        SetItemButtonOverlay(button, 900022, Enum.ItemQuality.Common, false)
+        assert(not button.IconOverlay:IsShown())
+    "#).expect("admin corruption input drives original overlay");
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
+#[test]
+fn item_overlay_supplied_flags_select_distinct_overlays() {
+    let env = setup_env();
+    env.exec(r#"
+        local button = CreateFrame('Button', nil, UIParent)
+        button.IconOverlay = button:CreateTexture(nil, 'OVERLAY')
+        button.IconOverlay2 = button:CreateTexture(nil, 'OVERLAY')
+        local cases = {
+            {900031, 'cosmetic', 'CosmeticIconFrame'},
+            {900032, 'conduit', 'ConduitIconFrame'},
+            {900033, 'curio', 'delves-curios-icon-border'},
+            {900034, 'relic', 'delves-curios-icon-border'},
+            {900035, 'decor', 'housing-item-wood-frame_64'},
+        }
+        for _, case in ipairs(cases) do
+            A_Admin.SetItemOverlayFlag(case[1], case[2], true)
+            SetItemButtonOverlay(button, case[1], Enum.ItemQuality.Common, false)
+            assert(button.IconOverlay:IsShown())
+            assert(button.IconOverlay:GetAtlas() == case[3], case[2])
+        end
+        A_Admin.SetItemOverlayFlag(900031, 'cosmetic', false)
+        SetItemButtonOverlay(button, 900031, Enum.ItemQuality.Common, false)
+        assert(not button.IconOverlay:IsShown())
+    "#).expect("supplied classifications drive original item overlay");
 }
