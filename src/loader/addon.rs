@@ -506,7 +506,6 @@ fn load_addon_files(
 
     for (index, (file_rel, file)) in toc.files.iter().zip(toc.file_paths()).enumerate() {
         if !loads_file_in_bootstrap_phase(pass, toc.file_is_bootstrap(index), bootstrap_loaded)
-            || !toc.file_allows_screen(index, env.state().borrow().screen_kind)
             || should_skip_addon_file(toc, file_rel)
         {
             continue;

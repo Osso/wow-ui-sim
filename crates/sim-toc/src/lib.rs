@@ -43,8 +43,6 @@ pub struct TocFile<P: Selection> {
     /// Per-file load-pass filter from `[AllowLoadEnvironment ...]`.
     /// `None` means the file can load in any environment pass.
     pub file_env_allows: Vec<Option<bool>>,
-    /// Per-file screen phase from `[AllowLoad Game]` or `[AllowLoad Glue]`.
-    pub file_screen_allows: Vec<Option<String>>,
 }
 
 impl<P: Selection> std::fmt::Debug for TocFile<P> {
@@ -57,17 +55,7 @@ impl<P: Selection> std::fmt::Debug for TocFile<P> {
             .field("file_is_bootstrap", &self.file_is_bootstrap)
             .field("file_env_overrides", &self.file_env_overrides)
             .field("file_env_allows", &self.file_env_allows)
-            .field("file_screen_allows", &self.file_screen_allows)
             .finish()
-    }
-}
-
-fn allows_screen_value<P: Selection>(value: Option<&str>, screen: P::Screen) -> bool {
-    match value {
-        Some(v) if v.eq_ignore_ascii_case("both") => true,
-        Some(v) if v.eq_ignore_ascii_case("game") => P::is_game(screen),
-        Some(v) if v.eq_ignore_ascii_case("glue") => P::is_glue(screen),
-        _ => P::is_game(screen),
     }
 }
 
@@ -92,7 +80,7 @@ fn strip_annotations(line: &str) -> &str {
         let Some((prefix, _annotation)) = path.rsplit_once('[') else {
             break;
         };
-        if !prefix.ends_with(char::is_whitespace) && !prefix.ends_with(']') {
+        if !prefix.ends_with(char::is_whitespace) {
             break;
         }
         path = prefix.trim_end();
@@ -243,7 +231,6 @@ struct ParsedFileEntries {
     file_is_bootstrap: Vec<bool>,
     file_env_overrides: Vec<Option<bool>>,
     file_env_allows: Vec<Option<bool>>,
-    file_screen_allows: Vec<Option<String>>,
 }
 
 impl ParsedFileEntries {
@@ -275,9 +262,6 @@ impl ParsedFileEntries {
             .push(parse_load_into_environment(&line));
         self.file_env_allows
             .push(parse_allow_load_environment(&line));
-        let lower = line.to_ascii_lowercase();
-        self.file_screen_allows
-            .push(annotation_value(&lower, "[allowload ").map(|value| value.trim().to_owned()));
     }
 }
 
@@ -319,7 +303,6 @@ impl<P: Selection> TocFile<P> {
             file_is_bootstrap: file_entries.file_is_bootstrap,
             file_env_overrides: file_entries.file_env_overrides,
             file_env_allows: file_entries.file_env_allows,
-            file_screen_allows: file_entries.file_screen_allows,
         }
     }
 
@@ -417,18 +400,6 @@ impl<P: Selection> TocFile<P> {
             .unwrap_or(true)
     }
 
-    /// Whether a TOC file is eligible for this screen.
-    pub fn file_allows_screen(&self, index: usize, screen: P::Screen) -> bool {
-        match self
-            .file_screen_allows
-            .get(index)
-            .and_then(Option::as_deref)
-        {
-            Some(value) => allows_screen_value::<P>(Some(value), screen),
-            None => true,
-        }
-    }
-
     /// Default enabled state — `## DefaultState: disabled` ships the addon
     /// disabled out of the box; any other value (or absence) ships it enabled.
     pub fn default_enabled(&self) -> bool {
@@ -502,7 +473,13 @@ impl<P: Selection> TocFile<P> {
 
     /// Whether this addon should load for the requested screen kind.
     pub fn allows_screen(&self, screen: P::Screen) -> bool {
-        allows_screen_value::<P>(self.metadata.get("AllowLoad").map(|v| v.trim()), screen)
+        match self.metadata.get("AllowLoad").map(|v| v.trim()) {
+            Some(v) if v.eq_ignore_ascii_case("both") => true,
+            Some(v) if v.eq_ignore_ascii_case("game") => P::is_game(screen),
+            Some(v) if v.eq_ignore_ascii_case("glue") => P::is_glue(screen),
+            Some(_) => P::is_game(screen),
+            None => P::is_game(screen),
+        }
     }
 
     /// Get saved variables names (account-wide + machine-specific).
