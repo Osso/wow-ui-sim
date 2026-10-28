@@ -32,6 +32,38 @@ fn load_bank() -> WowLuaEnv {
 }
 
 #[test]
+fn approved_native_defaults_quick_keybind_consumer() {
+    let ui = blizzard_ui_dir();
+    let toc =
+        TocFile::from_file(&find_toc_file(&ui.join("Blizzard_QuickKeybind")).unwrap()).unwrap();
+    assert!(toc.allows_screen(ScreenKind::Game));
+    assert!(
+        toc.files
+            .iter()
+            .any(|path| path.to_string_lossy().contains("QuickKeybind.xml"))
+    );
+    let env = new_blizzard_addon_env(&ui);
+    wow_ui_sim::xml::register_intrinsic_templates();
+    let loaded = load_blizzard_addon_closure_into_env(
+        &env,
+        &ui,
+        &["Blizzard_FrameXML", "Blizzard_QuickKeybind"],
+        &[],
+    );
+    assert!(loaded.iter().any(|name| name == "Blizzard_QuickKeybind"));
+    env.exec(r#"
+        local source = debug.getinfo(QuickKeybindFrameMixin.OnLoad, 'S').source:gsub('\\', '/')
+        assert(source:find('QuickKeybind.lua', 1, true))
+        local function button() return {SetText=function() end, SetScript=function() end} end
+        local checkbox = {hidden=false, Hide=function(self) self.hidden=true end}
+        local frame = setmetatable({CancelButton=button(), OkayButton=button(), DefaultsButton=button(), UseCharacterBindingsButton=checkbox}, {__index=QuickKeybindFrameMixin})
+        QuickKeybindFrameMixin.OnLoad(frame)
+        assert(checkbox.hidden)
+        assert(C_GameRules.IsAccountKeyBindingsEnabled() == false)
+    "#).expect("original keybind OnLoad consumes the approved default");
+}
+
+#[test]
 fn approved_native_defaults_bank_selected_tab_consumer() {
     let env = load_bank();
     env.exec(r#"
