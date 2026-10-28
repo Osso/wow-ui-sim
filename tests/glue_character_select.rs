@@ -13,6 +13,11 @@ fn ptr_character_select_registers_undelete_event_on_load() {
         let env = load_blizzard_screen(ScreenKind::CharacterSelect);
         let registered: bool = env.eval("return CharacterSelect:IsEventRegistered('CHARACTER_UNDELETE_STARTED')").unwrap();
         assert!(registered);
+        let errors = env.state().borrow().lua_errors.clone();
+        assert!(
+            !errors.iter().any(|error| error.contains("[OnLoad] CharacterSelect:") && error.contains("RegisterEvent")),
+            "CharacterSelect event registration failed: {errors:#?}"
+        );
     }
 }
 
