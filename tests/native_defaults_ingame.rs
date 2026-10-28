@@ -64,6 +64,40 @@ fn approved_native_defaults_quick_keybind_consumer() {
 }
 
 #[test]
+fn approved_native_defaults_minimap_event_consumer() {
+    let ui = blizzard_ui_dir();
+    let toc = TocFile::from_file(&find_toc_file(&ui.join("Blizzard_Minimap")).unwrap()).unwrap();
+    assert!(toc.allows_screen(ScreenKind::Game));
+    assert!(toc.files.iter().any(|p| {
+        p.to_string_lossy()
+            .contains("ExternalEventURLMinimapButton.lua")
+    }));
+    let env = new_blizzard_addon_env(&ui);
+    wow_ui_sim::xml::register_intrinsic_templates();
+    let loaded = load_blizzard_addon_closure_into_env(
+        &env,
+        &ui,
+        &["Blizzard_FrameXML", "Blizzard_Minimap"],
+        &[],
+    );
+    assert!(loaded.iter().any(|n| n == "Blizzard_Minimap"));
+    env.exec(
+        r#"
+        local f = ExternalEventURLMinimapButtonMixin.Refresh
+        local source = debug.getinfo(f, 'S').source:gsub('\\', '/')
+        assert(source:find('Shared/ExternalEventURLMinimapButton.lua', 1, true))
+        local button = {shown=true, effect=true,
+            SetShown=function(self,v) self.shown=v end,
+            IsShown=function(self) return self.shown end,
+            SetEffectShown=function(self,v) self.effect=v end}
+        f(button)
+        assert(not button.shown and not button.effect)
+    "#,
+    )
+    .expect("original minimap refresh hides absent event");
+}
+
+#[test]
 fn approved_native_defaults_guild_locale_consumer() {
     let ui = blizzard_ui_dir();
     let toc =
