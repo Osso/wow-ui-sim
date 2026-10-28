@@ -10,14 +10,16 @@ use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
 
 pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
-    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::WowForever {
+    if matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Ptr
+            | crate::client_profile::ClientProfile::WowForever
+    ) {
         let namespace = ensure_namespace(state, "C_TransmogSets")?;
-        return table_set_rust_fn_static(
-            state,
-            namespace,
-            "HasAnyValidSets",
-            catalog::has_any_valid,
-        );
+        table_set_rust_fn_static(state, namespace, "HasAnyValidSets", catalog::has_any_valid)?;
+    }
+    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::WowForever {
+        return Ok(());
     }
     if !cfg!(feature = "retail-12-0-0") {
         return Ok(());
