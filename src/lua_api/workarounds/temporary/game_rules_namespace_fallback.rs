@@ -32,6 +32,17 @@ end
 
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     lua.exec(GAME_RULES_NAMESPACE_FALLBACK_LUA)?;
+    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Ptr {
+        lua.exec(
+            r#"
+            -- User-approved simulator default, not evidence of native behavior.
+            -- Missing system: account-wide keybinding policy.
+            function C_GameRules.IsAccountKeyBindingsEnabled()
+                return false
+            end
+        "#,
+        )?;
+    }
     Ok(())
 }
 

@@ -175,7 +175,7 @@ fn original_pet_spec_refresh_tracks_records_and_isolation() {
 }
 
 #[test]
-fn original_pet_spec_unset_and_clear_raise_named_error() {
+fn original_pet_spec_unset_and_clear_use_empty_default() {
     let env = load_original_specialization();
     let method = if ACTIVE == ClientProfile::Ptr {
         "OnLoad"
@@ -186,19 +186,25 @@ fn original_pet_spec_unset_and_clear_raise_named_error() {
         .unwrap();
     env.exec(
         r#"
-        local function assertUnknown()
-            local ok, reason = pcall(originalPetSpecEntry, dropdown)
-            assert(not ok and tostring(reason):find(
-                'native-unknown: C_StableInfo.GetAvailablePetSpecInfos',1,true), tostring(reason))
+        local function assertDefault()
+            StableFrame.selectedPet = {specID=917}
+            dropdown:Hide()
+            originalPetSpecEntry(dropdown)
+            assert(#C_StableInfo.GetAvailablePetSpecInfos() == 0)
+            if originalPetSpecEntry == dropdown.Refresh then
+                assert(#dropdown.options == 0)
+            else
+                assert(not dropdown:IsShown())
+            end
         end
-        assertUnknown()
+        assertDefault()
         observeRefresh({suppliedSpec(917,7,'Supplied observation')},917)
         A_Admin.SetAvailablePetSpecInfos(nil)
-        assertUnknown()
+        assertDefault()
         observeRefresh({suppliedSpec(811,2,'Resupplied observation')},811)
     "#,
     )
-    .expect("named unknown through original entry and recovery");
+    .expect("empty default through original entry and recovery");
 }
 
 #[test]

@@ -40,26 +40,30 @@ if rawget(C_DeathInfo, "GetCorpseMapPosition") == nil then
 end
 "#;
 
-const FOREVER_SERVICE_CAPABILITIES: &str = r#"
+const PREFERRED_LOCALES: &str = r#"
 -- Missing system: preferred account locale ID/name catalog.
 if rawget(C_AccountServices, "GetPreferredLocales") == nil then
     function C_AccountServices.GetPreferredLocales()
         return {}, {}
     end
 end
+"#;
 
--- Missing system: Discord-specific voice capability/settings, not service enablement.
-if rawget(C_Discord, "IsVoiceEnabled") == nil then
-    function C_Discord.IsVoiceEnabled()
-        return false
-    end
-end
-
+const ACTIVE_VOICE_PROVIDER: &str = r#"
 -- Missing system: authoritative active voice-provider selection.
 -- Legacy is a presentation default from the selected profile enum, not login state.
 if rawget(C_VoiceChat, "GetActiveVoiceProviderID") == nil then
     function C_VoiceChat.GetActiveVoiceProviderID()
         return Enum.VoiceProviderID.Legacy
+    end
+end
+"#;
+
+const FOREVER_DISCORD_CAPABILITY: &str = r#"
+-- Missing system: Discord-specific voice capability/settings, not service enablement.
+if rawget(C_Discord, "IsVoiceEnabled") == nil then
+    function C_Discord.IsVoiceEnabled()
+        return false
     end
 end
 "#;
@@ -70,11 +74,16 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
         ClientProfile::Ptr => {
             lua.exec(MODERN_SERVICE_CAPABILITIES)?;
             lua.exec(PTR_DATACENTER_LOCALITIES)?;
+            // User-approved simulator default, not evidence of native behavior.
+            lua.exec(ACTIVE_VOICE_PROVIDER)?;
+            lua.exec(PREFERRED_LOCALES)?;
         }
         ClientProfile::Era | ClientProfile::Anniversary => lua.exec(CORPSE_LOCATION)?,
         ClientProfile::WowForever => {
             lua.exec(MODERN_SERVICE_CAPABILITIES)?;
-            lua.exec(FOREVER_SERVICE_CAPABILITIES)?;
+            lua.exec(PREFERRED_LOCALES)?;
+            lua.exec(FOREVER_DISCORD_CAPABILITY)?;
+            lua.exec(ACTIVE_VOICE_PROVIDER)?;
         }
         ClientProfile::Mists | ClientProfile::Wrath => {}
     }

@@ -92,6 +92,17 @@ class SlotBuildTests(unittest.TestCase):
         self.assertEqual(exit_info.exception.code, 2)
         self.assertIn("must start with cargo", stderr.getvalue())
 
+    def test_cargo_without_json_messages_is_rejected_before_launch(self):
+        for cargo in [["cargo", "check"],
+                      ["cargo", "test", "--test", "x", "--", "--message-format=json"]]:
+            with contextlib.redirect_stderr(io.StringIO()) as stderr, \
+                    self.assertRaises(SystemExit) as exit_info:
+                self.module.main(["--slot", "0", "--worktree", str(self.slot),
+                                  "--unit", "plain-test", "--owner", "lane-owner",
+                                  "--capacity-id", "cap", "--", *cargo])
+            self.assertEqual(exit_info.exception.code, 2)
+            self.assertIn("--message-format=json", stderr.getvalue())
+
     def test_launch_disables_configured_rustc_wrapper(self):
         argv = self.module.build_argv(0, self.slot, "wrapper-test", ["cargo", "build"])
         self.assertIn("--setenv=RUSTC_WRAPPER=", argv[:argv.index("--")])

@@ -25,6 +25,7 @@ pub(crate) use temporary::client_info_defaults::CLASSIC_EXPANSION_LEVEL;
 pub(crate) use temporary::environment_cleanup_restore::restore_post_cleanup_globals;
 #[cfg(not(feature = "retail-12-0-0"))]
 pub(crate) use temporary::party_ai_legacy::unit_in_party_is_ai;
+pub(crate) use temporary::pet_spec_catalog_default::default_catalog as default_pet_spec_catalog;
 pub(crate) use temporary::session_exit_defaults::register_all as register_session_exit_defaults;
 pub(crate) use temporary::source_patches::patch_lua_source;
 
@@ -208,6 +209,7 @@ fn apply_runtime_state_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     temporary::event_scheduler_state::apply_bootstrap(lua)?;
     temporary::combat_log_state::apply_bootstrap(lua)?;
     temporary::encounter_state::apply_bootstrap(lua)?;
+    temporary::external_event_url_default::apply_bootstrap(lua)?;
     temporary::housing_catalog_state::apply_bootstrap(lua)?;
     temporary::housing_owned_house_requests::apply_bootstrap(lua)?;
     #[cfg(feature = "client-wowforever")]
@@ -215,9 +217,11 @@ fn apply_runtime_state_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     temporary::house_exterior_debug::apply_bootstrap(lua)?;
     temporary::map_runtime_state::apply_bootstrap(lua)?;
     temporary::perks_activities_state::apply_bootstrap(lua)?;
+    temporary::ptr_bank_default::apply_bootstrap(lua)?;
     crate::c_api::private_aura_callbacks::apply_bootstrap(lua)?;
     temporary::private_aura_state::apply_bootstrap(lua)?;
-    temporary::reputation_state::apply_bootstrap(lua)
+    temporary::reputation_state::apply_bootstrap(lua)?;
+    temporary::zone_story_default::apply_bootstrap(lua)
 }
 
 fn apply_account_and_social_state_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
