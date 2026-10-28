@@ -56,6 +56,13 @@ end
 
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     lua.exec(CHARACTER_SERVICES_DEFAULTS_LUA)?;
+    if matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail | crate::client_profile::ClientProfile::Ptr
+    ) {
+        // User-approved default until queued character upgrades are modeled.
+        lua.exec("function C_CharacterServices.HasQueuedUpgrade() return false end")?;
+    }
     Ok(())
 }
 

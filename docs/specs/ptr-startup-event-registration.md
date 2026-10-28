@@ -20,4 +20,4 @@ The declarations are in the pinned PTR `Blizzard_APIDocumentationGenerated` cach
 | UNIT_PET_TRAINING_POINTS | UnitDocumentation.lua:4471 |
 | VOICE_CHAT_VOICE_PROVIDER_CHANGED | VoiceChatDocumentation.lua:1398 |
 
-`FORCE_DECLINE_CHARACTER` appears in a PTR consumer but has no declaration in that cache and is not added by this contract.
+PTR also accepts `CHARACTER_UNDELETE_STARTED` and `FORCE_DECLINE_CHARACTER`, which are registered by the selected glue consumers cited in the generated catalog. The former is derived from the consumer; the latter is a user-approved scenario default, not native evidence. Neither has a modeled trigger.

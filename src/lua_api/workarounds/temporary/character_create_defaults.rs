@@ -507,6 +507,17 @@ end
 
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     lua.exec(CHARACTER_CREATION_NAMESPACE_DEFAULTS_LUA)?;
+    if matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail | crate::client_profile::ClientProfile::Ptr
+    ) {
+        // User-approved default until character customization preview choices are modeled.
+        lua.exec("function C_CharacterCreation.ClearPreviewChoices(clearSavedChoices) end")?;
+    }
+    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Ptr {
+        // User-approved default until name-reservation realm policy is modeled.
+        lua.exec("function IsNameReservationOnly() return false end")?;
+    }
     Ok(())
 }
 
