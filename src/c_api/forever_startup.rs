@@ -38,7 +38,8 @@ impl StartupInputs {
     /// Best guesses for the stock simulator scenario, not native observations.
     pub(crate) fn stock() -> Self {
         let mut inputs = Self::default();
-        if ACTIVE == ClientProfile::WowForever {
+        if matches!(ACTIVE, ClientProfile::Ptr | ClientProfile::WowForever) {
+            // PTR false is a user-decided scenario default, not native evidence.
             inputs.ammo_required = Some(false);
         }
         inputs
@@ -59,6 +60,24 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
         table_set_rust_fn_static(state, paper_doll, "AmmoNeeded", ammo_needed)?;
         let spell = ensure_namespace(state, "C_Spell")?;
         table_set_rust_fn_static(state, spell, "GetTargetSpellID", target_spell_id)?;
+    }
+    if ACTIVE == ClientProfile::Ptr {
+        // User-decided scenario defaults, not native game-type policy.
+        // PTR BattleNetDocumentation.lua:272 and RecentAlliesDocumentation.lua:69.
+        let battle_net = ensure_namespace(state, "C_BattleNet")?;
+        table_set_rust_fn_static(
+            state,
+            battle_net,
+            "IsFriendTagSupportedForCurrentGameType",
+            ptr_social_supported,
+        )?;
+        let recent_allies = ensure_namespace(state, "C_RecentAllies")?;
+        table_set_rust_fn_static(
+            state,
+            recent_allies,
+            "IsInteractionCategoryFilterSupportedForCurrentGameType",
+            ptr_social_supported,
+        )?;
     }
     if ACTIVE != ClientProfile::WowForever {
         return Ok(());
@@ -354,6 +373,11 @@ pub(crate) fn accepts_event(name: &str) -> bool {
                 | "SOCIAL_UI_SOCIAL_QUEUE_SYSTEM_STATUS_UPDATED"
                 | "SOCIAL_UI_RAID_LIST_SYSTEM_STATUS_UPDATED"
         )
+}
+
+fn ptr_social_supported(state: &mut LuaState) -> LuaResult<u32> {
+    state.push(Val::Bool(true));
+    Ok(1)
 }
 
 fn ammo_needed(state: &mut LuaState) -> LuaResult<u32> {
