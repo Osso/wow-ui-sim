@@ -6,9 +6,59 @@ use wow_ui_sim::paths::default_blizzard_ui_addons_path;
 use wow_ui_sim::screen::ScreenKind;
 use wow_ui_sim::startup::{run_extra_update_ticks, settle_headless_startup};
 
+#[test]
+#[cfg(feature = "client-ptr")]
+fn ptr_character_select_registers_undelete_event_on_load() {
+    test_timeout! {
+        let env = load_blizzard_screen(ScreenKind::CharacterSelect);
+        let registered: bool = env.eval("return CharacterSelect:IsEventRegistered('CHARACTER_UNDELETE_STARTED')").unwrap();
+        assert!(registered);
+    }
+}
+
+#[test]
+#[cfg(feature = "client-ptr")]
+fn ptr_declension_consumer_registers_event() {
+    test_timeout! {
+        let env = load_blizzard_screen(ScreenKind::CharacterSelect);
+        let registered: bool = env.eval("return DeclensionFrame:IsEventRegistered('FORCE_DECLINE_CHARACTER')").unwrap();
+        assert!(registered);
+    }
+}
+
+#[test]
+#[cfg(feature = "client-ptr")]
+fn ptr_login_state_is_available_to_glue() {
+    test_timeout! {
+        let env = load_blizzard_screen(ScreenKind::CharacterSelect);
+        env.exec(r#"
+            local s = C_Login.GetState()
+            assert(type(s) == 'table')
+            assert(type(s.auroraState) == 'number')
+            assert(type(s.connectedToWoW) == 'boolean')
+            assert(type(s.wowConnectionState) == 'number')
+            assert(type(s.hasRealmList) == 'boolean')
+            assert(s.waitingForRealmList == false)
+            assert(s.superDistrictChoicePending == false)
+            assert(s.keepingCharacterListOnRealmJoin == false)
+            assert(s.waitingForRuleSets == false)
+            assert(s.hasSelectedExperiencePreset == true)
+        "#).unwrap();
+    }
+}
+
+#[test]
+#[cfg(feature = "client-ptr")]
+fn ptr_name_reservation_default_is_false() {
+    test_timeout! {
+        let env = load_blizzard_screen(ScreenKind::CharacterSelect);
+        let result: bool = env.eval("return IsNameReservationOnly() == false").unwrap();
+        assert!(result);
+    }
+}
+
 fn blizzard_ui_dir() -> std::path::PathBuf {
     default_blizzard_ui_addons_path().expect("Blizzard UI cache should be synced")
-
 }
 
 fn load_blizzard_screen(screen: ScreenKind) -> common::LockedEnv {
