@@ -4,6 +4,7 @@ These are simulator scenario defaults, approved 2026-10-28, not evidence of nati
 
 | Item | Value | Profiles | Consumer | Missing system |
 |---|---|---|---|---|
+| C_AccountServices.GetPreferredDatacenterLocalities | Two empty tables; user-approved, not native evidence | PTR | Blizzard_Communities/GuildPreferredPlaySettings.lua:154; Blizzard_Settings_PreferredPlaySettings.lua:75 | Account datacenter preferences |
 | FORCE_DECLINE_CHARACTER | Register; do not emit | PTR | Blizzard_DeclensionFrame/Mainline/DeclensionFrameGlue.lua:12 | Declension flow |
 | C_Login.GetState | Preserve modeled connection fields; waitingForRealmList, superDistrictChoicePending, keepingCharacterListOnRealmJoin, waitingForRuleSets false; hasSelectedExperiencePreset true | PTR | Blizzard_GlueParent/Mainline/GlueParent.lua:222–254 | Login policy |
 | IsNameReservationOnly | false | PTR | Blizzard_GlueXML/Mainline/CharacterSelect.lua:1019 | Name-reservation realm policy |
