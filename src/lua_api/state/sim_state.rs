@@ -180,10 +180,8 @@ pub struct SimState {
     pub spell_classifications: crate::c_api::c_spell_classification::SpellClassifications,
     #[cfg(feature = "retail-12-0-0")]
     pub nameplate_configuration: crate::c_api::c_nameplate_manager::NamePlateConfiguration,
-    #[cfg(feature = "retail-12-0-0")]
     pub recipe_quality_inputs: crate::c_api::c_trade_skill_quality::RecipeQualityInputs,
     /// Explicit per-item supplied quality; independent of recipe inputs, initially empty.
-    #[cfg(feature = "retail-12-0-0")]
     pub crafted_item_quality:
         HashMap<u32, crate::c_api::c_trade_skill_quality::CraftingQualityInfo>,
     #[cfg(feature = "retail-12-0-0")]
