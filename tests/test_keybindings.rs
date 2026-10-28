@@ -811,3 +811,36 @@ fn item_button_queries_authenticate_secret_arguments_by_caller_taint() {
     )
     .expect("item button queries authenticate secret arguments");
 }
+
+#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
+#[test]
+fn item_overlay_uncorrupted_items_reach_ordinary_path() {
+    let env = setup_env();
+    env.exec(r#"
+        local button = CreateFrame('Button', nil, UIParent)
+        button.IconOverlay = button:CreateTexture(nil, 'OVERLAY')
+        button.noProfessionQualityOverlay = true
+        for _, id in ipairs({900011, 900012}) do
+            SetItemButtonOverlay(button, id, Enum.ItemQuality.Common, false)
+            assert(not button.IconOverlay:IsShown())
+        end
+    "#).expect("ordinary items traverse original item overlay");
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
+#[test]
+fn item_overlay_corruption_admin_input() {
+    let env = setup_env();
+    env.exec(r#"
+        local button = CreateFrame('Button', nil, UIParent)
+        button.IconOverlay = button:CreateTexture(nil, 'OVERLAY')
+        button.noProfessionQualityOverlay = true
+        A_Admin.SetItemCorrupted(900021, true)
+        A_Admin.SetItemCorrupted(900022, false)
+        SetItemButtonOverlay(button, 900021, Enum.ItemQuality.Common, false)
+        assert(button.IconOverlay:GetAtlas() == 'Nzoth-inventory-icon')
+        assert(button.IconOverlay:IsShown())
+        SetItemButtonOverlay(button, 900022, Enum.ItemQuality.Common, false)
+        assert(not button.IconOverlay:IsShown())
+    "#).expect("admin corruption input drives original overlay");
+}
