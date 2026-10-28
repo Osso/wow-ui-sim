@@ -29,6 +29,8 @@ fn ptr_declension_uses_glue_frame() {
             assert!(loaded.iter().any(|name| name == "Blizzard_DeclensionFrame"));
             let is_glue: bool = env.eval("return DeclensionFrame ~= nil and DeclensionFrame:GetParent() == GlueParent").unwrap();
             assert!(is_glue, "DeclensionFrame must be the original glue frame");
+            let game_function_absent: bool = env.eval("return DeclensionFrame_Update == nil").unwrap();
+            assert!(game_function_absent, "game-phase DeclensionFrame Lua must not load");
         });
     }
 }
