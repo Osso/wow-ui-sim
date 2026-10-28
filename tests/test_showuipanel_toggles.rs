@@ -273,8 +273,17 @@ fn toggle_player_spells_frame_opens_and_closes_talent_panel() {
             env.exec(r#"
                 ToggleTalentFrame()
                 assert(PlayerTalentFrame:IsShown(), "native talent panel should open")
+                print('talent diagnostic after open', GetNumTalentTabs(), PanelTemplates_GetSelectedTab(PlayerTalentFrame), PlayerTalentFrameTab1:IsShown())
                 ToggleTalentFrame()
+                print('talent diagnostic after close', PlayerTalentFrame:IsShown())
                 assert(not PlayerTalentFrame:IsShown(), "native talent panel should close")
+                assert(GetNumTalentTabs() == 3)
+                local name, icon, _, background = GetTalentTabInfo(1)
+                assert(name == 'Retribution' and icon == 135873 and background == 'PaladinCombat')
+                local talent, talentIcon, tier, column, _, maximum = GetTalentInfo(1, 1)
+                assert(talent == 'Improved Blessing of Might' and talentIcon == 135906)
+                assert(tier == 2 and column == 3 and maximum == 2)
+                assert(GetNumTalents(1) == 26 and GetNumTalents(2) == 26)
             "#).expect("native talent lazy loader and toggle");
             return;
         }
@@ -378,6 +387,14 @@ fn collections_mount_list_count_matches_displayed_mount_count() {
                 }
                 state.wrath_legacy.eligible_mounts = state.world.mounts.iter().take(2)
                     .map(|mount| mount.mount_id as i32).collect();
+                // Creature IDs are synthetic scenario fixture data, not native values.
+                let spells = [state.world.mounts[0].spell_id, state.world.mounts[1].spell_id];
+                for (spell, creature_id, name) in [(spells[0], 91001, "Zulu"), (spells[1], 91002, "Alpha")] {
+                    state.wrath_legacy.companion_metadata.insert(spell,
+                        wow_ui_sim::lua_api::globals::real::wrath_legacy_state::CompanionMetadata {
+                            creature_id, name: Some(name.into()), icon_path: None, active: false,
+                        });
+                }
             }
             common::panel_fixtures::clear_recorded_lua_errors(&env);
             env.fire_event("COMPANION_LEARNED").expect("dispatch native companion availability update");
@@ -385,6 +402,10 @@ fn collections_mount_list_count_matches_displayed_mount_count() {
             assert!(errors.is_empty(), "native companion update errors: {errors:?}");
             env.exec(include_str!("fixtures/wrath_f03/mount_list.lua"))
                 .expect("native companion mount buttons match supplied mount count");
+            env.exec(r#"
+                assert(CompanionButton1.creatureID == 91002, "first sorted mount creature identity")
+                assert(CompanionButton2.creatureID == 91001, "second sorted mount creature identity")
+            "#).expect("native mount rows project both supplied creature identities");
             return;
         }
 
@@ -613,10 +634,23 @@ fn toggle_guild_frame_opens_and_closes_communities_panel() {
         let env = setup_env();
         if cfg!(feature = "client-wrath") {
             env.exec(r#"
+                local info = debug.getinfo(ToggleFriendsFrame, "S")
+                assert(info.source:find("FrameXML/FriendsFrame.lua", 1, true), "original ToggleFriendsFrame source: " .. tostring(info.source))
+                assert(info.linedefined == 1426, "original ToggleFriendsFrame line: " .. tostring(info.linedefined))
+                A_Admin.SetGuildInfo('Fixture Guild', 'Member', 2)
                 ToggleFriendsFrame(3)
-                assert(FriendsFrame:IsShown() and GuildFrame:IsShown())
+                assert(FriendsFrame:IsShown(), "guild member opens friends panel")
+                assert(GuildFrame:IsShown(), "guild member opens guild tab")
+                assert(PanelTemplates_GetSelectedTab(FriendsFrame) == 3, "guild tab selected")
                 ToggleFriendsFrame(3)
-                assert(not FriendsFrame:IsShown())
+                assert(not FriendsFrame:IsShown(), "guild tab toggles panel closed")
+                ToggleFriendsFrame(1)
+                assert(FriendsFrame:IsShown(), "friends tab opens panel")
+                assert(PanelTemplates_GetSelectedTab(FriendsFrame) == 1, "friends tab selected")
+                A_Admin.ClearGuild()
+                ToggleFriendsFrame(3)
+                assert(FriendsFrame:IsShown(), "unguilded guild toggle preserves panel visibility")
+                assert(PanelTemplates_GetSelectedTab(FriendsFrame) == 1, "unguilded guild toggle preserves selected tab")
             "#).expect("native guild tab toggles through FriendsFrame");
             return;
         }

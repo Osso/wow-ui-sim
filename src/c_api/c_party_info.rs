@@ -65,12 +65,18 @@ fn mists_supplied_min_level(state: &mut LuaState) -> LuaResult<u32> {
             "unsupported: C_PartyInfo.GetMinLevel explicit category",
         ));
     }
-    let supplied = crate::lua_api::methods::borrow_state(state)?.mists_party_min_level;
-    let minimum = supplied.ok_or_else(|| {
-        rilua::runtime_error(
-            "native-unknown: C_PartyInfo.GetMinLevel has no supplied active-party minimum or documented default",
-        )
-    })?;
+    let minimum = {
+        let sim = crate::lua_api::methods::borrow_state(state)?;
+        match sim.mists_party_min_level {
+            Some(minimum) => minimum,
+            None if !sim.party_group_active => sim.player.level as f64,
+            None => {
+                return Err(rilua::runtime_error(
+                    "native-unknown: C_PartyInfo.GetMinLevel has no supplied active-party minimum or documented default",
+                ));
+            }
+        }
+    };
     state.push(Val::Num(minimum));
     Ok(1)
 }

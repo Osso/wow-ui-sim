@@ -17,13 +17,13 @@ if type(state) ~= "table" then
         showLegacy = true,
         factions = seedRetailReputationFixture and {
             { factionID = 0, name = "The War Within", description = "", reaction = 0, standing = 0, bottom = 0, top = 0, isHeader = true, isCollapsed = false, isChild = false, isAccountWide = false, isLegacy = false },
-            { factionID = 2590, name = "Council of Dornogal", description = "The governing body of Dornogal.", reaction = 6, standing = 8200, bottom = 0, top = 12000, isHeader = false, isCollapsed = false, isChild = true, isAccountWide = true, isLegacy = false },
-            { factionID = 2570, name = "Hallowfall Arathi", description = "The Arathi settlers of Hallowfall.", reaction = 7, standing = 4500, bottom = 0, top = 21000, isHeader = false, isCollapsed = false, isChild = true, isAccountWide = true, isLegacy = false },
-            { factionID = 2600, name = "The Assembly of the Deeps", description = "United denizens of the deep.", reaction = 6, standing = 11000, bottom = 0, top = 12000, isHeader = false, isCollapsed = false, isChild = true, isAccountWide = true, isLegacy = false },
-            { factionID = 2605, name = "The Severed Threads", description = "A coalition of Nerubian outcasts.", reaction = 5, standing = 4800, bottom = 0, top = 6000, isHeader = false, isCollapsed = false, isChild = true, isAccountWide = true, isLegacy = false },
+            { factionID = 2590, name = "Council of Dornogal", description = "The governing body of Dornogal.", reaction = 6, standing = 8200, bottom = 0, top = 12000, isHeader = false, isCollapsed = false, isChild = true, isAccountWide = fixtureAccountWide, isLegacy = false },
+            { factionID = 2570, name = "Hallowfall Arathi", description = "The Arathi settlers of Hallowfall.", reaction = 7, standing = 4500, bottom = 0, top = 21000, isHeader = false, isCollapsed = false, isChild = true, isAccountWide = fixtureAccountWide, isLegacy = false },
+            { factionID = 2600, name = "The Assembly of the Deeps", description = "United denizens of the deep.", reaction = 6, standing = 11000, bottom = 0, top = 12000, isHeader = false, isCollapsed = false, isChild = true, isAccountWide = fixtureAccountWide, isLegacy = false },
+            { factionID = 2605, name = "The Severed Threads", description = "A coalition of Nerubian outcasts.", reaction = 5, standing = 4800, bottom = 0, top = 6000, isHeader = false, isCollapsed = false, isChild = true, isAccountWide = fixtureAccountWide, isLegacy = false },
             { factionID = 0, name = "Dragonflight", description = "", reaction = 0, standing = 0, bottom = 0, top = 0, isHeader = true, isCollapsed = false, isChild = false, isAccountWide = false, isLegacy = false },
-            { factionID = 2507, name = "Dragonscale Expedition", description = "Explorers of the Dragon Isles.", reaction = 8, standing = 999, bottom = 0, top = 1000, isHeader = false, isCollapsed = false, isChild = true, isAccountWide = true, isLegacy = false },
-            { factionID = 2510, name = "Valdrakken Accord", description = "The united dragonflights.", reaction = 8, standing = 999, bottom = 0, top = 1000, isHeader = false, isCollapsed = false, isChild = true, isAccountWide = true, isLegacy = false },
+            { factionID = 2507, name = "Dragonscale Expedition", description = "Explorers of the Dragon Isles.", reaction = 8, standing = 999, bottom = 0, top = 1000, isHeader = false, isCollapsed = false, isChild = true, isAccountWide = fixtureAccountWide, isLegacy = false },
+            { factionID = 2510, name = "Valdrakken Accord", description = "The united dragonflights.", reaction = 8, standing = 999, bottom = 0, top = 1000, isHeader = false, isCollapsed = false, isChild = true, isAccountWide = fixtureAccountWide, isLegacy = false },
             { factionID = 0, name = "Classic", description = "", reaction = 0, standing = 0, bottom = 0, top = 0, isHeader = true, isCollapsed = false, isChild = false, isAccountWide = false, isLegacy = true },
             { factionID = 72, name = "Stormwind", description = "The Kingdom of Stormwind.", reaction = 8, standing = 999, bottom = 0, top = 1000, isHeader = false, isCollapsed = false, isChild = true, isAccountWide = false, isLegacy = true },
             { factionID = 47, name = "Ironforge", description = "The Dwarven capital.", reaction = 8, standing = 999, bottom = 0, top = 1000, isHeader = false, isCollapsed = false, isChild = true, isAccountWide = false, isLegacy = true },
@@ -245,8 +245,9 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
         crate::client_profile::ClientProfile::Era
             | crate::client_profile::ClientProfile::Anniversary
     );
+    let fixture_account_wide = crate::c_api::c_reputation::fixture_account_wide_default();
     lua.exec(&format!(
-        "local seedRetailReputationFixture = {seed_retail_fixture}\n{REPUTATION_STATE_LUA}"
+        "local seedRetailReputationFixture = {seed_retail_fixture}\nlocal fixtureAccountWide = {fixture_account_wide}\n{REPUTATION_STATE_LUA}"
     ))?;
     Ok(())
 }
@@ -261,7 +262,7 @@ mod tests {
 
         let result: String = env
             .eval(
-                r#"
+                &r#"
                 if C_Reputation.GetNumFactions() ~= 11 then
                     return "bad_initial_count"
                 end
@@ -310,7 +311,7 @@ mod tests {
                 if C_Reputation.AreLegacyReputationsShown() then
                     return "bad_legacy_flag"
                 end
-                if not C_Reputation.IsAccountWideReputation(2590) or C_Reputation.IsAccountWideReputation(72) then
+                if C_Reputation.IsAccountWideReputation(2590) ~= EXPECT_ACCOUNT_WIDE or C_Reputation.IsAccountWideReputation(72) then
                     return "bad_account_wide"
                 end
                 if C_Reputation.GetGuildFactionData().factionID ~= 1168 then
@@ -329,7 +330,15 @@ mod tests {
                 C_Reputation.SetFactionActive(2590)
                 C_Reputation.ToggleFactionAtWar(2590)
                 return "ok"
-                "#,
+                "#
+                .replace(
+                    "EXPECT_ACCOUNT_WIDE",
+                    if crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Mists {
+                        "true"
+                    } else {
+                        "false"
+                    },
+                ),
             )
             .expect("reputation state probe should run");
 

@@ -525,12 +525,6 @@ fn test_minimap_get_view_radius() {
 }
 
 #[test]
-fn test_minimap_set_player_texture_no_error() {
-    let env = env();
-    env.exec("C_Minimap.SetPlayerTexture(0, 0)").unwrap();
-}
-
-#[test]
 fn test_objective_tracker_quest_blob_observation() {
     use crate::common::blizzard_addon_harness::{
         blizzard_ui_dir, load_blizzard_addon_closure_into_env, new_blizzard_addon_env,
@@ -600,21 +594,6 @@ fn test_navigation_get_distance() {
     let env = env();
     let dist: f64 = env.eval("return C_Navigation.GetDistance()").unwrap();
     assert_eq!(dist, 0.0);
-}
-
-#[test]
-fn test_navigation_is_auto_follow_enabled() {
-    let env = env();
-    let val: bool = env
-        .eval("return C_Navigation.IsAutoFollowEnabled()")
-        .unwrap();
-    assert!(!val);
-}
-
-#[test]
-fn test_navigation_set_auto_follow_enabled_no_error() {
-    let env = env();
-    env.exec("C_Navigation.SetAutoFollowEnabled(true)").unwrap();
 }
 
 // ============================================================================

@@ -17,11 +17,7 @@ pub(super) fn register(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResu
 
 fn can_player_use_scenario_finder(state: &mut LuaState) -> LuaResult<u32> {
     let supplied = borrow_state(state)?.scenario_finder_availability.clone();
-    let (can_use, failure_reason) = supplied.ok_or_else(|| {
-        rilua::runtime_error(
-            "native-unknown: C_LFGInfo.CanPlayerUseScenarioFinder has no supplied availability or documented default",
-        )
-    })?;
+    let (can_use, failure_reason) = supplied.unwrap_or_else(|| (true, String::new()));
     let reason = create_string(state, &failure_reason);
     state.push(Val::Bool(can_use));
     state.push(reason);

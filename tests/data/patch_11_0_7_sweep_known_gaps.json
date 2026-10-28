@@ -8,7 +8,6 @@
   "wt-global-api-C_LFGInfo.DoesCrossFactionQueueRequireFullPremade-64",
   "wt-global-api-C_LFGList.GetSearchResultLeaderInfo-66",
   "wt-global-api-C_LFGList.GetSearchResultPlayerInfo-67",
-  "wt-global-api-C_LFGList.IsPlayerAuthenticatedForLFG-113",
   "wt-global-api-C_LobbyMatchmakerInfo.AbandonQueue-69",
   "wt-global-api-C_LobbyMatchmakerInfo.EnterQueue-70",
   "wt-global-api-C_LobbyMatchmakerInfo.GetCurrQueuePlaylistEntry-71",

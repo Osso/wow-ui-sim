@@ -126,26 +126,25 @@ pub fn apply_delay(delay: Option<u64>) {
     }
 }
 
-/// `--delay` for the headless commands: sleep, then fire one OnUpdate tick
-/// that reports the slept time as `elapsed` and run the timers that came due.
-///
-/// `GetTime` is wall-clock, so an addon that defers its initialisation with
-/// `C_Timer.After(2)` (QuickRoute does) has its timer due after the sleep, and
-/// an OnUpdate handler that throttles on accumulated `elapsed` (QuickRoute's
-/// secure-overlay positioner waits for 0.1 s) sees the whole delay in one
-/// tick. A bare sleep left both waiting: the three 16 ms ticks that follow
-/// `--exec-lua` never reached the timer, and the handler saw 48 ms.
+/// Dispatch headless timers and updates for the requested real-time delay.
 pub fn apply_delay_with_tick(env: &WowLuaEnv, delay: Option<u64>) {
-    let Some(ms) = delay else {
-        return;
-    };
-    apply_delay(Some(ms));
-    env.state().borrow_mut().ensure_layout_rects();
-    if let Err(e) = env.fire_on_update(ms as f64 / 1000.0) {
-        log_with_timestamp(env, &format!("[delay tick] error: {e}"));
+    let Some(ms) = delay else { return };
+    let duration = std::time::Duration::from_millis(ms);
+    let tick_interval = std::time::Duration::from_millis(16);
+    let start = std::time::Instant::now();
+    let mut previous = start;
+    while previous.duration_since(start) < duration {
+        let remaining = duration.saturating_sub(previous.duration_since(start));
+        std::thread::sleep(remaining.min(tick_interval));
+        let now = std::time::Instant::now();
+        process_pending_timers(env);
+        env.state().borrow_mut().ensure_layout_rects();
+        if let Err(error) = env.fire_on_update(now.duration_since(previous).as_secs_f64()) {
+            log_with_timestamp(env, &format!("[delay OnUpdate] error: {error}"));
+        }
+        normalize_headless_frame_positions(env);
+        previous = now;
     }
-    normalize_headless_frame_positions(env);
-    process_pending_timers(env);
 }
 
 /// Demand-load Blizzard_PlayerSpells during game-screen startup and keep it hidden.
@@ -788,7 +787,7 @@ mod seed_buff_duration_tests {
     }
 
     /// `--delay` has to reach a timer that came due while sleeping and to
-    /// report the slept time to OnUpdate in one tick; a bare sleep did neither
+    /// report the elapsed time to OnUpdate; a bare sleep did neither
     /// (QuickRoute's `C_Timer.After(2)` init and its 0.1 s OnUpdate throttle).
     #[test]
     fn apply_delay_with_tick_fires_due_timers_and_reports_the_delay_as_elapsed() {
@@ -798,7 +797,7 @@ mod seed_buff_duration_tests {
             DELAY_PROBE = { fired = false, elapsed = 0 }
             C_Timer.After(0.05, function() DELAY_PROBE.fired = true end)
             local f = CreateFrame("Frame")
-            f:SetScript("OnUpdate", function(_, elapsed) DELAY_PROBE.elapsed = elapsed end)
+            f:SetScript("OnUpdate", function(_, elapsed) DELAY_PROBE.elapsed = DELAY_PROBE.elapsed + elapsed end)
             "#,
         )
         .unwrap();

@@ -19,7 +19,7 @@ pub(crate) fn register(state: &mut LuaState, ns: GcRef<Table>) -> LuaResult<()> 
     )
 }
 
-fn is_war_mode_desired(state: &mut LuaState) -> LuaResult<u32> {
+pub(super) fn is_war_mode_desired(state: &mut LuaState) -> LuaResult<u32> {
     let desired = borrow_state(state)?.war_mode.desired;
     state.push(Val::Bool(desired));
     Ok(1)

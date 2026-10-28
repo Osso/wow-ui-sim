@@ -1,10 +1,10 @@
 # Mists scenario finder eligibility
 
-Mists `C_LFGInfo.CanPlayerUseScenarioFinder` reads `SimState.scenario_finder_availability: Option<(bool, String)>`. The [contract](../../specs/mists-scenario-finder.md) requires a supplied tuple, not an eligibility inference from level, expansion or scenario catalog.
+Mists `C_LFGInfo.CanPlayerUseScenarioFinder` reads `SimState.scenario_finder_availability: Option<(bool, String)>`. The [contract](../../specs/mists-scenario-finder.md) uses a supplied tuple or the user-decided best-guess scenario default `(true, "")`; native behavior is UNKNOWN.
 
 ## Publication and state
 
-The namespace registrar publishes the query only when `client_profile::ACTIVE` is Mists. The producer returns exactly two values, preserving the supplied failure-reason string even when eligibility is true. None raises the explicit named missing-input error. That is simulator policy, not an assertion about native defaults.
+The namespace registrar publishes the query only when `client_profile::ACTIVE` is Mists. The producer returns exactly two values, preserving the supplied failure-reason string even when eligibility is true. None returns `(true, "")` as a scenario default, not an assertion about native behavior.
 
 ## Selected original consumer
 
@@ -28,14 +28,14 @@ All seven profiles have separate full-feature all-target checks with zero Cargo 
 
 - [Supplied eligibility contract](../../specs/mists-scenario-finder.md)
 - `tests/mists_scenario_finder.rs` — original-consumer transitions, tuple shape and isolation.
-- `src/c_api/scenario_finder_availability.rs` — supplied tuple query and explicit unset error.
+- `src/c_api/scenario_finder_availability.rs` — supplied tuple query and scenario default.
 - `src/c_api/c_lfg_info.rs` — profile publication boundary.
 
 ## Supplied active-party minimum
 
-The [Mists minimum contract](../../specs/mists-party-minimum.md) adds `SimState.mists_party_min_level: Option<f64>`, initially None. The Mists-only `C_PartyInfo.GetMinLevel()` producer returns that observation exactly. It rejects explicit arguments and raises a named native-unknown error for None; it does not infer from player levels, roster or eligibility. Retail/PTR keep their existing producer.
+The [Mists minimum contract](../../specs/mists-party-minimum.md) adds `SimState.mists_party_min_level: Option<f64>`, initially None. The Mists-only `C_PartyInfo.GetMinLevel()` producer returns that observation exactly. It rejects explicit arguments. For None it returns player level when solo, a user-decided scenario default with native behavior UNKNOWN; in a group it raises the named missing-input error. Retail/PTR keep their existing producer.
 
-Pinned Mists 5.5.4.70268 `PartyInfoDocumentation.lua:125–135` declares the query; line130 specifies the active party when category is omitted. The selected original `ScenarioFinder_Shared.lua:58` fails without the producer. Tests supply85/90 and exercise the original empty-catalog cover and label, plus direct value/count/isolation and clearing. Empty-catalog output is preservation, not minimum-sensitive presentation. Catalog discrimination remains blocked pending native contracts for the four legacy catalog queries. Three exact cases fail on the producer-subtracted sibling and pass with the Mists producer. Error-only calls use `xpcall` with `debug.traceback` to retain the original58 boundary; no consumer or query is replaced. The fixture logs existing closure-load errors; assertions require no new errors during the supplied calls, not a clean dependency closure.
+Pinned Mists 5.5.4.70268 `PartyInfoDocumentation.lua:125–135` declares the query; line130 specifies the active party when category is omitted. The selected original `ScenarioFinder_Shared.lua:58` fails without the producer. Tests supply85/90 and exercise the original empty-catalog cover and label, plus direct value/count/isolation and clearing. Empty-catalog output is preservation, not minimum-sensitive presentation. The prior empty-catalog proof did not discriminate. A new test supplies a presentation-list entry and dungeon fixture: original cover visibility changes between solo levels 40 and 55. This does not establish native catalog behavior. Three exact cases fail on the producer-subtracted sibling and pass with the Mists producer. Error-only calls use `xpcall` with `debug.traceback` to retain the original58 boundary; no consumer or query is replaced. The fixture logs existing closure-load errors; assertions require no new errors during the supplied calls, not a clean dependency closure.
 
 Paired stock stays6 keys/12 occurrences. The two ScenarioFinder event keys change from absent `GetMinLevel` to the named unsupplied error at the same original58 call; four other raw keys/counts are unchanged. This is diagnostic replacement, not startup cleanup or downstream catalog advancement. All seven full-feature all-target checks pass with zero Cargo JSON and plain compiler warnings. An initial Retail check exposed a profile-gated import; the producer now uses a qualified state accessor, with no new cfg or suppression. The final Mists integration executable is byte-identical before and after qualification and all three exact GREEN cases pass again. Formatting and changed-line readability pass. Retail/PTR runtime parity is not claimed.
 
@@ -43,3 +43,7 @@ Paired stock stays6 keys/12 occurrences. The two ScenarioFinder event keys chang
 
 - [Mists LFR availability](mists-lfr-availability.md)
 - [Party minimum](../../specs/party-min-level-scenario-availability.md) — separate Retail/PTR catalog contract.
+
+## Scenario defaults proof (2026-10-27)
+
+The user chose the two best-guess defaults; native values remain UNKNOWN. Byte-identical sibling tests fail at original PVEFrame:270 and ScenarioFinder_Shared:58 and pass with both defaults. The original scenario button transitions on supplied false/true, and the original scenario cover transitions with solo player levels 40/55 using supplied presentation data. Mists stock changes from 8 keys/14 occurrences to 6/12: two GroupFinder OnLoad eligibility errors disappear, with no added keys. Retail GREEN stock is empty. All seven all-target checks report zero JSON compiler warnings.

@@ -3177,3 +3177,7 @@ and coupled GPU ownership in root to preserve the original profile predicate,
 signatures and three exact cfg guards. Neutral types and quads remain extracted.
 The handoff recipe warms each revision once, separately recorded, then measures
 mtime-only lib.rs and c_club.rs rebuilds. Static-only handoff; no CPU/build proof.
+
+## 2026-10-27 — Mists scenario defaults
+
+- Updated [scenario finder](systems/mists-scenario-finder.md) with user-decided defaults and bounded consumer proof.

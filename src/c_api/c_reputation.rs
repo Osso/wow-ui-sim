@@ -5,6 +5,11 @@ use crate::lua_bridge::stack_val;
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
 
+/// Mists fixture policy; native account-wide reputation behavior is unknown.
+pub(crate) fn fixture_account_wide_default() -> bool {
+    crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Mists
+}
+
 /// Seeded paragon payload; presence in `SimState.faction_paragon` marks a faction
 /// as paragon. Storage level is explicit state, not derived from reputation.
 #[derive(Clone, Debug)]

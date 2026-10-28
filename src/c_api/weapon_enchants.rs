@@ -21,7 +21,11 @@ pub struct WeaponEnchant {
 
 pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
     LuaApiMut::register_function(state, "GetWeaponEnchantInfo", legacy_info)?;
-    if cfg!(feature = "client-wowforever") {
+    if matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Ptr
+            | crate::client_profile::ClientProfile::WowForever
+    ) {
         let table = super::helpers::ensure_namespace(state, "C_Item")?;
         table_set_rust_fn_static(state, table, "GetWeaponEnchantInfo", weapon_info)?;
     }

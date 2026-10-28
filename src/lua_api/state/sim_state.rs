@@ -533,6 +533,7 @@ pub struct SimState {
     pub unit_health_knowledge: HashMap<String, bool>,
     pub player: PlayerState,
     pub war_mode: crate::c_api::c_pvp::war_mode::WarModeState,
+    pub pvp_talents: crate::c_api::c_spec::PvpTalentState,
     pub player_xp: PlayerXpState,
     pub bind_location: String,
     pub pvp_honor: PvpHonorState,

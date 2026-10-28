@@ -441,6 +441,7 @@ macro_rules! build_empty_sim_state {
             unit_health_knowledge: HashMap::new(),
             player: PlayerState::seeded(),
             war_mode: crate::c_api::c_pvp::war_mode::WarModeState::default(),
+            pvp_talents: crate::c_api::c_spec::PvpTalentState::default(),
             player_xp: PlayerXpState::default(),
             bind_location: "Stormwind City".into(),
             pvp_honor: PvpHonorState::default(),

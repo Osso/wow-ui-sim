@@ -4,6 +4,8 @@ use crate::lua_bridge::stack_val;
 use rilua::vm::state::LuaState;
 use rilua::{LuaApiMut, LuaResult, Val};
 
+mod catalog;
+
 pub fn register(lua: &mut rilua::Lua) -> LuaResult<()> {
     LuaApiMut::register_function(lua, "GetActiveTalentGroup", get_active_talent_group)?;
     LuaApiMut::register_function(lua, "GetNumTalentGroups", get_num_talent_groups)?;
@@ -172,16 +174,43 @@ fn is_other_unit(state: &LuaState, inspect: i32, pet: i32) -> bool {
     string_to_bool(state, stack_val(state, inspect)) || string_to_bool(state, stack_val(state, pet))
 }
 
+fn default_tab(
+    state: &LuaState,
+    group: u32,
+    index: u32,
+) -> LuaResult<Option<&'static catalog::Tab>> {
+    let sim = borrow_state(state)?;
+    let supplied = sim.wrath_talent_tabs.keys().any(|(g, _)| *g == group)
+        || sim.wrath_talent_rows.keys().any(|(g, _)| *g == group);
+    if crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Wrath
+        || sim.player.class_index != 2
+        || group != 1
+        || supplied
+    {
+        return Ok(None);
+    }
+    Ok(index
+        .checked_sub(1)
+        .and_then(|i| catalog::TABS.get(i as usize)))
+}
+
 fn get_num_talent_tabs(state: &mut LuaState) -> LuaResult<u32> {
     let count = if is_other_unit(state, 1, 2) {
         0
     } else {
         let sim = borrow_state(state)?;
         let group = sim.wrath_legacy.player_talent_group + 1;
-        sim.wrath_talent_tabs
+        let supplied = sim
+            .wrath_talent_tabs
             .keys()
             .filter(|(g, _)| *g == group)
-            .count()
+            .count();
+        drop(sim);
+        if default_tab(state, group, 1)?.is_some() {
+            catalog::TABS.len()
+        } else {
+            supplied
+        }
     };
     state.push(Val::Num(count as f64));
     Ok(1)
@@ -196,6 +225,19 @@ fn get_talent_tab_info(state: &mut LuaState) -> LuaResult<u32> {
         let sim = borrow_state(state)?;
         tab.and_then(|tab| sim.wrath_talent_tabs.get(&(group, tab)).cloned())
     };
+    if record.is_none() && !is_other_unit(state, 2, 3) {
+        if let Some(tab) = tab
+            .and_then(|index| default_tab(state, group, index).transpose())
+            .transpose()?
+        {
+            push_string(state, tab.name);
+            state.push(Val::Num(tab.icon as f64));
+            state.push(Val::Num(0.0));
+            push_string(state, tab.background);
+            state.push(Val::Num(0.0));
+            return Ok(5);
+        }
+    }
     let Some(record) = record else {
         for value in [Val::Nil, Val::Nil, Val::Num(0.0), Val::Nil, Val::Num(0.0)] {
             state.push(value);
@@ -217,8 +259,16 @@ fn get_num_talents(state: &mut LuaState) -> LuaResult<u32> {
     } else {
         let sim = borrow_state(state)?;
         let group = sim.wrath_legacy.player_talent_group + 1;
-        tab.and_then(|tab| sim.wrath_talent_rows.get(&(group, tab)))
-            .map_or(0, Vec::len)
+        let supplied = tab
+            .and_then(|tab| sim.wrath_talent_rows.get(&(group, tab)))
+            .map_or(0, Vec::len);
+        drop(sim);
+        match tab {
+            Some(index) => {
+                default_tab(state, group, index)?.map_or(supplied, |tab| tab.talents.len())
+            }
+            None => 0,
+        }
     };
     state.push(Val::Num(count as f64));
     Ok(1)
@@ -232,6 +282,34 @@ fn supplied_rows(state: &LuaState) -> LuaResult<Vec<crate::lua_api::state::Wrath
         return Ok(Vec::new());
     }
     let group = selected_group(state, 5)?;
+    if let Some(default) = default_tab(state, group, tab)? {
+        return Ok(default
+            .talents
+            .iter()
+            .map(|talent| crate::lua_api::state::WrathTalentRow {
+                name: talent.name.to_string(),
+                icon: None,
+                tier: talent.tier,
+                column: talent.column,
+                rank: 0,
+                max_rank: talent.max_rank,
+                exceptional: talent.exceptional,
+                meets_prereq: true,
+                preview_rank: 0,
+                meets_preview_prereq: true,
+                prerequisites: talent
+                    .prerequisites
+                    .iter()
+                    .map(|&(talent_index, required_rank)| {
+                        crate::lua_api::state::WrathTalentPrerequisite {
+                            talent_index,
+                            required_rank,
+                        }
+                    })
+                    .collect(),
+            })
+            .collect());
+    }
     Ok(borrow_state(state)?
         .wrath_talent_rows
         .get(&(group, tab))
@@ -261,7 +339,19 @@ fn get_talent_info(state: &mut LuaState) -> LuaResult<u32> {
         return Ok(10);
     };
     push_string(state, &row.name);
-    push_optional_string(state, row.icon.as_deref());
+    let tab = one_based_index(state, 1)?;
+    let group = selected_group(state, 5)?;
+    let default_icon = match (tab, index) {
+        (Some(tab), Some(index)) if !is_other_unit(state, 3, 4) => default_tab(state, group, tab)?
+            .and_then(|tab| tab.talents.get((index - 1) as usize))
+            .map(|talent| talent.icon),
+        _ => None,
+    };
+    if let Some(icon) = default_icon {
+        state.push(Val::Num(icon as f64));
+    } else {
+        push_optional_string(state, row.icon.as_deref());
+    }
     state.push(Val::Num(row.tier as f64));
     state.push(Val::Num(row.column as f64));
     state.push(Val::Num(row.rank as f64));

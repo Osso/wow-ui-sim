@@ -5,8 +5,8 @@ Mists `C_PartyInfo.GetMinLevel()` returns an environment-local supplied number. 
 ## What it must do
 
 - [ ] Publish only on Mists, using `client_profile::ACTIVE`; leave Retail/PTR producers unchanged.
-- [x] Return exactly `SimState.mists_party_min_level: Option<f64>` when supplied. Do not infer from seeded player/party levels, scenario eligibility or catalog thresholds.
-- [x] None raises `native-unknown: C_PartyInfo.GetMinLevel has no supplied active-party minimum or documented default`.
+- [x] Return exactly `SimState.mists_party_min_level: Option<f64>` when supplied. Supplied values take precedence over the scenario default.
+- [x] When solo and unsupplied, return the player level as a best-guess scenario default; native behavior is UNKNOWN. When grouped and unsupplied, raise `native-unknown: C_PartyInfo.GetMinLevel has no supplied active-party minimum or documented default`.
 - [x] Only the omitted-category call is supported. An explicit argument raises `unsupported: C_PartyInfo.GetMinLevel explicit category`; no category lookup is invented. Both errors are simulator policies, not native wording.
 - [x] With a supplied minimum, the selected original `ScenarioFinder_Shared.lua:58` must complete through the empty-catalog branch with its original cover shown and `NO_SCENARIO_AVAILABLE` label. This is preservation, not output discrimination.
 
@@ -23,12 +23,12 @@ Mists `C_PartyInfo.GetMinLevel()` returns an environment-local supplied number. 
 
 The publication/unchanged-other-profile requirement has Mists runtime and seven-profile compile proof; other-profile runtime parity is not claimed.
 
-`tests/mists_scenario_minlevel.rs` covers selected TOC/Lua/XML identity, unsupplied original58 boundary, empty-catalog preservation at85/90, exact direct-query values and count, explicit-category rejection, clearing and environment isolation.
+`tests/mists_scenario_minlevel.rs` covers selected TOC/Lua/XML identity, unsupplied original58 boundary, empty-catalog preservation at85/90, original cover transitions at40/55, exact direct-query values and count, explicit-category rejection, clearing and environment isolation.
 
 ## Known gaps (current cycle)
 
-- [ ] Original output discrimination is BLOCKED pending native contracts for legacy `GetScenariosChoiceOrder`, `GetNumRandomScenarios`, `GetRandomScenarioInfo`, and `GetLFGDungeonInfo`. The pinned generated-documentation scan found no declarations for these members. Main has asked the laptop. No catalog producer change is part of this contract.
+- [x] The selected original consumer discriminates solo levels 40 and 55 using an explicitly supplied presentation-list entry and dungeon fixture. This does not establish native catalog behavior; no catalog producer was changed.
 
 ## Out of scope
 
-Native minimum/default/category inference, supplied catalog projection, nonempty original-output transitions, vendor edits and changes to other profiles.
+Native minimum/default/category inference, catalog producer changes, vendor edits and changes to other profiles.
