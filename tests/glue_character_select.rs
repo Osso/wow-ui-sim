@@ -25,7 +25,7 @@ fn ptr_character_select_registers_undelete_event_on_load() {
 #[cfg(feature = "client-ptr")]
 fn ptr_declension_uses_glue_frame() {
     test_timeout! {
-        common::with_blizzard_addon_glue_smoke_shape(&["Blizzard_DeclensionFrame"], &[], |env, loaded| {
+        common::blizzard_addon_harness::with_blizzard_addon_glue_smoke_shape(&["Blizzard_DeclensionFrame"], &[], |env, loaded| {
             assert!(loaded.iter().any(|name| name == "Blizzard_DeclensionFrame"));
             let is_glue: bool = env.eval("return DeclensionFrame ~= nil and DeclensionFrame:GetParent() == GlueParent").unwrap();
             assert!(is_glue, "DeclensionFrame must be the original glue frame");
