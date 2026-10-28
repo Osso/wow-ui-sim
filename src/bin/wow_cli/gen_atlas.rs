@@ -25,6 +25,9 @@ pub struct Options {
     /// Explicit CSV directory; never uses the retail slice override.
     #[arg(long)]
     csv_dir: Option<PathBuf>,
+    /// Skip atlas-set filtering for exports without atlas sets.
+    #[arg(long)]
+    no_atlas_sets: bool,
     #[arg(long)]
     listfile: Option<PathBuf>,
     #[arg(long, default_value = "crates/sim-data-profile/data/atlas.rs")]
@@ -44,7 +47,7 @@ pub fn run(options: Options) -> Result<(), Box<dyn std::error::Error>> {
     } else {
         slice_data_path(&wow_data)
     };
-    let mut atlas_data = load_atlas_data(&wow_data, &listfile, &slices)?;
+    let mut atlas_data = load_atlas_data(&wow_data, &listfile, &slices, options.no_atlas_sets)?;
     if options.csv_dir.is_some() {
         add_element_names(&mut atlas_data);
     }
@@ -76,13 +79,14 @@ fn load_atlas_data(
     wow_data: &Path,
     listfile_path: &Path,
     slices_path: &Path,
+    no_atlas_sets: bool,
 ) -> Result<AtlasData, Box<dyn std::error::Error>> {
     println!("Loading listfile...");
     let listfile = load_listfile(listfile_path)?;
     println!("  {} entries", listfile.len());
 
     println!("Loading UiTextureAtlas...");
-    let atlases = load_atlas(&wow_data.join("UiTextureAtlas.csv"))?;
+    let atlases = load_atlas(&wow_data.join("UiTextureAtlas.csv"), no_atlas_sets)?;
     println!("  {} entries", atlases.len());
 
     println!("Loading UiTextureAtlasElement...");
@@ -116,7 +120,7 @@ fn add_element_names(data: &mut AtlasData) {
         .iter()
         .filter_map(|member| {
             let atlas = data.atlases.get(&member.atlas_id)?;
-            if atlas.set_id != 1 || atlas.canvas_id != 1 {
+            if atlas.set_id.is_some_and(|set| set != 1) || atlas.canvas_id != 1 {
                 return None;
             }
             let name = data.elements.get(&member.element_id)?;
@@ -146,10 +150,9 @@ fn collect_default_1x_elements(data: &AtlasData) -> std::collections::HashSet<u3
         .iter()
         .filter(|member| {
             member.canvas_id != 2
-                && data
-                    .atlases
-                    .get(&member.atlas_id)
-                    .is_some_and(|atlas| atlas.set_id == 1 && atlas.canvas_id == 1)
+                && data.atlases.get(&member.atlas_id).is_some_and(|atlas| {
+                    atlas.set_id.is_none_or(|set| set == 1) && atlas.canvas_id == 1
+                })
         })
         .map(|member| member.element_id)
         .collect()
@@ -527,7 +530,7 @@ struct AtlasEntry {
     file_data_id: u32,
     width: u32,
     height: u32,
-    set_id: u32,
+    set_id: Option<u32>,
     canvas_id: u32,
 }
 
@@ -573,14 +576,17 @@ fn load_listfile(path: &Path) -> Result<HashMap<u32, String>, Box<dyn std::error
     Ok(map)
 }
 
-fn load_atlas(path: &Path) -> Result<HashMap<u32, AtlasEntry>, Box<dyn std::error::Error>> {
+fn load_atlas(
+    path: &Path,
+    no_atlas_sets: bool,
+) -> Result<HashMap<u32, AtlasEntry>, Box<dyn std::error::Error>> {
     let file = File::open(path)?;
     let reader = BufReader::new(file);
     let mut map = HashMap::new();
 
     let mut records = read_csv_records(reader)?.into_iter();
     let header = records.next().ok_or("empty atlas CSV")?;
-    let columns = AtlasColumns::parse(&header)?;
+    let columns = AtlasColumns::parse(&header, no_atlas_sets)?;
     for (index, record) in records.enumerate() {
         let (id, entry) = columns.parse_row(&record, index + 2)?;
         map.insert(id, entry);
@@ -598,19 +604,24 @@ const ATLAS_COLUMNS: [&str; 6] = [
 ];
 
 struct AtlasColumns {
-    indices: [usize; 6],
+    indices: [Option<usize>; 6],
     count: usize,
 }
 
 impl AtlasColumns {
-    fn parse(header: &str) -> Result<Self, Box<dyn std::error::Error>> {
+    fn parse(header: &str, no_atlas_sets: bool) -> Result<Self, Box<dyn std::error::Error>> {
         let columns = parse_csv_line(header);
-        let mut indices = [0; 6];
+        let mut indices = [None; 6];
         for (slot, name) in ATLAS_COLUMNS.iter().enumerate() {
-            indices[slot] = columns
-                .iter()
-                .position(|column| column == name)
-                .ok_or_else(|| format!("atlas CSV missing required column '{name}'"))?;
+            if slot == 2 && no_atlas_sets {
+                continue;
+            }
+            indices[slot] = Some(
+                columns
+                    .iter()
+                    .position(|column| column == name)
+                    .ok_or_else(|| format!("atlas CSV missing required column '{name}'"))?,
+            );
         }
         Ok(Self {
             indices,
@@ -634,6 +645,7 @@ impl AtlasColumns {
         }
         let mut values = [0u32; 6];
         for (slot, index) in self.indices.iter().enumerate() {
+            let Some(index) = index else { continue };
             values[slot] = fields[*index].parse().map_err(|error| {
                 format!(
                     "atlas CSV row {row}, column '{}': {error}",
@@ -648,7 +660,7 @@ impl AtlasColumns {
                 file_data_id,
                 width,
                 height,
-                set_id,
+                set_id: self.indices[2].map(|_| set_id),
                 canvas_id,
             },
         ))

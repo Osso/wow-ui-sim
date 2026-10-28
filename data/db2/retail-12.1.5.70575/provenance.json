@@ -1,0 +1,32 @@
+{
+  "build": "12.1.5.70575",
+  "product": "wow",
+  "build_key": "d718abcc42604d8efbd35aecfa5bb75b",
+  "source": "Local CASC; casc-local and game-engine scripts/export_db2_csv.py with WoWDBDefs exact-layout definitions",
+  "unreadable_records": {
+    "UiTextureAtlas": 2,
+    "UiTextureAtlasMember": 7,
+    "UiTextureAtlasElement": 9,
+    "UiTextureAtlasElementSliceData": 0
+  },
+  "layouts": {
+    "UiTextureAtlas": "EF905486",
+    "UiTextureAtlasMember": "75E12F73",
+    "UiTextureAtlasElement": "7CCBD18F",
+    "UiTextureAtlasElementSliceData": "32F4C664"
+  },
+  "db2_sha256": {
+    "897470": "992011593db7383c89441f937832e7e10dd705368ee5ef49631147f4a859a66e",
+    "897532": "164a286bdd5cce275dc9a258925ebf2fa46a296168f37df14631dda8054adc1b",
+    "1989276": "2afae0d6903675bd043d3296b02b23aff3e746ec5aa75bb3db85bf5d8df7716d",
+    "5319042": "f1be61cd5089b1ca6ca851806a4bf871944f72c77507e9fdbe5faf89fa5e5fa5"
+  },
+  "community_listfile_sha256": "29b1724614074993a53905a4ae3e45c51c3bd5a683a64c2f53aad3f2791c8970",
+  "sha256": {
+    "UiTextureAtlas.csv": "b48311647349a7f8b8ba6efabd848093f9ad5e3ea9f80240ccd93265a39ba22e",
+    "UiTextureAtlasElement.csv": "7ad77ef4c0cb3796946c4f66436f32589be63b00e6083ca0ff9386cf3b855df8",
+    "UiTextureAtlasElementSliceData.csv": "90af1f8ee283ebce4fa0a9600245865065095dcebdab2f938b18a868754dd21c",
+    "UiTextureAtlasMember.csv": "31b9dba1ee0591809377d43902a1c2378f273396d7e701bad5a2a3a3d4687643",
+    "listfile.csv": "bb1b5b4c41cd58fe4a6f29eb51670c36595fc10290ff4c76b434128231658988"
+  }
+}
