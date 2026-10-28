@@ -1,13 +1,13 @@
 # Era and Anniversary engraving availability
 
-Era and Anniversary expose supplied engraving availability through `src/c_api/c_engraving.rs`, not an invented inactive default. See [the investigation](../wiki/investigations/era-engraving-availability.md) for original consumer selection and proof limits.
+Era and Anniversary expose engraving availability through `src/c_api/c_engraving.rs`. The user decided that the default stock non-season scenario is disabled; native behavior remains unverified. See [the investigation](../wiki/investigations/era-engraving-availability.md) for original consumer selection and proof limits.
 
 ## What it must do
 
 - [x] Publish `C_Engraving.IsEngravingEnabled` on Era and Anniversary through the shared C API registrar, selected through `client_profile::ACTIVE`.
-- [x] Return one supplied environment-local boolean. Missing input raises `C_Engraving.IsEngravingEnabled: unsupplied input`; supplied false is not missing input.
-- [x] Remove the temporary constant-false Lua default without seeding stock availability or inferring seasonal policy.
-- [x] Drive the selected original `RuneFrameControlButton` XML-bound OnLoad with supplied true/false and unset, including transitions, recovery and independent environments. Both exact selectors on each profile reject the old constant-false implementation.
+- [x] Return one environment-local boolean: supplied availability takes precedence; an unsupplied value returns false for the user-decided stock non-season scenario.
+- [x] Keep Season of Discovery as an explicit supplied scenario input, without inferring seasonal policy.
+- [x] Drive the selected original `RuneFrameControlButton` XML-bound OnLoad with supplied true/false and the stock default, including transitions and independent environments.
 - [x] Attempt the complete original settings closure as preservation and report its actual boundary, without claiming full-settings behavior acceptance.
 
 ## How it works
@@ -23,15 +23,15 @@ Era and Anniversary expose supplied engraving availability through `src/c_api/c_
 
 ## Tests asserting this spec
 
-- `tests/era_engraving.rs` — original XML OnLoad, supplied-query arity, missing-input error and settings preservation attempt.
+- `tests/era_engraving.rs` — original XML OnLoad, supplied-query arity, stock default and settings preservation attempt.
 
 ## Known gaps (current cycle)
 
-No open implementation task remains in the approved availability-only slice. Both profiles' exact original selectors are RED101/GREEN0; settings false-input preservation completes with no collected closure diagnostics. Each stock map changes0/0→2/2, exposing the named unset error and its ScriptErrors echo; this is not clean startup. Both added raw keys are attributed to Blizzard_CharacterFrame and the removed constant-false shim is their masking predecessor. All seven full-feature all-target checks have zero JSON/plain compiler warnings/errors. Other-profile runtime parity is not established by compiler checks.
+The earlier supplied-only implementation exposed an unset error and its ScriptErrors echo in both stock maps. The user-decided default replaces that unset error for Era and Anniversary. Stock and full-profile verification of this change is pending integration.
 
 ## Out of scope
 
-Bags and full LoD EngravingUI are excluded. Native availability values remain unknown; no inactive default or complete engraving lifecycle is claimed. Mists' existing seven-member model is retained; no other profile gains publication. The other25 declared members remain outside Era/Anniversary's modeled surface:
+Bags and full LoD EngravingUI are excluded. Native availability values remain unknown; the stock default is a user decision, not a native observation. No complete engraving lifecycle is claimed. Mists' existing seven-member model is retained; no other profile gains publication. The other25 declared members remain outside Era/Anniversary's modeled surface:
 
 | Domain | Excluded members |
 |---|---|

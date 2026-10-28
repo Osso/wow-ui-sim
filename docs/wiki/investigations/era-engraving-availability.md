@@ -1,10 +1,10 @@
 # Era and Anniversary engraving availability
 
-The [availability contract](../../specs/era-engraving-availability.md) replaces the temporary constant-false query with the shared environment-local supplied reader. Missing state is an explicit error, not evidence that engraving is disabled.
+The [availability contract](../../specs/era-engraving-availability.md) uses an environment-local supplied reader. On 2026-10-28 the user decided that unsupplied availability is false in the stock non-season Era and Anniversary scenario; supplied values still take precedence.
 
 ## Root cause and selection
 
-The temporary Classic startup defaults installed `IsEngravingEnabled() return false` only on Era/Anniversary. Pinned declarations on both profiles declare a bool result but establish no inactive default. The existing [Mists engraving inputs](mists-engraving-inputs.md) already represent availability as `Option<bool>`; the shared C API registrar now publishes that same reader on all three profiles through `client_profile::ACTIVE`. See [shared publication and Rust input supply](mists-engraving-inputs.md#shared-availability-and-input-supply) for the complete profile inventory, named unset contract and absence of a Lua admin setter. Native availability values remain unknown.
+The temporary Classic startup defaults installed `IsEngravingEnabled() return false` only on Era/Anniversary. Pinned declarations on both profiles declare a bool result but establish no inactive default. The existing [Mists engraving inputs](mists-engraving-inputs.md) already represent availability as `Option<bool>`; the shared C API registrar now publishes that same reader on all three profiles through `client_profile::ACTIVE`. See [shared publication and Rust input supply](mists-engraving-inputs.md#shared-availability-and-input-supply) for the profile inventory and absence of a Lua admin setter; its earlier Era/Anniversary unset behavior is superseded by the user-decided stock default. Native availability values remain unknown.
 
 Both Era and Anniversary select vanilla/classic game types (`src/toc/mod.rs`), Family Classic and Game Vanilla. Both pinned `Blizzard_CharacterFrame.toc:18,22` select Vanilla PaperDoll Lua/XML. `Vanilla/PaperDollFrame.xml:716,722` creates RuneFrameControlButton and binds original OnLoad; `PaperDollFrame.lua:950–954` reads availability and hides the control on false. Settings selects `Classic/InterfaceOverrides.lua` through its Classic TOC and reads availability at136. Both have a real conditional LoD EngravingUI entry at PaperDollFrame.lua935–948; that full system is not implemented by this slice.
 
@@ -21,7 +21,7 @@ Both Era and Anniversary select vanilla/classic game types (`src/toc/mod.rs`), F
 
 Each profile's master-equivalent stock map changes0 unique/0 occurrences to2/2. The first raw key is `[OnLoad] RuneFrameControlButton: C_Engraving.IsEngravingEnabled: unsupplied input`, reported by `src/loader/precompiled.rs:23–30` from the original PaperDollFrame.lua951 query bound by XML722. The second is its `Lua Error:` echo, formatted at `Blizzard_ScriptErrors.lua:71–80` and recorded through addframetext. Each has count1 and both are attributed to Blizzard_CharacterFrame. The removed `classic_startup_defaults.rs` false policy (predecessor lines10–18, return at16) formerly let the same original951 query hide the control without reporting an error. These are explicit accepted consequences of requiring supplied input, not stock cleanup or clean-startup claims. No key is removed or otherwise count-changed.
 
-Do not interpret the settings preservation attempt as full-settings behavior proof. Bags and full LoD EngravingUI remain excluded, as do the other25 declared C_Engraving members on these two profiles. Compiler checks are not runtime parity proof for other profiles. No stock input is supplied merely to suppress a newly exposed error.
+Do not interpret the settings preservation attempt as full-settings behavior proof. Bags and full LoD EngravingUI remain excluded, as do the other25 declared C_Engraving members on these two profiles. Compiler checks are not runtime parity proof for other profiles. The user-decided stock default supersedes the former unset error; the stock comparison for this change remains pending.
 
 ## Sources
 
