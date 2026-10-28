@@ -108,6 +108,7 @@ pub fn register_all(lua: &mut rilua::Lua) -> LuaResult<()> {
             crate::c_api::c_loss_of_control::clear_supplied_entries,
         )?;
     let builder = crate::c_api::equipment_set_locks::register_admin(builder)?;
+    let builder = crate::c_api::item_overlay::register_admin(builder)?;
     let builder = crate::c_api::c_minimap_quest_blob::register_admin(builder)?;
     let builder = builder.set_function(
         "SetHousingCatalogVariantStoredCount",

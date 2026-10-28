@@ -80,31 +80,7 @@ pub(super) fn register_c_item(state: &mut LuaState) -> LuaResult<()> {
     register_c_item_metadata_queries(state, table_ref)?;
     register_c_item_inventory_queries(state, table_ref)?;
     register_c_item_dressability_query(state, table_ref)?;
-    if matches!(ACTIVE, ClientProfile::Retail | ClientProfile::Ptr) {
-        table_set_rust_fn_static(
-            state,
-            table_ref,
-            "IsCorruptedItem",
-            c_item_is_corrupted_item,
-        )?;
-    }
     Ok(())
-}
-
-fn c_item_is_corrupted_item(state: &mut LuaState) -> LuaResult<u32> {
-    let value = rilua::table_security::unwrap_secret(state, stack_val(state, 1))?;
-    if !matches!(value, Val::Num(_) | Val::Str(_)) {
-        return Err(runtime_error(
-            "C_Item.IsCorruptedItem: itemInfo must be an item ID or link",
-        ));
-    }
-    let item_id = parse_item_id_from_val(state, value);
-    let corrupted = {
-        let sim = borrow_state(state)?;
-        item_id.is_some_and(|id| sim.corrupted_items.contains(&id))
-    };
-    state.push(Val::Bool(corrupted));
-    Ok(1)
 }
 
 fn register_c_item_dressability_query(

@@ -620,7 +620,7 @@ fn character_panel_inventory_tooltip_has_lines_and_closes_without_errors() {
 #[test]
 fn item_button_corruption_uses_supplied_identity() {
     let env = setup_env();
-    env.state().borrow_mut().corrupted_items.insert(900001);
+    env.exec("A_Admin.SetItemOverlayFlag(900001, 'corrupted', true)").unwrap();
     env.exec(
         r#"
         local button = CreateFrame('Button', nil, UIParent)

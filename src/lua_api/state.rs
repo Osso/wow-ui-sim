@@ -206,7 +206,7 @@ macro_rules! build_empty_sim_state {
             model_scenes: HashMap::new(),
             active_player_interactions: HashSet::new(),
             azerite_item: None,
-            corrupted_items: HashSet::new(),
+            item_overlay_flags: HashSet::new(),
             azerite_essence: AzeriteEssenceState::default(),
             azerite_empowered: AzeriteEmpoweredItemState::default(),
             barber_shop: BarberShopState::default(),
