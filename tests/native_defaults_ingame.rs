@@ -64,6 +64,34 @@ fn approved_native_defaults_quick_keybind_consumer() {
 }
 
 #[test]
+fn approved_native_defaults_voice_transcription_consumer() {
+    let ui = blizzard_ui_dir();
+    let toc = TocFile::from_file(&find_toc_file(&ui.join("Blizzard_ChatFrame")).unwrap()).unwrap();
+    assert!(toc.allows_screen(ScreenKind::Game));
+    assert!(toc.files.iter().any(|path| {
+        path.to_string_lossy()
+            .contains("VoiceChatTranscriptionFrame.lua")
+    }));
+    let env = new_blizzard_addon_env(&ui);
+    wow_ui_sim::xml::register_intrinsic_templates();
+    let loaded = load_blizzard_addon_closure_into_env(
+        &env,
+        &ui,
+        &["Blizzard_FrameXML", "Blizzard_ChatFrame"],
+        &[],
+    );
+    assert!(loaded.iter().any(|name| name == "Blizzard_ChatFrame"));
+    env.exec(r#"
+        local source = debug.getinfo(VoiceTranscriptionFrame_UpdateVisibility, 'S').source:gsub('\\', '/')
+        assert(source:find('Shared/VoiceChatTranscriptionFrame.lua', 1, true))
+        local frame = CreateFrame('Frame')
+        frame:SetID(1)
+        VoiceTranscriptionFrame_UpdateVisibility(frame)
+        assert(C_VoiceChat.GetActiveVoiceProviderID() == Enum.VoiceProviderID.Legacy)
+    "#).expect("original transcription consumer accepts the approved provider");
+}
+
+#[test]
 fn approved_native_defaults_bank_selected_tab_consumer() {
     let env = load_bank();
     env.exec(r#"
