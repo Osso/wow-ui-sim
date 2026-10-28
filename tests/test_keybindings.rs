@@ -616,9 +616,9 @@ fn character_panel_inventory_tooltip_has_lines_and_closes_without_errors() {
     }
 }
 
-#[cfg(feature = "client-retail")]
+#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
 #[test]
-fn retail_item_button_corruption_uses_supplied_identity() {
+fn item_button_corruption_uses_supplied_identity() {
     let env = setup_env();
     env.state().borrow_mut().corrupted_items.insert(900001);
     env.exec(
@@ -635,9 +635,9 @@ fn retail_item_button_corruption_uses_supplied_identity() {
     .expect("original item overlay uses supplied corruption");
 }
 
-#[cfg(feature = "client-retail")]
+#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
 #[test]
-fn retail_paper_doll_azerite_overlay_uses_supplied_location() {
+fn paper_doll_azerite_overlay_uses_supplied_location() {
     use wow_ui_sim::lua_api::{AzeriteItemState, ItemLocationData};
     let env = setup_env();
     env.state().borrow_mut().azerite_item = Some(AzeriteItemState {
