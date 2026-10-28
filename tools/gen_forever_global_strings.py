@@ -30,11 +30,11 @@ def rust_string(value):
     return json.dumps(value, ensure_ascii=False).replace("\\u00", "\\x")
 
 
-def generate(source, output):
+def generate(source, output, profile="Forever 1.60.1.69913"):
     strings = read_strings(source)
     lines = [
-        "//! Generated from Forever 1.60.1.69913 GlobalStrings.csv.",
-        "//! Regenerate: python3 tools/gen_forever_global_strings.py",
+        f"//! Generated from {profile} GlobalStrings.csv.",
+        "//! Regenerate: python3 tools/gen_forever_global_strings.py" if profile == "Forever 1.60.1.69913" else "//! Regenerate: python3 tools/gen_forever_global_strings.py --profile ptr",
         "use phf::phf_map;",
         "pub fn get_global_string(name: &str) -> Option<&'static str> {",
         "    GLOBAL_STRINGS.get(name).copied()",
@@ -51,5 +51,11 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--source", type=Path, default=SOURCE)
     parser.add_argument("--output", type=Path, default=OUTPUT)
+    parser.add_argument("--profile", choices=["forever", "ptr"], default="forever")
     args = parser.parse_args()
-    generate(args.source, args.output)
+    if args.profile == "ptr":
+        source = ROOT / "data/db2/ptr-12.1.7.70493/GlobalStrings.csv"
+        output = ROOT / "crates/sim-data-profile/data/global_strings_ptr.rs"
+        generate(source, output, "PTR 12.1.7.70493")
+    else:
+        generate(args.source, args.output)

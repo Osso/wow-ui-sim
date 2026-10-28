@@ -177,7 +177,7 @@ prefork-full-ui = []
 # allows historical retail epoch tests against the same retail source cache.
 profile-retail = ["sim-data-profile/profile-retail"]
 client-retail = ["profile-retail", "retail-12-1-5", "prefork-full-ui"]
-client-ptr = ["retail-12-1-5"]
+client-ptr = ["retail-12-1-5", "sim-data-profile/client-ptr"]
 client-wrath = []
 client-mists = ["prefork-full-ui", "sim-data-profile/client-mists"]
 client-era = ["aura-spell-classifications", "sim-data-profile/client-era"]
