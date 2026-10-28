@@ -6,8 +6,8 @@ Mists `C_PartyInfo.GetMinLevel()` returns an environment-local supplied number. 
 
 - [ ] Publish only on Mists, using `client_profile::ACTIVE`; leave Retail/PTR producers unchanged.
 - [x] Return exactly `SimState.mists_party_min_level: Option<f64>` when supplied. Supplied values take precedence over the scenario default.
-- [x] When solo and unsupplied, return the player level as a best-guess scenario default; native behavior is UNKNOWN. When grouped and unsupplied, raise `native-unknown: C_PartyInfo.GetMinLevel has no supplied active-party minimum or documented default`.
-- [x] Only the omitted-category call is supported. An explicit argument raises `unsupported: C_PartyInfo.GetMinLevel explicit category`; no category lookup is invented. Both errors are simulator policies, not native wording.
+- [x] When unsupplied, return the player level when solo, or the lowest level among the player and modeled party/raid members when grouped. These are user-decided scenario defaults; native behavior is UNKNOWN.
+- [x] Only the omitted-category call is supported. An explicit argument raises `unsupported: C_PartyInfo.GetMinLevel explicit category`; no category lookup is invented. This error is a simulator policy, not native wording.
 - [x] With a supplied minimum, the selected original `ScenarioFinder_Shared.lua:58` must complete through the empty-catalog branch with its original cover shown and `NO_SCENARIO_AVAILABLE` label. This is preservation, not output discrimination.
 
 ## How it works
@@ -23,7 +23,7 @@ Mists `C_PartyInfo.GetMinLevel()` returns an environment-local supplied number. 
 
 The publication/unchanged-other-profile requirement has Mists runtime and seven-profile compile proof; other-profile runtime parity is not claimed.
 
-`tests/mists_scenario_minlevel.rs` covers selected TOC/Lua/XML identity, unsupplied original58 boundary, empty-catalog preservation at85/90, original cover transitions at40/55, exact direct-query values and count, explicit-category rejection, clearing and environment isolation.
+`tests/mists_scenario_minlevel.rs` covers selected TOC/Lua/XML identity, unsupplied original58 boundary, empty-catalog preservation at85/90, original cover transitions for grouped and solo levels 40/55, exact direct-query values and count, explicit-category rejection, clearing and environment isolation.
 
 ## Known gaps (current cycle)
 

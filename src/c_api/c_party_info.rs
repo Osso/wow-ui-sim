@@ -69,12 +69,13 @@ fn mists_supplied_min_level(state: &mut LuaState) -> LuaResult<u32> {
         let sim = crate::lua_api::methods::borrow_state(state)?;
         match sim.mists_party_min_level {
             Some(minimum) => minimum,
-            None if !sim.party_group_active => sim.player.level as f64,
-            None => {
-                return Err(rilua::runtime_error(
-                    "native-unknown: C_PartyInfo.GetMinLevel has no supplied active-party minimum or documented default",
-                ));
+            None if sim.party_group_active => {
+                sim.party_members
+                    .iter()
+                    .map(|member| member.level)
+                    .fold(sim.player.level, i32::min) as f64
             }
+            None => sim.player.level as f64,
         }
     };
     state.push(Val::Num(minimum));
