@@ -7,7 +7,6 @@ use wow_ui_sim::loader::find_toc_file;
 use wow_ui_sim::lua_api::WowLuaEnv;
 use wow_ui_sim::toc::TocFile;
 
-const UNKNOWN: &str = "native-unknown: C_PartyInfo.GetMinLevel has no supplied active-party minimum or documented default";
 const UNSUPPORTED: &str = "unsupported: C_PartyInfo.GetMinLevel explicit category";
 
 fn load_original_scenario() -> WowLuaEnv {
@@ -103,13 +102,9 @@ fn supplied_minimum_is_exact_environment_local_and_solo_defaults_to_player() {
 }
 
 #[test]
-fn group_minimum_still_requires_a_supplied_value() {
+fn supplied_group_minimum_overrides_roster() {
     let env = WowLuaEnv::new().unwrap();
     env.state().borrow_mut().party_group_active = true;
-    let error = env
-        .exec("C_PartyInfo.GetMinLevel()")
-        .expect_err("group minimum remains an explicit supplied input");
-    assert!(error.to_string().contains(UNKNOWN), "{error}");
     for minimum in [36.0, 58.0] {
         env.state().borrow_mut().mists_party_min_level = Some(minimum);
         assert_eq!(query_minimum(&env), minimum);
@@ -130,7 +125,7 @@ fn explicit_category_is_unsupported_even_with_supplied_minimum() {
 }
 
 #[test]
-fn original_scenario_cover_tracks_solo_player_level() {
+fn original_scenario_cover_tracks_group_and_solo_minimum() {
     let env = load_original_scenario();
     {
         let mut sim = env.state().borrow_mut();
@@ -139,7 +134,11 @@ fn original_scenario_cover_tracks_solo_player_level() {
         dungeon.min_level = 50;
         dungeon.max_level = 60;
         sim.lfd_dungeons.push(dungeon);
-        sim.player.level = 40;
+        sim.player.level = 55;
+        sim.party_group_active = true;
+        assert!(sim.party_members.len() >= 2);
+        sim.party_members[0].level = 40;
+        sim.party_members[1].level = 58;
     }
     env.exec(
         r#"
@@ -150,12 +149,17 @@ fn original_scenario_cover_tracks_solo_player_level() {
     )
     .unwrap();
     env.exec("local ok, reason = xpcall(ScenarioFinderFrame_UpdateAvailability, debug.traceback); if not ok then error(reason, 0) end")
-        .expect("original ScenarioFinder_Shared.lua:58 must consume the solo default");
+        .expect("original ScenarioFinder_Shared.lua:58 must consume the grouped default");
+    assert_eq!(query_minimum(&env), 40.0);
     env.exec("assert(ScenarioFinderFrame.NoScenariosCover:IsShown())")
         .unwrap();
-    env.state().borrow_mut().player.level = 55;
+    {
+        let mut sim = env.state().borrow_mut();
+        sim.party_group_active = false;
+    }
     env.exec("ScenarioFinderFrame_UpdateAvailability()")
         .unwrap();
+    assert_eq!(query_minimum(&env), 55.0);
     env.exec("assert(not ScenarioFinderFrame.NoScenariosCover:IsShown())")
         .unwrap();
 }
