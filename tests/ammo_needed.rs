@@ -81,6 +81,23 @@ fn observe_slot(env: &WowLuaEnv, required: bool) {
 }
 
 #[test]
+#[cfg(feature = "client-ptr")]
+fn ptr_stock_ammo_default_reaches_original_slot() {
+    let ui = blizzard_ui_dir();
+    let env = new_blizzard_addon_env(&ui);
+    load_blizzard_addon_closure_into_env(&env, &ui, &["Blizzard_UIPanels_Game"], &[]);
+    env.exec(r#"
+        assert(CharacterAmmoSlot, 'original XML slot')
+        local info = debug.getinfo(PaperDollItemSlotButton_OnLoad, 'S')
+        assert(info.source:match('Blizzard_UIPanels_Game/Mainline/PaperDollFrame.lua$'))
+        CharacterAmmoSlot:Show()
+        PaperDollItemSlotButton_OnLoad(CharacterAmmoSlot)
+        assert(not CharacterAmmoSlot:IsShown())
+        assert(C_PaperDollInfo.AmmoNeeded() == false)
+    "#).expect("PTR stock default must reach original slot consumer");
+}
+
+#[test]
 #[cfg(feature = "client-wowforever")]
 fn stock_ammo_default_reaches_original_slot() {
     let ui = blizzard_ui_dir();
