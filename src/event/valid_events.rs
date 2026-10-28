@@ -73,7 +73,16 @@ fn is_ptr_event(name: &str) -> bool {
     crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Ptr
         && matches!(
             name,
-            "GLOBAL_REGION_MOUSE_DOWN"
+            "ACTION_COMBAT_ACTION_RANGE_CHECK_UPDATE"
+                | "EXTERNAL_EVENT_LAUNCH_URL_RESULT"
+                | "GAME_MODE_EXP_BAR_DATA_UPDATED"
+                | "GAME_RULES_CHANGED"
+                | "PLAYER_PVP_FLAG_CHANGED"
+                | "SECURE_TRANSFER_CONFIRM_VC_PRODUCT_PURCHASE"
+                | "SHARD_TRANSFER_CANCELLED"
+                | "UNIT_PET_TRAINING_POINTS"
+                | "VOICE_CHAT_VOICE_PROVIDER_CHANGED"
+                | "GLOBAL_REGION_MOUSE_DOWN"
                 | "SHARD_TRANSFER"
                 | "SHARD_TRANSFER_IMMINENT"
                 | "VOICE_CHAT_ACTIVE_VOICE_PROVIDER_CHANGED"
