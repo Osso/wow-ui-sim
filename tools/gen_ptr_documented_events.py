@@ -36,10 +36,10 @@ def generate(addons: Path) -> str:
         "//! Source: ~/.cache/wow-ui-sim/blizzard-ui/ptr/AddOns/Blizzard_APIDocumentationGenerated/*.lua",
         f"//! Build: {provenance['version']}; files: {len(files)}; events: {len(events)}.",
         "", "pub(super) const EVENTS: &[&str] = &["]
-    lines.extend(
-        f'    "{event}",' + (f' // {consumer_events[event]}' if event in consumer_events else "")
-        for event in sorted(events)
-    )
+    for event in sorted(events):
+        if event in consumer_events:
+            lines.append(f"    // {consumer_events[event]}")
+        lines.append(f'    "{event}",')
     return "\n".join(lines + ["];", ""])
 
 

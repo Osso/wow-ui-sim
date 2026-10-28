@@ -271,11 +271,14 @@ pub(super) const EVENTS: &[&str] = &[
     "CHANNEL_PASSWORD_REQUEST",
     "CHANNEL_ROSTER_UPDATE",
     "CHANNEL_UI_UPDATE",
-    "CHARACTER_DECLINE_IN_PROGRESS", // Blizzard_DeclensionFrame/Mainline/DeclensionFrameGlue.lua:14
-    "CHARACTER_DECLINE_RESULT", // Blizzard_DeclensionFrame/Mainline/DeclensionFrameGlue.lua:13
+    // Blizzard_DeclensionFrame/Mainline/DeclensionFrameGlue.lua:14
+    "CHARACTER_DECLINE_IN_PROGRESS",
+    // Blizzard_DeclensionFrame/Mainline/DeclensionFrameGlue.lua:13
+    "CHARACTER_DECLINE_RESULT",
     "CHARACTER_ITEM_FIXUP_NOTIFICATION",
     "CHARACTER_POINTS_CHANGED",
-    "CHARACTER_UNDELETE_STARTED", // Blizzard_GlueXML/Mainline/CharacterSelect.lua:40
+    // Blizzard_GlueXML/Mainline/CharacterSelect.lua:40
+    "CHARACTER_UNDELETE_STARTED",
     "CHARACTER_UPGRADE_SPELL_TIER_SET",
     "CHAT_COMBAT_MSG_ARENA_POINTS_GAIN",
     "CHAT_DISABLED_CHANGED",
@@ -603,7 +606,8 @@ pub(super) const EVENTS: &[&str] = &[
     "FORBIDDEN_NAME_PLATE_CREATED",
     "FORBIDDEN_NAME_PLATE_UNIT_ADDED",
     "FORBIDDEN_NAME_PLATE_UNIT_REMOVED",
-    "FORCE_DECLINE_CHARACTER", // Blizzard_DeclensionFrame/Mainline/DeclensionFrameGlue.lua:12
+    // Blizzard_DeclensionFrame/Mainline/DeclensionFrameGlue.lua:12
+    "FORCE_DECLINE_CHARACTER",
     "FORCE_REFRESH_HOUSE_FINDER",
     "FRAME_MANAGER_UPDATE_ALL",
     "FRAME_MANAGER_UPDATE_FRAME",
