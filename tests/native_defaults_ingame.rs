@@ -64,6 +64,41 @@ fn approved_native_defaults_quick_keybind_consumer() {
 }
 
 #[test]
+fn approved_native_defaults_guild_locale_consumer() {
+    let ui = blizzard_ui_dir();
+    let toc =
+        TocFile::from_file(&find_toc_file(&ui.join("Blizzard_Communities")).unwrap()).unwrap();
+    assert!(toc.allows_screen(ScreenKind::Game));
+    assert!(toc.files.iter().any(|path| {
+        path.to_string_lossy()
+            .contains("GuildPreferredPlaySettings.lua")
+    }));
+    let env = new_blizzard_addon_env(&ui);
+    wow_ui_sim::xml::register_intrinsic_templates();
+    let loaded = load_blizzard_addon_closure_into_env(
+        &env,
+        &ui,
+        &["Blizzard_FrameXML", "Blizzard_Communities"],
+        &[],
+    );
+    assert!(loaded.iter().any(|name| name == "Blizzard_Communities"));
+    env.exec(
+        r#"
+        local f = CommunitiesGuildPreferredPlaySettingsFrameMixin.InitializeLocaleDropdown
+        local source = debug.getinfo(f, 'S').source:gsub('\\', '/')
+        assert(source:find('GuildPreferredPlaySettings.lua', 1, true))
+        local root = {count=0, CreateButton=function(self) self.count=self.count+1 end}
+        local dropdown = {SetupMenu=function(self, generator) generator(self, root) end}
+        f({LocaleDropdown=dropdown})
+        assert(root.count == 0)
+        local ids, names = C_AccountServices.GetPreferredLocales()
+        assert(type(ids) == 'table' and #ids == 0 and type(names) == 'table' and #names == 0)
+    "#,
+    )
+    .expect("original guild locale menu consumes two empty catalogs");
+}
+
+#[test]
 fn approved_native_defaults_voice_transcription_consumer() {
     let ui = blizzard_ui_dir();
     let toc = TocFile::from_file(&find_toc_file(&ui.join("Blizzard_ChatFrame")).unwrap()).unwrap();
