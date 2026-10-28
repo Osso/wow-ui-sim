@@ -20,4 +20,4 @@ The declarations are in the pinned PTR `Blizzard_APIDocumentationGenerated` cach
 | UNIT_PET_TRAINING_POINTS | UnitDocumentation.lua:4471 |
 | VOICE_CHAT_VOICE_PROVIDER_CHANGED | VoiceChatDocumentation.lua:1398 |
 
-PTR also accepts `CHARACTER_UNDELETE_STARTED` and `FORCE_DECLINE_CHARACTER`, which are registered by the selected glue consumers cited in the generated catalog. The former is derived from the consumer; the latter is a user-approved scenario default, not native evidence. Neither has a modeled trigger.
+PTR also accepts `CHARACTER_UNDELETE_STARTED`, `CHARACTER_DECLINE_RESULT`, `CHARACTER_DECLINE_IN_PROGRESS`, and `FORCE_DECLINE_CHARACTER`, which are registered by the selected glue consumers cited in the generated catalog. The first three are derived from consumers; the last is a user-approved scenario default, not native evidence. No modeled trigger is added.
