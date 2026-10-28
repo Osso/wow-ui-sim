@@ -344,9 +344,7 @@ macro_rules! build_empty_sim_state {
             spell_classifications: Default::default(),
             #[cfg(feature = "retail-12-0-0")]
             nameplate_configuration: Default::default(),
-            #[cfg(feature = "retail-12-0-0")]
             recipe_quality_inputs: Default::default(),
-            #[cfg(feature = "retail-12-0-0")]
             crafted_item_quality: Default::default(),
             #[cfg(feature = "retail-12-0-0")]
             pvp_catalog: Default::default(),

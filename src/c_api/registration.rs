@@ -91,7 +91,6 @@ pub(crate) fn register_interaction_tables(state: &mut LuaState) -> LuaResult<()>
     super::c_combat_text::register(state)?;
     #[cfg(feature = "retail-12-0-0")]
     super::c_encounter_warnings::register_settings(state)?;
-    #[cfg(feature = "retail-12-0-0")]
     super::c_trade_skill_quality::register(state)?;
     #[cfg(feature = "retail-12-0-0")]
     super::c_crafting_orders::register(state)?;

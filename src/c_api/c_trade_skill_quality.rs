@@ -32,6 +32,9 @@ pub struct RecipeQualityInputs {
 }
 
 pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
+    if !matches!(ACTIVE, ClientProfile::Retail | ClientProfile::Ptr) {
+        return Ok(());
+    }
     let ns = super::ensure_namespace(state, "C_TradeSkillUI")?;
     table_set_rust_fn_static(state, ns, "GetRecipeItemQualityInfo", item_quality)?;
     table_set_rust_fn_static(state, ns, "GetRecipeQualityReagentLink", reagent_link)?;
