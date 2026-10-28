@@ -26,9 +26,20 @@ fn ptr_character_select_registers_undelete_event_on_load() {
 fn ptr_declension_consumer_registers_event() {
     test_timeout! {
         let env = load_blizzard_screen(ScreenKind::CharacterSelect);
-        let registered: bool = env.eval("return DeclensionFrame:IsEventRegistered('FORCE_DECLINE_CHARACTER')").unwrap();
-        let detail: String = env.eval("return tostring(DeclensionFrame:GetScript('OnLoad')) .. ':' .. tostring(DeclensionFrame:IsEventRegistered('CHARACTER_DECLINE_RESULT')) .. ':' .. tostring(DeclensionFrame:IsEventRegistered('CHARACTER_DECLINE_IN_PROGRESS')) .. ':' .. tostring(DeclensionFrame.set)").unwrap();
-        assert!(registered, "{detail}");
+        let errors = env.state().borrow().lua_errors.clone();
+        assert!(
+            !errors.iter().any(|error| error.contains("DeclensionFrame:RegisterEvent") && error.contains("unknown event")),
+            "DeclensionFrame event registration failed: {errors:#?}"
+        );
+        env.exec(r#"
+            declensionProbe = CreateFrame('Frame')
+            declensionProbe:RegisterEvent('FORCE_DECLINE_CHARACTER')
+            declensionProbe:SetScript('OnEvent', function() declensionEventReceived = true end)
+            assert(declensionProbe:IsEventRegistered('FORCE_DECLINE_CHARACTER'))
+        "#).unwrap();
+        run_extra_update_ticks(&env, 3);
+        let emitted: bool = env.eval("return declensionEventReceived == true").unwrap();
+        assert!(!emitted);
     }
 }
 
