@@ -26,6 +26,8 @@ def generate(addons: Path) -> str:
     # A full selected-consumer scan requires TOC and XML loading semantics.
     consumer_events = {
         "CHARACTER_UNDELETE_STARTED": "Blizzard_GlueXML/Mainline/CharacterSelect.lua:40",
+        "CHARACTER_DECLINE_RESULT": "Blizzard_DeclensionFrame/Mainline/DeclensionFrameGlue.lua:13",
+        "CHARACTER_DECLINE_IN_PROGRESS": "Blizzard_DeclensionFrame/Mainline/DeclensionFrameGlue.lua:14",
         "FORCE_DECLINE_CHARACTER": "Blizzard_DeclensionFrame/Mainline/DeclensionFrameGlue.lua:12",
     }
     events.update(consumer_events)
