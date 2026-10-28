@@ -819,7 +819,6 @@ fn item_overlay_uncorrupted_items_reach_ordinary_path() {
     env.exec(r#"
         local button = CreateFrame('Button', nil, UIParent)
         button.IconOverlay = button:CreateTexture(nil, 'OVERLAY')
-        button.noProfessionQualityOverlay = true
         for _, id in ipairs({900011, 900012}) do
             SetItemButtonOverlay(button, id, Enum.ItemQuality.Common, false)
             assert(not button.IconOverlay:IsShown())
@@ -834,7 +833,6 @@ fn item_overlay_corruption_admin_input() {
     env.exec(r#"
         local button = CreateFrame('Button', nil, UIParent)
         button.IconOverlay = button:CreateTexture(nil, 'OVERLAY')
-        button.noProfessionQualityOverlay = true
         A_Admin.SetItemOverlayFlag(900021, "corrupted", true)
         A_Admin.SetItemOverlayFlag(900022, "corrupted", false)
         SetItemButtonOverlay(button, 900021, Enum.ItemQuality.Common, false)
@@ -853,7 +851,6 @@ fn item_overlay_supplied_flags_select_distinct_overlays() {
         local button = CreateFrame('Button', nil, UIParent)
         button.IconOverlay = button:CreateTexture(nil, 'OVERLAY')
         button.IconOverlay2 = button:CreateTexture(nil, 'OVERLAY')
-        button.noProfessionQualityOverlay = true
         local cases = {
             {900031, 'cosmetic', 'CosmeticIconFrame'},
             {900032, 'conduit', 'ConduitIconFrame'},
