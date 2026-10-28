@@ -7,8 +7,8 @@ fn original_sidepanel_tab_uses_common_sidetab_atlas() {
     env.exec(
         r#"
         local tab = CreateFrame("Frame", nil, UIParent, "LargeSideTabButtonTemplate")
-        assert(tab.Background:GetAtlas() == "common-sidetab")
-        assert(tab.Background:GetWidth() == 45 and tab.Background:GetHeight() == 60)
+        assert(tab.Background:GetAtlas() == "common-sidetab", "template background atlas")
+        assert(tab.Background:GetWidth() == 45 and tab.Background:GetHeight() == 60, "template background geometry")
         local info = assert(C_Texture.GetAtlasInfo("common-sidetab"))
         assert(info.width == 45 and info.height == 60)
         assert(info.filename == "Interface\\common\\commonsidetab.blp")
