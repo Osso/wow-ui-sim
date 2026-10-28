@@ -568,7 +568,11 @@ fn apply_post_event_bootstrap(env: &crate::lua_api::WowLuaEnv) {
     crate::lua_api::workarounds_editmode::init_edit_mode_layout(env);
     crate::lua_api::workarounds_editmode::reapply_player_frame_anchor(env);
     crate::lua_api::chat_init::init_chat_type_colors(env);
-    crate::lua_api::chat_init::show_chat_frame(env);
+    let is_character_select =
+        env.state().borrow().screen_kind == crate::screen::ScreenKind::CharacterSelect;
+    if !is_character_select {
+        crate::lua_api::chat_init::show_chat_frame(env);
+    }
 }
 
 fn patch_post_event_frame_layout(env: &crate::lua_api::WowLuaEnv) {
