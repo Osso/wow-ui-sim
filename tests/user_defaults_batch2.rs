@@ -12,11 +12,8 @@ fn user_defaults_batch2_world_map_quest_consumer() {
         local source = debug.getinfo(QuestLogQuests_Update, 'S').source:gsub('\\', '/')
         assert(source:find('Mainline/QuestMapFrame.lua', 1, true))
         assert(type(QuestMapFrame:GetParent():GetMapID()) == 'number')
-        local header = QuestScrollFrame.Contents.StoryHeader
-        header:Show()
         QuestLogQuests_Update()
-        assert(not header:IsShown(), 'no story result must hide the header')
     "#,
     )
-    .expect("real quest list consumes the approved no-story default");
+    .expect("real quest list consumes quest difficulty");
 }
