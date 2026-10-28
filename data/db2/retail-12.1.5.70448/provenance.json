@@ -1,0 +1,26 @@
+{
+  "build": "12.1.5.70448",
+  "source": "Wago DB2CSV exact-build exports",
+  "urls": {
+    "GlobalStrings.csv": "https://wago.tools/db2/GlobalStrings/csv?build=12.1.5.70448",
+    "UiTextureAtlas.csv": "https://wago.tools/db2/UiTextureAtlas/csv?build=12.1.5.70448",
+    "UiTextureAtlasElement.csv": "https://wago.tools/db2/UiTextureAtlasElement/csv?build=12.1.5.70448",
+    "UiTextureAtlasElementSliceData.csv": "https://wago.tools/db2/UiTextureAtlasElementSliceData/csv?build=12.1.5.70448",
+    "UiTextureAtlasMember.csv": "https://wago.tools/db2/UiTextureAtlasMember/csv?build=12.1.5.70448"
+  },
+  "listfile_source": "Subset of data/wow-ui-sim-listfile.csv and data/db2/retail-12.1.5.70575/listfile.csv",
+  "sha256": {
+    "GlobalStrings.csv": "d5ac7f3251e7b96b25c397e9cf94bf7ca8b3906e157ae7e8bca0e555d562285e",
+    "UiTextureAtlas.csv": "85e8b8e14b784a267f5defacbf26dc131301af081ef79a7844e36a103ec3074e",
+    "UiTextureAtlasElement.csv": "d9f5c3b081f9b7773a0079e5d97f26fc2c26ee6b227172c140216035318ce072",
+    "UiTextureAtlasElementSliceData.csv": "e9aaa23b82f9f2b61356d73764bf6162203309a40d2df2f1f9e53bd7301a9cf7",
+    "UiTextureAtlasMember.csv": "7e63a711fb1b52013ca51f1727d6556207be60db17803d598b434f4547b91539",
+    "listfile.csv": "bb1b5b4c41cd58fe4a6f29eb51670c36595fc10290ff4c76b434128231658988"
+  },
+  "unmapped_fdids": [
+    5426612,
+    8116297,
+    8116299,
+    8425294
+  ]
+}
