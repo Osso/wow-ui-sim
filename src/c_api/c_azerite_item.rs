@@ -17,9 +17,10 @@
 //! despite the signature in the documentation).
 
 use crate::c_api::helpers::ensure_namespace;
-use crate::lua_api::methods::{borrow_state, create_table_with_fields};
+use crate::client_profile::{ACTIVE, ClientProfile};
+use crate::lua_api::methods::{borrow_state, create_table_with_fields, table_get};
 use crate::lua_api::state::AzeriteItemState;
-use crate::lua_bridge::table_set_rust_fn_static;
+use crate::lua_bridge::{stack_val, table_set_rust_fn_static};
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
 
@@ -47,7 +48,43 @@ pub(crate) fn register_c_azerite_item_surface(state: &mut LuaState) -> LuaResult
         is_azerite_item_at_max_level,
     )?;
     table_set_rust_fn_static(state, ns, "IsAzeriteItemEnabled", is_azerite_item_enabled)?;
+    if matches!(ACTIVE, ClientProfile::Retail) {
+        table_set_rust_fn_static(state, ns, "IsAzeriteItem", is_azerite_item)?;
+    }
     Ok(())
+}
+
+fn is_azerite_item(state: &mut LuaState) -> LuaResult<u32> {
+    let value = rilua::table_security::unwrap_secret(state, stack_val(state, 1))?;
+    if !matches!(value, Val::Table(_)) {
+        return Err(rilua::runtime_error(
+            "C_AzeriteItem.IsAzeriteItem: itemLocation must be a table",
+        ));
+    }
+    let bag = location_field(state, value, "bagID")?;
+    let slot = location_field(state, value, "slotIndex")?;
+    let equipment = location_field(state, value, "equipmentSlotIndex")?;
+    let matches = borrow_state(state)?
+        .azerite_item
+        .as_ref()
+        .is_some_and(|item| {
+            let location = &item.item_location;
+            (equipment.is_some() || bag.is_some() && slot.is_some())
+                && bag == location.bag_id
+                && slot == location.slot_index
+                && equipment == location.equipment_slot_index
+        });
+    state.push(Val::Bool(matches));
+    Ok(1)
+}
+
+fn location_field(state: &mut LuaState, value: Val, key: &str) -> LuaResult<Option<i32>> {
+    let field = table_get(state, value, key);
+    let field = rilua::table_security::unwrap_secret(state, field)?;
+    Ok(match field {
+        Val::Num(n) => Some(n as i32),
+        _ => None,
+    })
 }
 
 fn find_active_azerite_item(state: &mut LuaState) -> LuaResult<u32> {
