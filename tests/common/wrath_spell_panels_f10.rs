@@ -121,7 +121,11 @@ fn glyph_socket_consumer_tracks_supplied_records() {
 #[test]
 fn talent_tab_background_tracks_supplied_records_on_show() {
     let env = load_talent_fixture();
-    for (background, rank, prerequisite) in [("FirstTree", 1, false), ("SecondTree", 0, true), ("SecondTree", 1, true)] {
+    for (background, rank, prerequisite) in [
+        ("FirstTree", 1, false),
+        ("SecondTree", 0, true),
+        ("SecondTree", 1, true),
+    ] {
         env.state().borrow_mut().wrath_talent_tabs.insert(
             (1, 1),
             wow_ui_sim::lua_api::state::WrathTalentTab {
@@ -175,7 +179,10 @@ fn talent_tab_background_tracks_supplied_records_on_show() {
                 }],
             });
         }
-        env.state().borrow_mut().wrath_talent_rows.insert((1, 1), rows);
+        env.state()
+            .borrow_mut()
+            .wrath_talent_rows
+            .insert((1, 1), rows);
         env.exec("A_Admin.SetWrathUnspentTalentPoints(1, 3); SetCVar('previewTalents', '0')")
             .expect("supply talent points");
         env.exec("PlayerTalentFrame:Hide(); PlayerTalentFrame:Show()")
@@ -497,6 +504,28 @@ fn first_open_formats_native_spellbook_page_label() {
     exec_consumer(
         &env,
         "assert(SpellBookPageText:GetText() == string.format(PAGE_NUMBER, 1))",
+    );
+}
+
+#[test]
+fn original_spellbook_hover_tracks_supplied_spell_slots() {
+    let env = load_spellbook_fixture();
+    env.exec(r#"A_Admin.SetWrathSpellBookSlot('spell', 1, 6603, 'Auto Attack', '', 'Interface\\Icons\\INV_Sword_04')"#).unwrap();
+    open_spellbook(&env);
+    exec_consumer(
+        &env,
+        r#"
+        SpellButton1:GetScript('OnEnter')(SpellButton1)
+        assert(GameTooltip:IsShown())
+        assert(GameTooltip:GetLeftLine(1):GetText() == 'Auto Attack')
+        assert(SpellButton1.UpdateTooltip == nil)
+        A_Admin.SetWrathSpellBookSlot('spell', 1, 635, 'Holy Light', '', 'Interface\\Icons\\Spell_Holy_HolyBolt')
+        SpellButton1:GetScript('OnEnter')(SpellButton1)
+        assert(GameTooltip:IsShown())
+        assert(GameTooltip:GetLeftLine(1):GetText() == 'Holy Light')
+        assert(GameTooltip:SetSpell(999, 'spell') == nil)
+        assert(GameTooltip:GetLeftLine(1):GetText() == 'Holy Light')
+    "#,
     );
 }
 
