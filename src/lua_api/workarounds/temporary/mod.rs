@@ -77,9 +77,9 @@ pub(crate) mod dye_color_defaults;
 pub(crate) mod edit_mode_cache_defaults;
 pub(crate) mod encounter_state;
 pub(crate) mod environment_cleanup_restore;
-pub(crate) mod external_event_url_default;
 pub(crate) mod equipment_set_lock_defaults;
 pub(crate) mod event_scheduler_state;
+pub(crate) mod external_event_url_default;
 pub(crate) mod fog_of_war_pin;
 #[cfg(feature = "client-wowforever")]
 pub(crate) mod forever_bank_capability_defaults;
@@ -154,9 +154,9 @@ pub(crate) mod post_event_action_button_refresh;
 pub(crate) mod post_event_frame_layout;
 pub(crate) mod private_aura_state;
 pub(crate) mod profession_specs_defaults;
-pub(crate) mod ptr_bank_default;
 pub(crate) mod prototype_dialog_state;
 pub(crate) mod proxy_object_factories;
+pub(crate) mod ptr_bank_default;
 pub(crate) mod pvp_talent_defaults;
 pub(crate) mod quest_log_mixin;
 pub(crate) mod quest_objective_defaults;
@@ -219,8 +219,8 @@ pub(crate) mod unit_threat_defaults;
 pub(crate) mod video_options_state;
 pub(crate) mod vignette_pin_template;
 pub(crate) mod world_service_defaults;
-pub(crate) mod zone_story_default;
 #[cfg(feature = "client-wrath")]
 pub(crate) mod wrath_arena_roster;
 #[cfg(feature = "client-wrath")]
 pub(crate) mod wrath_trade_skill_filters;
+pub(crate) mod zone_story_default;
