@@ -43,6 +43,7 @@ fn require_supplied<T>(input: Option<T>, query: &str) -> LuaResult<T> {
 fn is_engraving_enabled(state: &mut LuaState) -> LuaResult<u32> {
     let input = borrow_state(state)?.engraving.enabled;
     let enabled = if matches!(ACTIVE, ClientProfile::Era | ClientProfile::Anniversary) {
+        // Era/Anniversary default: user-decided, not native evidence.
         input.unwrap_or(false)
     } else {
         require_supplied(input, "IsEngravingEnabled")?

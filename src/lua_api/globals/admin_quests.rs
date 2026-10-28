@@ -191,7 +191,6 @@ fn commit_selected_quest_turn_in(sim: &mut crate::lua_api::SimState) -> Option<i
         return None;
     }
     sim.quest_log.retain(|id| *id != selected);
-    #[cfg(feature = "client-wowforever")]
     sim.quest_watch_types.remove(&quest_id);
     clear_turned_in_quest_dialog(sim, quest_id);
     Some(quest_id)

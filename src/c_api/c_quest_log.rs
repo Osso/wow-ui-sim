@@ -27,6 +27,8 @@ pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
     #[cfg(any(feature = "client-retail", feature = "client-ptr"))]
     {
         let namespace = ensure_namespace(state, "C_QuestLog")?;
+        // QuestLogDocumentation.lua:701 Retail, :719 PTR; user-approved default.
+        table_set_rust_fn_static(state, namespace, "IsAccountQuest", is_account_quest)?;
         table_set_rust_fn_static(
             state,
             namespace,
@@ -36,6 +38,9 @@ pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
     }
     #[cfg(feature = "client-wowforever")]
     register_forever_queries(state)?;
+    if super::c_quest_log_watches::ENABLED {
+        super::c_quest_log_watches::register(state)?;
+    }
     Ok(())
 }
 
@@ -48,7 +53,22 @@ fn register_forever_queries(state: &mut LuaState) -> LuaResult<()> {
         "GetQuestDifficultyLevel",
         get_quest_difficulty_level,
     )?;
-    super::c_quest_log_watches::register(state)
+    Ok(())
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
+fn is_account_quest(state: &mut LuaState) -> LuaResult<u32> {
+    let id = validate_supplied_relation_id(stack_val(state, 1), "questID must be a number")?;
+    // User-approved default, not native evidence; supplied quest data takes precedence.
+    let account = borrow_state(state)?
+        .quest_log_entries
+        .entries
+        .iter()
+        .find(|entry| Some(entry.quest_id) == id)
+        .and_then(|entry| entry.is_account_quest)
+        .unwrap_or(false);
+    state.push(Val::Bool(account));
+    Ok(1)
 }
 
 #[cfg(any(feature = "client-retail", feature = "client-ptr"))]

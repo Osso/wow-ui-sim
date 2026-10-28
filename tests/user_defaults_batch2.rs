@@ -49,6 +49,9 @@ fn user_defaults_batch2_quest_watch_membership() {
     "#
     ))
     .expect("quest watch membership must follow changes");
+    env.state().borrow_mut().quest_log_entries.entries[0].is_account_quest = Some(true);
+    env.exec(&format!("assert(C_QuestLog.IsAccountQuest({quest_id}))"))
+        .expect("supplied account quest flag takes precedence");
 }
 
 #[test]
