@@ -891,6 +891,14 @@ def print_status(unit):
     print(f"WallTimeSec={wall}")
 
 
+def requests_json_messages(cargo):
+    cargo_args = cargo[:cargo.index("--")] if "--" in cargo else cargo
+    pairs = zip(cargo_args, cargo_args[1:] + [""])
+    return any(arg.startswith("--message-format=json")
+               or (arg == "--message-format" and value.startswith("json"))
+               for arg, value in pairs)
+
+
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--execute", type=Path, help=argparse.SUPPRESS)
@@ -933,6 +941,9 @@ def main(argv=None):
         parser.error("provide a Cargo command after --")
     if Path(cargo[0]).name != "cargo":
         parser.error(f"the command after -- must start with cargo, got {cargo[0]!r}")
+    if not requests_json_messages(cargo):
+        parser.error("the Cargo command must pass --message-format=json before any --; "
+                     "artifact certification needs compiler-artifact records")
     if not args.worktree.is_absolute() or not args.worktree.is_dir():
         parser.error("--worktree must be an absolute directory path")
     worktree = args.worktree.resolve()
