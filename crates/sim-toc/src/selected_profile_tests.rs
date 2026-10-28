@@ -314,6 +314,22 @@ fn test_supports_interface_version() {
 }
 
 #[test]
+fn test_parse_addon_text_locale_metadata() {
+    for value in ["enUS", "ruRU", "frFR, enUS", "frFR enUS"] {
+        let toc = TocFile::parse(
+            Path::new("/addons/LocaleProbe"),
+            &format!("## AllowLoadTextLocale: {value}\nCore.lua\n"),
+        );
+        assert_eq!(
+            toc.metadata.get("AllowLoadTextLocale").map(String::as_str),
+            Some(value)
+        );
+    }
+    let toc = TocFile::parse(Path::new("/addons/LocaleProbe"), "Core.lua\n");
+    assert!(!toc.metadata.contains_key("AllowLoadTextLocale"));
+}
+
+#[test]
 fn test_parse_text_locale_excludes_production_template() {
     let toc = TocFile::parse(
         Path::new("/addons/ExtraQuestButton"),
