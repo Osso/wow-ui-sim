@@ -34,7 +34,10 @@ pub struct RecipeQualityInputs {
 pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
     if !matches!(
         ACTIVE,
-        ClientProfile::Retail | ClientProfile::Ptr | ClientProfile::WowForever
+        ClientProfile::Retail
+            | ClientProfile::Ptr
+            | ClientProfile::WowForever
+            | ClientProfile::Mists
     ) {
         return Ok(());
     }
@@ -46,7 +49,10 @@ pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
     }
     if matches!(
         ACTIVE,
-        ClientProfile::Retail | ClientProfile::Ptr | ClientProfile::WowForever
+        ClientProfile::Retail
+            | ClientProfile::Ptr
+            | ClientProfile::WowForever
+            | ClientProfile::Mists
     ) {
         table_set_rust_fn_static(state, ns, "GetItemReagentQualityInfo", reagent_item_quality)?;
     }
@@ -102,6 +108,11 @@ fn crafted_item_quality(state: &mut LuaState) -> LuaResult<u32> {
 
 fn reagent_item_quality(state: &mut LuaState) -> LuaResult<u32> {
     let value = rilua::table_security::unwrap_secret(state, stack_val(state, 1))?;
+    if ACTIVE == ClientProfile::Mists && !matches!(value, Val::Num(_)) {
+        return Err(rilua::runtime_error(
+            "C_TradeSkillUI.GetItemReagentQualityInfo: itemID must be a number",
+        ));
+    }
     if !matches!(value, Val::Num(_) | Val::Str(_)) {
         return Err(rilua::runtime_error(
             "C_TradeSkillUI.GetItemReagentQualityInfo: itemInfo must be an item ID or link",
@@ -143,10 +154,13 @@ fn push_crafting_quality_snapshot(state: &mut LuaState, record: &CraftingQuality
         ("barBackgroundCap", &record.bar_background_cap),
         ("barHighlight", &record.bar_highlight),
         ("iconChat", &record.icon_chat),
-        ("iconQuestObjective", &record.icon_quest_objective),
     ] {
         let value = create_string(state, text);
         table_set(state, result, key, value);
+    }
+    if ACTIVE != ClientProfile::Mists {
+        let value = create_string(state, &record.icon_quest_objective);
+        table_set(state, result, "iconQuestObjective", value);
     }
     1
 }
