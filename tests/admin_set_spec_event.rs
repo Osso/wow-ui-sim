@@ -60,16 +60,16 @@ fn admin_set_spec_dispatches_to_observers_and_micro_menu() {
         A_Admin.SetSpec(firstSpec)
         assert(#specEvents == 1 and specEvents[1][1] == "PLAYER_SPECIALIZATION_CHANGED")
         assert(specEvents[1][2] == 1 and specEvents[1][3] == "player" and specEvents[1][4] == firstSpec)
-        assert(PlayerSpellsMicroButton:IsDirty(), "original micro-menu consumer did not mark itself dirty")
+        assert(PlayerSpellsMicroButton.dirty, "original micro-menu consumer did not mark itself dirty")
         PlayerSpellsMicroButton.dirty = nil
         A_Admin.SetSpec(secondSpec)
         assert(#specEvents == 2 and specEvents[2][1] == "PLAYER_SPECIALIZATION_CHANGED")
         assert(specEvents[2][2] == 1 and specEvents[2][3] == "player" and specEvents[2][4] == secondSpec)
-        assert(PlayerSpellsMicroButton:IsDirty(), "second change did not mark micro-menu dirty")
+        assert(PlayerSpellsMicroButton.dirty, "second change did not mark micro-menu dirty")
         PlayerSpellsMicroButton.dirty = nil
         A_Admin.SetSpec(secondSpec)
         assert(#specEvents == 2, "same specialization must not fire an event")
-        assert(not PlayerSpellsMicroButton:IsDirty(), "same specialization must not refresh micro-menu")
+        assert(not PlayerSpellsMicroButton.dirty, "same specialization must not refresh micro-menu")
         "#,
     )
     .expect("second spec event and same-spec no-op");
