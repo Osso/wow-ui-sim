@@ -25,6 +25,10 @@ fn ptr_original_consumers_register_documented_events() {
             "SecureTransferDialog",
             "SECURE_TRANSFER_CONFIRM_VC_PRODUCT_PURCHASE",
         ),
+        (
+            "SecureTransferDialog",
+            "SECURE_TRANSFER_CONFIRM_TAKE_MAIL_MONEY",
+        ),
         ("ShardTransferImminentFrame", "SHARD_TRANSFER_CANCELLED"),
         (
             "ShardTransferImminentMinimizeButton",
@@ -36,8 +40,10 @@ fn ptr_original_consumers_register_documented_events() {
         env.exec(&format!("assert({frame}:IsEventRegistered('{event}'), '{frame}: {event}'); {frame}:RegisterEvent('{event}'); assert({frame}:IsEventRegistered('{event}'))"))
             .unwrap_or_else(|error| panic!("{frame}: {event}: {error}"));
     }
-    let error = env
-        .exec("CreateFrame('Frame'):RegisterEvent('PTR_INVENTED_UNDECLARED_EVENT')")
-        .unwrap_err();
-    assert!(error.to_string().contains("unknown event"), "{error}");
+    for event in ["FORCE_DECLINE_CHARACTER", "PTR_INVENTED_UNDECLARED_EVENT"] {
+        let error = env
+            .exec(&format!("CreateFrame('Frame'):RegisterEvent('{event}')"))
+            .unwrap_err();
+        assert!(error.to_string().contains("unknown event"), "{event}: {error}");
+    }
 }
