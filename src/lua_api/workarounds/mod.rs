@@ -209,6 +209,7 @@ fn apply_runtime_state_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     temporary::event_scheduler_state::apply_bootstrap(lua)?;
     temporary::combat_log_state::apply_bootstrap(lua)?;
     temporary::encounter_state::apply_bootstrap(lua)?;
+    temporary::external_event_url_default::apply_bootstrap(lua)?;
     temporary::housing_catalog_state::apply_bootstrap(lua)?;
     temporary::housing_owned_house_requests::apply_bootstrap(lua)?;
     #[cfg(feature = "client-wowforever")]
