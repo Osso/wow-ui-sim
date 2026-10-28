@@ -613,3 +613,11 @@ mod tests {
 #[cfg(test)]
 #[path = "headless_colour_tests.rs"]
 mod colour_tests;
+
+#[cfg(test)]
+#[path = "headless_sampler_tests.rs"]
+mod sampler_tests;
+
+#[cfg(test)]
+#[path = "headless_atlas_edge_tests.rs"]
+mod atlas_edge_tests;
