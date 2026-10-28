@@ -239,9 +239,14 @@ fn character_select_populates_character_roster() {
             "character-select screen should expose a guid for the first character"
         );
 
+        let name_field = if wow_ui_sim::client_profile::ACTIVE == wow_ui_sim::client_profile::ClientProfile::Ptr {
+            "characterName"
+        } else {
+            "name"
+        };
         let first_name: Option<String> = env
             .eval(
-                "local info = CharacterSelectUtil and CharacterSelectUtil.GetCharacterInfoTable(1); return info and info.name or nil",
+                &format!("local info = CharacterSelectUtil and CharacterSelectUtil.GetCharacterInfoTable(1); return info and info.{name_field} or nil"),
             )
             .expect("CharacterSelectUtil.GetCharacterInfoTable(1) should be queryable");
         assert!(
@@ -259,7 +264,7 @@ fn character_select_populates_character_roster() {
 
         let second_name: Option<String> = env
             .eval(
-                "local info = CharacterSelectUtil and CharacterSelectUtil.GetCharacterInfoTable(2); return info and info.name or nil",
+                &format!("local info = CharacterSelectUtil and CharacterSelectUtil.GetCharacterInfoTable(2); return info and info.{name_field} or nil"),
             )
             .expect("CharacterSelectUtil.GetCharacterInfoTable(2) should be queryable");
         assert!(
