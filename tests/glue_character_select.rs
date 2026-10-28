@@ -22,6 +22,27 @@ fn ptr_character_select_registers_undelete_event_on_load() {
 }
 
 #[test]
+#[cfg(feature = "client-retail")]
+fn retail_fonts_follow_screen_phase() {
+    test_timeout! {
+        common::blizzard_addon_harness::with_blizzard_addon_glue_smoke_shape(
+            &["Blizzard_Fonts_Shared"], &[], |env, loaded| {
+                assert!(loaded.iter().any(|name| name == "Blizzard_Fonts_Shared"));
+                let game_font_script_absent: bool = env.eval("return UNIT_NAME_FONT_KOREAN == nil").unwrap();
+                assert!(game_font_script_absent);
+            },
+        );
+        common::blizzard_addon_harness::with_blizzard_addon_closure(
+            &["Blizzard_Fonts_Shared"], &[], |env, loaded| {
+                assert!(loaded.iter().any(|name| name == "Blizzard_Fonts_Shared"));
+                let game_font_script_loaded: bool = env.eval("return UNIT_NAME_FONT_KOREAN ~= nil").unwrap();
+                assert!(game_font_script_loaded);
+            },
+        );
+    }
+}
+
+#[test]
 #[cfg(feature = "client-ptr")]
 fn ptr_declension_uses_glue_frame() {
     test_timeout! {
