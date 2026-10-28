@@ -6,9 +6,76 @@ use wow_ui_sim::paths::default_blizzard_ui_addons_path;
 use wow_ui_sim::screen::ScreenKind;
 use wow_ui_sim::startup::{run_extra_update_ticks, settle_headless_startup};
 
+#[test]
+#[cfg(feature = "client-ptr")]
+fn ptr_character_select_registers_undelete_event_on_load() {
+    test_timeout! {
+        let env = load_blizzard_screen(ScreenKind::CharacterSelect);
+        let registered: bool = env.eval("return CharacterSelect:IsEventRegistered('CHARACTER_UNDELETE_STARTED')").unwrap();
+        assert!(registered);
+        let errors = env.state().borrow().lua_errors.clone();
+        assert!(
+            !errors.iter().any(|error| error.contains("[OnLoad] CharacterSelect:") && error.contains("RegisterEvent")),
+            "CharacterSelect event registration failed: {errors:#?}"
+        );
+    }
+}
+
+#[test]
+#[cfg(feature = "client-ptr")]
+fn ptr_declension_consumer_registers_event() {
+    test_timeout! {
+        let env = load_blizzard_screen(ScreenKind::CharacterSelect);
+        let errors = env.state().borrow().lua_errors.clone();
+        assert!(
+            !errors.iter().any(|error| error.contains("DeclensionFrame:RegisterEvent") && error.contains("unknown event")),
+            "DeclensionFrame event registration failed: {errors:#?}"
+        );
+        env.exec(r#"
+            declensionProbe = CreateFrame('Frame')
+            declensionProbe:RegisterEvent('FORCE_DECLINE_CHARACTER')
+            declensionProbe:SetScript('OnEvent', function() declensionEventReceived = true end)
+            assert(declensionProbe:IsEventRegistered('FORCE_DECLINE_CHARACTER'))
+        "#).unwrap();
+        run_extra_update_ticks(&env, 3);
+        let emitted: bool = env.eval("return declensionEventReceived == true").unwrap();
+        assert!(!emitted);
+    }
+}
+
+#[test]
+#[cfg(feature = "client-ptr")]
+fn ptr_login_state_is_available_to_glue() {
+    test_timeout! {
+        let env = load_blizzard_screen(ScreenKind::CharacterSelect);
+        env.exec(r#"
+            local s = C_Login.GetState()
+            assert(type(s) == 'table')
+            assert(type(s.auroraState) == 'number')
+            assert(type(s.connectedToWoW) == 'boolean')
+            assert(type(s.wowConnectionState) == 'number')
+            assert(type(s.hasRealmList) == 'boolean')
+            assert(s.waitingForRealmList == false)
+            assert(s.superDistrictChoicePending == false)
+            assert(s.keepingCharacterListOnRealmJoin == false)
+            assert(s.waitingForRuleSets == false)
+            assert(s.hasSelectedExperiencePreset == true)
+        "#).unwrap();
+    }
+}
+
+#[test]
+#[cfg(feature = "client-ptr")]
+fn ptr_name_reservation_default_is_false() {
+    test_timeout! {
+        let env = load_blizzard_screen(ScreenKind::CharacterSelect);
+        let result: bool = env.eval("return IsNameReservationOnly() == false").unwrap();
+        assert!(result);
+    }
+}
+
 fn blizzard_ui_dir() -> std::path::PathBuf {
     default_blizzard_ui_addons_path().expect("Blizzard UI cache should be synced")
-
 }
 
 fn load_blizzard_screen(screen: ScreenKind) -> common::LockedEnv {
@@ -184,9 +251,14 @@ fn character_select_populates_character_roster() {
             "character-select screen should expose a guid for the first character"
         );
 
+        let name_field = if wow_ui_sim::client_profile::ACTIVE == wow_ui_sim::client_profile::ClientProfile::Ptr {
+            "characterName"
+        } else {
+            "name"
+        };
         let first_name: Option<String> = env
             .eval(
-                "local info = CharacterSelectUtil and CharacterSelectUtil.GetCharacterInfoTable(1); return info and info.name or nil",
+                &format!("local info = CharacterSelectUtil and CharacterSelectUtil.GetCharacterInfoTable(1); return info and info.{name_field} or nil"),
             )
             .expect("CharacterSelectUtil.GetCharacterInfoTable(1) should be queryable");
         assert!(
@@ -204,7 +276,7 @@ fn character_select_populates_character_roster() {
 
         let second_name: Option<String> = env
             .eval(
-                "local info = CharacterSelectUtil and CharacterSelectUtil.GetCharacterInfoTable(2); return info and info.name or nil",
+                &format!("local info = CharacterSelectUtil and CharacterSelectUtil.GetCharacterInfoTable(2); return info and info.{name_field} or nil"),
             )
             .expect("CharacterSelectUtil.GetCharacterInfoTable(2) should be queryable");
         assert!(

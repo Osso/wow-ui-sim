@@ -40,10 +40,13 @@ fn ptr_original_consumers_register_documented_events() {
         env.exec(&format!("assert({frame}:IsEventRegistered('{event}'), '{frame}: {event}'); {frame}:RegisterEvent('{event}'); assert({frame}:IsEventRegistered('{event}'))"))
             .unwrap_or_else(|error| panic!("{frame}: {event}: {error}"));
     }
-    for event in ["FORCE_DECLINE_CHARACTER", "PTR_INVENTED_UNDECLARED_EVENT"] {
+    for event in ["PTR_INVENTED_UNDECLARED_EVENT"] {
         let error = env
             .exec(&format!("CreateFrame('Frame'):RegisterEvent('{event}')"))
             .unwrap_err();
-        assert!(error.to_string().contains("unknown event"), "{event}: {error}");
+        assert!(
+            error.to_string().contains("unknown event"),
+            "{event}: {error}"
+        );
     }
 }
