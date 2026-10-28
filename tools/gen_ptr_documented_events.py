@@ -38,6 +38,8 @@ def generate(addons: Path) -> str:
         "", "pub(super) const EVENTS: &[&str] = &["]
     for event in sorted(events):
         if event in consumer_events:
+            if event == "FORCE_DECLINE_CHARACTER":
+                lines.append("    // User-approved, not native evidence; declension flow is not modeled.")
             lines.append(f"    // {consumer_events[event]}")
         lines.append(f'    "{event}",')
     return "\n".join(lines + ["];", ""])

@@ -606,6 +606,7 @@ pub(super) const EVENTS: &[&str] = &[
     "FORBIDDEN_NAME_PLATE_CREATED",
     "FORBIDDEN_NAME_PLATE_UNIT_ADDED",
     "FORBIDDEN_NAME_PLATE_UNIT_REMOVED",
+    // User-approved, not native evidence; declension flow is not modeled.
     // Blizzard_DeclensionFrame/Mainline/DeclensionFrameGlue.lua:12
     "FORCE_DECLINE_CHARACTER",
     "FORCE_REFRESH_HOUSE_FINDER",
