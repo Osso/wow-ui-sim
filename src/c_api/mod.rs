@@ -286,7 +286,6 @@ pub(crate) mod c_ui;
 pub mod c_ui_file_asset;
 #[cfg(feature = "retail-12-0-5")]
 pub(crate) mod c_unit_aura_altered_form;
-#[cfg(any(feature = "aura-spell-classifications", feature = "client-mists"))]
 pub mod c_unit_aura_classification;
 #[cfg(feature = "retail-12-0-5")]
 pub mod c_unit_aura_cooldown_spells;

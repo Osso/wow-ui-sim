@@ -356,7 +356,6 @@ pub struct SimState {
     pub cooldown_aura_associations:
         crate::c_api::c_unit_aura_cooldown_spells::CooldownAuraAssociations,
     /// INFERRED explicit spell flags only; no classification catalog or acquisition.
-    #[cfg(any(feature = "aura-spell-classifications", feature = "client-mists"))]
     pub aura_spell_classifications:
         crate::c_api::c_unit_aura_classification::AuraSpellClassifications,
     /// INFERRED host-declared sound IDs only; no Add acquisition or playback model.
