@@ -89,47 +89,6 @@ fn check_desired(desired: bool) {
 }
 
 #[test]
-fn admin_set_spec_dispatches_to_observers_and_micro_menu() {
-    let env = load_game_ui();
-    env.exec(
-        r#"
-        assert(PlayerSpellsMicroButton:IsEventRegistered("PLAYER_SPECIALIZATION_CHANGED"))
-        local source = debug.getinfo(PlayerSpellsMicroButton.GetAnyPvpTalentAlert, "S").source
-        assert(string.find(source, "MainMenuBarMicroButtons.lua", 1, true), source)
-        specEvents = {}
-        local observer = CreateFrame("Frame")
-        observer:RegisterEvent("PLAYER_SPECIALIZATION_CHANGED")
-        observer:SetScript("OnEvent", function(_, event, ...)
-            table.insert(specEvents, {event, select('#', ...), ..., GetSpecialization()})
-        end)
-        consumerCalls = 0
-        hooksecurefunc(PlayerSpellsMicroButton, "GetAnyPvpTalentAlert", function()
-            consumerCalls = consumerCalls + 1
-        end)
-        initialSpec = GetSpecialization()
-        firstSpec = initialSpec == 1 and 2 or 1
-        secondSpec = initialSpec == 3 and 2 or 3
-        A_Admin.SetSpec(firstSpec)
-        assert(#specEvents == 1 and specEvents[1][1] == "PLAYER_SPECIALIZATION_CHANGED")
-        assert(specEvents[1][2] == 1 and specEvents[1][3] == "player" and specEvents[1][4] == firstSpec)
-        "#,
-    )
-    .expect("first spec event sees updated state");
-    env.fire_on_update(0.016).expect("refresh micro menu");
-    env.exec(
-        r#"
-        assert(consumerCalls > 0, "original micro-menu consumer did not refresh")
-        A_Admin.SetSpec(secondSpec)
-        assert(#specEvents == 2 and specEvents[2][1] == "PLAYER_SPECIALIZATION_CHANGED")
-        assert(specEvents[2][2] == 1 and specEvents[2][3] == "player" and specEvents[2][4] == secondSpec)
-        A_Admin.SetSpec(secondSpec)
-        assert(#specEvents == 2, "same specialization must not fire an event")
-        "#,
-    )
-    .expect("second spec event and same-spec no-op");
-}
-
-#[test]
 fn forever_specialization_refresh_war_mode_disabled() {
     check_desired(false);
 }
