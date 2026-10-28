@@ -28,11 +28,10 @@ pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
 }
 
 fn get_list(state: &mut LuaState) -> LuaResult<u32> {
-    // User-approved simulator default, not native evidence; missing pet specialization catalog.
     let observation = borrow_state(state)?
         .stable_pet_spec_infos
         .clone()
-        .unwrap_or_default();
+        .unwrap_or_else(crate::lua_api::workarounds::default_pet_spec_catalog);
     let list = create_table(state);
     for (index, record) in observation.iter().enumerate() {
         let row = create_table(state);
