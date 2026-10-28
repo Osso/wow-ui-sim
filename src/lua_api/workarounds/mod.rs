@@ -216,6 +216,7 @@ fn apply_runtime_state_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     temporary::house_exterior_debug::apply_bootstrap(lua)?;
     temporary::map_runtime_state::apply_bootstrap(lua)?;
     temporary::perks_activities_state::apply_bootstrap(lua)?;
+    temporary::ptr_bank_default::apply_bootstrap(lua)?;
     crate::c_api::private_aura_callbacks::apply_bootstrap(lua)?;
     temporary::private_aura_state::apply_bootstrap(lua)?;
     temporary::reputation_state::apply_bootstrap(lua)
