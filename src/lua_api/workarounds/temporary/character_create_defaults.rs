@@ -507,6 +507,7 @@ end
 
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     lua.exec(CHARACTER_CREATION_NAMESPACE_DEFAULTS_LUA)?;
+    crate::c_api::c_character_creation_seen::install(lua)?;
     if matches!(
         crate::client_profile::ACTIVE,
         crate::client_profile::ClientProfile::Retail | crate::client_profile::ClientProfile::Ptr

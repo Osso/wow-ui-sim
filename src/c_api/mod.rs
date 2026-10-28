@@ -78,6 +78,7 @@ pub mod c_calendar;
 pub mod c_catalog_shop;
 pub mod c_catalog_shop_products;
 pub mod c_challenge_mode;
+pub(crate) mod c_character_creation_seen;
 pub mod c_character_services;
 pub mod c_chat_bubbles;
 #[cfg(feature = "retail-12-0-5")]
