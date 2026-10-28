@@ -844,6 +844,7 @@ pub struct SimState {
     pub pvp_last_honor_gain: i32,
     /// Explicit host booleans; only Retail/PTR publish the query, never inferred.
     pub item_dressability: HashMap<u32, bool>,
+    pub corrupted_items: HashSet<u32>,
     pub equippable_items: ::std::collections::HashSet<u32>,
     pub consumable_items: ::std::collections::HashSet<u32>,
     pub can_replace_guild_master: bool,

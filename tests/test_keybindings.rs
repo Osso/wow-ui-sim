@@ -616,6 +616,56 @@ fn character_panel_inventory_tooltip_has_lines_and_closes_without_errors() {
     }
 }
 
+#[cfg(feature = "client-retail")]
+#[test]
+fn retail_item_button_corruption_uses_supplied_identity() {
+    let env = setup_env();
+    env.state().borrow_mut().corrupted_items.insert(900001);
+    env.exec(
+        r#"
+        local button = CreateFrame('Button', nil, UIParent)
+        button.IconOverlay = button:CreateTexture(nil, 'OVERLAY')
+        SetItemButtonOverlay(button, 900001, Enum.ItemQuality.Common, false)
+        assert(button.IconOverlay:GetAtlas() == 'Nzoth-inventory-icon')
+        assert(button.IconOverlay:IsShown())
+        assert(C_Item.IsCorruptedItem(900001) == true)
+        assert(C_Item.IsCorruptedItem(900002) == false)
+        "#,
+    )
+    .expect("original item overlay uses supplied corruption");
+}
+
+#[cfg(feature = "client-retail")]
+#[test]
+fn retail_paper_doll_azerite_overlay_uses_supplied_location() {
+    use wow_ui_sim::lua_api::{AzeriteItemState, ItemLocationData};
+    let env = setup_env();
+    env.state().borrow_mut().azerite_item = Some(AzeriteItemState {
+        item_location: ItemLocationData { equipment_slot_index: Some(2), ..Default::default() },
+        current_xp: 0,
+        max_xp: 100,
+        power_level: 42,
+        unlimited_power_level: 0,
+        unlimited_unlocked: false,
+        at_max_level: false,
+        enabled: true,
+    });
+    env.exec(
+        r#"
+        local slot = CharacterNeckSlot
+        local first = ItemLocation:CreateFromEquipmentSlot(2)
+        local second = ItemLocation:CreateFromEquipmentSlot(1)
+        slot:SetAzeriteItem(first)
+        assert(slot.RankFrame:IsShown())
+        assert(slot.AzeriteTexture:GetAtlas() == 'AzeriteArmor-CharacterInfo-Neck')
+        slot:SetAzeriteItem(second)
+        assert(not slot.RankFrame:IsShown())
+        assert(not slot.AzeriteTexture:IsShown())
+        "#,
+    )
+    .expect("original paper doll overlay uses supplied Azerite location");
+}
+
 // ── U → ToggleCharacter("ReputationFrame") ──────────────────────────────
 
 #[test]
