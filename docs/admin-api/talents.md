@@ -13,8 +13,9 @@ Sets the scenario input for `C_SpecializationInfo.IsSpecSelectionEnabled` on PTR
 Sets the player's active specialization.
 
 - **specIndex** `number` -- 1-based spec index within the player's class
-- **Affects:** `GetSpecialization()`, `GetSpecializationInfo()`
-- **Fires:** `PLAYER_SPECIALIZATION_CHANGED`
+- **Affects:** `GetSpecialization()`, `GetSpecializationInfo()` (WoWForever uses the `C_SpecializationInfo` equivalents).
+- **Fires:** `PLAYER_SPECIALIZATION_CHANGED` with `"player"` after the state changes, on Retail, PTR, Mists, Era, Anniversary, and WoWForever. Wrath does not declare this event and does not fire it.
+- Setting the current index again is a simulator no-op and fires no event.
 - **Example:**
 ```lua
 -- For a Paladin: 1=Holy, 2=Protection, 3=Retribution

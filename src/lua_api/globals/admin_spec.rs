@@ -5,7 +5,9 @@
 //! point in admin.rs imports these as pub(super) and weaves
 //! them into the A_Admin TableBuilder chain.
 
-use crate::lua_api::methods::borrow_state_mut;
+use crate::client_profile::{ACTIVE, ClientProfile};
+use crate::lua_api::methods::{borrow_state_mut, create_string};
+use crate::lua_api::script_helpers::fire_named_event_state;
 use crate::lua_bridge::FromStack;
 use rilua::LuaResult;
 use rilua::vm::state::LuaState;
@@ -46,7 +48,17 @@ pub(super) fn set_wrath_unspent_talent_points(state: &mut LuaState) -> LuaResult
 
 pub(super) fn set_spec(state: &mut LuaState) -> LuaResult<u32> {
     let spec_index = i32::from_stack(state, 1)?;
-    borrow_state_mut(state)?.player.active_spec_index = spec_index;
+    {
+        let mut sim = borrow_state_mut(state)?;
+        if sim.player.active_spec_index == spec_index {
+            return Ok(0);
+        }
+        sim.player.active_spec_index = spec_index;
+    }
+    if ACTIVE != ClientProfile::Wrath {
+        let player = create_string(state, "player");
+        fire_named_event_state(state, "PLAYER_SPECIALIZATION_CHANGED", &[player]);
+    }
     Ok(0)
 }
 
