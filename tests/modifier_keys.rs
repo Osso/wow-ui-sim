@@ -122,8 +122,20 @@ fn multiple_modifiers_set_simultaneously() {
 }
 
 #[test]
+fn modified_click_queries_use_replacement_state() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec("__wow_modified_clicks = { CHATLINK = 'CTRL' }").unwrap();
+    let before: String = env.eval("return GetModifiedClick('CHATLINK')").unwrap();
+    assert_eq!(before, "CTRL");
+    env.exec("SetModifiedClick('CHATLINK', 'ALT')").unwrap();
+    let after: String = env.eval("return __wow_modified_clicks.CHATLINK").unwrap();
+    assert_eq!(after, "ALT");
+}
+
+#[test]
 fn is_modified_click_follows_any_non_meta_modifier() {
     let env = WowLuaEnv::new().unwrap();
+    env.exec("__wow_modified_clicks.CHATLINK = 'SHIFT'").unwrap();
 
     let before: bool = env.eval("return IsModifiedClick('CHATLINK')").unwrap();
     assert!(

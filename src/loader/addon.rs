@@ -550,19 +550,9 @@ fn load_modified_click_defaults(env: &LoaderEnv<'_>, toc: &TocFile, result: &mut
             return;
         }
     };
-    let _: Result<(), ()> = env.with_state(|state| {
-        use crate::lua_api::methods::{create_string, table_get_static, table_set};
-        let table = table_get_static(state, Val::Table(state.global), "__wow_modified_clicks");
-        for key in [
-            "AUTOLOOTTOGGLE",
-            "CHATLINK",
-            "COMPAREITEMS",
-            "DRESSUP",
-            "FOCUSCAST",
-            "SELFCAST",
-        ] {
-            table_set(state, table, key, Val::Nil);
-        }
+    let install: crate::Result<()> = env.with_state(|state| {
+        use crate::lua_api::methods::{create_string, create_table, table_set};
+        let table = create_table(state);
         for element in ui.elements {
             if let crate::xml::XmlElement::ModifiedClick(click) = element
                 && let Some(action) = click.action
@@ -571,8 +561,20 @@ fn load_modified_click_defaults(env: &LoaderEnv<'_>, toc: &TocFile, result: &mut
                 table_set(state, table, &action, value);
             }
         }
+        table_set(
+            state,
+            Val::Table(state.global),
+            "__wow_modified_clicks",
+            table,
+        );
         Ok(())
     });
+    if let Err(error) = install {
+        result.warnings.push(format!(
+            "{}: installing modified-click defaults: {error}",
+            path.display()
+        ));
+    }
 }
 
 fn load_conventional_bindings(
