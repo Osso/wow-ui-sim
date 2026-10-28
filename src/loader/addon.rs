@@ -236,6 +236,9 @@ pub fn load_addon_internal(
         &mut result,
     );
     maybe_replay_blizzard_lua_in_secure_env(env, toc, folder_name, &ctx, &mut result);
+    if folder_name == "Blizzard_FrameXML" {
+        load_modified_click_defaults(env, toc, &mut result);
+    }
     if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Wrath {
         load_conventional_bindings(env, toc, &ctx, &mut result);
     } else {
@@ -528,6 +531,48 @@ fn load_addon_files(
         }
         load_addon_file(env, &file_ctx, result, &file, pass);
     }
+}
+
+fn load_modified_click_defaults(env: &LoaderEnv<'_>, toc: &TocFile, result: &mut LoadResult) {
+    use crate::client_profile::ClientProfile;
+    let filename = match crate::client_profile::ACTIVE {
+        ClientProfile::Retail | ClientProfile::Ptr => "Bindings_Standard.xml",
+        ClientProfile::WowForever => "Bindings_Camelot.xml",
+        ClientProfile::Mists => "Bindings_Mists.xml",
+        ClientProfile::Era | ClientProfile::Anniversary => "Bindings_Vanilla.xml",
+        ClientProfile::Wrath => return,
+    };
+    let path = toc.addon_dir.join(filename);
+    let ui = match crate::xml::parse_xml_file(&path) {
+        Ok(ui) => ui,
+        Err(error) => {
+            result.warnings.push(format!("{}: {error}", path.display()));
+            return;
+        }
+    };
+    let _: Result<(), ()> = env.with_state(|state| {
+        use crate::lua_api::methods::{create_string, table_get_static, table_set};
+        let table = table_get_static(state, Val::Table(state.global), "__wow_modified_clicks");
+        for key in [
+            "AUTOLOOTTOGGLE",
+            "CHATLINK",
+            "COMPAREITEMS",
+            "DRESSUP",
+            "FOCUSCAST",
+            "SELFCAST",
+        ] {
+            table_set(state, table, key, Val::Nil);
+        }
+        for element in ui.elements {
+            if let crate::xml::XmlElement::ModifiedClick(click) = element
+                && let Some(action) = click.action
+            {
+                let value = create_string(state, click.default.as_deref().unwrap_or("NONE"));
+                table_set(state, table, &action, value);
+            }
+        }
+        Ok(())
+    });
 }
 
 fn load_conventional_bindings(
