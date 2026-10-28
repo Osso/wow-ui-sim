@@ -5,9 +5,9 @@
 ## What it must do
 
 - [x] WoW Forever accepts item IDs or item links and returns supplied records to the Professions consumer. Its declared `CraftingQualityInfo` includes `iconQuestObjective`.
-- [ ] Mists accepts a numeric item ID and returns supplied records to the Auction House consumer. Its declared `CraftingQualityInfo` omits `iconQuestObjective`; its other fields match the supplied model.
+- [x] Mists accepts a numeric item ID and returns supplied records to the Auction House consumer. Its declared `CraftingQualityInfo` omits `iconQuestObjective`; its other fields match the supplied model.
 - [ ] Unsupplied records return nil. Mists rejects nonnumeric arguments.
-- [ ] Retail and PTR retain their existing publication and return shape.
+- [ ] Retail and PTR retain their existing publication and return shape. The Retail item-button consumer is covered; PTR preservation is not yet tested.
 
 The pinned declarations are `Blizzard_APIDocumentationGenerated/TradeSkillUIDocumentation.lua:11` and `TradeSkillUITypesDocumentation.lua:40` for Mists, and `TradeSkillUIDocumentation.lua:379` and `TradeSkillUITypesDocumentation.lua:194` for Forever. Selected consumers are Mists `Blizzard_AuctionHouseUI/Shared/Blizzard_AuctionHouseTableBuilder.lua:705` and Forever `Blizzard_ProfessionsTemplates/Blizzard_Professions.lua:54`.
 
