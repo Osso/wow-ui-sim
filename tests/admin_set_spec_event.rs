@@ -53,28 +53,23 @@ fn admin_set_spec_dispatches_to_observers_and_micro_menu() {
         observer:SetScript("OnEvent", function(_, event, ...)
             table.insert(specEvents, {event, select('#', ...), ..., GetSpecialization()})
         end)
-        consumerCalls = 0
-        hooksecurefunc(PlayerSpellsMicroButton, "GetAnyPvpTalentAlert", function()
-            consumerCalls = consumerCalls + 1
-        end)
+        PlayerSpellsMicroButton.dirty = nil
         initialSpec = GetSpecialization()
         firstSpec = initialSpec == 1 and 2 or 1
         secondSpec = initialSpec == 3 and 2 or 3
         A_Admin.SetSpec(firstSpec)
         assert(#specEvents == 1 and specEvents[1][1] == "PLAYER_SPECIALIZATION_CHANGED")
         assert(specEvents[1][2] == 1 and specEvents[1][3] == "player" and specEvents[1][4] == firstSpec)
-        "#,
-    )
-    .expect("first spec event sees updated state");
-    env.fire_on_update(0.016).expect("refresh micro menu");
-    env.exec(
-        r#"
-        assert(consumerCalls > 0, "original micro-menu consumer did not refresh")
+        assert(PlayerSpellsMicroButton:IsDirty(), "original micro-menu consumer did not mark itself dirty")
+        PlayerSpellsMicroButton.dirty = nil
         A_Admin.SetSpec(secondSpec)
         assert(#specEvents == 2 and specEvents[2][1] == "PLAYER_SPECIALIZATION_CHANGED")
         assert(specEvents[2][2] == 1 and specEvents[2][3] == "player" and specEvents[2][4] == secondSpec)
+        assert(PlayerSpellsMicroButton:IsDirty(), "second change did not mark micro-menu dirty")
+        PlayerSpellsMicroButton.dirty = nil
         A_Admin.SetSpec(secondSpec)
         assert(#specEvents == 2, "same specialization must not fire an event")
+        assert(not PlayerSpellsMicroButton:IsDirty(), "same specialization must not refresh micro-menu")
         "#,
     )
     .expect("second spec event and same-spec no-op");
