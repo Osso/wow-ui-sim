@@ -78,8 +78,20 @@ fn find_spell_by_name(state: &mut LuaState) -> LuaResult<Option<SpellSlot>> {
 }
 
 fn find_spell_slot(state: &mut LuaState, function: &str) -> LuaResult<SpellQuery> {
-    let slot = match stack_val(state, 1) {
-        Val::Str(_) => return Ok(SpellQuery::Name(find_spell_by_name(state)?)),
+    if matches!(stack_val(state, 1), Val::Str(_)) {
+        return Ok(SpellQuery::Name(find_spell_by_name(state)?));
+    }
+    Ok(SpellQuery::Slot(find_numeric_spell_slot(
+        state, 1, function,
+    )?))
+}
+
+pub(crate) fn find_numeric_spell_slot(
+    state: &mut LuaState,
+    index: i32,
+    function: &str,
+) -> LuaResult<Option<SpellSlot>> {
+    let slot = match stack_val(state, index) {
         Val::Num(slot) if (1.0..=1024.0).contains(&slot) && slot.fract() == 0.0 => slot as u32,
         _ => {
             return Err(rilua::runtime_error(format!(
@@ -87,23 +99,21 @@ fn find_spell_slot(state: &mut LuaState, function: &str) -> LuaResult<SpellQuery
             )));
         }
     };
-    if !matches!(stack_val(state, 2), Val::Str(_)) {
+    if !matches!(stack_val(state, index + 1), Val::Str(_)) {
         return Err(rilua::runtime_error(format!(
             "{function}(): Invalid spell slot"
         )));
     }
-    let book = String::from_stack(state, 2)?;
+    let book = String::from_stack(state, index + 1)?;
     let book = if book.eq_ignore_ascii_case("pet") {
         "pet"
     } else {
         "spell"
     };
-    Ok(SpellQuery::Slot(
-        borrow_state(state)?
-            .wrath_spell_slots
-            .get(&(book.to_string(), slot))
-            .cloned(),
-    ))
+    Ok(borrow_state(state)?
+        .wrath_spell_slots
+        .get(&(book.to_string(), slot))
+        .cloned())
 }
 
 fn resolve_spell_slot(

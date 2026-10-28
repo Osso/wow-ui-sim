@@ -113,5 +113,8 @@ pub(super) fn register_tooltip(state: &mut LuaState, metatable: GcRef<Table>) ->
     for (name, func) in TOOLTIP_METHODS {
         table_set_rust_fn(state, metatable, name, *func)?;
     }
+    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Wrath {
+        table_set_rust_fn(state, metatable, "SetSpell", set_wrath_spell)?;
+    }
     Ok(())
 }
