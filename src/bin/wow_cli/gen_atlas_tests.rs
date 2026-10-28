@@ -11,13 +11,13 @@ fn atlas_csv_reads_reordered_named_columns() {
     let file = atlas_fixture(
         "UiCanvasID,AtlasHeight,ID,UiTextureAtlasSetID,FileDataID,AtlasWidth\n2,1024,3945,7,8026708,512\n",
     );
-    let entries = load_atlas(file.path()).unwrap();
+    let entries = load_atlas(file.path(), false).unwrap();
     let atlas = &entries[&3945];
     assert_eq!(
         (atlas.file_data_id, atlas.width, atlas.height),
         (8026708, 512, 1024)
     );
-    assert_eq!((atlas.set_id, atlas.canvas_id), (7, 2));
+    assert_eq!((atlas.set_id, atlas.canvas_id), (Some(7), 2));
 }
 
 #[test]
@@ -38,7 +38,7 @@ fn atlas_csv_rejects_each_missing_required_header() {
             .collect::<Vec<_>>()
             .join(",");
         let file = atlas_fixture(&format!("{header}\n"));
-        let error = load_atlas(file.path())
+        let error = load_atlas(file.path(), false)
             .err()
             .expect("missing header must fail")
             .to_string();
@@ -57,7 +57,7 @@ fn atlas_csv_rejects_truncated_rows_without_panicking() {
         let file = atlas_fixture(&format!(
             "ID,FileDataID,UiTextureAtlasSetID,AtlasWidth,AtlasHeight,UiCanvasID\n{row}\n"
         ));
-        let error = load_atlas(file.path())
+        let error = load_atlas(file.path(), false)
             .err()
             .expect("short row must fail")
             .to_string();
@@ -104,6 +104,7 @@ fn element_alias_uses_member_canvas_for_logical_dimensions_without_changing_expl
     let output = dir.join("atlas.rs");
     run(Options {
         csv_dir: Some(dir.to_owned()),
+        no_atlas_sets: false,
         listfile: None,
         output: output.clone(),
         elements_output: dir.join("elements.rs"),
@@ -157,6 +158,7 @@ fn explicit_csv_generation_uses_canvas_geometry_and_local_slices() {
     let elements_output = dir.join("elements.rs");
     run(Options {
         csv_dir: Some(dir.to_owned()),
+        no_atlas_sets: false,
         listfile: None,
         output: output.clone(),
         elements_output: elements_output.clone(),
@@ -209,6 +211,7 @@ fn override_sized_members_are_marked_so_their_2x_fallback_is_not_halved() {
     let output = dir.join("atlas.rs");
     run(Options {
         csv_dir: Some(dir.to_owned()),
+        no_atlas_sets: false,
         listfile: None,
         output: output.clone(),
         elements_output: dir.join("elements.rs"),
@@ -228,4 +231,23 @@ fn override_sized_members_are_marked_so_their_2x_fallback_is_not_halved() {
     assert!(entry("slot-2x").contains("width: 96, height: 96"));
     assert!(entry("slot-2x").contains("size_is_override: false"));
     assert!(generated.contains("} else if self.is_2x_fallback && !self.info.size_is_override {"));
+}
+
+#[test]
+fn setless_atlas_requires_explicit_option() {
+    let file =
+        atlas_fixture("ID,FileDataID,AtlasWidth,AtlasHeight,UiCanvasID\n3956,8033669,128,128,1\n");
+    assert!(load_atlas(file.path(), false).is_err());
+    let entries = load_atlas(file.path(), true).unwrap();
+    let atlas = &entries[&3956];
+    assert_eq!(
+        (
+            atlas.file_data_id,
+            atlas.width,
+            atlas.height,
+            atlas.canvas_id,
+            atlas.set_id
+        ),
+        (8033669, 128, 128, 1, None)
+    );
 }
