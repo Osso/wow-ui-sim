@@ -16,11 +16,13 @@ These are simulator scenario defaults, approved by the user on 2026-10-28. They 
 | C_CharacterCreation.SaveSeenChoices | Record offered choice IDs as seen; user-approved, not native evidence | Retail, PTR | Blizzard_CharacterCreate/Blizzard_CharacterCreate.lua:744 (Retail), Mainline/Blizzard_CharacterCreate.lua:787 (PTR) | Character customization seen-choice persistence |
 | C_CharacterCreation.ClearPreviewChoices | Accept clearSavedChoices; no effect or returns | Retail, PTR | Blizzard_CharacterCreate/Blizzard_CharacterCreate.lua:727 (Retail), Mainline/Blizzard_CharacterCreate.lua:770 (PTR) | Character customization preview and saved choices |
 | C_CharacterCreation.AreRegionalUniqueNamesEnabled | false | PTR | Blizzard_CharacterCreate/Mainline/Blizzard_CharacterCreate.lua:2079 | Regional naming policy |
+| C_CharacterServices.GetPaidCharacterTransferSuperDistrictDestinations | {} (no destinations) | PTR | Blizzard_GlueXML/Mainline/CharacterServicesSuperDistrictSelector.lua:27 | Paid character transfer super-district dropdown |
 
 ## In-game
 
 | Item | Default | Profiles | Original consumer | Approved |
 |---|---|---|---|---|
+| ModelSceneActorBase:SetModelByUnitCreatureDisplayID | false; permanent 3D no-op | PTR | Blizzard_UIPanels_Game/Mainline/PaperDollFrame.lua:2995 | Pet model in character frame (3D non-goal) |
 | `C_GameRules.IsAccountKeyBindingsEnabled` | `false` | PTR | QuickKeybindFrameMixin.OnLoad | 2026-10-28 |
 | `C_AccountServices.GetPreferredLocales` | Two empty tables | PTR | CommunitiesGuildPreferredPlaySettingsFrameMixin.InitializeLocaleDropdown | 2026-10-28 |
 | `C_VoiceChat.GetActiveVoiceProviderID` | `Enum.VoiceProviderID.Legacy` | PTR | VoiceTranscriptionFrame_UpdateVisibility | 2026-10-28 |
