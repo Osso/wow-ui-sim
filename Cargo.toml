@@ -204,6 +204,10 @@ debug = 0
 # input latency in dev builds.
 opt-level = 1
 
+[profile.dev.package.wow-ui-sim]
+# Compile-throughput trial (user-approved 2026-10-28): fewer codegen units for the edited crate.
+codegen-units = 16
+
 [profile.test]
 # Keep the same debug-info policy for test executables and dependencies.
 debug = 0
