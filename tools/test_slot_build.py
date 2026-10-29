@@ -2,6 +2,7 @@
 import contextlib
 import importlib.util
 import io
+import hashlib
 import json
 import os
 import time
@@ -14,6 +15,11 @@ from unittest.mock import patch
 
 SCRIPT = Path(__file__).resolve().parents[1] / "scripts/slot-build.py"
 
+
+
+def full_identity(slot):
+    """Receipts are summaries; the latest attempt's full identity stays beside the slot."""
+    return json.loads((slot / ".source-identity.json").read_text())
 
 class SlotBuildTests(unittest.TestCase):
     def setUp(self):
@@ -710,9 +716,20 @@ class SourceFreshnessTests(unittest.TestCase):
         os.utime(self.tree / "tests/nested/case.rs", (1, 1))
         result, receipt = self.run_library_step("retail", fresh=True)
         self.assertEqual(result.returncode, 0, result.stderr)
-        self.assertEqual(receipt["artifact_certificates"], first["artifact_certificates"])
+        self.assertEqual(receipt["artifact_certificates_sha256"],
+                         first["artifact_certificates_sha256"])
         output = self.slot / "debug/deps/libprobe-retail.rmeta"
         self.assertTrue(output.read_bytes().endswith(b"original case"))
+
+    def test_receipt_summarizes_certificates_kept_in_verified_identity(self):
+        receipt = self.build_directory_library()
+        verified = json.loads((self.slot / ".verified-source-identity.json").read_text())
+        self.assertNotIn("artifact_certificates", receipt)
+        certificates = verified["artifact_certificates"]
+        self.assertGreater(len(certificates), 0)
+        self.assertEqual(receipt["artifact_certificate_count"], len(certificates))
+        self.assertEqual(receipt["artifact_certificates_sha256"], hashlib.sha256(
+            json.dumps(certificates, sort_keys=True).encode()).hexdigest())
 
     def assert_directory_change_rejected(self, change):
         self.build_directory_library()
@@ -883,7 +900,7 @@ class SourceFreshnessTests(unittest.TestCase):
         self.assertEqual(receipt["changed_paths"], [])
         self.assertNotEqual(result.returncode, 0)
         self.assertEqual(receipt["result"], "stale-artifacts")
-        certificate = receipt["artifact_certificates"][str(output.relative_to(self.slot))]
+        certificate = full_identity(self.slot)["artifact_certificates"][str(output.relative_to(self.slot))]
         self.assertIn("extra.rs", certificate["inputs"])
         self.assertNotIn(str(decoy), certificate["inputs"])
         self.assertEqual((self.slot / ".verified-source-identity.json").read_bytes(), verified)
@@ -1011,7 +1028,7 @@ class SourceFreshnessTests(unittest.TestCase):
             result, receipt = self.run_library_step(profile, fresh=fresh)
             self.assertEqual(result.returncode, 0, result.stderr)
             self.assertEqual(receipt["result"], "success")
-        self.assertEqual(len(receipt["artifact_certificates"]), 2)
+        self.assertEqual(len(full_identity(self.slot)["artifact_certificates"]), 2)
 
     def test_rebuilt_library_recovers_after_profile_reuse_rejection(self):
         result, _ = self.run_library_step("retail")
@@ -1441,7 +1458,7 @@ class SourceFreshnessTests(unittest.TestCase):
                 capture_output=True))
             receipts.append(json.loads(receipt.read_text()))
             verified = json.loads((self.slot / ".verified-source-identity.json").read_text())
-            self.assertEqual(verified, receipts[0])
+            self.assertEqual(self.module.summarize_receipt(verified), receipts[0])
         self.assertEqual(results[0].returncode, 0, results[0].stderr)
         self.assertEqual(results[1].returncode, 7, results[1].stderr)
         self.assertEqual(receipts[0]["artifacts"], receipts[2]["artifacts"])
@@ -1454,9 +1471,9 @@ class SourceFreshnessTests(unittest.TestCase):
         self.assertIn(b"stale artifacts", result.stderr)
         self.assertIn("src/main.rs", receipts[2]["content_changed_paths"])
         verified = json.loads((self.slot / ".verified-source-identity.json").read_text())
-        self.assertEqual(verified, receipts[0])
+        self.assertEqual(self.module.summarize_receipt(verified), receipts[0])
         attempted = json.loads((self.slot / ".source-identity.json").read_text())
-        self.assertEqual(attempted, receipts[2])
+        self.assertEqual(self.module.summarize_receipt(attempted), receipts[2])
 
     def test_failed_build_retry_rejects_missing_current_dep_info(self):
         result, receipts = self.run_failed_build_retry(remove_dep_info=True)
@@ -1476,7 +1493,7 @@ class SourceFreshnessTests(unittest.TestCase):
         self.assertNotEqual(result.returncode, 0)
         self.assertIn(b"stale artifacts", result.stderr)
         verified = json.loads((self.slot / ".verified-source-identity.json").read_text())
-        self.assertEqual(verified, first)
+        self.assertEqual(self.module.summarize_receipt(verified), first)
         self.assertNotEqual(verified["identity"], stale["identity"])
 
     def test_stale_receipt_recovers_with_identical_rebuilt_bytes(self):
@@ -1925,7 +1942,7 @@ class LockClosureTransitionTests(unittest.TestCase):
         self.assertEqual(receipt["result"], "success")
         for record in records:
             self.assertIn(str(Path(record["filenames"][0]).relative_to(self.slot)),
-                          receipt["artifact_certificates"])
+                          full_identity(self.slot)["artifact_certificates"])
             record["fresh"] = True
         error, receipt = execute()
         self.assertIsNone(error, error)
