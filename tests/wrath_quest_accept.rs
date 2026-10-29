@@ -428,13 +428,12 @@ fn original_combined_lifecycle_accept_progress_turn_in() {
     }
     {
         let mut sim = env.env.state().borrow_mut();
-        sim.quest_log_entries.entries[0].is_complete = true;
         sim.quest_log_entries.readiness.active_player_present = true;
         sim.quest_log_entries
             .readiness
             .completion_callback_cache_hit = true;
         let mut active = offer(990301, "Wrath northern recovery", 23);
-        active.is_complete = Some(true);
+        active.is_complete = Some(false);
         sim.gossip.active = true;
         sim.gossip.giver_guid = 12340;
         sim.gossip.available_quests.clear();
@@ -446,6 +445,11 @@ fn original_combined_lifecycle_accept_progress_turn_in() {
     env.env.fire_event("QUEST_GREETING").unwrap();
     exec(&env, "QuestTitleButton1:Click()");
     dispatch_queued(&env);
+    {
+        let mut sim = env.env.state().borrow_mut();
+        sim.quest_log_entries.entries[0].is_complete = true;
+        sim.gossip.active_quests[0].is_complete = Some(true);
+    }
     exec(
         &env,
         "assert(QuestFrameProgressPanel:IsShown(), 'progress panel'); QuestFrameProgressPanel:Hide(); QuestFrameProgressPanel:Show(); assert(QuestFrameCompleteButton:IsEnabled(), 'complete enabled'); QuestFrameCompleteButton:Click(); assert(A_Admin.OfferQuestReward(), 'server offer')",
