@@ -203,7 +203,7 @@ fn run_test_file(env: &WowLuaEnv, path: &PathBuf) -> Result<(u32, u32), String> 
         .map_err(|e| format!("{e}"))?;
 
     // Run sync tests with a fresh owner budget for each test.
-    let count: usize = env
+    let count: i64 = env
         .eval("return #__addon_tests")
         .map_err(|e| format!("runner error: {e}"))?;
     for idx in 1..=count {
