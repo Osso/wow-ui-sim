@@ -17,18 +17,16 @@ __async_done = false
 __async_error = nil
 "#;
 
-/// Run sync tests, store results. Skips async tests (marked for Rust to handle).
+/// Run one sync test and store its result; async tests are handled separately.
 const SYNC_RUNNER: &str = r#"
-__addon_test_results = {}
-for _, t in ipairs(__addon_tests) do
-    if not t.async then
-        local ok, err = pcall(t.fn)
-        __addon_test_results[#__addon_test_results + 1] = {
-            name = t.name,
-            ok = ok,
-            err = ok and "" or tostring(err),
-        }
-    end
+local t = __addon_tests[idx]
+if not t.async then
+    local ok, err = pcall(t.fn)
+    __addon_test_results[#__addon_test_results + 1] = {
+        name = t.name,
+        ok = ok,
+        err = ok and "" or tostring(err),
+    }
 end
 "#;
 
@@ -204,9 +202,24 @@ fn run_test_file(env: &WowLuaEnv, path: &PathBuf) -> Result<(u32, u32), String> 
     env.exec_named(&code, &chunk_name)
         .map_err(|e| format!("{e}"))?;
 
-    // Run sync tests
-    env.exec(SYNC_RUNNER)
+    // Run sync tests with a fresh owner budget for each test.
+    let count: usize = env
+        .eval("return #__addon_tests")
         .map_err(|e| format!("runner error: {e}"))?;
+    for idx in 1..=count {
+        let is_async: bool = env
+            .eval(&format!("return not not __addon_tests[{idx}].async"))
+            .map_err(|e| format!("runner error: {e}"))?;
+        if is_async {
+            continue;
+        }
+        #[cfg(feature = "retail-12-0-5")]
+        env.loader_env()
+            .with_state(crate::lua_api::execution_budget::reset_frame_budgets)
+            .map_err(|e| format!("budget reset error: {e}"))?;
+        env.exec(&format!("local idx = {idx}\n{SYNC_RUNNER}"))
+            .map_err(|e| format!("runner error: {e}"))?;
+    }
 
     // Read sync results
     let (mut passed, mut failed) = read_test_results(env, &file_name)?;
