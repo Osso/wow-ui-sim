@@ -731,10 +731,49 @@ class SourceFreshnessTests(unittest.TestCase):
         self.assertEqual(receipt["artifact_certificates_sha256"], hashlib.sha256(
             json.dumps(certificates, sort_keys=True).encode()).hexdigest())
 
+    def test_stat_cache_reuses_unchanged_bytes_and_rereads_rewrites(self):
+        self.module.RACY_NS = 0
+        path = self.slot / "input.rs"
+        path.write_text("first")
+        reads = []
+        read = lambda: reads.append(path.read_text()) or reads[-1]
+        self.assertEqual(self.module.stat_cached("text", path, read), "first")
+        self.assertEqual(self.module.stat_cached("text", path, read), "first")
+        self.assertEqual(reads, ["first"])
+        time.sleep(0.02)
+        path.write_text("other")
+        self.assertEqual(self.module.stat_cached("text", path, read), "other")
+        self.assertEqual(reads, ["first", "other"])
+
+    def test_stat_cache_rereads_values_read_inside_racy_window(self):
+        path = self.slot / "input.rs"
+        path.write_text("just written")
+        self.module.file_sha256(path)
+        cache = self.slot / ".stat-cache.json"
+        self.module.save_stat_cache(cache)
+        self.assertEqual(json.loads(cache.read_text()), {})
+
+    def test_persisted_stat_cache_cannot_hide_same_size_source_edit(self):
+        self.build_directory_library()
+        # The first build touches changed sources; once they age past the racy
+        # window, an unrelated build stores their digests.
+        time.sleep(self.module.RACY_NS / 1e9 + 0.1)
+        result, _ = self.run_library_step("forever")
+        self.assertEqual(result.returncode, 0, result.stderr)
+        directory = self.tree / "tests/nested"
+        cached = json.loads((self.slot / ".stat-cache.json").read_text())
+        self.assertIn(hashlib.sha256(b"original case").hexdigest(),
+                      [value for _, value in cached.values()])
+        self.assert_cached_change_rejected(
+            lambda: (directory / "case.rs").write_text("Original case"))
+
     def assert_directory_change_rejected(self, change):
         self.build_directory_library()
+        self.assert_cached_change_rejected(lambda: change(self.tree / "tests/nested"))
+
+    def assert_cached_change_rejected(self, change):
         output = self.slot / "debug/deps/libprobe-retail.rmeta"
-        change(self.tree / "tests/nested")
+        change()
         # Advance the slot-wide source baseline with an unrelated profile.
         result, _ = self.run_library_step("forever")
         self.assertEqual(result.returncode, 0, result.stderr)

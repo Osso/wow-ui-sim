@@ -59,6 +59,13 @@ sccache instead of the incremental compiler. Status prints
 `SubState`, `Result`, `CPUUsageNSec`, and `WallTimeSec` (elapsed while running).
 Use the helper from the checkout that contains it; it builds `--worktree`.
 
+The freshness guard stores file digests and parsed dep-info in
+`slot-N/.stat-cache.json`, keyed by device, inode, size, mtime and ctime.
+A value is reused only while that key is unchanged. Values read within 2 s of
+the file's last change are not stored, so a write in the same timestamp tick is
+re-read. Each build keeps only the entries it used. Output realpaths in dep-info
+are resolved on every build.
+
 ### Slot size limit
 
 Before Cargo starts, the worker checks `.owner` and acquires each existing
