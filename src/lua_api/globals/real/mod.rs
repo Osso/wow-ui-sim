@@ -119,6 +119,7 @@ pub mod unit_speed;
     any(feature = "profile-retail", feature = "client-ptr")
 ))]
 pub mod unit_spell_target_name;
+pub(crate) mod utf8_case;
 pub mod vehicle_possession;
 pub mod voice_chat_probes;
 #[cfg(feature = "client-wrath")]
