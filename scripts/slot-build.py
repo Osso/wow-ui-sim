@@ -17,6 +17,8 @@ import time
 import tomllib
 
 
+# Builds receipted this recently keep their whole dependency set when pruning.
+LIVE_RECEIPT_DAYS = 7
 TARGET_ROOT = Path("/home/osso/.cache/wow-ui-sim-targets")
 SOURCE_ROOT = Path("/home/osso/.cache/wow-ui-sim-srcmount")
 # Slot 2 was retired on 2026-10-27 (user decision: three build slots).
@@ -87,15 +89,37 @@ def artifact_units(slot, entries):
     return list(units.values())
 
 
-def previous_artifact_paths(slot):
-    receipt = slot / ".verified-source-identity.json"
-    if not receipt.exists():
-        return set()
-    previous = json.loads(receipt.read_text())
-    paths = {slot / name for name in previous.get("artifacts", {})}
-    for record in previous.get("reported_artifacts", []):
+def receipt_paths(receipt):
+    paths = {Path(name) for name in receipt.get("build_script_out_dirs", [])}
+    for record in receipt.get("reported_artifacts", []):
         paths.update(Path(name) for name in
                      [record.get("executable"), *record.get("filenames", [])] if name)
+    return paths
+
+
+def live_artifact_paths(slot, now):
+    """Outputs Cargo reported to the verified build and to every build receipted within
+    LIVE_RECEIPT_DAYS.
+
+    Cargo reuses fresh units without touching them, so mtime alone marks live
+    build-script outputs and dependencies as the oldest units in the slot. The
+    verified `artifacts` hash map is cumulative across builds, so it is not a
+    liveness signal.
+    """
+    paths = set()
+    verified = slot / ".verified-source-identity.json"
+    if verified.exists():
+        paths.update(receipt_paths(json.loads(verified.read_text())))
+    # Receipt mtimes are not build times (receipts may be rewritten), so only
+    # the recorded finish time counts.
+    cutoff_ns = (now - LIVE_RECEIPT_DAYS * 86400) * 1e9
+    for receipt in (slot / "receipts").glob("*.json"):
+        try:
+            content = json.loads(receipt.read_text())
+        except (OSError, ValueError):
+            continue
+        if content.get("finished_ns", 0) >= cutoff_ns:
+            paths.update(receipt_paths(content))
     return paths
 
 
@@ -156,9 +180,10 @@ def prune_locked_slot(slot, owner, cap_bytes, recent_hours, dry_run, now):
     if total <= cap_bytes:
         print(json.dumps(result), flush=True)
         return result
-    protected = previous_artifact_paths(slot)
+    now = time.time() if now is None else now
+    protected = live_artifact_paths(slot, now)
     protected_inodes = receipt_artifact_identities(protected)
-    cutoff = (time.time() if now is None else now) - recent_hours * 3600
+    cutoff = now - recent_hours * 3600
     candidates = []
     units = artifact_units(slot, entries)
     membership = {path: index for index, paths in enumerate(units) for path in paths}
@@ -184,8 +209,11 @@ def prune_locked_slot(slot, owner, cap_bytes, recent_hours, dry_run, now):
         freed = sum(inodes[identity] for identity, count in links.items()
                     if count >= metadata[identity].st_nlink
                     or stat.S_ISDIR(metadata[identity].st_mode))
-        candidates.append((newest, sorted(paths), freed))
-    for _, paths, freed in sorted(candidates):
+        # Stale incremental caches and binaries go first; fingerprint/build-only
+        # units are small and dropping them cascades into rebuilds.
+        bulky = any(path.parent.name in {"deps", "incremental"} for path in paths)
+        candidates.append((not bulky, newest, sorted(paths), freed))
+    for _, _, paths, freed in sorted(candidates):
         if result["remaining_bytes"] < result["watermark_bytes"]:
             break
         manifest = {"paths": [str(path) for path in paths], "size_bytes": freed}
@@ -849,7 +877,8 @@ def finish_build(slot, receipt, current, previous, artifacts, returncode):
                 continue
             evicted.append(str(path.relative_to(slot)))
     current = dict(current, artifacts=artifacts, returncode=returncode, result=result,
-                   evicted_artifacts=evicted, unread_package_paths=unread_package_paths(current))
+                   evicted_artifacts=evicted, unread_package_paths=unread_package_paths(current),
+                   finished_ns=time.time_ns())
     write_json(receipt, summarize_receipt(current))
     write_json(slot / ".source-identity.json", current)
     if result == "success":
@@ -904,12 +933,13 @@ def run_build_command(command):
                 record = json.loads(line)
             except (ValueError, UnicodeDecodeError):
                 continue
-            if isinstance(record, dict) and record.get("reason") == "compiler-artifact":
+            if isinstance(record, dict) and record.get("reason") in {
+                    "compiler-artifact", "build-script-executed"}:
                 records.append(record)
         return child.wait(), records
 
 
-def execute_build(request_path, cap_gib=60, recent_hours=2):
+def execute_build(request_path, cap_gib=130, recent_hours=2):
     request = json.loads(request_path.read_text())
     slot = Path(request["slot"])
     check_owner(slot, request["owner"])
@@ -941,6 +971,9 @@ def run_verified_build(slot, worktree, receipt, current, previous, request):
     source_before = snapshot_source_hashes(current, before)
     started_ns = time.time_ns()
     returncode, records = run_build_command(request["cargo"])
+    current["build_script_out_dirs"] = [record["out_dir"] for record in records
+                                        if record.get("reason") == "build-script-executed"]
+    records = [record for record in records if record.get("reason") != "build-script-executed"]
     current["reported_artifacts"] = records
     after = read_dep_info_snapshot(slot, worktree)
     current["target_inputs"], current["dep_info_errors"] = read_target_inputs(
@@ -986,8 +1019,8 @@ def main(argv=None):
     parser.add_argument("--unit")
     parser.add_argument("--owner")
     parser.add_argument("--capacity-id")
-    parser.add_argument("--slot-cap-gib", type=float, default=60,
-                        help="prune above this allocated size (default: 60 GiB)")
+    parser.add_argument("--slot-cap-gib", type=float, default=130,
+                        help="prune above this allocated size (default: 130 GiB)")
     parser.add_argument("--prune-recent-hours", type=float, default=2,
                         help="retain units modified within this age (default: 2 hours)")
     parser.add_argument("--prune-dry-run", action="store_true",

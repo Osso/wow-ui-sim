@@ -526,6 +526,24 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
         )?;
         // User-approved default until character customization preview choices are modeled.
         lua.exec("function C_CharacterCreation.ClearPreviewChoices(clearSavedChoices) end")?;
+        // User-approved, not native evidence: facing feeds only 3D model rotation, a non-goal.
+        lua.exec("function C_CharacterCreation.GetDefaultCharacterCreateFacing() return 0 end")?;
+        // Stored facing round-trips as Blizzard_CharacterCreate's rotate code expects; it starts at the default.
+        lua.exec(
+            "local facing = 0; function C_CharacterCreation.GetCharacterCreateFacing() return facing end; function C_CharacterCreation.SetCharacterCreateFacing(value) facing = value end",
+        )?;
+        // Stored altered-form flag: CharacterCreateMixin:SetMode writes it (line 512) before
+        // reading it (line 540), so the initial value is not observed on that path.
+        lua.exec(
+            "local altered = false; function C_CharacterCreation.IsViewingAlteredForm() return altered end; function C_CharacterCreation.SetViewingAlteredForm(value) altered = value end",
+        )?;
+        // User-approved, not native evidence: class-trial boosts are not modeled.
+        lua.exec("function C_CharacterCreation.GetTrialBoostStartingLevel() return 0 end")?;
+        // Scene blur, preview gear, dress state and camera zoom level only affect the 3D model
+        // scene, an intentional gap; Blizzard_CharacterCreate reads none of them back.
+        lua.exec(
+            "function C_CharacterCreation.SetBlurEnabled(enabled) end; function C_CharacterCreation.SetSelectedPreviewGearType(gearType) end; function C_CharacterCreation.SetModelDressState(dressedState) end; function C_CharacterCreation.SetCameraZoomLevel(zoomLevel, keepCustomZoom) end",
+        )?;
     }
     if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Ptr {
         // User-approved defaults until realm name-reservation and regional naming policies are modeled.
