@@ -532,6 +532,15 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
         lua.exec(
             "local facing = 0; function C_CharacterCreation.GetCharacterCreateFacing() return facing end; function C_CharacterCreation.SetCharacterCreateFacing(value) facing = value end",
         )?;
+        // Stored altered-form flag: CharacterCreateMixin:SetMode writes it (line 512) before
+        // reading it (line 540), so the initial value is not observed on that path.
+        lua.exec(
+            "local altered = false; function C_CharacterCreation.IsViewingAlteredForm() return altered end; function C_CharacterCreation.SetViewingAlteredForm(value) altered = value end",
+        )?;
+        // Scene blur and preview gear only affect the 3D model scene, an intentional gap; no getter exists.
+        lua.exec(
+            "function C_CharacterCreation.SetBlurEnabled(enabled) end; function C_CharacterCreation.SetSelectedPreviewGearType(gearType) end",
+        )?;
     }
     if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Ptr {
         // User-approved defaults until realm name-reservation and regional naming policies are modeled.
