@@ -59,6 +59,13 @@ sccache instead of the incremental compiler. Status prints
 `SubState`, `Result`, `CPUUsageNSec`, and `WallTimeSec` (elapsed while running).
 Use the helper from the checkout that contains it; it builds `--worktree`.
 
+The freshness guard stores file digests and parsed dep-info in
+`slot-N/.stat-cache.json`, keyed by device, inode, size, mtime and ctime.
+A value is reused only while that key is unchanged. Values read within 2 s of
+the file's last change are not stored, so a write in the same timestamp tick is
+re-read. Each build keeps only the entries it used. Output realpaths in dep-info
+are resolved on every build.
+
 ### Slot size limit
 
 Before Cargo starts, the worker checks `.owner` and acquires each existing
@@ -170,7 +177,10 @@ Content changes are computed from the last successfully verified source identity
 not the latest attempt or the mtime refresh set. Failed and rejected builds never
 advance that baseline, so retrying cannot erase a pending content diff. When the content diff intersects a
 record's own inputs, Cargo must report `fresh=false`. If that record is an
-executable, its SHA256 must also differ from the previous hash at the same path.
+executable, its SHA256 must also differ from the previous hash at the same path,
+unless the only changed content inputs are `Cargo.toml` or `Cargo.lock` files:
+manifest edits (dev-dependencies, workspace members, other targets) often leave
+executable bytes unchanged, so `fresh=false` is enough (user decision 2026-10-29).
 Otherwise the run fails with `stale artifacts`. Libraries do not require changed
 hashes. A changed library, `.rmeta`, or another executable cannot certify an
 executable whose own inputs changed. Unreported artifacts and records with
