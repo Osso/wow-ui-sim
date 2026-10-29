@@ -967,10 +967,13 @@ def execute_build(request_path, cap_gib=130, recent_hours=2):
 
 
 def run_verified_build(slot, worktree, receipt, current, previous, request):
+    guard_cpu = time.process_time()
     before = read_dep_info_snapshot(slot, worktree)
     source_before = snapshot_source_hashes(current, before)
+    pre_cpu = time.process_time() - guard_cpu
     started_ns = time.time_ns()
     returncode, records = run_build_command(request["cargo"])
+    guard_cpu = time.process_time()
     current["build_script_out_dirs"] = [record["out_dir"] for record in records
                                         if record.get("reason") == "build-script-executed"]
     records = [record for record in records if record.get("reason") != "build-script-executed"]
@@ -983,6 +986,9 @@ def run_verified_build(slot, worktree, receipt, current, previous, request):
         current, previous, source_before, artifacts, after)
     current["dep_info_errors"].extend(certificate_errors)
     finish_build(slot, receipt, current, previous, artifacts, returncode)
+    print(json.dumps({"guard_cpu_s": {"before_build": round(pre_cpu, 3),
+                                      "after_build": round(time.process_time() - guard_cpu, 3)}}),
+          file=sys.stderr)
     return returncode
 
 
