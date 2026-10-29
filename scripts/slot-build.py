@@ -850,7 +850,7 @@ def run_build_command(command):
         return child.wait(), records
 
 
-def execute_build(request_path, cap_gib=60, recent_hours=2):
+def execute_build(request_path, cap_gib=130, recent_hours=2):
     request = json.loads(request_path.read_text())
     slot = Path(request["slot"])
     check_owner(slot, request["owner"])
@@ -918,8 +918,8 @@ def main(argv=None):
     parser.add_argument("--unit")
     parser.add_argument("--owner")
     parser.add_argument("--capacity-id")
-    parser.add_argument("--slot-cap-gib", type=float, default=60,
-                        help="prune above this allocated size (default: 60 GiB)")
+    parser.add_argument("--slot-cap-gib", type=float, default=130,
+                        help="prune above this allocated size (default: 130 GiB)")
     parser.add_argument("--prune-recent-hours", type=float, default=2,
                         help="retain units modified within this age (default: 2 hours)")
     parser.add_argument("--prune-dry-run", action="store_true",

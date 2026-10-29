@@ -65,8 +65,9 @@ Before Cargo starts, the worker checks `.owner` and acquires each existing
 Cargo build profile's `.cargo-lock` non-blockingly. A held lock refuses pruning
 with `slot build lock busy` and the lock path. Locks remain held from inventory
 through deletion, so Cargo cannot build in those profiles during pruning.
-The worker prunes when allocated disk usage exceeds `--slot-cap-gib` (default 60 GiB), stopping below 80% of the cap
-(default 48 GiB). Units are ordered by their newest member mtime. Fingerprints,
+The worker prunes when allocated disk usage exceeds `--slot-cap-gib` (default 130 GiB; user decision 2026-10-29, one
+integration-target slot uses 100-120 GiB), stopping below 80% of the cap
+(default 104 GiB). Units are ordered by their newest member mtime. Fingerprints,
 matching deps files, build directories, and incremental sessions are removed
 together per name/hash within each build-profile directory. Fingerprint
 package/target aliases are joined only at the same hash. Independently hashed
