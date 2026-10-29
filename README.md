@@ -108,6 +108,8 @@ docker run --rm -v "$(pwd)/screenshots:/out" \
   ghcr.io/osso/wow-ui-sim screenshot -o /out/screenshot.webp
 ```
 
+For deterministic timing in addon tests, see the [manual clock example](docs/admin-api/challenge-mode.md#phase-b-explicit-manual-clock).
+
 The image does not include WoW game assets; screenshots may omit textures unless
 assets are available to the container.
 
