@@ -442,6 +442,7 @@ fn original_combined_lifecycle_accept_progress_turn_in() {
         sim.gossip.active_quests = vec![active];
         sim.gossip.num_active_quests = 1;
     }
+    exec(&env, "HideUIPanel(QuestLogFrame)");
     env.env.fire_event("QUEST_GREETING").unwrap();
     exec(&env, "QuestTitleButton1:Click()");
     dispatch_queued(&env);
@@ -465,7 +466,7 @@ fn original_combined_lifecycle_accept_then_abandon() {
     let env = lifecycle_accept();
     exec(
         &env,
-        "SelectQuestLogEntry(1); ShowUIPanel(QuestLogFrame); QuestLogControlPanel_UpdateState(); assert(QuestLogFrameAbandonButton:IsVisible(), 'abandon visible'); QuestLogFrameAbandonButton:Click(); local popup = StaticPopup_FindVisible('ABANDON_QUEST'); assert(popup and popup:IsShown(), 'abandon popup'); popup.button1:Click()",
+        "ShowUIPanel(QuestLogFrame); QuestLog_SetSelection(1); assert(QuestLogFrameAbandonButton:IsVisible(), 'abandon visible'); QuestLogFrameAbandonButton:Click(); local popup = StaticPopup_FindVisible('ABANDON_QUEST'); assert(popup and popup:IsShown(), 'abandon popup'); popup.button1:Click()",
     );
     dispatch_queued(&env);
     let sim = env.env.state().borrow();
