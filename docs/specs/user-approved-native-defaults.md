@@ -22,7 +22,7 @@ These are simulator scenario defaults, approved by the user on 2026-10-28. They 
 
 | Item | Default | Profiles | Original consumer | Approved |
 |---|---|---|---|---|
-| ModelSceneActorBase:SetModelByUnitCreatureDisplayID | false; permanent 3D no-op | PTR | Blizzard_UIPanels_Game/Mainline/PaperDollFrame.lua:2995 | Pet model in character frame (3D non-goal) |
+| `ModelSceneActorBase:SetModelByUnitCreatureDisplayID` | `false`; permanent 3D no-op | PTR | PaperDollFrame.lua:2995 (pet model) | 2026-10-28 |
 | `C_GameRules.IsAccountKeyBindingsEnabled` | `false` | PTR | QuickKeybindFrameMixin.OnLoad | 2026-10-28 |
 | `C_AccountServices.GetPreferredLocales` | Two empty tables | PTR | CommunitiesGuildPreferredPlaySettingsFrameMixin.InitializeLocaleDropdown | 2026-10-28 |
 | `C_VoiceChat.GetActiveVoiceProviderID` | `Enum.VoiceProviderID.Legacy` | PTR | VoiceTranscriptionFrame_UpdateVisibility | 2026-10-28 |
