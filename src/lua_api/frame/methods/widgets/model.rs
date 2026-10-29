@@ -623,6 +623,13 @@ pub(super) fn stub_true(state: &mut LuaState) -> LuaResult<u32> {
 
 const SKIP_3D_RENDERING: rilua::vm::closure::RustFn = stub_variadic;
 
+/// Permanent 3D non-goal; user-approved, not native evidence: no model loads,
+/// so the documented `success` return is false.
+#[cfg(feature = "client-ptr")]
+fn set_model_by_unit_creature_display_id(state: &mut LuaState) -> LuaResult<u32> {
+    false.into_stack(state)
+}
+
 // ---------------------------------------------------------------------------
 // register_model
 // ---------------------------------------------------------------------------
@@ -665,6 +672,11 @@ const MODEL_METHODS: &[(&'static str, rilua::vm::closure::RustFn)] = &[
     ("SetItem", set_item),
     ("SetItemAppearance", set_item_appearance),
     ("SetModelByUnit", set_model_by_unit),
+    #[cfg(feature = "client-ptr")]
+    (
+        "SetModelByUnitCreatureDisplayID",
+        set_model_by_unit_creature_display_id,
+    ),
     ("PlayAnimKit", play_anim_kit),
     ("StopAnimKit", stop_anim_kit),
     ("CanSetUnit", can_set_unit),

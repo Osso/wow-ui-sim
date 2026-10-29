@@ -22,11 +22,13 @@ These are simulator scenario defaults, approved by the user on 2026-10-28. They 
 | C_CharacterCreation.Is/SetViewingAlteredForm | Stored boolean, initially false; Blizzard writes it before reading it | Retail, PTR | Blizzard_CharacterCreate/Blizzard_CharacterCreate.lua:512, 540, 756 (Retail), Mainline/Blizzard_CharacterCreate.lua:537, 565, 799 (PTR) | Altered-form (Worgen/Dracthyr) model selection |
 | C_CharacterCreation.SetBlurEnabled, SetSelectedPreviewGearType, SetModelDressState, SetCameraZoomLevel | No effect; never read back | Retail, PTR | Blizzard_CharacterCreate/Blizzard_CharacterCreate.lua:521-536, 748, 752 (Retail), Mainline/Blizzard_CharacterCreate.lua:546-561, 791, 795 (PTR) | 3D scene state (non-goal) |
 | C_CharacterCreation.AreRegionalUniqueNamesEnabled | false | PTR | Blizzard_CharacterCreate/Mainline/Blizzard_CharacterCreate.lua:2079 | Regional naming policy |
+| C_CharacterServices.GetPaidCharacterTransferSuperDistrictDestinations | {} (no destinations) | PTR | Blizzard_GlueXML/Mainline/CharacterServicesSuperDistrictSelector.lua:27 | Paid character transfer super-district dropdown |
 
 ## In-game
 
 | Item | Default | Profiles | Original consumer | Approved |
 |---|---|---|---|---|
+| `ModelSceneActorBase:SetModelByUnitCreatureDisplayID` | `false`; permanent 3D no-op | PTR | PaperDollFrame.lua:2995 (pet model) | 2026-10-28 |
 | `C_GameRules.IsAccountKeyBindingsEnabled` | `false` | PTR | QuickKeybindFrameMixin.OnLoad | 2026-10-28 |
 | `C_AccountServices.GetPreferredLocales` | Two empty tables | PTR | CommunitiesGuildPreferredPlaySettingsFrameMixin.InitializeLocaleDropdown | 2026-10-28 |
 | `C_VoiceChat.GetActiveVoiceProviderID` | `Enum.VoiceProviderID.Legacy` | PTR | VoiceTranscriptionFrame_UpdateVisibility | 2026-10-28 |
