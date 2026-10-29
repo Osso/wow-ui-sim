@@ -70,6 +70,7 @@ fn mists_supplied_min_level(state: &mut LuaState) -> LuaResult<u32> {
         match sim.mists_party_min_level {
             Some(minimum) => minimum,
             None if sim.party_group_active => {
+                // Mists grouped minimum: user-decided, not native evidence.
                 sim.party_members
                     .iter()
                     .map(|member| member.level)

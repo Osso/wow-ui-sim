@@ -507,7 +507,6 @@ macro_rules! build_empty_sim_state {
             relic_forge_at_forge: false,
             artifact_relic_items: HashSet::new(),
             quest_log: Vec::new(),
-            #[cfg(feature = "client-wowforever")]
             quest_watch_types: crate::c_api::seed_quest_watch_types(&quest_log_entries.entries),
             quest_log_entries,
             super_track: Default::default(),

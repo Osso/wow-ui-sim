@@ -182,8 +182,7 @@ pub mod c_quest_hub;
 #[cfg(feature = "retail-12-0-5")]
 pub mod c_quest_info_system;
 pub mod c_quest_log;
-#[cfg(feature = "client-wowforever")]
-mod c_quest_log_watches;
+pub(crate) mod c_quest_log_watches;
 pub mod c_quest_offer;
 pub mod c_super_track;
 pub(crate) mod challenge_run;
@@ -197,9 +196,7 @@ pub mod outfit_entry;
 mod scenario_finder_availability;
 pub mod store_public_eligibility;
 pub mod transmog_availability;
-#[cfg(feature = "client-wowforever")]
 pub use c_quest_log_watches::QuestWatchType;
-#[cfg(feature = "client-wowforever")]
 pub(crate) use c_quest_log_watches::seed_quest_watch_types;
 pub mod c_recent_allies;
 pub mod c_report_system;

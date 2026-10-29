@@ -11,7 +11,15 @@ use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
 use std::collections::{HashMap, hash_map::Entry};
 
-/// Values declared by Forever's QuestLogDocumentation.lua.
+use crate::client_profile::{ACTIVE, ClientProfile};
+
+/// Retail, PTR and Forever QuestLogDocumentation.lua declare these values.
+pub(crate) const ENABLED: bool = matches!(
+    ACTIVE,
+    ClientProfile::Retail | ClientProfile::Ptr | ClientProfile::WowForever
+);
+
+/// Values declared by QuestLogDocumentation.lua.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 #[repr(i32)]
 pub enum QuestWatchType {
@@ -39,15 +47,17 @@ pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
     for &(name, function) in METHODS {
         table_set_rust_fn_static(state, namespace, name, function)?;
     }
-    let globals = state.global;
-    for &(name, function) in GLOBALS {
-        table_set_rust_fn_static(state, globals, name, function)?;
+    if ACTIVE == ClientProfile::WowForever {
+        let globals = state.global;
+        for &(name, function) in GLOBALS {
+            table_set_rust_fn_static(state, globals, name, function)?;
+        }
     }
     Ok(())
 }
 
 /// Preserve the existing ordinary seed once; later queries read explicit membership.
-/// Manual seed classification is simulator policy, not a native default claim.
+/// Manual seeding is user-approved for Retail/PTR, simulator policy, not native evidence.
 pub(crate) fn seed_quest_watch_types(entries: &[QuestLogEntry]) -> HashMap<i32, QuestWatchType> {
     entries
         .iter()

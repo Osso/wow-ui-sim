@@ -16,10 +16,7 @@ pub const QUEST_LOG_METHODS: &[(&str, SurfaceFn)] = &[
     ("GetQuestIDForLogIndex", get_quest_id_for_log_index),
     ("GetLogIndexForQuestID", get_log_index_for_quest_id),
     ("GetTitleForQuestID", get_title_for_quest_id),
-    // Forever's modeled C API publication must survive this later legacy pass.
-    #[cfg(not(feature = "client-wowforever"))]
     ("GetNumQuestWatches", get_num_quest_watches),
-    #[cfg(not(feature = "client-wowforever"))]
     (
         "GetQuestIDForQuestWatchIndex",
         get_quest_id_for_quest_watch_index,
@@ -29,9 +26,7 @@ pub const QUEST_LOG_METHODS: &[(&str, SurfaceFn)] = &[
         "GetQuestIDForWorldQuestWatchIndex",
         get_quest_id_for_world_quest_watch_index,
     ),
-    #[cfg(not(feature = "client-wowforever"))]
     ("AddQuestWatch", noop),
-    #[cfg(not(feature = "client-wowforever"))]
     ("RemoveQuestWatch", noop),
     ("SortQuestWatches", noop),
     ("IsQuestFlaggedCompleted", return_false),
@@ -204,6 +199,17 @@ pub const GLOBAL_QUEST_FUNCTIONS: &[(&str, SurfaceFn)] = &[
 pub fn register_quest_info_handlers(state: &mut LuaState) -> LuaResult<()> {
     let table_ref = super::ensure_global_table(state, "C_QuestLog");
     for (name, func) in QUEST_LOG_METHODS {
+        if crate::c_api::c_quest_log_watches::ENABLED
+            && matches!(
+                *name,
+                "GetNumQuestWatches"
+                    | "GetQuestIDForQuestWatchIndex"
+                    | "AddQuestWatch"
+                    | "RemoveQuestWatch"
+            )
+        {
+            continue;
+        }
         table_set_rust_fn_static(state, table_ref, name, *func)?;
     }
     Ok(())

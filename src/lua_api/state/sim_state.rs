@@ -613,7 +613,6 @@ pub struct SimState {
     pub quest_log_entries: QuestLogState,
     pub super_track: crate::c_api::c_super_track::SuperTrackState,
     /// Explicit ordinary-watch metadata; seeded once, not derived on every query.
-    #[cfg(feature = "client-wowforever")]
     pub quest_watch_types: HashMap<i32, crate::c_api::QuestWatchType>,
     /// Explicit eligible IDs, independent of world-quest classification.
     pub quest_war_mode_eligibility: std::collections::HashSet<i32>,
