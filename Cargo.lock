@@ -7828,7 +7828,15 @@ dependencies = [
  "wgpu",
  "winapi",
  "winresource",
+ "wow-ui-sim-dylib",
  "wow-ui-sim-test-harness",
+]
+
+[[package]]
+name = "wow-ui-sim-dylib"
+version = "0.1.0"
+dependencies = [
+ "wow-ui-sim",
 ]
 
 [[package]]
