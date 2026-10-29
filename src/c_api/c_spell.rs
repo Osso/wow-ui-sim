@@ -11,7 +11,7 @@
 //! - `GetSchoolString(mask)` → localized school name for a bitmask.
 //! - `PickupSpell(spellID)` → sets cursor to a spell and fires `CURSOR_CHANGED`.
 //! - `GetSpellLink(spellID)` → spell hyperlink string or nil.
-//! - `GetSpellName(spellID)` → localized name or `"Unknown"`.
+//! - `GetSpellName(spellID)` → localized name, or no values on a catalog miss.
 //! - `IsAutoAttackSpell(spellID)` → true for spell 6603.
 //! - `IsSpellHelpful(spellID)` → true for self-targeted spells.
 //! - `IsSpellHarmful(spellID)` → true for known non-self-targeted spells.
@@ -516,10 +516,12 @@ fn get_spell_link(state: &mut LuaState) -> LuaResult<u32> {
 
 fn get_spell_name(state: &mut LuaState) -> LuaResult<u32> {
     let spell_id = read_modeled_u32_spell_id(state)?;
-    let name = spells::get_spell(spell_id)
-        .map(|spell| spell.name)
-        .unwrap_or("Unknown");
-    let name_string = create_string_static(state, name);
+    // Retail SpellDocumentation.lua:477-490 and Forever :518-531 declare
+    // MayReturnNothing for missing spells.
+    let Some(spell) = spells::get_spell(spell_id) else {
+        return Ok(0);
+    };
+    let name_string = create_string_static(state, spell.name);
     state.push(name_string);
     Ok(1)
 }
