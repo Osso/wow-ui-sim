@@ -537,9 +537,10 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
         lua.exec(
             "local altered = false; function C_CharacterCreation.IsViewingAlteredForm() return altered end; function C_CharacterCreation.SetViewingAlteredForm(value) altered = value end",
         )?;
-        // Scene blur and preview gear only affect the 3D model scene, an intentional gap; no getter exists.
+        // Scene blur, preview gear, dress state and camera zoom level only affect the 3D model
+        // scene, an intentional gap; Blizzard_CharacterCreate reads none of them back.
         lua.exec(
-            "function C_CharacterCreation.SetBlurEnabled(enabled) end; function C_CharacterCreation.SetSelectedPreviewGearType(gearType) end",
+            "function C_CharacterCreation.SetBlurEnabled(enabled) end; function C_CharacterCreation.SetSelectedPreviewGearType(gearType) end; function C_CharacterCreation.SetModelDressState(dressedState) end; function C_CharacterCreation.SetCameraZoomLevel(zoomLevel, keepCustomZoom) end",
         )?;
     }
     if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Ptr {
