@@ -16,6 +16,7 @@ These are simulator scenario defaults, approved by the user on 2026-10-28. They 
 | C_CharacterCreation.SaveSeenChoices | Record offered choice IDs as seen; user-approved, not native evidence | Retail, PTR | Blizzard_CharacterCreate/Blizzard_CharacterCreate.lua:744 (Retail), Mainline/Blizzard_CharacterCreate.lua:787 (PTR) | Character customization seen-choice persistence |
 | C_CharacterCreation.ClearPreviewChoices | Accept clearSavedChoices; no effect or returns | Retail, PTR | Blizzard_CharacterCreate/Blizzard_CharacterCreate.lua:727 (Retail), Mainline/Blizzard_CharacterCreate.lua:770 (PTR) | Character customization preview and saved choices |
 | C_CharacterCreation.GetDefaultCharacterCreateFacing | 0 | Retail, PTR | Blizzard_CharacterCreate/Blizzard_CharacterCreate.lua:761 (Retail), Mainline/Blizzard_CharacterCreate.lua:804 (PTR) | Default subject rotation; feeds only 3D model rotation (non-goal) |
+| C_CharacterCreation.Get/SetCharacterCreateFacing | Stored number, initially the default facing 0; round-trip derived from Blizzard rotate code | Retail, PTR | Blizzard_CharacterCreate/Blizzard_CharacterCreate.lua:773-807 (Retail), Mainline/Blizzard_CharacterCreate.lua:816-850 (PTR) | 3D subject rotation (non-goal) |
 | C_CharacterCreation.AreRegionalUniqueNamesEnabled | false | PTR | Blizzard_CharacterCreate/Mainline/Blizzard_CharacterCreate.lua:2079 | Regional naming policy |
 
 ## In-game

@@ -528,6 +528,10 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
         lua.exec("function C_CharacterCreation.ClearPreviewChoices(clearSavedChoices) end")?;
         // User-approved, not native evidence: facing feeds only 3D model rotation, a non-goal.
         lua.exec("function C_CharacterCreation.GetDefaultCharacterCreateFacing() return 0 end")?;
+        // Stored facing round-trips as Blizzard_CharacterCreate's rotate code expects; it starts at the default.
+        lua.exec(
+            "local facing = 0; function C_CharacterCreation.GetCharacterCreateFacing() return facing end; function C_CharacterCreation.SetCharacterCreateFacing(value) facing = value end",
+        )?;
     }
     if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Ptr {
         // User-approved defaults until realm name-reservation and regional naming policies are modeled.
