@@ -38,16 +38,14 @@ mod warband_scene;
 mod zone_ability;
 
 use crate::c_api;
-use crate::lua_api::methods::{
-    borrow_state, borrow_state_mut, create_string, table_get, val_to_string,
-};
+use crate::lua_api::methods::{borrow_state, borrow_state_mut, create_string, val_to_string};
 use crate::lua_bridge::{FromStack, stack_val};
 use crate::spells;
 
 use rilua::vm::gc::arena::GcRef;
 use rilua::vm::state::LuaState;
 use rilua::vm::table::Table;
-use rilua::{LuaApiMut, LuaResult, Val};
+use rilua::{LuaApiMut, LuaResult, Val, runtime_error};
 
 const TOOLTIP_TYPE_ITEM: f64 = 0.0;
 const TOOLTIP_TYPE_SPELL: f64 = 1.0;
@@ -165,12 +163,22 @@ fn install_date_alias(lua: &mut rilua::Lua) -> LuaResult<()> {
         return Ok(());
     }
 
-    let os_table = LuaApiMut::get_global_val(lua, "os");
-    let date_fn = table_get(lua.state_mut(), os_table, "date");
-    if matches!(date_fn, Val::Function(_)) {
-        LuaApiMut::set_global_val(lua, "date", date_fn)?;
-    }
-    Ok(())
+    // WoW's date passes the format to strftime and raises when it writes nothing
+    // (3.3.5a Script_date; Retail 12.1.5 observation in Meorawr/elune#15).
+    lua.exec(
+        r#"
+if os ~= nil and type(os.date) == "function" then
+  local os_date = os.date
+  function date(format, ...)
+    if format == "" then
+      error("'date' format too long", 0)
+    end
+    return os_date(format, ...)
+  end
+end
+"#,
+    )
+    .map_err(|e| runtime_error(format!("date install: {e}")))
 }
 
 fn register_item_trait_surfaces(state: &mut LuaState) -> LuaResult<()> {
@@ -593,4 +601,23 @@ pub(super) fn set_table_array(state: &mut LuaState, table: Val, index: i64, valu
         let _ = table.raw_set(Val::Num(index as f64), value, &state.gc.string_arena);
     }
     state.gc.barrier_back(table_ref);
+}
+
+#[cfg(test)]
+mod tests {
+    use crate::lua_api::WowLuaEnv;
+
+    #[test]
+    fn date_rejects_an_empty_format() {
+        let env = WowLuaEnv::new().expect("lua env should initialize");
+        let result: String = env
+            .eval(
+                r#"
+                local ok, err = pcall(date, "")
+                return tostring(ok) .. "|" .. tostring(err) .. "|" .. date("!%Y", 0)
+                "#,
+            )
+            .expect("date probe should run");
+        assert_eq!(result, "false|'date' format too long|1970");
+    }
 }

@@ -139,6 +139,7 @@ fn register_frame_foundation_globals(lua: &mut rilua::Lua) -> crate::Result<()> 
             super::real::event_callbacks::unregister_unit_event_callback,
         )?;
     }
+    super::real::utf8_case::register_all(lua)?;
     #[cfg(any(feature = "retail-12-1-5", feature = "client-wowforever"))]
     super::real::math_extensions::register_all(lua)?;
     #[cfg(any(feature = "retail-12-1-5", feature = "client-wowforever"))]
