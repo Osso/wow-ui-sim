@@ -67,7 +67,8 @@ with `slot build lock busy` and the lock path. Locks remain held from inventory
 through deletion, so Cargo cannot build in those profiles during pruning.
 The worker prunes when allocated disk usage exceeds `--slot-cap-gib` (default 130 GiB; user decision 2026-10-29, one
 integration-target slot uses 100-120 GiB), stopping below 80% of the cap
-(default 104 GiB). Units are ordered by their newest member mtime. Fingerprints,
+(default 104 GiB). Units with `deps` or `incremental` members go first, then
+fingerprint/build-only units; each group is ordered by newest member mtime. Fingerprints,
 matching deps files, build directories, and incremental sessions are removed
 together per name/hash within each build-profile directory. Fingerprint
 package/target aliases are joined only at the same hash. Independently hashed
@@ -75,15 +76,20 @@ incremental directories are separate cache units; different revisions are not
 coalesced. Same-hash library sidecars, including `.so.dwp`, belong to the
 library's unit; a recent sidecar protects every member.
 
-Units referenced by `.verified-source-identity.json` (by path or hardlink
-identity, including receipt paths outside the slot) or modified within
+Units whose outputs Cargo reported to the build in `.verified-source-identity.json`
+or to any build in `receipts/*.json` that finished (`finished_ns`) within 7 days (by path or hardlink identity, including receipt paths
+outside the slot) or modified within
 `--prune-recent-hours` (default 2) are retained. Protected units and unclassified
 files can prevent reaching the cap; the summary reports the remaining bytes. Allocated
 bytes count hard links once; predicted reclaimed bytes exclude links retained
 outside the unit. Each removal prints a JSON manifest with paths and bytes to
 the service log. Worker pruning diagnostics use stderr, leaving stdout byte-exact
 for the launched command. Standalone `--prune-dry-run` reports use stdout.
-Receipts and source-identity files are never removed.
+Receipts and source-identity files are never removed. Receipts list every
+Cargo-reported output (fresh or rebuilt) and `build_script_out_dirs`; Cargo does
+not touch fresh units, so mtime alone would rank a build's live dependencies and
+build-script outputs as the oldest units. The verified `artifacts` hash map is
+cumulative across builds and does not protect anything.
 
 Read-only inspection does not require ownership or launch a build:
 

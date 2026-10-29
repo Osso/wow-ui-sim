@@ -721,6 +721,17 @@ class SourceFreshnessTests(unittest.TestCase):
         output = self.slot / "debug/deps/libprobe-retail.rmeta"
         self.assertTrue(output.read_bytes().endswith(b"original case"))
 
+    def test_receipt_records_build_script_out_dirs_for_pruning(self):
+        out = self.slot / "debug/build/quote-run456/out"
+        mutation = ('print(json.dumps({"reason":"build-script-executed",'
+                    f'"package_id":"quote","out_dir":{str(out)!r}}}))')
+        result, receipt = self.run_library_step("retail", mutation=mutation)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual(receipt["build_script_out_dirs"], [str(out)])
+        self.assertLessEqual(abs(receipt["finished_ns"] - time.time_ns()), 60 * 10**9)
+        self.assertTrue(all(record["reason"] == "compiler-artifact"
+                            for record in receipt["reported_artifacts"]))
+
     def test_receipt_summarizes_certificates_kept_in_verified_identity(self):
         receipt = self.build_directory_library()
         verified = json.loads((self.slot / ".verified-source-identity.json").read_text())
