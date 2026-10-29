@@ -205,6 +205,12 @@ if bit == nil then
     rshift = rshift,
     arshift = rshift,
     mod = function(a, b)
+      -- A divisor that truncates to zero returns 1 / divisor (3.3.5a lbitlib;
+      -- Retail 12.1.5 observation in Meorawr/elune#12).
+      local divisor = tonumber(b)
+      if divisor ~= nil and divisor > -1 and divisor < 1 then
+        return 1 / divisor
+      end
       return normalize(a) % normalize(b)
     end,
   }
@@ -601,6 +607,9 @@ mod tests {
                 if bit.rshift(16, 2) ~= 4 then return "rshift" end
                 if bit.arshift(16, 2) ~= 4 then return "arshift" end
                 if bit.mod(17, 5) ~= 2 then return "mod" end
+                if bit.mod(5, 0.5) ~= 2 then return "mod_half" end
+                if bit.mod(5, 0) ~= math.huge then return "mod_zero" end
+                if bit.mod(5, -0.5) ~= -2 then return "mod_negative_half" end
                 return "ok"
                 "#,
             )
