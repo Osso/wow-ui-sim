@@ -136,6 +136,59 @@ class SlotPruneTests(unittest.TestCase):
         self.assertEqual(result["removed"], [])
         self.assertTrue(all(path.exists() for path in paths))
 
+    def build_script_unit(self, name, age):
+        fingerprint = self.slot / f"debug/.fingerprint/{name}-run456/run-build-script-build-script-build"
+        out = self.slot / f"debug/build/{name}-run456/out"
+        for path in (fingerprint, out / "generated.rs"):
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_bytes(b"x" * MIB)
+        stamp = self.now - age * 3600
+        for path in (fingerprint, fingerprint.parent, out / "generated.rs", out, out.parent):
+            os.utime(path, (stamp, stamp))
+        return out
+
+    def write_receipt(self, name, age_days, out_dirs=(), filenames=()):
+        receipt = self.slot / f"receipts/{name}.json"
+        receipt.parent.mkdir(exist_ok=True)
+        receipt.write_text(json.dumps({"build_script_out_dirs": [str(p) for p in out_dirs],
+                                       "reported_artifacts": [{"filenames": [str(p) for p in filenames]}],
+                                       "finished_ns": int((self.now - age_days * 86400) * 1e9)}))
+        # A rewritten receipt has a fresh mtime; only the recorded finish time counts.
+        os.utime(receipt, (self.now, self.now))
+
+    def test_recent_receipt_protects_untouched_build_script_and_dependency(self):
+        out = self.build_script_unit("quote", age=30)
+        library = self.artifact("syn", age=30)
+        stale = self.artifact("old", age=10)
+        self.write_receipt("noop", 1, out_dirs=[out], filenames=[library[2]])
+        result, _ = self.prune(cap=7 * MIB)
+        self.assertTrue(out.exists())
+        self.assertTrue(all(path.exists() for path in library))
+        self.assertFalse(any(path.exists() for path in stale))
+        self.assertEqual(len(result["removed"]), 1)
+
+    def test_cumulative_verified_artifact_map_does_not_protect(self):
+        paths = self.artifact("old")
+        verified = {"result": "success", "reported_artifacts": [],
+                    "artifacts": {str(paths[2].relative_to(self.slot)): "digest"}}
+        (self.slot / ".verified-source-identity.json").write_text(json.dumps(verified))
+        result, _ = self.prune(cap=MIB)
+        self.assertFalse(any(path.exists() for path in paths))
+
+    def test_receipt_older_than_live_window_does_not_protect(self):
+        library = self.artifact("syn", age=30)
+        self.write_receipt("old", self.module.LIVE_RECEIPT_DAYS + 1, filenames=[library[2]])
+        result, _ = self.prune(cap=MIB)
+        self.assertFalse(any(path.exists() for path in library))
+
+    def test_stale_bulky_units_go_before_older_build_script_units(self):
+        out = self.build_script_unit("quote", age=50)
+        stale = self.artifact("old", age=10)
+        result, _ = self.prune(cap=6 * MIB)
+        self.assertFalse(any(path.exists() for path in stale))
+        self.assertTrue(out.exists())
+        self.assertEqual(len(result["removed"]), 1)
+
     def test_build_lock_refuses_pruning_until_other_process_releases(self):
         for profile in ("debug", "release", "aarch64-unknown-linux-gnu/custom"):
             with self.subTest(profile=profile):

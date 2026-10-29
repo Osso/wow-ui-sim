@@ -62,6 +62,8 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     ) {
         // User-approved default until queued character upgrades are modeled.
         lua.exec("function C_CharacterServices.HasQueuedUpgrade() return false end")?;
+        // User-approved, not native evidence: class-trial boosts are not modeled.
+        lua.exec("function C_CharacterServices.IsTrialBoostEnabled() return false end")?;
     }
     if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Ptr {
         // User-approved, not native evidence: no paid-transfer destinations until VAS transfers are modeled.
