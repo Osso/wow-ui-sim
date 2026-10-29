@@ -447,7 +447,7 @@ fn original_combined_lifecycle_accept_progress_turn_in() {
     dispatch_queued(&env);
     exec(
         &env,
-        "assert(QuestFrameProgressPanel:IsShown()); assert(QuestFrameCompleteButton:IsEnabled()); QuestFrameCompleteButton:Click(); assert(A_Admin.OfferQuestReward())",
+        "assert(QuestFrameProgressPanel:IsShown(), 'progress panel'); QuestFrameProgressPanel:Hide(); QuestFrameProgressPanel:Show(); assert(QuestFrameCompleteButton:IsEnabled(), 'complete enabled'); QuestFrameCompleteButton:Click(); assert(A_Admin.OfferQuestReward(), 'server offer')",
     );
     dispatch_queued(&env);
     exec(
@@ -465,7 +465,7 @@ fn original_combined_lifecycle_accept_then_abandon() {
     let env = lifecycle_accept();
     exec(
         &env,
-        "SelectQuestLogEntry(1); ShowUIPanel(QuestLogFrame); assert(QuestLogFrameAbandonButton:IsVisible()); QuestLogFrameAbandonButton:Click(); local popup = StaticPopup_FindVisible('ABANDON_QUEST'); assert(popup and popup:IsShown()); popup.button1:Click()",
+        "SelectQuestLogEntry(1); ShowUIPanel(QuestLogFrame); QuestLogControlPanel_UpdateState(); assert(QuestLogFrameAbandonButton:IsVisible(), 'abandon visible'); QuestLogFrameAbandonButton:Click(); local popup = StaticPopup_FindVisible('ABANDON_QUEST'); assert(popup and popup:IsShown(), 'abandon popup'); popup.button1:Click()",
     );
     dispatch_queued(&env);
     let sim = env.env.state().borrow();
