@@ -537,6 +537,8 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
         lua.exec(
             "local altered = false; function C_CharacterCreation.IsViewingAlteredForm() return altered end; function C_CharacterCreation.SetViewingAlteredForm(value) altered = value end",
         )?;
+        // User-approved, not native evidence: class-trial boosts are not modeled.
+        lua.exec("function C_CharacterCreation.GetTrialBoostStartingLevel() return 0 end")?;
         // Scene blur, preview gear, dress state and camera zoom level only affect the 3D model
         // scene, an intentional gap; Blizzard_CharacterCreate reads none of them back.
         lua.exec(
