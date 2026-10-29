@@ -791,7 +791,11 @@ def find_stale_artifacts(current, previous_artifacts, artifacts):
         if not record.get("executable"):
             continue
         changed_hash = name in artifacts and previous_artifacts.get(name) != artifacts[name]
-        needs_changed_hash = bool(matched_input_changes(current, inputs, content_changed))
+        # Manifest and lockfile edits (dev-dependencies, workspace members, other
+        # targets) often leave an executable's bytes unchanged; fresh=false suffices.
+        source_changed = {path for path in content_changed
+                          if Path(path).name not in {"Cargo.toml", "Cargo.lock"}}
+        needs_changed_hash = bool(matched_input_changes(current, inputs, source_changed))
         if name not in artifacts or (needs_changed_hash and not changed_hash):
             stale.append(name)
     return sorted(set(stale))

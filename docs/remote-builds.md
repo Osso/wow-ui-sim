@@ -177,7 +177,10 @@ Content changes are computed from the last successfully verified source identity
 not the latest attempt or the mtime refresh set. Failed and rejected builds never
 advance that baseline, so retrying cannot erase a pending content diff. When the content diff intersects a
 record's own inputs, Cargo must report `fresh=false`. If that record is an
-executable, its SHA256 must also differ from the previous hash at the same path.
+executable, its SHA256 must also differ from the previous hash at the same path,
+unless the only changed content inputs are `Cargo.toml` or `Cargo.lock` files:
+manifest edits (dev-dependencies, workspace members, other targets) often leave
+executable bytes unchanged, so `fresh=false` is enough (user decision 2026-10-29).
 Otherwise the run fails with `stale artifacts`. Libraries do not require changed
 hashes. A changed library, `.rmeta`, or another executable cannot certify an
 executable whose own inputs changed. Unreported artifacts and records with

@@ -1692,11 +1692,20 @@ class SourceFreshnessTests(unittest.TestCase):
         self.assertNotEqual(result.returncode, 0)
         self.assertEqual(second["result"], "stale-artifacts")
 
-    def test_build_input_change_rejects_unchanged_executable(self):
+    def test_manifest_change_accepts_rebuilt_identical_executable(self):
         result, first, second = self.run_mixed_output_pair(
             "Cargo.toml", {"debug/deps/probe.rmeta": "B metadata"},
             reported_names=["debug/probe", "debug/deps/probe.rmeta"])
         self.assertEqual(second["changed_paths"], ["Cargo.toml"])
+        self.assertEqual(first["artifacts"]["debug/probe"], second["artifacts"]["debug/probe"])
+        self.assertEqual(result.returncode, 0)
+        self.assertEqual(second["result"], "success")
+
+    def test_manifest_change_rejects_reused_executable(self):
+        result, first, second = self.run_mixed_output_pair(
+            "Cargo.toml", {"debug/deps/probe.rmeta": "B metadata"},
+            fresh=["debug/probe"],
+            reported_names=["debug/probe", "debug/deps/probe.rmeta"])
         self.assertNotEqual(result.returncode, 0)
         self.assertEqual(second["result"], "stale-artifacts")
 
@@ -1710,7 +1719,7 @@ class SourceFreshnessTests(unittest.TestCase):
         self.assertNotEqual(result.returncode, 0)
         self.assertEqual(second["result"], "stale-artifacts")
 
-    def test_lockfile_is_an_input_even_when_absent_from_dep_info(self):
+    def test_lockfile_change_accepts_rebuilt_identical_executable(self):
         (self.tree / "Cargo.lock").write_text(
             'version = 4\n[[package]]\nname = "probe"\nversion = "0.1.0"\n')
         self.git("add", ".")
@@ -1718,8 +1727,9 @@ class SourceFreshnessTests(unittest.TestCase):
         result, first, second = self.run_mixed_output_pair(
             "Cargo.lock", {"debug/deps/probe.rmeta": "B metadata"},
             reported_names=["debug/probe"])
-        self.assertNotEqual(result.returncode, 0)
-        self.assertEqual(second["result"], "stale-artifacts")
+        self.assertEqual(second["changed_paths"], ["Cargo.lock"])
+        self.assertEqual(result.returncode, 0)
+        self.assertEqual(second["result"], "success")
 
     def test_changed_executables_allow_unchanged_library_metadata(self):
         result, first, second = self.run_mixed_output_pair(
