@@ -199,6 +199,8 @@ fn ensure_runtime_aura_state(state: &mut LuaState, ns: Val) {
 pub(crate) enum AuraFilter {
     Helpful,
     Harmful,
+    HelpfulPlayer,
+    HarmfulPlayer,
     ExternalDefensive,
     /// Torghast anima powers. The sim has no MAW auras, so this variant
     /// matches nothing — preventing Blizzard_MawBuffs from showing outside
@@ -212,6 +214,12 @@ pub(crate) fn filter_from_str(filter: &str) -> AuraFilter {
         AuraFilter::Maw
     } else if upper.contains("EXTERNAL_DEFENSIVE") {
         AuraFilter::ExternalDefensive
+    } else if upper.split(['|', ' ']).any(|term| term == "PLAYER") {
+        if upper.contains("HARMFUL") {
+            AuraFilter::HarmfulPlayer
+        } else {
+            AuraFilter::HelpfulPlayer
+        }
     } else if upper.contains("HARMFUL") {
         AuraFilter::Harmful
     } else {
@@ -242,6 +250,8 @@ fn aura_matches_filter(aura: &AuraInfo, filter: AuraFilter) -> bool {
     match filter {
         AuraFilter::Helpful => aura.is_helpful,
         AuraFilter::Harmful => !aura.is_helpful,
+        AuraFilter::HelpfulPlayer => aura.is_helpful && aura.is_from_player_or_player_pet,
+        AuraFilter::HarmfulPlayer => !aura.is_helpful && aura.is_from_player_or_player_pet,
         AuraFilter::ExternalDefensive => false,
         AuraFilter::Maw => false,
     }
@@ -306,8 +316,8 @@ fn collect_unit_auras(state: &mut LuaState, unit: &str, filter: AuraFilter) -> V
     let auras: Vec<&AuraInfo> = if let Some(idx) = parse_party_index(unit) {
         if let Some(member) = sim.party_members.get(idx) {
             match filter {
-                AuraFilter::Helpful => member.buffs.iter().collect(),
-                AuraFilter::Harmful => member.debuffs.iter().collect(),
+                AuraFilter::Helpful | AuraFilter::HelpfulPlayer => member.buffs.iter().collect(),
+                AuraFilter::Harmful | AuraFilter::HarmfulPlayer => member.debuffs.iter().collect(),
                 AuraFilter::ExternalDefensive => return Vec::new(),
                 AuraFilter::Maw => return Vec::new(),
             }
@@ -334,7 +344,11 @@ fn collect_unit_auras(state: &mut LuaState, unit: &str, filter: AuraFilter) -> V
     } else {
         return Vec::new();
     };
-    let copied = auras.into_iter().cloned().collect();
+    let copied = auras
+        .into_iter()
+        .filter(|a| aura_matches_filter(a, filter))
+        .cloned()
+        .collect();
     #[cfg(feature = "retail-12-0-7")]
     let copied = classify_vehicle_auras(copied, &sim.player_controlled_vehicle_sources);
     copied
