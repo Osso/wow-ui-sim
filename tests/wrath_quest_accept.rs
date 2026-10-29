@@ -7,6 +7,9 @@
 mod wrath_full_ui;
 
 use sha2::{Digest, Sha256};
+use wow_ui_sim::c_api::quest_objectives::{
+    QuestObjective, QuestObjectiveProgress, commit_objective_progress,
+};
 use wow_ui_sim::event::EventArg;
 use wow_ui_sim::lua_api::WowLuaEnv;
 use wow_ui_sim::lua_api::state::GossipQuestRow;
@@ -371,6 +374,103 @@ fn exercise_accept(existing: u32, offers: Vec<GossipQuestRow>, event: &str, butt
         "assert(#AcceptEvents == 0, 'repeat accept has no success notifications')",
     );
     assert_eq!(preserved_state(&env), before);
+}
+
+fn lifecycle_accept() -> ConsumerEnv {
+    let env = seed_env(0, vec![offer(990301, "Wrath northern recovery", 23)]);
+    open_detail(
+        &env,
+        "GOSSIP_SHOW",
+        "GossipTitleButton1",
+        "Wrath northern recovery",
+    );
+    exec(&env, "QuestFrameAcceptButton:Click()");
+    dispatch_queued(&env);
+    assert_committed(&env, 0, 990301, "Wrath northern recovery", 23);
+    env
+}
+
+#[test]
+fn original_combined_lifecycle_accept_progress_turn_in() {
+    let env = lifecycle_accept();
+    for (text, finished, count) in [
+        ("Wolves slain: 1/2", false, 1),
+        ("Wolves slain: 2/2", true, 2),
+    ] {
+        let mut sim = env.env.state().borrow_mut();
+        assert!(commit_objective_progress(
+            &mut sim.quest_log_entries,
+            990301,
+            QuestObjectiveProgress {
+                objectives: vec![QuestObjective {
+                    text: text.into(),
+                    objective_type: "monster".into(),
+                    finished,
+                    num_fulfilled: count,
+                    num_required: 2,
+                    criteria_id: None
+                }],
+                ..Default::default()
+            }
+        ));
+        drop(sim);
+        exec(
+            &env,
+            &format!(
+                "SelectQuestLogEntry(1); QuestLogFrame:Show(); QuestLog_UpdateQuestDetails(false); assert(QuestInfoObjective1:GetText() == '{}', 'original objective progress')",
+                if finished {
+                    format!("{} (' .. COMPLETE .. ')", text)
+                } else {
+                    text.into()
+                }
+            ),
+        );
+    }
+    {
+        let mut sim = env.env.state().borrow_mut();
+        sim.quest_log_entries.entries[0].is_complete = true;
+        sim.quest_log_entries.readiness.active_player_present = true;
+        sim.quest_log_entries
+            .readiness
+            .completion_callback_cache_hit = true;
+        let mut active = offer(990301, "Wrath northern recovery", 23);
+        active.is_complete = Some(true);
+        sim.gossip.active = true;
+        sim.gossip.giver_guid = 12340;
+        sim.gossip.available_quests.clear();
+        sim.gossip.num_available_quests = 0;
+        sim.gossip.active_quests = vec![active];
+        sim.gossip.num_active_quests = 1;
+    }
+    env.env.fire_event("QUEST_GREETING").unwrap();
+    exec(&env, "QuestTitleButton1:Click()");
+    dispatch_queued(&env);
+    exec(
+        &env,
+        "assert(QuestFrameProgressPanel:IsShown()); assert(QuestFrameCompleteButton:IsEnabled()); QuestFrameCompleteButton:Click(); assert(A_Admin.OfferQuestReward())",
+    );
+    dispatch_queued(&env);
+    exec(
+        &env,
+        "assert(QuestFrameRewardPanel:IsShown()); QuestFrameCompleteQuestButton:Click(); assert(A_Admin.TurnInSelectedQuest())",
+    );
+    dispatch_queued(&env);
+    let sim = env.env.state().borrow();
+    assert!(!sim.quest_log.contains(&990301));
+    assert!(sim.quest_log_entries.completed_quest_ids.contains(&990301));
+}
+
+#[test]
+fn original_combined_lifecycle_accept_then_abandon() {
+    let env = lifecycle_accept();
+    exec(
+        &env,
+        "SelectQuestLogEntry(1); ShowUIPanel(QuestLogFrame); assert(QuestLogFrameAbandonButton:IsVisible()); QuestLogFrameAbandonButton:Click(); local popup = StaticPopup_FindVisible('ABANDON_QUEST'); assert(popup and popup:IsShown()); popup.button1:Click()",
+    );
+    dispatch_queued(&env);
+    let sim = env.env.state().borrow();
+    assert!(!sim.quest_log.contains(&990301));
+    assert!(!sim.quest_log_entries.completed_quest_ids.contains(&990301));
 }
 
 #[test]

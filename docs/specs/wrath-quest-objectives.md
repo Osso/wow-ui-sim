@@ -25,6 +25,10 @@ Wrath ordinary active quests project supplied identity-keyed objective snapshots
 - `src/lua_api/globals/quest_surface/wrath_objectives.rs`: supplied legacy count/row/summary adapters and 12340 argument/tuple conversion.
 - `src/lua_api/globals/quest_surface/wrath_quest_log.rs`: Wrath-only registration overrides; no shared registration-order change.
 
+## Combined lifecycle contract
+
+The unchanged Wrath UI accepts a supplied gossip offer through its accept button, renders supplied objective progress in the quest log, and completes the quest through its progress and reward buttons with the existing simulator server-response controls. A separate accepted quest can be abandoned through the original quest-log button and confirmation. These scenarios do not establish native server scheduling, rewards, or objective notification timing.
+
 ## Tests asserting this spec
 
 `tests/wrath_quest_objectives.rs` loads whole original cached UI sources and real widgets via `tests/common/wrath_full_ui.rs`; `tests/wrath_quest_objectives_fixture.lua` asserts consumer output. Source seals authenticate the whole consumers. Required cases: direct objective body, full detail entry, two noncatalog quests, reorder/explicit reads, individual completion, shorter/empty lists, catalog no-fallback, type substitution, read purity, independent environments and bounded direct 12340 tuples/selectors.
