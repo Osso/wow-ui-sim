@@ -42,9 +42,12 @@ pub(super) fn add_buff(state: &mut LuaState) -> LuaResult<u32> {
     let icon = icon_string_from_stack(state, 3)?;
     let duration = f64::from_stack(state, 4)?;
     let stacks = i32::from_stack(state, 5)?;
+    let caster = opt_string_stack(state, 6, "player");
     {
         let mut st = borrow_state_mut(state)?;
-        let buff = build_admin_buff(&st, spell_id, name, icon, duration, stacks);
+        let mut buff = build_admin_buff(&st, spell_id, name, icon, duration, stacks);
+        buff.is_from_player_or_player_pet = caster == "player" || caster == "pet";
+        buff.source_unit = caster;
         st.player.buffs.push(buff);
     }
     fire_player_unit_aura(state)?;

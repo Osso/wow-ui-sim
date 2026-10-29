@@ -1,5 +1,7 @@
 # Health & Power
 
+Health setters dispatch `UNIT_HEALTH` after updating state, then `UNIT_MAXHEALTH` if the maximum changed. Native order was observed in the 4.x build 15595 party stats path (aso); other update paths are unverified.
+
 ### A_Admin.SetPlayerHealth(current, max)
 
 Sets the player's current and maximum health.
@@ -7,7 +9,7 @@ Sets the player's current and maximum health.
 - **current** `number` -- Current health value
 - **max** `number` -- Maximum health value
 - **Affects:** `UnitHealth("player")`, `UnitHealthMax("player")`, `UnitIsDead("player")`
-- **Fires:** `UNIT_HEALTH`
+- **Fires:** `UNIT_HEALTH("player")`, then `UNIT_MAXHEALTH("player")` if max changed.
 - **Example:**
 ```lua
 A_Admin.SetPlayerHealth(50000, 100000)
@@ -50,7 +52,7 @@ Sets the current target's health values.
 - **current** `number` -- Current health value
 - **max** `number` -- Maximum health value
 - **Affects:** `UnitHealth("target")`, `UnitHealthMax("target")`
-- **Fires:** `UNIT_HEALTH`
+- **Fires:** `UNIT_HEALTH("target")`, then `UNIT_MAXHEALTH("target")` if max changed.
 - **Note:** Requires an active target. Has no effect if no target is set.
 - **Example:**
 ```lua
