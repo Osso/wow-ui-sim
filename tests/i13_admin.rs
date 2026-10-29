@@ -24,7 +24,16 @@ fn buff_caster_is_visible_to_aura_queries() {
 fn replacing_seeded_party_member_clears_auras() {
     WowLuaEnv::new().unwrap().eval::<()>(r#"
         A_Admin.SetPartySize(2)
+        local seen = false
+        local listener = CreateFrame('Frame')
+        listener:RegisterEvent('UNIT_AURA')
+        listener:SetScript('OnEvent', function(_, _, unit)
+            if unit == 'party1' then
+                seen = C_UnitAuras.GetAuraDataByIndex('party1', 1, 'HELPFUL') == nil
+            end
+        end)
         A_Admin.SetPartyMember(1, 'Replacement', 1, 80)
+        assert(seen, 'replacement must dispatch UNIT_AURA after clearing')
         assert(C_UnitAuras.GetAuraDataByIndex('party1', 1, 'HELPFUL') == nil, 'old buff remains')
         assert(C_UnitAuras.GetAuraDataByIndex('party1', 1, 'HARMFUL') == nil, 'old debuff remains')
     "#).unwrap();
