@@ -986,9 +986,9 @@ def run_verified_build(slot, worktree, receipt, current, previous, request):
         current, previous, source_before, artifacts, after)
     current["dep_info_errors"].extend(certificate_errors)
     finish_build(slot, receipt, current, previous, artifacts, returncode)
-    print(json.dumps({"guard_cpu_s": {"before_build": round(pre_cpu, 3),
-                                      "after_build": round(time.process_time() - guard_cpu, 3)}}),
-          file=sys.stderr)
+    write_json(receipt.with_suffix(".guard.json"),
+               {"guard_cpu_s": {"before_build": round(pre_cpu, 3),
+                                "after_build": round(time.process_time() - guard_cpu, 3)}})
     return returncode
 
 
