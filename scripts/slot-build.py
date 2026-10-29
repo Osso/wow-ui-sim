@@ -312,6 +312,16 @@ def write_json(path, value):
     temporary.replace(path)
 
 
+def summarize_receipt(current):
+    """Receipts keep a certificate count and digest; slot identity files keep the full map."""
+    summary = dict(current)
+    certificates = summary.pop("artifact_certificates", {})
+    summary["artifact_certificate_count"] = len(certificates)
+    summary["artifact_certificates_sha256"] = hashlib.sha256(
+        json.dumps(certificates, sort_keys=True).encode()).hexdigest()
+    return summary
+
+
 def read_package_roots(worktree):
     result = subprocess.run(
         ["cargo", "metadata", "--no-deps", "--format-version", "1", "--offline"],
@@ -779,7 +789,7 @@ def finish_build(slot, receipt, current, previous, artifacts, returncode):
             evicted.append(str(path.relative_to(slot)))
     current = dict(current, artifacts=artifacts, returncode=returncode, result=result,
                    evicted_artifacts=evicted, unread_package_paths=unread_package_paths(current))
-    write_json(receipt, current)
+    write_json(receipt, summarize_receipt(current))
     write_json(slot / ".source-identity.json", current)
     if result == "success":
         write_json(slot / ".verified-source-identity.json", current)
@@ -858,7 +868,7 @@ def execute_build(request_path, cap_gib=60, recent_hours=2):
     # Only finish_build advances the separate verified baseline after acceptance.
     write_json(state, dict(current, artifacts={}, result="building"))
     receipt = Path(request["receipt"])
-    write_json(receipt, dict(current, artifacts={}, result="building"))
+    write_json(receipt, summarize_receipt(dict(current, artifacts={}, result="building")))
     before = read_dep_info_snapshot(slot, worktree)
     source_before = snapshot_source_hashes(current, before)
     started_ns = time.time_ns()
