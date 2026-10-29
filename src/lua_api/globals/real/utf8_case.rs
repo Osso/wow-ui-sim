@@ -8,7 +8,7 @@
 
 use crate::lua_bridge::{stack_val, table_set_rust_fn_static};
 use rilua::vm::state::LuaState;
-use rilua::{LuaResult, Val, runtime_error};
+use rilua::{LuaApiMut, LuaResult, Val, runtime_error};
 
 pub fn register_all(lua: &mut rilua::Lua) -> LuaResult<()> {
     let state = lua.state_mut();
