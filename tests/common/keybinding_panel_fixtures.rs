@@ -72,6 +72,9 @@ pub(crate) fn setup_env() -> WowLuaEnv {
     for addon_name in BLIZZARD_ADDONS {
         crate::common::load_required_blizzard_addon(&env, &ui, addon_name);
     }
+    // PTR ships this startup addon (AllowLoad: Both); Mainline QuestMapFrame calls its globals.
+    #[cfg(feature = "client-ptr")]
+    crate::common::load_required_blizzard_addon(&env, &ui, "Blizzard_GamepadSmartNavigation");
 
     load_token_ui(&env);
     env.apply_post_load_workarounds();
