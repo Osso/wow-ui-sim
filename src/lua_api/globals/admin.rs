@@ -166,7 +166,9 @@ fn register_player(b: TableBuilder) -> LuaResult<TableBuilder> {
 }
 
 fn register_combat_casting(b: TableBuilder) -> LuaResult<TableBuilder> {
-    b.set_function("SetInCombat", set_in_combat)?
+    b.set_function("LearnSpell", learn_spell)?
+        .set_function("UnlearnSpell", unlearn_spell)?
+        .set_function("SetInCombat", set_in_combat)?
         .set_function("SetResting", set_resting)?
         .set_function("SetFrameProtected", set_frame_protected)?
         .set_function("SetCasting", set_casting)?
@@ -540,9 +542,30 @@ fn set_player_sex(state: &mut LuaState) -> LuaResult<u32> {
 
 // ── Combat ───────────────────────────────────────────────────────────────────
 
+fn learn_spell(state: &mut LuaState) -> LuaResult<u32> {
+    let id = u32::from_stack(state, 1)?;
+    borrow_state_mut(state)?.known_spells.insert(id);
+    Ok(0)
+}
+
+fn unlearn_spell(state: &mut LuaState) -> LuaResult<u32> {
+    let id = u32::from_stack(state, 1)?;
+    borrow_state_mut(state)?.known_spells.remove(&id);
+    Ok(0)
+}
+
 fn set_in_combat(state: &mut LuaState) -> LuaResult<u32> {
     let v = bool::from_stack(state, 1)?;
     borrow_state_mut(state)?.player.in_combat = v;
+    super::state_backed_queries::dispatch_event_now(
+        state,
+        if v {
+            "PLAYER_REGEN_DISABLED"
+        } else {
+            "PLAYER_REGEN_ENABLED"
+        },
+        &[],
+    )?;
     Ok(0)
 }
 
@@ -645,10 +668,28 @@ fn set_spell_cooldown(state: &mut LuaState) -> LuaResult<u32> {
 fn set_player_health(state: &mut LuaState) -> LuaResult<u32> {
     let cur = i32::from_stack(state, 1)?;
     let max = i32::from_stack(state, 2)?;
-    let mut st = borrow_state_mut(state)?;
-    st.player.health = cur;
-    st.player.health_max = max;
+    let changed = {
+        let mut st = borrow_state_mut(state)?;
+        let changed = st.player.health_max != max;
+        st.player.health = cur;
+        st.player.health_max = max;
+        changed
+    };
+    dispatch_health_events(state, "player", changed)?;
     Ok(0)
+}
+
+pub(super) fn dispatch_health_events(
+    state: &mut LuaState,
+    unit: &str,
+    max_changed: bool,
+) -> LuaResult<()> {
+    let unit = crate::lua_api::methods::create_string(state, unit);
+    super::state_backed_queries::dispatch_event_now(state, "UNIT_HEALTH", &[unit])?;
+    if max_changed {
+        super::state_backed_queries::dispatch_event_now(state, "UNIT_MAXHEALTH", &[unit])?;
+    }
+    Ok(())
 }
 
 fn set_player_power(state: &mut LuaState) -> LuaResult<u32> {
@@ -683,10 +724,17 @@ fn is_secondary_player_power_type(power_type: i32) -> bool {
 fn set_target_health(state: &mut LuaState) -> LuaResult<u32> {
     let cur = i32::from_stack(state, 1)?;
     let max = i32::from_stack(state, 2)?;
-    let mut st = borrow_state_mut(state)?;
-    if let Some(t) = st.current_target.as_mut() {
-        t.health = cur;
-        t.health_max = max;
+    let changed = {
+        let mut st = borrow_state_mut(state)?;
+        st.current_target.as_mut().map(|t| {
+            let changed = t.health_max != max;
+            t.health = cur;
+            t.health_max = max;
+            changed
+        })
+    };
+    if let Some(changed) = changed {
+        dispatch_health_events(state, "target", changed)?;
     }
     Ok(0)
 }

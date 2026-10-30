@@ -1,0 +1,27 @@
+//! Original Blizzard TargetFrame receives admin target and health changes.
+#![cfg(feature = "client-retail")]
+
+#[test]
+fn target_frame_tracks_admin_target_and_health_events() {
+    crate::common::with_timeout(90, || {
+        crate::common::blizzard_addon_harness::with_blizzard_addon_startup_shape(
+            &["Blizzard_UnitFrame"],
+            &[],
+            |env, _| {
+                env.exec(r#"
+                    A_Admin.ClearTarget()
+                    assert(TargetFrame and not TargetFrame:IsShown(), 'target frame starts hidden')
+                    A_Admin.SetTarget('Admin target', 80, 1, true)
+                    assert(TargetFrame:IsShown(), 'target event must show Blizzard frame')
+                    local health = TargetFrame.TargetFrameContent.TargetFrameContentMain.HealthBarsContainer.HealthBar
+                    A_Admin.SetTargetHealth(123, 456)
+                    assert(health:GetValue() == 123, 'health event must update Blizzard bar')
+                    local _, maximum = health:GetMinMaxValues()
+                    assert(maximum == 456, 'max-health event must update Blizzard bar')
+                    A_Admin.ClearTarget()
+                    assert(not TargetFrame:IsShown(), 'target event must hide Blizzard frame')
+                "#).expect("original TargetFrame consumes admin events");
+            },
+        );
+    });
+}

@@ -704,7 +704,8 @@ fn is_spell_known_or_in_spell_book(state: &mut LuaState) -> LuaResult<u32> {
     let bank = Option::<i32>::from_stack(state, 2)?.unwrap_or(PLAYER_SPELL_BANK);
     let present = match bank {
         PLAYER_SPELL_BANK => {
-            spellbook_data::is_spell_known(spell_id)
+            borrow_state(state)?.known_spells.contains(&spell_id)
+                || spellbook_data::is_spell_known(spell_id)
                 || spellbook_data::find_spell_slot(spell_id).is_some()
         }
         PET_SPELL_BANK => borrow_state(state)?.pet_spells.contains(&spell_id),
@@ -718,7 +719,8 @@ fn is_spell_known_or_in_spell_book(state: &mut LuaState) -> LuaResult<u32> {
 
 fn c_spell_book_is_spell_known(state: &mut LuaState) -> LuaResult<u32> {
     let spell_id = u32::from_stack(state, 1)?;
-    let known = spellbook_data::is_spell_known(spell_id);
+    let known = borrow_state(state)?.known_spells.contains(&spell_id)
+        || spellbook_data::is_spell_known(spell_id);
     state.push(Val::Bool(known));
     Ok(1)
 }
@@ -758,7 +760,8 @@ fn c_spell_book_cast_spell_book_item(state: &mut LuaState) -> LuaResult<u32> {
 
 fn c_spell_book_is_spell_in_spell_book(state: &mut LuaState) -> LuaResult<u32> {
     let spell_id = u32::from_stack(state, 1)?;
-    let known = spellbook_data::is_spell_known(spell_id);
+    let known = borrow_state(state)?.known_spells.contains(&spell_id)
+        || spellbook_data::is_spell_known(spell_id);
     state.push(Val::Bool(known));
     Ok(1)
 }
