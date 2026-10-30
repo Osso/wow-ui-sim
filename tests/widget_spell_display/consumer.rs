@@ -253,6 +253,7 @@ fn spell_display_seeded_world_loot_and_api_queries() {
         assert(frame.rarityPipPool:GetNumActive() == 3)
     "#);
     let mut updated = object;
+    updated.inventory_type = 0;
     updated.in_range = false;
     updated.is_upgrade = true;
     env.supply_world_loot_object("GameObject-1", updated).unwrap();
