@@ -237,6 +237,8 @@ fn spell_display_seeded_world_loot_and_api_queries() {
         assert(C_WorldLootObject.GetWorldLootObjectInfoByGUID('missing') == nil)
         assert(C_WorldLootObject.DoesSlotMatchInventoryType(1, 1))
         assert(not C_WorldLootObject.DoesSlotMatchInventoryType(2, 1))
+        assert(not pcall(C_WorldLootObject.OnWorldLootObjectClick, 'player', nil))
+        assert(not pcall(C_WorldLootObject.OnWorldLootObjectClick, nil, true))
         C_WorldLootObject.OnWorldLootObjectClick('player', true)
     "#);
     assert_eq!(env.state().borrow().world_loot_objects.clicks, [("player".into(), true)]);

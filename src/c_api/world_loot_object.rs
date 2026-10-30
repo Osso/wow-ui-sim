@@ -1,7 +1,7 @@
 //! Host-supplied world loot state; unobserved behavior is simulator policy.
 use crate::lua_api::WowLuaEnv;
 use crate::lua_api::methods::{borrow_state, borrow_state_mut, create_table_with_fields};
-use crate::lua_bridge::{FromStack, table_set_rust_fn_static};
+use crate::lua_bridge::{FromStack, stack_val, table_set_rust_fn_static};
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
 use std::collections::HashMap;
@@ -140,7 +140,11 @@ fn in_range(state: &mut LuaState) -> LuaResult<u32> {
 }
 fn click(state: &mut LuaState) -> LuaResult<u32> {
     let unit = String::from_stack(state, 1)?;
-    let left = bool::from_stack(state, 2)?;
+    let Val::Bool(left) = stack_val(state, 2) else {
+        return Err(rilua::runtime_error(
+            "OnWorldLootObjectClick requires a boolean isLeftClick",
+        ));
+    };
     borrow_state_mut(state)?
         .world_loot_objects
         .clicks
