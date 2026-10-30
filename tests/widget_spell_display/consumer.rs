@@ -297,3 +297,34 @@ fn spell_display_zero_spell_polling_uses_real_on_update_without_feed_notificatio
     "#,
     );
 }
+
+#[test]
+fn spell_display_equippable_world_loot_event_and_slot_matching() {
+    use wow_ui_sim::c_api::world_loot_object::WorldLootObject;
+    let env = load_and_register_spell_container_env(true);
+    assert_lua(&env, "equip event listener", r#"
+        equipEvents = 0
+        local f = CreateFrame('Frame')
+        f:RegisterEvent('PLAYER_EQUIPED_SPELLS_CHANGED')
+        f:SetScript('OnEvent', function(_, _, ...)
+            assert(select('#', ...) == 0)
+            equipEvents = equipEvents + 1
+        end)
+    "#);
+    env.supply_world_loot_object("GameObject-1", WorldLootObject {
+        unit_token: "player".into(), inventory_type: 31, at_max_quality: false,
+        is_upgrade: true, distance_squared: 4.0, in_range: true,
+    }).unwrap();
+    supply(&env, supplied_record(), true);
+    assert_lua(&env, "equippable cached spell widget", r#"
+        local frame = assert(SpellContainer.widgetFrames[761301])
+        assert(frame.Spell:IsEventRegistered('PLAYER_EQUIPED_SPELLS_CHANGED'))
+        assert(equipEvents == 1)
+        assert(C_WorldLootObject.DoesSlotMatchInventoryType(212, 31))
+        assert(C_WorldLootObject.DoesSlotMatchInventoryType(213, 31))
+        assert(not C_WorldLootObject.DoesSlotMatchInventoryType(216, 31))
+        assert(C_WorldLootObject.DoesSlotMatchInventoryType(216, 32))
+        assert(C_WorldLootObject.DoesSlotMatchInventoryType(217, 32))
+        assert(not C_WorldLootObject.DoesSlotMatchInventoryType(212, 32))
+    "#);
+}
