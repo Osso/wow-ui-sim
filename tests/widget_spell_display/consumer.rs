@@ -242,6 +242,10 @@ fn spell_display_seeded_world_loot_and_api_queries() {
         C_WorldLootObject.OnWorldLootObjectClick('player', true)
     "#);
     assert_eq!(env.state().borrow().world_loot_objects.clicks, [("player".into(), true)]);
+    // The non-equippable path avoids an unrelated unsupported event.
+    let mut non_equippable = object.clone();
+    non_equippable.inventory_type = 0;
+    env.supply_world_loot_object("GameObject-1", non_equippable).unwrap();
     supply(&env, supplied_record(), true);
     assert_lua(&env, "original spell display world loot branch", r#"
         local frame = assert(SpellContainer.widgetFrames[761301])
@@ -253,7 +257,7 @@ fn spell_display_seeded_world_loot_and_api_queries() {
     updated.is_upgrade = true;
     env.supply_world_loot_object("GameObject-1", updated).unwrap();
     assert_lua(&env, "updated state", r#"
-        assert(#lootEvents == 2 and lootEvents[2] == 'GameObject-1')
+        assert(#lootEvents == 3 and lootEvents[2] == 'GameObject-1' and lootEvents[3] == 'GameObject-1')
         assert(not C_WorldLootObject.IsWorldLootObjectInRange('player'))
         assert(C_WorldLootObject.GetWorldLootObjectInfo('player').isUpgrade)
     "#);
