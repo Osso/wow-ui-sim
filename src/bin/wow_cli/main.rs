@@ -294,6 +294,8 @@ enum GenerateTarget {
 enum CascTarget {
     /// Populate the profile-scoped Blizzard UI cache from its configured source
     SyncBlizzardUi,
+    /// Extract a file data ID from the active profile's CASC storage
+    ExtractFdid { fdid: u32, out: PathBuf },
 }
 
 fn default_addons_path() -> PathBuf {
@@ -389,6 +391,17 @@ fn run_generator(target: GenerateTarget) {
 
 fn run_casc_command(target: CascTarget) {
     let result = match target {
+        CascTarget::ExtractFdid { fdid, out } => {
+            wow_ui_sim::blizzard_ui_sync::extract_fdid(fdid, &out).and_then(|found| {
+                if found {
+                    Ok(())
+                } else {
+                    Err(wow_ui_sim::Error::Other(format!(
+                        "CASC file data ID {fdid} not found"
+                    )))
+                }
+            })
+        }
         CascTarget::SyncBlizzardUi => wow_ui_sim::blizzard_ui_sync::sync_blizzard_ui().map(|s| {
             println!(
                 "Synced {} Blizzard UI files to {} ({} extracted, {} already present)",
