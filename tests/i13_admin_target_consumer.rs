@@ -1,4 +1,5 @@
 //! Original Blizzard TargetFrame receives admin target and health changes.
+#![cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 
 #[test]
 fn target_frame_tracks_admin_target_and_health_events() {
