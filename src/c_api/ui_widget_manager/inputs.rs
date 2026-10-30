@@ -48,6 +48,7 @@ pub struct IconAndTextRecord {
 
 #[derive(Debug, Default)]
 pub struct UiWidgetInputs {
+    pub unit_context: super::WidgetUnitContext,
     pub sets: HashMap<WidgetId, WidgetSetRecord>,
     pub icon_and_text: HashMap<WidgetId, IconAndTextRecord>,
     pub icon_text_and_background: HashMap<WidgetId, IconTextAndBackgroundRecord>,
