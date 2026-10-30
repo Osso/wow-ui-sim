@@ -131,24 +131,10 @@ fn blizzard_party_pose_ui_toc_declares_metadata_in_raw_bytes() {
          `Blizzard Party Pose UI`); the minority pattern, suggesting the addon was \
          scaffolded from a code template"
     );
-    assert!(
-        raw.contains("## Notes: Every time I'm here it's a party! :3"),
-        "TOC must declare the WHIMSICAL `## Notes:` line verbatim — UNUSUAL: most \
-         Blizzard-shipped addons OMIT the `## Notes:` key entirely; this one ships a \
-         whimsical author-comment-as-tooltip-text (`:3` emoticon and all). The Notes key \
-         is engine-visible in the AddOns panel as the addon's tooltip — this one was \
-         written by a developer who knew the line would surface"
-    );
-    assert!(
-        raw.contains("## Author: Blizzard Entertainment"),
-        "TOC must declare `## Author: Blizzard Entertainment` exactly"
-    );
-    assert!(
-        raw.contains("## Version: 1.0"),
-        "TOC must declare `## Version: 1.0` exactly — UNUSUAL: stub version that nobody \
-         updates despite the file having seen multiple expansions of changes; matches the \
-         Blizzard_OrderHallUI pattern"
-    );
+    // Retail manifest's Blizzard_PartyPoseUI.toc, SHA-256 34e388b9db6734fad20c361ba1f88fbcf1dee2792d8527220ea946975b31cad1.
+    for key in ["## Notes:", "## Author:", "## Version:"] {
+        assert!(!raw.contains(key), "pinned TOC omits {key}");
+    }
     assert!(
         raw.contains("## LoadOnDemand: 1"),
         "TOC must declare `## LoadOnDemand: 1` exactly — the canonical retail spelling \

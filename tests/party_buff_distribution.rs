@@ -8,7 +8,9 @@
 use wow_ui_sim::lua_api::WowLuaEnv;
 
 fn env() -> WowLuaEnv {
-    WowLuaEnv::new().expect("Failed to create Lua environment")
+    let env = WowLuaEnv::new().expect("Failed to create Lua environment");
+    env.state().borrow_mut().party_group_active = true;
+    env
 }
 
 #[test]
