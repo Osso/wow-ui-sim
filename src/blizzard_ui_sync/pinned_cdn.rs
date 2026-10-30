@@ -3,9 +3,35 @@ use reqwest::{Url, blocking::Client};
 use std::collections::HashSet;
 use std::io::Read;
 
+/// Blizzard serves the same BPSV record over HTTPS and plain HTTP on port 1119.
+/// HTTPS goes first so discovery works through HTTPS-only egress proxies.
+fn discovery_urls(product: &str) -> [String; 2] {
+    [
+        format!("https://us.version.battle.net/v2/products/{product}/cdns"),
+        format!("http://us.patch.battle.net:1119/{product}/cdns"),
+    ]
+}
+
 pub(super) fn fetch_roots(client: &Client, product: &str) -> crate::Result<Vec<String>> {
-    let url = format!("http://us.patch.battle.net:1119/{product}/cdns");
-    let response = super::pinned_download::request_with_retry(client, &url, None)?;
+    fetch_roots_from(client, &discovery_urls(product))
+}
+
+fn fetch_roots_from(client: &Client, urls: &[String]) -> crate::Result<Vec<String>> {
+    let mut failures = Vec::new();
+    for url in urls {
+        match fetch_record(client, url).and_then(|record| parse_roots(&record)) {
+            Ok(roots) => return Ok(roots),
+            Err(cause) => {
+                eprintln!("CDN discovery via {url} failed: {cause}");
+                failures.push(cause.to_string());
+            }
+        }
+    }
+    Err(error(failures.join("; ")))
+}
+
+fn fetch_record(client: &Client, url: &str) -> crate::Result<String> {
+    let response = super::pinned_download::request_with_retry(client, url, None)?;
     const MAX_RECORD_SIZE: u64 = 64 * 1024;
     let mut record = String::new();
     response
@@ -15,7 +41,7 @@ pub(super) fn fetch_roots(client: &Client, product: &str) -> crate::Result<Vec<S
     if record.len() as u64 > MAX_RECORD_SIZE {
         return Err(error("CDN record exceeds 64 KiB"));
     }
-    parse_roots(&record)
+    Ok(record)
 }
 
 fn error(cause: impl std::fmt::Display) -> crate::Error {
@@ -122,6 +148,48 @@ mod tests {
         );
         assert!(parse_roots("Name!STRING:0\nus\n").is_err());
     }
+    #[test]
+    fn discovery_prefers_https_and_keeps_port_1119_fallback() {
+        let [first, second] = discovery_urls("wowf");
+        assert_eq!(first, "https://us.version.battle.net/v2/products/wowf/cdns");
+        assert_eq!(second, "http://us.patch.battle.net:1119/wowf/cdns");
+    }
+
+    #[test]
+    fn discovery_falls_back_when_an_earlier_source_fails() {
+        use std::io::{Read, Write};
+        let closed = std::net::TcpListener::bind("127.0.0.1:0").unwrap();
+        let unreachable = format!("http://{}/cdns", closed.local_addr().unwrap());
+        drop(closed);
+        let listener = std::net::TcpListener::bind("127.0.0.1:0").unwrap();
+        let reachable = format!("http://{}/cdns", listener.local_addr().unwrap());
+        let server = std::thread::spawn(move || {
+            let (mut socket, _) = listener.accept().unwrap();
+            let mut request = Vec::new();
+            let mut byte = [0];
+            while !request.ends_with(b"\r\n\r\n") {
+                socket.read_exact(&mut byte).unwrap();
+                request.push(byte[0]);
+            }
+            let body = "Name!STRING:0|Path!STRING:0|Hosts!STRING:0|Servers!STRING:0|ConfigPath!STRING:0\nus|tpr/wow|cdn.example||tpr/configs/data\n";
+            let head = format!(
+                "HTTP/1.1 200 OK\r\nContent-Length: {}\r\nConnection: close\r\n\r\n",
+                body.len()
+            );
+            socket.write_all(head.as_bytes()).unwrap();
+            socket.write_all(body.as_bytes()).unwrap();
+        });
+        let client = Client::builder()
+            .timeout(std::time::Duration::from_secs(3))
+            .build()
+            .unwrap();
+        assert_eq!(
+            fetch_roots_from(&client, &[unreachable, reachable]).unwrap(),
+            ["https://cdn.example/tpr/wow/"]
+        );
+        server.join().unwrap();
+    }
+
     #[test]
     fn advertised_roots_preserve_server_prefix_scheme_and_deduplicate() {
         let record = concat!(
