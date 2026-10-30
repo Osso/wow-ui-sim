@@ -1,6 +1,16 @@
 //! Original Blizzard TargetFrame receives admin target and health changes.
 #![cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 
+#[cfg(feature = "client-wowforever")]
+#[test]
+fn forever_panel_fixture_startup_has_no_lua_errors() {
+    crate::common::with_timeout(90, || {
+        let env = crate::common::panel_fixtures::setup_env();
+        let errors = crate::common::panel_fixtures::recorded_lua_errors(&env);
+        assert!(errors.is_empty(), "fixture startup Lua errors: {errors:#?}");
+    });
+}
+
 #[test]
 fn target_frame_tracks_admin_target_and_health_events() {
     crate::common::with_timeout(90, || {

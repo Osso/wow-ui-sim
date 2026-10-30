@@ -58,6 +58,8 @@ pub const PANEL_ADDONS: &[&str] = &[
     "Blizzard_UIPanels_Game",
     "Blizzard_PingUI",
     "Blizzard_ActionBar",
+    #[cfg(feature = "client-wowforever")]
+    "Blizzard_MainMenuBarBagButtons",
     "Blizzard_ColorPickerFrame",
     // UnitFrame's secure aura consumer relies on this implicit startup root.
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
