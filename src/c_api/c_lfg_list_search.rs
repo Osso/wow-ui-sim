@@ -6,6 +6,8 @@ use rilua::vm::state::LuaState;
 #[derive(Debug, Clone, Default)]
 pub struct SearchMetadata {
     pub has_self: bool,
+    pub overall_dungeon_score: Option<f64>,
+    pub best_dungeon_score: Option<DungeonScore>,
     pub dungeon_scores: Vec<DungeonScore>,
     pub pvp_ratings: Vec<PvpRating>,
 }
@@ -30,6 +32,14 @@ pub struct PvpRating {
 
 pub(crate) fn publish(state: &mut LuaState, info: Val, metadata: &SearchMetadata) {
     table_set(state, info, "hasSelf", Val::Bool(metadata.has_self));
+    if let Some(score) = metadata.overall_dungeon_score {
+        table_set(state, info, "leaderOverallDungeonScore", Val::Num(score));
+    }
+    if let Some(score) = &metadata.best_dungeon_score {
+        let best = create_table(state);
+        table_set(state, info, "leaderBestDungeonScoreInfo", best);
+        set_dungeon_score(state, best, score);
+    }
     publish_dungeon_scores(state, info, &metadata.dungeon_scores);
     publish_pvp_ratings(state, info, &metadata.pvp_ratings);
 }
@@ -40,23 +50,27 @@ fn publish_dungeon_scores(state: &mut LuaState, info: Val, scores: &[DungeonScor
     for (index, score) in scores.iter().enumerate() {
         let row = create_table(state);
         super::helpers::set_table_array(state, dungeons, index as i64 + 1, row);
-        for (key, value) in [
-            ("mapScore", score.map_score),
-            ("bestRunLevel", f64::from(score.best_run_level)),
-            ("bestRunDurationMs", score.best_run_duration_ms),
-            ("bestLevelIncrement", f64::from(score.best_level_increment)),
-        ] {
-            table_set(state, row, key, Val::Num(value));
-        }
-        let name = create_string(state, &score.map_name);
-        table_set(state, row, "mapName", name);
-        table_set(
-            state,
-            row,
-            "finishedSuccess",
-            Val::Bool(score.finished_success),
-        );
+        set_dungeon_score(state, row, score);
     }
+}
+
+fn set_dungeon_score(state: &mut LuaState, row: Val, score: &DungeonScore) {
+    for (key, value) in [
+        ("mapScore", score.map_score),
+        ("bestRunLevel", f64::from(score.best_run_level)),
+        ("bestRunDurationMs", score.best_run_duration_ms),
+        ("bestLevelIncrement", f64::from(score.best_level_increment)),
+    ] {
+        table_set(state, row, key, Val::Num(value));
+    }
+    let name = create_string(state, &score.map_name);
+    table_set(state, row, "mapName", name);
+    table_set(
+        state,
+        row,
+        "finishedSuccess",
+        Val::Bool(score.finished_success),
+    );
 }
 
 fn publish_pvp_ratings(state: &mut LuaState, info: Val, ratings_info: &[PvpRating]) {

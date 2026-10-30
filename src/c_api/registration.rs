@@ -161,6 +161,7 @@ fn register_classic_combat_tables(state: &mut LuaState) -> LuaResult<()> {
 #[cfg(feature = "retail-12-0-0")]
 fn register_retirement_successors(state: &mut LuaState) -> LuaResult<()> {
     super::c_challenge_mode::register(state)?;
+    super::c_dungeon_score_rarity::register(state)?;
     super::c_log::register(state)?;
     super::c_spell_activation_overlay::register(state)
 }

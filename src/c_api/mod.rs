@@ -110,6 +110,7 @@ pub(crate) mod c_debug;
 #[cfg(feature = "retail-12-0-5")]
 pub(crate) mod c_delves_entrance;
 pub mod c_discord;
+mod c_dungeon_score_rarity;
 #[cfg(feature = "retail-12-0-0")]
 pub mod c_dye_color;
 #[cfg(feature = "client-wowforever")]
