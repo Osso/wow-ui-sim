@@ -57,9 +57,15 @@ fn advance_time(state: &mut LuaState) -> LuaResult<u32> {
     advance_clock(state, duration)?;
     #[cfg(feature = "retail-12-0-5")]
     super::execution_budget::reset_frame_budgets(state)?;
-    super::on_update::fire_state(state, delta).map_err(|error| runtime_error(error.to_string()))?;
-    super::manual_timers::drain(state)?;
-    Ok(0)
+    let taints = super::taint::clear_active_stack_taint(state);
+    let result = (|| {
+        super::on_update::fire_state(state, delta)
+            .map_err(|error| runtime_error(error.to_string()))?;
+        super::manual_timers::drain(state)?;
+        Ok(0)
+    })();
+    super::taint::restore_active_stack_taint(state, taints);
+    result
 }
 
 fn advance_clock(state: &LuaState, delta: Duration) -> LuaResult<()> {

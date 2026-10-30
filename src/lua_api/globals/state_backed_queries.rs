@@ -66,6 +66,13 @@ pub(crate) fn dispatch_event_now(
     event_name: &str,
     args: &[Val],
 ) -> LuaResult<()> {
+    let taints = crate::lua_api::taint::clear_active_stack_taint(state);
+    let result = dispatch_event_clean(state, event_name, args);
+    crate::lua_api::taint::restore_active_stack_taint(state, taints);
+    result
+}
+
+fn dispatch_event_clean(state: &mut LuaState, event_name: &str, args: &[Val]) -> LuaResult<()> {
     #[cfg(feature = "retail-12-0-5")]
     crate::c_api::aura_entry::apply_entry_event(state, event_name)?;
     #[cfg(feature = "retail-12-0-0")]
