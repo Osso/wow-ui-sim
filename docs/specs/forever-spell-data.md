@@ -16,10 +16,12 @@ The Forever profile uses a selected spell-data file derived from the pinned Fore
 ## Implementation inventory
 
 - `src/blizzard_ui_sync/pinned_download.rs`: pinned CDN transport and DB2 decoding.
+- `src/forever_spell_data.rs`: selected-record cache generation and source-range validation.
 
 ## Tests asserting this spec
 
 - `src/blizzard_ui_sync/pinned_download.rs`: encrypted chunk decoding and corruption rejection.
+- `src/forever_spell_data.rs`: selection, deterministic output and zero-filled-range rejection.
 
 ## Known gaps (current cycle)
 
