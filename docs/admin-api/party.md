@@ -1,5 +1,9 @@
 # Party
 
+The simulator seeds a demo roster with auras unless `WOW_SIM_NO_PARTY` is set. `SetPartySize` retains existing slots when it activates or resizes the roster.
+
+Health setters dispatch `UNIT_HEALTH` after updating state, then `UNIT_MAXHEALTH` if the maximum changed. Native order was observed in the 4.x build 15595 party stats path (aso); other update paths are unverified.
+
 ### A_Admin.SetPartySize(n)
 
 Sets the number of active party members, resizing the party array.
@@ -23,7 +27,7 @@ Configures a specific party member's identity.
 - **name** `string` -- Character name
 - **classIndex** `number` -- 1-based class index (see `SetPlayerClass`)
 - **level** `number` -- Character level
-- **Affects:** `UnitName("party1")`, `UnitClass("party1")`, `UnitLevel("party1")`, etc.
+- **Affects:** `UnitName("party1")`, `UnitClass("party1")`, `UnitLevel("party1")`, etc. Changing identity clears that slot's buffs and debuffs and fires `UNIT_AURA` after the change.
 - **Fires:** `GROUP_ROSTER_UPDATE`
 - **Example:**
 ```lua
@@ -52,7 +56,7 @@ Sets a party member's health values.
 - **current** `number` -- Current health
 - **max** `number` -- Maximum health
 - **Affects:** `UnitHealth("partyN")`, `UnitHealthMax("partyN")`
-- **Fires:** `UNIT_HEALTH`
+- **Fires:** `UNIT_HEALTH`, then `UNIT_MAXHEALTH` if max changed, with `partyN` as the unit.
 - **Example:**
 ```lua
 A_Admin.SetPartyMemberHealth(1, 60000, 120000)  -- party1 at 50% HP

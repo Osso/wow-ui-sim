@@ -79,7 +79,7 @@ fn is_spell_known(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn is_known_spell(st: &SimState, spell_id: u32) -> bool {
-    st.known_spells.contains(&spell_id)
+    st.known_spells.contains(&spell_id) || super::spellbook_data::is_spell_known(spell_id)
 }
 
 /// `IsSpellKnownOrOverridesKnown(spellId)` — alias of `IsSpellKnown`.
