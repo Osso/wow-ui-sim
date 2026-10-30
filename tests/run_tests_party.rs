@@ -21,7 +21,7 @@ fn run_tests_starts_with_demo_party_and_respects_no_party() {
         ),
         (
             true,
-            "test('solo', function() assertEquals(0, GetNumGroupMembers()); assertNil(UnitName('party1')); assertFalse(IsInGroup()) end)",
+            "test('solo', function() assertEquals(0, GetNumGroupMembers()); assertFalse(UnitExists('party1')); assertFalse(IsInGroup()) end)",
         ),
     ] {
         std::fs::write(addon.join("tests/party.lua"), source).unwrap();
