@@ -9,6 +9,9 @@ use rilua::{LuaResult, Val, runtime_error};
 
 pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
     let namespace = crate::c_api::ensure_namespace(state, "C_UIWidgetManager")?;
+    if crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Wrath {
+        super::unit_context::register(state, namespace)?;
+    }
     table_set_rust_fn_static(state, namespace, "GetWidgetSetInfo", query_set_info)?;
     table_set_rust_fn_static(state, namespace, "GetAllWidgetsBySetID", query_set_widgets)?;
     table_set_rust_fn_static(

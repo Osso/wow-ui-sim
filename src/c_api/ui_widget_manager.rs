@@ -35,6 +35,7 @@ mod icon_text_and_currencies_record;
 mod inputs;
 mod item_display;
 mod item_display_record;
+mod unit_context;
 pub use icon_text_and_background_record::IconTextAndBackgroundRecord;
 pub use icon_text_and_currencies_record::{IconTextAndCurrenciesRecord, UiWidgetCurrencyRecord};
 pub use item_display_record::{ItemDisplayRecord, UiWidgetItemRecord};
@@ -57,6 +58,7 @@ pub use text_with_subtext_record::TextWithSubtextRecord;
 pub(crate) mod queries;
 pub(crate) use fixtures::seed_demo_world_quest_widgets;
 pub use inputs::{IconAndTextRecord, UiWidgetInputs, WidgetSetEntry, WidgetSetRecord};
+pub use unit_context::{ProcessingUnit, WidgetUnitContext};
 
 #[cfg(any(feature = "client-retail", feature = "client-ptr"))]
 pub(crate) mod button_header;

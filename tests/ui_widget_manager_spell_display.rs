@@ -12,3 +12,5 @@ mod fixtures;
 mod queries;
 #[path = "widget_spell_display/security.rs"]
 mod security;
+#[path = "widget_spell_display/unit_apis.rs"]
+mod unit_apis;
