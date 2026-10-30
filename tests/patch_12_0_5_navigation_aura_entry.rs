@@ -263,6 +263,7 @@ fn aura_entry_rekeys_party_helpful_and_harmful_stores_without_changing_members()
         buffs: vec![aura(83, true)],
         debuffs: vec![aura(94, false)],
     }];
+    env.state().borrow_mut().party_group_active = true;
     queue_ids(&env, &[907, 301, 802, 603]);
     env.fire_event("ENCOUNTER_START").unwrap();
     assert_player_aura_queries(&env, &[41, 72], &[907, 301]);
