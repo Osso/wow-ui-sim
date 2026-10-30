@@ -7,9 +7,14 @@ use rilua::{LuaResult, Val};
 use std::collections::HashSet;
 
 pub(crate) fn drain(state: &mut LuaState) -> LuaResult<usize> {
+    let eligible: HashSet<u64> = borrow_state_mut(state)?
+        .rilua_timers
+        .iter()
+        .map(|timer| timer.id)
+        .collect();
     let mut fired = drain_signals(state)?;
     let mut zero_interval_fired = HashSet::new();
-    while let Some(mut timer) = take_next_due(state, &zero_interval_fired)? {
+    while let Some(mut timer) = take_next_due(state, &eligible, &zero_interval_fired)? {
         let callback = get_timer_callback(state, timer.id);
         if matches!(callback, Val::Nil) {
             continue;
@@ -38,7 +43,11 @@ pub(crate) fn drain(state: &mut LuaState) -> LuaResult<usize> {
     Ok(fired)
 }
 
-fn take_next_due(state: &LuaState, blocked: &HashSet<u64>) -> LuaResult<Option<PendingTimer>> {
+fn take_next_due(
+    state: &LuaState,
+    eligible: &HashSet<u64>,
+    blocked: &HashSet<u64>,
+) -> LuaResult<Option<PendingTimer>> {
     let mut sim = borrow_state_mut(state)?;
     let now = sim.clock_now();
     let index = sim
@@ -46,7 +55,10 @@ fn take_next_due(state: &LuaState, blocked: &HashSet<u64>) -> LuaResult<Option<P
         .iter()
         .enumerate()
         .filter(|(_, timer)| {
-            !timer.cancelled && timer.fire_at <= now && !blocked.contains(&timer.id)
+            !timer.cancelled
+                && timer.fire_at <= now
+                && eligible.contains(&timer.id)
+                && !blocked.contains(&timer.id)
         })
         .min_by_key(|(_, timer)| (timer.fire_at, timer.id))
         .map(|(index, _)| index);
