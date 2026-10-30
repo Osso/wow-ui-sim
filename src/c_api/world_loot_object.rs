@@ -6,7 +6,7 @@ use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
 use std::collections::HashMap;
 
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, PartialEq)]
 pub struct WorldLootObject {
     pub unit_token: String,
     pub inventory_type: i32,
@@ -20,8 +20,6 @@ pub struct WorldLootObject {
 pub struct WorldLootObjects {
     pub objects: HashMap<String, WorldLootObject>,
     pub clicks: Vec<(String, bool)>,
-    /// Explicit observations of inventory-slot compatibility.
-    pub slot_matches: HashMap<(i32, i32), bool>,
 }
 
 impl WowLuaEnv {
@@ -31,8 +29,15 @@ impl WowLuaEnv {
         guid: &str,
         object: WorldLootObject,
     ) -> crate::Result<()> {
+        let equippable_changed;
         {
             let mut sim = self.state.borrow_mut();
+            let previous = sim.world_loot_objects.objects.get(guid);
+            let is_equippable = |value: &WorldLootObject| {
+                value.unit_token == "player" && matches!(value.inventory_type, 31 | 32)
+            };
+            equippable_changed = previous != Some(&object)
+                && (is_equippable(&object) || previous.is_some_and(is_equippable));
             sim.world_loot_objects
                 .objects
                 .retain(|key, value| key == guid || value.unit_token != object.unit_token);
@@ -40,7 +45,11 @@ impl WowLuaEnv {
                 .objects
                 .insert(guid.to_owned(), object);
         }
-        self.fire_event_with_args("WORLD_LOOT_OBJECT_INFO_UPDATED", &[self.lua_string(guid)])
+        self.fire_event_with_args("WORLD_LOOT_OBJECT_INFO_UPDATED", &[self.lua_string(guid)])?;
+        if equippable_changed {
+            self.fire_event_with_args("PLAYER_EQUIPED_SPELLS_CHANGED", &[])?;
+        }
+        Ok(())
     }
 }
 
@@ -67,15 +76,19 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
 fn by_unit<'a>(store: &'a WorldLootObjects, unit: &str) -> Option<&'a WorldLootObject> {
     store.objects.values().find(|obj| obj.unit_token == unit)
 }
+pub(crate) fn is_equippable_spell_slot(slot: i32) -> bool {
+    matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail
+            | crate::client_profile::ClientProfile::Ptr
+            | crate::client_profile::ClientProfile::WowForever
+    ) && matches!(slot, 212 | 213 | 216 | 217)
+}
+
 fn slot_matches(state: &mut LuaState) -> LuaResult<u32> {
     let slot = i32::from_stack(state, 1)?;
     let inventory = i32::from_stack(state, 2)?;
-    let matches = borrow_state(state)?
-        .world_loot_objects
-        .slot_matches
-        .get(&(slot, inventory))
-        .copied()
-        .unwrap_or(false);
+    let matches = matches!((slot, inventory), (212 | 213, 31) | (216 | 217, 32));
     state.push(Val::Bool(matches));
     Ok(1)
 }
