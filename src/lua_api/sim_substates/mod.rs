@@ -382,7 +382,17 @@ pub struct VoiceChatState {
 impl Default for VoiceChatState {
     fn default() -> Self {
         Self {
-            can_access_settings: None,
+            // Retail and Forever VoiceChatDocumentation.lua:41-47. User-approved
+            // default, not native evidence; explicit observations still override it.
+            can_access_settings: if matches!(
+                crate::client_profile::ACTIVE,
+                crate::client_profile::ClientProfile::Retail
+                    | crate::client_profile::ClientProfile::WowForever
+            ) {
+                Some(true)
+            } else {
+                None
+            },
             microphone_volume: 1.0,
             output_volume: 1.0,
             muted: false,

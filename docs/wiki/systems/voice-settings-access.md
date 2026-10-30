@@ -1,6 +1,6 @@
 # Voice settings access
 
-The [supplied-observation contract](../../specs/voice-settings-access.md) exposes settings access without inventing voice-proxy readiness. The Rust host supplies `Some(false)` or `Some(true)` on `SimState.voice_chat.can_access_settings`; `None` means unknown and raises a named error. Each environment owns its observation. No admin function or readiness side effect is added.
+The [supplied-observation contract](../../specs/voice-settings-access.md) exposes settings access without claiming native voice-proxy readiness. The Rust host supplies `Some(false)` or `Some(true)` on `SimState.voice_chat.can_access_settings`; `None` means unknown and raises a named error. Each environment owns its observation. No admin function or readiness side effect is added.
 
 ## Original consumer
 
