@@ -181,6 +181,8 @@ fn test_set_spell_by_id_applies_full_line_inline_color_markup() {
         .unwrap();
 
     assert_eq!(description_text, "Requires Clearcasting");
+    let next_line: String = env.eval(&format!("return GameTooltip:GetLeftLine({}):GetText()", description_index + 1)).unwrap();
+    assert!(next_line.starts_with("Launches "), "subsequent description paragraph: {next_line}");
     assert!(
         (description_color.0 - 1.0).abs() < 0.01
             && (description_color.1 - 1.0).abs() < 0.01
@@ -223,6 +225,10 @@ fn test_set_spell_by_id_applies_named_inline_color_markup() {
         .unwrap();
 
     assert_eq!(description_text, "Season 1");
+    let state = env.state().borrow();
+    let tooltip = state.tooltips.get(&state.widgets.get_id_by_name("GameTooltip").unwrap()).unwrap();
+    assert!(tooltip.lines.iter().any(|line| line.left_text.starts_with("Brann's combat mastery")));
+    drop(state);
     assert!(
         (description_color.0 - expected.0).abs() < 0.01
             && (description_color.1 - expected.1).abs() < 0.01
