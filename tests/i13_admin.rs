@@ -6,10 +6,17 @@ fn tainted_admin_dispatch_preserves_blizzard_and_addon_handler_ownership() {
     let ui = crate::common::panel_fixtures::blizzard_ui_dir();
     let env = crate::common::blizzard_addon_harness::new_blizzard_addon_env(&ui);
     crate::common::panel_fixtures::load_panel_addons(&env);
+    crate::common::blizzard_addon_harness::load_blizzard_addon_closure_into_env(
+        &env,
+        &ui,
+        &["Blizzard_CompactRaidFrames"],
+        &[],
+    );
     env.apply_post_load_workarounds();
     crate::common::panel_fixtures::fire_startup_events(&env);
     let before = crate::common::panel_fixtures::recorded_lua_errors(&env);
     env.exec(r#"
+        assert(C_AddOns.IsAddOnLoaded('Blizzard_CompactRaidFrames'))
         assert(C_AddOns.IsAddOnLoaded('Blizzard_UnitFrame'))
         assert(C_AddOns.IsAddOnLoaded('Blizzard_AuraContainer'))
         assert(CompactRaidFrameContainer and TargetFrame)
@@ -23,6 +30,7 @@ fn tainted_admin_dispatch_preserves_blizzard_and_addon_handler_ownership() {
         listener:SetScript('OnUpdate', onUpdate)
         local function runTest()
             assert(not issecure(), 'test caller must be addon-tainted')
+            A_Admin.SetManualClock(100)
             A_Admin.SetPartySize(0)
             A_Admin.SetPartySize(1)
             A_Admin.SetPartyMember(1, 'I13Member', 1, 80)
