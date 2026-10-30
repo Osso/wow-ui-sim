@@ -266,8 +266,8 @@ enum GenerateTarget {
     PatchApiDocs(gen_patch_api_docs::Options),
     /// Generate crates/sim-data/data/spells.rs from SpellName/Spell/SpellMisc CSVs
     Spells,
-    /// Generate the partial Forever spell-name table from a SpellName CSV
-    ForeverSpellNames { csv: PathBuf },
+    /// Generate partial Forever spell records from exported DB2 CSVs
+    ForeverSpellNames { csv_dir: PathBuf },
     /// Generate crates/sim-data/data/items.rs from ItemSparse CSV
     Items,
     /// Generate crates/sim-data-profile/data/atlas.rs from UiTextureAtlas CSVs
@@ -373,7 +373,7 @@ fn run_generator(target: GenerateTarget) {
     let result = match target {
         GenerateTarget::PatchApiDocs(options) => gen_patch_api_docs::run(options),
         GenerateTarget::Spells => gen_spells::run(),
-        GenerateTarget::ForeverSpellNames { csv } => gen_spells::run_forever_names(&csv),
+        GenerateTarget::ForeverSpellNames { csv_dir } => gen_spells::run_forever_names(&csv_dir),
         GenerateTarget::Items => gen_items::run(),
         GenerateTarget::Atlas(options) => gen_atlas::run(options),
         GenerateTarget::Currencies => gen_currencies::run(),
