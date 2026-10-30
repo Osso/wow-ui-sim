@@ -8,7 +8,13 @@ fn tainted_admin_dispatch_preserves_blizzard_and_addon_handler_ownership() {
     crate::common::blizzard_addon_harness::load_blizzard_addon_closure_into_env(
         &env,
         &ui,
-        &["Blizzard_CompactRaidFrames", "Blizzard_UnitFrame", "Blizzard_AuraContainer"],
+        &[
+            "Blizzard_CompactRaidFrames",
+            "Blizzard_UnitFrame",
+            "Blizzard_AuraContainer",
+            "Blizzard_QuickJoin",
+            "Blizzard_RaidUI",
+        ],
         &[],
     );
     env.apply_post_load_workarounds();
