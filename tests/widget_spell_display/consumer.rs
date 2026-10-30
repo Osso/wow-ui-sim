@@ -343,3 +343,33 @@ fn world_loot_plunderstorm_action_button_slot_matching() {
         assert(not m.CanSwapWithInventoryType(offensive1, 32))
     "#);
 }
+
+#[test]
+fn world_loot_equipped_spell_change_refreshes_original_button_border() {
+    let env = load_and_register_spell_container_env(false);
+    let cache = wow_ui_sim::paths::default_blizzard_ui_addons_path().unwrap();
+    env.exec(&std::fs::read_to_string(cache.join("Blizzard_Plunderstorm/GameModeConstants.lua")).unwrap()).unwrap();
+    env.exec("ActionBarButtonEventsDerivedFrameMixin = {}; ActionBarActionButtonDerivedMixin = {}").unwrap();
+    env.exec(&std::fs::read_to_string(cache.join("Blizzard_ActionBar/WoWLabs/ActionButtonOverrides.lua")).unwrap()).unwrap();
+    assert_lua(&env, "real action button border and equipment event", r#"
+        local button = CreateFrame('Button', nil, UIParent)
+        button.action = 61
+        button.Border = button:CreateTexture(nil, 'ARTWORK')
+        button.RarityPipBackground = button:CreateTexture(nil, 'ARTWORK')
+        button.RarityPipContainer = CreateFrame('Frame', nil, button, 'VerticalLayoutFrame')
+        local m = ActionBarActionButtonDerivedMixin
+        local listener = CreateFrame('Frame')
+        local events = 0
+        listener:RegisterEvent('PLAYER_EQUIPED_SPELLS_CHANGED')
+        listener:SetScript('OnEvent', function() events = events + 1; m.UpdateBorder(button) end)
+        m.UpdateBorder(button)
+        assert(not button.Border:IsShown())
+        A_Admin.EquipItem(212, 211993)
+        assert(GetInventoryItemID('player', 212) == 211993)
+        assert(GetInventoryItemQuality('player', 212) > 1)
+        assert(events == 1 and button.Border:IsShown())
+        A_Admin.UnequipItem(212)
+        assert(GetInventoryItemID('player', 212) == nil)
+        assert(events == 2 and not button.Border:IsShown())
+    "#);
+}
