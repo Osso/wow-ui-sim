@@ -1,6 +1,8 @@
 //! Profile-scoped Blizzard UI source synchronization.
 
 #[cfg(feature = "casc")]
+pub mod dungeon_score_rarity;
+#[cfg(feature = "casc")]
 pub mod forever_spells;
 #[cfg(feature = "casc")]
 mod gethe_missing;
