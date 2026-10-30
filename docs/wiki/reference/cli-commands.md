@@ -6,6 +6,8 @@ Two binaries: `wow-sim` (full UI load, GUI capable) and `wow-cli` (connects to r
 
 Build `wow-cli` with `cargo build --bin wow-cli --features tools` before using the bare `wow-cli` commands below; `tools` is a Cargo feature, not a runtime argument. See [utility builds](../../../README.md#utility-binary-builds).
 
+GUI, screenshot, dump-tree, and run-tests start with four demo party members. Set `WOW_SIM_NO_PARTY=1` to start solo. See [party administration](../../admin-api/party.md).
+
 ## wow-sim Subcommands
 
 ### `lua-errors`

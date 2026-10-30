@@ -1,6 +1,6 @@
 # Party
 
-The simulator seeds a demo roster with auras unless `WOW_SIM_NO_PARTY` is set. `SetPartySize` retains existing slots when it activates or resizes the roster.
+GUI, screenshot, dump-tree, and run-tests start with four demo party members and the player (`GetNumGroupMembers()` returns 5). Set `WOW_SIM_NO_PARTY=1` to start solo. `SetPartySize` retains existing slots when it activates or resizes the roster.
 
 Health setters dispatch `UNIT_HEALTH` after updating state, then `UNIT_MAXHEALTH` if the maximum changed. Native order was observed in the 4.x build 15595 party stats path (aso); other update paths are unverified.
 
@@ -16,7 +16,7 @@ Sets the number of active party members, resizing the party array.
 ```lua
 A_Admin.SetPartySize(0)     -- go solo
 A_Admin.SetPartySize(4)     -- full 4-member party
-print(GetNumGroupMembers()) -- 4
+print(GetNumGroupMembers()) -- 5 (four party members and the player)
 ```
 
 ### A_Admin.SetPartyMember(index, name, classIndex, level)
