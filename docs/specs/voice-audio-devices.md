@@ -46,6 +46,7 @@ The default row uses `deviceID`/`displayName` "Default System Device" and `isAct
 ## Known gaps (current cycle)
 
 - [ ] Replace the best-guess default with aso or in-game evidence of a native list.
+- [ ] Forever: the shape test passes, but the three consumer tests stop before the device code. Forever Audio.lua:270-271 registers the `voiceProvider` dropdown with `VOICE_CHAT_SERVICE`, which the Forever global strings (build 69913) lack, so `Blizzard_Setting.lua:34` rejects the nil name. That is a separate data gap; Forever `upstream/master` already has six unrelated `voice_` failures.
 - [ ] Run the consumer tests under PTR; its declaration is cited but its runtime was not executed in the proving environment.
 - [ ] Mists, Era and Anniversary ship Audio.lua and VoiceChatDocumentation.lua, but their pinned contents were not checked; the members stay unpublished there.
 
