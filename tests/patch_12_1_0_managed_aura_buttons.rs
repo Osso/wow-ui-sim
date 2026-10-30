@@ -167,7 +167,7 @@ fn dispel_type_textures_follow_options_for_each_aura() {
 }
 
 #[test]
-fn multiple_dispel_textures_and_set_aura_border_alias() {
+fn multiple_dispel_textures_select_by_style_and_stealable_filter() {
     let env = presentation_env(dispel_fixture());
     env.exec(&format!(
         r#"
@@ -176,10 +176,6 @@ fn multiple_dispel_textures_and_set_aura_border_alias() {
             frame:AddDispelTypeTexture(border, {{style = {STYLE}.Border}})
             local badge = frame:CreateTexture(nil, 'OVERLAY')
             frame:AddDispelTypeTexture(badge, {{style = {STYLE}.Icon, stealableFilter = {STEALABLE}.Stealable}})
-        end)
-        AuditAlias = AuditPresenter(function(frame)
-            frame:SetAuraBorder(frame:CreateTexture(nil, 'OVERLAY'), {{style = {STYLE}.Icon}})
-            frame:SetAuraBorder(frame:CreateTexture(nil, 'OVERLAY'), {{style = {STYLE}.Border}})
         end)
     "#
     ))
@@ -198,9 +194,6 @@ fn multiple_dispel_textures_and_set_aura_border_alias() {
                 end
                 parts[#parts + 1] = table.concat(states, ',')
             end
-            local alias = AuditButtonFor(AuditAlias, 302)
-            local border = alias:GetAuraBorder()
-            parts[#parts + 1] = alias:GetDispelTypeTextureCount() .. ',' .. AuditPlain(border:GetAtlas())
             return table.concat(parts, ' ')
         "#,
         )
@@ -208,24 +201,26 @@ fn multiple_dispel_textures_and_set_aura_border_alias() {
     assert_eq!(
         readout,
         "2,ui-debuff-border-magic-noicon,RaidFrame-Icon-DebuffMagic \
-         2,ui-debuff-border-curse-noicon,- \
-         1,ui-debuff-border-magic-noicon"
+         2,ui-debuff-border-curse-noicon,-"
     );
     assert_no_lua_errors(&env);
 }
 
+// Pinned Retail 12.1.5.70448 Blizzard_CustomAuraButton.lua:135-153 exposes
+// Get/SetDispelTypeText; the older SetAuraSymbol/SetAuraBorder aliases and
+// AddPandemicRegion's return value (lines 256-265) no longer exist.
 #[test]
-fn aura_symbol_text_validates_its_own_region_and_maps_dispel_types() {
+fn dispel_type_text_validates_its_own_region_and_maps_dispel_types() {
     let env = presentation_env(dispel_fixture());
     env.exec(
         r#"
         AuditSymbol = AuditPresenter(function(frame)
             local text = frame:CreateFontString(nil, 'OVERLAY', 'GameFontNormal')
-            frame:SetAuraSymbol(text, {customDispelTextMap = {Magic = 'M!', Curse = 'C!'}})
+            frame:SetDispelTypeText(text, {customDispelTextMap = {Magic = 'M!', Curse = 'C!'}})
         end)
         AuditSymbolErrors = {}
         AuditPresenter(function(frame)
-            local ok, err = pcall(frame.SetAuraSymbol, frame, frame:CreateTexture())
+            local ok, err = pcall(frame.SetDispelTypeText, frame, frame:CreateTexture())
             AuditSymbolErrors[#AuditSymbolErrors + 1] = ok and 'accepted' or err
         end)
     "#,
@@ -237,7 +232,7 @@ fn aura_symbol_text_validates_its_own_region_and_maps_dispel_types() {
             r#"
             local parts = {}
             for _, icon in ipairs({301, 302, 303, 304}) do
-                local text = AuditButtonFor(AuditSymbol, icon):GetAuraSymbol()
+                local text = AuditButtonFor(AuditSymbol, icon):GetDispelTypeText()
                 parts[#parts + 1] = AuditPlain(text:IsShown()) and AuditPlain(text:GetText()) or '-'
             end
             return table.concat(parts, ' ')
@@ -355,7 +350,7 @@ fn pandemic_regions_show_only_inside_the_refresh_window() {
     env.exec(
         r#"
         AuditPandemic = AuditPresenter(function(frame)
-            assert(frame:AddPandemicRegion(frame:CreateTexture(nil, 'OVERLAY')) == 1)
+            frame:AddPandemicRegion(frame:CreateTexture(nil, 'OVERLAY'))
         end)
     "#,
     )
