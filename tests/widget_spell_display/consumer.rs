@@ -196,6 +196,7 @@ fn spell_display_attached_player_context_separate_from_world_loot_policy() {
         "container attachedUnit propagation only",
         r#"
         local frame = assert(SpellContainer.widgetFrames[761301])
+        assert(not C_WorldLootObject.IsWorldLootObject('player'))
         assert(SpellContainer.attachedUnit == 'player' and frame.attachedUnit == 'player')
         assert(frame.Spell.spellInfo.text == 'Supplied spell')
         assert(C_UIWidgetManager.GetSpellDisplayVisualizationInfo(761301).attachedUnit == nil,
