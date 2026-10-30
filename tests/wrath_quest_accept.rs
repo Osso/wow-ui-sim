@@ -75,6 +75,14 @@ fn assert_originals() {
             "QuestLogFrame.xml",
             "530c396e36af4b23a725086d37b6cb68abaf1966db77ba26c4e3fed3ce76f154",
         ),
+        (
+            "WatchFrame.lua",
+            "ad67e96468a14734212aa53cb62c43619f4006dc15173affb43a0be29476751b",
+        ),
+        (
+            "WatchFrame.xml",
+            "d957db59c5a827f06d586333701de58a1585172f7c3d07625604fb42c5aebf58",
+        ),
     ] {
         let path = toc.parent().unwrap().join(file);
         let hash = format!("{:x}", Sha256::digest(std::fs::read(&path).unwrap()));
@@ -387,12 +395,20 @@ fn lifecycle_accept() -> ConsumerEnv {
     exec(&env, "QuestFrameAcceptButton:Click()");
     dispatch_queued(&env);
     assert_committed(&env, 0, 990301, "Wrath northern recovery", 23);
+    exec(
+        &env,
+        "assert(GetNumQuestLogEntries() == 1); assert(select(9, GetQuestLogTitle(1)) == 990301); assert(QuestLogQuestCount:GetText() == string.format(QUEST_LOG_COUNT_TEMPLATE, 1, 25))",
+    );
     env
 }
 
 #[test]
 fn original_combined_lifecycle_accept_progress_turn_in() {
     let env = lifecycle_accept();
+    exec(
+        &env,
+        "WATCHFRAME_SORT_TYPE = WATCHFRAME_SORT_MANUAL; WATCHFRAME_FILTER_TYPE = WATCHFRAME_FILTER_COMPLETED_QUESTS + WATCHFRAME_FILTER_REMOTE_ZONES; AddQuestWatch(1); WatchFrame:Show(); WatchFrame_Expand(WatchFrame)",
+    );
     for (text, finished, count) in [
         ("Wolves slain: 1/2", false, 1),
         ("Wolves slain: 2/2", true, 2),
@@ -423,6 +439,29 @@ fn original_combined_lifecycle_accept_progress_turn_in() {
                 } else {
                     text.into()
                 }
+            ),
+        );
+        exec(
+            &env,
+            &format!(
+                r#"
+            assert(GetNumQuestLeaderBoards(1) == 1)
+            local text, kind, done = GetQuestLogLeaderBoard(1, 1)
+            assert(text == '{text}' and kind == 'monster' and not not done == {finished})
+            assert(GetNumQuestWatches() == 1 and GetQuestIndexForWatch(1) == 1)
+            WatchFrame_Update()
+            assert(WatchFrameLines:IsVisible())
+            local title, progress = false, false
+            for _, line in ipairs(WATCHFRAME_QUESTLINES) do
+                if line:IsVisible() then
+                    title = title or line.text:GetText() == 'Wrath northern recovery'
+                    progress = progress or line.text:GetText() == '1/2 Wolves slain'
+                end
+            end
+            assert(title, 'original watch title')
+            assert(progress == {unfinished}, 'original watch unfinished progress')
+        "#,
+                unfinished = !finished
             ),
         );
     }
@@ -460,6 +499,10 @@ fn original_combined_lifecycle_accept_progress_turn_in() {
         "assert(QuestFrameRewardPanel:IsShown()); QuestFrameCompleteQuestButton:Click(); assert(A_Admin.TurnInSelectedQuest())",
     );
     dispatch_queued(&env);
+    exec(
+        &env,
+        "QuestLogFrame:Show(); QuestLog_Update(); assert(GetNumQuestLogEntries() == 0, 'turned-in quest removed from API'); assert(QuestLogQuestCount:GetText() == string.format(QUEST_LOG_COUNT_TEMPLATE, 0, 25), 'turned-in quest removed from visible log')",
+    );
     let sim = env.env.state().borrow();
     assert!(!sim.quest_log.contains(&990301));
     assert!(sim.quest_log_entries.completed_quest_ids.contains(&990301));
@@ -473,6 +516,10 @@ fn original_combined_lifecycle_accept_then_abandon() {
         "ShowUIPanel(QuestLogFrame); QuestLog_SetSelection(1); assert(QuestLogFrameAbandonButton:IsVisible(), 'abandon visible'); QuestLogFrameAbandonButton:Click(); local popup = StaticPopup_FindVisible('ABANDON_QUEST'); assert(popup and popup:IsShown(), 'abandon popup'); popup.button1:Click()",
     );
     dispatch_queued(&env);
+    exec(
+        &env,
+        "QuestLog_Update(); assert(GetNumQuestLogEntries() == 0, 'abandoned quest removed from API'); assert(QuestLogQuestCount:GetText() == string.format(QUEST_LOG_COUNT_TEMPLATE, 0, 25), 'abandoned quest removed from visible log')",
+    );
     let sim = env.env.state().borrow();
     assert!(!sim.quest_log.contains(&990301));
     assert!(!sim.quest_log_entries.completed_quest_ids.contains(&990301));
