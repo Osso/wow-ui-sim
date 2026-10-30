@@ -61,6 +61,10 @@ fn register_loot_slot_functions(lua: &mut rilua::Lua) -> crate::Result<()> {
     Ok(())
 }
 
+/// Signals an event synchronously with the ambient stack taint cleared, so each
+/// handler runs with its own stored taint. Native evidence (aso, 4.3.4.15595,
+/// `vFrameScript_SignalEvent`): ambient taint is saved, cleared and restored
+/// around dispatch. No Retail 12.x confirmation.
 pub(crate) fn dispatch_event_now(
     state: &mut LuaState,
     event_name: &str,
