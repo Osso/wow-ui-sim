@@ -76,6 +76,15 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
 fn by_unit<'a>(store: &'a WorldLootObjects, unit: &str) -> Option<&'a WorldLootObject> {
     store.objects.values().find(|obj| obj.unit_token == unit)
 }
+pub(crate) fn is_equippable_spell_slot(slot: i32) -> bool {
+    matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail
+            | crate::client_profile::ClientProfile::Ptr
+            | crate::client_profile::ClientProfile::WowForever
+    ) && matches!(slot, 212 | 213 | 216 | 217)
+}
+
 fn slot_matches(state: &mut LuaState) -> LuaResult<u32> {
     let slot = i32::from_stack(state, 1)?;
     let inventory = i32::from_stack(state, 2)?;
