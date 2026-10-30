@@ -299,13 +299,9 @@ fn spell_display_zero_spell_polling_uses_real_on_update_without_feed_notificatio
 }
 
 #[test]
-fn spell_display_equippable_world_loot_event_and_slot_matching() {
+fn spell_display_equippable_world_loot_event() {
     use wow_ui_sim::c_api::world_loot_object::WorldLootObject;
     let env = load_and_register_spell_container_env(true);
-    let cache = wow_ui_sim::paths::default_blizzard_ui_addons_path().unwrap();
-    env.exec(&std::fs::read_to_string(cache.join("Blizzard_Plunderstorm/GameModeConstants.lua")).unwrap()).unwrap();
-    env.exec("ActionBarButtonEventsDerivedFrameMixin = {}; ActionBarActionButtonDerivedMixin = {}").unwrap();
-    env.exec(&std::fs::read_to_string(cache.join("Blizzard_ActionBar/WoWLabs/ActionButtonOverrides.lua")).unwrap()).unwrap();
     assert_lua(&env, "equip event listener", r#"
         equipEvents = 0
         local f = CreateFrame('Frame')
@@ -324,6 +320,19 @@ fn spell_display_equippable_world_loot_event_and_slot_matching() {
         local frame = assert(SpellContainer.widgetFrames[761301])
         assert(frame.Spell:IsEventRegistered('PLAYER_EQUIPED_SPELLS_CHANGED'))
         assert(equipEvents == 1)
+
+    "#);
+}
+
+#[test]
+fn world_loot_plunderstorm_action_button_slot_matching() {
+    let cache = wow_ui_sim::paths::default_blizzard_ui_addons_path().unwrap();
+    let env = new_blizzard_addon_env(&cache);
+    let cache = wow_ui_sim::paths::default_blizzard_ui_addons_path().unwrap();
+    env.exec(&std::fs::read_to_string(cache.join("Blizzard_Plunderstorm/GameModeConstants.lua")).unwrap()).unwrap();
+    env.exec("ActionBarButtonEventsDerivedFrameMixin = {}; ActionBarActionButtonDerivedMixin = {}").unwrap();
+    env.exec(&std::fs::read_to_string(cache.join("Blizzard_ActionBar/WoWLabs/ActionButtonOverrides.lua")).unwrap()).unwrap();
+    assert_lua(&env, "original WoWLabs action button consumer", r#"
         local m = ActionBarActionButtonDerivedMixin
         local offensive1, offensive2 = {action=61}, {action=62}
         local utility1, utility2 = {action=49}, {action=50}
