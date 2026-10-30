@@ -81,17 +81,15 @@ fn push_highlight_spell_line(state: &mut LuaState, lines: Val, index: i64, text:
 
 fn push_spell_description_line(state: &mut LuaState, lines: Val, index: i64, spell_id: u32) {
     let description = resolved_spell_description(state, spell_id);
-    for (offset, paragraph) in description.split('\n').enumerate() {
-        push_tooltip_line(
-            state,
-            lines,
-            index + offset as i64,
-            LINE_TYPE_SPELL_DESCRIPTION,
-            paragraph,
-            None,
-            true,
-        );
-    }
+    push_tooltip_line(
+        state,
+        lines,
+        index,
+        LINE_TYPE_SPELL_DESCRIPTION,
+        &description,
+        None,
+        true,
+    );
 }
 
 pub(super) fn append_action_binding_line(state: &mut LuaState, tooltip: Val, slot: u32) {

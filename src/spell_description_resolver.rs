@@ -16,9 +16,6 @@ pub fn resolve_spell_description_or_empty(sim: &SimState, spell_id: u32) -> Stri
         return String::new();
     };
     resolve_text(sim, spell_id, raw, 0)
-        .split_whitespace()
-        .collect::<Vec<_>>()
-        .join(" ")
 }
 
 fn resolve_text(sim: &SimState, spell_id: u32, text: &str, depth: usize) -> String {
@@ -602,10 +599,7 @@ fn cleanup_control_tokens(text: &str) -> String {
             out.push(ch);
         }
     }
-    out.lines()
-        .map(|line| line.split_whitespace().collect::<Vec<_>>().join(" "))
-        .collect::<Vec<_>>()
-        .join("\n")
+    out.split_whitespace().collect::<Vec<_>>().join(" ")
 }
 
 fn format_number(value: f64) -> String {
