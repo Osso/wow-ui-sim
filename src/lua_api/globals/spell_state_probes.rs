@@ -109,10 +109,17 @@ fn is_spell_in_range(state: &mut LuaState) -> LuaResult<u32> {
         match stack_val(state, 1) {
             Val::Str(_) => {
                 let name = Option::<String>::from_stack(state, 1)?.unwrap_or_default();
-                st.known_spells.iter().copied().find(|id| {
-                    crate::spell_lookup::get_spell(*id)
-                        .is_some_and(|spell| spell.name.eq_ignore_ascii_case(&name))
-                })
+                st.known_spells
+                    .iter()
+                    .copied()
+                    .find(|id| {
+                        crate::spell_lookup::get_spell(*id)
+                            .is_some_and(|spell| spell.name.eq_ignore_ascii_case(&name))
+                    })
+                    .or_else(|| {
+                        super::spellbook_data::find_spell_by_name(&name)
+                            .filter(|id| is_known_spell(&st, *id))
+                    })
             }
             _ => stack_u32(state, 1).filter(|id| is_known_spell(&st, *id)),
         }

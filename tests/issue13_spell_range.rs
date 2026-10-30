@@ -32,6 +32,10 @@ fn legacy_name_and_spellbook_range() {
         local spellName = C_SpellBook.GetSpellBookItemName(1)
         assert(spellName ~= nil)
         assert(IsSpellInRange(1, 'spell', 'player') == 1)
+        local spellID = C_SpellBook.GetSpellBookItemInfo(1).spellID
+        if IsSpellKnown(spellID) then
+            assert(IsSpellInRange(spellName, 'player') == 1)
+        end
     "#,
     )
     .unwrap();
