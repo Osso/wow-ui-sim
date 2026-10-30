@@ -24,6 +24,14 @@ fn run_tests_starts_with_demo_party_and_respects_no_party() {
             "test('solo', function() assertEquals(0, GetNumGroupMembers()); assertFalse(UnitExists('party1')); assertFalse(IsInGroup()) end)",
         ),
     ] {
+        let mut source = source.to_owned();
+        if disabled {
+            if cfg!(feature = "client-wowforever") {
+                // ChatInfoDocumentation.lua:516-531 and ChatConstantsDocumentation.lua:147-159.
+                source.push_str("\ntest('solo addon party message', function() assertEquals(Enum.SendAddonMessageResult.NotInGroup, C_ChatInfo.SendAddonMessage('PartyTest', 'message', 'PARTY')) end)");
+            }
+            source.push_str("\ntest('solo macro group condition', function() assertEquals('solo', SecureCmdOptionParse('[group] grouped; solo')) end)");
+        }
         std::fs::write(addon.join("tests/party.lua"), source).unwrap();
         let mut command = Command::new("timeout");
         command
