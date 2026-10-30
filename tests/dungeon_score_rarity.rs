@@ -59,6 +59,23 @@ fn original_lfg_result_tooltip_uses_supplied_scores() {
 }
 
 #[test]
+fn missing_cache_reports_generation_command() {
+    if std::env::var_os("WOW_SIM_TEST_MISSING_RARITY_CACHE").is_some() {
+        let env = wow_ui_sim::lua_api::WowLuaEnv::new().unwrap();
+        let error = env.exec("C_ChallengeMode.GetDungeonScoreRarityColor(1250)").unwrap_err().to_string();
+        assert!(error.contains("wow-cli casc sync-dungeon-score-rarity"), "{error}");
+        return;
+    }
+    let cache = tempfile::tempdir().unwrap();
+    let output = std::process::Command::new(std::env::current_exe().unwrap())
+        .args(["dungeon_score_rarity::missing_cache_reports_generation_command", "--exact", "--nocapture"])
+        .env("WOW_SIM_TEST_MISSING_RARITY_CACHE", "1")
+        .env("XDG_CACHE_HOME", cache.path())
+        .output().unwrap();
+    assert!(output.status.success(), "{}", String::from_utf8_lossy(&output.stderr));
+}
+
+#[test]
 fn rarity_boundaries_follow_pinned_rows() {
     let env = wow_ui_sim::lua_api::WowLuaEnv::new().unwrap();
     env.exec(r#"
