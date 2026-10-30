@@ -89,6 +89,17 @@ if rawget(C_UnitAurasPrivate, "GetAuraDataByAuraInstanceIDPrivate") == nil then
 end
 "#;
 
+// User-approved default, not native evidence. The pinned consumer calls this
+// undeclared query; the temporary private-aura store owns the supplied GUID.
+#[cfg(feature = "retail-12-1-5")]
+const PRIVATE_CASTER_GUID_LUA: &str = r#"
+function C_UnitAurasPrivate.GetPrivateAuraCasterGUID(unitToken, auraInstanceID)
+    local byUnit = C_UnitAurasPrivate._state.auraDataByUnit[unitToken]
+    local aura = byUnit and byUnit[auraInstanceID]
+    return aura and aura.sourceGUID or nil
+end
+"#;
+
 // 12.1.0 removed the public trigger.
 #[cfg(not(feature = "retail-12-1-0"))]
 const SHOW_DISPEL_TYPE_TRIGGER_LUA: &str = r#"
@@ -105,6 +116,8 @@ end
 
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     lua.exec(PRIVATE_AURA_STATE_LUA)?;
+    #[cfg(feature = "retail-12-1-5")]
+    lua.exec(PRIVATE_CASTER_GUID_LUA)?;
     #[cfg(not(feature = "retail-12-1-0"))]
     lua.exec(SHOW_DISPEL_TYPE_TRIGGER_LUA)?;
     Ok(())
