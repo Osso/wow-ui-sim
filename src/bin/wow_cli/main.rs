@@ -266,8 +266,6 @@ enum GenerateTarget {
     PatchApiDocs(gen_patch_api_docs::Options),
     /// Generate crates/sim-data/data/spells.rs from SpellName/Spell/SpellMisc CSVs
     Spells,
-    /// Generate partial Forever spell records from exported DB2 CSVs
-    ForeverSpellNames { csv_dir: PathBuf },
     /// Generate crates/sim-data/data/items.rs from ItemSparse CSV
     Items,
     /// Generate crates/sim-data-profile/data/atlas.rs from UiTextureAtlas CSVs
@@ -298,6 +296,13 @@ enum CascTarget {
     SyncBlizzardUi,
     /// Extract a file data ID from the active profile's CASC storage
     ExtractFdid { fdid: u32, out: PathBuf },
+    /// Generate selected Forever spell data from local CASC or the pinned CDN
+    SyncForeverSpells {
+        #[arg(long, value_parser = ["auto", "local", "cdn"], default_value = "auto")]
+        source: String,
+        #[arg(long)]
+        output: Option<PathBuf>,
+    },
 }
 
 fn default_addons_path() -> PathBuf {
@@ -373,7 +378,6 @@ fn run_generator(target: GenerateTarget) {
     let result = match target {
         GenerateTarget::PatchApiDocs(options) => gen_patch_api_docs::run(options),
         GenerateTarget::Spells => gen_spells::run(),
-        GenerateTarget::ForeverSpellNames { csv_dir } => gen_spells::run_forever_names(&csv_dir),
         GenerateTarget::Items => gen_items::run(),
         GenerateTarget::Atlas(options) => gen_atlas::run(options),
         GenerateTarget::Currencies => gen_currencies::run(),
@@ -394,6 +398,21 @@ fn run_generator(target: GenerateTarget) {
 
 fn run_casc_command(target: CascTarget) {
     let result = match target {
+        CascTarget::SyncForeverSpells { source, output } => {
+            use wow_ui_sim::blizzard_ui_sync::forever_spells::{self, Source};
+            let source = match source.as_str() {
+                "local" => Source::Local,
+                "cdn" => Source::Cdn,
+                _ => Source::Auto,
+            };
+            output
+                .map_or_else(forever_spells::cache_path, Ok)
+                .and_then(|path| {
+                    forever_spells::populate(source, &path)?;
+                    println!("Generated Forever spell data: {}", path.display());
+                    Ok(())
+                })
+        }
         CascTarget::ExtractFdid { fdid, out } => {
             wow_ui_sim::blizzard_ui_sync::extract_fdid(fdid, &out).and_then(|found| {
                 if found {

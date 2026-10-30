@@ -1,6 +1,8 @@
 //! Profile-scoped Blizzard UI source synchronization.
 
 #[cfg(feature = "casc")]
+pub mod forever_spells;
+#[cfg(feature = "casc")]
 mod gethe_missing;
 #[cfg(feature = "casc")]
 mod locale;

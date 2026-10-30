@@ -7,6 +7,8 @@ The Forever profile uses a selected spell-data file derived from the pinned Fore
 - [ ] Verify the CDN BLTE encoding key and each chunk checksum before decoding DB2 data.
 - [ ] Zero-fill only chunks whose encryption key is unknown and retain their decoded byte ranges.
 - [ ] Reject selected data that overlaps a zero-filled range.
+- [ ] `wow-cli casc sync-forever-spells` writes the selected data to the Forever profile cache, using the installed Forever build when present or pinned CDN build 1.60.1.70685 otherwise.
+- [ ] The file contains only selected IDs, full table columns, layout hashes and unreadable-record counts.
 - [ ] When chunks are zero-filled, do not claim whole-file content-key verification; the strict Blizzard UI downloader remains unchanged.
 
 ## How it works
@@ -17,11 +19,14 @@ The Forever profile uses a selected spell-data file derived from the pinned Fore
 
 - `src/blizzard_ui_sync/pinned_download.rs`: pinned CDN transport and DB2 decoding.
 - `src/forever_spell_data.rs`: selected-record cache generation and source-range validation.
+- `src/forever_db2.rs`: pinned WDC5 spell layouts.
+- `src/blizzard_ui_sync/forever_spells.rs`: pinned DB2 sources and cache population.
 
 ## Tests asserting this spec
 
 - `src/blizzard_ui_sync/pinned_download.rs`: encrypted chunk decoding and corruption rejection.
 - `src/forever_spell_data.rs`: selection, deterministic output and zero-filled-range rejection.
+- `src/forever_db2.rs`: WDC5 name record and zero-fill rejection.
 
 ## Known gaps (current cycle)
 
