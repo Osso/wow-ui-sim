@@ -94,9 +94,18 @@ fn is_spell_in_range(state: &mut LuaState) -> LuaResult<u32> {
         matches!(stack_val(state, 1), Val::Num(_)) && matches!(stack_val(state, 3), Val::Str(_));
     let unit_index = if book_form { 3 } else { 2 };
     let unit = Option::<String>::from_stack(state, unit_index)?.unwrap_or_default();
+    let book = if book_form {
+        Option::<String>::from_stack(state, 2)?.unwrap_or_default()
+    } else {
+        String::new()
+    };
+    let name = if !book_form && matches!(stack_val(state, 1), Val::Str(_)) {
+        Option::<String>::from_stack(state, 1)?
+    } else {
+        None
+    };
     let st = borrow_state(state)?;
     let id = if book_form {
-        let book = Option::<String>::from_stack(state, 2)?.unwrap_or_default();
         if book == "spell" {
             stack_u32(state, 1).and_then(|slot| {
                 crate::lua_api::globals::spellbook_data::get_spell_at_slot(slot as i32)
@@ -108,16 +117,16 @@ fn is_spell_in_range(state: &mut LuaState) -> LuaResult<u32> {
     } else {
         match stack_val(state, 1) {
             Val::Str(_) => {
-                let name = Option::<String>::from_stack(state, 1)?.unwrap_or_default();
+                let name = name.as_deref().unwrap_or_default();
                 st.known_spells
                     .iter()
                     .copied()
                     .find(|id| {
                         crate::spell_lookup::get_spell(*id)
-                            .is_some_and(|spell| spell.name.eq_ignore_ascii_case(&name))
+                            .is_some_and(|spell| spell.name.eq_ignore_ascii_case(name))
                     })
                     .or_else(|| {
-                        super::spellbook_data::find_spell_by_name(&name)
+                        super::spellbook_data::find_spell_by_name(name)
                             .filter(|id| is_known_spell(&st, *id))
                     })
             }
