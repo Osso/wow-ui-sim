@@ -65,6 +65,34 @@ pub fn run() -> Result<(), Box<dyn std::error::Error>> {
     Ok(())
 }
 
+pub fn run_forever_names(csv: &Path) -> Result<(), Box<dyn std::error::Error>> {
+    let names = load_spell_names(csv)?;
+    let ids = std::fs::read_to_string("data/forever-spell-ids.txt")?;
+    let mut builder = phf_codegen::Map::new();
+    let mut count = 0;
+    for line in ids.lines() {
+        let id: u32 = line.parse()?;
+        let name = names
+            .get(&id)
+            .filter(|name| !name.is_empty())
+            .ok_or_else(|| format!("missing Forever SpellName for {id}"))?;
+        builder.entry(id, &format!("\"{}\"", escape_str(name)));
+        count += 1;
+    }
+    let mut out = File::create("src/forever_spell_names.rs")?;
+    writeln!(
+        out,
+        "//! Generated from Forever SpellName.csv and data/forever-spell-ids.txt."
+    )?;
+    writeln!(
+        out,
+        "pub static NAMES: phf::Map<u32, &'static str> = {};",
+        builder.build()
+    )?;
+    println!("Generated {count} Forever spell names");
+    Ok(())
+}
+
 struct SpellData {
     spell_names: HashMap<u32, String>,
     spell_subtexts: HashMap<u32, String>,
