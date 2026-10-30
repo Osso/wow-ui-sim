@@ -77,7 +77,11 @@ Before Cargo starts, the worker checks `.owner` and acquires each existing
 Cargo build profile's `.cargo-lock` non-blockingly. A held lock refuses pruning
 with `slot build lock busy` and the lock path. Locks remain held from inventory
 through deletion, so Cargo cannot build in those profiles during pruning.
-The worker prunes when allocated disk usage exceeds `--slot-cap-gib` (default 130 GiB; user decision 2026-10-29, one
+While holding those locks it first removes superseded incremental sessions
+(every `incremental/<crate>-<hash>/s-*` directory and its `.lock` except the
+newest) regardless of the cap; rustc only reads the newest session. On
+2026-10-30 these were about 70 GiB of each ~100 GiB slot.
+The worker then prunes when allocated disk usage exceeds `--slot-cap-gib` (default 130 GiB; user decision 2026-10-29, one
 integration-target slot uses 100-120 GiB), stopping below 80% of the cap
 (default 104 GiB). Units with `deps` or `incremental` members go first, then
 fingerprint/build-only units; each group is ordered by newest member mtime. Fingerprints,

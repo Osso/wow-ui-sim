@@ -69,6 +69,22 @@ class SlotPruneTests(unittest.TestCase):
         self.assertEqual(result["removed"], [])
         self.assertTrue(all(path.exists() for path in paths))
 
+    def test_superseded_incremental_sessions_are_removed_under_cap(self):
+        crate = self.slot / "debug/incremental/wow_ui_sim-abc123"
+        old, new = crate / "s-old-1", crate / "s-new-2"
+        for index, session in enumerate((old, new)):
+            (session / "data").parent.mkdir(parents=True)
+            (session / "data").write_bytes(b"x" * MIB)
+            (crate / f"{session.name}.lock").write_bytes(b"")
+            stamp = self.now - (2 - index) * 3600
+            os.utime(session, (stamp, stamp))
+        result, _ = self.prune(cap=64 * MIB)
+        self.assertFalse(old.exists())
+        self.assertFalse((crate / "s-old-1.lock").exists())
+        self.assertTrue((new / "data").exists())
+        self.assertTrue((crate / "s-new-2.lock").exists())
+        self.assertEqual(len(result["removed"]), 2)
+
     def test_over_cap_removes_oldest_whole_units_to_watermark(self):
         oldest = self.artifact("zeta", age=8)
         middle = self.artifact("beta", age=6)

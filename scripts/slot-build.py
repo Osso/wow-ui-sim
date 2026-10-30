@@ -163,6 +163,41 @@ def prune_slot(slot, owner, cap_bytes, recent_hours=2, dry_run=False, now=None):
         return prune_locked_slot(slot, owner, cap_bytes, recent_hours, dry_run, now)
 
 
+def superseded_sessions(slot):
+    """Incremental session dirs that rustc will never read again.
+
+    rustc loads only the newest session of each `incremental/<crate>-<hash>`
+    directory; older ones (left by interrupted or failed compiles) are dead
+    weight that reached ~70 GiB per slot on 2026-10-30.
+    """
+    stale = []
+    for crate in slot.glob("**/incremental/*"):
+        if not crate.is_dir():
+            continue
+        sessions = sorted((path for path in crate.iterdir()
+                           if path.is_dir() and path.name.startswith("s-")),
+                          key=lambda path: path.stat().st_mtime)
+        for session in sessions[:-1]:
+            stale.append(session)
+            lock = session.with_name(session.name + ".lock")
+            if lock.exists():
+                stale.append(lock)
+    return stale
+
+
+def remove_superseded_sessions(slot, dry_run):
+    removed = []
+    for path in superseded_sessions(slot):
+        if not dry_run:
+            if path.is_dir():
+                shutil.rmtree(path)
+            else:
+                path.unlink()
+        removed.append({"paths": [str(path)], "superseded_session": True})
+        print(json.dumps(dict(removed[-1], dry_run=dry_run)), flush=True)
+    return removed
+
+
 def prune_locked_slot(slot, owner, cap_bytes, recent_hours, dry_run, now):
     if cap_bytes <= 0 or not math.isfinite(cap_bytes):
         raise ValueError("slot cap must be positive and finite")
@@ -170,13 +205,15 @@ def prune_locked_slot(slot, owner, cap_bytes, recent_hours, dry_run, now):
         raise ValueError("recent hours must be nonnegative and finite")
     if not dry_run:
         check_owner(slot, owner)
+    # Profile locks are held, so no rustc is writing a session right now.
+    superseded = remove_superseded_sessions(slot, dry_run)
     entries = disk_inventory(slot)
     inodes = {(stat.st_dev, stat.st_ino): stat.st_blocks * 512
               for stat in entries.values()}
     total = sum(inodes.values())
     result = {"slot": str(slot), "dry_run": dry_run, "total_bytes": total,
               "remaining_bytes": total, "watermark_bytes": int(cap_bytes * .8),
-              "removed": []}
+              "removed": superseded}
     if total <= cap_bytes:
         print(json.dumps(result), flush=True)
         return result
