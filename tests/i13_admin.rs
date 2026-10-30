@@ -5,11 +5,10 @@ use wow_ui_sim::lua_api::WowLuaEnv;
 fn tainted_admin_dispatch_preserves_blizzard_and_addon_handler_ownership() {
     let ui = crate::common::panel_fixtures::blizzard_ui_dir();
     let env = crate::common::blizzard_addon_harness::new_blizzard_addon_env(&ui);
-    crate::common::panel_fixtures::load_panel_addons(&env);
     crate::common::blizzard_addon_harness::load_blizzard_addon_closure_into_env(
         &env,
         &ui,
-        &["Blizzard_CompactRaidFrames"],
+        &["Blizzard_CompactRaidFrames", "Blizzard_UnitFrame", "Blizzard_AuraContainer"],
         &[],
     );
     env.apply_post_load_workarounds();
