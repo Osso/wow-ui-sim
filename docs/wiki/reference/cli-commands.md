@@ -28,6 +28,8 @@ wow-sim --no-addons --no-saved-vars run-tests MyAddon
 wow-sim --addons-path /tmp/test-addons run-tests MyAddon
 ```
 
+For deterministic timing in addon tests, see the [manual clock example](../../admin-api/challenge-mode.md#phase-b-explicit-manual-clock).
+
 Use [exclusive addon roots](../../../README.md#exclusive-addon-test-runs) to
 prevent live addons from entering a test run. The guide covers repeated CLI
 roots, the environment-only mode for existing scripts, bundled TestFramework,

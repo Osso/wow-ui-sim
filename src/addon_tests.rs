@@ -17,18 +17,16 @@ __async_done = false
 __async_error = nil
 "#;
 
-/// Run sync tests, store results. Skips async tests (marked for Rust to handle).
+/// Run one sync test and store its result; async tests are handled separately.
 const SYNC_RUNNER: &str = r#"
-__addon_test_results = {}
-for _, t in ipairs(__addon_tests) do
-    if not t.async then
-        local ok, err = pcall(t.fn)
-        __addon_test_results[#__addon_test_results + 1] = {
-            name = t.name,
-            ok = ok,
-            err = ok and "" or tostring(err),
-        }
-    end
+local t = __addon_tests[idx]
+if not t.async then
+    local ok, err = pcall(t.fn)
+    __addon_test_results[#__addon_test_results + 1] = {
+        name = t.name,
+        ok = ok,
+        err = ok and "" or tostring(err),
+    }
 end
 "#;
 
@@ -204,9 +202,24 @@ fn run_test_file(env: &WowLuaEnv, path: &PathBuf) -> Result<(u32, u32), String> 
     env.exec_named(&code, &chunk_name)
         .map_err(|e| format!("{e}"))?;
 
-    // Run sync tests
-    env.exec(SYNC_RUNNER)
+    // Run sync tests with a fresh owner budget for each test.
+    let count: i64 = env
+        .eval("return #__addon_tests")
         .map_err(|e| format!("runner error: {e}"))?;
+    for idx in 1..=count {
+        let is_async: bool = env
+            .eval(&format!("return not not __addon_tests[{idx}].async"))
+            .map_err(|e| format!("runner error: {e}"))?;
+        if is_async {
+            continue;
+        }
+        #[cfg(feature = "retail-12-0-5")]
+        env.loader_env()
+            .with_state(crate::lua_api::execution_budget::reset_frame_budgets)
+            .map_err(|e| format!("budget reset error: {e}"))?;
+        env.exec(&format!("local idx = {idx}\n{SYNC_RUNNER}"))
+            .map_err(|e| format!("runner error: {e}"))?;
+    }
 
     // Read sync results
     let (mut passed, mut failed) = read_test_results(env, &file_name)?;
@@ -304,6 +317,66 @@ fn read_test_results(env: &WowLuaEnv, file_name: &str) -> Result<(u32, u32), Str
         }
     }
     Ok((passed, failed))
+}
+
+#[cfg(all(test, feature = "retail-12-0-5"))]
+mod tests {
+    use super::*;
+    use crate::lua_api::AddonInfo;
+
+    #[test]
+    fn synchronous_tests_reset_addon_instruction_usage() {
+        let env = WowLuaEnv::new().unwrap();
+        {
+            let mut sim = env.state().borrow_mut();
+            let index = sim.addons.len() as u16;
+            sim.addons.push(AddonInfo {
+                folder_name: "BudgetAddon".into(),
+                ..Default::default()
+            });
+            sim.loading_addon_index = Some(index);
+        }
+        env.exec(
+            r#"
+            BudgetFrame = CreateFrame('Frame')
+            BudgetFrame:RegisterEvent('PLAYER_LOGIN')
+            Completed = 0
+            BudgetFrame:SetScript('OnEvent', function()
+                local n = 0
+                for i = 1, 300 do n = n + i end
+                Completed = Completed + 1
+            end)
+        "#,
+        )
+        .unwrap();
+        env.state().borrow_mut().loading_addon_index = None;
+        env.loader_env()
+            .with_state(|state| {
+                state.set_instruction_budget("BudgetAddon", Some(1000));
+                Ok::<_, rilua::LuaError>(())
+            })
+            .unwrap();
+        let file = tempfile::NamedTempFile::new().unwrap();
+        std::fs::write(
+            file.path(),
+            r#"
+            test('first', function()
+                A_Admin.FireEvent('PLAYER_LOGIN')
+                assert(Completed == 1, 'first handler did not complete')
+            end)
+            test('second', function()
+                A_Admin.FireEvent('PLAYER_LOGIN')
+                assert(Completed == 2, 'second handler did not complete')
+            end)
+        "#,
+        )
+        .unwrap();
+        load_test_framework(&env);
+        assert_eq!(
+            run_test_file(&env, &file.path().to_path_buf()).unwrap(),
+            (2, 0)
+        );
+    }
 }
 
 /// Flush Lua print() output from console_output to stderr.

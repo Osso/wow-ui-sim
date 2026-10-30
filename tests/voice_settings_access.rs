@@ -22,7 +22,8 @@ fn original_audio_env() -> WowLuaEnv {
             .any(|(name, _)| name == "Blizzard_SettingsDefinitions_Shared")
     );
     let env = new_blizzard_addon_env(&ui);
-    assert_eq!(env.state().borrow().voice_chat.can_access_settings, None);
+    let expected = if matches!(ACTIVE, ClientProfile::Retail | ClientProfile::WowForever) { Some(true) } else { None };
+    assert_eq!(env.state().borrow().voice_chat.can_access_settings, expected);
     load_blizzard_addon_closure_into_env(&env, &ui, &["Blizzard_SettingsDefinitions_Shared"], &[]);
     env.exec(include_str!("voice_settings_access/original_callback.lua"))
         .expect("selected original Audio registration must create its polling callback");
@@ -88,9 +89,13 @@ fn original_audio_initially_unset_then_supplied() {
         return;
     }
     let env = original_audio_env();
+    if matches!(ACTIVE, ClientProfile::Retail | ClientProfile::WowForever) {
+        assert!(env.eval::<bool>("return ObserveOriginalVoiceSettings()").unwrap());
+    }
+    env.state().borrow_mut().voice_chat.can_access_settings = None;
     let error = env
         .eval::<bool>("return ObserveOriginalVoiceSettings()")
-        .expect_err("fresh observation must be explicitly unknown");
+        .expect_err("unset observation must be explicitly unknown");
     assert!(
         error
             .to_string()
