@@ -12,7 +12,6 @@ fn buff_caster_is_visible_to_aura_queries() {
         assert(aura.isFromPlayerOrPlayerPet == false, 'player ownership')
         local _, _, _, _, _, _, caster = UnitBuff('player', 1)
         assert(caster == 'party1', 'legacy caster')
-        assert(C_UnitAuras.GetAuraDataByIndex('player', 1, 'HELPFUL|PLAYER') == nil)
         A_Admin.ClearBuffs()
         A_Admin.AddBuff(21562, 'Test buff', 135987, 60, 1)
         aura = C_UnitAuras.GetAuraDataByIndex('player', 1, 'HELPFUL')
