@@ -594,7 +594,7 @@ pub(crate) fn resize_party_state(state: &mut crate::lua_api::SimState, size: usi
         state.party_members.push(member);
     }
     state.party_members.truncate(clamped_size);
-    state.party_group_active = clamped_size > 0;
+    state.party_group_active = !state.party_members.is_empty();
     state.party_leader_index = None;
 }
 
