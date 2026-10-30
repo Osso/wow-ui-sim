@@ -11,6 +11,7 @@ The Forever profile uses a selected spell-data file derived from the pinned Fore
 - [ ] The file contains only selected IDs, full table columns, layout hashes and unreadable-record counts.
 - [x] Forever runtime initialization fails with the generation command if the data file is missing. Bundled data or the profile cache supplies the file.
 - [ ] Selected spell names, ranks, icons, schools, targets, descriptions and power costs come from the Forever data. Retail behavior is unchanged.
+- [ ] Forever release packages and Docker images generate and bundle the pinned spell data beside the simulator.
 - [ ] When chunks are zero-filled, do not claim whole-file content-key verification; the strict Blizzard UI downloader remains unchanged.
 
 ## Source equivalence
@@ -29,6 +30,7 @@ For build `1.60.1.70685`, local CASC and CDN generation each produced 189,706 by
 - `src/blizzard_ui_sync/forever_spells.rs`: pinned DB2 sources and cache population.
 - `src/forever_spell_runtime.rs`: cache validation and runtime catalog.
 - `src/spells.rs`, `src/spell_descriptions.rs`, `src/spell_power.rs`: profile-aware lookups.
+- `.github/workflows/release.yml`, `Dockerfile`: generate and bundle the data.
 
 ## Tests asserting this spec
 
@@ -39,7 +41,7 @@ For build `1.60.1.70685`, local CASC and CDN generation each produced 189,706 by
 
 ## Known gaps (current cycle)
 
-- [ ] Generate and bundle the selected data, and load it in the Forever runtime.
+- [ ] Verify release and Docker packaging in their build environments.
 
 ## Out of scope
 
