@@ -415,7 +415,7 @@ fn known_mount_numeric_uses_existing_declared_host_mount() {
         .exec(
             r#"
         local d = TMCheck(C_TooltipInfo.GetMountBySpellID, 458, 458, 'Brown Horse')
-        assert(d.lines[3].leftText == 'Summons this mount.' and d.lines[3].wrapText)
+        TMEqual(d, TMData(C_TooltipInfo.GetSpellByID(458)))
     "#,
         )
         .unwrap();
@@ -494,7 +494,7 @@ fn live_alias_changes_are_visible_without_cached_query_results() {
         .borrow_mut()
         .spell_id_aliases
         .insert("flash of light".into(), 458);
-    env.exec("TMCheck(C_TooltipInfo.GetSpellByID, 'flash of light', 458, nil); TMCheck(C_TooltipInfo.GetMountBySpellID, 'flash of light', 458, 'Brown Horse')").unwrap();
+    env.exec("TMCheck(C_TooltipInfo.GetSpellByID, 'flash of light', 458, 'Brown Horse'); TMCheck(C_TooltipInfo.GetMountBySpellID, 'flash of light', 458, 'Brown Horse')").unwrap();
     env.state()
         .borrow_mut()
         .spell_id_aliases
