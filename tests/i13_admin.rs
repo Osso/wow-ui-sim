@@ -1,8 +1,52 @@
 use wow_ui_sim::lua_api::WowLuaEnv;
 
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+#[test]
+fn tainted_admin_dispatch_preserves_blizzard_and_addon_handler_ownership() {
+    let ui = crate::common::panel_fixtures::blizzard_ui_dir();
+    let env = crate::common::blizzard_addon_harness::new_blizzard_addon_env(&ui);
+    crate::common::panel_fixtures::load_panel_addons(&env);
+    env.apply_post_load_workarounds();
+    crate::common::panel_fixtures::fire_startup_events(&env);
+    let before = crate::common::panel_fixtures::recorded_lua_errors(&env);
+    env.exec(r#"
+        assert(C_AddOns.IsAddOnLoaded('Blizzard_UnitFrame'))
+        assert(C_AddOns.IsAddOnLoaded('Blizzard_AuraContainer'))
+        assert(CompactRaidFrameContainer and TargetFrame)
+        local listener = CreateFrame('Frame')
+        listener:RegisterEvent('GROUP_ROSTER_UPDATE')
+        local function onEvent() addonEventTainted = not issecure() end
+        local function onUpdate(self) addonUpdateTainted = not issecure(); self:SetScript('OnUpdate', nil) end
+        debug.setobjecttaint(onEvent, 'I13TaintTest')
+        debug.setobjecttaint(onUpdate, 'I13TaintTest')
+        listener:SetScript('OnEvent', onEvent)
+        listener:SetScript('OnUpdate', onUpdate)
+        local function runTest()
+            assert(not issecure(), 'test caller must be addon-tainted')
+            A_Admin.SetPartySize(0)
+            A_Admin.SetPartySize(1)
+            A_Admin.SetPartyMember(1, 'I13Member', 1, 80)
+            A_Admin.AddBuff(21562, 'Test buff', 135987, 60, 1)
+            A_Admin.AdvanceTime(0.1)
+            assert(not issecure(), 'caller taint must be restored')
+        end
+        debug.setobjecttaint(runTest, 'I13TaintTest')
+        runTest()
+        assert(addonEventTainted, 'addon event handler must remain tainted')
+        assert(addonUpdateTainted, 'addon OnUpdate handler must remain tainted')
+        assert(UnitName('party1') == 'I13Member', 'party state must update')
+        assert(C_UnitAuras.GetAuraDataByIndex('player', 1, 'HELPFUL'), 'aura must update')
+    "#).unwrap();
+    let after = crate::common::panel_fixtures::recorded_lua_errors(&env);
+    assert_eq!(after, before, "admin dispatch added Lua errors");
+}
+
 #[test]
 fn buff_caster_controls_aura_ownership() {
-    WowLuaEnv::new().unwrap().eval::<()>(r#"
+    WowLuaEnv::new()
+        .unwrap()
+        .eval::<()>(
+            r#"
         A_Admin.SetPartySize(1)
         A_Admin.SetPartyMember(1, 'Caster', 1, 80)
         A_Admin.ClearBuffs()
@@ -16,12 +60,17 @@ fn buff_caster_controls_aura_ownership() {
         A_Admin.AddBuff(21562, 'Test buff', 135987, 60, 1)
         aura = C_UnitAuras.GetAuraDataByIndex('player', 1, 'HELPFUL')
         assert(aura.sourceUnit == 'player' and aura.isFromPlayerOrPlayerPet)
-    "#).unwrap();
+    "#,
+        )
+        .unwrap();
 }
 
 #[test]
 fn replacing_seeded_party_member_clears_auras() {
-    WowLuaEnv::new().unwrap().eval::<()>(r#"
+    WowLuaEnv::new()
+        .unwrap()
+        .eval::<()>(
+            r#"
         A_Admin.SetPartySize(2)
         local seen = false
         local listener = CreateFrame('Frame')
@@ -35,12 +84,17 @@ fn replacing_seeded_party_member_clears_auras() {
         assert(seen, 'replacement must dispatch UNIT_AURA after clearing')
         assert(C_UnitAuras.GetAuraDataByIndex('party1', 1, 'HELPFUL') == nil, 'old buff remains')
         assert(C_UnitAuras.GetAuraDataByIndex('party1', 1, 'HARMFUL') == nil, 'old debuff remains')
-    "#).unwrap();
+    "#,
+        )
+        .unwrap();
 }
 
 #[test]
 fn admin_spell_membership_is_consistent() {
-    WowLuaEnv::new().unwrap().eval::<()>(r#"
+    WowLuaEnv::new()
+        .unwrap()
+        .eval::<()>(
+            r#"
         local id = 9876543
         assert(not IsSpellKnown(id) and not IsPlayerSpell(id))
         assert(not C_SpellBook.IsSpellKnown(id))
@@ -52,7 +106,9 @@ fn admin_spell_membership_is_consistent() {
         assert(not IsSpellKnown(id) and not IsPlayerSpell(id))
         assert(not C_SpellBook.IsSpellKnown(id))
         assert(not C_SpellBook.IsSpellKnownOrInSpellBook(id))
-    "#).unwrap();
+    "#,
+        )
+        .unwrap();
 }
 
 #[test]
