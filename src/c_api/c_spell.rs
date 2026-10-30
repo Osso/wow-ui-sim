@@ -855,6 +855,11 @@ pub(super) fn numeric_spell_id_value(state: &LuaState, value: Val) -> Option<u32
 }
 
 fn spell_id_by_name(name: &str) -> Option<u32> {
+    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::WowForever {
+        if let Some(id) = crate::forever_spell_runtime::spell_id_by_name(name) {
+            return Some(id);
+        }
+    }
     let needle = name.to_ascii_lowercase();
     SPELL_DB
         .entries()
