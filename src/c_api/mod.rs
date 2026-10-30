@@ -376,6 +376,7 @@ pub mod tooltip_item_context;
 #[cfg(feature = "retail-12-0-5")]
 pub use tooltip_item_context::ItemTooltipContext;
 pub mod weapon_enchants;
+pub mod world_loot_object;
 
 #[cfg(any(feature = "client-wowforever", feature = "client-ptr"))]
 pub mod c_game_pad;
@@ -429,6 +430,9 @@ pub(crate) fn register_utility_bootstrap_tables(state: &mut LuaState) -> LuaResu
     #[cfg(feature = "retail-12-0-5")]
     c_navigation::register(state)?;
     c_weather::register(state)?;
+    if supports_super_tracking() {
+        world_loot_object::register(state)?;
+    }
     #[cfg(not(feature = "client-wrath"))]
     combat_audio_throttle::register(state)?;
     #[cfg(any(feature = "retail-12-1-0", feature = "client-wowforever"))]

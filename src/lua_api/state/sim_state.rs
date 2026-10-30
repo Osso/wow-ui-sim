@@ -1,6 +1,7 @@
 use super::*;
 
 pub struct SimState {
+    pub world_loot_objects: crate::c_api::world_loot_object::WorldLootObjects,
     pub wrath_relic_slot: crate::lua_api::globals::real::wrath_relic_slot::RelicSlotState,
     pub plain_global_inputs: crate::lua_api::globals::real::publication_12_0_0::PlainGlobalInputs,
     pub(crate) private_aura_anchors: crate::c_api::private_aura_anchors::PrivateAuraAnchors,
