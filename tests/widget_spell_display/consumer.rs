@@ -220,7 +220,6 @@ fn spell_display_seeded_world_loot_and_api_queries() {
     "#);
     let object = WorldLootObject { unit_token: "player".into(), inventory_type: 1, at_max_quality: true, is_upgrade: false, distance_squared: 9.0, in_range: true };
     env.supply_world_loot_object("GameObject-1", object.clone()).unwrap();
-    env.state().borrow_mut().world_loot_objects.slot_matches.insert((1, 1), true);
     assert_lua(&env, "seeded queries and event", r#"
         assert(#lootEvents == 1 and lootEvents[1] == 'GameObject-1')
         assert(C_WorldLootObject.IsWorldLootObject('player'))
@@ -235,8 +234,8 @@ fn spell_display_seeded_world_loot_and_api_queries() {
         assert(a.inventoryType == 1 and a.atMaxQuality and not a.isUpgrade)
         assert(b.inventoryType == 1 and b.atMaxQuality and not b.isUpgrade)
         assert(C_WorldLootObject.GetWorldLootObjectInfoByGUID('missing') == nil)
-        assert(C_WorldLootObject.DoesSlotMatchInventoryType(1, 1))
-        assert(not C_WorldLootObject.DoesSlotMatchInventoryType(2, 1))
+        assert(C_WorldLootObject.DoesSlotMatchInventoryType(212, 31))
+        assert(not C_WorldLootObject.DoesSlotMatchInventoryType(216, 31))
         assert(not pcall(C_WorldLootObject.OnWorldLootObjectClick, 'player', nil))
         assert(not pcall(C_WorldLootObject.OnWorldLootObjectClick, nil, true))
         C_WorldLootObject.OnWorldLootObjectClick('player', true)
