@@ -122,8 +122,8 @@ fn tooltip_item_and_toy_payloads_retain_modeled_identity() {
         assert(itemByLink.id == 6948)
         local toy = C_TooltipInfo.GetToyByItemID(166779)
         assert(toy.id == 166779 and toy.lines[1].leftText == "Hearthstone Game Table")
-        local mount = C_TooltipInfo.GetMountBySpellID(23338)
-        assert(mount.id == 23338 and mount.lines[1].leftText == "Swift Palomino")
+        local mount = C_TooltipInfo.GetMountBySpellID(458)
+        assert(mount.id == 458 and mount.lines[1].leftText == "Brown Horse")
         "#,
     )
     .expect("identified item, toy and mount payloads retain their modeled identity");
