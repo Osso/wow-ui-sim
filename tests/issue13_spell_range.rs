@@ -19,6 +19,24 @@ fn c_spell_range_valid_and_invalid_inputs() {
     .unwrap();
 }
 
+#[cfg(feature = "client-wowforever")]
+#[test]
+fn forever_reporter_buff_name_and_range() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        local name = C_Spell.GetSpellName(10157)
+        assert(name == 'Arcane Intellect', 'Forever rank name')
+        assert(C_Spell.GetSpellInfo(10157).name == name, 'spell info name')
+        A_Admin.LearnSpell(10157)
+        assert(IsSpellKnown(10157), 'learned spell')
+        A_Admin.SetTarget('Range target', 60, 1, true)
+        assert(C_Spell.IsSpellInRange(name, 'target') == true, 'name range')
+    "#,
+    )
+    .unwrap();
+}
+
 #[test]
 fn legacy_name_and_spellbook_range() {
     let env = WowLuaEnv::new().unwrap();
