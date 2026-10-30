@@ -27,6 +27,10 @@ fn tainted_admin_dispatch_preserves_blizzard_and_addon_handler_ownership() {
         assert(CompactRaidFrameContainer and TargetFrame)
         local listener = CreateFrame('Frame')
         listener:RegisterEvent('GROUP_ROSTER_UPDATE')
+        listener:RegisterEvent('UNIT_AURA')
+        local secureListener = CreateFrame('Frame')
+        secureListener:RegisterEvent('UNIT_AURA')
+        secureListener:SetScript('OnEvent', function() secureAuraEvent = issecure() end)
         local function onEvent() addonEventTainted = not issecure() end
         local function onUpdate(self) addonUpdateTainted = not issecure(); self:SetScript('OnUpdate', nil) end
         debug.setobjecttaint(onEvent, 'I13TaintTest')
@@ -45,6 +49,7 @@ fn tainted_admin_dispatch_preserves_blizzard_and_addon_handler_ownership() {
         end
         debug.setobjecttaint(runTest, 'I13TaintTest')
         runTest()
+        assert(secureAuraEvent, 'native aura dispatch must not inherit addon taint')
         assert(addonEventTainted, 'addon event handler must remain tainted')
         assert(addonUpdateTainted, 'addon OnUpdate handler must remain tainted')
         assert(UnitName('party1') == 'I13Member', 'party state must update')
