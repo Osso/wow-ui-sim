@@ -24,7 +24,7 @@ use crate::lua_bridge::{FromStack, stack_val};
 use rilua::vm::state::LuaState;
 use rilua::{LuaApiMut, LuaResult, Val};
 
-fn stack_u32(state: &mut LuaState, index: i32) -> Option<u32> {
+fn stack_u32(state: &LuaState, index: i32) -> Option<u32> {
     match stack_val(state, index) {
         Val::Num(n) if n >= 0.0 => Some(n as u32),
         _ => None,
