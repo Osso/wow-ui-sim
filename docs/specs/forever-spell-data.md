@@ -4,14 +4,18 @@ The Forever profile uses a selected spell-data file derived from the pinned Fore
 
 ## What it must do
 
-- [ ] Verify the CDN BLTE encoding key and each chunk checksum before decoding DB2 data.
-- [ ] Zero-fill only chunks whose encryption key is unknown and retain their decoded byte ranges.
-- [ ] Reject selected data that overlaps a zero-filled range.
+- [x] Verify the CDN BLTE encoding key and each chunk checksum before decoding DB2 data.
+- [x] Zero-fill only chunks whose encryption key is unknown and retain their decoded byte ranges.
+- [x] Reject selected data that overlaps a zero-filled range.
 - [ ] `wow-cli casc sync-forever-spells` writes the selected data to the Forever profile cache, using the installed Forever build when present or pinned CDN build 1.60.1.70685 otherwise.
 - [ ] The file contains only selected IDs, full table columns, layout hashes and unreadable-record counts.
-- [ ] Forever runtime initialization fails with the generation command if the data file is missing. Bundled data or the profile cache supplies the file.
+- [x] Forever runtime initialization fails with the generation command if the data file is missing. Bundled data or the profile cache supplies the file.
 - [ ] Selected spell names, ranks, icons, schools, targets, descriptions and power costs come from the Forever data. Retail behavior is unchanged.
 - [ ] When chunks are zero-filled, do not claim whole-file content-key verification; the strict Blizzard UI downloader remains unchanged.
+
+## Source equivalence
+
+For build `1.60.1.70685`, local CASC and CDN generation each produced 189,706 bytes with SHA-256 `13122873d813481e85815946ddf964068b04132d4d2b2b44ba5ce61491595ad0`. Both outputs contain 72 selected spell IDs. The selected rows were also compared with the matching DB2 CSV exports; all fields matched at float32 precision.
 
 ## How it works
 
