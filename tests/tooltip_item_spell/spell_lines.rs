@@ -182,12 +182,11 @@ fn test_set_spell_by_id_applies_named_inline_color_markup() {
     assert!(description.starts_with("|cnGREEN_FONT_COLOR:Season 1|r"));
     let expected_text = description.replace("|cnGREEN_FONT_COLOR:", "").replace("|cnWHITE_FONT_COLOR:", "").replace("|r", "");
     let expected: (f32, f32, f32) = env.eval("return GREEN_FONT_COLOR:GetRGB()").unwrap();
-    let base: (f32, f32, f32) = env.eval("return NORMAL_FONT_COLOR:GetRGB()").unwrap();
     let state = env.state().borrow();
     let td = state.tooltips.get(&state.widgets.get_id_by_name("GameTooltip").unwrap()).unwrap();
     let line = td.lines.iter().find(|line| line.left_text.contains("Season 1")).unwrap();
     assert_eq!(line.left_text, expected_text);
-    assert_eq!(line.left_color, base);
+    assert_eq!(line.left_color, expected);
     let segment = line.left_segments.iter().find(|segment| segment.text == "Season 1").expect("green inline segment");
     assert!((segment.color.0 - expected.0).abs() < 0.01 && (segment.color.1 - expected.1).abs() < 0.01 && (segment.color.2 - expected.2).abs() < 0.01);
 }
