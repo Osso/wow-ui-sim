@@ -1,5 +1,5 @@
 //! Original Blizzard TargetFrame receives admin target and health changes.
-#![cfg(feature = "client-retail")]
+#![cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 
 #[test]
 fn target_frame_tracks_admin_target_and_health_events() {
@@ -8,6 +8,7 @@ fn target_frame_tracks_admin_target_and_health_events() {
             &["Blizzard_UnitFrame"],
             &[],
             |env, _| {
+                let errors_before = env.state().borrow().lua_errors.len();
                 env.exec(r#"
                     A_Admin.ClearTarget()
                     assert(TargetFrame and not TargetFrame:IsShown(), 'target frame starts hidden')
@@ -21,6 +22,14 @@ fn target_frame_tracks_admin_target_and_health_events() {
                     A_Admin.ClearTarget()
                     assert(not TargetFrame:IsShown(), 'target event must hide Blizzard frame')
                 "#).expect("original TargetFrame consumes admin events");
+                let state = env.state();
+                let state = state.borrow();
+                assert_eq!(
+                    state.lua_errors.len(),
+                    errors_before,
+                    "TargetFrame events logged Lua errors: {:?}",
+                    &state.lua_errors[errors_before..]
+                );
             },
         );
     });
