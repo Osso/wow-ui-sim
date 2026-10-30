@@ -7,7 +7,7 @@ Retail 12.0.5 `C_TooltipInfo.GetMountBySpellID` and `GetSpellByID` must accept t
 ### Identifiers and meaningful payloads
 
 - [x] Use the existing strict public `c_spell::read_public_spell_identifier_at` contract: finite integral u32 NUMBER or UTF-8 STRING, with seeded lowercase aliases preceding numeric identity. This representation/validation policy is **inferred**, not native argument-type evidence.
-- [x] Numeric 19750 retains the real generated Flash of Light title, modeled cast/description lines, spell type, ID and width. Numeric mount 23338 retains the first actual default `world.mounts` match, Swift Palomino, its title and existing `Summons this mount.` description.
+- [x] Numeric 19750 retains the real generated Flash of Light title, modeled cast/description lines, spell type, ID and width. Numeric mount 458 retains the actual default `world.mounts` match, Brown Horse, its generated spell tooltip and title. The build 70391 spell catalog in `crates/sim-data/data/spells.rs` identifies spell 458 as Brown Horse.
 - [x] DTO equivalence compares Color values through exactly four public numeric RGBA components (`GetRGBA()` or public numeric `r/g/b/a`), not per-instance method/object identity. All non-color fields retain strict recursive value/type equality with diagnostic paths.
 - [x] Explicit numeric-string, case-normalized name and full colored-link aliases produce DTO-equivalent results to their resolved numeric IDs for both queries. A seeded numeric alias wins over numeric identity; a full-link alias wins over its embedded number. Output ID is the resolved ID.
 - [x] Read alias changes/removal live. Queries do not mutate aliases or declared mounts; independent environments remain isolated. Mutating a returned DTO cannot change later results or another returned DTO.
@@ -33,7 +33,7 @@ Retail 12.0.5 `C_TooltipInfo.GetMountBySpellID` and `GetSpellByID` must accept t
 
 ### Numeric-secret original-consumer contract
 
-- [x] Original meter OnEnter reaches real `TooltipDataHandler` from a row initialized without P3 name/icon/Info presentation methods; original dynamic mount handler resolves actual default mount23338 Swift Palomino.
+- [x] Original meter OnEnter reaches real `TooltipDataHandler` from a row initialized without P3 name/icon/Info presentation methods; original dynamic mount handler resolves actual default mount458 Brown Horse.
 - [x] Four selector/caller controls retain exact arity and meaningful title/lines, wrapper opacity, caller taint and source model rows. Unknown numeric900002 remains one identified empty Spell DTO with secret identity for secret input.
 - [x] Forced GC retains authentic input roots and secret numeric success; NeverSecret optional negatives and nonnumeric rejections remain independent.
 
@@ -78,7 +78,7 @@ Both declare `SecretArguments = "AllowedWhenTainted"`, `MayReturnNothing = true`
 - `src/lua_api/globals/missing_surface/tooltip_info/builders.rs`: existing fresh empty/identified TooltipData builders and line/color construction; reused later, never copied.
 - `data/spells.rs`: real generated 19750 entry at lines52582–52588, name `Flash of Light`; no fake production catalog entry.
 - `src/spell_lookup.rs`: existing spell catalog facade; 23338 has no spell row in inspected generated catalog and reaches host mount state.
-- `src/lua_api/state_defaults.rs`: actual default mount18 Swift Palomino, spell23338, icon132261, collected/usable true, mount_type230. A later default mount69 shares23338; current first match wins. Tests assert the existing fixture precondition rather than fabricate catalog data.
+- `src/lua_api/state_defaults.rs`: actual default mount6 Brown Horse, spell458, icon132261, collected/usable true, mount_type230. Tests assert the existing fixture precondition rather than fabricate catalog data.
 - `src/lua_api/state_types/collections.rs`: declared `MountData` fields; no new state/producer fixtures or modified model.
 - `src/c_api/c_spell.rs`: already crate-visible strict public identifier helper and shared alias-first value resolver over existing `spell_id_aliases`; unchanged by this extension.
 - `src/lua_api/frame/methods/widgets/tooltip/content.rs`: actual setters forward original argument values to the real namespace query, store exposed `processingInfo.tooltipData`, and apply rendered lines. Mount forwards arg2; spell setter currently forwards only arg1.

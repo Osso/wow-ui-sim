@@ -251,17 +251,21 @@ mod current {
     }
 
     #[test]
-    fn spell_secret_userdata_stays_unmodeled_nil_for_secure_and_addon_callers() {
+    fn spell_secret_userdata_selects_record_for_secure_and_addon_callers() {
         let env = fixture(true);
         publish_secret(&env, "SecretSpell", 19750.0);
-        assert_nil(
+        // cooldown-restriction.md SS-P1: authentic numeric secrets select inside the host.
+        check(
             &env,
             "C_Spell.GetSpellLossOfControlCooldownInfo(SecretSpell)",
+            FIRST,
+            true,
         );
         addon(
             &env,
-            "assert(C_Spell.GetSpellLossOfControlCooldownInfo(SecretSpell) == nil)\nassert(issecretvalue(SecretSpell))",
+            "Info = C_Spell.GetSpellLossOfControlCooldownInfo(SecretSpell)\nassert(type(Info) == 'table' and Info.isActive and Info.shouldReplaceNormalCooldown)\nassert(issecretvalue(Info.duration) and issecretvalue(SecretSpell))",
         );
+        assert_payload(&env, FIRST, true);
         check(&env, SPELL, FIRST, true);
     }
 

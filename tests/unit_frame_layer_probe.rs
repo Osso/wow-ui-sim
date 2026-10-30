@@ -90,18 +90,23 @@ fn fixture() -> WowLuaEnv {
 }
 
 fn load_probe(env: &WowLuaEnv) {
-    let toc_path = Path::new(PROBE_DIR).join("UnitFrameLayerProbe.toc");
     let toc = wow_ui_sim::toc::TocFile::parse(
         Path::new(PROBE_DIR),
-        &fs::read_to_string(toc_path).unwrap(),
+        include_str!("../docs/addons/UnitFrameLayerProbe/UnitFrameLayerProbe.toc"),
     );
     let addon = env.create_addon_table().unwrap();
     for file in toc.files {
-        let path = Path::new(PROBE_DIR).join(file);
-        let source = fs::read_to_string(&path).unwrap();
+        let path = Path::new(PROBE_DIR).join(&file);
+        let source = match file.to_str() {
+            Some("UnitFrameLayerProbe.lua") => {
+                include_str!("../docs/addons/UnitFrameLayerProbe/UnitFrameLayerProbe.lua")
+            }
+            Some("Controls.lua") => include_str!("../docs/addons/UnitFrameLayerProbe/Controls.lua"),
+            _ => panic!("unexpected probe TOC file: {}", file.display()),
+        };
         env.loader_env()
             .exec_with_varargs(
-                &source,
+                source,
                 &path.to_string_lossy(),
                 "UnitFrameLayerProbe",
                 addon,
