@@ -233,7 +233,9 @@ def prune_locked_slot(slot, owner, cap_bytes, recent_hours, dry_run, now):
 
 
 def check_capacity(capacity_id):
-    env = dict(os.environ, CAPACITY_ID=capacity_id)
+    # Starvation floor: capacity.sh admits one slot build past the CPU cap while none is compiling.
+    env = dict(os.environ, CAPACITY_ID=capacity_id,
+               CAPACITY_GUARANTEE=f"{TARGET_ROOT}/slot-")
     env.pop("CAPACITY_PEEK", None)
     result = subprocess.run([CAPACITY], env=env, check=True,
                             capture_output=True, text=True)

@@ -46,6 +46,11 @@ a newline; remove it on release. Existing JSON markers remain unchanged for
 running lanes. This helper checks ownership; it does not claim or release slots.
 It checks `capacity.sh` once with `CAPACITY_ID` from `--capacity-id` and refuses
 anything except a literal `ADD` verdict. It does not poll for admission.
+It also exports `CAPACITY_GUARANTEE` with the slot target root. While no
+cargo, rustc or linker process of any slot is running and no floor admission is
+under 1 min old, `capacity.sh` admits that caller past the 24/32 agent-CPU cap and
+the FIFO rank. The RAM, disk and memory-pressure limits still apply (user decision
+2026-10-29: other projects held every slot build for hours).
 
 ```sh
 scripts/slot-build.py --slot 3 --worktree "$HOME/.worktrees/wow-ui-sim-lane" --unit lane-build --owner lane-owner --capacity-id lane-capacity -- /usr/bin/cargo test --test integration --no-run
