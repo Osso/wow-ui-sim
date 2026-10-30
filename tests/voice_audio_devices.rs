@@ -42,19 +42,23 @@ fn observe(env: &WowLuaEnv, kind: &str) -> (String, String, String) {
 }
 
 #[test]
-fn original_voice_initialization_accepts_chosen_empty_catalogs() {
+fn original_voice_initialization_selects_best_guess_system_default() {
     if !publishes_devices() {
         return;
     }
     let env = original_audio_env();
     let defaults = env.state().borrow().voice_chat.clone();
-    assert_eq!(defaults.output_devices, Some(Vec::new()));
-    assert_eq!(defaults.input_devices, Some(Vec::new()));
+    let system = Some(vec![VoiceAudioDevice::system_default()]);
+    assert_eq!(defaults.output_devices, system);
+    assert_eq!(defaults.input_devices, system);
     env.exec(include_str!("voice_audio_devices/observe.lua")).unwrap();
     env.eval::<bool>("return RunOriginalVoiceInitialization()")
-        .expect("original InitVoiceSettings must complete with the chosen empty catalogs");
-    for kind in ["OUTPUT", "INPUT"] {
-        assert_eq!(observe(&env, kind), (String::new(), String::new(), String::new()));
+        .expect("original InitVoiceSettings must complete with the best-guess catalogs");
+    for (kind, label) in [("OUTPUT", "VOICE_CHAT_OUTPUT_DEVICE_DEFAULT"), ("INPUT", "VOICE_CHAT_INPUT_DEVICE_DEFAULT")] {
+        let label: String = env.eval(&format!("return {label}")).unwrap();
+        assert_eq!(label, "System Default");
+        let id = "Default System Device".to_string();
+        assert_eq!(observe(&env, kind), (id.clone(), id.clone(), format!("{id}={label}")));
     }
 }
 
@@ -130,7 +134,8 @@ fn device_queries_match_documented_shape() {
         assert(row.isActive == true and row.isSystemDefault == false and row.isCommsDefault == false)
         assert(C_VoiceChat.GetAvailableInputDevices() ~= devices, 'fresh table per call')
         n, devices = pack(C_VoiceChat.GetAvailableOutputDevices())
-        assert(n == 1 and type(devices) == 'table' and #devices == 0)
+        assert(n == 1 and #devices == 1 and devices[1].deviceID == 'Default System Device')
+        assert(devices[1].isActive == true and devices[1].isSystemDefault == true)
         "#,
     )
     .unwrap();

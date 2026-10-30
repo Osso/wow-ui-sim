@@ -20,6 +20,21 @@ pub struct VoiceAudioDevice {
     pub is_comms_default: bool,
 }
 
+impl VoiceAudioDevice {
+    /// Researched best guess for a normal machine, not native evidence: one
+    /// selected system-default device. Audio.lua labels it with the client's
+    /// "System Default" string; the identifier follows Vivox's virtual device name.
+    pub fn system_default() -> Self {
+        Self {
+            device_id: "Default System Device".into(),
+            display_name: "Default System Device".into(),
+            is_active: true,
+            is_system_default: true,
+            is_comms_default: false,
+        }
+    }
+}
+
 pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
     if !matches!(
         ACTIVE,
