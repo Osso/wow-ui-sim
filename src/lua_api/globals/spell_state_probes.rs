@@ -87,19 +87,43 @@ fn is_spell_known_or_overrides(state: &mut LuaState) -> LuaResult<u32> {
     is_spell_known(state)
 }
 
-/// `IsSpellInRange(idOrName, unit)` — true when the unit exists and
-/// the spell is known. Per-spell range tables are not modelled.
+/// Legacy range: 1/0/nil observed in WoW 3.3.5a; name and nil policy
+/// for these profiles is user-approved, not native evidence.
 fn is_spell_in_range(state: &mut LuaState) -> LuaResult<u32> {
-    let Some(id) = stack_u32(state, 1) else {
-        state.push(Val::Bool(false));
-        return Ok(1);
+    let book_form =
+        matches!(stack_val(state, 1), Val::Num(_)) && matches!(stack_val(state, 3), Val::Str(_));
+    let unit_index = if book_form { 3 } else { 2 };
+    let unit = Option::<String>::from_stack(state, unit_index)?.unwrap_or_default();
+    let st = borrow_state(state)?;
+    let id = if book_form {
+        let book = Option::<String>::from_stack(state, 2)?.unwrap_or_default();
+        if book == "spell" {
+            stack_u32(state, 1).and_then(|slot| {
+                crate::lua_api::globals::spellbook_data::get_spell_at_slot(slot as i32)
+                    .map(|(_, entry, _)| entry.spell_id)
+            })
+        } else {
+            None
+        }
+    } else {
+        match stack_val(state, 1) {
+            Val::Str(_) => {
+                let name = Option::<String>::from_stack(state, 1)?.unwrap_or_default();
+                st.known_spells.iter().copied().find(|id| {
+                    crate::spell_lookup::get_spell(*id)
+                        .is_some_and(|spell| spell.name.eq_ignore_ascii_case(&name))
+                })
+            }
+            _ => stack_u32(state, 1).filter(|id| is_known_spell(&st, *id)),
+        }
     };
-    let unit = Option::<String>::from_stack(state, 2)?.unwrap_or_default();
-    let in_range = {
-        let st = borrow_state(state)?;
-        is_known_spell(&st, id) && unit_is_reachable(&st, &unit)
-    };
-    state.push(Val::Bool(in_range));
+    let valid_unit = crate::lua_api::globals::group_queries::unit_exists_in_state(&st, &unit)
+        && unit_is_reachable(&st, &unit);
+    let result = id
+        .filter(|_| valid_unit)
+        .map(|_| unit_is_reachable(&st, &unit));
+    drop(st);
+    state.push(result.map_or(Val::Nil, |value| Val::Num(if value { 1.0 } else { 0.0 })));
     Ok(1)
 }
 

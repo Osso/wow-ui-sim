@@ -54,6 +54,14 @@ const SPELL_COOLDOWN_HASH_FIELDS: usize = 5;
 
 pub(crate) fn register_c_spell_surface(state: &mut LuaState) -> LuaResult<()> {
     let ns = ensure_namespace(state, "C_Spell")?;
+    // Retail SpellDocumentation.lua:879-892; Forever :948-961.
+    if matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail
+            | crate::client_profile::ClientProfile::WowForever
+    ) {
+        table_set_rust_fn_static(state, ns, "IsSpellInRange", is_spell_in_range)?;
+    }
     if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Ptr {
         table_set_rust_fn_static(state, ns, "GetItemCooldown", get_item_cooldown)?;
     }
@@ -511,6 +519,25 @@ fn get_spell_link(state: &mut LuaState) -> LuaResult<u32> {
         }
         None => state.push(Val::Nil),
     }
+    Ok(1)
+}
+
+fn is_spell_in_range(state: &mut LuaState) -> LuaResult<u32> {
+    let spell_id = numeric_spell_id(state, 1);
+    let unit = Option::<String>::from_stack(state, 2)?.unwrap_or_else(|| "target".to_string());
+    let result = {
+        let sim = borrow_state(state)?;
+        if !spell_id.is_some_and(|id| spells::get_spell(id).is_some())
+            || !crate::lua_api::globals::group_queries::unit_exists_in_state(&sim, &unit)
+        {
+            None
+        } else {
+            Some(crate::c_api::item_spell::helpers::unit_is_reachable(
+                &sim, &unit,
+            ))
+        }
+    };
+    state.push(result.map_or(Val::Nil, Val::Bool));
     Ok(1)
 }
 

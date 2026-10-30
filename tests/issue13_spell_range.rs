@@ -11,6 +11,9 @@ fn c_spell_range_valid_and_invalid_inputs() {
         assert(C_Spell.IsSpellInRange(99999999, 'player') == nil)
         assert(C_Spell.IsSpellInRange(100, 'nonexistent') == nil)
         assert(C_Spell.IsSpellInRange(100) == nil)
+        A_Admin.SetTarget('Range target', 80, 1, true)
+        assert(C_Spell.IsSpellInRange(100) == true)
+        assert(C_Spell.IsSpellInRange('Charge', 'target') == true)
     "#,
     )
     .unwrap();

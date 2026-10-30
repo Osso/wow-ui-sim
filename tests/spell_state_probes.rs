@@ -123,12 +123,11 @@ fn is_spell_known_or_overrides_alias() {
 fn is_spell_in_range_requires_known_spell_and_visible_unit() {
     let env = env();
     env.state().borrow_mut().known_spells.insert(7);
-    // No target → false.
-    let b: bool = env.eval(r#"return IsSpellInRange(7, "target")"#).unwrap();
-    assert!(!b);
-    // Player is always reachable; spell is known → true.
-    let b: bool = env.eval(r#"return IsSpellInRange(7, "player")"#).unwrap();
-    assert!(b);
+    // No target → nil; known spell and reachable player → 1.
+    let missing: bool = env.eval(r#"return IsSpellInRange(7, "target") == nil"#).unwrap();
+    assert!(missing);
+    let result: i32 = env.eval(r#"return IsSpellInRange(7, "player")"#).unwrap();
+    assert_eq!(result, 1);
 }
 
 #[test]
