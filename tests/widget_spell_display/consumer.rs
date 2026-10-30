@@ -302,6 +302,10 @@ fn spell_display_zero_spell_polling_uses_real_on_update_without_feed_notificatio
 fn spell_display_equippable_world_loot_event_and_slot_matching() {
     use wow_ui_sim::c_api::world_loot_object::WorldLootObject;
     let env = load_and_register_spell_container_env(true);
+    let cache = wow_ui_sim::paths::default_blizzard_ui_addons_path().unwrap();
+    env.exec(&std::fs::read_to_string(cache.join("Blizzard_Plunderstorm/GameModeConstants.lua")).unwrap()).unwrap();
+    env.exec("ActionBarButtonEventsDerivedFrameMixin = {}; ActionBarActionButtonDerivedMixin = {}").unwrap();
+    env.exec(&std::fs::read_to_string(cache.join("Blizzard_ActionBar/WoWLabs/ActionButtonOverrides.lua")).unwrap()).unwrap();
     assert_lua(&env, "equip event listener", r#"
         equipEvents = 0
         local f = CreateFrame('Frame')
@@ -320,11 +324,14 @@ fn spell_display_equippable_world_loot_event_and_slot_matching() {
         local frame = assert(SpellContainer.widgetFrames[761301])
         assert(frame.Spell:IsEventRegistered('PLAYER_EQUIPED_SPELLS_CHANGED'))
         assert(equipEvents == 1)
-        assert(C_WorldLootObject.DoesSlotMatchInventoryType(212, 31))
-        assert(C_WorldLootObject.DoesSlotMatchInventoryType(213, 31))
-        assert(not C_WorldLootObject.DoesSlotMatchInventoryType(216, 31))
-        assert(C_WorldLootObject.DoesSlotMatchInventoryType(216, 32))
-        assert(C_WorldLootObject.DoesSlotMatchInventoryType(217, 32))
-        assert(not C_WorldLootObject.DoesSlotMatchInventoryType(212, 32))
+        local m = ActionBarActionButtonDerivedMixin
+        local offensive1, offensive2 = {action=61}, {action=62}
+        local utility1, utility2 = {action=49}, {action=50}
+        assert(m.CanSwapWithInventoryType(offensive1, 31))
+        assert(m.CanSwapWithInventoryType(offensive2, 31))
+        assert(not m.CanSwapWithInventoryType(utility1, 31))
+        assert(m.CanSwapWithInventoryType(utility1, 32))
+        assert(m.CanSwapWithInventoryType(utility2, 32))
+        assert(not m.CanSwapWithInventoryType(offensive1, 32))
     "#);
 }
