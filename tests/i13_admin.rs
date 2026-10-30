@@ -1,17 +1,17 @@
 use wow_ui_sim::lua_api::WowLuaEnv;
 
 #[test]
-fn buff_caster_is_visible_to_aura_queries() {
+fn buff_caster_controls_aura_ownership() {
     WowLuaEnv::new().unwrap().eval::<()>(r#"
         A_Admin.SetPartySize(1)
         A_Admin.SetPartyMember(1, 'Caster', 1, 80)
         A_Admin.ClearBuffs()
         A_Admin.AddBuff(21562, 'Test buff', 135987, 60, 1, 'party1')
         local aura = C_UnitAuras.GetAuraDataByIndex('player', 1, 'HELPFUL')
-        assert(aura.sourceUnit == 'party1', 'source unit')
+        assert(aura.sourceUnit == 'player', 'player aura projection')
         assert(aura.isFromPlayerOrPlayerPet == false, 'player ownership')
         local _, _, _, _, _, _, caster = UnitBuff('player', 1)
-        assert(caster == 'party1', 'legacy caster')
+        assert(caster == 'player', 'legacy player aura projection')
         A_Admin.ClearBuffs()
         A_Admin.AddBuff(21562, 'Test buff', 135987, 60, 1)
         aura = C_UnitAuras.GetAuraDataByIndex('player', 1, 'HELPFUL')

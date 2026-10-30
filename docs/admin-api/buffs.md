@@ -9,7 +9,7 @@ Adds a buff to the player's aura list.
 - **icon** `number` -- File data ID for the aura icon texture
 - **duration** `number` -- Duration in seconds (0 = permanent/no expiry)
 - **stacks** `number` -- Stack count (`applications` in aura data)
-- **caster** `string?` -- Source unit token; defaults to `player`. `player` and `pet` count as player-owned for aura filters.
+- **caster** `string?` -- Stored source unit token; defaults to `player`. `player` and `pet` set `isFromPlayerOrPlayerPet`. Player-aura queries currently project `sourceUnit` as `player` regardless of the stored token; native behavior is pending investigation.
 - **Affects:** `UnitBuff("player", index)`, `UnitAura("player", index)`, `GetPlayerAuraBySpellID(spellId)`
 - **Fires:** `UNIT_AURA`
 - **Example:**
