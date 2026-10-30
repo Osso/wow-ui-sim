@@ -29,13 +29,20 @@ impl SpellAuraDuration {
             && self.max_carryover_seconds >= 0.0
     }
 
-    fn refresh_duration(self, aura: &AuraInfo, now: f64) -> Option<f64> {
-        // Inferred eligibility: permanent active records have no refresh total.
+    fn carryover(self, aura: &AuraInfo, now: f64) -> Option<f64> {
+        // User-approved default, not native evidence.
         if aura.duration == 0.0 || aura.expiration_time == 0.0 {
             return None;
         }
-        let remaining = (aura.expiration_time - now).max(0.0);
-        let duration = self.base_duration_seconds + remaining.min(self.max_carryover_seconds);
+        Some(
+            (aura.expiration_time - now)
+                .max(0.0)
+                .min(self.max_carryover_seconds),
+        )
+    }
+
+    fn refresh_duration(self, aura: &AuraInfo, now: f64) -> Option<f64> {
+        let duration = self.base_duration_seconds + self.carryover(aura, now)?;
         duration.is_finite().then_some(duration)
     }
 }
@@ -60,7 +67,15 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
         namespace,
         "GetRefreshExtendedDuration",
         get_refresh_extended_duration,
-    )
+    )?;
+    #[cfg(feature = "retail-12-1-5")]
+    table_set_rust_fn_static(
+        state,
+        namespace,
+        "GetRefreshCarryOverDuration",
+        get_refresh_carryover_duration,
+    )?;
+    Ok(())
 }
 
 /// Timed snapshot of a stored aura. INFERRED: an unknown unit or instance errors
@@ -110,21 +125,35 @@ fn read_expiration_arguments(state: &LuaState) -> LuaResult<(Option<String>, f64
 
 fn get_aura_base_duration(state: &mut LuaState) -> LuaResult<u32> {
     require_unit_aura_access(state, "C_UnitAuras.GetAuraBaseDuration")?;
-    push_duration(state, false)
+    push_duration(state, DurationQuery::Base)
 }
 
 fn get_refresh_extended_duration(state: &mut LuaState) -> LuaResult<u32> {
     require_unit_aura_access(state, "C_UnitAuras.GetRefreshExtendedDuration")?;
-    push_duration(state, true)
+    push_duration(state, DurationQuery::Extended)
 }
 
-fn push_duration(state: &mut LuaState, extended: bool) -> LuaResult<u32> {
-    let duration = query_duration(state, extended)?;
+#[cfg(feature = "retail-12-1-5")]
+fn get_refresh_carryover_duration(state: &mut LuaState) -> LuaResult<u32> {
+    require_unit_aura_access(state, "C_UnitAuras.GetRefreshCarryOverDuration")?;
+    push_duration(state, DurationQuery::Carryover)
+}
+
+#[derive(Clone, Copy)]
+enum DurationQuery {
+    Base,
+    Extended,
+    #[cfg(feature = "retail-12-1-5")]
+    Carryover,
+}
+
+fn push_duration(state: &mut LuaState, query: DurationQuery) -> LuaResult<u32> {
+    let duration = query_duration(state, query)?;
     state.push(duration.map_or(Val::Nil, Val::Num));
     Ok(1)
 }
 
-fn query_duration(state: &mut LuaState, extended: bool) -> LuaResult<Option<f64>> {
+fn query_duration(state: &mut LuaState, query: DurationQuery) -> LuaResult<Option<f64>> {
     let (unit, instance_id) = read_public_arguments(state)?;
     let Some(unit) = unit else {
         return Ok(None);
@@ -148,10 +177,13 @@ fn query_duration(state: &mut LuaState, extended: bool) -> LuaResult<Option<f64>
     if !metadata.is_valid() {
         return Ok(None);
     }
-    Ok(if extended {
-        metadata.refresh_duration(&aura, sim.clock_elapsed().as_secs_f64())
-    } else {
-        Some(metadata.base_duration_seconds)
+    Ok(match query {
+        DurationQuery::Base => Some(metadata.base_duration_seconds),
+        DurationQuery::Extended => {
+            metadata.refresh_duration(&aura, sim.clock_elapsed().as_secs_f64())
+        }
+        #[cfg(feature = "retail-12-1-5")]
+        DurationQuery::Carryover => metadata.carryover(&aura, sim.clock_elapsed().as_secs_f64()),
     })
 }
 
