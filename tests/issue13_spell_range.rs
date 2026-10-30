@@ -19,6 +19,45 @@ fn c_spell_range_valid_and_invalid_inputs() {
     .unwrap();
 }
 
+#[cfg(feature = "client-wowforever")]
+#[test]
+fn forever_reporter_buff_name_and_range() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        local name = C_Spell.GetSpellName(10157)
+        assert(name == 'Arcane Intellect', 'Forever rank name')
+        assert(C_Spell.GetSpellInfo(10157).name == name, 'spell info name')
+        A_Admin.LearnSpell(10157)
+        assert(IsSpellKnown(10157), 'learned spell')
+        A_Admin.SetTarget('Range target', 60, 1, true)
+        assert(C_Spell.IsSpellInRange(name, 'target') == true, 'name range')
+    "#,
+    )
+    .unwrap();
+}
+
+#[cfg(feature = "client-wowforever")]
+#[test]
+fn forever_missing_spell_data_reports_generation_command() {
+    if std::env::var_os("WOW_SIM_TEST_MISSING_FOREVER_SPELLS").is_some() {
+        let error = match WowLuaEnv::new() {
+            Ok(_) => panic!("missing Forever spell file must fail"),
+            Err(error) => error.to_string(),
+        };
+        assert!(error.contains("wow-cli casc sync-forever-spells"), "{error}");
+        return;
+    }
+    let cache = tempfile::tempdir().unwrap();
+    let output = std::process::Command::new(std::env::current_exe().unwrap())
+        .args(["issue13_spell_range::forever_missing_spell_data_reports_generation_command", "--exact", "--nocapture"])
+        .env("WOW_SIM_TEST_MISSING_FOREVER_SPELLS", "1")
+        .env("XDG_CACHE_HOME", cache.path())
+        .output()
+        .unwrap();
+    assert!(output.status.success(), "{}", String::from_utf8_lossy(&output.stderr));
+}
+
 #[test]
 fn legacy_name_and_spellbook_range() {
     let env = WowLuaEnv::new().unwrap();

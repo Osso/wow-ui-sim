@@ -294,6 +294,15 @@ enum GenerateTarget {
 enum CascTarget {
     /// Populate the profile-scoped Blizzard UI cache from its configured source
     SyncBlizzardUi,
+    /// Extract a file data ID from the active profile's CASC storage
+    ExtractFdid { fdid: u32, out: PathBuf },
+    /// Generate selected Forever spell data from local CASC or the pinned CDN
+    SyncForeverSpells {
+        #[arg(long, value_parser = ["auto", "local", "cdn"], default_value = "auto")]
+        source: String,
+        #[arg(long)]
+        output: Option<PathBuf>,
+    },
 }
 
 fn default_addons_path() -> PathBuf {
@@ -389,6 +398,32 @@ fn run_generator(target: GenerateTarget) {
 
 fn run_casc_command(target: CascTarget) {
     let result = match target {
+        CascTarget::SyncForeverSpells { source, output } => {
+            use wow_ui_sim::blizzard_ui_sync::forever_spells::{self, Source};
+            let source = match source.as_str() {
+                "local" => Source::Local,
+                "cdn" => Source::Cdn,
+                _ => Source::Auto,
+            };
+            output
+                .map_or_else(forever_spells::cache_path, Ok)
+                .and_then(|path| {
+                    forever_spells::populate(source, &path)?;
+                    println!("Generated Forever spell data: {}", path.display());
+                    Ok(())
+                })
+        }
+        CascTarget::ExtractFdid { fdid, out } => {
+            wow_ui_sim::blizzard_ui_sync::extract_fdid(fdid, &out).and_then(|found| {
+                if found {
+                    Ok(())
+                } else {
+                    Err(wow_ui_sim::Error::Other(format!(
+                        "CASC file data ID {fdid} not found"
+                    )))
+                }
+            })
+        }
         CascTarget::SyncBlizzardUi => wow_ui_sim::blizzard_ui_sync::sync_blizzard_ui().map(|s| {
             println!(
                 "Synced {} Blizzard UI files to {} ({} extracted, {} already present)",

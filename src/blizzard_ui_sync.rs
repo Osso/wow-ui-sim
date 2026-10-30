@@ -1,6 +1,8 @@
 //! Profile-scoped Blizzard UI source synchronization.
 
 #[cfg(feature = "casc")]
+pub mod forever_spells;
+#[cfg(feature = "casc")]
 mod gethe_missing;
 #[cfg(feature = "casc")]
 mod locale;
@@ -400,7 +402,7 @@ fn manifest_entry_is_allowed_unmapped(entry: &str) -> bool {
 }
 
 #[cfg(feature = "casc")]
-fn extract_fdid(fdid: u32, out_path: &Path) -> crate::Result<bool> {
+pub fn extract_fdid(fdid: u32, out_path: &Path) -> crate::Result<bool> {
     if !casc_available() {
         return Err(casc_unavailable_error());
     }
@@ -561,7 +563,7 @@ fn retry_cdn_fetch<E: std::fmt::Display>(
 }
 
 #[cfg(not(feature = "casc"))]
-fn extract_fdid(_fdid: u32, _out_path: &Path) -> crate::Result<bool> {
+pub fn extract_fdid(_fdid: u32, _out_path: &Path) -> crate::Result<bool> {
     Err(casc_feature_error())
 }
 

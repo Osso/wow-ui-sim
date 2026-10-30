@@ -16,7 +16,7 @@ pub(super) struct ContentEntry {
     pub size: usize,
 }
 
-pub(super) fn decode_entry(entry: &ContentEntry, encoded: &[u8]) -> crate::Result<Vec<u8>> {
+fn validate_encoding(entry: &ContentEntry, encoded: &[u8]) -> crate::Result<()> {
     if encoded.len() != entry.size || encoded.len() < 8 || &encoded[..4] != b"BLTE" {
         return Err(error(entry, "invalid BLTE length or signature"));
     }
@@ -31,12 +31,135 @@ pub(super) fn decode_entry(entry: &ContentEntry, encoded: &[u8]) -> crate::Resul
     if ContentKey::from_data(hash_bytes).to_hex() != entry.encoding_key {
         return Err(error(entry, "encoding key mismatch"));
     }
+    Ok(())
+}
+
+pub(super) fn decode_entry(entry: &ContentEntry, encoded: &[u8]) -> crate::Result<Vec<u8>> {
+    validate_encoding(entry, encoded)?;
     let blte = BlteFile::parse(encoded).map_err(|cause| error(entry, cause))?;
     let content = blte.decompress().map_err(|cause| error(entry, cause))?;
     if !content_matches(entry, &content) {
         return Err(error(entry, "decoded content size or key mismatch"));
     }
     Ok(content)
+}
+
+/// A DB2 decoded from a pinned BLTE object, including ranges that could not be decrypted.
+pub struct PartialDb2 {
+    pub data: Vec<u8>,
+    pub zero_filled: Vec<std::ops::Range<usize>>,
+}
+
+/// Verify the encoding key and each compressed chunk before decoding a DB2.
+/// A full content-key check is impossible when unknown-key chunks are zero-filled;
+/// callers must reject any selected data that intersects a recorded range.
+pub(super) fn decode_db2(entry: &ContentEntry, encoded: &[u8]) -> crate::Result<PartialDb2> {
+    use cascette_crypto::TactKeyStore;
+    use cascette_formats::blte::{CompressionMode, decrypt_chunk_with_keys};
+
+    validate_encoding(entry, encoded)?;
+    let blte = BlteFile::parse(encoded).map_err(|cause| error(entry, cause))?;
+    let Some(header) = &blte.header.extended else {
+        let data = blte
+            .decompress_with_keys(&TactKeyStore::new())
+            .map_err(|cause| error(entry, cause))?;
+        if !content_matches(entry, &data) {
+            return Err(error(entry, "decoded content size or key mismatch"));
+        }
+        return Ok(PartialDb2 {
+            data,
+            zero_filled: Vec::new(),
+        });
+    };
+    let keys = TactKeyStore::new();
+    let mut data = Vec::with_capacity(entry.content_size);
+    let mut zero_filled = Vec::new();
+    for (index, (chunk, info)) in blte.chunks.iter().zip(&header.chunk_infos).enumerate() {
+        if !chunk.verify_checksum(&info.checksum) {
+            return Err(error(entry, format!("chunk {index} checksum mismatch")));
+        }
+        let size = info.decompressed_size as usize;
+        if chunk.mode == CompressionMode::Encrypted {
+            let bytes = &chunk.data;
+            if bytes.len() < 15
+                || bytes[0] != 8
+                || bytes[9] != 4
+                || !matches!(bytes[14], b'S' | b'A')
+            {
+                return Err(error(
+                    entry,
+                    format!("invalid encrypted chunk {index} header"),
+                ));
+            }
+            let key = u64::from_le_bytes(bytes[1..9].try_into().unwrap());
+            if keys.get(key).is_none() {
+                let start = data.len();
+                data.resize(
+                    start
+                        .checked_add(size)
+                        .ok_or_else(|| error(entry, "chunk size overflow"))?,
+                    0,
+                );
+                zero_filled.push(start..data.len());
+                continue;
+            }
+        }
+        let decoded = if chunk.mode == CompressionMode::Encrypted {
+            decrypt_chunk_with_keys(&chunk.data, &keys, index)
+        } else {
+            chunk.decompress(index)
+        }
+        .map_err(|cause| error(entry, cause))?;
+        if decoded.len() != size {
+            return Err(error(entry, format!("chunk {index} decoded size mismatch")));
+        }
+        data.extend_from_slice(&decoded);
+    }
+    if data.len() != entry.content_size
+        || (zero_filled.is_empty() && !content_matches(entry, &data))
+    {
+        return Err(error(entry, "decoded content size or key mismatch"));
+    }
+    Ok(PartialDb2 { data, zero_filled })
+}
+
+pub(super) fn download_db2(
+    client: &Client,
+    entry: &ContentEntry,
+    roots: &[String],
+) -> crate::Result<PartialDb2> {
+    let mut failures = Vec::new();
+    for root in roots {
+        let url = format!(
+            "{}/data/{}/{}/{}",
+            root.trim_end_matches('/'),
+            &entry.archive[..2],
+            &entry.archive[2..4],
+            entry.archive
+        );
+        let result = (|| {
+            let end = entry
+                .offset
+                .checked_add(entry.size as u64)
+                .and_then(|end| end.checked_sub(1))
+                .ok_or_else(|| error(entry, "invalid archive range"))?;
+            let range = format!("bytes={}-{}", entry.offset, end);
+            let response = request_with_retry(client, &url, Some(&range))
+                .map_err(|cause| error(entry, cause))?;
+            decode_db2(entry, &read_range(entry, response, end)?)
+        })();
+        match result {
+            Ok(content) => return Ok(content),
+            Err(cause) => failures.push(format!("{url}: {cause}")),
+        }
+    }
+    Err(error(
+        entry,
+        format!(
+            "all advertised CDN endpoints failed: {}",
+            failures.join("; ")
+        ),
+    ))
 }
 
 pub(super) fn content_matches(entry: &ContentEntry, content: &[u8]) -> bool {
@@ -85,7 +208,8 @@ fn download_from_url(client: &Client, entry: &ContentEntry, url: &str) -> crate:
     let range = format!("bytes={}-{}", entry.offset, end);
     let response =
         request_with_retry(client, url, Some(&range)).map_err(|cause| error(entry, cause))?;
-    read_range(entry, response, end)
+    let encoded = read_range(entry, response, end)?;
+    decode_entry(entry, &encoded)
 }
 
 pub(super) fn request_with_retry(
@@ -200,7 +324,7 @@ fn read_range(
         .take(entry.size as u64 + 1)
         .read_to_end(&mut encoded)
         .map_err(|cause| error(entry, cause))?;
-    decode_entry(entry, &encoded)
+    Ok(encoded)
 }
 
 #[cfg(test)]
@@ -222,6 +346,43 @@ mod tests {
             size: encoded.len(),
         };
         (entry, encoded)
+    }
+
+    #[test]
+    fn db2_decode_zero_fills_only_unknown_key_chunks_and_rejects_corruption() {
+        let plain = b"Nreadable".to_vec();
+        let mut encrypted = vec![b'E', 8];
+        encrypted.extend_from_slice(&0x123456789abcdef0u64.to_le_bytes());
+        encrypted.extend_from_slice(&[4, 0, 0, 0, 0, b'S', 7, 8]);
+        let chunks = [plain, encrypted];
+        let mut encoded = b"BLTE".to_vec();
+        let header_size = 12 + 24 * chunks.len();
+        encoded.extend_from_slice(&(header_size as u32).to_be_bytes());
+        encoded.extend_from_slice(&[15, 0, 0, chunks.len() as u8]);
+        for (chunk, decoded_size) in chunks.iter().zip([8u32, 3]) {
+            encoded.extend_from_slice(&(chunk.len() as u32).to_be_bytes());
+            encoded.extend_from_slice(&decoded_size.to_be_bytes());
+            encoded.extend_from_slice(ContentKey::from_data(chunk).as_bytes());
+        }
+        let encoding_key = ContentKey::from_data(&encoded).to_hex();
+        for chunk in &chunks {
+            encoded.extend_from_slice(chunk);
+        }
+        let entry = ContentEntry {
+            path: "Spell.db2".into(),
+            content_key: "unavailable".into(),
+            encoding_key,
+            content_size: 11,
+            archive: "0".repeat(32),
+            offset: 0,
+            size: encoded.len(),
+        };
+        let decoded = decode_db2(&entry, &encoded).unwrap();
+        assert_eq!(decoded.data, b"readable\0\0\0");
+        assert_eq!(decoded.zero_filled, [8..11]);
+        let last = encoded.len() - 1;
+        encoded[last] ^= 1;
+        assert!(decode_db2(&entry, &encoded).is_err());
     }
 
     #[test]
