@@ -21,29 +21,26 @@ fn blocked_action_reaches_blizzard_with_taint_owner() {
     env.apply_post_load_workarounds();
     fire_startup_events_for_screen(&env, ScreenKind::Game);
     env.state().borrow_mut().lua_errors.clear();
-    let (count, action, visible): (i32, String, bool) = env
+    let (owner, action, visible): (String, String, bool) = env
         .eval(
             r#"
         assert(type(GameEvent.HandleActionBlocked) == "function")
         assert(type(AddonTooltip_ActionBlocked) == "function")
         local f = CreateFrame("Frame", "I13ProtectedAction", UIParent)
-        local action
+        local owner, action
         local listener = CreateFrame("Frame")
         listener:RegisterEvent("ADDON_ACTION_BLOCKED")
-        listener:SetScript("OnEvent", function(_, _, _, name) action = name end)
+        listener:SetScript("OnEvent", function(_, _, addon, name) owner, action = addon, name end)
         A_Admin.SetFrameProtected("I13ProtectedAction", true)
         A_Admin.SetInCombat(true)
         debug.setstacktaint("I13TestAddon")
         f:Hide()
         debug.setstacktaint(nil)
-        return ADDON_ACTIONS_BLOCKED.I13TestAddon or 0, action or "", f:IsShown()
+        return owner or "", action or "", f:IsShown()
     "#,
         )
         .unwrap();
-    assert_eq!(
-        count, 1,
-        "Blizzard must attribute the blocked action to the taint owner"
-    );
+    assert_eq!(owner, "I13TestAddon");
     assert_eq!(action, "I13ProtectedAction:Hide()");
     assert!(visible);
     assert!(
