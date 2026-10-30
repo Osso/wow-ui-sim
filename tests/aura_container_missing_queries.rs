@@ -28,8 +28,8 @@ fn pandemic_window_uses_stored_carryover() {
         r#"
         for _, case in ipairs({{1001, 6}, {1002, 3}}) do
             local data = C_UnitAuras.GetAuraDataByAuraInstanceID('player', case[1])
-            data.auraType = AuraContainerAuraDataType.Aura
-            local startTime, endTime = AuraContainerUtil.GetPandemicWindow('player', data)
+            data.auraType = __secureenv.AuraContainerAuraDataType.Aura
+            local startTime, endTime = __secureenv.AuraContainerUtil.GetPandemicWindow('player', data)
             assert(endTime - startTime == case[2])
         end
     "#,
@@ -47,7 +47,7 @@ fn private_source_returns_supplied_caster_guid() {
             [22] = {sourceGUID = 'Player-1-BBB'},
             [33] = {},
         }
-        local source = AuraContainerPrivateAuraSourceMixin
+        local source = __secureenv.AuraContainerPrivateAuraSourceMixin
         assert(source:GetAuraCasterGUID('player', 11) == 'Player-1-AAA')
         assert(source:GetAuraCasterGUID('player', 22) == 'Player-1-BBB')
         assert(source:GetAuraCasterGUID('player', 33) == nil)
