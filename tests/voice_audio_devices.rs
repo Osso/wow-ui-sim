@@ -3,7 +3,13 @@ use wow_ui_sim::c_api::c_voice_chat_devices::VoiceAudioDevice;
 use wow_ui_sim::client_profile::{ACTIVE, ClientProfile};
 use wow_ui_sim::lua_api::WowLuaEnv;
 
-use crate::voice_settings_access::original_audio_env;
+use crate::voice_settings_access::original_audio_env_with_roots;
+
+/// Forever InitVoiceSettings calls CustomBindingManager, defined by always-loaded
+/// Blizzard_FrameXML (Forever Audio.lua:470-473, Blizzard_FrameXML.toc:30).
+fn original_audio_env() -> WowLuaEnv {
+    original_audio_env_with_roots(&["Blizzard_FrameXML"])
+}
 
 fn publishes_devices() -> bool {
     matches!(ACTIVE, ClientProfile::Retail | ClientProfile::Ptr | ClientProfile::WowForever)

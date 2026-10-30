@@ -10,6 +10,11 @@ use wow_ui_sim::screen::ScreenKind;
 use wow_ui_sim::toc::TocFile;
 
 pub(crate) fn original_audio_env() -> WowLuaEnv {
+    original_audio_env_with_roots(&[])
+}
+
+/// Extra roots load before the Audio closure, as the client loads them at startup.
+pub(crate) fn original_audio_env_with_roots(extra_roots: &[&str]) -> WowLuaEnv {
     let ui = blizzard_ui_dir();
     let toc_path = find_toc_file(&ui.join("Blizzard_SettingsDefinitions_Shared")).unwrap();
     let toc = TocFile::from_file(&toc_path).unwrap();
@@ -24,7 +29,8 @@ pub(crate) fn original_audio_env() -> WowLuaEnv {
     let env = new_blizzard_addon_env(&ui);
     let expected = if matches!(ACTIVE, ClientProfile::Retail | ClientProfile::WowForever) { Some(true) } else { None };
     assert_eq!(env.state().borrow().voice_chat.can_access_settings, expected);
-    load_blizzard_addon_closure_into_env(&env, &ui, &["Blizzard_SettingsDefinitions_Shared"], &[]);
+    let roots: Vec<&str> = extra_roots.iter().copied().chain(["Blizzard_SettingsDefinitions_Shared"]).collect();
+    load_blizzard_addon_closure_into_env(&env, &ui, &roots, &[]);
     env.exec(include_str!("voice_settings_access/original_callback.lua"))
         .expect("selected original Audio registration must create its polling callback");
     env
