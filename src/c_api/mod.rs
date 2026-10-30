@@ -243,6 +243,7 @@ pub(crate) mod c_transmog_collection;
 pub(crate) mod c_voice_chat_activity;
 #[cfg(feature = "retail-12-0-5")]
 pub mod c_voice_chat_channels;
+pub mod c_voice_chat_devices;
 mod c_voice_chat_settings;
 #[cfg(feature = "retail-12-0-0")]
 mod c_voice_chat_volume;

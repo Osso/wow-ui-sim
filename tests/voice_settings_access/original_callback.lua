@@ -38,6 +38,7 @@ for _, stored in pairs(debug.getregistry().__rilua_timer_callbacks) do
     end
 end
 assert(callback, 'original Audio polling callback missing')
+OriginalAudioCallback = callback
 local init
 for i = 1, 20 do
     local name, value = debug.getupvalue(callback, i)

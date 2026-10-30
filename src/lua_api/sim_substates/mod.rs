@@ -342,6 +342,9 @@ pub struct VoiceChannel {
 pub struct VoiceChatState {
     /// Host-supplied settings-access observation; None is unknown, not denied.
     pub can_access_settings: Option<bool>,
+    /// Supplied device catalogs; None answers the documented nil result.
+    pub input_devices: Option<Vec<crate::c_api::c_voice_chat_devices::VoiceAudioDevice>>,
+    pub output_devices: Option<Vec<crate::c_api::c_voice_chat_devices::VoiceAudioDevice>>,
     pub microphone_volume: f32,
     pub output_volume: f32,
     pub muted: bool,
@@ -393,6 +396,9 @@ impl Default for VoiceChatState {
             } else {
                 None
             },
+            // Chosen default, not native evidence: no devices until a host supplies them.
+            input_devices: Some(Vec::new()),
+            output_devices: Some(Vec::new()),
             microphone_volume: 1.0,
             output_volume: 1.0,
             muted: false,

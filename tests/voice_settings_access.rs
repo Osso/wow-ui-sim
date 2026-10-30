@@ -9,7 +9,7 @@ use wow_ui_sim::loader::{discover_blizzard_addons_for_screen, find_toc_file};
 use wow_ui_sim::screen::ScreenKind;
 use wow_ui_sim::toc::TocFile;
 
-fn original_audio_env() -> WowLuaEnv {
+pub(crate) fn original_audio_env() -> WowLuaEnv {
     let ui = blizzard_ui_dir();
     let toc_path = find_toc_file(&ui.join("Blizzard_SettingsDefinitions_Shared")).unwrap();
     let toc = TocFile::from_file(&toc_path).unwrap();
