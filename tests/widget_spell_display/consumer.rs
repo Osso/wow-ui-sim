@@ -207,6 +207,57 @@ fn spell_display_attached_player_context_separate_from_world_loot_policy() {
 }
 
 #[test]
+fn spell_display_seeded_world_loot_and_api_queries() {
+    use wow_ui_sim::c_api::world_loot_object::WorldLootObject;
+    let env = load_and_register_spell_container_env(true);
+    assert_lua(&env, "world loot event listener", r#"
+        lootEvents = {}
+        local listener = CreateFrame('Frame')
+        listener:RegisterEvent('WORLD_LOOT_OBJECT_INFO_UPDATED')
+        listener:SetScript('OnEvent', function(_, _, guid) table.insert(lootEvents, guid) end)
+        assert(not C_WorldLootObject.IsWorldLootObject('player'))
+        assert(C_WorldLootObject.GetWorldLootObjectInfo('player') == nil)
+    "#);
+    let object = WorldLootObject { unit_token: "player".into(), inventory_type: 1, at_max_quality: true, is_upgrade: false, distance_squared: 9.0, in_range: true };
+    env.supply_world_loot_object("GameObject-1", object.clone()).unwrap();
+    env.state().borrow_mut().world_loot_objects.slot_matches.insert((1, 1), true);
+    assert_lua(&env, "seeded queries and event", r#"
+        assert(#lootEvents == 1 and lootEvents[1] == 'GameObject-1')
+        assert(C_WorldLootObject.IsWorldLootObject('player'))
+        assert(C_WorldLootObject.IsWorldLootObjectByGUID('GameObject-1'))
+        assert(not C_WorldLootObject.IsWorldLootObjectByGUID('missing'))
+        assert(C_WorldLootObject.IsWorldLootObjectInRange('player'))
+        assert(not C_WorldLootObject.IsWorldLootObjectInRange('missing'))
+        assert(C_WorldLootObject.GetWorldLootObjectDistanceSquared('player') == 9)
+        assert(C_WorldLootObject.GetWorldLootObjectDistanceSquared('missing') == nil)
+        local a = C_WorldLootObject.GetWorldLootObjectInfo('player')
+        local b = C_WorldLootObject.GetWorldLootObjectInfoByGUID('GameObject-1')
+        assert(a.inventoryType == 1 and a.atMaxQuality and not a.isUpgrade)
+        assert(b.inventoryType == 1 and b.atMaxQuality and not b.isUpgrade)
+        assert(C_WorldLootObject.GetWorldLootObjectInfoByGUID('missing') == nil)
+        assert(C_WorldLootObject.DoesSlotMatchInventoryType(1, 1))
+        assert(not C_WorldLootObject.DoesSlotMatchInventoryType(2, 1))
+        C_WorldLootObject.OnWorldLootObjectClick('player', true)
+    "#);
+    assert_eq!(env.state().borrow().world_loot_objects.clicks, [("player".into(), true)]);
+    supply(&env, supplied_record(), true);
+    assert_lua(&env, "original spell display world loot branch", r#"
+        local frame = assert(SpellContainer.widgetFrames[761301])
+        assert(frame.displayedWorldLootObject == 'player')
+        assert(frame.rarityPipPool:GetNumActive() == 3)
+    "#);
+    let mut updated = object;
+    updated.in_range = false;
+    updated.is_upgrade = true;
+    env.supply_world_loot_object("GameObject-1", updated).unwrap();
+    assert_lua(&env, "updated state", r#"
+        assert(#lootEvents == 2 and lootEvents[2] == 'GameObject-1')
+        assert(not C_WorldLootObject.IsWorldLootObjectInRange('player'))
+        assert(C_WorldLootObject.GetWorldLootObjectInfo('player').isUpgrade)
+    "#);
+}
+
+#[test]
 fn spell_display_zero_spell_polling_uses_real_on_update_without_feed_notification() {
     let env = load_and_register_spell_container_env(false);
     let mut row = supplied_record();
