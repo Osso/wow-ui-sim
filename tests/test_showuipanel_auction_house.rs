@@ -9,7 +9,7 @@ fn auction_house_panel_loads_and_shows_seeded_browse_results() {
     test_timeout! {
         let env = common::panel_fixtures::setup_env();
         let ui = common::panel_fixtures::blizzard_ui_dir();
-        let toc_path = ui.join("Blizzard_AuctionHouseUI/Blizzard_AuctionHouseUI_Mainline.toc");
+        let toc_path = ui.join("Blizzard_AuctionHouseUI/Blizzard_AuctionHouseUI.toc");
         load_addon(&env.loader_env(), &toc_path)
             .unwrap_or_else(|err| panic!("failed to load Blizzard_AuctionHouseUI: {err}"));
 
@@ -57,7 +57,8 @@ fn auction_house_auctions_tabs_show_seeded_owned_and_bid_groups() {
     test_timeout! {
         let env = common::panel_fixtures::setup_env();
         let ui = common::panel_fixtures::blizzard_ui_dir();
-        let toc_path = ui.join("Blizzard_AuctionHouseUI/Blizzard_AuctionHouseUI_Mainline.toc");
+        // Retail manifest pins the unqualified TOC.
+        let toc_path = ui.join("Blizzard_AuctionHouseUI/Blizzard_AuctionHouseUI.toc");
         load_addon(&env.loader_env(), &toc_path)
             .unwrap_or_else(|err| panic!("failed to load Blizzard_AuctionHouseUI: {err}"));
 
