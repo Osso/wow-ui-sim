@@ -3,7 +3,6 @@
 use crate::lua_api::globals::state_backed_queries::dispatch_event_now;
 use crate::lua_api::methods::borrow_state;
 use crate::widget::{Anchor, AnchorPoint, Frame, WidgetRegistry, WidgetType};
-use rilua::Val;
 use rilua::vm::state::LuaState;
 
 pub fn set_all_points_anchors_pub(frame: &mut Frame, parent_id: u64) {
@@ -62,8 +61,14 @@ pub fn emit_addon_action_blocked(state: &mut LuaState, frame_id: u64, action: &s
                 .map(|name| format!("{name}:{action}()"))
         })
         .unwrap_or_else(|| action.to_string());
+    let owner = state.call_stack[..=state.ci]
+        .iter()
+        .rev()
+        .find_map(|frame| frame.taint.clone())
+        .expect("blocked protected action must have a tainted caller");
+    let owner = crate::lua_api::methods::create_string(state, &owner);
     let blocked_action = crate::lua_api::methods::create_string(state, &blocked_action);
-    let _ = dispatch_event_now(state, "ADDON_ACTION_BLOCKED", &[Val::Nil, blocked_action]);
+    let _ = dispatch_event_now(state, "ADDON_ACTION_BLOCKED", &[owner, blocked_action]);
 }
 
 fn button_texture_child_id(
