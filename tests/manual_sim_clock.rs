@@ -51,9 +51,9 @@ fn manual_clock_drains_deadlines_and_repeated_tickers_in_order() {
             C_Timer.After(0, function() record('nested') end)
         end)
         A_Admin.AdvanceTime(4)
-        assert(table.concat(seen, ',') == 'ticker,after1.5,ticker,timer2.5,after3,ticker,ticker,nested', table.concat(seen, ','))
+        assert(table.concat(seen, ',') == 'ticker,after1.5,ticker,timer2.5,after3,ticker,ticker', table.concat(seen, ','))
         A_Admin.AdvanceTime(1)
-        assert(#seen == 8)
+        assert(#seen == 8 and seen[8] == 'nested')
         local zeroCount = 0
         local zero = C_Timer.NewTicker(0, function() zeroCount=zeroCount+1 end)
         A_Admin.AdvanceTime(0)
@@ -66,6 +66,26 @@ fn manual_clock_drains_deadlines_and_repeated_tickers_in_order() {
         cancel = C_Timer.NewTicker(0.5, function() count=count+1; cancel:Cancel() end)
         A_Admin.AdvanceTime(5)
         assert(count == 1)
+    "#).unwrap();
+}
+
+#[test]
+fn manual_clock_defers_self_rescheduled_zero_delay_to_next_advance() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(r#"
+        A_Admin.SetManualClock(0)
+        local count = 0
+        local function callback()
+            count = count + 1
+            if count < 3 then C_Timer.After(0, callback) end
+        end
+        C_Timer.After(0, callback)
+        A_Admin.AdvanceTime(0)
+        assert(count == 1, 'one callback per advance: ' .. count)
+        A_Admin.AdvanceTime(0)
+        assert(count == 2)
+        A_Admin.AdvanceTime(0)
+        assert(count == 3)
     "#).unwrap();
 }
 
