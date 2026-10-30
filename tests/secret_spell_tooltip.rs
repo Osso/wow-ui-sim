@@ -191,12 +191,7 @@ fn tooltip_numeric_secret_direct_arity_identity_and_model_preservation() {
     for tainted in [false, true] {
         for (query, public, secret, title) in [
             ("GetSpellByID", 19750, "Selector", "Flash of Light"),
-            (
-                "GetMountBySpellID",
-                458,
-                "MountSelector",
-                "Brown Horse",
-            ),
+            ("GetMountBySpellID", 458, "MountSelector", "Brown Horse"),
         ] {
             for selector in [public.to_string(), secret.into()] {
                 invoke(

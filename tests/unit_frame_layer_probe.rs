@@ -98,7 +98,9 @@ fn load_probe(env: &WowLuaEnv) {
     for file in toc.files {
         let path = Path::new(PROBE_DIR).join(&file);
         let source = match file.to_str() {
-            Some("UnitFrameLayerProbe.lua") => include_str!("../docs/addons/UnitFrameLayerProbe/UnitFrameLayerProbe.lua"),
+            Some("UnitFrameLayerProbe.lua") => {
+                include_str!("../docs/addons/UnitFrameLayerProbe/UnitFrameLayerProbe.lua")
+            }
             Some("Controls.lua") => include_str!("../docs/addons/UnitFrameLayerProbe/Controls.lua"),
             _ => panic!("unexpected probe TOC file: {}", file.display()),
         };

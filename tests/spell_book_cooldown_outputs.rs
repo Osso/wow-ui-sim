@@ -638,7 +638,8 @@ mod current {
         }
         // cooldown-restriction.md SS-P1: authenticated numeric secrets are host-only selectors.
         check(&env, "C_Spell.GetSpellCooldown(SecretSpell)", SPELL, false);
-        env.exec(r#"
+        env.exec(
+            r#"
             local function addon()
                 assert(debug.getstacktaint() == 'CooldownSelectorProbe')
                 local info = C_Spell.GetSpellCooldown(SecretSpell)
@@ -649,7 +650,9 @@ mod current {
             debug.setobjecttaint(addon, 'CooldownSelectorProbe')
             addon()
             assert(issecure() and issecretvalue(SecretSpell))
-        "#).unwrap();
+        "#,
+        )
+        .unwrap();
         check(&env, "C_Spell.GetSpellCooldown(0)", EMPTY, false);
         check(&env, "C_Spell.GetSpellCooldown(4294967295)", EMPTY, false);
         check_both(&env, SPELL, false);

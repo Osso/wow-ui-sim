@@ -161,34 +161,71 @@ fn test_add_line_preserves_explicit_processing_info_inline_color_segments() {
 fn test_set_spell_by_id_applies_full_line_inline_color_markup() {
     let env = WowLuaEnv::new().unwrap();
     env.exec("GameTooltip:SetSpellByID(5143)").unwrap();
-    let description: String = env.eval("return C_Spell.GetSpellDescription(5143)").unwrap();
+    let description: String = env
+        .eval("return C_Spell.GetSpellDescription(5143)")
+        .unwrap();
     assert!(description.starts_with("|cFFFFFFFFRequires Clearcasting|r"));
     let expected = description.replace("|cFFFFFFFF", "").replace("|r", "");
     let base: (f32, f32, f32) = env.eval("return NORMAL_FONT_COLOR:GetRGB()").unwrap();
     let state = env.state().borrow();
-    let td = state.tooltips.get(&state.widgets.get_id_by_name("GameTooltip").unwrap()).unwrap();
-    let line = td.lines.iter().find(|line| line.left_text.contains("Requires Clearcasting")).unwrap();
+    let td = state
+        .tooltips
+        .get(&state.widgets.get_id_by_name("GameTooltip").unwrap())
+        .unwrap();
+    let line = td
+        .lines
+        .iter()
+        .find(|line| line.left_text.contains("Requires Clearcasting"))
+        .unwrap();
     assert_eq!(line.left_text, expected);
     assert_eq!(line.left_color, base);
-    let segment = line.left_segments.iter().find(|segment| segment.text == "Requires Clearcasting").expect("white inline segment");
-    assert!((segment.color.0 - 1.0).abs() < 0.01 && (segment.color.1 - 1.0).abs() < 0.01 && (segment.color.2 - 1.0).abs() < 0.01);
+    let segment = line
+        .left_segments
+        .iter()
+        .find(|segment| segment.text == "Requires Clearcasting")
+        .expect("white inline segment");
+    assert!(
+        (segment.color.0 - 1.0).abs() < 0.01
+            && (segment.color.1 - 1.0).abs() < 0.01
+            && (segment.color.2 - 1.0).abs() < 0.01
+    );
 }
 
 #[test]
 fn test_set_spell_by_id_applies_named_inline_color_markup() {
     let env = WowLuaEnv::new().unwrap();
     env.exec("GameTooltip:SetSpellByID(448287)").unwrap();
-    let description: String = env.eval("return C_Spell.GetSpellDescription(448287)").unwrap();
+    let description: String = env
+        .eval("return C_Spell.GetSpellDescription(448287)")
+        .unwrap();
     assert!(description.starts_with("|cnGREEN_FONT_COLOR:Season 1|r"));
-    let expected_text = description.replace("|cnGREEN_FONT_COLOR:", "").replace("|cnWHITE_FONT_COLOR:", "").replace("|r", "");
+    let expected_text = description
+        .replace("|cnGREEN_FONT_COLOR:", "")
+        .replace("|cnWHITE_FONT_COLOR:", "")
+        .replace("|r", "");
     let expected: (f32, f32, f32) = env.eval("return GREEN_FONT_COLOR:GetRGB()").unwrap();
     let state = env.state().borrow();
-    let td = state.tooltips.get(&state.widgets.get_id_by_name("GameTooltip").unwrap()).unwrap();
-    let line = td.lines.iter().find(|line| line.left_text.contains("Season 1")).unwrap();
+    let td = state
+        .tooltips
+        .get(&state.widgets.get_id_by_name("GameTooltip").unwrap())
+        .unwrap();
+    let line = td
+        .lines
+        .iter()
+        .find(|line| line.left_text.contains("Season 1"))
+        .unwrap();
     assert_eq!(line.left_text, expected_text);
     assert_eq!(line.left_color, expected);
-    let segment = line.left_segments.iter().find(|segment| segment.text == "Season 1").expect("green inline segment");
-    assert!((segment.color.0 - expected.0).abs() < 0.01 && (segment.color.1 - expected.1).abs() < 0.01 && (segment.color.2 - expected.2).abs() < 0.01);
+    let segment = line
+        .left_segments
+        .iter()
+        .find(|segment| segment.text == "Season 1")
+        .expect("green inline segment");
+    assert!(
+        (segment.color.0 - expected.0).abs() < 0.01
+            && (segment.color.1 - expected.1).abs() < 0.01
+            && (segment.color.2 - expected.2).abs() < 0.01
+    );
 }
 
 #[test]

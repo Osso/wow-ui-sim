@@ -793,10 +793,8 @@ fn frame_nonnumeric_secret_inputs_fail_without_mutating_prior_actual_tooltip_pay
         prior,
         "failed setter leaves actual rendered payload intact"
     );
-    env.exec(
-        "TMFrameCheck('SetMountBySpellID', C_TooltipInfo.GetMountBySpellID, 'brown horse')",
-    )
-    .unwrap();
+    env.exec("TMFrameCheck('SetMountBySpellID', C_TooltipInfo.GetMountBySpellID, 'brown horse')")
+        .unwrap();
     assert_eq!(
         rendered_lines(&env)[0].0,
         "Brown Horse",

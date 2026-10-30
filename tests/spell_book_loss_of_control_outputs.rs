@@ -255,7 +255,12 @@ mod current {
         let env = fixture(true);
         publish_secret(&env, "SecretSpell", 19750.0);
         // cooldown-restriction.md SS-P1: authentic numeric secrets select inside the host.
-        check(&env, "C_Spell.GetSpellLossOfControlCooldownInfo(SecretSpell)", FIRST, true);
+        check(
+            &env,
+            "C_Spell.GetSpellLossOfControlCooldownInfo(SecretSpell)",
+            FIRST,
+            true,
+        );
         addon(
             &env,
             "Info = C_Spell.GetSpellLossOfControlCooldownInfo(SecretSpell)\nassert(type(Info) == 'table' and Info.isActive and Info.shouldReplaceNormalCooldown)\nassert(issecretvalue(Info.duration) and issecretvalue(SecretSpell))",
