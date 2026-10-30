@@ -593,6 +593,8 @@ pub struct SimState {
     pub lfg_random_cooldown_units: std::collections::HashSet<String>,
     pub lfg_activity_groups: Vec<LfgActivityGroupInfo>,
     pub lfg_activities: Vec<LfgActivityInfo>,
+    pub lfg_search_result_ids: Vec<u32>,
+    pub lfg_search_timer_ids: Vec<u64>,
     pub lfg_applications: Vec<LfgApplication>,
     pub lfg_next_application_id: u64,
     pub lfg_advanced_filter: LfgAdvancedFilter,

@@ -70,6 +70,8 @@ fn lfg_general_playstyle_roundtrip_and_parent_shapes() {
         state.world.premade_listings[1].general_playstyle = 4;
         state.world.premade_listings[2].general_playstyle = 0;
     }
+    // Retail GroupFinder/Mainline/LFGList.lua:2817 searches before reading results.
+    env.exec("C_LFGList.Search(2)").unwrap();
     assert_shape(
         &env,
         "LFGListInfoDocumentation.lua",

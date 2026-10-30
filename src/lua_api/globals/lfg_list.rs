@@ -58,6 +58,14 @@ pub(crate) fn defer_lfg_event(
     dispatch: RustFn,
     label: &'static str,
 ) -> LuaResult<()> {
+    defer_lfg_event_with_id(state, dispatch, label).map(|_| ())
+}
+
+fn defer_lfg_event_with_id(
+    state: &mut LuaState,
+    dispatch: RustFn,
+    label: &'static str,
+) -> LuaResult<u64> {
     let callback = Val::Function(
         state
             .gc
@@ -87,7 +95,7 @@ pub(crate) fn defer_lfg_event(
             callback_receives_timer: false,
             callback_arg: None,
         });
-    Ok(())
+    Ok(id)
 }
 
 fn dispatch_lfg_search_results_received(state: &mut LuaState) -> LuaResult<u32> {
@@ -96,9 +104,11 @@ fn dispatch_lfg_search_results_received(state: &mut LuaState) -> LuaResult<u32> 
 }
 
 fn premade_listing(state: &LuaState, search_result_id: u32) -> Option<PremadeListing> {
-    borrow_state(state)
-        .ok()?
-        .world
+    let sim = borrow_state(state).ok()?;
+    if !sim.lfg_search_result_ids.contains(&search_result_id) {
+        return None;
+    }
+    sim.world
         .premade_listings
         .iter()
         .find(|listing| listing.search_result_id == search_result_id)
@@ -254,11 +264,7 @@ fn has_search_result_info(state: &mut LuaState) -> LuaResult<u32> {
 fn get_search_results(state: &mut LuaState) -> LuaResult<u32> {
     let search_result_ids = {
         let sim = borrow_state(state)?;
-        sim.world
-            .premade_listings
-            .iter()
-            .map(|listing| listing.search_result_id)
-            .collect::<Vec<_>>()
+        sim.lfg_search_result_ids.clone()
     };
     let results = create_table(state);
     if let Val::Table(table_ref) = results {
@@ -279,11 +285,25 @@ fn get_search_results(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn search(state: &mut LuaState) -> LuaResult<u32> {
-    defer_lfg_event(
+    let pending = std::mem::take(&mut borrow_state_mut(state)?.lfg_search_timer_ids);
+    let pending = pending
+        .into_iter()
+        .filter(|id| !matches!(timer_layout::get_timer_callback(state, *id), Val::Nil))
+        .collect();
+    borrow_state_mut(state)?.lfg_search_timer_ids = pending;
+    let ids = borrow_state(state)?
+        .world
+        .premade_listings
+        .iter()
+        .map(|listing| listing.search_result_id)
+        .collect();
+    borrow_state_mut(state)?.lfg_search_result_ids = ids;
+    let id = defer_lfg_event_with_id(
         state,
         dispatch_lfg_search_results_received,
         "C_LFGList.SearchResultsReady",
     )?;
+    borrow_state_mut(state)?.lfg_search_timer_ids.push(id);
     Ok(0)
 }
 
@@ -503,10 +523,11 @@ fn apply_to_group_listing_name(
     search_result_id: u32,
 ) -> LuaResult<Option<String>> {
     let sim = borrow_state(state)?;
-    if sim
-        .lfg_applications
-        .iter()
-        .any(|a| a.search_result_id == search_result_id)
+    if !sim.lfg_search_result_ids.contains(&search_result_id)
+        || sim
+            .lfg_applications
+            .iter()
+            .any(|a| a.search_result_id == search_result_id)
     {
         return Ok(None);
     }
@@ -656,7 +677,16 @@ fn register_search_methods(state: &mut LuaState, table_ref: GcRef<Table>) -> Lua
             ),
             ("Search", search),
         ],
-    )
+    )?;
+    if crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Wrath {
+        table_set_rust_fn_static(
+            state,
+            table_ref,
+            "ClearSearchResults",
+            crate::lua_api::workarounds::temporary::lfg_search_state::clear_search_results,
+        )?;
+    }
+    Ok(())
 }
 
 #[cfg(feature = "retail-12-1-0")]
