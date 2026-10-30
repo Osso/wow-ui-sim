@@ -53,6 +53,13 @@ fn tainted_admin_dispatch_preserves_blizzard_and_addon_handler_ownership() {
         assert(addonEventTainted, 'addon event handler must remain tainted')
         assert(addonUpdateTainted, 'addon OnUpdate handler must remain tainted')
         assert(UnitName('party1') == 'I13Member', 'party state must update')
+        local memberUpdated = false
+        for _, member in ipairs(CompactPartyFrame.memberUnitFrames) do
+            if member.unit == 'party1' and member.name:GetText() == 'I13Member' then
+                memberUpdated = true
+            end
+        end
+        assert(memberUpdated, 'original compact party frame must display the member')
         assert(C_UnitAuras.GetAuraDataByIndex('player', 1, 'HELPFUL'), 'aura must update')
     "#).unwrap();
     let after = crate::common::panel_fixtures::recorded_lua_errors(&env);
