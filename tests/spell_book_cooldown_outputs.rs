@@ -625,7 +625,6 @@ mod current {
             "4294967296",
             "0/0",
             "math.huge",
-            "SecretSpell",
         ] {
             env.exec(&format!(
                 r#"
@@ -637,6 +636,20 @@ mod current {
             ))
             .expect("output-only row 305 preserves current parser gap");
         }
+        // cooldown-restriction.md SS-P1: authenticated numeric secrets are host-only selectors.
+        check(&env, "C_Spell.GetSpellCooldown(SecretSpell)", SPELL, false);
+        env.exec(r#"
+            local function addon()
+                assert(debug.getstacktaint() == 'CooldownSelectorProbe')
+                local info = C_Spell.GetSpellCooldown(SecretSpell)
+                assert(info.startTime == 312 and info.duration == 237)
+                assert(issecretvalue(SecretSpell))
+                assert(debug.getstacktaint() == 'CooldownSelectorProbe')
+            end
+            debug.setobjecttaint(addon, 'CooldownSelectorProbe')
+            addon()
+            assert(issecure() and issecretvalue(SecretSpell))
+        "#).unwrap();
         check(&env, "C_Spell.GetSpellCooldown(0)", EMPTY, false);
         check(&env, "C_Spell.GetSpellCooldown(4294967295)", EMPTY, false);
         check_both(&env, SPELL, false);
