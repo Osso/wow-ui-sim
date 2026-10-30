@@ -566,6 +566,15 @@ fn premade_group_categories_can_start_search() {
             LFGListPVEStub_OnShow(LFGListPVEStub)
             LFGListFrame_SetActivePanel(LFGListFrame, LFGListFrame.CategorySelection)
 
+            C_LFGList.Search(2)
+            local count, results = C_LFGList.GetSearchResults()
+            assert(count > 0 and C_LFGList.GetSearchResultInfo(results[1]))
+            LFGListSearchPanel_Clear(LFGListFrame.SearchPanel)
+            assert(select(1, C_LFGList.GetSearchResults()) == 0)
+            assert(not C_LFGList.GetSearchResultInfo(results[1]))
+            C_LFGList.Search(2)
+            assert(select(1, C_LFGList.GetSearchResults()) == count)
+
             for _, button in ipairs(LFGListFrame.CategorySelection.CategoryButtons) do
                 if button:IsShown() then
                     LFGListFrame_SetActivePanel(LFGListFrame, LFGListFrame.CategorySelection)
@@ -590,12 +599,17 @@ fn premade_group_search_result_tooltips_do_not_error() {
         env.exec(
             r#"
             assert(C_AddOns.LoadAddOn("Blizzard_GroupFinder"))
+            -- Blizzard_GroupFinder/Mainline/LFGList.lua:2817 starts the search before reading results.
+            C_LFGList.Search(2)
             local _, results = C_LFGList.GetSearchResults()
             assert(#results > 0, "expected seeded premade search results")
 
             for _, resultID in ipairs(results) do
                 LFGListUtil_SetSearchEntryTooltip(GameTooltip, resultID)
             end
+            local low = C_ChallengeMode.GetDungeonScoreRarityColor(0)
+            local high = C_ChallengeMode.GetDungeonScoreRarityColor(2200)
+            assert(low.r ~= high.r or low.g ~= high.g or low.b ~= high.b, "score colors must vary")
             "#
         ).expect("Premade Group search result tooltips should not raise Lua errors");
     }
