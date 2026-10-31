@@ -69,7 +69,7 @@ Frame method `CallMethod` is registered in `src/lua_api/frame/methods/text_attri
 
 - `issecretvalue(value)` returns true for values explicitly marked with the simulator secret marker, Elune-tainted functions, tables with tainted slots, and tables containing nested secret keys or values.
 - `canaccessvalue(value)`, `canaccessallvalues(...)`, and `canaccesstable(table)` return false when those same checks find a secret value.
-- `scrub()` and `scrubsecretvalues()` are still pass-throughs.
+- `scrub(...)` replaces secret values and every non-boolean/number/string argument with nil; `scrubsecretvalues(...)` replaces only secret values. Both keep the argument count. Sources: decomp S18 §12 and `FrameScriptDocumentation.lua` (two routes). `issecretvalue()` / `canaccessvalue()` with no argument treat the missing value as nil (`tests/security_api.rs`).
 
 Current simulator-owned secret values include party/raid identity strings returned through unit/group APIs and tainted `CallMethod` payloads/results.
 
