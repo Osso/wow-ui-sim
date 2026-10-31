@@ -26,6 +26,10 @@ fn protected_method_set_id_routes_blocked_event_and_allows_trusted_calls() {
     env.exec(
         r#"
         assert(type(GameEvent.HandleActionBlocked) == 'function')
+        local routed
+        hooksecurefunc(GameEvent, 'HandleActionBlocked', function(_, event, owner)
+            if event == 'ADDON_ACTION_BLOCKED' then routed = owner end
+        end)
         local frame = CreateFrame('Frame', 'ProtectedMethodId', UIParent)
         local events = {}
         local listener = CreateFrame('Frame')
@@ -49,6 +53,7 @@ fn protected_method_set_id_routes_blocked_event_and_allows_trusted_calls() {
         assert(#events == 1, 'blocked action must fire once')
         assert(events[1][1] == 'ProtectedMethodAddon')
         assert(events[1][2] == 'ProtectedMethodId:SetID()')
+        assert(routed == 'ProtectedMethodAddon', 'Blizzard handler must receive the event')
     "#,
     )
     .unwrap();
@@ -59,6 +64,10 @@ fn assert_protected_input_method(method: &str, getter: &str) {
     env.exec(&format!(
         r#"
         assert(type(GameEvent.HandleActionBlocked) == 'function')
+        local routed
+        hooksecurefunc(GameEvent, 'HandleActionBlocked', function(_, event, owner)
+            if event == 'ADDON_ACTION_BLOCKED' then routed = owner end
+        end)
         local frame = CreateFrame('Frame', 'ProtectedInputMethod', UIParent)
         local events = {{}}
         local listener = CreateFrame('Frame')
@@ -82,6 +91,7 @@ fn assert_protected_input_method(method: &str, getter: &str) {
         assert(#events == 1, '{method} must emit one blocked event')
         assert(events[1][1] == 'ProtectedMethodAddon')
         assert(events[1][2] == 'ProtectedInputMethod:{method}()')
+        assert(routed == 'ProtectedMethodAddon', 'Blizzard handler must receive the event')
     "#
     ))
     .unwrap();
