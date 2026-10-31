@@ -99,6 +99,27 @@ fn original_lfg_result_tooltip_uses_supplied_scores() {
 }
 
 #[test]
+fn passed_time_event_snapshot_selects_rarity_window() {
+    let env = wow_ui_sim::lua_api::WowLuaEnv::new().unwrap();
+    for (events, expected) in [
+        (vec![121, 248], "green"),
+        (vec![121], "white"),
+        (vec![248], "green"),
+        (vec![], "none"),
+    ] {
+        env.state().borrow_mut().passed_time_events = events.into_iter().collect();
+        env.exec(&format!(
+            r#"
+            local c = C_ChallengeMode.GetDungeonScoreRarityColor(1000)
+            local actual = not c and 'none' or (c.g > 0.99 and c.r < 0.2 and 'green' or 'white')
+            assert(actual == '{expected}', actual)
+        "#
+        ))
+        .unwrap();
+    }
+}
+
+#[test]
 fn missing_cache_reports_generation_command() {
     if std::env::var_os("WOW_SIM_TEST_MISSING_RARITY_CACHE").is_some() {
         let env = wow_ui_sim::lua_api::WowLuaEnv::new().unwrap();

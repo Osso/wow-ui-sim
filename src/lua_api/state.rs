@@ -78,6 +78,7 @@ macro_rules! build_empty_sim_state {
             who_routing: Default::default(),
             console_output: $collections.console_output,
             tutorial_requests: ::std::vec::Vec::new(),
+            passed_time_events: [121, 248].into_iter().collect(),
             engraving: crate::c_api::engraving_inputs::EngravingInputs::default(),
             timers: $collections.timers,
             rilua_timers: ::std::collections::VecDeque::new(),
