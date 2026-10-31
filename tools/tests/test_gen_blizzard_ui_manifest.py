@@ -1,7 +1,7 @@
 from __future__ import annotations
 
-import sys
 import json
+import sys
 import subprocess
 import tempfile
 import unittest
@@ -79,14 +79,19 @@ class RetailManifestTests(unittest.TestCase):
             repo = root / "repo"
             (repo / "data/blizzard-ui-files").mkdir(parents=True)
             (repo / "data/blizzard-ui-builds").mkdir(parents=True)
-            (repo / "data/blizzard-ui-builds/retail.json").write_text(json.dumps({"gethe_revision": selected}))
+            (repo / "data/blizzard-ui-builds/retail.json").write_text(
+                json.dumps({"gethe_revision": selected})
+            )
             with mock.patch.object(generator, "GETHE_REMOTE", str(upstream)), mock.patch.object(
                 generator, "GIT_ROOT", root / "git"
             ), mock.patch.object(generator, "CACHE_ROOT", root / "cache"), mock.patch.object(
                 generator, "REPO_ROOT", repo
             ), mock.patch.object(sys, "argv", ["generator", "retail"]):
                 generator.main()
-            self.assertEqual((repo / "data/blizzard-ui-files/retail.txt").read_text(), "Example/Selected.lua\n")
+            self.assertEqual(
+                (repo / "data/blizzard-ui-files/retail.txt").read_text(),
+                "Example/Selected.lua\n",
+            )
 
 
 if __name__ == "__main__":
