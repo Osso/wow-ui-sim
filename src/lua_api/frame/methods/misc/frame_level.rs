@@ -1,5 +1,8 @@
 //! Frame level, raise/lower, and parent-level hierarchy methods.
 
+use crate::lua_api::frame::methods::methods_helpers::{
+    can_change_protected_state_for, emit_addon_action_blocked,
+};
 use crate::lua_api::methods::{borrow_state, borrow_state_mut, frame_id_from_stack};
 use crate::lua_bridge::{FromStack, table_set_rust_fn_static};
 use rilua::vm::gc::arena::GcRef;
@@ -86,7 +89,10 @@ pub fn is_using_parent_level(state: &mut LuaState) -> LuaResult<u32> {
 pub fn set_using_parent_level(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
     let using_parent_level = bool::from_stack(state, 2)?;
-    // NOTE: lockdown check omitted — requires mlua context for combat_lockdown::check_and_fire
+    if !can_change_protected_state_for(state, id) {
+        emit_addon_action_blocked(state, id, "SetUsingParentLevel");
+        return Ok(0);
+    }
     let mut sim = borrow_state_mut(state)?;
     let inherited_level = inherited_parent_level(&sim.widgets, id);
     if let Some(frame) = sim.widgets.get_mut_visual(id) {

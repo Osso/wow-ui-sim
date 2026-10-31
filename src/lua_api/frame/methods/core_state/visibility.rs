@@ -364,6 +364,10 @@ pub fn is_shown(state: &mut LuaState) -> LuaResult<u32> {
 pub fn set_collapses_layout(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id(state, 1)?;
     let val = arg_bool(state, 2);
+    if !can_change_protected_state_for(state, id) {
+        emit_addon_action_blocked(state, id, "SetCollapsesLayout");
+        return Ok(0);
+    }
     let mut sim = borrow_state_mut(state)?;
     if let Some(frame) = sim.widgets.get_mut_visual(id) {
         frame.collapses_layout = val;

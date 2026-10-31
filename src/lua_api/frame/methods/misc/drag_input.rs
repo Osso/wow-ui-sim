@@ -1,5 +1,8 @@
 //! Drag, input movement, and clamping methods.
 
+use crate::lua_api::frame::methods::methods_helpers::{
+    can_change_protected_state_for, emit_addon_action_blocked,
+};
 use crate::lua_api::methods::{
     borrow_state, borrow_state_mut, extract_frame_id, frame_id_from_stack, val_to_string,
 };
@@ -206,6 +209,10 @@ pub fn is_user_placed(state: &mut LuaState) -> LuaResult<u32> {
 pub fn set_clamped_to_screen(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
     let clamped = bool::from_stack(state, 2)?;
+    if !can_change_protected_state_for(state, id) {
+        emit_addon_action_blocked(state, id, "SetClampedToScreen");
+        return Ok(0);
+    }
     let mut sim = borrow_state_mut(state)?;
     if let Some(frame) = sim.widgets.get_mut_visual(id) {
         frame.clamped_to_screen = clamped;

@@ -1,6 +1,9 @@
 //! Mouse click/motion and hyperlink propagation methods.
 
 use crate::lua_api::frame::methods::forbidden_aspects;
+use crate::lua_api::frame::methods::methods_helpers::{
+    can_change_protected_state_for, emit_addon_action_blocked,
+};
 use crate::lua_api::methods::{borrow_state, borrow_state_mut, frame_id_from_stack};
 use crate::lua_bridge::{FromStack, table_set_rust_fn_static};
 use crate::widget::Frame;
@@ -105,11 +108,27 @@ fn set_frame_bool(state: &mut LuaState, apply: impl FnOnce(&mut Frame, bool)) ->
 }
 
 pub fn set_propagate_mouse_clicks(state: &mut LuaState) -> LuaResult<u32> {
-    ensure_mouse_propagation_clearable(state)?;
-    set_frame_bool(state, |frame, value| frame.propagate_mouse_clicks = value)
+    set_mouse_propagation(state, "SetPropagateMouseClicks", |frame, value| {
+        frame.propagate_mouse_clicks = value
+    })
 }
 
 pub fn set_propagate_mouse_motion(state: &mut LuaState) -> LuaResult<u32> {
+    set_mouse_propagation(state, "SetPropagateMouseMotion", |frame, value| {
+        frame.propagate_mouse_motion = value
+    })
+}
+
+fn set_mouse_propagation(
+    state: &mut LuaState,
+    method: &str,
+    apply: impl FnOnce(&mut Frame, bool),
+) -> LuaResult<u32> {
     ensure_mouse_propagation_clearable(state)?;
-    set_frame_bool(state, |frame, value| frame.propagate_mouse_motion = value)
+    let id = frame_id_from_stack(state, 1)?;
+    if !can_change_protected_state_for(state, id) {
+        emit_addon_action_blocked(state, id, method);
+        return Ok(0);
+    }
+    set_frame_bool(state, apply)
 }
