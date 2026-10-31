@@ -310,6 +310,8 @@ def run(ref, build_jobs, target_dir, profile="retail"):
                                 continue
                             phase = name
                             binary = test_artifact(receipt, artifact, kind)
+                            # Linux test executables link libwow_ui_sim_dylib.so from the same deps directory.
+                            env["LD_LIBRARY_PATH"] = str(Path(binary).parent)
                             mount = Path.home() / ".cache/wow-ui-sim-srcmount" / target_dir.name
                             unit = f"full-suite-test-{sha[:12]}-{profile}-{name}-{time.time_ns()}"
                             command = ["systemd-run", "--user", f"--unit={unit}", "--wait", "--pipe", "--collect", "--quiet",

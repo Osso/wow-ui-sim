@@ -568,6 +568,7 @@ sys.exit(runner.run(sys.argv[2], 1, sys.argv[3], "ptr"))
                          "import os, pathlib, time\n"
                          "root = pathlib.Path(os.environ['HOME'])\n"
                          "(root / 'test-started').touch()\n"
+                         "(root / 'test-ld-path').write_text(os.environ.get('LD_LIBRARY_PATH', ''))\n"
                          "while not (root / 'test-release').exists(): time.sleep(.01)\n")
         write_executable(self.bin / 'slot-build.py',
                          "import json, os, pathlib, sys, time\n"
@@ -619,6 +620,7 @@ sys.exit(runner.run(sys.argv[2], 1, sys.argv[3], "ptr"))
         mount = self.home / '.cache/wow-ui-sim-srcmount/slot-3'
         self.assertIn(f'BindPaths={worktree}:{mount}', unit)
         self.assertIn(f'--working-directory={mount}', unit)
+        self.assertEqual((self.home / 'test-ld-path').read_text(), str(self.slot))
         self.assertTrue(all(step.get('exit', 0) == 0
                             for step in json.loads(receipt.read_text())['steps'].values()))
         argv = json.loads((self.home / 'slot-argv.json').read_text())
