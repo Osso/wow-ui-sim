@@ -146,6 +146,15 @@ impl WowLuaEnv {
         Ok(())
     }
 
+    pub fn remove_ui_widget_for_unit(
+        &self,
+        set_id: f64,
+        widget_id: f64,
+        _unit: ProcessingUnit,
+    ) -> Result<bool> {
+        self.remove_ui_widget(set_id, widget_id)
+    }
+
     /// Remove membership without deleting a record shared by other containers.
     pub fn remove_ui_widget(&self, set_id: f64, widget_id: f64) -> Result<bool> {
         let removed = {

@@ -229,6 +229,28 @@ fn spell_display_unit_context_isolates_original_containers() {
 }
 
 #[test]
+fn spell_display_remove_one_unit_preserves_other_container() {
+    use wow_ui_sim::c_api::ui_widget_manager::ProcessingUnit;
+    let env = load_and_register_spell_container_env(true);
+    assert_lua(&env, "second unit", r#"
+        OtherContainer = CreateFrame('Frame', nil, UIParent, 'UIWidgetContainerTemplate')
+        OtherContainer:RegisterForWidgetSet(431, nil, nil, 'target')
+    "#);
+    for (unit, text) in [("player", "Player widget"), ("target", "Target widget")] {
+        let mut membership = entry();
+        membership.unit_token = Some(unit.into());
+        let mut row = supplied_record();
+        row.spell_info.text = text.into();
+        env.update_ui_widget(SET_ID, membership, WidgetVisualization::SpellDisplay(row)).unwrap();
+    }
+    env.remove_ui_widget_for_unit(SET_ID, ID, ProcessingUnit::Token("player".into())).unwrap();
+    assert_lua(&env, "unit removal leaves target container", r#"
+        assert(SpellContainer.widgetFrames[761301] == nil, 'removed player widget')
+        assert(OtherContainer.widgetFrames[761301].Spell.Text:GetText() == 'Target widget', 'target widget remains')
+    "#);
+}
+
+#[test]
 fn spell_display_guid_context_delivers_to_original_container() {
     let env = load_and_register_spell_container_env(false);
     assert_lua(&env, "GUID container", r#"
