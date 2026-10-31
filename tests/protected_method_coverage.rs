@@ -511,3 +511,39 @@ fn protected_transition_clear_points_offset() {
         "select(4, frame:GetPoint(1)) == 22 and select(5, frame:GetPoint(1)) == 23",
     );
 }
+
+#[test]
+fn clear_attribute_reports_existence_and_dispatches_change() {
+    let env = loaded_env();
+    env.exec(
+        r#"
+        local frame = CreateFrame('Frame')
+        frame:SetAttribute('x', 11)
+        local calls = 0
+        frame:SetScript('OnAttributeChanged', function(_, name, value)
+            assert(name == 'x' and value == nil)
+            calls = calls + 1
+        end)
+        assert(frame:ClearAttribute('x') == true)
+        assert(frame:GetAttribute('x') == nil and calls == 1)
+        assert(frame:ClearAttribute('x') == false and calls == 1)
+    "#,
+    )
+    .unwrap();
+}
+
+#[test]
+fn clear_points_offset_resets_all_points_without_removing_them() {
+    let env = loaded_env();
+    env.exec(r#"
+        local frame = CreateFrame('Frame')
+        frame:SetPoint('TOPLEFT', UIParent, 'TOPLEFT', 11, 12)
+        frame:SetPoint('BOTTOMRIGHT', UIParent, 'BOTTOMRIGHT', 21, 22)
+        frame:ClearPointsOffset()
+        assert(frame:GetNumPoints() == 2)
+        local point, relative, relative_point, x, y = frame:GetPoint(1)
+        assert(point == 'TOPLEFT' and relative == UIParent and relative_point == 'TOPLEFT' and x == 0 and y == 0)
+        point, relative, relative_point, x, y = frame:GetPoint(2)
+        assert(point == 'BOTTOMRIGHT' and relative == UIParent and relative_point == 'BOTTOMRIGHT' and x == 0 and y == 0)
+    "#).unwrap();
+}
