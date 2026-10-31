@@ -547,3 +547,73 @@ fn clear_points_offset_resets_all_points_without_removing_them() {
         assert(point == 'BOTTOMRIGHT' and relative == UIParent and relative_point == 'BOTTOMRIGHT' and x == 0 and y == 0)
     "#).unwrap();
 }
+
+#[test]
+fn protected_transition_start_moving() {
+    assert_protected_transition(
+        "Frame",
+        "StartMoving",
+        "frame:SetMovable(true)",
+        "frame:StartMoving()",
+        "frame:StopMovingOrSizing()",
+        "frame:StartMoving()",
+        "frame:IsDragging()",
+        "not frame:IsDragging()",
+    );
+}
+
+#[test]
+fn protected_transition_start_sizing() {
+    assert_protected_transition(
+        "Frame",
+        "StartSizing",
+        "frame:SetResizable(true)",
+        "frame:StartSizing('BOTTOMRIGHT')",
+        "frame:StopMovingOrSizing()",
+        "frame:StartSizing('BOTTOMRIGHT')",
+        "frame:IsDragging()",
+        "not frame:IsDragging()",
+    );
+}
+
+#[test]
+fn protected_transition_stop_moving() {
+    assert_protected_transition(
+        "Frame",
+        "StopMovingOrSizing",
+        "frame:SetMovable(true)",
+        "frame:StartMoving(); frame:StopMovingOrSizing()",
+        "frame:StartMoving()",
+        "frame:StopMovingOrSizing()",
+        "not frame:IsDragging()",
+        "frame:IsDragging()",
+    );
+}
+
+#[test]
+fn protected_transition_cooldown_duration_object() {
+    assert_protected_transition(
+        "Cooldown",
+        "SetCooldownFromDurationObject",
+        "local a=C_DurationUtil.CreateDuration(); a:SetTimeFromStart(10,11,1); local b=C_DurationUtil.CreateDuration(); b:SetTimeFromStart(20,21,1); local c=C_DurationUtil.CreateDuration(); c:SetTimeFromStart(30,31,1)",
+        "frame:SetCooldownFromDurationObject(a)",
+        "frame:SetCooldownFromDurationObject(b)",
+        "frame:SetCooldownFromDurationObject(c)",
+        "select(2,frame:GetCooldownTimes()) == 11000",
+        "select(2,frame:GetCooldownTimes()) == 21000",
+    );
+}
+
+#[test]
+fn protected_transition_defaults() {
+    assert_protected_transition(
+        "Frame",
+        "SetToDefaults",
+        "frame:SetSize(11,12)",
+        "frame:SetToDefaults()",
+        "frame:SetSize(22,23)",
+        "frame:SetToDefaults()",
+        "frame:GetWidth() == 0",
+        "frame:GetWidth() == 22",
+    );
+}
