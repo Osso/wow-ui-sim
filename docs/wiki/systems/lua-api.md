@@ -4,6 +4,10 @@ The Lua API layer bridges Lua addon code with the Rust simulation engine. It pro
 
 
 
+## Group member counts
+
+The [group-count contract](../../specs/group-member-role-counts.md) distinguishes native build 70688 evidence from simulator coverage. Solo and class counts have selected Retail PartyUtil RED/GREEN proof; the native role bytes, skip flag, and separate raid container remain unmodeled.
+
 ## Wrath relic class capability
 
 `real::wrath_relic_slot` publishes `UnitHasRelicSlot` from shared registration

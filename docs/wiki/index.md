@@ -18,6 +18,10 @@ finalization remains unfinished.
 
 [Native row scan and passed-event state](systems/dungeon-score-rarity.md) describe the pinned-cache contract, original Retail consumer proof and unknown native defaults.
 
+## [2026-10-31] bounded proof | Group member counts
+
+[Group counts](systems/lua-api.md#group-member-counts) records Retail build 70688 evidence and the remaining modeled-state gaps. Selected PartyUtil tests cover solo and class counts.
+
 ## [2026-10-27] implementation | Minimap quest-blob observations
 
 [Minimap containment](investigations/minimap.md#supplied-quest-blob-containment) links the supplied-state contract. Retail, PTR and Forever original-consumer RED/GREEN are proven; paired Retail/PTR stock is unchanged and seven all-target checks have zero compiler warnings. The Retail publication sweep still fails on the same pre-existing LFG gap in both siblings.

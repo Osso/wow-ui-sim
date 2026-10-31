@@ -1,15 +1,23 @@
 # Group member role counts
 
-## Contract
+## Native contract: Retail build 70688
 
-**Best-guess, native UNKNOWN.** `GetGroupMemberCounts()` returns a fresh table with numeric `TANK`, `HEALER`, `DAMAGER`, and `NOROLE` counts. It counts the player and every member of the active modeled group using their existing assigned roles. Unassigned members count as `NOROLE`; when solo, only the player is counted. An inactive stored party is not a current group. The producer does not infer roles from class, specialization, online status, or names.
+Basis: native behavioral evidence `GetGroupMemberCounts.md`, client 70688.
 
-The producer is published for Retail, PTR, Mists, Era, Anniversary, and Forever, whose pinned Game-screen `Blizzard_FrameXMLUtil/Blizzard_FrameXMLUtil.toc:5,8` selects `PartyUtil.lua`. Wrath has no corresponding selected consumer or generated declaration in its pinned cache. Earlier profiles have no modeled role-assignment producer; their existing role reads remain `NONE`.
+`GetGroupMemberCounts()` returns one table. With no group or an empty group, all role and class counts are zero. Otherwise it scans up to 40 slots in the current party or raid container, including the player. A member with flag `0x10` is skipped. Class IDs outside the class range count as class 1. Every class has a numeric key even when its count is zero; the evidence indicates the key is most likely the class name, but its exact string resolution is not fully decoded.
 
-## Best-guess basis
+For each non-skipped member, native role classification checks the two supplied flag bytes `Stage` and `Spec` in order: `Stage & 0x2` counts as `TANK`; otherwise `Stage & 0x4` counts as `HEALER`; otherwise `(Stage & 0xA) != 0x2` and `Spec & 0x8` counts as `DAMAGER`; otherwise it counts as `NOROLE`. The names and meaning of these bits and the skipped-member flag remain unknown. The function fires no events.
 
-Native behavior is unknown, including role source, player inclusion, solo, offline or pending members, and exact keys. The pinned generated API documentation does not declare `GetGroupMemberCounts`. Retail `Blizzard_FrameXMLUtil/PartyUtil.lua:108-112` reads `DAMAGER` and `NOROLE` and folds the latter into the former; `Blizzard_RaidFrame/Mainline/RaidFrameSocialView.lua:285-288` reads `TANK`, `HEALER`, and `DAMAGER`. Retail `Blizzard_RaidFrame/Blizzard_RaidFrame_Mainline.toc:6,11` selects the raid consumer for mainline. The third-party wowless `apis.yaml:35164-35173` lists the four keys; it is not native evidence. The player-inclusion and role rules above are explicitly supplied simulator assumptions, not native claims.
+## Simulator coverage
+
+Solo returns zero role and class counts. The simulator counts the player and up to 39 other members of the active modeled party using assigned roles and class display names; invalid class IDs count as class 1. Other profiles retain this shared implementation; build 70688 evidence does not establish their native behavior.
+
+## Known gaps
+
+The simulator does not model the native `Stage` and `Spec` bytes, the member `0x10` skip flag, or a separate raid container. Its raid representation derives from the party vector. The mapping from modeled assigned roles to the native bytes is not established, so grouped role counts are not proven native-equivalent. The exact native class key spelling remains uncertain. The 40-slot cap is implemented but not exercised by the consumer test.
+
+The pinned generated API documentation does not declare this global. Retail `Blizzard_FrameXMLUtil/Blizzard_FrameXMLUtil.toc:5,8` selects `PartyUtil.lua` for the Game screen. `PartyUtil.lua:108-112` reads `DAMAGER` and `NOROLE` and folds the latter into the former.
 
 ## Tests
 
-`tests/group_role_counts.rs` runs the whole selected cached PartyUtil file and exercises the original display function with two distinct assigned rosters and solo/unassigned transitions. `tests/admin_pvp_guild_api.rs` covers the solo total. Native parity and other profile execution remain unverified.
+`tests/group_role_counts.rs` loads the selected original PartyUtil and exercises two assigned rosters, class counts, invalid class IDs, and solo transitions. `tests/admin_pvp_guild_api.rs` covers the solo total. These tests do not establish the missing native behaviors above.
