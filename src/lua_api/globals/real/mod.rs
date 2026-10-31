@@ -22,6 +22,7 @@ pub mod forever_stat_contributions;
 pub mod frame_level_helpers;
 pub mod glyph_state;
 pub mod gossip_probes;
+pub(crate) mod group_role_counts;
 #[cfg(feature = "client-wowforever")]
 pub mod guild_invites;
 pub mod guild_logo;
