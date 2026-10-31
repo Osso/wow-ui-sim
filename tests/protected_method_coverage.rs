@@ -315,3 +315,185 @@ fn protected_transition_passthrough() {
         "frame:ShouldButtonPassThrough('RightButton') and not frame:ShouldButtonPassThrough('MiddleButton')",
     );
 }
+
+#[test]
+fn protected_transition_button_enable() {
+    assert_protected_transition(
+        "Button",
+        "Enable",
+        "",
+        "frame:Disable(); frame:Enable()",
+        "frame:Disable()",
+        "frame:Enable()",
+        "frame:IsEnabled()",
+        "not frame:IsEnabled()",
+    );
+}
+
+#[test]
+fn protected_transition_button_disable() {
+    assert_protected_transition(
+        "Button",
+        "Disable",
+        "",
+        "frame:Disable()",
+        "frame:Enable()",
+        "frame:Disable()",
+        "not frame:IsEnabled()",
+        "frame:IsEnabled()",
+    );
+}
+
+#[test]
+fn protected_transition_scroll_child() {
+    assert_protected_transition(
+        "ScrollFrame",
+        "SetScrollChild",
+        "local a = CreateFrame('Frame',nil,frame); local b = CreateFrame('Frame',nil,frame); local c = CreateFrame('Frame',nil,frame)",
+        "frame:SetScrollChild(a)",
+        "frame:SetScrollChild(b)",
+        "frame:SetScrollChild(c)",
+        "frame:GetScrollChild() == a",
+        "frame:GetScrollChild() == b",
+    );
+}
+
+#[test]
+fn protected_transition_clamp_insets() {
+    assert_protected_transition(
+        "Frame",
+        "SetClampRectInsets",
+        "",
+        "frame:SetClampRectInsets(11,0,0,0)",
+        "frame:SetClampRectInsets(22,0,0,0)",
+        "frame:SetClampRectInsets(33,0,0,0)",
+        "frame:GetClampRectInsets() == 11",
+        "frame:GetClampRectInsets() == 22",
+    );
+}
+
+#[test]
+fn protected_transition_hit_insets() {
+    assert_protected_transition(
+        "Frame",
+        "SetHitRectInsets",
+        "",
+        "frame:SetHitRectInsets(11,0,0,0)",
+        "frame:SetHitRectInsets(22,0,0,0)",
+        "frame:SetHitRectInsets(33,0,0,0)",
+        "frame:GetHitRectInsets() == 11",
+        "frame:GetHitRectInsets() == 22",
+    );
+}
+
+#[test]
+fn protected_transition_cooldown_unix() {
+    assert_protected_transition(
+        "Cooldown",
+        "SetCooldownUNIX",
+        "",
+        "frame:SetCooldownUNIX(10,11)",
+        "frame:SetCooldownUNIX(20,21)",
+        "frame:SetCooldownUNIX(30,31)",
+        "select(2,frame:GetCooldownTimes()) == 11000",
+        "select(2,frame:GetCooldownTimes()) == 21000",
+    );
+}
+
+#[test]
+fn protected_transition_cooldown_duration() {
+    assert_protected_transition(
+        "Cooldown",
+        "SetCooldownDuration",
+        "",
+        "frame:SetCooldownDuration(11)",
+        "frame:SetCooldownDuration(21)",
+        "frame:SetCooldownDuration(31)",
+        "select(2,frame:GetCooldownTimes()) == 11000",
+        "select(2,frame:GetCooldownTimes()) == 21000",
+    );
+}
+
+#[test]
+fn protected_transition_cooldown_expiration() {
+    assert_protected_transition(
+        "Cooldown",
+        "SetCooldownFromExpirationTime",
+        "",
+        "frame:SetCooldownFromExpirationTime(40,11)",
+        "frame:SetCooldownFromExpirationTime(50,21)",
+        "frame:SetCooldownFromExpirationTime(60,31)",
+        "select(2,frame:GetCooldownTimes()) == 11000",
+        "select(2,frame:GetCooldownTimes()) == 21000",
+    );
+}
+
+#[test]
+fn protected_transition_cooldown_clear() {
+    assert_protected_transition(
+        "Cooldown",
+        "Clear",
+        "frame:SetCooldown(10,11)",
+        "frame:Clear()",
+        "frame:SetCooldown(20,21)",
+        "frame:Clear()",
+        "select(2,frame:GetCooldownTimes()) == 0",
+        "select(2,frame:GetCooldownTimes()) == 21000",
+    );
+}
+
+#[test]
+fn protected_transition_roleset_add() {
+    assert_protected_transition(
+        "Frame",
+        "AddRoleset",
+        "",
+        "frame:AddRoleset('alpha')",
+        "frame:SetRolesets('beta'); frame:AddRoleset('gamma')",
+        "frame:AddRoleset('delta')",
+        "frame:GetRolesetNames()[1] == 'alpha'",
+        "table.concat(frame:GetRolesetNames(), ',') == 'beta,gamma'",
+    );
+}
+
+#[test]
+fn protected_transition_roleset_remove() {
+    assert_protected_transition(
+        "Frame",
+        "RemoveRoleset",
+        "frame:SetRolesets('alpha,beta')",
+        "frame:RemoveRoleset('alpha')",
+        "frame:SetRolesets('alpha,beta'); frame:RemoveRoleset('beta')",
+        "frame:RemoveRoleset('alpha')",
+        "frame:GetRolesetNames()[1] == 'beta'",
+        "frame:GetRolesetNames()[1] == 'alpha'",
+    );
+}
+
+#[test]
+fn protected_transition_clear_attribute() {
+    assert_protected_transition(
+        "Frame",
+        "ClearAttribute",
+        "frame:SetAttribute('x',11)",
+        "frame:ClearAttribute('x')",
+        "frame:SetAttribute('x',22)",
+        "frame:ClearAttribute('x')",
+        "frame:GetAttribute('x') == nil",
+        "frame:GetAttribute('x') == 22",
+    );
+}
+
+#[test]
+fn protected_transition_clear_attributes() {
+    assert_protected_transition(
+        "Frame",
+        "ClearAttributes",
+        "frame:SetAttribute('x',11)",
+        "frame:ClearAttributes()",
+        "frame:SetAttribute('x',22)",
+        "frame:ClearAttributes()",
+        "frame:GetAttribute('x') == nil",
+        "frame:GetAttribute('x') == 22",
+    );
+}
