@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import json
 import sys
 import subprocess
 import tempfile
@@ -52,6 +53,44 @@ class PtrManifestTests(unittest.TestCase):
                 generator.main()
             self.assertEqual(
                 (output / "ptr.txt").read_text(), "Blizzard_Example/New.lua\n"
+            )
+
+
+class RetailManifestTests(unittest.TestCase):
+    def test_retail_manifest_uses_pinned_revision_not_branch_tip(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            upstream = root / "upstream"
+            upstream.mkdir()
+            def git(*args: str) -> str:
+                return subprocess.check_output(["git", "-C", str(upstream), *args], text=True).strip()
+            git("init", "-b", "live")
+            git("config", "user.name", "Fixture")
+            git("config", "user.email", "fixture@example.invalid")
+            addons = upstream / "Interface/AddOns/Example"
+            addons.mkdir(parents=True)
+            (addons / "Selected.lua").write_text("return 70575\n")
+            git("add", ".")
+            git("commit", "-m", "selected")
+            selected = git("rev-parse", "HEAD")
+            (addons / "Future.lua").write_text("return 70688\n")
+            git("add", ".")
+            git("commit", "-m", "future")
+            repo = root / "repo"
+            (repo / "data/blizzard-ui-files").mkdir(parents=True)
+            (repo / "data/blizzard-ui-builds").mkdir(parents=True)
+            (repo / "data/blizzard-ui-builds/retail.json").write_text(
+                json.dumps({"gethe_revision": selected})
+            )
+            with mock.patch.object(generator, "GETHE_REMOTE", str(upstream)), mock.patch.object(
+                generator, "GIT_ROOT", root / "git"
+            ), mock.patch.object(generator, "CACHE_ROOT", root / "cache"), mock.patch.object(
+                generator, "REPO_ROOT", repo
+            ), mock.patch.object(sys, "argv", ["generator", "retail"]):
+                generator.main()
+            self.assertEqual(
+                (repo / "data/blizzard-ui-files/retail.txt").read_text(),
+                "Example/Selected.lua\n",
             )
 
 
