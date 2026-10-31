@@ -174,6 +174,36 @@ fn assert_failure(output: &Output, name: &str, error: &str, summary: &str) {
     );
 }
 
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
+#[test]
+fn party_changes_from_addon_test_do_not_taint_blizzard_handlers() {
+    let output = run_fixture(
+        r#"
+        test('party changes', function()
+            assertTrue(C_AddOns.IsAddOnLoaded('Blizzard_UnitFrame'))
+            assertNotNil(CompactRaidFrameContainer)
+            assertFalse(issecure())
+            A_Admin.SetManualClock(100)
+            A_Admin.SetPartySize(0)
+            A_Admin.SetPartySize(1)
+            A_Admin.SetPartyMember(1, 'I13Member', 1, 80)
+            assertEquals('I13Member', UnitName('party1'))
+        end)
+        "#,
+    );
+    let text = format!(
+        "{}\n{}",
+        String::from_utf8_lossy(&output.stdout),
+        String::from_utf8_lossy(&output.stderr)
+    );
+    assert!(output.status.success(), "{text}");
+    assert!(text.contains("1 passed"), "{text}");
+    assert!(
+        !text.contains("secret access requires an untainted caller"),
+        "{text}"
+    );
+}
+
 #[test]
 fn sync_failure_reaches_process_output() {
     let output = run_fixture(
