@@ -1,5 +1,6 @@
 use std::path::PathBuf;
 
+use wow_ui_sim::client_profile::{ACTIVE, ClientProfile};
 use wow_ui_sim::loader::load_addon;
 use wow_ui_sim::loader::{discover_blizzard_addons_for_screen, find_toc_file};
 use wow_ui_sim::lua_api::WowLuaEnv;
@@ -119,8 +120,18 @@ fn retail_12_1_housing_settings_global_strings_match_pinned_export() {
         ),
     ];
 
+    // Forever 1.60.1.70532 GlobalStrings.csv row 58413 differs from the Retail export.
+    const FOREVER_OVERRIDES: &[(&str, &str)] = &[(
+        "OPTION_TOOLTIP_DECOR_LIGHT_RADIUS_INDICATOR_TYPE_OVERLAP",
+        "When two lights are overlapping, the indicator will appear.",
+    )];
+
     let env = WowLuaEnv::new().expect("failed to create Lua environment");
     for &(name, expected) in EXPECTED {
+        let expected = FOREVER_OVERRIDES
+            .iter()
+            .find(|(key, _)| *key == name && ACTIVE == ClientProfile::WowForever)
+            .map_or(expected, |&(_, value)| value);
         let (actual_type, actual_value): (String, String) = env
             .eval(&format!(
                 r#"

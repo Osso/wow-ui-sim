@@ -334,6 +334,9 @@ fn forever_known_startup_names_register_query_and_unregister() {
             "PLAYER_PVP_FLAG_CHANGED",
             "VOICE_CHAT_ACTIVE_VOICE_PROVIDER_CHANGED",
             "VOICE_CHAT_VOICE_PROVIDER_CHANGED",
+            -- 70532 VoiceChatDocumentation.lua:1229, :1408; Audio.lua registers both.
+            "VOICE_CHAT_DISCORD_SETTINGS_UPDATED",
+            "VOICE_CHAT_VOICE_PROVIDERS_AVAILABLE_CHANGED",
         }) do
             assert(not frame:IsEventRegistered(event), event)
             assert(frame:RegisterEvent(event), event)
@@ -400,6 +403,7 @@ fn forever_known_startup_catalog_preserves_strict_unknown_name_rejection() {
             "PLAYER_PVP_FLAG_CHANGED_INVENTED",
             "VOICE_CHAT_ACTIVE_VOICE_PROVIDER_CHANGED_INVENTED",
             "VOICE_CHAT_VOICE_PROVIDER_CHANGED_INVENTED",
+            "VOICE_CHAT_VOICE_PROVIDERS_AVAILABLE_CHANGED_INVENTED",
             "WOWFOREVER_INVENTED_EVENT",
             "",
         }) do
