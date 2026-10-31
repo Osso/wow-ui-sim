@@ -13,6 +13,7 @@ fn load_insecure_addon(env: &WowLuaEnv) {
         r#"
         function ProtectedGlobalsTarget() return TargetUnit('player') end
         function ProtectedGlobalsSecurecall() return securecall(TargetUnit, 'player') end
+        function ProtectedGlobalsNestedSecurecall() return securecall(ProtectedGlobalsSecureCallback) end
         function ProtectedGlobalsBind(action) return SetBinding('CTRL-F12', action) end
     "#,
     )
@@ -29,6 +30,7 @@ fn protected_globals_consumer() {
             env.exec(
                 r#"
                 ClearTarget()
+                function ProtectedGlobalsSecureCallback() TargetUnit('player') end
                 protectedEvents = {}
                 local f = CreateFrame('Frame')
                 f:RegisterEvent('ADDON_ACTION_FORBIDDEN')
@@ -61,6 +63,11 @@ fn protected_globals_consumer() {
                 assert(protectedEvents[2][1] == 'ADDON_ACTION_FORBIDDEN')
                 assert(protectedEvents[2][2] == 'ProtectedGlobalsProbe')
                 assert(protectedEvents[2][3] == 'TargetUnit()')
+                ProtectedGlobalsNestedSecurecall()
+                assert(not UnitExists('target'), 'securecall callback laundered taint')
+                assert(protectedEvents[3][1] == 'ADDON_ACTION_FORBIDDEN')
+                assert(protectedEvents[3][2] == 'ProtectedGlobalsProbe')
+                assert(protectedEvents[3][3] == 'TargetUnit()')
                 ProtectedGlobalsBind('TOGGLEGAMEMENU')
                 assert(GetBindingAction('CTRL-F12') == 'TOGGLEGAMEMENU')
             "#,
@@ -71,9 +78,9 @@ fn protected_globals_consumer() {
                 r#"
                 assert(select('#', ProtectedGlobalsBind('TOGGLEBACKPACK')) == 0)
                 assert(GetBindingAction('CTRL-F12') == 'TOGGLEGAMEMENU')
-                assert(protectedEvents[3][1] == 'ADDON_ACTION_BLOCKED')
-                assert(protectedEvents[3][2] == 'ProtectedGlobalsProbe')
-                assert(protectedEvents[3][3] == 'SetBinding()')
+                assert(protectedEvents[4][1] == 'ADDON_ACTION_BLOCKED')
+                assert(protectedEvents[4][2] == 'ProtectedGlobalsProbe')
+                assert(protectedEvents[4][3] == 'SetBinding()')
             "#,
             )
             .expect("in-combat refusal");
