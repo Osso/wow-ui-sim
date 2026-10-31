@@ -703,3 +703,60 @@ fn protected_transition_raise() {
         "frame:GetRaisedFrameLevel() == previous",
     );
 }
+
+#[test]
+fn protected_lower_preserves_hit_order_in_combat() {
+    let env = loaded_env();
+    env.exec(
+        r#"
+        local target = CreateFrame('Frame', 'ProtectedLowerTarget', UIParent)
+        local sibling = CreateFrame('Frame', 'ProtectedLowerSibling', UIParent)
+        for _, frame in ipairs({target, sibling}) do
+            frame:SetSize(100, 100)
+            frame:SetPoint('CENTER', UIParent, 'CENTER')
+            frame:SetFrameStrata('DIALOG')
+            frame:SetFrameLevel(100)
+            frame:EnableMouse(true)
+            frame:Show()
+        end
+        target:Raise()
+        LowerEvents = {}
+        LowerRouted = nil
+        hooksecurefunc(GameEvent, 'HandleActionBlocked', function(_, event, owner)
+            if event == 'ADDON_ACTION_BLOCKED' then LowerRouted = owner end
+        end)
+        local listener = CreateFrame('Frame')
+        listener:RegisterEvent('ADDON_ACTION_BLOCKED')
+        listener:SetScript('OnEvent', function(_, _, owner, action)
+            LowerEvents[#LowerEvents + 1] = {owner, action}
+        end)
+        A_Admin.SetFrameProtected('ProtectedLowerTarget', true)
+        A_Admin.SetInCombat(false)
+    "#,
+    )
+    .unwrap();
+    let top = || {
+        let mut sim = env.state().borrow_mut();
+        sim.ensure_layout_rects();
+        let buckets = sim.get_strata_buckets().unwrap().clone();
+        let collected =
+            wow_ui_sim::iced_app::frame_collect::collect_hittable_frames(&sim.widgets, &buckets);
+        collected
+            .hittable
+            .iter()
+            .rev()
+            .find_map(|(id, _, _)| {
+                let name = sim.widgets.get(*id)?.name.as_deref()?;
+                name.starts_with("ProtectedLower").then(|| name.to_owned())
+            })
+            .unwrap()
+    };
+    env.exec("debug.setstacktaint('ProtectedMethodAddon'); ProtectedLowerTarget:Lower(); debug.setstacktaint(nil)").unwrap();
+    assert_eq!(top(), "ProtectedLowerSibling");
+    env.exec("A_Admin.SetInCombat(true); ProtectedLowerTarget:Raise()")
+        .unwrap();
+    assert_eq!(top(), "ProtectedLowerTarget");
+    env.exec("debug.setstacktaint('ProtectedMethodAddon'); ProtectedLowerTarget:Lower(); debug.setstacktaint(nil)").unwrap();
+    assert_eq!(top(), "ProtectedLowerTarget");
+    env.exec("assert(#LowerEvents == 1 and LowerEvents[1][1] == 'ProtectedMethodAddon' and LowerEvents[1][2] == 'ProtectedLowerTarget:Lower()' and LowerRouted == 'ProtectedMethodAddon')").unwrap();
+}
