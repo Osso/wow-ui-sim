@@ -179,6 +179,10 @@ pub(super) fn disable(state: &mut LuaState) -> LuaResult<u32> {
 pub(super) fn register_for_clicks(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
     let buttons = collect_click_registration_args(state, 2);
+    if !can_change_protected_state_for(state, id) {
+        emit_addon_action_blocked(state, id, "RegisterForClicks");
+        return Ok(0);
+    }
     let mut sim = borrow_state_mut(state)?;
     if let Some(frame) = sim.widgets.get_mut_visual(id) {
         frame.registered_click_buttons = buttons;

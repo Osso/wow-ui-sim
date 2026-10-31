@@ -22,12 +22,20 @@ pub fn register(state: &mut LuaState, mt: GcRef<Table>) -> LuaResult<()> {
 
 pub fn lower(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
+    if !can_change_protected_state_for(state, id) {
+        emit_addon_action_blocked(state, id, "Lower");
+        return Ok(0);
+    }
     borrow_state_mut(state)?.lower_frame(id);
     Ok(0)
 }
 
 pub fn raise(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
+    if !can_change_protected_state_for(state, id) {
+        emit_addon_action_blocked(state, id, "Raise");
+        return Ok(0);
+    }
     borrow_state_mut(state)?.raise_frame(id);
     Ok(0)
 }
