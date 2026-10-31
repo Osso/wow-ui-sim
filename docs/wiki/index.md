@@ -22,6 +22,10 @@ finalization remains unfinished.
 
 [Group counts](systems/lua-api.md#group-member-counts) records Retail build 70688 evidence and the remaining modeled-state gaps. Selected PartyUtil tests cover solo and class counts.
 
+## [2026-10-31] implementation | TOC game-type masks
+
+[Native token tables and known gaps](reference/toc-game-type-tokens.md#native-game-type-masks) describe Retail, PTR and Forever header and file filters.
+
 ## [2026-10-27] implementation | Minimap quest-blob observations
 
 [Minimap containment](investigations/minimap.md#supplied-quest-blob-containment) links the supplied-state contract. Retail, PTR and Forever original-consumer RED/GREEN are proven; paired Retail/PTR stock is unchanged and seven all-target checks have zero compiler warnings. The Retail publication sweep still fails on the same pre-existing LFG gap in both siblings.

@@ -4,11 +4,14 @@ Client profile bundles select the runtime cache and API epoch exposed by wow-ui-
 
 ## What it must do
 
+- [x] TOC game-type headers and file annotations use case-insensitive space/comma-separated tokens and ignore unknown tokens. Zero masks impose no restriction; nonzero allow masks require overlap and exclude masks reject overlap. Game-type header values retain brackets verbatim rather than evaluating them as file conditions.
+- [x] Retail recognizes the 70688 token table; PTR and Forever additionally recognize `camelot` and `forever` as the same bit. Forever's modeled active mask is mainline plus camelot; Retail/PTR retain mainline plus standard. Native basis and unknown client masks are recorded in [TOC game-type tokens](../wiki/reference/toc-game-type-tokens.md#native-game-type-masks).
+
 - [x] The public `client-retail` bundle selects the retail profile and current retail 12.1.5 API epoch (`120105`), selected for installed Retail 12.1.5.70448.
 - [x] Retail API epoch features remain cumulative, so 12.1.5 includes the modeled 12.0.0, 12.0.5, 12.0.7, and 12.1.0 surfaces.
 - [x] Historical retail epochs remain selectable through `profile-retail` without enabling the current-retail bundle.
 - [x] `client-ptr` remains a distinct profile/cache with TOC interface `120107`, retaining the cumulative 12.1.5 API surface. This interface selection does not claim inherited 12.1.7 API coverage or refresh the source/cache pin.
-- [x] PTR 12.1.7 skips entire `##` metadata directives containing `[Family]`, `[Game]`, `[TextLocale]`, or `[RegionalTextLocale]`, preserving earlier values and dependency lists. Conditional directives such as `AllowLoadGameType` remain active; other profiles retain existing metadata handling.
+- [x] PTR 12.1.7 skips `##` metadata directives containing `[Family]`, `[Game]`, `[TextLocale]`, or `[RegionalTextLocale]`, preserving earlier values and dependency lists. Game-type headers are exempt and retain their values verbatim; other profiles retain existing metadata handling.
 - [x] PTR and Forever expand `[RegionalTextLocale]` in TOC file paths to `enUS` for the simulator's current enUS text locale / US region. Existing `[Family]`, `[Game]`, and `[TextLocale]` file expansion is preserved; other profiles do not gain regional expansion. Alternate locale/region configuration is not modeled by this change.
 - [x] PTR CASC resolves the official `wowxptr` product; 12.1.5.69594 uses BuildConfig `4a9973f37906f8cfb344f8a9fe6777e0` and Gethe `ptr2` source commit `49b69918fcdc77e109813281e4f537d45ec7dcbf`.
 - [x] PTR `GetBuildInfo()` retains `12.1.5` and build `69594` from the pinned source identity but publishes selected TOC interface `120107`; non-PTR builds publish version `12.1.5` and interface `120105` with `retail-12-1-5`, `12.1.0`/`120100` with `retail-12-1-0`, otherwise `12.0.7`/`120007`. Retail build/date/trailing fields remain temporary defaults, not installed-build identity.
