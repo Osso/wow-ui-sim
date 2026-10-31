@@ -90,12 +90,23 @@ The simulator rejects missing, nil and non-string required tokens (best-guess va
 
 Retail's `Blizzard_UIPanels_Game_Mainline.toc:6,10` selects `Shared/CastingBarFrame.lua`; its `IsInterruptable` method reaches the predicate via lines 2, 5 and 604–605. The consumer test observes interruptible and uninterruptible results, but a constant false predicate also permits both: it proves the missing-call boundary and preserves consumer behavior, not nonconstant predicate semantics.
 
+## Native restriction surface (clean-room S10–S13, 2026-10-31)
+
+Source: `native-evidence-70688/secrets/S13-restriction-surface-summary.md` (behavioural specs only; builds 12.1.5.70688, Forever 70707, 12.1.7 PTR).
+
+- VERIFIED, all three builds: the restricted helper set is closed. It has 25 names: 24 at permission class 7 and `GetForbiddenObjectTable` at class 6. The set is `canaccessallvalues`, `canaccesssecrets`, `canaccesstable`, `canaccessvalue`, `hasanysecretvalues`, `issecrettable`, `issecretvalue`, `mapvalues`, `scrub`, `scrubsecretvalues`, `secretunwrap`, `secretwrap`, `securecopy`, `CreateFromMixins`, `CreateSecureDelegate`, `Mixin`, `RegisterEventCallback`, `RegisterUnitEventCallback`, `UnregisterEventCallback`, `UnregisterUnitEventCallback`, `dropsecretaccess`, `dumpobject`, `securecallmethod`, `settablesecurity` and `GetForbiddenObjectTable`. The simulator registers all 25. `securecopy` and `CreateSecureDelegate` are still temporary fallbacks; the secure-helpers lane replaces them. One implementation is correct for every pinned build.
+- VERIFIED: `GetAddOnRestrictionState(type)` returns one byte of a per-type state array, and `IsAddOnRestrictionActive(type)` is `state[type] == 2`. See [restricted-actions-state](restricted-actions-state.md).
+- VERIFIED structure, two builds: `canaccessvalue` returns its fallback `1` when the argument is missing or fails its check. INFERRED meaning: fail-open (access allowed). The simulator matches this: `canaccessvalue()` returns `true`. Do not apply one fail-closed default to the whole surface.
+- VERIFIED, three builds: `CreateSecureDelegate`, `secretunwrap` and `settablesecurity` refuse while a native singleton is set. They report an error and return `nil`; they do not raise. `secretwrap` has no guard. The singleton and its writer are native UNKNOWN, so the simulator does not model this refusal.
+- Native UNKNOWN (user decision: leave UNKNOWN, no live-client observation): the bodies of `securecopy` and `CreateSecureDelegate`, renown rewards, and the AuraData layout. In the first three, a computed decoy operand stands in for the value. The aura-granularity claim (S3) rests on type names only and has not been re-checked.
+
 ## Known gaps (current cycle)
 
 - [ ] Casting and threat restriction triggers: **best-guess, native UNKNOWN**; the shared simulated threat flag is not evidence of native threat-values behavior.
 - [ ] Native S1 §7 describes a generic indexed state-byte predicate path comparing the byte to 2. The mapping of restriction indices and any pairing of a particular predicate with a getter remain unverified; existing `GetSpellCastSecrecy` and `ShouldUnitSpellCastBeSecret` are computed independently.
 
-- [ ] Native behaviour questions S1–S9 (clean-room, 12.1.5.70688). The string inventory is done; behavioural traces are pending.
+- [ ] Native behaviour questions: S10–S13 answered the restriction surface (above). `securecopy`/`CreateSecureDelegate` bodies, renown and the AuraData layout remain native UNKNOWN.
+- [ ] Restricted-helper refusal guard (`CreateSecureDelegate`, `secretunwrap`, `settablesecurity` return `nil` while a native singleton is set): not modelled; the singleton is UNKNOWN.
 - [ ] Production restriction trigger (after S1).
 - [ ] Per-field AuraData secrecy (after S3).
 - [ ] General operation rules for secrets in tainted code (after S4).
