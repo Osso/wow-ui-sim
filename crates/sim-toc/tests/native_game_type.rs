@@ -65,7 +65,7 @@ macro_rules! modern_profile {
                 Retail::game_subdir()
             }
             fn is_variable_metadata(line: &str) -> bool {
-                Retail::is_variable_metadata(line)
+                line.contains("[Game]")
             }
             fn is_mists_game_menu_shared_file(dir: &Path, line: &str) -> bool {
                 Retail::is_mists_game_menu_shared_file(dir, line)
@@ -99,6 +99,11 @@ modern_profile!(Forever, &["mainline", "camelot"]);
 
 #[test]
 fn modern_alias_and_client_mask_contrasts() {
+    let ptr = TocFile::<Ptr>::parse(
+        Path::new("/addons/Test"),
+        "## AllowLoadGameType: classic [Game]\nCore.lua",
+    );
+    assert!(ptr.is_game_type_restricted());
     for token in ["camelot", "FOREVER"] {
         let header = format!("## AllowLoadGameType: {token}\nCore.lua");
         let ptr = TocFile::<Ptr>::parse(Path::new("/addons/Test"), &header);
