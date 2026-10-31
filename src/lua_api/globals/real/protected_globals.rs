@@ -200,16 +200,19 @@ pub(crate) fn install(lua: &mut rilua::Lua) -> crate::Result<()> {
         r#"
         local refused = __sim_protected_global_refused
         __sim_protected_global_refused = nil
+        local protectedFunctions = {}
         local function wrap(name, combatOnly)
             local namespace, member = string.match(name, "^([^.]+)%.(.+)$")
             local target, key = _G, name
             if namespace then target, key = _G[namespace], member end
             if type(target) == "table" and type(target[key]) == "function" then
                 local original = target[key]
-                target[key] = function(...)
+                local wrapped = function(...)
                     if refused(name, combatOnly) then return end
                     return original(...)
                 end
+                target[key] = wrapped
+                protectedFunctions[wrapped] = true
             end
         end
     "#,
@@ -219,6 +222,20 @@ pub(crate) fn install(lua: &mut rilua::Lua) -> crate::Result<()> {
             source.push_str(&format!("wrap({name:?}, {combat_only})\n"));
         }
     }
+    source.push_str(
+        r#"
+        local function wrapSecureCall(original)
+            return function(fn, ...)
+                local target = fn
+                if type(fn) == "string" then target = _G[fn] end
+                if protectedFunctions[target] then return target(...) end
+                return original(fn, ...)
+            end
+        end
+        securecall = wrapSecureCall(securecall)
+        securecallfunction = wrapSecureCall(securecallfunction)
+    "#,
+    );
     lua.exec(&source)?;
     Ok(())
 }
