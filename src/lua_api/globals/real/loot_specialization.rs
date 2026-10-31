@@ -31,29 +31,47 @@ fn has(state: &mut LuaState) -> LuaResult<u32> {
 
 fn set(state: &mut LuaState) -> LuaResult<u32> {
     let value = match stack_val(state, 1) {
-        Val::Num(n) => n,
+        Val::Num(n) => n as i64,
         _ => {
             return Err(LuaError::Runtime(RuntimeError {
-                message: "bad argument #1 to SetLootSpecialization (number expected)".into(),
+                message: "Usage: SetLootSpecialization(specializationID)".into(),
                 level: 1,
                 traceback: vec![],
             }));
         }
     };
-    let changed = {
-        let mut sim = borrow_state_mut(state)?;
-        let class = sim.player.class_index.max(1) as u32;
-        let valid = value == 0.0
-            || specializations::specs_for_class(class).any(|spec| value == spec.id as f64);
-        if valid && sim.loot_specialization != value as u32 {
-            sim.loot_specialization = value as u32;
-            true
-        } else {
-            false
-        }
-    };
-    if changed {
-        fire_named_event_state(state, "PLAYER_LOOT_SPEC_UPDATED", &[]);
+    let mut sim = borrow_state_mut(state)?;
+    let now = sim.clock_now();
+    if sim
+        .loot_spec_window
+        .is_none_or(|(start, _)| now.duration_since(start).as_secs() >= 10)
+    {
+        sim.loot_spec_window = Some((now, 0));
+    }
+    let (_, count) = sim.loot_spec_window.as_mut().expect("window initialized");
+    if *count < 5 {
+        *count += 1;
+        sim.pending_loot_specs.push(value);
     }
     Ok(0)
+}
+
+pub(crate) fn apply_pending(state: &mut LuaState) -> LuaResult<()> {
+    let requests = std::mem::take(&mut borrow_state_mut(state)?.pending_loot_specs);
+    for id in requests {
+        let accepted = {
+            let mut sim = borrow_state_mut(state)?;
+            let class = sim.player.class_index.max(1) as u32;
+            let valid = id == 0
+                || specializations::specs_for_class(class).any(|spec| i64::from(spec.id) == id);
+            if valid {
+                sim.loot_specialization = id as u32;
+            }
+            valid
+        };
+        if accepted {
+            fire_named_event_state(state, "PLAYER_LOOT_SPEC_UPDATED", &[]);
+        }
+    }
+    Ok(())
 }
