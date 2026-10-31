@@ -1,17 +1,22 @@
 # Mount journal filters
 
-Retail `C_MountJournal` maintains independent collected, not-collected, unusable, source, and mount-type selections. `IsUsingDefaultFilters` reports whether those selections are at their defaults. `SetDefaultFilters` restores all of them. The displayed mount count, displayed IDs, and displayed info use the same selections. The Blizzard Collections filter dropdown uses the default-state and reset APIs for its reset button.
+Retail filter state is session-local. Fresh collected, source, and type masks are zero. `SetDefaultFilters` sets collected mask `3`, the valid source bits among indices 0–11, and type mask `0x1f`. It leaves search unchanged. `IsUsingDefaultFilters` compares those three masks exactly and ignores search.
 
-Search remains separate from the dropdown filter selections. Resetting the filters does not change the search text. Changes that alter the displayed mount list enqueue `MOUNT_JOURNAL_SEARCH_UPDATED`. Filter choices live for the simulator session and are not persisted.
+Getters use zero-based bit indices. Source checks require both a set bit and valid source data. Type validity accepts 0–31 except 3; setting type 3 or an out-of-range type raises an error. Bulk type reset nevertheless sets bit 3. Collected setters accept 0–3; invalid source setters do nothing. Bulk operations replace the source and type masks rather than preserving higher bits.
 
-## Best-guess basis — best-guess, native UNKNOWN
+The original Collections consumer registers `SetDefaultFilters` as a reset callback, but does not call it from `MountJournal_OnLoad`. Thus loading the consumer does not itself initialize the filters.
 
-Native default values, reset coverage, search participation, event behavior, persistence, and profile differences are unknown. The Retail scenario defaults enable collected, not-collected and unusable mounts, all sources, and all types. This is a best guess, not a measured native fresh-account state. Mount Journal Enhanced resets collected, not-collected, unusable and all sources to enabled: https://github.com/exochron/MountJournalEnhanced/blob/master/MountJournalEnhanced.lua . Blizzard forum support recommends checking all three categories, all types and all sources when a mount is missing: https://us.forums.blizzard.com/en/wow/t/i-got-a-mount-drop-used-it-but-it-doesnt-show-up-in-my-mount-journal/1790609 . Neither establishes fresh-account defaults.
+## Native basis (70688 behavioural spec)
 
-The separate search box motivates the best guess that search is excluded from default-filter comparison and reset. The original consumer handles `MOUNT_JOURNAL_SEARCH_UPDATED` when refreshing its list; emitting it for changed results is a best guess about native behavior. This model does not claim native persistence or parity for other profiles.
+The clean-room evidence is `native-evidence-70688/C_MountJournal_FilterState.md` and the function-specific files `GetCollectedFilterSetting.md`, `IsSourceChecked.md`, `IsTypeChecked.md`, `IsValidSourceFilter.md`, `IsValidTypeFilter.md`, `IsUsingDefaultFilters.md`, `SetDefaultFilters.md`, `SetSearch.md`, `SetSourceFilter.md`, `SetTypeFilter.md`, `SetCollectedFilterSetting.md`, `SetAllSourceFilters.md`, and `SetAllTypeFilters.md`. These describe build 70688, whereas the pinned Retail UI is 70575.
 
-The existing mount fixture publishes every source as Drop; source filtering follows that published source. Its fixture records ground and flying filter categories separately from raw type IDs 230 and 248.
+## Known gaps
+
+- Event delivery timing relative to setter return is unknown. The simulator retains queued `MOUNT_JOURNAL_SEARCH_UPDATED` behavior when displayed IDs change; native listener notifications can occur even without a displayed-list change.
+- Native valid-source data is runtime-dependent and not supplied by the evidence. The simulator fixture currently publishes only Drop, so its valid-source mask contains only that source; it does not model the native data refresh.
+- Exact type-error text for invalid collected indices and search argument errors is unknown.
+- The fixture's collected/unusable mapping and the 70575-to-70688 behavior differences require native confirmation.
 
 ## Pinned declarations and consumer
 
-Retail `Blizzard_APIDocumentationGenerated/MountJournalDocumentation.lua:86-98,420-455,518-550,564-593` declares the filter getters, setters, reset and search. `Blizzard_Collections/Mainline/Blizzard_MountCollection.lua:184-193,221-259,952-985` binds the dropdown and search. `Blizzard_Collections/Blizzard_Collections_Mainline.toc:5-6,10,14` selects the load-on-demand consumer. `Blizzard_Menu/MenuTemplates.lua:855-905` defines reset callback and visibility behavior.
+Retail `Blizzard_APIDocumentationGenerated/MountJournalDocumentation.lua:86-98,420-455,518-550,564-593` declares the filter getters, setters, reset and search. `Blizzard_Collections/Mainline/Blizzard_MountCollection.lua:137-193,221-259,952-985` binds the dropdown and search. `Blizzard_Collections/Blizzard_Collections_Mainline.toc:5-6,10,14` selects the load-on-demand consumer. `Blizzard_Menu/MenuTemplates.lua:855-905` defines reset callback and visibility behavior.

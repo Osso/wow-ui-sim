@@ -115,7 +115,7 @@ fn test_mount_journal_get_num_displayed_mounts() {
     let count: i32 = env
         .eval("return C_MountJournal.GetNumDisplayedMounts()")
         .unwrap();
-    assert_eq!(count, 10);
+    assert_eq!(count, if cfg!(feature = "client-retail") { 0 } else { 10 });
 }
 
 #[test]
@@ -149,7 +149,7 @@ fn test_mount_journal_get_collected_filter_setting() {
     let val: bool = env
         .eval("return C_MountJournal.GetCollectedFilterSetting(1)")
         .unwrap();
-    assert!(val);
+    assert_eq!(val, !cfg!(feature = "client-retail"));
 }
 
 #[test]

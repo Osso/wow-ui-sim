@@ -241,13 +241,13 @@ fn register_mount_fanfare_stubs(tb: TableBuilder) -> LuaResult<TableBuilder> {
 }
 
 fn register_mount_filter_stubs(tb: TableBuilder) -> LuaResult<TableBuilder> {
-    let tb = tb
-        .set_function("IsDragonridingUnlocked", |state| false.into_stack(state))?
-        .set_function("IsValidSourceFilter", |state| true.into_stack(state))?
-        .set_function("IsValidTypeFilter", |state| true.into_stack(state))?;
+    let tb = tb.set_function("IsDragonridingUnlocked", |state| false.into_stack(state))?;
     if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
         return register_modeled_mount_filters(tb);
     }
+    let tb = tb
+        .set_function("IsValidSourceFilter", |state| true.into_stack(state))?
+        .set_function("IsValidTypeFilter", |state| true.into_stack(state))?;
     let tb = register_collected_filter_stubs(tb)?;
     let tb = register_default_filter_stubs(tb)?;
     let tb = register_source_filter_stubs(tb)?;
@@ -255,12 +255,20 @@ fn register_mount_filter_stubs(tb: TableBuilder) -> LuaResult<TableBuilder> {
 }
 
 fn register_modeled_mount_filters(tb: TableBuilder) -> LuaResult<TableBuilder> {
-    tb.set_function("IsUsingDefaultFilters", |state| {
-        let value = borrow_state(state)?.world.mount_filters == Default::default();
+    tb.set_function("IsValidSourceFilter", |state| {
+        crate::c_api::mount_filters::MountFilters::valid_source(i32::from_stack(state, 1)?)
+            .into_stack(state)
+    })?
+    .set_function("IsValidTypeFilter", |state| {
+        crate::c_api::mount_filters::MountFilters::valid_type(i32::from_stack(state, 1)?)
+            .into_stack(state)
+    })?
+    .set_function("IsUsingDefaultFilters", |state| {
+        let value = borrow_state(state)?.world.mount_filters.is_default();
         value.into_stack(state)
     })?
     .set_function("SetDefaultFilters", |state| {
-        update_mount_filters(state, |filters| *filters = Default::default())
+        update_mount_filters(state, |filters| filters.reset())
     })?
     .set_function("GetCollectedFilterSetting", |state| {
         let index = i32::from_stack(state, 1)?;
@@ -270,6 +278,11 @@ fn register_modeled_mount_filters(tb: TableBuilder) -> LuaResult<TableBuilder> {
     .set_function("SetCollectedFilterSetting", |state| {
         let index = i32::from_stack(state, 1)?;
         let checked = bool::from_stack(state, 2)?;
+        if !(0..4).contains(&index) {
+            return Err(rilua::runtime_error(
+                "SetCollectedFilterSetting: invalid filter index",
+            ));
+        }
         update_mount_filters(state, |f| f.set_collected(index, checked))
     })?
     .set_function("IsSourceChecked", |state| {
@@ -294,6 +307,11 @@ fn register_modeled_mount_filters(tb: TableBuilder) -> LuaResult<TableBuilder> {
     .set_function("SetTypeFilter", |state| {
         let index = i32::from_stack(state, 1)?;
         let checked = bool::from_stack(state, 2)?;
+        if !crate::c_api::mount_filters::MountFilters::valid_type(index) {
+            return Err(rilua::runtime_error(format!(
+                "Invalid mount type filter set: {index}"
+            )));
+        }
         update_mount_filters(state, |f| f.set_type(index, checked))
     })?
     .set_function("SetAllTypeFilters", |state| {
@@ -340,7 +358,7 @@ fn mount_matches(
         return false;
     }
     // Current mount data publishes all sources as Drop.
-    f.source(1) && f.mount_type(mount.filter_type)
+    f.source(0) && f.mount_type(mount.filter_type)
 }
 
 fn register_collected_filter_stubs(tb: TableBuilder) -> LuaResult<TableBuilder> {
