@@ -145,3 +145,31 @@ fn stable_reads_count_tracks_pets_and_environments_are_independent() {
     first.state().borrow_mut().stable_reads.pets.clear();
     first.exec("assert(C_StableInfo.GetNumStablePets() == 0); assert(C_StableInfo.GetStablePetInfo(1) == nil)").unwrap();
 }
+
+#[test]
+fn forever_native_empty_pet_and_original_purchase_consumer() {
+    use crate::common::blizzard_addon_harness::{
+        blizzard_ui_dir, load_blizzard_addon_closure_into_env, new_blizzard_addon_env,
+    };
+    use wow_ui_sim::loader::find_toc_file;
+    use wow_ui_sim::screen::ScreenKind;
+    use wow_ui_sim::toc::TocFile;
+
+    let ui = blizzard_ui_dir();
+    let toc = TocFile::from_file(&find_toc_file(&ui.join("Blizzard_StableUI")).unwrap()).unwrap();
+    assert!(toc.allows_screen(ScreenKind::Game));
+    assert!(!toc.is_game_type_restricted());
+    assert!(
+        toc.files
+            .iter()
+            .any(|file| file.ends_with("Camelot/Blizzard_StableUI.lua"))
+    );
+    let env = new_blizzard_addon_env(&ui);
+    load_blizzard_addon_closure_into_env(&env, &ui, &["Blizzard_StableUI"], &[]);
+    env.exec(r#"
+        assert(debug.getinfo(PetStablePurchaseButtonMixin.Update).source:find("Camelot/Blizzard_StableUI.lua", 1, true))
+        local value = C_StableInfo.GetStablePetInfo(99)
+        assert(type(value) == "table", "absent stable pet must return a table")
+        PetStablePurchaseButtonMixin.Update(PetStableFrame.purchaseButton)
+    "#).unwrap();
+}
