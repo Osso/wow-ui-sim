@@ -6,7 +6,7 @@ use super::{
     DoubleStatusBarRecord, HorizontalCurrenciesRecord, IconTextAndBackgroundRecord,
     IconTextAndCurrenciesRecord, ItemDisplayRecord, SpacerRecord, SpellDisplayRecord,
     StatusBarRecord, TextColumnRowVisualizationInfo, TextWithStateRecord, TextWithSubtextRecord,
-    TextureAndTextRecord, TextureAndTextRowRecord, WidgetId,
+    TextureAndTextRecord, TextureAndTextRowRecord, WidgetId, WidgetVisualization,
 };
 
 #[derive(Debug, Clone, PartialEq)]
@@ -21,6 +21,34 @@ pub struct WidgetSetRecord {
     pub layout_direction: u32,
     pub vertical_padding: f64,
     pub widgets: Vec<WidgetSetEntry>,
+}
+
+impl UiWidgetInputs {
+    pub(crate) fn unit_visualization(&self, id: WidgetId) -> Option<Option<&WidgetVisualization>> {
+        let records = &self.unit_context.unit_visualizations;
+        if self.unit_context.unit_widget_ids.contains(&id) {
+            Some(
+                self.unit_context
+                    .processing_unit
+                    .as_ref()
+                    .and_then(|unit| records.get(&(unit.clone(), id))),
+            )
+        } else {
+            None
+        }
+    }
+
+    pub(super) fn resolve_visualization<T: Clone>(
+        &self,
+        id: WidgetId,
+        global: &HashMap<WidgetId, T>,
+        extract: impl Fn(&WidgetVisualization) -> Option<&T>,
+    ) -> Option<T> {
+        match self.unit_visualization(id) {
+            Some(record) => record.and_then(extract).cloned(),
+            None => global.get(&id).cloned(),
+        }
+    }
 }
 
 /// Complete supplied record; field values are never inferred from widget IDs.
@@ -48,6 +76,7 @@ pub struct IconAndTextRecord {
 
 #[derive(Debug, Default)]
 pub struct UiWidgetInputs {
+    pub unit_context: super::WidgetUnitContext,
     pub sets: HashMap<WidgetId, WidgetSetRecord>,
     pub icon_and_text: HashMap<WidgetId, IconAndTextRecord>,
     pub icon_text_and_background: HashMap<WidgetId, IconTextAndBackgroundRecord>,

@@ -78,6 +78,7 @@ fn secure_raid_group_header_spawns_raid_unit_children() {
 fn secure_group_pet_header_spawns_pet_child() {
     test_timeout! {
         let env = env_with_restricted_environment();
+        env.state().borrow_mut().pet.icon = Some("Interface\\Icons\\Ability_Hunter_Pet_Wolf".into());
 
         let unit: String = env.eval(
             r#"

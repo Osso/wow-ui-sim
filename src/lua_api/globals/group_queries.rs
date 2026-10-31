@@ -42,6 +42,13 @@ pub fn register_all(state: &mut LuaState) {
 }
 
 fn register_group_status(state: &mut LuaState) {
+    if crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Wrath {
+        set_global(
+            state,
+            "GetGroupMemberCounts",
+            super::real::group_role_counts::get_group_member_counts,
+        );
+    }
     set_global(state, "GetNumGroupMembers", get_num_group_members);
     set_global(state, "GetNumSubgroupMembers", get_num_subgroup_members);
     set_global(state, "GetNumPartyMembers", get_num_subgroup_members);

@@ -148,7 +148,8 @@ fn inspect_guid_for_unit(st: &SimState, unit: &str) -> String {
 }
 
 fn player_equipped_item_id(state: &mut LuaState, unit: &str, slot: i32) -> Option<u32> {
-    let is_equipment_slot = (FIRST_EQUIPMENT_SLOT_ID..=LAST_PROFESSION_SLOT_ID).contains(&slot);
+    let is_equipment_slot = (FIRST_EQUIPMENT_SLOT_ID..=LAST_PROFESSION_SLOT_ID).contains(&slot)
+        || crate::c_api::world_loot_object::is_equippable_spell_slot(slot);
     if unit != "player" || !is_equipment_slot {
         return None;
     }

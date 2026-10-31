@@ -1,5 +1,9 @@
 # Combat State
 
+### A_Admin.LearnSpell(spellID) / A_Admin.UnlearnSpell(spellID)
+
+Adds or removes a supplied player-known spell ID. The known-spell queries include this supplied membership as well as the simulator's fixed spellbook data. These inputs do not add spellbook slots or fire events.
+
 ### A_Admin.SetSpellBookItemLowRank(spellID, lowRank)
 
 Sets or clears a scenario low-rank flag for a spell ID. The scenario starts with no flagged spells; this is not native rank data. On PTR and WoWForever, `C_SpellBook.IsSpellBookItemLowRank` reads this input.
@@ -20,7 +24,7 @@ Toggles the player's combat state.
 
 - **inCombat** `boolean` -- `true` to enter combat, `false` to leave
 - **Affects:** `InCombatLockdown()`, `UnitAffectingCombat("player")`
-- **Fires:** `PLAYER_REGEN_DISABLED` when entering combat, `PLAYER_REGEN_ENABLED` when leaving
+- **Fires:** `PLAYER_REGEN_DISABLED` for true and `PLAYER_REGEN_ENABLED` for false, after the state change. This is simulator ordering; native combat-state timing is unverified.
 - **Example:**
 ```lua
 A_Admin.SetInCombat(true)

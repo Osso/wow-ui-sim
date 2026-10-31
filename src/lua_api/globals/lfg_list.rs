@@ -58,6 +58,14 @@ pub(crate) fn defer_lfg_event(
     dispatch: RustFn,
     label: &'static str,
 ) -> LuaResult<()> {
+    defer_lfg_event_with_id(state, dispatch, label).map(|_| ())
+}
+
+pub(crate) fn defer_lfg_event_with_id(
+    state: &mut LuaState,
+    dispatch: RustFn,
+    label: &'static str,
+) -> LuaResult<u64> {
     let callback = Val::Function(
         state
             .gc
@@ -87,18 +95,15 @@ pub(crate) fn defer_lfg_event(
             callback_receives_timer: false,
             callback_arg: None,
         });
-    Ok(())
+    Ok(id)
 }
 
-fn dispatch_lfg_search_results_received(state: &mut LuaState) -> LuaResult<u32> {
-    fire_event_with_args(state, "LFG_LIST_SEARCH_RESULTS_RECEIVED", Vec::new())?;
-    Ok(0)
-}
-
-fn premade_listing(state: &LuaState, search_result_id: u32) -> Option<PremadeListing> {
-    borrow_state(state)
-        .ok()?
-        .world
+pub(crate) fn premade_listing(state: &LuaState, search_result_id: u32) -> Option<PremadeListing> {
+    let sim = borrow_state(state).ok()?;
+    if !sim.lfg_search_result_ids.contains(&search_result_id) {
+        return None;
+    }
+    sim.world
         .premade_listings
         .iter()
         .find(|listing| listing.search_result_id == search_result_id)
@@ -111,7 +116,7 @@ fn build_search_result_info(state: &mut LuaState, listing: &PremadeListing) -> V
     set_search_result_activity_fields(state, info, listing);
     set_search_result_size_fields(state, info, listing);
     set_search_result_social_fields(state, info, listing);
-    set_search_result_requirement_fields(state, info);
+    set_search_result_requirement_fields(state, info, listing);
     crate::c_api::c_lfg_list_search::publish(state, info, &listing.metadata);
     info
 }
@@ -215,12 +220,17 @@ fn set_search_result_social_fields(state: &mut LuaState, info: Val, listing: &Pr
     );
 }
 
-fn set_search_result_requirement_fields(state: &mut LuaState, info: Val) {
+fn set_search_result_requirement_fields(state: &mut LuaState, info: Val, listing: &PremadeListing) {
     table_set(state, info, "requiredItemLevel", Val::Num(0.0));
     table_set(state, info, "requiredHonorLevel", Val::Num(0.0));
     table_set(state, info, "requiredDungeonScore", Val::Num(0.0));
     table_set(state, info, "requiredPvpRating", Val::Num(0.0));
-    table_set(state, info, "questID", Val::Num(0.0));
+    table_set(
+        state,
+        info,
+        "questID",
+        Val::Num(listing.metadata.quest_id.unwrap_or(0) as f64),
+    );
     table_set(state, info, "age", Val::Num(0.0));
     table_set(state, info, "isWarMode", Val::Bool(false));
     set_patch_12_1_search_result_fields(state, info);
@@ -254,11 +264,7 @@ fn has_search_result_info(state: &mut LuaState) -> LuaResult<u32> {
 fn get_search_results(state: &mut LuaState) -> LuaResult<u32> {
     let search_result_ids = {
         let sim = borrow_state(state)?;
-        sim.world
-            .premade_listings
-            .iter()
-            .map(|listing| listing.search_result_id)
-            .collect::<Vec<_>>()
+        sim.lfg_search_result_ids.clone()
     };
     let results = create_table(state);
     if let Val::Table(table_ref) = results {
@@ -276,15 +282,6 @@ fn get_search_results(state: &mut LuaState) -> LuaResult<u32> {
     state.push(Val::Num(search_result_ids.len() as f64));
     state.push(results);
     Ok(2)
-}
-
-fn search(state: &mut LuaState) -> LuaResult<u32> {
-    defer_lfg_event(
-        state,
-        dispatch_lfg_search_results_received,
-        "C_LFGList.SearchResultsReady",
-    )?;
-    Ok(0)
 }
 
 /// `GetFilteredSearchResults()` → `(totalResults, results)`. Mirrors
@@ -503,10 +500,11 @@ fn apply_to_group_listing_name(
     search_result_id: u32,
 ) -> LuaResult<Option<String>> {
     let sim = borrow_state(state)?;
-    if sim
-        .lfg_applications
-        .iter()
-        .any(|a| a.search_result_id == search_result_id)
+    if !sim.lfg_search_result_ids.contains(&search_result_id)
+        || sim
+            .lfg_applications
+            .iter()
+            .any(|a| a.search_result_id == search_result_id)
     {
         return Ok(None);
     }
@@ -654,9 +652,40 @@ fn register_search_methods(state: &mut LuaState, table_ref: GcRef<Table>) -> Lua
                 "GetGroupLeaverCountsByRole",
                 get_group_leaver_counts_by_role,
             ),
-            ("Search", search),
+            ("Search", crate::c_api::c_lfg_list_search::search),
+            (
+                "GetSearchResultEncounterInfo",
+                crate::lua_api::workarounds::get_search_result_encounter_info,
+            ),
         ],
-    )
+    )?;
+    if crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Wrath {
+        register_lfg_list_methods(
+            state,
+            table_ref,
+            &[
+                (
+                    "ClearSearchTextFields",
+                    crate::c_api::c_lfg_list_search::clear_search_text_fields,
+                ),
+                (
+                    "SetSearchToActivity",
+                    crate::c_api::c_lfg_list_search::set_search_to_activity,
+                ),
+                (
+                    "SetSearchToQuestID",
+                    crate::c_api::c_lfg_list_search::set_search_to_quest,
+                ),
+            ],
+        )?;
+        table_set_rust_fn_static(
+            state,
+            table_ref,
+            "ClearSearchResults",
+            crate::c_api::c_lfg_list_search::clear_search_results,
+        )?;
+    }
+    Ok(())
 }
 
 #[cfg(feature = "retail-12-1-0")]

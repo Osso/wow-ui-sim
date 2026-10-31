@@ -147,7 +147,7 @@ intern-stats = ["rilua/intern-stats"]
 # Retail API epoch features are cumulative patch gates. Client-channel
 # features select one runtime profile and point at the current API epoch for
 # that channel.
-retail-12-0-0 = ["aura-instance-enumeration"]
+retail-12-0-0 = ["aura-instance-enumeration", "action-spell-range"]
 retail-12-0-5 = ["retail-12-0-0", "native-duration-formatting", "base-spell-relationships", "aura-spell-classifications"]
 retail-12-0-7 = ["retail-12-0-5"]
 retail-12-1-0 = ["retail-12-0-7", "aura-xml-widgets", "on-update-modes", "player-cast-durations", "forbidden-aspects", "numeric-rule-formatters", "aura-containers"]
@@ -156,6 +156,8 @@ retail-12-1-5 = ["retail-12-1-0", "timed-signal-maps", "forbidden-animation-aspe
 native-duration-formatting = ["dep:cc", "dep:pkg-config", "dep:vcpkg"]
 # Existing specialization relationship model shared by Retail 12.0.5+ and Forever.
 base-spell-relationships = []
+# Supplied spell/target range observations shared by native and legacy adapters.
+action-spell-range = []
 # Explicit defensive spell classification shared by Retail, Forever and vanilla profiles.
 aura-spell-classifications = []
 # Shared keyed timer capability used by PTR and Forever.
@@ -184,11 +186,11 @@ prefork-full-ui = []
 profile-retail = ["sim-data-profile/profile-retail"]
 client-retail = ["profile-retail", "retail-12-1-5", "prefork-full-ui"]
 client-ptr = ["retail-12-1-5", "sim-data-profile/client-ptr"]
-client-wrath = []
+client-wrath = ["action-spell-range"]
 client-mists = ["prefork-full-ui", "sim-data-profile/client-mists"]
 client-era = ["aura-spell-classifications", "sim-data-profile/client-era"]
 client-anniversary = ["aura-spell-classifications", "sim-data-profile/client-anniversary"]
-client-wowforever = ["timed-signal-maps", "aura-xml-widgets", "on-update-modes", "player-cast-durations", "forbidden-animation-aspects", "numeric-rule-formatters", "aura-containers", "native-duration-formatting", "base-spell-relationships", "aura-spell-classifications", "sim-data-profile/client-wowforever"]
+client-wowforever = ["timed-signal-maps", "aura-xml-widgets", "on-update-modes", "player-cast-durations", "forbidden-animation-aspects", "numeric-rule-formatters", "aura-containers", "native-duration-formatting", "base-spell-relationships", "action-spell-range", "aura-spell-classifications", "sim-data-profile/client-wowforever"]
 
 [profile.release]
 lto = false
@@ -463,3 +465,8 @@ path = "tests/classic_startup_b.rs"
 [[test]]
 name = "should_know_unit_health"
 path = "tests/should_know_unit_health.rs"
+
+[[test]]
+name = "forever_action_range"
+path = "tests/forever_action_range.rs"
+required-features = ["client-wowforever"]

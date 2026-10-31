@@ -9,7 +9,12 @@ use wow_ui_sim::loader::{discover_blizzard_addons_for_screen, find_toc_file};
 use wow_ui_sim::screen::ScreenKind;
 use wow_ui_sim::toc::TocFile;
 
-fn original_audio_env() -> WowLuaEnv {
+pub(crate) fn original_audio_env() -> WowLuaEnv {
+    original_audio_env_with_roots(&[])
+}
+
+/// Extra roots load before the Audio closure, as the client loads them at startup.
+pub(crate) fn original_audio_env_with_roots(extra_roots: &[&str]) -> WowLuaEnv {
     let ui = blizzard_ui_dir();
     let toc_path = find_toc_file(&ui.join("Blizzard_SettingsDefinitions_Shared")).unwrap();
     let toc = TocFile::from_file(&toc_path).unwrap();
@@ -22,8 +27,10 @@ fn original_audio_env() -> WowLuaEnv {
             .any(|(name, _)| name == "Blizzard_SettingsDefinitions_Shared")
     );
     let env = new_blizzard_addon_env(&ui);
-    assert_eq!(env.state().borrow().voice_chat.can_access_settings, None);
-    load_blizzard_addon_closure_into_env(&env, &ui, &["Blizzard_SettingsDefinitions_Shared"], &[]);
+    let expected = if matches!(ACTIVE, ClientProfile::Retail | ClientProfile::WowForever) { Some(true) } else { None };
+    assert_eq!(env.state().borrow().voice_chat.can_access_settings, expected);
+    let roots: Vec<&str> = extra_roots.iter().copied().chain(["Blizzard_SettingsDefinitions_Shared"]).collect();
+    load_blizzard_addon_closure_into_env(&env, &ui, &roots, &[]);
     env.exec(include_str!("voice_settings_access/original_callback.lua"))
         .expect("selected original Audio registration must create its polling callback");
     env
@@ -88,9 +95,13 @@ fn original_audio_initially_unset_then_supplied() {
         return;
     }
     let env = original_audio_env();
+    if matches!(ACTIVE, ClientProfile::Retail | ClientProfile::WowForever) {
+        assert!(env.eval::<bool>("return ObserveOriginalVoiceSettings()").unwrap());
+    }
+    env.state().borrow_mut().voice_chat.can_access_settings = None;
     let error = env
         .eval::<bool>("return ObserveOriginalVoiceSettings()")
-        .expect_err("fresh observation must be explicitly unknown");
+        .expect_err("unset observation must be explicitly unknown");
     assert!(
         error
             .to_string()

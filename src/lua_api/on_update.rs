@@ -57,6 +57,7 @@ pub(crate) fn fire_state(
 }
 
 fn begin_tick(state: &mut LuaState, elapsed: f64) -> crate::Result<()> {
+    super::globals::real::loot_specialization::apply_pending(state)?;
     #[cfg(feature = "player-cast-durations")]
     super::channeling::tick(state)?;
     #[cfg(feature = "retail-12-1-0")]

@@ -7,49 +7,6 @@ const CAMPAIGN_COVENANT_DEFAULTS_LUA: &str = r#"
 C_CampaignInfo = C_CampaignInfo or __wow_namespace()
 C_CovenantSanctumUI = C_CovenantSanctumUI or __wow_namespace()
 
-local function campaignIDArg(campaignID)
-    return tonumber(campaignID) or 0
-end
-
-local function campaignName(campaignID)
-    if campaignID == 290 then
-        return "Broken Shore"
-    end
-
-    return "Campaign " .. campaignID
-end
-
-local function invalidCampaignState()
-    if Enum and Enum.CampaignState and Enum.CampaignState.Invalid ~= nil then
-        return Enum.CampaignState.Invalid
-    end
-
-    return 0
-end
-
-if rawget(C_CampaignInfo, "GetCampaignID") == nil then
-    function C_CampaignInfo.GetCampaignID(campaignID)
-        return campaignIDArg(campaignID)
-    end
-end
-
-if rawget(C_CampaignInfo, "GetCampaignInfo") == nil then
-    function C_CampaignInfo.GetCampaignInfo(campaignID)
-        local normalizedID = campaignIDArg(campaignID)
-        return {
-            campaignID = normalizedID,
-            id = normalizedID,
-            name = campaignName(normalizedID),
-        }
-    end
-end
-
-if rawget(C_CampaignInfo, "GetState") == nil then
-    function C_CampaignInfo.GetState(_campaignID)
-        return invalidCampaignState()
-    end
-end
-
 if rawget(C_CovenantSanctumUI, "GetRenownRewardsForLevel") == nil then
     function C_CovenantSanctumUI.GetRenownRewardsForLevel(factionID, level)
         if tonumber(factionID) == 1 and tonumber(level) == 5 then
@@ -116,45 +73,6 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
 #[cfg(test)]
 mod tests {
     use crate::lua_api::WowLuaEnv;
-
-    #[test]
-    fn installs_campaign_and_covenant_placeholder_defaults() {
-        let env = WowLuaEnv::new().expect("lua env should initialize");
-
-        let result: (i32, i32, String, bool, i32, i32, i32, bool, i32) = env
-            .eval(
-                r#"
-                local campaign = C_CampaignInfo.GetCampaignInfo(290)
-                local fallbackCampaign = C_CampaignInfo.GetCampaignInfo("12")
-                local anima, maxAnima = C_CovenantSanctumUI.GetAnimaInfo()
-                return C_CampaignInfo.GetCampaignID("12"),
-                       campaign.id,
-                       campaign.name,
-                       C_CampaignInfo.GetState(99999) == Enum.CampaignState.Invalid,
-                       fallbackCampaign.campaignID,
-                       anima,
-                       maxAnima,
-                       C_CovenantSanctumUI.CanDepositAnima(),
-                       C_CovenantSanctumUI.GetCurrentTalentTreeID()
-                "#,
-            )
-            .expect("campaign/covenant defaults should be callable");
-
-        assert_eq!(
-            result,
-            (
-                12,
-                290,
-                "Broken Shore".to_string(),
-                true,
-                12,
-                0,
-                0,
-                false,
-                0
-            )
-        );
-    }
 
     #[test]
     fn installs_path_of_ascension_reward_shape() {

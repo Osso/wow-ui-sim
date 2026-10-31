@@ -4,6 +4,7 @@ mod logging;
 mod permanent;
 mod runtime_surfaces;
 mod temporary;
+pub(crate) use temporary::lfg_encounters::get_search_result_encounter_info;
 
 #[cfg(feature = "client-wrath")]
 pub(crate) use temporary::wrath_attack_action;
@@ -248,6 +249,7 @@ fn apply_secure_and_store_state_bootstrap(lua: &mut rilua::Lua) -> crate::Result
 fn apply_unit_state_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     temporary::unit_auras_state::apply_bootstrap(lua)?;
     temporary::unit_stagger_defaults::apply_bootstrap(lua)?;
+    temporary::unit_power_display_mod::apply_bootstrap(lua)?;
     temporary::unit_threat_defaults::apply_bootstrap(lua)
 }
 

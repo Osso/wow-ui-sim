@@ -35,7 +35,7 @@ fn fixture() -> WowLuaEnv {
     let mut lua = loader.rilua_mut();
     for (name, number) in [
         ("Selector", 19750.0),
-        ("MountSelector", 23338.0),
+        ("MountSelector", 458.0),
         ("Missing", 900002.0),
         ("Fraction", 19750.5),
         ("Negative", -1.0),
@@ -130,7 +130,7 @@ fn original_meter_on_enter_numeric_secret_selector() {
 fn original_mount_dynamic_handler_numeric_secret_selector() {
     let env = fixture();
     for tainted in [false, true] {
-        for selector in ["23338", "MountSelector"] {
+        for selector in ["458", "MountSelector"] {
             invoke(
                 &env,
                 &format!(
@@ -139,7 +139,7 @@ fn original_mount_dynamic_handler_numeric_secret_selector() {
                 GameTooltip:SetOwner(MeterIcon, 'ANCHOR_NONE')
                 GameTooltip:SetMountBySpellID({selector}, false)
                 assert(GameTooltip:NumLines() > 0)
-                assert(GameTooltip:GetLeftLine(1):GetText() == 'Swift Palomino')
+                assert(GameTooltip:GetLeftLine(1):GetText() == 'Brown Horse')
                 local data = GameTooltip:GetPrimaryTooltipData()
                 assert(issecretvalue(data.id) == issecretvalue({selector}))
             "#
@@ -191,12 +191,7 @@ fn tooltip_numeric_secret_direct_arity_identity_and_model_preservation() {
     for tainted in [false, true] {
         for (query, public, secret, title) in [
             ("GetSpellByID", 19750, "Selector", "Flash of Light"),
-            (
-                "GetMountBySpellID",
-                23338,
-                "MountSelector",
-                "Swift Palomino",
-            ),
+            ("GetMountBySpellID", 458, "MountSelector", "Brown Horse"),
         ] {
             for selector in [public.to_string(), secret.into()] {
                 invoke(

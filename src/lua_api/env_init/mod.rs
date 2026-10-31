@@ -208,6 +208,11 @@ fn tainting_loadstring(state: &mut LuaState) -> LuaResult<u32> {
     let mut args = (0..nargs)
         .map(|index| state.stack_get(state.base + index))
         .collect::<Vec<_>>();
+    if let Some(source) = args.first_mut()
+        && let Some(stripped) = strip_utf8_bom(state, *source)
+    {
+        *source = stripped;
+    }
     let should_taint = !rilua::api::state_is_secure(state);
     if should_taint && let Some(source) = args.first_mut() {
         if let Some(wrapped_source) = wrap_loadstring_source(state, *source) {
@@ -225,6 +230,22 @@ fn tainting_loadstring(state: &mut LuaState) -> LuaResult<u32> {
         state.push(value);
     }
     Ok(count)
+}
+
+/// WoW's luaL_loadbuffer skips a leading UTF-8 BOM (3.3.5a lauxlib; Retail
+/// 12.1.5 observation in Meorawr/elune#11).
+fn strip_utf8_bom(state: &mut LuaState, source: Val) -> Option<Val> {
+    let Val::Str(source_ref) = source else {
+        return None;
+    };
+    let rest = state
+        .gc
+        .string_arena
+        .get(source_ref)?
+        .data()
+        .strip_prefix(b"\xEF\xBB\xBF")?
+        .to_vec();
+    Some(Val::Str(state.gc.intern_string(&rest)))
 }
 
 fn wrap_loadstring_source(state: &mut LuaState, source: Val) -> Option<Val> {
@@ -388,5 +409,20 @@ mod tests {
             visible_states.3,
             "registered settings category should preserve its display name"
         );
+    }
+
+    #[test]
+    fn loadstring_skips_a_leading_utf8_bom() {
+        let env = WowLuaEnv::new().expect("lua env should initialize");
+        let result: String = env
+            .eval(
+                r#"
+                local f, err = loadstring("\239\187\191return 1")
+                local inner, inner_err = loadstring("return 1 \239\187\191")
+                return tostring(f and f()) .. "|" .. tostring(err) .. "|" .. tostring(inner)
+                "#,
+            )
+            .expect("loadstring probe should run");
+        assert_eq!(result, "1|nil|nil");
     }
 }

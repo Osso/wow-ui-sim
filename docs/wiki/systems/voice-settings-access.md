@@ -1,6 +1,6 @@
 # Voice settings access
 
-The [supplied-observation contract](../../specs/voice-settings-access.md) exposes settings access without inventing voice-proxy readiness. The Rust host supplies `Some(false)` or `Some(true)` on `SimState.voice_chat.can_access_settings`; `None` means unknown and raises a named error. Each environment owns its observation. No admin function or readiness side effect is added.
+The [supplied-observation contract](../../specs/voice-settings-access.md) exposes settings access without claiming native voice-proxy readiness. The Rust host supplies `Some(false)` or `Some(true)` on `SimState.voice_chat.can_access_settings`; `None` means unknown and raises a named error. Each environment owns its observation. No admin function or readiness side effect is added.
 
 ## Original consumer
 
@@ -25,4 +25,5 @@ Seven full-feature all-target checks have zero compiler warnings. All 98 protect
 ## See Also
 
 - [Lua API architecture](../../lua-api.md)
+- [Voice audio devices](../../specs/voice-audio-devices.md) — the device catalogs the true branch consumes next.
 - [Speak For Me activity](../../specs/voice-speak-for-me-active-input.md) — a separate observation, not a readiness derivation.

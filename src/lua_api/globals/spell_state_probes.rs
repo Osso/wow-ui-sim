@@ -24,7 +24,7 @@ use crate::lua_bridge::{FromStack, stack_val};
 use rilua::vm::state::LuaState;
 use rilua::{LuaApiMut, LuaResult, Val};
 
-fn stack_u32(state: &mut LuaState, index: i32) -> Option<u32> {
+fn stack_u32(state: &LuaState, index: i32) -> Option<u32> {
     match stack_val(state, index) {
         Val::Num(n) if n >= 0.0 => Some(n as u32),
         _ => None,
@@ -79,7 +79,7 @@ fn is_spell_known(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn is_known_spell(st: &SimState, spell_id: u32) -> bool {
-    st.known_spells.contains(&spell_id)
+    st.known_spells.contains(&spell_id) || super::spellbook_data::is_spell_known(spell_id)
 }
 
 /// `IsSpellKnownOrOverridesKnown(spellId)` — alias of `IsSpellKnown`.
@@ -87,19 +87,59 @@ fn is_spell_known_or_overrides(state: &mut LuaState) -> LuaResult<u32> {
     is_spell_known(state)
 }
 
-/// `IsSpellInRange(idOrName, unit)` — true when the unit exists and
-/// the spell is known. Per-spell range tables are not modelled.
+/// Legacy range: 1/0/nil observed in WoW 3.3.5a; name and nil policy
+/// for these profiles is user-approved, not native evidence.
 fn is_spell_in_range(state: &mut LuaState) -> LuaResult<u32> {
-    let Some(id) = stack_u32(state, 1) else {
-        state.push(Val::Bool(false));
-        return Ok(1);
+    let book_form =
+        matches!(stack_val(state, 1), Val::Num(_)) && matches!(stack_val(state, 3), Val::Str(_));
+    let unit_index = if book_form { 3 } else { 2 };
+    let unit = Option::<String>::from_stack(state, unit_index)?.unwrap_or_default();
+    let book = if book_form {
+        Option::<String>::from_stack(state, 2)?.unwrap_or_default()
+    } else {
+        String::new()
     };
-    let unit = Option::<String>::from_stack(state, 2)?.unwrap_or_default();
-    let in_range = {
-        let st = borrow_state(state)?;
-        is_known_spell(&st, id) && unit_is_reachable(&st, &unit)
+    let name = if !book_form && matches!(stack_val(state, 1), Val::Str(_)) {
+        Option::<String>::from_stack(state, 1)?
+    } else {
+        None
     };
-    state.push(Val::Bool(in_range));
+    let st = borrow_state(state)?;
+    let id = if book_form {
+        if book == "spell" {
+            stack_u32(state, 1).and_then(|slot| {
+                crate::lua_api::globals::spellbook_data::get_spell_at_slot(slot as i32)
+                    .map(|(_, entry, _)| entry.spell_id)
+            })
+        } else {
+            None
+        }
+    } else {
+        match stack_val(state, 1) {
+            Val::Str(_) => {
+                let name = name.as_deref().unwrap_or_default();
+                st.known_spells
+                    .iter()
+                    .copied()
+                    .find(|id| {
+                        crate::spell_lookup::get_spell(*id)
+                            .is_some_and(|spell| spell.name.eq_ignore_ascii_case(name))
+                    })
+                    .or_else(|| {
+                        super::spellbook_data::find_spell_by_name(name)
+                            .filter(|id| is_known_spell(&st, *id))
+                    })
+            }
+            _ => stack_u32(state, 1).filter(|id| is_known_spell(&st, *id)),
+        }
+    };
+    let valid_unit = crate::lua_api::globals::group_queries::unit_exists_in_state(&st, &unit)
+        && unit_is_reachable(&st, &unit);
+    let result = id
+        .filter(|_| valid_unit)
+        .map(|_| unit_is_reachable(&st, &unit));
+    drop(st);
+    state.push(result.map_or(Val::Nil, |value| Val::Num(if value { 1.0 } else { 0.0 })));
     Ok(1)
 }
 

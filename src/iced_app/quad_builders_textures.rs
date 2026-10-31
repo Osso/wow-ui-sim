@@ -168,7 +168,7 @@ fn emit_textured_quad(
     }
 
     if bar_fill.is_none()
-        && let Some(uv4) = rotated_quad_uvs(f)
+        && let Some(uv4) = single_quad_uvs(f)
     {
         let (effective_path, effective_uv4) =
             remap_atlas_crop_uv4(tex_path, uv4, f.atlas_tex_coords);
@@ -193,10 +193,12 @@ fn emit_textured_quad(
     finalize_textured_quad(batch, vert_before, f);
 }
 
-/// Returns the 4 corner UVs (TL, TR, BR, BL) when the frame has an 8-arg
-/// SetTexCoord that can't be represented as an axis-aligned rect. Excludes
-/// UV-repeat tiling (any value > 1.0) which is handled separately.
-fn rotated_quad_uvs(f: &crate::widget::Frame) -> Option<[[f32; 2]; 4]> {
+/// Explicit 8-arg SetTexCoord values describe one quad (TL, TR, BR, BL),
+/// including axis-aligned crops and mirrors. Texture wrap flags do not add
+/// repeats to a crop inside [0, 1]; BackdropTemplate corners rely on this
+/// when their rendered size differs from their stored size due to UI scale.
+/// UV-repeat tiling (any value > 1.0) is handled separately.
+fn explicit_quad_uvs(f: &crate::widget::Frame) -> Option<[[f32; 2]; 4]> {
     let raw = f.tex_coords_quad?;
     if raw.iter().any(|&v| v > 1.0) {
         return None;
@@ -205,6 +207,26 @@ fn rotated_quad_uvs(f: &crate::widget::Frame) -> Option<[[f32; 2]; 4]> {
     let bl = [raw[2], raw[3]];
     let tr = [raw[4], raw[5]];
     let br = [raw[6], raw[7]];
+    Some([tl, tr, br, bl])
+}
+
+/// Corner UVs for the single-quad path without a status-bar fill. On a
+/// plain file texture every explicit quad qualifies. On an atlas slot only
+/// a rotated quad does: an axis-aligned one keeps the rect path, which
+/// already maps `tex_coords` into the slot and honours slice modes.
+fn single_quad_uvs(f: &crate::widget::Frame) -> Option<[[f32; 2]; 4]> {
+    if f.atlas_tex_coords.is_none() {
+        explicit_quad_uvs(f)
+    } else {
+        rotated_quad_uvs(f)
+    }
+}
+
+/// Returns the 4 corner UVs (TL, TR, BR, BL) when the frame has an 8-arg
+/// SetTexCoord that can't be represented as an axis-aligned rect. Excludes
+/// UV-repeat tiling (any value > 1.0) which is handled separately.
+fn rotated_quad_uvs(f: &crate::widget::Frame) -> Option<[[f32; 2]; 4]> {
+    let [tl, tr, br, bl] = explicit_quad_uvs(f)?;
     let axis_aligned = (tl[0] - bl[0]).abs() < f32::EPSILON
         && (tr[0] - br[0]).abs() < f32::EPSILON
         && (tl[1] - tr[1]).abs() < f32::EPSILON
@@ -787,6 +809,169 @@ mod tests {
             assert!((vertex.tex_coords[1] - expected[1]).abs() < 0.0001);
         }
         assert!(batch.texture_requests[0].path.contains("@crop:"));
+    }
+
+    #[test]
+    fn explicit_uv_backdrop_corners_scale_without_repeating() {
+        // Blizzard_SharedXML/Backdrop.lua supplies these UVs for the four
+        // corners while SetTexture(edgeFile, true, true) enables wrapping.
+        for (left, right) in [
+            (0.5078125, 0.6171875),
+            (0.6328125, 0.7421875),
+            (0.7578125, 0.8671875),
+            (0.8828125, 0.9921875),
+        ] {
+            for scale in [0.75, 1.0, 1.5] {
+                let mut frame = Frame::new(WidgetType::Texture, None, None);
+                frame.texture = Some(r"Interface\Tooltips\UI-Tooltip-Border".into());
+                frame.width = 16.0;
+                frame.height = 16.0;
+                frame.horiz_tile = true;
+                frame.vert_tile = true;
+                frame.tex_coords = Some((left, right, 0.0625, 0.9375));
+                frame.tex_coords_quad =
+                    Some([left, 0.0625, left, 0.9375, right, 0.0625, right, 0.9375]);
+                let mut batch = QuadBatch::new();
+                let bounds = Rectangle::new(
+                    Point::new(10.0, 20.0),
+                    Size::new(16.0 * scale, 16.0 * scale),
+                );
+
+                build_texture_quads(&mut batch, bounds, &frame, None, 1.0);
+
+                assert_eq!(batch.vertices.len(), 4, "one corner at scale {scale}");
+                assert_eq!(batch.texture_requests.len(), 1);
+                let actual: Vec<_> = batch.vertices.iter().map(|v| v.tex_coords).collect();
+                assert_eq!(
+                    actual,
+                    [
+                        [left, 0.0625],
+                        [right, 0.0625],
+                        [right, 0.9375],
+                        [left, 0.9375]
+                    ]
+                );
+                assert_eq!(
+                    batch.vertices[2].position,
+                    [bounds.x + bounds.width, bounds.y + bounds.height]
+                );
+            }
+        }
+    }
+
+    #[test]
+    fn explicit_axis_aligned_uvs_on_atlas_slot_stay_in_slot_space() {
+        let mut frame = Frame::new(WidgetType::Texture, None, None);
+        frame.texture = Some(r"Interface\Buttons\WHITE8X8".into());
+        frame.atlas_tex_coords = Some((0.2, 0.6, 0.3, 0.7));
+        frame.tex_coords = Some((0.2, 0.6, 0.3, 0.7));
+        frame.tex_coords_quad = Some([0.0, 0.0, 0.0, 1.0, 1.0, 0.0, 1.0, 1.0]);
+        let mut batch = QuadBatch::new();
+
+        build_texture_quads(
+            &mut batch,
+            Rectangle::new(Point::ORIGIN, Size::new(24.0, 24.0)),
+            &frame,
+            None,
+            1.0,
+        );
+
+        assert_eq!(batch.vertices.len(), 4);
+        assert!(batch.texture_requests[0].path.contains("@crop:"));
+        for vertex in &batch.vertices {
+            for value in vertex.tex_coords {
+                assert!(
+                    (-0.0001..=1.0001).contains(&value),
+                    "slot-space UV {value} outside [0, 1]"
+                );
+            }
+        }
+    }
+
+    #[test]
+    fn explicit_axis_aligned_uvs_preserve_horizontal_and_vertical_mirrors() {
+        for raw in [
+            [0.8, 0.2, 0.8, 0.9, 0.1, 0.2, 0.1, 0.9],
+            [0.1, 0.9, 0.1, 0.2, 0.8, 0.9, 0.8, 0.2],
+        ] {
+            let mut frame = Frame::new(WidgetType::Texture, None, None);
+            frame.texture = Some("Interface/Test".into());
+            frame.tex_coords = Some((0.1, 0.8, 0.2, 0.9));
+            frame.tex_coords_quad = Some(raw);
+            let mut batch = QuadBatch::new();
+
+            build_texture_quads(
+                &mut batch,
+                Rectangle::new(Point::ORIGIN, Size::new(24.0, 24.0)),
+                &frame,
+                None,
+                1.0,
+            );
+
+            assert_eq!(batch.vertices.len(), 4);
+            let actual: Vec<_> = batch.vertices.iter().map(|v| v.tex_coords).collect();
+            assert_eq!(
+                actual,
+                [
+                    [raw[0], raw[1]],
+                    [raw[4], raw[5]],
+                    [raw[6], raw[7]],
+                    [raw[2], raw[3]]
+                ]
+            );
+        }
+    }
+
+    #[test]
+    fn explicit_backdrop_edge_repeat_still_tiles_with_rotated_uvs() {
+        let mut frame = Frame::new(WidgetType::Texture, None, None);
+        frame.texture = Some(r"Interface\Tooltips\UI-Tooltip-Border".into());
+        frame.height = 16.0;
+        frame.horiz_tile = true;
+        frame.vert_tile = true;
+        frame.tex_coords = Some((0.2578125, 0.3671875, 0.0625, 4.0));
+        frame.tex_coords_quad = Some([
+            0.2578125, 4.0, 0.3671875, 4.0, 0.2578125, 0.0625, 0.3671875, 0.0625,
+        ]);
+        let mut batch = QuadBatch::new();
+
+        build_texture_quads(
+            &mut batch,
+            Rectangle::new(Point::ORIGIN, Size::new(64.0, 16.0)),
+            &frame,
+            None,
+            1.0,
+        );
+
+        assert_eq!(batch.vertices.len(), 16);
+        assert_eq!(batch.texture_requests.len(), 4);
+        assert_eq!(batch.vertices[0].tex_coords, [0.0, 1.0]);
+        assert_eq!(batch.vertices[1].tex_coords, [0.0, 0.0]);
+        assert_eq!(batch.vertices[2].tex_coords, [1.0, 0.0]);
+        assert_eq!(batch.vertices[13].position[0], 64.0);
+    }
+
+    #[test]
+    fn natural_atlas_tiling_without_explicit_quad_is_preserved() {
+        let mut frame = texture_frame_with_atlas("_128-RedButton-Center");
+        frame.horiz_tile = true;
+        let mut batch = QuadBatch::new();
+
+        emit_texture_fill(
+            &mut batch,
+            Rectangle::new(Point::ORIGIN, Size::new(150.0, 128.0)),
+            Some((0.0, 1.0, 0.0, 1.0)),
+            "Interface/Test",
+            &frame,
+            [1.0; 4],
+            1.0,
+        );
+
+        assert_eq!(batch.vertices.len(), 12);
+        assert_eq!(batch.texture_requests.len(), 3);
+        assert_eq!(batch.vertices[1].position[0], 64.0);
+        assert_eq!(batch.vertices[5].position[0], 128.0);
+        assert_eq!(batch.vertices[9].position[0], 150.0);
     }
 
     #[test]

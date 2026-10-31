@@ -10,15 +10,15 @@ fn c_tooltip_info_mount_by_spell_id_uses_seeded_mount_state() {
     let (tooltip_type, name, spell_id): (i32, String, i32) = env
         .eval(
             r#"
-            local mountTip = C_TooltipInfo.GetMountBySpellID(23338)
+            local mountTip = C_TooltipInfo.GetMountBySpellID(458)
             return mountTip.type, mountTip.lines[1].leftText, mountTip.id
             "#,
         )
         .unwrap();
 
     assert_eq!(tooltip_type, 1);
-    assert_eq!(name, "Swift Palomino");
-    assert_eq!(spell_id, 23338);
+    assert_eq!(name, "Brown Horse");
+    assert_eq!(spell_id, 458);
 }
 
 #[test]

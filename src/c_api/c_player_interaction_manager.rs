@@ -28,7 +28,21 @@ const ALLIED_RACE_DETAILS_GIVER: i32 = 9;
 pub(crate) fn register_c_player_interaction_manager_surface(state: &mut LuaState) -> LuaResult<()> {
     let ns = ensure_namespace(state, "C_PlayerInteractionManager")?;
     table_set_rust_fn_static(state, ns, "ClearInteraction", clear_interaction)?;
+    // Retail and Forever PlayerInteractionManagerDocumentation.lua:64-70.
+    if matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail
+            | crate::client_profile::ClientProfile::WowForever
+    ) {
+        table_set_rust_fn_static(state, ns, "IsReplacingUnit", is_replacing_unit)?;
+    }
     Ok(())
+}
+
+fn is_replacing_unit(state: &mut LuaState) -> LuaResult<u32> {
+    // User-approved default, not native evidence.
+    state.push(rilua::Val::Bool(false));
+    Ok(1)
 }
 
 fn clear_interaction(state: &mut LuaState) -> LuaResult<u32> {

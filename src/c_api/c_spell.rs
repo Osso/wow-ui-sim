@@ -11,7 +11,7 @@
 //! - `GetSchoolString(mask)` → localized school name for a bitmask.
 //! - `PickupSpell(spellID)` → sets cursor to a spell and fires `CURSOR_CHANGED`.
 //! - `GetSpellLink(spellID)` → spell hyperlink string or nil.
-//! - `GetSpellName(spellID)` → localized name or `"Unknown"`.
+//! - `GetSpellName(spellID)` → localized name, or no values on a catalog miss.
 //! - `IsAutoAttackSpell(spellID)` → true for spell 6603.
 //! - `IsSpellHelpful(spellID)` → true for self-targeted spells.
 //! - `IsSpellHarmful(spellID)` → true for known non-self-targeted spells.
@@ -54,6 +54,14 @@ const SPELL_COOLDOWN_HASH_FIELDS: usize = 5;
 
 pub(crate) fn register_c_spell_surface(state: &mut LuaState) -> LuaResult<()> {
     let ns = ensure_namespace(state, "C_Spell")?;
+    // Retail SpellDocumentation.lua:879-892; Forever :948-961.
+    if matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail
+            | crate::client_profile::ClientProfile::WowForever
+    ) {
+        table_set_rust_fn_static(state, ns, "IsSpellInRange", is_spell_in_range)?;
+    }
     if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Ptr {
         table_set_rust_fn_static(state, ns, "GetItemCooldown", get_item_cooldown)?;
     }
@@ -514,12 +522,33 @@ fn get_spell_link(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
+fn is_spell_in_range(state: &mut LuaState) -> LuaResult<u32> {
+    let spell_id = numeric_spell_id(state, 1);
+    let unit = Option::<String>::from_stack(state, 2)?.unwrap_or_else(|| "target".to_string());
+    let result = {
+        let sim = borrow_state(state)?;
+        if !spell_id.is_some_and(|id| spells::get_spell(id).is_some())
+            || !crate::lua_api::globals::group_queries::unit_exists_in_state(&sim, &unit)
+        {
+            None
+        } else {
+            Some(crate::c_api::item_spell::helpers::unit_is_reachable(
+                &sim, &unit,
+            ))
+        }
+    };
+    state.push(result.map_or(Val::Nil, Val::Bool));
+    Ok(1)
+}
+
 fn get_spell_name(state: &mut LuaState) -> LuaResult<u32> {
     let spell_id = read_modeled_u32_spell_id(state)?;
-    let name = spells::get_spell(spell_id)
-        .map(|spell| spell.name)
-        .unwrap_or("Unknown");
-    let name_string = create_string_static(state, name);
+    // Retail SpellDocumentation.lua:477-490 and Forever :518-531 declare
+    // MayReturnNothing for missing spells.
+    let Some(spell) = spells::get_spell(spell_id) else {
+        return Ok(0);
+    };
+    let name_string = create_string_static(state, spell.name);
     state.push(name_string);
     Ok(1)
 }
@@ -826,6 +855,11 @@ pub(super) fn numeric_spell_id_value(state: &LuaState, value: Val) -> Option<u32
 }
 
 fn spell_id_by_name(name: &str) -> Option<u32> {
+    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::WowForever {
+        if let Some(id) = crate::forever_spell_runtime::spell_id_by_name(name) {
+            return Some(id);
+        }
+    }
     let needle = name.to_ascii_lowercase();
     SPELL_DB
         .entries()

@@ -38,3 +38,4 @@ tests/rilua_bridge/target/
 # restricted listfile; keep the huge full files local and untracked.
 /data/full-community-listfile*.csv
 /data/community-listfile-full*.csv
+__pycache__/

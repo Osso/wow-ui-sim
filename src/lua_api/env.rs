@@ -76,6 +76,9 @@ impl Drop for WowLuaEnv {
 impl WowLuaEnv {
     /// Create a new WoW Lua environment with the API initialized.
     pub fn new() -> Result<Self> {
+        if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::WowForever {
+            crate::forever_spell_runtime::initialize().map_err(crate::Error::Other)?;
+        }
         crate::logging::eprintln_elapsed("[Startup] WowLuaEnv::new begin");
         let state = timed_startup_phase("SimState::default complete", || {
             Rc::new(RefCell::new(SimState::default()))

@@ -480,8 +480,10 @@ fn test_spell_get_spell_name() {
 #[test]
 fn test_spell_get_spell_name_unknown() {
     let env = env();
-    let name: String = env.eval("return C_Spell.GetSpellName(999999999)").unwrap();
-    assert_eq!(name, "Unknown");
+    let result: bool = env
+        .eval("return select('#', C_Spell.GetSpellName(999999999)) == 0 and C_Spell.GetSpellName(999999999) == nil")
+        .unwrap();
+    assert!(result);
 }
 
 #[test]

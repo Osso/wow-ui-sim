@@ -179,22 +179,70 @@ fn filter_fixture() -> Vec<AuraInfo> {
 /// (case, filter string, candidateFilters literal, expected shown icons)
 const CANDIDATE_FILTER_CASES: &[(&str, &str, &str, &str)] = &[
     ("no candidate filters", "HELPFUL", "nil", "101,102,103,104"),
-    ("include spell IDs", "HELPFUL", "{includeSpellIDs = {[101] = true, [104] = true}}", "101,104"),
-    ("exclude spell IDs", "HELPFUL", "{excludeSpellIDs = {[101] = true}}", "102,103,104"),
-    ("max duration hides longer and permanent", "HELPFUL", "{maxDuration = 60}", "101,102"),
-    ("max duration is inclusive", "HELPFUL", "{maxDuration = 600}", "101,102,104"),
-    ("stealable true", "HELPFUL", "{isStealable = true}", "102"),
-    ("stealable false negates", "HELPFUL", "{isStealable = false}", "101,103,104"),
-    ("player-or-pet false negates", "HELPFUL", "{isFromPlayerOrPlayerPet = false}", "102"),
-    ("player-or-pet true", "HELPFUL", "{isFromPlayerOrPlayerPet = true}", "101,103,104"),
-    ("can apply false", "HELPFUL", "{canApplyAura = false}", ""),
-    ("include dispel types", "HARMFUL", "{includeDispelTypes = {Magic = true}}", "201"),
-    ("exclude dispel types", "HARMFUL", "{excludeDispelTypes = {Magic = true, Curse = true}}", "203,204,205"),
     (
-        "spell ID filters skip secret debuffs on friendly units",
+        "include spell IDs",
+        "HELPFUL",
+        "{includeSpellIDs = {[101] = true, [104] = true}}",
+        "101,104",
+    ),
+    (
+        "exclude spell IDs",
+        "HELPFUL",
+        "{excludeSpellIDs = {[101] = true}}",
+        "102,103,104",
+    ),
+    (
+        "max duration hides longer and permanent",
+        "HELPFUL",
+        "{maxDuration = 60}",
+        "101,102",
+    ),
+    (
+        "max duration is inclusive",
+        "HELPFUL",
+        "{maxDuration = 600}",
+        "101,102,104",
+    ),
+    ("stealable true", "HELPFUL", "{isStealable = true}", "102"),
+    (
+        "stealable false negates",
+        "HELPFUL",
+        "{isStealable = false}",
+        "101,103,104",
+    ),
+    (
+        "player-or-pet false negates",
+        "HELPFUL",
+        "{isFromPlayerOrPlayerPet = false}",
+        "102",
+    ),
+    (
+        "player-or-pet true",
+        "HELPFUL",
+        "{isFromPlayerOrPlayerPet = true}",
+        "101,103,104",
+    ),
+    ("can apply false", "HELPFUL", "{canApplyAura = false}", ""),
+    (
+        "include dispel types",
+        "HARMFUL",
+        "{includeDispelTypes = {Magic = true}}",
+        "201",
+    ),
+    (
+        "exclude dispel types",
+        "HARMFUL",
+        "{excludeDispelTypes = {Magic = true, Curse = true}}",
+        "203,204,205",
+    ),
+    // Pinned Blizzard_AuraContainerUtil.lua:94-111 (Retail 12.1.5.70448): when
+    // identity filters cannot apply (secret debuff on a friendly unit), an
+    // includeSpellIDs list rejects the aura by default.
+    (
+        "include list rejects unfilterable debuffs on friendly units",
         "HARMFUL",
         "{includeSpellIDs = {[201] = true}}",
-        "201,202,203,205",
+        "",
     ),
     (
         "never-secret debuffs honour exclude on any unit",
@@ -205,10 +253,15 @@ const CANDIDATE_FILTER_CASES: &[(&str, &str, &str, &str)] = &[
     (
         "never-secret debuffs honour include on any unit",
         "HARMFUL",
-        "{includeSpellIDs = {[9072] = true}}",
-        "201,202,203,205",
+        "{includeSpellIDs = {[1126] = true, [9072] = true}}",
+        "204",
     ),
-    ("filter string and candidates combine", "HELPFUL|PLAYER", "{isStealable = true}", ""),
+    (
+        "filter string and candidates combine",
+        "HELPFUL|PLAYER",
+        "{isStealable = true}",
+        "",
+    ),
 ];
 
 #[test]
@@ -267,15 +320,19 @@ fn candidate_filters_can_be_replaced_after_creation() {
 }
 
 fn sort_fixture() -> Vec<AuraInfo> {
-    [(101, "Charlie", 30.0), (102, "Alpha", 10.0), (103, "Bravo", 0.0)]
-        .into_iter()
-        .map(|(id, name, expiration)| AuraInfo {
-            name: name.into(),
-            duration: expiration,
-            expiration_time: expiration,
-            ..aura(id)
-        })
-        .collect()
+    [
+        (101, "Charlie", 30.0),
+        (102, "Alpha", 10.0),
+        (103, "Bravo", 0.0),
+    ]
+    .into_iter()
+    .map(|(id, name, expiration)| AuraInfo {
+        name: name.into(),
+        duration: expiration,
+        expiration_time: expiration,
+        ..aura(id)
+    })
+    .collect()
 }
 
 /// (sort method, direction, expected order)
@@ -345,7 +402,13 @@ fn aura_slots_show_only_the_preferred_aura() {
     let slot = || env.eval::<String>("return AuditSlotIcon()").unwrap();
     assert_eq!(slot(), "102");
     // Removing the preferred aura promotes the next candidate.
-    set_player_auras(&env, sort_fixture().into_iter().filter(|a| a.aura_instance_id != 102).collect());
+    set_player_auras(
+        &env,
+        sort_fixture()
+            .into_iter()
+            .filter(|a| a.aura_instance_id != 102)
+            .collect(),
+    );
     settle(&env);
     assert_eq!(slot(), "101");
     env.exec(
@@ -360,8 +423,10 @@ fn aura_slots_show_only_the_preferred_aura() {
     .unwrap();
     settle(&env);
     assert_eq!(slot(), "101");
-    env.exec("AuditAddon(function() AuditSlotHost:SetAuraSlotFilterString('soonest', 'HARMFUL') end)")
-        .unwrap();
+    env.exec(
+        "AuditAddon(function() AuditSlotHost:SetAuraSlotFilterString('soonest', 'HARMFUL') end)",
+    )
+    .unwrap();
     settle(&env);
     assert_eq!(slot(), "hidden");
     assert_no_lua_errors(&env);

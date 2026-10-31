@@ -4,6 +4,16 @@ verified: 2026-10-09
 
 Bounded source inventory: 12 literal `AllowLoadGameType` tokens observed in cached Blizzard TOCs, not an exhaustive recognized vocabulary or a native-client acceptance result.
 
+## Native game-type masks
+
+Retail build 70688 recognizes `mainline`, `standard`, `plunderstorm`, `classic`, `vanilla`, `tbc`, `wrath`, `cata`, `mists`, and `wowhack` as bits 0x001 through 0x200. Forever build 70707 and PTR 12.1.7 add `camelot` and `forever`, both 0x400. Matching is case-insensitive; unknown tokens contribute no bits. Space and comma separate tokens. A zero mask imposes no restriction; a nonzero allow mask requires overlap and an exclude mask rejects overlap.
+
+Retail 70688 takes game-type header values verbatim, including brackets. The simulator applies this rule to all profiles. On Forever 70707 the bracket game-type list splits and accumulates the same way; its Camelot client mask is 0x401. The simulator uses `mainline` and `camelot` for Forever, and retains `mainline` and `standard` for Retail and PTR.
+
+### Known gaps
+
+Retail and PTR live client masks are unknown. The Forever and PTR header-value paths were not independently traced; the PTR bracket splitter and gate were not independently confirmed. Classic profile token tables and masks remain unverified. These are simulator policies, not native observations.
+
 ## Observed list
 
 `camelot`, `cata`, `classic`, `mainline`, `mists`, `plunderstorm`, `standard`, `tbc`, `vanilla`, `wowhack`, `wowlabs`, `wrath`.
@@ -32,14 +42,15 @@ Each inspected `AddOns/.wow-ui-sim-blizzard-ui-complete` contains `ok`. Correspo
 
 ## What this does not establish
 
-Filename suffixes such as `_Mainline`, `-Camelot`, or `_Vanilla` are filename-selection strings, not evidence of accepted `AllowLoadGameType` filter strings. Header syntax and inline syntax are distinct observations; examples do not establish complete grammar, case rules, unknown-token semantics, or universal validity. No taxonomy, synonym mapping, or mode assignment is inferred.
+Filename suffixes such as `_Mainline`, `-Camelot`, or `_Vanilla` are filename-selection strings, not evidence of accepted `AllowLoadGameType` filter strings. Header syntax and inline syntax are distinct observations; the source inventory alone does not establish their native grammar. This inventory alone does not establish a taxonomy, synonym mapping, or mode assignment.
 
 `BCC` is not observed in this inventory. Current native Anniversary acceptance of legacy `_BCC` / `-BCC` filenames remains unverified; contradictory online documentation is not resolved by these local TOCs. No native BCC claim is made.
 
-The simulator allow-list contains `classic_era`, `classic_anniversary`, `wrath_classic`, and `mists_classic`; these are not native-confirmed by this evidence. Simulator selection/filter policy belongs in [[client-profiles]], separately from this observed list. Absence from the inventory does not make an unknown token invalid: native recognition and unknown-token handling require actual-client proof.
+The simulator's active Classic profile labels include `classic_era`, `classic_anniversary`, `wrath_classic`, and `mists_classic`; their native recognition is unverified. Simulator selection/filter policy belongs in [[client-profiles]], separately from this observed list.
 
 ## Sources
 
+- Native behavior handoffs: Retail 70688 `TOC_AllowLoadGameType.md`; Forever 70707 F1 `TOC_AllowLoadGameType.md`; PTR 12.1.7 F5 `TOC_AllowLoadGameType.md` — supplied clean-room behavioral evidence.
 - Local TOC paths/line numbers quoted above — observed literals only.
 - [Tracked source capture](../../../data/toc-evidence/allowload-game-types-2026-10-09.json) — exact selected snippets, hashes, and cache metadata.
 - `/tmp/allowload-game-types-list.md` — original bounded inventory; temporary research path, not a durable acceptance authority.

@@ -80,9 +80,13 @@ Use local while gaming on desktop. Raw Cargo stays local. See [native workflow, 
 
 GitHub releases provide Retail, Mists, and WoW Forever packages for Linux x86-64, Windows x86-64, and macOS Apple Silicon. Windows packages include a ZIP and an installer; macOS packages use a DMG. Forever package names include `forever`, and its installer and macOS app use separate identities.
 
+Forever packages include selected spell data. For a local Forever build, run `wow-cli casc sync-forever-spells` before starting the simulator. It uses the installed pinned Forever client when available, or downloads the pinned DB2 files from Blizzard's CDN. See the [spell data contract](docs/specs/forever-spell-data.md).
+
+Retail and PTR dungeon score colours require a generated cache. Run `wow-cli casc sync-dungeon-score-rarity` for the active profile before running local tests or using those APIs. Retail release packages and Docker images include the cache. See the [rarity contract](docs/specs/dungeon-score-rarity.md).
+
 ## Docker
 
-Published addon-test images and CI/release workflows remain separate from native development.
+Published addon-test images and CI/release workflows remain separate from native development. The Dockerfile builds Retail by default; use `docker build --build-arg WOW_UI_SIM_PROFILE=wowforever .` for a Forever image with its spell data.
 Docker builds use `.cargo/config.ci.toml` for the default x86-64 CPU target;
 local builds keep `target-cpu=native` in `.cargo/config.toml`.
 Before publication, `.github/scripts/verify_docker_image.py IMAGE` checks
@@ -107,6 +111,8 @@ mkdir -p screenshots
 docker run --rm -v "$(pwd)/screenshots:/out" \
   ghcr.io/osso/wow-ui-sim screenshot -o /out/screenshot.webp
 ```
+
+For deterministic timing in addon tests, see the [manual clock example](docs/admin-api/challenge-mode.md#phase-b-explicit-manual-clock).
 
 The image does not include WoW game assets; screenshots may omit textures unless
 assets are available to the container.

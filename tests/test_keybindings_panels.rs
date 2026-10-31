@@ -566,6 +566,15 @@ fn premade_group_categories_can_start_search() {
             LFGListPVEStub_OnShow(LFGListPVEStub)
             LFGListFrame_SetActivePanel(LFGListFrame, LFGListFrame.CategorySelection)
 
+            C_LFGList.Search(2)
+            local count, results = C_LFGList.GetSearchResults()
+            assert(count > 0 and C_LFGList.GetSearchResultInfo(results[1]))
+            LFGListSearchPanel_Clear(LFGListFrame.SearchPanel)
+            assert(select(1, C_LFGList.GetSearchResults()) == 0)
+            assert(not C_LFGList.GetSearchResultInfo(results[1]))
+            C_LFGList.Search(2)
+            assert(select(1, C_LFGList.GetSearchResults()) == count)
+
             for _, button in ipairs(LFGListFrame.CategorySelection.CategoryButtons) do
                 if button:IsShown() then
                     LFGListFrame_SetActivePanel(LFGListFrame, LFGListFrame.CategorySelection)
@@ -582,6 +591,93 @@ fn premade_group_categories_can_start_search() {
 }
 }
 
+// The exercised Mainline GroupFinder handler is selected by Retail and PTR.
+#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
+#[test]
+fn premade_group_result_update_refreshes_selected_listing() {
+    test_timeout! {
+        let env = setup_env();
+        env.exec(r#"
+            assert(C_AddOns.LoadAddOn('Blizzard_GroupFinder'))
+            LFGListPVEStub_OnShow(LFGListPVEStub)
+            LFGListFrame_SetActivePanel(LFGListFrame, LFGListFrame.CategorySelection)
+            local category
+            for _, button in ipairs(LFGListFrame.CategorySelection.CategoryButtons) do
+                if button:IsShown() then category = button; break end
+            end
+            assert(category, 'expected a visible category')
+            category:GetScript('OnClick')(category)
+            local find = LFGListFrame.CategorySelection.FindGroupButton
+            find:GetScript('OnClick')(find)
+            local panel = LFGListFrame.SearchPanel
+            assert(LFGListFrame.activePanel == panel)
+            local source = debug.getinfo(LFGListSearchPanel_OnEvent, 'S').source:gsub('\\', '/')
+            assert(source:find('Blizzard_GroupFinder/', 1, true), source)
+            C_LFGList.Search(2)
+            assert(C_LFGList.GetSearchResultInfo(1).numMembers == 3)
+            local count = select(1, C_LFGList.GetSearchResults())
+            local events = 0
+            local observer = CreateFrame('Frame')
+            observer:RegisterEvent('LFG_LIST_SEARCH_RESULT_UPDATED')
+            observer:SetScript('OnEvent', function(_, _, id)
+                assert(id == 1)
+                events = events + 1
+            end)
+            A_Admin.UpdatePremadeListing(1, 'numMembers', 5)
+            assert(C_LFGList.GetSearchResultInfo(1).numMembers == 5)
+            assert(events == 1, 'listing update event was not delivered')
+            panel.selectedResult = 1
+            A_Admin.UpdatePremadeListing(1, 'isDelisted', true)
+            assert(C_LFGList.GetSearchResultInfo(1).isDelisted)
+            assert(C_LFGList.HasSearchResultInfo(1), 'delisted result must remain in the set')
+            assert(panel.selectedResult == nil, 'original OnEvent must clear a delisted selection')
+            assert(events == 2, 'delisting update event was not delivered')
+            A_Admin.AddPremadeListing('New group', 'new', 1195, 2, 5)
+            assert(select(1, C_LFGList.GetSearchResults()) == count)
+            assert(events == 2, 'a new catalog listing must not emit a result update')
+        "#).expect("Premade result updates should reach the original search panel handler");
+    }
+}
+
+// The exercised Mainline GroupFinder controls are selected by Retail and PTR.
+#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
+#[test]
+fn premade_group_search_text_filter_and_clear() {
+    test_timeout! {
+        let env = setup_env();
+        env.exec(r#"
+            assert(C_AddOns.LoadAddOn('Blizzard_GroupFinder'))
+            LFGListPVEStub_OnShow(LFGListPVEStub)
+            LFGListFrame_SetActivePanel(LFGListFrame, LFGListFrame.CategorySelection)
+            local category
+            for _, button in ipairs(LFGListFrame.CategorySelection.CategoryButtons) do
+                if button:IsShown() then category = button; break end
+            end
+            assert(category)
+            category:GetScript('OnClick')(category)
+            local find = LFGListFrame.CategorySelection.FindGroupButton
+            find:GetScript('OnClick')(find)
+            local panel = LFGListFrame.SearchPanel
+            local button = panel.AutoCompleteFrame.Results[1]
+            assert(button and button:GetScript('OnClick'))
+            button.activityID = 1195
+            button:GetScript('OnClick')(button)
+            local count, ids = C_LFGList.GetSearchResults()
+            assert(count == 1 and ids[1] == 1, 'activity 1195 filter')
+            button.activityID = 1188
+            button:GetScript('OnClick')(button)
+            count, ids = C_LFGList.GetSearchResults()
+            assert(count == 1 and ids[1] == 2, 'activity 1188 filter')
+            C_LFGList.SetSearchToQuestID(987654)
+            C_LFGList.Search(2)
+            assert(select(1, C_LFGList.GetSearchResults()) == 0, 'quest filter must replace activity filter')
+            LFGListSearchPanel_Clear(panel)
+            C_LFGList.Search(2)
+            assert(select(1, C_LFGList.GetSearchResults()) == 8, 'clear must reset search text fields')
+        "#).expect("Original GroupFinder search text controls should filter and clear results");
+    }
+}
+
 post_wrath_ui_fixture! {
 #[test]
 fn premade_group_search_result_tooltips_do_not_error() {
@@ -590,6 +686,8 @@ fn premade_group_search_result_tooltips_do_not_error() {
         env.exec(
             r#"
             assert(C_AddOns.LoadAddOn("Blizzard_GroupFinder"))
+            -- Blizzard_GroupFinder/Mainline/LFGList.lua:2817 starts the search before reading results.
+            C_LFGList.Search(2)
             local _, results = C_LFGList.GetSearchResults()
             assert(#results > 0, "expected seeded premade search results")
 

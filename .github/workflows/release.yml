@@ -170,6 +170,24 @@ jobs:
           WOW_UI_SIM_RELEASE_FEATURES: ${{ matrix.features }}
         run: cargo release-${{ matrix.platform }}
 
+      - name: Generate Forever spell data
+        if: contains(matrix.features, 'client-wowforever')
+        shell: bash
+        run: |
+          set -euo pipefail
+          cli="${{ matrix.bin-dir }}/wow-cli"
+          if [[ "${{ runner.os }}" == "Windows" ]]; then cli="${cli}.exe"; fi
+          "${cli}" casc sync-forever-spells --source cdn --output "${RUNNER_TEMP}/forever-spells.json"
+
+      - name: Generate dungeon score rarity cache
+        if: contains(matrix.features, 'client-retail') || contains(matrix.features, 'client-ptr')
+        shell: bash
+        run: |
+          set -euo pipefail
+          cli="${{ matrix.bin-dir }}/wow-cli"
+          if [[ "${{ runner.os }}" == "Windows" ]]; then cli="${cli}.exe"; fi
+          "${cli}" casc sync-dungeon-score-rarity --output "${RUNNER_TEMP}/dungeon-score-rarity.json"
+
       - name: Smoke-test release binary
         shell: bash
         run: |
@@ -199,6 +217,16 @@ jobs:
 
           mkdir -p "${root}"
           cp "${{ matrix.bin-dir }}/wow-sim" "${root}/"
+          if [[ "${{ matrix.features }}" == *client-wowforever* ]]; then
+            cp "${{ matrix.bin-dir }}/wow-cli" "${root}/"
+            mkdir -p "${root}/spells/wowforever"
+            cp "${RUNNER_TEMP}/forever-spells.json" "${root}/spells/wowforever/spells.json"
+          fi
+          if [[ "${{ matrix.features }}" == *client-retail* || "${{ matrix.features }}" == *client-ptr* ]]; then
+            profile=retail; [[ "${{ matrix.features }}" == *client-ptr* ]] && profile=ptr
+            mkdir -p "${root}/dungeon-score-rarity/${profile}"
+            cp "${RUNNER_TEMP}/dungeon-score-rarity.json" "${root}/dungeon-score-rarity/${profile}/rarity.json"
+          fi
           cp README.md LICENSE "${root}/"
           mkdir -p "${root}/Interface/AddOns"
           cp -R Interface/AddOns/Admin Interface/AddOns/SimCommands Interface/AddOns/TestFramework "${root}/Interface/AddOns/"
@@ -255,6 +283,16 @@ jobs:
           rm -rf "${app}"
           mkdir -p "${contents}/MacOS" "${contents}/Resources/Interface/AddOns"
           cp "${{ matrix.bin-dir }}/wow-sim" "${contents}/MacOS/wow-sim"
+          if [[ "${{ matrix.features }}" == *client-wowforever* ]]; then
+            cp "${{ matrix.bin-dir }}/wow-cli" "${contents}/MacOS/wow-cli"
+            mkdir -p "${contents}/MacOS/spells/wowforever"
+            cp "${RUNNER_TEMP}/forever-spells.json" "${contents}/MacOS/spells/wowforever/spells.json"
+          fi
+          if [[ "${{ matrix.features }}" == *client-retail* || "${{ matrix.features }}" == *client-ptr* ]]; then
+            profile=retail; [[ "${{ matrix.features }}" == *client-ptr* ]] && profile=ptr
+            mkdir -p "${contents}/MacOS/dungeon-score-rarity/${profile}"
+            cp "${RUNNER_TEMP}/dungeon-score-rarity.json" "${contents}/MacOS/dungeon-score-rarity/${profile}/rarity.json"
+          fi
           chmod +x "${contents}/MacOS/wow-sim"
           cp dist/wow-sim.icns "${contents}/Resources/wow-sim.icns"
           cp -R Interface/AddOns/Admin Interface/AddOns/SimCommands Interface/AddOns/TestFramework \
@@ -263,6 +301,10 @@ jobs:
           if [[ "${{ matrix.features }}" == *client-retail* || "${{ matrix.features }}" == *client-wowforever* ]]; then
             python3 "${GITHUB_WORKSPACE}/scripts/bundle-macos-icu.py" \
               "${contents}/MacOS/wow-sim" "$(brew --prefix icu4c)/lib"
+            if [[ "${{ matrix.features }}" == *client-wowforever* ]]; then
+              python3 "${GITHUB_WORKSPACE}/scripts/bundle-macos-icu.py" \
+                "${contents}/MacOS/wow-cli" "$(brew --prefix icu4c)/lib"
+            fi
           fi
 
           # Ad-hoc codesign so macOS reports "unidentified developer"
@@ -339,6 +381,16 @@ jobs:
 
           New-Item -ItemType Directory -Force $root | Out-Null
           Copy-Item "${{ matrix.bin-dir }}\wow-sim.exe" $root
+          if ("${{ matrix.features }}" -like "*client-wowforever*") {
+            Copy-Item "${{ matrix.bin-dir }}\wow-cli.exe" $root
+            New-Item -ItemType Directory -Force "$root\spells\wowforever" | Out-Null
+            Copy-Item "$env:RUNNER_TEMP\forever-spells.json" "$root\spells\wowforever\spells.json"
+          }
+          if ("${{ matrix.features }}" -like "*client-retail*" -or "${{ matrix.features }}" -like "*client-ptr*") {
+            $profile = if ("${{ matrix.features }}" -like "*client-ptr*") { "ptr" } else { "retail" }
+            New-Item -ItemType Directory -Force "$root\dungeon-score-rarity\$profile" | Out-Null
+            Copy-Item "$env:RUNNER_TEMP\dungeon-score-rarity.json" "$root\dungeon-score-rarity\$profile\rarity.json"
+          }
           Copy-Item README.md, LICENSE $root
           New-Item -ItemType Directory -Force "$root\Interface\AddOns" | Out-Null
           Copy-Item Interface\AddOns\Admin, Interface\AddOns\SimCommands, Interface\AddOns\TestFramework "$root\Interface\AddOns\" -Recurse

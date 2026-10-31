@@ -9,6 +9,9 @@ use rilua::{LuaResult, Val, runtime_error};
 
 pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
     let namespace = crate::c_api::ensure_namespace(state, "C_UIWidgetManager")?;
+    if crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Wrath {
+        super::unit_context::register(state, namespace)?;
+    }
     table_set_rust_fn_static(state, namespace, "GetWidgetSetInfo", query_set_info)?;
     table_set_rust_fn_static(state, namespace, "GetAllWidgetsBySetID", query_set_widgets)?;
     table_set_rust_fn_static(
@@ -125,11 +128,16 @@ fn query_icon_and_text(state: &mut LuaState) -> LuaResult<u32> {
         state,
         "C_UIWidgetManager.GetIconAndTextWidgetVisualizationInfo: widgetID must be a number",
     )?;
-    let record = borrow_state(state)?
-        .ui_widget_inputs
-        .icon_and_text
-        .get(&WidgetId::from_number(id))
-        .cloned();
+    let record = {
+        let sim = borrow_state(state)?;
+        let inputs = &sim.ui_widget_inputs;
+        inputs.resolve_visualization(WidgetId::from_number(id), &inputs.icon_and_text, |value| {
+            match value {
+                super::WidgetVisualization::IconAndText(record) => Some(record),
+                _ => None,
+            }
+        })
+    };
     let Some(record) = record else {
         state.push(Val::Nil);
         return Ok(1);

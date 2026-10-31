@@ -1,6 +1,10 @@
 //! Profile-scoped Blizzard UI source synchronization.
 
 #[cfg(feature = "casc")]
+pub mod dungeon_score_rarity;
+#[cfg(feature = "casc")]
+pub mod forever_spells;
+#[cfg(feature = "casc")]
 mod gethe_missing;
 #[cfg(feature = "casc")]
 mod locale;
@@ -85,9 +89,11 @@ pub fn cached_blizzard_ui_addons_path() -> Option<PathBuf> {
         };
     }
     let is_complete = path.join(COMPLETE_MARKER).is_file();
-    let identity_matches = crate::client_profile::ACTIVE
-        != crate::client_profile::ClientProfile::Ptr
-        || pinned::cache_matches(&path);
+    let identity_matches = match crate::client_profile::ACTIVE {
+        crate::client_profile::ClientProfile::Retail => pinned::retail_cache_matches(&path),
+        crate::client_profile::ClientProfile::Ptr => pinned::cache_matches(&path),
+        _ => true,
+    };
     (is_complete && identity_matches && cache_has_required_profile_files(&path)).then_some(path)
 }
 
@@ -109,6 +115,9 @@ pub fn sync_blizzard_ui_to(root: &Path) -> crate::Result<SyncSummary> {
     }
     if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Ptr {
         return pinned::sync_to(root);
+    }
+    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
+        return pinned::sync_retail_to(root);
     }
     let expected_provenance = expected_cache_provenance()?;
     invalidate_cache_if_provenance_mismatched(root, &expected_provenance)?;
@@ -247,6 +256,9 @@ impl CacheProvenance {
 }
 
 fn expected_cache_provenance() -> crate::Result<CacheProvenance> {
+    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
+        return pinned::retail_provenance();
+    }
     if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Ptr {
         return pinned::provenance();
     }
@@ -400,7 +412,7 @@ fn manifest_entry_is_allowed_unmapped(entry: &str) -> bool {
 }
 
 #[cfg(feature = "casc")]
-fn extract_fdid(fdid: u32, out_path: &Path) -> crate::Result<bool> {
+pub fn extract_fdid(fdid: u32, out_path: &Path) -> crate::Result<bool> {
     if !casc_available() {
         return Err(casc_unavailable_error());
     }
@@ -561,7 +573,7 @@ fn retry_cdn_fetch<E: std::fmt::Display>(
 }
 
 #[cfg(not(feature = "casc"))]
-fn extract_fdid(_fdid: u32, _out_path: &Path) -> crate::Result<bool> {
+pub fn extract_fdid(_fdid: u32, _out_path: &Path) -> crate::Result<bool> {
     Err(casc_feature_error())
 }
 

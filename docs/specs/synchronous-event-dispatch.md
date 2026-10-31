@@ -33,6 +33,10 @@ At `9c223f8b7`, `admin_event_api::test_fire_event_` passes 12/12. The synthetic 
 
 The observed GUI removal instead depended on recursive visibility dispatch: after `ReloadFrames`, the visible `pball` container lacked `UNIT_AURA` registration because normal-only `OnShow` skipped its intrinsic re-registration. `1e1dfe7c0` corrects that route. It is intentionally separate from the synchronous producer fix; AddBuff/RemoveBuff already use `fire_named_event_state`.
 
+## Issue 13 party dispatch observation
+
+The Retail `run-tests` party-change fixture reaches `CompactArenaFrame.lua:318` through the original Blizzard handler. An untainted line hook observes a nil stack taint there for the `SetPartySize(0)`, `SetPartySize(1)`, and `SetPartyMember` sequence. This is simulator preservation coverage, not proof of the native dispatch-taint rule, which remains UNKNOWN. The reported aura-pool and blocked-action scenarios are not established by this test.
+
 ## Out of scope
 
 Loader/template changes, vendor edits, new event shims, unit-alias redesign, and broader security policy. Existing intrinsic bindings are reused rather than synthesized in the event producer.

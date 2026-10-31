@@ -14,6 +14,9 @@ const HIGH_LEVEL_ARMOR_FORMULA_MIN_LEVEL: f64 = 60.0;
 
 pub(crate) fn register_c_paper_doll_info_surface(state: &mut LuaState) -> LuaResult<()> {
     let ns = ensure_namespace(state, "C_PaperDollInfo")?;
+    if crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Wrath {
+        table_set_rust_fn_static(state, ns, "GetMinItemLevel", get_min_item_level)?;
+    }
     table_set_rust_fn_static(state, ns, "GetArmorEffectiveness", get_armor_effectiveness)?;
     if cfg!(any(
         feature = "retail-12-1-0",
@@ -52,6 +55,12 @@ pub(crate) fn register_c_paper_doll_info_surface(state: &mut LuaState) -> LuaRes
         get_temporary_enchantment_info,
     )?;
     Ok(())
+}
+
+// Best guess: no display floor applies when level scaling is not modeled.
+fn get_min_item_level(state: &mut LuaState) -> LuaResult<u32> {
+    state.push(Val::Nil);
+    Ok(1)
 }
 
 /// Weapon enchant index for the main-hand (16), off-hand (17), or ranged (18)

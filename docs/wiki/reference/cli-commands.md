@@ -6,6 +6,8 @@ Two binaries: `wow-sim` (full UI load, GUI capable) and `wow-cli` (connects to r
 
 Build `wow-cli` with `cargo build --bin wow-cli --features tools` before using the bare `wow-cli` commands below; `tools` is a Cargo feature, not a runtime argument. See [utility builds](../../../README.md#utility-binary-builds).
 
+GUI, screenshot, dump-tree, and run-tests start with four demo party members. Set `WOW_SIM_NO_PARTY=1` to start solo. See [party administration](../../admin-api/party.md).
+
 ## wow-sim Subcommands
 
 ### `lua-errors`
@@ -27,6 +29,8 @@ Run Lua-level tests from `Interface/AddOns/<addon>/tests/`. For internal logic, 
 wow-sim --no-addons --no-saved-vars run-tests MyAddon
 wow-sim --addons-path /tmp/test-addons run-tests MyAddon
 ```
+
+For deterministic timing in addon tests, see the [manual clock example](../../admin-api/challenge-mode.md#phase-b-explicit-manual-clock).
 
 Use [exclusive addon roots](../../../README.md#exclusive-addon-test-runs) to
 prevent live addons from entering a test run. The guide covers repeated CLI

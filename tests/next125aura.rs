@@ -29,6 +29,7 @@ fn fixture_aura(id: i32, helpful: bool, from_player: bool) -> AuraInfo {
 
 fn populate_existing_stores(env: &WowLuaEnv) {
     let mut state = env.state().borrow_mut();
+    state.party_group_active = true;
     state.player.buffs = vec![
         fixture_aura(101, true, true),
         fixture_aura(102, true, false),

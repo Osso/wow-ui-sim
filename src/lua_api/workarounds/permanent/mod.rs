@@ -4,9 +4,11 @@
 //! compromises kept out of the generic bootstrap/C API surface.
 
 mod achievement_display;
+mod flash_client_icon;
 
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
-    achievement_display::apply_bootstrap(lua)
+    achievement_display::apply_bootstrap(lua)?;
+    flash_client_icon::apply_bootstrap(lua)
 }
 
 pub(crate) fn reapply_achievement_display_after_blizzard_load(env: &crate::lua_api::WowLuaEnv) {

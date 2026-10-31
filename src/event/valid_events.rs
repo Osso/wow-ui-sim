@@ -74,13 +74,24 @@ fn is_ptr_event(name: &str) -> bool {
             .is_ok()
 }
 
+fn is_world_loot_equipment_event(name: &str) -> bool {
+    matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail
+            | crate::client_profile::ClientProfile::Ptr
+            | crate::client_profile::ClientProfile::WowForever
+    ) && name == "PLAYER_EQUIPED_SPELLS_CHANGED"
+}
+
 pub fn is_registerable_event(name: &str) -> bool {
-    is_ptr_event(name)
+    is_world_loot_equipment_event(name)
+        || is_ptr_event(name)
         || crate::c_api::forever_startup::accepts_event(name)
         || sim_event::is_registerable_event(name, POLICY)
 }
 pub fn is_valid_event(name: &str) -> bool {
-    is_ptr_event(name)
+    is_world_loot_equipment_event(name)
+        || is_ptr_event(name)
         || crate::c_api::forever_startup::accepts_event(name)
         || sim_event::is_valid_event(name, POLICY)
 }

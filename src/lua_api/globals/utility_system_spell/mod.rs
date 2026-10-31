@@ -293,24 +293,40 @@ fn split_on_delimiter_set(input: &[u8], delim: &[u8], limit: Option<usize>) -> V
     pieces
 }
 
-/// `strjoin(delimiter, ...)` — concatenate the variadic string arguments
-/// separated by `delimiter`.
+/// `strjoin(delimiter, ...)` — concatenate the variadic arguments separated by
+/// `delimiter` with `lua_concat` semantics: strings and numbers only, anything
+/// else raises "attempt to concatenate a <type> value" (3.3.5a Script_strjoin;
+/// Retail 12.1.5 observation in Meorawr/elune#16).
 pub fn strjoin(state: &mut LuaState) -> LuaResult<u32> {
-    let delim = val_to_string_bytes(state, stack_val(state, 1)).unwrap_or_default();
     let nargs = (state.top as i32 - state.base as i32) as usize;
     let mut out: Vec<u8> = Vec::new();
     for index in 2..=nargs {
-        if !out.is_empty() {
-            out.extend_from_slice(&delim);
+        if index > 2 {
+            out.extend_from_slice(&concat_operand_bytes(state, stack_val(state, 1))?);
         }
         let slot = state.base + index - 1;
-        if let Some(bytes) = val_to_string_bytes(state, state.stack_get(slot)) {
-            out.extend_from_slice(&bytes);
-        }
+        out.extend_from_slice(&concat_operand_bytes(state, state.stack_get(slot))?);
     }
     let joined = state.gc.intern_string(&out);
     state.push(Val::Str(joined));
     Ok(1)
+}
+
+fn concat_operand_bytes(state: &LuaState, val: Val) -> LuaResult<Vec<u8>> {
+    match val {
+        Val::Str(s) => Ok(state
+            .gc
+            .string_arena
+            .get(s)
+            .map(|s| s.data().to_vec())
+            .unwrap_or_default()),
+        // `Val`'s Display uses Lua's %.14g number formatting.
+        Val::Num(_) => Ok(val.to_string().into_bytes()),
+        other => Err(runtime_error(format!(
+            "attempt to concatenate a {} value",
+            other.type_name()
+        ))),
+    }
 }
 
 fn val_to_string_bytes(state: &LuaState, val: Val) -> Option<Vec<u8>> {
@@ -653,6 +669,7 @@ pub fn register_all(lua: &mut rilua::Lua) -> rilua::LuaResult<()> {
     crate::lua_api::globals::real::specialization_legacy::register_legacy_specialization_globals(
         state,
     )?;
+    crate::lua_api::globals::real::loot_specialization::register(state)?;
     crate::lua_api::globals::real::ui_widget_container::register_widget_container_mixin(state)?;
 
     Ok(())
@@ -767,6 +784,28 @@ mod tests {
                 "number".to_string(),
                 "nil".to_string(),
             )
+        );
+    }
+
+    #[test]
+    fn strjoin_concatenates_like_lua_concat() {
+        let env = WowLuaEnv::new().expect("lua env should initialize");
+        let result: String = env
+            .eval(
+                r#"
+                local joined = strjoin(",", "a", 1.5, "b")
+                local ok_nil, err_nil = pcall(strjoin, ",", "a", nil)
+                local ok_bool, err_bool = pcall(strjoin, ",", "a", true)
+                return joined .. "|" .. strjoin(",") .. "|" .. strjoin(nil, "solo")
+                    .. "|" .. tostring(ok_nil) .. ":" .. tostring(err_nil)
+                    .. "|" .. tostring(ok_bool) .. ":" .. tostring(err_bool)
+                "#,
+            )
+            .expect("strjoin probe should run");
+        assert_eq!(
+            result,
+            "a,1.5,b||solo|false:attempt to concatenate a nil value\
+             |false:attempt to concatenate a boolean value"
         );
     }
 }

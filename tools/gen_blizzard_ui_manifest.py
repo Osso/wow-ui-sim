@@ -18,7 +18,7 @@ AddOns and FrameXML roots rather than Interface/AddOns. Wrath enumeration
 validates that local snapshot; it never refreshes another profile's branch.
 
 By default the script refreshes branch-backed snapshots from upstream
-(shallow). PTR checks out the immutable revision in its committed content index;
+(shallow). Retail and PTR check out the immutable revisions in their content indexes;
 other profiles follow their branch. Pass --no-refresh to enumerate the existing cache as-is.
 
 The community listfile is deliberately NOT used as a source: it is a periodic
@@ -156,8 +156,9 @@ def main() -> None:
             )
         if not args.no_refresh:
             revision = None
-            if profile == "ptr":
-                pin = json.loads((REPO_ROOT / "data/blizzard-ui-builds/ptr.json").read_text())
+            if profile in ("retail", "ptr"):
+                pin_path = REPO_ROOT / f"data/blizzard-ui-builds/{profile}.json"
+                pin = json.loads(pin_path.read_text())
                 revision = pin["gethe_revision"]
             refresh_branch(branch, revision)
         entries = enumerate_files(branch)

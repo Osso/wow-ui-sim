@@ -2,10 +2,10 @@
 use super::{
     BulletTextListRecord, ButtonHeaderRecord, CaptureBarRecord, DiscreteProgressStepsRecord,
     DoubleIconAndTextRecord, DoubleStatusBarRecord, HorizontalCurrenciesRecord, IconAndTextRecord,
-    IconTextAndBackgroundRecord, IconTextAndCurrenciesRecord, ItemDisplayRecord, SpacerRecord,
-    SpellDisplayRecord, StatusBarRecord, TextColumnRowVisualizationInfo, TextWithStateRecord,
-    TextWithSubtextRecord, TextureAndTextRecord, TextureAndTextRowRecord, WidgetId, WidgetSetEntry,
-    WidgetSetRecord,
+    IconTextAndBackgroundRecord, IconTextAndCurrenciesRecord, ItemDisplayRecord, ProcessingUnit,
+    SpacerRecord, SpellDisplayRecord, StatusBarRecord, TextColumnRowVisualizationInfo,
+    TextWithStateRecord, TextWithSubtextRecord, TextureAndTextRecord, TextureAndTextRowRecord,
+    WidgetId, WidgetSetEntry, WidgetSetRecord,
 };
 use crate::lua_api::WowLuaEnv;
 use crate::{Error, Result};
@@ -91,7 +91,31 @@ impl WowLuaEnv {
         entry: WidgetSetEntry,
         record: WidgetVisualization,
     ) -> Result<()> {
+        self.update_ui_widget_for_unit(set_id, entry, record, false)
+    }
+
+    /// Supply a GUID-attached visualization and notify registered GUID consumers.
+    pub fn update_ui_widget_for_guid(
+        &self,
+        set_id: f64,
+        entry: WidgetSetEntry,
+        record: WidgetVisualization,
+    ) -> Result<()> {
+        if entry.unit_token.is_none() {
+            return Err(Error::Other("GUID widget update requires a GUID".into()));
+        }
+        self.update_ui_widget_for_unit(set_id, entry, record, true)
+    }
+
+    fn update_ui_widget_for_unit(
+        &self,
+        set_id: f64,
+        entry: WidgetSetEntry,
+        record: WidgetVisualization,
+        is_guid: bool,
+    ) -> Result<()> {
         validate_visualization(&entry, &record)?;
+        let deliver;
         {
             let mut sim = self.state.borrow_mut();
             let set = sim
@@ -100,9 +124,85 @@ impl WowLuaEnv {
                 .get_mut(&WidgetId::from_number(set_id))
                 .ok_or_else(|| Error::Other("UI widget update requires a supplied set".into()))?;
             upsert_membership(&mut set.widgets, &entry);
-            supply_visualization(&mut sim, entry.widget_id, record);
+            if let Some(unit) = &entry.unit_token {
+                let context = &mut sim.ui_widget_inputs.unit_context;
+                let key = if is_guid {
+                    ProcessingUnit::Guid(unit.clone())
+                } else {
+                    ProcessingUnit::Token(unit.clone())
+                };
+                let id = WidgetId::from_number(entry.widget_id);
+                context.unit_widget_ids.insert(id);
+                context.unit_visualizations.insert((key, id), record);
+                deliver = context.registrations.contains(&(unit.clone(), is_guid));
+            } else {
+                supply_visualization(&mut sim, entry.widget_id, record);
+                deliver = true;
+            }
         }
-        self.fire_ui_widget_update(set_id, &entry)
+        if deliver {
+            self.fire_ui_widget_update(set_id, &entry)?;
+        }
+        Ok(())
+    }
+
+    /// Remove only the supplied unit's record and notify its registered container.
+    pub fn remove_ui_widget_for_unit(
+        &self,
+        set_id: f64,
+        widget_id: f64,
+        unit: ProcessingUnit,
+    ) -> Result<bool> {
+        let (entry, deliver) = {
+            let mut sim = self.state.borrow_mut();
+            let id = WidgetId::from_number(widget_id);
+            let Some(mut entry) = sim
+                .ui_widget_inputs
+                .sets
+                .get(&WidgetId::from_number(set_id))
+                .and_then(|set| {
+                    set.widgets
+                        .iter()
+                        .find(|entry| WidgetId::from_number(entry.widget_id) == id)
+                })
+                .cloned()
+            else {
+                return Ok(false);
+            };
+            let context = &mut sim.ui_widget_inputs.unit_context;
+            if context
+                .unit_visualizations
+                .remove(&(unit.clone(), id))
+                .is_none()
+            {
+                return Ok(false);
+            }
+            let (name, is_guid) = match unit {
+                ProcessingUnit::Token(name) => (name, false),
+                ProcessingUnit::Guid(name) => (name, true),
+            };
+            let deliver = context.registrations.contains(&(name.clone(), is_guid));
+            let has_other_units = context
+                .unit_visualizations
+                .keys()
+                .any(|(_, key)| *key == id);
+            if !has_other_units {
+                if let Some(set) = sim
+                    .ui_widget_inputs
+                    .sets
+                    .get_mut(&WidgetId::from_number(set_id))
+                {
+                    set.widgets
+                        .retain(|entry| WidgetId::from_number(entry.widget_id) != id);
+                }
+            }
+            entry.unit_token = Some(name);
+            (entry, deliver)
+        };
+        if deliver {
+            self.fire_ui_widget_update(set_id, &entry)?;
+        }
+        Ok(true)
     }
 
     /// Remove membership without deleting a record shared by other containers.

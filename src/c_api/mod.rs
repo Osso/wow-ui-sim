@@ -11,6 +11,7 @@ pub(crate) mod classic_startup_data;
 #[cfg(feature = "client-retail")]
 pub(crate) mod currency_list;
 pub mod item_overlay;
+pub mod mount_filters;
 pub(crate) mod ptr_i4_game_rules;
 pub(crate) mod quest_difficulty;
 pub mod quest_objectives;
@@ -28,7 +29,7 @@ pub mod action_count_info;
 pub use action_count_info::ActionUseCountInfo;
 pub mod action_macros;
 pub mod action_repeat;
-#[cfg(any(feature = "retail-12-0-0", feature = "client-wrath"))]
+#[cfg(feature = "action-spell-range")]
 pub mod action_spell_range;
 pub mod action_usability;
 #[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
@@ -49,7 +50,7 @@ pub(crate) mod c_action_bar;
 pub(crate) mod c_action_bar_counts;
 #[cfg(feature = "retail-12-0-5")]
 pub(crate) mod c_action_bar_loss_of_control;
-#[cfg(feature = "retail-12-0-0")]
+#[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
 pub mod c_action_bar_queries;
 #[cfg(feature = "retail-12-0-5")]
 pub(crate) mod c_action_bar_spell_slots;
@@ -76,6 +77,7 @@ pub(crate) mod c_battle_net_friend_search;
 #[cfg(feature = "retail-12-0-7")]
 pub(crate) mod c_battle_net_invite;
 pub mod c_calendar;
+pub(crate) mod c_campaign_info;
 pub mod c_catalog_shop;
 pub mod c_catalog_shop_products;
 pub mod c_challenge_mode;
@@ -110,6 +112,7 @@ pub(crate) mod c_debug;
 #[cfg(feature = "retail-12-0-5")]
 pub(crate) mod c_delves_entrance;
 pub mod c_discord;
+mod c_dungeon_score_rarity;
 #[cfg(feature = "retail-12-0-0")]
 pub mod c_dye_color;
 #[cfg(feature = "client-wowforever")]
@@ -243,6 +246,7 @@ pub(crate) mod c_transmog_collection;
 pub(crate) mod c_voice_chat_activity;
 #[cfg(feature = "retail-12-0-5")]
 pub mod c_voice_chat_channels;
+pub mod c_voice_chat_devices;
 mod c_voice_chat_settings;
 #[cfg(feature = "retail-12-0-0")]
 mod c_voice_chat_volume;
@@ -376,6 +380,7 @@ pub mod tooltip_item_context;
 #[cfg(feature = "retail-12-0-5")]
 pub use tooltip_item_context::ItemTooltipContext;
 pub mod weapon_enchants;
+pub mod world_loot_object;
 
 #[cfg(any(feature = "client-wowforever", feature = "client-ptr"))]
 pub mod c_game_pad;
@@ -429,12 +434,23 @@ pub(crate) fn register_utility_bootstrap_tables(state: &mut LuaState) -> LuaResu
     #[cfg(feature = "retail-12-0-5")]
     c_navigation::register(state)?;
     c_weather::register(state)?;
+    if supports_super_tracking() {
+        world_loot_object::register(state)?;
+    }
     #[cfg(not(feature = "client-wrath"))]
     combat_audio_throttle::register(state)?;
     #[cfg(any(feature = "retail-12-1-0", feature = "client-wowforever"))]
     c_cvar_readiness::register(state)?;
     c_achievement_info_relations::register(state)?;
     c_calendar::register(state)?;
+    if matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail
+            | crate::client_profile::ClientProfile::Ptr
+            | crate::client_profile::ClientProfile::WowForever
+    ) {
+        c_campaign_info::register(state)?;
+    }
     if supports_super_tracking() {
         c_quest_log::register(state)?;
         c_super_track::register(state)?;

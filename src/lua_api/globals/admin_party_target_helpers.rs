@@ -83,11 +83,14 @@ pub(super) fn default_party_member() -> PartyMember {
 pub(super) fn set_target(state: &mut LuaState) -> LuaResult<u32> {
     set_selected_unit(state, "target", |st, unit| {
         st.current_target = Some(unit);
-    })
+    })?;
+    super::state_backed_queries::dispatch_event_now(state, "PLAYER_TARGET_CHANGED", &[])?;
+    Ok(0)
 }
 
 pub(super) fn clear_target(state: &mut LuaState) -> LuaResult<u32> {
     borrow_state_mut(state)?.current_target = None;
+    super::state_backed_queries::dispatch_event_now(state, "PLAYER_TARGET_CHANGED", &[])?;
     Ok(0)
 }
 
@@ -251,6 +254,10 @@ pub(super) fn set_party_member(state: &mut LuaState) -> LuaResult<u32> {
         if let Some(member) = st.party_members.get_mut((idx - 1) as usize) {
             changed =
                 member.name != name || member.class_index != class_index || member.level != level;
+            if changed {
+                member.buffs.clear();
+                member.debuffs.clear();
+            }
             member.name = name;
             member.class_index = class_index;
             member.level = level;
@@ -259,6 +266,11 @@ pub(super) fn set_party_member(state: &mut LuaState) -> LuaResult<u32> {
     };
     if changed {
         dispatch_event_now(state, "GROUP_ROSTER_UPDATE", &[])?;
+        let unit = crate::lua_api::methods::create_string(state, &format!("party{idx}"));
+        let info = crate::lua_api::methods::create_table(state);
+        crate::lua_api::methods::table_set(state, info, "isFullUpdate", rilua::Val::Bool(true));
+        let info = crate::c_api::unit_aura_access::unit_aura_event_payload(state, info)?;
+        dispatch_event_now(state, "UNIT_AURA", &[unit, info])?;
     }
     Ok(0)
 }
@@ -299,29 +311,52 @@ pub(super) fn set_party_member_health(state: &mut LuaState) -> LuaResult<u32> {
     let idx = i32::from_stack(state, 1)?;
     let cur = i32::from_stack(state, 2)?;
     let max = i32::from_stack(state, 3)?;
-    let mut st = borrow_state_mut(state)?;
-    if let Some(member) = st.party_members.get_mut((idx - 1) as usize) {
-        member.health = cur;
-        member.health_max = max;
+    let changed = {
+        let mut st = borrow_state_mut(state)?;
+        st.party_members.get_mut((idx - 1) as usize).map(|member| {
+            let changed = member.health_max != max;
+            member.health = cur;
+            member.health_max = max;
+            changed
+        })
+    };
+    if let Some(changed) = changed {
+        super::admin::dispatch_health_events(state, &format!("party{idx}"), changed)?;
     }
     Ok(0)
 }
 
 pub(super) fn kill_party_member(state: &mut LuaState) -> LuaResult<u32> {
     let idx = i32::from_stack(state, 1)?;
-    let mut st = borrow_state_mut(state)?;
-    let now = st.clock_now();
-    if let Some(member) = st.party_members.get_mut((idx - 1) as usize) {
-        member.dead_since = Some(now);
+    let present = {
+        let mut st = borrow_state_mut(state)?;
+        let now = st.clock_now();
+        if let Some(member) = st.party_members.get_mut((idx - 1) as usize) {
+            member.dead_since = Some(now);
+            true
+        } else {
+            false
+        }
+    };
+    if present {
+        super::admin::dispatch_health_events(state, &format!("party{idx}"), false)?;
     }
     Ok(0)
 }
 
 pub(super) fn res_party_member(state: &mut LuaState) -> LuaResult<u32> {
     let idx = i32::from_stack(state, 1)?;
-    let mut st = borrow_state_mut(state)?;
-    if let Some(member) = st.party_members.get_mut((idx - 1) as usize) {
-        member.dead_since = None;
+    let present = {
+        let mut st = borrow_state_mut(state)?;
+        if let Some(member) = st.party_members.get_mut((idx - 1) as usize) {
+            member.dead_since = None;
+            true
+        } else {
+            false
+        }
+    };
+    if present {
+        super::admin::dispatch_health_events(state, &format!("party{idx}"), false)?;
     }
     Ok(0)
 }

@@ -46,6 +46,11 @@ a newline; remove it on release. Existing JSON markers remain unchanged for
 running lanes. This helper checks ownership; it does not claim or release slots.
 It checks `capacity.sh` once with `CAPACITY_ID` from `--capacity-id` and refuses
 anything except a literal `ADD` verdict. It does not poll for admission.
+It also exports `CAPACITY_GUARANTEE` with the slot target root. While no
+cargo, rustc or linker process of any slot is running and no floor admission is
+under 1 min old, `capacity.sh` admits that caller past the 24/32 agent-CPU cap and
+the FIFO rank. The RAM, disk and memory-pressure limits still apply (user decision
+2026-10-29: other projects held every slot build for hours).
 
 ```sh
 scripts/slot-build.py --slot 3 --worktree "$HOME/.worktrees/wow-ui-sim-lane" --unit lane-build --owner lane-owner --capacity-id lane-capacity -- /usr/bin/cargo test --test integration --no-run
@@ -59,13 +64,24 @@ sccache instead of the incremental compiler. Status prints
 `SubState`, `Result`, `CPUUsageNSec`, and `WallTimeSec` (elapsed while running).
 Use the helper from the checkout that contains it; it builds `--worktree`.
 
+The freshness guard stores file digests and parsed dep-info in
+`slot-N/.stat-cache.json`, keyed by device, inode, size, mtime and ctime.
+A value is reused only while that key is unchanged. Values read within 2 s of
+the file's last change are not stored, so a write in the same timestamp tick is
+re-read. Each build keeps only the entries it used. Output realpaths in dep-info
+are resolved on every build.
+
 ### Slot size limit
 
 Before Cargo starts, the worker checks `.owner` and acquires each existing
 Cargo build profile's `.cargo-lock` non-blockingly. A held lock refuses pruning
 with `slot build lock busy` and the lock path. Locks remain held from inventory
 through deletion, so Cargo cannot build in those profiles during pruning.
-The worker prunes when allocated disk usage exceeds `--slot-cap-gib` (default 130 GiB; user decision 2026-10-29, one
+While holding those locks it first removes superseded incremental sessions
+(every `incremental/<crate>-<hash>/s-*` directory and its `.lock` except the
+newest) regardless of the cap; rustc only reads the newest session. On
+2026-10-30 these were about 70 GiB of each ~100 GiB slot.
+The worker then prunes when allocated disk usage exceeds `--slot-cap-gib` (default 130 GiB; user decision 2026-10-29, one
 integration-target slot uses 100-120 GiB), stopping below 80% of the cap
 (default 104 GiB). Units with `deps` or `incremental` members go first, then
 fingerprint/build-only units; each group is ordered by newest member mtime. Fingerprints,
@@ -170,7 +186,10 @@ Content changes are computed from the last successfully verified source identity
 not the latest attempt or the mtime refresh set. Failed and rejected builds never
 advance that baseline, so retrying cannot erase a pending content diff. When the content diff intersects a
 record's own inputs, Cargo must report `fresh=false`. If that record is an
-executable, its SHA256 must also differ from the previous hash at the same path.
+executable, its SHA256 must also differ from the previous hash at the same path,
+unless the only changed content inputs are `Cargo.toml` or `Cargo.lock` files:
+manifest edits (dev-dependencies, workspace members, other targets) often leave
+executable bytes unchanged, so `fresh=false` is enough (user decision 2026-10-29).
 Otherwise the run fails with `stale artifacts`. Libraries do not require changed
 hashes. A changed library, `.rmeta`, or another executable cannot certify an
 executable whose own inputs changed. Unreported artifacts and records with

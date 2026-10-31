@@ -22,6 +22,7 @@ pub mod forever_stat_contributions;
 pub mod frame_level_helpers;
 pub mod glyph_state;
 pub mod gossip_probes;
+pub(crate) mod group_role_counts;
 #[cfg(feature = "client-wowforever")]
 pub mod guild_invites;
 pub mod guild_logo;
@@ -47,6 +48,7 @@ pub mod legacy_skills;
 pub(crate) mod legacy_sound;
 pub mod locale_info;
 pub mod loot_method;
+pub mod loot_specialization;
 pub mod math_extensions;
 #[cfg(feature = "client-wowforever")]
 pub mod merchant_buyback;
@@ -119,6 +121,7 @@ pub mod unit_speed;
     any(feature = "profile-retail", feature = "client-ptr")
 ))]
 pub mod unit_spell_target_name;
+pub(crate) mod utf8_case;
 pub mod vehicle_possession;
 pub mod voice_chat_probes;
 #[cfg(feature = "client-wrath")]

@@ -21,7 +21,7 @@ pub(super) fn equip_item(state: &mut LuaState) -> LuaResult<u32> {
         &mut st,
         crate::c_api::item_upgrade_eligibility::ItemSlot::Equipment(slot),
     );
-    st.player.equipped_items.insert(
+    let previous = st.player.equipped_items.insert(
         slot,
         EquippedItem {
             item_id,
@@ -30,6 +30,16 @@ pub(super) fn equip_item(state: &mut LuaState) -> LuaResult<u32> {
         },
     );
     st.player.stats = CharacterStats::compute(&st.player.equipped_items, st.player.class_index);
+    drop(st);
+    if previous.is_none_or(|item| item.item_id != item_id)
+        && crate::c_api::world_loot_object::is_equippable_spell_slot(slot)
+    {
+        super::state_backed_queries::dispatch_event_now(
+            state,
+            "PLAYER_EQUIPED_SPELLS_CHANGED",
+            &[],
+        )?;
+    }
     Ok(0)
 }
 
@@ -41,7 +51,15 @@ pub(super) fn unequip_item(state: &mut LuaState) -> LuaResult<u32> {
         &mut st,
         crate::c_api::item_upgrade_eligibility::ItemSlot::Equipment(slot),
     );
-    st.player.equipped_items.remove(&slot);
+    let previous = st.player.equipped_items.remove(&slot);
     st.player.stats = CharacterStats::compute(&st.player.equipped_items, st.player.class_index);
+    drop(st);
+    if previous.is_some() && crate::c_api::world_loot_object::is_equippable_spell_slot(slot) {
+        super::state_backed_queries::dispatch_event_now(
+            state,
+            "PLAYER_EQUIPED_SPELLS_CHANGED",
+            &[],
+        )?;
+    }
     Ok(0)
 }

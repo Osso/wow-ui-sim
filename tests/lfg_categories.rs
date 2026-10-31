@@ -188,6 +188,8 @@ fn get_available_roles_returns_true_true_true() {
 #[test]
 fn has_search_result_info() {
     let env = env();
+    // Retail GroupFinder/Mainline/LFGList.lua:2817 searches before reading results.
+    env.exec("C_LFGList.Search(2)").unwrap();
     let result: String = env
         .eval(
             r#"

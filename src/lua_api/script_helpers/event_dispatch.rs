@@ -49,6 +49,7 @@ pub(crate) fn event_matches_unit_filter(
 }
 
 pub fn fire_named_event_state(state: &mut LuaState, event_name: &str, args: &[Val]) {
+    let taints = crate::lua_api::taint::clear_active_stack_taint(state);
     let saved_top = state.top;
     for value in args {
         state.push(*value);
@@ -60,6 +61,7 @@ pub fn fire_named_event_state(state: &mut LuaState, event_name: &str, args: &[Va
         }
     }
     state.top = saved_top;
+    crate::lua_api::taint::restore_active_stack_taint(state, taints);
 }
 
 /// Dispatch one frame's filtered precall, normal and postcall event scripts.

@@ -111,6 +111,13 @@ fn get_info(state: &mut LuaState) -> LuaResult<u32> {
             write_quest_identity_fields(state, t, &entry, log_index);
             write_quest_classification_flags(state, t, &entry);
             write_quest_constant_stub_fields(state, t, false);
+            let campaign = borrow_state(state)?
+                .quest_log_entries
+                .campaign_ids
+                .get(&entry.quest_id)
+                .copied()
+                .unwrap_or(0);
+            table_set(state, t, "campaignID", Val::Num(f64::from(campaign)));
             let auto_complete = crate::c_api::quest_objectives::ENABLED
                 && borrow_state(state)?
                     .quest_log_entries
@@ -190,9 +197,6 @@ fn write_quest_constant_stub_fields(state: &mut LuaState, t: Val, is_header: boo
     table_set(state, t, "startEvent", Val::Bool(false));
     table_set(state, t, "isScaling", Val::Bool(false));
     table_set(state, t, "readyForTranslation", Val::Bool(false));
-    if !is_header {
-        table_set(state, t, "campaignID", Val::Num(0.0));
-    }
     table_set(state, t, "suggestedGroup", Val::Num(0.0));
 }
 

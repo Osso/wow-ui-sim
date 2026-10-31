@@ -13,8 +13,8 @@ fn test_bootstrap_fills_existing_namespace_defaults() {
         color_ty,
         hex_ty,
         campaign_ty,
-        campaign_name,
-    ): (String, i64, String, bool, String, String, String, String) = env
+        campaign_missing,
+    ): (String, i64, String, bool, String, String, String, bool) = env
         .eval(
             r#"
             local color = C_ColorOverrides.GetColorForQuality(0)
@@ -26,7 +26,7 @@ fn test_bootstrap_fills_existing_namespace_defaults() {
                 type(C_ColorOverrides.GetColorForQuality),
                 type(color and color.GenerateHexColorMarkup),
                 type(C_CampaignInfo.GetCampaignInfo),
-                campaign.name
+                campaign == nil
             "#,
         )
         .unwrap();
@@ -38,7 +38,7 @@ fn test_bootstrap_fills_existing_namespace_defaults() {
     assert_eq!(color_ty, "function");
     assert_eq!(hex_ty, "function");
     assert_eq!(campaign_ty, "function");
-    assert_eq!(campaign_name, "Broken Shore");
+    assert!(campaign_missing);
 }
 #[test]
 fn test_startup_bootstrap_namespaces_exist() {

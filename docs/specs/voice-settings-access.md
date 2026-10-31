@@ -1,6 +1,6 @@
 # Supplied voice settings access
 
-`C_VoiceChat.CanAccessSettings()` exposes an environment-local supplied observation from `VoiceChatState.can_access_settings`. [Original consumer and model](../wiki/systems/voice-settings-access.md) describe the boundary. No native initial value is inferred.
+`C_VoiceChat.CanAccessSettings()` exposes an environment-local supplied observation from `VoiceChatState.can_access_settings`. [Original consumer and model](../wiki/systems/voice-settings-access.md) describe the boundary. Retail and Forever start with true as a user-approved default, not native evidence; other profiles remain initially unknown.
 
 ## What it must do
 
@@ -24,7 +24,7 @@ Paths are relative to the active profile's `AddOns/Blizzard_APIDocumentationGene
 
 ## Implementation inventory
 
-- `src/lua_api/sim_substates/mod.rs`: optional host-supplied observation, initially unknown.
+- `src/lua_api/sim_substates/mod.rs`: optional host-supplied observation, initially true on Retail and Forever and unknown on other profiles.
 - `src/c_api/c_voice_chat_settings.rs`: profile-gated namespace query and named unset error.
 - `src/c_api/registration.rs`, `src/c_api/mod.rs`: namespace registration wiring.
 
@@ -37,7 +37,7 @@ Paths are relative to the active profile's `AddOns/Blizzard_APIDocumentationGene
 
 Current-code revision `688ca21bc` and producer-free sibling `c082a2398` have byte-identical tests. Three exact original-consumer selectors per declaring profile pass GREEN and fail RED at the missing namespace member. Two non-vacuous Wrath selectors preserve raw-member absence; its initially-unset selector has no consumer and returns early. All seven full-feature all-target checks have zero compiler warnings. Paired raw stock maps are identical: Retail 0/0, PTR 124/140, Forever 26/26, Mists 6/12, Wrath/Era/Anniversary 0/0. All 98 final test-discovery, test-run and stock-launch CVar guards remain unchanged.
 
-The true branch proves entry into the original initialization function, not completion or ticker cancellation. The hook deliberately stops before separate device/settings contracts. An unsupplied forecast run is not made clean by this API; the host must supply an observation.
+The true branch proves entry into the original initialization function, not completion or ticker cancellation. The hook deliberately stops before separate device/settings contracts. That historical verification predates the user-approved Retail and Forever default.
 
 ## Known gaps (current cycle)
 

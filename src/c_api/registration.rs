@@ -69,11 +69,13 @@ pub(crate) fn register_character_progression_tables(state: &mut LuaState) -> Lua
 }
 
 pub(crate) fn register_interaction_tables(state: &mut LuaState) -> LuaResult<()> {
+    super::c_dungeon_score_rarity::register(state)?;
     super::c_quest_offer::register(state)?;
     super::c_store_secure::register(state)?;
     super::store_public_eligibility::register(state)?;
     super::c_voice_chat_activity::register(state)?;
     super::c_voice_chat_settings::register(state)?;
+    super::c_voice_chat_devices::register(state)?;
     #[cfg(feature = "retail-12-0-0")]
     super::c_voice_chat_volume::register(state)?;
     #[cfg(feature = "retail-12-0-0")]

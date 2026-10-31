@@ -13,6 +13,12 @@ fn env() -> WowLuaEnv {
 #[test]
 fn buff_slot_table_has_every_documented_field() {
     let env = env();
+    // Default player buffs are randomly drawn and include permanent (0-duration)
+    // and party-sourced auras; seed a timed player aura so slot 1 is fixed.
+    env.state().borrow_mut().player.buffs = vec![AuraInfo {
+        aura_instance_id: 1,
+        ..helpful_non_raid_fixture()
+    }];
     let (name, icon, duration, source, spell_id, is_helpful, is_harmful, applications, time_mod): (
         String,
         f64,

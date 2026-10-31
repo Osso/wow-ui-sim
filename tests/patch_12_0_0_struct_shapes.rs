@@ -69,6 +69,8 @@ fn advanced_filter_parent_and_playstyle_roundtrip() {
             assert(actual.activities[1] == 1195 and actual.activities[2] == 1240)
         end
         for flag = 1, 4 do assert(before['generalPlaystyle' .. flag] == false) end
+        -- Retail GroupFinder/Mainline/LFGList.lua:2817 searches before reading results.
+        C_LFGList.Search(2)
         assert(C_LFGList.GetSearchResultInfo(1).name == '+15 Mists chill run')
     "#,
     )

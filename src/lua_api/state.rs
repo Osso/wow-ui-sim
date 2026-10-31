@@ -24,6 +24,10 @@ macro_rules! build_empty_sim_state {
     ($collections:ident, $runtime:ident) => {{
         let quest_log_entries = QuestLogState::seeded();
         Self {
+            loot_specialization: 0,
+            loot_spec_window: None,
+            pending_loot_specs: Vec::new(),
+            world_loot_objects: Default::default(),
             widgets: WidgetRegistry::with_screen_size(
                 $runtime.screen_width,
                 $runtime.screen_height,
@@ -74,6 +78,7 @@ macro_rules! build_empty_sim_state {
             who_routing: Default::default(),
             console_output: $collections.console_output,
             tutorial_requests: ::std::vec::Vec::new(),
+            passed_time_events: [121, 248].into_iter().collect(),
             engraving: crate::c_api::engraving_inputs::EngravingInputs::default(),
             timers: $collections.timers,
             rilua_timers: ::std::collections::VecDeque::new(),
@@ -358,7 +363,7 @@ macro_rules! build_empty_sim_state {
             pet_bonus_slot_available: false,
             #[cfg(feature = "retail-12-0-0")]
             limited_input_allowed: [false; 4],
-            #[cfg(any(feature = "retail-12-0-0", feature = "client-wrath"))]
+            #[cfg(feature = "action-spell-range")]
             action_spell_ranges: Default::default(),
             #[cfg(feature = "retail-12-0-0")]
             weekly_reward_progress: Default::default(),
@@ -485,6 +490,9 @@ macro_rules! build_empty_sim_state {
             lfg_random_cooldown_units: ::std::collections::HashSet::new(),
             lfg_activity_groups: default_lfg_activity_groups(),
             lfg_activities: default_lfg_activities(),
+            lfg_search_text_filter: None,
+            lfg_search_result_ids: Vec::new(),
+            lfg_search_timer_ids: Vec::new(),
             lfg_applications: Vec::new(),
             lfg_next_application_id: 1,
             lfg_advanced_filter: LfgAdvancedFilter::default(),

@@ -527,6 +527,7 @@ pub struct WorldState {
     pub active_mount_id: Option<u32>,
     /// Current mount journal search text. Drives displayed mount APIs.
     pub mount_search_text: String,
+    pub mount_filters: crate::c_api::mount_filters::MountFilters,
     pub collected_pets: HashSet<i32>,
     pub pets: Vec<PetData>,
     pub collected_toys: HashSet<i32>,

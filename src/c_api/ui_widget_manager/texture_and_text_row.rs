@@ -23,11 +23,18 @@ fn query_texture_and_text_row(state: &mut LuaState) -> LuaResult<u32> {
         state,
         "C_UIWidgetManager.GetTextureAndTextRowVisualizationInfo: widgetID must be a number",
     )?;
-    let record = borrow_state(state)?
-        .ui_widget_inputs
-        .texture_and_text_row
-        .get(&WidgetId::from_number(id))
-        .cloned();
+    let record = {
+        let sim = borrow_state(state)?;
+        let inputs = &sim.ui_widget_inputs;
+        inputs.resolve_visualization(
+            WidgetId::from_number(id),
+            &inputs.texture_and_text_row,
+            |value| match value {
+                super::WidgetVisualization::TextureAndTextRow(record) => Some(record),
+                _ => None,
+            },
+        )
+    };
     let Some(record) = record else {
         state.push(Val::Nil);
         return Ok(1);

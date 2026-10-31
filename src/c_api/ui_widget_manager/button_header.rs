@@ -23,11 +23,17 @@ fn query_header(state: &mut LuaState) -> LuaResult<u32> {
             "C_UIWidgetManager.GetButtonHeaderWidgetVisualizationInfo: widgetID must be a number",
         ));
     };
-    let record = borrow_state(state)?
-        .button_header_inputs
-        .widgets
-        .get(&WidgetId::from_number(id))
-        .cloned();
+    let record = {
+        let sim = borrow_state(state)?;
+        sim.ui_widget_inputs.resolve_visualization(
+            WidgetId::from_number(id),
+            &sim.button_header_inputs.widgets,
+            |value| match value {
+                super::WidgetVisualization::ButtonHeader(record) => Some(record),
+                _ => None,
+            },
+        )
+    };
     let Some(record) = record else {
         state.push(Val::Nil);
         return Ok(1);

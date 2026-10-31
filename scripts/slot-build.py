@@ -163,6 +163,41 @@ def prune_slot(slot, owner, cap_bytes, recent_hours=2, dry_run=False, now=None):
         return prune_locked_slot(slot, owner, cap_bytes, recent_hours, dry_run, now)
 
 
+def superseded_sessions(slot):
+    """Incremental session dirs that rustc will never read again.
+
+    rustc loads only the newest session of each `incremental/<crate>-<hash>`
+    directory; older ones (left by interrupted or failed compiles) are dead
+    weight that reached ~70 GiB per slot on 2026-10-30.
+    """
+    stale = []
+    for crate in slot.glob("**/incremental/*"):
+        if not crate.is_dir():
+            continue
+        sessions = sorted((path for path in crate.iterdir()
+                           if path.is_dir() and path.name.startswith("s-")),
+                          key=lambda path: path.stat().st_mtime)
+        for session in sessions[:-1]:
+            stale.append(session)
+            lock = session.with_name(session.name + ".lock")
+            if lock.exists():
+                stale.append(lock)
+    return stale
+
+
+def remove_superseded_sessions(slot, dry_run):
+    removed = []
+    for path in superseded_sessions(slot):
+        if not dry_run:
+            if path.is_dir():
+                shutil.rmtree(path)
+            else:
+                path.unlink()
+        removed.append({"paths": [str(path)], "superseded_session": True})
+        print(json.dumps(dict(removed[-1], dry_run=dry_run)), flush=True)
+    return removed
+
+
 def prune_locked_slot(slot, owner, cap_bytes, recent_hours, dry_run, now):
     if cap_bytes <= 0 or not math.isfinite(cap_bytes):
         raise ValueError("slot cap must be positive and finite")
@@ -170,13 +205,15 @@ def prune_locked_slot(slot, owner, cap_bytes, recent_hours, dry_run, now):
         raise ValueError("recent hours must be nonnegative and finite")
     if not dry_run:
         check_owner(slot, owner)
+    # Profile locks are held, so no rustc is writing a session right now.
+    superseded = remove_superseded_sessions(slot, dry_run)
     entries = disk_inventory(slot)
     inodes = {(stat.st_dev, stat.st_ino): stat.st_blocks * 512
               for stat in entries.values()}
     total = sum(inodes.values())
     result = {"slot": str(slot), "dry_run": dry_run, "total_bytes": total,
               "remaining_bytes": total, "watermark_bytes": int(cap_bytes * .8),
-              "removed": []}
+              "removed": superseded}
     if total <= cap_bytes:
         print(json.dumps(result), flush=True)
         return result
@@ -233,7 +270,9 @@ def prune_locked_slot(slot, owner, cap_bytes, recent_hours, dry_run, now):
 
 
 def check_capacity(capacity_id):
-    env = dict(os.environ, CAPACITY_ID=capacity_id)
+    # Starvation floor: capacity.sh admits one slot build past the CPU cap while none is compiling.
+    env = dict(os.environ, CAPACITY_ID=capacity_id,
+               CAPACITY_GUARANTEE=f"{TARGET_ROOT}/slot-")
     env.pop("CAPACITY_PEEK", None)
     result = subprocess.run([CAPACITY], env=env, check=True,
                             capture_output=True, text=True)
@@ -340,6 +379,56 @@ def write_json(path, value):
     temporary.replace(path)
 
 
+# Stat-keyed reuse of values derived from file bytes (digests, parsed dep-info).
+# A key includes inode, size, mtime and ctime; unprivileged writes always change
+# ctime. Values read within RACY_NS of the last change are not stored, so a later
+# write inside the same timestamp tick is re-read (Git's racy-clean rule).
+# Entries are carried forward only when used, bounding the file to the live set.
+STAT_CACHE, LOADED_STAT_CACHE = {}, {}
+RACY_NS = 2_000_000_000
+
+
+def file_stat_key(path):
+    stat_result = os.stat(path)
+    return [stat_result.st_dev, stat_result.st_ino, stat_result.st_size,
+            stat_result.st_mtime_ns, stat_result.st_ctime_ns]
+
+
+def stat_cached(kind, path, compute):
+    name = f"{kind}\0{path}"
+    key = file_stat_key(path)
+    hit = STAT_CACHE.get(name) or LOADED_STAT_CACHE.get(name)
+    if hit and hit[0] == key:
+        STAT_CACHE[name] = hit
+        return hit[1]
+    value = compute()
+    if file_stat_key(path) == key and time.time_ns() - max(key[3], key[4]) > RACY_NS:
+        STAT_CACHE[name] = [key, value]
+    return value
+
+
+def file_sha256(path):
+    def digest():
+        with open(path, "rb") as stream:
+            return hashlib.file_digest(stream, "sha256").hexdigest()
+    return stat_cached("sha256", path, digest)
+
+
+def load_stat_cache(path):
+    STAT_CACHE.clear()
+    LOADED_STAT_CACHE.clear()
+    try:
+        LOADED_STAT_CACHE.update(json.loads(path.read_text()))
+    except (OSError, ValueError):
+        pass
+
+
+def save_stat_cache(path):
+    temporary = path.with_suffix(".tmp")
+    temporary.write_text(json.dumps(STAT_CACHE, separators=(",", ":")))
+    temporary.replace(path)
+
+
 def summarize_receipt(current):
     """Receipts keep a certificate count and digest; slot identity files keep the full map."""
     summary = dict(current)
@@ -377,18 +466,28 @@ def dep_info_words(value):
 
 
 def parse_dep_info(content, worktree):
+    return resolve_dep_info_outputs(parse_dep_info_text(content, worktree))
+
+
+def parse_dep_info_text(content, worktree):
+    # Depends only on the file text and worktree, so it may be stat-cached;
+    # output realpaths depend on the filesystem and are resolved per call.
     outputs, inputs = set(), set()
     for line in content.replace("\\\n", " ").splitlines():
         target, separator, sources = line.partition(": ")
         if not separator or not sources.strip():
             continue
-        outputs.update(os.path.realpath(worktree / word, strict=False)
-                       for word in dep_info_words(target))
+        outputs.update(str(worktree / word) for word in dep_info_words(target))
         # Keep symlink-sensitive /.. traversal until classification and existence checks.
         inputs.update(str(worktree / word) for word in dep_info_words(sources))
     if not outputs or not inputs:
         raise ValueError("no dependency rules")
     return {"outputs": sorted(outputs), "inputs": sorted(inputs)}
+
+
+def resolve_dep_info_outputs(info):
+    outputs = sorted({os.path.realpath(path, strict=False) for path in info["outputs"]})
+    return {"outputs": outputs, "inputs": info["inputs"]}
 
 
 def read_dep_info_snapshot(slot, worktree):
@@ -405,7 +504,9 @@ def read_dep_info_snapshot(slot, worktree):
             if path.suffix != ".d":
                 continue
             try:
-                files[str(path)] = parse_dep_info(path.read_text(), worktree)
+                files[str(path)] = resolve_dep_info_outputs(stat_cached(
+                    f"dep-info\0{worktree}", path,
+                    lambda: parse_dep_info_text(path.read_text(), worktree)))
             except (OSError, UnicodeError, ValueError) as error:
                 files[str(path)] = {"error": str(error)}
     aliases = {path: paths for paths in identities.values() for path in paths}
@@ -531,8 +632,7 @@ def input_content_digest(path, cache, ancestors=frozenset()):
             digest.update(len(name).to_bytes(8, "big") + name + content.encode("ascii") + b"\0")
         value = "tree-sha256:" + digest.hexdigest()
     else:
-        with path.open("rb") as stream:
-            value = hashlib.file_digest(stream, "sha256").hexdigest()
+        value = file_sha256(resolved)
     cache[resolved] = value
     return value
 
@@ -730,7 +830,11 @@ def find_stale_artifacts(current, previous_artifacts, artifacts):
         if not record.get("executable"):
             continue
         changed_hash = name in artifacts and previous_artifacts.get(name) != artifacts[name]
-        needs_changed_hash = bool(matched_input_changes(current, inputs, content_changed))
+        # Manifest and lockfile edits (dev-dependencies, workspace members, other
+        # targets) often leave an executable's bytes unchanged; fresh=false suffices.
+        source_changed = {path for path in content_changed
+                          if Path(path).name not in {"Cargo.toml", "Cargo.lock"}}
+        needs_changed_hash = bool(matched_input_changes(current, inputs, source_changed))
         if name not in artifacts or (needs_changed_hash and not changed_hash):
             stale.append(name)
     return sorted(set(stale))
@@ -836,9 +940,7 @@ def hash_artifacts(slot, paths):
     artifacts = {}
     for path in sorted(paths):
         if path.is_file() and not path.is_symlink():
-            with path.open("rb") as stream:
-                artifacts[os.path.relpath(path, slot)] = hashlib.file_digest(
-                    stream, "sha256").hexdigest()
+            artifacts[os.path.relpath(path, slot)] = file_sha256(path)
     return artifacts
 
 
@@ -899,10 +1001,22 @@ def execute_build(request_path, cap_gib=130, recent_hours=2):
     write_json(state, dict(current, artifacts={}, result="building"))
     receipt = Path(request["receipt"])
     write_json(receipt, summarize_receipt(dict(current, artifacts={}, result="building")))
+    stat_cache = slot / ".stat-cache.json"
+    load_stat_cache(stat_cache)
+    try:
+        return run_verified_build(slot, worktree, receipt, current, previous, request)
+    finally:
+        save_stat_cache(stat_cache)
+
+
+def run_verified_build(slot, worktree, receipt, current, previous, request):
+    guard_cpu = time.process_time()
     before = read_dep_info_snapshot(slot, worktree)
     source_before = snapshot_source_hashes(current, before)
+    pre_cpu = time.process_time() - guard_cpu
     started_ns = time.time_ns()
     returncode, records = run_build_command(request["cargo"])
+    guard_cpu = time.process_time()
     current["build_script_out_dirs"] = [record["out_dir"] for record in records
                                         if record.get("reason") == "build-script-executed"]
     records = [record for record in records if record.get("reason") != "build-script-executed"]
@@ -915,6 +1029,9 @@ def execute_build(request_path, cap_gib=130, recent_hours=2):
         current, previous, source_before, artifacts, after)
     current["dep_info_errors"].extend(certificate_errors)
     finish_build(slot, receipt, current, previous, artifacts, returncode)
+    write_json(receipt.with_suffix(".guard.json"),
+               {"guard_cpu_s": {"before_build": round(pre_cpu, 3),
+                                "after_build": round(time.process_time() - guard_cpu, 3)}})
     return returncode
 
 

@@ -7,6 +7,7 @@ pub(crate) mod classic_startup_defaults;
     feature = "client-anniversary"
 ))]
 pub(crate) mod legacy_quest_timers;
+pub(crate) mod lfg_encounters;
 pub(crate) mod pet_spec_catalog_default;
 
 #[cfg(feature = "client-wrath")]
@@ -214,6 +215,7 @@ pub(crate) mod uiparent_managed_frame_mixin;
 pub(crate) mod uiparent_onupdate_worklists;
 pub(crate) mod unit_auras_state;
 pub(crate) mod unit_position_frame_mixin;
+pub(crate) mod unit_power_display_mod;
 pub(crate) mod unit_stagger_defaults;
 pub(crate) mod unit_threat_defaults;
 pub(crate) mod video_options_state;

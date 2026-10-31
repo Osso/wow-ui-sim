@@ -10,7 +10,7 @@ use rilua::vm::value::Val;
 use wow_ui_sim::lua_api::WowLuaEnv;
 
 const SPELL_LINK: &str = "|cff71d5ff|Hspell:19750|h[Flash of Light]|h|r";
-const MOUNT_LINK: &str = "|cff71d5ff|Hspell:23338|h[Swift Palomino]|h|r";
+const MOUNT_LINK: &str = "|cff71d5ff|Hspell:458|h[Brown Horse]|h|r";
 const SECRET_NAMES: [&str; 6] = [
     "TMSecretFalse",
     "TMSecretTrue",
@@ -28,10 +28,10 @@ fn fixture_env() -> WowLuaEnv {
             .world
             .mounts
             .iter()
-            .find(|mount| mount.spell_id == 23338)
+            .find(|mount| mount.spell_id == 458)
             .expect("actual default mount fixture, not manufactured catalog");
-        assert_eq!(mount.name, "Swift Palomino", "first matching host mount");
-        assert_eq!(mount.mount_id, 18);
+        assert_eq!(mount.name, "Brown Horse", "first matching host mount");
+        assert_eq!(mount.mount_id, 6);
         assert!(mount.is_collected && mount.is_usable);
     }
     env.exec(r#"
@@ -150,7 +150,7 @@ fn fixture_env() -> WowLuaEnv {
         end
         function TMRecovery()
             TMCheck(C_TooltipInfo.GetSpellByID, 19750, 19750, 'Flash of Light')
-            TMCheck(C_TooltipInfo.GetMountBySpellID, 23338, 23338, 'Swift Palomino')
+            TMCheck(C_TooltipInfo.GetMountBySpellID, 458, 458, 'Brown Horse')
             TMProperties()
         end
         function TMContexts(probe)
@@ -199,12 +199,12 @@ fn seeded_env() -> WowLuaEnv {
     state.spell_id_aliases.clear();
     for (alias, id) in [
         ("flash of light", 19750),
-        ("swift palomino", 23338),
+        ("brown horse", 458),
         ("19750", 19750),
-        ("23338", 23338),
+        ("458", 458),
         (SPELL_LINK, 19750),
-        (MOUNT_LINK, 23338),
-        ("private-tooltip56-23338", 23338),
+        (MOUNT_LINK, 458),
+        ("private-tooltip56-458", 458),
     ] {
         state.spell_id_aliases.insert(alias.to_lowercase(), id);
     }
@@ -223,7 +223,7 @@ fn secret_env() -> WowLuaEnv {
     }
     let number = wrap_host_secret_number(lua.state_mut(), 19750.0);
     publish_secret(&mut *lua, "TMSecretNumber", number);
-    let text = wrap_host_secret_string(lua.state_mut(), "PRIVATE-Tooltip56-23338");
+    let text = wrap_host_secret_string(lua.state_mut(), "PRIVATE-Tooltip56-458");
     publish_secret(&mut *lua, "TMSecretString", text);
     for (original, name) in [("TMFrame", "TMSecretFrame"), ("TMInputs", "TMSecretTable")] {
         let value = lua.get_global_val(original);
@@ -414,8 +414,8 @@ fn known_mount_numeric_uses_existing_declared_host_mount() {
     fixture_env()
         .exec(
             r#"
-        local d = TMCheck(C_TooltipInfo.GetMountBySpellID, 23338, 23338, 'Swift Palomino')
-        assert(d.lines[3].leftText == 'Summons this mount.' and d.lines[3].wrapText)
+        local d = TMCheck(C_TooltipInfo.GetMountBySpellID, 458, 458, 'Brown Horse')
+        TMEqual(d, TMData(C_TooltipInfo.GetSpellByID(458)))
     "#,
         )
         .unwrap();
@@ -440,8 +440,8 @@ fn mount_number_name_and_colored_link_aliases_have_equivalent_dtos() {
     seeded_env()
         .exec(&format!(
             r#"
-        local baseline = TMCheck(C_TooltipInfo.GetMountBySpellID, 23338, 23338, 'Swift Palomino')
-        for _, alias in ipairs({{'23338', 'SWIFT PALOMINO', '{MOUNT_LINK}'}}) do
+        local baseline = TMCheck(C_TooltipInfo.GetMountBySpellID, 458, 458, 'Brown Horse')
+        for _, alias in ipairs({{'458', 'BROWN HORSE', '{MOUNT_LINK}'}}) do
             TMEqual(TMData(C_TooltipInfo.GetMountBySpellID(alias)), baseline)
         end
     "#
@@ -455,18 +455,18 @@ fn numeric_alias_precedes_identity_and_returns_resolved_payload_id() {
     env.state()
         .borrow_mut()
         .spell_id_aliases
-        .insert("23338".into(), 19750);
+        .insert("458".into(), 19750);
     env.exec(
         r#"
         for _, query in ipairs({C_TooltipInfo.GetSpellByID, C_TooltipInfo.GetMountBySpellID}) do
-            TMEqual(TMCheck(query, 23338, 19750, 'Flash of Light'), TMData(query(19750)))
-            TMEqual(TMData(query('23338')), TMData(query(19750)))
+            TMEqual(TMCheck(query, 458, 19750, 'Flash of Light'), TMData(query(19750)))
+            TMEqual(TMData(query('458')), TMData(query(19750)))
         end
     "#,
     )
     .unwrap();
-    env.state().borrow_mut().spell_id_aliases.remove("23338");
-    env.exec("TMCheck(C_TooltipInfo.GetMountBySpellID, 23338, 23338, 'Swift Palomino'); TMCheck(C_TooltipInfo.GetMountBySpellID, '23338', nil, nil)").unwrap();
+    env.state().borrow_mut().spell_id_aliases.remove("458");
+    env.exec("TMCheck(C_TooltipInfo.GetMountBySpellID, 458, 458, 'Brown Horse'); TMCheck(C_TooltipInfo.GetMountBySpellID, '458', nil, nil)").unwrap();
 }
 
 #[test]
@@ -493,8 +493,8 @@ fn live_alias_changes_are_visible_without_cached_query_results() {
     env.state()
         .borrow_mut()
         .spell_id_aliases
-        .insert("flash of light".into(), 23338);
-    env.exec("TMCheck(C_TooltipInfo.GetSpellByID, 'flash of light', 23338, nil); TMCheck(C_TooltipInfo.GetMountBySpellID, 'flash of light', 23338, 'Swift Palomino')").unwrap();
+        .insert("flash of light".into(), 458);
+    env.exec("TMCheck(C_TooltipInfo.GetSpellByID, 'flash of light', 458, 'Brown Horse'); TMCheck(C_TooltipInfo.GetMountBySpellID, 'flash of light', 458, 'Brown Horse')").unwrap();
     env.state()
         .borrow_mut()
         .spell_id_aliases
@@ -523,7 +523,7 @@ fn unseeded_public_strings_return_one_unidentified_empty_spell_tooltip() {
         r#"
         for _, query in ipairs({{C_TooltipInfo.GetSpellByID, C_TooltipInfo.GetMountBySpellID}}) do
             for _, text in ipairs({{'', 'unknown', '19750', 'Flash of Light',
-                'Swift Palomino', 'spell:19750', '{SPELL_LINK}', '{MOUNT_LINK}'}}) do
+                'Brown Horse', 'spell:19750', '{SPELL_LINK}', '{MOUNT_LINK}'}}) do
                 TMCheck(query, text, nil, nil)
             end
         end
@@ -539,7 +539,7 @@ fn result_mutation_and_repeated_queries_leave_payload_sources_read_only() {
     let mounts = mount_snapshot(&env);
     env.exec(r#"
         for _, case in ipairs({{C_TooltipInfo.GetSpellByID, 'flash of light', 19750, 'Flash of Light'},
-                {C_TooltipInfo.GetMountBySpellID, 'swift palomino', 23338, 'Swift Palomino'}}) do
+                {C_TooltipInfo.GetMountBySpellID, 'brown horse', 458, 'Brown Horse'}}) do
             local a = TMCheck(unpack(case))
             local b = TMCheck(unpack(case))
             assert(not rawequal(a, b) and not rawequal(a.lines, b.lines), 'fresh results')
@@ -568,12 +568,12 @@ fn separate_environments_do_not_share_alias_updates() {
         .state()
         .borrow_mut()
         .spell_id_aliases
-        .insert("swift palomino".into(), 19750);
+        .insert("brown horse".into(), 19750);
     first
-        .exec("TMCheck(C_TooltipInfo.GetMountBySpellID, 'swift palomino', 19750, 'Flash of Light')")
+        .exec("TMCheck(C_TooltipInfo.GetMountBySpellID, 'brown horse', 19750, 'Flash of Light')")
         .unwrap();
     second
-        .exec("TMCheck(C_TooltipInfo.GetMountBySpellID, 'swift palomino', 23338, 'Swift Palomino')")
+        .exec("TMCheck(C_TooltipInfo.GetMountBySpellID, 'brown horse', 458, 'Brown Horse')")
         .unwrap();
 }
 
@@ -599,11 +599,11 @@ fn strict_public_identifiers_reject_invalid_representations_in_both_contexts() {
 fn documented_public_optional_combinations_keep_current_ignored_payloads() {
     seeded_env().exec(r#"
         local spell = TMData(C_TooltipInfo.GetSpellByID(19750))
-        local mount = TMData(C_TooltipInfo.GetMountBySpellID(23338))
+        local mount = TMData(C_TooltipInfo.GetMountBySpellID(458))
         TMEqual(TMData(C_TooltipInfo.GetSpellByID(19750, nil, nil, nil, nil, nil)), spell)
-        TMEqual(TMData(C_TooltipInfo.GetMountBySpellID(23338, nil)), mount)
+        TMEqual(TMData(C_TooltipInfo.GetMountBySpellID(458, nil)), mount)
         for _, flag in ipairs({false, true}) do
-            TMEqual(TMData(C_TooltipInfo.GetMountBySpellID('swift palomino', flag)), mount)
+            TMEqual(TMData(C_TooltipInfo.GetMountBySpellID('brown horse', flag)), mount)
             TMEqual(TMData(C_TooltipInfo.GetSpellByID('flash of light', flag, flag, flag, 17, flag)), spell)
         end
         TMEqual(TMData(C_TooltipInfo.GetSpellByID(19750, true, false, true, 17, false)), spell)
@@ -618,8 +618,8 @@ fn ordinary_tainted_public_calls_preserve_stack_taint_and_payload() {
             local before = debug.getstacktaint()
             TMEqual(TMData(C_TooltipInfo.GetSpellByID('flash of light', true, false, true, 17, false)),
                 TMData(C_TooltipInfo.GetSpellByID(19750)))
-            TMEqual(TMData(C_TooltipInfo.GetMountBySpellID('swift palomino', true)),
-                TMData(C_TooltipInfo.GetMountBySpellID(23338)))
+            TMEqual(TMData(C_TooltipInfo.GetMountBySpellID('brown horse', true)),
+                TMData(C_TooltipInfo.GetMountBySpellID(458)))
             TMRecovery()
             assert(debug.getstacktaint() == before)
         end)
@@ -652,7 +652,7 @@ fn mount_never_secret_optional_rejects_all_vm_kinds_before_known_or_missing_payl
         &env,
         r#"
         TMContexts(function()
-            for _, identifier in ipairs({23338, 'swift palomino', 'missing', 4294967295}) do
+            for _, identifier in ipairs({458, 'brown horse', 'missing', 4294967295}) do
                 for _, value in ipairs(TMSecrets) do
                     TMRejectOptional(C_TooltipInfo.GetMountBySpellID, identifier, 2, value)
                 end
@@ -734,8 +734,8 @@ fn original_frame_identifier_routes_match_direct_dto_and_actual_rendered_lines()
         (
             "SetMountBySpellID",
             "GetMountBySpellID",
-            23338,
-            "swift palomino",
+            458,
+            "brown horse",
             MOUNT_LINK,
         ),
     ] {
@@ -780,7 +780,7 @@ fn frame_nonnumeric_secret_inputs_fail_without_mutating_prior_actual_tooltip_pay
                         assert(rawequal(GameTooltip.processingInfo.tooltipData, original))
                     end
                 end
-                local ok, err = pcall(GameTooltip.SetMountBySpellID, GameTooltip, 'swift palomino', value)
+                local ok, err = pcall(GameTooltip.SetMountBySpellID, GameTooltip, 'brown horse', value)
                 assert(not ok and type(err) == 'string' and #err > 0)
                 assert(rawequal(GameTooltip.processingInfo.tooltipData, original))
             end
@@ -793,13 +793,11 @@ fn frame_nonnumeric_secret_inputs_fail_without_mutating_prior_actual_tooltip_pay
         prior,
         "failed setter leaves actual rendered payload intact"
     );
-    env.exec(
-        "TMFrameCheck('SetMountBySpellID', C_TooltipInfo.GetMountBySpellID, 'swift palomino')",
-    )
-    .unwrap();
+    env.exec("TMFrameCheck('SetMountBySpellID', C_TooltipInfo.GetMountBySpellID, 'brown horse')")
+        .unwrap();
     assert_eq!(
         rendered_lines(&env)[0].0,
-        "Swift Palomino",
+        "Brown Horse",
         "valid public frame recovery"
     );
 }
@@ -832,7 +830,7 @@ fn forced_gc_preserves_stack_global_list_roots_and_caller_properties() {
                     TMReject(C_TooltipInfo.GetSpellByID, value)
                     TMReject(C_TooltipInfo.GetMountBySpellID, value)
                 end
-                TMRejectOptional(C_TooltipInfo.GetMountBySpellID, 'swift palomino', 2, value)
+                TMRejectOptional(C_TooltipInfo.GetMountBySpellID, 'brown horse', 2, value)
                 for position = 2, 6 do
                     TMRejectOptional(C_TooltipInfo.GetSpellByID, 'flash of light', position, value)
                 end

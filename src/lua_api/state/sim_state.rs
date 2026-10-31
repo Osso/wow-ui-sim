@@ -1,6 +1,11 @@
 use super::*;
 
 pub struct SimState {
+    /// Selected loot specialization; zero follows the active specialization.
+    pub loot_specialization: u32,
+    pub(crate) loot_spec_window: Option<(std::time::Instant, u8)>,
+    pub(crate) pending_loot_specs: Vec<i64>,
+    pub world_loot_objects: crate::c_api::world_loot_object::WorldLootObjects,
     pub wrath_relic_slot: crate::lua_api::globals::real::wrath_relic_slot::RelicSlotState,
     pub plain_global_inputs: crate::lua_api::globals::real::publication_12_0_0::PlainGlobalInputs,
     pub(crate) private_aura_anchors: crate::c_api::private_aura_anchors::PrivateAuraAnchors,
@@ -37,6 +42,8 @@ pub struct SimState {
     pub console_output: Vec<String>,
     /// Requested legacy tutorial IDs in call order; no flag, event or display policy.
     pub tutorial_requests: Vec<i32>,
+    /// Best-guess default; native passed time-event snapshot producer is unknown.
+    pub passed_time_events: HashSet<u32>,
     pub engraving: crate::c_api::engraving_inputs::EngravingInputs,
     pub timers: VecDeque<PendingTimer>,
     pub rilua_timers: VecDeque<crate::lua_api::timer_layout::RiluaPendingTimer>,
@@ -200,7 +207,7 @@ pub struct SimState {
     #[cfg(feature = "retail-12-0-0")]
     pub limited_input_allowed: [bool; 4],
     /// INFERRED empty host range inputs and tier-completion snapshots.
-    #[cfg(any(feature = "retail-12-0-0", feature = "client-wrath"))]
+    #[cfg(feature = "action-spell-range")]
     pub action_spell_ranges: HashMap<u32, crate::c_api::action_spell_range::ActionSpellRange>,
     #[cfg(feature = "retail-12-0-0")]
     pub weekly_reward_progress:
@@ -592,6 +599,9 @@ pub struct SimState {
     pub lfg_random_cooldown_units: std::collections::HashSet<String>,
     pub lfg_activity_groups: Vec<LfgActivityGroupInfo>,
     pub lfg_activities: Vec<LfgActivityInfo>,
+    pub lfg_search_text_filter: Option<crate::c_api::c_lfg_list_search::SearchTextFilter>,
+    pub lfg_search_result_ids: Vec<u32>,
+    pub lfg_search_timer_ids: Vec<u64>,
     pub lfg_applications: Vec<LfgApplication>,
     pub lfg_next_application_id: u64,
     pub lfg_advanced_filter: LfgAdvancedFilter,

@@ -31,6 +31,7 @@ fn fixture_env() -> WowLuaEnv {
     let env = WowLuaEnv::new().expect("create aura expiration environment");
     {
         let mut state = env.state().borrow_mut();
+        state.party_group_active = true;
         state.player.buffs = vec![
             fixture_aura(301, true, 45.0),
             fixture_aura(302, true, 0.0),
