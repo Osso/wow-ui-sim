@@ -42,6 +42,8 @@ pub struct SimState {
     pub console_output: Vec<String>,
     /// Requested legacy tutorial IDs in call order; no flag, event or display policy.
     pub tutorial_requests: Vec<i32>,
+    /// Best-guess default; native passed time-event snapshot producer is unknown.
+    pub passed_time_events: HashSet<u32>,
     pub engraving: crate::c_api::engraving_inputs::EngravingInputs,
     pub timers: VecDeque<PendingTimer>,
     pub rilua_timers: VecDeque<crate::lua_api::timer_layout::RiluaPendingTimer>,

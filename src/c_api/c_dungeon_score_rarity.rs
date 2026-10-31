@@ -1,7 +1,7 @@
-//! Profile-cached dungeon score rarity colors. Native selection is unknown.
+//! Profile-cached dungeon score rarity colors.
 use crate::c_api::global_val;
 use crate::dungeon_score_rarity_runtime::{self, Family};
-use crate::lua_api::methods::call_function_state;
+use crate::lua_api::methods::{borrow_state, call_function_state};
 use crate::lua_bridge::{stack_val, table_set_rust_fn_static};
 use rilua::table_security::unwrap_secret;
 use rilua::vm::state::LuaState;
@@ -53,7 +53,15 @@ fn result(state: &mut LuaState, family: Family) -> LuaResult<u32> {
     let Val::Num(score) = unwrap_secret(state, stack_val(state, 1))? else {
         return Err(runtime_error("expected number as argument 1"));
     };
-    let (r, g, b) = dungeon_score_rarity_runtime::color(score, family).map_err(runtime_error)?;
+    let color = {
+        let sim = borrow_state(state)?;
+        dungeon_score_rarity_runtime::color(score, family, &sim.passed_time_events)
+            .map_err(runtime_error)?
+    };
+    let Some((r, g, b)) = color else {
+        state.push(Val::Nil);
+        return Ok(1);
+    };
     let create_color = global_val(state, "CreateColor");
     let color = call_function_state(
         state,

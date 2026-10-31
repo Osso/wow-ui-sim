@@ -1,30 +1,32 @@
 # Dungeon score rarity colours
 
-## Contract
+## Contract and native basis
 
-**Best-guess, native UNKNOWN.** Retail and PTR use profile-specific generated UIDungeonScoreRarity DB2 caches. A missing, invalid or unreadable cache is an error; never substitute colours. The current active row set is the set with the highest final field value. Each family uses the largest minimum not greater than the input; below all minima uses the lowest tier. Ranges are half-open; maximum zero is unbounded. Inputs are required numbers. Outputs are ColorMixin-compatible RGB values.
+Retail and PTR read the generated, per-profile pinned-CDN `UIDungeonScoreRarity` cache. Missing, invalid or unreadable cache data is an error; the missing-cache error names `wow-cli casc sync-dungeon-score-rarity`. No other source supplies rows.
 
-- Overall rating uses DungeonScoreMin/Max.
-- Keystone level uses KeystoneLevelMin/Max.
-- Single dungeon combined rating uses fields 009/010.
-- Single run rating uses fields 007/008.
+Retail client build 70688 behavioural evidence establishes a linear scan in table order. A row matches when its PlayerCondition gate passes and its family bounds contain the input in `[min, max)`. A maximum of zero is unbounded. The first match supplies the colour. Field 11 is the condition ID; zero means no condition. The simulator evaluates the pinned CDN conditions as follows:
+
+- 96877: time event 248 passed.
+- 96879: time event 121 passed and 248 has not passed.
+
+Type 289 tests membership in the passed-time-event snapshot. Unknown nonzero conditions produce an explicit error rather than an invented result. The families use `DungeonScoreMin/Max`, `KeystoneLevelMin/Max`, fields 007/008 (single run), and fields 009/010 (single dungeon overall), respectively.
+
+Retail `Blizzard_GroupFinder_Mainline.toc` selects `Mainline/LFGList.lua`; its search-result tooltip calls the overall API at line 4470. The consumer test loads the addon closure and checks the function source and rendered score.
 
 ## Best-guess basis
 
-[WoWDBDefs UIDungeonScoreRarity.dbd](https://github.com/wowdev/WoWDBDefs/blob/master/definitions/UIDungeonScoreRarity.dbd) layout 6242874E defines the fields, but calls 007–011 unknown. Retail 12.1.5.70575 and PTR 12.1.7.70493 DB2 files each have two five-row sets with final values 96877 and 96879. The first has top score threshold 2200 and the latter 2750. The larger threshold set is selected as a best guess for the newer season. The decoded DB2 rows supply the thresholds. [Forum player observations](https://eu.forums.blizzard.com/en/wow/t/at-what-rating-does-your-rating-turn-orangelegendary/319338) report orange at 2200 in 2021. [Blizzard's season announcement](https://news.blizzard.com/en-us/article/24266321/midnight-season-1-mythic-now-available) lists 1500, 2000, 2500 and 3000 rating achievement milestones; it does not specify colour thresholds or native row selection. Adjacent rows have matching max/min endpoints and the top max is zero; half-open ranges and an open-ended last tier give each boundary one tier. Below-minimum uses the lowest tier because Retail/PTR `ChallengeModeInfoDocumentation.lua:92–106,118–132,223–253` declare non-nil colour outputs.
-
-Retail GroupFinder `Mainline/LFGList.lua:4470` passes leader overall score to the overall function; PTR passes it at :4461. Retail/PTR `Blizzard_ChallengesUI/Mainline/Blizzard_ChallengesUI.lua:490–493,530–533` pass a map's combined affix score to the specific-overall function. The GroupFinder applicant tooltip passes `mapScore` at Retail :2300 / PTR :2287, but its applicant model is unavailable. Its search-result tooltip instead passes `bestRunLevel` to that same function at Retail :4475–4477 / PTR :4466–4468. That quirk may contradict the mapping; native semantics remain unknown. These consumers do not prove native threshold selection. No pinned Retail/PTR consumers of the single-run or keystone color functions were found; their mappings are inferred from generated argument documentation and the DB2 range ratios (roughly one-twentieth and the explicit keystone fields).
+**Best-guess, native UNKNOWN:** `SimState` starts with passed events `{121, 248}`. The client reads a supplied snapshot; its producer and current live contents are unknown. This default enables condition 96877 and is not a claim about live server state. A no-match scan returns nil; the 70688 no-colour Lua return path was not fully resolved. RGB unpacking and the ColorMixin result retain the existing simulator behaviour; native payload packing was not established by the behavioural evidence.
 
 ## Cache generation
 
-Generate the active profile's persistent cache before running its tests:
+Generate each active profile's persistent cache with:
 
 ```text
 wow-cli casc sync-dungeon-score-rarity
 ```
 
-The default path is the user cache under `wow-ui-sim/dungeon-score-rarity/<profile>/rarity.json`. Release packages and Docker images bundle the generated data beside the executable.
+The default path is the user cache under `wow-ui-sim/dungeon-score-rarity/<profile>/rarity.json`. Release packages and Docker images bundle generated data beside the executable.
 
 ## Known gaps
 
-Pinned Forever, Mists, Era and Anniversary UIDungeonScoreRarity tables contain zero rows. These profiles do not publish the new colour implementations; native empty-table behaviour is unknown. The Mists selected GroupFinder consumer references the specific-overall function, which remains absent on current master. The ChallengesUI score branch and GroupFinder applicant tooltip are not exercised because the supplied season-best and applicant models are missing. The search-result tooltip passes `bestRunLevel` to the specific-overall score function; whether this caller quirk matches native semantics remains unknown.
+The simulator decodes only the two pinned dungeon rarity PlayerConditions above, not arbitrary PlayerCondition trees. It does not model the native snapshot producer or change notifications. Native argument conversion and the exact no-colour Lua result require further evidence. The 70688 client evidence and the pinned Retail 70575 CDN condition trees are distinct builds; PTR condition trees have not been independently verified. Forever, Mists, Era and Anniversary do not publish these implementations; their pinned rarity tables contain no rows. The ChallengesUI score branch and GroupFinder applicant tooltip remain untested. The search-result tooltip passes `bestRunLevel` to the specific-overall function; native intent for that call remains unknown.
