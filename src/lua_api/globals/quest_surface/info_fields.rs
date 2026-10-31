@@ -25,7 +25,11 @@ pub(super) fn write_quest_entry_fields(
     let title_val = create_string(state, title);
     table_set(state, info, "title", title_val);
     table_set(state, info, "questID", Val::Num(quest_id as f64));
-    table_set(state, info, "campaignID", Val::Num(0.0));
+    let campaign_id = crate::lua_api::methods::borrow_state(state)
+        .ok()
+        .and_then(|sim| sim.quest_log_entries.campaign_ids.get(&quest_id).copied())
+        .unwrap_or(0);
+    table_set(state, info, "campaignID", Val::Num(f64::from(campaign_id)));
     table_set(state, info, "level", Val::Num(80.0));
     table_set(state, info, "difficultyLevel", Val::Num(80.0));
     table_set(state, info, "suggestedGroup", Val::Num(0.0));
