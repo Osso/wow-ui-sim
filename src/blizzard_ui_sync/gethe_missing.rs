@@ -1,5 +1,5 @@
 //! Forever's mapped-but-nonresident UI sources, verified against local CASC CKeys.
-use super::{CacheProvenance, EntrySyncResult};
+use super::{CacheProvenance, DISABLED_VERSION_MISMATCH, EntrySyncResult};
 use cascette_crypto::ContentKey;
 use serde::{Deserialize, Serialize};
 use std::path::{Path, PathBuf};
@@ -37,13 +37,27 @@ struct Substitution {
 pub(super) fn append_source_identity(
     provenance: &mut CacheProvenance,
     installed_version: &str,
+    allow_ui_version_mismatch: bool,
 ) -> crate::Result<()> {
     let pin = read_source_pin()?;
-    require_version(installed_version, &pin.version)?;
-    provenance.contents = provenance.contents.replace(
-        "source=casc-local-or-cdn\nfallback=none\n",
-        "source=casc-local-or-gethe-md5\nfallback=none\n",
-    );
+    if installed_version != pin.version && !allow_ui_version_mismatch {
+        return Err(crate::Error::Other(format!(
+            "UI version mismatch: installed {installed_version}, configured {}. \
+             Pass --allow-ui-version-mismatch to use this installation without Gethe fallback.",
+            pin.version
+        )));
+    }
+    if installed_version == pin.version {
+        provenance.contents = provenance.contents.replace(
+            "source=casc-local-or-cdn\nfallback=none\n",
+            "source=casc-local-or-gethe-md5\nfallback=none\n",
+        );
+    } else {
+        // The selected installation remains authoritative. An older Gethe pin
+        // must not block exact-build CASC reads or supply replacement files.
+        provenance.contents.push_str(DISABLED_VERSION_MISMATCH);
+        provenance.contents.push('\n');
+    }
     provenance.contents.push_str(&format!(
         "gethe_version={}\ngethe_revision={}\n",
         pin.version, pin.gethe_revision
@@ -61,6 +75,12 @@ fn read_source_pin() -> crate::Result<SourcePin> {
     Ok(pin)
 }
 
+fn gethe_fallback_enabled(provenance: &str) -> bool {
+    !provenance
+        .lines()
+        .any(|line| line == DISABLED_VERSION_MISMATCH)
+}
+
 pub(super) fn sync_manifest_entry(
     root: &Path,
     entry: &str,
@@ -68,6 +88,7 @@ pub(super) fn sync_manifest_entry(
 ) -> crate::Result<EntrySyncResult> {
     let destination = root.join(entry);
     let (result, record) = sync_mapped_file(
+        gethe_fallback_enabled(provenance.contents()),
         || read_mapped_file(entry),
         &destination,
         || super::sync_manifest_entry(root, entry),
@@ -111,11 +132,15 @@ fn load_pinned_tree() -> crate::Result<GetheTree> {
 }
 
 fn sync_mapped_file(
+    allow_gethe: bool,
     lookup: impl FnOnce() -> crate::Result<Option<MappedFile>>,
     destination: &Path,
     read_local: impl FnOnce() -> crate::Result<EntrySyncResult>,
     load_gethe: impl FnOnce() -> crate::Result<GetheTree>,
 ) -> crate::Result<(EntrySyncResult, Option<Substitution>)> {
+    if !allow_gethe {
+        return Ok((read_local()?, None));
+    }
     let Some(file) = lookup()? else {
         // No root/encoding mapping retains the existing failure path, not Gethe.
         return Ok((read_local()?, None));
@@ -208,6 +233,10 @@ fn append_substitution(
 }
 
 pub(super) fn provenance_matches(actual: &str, expected: &str) -> bool {
+    if !gethe_fallback_enabled(expected) {
+        // A CASC-only cache must not acquire historical Gethe substitutions.
+        return actual == expected;
+    }
     let Some(records) = actual.strip_prefix(expected) else {
         return false;
     };

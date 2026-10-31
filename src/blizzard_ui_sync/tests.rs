@@ -534,6 +534,16 @@ fn locale_blind_provenance_invalidates_cached_ptpt_before_sync() {
 }
 
 #[test]
+fn cached_ui_version_override_requires_the_explicit_flag() {
+    let normal = "version=pinned\n";
+    let bypassed = format!("{normal}{}\n", super::DISABLED_VERSION_MISMATCH);
+    assert!(super::cache_version_is_allowed(normal, false));
+    assert!(super::cache_version_is_allowed(normal, true));
+    assert!(!super::cache_version_is_allowed(&bypassed, false));
+    assert!(super::cache_version_is_allowed(&bypassed, true));
+}
+
+#[test]
 #[cfg(all(feature = "casc", feature = "client-retail"))]
 fn retail_provenance_ignores_installed_build_identity() {
     const CHILD: &str = "WOW_SIM_RETAIL_PROVENANCE_TEST_CHILD";

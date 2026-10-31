@@ -36,6 +36,7 @@ use sha2::{Digest, Sha256};
 use std::path::{Path, PathBuf};
 #[cfg(feature = "casc")]
 use std::sync::OnceLock;
+use std::sync::atomic::{AtomicBool, Ordering};
 
 const RETAIL_BLIZZARD_UI_MANIFEST: &str = include_str!("../data/blizzard-ui-files/retail.txt");
 const PTR_BLIZZARD_UI_MANIFEST: &str = include_str!("../data/blizzard-ui-files/ptr.txt");
@@ -52,6 +53,8 @@ const PROVENANCE_FILE: &str = ".wow-ui-sim-blizzard-ui-provenance";
 const PROVENANCE_SCHEMA: &str = "1";
 #[cfg(feature = "casc")]
 static CASC_CONFIGURED: OnceLock<bool> = OnceLock::new();
+static ALLOW_UI_VERSION_MISMATCH: AtomicBool = AtomicBool::new(false);
+const DISABLED_VERSION_MISMATCH: &str = "gethe_fallback=disabled-version-mismatch";
 
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct SyncSummary {
@@ -60,6 +63,18 @@ pub struct SyncSummary {
     pub extracted: usize,
     pub present: usize,
     pub missing: usize,
+}
+
+/// Set the launch option before loading or synchronizing Blizzard UI sources.
+pub fn set_allow_ui_version_mismatch(allow: bool) {
+    ALLOW_UI_VERSION_MISMATCH.store(allow, Ordering::Relaxed);
+}
+
+fn cache_version_is_allowed(provenance: &str, allow_mismatch: bool) -> bool {
+    allow_mismatch
+        || !provenance
+            .lines()
+            .any(|line| line == DISABLED_VERSION_MISMATCH)
 }
 
 pub fn default_cache_addons_path() -> crate::Result<PathBuf> {
@@ -94,7 +109,15 @@ pub fn cached_blizzard_ui_addons_path() -> Option<PathBuf> {
         crate::client_profile::ClientProfile::Ptr => pinned::cache_matches(&path),
         _ => true,
     };
-    (is_complete && identity_matches && cache_has_required_profile_files(&path)).then_some(path)
+    let version_allowed =
+        std::fs::read_to_string(path.join(PROVENANCE_FILE)).map_or(true, |provenance| {
+            cache_version_is_allowed(
+                &provenance,
+                ALLOW_UI_VERSION_MISMATCH.load(Ordering::Relaxed),
+            )
+        });
+    (is_complete && identity_matches && version_allowed && cache_has_required_profile_files(&path))
+        .then_some(path)
 }
 
 fn cache_has_required_profile_files(root: &Path) -> bool {
@@ -278,7 +301,11 @@ fn expected_cache_provenance() -> crate::Result<CacheProvenance> {
             &manifest_sha256,
         );
         if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::WowForever {
-            gethe_missing::append_source_identity(&mut provenance, &build_identity.version)?;
+            gethe_missing::append_source_identity(
+                &mut provenance,
+                &build_identity.version,
+                ALLOW_UI_VERSION_MISMATCH.load(Ordering::Relaxed),
+            )?;
         }
         return Ok(provenance);
     }
