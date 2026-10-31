@@ -232,7 +232,7 @@ The simulator uses **rilua** — a pure-Rust Lua 5.1 VM that bakes Elune-style t
 
 ### What is NOT enforced
 
-- **Protected frame restrictions**: `SetAttribute` does NOT check `issecure()`. In real WoW, protected frames block attribute changes from insecure code. We don't enforce this — known gap.
+- **Protected frame restrictions**: `SetAttribute` checks the shared combat-lockdown gate. The simulator does not claim complete native protected-frame parity.
 - **`SetForbidden`/`IsForbidden`**: Implemented as flags but not enforced on any method.
 
 ## Intentional Gaps

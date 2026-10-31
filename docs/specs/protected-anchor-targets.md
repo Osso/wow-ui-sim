@@ -1,6 +1,6 @@
 # Protected-recipient anchor targets
 
-Shared clean-room simulator policy for `SetPoint`, including Wrath and Retail. Derived from the supplied functional requirements, without consulting reconstructed implementations; not native-client parity. [Existing caller restrictions](../protected-frame-enforcement.md) and [offset writes](protected-anchor-offsets.md) remain separate contracts.
+Shared clean-room simulator policy for `SetPoint`, including Wrath and Retail. Derived from the supplied functional requirements, without consulting reconstructed implementations; not native-client parity. [Protected-method combat lockdown](protected-method-coverage.md), [existing caller restrictions](../protected-frame-enforcement.md), and [offset writes](protected-anchor-offsets.md) remain separate contracts.
 
 ## What it must do
 
