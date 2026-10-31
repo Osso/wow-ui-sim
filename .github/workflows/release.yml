@@ -179,6 +179,15 @@ jobs:
           if [[ "${{ runner.os }}" == "Windows" ]]; then cli="${cli}.exe"; fi
           "${cli}" casc sync-forever-spells --source cdn --output "${RUNNER_TEMP}/forever-spells.json"
 
+      - name: Generate dungeon score rarity cache
+        if: contains(matrix.features, 'client-retail') || contains(matrix.features, 'client-ptr')
+        shell: bash
+        run: |
+          set -euo pipefail
+          cli="${{ matrix.bin-dir }}/wow-cli"
+          if [[ "${{ runner.os }}" == "Windows" ]]; then cli="${cli}.exe"; fi
+          "${cli}" casc sync-dungeon-score-rarity --output "${RUNNER_TEMP}/dungeon-score-rarity.json"
+
       - name: Smoke-test release binary
         shell: bash
         run: |
@@ -212,6 +221,11 @@ jobs:
             cp "${{ matrix.bin-dir }}/wow-cli" "${root}/"
             mkdir -p "${root}/spells/wowforever"
             cp "${RUNNER_TEMP}/forever-spells.json" "${root}/spells/wowforever/spells.json"
+          fi
+          if [[ "${{ matrix.features }}" == *client-retail* || "${{ matrix.features }}" == *client-ptr* ]]; then
+            profile=retail; [[ "${{ matrix.features }}" == *client-ptr* ]] && profile=ptr
+            mkdir -p "${root}/dungeon-score-rarity/${profile}"
+            cp "${RUNNER_TEMP}/dungeon-score-rarity.json" "${root}/dungeon-score-rarity/${profile}/rarity.json"
           fi
           cp README.md LICENSE "${root}/"
           mkdir -p "${root}/Interface/AddOns"
@@ -273,6 +287,11 @@ jobs:
             cp "${{ matrix.bin-dir }}/wow-cli" "${contents}/MacOS/wow-cli"
             mkdir -p "${contents}/MacOS/spells/wowforever"
             cp "${RUNNER_TEMP}/forever-spells.json" "${contents}/MacOS/spells/wowforever/spells.json"
+          fi
+          if [[ "${{ matrix.features }}" == *client-retail* || "${{ matrix.features }}" == *client-ptr* ]]; then
+            profile=retail; [[ "${{ matrix.features }}" == *client-ptr* ]] && profile=ptr
+            mkdir -p "${contents}/MacOS/dungeon-score-rarity/${profile}"
+            cp "${RUNNER_TEMP}/dungeon-score-rarity.json" "${contents}/MacOS/dungeon-score-rarity/${profile}/rarity.json"
           fi
           chmod +x "${contents}/MacOS/wow-sim"
           cp dist/wow-sim.icns "${contents}/Resources/wow-sim.icns"
@@ -366,6 +385,11 @@ jobs:
             Copy-Item "${{ matrix.bin-dir }}\wow-cli.exe" $root
             New-Item -ItemType Directory -Force "$root\spells\wowforever" | Out-Null
             Copy-Item "$env:RUNNER_TEMP\forever-spells.json" "$root\spells\wowforever\spells.json"
+          }
+          if ("${{ matrix.features }}" -like "*client-retail*" -or "${{ matrix.features }}" -like "*client-ptr*") {
+            $profile = if ("${{ matrix.features }}" -like "*client-ptr*") { "ptr" } else { "retail" }
+            New-Item -ItemType Directory -Force "$root\dungeon-score-rarity\$profile" | Out-Null
+            Copy-Item "$env:RUNNER_TEMP\dungeon-score-rarity.json" "$root\dungeon-score-rarity\$profile\rarity.json"
           }
           Copy-Item README.md, LICENSE $root
           New-Item -ItemType Directory -Force "$root\Interface\AddOns" | Out-Null

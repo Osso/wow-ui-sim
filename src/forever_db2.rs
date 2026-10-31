@@ -43,6 +43,23 @@ fn schema(name: &str) -> Result<(u32, Vec<Field>), String> {
             ],
         ),
         "SpellName" => (0x782ee721, vec![field("Name_lang", Text, 32, 1)]),
+        "UIDungeonScoreRarity" => (
+            0x6242874e,
+            vec![
+                s("ID"),
+                s("ScoreColor"),
+                s("DungeonScoreMin"),
+                s("DungeonScoreMax"),
+                s("OrderIndex"),
+                s("KeystoneLevelMin"),
+                s("KeystoneLevelMax"),
+                s("Field_9_2_5_43630_007"),
+                s("Field_9_2_5_43630_008"),
+                s("Field_9_2_5_43630_009"),
+                s("Field_9_2_5_43630_010"),
+                s("Field_9_2_5_43630_011"),
+            ],
+        ),
         "SpellMisc" => (
             0x434b3607,
             vec![
@@ -392,7 +409,7 @@ fn read_relations(data: &[u8], p: usize, size: usize) -> Result<BTreeMap<usize, 
 fn decode_fixed(
     data: &[u8],
     name: &str,
-    selected: &BTreeSet<u32>,
+    selected: Option<&BTreeSet<u32>>,
     zero: &[Range<usize>],
     fields: &[Field],
     sections: &[Section],
@@ -430,12 +447,12 @@ fn decode_fixed(
     }
     let mut result = Vec::new();
     for (id, (index, source)) in records {
-        let spell_id = if name == "SpellName" {
+        let spell_id = if selected.is_none() || name == "SpellName" {
             id
         } else {
             *relations.get(&index).unwrap_or(&0)
         };
-        if !selected.contains(&spell_id) {
+        if selected.is_some_and(|ids| !ids.contains(&spell_id)) {
             continue;
         }
         let at = sec.start + index * record_size;
@@ -464,7 +481,7 @@ fn decode_fixed(
             }
             insert_columns(&mut columns, field, values)?;
         }
-        if name != "SpellName" {
+        if selected.is_some() && name != "SpellName" {
             columns.insert("SpellID".into(), json!(spell_id));
         }
         result.push(SourceRow {
@@ -541,6 +558,20 @@ pub fn decode(
     zero: Vec<Range<usize>>,
     selected: &BTreeSet<u32>,
 ) -> Result<SourceTable, String> {
+    decode_selected(name, data, zero, Some(selected))
+}
+
+/// Decode every record of a supported fixed-layout table.
+pub fn decode_all(name: &str, data: &[u8], zero: Vec<Range<usize>>) -> Result<SourceTable, String> {
+    decode_selected(name, data, zero, None)
+}
+
+fn decode_selected(
+    name: &str,
+    data: &[u8],
+    zero: Vec<Range<usize>>,
+    selected: Option<&BTreeSet<u32>>,
+) -> Result<SourceTable, String> {
     if bytes(data, 0, 4)? != b"WDC5" {
         return Err(format!("{name}: expected WDC5"));
     }
@@ -570,12 +601,23 @@ pub fn decode(
     let guarded = guard(0..first_end, &zero)?;
     let flags = u16_at(data, 172)?;
     let rows = match (name, flags) {
-        ("Spell", 5) => decode_sparse(data, selected, &fields, &sections[0], guarded)?,
+        ("Spell", 5) => decode_sparse(
+            data,
+            selected.ok_or("sparse decoding requires selected IDs")?,
+            &fields,
+            &sections[0],
+            guarded,
+        )?,
         (_, 0 | 4) => decode_fixed(
             data, name, selected, &zero, &fields, &sections, &info, guarded,
         )?,
         _ => return Err(format!("{name}: unsupported DB2 flags {flags}")),
     };
+    if selected.is_none() && rows.len() != u32_at(data, 136)? {
+        return Err(format!(
+            "{name}: decoded record count does not match table header"
+        ));
+    }
     let unreadable_records = sections
         .iter()
         .skip(1)

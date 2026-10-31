@@ -54,9 +54,11 @@ COPY data/ data/
 # Overwrite every binary stub with real sources. Test/example/bench stubs are
 # manifest-only inputs: the binary-only build below never compiles them.
 COPY src/ src/
-RUN mkdir -p /spell-bundle /cli-bundle \
+RUN mkdir -p /spell-bundle /cli-bundle /rarity-bundle \
     && case "$WOW_UI_SIM_PROFILE" in \
-        retail) cargo build --release --bin wow-sim --no-default-features --features client-retail,gui --locked ;; \
+        retail) cargo build --release --bin wow-sim --bin wow-cli --no-default-features --features client-retail,gui,tools --locked \
+            && mkdir -p /rarity-bundle/retail \
+            && /build/target/release/wow-cli casc sync-dungeon-score-rarity --output /rarity-bundle/retail/rarity.json ;; \
         wowforever) cargo build --release --bin wow-sim --bin wow-cli --no-default-features --features client-wowforever,gui,tools --locked \
             && /build/target/release/wow-cli casc sync-forever-spells --source cdn --output /spell-bundle/spells.json \
             && cp /build/target/release/wow-cli /cli-bundle/wow-cli ;; \
@@ -126,6 +128,7 @@ COPY --from=builder /icu-runtime/ /usr/lib/x86_64-linux-gnu/
 # is ready, skipping the CASC sync attempt.
 COPY --from=blizzard-ui /wow-ui-source/Interface/AddOns/ /root/.cache/wow-ui-sim/blizzard-ui/${WOW_UI_SIM_PROFILE}/AddOns/
 COPY --from=builder /spell-bundle/ /app/spells/wowforever/
+COPY --from=builder /rarity-bundle/ /app/dungeon-score-rarity/
 
 # TestFramework: assertion library loaded automatically by `run-tests`
 COPY Interface/AddOns/TestFramework/ /app/Interface/AddOns/TestFramework/
