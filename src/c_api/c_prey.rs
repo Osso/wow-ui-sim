@@ -67,11 +67,17 @@ fn widget(state: &mut LuaState) -> LuaResult<u32> {
     if id <= 0.0 || id > u32::MAX as f64 || id.fract() != 0.0 {
         return Err(rilua::runtime_error("widgetID must be a positive integer"));
     }
-    let record = borrow_state(state)?
-        .prey_inputs
-        .widgets
-        .get(&(id as u32))
-        .cloned();
+    let record = {
+        let sim = borrow_state(state)?;
+        let widget_id = super::ui_widget_manager::WidgetId::from_number(id);
+        match sim.ui_widget_inputs.unit_visualization(widget_id) {
+            Some(Some(super::ui_widget_manager::WidgetVisualization::PreyHuntProgress(record))) => {
+                Some(record.clone())
+            }
+            Some(_) => None,
+            None => sim.prey_inputs.widgets.get(&(id as u32)).cloned(),
+        }
+    };
     let Some(r) = record else {
         state.push(Val::Nil);
         return Ok(1);

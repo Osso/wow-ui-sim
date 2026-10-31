@@ -1,33 +1,26 @@
 # Widget unit context
 
-This is a **user-approved simulator default**, not evidence of native behavior. The pinned `Blizzard_APIDocumentationGenerated/UIWidgetManagerDocumentation.lua` declares these four APIs at Retail, PTR, and Forever lines 557–600, and Mists, Era, and Anniversary lines 523–561. Wrath has no pinned declaration.
+## Best-guess basis
 
-## What it must do
+**Best-guess, native UNKNOWN.** No native evidence establishes registration, event, query-context, duration, or invalid-token behavior. The following are simulator behavior inferred from the pinned consumers, not a native claim:
 
-- [ ] The six declaring profiles expose `RegisterUnitForWidgetUpdates` and `UnregisterUnitForWidgetUpdates`: a required string and an optional boolean defaulting to false. Registration is an idempotent set of `(string, isGuid)`; removing an absent key does nothing.
-- [ ] `SetProcessingUnit` and `SetProcessingUnitGuid` accept a nilable string. Each selects its own kind of processing context; nil clears the selection.
-- [ ] All four functions return no values, validate arguments, and authenticate secret arguments using the VM's AllowedWhenUntainted pattern. They fire no events and do not alter visualization queries.
-- [ ] Context belongs to each simulator environment. The existing cached Blizzard manager and spell-display polling paths continue to work.
+- Retail, PTR and Forever `Blizzard_APIDocumentationGenerated/UIWidgetManagerDocumentation.lua:557–600` and Mists, Era and Anniversary `:523–561` declare registration and processing-unit APIs; Wrath does not declare them. Retail/PTR/Forever `:604–621` declare synchronous `UPDATE_ALL_UI_WIDGETS` and `UPDATE_UI_WIDGET`.
+- Retail/PTR/Forever `Blizzard_UIWidgets/Blizzard_UIWidgetManager.lua:46–52, 266–282, 307–318, 479–481, 648–655` register attached units, filter widget updates by attached unit, unregister them, and set processing unit before visualization queries.
+- Retail `Blizzard_UnitFrame/Shared/CompactUnitFrame.lua:1565–1571` uses `UnitWidgetSet(frame.unit)` and passes the unit to the original widget container. Forever `Blizzard_PlayerChoice/Blizzard_PlayerChoiceOptionBase.lua:268–272` passes a GUID-attached unit.
+- Retail `Blizzard_UIWidgets/Blizzard_UIWidgetTemplateSpellDisplay.lua:99–106` sets processing unit before querying the spell-display visualization.
 
-## How it works
+## Contract
 
-- [Widget manager state](../wiki/systems/ui-widget-manager-state.md)
+- The six declaring profiles expose registration and processing APIs with the declared argument validation, secret-argument handling, nil clearing, and no return values. Registration is an idempotent set of token/GUID keys local to each simulator environment.
+- Host updates with an attached token or GUID store a visualization for that unit and widget ID. The registered unit receives synchronous `UPDATE_UI_WIDGET` after the state change; an unregistered unit receives no event. Global widget updates retain their existing behavior.
+- Visualization queries use the selected processing token or GUID for unit-specific records. A unit-specific widget with no record for that context returns nil; clearing context leaves no unit-specific record selected. Widgets with no unit-specific records retain their supplied global record.
+- Unit-specific state is supplied, not inferred from widget IDs. Native registration lifetime and unknown-token behavior are not claimed.
 
-## Implementation inventory
+## Tests
 
-- `src/c_api/ui_widget_manager/unit_context.rs` — context state and API handlers.
-- `src/c_api/ui_widget_manager/queries.rs` — profile-gated publication.
-- `src/c_api/ui_widget_manager/inputs.rs` — environment-local context.
-
-## Tests asserting this spec
-
-- `tests/widget_spell_display/unit_apis.rs` — direct calls and state transitions.
-- `tests/widget_spell_display/consumer.rs` — cached manager and polling consumers.
-
-## Known gaps (current cycle)
-
-- [ ] Native registration, event, and processing-unit semantics are not established.
+- `tests/widget_spell_display/consumer.rs` exercises two attached original Blizzard containers, unit-specific queries and registration-controlled event delivery.
+- `tests/widget_spell_display/unit_apis.rs` covers argument validation and context state.
 
 ## Out of scope
 
-- Changing visualization queries or modeling native unit-specific feed filtering.
+- Native feed discovery, automatic unit/GUID identity mapping, and unrelated widget APIs.

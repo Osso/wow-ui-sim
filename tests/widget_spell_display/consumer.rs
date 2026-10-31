@@ -229,6 +229,29 @@ fn spell_display_unit_context_isolates_original_containers() {
 }
 
 #[test]
+fn spell_display_guid_context_delivers_to_original_container() {
+    let env = load_and_register_spell_container_env(false);
+    assert_lua(&env, "GUID container", r#"
+        GuidContainer = CreateFrame('Frame', nil, UIParent, 'UIWidgetContainerTemplate')
+        GuidContainer:RegisterForWidgetSet(431, nil, nil, {unit='Creature-1', isGuid=true})
+    "#);
+    let mut membership = entry();
+    membership.unit_token = Some("Creature-1".into());
+    let mut row = supplied_record();
+    row.spell_info.text = "GUID widget".into();
+    env.update_ui_widget_for_guid(SET_ID, membership, WidgetVisualization::SpellDisplay(row)).unwrap();
+    assert_lua(&env, "GUID event and query", r#"
+        assert(GuidContainer.widgetFrames[761301].Spell.Text:GetText() == 'GUID widget')
+        C_UIWidgetManager.SetProcessingUnitGuid('Creature-1')
+        assert(C_UIWidgetManager.GetSpellDisplayVisualizationInfo(761301).spellInfo.text == 'GUID widget')
+        C_UIWidgetManager.SetProcessingUnit('Creature-1')
+        assert(C_UIWidgetManager.GetSpellDisplayVisualizationInfo(761301) == nil)
+        C_UIWidgetManager.SetProcessingUnit(nil)
+        assert(C_UIWidgetManager.GetSpellDisplayVisualizationInfo(761301) == nil)
+    "#);
+}
+
+#[test]
 fn spell_display_attached_player_context_separate_from_world_loot_policy() {
     let env = load_and_register_spell_container_env(true);
     supply(&env, supplied_record(), true);
