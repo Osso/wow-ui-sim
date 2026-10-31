@@ -16,7 +16,7 @@ The Forever profile uses a selected spell-data file derived from the pinned Fore
 
 ## Source equivalence
 
-For build `1.60.1.70685`, local CASC and CDN generation each produced 189,706 bytes with SHA-256 `13122873d813481e85815946ddf964068b04132d4d2b2b44ba5ce61491595ad0`. Both outputs contain 72 selected spell IDs. The selected rows were also compared with the matching DB2 CSV exports; all fields matched at float32 precision.
+For build `1.60.1.70685`, local CASC and CDN generation each produced 189,706 bytes with SHA-256 `13122873d813481e85815946ddf964068b04132d4d2b2b44ba5ce61491595ad0`. Both outputs contain 72 selected spell IDs. On 2026-10-30, CDN generation through an HTTPS-only egress proxy, with discovery over HTTPS, reproduced the same 189,706 bytes and SHA-256. The selected rows were also compared with the matching DB2 CSV exports; all fields matched at float32 precision.
 
 ## How it works
 
@@ -24,6 +24,7 @@ For build `1.60.1.70685`, local CASC and CDN generation each produced 189,706 by
 
 ## Implementation inventory
 
+- `src/blizzard_ui_sync/pinned_cdn.rs`: CDN discovery; HTTPS `us.version.battle.net` first, `us.patch.battle.net:1119` fallback.
 - `src/blizzard_ui_sync/pinned_download.rs`: pinned CDN transport and DB2 decoding.
 - `src/forever_spell_data.rs`: selected-record cache generation and source-range validation.
 - `src/forever_db2.rs`: pinned WDC5 spell layouts.
@@ -34,6 +35,7 @@ For build `1.60.1.70685`, local CASC and CDN generation each produced 189,706 by
 
 ## Tests asserting this spec
 
+- `src/blizzard_ui_sync/pinned_cdn.rs`: discovery order and fallback after a failed source.
 - `src/blizzard_ui_sync/pinned_download.rs`: encrypted chunk decoding and corruption rejection.
 - `src/forever_spell_data.rs`: selection, deterministic output and zero-filled-range rejection.
 - `src/forever_db2.rs`: WDC5 name record and zero-fill rejection.
