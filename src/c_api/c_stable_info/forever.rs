@@ -81,6 +81,7 @@ fn get_next_slot_cost(state: &mut LuaState) -> LuaResult<u32> {
         .get(&(u32::from(stable.owned_slots) + 1))
         .copied()
         .unwrap_or(0);
+    drop(model);
     state.push(Val::Num(cost as f64));
     Ok(1)
 }
