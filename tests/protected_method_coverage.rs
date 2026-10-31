@@ -132,3 +132,34 @@ protected_input_test!(
     "SetMouseClickEnabled",
     "IsMouseClickEnabled"
 );
+
+protected_input_test!(
+    protected_input_propagate_clicks,
+    "SetPropagateMouseClicks",
+    "CanPropagateMouseClicks"
+);
+protected_input_test!(
+    protected_input_propagate_motion,
+    "SetPropagateMouseMotion",
+    "CanPropagateMouseMotion"
+);
+protected_input_test!(
+    protected_input_parent_scale,
+    "SetIgnoreParentScale",
+    "IsIgnoringParentScale"
+);
+protected_input_test!(
+    protected_input_collapses,
+    "SetCollapsesLayout",
+    "CollapsesLayout"
+);
+protected_input_test!(
+    protected_input_clamped,
+    "SetClampedToScreen",
+    "IsClampedToScreen"
+);
+protected_input_test!(
+    protected_input_parent_level,
+    "SetUsingParentLevel",
+    "IsUsingParentLevel"
+);
