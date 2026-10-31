@@ -253,6 +253,24 @@ fn test_securecallmethod_missing_method() {
 // CreateSecureDelegate
 // ============================================================================
 
+/// FrameScriptDocumentation declares CreateSecureDelegate on every profile
+/// except Wrath and securecopy only on Retail, PTR and Forever.
+#[test]
+fn secure_helpers_publish_on_declaring_profiles_only() {
+    use wow_ui_sim::client_profile::{ACTIVE, ClientProfile};
+    let (delegate, copy): (String, String) = env()
+        .eval("return type(CreateSecureDelegate), type(securecopy)")
+        .unwrap();
+    let declares_copy = matches!(
+        ACTIVE,
+        ClientProfile::Retail | ClientProfile::Ptr | ClientProfile::WowForever
+    );
+    assert_eq!(delegate == "function", ACTIVE != ClientProfile::Wrath);
+    assert_eq!(copy == "function", declares_copy);
+}
+
+// Wrath's generated FrameScriptDocumentation does not declare CreateSecureDelegate.
+#[cfg(not(feature = "client-wrath"))]
 #[test]
 fn test_create_secure_delegate_runs_with_secure_taint() {
     let env = env();
@@ -274,6 +292,8 @@ fn test_create_secure_delegate_runs_with_secure_taint() {
     );
 }
 
+// Wrath's generated FrameScriptDocumentation does not declare CreateSecureDelegate.
+#[cfg(not(feature = "client-wrath"))]
 #[test]
 fn test_create_secure_delegate_survives_nil() {
     let env = env();

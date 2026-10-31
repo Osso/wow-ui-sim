@@ -49,6 +49,14 @@ pub(crate) fn is_active_stack_tainted(state: &LuaState) -> bool {
         .any(|frame| frame.taint.is_some())
 }
 
+/// The taint `debug.getstacktaint()` reports: the innermost tainted frame.
+pub(crate) fn current_stack_taint(state: &LuaState) -> Option<String> {
+    state.call_stack[..=state.ci]
+        .iter()
+        .rev()
+        .find_map(|frame| frame.taint.clone())
+}
+
 pub fn clear_active_stack_taint(state: &mut LuaState) -> Vec<Option<String>> {
     let active_depth = state.ci.saturating_add(1);
     let mut saved_taints = Vec::with_capacity(active_depth);

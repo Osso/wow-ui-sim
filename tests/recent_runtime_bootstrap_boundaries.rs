@@ -591,7 +591,7 @@ const RECENTLY_MOVED_BOOTSTRAP_FALLBACKS: &[BootstrapFallbackOwner] = &[
         ),
         (
             "function CreateSecureDelegate",
-            "temporary debug/environment workaround",
+            "Rust secure helpers owner",
         ),
         (
             "function debug.getfenv",

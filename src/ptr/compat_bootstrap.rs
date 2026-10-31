@@ -3,14 +3,10 @@ use rilua::LuaApiMut;
 #[cfg(not(feature = "retail-12-1-5"))]
 const PATCH_12_1_COMPAT_BOOTSTRAP_LUA: &str = concat!(
     "Enum.TieredEntranceTypeMeta = { MinValue = 0, MaxValue = 4, NumValues = 5 }\n",
-    include_str!("../lua_api/workarounds/temporary/securecopy.lua"),
-    "\n",
     include_str!("compat_bootstrap.lua"),
 );
 #[cfg(feature = "retail-12-1-5")]
 const PATCH_12_1_COMPAT_BOOTSTRAP_LUA: &str = concat!(
-    include_str!("../lua_api/workarounds/temporary/securecopy.lua"),
-    "\n",
     include_str!("tiered_entrance_type.lua"),
     "\n",
     include_str!("fragment_id.lua"),
