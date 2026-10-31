@@ -25,6 +25,8 @@ macro_rules! build_empty_sim_state {
         let quest_log_entries = QuestLogState::seeded();
         Self {
             loot_specialization: 0,
+            loot_spec_window: None,
+            pending_loot_specs: Vec::new(),
             world_loot_objects: Default::default(),
             widgets: WidgetRegistry::with_screen_size(
                 $runtime.screen_width,

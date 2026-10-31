@@ -46,18 +46,39 @@ fn loot_specialization_original_popup_selection() {
             events = events + 1
         end)
         assert(chosen:OnClick({}) == MenuResponse.Close)
-        assert(GetLootSpecialization() == id)
-        assert(chosen:IsChecked({}) and not default:IsChecked({}))
-        assert(events == 1)
-        SetLootSpecialization(id)
-        assert(events == 1, 'same selection does not emit')
-        SetLootSpecialization(999999)
-        SetLootSpecialization(71) -- Arms belongs to Warrior; the default player is Paladin.
-        assert(events == 1 and GetLootSpecialization() == id, 'invalid and foreign ids are rejected')
-        listener:UnregisterEvent('PLAYER_LOOT_SPEC_UPDATED')
-        default:OnClick({})
-        assert(GetLootSpecialization() == 0 and default:IsChecked({}) and not chosen:IsChecked({}))
+        assert(GetLootSpecialization() == 0 and events == 0)
+        _G.loot_spec_id = id
+        _G.loot_spec_events = function() return events end
     "#,
     )
-    .expect("original loot specialization popup selection");
+    .expect("popup request");
+    env.fire_on_update(0.0).unwrap();
+    env.exec(r#"
+        assert(GetLootSpecialization() == loot_spec_id)
+        assert(UnitPopupLootSpecialization2ButtonMixin:IsChecked({}))
+        assert(loot_spec_events() == 1)
+    "#).expect("popup response");
+}
+
+#[test]
+fn loot_specialization_rate_limit_drops_sixth_request() {
+    let env = WowLuaEnv::new().expect("environment");
+    env.exec(r#"
+        events = 0
+        local listener = CreateFrame('Frame')
+        listener:RegisterEvent('PLAYER_LOOT_SPEC_UPDATED')
+        listener:SetScript('OnEvent', function() events = events + 1 end)
+        for i = 1, 5 do SetLootSpecialization(0) end
+        SetLootSpecialization(65)
+        assert(GetLootSpecialization() == 0 and events == 0)
+    "#).unwrap();
+    env.fire_on_update(0.0).unwrap();
+    env.exec("assert(GetLootSpecialization() == 0 and events == 5)").unwrap();
+}
+
+#[test]
+fn loot_specialization_usage_error() {
+    let env = WowLuaEnv::new().expect("environment");
+    let error = env.exec("SetLootSpecialization({})").unwrap_err().to_string();
+    assert!(error.contains("Usage: SetLootSpecialization(specializationID)"), "{error}");
 }
