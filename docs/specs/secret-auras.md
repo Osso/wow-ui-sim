@@ -82,7 +82,18 @@ Evidence levels used below:
 
 None yet at umbrella level. The narrow specs above list their own tests. Each bullet here gains a test that runs a shipped Blizzard consumer when its lane lands.
 
+## Casting and threat predicate surface
+
+The pinned Retail and PTR `Blizzard_APIDocumentationGenerated/SecretPredicateAPIDocumentation.lua` declares `ShouldUnitSpellCastingBeSecret` at lines 372–385 and `ShouldUnitThreatValuesBeSecret` at lines 415–429. Both return one boolean. Casting requires one unit token; threat values requires two. `ShouldUnitThreatStateBeSecret` declares its second token nilable at lines 398–412. These declarations specify required arguments, not exact error text or coercion behavior.
+
+The simulator rejects missing, nil and non-string required tokens (best-guess validation, native UNKNOWN). Casting follows the existing public player-cast policy. Threat values follows the existing supplied `threat_state_restricted` policy. Both triggers are **best-guess, native UNKNOWN**. `CanCompareUnitTokens` uses the existing comparison-permission policy, not the inverse of comparison secrecy. Retail and PTR both enable the `retail-12-0-5` feature that gates the existing threat-state predicate.
+
+Retail's `Blizzard_UIPanels_Game_Mainline.toc:6,10` selects `Shared/CastingBarFrame.lua`; its `IsInterruptable` method reaches the predicate via lines 2, 5 and 604–605. The consumer test observes interruptible and uninterruptible results, but a constant false predicate also permits both: it proves the missing-call boundary and preserves consumer behavior, not nonconstant predicate semantics.
+
 ## Known gaps (current cycle)
+
+- [ ] Casting and threat restriction triggers: **best-guess, native UNKNOWN**; the shared simulated threat flag is not evidence of native threat-values behavior.
+- [ ] Native S1 §7 describes a generic indexed state-byte predicate path comparing the byte to 2. The mapping of restriction indices and any pairing of a particular predicate with a getter remain unverified; existing `GetSpellCastSecrecy` and `ShouldUnitSpellCastBeSecret` are computed independently.
 
 - [ ] Native behaviour questions S1–S9 (clean-room, 12.1.5.70688). The string inventory is done; behavioural traces are pending.
 - [ ] Production restriction trigger (after S1).
