@@ -71,7 +71,11 @@ pub(super) fn set_attribute(state: &mut LuaState) -> LuaResult<u32> {
     if protected_write_blocked(state, id) {
         return Ok(0);
     }
-    let name_arg = create_string(state, &name);
+    write_attribute(state, id, &name, value)
+}
+
+fn write_attribute(state: &mut LuaState, id: u64, name: &str, value: Val) -> LuaResult<u32> {
+    let name_arg = create_string(state, name);
     let secure_delegate_dispatch = {
         let sim = borrow_state(state)?;
         sim.widgets
@@ -95,15 +99,15 @@ pub(super) fn set_attribute(state: &mut LuaState) -> LuaResult<u32> {
         Ok(())
     };
     if value == Val::Bool(false) {
-        let _ = store_simple_attribute(state, id, &name, Val::Nil)?;
+        let _ = store_simple_attribute(state, id, name, Val::Nil)?;
         dispatch(state)?;
     }
-    let changed = store_simple_attribute(state, id, &name, value)?;
+    let changed = store_simple_attribute(state, id, name, value)?;
     if value != Val::Bool(false) {
         dispatch(state)?;
     }
     if changed {
-        run_state_attribute_snippet(state, id, &name, value)?;
+        run_state_attribute_snippet(state, id, name, value)?;
     }
     Ok(0)
 }
@@ -259,8 +263,7 @@ pub(super) fn clear_attribute(state: &mut LuaState) -> LuaResult<u32> {
         .get(id)
         .is_some_and(|frame| frame.attributes.contains_key(&name));
     if existed {
-        state.push(Val::Nil);
-        set_attribute(state)?;
+        write_attribute(state, id, &name, Val::Nil)?;
     }
     state.push(Val::Bool(existed));
     Ok(1)
