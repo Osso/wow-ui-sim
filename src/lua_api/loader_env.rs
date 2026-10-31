@@ -185,6 +185,7 @@ impl<'a> LoaderEnv<'a> {
 
     fn fire_rooted_event(&self, event: &str, args: &[Val]) -> Result<()> {
         let listeners = self.with_state(|state| {
+            crate::c_api::restricted_actions::apply_host_event(state, event)?;
             #[cfg(feature = "retail-12-0-5")]
             crate::c_api::aura_entry::apply_entry_event(state, event)?;
             Ok::<Vec<u64>, crate::Error>(crate::lua_api::script_helpers::get_event_listeners(

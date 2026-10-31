@@ -97,6 +97,7 @@ pub(super) fn start_run(state: &mut LuaState) -> LuaResult<u32> {
     };
     let event_id = run.event_map_id;
     borrow_state_mut(state)?.challenge_run.active = Some(run);
+    crate::c_api::restricted_actions::set_challenge_mode(state, true)?;
     dispatch_event_now(
         state,
         "CHALLENGE_MODE_START",
@@ -123,6 +124,7 @@ fn remove_run(state: &mut LuaState) -> LuaResult<Option<i32>> {
 
 pub(super) fn clear_run(state: &mut LuaState) -> LuaResult<u32> {
     if let Some(event_id) = remove_run(state)? {
+        crate::c_api::restricted_actions::set_challenge_mode(state, false)?;
         dispatch_event_now(
             state,
             "CHALLENGE_MODE_RESET",
@@ -137,6 +139,7 @@ pub(super) fn complete_run(state: &mut LuaState) -> LuaResult<u32> {
     let completion = decode_completion(state, row)?;
     borrow_state_mut(state)?.challenge_completion = completion;
     remove_run(state)?;
+    crate::c_api::restricted_actions::set_challenge_mode(state, false)?;
     dispatch_event_now(state, "CHALLENGE_MODE_COMPLETED", &[])?;
     Ok(0)
 }
