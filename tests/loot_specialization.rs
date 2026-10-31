@@ -33,6 +33,7 @@ fn loot_specialization_original_popup_selection() {
         local chosen = UnitPopupLootSpecialization2ButtonMixin
         local source = debug.getinfo(chosen.OnClick, 'S').source:gsub('\\', '/')
         assert(source:find('Blizzard_UnitPopupShared/UnitPopupSharedButtonMixins.lua', 1, true))
+        assert(GetLootSpecialization() == 0 and HasLootSpecializations() == true)
         assert(default:IsChecked({}) and not chosen:IsChecked({}))
         local id = chosen:GetSpecID()
         assert(id > 0)
@@ -48,6 +49,11 @@ fn loot_specialization_original_popup_selection() {
         assert(GetLootSpecialization() == id)
         assert(chosen:IsChecked({}) and not default:IsChecked({}))
         assert(events == 1)
+        SetLootSpecialization(id)
+        assert(events == 1, 'same selection does not emit')
+        SetLootSpecialization(999999)
+        SetLootSpecialization(71) -- Arms belongs to Warrior; the default player is Paladin.
+        assert(events == 1 and GetLootSpecialization() == id, 'invalid and foreign ids are rejected')
         listener:UnregisterEvent('PLAYER_LOOT_SPEC_UPDATED')
         default:OnClick({})
         assert(GetLootSpecialization() == 0 and default:IsChecked({}) and not chosen:IsChecked({}))
