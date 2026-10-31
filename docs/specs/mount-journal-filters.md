@@ -15,7 +15,9 @@ The clean-room evidence is `native-evidence-70688/C_MountJournal_FilterState.md`
 - Event delivery timing relative to setter return is unknown. The simulator retains queued `MOUNT_JOURNAL_SEARCH_UPDATED` behavior when displayed IDs change; native listener notifications can occur even without a displayed-list change.
 - Native valid-source data is runtime-dependent and not supplied by the evidence. The simulator fixture currently publishes only Drop, so its valid-source mask contains only that source; it does not model the native data refresh.
 - Exact type-error text for invalid collected indices and search argument errors is unknown.
-- The fixture's collected/unusable mapping and the 70575-to-70688 behavior differences require native confirmation.
+- Verified (M8): `LE_MOUNT_JOURNAL_FILTER_COLLECTED/NOT_COLLECTED/UNUSABLE` are 1/2/3 and `NUM_LE_MOUNT_JOURNAL_FILTERS` is 3. The collected getter tests bit == index for 0–3 and returns false above 3. Blizzard_MountCollection passes the constants directly, so after `SetDefaultFilters` (bits 0 and 1) the original UI reports Collected checked and Not Collected/Unusable unchecked.
+- Which native bit the displayed-list filter reads for collected, uncollected and unusable mounts is unknown. The simulator filters with the UI constants (1, 2, 3).
+- The 70575-to-70688 behavior differences require native confirmation.
 
 ## Pinned declarations and consumer
 
