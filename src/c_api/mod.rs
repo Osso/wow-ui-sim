@@ -11,6 +11,7 @@ pub(crate) mod classic_startup_data;
 #[cfg(feature = "client-retail")]
 pub(crate) mod currency_list;
 pub mod item_overlay;
+pub mod mount_filters;
 pub(crate) mod ptr_i4_game_rules;
 pub(crate) mod quest_difficulty;
 pub mod quest_objectives;

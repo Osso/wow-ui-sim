@@ -221,6 +221,44 @@ fn mount_filter_reset_consumer_restores_defaults() {
         assert(MountJournal_GetUnusableFilter(), "unusable restored")
         assert(C_MountJournal.IsSourceChecked(1), "source restored")
         assert(C_MountJournal.IsTypeChecked(1), "type restored")
+        local count = C_MountJournal.GetNumDisplayedMounts()
+        C_MountJournal.SetSearch("not-a-real-mount-name")
+        assert(C_MountJournal.IsUsingDefaultFilters(), "search is not a dropdown filter")
+        assert(C_MountJournal.GetNumDisplayedMounts() == 0, "search filters displayed mounts")
+        C_MountJournal.SetDefaultFilters()
+        assert(C_MountJournal.GetNumDisplayedMounts() == 0, "filter reset preserves search")
+        C_MountJournal.SetSearch("")
+        assert(C_MountJournal.GetNumDisplayedMounts() == count, "clearing search restores list")
+        for i = 1, 12 do assert(C_MountJournal.IsSourceChecked(i), "all source defaults") end
+        for i = 1, 5 do assert(C_MountJournal.IsTypeChecked(i), "all type defaults") end
+        C_MountJournal.SetAllSourceFilters(false)
+        assert(C_MountJournal.GetNumDisplayedMounts() == 0, "sources filter displayed mounts")
+        assert(not C_MountJournal.IsUsingDefaultFilters(), "sources alter defaults")
+        C_MountJournal.SetAllSourceFilters(true)
+        assert(C_MountJournal.IsUsingDefaultFilters(), "all sources restored")
+        C_MountJournal.SetAllTypeFilters(false)
+        assert(C_MountJournal.GetNumDisplayedMounts() == 0, "types filter displayed mounts")
+        assert(not C_MountJournal.IsUsingDefaultFilters(), "types alter defaults")
+        C_MountJournal.SetAllTypeFilters(true)
+        assert(C_MountJournal.IsUsingDefaultFilters(), "all types restored")
+        for index = 1, 3 do
+            C_MountJournal.SetCollectedFilterSetting(index, false)
+            assert(not C_MountJournal.IsUsingDefaultFilters(), "each collected filter changes default")
+            C_MountJournal.SetCollectedFilterSetting(index, true)
+            assert(C_MountJournal.IsUsingDefaultFilters(), "each collected filter restores default")
+        end
+        for index = 1, 12 do
+            C_MountJournal.SetSourceFilter(index, false)
+            assert(not C_MountJournal.IsUsingDefaultFilters(), "each source changes default")
+            C_MountJournal.SetSourceFilter(index, true)
+            assert(C_MountJournal.IsUsingDefaultFilters(), "each source restores default")
+        end
+        for index = 1, 5 do
+            C_MountJournal.SetTypeFilter(index, false)
+            assert(not C_MountJournal.IsUsingDefaultFilters(), "each type changes default")
+            C_MountJournal.SetTypeFilter(index, true)
+            assert(C_MountJournal.IsUsingDefaultFilters(), "each type restores default")
+        end
     "#,
     )
     .expect("mount filter consumer should reset filters");
@@ -689,4 +727,22 @@ fn encounter_journal_journeys_frame_seeds_current_major_factions_without_tww_lea
         "current Midnight Journeys must not show War Within rows; count={count}, names={names}"
     );
 }
+}
+
+#[cfg(feature = "client-retail")]
+#[test]
+fn mount_filter_events_follow_displayed_list_changes() {
+    let env = WowLuaEnv::new().expect("Lua environment");
+    env.state().borrow_mut().events.drain();
+    env.exec("C_MountJournal.SetCollectedFilterSetting(1, false)").unwrap();
+    let events = env.state().borrow_mut().events.drain();
+    assert_eq!(events.iter().filter(|event| event.name == "MOUNT_JOURNAL_SEARCH_UPDATED").count(), 1);
+    env.exec("C_MountJournal.SetCollectedFilterSetting(1, false)").unwrap();
+    assert!(env.state().borrow().events.pending().iter().all(|event| event.name != "MOUNT_JOURNAL_SEARCH_UPDATED"));
+    env.exec("C_MountJournal.SetDefaultFilters()").unwrap();
+    let events = env.state().borrow_mut().events.drain();
+    assert_eq!(events.iter().filter(|event| event.name == "MOUNT_JOURNAL_SEARCH_UPDATED").count(), 1);
+    env.exec("C_MountJournal.SetSearch('not-a-real-mount-name')").unwrap();
+    let events = env.state().borrow_mut().events.drain();
+    assert_eq!(events.iter().filter(|event| event.name == "MOUNT_JOURNAL_SEARCH_UPDATED").count(), 1);
 }
