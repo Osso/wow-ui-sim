@@ -6,6 +6,9 @@ mod countdown_formatter;
 pub(crate) use countdown_formatter::tick_countdown_formatters;
 
 use super::shared::{animation_group_id_for_frame, opt_string, val_to_bool, val_to_f64};
+use crate::lua_api::frame::methods::methods_helpers::{
+    can_change_protected_state_for, emit_addon_action_blocked,
+};
 use crate::lua_api::frame::methods::secret_origin::{require_readable, require_timing_readable};
 use crate::lua_api::globals::lua_duration_object::duration_has_secret_values;
 use crate::lua_api::methods::{
@@ -163,6 +166,14 @@ fn cooldown_inputs_are_secret(state: &LuaState, indices: std::ops::RangeInclusiv
 
 pub(super) fn set_cooldown(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
+    if !can_change_protected_state_for(state, id) {
+        emit_addon_action_blocked(state, id, "SetCooldown");
+        return Ok(0);
+    }
+    apply_cooldown(state, id)
+}
+
+fn apply_cooldown(state: &mut LuaState, id: u64) -> LuaResult<u32> {
     let start = read_cooldown_number(state, 2)?;
     let duration = read_cooldown_number(state, 3)?;
     let mod_rate = normalize_mod_rate(read_cooldown_number(state, 4)?);
@@ -176,7 +187,8 @@ pub(super) fn set_cooldown(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 pub(super) fn set_cooldown_unix(state: &mut LuaState) -> LuaResult<u32> {
-    set_cooldown(state)
+    let id = frame_id_from_stack(state, 1)?;
+    apply_cooldown(state, id)
 }
 
 pub(super) fn set_cooldown_from_expiration_time(state: &mut LuaState) -> LuaResult<u32> {

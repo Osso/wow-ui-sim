@@ -1,6 +1,9 @@
 //! Slider, CheckButton, shared value (Slider+StatusBar), and ScrollFrame methods.
 
 use super::shared::{opt_string, val_to_bool, val_to_f64};
+use crate::lua_api::frame::methods::methods_helpers::{
+    can_change_protected_state_for, emit_addon_action_blocked,
+};
 use crate::lua_api::methods::{
     borrow_state, borrow_state_mut, extract_frame_id, frame_id_from_stack, frame_ref,
     sync_child_to_rilua,
@@ -585,6 +588,10 @@ pub(super) fn set_horizontal_scroll(state: &mut LuaState) -> LuaResult<u32> {
         crate::lua_api::frame::methods::secret_origin::authenticate_retail_arguments(state)?;
     let id = frame_id_from_stack(state, 1)?;
     let offset = val_to_f64(stack_val(state, 2));
+    if !can_change_protected_state_for(state, id) {
+        emit_addon_action_blocked(state, id, "SetHorizontalScroll");
+        return Ok(0);
+    }
     let mut sim = borrow_state_mut(state)?;
     if cfg!(feature = "retail-12-0-7") {
         if let Some(frame) = sim.widgets.get_mut(id) {
@@ -645,6 +652,10 @@ pub(super) fn set_vertical_scroll(state: &mut LuaState) -> LuaResult<u32> {
         crate::lua_api::frame::methods::secret_origin::authenticate_retail_arguments(state)?;
     let id = frame_id_from_stack(state, 1)?;
     let offset = val_to_f64(stack_val(state, 2));
+    if !can_change_protected_state_for(state, id) {
+        emit_addon_action_blocked(state, id, "SetVerticalScroll");
+        return Ok(0);
+    }
     let mut sim = borrow_state_mut(state)?;
     if cfg!(feature = "retail-12-0-7") {
         if let Some(frame) = sim.widgets.get_mut(id) {

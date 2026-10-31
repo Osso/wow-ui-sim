@@ -3,6 +3,9 @@
 //! Tags live on `Frame::rolesets`; every change reevaluates the frame against
 //! the active `C_Roleset` filters.
 use crate::c_api::c_roleset::{push_names, split_roleset_list, update_frame_rolesets};
+use crate::lua_api::frame::methods::methods_helpers::{
+    can_change_protected_state_for, emit_addon_action_blocked,
+};
 use crate::lua_api::methods::{borrow_state, borrow_state_mut, frame_id_from_stack, val_to_string};
 use crate::lua_bridge::{stack_val, table_set_rust_fn_static};
 use rilua::LuaResult;
@@ -62,6 +65,10 @@ fn add_roleset(state: &mut LuaState) -> LuaResult<u32> {
 fn set_rolesets(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
     let names = roleset_arg(state).map(|list| split_roleset_list(&list));
+    if !can_change_protected_state_for(state, id) {
+        emit_addon_action_blocked(state, id, "SetRolesets");
+        return Ok(0);
+    }
     update_rolesets(state, id, |rolesets| {
         *rolesets = names.unwrap_or_default();
     })?;

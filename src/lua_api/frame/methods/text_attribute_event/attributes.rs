@@ -530,6 +530,14 @@ pub(super) fn set_pass_through_buttons(state: &mut LuaState) -> LuaResult<u32> {
         .filter_map(|index| val_to_string(state, stack_val(state, index as i32)))
         .map(|button| button.to_ascii_lowercase())
         .collect();
+    if !can_change_protected_state_for(state, id) {
+        super::super::methods_helpers::emit_addon_action_blocked(
+            state,
+            id,
+            "SetPassThroughButtons",
+        );
+        return Ok(0);
+    }
     let mut sim = borrow_state_mut(state)?;
     if let Some(frame) = sim.widgets.get_mut(id) {
         frame.pass_through_buttons = buttons;
