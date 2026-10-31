@@ -1,3 +1,7 @@
+## [2026-10-30] implementation | Supplied voice audio devices
+
+[Voice settings access](systems/voice-settings-access.md) now links the [device catalog contract](../specs/voice-audio-devices.md). Retail, PTR and Forever publish `GetAvailableInputDevices`/`GetAvailableOutputDevices` from host-overridable state, initially one selected "System Default" device as a researched best guess. On upstream `35b3578d` the original Retail InitVoiceSettings failed at Audio.lua:179; with the catalogs it completes, and its device dropdowns read supplied, empty and nil catalogs. Mists/Era/Anniversary declarations were not checked and stay unpublished.
+
 ## [2026-10-27] investigation | UI capture fidelity
 
 Created [UI capture fidelity](investigations/ui-capture-fidelity.md) for the render fixes ported from the capture comparison, and documented `--quality`, `--ui-scale` and `WOW_SIM_HIRES_ATLASES` in [CLI commands](reference/cli-commands.md#screenshot).
@@ -3181,3 +3185,10 @@ mtime-only lib.rs and c_club.rs rebuilds. Static-only handoff; no CPU/build proo
 ## 2026-10-27 — Mists scenario defaults
 
 - Updated [scenario finder](systems/mists-scenario-finder.md) with user-decided defaults and bounded consumer proof.
+
+## 2026-10-31 — SavedVariables data preservation and input failures
+
+[SavedVariables persistence](../specs/saved-variables.md) documents byte-preserving
+serialization, account/character loading and retained input failures. The
+[native evidence](../specs/saved-variables-native-evidence.md) distinguishes
+simulator preservation from native parity. Shutdown finalization remains unfinished.

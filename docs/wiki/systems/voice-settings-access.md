@@ -25,4 +25,5 @@ Seven full-feature all-target checks have zero compiler warnings. All 98 protect
 ## See Also
 
 - [Lua API architecture](../../lua-api.md)
+- [Voice audio devices](../../specs/voice-audio-devices.md) — the device catalogs the true branch consumes next.
 - [Speak For Me activity](../../specs/voice-speak-for-me-active-input.md) — a separate observation, not a readiness derivation.

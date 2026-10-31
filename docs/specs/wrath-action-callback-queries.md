@@ -6,7 +6,7 @@ Native Wrath action, stance and pet callbacks must read profile-correct query re
 
 ### Range snapshots and publication
 
-- [x] Supplied spell/target GUID range snapshots can be seeded by Wrath fixtures without publishing `C_ActionBar.IsActionInRange`, `HasRangeRequirements` or `GetActionAutocast` on Wrath. Modern registration remains `retail-12-0-0` only.
+- [x] Supplied spell/target GUID range snapshots can be seeded by Wrath fixtures without publishing `C_ActionBar.IsActionInRange`, `HasRangeRequirements` or `GetActionAutocast` on Wrath. Modern registration is selected by Retail's `retail-12-0-0` and Forever; the shared backing model uses the `action-spell-range` capability.
 - [x] Legacy `IsActionInRange(slot[, unit])` returns exactly one numeric 1/0 or nil; never boolean. Valid supplied in-range/out-of-range snapshots drive original `ActionButton_OnUpdate` hotkey colors.
 - [x] Invalid/missing slot or index outside 1..144 returns one nil; ordinary decimal numeric strings are accepted. Empty/unresolved action, target or snapshot returns nil. Omitted unit uses current target for directly bound spells.
 - [x] No special unranged-action result is invented. **INFERRED host model:** absent supplied range/eligibility data remains indeterminate; snapshots represent the result of the shared native range/target-validity checker, not computed geometry.
@@ -26,7 +26,7 @@ Native Wrath action, stance and pet callbacks must read profile-correct query re
 ## Implementation inventory
 
 - `src/c_api/action_spell_range.rs` — supplied spell/target snapshot type; no Lua registration.
-- `src/c_api/c_action_bar_queries.rs` — existing Retail query registration and readers; Retail-only module.
+- `src/c_api/c_action_bar_queries.rs` — shared Retail/Forever query registration and readers; not published on Wrath.
 - `src/lua_api/state{,/sim_state}.rs` — profile-scoped snapshot storage.
 - `src/lua_api/globals/real/pet_bar.rs` — Wrath seven-value spell/token projection; modern nine-value output preserved.
 - `src/lua_api/globals/real/shapeshift.rs` — Wrath texture/name/numeric-flags projection; modern texture/boolean-flags/spellID preserved.
@@ -36,6 +36,7 @@ Native Wrath action, stance and pet callbacks must read profile-correct query re
 ## Tests asserting this spec
 
 - `tests/wrath_action_contract.rs` — sourced return shapes, unknown/invalid inputs and publication isolation.
+- `tests/forever_action_range.rs` — Forever's selected legacy wrapper reads the shared supplied range observations; direct range-requirement and pet-autocast queries reuse their backing state.
 - `tests/{c_pet_bar_globals,c_shapeshift_globals}.rs` — direct producer oracles select native Wrath positions/arity without weakening modern assertions.
 - `tests/common/wrath_action_assertions.rs` — original native ActionButton_OnUpdate, ShapeshiftBar_UpdateState and PetActionBar_Update consumers, reached through original F04 test IDs.
 

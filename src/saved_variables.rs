@@ -15,6 +15,9 @@
 #[path = "saved_variables_details_tests.rs"]
 mod saved_variables_details_tests;
 #[cfg(test)]
+#[path = "saved_variables_load_tests.rs"]
+mod saved_variables_load_tests;
+#[cfg(test)]
 #[path = "saved_variables_model_tests.rs"]
 mod saved_variables_model_tests;
 #[path = "saved_variables_parse.rs"]
@@ -121,6 +124,14 @@ impl WtfConfig {
     }
 }
 
+/// Result of resolving one addon's account or character input in this VM.
+#[derive(Debug)]
+enum LoadResult {
+    Loaded,
+    MissingImport,
+    Failed(String),
+}
+
 /// Manages saved variables for all loaded addons.
 #[derive(Debug)]
 pub struct SavedVariablesManager {
@@ -130,18 +141,23 @@ pub struct SavedVariablesManager {
     registered: HashMap<String, Vec<String>>,
     registered_per_char: HashMap<String, Vec<String>>,
     wtf_config: Option<WtfConfig>,
-    wtf_loaded: HashMap<String, bool>,
     loaded_values: HashMap<String, Vec<(String, Val)>>,
     reload_saved_addons: std::collections::HashSet<String>,
     max_load_bytes: Option<u64>,
+    load_results: HashMap<(String, bool), LoadResult>,
 }
 
 impl SavedVariablesManager {
     pub fn new() -> Self {
-        let storage_dir = dirs::data_local_dir()
-            .unwrap_or_else(|| PathBuf::from("."))
-            .join("wow-sim")
-            .join("SavedVariables");
+        let storage_dir = std::env::var_os("WOW_SIM_STORAGE_DIR")
+            .filter(|value| !value.is_empty())
+            .map(PathBuf::from)
+            .unwrap_or_else(|| {
+                dirs::data_local_dir()
+                    .unwrap_or_else(|| PathBuf::from("."))
+                    .join("wow-sim")
+                    .join("SavedVariables")
+            });
         Self::with_storage_dir(storage_dir)
     }
 
@@ -153,10 +169,10 @@ impl SavedVariablesManager {
             registered: HashMap::new(),
             registered_per_char: HashMap::new(),
             wtf_config: None,
-            wtf_loaded: HashMap::new(),
             loaded_values: HashMap::new(),
             reload_saved_addons: std::collections::HashSet::new(),
             max_load_bytes: max_load_bytes_from_env(),
+            load_results: HashMap::new(),
         }
     }
 
@@ -165,7 +181,10 @@ impl SavedVariablesManager {
         let path = self.storage_path(name, false);
         let content = match fs::read_to_string(&path) {
             Ok(content) => content,
-            Err(error) if error.kind() == std::io::ErrorKind::NotFound => return Ok(Val::Nil),
+            Err(error) if error.kind() == std::io::ErrorKind::NotFound => {
+                verify_missing_file(&path)?;
+                return Ok(Val::Nil);
+            }
             Err(error) => {
                 return Err(crate::Error::Other(format!(
                     "read model {}: {error}",
@@ -187,7 +206,7 @@ impl SavedVariablesManager {
     ) -> crate::Result<()> {
         let path = self.storage_path(name, false);
         let mut output = String::new();
-        serialize_assignment(&mut output, state, "preferences", value);
+        serialize_assignment(&mut output, state, "preferences", value)?;
         fs::create_dir_all(&self.storage_dir).map_err(|error| {
             crate::Error::Other(format!(
                 "create model directory {}: {error}",
@@ -201,6 +220,7 @@ impl SavedVariablesManager {
 
     /// Forget VM handles and declarations; the fresh addon graph registers them again.
     pub(crate) fn retire_lua_environment(&mut self) {
+        self.load_results.clear();
         self.reload_saved_addons
             .extend(self.registered.keys().cloned());
         self.reload_saved_addons
@@ -208,7 +228,6 @@ impl SavedVariablesManager {
         self.registered.clear();
         self.registered_per_char.clear();
         self.loaded_values.clear();
-        self.wtf_loaded.clear();
     }
 
     #[cfg(feature = "client-wrath")]
@@ -251,38 +270,34 @@ impl SavedVariablesManager {
         let Some(config) = self.wtf_config.clone() else {
             return Ok(0);
         };
-        if self.wtf_loaded.contains_key(addon_name) {
-            return Ok(0);
-        }
-        let files = [
-            (
-                config.account_saved_vars_file(addon_name),
-                format!("account SavedVariables for {addon_name}"),
-            ),
-            (
-                config.character_saved_vars_file(addon_name),
-                format!("character SavedVariables for {addon_name}"),
-            ),
-        ];
-
         let mut loaded = 0;
-        for (path, description) in files {
-            if !path.exists() {
-                continue;
-            }
-            match self.load_lua_file(state, &path, "@WTF") {
-                Ok(()) => {
-                    crate::lua_api::workarounds::sanitize_imported_wtf_addon_saved_variables(
-                        state, addon_name,
-                    );
-                    loaded += 1;
+        let mut failures = Vec::new();
+        for (per_character, path) in [
+            (false, config.account_saved_vars_file(addon_name)),
+            (true, config.character_saved_vars_file(addon_name)),
+        ] {
+            match self
+                .load_results
+                .get(&(addon_name.to_owned(), per_character))
+            {
+                Some(LoadResult::Failed(error)) => {
+                    failures.push(error.clone());
+                    continue;
                 }
-                Err(error) => tracing::warn!("Failed to load {description}: {error}"),
+                Some(_) => continue,
+                None => {}
+            }
+            match self.load_scope_file(state, addon_name, per_character, &path, true, false) {
+                Ok(true) => loaded += 1,
+                Ok(false) => {}
+                Err(error) => failures.push(error.to_string()),
             }
         }
-
-        self.wtf_loaded.insert(addon_name.to_string(), loaded > 0);
-        Ok(loaded)
+        if failures.is_empty() {
+            Ok(loaded)
+        } else {
+            Err(crate::Error::Other(failures.join("; ")))
+        }
     }
 
     /// Load the EditMode layout cache and select the active layout.
@@ -342,11 +357,9 @@ impl SavedVariablesManager {
         saved_vars: &[String],
         saved_vars_per_char: &[String],
     ) -> crate::Result<()> {
-        self.init_registered_globals(state, addon_name, saved_vars, false)?;
-        self.init_registered_globals(state, addon_name, saved_vars_per_char, true)?;
-        self.remember_registered_vars(addon_name, saved_vars, saved_vars_per_char);
+        let result = self.load_declared_scopes(state, addon_name, saved_vars, saved_vars_per_char);
         self.remember_loaded_values(state, addon_name, saved_vars, saved_vars_per_char);
-        Ok(())
+        result
     }
 
     /// Wrath executes each declared scope once after addon code, overwriting defaults.
@@ -357,44 +370,30 @@ impl SavedVariablesManager {
         saved_vars: &[String],
         saved_vars_per_char: &[String],
     ) -> crate::Result<()> {
-        self.remember_registered_vars(addon_name, saved_vars, saved_vars_per_char);
-        for (per_character, names) in [(false, saved_vars), (true, saved_vars_per_char)] {
-            if !names.is_empty() {
-                self.load_post_code_scope(state, addon_name, per_character)?;
-            }
-        }
-        Ok(())
+        self.load_declared_scopes(state, addon_name, saved_vars, saved_vars_per_char)
     }
 
-    fn load_post_code_scope(
-        &self,
+    fn load_declared_scopes(
+        &mut self,
         state: &mut LuaState,
         addon_name: &str,
-        per_character: bool,
+        saved_vars: &[String],
+        saved_vars_per_char: &[String],
     ) -> crate::Result<()> {
-        let local_path = self.storage_path(addon_name, per_character);
-        if self.reload_saved_addons.contains(addon_name) {
-            if local_path.exists() {
-                self.read_and_execute_lua_file(state, &local_path, "@SavedVariables")?;
+        self.remember_registered_vars(addon_name, saved_vars, saved_vars_per_char);
+        let mut failures = Vec::new();
+        for (per_character, names) in [(false, saved_vars), (true, saved_vars_per_char)] {
+            if !names.is_empty()
+                && let Err(error) = self.load_registered_scope(state, addon_name, per_character)
+            {
+                failures.push(error.to_string());
             }
-            return Ok(());
         }
-        let import_path = self.wtf_config.as_ref().map(|config| {
-            if per_character {
-                config.character_saved_vars_file(addon_name)
-            } else {
-                config.account_saved_vars_file(addon_name)
-            }
-        });
-        if let Some(path) = import_path.filter(|path| path.exists()) {
-            self.load_lua_file(state, &path, "@WTF")?;
-            crate::lua_api::workarounds::sanitize_imported_wtf_addon_saved_variables(
-                state, addon_name,
-            );
-        } else if local_path.exists() {
-            self.load_lua_file(state, &local_path, "@SavedVariables")?;
+        if failures.is_empty() {
+            Ok(())
+        } else {
+            Err(crate::Error::Other(failures.join("; ")))
         }
-        Ok(())
     }
 
     /// Restore saved-variable globals that addon top-level code clobbered with
@@ -455,24 +454,6 @@ impl SavedVariablesManager {
             .collect()
     }
 
-    fn init_registered_globals(
-        &self,
-        state: &mut LuaState,
-        addon_name: &str,
-        variable_names: &[String],
-        per_character: bool,
-    ) -> crate::Result<()> {
-        for variable_name in variable_names {
-            let already_present = !matches!(get_global(state, variable_name), Val::Nil);
-            if already_present {
-                continue;
-            }
-            let table = self.load_variable(state, addon_name, variable_name, per_character)?;
-            set_global(state, variable_name, table);
-        }
-        Ok(())
-    }
-
     fn remember_registered_vars(
         &mut self,
         addon_name: &str,
@@ -504,80 +485,145 @@ impl SavedVariablesManager {
         self.loaded_values.insert(addon_name.to_string(), values);
     }
 
-    fn load_variable(
-        &self,
+    fn load_registered_scope(
+        &mut self,
         state: &mut LuaState,
         addon_name: &str,
-        var_name: &str,
         per_character: bool,
-    ) -> crate::Result<Val> {
-        let path = self.storage_path(addon_name, per_character);
-        if !path.exists() {
-            return Ok(Val::Nil);
+    ) -> crate::Result<()> {
+        match self
+            .load_results
+            .get(&(addon_name.to_owned(), per_character))
+        {
+            Some(LoadResult::Loaded) => return Ok(()),
+            Some(LoadResult::Failed(error)) => return Err(crate::Error::Other(error.clone())),
+            Some(LoadResult::MissingImport) | None => {}
         }
-        if self.reload_saved_addons.contains(addon_name) {
-            // These values were just serialized by this process, not imported from WTF.
-            self.read_and_execute_lua_file(state, &path, "@SavedVariables")?;
-            return Ok(get_global(state, var_name));
+        let reload = self.reload_saved_addons.contains(addon_name);
+        let local_path = self.storage_path(addon_name, per_character);
+        if reload {
+            return self
+                .load_scope_file(state, addon_name, per_character, &local_path, false, true)
+                .map(|_| ());
         }
+        if let Some(config) = self.wtf_config.as_ref()
+            && !self
+            .load_results
+            .contains_key(&(addon_name.to_owned(), per_character))
+        {
+            let path = if per_character {
+                config.character_saved_vars_file(addon_name)
+            } else {
+                config.account_saved_vars_file(addon_name)
+            };
+            if self.load_scope_file(state, addon_name, per_character, &path, true, false)? {
+                return Ok(());
+            }
+        }
+        self.load_scope_file(state, addon_name, per_character, &local_path, false, false)
+            .map(|_| ())
+    }
 
-        if let Err(error) = self.load_lua_file(state, &path, "@SavedVariables") {
-            tracing::warn!(
-                "Ignoring invalid simulator SavedVariables file {} while loading {var_name}: {error}",
-                path.display()
+    fn load_scope_file(
+        &mut self,
+        state: &mut LuaState,
+        addon_name: &str,
+        per_character: bool,
+        path: &Path,
+        wtf_input: bool,
+        reload: bool,
+    ) -> crate::Result<bool> {
+        let loaded = (|| -> crate::Result<bool> {
+            let metadata = match fs::symlink_metadata(path) {
+                Ok(metadata) if metadata.file_type().is_symlink() => {
+                    // A dangling link is failed input, not an absent file.
+                    Ok(fs::metadata(path).map_err(|error| {
+                        crate::Error::Other(format!(
+                            "Resolve SavedVariables link {}: {error}",
+                            path.display()
+                        ))
+                    })?)
+                }
+                result => result,
+            };
+            match metadata {
+                Ok(metadata) if !metadata.file_type().is_file() => {
+                    return Err(crate::Error::Other(format!(
+                        "SavedVariables input is not a regular file: {}",
+                        path.display()
+                    )));
+                }
+                Ok(metadata)
+                if !reload
+                    && self
+                    .max_load_bytes
+                    .is_some_and(|limit| metadata.len() > limit) =>
+                    {
+                        return Err(crate::Error::Other(format!(
+                            "SavedVariables input exceeds the configured byte limit: {}",
+                            path.display()
+                        )));
+                    }
+                Ok(_) => {}
+                Err(error) if error.kind() == std::io::ErrorKind::NotFound && !reload => {
+                    verify_missing_file(path)?;
+                    return Ok(false);
+                }
+                Err(error) => {
+                    return Err(crate::Error::Other(format!(
+                        "Read SavedVariables {}: {error}",
+                        path.display()
+                    )));
+                }
+            }
+            let content = fs::read(path).map_err(|error| {
+                crate::Error::Other(format!("Read SavedVariables {}: {error}", path.display()))
+            })?;
+            if !reload
+                && self
+                .max_load_bytes
+                .is_some_and(|limit| content.len() as u64 > limit)
+            {
+                return Err(crate::Error::Other(format!(
+                    "SavedVariables input exceeds the configured byte limit: {}",
+                    path.display()
+                )));
+            }
+            self.execute_lua_bytes(
+                state,
+                path,
+                if wtf_input { "@WTF" } else { "@SavedVariables" },
+                &content,
+            )?;
+            Ok(true)
+        })();
+        let result = match &loaded {
+            Ok(false) if wtf_input => LoadResult::MissingImport,
+            Ok(_) => LoadResult::Loaded,
+            Err(error) => LoadResult::Failed(error.to_string()),
+        };
+        self.load_results
+            .insert((addon_name.to_owned(), per_character), result);
+        if wtf_input && matches!(loaded, Ok(true)) {
+            crate::lua_api::workarounds::sanitize_imported_wtf_addon_saved_variables(
+                state, addon_name,
             );
-            self.load_wtf_variable_file(state, addon_name, per_character)?;
         }
-        let value = get_global(state, var_name);
-        if matches!(value, Val::Table(_)) {
-            return Ok(value);
-        }
-
-        Ok(Val::Nil)
+        loaded
     }
 
-    fn load_wtf_variable_file(
-        &self,
-        state: &mut LuaState,
-        addon_name: &str,
-        per_character: bool,
-    ) -> crate::Result<()> {
-        let Some(config) = self.wtf_config.as_ref() else {
-            return Ok(());
-        };
-        let path = if per_character {
-            config.character_saved_vars_file(addon_name)
-        } else {
-            config.account_saved_vars_file(addon_name)
-        };
-        if !path.exists() {
-            return Ok(());
-        }
-        self.load_lua_file(state, &path, "@WTF")
-    }
-
-    fn load_lua_file(
+    fn execute_lua_bytes(
         &self,
         state: &mut LuaState,
         path: &Path,
         chunk_prefix: &str,
+        content: &[u8],
     ) -> crate::Result<()> {
-        if self.should_skip_load(path)? {
-            return Ok(());
-        }
-        self.read_and_execute_lua_file(state, path, chunk_prefix)
-    }
-
-    fn read_and_execute_lua_file(
-        &self,
-        state: &mut LuaState,
-        path: &Path,
-        chunk_prefix: &str,
-    ) -> crate::Result<()> {
-        let content = fs::read_to_string(path).map_err(|e| crate::Error::Other(e.to_string()))?;
-        let content = content.strip_prefix('\u{feff}').unwrap_or(&content);
+        let content = content.strip_prefix(b"\xef\xbb\xbf").unwrap_or(content);
         let mut table_size_cache = load_table_size_cache(&self.storage_dir, path);
-        if parse_saved_variables_file_with_cache(state, content, Some(&mut table_size_cache))
+        // Parse literal data directly when possible; other Lua syntax uses the VM.
+        if let Ok(source) = std::str::from_utf8(content)
+            && parse_saved_variables_file_with_cache(state, source, Some(&mut table_size_cache))
             .is_ok()
         {
             save_table_size_cache(&self.storage_dir, path, &table_size_cache)?;
@@ -589,7 +635,7 @@ impl SavedVariablesManager {
             chunk_prefix,
             path.file_name().unwrap_or_default().to_string_lossy()
         );
-        let func = LuaApiMut::load_bytes(state, content.as_bytes(), &chunk_name)?;
+        let func = LuaApiMut::load_bytes(state, content, &chunk_name)?;
         call_function_state(state, Val::Function(func.gc_ref()), &[])?;
         Ok(())
     }
@@ -613,18 +659,16 @@ impl SavedVariablesManager {
         vars: &[String],
         path: &Path,
     ) -> crate::Result<()> {
+        if vars.is_empty() {
+            return Ok(());
+        }
         let mut output = String::from("\n");
-        let mut has_data = false;
 
         for var_name in vars {
             let value = get_global(state, var_name);
-            serialize_assignment(&mut output, state, var_name, value);
-            has_data = true;
+            serialize_assignment(&mut output, state, var_name, value)?;
         }
 
-        if !has_data {
-            return Ok(());
-        }
         if let Some(parent) = path.parent() {
             fs::create_dir_all(parent).map_err(|e| crate::Error::Other(e.to_string()))?;
         }
@@ -649,20 +693,44 @@ impl SavedVariablesManager {
         }
         self.storage_dir.join(format!("{}.lua", addon_name))
     }
-
-    fn should_skip_load(&self, path: &Path) -> crate::Result<bool> {
-        let Some(max_load_bytes) = self.max_load_bytes else {
-            return Ok(false);
-        };
-        let metadata = fs::metadata(path).map_err(|e| crate::Error::Other(e.to_string()))?;
-        Ok(metadata.len() > max_load_bytes)
-    }
 }
 
 impl Default for SavedVariablesManager {
     fn default() -> Self {
         Self::new()
     }
+}
+
+/// Some platforms report a non-directory path ancestor as `NotFound`. That is
+/// an unreadable input, not verified absence eligible for initializing new data.
+fn verify_missing_file(path: &Path) -> crate::Result<()> {
+    for ancestor in path.ancestors().skip(1) {
+        let ancestor = if ancestor.as_os_str().is_empty() {
+            Path::new(".")
+        } else {
+            ancestor
+        };
+        match fs::metadata(ancestor) {
+            Ok(metadata) if metadata.is_dir() => return Ok(()),
+            Ok(_) => {
+                return Err(crate::Error::Other(format!(
+                    "SavedVariables ancestor is not a directory: {}",
+                    ancestor.display()
+                )));
+            }
+            Err(error) if error.kind() == std::io::ErrorKind::NotFound => {}
+            Err(error) => {
+                return Err(crate::Error::Other(format!(
+                    "Inspect SavedVariables ancestor {}: {error}",
+                    ancestor.display()
+                )));
+            }
+        }
+    }
+    Err(crate::Error::Other(format!(
+        "Could not verify SavedVariables absence: {}",
+        path.display()
+    )))
 }
 
 fn read_optional_file(path: &Path) -> crate::Result<Option<String>> {
@@ -776,13 +844,13 @@ mod tests {
     use super::{SavedVariablesManager, WtfConfig, get_global};
 
     #[test]
-    fn oversized_local_saved_variables_seed_nil_instead_of_loading() {
+    fn oversized_local_saved_variables_fail_instead_of_counting_as_loaded() {
         let dir = tempfile::tempdir().expect("tempdir");
         fs::write(
             dir.path().join("HugeAddon.lua"),
             "\nHugeDB = { value = 'should not load' }\n",
         )
-        .expect("write saved variables");
+            .expect("write saved variables");
 
         let env = WowLuaEnv::new().expect("env");
         let mut mgr = SavedVariablesManager::with_storage_dir(dir.path().to_path_buf());
@@ -790,8 +858,10 @@ mod tests {
 
         {
             let mut lua = env.rilua_mut();
-            mgr.init_for_addon(lua.state_mut(), "HugeAddon", &["HugeDB".to_string()], &[])
-                .expect("saved variable init should not fail");
+            let error = mgr
+                .init_for_addon(lua.state_mut(), "HugeAddon", &["HugeDB".to_string()], &[])
+                .expect_err("oversized input is a load failure");
+            assert!(error.to_string().contains("byte limit"));
         }
 
         let value_type: String = env.eval("return type(HugeDB)").expect("probe should run");
@@ -808,12 +878,12 @@ mod tests {
             wtf_account_dir.join("BlizzMove.lua"),
             "\nBlizzMoveDB = { source = 'wtf' }\n",
         )
-        .expect("write wtf saved variables");
+            .expect("write wtf saved variables");
         fs::write(
             local_dir.path().join("BlizzMove.lua"),
             "\nBlizzMoveDB = { source = 'local' }\n",
         )
-        .expect("write local saved variables");
+            .expect("write local saved variables");
 
         let env = WowLuaEnv::new().expect("env");
         let mut mgr = SavedVariablesManager::with_storage_dir(local_dir.path().to_path_buf());
@@ -848,7 +918,7 @@ mod tests {
             dir.path().join("GTFO.lua"),
             "\nGTFOData = { [\"DataCode\"] = \"4\", [\"source\"] = \"saved\" }\n",
         )
-        .expect("write saved variables");
+            .expect("write saved variables");
 
         let env = WowLuaEnv::new().expect("env");
         let mut mgr = SavedVariablesManager::with_storage_dir(dir.path().to_path_buf());
@@ -895,14 +965,14 @@ mod tests {
                 }
             "#,
         )
-        .expect("write saved variables");
+            .expect("write saved variables");
 
         let env = WowLuaEnv::new().expect("env");
         {
             let mut lua = env.rilua_mut();
-            let manager = SavedVariablesManager::with_storage_dir(dir.path().to_path_buf());
+            let mut manager = SavedVariablesManager::with_storage_dir(dir.path().to_path_buf());
             manager
-                .load_lua_file(lua.state_mut(), &saved_vars_file, "@test")
+                .init_for_addon(lua.state_mut(), "Large", &["TEST_SV".to_string()], &[])
                 .expect("initial parse should persist table sizes");
         }
 
@@ -916,13 +986,13 @@ mod tests {
                 }
             "#,
         )
-        .expect("rewrite saved variables");
+            .expect("rewrite saved variables");
 
         {
             let mut lua = env.rilua_mut();
-            let manager = SavedVariablesManager::with_storage_dir(dir.path().to_path_buf());
+            let mut manager = SavedVariablesManager::with_storage_dir(dir.path().to_path_buf());
             manager
-                .load_lua_file(lua.state_mut(), &saved_vars_file, "@test")
+                .init_for_addon(lua.state_mut(), "Large", &["TEST_SV".to_string()], &[])
                 .expect("second parse should use persisted table sizes");
 
             let state = lua.state_mut();

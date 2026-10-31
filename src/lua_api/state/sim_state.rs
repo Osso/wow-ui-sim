@@ -205,7 +205,7 @@ pub struct SimState {
     #[cfg(feature = "retail-12-0-0")]
     pub limited_input_allowed: [bool; 4],
     /// INFERRED empty host range inputs and tier-completion snapshots.
-    #[cfg(any(feature = "retail-12-0-0", feature = "client-wrath"))]
+    #[cfg(feature = "action-spell-range")]
     pub action_spell_ranges: HashMap<u32, crate::c_api::action_spell_range::ActionSpellRange>,
     #[cfg(feature = "retail-12-0-0")]
     pub weekly_reward_progress:

@@ -28,6 +28,7 @@ pub use wow_labs::{
     WowLabsPartyInvite, WowLabsPartyMember, WowLabsPoint, WowLabsState,
 };
 
+use crate::c_api::c_voice_chat_devices::VoiceAudioDevice;
 use std::collections::{HashMap, HashSet};
 
 /// Simulated network statistics returned by `GetNetStats()`.
@@ -342,6 +343,9 @@ pub struct VoiceChannel {
 pub struct VoiceChatState {
     /// Host-supplied settings-access observation; None is unknown, not denied.
     pub can_access_settings: Option<bool>,
+    /// Supplied device catalogs; None answers the documented nil result.
+    pub input_devices: Option<Vec<VoiceAudioDevice>>,
+    pub output_devices: Option<Vec<VoiceAudioDevice>>,
     pub microphone_volume: f32,
     pub output_volume: f32,
     pub muted: bool,
@@ -393,6 +397,9 @@ impl Default for VoiceChatState {
             } else {
                 None
             },
+            // Best-guess selected system default (docs/specs/voice-audio-devices.md).
+            input_devices: Some(vec![VoiceAudioDevice::system_default()]),
+            output_devices: Some(vec![VoiceAudioDevice::system_default()]),
             microphone_volume: 1.0,
             output_volume: 1.0,
             muted: false,
