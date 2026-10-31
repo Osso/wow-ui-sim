@@ -33,6 +33,7 @@ fn campaign_header_reflects_quest_progress() {
         end
         check(101, true)
         check(102, false)
+        assert(C_QuestLog.GetInfo(2).campaignID == 102, 'quest log campaign ID')
         assert(C_CampaignInfo.GetCampaignID(91001) == 101, 'quest campaign lookup')
         assert(C_CampaignInfo.GetCampaignInfo(999999) == nil, 'unknown campaign info')
         assert(C_CampaignInfo.GetState(999999) == Enum.CampaignState.Invalid, 'unknown state')
