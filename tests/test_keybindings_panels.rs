@@ -633,6 +633,7 @@ fn premade_group_result_update_refreshes_selected_listing() {
             assert(events == 2, 'delisting update event was not delivered')
             A_Admin.AddPremadeListing('New group', 'new', 1195, 2, 5)
             assert(select(1, C_LFGList.GetSearchResults()) == count)
+            assert(events == 2, 'a new catalog listing must not emit a result update')
         "#).expect("Premade result updates should reach the original search panel handler");
     }
 }
