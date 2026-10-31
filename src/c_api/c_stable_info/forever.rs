@@ -8,12 +8,11 @@ use crate::lua_bridge::{FromStack, table_set_rust_fn_static};
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
 
-/// Pets keyed by the public one-based slot: current pet = 1, stabled pets = 2..=3.
-/// Count includes every stored pet, including the current slot (inferred policy).
+/// Supplied server records and best-guess, native UNKNOWN cost rows.
 #[derive(Debug, Clone)]
 pub struct StableReadState {
-    pub owned_slots: u32,
-    pub next_slot_cost: u64,
+    pub owned_slots: u8,
+    pub slot_costs: BTreeMap<u32, u64>,
     pub pets: BTreeMap<u32, PetInfo>,
 }
 
@@ -22,7 +21,7 @@ impl Default for StableReadState {
         // Explicit empty, fully-unlocked scenario; capacity alone does not imply ownership.
         Self {
             owned_slots: 2,
-            next_slot_cost: 0,
+            slot_costs: BTreeMap::new(),
             pets: BTreeMap::new(),
         }
     }
@@ -31,6 +30,8 @@ impl Default for StableReadState {
 /// Cached Forever StableInfoDocumentation PetInfo fields; slotID comes from the map key.
 #[derive(Debug, Clone)]
 pub struct PetInfo {
+    pub native_record_id: u32,
+    pub native_flags: u8,
     pub icon: u32,
     pub name: String,
     pub level: u32,
@@ -73,19 +74,32 @@ fn get_num_stable_slots(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn get_next_slot_cost(state: &mut LuaState) -> LuaResult<u32> {
-    let cost = borrow_state(state)?.stable_reads.next_slot_cost;
+    let model = borrow_state(state)?;
+    let stable = &model.stable_reads;
+    let cost = stable
+        .slot_costs
+        .get(&(u32::from(stable.owned_slots) + 1))
+        .copied()
+        .unwrap_or(0);
     state.push(Val::Num(cost as f64));
     Ok(1)
 }
 
 fn get_num_stable_pets(state: &mut LuaState) -> LuaResult<u32> {
-    let count = borrow_state(state)?.stable_reads.pets.len();
+    let count = borrow_state(state)?
+        .stable_reads
+        .pets
+        .values()
+        .filter(|pet| pet.native_record_id != 0 && pet.native_flags & 2 != 0)
+        .count();
     state.push(Val::Num(count as f64));
     Ok(1)
 }
 
 fn get_stable_pet_info(state: &mut LuaState) -> LuaResult<u32> {
-    let index = i32::from_stack(state, 1)?;
+    let index = i32::from_stack(state, 1).map_err(|_| {
+        rilua::runtime_error("Usage: local petInfo = C_StableInfo.GetStablePetInfo(index)")
+    })?;
     let pet = {
         let model = borrow_state(state)?;
         u32::try_from(index)
@@ -95,7 +109,7 @@ fn get_stable_pet_info(state: &mut LuaState) -> LuaResult<u32> {
     };
     let result = match pet {
         Some(pet) => pet_info_table(state, index as u32, &pet),
-        None => Val::Nil,
+        None => create_table(state),
     };
     state.push(result);
     Ok(1)

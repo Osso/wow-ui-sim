@@ -146,7 +146,7 @@ fn stable_reads_count_tracks_pets_and_environments_are_independent() {
         .exec("assert(not C_StableInfo.IsAtPetStable())")
         .unwrap();
     first.state().borrow_mut().stable_reads.pets.clear();
-    first.exec("assert(C_StableInfo.GetNumStablePets() == 0); assert(type(C_StableInfo.GetStablePetInfo(1)) == "table")").unwrap();
+    first.exec("assert(C_StableInfo.GetNumStablePets() == 0); assert(type(C_StableInfo.GetStablePetInfo(1)) == 'table')").unwrap();
 }
 
 #[test]
@@ -191,15 +191,19 @@ fn forever_stable_native_record_flags_and_cost_keys() {
         no_flag.native_flags = 1;
         stable.pets = [(1, wolf()), (2, no_id), (3, no_flag)].into();
     }
-    env.exec(r#"
+    env.exec(
+        r#"
         assert(select('#', C_StableInfo.GetNumStablePets()) == 1)
         assert(C_StableInfo.GetNumStablePets() == 1)
         assert(C_StableInfo.GetNextStableSlotCost() == 123)
         assert(select('#', C_StableInfo.GetStablePetInfo(99)) == 1)
         assert(type(C_StableInfo.GetStablePetInfo(99)) == 'table')
-    "#).unwrap();
+    "#,
+    )
+    .unwrap();
     env.state().borrow_mut().stable_reads.owned_slots = 1;
-    env.exec("assert(C_StableInfo.GetNextStableSlotCost() == 456)").unwrap();
+    env.exec("assert(C_StableInfo.GetNextStableSlotCost() == 456)")
+        .unwrap();
     env.state().borrow_mut().stable_reads.owned_slots = 255;
     env.exec("assert(C_StableInfo.GetNumStableSlots() == 255); assert(C_StableInfo.GetNextStableSlotCost() == 0)").unwrap();
 }
