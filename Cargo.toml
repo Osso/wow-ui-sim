@@ -9,7 +9,7 @@ build = "build.rs"
 autotests = false
 
 [workspace]
-members = ["crates/sim-render", "crates/sim-texture", "crates/sim-widget", ".", "xtask", "crates/test-harness", "crates/sim-data", "crates/sim-data-profile", "crates/sim-lua-bridge", "crates/sim-event", "crates/sim-toc", "crates/sim-xml"]
+members = ["crates/sim-render", "crates/sim-texture", "crates/sim-widget", ".", "xtask", "crates/test-harness", "crates/wow-ui-sim-dylib", "crates/sim-data", "crates/sim-data-profile", "crates/sim-lua-bridge", "crates/sim-event", "crates/sim-toc", "crates/sim-xml"]
 
 [dependencies]
 sim-render = { path = "crates/sim-render" }
@@ -121,6 +121,12 @@ insta = "1.42"
 pollster = "0.4"
 tempfile = "3"
 
+# Linux integration tests link wow-ui-sim as a dylib so a library edit does not
+# relink the whole simulator into each test binary. Windows keeps static
+# linking: a Rust dylib of this size exceeds the 65,535-export DLL limit.
+[target.'cfg(target_os = "linux")'.dev-dependencies]
+wow-ui-sim-dylib = { path = "crates/wow-ui-sim-dylib" }
+
 [features]
 # Non-test utility binaries; integration tests need only wow-sim.
 tools = []
@@ -199,6 +205,11 @@ debug = 0
 # traversal; opt-level 0 makes them ~5-10x slower and visibly degrades GUI
 # input latency in dev builds.
 opt-level = 1
+
+[profile.dev.package.wow-ui-sim]
+# Fewer codegen units for the edited crate: one-line-edit test rebuild median 68 CPU-s
+# with the Linux test dylib (static: ~98). See docs/remote-builds.md.
+codegen-units = 16
 
 [profile.test]
 # Keep the same debug-info policy for test executables and dependencies.
