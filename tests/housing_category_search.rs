@@ -378,10 +378,10 @@ fn guarded_search_table_preserves_real_vm_access_policy() {
         local function addon()
             assert(not issecure())
             local sourceOK, sourceError = pcall(rawget, guarded, 'withStoredEntriesOnly')
-            assert(not sourceOK and string.find(sourceError, 'tainted access to secured table', 1, true))
+            assert(not sourceOK and string.find(sourceError, 'a table that cannot be accessed while tainted (execution tainted by ', 1, true))
             for _, query in ipairs(SearchQueries) do
                 local ok, message = pcall(query, guarded)
-                assert(not ok and string.find(message, 'tainted access to secured table', 1, true),
+                assert(not ok and string.find(message, 'a table that cannot be accessed while tainted (execution tainted by ', 1, true),
                     'query must respect table access guard')
                 assert(not issecure(), 'guard failure must preserve caller taint')
             end

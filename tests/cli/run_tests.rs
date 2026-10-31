@@ -213,7 +213,7 @@ fn party_changes_from_addon_test_do_not_taint_blizzard_handlers() {
     assert!(output.status.success(), "{text}");
     assert!(text.contains("1 passed"), "{text}");
     assert!(
-        !text.contains("secret access requires an untainted caller"),
+        !text.contains("execution tainted by '"),
         "{text}"
     );
 }

@@ -835,9 +835,9 @@ fn secret_wrapped_guarded_selector_retains_underlying_table_access_policy() {
         collectgarbage('collect')
         runDestroyAddon(function()
             local ok, message = pcall(rawget, firstID, 'recordID')
-            assert(not ok and string.find(message, 'tainted access to secured table', 1, true), message)
+            assert(not ok and string.find(message, 'a table that cannot be accessed while tainted (execution tainted by ', 1, true), message)
             message = assertRejected(firstID, false)
-            assert(string.find(message, 'tainted access to secured table', 1, true), message)
+            assert(string.find(message, 'a table that cannot be accessed while tainted (execution tainted by ', 1, true), message)
             assertSecretDenied(SecretFirstTable, false)
             assert(not issecure())
         end)
@@ -896,10 +896,10 @@ fn guarded_selector_retains_vm_access_policy_without_mutation_on_rejection() {
         local function addon()
             assert(not issecure())
             local sourceOK, sourceError = pcall(rawget, firstID, 'recordID')
-            assert(not sourceOK and string.find(sourceError, 'tainted access to secured table', 1, true))
+            assert(not sourceOK and string.find(sourceError, 'a table that cannot be accessed while tainted (execution tainted by ', 1, true))
             for _, destroyAll in ipairs({false, true}) do
                 local message = assertRejected(firstID, destroyAll)
-                assert(string.find(message, 'tainted access to secured table', 1, true))
+                assert(string.find(message, 'a table that cannot be accessed while tainted (execution tainted by ', 1, true))
                 assert(not issecure())
             end
         end

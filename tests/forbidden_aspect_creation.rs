@@ -43,9 +43,9 @@ fn native_children_inherit_only_hierarchy_aspects_at_creation() {
         foreign:AddForbiddenAspects(e.UntrustedLayoutScriptExecution)
         local plain = CreateFrame('Frame')
         local ok, err = pcall(plain.SetPoint, plain, 'TOPLEFT', foreign, 'TOPLEFT')
-        assert(not ok and string.find(err, 'Cannot implicitly gain forbidden aspects', 1, true))
+        assert(not ok and err == 'Anchoring disallowed as dependent object would inherit forbidden aspects: UntrustedLayoutScriptExecution', err)
         ok, err = pcall(plain.SetParent, plain, foreign)
-        assert(not ok and string.find(err, 'Cannot implicitly gain forbidden aspects', 1, true))
+        assert(not ok and err == 'Reparenting disallowed as child object would inherit forbidden aspects: UntrustedLayoutScriptExecution', err)
         assert(plain:GetNumPoints() == 0 and plain:GetParent() ~= foreign)
     "#).expect("creation inherits, later foreign relationships remain denied");
 }
@@ -144,7 +144,7 @@ fn aura_button_icon_and_overlay_border_follow_real_initializer_order() {
                     assert(bit.band(border:GetForbiddenAspects(), e.UntrustedLayoutScriptExecution) ~= 0)
                     local foreign = CreateFrame('Frame')
                     local ok, err = pcall(foreign.SetPoint, foreign, 'CENTER', icon, 'CENTER')
-                    assert(not ok and string.find(err, 'Cannot implicitly gain forbidden aspects', 1, true))
+                    assert(not ok and err == 'Anchoring disallowed as dependent object would inherit forbidden aspects: UntrustedLayoutScriptExecution', err)
                 "#).expect("BetterBlizzFrames icon/cooldown/overlay/border initialization keeps valid ownership");
             },
         );

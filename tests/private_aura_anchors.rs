@@ -829,7 +829,7 @@ fn secured_outer_and_nested_tables_respect_vm_access_guards() {
         local function addon()
             for index, args in ipairs(cases) do
                 local ok, message = pcall(rawget, guards[index], probeFields[index])
-                assert(not ok and string.find(message, 'tainted access to secured table', 1, true))
+                assert(not ok and string.find(message, 'a table that cannot be accessed while tainted (execution tainted by ', 1, true))
                 AssertRejected(C_UnitAuras.AddPrivateAuraAnchor, args)
                 assert(not issecure(), 'guard rejection preserves addon taint')
             end

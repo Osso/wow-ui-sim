@@ -157,8 +157,8 @@ fn secret_env() -> WowLuaEnv {
                 assert(rawequal(left, right), 'secure boolean payload equality')
             else
                 local ok, err = pcall(rawequal, left, right)
-                assert(not ok and err == 'secret access requires an untainted caller without revoked access',
-                    'tainted secret BOOL equality denied')
+                assert(not ok and err == "attempt to compare a secret boolean value (execution tainted by '" .. before .. "')",
+                    'tainted secret BOOL equality denied: ' .. tostring(err))
             end
             assert(debug.getstacktaint() == before, 'equality preserves caller taint')
             assert(issecretvalue(left) and issecretvalue(right), 'wrappers remain secret')

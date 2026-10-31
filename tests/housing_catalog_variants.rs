@@ -403,16 +403,16 @@ fn housing_variant_secured_selector_preserves_access_guard() {
             assert(not issecure(), 'guard probe must run as a tainted caller')
             local source_ok, source_error = pcall(function() return id.recordID end)
             assert(not source_ok, 'tainted source indexing must reject guarded selector')
-            assert(string.find(source_error, 'tainted access to secured table', 1, true),
+            assert(string.find(source_error, 'a table that cannot be accessed while tainted (execution tainted by ', 1, true),
                 'source indexing must fail at table access guard')
             local raw_ok, raw_error = pcall(rawget, id, 'recordID')
             assert(not raw_ok, 'tainted source rawget must reject guarded selector')
-            assert(string.find(raw_error, 'tainted access to secured table', 1, true),
+            assert(string.find(raw_error, 'a table that cannot be accessed while tainted (execution tainted by ', 1, true),
                 'source rawget must fail at table access guard')
             for _, query in ipairs(queries) do
                 local ok, message = pcall(query[2], id)
                 assert(not ok, query[1] .. ' must preserve table access guard')
-                assert(string.find(message, 'tainted access to secured table', 1, true),
+                assert(string.find(message, 'a table that cannot be accessed while tainted (execution tainted by ', 1, true),
                     query[1] .. ' must fail at table access guard')
                 assert(not issecure(), query[1] .. ' rejection must not clear caller taint')
             end
@@ -628,9 +628,9 @@ mod destroyable_count {
             local function addon()
                 local source_ok, source_error = pcall(rawget, id, 'recordID')
                 assert(not source_ok and string.find(source_error,
-                    'tainted access to secured table', 1, true), 'source must be guarded')
+                    'a table that cannot be accessed while tainted (execution tainted by ', 1, true), 'source must be guarded')
                 local ok, message = pcall(C_HousingCatalog.GetDestroyableInstanceCount, id)
-                assert(not ok and string.find(message, 'tainted access to secured table', 1, true),
+                assert(not ok and string.find(message, 'a table that cannot be accessed while tainted (execution tainted by ', 1, true),
                     'count query must preserve secured table access rejection')
                 assert(not issecure(), 'rejection must preserve caller taint')
             end
