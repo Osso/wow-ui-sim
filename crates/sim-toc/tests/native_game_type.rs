@@ -68,4 +68,22 @@ fn retail_header_unknown_tokens_do_not_restrict() {
         !tab.is_game_type_restricted(),
         "tab is part of an unknown token"
     );
+    for (header, restricted) in [
+        ("## AllowLoadGameType: imaginary, wowlabs", false),
+        ("## AllowLoadGameType: CLASSIC, MaInLiNe", false),
+        ("## AllowLoadGameType: classic, plunderstorm", true),
+        ("## ExcludeLoadGameType: unknown", false),
+        ("## ExcludeLoadGameType: unknown, MAINLINE", true),
+    ] {
+        let toc = TocFile::<Retail>::parse(Path::new("/addons/ThirdParty"), header);
+        assert_eq!(toc.is_game_type_restricted(), restricted, "{header}");
+    }
+    let toc = TocFile::<Retail>::parse(
+        Path::new("/addons/ThirdParty"),
+        "Unknown.lua [AllowLoadGameType missing]\nMatch.lua [AllowLoadGameType classic, MAINLINE]\nExcluded.lua [ExcludeLoadGameType mainline]\nOther.lua [AllowLoadGameType classic]\n",
+    );
+    assert_eq!(
+        toc.files,
+        vec![PathBuf::from("Unknown.lua"), PathBuf::from("Match.lua")]
+    );
 }
