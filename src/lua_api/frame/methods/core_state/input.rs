@@ -1,6 +1,9 @@
 //! Mouse and keyboard input-enable methods.
 
 use super::helpers::{arg_bool, frame_id};
+use crate::lua_api::frame::methods::methods_helpers::{
+    can_change_protected_state_for, emit_addon_action_blocked,
+};
 use crate::lua_api::methods::{borrow_state, borrow_state_mut, val_to_string};
 use crate::lua_bridge::stack_val;
 use crate::widget::Frame;
@@ -8,15 +11,20 @@ use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
 
 pub fn enable_mouse(state: &mut LuaState) -> LuaResult<u32> {
-    set_frame_input_flag(state, Frame::set_mouse_enabled)
+    set_frame_input_flag(state, "EnableMouse", Frame::set_mouse_enabled)
 }
 
 fn set_frame_input_flag(
     state: &mut LuaState,
+    method: &str,
     apply: impl FnOnce(&mut Frame, bool),
 ) -> LuaResult<u32> {
     let id = frame_id(state, 1)?;
     let enable = arg_bool(state, 2);
+    if !can_change_protected_state_for(state, id) {
+        emit_addon_action_blocked(state, id, method);
+        return Ok(0);
+    }
     let mut sim = borrow_state_mut(state)?;
     if let Some(frame) = sim.widgets.get_mut(id) {
         let was_mouse_eligible = frame.accepts_mouse();
@@ -48,7 +56,9 @@ fn push_frame_input_flag(
 }
 
 pub fn enable_mouse_wheel(state: &mut LuaState) -> LuaResult<u32> {
-    set_frame_input_flag(state, |frame, enable| frame.mouse_wheel_enabled = enable)
+    set_frame_input_flag(state, "EnableMouseWheel", |frame, enable| {
+        frame.mouse_wheel_enabled = enable
+    })
 }
 
 pub fn is_mouse_wheel_enabled(state: &mut LuaState) -> LuaResult<u32> {
@@ -56,7 +66,9 @@ pub fn is_mouse_wheel_enabled(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 pub fn enable_keyboard(state: &mut LuaState) -> LuaResult<u32> {
-    set_frame_input_flag(state, |frame, enable| frame.keyboard_enabled = enable)
+    set_frame_input_flag(state, "EnableKeyboard", |frame, enable| {
+        frame.keyboard_enabled = enable
+    })
 }
 
 pub fn is_keyboard_enabled(state: &mut LuaState) -> LuaResult<u32> {
@@ -93,7 +105,9 @@ fn collect_mouse_registration_args(
 }
 
 pub fn enable_mouse_motion(state: &mut LuaState) -> LuaResult<u32> {
-    set_frame_input_flag(state, |frame, enable| frame.mouse_motion_enabled = enable)
+    set_frame_input_flag(state, "EnableMouseMotion", |frame, enable| {
+        frame.mouse_motion_enabled = enable
+    })
 }
 
 pub fn is_mouse_motion_enabled(state: &mut LuaState) -> LuaResult<u32> {
@@ -101,11 +115,15 @@ pub fn is_mouse_motion_enabled(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 pub fn set_mouse_motion_enabled(state: &mut LuaState) -> LuaResult<u32> {
-    enable_mouse_motion(state)
+    set_frame_input_flag(state, "SetMouseMotionEnabled", |frame, enable| {
+        frame.mouse_motion_enabled = enable
+    })
 }
 
 pub fn set_mouse_click_enabled(state: &mut LuaState) -> LuaResult<u32> {
-    set_frame_input_flag(state, |frame, enable| frame.mouse_enabled = enable)
+    set_frame_input_flag(state, "SetMouseClickEnabled", |frame, enable| {
+        frame.mouse_enabled = enable
+    })
 }
 
 pub fn is_mouse_click_enabled(state: &mut LuaState) -> LuaResult<u32> {
