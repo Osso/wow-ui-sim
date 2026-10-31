@@ -60,10 +60,11 @@ fn restriction_state(state: &mut LuaState) -> LuaResult<u32> {
 
 fn restriction_active(state: &mut LuaState) -> LuaResult<u32> {
     let kind = restriction_type(state)?;
-    let sim = borrow_state(state)?;
-    // Documented: always false during ADDON_RESTRICTION_STATE_CHANGED dispatch.
-    let active =
-        !sim.restricted_actions_dispatching && sim.restricted_actions[kind] == ACTIVE_STATE;
+    let active = {
+        let sim = borrow_state(state)?;
+        // Documented: always false during ADDON_RESTRICTION_STATE_CHANGED dispatch.
+        !sim.restricted_actions_dispatching && sim.restricted_actions[kind] == ACTIVE_STATE
+    };
     state.push(Val::Bool(active));
     Ok(1)
 }
