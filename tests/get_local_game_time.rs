@@ -3,6 +3,16 @@ use wow_ui_sim::lua_api::WowLuaEnv;
 #[test]
 fn game_clock_contract() {
     let env = WowLuaEnv::new().unwrap();
+    if !matches!(
+        wow_ui_sim::client_profile::ACTIVE,
+        wow_ui_sim::client_profile::ClientProfile::Retail
+            | wow_ui_sim::client_profile::ClientProfile::Ptr
+            | wow_ui_sim::client_profile::ClientProfile::WowForever
+    ) {
+        env.exec("assert(rawget(_G, 'GetLocalGameTime') == nil)")
+            .unwrap();
+        return;
+    }
     env.exec(
         r##"
         assert(type(GetLocalGameTime) == "function", "GetLocalGameTime is missing")
