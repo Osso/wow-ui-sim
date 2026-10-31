@@ -60,7 +60,10 @@ fn restriction_state(state: &mut LuaState) -> LuaResult<u32> {
 
 fn restriction_active(state: &mut LuaState) -> LuaResult<u32> {
     let kind = restriction_type(state)?;
-    let active = borrow_state(state)?.restricted_actions[kind] == ACTIVE_STATE;
+    let sim = borrow_state(state)?;
+    // Documented: always false during ADDON_RESTRICTION_STATE_CHANGED dispatch.
+    let active =
+        !sim.restricted_actions_dispatching && sim.restricted_actions[kind] == ACTIVE_STATE;
     state.push(Val::Bool(active));
     Ok(1)
 }
@@ -104,12 +107,18 @@ pub(crate) fn set_restriction(state: &mut LuaState, kind: usize, active: bool) -
         return Ok(());
     }
     let next = if active { ACTIVATING } else { INACTIVE };
-    borrow_state_mut(state)?.restricted_actions[kind] = next;
-    dispatch_event_now(
+    let outer_dispatch = {
+        let mut sim = borrow_state_mut(state)?;
+        sim.restricted_actions[kind] = next;
+        std::mem::replace(&mut sim.restricted_actions_dispatching, true)
+    };
+    let dispatched = dispatch_event_now(
         state,
         "ADDON_RESTRICTION_STATE_CHANGED",
         &[Val::Num(kind as f64), Val::Num(f64::from(next))],
-    )?;
+    );
+    borrow_state_mut(state)?.restricted_actions_dispatching = outer_dispatch;
+    dispatched?;
     if active && borrow_state(state)?.restricted_actions[kind] == ACTIVATING {
         borrow_state_mut(state)?.restricted_actions[kind] = ACTIVE_STATE;
     }

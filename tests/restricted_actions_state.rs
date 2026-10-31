@@ -76,6 +76,29 @@ fn restricted_actions_supplied_types_are_independent() {
 }
 
 #[test]
+fn restricted_actions_predicate_is_false_for_every_type_during_dispatch() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(r#"
+        local api = C_RestrictedActions
+        local types = Enum.AddOnRestrictionType
+        A_Admin.SetInCombat(true)
+        assert(api.IsAddOnRestrictionActive(types.Combat))
+        local seen = {}
+        local listener = CreateFrame('Frame')
+        listener:RegisterEvent('ADDON_RESTRICTION_STATE_CHANGED')
+        listener:SetScript('OnEvent', function(_, _, kind)
+            seen[#seen + 1] = {kind, api.IsAddOnRestrictionActive(types.Combat), api.GetAddOnRestrictionState(types.Combat)}
+        end)
+        A_Admin.SetAddOnRestrictionActive(types.Encounter, true)
+        assert(#seen == 1 and seen[1][1] == types.Encounter)
+        assert(seen[1][2] == false, 'other active type reported active during dispatch')
+        assert(seen[1][3] == Enum.AddOnRestrictionState.Active, 'state getter is unaffected')
+        assert(api.IsAddOnRestrictionActive(types.Combat))
+        assert(api.IsAddOnRestrictionActive(types.Encounter))
+    "#).unwrap();
+}
+
+#[test]
 fn restricted_actions_follow_host_lifecycle_inputs() {
     let env = WowLuaEnv::new().unwrap();
     env.exec(r#"
