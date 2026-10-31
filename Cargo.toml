@@ -32,7 +32,7 @@ unicode-blocks = "=0.1.10"
 fixed_decimal = { version = "=0.7.0", features = ["ryu"] }
 icu_segmenter = { version = "=2.1.1", default-features = false, features = ["compiled_data", "auto"] }
 # mlua removed — rilua is the sole Lua VM
-rilua = { git = "https://github.com/Osso/rilua.git", rev = "101d7b0287e56efbded3c2d2b87936310aad4aa6" }
+rilua = { git = "https://github.com/Osso/rilua.git", rev = "cce2e774c56ad40428ffbfe457419468f285802d" }
 quick-xml = { version = "0.37", features = ["serialize"] }
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
