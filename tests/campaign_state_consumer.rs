@@ -43,3 +43,21 @@ fn campaign_header_reflects_quest_progress() {
         assert(C_CampaignInfo.GetState(999999) == Enum.CampaignState.Invalid, 'unknown state')
     "#).expect("selected Blizzard campaign header consumes quest progress");
 }
+
+#[test]
+fn campaign_chapters_project_supplied_ids() {
+    let env = wow_ui_sim::lua_api::WowLuaEnv::new().unwrap();
+    env.state()
+        .borrow_mut()
+        .quest_log_entries
+        .campaign_chapter_ids
+        .insert(101, vec![201, 202]);
+    env.exec(
+        r#"
+        local chapters = C_CampaignInfo.GetChapterIDs(101)
+        assert(#chapters == 2 and chapters[1] == 201 and chapters[2] == 202)
+        assert(C_CampaignInfo.GetChapterIDs(102) == nil)
+    "#,
+    )
+    .unwrap();
+}
