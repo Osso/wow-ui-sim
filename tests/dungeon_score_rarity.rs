@@ -59,6 +59,13 @@ fn original_lfg_result_tooltip_uses_supplied_scores() {
         assert(C_LFGList.GetSearchResultEncounterInfo(1)[1] == 'Fixture Boss')
         assert(texts:find('|cff1eff001250|r', 1, true), texts)
         assert(texts:find('|cffffffffFixture Dungeon|r', 1, true), texts)
+        assert(C_LFGList.GetSearchResultEncounterInfo(2) == nil)
+        GameTooltip:ClearLines()
+        LFGListUtil_SetSearchEntryTooltip(GameTooltip, 2)
+        for i=1,GameTooltip:NumLines() do
+            local line = _G['GameTooltipTextLeft' .. i]
+            assert(not line or not (line:GetText() or ''):find('Fixture Boss', 1, true))
+        end
     "#).unwrap();
 }
 
