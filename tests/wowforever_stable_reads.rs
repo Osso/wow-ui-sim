@@ -7,7 +7,7 @@ const DEFAULT_READS: &str = r#"
     assert(C_StableInfo.GetNumStableSlots() == 2, "default owned slots")
     assert(C_StableInfo.GetNextStableSlotCost() == 0, "unavailable purchase cost")
     assert(C_StableInfo.GetNumStablePets() == 0, "empty stable count")
-    for slot = 1, 3 do assert(C_StableInfo.GetStablePetInfo(slot) == nil) end
+    for slot = 1, 3 do assert(type(C_StableInfo.GetStablePetInfo(slot)) == "table") end
 "#;
 
 const MONEY_EVENT: &str = r#"
@@ -55,6 +55,8 @@ fn stable_reads_cached_money_event() {
 
 fn wolf() -> PetInfo {
     PetInfo {
+        native_record_id: 17,
+        native_flags: 2,
         icon: 132203,
         name: "Fang".into(),
         level: 42,
@@ -83,7 +85,7 @@ fn stable_reads_configured_pet_fields_and_snapshot() {
     let env = WowLuaEnv::new().unwrap();
     env.state().borrow_mut().stable_reads = StableReadState {
         owned_slots: 1,
-        next_slot_cost: 50_000,
+        slot_costs: [(2, 50_000)].into(),
         pets: [(2, wolf())].into(),
     };
     env.exec(
@@ -101,16 +103,17 @@ fn stable_reads_configured_pet_fields_and_snapshot() {
         assert(p.uiModelSceneID == 718 and p.petNumber == 17 and p.creatureID == 299)
         assert(p.specID == 1 and p.loyaltyLevel == 6 and p.loyaltyName == "Best Friend")
         assert(p.happinessLevel == 3 and p.experience == 1200 and p.experienceNeeded == 4000)
-        assert(C_StableInfo.GetStablePetInfo(1) == nil)
-        assert(C_StableInfo.GetStablePetInfo(3) == nil)
-        assert(C_StableInfo.GetStablePetInfo(0) == nil)
-        assert(C_StableInfo.GetStablePetInfo(-1) == nil)
-        assert(C_StableInfo.GetStablePetInfo(99) == nil)
+        assert(type(C_StableInfo.GetStablePetInfo(1)) == "table")
+        assert(type(C_StableInfo.GetStablePetInfo(3)) == "table")
+        assert(type(C_StableInfo.GetStablePetInfo(0)) == "table")
+        assert(type(C_StableInfo.GetStablePetInfo(-1)) == "table")
+        assert(type(C_StableInfo.GetStablePetInfo(99)) == "table")
         p.name = "changed"; p.petAbilities[1] = 0
         local again = C_StableInfo.GetStablePetInfo(2)
         assert(again.name == "Fang" and again.petAbilities[1] == 17253)
         assert(not pcall(C_StableInfo.GetStablePetInfo))
-        assert(not pcall(C_StableInfo.GetStablePetInfo, {}))
+        local ok, err = pcall(C_StableInfo.GetStablePetInfo, {})
+        assert(not ok and err:find("Usage: local petInfo = C_StableInfo.GetStablePetInfo(index)", 1, true))
     "#,
     )
     .unwrap();
@@ -123,7 +126,7 @@ fn stable_reads_count_tracks_pets_and_environments_are_independent() {
     {
         let mut state = first.state().borrow_mut();
         state.stable_reads.owned_slots = 0;
-        state.stable_reads.next_slot_cost = 10_000;
+        state.stable_reads.slot_costs.insert(1, 10_000);
         state.stable_reads.pets.insert(1, wolf());
         state.pet_stables_open = true;
     }
@@ -143,7 +146,7 @@ fn stable_reads_count_tracks_pets_and_environments_are_independent() {
         .exec("assert(not C_StableInfo.IsAtPetStable())")
         .unwrap();
     first.state().borrow_mut().stable_reads.pets.clear();
-    first.exec("assert(C_StableInfo.GetNumStablePets() == 0); assert(C_StableInfo.GetStablePetInfo(1) == nil)").unwrap();
+    first.exec("assert(C_StableInfo.GetNumStablePets() == 0); assert(type(C_StableInfo.GetStablePetInfo(1)) == "table")").unwrap();
 }
 
 #[test]
@@ -172,4 +175,31 @@ fn forever_native_empty_pet_and_original_purchase_consumer() {
         assert(type(value) == "table", "absent stable pet must return a table")
         PetStablePurchaseButtonMixin.Update(PetStableFrame.purchaseButton)
     "#).unwrap();
+}
+
+#[test]
+fn forever_stable_native_record_flags_and_cost_keys() {
+    let env = WowLuaEnv::new().unwrap();
+    {
+        let mut state = env.state().borrow_mut();
+        let stable = &mut state.stable_reads;
+        stable.owned_slots = 0;
+        stable.slot_costs = [(1, 123), (2, 456)].into();
+        let mut no_id = wolf();
+        no_id.native_record_id = 0;
+        let mut no_flag = wolf();
+        no_flag.native_flags = 1;
+        stable.pets = [(1, wolf()), (2, no_id), (3, no_flag)].into();
+    }
+    env.exec(r#"
+        assert(select('#', C_StableInfo.GetNumStablePets()) == 1)
+        assert(C_StableInfo.GetNumStablePets() == 1)
+        assert(C_StableInfo.GetNextStableSlotCost() == 123)
+        assert(select('#', C_StableInfo.GetStablePetInfo(99)) == 1)
+        assert(type(C_StableInfo.GetStablePetInfo(99)) == 'table')
+    "#).unwrap();
+    env.state().borrow_mut().stable_reads.owned_slots = 1;
+    env.exec("assert(C_StableInfo.GetNextStableSlotCost() == 456)").unwrap();
+    env.state().borrow_mut().stable_reads.owned_slots = 255;
+    env.exec("assert(C_StableInfo.GetNumStableSlots() == 255); assert(C_StableInfo.GetNextStableSlotCost() == 0)").unwrap();
 }
