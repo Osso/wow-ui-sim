@@ -187,6 +187,45 @@ fn achievement_error_handling_load_matches_raw_load_addon() {
     assert!(raw_is_loaded, "raw load should mark the addon loaded");
 }
 
+#[cfg(feature = "client-retail")]
+#[test]
+fn mount_filter_reset_consumer_restores_defaults() {
+    let env = WowLuaEnv::new().expect("Lua environment");
+    env.set_screen_size(1024.0, 768.0);
+    env.state().borrow_mut().addon_base_paths = vec![blizzard_ui_dir()];
+    load_panel_harness(&env);
+    env.exec(
+        r#"
+        assert(C_AddOns.LoadAddOn("Blizzard_Collections"))
+        assert(MountJournal and MountJournal.FilterDropdown, "mount consumer loaded")
+        local dropdown = MountJournal.FilterDropdown
+        MountJournal_InitFilterButton(MountJournal)
+        C_MountJournal.SetDefaultFilters()
+        dropdown:ValidateResetState()
+        assert(C_MountJournal.IsUsingDefaultFilters(), "initial defaults")
+        assert(not dropdown.ResetButton:IsShown(), "reset hidden at defaults")
+        MountJournal_SetCollectedFilter(false)
+        dropdown:ValidateResetState()
+        assert(not C_MountJournal.IsUsingDefaultFilters(), "changed filter is not default")
+        assert(dropdown.ResetButton:IsShown(), "consumer exposes reset")
+        MountJournal_SetNotCollectedFilter(false)
+        MountJournal_SetUnusableFilter(false)
+        C_MountJournal.SetSourceFilter(1, false)
+        C_MountJournal.SetTypeFilter(1, false)
+        dropdown.defaultCallback()
+        dropdown:ValidateResetState()
+        assert(C_MountJournal.IsUsingDefaultFilters(), "reset restores default state")
+        assert(not dropdown.ResetButton:IsShown(), "consumer hides reset")
+        assert(MountJournal_GetCollectedFilter(), "collected restored")
+        assert(MountJournal_GetNotCollectedFilter(), "not-collected restored")
+        assert(MountJournal_GetUnusableFilter(), "unusable restored")
+        assert(C_MountJournal.IsSourceChecked(1), "source restored")
+        assert(C_MountJournal.IsTypeChecked(1), "type restored")
+    "#,
+    )
+    .expect("mount filter consumer should reset filters");
+}
+
 post_wrath_ui_fixture! {
 #[test]
 fn collections_addon_load_creates_collections_journal() {
