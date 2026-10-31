@@ -9,6 +9,7 @@ use std::path::{Path, PathBuf};
 pub trait Selection: Clone + std::fmt::Debug {
     type Screen: Copy;
     fn game_types() -> &'static [&'static str];
+    fn recognizes_camelot() -> bool;
     fn family_subdir() -> &'static str;
     fn game_subdir() -> &'static str;
     fn is_variable_metadata(line: &str) -> bool;
@@ -102,10 +103,31 @@ fn strip_annotations(line: &str) -> &str {
     path
 }
 
+fn game_type_mask<P: Selection>(types: &str) -> u16 {
+    types.split([' ', ',']).fold(0, |mask, token| {
+        let bit = match token.to_ascii_lowercase().as_str() {
+            "mainline" => 0x001,
+            "standard" => 0x002,
+            "plunderstorm" => 0x004,
+            "classic" => 0x008,
+            "vanilla" => 0x010,
+            "tbc" => 0x020,
+            "wrath" => 0x040,
+            "cata" => 0x080,
+            "mists" => 0x100,
+            "wowhack" => 0x200,
+            "camelot" | "forever" if P::recognizes_camelot() => 0x400,
+            _ => 0,
+        };
+        mask | bit
+    })
+}
+
 pub fn matches_active_game_type<P: Selection>(types: &str) -> bool {
-    types
-        .split(|character: char| character == ',' || character.is_whitespace())
-        .any(|game_type| P::game_types().contains(&game_type))
+    let active = P::game_types()
+        .iter()
+        .fold(0, |mask, token| mask | game_type_mask::<P>(token));
+    game_type_mask::<P>(types) & active != 0
 }
 
 fn annotation_value<'a>(line: &'a str, annotation: &str) -> Option<&'a str> {
@@ -116,8 +138,9 @@ fn annotation_value<'a>(line: &'a str, annotation: &str) -> Option<&'a str> {
 
 /// Apply both inline game-type filters used by the profile's TOC files.
 pub fn is_allowed_game_type<P: Selection>(line: &str) -> bool {
-    let allowed =
-        annotation_value(line, "[AllowLoadGameType").is_none_or(matches_active_game_type::<P>);
+    let allowed = annotation_value(line, "[AllowLoadGameType").is_none_or(|value| {
+        game_type_mask::<P>(value) == 0 || matches_active_game_type::<P>(value)
+    });
     let excluded =
         annotation_value(line, "[ExcludeLoadGameType").is_some_and(matches_active_game_type::<P>);
     allowed && !excluded
@@ -168,18 +191,26 @@ fn metadata_key_allows_repeats(key: &str) -> bool {
 /// `@toc-version-*@` packager tokens — the `#@debug@` block in the TOC
 /// provides the real fallback version for source-form TOC files.
 fn insert_metadata<P: Selection>(metadata: &mut HashMap<String, String>, rest: &str) {
-    if P::is_variable_metadata(rest) || !is_allowed_game_type::<P>(rest) {
+    if P::is_variable_metadata(rest) {
         return;
     }
     let Some((key, value)) = rest.split_once(':') else {
         return;
     };
     let key = key.trim();
+    let game_type_header = matches!(key, "AllowLoadGameType" | "ExcludeLoadGameType");
+    if !game_type_header && !is_allowed_game_type::<P>(rest) {
+        return;
+    }
     let value = value.trim();
     if key == "Interface" && is_all_template_versions(value) {
         return;
     }
-    let value = replace_template_vars(strip_annotations(value));
+    let value = replace_template_vars(if game_type_header {
+        value
+    } else {
+        strip_annotations(value)
+    });
     if metadata_key_allows_repeats(key) {
         metadata
             .entry(key.to_string())
@@ -482,10 +513,9 @@ impl<P: Selection> TocFile<P> {
             return false;
         }
 
-        let excluded_by_allow = self
-            .metadata
-            .get("AllowLoadGameType")
-            .is_some_and(|value| !matches_active_game_type::<P>(value));
+        let excluded_by_allow = self.metadata.get("AllowLoadGameType").is_some_and(|value| {
+            game_type_mask::<P>(value) != 0 && !matches_active_game_type::<P>(value)
+        });
         let explicitly_excluded = self
             .metadata
             .get("ExcludeLoadGameType")

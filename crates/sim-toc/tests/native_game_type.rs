@@ -8,6 +8,9 @@ impl Selection for Retail {
     fn game_types() -> &'static [&'static str] {
         &["mainline", "standard"]
     }
+    fn recognizes_camelot() -> bool {
+        false
+    }
     fn family_subdir() -> &'static str {
         "Mainline"
     }
