@@ -1,7 +1,7 @@
 //! Protected-call policy based on the community API tags; native membership is unknown.
 
 use crate::lua_api::globals::state_backed_queries::dispatch_event_now;
-use crate::lua_api::methods::{borrow_state, create_string};
+use crate::lua_api::methods::{borrow_state, create_string, registry_get, registry_set};
 use crate::lua_bridge::FromStack;
 use rilua::vm::state::LuaState;
 use rilua::{LuaApiMut, LuaResult, Val};
@@ -172,6 +172,33 @@ const NO_COMBAT: &[&str] = &[
     "UnlearnSpecialization",
 ];
 
+const SECURECALL_ORIGIN: &str = "__sim_protected_securecall_origin";
+
+fn securecall_with_origin(state: &mut LuaState) -> LuaResult<u32> {
+    let previous = registry_get(state, SECURECALL_ORIGIN);
+    let origin = state.call_stack[..=state.ci]
+        .iter()
+        .rev()
+        .find_map(|frame| frame.taint.clone());
+    if previous == Val::Nil {
+        if let Some(origin) = origin {
+            let origin = create_string(state, &origin);
+            registry_set(state, SECURECALL_ORIGIN, origin);
+        }
+    }
+    let arguments: Vec<_> = (state.base..state.top)
+        .map(|i| state.stack_get(i))
+        .collect();
+    let start = state.top;
+    for argument in arguments {
+        state.push(argument);
+    }
+    let result = state.call_function(start, rilua::vm::callinfo::LUA_MULTRET);
+    registry_set(state, SECURECALL_ORIGIN, previous);
+    result?;
+    Ok((state.top - start) as u32)
+}
+
 fn refuse_call(state: &mut LuaState) -> LuaResult<u32> {
     let name = String::from_stack(state, 1)?;
     let combat_only = bool::from_stack(state, 2)?;
@@ -179,9 +206,12 @@ fn refuse_call(state: &mut LuaState) -> LuaResult<u32> {
         .iter()
         .rev()
         .find_map(|frame| frame.taint.clone());
-    let blocked = origin.is_some() && (!combat_only || borrow_state(state)?.in_combat_lockdown());
-    if let Some(origin) = origin.filter(|_| blocked) {
-        let origin = create_string(state, &origin);
+    let origin = match origin {
+        Some(origin) => create_string(state, &origin),
+        None => registry_get(state, SECURECALL_ORIGIN),
+    };
+    let blocked = origin != Val::Nil && (!combat_only || borrow_state(state)?.in_combat_lockdown());
+    if blocked {
         let function = create_string(state, &format!("{name}()"));
         let event = if combat_only {
             "ADDON_ACTION_BLOCKED"
@@ -196,23 +226,23 @@ fn refuse_call(state: &mut LuaState) -> LuaResult<u32> {
 
 pub(crate) fn install(lua: &mut rilua::Lua) -> crate::Result<()> {
     LuaApiMut::register_function(lua, "__sim_protected_global_refused", refuse_call)?;
+    LuaApiMut::register_function(lua, "__sim_securecall_with_origin", securecall_with_origin)?;
     let mut source = String::from(
         r#"
         local refused = __sim_protected_global_refused
+        local securecallWithOrigin = __sim_securecall_with_origin
         __sim_protected_global_refused = nil
-        local protectedFunctions = {}
+        __sim_securecall_with_origin = nil
         local function wrap(name, combatOnly)
             local namespace, member = string.match(name, "^([^.]+)%.(.+)$")
             local target, key = _G, name
             if namespace then target, key = _G[namespace], member end
             if type(target) == "table" and type(target[key]) == "function" then
                 local original = target[key]
-                local wrapped = function(...)
+                target[key] = function(...)
                     if refused(name, combatOnly) then return end
                     return original(...)
                 end
-                target[key] = wrapped
-                protectedFunctions[wrapped] = true
             end
         end
     "#,
@@ -226,10 +256,7 @@ pub(crate) fn install(lua: &mut rilua::Lua) -> crate::Result<()> {
         r#"
         local function wrapSecureCall(original)
             return function(fn, ...)
-                local target = fn
-                if type(fn) == "string" then target = _G[fn] end
-                if protectedFunctions[target] then return target(...) end
-                return original(fn, ...)
+                return securecallWithOrigin(original, fn, ...)
             end
         end
         securecall = wrapSecureCall(securecall)
