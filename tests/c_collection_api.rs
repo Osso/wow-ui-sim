@@ -162,6 +162,7 @@ fn test_mount_journal_set_collected_filter_setting() {
 #[test]
 fn test_mount_journal_get_is_favorite() {
     let env = env();
+    env.exec("C_MountJournal.SetDefaultFilters()").unwrap();
     let (is_fav, can_fav): (bool, bool) =
         env.eval("return C_MountJournal.GetIsFavorite(1)").unwrap();
     assert!(!is_fav);
