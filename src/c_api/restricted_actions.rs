@@ -2,7 +2,7 @@
 
 use crate::client_profile::{ACTIVE, ClientProfile};
 use crate::lua_api::globals::state_backed_queries::dispatch_event_now;
-use crate::lua_api::methods::{borrow_state, borrow_state_mut};
+use crate::lua_api::methods::{borrow_state, borrow_state_mut, table_get, table_set};
 use crate::lua_bridge::{FromStack, table_set_rust_fn_static};
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
@@ -20,6 +20,12 @@ pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
     if !supported() {
         return Ok(());
     }
+    let enums = super::ensure_global_table(state, "Enum");
+    let types = table_get(state, enums, "AddOnRestrictionType");
+    table_set(state, types, "Chat", Val::Num(5.0));
+    let metadata = table_get(state, enums, "AddOnRestrictionTypeMeta");
+    table_set(state, metadata, "MaxValue", Val::Num(5.0));
+    table_set(state, metadata, "NumValues", Val::Num(6.0));
     let namespace = super::ensure_namespace(state, "C_RestrictedActions")?;
     table_set_rust_fn_static(
         state,
