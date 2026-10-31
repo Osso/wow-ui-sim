@@ -15,6 +15,7 @@ fn campaign_header_reflects_quest_progress() {
         log.entries.clear();
         log.completed_quest_ids.clear();
         log.campaign_ids.extend([(91001, 101), (91002, 102)]);
+        log.campaign_chapter_ids.insert(101, vec![201, 202]);
         log.completed_quest_ids.insert(91001);
         let mut active = wow_ui_sim::lua_api::state::QuestLogState::seeded()
             .entries
@@ -24,6 +25,9 @@ fn campaign_header_reflects_quest_progress() {
         log.entries.push(active);
     }
     env.exec(r#"
+        local chapters = C_CampaignInfo.GetChapterIDs(101)
+        assert(#chapters == 2 and chapters[1] == 201 and chapters[2] == 202, "supplied chapters")
+        assert(C_CampaignInfo.GetChapterIDs(102) == nil, "absent chapters")
         local function check(id, complete)
             local h = { UpdateTextureKit = function() end, UpdateComplete = function(self, v) self.result = v end,
                 UpdateTitle = function() end, UpdateProgress = function() end,
