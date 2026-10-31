@@ -3206,3 +3206,12 @@ serialization, account/character loading and retained input failures. The
 simulator preservation from native parity. Shutdown finalization remains unfinished.
 
 - 2026-10-31: Documented casting-bar predicate selection and native secrecy gaps.
+
+## 2026-10-31 — Startup class, race, and specialization
+
+[Startup player settings](../specs/cli-class-spec.md#initial-class-race-and-specialization)
+document CLI class/race/spec seeding before addon loading. GUI controls use the
+resolved model; reload retains later selections. The late hook reaffirms CLI
+selections and emits notifications without duplicate specialization events.
+Spec-only input is validated against the initial class and re-resolved against
+the current class after startup.

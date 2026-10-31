@@ -59,13 +59,17 @@ struct Args {
     #[arg(long, value_name = "CODE")]
     exec_lua: Option<String>,
 
-    /// Set player class by name or one-based index after startup.
+    /// Select player class by name or one-based index before addons load.
     #[arg(long, value_name = "NAME|N")]
     class: Option<String>,
 
-    /// Set player specialization by name or one-based index after startup.
+    /// Select specialization for the startup class by name or one-based index.
     #[arg(long, value_name = "NAME|N")]
     spec: Option<String>,
+
+    /// Select player race by name or one-based simulator race-list index before addons load.
+    #[arg(long, value_name = "NAME|N")]
+    race: Option<String>,
 
     /// Run `--exec-lua` under secureenv (fenv retargeted via `mark_secure`).
     /// Handy for inspecting/setting secure-scope globals from an ad-hoc
@@ -260,7 +264,11 @@ fn hires_atlases_wanted(ui_scale: f32, env_override: Option<&str>) -> bool {
 
 fn run_main() -> Result<(), Box<dyn std::error::Error>> {
     let args = Args::parse();
-    let selection = class_spec::parse_selection(args.class.as_deref(), args.spec.as_deref())?;
+    let selection = class_spec::parse_selection(
+        args.class.as_deref(),
+        args.spec.as_deref(),
+        args.race.as_deref(),
+    )?;
     if let Some(Commands::CacheTexture { ref path, force }) = args.command {
         return run_cache_texture(path, force);
     }
@@ -720,6 +728,38 @@ fn update_dump_layout_rects(env: &WowLuaEnv) {
 mod tests {
     use super::*;
     use clap::Parser;
+
+    #[test]
+    fn race_flag_parses_alone_and_with_class_and_spec() {
+        let args = Args::try_parse_from(["wow-sim", "dump-tree"]).unwrap();
+        assert!(args.race.is_none());
+        for argv in [
+            vec!["wow-sim", "--race", "Orc", "dump-tree"],
+            vec![
+                "wow-sim",
+                "--class",
+                "Mage",
+                "--spec",
+                "Fire",
+                "--race",
+                "NightElf",
+                "dump-tree",
+            ],
+            vec!["wow-sim", "--race", "4", "dump-tree"],
+        ] {
+            let args = Args::try_parse_from(argv).unwrap();
+            assert!(args.race.is_some());
+            assert!(
+                class_spec::parse_selection(
+                    args.class.as_deref(),
+                    args.spec.as_deref(),
+                    args.race.as_deref(),
+                )
+                .unwrap()
+                .is_some()
+            );
+        }
+    }
 
     #[test]
     fn reload_ui_dump_owner_observes_fresh_environment() {

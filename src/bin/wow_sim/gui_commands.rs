@@ -466,11 +466,15 @@ fn save_screenshot(img: &image::RgbaImage, output: &Path, png: bool, quality: f3
 }
 
 fn create_texture_manager(env: &WowLuaEnv) -> Rc<RefCell<wow_ui_sim::texture::TextureManager>> {
-    let config = wow_ui_sim::config::SimConfig::load();
+    let class_index = env.state().borrow().player.class_index;
+    let class = wow_ui_sim::lua_api::state::CLASS_LABELS
+        .get((class_index - 1).max(0) as usize)
+        .copied()
+        .unwrap_or("Warrior");
     let texture_manager = { env.state().borrow().texture_manager() };
     let mut mgr = texture_manager.borrow_mut();
     mgr.preload_talent_textures(790);
-    mgr.preload_talent_panel_textures(&config.player_class);
+    mgr.preload_talent_panel_textures(class);
     drop(mgr);
     texture_manager
 }

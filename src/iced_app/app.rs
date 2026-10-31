@@ -249,12 +249,23 @@ pub(crate) struct AppInit {
 }
 
 impl AppInitialSelections {
-    fn from_config(config: &crate::config::SimConfig) -> Self {
+    fn from_state_and_config(
+        state: &crate::lua_api::SimState,
+        config: &crate::config::SimConfig,
+    ) -> Self {
+        use crate::lua_api::state::{CLASS_LABELS, RACE_DATA};
         Self {
             xp_level: config.xp_level.clone(),
             party_size: config.party_size.to_string(),
-            class: config.player_class.clone(),
-            race: config.player_race.clone(),
+            class: CLASS_LABELS
+                .get((state.player.class_index - 1).max(0) as usize)
+                .unwrap_or(&CLASS_LABELS[0])
+                .to_string(),
+            race: RACE_DATA
+                .get(state.player.race_index)
+                .unwrap_or(&RACE_DATA[0])
+                .0
+                .to_string(),
             rot_level: config.rot_damage_level.clone(),
             movement: config.movement.clone(),
         }
@@ -377,7 +388,11 @@ impl App {
             state.texture_manager = init.texture_manager.clone();
         }
         let now = std::time::Instant::now();
-        let selections = AppInitialSelections::from_config(&init.config);
+        let selections = {
+            let env = init.env.borrow();
+            let state = env.state().borrow();
+            AppInitialSelections::from_state_and_config(&state, &init.config)
+        };
         let initial_screen_size = current_env_screen_size(&init.env);
         app_from_initial_state!(init, selections, now, initial_screen_size)
     }
@@ -443,20 +458,11 @@ impl App {
         self.textures_pending.set(false);
     }
 
-    /// Apply saved config to SimState before startup events fire.
+    /// Apply GUI preferences without replacing the player resolved at startup.
     fn apply_config_to_state(env_rc: &Rc<RefCell<WowLuaEnv>>, config: &crate::config::SimConfig) {
-        use crate::lua_api::state::{CLASS_LABELS, RACE_DATA, ROT_DAMAGE_LEVELS};
+        use crate::lua_api::state::ROT_DAMAGE_LEVELS;
         let env = env_rc.borrow();
         let mut state = env.state().borrow_mut();
-        state.player.class_index = CLASS_LABELS
-            .iter()
-            .position(|&n| n == config.player_class)
-            .map(|i| (i + 1) as i32)
-            .unwrap_or(1);
-        state.player.race_index = RACE_DATA
-            .iter()
-            .position(|(n, _, _)| *n == config.player_race)
-            .unwrap_or(0);
         state.rot_damage_level = ROT_DAMAGE_LEVELS
             .iter()
             .position(|(l, _)| *l == config.rot_damage_level)

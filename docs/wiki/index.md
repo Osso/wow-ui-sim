@@ -1,3 +1,9 @@
+## [2026-10-31] architecture | Startup class and race
+
+[Startup player settings](../specs/cli-class-spec.md#initial-class-race-and-specialization)
+describe CLI class/race/spec seeding before addon loading, GUI consumption of the
+resolved model, and post-startup selection and notification.
+
 ## Casting and threat secrecy predicates
 
 [Consumer selection and proof limits](investigations/consumer-selection-and-red-proof.md#casting-bar-secrecy-predicate) links the [predicate contract](../specs/secret-auras.md#casting-and-threat-predicate-surface).
