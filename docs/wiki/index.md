@@ -14,6 +14,10 @@ finalization remains unfinished.
 
 [[ui-capture-fidelity]] records the screenshot `--quality` and `--ui-scale` options, 2x atlas art above 1 px per unit, bilinear atlas sampling, font `<Shadow>`/`<Color>`, shadow direction, and five startup-state fixes found by comparing renders with a 12.1.0 client capture. It also lists the findings left out because master pins the opposite behaviour.
 
+## Dungeon score rarity
+
+[Native row scan and passed-event state](systems/dungeon-score-rarity.md) describe the pinned-cache contract, original Retail consumer proof and unknown native defaults.
+
 ## [2026-10-27] implementation | Minimap quest-blob observations
 
 [Minimap containment](investigations/minimap.md#supplied-quest-blob-containment) links the supplied-state contract. Retail, PTR and Forever original-consumer RED/GREEN are proven; paired Retail/PTR stock is unchanged and seven all-target checks have zero compiler warnings. The Retail publication sweep still fails on the same pre-existing LFG gap in both siblings.
