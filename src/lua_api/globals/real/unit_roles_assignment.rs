@@ -35,7 +35,7 @@ fn role_name(role: Option<UnitRole>) -> &'static str {
     }
 }
 
-pub(super) fn read_role(state: &LuaState, unit: &str) -> LuaResult<(&'static str, f64)> {
+pub(crate) fn read_role(state: &LuaState, unit: &str) -> LuaResult<(&'static str, f64)> {
     let sim = borrow_state(state)?;
     let role = represented_identity(&sim, unit)
         .and_then(|(guid, _)| sim.unit_roles.get(&guid).copied().flatten());
