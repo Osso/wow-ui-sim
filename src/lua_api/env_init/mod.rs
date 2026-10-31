@@ -112,6 +112,7 @@ pub(super) fn init_lua_state(
     #[cfg(feature = "client-wowforever")]
     rilua::table_security::register_table_security(lua)?;
     trace_debug_getter_values(lua, "after_profile_bootstrap");
+    super::globals::real::protected_globals::install(lua)?;
     // secureenv is shallow-copied from `_G` here. It keeps its copy of
     // the dangerous globals (dofile / loadfile / require / string.dump /
     // math.randomseed) so secure chunks — which Blizzard trusts —
