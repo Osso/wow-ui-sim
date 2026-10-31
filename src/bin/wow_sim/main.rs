@@ -34,6 +34,10 @@ struct Args {
     #[arg(long)]
     no_addons: bool,
 
+    /// Allow the installed UI version to differ from the configured source version
+    #[arg(long, global = true)]
+    allow_ui_version_mismatch: bool,
+
     /// Load third-party addons only from these roots (repeatable; replaces default discovery)
     #[arg(long, value_name = "DIR")]
     addons_path: Vec<PathBuf>,
@@ -260,6 +264,7 @@ fn hires_atlases_wanted(ui_scale: f32, env_override: Option<&str>) -> bool {
 
 fn run_main() -> Result<(), Box<dyn std::error::Error>> {
     let args = Args::parse();
+    wow_ui_sim::blizzard_ui_sync::set_allow_ui_version_mismatch(args.allow_ui_version_mismatch);
     let selection = class_spec::parse_selection(args.class.as_deref(), args.spec.as_deref())?;
     if let Some(Commands::CacheTexture { ref path, force }) = args.command {
         return run_cache_texture(path, force);
@@ -720,6 +725,19 @@ fn update_dump_layout_rects(env: &WowLuaEnv) {
 mod tests {
     use super::*;
     use clap::Parser;
+
+    #[test]
+    fn ui_version_mismatch_requires_explicit_opt_out() {
+        let strict = Args::try_parse_from(["wow-sim", "dump-tree"]).unwrap();
+        assert!(!strict.allow_ui_version_mismatch);
+        for argv in [
+            ["wow-sim", "--allow-ui-version-mismatch", "dump-tree"],
+            ["wow-sim", "dump-tree", "--allow-ui-version-mismatch"],
+        ] {
+            let opted_in = Args::try_parse_from(argv).unwrap();
+            assert!(opted_in.allow_ui_version_mismatch);
+        }
+    }
 
     #[test]
     fn reload_ui_dump_owner_observes_fresh_environment() {

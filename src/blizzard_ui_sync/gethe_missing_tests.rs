@@ -66,6 +66,7 @@ fn nonresident_matching_gethe_is_written_and_recorded() {
     let destination = output.path().join(ENTRY);
     let revision = tree.revision.clone();
     let (result, record) = sync_mapped_file(
+        true,
         || Ok(Some(file(false))),
         &destination,
         || unreachable!(),
@@ -100,6 +101,7 @@ fn nonresident_mismatching_gethe_fails_without_writing() {
     let output = tempfile::tempdir().unwrap();
     let destination = output.path().join(ENTRY);
     let error = sync_mapped_file(
+        true,
         || Ok(Some(file(false))),
         &destination,
         || unreachable!(),
@@ -120,6 +122,7 @@ fn resident_uses_casc_with_no_gethe_tree() {
     let destination = output.path().join(ENTRY);
     let missing_tree = output.path().join("absent-gethe");
     let (result, record) = sync_mapped_file(
+        true,
         || Ok(Some(file(true))),
         &destination,
         || {
@@ -146,6 +149,7 @@ fn mismatched_gethe_version_fails_without_writing() {
     let output = tempfile::tempdir().unwrap();
     let destination = output.path().join(ENTRY);
     let error = sync_mapped_file(
+        true,
         || Ok(Some(file(false))),
         &destination,
         || unreachable!(),
@@ -172,6 +176,7 @@ fn pinned_revision_ignores_modified_working_tree_bytes() {
     let output = tempfile::tempdir().unwrap();
     let destination = output.path().join(ENTRY);
     sync_mapped_file(
+        true,
         || Ok(Some(file(false))),
         &destination,
         || unreachable!(),
@@ -187,6 +192,7 @@ fn substitution_provenance_preserves_identity_comparison() {
     let output = tempfile::tempdir().unwrap();
     let destination = output.path().join(ENTRY);
     let (_, record) = sync_mapped_file(
+        true,
         || Ok(Some(file(false))),
         &destination,
         || unreachable!(),
@@ -206,5 +212,105 @@ fn substitution_provenance_preserves_identity_comparison() {
     assert!(!provenance_matches(
         &format!("{base}unrecognized=bad\n"),
         base
+    ));
+}
+
+fn installation_provenance(version: &str) -> CacheProvenance {
+    CacheProvenance::new(
+        "wowforever",
+        "wowf",
+        version,
+        "7d8ae4cd9c1f639a3ea04fd47e21c746",
+        "",
+        "manifest-hash",
+    )
+}
+
+#[test]
+fn matching_installed_version_preserves_gethe_policy() {
+    let pin = read_source_pin().unwrap();
+    let mut provenance = installation_provenance(&pin.version);
+    append_source_identity(&mut provenance, &pin.version, false).unwrap();
+    assert!(gethe_fallback_enabled(provenance.contents()));
+    assert!(
+        provenance
+            .contents()
+            .contains("source=casc-local-or-gethe-md5\n")
+    );
+    assert!(!provenance.contents().contains(DISABLED_VERSION_MISMATCH));
+    assert!(provenance.contents().ends_with(&format!(
+        "gethe_version={}\ngethe_revision={}\n",
+        pin.version, pin.gethe_revision
+    )));
+}
+
+#[test]
+fn different_installed_version_is_rejected_without_opt_out() {
+    let pin = read_source_pin().unwrap();
+    let installed = format!("{}.different", pin.version);
+    let mut provenance = installation_provenance(&installed);
+    let original = provenance.contents().to_owned();
+    let error = append_source_identity(&mut provenance, &installed, false).unwrap_err();
+    assert!(error.to_string().contains(&installed));
+    assert!(error.to_string().contains(&pin.version));
+    assert!(error.to_string().contains("--allow-ui-version-mismatch"));
+    assert_eq!(provenance.contents(), original);
+}
+
+#[test]
+fn different_installed_version_uses_casc_without_gethe_lookup() {
+    let installed = "1.60.1.70634";
+    let mut provenance = installation_provenance(installed);
+    append_source_identity(&mut provenance, installed, true).unwrap();
+    assert!(
+        provenance
+            .contents()
+            .contains(&format!("version={installed}\n"))
+    );
+    assert!(
+        provenance
+            .contents()
+            .contains("source=casc-local-or-cdn\nfallback=none\n")
+    );
+    assert!(provenance.contents().contains(DISABLED_VERSION_MISMATCH));
+    let output = tempfile::tempdir().unwrap();
+    let destination = output.path().join(ENTRY);
+    let (result, substitution) = sync_mapped_file(
+        gethe_fallback_enabled(provenance.contents()),
+        || panic!("disabled Gethe policy must not inspect substitution mappings"),
+        &destination,
+        || {
+            super::super::write_extracted_casc_path(&destination, b"selected CASC bytes")?;
+            Ok(EntrySyncResult::Extracted)
+        },
+        || panic!("disabled Gethe policy must not load a Gethe tree"),
+    )
+    .unwrap();
+    assert!(matches!(result, EntrySyncResult::Extracted));
+    assert!(substitution.is_none());
+    assert_eq!(std::fs::read(destination).unwrap(), b"selected CASC bytes");
+}
+
+#[test]
+fn disabled_gethe_policy_rejects_substitution_provenance() {
+    let mut provenance = installation_provenance("1.60.1.70634");
+    append_source_identity(&mut provenance, "1.60.1.70634", true).unwrap();
+    let expected = provenance.contents().to_owned();
+    assert!(provenance_matches(&expected, &expected));
+    append_substitution(
+        &mut provenance,
+        &Substitution {
+            path: ENTRY.into(),
+            fdid: 8379893,
+            ckey: HELLO_MD5.into(),
+            gethe_revision: "0".repeat(40),
+            source: "gethe".into(),
+        },
+    )
+    .unwrap();
+    assert!(!provenance_matches(provenance.contents(), &expected));
+    assert!(!provenance_matches(
+        &expected.replace("70634", "70532"),
+        &expected
     ));
 }

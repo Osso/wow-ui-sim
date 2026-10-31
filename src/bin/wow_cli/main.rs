@@ -47,6 +47,10 @@ use wow_ui_sim::lua_server::client;
 #[command(about = "WoW UI Simulator CLI tools (requires running wow-sim)")]
 #[command(version)]
 struct Cli {
+    /// Allow the installed UI version to differ from the configured source version
+    #[arg(long, global = true)]
+    allow_ui_version_mismatch: bool,
+
     #[command(subcommand)]
     command: Commands,
 }
@@ -319,6 +323,7 @@ fn default_wowless_path() -> PathBuf {
 
 fn main() {
     let cli = Cli::parse();
+    wow_ui_sim::blizzard_ui_sync::set_allow_ui_version_mismatch(cli.allow_ui_version_mismatch);
     handle_command(cli.command);
 }
 
@@ -951,11 +956,39 @@ mod tests {
     fn casc_sync_blizzard_ui_parses() {
         let cli = Cli::try_parse_from(["wow-cli", "casc", "sync-blizzard-ui"])
             .expect("casc sync-blizzard-ui should parse");
+        assert!(!cli.allow_ui_version_mismatch);
         match cli.command {
             Commands::Casc {
                 what: CascTarget::SyncBlizzardUi,
             } => {}
             _ => panic!("expected casc sync-blizzard-ui command"),
+        }
+    }
+
+    #[test]
+    fn casc_sync_blizzard_ui_accepts_explicit_version_override() {
+        for argv in [
+            [
+                "wow-cli",
+                "--allow-ui-version-mismatch",
+                "casc",
+                "sync-blizzard-ui",
+            ],
+            [
+                "wow-cli",
+                "casc",
+                "sync-blizzard-ui",
+                "--allow-ui-version-mismatch",
+            ],
+        ] {
+            let cli = Cli::try_parse_from(argv).unwrap();
+            assert!(cli.allow_ui_version_mismatch);
+            assert!(matches!(
+                cli.command,
+                Commands::Casc {
+                    what: CascTarget::SyncBlizzardUi,
+                }
+            ));
         }
     }
 }

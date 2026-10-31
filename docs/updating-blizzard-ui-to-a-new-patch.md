@@ -66,6 +66,41 @@ previously existed; no other profile's baseline is rewritten.
 
 ## Matching the installed Forever build
 
+### Explicit opt-out for a different installed Forever build
+
+By default, the installed Forever version must match
+`data/blizzard-ui-builds/wowforever.json`. For temporary development with a
+different installed build, explicitly opt out for each source-sync or simulator
+process:
+
+```sh
+wow-cli casc sync-blizzard-ui --allow-ui-version-mismatch
+wow-sim --allow-ui-version-mismatch
+```
+
+The option also controls cached source loading. A cache created for a mismatched
+version is rejected by ordinary startup without the flag, including headless
+builds without CASC support. A matching cache remains usable offline.
+The flag is shared by the launch tools; each source retains its existing version
+and integrity checks.
+
+With the opt-out, the selected installation's `.product.db` identity remains
+authoritative. Acquisition uses the existing CASC path for that installed build;
+it does not substitute blobs from the older Gethe tree. Provenance retains the
+installed version/build key and records
+`gethe_fallback=disabled-version-mismatch` alongside the historical pin. Such a
+cache rejects appended Gethe substitution records. A matching installed version
+retains the existing pinned Gethe/CKey-verified recovery path unchanged.
+
+The compiled manifest is still the file list of its recorded Gethe snapshot.
+Acquiring every entry from a newer installation proves that those entries are
+available; it does not establish that the list contains every file newly shipped
+by that build. Missing content must fail explicitly. Refresh mappings using the
+workflow below, and update the manifest/pin only from matching source evidence.
+Do not relabel an older snapshot as the selected installed build.
+The opt-out does not update the simulator's compiled API support; a longer-term
+version-selection policy remains a separate discussion.
+
 ### Current selected target — October 25, 2026
 
 The selected non-beta product is `wowf` **1.60.1.70532**, build key
