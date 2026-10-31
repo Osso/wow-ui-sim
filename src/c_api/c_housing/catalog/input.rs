@@ -14,7 +14,12 @@ pub(in crate::c_api::c_housing) fn read_selector(state: &mut LuaState) -> LuaRes
             "housing catalog selector must be a public table",
         ));
     };
-    check_table_access(state, reference, None)?;
+    check_table_access(
+        state,
+        reference,
+        None,
+        rilua::table_security::TableAccess::Index,
+    )?;
     Ok(selector)
 }
 

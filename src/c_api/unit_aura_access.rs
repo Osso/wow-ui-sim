@@ -35,10 +35,10 @@ pub(crate) fn aura_access_restriction_active(sim: &SimState, frame: &Frame) -> b
 }
 
 /// Native script-object resolution: tainted code cannot reach an object whose
-/// aura access restriction is in force. The stack-taint walk runs only for
-/// restricted objects while auras are secret.
-/// INFERRED: error wording follows the live forbidden-object message; the
-/// 12.1.0 page gives no text contract.
+/// aura access restriction is in force, checked only for restricted objects
+/// while auras are secret.
+/// The text is the client's forbidden-object template, which names no addon
+/// (S9 (e)); that this path uses it is best-guess.
 pub(crate) fn ensure_script_object_accessible(state: &LuaState, id: u64) -> LuaResult<()> {
     if !cfg!(feature = "retail-12-1-0") {
         return Ok(());
@@ -54,13 +54,9 @@ pub(crate) fn ensure_script_object_accessible(state: &LuaState, id: u64) -> LuaR
     if !restricted || rilua::api::state_is_secure(state) {
         return Ok(());
     }
-    let taint = state.call_stack[..=state.ci]
-        .iter()
-        .find_map(|frame| frame.taint.clone())
-        .unwrap_or_default();
-    Err(runtime_error(format!(
-        "Attempt to access forbidden object from code tainted by '{taint}'"
-    )))
+    Err(runtime_error(
+        "Attempt to access forbidden object from code tainted by an AddOn",
+    ))
 }
 
 /// Enforce `RequiresUnitAuraAccess` before argument parsing or lookup.

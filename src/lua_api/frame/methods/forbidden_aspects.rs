@@ -27,7 +27,6 @@ pub(crate) fn ensure_forbidden_aspect_absent(
     state: &mut LuaState,
     frame_id: u64,
     aspect_name: &str,
-    method_name: &str,
 ) -> LuaResult<()> {
     let mask = borrow_state(state)?
         .widgets
@@ -37,12 +36,14 @@ pub(crate) fn ensure_forbidden_aspect_absent(
         return Ok(());
     }
     let aspect = resolve_aspect(state, aspect_name)?;
-    if mask & aspect != 0 {
-        return Err(runtime_error(format!(
-            "{method_name}: forbidden aspect {aspect_name} disallows this operation"
-        )));
+    if mask & aspect == 0 {
+        return Ok(());
     }
-    Ok(())
+    // Native template (S9 (d)); an insecure stack always carries a taint origin.
+    let origin = rilua::api::stack_taint_origin(state).unwrap_or_default();
+    Err(runtime_error(format!(
+        "Function call not permitted due to forbidden aspect '{aspect_name}' (execution tainted by '{origin}')"
+    )))
 }
 
 /// Whether UntrustedScriptExecution (any handler) or UntrustedLayoutScriptExecution
@@ -200,9 +201,18 @@ fn resolve_aspect(state: &mut LuaState, name: &str) -> LuaResult<u64> {
         Val::Num(value) if value.is_finite() && value > 0.0 && value.fract() == 0.0 => {
             Ok(value as u64)
         }
-        _ => Err(runtime_error(format!(
-            "Unknown forbidden aspect '{name}' in active Enum.ForbiddenAspect"
-        ))),
+        _ => Err(runtime_error(unknown_aspect_message(name))),
+    }
+}
+
+/// Only the 12.1.7 (PTR) client carries "Unknown forbidden aspect '%s'". Retail and
+/// Forever have no such string; their UI.xsd:129 `FORBIDDENASPECT` enumeration makes an
+/// unknown name a load-time schema violation whose native wording is UNKNOWN, so the
+/// simulator keeps its own best-guess load error there.
+fn unknown_aspect_message(name: &str) -> String {
+    match crate::client_profile::ACTIVE {
+        crate::client_profile::ClientProfile::Ptr => format!("Unknown forbidden aspect '{name}'"),
+        _ => format!("Unknown forbidden aspect '{name}' in active Enum.ForbiddenAspect"),
     }
 }
 
@@ -233,14 +243,33 @@ pub(crate) fn ensure_forbidden_aspects_already_owned(
     frame_id: u64,
     source_frame_id: u64,
     inheritance: u64,
-    method_name: &str,
 ) -> LuaResult<()> {
     let source_aspects = stored_inheritable_forbidden_aspects(state, source_frame_id, inheritance)?;
     let frame_aspects = stored_forbidden_aspects(state, frame_id)?;
-    if source_aspects & !frame_aspects == 0 {
+    let gained = source_aspects & !frame_aspects;
+    if gained == 0 {
         return Ok(());
     }
+    let relation = if inheritance & INHERITANCE_PARENT != 0 {
+        "Reparenting disallowed as child"
+    } else {
+        "Anchoring disallowed as dependent"
+    };
     Err(runtime_error(format!(
-        "Action[{method_name}] failed because[Cannot implicitly gain forbidden aspects]"
+        "{relation} object would inherit forbidden aspects: {}",
+        aspect_names(gained)
     )))
+}
+
+/// Best-guess slot content: the gained aspects' `Enum.ForbiddenAspect` names, in bit
+/// order, joined by ", ". The native slot content is UNKNOWN.
+#[cfg(feature = "forbidden-aspects")]
+fn aspect_names(mask: u64) -> String {
+    crate::lua_api::globals::enum_data::FORBIDDEN_ASPECT
+        .1
+        .iter()
+        .filter(|(_, bit)| mask & *bit as u64 != 0)
+        .map(|(name, _)| *name)
+        .collect::<Vec<_>>()
+        .join(", ")
 }

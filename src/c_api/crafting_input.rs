@@ -11,7 +11,12 @@ pub(crate) fn read_array(state: &LuaState, value: Val) -> LuaResult<Vec<Val>> {
     let Val::Table(reference) = value else {
         return Err(runtime_error("crafting array required"));
     };
-    rilua::table_security::check_table_access(state, reference, None)?;
+    rilua::table_security::check_table_access(
+        state,
+        reference,
+        None,
+        rilua::table_security::TableAccess::Index,
+    )?;
     let table = state
         .gc
         .tables
@@ -42,7 +47,12 @@ fn authenticate_table(state: &mut LuaState, value: Val) -> LuaResult<Val> {
     let Val::Table(reference) = value else {
         return Err(runtime_error("crafting structure must be a table"));
     };
-    rilua::table_security::check_table_access(state, reference, None)?;
+    rilua::table_security::check_table_access(
+        state,
+        reference,
+        None,
+        rilua::table_security::TableAccess::Index,
+    )?;
     state.push(value);
     Ok(value)
 }

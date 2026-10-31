@@ -22,7 +22,12 @@ pub(crate) fn read_table(state: &LuaState, value: Val, field: &str) -> LuaResult
             "private aura anchor {field} must be a table"
         )));
     };
-    check_table_access(state, reference, None)?;
+    check_table_access(
+        state,
+        reference,
+        None,
+        rilua::table_security::TableAccess::Index,
+    )?;
     Ok(value)
 }
 
@@ -32,7 +37,12 @@ fn read_field(state: &mut LuaState, table: Val, field: &str) -> LuaResult<Val> {
             "private aura anchor structure must be a table",
         ));
     };
-    check_table_access(state, reference, None)?;
+    check_table_access(
+        state,
+        reference,
+        None,
+        rilua::table_security::TableAccess::Index,
+    )?;
     let value = table_get(state, table, field);
     reject_secret(state, value, field)?;
     Ok(value)

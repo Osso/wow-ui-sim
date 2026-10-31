@@ -15,7 +15,12 @@ pub(super) fn read_variant_id(state: &mut LuaState) -> LuaResult<HousingCatalogE
             "housing pending selector must be a table",
         ));
     };
-    check_table_access(state, reference, None)?;
+    check_table_access(
+        state,
+        reference,
+        None,
+        rilua::table_security::TableAccess::Index,
+    )?;
 
     // Keep the underlying table and its original fields rooted across field-key allocations.
     let stack_top = state.top;

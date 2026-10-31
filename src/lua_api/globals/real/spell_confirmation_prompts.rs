@@ -33,7 +33,12 @@ impl SpellConfirmationPrompt {
                 "QueueSpellConfirmationPrompt requires a record table",
             ));
         };
-        check_table_access(state, table, None)?;
+        check_table_access(
+            state,
+            table,
+            None,
+            rilua::table_security::TableAccess::Index,
+        )?;
         Ok(Self {
             spell_id: read_number(state, record, "spellID")?,
             confirm_type: read_number(state, record, "confirmType")?,

@@ -454,7 +454,6 @@ pub(super) fn set_point(state: &mut LuaState) -> LuaResult<u32> {
             id,
             relative_to as u64,
             forbidden_aspects::INHERITANCE_LAYOUT,
-            "SetPoint",
         )?;
     }
 
