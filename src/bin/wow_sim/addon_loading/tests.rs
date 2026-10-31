@@ -49,7 +49,7 @@ fn retail_third_party_game_type_headers_select_startup_addons() {
             temp.path(),
             name,
             &format!("## AllowLoadGameType: {value}\n"),
-            "",
+            "GameTypeProbeLoaded = true",
         );
         assert_eq!(
             loadable_toc_path(&temp.path().join(name), ScreenKind::Game).is_some(),
@@ -57,6 +57,10 @@ fn retail_third_party_game_type_headers_select_startup_addons() {
             "{name}"
         );
     }
+    let toc = loadable_toc_path(&temp.path().join("Bracketed"), ScreenKind::Game).unwrap();
+    let env = WowLuaEnv::new().unwrap();
+    wow_ui_sim::loader::load_addon(&env.loader_env(), &toc).unwrap();
+    assert!(env.eval::<bool>("return GameTypeProbeLoaded").unwrap());
 }
 
 #[test]
