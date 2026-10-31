@@ -12,7 +12,10 @@ fn original_audio_env() -> WowLuaEnv {
 }
 
 fn publishes_devices() -> bool {
-    matches!(ACTIVE, ClientProfile::Retail | ClientProfile::Ptr | ClientProfile::WowForever)
+    matches!(
+        ACTIVE,
+        ClientProfile::Retail | ClientProfile::Ptr | ClientProfile::WowForever
+    )
 }
 
 fn device(id: &str, name: &str, active: bool, system_default: bool) -> VoiceAudioDevice {
@@ -36,7 +39,8 @@ fn initialized_audio_env(
         state.voice_chat.output_devices = output;
         state.voice_chat.input_devices = input;
     }
-    env.exec(include_str!("voice_audio_devices/observe.lua")).unwrap();
+    env.exec(include_str!("voice_audio_devices/observe.lua"))
+        .unwrap();
     env.eval::<bool>("return RunOriginalVoiceInitialization()")
         .expect("original InitVoiceSettings must consume the supplied device catalogs");
     env
@@ -57,14 +61,23 @@ fn original_voice_initialization_selects_best_guess_system_default() {
     let system = Some(vec![VoiceAudioDevice::system_default()]);
     assert_eq!(defaults.output_devices, system);
     assert_eq!(defaults.input_devices, system);
-    env.exec(include_str!("voice_audio_devices/observe.lua")).unwrap();
+    // PTR leaves settings access unsupplied; the original callback needs it.
+    env.state().borrow_mut().voice_chat.can_access_settings = Some(true);
+    env.exec(include_str!("voice_audio_devices/observe.lua"))
+        .unwrap();
     env.eval::<bool>("return RunOriginalVoiceInitialization()")
         .expect("original InitVoiceSettings must complete with the best-guess catalogs");
-    for (kind, label) in [("OUTPUT", "VOICE_CHAT_OUTPUT_DEVICE_DEFAULT"), ("INPUT", "VOICE_CHAT_INPUT_DEVICE_DEFAULT")] {
+    for (kind, label) in [
+        ("OUTPUT", "VOICE_CHAT_OUTPUT_DEVICE_DEFAULT"),
+        ("INPUT", "VOICE_CHAT_INPUT_DEVICE_DEFAULT"),
+    ] {
         let label: String = env.eval(&format!("return {label}")).unwrap();
         assert_eq!(label, "System Default");
         let id = "Default System Device".to_string();
-        assert_eq!(observe(&env, kind), (id.clone(), id.clone(), format!("{id}={label}")));
+        assert_eq!(
+            observe(&env, kind),
+            (id.clone(), id.clone(), format!("{id}={label}"))
+        );
     }
 }
 
@@ -95,7 +108,8 @@ fn original_voice_dropdowns_read_supplied_devices() {
     // The consumer sorted its copy in place; the supplied catalog keeps its order.
     assert_eq!(env.state().borrow().voice_chat.output_devices, Some(output));
 
-    env.state().borrow_mut().voice_chat.output_devices = Some(vec![device("usb-3", "USB", true, true)]);
+    env.state().borrow_mut().voice_chat.output_devices =
+        Some(vec![device("usb-3", "USB", true, true)]);
     let (active, _, options) = observe(&env, "OUTPUT");
     assert_eq!(active, "usb-3", "setting reads the live catalog");
     assert!(options.starts_with("usb-3="), "{options}");
@@ -112,7 +126,10 @@ fn original_voice_dropdowns_mark_unsupplied_catalog_invalid() {
         observe(&env, "OUTPUT"),
         (String::new(), String::new(), format!("{invalid}={invalid}"))
     );
-    assert_eq!(observe(&env, "INPUT"), (String::new(), String::new(), String::new()));
+    assert_eq!(
+        observe(&env, "INPUT"),
+        (String::new(), String::new(), String::new())
+    );
 }
 
 #[test]

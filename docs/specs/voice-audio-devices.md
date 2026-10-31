@@ -1,6 +1,6 @@
 # Supplied voice audio devices
 
-`C_VoiceChat.GetAvailableInputDevices()` and `C_VoiceChat.GetAvailableOutputDevices()` expose environment-local catalogs from `VoiceChatState.input_devices` and `VoiceChatState.output_devices`. Each starts with one selected system-default device. That is a researched best guess at a normal machine, not native evidence (see [Default device evidence](#default-device-evidence)). The simulator has no audio-device enumeration or voice proxy; a host overrides either catalog on the state.
+`C_VoiceChat.GetAvailableInputDevices()` and `C_VoiceChat.GetAvailableOutputDevices()` expose environment-local catalogs from `VoiceChatState.input_devices` and `VoiceChatState.output_devices`. Each starts with one selected system-default device. That is a researched best guess at a normal machine, not native evidence (see [Best-guess basis](#best-guess-basis)). The simulator has no audio-device enumeration or voice proxy; a host overrides either catalog on the state.
 
 The original consumer is `Blizzard_SettingsDefinitions_Shared/Audio.lua` `InitVoiceSettings`, entered once [settings access](voice-settings-access.md) answers true. Without these members it fails at Retail Audio.lua:179 (`GetDefaultOutputDevice`) with `attempt to call field 'GetAvailableOutputDevices' (a nil value)`.
 
@@ -21,7 +21,9 @@ Paths are relative to the active profile's `AddOns/Blizzard_APIDocumentationGene
 | PTR `2cdbc7f` | :125-132 | :134-141 | :1512-1522 |
 | Forever `ca8368f` | :125-132 | :134-141 | :1512-1522 |
 
-## Default device evidence
+## Best-guess basis
+
+Best-guess, native UNKNOWN.
 
 No generated documentation, aso finding or in-game capture states the native lists, so the default follows the AGENTS.md best-guess rule. The warcraft.wiki.gg pages `API:C_VoiceChat.GetAvailableOutputDevices`, `API:C_VoiceChat.GetAvailableInputDevices` and `Structure_VoiceAudioDevice` (read 2026-10-30) give only the shape: no field descriptions or example values, and `isCommsDefault` added in 9.1.0.
 
