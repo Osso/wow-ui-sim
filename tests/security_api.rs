@@ -965,7 +965,7 @@ fn test_scrub_replaces_secret_and_non_scalar_values_with_nil() {
     let env = env();
     let rows: String = env
         .eval(
-            r#"
+            r##"
             local t, f, secret = { marker = true }, print, secretwrap("private")
             local function describe(n, ...)
                 local out = {}
@@ -975,7 +975,7 @@ fn test_scrub_replaces_secret_and_non_scalar_values_with_nil() {
             return describe(7, scrub(7, t, "ok", f, true, secret, nil))
                 .. "|" .. describe(7, scrubsecretvalues(7, t, "ok", f, true, secret, nil))
                 .. "|" .. select("#", scrub(1, nil, nil))
-            "#,
+            "##,
         )
         .unwrap();
     let mut parts = rows.split('|');
