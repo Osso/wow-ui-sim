@@ -18,7 +18,7 @@ AddOns and FrameXML roots rather than Interface/AddOns. Wrath enumeration
 validates that local snapshot; it never refreshes another profile's branch.
 
 By default the script refreshes branch-backed snapshots from upstream
-(shallow). PTR checks out the immutable revision in its committed content index;
+(shallow). Retail and PTR check out the immutable revisions in their content indexes;
 other profiles follow their branch. Pass --no-refresh to enumerate the existing cache as-is.
 
 The community listfile is deliberately NOT used as a source: it is a periodic
