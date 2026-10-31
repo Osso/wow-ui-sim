@@ -76,7 +76,7 @@ fn forever_secured_map_rejects_explicit_caller_taint() {
             return map[42]
         end)
         assert(not ok, 'tainted reader must be rejected')
-        assert(string.find(message, 'tainted access', 1, true))
+        assert(string.find(message, "attempted to index a table that cannot be accessed while tainted (execution tainted by 'SecurityProbe')", 1, true), message)
     "#,
     )
     .unwrap();
@@ -97,7 +97,7 @@ fn forever_secured_map_rejects_real_addon_loader_taint() {
         r#"
         local ok, message = pcall(function() return ForeverProtectedMap[42] end)
         assert(not ok, 'loader-stamped addon must not read secured map')
-        assert(string.find(message, 'tainted access', 1, true))
+        assert(string.find(message, "attempted to index a table that cannot be accessed while tainted (execution tainted by 'SecurityProbe')", 1, true), message)
         ForeverLoaderSecurityRejected = true
     "#,
     )
