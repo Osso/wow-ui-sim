@@ -15,6 +15,12 @@ fn load_insecure_addon(env: &WowLuaEnv) {
         function ProtectedGlobalsSecurecall() return securecall(TargetUnit, 'player') end
         function ProtectedGlobalsNestedSecurecall() return securecall(ProtectedGlobalsSecureCallback) end
         function ProtectedGlobalsBind(action) return SetBinding('CTRL-F12', action) end
+        function ProtectedGlobalsPcall() return pcall(TargetUnit, 'player') end
+        function ProtectedGlobalsCoroutine() coroutine.wrap(function() TargetUnit('player') end)() end
+        function ProtectedGlobalsTimer() C_Timer.After(0, function() TargetUnit('player') end) end
+        function ProtectedGlobalsHook()
+            hooksecurefunc('ProtectedGlobalsHookTarget', function() TargetUnit('player') end)
+        end
     "#,
     )
     .unwrap();
@@ -84,6 +90,48 @@ fn protected_globals_consumer() {
             "#,
             )
             .expect("in-combat refusal");
+        },
+    );
+}
+
+#[test]
+fn protected_globals_wrapper_routes_keep_addon_taint() {
+    crate::common::blizzard_addon_harness::with_blizzard_addon_startup_shape(
+        &["Blizzard_Game"],
+        &[],
+        |env, _| {
+            env.exec(
+                r#"
+                ClearTarget()
+                A_Admin.SetManualClock(0)
+                function ProtectedGlobalsHookTarget() end
+                forbidden = 0
+                local f = CreateFrame('Frame')
+                f:RegisterEvent('ADDON_ACTION_FORBIDDEN')
+                f:SetScript('OnEvent', function() forbidden = forbidden + 1 end)
+            "#,
+            )
+            .unwrap();
+            load_insecure_addon(env);
+            env.exec(
+                r#"
+                ProtectedGlobalsPcall()
+                assert(not UnitExists('target'), 'pcall laundered taint')
+                assert(forbidden == 1, 'pcall route: ' .. forbidden)
+                ProtectedGlobalsCoroutine()
+                assert(not UnitExists('target'), 'coroutine.wrap laundered taint')
+                assert(forbidden == 2, 'coroutine route: ' .. forbidden)
+                ProtectedGlobalsTimer()
+                A_Admin.AdvanceTime(0)
+                assert(not UnitExists('target'), 'C_Timer callback laundered taint')
+                assert(forbidden == 3, 'timer route: ' .. forbidden)
+                ProtectedGlobalsHook()
+                ProtectedGlobalsHookTarget()
+                assert(not UnitExists('target'), 'hooksecurefunc callback laundered taint')
+                assert(forbidden == 4, 'hook route: ' .. forbidden)
+            "#,
+            )
+            .expect("wrapper routes stay tainted");
         },
     );
 }
