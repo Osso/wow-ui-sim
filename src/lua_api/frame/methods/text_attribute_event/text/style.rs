@@ -4,6 +4,9 @@ use super::simple_html::{
     get_simple_html_text_color, is_simple_html_frame, set_simple_html_text_color,
     with_simple_html_data_mut,
 };
+use crate::lua_api::frame::methods::methods_helpers::{
+    can_change_protected_state_for, emit_addon_action_blocked,
+};
 use crate::lua_api::methods::{
     borrow_state, borrow_state_mut, create_string, create_string_static, frame_id_from_stack,
     get_or_create_frame_fields, table_get, table_set, val_to_string,
@@ -21,6 +24,10 @@ enum JustifyAxis {
 pub(crate) fn set_hyperlinks_enabled(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
     let enabled = matches!(stack_val(state, 2), Val::Bool(true));
+    if !can_change_protected_state_for(state, id) {
+        emit_addon_action_blocked(state, id, "SetHyperlinksEnabled");
+        return Ok(0);
+    }
     if with_simple_html_data_mut(state, id, |data| {
         data.hyperlinks_enabled = enabled;
     })

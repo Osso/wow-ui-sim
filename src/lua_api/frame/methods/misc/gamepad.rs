@@ -1,5 +1,8 @@
 //! Gamepad button/stick enable methods.
 
+use crate::lua_api::frame::methods::methods_helpers::{
+    can_change_protected_state_for, emit_addon_action_blocked,
+};
 use crate::lua_api::methods::{borrow_state, borrow_state_mut, frame_id_from_stack};
 use crate::lua_bridge::{FromStack, table_set_rust_fn_static};
 use rilua::vm::gc::arena::GcRef;
@@ -55,6 +58,14 @@ enum GamePadControl {
 fn set_game_pad_enabled(state: &mut LuaState, control: GamePadControl) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
     let enabled = bool::from_stack(state, 2)?;
+    if !can_change_protected_state_for(state, id) {
+        let method = match control {
+            GamePadControl::Button => "EnableGamePadButton",
+            GamePadControl::Stick => "EnableGamePadStick",
+        };
+        emit_addon_action_blocked(state, id, method);
+        return Ok(0);
+    }
     let mut sim = borrow_state_mut(state)?;
     if let Some(frame) = sim.widgets.get_mut(id) {
         match control {
