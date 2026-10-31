@@ -110,7 +110,7 @@ fn get_stable_pet_info(state: &mut LuaState) -> LuaResult<u32> {
     };
     let result = match pet {
         Some(pet) => pet_info_table(state, index as u32, &pet),
-        None => create_table(state),
+        None => Val::Nil,
     };
     state.push(result);
     Ok(1)
