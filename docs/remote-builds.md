@@ -75,7 +75,7 @@ are resolved on every build.
 
 On Linux, `tests/integration.rs` links `crates/wow-ui-sim-dylib` (a `dylib` re-export of `wow-ui-sim`), so a library edit relinks one shared object, not the whole simulator into the test executable. Windows and release builds stay static: a Rust dylib of this size exceeds the 65,535-export DLL limit. `[profile.dev.package.wow-ui-sim]` sets `codegen-units = 16`.
 
-Measured 2026-10-29 on an incremental-primed slot (one-line library edit, `CPUUsageNSec` of the slot unit): static ~98 CPU-s; dylib only 78–95; dylib + 16 codegen units 58–75 (median 68). The first cold build with 16 codegen units cost ~488 CPU-s. The ≤60 CPU-s target is not yet met. Evidence: `H/slot-queue.md` 2026-10-29 entries; timing HTML `H/compile-edit-60/dylib/edit3t-timing.html`.
+Measured 2026-10-29 on an incremental-primed slot (one-line library edit, `CPUUsageNSec` of the slot unit): static ~98 CPU-s; dylib only 78–95; dylib + 16 codegen units 58–75 (median 68). The first cold build with 16 codegen units cost ~488 CPU-s. The ≤60 CPU-s target is not yet met. Raw receipts and the Cargo timing report are kept in the private handoff (compile-edit-60).
 
 ### Slot size limit
 
