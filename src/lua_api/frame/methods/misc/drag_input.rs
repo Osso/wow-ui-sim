@@ -1,5 +1,8 @@
 //! Drag, input movement, and clamping methods.
 
+use crate::lua_api::frame::methods::methods_helpers::{
+    can_change_protected_state_for, emit_addon_action_blocked,
+};
 use crate::lua_api::methods::{
     borrow_state, borrow_state_mut, extract_frame_id, frame_id_from_stack, val_to_string,
 };
@@ -140,6 +143,10 @@ pub fn is_resizable(state: &mut LuaState) -> LuaResult<u32> {
 
 pub fn start_moving(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
+    if !can_change_protected_state_for(state, id) {
+        emit_addon_action_blocked(state, id, "StartMoving");
+        return Ok(0);
+    }
     let mut sim = borrow_state_mut(state)?;
     if let Some(frame) = sim.widgets.get_mut_visual(id)
         && frame.movable
@@ -152,6 +159,10 @@ pub fn start_moving(state: &mut LuaState) -> LuaResult<u32> {
 
 pub fn start_sizing(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
+    if !can_change_protected_state_for(state, id) {
+        emit_addon_action_blocked(state, id, "StartSizing");
+        return Ok(0);
+    }
     let sizing_point = val_to_string(state, stack_val(state, 2))
         .and_then(|value| AnchorPoint::from_str(&value))
         .unwrap_or(AnchorPoint::BottomRight);
@@ -168,6 +179,10 @@ pub fn start_sizing(state: &mut LuaState) -> LuaResult<u32> {
 
 pub fn stop_moving_or_sizing(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
+    if !can_change_protected_state_for(state, id) {
+        emit_addon_action_blocked(state, id, "StopMovingOrSizing");
+        return Ok(0);
+    }
     let mut sim = borrow_state_mut(state)?;
     if let Some(frame) = sim.widgets.get_mut_visual(id) {
         if frame.is_moving || frame.is_sizing {
@@ -206,6 +221,10 @@ pub fn is_user_placed(state: &mut LuaState) -> LuaResult<u32> {
 pub fn set_clamped_to_screen(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
     let clamped = bool::from_stack(state, 2)?;
+    if !can_change_protected_state_for(state, id) {
+        emit_addon_action_blocked(state, id, "SetClampedToScreen");
+        return Ok(0);
+    }
     let mut sim = borrow_state_mut(state)?;
     if let Some(frame) = sim.widgets.get_mut_visual(id) {
         frame.clamped_to_screen = clamped;

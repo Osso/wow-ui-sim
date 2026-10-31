@@ -245,8 +245,33 @@ pub(super) fn set_attribute_no_handler(state: &mut LuaState) -> LuaResult<u32> {
     Ok(0)
 }
 
+pub(super) fn clear_attribute(state: &mut LuaState) -> LuaResult<u32> {
+    let id = frame_id_from_stack(state, 1)?;
+    let Some(name) = val_to_string(state, stack_val(state, 2)) else {
+        return Err(runtime_error("Arguments: (\"attributeName\")"));
+    };
+    if !can_change_protected_state_for(state, id) {
+        super::super::methods_helpers::emit_addon_action_blocked(state, id, "ClearAttribute");
+        return Ok(0);
+    }
+    let existed = borrow_state(state)?
+        .widgets
+        .get(id)
+        .is_some_and(|frame| frame.attributes.contains_key(&name));
+    if existed {
+        state.push(Val::Nil);
+        set_attribute(state)?;
+    }
+    state.push(Val::Bool(existed));
+    Ok(1)
+}
+
 pub(super) fn clear_attributes(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
+    if !can_change_protected_state_for(state, id) {
+        super::super::methods_helpers::emit_addon_action_blocked(state, id, "ClearAttributes");
+        return Ok(0);
+    }
     let mut sim = borrow_state_mut(state)?;
     if let Some(frame) = sim.widgets.get_mut(id) {
         frame.attributes.clear();
@@ -530,6 +555,14 @@ pub(super) fn set_pass_through_buttons(state: &mut LuaState) -> LuaResult<u32> {
         .filter_map(|index| val_to_string(state, stack_val(state, index as i32)))
         .map(|button| button.to_ascii_lowercase())
         .collect();
+    if !can_change_protected_state_for(state, id) {
+        super::super::methods_helpers::emit_addon_action_blocked(
+            state,
+            id,
+            "SetPassThroughButtons",
+        );
+        return Ok(0);
+    }
     let mut sim = borrow_state_mut(state)?;
     if let Some(frame) = sim.widgets.get_mut(id) {
         frame.pass_through_buttons = buttons;
@@ -595,7 +628,10 @@ pub(super) fn does_clip_children(state: &mut LuaState) -> LuaResult<u32> {
 
 pub(super) fn set_hit_rect_insets(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
-    // TODO: combat lockdown check
+    if !can_change_protected_state_for(state, id) {
+        super::super::methods_helpers::emit_addon_action_blocked(state, id, "SetHitRectInsets");
+        return Ok(0);
+    }
     let l = val_to_f32(stack_val(state, 2), 0.0);
     let r = val_to_f32(stack_val(state, 3), 0.0);
     let t = val_to_f32(stack_val(state, 4), 0.0);

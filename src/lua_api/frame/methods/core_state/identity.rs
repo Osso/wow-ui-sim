@@ -2,6 +2,9 @@
 //! GetName, GetDebugName, GetObjectType, IsObjectType.
 
 use super::helpers::frame_id;
+use crate::lua_api::frame::methods::methods_helpers::{
+    can_change_protected_state_for, emit_addon_action_blocked,
+};
 use crate::lua_api::methods::{borrow_state, borrow_state_mut, create_string};
 use crate::lua_bridge::FromStack;
 use rilua::vm::state::LuaState;
@@ -20,6 +23,10 @@ const INTERNAL_GENERATED_NAME_PREFIXES: &[&str] = &[
 pub fn set_id(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id(state, 1)?;
     let user_id = i32::from_stack(state, 2)?;
+    if !can_change_protected_state_for(state, id) {
+        emit_addon_action_blocked(state, id, "SetID");
+        return Ok(0);
+    }
     let mut sim = borrow_state_mut(state)?;
     if let Some(f) = sim.widgets.get_mut(id) {
         f.user_id = user_id;

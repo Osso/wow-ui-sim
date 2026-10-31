@@ -1,6 +1,9 @@
 //! Button state, enable/disable, click, and related methods.
 
 use crate::lua_api::frame::methods::forbidden_aspects::ensure_forbidden_aspect_absent;
+use crate::lua_api::frame::methods::methods_helpers::{
+    can_change_protected_state_for, emit_addon_action_blocked,
+};
 use crate::lua_api::methods::{
     borrow_state, borrow_state_mut, call_function_state, create_string, extract_frame_id,
     frame_id_from_stack, frame_ref, get_or_create_frame_fields, table_get, table_set,
@@ -112,6 +115,10 @@ pub(super) fn set_enabled(state: &mut LuaState) -> LuaResult<u32> {
     let secret = super::super::secret_origin::authenticate_retail_arguments(state)?;
     let id = frame_id_from_stack(state, 1)?;
     let enabled = bool::from_stack(state, 2).ok().unwrap_or(true);
+    if !can_change_protected_state_for(state, id) {
+        emit_addon_action_blocked(state, id, "SetEnabled");
+        return Ok(0);
+    }
     let changed = {
         let sim = borrow_state(state)?;
         sim.widgets
@@ -134,6 +141,10 @@ pub(super) fn set_enabled(state: &mut LuaState) -> LuaResult<u32> {
 
 pub(super) fn enable(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
+    if !can_change_protected_state_for(state, id) {
+        emit_addon_action_blocked(state, id, "Enable");
+        return Ok(0);
+    }
     let was_disabled = {
         let sim = borrow_state(state)?;
         sim.widgets
@@ -150,6 +161,10 @@ pub(super) fn enable(state: &mut LuaState) -> LuaResult<u32> {
 
 pub(super) fn disable(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
+    if !can_change_protected_state_for(state, id) {
+        emit_addon_action_blocked(state, id, "Disable");
+        return Ok(0);
+    }
     let was_enabled = {
         let sim = borrow_state(state)?;
         sim.widgets.get(id).map(button_enabled).unwrap_or(true)
@@ -164,6 +179,10 @@ pub(super) fn disable(state: &mut LuaState) -> LuaResult<u32> {
 pub(super) fn register_for_clicks(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
     let buttons = collect_click_registration_args(state, 2);
+    if !can_change_protected_state_for(state, id) {
+        emit_addon_action_blocked(state, id, "RegisterForClicks");
+        return Ok(0);
+    }
     let mut sim = borrow_state_mut(state)?;
     if let Some(frame) = sim.widgets.get_mut_visual(id) {
         frame.registered_click_buttons = buttons;

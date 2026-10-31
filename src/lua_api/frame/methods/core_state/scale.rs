@@ -134,6 +134,10 @@ fn is_map_canvas_scroll_child(sim: &SimState, id: u64) -> bool {
 pub fn set_ignore_parent_scale(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id(state, 1)?;
     let ignore = arg_bool(state, 2);
+    if !can_change_protected_state_for(state, id) {
+        emit_addon_action_blocked(state, id, "SetIgnoreParentScale");
+        return Ok(0);
+    }
     let mut sim = borrow_state_mut(state)?;
     let changed = sim
         .widgets

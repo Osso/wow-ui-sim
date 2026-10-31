@@ -1,6 +1,9 @@
 //! PTR native per-region layout rounding controls.
 
 use super::helpers::{arg_bool, frame_id};
+use crate::lua_api::frame::methods::methods_helpers::{
+    can_change_protected_state_for, emit_addon_action_blocked,
+};
 use crate::lua_api::methods::{borrow_state, borrow_state_mut};
 use crate::lua_bridge::table_set_rust_fn_static;
 use rilua::vm::{gc::arena::GcRef, state::LuaState, table::Table};
@@ -24,6 +27,10 @@ fn get_round_layout(state: &mut LuaState) -> LuaResult<u32> {
 fn set_round_layout(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id(state, 1)?;
     let enabled = arg_bool(state, 2);
+    if !can_change_protected_state_for(state, id) {
+        emit_addon_action_blocked(state, id, "SetRoundLayoutToNearestPixel");
+        return Ok(0);
+    }
     let mut sim = borrow_state_mut(state)?;
     let Some(frame) = sim.widgets.get_mut_visual(id) else {
         return Ok(0);

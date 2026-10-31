@@ -256,9 +256,21 @@ pub(super) fn clear_point(state: &mut LuaState) -> LuaResult<u32> {
     Ok(0)
 }
 
-/// ClearPointsOffset() — no-op stub
+/// ClearPointsOffset() resets each anchor offset; native storage semantics are unknown.
 pub(super) fn clear_points_offset(state: &mut LuaState) -> LuaResult<u32> {
-    let _id = frame_id_from_stack(state, 1)?;
+    let id = frame_id_from_stack(state, 1)?;
+    if !can_change_protected_state_for(state, id) {
+        emit_addon_action_blocked(state, id, "ClearPointsOffset");
+        return Ok(0);
+    }
+    let mut sim = borrow_state_mut(state)?;
+    if let Some(frame) = sim.widgets.get_mut_visual(id) {
+        for anchor in &mut frame.anchors {
+            anchor.x_offset = 0.0;
+            anchor.y_offset = 0.0;
+        }
+    }
+    sim.widgets.mark_rect_dirty(id);
     Ok(0)
 }
 
@@ -658,7 +670,7 @@ fn apply_set_point(
 pub(super) fn set_all_points(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
     let wrath = crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Wrath;
-    if wrath && !can_change_protected_state_for(state, id) {
+    if !can_change_protected_state_for(state, id) {
         emit_addon_action_blocked(state, id, "SetAllPoints");
         return Ok(0);
     }
