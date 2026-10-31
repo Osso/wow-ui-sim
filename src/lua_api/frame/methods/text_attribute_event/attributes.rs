@@ -245,6 +245,27 @@ pub(super) fn set_attribute_no_handler(state: &mut LuaState) -> LuaResult<u32> {
     Ok(0)
 }
 
+pub(super) fn clear_attribute(state: &mut LuaState) -> LuaResult<u32> {
+    let id = frame_id_from_stack(state, 1)?;
+    let Some(name) = val_to_string(state, stack_val(state, 2)) else {
+        return Err(runtime_error("Arguments: (\"attributeName\")"));
+    };
+    if !can_change_protected_state_for(state, id) {
+        super::super::methods_helpers::emit_addon_action_blocked(state, id, "ClearAttribute");
+        return Ok(0);
+    }
+    let existed = borrow_state(state)?
+        .widgets
+        .get(id)
+        .is_some_and(|frame| frame.attributes.contains_key(&name));
+    if existed {
+        state.push(Val::Nil);
+        set_attribute(state)?;
+    }
+    state.push(Val::Bool(existed));
+    Ok(1)
+}
+
 pub(super) fn clear_attributes(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
     if !can_change_protected_state_for(state, id) {

@@ -400,6 +400,7 @@ fn register_attribute_core(state: &mut LuaState, table: GcRef<Table>) -> LuaResu
         "ClearAttributes",
         attributes::clear_attributes,
     )?;
+    table_set_rust_fn_static(state, table, "ClearAttribute", attributes::clear_attribute)?;
     table_set_rust_fn_static(
         state,
         table,
