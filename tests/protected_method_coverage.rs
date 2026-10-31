@@ -774,3 +774,17 @@ fn protected_transition_set_all_points() {
         "select(2,frame:GetPoint(1)) == b",
     );
 }
+
+#[test]
+fn clear_attribute_ignores_extra_arguments() {
+    let env = loaded_env();
+    env.exec(
+        r#"
+        local frame = CreateFrame('Frame')
+        frame:SetAttribute('x', 11)
+        assert(frame:ClearAttribute('x', 99) == true)
+        assert(frame:GetAttribute('x') == nil, 'extra arguments must not replace the value')
+    "#,
+    )
+    .unwrap();
+}

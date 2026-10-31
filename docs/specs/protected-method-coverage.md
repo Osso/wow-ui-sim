@@ -6,7 +6,7 @@ The pinned Retail `Blizzard_APIDocumentationGenerated` declarations identify pro
 
 - [ ] Documented methods on a frame blocked by the shared protection model must not mutate state when called by tainted code during combat. They emit `ADDON_ACTION_BLOCKED` with the taint owner and `FrameName:Method()` and reach Blizzard's `GameEvent.HandleActionBlocked` handler.
 - [ ] Secure calls in combat and insecure calls outside combat proceed. `tests/protected_method_coverage.rs` covers changed method families with observable controls; registration cases inspect simulated registration state.
-- [x] `ClearAttribute` removes an existing named attribute, returns true, and dispatches the same nil change as `SetAttribute`; absent attributes return false without a callback. The absent return and callback are **best-guess, native UNKNOWN**.
+- [x] `ClearAttribute` removes an existing named attribute, returns true, ignores extra arguments, and dispatches the same nil change as `SetAttribute`; absent attributes return false without a callback. The absent return and callback are **best-guess, native UNKNOWN**.
 - [x] `ClearPointsOffset` sets both offsets to zero on each existing anchor and retains the point, target, and relative point. This is **best-guess, native UNKNOWN**; the Warcraft Wiki ScriptRegionResizing description says the method resets the region's x/y offset to zero.
 
 ## Coverage inventory
