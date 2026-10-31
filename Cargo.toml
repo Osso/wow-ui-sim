@@ -207,7 +207,8 @@ debug = 0
 opt-level = 1
 
 [profile.dev.package.wow-ui-sim]
-# Compile-throughput trial (user-approved 2026-10-28): fewer codegen units for the edited crate.
+# Fewer codegen units for the edited crate: one-line-edit test rebuild median 68 CPU-s
+# with the Linux test dylib (static: ~98). See docs/remote-builds.md.
 codegen-units = 16
 
 [profile.test]
