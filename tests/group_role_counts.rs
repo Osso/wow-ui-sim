@@ -47,9 +47,9 @@ fn group_role_counts_original_party_util_tracks_roster() {
     env.state().borrow_mut().party_group_active = false;
     env.exec(r#"
         local raw = GetGroupMemberCounts()
-        assert(raw.TANK == 0 and raw.HEALER == 0 and raw.DAMAGER == 1 and raw.NOROLE == 0, 'solo excludes inactive roster')
+        assert(raw.TANK == 0 and raw.HEALER == 0 and raw.DAMAGER == 0 and raw.NOROLE == 0, 'solo excludes inactive roster and player')
         assert(UnitSetRole('player', 'NONE'))
         local shown = GetGroupMemberCountsForDisplay()
-        assert(shown.TANK == 0 and shown.HEALER == 0 and shown.DAMAGER == 1 and shown.NOROLE == 0, 'solo unassigned display')
+        assert(shown.TANK == 0 and shown.HEALER == 0 and shown.DAMAGER == 0 and shown.NOROLE == 0, 'solo unassigned display')
     "#).expect("solo role counts");
 }
