@@ -191,15 +191,12 @@ fn metadata_key_allows_repeats(key: &str) -> bool {
 /// `@toc-version-*@` packager tokens — the `#@debug@` block in the TOC
 /// provides the real fallback version for source-form TOC files.
 fn insert_metadata<P: Selection>(metadata: &mut HashMap<String, String>, rest: &str) {
-    if P::is_variable_metadata(rest) {
-        return;
-    }
     let Some((key, value)) = rest.split_once(':') else {
         return;
     };
     let key = key.trim();
     let game_type_header = matches!(key, "AllowLoadGameType" | "ExcludeLoadGameType");
-    if !game_type_header && !is_allowed_game_type::<P>(rest) {
+    if !game_type_header && (P::is_variable_metadata(rest) || !is_allowed_game_type::<P>(rest)) {
         return;
     }
     let value = if game_type_header {

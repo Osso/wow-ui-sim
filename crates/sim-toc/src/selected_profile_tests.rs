@@ -735,6 +735,7 @@ fn native_game_type_masks_filter_headers_and_files() {
         ("unknown, nonsense", true),
         ("MaInLiNe,classic", true),
         ("classic, plunderstorm", false),
+        ("classic [Game]", false),
         ("forever", !camelot_known || is_forever),
         (
             "camelot [AllowLoadGameType standard]",
