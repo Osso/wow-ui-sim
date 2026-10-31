@@ -617,3 +617,89 @@ fn protected_transition_defaults() {
         "frame:GetWidth() == 22",
     );
 }
+
+fn assert_protected_registration(
+    method: &str,
+    first: &str,
+    second: &str,
+    third: &str,
+    clicks: bool,
+) {
+    let env = loaded_env();
+    env.exec(
+        r#"
+        RegistrationFrame = CreateFrame('Button', 'ProtectedRegistration', UIParent)
+        RegistrationEvents = {}
+        RegistrationRouted = nil
+        hooksecurefunc(GameEvent, 'HandleActionBlocked', function(_, event, owner)
+            if event == 'ADDON_ACTION_BLOCKED' then RegistrationRouted = owner end
+        end)
+        local listener = CreateFrame('Frame')
+        listener:RegisterEvent('ADDON_ACTION_BLOCKED')
+        listener:SetScript('OnEvent', function(_, _, owner, action)
+            RegistrationEvents[#RegistrationEvents + 1] = {owner, action}
+        end)
+        A_Admin.SetFrameProtected('ProtectedRegistration', true)
+        A_Admin.SetInCombat(false)
+    "#,
+    )
+    .unwrap();
+    let assert_registered = |expected: &str| {
+        let sim = env.state().borrow();
+        let id = sim.widgets.get_id_by_name("ProtectedRegistration").unwrap();
+        let frame = sim.widgets.get(id).unwrap();
+        let buttons = if clicks {
+            &frame.registered_click_buttons
+        } else {
+            &frame.registered_mouse_buttons
+        };
+        assert_eq!(buttons.len(), 1);
+        assert!(buttons.contains(expected));
+    };
+    env.exec(&format!("debug.setstacktaint('ProtectedMethodAddon'); RegistrationFrame:{method}('{first}'); debug.setstacktaint(nil)")).unwrap();
+    assert_registered(first);
+    env.exec(&format!(
+        "A_Admin.SetInCombat(true); RegistrationFrame:{method}('{second}')"
+    ))
+    .unwrap();
+    assert_registered(second);
+    env.exec(&format!("debug.setstacktaint('ProtectedMethodAddon'); RegistrationFrame:{method}('{third}'); debug.setstacktaint(nil)")).unwrap();
+    assert_registered(second);
+    env.exec(&format!("assert(#RegistrationEvents == 1 and RegistrationEvents[1][1] == 'ProtectedMethodAddon' and RegistrationEvents[1][2] == 'ProtectedRegistration:{method}()' and RegistrationRouted == 'ProtectedMethodAddon')")).unwrap();
+}
+
+#[test]
+fn protected_registration_clicks() {
+    assert_protected_registration(
+        "RegisterForClicks",
+        "LeftButtonUp",
+        "RightButtonUp",
+        "MiddleButtonUp",
+        true,
+    );
+}
+
+#[test]
+fn protected_registration_mouse() {
+    assert_protected_registration(
+        "RegisterForMouse",
+        "LeftButton",
+        "RightButton",
+        "MiddleButton",
+        false,
+    );
+}
+
+#[test]
+fn protected_transition_raise() {
+    assert_protected_transition(
+        "Frame",
+        "Raise",
+        "frame:SetToplevel(true); frame:Show(); local previous = frame:GetRaisedFrameLevel()",
+        "frame:Raise()",
+        "frame:Raise(); previous = frame:GetRaisedFrameLevel()",
+        "frame:Raise()",
+        "frame:GetRaisedFrameLevel() > previous",
+        "frame:GetRaisedFrameLevel() == previous",
+    );
+}
