@@ -1,7 +1,7 @@
 # Updating Blizzard UI to a New WoW Patch
 
-When the installed WoW client updates (e.g. 12.0.5 → 12.0.7), the committed
-Blizzard UI manifests and the CASC listfile go stale: file paths get renamed or
+When the selected WoW target updates (e.g. 12.0.5 → 12.0.7), the committed
+Blizzard UI manifests and the CASC listfile may go stale: file paths get renamed or
 moved into flavor subdirs (`Mainline/`, `Vanilla/`, …), addons are added/removed,
 and new files won't resolve because their `path → fileDataID` mapping is missing.
 

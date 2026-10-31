@@ -156,8 +156,9 @@ def main() -> None:
             )
         if not args.no_refresh:
             revision = None
-            if profile == "ptr":
-                pin = json.loads((REPO_ROOT / "data/blizzard-ui-builds/ptr.json").read_text())
+            if profile in ("retail", "ptr"):
+                pin_path = REPO_ROOT / f"data/blizzard-ui-builds/{profile}.json"
+                pin = json.loads(pin_path.read_text())
                 revision = pin["gethe_revision"]
             refresh_branch(branch, revision)
         entries = enumerate_files(branch)
