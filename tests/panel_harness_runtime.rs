@@ -189,6 +189,39 @@ fn achievement_error_handling_load_matches_raw_load_addon() {
 
 #[cfg(feature = "client-retail")]
 #[test]
+fn mount_filter_native_initial_and_reset_consumer() {
+    let env = WowLuaEnv::new().expect("Lua environment");
+    env.set_screen_size(1024.0, 768.0);
+    env.state().borrow_mut().addon_base_paths = vec![blizzard_ui_dir()];
+    load_panel_harness(&env);
+    env.exec(r#"
+        assert(C_AddOns.LoadAddOn("Blizzard_Collections"))
+        assert(not C_MountJournal.IsUsingDefaultFilters(), "load must not set defaults")
+        assert(not C_MountJournal.GetCollectedFilterSetting(0), "initial collected bit")
+        assert(not C_MountJournal.IsTypeChecked(3), "initial type bit")
+        local dropdown = MountJournal.FilterDropdown
+        dropdown.defaultCallback()
+        assert(C_MountJournal.IsUsingDefaultFilters(), "consumer reset sets defaults")
+        assert(C_MountJournal.GetCollectedFilterSetting(0))
+        assert(C_MountJournal.GetCollectedFilterSetting(1))
+        assert(not C_MountJournal.GetCollectedFilterSetting(2))
+        assert(not C_MountJournal.IsValidTypeFilter(3))
+        assert(C_MountJournal.IsTypeChecked(3))
+        assert(not pcall(C_MountJournal.SetTypeFilter, 3, false))
+        C_MountJournal.SetTypeFilter(31, true)
+        assert(C_MountJournal.IsTypeChecked(31))
+        assert(not C_MountJournal.IsUsingDefaultFilters())
+        C_MountJournal.SetAllTypeFilters(true)
+        assert(C_MountJournal.IsUsingDefaultFilters())
+        C_MountJournal.SetSearch("not-a-real-mount-name")
+        C_MountJournal.SetDefaultFilters()
+        assert(C_MountJournal.IsUsingDefaultFilters())
+        assert(C_MountJournal.GetNumDisplayedMounts() == 0)
+    "#).expect("native filter behavior through Collections");
+}
+
+#[cfg(feature = "client-retail")]
+#[test]
 fn mount_filter_reset_consumer_restores_defaults() {
     let env = WowLuaEnv::new().expect("Lua environment");
     env.set_screen_size(1024.0, 768.0);
