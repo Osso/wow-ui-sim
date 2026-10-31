@@ -691,7 +691,7 @@ fn campaign_covenant_placeholder_defaults_are_not_c_api_temporary_shims() {
 
     assert!(
         !temporary_shims.contains("c_campaign_covenant_defaults"),
-        "unmodeled C_CampaignInfo and C_CovenantSanctumUI placeholder defaults belong in lua_api::workarounds::temporary"
+        "unmodeled C_CovenantSanctumUI placeholder defaults belong in lua_api::workarounds::temporary"
     );
     assert!(
         !c_api.contains("c_campaign_covenant_defaults"),
