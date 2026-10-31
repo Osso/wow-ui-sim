@@ -278,7 +278,7 @@ fn register_modeled_mount_filters(tb: TableBuilder) -> LuaResult<TableBuilder> {
     .set_function("SetCollectedFilterSetting", |state| {
         let index = i32::from_stack(state, 1)?;
         let checked = bool::from_stack(state, 2)?;
-        if !(0..4).contains(&index) {
+        if !crate::c_api::mount_filters::MountFilters::valid_collected(index) {
             return Err(rilua::runtime_error(
                 "SetCollectedFilterSetting: invalid filter index",
             ));

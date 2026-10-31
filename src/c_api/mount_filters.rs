@@ -33,8 +33,14 @@ impl MountFilters {
         self.sources = Self::VALID_SOURCES & 0xfff;
         self.types = Self::DEFAULT_TYPES;
     }
+    /// `LE_MOUNT_JOURNAL_FILTER_*` constants are 1-based: constant N selects bit N-1, so
+    /// the default bits 0 and 1 are COLLECTED and NOT_COLLECTED (native M8, inferred from
+    /// the default state). The fourth bit is accepted but unnamed.
+    pub fn valid_collected(index: i32) -> bool {
+        (1..=4).contains(&index)
+    }
     pub fn collected(&self, index: i32) -> bool {
-        (0..4).contains(&index) && self.collected & bit(index) != 0
+        Self::valid_collected(index) && self.collected & bit(index - 1) != 0
     }
     pub fn source(&self, index: i32) -> bool {
         Self::valid_source(index) && self.sources & bit(index) != 0
@@ -43,7 +49,7 @@ impl MountFilters {
         self.types & bit(index) != 0
     }
     pub fn set_collected(&mut self, index: i32, checked: bool) {
-        update(&mut self.collected, bit(index), checked);
+        update(&mut self.collected, bit(index - 1), checked);
     }
     pub fn set_source(&mut self, index: i32, checked: bool) {
         if Self::valid_source(index) {
