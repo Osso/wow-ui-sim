@@ -183,10 +183,24 @@ fn party_changes_from_addon_test_do_not_taint_blizzard_handlers() {
             assertTrue(C_AddOns.IsAddOnLoaded('Blizzard_UnitFrame'))
             assertNotNil(CompactRaidFrameContainer)
             assertFalse(issecure())
+            local hits, tainted = 0, false
+            local function observe(_, line)
+                local info = debug.getinfo(2, 'S')
+                if info and info.source and string.find(info.source, 'CompactArenaFrame.lua', 1, true) and line == 318 then
+                    hits = hits + 1
+                    local taint = debug.getstacktaint()
+                    if not issecure() or taint ~= nil then tainted = true end
+                end
+            end
+            debug.setobjecttaint(observe, nil)
+            debug.sethook(observe, 'l')
             A_Admin.SetManualClock(100)
             A_Admin.SetPartySize(0)
             A_Admin.SetPartySize(1)
             A_Admin.SetPartyMember(1, 'I13Member', 1, 80)
+            debug.sethook()
+            assertTrue(hits > 0, 'original arena handler was not reached')
+            assertFalse(tainted, 'original arena handler inherited taint')
             assertEquals('I13Member', UnitName('party1'))
         end)
         "#,
