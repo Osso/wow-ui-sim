@@ -71,9 +71,9 @@ use super::admin_pvp_guild::{
 use super::admin_spec::{reset_talents, set_spec, set_talent_rank, set_talent_selection};
 use super::admin_vault::{clear_vault, set_vault_activity, set_vault_rewards};
 use super::admin_zone_economy::{
-    set_alt_key_down, set_bind_location, set_control_key_down, set_guild_emblem, set_guild_ranks,
-    set_in_instance, set_instance_info, set_item_level, set_meta_key_down, set_money,
-    set_mouse_over_frame, set_mouse_position, set_net_stats, set_shift_key_down,
+    set_alt_key_down, set_bind_location, set_control_key_down, set_game_time, set_guild_emblem,
+    set_guild_ranks, set_in_instance, set_instance_info, set_item_level, set_meta_key_down,
+    set_money, set_mouse_over_frame, set_mouse_position, set_net_stats, set_shift_key_down,
     set_store_frame_shown, set_sub_zone, set_timerunning_season_id, set_zone, set_zone_pvp,
 };
 
@@ -248,6 +248,7 @@ fn register_zone_and_economy(b: TableBuilder) -> LuaResult<TableBuilder> {
         .set_function("SetMouseOverFrame", set_mouse_over_frame)?
         .set_function("SetMousePosition", set_mouse_position)?
         .set_function("SetNetStats", set_net_stats)?
+        .set_function("SetGameTime", set_game_time)?
         .set_function("SetStoreFrameShown", set_store_frame_shown)?
         .set_function("SetTimerunningSeasonID", set_timerunning_season_id)?
         .set_function("SetZonePVP", set_zone_pvp)

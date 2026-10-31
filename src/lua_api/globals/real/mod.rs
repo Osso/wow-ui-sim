@@ -20,6 +20,7 @@ pub mod event_callbacks;
 #[cfg(feature = "client-wowforever")]
 pub mod forever_stat_contributions;
 pub mod frame_level_helpers;
+pub(crate) mod game_clock;
 pub mod glyph_state;
 pub mod gossip_probes;
 pub(crate) mod group_role_counts;

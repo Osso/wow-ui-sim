@@ -551,6 +551,7 @@ pub struct SimState {
     pub tracked_recipes: TrackedRecipes,
     pub crafting: CraftingState,
     pub net_stats: NetStats,
+    pub game_clock: GameClock,
     pub store_frame_shown: bool,
     /// Host observations; absence is not evidence of an ineligible group.
     pub store_public_eligibility:
