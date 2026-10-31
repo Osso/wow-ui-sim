@@ -23,7 +23,7 @@ fn fetch_roots_from(client: &Client, urls: &[String]) -> crate::Result<Vec<Strin
             Ok(roots) => return Ok(roots),
             Err(cause) => {
                 eprintln!("CDN discovery via {url} failed: {cause}");
-                failures.push(cause.to_string());
+                failures.push(format!("{url}: {cause}"));
             }
         }
     }
@@ -188,6 +188,46 @@ mod tests {
             ["https://cdn.example/tpr/wow/"]
         );
         server.join().unwrap();
+    }
+
+    fn serve_record_once(body: &'static str) -> (String, std::thread::JoinHandle<()>) {
+        use std::io::{Read, Write};
+        let listener = std::net::TcpListener::bind("127.0.0.1:0").unwrap();
+        let url = format!("http://{}/cdns", listener.local_addr().unwrap());
+        let server = std::thread::spawn(move || {
+            let (mut socket, _) = listener.accept().unwrap();
+            let mut request = Vec::new();
+            let mut byte = [0];
+            while !request.ends_with(b"\r\n\r\n") {
+                socket.read_exact(&mut byte).unwrap();
+                request.push(byte[0]);
+            }
+            let head = format!(
+                "HTTP/1.1 200 OK\r\nContent-Length: {}\r\nConnection: close\r\n\r\n",
+                body.len()
+            );
+            socket.write_all(head.as_bytes()).unwrap();
+            socket.write_all(body.as_bytes()).unwrap();
+        });
+        (url, server)
+    }
+
+    #[test]
+    fn discovery_error_names_every_failed_source() {
+        let empty = "Name!STRING:0|Path!STRING:0|Hosts!STRING:0|Servers!STRING:0|ConfigPath!STRING:0\nus|tpr/wow|||tpr/configs/data\n";
+        let (first, first_server) = serve_record_once(empty);
+        let (second, second_server) = serve_record_once(empty);
+        let client = Client::builder()
+            .timeout(std::time::Duration::from_secs(3))
+            .build()
+            .unwrap();
+        let message = fetch_roots_from(&client, &[first.clone(), second.clone()])
+            .unwrap_err()
+            .to_string();
+        assert!(message.contains(&format!("{first}: ")), "{message}");
+        assert!(message.contains(&format!("{second}: ")), "{message}");
+        first_server.join().unwrap();
+        second_server.join().unwrap();
     }
 
     #[test]
