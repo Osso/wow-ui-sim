@@ -98,7 +98,7 @@ fn monk_windwalker_flag_matches_specialization_identity() {
 }
 
 #[test]
-fn spec_without_class_uses_startup_class_and_dispatches_event() {
+fn spec_without_class_is_seeded_then_resolved_again_after_startup() {
     if ACTIVE != ClientProfile::Retail {
         return;
     }
@@ -112,13 +112,14 @@ fn spec_without_class_uses_startup_class_and_dispatches_event() {
     )
     .unwrap();
     std::fs::write(addon.join("Issue5ContextProbe.lua"), r#"
+        Issue5Initial = UnitClass('player') .. ':' .. GetSpecialization()
         local frame = CreateFrame('Frame')
         frame:RegisterEvent('PLAYER_ENTERING_WORLD')
         frame:RegisterUnitEvent('PLAYER_SPECIALIZATION_CHANGED', 'player')
         frame:SetScript('OnEvent', function(_, event, unit)
             if event == 'PLAYER_ENTERING_WORLD' then
                 Issue5WorldCount = (Issue5WorldCount or 0) + 1
-                A_Admin.SetPlayerClass(8)
+                A_Admin.SetPlayerClass(5)
             else
                 Issue5Observed = UnitClass('player') .. ':' .. GetSpecialization() .. ':' .. tostring(unit)
             end
@@ -128,7 +129,7 @@ fn spec_without_class_uses_startup_class_and_dispatches_event() {
         .args(["90", env!("CARGO_BIN_EXE_wow-sim")])
         .arg("--no-saved-vars")
         .arg("--addons-path").arg(addons)
-        .args(["--spec", "Fire", "--exec-lua", "print('EVENT_CONTEXT:' .. tostring(Issue5Observed) .. ':' .. tostring(Issue5WorldCount))", "dump-tree", "--filter", "__no_such_frame__"])
+        .args(["--spec", "Holy", "--exec-lua", "print('EVENT_CONTEXT:' .. tostring(Issue5Observed) .. ':' .. tostring(Issue5WorldCount) .. ':' .. tostring(Issue5Initial))", "dump-tree", "--filter", "__no_such_frame__"])
         .env("XDG_DATA_HOME", isolated_data_dir(root.path()))
         .env("WOW_SIM_WTF_PATH", root.path().join("wtf"))
         .env("WOW_SIM_NO_SOUND", "1")
@@ -137,7 +138,7 @@ fn spec_without_class_uses_startup_class_and_dispatches_event() {
     let stderr = String::from_utf8_lossy(&output.stderr);
     assert!(output.status.success(), "{stdout}\n{stderr}");
     assert!(
-        stderr.contains("EVENT_CONTEXT:Mage:2:player:1"),
+        stderr.contains("EVENT_CONTEXT:Priest:2:player:1:Paladin:1"),
         "{stdout}\n{stderr}"
     );
 }

@@ -11,6 +11,51 @@ fn build_env() -> Rc<RefCell<WowLuaEnv>> {
     ))
 }
 
+#[test]
+fn gui_configuration_preserves_resolved_class_and_race() {
+    let env = build_env();
+    {
+        let env = env.borrow();
+        let mut state = env.state().borrow_mut();
+        state.player.class_index = 1;
+        state.player.race_index = 1;
+    }
+    let mut config = crate::config::SimConfig::default();
+    config.movement.moving = true;
+    assert_eq!(config.player_class, "Paladin");
+    assert_eq!(config.player_race, "Human");
+
+    App::apply_config_to_state(&env, &config);
+
+    let env = env.borrow();
+    let identity: (String, String) = env
+        .eval("local _, class = UnitClass('player'); local _, race = UnitRace('player'); return class, race")
+        .unwrap();
+    assert_eq!(identity, ("WARRIOR".into(), "Orc".into()));
+    assert!(env.state().borrow().player.movement.moving);
+}
+
+#[test]
+fn gui_selectors_use_resolved_class_and_race() {
+    let env = build_env();
+    {
+        let env = env.borrow();
+        let mut state = env.state().borrow_mut();
+        state.player.class_index = 8;
+        state.player.race_index = 3;
+    }
+    let config = crate::config::SimConfig::default();
+    let selections = {
+        let env = env.borrow();
+        let state = env.state().borrow();
+        AppInitialSelections::from_state_and_config(&state, &config)
+    };
+
+    assert_eq!(selections.class, "Mage");
+    assert_eq!(selections.race, "Night Elf");
+    assert_eq!(selections.xp_level, "33%");
+}
+
 pub(super) fn build_test_app(screen_kind: ScreenKind) -> App {
     let env = build_env();
     env.borrow().set_screen_mode(screen_kind);

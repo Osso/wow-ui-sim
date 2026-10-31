@@ -3,6 +3,7 @@ use std::error::Error;
 use std::rc::Rc;
 use std::time::Instant;
 
+use wow_ui_sim::config::SimConfig;
 use wow_ui_sim::font::WowFontSystem;
 use wow_ui_sim::logging;
 use wow_ui_sim::lua_api::WowLuaEnv;
@@ -30,6 +31,13 @@ pub(super) fn init_and_load(args: &Args, screen: ScreenKind) -> InitResult {
 
 fn initialize_and_load_env(args: &Args, screen: ScreenKind, mut env: WowLuaEnv) -> InitResult {
     configure_screen_size(&env, args);
+    let selection = super::class_spec::parse_selection(
+        args.class.as_deref(),
+        args.spec.as_deref(),
+        args.race.as_deref(),
+    )
+    .map_err(wow_ui_sim::Error::Other)?;
+    apply_initial_player_settings(&env, &SimConfig::load(), selection.as_ref())?;
     let font_system = create_font_system(args);
     init_environment(args, &env, &font_system)?;
     env.set_screen_mode(screen);
@@ -351,6 +359,49 @@ fn create_font_system(args: &Args) -> Rc<RefCell<WowFontSystem>> {
     ));
     font_system
 }
+
+/// Seed launch selections once; ReloadUI retains the current player model.
+fn apply_initial_player_settings(
+    env: &WowLuaEnv,
+    config: &SimConfig,
+    selection: Option<&super::class_spec::Selection>,
+) -> wow_ui_sim::Result<()> {
+    use wow_ui_sim::lua_api::state::{CLASS_LABELS, RACE_DATA};
+
+    let class_index = selection
+        .and_then(|selection| selection.class)
+        .unwrap_or_else(|| {
+            CLASS_LABELS
+                .iter()
+                .position(|&name| name == config.player_class)
+                .map(|index| (index + 1) as i32)
+                .unwrap_or(1)
+        });
+    let race_index = selection
+        .and_then(|selection| selection.race)
+        .unwrap_or_else(|| {
+            RACE_DATA
+                .iter()
+                .position(|(name, _, _)| *name == config.player_race)
+                .unwrap_or(0)
+        });
+    let spec_index = selection
+        .and_then(|selection| selection.spec.as_deref())
+        .map(|spec| super::class_spec::resolve_spec(class_index, spec))
+        .transpose()
+        .map_err(wow_ui_sim::Error::Other)?;
+    let mut state = env.state().borrow_mut();
+    state.player.class_index = class_index;
+    state.player.race_index = race_index;
+    if let Some(index) = spec_index {
+        state.player.active_spec_index = index;
+    }
+    Ok(())
+}
+
+#[cfg(test)]
+#[path = "startup_player_tests.rs"]
+mod player_tests;
 
 fn configure_startup_state(
     args: &Args,

@@ -144,13 +144,14 @@ Host noise: this machine mixes Zen 5 (CPUs 0-3, 12-15, 5.16 GHz) and Zen 5c (3.2
 | `--no-saved-vars` | Skip WTF SavedVariables (~18% of load time) |
 | `--delay <ms>` | Delay after startup events (dump-tree/screenshot); followed by one OnUpdate tick carrying the slept time and the timers that came due, before `--exec-lua` runs |
 | `--exec-lua "code"` | Execute Lua after startup; prefix with `@` to load file |
-| `--class <NAME|N>` | Set the player class by case-insensitive name or one-based index |
-| `--spec <NAME|N>` | Set the specialization by case-insensitive name or one-based index; uses the current class when `--class` is absent |
+| `--class <NAME|N>` | Select the initial class by case-insensitive name or one-based index |
+| `--spec <NAME|N>` | Select the initial specialization by case-insensitive name or one-based index; uses the startup class when `--class` is absent |
+| `--race <NAME|N>` | Select the initial race by case-insensitive display name/file token or one-based simulator race-list index |
 | `--debug-borders` | Red borders overlay |
 | `--debug-anchors` | Green anchor-point dots |
 | `--debug-elements` | Both overlays |
 
-Class and specialization changes run after startup events and before `--exec-lua`. They dispatch `PLAYER_SPECIALIZATION_CHANGED` for `player`. They do not repeat `PLAYER_ENTERING_WORLD`, because a class or specialization change is not a world-entry lifecycle. Wrath, Era, and Anniversary reject `--spec` because these profiles do not model modern specialization selection. Unknown names or indices report valid choices and exit non-zero.
+Class, race, and specialization selections are seeded before addons load, then reaffirmed after startup events and before `--exec-lua`. Spec-only input must be valid for the initial class and is resolved again against the current class at the late hook. Class/spec selections dispatch `PLAYER_SPECIALIZATION_CHANGED` for `player` once at that hook; race selections dispatch `UNIT_PORTRAIT_UPDATE` for `player`. A race-only selection does not dispatch a specialization event. They do not repeat `PLAYER_ENTERING_WORLD`, because a class or specialization change is not a world-entry lifecycle. Wrath, Era, and Anniversary reject `--spec` because these profiles do not model modern specialization selection. Unknown names or indices report valid choices and exit non-zero.
 
 ## Sources
 
