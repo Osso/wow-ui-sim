@@ -1,0 +1,9 @@
+{
+  "build": "1.60.1.70532",
+  "interface": 16001,
+  "source": "https://wago.tools/db2/GlobalStrings/csv?build=1.60.1.70532",
+  "sha256": "79d0987e3479f3cb19dc68475bef33a7876d7f340daf0fc3eb835cf057a68dd3",
+  "rows": 27388,
+  "duplicate_tags": 0,
+  "regenerate": "python3 tools/gen_forever_global_strings.py"
+}

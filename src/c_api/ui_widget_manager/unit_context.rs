@@ -1,12 +1,14 @@
 //! User-approved simulator default; native registration behavior is not established.
-use std::collections::HashSet;
+use std::collections::{HashMap, HashSet};
+
+use super::{WidgetId, WidgetVisualization};
 
 use crate::lua_api::methods::{borrow_state_mut, val_to_string};
 use crate::lua_bridge::{stack_val, table_set_rust_fn_static};
 use rilua::vm::{gc::arena::GcRef, state::LuaState, table::Table};
 use rilua::{LuaResult, Val, runtime_error};
 
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub enum ProcessingUnit {
     Token(String),
     Guid(String),
@@ -16,6 +18,8 @@ pub enum ProcessingUnit {
 pub struct WidgetUnitContext {
     pub registrations: HashSet<(String, bool)>,
     pub processing_unit: Option<ProcessingUnit>,
+    pub unit_visualizations: HashMap<(ProcessingUnit, WidgetId), WidgetVisualization>,
+    pub unit_widget_ids: HashSet<WidgetId>,
 }
 
 pub(super) fn register(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResult<()> {

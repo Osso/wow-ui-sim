@@ -14,6 +14,13 @@ impl sim_toc::Selection for ActiveSelection {
     fn game_types() -> &'static [&'static str] {
         active_game_types()
     }
+    fn recognizes_camelot() -> bool {
+        matches!(
+            crate::client_profile::ACTIVE,
+            crate::client_profile::ClientProfile::Ptr
+                | crate::client_profile::ClientProfile::WowForever
+        )
+    }
     fn family_subdir() -> &'static str {
         family_subdir()
     }

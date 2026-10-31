@@ -22,11 +22,18 @@ fn query_double_icon_and_text(state: &mut LuaState) -> LuaResult<u32> {
         state,
         "C_UIWidgetManager.GetDoubleIconAndTextWidgetVisualizationInfo: widgetID must be a number",
     )?;
-    let record = borrow_state(state)?
-        .ui_widget_inputs
-        .double_icon_and_text
-        .get(&WidgetId::from_number(id))
-        .cloned();
+    let record = {
+        let sim = borrow_state(state)?;
+        let inputs = &sim.ui_widget_inputs;
+        inputs.resolve_visualization(
+            WidgetId::from_number(id),
+            &inputs.double_icon_and_text,
+            |value| match value {
+                super::WidgetVisualization::DoubleIconAndText(record) => Some(record),
+                _ => None,
+            },
+        )
+    };
     let Some(record) = record else {
         state.push(Val::Nil);
         return Ok(1);

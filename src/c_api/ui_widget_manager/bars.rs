@@ -29,11 +29,16 @@ fn query_status_bar(state: &mut LuaState) -> LuaResult<u32> {
         state,
         "C_UIWidgetManager.GetStatusBarWidgetVisualizationInfo: widgetID must be a number",
     )?;
-    let record = borrow_state(state)?
-        .ui_widget_inputs
-        .status_bars
-        .get(&WidgetId::from_number(id))
-        .cloned();
+    let record = {
+        let sim = borrow_state(state)?;
+        let inputs = &sim.ui_widget_inputs;
+        inputs.resolve_visualization(WidgetId::from_number(id), &inputs.status_bars, |value| {
+            match value {
+                super::WidgetVisualization::StatusBar(record) => Some(record),
+                _ => None,
+            }
+        })
+    };
     let Some(record) = record else {
         state.push(Val::Nil);
         return Ok(1);
@@ -54,11 +59,16 @@ fn query_capture_bar(state: &mut LuaState) -> LuaResult<u32> {
         state,
         "C_UIWidgetManager.GetCaptureBarWidgetVisualizationInfo: widgetID must be a number",
     )?;
-    let record = borrow_state(state)?
-        .ui_widget_inputs
-        .capture_bars
-        .get(&WidgetId::from_number(id))
-        .cloned();
+    let record = {
+        let sim = borrow_state(state)?;
+        let inputs = &sim.ui_widget_inputs;
+        inputs.resolve_visualization(WidgetId::from_number(id), &inputs.capture_bars, |value| {
+            match value {
+                super::WidgetVisualization::CaptureBar(record) => Some(record),
+                _ => None,
+            }
+        })
+    };
     let Some(record) = record else {
         state.push(Val::Nil);
         return Ok(1);

@@ -542,3 +542,83 @@ fn cached_ui_version_override_requires_the_explicit_flag() {
     assert!(!super::cache_version_is_allowed(&bypassed, false));
     assert!(super::cache_version_is_allowed(&bypassed, true));
 }
+
+#[test]
+#[cfg(all(feature = "casc", feature = "client-retail"))]
+fn retail_provenance_ignores_installed_build_identity() {
+    const CHILD: &str = "WOW_SIM_RETAIL_PROVENANCE_TEST_CHILD";
+    if std::env::var_os(CHILD).is_some() {
+        let installed = super::read_active_build_identity(
+            std::path::Path::new(&std::env::var("WOW_INSTALL_PATH").unwrap()),
+            "wow",
+        )
+        .unwrap();
+        assert_ne!(installed.version, "12.1.5.70575");
+        let provenance = super::expected_cache_provenance().unwrap();
+        assert!(provenance.contents().contains("version=12.1.5.70575\n"));
+        assert!(
+            provenance
+                .contents()
+                .contains("source=blizzard-cdn-pinned\n")
+        );
+        return;
+    }
+    let install = installed_product_fixture();
+    std::fs::create_dir_all(install.path().join("Data/data")).unwrap();
+    let status = std::process::Command::new(std::env::current_exe().unwrap())
+        .args([
+            "--exact",
+            "blizzard_ui_sync::tests::retail_provenance_ignores_installed_build_identity",
+            "--nocapture",
+        ])
+        .env(CHILD, "1")
+        .env("WOW_INSTALL_PATH", install.path())
+        .status()
+        .unwrap();
+    assert!(status.success(), "child provenance test failed");
+}
+
+#[test]
+#[cfg(all(feature = "casc", feature = "client-retail"))]
+fn retail_sync_cached_fixture_child() {
+    use std::io::{IsTerminal, Read};
+    let args: Vec<_> = std::env::args().collect();
+    if !args.windows(2).any(|args| {
+        args == [
+            "--exact",
+            "blizzard_ui_sync::tests::retail_sync_cached_fixture_child",
+        ]
+    }) {
+        return;
+    }
+    let mut input = std::io::stdin();
+    if input.is_terminal() {
+        return;
+    }
+    let mut message = String::new();
+    input.read_to_string(&mut message).unwrap();
+    if message.is_empty() {
+        return;
+    }
+    let root: std::path::PathBuf = serde_json::from_str(&message).unwrap();
+    let install = std::env::var("WOW_INSTALL_PATH").unwrap();
+    let installed =
+        super::read_active_build_identity(std::path::Path::new(&install), "wow").unwrap();
+    assert_ne!(installed.version, "12.1.5.70575");
+    let entry = "Blizzard_ArchaeologyUI/Blizzard_ArchaeologyUI.lua";
+    let before = std::fs::read(root.join(entry)).unwrap();
+    let result = super::sync_blizzard_ui_to(&root);
+    assert_eq!(
+        std::fs::read(root.join(entry)).unwrap(),
+        before,
+        "valid cached bytes must survive sync"
+    );
+    let summary = result.expect("the pinned cache must be ready");
+    assert_eq!(summary.extracted, 0);
+    assert_eq!(summary.missing, 0);
+    assert_eq!(summary.present, summary.total);
+    assert_eq!(summary.total, 4026);
+    let provenance = std::fs::read_to_string(root.join(super::PROVENANCE_FILE)).unwrap();
+    assert!(provenance.contains("version=12.1.5.70575\n"));
+    assert!(provenance.contains("source=blizzard-cdn-pinned\n"));
+}

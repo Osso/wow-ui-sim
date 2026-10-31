@@ -1,6 +1,8 @@
 //! Profile-scoped Blizzard UI source synchronization.
 
 #[cfg(feature = "casc")]
+pub mod dungeon_score_rarity;
+#[cfg(feature = "casc")]
 pub mod forever_spells;
 #[cfg(feature = "casc")]
 mod gethe_missing;
@@ -102,9 +104,11 @@ pub fn cached_blizzard_ui_addons_path() -> Option<PathBuf> {
         };
     }
     let is_complete = path.join(COMPLETE_MARKER).is_file();
-    let identity_matches = crate::client_profile::ACTIVE
-        != crate::client_profile::ClientProfile::Ptr
-        || pinned::cache_matches(&path);
+    let identity_matches = match crate::client_profile::ACTIVE {
+        crate::client_profile::ClientProfile::Retail => pinned::retail_cache_matches(&path),
+        crate::client_profile::ClientProfile::Ptr => pinned::cache_matches(&path),
+        _ => true,
+    };
     let version_allowed =
         std::fs::read_to_string(path.join(PROVENANCE_FILE)).map_or(true, |provenance| {
             cache_version_is_allowed(
@@ -134,6 +138,9 @@ pub fn sync_blizzard_ui_to(root: &Path) -> crate::Result<SyncSummary> {
     }
     if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Ptr {
         return pinned::sync_to(root);
+    }
+    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
+        return pinned::sync_retail_to(root);
     }
     let expected_provenance = expected_cache_provenance()?;
     invalidate_cache_if_provenance_mismatched(root, &expected_provenance)?;
@@ -272,6 +279,9 @@ impl CacheProvenance {
 }
 
 fn expected_cache_provenance() -> crate::Result<CacheProvenance> {
+    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
+        return pinned::retail_provenance();
+    }
     if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Ptr {
         return pinned::provenance();
     }

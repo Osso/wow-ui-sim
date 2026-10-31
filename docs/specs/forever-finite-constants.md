@@ -71,6 +71,13 @@ Selected 70374 `SystemDocumentation.lua`, `PvpInfoDocumentation.lua`, `SocialRes
 
 Commit `c2bf42c4f` extends only `src/event/valid_events.rs`'s finite Forever list. `tests/startup_api_events.rs::forever_known_startup_*` contains five authored cases (four enabled under Forever) covering registration lifecycle, two injected documented payload shapes and negative/profile controls. Current runtime-code `c2bf42c4f`, built at `57f8e0b10`, has saved bounded test execution and normal-probe registration lifecycles. The [central receipt](../baselines/README.md#current-importevents-execution--2026-10-15) owns actual executed counts and failing startup; independent bounded reconciliation PASS. This is not native payload/parity proof. See the [event-system source checkpoint](../event-system.md#forever-finite-startup-additions--source-checkpoint-2026-10-15). Native mouse/voice producers are not connected or claimed; no wildcard acceptance, alias, vendor patch or new provider/network model. Other startup failures remain open; the [current baseline](../baselines/README.md#forever-lua-errors) owns measured counts.
 
+### 70532 voice settings events — 2026-10-30
+
+- [x] Register, query and unregister `VOICE_CHAT_DISCORD_SETTINGS_UPDATED` and `VOICE_CHAT_VOICE_PROVIDERS_AVAILABLE_CHANGED`, declared by 70532 `VoiceChatDocumentation.lua`:1229 and :1408. Forever `Audio.lua` `InitVoiceSettings` registers both through `EventRegistry`, and the finite list rejected them.
+- [x] Keep rejecting suffixed invented names. Retail stays strict; PTR already accepts both through its own documented list.
+
+`tests/startup_api_events.rs::forever_known_startup_names_register_query_and_unregister` and `forever_known_startup_catalog_preserves_strict_unknown_name_rejection` cover them. No native producer is connected.
+
 ### Aura block-list cleared registration — bounded independently verified GREEN
 
 Source-inspected 2026-10-10: the Forever profile cache's `Blizzard_APIDocumentationGenerated/UnitAuraDocumentation.lua:631–638` declares `UNIT_AURA_BLOCK_LIST_CLEARED`, synchronous, with one required `unitTarget: UnitTokenVariant` payload. This is a source declaration, not native firing or payload-parity proof.

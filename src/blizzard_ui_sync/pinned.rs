@@ -6,6 +6,7 @@ use std::path::Path;
 use std::sync::OnceLock;
 
 const INDEX: &str = include_str!("../../data/blizzard-ui-builds/ptr.json");
+const RETAIL_INDEX: &str = include_str!("../../data/blizzard-ui-builds/retail.json");
 
 #[cfg(feature = "client-ptr")]
 #[derive(Debug, Clone, PartialEq, Eq)]
@@ -59,6 +60,64 @@ fn build() -> crate::Result<&'static Build> {
         .map_err(|cause| crate::Error::Other(cause.clone()))
 }
 
+fn retail_build() -> crate::Result<&'static Build> {
+    static BUILD: OnceLock<Result<Build, String>> = OnceLock::new();
+    BUILD
+        .get_or_init(|| {
+            let build: Build =
+                serde_json::from_str(RETAIL_INDEX).map_err(|cause| cause.to_string())?;
+            let identity = [
+                build.product.as_str(),
+                build.version.as_str(),
+                build.build_key.as_str(),
+                build.cdn_key.as_str(),
+                build.install_key.as_str(),
+                build.gethe_revision.as_str(),
+            ];
+            let expected = [
+                "wow",
+                "12.1.5.70575",
+                "d718abcc42604d8efbd35aecfa5bb75b",
+                "c13b476a09cb3262797a6fdc88103036",
+                "8fef5697abe6472c6b9235a2b9f7c9f8",
+                "15881d522c44cd106d3d8660106ec9f9d2f44167",
+            ];
+            if build.schema != 1 || identity != expected {
+                return Err("unsupported Retail content-index schema or source identity".into());
+            }
+            #[cfg(feature = "casc")]
+            validate_entries_for(&build, super::RETAIL_BLIZZARD_UI_MANIFEST, "Retail")?;
+            Ok(build)
+        })
+        .as_ref()
+        .map_err(|cause| crate::Error::Other(cause.clone()))
+}
+
+pub(super) fn retail_provenance() -> crate::Result<CacheProvenance> {
+    let build = retail_build()?;
+    let manifest_hash = format!("{:x}", Sha256::digest(super::RETAIL_BLIZZARD_UI_MANIFEST));
+    let index_hash = format!("{:x}", Sha256::digest(RETAIL_INDEX));
+    Ok(CacheProvenance {
+        contents: format!(
+            "schema=2\nprofile=retail\nproduct={}\nversion={}\nbuild_key={}\ninstall_key={}\ncdn_key={}\ngethe_revision={}\nmanifest_sha256={manifest_hash}\ncontent_index_sha256={index_hash}\nsource=blizzard-cdn-pinned\nfallback=none\n",
+            build.product,
+            build.version,
+            build.build_key,
+            build.install_key,
+            build.cdn_key,
+            build.gethe_revision,
+        ),
+    })
+}
+
+pub(super) fn retail_cache_matches(root: &Path) -> bool {
+    let Ok(expected) = retail_provenance() else {
+        return false;
+    };
+    std::fs::read_to_string(root.join(super::PROVENANCE_FILE))
+        .is_ok_and(|contents| contents == expected.contents())
+}
+
 #[cfg(feature = "client-ptr")]
 pub(crate) fn client_identity() -> crate::Result<ClientIdentity> {
     let version_and_build = &build()?.version;
@@ -100,14 +159,21 @@ pub(super) fn cache_matches(root: &Path) -> bool {
 
 #[cfg(feature = "casc")]
 fn validate_entries(build: &Build) -> Result<(), String> {
-    let expected: Vec<_> = super::PTR_BLIZZARD_UI_MANIFEST.lines().collect();
+    validate_entries_for(build, super::PTR_BLIZZARD_UI_MANIFEST, "PTR")
+}
+
+#[cfg(feature = "casc")]
+fn validate_entries_for(build: &Build, manifest: &str, profile: &str) -> Result<(), String> {
+    let expected: Vec<_> = manifest.lines().collect();
     let paths: Vec<_> = build
         .files
         .iter()
         .map(|entry| entry.path.as_str())
         .collect();
     if paths != expected {
-        return Err("PTR content index does not match its path manifest".into());
+        return Err(format!(
+            "{profile} content index does not match its path manifest"
+        ));
     }
     for entry in &build.files {
         let safe_path = !entry.path.starts_with('/')
@@ -171,6 +237,87 @@ pub(super) fn sync_to(root: &Path) -> crate::Result<super::SyncSummary> {
 }
 
 #[cfg(feature = "casc")]
+pub(super) fn sync_retail_to(root: &Path) -> crate::Result<super::SyncSummary> {
+    let build = retail_build()?;
+    let expected = retail_provenance()?;
+    let mut complete = true;
+    for entry in &build.files {
+        let path = root.join(&entry.path);
+        match std::fs::read(&path) {
+            Ok(content) if super::pinned_download::content_matches(entry, &content) => {}
+            Ok(_) => complete = false,
+            Err(cause) if cause.kind() == std::io::ErrorKind::NotFound => complete = false,
+            Err(cause) => {
+                return Err(crate::Error::Other(format!(
+                    "read {}: {cause}",
+                    path.display()
+                )));
+            }
+        }
+    }
+    if complete {
+        super::write_complete_marker(root, &expected)?;
+        return Ok(super::SyncSummary {
+            root: root.to_owned(),
+            total: build.files.len(),
+            extracted: 0,
+            present: build.files.len(),
+            missing: 0,
+        });
+    }
+    let marker = root.join(super::COMPLETE_MARKER);
+    match std::fs::remove_file(&marker) {
+        Ok(()) => {}
+        Err(cause) if cause.kind() == std::io::ErrorKind::NotFound => {}
+        Err(cause) => {
+            return Err(crate::Error::Other(format!(
+                "remove {}: {cause}",
+                marker.display()
+            )));
+        }
+    }
+    let client = reqwest::blocking::Client::builder()
+        .redirect(reqwest::redirect::Policy::none())
+        .timeout(std::time::Duration::from_secs(30))
+        .build()
+        .map_err(|cause| crate::Error::Other(format!("create Blizzard CDN client: {cause}")))?;
+    let roots = super::pinned_cdn::fetch_roots(&client, &build.product)?;
+    let workers = 16.min(build.files.len()).max(1);
+    let counts = std::thread::scope(|scope| {
+        let handles: Vec<_> = (0..workers)
+            .map(|worker| {
+                let client = &client;
+                let roots = &roots;
+                scope.spawn(move || sync_worker(root, client, &build.files, roots, worker, workers))
+            })
+            .collect();
+        handles
+            .into_iter()
+            .map(|handle| {
+                handle
+                    .join()
+                    .map_err(|_| crate::Error::Other("Retail source sync worker panicked".into()))?
+            })
+            .collect::<crate::Result<Vec<_>>>()
+    })?;
+    let present = counts.iter().map(|counts| counts.0).sum();
+    let extracted = counts.iter().map(|counts| counts.1).sum();
+    super::write_complete_marker(root, &expected)?;
+    Ok(super::SyncSummary {
+        root: root.to_owned(),
+        total: build.files.len(),
+        extracted,
+        present,
+        missing: 0,
+    })
+}
+
+#[cfg(not(feature = "casc"))]
+pub(super) fn sync_retail_to(_root: &Path) -> crate::Result<super::SyncSummary> {
+    Err(super::casc_feature_error())
+}
+
+#[cfg(feature = "casc")]
 fn prepare_sync_cache(root: &Path, expected: &CacheProvenance) -> crate::Result<()> {
     super::invalidate_cache_if_provenance_mismatched(root, expected)?;
     super::write_cache_provenance(root, expected)
@@ -194,7 +341,10 @@ fn sync_worker(
                 present += 1;
                 continue;
             }
-            Ok(_) => eprintln!("Replacing mismatched PTR source {}", destination.display()),
+            Ok(_) => eprintln!(
+                "Replacing mismatched pinned source {}",
+                destination.display()
+            ),
             Err(cause) if cause.kind() == std::io::ErrorKind::NotFound => {}
             Err(cause) => {
                 return Err(crate::Error::Other(format!(

@@ -691,7 +691,7 @@ fn campaign_covenant_placeholder_defaults_are_not_c_api_temporary_shims() {
 
     assert!(
         !temporary_shims.contains("c_campaign_covenant_defaults"),
-        "unmodeled C_CampaignInfo and C_CovenantSanctumUI placeholder defaults belong in lua_api::workarounds::temporary"
+        "unmodeled C_CovenantSanctumUI placeholder defaults belong in lua_api::workarounds::temporary"
     );
     assert!(
         !c_api.contains("c_campaign_covenant_defaults"),
@@ -788,12 +788,18 @@ fn minimap_tracking_defaults_are_not_c_api_temporary_shims() {
     let temporary_shims = c_api_temporary_shims_source();
     let c_api = include_str!("../src/c_api/mod.rs");
 
+    // `c_minimap_quest_blob` is a modeled module; only the bare `c_minimap` shim is forbidden.
+    let declares_shim = |source: &str| {
+        source
+            .lines()
+            .any(|line| line.trim_end().ends_with("mod c_minimap;"))
+    };
     assert!(
-        !temporary_shims.contains("c_minimap"),
+        !declares_shim(&temporary_shims),
         "unmodeled C_Minimap tracking/radius defaults belong in lua_api::workarounds::temporary"
     );
     assert!(
-        !c_api.contains("c_minimap"),
+        !declares_shim(c_api) && !c_api.contains("c_minimap::"),
         "C_Minimap tracking/radius defaults should not be wired through c_api registration"
     );
 }

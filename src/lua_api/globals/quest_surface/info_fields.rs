@@ -21,11 +21,12 @@ pub(super) fn write_quest_entry_fields(
     info: Val,
     quest_id: i32,
     title: &str,
+    campaign_id: i32,
 ) {
     let title_val = create_string(state, title);
     table_set(state, info, "title", title_val);
     table_set(state, info, "questID", Val::Num(quest_id as f64));
-    table_set(state, info, "campaignID", Val::Num(0.0));
+    table_set(state, info, "campaignID", Val::Num(f64::from(campaign_id)));
     table_set(state, info, "level", Val::Num(80.0));
     table_set(state, info, "difficultyLevel", Val::Num(80.0));
     table_set(state, info, "suggestedGroup", Val::Num(0.0));

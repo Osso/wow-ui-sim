@@ -108,7 +108,7 @@ pub fn register_all(lua: &mut rilua::Lua) -> crate::Result<()> {
             crate::c_api::c_action_bar::unregister_action_ui_button,
         )?;
     }
-    #[cfg(feature = "retail-12-0-0")]
+    #[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
     crate::c_api::c_action_bar_queries::register(state, table_ref)?;
     crate::c_api::action_macros::register(state, table_ref)?;
     #[cfg(feature = "retail-12-0-5")]

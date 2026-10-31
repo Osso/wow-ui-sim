@@ -4,6 +4,8 @@ mod addon;
 pub(crate) mod addon_modules;
 mod addon_order;
 mod addon_saved_variables;
+#[cfg(test)]
+mod addon_saved_variables_tests;
 pub(crate) mod button;
 pub(crate) mod bytecode;
 pub(crate) mod bytecode_cache;

@@ -669,6 +669,7 @@ pub fn register_all(lua: &mut rilua::Lua) -> rilua::LuaResult<()> {
     crate::lua_api::globals::real::specialization_legacy::register_legacy_specialization_globals(
         state,
     )?;
+    crate::lua_api::globals::real::loot_specialization::register(state)?;
     crate::lua_api::globals::real::ui_widget_container::register_widget_container_mixin(state)?;
 
     Ok(())

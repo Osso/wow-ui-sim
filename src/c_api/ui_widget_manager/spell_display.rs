@@ -27,11 +27,16 @@ fn query_spell_display(state: &mut LuaState) -> LuaResult<u32> {
         state,
         "C_UIWidgetManager.GetSpellDisplayVisualizationInfo: widgetID must be a number",
     )?;
-    let record = borrow_state(state)?
-        .ui_widget_inputs
-        .spell_display
-        .get(&WidgetId::from_number(id))
-        .cloned();
+    let record = {
+        let sim = borrow_state(state)?;
+        let inputs = &sim.ui_widget_inputs;
+        inputs.resolve_visualization(WidgetId::from_number(id), &inputs.spell_display, |value| {
+            match value {
+                super::WidgetVisualization::SpellDisplay(record) => Some(record),
+                _ => None,
+            }
+        })
+    };
     let Some(record) = record else {
         state.push(Val::Nil);
         return Ok(1);

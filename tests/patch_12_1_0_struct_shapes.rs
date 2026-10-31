@@ -347,7 +347,8 @@ const CASES: &[ShapeCase] = &[
         doc_file: "LFGListInfoDocumentation.lua",
         struct_name: "LfgSearchResultData",
         seed: no_seed,
-        getter: "return C_LFGList.GetSearchResultInfo(7)",
+        // PTR GroupFinder/Mainline/LFGList.lua:2804 searches before reading results.
+        getter: "C_LFGList.Search(2); return C_LFGList.GetSearchResultInfo(7)",
         added: &["censored"],
         removed: &[],
         values: r#"return info.censored == false and "ok" or "censored""#,

@@ -366,7 +366,15 @@ pub fn get_quest_log_info(state: &mut LuaState) -> LuaResult<u32> {
         QuestLogEntry::Header { title } => write_quest_header_fields(state, info, title),
         QuestLogEntry::Quest {
             quest_id, title, ..
-        } => write_quest_entry_fields(state, info, *quest_id, title),
+        } => {
+            let campaign_id = borrow_state(state)?
+                .quest_log_entries
+                .campaign_ids
+                .get(quest_id)
+                .copied()
+                .unwrap_or(0);
+            write_quest_entry_fields(state, info, *quest_id, title, campaign_id);
+        }
     }
     state.push(info);
     Ok(1)

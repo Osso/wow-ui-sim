@@ -391,8 +391,10 @@ fn test_get_guild_faction_group_returns_default_faction() {
 // GetGroupMemberCounts
 // ============================================================================
 
+// PartyUtil.lua:108-112 consumes counts including unassigned members as damage.
+#[cfg(not(feature = "client-wrath"))]
 #[test]
-fn test_get_group_member_counts_all_zero_when_solo() {
+fn test_get_group_member_counts_excludes_solo_player() {
     let env = env();
     let total: i32 = env
         .eval(

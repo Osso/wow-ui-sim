@@ -5,8 +5,67 @@ fn env() -> WowLuaEnv {
 }
 
 #[test]
+fn clear_search_cancels_pending_delivery_and_preserves_catalog() {
+    if wow_ui_sim::client_profile::ACTIVE == wow_ui_sim::client_profile::ClientProfile::Wrath {
+        return;
+    }
+    let env = env();
+    // GroupFinder/Mainline/LFGList.lua:2778 clears, and :2817 searches.
+    env.exec(r#"
+        observed = 0
+        local f = CreateFrame('Frame')
+        f:RegisterEvent('LFG_LIST_SEARCH_RESULTS_RECEIVED')
+        f:SetScript('OnEvent', function() observed = observed + 1 end)
+        C_LFGList.Search(2)
+        local n, ids = C_LFGList.GetSearchResults()
+        assert(n == 8 and C_LFGList.HasSearchResultInfo(ids[1]))
+        C_LFGList.ClearSearchResults()
+        assert(select(1, C_LFGList.GetSearchResults()) == 0)
+        assert(not C_LFGList.HasSearchResultInfo(ids[1]))
+        assert(C_LFGList.GetSearchResultInfo(ids[1]) == nil)
+        assert(C_LFGList.GetSearchResultMemberCounts(ids[1]) == nil)
+        assert(select(1, C_LFGList.GetFilteredSearchResults()) == 0)
+    "#).unwrap();
+    env.process_timers().unwrap();
+    env.exec("assert(observed == 0); C_LFGList.Search(2); assert(select(1, C_LFGList.GetSearchResults()) == 8)").unwrap();
+    env.process_timers().unwrap();
+    env.exec("assert(observed == 1)").unwrap();
+}
+
+#[test]
+fn supplied_quest_search_filters_results() {
+    if wow_ui_sim::client_profile::ACTIVE == wow_ui_sim::client_profile::ClientProfile::Wrath {
+        return;
+    }
+    let env = env();
+    {
+        let state = env.state();
+        let mut state = state.borrow_mut();
+        state.world.premade_listings[0].metadata.quest_id = Some(987654);
+        state.world.premade_listings[1].metadata.quest_id = Some(987655);
+    }
+    // Retail GroupFinder/Mainline/LFGList.lua:796,2779,2817.
+    env.exec(r#"
+        C_LFGList.SetSearchToQuestID(987654)
+        C_LFGList.Search(2)
+        local count, ids = C_LFGList.GetSearchResults()
+        assert(count == 1 and ids[1] == 1)
+        assert(C_LFGList.GetSearchResultInfo(1).questID == 987654)
+        C_LFGList.SetSearchToQuestID(987655)
+        C_LFGList.Search(2)
+        count, ids = C_LFGList.GetSearchResults()
+        assert(count == 1 and ids[1] == 2)
+        C_LFGList.ClearSearchTextFields()
+        C_LFGList.Search(2)
+        assert(select(1, C_LFGList.GetSearchResults()) == 8)
+    "#).unwrap();
+}
+
+#[test]
 fn get_search_result_info_returns_table() {
     let env = env();
+    // Retail GroupFinder/Mainline/LFGList.lua:2817 searches before reading results.
+    env.exec("C_LFGList.Search(2)").unwrap();
     let result: String = env
         .eval(
             r#"
@@ -27,6 +86,8 @@ fn get_search_result_info_returns_table() {
 #[test]
 fn get_search_result_info_invalid_returns_nil() {
     let env = env();
+    // Retail GroupFinder/Mainline/LFGList.lua:2817 searches before reading results.
+    env.exec("C_LFGList.Search(2)").unwrap();
     let result: String = env
         .eval(
             r#"
@@ -41,6 +102,8 @@ fn get_search_result_info_invalid_returns_nil() {
 #[test]
 fn get_search_results_returns_ids() {
     let env = env();
+    // Retail GroupFinder/Mainline/LFGList.lua:2817 searches before reading results.
+    env.exec("C_LFGList.Search(2)").unwrap();
     let result: String = env
         .eval(
             r#"
@@ -107,11 +170,15 @@ fn get_activity_info_table() {
 #[test]
 fn admin_add_premade_listing() {
     let env = env();
+    // Retail GroupFinder/Mainline/LFGList.lua:2817 searches before reading results.
+    env.exec("C_LFGList.Search(2)").unwrap();
     let result: String = env
         .eval(
             r#"
             local before = select(1, C_LFGList.GetSearchResults())
             A_Admin.AddPremadeListing("Test Group", "Testing", 1195, 2, 5)
+            assert(select(1, C_LFGList.GetSearchResults()) == before)
+            C_LFGList.Search(2)
             local after = select(1, C_LFGList.GetSearchResults())
             if after ~= before + 1 then return "count=" .. after end
             return "ok"
@@ -124,6 +191,8 @@ fn admin_add_premade_listing() {
 #[test]
 fn admin_update_premade_listing() {
     let env = env();
+    // Retail GroupFinder/Mainline/LFGList.lua:2817 searches before reading results.
+    env.exec("C_LFGList.Search(2)").unwrap();
     let result: String = env
         .eval(
             r#"
@@ -143,10 +212,13 @@ fn admin_update_premade_listing() {
 #[test]
 fn admin_clear_premade_listings() {
     let env = env();
+    // Retail GroupFinder/Mainline/LFGList.lua:2817 searches before reading results.
+    env.exec("C_LFGList.Search(2)").unwrap();
     let result: String = env
         .eval(
             r#"
             A_Admin.ClearPremadeListings()
+            C_LFGList.Search(2)
             local count = select(1, C_LFGList.GetSearchResults())
             return tostring(count)
             "#,
@@ -158,6 +230,8 @@ fn admin_clear_premade_listings() {
 #[test]
 fn get_filtered_search_results_mirrors_get_search_results() {
     let env = env();
+    // Retail GroupFinder/Mainline/LFGList.lua:2817 searches before reading results.
+    env.exec("C_LFGList.Search(2)").unwrap();
     let result: String = env
         .eval(
             r#"
@@ -179,6 +253,8 @@ fn get_filtered_search_results_mirrors_get_search_results() {
 #[test]
 fn search_result_info_has_full_blizzard_schema() {
     let env = env();
+    // Retail GroupFinder/Mainline/LFGList.lua:2817 searches before reading results.
+    env.exec("C_LFGList.Search(2)").unwrap();
     let result: String = env
         .eval(
             r#"
@@ -214,6 +290,8 @@ fn search_result_info_has_full_blizzard_schema() {
 #[test]
 fn search_result_leader_factions_use_player_faction_group_indexes() {
     let env = env();
+    // Retail GroupFinder/Mainline/LFGList.lua:2817 searches before reading results.
+    env.exec("C_LFGList.Search(2)").unwrap();
     let result: String = env
         .eval(
             r#"
@@ -235,6 +313,8 @@ fn search_result_leader_factions_use_player_faction_group_indexes() {
 #[test]
 fn get_playstyle_string_returns_text_for_seeded_general_playstyles() {
     let env = env();
+    // Retail GroupFinder/Mainline/LFGList.lua:2817 searches before reading results.
+    env.exec("C_LFGList.Search(2)").unwrap();
     let result: String = env
         .eval(
             r#"
@@ -261,6 +341,8 @@ fn get_playstyle_string_returns_text_for_seeded_general_playstyles() {
 #[test]
 fn get_search_result_member_counts_returns_role_breakdown() {
     let env = env();
+    // Retail GroupFinder/Mainline/LFGList.lua:2817 searches before reading results.
+    env.exec("C_LFGList.Search(2)").unwrap();
     let result: String = env
         .eval(
             r#"
@@ -307,6 +389,8 @@ fn get_application_info_for_unsubmitted_returns_none() {
 #[test]
 fn apply_to_group_creates_application_and_fires_event() {
     let env = env();
+    // Retail GroupFinder/Mainline/LFGList.lua:2817 searches before reading results.
+    env.exec("C_LFGList.Search(2)").unwrap();
     let result: String = env
         .eval(
             r#"
@@ -342,6 +426,8 @@ fn apply_to_group_creates_application_and_fires_event() {
 #[test]
 fn apply_to_group_is_idempotent() {
     let env = env();
+    // Retail GroupFinder/Mainline/LFGList.lua:2817 searches before reading results.
+    env.exec("C_LFGList.Search(2)").unwrap();
     let result: String = env
         .eval(
             r#"
@@ -363,6 +449,8 @@ fn apply_to_group_is_idempotent() {
 #[test]
 fn cancel_application_removes_entry() {
     let env = env();
+    // Retail GroupFinder/Mainline/LFGList.lua:2817 searches before reading results.
+    env.exec("C_LFGList.Search(2)").unwrap();
     let result: String = env
         .eval(
             r#"

@@ -95,6 +95,10 @@ pub struct QuestRewardCurrency {
 /// Backing state for `C_QuestLog.*` probes.
 #[derive(Debug, Clone, Default)]
 pub struct QuestLogState {
+    /// Supplied quest-to-campaign associations, including completed quests.
+    pub campaign_ids: HashMap<i32, i32>,
+    /// Supplied chapter IDs in campaign order.
+    pub campaign_chapter_ids: HashMap<i32, Vec<i32>>,
     pub entries: Vec<QuestLogEntry>,
     pub additional_highlights: HashMap<i32, crate::c_api::c_quest_log::QuestAdditionalHighlights>,
     /// Build-12340 manual append order; IDs survive row reorder until log refresh.
@@ -193,6 +197,8 @@ impl QuestLogState {
 
     pub fn seeded() -> Self {
         Self {
+            campaign_ids: HashMap::new(),
+            campaign_chapter_ids: HashMap::new(),
             entries: vec![
                 lost_expedition_entry(),
                 defending_the_gates_entry(),
