@@ -447,6 +447,10 @@ pub fn set_border_scalar(state: &mut LuaState) -> LuaResult<u32> {
 
 pub fn set_to_defaults(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
+    if !super::super::methods_helpers::can_change_protected_state_for(state, id) {
+        super::super::methods_helpers::emit_addon_action_blocked(state, id, "SetToDefaults");
+        return Ok(0);
+    }
     {
         let mut sim = borrow_state_mut(state)?;
         if let Some(frame) = sim.widgets.get_mut_visual(id) {

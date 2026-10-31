@@ -641,6 +641,10 @@ fn read_duration_number(state: &mut LuaState, object: Val, name: &str) -> LuaRes
 
 pub(super) fn set_from_duration_object(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
+    if !can_change_protected_state_for(state, id) {
+        emit_addon_action_blocked(state, id, "SetCooldownFromDurationObject");
+        return Ok(0);
+    }
     let duration_object = stack_val(state, 2);
     let secret = duration_has_secret_values(state, duration_object);
     require_readable(state, secret)?;

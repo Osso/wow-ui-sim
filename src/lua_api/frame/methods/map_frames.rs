@@ -683,6 +683,10 @@ fn update_blips(state: &mut LuaState) -> LuaResult<u32> {
 
 fn set_to_defaults(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
+    if !super::methods_helpers::can_change_protected_state_for(state, id) {
+        super::methods_helpers::emit_addon_action_blocked(state, id, "SetToDefaults");
+        return Ok(0);
+    }
     {
         // Real WoW's FrameCompositor:SetToDefaults clears anchors and resets size
         // to 0,0 (see BlizzardUI Compositor.lua). The menu element pool relies on
