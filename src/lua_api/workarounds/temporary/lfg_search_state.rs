@@ -6,7 +6,7 @@ use rilua::vm::state::LuaState;
 pub(crate) fn clear_search_results(state: &mut LuaState) -> LuaResult<u32> {
     let ids = {
         let mut sim = borrow_state_mut(state)?;
-        sim.lfg_search_result_ids.clear();
+        sim.lfg_search_results.clear();
         let ids = std::mem::take(&mut sim.lfg_search_timer_ids);
         sim.rilua_timers.retain(|timer| !ids.contains(&timer.id));
         ids

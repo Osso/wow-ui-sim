@@ -168,9 +168,13 @@ fn admin_update_premade_listing() {
         .eval(
             r#"
             A_Admin.UpdatePremadeListing(1, "numMembers", 5)
+            assert(C_LFGList.GetSearchResultInfo(1).numMembers == 3, "search snapshot changed before Search")
+            C_LFGList.Search(2)
             local info = C_LFGList.GetSearchResultInfo(1)
             if info.numMembers ~= 5 then return "num=" .. tostring(info.numMembers) end
             A_Admin.UpdatePremadeListing(1, "isDelisted", true)
+            assert(not C_LFGList.GetSearchResultInfo(1).isDelisted, "search snapshot changed before Search")
+            C_LFGList.Search(2)
             local info2 = C_LFGList.GetSearchResultInfo(1)
             if info2.isDelisted ~= true then return "delisted=" .. tostring(info2.isDelisted) end
             return "ok"

@@ -486,7 +486,7 @@ macro_rules! build_empty_sim_state {
             lfg_random_cooldown_units: ::std::collections::HashSet::new(),
             lfg_activity_groups: default_lfg_activity_groups(),
             lfg_activities: default_lfg_activities(),
-            lfg_search_result_ids: Vec::new(),
+            lfg_search_results: Vec::new(),
             lfg_search_timer_ids: Vec::new(),
             lfg_applications: Vec::new(),
             lfg_next_application_id: 1,
