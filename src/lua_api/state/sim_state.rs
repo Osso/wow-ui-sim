@@ -3,6 +3,8 @@ use super::*;
 pub struct SimState {
     /// Selected loot specialization; zero follows the active specialization.
     pub loot_specialization: u32,
+    pub(crate) loot_spec_window: Option<(std::time::Instant, u8)>,
+    pub(crate) pending_loot_specs: Vec<i64>,
     pub world_loot_objects: crate::c_api::world_loot_object::WorldLootObjects,
     pub wrath_relic_slot: crate::lua_api::globals::real::wrath_relic_slot::RelicSlotState,
     pub plain_global_inputs: crate::lua_api::globals::real::publication_12_0_0::PlainGlobalInputs,

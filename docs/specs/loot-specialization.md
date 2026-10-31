@@ -1,37 +1,27 @@
 # Loot specialization
 
-The loot-specialization globals use per-simulator player state. Native validity, persistence and event behavior remain unknown.
+## Behavior
 
-## What it must do
+- `GetLootSpecialization()` returns the last applied player value, initially 0. Zero means follow the current specialization.
+- `SetLootSpecialization(id)` accepts a number and returns no values. Missing or non-convertible arguments raise `Usage: SetLootSpecialization(specializationID)`.
+- The setter sends any integer without client-side class or catalog validation. At most five requests are sent per 10-second window; excess requests are silently dropped.
+- The simulator models a server response on the next OnUpdate tick. An accepted response stores the value and fires `PLAYER_LOOT_SPEC_UPDATED` with no arguments. No state change or event occurs synchronously in the setter.
+- The simulated server accepts 0 and IDs in the player's class catalog and rejects other IDs. This is a best guess, not native evidence.
+- `HasLootSpecializations()` uses the player's class catalog.
 
-- [x] Return 0 initially, selecting the current specialization.
-- [ ] Accept 0 or a specialization belonging to the player's class; reject other numeric values without changing state. The Retail test covers one class specialization, 0, one foreign ID and one unknown ID.
-- [ ] Fire `PLAYER_LOOT_SPEC_UPDATED` synchronously with no payload on a change, after storing the new value; do not fire for an unchanged or invalid selection. The Retail test covers one change and unchanged, foreign and unknown IDs.
-- [x] Reflect a non-default choice and a return to default in the original player popup radio buttons.
-- [ ] Report availability from the player's class specialization catalog.
+## Native basis (70688 behavioural spec)
 
-## Best-guess basis — best-guess, native UNKNOWN
+The clean-room behavioral specs `GetLootSpecialization.md` and `SetLootSpecialization.md` for client build 70688 establish the getter's player field, setter's type check and lack of value validation, rate limit, lack of local write, and the event's update-path origin. The actual server validation and response message are unknown. The getter's field is unsigned 16-bit and returns zero without a player.
 
-The Retail pinned `Blizzard_UnitPopupShared/UnitPopupSharedButtonMixins.lua:1823-1825,1837-1863,1877-1903` shows that 0 is the current-spec choice and that other choices come from the player class's specialization information. `PlayerScriptDocumentation.lua:461-467,1493-1501` declares a numeric getter and setter. `LootDocumentation.lua:298-302` declares a synchronous event with no documented payload; its triggering conditions remain unknown. `SpecializationSharedDocumentation.lua:84` declares the separate `HasLootSpecializations` query, used at popup line 1824. [Warcraft Wiki's SetLootSpecialization](https://warcraft.wiki.gg/wiki/API_SetLootSpecialization) reports rejection of invalid or other-class IDs and an update event after a successful change. [Blizzard's 2013 off-spec loot announcement](https://worldofwarcraft.blizzard.com/en-gb/news/10058095/patch-5-3-adds-off-spec-loot-and-rewards) describes player choice. [Player reports](https://www.reddit.com/r/wownoob/comments/nem3m6) describe current specialization as the default. These sources do not establish native persistence, exact event conditions, or availability criteria; those remain simulator best guesses.
+## Best-guess basis — native UNKNOWN
 
-## How it works
+[Warcraft Wiki](https://warcraft.wiki.gg/wiki/API_SetLootSpecialization) reports silent failure for invalid or other-class IDs. [Blizzard's off-spec loot announcement](https://worldofwarcraft.blizzard.com/en-gb/news/10058095/patch-5-3-adds-off-spec-loot-and-rewards) describes choosing among class specializations. Neither establishes which side rejects an ID; the simulated server rejects it as a best guess. The exact rate-limit window reset semantics and repeated-value server responses are also unknown.
 
-- [Specialization system](../wiki/systems/lua-api.md)
+## Tests
 
-## Implementation inventory
+`tests/loot_specialization.rs` covers the original popup, deferred application, rate limiting and usage error.
 
-- `src/lua_api/globals/real/loot_specialization.rs`: global functions.
-- `src/lua_api/state/sim_state.rs`: selected ID.
+## Known gaps
 
-## Tests asserting this spec
-
-- `tests/loot_specialization.rs`: original popup selection and state.
-
-## Known gaps (current cycle)
-
-- [ ] Native persistence, validation, availability and event conditions are unverified.
-- [ ] Warcraft Wiki reports a `CHAT_MSG_SYSTEM` message for specID > 0; it is not implemented or natively verified.
-
-## Out of scope
-
-- Persistence across simulator sessions and actual loot generation.
+- Server validation, response timing, persistence and whether the server sends a chat message are unknown.
+- No actual server connection or loot generation is modeled.
