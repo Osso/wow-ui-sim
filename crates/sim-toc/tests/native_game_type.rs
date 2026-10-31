@@ -56,4 +56,16 @@ fn retail_header_unknown_tokens_do_not_restrict() {
         !toc.is_game_type_restricted(),
         "third-party addon must be admitted"
     );
+    assert_eq!(
+        toc.metadata.get("AllowLoadGameType").unwrap(),
+        "camelot [AllowLoadGameType standard]"
+    );
+    let tab = TocFile::<Retail>::parse(
+        Path::new("/addons/ThirdParty"),
+        "## AllowLoadGameType: classic\t\nCore.lua\n",
+    );
+    assert!(
+        !tab.is_game_type_restricted(),
+        "tab is part of an unknown token"
+    );
 }

@@ -202,15 +202,19 @@ fn insert_metadata<P: Selection>(metadata: &mut HashMap<String, String>, rest: &
     if !game_type_header && !is_allowed_game_type::<P>(rest) {
         return;
     }
-    let value = value.trim();
+    let value = if game_type_header {
+        value.trim_start_matches(' ')
+    } else {
+        value.trim()
+    };
     if key == "Interface" && is_all_template_versions(value) {
         return;
     }
-    let value = replace_template_vars(if game_type_header {
-        value
+    let value = if game_type_header {
+        value.to_owned()
     } else {
-        strip_annotations(value)
-    });
+        replace_template_vars(strip_annotations(value))
+    };
     if metadata_key_allows_repeats(key) {
         metadata
             .entry(key.to_string())
@@ -329,14 +333,15 @@ impl<P: Selection> TocFile<P> {
         let mut file_entries = ParsedFileEntries::default();
 
         for line in contents.lines() {
-            let line = line.trim();
+            let line = line.trim_start();
             if line.is_empty() {
                 continue;
             }
             if let Some(rest) = line.strip_prefix("##") {
-                insert_metadata::<P>(&mut metadata, rest.trim());
+                insert_metadata::<P>(&mut metadata, rest.trim_start());
                 continue;
             }
+            let line = line.trim_end();
             if line.starts_with('#') {
                 continue;
             }
