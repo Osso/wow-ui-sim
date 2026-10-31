@@ -1,0 +1,13 @@
+[package]
+name = "wow-ui-sim-dylib"
+version = "0.1.0"
+edition = "2024"
+publish = false
+license = "GPL-3.0-only"
+description = "Linux test-only dynamic build of wow-ui-sim; integration tests link it instead of the static library"
+
+[lib]
+crate-type = ["dylib"]
+
+[dependencies]
+wow-ui-sim = { path = "../..", default-features = false }
