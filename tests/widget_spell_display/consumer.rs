@@ -188,6 +188,157 @@ fn spell_display_cached_activation_update_hidden_restore_remove() {
 }
 
 #[test]
+fn spell_display_unit_context_isolates_original_containers() {
+    let env = load_and_register_spell_container_env(true);
+    assert_lua(
+        &env,
+        "second unit container",
+        r#"
+        OtherContainer = CreateFrame('Frame', nil, UIParent, 'UIWidgetContainerTemplate')
+        OtherContainer:RegisterForWidgetSet(431, nil, nil, 'target')
+    "#,
+    );
+    let mut player = entry();
+    player.unit_token = Some("player".into());
+    let mut target = entry();
+    target.unit_token = Some("target".into());
+    let mut player_record = supplied_record();
+    player_record.spell_info.text = "Player widget".into();
+    let mut target_record = supplied_record();
+    target_record.spell_info.text = "Target widget".into();
+    env.update_ui_widget(
+        SET_ID,
+        player.clone(),
+        WidgetVisualization::SpellDisplay(player_record),
+    )
+    .unwrap();
+    env.update_ui_widget(
+        SET_ID,
+        target.clone(),
+        WidgetVisualization::SpellDisplay(target_record),
+    )
+    .unwrap();
+    assert_lua(
+        &env,
+        "per-unit queries through original consumer",
+        r#"
+        SpellContainer:ProcessAllWidgets()
+        OtherContainer:ProcessAllWidgets()
+        assert(SpellContainer.widgetFrames[761301].Spell.Text:GetText() == 'Player widget', 'player widget must remain distinct')
+        assert(OtherContainer.widgetFrames[761301].Spell.Text:GetText() == 'Target widget')
+        SpellContainer:UnregisterForWidgetSet()
+        events = 0
+        listener = CreateFrame('Frame')
+        listener:RegisterEvent('UPDATE_UI_WIDGET')
+        listener:SetScript('OnEvent', function() events = events + 1 end)
+    "#,
+    );
+    let mut changed = supplied_record();
+    changed.spell_info.text = "Unregistered player".into();
+    env.update_ui_widget(SET_ID, player, WidgetVisualization::SpellDisplay(changed))
+        .unwrap();
+    assert_lua(
+        &env,
+        "unregistered update is not delivered",
+        "assert(events == 0)",
+    );
+    let mut changed = supplied_record();
+    changed.spell_info.text = "Target updated".into();
+    env.update_ui_widget(SET_ID, target, WidgetVisualization::SpellDisplay(changed))
+        .unwrap();
+    assert_lua(
+        &env,
+        "registered target update",
+        r#"
+        assert(events == 1)
+        assert(OtherContainer.widgetFrames[761301].Spell.Text:GetText() == 'Target updated')
+    "#,
+    );
+}
+
+#[test]
+fn spell_display_remove_one_unit_preserves_other_container() {
+    use wow_ui_sim::c_api::ui_widget_manager::ProcessingUnit;
+    let env = load_and_register_spell_container_env(true);
+    assert_lua(
+        &env,
+        "second unit",
+        r#"
+        OtherContainer = CreateFrame('Frame', nil, UIParent, 'UIWidgetContainerTemplate')
+        OtherContainer:RegisterForWidgetSet(431, nil, nil, 'target')
+    "#,
+    );
+    for (unit, text) in [("player", "Player widget"), ("target", "Target widget")] {
+        let mut membership = entry();
+        membership.unit_token = Some(unit.into());
+        let mut row = supplied_record();
+        row.spell_info.text = text.into();
+        env.update_ui_widget(SET_ID, membership, WidgetVisualization::SpellDisplay(row))
+            .unwrap();
+    }
+    let mut membership = entry();
+    membership.unit_token = Some("player".into());
+    let mut updated = supplied_record();
+    updated.spell_info.text = "Player replacement".into();
+    env.update_ui_widget(
+        SET_ID,
+        membership,
+        WidgetVisualization::SpellDisplay(updated),
+    )
+    .unwrap();
+    assert_lua(
+        &env,
+        "unit replacement leaves target container",
+        r#"
+        assert(SpellContainer.widgetFrames[761301].Spell.Text:GetText() == 'Player replacement')
+        assert(OtherContainer.widgetFrames[761301].Spell.Text:GetText() == 'Target widget')
+    "#,
+    );
+    env.remove_ui_widget_for_unit(SET_ID, ID, ProcessingUnit::Token("player".into()))
+        .unwrap();
+    assert_lua(
+        &env,
+        "unit removal leaves target container",
+        r#"
+        assert(SpellContainer.widgetFrames[761301] == nil, 'removed player widget')
+        assert(OtherContainer.widgetFrames[761301].Spell.Text:GetText() == 'Target widget', 'target widget remains')
+    "#,
+    );
+}
+
+#[test]
+fn spell_display_guid_context_delivers_to_original_container() {
+    let env = load_and_register_spell_container_env(false);
+    assert_lua(
+        &env,
+        "GUID container",
+        r#"
+        GuidContainer = CreateFrame('Frame', nil, UIParent, 'UIWidgetContainerTemplate')
+        GuidContainer:RegisterForWidgetSet(431, nil, nil, {unit='Creature-1', isGuid=true})
+    "#,
+    );
+    let mut membership = entry();
+    membership.unit_token = Some("Creature-1".into());
+    let mut row = supplied_record();
+    row.spell_info.text = "GUID widget".into();
+    env.update_ui_widget_for_guid(SET_ID, membership, WidgetVisualization::SpellDisplay(row))
+        .unwrap();
+    assert_lua(
+        &env,
+        "GUID event and query",
+        r#"
+        assert(GuidContainer.widgetFrames[761301].Spell.Text:GetText() == 'GUID widget')
+        C_UIWidgetManager.SetProcessingUnitGuid('Creature-1')
+        assert(C_UIWidgetManager.GetSpellDisplayVisualizationInfo(761301).spellInfo.text == 'GUID widget')
+        C_UIWidgetManager.SetProcessingUnit('Creature-1')
+        assert(C_UIWidgetManager.GetSpellDisplayVisualizationInfo(761301) == nil)
+        C_UIWidgetManager.SetProcessingUnit(nil)
+        assert(C_UIWidgetManager.GetSpellDisplayVisualizationInfo(761301) == nil)
+    "#,
+    );
+}
+
+#[test]
 fn spell_display_attached_player_context_separate_from_world_loot_policy() {
     let env = load_and_register_spell_container_env(true);
     supply(&env, supplied_record(), true);
@@ -210,17 +361,32 @@ fn spell_display_attached_player_context_separate_from_world_loot_policy() {
 fn spell_display_seeded_world_loot_and_api_queries() {
     use wow_ui_sim::c_api::world_loot_object::WorldLootObject;
     let env = load_and_register_spell_container_env(true);
-    assert_lua(&env, "world loot event listener", r#"
+    assert_lua(
+        &env,
+        "world loot event listener",
+        r#"
         lootEvents = {}
         local listener = CreateFrame('Frame')
         listener:RegisterEvent('WORLD_LOOT_OBJECT_INFO_UPDATED')
         listener:SetScript('OnEvent', function(_, _, guid) table.insert(lootEvents, guid) end)
         assert(not C_WorldLootObject.IsWorldLootObject('player'))
         assert(C_WorldLootObject.GetWorldLootObjectInfo('player') == nil)
-    "#);
-    let object = WorldLootObject { unit_token: "player".into(), inventory_type: 1, at_max_quality: true, is_upgrade: false, distance_squared: 9.0, in_range: true };
-    env.supply_world_loot_object("GameObject-1", object.clone()).unwrap();
-    assert_lua(&env, "seeded queries and event", r#"
+    "#,
+    );
+    let object = WorldLootObject {
+        unit_token: "player".into(),
+        inventory_type: 1,
+        at_max_quality: true,
+        is_upgrade: false,
+        distance_squared: 9.0,
+        in_range: true,
+    };
+    env.supply_world_loot_object("GameObject-1", object.clone())
+        .unwrap();
+    assert_lua(
+        &env,
+        "seeded queries and event",
+        r#"
         assert(#lootEvents == 1 and lootEvents[1] == 'GameObject-1')
         assert(C_WorldLootObject.IsWorldLootObject('player'))
         assert(C_WorldLootObject.IsWorldLootObjectByGUID('GameObject-1'))
@@ -239,28 +405,42 @@ fn spell_display_seeded_world_loot_and_api_queries() {
         assert(not pcall(C_WorldLootObject.OnWorldLootObjectClick, 'player', nil))
         assert(not pcall(C_WorldLootObject.OnWorldLootObjectClick, nil, true))
         C_WorldLootObject.OnWorldLootObjectClick('player', true)
-    "#);
-    assert_eq!(env.state().borrow().world_loot_objects.clicks, [("player".into(), true)]);
+    "#,
+    );
+    assert_eq!(
+        env.state().borrow().world_loot_objects.clicks,
+        [("player".into(), true)]
+    );
     // The non-equippable path avoids an unrelated unsupported event.
     let mut non_equippable = object.clone();
     non_equippable.inventory_type = 0;
-    env.supply_world_loot_object("GameObject-1", non_equippable).unwrap();
+    env.supply_world_loot_object("GameObject-1", non_equippable)
+        .unwrap();
     supply(&env, supplied_record(), true);
-    assert_lua(&env, "original spell display world loot branch", r#"
+    assert_lua(
+        &env,
+        "original spell display world loot branch",
+        r#"
         local frame = assert(SpellContainer.widgetFrames[761301])
         assert(frame.displayedWorldLootObject == 'player')
         assert(frame.rarityPipPool:GetNumActive() == 3)
-    "#);
+    "#,
+    );
     let mut updated = object;
     updated.inventory_type = 0;
     updated.in_range = false;
     updated.is_upgrade = true;
-    env.supply_world_loot_object("GameObject-1", updated).unwrap();
-    assert_lua(&env, "updated state", r#"
+    env.supply_world_loot_object("GameObject-1", updated)
+        .unwrap();
+    assert_lua(
+        &env,
+        "updated state",
+        r#"
         assert(#lootEvents == 3 and lootEvents[2] == 'GameObject-1' and lootEvents[3] == 'GameObject-1')
         assert(not C_WorldLootObject.IsWorldLootObjectInRange('player'))
         assert(C_WorldLootObject.GetWorldLootObjectInfo('player').isUpgrade)
-    "#);
+    "#,
+    );
 }
 
 #[test]

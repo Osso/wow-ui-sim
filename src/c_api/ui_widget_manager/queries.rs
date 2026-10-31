@@ -128,11 +128,16 @@ fn query_icon_and_text(state: &mut LuaState) -> LuaResult<u32> {
         state,
         "C_UIWidgetManager.GetIconAndTextWidgetVisualizationInfo: widgetID must be a number",
     )?;
-    let record = borrow_state(state)?
-        .ui_widget_inputs
-        .icon_and_text
-        .get(&WidgetId::from_number(id))
-        .cloned();
+    let record = {
+        let sim = borrow_state(state)?;
+        let inputs = &sim.ui_widget_inputs;
+        inputs.resolve_visualization(WidgetId::from_number(id), &inputs.icon_and_text, |value| {
+            match value {
+                super::WidgetVisualization::IconAndText(record) => Some(record),
+                _ => None,
+            }
+        })
+    };
     let Some(record) = record else {
         state.push(Val::Nil);
         return Ok(1);

@@ -22,11 +22,16 @@ fn query_item_display(state: &mut LuaState) -> LuaResult<u32> {
         state,
         "C_UIWidgetManager.GetItemDisplayVisualizationInfo: widgetID must be a number",
     )?;
-    let record = borrow_state(state)?
-        .ui_widget_inputs
-        .item_display
-        .get(&WidgetId::from_number(id))
-        .cloned();
+    let record = {
+        let sim = borrow_state(state)?;
+        let inputs = &sim.ui_widget_inputs;
+        inputs.resolve_visualization(WidgetId::from_number(id), &inputs.item_display, |value| {
+            match value {
+                super::WidgetVisualization::ItemDisplay(record) => Some(record),
+                _ => None,
+            }
+        })
+    };
     let Some(record) = record else {
         state.push(Val::Nil);
         return Ok(1);

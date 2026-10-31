@@ -22,11 +22,18 @@ fn query_discrete_progress_steps(state: &mut LuaState) -> LuaResult<u32> {
         state,
         "C_UIWidgetManager.GetDiscreteProgressStepsVisualizationInfo: widgetID must be a number",
     )?;
-    let record = borrow_state(state)?
-        .ui_widget_inputs
-        .discrete_progress_steps
-        .get(&WidgetId::from_number(id))
-        .cloned();
+    let record = {
+        let sim = borrow_state(state)?;
+        let inputs = &sim.ui_widget_inputs;
+        inputs.resolve_visualization(
+            WidgetId::from_number(id),
+            &inputs.discrete_progress_steps,
+            |value| match value {
+                super::WidgetVisualization::DiscreteProgressSteps(record) => Some(record),
+                _ => None,
+            },
+        )
+    };
     let Some(record) = record else {
         state.push(Val::Nil);
         return Ok(1);
