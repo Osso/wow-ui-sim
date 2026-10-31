@@ -62,7 +62,6 @@ jobs:
       - name: Checkout simulator
         uses: actions/checkout@v4
         with:
-          submodules: recursive
           persist-credentials: false
 
       - name: Install Rust

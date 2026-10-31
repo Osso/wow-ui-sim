@@ -48,8 +48,7 @@ pub(crate) use secret_values::register_retail_secret_values;
 
 /// Register all security-related globals into rilua's global table.
 ///
-/// Registers the same set as `security_api::register_security_functions` but
-/// as rilua `RustFn`s. Elune C-runtime functions are excluded.
+/// Registers the security globals as rilua `RustFn`s.
 pub fn register_all(lua: &mut rilua::Lua) -> LuaResult<()> {
     LuaApiMut::register_function(lua, "securecallmethod", securecallmethod::securecallmethod)?;
     environment::register_environment_helpers(lua)?;

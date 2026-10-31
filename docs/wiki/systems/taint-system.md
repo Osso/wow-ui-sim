@@ -1,6 +1,6 @@
 # Taint System
 
-The taint system enforces WoW's secure/insecure execution boundary. The simulator keeps the practical pieces that addons rely on: protected-frame gating, the dual-environment split (`genv` vs `secureenv`), SecureHandler fallbacks, and shallow state/attribute driver application. Per-call taint tracking still comes from the Elune Lua runtime.
+The taint system enforces WoW's secure/insecure execution boundary. The simulator keeps the practical pieces that addons rely on: protected-frame gating, the dual-environment split (`genv` vs `secureenv`), SecureHandler fallbacks, and shallow state/attribute driver application. Per-call taint tracking comes from the rilua VM, which implements Elune-compatible taint natively.
 
 ## Design Scope
 
@@ -8,8 +8,8 @@ Full retail taint simulation remains out of scope. What the simulator does imple
 
 - **Protected-frame gating**: `can_change_protected_state_for()` blocks protected mutations when the caller is insecure and the player is in combat
 - **Dual Lua environment**: `genv` (`_G`) for addon code vs `secureenv` for Blizzard secure code. `secureenv` is a separate shallow copy, not a live overlay over `_G`.
-- **Elune runtime taint**: `issecure`, `securecall`, `issecurevariable`, `forceinsecure`, and `debug.*taint*` helpers come from Elune
-- **securecallmethod()**: simulator-provided helper that Elune omits
+- **VM taint**: `debug.*taint*` helpers come from rilua; `issecure`, `securecall`, `issecurevariable` and `forceinsecure` follow Elune semantics
+- **securecallmethod()**: simulator-provided helper
 - **Secret values**: simulator-owned identity values and tainted `CallMethod` payloads/results are tracked by fallback accessors
 - **SecureHandler fallback**: `SecureHandlerSetFrameRef`, `SecureHandlerGetFrameRef`, `SecureHandlerExecute`, `SecureHandlerWrapScript`, and `SecureHandlerUnwrapScript` are backed by the Lua-side fallback in `src/lua_api/globals/security.rs`
 - **State/attribute drivers**: `RegisterStateDriver`, `UnregisterStateDriver`, `RegisterAttributeDriver`, `UnregisterAttributeDriver` store raw driver text in `SimState.secure_attribute_drivers` and eagerly apply the resolved state
@@ -55,9 +55,9 @@ For shared Blizzard libraries, publication into secureenv is an explicit loader 
 
 `set_in_both_envs_rilua(key, value)` registers named frames in both environments so frame globals are visible from both.
 
-## Elune Runtime Functions
+## Runtime Taint Functions
 
-Elune provides `issecure`, `issecurevariable`, `securecall`, `securecallfunction`, `forceinsecure`, `hooksecurefunc`, `secureexecuterange`, and the `debug.*taint*` helpers. The simulator relies on these VM-level functions instead of replacing them.
+rilua provides the `debug.*taint*` helpers natively. The simulator registers or overrides `issecurevariable`, `forceinsecure`, `issecure`, `hooksecurefunc` and `secureexecuterange` on top of that VM state; see the Taint System section of the repo `AGENTS.md`.
 
 `securecallmethod(obj, name, ...)` calls `obj[name](obj, ...)` via protected pcall dispatch and returns `nil` on missing/non-function/error paths.
 
@@ -124,7 +124,7 @@ The secure-file and restricted-environment startup-test citations below have [pr
 
 End-to-end coverage summary:
 
-- `tests/security_api.rs` covers the base Elune contract: `issecure()`, `forceinsecure()`, `loadstring()` tainting, and `securecall()` restoring secure execution.
+- `tests/security_api.rs` covers the base Elune-compatible contract: `issecure()`, `forceinsecure()`, `loadstring()` tainting, and `securecall()` restoring secure execution.
 - `tests/protected_frame_enforcement.rs` covers the combat/insecure gates that many `issecure()` branches are protecting.
 - `tests/secure_handler_fallback.rs` covers the SecureHandler fallback path that runs before `Blizzard_RestrictedAddOnEnvironment` loads.
 - `tests/secure_group_headers.rs` covers the secure group-header path after `Blizzard_RestrictedAddOnEnvironment` loads.

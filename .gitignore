@@ -5,8 +5,6 @@
 /cache/
 /iced-dynamic/target
 /iced-dynamic/Cargo.lock
-/elune-src/target
-/elune-src/Cargo.lock
 /Interface/AddOns/*
 !/Interface/AddOns/TestFramework
 !/Interface/AddOns/Admin
