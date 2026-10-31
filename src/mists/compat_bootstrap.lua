@@ -570,40 +570,6 @@ function DebugBarManager:GetTotalHeight() return 0 end
 
 -- ─── C_LootHistory namespace ─────────────────────────────────────────────────
 
--- C_Item.GetItemQualityColor: mists's UIParent.lua iterates qualities 0..8
--- and stuffs the (r,g,b) tuple into ITEM_QUALITY_COLORS. Returning nil for
--- the tuple causes nil arithmetic when CreateColor formats hex markup.
-do
-  local quality_colors = {
-    [0] = { 0.62, 0.62, 0.62, "9d9d9d" },  -- Poor (gray)
-    [1] = { 1.00, 1.00, 1.00, "ffffff" },  -- Common (white)
-    [2] = { 0.12, 1.00, 0.00, "1eff00" },  -- Uncommon (green)
-    [3] = { 0.00, 0.44, 0.87, "0070dd" },  -- Rare (blue)
-    [4] = { 0.64, 0.21, 0.93, "a335ee" },  -- Epic (purple)
-    [5] = { 1.00, 0.50, 0.00, "ff8000" },  -- Legendary (orange)
-    [6] = { 0.90, 0.80, 0.50, "e6cc80" },  -- Artifact (light gold)
-    [7] = { 0.00, 0.80, 1.00, "00ccff" },  -- Heirloom (light blue)
-    [8] = { 0.00, 0.80, 1.00, "00ccff" },  -- Token (light blue)
-  }
-
-  C_Item = C_Item or {}
-  -- Override unconditionally: the simulator's existing C_Item registration
-  -- doesn't expose this method, and mists's UIParent.lua needs it during
-  -- bootstrap. Even if a future C_Item stub appears, mists's hardcoded color
-  -- table is fine for visual fidelity in 2D mode.
-  function C_Item.GetItemQualityColor(quality)
-    local row = quality_colors[quality] or quality_colors[1]
-    return row[1], row[2], row[3], row[4]
-  end
-
-  -- Flat global GetItemQualityColor: simulator's nil-stub returns nothing;
-  -- mists's UIParent.lua expects (r,g,b,hex). Always override under mists.
-  function GetItemQualityColor(quality)
-    local row = quality_colors[quality] or quality_colors[1]
-    return row[1], row[2], row[3], row[4]
-  end
-end
-
 if Enum and Enum.ItemQuality and Enum.ItemQuality.Good == nil then
   Enum.ItemQuality.Good = Enum.ItemQuality.Uncommon
 end

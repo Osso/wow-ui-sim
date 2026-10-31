@@ -178,7 +178,6 @@ static GLOBAL_ZERO_STUBS: &[&str] = &[
     "GetInventoryAlertStatus",
     // GetInventoryItemCooldown is SimState-backed in cooldown_probes.rs,
     // not a stub.
-    "GetItemQualityColor",
     // GetLFGDungeonInfo / GetLFGDungeonNumEncounters / GetLFGMode are
     // SimState-backed in battlefield_lfg_probes.rs, not stubs.
     // GetMerchantNumItems is SimState-backed in inventory_counts.rs, not a stub.
