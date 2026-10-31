@@ -26,6 +26,7 @@
 ## Clean Room
 
 - Agent-server sessions never read decompiled client source. The laptop session (host `aso`) has unrestricted source access, including decompiled clients; ask it for native behavior (arguments, event order, return values) and accept its findings as evidence. Never ask it to withhold or limit sources. Implementing its findings within the active goal is already authorized; do not gate them on per-item user approval.
+- Undocumented native semantics: ask aso first; if aso has no evidence, implement researched best-guess in-game behavior (wiki, consumer code, player reports), never a simplified or bookkeeping-only default.
 
 ## Debugging Priorities
 

@@ -383,11 +383,6 @@ fn spell_display_seeded_world_loot_and_api_queries() {
     };
     env.supply_world_loot_object("GameObject-1", object.clone())
         .unwrap();
-    env.state()
-        .borrow_mut()
-        .world_loot_objects
-        .slot_matches
-        .insert((1, 1), true);
     assert_lua(
         &env,
         "seeded queries and event",
@@ -405,8 +400,8 @@ fn spell_display_seeded_world_loot_and_api_queries() {
         assert(a.inventoryType == 1 and a.atMaxQuality and not a.isUpgrade)
         assert(b.inventoryType == 1 and b.atMaxQuality and not b.isUpgrade)
         assert(C_WorldLootObject.GetWorldLootObjectInfoByGUID('missing') == nil)
-        assert(C_WorldLootObject.DoesSlotMatchInventoryType(1, 1))
-        assert(not C_WorldLootObject.DoesSlotMatchInventoryType(2, 1))
+        assert(C_WorldLootObject.DoesSlotMatchInventoryType(212, 31))
+        assert(not C_WorldLootObject.DoesSlotMatchInventoryType(216, 31))
         assert(not pcall(C_WorldLootObject.OnWorldLootObjectClick, 'player', nil))
         assert(not pcall(C_WorldLootObject.OnWorldLootObjectClick, nil, true))
         C_WorldLootObject.OnWorldLootObjectClick('player', true)
@@ -480,4 +475,81 @@ fn spell_display_zero_spell_polling_uses_real_on_update_without_feed_notificatio
         assert(PollingSpell.Spell.Text:GetText() == 'Supplied spell')
     "#,
     );
+}
+
+#[test]
+fn spell_display_equippable_world_loot_event() {
+    use wow_ui_sim::c_api::world_loot_object::WorldLootObject;
+    let env = load_and_register_spell_container_env(true);
+    assert_lua(&env, "equip event listener", r#"
+        equipEvents = 0
+        local f = CreateFrame('Frame')
+        f:RegisterEvent('PLAYER_EQUIPED_SPELLS_CHANGED')
+        f:SetScript('OnEvent', function(_, _, ...)
+            assert(select('#', ...) == 0)
+            equipEvents = equipEvents + 1
+        end)
+    "#);
+    env.supply_world_loot_object("GameObject-1", WorldLootObject {
+        unit_token: "player".into(), inventory_type: 31, at_max_quality: false,
+        is_upgrade: true, distance_squared: 4.0, in_range: true,
+    }).unwrap();
+    supply(&env, supplied_record(), true);
+    assert_lua(&env, "equippable cached spell widget", r#"
+        local frame = assert(SpellContainer.widgetFrames[761301])
+        assert(frame.Spell:IsEventRegistered('PLAYER_EQUIPED_SPELLS_CHANGED'))
+        assert(equipEvents == 1)
+
+    "#);
+}
+
+#[test]
+fn world_loot_plunderstorm_action_button_slot_matching() {
+    let cache = wow_ui_sim::paths::default_blizzard_ui_addons_path().unwrap();
+    let env = new_blizzard_addon_env(&cache);
+    let cache = wow_ui_sim::paths::default_blizzard_ui_addons_path().unwrap();
+    env.exec(&std::fs::read_to_string(cache.join("Blizzard_Plunderstorm/GameModeConstants.lua")).unwrap()).unwrap();
+    env.exec("ActionBarButtonEventsDerivedFrameMixin = {}; ActionBarActionButtonDerivedMixin = {}").unwrap();
+    env.exec(&std::fs::read_to_string(cache.join("Blizzard_ActionBar/WoWLabs/ActionButtonOverrides.lua")).unwrap()).unwrap();
+    assert_lua(&env, "original WoWLabs action button consumer", r#"
+        local m = ActionBarActionButtonDerivedMixin
+        local offensive1, offensive2 = {action=61}, {action=62}
+        local utility1, utility2 = {action=49}, {action=50}
+        assert(m.CanSwapWithInventoryType(offensive1, 31))
+        assert(m.CanSwapWithInventoryType(offensive2, 31))
+        assert(not m.CanSwapWithInventoryType(utility1, 31))
+        assert(m.CanSwapWithInventoryType(utility1, 32))
+        assert(m.CanSwapWithInventoryType(utility2, 32))
+        assert(not m.CanSwapWithInventoryType(offensive1, 32))
+    "#);
+}
+
+#[test]
+fn world_loot_equipped_spell_change_refreshes_original_button_border() {
+    let env = load_and_register_spell_container_env(false);
+    let cache = wow_ui_sim::paths::default_blizzard_ui_addons_path().unwrap();
+    env.exec(&std::fs::read_to_string(cache.join("Blizzard_Plunderstorm/GameModeConstants.lua")).unwrap()).unwrap();
+    env.exec("ActionBarButtonEventsDerivedFrameMixin = {}; ActionBarActionButtonDerivedMixin = {}").unwrap();
+    env.exec(&std::fs::read_to_string(cache.join("Blizzard_ActionBar/WoWLabs/ActionButtonOverrides.lua")).unwrap()).unwrap();
+    assert_lua(&env, "real action button border and equipment event", r#"
+        local button = CreateFrame('Button', nil, UIParent)
+        button.action = 61
+        button.Border = button:CreateTexture(nil, 'ARTWORK')
+        button.RarityPipBackground = button:CreateTexture(nil, 'ARTWORK')
+        button.RarityPipContainer = CreateFrame('Frame', nil, button, 'VerticalLayoutFrame')
+        local m = ActionBarActionButtonDerivedMixin
+        local listener = CreateFrame('Frame')
+        local events = 0
+        listener:RegisterEvent('PLAYER_EQUIPED_SPELLS_CHANGED')
+        listener:SetScript('OnEvent', function() events = events + 1; m.UpdateBorder(button) end)
+        m.UpdateBorder(button)
+        assert(not button.Border:IsShown(), 'initial border')
+        A_Admin.EquipItem(212, 211993)
+        assert(GetInventoryItemID('player', 212) == 211993, 'item identity')
+        assert(GetInventoryItemQuality('player', 212) > 1, 'item quality')
+        assert(events == 1 and button.Border:IsShown(), 'equip event and border')
+        A_Admin.UnequipItem(212)
+        assert(GetInventoryItemID('player', 212) == nil, 'removed item')
+        assert(events == 2 and not button.Border:IsShown(), 'unequip event and border')
+    "#);
 }
