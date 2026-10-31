@@ -641,6 +641,45 @@ fn premade_group_result_update_refreshes_selected_listing() {
 
 post_wrath_ui_fixture! {
 #[test]
+fn premade_group_search_text_filter_and_clear() {
+    test_timeout! {
+        let env = setup_env();
+        env.exec(r#"
+            assert(C_AddOns.LoadAddOn('Blizzard_GroupFinder'))
+            LFGListPVEStub_OnShow(LFGListPVEStub)
+            LFGListFrame_SetActivePanel(LFGListFrame, LFGListFrame.CategorySelection)
+            local category
+            for _, button in ipairs(LFGListFrame.CategorySelection.CategoryButtons) do
+                if button:IsShown() then category = button; break end
+            end
+            assert(category)
+            category:GetScript('OnClick')(category)
+            local find = LFGListFrame.CategorySelection.FindGroupButton
+            find:GetScript('OnClick')(find)
+            local panel = LFGListFrame.SearchPanel
+            local button = panel.AutoCompleteFrame.Results[1]
+            assert(button and button:GetScript('OnClick'))
+            button.activityID = 1195
+            button:GetScript('OnClick')(button)
+            local count, ids = C_LFGList.GetSearchResults()
+            assert(count == 1 and ids[1] == 1, 'activity 1195 filter')
+            button.activityID = 1188
+            button:GetScript('OnClick')(button)
+            count, ids = C_LFGList.GetSearchResults()
+            assert(count == 1 and ids[1] == 2, 'activity 1188 filter')
+            C_LFGList.SetSearchToQuestID(987654)
+            C_LFGList.Search(2)
+            assert(select(1, C_LFGList.GetSearchResults()) == 0, 'quest filter must replace activity filter')
+            LFGListSearchPanel_Clear(panel)
+            C_LFGList.Search(2)
+            assert(select(1, C_LFGList.GetSearchResults()) == 8, 'clear must reset search text fields')
+        "#).expect("Original GroupFinder search text controls should filter and clear results");
+    }
+}
+}
+
+post_wrath_ui_fixture! {
+#[test]
 fn premade_group_search_result_tooltips_do_not_error() {
     test_timeout! {
         let env = setup_env();
