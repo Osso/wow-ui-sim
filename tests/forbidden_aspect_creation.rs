@@ -492,3 +492,28 @@ fn scripted_focus_aspect_unrestricted_focus_mutations_and_queries_still_work() {
         assert(PlainFocusFirst:HasFocus() and not PlainFocusSecond:HasFocus())
     "#).expect("unrestricted engine typing retains the current focus owner");
 }
+
+#[test]
+fn forbidden_aspect_error_text_matches_native() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(r#"
+        local frame = CreateFrame('Frame')
+        frame:AddForbiddenAspects(Enum.ForbiddenAspect.EventRegistrations)
+        local function invoke() frame:RegisterEvent('PLAYER_LOGIN') end
+        debug.setobjecttaint(invoke, 'AspectProbe')
+        local ok, err = pcall(invoke)
+        assert(not ok)
+        assert(err == "Function call not permitted due to forbidden aspect 'EventRegistrations' (execution tainted by 'AspectProbe')", err)
+    "#).unwrap();
+}
+
+#[cfg(feature = "client-ptr")]
+#[test]
+fn ptr_unknown_forbidden_aspect_has_native_text() {
+    let env = WowLuaEnv::new().unwrap();
+    let result = load_xml_fixture(
+        &env,
+        r#"<Ui><Frame name="InvalidAspect"><ForbiddenAspects><ForbiddenAspect aspect="NotARealForbiddenAspect"/></ForbiddenAspects></Frame></Ui>"#,
+    );
+    assert!(result.warnings.iter().any(|warning| warning.ends_with("Unknown forbidden aspect 'NotARealForbiddenAspect'")), "{:?}", result.warnings);
+}
