@@ -7,7 +7,7 @@ const DEFAULT_READS: &str = r#"
     assert(C_StableInfo.GetNumStableSlots() == 2, "default owned slots")
     assert(C_StableInfo.GetNextStableSlotCost() == 0, "unavailable purchase cost")
     assert(C_StableInfo.GetNumStablePets() == 0, "empty stable count")
-    for slot = 1, 3 do assert(type(C_StableInfo.GetStablePetInfo(slot)) == "table") end
+    for slot = 1, 3 do assert(C_StableInfo.GetStablePetInfo(slot) == nil) end
 "#;
 
 const MONEY_EVENT: &str = r#"
@@ -103,11 +103,11 @@ fn stable_reads_configured_pet_fields_and_snapshot() {
         assert(p.uiModelSceneID == 718 and p.petNumber == 17 and p.creatureID == 299)
         assert(p.specID == 1 and p.loyaltyLevel == 6 and p.loyaltyName == "Best Friend")
         assert(p.happinessLevel == 3 and p.experience == 1200 and p.experienceNeeded == 4000)
-        assert(type(C_StableInfo.GetStablePetInfo(1)) == "table")
-        assert(type(C_StableInfo.GetStablePetInfo(3)) == "table")
-        assert(type(C_StableInfo.GetStablePetInfo(0)) == "table")
-        assert(type(C_StableInfo.GetStablePetInfo(-1)) == "table")
-        assert(type(C_StableInfo.GetStablePetInfo(99)) == "table")
+        assert(C_StableInfo.GetStablePetInfo(1) == nil)
+        assert(C_StableInfo.GetStablePetInfo(3) == nil)
+        assert(C_StableInfo.GetStablePetInfo(0) == nil)
+        assert(C_StableInfo.GetStablePetInfo(-1) == nil)
+        assert(C_StableInfo.GetStablePetInfo(99) == nil)
         p.name = "changed"; p.petAbilities[1] = 0
         local again = C_StableInfo.GetStablePetInfo(2)
         assert(again.name == "Fang" and again.petAbilities[1] == 17253)
@@ -146,7 +146,7 @@ fn stable_reads_count_tracks_pets_and_environments_are_independent() {
         .exec("assert(not C_StableInfo.IsAtPetStable())")
         .unwrap();
     first.state().borrow_mut().stable_reads.pets.clear();
-    first.exec("assert(C_StableInfo.GetNumStablePets() == 0); assert(type(C_StableInfo.GetStablePetInfo(1)) == 'table')").unwrap();
+    first.exec("assert(C_StableInfo.GetNumStablePets() == 0); assert(C_StableInfo.GetStablePetInfo(1) == nil)").unwrap();
 }
 
 #[test]
@@ -172,7 +172,7 @@ fn forever_native_empty_pet_and_original_purchase_consumer() {
     env.exec(r#"
         assert(debug.getinfo(PetStablePurchaseButtonMixin.Update).source:find("Camelot/Blizzard_StableUI.lua", 1, true))
         local value = C_StableInfo.GetStablePetInfo(99)
-        assert(type(value) == "table", "absent stable pet must return a table")
+        assert(value == nil, "absent stable pet must return nil")
         PetStablePurchaseButtonMixin.Update(PetStableFrame.purchaseButton)
     "#).unwrap();
 }
@@ -197,7 +197,7 @@ fn forever_stable_native_record_flags_and_cost_keys() {
         assert(C_StableInfo.GetNumStablePets() == 1)
         assert(C_StableInfo.GetNextStableSlotCost() == 123)
         assert(select('#', C_StableInfo.GetStablePetInfo(99)) == 1)
-        assert(type(C_StableInfo.GetStablePetInfo(99)) == 'table')
+        assert(C_StableInfo.GetStablePetInfo(99) == nil)
     "#,
     )
     .unwrap();
@@ -206,4 +206,28 @@ fn forever_stable_native_record_flags_and_cost_keys() {
         .unwrap();
     env.state().borrow_mut().stable_reads.owned_slots = 255;
     env.exec("assert(C_StableInfo.GetNumStableSlots() == 255); assert(C_StableInfo.GetNextStableSlotCost() == 0)").unwrap();
+}
+
+#[test]
+fn forever_stable_slot_original_consumer_populated_and_empty() {
+    use crate::common::blizzard_addon_harness::{blizzard_ui_dir, load_blizzard_addon_closure_into_env, new_blizzard_addon_env};
+    let ui = blizzard_ui_dir();
+    let env = new_blizzard_addon_env(&ui);
+    load_blizzard_addon_closure_into_env(&env, &ui, &["Blizzard_StableUI"], &[]);
+    {
+        let mut state = env.state().borrow_mut();
+        state.stable_reads.owned_slots = 2;
+        state.stable_reads.pets.insert(2, wolf());
+    }
+    env.exec(r#"
+        assert(debug.getinfo(PetStableSlotMixin.Update).source:find("Camelot/Blizzard_StableUI.lua", 1, true))
+        local populated = PetStableFrame:GetSlotFrame(2)
+        local empty = PetStableFrame:GetSlotFrame(3)
+        PetStableSlotMixin.Update(populated)
+        assert(populated.tooltip == "Fang", "populated name")
+        assert(populated.tooltipSubtext == format(UNIT_LEVEL_TEMPLATE, 42) .. " Wolf", "populated level and family")
+        PetStableSlotMixin.Update(empty)
+        assert(empty.tooltip == EMPTY_STABLE_SLOT, "unlocked empty slot")
+        assert(empty.tooltipSubtext == "", "empty subtext")
+    "#).unwrap();
 }
