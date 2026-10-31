@@ -760,3 +760,17 @@ fn protected_lower_preserves_hit_order_in_combat() {
     assert_eq!(top(), "ProtectedLowerTarget");
     env.exec("assert(#LowerEvents == 1 and LowerEvents[1][1] == 'ProtectedMethodAddon' and LowerEvents[1][2] == 'ProtectedLowerTarget:Lower()' and LowerRouted == 'ProtectedMethodAddon')").unwrap();
 }
+
+#[test]
+fn protected_transition_set_all_points() {
+    assert_protected_transition(
+        "Frame",
+        "SetAllPoints",
+        "local a=CreateFrame('Frame',nil,UIParent); local b=CreateFrame('Frame',nil,UIParent); local c=CreateFrame('Frame',nil,UIParent)",
+        "frame:SetAllPoints(a)",
+        "frame:SetAllPoints(b)",
+        "frame:SetAllPoints(c)",
+        "select(2,frame:GetPoint(1)) == a",
+        "select(2,frame:GetPoint(1)) == b",
+    );
+}
