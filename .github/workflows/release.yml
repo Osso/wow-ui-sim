@@ -259,6 +259,9 @@ jobs:
           # Generate the source PNG for the iconset (also writes the ICO,
           # which is unused on macOS).
           cargo run --example gen_app_icon --no-default-features --features "${{ matrix.features }}"
+          # The icon generator needs a second, dev-profile build. Drop it so
+          # the DMG step has disk space (v0.1.38 failed with ENOSPC).
+          rm -rf target/debug
 
           # Build a multi-size iconset from the rendered PNG and convert
           # to .icns. Source is 128x128, so larger sizes are upscaled.

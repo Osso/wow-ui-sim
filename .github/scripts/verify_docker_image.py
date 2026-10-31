@@ -69,7 +69,7 @@ end)
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("image")
-    parser.add_argument("--qemu", type=Path, default=Path("/usr/bin/qemu-x86_64-static"))
+    parser.add_argument("--qemu", type=Path, default=Path("/usr/bin/qemu-x86_64"))
     arguments = parser.parse_args()
     qemu = arguments.qemu.resolve(strict=True)
     verify(arguments.image, qemu)

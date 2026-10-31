@@ -46,7 +46,7 @@ jobs:
       - name: Install baseline CPU emulator
         run: |
           sudo apt-get update
-          sudo apt-get install -y --no-install-recommends qemu-user-static
+          sudo apt-get install -y --no-install-recommends qemu-user
 
       - name: Verify final image before publication
         run: python3 "${GITHUB_WORKSPACE}/.github/scripts/verify_docker_image.py" wow-ui-sim:ci

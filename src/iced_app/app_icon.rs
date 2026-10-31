@@ -4,19 +4,30 @@
 
 use iced::{Size, window};
 
-use crate::app_icon_render::{FREEDESKTOP_APP_ID, SIZE, render_icon};
+#[cfg(target_os = "linux")]
+use crate::app_icon_render::FREEDESKTOP_APP_ID;
+use crate::app_icon_render::{SIZE, render_icon};
 
 pub(super) fn settings() -> window::Settings {
-    let mut settings = window::Settings {
+    window::Settings {
         size: initial_window_size(),
         icon: window::icon::from_rgba(render_icon(), SIZE, SIZE).ok(),
+        platform_specific: platform_settings(),
         ..window::Settings::default()
-    };
-    #[cfg(target_os = "linux")]
-    {
-        settings.platform_specific.application_id = FREEDESKTOP_APP_ID.to_string();
     }
-    settings
+}
+
+#[cfg(target_os = "linux")]
+fn platform_settings() -> window::settings::PlatformSpecific {
+    window::settings::PlatformSpecific {
+        application_id: FREEDESKTOP_APP_ID.to_string(),
+        ..Default::default()
+    }
+}
+
+#[cfg(not(target_os = "linux"))]
+fn platform_settings() -> window::settings::PlatformSpecific {
+    window::settings::PlatformSpecific::default()
 }
 
 pub(super) fn initial_window_size() -> Size {
