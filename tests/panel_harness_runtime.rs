@@ -189,6 +189,39 @@ fn achievement_error_handling_load_matches_raw_load_addon() {
 
 #[cfg(feature = "client-retail")]
 #[test]
+fn mount_filter_native_initial_and_reset_consumer() {
+    let env = WowLuaEnv::new().expect("Lua environment");
+    env.set_screen_size(1024.0, 768.0);
+    env.state().borrow_mut().addon_base_paths = vec![blizzard_ui_dir()];
+    load_panel_harness(&env);
+    env.exec(r#"
+        assert(C_AddOns.LoadAddOn("Blizzard_Collections"))
+        assert(not C_MountJournal.IsUsingDefaultFilters(), "load must not set defaults")
+        assert(not C_MountJournal.GetCollectedFilterSetting(0), "initial collected bit")
+        assert(not C_MountJournal.IsTypeChecked(3), "initial type bit")
+        local dropdown = MountJournal.FilterDropdown
+        dropdown.defaultCallback()
+        assert(C_MountJournal.IsUsingDefaultFilters(), "consumer reset sets defaults")
+        assert(C_MountJournal.GetCollectedFilterSetting(0))
+        assert(C_MountJournal.GetCollectedFilterSetting(1))
+        assert(not C_MountJournal.GetCollectedFilterSetting(2))
+        assert(not C_MountJournal.IsValidTypeFilter(3))
+        assert(C_MountJournal.IsTypeChecked(3))
+        assert(not pcall(C_MountJournal.SetTypeFilter, 3, false))
+        C_MountJournal.SetTypeFilter(31, true)
+        assert(C_MountJournal.IsTypeChecked(31))
+        assert(not C_MountJournal.IsUsingDefaultFilters())
+        C_MountJournal.SetAllTypeFilters(true)
+        assert(C_MountJournal.IsUsingDefaultFilters())
+        C_MountJournal.SetSearch("not-a-real-mount-name")
+        C_MountJournal.SetDefaultFilters()
+        assert(C_MountJournal.IsUsingDefaultFilters())
+        assert(C_MountJournal.GetNumDisplayedMounts() == 0)
+    "#).expect("native filter behavior through Collections");
+}
+
+#[cfg(feature = "client-retail")]
+#[test]
 fn mount_filter_reset_consumer_restores_defaults() {
     let env = WowLuaEnv::new().expect("Lua environment");
     env.set_screen_size(1024.0, 768.0);
@@ -210,16 +243,16 @@ fn mount_filter_reset_consumer_restores_defaults() {
         assert(dropdown.ResetButton:IsShown(), "consumer exposes reset")
         MountJournal_SetNotCollectedFilter(false)
         MountJournal_SetUnusableFilter(false)
-        C_MountJournal.SetSourceFilter(1, false)
+        C_MountJournal.SetSourceFilter(0, false)
         C_MountJournal.SetTypeFilter(1, false)
         dropdown.defaultCallback()
         dropdown:ValidateResetState()
         assert(C_MountJournal.IsUsingDefaultFilters(), "reset restores default state")
         assert(not dropdown.ResetButton:IsShown(), "consumer hides reset")
         assert(MountJournal_GetCollectedFilter(), "collected restored")
-        assert(MountJournal_GetNotCollectedFilter(), "not-collected restored")
-        assert(MountJournal_GetUnusableFilter(), "unusable restored")
-        assert(C_MountJournal.IsSourceChecked(1), "source restored")
+        assert(not MountJournal_GetNotCollectedFilter(), "not-collected bit is clear")
+        assert(not MountJournal_GetUnusableFilter(), "unusable bit is clear")
+        assert(C_MountJournal.IsSourceChecked(0), "source restored")
         assert(C_MountJournal.IsTypeChecked(1), "type restored")
         local count = C_MountJournal.GetNumDisplayedMounts()
         C_MountJournal.SetSearch("not-a-real-mount-name")
@@ -229,8 +262,8 @@ fn mount_filter_reset_consumer_restores_defaults() {
         assert(C_MountJournal.GetNumDisplayedMounts() == 0, "filter reset preserves search")
         C_MountJournal.SetSearch("")
         assert(C_MountJournal.GetNumDisplayedMounts() == count, "clearing search restores list")
-        for i = 1, 12 do assert(C_MountJournal.IsSourceChecked(i), "all source defaults") end
-        for i = 1, 5 do assert(C_MountJournal.IsTypeChecked(i), "all type defaults") end
+        for i = 0, 11 do assert(C_MountJournal.IsSourceChecked(i) == C_MountJournal.IsValidSourceFilter(i), "valid source defaults") end
+        for i = 0, 4 do assert(C_MountJournal.IsTypeChecked(i), "all type defaults") end
         C_MountJournal.SetAllSourceFilters(false)
         assert(C_MountJournal.GetNumDisplayedMounts() == 0, "sources filter displayed mounts")
         assert(not C_MountJournal.IsUsingDefaultFilters(), "sources alter defaults")
@@ -241,23 +274,23 @@ fn mount_filter_reset_consumer_restores_defaults() {
         assert(not C_MountJournal.IsUsingDefaultFilters(), "types alter defaults")
         C_MountJournal.SetAllTypeFilters(true)
         assert(C_MountJournal.IsUsingDefaultFilters(), "all types restored")
-        for index = 1, 3 do
+        for index = 0, 1 do
             C_MountJournal.SetCollectedFilterSetting(index, false)
-            assert(not C_MountJournal.IsUsingDefaultFilters(), "each collected filter changes default")
+            assert(not C_MountJournal.IsUsingDefaultFilters())
             C_MountJournal.SetCollectedFilterSetting(index, true)
-            assert(C_MountJournal.IsUsingDefaultFilters(), "each collected filter restores default")
+            assert(C_MountJournal.IsUsingDefaultFilters())
         end
-        for index = 1, 12 do
-            C_MountJournal.SetSourceFilter(index, false)
-            assert(not C_MountJournal.IsUsingDefaultFilters(), "each source changes default")
-            C_MountJournal.SetSourceFilter(index, true)
-            assert(C_MountJournal.IsUsingDefaultFilters(), "each source restores default")
-        end
-        for index = 1, 5 do
-            C_MountJournal.SetTypeFilter(index, false)
-            assert(not C_MountJournal.IsUsingDefaultFilters(), "each type changes default")
-            C_MountJournal.SetTypeFilter(index, true)
-            assert(C_MountJournal.IsUsingDefaultFilters(), "each type restores default")
+        C_MountJournal.SetSourceFilter(0, false)
+        assert(not C_MountJournal.IsUsingDefaultFilters())
+        C_MountJournal.SetSourceFilter(0, true)
+        assert(C_MountJournal.IsUsingDefaultFilters())
+        for index = 0, 4 do
+            if C_MountJournal.IsValidTypeFilter(index) then
+                C_MountJournal.SetTypeFilter(index, false)
+                assert(not C_MountJournal.IsUsingDefaultFilters())
+                C_MountJournal.SetTypeFilter(index, true)
+                assert(C_MountJournal.IsUsingDefaultFilters())
+            end
         end
     "#,
     )
@@ -733,6 +766,7 @@ fn encounter_journal_journeys_frame_seeds_current_major_factions_without_tww_lea
 #[test]
 fn mount_filter_events_follow_displayed_list_changes() {
     let env = WowLuaEnv::new().expect("Lua environment");
+    env.exec("C_MountJournal.SetDefaultFilters()").unwrap();
     env.state().borrow_mut().events.drain();
     env.exec("C_MountJournal.SetCollectedFilterSetting(1, false)").unwrap();
     let events = env.state().borrow_mut().events.drain();
