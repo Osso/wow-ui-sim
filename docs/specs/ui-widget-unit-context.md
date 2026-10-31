@@ -12,13 +12,14 @@
 ## Contract
 
 - The six declaring profiles expose registration and processing APIs with the declared argument validation, secret-argument handling, nil clearing, and no return values. Registration is an idempotent set of token/GUID keys local to each simulator environment.
-- Host updates with an attached token or GUID store a visualization for that unit and widget ID. The registered unit receives synchronous `UPDATE_UI_WIDGET` after the state change; an unregistered unit receives no event. Global widget updates retain their existing behavior.
+- Host updates with an attached token or GUID store a visualization for that unit and widget ID. Unit-specific removal removes that unit's record, retains membership while another unit has a record, and notifies only if the removed unit is registered. The registered unit receives synchronous `UPDATE_UI_WIDGET` after the state change; an unregistered unit receives no event. Global widget updates retain their existing behavior.
+- Global set replacement and global membership removal use `UPDATE_ALL_UI_WIDGETS`; the documented event has no payload and the pinned container processes it without filtering.
 - Visualization queries use the selected processing token or GUID for unit-specific records. A unit-specific widget with no record for that context returns nil; clearing context leaves no unit-specific record selected. Widgets with no unit-specific records retain their supplied global record.
 - Unit-specific state is supplied, not inferred from widget IDs. Native registration lifetime and unknown-token behavior are not claimed.
 
 ## Tests
 
-- `tests/widget_spell_display/consumer.rs` exercises two attached original Blizzard containers, unit-specific queries and registration-controlled event delivery.
+- `tests/widget_spell_display/consumer.rs` exercises two attached original Blizzard containers, unit-specific queries, replacement, removal, and registration-controlled event delivery.
 - `tests/widget_spell_display/unit_apis.rs` covers argument validation and context state.
 
 ## Out of scope

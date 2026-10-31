@@ -26,7 +26,7 @@ pub struct WidgetSetRecord {
 impl UiWidgetInputs {
     pub(crate) fn unit_visualization(&self, id: WidgetId) -> Option<Option<&WidgetVisualization>> {
         let records = &self.unit_context.unit_visualizations;
-        if records.keys().any(|(_, widget_id)| *widget_id == id) {
+        if self.unit_context.unit_widget_ids.contains(&id) {
             Some(
                 self.unit_context
                     .processing_unit

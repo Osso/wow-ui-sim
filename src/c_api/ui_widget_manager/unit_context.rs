@@ -19,6 +19,7 @@ pub struct WidgetUnitContext {
     pub registrations: HashSet<(String, bool)>,
     pub processing_unit: Option<ProcessingUnit>,
     pub unit_visualizations: HashMap<(ProcessingUnit, WidgetId), WidgetVisualization>,
+    pub unit_widget_ids: HashSet<WidgetId>,
 }
 
 pub(super) fn register(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResult<()> {

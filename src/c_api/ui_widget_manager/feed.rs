@@ -131,9 +131,9 @@ impl WowLuaEnv {
                 } else {
                     ProcessingUnit::Token(unit.clone())
                 };
-                context
-                    .unit_visualizations
-                    .insert((key, WidgetId::from_number(entry.widget_id)), record);
+                let id = WidgetId::from_number(entry.widget_id);
+                context.unit_widget_ids.insert(id);
+                context.unit_visualizations.insert((key, id), record);
                 deliver = context.registrations.contains(&(unit.clone(), is_guid));
             } else {
                 supply_visualization(&mut sim, entry.widget_id, record);
@@ -146,13 +146,63 @@ impl WowLuaEnv {
         Ok(())
     }
 
+    /// Remove only the supplied unit's record and notify its registered container.
     pub fn remove_ui_widget_for_unit(
         &self,
         set_id: f64,
         widget_id: f64,
-        _unit: ProcessingUnit,
+        unit: ProcessingUnit,
     ) -> Result<bool> {
-        self.remove_ui_widget(set_id, widget_id)
+        let (entry, deliver) = {
+            let mut sim = self.state.borrow_mut();
+            let id = WidgetId::from_number(widget_id);
+            let Some(mut entry) = sim
+                .ui_widget_inputs
+                .sets
+                .get(&WidgetId::from_number(set_id))
+                .and_then(|set| {
+                    set.widgets
+                        .iter()
+                        .find(|entry| WidgetId::from_number(entry.widget_id) == id)
+                })
+                .cloned()
+            else {
+                return Ok(false);
+            };
+            let context = &mut sim.ui_widget_inputs.unit_context;
+            if context
+                .unit_visualizations
+                .remove(&(unit.clone(), id))
+                .is_none()
+            {
+                return Ok(false);
+            }
+            let (name, is_guid) = match unit {
+                ProcessingUnit::Token(name) => (name, false),
+                ProcessingUnit::Guid(name) => (name, true),
+            };
+            let deliver = context.registrations.contains(&(name.clone(), is_guid));
+            let has_other_units = context
+                .unit_visualizations
+                .keys()
+                .any(|(_, key)| *key == id);
+            if !has_other_units {
+                if let Some(set) = sim
+                    .ui_widget_inputs
+                    .sets
+                    .get_mut(&WidgetId::from_number(set_id))
+                {
+                    set.widgets
+                        .retain(|entry| WidgetId::from_number(entry.widget_id) != id);
+                }
+            }
+            entry.unit_token = Some(name);
+            (entry, deliver)
+        };
+        if deliver {
+            self.fire_ui_widget_update(set_id, &entry)?;
+        }
+        Ok(true)
     }
 
     /// Remove membership without deleting a record shared by other containers.
