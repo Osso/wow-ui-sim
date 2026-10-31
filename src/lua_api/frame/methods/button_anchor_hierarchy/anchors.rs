@@ -670,7 +670,7 @@ fn apply_set_point(
 pub(super) fn set_all_points(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
     let wrath = crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Wrath;
-    if wrath && !can_change_protected_state_for(state, id) {
+    if !can_change_protected_state_for(state, id) {
         emit_addon_action_blocked(state, id, "SetAllPoints");
         return Ok(0);
     }
