@@ -266,6 +266,10 @@ impl WowLuaEnv {
                 .quest_log_entries
                 .prune_manual_watches();
         }
+        crate::c_api::restricted_actions::apply_host_event(
+            self.lua.borrow_mut().state_mut(),
+            event,
+        )?;
         #[cfg(feature = "retail-12-0-5")]
         crate::c_api::aura_entry::apply_entry_event(self.lua.borrow_mut().state_mut(), event)?;
         #[cfg(feature = "retail-12-0-0")]

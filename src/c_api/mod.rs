@@ -401,6 +401,7 @@ mod patch_retired_members;
 #[cfg(feature = "retail-12-0-0")]
 pub(crate) use patch_retired_members::RETIRED_4_0_1_GLOBALS;
 mod registration;
+pub(crate) mod restricted_actions;
 
 pub(crate) use c_store_secure::register as register_store_secure_table;
 pub(crate) use helpers::{
@@ -427,6 +428,7 @@ fn supports_super_tracking() -> bool {
 pub(crate) fn register_utility_bootstrap_tables(state: &mut LuaState) -> LuaResult<()> {
     c_engraving::register(state)?;
     c_social_restrictions::register(state)?;
+    restricted_actions::register(state)?;
     c_loot_history::register_c_loot_history(state)?;
     c_date_and_time::register(state)?;
     #[cfg(feature = "retail-12-0-5")]

@@ -238,7 +238,7 @@ fn apply_player_state_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
 }
 
 fn apply_secure_and_store_state_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
-    temporary::restricted_actions_defaults::apply_bootstrap(lua)?;
+    temporary::restricted_actions_protected::apply_bootstrap(lua)?;
     temporary::secure_reference_defaults::apply_bootstrap(lua)?;
     temporary::secure_types_defaults::apply_bootstrap(lua)?;
     temporary::secure_transfer_state::apply_bootstrap(lua)?;
