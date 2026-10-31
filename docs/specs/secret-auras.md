@@ -24,7 +24,7 @@ Evidence levels used below:
 
 ### Who sees secrets
 - [ ] Secrecy applies to tainted (addon) execution. Untainted Blizzard code keeps working on the same data. STRING: `DenyTaintedAccessWhenAurasAreSecret`; "Auras cannot be accessed when secret while tainted by '%s'". Exact rules UNKNOWN (S2).
-- [ ] Error messages report taint separately from secrecy. STRING: one access-error family adds "(execution tainted by '%s')".
+- [x] Error messages report taint separately from secrecy: the four secret-value variants and the table guards follow the native templates ([taint error text](taint-error-text.md)).
 - [ ] Event handlers run under the taint the client gives them, not the taint of whoever caused the state change. UNKNOWN (S9). This decides issue #13's `CompactArenaFrame.lua:318` "secret access requires an untainted caller" case.
 
 ### Granularity
@@ -66,7 +66,7 @@ Evidence levels used below:
 
 ## Related narrow specs
 
-[unit-aura-slot-secret-arguments](unit-aura-slot-secret-arguments.md), [unit-aura-index-secret-arguments](unit-aura-index-secret-arguments.md), [spell-aura-secrecy](spell-aura-secrecy.md), [secret-selector-aura-duration](secret-selector-aura-duration.md), [secret-selector-aura-caster](secret-selector-aura-caster.md), [tooltip-aura-instance-security](tooltip-aura-instance-security.md), [script-object-secret-aspects](script-object-secret-aspects.md), [widget-secret-aspects-12-0-7](widget-secret-aspects-12-0-7.md), [secret-number-ordering](secret-number-ordering.md), [secret-string-formatting](secret-string-formatting.md), [closure-taint-lifetime](closure-taint-lifetime.md).
+[unit-aura-slot-secret-arguments](unit-aura-slot-secret-arguments.md), [unit-aura-index-secret-arguments](unit-aura-index-secret-arguments.md), [spell-aura-secrecy](spell-aura-secrecy.md), [secret-selector-aura-duration](secret-selector-aura-duration.md), [secret-selector-aura-caster](secret-selector-aura-caster.md), [tooltip-aura-instance-security](tooltip-aura-instance-security.md), [script-object-secret-aspects](script-object-secret-aspects.md), [widget-secret-aspects-12-0-7](widget-secret-aspects-12-0-7.md), [secret-number-ordering](secret-number-ordering.md), [secret-string-formatting](secret-string-formatting.md), [closure-taint-lifetime](closure-taint-lifetime.md), [taint-error-text](taint-error-text.md).
 
 ## Implementation inventory
 
