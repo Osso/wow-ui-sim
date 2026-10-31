@@ -16,7 +16,7 @@ resolution.
 | Data | Source | Where it lives |
 |------|--------|----------------|
 | Per-profile file **list** (`retail.txt`, …) | Gethe branch tree; exact pinned revision for Wrath | `data/blizzard-ui-files/<profile>.txt` |
-| File **content** | local WoW CASC except Wrath; pinned Blizzard CDN ranges for PTR 12.1.5; separate pinned Gethe snapshot for Wrath | `~/.cache/wow-ui-sim/blizzard-ui/<profile>/AddOns`, plus sibling `FrameXML` for Wrath |
+| File **content** | pinned Blizzard CDN ranges for Retail and PTR; local WoW CASC for other profiles except Wrath; pinned Gethe snapshot for Wrath | `~/.cache/wow-ui-sim/blizzard-ui/<profile>/AddOns`, plus sibling `FrameXML` for Wrath |
 | `path → FDID` map | community listfile + authoritative overrides | `data/wow-ui-sim-listfile.csv` (generated) |
 | Extra or canonicalized paths | hand-maintained overrides | `data/listfile-overrides.csv` |
 
@@ -24,14 +24,20 @@ Profile → Gethe branch:
 
 | Profile | Branch |
 |---------|--------|
-| retail | `live` |
+| retail | `live` (immutable revision in `data/blizzard-ui-builds/retail.json`) |
 | ptr | `ptr` (immutable revision in `data/blizzard-ui-builds/ptr.json`; [selected identity](ptr-cdn-content-index.md#selected-identity-and-regeneration-evidence)) |
 | mists | `classic` (current Classic = Mists of Pandaria) |
 | era | `classic_era` |
 | anniversary | `classic_anniversary` |
 | wowforever | `forever` (current selected target 1.60.1.70532; distinct runtime profile, cache, and manifest) |
 
-## Retail selected target — October 16, 2026
+## Retail selected target — October 31, 2026
+
+Retail sync pins `wow` **12.1.5.70575** in `data/blizzard-ui-builds/retail.json`. Its build, CDN and install keys and all 4,026 file ranges come from Blizzard metadata; runtime content comes only from the Blizzard CDN. The installed client build does not select or invalidate this cache. Sync verifies each cached content key and retains matching files, including a verified restored cache with older provenance. It writes pinned provenance after all files match.
+
+To retarget, regenerate the manifest and CDN index for the same immutable build, verify every downloaded range and decoded content key, and update the pin and manifest together. Do not use Gethe content as a runtime fallback.
+
+## Historical Retail target — October 16, 2026
 
 Retail's selected installed product is `wow` **12.1.5.70448**, active build key
 `88d5e8ef05ec5a8446cdec93d142d7c6`. Gethe `live` revision
@@ -189,9 +195,7 @@ python3 tools/gen_blizzard_ui_manifest.py                 # all profiles
 python3 tools/gen_blizzard_ui_manifest.py retail --no-refresh   # reuse existing cache
 ```
 
-For non-pinned retail/Classic products, sanity-check the reported version and active build key against the requested `.product.db` record. The resolver selects the exact product code through cascette's shared parser (`currentVersionStr` field 7, `activeBuildKey` field 14, optional `activeInstallKey` field 16); it does not use `.build.info` as authority or fallback. This is simulator policy, not a native-launcher or complete-content guarantee. PTR is different: its committed
-`data/blizzard-ui-builds/ptr.json` pins the official `wowt` build/config identity
-and Gethe revision because this machine has no matching local PTR install.
+For non-pinned Classic products, sanity-check the reported version and active build key against the requested `.product.db` record. The resolver selects the exact product code through cascette's shared parser (`currentVersionStr` field 7, `activeBuildKey` field 14, optional `activeInstallKey` field 16); it does not use `.build.info` as authority or fallback. This is simulator policy, not a native-launcher or complete-content guarantee. Retail and PTR use their committed build and content indexes instead of the installed product identity.
 
 ### 3. Regenerate the bundled limited listfile
 
@@ -231,23 +235,14 @@ compatibility.
 ### 4. Rebuild and validate the sync
 
 The manifests and limited listfile are `include_str!`'d at compile time, so
-rebuild before syncing. Non-pinned sync compares its active profile, requested CASC product, `.product.db` version/active-build identity, and compiled manifest hash with cache provenance. PTR
-12.1.7 instead compares its pinned `wowt` build/config, Gethe revision, manifest,
-and content-index hashes; it downloads exact CDN archive ranges and verifies both BLTE
-and decoded-content keys. A mismatch automatically removes only that profile's
-`AddOns` cache before extraction; do not delete the cache manually.
+rebuild before syncing. Non-pinned sync compares installed identity and manifest hash with cache provenance. Retail and PTR use pinned build/config and content-index hashes and verify CDN BLTE and decoded-content keys. Retail preserves each matching cached file when provenance differs; PTR invalidates its cache on a provenance mismatch.
 
 ```bash
 cargo build --bin wow-cli --features tools
-# Retail-only isolation test (fresh cache, non-retail flavors masked):
-python3 scripts/test-retail-casc-isolation.py
+# Use a private XDG_CACHE_HOME for source-sync tests.
 ```
 
-A pass means every retail manifest entry resolves against installed retail CASC.
-For PTR 12.1.7, `wow-cli casc sync-blizzard-ui` must report the complete pinned entry
-count; then run `lua-errors` and capture its baseline. The cache alone is not startup
-acceptance. The isolation script reports the exact list of any retail `missing or
-unusable` entries.
+For Retail and PTR, `wow-cli casc sync-blizzard-ui` must report the complete pinned entry count; then run `lua-errors` and capture its baseline. The cache alone is not startup acceptance.
 
 ### 5. Resolve residual misses
 
