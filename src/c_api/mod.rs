@@ -77,6 +77,7 @@ pub(crate) mod c_battle_net_friend_search;
 #[cfg(feature = "retail-12-0-7")]
 pub(crate) mod c_battle_net_invite;
 pub mod c_calendar;
+pub(crate) mod c_campaign_info;
 pub mod c_catalog_shop;
 pub mod c_catalog_shop_products;
 pub mod c_challenge_mode;
@@ -442,6 +443,14 @@ pub(crate) fn register_utility_bootstrap_tables(state: &mut LuaState) -> LuaResu
     c_cvar_readiness::register(state)?;
     c_achievement_info_relations::register(state)?;
     c_calendar::register(state)?;
+    if matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail
+            | crate::client_profile::ClientProfile::Ptr
+            | crate::client_profile::ClientProfile::WowForever
+    ) {
+        c_campaign_info::register(state)?;
+    }
     if supports_super_tracking() {
         c_quest_log::register(state)?;
         c_super_track::register(state)?;
