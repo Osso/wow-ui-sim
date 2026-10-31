@@ -1,3 +1,11 @@
+## [2026-10-31] persistence | Runtime configuration and SavedVariables
+
+[SavedVariables persistence](../specs/saved-variables.md) documents the shared
+byte-preserving serializer, account/character loading, retained input errors and
+current lifecycle limits. [Native lifecycle evidence](../specs/saved-variables-native-evidence.md)
+distinguishes researched policy from measured behavior. Explicit lifecycle
+finalization remains unfinished.
+
 ## [2026-10-27] proof | Mists scenario defaults
 
 [Scenario finder](systems/mists-scenario-finder.md) records the user-decided, native-UNKNOWN defaults and original-consumer proof.

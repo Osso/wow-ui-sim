@@ -3185,3 +3185,10 @@ mtime-only lib.rs and c_club.rs rebuilds. Static-only handoff; no CPU/build proo
 ## 2026-10-27 — Mists scenario defaults
 
 - Updated [scenario finder](systems/mists-scenario-finder.md) with user-decided defaults and bounded consumer proof.
+
+## 2026-10-31 — SavedVariables data preservation and input failures
+
+[SavedVariables persistence](../specs/saved-variables.md) documents byte-preserving
+serialization, account/character loading and retained input failures. The
+[native evidence](../specs/saved-variables-native-evidence.md) distinguishes
+simulator preservation from native parity. Shutdown finalization remains unfinished.

@@ -335,9 +335,21 @@ impl<'a, 's> Parser<'a, 's> {
             b'\\' => out.push(b'\\'),
             b'"' => out.push(b'"'),
             b'\'' => out.push(b'\''),
+            b'a' => out.push(7),
+            b'b' => out.push(8),
+            b'f' => out.push(12),
             b'n' => out.push(b'\n'),
             b'r' => out.push(b'\r'),
             b't' => out.push(b'\t'),
+            b'v' => out.push(11),
+            b'\r' => {
+                self.consume_byte(b'\n');
+                out.push(b'\n');
+            }
+            b'\n' => {
+                self.consume_byte(b'\r');
+                out.push(b'\n');
+            }
             b'0'..=b'9' => self.parse_decimal_escape(out, byte)?,
             other => out.push(other),
         }
@@ -631,6 +643,37 @@ mod tests {
 
         let localized: String = env.eval("return TEST_SV.localized").unwrap();
         assert_eq!(localized, "Café");
+    }
+
+    #[test]
+    fn short_string_escapes_match_lua_vm_bytes() {
+        let cases: &[(&str, &[u8])] = &[
+            (
+                r#"ESC = "\a\b\f\n\r\t\v\\\"\'""#,
+                &[7, 8, 12, 10, 13, 9, 11, b'\\', b'"', b'\''],
+            ),
+            ("ESC = \"left\\\nright\"", b"left\nright"),
+            ("ESC = \"left\\\rright\"", b"left\nright"),
+            ("ESC = \"left\\\r\nright\"", b"left\nright"),
+            ("ESC = \"left\\\n\rright\"", b"left\nright"),
+        ];
+        let mut parsed = rilua::Lua::new().unwrap();
+        let mut compiled = rilua::Lua::new().unwrap();
+        for &(source, expected) in cases {
+            parse_saved_variables_file_with_cache(parsed.state_mut(), source, None).unwrap();
+            compiled.exec(source).unwrap();
+            for lua in [&mut parsed, &mut compiled] {
+                let state = lua.state_mut();
+                let Val::Str(value) = get_global(state, "ESC") else {
+                    panic!("ESC should be a string: {source:?}");
+                };
+                assert_eq!(
+                    state.gc.string_arena.get(value).unwrap().data(),
+                    expected,
+                    "{source:?}"
+                );
+            }
+        }
     }
 
     #[test]
