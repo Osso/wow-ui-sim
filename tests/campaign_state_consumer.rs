@@ -4,7 +4,9 @@
 fn campaign_header_reflects_quest_progress() {
     let ui = wow_ui_sim::blizzard_ui_sync::default_cache_addons_path().unwrap();
     let (env, loaded) = crate::common::blizzard_addon_harness::build_blizzard_addon_closure_env(
-        &ui, &["Blizzard_UIPanels_Game"], &[],
+        &ui,
+        &["Blizzard_ObjectAPI", "Blizzard_UIPanels_Game"],
+        &[],
     );
     assert!(loaded.iter().any(|name| name == "Blizzard_UIPanels_Game"));
     {
@@ -14,7 +16,9 @@ fn campaign_header_reflects_quest_progress() {
         log.completed_quest_ids.clear();
         log.campaign_ids.extend([(91001, 101), (91002, 102)]);
         log.completed_quest_ids.insert(91001);
-        let mut active = wow_ui_sim::lua_api::state::QuestLogState::seeded().entries.remove(0);
+        let mut active = wow_ui_sim::lua_api::state::QuestLogState::seeded()
+            .entries
+            .remove(0);
         active.quest_id = 91002;
         active.is_complete = false;
         log.entries.push(active);
