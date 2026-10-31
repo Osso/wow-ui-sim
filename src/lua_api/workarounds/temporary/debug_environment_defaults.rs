@@ -10,21 +10,6 @@ if AddSourceLocationExclude == nil then
   end
 end
 
--- Secure delegates invoke the original function with secure execution taint.
--- Delegate options are accepted but not modeled. Blizzard_EnvironmentCleanup
--- nils the global; the post-cleanup restore reinstalls it here.
-if CreateSecureDelegate == nil then
-  local callSecureDelegate = securecallfunction
-  function CreateSecureDelegate(luaFunction, _options)
-    if type(luaFunction) ~= "function" then
-      error("CreateSecureDelegate: luaFunction must be a function", 2)
-    end
-    return function(...)
-      return callSecureDelegate(luaFunction, ...)
-    end
-  end
-end
-
 if GetButtonMetatable == nil then
   function GetButtonMetatable()
     if CreateFrame == nil then
@@ -239,8 +224,6 @@ mod tests {
                 end
                 traceDebugGetters("probe_start", nil)
                 local marker = function() return "wrapped" end
-                if CreateSecureDelegate(marker)() ~= "wrapped" then return "secure_delegate" end
-                traceDebugGetters("after_secure_delegate", marker)
                 if type(GetButtonMetatable()) ~= "table" then return "button_metatable" end
                 traceDebugGetters("after_button_metatable", marker)
                 if type(GetEditBoxMetatable()) ~= "table" then return "editbox_metatable" end

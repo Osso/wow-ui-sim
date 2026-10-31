@@ -272,7 +272,7 @@ pub(super) fn is_down_over(state: &mut LuaState) -> LuaResult<u32> {
 
 pub(super) fn click(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
-    ensure_forbidden_aspect_absent(state, id, "ScriptedInput", "Click")?;
+    ensure_forbidden_aspect_absent(state, id, "ScriptedInput")?;
     crate::lua_api::frame::methods::widgets::toggle_checkbutton_for_click(state, id)?;
     if !begin_click(state, id)? {
         return Ok(0);

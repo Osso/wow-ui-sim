@@ -59,17 +59,12 @@ fn push_forced_mouse_propagation(
 
 /// Clearing propagation is rejected under AlwaysPropagateInput.
 /// INFERRED: mirrors SetPropagateKeyboardInput(false); the mouse setters are unannotated.
-fn ensure_mouse_propagation_clearable(state: &mut LuaState, method_name: &str) -> LuaResult<()> {
+fn ensure_mouse_propagation_clearable(state: &mut LuaState) -> LuaResult<()> {
     let id = frame_id_from_stack(state, 1)?;
     if bool::from_stack(state, 2)? {
         return Ok(());
     }
-    forbidden_aspects::ensure_forbidden_aspect_absent(
-        state,
-        id,
-        "AlwaysPropagateInput",
-        method_name,
-    )
+    forbidden_aspects::ensure_forbidden_aspect_absent(state, id, "AlwaysPropagateInput")
 }
 
 fn push_frame_bool(state: &mut LuaState, read: impl FnOnce(&Frame) -> bool) -> LuaResult<u32> {
@@ -93,12 +88,7 @@ pub fn does_hyperlink_propagate_to_parent(state: &mut LuaState) -> LuaResult<u32
 
 pub fn set_hyperlink_propagate_to_parent(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
-    forbidden_aspects::ensure_forbidden_aspect_absent(
-        state,
-        id,
-        "UntrustedScriptExecution",
-        "SetHyperlinkPropagateToParent",
-    )?;
+    forbidden_aspects::ensure_forbidden_aspect_absent(state, id, "UntrustedScriptExecution")?;
     set_frame_bool(state, |frame, value| {
         frame.propagate_hyperlinks_to_parent = value
     })
@@ -115,11 +105,11 @@ fn set_frame_bool(state: &mut LuaState, apply: impl FnOnce(&mut Frame, bool)) ->
 }
 
 pub fn set_propagate_mouse_clicks(state: &mut LuaState) -> LuaResult<u32> {
-    ensure_mouse_propagation_clearable(state, "SetPropagateMouseClicks")?;
+    ensure_mouse_propagation_clearable(state)?;
     set_frame_bool(state, |frame, value| frame.propagate_mouse_clicks = value)
 }
 
 pub fn set_propagate_mouse_motion(state: &mut LuaState) -> LuaResult<u32> {
-    ensure_mouse_propagation_clearable(state, "SetPropagateMouseMotion")?;
+    ensure_mouse_propagation_clearable(state)?;
     set_frame_bool(state, |frame, value| frame.propagate_mouse_motion = value)
 }

@@ -35,7 +35,12 @@ pub(super) fn read_row(
     let Val::Table(reference) = table else {
         return Err(runtime_error("abbreviation breakpoint must be a table"));
     };
-    rilua::table_security::check_table_access(state, reference, None)?;
+    rilua::table_security::check_table_access(
+        state,
+        reference,
+        None,
+        rilua::table_security::TableAccess::Index,
+    )?;
     let threshold = read_number(state, table, "breakpoint", &mut secret)?;
     let significand = read_number(state, table, "significandDivisor", &mut secret)?;
     let fraction = read_number(state, table, "fractionDivisor", &mut secret)?;
@@ -71,7 +76,12 @@ pub(super) fn read_rows(state: &mut LuaState, value: Val) -> LuaResult<Vec<Break
             "abbreviation breakpoints must be an array table",
         ));
     };
-    rilua::table_security::check_table_access(state, reference, None)?;
+    rilua::table_security::check_table_access(
+        state,
+        reference,
+        None,
+        rilua::table_security::TableAccess::Index,
+    )?;
     let values = read_array(state, reference)?;
     let rows = values
         .into_iter()

@@ -20,6 +20,7 @@ pub(crate) fn restore_post_cleanup_globals(
     crate::lua_api::globals::strings::restore_missing_ui_strings(lua)?;
     crate::c_api::register_utility_bootstrap_tables(lua.state_mut())?;
     super::debug_environment_defaults::apply_bootstrap(lua)?;
+    crate::lua_api::globals::real::secure_helpers::register(lua)?;
     super::gamepad_cursor_control_defaults::apply_bootstrap(lua)?;
     super::ui_parent_panel_toggles::apply_bootstrap(lua)
 }

@@ -5,11 +5,11 @@ Frames and regions retain owned forbidden aspects and separate hierarchy/layout 
 ## What it must do
 
 - [x] Publish `Enum.ScriptObjectPropagationPath` (`Hierarchy=0`, `Layout=1`) and its metadata before frame methods are called.
-- [x] Resolve every XML aspect name through the active enum, report unknown names, and apply the same declarations to literal XML and runtime template instances.
+- [x] Resolve every XML aspect name through the active enum, report unknown names (text per [taint error text](taint-error-text.md); PTR-only native wording), and apply the same declarations to literal XML and runtime template instances.
 - [x] Merge declarations with inherited state. A nonempty mask implies `SetToDefaults`.
 - [x] Propagate `UntrustedScriptExecution`, `UntrustedLayoutScriptExecution`, and `AlwaysPropagateInput` through parent ownership; only `UntrustedLayoutScriptExecution` propagates through layout dependencies by default.
 - [x] Give newly registered children their parent's hierarchy-inheritable aspects before Lua observes the child, including textures, font strings, lines, mask textures, and native default children.
-- [x] Preserve denial of later `SetParent`/`SetPoint` operations that would acquire unowned propagating restrictions from a foreign object.
+- [x] Preserve denial of later `SetParent`/`SetPoint` operations that would acquire unowned propagating restrictions from a foreign object, with the native `Reparenting`/`Anchoring disallowed ...` text ([taint error text](taint-error-text.md)).
 
 ## How it works
 

@@ -149,20 +149,13 @@ fn validate_placement(state: &mut LuaState, id: u64, request: &WarningRequest) -
         use crate::lua_api::frame::methods::forbidden_aspects::{
             INHERITANCE_LAYOUT, INHERITANCE_PARENT, ensure_forbidden_aspects_already_owned,
         };
-        ensure_forbidden_aspects_already_owned(
-            state,
-            id,
-            request.parent,
-            INHERITANCE_PARENT,
-            "SetPrivateWarningTextAnchor",
-        )?;
+        ensure_forbidden_aspects_already_owned(state, id, request.parent, INHERITANCE_PARENT)?;
         if let Some(binding) = &request.binding {
             ensure_forbidden_aspects_already_owned(
                 state,
                 id,
                 binding.relative_to,
                 INHERITANCE_LAYOUT,
-                "SetPrivateWarningTextAnchor",
             )?;
         }
     }

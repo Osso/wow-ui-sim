@@ -50,7 +50,7 @@ pub(super) fn set_parent(state: &mut LuaState) -> LuaResult<u32> {
         return Ok(0);
     }
     #[cfg(feature = "forbidden-aspects")]
-    forbidden_aspects::ensure_forbidden_aspect_absent(state, id, "ChangeParent", "SetParent")?;
+    forbidden_aspects::ensure_forbidden_aspect_absent(state, id, "ChangeParent")?;
     #[cfg(feature = "forbidden-aspects")]
     if let Some(parent_id) = new_parent_id {
         forbidden_aspects::ensure_forbidden_aspects_already_owned(
@@ -58,7 +58,6 @@ pub(super) fn set_parent(state: &mut LuaState) -> LuaResult<u32> {
             id,
             parent_id,
             forbidden_aspects::INHERITANCE_PARENT,
-            "SetParent",
         )?;
     }
     {

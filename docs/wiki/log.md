@@ -1,3 +1,7 @@
+## [2026-10-31] implementation | Taint and secret error text
+
+Added the [taint error text](../specs/taint-error-text.md) spec (native S9 templates, best-guess site mapping) and updated [taint system](systems/taint-system.md) for the fixed forbidden-object text.
+
 ## [2026-10-31] implementation | Dungeon score rarity selection
 
 [Dungeon score rarity](systems/dungeon-score-rarity.md) records the 70688 scan, decoded condition gates, best-guess snapshot and Retail original-consumer RED/GREEN.

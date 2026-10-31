@@ -22,23 +22,23 @@ fn forever_vendor_secure_map_preserves_wrapped_key_identity() {
         r#"
         local map = ForeverSecureMaps.CreateSecureAuraInstanceMap()
         local key = secretwrap(1234)
-        assert(issecretvalue(key))
+        assert(issecretvalue(key), 'vendor map check 1')
         map[key] = 'aura'
-        assert(map[1234] == 'aura')
-        assert(map[secretwrap(1234)] == 'aura')
+        assert(map[1234] == 'aura', 'vendor map check 2')
+        assert(map[secretwrap(1234)] == 'aura', 'vendor map check 3')
         map[1234] = 'updated'
-        assert(map[key] == 'updated')
+        assert(map[key] == 'updated', 'vendor map check 4')
         local backing = {}
         settablesecurity(backing, Enum.TableSecurityOption.DisallowSecretKeys)
-        assert(not pcall(function() backing[key] = 1 end))
-        assert(not pcall(function() return backing[key] end))
+        assert(not pcall(function() backing[key] = 1 end), 'vendor map check 5')
+        assert(not pcall(function() return backing[key] end), 'vendor map check 6')
         backing[secretunwrap(key)] = 7
-        assert(backing[1234] == 7)
-        assert(not pcall(settablesecurity, {}, Enum.TableSecurityOption.SecretWrapContents))
-        assert(__secureenv.secretwrap == secretwrap)
-        assert(__secureenv.secretunwrap == secretunwrap)
-        assert(__secureenv.settablesecurity == settablesecurity)
-        assert(__secureenv.issecretvalue == issecretvalue)
+        assert(backing[1234] == 7, 'vendor map check 7')
+        assert(not pcall(settablesecurity, {}, Enum.TableSecurityOption.SecretWrapContents), 'vendor map check 8')
+        assert(__secureenv.secretwrap == secretwrap, 'vendor map check 9')
+        assert(__secureenv.secretunwrap == secretunwrap, 'vendor map check 10')
+        assert(__secureenv.settablesecurity == settablesecurity, 'vendor map check 11')
+        assert(__secureenv.issecretvalue == issecretvalue, 'vendor map check 12')
     "#,
     )
     .unwrap();
@@ -76,7 +76,7 @@ fn forever_secured_map_rejects_explicit_caller_taint() {
             return map[42]
         end)
         assert(not ok, 'tainted reader must be rejected')
-        assert(string.find(message, 'tainted access', 1, true))
+        assert(string.find(message, "attempted to index a table that cannot be accessed while tainted (execution tainted by 'SecurityProbe')", 1, true), message)
     "#,
     )
     .unwrap();
@@ -97,7 +97,7 @@ fn forever_secured_map_rejects_real_addon_loader_taint() {
         r#"
         local ok, message = pcall(function() return ForeverProtectedMap[42] end)
         assert(not ok, 'loader-stamped addon must not read secured map')
-        assert(string.find(message, 'tainted access', 1, true))
+        assert(string.find(message, "attempted to index a table that cannot be accessed while tainted (execution tainted by 'SecurityProbe')", 1, true), message)
         ForeverLoaderSecurityRejected = true
     "#,
     )

@@ -152,3 +152,22 @@ fn pre_login_buttons_stay_accessible_through_player_login() {
     assert_eq!(probe(&env, true), OPEN, "auras public again");
     assert_no_lua_errors(&env);
 }
+
+#[test]
+fn forbidden_aura_button_error_text_matches_native() {
+    let env = container_env(true);
+    set_auras_secret(&env, true);
+    let message: String = env
+        .eval(
+            r#"return AuditAddon(function()
+                local ok, err = pcall(AuditButton.SetSize, AuditButton, 24, 24)
+                assert(not ok)
+                return err
+            end)"#,
+        )
+        .unwrap();
+    assert_eq!(
+        message,
+        "Attempt to access forbidden object from code tainted by an AddOn"
+    );
+}

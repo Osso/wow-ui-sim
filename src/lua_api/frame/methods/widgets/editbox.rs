@@ -27,7 +27,7 @@ use rilua::{LuaResult, Val};
 
 pub(super) fn set_focus(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
-    ensure_forbidden_aspect_absent(state, id, "ScriptedInput", "SetFocus")?;
+    ensure_forbidden_aspect_absent(state, id, "ScriptedInput")?;
     acquire_editbox_focus(state, id)?;
     Ok(0)
 }
@@ -110,7 +110,7 @@ fn fire_focus_script(state: &mut LuaState, id: u64, handler_name: &str) -> LuaRe
 
 pub(super) fn clear_focus(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
-    ensure_forbidden_aspect_absent(state, id, "ScriptedInput", "ClearFocus")?;
+    ensure_forbidden_aspect_absent(state, id, "ScriptedInput")?;
     let cleared = {
         let mut sim = borrow_state_mut(state)?;
         if sim.focused_frame_id == Some(id) {
@@ -132,7 +132,7 @@ pub(super) fn clear_focus(state: &mut LuaState) -> LuaResult<u32> {
 
 pub(super) fn has_focus(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
-    ensure_forbidden_aspect_absent(state, id, "QueryFocus", "HasFocus")?;
+    ensure_forbidden_aspect_absent(state, id, "QueryFocus")?;
     let sim = borrow_state(state)?;
     let v = sim.focused_frame_id == Some(id);
     drop(sim);
@@ -153,7 +153,7 @@ pub(super) fn has_text(state: &mut LuaState) -> LuaResult<u32> {
 
 pub(super) fn set_cursor_position(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
-    ensure_forbidden_aspect_absent(state, id, "ScriptedInput", "SetCursorPosition")?;
+    ensure_forbidden_aspect_absent(state, id, "ScriptedInput")?;
     let pos = val_to_f64(stack_val(state, 2)) as i32;
     let mut sim = borrow_state_mut(state)?;
     if let Some(f) = sim.widgets.get_mut_visual(id) {

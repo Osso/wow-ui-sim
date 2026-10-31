@@ -623,9 +623,9 @@ fn secret_wrapped_guarded_table_retains_underlying_access_constraints() {
     env.exec(r#"
         local function addon()
             local ok, message = pcall(rawget, secondID, 'recordID')
-            assert(not ok and string.find(message, 'tainted access to secured table', 1, true), message)
+            assert(not ok and string.find(message, 'a table that cannot be accessed while tainted (execution tainted by ', 1, true), message)
             ok, message = pcall(C_HousingBasicMode.StartPlacingNewDecor, secondID)
-            assert(not ok and string.find(message, 'tainted access to secured table', 1, true), message)
+            assert(not ok and string.find(message, 'a table that cannot be accessed while tainted (execution tainted by ', 1, true), message)
             ok, message = pcall(C_HousingBasicMode.StartPlacingNewDecor, SecretSecondTable)
             assert(not ok and string.find(message, 'requires an untainted caller', 1, true), message)
             assert(not issecure())
@@ -651,9 +651,9 @@ fn guarded_selector_rejects_tainted_access_without_replacing_pending() {
         settablesecurity(guarded, 0) -- Explicit host-installed VM policy, not native API parity.
         local function addon()
             local sourceOK, sourceError = pcall(rawget, guarded, 'recordID')
-            assert(not sourceOK and string.find(sourceError, 'tainted access to secured table', 1, true))
+            assert(not sourceOK and string.find(sourceError, 'a table that cannot be accessed while tainted (execution tainted by ', 1, true))
             local ok, message = pcall(C_HousingBasicMode.StartPlacingNewDecor, guarded)
-            assert(not ok and string.find(message, 'tainted access to secured table', 1, true))
+            assert(not ok and string.find(message, 'a table that cannot be accessed while tainted (execution tainted by ', 1, true))
             assert(not issecure())
         end
         debug.setobjecttaint(addon, 'HousingPendingFixture')

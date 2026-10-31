@@ -31,7 +31,12 @@ fn read_authenticated_input(
             "housing catalog selector must be a table",
         ));
     };
-    check_table_access(state, reference, None)?;
+    check_table_access(
+        state,
+        reference,
+        None,
+        rilua::table_security::TableAccess::Index,
+    )?;
     let id = read_authenticated_variant_id(state, selector)?;
     let Val::Bool(destroy_all) = destroy_all else {
         return Err(rilua::runtime_error(
