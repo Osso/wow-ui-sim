@@ -17,7 +17,7 @@ fn displayed_mount_count(st: &crate::lua_api::state::SimState) -> i32 {
     st.world
         .mounts
         .iter()
-        .filter(|mount| mount_matches_search(mount, &st.world.mount_search_text))
+        .filter(|mount| mount_matches(st, mount))
         .count() as i32
 }
 
@@ -32,7 +32,7 @@ fn displayed_mount(
     st.world
         .mounts
         .iter()
-        .filter(|mount| mount_matches_search(mount, &st.world.mount_search_text))
+        .filter(|mount| mount_matches(st, mount))
         .nth(i)
 }
 
@@ -72,8 +72,6 @@ fn register_mount_counts(tb: TableBuilder) -> LuaResult<TableBuilder> {
         };
         count.into_stack(state)
     })?
-    .set_function("IsUsingDefaultFilters", |state| true.into_stack(state))?
-    .set_function("SetDefaultFilters", |_state| Ok(0))?
     .set_function("GetDisplayedMountID", |state| {
         let index = i32::from_stack(state, 1)?;
         let mount_id = {
@@ -243,10 +241,106 @@ fn register_mount_fanfare_stubs(tb: TableBuilder) -> LuaResult<TableBuilder> {
 }
 
 fn register_mount_filter_stubs(tb: TableBuilder) -> LuaResult<TableBuilder> {
+    let tb = tb
+        .set_function("IsDragonridingUnlocked", |state| false.into_stack(state))?
+        .set_function("IsValidSourceFilter", |state| true.into_stack(state))?
+        .set_function("IsValidTypeFilter", |state| true.into_stack(state))?;
+    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
+        return register_modeled_mount_filters(tb);
+    }
     let tb = register_collected_filter_stubs(tb)?;
     let tb = register_default_filter_stubs(tb)?;
     let tb = register_source_filter_stubs(tb)?;
     register_type_filter_stubs(tb)
+}
+
+fn register_modeled_mount_filters(tb: TableBuilder) -> LuaResult<TableBuilder> {
+    tb.set_function("IsUsingDefaultFilters", |state| {
+        let value = borrow_state(state)?.world.mount_filters == Default::default();
+        value.into_stack(state)
+    })?
+    .set_function("SetDefaultFilters", |state| {
+        update_mount_filters(state, |filters| *filters = Default::default())
+    })?
+    .set_function("GetCollectedFilterSetting", |state| {
+        let index = i32::from_stack(state, 1)?;
+        let value = borrow_state(state)?.world.mount_filters.collected(index);
+        value.into_stack(state)
+    })?
+    .set_function("SetCollectedFilterSetting", |state| {
+        let index = i32::from_stack(state, 1)?;
+        let checked = bool::from_stack(state, 2)?;
+        update_mount_filters(state, |f| f.set_collected(index, checked))
+    })?
+    .set_function("IsSourceChecked", |state| {
+        let index = i32::from_stack(state, 1)?;
+        let value = borrow_state(state)?.world.mount_filters.source(index);
+        value.into_stack(state)
+    })?
+    .set_function("SetSourceFilter", |state| {
+        let index = i32::from_stack(state, 1)?;
+        let checked = bool::from_stack(state, 2)?;
+        update_mount_filters(state, |f| f.set_source(index, checked))
+    })?
+    .set_function("SetAllSourceFilters", |state| {
+        let checked = bool::from_stack(state, 1)?;
+        update_mount_filters(state, |f| f.all_sources(checked))
+    })?
+    .set_function("IsTypeChecked", |state| {
+        let index = i32::from_stack(state, 1)?;
+        let value = borrow_state(state)?.world.mount_filters.mount_type(index);
+        value.into_stack(state)
+    })?
+    .set_function("SetTypeFilter", |state| {
+        let index = i32::from_stack(state, 1)?;
+        let checked = bool::from_stack(state, 2)?;
+        update_mount_filters(state, |f| f.set_type(index, checked))
+    })?
+    .set_function("SetAllTypeFilters", |state| {
+        let checked = bool::from_stack(state, 1)?;
+        update_mount_filters(state, |f| f.all_types(checked))
+    })
+}
+
+fn update_mount_filters(
+    state: &mut LuaState,
+    change: impl FnOnce(&mut crate::c_api::mount_filters::MountFilters),
+) -> LuaResult<u32> {
+    let mut sim = borrow_state_mut(state)?;
+    let before = displayed_mount_ids(&sim);
+    change(&mut sim.world.mount_filters);
+    if before != displayed_mount_ids(&sim) {
+        sim.events.push_simple("MOUNT_JOURNAL_SEARCH_UPDATED");
+    }
+    Ok(0)
+}
+
+fn displayed_mount_ids(st: &crate::lua_api::state::SimState) -> Vec<u32> {
+    st.world
+        .mounts
+        .iter()
+        .filter(|m| mount_matches(st, m))
+        .map(|m| m.mount_id)
+        .collect()
+}
+
+fn mount_matches(
+    st: &crate::lua_api::state::SimState,
+    mount: &crate::lua_api::state_types::MountData,
+) -> bool {
+    if !mount_matches_search(mount, &st.world.mount_search_text) {
+        return false;
+    }
+    if crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Retail {
+        return true;
+    }
+    let f = &st.world.mount_filters;
+    let collected = if mount.is_collected { 1 } else { 2 };
+    if !f.collected(collected) || (!mount.is_usable && !f.collected(3)) {
+        return false;
+    }
+    // Current mount data publishes all sources as Drop.
+    f.source(1) && f.mount_type(mount.filter_type)
 }
 
 fn register_collected_filter_stubs(tb: TableBuilder) -> LuaResult<TableBuilder> {
@@ -255,22 +349,19 @@ fn register_collected_filter_stubs(tb: TableBuilder) -> LuaResult<TableBuilder> 
 }
 
 fn register_default_filter_stubs(tb: TableBuilder) -> LuaResult<TableBuilder> {
-    tb.set_function("IsDragonridingUnlocked", |state| false.into_stack(state))?
-        .set_function("IsUsingDefaultFilters", |state| true.into_stack(state))?
+    tb.set_function("IsUsingDefaultFilters", |state| true.into_stack(state))?
         .set_function("SetDefaultFilters", |_state| Ok(0))
 }
 
 fn register_source_filter_stubs(tb: TableBuilder) -> LuaResult<TableBuilder> {
     tb.set_function("IsSourceChecked", |state| false.into_stack(state))?
         .set_function("SetSourceFilter", |_state| Ok(0))?
-        .set_function("IsValidSourceFilter", |state| true.into_stack(state))?
         .set_function("SetAllSourceFilters", |_state| Ok(0))
 }
 
 fn register_type_filter_stubs(tb: TableBuilder) -> LuaResult<TableBuilder> {
     tb.set_function("IsTypeChecked", |state| false.into_stack(state))?
-        .set_function("SetTypeFilter", |_state| Ok(0))?
-        .set_function("IsValidTypeFilter", |state| true.into_stack(state))
+        .set_function("SetTypeFilter", |_state| Ok(0))
 }
 
 fn register_mount_favorite_stubs(tb: TableBuilder) -> LuaResult<TableBuilder> {
@@ -366,7 +457,14 @@ fn mount_set_search(state: &mut LuaState) -> LuaResult<u32> {
         .unwrap_or_default()
         .trim()
         .to_lowercase();
-    borrow_state_mut(state)?.world.mount_search_text = search_text;
+    let mut sim = borrow_state_mut(state)?;
+    let before = displayed_mount_ids(&sim);
+    sim.world.mount_search_text = search_text;
+    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail
+        && before != displayed_mount_ids(&sim)
+    {
+        sim.events.push_simple("MOUNT_JOURNAL_SEARCH_UPDATED");
+    }
     Ok(0)
 }
 

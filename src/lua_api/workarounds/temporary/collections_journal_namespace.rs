@@ -28,11 +28,6 @@ end
 
 const COLLECTIONS_JOURNAL_NAMESPACE_WORKAROUND_LUA: &str = r#"
 if type(C_MountJournal) == "table" then
-    if rawget(C_MountJournal, "IsUsingDefaultFilters") == nil then
-        function C_MountJournal.IsUsingDefaultFilters()
-            return true
-        end
-    end
     if rawget(C_MountJournal, "GetDisplayedMountID") == nil then
         function C_MountJournal.GetDisplayedMountID(_index)
             return nil
@@ -160,7 +155,7 @@ mod tests {
         ): (bool, bool, bool, bool, bool, bool) = env
             .eval(
                 r#"
-                return C_MountJournal.IsUsingDefaultFilters(),
+                return C_MountJournal.IsUsingDefaultFilters == nil,
                     C_MountJournal.GetDisplayedMountID(1) == nil,
                     C_MountJournal.ApplyMountEquipment(1) == nil,
                     C_MountJournal.Pickup(1) == nil,

@@ -32,6 +32,7 @@ pub struct MountData {
     pub is_collected: bool,
     pub is_usable: bool,
     pub mount_type: u32,
+    pub filter_type: i32,
 }
 
 /// A battle pet in the pet journal.
