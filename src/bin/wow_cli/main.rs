@@ -296,7 +296,7 @@ enum CascTarget {
     SyncBlizzardUi,
     /// Extract a file data ID from the active profile's CASC storage
     ExtractFdid { fdid: u32, out: PathBuf },
-    /// Generate profile-specific dungeon score rarity data
+    /// Generate profile-specific dungeon score rarity data from the verified pinned CDN
     SyncDungeonScoreRarity {
         #[arg(long)]
         output: Option<PathBuf>,

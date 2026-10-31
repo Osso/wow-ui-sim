@@ -19,7 +19,12 @@ pub(crate) fn get_search_result_encounter_info(state: &mut LuaState) -> LuaResul
     let result = create_table(state);
     for (index, name) in listing.metadata.defeated_encounters.iter().enumerate() {
         let value = create_string(state, name);
-        crate::c_api::helpers::set_table_array(state, result, index as i64 + 1, value);
+        if let Val::Table(table_ref) = result {
+            if let Some(table) = state.gc.tables.get_mut(table_ref) {
+                let _ = table.raw_set(Val::Num(index as f64 + 1.0), value, &state.gc.string_arena);
+            }
+            state.gc.barrier_back(table_ref);
+        }
     }
     state.push(result);
     Ok(1)
