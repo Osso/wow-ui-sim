@@ -20,6 +20,26 @@ New namespace functions read per-environment `SimState` fields or typed records 
 | Existing outfit catalog | Bounded title-only outfit TooltipData; rename/removal changes subsequent results. |
 | `limited_input_allowed`, `combat_log_restricted`, `pet_bonus_slot_available`, exterior hover flag, catalog new-product IDs | Explicit query/configuration state, not native input dispatch, secrecy enforcement, entitlement acquisition, hit testing or commerce. |
 
+## Forever action-range publication
+
+The `action-spell-range` capability shares the existing GUID-keyed observations
+between Retail, Wrath, and Forever. Retail and Forever publish the existing
+`C_ActionBar.GetActionAutocast`, `HasRangeRequirements`, and `IsActionInRange`
+adapters; Wrath retains its separate legacy result projection without publishing
+those modern namespace methods.
+
+The extracted Forever 1.60.1.70634 `ActionBarFrameDocumentation.lua` declares all
+three methods. Its `IsActionInRange` return is nullable, explicitly documenting
+indeterminate range when no target is available. The existing model returns nil
+without a supplied spell/target-GUID observation; it does not invent an in-range
+result or calculate geometry. The installed EllesmereUI range-coloring consumer
+reaches this query through the unchanged `Blizzard_DeprecatedActionBar` wrapper.
+
+`tests/forever_action_range.rs` selects that original Game-screen TOC and exercises
+the wrapper with supplied false/true observations, missing observations, action
+rebinding, and existing pet-autocast/range-requirement state. This is simulator
+model/consumer coverage, not native game behavior or complete UI acceptance.
+
 ## Limits
 
 Empty/false/zero defaults and local policies are marked `INFERRED`. Public spell classifiers do not implement alias override selection or tainted-secret identifier parity. Outfit tooltip appearance/layout parity, reward acquisition, native service acknowledgements and strict historical epoch builds are unverified. No new temporary/permanent shim or Blizzard Lua patch was added.
@@ -31,6 +51,7 @@ Per-ID outcomes and verification belong to the [closure contract](../../specs/pa
 - [Closure contract and proof](../../specs/patch-12-0-0-publication-sweep.md#remaining-namespace-closure--2026-10-06).
 - [State fields](../../../src/lua_api/state/sim_state.rs) and [C API producers](../../../src/c_api/mod.rs).
 - Cached `Blizzard_APIDocumentationGenerated` declarations and Blizzard consumer paths captured in the per-ID evidence linked by the contract.
+- [Forever range regression](../../../tests/forever_action_range.rs) — original deprecated wrapper and supplied backing-state coverage.
 
 ## See Also
 

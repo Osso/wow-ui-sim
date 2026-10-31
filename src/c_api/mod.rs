@@ -28,7 +28,7 @@ pub mod action_count_info;
 pub use action_count_info::ActionUseCountInfo;
 pub mod action_macros;
 pub mod action_repeat;
-#[cfg(any(feature = "retail-12-0-0", feature = "client-wrath"))]
+#[cfg(feature = "action-spell-range")]
 pub mod action_spell_range;
 pub mod action_usability;
 #[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
@@ -49,7 +49,7 @@ pub(crate) mod c_action_bar;
 pub(crate) mod c_action_bar_counts;
 #[cfg(feature = "retail-12-0-5")]
 pub(crate) mod c_action_bar_loss_of_control;
-#[cfg(feature = "retail-12-0-0")]
+#[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
 pub mod c_action_bar_queries;
 #[cfg(feature = "retail-12-0-5")]
 pub(crate) mod c_action_bar_spell_slots;

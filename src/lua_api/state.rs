@@ -359,7 +359,7 @@ macro_rules! build_empty_sim_state {
             pet_bonus_slot_available: false,
             #[cfg(feature = "retail-12-0-0")]
             limited_input_allowed: [false; 4],
-            #[cfg(any(feature = "retail-12-0-0", feature = "client-wrath"))]
+            #[cfg(feature = "action-spell-range")]
             action_spell_ranges: Default::default(),
             #[cfg(feature = "retail-12-0-0")]
             weekly_reward_progress: Default::default(),
