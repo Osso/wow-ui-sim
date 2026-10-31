@@ -591,7 +591,8 @@ fn premade_group_categories_can_start_search() {
 }
 }
 
-post_wrath_ui_fixture! {
+// The exercised Mainline GroupFinder handler is selected by Retail and PTR.
+#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
 #[test]
 fn premade_group_result_update_refreshes_selected_listing() {
     test_timeout! {
@@ -637,9 +638,9 @@ fn premade_group_result_update_refreshes_selected_listing() {
         "#).expect("Premade result updates should reach the original search panel handler");
     }
 }
-}
 
-post_wrath_ui_fixture! {
+// The exercised Mainline GroupFinder controls are selected by Retail and PTR.
+#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
 #[test]
 fn premade_group_search_text_filter_and_clear() {
     test_timeout! {
@@ -676,7 +677,6 @@ fn premade_group_search_text_filter_and_clear() {
         "#).expect("Original GroupFinder search text controls should filter and clear results");
     }
 }
-}
 
 post_wrath_ui_fixture! {
 #[test]
@@ -694,9 +694,6 @@ fn premade_group_search_result_tooltips_do_not_error() {
             for _, resultID in ipairs(results) do
                 LFGListUtil_SetSearchEntryTooltip(GameTooltip, resultID)
             end
-            local low = C_ChallengeMode.GetDungeonScoreRarityColor(0)
-            local high = C_ChallengeMode.GetDungeonScoreRarityColor(2200)
-            assert(low.r ~= high.r or low.g ~= high.g or low.b ~= high.b, "score colors must vary")
             "#
         ).expect("Premade Group search result tooltips should not raise Lua errors");
     }

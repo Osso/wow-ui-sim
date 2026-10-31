@@ -683,7 +683,7 @@ fn register_search_methods(state: &mut LuaState, table_ref: GcRef<Table>) -> Lua
             state,
             table_ref,
             "ClearSearchResults",
-            crate::lua_api::workarounds::temporary::lfg_search_state::clear_search_results,
+            crate::lua_api::workarounds::clear_search_results,
         )?;
     }
     Ok(())
