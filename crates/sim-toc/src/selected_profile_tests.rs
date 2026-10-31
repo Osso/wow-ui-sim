@@ -714,6 +714,50 @@ Shared\Localization.lua
 }
 
 #[test]
+fn native_game_type_masks_filter_headers_and_files() {
+    let is_forever = matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::WowForever
+    );
+    let is_retail = matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail
+    );
+    let camelot_known = matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Ptr
+            | crate::client_profile::ClientProfile::WowForever
+    );
+    if !(is_retail || camelot_known) {
+        return;
+    }
+    for (value, allowed) in [
+        ("unknown, nonsense", true),
+        ("MaInLiNe,classic", true),
+        ("classic, plunderstorm", false),
+        ("forever", !camelot_known || is_forever),
+        (
+            "camelot [AllowLoadGameType standard]",
+            is_retail || is_forever,
+        ),
+    ] {
+        let toc = TocFile::parse(
+            Path::new("/addons/Test"),
+            &format!("## AllowLoadGameType: {value}\nCore.lua"),
+        );
+        assert_eq!(!toc.is_game_type_restricted(), allowed, "header {value}");
+    }
+    let toc = TocFile::parse(
+        Path::new("/addons/Test"),
+        "Unknown.lua [AllowLoadGameType nonsense]\nMixed.lua [AllowLoadGameType ClAsSiC, MaInLiNe]\nExcluded.lua [ExcludeLoadGameType MAINLINE]\n",
+    );
+    assert_eq!(
+        toc.files,
+        vec![PathBuf::from("Unknown.lua"), PathBuf::from("Mixed.lua")]
+    );
+}
+
+#[test]
 fn test_is_game_type_restricted() {
     for (filter, allowed) in expected_game_type_filters() {
         let contents = format!("## AllowLoadGameType: {filter}\nCore.lua");
