@@ -1,3 +1,7 @@
+## Casting and threat secrecy predicates
+
+[Consumer selection and proof limits](investigations/consumer-selection-and-red-proof.md#casting-bar-secrecy-predicate) links the [predicate contract](../specs/secret-auras.md#casting-and-threat-predicate-surface).
+
 ## [2026-10-31] persistence | Runtime configuration and SavedVariables
 
 [SavedVariables persistence](../specs/saved-variables.md) documents the shared

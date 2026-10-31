@@ -14,6 +14,10 @@ Lessons learned on 2026-10-23: cached Blizzard source is not proof of a runtime-
 
 The upgrade/store audit found the same trap: cached Mainline upgrade calls were not selected on Mists/Era/Anniversary, and cached shared secure-store source was absent from the selected Retail/PTR/Forever TOC.
 
+## Casting bar secrecy predicate
+
+Retail's `Blizzard_UIPanels_Game_Mainline.toc:6,10` selects `Shared/CastingBarFrame.lua`. Its `IsInterruptable` method calls the locally captured predicate through lines 2 and 5. The consumer test verifies source provenance and the XML-created player bar before exercising both bar types. Its Retail RED is the nil call at line 5. Because both output cases also pass with a constant-false predicate, this is missing-publication and consumer-preservation proof, not proof of a native trigger. The [contract](../../specs/secret-auras.md#casting-and-threat-predicate-surface) records the unknown behavior and validation limits.
+
 ## Combat-log processor filter staging
 
 [Filter-record contract](../../specs/combat-log-event-filters.md) separates the original ApplyFilterSettings lifecycle from native event matching. The cached secure Add/Clear declarations provide restriction markers but no argument or return signatures; missing signatures do not establish validation or default values. The staged producer retains opaque requests and exposes a simulator-only snapshot, without interpreting event/mask semantics. Retail/PTR execution is pending; case032/033 remain preservation evidence, not producer acceptance.

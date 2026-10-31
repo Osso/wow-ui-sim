@@ -828,3 +828,56 @@ fn spellcast_input_blizzard_bar_observes_delay_and_failure() {
     let env = env_with_full_blizzard_ui();
     spellcast_input_blizzard_bar_observes_delay_and_failure::run(&env);
 }
+
+#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
+#[test]
+fn casting_bar_original_interruptibility_uses_cast_secrecy_predicate() {
+    let env = env_with_full_blizzard_ui();
+    env.exec(r#"
+        assert(PlayerCastingBarFrame:IsObjectType('StatusBar'))
+        assert(PlayerCastingBarFrame.IsInterruptable == CastingBarMixin.IsInterruptable)
+        assert(string.find(debug.getinfo(CastingBarMixin.IsInterruptable, 'S').source, 'CastingBarFrame.lua', 1, true))
+        PlayerCastingBarFrame.unit = 'player'
+        PlayerCastingBarFrame.barType = CastingBarType.Standard
+        assert(PlayerCastingBarFrame:IsInterruptable() == true)
+        PlayerCastingBarFrame.barType = CastingBarType.Uninterruptable
+        assert(PlayerCastingBarFrame:IsInterruptable() == false)
+    "#).expect("original CastingBarFrame interruptibility path");
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
+#[test]
+fn secret_predicates_validate_required_units_and_follow_sibling_policies() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        local cast = C_Secrets.ShouldUnitSpellCastingBeSecret
+        local threat = C_Secrets.ShouldUnitThreatValuesBeSecret
+        assert(select('#', cast('player')) == 1 and cast('player') == false)
+        assert(select('#', threat('player', 'target')) == 1 and threat('player', 'target') == false)
+        assert(not pcall(cast))
+        assert(not pcall(cast, nil))
+        assert(not pcall(cast, {}))
+        assert(not pcall(threat, 'player'))
+        assert(not pcall(threat, 'player', nil))
+        assert(not pcall(threat, nil, 'target'))
+        assert(not pcall(threat, 'player', {}))
+        assert(C_Secrets.ShouldUnitThreatStateBeSecret('player') == false)
+        assert(C_Secrets.CanCompareUnitTokens('player', 'target'))
+        assert(not C_Secrets.CanCompareUnitTokens('nameplate1', 'nameplate2'))
+    "#,
+    )
+    .unwrap();
+    env.state()
+        .borrow_mut()
+        .plain_global_inputs
+        .threat_state_restricted = true;
+    env.exec(
+        r#"
+        assert(C_Secrets.ShouldUnitThreatValuesBeSecret('player', 'target') == true)
+        assert(C_Secrets.ShouldUnitThreatStateBeSecret('player') == true)
+        assert(C_Secrets.ShouldUnitSpellCastingBeSecret('player') == false)
+    "#,
+    )
+    .unwrap();
+}
