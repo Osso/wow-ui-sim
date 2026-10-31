@@ -3204,3 +3204,5 @@ mtime-only lib.rs and c_club.rs rebuilds. Static-only handoff; no CPU/build proo
 serialization, account/character loading and retained input failures. The
 [native evidence](../specs/saved-variables-native-evidence.md) distinguishes
 simulator preservation from native parity. Shutdown finalization remains unfinished.
+
+- 2026-10-31: Documented casting-bar predicate selection and native secrecy gaps.
