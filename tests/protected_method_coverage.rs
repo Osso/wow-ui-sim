@@ -163,3 +163,24 @@ protected_input_test!(
     "SetUsingParentLevel",
     "IsUsingParentLevel"
 );
+
+protected_input_test!(
+    protected_input_gamepad_button,
+    "EnableGamePadButton",
+    "IsGamePadButtonEnabled"
+);
+protected_input_test!(
+    protected_input_gamepad_stick,
+    "EnableGamePadStick",
+    "IsGamePadStickEnabled"
+);
+protected_input_test!(
+    protected_input_round_layout,
+    "SetRoundLayoutToNearestPixel",
+    "GetRoundLayoutToNearestPixel"
+);
+protected_input_test!(
+    protected_input_hyperlinks,
+    "SetHyperlinksEnabled",
+    "GetHyperlinksEnabled"
+);
