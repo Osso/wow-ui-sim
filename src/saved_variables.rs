@@ -508,8 +508,8 @@ impl SavedVariablesManager {
         }
         if let Some(config) = self.wtf_config.as_ref()
             && !self
-            .load_results
-            .contains_key(&(addon_name.to_owned(), per_character))
+                .load_results
+                .contains_key(&(addon_name.to_owned(), per_character))
         {
             let path = if per_character {
                 config.character_saved_vars_file(addon_name)
@@ -554,16 +554,16 @@ impl SavedVariablesManager {
                     )));
                 }
                 Ok(metadata)
-                if !reload
-                    && self
-                    .max_load_bytes
-                    .is_some_and(|limit| metadata.len() > limit) =>
-                    {
-                        return Err(crate::Error::Other(format!(
-                            "SavedVariables input exceeds the configured byte limit: {}",
-                            path.display()
-                        )));
-                    }
+                    if !reload
+                        && self
+                            .max_load_bytes
+                            .is_some_and(|limit| metadata.len() > limit) =>
+                {
+                    return Err(crate::Error::Other(format!(
+                        "SavedVariables input exceeds the configured byte limit: {}",
+                        path.display()
+                    )));
+                }
                 Ok(_) => {}
                 Err(error) if error.kind() == std::io::ErrorKind::NotFound && !reload => {
                     verify_missing_file(path)?;
@@ -581,8 +581,8 @@ impl SavedVariablesManager {
             })?;
             if !reload
                 && self
-                .max_load_bytes
-                .is_some_and(|limit| content.len() as u64 > limit)
+                    .max_load_bytes
+                    .is_some_and(|limit| content.len() as u64 > limit)
             {
                 return Err(crate::Error::Other(format!(
                     "SavedVariables input exceeds the configured byte limit: {}",
@@ -624,7 +624,7 @@ impl SavedVariablesManager {
         // Parse literal data directly when possible; other Lua syntax uses the VM.
         if let Ok(source) = std::str::from_utf8(content)
             && parse_saved_variables_file_with_cache(state, source, Some(&mut table_size_cache))
-            .is_ok()
+                .is_ok()
         {
             save_table_size_cache(&self.storage_dir, path, &table_size_cache)?;
             return Ok(());
@@ -850,7 +850,7 @@ mod tests {
             dir.path().join("HugeAddon.lua"),
             "\nHugeDB = { value = 'should not load' }\n",
         )
-            .expect("write saved variables");
+        .expect("write saved variables");
 
         let env = WowLuaEnv::new().expect("env");
         let mut mgr = SavedVariablesManager::with_storage_dir(dir.path().to_path_buf());
@@ -878,12 +878,12 @@ mod tests {
             wtf_account_dir.join("BlizzMove.lua"),
             "\nBlizzMoveDB = { source = 'wtf' }\n",
         )
-            .expect("write wtf saved variables");
+        .expect("write wtf saved variables");
         fs::write(
             local_dir.path().join("BlizzMove.lua"),
             "\nBlizzMoveDB = { source = 'local' }\n",
         )
-            .expect("write local saved variables");
+        .expect("write local saved variables");
 
         let env = WowLuaEnv::new().expect("env");
         let mut mgr = SavedVariablesManager::with_storage_dir(local_dir.path().to_path_buf());
@@ -918,7 +918,7 @@ mod tests {
             dir.path().join("GTFO.lua"),
             "\nGTFOData = { [\"DataCode\"] = \"4\", [\"source\"] = \"saved\" }\n",
         )
-            .expect("write saved variables");
+        .expect("write saved variables");
 
         let env = WowLuaEnv::new().expect("env");
         let mut mgr = SavedVariablesManager::with_storage_dir(dir.path().to_path_buf());
@@ -965,7 +965,7 @@ mod tests {
                 }
             "#,
         )
-            .expect("write saved variables");
+        .expect("write saved variables");
 
         let env = WowLuaEnv::new().expect("env");
         {
@@ -986,7 +986,7 @@ mod tests {
                 }
             "#,
         )
-            .expect("rewrite saved variables");
+        .expect("rewrite saved variables");
 
         {
             let mut lua = env.rilua_mut();

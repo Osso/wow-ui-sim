@@ -277,6 +277,11 @@ fn file_symlinks_load_regular_targets_and_retain_invalid_target_errors() {
             error
         );
         lua.exec("assert(DB == nil)").unwrap();
-        assert!(fs::symlink_metadata(&input).unwrap().file_type().is_symlink());
+        assert!(
+            fs::symlink_metadata(&input)
+                .unwrap()
+                .file_type()
+                .is_symlink()
+        );
     }
 }
