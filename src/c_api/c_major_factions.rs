@@ -39,7 +39,36 @@ pub(crate) fn register_c_major_factions_surface(state: &mut LuaState) -> LuaResu
         renown_rewards::get_renown_rewards_for_level,
     )?;
     table_set_rust_fn_static(state, ns, "GetMajorFactionIDs", get_major_faction_ids)?;
+    table_set_rust_fn_static(state, ns, "GetCurrentRenownLevel", get_current_renown_level)?;
+    table_set_rust_fn_static(state, ns, "HasMaximumRenown", has_maximum_renown)?;
     Ok(())
+}
+
+/// `(renown_level, max_level)` for a known faction; `None` for unknown or
+/// non-number IDs.
+fn renown_progress(state: &mut LuaState) -> LuaResult<Option<(i32, i32)>> {
+    let Ok(faction_id) = i64::from_stack(state, 1) else {
+        return Ok(None);
+    };
+    Ok(borrow_state(state)?
+        .major_factions
+        .get(&faction_id)
+        .map(|data| (data.renown_level, data.max_level)))
+}
+
+/// Native: every failure path returns 0; there is no -1 sentinel.
+fn get_current_renown_level(state: &mut LuaState) -> LuaResult<u32> {
+    let level = renown_progress(state)?.map_or(0, |(level, _)| level);
+    state.push(number(i64::from(level)));
+    Ok(1)
+}
+
+/// Native: true when the current level reaches the faction's maximum;
+/// unknown factions return false.
+fn has_maximum_renown(state: &mut LuaState) -> LuaResult<u32> {
+    let capped = renown_progress(state)?.is_some_and(|(level, max)| level >= max);
+    state.push(Val::Bool(capped));
+    Ok(1)
 }
 
 fn get_major_faction_data(state: &mut LuaState) -> LuaResult<u32> {
