@@ -74,6 +74,7 @@ pub(crate) fn notify_listing_changed(state: &mut LuaState, result_id: u32) -> Lu
 pub struct SearchMetadata {
     pub has_self: bool,
     pub quest_id: Option<u32>,
+    pub defeated_encounters: Vec<String>,
     pub overall_dungeon_score: Option<f64>,
     pub best_dungeon_score: Option<DungeonScore>,
     pub dungeon_scores: Vec<DungeonScore>,

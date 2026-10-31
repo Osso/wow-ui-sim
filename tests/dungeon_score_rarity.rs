@@ -25,6 +25,7 @@ fn original_lfg_result_tooltip_uses_supplied_scores() {
         assert(source:find('Blizzard_GroupFinder/', 1, true), source)
         GameTooltip:ClearLines()
         LFGListUtil_SetSearchEntryTooltip(GameTooltip, 1)
+        assert(C_LFGList.GetSearchResultEncounterInfo(1) == nil)
         local texts = ''
         for i=1,GameTooltip:NumLines() do
             for _, side in ipairs({'Left', 'Right'}) do
@@ -41,6 +42,7 @@ fn original_lfg_result_tooltip_uses_supplied_scores() {
         let mut state = shared.borrow_mut();
         state.world.premade_listings[0].metadata.overall_dungeon_score = Some(1250.0);
         state.world.premade_listings[0].metadata.dungeon_scores[0].best_run_level = 7;
+        state.world.premade_listings[0].metadata.defeated_encounters = vec!["Fixture Boss".into()];
     }
     env.exec(r#"
         C_LFGList.Search(2)
@@ -53,6 +55,8 @@ fn original_lfg_result_tooltip_uses_supplied_scores() {
                 if line then texts = texts .. (line:GetText() or '') .. '\n' end
             end
         end
+        assert(texts:find('Fixture Boss', 1, true), texts)
+        assert(C_LFGList.GetSearchResultEncounterInfo(1)[1] == 'Fixture Boss')
         assert(texts:find('|cff1eff001250|r', 1, true), texts)
         assert(texts:find('|cffffffffFixture Dungeon|r', 1, true), texts)
     "#).unwrap();

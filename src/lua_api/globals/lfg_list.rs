@@ -98,7 +98,7 @@ pub(crate) fn defer_lfg_event_with_id(
     Ok(id)
 }
 
-fn premade_listing(state: &LuaState, search_result_id: u32) -> Option<PremadeListing> {
+pub(crate) fn premade_listing(state: &LuaState, search_result_id: u32) -> Option<PremadeListing> {
     let sim = borrow_state(state).ok()?;
     if !sim.lfg_search_result_ids.contains(&search_result_id) {
         return None;
@@ -653,6 +653,7 @@ fn register_search_methods(state: &mut LuaState, table_ref: GcRef<Table>) -> Lua
                 get_group_leaver_counts_by_role,
             ),
             ("Search", crate::c_api::c_lfg_list_search::search),
+            ("GetSearchResultEncounterInfo", crate::lua_api::workarounds::temporary::lfg_encounters::get_search_result_encounter_info),
         ],
     )?;
     if crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Wrath {
