@@ -82,6 +82,7 @@ pub(crate) mod raid_targets;
 pub mod recent_allies_location;
 #[cfg(feature = "client-wrath")]
 pub mod recruit_a_friend;
+pub(crate) mod secure_helpers;
 pub mod session_exit;
 pub mod shapeshift;
 #[cfg(feature = "retail-12-0-7")]

@@ -82,6 +82,7 @@ pub(super) fn init_lua_state(
     crate::lua_api::workarounds::apply_temporary_bootstrap(lua)?;
     trace_debug_getter_values(lua, "after_temporary_bootstrap");
     super::globals::real::heal_prediction::register(lua)?;
+    super::globals::real::secure_helpers::register(lua)?;
     super::globals::real::totems::register(lua)?;
     crate::c_api::c_tts_settings::register(lua)?;
     crate::c_api::c_click_bindings::register(lua)?;
@@ -102,8 +103,6 @@ pub(super) fn init_lua_state(
     crate::era::compat_bootstrap::init(lua)?;
     #[cfg(feature = "retail-12-1-0")]
     crate::ptr::compat_bootstrap::init(lua)?;
-    #[cfg(feature = "client-wowforever")]
-    lua.exec(include_str!("../workarounds/temporary/securecopy.lua"))?;
     if crate::loader::addon_modules::enabled() {
         let publish_require =
             crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::WowForever;
