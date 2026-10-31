@@ -2,7 +2,7 @@
 
 ## Best-guess basis — best-guess, native UNKNOWN
 
-Retail and PTR expose campaign IDs associated with supplied quest state. Unknown campaign IDs return nil info and Invalid state. A campaign whose known quests are all complete is Complete; one with any active or completed quest, but not all complete, is InProgress; otherwise it is Invalid. GetCampaignID maps a supplied quest ID to its campaign ID, or zero when no association is supplied. The active quest-log projection carries that ID.
+Retail, PTR and Forever (whose pinned `WarCampaignDocumentation.lua` declares the same namespace) expose campaign IDs associated with supplied quest state. Unknown campaign IDs return nil info and Invalid state. A campaign whose known quests are all complete is Complete; one with any active or completed quest, but not all complete, is InProgress; otherwise it is Invalid. GetCampaignID maps a supplied quest ID to its campaign ID, or zero when no association is supplied. The active quest-log projection carries that ID.
 
 GetChapterIDs projects explicitly supplied ordered chapter IDs; absent chapter data returns nil. This is a best guess, not measured native behavior. No chapters are fabricated.
 
