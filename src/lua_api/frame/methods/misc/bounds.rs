@@ -74,6 +74,10 @@ pub fn set_clamp_rect_insets(state: &mut LuaState) -> LuaResult<u32> {
     let right = f64::from_stack(state, 3).unwrap_or(0.0) as f32;
     let top = f64::from_stack(state, 4).unwrap_or(0.0) as f32;
     let bottom = f64::from_stack(state, 5).unwrap_or(0.0) as f32;
+    if !can_change_protected_state_for(state, id) {
+        emit_addon_action_blocked(state, id, "SetClampRectInsets");
+        return Ok(0);
+    }
     let mut sim = borrow_state_mut(state)?;
     if let Some(frame) = sim.widgets.get_mut_visual(id) {
         frame.clamp_rect_insets = (left, right, top, bottom);

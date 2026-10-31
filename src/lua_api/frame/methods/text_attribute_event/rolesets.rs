@@ -51,6 +51,10 @@ fn roleset_arg(state: &LuaState) -> Option<String> {
 
 fn add_roleset(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
+    if !can_change_protected_state_for(state, id) {
+        emit_addon_action_blocked(state, id, "AddRoleset");
+        return Ok(0);
+    }
     if let Some(name) = roleset_arg(state) {
         update_rolesets(state, id, |rolesets| {
             if !rolesets.contains(&name) {
@@ -77,6 +81,10 @@ fn set_rolesets(state: &mut LuaState) -> LuaResult<u32> {
 
 fn remove_roleset(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
+    if !can_change_protected_state_for(state, id) {
+        emit_addon_action_blocked(state, id, "RemoveRoleset");
+        return Ok(0);
+    }
     if let Some(name) = roleset_arg(state) {
         update_rolesets(state, id, |rolesets| {
             rolesets.retain(|existing| *existing != name);

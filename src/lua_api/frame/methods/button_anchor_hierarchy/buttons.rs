@@ -141,6 +141,10 @@ pub(super) fn set_enabled(state: &mut LuaState) -> LuaResult<u32> {
 
 pub(super) fn enable(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
+    if !can_change_protected_state_for(state, id) {
+        emit_addon_action_blocked(state, id, "Enable");
+        return Ok(0);
+    }
     let was_disabled = {
         let sim = borrow_state(state)?;
         sim.widgets
@@ -157,6 +161,10 @@ pub(super) fn enable(state: &mut LuaState) -> LuaResult<u32> {
 
 pub(super) fn disable(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
+    if !can_change_protected_state_for(state, id) {
+        emit_addon_action_blocked(state, id, "Disable");
+        return Ok(0);
+    }
     let was_enabled = {
         let sim = borrow_state(state)?;
         sim.widgets.get(id).map(button_enabled).unwrap_or(true)

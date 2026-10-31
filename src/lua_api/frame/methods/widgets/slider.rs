@@ -708,6 +708,10 @@ pub(super) fn get_scroll_child(state: &mut LuaState) -> LuaResult<u32> {
 
 pub(super) fn set_scroll_child(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
+    if !can_change_protected_state_for(state, id) {
+        emit_addon_action_blocked(state, id, "SetScrollChild");
+        return Ok(0);
+    }
     let child = stack_val(state, 2);
     let Some(child_id) = extract_frame_id(state, child) else {
         let mut sim = borrow_state_mut(state)?;

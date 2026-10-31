@@ -188,11 +188,19 @@ fn apply_cooldown(state: &mut LuaState, id: u64) -> LuaResult<u32> {
 
 pub(super) fn set_cooldown_unix(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
+    if !can_change_protected_state_for(state, id) {
+        emit_addon_action_blocked(state, id, "SetCooldownUNIX");
+        return Ok(0);
+    }
     apply_cooldown(state, id)
 }
 
 pub(super) fn set_cooldown_from_expiration_time(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
+    if !can_change_protected_state_for(state, id) {
+        emit_addon_action_blocked(state, id, "SetCooldownFromExpirationTime");
+        return Ok(0);
+    }
     let expiration = read_cooldown_number(state, 2)?;
     let duration = read_cooldown_number(state, 3)?;
     let mod_rate = normalize_mod_rate(read_cooldown_number(state, 4)?);
@@ -208,6 +216,10 @@ pub(super) fn set_cooldown_from_expiration_time(state: &mut LuaState) -> LuaResu
 
 pub(super) fn set_cooldown_duration(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
+    if !can_change_protected_state_for(state, id) {
+        emit_addon_action_blocked(state, id, "SetCooldownDuration");
+        return Ok(0);
+    }
     let duration = read_cooldown_number(state, 2)?;
     let mod_rate = normalize_mod_rate(read_cooldown_number(state, 3)?);
     let secret_timing = cooldown_inputs_are_secret(state, 2..=3);
@@ -261,6 +273,10 @@ pub(super) fn get_cooldown_display_duration(state: &mut LuaState) -> LuaResult<u
 
 pub(super) fn clear(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
+    if !can_change_protected_state_for(state, id) {
+        emit_addon_action_blocked(state, id, "Clear");
+        return Ok(0);
+    }
     let mut sim = borrow_state_mut(state)?;
     if let Some(f) = sim.widgets.get_mut_visual(id) {
         clear_cooldown_timing(f);
