@@ -36,6 +36,30 @@ fn write_addon_with_lua(root: &Path, name: &str, metadata: &str, lua: &str) -> P
 }
 
 #[test]
+#[cfg(feature = "client-retail")]
+fn retail_third_party_game_type_headers_select_startup_addons() {
+    let temp = tempfile::tempdir().unwrap();
+    for (name, value, expected) in [
+        ("Bracketed", "camelot [AllowLoadGameType standard]", true),
+        ("Unknown", "imaginary, wowlabs", true),
+        ("CaseComma", "CLASSIC, MaInLiNe", true),
+        ("Other", "classic, plunderstorm", false),
+    ] {
+        write_addon_with_lua(
+            temp.path(),
+            name,
+            &format!("## AllowLoadGameType: {value}\n"),
+            "",
+        );
+        assert_eq!(
+            loadable_toc_path(&temp.path().join(name), ScreenKind::Game).is_some(),
+            expected,
+            "{name}"
+        );
+    }
+}
+
+#[test]
 fn third_party_lod_metadata_precedes_startup_and_explicit_load_runs_once() {
     let temp = tempfile::tempdir().unwrap();
     write_addon_with_lua(
