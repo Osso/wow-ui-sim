@@ -1,5 +1,9 @@
 # Zone & Instance
 
+### A_Admin.SetGameTime(hour, minute)
+
+Sets the shared game clock. Hour must be an integer from 0 to 23; minute must be an integer from 0 to 59. `A_Admin.SetGameTime(nil)` clears the clock to unknown. Invalid inputs raise an error. `GetGameTime()` and, where available, `GetLocalGameTime()` return the supplied time, or `-1, -1` when unknown.
+
 ### A_Admin.SetZone(name, zoneId)
 
 Sets the current zone name and ID.

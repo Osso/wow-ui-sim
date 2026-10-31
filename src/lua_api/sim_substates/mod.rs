@@ -31,6 +31,20 @@ pub use wow_labs::{
 use crate::c_api::c_voice_chat_devices::VoiceAudioDevice;
 use std::collections::{HashMap, HashSet};
 
+/// Supplied game-clock time, or unknown when no time source is available.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub struct GameClock {
+    pub time: Option<(u8, u8)>,
+}
+
+impl Default for GameClock {
+    fn default() -> Self {
+        Self {
+            time: Some((12, 0)),
+        }
+    }
+}
+
 /// Simulated network statistics returned by `GetNetStats()`.
 ///
 /// WoW's real `GetNetStats` returns `(bandwidthIn, bandwidthOut, latencyHome,

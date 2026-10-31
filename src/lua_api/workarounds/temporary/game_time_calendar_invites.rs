@@ -1,17 +1,11 @@
 //! Temporary GameTime calendar defaults.
 //!
-//! Calendar invite and local clock state are not modeled yet, but Blizzard
+//! Calendar invite state is not modeled yet, but Blizzard
 //! startup expects these fields/globals before real calendar data has loaded.
 
 use crate::lua_api::WowLuaEnv;
 
 const GAME_TIME_BOOTSTRAP_LUA: &str = r#"
-if GetGameTime == nil then
-    function GetGameTime()
-        return 12, 0
-    end
-end
-
 local function __wow_normalize_time_table(dateTable)
     if type(dateTable) ~= "table" then
         return dateTable
@@ -110,7 +104,7 @@ mod tests {
     #[test]
     fn installs_missing_game_time_globals() {
         let env = WowLuaEnv::new().expect("lua env should initialize");
-        env.exec("GetGameTime = nil; time = nil")
+        env.exec("time = nil")
             .expect("game time fixture should clear globals");
 
         {

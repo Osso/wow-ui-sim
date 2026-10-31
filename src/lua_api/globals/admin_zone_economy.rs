@@ -116,6 +116,27 @@ pub(super) fn set_mouse_over_frame(state: &mut LuaState) -> LuaResult<u32> {
     Ok(0)
 }
 
+pub(super) fn set_game_time(state: &mut LuaState) -> LuaResult<u32> {
+    let time = match (stack_val(state, 1), stack_val(state, 2)) {
+        (Val::Nil, Val::Nil) => None,
+        (Val::Num(hour), Val::Num(minute))
+            if hour.fract() == 0.0
+                && minute.fract() == 0.0
+                && (0.0..=23.0).contains(&hour)
+                && (0.0..=59.0).contains(&minute) =>
+        {
+            Some((hour as u8, minute as u8))
+        }
+        _ => {
+            return Err(rilua::runtime_error(
+                "A_Admin.SetGameTime expects hour 0-23 and minute 0-59, or nil",
+            ));
+        }
+    };
+    borrow_state_mut(state)?.game_clock.time = time;
+    Ok(0)
+}
+
 // ── Network stats (for GetNetStats) ───────────────────────────────────────────
 
 /// `A_Admin.SetNetStats(bandwidthIn, bandwidthOut, latencyHome, latencyWorld)`.
