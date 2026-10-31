@@ -828,3 +828,19 @@ fn spellcast_input_blizzard_bar_observes_delay_and_failure() {
     let env = env_with_full_blizzard_ui();
     spellcast_input_blizzard_bar_observes_delay_and_failure::run(&env);
 }
+
+#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
+#[test]
+fn casting_bar_original_interruptibility_uses_cast_secrecy_predicate() {
+    let env = env_with_full_blizzard_ui();
+    env.exec(r#"
+        assert(PlayerCastingBarFrame:IsObjectType('StatusBar'))
+        assert(PlayerCastingBarFrame.IsInterruptable == CastingBarMixin.IsInterruptable)
+        assert(string.find(debug.getinfo(CastingBarMixin.IsInterruptable, 'S').source, 'CastingBarFrame.lua', 1, true))
+        PlayerCastingBarFrame.unit = 'player'
+        PlayerCastingBarFrame.barType = CastingBarType.Standard
+        assert(PlayerCastingBarFrame:IsInterruptable() == true)
+        PlayerCastingBarFrame.barType = CastingBarType.Uninterruptable
+        assert(PlayerCastingBarFrame:IsInterruptable() == false)
+    "#).expect("original CastingBarFrame interruptibility path");
+}
