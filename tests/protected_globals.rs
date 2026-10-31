@@ -48,6 +48,11 @@ fn protected_globals_consumer() {
                 assert(protectedEvents[1][2] == 'ProtectedGlobalsProbe')
                 assert(protectedEvents[1][3] == 'TargetUnit()')
                 assert(StaticPopup_Visible('ADDON_ACTION_FORBIDDEN'), 'Blizzard popup missing')
+            "#,
+            )
+            .expect("insecure targeting and popup");
+            env.exec(
+                r#"
                 TargetUnit('player')
                 assert(UnitIsUnit('target', 'player'), 'secure targeting failed')
                 ClearTarget()
