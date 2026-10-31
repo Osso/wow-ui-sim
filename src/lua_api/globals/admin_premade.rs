@@ -81,14 +81,9 @@ pub(super) fn update_premade_listing(state: &mut LuaState) -> LuaResult<u32> {
         }
         _ => false,
     };
-    let notify = changed && st.lfg_search_result_ids.contains(&result_id);
     drop(st);
-    if notify {
-        super::lfg_list::fire_event_with_args(
-            state,
-            "LFG_LIST_SEARCH_RESULT_UPDATED",
-            vec![Val::Num(result_id as f64)],
-        )?;
+    if changed {
+        crate::c_api::c_lfg_list_search::notify_listing_changed(state, result_id)?;
     }
     Ok(0)
 }

@@ -7,7 +7,6 @@ pub(crate) mod classic_startup_defaults;
     feature = "client-anniversary"
 ))]
 pub(crate) mod legacy_quest_timers;
-pub(crate) mod lfg_search_state;
 pub(crate) mod pet_spec_catalog_default;
 
 #[cfg(feature = "client-wrath")]

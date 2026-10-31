@@ -1,7 +1,67 @@
-//! Additional per-result public metadata; absence of score records is an empty sequence.
-use crate::lua_api::methods::{create_string, create_table, table_set};
-use rilua::Val;
+//! C_LFGList search lifecycle and per-result metadata.
+use crate::lua_api::globals::lfg_list::{defer_lfg_event_with_id, fire_event_with_args};
+use crate::lua_api::methods::{
+    borrow_state, borrow_state_mut, create_string, create_table, table_set,
+};
+use crate::lua_api::timer_layout;
 use rilua::vm::state::LuaState;
+use rilua::{LuaResult, Val};
+
+pub(crate) fn search(state: &mut LuaState) -> LuaResult<u32> {
+    let pending = std::mem::take(&mut borrow_state_mut(state)?.lfg_search_timer_ids);
+    let pending = pending
+        .into_iter()
+        .filter(|id| !matches!(timer_layout::get_timer_callback(state, *id), Val::Nil))
+        .collect();
+    borrow_state_mut(state)?.lfg_search_timer_ids = pending;
+    let ids = borrow_state(state)?
+        .world
+        .premade_listings
+        .iter()
+        .map(|listing| listing.search_result_id)
+        .collect();
+    borrow_state_mut(state)?.lfg_search_result_ids = ids;
+    let id = defer_lfg_event_with_id(
+        state,
+        dispatch_search_results,
+        "C_LFGList.SearchResultsReady",
+    )?;
+    borrow_state_mut(state)?.lfg_search_timer_ids.push(id);
+    Ok(0)
+}
+
+fn dispatch_search_results(state: &mut LuaState) -> LuaResult<u32> {
+    fire_event_with_args(state, "LFG_LIST_SEARCH_RESULTS_RECEIVED", Vec::new())?;
+    Ok(0)
+}
+
+pub(crate) fn clear_search_results(state: &mut LuaState) -> LuaResult<u32> {
+    let ids = {
+        let mut sim = borrow_state_mut(state)?;
+        sim.lfg_search_result_ids.clear();
+        let ids = std::mem::take(&mut sim.lfg_search_timer_ids);
+        sim.rilua_timers.retain(|timer| !ids.contains(&timer.id));
+        ids
+    };
+    for id in ids {
+        timer_layout::remove_timer_callback(state, id);
+    }
+    Ok(0)
+}
+
+pub(crate) fn notify_listing_changed(state: &mut LuaState, result_id: u32) -> LuaResult<()> {
+    if borrow_state(state)?
+        .lfg_search_result_ids
+        .contains(&result_id)
+    {
+        fire_event_with_args(
+            state,
+            "LFG_LIST_SEARCH_RESULT_UPDATED",
+            vec![Val::Num(result_id as f64)],
+        )?;
+    }
+    Ok(())
+}
 
 #[derive(Debug, Clone, Default)]
 pub struct SearchMetadata {

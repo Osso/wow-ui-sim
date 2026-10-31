@@ -4,7 +4,6 @@ mod logging;
 mod permanent;
 mod runtime_surfaces;
 mod temporary;
-pub(crate) use temporary::lfg_search_state::clear_search_results;
 
 #[cfg(feature = "client-wrath")]
 pub(crate) use temporary::wrath_attack_action;

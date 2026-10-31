@@ -61,7 +61,7 @@ pub(crate) fn defer_lfg_event(
     defer_lfg_event_with_id(state, dispatch, label).map(|_| ())
 }
 
-fn defer_lfg_event_with_id(
+pub(crate) fn defer_lfg_event_with_id(
     state: &mut LuaState,
     dispatch: RustFn,
     label: &'static str,
@@ -96,11 +96,6 @@ fn defer_lfg_event_with_id(
             callback_arg: None,
         });
     Ok(id)
-}
-
-fn dispatch_lfg_search_results_received(state: &mut LuaState) -> LuaResult<u32> {
-    fire_event_with_args(state, "LFG_LIST_SEARCH_RESULTS_RECEIVED", Vec::new())?;
-    Ok(0)
 }
 
 fn premade_listing(state: &LuaState, search_result_id: u32) -> Option<PremadeListing> {
@@ -282,29 +277,6 @@ fn get_search_results(state: &mut LuaState) -> LuaResult<u32> {
     state.push(Val::Num(search_result_ids.len() as f64));
     state.push(results);
     Ok(2)
-}
-
-fn search(state: &mut LuaState) -> LuaResult<u32> {
-    let pending = std::mem::take(&mut borrow_state_mut(state)?.lfg_search_timer_ids);
-    let pending = pending
-        .into_iter()
-        .filter(|id| !matches!(timer_layout::get_timer_callback(state, *id), Val::Nil))
-        .collect();
-    borrow_state_mut(state)?.lfg_search_timer_ids = pending;
-    let ids = borrow_state(state)?
-        .world
-        .premade_listings
-        .iter()
-        .map(|listing| listing.search_result_id)
-        .collect();
-    borrow_state_mut(state)?.lfg_search_result_ids = ids;
-    let id = defer_lfg_event_with_id(
-        state,
-        dispatch_lfg_search_results_received,
-        "C_LFGList.SearchResultsReady",
-    )?;
-    borrow_state_mut(state)?.lfg_search_timer_ids.push(id);
-    Ok(0)
 }
 
 /// `GetFilteredSearchResults()` → `(totalResults, results)`. Mirrors
@@ -675,7 +647,7 @@ fn register_search_methods(state: &mut LuaState, table_ref: GcRef<Table>) -> Lua
                 "GetGroupLeaverCountsByRole",
                 get_group_leaver_counts_by_role,
             ),
-            ("Search", search),
+            ("Search", crate::c_api::c_lfg_list_search::search),
         ],
     )?;
     if crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Wrath {
@@ -683,7 +655,7 @@ fn register_search_methods(state: &mut LuaState, table_ref: GcRef<Table>) -> Lua
             state,
             table_ref,
             "ClearSearchResults",
-            crate::lua_api::workarounds::clear_search_results,
+            crate::c_api::c_lfg_list_search::clear_search_results,
         )?;
     }
     Ok(())
