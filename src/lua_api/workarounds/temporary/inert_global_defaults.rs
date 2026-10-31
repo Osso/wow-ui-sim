@@ -136,16 +136,6 @@ if GetGuildFactionGroup == nil then
         return 1
     end
 end
-if GetGroupMemberCounts == nil then
-    function GetGroupMemberCounts()
-        return {
-            TANK = 0,
-            HEALER = 0,
-            DAMAGER = 0,
-            NOROLE = 0,
-        }
-    end
-end
 if GetLootSpecialization == nil then
     function GetLootSpecialization()
         return 0
@@ -284,7 +274,6 @@ mod tests {
         let result: String = env
             .eval(
                 r#"
-                local counts = GetGroupMemberCounts()
                 if IsPlayerInWorld() ~= true then return "player_world" end
                 if GetCurrentRegionName() ~= "US" then return "region" end
                 local languageName, languageID = GetDefaultLanguage()
@@ -321,7 +310,6 @@ mod tests {
                 if Ambiguate("Alyth-Realm", "none") ~= "Alyth-Realm" then return "ambiguate_none" end
                 if AreTalentsLocked() ~= false then return "talents_locked" end
                 if GetGuildFactionGroup() ~= 1 then return "guild_faction" end
-                if counts.TANK ~= 0 or counts.HEALER ~= 0 or counts.DAMAGER ~= 0 or counts.NOROLE ~= 0 then return "counts" end
                 if GetLootSpecialization() ~= 0 then return "loot_spec" end
                 if HasLootSpecializations() ~= true then return "has_loot_specs" end
                 if WorldLootObjectExists("player") ~= false then return "world_loot_object" end

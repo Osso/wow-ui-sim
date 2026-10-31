@@ -9,7 +9,7 @@ use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val, runtime_error};
 
 #[cfg(any(feature = "client-retail", feature = "client-ptr"))]
-use super::unit_roles_assignment::read_role;
+pub(crate) use super::unit_roles_assignment::read_role;
 
 pub(super) fn require_string(state: &LuaState, value: Val) -> LuaResult<String> {
     if !matches!(value, Val::Str(_)) {
@@ -43,7 +43,7 @@ pub(super) fn represented_identity(
 }
 
 #[cfg(not(any(feature = "client-retail", feature = "client-ptr")))]
-fn read_role(state: &LuaState, _unit: &str) -> LuaResult<(&'static str, f64)> {
+pub(crate) fn read_role(state: &LuaState, _unit: &str) -> LuaResult<(&'static str, f64)> {
     // These profiles have no role assignment producer; preserve their unset reads.
     let _sim = crate::lua_api::methods::borrow_state(state)?;
     Ok(("NONE", -1.0))
