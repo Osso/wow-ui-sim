@@ -593,6 +593,53 @@ fn premade_group_categories_can_start_search() {
 
 post_wrath_ui_fixture! {
 #[test]
+fn premade_group_result_update_refreshes_selected_listing() {
+    test_timeout! {
+        let env = setup_env();
+        env.exec(r#"
+            assert(C_AddOns.LoadAddOn('Blizzard_GroupFinder'))
+            LFGListPVEStub_OnShow(LFGListPVEStub)
+            LFGListFrame_SetActivePanel(LFGListFrame, LFGListFrame.CategorySelection)
+            local category
+            for _, button in ipairs(LFGListFrame.CategorySelection.CategoryButtons) do
+                if button:IsShown() then category = button; break end
+            end
+            assert(category, 'expected a visible category')
+            category:GetScript('OnClick')(category)
+            local find = LFGListFrame.CategorySelection.FindGroupButton
+            find:GetScript('OnClick')(find)
+            local panel = LFGListFrame.SearchPanel
+            assert(LFGListFrame.activePanel == panel)
+            local source = debug.getinfo(LFGListSearchPanel_OnEvent, 'S').source:gsub('\\', '/')
+            assert(source:find('Blizzard_GroupFinder/', 1, true), source)
+            C_LFGList.Search(2)
+            assert(C_LFGList.GetSearchResultInfo(1).numMembers == 3)
+            local count = select(1, C_LFGList.GetSearchResults())
+            local events = 0
+            local observer = CreateFrame('Frame')
+            observer:RegisterEvent('LFG_LIST_SEARCH_RESULT_UPDATED')
+            observer:SetScript('OnEvent', function(_, _, id)
+                assert(id == 1)
+                events = events + 1
+            end)
+            A_Admin.UpdatePremadeListing(1, 'numMembers', 5)
+            assert(C_LFGList.GetSearchResultInfo(1).numMembers == 5)
+            assert(events == 1, 'listing update event was not delivered')
+            panel.selectedResult = 1
+            A_Admin.UpdatePremadeListing(1, 'isDelisted', true)
+            assert(C_LFGList.GetSearchResultInfo(1).isDelisted)
+            assert(C_LFGList.HasSearchResultInfo(1), 'delisted result must remain in the set')
+            assert(panel.selectedResult == nil, 'original OnEvent must clear a delisted selection')
+            assert(events == 2, 'delisting update event was not delivered')
+            A_Admin.AddPremadeListing('New group', 'new', 1195, 2, 5)
+            assert(select(1, C_LFGList.GetSearchResults()) == count)
+        "#).expect("Premade result updates should reach the original search panel handler");
+    }
+}
+}
+
+post_wrath_ui_fixture! {
+#[test]
 fn premade_group_search_result_tooltips_do_not_error() {
     test_timeout! {
         let env = setup_env();

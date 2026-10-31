@@ -2,10 +2,11 @@
 
 ## Contract
 
-- Search populates a player result set from the current premade listing catalog and schedules the existing deferred results event.
-- Result queries and application submission use that set. Clearing results empties it and cancels pending search deliveries without deleting the catalog.
-- A later Search repopulates the set; catalog changes do not create results until Search.
+- Search snapshots result membership from the current premade listing catalog and schedules the existing deferred results event.
+- Result queries and application submission use that membership. Fields for existing results reflect current listing data; changing a result fires `LFG_LIST_SEARCH_RESULT_UPDATED(resultID)`.
+- A delisted result remains in the set with `isDelisted=true` and emits the update event. New listings do not enter the set until Search.
+- Clearing results empties the set and cancels pending search deliveries without deleting the catalog.
 
 ## Best-guess basis
 
-**Best-guess, native UNKNOWN.** The pinned GroupFinder consumer calls ClearSearchResults and Search at Retail `Mainline/LFGList.lua:2778,2817`, PTR and Forever `Mainline/LFGList.lua:2765,2804`, and Mists, Era and Anniversary `Classic/LFGList.lua:2090,2125`. Era and Anniversary's Vanilla TOCs do not select the Classic LFGList file; publication on those profiles is explicitly requested despite that limitation. No generated declaration for ClearSearchResults was identified. The separation of catalog and results, and cancellation timing, are inferred; native behavior is unverified.
+**Best-guess, native UNKNOWN.** The pinned GroupFinder consumer calls ClearSearchResults and Search at Retail `Mainline/LFGList.lua:2778,2817`, PTR and Forever `Mainline/LFGList.lua:2765,2804`, and Mists, Era and Anniversary `Classic/LFGList.lua:2090,2125`. Retail `LFGList.lua:215,2395–2410` registers and handles individual result updates; `:2845–2862` deselects a delisted listing. Retail `LFGListInfoDocumentation.lua:965–983` declares `isDelisted` on `LfgSearchResultData`. Era and Anniversary's Vanilla TOCs do not select the Classic LFGList file; publication on those profiles is explicitly requested despite that limitation. No generated declaration for ClearSearchResults was identified. Result membership, update delivery, delisting retention and cancellation timing are inferred; native behavior is unverified.

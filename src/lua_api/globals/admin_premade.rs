@@ -70,18 +70,25 @@ pub(super) fn update_premade_listing(state: &mut LuaState) -> LuaResult<u32> {
     else {
         return Ok(0);
     };
-    match field.as_str() {
-        "numMembers" => {
-            if let Val::Num(n) = value {
-                listing.num_members = n as i32;
-            }
+    let changed = match (field.as_str(), value) {
+        ("numMembers", Val::Num(n)) if listing.num_members != n as i32 => {
+            listing.num_members = n as i32;
+            true
         }
-        "isDelisted" => {
-            if let Val::Bool(b) = value {
-                listing.is_delisted = b;
-            }
+        ("isDelisted", Val::Bool(b)) if listing.is_delisted != b => {
+            listing.is_delisted = b;
+            true
         }
-        _ => {}
+        _ => false,
+    };
+    let notify = changed && st.lfg_search_result_ids.contains(&result_id);
+    drop(st);
+    if notify {
+        super::lfg_list::fire_event_with_args(
+            state,
+            "LFG_LIST_SEARCH_RESULT_UPDATED",
+            vec![Val::Num(result_id as f64)],
+        )?;
     }
     Ok(0)
 }
