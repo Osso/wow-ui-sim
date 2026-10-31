@@ -497,3 +497,17 @@ fn protected_transition_clear_attributes() {
         "frame:GetAttribute('x') == 22",
     );
 }
+
+#[test]
+fn protected_transition_clear_points_offset() {
+    assert_protected_transition(
+        "Frame",
+        "ClearPointsOffset",
+        "frame:SetPoint('CENTER', UIParent, 'CENTER', 11, 12)",
+        "frame:ClearPointsOffset()",
+        "frame:SetPoint('CENTER', UIParent, 'CENTER', 22, 23)",
+        "frame:ClearPointsOffset()",
+        "select(4, frame:GetPoint(1)) == 0 and select(5, frame:GetPoint(1)) == 0",
+        "select(4, frame:GetPoint(1)) == 22 and select(5, frame:GetPoint(1)) == 23",
+    );
+}
