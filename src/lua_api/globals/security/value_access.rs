@@ -134,15 +134,25 @@ fn set_slot_taint(
 /// table) without recursing into nested table contents; `canaccesstable` is
 /// the deep check.
 fn issecretvalue_fallback(state: &mut LuaState) -> LuaResult<u32> {
-    let value = state.stack_get(state.base);
+    let value = first_argument(state);
     let secret = value_is_secret_shallow(state, value);
     state.push(Val::Bool(secret));
     Ok(1)
 }
 
+/// The first argument, or nil when the call has none. Slots at or above
+/// `top` may hold stale values from earlier calls.
+fn first_argument(state: &LuaState) -> Val {
+    if state.top > state.base {
+        state.stack_get(state.base)
+    } else {
+        Val::Nil
+    }
+}
+
 /// `canaccessvalue(v)` — returns true for non-secret values.
 fn canaccessvalue_fallback(state: &mut LuaState) -> LuaResult<u32> {
-    let value = state.stack_get(state.base);
+    let value = first_argument(state);
     let secret = value_is_secret_shallow(state, value);
     state.push(Val::Bool(!secret));
     Ok(1)

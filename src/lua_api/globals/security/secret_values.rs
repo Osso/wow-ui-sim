@@ -1,4 +1,4 @@
-//! Secret-value tracking and scrub pass-throughs.
+//! Secret-value tracking and scrub helpers.
 //!
 //! Tracks which Lua values are "secret" via a registry table keyed by string
 //! identity. Used by `issecretvalue` / `canaccess*` fallbacks and by C-side
@@ -21,8 +21,8 @@ const SECRET_TAINT_MARKER: &str = "*** SimSecretValue ***";
 const LOADSTRING_SECRET_TAINT_MARKER: &str = "*** ForceTaint_Strong ***";
 
 pub(super) fn register_scrub_fallbacks(lua: &mut rilua::Lua) -> LuaResult<()> {
-    register_if_missing(lua, "scrub", scrub_passthrough)?;
-    register_if_missing(lua, "scrubsecretvalues", scrub_passthrough)?;
+    register_if_missing(lua, "scrub", scrub)?;
+    register_if_missing(lua, "scrubsecretvalues", scrub_secret_values)?;
     register_if_missing(lua, "secretunwrap", secretunwrap_passthrough)?;
     Ok(())
 }
@@ -55,10 +55,32 @@ fn secretunwrap_native(state: &mut LuaState) -> LuaResult<u32> {
     Ok(count as u32)
 }
 
-/// `scrub(...)` / `scrubsecretvalues(...)` — return args unchanged.
-fn scrub_passthrough(state: &mut LuaState) -> LuaResult<u32> {
-    let nargs = (state.top as i32 - state.base as i32).max(0) as u32;
-    Ok(nargs)
+/// `scrub(...)` — replace secret values and anything that is not a
+/// boolean, number or string with nil.
+fn scrub(state: &mut LuaState) -> LuaResult<u32> {
+    scrub_arguments(state, |state, value| {
+        matches!(value, Val::Bool(_) | Val::Num(_) | Val::Str(_))
+            && !value_is_secret_shallow(state, value)
+    })
+}
+
+/// `scrubsecretvalues(...)` — replace only secret values with nil.
+fn scrub_secret_values(state: &mut LuaState) -> LuaResult<u32> {
+    scrub_arguments(state, |state, value| !value_is_secret_shallow(state, value))
+}
+
+fn scrub_arguments(
+    state: &mut LuaState,
+    keep: impl Fn(&mut LuaState, Val) -> bool,
+) -> LuaResult<u32> {
+    let nargs = state.top.saturating_sub(state.base);
+    for index in state.base..state.base + nargs {
+        let value = state.stack_get(index);
+        if !keep(state, value) {
+            state.stack_set(index, Val::Nil);
+        }
+    }
+    Ok(nargs as u32)
 }
 
 /// `secretunwrap(value)` — return the same value without changing its metadata.

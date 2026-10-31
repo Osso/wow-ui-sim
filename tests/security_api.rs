@@ -961,26 +961,49 @@ fn native_secret_contents_remain_inaccessible_in_public_table() {
 }
 
 #[test]
-fn test_scrub_helpers_are_passthrough() {
+fn test_scrub_replaces_secret_and_non_scalar_values_with_nil() {
     let env = env();
-    let (first, third, first_secret, third_secret): (i32, String, i32, String) = env
+    let rows: String = env
         .eval(
             r#"
-            local t = { marker = true }
-            local a, b, c = scrub(7, t, "ok")
-            local x, y, z = scrubsecretvalues(7, t, "ok")
-            return a, c, x, z
+            local t, f, secret = { marker = true }, print, secretwrap("private")
+            local function describe(n, ...)
+                local out = {}
+                for i = 1, n do out[i] = tostring((select(i, ...))) end
+                return table.concat(out, ",")
+            end
+            return describe(7, scrub(7, t, "ok", f, true, secret, nil))
+                .. "|" .. describe(7, scrubsecretvalues(7, t, "ok", f, true, secret, nil))
+                .. "|" .. select("#", scrub(1, nil, nil))
             "#,
         )
         .unwrap();
-    assert_eq!(first, 7, "scrub should preserve the first argument");
-    assert_eq!(third, "ok", "scrub should preserve later arguments");
-    assert_eq!(
-        first_secret, 7,
-        "scrubsecretvalues should preserve the first argument"
+    let mut parts = rows.split('|');
+    assert_eq!(parts.next(), Some("7,nil,ok,nil,true,nil,nil"), "scrub");
+    let secret_scrub = parts.next().unwrap();
+    assert!(
+        secret_scrub.starts_with("7,table: ") && secret_scrub.contains(",ok,function: "),
+        "scrubsecretvalues keeps non-secret values: {secret_scrub}"
     );
-    assert_eq!(
-        third_secret, "ok",
-        "scrubsecretvalues should preserve later arguments"
+    assert!(
+        secret_scrub.ends_with(",true,nil,nil"),
+        "scrubsecretvalues drops the secret value: {secret_scrub}"
     );
+    assert_eq!(parts.next(), Some("3"), "scrub keeps the argument count");
+}
+
+#[test]
+fn test_issecretvalue_without_argument_ignores_stale_stack_slots() {
+    let env = env();
+    let (is_secret, accessible): (bool, bool) = env
+        .eval(
+            r#"
+            local function leave_secret_in_slot() return issecretvalue(secretwrap("private")) end
+            assert(leave_secret_in_slot())
+            return issecretvalue(), canaccessvalue()
+            "#,
+        )
+        .unwrap();
+    assert!(!is_secret, "issecretvalue() with no argument returns false");
+    assert!(accessible, "canaccessvalue() with no argument returns true");
 }
