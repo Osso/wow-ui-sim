@@ -82,7 +82,7 @@ GitHub releases provide Retail, Mists, and WoW Forever packages for Linux x86-64
 
 Forever packages include selected spell data. For a local Forever build, run `wow-cli casc sync-forever-spells` before starting the simulator. It uses the installed pinned Forever client when available, or downloads the pinned DB2 files from Blizzard's CDN. See the [spell data contract](docs/specs/forever-spell-data.md).
 
-Retail and PTR dungeon score colours require a generated cache. Run `wow-cli casc sync-dungeon-score-rarity --source cdn` for the active profile before running local tests or using those APIs. Retail release packages and Docker images include the cache. See the [rarity contract](docs/specs/dungeon-score-rarity.md).
+Retail and PTR dungeon score colours require a generated cache. Run `wow-cli casc sync-dungeon-score-rarity` for the active profile before running local tests or using those APIs. Retail release packages and Docker images include the cache. See the [rarity contract](docs/specs/dungeon-score-rarity.md).
 
 ## Docker
 

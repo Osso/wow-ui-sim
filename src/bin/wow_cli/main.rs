@@ -298,8 +298,6 @@ enum CascTarget {
     ExtractFdid { fdid: u32, out: PathBuf },
     /// Generate profile-specific dungeon score rarity data
     SyncDungeonScoreRarity {
-        #[arg(long, value_parser = ["auto", "local", "cdn"], default_value = "auto")]
-        source: String,
         #[arg(long)]
         output: Option<PathBuf>,
     },
@@ -405,17 +403,12 @@ fn run_generator(target: GenerateTarget) {
 
 fn run_casc_command(target: CascTarget) {
     let result = match target {
-        CascTarget::SyncDungeonScoreRarity { source, output } => {
-            use wow_ui_sim::blizzard_ui_sync::{dungeon_score_rarity, forever_spells::Source};
-            let source = match source.as_str() {
-                "local" => Source::Local,
-                "cdn" => Source::Cdn,
-                _ => Source::Auto,
-            };
+        CascTarget::SyncDungeonScoreRarity { output } => {
+            use wow_ui_sim::blizzard_ui_sync::dungeon_score_rarity;
             output
                 .map_or_else(dungeon_score_rarity::cache_path, Ok)
                 .and_then(|path| {
-                    dungeon_score_rarity::populate(&path, source)?;
+                    dungeon_score_rarity::populate(&path)?;
                     println!("Generated dungeon score rarity data: {}", path.display());
                     Ok(())
                 })

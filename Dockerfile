@@ -58,7 +58,7 @@ RUN mkdir -p /spell-bundle /cli-bundle /rarity-bundle \
     && case "$WOW_UI_SIM_PROFILE" in \
         retail) cargo build --release --bin wow-sim --bin wow-cli --no-default-features --features client-retail,gui,tools --locked \
             && mkdir -p /rarity-bundle/retail \
-            && /build/target/release/wow-cli casc sync-dungeon-score-rarity --source cdn --output /rarity-bundle/retail/rarity.json ;; \
+            && /build/target/release/wow-cli casc sync-dungeon-score-rarity --output /rarity-bundle/retail/rarity.json ;; \
         wowforever) cargo build --release --bin wow-sim --bin wow-cli --no-default-features --features client-wowforever,gui,tools --locked \
             && /build/target/release/wow-cli casc sync-forever-spells --source cdn --output /spell-bundle/spells.json \
             && cp /build/target/release/wow-cli /cli-bundle/wow-cli ;; \

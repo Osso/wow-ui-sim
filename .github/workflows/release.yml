@@ -186,7 +186,7 @@ jobs:
           set -euo pipefail
           cli="${{ matrix.bin-dir }}/wow-cli"
           if [[ "${{ runner.os }}" == "Windows" ]]; then cli="${cli}.exe"; fi
-          "${cli}" casc sync-dungeon-score-rarity --source cdn --output "${RUNNER_TEMP}/dungeon-score-rarity.json"
+          "${cli}" casc sync-dungeon-score-rarity --output "${RUNNER_TEMP}/dungeon-score-rarity.json"
 
       - name: Smoke-test release binary
         shell: bash

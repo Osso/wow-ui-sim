@@ -20,10 +20,10 @@ Retail GroupFinder `Mainline/LFGList.lua:4470` passes leader overall score to th
 Generate the active profile's persistent cache before running its tests:
 
 ```text
-wow-cli casc sync-dungeon-score-rarity --source cdn
+wow-cli casc sync-dungeon-score-rarity
 ```
 
-The default path is the user cache under `wow-ui-sim/dungeon-score-rarity/<profile>/rarity.json`. Release packages and Docker images bundle the generated data beside the executable. The CLI also supports explicit local CASC extraction for the exact pinned build.
+The default path is the user cache under `wow-ui-sim/dungeon-score-rarity/<profile>/rarity.json`. Release packages and Docker images bundle the generated data beside the executable.
 
 ## Known gaps
 
