@@ -184,3 +184,134 @@ protected_input_test!(
     "SetHyperlinksEnabled",
     "GetHyperlinksEnabled"
 );
+
+fn assert_protected_transition(
+    kind: &str,
+    method: &str,
+    setup: &str,
+    out: &str,
+    secure: &str,
+    blocked: &str,
+    out_check: &str,
+    secure_check: &str,
+) {
+    let env = loaded_env();
+    env.exec(&format!(
+        r#"
+        local frame = CreateFrame('{kind}', 'ProtectedTransition', UIParent)
+        {setup}
+        local events = {{}}
+        local routed
+        hooksecurefunc(GameEvent, 'HandleActionBlocked', function(_, event, owner)
+            if event == 'ADDON_ACTION_BLOCKED' then routed = owner end
+        end)
+        local listener = CreateFrame('Frame')
+        listener:RegisterEvent('ADDON_ACTION_BLOCKED')
+        listener:SetScript('OnEvent', function(_, _, owner, action)
+            events[#events + 1] = {{ owner, action }}
+        end)
+        A_Admin.SetFrameProtected('ProtectedTransition', true)
+        A_Admin.SetInCombat(false)
+        debug.setstacktaint('ProtectedMethodAddon')
+        {out}
+        assert({out_check}, '{method} must work outside combat')
+        debug.setstacktaint(nil)
+        A_Admin.SetInCombat(true)
+        {secure}
+        assert({secure_check}, '{method} must work for secure callers')
+        debug.setstacktaint('ProtectedMethodAddon')
+        {blocked}
+        debug.setstacktaint(nil)
+        assert({secure_check}, '{method} must be refused in combat')
+        assert(#events == 1, '{method} must emit one blocked event')
+        assert(events[1][1] == 'ProtectedMethodAddon')
+        assert(events[1][2] == 'ProtectedTransition:{method}()')
+        assert(routed == 'ProtectedMethodAddon', 'Blizzard handler must receive the event')
+    "#
+    ))
+    .unwrap();
+}
+
+#[test]
+fn protected_transition_button_enabled() {
+    assert_protected_transition(
+        "Button",
+        "SetEnabled",
+        "",
+        "frame:SetEnabled(false)",
+        "frame:SetEnabled(true)",
+        "frame:SetEnabled(false)",
+        "not frame:IsEnabled()",
+        "frame:IsEnabled()",
+    );
+}
+
+#[test]
+fn protected_transition_scroll_horizontal() {
+    assert_protected_transition(
+        "ScrollFrame",
+        "SetHorizontalScroll",
+        "frame:SetSize(100,100); local child = CreateFrame('Frame', nil, frame); child:SetSize(500,500); frame:SetScrollChild(child)",
+        "frame:SetHorizontalScroll(10)",
+        "frame:SetHorizontalScroll(20)",
+        "frame:SetHorizontalScroll(30)",
+        "frame:GetHorizontalScroll() == 10",
+        "frame:GetHorizontalScroll() == 20",
+    );
+}
+
+#[test]
+fn protected_transition_scroll_vertical() {
+    assert_protected_transition(
+        "ScrollFrame",
+        "SetVerticalScroll",
+        "frame:SetSize(100,100); local child = CreateFrame('Frame', nil, frame); child:SetSize(500,500); frame:SetScrollChild(child)",
+        "frame:SetVerticalScroll(10)",
+        "frame:SetVerticalScroll(20)",
+        "frame:SetVerticalScroll(30)",
+        "frame:GetVerticalScroll() == 10",
+        "frame:GetVerticalScroll() == 20",
+    );
+}
+
+#[test]
+fn protected_transition_cooldown() {
+    assert_protected_transition(
+        "Cooldown",
+        "SetCooldown",
+        "",
+        "frame:SetCooldown(10, 11)",
+        "frame:SetCooldown(20, 21)",
+        "frame:SetCooldown(30, 31)",
+        "select(2, frame:GetCooldownTimes()) == 11000",
+        "select(2, frame:GetCooldownTimes()) == 21000",
+    );
+}
+
+#[test]
+fn protected_transition_rolesets() {
+    assert_protected_transition(
+        "Frame",
+        "SetRolesets",
+        "",
+        "frame:SetRolesets('alpha')",
+        "frame:SetRolesets('beta')",
+        "frame:SetRolesets('gamma')",
+        "frame:GetRolesetNames()[1] == 'alpha'",
+        "frame:GetRolesetNames()[1] == 'beta'",
+    );
+}
+
+#[test]
+fn protected_transition_passthrough() {
+    assert_protected_transition(
+        "Frame",
+        "SetPassThroughButtons",
+        "",
+        "frame:SetPassThroughButtons('LeftButton')",
+        "frame:SetPassThroughButtons('RightButton')",
+        "frame:SetPassThroughButtons('MiddleButton')",
+        "frame:ShouldButtonPassThrough('LeftButton')",
+        "frame:ShouldButtonPassThrough('RightButton') and not frame:ShouldButtonPassThrough('MiddleButton')",
+    );
+}
