@@ -116,7 +116,7 @@ fn build_search_result_info(state: &mut LuaState, listing: &PremadeListing) -> V
     set_search_result_activity_fields(state, info, listing);
     set_search_result_size_fields(state, info, listing);
     set_search_result_social_fields(state, info, listing);
-    set_search_result_requirement_fields(state, info);
+    set_search_result_requirement_fields(state, info, listing);
     crate::c_api::c_lfg_list_search::publish(state, info, &listing.metadata);
     info
 }
@@ -220,12 +220,17 @@ fn set_search_result_social_fields(state: &mut LuaState, info: Val, listing: &Pr
     );
 }
 
-fn set_search_result_requirement_fields(state: &mut LuaState, info: Val) {
+fn set_search_result_requirement_fields(state: &mut LuaState, info: Val, listing: &PremadeListing) {
     table_set(state, info, "requiredItemLevel", Val::Num(0.0));
     table_set(state, info, "requiredHonorLevel", Val::Num(0.0));
     table_set(state, info, "requiredDungeonScore", Val::Num(0.0));
     table_set(state, info, "requiredPvpRating", Val::Num(0.0));
-    table_set(state, info, "questID", Val::Num(0.0));
+    table_set(
+        state,
+        info,
+        "questID",
+        Val::Num(listing.metadata.quest_id.unwrap_or(0) as f64),
+    );
     table_set(state, info, "age", Val::Num(0.0));
     table_set(state, info, "isWarMode", Val::Bool(false));
     set_patch_12_1_search_result_fields(state, info);
@@ -651,6 +656,24 @@ fn register_search_methods(state: &mut LuaState, table_ref: GcRef<Table>) -> Lua
         ],
     )?;
     if crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Wrath {
+        register_lfg_list_methods(
+            state,
+            table_ref,
+            &[
+                (
+                    "ClearSearchTextFields",
+                    crate::c_api::c_lfg_list_search::clear_search_text_fields,
+                ),
+                (
+                    "SetSearchToActivity",
+                    crate::c_api::c_lfg_list_search::set_search_to_activity,
+                ),
+                (
+                    "SetSearchToQuestID",
+                    crate::c_api::c_lfg_list_search::set_search_to_quest,
+                ),
+            ],
+        )?;
         table_set_rust_fn_static(
             state,
             table_ref,

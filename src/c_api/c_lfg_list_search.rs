@@ -4,6 +4,7 @@ use crate::lua_api::methods::{
     borrow_state, borrow_state_mut, create_string, create_table, table_set,
 };
 use crate::lua_api::timer_layout;
+use crate::lua_bridge::FromStack;
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
 
@@ -14,12 +15,18 @@ pub(crate) fn search(state: &mut LuaState) -> LuaResult<u32> {
         .filter(|id| !matches!(timer_layout::get_timer_callback(state, *id), Val::Nil))
         .collect();
     borrow_state_mut(state)?.lfg_search_timer_ids = pending;
-    let ids = borrow_state(state)?
-        .world
-        .premade_listings
-        .iter()
-        .map(|listing| listing.search_result_id)
-        .collect();
+    let ids = {
+        let sim = borrow_state(state)?;
+        sim.world
+            .premade_listings
+            .iter()
+            .filter(|listing| {
+                sim.lfg_search_text_filter
+                    .is_none_or(|filter| filter.matches(listing))
+            })
+            .map(|listing| listing.search_result_id)
+            .collect()
+    };
     borrow_state_mut(state)?.lfg_search_result_ids = ids;
     let id = defer_lfg_event_with_id(
         state,
@@ -66,10 +73,43 @@ pub(crate) fn notify_listing_changed(state: &mut LuaState, result_id: u32) -> Lu
 #[derive(Debug, Clone, Default)]
 pub struct SearchMetadata {
     pub has_self: bool,
+    pub quest_id: Option<u32>,
     pub overall_dungeon_score: Option<f64>,
     pub best_dungeon_score: Option<DungeonScore>,
     pub dungeon_scores: Vec<DungeonScore>,
     pub pvp_ratings: Vec<PvpRating>,
+}
+
+#[derive(Debug, Clone, Copy)]
+pub enum SearchTextFilter {
+    Activity(u32),
+    Quest(u32),
+}
+
+pub(crate) fn clear_search_text_fields(state: &mut LuaState) -> LuaResult<u32> {
+    borrow_state_mut(state)?.lfg_search_text_filter = None;
+    Ok(0)
+}
+
+pub(crate) fn set_search_to_activity(state: &mut LuaState) -> LuaResult<u32> {
+    let id = u32::from_stack(state, 1)?;
+    borrow_state_mut(state)?.lfg_search_text_filter = Some(SearchTextFilter::Activity(id));
+    Ok(0)
+}
+
+pub(crate) fn set_search_to_quest(state: &mut LuaState) -> LuaResult<u32> {
+    let id = u32::from_stack(state, 1)?;
+    borrow_state_mut(state)?.lfg_search_text_filter = Some(SearchTextFilter::Quest(id));
+    Ok(0)
+}
+
+impl SearchTextFilter {
+    pub fn matches(self, listing: &crate::lua_api::state_types::PremadeListing) -> bool {
+        match self {
+            Self::Activity(id) => listing.activity_id == id,
+            Self::Quest(id) => listing.metadata.quest_id == Some(id),
+        }
+    }
 }
 
 #[derive(Debug, Clone, Default)]

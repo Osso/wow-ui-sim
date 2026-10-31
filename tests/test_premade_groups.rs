@@ -33,6 +33,35 @@ fn clear_search_cancels_pending_delivery_and_preserves_catalog() {
 }
 
 #[test]
+fn supplied_quest_search_filters_results() {
+    if wow_ui_sim::client_profile::ACTIVE == wow_ui_sim::client_profile::ClientProfile::Wrath {
+        return;
+    }
+    let env = env();
+    {
+        let state = env.state();
+        let mut state = state.borrow_mut();
+        state.world.premade_listings[0].metadata.quest_id = Some(987654);
+        state.world.premade_listings[1].metadata.quest_id = Some(987655);
+    }
+    // Retail GroupFinder/Mainline/LFGList.lua:796,2779,2817.
+    env.exec(r#"
+        C_LFGList.SetSearchToQuestID(987654)
+        C_LFGList.Search(2)
+        local count, ids = C_LFGList.GetSearchResults()
+        assert(count == 1 and ids[1] == 1)
+        assert(C_LFGList.GetSearchResultInfo(1).questID == 987654)
+        C_LFGList.SetSearchToQuestID(987655)
+        C_LFGList.Search(2)
+        count, ids = C_LFGList.GetSearchResults()
+        assert(count == 1 and ids[1] == 2)
+        C_LFGList.ClearSearchTextFields()
+        C_LFGList.Search(2)
+        assert(select(1, C_LFGList.GetSearchResults()) == 8)
+    "#).unwrap();
+}
+
+#[test]
 fn get_search_result_info_returns_table() {
     let env = env();
     // Retail GroupFinder/Mainline/LFGList.lua:2817 searches before reading results.
