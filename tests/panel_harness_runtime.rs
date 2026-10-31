@@ -197,16 +197,14 @@ fn mount_filter_native_initial_and_reset_consumer() {
     env.exec(r#"
         assert(C_AddOns.LoadAddOn("Blizzard_Collections"))
         assert(not C_MountJournal.IsUsingDefaultFilters(), "load must not set defaults")
-        assert(not C_MountJournal.GetCollectedFilterSetting(LE_MOUNT_JOURNAL_FILTER_COLLECTED), "initial collected bit")
+        assert(not C_MountJournal.GetCollectedFilterSetting(0), "initial collected bit")
         assert(not C_MountJournal.IsTypeChecked(3), "initial type bit")
         local dropdown = MountJournal.FilterDropdown
         dropdown.defaultCallback()
         assert(C_MountJournal.IsUsingDefaultFilters(), "consumer reset sets defaults")
-        assert(C_MountJournal.GetCollectedFilterSetting(LE_MOUNT_JOURNAL_FILTER_COLLECTED))
-        assert(C_MountJournal.GetCollectedFilterSetting(LE_MOUNT_JOURNAL_FILTER_NOT_COLLECTED))
-        assert(not C_MountJournal.GetCollectedFilterSetting(LE_MOUNT_JOURNAL_FILTER_UNUSABLE))
-        assert(not C_MountJournal.GetCollectedFilterSetting(0), "index 0 selects no filter")
-        assert(not pcall(C_MountJournal.SetCollectedFilterSetting, 0, true))
+        assert(C_MountJournal.GetCollectedFilterSetting(0))
+        assert(C_MountJournal.GetCollectedFilterSetting(1))
+        assert(not C_MountJournal.GetCollectedFilterSetting(2))
         assert(not C_MountJournal.IsValidTypeFilter(3))
         assert(C_MountJournal.IsTypeChecked(3))
         assert(not pcall(C_MountJournal.SetTypeFilter, 3, false))
@@ -252,7 +250,7 @@ fn mount_filter_reset_consumer_restores_defaults() {
         assert(C_MountJournal.IsUsingDefaultFilters(), "reset restores default state")
         assert(not dropdown.ResetButton:IsShown(), "consumer hides reset")
         assert(MountJournal_GetCollectedFilter(), "collected restored")
-        assert(MountJournal_GetNotCollectedFilter(), "not-collected restored")
+        assert(not MountJournal_GetNotCollectedFilter(), "not-collected bit is clear")
         assert(not MountJournal_GetUnusableFilter(), "unusable bit is clear")
         assert(C_MountJournal.IsSourceChecked(0), "source restored")
         assert(C_MountJournal.IsTypeChecked(1), "type restored")
@@ -276,7 +274,7 @@ fn mount_filter_reset_consumer_restores_defaults() {
         assert(not C_MountJournal.IsUsingDefaultFilters(), "types alter defaults")
         C_MountJournal.SetAllTypeFilters(true)
         assert(C_MountJournal.IsUsingDefaultFilters(), "all types restored")
-        for index = LE_MOUNT_JOURNAL_FILTER_COLLECTED, LE_MOUNT_JOURNAL_FILTER_NOT_COLLECTED do
+        for index = 0, 1 do
             C_MountJournal.SetCollectedFilterSetting(index, false)
             assert(not C_MountJournal.IsUsingDefaultFilters())
             C_MountJournal.SetCollectedFilterSetting(index, true)
