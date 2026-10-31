@@ -7,16 +7,17 @@ use rilua::{LuaResult, Val};
 pub(crate) fn get_group_member_counts(state: &mut LuaState) -> LuaResult<u32> {
     let party_count = {
         let sim = borrow_state(state)?;
-        if sim.party_group_active {
-            sim.party_members.len()
+        if sim.party_group_active && !sim.party_members.is_empty() {
+            Some(sim.party_members.len())
         } else {
-            0
+            None
         }
     };
     let mut counts = [0u32; 4];
-    for unit in std::iter::once("player".to_owned())
-        .chain((1..=party_count).map(|index| format!("party{index}")))
-    {
+    for unit in party_count.into_iter().flat_map(|party_count| {
+        std::iter::once("player".to_owned())
+            .chain((1..=party_count).map(|index| format!("party{index}")))
+    }) {
         let role = read_role(state, &unit)?.0;
         let index = match role {
             "TANK" => 0,
