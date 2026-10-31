@@ -1,6 +1,6 @@
 # Supplied stable pet slots
 
-Retail/PTR slot queries use explicit environment-local observations. The [contract](../../specs/stable-pet-info.md) defines the supported boundary; Forever retains its separate existing producer.
+Retail/PTR slot queries use explicit environment-local observations. The [contract](../../specs/stable-pet-info.md) defines the supported boundary. Forever has a separate [build 70707 stable-read contract](../../specs/forever-stable-read-state.md): flagged-record counts, a raw slot byte, supplied cost rows, and non-nil empty pet tables. Its empty-table fields and refresh-event relationship remain unknown.
 
 ## State and projection
 

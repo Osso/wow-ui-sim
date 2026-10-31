@@ -55,6 +55,8 @@ fn stable_reads_cached_money_event() {
 
 fn wolf() -> PetInfo {
     PetInfo {
+        native_record_id: 17,
+        native_flags: 2,
         icon: 132203,
         name: "Fang".into(),
         level: 42,
@@ -83,7 +85,7 @@ fn stable_reads_configured_pet_fields_and_snapshot() {
     let env = WowLuaEnv::new().unwrap();
     env.state().borrow_mut().stable_reads = StableReadState {
         owned_slots: 1,
-        next_slot_cost: 50_000,
+        slot_costs: [(2, 50_000)].into(),
         pets: [(2, wolf())].into(),
     };
     env.exec(
@@ -110,7 +112,8 @@ fn stable_reads_configured_pet_fields_and_snapshot() {
         local again = C_StableInfo.GetStablePetInfo(2)
         assert(again.name == "Fang" and again.petAbilities[1] == 17253)
         assert(not pcall(C_StableInfo.GetStablePetInfo))
-        assert(not pcall(C_StableInfo.GetStablePetInfo, {}))
+        local ok, err = pcall(C_StableInfo.GetStablePetInfo, {})
+        assert(not ok and err:find("Usage: local petInfo = C_StableInfo.GetStablePetInfo(index)", 1, true))
     "#,
     )
     .unwrap();
@@ -123,7 +126,7 @@ fn stable_reads_count_tracks_pets_and_environments_are_independent() {
     {
         let mut state = first.state().borrow_mut();
         state.stable_reads.owned_slots = 0;
-        state.stable_reads.next_slot_cost = 10_000;
+        state.stable_reads.slot_costs.insert(1, 10_000);
         state.stable_reads.pets.insert(1, wolf());
         state.pet_stables_open = true;
     }
@@ -144,4 +147,87 @@ fn stable_reads_count_tracks_pets_and_environments_are_independent() {
         .unwrap();
     first.state().borrow_mut().stable_reads.pets.clear();
     first.exec("assert(C_StableInfo.GetNumStablePets() == 0); assert(C_StableInfo.GetStablePetInfo(1) == nil)").unwrap();
+}
+
+#[test]
+fn forever_native_empty_pet_and_original_purchase_consumer() {
+    use crate::common::blizzard_addon_harness::{
+        blizzard_ui_dir, load_blizzard_addon_closure_into_env, new_blizzard_addon_env,
+    };
+    use wow_ui_sim::loader::find_toc_file;
+    use wow_ui_sim::screen::ScreenKind;
+    use wow_ui_sim::toc::TocFile;
+
+    let ui = blizzard_ui_dir();
+    let toc = TocFile::from_file(&find_toc_file(&ui.join("Blizzard_StableUI")).unwrap()).unwrap();
+    assert!(toc.allows_screen(ScreenKind::Game));
+    assert!(!toc.is_game_type_restricted());
+    assert!(
+        toc.files
+            .iter()
+            .any(|file| file.ends_with("Camelot/Blizzard_StableUI.lua"))
+    );
+    let env = new_blizzard_addon_env(&ui);
+    load_blizzard_addon_closure_into_env(&env, &ui, &["Blizzard_StableUI"], &[]);
+    env.exec(r#"
+        assert(debug.getinfo(PetStablePurchaseButtonMixin.Update).source:find("Camelot/Blizzard_StableUI.lua", 1, true))
+        local value = C_StableInfo.GetStablePetInfo(99)
+        assert(value == nil, "absent stable pet must return nil")
+        PetStablePurchaseButtonMixin.Update(PetStableFrame.purchaseButton)
+    "#).unwrap();
+}
+
+#[test]
+fn forever_stable_native_record_flags_and_cost_keys() {
+    let env = WowLuaEnv::new().unwrap();
+    {
+        let mut state = env.state().borrow_mut();
+        let stable = &mut state.stable_reads;
+        stable.owned_slots = 0;
+        stable.slot_costs = [(1, 123), (2, 456)].into();
+        let mut no_id = wolf();
+        no_id.native_record_id = 0;
+        let mut no_flag = wolf();
+        no_flag.native_flags = 1;
+        stable.pets = [(1, wolf()), (2, no_id), (3, no_flag)].into();
+    }
+    env.exec(
+        r#"
+        assert(select('#', C_StableInfo.GetNumStablePets()) == 1)
+        assert(C_StableInfo.GetNumStablePets() == 1)
+        assert(C_StableInfo.GetNextStableSlotCost() == 123)
+        assert(select('#', C_StableInfo.GetStablePetInfo(99)) == 1)
+        assert(C_StableInfo.GetStablePetInfo(99) == nil)
+    "#,
+    )
+    .unwrap();
+    env.state().borrow_mut().stable_reads.owned_slots = 1;
+    env.exec("assert(C_StableInfo.GetNextStableSlotCost() == 456)")
+        .unwrap();
+    env.state().borrow_mut().stable_reads.owned_slots = 255;
+    env.exec("assert(C_StableInfo.GetNumStableSlots() == 255); assert(C_StableInfo.GetNextStableSlotCost() == 0)").unwrap();
+}
+
+#[test]
+fn forever_stable_slot_original_consumer_populated_and_empty() {
+    use crate::common::blizzard_addon_harness::{blizzard_ui_dir, load_blizzard_addon_closure_into_env, new_blizzard_addon_env};
+    let ui = blizzard_ui_dir();
+    let env = new_blizzard_addon_env(&ui);
+    load_blizzard_addon_closure_into_env(&env, &ui, &["Blizzard_StableUI"], &[]);
+    {
+        let mut state = env.state().borrow_mut();
+        state.stable_reads.owned_slots = 2;
+        state.stable_reads.pets.insert(2, wolf());
+    }
+    env.exec(r#"
+        assert(debug.getinfo(PetStableSlotMixin.Update).source:find("Camelot/Blizzard_StableUI.lua", 1, true))
+        local populated = PetStableFrame:GetSlotFrame(2)
+        local empty = PetStableFrame:GetSlotFrame(3)
+        PetStableSlotMixin.Update(populated)
+        assert(populated.tooltip == "Fang", "populated name")
+        assert(populated.tooltipSubtext == format(UNIT_LEVEL_TEMPLATE, 42) .. " Wolf", "populated level and family")
+        PetStableSlotMixin.Update(empty)
+        assert(empty.tooltip == EMPTY_STABLE_SLOT, "unlocked empty slot")
+        assert(empty.tooltipSubtext == "", "empty subtext")
+    "#).unwrap();
 }
