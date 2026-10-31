@@ -236,17 +236,51 @@ mod modern_specs {
     }
 
     #[test]
-    fn invalid_initial_spec_rejects_all_settings_before_mutation() {
+    fn spec_only_outside_initial_class_defers_to_post_startup_class() {
         let env = WowLuaEnv::new().unwrap();
-        let original = player_class_and_race(&env);
         let original_spec = env.state().borrow().player.active_spec_index;
-        let selection = crate::class_spec::parse_selection(None, Some("Holy"), Some("NightElf"))
+        let selection = crate::class_spec::parse_selection(None, Some("Fire"), Some("NightElf"))
             .unwrap()
             .unwrap();
-        let error =
-            apply_initial_player_settings(&env, &mage_orc_config(), Some(&selection)).unwrap_err();
-        assert!(error.to_string().contains("valid specializations: Arcane"));
-        assert_eq!(player_class_and_race(&env), original);
+        apply_initial_player_settings(&env, &SimConfig::default(), Some(&selection)).unwrap();
+        assert_eq!(
+            load_initial_player_probe(&env),
+            ("PALADIN".into(), "NightElf".into())
+        );
         assert_eq!(env.state().borrow().player.active_spec_index, original_spec);
+        env.exec(
+            "local frame = CreateFrame('Frame'); frame:RegisterEvent('PLAYER_ENTERING_WORLD'); \
+             frame:SetScript('OnEvent', function() A_Admin.SetPlayerClass(8) end)",
+        )
+        .unwrap();
+        env.fire_event("PLAYER_ENTERING_WORLD").unwrap();
+        crate::class_spec::schedule_selection(&env, selection);
+        env.exec_maybe_secure("", false).unwrap();
+        assert_eq!(
+            player_class_and_race(&env),
+            ("MAGE".into(), "NightElf".into())
+        );
+        assert_eq!(
+            env.eval::<i32>("return C_SpecializationInfo.GetSpecialization()")
+                .unwrap(),
+            2
+        );
+    }
+}
+
+#[test]
+fn headless_commands_ignore_saved_gui_player_preferences() {
+    for argv in [
+        vec!["wow-sim", "dump-tree"],
+        vec!["wow-sim", "lua-errors"],
+        vec!["wow-sim", "run-tests", "Example"],
+    ] {
+        let args = Args::try_parse_from(argv).unwrap();
+        let config = startup_player_config(&args);
+        let defaults = SimConfig::default();
+        assert_eq!(
+            (config.player_class, config.player_race),
+            (defaults.player_class, defaults.player_race)
+        );
     }
 }

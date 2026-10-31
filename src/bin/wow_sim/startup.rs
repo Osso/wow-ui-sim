@@ -37,7 +37,7 @@ fn initialize_and_load_env(args: &Args, screen: ScreenKind, mut env: WowLuaEnv) 
         args.race.as_deref(),
     )
     .map_err(wow_ui_sim::Error::Other)?;
-    apply_initial_player_settings(&env, &SimConfig::load(), selection.as_ref())?;
+    apply_initial_player_settings(&env, &startup_player_config(args), selection.as_ref())?;
     let font_system = create_font_system(args);
     init_environment(args, &env, &font_system)?;
     env.set_screen_mode(screen);
@@ -360,6 +360,16 @@ fn create_font_system(args: &Args) -> Rc<RefCell<WowFontSystem>> {
     font_system
 }
 
+/// Saved GUI class/race preferences apply only to GUI launches; headless
+/// commands start from the defaults so their results do not depend on them.
+fn startup_player_config(args: &Args) -> SimConfig {
+    if args.command.is_none() {
+        SimConfig::load()
+    } else {
+        SimConfig::default()
+    }
+}
+
 /// Seed launch selections once; ReloadUI retains the current player model.
 fn apply_initial_player_settings(
     env: &WowLuaEnv,
@@ -385,11 +395,16 @@ fn apply_initial_player_settings(
                 .position(|(name, _, _)| *name == config.player_race)
                 .unwrap_or(0)
         });
-    let spec_index = selection
-        .and_then(|selection| selection.spec.as_deref())
-        .map(|spec| super::class_spec::resolve_spec(class_index, spec))
-        .transpose()
-        .map_err(wow_ui_sim::Error::Other)?;
+    let explicit_class = selection.is_some_and(|selection| selection.class.is_some());
+    let spec_index = match selection.and_then(|selection| selection.spec.as_deref()) {
+        None => None,
+        Some(spec) if explicit_class => Some(
+            super::class_spec::resolve_spec(class_index, spec).map_err(wow_ui_sim::Error::Other)?,
+        ),
+        // Without --class the post-startup hook resolves the spec against the
+        // class startup handlers leave; seed it only when the initial class has it.
+        Some(spec) => super::class_spec::resolve_spec(class_index, spec).ok(),
+    };
     let mut state = env.state().borrow_mut();
     state.player.class_index = class_index;
     state.player.race_index = race_index;
