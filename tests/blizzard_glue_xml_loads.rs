@@ -382,3 +382,38 @@ fn blizzard_glue_xml_publishes_top_level_glue_screen_frames() {
         );
     }
 }
+
+#[test]
+fn character_select_social_contract_follows_account_acceptance() {
+    let env = load_character_select_screen();
+    let shown_after_query = |env: &WowLuaEnv| -> bool {
+        env.eval(
+            "CharacterSelect.showSocialContract = nil; \
+             C_SocialContractGlue.GetShouldShowSocialContract(); \
+             return CharacterSelect.showSocialContract == true",
+        )
+        .expect("social contract query should succeed")
+    };
+
+    assert!(
+        !shown_after_query(&env),
+        "an account that accepted the contract must not be asked again"
+    );
+    env.state().borrow_mut().social_contract_accepted = false;
+    assert!(
+        shown_after_query(&env),
+        "an account without acceptance must be shown the contract"
+    );
+    env.exec(
+        "SocialContractFrame:Show(); \
+         SocialContractFrame.ScrollBox:ScrollToEnd(); \
+         SocialContractFrame:Update(); \
+         assert(SocialContractFrame.AcceptButton:IsEnabled(), 'accept enables once read'); \
+         SocialContractFrame.AcceptButton:Click()",
+    )
+    .expect("reading and accepting the contract should succeed");
+    let hidden: bool = env.eval("return not SocialContractFrame:IsShown()").unwrap();
+    assert!(hidden, "accepting closes the contract frame");
+    assert!(env.state().borrow().social_contract_accepted);
+    assert!(!shown_after_query(&env), "acceptance must persist");
+}

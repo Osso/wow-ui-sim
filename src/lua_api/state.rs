@@ -708,6 +708,7 @@ macro_rules! build_empty_sim_state {
             voice_chat_speak_stop_count: 0,
             achievement_telemetry: Vec::new(),
             item_search_text: String::new(),
+            social_contract_accepted: true,
             spell_activation_overlays: ::std::collections::HashSet::new(),
             challenge_completion: Default::default(),
             challenge_run: Default::default(),
