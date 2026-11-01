@@ -113,6 +113,9 @@ fn seeded_missing_c_namespace_tables_exist_with_representative_methods() {
 }
 
 #[test]
+// No profile's generated docs or UI declare C_Console, C_Guild, C_PrivateAuras
+// or C_Who; the documented forms are ConsoleGetAllCommands, IsInGuild and
+// C_FriendList.SendWho, so those namespaces have no method to require here.
 fn documented_extra_c_namespace_tables_exist_with_representative_methods() {
     let env = env();
     let result: String = env
@@ -121,14 +124,10 @@ fn documented_extra_c_namespace_tables_exist_with_representative_methods() {
             local expectations = {
                 { "C_CinematicList", "GetUICinematicList" },
                 { "C_CombatLogSecure", "GetEntryCount" },
-                { "C_Console", "GetAllCommands" },
-                { "C_Guild", "IsInGuild" },
                 { "C_Login", "GetState" },
                 { "C_MacOptions", "GetGameBundleName" },
                 { "C_PingSecure", "CreateFrame" },
-                { "C_PrivateAuras", "SetPrivateRaidBossMessageCallback" },
                 { "C_UnitAurasPrivate", "GetAllPrivateAuras" },
-                { "C_Who", "SendWho" },
             }
 
             for _, expectation in ipairs(expectations) do
