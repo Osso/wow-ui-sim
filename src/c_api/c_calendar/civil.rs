@@ -1,5 +1,5 @@
 //! Supplied civil time and displayed Gregorian month.
-use super::{CivilDateTime, DisplayedMonth};
+use super::DisplayedMonth;
 use crate::lua_api::globals::state_backed_queries::dispatch_event_now;
 use crate::lua_api::methods::{
     borrow_state, borrow_state_mut, call_function_state, create_table_with_fields,
