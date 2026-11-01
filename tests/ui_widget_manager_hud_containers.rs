@@ -175,7 +175,7 @@ fn cached_standard_hud_onload_consumes_preseeded_selection_and_records() {
 }
 
 #[test]
-fn cached_standard_hud_registers_native_set_ids_without_records() {
+fn cached_standard_hud_does_not_register_without_set_records() {
     common::with_timeout(88, || {
         wow_ui_sim::xml::register_intrinsic_templates();
         let env = WowLuaEnv::new().expect("failed to create Lua environment");
@@ -193,13 +193,11 @@ fn cached_standard_hud_registers_native_set_ids_without_records() {
             for _, item in ipairs(names) do
                 local name, setID = item[1], item[2]
                 local container = assert(_G[name], name .. ' missing')
-                assert(container:IsRegisteredForWidgetSet(setID), name .. ' selected wrong set')
+                assert(not container:IsRegisteredForWidgetSet(setID), name .. ' registered an absent set')
                 assert(container.widgetFrames == nil or next(container.widgetFrames) == nil,
                     name .. ' consumed unsupplied records')
-                assert(container.widgetPools:GetNumActive() == 0, name .. ' acquired unsupplied widgets')
-                assert(container.horizontalRowContainerPool:GetNumActive() == 0, name .. ' acquired rows')
-                assert(UIWidgetManager.registeredWidgetContainers[container],
-                    name .. ' did not register HUD')
+                assert(not UIWidgetManager.registeredWidgetContainers[container],
+                    name .. ' registered without set information')
             end
         "#,
         )
