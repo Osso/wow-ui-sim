@@ -502,6 +502,40 @@ fn commentator_camera_presets_accept_two_numeric_speeds() {
     assert!(env.exec("C_Commentator.SetFollowCameraSpeeds(0.05, 'bad')").is_err());
 }
 
+#[cfg(feature = "client-retail")]
+#[test]
+fn garrison_mission_frames_use_db2_currency_types() {
+    let env = WowLuaEnv::new().expect("create Lua environment");
+    env.state().borrow_mut().addon_base_paths = vec![blizzard_ui_dir()];
+    reset_template_state();
+    common::load_profile_framexml(&env);
+    load_force_load_startup(&env);
+    clear_lua_error_tracking(&env);
+    for (name, toc) in force_load_game_addons() {
+        load_addon(&env.loader_env(), &toc).expect("force-load Blizzard addon");
+        if name == "Blizzard_GarrisonUI" {
+            let errors = env.state().borrow().lua_errors.clone();
+            assert!(
+                !errors.iter().any(|error| error.contains("Blizzard_OrderHallMissionUI.lua:36")),
+                "mission frames must resolve garrison currency types: {errors:?}"
+            );
+            let ok: bool = env.eval(r#"
+                local order = OrderHallMissionFrame.MissionTab.MissionPage.CostFrame
+                local bfa = BFAMissionFrame.MissionTab.MissionPage.CostFrame
+                local orderInfo = C_CurrencyInfo.GetCurrencyInfo(1220)
+                local bfaInfo = C_CurrencyInfo.GetCurrencyInfo(1560)
+                return order.currency == 1220 and bfa.currency == 1560
+                    and order.CostIcon:GetTexture() == orderInfo.iconFileID
+                    and bfa.CostIcon:GetTexture() == bfaInfo.iconFileID
+                    and orderInfo.quantity == 0 and bfaInfo.quantity == 0
+            "#).expect("mission frames expose currency and icon state");
+            assert!(ok);
+            return;
+        }
+    }
+    panic!("GarrisonUI missing from Game coverage");
+}
+
 #[test]
 fn all_blizzard_addon_load_errors_are_tracked_per_addon_name() {
     common::with_perf_lock(|| {
