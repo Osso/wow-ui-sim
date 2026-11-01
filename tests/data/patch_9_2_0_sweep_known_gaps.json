@@ -1,7 +1,6 @@
 [
   "wt-cvars-spectate-144",
   "wt-global-api-C_CharacterServices.GetCharacterServiceDisplayDataByVASType-29",
-  "wt-global-api-C_CharacterServices.GetCharacterServiceDisplayOrder-80",
   "wt-global-api-C_GamePad.ClearLedColor-43",
   "wt-global-api-C_GamePad.GetLedColor-44",
   "wt-global-api-C_GamePad.SetLedColor-45",

@@ -20,9 +20,7 @@
   "wt-global-api-C_PetInfo.PetRename-70",
   "wt-global-api-C_QuestLog.IsQuestFromContentPush-71",
   "wt-global-api-C_QuestLog.UpdateCampaignHeaders-72",
-  "wt-global-api-C_StableInfo.GetActivePetList-78",
   "wt-global-api-C_StableInfo.GetStablePetFoodTypes-80",
-  "wt-global-api-C_StableInfo.GetStablePetInfo-81",
   "wt-global-api-C_StableInfo.GetStabledPetList-79",
   "wt-global-api-C_StableInfo.IsAtStableMaster-82",
   "wt-global-api-C_StableInfo.IsPetFavorite-83",
@@ -30,8 +28,6 @@
   "wt-global-api-C_StableInfo.SetPetFavorite-85",
   "wt-global-api-C_StableInfo.SetPetSlot-86",
   "wt-global-api-C_TooltipInfo.GetItemByItemModifiedAppearanceID-87",
-  "wt-global-api-C_WorldLootObject.IsWorldLootObject-122",
-  "wt-global-api-C_WorldLootObject.OnWorldLootObjectClick-124",
   "wt-global-api-StartAttack-126",
   "wt-global-api-issecurevalue-90",
   "wt-widgets-ModelSceneActor:DressPlayerSlot-143"

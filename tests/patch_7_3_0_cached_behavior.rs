@@ -30,6 +30,27 @@ fn patch_7_3_0_cached_sound_ids_reject_names_and_preserve_request(env: &WowLuaEn
 }
 
 prefork_full_ui_case! {
+fn widget_recognition_distinguishes_regions_from_animations(env: &WowLuaEnv) {
+    let recognized: bool = env.eval(r#"
+        local frame = CreateFrame("Frame")
+        local texture = frame:CreateTexture()
+        local text = frame:CreateFontString()
+        local group = frame:CreateAnimationGroup()
+        local animation = group:CreateAnimation("Alpha")
+        return C_Widget.IsWidget(frame)
+            and C_Widget.IsWidget(texture)
+            and C_Widget.IsWidget(text)
+            and not C_Widget.IsWidget(group)
+            and not C_Widget.IsWidget(animation)
+            and not C_Widget.IsWidget({})
+            and not C_Widget.IsWidget(nil)
+            and not C_Widget.IsWidget(42)
+    "#).expect("widget recognition returns booleans");
+    assert!(recognized);
+}
+}
+
+prefork_full_ui_case! {
 fn patch_7_3_0_cached_table_inspector_focuses_concrete_tables(env: &WowLuaEnv) {
     let addons = wow_ui_sim::client_profile::blizzard_ui_addons_dir_under(
         std::path::Path::new(env!("CARGO_MANIFEST_DIR")),

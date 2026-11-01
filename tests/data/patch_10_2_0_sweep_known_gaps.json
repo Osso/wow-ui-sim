@@ -6,8 +6,6 @@
   "wt-global-api-C_Console.GetColorFromType-117",
   "wt-global-api-C_CurrencyInfo.GetDragonIslesSuppliesCurrencyID-86",
   "wt-global-api-C_FriendList.SendWho-164",
-  "wt-global-api-C_LFGInfo.IsGroupFinderEnabled-88",
-  "wt-global-api-C_LFGInfo.IsLFDEnabled-89",
   "wt-global-api-C_LFGInfo.IsLFREnabled-90",
   "wt-global-api-C_PartyInfo.GetMinItemLevel-92",
   "wt-global-api-C_PerksProgram.IsFrozenPerksVendorItem-94",

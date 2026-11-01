@@ -38,14 +38,10 @@
   "wt-global-api-C_PvP.CanToggleWarModeInArea-84",
   "wt-global-api-C_PvP.GetRewardItemLevelsByTierEnum-85",
   "wt-global-api-C_PvP.GetWeeklyChestInfo-88",
-  "wt-global-api-C_QuestChoice.GetQuestChoiceInfo-90",
-  "wt-global-api-C_QuestChoice.GetQuestChoiceOptionInfo-91",
   "wt-global-api-C_QuestLine.RequestQuestLinesForMap-92",
-  "wt-global-api-C_ReportSystem.CanReportPlayer-96",
   "wt-global-api-C_ReportSystem.ReportServerLag-98",
   "wt-global-api-C_SummonInfo.CancelSummon-104",
   "wt-global-api-C_SummonInfo.ConfirmSummon-105",
   "wt-global-api-C_SummonInfo.GetSummonConfirmAreaName-106",
-  "wt-global-api-C_SummonInfo.GetSummonConfirmSummoner-107",
-  "wt-global-api-C_TradeSkillUI.GetTradeSkillLineInfoByID-113"
+  "wt-global-api-C_SummonInfo.GetSummonConfirmSummoner-107"
 ]

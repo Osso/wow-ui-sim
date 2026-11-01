@@ -19,7 +19,6 @@
   "wt-global-api-C_Soulbinds.GetConduitIDPendingInstall-49",
   "wt-global-api-C_Soulbinds.GetInstalledConduitID-51",
   "wt-global-api-C_Soulbinds.IsNodePendingModify-54",
-  "wt-global-api-C_Soulbinds.MatchesCurrentSpecSet-72",
   "wt-global-api-C_Soulbinds.ModifyNode-55",
   "wt-global-api-C_Soulbinds.UnmodifyNode-56",
   "wt-global-api-C_SpecializationInfo.MatchesCurrentSpecSet-58",
