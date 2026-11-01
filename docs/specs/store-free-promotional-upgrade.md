@@ -8,4 +8,9 @@ The simulator does not model account promotional upgrades. On Retail only, an ac
 
 ## Test
 
-`store_tree::store_free_upgrade_check_handles_account_without_upgrade` loads the original StoreUI and calls its secure check after both relevant events.
+`store_tree::store_free_upgrade_check_handles_account_without_upgrade` asserts the query returns `false` (not nil), then loads the original StoreUI and calls its secure check after both relevant events.
+
+## Known gaps
+
+- Native default and argument handling are unknown; the function is absent from the pinned Retail generated docs.
+- Account promotional-upgrade state, the free-upgrade dialog branch of `StoreFrame_CheckForFree`, and PTR/other profiles are not modeled.
