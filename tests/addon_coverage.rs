@@ -420,6 +420,39 @@ fn loot_journal_displays_empty_runeforge_catalog_for_distinct_filters() {
     assert!(ok);
 }
 
+#[cfg(feature = "client-retail")]
+#[test]
+fn wardrobe_latest_appearance_tracks_collections() {
+    let env = WowLuaEnv::new().expect("create Lua environment");
+    env.state().borrow_mut().addon_base_paths = vec![blizzard_ui_dir()];
+    reset_template_state();
+    common::load_profile_framexml(&env);
+    load_force_load_startup(&env);
+    let (_, toc) = force_load_game_addons()
+        .into_iter()
+        .find(|(name, _)| name == "Blizzard_Collections")
+        .expect("Collections is eligible for the Game screen");
+    load_addon(&env.loader_env(), &toc).expect("load Collections");
+    let ok: bool = env.eval(r#"
+        local wardrobe = setmetatable({}, {__index=WardrobeItemsCollectionMixin})
+        wardrobe:CheckLatestAppearance(false)
+        if wardrobe.latestAppearanceID ~= nil then return false end
+        A_Admin.AddTransmogAppearance(9901, 1, 60001)
+        local first = C_TransmogCollection.GetSourceInfo(9901)
+        wardrobe:CheckLatestAppearance(false)
+        if wardrobe.latestAppearanceID ~= first.visualID
+            or wardrobe.jumpToLatestCategoryID ~= 1 then return false end
+        A_Admin.AddTransmogAppearance(9902, 4, 60002)
+        local second = C_TransmogCollection.GetSourceInfo(9902)
+        wardrobe:CheckLatestAppearance(false)
+        return first.visualID ~= second.visualID
+            and wardrobe.latestAppearanceID == second.visualID
+            and wardrobe.jumpToLatestAppearanceID == second.visualID
+            and wardrobe.jumpToLatestCategoryID == 4
+    "#).expect("Wardrobe updates the latest collected appearance");
+    assert!(ok);
+}
+
 #[test]
 fn all_blizzard_addon_load_errors_are_tracked_per_addon_name() {
     common::with_perf_lock(|| {
