@@ -833,6 +833,35 @@ fn allied_races_original_update_uses_generated_scene_actors() {
 
 #[cfg(feature = "client-retail")]
 #[test]
+fn perks_original_load_uses_generated_category_scene() {
+    let env = WowLuaEnv::new().expect("create Lua environment");
+    env.state().borrow_mut().addon_base_paths = vec![blizzard_ui_dir()];
+    reset_template_state();
+    common::load_profile_framexml(&env);
+    load_force_load_startup(&env);
+    let mut found = false;
+    for (name, toc) in force_load_game_addons() {
+        if name == "Blizzard_PerksProgram" { clear_lua_error_tracking(&env); found = true; }
+        load_addon(&env.loader_env(), &toc).expect("force-load Blizzard addon");
+        if found { break; }
+    }
+    assert!(found, "PerksProgram must be Game eligible");
+    let errors = env.state().borrow().lua_errors.clone();
+    assert!(errors.is_empty(), "PerksProgram must initialize without errors: {errors:?}");
+    let ok: bool = env.eval(r#"
+        local ids = C_PerksProgram.GetAvailableCategoryIDs()
+        local transmog = C_PerksProgram.GetCategoryInfo(1)
+        local mounts = C_PerksProgram.GetCategoryInfo(2)
+        return #ids == 6 and transmog.ID == 1 and transmog.displayName == 'Transmog'
+            and transmog.defaultUIModelSceneID == 430
+            and mounts.ID == 2 and mounts.defaultUIModelSceneID == 418
+            and PerksProgramFrame:GetDefaultModelSceneID(Enum.PerksVendorCategoryType.Transmog) == 430
+    "#).expect("original PerksProgram reads category catalogue");
+    assert!(ok);
+}
+
+#[cfg(feature = "client-retail")]
+#[test]
 fn perks_celebration_scene_has_generated_fanfare_actor() {
     let env = WowLuaEnv::new().expect("create Lua environment");
     env.state().borrow_mut().addon_base_paths = vec![blizzard_ui_dir()];

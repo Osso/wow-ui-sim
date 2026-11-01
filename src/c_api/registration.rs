@@ -49,6 +49,7 @@ pub(crate) fn register_item_power_tables(state: &mut LuaState) -> LuaResult<()> 
     super::c_garrison_currency::register(state)?;
     super::c_garrison_follower_xp::register(state)?;
     super::c_scrapping_machine::register(state)?;
+    super::c_perks_categories::register(state)?;
     super::c_legendary_crafting::register(state)?;
     super::c_transmog_latest::register(state)?;
     super::weapon_enchants::register(state)?;
