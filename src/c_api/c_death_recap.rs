@@ -8,14 +8,20 @@
 //!   nil when the list is empty.
 
 use crate::c_api::helpers::{ensure_namespace, set_table_array};
-use crate::lua_api::methods::{borrow_state, create_string, create_table, table_set};
+use crate::client_profile::{ACTIVE, ClientProfile};
+use crate::lua_api::methods::{
+    borrow_state, create_string, create_table, table_set, val_to_string,
+};
 use crate::lua_api::state::{DeathRecapEntry, KillingBlowInfo};
-use crate::lua_bridge::table_set_rust_fn_static;
+use crate::lua_bridge::{stack_val, table_set_rust_fn_static};
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
 
 pub(crate) fn register_c_death_recap_surface(state: &mut LuaState) -> LuaResult<()> {
     let table_ref = ensure_namespace(state, "C_DeathRecap")?;
+    if ACTIVE == ClientProfile::Retail {
+        table_set_rust_fn_static(state, table_ref, "GetRecapEvents", get_recap_events)?;
+    }
     #[cfg(feature = "retail-12-0-5")]
     table_set_rust_fn_static(state, table_ref, "GetRecapMaxHealth", get_recap_max_health)?;
     table_set_rust_fn_static(
@@ -31,6 +37,60 @@ pub(crate) fn register_c_death_recap_surface(state: &mut LuaState) -> LuaResult<
         c_death_recap_get_most_recent_death_recap,
     )?;
     Ok(())
+}
+
+fn read_recap_id(state: &LuaState) -> LuaResult<Option<i32>> {
+    let value = stack_val(state, 1);
+    if value == Val::Nil {
+        return Ok(None);
+    }
+    let number = match value {
+        Val::Num(number) => number,
+        Val::Str(_) => val_to_string(state, value)
+            .and_then(|text| text.trim().parse().ok())
+            .unwrap_or(0.0),
+        _ => 0.0,
+    };
+    if !number.is_finite() || number < i32::MIN as f64 || number > i32::MAX as f64 {
+        return Err(rilua::runtime_error(format!(
+            "integer overflow attempting to store {number}"
+        )));
+    }
+    Ok(Some(number as i32))
+}
+
+fn get_recap_events(state: &mut LuaState) -> LuaResult<u32> {
+    let id = read_recap_id(state)?;
+    let events = {
+        let sim = borrow_state(state)?;
+        let mut recaps = sim.death_recaps.iter().rev().take(60);
+        let recap = match id {
+            Some(id) => recaps.find(|entry| i64::from(entry.recap_id) == i64::from(id)),
+            None => recaps.find(|entry| entry.default_eligible),
+        };
+        recap.map(|entry| entry.events.iter().take(10).cloned().collect::<Vec<_>>())
+    };
+    let Some(events) = events else {
+        return Ok(0);
+    };
+    let array = create_table(state);
+    for (index, event) in events.iter().enumerate() {
+        let item = create_table(state);
+        table_set(state, item, "currentHP", Val::Num(event.current_hp as f64));
+        if let Some(amount) = event.amount {
+            table_set(state, item, "amount", Val::Num(amount as f64));
+        }
+        if let Some(timestamp) = event.timestamp {
+            table_set(state, item, "timestamp", Val::Num(timestamp));
+        }
+        if let Some(source_guid) = &event.source_guid {
+            let value = create_string(state, source_guid);
+            table_set(state, item, "sourceGUID", value);
+        }
+        set_table_array(state, array, index as i64 + 1, item);
+    }
+    state.push(array);
+    Ok(1)
 }
 
 #[cfg(feature = "retail-12-0-5")]
