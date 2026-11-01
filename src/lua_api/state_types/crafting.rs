@@ -1,6 +1,6 @@
 //! Crafting / profession dynamic state.
 
-use std::collections::{HashMap, HashSet};
+use std::collections::{BTreeSet, HashMap, HashSet};
 
 /// Mutable crafting state. Static profession/recipe catalogue still
 /// lives in `globals::profession_data`; this struct only carries
@@ -10,6 +10,8 @@ pub struct CraftingState {
     pub reagents: crate::c_api::crafting_reagents::CraftingInputs,
     /// Recipe-list search text; an empty string disables name filtering.
     pub recipe_name_filter: String,
+    /// Recipe-list display filters other than the name search.
+    pub recipe_filters: RecipeListFilters,
     /// Currently-selected profession id (Skill Line ID — matches the
     /// values in `profession_data`). `None` until `C_TradeSkillUI.
     /// SetProfessionChildSkillLineID` is called or the player opens
@@ -37,4 +39,43 @@ pub struct CraftingState {
     pub wrath_trade_skill_tools: HashMap<i32, Vec<String>>,
     /// Currently selected legacy ClassTrainerFrame service index.
     pub selected_trainer_service_index: Option<i32>,
+}
+
+/// Recipe-list display filters for `C_TradeSkillUI`; see
+/// `docs/specs/trade-skill-recipe-filters.md`.
+#[derive(Clone, Debug, PartialEq)]
+pub struct RecipeListFilters {
+    pub show_learned: bool,
+    /// INFERRED: unlearned recipes start hidden, preserving the catalogue's
+    /// learned-only list until the UI applies `Professions.SetDefaultFilters`.
+    pub show_unlearned: bool,
+    pub only_makeable: bool,
+    /// Stored only: the catalogue records no relative difficulty.
+    pub only_skill_up: bool,
+    /// Stored only: the catalogue records no first-craft state.
+    pub only_first_craft: bool,
+    /// Filtered-out `Enum.BattlePetSources` indices.
+    pub filtered_source_types: BTreeSet<i32>,
+    /// Filtered-out filterable inventory-slot indices.
+    pub filtered_inventory_slots: BTreeSet<i32>,
+    /// Filtered-out recipe category IDs.
+    pub filtered_category_ids: BTreeSet<i32>,
+    /// Inclusive `(min, max)` recipe item level; `None` disables the filter.
+    pub item_level_range: Option<(i32, i32)>,
+}
+
+impl Default for RecipeListFilters {
+    fn default() -> Self {
+        Self {
+            show_learned: true,
+            show_unlearned: false,
+            only_makeable: false,
+            only_skill_up: false,
+            only_first_craft: false,
+            filtered_source_types: BTreeSet::new(),
+            filtered_inventory_slots: BTreeSet::new(),
+            filtered_category_ids: BTreeSet::new(),
+            item_level_range: None,
+        }
+    }
 }
