@@ -207,14 +207,8 @@ fn micro_menu_onload_consumes_supplied_wowhack_mode() {
             .eval::<i32>(&format!("return Enum.GameMode.{mode}"))
             .unwrap();
         env.state().borrow_mut().game_rules.active_game_mode = mode_id;
-        // Reset the observed button placement before the original OnLoad runs again.
-        env.exec(
-            "for _, name in ipairs({'PlayerSpellsMicroButton', 'SpellbookMicroButton', \
-             'TalentMicroButton', 'ScribeMicroButton'}) do \
-             local button = _G[name]; if button then button:SetParent(UIParent); \
-             button.layoutIndex = nil end end; MicroMenu.numButtons = 0; MicroMenu:OnLoad()",
-        )
-        .unwrap();
+        // PTR's original refresh removes obsolete buttons as the mode changes.
+        env.exec("MicroMenu:OnLoad()").unwrap();
         assert_boolean_query_shape(&env, "IsWoWHack");
         let wowhack = mode == "WoWHack";
         assert_eq!(env.eval::<bool>("return C_GameRules.IsWoWHack()").unwrap(), wowhack);
