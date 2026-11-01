@@ -1246,7 +1246,7 @@ fn generated_registry_lists_post_start_housing_batch(state: &ConformanceState) {
         );
         total += actual_count;
     }
-    assert_eq!(total, 189);
+    assert_eq!(total, 190);
 }
 
 #[cfg(feature = "client-retail")]
