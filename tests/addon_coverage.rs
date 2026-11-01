@@ -376,6 +376,35 @@ fn force_load_click_binding_runs_macro_bootstrap_first() {
     panic!("Click Binding addon missing from force-load discovery");
 }
 
+#[cfg(feature = "client-retail")]
+#[test]
+fn loot_journal_displays_empty_runeforge_catalog_for_distinct_filters() {
+    let env = WowLuaEnv::new().expect("create Lua environment");
+    env.state().borrow_mut().addon_base_paths = vec![blizzard_ui_dir()];
+    reset_template_state();
+    common::load_profile_framexml(&env);
+    load_force_load_startup(&env);
+    let (_, toc) = force_load_game_addons()
+        .into_iter()
+        .find(|(name, _)| name == "Blizzard_EncounterJournal")
+        .expect("Encounter Journal is eligible for the Game screen");
+    load_addon(&env.loader_env(), &toc).expect("load Encounter Journal");
+    let ok: bool = env.eval(r#"
+        local journal = setmetatable({classFilter=1, specFilter=71,
+            runeforgePowerFilter=Enum.RuneforgePowerFilter.All,
+            IsShown=function() return false end}, {__index=LootJournalMixin})
+        journal:UpdatePowers()
+        local first = journal.powers
+        journal.classFilter, journal.specFilter = 2, 65
+        journal.runeforgePowerFilter = Enum.RuneforgePowerFilter.Relevant
+        journal:UpdatePowers()
+        return type(first) == 'table' and next(first) == nil
+            and type(journal.powers) == 'table' and next(journal.powers) == nil
+            and first ~= journal.powers
+    "#).expect("Loot Journal updates both runeforge filters");
+    assert!(ok);
+}
+
 #[test]
 fn all_blizzard_addon_load_errors_are_tracked_per_addon_name() {
     common::with_perf_lock(|| {
