@@ -78,7 +78,7 @@ fn panel_open_runtime_baseline_overrides_known_side_loads() {
     let known_counts = known_panel_open_runtime_error_counts(collections_case);
 
     assert_eq!(known_counts.get("<unknown>"), Some(&29));
-    assert_eq!(known_counts.get("Blizzard_Collections"), Some(&6));
+    assert_eq!(known_counts.get("Blizzard_Collections"), Some(&0));
 
     let encounter_journal_case = PANEL_OPEN_COVERAGE_CASES
         .iter()
@@ -91,6 +91,7 @@ fn panel_open_runtime_baseline_overrides_known_side_loads() {
 
 #[test]
 fn panel_open_runtime_paths_stay_within_known_error_baseline() {
+    let _full_ui = lock_full_ui();
     common::with_perf_lock(|| {
         common::with_timeout(600, move || {
             let env = WowLuaEnv::new().expect("Failed to create Lua environment");
