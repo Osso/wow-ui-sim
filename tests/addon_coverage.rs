@@ -783,6 +783,9 @@ fn dress_up_scene_uses_player_fallback_and_exported_race_actor() {
     common::load_profile_framexml(&env);
     load_force_load_startup(&env);
     let ok: bool = env.eval(r#"
+        local kind, cameras, actors = C_ModelInfo.GetModelSceneInfoByID(641)
+        if kind ~= 0 or cameras[1] ~= 626 or actors[1] ~= 1760 then return false end
+        if C_ModelInfo.GetModelSceneActorInfoByID(1760).scriptTag ~= 'fanfare' then return false end
         local scene = CreateFrame('ModelScene', nil, UIParent, 'ModelSceneMixinTemplate')
         scene:TransitionToModelSceneID(596, CAMERA_TRANSITION_TYPE_IMMEDIATE, CAMERA_MODIFICATION_TYPE_DISCARD, true)
         local player = scene:GetActorByTag('player')
@@ -802,6 +805,30 @@ fn dress_up_scene_uses_player_fallback_and_exported_race_actor() {
         .expect("actor accepts documented blend operations");
     assert!(env.exec("ModelBlendActor:SetAnimationBlendOperation('bad')").is_err());
     assert!(env.exec("ModelBlendActor:SetAnimationBlendOperation(2)").is_err());
+}
+
+#[cfg(feature = "client-retail")]
+#[test]
+fn allied_races_original_update_uses_generated_scene_actors() {
+    let env = WowLuaEnv::new().expect("create Lua environment");
+    env.state().borrow_mut().addon_base_paths = vec![blizzard_ui_dir()];
+    reset_template_state();
+    common::load_profile_framexml(&env);
+    load_force_load_startup(&env);
+    let mut found = false;
+    for (name, toc) in force_load_game_addons() {
+        load_addon(&env.loader_env(), &toc).expect("force-load Blizzard addon");
+        if name == "Blizzard_AlliedRacesUI" { found = true; break; }
+    }
+    assert!(found, "AlliedRacesUI must be Game eligible");
+    let ok: bool = env.eval(r#"
+        AlliedRacesFrame:UpdateModel(82735)
+        local actor = AlliedRacesFrame.ModelScene:GetActorByTag('voidelf-female')
+        if not actor or actor:GetDisplayInfo() ~= 82735 then return false end
+        AlliedRacesFrame:UpdateModel(0)
+        return AlliedRacesFrame.ModelScene:GetActorByTag('player') ~= nil
+    "#).expect("original AlliedRaces UpdateModel uses the generated actors");
+    assert!(ok);
 }
 
 #[cfg(feature = "client-retail")]

@@ -65,7 +65,9 @@ fn build_widget_metatable(
         crate::lua_api::frame::methods::widgets::register_cinematic_methods(state, index_clone)
             .expect("register CinematicModel methods");
     }
-    if model_scene_actor {
+    if model_scene_actor
+        && crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Wrath
+    {
         crate::lua_api::frame::methods::widgets::register_model_scene_actor_methods(
             state,
             index_clone,
