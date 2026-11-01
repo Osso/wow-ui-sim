@@ -32,11 +32,31 @@ pub(crate) fn register_c_lfg_info_surface(state: &mut LuaState) -> LuaResult<()>
     register_access_methods(state, table_ref)?;
     register_category_methods(state, table_ref)?;
     register_dungeon_methods(state, table_ref)?;
+    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
+        table_set_rust_fn_static(
+            state,
+            table_ref,
+            "ConfirmLfgExpandSearch",
+            confirm_expand_search,
+        )?;
+    }
     if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Mists {
         super::lfr_availability::register(state, table_ref)?;
         super::scenario_finder_availability::register(state, table_ref)?;
     }
     register_active_dungeon_name(state, table_ref)
+}
+
+fn confirm_expand_search(state: &mut LuaState) -> LuaResult<u32> {
+    let mut sim = borrow_state_mut(state)?;
+    if sim
+        .lfg_expand_prompt
+        .as_ref()
+        .is_some_and(|(key, _)| *key != 0)
+    {
+        sim.lfg_expand_prompt = None;
+    }
+    Ok(0)
 }
 
 #[cfg(feature = "retail-12-1-5")]
