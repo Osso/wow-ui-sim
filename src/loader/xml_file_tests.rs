@@ -95,7 +95,7 @@ fn player_model_variants_all_map_to_player_model() {
     );
     assert_eq!(
         resolve(&XmlElement::CinematicModel(f.clone())),
-        Some(("PlayerModel", None))
+        Some(("CinematicModel", None))
     );
     assert_eq!(
         resolve(&XmlElement::TabardModel(f.clone())),

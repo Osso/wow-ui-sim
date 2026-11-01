@@ -1,6 +1,6 @@
 # CinematicModel camera inputs
 
-CinematicModel objects expose `SetFacingLeft` and `SetTargetDistance`; PlayerModel, DressUpModel and ordinary Frame objects do not gain these methods. `SetFacingLeft` accepts a boolean or omitted value, and `SetTargetDistance` requires a number. Neither changes rendered output because 3D model rendering is intentionally unsupported.
+CinematicModel objects, including XML-created objects, expose `SetFacingLeft` and `SetTargetDistance`; PlayerModel, DressUpModel and ordinary Frame objects do not gain these methods. `SetFacingLeft` accepts a boolean or omitted value, and `SetTargetDistance` requires a number. Neither changes rendered output because 3D model rendering is intentionally unsupported.
 
 ## Best-guess basis (best-guess, native UNKNOWN)
 

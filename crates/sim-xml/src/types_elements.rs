@@ -500,6 +500,9 @@ fn is_frame_fallback_tag(tag: &str) -> bool {
 /// Covers the common mappings used by both `FrameElement` (inside `<Frames>`)
 /// and `XmlElement` (top-level). Callers handle divergences before calling this.
 pub fn widget_type_for_tag(tag: &str) -> Option<(&'static str, Option<&'static str>)> {
+    if tag == "CinematicModel" {
+        return Some(("CinematicModel", None));
+    }
     if let Some(widget_type) = preserved_frame_alias_type(tag).or_else(|| {
         if is_player_model_family_tag(tag) {
             Some("PlayerModel")
