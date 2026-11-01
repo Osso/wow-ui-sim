@@ -7,8 +7,8 @@
 - [x] Publish `C_ItemUpgrade.CanUpgradeItem` on Retail, PTR, Forever, Mists, Era and Anniversary only; leave the excluded Wrath path unchanged.
 - [x] Resolve an actual ItemLocation through existing inventory/bag state and return exactly one supplied boolean. Supply independent eligibility at two concrete locations; no catalog policy is inferred.
 - [x] `A_Admin.SetItemUpgradeEligibility(location, boolean)` supplies an observation for the existing item. `ClearItemUpgradeEligibility(location)` removes it; omitted/nil location clears all observations in that environment.
-- [x] Move observations through bag/cursor/equipment swaps and backpack placement. Removal, deletion and admin replacement must not leak observations to a replacement instance, including one with the same item ID. `A_Admin.SetReagentCount` must discard observations when removing or creating bag records; remove/recreate at the same location must report missing input.
-- [x] Report `native-unknown: C_ItemUpgrade.CanUpgradeItem has no supplied eligibility or documented default for this location` for unsupplied, empty or unsupported locations. This is a simulator diagnostic, not native validation/error behavior.
+- [x] Move observations through bag/cursor/equipment swaps and backpack placement. Removal, deletion and admin replacement must not leak observations to a replacement instance, including one with the same item ID. `A_Admin.SetReagentCount` must discard observations when removing or creating bag records; remove/recreate at the same location must fall back to the unsupplied default.
+- [x] Return `false` for unsupplied and empty bag/equipment locations (decision 2026-11-01; see Best-guess basis). Raise `C_ItemUpgrade.CanUpgradeItem: itemLocation must be a bag or equipment ItemLocation` for nil, non-table and unresolvable arguments.
 
 Pinned declarations: `Blizzard_APIDocumentationGenerated/ItemUpgradeDocumentation.lua:11–24` on Retail/PTR/Forever and `:11–23` on Mists/Era/Anniversary. Required `ItemLocation` argument; one non-nil boolean result. Generic `Blizzard_FrameXMLUtil/ItemUtil.lua` query lines rechecked on 2026-10-26: Retail147, PTR/Forever217, Mists/Era/Anniversary142. Forever's Camelot utility is not this consumer.
 
@@ -35,6 +35,10 @@ The normally selected FrameXMLUtil/ObjectAPI closure is loaded without source ov
 
 - [x] Execute byte-identical original-consumer RED/GREEN on all six declaring profiles, bound stock pairs and seven zero-warning canonical checks. See [the final proof](../wiki/systems/item-upgrade-eligibility.md#final-proof--2026-10-26).
 - [ ] Bag-helper preservation on Mists/Era/Anniversary is BLOCKED before the added seed/query: the existing fixture requires Blizzard_POIButton, which has no compatible TOC. Both final branches and earlier RED receipts stop at this same setup boundary. No assertions or applicability gates were weakened.
+
+## Best-guess basis
+
+best-guess, native UNKNOWN. Unmodified Blizzard consumers (TokenUI via `ToggleBackpack`, auction-house tab switching through `ItemUtil.lua`) query every bag item, so an error for unsupplied locations broke them. Most items cannot be upgraded, and an empty location holds nothing to upgrade, so `false` is the default. Supplied observations still take precedence. Invalid-argument error text is simulator wording, not native.
 
 ## Out of scope
 

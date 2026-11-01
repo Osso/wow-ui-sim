@@ -64,17 +64,20 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
 
 fn can_upgrade_item(state: &mut LuaState) -> LuaResult<u32> {
     let location = stack_val(state, 1);
-    let slot = read_item_slot(state, location);
+    let slot = read_item_slot(state, location).ok_or_else(|| {
+        rilua::runtime_error(
+            "C_ItemUpgrade.CanUpgradeItem: itemLocation must be a bag or equipment ItemLocation",
+        )
+    })?;
     let item_id = super::item_spell::location_item(state, location).map(|(id, _)| id);
-    let eligible = {
-        let sim = borrow_state(state)?;
-        slot.and_then(|slot| sim.item_upgrade_eligibility.locations.get(&slot))
-            .filter(|observation| Some(observation.item_id) == item_id)
-            .map(|observation| observation.eligible)
-    };
-    let eligible = eligible.ok_or_else(|| rilua::runtime_error(
-        "native-unknown: C_ItemUpgrade.CanUpgradeItem has no supplied eligibility or documented default for this location"
-    ))?;
+    // Best guess, native UNKNOWN: without a supplied observation the item is
+    // not upgradable, as for most items and for empty locations.
+    let eligible = borrow_state(state)?
+        .item_upgrade_eligibility
+        .locations
+        .get(&slot)
+        .filter(|observation| Some(observation.item_id) == item_id)
+        .is_some_and(|observation| observation.eligible);
     state.push(Val::Bool(eligible));
     Ok(1)
 }

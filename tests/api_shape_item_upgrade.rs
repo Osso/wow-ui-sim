@@ -71,9 +71,15 @@ fn load_original_item_util() -> WowLuaEnv {
             end
             checkResult(C_ItemUpgrade.CanUpgradeItem(location))
         end
-        function CheckUpgradeUnknown(location)
+        function CheckUpgradeDefault(location)
+            local function checkResult(...)
+                assert(select('#', ...) == 1 and (...) == false, 'unsupplied location defaults to false')
+            end
+            checkResult(C_ItemUpgrade.CanUpgradeItem(location))
+        end
+        function CheckUpgradeInvalid(location)
             local ok, reason = pcall(C_ItemUpgrade.CanUpgradeItem, location)
-            assert(not ok and tostring(reason):find('native%-unknown: C_ItemUpgrade.CanUpgradeItem'), tostring(reason))
+            assert(not ok and tostring(reason):find('itemLocation must be', 1, true), tostring(reason))
         end
     "#).expect("original generic consumer and real two-location fixture");
     env
@@ -110,15 +116,15 @@ fn original_item_util_tracks_supplied_eligibility_movement_removal_and_isolation
             CheckUpgrade(movedLocation, true)
             A_Admin.RemoveBagItem(0, 3)
             assert(ItemButtonUtil.GetItemContextMatchResultForItem(movedLocation) == ItemButtonUtil.ItemContextMatchResult.DoesNotApply)
-            CheckUpgradeUnknown(movedLocation)
+            CheckUpgradeDefault(movedLocation)
             A_Admin.AddBagItem(0, 3, 19019, 1)
-            CheckUpgradeUnknown(movedLocation)
+            CheckUpgradeDefault(movedLocation)
             A_Admin.SetItemUpgradeEligibility(movedLocation, false)
             CheckUpgrade(movedLocation, false)
             A_Admin.ClearItemUpgradeEligibility(movedLocation)
-            CheckUpgradeUnknown(movedLocation)
+            CheckUpgradeDefault(movedLocation)
             A_Admin.ClearItemUpgradeEligibility()
-            CheckUpgradeUnknown(secondLocation)
+            CheckUpgradeDefault(secondLocation)
             A_Admin.SetItemUpgradeEligibility(secondLocation, true)
             A_Admin.RemoveBagItem(0, 1)
             C_Container.PickupContainerItem(0, 2)
@@ -127,14 +133,14 @@ fn original_item_util_tracks_supplied_eligibility_movement_removal_and_isolation
             C_Container.PickupContainerItem(0, 1)
             DeleteCursorItem()
             A_Admin.AddBagItem(0, 1, 6948, 1)
-            CheckUpgradeUnknown(firstLocation)
+            CheckUpgradeDefault(firstLocation)
             A_Admin.SetItemUpgradeEligibility(firstLocation, true)
             CheckUpgrade(firstLocation, true)
         "#).expect("supplied location eligibility must drive original ItemUtil through lifecycle");
         second
             .exec(
                 r#"
-            CheckUpgradeUnknown(firstLocation)
+            CheckUpgradeDefault(firstLocation)
             A_Admin.SetItemUpgradeEligibility(firstLocation, false)
             A_Admin.SetItemUpgradeEligibility(secondLocation, true)
             CheckUpgrade(firstLocation, false)
@@ -143,7 +149,7 @@ fn original_item_util_tracks_supplied_eligibility_movement_removal_and_isolation
             )
             .expect("second environment has independent supplied eligibility");
         first
-            .exec("CheckUpgrade(firstLocation, true); CheckUpgradeUnknown(secondLocation)")
+            .exec("CheckUpgrade(firstLocation, true); CheckUpgradeDefault(secondLocation)")
             .unwrap();
         second.exec(r#"
             A_Admin.SetItemUpgradeEligibility(firstLocation, true)
@@ -158,35 +164,35 @@ fn original_item_util_tracks_supplied_eligibility_movement_removal_and_isolation
 }
 
 #[test]
-fn item_upgrade_unresolved_and_unsupplied_inputs_report_native_unknown() {
+fn item_upgrade_unsupplied_locations_default_false_and_invalid_inputs_error() {
     crate::common::with_timeout(90, || {
         let env = load_original_item_util();
         env.exec(r#"
-            CheckUpgradeUnknown(firstLocation)
-            CheckUpgradeUnknown(ItemLocation:CreateFromBagAndSlot(0, 9))
-            CheckUpgradeUnknown({itemID = 19019})
-            CheckUpgradeUnknown(nil)
-            CheckUpgradeUnknown('not a location')
+            CheckUpgradeDefault(firstLocation)
+            CheckUpgradeDefault(ItemLocation:CreateFromBagAndSlot(0, 9))
+            CheckUpgradeInvalid({itemID = 19019})
+            CheckUpgradeInvalid(nil)
+            CheckUpgradeInvalid('not a location')
             local ok = pcall(A_Admin.SetItemUpgradeEligibility, ItemLocation:CreateFromBagAndSlot(0, 9), true)
             assert(not ok, 'admin cannot supply an absent item')
             A_Admin.SetItemUpgradeEligibility(firstLocation, true)
             CheckUpgrade(firstLocation, true)
             A_Admin.AddBagItem(0, 1, 6948, 1)
-            CheckUpgradeUnknown(firstLocation)
+            CheckUpgradeDefault(firstLocation)
             A_Admin.SetItemUpgradeEligibility(firstLocation, false)
             CheckUpgrade(firstLocation, false)
             A_Admin.ClearBags()
-            CheckUpgradeUnknown(firstLocation)
+            CheckUpgradeDefault(firstLocation)
             A_Admin.AddBagItem(0, 1, 6948, 1)
-            CheckUpgradeUnknown(firstLocation)
+            CheckUpgradeDefault(firstLocation)
             A_Admin.ClearBags()
             A_Admin.EquipItem(16, 19019)
             A_Admin.SetItemUpgradeEligibility(equipmentLocation, true)
             CheckUpgrade(equipmentLocation, true)
             A_Admin.UnequipItem(16)
-            CheckUpgradeUnknown(equipmentLocation)
+            CheckUpgradeDefault(equipmentLocation)
             A_Admin.EquipItem(16, 19019)
-            CheckUpgradeUnknown(equipmentLocation)
-        "#).expect("simulator errors do not invent native validation or default policy");
+            CheckUpgradeDefault(equipmentLocation)
+        "#).expect("unsupplied locations use the best-guess false default");
     });
 }

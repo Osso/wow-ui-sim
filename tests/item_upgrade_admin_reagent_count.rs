@@ -26,10 +26,8 @@ fn admin_reagent_count_recreation_discards_item_upgrade_observation() {
                     A_Admin.SetReagentCount(6948, 1)
                     assert(C_Item.DoesItemExist(location) and C_Item.GetItemID(location) == 6948,
                         'admin recreated the same item ID at the same location')
-                    local ok, reason = pcall(C_ItemUpgrade.CanUpgradeItem, location)
-                    local diagnostic = 'native-unknown: C_ItemUpgrade.CanUpgradeItem has no supplied eligibility or documented default for this location'
-                    assert(not ok and tostring(reason):find(diagnostic, 1, true),
-                        'recreated item must have no supplied eligibility: '..tostring(reason))
+                    assert(C_ItemUpgrade.CanUpgradeItem(location) == false,
+                        'recreated item must not inherit the supplied eligibility')
                 "#).expect("admin reagent recreation must invalidate the old item observation");
             },
         );
