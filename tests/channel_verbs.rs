@@ -91,14 +91,17 @@ fn chat_info_channel_identifier_matches_joined_channel() {
         i32,
         i32,
         i32,
-        bool,
+        String,
     ) = env
         .eval(
             r#"
             JoinChannelByName("General")
             local info = C_ChatInfo.GetChannelInfoFromIdentifier("General")
+            local before = C_TTSSettings.GetChannelEnabled(info)
+            C_TTSSettings.SetChannelEnabled(info, true)
+            local after = C_TTSSettings.GetChannelEnabled(C_ChatInfo.GetChannelInfoFromIdentifier("General"))
             return info.name, info.shortcut, info.localID, info.instanceID,
-                info.zoneChannelID, info.channelType, C_TTSSettings.GetChannelEnabled(info)
+                info.zoneChannelID, info.channelType, tostring(before) .. "," .. tostring(after)
             "#,
         )
         .unwrap();
@@ -108,7 +111,9 @@ fn chat_info_channel_identifier_matches_joined_channel() {
     assert_eq!(instance_id, 0);
     assert_eq!(zone_channel_id, 1);
     assert_eq!(channel_type, 1);
-    assert!(enabled);
+    // Legacy TTS defaults have no enabled channels; the returned record round-trips
+    // through C_TTSSettings (docs/specs/c-factory-cf2-tts.md).
+    assert_eq!(enabled, "false,true");
 }
 
 // ── ChannelLeave ──────────────────────────────────────────────────────────────

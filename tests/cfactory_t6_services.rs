@@ -42,9 +42,22 @@ fn cfactory_t6_collectable_tracking_documented_boolean() {
 }
 
 #[test]
-fn cfactory_t6_tts_chat_type_disabled_without_preference_backend() {
+fn cfactory_t6_tts_chat_types_start_from_legacy_defaults_and_round_trip() {
+    // DefaultLegacySettings enables SAY and PARTY; unlisted chat types stay disabled.
     let env = documented_env("TTSSettingsDocumentation.lua", "GetChatTypeEnabled");
-    env.exec("assert(C_TTSSettings.GetChatTypeEnabled('SAY') == false); assert(C_TTSSettings.GetChatTypeEnabled('PARTY') == false)").unwrap();
+    let states: String = env
+        .eval(
+            r#"
+            local before = tostring(C_TTSSettings.GetChatTypeEnabled('SAY'))
+                .. tostring(C_TTSSettings.GetChatTypeEnabled('PARTY'))
+                .. tostring(C_TTSSettings.GetChatTypeEnabled('CHANNEL'))
+            C_TTSSettings.SetChatTypeEnabled('SAY', false)
+            return before .. '/' .. tostring(C_TTSSettings.GetChatTypeEnabled('SAY'))
+                .. tostring(C_TTSSettings.GetChatTypeEnabled('PARTY'))
+            "#,
+        )
+        .unwrap();
+    assert_eq!(states, "truetruefalse/falsetrue");
 }
 
 #[cfg(any(
