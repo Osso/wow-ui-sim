@@ -826,8 +826,14 @@ pub(crate) fn register_cinematic_methods(
     table_set_rust_fn(
         state,
         index,
+        "SetHeightFactor",
+        cinematic_set_numeric_camera_input,
+    )?;
+    table_set_rust_fn(
+        state,
+        index,
         "SetTargetDistance",
-        cinematic_set_target_distance,
+        cinematic_set_numeric_camera_input,
     )
 }
 
@@ -839,7 +845,7 @@ fn cinematic_set_facing_left(state: &mut LuaState) -> LuaResult<u32> {
     }
 }
 
-fn cinematic_set_target_distance(state: &mut LuaState) -> LuaResult<u32> {
+fn cinematic_set_numeric_camera_input(state: &mut LuaState) -> LuaResult<u32> {
     frame_id_from_stack(state, 1)?;
     f64::from_stack(state, 2)?;
     Ok(0)

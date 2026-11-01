@@ -41,7 +41,7 @@ pub const KNOWN_ERRORS: &[(&str, usize)] = &[
     ("Blizzard_ExpansionTrial", 4),
     ("Blizzard_FlightMap", 0),
     ("Blizzard_GarrisonTemplates", 3),
-    ("Blizzard_GarrisonUI", 10),
+    ("Blizzard_GarrisonUI", 8),
     ("Blizzard_GroupFinder", 2),
     ("Blizzard_GuildBankUI", 8),
     ("Blizzard_HouseList", 2),

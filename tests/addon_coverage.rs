@@ -711,6 +711,48 @@ fn garrison_cinematic_models_expose_only_cinematic_camera_methods() {
     assert!(env.exec("CinematicMethodProbe:SetTargetDistance('bad')").is_err());
 }
 
+#[cfg(feature = "client-retail")]
+#[test]
+fn adventure_rewards_consumer_loads_follower_level_xp() {
+    let env = load_garrison_original_consumers();
+    let errors = env.state().borrow().lua_errors.clone();
+    assert!(
+        !errors.iter().any(|error| error.contains("Blizzard_AdventuresRewardsScreen.lua:13")),
+        "adventure rewards must load follower XP: {errors:?}"
+    );
+    let ok: bool = env.eval(r#"
+        local frame = CreateFrame('Frame', nil, UIParent, 'AdventuresRewardsScreenTemplate')
+        local covenant = C_Garrison.GetFollowerXPTable(123)
+        local garrison = C_Garrison.GetFollowerXPTable(1)
+        return frame.rewardsPool ~= nil and frame.followerPool ~= nil
+            and covenant[1] == 50 and covenant[2] == 100 and covenant[60] == 0
+            and garrison[90] == 400 and garrison[91] == 800
+    "#).expect("adventure rewards and XP catalogue load");
+    assert!(ok);
+}
+
+#[cfg(feature = "client-retail")]
+#[test]
+fn garrison_bonus_chest_onload_accepts_cinematic_height_factor() {
+    let env = load_garrison_original_consumers();
+    clear_lua_error_tracking(&env);
+    let ok: bool = env.eval(r#"
+        local frame = CreateFrame('Frame', nil, UIParent, 'GarrisonMissionBonusRewardsTemplate')
+        _G.GarrisonChestProbe = frame.ChestModel
+        return type(frame.ChestModel:GetScript('OnLoad')) == 'function'
+            and type(frame.ChestModel.SetHeightFactor) == 'function'
+            and CreateFrame('PlayerModel').SetHeightFactor == nil
+            and CreateFrame('DressUpModel').SetHeightFactor == nil
+    "#).expect("create the original Garrison bonus chest");
+    let errors = env.state().borrow().lua_errors.clone();
+    assert!(
+        !errors.iter().any(|error| error.contains("SetHeightFactor")),
+        "original chest OnLoad must accept SetHeightFactor: {errors:?}"
+    );
+    assert!(ok);
+    assert!(env.exec("GarrisonChestProbe:SetHeightFactor('bad')").is_err());
+}
+
 #[test]
 fn all_blizzard_addon_load_errors_are_tracked_per_addon_name() {
     common::with_perf_lock(|| {
