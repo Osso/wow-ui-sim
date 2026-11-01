@@ -263,6 +263,20 @@ mod tests {
     }
 
     #[test]
+    fn nine_slice_preserves_base_dimensions_when_2x_art_is_not_double_size() {
+        let piece = nine_slice_piece("ui-frame-diamondmetal-nineslice-cornertopleft")
+            .expect("diamond metal corner should resolve");
+        let base = ATLAS_DB.get("ui-frame-diamondmetal-cornertopleft").unwrap();
+        let art = ATLAS_DB
+            .get("ui-frame-diamondmetal-cornertopleft-2x")
+            .unwrap();
+        assert_eq!((base.width, base.height), (64, 64));
+        assert_eq!((art.width, art.height), (64, 64));
+        assert_eq!(piece.file, art.file);
+        assert_eq!((piece.width, piece.height), (64, 64));
+    }
+
+    #[test]
     fn exact_unsuffixed_atlas_beats_2x_fallback() {
         let lookup = get_atlas_info("glues-characterselect-card-singles")
             .expect("character select singles atlas should exist");
