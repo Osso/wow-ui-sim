@@ -31,12 +31,13 @@ The documentation does not state these details, and decompiled bodies were not r
 ## Evidence cross-check
 
 - **Implemented:** `securecopy` omits metatables. The independent VERIFIED static table-copy and allocation findings in `S4s7a-securecopy-emulated.md`, window E, corroborate the emulated metatable-bearing table result. The simulator allocates a new ordinary table without assigning a metatable.
-- **Not implemented:** rejecting delegate construction from tainted code. `S4s7b-createsecuredelegate-emulated.md` reports a VERIFIED entry restriction, but the generated declaration's `HasRestrictions` does not independently identify that restriction. Its exact reporting effects are UNKNOWN.
+- **Not implemented:** rejecting delegate construction from tainted code. See Known gaps.
 - **Not fully implemented:** `secretwrap` variadic same-type values and marker gate. The Retail generated declaration `FrameScriptDocumentation.lua:426-440` independently documents variadic input and output and secret conversion; `S7a-secretwrap-emulated.md` verifies the conditional return-transfer rule, but the complete handler is EMULATED and the live gate is UNKNOWN. The current simulator invokes rilua `wrap_secret` for each argument; complete per-value marker/gate parity requires rilua work.
 - **Not implemented:** the `secretunwrap` denied path returning zero values. `S7a-secretwrap-emulated.md` labels that result EMULATED and assumes the reporting helper returns; no independent route establishes this outcome.
 
 ## Known gaps
 
+- **VERIFIED + EMULATED, single route:** `S4s7b-createsecuredelegate-emulated.md` reports that tainted construction is rejected; static inspection and emulation read the same client binary. The generated declaration's `HasRestrictions` does not independently identify this restriction. Its reporting effects are UNKNOWN.
 - **EMULATED only:** Delegate constructor accepts non-function values, and normal invocation forwards every target result (`S4s7b-createsecuredelegate-emulated.md`). Neither fact has independent complete-path corroboration.
 - **EMULATED only:** Secret wrapping and unwrapping marker and result counts for the complete handler paths, including denied unwrap, remain conditional on the modeled state and stubbed reporting helper (`S7a-secretwrap-emulated.md`).
 
