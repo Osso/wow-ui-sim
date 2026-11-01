@@ -46,6 +46,7 @@ pub(crate) fn register_spell_and_widget_tables(state: &mut LuaState) -> LuaResul
 }
 
 pub(crate) fn register_item_power_tables(state: &mut LuaState) -> LuaResult<()> {
+    super::c_legendary_crafting::register(state)?;
     super::weapon_enchants::register(state)?;
     c_paper_doll_info::register_c_paper_doll_info_surface(state)?;
     c_artifact_ui::register_c_artifact_ui_surface(state)?;
