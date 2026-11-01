@@ -10,6 +10,44 @@ use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
 use std::collections::HashMap;
 
+/// Host-supplied civil time, independent of the displayed calendar month.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub struct CivilDateTime {
+    pub year: i32,
+    pub month: u8,
+    pub day: u8,
+    pub hour: u8,
+    pub minute: u8,
+}
+
+impl Default for CivilDateTime {
+    fn default() -> Self {
+        Self {
+            year: 2026,
+            month: 4,
+            day: 14,
+            hour: 12,
+            minute: 0,
+        }
+    }
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub struct DisplayedMonth {
+    pub year: i32,
+    pub month: u8,
+}
+
+impl Default for DisplayedMonth {
+    fn default() -> Self {
+        let current = CivilDateTime::default();
+        Self {
+            year: current.year,
+            month: current.month,
+        }
+    }
+}
+
 #[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct CalendarEventIndexInfo {

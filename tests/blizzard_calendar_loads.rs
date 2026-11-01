@@ -81,6 +81,35 @@ fn blizzard_calendar_loads_without_errors(env: &WowLuaEnv) {
 }
 
 prefork_full_ui_case! {
+fn calendar_show_projects_supplied_civil_month(env: &WowLuaEnv) {
+    use wow_ui_sim::c_api::c_calendar::{CivilDateTime, DisplayedMonth};
+    load_addon(&env.loader_env(), &calendar_toc()).unwrap();
+    env.exec("calendarUpdateCount = 0; calendarObserver = CreateFrame('Frame'); calendarObserver:RegisterEvent('CALENDAR_UPDATE_EVENT_LIST'); calendarObserver:SetScript('OnEvent', function() calendarUpdateCount = calendarUpdateCount + 1 end)").unwrap();
+    for (year, month, day) in [(2026, 4, 14), (2028, 2, 29)] {
+        {
+            let mut state = env.state().borrow_mut();
+            state.calendar_now = CivilDateTime { year, month, day, hour: 12, minute: 0 };
+            state.calendar_displayed_month = DisplayedMonth { year: 2025, month: 1 };
+        }
+        env.exec("calendarUpdateCount = 0; CalendarFrame_OnShow(CalendarFrame)").unwrap();
+        let (shown_year, shown_month, events): (i32, i32, i32) = env.eval("local m = C_Calendar.GetMonthInfo(); return m.year, m.month, calendarUpdateCount").unwrap();
+        assert_eq!((shown_year, shown_month), (year, i32::from(month)));
+        assert!(events > 0, "calendar update event should fire");
+    }
+}
+}
+
+prefork_full_ui_case! {
+fn calendar_hide_clears_supplied_club_selection(env: &WowLuaEnv) {
+    load_addon(&env.loader_env(), &calendar_toc()).unwrap();
+    env.state().borrow_mut().calendar_next_club_id = Some(0);
+    env.exec("CalendarFrame_OnHide(CalendarFrame)").unwrap();
+    let cleared: bool = env.eval("return C_Calendar.GetNextClubId() == nil").unwrap();
+    assert!(cleared, "the original OnHide consumer clears the selected club");
+}
+}
+
+prefork_full_ui_case! {
 fn calendar_show_and_hide_run_without_errors(env: &WowLuaEnv) {
 
     load_addon(&env.loader_env(), &calendar_toc()).expect("Blizzard_Calendar should load");
