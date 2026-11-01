@@ -371,8 +371,18 @@ fn objective_tracker_frame_layout_is_locked(env: &WowLuaEnv) {
         return;
     }
     #[cfg(feature = "client-retail")]
-    settle_prefork_game_ui(env);
-
+    {
+        let state = env.state();
+        let mut sim = state.borrow_mut();
+        let mut quest = sim.quest_log_entries.entries[0].clone();
+        quest.quest_id = 80002;
+        quest.title = "Tracker layout fixture".into();
+        assert!(sim.quest_log_entries.entries.iter().all(|entry| entry.quest_id != quest.quest_id));
+        sim.quest_log_entries.entries.push(quest);
+        drop(sim);
+        env.exec("assert(C_QuestLog.AddQuestWatch(80002))").unwrap();
+        settle_prefork_game_ui(env);
+    }
 
         env.exec(
             r#"
