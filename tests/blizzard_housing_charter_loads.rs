@@ -486,6 +486,10 @@ fn blizzard_housing_charter_settings_reflect_supplied_editability(env: &WowLuaEn
             .eval("return HousingCharterFrame.SettingsButton:IsEnabled()")
             .expect("settings button state should be readable");
         assert_eq!(enabled, can_edit);
+        let (reported, count): (bool, i64) = env
+            .eval("return C_Housing.CanEditCharter(), select('#', C_Housing.CanEditCharter())")
+            .expect("charter query should return one boolean");
+        assert_eq!((reported, count), (can_edit, 1));
     }
 }
 }
