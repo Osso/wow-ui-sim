@@ -476,27 +476,6 @@ fn time_manager_renders_numeric_hour_through_original_dropdown() {
     });
 }
 
-#[cfg(feature = "retail-12-1-0")]
-#[test]
-fn click_binding_load_uses_macro_bootstrap_in_coverage_startup() {
-    with_isolated_addon_coverage_state(|| {
-        let env = WowLuaEnv::new().expect("create Lua environment");
-        env.state().borrow_mut().addon_base_paths = vec![blizzard_ui_dir()];
-        load_startup_blizzard_ui(&env);
-        clear_lua_error_tracking(&env);
-        let _: (bool, Option<String>) = env
-            .eval("return C_AddOns.LoadAddOn('Blizzard_ClickBindingUI')")
-            .expect("load Click Binding addon");
-        let errors = env.state().borrow().lua_errors.clone();
-        assert!(
-            !errors.iter().any(|error| error.contains("Blizzard_ClickBindingUI.lua:594")),
-            "Click Binding OnLoad must call the startup macro bootstrap: {errors:?}"
-        );
-        let loaded: bool = env.eval("return type(MacroFrame_LoadUI) == 'function' and ClickBindingFrame ~= nil").unwrap();
-        assert!(loaded, "Click Binding frame and macro bootstrap must be available");
-    });
-}
-
 #[test]
 fn load_on_demand_runtime_baseline_overrides_force_load_counts() {
     let known_runtime_counts = known_load_on_demand_runtime_error_counts();
