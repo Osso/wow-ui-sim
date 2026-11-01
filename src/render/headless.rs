@@ -48,6 +48,22 @@ fn load_batches_textures(
     (textures, bc_textures)
 }
 
+static GPU_DEVICE_LIFETIME: std::sync::Mutex<()> = std::sync::Mutex::new(());
+
+/// Serializes headless wgpu instance/device lifetimes within one process.
+///
+/// Workaround: on the NVIDIA 615 Vulkan driver, concurrent instance/device
+/// teardown on one thread and command encoding on another deadlock inside
+/// libvulkan/libnvidia-eglcore (the parallel lib test run hung for hours).
+/// Hold the guard from before the instance is created until after the device
+/// is dropped. Retire when the driver no longer deadlocks under parallel GPU
+/// tests.
+pub(crate) fn lock_gpu_device_lifetime() -> std::sync::MutexGuard<'static, ()> {
+    GPU_DEVICE_LIFETIME
+        .lock()
+        .unwrap_or_else(std::sync::PoisonError::into_inner)
+}
+
 /// Create a headless wgpu device and queue.
 fn create_headless_device() -> (wgpu::Device, wgpu::Queue) {
     let instance = wgpu::Instance::new(&wgpu::InstanceDescriptor {
@@ -401,10 +417,13 @@ struct HeadlessRenderContext {
     render_view: wgpu::TextureView,
     width: u32,
     height: u32,
+    // Declared last so it drops after the device, queue and pipeline.
+    _gpu_lifetime: std::sync::MutexGuard<'static, ()>,
 }
 
 impl HeadlessRenderContext {
     fn new(width: u32, height: u32) -> Self {
+        let gpu_lifetime = lock_gpu_device_lifetime();
         let (device, queue) = create_headless_device();
         let (pipeline, render_texture, render_view) =
             create_headless_pipeline_and_target(&device, &queue, width, height);
@@ -416,6 +435,7 @@ impl HeadlessRenderContext {
             render_view,
             width,
             height,
+            _gpu_lifetime: gpu_lifetime,
         }
     }
 
@@ -455,20 +475,20 @@ mod tests {
     use super::{image_from_read_back_buffer, install_glyph_atlas_data, read_back_buffer_layout};
     use crate::render::shader::WowUiPrimitive;
 
+    fn gpu_adapter_available() -> bool {
+        let _gpu = super::lock_gpu_device_lifetime();
+        let instance = wgpu::Instance::new(&wgpu::InstanceDescriptor::default());
+        pollster::block_on(instance.request_adapter(&wgpu::RequestAdapterOptions::default()))
+            .is_ok()
+    }
+
     /// The client magnifies UI art bilinearly; a nearest sampler turns every
     /// upscaled icon and frame into stair-stepped pixel blocks. A 2x2 checker
     /// drawn at 16x16 has a smooth ramp through the middle only when the
     /// sampler interpolates: nearest yields nothing but 0 and 255.
     #[test]
     fn atlas_sampler_interpolates_between_texels() {
-        let instance = wgpu::Instance::new(&wgpu::InstanceDescriptor::default());
-        let has_adapter = pollster::block_on(async {
-            instance
-                .request_adapter(&wgpu::RequestAdapterOptions::default())
-                .await
-                .is_ok()
-        });
-        if !has_adapter {
+        if !gpu_adapter_available() {
             eprintln!("Skipping atlas sampler test: no GPU adapter available");
             return;
         }
@@ -519,14 +539,7 @@ mod tests {
     /// constant.
     #[test]
     fn single_texel_strip_stretched_wide_reads_back_constant_row() {
-        let instance = wgpu::Instance::new(&wgpu::InstanceDescriptor::default());
-        let has_adapter = pollster::block_on(async {
-            instance
-                .request_adapter(&wgpu::RequestAdapterOptions::default())
-                .await
-                .is_ok()
-        });
-        if !has_adapter {
+        if !gpu_adapter_available() {
             eprintln!("Skipping single-texel strip test: no GPU adapter available");
             return;
         }
@@ -577,6 +590,57 @@ mod tests {
         assert!(
             red_max <= 2,
             "a stretched 1-texel strip must not blend with the neighbouring atlas cell (red max = {red_max}); row = {row:?}"
+        );
+    }
+
+    /// Parallel test threads each own a headless device. Their creation,
+    /// rendering and teardown must not deadlock in the Vulkan driver.
+    #[test]
+    fn concurrent_headless_renders_all_complete() {
+        if !gpu_adapter_available() {
+            eprintln!("Skipping concurrent render test: no GPU adapter available");
+            return;
+        }
+        let (done_tx, done_rx) = std::sync::mpsc::channel();
+        for index in 0..8u8 {
+            let done_tx = done_tx.clone();
+            std::thread::spawn(move || {
+                for _ in 0..4 {
+                    let path = format!("Interface\\Test\\Concurrent{index}");
+                    let mut batch = crate::render::QuadBatch::default();
+                    batch.push_textured_path(
+                        iced::Rectangle::new(iced::Point::ORIGIN, iced::Size::new(8.0, 8.0)),
+                        &path,
+                        [1.0, 1.0, 1.0, 1.0],
+                        crate::BlendMode::Alpha,
+                    );
+                    let texture = crate::render::shader::GpuTextureData {
+                        path,
+                        width: 1,
+                        height: 1,
+                        rgba: vec![index, 0, 255, 255].into(),
+                    };
+                    let mut primitive = WowUiPrimitive::new_merged_with_textures(
+                        std::sync::Arc::new(batch),
+                        vec![texture],
+                        Vec::new(),
+                    );
+                    let image = super::HeadlessRenderContext::new(8, 8).render(&mut primitive);
+                    assert_eq!(image.get_pixel(4, 4).0[2], 255);
+                }
+                done_tx.send(index).unwrap();
+            });
+        }
+        drop(done_tx);
+        let mut finished = Vec::new();
+        while let Ok(index) = done_rx.recv_timeout(std::time::Duration::from_secs(120)) {
+            finished.push(index);
+        }
+        finished.sort_unstable();
+        assert_eq!(
+            finished,
+            (0..8).collect::<Vec<u8>>(),
+            "every render thread must finish"
         );
     }
 

@@ -206,6 +206,7 @@ mod tests {
 
     #[test]
     fn create_atlas_bind_group_entries_keeps_sampler_at_binding_five() {
+        let _gpu = crate::render::headless::lock_gpu_device_lifetime();
         let (device, _queue) = create_test_device();
         let tier_views: [wgpu::TextureView; NUM_TIERS] =
             std::array::from_fn(|_| create_test_view(&device));

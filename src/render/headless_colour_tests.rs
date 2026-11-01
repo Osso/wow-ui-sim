@@ -70,6 +70,7 @@ fn upload_colour_swatches(pipeline: &mut WowUiPipeline, queue: &wgpu::Queue) -> 
 #[test]
 #[ignore = "opt-in production wgpu readback; use the documented exact test filter"]
 fn colour_readback_has_no_artificial_brightness_lift() {
+    let _gpu = crate::render::headless::lock_gpu_device_lifetime();
     let (device, queue) = request_colour_test_device();
     let mut pipeline = WowUiPipeline::new(&device, &queue, FORMAT);
     let (target, view) = create_render_target(&device, WIDTH, HEIGHT, FORMAT);

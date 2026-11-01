@@ -650,6 +650,7 @@ mod tests {
 
     #[test]
     fn upload_new_bc_texture_returns_none_when_atlas_is_full() {
+        let _gpu = crate::render::headless::lock_gpu_device_lifetime();
         let (device, queue) = create_test_device();
         let mut atlas = create_test_bc_atlas(&device);
         while atlas.allocate_slot().is_some() {}
@@ -661,6 +662,7 @@ mod tests {
 
     #[test]
     fn create_tier_atlases_uses_configured_sizes_and_empty_slots() {
+        let _gpu = crate::render::headless::lock_gpu_device_lifetime();
         let (device, _queue) = create_test_device();
         let tiers = create_tier_atlases(&device);
 
@@ -673,6 +675,7 @@ mod tests {
 
     #[test]
     fn cached_bc_entry_returns_copied_entry() {
+        let _gpu = crate::render::headless::lock_gpu_device_lifetime();
         let (device, _queue) = create_test_device();
         let mut atlas = GpuTextureAtlas::new(&device);
         let expected = BcTextureEntry {

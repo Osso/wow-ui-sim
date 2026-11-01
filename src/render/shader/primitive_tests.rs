@@ -232,6 +232,7 @@ fn texture_request_inset_policy_can_be_overridden() {
 
 #[test]
 fn resolved_tab_crop_insets_atlas_slot_edges_by_half_texel() {
+    let _gpu = crate::render::headless::lock_gpu_device_lifetime();
     let instance = wgpu::Instance::new(&wgpu::InstanceDescriptor::default());
     let (device, queue) = pollster::block_on(async {
         let adapter = instance
@@ -294,6 +295,7 @@ fn bc_texture_dimensions_must_fit_bc_gpu_cell() {
 
 #[test]
 fn unresolved_pending_textures_become_transparent() {
+    let _gpu = crate::render::headless::lock_gpu_device_lifetime();
     let instance = wgpu::Instance::new(&wgpu::InstanceDescriptor::default());
     let (device, queue) = pollster::block_on(async {
         let adapter = instance
@@ -332,6 +334,7 @@ fn unresolved_pending_textures_become_transparent() {
 
 #[test]
 fn prepare_bc_upload_failure_keeps_path_unready_and_requests_rgba_retry() {
+    let _gpu = crate::render::headless::lock_gpu_device_lifetime();
     let instance = wgpu::Instance::new(&wgpu::InstanceDescriptor::default());
     let (device, queue) = pollster::block_on(async {
         let adapter = instance
@@ -420,6 +423,7 @@ fn prepare_bc_upload_failure_keeps_path_unready_and_requests_rgba_retry() {
 
 #[test]
 fn resolved_textures_remap_quad_uvs_into_atlas_slot() {
+    let _gpu = crate::render::headless::lock_gpu_device_lifetime();
     let instance = wgpu::Instance::new(&wgpu::InstanceDescriptor::default());
     let (device, queue) = pollster::block_on(async {
         let adapter = instance
@@ -548,6 +552,7 @@ fn resolved_bc_entries_remap_mask_uvs_into_bc_slot() {
 
 #[test]
 fn pending_transition_reuploads_strata_vertices_with_resolved_tex_indices_after_ready() {
+    let _gpu = crate::render::headless::lock_gpu_device_lifetime();
     let instance = wgpu::Instance::new(&wgpu::InstanceDescriptor::default());
     let (device, queue) = pollster::block_on(async {
         let adapter = instance
