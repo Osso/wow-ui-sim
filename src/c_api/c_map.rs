@@ -92,17 +92,6 @@ const C_MAP_METHODS: &[(&str, RustLuaFn)] = &[
 pub(crate) fn register_c_map_surface(state: &mut LuaState) -> LuaResult<()> {
     let table_ref = ensure_namespace(state, "C_Map")?;
     register_c_map_methods(state, table_ref)?;
-    if !matches!(
-        crate::client_profile::ACTIVE,
-        crate::client_profile::ClientProfile::Wrath
-    ) {
-        table_set_rust_fn_static(
-            state,
-            table_ref,
-            "GetMapArtHelpTextPosition",
-            c_map_get_map_art_help_text_position,
-        )?;
-    }
     super::c_map_bounties::register(state)?;
     super::map_world_coordinates::register(state)
 }
@@ -125,13 +114,6 @@ fn register_c_map_methods(state: &mut LuaState, table_ref: LuaTableRef) -> LuaRe
         )?;
     }
     Ok(())
-}
-
-fn c_map_get_map_art_help_text_position(state: &mut LuaState) -> LuaResult<u32> {
-    f64::from_stack(state, 1)?;
-    // Best guess until UiMapArt positions are available: MapCanvasPosition.BottomRight.
-    state.push(Val::Num(2.0));
-    Ok(1)
 }
 
 const DEFAULT_PLAYER_MAP_ID: i32 = 2248;

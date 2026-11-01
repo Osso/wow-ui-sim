@@ -326,6 +326,7 @@ fn apply_core_foundation_tracking_defaults(lua: &mut rilua::Lua) -> crate::Resul
     temporary::container_default_shapes::apply_bootstrap(lua)?;
     temporary::container_portrait_texture::apply_bootstrap(lua)?;
     temporary::minimap_tracking_defaults::apply_bootstrap(lua)?;
+    temporary::map_art_help_text_defaults::apply_bootstrap(lua)?;
     temporary::super_track_defaults::apply_bootstrap(lua)
 }
 

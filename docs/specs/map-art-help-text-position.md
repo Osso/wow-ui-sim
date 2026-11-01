@@ -1,6 +1,6 @@
 # Map art help-text position
 
-`C_Map.GetMapArtHelpTextPosition(uiMapID)` requires a number and returns `Enum.MapCanvasPosition.BottomRight` for every map ID. The query is published for Retail, PTR, WoW Forever, Mists, Era and Anniversary.
+`C_Map.GetMapArtHelpTextPosition(uiMapID)` requires a number and returns `Enum.MapCanvasPosition.BottomRight` for every map ID. The query is published for Retail, PTR, WoW Forever, Mists, Era and Anniversary by the temporary workaround `src/lua_api/workarounds/temporary/map_art_help_text_defaults.rs`.
 
 ## Best-guess basis (best-guess, native UNKNOWN)
 
@@ -8,4 +8,4 @@
 
 ## Known gaps
 
-Per-map positions require a UiMapArt DB2 export. Native position data and behavior for individual map IDs are unknown.
+No per-map position source is known: the exported `data/db2/UiMapArt.csv`, `UiMapArtStyleLayer.csv` and `UiMapArtTile.csv` have no position column. Native position data and behavior for individual map IDs are unknown.
