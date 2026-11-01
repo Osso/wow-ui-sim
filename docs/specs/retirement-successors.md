@@ -15,6 +15,10 @@ Retail 12.0.0+ keeps all 21 symbols in `tests/data/patch_12_0_0_deprecated.json`
 
 Proof: native behavior tests in `tests/retirement_successors.rs`, model migrations in existing integration tests, and cached retirement/successor proof in `tests/patch_12_0_0_deprecated.rs`. Cached generated API docs and unmodified consumer Lua are the compatibility target. No page-coverage ledger changes.
 
+## Chat report retirement
+
+`C_ChatInfo.CanReportPlayer` was removed in the 8.1.5 source register. On current Retail both raw and ordinary lookups are nil. The current generated declaration is `C_ReportSystem.CanReportPlayer` in `ReportSystemDocumentation.lua:11-22`; its eligibility behavior is a separate contract. The 8.0.1 and 8.1.5 publication sweeps classify the old location as absent, not as a known gap.
+
 ## Fallout test disposition
 
 Gated tests retain their earlier-epoch assertions. The existing 21-row retirement case covers Retail absence; no duplicate absence tests were added.
