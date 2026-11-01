@@ -11,11 +11,13 @@ use std::collections::{BTreeMap, BTreeSet, HashSet};
 use std::path::PathBuf;
 use wow_ui_sim::blizzard_ui_sync::manifest_entries;
 use wow_ui_sim::loader::{
-    discover_all_blizzard_addons, discover_blizzard_addon_closure_for_screen, load_addon,
+    discover_all_blizzard_addons, discover_blizzard_addon_closure_for_screen,
+    discover_blizzard_startup_addons_for_screen, load_addon, load_startup_addon,
 };
 use wow_ui_sim::lua_api::WowLuaEnv;
 use wow_ui_sim::lua_errors::grouped_errors_by_addon;
 use wow_ui_sim::screen::ScreenKind;
+use wow_ui_sim::toc::TocFile;
 use wow_ui_sim::xml::{clear_templates, register_intrinsic_templates};
 
 const PANEL_COVERAGE_ADDONS: &[(&str, &str)] = &[
@@ -307,6 +309,102 @@ fn load_panel_harness_blizzard_ui(env: &WowLuaEnv) -> HashSet<String> {
     closure.into_iter().map(|(name, _)| name).collect()
 }
 
+fn force_load_game_addons() -> Vec<(String, PathBuf)> {
+    discover_all_blizzard_addons(&blizzard_ui_dir())
+        .into_iter()
+        .filter(|(_, path)| {
+            let toc = TocFile::from_file(path).expect("parse addon TOC");
+            toc.allows_screen(ScreenKind::Game)
+                && toc.allows_text_locale()
+                && !toc.is_ptr_only()
+                && !toc.is_game_type_restricted()
+        })
+        .collect()
+}
+
+#[test]
+fn force_load_coverage_selects_only_game_eligible_addons() {
+    let addons = force_load_game_addons();
+    let selected: HashSet<_> = addons.iter().map(|(name, _)| name.as_str()).collect();
+    let excluded: Vec<_> = discover_all_blizzard_addons(&blizzard_ui_dir())
+        .into_iter()
+        .map(|(name, _)| name)
+        .filter(|name| !selected.contains(name.as_str()))
+        .collect();
+    println!("Excluded from Game coverage: {excluded:?}");
+    assert!(addons.iter().any(|(name, _)| name == "Blizzard_ClickBindingUI"));
+    for (name, path) in addons {
+        let toc = TocFile::from_file(&path).expect("parse addon TOC");
+        assert!(
+            toc.allows_screen(ScreenKind::Game)
+                && toc.allows_text_locale()
+                && !toc.is_ptr_only()
+                && !toc.is_game_type_restricted(),
+            "{name} is not eligible for the Game screen"
+        );
+    }
+}
+
+fn load_force_load_startup(env: &WowLuaEnv) {
+    for addon in discover_blizzard_startup_addons_for_screen(&blizzard_ui_dir(), ScreenKind::Game) {
+        load_startup_addon(&env.loader_env(), &addon.toc_path, addon.kind, None)
+            .unwrap_or_else(|error| panic!("{} startup load failed: {error}", addon.name));
+    }
+}
+
+#[cfg(feature = "client-retail")]
+#[test]
+fn force_load_click_binding_runs_macro_bootstrap_first() {
+    let env = WowLuaEnv::new().expect("create Lua environment");
+    env.state().borrow_mut().addon_base_paths = vec![blizzard_ui_dir()];
+    reset_template_state();
+    common::load_profile_framexml(&env);
+    load_force_load_startup(&env);
+    for (name, toc) in force_load_game_addons() {
+        load_addon(&env.loader_env(), &toc).expect("force-load Blizzard addon");
+        if name == "Blizzard_ClickBindingUI" {
+            let errors = env.state().borrow().lua_errors.clone();
+            assert!(
+                !errors.iter().any(|error| error.contains("Blizzard_ClickBindingUI.lua:594")),
+                "Click Binding OnLoad must not fail at the macro bootstrap call: {errors:?}"
+            );
+            let present: bool = env.eval("return type(MacroFrame_LoadUI) == 'function' and ClickBindingFrame ~= nil").unwrap();
+            assert!(present, "the macro bootstrap and Click Binding frame must exist");
+            return;
+        }
+    }
+    panic!("Click Binding addon missing from force-load discovery");
+}
+
+#[cfg(feature = "client-retail")]
+#[test]
+fn loot_journal_displays_empty_runeforge_catalog_for_distinct_filters() {
+    let env = WowLuaEnv::new().expect("create Lua environment");
+    env.state().borrow_mut().addon_base_paths = vec![blizzard_ui_dir()];
+    reset_template_state();
+    common::load_profile_framexml(&env);
+    load_force_load_startup(&env);
+    let (_, toc) = force_load_game_addons()
+        .into_iter()
+        .find(|(name, _)| name == "Blizzard_EncounterJournal")
+        .expect("Encounter Journal is eligible for the Game screen");
+    load_addon(&env.loader_env(), &toc).expect("load Encounter Journal");
+    let ok: bool = env.eval(r#"
+        local journal = setmetatable({classFilter=1, specFilter=71,
+            runeforgePowerFilter=Enum.RuneforgePowerFilter.All,
+            IsShown=function() return false end}, {__index=LootJournalMixin})
+        journal:UpdatePowers()
+        local first = journal.powers
+        journal.classFilter, journal.specFilter = 2, 65
+        journal.runeforgePowerFilter = Enum.RuneforgePowerFilter.Relevant
+        journal:UpdatePowers()
+        return type(first) == 'table' and next(first) == nil
+            and type(journal.powers) == 'table' and next(journal.powers) == nil
+            and first ~= journal.powers
+    "#).expect("Loot Journal updates both runeforge filters");
+    assert!(ok);
+}
+
 #[test]
 fn all_blizzard_addon_load_errors_are_tracked_per_addon_name() {
     common::with_perf_lock(|| {
@@ -319,6 +417,8 @@ fn all_blizzard_addon_load_errors_are_tracked_per_addon_name() {
                 load_addon(&env.loader_env(), &toc)
                     .expect("profile FrameXML should load before addons");
             }
+
+            load_force_load_startup(&env);
 
             let cached_addon_roots = cached_blizzard_addon_roots();
             let manifest_addon_roots = active_manifest_blizzard_addon_roots();
@@ -335,7 +435,7 @@ fn all_blizzard_addon_load_errors_are_tracked_per_addon_name() {
                 "active Blizzard UI cache roots must match committed manifest roots\ncache only: {cache_only:?}\nmanifest only: {manifest_only:?}"
             );
 
-            let addons = discover_all_blizzard_addons(&blizzard_ui_dir());
+            let addons = force_load_game_addons();
             let known_addons: HashSet<_> = addons.iter().map(|(name, _)| name.clone()).collect();
             let mut load_failures = Vec::new();
 
