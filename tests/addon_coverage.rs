@@ -542,6 +542,117 @@ fn garrison_mission_frames_use_db2_currency_types() {
     panic!("GarrisonUI missing from Game coverage");
 }
 
+#[cfg(feature = "client-retail")]
+#[test]
+fn garrison_consumers_clear_and_read_empty_mission_lists() {
+    let env = WowLuaEnv::new().expect("create Lua environment");
+    env.state().borrow_mut().addon_base_paths = vec![blizzard_ui_dir()];
+    reset_template_state();
+    common::load_profile_framexml(&env);
+    load_force_load_startup(&env);
+    for (name, toc) in force_load_game_addons() {
+        load_addon(&env.loader_env(), &toc).expect("force-load Blizzard addon");
+        if name == "Blizzard_GarrisonUI" { break; }
+    }
+    let (_, toc) = force_load_game_addons().into_iter()
+        .find(|(name, _)| name == "Blizzard_AdventureMap")
+        .expect("Adventure Map is eligible for the Game screen");
+    load_addon(&env.loader_env(), &toc).expect("load Adventure Map");
+    let ok: bool = env.eval(r#"
+        local texture = {SetDesaturated=function() end}
+        local tab1 = {SetText=function(self, value) self.text=value end}
+        local tab2 = {SetText=function(self, value) self.text=value end,
+            SetEnabled=function(self, value) self.enabled=value end,
+            Left=texture, Right=texture, Middle=texture,
+            Text={SetTextColor=function() end}}
+        local list = setmetatable({inProgressMissions={123}, availableMissions={456},
+            Tab1=tab1, Tab2=tab2,
+            GetMissionFrame=function() return {followerTypeID=1} end,
+            UpdateCombatAllyMission=function() end, Update=function() end},
+            {__index=GarrisonMissionListMixin})
+        list:UpdateMissions()
+        local provider = setmetatable({GetMap=function()
+            return {GetMapID=function() return 84 end}
+        end}, {__index=AdventureMap_ZoneSummaryProviderMixin})
+        provider:GatherMissions()
+        return next(list.inProgressMissions) == nil and next(list.availableMissions) == nil
+            and tab2.enabled == false and next(provider.missionsByZone) == nil
+    "#).expect("original mission list and Adventure Map consumers run");
+    assert!(ok);
+    assert!(env.exec("C_Garrison.GetInProgressMissions({}, 'bad')").is_err());
+    assert!(env.exec("C_Garrison.GetAvailableMissions(true, 1)").is_err());
+}
+
+#[cfg(feature = "client-retail")]
+fn load_garrison_original_consumers() -> WowLuaEnv {
+    let env = WowLuaEnv::new().expect("create Lua environment");
+    env.state().borrow_mut().addon_base_paths = vec![blizzard_ui_dir()];
+    reset_template_state();
+    common::load_profile_framexml(&env);
+    load_force_load_startup(&env);
+    for (name, toc) in force_load_game_addons() {
+        load_addon(&env.loader_env(), &toc).expect("force-load Blizzard addon");
+        if name == "Blizzard_GarrisonUI" { return env; }
+    }
+    panic!("GarrisonUI missing from Game coverage");
+}
+
+#[cfg(feature = "client-retail")]
+#[test]
+fn shipyard_consumer_reads_empty_in_progress_missions() {
+    let env = load_garrison_original_consumers();
+    let ok: bool = env.eval(r#"
+        -- Test-only fixture for the missing GetAllBonusAbilityEffects API.
+        C_Garrison.GetAllBonusAbilityEffects = function() return {} end
+        local list = {missions={123}, missionFrames={}, bonusFrames={},
+            CompleteDialog={IsShown=function() return false end}}
+        GarrisonShipyardFrame = {MissionTab={MissionList=list}}
+        GarrisonShipyardMap_UpdateMissions()
+        return next(list.missions) == nil and next(list.bonusEffects) == nil
+    "#).expect("original Shipyard mission consumer runs");
+    assert!(ok);
+}
+
+#[cfg(feature = "client-retail")]
+#[test]
+fn landing_page_consumer_reads_empty_available_missions() {
+    let env = load_garrison_original_consumers();
+    let ok: bool = env.eval(r#"
+        -- Test-only fixture for the missing GetLandingPageItems API.
+        C_Garrison.GetLandingPageItems = function() return {} end
+        GarrisonLandingPage = {garrTypeID=3}
+        local function text() return {SetFormattedText=function() end, SetText=function() end} end
+        local list = {EmptyMissionText=text(), ScrollBox={SetDataProvider=function(self, provider)
+            self.size=provider:GetSize()
+        end}}
+        local available = {Text=text()}
+        GarrisonLandingPageReport = {List=list, InProgress={Text=text()}, Available=available,
+            selectedTab=available, GetParent=function() return GarrisonLandingPage end}
+        GarrisonLandingPageReportList_UpdateItems()
+        return next(list.AvailableItems) == nil and list.ScrollBox.size == 0
+    "#).expect("original Landing Page mission consumer runs");
+    assert!(ok);
+}
+
+#[cfg(feature = "client-retail")]
+#[test]
+fn order_hall_hides_missing_combat_ally_and_uses_full_height() {
+    let env = load_garrison_original_consumers();
+    let ok: bool = env.eval(r#"
+        local ally = setmetatable({Hide=function(self) self.hidden=true end},
+            {__index=OrderHallCombatAllyMixin})
+        local list = setmetatable({combatAllyMission={stale=true}, CombatAllyUI=ally,
+            GetMissionFrame=function() return {followerTypeID=1} end,
+            SetHeight=function(self, height) self.height=height end},
+            {__index=OrderHallMissionListMixin})
+        list:UpdateCombatAllyMission()
+        return list.height == 565 and list.combatAllyMission == nil
+            and ally.missionInfo == nil and ally.hidden == true
+    "#).expect("Order Hall updates its combat ally layout");
+    assert!(ok);
+    assert!(env.exec("C_Garrison.GetCombatAllyMission('bad')").is_err());
+}
+
 #[test]
 fn all_blizzard_addon_load_errors_are_tracked_per_addon_name() {
     common::with_perf_lock(|| {
