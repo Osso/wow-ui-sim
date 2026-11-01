@@ -60,6 +60,7 @@ pub(super) fn add_transmog_appearance(state: &mut LuaState) -> LuaResult<u32> {
         source_type: DEFAULT_TRANSMOG_SOURCE_TYPE,
         item_mod_id: 0,
     });
+    st.latest_transmog_appearance = Some((visual_id, category_id));
     Ok(0)
 }
 
