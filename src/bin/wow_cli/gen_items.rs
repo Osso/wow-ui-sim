@@ -132,6 +132,7 @@ const ADDON_COMPAT_ITEM_IDS: &[u32] = &[
 
 const REQUIRED_ENCOUNTER_JOURNAL_TIER_IDS: &[u32] = &[
     516, // Midnight dungeons and raids
+    514, // The War Within; left "Current Season" in 12.1.5.70391
     505, // Suggested/current Adventure Guide dungeons and raids
 ];
 
