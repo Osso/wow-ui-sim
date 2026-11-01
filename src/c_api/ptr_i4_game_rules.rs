@@ -16,7 +16,6 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
         ("IsSDHDToggleEnabled", is_sd_hd_toggle_enabled),
         ("AccountHasSDEnabled", account_has_sd_enabled),
         ("SetSDHDToggleValue", set_sd_hd_toggle_value),
-        ("IsWoWHack", is_wowhack),
     ];
     for &(name, function) in functions {
         table_set_rust_fn(state, namespace, name, function)?;
@@ -25,17 +24,6 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
     register_usage_locations(state, enums);
     register_recent_allies_categories(state, enums);
     Ok(())
-}
-
-fn is_wowhack(state: &mut LuaState) -> LuaResult<u32> {
-    let wowhack_mode = crate::lua_api::globals::enum_data::GAME_MODE
-        .1
-        .iter()
-        .find_map(|&(name, value)| (name == "WoWHack").then_some(value))
-        .expect("GameMode declares WoWHack");
-    let active = borrow_state(state)?.game_rules.active_game_mode == wowhack_mode;
-    state.push(Val::Bool(active));
-    Ok(1)
 }
 
 fn is_hardcore_active(state: &mut LuaState) -> LuaResult<u32> {

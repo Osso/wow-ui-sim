@@ -21,6 +21,7 @@
 //! - `A_Admin.SetActiveGameMode(mode, glueScreen?)` — mode is an integer;
 //!   glueScreen defaults to `"CharacterSelect"`.
 
+use crate::client_profile::{ACTIVE, ClientProfile};
 use crate::lua_api::methods::{borrow_state, borrow_state_mut, create_string, create_table};
 use crate::lua_api::state::GameRuleValue;
 use crate::lua_bridge::{FromStack, stack_val, table_set_rust_fn};
@@ -210,6 +211,25 @@ fn is_game_mode_enabled(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
+fn is_wowhack(state: &mut LuaState) -> LuaResult<u32> {
+    let wowhack_mode = crate::lua_api::globals::enum_data::GAME_MODE
+        .1
+        .iter()
+        .find_map(|&(name, value)| (name == "WoWHack").then_some(value))
+        .expect("GameMode declares WoWHack");
+    let active = borrow_state(state)?.game_rules.active_game_mode == wowhack_mode;
+    state.push(Val::Bool(active));
+    Ok(1)
+}
+
+/// `GameModeDisplayInfo` is nilable; no game-mode display records are modeled,
+/// so every record ID reports no info and GameModeSelect uses the expansion logo.
+fn get_game_mode_display_info_by_record_id(state: &mut LuaState) -> LuaResult<u32> {
+    let _ = i32::from_stack(state, 1)?;
+    state.push(Val::Nil);
+    Ok(1)
+}
+
 fn install_on_c_game_rules(state: &mut LuaState) -> LuaResult<()> {
     let table_ref = ensure_c_game_rules_table(state);
     let entries: &[(&'static str, rilua::vm::closure::RustFn)] = &[
@@ -230,6 +250,17 @@ fn install_on_c_game_rules(state: &mut LuaState) -> LuaResult<()> {
     ];
     for (name, func) in entries {
         table_set_rust_fn(state, table_ref, name, *func)?;
+    }
+    // GameRulesDocumentation.lua declares these on every profile except Wrath,
+    // which ships no generated documentation.
+    if ACTIVE != ClientProfile::Wrath {
+        table_set_rust_fn(
+            state,
+            table_ref,
+            "GetGameModeDisplayInfoByRecordID",
+            get_game_mode_display_info_by_record_id,
+        )?;
+        table_set_rust_fn(state, table_ref, "IsWoWHack", is_wowhack)?;
     }
     Ok(())
 }

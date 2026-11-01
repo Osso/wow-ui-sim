@@ -198,7 +198,7 @@ fn recent_allies_original_labels_consume_documented_enum() {
 
 #[test]
 fn micro_menu_onload_consumes_supplied_wowhack_mode() {
-    if ACTIVE != ClientProfile::Ptr {
+    if !matches!(ACTIVE, ClientProfile::Ptr | ClientProfile::Retail) {
         return;
     }
     let env = load_consumers("Blizzard_MicroMenu", ScreenKind::Game, false);
@@ -282,7 +282,7 @@ fn non_ptr_publication_is_unchanged() {
         env.exec(
             r#"
             for _, name in ipairs({'IsHardcoreActive', 'IsSDHDToggleEnabled', 'AccountHasSDEnabled',
-                'SetSDHDToggleValue', 'IsSelfFoundAllowed', 'GetForeverExperiencePreset', 'IsWoWHack'}) do
+                'SetSDHDToggleValue', 'IsSelfFoundAllowed', 'GetForeverExperiencePreset'}) do
                 assert(rawget(C_GameRules, name) == nil, name)
             end
             assert(rawget(Enum, 'RecentAlliesInteractionCategoryFilter') == nil)
