@@ -208,6 +208,20 @@ fn error_count_ratchet_detects_increases_and_decreases() {
 }
 
 #[test]
+fn error_count_ratchet_rejects_unlisted_addon_errors() {
+    let known = BTreeMap::from([("Blizzard_Collections".to_string(), 2)]);
+    let actual = BTreeMap::from([
+        ("Blizzard_Collections".to_string(), 2),
+        ("Blizzard_EncounterJournal".to_string(), 2),
+    ]);
+    let changes = classify_error_count_changes(&known, &actual);
+    assert_eq!(
+        changes.increased,
+        vec![("Blizzard_EncounterJournal".to_string(), 0, 2)]
+    );
+}
+
+#[test]
 fn full_per_addon_report_lists_highest_error_counts_first() {
     let grouped_errors = BTreeMap::from([
         ("Blizzard_B".to_string(), vec!["second".to_string()]),
