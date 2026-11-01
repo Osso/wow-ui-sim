@@ -12,7 +12,8 @@ fn blizzard_ui_dir() -> PathBuf {
 }
 
 fn calendar_toc() -> PathBuf {
-    blizzard_ui_dir().join("Blizzard_Calendar/Blizzard_Calendar_Mainline.toc")
+    wow_ui_sim::loader::find_toc_file(&blizzard_ui_dir().join("Blizzard_Calendar"))
+        .expect("Blizzard_Calendar TOC must resolve")
 }
 
 fn load_full_game_ui() -> WowLuaEnv {

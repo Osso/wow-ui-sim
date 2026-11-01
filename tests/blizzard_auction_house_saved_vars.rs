@@ -102,9 +102,8 @@ fn auction_house_saved_variables_exist_with_onload_defaults() {
 }
 
 fn auction_house_toc() -> std::path::PathBuf {
-    blizzard_ui_dir()
-        .join(ROOT)
-        .join("Blizzard_AuctionHouseUI_Mainline.toc")
+    wow_ui_sim::loader::find_toc_file(&blizzard_ui_dir().join(ROOT))
+        .expect("Blizzard_AuctionHouseUI TOC must resolve")
 }
 
 fn assert_saved_variable_defaults(env: &wow_ui_sim::lua_api::WowLuaEnv) {

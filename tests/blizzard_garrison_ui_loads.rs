@@ -18,7 +18,7 @@ fn garrison_ui_dir() -> PathBuf {
 }
 
 fn garrison_ui_toc() -> PathBuf {
-    garrison_ui_dir().join("Blizzard_GarrisonUI_Mainline.toc")
+    find_toc_file(&garrison_ui_dir()).expect("Blizzard_GarrisonUI TOC must resolve")
 }
 
 fn lod_addon_toc(folder: &str) -> PathBuf {
@@ -104,7 +104,7 @@ fn load_full_game_ui_with_lod_deps() -> WowLuaEnv {
 }
 
 #[test]
-fn blizzard_garrison_ui_resolves_mainline_toc() {
+fn blizzard_garrison_ui_resolves_single_toc() {
     let resolved = find_toc_file(&garrison_ui_dir())
         .expect("Blizzard_GarrisonUI directory must contain a discoverable TOC");
     let resolved_name = resolved
@@ -114,10 +114,9 @@ fn blizzard_garrison_ui_resolves_mainline_toc() {
         .expect("resolved TOC filename must be utf-8");
 
     assert_eq!(
-        resolved_name, "Blizzard_GarrisonUI_Mainline.toc",
-        "Blizzard_GarrisonUI ships only a `_Mainline.toc` variant (no bare \
-         Blizzard_GarrisonUI.toc); src/loader/mod.rs:65's `find_toc_file` prefers the \
-         `_Mainline.toc` suffix and resolves it directly"
+        resolved_name, "Blizzard_GarrisonUI.toc",
+        "Since 12.1.5 Blizzard_GarrisonUI ships a single TOC gated by \
+         `## AllowLoadGameType: mainline`; `find_toc_file` resolves it directly"
     );
 }
 

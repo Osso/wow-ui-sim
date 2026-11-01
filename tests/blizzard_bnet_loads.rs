@@ -13,7 +13,8 @@ fn blizzard_ui_dir() -> PathBuf {
 }
 
 fn bnet_toc() -> PathBuf {
-    blizzard_ui_dir().join("Blizzard_BNet/Blizzard_BNet_Mainline.toc")
+    wow_ui_sim::loader::find_toc_file(&blizzard_ui_dir().join("Blizzard_BNet"))
+        .expect("Blizzard_BNet TOC must resolve")
 }
 
 fn load_full_game_ui() -> WowLuaEnv {
