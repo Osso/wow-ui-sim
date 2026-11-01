@@ -4,7 +4,7 @@ Generated fast XML handlers must use the same loading environment as the XML scr
 
 ## What it must do
 
-- [ ] A fast handler created while loading a secure addon resolves globals from its secure environment.
+- [x] A fast handler created while loading a secure addon resolves globals from its secure environment.
 - [ ] A scoped script environment, when supplied, takes precedence over the addon environment.
 - [ ] Public-addon handlers retain the public environment.
 
@@ -18,7 +18,8 @@ Generated fast XML handlers must use the same loading environment as the XML scr
 
 ## Tests asserting this spec
 
-- `tests/store_tree.rs::store_product_card_buy_button_click_completes_without_store_upvalue_error` exercises the original secure Store notice handler.
+- `tests/store_tree.rs::store_product_card_buy_button_click_completes_without_store_upvalue_error` exercises the original secure Store purchase path.
+- `tests/store_tree.rs::store_notice_show_updates_cover` checks the notice-to-cover transition.
 
 ## Known gaps (current cycle)
 
