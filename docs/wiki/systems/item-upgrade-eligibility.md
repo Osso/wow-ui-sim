@@ -23,7 +23,7 @@ Compiled GREEN is `bb5bb9ba4`; constant-false RED is `a88e072b7`. All 2,676 trac
 | Exact selector / boundary | Retail, PTR, Forever | Mists, Era, Anniversary |
 |---|---|---|
 | `api_shape_item_upgrade::original_item_util_tracks_supplied_eligibility_movement_removal_and_isolation` | RED original supplied-match failure; GREEN PASS | RED original supplied-match failure; GREEN PASS |
-| `api_shape_item_upgrade::item_upgrade_unresolved_and_unsupplied_inputs_report_native_unknown` | RED rejects constant false; GREEN PASS | RED rejects constant false; GREEN PASS |
+| `api_shape_item_upgrade::item_upgrade_unresolved_and_unsupplied_inputs_report_native_unknown` (renamed `item_upgrade_unsupplied_locations_default_false_and_invalid_inputs_error` 2026-11-01) | RED rejects constant false; GREEN PASS | RED rejects constant false; GREEN PASS |
 | `item_upgrade_admin_reagent_count::admin_reagent_count_recreation_discards_item_upgrade_observation` | RED rejects constant false; GREEN PASS | RED rejects constant false; GREEN PASS |
 | `c_item_api::c_container::test_c_item_upgrade_supplied_false_preserves_boolean_shape` | Both branches PASS; preservation only | Both branches PASS; preservation only |
 | `bags::test_bag_ui_c_container_helpers_have_safe_default_shapes` | Both branches PASS; preservation only | Both branches BLOCKED before the seed/query |
