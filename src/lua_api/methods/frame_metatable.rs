@@ -13,6 +13,7 @@ pub(super) fn frame_metatable_for_widget_type(
     widget_type: WidgetType,
     plain_wrath_message_frame: bool,
     cinematic_model: bool,
+    model_scene_actor: bool,
 ) -> Val {
     let cinematic_model = cinematic_model
         && widget_type == WidgetType::PlayerModel
@@ -22,6 +23,7 @@ pub(super) fn frame_metatable_for_widget_type(
     let key = match widget_type {
         WidgetType::WorldFrame => "WorldFrame",
         WidgetType::PlayerModel if cinematic_model => "CinematicModel",
+        WidgetType::Frame if model_scene_actor => "ModelSceneActor",
         WidgetType::MessageFrame if plain_wrath_message_frame => "WrathMessageFrame",
         _ => widget_type.as_str(),
     };
@@ -35,6 +37,7 @@ pub(super) fn frame_metatable_for_widget_type(
         widget_type,
         plain_wrath_message_frame,
         cinematic_model,
+        model_scene_actor,
     ) else {
         return Val::Table(base_mt_ref);
     };
@@ -48,6 +51,7 @@ fn build_widget_metatable(
     widget_type: WidgetType,
     plain_wrath_message_frame: bool,
     cinematic_model: bool,
+    model_scene_actor: bool,
 ) -> Option<Val> {
     let source_index = metatable_index_table(state, base_mt_ref)?;
     let index_clone = clone_index_for_widget(state, source_index, widget_type)?;
@@ -60,6 +64,15 @@ fn build_widget_metatable(
     if cinematic_model {
         crate::lua_api::frame::methods::widgets::register_cinematic_methods(state, index_clone)
             .expect("register CinematicModel methods");
+    }
+    if model_scene_actor
+        && crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Wrath
+    {
+        crate::lua_api::frame::methods::widgets::register_model_scene_actor_methods(
+            state,
+            index_clone,
+        )
+        .expect("register ModelSceneActor methods");
     }
     let mt_clone = clone_metatable_with_index(state, base_mt_ref, index_clone)?;
     Some(Val::Table(mt_clone))

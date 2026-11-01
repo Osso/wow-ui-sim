@@ -774,6 +774,91 @@ fn garrison_bonus_chest_onload_initializes_cinematic_camera() {
     assert!(env.exec("GarrisonCameraProbe:InitializeCamera('bad')").is_err());
 }
 
+#[cfg(feature = "client-retail")]
+#[test]
+fn dress_up_scene_uses_player_fallback_and_exported_race_actor() {
+    let env = WowLuaEnv::new().expect("create Lua environment");
+    env.state().borrow_mut().addon_base_paths = vec![blizzard_ui_dir()];
+    reset_template_state();
+    common::load_profile_framexml(&env);
+    load_force_load_startup(&env);
+    let ok: bool = env.eval(r#"
+        local kind, cameras, actors = C_ModelInfo.GetModelSceneInfoByID(641)
+        if kind ~= 0 or cameras[1] ~= 626 or actors[1] ~= 1760 then return false end
+        if C_ModelInfo.GetModelSceneActorInfoByID(1760).scriptTag ~= 'fanfare' then return false end
+        local scene = CreateFrame('ModelScene', nil, UIParent, 'ModelSceneMixinTemplate')
+        scene:TransitionToModelSceneID(596, CAMERA_TRANSITION_TYPE_IMMEDIATE, CAMERA_MODIFICATION_TYPE_DISCARD, true)
+        local player = scene:GetActorByTag('player')
+        local tauren = scene:GetActorByTag('tauren-male')
+        _G.ModelBlendActor = player
+        if not player or not tauren then return false end
+        if type(player.SetAnimationBlendOperation) ~= 'function' or CreateFrame('Frame').SetAnimationBlendOperation ~= nil or CreateFrame('PlayerModel').SetAnimationBlendOperation ~= nil then return false end
+        if scene:GetPlayerActor(nil, nil, 'Human', 2) ~= player then return false end
+        SetupPlayerForModelScene(scene, nil, nil, nil, nil, nil, nil, 'Human', 2)
+        if player:GetModelUnitGUID() ~= UnitGUID('player') then return false end
+        if scene:GetPlayerActor(nil, nil, 'Tauren', 2) ~= tauren then return false end
+        SetupPlayerForModelScene(scene, nil, nil, nil, nil, nil, nil, 'Tauren', 2)
+        return tauren:GetModelUnitGUID() == UnitGUID('player')
+    "#).expect("original SetupPlayerForModelScene selects scene actors");
+    assert!(ok);
+    env.exec("ModelBlendActor:SetAnimationBlendOperation(Enum.ModelBlendOperation.None); ModelBlendActor:SetAnimationBlendOperation(Enum.ModelBlendOperation.Anim)")
+        .expect("actor accepts documented blend operations");
+    assert!(env.exec("ModelBlendActor:SetAnimationBlendOperation('bad')").is_err());
+    assert!(env.exec("ModelBlendActor:SetAnimationBlendOperation(2)").is_err());
+}
+
+#[cfg(feature = "client-retail")]
+#[test]
+fn allied_races_original_update_uses_generated_scene_actors() {
+    let env = WowLuaEnv::new().expect("create Lua environment");
+    env.state().borrow_mut().addon_base_paths = vec![blizzard_ui_dir()];
+    reset_template_state();
+    common::load_profile_framexml(&env);
+    load_force_load_startup(&env);
+    let mut found = false;
+    for (name, toc) in force_load_game_addons() {
+        load_addon(&env.loader_env(), &toc).expect("force-load Blizzard addon");
+        if name == "Blizzard_AlliedRacesUI" { found = true; break; }
+    }
+    assert!(found, "AlliedRacesUI must be Game eligible");
+    let ok: bool = env.eval(r#"
+        AlliedRacesFrame:UpdateModel(82735)
+        local actor = AlliedRacesFrame.ModelScene:GetActorByTag('voidelf-female')
+        if not actor or actor:GetDisplayInfo() ~= 82735 then return false end
+        AlliedRacesFrame:UpdateModel(0)
+        return AlliedRacesFrame.ModelScene:GetActorByTag('player') ~= nil
+    "#).expect("original AlliedRaces UpdateModel uses the generated actors");
+    assert!(ok);
+}
+
+#[cfg(feature = "client-retail")]
+#[test]
+fn perks_celebration_scene_has_generated_fanfare_actor() {
+    let env = WowLuaEnv::new().expect("create Lua environment");
+    env.state().borrow_mut().addon_base_paths = vec![blizzard_ui_dir()];
+    reset_template_state();
+    common::load_profile_framexml(&env);
+    load_force_load_startup(&env);
+    let mut found = false;
+    for (name, toc) in force_load_game_addons() {
+        if name == "Blizzard_PerksProgram" { clear_lua_error_tracking(&env); found = true; }
+        load_addon(&env.loader_env(), &toc).expect("force-load Blizzard addon");
+        if found { break; }
+    }
+    assert!(found, "PerksProgram must be Game eligible");
+    let dispatch: String = env.eval(r#"
+        local scene = PerksProgramFrame.ModelSceneContainerFrame.CelebrateModelScene
+        local info = debug.getinfo(scene.TransitionToModelSceneID, 'S')
+        return info.what .. ':' .. (info.source or '')
+    "#).expect("inspect the live celebration transition method");
+    println!("celebration transition dispatch: {dispatch}");
+    let errors = env.state().borrow().lua_errors.clone();
+    assert!(!errors.iter().any(|e| e.contains("fanfareActor")), "original celebration Init must find its actor: {errors:?}");
+    let found: bool = env.eval("return PerksProgramFrame.ModelSceneContainerFrame.CelebrateModelScene:GetActorByTag('fanfare') ~= nil")
+        .expect("query original celebration actor");
+    assert!(found);
+}
+
 #[test]
 fn selected_scrapping_machine_profiles_expose_closed_state() {
     use wow_ui_sim::client_profile::{ACTIVE, ClientProfile};

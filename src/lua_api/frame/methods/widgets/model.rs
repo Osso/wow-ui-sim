@@ -843,6 +843,36 @@ pub(crate) fn register_cinematic_methods(
     )
 }
 
+/// Permanent 3D non-goal: accept documented actor blend operations without rendering.
+pub(crate) fn register_model_scene_actor_methods(
+    state: &mut LuaState,
+    index: GcRef<Table>,
+) -> LuaResult<()> {
+    table_set_rust_fn(
+        state,
+        index,
+        "SetAnimationBlendOperation",
+        actor_set_animation_blend_operation,
+    )
+}
+
+fn actor_set_animation_blend_operation(state: &mut LuaState) -> LuaResult<u32> {
+    let id = frame_id_from_stack(state, 1)?;
+    if !borrow_state(state)?
+        .widgets
+        .get(id)
+        .is_some_and(|frame| frame.object_type_name.as_deref() == Some("ModelSceneActor"))
+    {
+        return Err(rilua::runtime_error(
+            "SetAnimationBlendOperation expects a ModelSceneActor",
+        ));
+    }
+    match i32::from_stack(state, 2)? {
+        0 | 1 => Ok(0),
+        _ => Err(rilua::runtime_error("invalid ModelBlendOperation")),
+    }
+}
+
 fn cinematic_initialize_camera(state: &mut LuaState) -> LuaResult<u32> {
     frame_id_from_stack(state, 1)?;
     Option::<f64>::from_stack(state, 2)?;
