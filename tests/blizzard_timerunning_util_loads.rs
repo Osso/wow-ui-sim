@@ -360,18 +360,13 @@ fn icon_helpers_emit_atlas_markup_wrapping_text(env: &WowLuaEnv) {
 prefork_full_ui_case! {
 fn season_lookup_returns_classic_expansion_when_no_active_season(env: &WowLuaEnv) {
 
-    let probe = "\
-        local prev_active = GetActiveTimerunningSeasonID
-        local prev_c = C_TimerunningUI and C_TimerunningUI.GetActiveTimerunningSeasonID
-        GetActiveTimerunningSeasonID = function() return nil end
-        if C_TimerunningUI then C_TimerunningUI.GetActiveTimerunningSeasonID = function() return nil end end
-        local exp = TimerunningUtil.GetTimerunningExpansion()
-        local desc = TimerunningUtil.GetTimerunningChoiceDesc()
-        local hdr = TimerunningUtil.GetTimerunningBannerHeaderText()
-        GetActiveTimerunningSeasonID = prev_active
-        if C_TimerunningUI then C_TimerunningUI.GetActiveTimerunningSeasonID = prev_c end
-        return exp, desc, hdr
-    ";
+    {
+        let mut state = env.state().borrow_mut();
+        state.active_timerunning_season_id = 0;
+        state.timerunning_season_id = Some(2);
+    }
+    let probe = "return TimerunningUtil.GetTimerunningExpansion(), \
+        TimerunningUtil.GetTimerunningChoiceDesc(), TimerunningUtil.GetTimerunningBannerHeaderText()";
 
     let (expansion, desc, header): (i64, String, String) = env.eval(probe).expect("season probe");
 
@@ -393,6 +388,12 @@ fn season_lookup_returns_classic_expansion_when_no_active_season(env: &WowLuaEnv
          return empty string from the SEASON_NONE config — \
          gluesTimerunningBannerHeaderText = \"\""
     );
+
+    env.state().borrow_mut().active_timerunning_season_id = 1;
+    let expansion: i64 = env
+        .eval("return TimerunningUtil.GetTimerunningExpansion()")
+        .expect("active season probe");
+    assert_eq!(expansion, 4, "Pandaria season selects the Mists expansion");
 }
 }
 

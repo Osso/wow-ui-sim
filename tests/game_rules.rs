@@ -29,6 +29,21 @@ fn game_rules_hardcore_flag_defaults_to_false() {
 }
 
 #[test]
+fn active_game_mode_matches_published_enum() {
+    let env = env();
+    let standard: bool = env
+        .eval("return C_GameRules.GetActiveGameMode() == Enum.GameMode.Standard")
+        .unwrap();
+    env.exec("A_Admin.SetActiveGameMode(Enum.GameMode.Plunderstorm)")
+        .unwrap();
+    let plunderstorm: bool = env
+        .eval("return C_GameRules.GetActiveGameMode() == Enum.GameMode.Plunderstorm and C_GameRules.IsPlunderstorm()")
+        .unwrap();
+    assert!(standard, "the default mode must be Enum.GameMode.Standard");
+    assert!(plunderstorm, "the supplied mode must be Enum.GameMode.Plunderstorm");
+}
+
+#[test]
 fn defaults_no_rules_standard_mode_character_select() {
     let (active, f, i, s, plunder, mode, glue): (bool, f64, i64, String, bool, i64, String) = env()
         .eval(
@@ -48,7 +63,7 @@ fn defaults_no_rules_standard_mode_character_select() {
     assert_eq!(i, 0);
     assert_eq!(s, "");
     assert!(!plunder);
-    assert_eq!(mode, 0);
+    assert_eq!(mode, 1);
     assert_eq!(glue, "CharacterSelect");
 }
 
@@ -142,8 +157,28 @@ fn nil_removes_rule() {
 #[test]
 fn set_active_game_mode_flips_is_plunderstorm() {
     let env = env();
-    env.exec(r#"A_Admin.SetActiveGameMode(1, "PlunderstormLogin")"#)
+    env.exec(r#"A_Admin.SetActiveGameMode(Enum.GameMode.Plunderstorm, "PlunderstormLogin")"#)
         .unwrap();
+    let (mode, plunder, glue): (i64, bool, String) = env
+        .eval(
+            r#"
+            return C_GameRules.GetActiveGameMode(),
+                   C_GameRules.IsPlunderstorm(),
+                   C_GameRules.GetGameModeGlueScreenName()
+            "#,
+        )
+        .unwrap();
+    assert_eq!(mode, 2);
+    assert!(plunder);
+    assert_eq!(glue, "PlunderstormLogin");
+}
+
+#[test]
+fn set_active_game_mode_back_to_standard_resets_glue_default() {
+    let env = env();
+    env.exec(r#"A_Admin.SetActiveGameMode(Enum.GameMode.Plunderstorm, "PlunderstormLogin")"#)
+        .unwrap();
+    env.exec(r#"A_Admin.SetActiveGameMode(Enum.GameMode.Standard)"#).unwrap();
     let (mode, plunder, glue): (i64, bool, String) = env
         .eval(
             r#"
@@ -154,26 +189,6 @@ fn set_active_game_mode_flips_is_plunderstorm() {
         )
         .unwrap();
     assert_eq!(mode, 1);
-    assert!(plunder);
-    assert_eq!(glue, "PlunderstormLogin");
-}
-
-#[test]
-fn set_active_game_mode_back_to_standard_resets_glue_default() {
-    let env = env();
-    env.exec(r#"A_Admin.SetActiveGameMode(1, "PlunderstormLogin")"#)
-        .unwrap();
-    env.exec(r#"A_Admin.SetActiveGameMode(0)"#).unwrap();
-    let (mode, plunder, glue): (i64, bool, String) = env
-        .eval(
-            r#"
-            return C_GameRules.GetActiveGameMode(),
-                   C_GameRules.IsPlunderstorm(),
-                   C_GameRules.GetGameModeGlueScreenName()
-            "#,
-        )
-        .unwrap();
-    assert_eq!(mode, 0);
     assert!(!plunder);
     assert_eq!(
         glue, "CharacterSelect",

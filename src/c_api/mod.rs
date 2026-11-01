@@ -10,6 +10,7 @@ pub(crate) mod class_catalog;
 pub(crate) mod classic_startup_data;
 #[cfg(feature = "client-retail")]
 pub(crate) mod currency_list;
+pub(crate) mod game_mode;
 pub mod item_overlay;
 pub(crate) mod item_quality_color;
 pub mod mount_filters;
@@ -292,6 +293,7 @@ pub mod c_achievement_telemetry;
 pub mod c_social_contract_glue;
 #[cfg(feature = "retail-12-0-5")]
 pub mod c_spell_maw_powers;
+mod c_timerunning_ui;
 pub mod c_toy_box_info;
 #[cfg(feature = "retail-12-0-0")]
 pub mod c_transmog_outfit_info;
@@ -455,6 +457,12 @@ pub(crate) fn register_utility_bootstrap_tables(state: &mut LuaState) -> LuaResu
     c_cvar_readiness::register(state)?;
     c_achievement_info_relations::register(state)?;
     c_calendar::register(state)?;
+    if matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail
+    ) {
+        c_timerunning_ui::register(state)?;
+    }
     if matches!(
         crate::client_profile::ACTIVE,
         crate::client_profile::ClientProfile::Retail

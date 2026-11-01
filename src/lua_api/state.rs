@@ -463,6 +463,7 @@ macro_rules! build_empty_sim_state {
             game_clock: GameClock::default(),
             store_frame_shown: false,
             timerunning_season_id: None,
+            active_timerunning_season_id: 0,
             timerunning_season_seconds_remaining: 0,
             modifier_keys: ModifierKeys::default(),
             pressed_keys: HashSet::new(),

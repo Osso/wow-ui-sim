@@ -77,7 +77,7 @@ fn blizzard_load_locale_toc_declares_default_state_enabled_with_allow_load_both(
     assert!(
         toc.dependencies().is_empty(),
         "Zero `## Dependencies:` — the locale-marker addon is dependency-free. Current \
-         retail source publishes LOCALE_ptPT = true and UI_LOCALE = \"ptPT\" without \
+         retail source publishes LOCALE_enUS = true and UI_LOCALE = \"enUS\" without \
          calling any external API"
     );
     assert!(toc.optional_deps().is_empty());
@@ -230,30 +230,30 @@ fn blizzard_load_locale_is_addon_loaded_after_auto_discovery(env: &WowLuaEnv) {
 }
 
 prefork_full_ui_case! {
-fn blizzard_load_locale_publishes_locale_ptpt_global_as_true(env: &WowLuaEnv) {
+fn blizzard_load_locale_publishes_locale_enus_global_as_true(env: &WowLuaEnv) {
 
     let marker: (String, bool, String) = env
-        .eval("return type(LOCALE_ptPT), LOCALE_ptPT, type(LOCALE_enUS)")
+        .eval("return type(LOCALE_enUS), LOCALE_enUS, type(LOCALE_ptPT)")
         .expect("active locale-marker probe succeeds");
     assert_eq!(
         marker,
         ("boolean".to_string(), true, "nil".to_string()),
-        "Current LoadLocale.lua publishes only the active LOCALE_ptPT marker. Inactive \
-         locale markers, including LOCALE_enUS, remain absent"
+        "Current LoadLocale.lua publishes only the active LOCALE_enUS marker. Inactive \
+         locale markers, including LOCALE_ptPT, remain absent"
     );
 }
 }
 
 prefork_full_ui_case! {
-fn blizzard_load_locale_publishes_ui_locale_global_as_ptpt_string(env: &WowLuaEnv) {
+fn blizzard_load_locale_publishes_ui_locale_global_as_enus_string(env: &WowLuaEnv) {
 
     let locale: (String, String) = env
         .eval("return type(UI_LOCALE), UI_LOCALE")
         .expect("UI_LOCALE probe succeeds");
     assert_eq!(
         locale,
-        ("string".to_string(), "ptPT".to_string()),
-        "Current LoadLocale.lua publishes UI_LOCALE = \"ptPT\", which \
+        ("string".to_string(), "enUS".to_string()),
+        "Current LoadLocale.lua publishes UI_LOCALE = \"enUS\", which \
          LocalizationMachinery.lua uses as the l10n table key"
     );
 }

@@ -52,8 +52,6 @@ fn cached_vendor_target_marker_handler_uses_selected_unit_and_default_target() {
         focus.guid = "Creature-0-1-2-3-448-000002".into();
         focus.name = "CmdOption focus fixture".into();
         sim.current_focus = Some(focus);
-        // Enum.GameMode.Standard = 1; default mode 0 registers no vendor commands.
-        sim.game_rules.active_game_mode = 1;
     }
     let ui = wow_ui_sim::blizzard_ui_sync::default_cache_addons_path().unwrap();
     let source =
