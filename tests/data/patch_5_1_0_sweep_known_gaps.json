@@ -1,7 +1,5 @@
 [
   "diff-wt-framexml-ShowFriendshipReputationTooltip-54",
-  "diff-wt-global-api-C_LossOfControl.GetEventInfo-10",
-  "diff-wt-global-api-C_LossOfControl.GetNumEvents-11",
   "diff-wt-global-api-C_PetJournal.FindPetIDByName-12",
   "diff-wt-global-api-C_PetJournal.GetOwnedBattlePetString-14",
   "diff-wt-global-api-C_PetJournal.GetPetTeamAverageLevel-16",
