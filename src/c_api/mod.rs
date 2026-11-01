@@ -192,6 +192,7 @@ pub mod c_quest_info_system;
 pub mod c_quest_log;
 pub(crate) mod c_quest_log_watches;
 pub mod c_quest_offer;
+mod c_scrapping_machine;
 pub mod c_super_track;
 pub(crate) mod challenge_run;
 pub mod container_quest;

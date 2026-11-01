@@ -774,6 +774,49 @@ fn garrison_bonus_chest_onload_initializes_cinematic_camera() {
     assert!(env.exec("GarrisonCameraProbe:InitializeCamera('bad')").is_err());
 }
 
+#[cfg(feature = "client-retail")]
+#[test]
+fn scrapping_machine_closed_state_loads_and_updates_original_frame() {
+    let env = WowLuaEnv::new().expect("create Lua environment");
+    env.state().borrow_mut().addon_base_paths = vec![blizzard_ui_dir()];
+    reset_template_state();
+    common::load_profile_framexml(&env);
+    load_force_load_startup(&env);
+    let mut found = false;
+    for (name, toc) in force_load_game_addons() {
+        if name == "Blizzard_ScrappingMachineUI" {
+            clear_lua_error_tracking(&env);
+            found = true;
+        }
+        load_addon(&env.loader_env(), &toc).expect("force-load Blizzard addon");
+        if found { break; }
+    }
+    assert!(found, "ScrappingMachineUI must be eligible for the Game screen");
+    let errors = env.state().borrow().lua_errors.clone();
+    assert!(errors.is_empty(), "ScrappingMachineUI must load: {errors:?}");
+    let ok: bool = env.eval(r#"
+        local frame = ScrappingMachineFrame
+        if frame:IsShown() then return false end
+        frame:UpdateScrapButtonState()
+        frame:OnEvent('BAG_UPDATE')
+        frame:OnEvent('UPDATE_TRADESKILL_CAST_STOPPED', true)
+        local count = 0
+        for button in frame.ItemSlots.scrapButtons:EnumerateActive() do
+            button:RefreshIcon()
+            count = count + 1
+        end
+        frame:CloseScrappingMachine()
+        return count == 9 and not frame.ScrapButton:IsEnabled()
+            and not C_ScrappingMachineUI.HasScrappableItems()
+            and C_ScrappingMachineUI.GetCurrentPendingScrapItemLocationByIndex(0) == nil
+            and C_ScrappingMachineUI.GetCurrentPendingScrapItemLocationByIndex(8) == nil
+            and C_ScrappingMachineUI.GetScrappingMachineName == nil
+            and C_ScrappingMachineUI.GetScrapSpellID == nil
+    "#).expect("closed machine original frame and slots operate");
+    assert!(ok);
+    assert!(env.exec("C_ScrappingMachineUI.GetCurrentPendingScrapItemLocationByIndex('bad')").is_err());
+}
+
 #[test]
 fn all_blizzard_addon_load_errors_are_tracked_per_addon_name() {
     common::with_perf_lock(|| {
