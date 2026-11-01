@@ -125,6 +125,7 @@ pub(crate) mod c_encounter_warnings;
 mod c_engraving;
 pub(crate) mod c_event_scheduler;
 pub(crate) mod c_friend_list;
+mod c_garrison_currency;
 pub(crate) mod c_garrison_damage_classes;
 #[cfg(feature = "client-retail")]
 pub mod c_garrison_trees;

@@ -524,7 +524,13 @@ fn garrison_mission_frames_use_db2_currency_types() {
                 local bfa = BFAMissionFrame.MissionTab.MissionPage.CostFrame
                 local orderInfo = C_CurrencyInfo.GetCurrencyInfo(1220)
                 local bfaInfo = C_CurrencyInfo.GetCurrencyInfo(1560)
-                return order.currency == 1220 and bfa.currency == 1560
+                local garrisonPrimary, garrisonSecondary = C_Garrison.GetCurrencyTypes(2)
+                local covenantPrimary, covenantSecondary = C_Garrison.GetCurrencyTypes(111)
+                local _, orderSecondary = C_Garrison.GetCurrencyTypes(3)
+                return garrisonPrimary == 824 and garrisonSecondary == 1101
+                    and covenantPrimary == 1810 and covenantSecondary == 1813
+                    and orderSecondary == 0
+                    and order.currency == 1220 and bfa.currency == 1560
                     and order.CostIcon:GetTexture() == orderInfo.iconFileID
                     and bfa.CostIcon:GetTexture() == bfaInfo.iconFileID
                     and orderInfo.quantity == 0 and bfaInfo.quantity == 0
