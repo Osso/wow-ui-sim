@@ -30,6 +30,8 @@ pub struct PvpCatalog {
     pub training_enabled: bool,
     pub training_eligible: bool,
     pub training_failure_reason: String,
+    pub rated_eligible: bool,
+    pub rated_failure_reason: String,
     pub random_training_win_today: bool,
     pub match_completed: bool,
 }
