@@ -169,6 +169,8 @@ impl Default for GameRulesState {
 /// fields based on the Lua type passed in.
 #[derive(Debug, Default, Clone, PartialEq)]
 pub struct GameRuleValue {
+    /// Original integer-valued input, without coercing string or boolean rules.
+    pub integer_value: Option<i64>,
     pub as_float: f64,
     pub as_int: i64,
     pub as_string: String,

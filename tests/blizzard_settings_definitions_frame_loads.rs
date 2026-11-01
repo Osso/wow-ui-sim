@@ -13,6 +13,12 @@ fn action_bar_settings_reflect_forced_visibility_rules(env: &WowLuaEnv) {
         let count: i32 = env.eval(&probe).expect("original action bar settings consumer");
         assert_eq!(count, expected, "forced={forced} hidden={hidden}");
     }
+    env.exec(r#"
+        A_Admin.SetGameRule('ForcedMultiActionBarSetting', '2')
+        A_Admin.SetGameRule('HideAllMultiActionBars', 0)
+        assert(C_GameRules.IsMultiActionBarVisibilityForced() == false)
+        assert(select('#', C_GameRules.IsMultiActionBarVisibilityForced()) == 1)
+    "#).unwrap();
 }
 }
 

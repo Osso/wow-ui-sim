@@ -254,6 +254,12 @@ fn install_on_c_game_rules(state: &mut LuaState) -> LuaResult<()> {
         table_set_rust_fn(
             state,
             table_ref,
+            "IsMultiActionBarVisibilityForced",
+            crate::c_api::game_rules_visibility::is_forced,
+        )?;
+        table_set_rust_fn(
+            state,
+            table_ref,
             "GetGameModeDisplayInfoByRecordID",
             get_game_mode_display_info_by_record_id,
         )?;
@@ -322,6 +328,11 @@ fn read_rule_op(state: &mut LuaState) -> RuleOp {
 
 fn rule_value_from_number(n: f64) -> GameRuleValue {
     GameRuleValue {
+        integer_value: (n.is_finite()
+            && n.fract() == 0.0
+            && n >= i64::MIN as f64
+            && n < -(i64::MIN as f64))
+            .then_some(n as i64),
         as_float: n,
         as_int: n as i64,
         as_string: format!("{}", n),
@@ -330,6 +341,7 @@ fn rule_value_from_number(n: f64) -> GameRuleValue {
 
 fn rule_value_true_marker() -> GameRuleValue {
     GameRuleValue {
+        integer_value: None,
         as_float: 1.0,
         as_int: 1,
         as_string: "true".into(),
@@ -350,6 +362,7 @@ fn rule_value_from_string(
     let parsed_f = text.parse::<f64>().unwrap_or(0.0);
     let parsed_i = text.parse::<i64>().unwrap_or(parsed_f as i64);
     GameRuleValue {
+        integer_value: None,
         as_float: parsed_f,
         as_int: parsed_i,
         as_string: text,
