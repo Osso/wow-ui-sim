@@ -159,14 +159,15 @@ fn classify_error_count_changes(
     let mut increased = Vec::new();
     let mut decreased = Vec::new();
 
-    for (addon_name, known_count) in known {
+    for addon_name in known.keys().chain(actual.keys()).collect::<BTreeSet<_>>() {
+        let known_count = known.get(addon_name).copied().unwrap_or(0);
         let actual_count = actual.get(addon_name).copied().unwrap_or(0);
-        match actual_count.cmp(known_count) {
+        match actual_count.cmp(&known_count) {
             std::cmp::Ordering::Greater => {
-                increased.push((addon_name.clone(), *known_count, actual_count));
+                increased.push((addon_name.clone(), known_count, actual_count));
             }
             std::cmp::Ordering::Less => {
-                decreased.push((addon_name.clone(), *known_count, actual_count));
+                decreased.push((addon_name.clone(), known_count, actual_count));
             }
             std::cmp::Ordering::Equal => {}
         }
