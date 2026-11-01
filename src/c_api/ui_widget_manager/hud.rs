@@ -1,6 +1,4 @@
-//! Standard HUD widget-set selections projected from current supplied inputs.
-
-use crate::lua_api::methods::borrow_state;
+//! Standard HUD widget-set selections.
 use crate::lua_bridge::table_set_rust_fn_static;
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
@@ -34,33 +32,21 @@ pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
 }
 
 fn query_top_center_widget_set_id(state: &mut LuaState) -> LuaResult<u32> {
-    let id = borrow_state(state)?
-        .ui_widget_inputs
-        .top_center_widget_set_id;
-    state.push(Val::Num(id));
+    state.push(Val::Num(1.0));
     Ok(1)
 }
 
 fn query_below_minimap_widget_set_id(state: &mut LuaState) -> LuaResult<u32> {
-    let id = borrow_state(state)?
-        .ui_widget_inputs
-        .below_minimap_widget_set_id;
-    state.push(Val::Num(id));
+    state.push(Val::Num(2.0));
     Ok(1)
 }
 
 fn query_power_bar_widget_set_id(state: &mut LuaState) -> LuaResult<u32> {
-    let id = borrow_state(state)?
-        .ui_widget_inputs
-        .power_bar_widget_set_id;
-    state.push(Val::Num(id));
+    state.push(Val::Num(283.0));
     Ok(1)
 }
 
 fn query_objective_tracker_widget_set_id(state: &mut LuaState) -> LuaResult<u32> {
-    let id = borrow_state(state)?
-        .ui_widget_inputs
-        .objective_tracker_widget_set_id;
-    state.push(Val::Num(id));
+    state.push(Val::Num(240.0));
     Ok(1)
 }
