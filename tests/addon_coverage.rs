@@ -653,6 +653,64 @@ fn order_hall_hides_missing_combat_ally_and_uses_full_height() {
     assert!(env.exec("C_Garrison.GetCombatAllyMission('bad')").is_err());
 }
 
+#[cfg(feature = "client-retail")]
+#[test]
+fn pvp_queue_rated_button_reflects_eligibility() {
+    for (eligible, reason) in [(false, "Rated unavailable"), (true, "")] {
+        let env = WowLuaEnv::new().expect("create Lua environment");
+        {
+            let mut state = env.state().borrow_mut();
+            state.addon_base_paths = vec![blizzard_ui_dir()];
+            state.pvp_catalog.rated_eligible = eligible;
+            state.pvp_catalog.rated_failure_reason = reason.to_string();
+        }
+        reset_template_state();
+        common::load_profile_framexml(&env);
+        load_force_load_startup(&env);
+        clear_lua_error_tracking(&env);
+        for (name, toc) in force_load_game_addons() {
+            load_addon(&env.loader_env(), &toc).expect("force-load Blizzard addon");
+            if name == "Blizzard_PVPUI" { break; }
+        }
+        let errors = env.state().borrow().lua_errors.clone();
+        assert!(
+            !errors.iter().any(|error| error.contains("Blizzard_PVPUI.lua:359")),
+            "rated PVP query must be available during OnLoad: {errors:?}"
+        );
+        let (enabled, tooltip): (bool, Option<String>) = env.eval(
+            "return PVPQueueFrame.CategoryButton2:IsEnabled(), PVPQueueFrame.CategoryButton2.tooltip"
+        ).expect("read rated button state");
+        assert_eq!(enabled, eligible);
+        assert_eq!(tooltip.as_deref(), (!eligible).then_some(reason));
+    }
+}
+
+#[cfg(feature = "client-retail")]
+#[test]
+fn garrison_cinematic_models_expose_only_cinematic_camera_methods() {
+    let env = load_garrison_original_consumers();
+    let ok: bool = env.eval(r#"
+        local cluster = CreateFrame('Frame', nil, UIParent, 'GarrisonMissionCompleteModelCluster')
+        if #cluster.Model == 0 then return false end
+        cluster:SetFacingLeft(true)
+        local cinematic = CreateFrame('CinematicModel')
+        local player = CreateFrame('PlayerModel')
+        local dressup = CreateFrame('DressUpModel')
+        local plain = CreateFrame('Frame')
+        if type(cinematic.SetFacingLeft) ~= 'function'
+            or type(cinematic.SetTargetDistance) ~= 'function' then return false end
+        for _, frame in ipairs({player, dressup, plain}) do
+            if frame.SetFacingLeft ~= nil or frame.SetTargetDistance ~= nil then return false end
+        end
+        cinematic:SetTargetDistance(0)
+        _G.CinematicMethodProbe = cinematic
+        return true
+    "#).expect("Garrison CinematicModel consumer executes");
+    assert!(ok);
+    assert!(env.exec("CinematicMethodProbe:SetFacingLeft('bad')").is_err());
+    assert!(env.exec("CinematicMethodProbe:SetTargetDistance('bad')").is_err());
+}
+
 #[test]
 fn all_blizzard_addon_load_errors_are_tracked_per_addon_name() {
     common::with_perf_lock(|| {

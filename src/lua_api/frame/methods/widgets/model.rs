@@ -12,7 +12,7 @@ mod model_unit_guid;
 
 use super::shared::{opt_bool, val_to_f64};
 use crate::lua_api::methods::{borrow_state, borrow_state_mut, create_string, frame_id_from_stack};
-use crate::lua_bridge::{IntoStack, stack_val, table_set_rust_fn};
+use crate::lua_bridge::{FromStack, IntoStack, stack_val, table_set_rust_fn};
 use model_scene::*;
 use model_scene_actors::*;
 use rilua::vm::gc::arena::GcRef;
@@ -816,6 +816,34 @@ const MODEL_METHODS: &[(&'static str, rilua::vm::closure::RustFn)] = &[
     ("SetResetCallback", scene_set_reset_callback),
     ("ClearScene", scene_clear_scene),
 ];
+
+/// Permanent 3D non-goal: accept CinematicModel camera inputs without rendering.
+pub(crate) fn register_cinematic_methods(
+    state: &mut LuaState,
+    index: GcRef<Table>,
+) -> LuaResult<()> {
+    table_set_rust_fn(state, index, "SetFacingLeft", cinematic_set_facing_left)?;
+    table_set_rust_fn(
+        state,
+        index,
+        "SetTargetDistance",
+        cinematic_set_target_distance,
+    )
+}
+
+fn cinematic_set_facing_left(state: &mut LuaState) -> LuaResult<u32> {
+    frame_id_from_stack(state, 1)?;
+    match stack_val(state, 2) {
+        Val::Bool(_) | Val::Nil => Ok(0),
+        _ => Err(rilua::runtime_error("isFacingLeft must be a boolean")),
+    }
+}
+
+fn cinematic_set_target_distance(state: &mut LuaState) -> LuaResult<u32> {
+    frame_id_from_stack(state, 1)?;
+    f64::from_stack(state, 2)?;
+    Ok(0)
+}
 
 pub(super) fn register_model(state: &mut LuaState, metatable: GcRef<Table>) -> LuaResult<()> {
     for (name, func) in MODEL_METHODS {

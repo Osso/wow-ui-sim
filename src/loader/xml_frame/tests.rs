@@ -165,7 +165,7 @@ fn specialized_widget_types() {
 }
 
 #[test]
-fn player_model_variants_all_map_to_player_model() {
+fn cinematic_model_preserves_its_frame_type() {
     let f = default_frame();
     assert_eq!(
         resolve(&FrameElement::PlayerModel(f.clone())),
@@ -173,7 +173,7 @@ fn player_model_variants_all_map_to_player_model() {
     );
     assert_eq!(
         resolve(&FrameElement::CinematicModel(f.clone())),
-        Some(("PlayerModel", None))
+        Some(("CinematicModel", None))
     );
     assert_eq!(
         resolve(&FrameElement::TabardModel(f.clone())),

@@ -30,11 +30,21 @@ pub struct PvpCatalog {
     pub training_enabled: bool,
     pub training_eligible: bool,
     pub training_failure_reason: String,
+    pub rated_eligible: bool,
+    pub rated_failure_reason: String,
     pub random_training_win_today: bool,
     pub match_completed: bool,
 }
 
 pub(super) fn register(state: &mut LuaState, ns: GcRef<Table>) -> LuaResult<()> {
+    if matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail
+            | crate::client_profile::ClientProfile::Ptr
+            | crate::client_profile::ClientProfile::WowForever
+    ) {
+        table_set_rust_fn_static(state, ns, "CanPlayerUseRatedPVPUI", rated_eligible)?;
+    }
     for (name, function) in [
         ("GetBattlegroundInfo", battleground_info as rilua::RustFn),
         ("GetTrainingGrounds", training_grounds),
@@ -143,6 +153,19 @@ fn training_eligible(state: &mut LuaState) -> LuaResult<u32> {
         (
             catalog.training_enabled && catalog.training_eligible,
             catalog.training_failure_reason.clone(),
+        )
+    };
+    state.push(Val::Bool(allowed));
+    let value = create_string(state, if allowed { "" } else { &reason });
+    state.push(value);
+    Ok(2)
+}
+fn rated_eligible(state: &mut LuaState) -> LuaResult<u32> {
+    let (allowed, reason) = {
+        let sim = borrow_state(state)?;
+        (
+            sim.pvp_catalog.rated_eligible,
+            sim.pvp_catalog.rated_failure_reason.clone(),
         )
     };
     state.push(Val::Bool(allowed));

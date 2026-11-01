@@ -17,6 +17,7 @@ mod editbox;
 pub(crate) use editbox::auto_focus_shown_editbox;
 pub mod message_frame;
 mod model;
+pub(crate) use model::register_cinematic_methods;
 mod movie;
 pub(super) mod shared;
 mod slider;
