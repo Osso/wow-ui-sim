@@ -381,6 +381,14 @@ fn objective_tracker_frame_layout_is_locked(env: &WowLuaEnv) {
         sim.quest_log_entries.entries.push(quest);
         drop(sim);
         env.exec("assert(C_QuestLog.AddQuestWatch(80002))").unwrap();
+        {
+            let sim = state.borrow();
+            assert!(
+                sim.lua_errors.iter().all(|error| !error.contains("CanAbandonQuest")),
+                "quest map update must resolve the Retail abandonability query: {:?}",
+                sim.lua_errors
+            );
+        }
         settle_prefork_game_ui(env);
     }
 
