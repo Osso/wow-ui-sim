@@ -218,10 +218,7 @@ fn try_spelling_corrections(lower: &str) -> Option<AtlasLookup> {
 
 #[cfg(test)]
 mod tests {
-    use super::{
-        ATLAS_DB, get_atlas_info, get_render_atlas_info, logical_nine_slice_piece_size,
-        nine_slice_piece,
-    };
+    use super::{ATLAS_DB, get_atlas_info, get_render_atlas_info, nine_slice_piece};
 
     #[test]
     fn nine_slice_uses_2x_fallback_with_logical_sizes() {
