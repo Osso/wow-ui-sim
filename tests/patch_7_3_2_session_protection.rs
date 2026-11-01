@@ -15,12 +15,23 @@ pub(crate) fn assert_insecure_session_actions_blocked(env: &WowLuaEnv) {
         let code = format!(
             r#"
             local taint
+            local events = {}
+            local frame = CreateFrame('Frame')
+            frame:RegisterEvent('ADDON_ACTION_FORBIDDEN')
+            frame:SetScript('OnEvent', function(_, event, addon, action)
+                events[#events + 1] = {event, addon, action}
+            end)
             local invoke = function()
                 taint = debug.getstacktaint()
                 {symbol}()
             end
             debug.setobjecttaint(invoke, 'Patch732Addon')
             local succeeded = pcall(invoke)
+            assert(#events == 1, 'expected one forbidden-action event')
+            assert(events[1][1] == 'ADDON_ACTION_FORBIDDEN')
+            assert(events[1][2] == 'Patch732Addon')
+            assert(events[1][3] == '{symbol}()')
+            frame:UnregisterAllEvents()
             return succeeded, taint
             "#
         );
@@ -32,7 +43,7 @@ pub(crate) fn assert_insecure_session_actions_blocked(env: &WowLuaEnv) {
         observations.insert(
             symbol.to_string(),
             serde_json::json!({"call_succeeded": allowed, "state_unchanged": unchanged,
-                               "taint": taint, "ok": !allowed && unchanged}),
+                               "taint": taint, "ok": allowed && unchanged}),
         );
     }
     if let Ok(path) = std::env::var("P732_PROTECTION_OUT") {
