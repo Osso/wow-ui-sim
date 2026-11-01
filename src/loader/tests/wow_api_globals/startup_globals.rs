@@ -97,10 +97,11 @@ fn test_patch_12_0_7_duration_objects_and_text_binding() {
             clock:ResetTime()
             if clock:GetTime() ~= 0 then return "DurationManualClock.ResetTime" end
 
-            if C_DurationUtil.CreateDurationTextFormattingOptions() ~= nil then
+            -- Unmodeled namespace members are nil, not callable stubs (9522d075d).
+            if C_DurationUtil.CreateDurationTextFormattingOptions ~= nil then
                 return "DurationTextFormattingOptions factory"
             end
-            if C_DurationUtil.CreateDurationTextRawValue() ~= nil then
+            if C_DurationUtil.CreateDurationTextRawValue ~= nil then
                 return "DurationTextRawValue factory"
             end
 
@@ -1245,6 +1246,8 @@ fn test_startup_social_and_lfg_globals_exist() {
     ): (String, bool, String, bool, i64, String, String, i64, String) = env
         .eval(
             r#"
+            -- Search establishes result membership (model introduced in 9abe44afc).
+            C_LFGList.Search(2)
             local groups = C_SocialQueue.GetAllGroups()
             local config = C_SocialQueue.GetConfig()
             return type(IsTutorialFlagged),
