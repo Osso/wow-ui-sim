@@ -540,6 +540,8 @@ fn test_patch_12_1_pet_and_lfg_payloads() {
             if pet.canAttachToDecor ~= false or pet.creatureModelScale ~= 1 then return "pet-12-1" end
             if C_PetJournal.GetPetInfoTableBySpeciesID(999999) ~= nil then return "pet-unknown" end
 
+            -- Search establishes result membership (model introduced in 9abe44afc).
+            C_LFGList.Search(2)
             local listing = C_LFGList.GetSearchResultInfo(7)
             if type(listing) ~= "table" then return "lfg-type" end
             if listing.searchResultID ~= 7 or listing.name ~= "RBG yolo" then return "lfg-identity" end

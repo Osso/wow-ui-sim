@@ -1245,6 +1245,8 @@ fn test_startup_social_and_lfg_globals_exist() {
     ): (String, bool, String, bool, i64, String, String, i64, String) = env
         .eval(
             r#"
+            -- Search establishes result membership (model introduced in 9abe44afc).
+            C_LFGList.Search(2)
             local groups = C_SocialQueue.GetAllGroups()
             local config = C_SocialQueue.GetConfig()
             return type(IsTutorialFlagged),
