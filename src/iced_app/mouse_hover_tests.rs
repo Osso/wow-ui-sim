@@ -463,7 +463,7 @@ fn hover_after_gui_resize_uses_resized_screen_coordinates() {
 }
 
 #[test]
-fn first_draw_at_actual_canvas_size_rebuilds_resize_dependent_hover_rects() {
+fn first_draw_after_deferred_startup_rebuilds_resize_dependent_hover_rects() {
     let mut app = build_test_app(ScreenKind::Game);
     let startup_size = iced::Size::new(1024.0, 768.0);
     let actual_canvas_size = iced::Size::new(920.0, 640.0);

@@ -250,16 +250,20 @@ mod tests {
 
     #[test]
     fn nine_slice_piece_uses_2x_dimensions_when_base_piece_is_missing() {
-        let corner = ATLAS_DB
-            .get("ui-frame-metal-cornertopleft-2x")
-            .expect("metal corner +2x entry should exist");
+        let key = "ui-frame-diamondmetal-header-cornerleft";
+        assert!(
+            ATLAS_DB.get(key).is_none(),
+            "fixture needs a missing base entry"
+        );
+        let art = ATLAS_DB
+            .get("ui-frame-diamondmetal-header-cornerleft-2x")
+            .expect("diamond metal header corner 2x entry should exist");
+        assert_eq!((art.width, art.height), (64, 78));
 
-        let piece = nine_slice_piece("ui-frame-metal-nineslice-cornertopleft")
-            .expect("metal corner should resolve through paired 2x fallback");
+        let piece = nine_slice_piece(key).expect("corner should resolve through paired 2x art");
 
-        assert_eq!(piece.file, corner.file);
-        assert_eq!(piece.width, logical_nine_slice_piece_size(corner, true).0);
-        assert_eq!(piece.height, logical_nine_slice_piece_size(corner, true).1);
+        assert_eq!(piece.file, art.file);
+        assert_eq!((piece.width, piece.height), (32, 39));
     }
 
     #[test]
