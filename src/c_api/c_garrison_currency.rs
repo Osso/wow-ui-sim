@@ -3,7 +3,7 @@
 use crate::client_profile::{ACTIVE, ClientProfile};
 use crate::lua_bridge::{FromStack, table_set_rust_fn_static};
 use rilua::vm::state::LuaState;
-use rilua::{LuaApiMut, LuaResult, Val};
+use rilua::{LuaResult, Val};
 
 pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
     if !matches!(
