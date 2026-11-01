@@ -139,6 +139,7 @@ macro_rules! build_empty_sim_state {
             minimap_quest_blob_inside: HashMap::new(),
             fog_of_war_frames: $collections.fog_of_war_frames,
             unit_position_frames: $collections.unit_position_frames,
+            report_player_eligible: false,
             pending_player_reports: $collections.pending_player_reports,
             message_frames: $collections.message_frames,
             on_update_frames: $collections.on_update_frames,

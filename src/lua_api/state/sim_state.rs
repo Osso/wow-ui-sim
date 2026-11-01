@@ -141,6 +141,8 @@ pub struct SimState {
     pub minimap_quest_blob_inside: HashMap<i32, bool>,
     pub fog_of_war_frames: HashMap<u64, FogOfWarFrameState>,
     pub unit_position_frames: HashMap<u64, UnitPositionFrameState>,
+    /// Scenario-supplied reporting eligibility; no target or account policy inference.
+    pub report_player_eligible: bool,
     pub pending_player_reports: HashMap<i64, PendingPlayerReport>,
     pub message_frames: HashMap<u64, MessageFrameData>,
     pub on_update_frames: HashSet<u64>,

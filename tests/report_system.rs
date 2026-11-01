@@ -91,6 +91,12 @@ fn report_button_respects_supplied_eligibility(env: &WowLuaEnv) {
         local location = UnitPopupSharedUtil.TryCreatePlayerLocation(context)
         assert(location and UnitPopupSharedUtil.IsValidPlayerLocation(location), 'valid report location required')
         assert(UnitPopupReportButtonMixin:CanShow(context) == false)
+        assert(not pcall(C_ReportSystem.CanReportPlayer, nil))
     "#).expect("report button should use report eligibility");
+    env.state().borrow_mut().report_player_eligible = true;
+    env.exec(r#"
+        local context = { guid = UnitGUID('player') }
+        assert(UnitPopupReportButtonMixin:CanShow(context) == true)
+    "#).expect("report button should reflect supplied eligibility");
 }
 }

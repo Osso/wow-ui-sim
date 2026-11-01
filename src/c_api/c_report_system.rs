@@ -5,7 +5,7 @@
 
 use crate::c_api::helpers::ensure_namespace;
 use crate::event::{Event, EventArg};
-use crate::lua_api::methods::borrow_state_mut;
+use crate::lua_api::methods::{borrow_state, borrow_state_mut};
 use crate::lua_api::state::PendingPlayerReport;
 use crate::lua_bridge::{FromStack, table_set_rust_fn_static};
 use rilua::vm::state::LuaState;
@@ -20,7 +20,21 @@ pub(crate) fn register_c_report_system_surface(state: &mut LuaState) -> LuaResul
         initiate_report_player,
     )?;
     table_set_rust_fn_static(state, table_ref, "SendReportPlayer", send_report_player)?;
+    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
+        table_set_rust_fn_static(state, table_ref, "CanReportPlayer", can_report_player)?;
+    }
     Ok(())
+}
+
+fn can_report_player(state: &mut LuaState) -> LuaResult<u32> {
+    if !matches!(crate::lua_bridge::stack_val(state, 1), Val::Table(_)) {
+        return Err(rilua::runtime_error(
+            "playerLocation requires a PlayerLocation table",
+        ));
+    }
+    let eligible = borrow_state(state)?.report_player_eligible;
+    state.push(Val::Bool(eligible));
+    Ok(1)
 }
 
 fn initiate_report_player(state: &mut LuaState) -> LuaResult<u32> {
