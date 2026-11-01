@@ -8,6 +8,8 @@ Retail's pinned `Blizzard_APIDocumentationGenerated/MinimapDocumentation.lua:28`
 - [ ] Query map bounties from supplied simulator state and distinguish missing map resolution from an empty resolved list.
 - [ ] Scan the current quest log for eligible entries with native-observed flag masks.
 - [ ] Exercise the original Retail world-map consumers against distinct input states.
+- [ ] UpdateCampaignHeaders returns no Lua values; no campaign-header projection exists yet.
+- [ ] IsUnitOnQuest resolves a represented group member and queries that member's supplied active quest IDs; grouped player uses the existing quest log.
 
 ## Best-guess basis
 
@@ -31,6 +33,7 @@ Native build 70688 evidence WM1–WM3 reports VERIFIED local decisions and EMULA
 - [ ] Real-client publication and runtime transitions are unobserved; inferred defaults and results are not live-client proof.
 - [ ] Native bounty selection and map ancestry rules are not established by the provided evidence.
 - [ ] Quest flag domain meanings and producers are unknown; do not infer them from their bit values.
+- [ ] WM15 campaign-header membership and ordering are unknown; no header projection is invented. The zero-return connection and party-quest boolean publication are best guesses from separate native suffixes, not observed live execution.
 
 ## Out of scope
 

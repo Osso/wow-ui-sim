@@ -114,6 +114,8 @@ pub struct QuestLogState {
     pub threat_entry_flags: HashMap<i32, u16>,
     /// Supplied bounties keyed by the existing bounty-set membership model.
     pub bounties_by_set: HashMap<i32, Vec<QuestBounty>>,
+    /// Supplied active quest IDs keyed by represented party-member GUID.
+    pub party_quest_ids: HashMap<String, HashSet<i32>>,
     pub additional_highlights: HashMap<i32, crate::c_api::c_quest_log::QuestAdditionalHighlights>,
     /// Build-12340 manual append order; IDs survive row reorder until log refresh.
     #[cfg(feature = "client-wrath")]
@@ -215,6 +217,7 @@ impl QuestLogState {
             campaign_chapter_ids: HashMap::new(),
             threat_entry_flags: HashMap::new(),
             bounties_by_set: HashMap::new(),
+            party_quest_ids: HashMap::new(),
             entries: vec![
                 lost_expedition_entry(),
                 defending_the_gates_entry(),

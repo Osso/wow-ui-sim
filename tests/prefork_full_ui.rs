@@ -182,6 +182,14 @@ const BYTECODE_FIXTURE_CASES: &[Case<BytecodeFixtureState>] = &[Case::new(
 #[cfg(feature = "client-retail")]
 const MANUAL_FULL_UI_CASES: &[Case<WowLuaEnv>] = &[
     Case::new(
+        "test_keybindings_panels_detail::world_map_campaign_headers_refresh_on_show",
+        test_keybindings_panels_detail::world_map_campaign_headers_refresh_on_show,
+    ),
+    Case::new(
+        "test_keybindings_panels_detail::world_map_party_quest_counts_follow_membership",
+        test_keybindings_panels_detail::world_map_party_quest_counts_follow_membership,
+    ),
+    Case::new(
         "test_keybindings_panels_detail::world_map_tracking_defaults_follow_filter_masks",
         test_keybindings_panels_detail::world_map_tracking_defaults_follow_filter_masks,
     ),

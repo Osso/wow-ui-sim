@@ -174,6 +174,53 @@ pub(crate) fn world_map_threat_frame_reads_quest_log_flags(env: &WowLuaEnv) {
     .expect("excluded quest flags must not count as active threats");
 }
 
+pub(crate) fn world_map_campaign_headers_refresh_on_show(env: &WowLuaEnv) {
+    env.exec(
+        r#"
+        QuestMapFrame.initialCampaignHeadersUpdate = nil
+        QuestMapFrame_OnShow(QuestMapFrame)
+        assert(QuestMapFrame.initialCampaignHeadersUpdate == true)
+        assert(select('#', C_QuestLog.UpdateCampaignHeaders()) == 0)
+    "#,
+    )
+    .expect("original quest map show must refresh campaign headers");
+}
+
+pub(crate) fn world_map_party_quest_counts_follow_membership(env: &WowLuaEnv) {
+    let quest_id = env.state().borrow().quest_log_entries.entries[0].quest_id;
+    {
+        let mut state = env.state().borrow_mut();
+        state.party_group_active = true;
+        assert!(!state.party_members.is_empty());
+        state.quest_log_entries.party_quest_ids.insert(
+            "Player-0000-00000002".to_string(),
+            [quest_id].into_iter().collect(),
+        );
+    }
+    env.exec(&format!(
+        r#"
+        assert(QuestUtils_GetNumPartyMembersOnQuest({quest_id}) == 1)
+        assert(C_QuestLog.IsUnitOnQuest('party1', {quest_id}) == true)
+        assert(C_QuestLog.IsUnitOnQuest('party1', -1) == false)
+        assert(C_QuestLog.IsUnitOnQuest('nobody', {quest_id}) == false)
+        assert(C_QuestLog.IsUnitOnQuest('player', {quest_id}) == true)
+    "#
+    ))
+    .expect("original quest utility must count supplied party quest membership");
+    env.state()
+        .borrow_mut()
+        .quest_log_entries
+        .party_quest_ids
+        .clear();
+    env.exec(&format!(
+        r#"
+        assert(QuestUtils_GetNumPartyMembersOnQuest({quest_id}) == 0)
+        assert(C_QuestLog.IsUnitOnQuest('party1', {quest_id}) == false)
+    "#
+    ))
+    .expect("removing supplied membership must update the original utility");
+}
+
 pub(crate) fn keybind_m_toggles_world_map_without_errors(env: &WowLuaEnv) {
     install_test_error_handler(&env);
 
