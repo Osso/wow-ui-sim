@@ -10,6 +10,7 @@ pub(crate) mod class_catalog;
 pub(crate) mod classic_startup_data;
 #[cfg(feature = "client-retail")]
 pub(crate) mod currency_list;
+pub(crate) mod game_mode;
 pub mod item_overlay;
 pub(crate) mod item_quality_color;
 pub mod mount_filters;

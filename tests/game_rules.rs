@@ -63,7 +63,7 @@ fn defaults_no_rules_standard_mode_character_select() {
     assert_eq!(i, 0);
     assert_eq!(s, "");
     assert!(!plunder);
-    assert_eq!(mode, 0);
+    assert_eq!(mode, 1);
     assert_eq!(glue, "CharacterSelect");
 }
 
@@ -157,8 +157,28 @@ fn nil_removes_rule() {
 #[test]
 fn set_active_game_mode_flips_is_plunderstorm() {
     let env = env();
-    env.exec(r#"A_Admin.SetActiveGameMode(1, "PlunderstormLogin")"#)
+    env.exec(r#"A_Admin.SetActiveGameMode(Enum.GameMode.Plunderstorm, "PlunderstormLogin")"#)
         .unwrap();
+    let (mode, plunder, glue): (i64, bool, String) = env
+        .eval(
+            r#"
+            return C_GameRules.GetActiveGameMode(),
+                   C_GameRules.IsPlunderstorm(),
+                   C_GameRules.GetGameModeGlueScreenName()
+            "#,
+        )
+        .unwrap();
+    assert_eq!(mode, 2);
+    assert!(plunder);
+    assert_eq!(glue, "PlunderstormLogin");
+}
+
+#[test]
+fn set_active_game_mode_back_to_standard_resets_glue_default() {
+    let env = env();
+    env.exec(r#"A_Admin.SetActiveGameMode(Enum.GameMode.Plunderstorm, "PlunderstormLogin")"#)
+        .unwrap();
+    env.exec(r#"A_Admin.SetActiveGameMode(Enum.GameMode.Standard)"#).unwrap();
     let (mode, plunder, glue): (i64, bool, String) = env
         .eval(
             r#"
@@ -169,26 +189,6 @@ fn set_active_game_mode_flips_is_plunderstorm() {
         )
         .unwrap();
     assert_eq!(mode, 1);
-    assert!(plunder);
-    assert_eq!(glue, "PlunderstormLogin");
-}
-
-#[test]
-fn set_active_game_mode_back_to_standard_resets_glue_default() {
-    let env = env();
-    env.exec(r#"A_Admin.SetActiveGameMode(1, "PlunderstormLogin")"#)
-        .unwrap();
-    env.exec(r#"A_Admin.SetActiveGameMode(0)"#).unwrap();
-    let (mode, plunder, glue): (i64, bool, String) = env
-        .eval(
-            r#"
-            return C_GameRules.GetActiveGameMode(),
-                   C_GameRules.IsPlunderstorm(),
-                   C_GameRules.GetGameModeGlueScreenName()
-            "#,
-        )
-        .unwrap();
-    assert_eq!(mode, 0);
     assert!(!plunder);
     assert_eq!(
         glue, "CharacterSelect",

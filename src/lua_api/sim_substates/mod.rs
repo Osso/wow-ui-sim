@@ -128,9 +128,7 @@ impl MouseButtons {
 /// getter variants without round-tripping strings.
 #[derive(Debug, Clone, PartialEq)]
 pub struct GameRulesState {
-    /// Currently-active game mode id. Matches `Enum.GameMode`:
-    /// `0 = Standard`, `1 = Plunderstorm`, `2 = Delves`, etc. Tests that don't
-    /// care treat nonzero as "some non-standard mode".
+    /// Currently active `Enum.GameMode` value.
     pub active_game_mode: i32,
     /// Glue screen name the current game mode opens on at the login flow.
     /// Default `"CharacterSelect"` (Standard).
@@ -151,7 +149,7 @@ pub struct GameRulesState {
 impl Default for GameRulesState {
     fn default() -> Self {
         Self {
-            active_game_mode: 0,
+            active_game_mode: crate::c_api::game_mode::STANDARD,
             glue_screen_name: "CharacterSelect".into(),
             rules: HashMap::new(),
             hardcore_active: false,
