@@ -7,10 +7,7 @@
 //! - `GetGameRuleAsInt(name)`        — int value (0 when missing).
 //! - `GetGameRuleAsString(name)`     — string value (`""` when missing).
 //! - `IsPlunderstorm()`              — active_game_mode == Plunderstorm.
-//! - `GetActiveGameMode()`           — the active mode id; prefers
-//!                                     `Enum.GameMode.Standard` (falls back
-//!                                     to the raw int when the enum's not
-//!                                     loaded).
+//! - `GetActiveGameMode()`           — the active `Enum.GameMode` value.
 //! - `GetGameModeGlueScreenName()`   — glue screen string.
 //!
 //! Admin:
@@ -21,15 +18,13 @@
 //! - `A_Admin.SetActiveGameMode(mode, glueScreen?)` — mode is an integer;
 //!   glueScreen defaults to `"CharacterSelect"`.
 
+use crate::c_api::game_mode;
 use crate::client_profile::{ACTIVE, ClientProfile};
 use crate::lua_api::methods::{borrow_state, borrow_state_mut, create_string, create_table};
 use crate::lua_api::state::GameRuleValue;
 use crate::lua_bridge::{FromStack, stack_val, table_set_rust_fn};
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
-
-/// Canonical mode id for Plunderstorm, used by `IsPlunderstorm()`.
-const PLUNDERSTORM_MODE: i32 = 1;
 
 /// Resolve the rule-key arg at stack index 1. Accepts either a string name
 /// or an `Enum.GameRule` integer id (reverse-looked-up by scanning
@@ -169,7 +164,7 @@ pub fn get_game_rule_as_string(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 pub fn is_plunderstorm(state: &mut LuaState) -> LuaResult<u32> {
-    let active = borrow_state(state)?.game_rules.active_game_mode == PLUNDERSTORM_MODE;
+    let active = borrow_state(state)?.game_rules.active_game_mode == game_mode::PLUNDERSTORM;
     state.push(Val::Bool(active));
     Ok(1)
 }
@@ -212,12 +207,7 @@ fn is_game_mode_enabled(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn is_wowhack(state: &mut LuaState) -> LuaResult<u32> {
-    let wowhack_mode = crate::lua_api::globals::enum_data::GAME_MODE
-        .1
-        .iter()
-        .find_map(|&(name, value)| (name == "WoWHack").then_some(value))
-        .expect("GameMode declares WoWHack");
-    let active = borrow_state(state)?.game_rules.active_game_mode == wowhack_mode;
+    let active = borrow_state(state)?.game_rules.active_game_mode == game_mode::WOWHACK;
     state.push(Val::Bool(active));
     Ok(1)
 }
@@ -260,6 +250,7 @@ fn install_on_c_game_rules(state: &mut LuaState) -> LuaResult<()> {
     // GameRulesDocumentation.lua declares these on every profile except Wrath,
     // which ships no generated documentation.
     if ACTIVE != ClientProfile::Wrath {
+        table_set_rust_fn(state, table_ref, "IsStandard", game_mode::is_standard)?;
         table_set_rust_fn(
             state,
             table_ref,
@@ -390,7 +381,8 @@ pub fn admin_set_game_rule(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 pub fn admin_set_active_game_mode(state: &mut LuaState) -> LuaResult<u32> {
-    let mode = Option::<f64>::from_stack(state, 1)?.unwrap_or(0.0) as i32;
+    let mode =
+        Option::<f64>::from_stack(state, 1)?.map_or(game_mode::STANDARD, |value| value as i32);
     let glue = Option::<String>::from_stack(state, 2)?
         .filter(|s| !s.is_empty())
         .unwrap_or_else(|| "CharacterSelect".into());

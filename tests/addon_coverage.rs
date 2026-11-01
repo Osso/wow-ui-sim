@@ -86,6 +86,13 @@ const PANEL_COVERAGE_ADDONS: &[(&str, &str)] = &[
     ),
 ];
 
+// Full Blizzard UI environments are too large to load concurrently in this binary.
+static FULL_UI_LOCK: std::sync::Mutex<()> = std::sync::Mutex::new(());
+
+fn lock_full_ui() -> std::sync::MutexGuard<'static, ()> {
+    FULL_UI_LOCK.lock().unwrap_or_else(|error| error.into_inner())
+}
+
 fn blizzard_ui_dir() -> PathBuf {
     wow_ui_sim::client_profile::blizzard_ui_addons_dir_under(std::path::Path::new(env!(
         "CARGO_MANIFEST_DIR"
@@ -370,6 +377,7 @@ fn load_force_load_startup(env: &WowLuaEnv) {
 #[cfg(feature = "client-retail")]
 #[test]
 fn force_load_click_binding_runs_macro_bootstrap_first() {
+    let _full_ui = lock_full_ui();
     let env = WowLuaEnv::new().expect("create Lua environment");
     env.state().borrow_mut().addon_base_paths = vec![blizzard_ui_dir()];
     reset_template_state();
@@ -394,6 +402,7 @@ fn force_load_click_binding_runs_macro_bootstrap_first() {
 #[cfg(feature = "client-retail")]
 #[test]
 fn loot_journal_displays_empty_runeforge_catalog_for_distinct_filters() {
+    let _full_ui = lock_full_ui();
     let env = WowLuaEnv::new().expect("create Lua environment");
     env.state().borrow_mut().addon_base_paths = vec![blizzard_ui_dir()];
     reset_template_state();
@@ -423,6 +432,7 @@ fn loot_journal_displays_empty_runeforge_catalog_for_distinct_filters() {
 #[cfg(feature = "client-retail")]
 #[test]
 fn wardrobe_latest_appearance_tracks_collections() {
+    let _full_ui = lock_full_ui();
     let env = WowLuaEnv::new().expect("create Lua environment");
     env.state().borrow_mut().addon_base_paths = vec![blizzard_ui_dir()];
     reset_template_state();
@@ -456,6 +466,7 @@ fn wardrobe_latest_appearance_tracks_collections() {
 #[cfg(feature = "client-retail")]
 #[test]
 fn map_click_to_zoom_uses_best_guess_help_text_position() {
+    let _full_ui = lock_full_ui();
     let env = WowLuaEnv::new().expect("create Lua environment");
     env.state().borrow_mut().addon_base_paths = vec![blizzard_ui_dir()];
     reset_template_state();
@@ -486,6 +497,7 @@ fn map_click_to_zoom_uses_best_guess_help_text_position() {
 #[cfg(feature = "client-retail")]
 #[test]
 fn commentator_camera_presets_accept_two_numeric_speeds() {
+    let _full_ui = lock_full_ui();
     let env = WowLuaEnv::new().expect("create Lua environment");
     env.state().borrow_mut().addon_base_paths = vec![blizzard_ui_dir()];
     reset_template_state();
@@ -505,6 +517,7 @@ fn commentator_camera_presets_accept_two_numeric_speeds() {
 #[cfg(feature = "client-retail")]
 #[test]
 fn garrison_mission_frames_use_db2_currency_types() {
+    let _full_ui = lock_full_ui();
     let env = WowLuaEnv::new().expect("create Lua environment");
     env.state().borrow_mut().addon_base_paths = vec![blizzard_ui_dir()];
     reset_template_state();
@@ -545,6 +558,7 @@ fn garrison_mission_frames_use_db2_currency_types() {
 #[cfg(feature = "client-retail")]
 #[test]
 fn garrison_consumers_clear_and_read_empty_mission_lists() {
+    let _full_ui = lock_full_ui();
     let env = WowLuaEnv::new().expect("create Lua environment");
     env.state().borrow_mut().addon_base_paths = vec![blizzard_ui_dir()];
     reset_template_state();
@@ -600,6 +614,7 @@ fn load_garrison_original_consumers() -> WowLuaEnv {
 #[cfg(feature = "client-retail")]
 #[test]
 fn shipyard_consumer_reads_empty_in_progress_missions() {
+    let _full_ui = lock_full_ui();
     let env = load_garrison_original_consumers();
     let ok: bool = env.eval(r#"
         -- Test-only fixture for the missing GetAllBonusAbilityEffects API.
@@ -616,6 +631,7 @@ fn shipyard_consumer_reads_empty_in_progress_missions() {
 #[cfg(feature = "client-retail")]
 #[test]
 fn landing_page_consumer_reads_empty_available_missions() {
+    let _full_ui = lock_full_ui();
     let env = load_garrison_original_consumers();
     let ok: bool = env.eval(r#"
         -- Test-only fixture for the missing GetLandingPageItems API.
@@ -637,6 +653,7 @@ fn landing_page_consumer_reads_empty_available_missions() {
 #[cfg(feature = "client-retail")]
 #[test]
 fn order_hall_hides_missing_combat_ally_and_uses_full_height() {
+    let _full_ui = lock_full_ui();
     let env = load_garrison_original_consumers();
     let ok: bool = env.eval(r#"
         local ally = setmetatable({Hide=function(self) self.hidden=true end},
@@ -656,6 +673,7 @@ fn order_hall_hides_missing_combat_ally_and_uses_full_height() {
 #[cfg(feature = "client-retail")]
 #[test]
 fn pvp_queue_rated_button_reflects_eligibility() {
+    let _full_ui = lock_full_ui();
     for (eligible, reason) in [(false, "Rated unavailable"), (true, "")] {
         let env = WowLuaEnv::new().expect("create Lua environment");
         {
@@ -688,6 +706,7 @@ fn pvp_queue_rated_button_reflects_eligibility() {
 #[cfg(feature = "client-retail")]
 #[test]
 fn garrison_cinematic_models_expose_only_cinematic_camera_methods() {
+    let _full_ui = lock_full_ui();
     let env = load_garrison_original_consumers();
     let ok: bool = env.eval(r#"
         local cluster = CreateFrame('Frame', nil, UIParent, 'GarrisonMissionCompleteModelCluster')
@@ -714,6 +733,7 @@ fn garrison_cinematic_models_expose_only_cinematic_camera_methods() {
 #[cfg(feature = "client-retail")]
 #[test]
 fn adventure_rewards_consumer_loads_follower_level_xp() {
+    let _full_ui = lock_full_ui();
     let env = load_garrison_original_consumers();
     let errors = env.state().borrow().lua_errors.clone();
     assert!(
@@ -734,6 +754,7 @@ fn adventure_rewards_consumer_loads_follower_level_xp() {
 #[cfg(feature = "client-retail")]
 #[test]
 fn garrison_bonus_chest_onload_accepts_cinematic_height_factor() {
+    let _full_ui = lock_full_ui();
     let env = load_garrison_original_consumers();
     clear_lua_error_tracking(&env);
     let ok: bool = env.eval(r#"
@@ -756,6 +777,7 @@ fn garrison_bonus_chest_onload_accepts_cinematic_height_factor() {
 #[cfg(feature = "client-retail")]
 #[test]
 fn garrison_bonus_chest_onload_initializes_cinematic_camera() {
+    let _full_ui = lock_full_ui();
     let env = load_garrison_original_consumers();
     clear_lua_error_tracking(&env);
     let ok: bool = env.eval(r#"
@@ -777,6 +799,7 @@ fn garrison_bonus_chest_onload_initializes_cinematic_camera() {
 #[cfg(feature = "client-retail")]
 #[test]
 fn dress_up_scene_uses_player_fallback_and_exported_race_actor() {
+    let _full_ui = lock_full_ui();
     let env = WowLuaEnv::new().expect("create Lua environment");
     env.state().borrow_mut().addon_base_paths = vec![blizzard_ui_dir()];
     reset_template_state();
@@ -810,6 +833,7 @@ fn dress_up_scene_uses_player_fallback_and_exported_race_actor() {
 #[cfg(feature = "client-retail")]
 #[test]
 fn allied_races_original_update_uses_generated_scene_actors() {
+    let _full_ui = lock_full_ui();
     let env = WowLuaEnv::new().expect("create Lua environment");
     env.state().borrow_mut().addon_base_paths = vec![blizzard_ui_dir()];
     reset_template_state();
@@ -834,6 +858,7 @@ fn allied_races_original_update_uses_generated_scene_actors() {
 #[cfg(feature = "client-retail")]
 #[test]
 fn perks_original_load_uses_generated_category_scene() {
+    let _full_ui = lock_full_ui();
     let env = WowLuaEnv::new().expect("create Lua environment");
     env.state().borrow_mut().addon_base_paths = vec![blizzard_ui_dir()];
     reset_template_state();
@@ -863,6 +888,7 @@ fn perks_original_load_uses_generated_category_scene() {
 #[cfg(feature = "client-retail")]
 #[test]
 fn perks_celebration_scene_has_generated_fanfare_actor() {
+    let _full_ui = lock_full_ui();
     let env = WowLuaEnv::new().expect("create Lua environment");
     env.state().borrow_mut().addon_base_paths = vec![blizzard_ui_dir()];
     reset_template_state();
@@ -890,6 +916,7 @@ fn perks_celebration_scene_has_generated_fanfare_actor() {
 
 #[test]
 fn selected_scrapping_machine_profiles_expose_closed_state() {
+    let _full_ui = lock_full_ui();
     use wow_ui_sim::client_profile::{ACTIVE, ClientProfile};
     if !matches!(ACTIVE, ClientProfile::Retail | ClientProfile::Ptr | ClientProfile::WowForever) {
         return;
@@ -906,6 +933,7 @@ fn selected_scrapping_machine_profiles_expose_closed_state() {
 #[cfg(feature = "client-retail")]
 #[test]
 fn scrapping_machine_closed_state_loads_and_updates_original_frame() {
+    let _full_ui = lock_full_ui();
     let env = WowLuaEnv::new().expect("create Lua environment");
     env.state().borrow_mut().addon_base_paths = vec![blizzard_ui_dir()];
     reset_template_state();
@@ -948,6 +976,7 @@ fn scrapping_machine_closed_state_loads_and_updates_original_frame() {
 
 #[test]
 fn all_blizzard_addon_load_errors_are_tracked_per_addon_name() {
+    let _full_ui = lock_full_ui();
     common::with_perf_lock(|| {
         common::with_timeout(600, move || {
             let env = WowLuaEnv::new().expect("Failed to create Lua environment");

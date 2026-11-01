@@ -80,6 +80,147 @@ pub(crate) fn world_map_floor_dropdown_hidden_without_subzone_or_map_group(env: 
     );
 }
 
+pub(crate) fn world_map_tracking_defaults_follow_filter_masks(env: &WowLuaEnv) {
+    env.exec(
+        r#"
+        local button = CreateFromMixins(WorldMapTrackingOptionsButtonMixin)
+        button:BuildFilterTable()
+        local off = button:GetWorldMapFilter('trivialQuests')
+        local on = button:GetWorldMapFilter('showAccountCompletedQuests')
+        assert(off:GetDefault() == false)
+        assert(on:GetDefault() == true)
+        assert(C_Minimap.GetDefaultTrackingValue(0) == true)
+        assert(C_Minimap.GetDefaultTrackingValue(2097152 + 1024) == false)
+    "#,
+    )
+    .expect("original world-map filters must observe both defaults");
+}
+
+pub(crate) fn world_map_bounty_board_reads_supplied_bounties(env: &WowLuaEnv) {
+    use wow_ui_sim::lua_api::state::QuestBounty;
+    {
+        let mut state = env.state().borrow_mut();
+        state.bounty_set_maps.insert(98701, vec![2248]);
+        state.quest_log_entries.bounties_by_set.insert(
+            98701,
+            vec![QuestBounty {
+                quest_id: 701,
+                faction_id: 72,
+                icon: Some(83),
+                num_objectives: 2,
+                turnin_requirement_text: Some("Return to camp".to_string()),
+            }],
+        );
+    }
+    env.exec(
+        r#"
+        WorldMapFrame:SetMapID(2248)
+        local board = CreateFrame('Frame', nil, WorldMapFrame, 'WorldMapBountyBoardTemplate')
+        board:Refresh()
+        assert(#board.bounties == 1 and board.bounties[1].questID == 701)
+        assert(board.bounties[1].factionID == 72 and board.bounties[1].icon == 83)
+        assert(board.bounties[1].numObjectives == 2)
+        assert(board.bounties[1].turninRequirementText == 'Return to camp')
+    "#,
+    )
+    .expect("original bounty board must read the supplied bounty");
+    env.state()
+        .borrow_mut()
+        .quest_log_entries
+        .bounties_by_set
+        .insert(98701, vec![]);
+    env.exec(
+        r#"
+        local bounties = C_QuestLog.GetBountiesForMapID(2248)
+        assert(type(bounties) == 'table' and #bounties == 0)
+        assert(C_QuestLog.GetBountiesForMapID(-98701) == nil)
+    "#,
+    )
+    .expect("resolved empty and missing map must differ");
+}
+
+pub(crate) fn world_map_threat_frame_reads_quest_log_flags(env: &WowLuaEnv) {
+    let quest_id = env
+        .state()
+        .borrow()
+        .quest_log_entries
+        .entries
+        .first()
+        .expect("seed quest")
+        .quest_id;
+    env.state()
+        .borrow_mut()
+        .quest_log_entries
+        .threat_entry_flags
+        .insert(quest_id, 8);
+    env.exec(
+        r#"
+        local frame = CreateFrame('Frame', nil, WorldMapFrame, 'WorldMapThreatFrameTemplate')
+        frame:Refresh()
+        assert(C_QuestLog.HasActiveThreats() == true)
+    "#,
+    )
+    .expect("original threat frame must query the active quest");
+    env.state()
+        .borrow_mut()
+        .quest_log_entries
+        .threat_entry_flags
+        .insert(quest_id, 8 | 32);
+    env.exec(
+        r#"
+        assert(C_QuestLog.HasActiveThreats() == false)
+    "#,
+    )
+    .expect("excluded quest flags must not count as active threats");
+}
+
+pub(crate) fn world_map_campaign_headers_refresh_on_show(env: &WowLuaEnv) {
+    env.exec(
+        r#"
+        QuestMapFrame.initialCampaignHeadersUpdate = nil
+        QuestMapFrame_OnShow(QuestMapFrame)
+        assert(QuestMapFrame.initialCampaignHeadersUpdate == true)
+        assert(select('#', C_QuestLog.UpdateCampaignHeaders()) == 0)
+    "#,
+    )
+    .expect("original quest map show must refresh campaign headers");
+}
+
+pub(crate) fn world_map_party_quest_counts_follow_membership(env: &WowLuaEnv) {
+    let quest_id = env.state().borrow().quest_log_entries.entries[0].quest_id;
+    {
+        let mut state = env.state().borrow_mut();
+        state.party_group_active = true;
+        assert!(!state.party_members.is_empty());
+        state.quest_log_entries.party_quest_ids.insert(
+            "Player-0000-00000002".to_string(),
+            [quest_id].into_iter().collect(),
+        );
+    }
+    env.exec(&format!(
+        r#"
+        assert(QuestUtils_GetNumPartyMembersOnQuest({quest_id}) == 1)
+        assert(C_QuestLog.IsUnitOnQuest('party1', {quest_id}) == true)
+        assert(C_QuestLog.IsUnitOnQuest('party1', -1) == false)
+        assert(C_QuestLog.IsUnitOnQuest('nobody', {quest_id}) == false)
+        assert(C_QuestLog.IsUnitOnQuest('player', {quest_id}) == true)
+    "#
+    ))
+    .expect("original quest utility must count supplied party quest membership");
+    env.state()
+        .borrow_mut()
+        .quest_log_entries
+        .party_quest_ids
+        .clear();
+    env.exec(&format!(
+        r#"
+        assert(QuestUtils_GetNumPartyMembersOnQuest({quest_id}) == 0)
+        assert(C_QuestLog.IsUnitOnQuest('party1', {quest_id}) == false)
+    "#
+    ))
+    .expect("removing supplied membership must update the original utility");
+}
+
 pub(crate) fn keybind_m_toggles_world_map_without_errors(env: &WowLuaEnv) {
     install_test_error_handler(&env);
 

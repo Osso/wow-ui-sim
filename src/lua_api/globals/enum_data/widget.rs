@@ -1,6 +1,7 @@
 //! UI Widget, Character, Store, and Animation enum data.
 
 use super::{EnumDef, SeqEnumDef};
+use crate::c_api::game_mode;
 
 // ============================================================================
 // Role & Character Enums
@@ -21,7 +22,11 @@ pub const UNIT_SEX: EnumDef = (
 
 pub const GAME_MODE: EnumDef = (
     "GameMode",
-    &[("Standard", 1), ("Plunderstorm", 2), ("WoWHack", 3)],
+    &[
+        ("Standard", game_mode::STANDARD),
+        ("Plunderstorm", game_mode::PLUNDERSTORM),
+        ("WoWHack", game_mode::WOWHACK),
+    ],
 );
 
 pub const PARTY_PLAYLIST_ENTRY: EnumDef = (

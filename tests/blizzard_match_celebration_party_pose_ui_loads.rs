@@ -185,11 +185,8 @@ fn blizzard_match_celebration_excluded_from_every_screen_auto_discovery() {
 }
 
 prefork_full_ui_case! {
-fn blizzard_match_celebration_loads_with_only_known_blizzard_source_bug(env: &WowLuaEnv) {
+fn blizzard_match_celebration_loads_without_addon_errors(env: &WowLuaEnv) {
     load_match_celebration_party_pose_ui_with_dependency(env);
-
-    let known_self_leave_button_bug =
-        "Blizzard_PartyPoseUI.lua:452: attempt to index local 'button' (a nil value)";
 
     let unexpected_errors: Vec<String> = env
         .state()
@@ -197,49 +194,29 @@ fn blizzard_match_celebration_loads_with_only_known_blizzard_source_bug(env: &Wo
         .lua_errors
         .iter()
         .filter(|message| {
-            (message.contains("Blizzard_MatchCelebrationPartyPoseUI")
+            message.contains("Blizzard_MatchCelebrationPartyPoseUI")
                 || message.contains("MatchCelebrationPartyPoseMixin")
                 || message.contains("MatchCelebrationPartyPoseFrame")
-                || message.contains("MatchCelebrationExtraButtonMixin"))
-                && !message.contains(known_self_leave_button_bug)
+                || message.contains("MatchCelebrationExtraButtonMixin")
         })
         .cloned()
         .collect();
     assert!(
         unexpected_errors.is_empty(),
-        "Blizzard_MatchCelebrationPartyPoseUI emitted unexpected addon-specific Lua errors \
-         during load (the `self.LeaveButton` bug at PartyPoseUI.lua:452 is documented \
-         separately):\n  {}",
+        "Blizzard_MatchCelebrationPartyPoseUI emitted addon-specific Lua errors during load:\n  {}",
         unexpected_errors.join("\n  ")
     );
 }
 }
 
 prefork_full_ui_case! {
-fn blizzard_match_celebration_onload_emits_known_self_leave_button_bug(env: &WowLuaEnv) {
+fn blizzard_match_celebration_onload_installs_leave_button_handler(env: &WowLuaEnv) {
     load_match_celebration_party_pose_ui_with_dependency(env);
 
-    let bug_message = "Blizzard_PartyPoseUI.lua:452: attempt to index local 'button' (a nil value)";
-
-    let bug_present = env.state().borrow().lua_errors.iter().any(|message| {
-        message.contains("MatchCelebrationPartyPoseFrame") && message.contains(bug_message)
-    });
-    assert!(
-        bug_present,
-        "MatchCelebrationPartyPoseFrame OnLoad must emit the known Blizzard-source bug — \
-         MatchCelebrationPartyPoseMixin:OnLoad (Blizzard_MatchCelebrationPartyPoseUI.lua:5) \
-         calls `PartyPoseUtil.AddDismissClickHandler(self.LeaveButton, self)`, but \
-         self.LeaveButton is nil because the XML places the LeaveButton at \
-         `MatchCelebrationPartyPoseFrame.ButtonContainer.LeaveButton` (xml:45-50, nested inside \
-         the ButtonContainer HorizontalLayoutFrame), not at `MatchCelebrationPartyPoseFrame.\
-         LeaveButton`. The AddDismissClickHandler helper at PartyPoseUI.lua:447-453 then tries \
-         `button:SetScript(\"OnClick\", ...)` on the nil and crashes with `attempt to index \
-         local 'button' (a nil value)`. This inconsistency persists in upstream Blizzard \
-         source: the LoadPartyPose override (lua:25) correctly uses \
-         `self.ButtonContainer.LeaveButton`, but the OnLoad uses `self.LeaveButton`. The \
-         simulator preserves the bug verbatim — fixing it would diverge from Blizzard's actual \
-         behavior"
-    );
+    let handler: String = env
+        .eval("return type(MatchCelebrationPartyPoseFrame.ButtonContainer.LeaveButton:GetScript('OnClick'))")
+        .expect("leave button handler probe should succeed");
+    assert_eq!(handler, "function", "OnLoad installs the leave button click handler");
 }
 }
 

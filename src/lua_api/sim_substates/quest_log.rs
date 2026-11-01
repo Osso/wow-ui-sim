@@ -92,6 +92,16 @@ pub struct QuestRewardCurrency {
     pub base_reward_amount: Option<i32>,
 }
 
+/// Supplied bounty presentation for one bounty-set member.
+#[derive(Debug, Clone)]
+pub struct QuestBounty {
+    pub quest_id: i32,
+    pub faction_id: i32,
+    pub icon: Option<i32>,
+    pub num_objectives: i32,
+    pub turnin_requirement_text: Option<String>,
+}
+
 /// Backing state for `C_QuestLog.*` probes.
 #[derive(Debug, Clone, Default)]
 pub struct QuestLogState {
@@ -108,6 +118,12 @@ pub struct QuestLogState {
     pub abandon_classification_flags: HashMap<i32, u32>,
     /// Supplied result of the unknown flag-2048 condition.
     pub abandon_conditional_blocked: HashMap<i32, bool>,
+    /// Supplied native-style flags for entries in the current quest log.
+    pub threat_entry_flags: HashMap<i32, u16>,
+    /// Supplied bounties keyed by the existing bounty-set membership model.
+    pub bounties_by_set: HashMap<i32, Vec<QuestBounty>>,
+    /// Supplied active quest IDs keyed by represented party-member GUID.
+    pub party_quest_ids: HashMap<String, HashSet<i32>>,
     pub additional_highlights: HashMap<i32, crate::c_api::c_quest_log::QuestAdditionalHighlights>,
     /// Build-12340 manual append order; IDs survive row reorder until log refresh.
     #[cfg(feature = "client-wrath")]
@@ -207,6 +223,9 @@ impl QuestLogState {
         Self {
             campaign_ids: HashMap::new(),
             campaign_chapter_ids: HashMap::new(),
+            threat_entry_flags: HashMap::new(),
+            bounties_by_set: HashMap::new(),
+            party_quest_ids: HashMap::new(),
             entries: vec![
                 lost_expedition_entry(),
                 defending_the_gates_entry(),

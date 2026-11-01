@@ -463,6 +463,7 @@ macro_rules! build_empty_sim_state {
             game_clock: GameClock::default(),
             store_frame_shown: false,
             timerunning_season_id: None,
+            active_timerunning_season_id: 0,
             timerunning_season_seconds_remaining: 0,
             modifier_keys: ModifierKeys::default(),
             pressed_keys: HashSet::new(),
@@ -823,10 +824,11 @@ pub use super::sim_substates::{
     FactionEntry, GameClock, GameRuleValue, GameRulesState, GardenwealdState, GossipOption,
     GossipQuestRow, GossipState, Keybindings, LfgListCounts, LootMethodState, MessageLogEntry,
     MetaPowerEntry, ModifierKeys, MouseButtons, NetStats, PetBattlePet, PetBattleState, PetState,
-    QuestLogEntry, QuestLogState, QuestRewardCurrency, QuestRewardItem, QuestRewardSpell,
-    RelicSlotInfo, SelectedArtifact, TorghastState, TradeState, ViewedArtifactState, VoiceChannel,
-    VoiceChatState, VoiceMember, WowLabsAreaInfo, WowLabsCircleInfo, WowLabsDataManagerState,
-    WowLabsMatchmakingState, WowLabsPartyInvite, WowLabsPartyMember, WowLabsPoint, WowLabsState,
+    QuestBounty, QuestLogEntry, QuestLogState, QuestRewardCurrency, QuestRewardItem,
+    QuestRewardSpell, RelicSlotInfo, SelectedArtifact, TorghastState, TradeState,
+    ViewedArtifactState, VoiceChannel, VoiceChatState, VoiceMember, WowLabsAreaInfo,
+    WowLabsCircleInfo, WowLabsDataManagerState, WowLabsMatchmakingState, WowLabsPartyInvite,
+    WowLabsPartyMember, WowLabsPoint, WowLabsState,
 };
 
 #[derive(Default)]

@@ -182,6 +182,26 @@ const BYTECODE_FIXTURE_CASES: &[Case<BytecodeFixtureState>] = &[Case::new(
 #[cfg(feature = "client-retail")]
 const MANUAL_FULL_UI_CASES: &[Case<WowLuaEnv>] = &[
     Case::new(
+        "test_keybindings_panels_detail::world_map_campaign_headers_refresh_on_show",
+        test_keybindings_panels_detail::world_map_campaign_headers_refresh_on_show,
+    ),
+    Case::new(
+        "test_keybindings_panels_detail::world_map_party_quest_counts_follow_membership",
+        test_keybindings_panels_detail::world_map_party_quest_counts_follow_membership,
+    ),
+    Case::new(
+        "test_keybindings_panels_detail::world_map_tracking_defaults_follow_filter_masks",
+        test_keybindings_panels_detail::world_map_tracking_defaults_follow_filter_masks,
+    ),
+    Case::new(
+        "test_keybindings_panels_detail::world_map_bounty_board_reads_supplied_bounties",
+        test_keybindings_panels_detail::world_map_bounty_board_reads_supplied_bounties,
+    ),
+    Case::new(
+        "test_keybindings_panels_detail::world_map_threat_frame_reads_quest_log_flags",
+        test_keybindings_panels_detail::world_map_threat_frame_reads_quest_log_flags,
+    ),
+    Case::new(
         "test_keybindings_panels_detail::keybind_m_opens_world_map",
         test_keybindings_panels_detail::keybind_m_opens_world_map,
     ),
@@ -1211,7 +1231,7 @@ fn generated_registry_lists_post_start_housing_batch(state: &ConformanceState) {
         ("blizzard_housing_house_finder_loads::", 20),
         ("blizzard_house_editor_loads::", 14),
         ("blizzard_house_list_loads::", 10),
-        ("blizzard_housing_charter_loads::", 13),
+        ("blizzard_housing_charter_loads::", 14),
         ("blizzard_housing_controls_loads::", 12),
         ("blizzard_housing_cornerstone_loads::", 20),
         ("blizzard_housing_inspect_mode_ui_loads::", 8),
@@ -1246,7 +1266,7 @@ fn generated_registry_lists_post_start_housing_batch(state: &ConformanceState) {
         );
         total += actual_count;
     }
-    assert_eq!(total, 190);
+    assert_eq!(total, 191);
 }
 
 #[cfg(feature = "client-retail")]

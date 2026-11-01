@@ -64,9 +64,8 @@ const VIRTUAL_TEMPLATES_NOT_IN_GLOBALS: &[&str] = &[
 ];
 
 fn auction_house_ui_toc() -> PathBuf {
-    blizzard_ui_dir()
-        .join("Blizzard_AuctionHouseUI")
-        .join("Blizzard_AuctionHouseUI_Mainline.toc")
+    find_toc_file(&blizzard_ui_dir().join("Blizzard_AuctionHouseUI"))
+        .expect("Blizzard_AuctionHouseUI TOC should resolve")
 }
 
 fn professions_templates_toc() -> PathBuf {
@@ -128,7 +127,7 @@ fn load_customer_orders_with_deps(env: &WowLuaEnv) {
     load_addon(&env.loader_env(), &professions_templates_toc())
         .expect("Blizzard_ProfessionsTemplates loads cleanly");
     load_addon(&env.loader_env(), &auction_house_ui_toc())
-        .expect("Blizzard_AuctionHouseUI (Mainline) loads cleanly");
+        .expect("Blizzard_AuctionHouseUI loads cleanly");
     load_addon(&env.loader_env(), &customer_orders_toc())
         .expect("Blizzard_ProfessionsCustomerOrders loads cleanly");
 }

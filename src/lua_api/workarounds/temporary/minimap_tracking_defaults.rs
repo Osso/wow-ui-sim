@@ -4,6 +4,9 @@
 //! remain on Minimap frames; these namespace-level defaults stay explicit here
 //! until real minimap tracking state exists.
 
+/// Retail build 70688 initialized tracking-default mask.
+pub(crate) const RETAIL_TRACKING_DEFAULT_MASK: u32 = 0x2f5aef;
+
 const MINIMAP_TRACKING_DEFAULTS_LUA: &str = r#"
 C_Minimap = C_Minimap or __wow_namespace()
 
