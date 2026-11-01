@@ -206,6 +206,21 @@ fn blizzard_housing_market_cart_loads_without_addon_specific_lua_errors(env: &Wo
 }
 
 prefork_full_ui_case! {
+fn blizzard_housing_market_cart_formats_numeric_prices(env: &WowLuaEnv) {
+    load_housing_market_cart_with_dependency(env);
+    let result: bool = env.eval(r#"
+        local price, sale = HousingMarketCartPriceMixin:GetPriceText(120, 75, 200)
+        local regular, noSale = HousingMarketCartPriceMixin:GetPriceText(42, nil, 200)
+        return price == '|c' .. GRAY_FONT_COLOR:GenerateHexColor() .. '120|r'
+            and sale == '|c' .. GREEN_FONT_COLOR:GenerateHexColor() .. '75|r'
+            and regular == '|c' .. WHITE_FONT_COLOR:GenerateHexColor() .. '42|r'
+            and noSale == ''
+    "#).expect("housing cart formats numeric prices");
+    assert!(result);
+}
+}
+
+prefork_full_ui_case! {
 fn blizzard_housing_market_cart_is_addon_loaded_via_explicit_lod_call(env: &WowLuaEnv) {
     load_housing_market_cart_with_dependency(env);
     let loaded: bool = env
