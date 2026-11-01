@@ -507,6 +507,12 @@ fn first_draw_at_actual_canvas_size_rebuilds_resize_dependent_hover_rects() {
         ));
     }
     assert!(app.gui_startup_complete.get(), "GUI startup must complete");
+    let _primitive = <&crate::iced_app::App as Program<crate::iced_app::Message>>::draw(
+        &&app,
+        &(),
+        iced::mouse::Cursor::Unavailable,
+        iced::Rectangle::new(iced::Point::ORIGIN, actual_canvas_size),
+    );
 
     let resized_center = {
         let env = app.env.borrow();
