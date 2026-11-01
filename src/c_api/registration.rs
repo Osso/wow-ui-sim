@@ -142,6 +142,9 @@ pub(crate) fn register_interaction_tables(state: &mut LuaState) -> LuaResult<()>
     #[cfg(feature = "retail-12-1-0")]
     c_browser::register_c_browser_surface(state)?;
     super::c_sound::register(state)?;
+    if crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Wrath {
+        super::c_mac_options::register(state)?;
+    }
     c_player_interaction_manager::register_c_player_interaction_manager_surface(state)
 }
 
