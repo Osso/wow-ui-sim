@@ -2,7 +2,7 @@
 //!
 //! Trader's Tender vendor/catalog state is not modeled yet. These defaults keep
 //! Trading Post and Monthly Activities startup paths well-typed until real
-//! catalog, currency, category, and pending reward state exists.
+//! catalog, currency, and pending reward state exists.
 
 const PERKS_PROGRAM_DEFAULTS_LUA: &str = r#"
 C_PerksProgram = C_PerksProgram or __wow_namespace()
@@ -10,17 +10,6 @@ C_PerksProgram = C_PerksProgram or __wow_namespace()
 if rawget(C_PerksProgram, "GetAvailableVendorItemIDs") == nil then
     function C_PerksProgram.GetAvailableVendorItemIDs()
         return {}
-    end
-end
-
-if rawget(C_PerksProgram, "GetAvailableCategoryIDs") == nil then
-    function C_PerksProgram.GetAvailableCategoryIDs()
-        return {}
-    end
-end
-
-if rawget(C_PerksProgram, "GetCategoryInfo") == nil then
-    function C_PerksProgram.GetCategoryInfo(_categoryID)
     end
 end
 
@@ -55,17 +44,14 @@ mod tests {
     fn installs_perks_program_empty_catalog_defaults() {
         let env = WowLuaEnv::new().expect("lua env should initialize");
 
-        let result: (i32, i32, i32, i32, String, i32, bool) = env
+        let result: (i32, i32, String, i32, bool) = env
             .eval(
                 r##"
                 local vendorItems = C_PerksProgram.GetAvailableVendorItemIDs()
-                local categories = C_PerksProgram.GetAvailableCategoryIDs()
                 local rewards = C_PerksProgram.GetPendingChestRewards()
                 local requestOK = pcall(C_PerksProgram.RequestPendingChestRewards)
                 return #vendorItems,
-                       #categories,
                        C_PerksProgram.GetCurrencyAmount(),
-                       select("#", C_PerksProgram.GetCategoryInfo(1)),
                        type(rewards),
                        #rewards,
                        requestOK
@@ -73,7 +59,7 @@ mod tests {
             )
             .expect("perks program defaults should be callable");
 
-        assert_eq!(result, (0, 0, 0, 0, "table".to_string(), 0, true));
+        assert_eq!(result, (0, 0, "table".to_string(), 0, true));
     }
 
     #[test]
