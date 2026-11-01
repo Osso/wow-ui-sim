@@ -4,9 +4,9 @@
 
 ## What it must do
 
-- [ ] The initial simulator scenario returns `Enum.GameMode.Standard`.
-- [ ] A supplied Plunderstorm mode returns `Enum.GameMode.Plunderstorm` and makes `C_GameRules.IsPlunderstorm()` true.
-- [ ] A supplied Standard mode returns `Enum.GameMode.Standard` and makes `C_GameRules.IsPlunderstorm()` false.
+- [x] The initial simulator scenario returns `Enum.GameMode.Standard`.
+- [x] A supplied Plunderstorm mode returns `Enum.GameMode.Plunderstorm` and makes `C_GameRules.IsPlunderstorm()` true.
+- [x] A supplied Standard mode returns `Enum.GameMode.Standard` and makes `C_GameRules.IsPlunderstorm()` false.
 
 ## How it works
 

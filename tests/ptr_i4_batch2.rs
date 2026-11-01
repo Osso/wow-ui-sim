@@ -207,28 +207,30 @@ fn micro_menu_onload_consumes_supplied_wowhack_mode() {
             .eval::<i32>(&format!("return Enum.GameMode.{mode}"))
             .unwrap();
         env.state().borrow_mut().game_rules.active_game_mode = mode_id;
-        // Original OnLoad -> InitializeButtons -> GameRulesUtil.lua:207.
+        // PTR's original refresh removes obsolete buttons as the mode changes.
         env.exec("MicroMenu:OnLoad()").unwrap();
         assert_boolean_query_shape(&env, "IsWoWHack");
-        let separated = mode == "WoWHack";
+        let wowhack = mode == "WoWHack";
+        assert_eq!(env.eval::<bool>("return C_GameRules.IsWoWHack()").unwrap(), wowhack);
+        // The pinned Retail override always uses PlayerSpells; PTR selects separate buttons.
+        let separated = ACTIVE == ClientProfile::Ptr && wowhack;
         assert_eq!(
-            env.eval::<bool>("return tContains(MicroMenu.addedButtons, PlayerSpellsMicroButton)")
+            env.eval::<bool>("return PlayerSpellsMicroButton:GetParent() == MicroMenu and type(PlayerSpellsMicroButton.layoutIndex) == 'number'")
                 .unwrap(),
-            !separated
+            !separated,
+            "{mode}: PlayerSpellsMicroButton"
         );
-        for button in [
-            "SpellbookMicroButton",
-            "TalentMicroButton",
-            "ScribeMicroButton",
-        ] {
-            assert_eq!(
-                env.eval::<bool>(&format!(
-                    "return tContains(MicroMenu.addedButtons, {button})"
-                ))
-                .unwrap(),
-                separated,
-                "{mode}: {button}"
-            );
+        if ACTIVE == ClientProfile::Ptr {
+            for button in ["SpellbookMicroButton", "TalentMicroButton", "ScribeMicroButton"] {
+                assert_eq!(
+                    env.eval::<bool>(&format!(
+                        "return {button}:GetParent() == MicroMenu and type({button}.layoutIndex) == 'number'"
+                    ))
+                    .unwrap(),
+                    separated,
+                    "{mode}: {button}"
+                );
+            }
         }
     }
     let other = WowLuaEnv::new().unwrap();
