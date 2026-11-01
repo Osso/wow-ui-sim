@@ -25,7 +25,7 @@ fn patch_12_0_1_death_recap_maximum_is_a_death_snapshot() {
         let mut sim = state.borrow_mut();
         for (recap_id, max_health) in [(41, 10000), (42, 25000)] {
             sim.death_recaps.push(wow_ui_sim::lua_api::state::DeathRecapEntry {
-                recap_id, max_health, zone_name: "Raid".into(), killing_blows: vec![],
+                recap_id, default_eligible: true, events: vec![], max_health, zone_name: "Raid".into(), killing_blows: vec![],
             });
         }
         sim.player.health_max = 99000;

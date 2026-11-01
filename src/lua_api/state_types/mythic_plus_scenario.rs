@@ -191,6 +191,15 @@ pub struct KillingBlowInfo {
     pub is_overkill: bool,
 }
 
+/// One host-supplied death recap event.
+#[derive(Debug, Clone)]
+pub struct DeathRecapEventInfo {
+    pub current_hp: u64,
+    pub amount: Option<i64>,
+    pub timestamp: Option<f64>,
+    pub source_guid: Option<String>,
+}
+
 /// One death event on the `SimState.death_recaps` list. Each entry
 /// represents a single death and carries zero or more killing blows.
 /// Drives `C_DeathRecap.GetKillingBlows` (blows for the most recent
@@ -200,6 +209,10 @@ pub struct DeathRecapEntry {
     /// Internal recap id — mirrors the `recapID` concept used by
     /// `C_DeathRecap.GetRecapEvents`; 1-based.
     pub recap_id: u32,
+    /// Whether the host marks this recap eligible for the default lookup.
+    pub default_eligible: bool,
+    /// Host-supplied events in recap order.
+    pub events: Vec<DeathRecapEventInfo>,
     /// Host snapshot of maximum health at death, not current player health.
     pub max_health: u64,
     /// Zone / encounter name where the player died (informational).

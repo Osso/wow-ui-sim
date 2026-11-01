@@ -10,6 +10,8 @@ fn env() -> WowLuaEnv {
 fn sample_death_recap() -> DeathRecapEntry {
     DeathRecapEntry {
         recap_id: 1,
+        default_eligible: true,
+        events: vec![],
         max_health: 100000,
         zone_name: "Icecrown Citadel".into(),
         killing_blows: vec![
@@ -115,6 +117,8 @@ fn get_killing_blows_reflects_most_recent_death() {
         // First death with 1 blow
         state.death_recaps.push(DeathRecapEntry {
             recap_id: 1,
+            default_eligible: true,
+            events: vec![],
             max_health: 10000,
             zone_name: "Stormwind".into(),
             killing_blows: vec![KillingBlowInfo {
@@ -128,6 +132,8 @@ fn get_killing_blows_reflects_most_recent_death() {
         // Second (most recent) death with 3 blows
         state.death_recaps.push(DeathRecapEntry {
             recap_id: 2,
+            default_eligible: true,
+            events: vec![],
             max_health: 20000,
             zone_name: "Orgrimmar".into(),
             killing_blows: vec![

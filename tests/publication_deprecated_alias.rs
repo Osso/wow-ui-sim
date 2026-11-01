@@ -6,6 +6,41 @@ use wow_ui_sim::lua_api::WowLuaEnv;
 mod sweep;
 
 prefork_full_ui_case! {
+fn death_recap_deprecated_alias_reads_supplied_events(env: &WowLuaEnv) {
+    use wow_ui_sim::lua_api::state::{DeathRecapEntry, DeathRecapEventInfo};
+
+    {
+        let state = env.state();
+        let mut sim = state.borrow_mut();
+        sim.death_recaps.clear();
+        for (id, hp, amount, eligible) in [(11, 80, 20, true), (22, 45, 55, false)] {
+            sim.death_recaps.push(DeathRecapEntry {
+                recap_id: id,
+                default_eligible: eligible,
+                events: vec![DeathRecapEventInfo {
+                    current_hp: hp,
+                    amount: Some(amount),
+                    timestamp: Some(id as f64),
+                    source_guid: None,
+                }],
+                max_health: 100,
+                zone_name: "fixture".into(),
+                killing_blows: vec![],
+            });
+        }
+    }
+    env.exec(r#"
+        assert(DeathRecap_GetEvents == C_DeathRecap.GetRecapEvents)
+        assert(select('#', DeathRecap_GetEvents(-1)) == 0)
+        assert(DeathRecap_GetEvents()[1].currentHP == 80)
+        assert(DeathRecap_GetEvents(11)[1].amount == 20)
+        assert(DeathRecap_GetEvents(22)[1].currentHP == 45)
+        assert(DeathRecap_GetEvents(22)[1].amount == 55)
+    "#).unwrap();
+}
+}
+
+prefork_full_ui_case! {
 fn deprecated_alias_attribution_requires_loaded_publisher_and_exact_identity(env: &WowLuaEnv) {
     let empty = wow_ui_sim::lua_api::WowLuaEnv::new().unwrap();
     assert!(sweep::read_deprecated_aliases(&empty).is_empty());
