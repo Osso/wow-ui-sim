@@ -21,7 +21,7 @@ pub const KNOWN_ERRORS: &[(&str, usize)] = &[
     ("Blizzard_Channels", 2),
     ("Blizzard_CharacterCreate", 1),
     ("Blizzard_CharacterCustomize", 2),
-    ("Blizzard_ClickBindingUI", 4),
+    ("Blizzard_ClickBindingUI", 0),
     ("Blizzard_Collections", 6),
     ("Blizzard_CombatLog", 1),
     ("Blizzard_CombatText", 2),

@@ -11,7 +11,8 @@ use std::collections::{BTreeMap, BTreeSet, HashSet};
 use std::path::PathBuf;
 use wow_ui_sim::blizzard_ui_sync::manifest_entries;
 use wow_ui_sim::loader::{
-    discover_all_blizzard_addons, discover_blizzard_addon_closure_for_screen, load_addon,
+    discover_all_blizzard_addons, discover_blizzard_addon_closure_for_screen,
+    discover_blizzard_startup_addons_for_screen, load_addon, load_startup_addon,
 };
 use wow_ui_sim::lua_api::WowLuaEnv;
 use wow_ui_sim::lua_errors::grouped_errors_by_addon;
@@ -307,6 +308,13 @@ fn load_panel_harness_blizzard_ui(env: &WowLuaEnv) -> HashSet<String> {
     closure.into_iter().map(|(name, _)| name).collect()
 }
 
+fn load_force_load_startup(env: &WowLuaEnv) {
+    for addon in discover_blizzard_startup_addons_for_screen(&blizzard_ui_dir(), ScreenKind::Game) {
+        load_startup_addon(&env.loader_env(), &addon.toc_path, addon.kind, None)
+            .unwrap_or_else(|error| panic!("{} startup load failed: {error}", addon.name));
+    }
+}
+
 #[cfg(feature = "client-retail")]
 #[test]
 fn force_load_click_binding_runs_macro_bootstrap_first() {
@@ -314,6 +322,7 @@ fn force_load_click_binding_runs_macro_bootstrap_first() {
     env.state().borrow_mut().addon_base_paths = vec![blizzard_ui_dir()];
     reset_template_state();
     common::load_profile_framexml(&env);
+    load_force_load_startup(&env);
     for (name, toc) in discover_all_blizzard_addons(&blizzard_ui_dir()) {
         load_addon(&env.loader_env(), &toc).expect("force-load Blizzard addon");
         if name == "Blizzard_ClickBindingUI" {
@@ -342,6 +351,8 @@ fn all_blizzard_addon_load_errors_are_tracked_per_addon_name() {
                 load_addon(&env.loader_env(), &toc)
                     .expect("profile FrameXML should load before addons");
             }
+
+            load_force_load_startup(&env);
 
             let cached_addon_roots = cached_blizzard_addon_roots();
             let manifest_addon_roots = active_manifest_blizzard_addon_roots();
