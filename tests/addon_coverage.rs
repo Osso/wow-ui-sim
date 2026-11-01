@@ -453,6 +453,55 @@ fn wardrobe_latest_appearance_tracks_collections() {
     assert!(ok);
 }
 
+#[cfg(feature = "client-retail")]
+#[test]
+fn map_click_to_zoom_uses_best_guess_help_text_position() {
+    let env = WowLuaEnv::new().expect("create Lua environment");
+    env.state().borrow_mut().addon_base_paths = vec![blizzard_ui_dir()];
+    reset_template_state();
+    common::load_profile_framexml(&env);
+    load_force_load_startup(&env);
+    let (_, toc) = force_load_game_addons()
+        .into_iter()
+        .find(|(name, _)| name == "Blizzard_SharedMapDataProviders")
+        .expect("map data providers are eligible for the Game screen");
+    load_addon(&env.loader_env(), &toc).expect("load map data providers");
+    let ok: bool = env.eval(r#"
+        local mapID = 84
+        local provider = setmetatable({GetMap=function()
+            return {GetMapID=function() return mapID end}
+        end}, {__index=ClickToZoomDataProviderMixin})
+        local first = provider:GetClickToZoomStyle()
+        mapID = 2022
+        local second = provider:GetClickToZoomStyle()
+        mapID = nil
+        return first == Enum.MapCanvasPosition.BottomRight
+            and second == Enum.MapCanvasPosition.BottomRight
+            and provider:GetClickToZoomStyle() == first
+    "#).expect("map consumer selects the help-text position");
+    assert!(ok);
+    assert!(env.exec("C_Map.GetMapArtHelpTextPosition('invalid')").is_err());
+}
+
+#[cfg(feature = "client-retail")]
+#[test]
+fn commentator_camera_presets_accept_two_numeric_speeds() {
+    let env = WowLuaEnv::new().expect("create Lua environment");
+    env.state().borrow_mut().addon_base_paths = vec![blizzard_ui_dir()];
+    reset_template_state();
+    common::load_profile_framexml(&env);
+    load_force_load_startup(&env);
+    let (_, toc) = force_load_game_addons()
+        .into_iter()
+        .find(|(name, _)| name == "Blizzard_Commentator")
+        .expect("Commentator is eligible for the Game screen");
+    load_addon(&env.loader_env(), &toc).expect("load Commentator");
+    env.exec("SetFollowCameraTransitionPreset(1); SetFollowCameraTransitionPreset(2)")
+        .expect("Commentator applies both camera presets");
+    assert!(env.exec("C_Commentator.SetFollowCameraSpeeds('bad', 20)").is_err());
+    assert!(env.exec("C_Commentator.SetFollowCameraSpeeds(0.05, 'bad')").is_err());
+}
+
 #[test]
 fn all_blizzard_addon_load_errors_are_tracked_per_addon_name() {
     common::with_perf_lock(|| {
