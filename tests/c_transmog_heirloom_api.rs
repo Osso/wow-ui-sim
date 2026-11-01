@@ -161,12 +161,20 @@ fn test_transmog_uncollected_returns_false() {
 }
 
 #[test]
-fn test_transmog_collection_get_item_info_nil() {
+fn test_transmog_collection_get_item_info_resolves_item_appearance() {
     let env = env();
-    let is_nil: bool = env
-        .eval("return C_TransmogCollection.GetItemInfo(1) == nil")
+    env.exec("A_Admin.AddTransmogAppearance(9001, 4, 123456)").unwrap();
+    let result: String = env
+        .eval(
+            r##"
+            local visual, source = C_TransmogCollection.GetItemInfo("|cffffffff|Hitem:123456::::|h[Test]|h|r")
+            local info = C_TransmogCollection.GetSourceInfo(source)
+            return string.format("%s:%d:%d|%d", tostring(visual == info.visualID), source,
+                info.itemID, select("#", C_TransmogCollection.GetItemInfo(424242)))
+            "##,
+        )
         .unwrap();
-    assert!(is_nil);
+    assert_eq!(result, "true:9001:123456|0");
 }
 
 #[test]

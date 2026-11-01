@@ -22,6 +22,7 @@ const APPEARANCE_QUERY_FUNCTIONS: &[StaticFunction] = &[
         get_valid_appearance_sources_for_class,
     ),
     ("GetSourceInfo", get_source_info),
+    ("GetItemInfo", get_item_info),
     ("PlayerHasTransmog", player_has_transmog),
     (
         "PlayerHasTransmogByItemInfo",
@@ -249,6 +250,27 @@ fn player_has_transmog_by_item_info(state: &mut LuaState) -> LuaResult<u32> {
     };
     state.push(Val::Bool(has_collected_transmog(state, item_id as i32)));
     Ok(1)
+}
+
+/// `GetItemInfo(itemInfo)` -> `itemAppearanceID, itemModifiedAppearanceID` for the
+/// item's base (lowest modifier) appearance; returns nothing for items without one.
+fn get_item_info(state: &mut LuaState) -> LuaResult<u32> {
+    let Some(item_id) = parse_item_id_from_val(state, stack_val(state, 1)) else {
+        return Ok(0);
+    };
+    let appearance = borrow_state(state)?
+        .world
+        .transmog_appearances
+        .iter()
+        .filter(|appearance| appearance.item_id == item_id as i32)
+        .min_by_key(|appearance| appearance.item_mod_id)
+        .map(|appearance| (appearance.visual_id, appearance.source_id));
+    let Some((visual_id, source_id)) = appearance else {
+        return Ok(0);
+    };
+    state.push(Val::Num(f64::from(visual_id)));
+    state.push(Val::Num(f64::from(source_id)));
+    Ok(2)
 }
 
 fn player_has_transmog_item_modified_appearance(state: &mut LuaState) -> LuaResult<u32> {
