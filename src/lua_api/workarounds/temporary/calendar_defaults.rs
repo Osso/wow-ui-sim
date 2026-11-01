@@ -114,12 +114,20 @@ mod tests {
     #[test]
     fn installs_empty_calendar_defaults() {
         let env = WowLuaEnv::new().expect("lua env should initialize");
+        let month: (i32, i32) = env
+            .eval("local m = C_Calendar.GetMonthInfo(0); return m.month, m.year")
+            .unwrap();
+        let expected =
+            if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
+                (4, 2026)
+            } else {
+                (1, 2024)
+            };
+        assert_eq!(month, expected);
 
         let result: String = env
             .eval(
                 r#"
-                local month = C_Calendar.GetMonthInfo(0)
-                if month.month ~= 1 or month.year ~= 2024 then return "month" end
                 local filter = C_Calendar.GetDefaultGuildFilter()
                 if filter.minLevel ~= 1 then return "filter-min" end
                 if filter.maxLevel ~= GetMaxLevelForLatestExpansion() then return "filter-max" end

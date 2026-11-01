@@ -1,4 +1,6 @@
 //! Host-supplied Calendar day records and synthetic event-index relations.
+pub(crate) mod civil;
+mod club;
 mod day_event_projection;
 mod day_event_queries;
 pub mod day_event_record;
@@ -64,6 +66,10 @@ pub(crate) fn seeded_event_indices() -> HashMap<i32, CalendarEventIndexInfo> {
 
 pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
     let namespace = ensure_namespace(state, "C_Calendar")?;
+    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
+        civil::register(state, namespace)?;
+        club::register(state, namespace)?;
+    }
     table_set_rust_fn_static(
         state,
         namespace,

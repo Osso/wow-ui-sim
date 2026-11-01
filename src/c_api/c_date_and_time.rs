@@ -22,6 +22,20 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
     let namespace = ensure_namespace(state, "C_DateAndTime")?;
     table_set_rust_fn_static(
         state,
+        state.global,
+        "__wow_current_calendar_time",
+        crate::c_api::c_calendar::civil::current_calendar_time,
+    )?;
+    if crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Wrath {
+        table_set_rust_fn_static(
+            state,
+            namespace,
+            "GetCurrentCalendarTime",
+            crate::c_api::c_calendar::civil::current_calendar_time,
+        )?;
+    }
+    table_set_rust_fn_static(
+        state,
         namespace,
         "CompareCalendarTime",
         compare_calendar_time,

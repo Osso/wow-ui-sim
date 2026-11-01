@@ -100,6 +100,32 @@ fn calendar_show_projects_supplied_civil_month(env: &WowLuaEnv) {
 }
 
 prefork_full_ui_case! {
+fn calendar_month_and_club_inputs_follow_supplied_state(env: &WowLuaEnv) {
+    use wow_ui_sim::c_api::c_calendar::CivilDateTime;
+    env.state().borrow_mut().calendar_now = CivilDateTime { year: 2026, month: 4, day: 14, hour: 12, minute: 0 };
+    env.exec(r#"
+        assert(select('#', C_Calendar.SetAbsMonth(13, 2000)) == 0)
+        local m = C_Calendar.GetMonthInfo(); assert(m.month == 1 and m.year == 2021 and m.numDays == 31)
+        C_Calendar.SetAbsMonth(0, 2035)
+        m = C_Calendar.GetMonthInfo(); assert(m.month == 2 and m.year == 2030 and m.numDays == 28)
+        local ok, err = pcall(C_Calendar.SetAbsMonth, nil, 2026)
+        assert(not ok and err:find('Usage: C_Calendar.SetAbsMonth', 1, true))
+        assert(select('#', C_Calendar.SetNextClubId(0)) == 0)
+        assert(C_Calendar.GetNextClubId() == 0 and C_Calendar.GetNextClubId() == 0)
+        C_Calendar.SetNextClubId(43.9); assert(C_Calendar.GetNextClubId() == 43)
+        C_Calendar.SetNextClubId('bad'); assert(C_Calendar.GetNextClubId() == 0)
+        assert(not pcall(C_Calendar.SetNextClubId, -1))
+        assert(not pcall(C_Calendar.SetNextClubId, 0/0))
+        assert(not pcall(C_Calendar.SetNextClubId, 9007199254740992))
+        assert(not pcall(C_Calendar.SetNextClubId, '0x0000000000000001'))
+        C_Calendar.SetNextClubId('0x0020000000000000')
+    "#).unwrap();
+    assert_eq!(env.state().borrow().calendar_next_club_id, Some(9_007_199_254_740_992));
+    env.exec("C_Calendar.SetNextClubId(); assert(C_Calendar.GetNextClubId() == nil)").unwrap();
+}
+}
+
+prefork_full_ui_case! {
 fn calendar_hide_clears_supplied_club_selection(env: &WowLuaEnv) {
     load_addon(&env.loader_env(), &calendar_toc()).unwrap();
     env.state().borrow_mut().calendar_next_club_id = Some(0);

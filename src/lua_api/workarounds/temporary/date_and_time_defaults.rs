@@ -6,30 +6,27 @@
 const DATE_AND_TIME_DEFAULTS_LUA: &str = r#"
 C_DateAndTime = C_DateAndTime or __wow_namespace()
 
-local BASE_YEAR = 2026
-local BASE_MONTH = 4
-local BASE_MONTH_DAY = 14
-local BASE_WEEKDAY = 3
-local BASE_HOUR = 12
 local MINUTES_PER_DAY = 24 * 60
 
 local function calendarTimeFromParts(monthDay, hour, minute)
+    local current = __wow_current_calendar_time()
     return {
-        year = BASE_YEAR,
-        month = BASE_MONTH,
+        year = current.year,
+        month = current.month,
         monthDay = monthDay,
-        weekday = BASE_WEEKDAY,
+        weekday = current.weekday,
         hour = hour,
         minute = minute,
     }
 end
 
 local function calendarTimeFromOffsets(dayOffset, minuteOffset)
-    local totalMinutes = BASE_HOUR * 60 + minuteOffset
+    local current = __wow_current_calendar_time()
+    local totalMinutes = current.hour * 60 + current.minute + minuteOffset
     local dayDelta = math.floor(totalMinutes / MINUTES_PER_DAY)
     local minuteOfDay = totalMinutes - dayDelta * MINUTES_PER_DAY
     return calendarTimeFromParts(
-        BASE_MONTH_DAY + dayOffset + dayDelta,
+        current.monthDay + dayOffset + dayDelta,
         math.floor(minuteOfDay / 60),
         minuteOfDay % 60
     )
@@ -44,17 +41,12 @@ local function numberField(tableValue, key, fallback)
 end
 
 local function calendarTimeArg(tableValue)
+    local current = __wow_current_calendar_time()
     return {
-        monthDay = numberField(tableValue, "monthDay", BASE_MONTH_DAY),
-        hour = numberField(tableValue, "hour", BASE_HOUR),
-        minute = numberField(tableValue, "minute", 0),
+        monthDay = numberField(tableValue, "monthDay", current.monthDay),
+        hour = numberField(tableValue, "hour", current.hour),
+        minute = numberField(tableValue, "minute", current.minute),
     }
-end
-
-if rawget(C_DateAndTime, "GetCurrentCalendarTime") == nil then
-    function C_DateAndTime.GetCurrentCalendarTime()
-        return calendarTimeFromOffsets(0, 0)
-    end
 end
 
 if rawget(C_DateAndTime, "GetServerTimeLocal") == nil then
@@ -131,7 +123,7 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
         -- Project the existing temporary namespace sources; do not seed UI fields.
         -- Retire with those defaults when supplied calendar state is implemented.
         function CalendarGetDate()
-            local date = C_DateAndTime.GetCurrentCalendarTime()
+            local date = __wow_current_calendar_time()
             return date.weekday, date.month, date.monthDay, date.year
         end
         function CalendarGetNumPendingInvites()
@@ -153,7 +145,7 @@ mod tests {
         let result: (i32, i32, i32, i32, i32, i32, i32, i32) = env
             .eval(
                 r#"
-                local current = C_DateAndTime.GetCurrentCalendarTime()
+                local current = __wow_current_calendar_time()
                 local serverTime = C_DateAndTime.GetServerTimeLocal()
                 local weeklyStart = C_DateAndTime.GetWeeklyResetStartTime()
                 return current.year,
@@ -178,7 +170,7 @@ mod tests {
         let result: (i32, i32, i32, i32, i32, i32, i32) = env
             .eval(
                 r#"
-                local base = C_DateAndTime.GetCurrentCalendarTime()
+                local base = __wow_current_calendar_time()
                 local previous = C_DateAndTime.AdjustTimeByMinutes(base, -13 * 60)
                 local next = C_DateAndTime.AdjustTimeByMinutes(base, 13 * 60)
                 local tomorrow = C_DateAndTime.AdjustTimeByDays(base, 1)
