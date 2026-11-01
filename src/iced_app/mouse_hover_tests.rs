@@ -497,6 +497,17 @@ fn first_draw_at_actual_canvas_size_rebuilds_resize_dependent_hover_rects() {
         iced::Rectangle::new(iced::Point::ORIGIN, actual_canvas_size),
     );
 
+    // Startup and resize processing moved from draw to update in 77eaac46d.
+    for _ in 0..200 {
+        if app.gui_startup_complete.get() {
+            break;
+        }
+        let _ = app.update(crate::iced_app::Message::ProcessTimers(
+            std::time::Instant::now(),
+        ));
+    }
+    assert!(app.gui_startup_complete.get(), "GUI startup must complete");
+
     let resized_center = {
         let env = app.env.borrow();
         let mut state = env.state().borrow_mut();
