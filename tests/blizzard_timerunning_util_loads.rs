@@ -360,7 +360,11 @@ fn icon_helpers_emit_atlas_markup_wrapping_text(env: &WowLuaEnv) {
 prefork_full_ui_case! {
 fn season_lookup_returns_classic_expansion_when_no_active_season(env: &WowLuaEnv) {
 
-    env.state().borrow_mut().active_timerunning_season_id = 0;
+    {
+        let mut state = env.state().borrow_mut();
+        state.active_timerunning_season_id = 0;
+        state.timerunning_season_id = Some(2);
+    }
     let probe = "return TimerunningUtil.GetTimerunningExpansion(), \
         TimerunningUtil.GetTimerunningChoiceDesc(), TimerunningUtil.GetTimerunningBannerHeaderText()";
 
