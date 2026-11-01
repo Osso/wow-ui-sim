@@ -35,16 +35,12 @@ fn icon_record(text: &str) -> IconAndTextRecord {
 fn seed_before_loading(env: &WowLuaEnv) {
     let mut state = env.state().borrow_mut();
     let inputs = &mut state.ui_widget_inputs;
-    inputs.top_center_widget_set_id = 417.0;
-    inputs.below_minimap_widget_set_id = 529.0;
-    inputs.power_bar_widget_set_id = 641.0;
-    inputs.objective_tracker_widget_set_id = 753.0;
-    // Synthetic supplied identities, not native HUD fixtures.
+    // Supplied records at the native HUD set IDs.
     for (set_id, widget_id, text) in [
-        (417.0, 760201.0, "Top supplied"),
-        (529.0, 760202.0, "Minimap supplied"),
-        (641.0, 760203.0, "Power supplied"),
-        (753.0, 760204.0, "Objective supplied"),
+        (1.0, 760201.0, "Top supplied"),
+        (2.0, 760202.0, "Minimap supplied"),
+        (283.0, 760203.0, "Power supplied"),
+        (240.0, 760204.0, "Objective supplied"),
     ] {
         inputs.sets.insert(
             WidgetId::from_number(set_id),
@@ -151,14 +147,14 @@ fn cached_standard_hud_onload_consumes_preseeded_selection_and_records() {
         wow_ui_sim::xml::register_intrinsic_templates();
         let env = WowLuaEnv::new().expect("failed to create Lua environment");
         seed_before_loading(&env);
-        assert_selection_queries(&env, [417, 529, 641, 753]);
         load_standard_containers(&env);
+        assert_selection_queries(&env, [1, 2, 283, 240]);
         env.exec(r#"
             local cases = {
-                {'UIWidgetTopCenterContainerFrame', 417, 760201, 'Top supplied'},
-                {'UIWidgetBelowMinimapContainerFrame', 529, 760202, 'Minimap supplied'},
-                {'UIWidgetPowerBarContainerFrame', 641, 760203, 'Power supplied'},
-                {'ObjectiveTrackerUIWidgetContainer', 753, 760204, 'Objective supplied'},
+                {'UIWidgetTopCenterContainerFrame', 1, 760201, 'Top supplied'},
+                {'UIWidgetBelowMinimapContainerFrame', 2, 760202, 'Minimap supplied'},
+                {'UIWidgetPowerBarContainerFrame', 283, 760203, 'Power supplied'},
+                {'ObjectiveTrackerUIWidgetContainer', 240, 760204, 'Objective supplied'},
             }
             for _, case in ipairs(cases) do
                 local container = assert(_G[case[1]], case[1] .. ' missing')
@@ -179,30 +175,29 @@ fn cached_standard_hud_onload_consumes_preseeded_selection_and_records() {
 }
 
 #[test]
-fn cached_standard_hud_default_zero_leaves_no_active_widget_set() {
+fn cached_standard_hud_does_not_register_without_set_records() {
     common::with_timeout(88, || {
         wow_ui_sim::xml::register_intrinsic_templates();
         let env = WowLuaEnv::new().expect("failed to create Lua environment");
-        // Preserve initialized state. No set0 or HUD records supplied.
-        assert_selection_queries(&env, [0, 0, 0, 0]);
+        // Preserve initialized state; no HUD records are supplied.
         load_standard_containers(&env);
+        assert_selection_queries(&env, [1, 2, 283, 240]);
         env.exec(
             r#"
             local names = {
-                'UIWidgetTopCenterContainerFrame',
-                'UIWidgetBelowMinimapContainerFrame',
-                'UIWidgetPowerBarContainerFrame',
-                'ObjectiveTrackerUIWidgetContainer',
+                {'UIWidgetTopCenterContainerFrame', 1},
+                {'UIWidgetBelowMinimapContainerFrame', 2},
+                {'UIWidgetPowerBarContainerFrame', 283},
+                {'ObjectiveTrackerUIWidgetContainer', 240},
             }
-            for _, name in ipairs(names) do
+            for _, item in ipairs(names) do
+                local name, setID = item[1], item[2]
                 local container = assert(_G[name], name .. ' missing')
-                assert(not container:IsRegisteredForWidgetSet(), name .. ' activated default HUD')
+                assert(not container:IsRegisteredForWidgetSet(setID), name .. ' registered an absent set')
                 assert(container.widgetFrames == nil or next(container.widgetFrames) == nil,
                     name .. ' consumed unsupplied records')
-                assert(container.widgetPools:GetNumActive() == 0, name .. ' acquired unsupplied widgets')
-                assert(container.horizontalRowContainerPool:GetNumActive() == 0, name .. ' acquired rows')
-                assert(UIWidgetManager.registeredWidgetContainers[container] == nil,
-                    name .. ' published default HUD')
+                assert(not UIWidgetManager.registeredWidgetContainers[container],
+                    name .. ' registered without set information')
             end
         "#,
         )

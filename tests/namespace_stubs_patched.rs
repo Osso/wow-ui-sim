@@ -1,6 +1,6 @@
 //! Pins namespace entries that must not fall through to generic nil stubs.
 //!
-//! `C_UIWidgetManager.GetPowerBarWidgetSetID` is an explicit temporary workaround,
+//! `C_UIWidgetManager.GetPowerBarWidgetSetID` is a modeled HUD selector,
 //! while the `C_PlayerInfo` probes are state-backed through
 //! `missing_surface::player_info`.
 
@@ -11,12 +11,12 @@ fn env() -> WowLuaEnv {
 }
 
 #[test]
-fn c_ui_widget_manager_get_power_bar_widget_set_id_returns_zero() {
+fn c_ui_widget_manager_get_power_bar_widget_set_id_returns_native_id() {
     let env = env();
     let value: f64 = env
         .eval("return C_UIWidgetManager.GetPowerBarWidgetSetID()")
         .expect("eval should succeed");
-    assert_eq!(value, 0.0);
+    assert_eq!(value, 283.0);
 }
 
 /// Regression guard: the PlayerInfo methods are registered by
