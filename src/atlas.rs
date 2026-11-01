@@ -39,8 +39,11 @@ fn ensure_nine_slice_kit_exists(kit: &str) -> Option<()> {
 }
 
 fn nine_slice_piece(key: &str) -> Option<NineSlicePiece> {
-    let (lookup, from_2x) = resolve_nine_slice_lookup(key)?;
-    let (width, height) = logical_nine_slice_piece_size(lookup, from_2x);
+    let (lookup, base_lookup) = resolve_nine_slice_lookup(key)?;
+    let (width, height) = match base_lookup {
+        Some(base) => (base.width, base.height),
+        None => logical_nine_slice_piece_size(lookup, true),
+    };
 
     Some(NineSlicePiece {
         file: lookup.file,
@@ -53,11 +56,13 @@ fn nine_slice_piece(key: &str) -> Option<NineSlicePiece> {
     })
 }
 
-fn resolve_nine_slice_lookup(key: &str) -> Option<(&'static AtlasInfo, bool)> {
+fn resolve_nine_slice_lookup(
+    key: &str,
+) -> Option<(&'static AtlasInfo, Option<&'static AtlasInfo>)> {
     for candidate in nine_slice_key_candidates(key) {
         let base_lookup = ATLAS_DB.get(candidate.as_str());
         if let Some(lookup) = paired_2x_variant(candidate.as_str()).or(base_lookup) {
-            return Some((lookup, base_lookup.is_none()));
+            return Some((lookup, base_lookup));
         }
     }
     None
