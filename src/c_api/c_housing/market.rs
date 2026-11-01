@@ -6,6 +6,7 @@ use rilua::vm::{gc::arena::GcRef, state::LuaState, table::Table};
 use rilua::{LuaResult, Val};
 
 pub(super) fn register(state: &mut LuaState, housing: GcRef<Table>) -> LuaResult<()> {
+    table_set_rust_fn_static(state, housing, "IsHousingMarketEnabled", is_market_enabled)?;
     table_set_rust_fn_static(
         state,
         housing,
@@ -24,6 +25,12 @@ pub(super) fn register(state: &mut LuaState, housing: GcRef<Table>) -> LuaResult
         },
     )?;
     table_set_rust_fn_static(state, housing, "OnHouseFinderClickPlot", select_plot)
+}
+
+fn is_market_enabled(state: &mut LuaState) -> LuaResult<u32> {
+    let enabled = borrow_state(state)?.housing.market_enabled;
+    state.push(Val::Bool(enabled));
+    Ok(1)
 }
 
 fn is_market_shop_enabled(state: &mut LuaState) -> LuaResult<u32> {

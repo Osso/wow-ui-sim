@@ -41,6 +41,14 @@ pub(super) fn register_quest_log_surface(state: &mut LuaState) -> LuaResult<()> 
     for (name, func) in C_QUEST_LOG_METHODS {
         table_set_rust_fn_static(state, ns, name, *func)?;
     }
+    if uses_account_quest_completion() {
+        table_set_rust_fn_static(
+            state,
+            ns,
+            "IsQuestFlaggedCompletedOnAccount",
+            is_quest_flagged_completed_on_account,
+        )?;
+    }
     quest_objectives::register(state)?;
     let globals = state.global;
     table_set_rust_fn_static(state, globals, "GetQuestPOIs", get_quest_pois)?;
@@ -492,6 +500,20 @@ fn is_quest_flagged_completed(state: &mut LuaState) -> LuaResult<u32> {
     let flagged = is_completed_quest_id(&borrow_state(state)?.quest_log_entries, quest_id);
     state.push(Val::Bool(flagged));
     Ok(1)
+}
+
+fn uses_account_quest_completion() -> bool {
+    use crate::client_profile::{ACTIVE, ClientProfile};
+    matches!(
+        ACTIVE,
+        ClientProfile::Retail | ClientProfile::Ptr | ClientProfile::WowForever
+    )
+}
+
+/// The simulator models one character per account, so account-wide
+/// completion equals the active character's completed-quest set.
+fn is_quest_flagged_completed_on_account(state: &mut LuaState) -> LuaResult<u32> {
+    is_quest_flagged_completed(state)
 }
 
 fn is_completed_quest_id(quest_log: &QuestLogState, quest_id: i32) -> bool {

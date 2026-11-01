@@ -64,7 +64,30 @@ pub(super) fn register_mythic_plus_surface(state: &mut LuaState) -> LuaResult<()
     register_mythic_plus_status_handlers(state, ns)?;
     register_mythic_plus_request_handlers(state, ns)?;
     register_challenge_mode_surface(state)?;
+    if uses_display_seasons() {
+        let seasons = ensure_namespace(state, "C_SeasonInfo")?;
+        table_set_rust_fn_static(
+            state,
+            seasons,
+            "GetCurrentDisplaySeasonID",
+            get_current_display_season_id,
+        )?;
+    }
     Ok(())
+}
+
+fn uses_display_seasons() -> bool {
+    use crate::client_profile::{ACTIVE, ClientProfile};
+    matches!(
+        ACTIVE,
+        ClientProfile::Retail | ClientProfile::Ptr | ClientProfile::WowForever
+    )
+}
+
+fn get_current_display_season_id(state: &mut LuaState) -> LuaResult<u32> {
+    let season = borrow_state(state)?.mythic_plus.display_season_id;
+    state.push(Val::Num(f64::from(season)));
+    Ok(1)
 }
 
 fn register_mythic_plus_probe_handlers(state: &mut LuaState, ns: GcRef<Table>) -> LuaResult<()> {

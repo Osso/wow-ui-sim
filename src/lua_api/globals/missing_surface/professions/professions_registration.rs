@@ -26,7 +26,7 @@ use super::{
     c_trade_skill_ui_set_recipe_tracked, ensure_namespace,
 };
 use crate::lua_api::methods::create_table;
-use crate::lua_bridge::table_set_rust_fn_static;
+use crate::lua_bridge::{FromStack, table_set_rust_fn_static};
 use rilua::vm::gc::arena::GcRef;
 use rilua::vm::state::LuaState;
 use rilua::vm::table::Table;
@@ -184,7 +184,46 @@ pub(super) fn register_trade_skill_namespace(state: &mut LuaState) -> LuaResult<
 
 pub(super) fn register_crafting_order_namespace(state: &mut LuaState) -> LuaResult<()> {
     let orders_ref = ensure_namespace(state, CRAFTING_ORDERS_NAMESPACE)?;
-    register_namespace_methods(state, orders_ref, CRAFTING_ORDER_METHODS)
+    register_namespace_methods(state, orders_ref, CRAFTING_ORDER_METHODS)?;
+    if uses_mainline_profession_queries() {
+        let trade_ref = ensure_namespace(state, TRADE_SKILL_NAMESPACE)?;
+        table_set_rust_fn_static(
+            state,
+            trade_ref,
+            "IsAnyRecipeFromSource",
+            is_any_recipe_from_source,
+        )?;
+        table_set_rust_fn_static(
+            state,
+            orders_ref,
+            "HasFavoriteCustomerOptions",
+            has_favorite_customer_options,
+        )?;
+    }
+    Ok(())
+}
+
+/// Only the mainline-family UIs (Retail, PTR, Forever) call these queries.
+fn uses_mainline_profession_queries() -> bool {
+    use crate::client_profile::{ACTIVE, ClientProfile};
+    matches!(
+        ACTIVE,
+        ClientProfile::Retail | ClientProfile::Ptr | ClientProfile::WowForever
+    )
+}
+
+/// The recipe catalogue records no acquisition source, so no recipe matches
+/// any `Enum.BattlePetSources` index.
+fn is_any_recipe_from_source(state: &mut LuaState) -> LuaResult<u32> {
+    let _source_type = i32::from_stack(state, 1)?;
+    state.push(Val::Bool(false));
+    Ok(1)
+}
+
+/// No favourite customer-order searches are stored in the simulator.
+fn has_favorite_customer_options(state: &mut LuaState) -> LuaResult<u32> {
+    state.push(Val::Bool(false));
+    Ok(1)
 }
 
 fn register_namespace_methods(

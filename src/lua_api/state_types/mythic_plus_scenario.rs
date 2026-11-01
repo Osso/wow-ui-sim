@@ -61,6 +61,9 @@ pub struct MythicPlusState {
     pub current_affixes: Vec<MythicPlusAffix>,
     /// Current M+ season id (e.g. 14 = Dragonflight Season 4).
     pub current_season: i32,
+    /// `C_SeasonInfo` display season; 0 means no active display season.
+    /// The live value is server-supplied, so it stays unset until configured.
+    pub display_season_id: i32,
     /// Keystone level of the key the player currently owns.
     /// 0 = no key.
     pub owned_keystone_level: i32,
@@ -85,6 +88,7 @@ impl Default for MythicPlusState {
                 season_id: 14,
             }],
             current_season: 14,
+            display_season_id: 0,
             owned_keystone_level: 0,
             run_history: Vec::new(),
             weekly_best_per_map: HashMap::new(),
