@@ -19,9 +19,11 @@
     },
     {
       "source_id": "wt-global-api-C_ChatInfo.CanReportPlayer-8",
-      "status": "audit-pending",
-      "capabilities": [],
-      "note": "No report eligibility model for report type, target identity, evidence or account restrictions. Autostub lookup is not a raw API; no constant eligibility promoted."
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Retired in 8.1.5. Retail raw and ordinary C_ChatInfo lookups are nil; current documented successor is C_ReportSystem.CanReportPlayer, whose behavior is a separate contract."
     },
     {
       "source_id": "wt-global-api-C_ChatInfo.IsAddonMessagePrefixRegistered-9",

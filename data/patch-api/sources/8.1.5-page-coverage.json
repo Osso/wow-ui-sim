@@ -292,9 +292,11 @@
     },
     {
       "source_id": "wt-global-api-C_ChatInfo.CanReportPlayer-57",
-      "status": "audit-pending",
-      "capabilities": [],
-      "note": "No qualified cached consumer, but two bare CanReportPlayer consumers under C_ReportSystem prohibit retirement under the conservative scan rule. Requires namespace-specific migration/publication policy, not an autostub tombstone."
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Retired in 8.1.5. Retail raw and ordinary C_ChatInfo lookups are nil; current documented successor is C_ReportSystem.CanReportPlayer, whose behavior is a separate contract."
     },
     {
       "source_id": "wt-global-api-C_ChatInfo.ReportPlayer-58",

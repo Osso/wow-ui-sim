@@ -83,3 +83,20 @@ fn report_system_player_report_flow_tracks_tokens_and_result_event() {
         matches!(second_event.args[1], EventArg::String(ref report_type) if report_type == "badpetname")
     );
 }
+
+prefork_full_ui_case! {
+fn report_button_respects_supplied_eligibility(env: &WowLuaEnv) {
+    env.exec(r#"
+        local context = { guid = UnitGUID('player') }
+        local location = UnitPopupSharedUtil.TryCreatePlayerLocation(context)
+        assert(location and UnitPopupSharedUtil.IsValidPlayerLocation(location), 'valid report location required')
+        assert(UnitPopupReportButtonMixin:CanShow(context) == false)
+        assert(not pcall(C_ReportSystem.CanReportPlayer, nil))
+    "#).expect("report button should use report eligibility");
+    env.state().borrow_mut().report_player_eligible = true;
+    env.exec(r#"
+        local context = { guid = UnitGUID('player') }
+        assert(UnitPopupReportButtonMixin:CanShow(context) == true)
+    "#).expect("report button should reflect supplied eligibility");
+}
+}
