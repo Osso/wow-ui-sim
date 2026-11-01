@@ -542,6 +542,47 @@ fn garrison_mission_frames_use_db2_currency_types() {
     panic!("GarrisonUI missing from Game coverage");
 }
 
+#[cfg(feature = "client-retail")]
+#[test]
+fn garrison_consumers_clear_and_read_empty_mission_lists() {
+    let env = WowLuaEnv::new().expect("create Lua environment");
+    env.state().borrow_mut().addon_base_paths = vec![blizzard_ui_dir()];
+    reset_template_state();
+    common::load_profile_framexml(&env);
+    load_force_load_startup(&env);
+    for (name, toc) in force_load_game_addons() {
+        load_addon(&env.loader_env(), &toc).expect("force-load Blizzard addon");
+        if name == "Blizzard_GarrisonUI" { break; }
+    }
+    let (_, toc) = force_load_game_addons().into_iter()
+        .find(|(name, _)| name == "Blizzard_AdventureMap")
+        .expect("Adventure Map is eligible for the Game screen");
+    load_addon(&env.loader_env(), &toc).expect("load Adventure Map");
+    let ok: bool = env.eval(r#"
+        local texture = {SetDesaturated=function() end}
+        local tab1 = {SetText=function(self, value) self.text=value end}
+        local tab2 = {SetText=function(self, value) self.text=value end,
+            SetEnabled=function(self, value) self.enabled=value end,
+            Left=texture, Right=texture, Middle=texture,
+            Text={SetTextColor=function() end}}
+        local list = setmetatable({inProgressMissions={123}, availableMissions={456},
+            Tab1=tab1, Tab2=tab2,
+            GetMissionFrame=function() return {followerTypeID=1} end,
+            UpdateCombatAllyMission=function() end, Update=function() end},
+            {__index=GarrisonMissionListMixin})
+        list:UpdateMissions()
+        local provider = setmetatable({GetMap=function()
+            return {GetMapID=function() return 84 end}
+        end}, {__index=AdventureMap_ZoneSummaryProviderMixin})
+        provider:GatherMissions()
+        return next(list.inProgressMissions) == nil and next(list.availableMissions) == nil
+            and tab2.enabled == false and next(provider.missionsByZone) == nil
+    "#).expect("original mission list and Adventure Map consumers run");
+    assert!(ok);
+    assert!(env.exec("C_Garrison.GetInProgressMissions({}, 'bad')").is_err());
+    assert!(env.exec("C_Garrison.GetAvailableMissions(true, 1)").is_err());
+}
+
 #[test]
 fn all_blizzard_addon_load_errors_are_tracked_per_addon_name() {
     common::with_perf_lock(|| {
