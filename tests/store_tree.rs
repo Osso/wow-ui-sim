@@ -628,3 +628,15 @@ fn store_frame_subtree_has_no_cycles_in_full_game_ui(env: &WowLuaEnv) {
     assert_no_child_cycle(&state.widgets, store_id, &mut path, &mut seen);
 }
 }
+
+#[test]
+fn store_free_upgrade_check_handles_account_without_upgrade() {
+    let env = load_store_ui_tree();
+    env.exec(r#"
+        assert(type(__secureenv.StoreFrame_CheckForFree) == 'function')
+        local frame = {}
+        __secureenv.StoreFrame_CheckForFree(frame, 'VARIABLES_LOADED')
+        __secureenv.StoreFrame_CheckForFree(frame, 'PRODUCT_DISTRIBUTIONS_UPDATED')
+        assert(frame.variablesLoaded and frame.distributionsUpdated)
+    "#).expect("store free upgrade check should accept an account without an upgrade");
+}
