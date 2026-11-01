@@ -213,6 +213,8 @@ impl QuestLogState {
         Self {
             campaign_ids: HashMap::new(),
             campaign_chapter_ids: HashMap::new(),
+            threat_entry_flags: HashMap::new(),
+            bounties_by_set: HashMap::new(),
             entries: vec![
                 lost_expedition_entry(),
                 defending_the_gates_entry(),
