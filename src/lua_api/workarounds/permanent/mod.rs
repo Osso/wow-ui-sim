@@ -4,10 +4,12 @@
 //! compromises kept out of the generic bootstrap/C API surface.
 
 mod achievement_display;
+mod commentator_camera;
 mod flash_client_icon;
 
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     achievement_display::apply_bootstrap(lua)?;
+    commentator_camera::apply_bootstrap(lua)?;
     flash_client_icon::apply_bootstrap(lua)
 }
 
