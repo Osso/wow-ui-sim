@@ -4,6 +4,8 @@
 pub mod currencies;
 #[path = "../data/encounter_journal.rs"]
 pub mod encounter_journal_data;
+#[path = "../data/garrison_currency.rs"]
+pub mod garrison_currency;
 #[path = "../data/items.rs"]
 pub mod items;
 #[path = "../data/manifest_interface_data.rs"]
