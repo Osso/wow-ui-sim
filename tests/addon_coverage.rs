@@ -741,6 +741,8 @@ fn garrison_bonus_chest_onload_accepts_cinematic_height_factor() {
         _G.GarrisonChestProbe = frame.ChestModel
         return type(frame.ChestModel:GetScript('OnLoad')) == 'function'
             and type(frame.ChestModel.SetHeightFactor) == 'function'
+            and CreateFrame('PlayerModel').SetHeightFactor == nil
+            and CreateFrame('DressUpModel').SetHeightFactor == nil
     "#).expect("create the original Garrison bonus chest");
     let errors = env.state().borrow().lua_errors.clone();
     assert!(
