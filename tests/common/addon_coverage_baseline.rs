@@ -79,7 +79,7 @@ pub const KNOWN_ERRORS: &[(&str, usize)] = &[
     ("Blizzard_RaidUI", 1),
     ("Blizzard_ReforgingUI", 3),
     ("Blizzard_ReportFrame", 2),
-    ("Blizzard_ScrappingMachineUI", 2),
+    ("Blizzard_ScrappingMachineUI", 0),
     ("Blizzard_SharedMapDataProviders", 7),
     ("Blizzard_SpectateFrame", 3),
     ("Blizzard_TimerunningCharacterCreate", 6),
