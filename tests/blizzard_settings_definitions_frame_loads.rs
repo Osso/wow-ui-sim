@@ -1,5 +1,21 @@
 use std::path::PathBuf;
 
+prefork_full_ui_case! {
+fn action_bar_settings_reflect_forced_visibility_rules(env: &WowLuaEnv) {
+    for (forced, hidden, expected) in [(0, 0, 7), (1, 0, 0), (0, -2, 0), (0, 0, 7)] {
+        let probe = format!(r#"
+            A_Admin.SetGameRule('ForcedMultiActionBarSetting', {forced})
+            A_Admin.SetGameRule('HideAllMultiActionBars', {hidden})
+            local category, layout = Settings.RegisterVerticalLayoutCategory('WM18 test')
+            ActionBarsOverrides.CreateActionBarVisibilitySettings(category, nil, 0, 10)
+            return #layout:GetInitializers()
+        "#);
+        let count: i32 = env.eval(&probe).expect("original action bar settings consumer");
+        assert_eq!(count, expected, "forced={forced} hidden={hidden}");
+    }
+}
+}
+
 use wow_ui_sim::client_profile::{ACTIVE, ClientProfile};
 use wow_ui_sim::loader::load_addon;
 use wow_ui_sim::loader::{discover_blizzard_addons_for_screen, find_toc_file};
