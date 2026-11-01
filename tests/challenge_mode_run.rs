@@ -99,8 +99,10 @@ fn original_scenario_criteria_render_order_quantity_and_completion() {
                 quantityString='25%', isWeightedProgress=true},
         })
         assert(ScenarioObjectiveTracker:ShouldShowCriteria() == true)
-        ScenarioObjectiveTracker:UpdateCriteria(C_ScenarioInfo.GetScenarioStepInfo().numCriteria)
         local block = ScenarioObjectiveTracker.ObjectivesBlock
+        -- Blizzard_ScenarioObjectiveTracker.lua resets the block before every UpdateCriteria.
+        block:Reset()
+        ScenarioObjectiveTracker:UpdateCriteria(C_ScenarioInfo.GetScenarioStepInfo().numCriteria)
         assert(block:GetExistingLine(1).Text:GetText() == '0/1 First boss')
         assert(block:GetExistingLine(2).Text:GetText() == 'Enemy forces')
         assert(block:GetExistingLine(2).progressBar.Bar:GetValue() == 25)
@@ -111,6 +113,7 @@ fn original_scenario_criteria_render_order_quantity_and_completion() {
             {criteriaID=902, description='Enemy forces', quantity=70, totalQuantity=100,
                 quantityString='70%', isWeightedProgress=true},
         })
+        block:Reset()
         ScenarioObjectiveTracker:UpdateCriteria(2)
         assert(block:GetExistingLine(1).Text:GetText() == '1/1 First boss')
         assert(block:GetExistingLine(2).progressBar.Bar:GetValue() == 70)
