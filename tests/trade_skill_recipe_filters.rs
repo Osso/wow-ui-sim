@@ -26,7 +26,7 @@ prefork_full_ui_case! {
             "#,
         )
         .unwrap();
-    assert_eq!(result, "false true true 10");
+    assert_eq!(result, "false true true 34");
     }
 }
 
@@ -49,7 +49,7 @@ prefork_full_ui_case! {
             "#,
         )
         .unwrap();
-    assert_eq!(result, "8 false 100001,100002,100004,100005 10");
+    assert_eq!(result, "32 false 100001,100002,100004,100005 34");
     }
 }
 
@@ -72,6 +72,6 @@ prefork_full_ui_case! {
             "#,
         )
         .unwrap();
-    assert_eq!(result, "10 true false 0");
+    assert_eq!(result, "34 true false 0");
     }
 }
