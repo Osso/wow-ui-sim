@@ -66,7 +66,7 @@ pub const KNOWN_ERRORS: &[(&str, usize)] = &[
     ("Blizzard_ObliterumUI", 2),
     ("Blizzard_OrderHallUI", 1),
     ("Blizzard_PTRFeedbackGlue", 1),
-    ("Blizzard_PVPUI", 14),
+    ("Blizzard_PVPUI", 0),
     ("Blizzard_PerksProgram", 10),
     ("Blizzard_PetBattleUI", 21),
     ("Blizzard_PhotoSharing", 4),
