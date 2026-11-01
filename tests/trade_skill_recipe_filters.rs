@@ -1,22 +1,20 @@
-#![cfg(feature = "profile-retail")]
+#![cfg(feature = "client-retail")]
 //! Recipe-list filters driven through the original Professions filter helpers.
 
 use wow_ui_sim::loader::load_addon;
 use wow_ui_sim::lua_api::WowLuaEnv;
 
-fn professions_env() -> WowLuaEnv {
-    let env = WowLuaEnv::new().expect("Lua environment");
+fn load_professions_templates(env: &WowLuaEnv) {
     let ui = wow_ui_sim::paths::default_blizzard_ui_addons_path().expect("Blizzard UI cache");
-    for addon in ["Blizzard_Colors", "Blizzard_ProfessionsTemplates"] {
-        let toc = ui.join(addon).join(format!("{addon}.toc"));
-        load_addon(&env.loader_env(), &toc).unwrap_or_else(|err| panic!("{addon}: {err}"));
-    }
-    env
+    let toc = ui
+        .join("Blizzard_ProfessionsTemplates")
+        .join("Blizzard_ProfessionsTemplates.toc");
+    load_addon(&env.loader_env(), &toc).expect("Blizzard_ProfessionsTemplates loads");
 }
 
-#[test]
-fn default_filters_show_learned_and_unlearned_recipes() {
-    let env = professions_env();
+prefork_full_ui_case! {
+    fn default_filters_show_learned_and_unlearned_recipes(env: &WowLuaEnv) {
+    load_professions_templates(env);
     let result: String = env
         .eval(
             r#"
@@ -29,11 +27,12 @@ fn default_filters_show_learned_and_unlearned_recipes() {
         )
         .unwrap();
     assert_eq!(result, "false true true 10");
+    }
 }
 
-#[test]
-fn category_and_item_level_filters_narrow_the_recipe_list() {
-    let env = professions_env();
+prefork_full_ui_case! {
+    fn category_and_item_level_filters_narrow_the_recipe_list(env: &WowLuaEnv) {
+    load_professions_templates(env);
     let result: String = env
         .eval(
             r#"
@@ -51,11 +50,12 @@ fn category_and_item_level_filters_narrow_the_recipe_list() {
         )
         .unwrap();
     assert_eq!(result, "8 false 100001,100002,100004,100005 10");
+    }
 }
 
-#[test]
-fn filter_set_round_trips_through_apply() {
-    let env = professions_env();
+prefork_full_ui_case! {
+    fn filter_set_round_trips_through_apply(env: &WowLuaEnv) {
+    load_professions_templates(env);
     let result: String = env
         .eval(
             r#"
@@ -73,4 +73,5 @@ fn filter_set_round_trips_through_apply() {
         )
         .unwrap();
     assert_eq!(result, "10 true false 0");
+    }
 }
