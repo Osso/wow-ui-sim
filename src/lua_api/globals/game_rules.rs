@@ -250,6 +250,7 @@ fn install_on_c_game_rules(state: &mut LuaState) -> LuaResult<()> {
     // GameRulesDocumentation.lua declares these on every profile except Wrath,
     // which ships no generated documentation.
     if ACTIVE != ClientProfile::Wrath {
+        table_set_rust_fn(state, table_ref, "IsStandard", game_mode::is_standard)?;
         table_set_rust_fn(
             state,
             table_ref,

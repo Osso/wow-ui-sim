@@ -7,6 +7,11 @@
 - [x] The initial simulator scenario returns `Enum.GameMode.Standard`.
 - [x] A supplied Plunderstorm mode returns `Enum.GameMode.Plunderstorm` and makes `C_GameRules.IsPlunderstorm()` true.
 - [x] A supplied Standard mode returns `Enum.GameMode.Standard` and makes `C_GameRules.IsPlunderstorm()` false.
+- [ ] On the six documented profiles, `C_GameRules.IsStandard()` returns one boolean that is true exactly when the supplied mode is Standard.
+
+## Best-guess basis
+
+Retail 12.1.5 build 70688 evidence verifies comparison of the cached mode to Standard; its connection to Lua boolean publication is emulated. The same supplied-state behavior on the other documented profiles is a best guess. `IsStandard` is declared in each profile's `Blizzard_APIDocumentationGenerated/GameRulesDocumentation.lua`: Retail:250, PTR:340, WowForever:295, Mists:258, Era:258, Anniversary:258. Wrath has no pinned declaration.
 
 ## How it works
 
@@ -21,12 +26,13 @@
 
 ## Tests asserting this spec
 
-- `tests/game_rules.rs`: default and supplied mode queries.
+- `tests/game_rules.rs`: default and supplied mode queries and `IsStandard`.
+- `tests/blizzard_game_menu_loads.rs`: original GameMenu consumer.
 - `tests/cmd_option_selected_unit.rs`: unchanged cached Blizzard slash-command consumer under the default mode.
 
 ## Known gaps (current cycle)
 
-- [ ] Live mode-selection policy, transitions, and event timing are not established by the enum capture.
+- [ ] Live mode-selection policy, transitions, and event timing are not established by the enum capture. The native rule installer's full integration with supplied state is not modeled.
 
 ## Out of scope
 
