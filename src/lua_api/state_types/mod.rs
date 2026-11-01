@@ -25,8 +25,8 @@ pub use collections::*;
 pub use crafting::*;
 pub use loot_history::LootHistoryState;
 pub use mythic_plus_scenario::{
-    DeathRecapEntry, KillingBlowInfo, MythicPlusAffix, MythicPlusRun, MythicPlusState,
-    MythicPlusWeeklyBest, ScenarioState, ScenarioStep,
+    DeathRecapEntry, DeathRecapEventInfo, KillingBlowInfo, MythicPlusAffix, MythicPlusRun,
+    MythicPlusState, MythicPlusWeeklyBest, ScenarioState, ScenarioStep,
 };
 pub use player_choice::*;
 pub use pvp::*;

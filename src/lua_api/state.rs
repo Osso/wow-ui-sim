@@ -774,7 +774,7 @@ pub use super::state_types::{
     BarberShopState, BidAuction, BnetFriend, BnetFriendInvite, BnetGameAccount, BrowseQuery,
     ChatBubble, CommodityPurchaseQuote, CommoditySearchResultInfo, CommoditySearchResults,
     CraftingState, CurrencyInfo, CursorInfo, CursorItemOrigin, DeathRecapEntry,
-    EquipmentManagerState, EquipmentSet, EquippedItem, GreatVaultActivity,
+    DeathRecapEventInfo, EquipmentManagerState, EquipmentSet, EquippedItem, GreatVaultActivity,
     GuildBankRankPermissions, GuildBankTab, GuildMember, GuildRank, ItemSearchKey,
     ItemSearchResultInfo, ItemSearchResults, KillingBlowInfo, LfdDungeonInfo, LfgActivityGroupInfo,
     LfgActivityInfo, LfgAdvancedFilter, LfgApplication, LfgCategoryInfo, LfgRoleSelection,
