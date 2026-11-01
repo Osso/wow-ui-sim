@@ -1,4 +1,5 @@
 use super::inputs::{array, field};
+use crate::client_profile::{ACTIVE, ClientProfile};
 use crate::lua_api::globals::state_backed_queries::dispatch_event_now;
 use crate::lua_api::methods::{
     borrow_state, borrow_state_mut, create_string, create_table, table_set_static,
@@ -57,7 +58,31 @@ fn decode_criterion(state: &mut LuaState, row: Val) -> LuaResult<Criterion> {
 pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
     let ns = crate::c_api::ensure_namespace(state, "C_ScenarioInfo")?;
     table_set_rust_fn_static(state, ns, "GetCriteriaInfo", current_criterion)?;
-    table_set_rust_fn_static(state, ns, "GetCriteriaInfoByStep", step_criterion)
+    table_set_rust_fn_static(state, ns, "GetCriteriaInfoByStep", step_criterion)?;
+    if matches!(ACTIVE, ClientProfile::Retail | ClientProfile::Ptr) {
+        let scenario = crate::c_api::ensure_namespace(state, "C_Scenario")?;
+        table_set_rust_fn_static(state, scenario, "ShouldShowCriteria", should_show_criteria)?;
+    }
+    Ok(())
+}
+
+/// Undocumented native; consumed by the Retail/PTR scenario tracker. Best guess,
+/// native UNKNOWN: criteria are shown unless a scenario supplies otherwise.
+fn should_show_criteria(state: &mut LuaState) -> LuaResult<u32> {
+    let shown = !borrow_state(state)?.challenge_run.criteria_hidden;
+    state.push(Val::Bool(shown));
+    Ok(1)
+}
+
+pub(super) fn set_criteria_shown(state: &mut LuaState) -> LuaResult<u32> {
+    let shown = bool::from_stack(state, 1)?;
+    borrow_state_mut(state)?.challenge_run.criteria_hidden = !shown;
+    dispatch_event_now(
+        state,
+        "SCENARIO_CRITERIA_SHOW_STATE_UPDATE",
+        &[Val::Bool(shown)],
+    )?;
+    Ok(0)
 }
 
 pub(super) fn set_criteria(state: &mut LuaState) -> LuaResult<u32> {

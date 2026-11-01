@@ -38,6 +38,8 @@ pub(crate) struct ChallengeState {
     pub maps: BTreeMap<i32, MapInfo>,
     pub timers: BTreeMap<i32, timers::ElapsedTimer>,
     pub criteria: BTreeMap<i32, Vec<scenario::Criterion>>,
+    /// Supplied scenario criteria visibility; `false` (default) keeps criteria shown.
+    pub criteria_hidden: bool,
 }
 
 fn supports_run() -> bool {
@@ -83,6 +85,7 @@ pub(crate) fn register_admin(b: TableBuilder) -> LuaResult<TableBuilder> {
         .set_function("ClearChallengeRun", inputs::clear_run)?
         .set_function("CompleteChallengeRun", inputs::complete_run)?
         .set_function("SetScenarioCriteria", scenario::set_criteria)?
+        .set_function("SetScenarioCriteriaShown", scenario::set_criteria_shown)?
         .set_function("StartWorldElapsedTimer", timers::start)?
         .set_function("SetWorldElapsedTime", timers::set)?
         .set_function("AdvanceWorldElapsedTime", timers::advance)

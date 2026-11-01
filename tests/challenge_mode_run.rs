@@ -98,7 +98,7 @@ fn original_scenario_criteria_render_order_quantity_and_completion() {
             {criteriaID=902, description='Enemy forces', quantity=25, totalQuantity=100,
                 quantityString='25%', isWeightedProgress=true},
         })
-        ScenarioObjectiveTracker:SetShouldShowCriteria(true)
+        assert(ScenarioObjectiveTracker:ShouldShowCriteria() == true)
         ScenarioObjectiveTracker:UpdateCriteria(C_ScenarioInfo.GetScenarioStepInfo().numCriteria)
         local block = ScenarioObjectiveTracker.ObjectivesBlock
         assert(block:GetExistingLine(1).Text:GetText() == '0/1 First boss')
@@ -292,4 +292,26 @@ fn challenge_admin_events_observe_updated_state_and_reject_invalid_input() {
         assert(not pcall(A_Admin.StartWorldElapsedTimer, 1, 'bad', 1, 0))
     "#).unwrap();
     assert_eq!(env.state().borrow().lua_errors.len(), errors_before);
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
+#[test]
+fn original_scenario_tracker_reads_supplied_criteria_visibility_on_init() {
+    let env = load_tracker();
+    env.exec(
+        r#"
+        A_Admin.SetScenarioCriteriaShown(false)
+        assert(C_Scenario.ShouldShowCriteria() == false)
+        ScenarioObjectiveTracker:InitModule()
+        assert(ScenarioObjectiveTracker:ShouldShowCriteria() == false)
+        A_Admin.SetScenarioCriteriaShown(true)
+        assert(C_Scenario.ShouldShowCriteria() == true)
+        ScenarioObjectiveTracker:InitModule()
+        assert(ScenarioObjectiveTracker:ShouldShowCriteria() == true)
+    "#,
+    )
+    .unwrap();
+    let independent = WowLuaEnv::new().unwrap();
+    let shown: bool = independent.eval("return C_Scenario.ShouldShowCriteria()").unwrap();
+    assert!(shown, "criteria default to shown in a fresh environment");
 }

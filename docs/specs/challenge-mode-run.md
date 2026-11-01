@@ -47,3 +47,9 @@ Original modern ScenarioObjectiveTracker initialization calls `C_Scenario.Should
 ## Proof requirements
 
 Each original-consumer selector must contradict constant/no-op producers independently. Preserve byte-identical tests on a producer-subtracted RED sibling. Add external InTimeBL forecast acceptance without changing its sources. Final gates include all seven zero-warning checks, default-mode Retail/PTR stock with bound binary/revision/argv/receipt, individual added-key tracing, formatting and changed-code readability.
+
+## Scenario criteria visibility
+
+- [x] `C_Scenario.ShouldShowCriteria()` (Retail/PTR; undocumented native read by `ScenarioObjectiveTracker:InitModule`) returns `true` unless `A_Admin.SetScenarioCriteriaShown(false)` supplied otherwise.
+- [x] `A_Admin.SetScenarioCriteriaShown(shown)` stores the flag and fires `SCENARIO_CRITERIA_SHOW_STATE_UPDATE(shown)`.
+- Best-guess basis: best-guess, native UNKNOWN. Standard scenarios (Delves, Mythic+) show objectives; no hidden-criteria scenario data is modeled.
