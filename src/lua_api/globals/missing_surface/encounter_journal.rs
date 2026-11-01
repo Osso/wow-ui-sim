@@ -48,6 +48,7 @@ const FALLBACK_ABILITY_ICON: u32 = 136243;
 const ENCOUNTER_JOURNAL_FUNCTIONS: &[(&str, RustFn)] = &[
     ("GetEncounterInfo", get_encounter_info),
     ("GetInstanceInfo", get_instance_info),
+    ("GetInstanceForGameMap", get_instance_for_game_map),
     ("GetSectionInfo", get_section_info),
     ("GetLootInfo", loot::get_loot_info),
     ("GetLootInfoByIndex", loot::get_loot_info_by_index),
@@ -356,6 +357,20 @@ fn set_slot_filter(state: &mut LuaState) -> LuaResult<u32> {
 fn reset_slot_filter(state: &mut LuaState) -> LuaResult<u32> {
     borrow_state_mut(state)?.encounter_journal.slot_filter = -1;
     Ok(0)
+}
+
+/// Best guess (native UNKNOWN): several journal instances can share one game
+/// map (Dire Maul wings, Stratholme gates); the lowest journal instance ID
+/// wins. Rows with `map_id` 0 carry no game map and never match.
+fn get_instance_for_game_map(state: &mut LuaState) -> LuaResult<u32> {
+    let map_id = u32::from_stack(state, 1)?;
+    let instance_id = data::INSTANCES
+        .iter()
+        .filter(|row| map_id != 0 && row.map_id == map_id)
+        .map(|row| row.id)
+        .min();
+    state.push(instance_id.map_or(Val::Nil, |id| Val::Num(id as f64)));
+    Ok(1)
 }
 
 fn set_tab(state: &mut LuaState) -> LuaResult<u32> {

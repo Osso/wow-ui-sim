@@ -142,6 +142,20 @@ fn is_player_eligible_for_npe_reflects_mutation() {
     assert!(eligible);
 }
 
+#[test]
+fn is_player_eligible_for_npe_v2_follows_the_shared_npe_gate() {
+    let env = env();
+    let (before, reason): (bool, String) = env
+        .eval("return C_PlayerInfo.IsPlayerEligibleForNPEv2()")
+        .unwrap();
+    env.state().borrow_mut().player.is_npe_eligible = true;
+    let (after, after_reason): (bool, String) = env
+        .eval("return C_PlayerInfo.IsPlayerEligibleForNPEv2()")
+        .unwrap();
+    assert_eq!((before, reason.as_str()), (false, "level"));
+    assert_eq!((after, after_reason.as_str()), (true, ""));
+}
+
 // ── IsPlayerNPERestricted ─────────────────────────────────────────────────────
 
 #[test]

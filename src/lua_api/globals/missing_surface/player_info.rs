@@ -8,7 +8,9 @@
 //! - `GetGlidingInfo()` — returns movement-backed skyriding/gliding state.
 //! - `GetPlayerMythicPlusRatingSummary(playerToken)` — returns a
 //!   `MythicPlusRatingSummary` table or nothing if no data.
-//! - `IsPlayerEligibleForNPE()` — returns `(isEligible, failureReason)`.
+//! - `IsPlayerEligibleForNPE()` / `IsPlayerEligibleForNPEv2()` — return
+//!   `(isEligible, failureReason)`. Best guess (native UNKNOWN): both read the
+//!   single `is_npe_eligible` flag; the simulator models one NPE gate.
 //! - `IsPlayerNPERestricted()` — returns the `is_npe_restricted` bool.
 //! - `IsPlayerInRPE()` — returns the `is_in_rpe` bool.
 
@@ -68,6 +70,12 @@ pub(super) fn register_player_info_surface(state: &mut LuaState) -> LuaResult<()
         state,
         ns,
         "IsPlayerEligibleForNPE",
+        is_player_eligible_for_npe,
+    )?;
+    table_set_rust_fn_static(
+        state,
+        ns,
+        "IsPlayerEligibleForNPEv2",
         is_player_eligible_for_npe,
     )?;
     table_set_rust_fn_static(state, ns, "IsPlayerNPERestricted", is_player_npe_restricted)?;

@@ -501,3 +501,25 @@ fn get_section_info_matches_section_info_shape() {
     )
     .unwrap();
 }
+
+// ---------------------------------------------------------------------------
+// GetInstanceForGameMap
+// ---------------------------------------------------------------------------
+
+#[test]
+fn get_instance_for_game_map_resolves_journal_instances_from_game_maps() {
+    let env = env();
+    let result: String = env
+        .eval(
+            r#"
+            local function show(mapID)
+                return tostring(C_EncounterJournal.GetInstanceForGameMap(mapID))
+            end
+            return table.concat({ show(2810), show(429), show(0), show(999999) }, " ")
+            "#,
+        )
+        .unwrap();
+    // Manaforge Omega; Dire Maul's three wings share map 429 and the lowest
+    // journal instance (Capital Gardens) wins; map 0 and unknown maps give nil.
+    assert_eq!(result, "1302 230 nil nil");
+}
