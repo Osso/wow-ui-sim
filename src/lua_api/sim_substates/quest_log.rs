@@ -100,6 +100,12 @@ pub struct QuestLogState {
     /// Supplied chapter IDs in campaign order.
     pub campaign_chapter_ids: HashMap<i32, Vec<i32>>,
     pub entries: Vec<QuestLogEntry>,
+    /// Supplied ready records outside the current quest log.
+    pub abandon_ready_ids: HashSet<i32>,
+    /// Supplied classification flags for ready quest records.
+    pub abandon_classification_flags: HashMap<i32, u32>,
+    /// Supplied result of the unknown flag-2048 condition.
+    pub abandon_conditional_blocked: HashMap<i32, bool>,
     pub additional_highlights: HashMap<i32, crate::c_api::c_quest_log::QuestAdditionalHighlights>,
     /// Build-12340 manual append order; IDs survive row reorder until log refresh.
     #[cfg(feature = "client-wrath")]
