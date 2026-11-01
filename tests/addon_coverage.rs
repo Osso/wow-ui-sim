@@ -753,6 +753,27 @@ fn garrison_bonus_chest_onload_accepts_cinematic_height_factor() {
     assert!(env.exec("GarrisonChestProbe:SetHeightFactor('bad')").is_err());
 }
 
+#[cfg(feature = "client-retail")]
+#[test]
+fn garrison_bonus_chest_onload_initializes_cinematic_camera() {
+    let env = load_garrison_original_consumers();
+    clear_lua_error_tracking(&env);
+    let ok: bool = env.eval(r#"
+        local frame = CreateFrame('Frame', nil, UIParent, 'GarrisonMissionBonusRewardsTemplate')
+        _G.GarrisonCameraProbe = frame.ChestModel
+        return type(frame.ChestModel:GetScript('OnLoad')) == 'function'
+            and type(frame.ChestModel.InitializeCamera) == 'function'
+            and CreateFrame('PlayerModel').InitializeCamera == nil
+            and CreateFrame('DressUpModel').InitializeCamera == nil
+    "#).expect("create the original Garrison bonus chest");
+    let errors = env.state().borrow().lua_errors.clone();
+    assert!(errors.is_empty(), "original chest OnLoad must complete: {errors:?}");
+    assert!(ok);
+    env.exec("GarrisonCameraProbe:InitializeCamera(); GarrisonCameraProbe:InitializeCamera(0.8)")
+        .expect("documented default and numeric camera scale");
+    assert!(env.exec("GarrisonCameraProbe:InitializeCamera('bad')").is_err());
+}
+
 #[test]
 fn all_blizzard_addon_load_errors_are_tracked_per_addon_name() {
     common::with_perf_lock(|| {

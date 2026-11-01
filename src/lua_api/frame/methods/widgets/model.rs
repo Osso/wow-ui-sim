@@ -822,6 +822,12 @@ pub(crate) fn register_cinematic_methods(
     state: &mut LuaState,
     index: GcRef<Table>,
 ) -> LuaResult<()> {
+    table_set_rust_fn(
+        state,
+        index,
+        "InitializeCamera",
+        cinematic_initialize_camera,
+    )?;
     table_set_rust_fn(state, index, "SetFacingLeft", cinematic_set_facing_left)?;
     table_set_rust_fn(
         state,
@@ -835,6 +841,12 @@ pub(crate) fn register_cinematic_methods(
         "SetTargetDistance",
         cinematic_set_numeric_camera_input,
     )
+}
+
+fn cinematic_initialize_camera(state: &mut LuaState) -> LuaResult<u32> {
+    frame_id_from_stack(state, 1)?;
+    Option::<f64>::from_stack(state, 2)?;
+    Ok(0)
 }
 
 fn cinematic_set_facing_left(state: &mut LuaState) -> LuaResult<u32> {
