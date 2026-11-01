@@ -511,3 +511,16 @@ fn world_map_frame_template_carries_scroll_container(env: &WowLuaEnv) {
     );
 }
 }
+
+#[test]
+fn world_map_tracking_filters_default_to_visible() {
+    let env = load_full_game_ui();
+    env.exec(r#"
+        for _, filter in ipairs({Enum.MinimapTrackingFilter.TrivialQuests, Enum.MinimapTrackingFilter.AccountCompletedQuests}) do
+            local item = CreateFromMixins(WorldMapFilterMixin)
+            item.minimapTrackingFilter = filter
+            assert(item:Get() == true)
+        end
+        assert(not pcall(C_Minimap.IsFilteredOut, {}))
+    "#).expect("WorldMapFilterMixin should read default tracking visibility");
+}
