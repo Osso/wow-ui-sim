@@ -12,4 +12,4 @@ The simulator has no minimap tracking model and reports zero tracking types. Unt
 
 ## Known gaps
 
-Per-filter defaults through `GetDefaultTrackingValue`, minimap tracking state, and mutation through `MinimapUtil.SetTrackingFilterByFilterID` remain unmodeled.
+Minimap tracking state and mutation through `MinimapUtil.SetTrackingFilterByFilterID` remain unmodeled. The initialized-default query is specified in [world-map API inputs](world-map-api-inputs.md).
