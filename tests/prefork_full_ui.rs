@@ -1215,7 +1215,7 @@ fn generated_registry_lists_post_start_housing_batch(state: &ConformanceState) {
         ("blizzard_housing_controls_loads::", 12),
         ("blizzard_housing_cornerstone_loads::", 20),
         ("blizzard_housing_inspect_mode_ui_loads::", 8),
-        ("blizzard_housing_market_cart_loads::", 10),
+        ("blizzard_housing_market_cart_loads::", 11),
         ("blizzard_housing_model_preview_loads::", 10),
         ("blizzard_housing_house_settings_loads::", 13),
     ];
