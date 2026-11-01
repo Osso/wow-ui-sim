@@ -731,6 +731,26 @@ fn adventure_rewards_consumer_loads_follower_level_xp() {
     assert!(ok);
 }
 
+#[cfg(feature = "client-retail")]
+#[test]
+fn garrison_bonus_chest_onload_accepts_cinematic_height_factor() {
+    let env = load_garrison_original_consumers();
+    clear_lua_error_tracking(&env);
+    let ok: bool = env.eval(r#"
+        local frame = CreateFrame('Frame', nil, UIParent, 'GarrisonMissionBonusRewardsTemplate')
+        _G.GarrisonChestProbe = frame.ChestModel
+        return type(frame.ChestModel:GetScript('OnLoad')) == 'function'
+            and type(frame.ChestModel.SetHeightFactor) == 'function'
+    "#).expect("create the original Garrison bonus chest");
+    let errors = env.state().borrow().lua_errors.clone();
+    assert!(
+        !errors.iter().any(|error| error.contains("SetHeightFactor")),
+        "original chest OnLoad must accept SetHeightFactor: {errors:?}"
+    );
+    assert!(ok);
+    assert!(env.exec("GarrisonChestProbe:SetHeightFactor('bad')").is_err());
+}
+
 #[test]
 fn all_blizzard_addon_load_errors_are_tracked_per_addon_name() {
     common::with_perf_lock(|| {
