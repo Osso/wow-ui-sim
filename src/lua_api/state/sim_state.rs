@@ -564,6 +564,7 @@ pub struct SimState {
     pub store_public_eligibility:
         crate::c_api::store_public_eligibility::GroupEligibilityObservations,
     pub timerunning_season_id: Option<u32>,
+    pub active_timerunning_season_id: u32,
     pub timerunning_season_seconds_remaining: u64,
     pub modifier_keys: ModifierKeys,
     pub pressed_keys: HashSet<String>,
