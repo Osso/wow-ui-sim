@@ -97,5 +97,4 @@ pub struct UiWidgetInputs {
     pub double_icon_and_text: HashMap<WidgetId, DoubleIconAndTextRecord>,
     pub bullet_text_lists: HashMap<WidgetId, BulletTextListRecord>,
     pub text_column_rows: HashMap<WidgetId, TextColumnRowVisualizationInfo>,
-    /// Zero means no selected HUD set in this simulator fixture, not a native default.
 }
