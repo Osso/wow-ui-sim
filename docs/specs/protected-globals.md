@@ -4,13 +4,14 @@ The simulator applies a best-guess protection policy to registered globals and C
 
 ## Best-guess basis
 
-Native evidence establishes the diagnostic events and that a refused call returns without raising. It does not establish the protected function set. The membership list uses the Warcraft Wiki `World_of_Warcraft_API` API tags captured on 2026-10-31. Protection membership and combat policy remain best guesses, not native-verified facts.
+Native evidence establishes the diagnostic events and that a refused call returns without raising. It does not establish the protected function set. The membership list uses the Warcraft Wiki `World_of_Warcraft_API` API tags captured on 2026-10-31. Protection membership and combat policy remain best guesses, not native-verified facts. For Logout and Quit, native return behavior is UNKNOWN; the common policy takes precedence over the older session-specific error expectation, so refusal emits the event and returns normally.
 
 ## What it must do
 
 - [x] An insecure `TargetUnit` call returns no values, leaves the target unchanged, and emits `ADDON_ACTION_FORBIDDEN` with the addon origin and `TargetUnit()`.
 - [x] The Blizzard `GameEvent` consumer shows `ADDON_ACTION_FORBIDDEN` for that event.
 - [x] A secure `TargetUnit` call executes normally.
+- [x] Insecure `Logout` and `Quit` emit `ADDON_ACTION_FORBIDDEN`, return normally and leave session state unchanged; secure calls retain their transitions.
 - [x] Insecure direct and callback-mediated `securecall` invocations cannot launder protected calls.
 - [x] Insecure `SetBinding` executes outside combat, but in combat returns no values, leaves the binding unchanged, and emits `ADDON_ACTION_BLOCKED` with origin and `SetBinding()`.
 - [ ] Apply the same policy to the other registered names in the community list, without publishing missing functions.
