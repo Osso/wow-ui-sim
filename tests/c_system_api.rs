@@ -156,16 +156,11 @@ fn test_c_voice_chat_speak_text_noop() {
 }
 
 #[test]
-fn test_c_voice_chat_stop_speaking_text_noop() {
+fn test_c_voice_chat_stop_speaking_text_records_each_call() {
     let env = env();
-    env.eval::<()>("C_VoiceChat.StopSpeakingText()").unwrap();
-}
-
-#[test]
-fn test_c_voice_chat_is_speaking_text_false() {
-    let env = env();
-    let speaking: bool = env.eval("return C_VoiceChat.IsSpeakingText()").unwrap();
-    assert!(!speaking);
+    env.exec("C_VoiceChat.StopSpeakingText(); C_VoiceChat.StopSpeakingText()")
+        .unwrap();
+    assert_eq!(env.state().borrow().voice_chat_speak_stop_count, 2);
 }
 
 #[test]

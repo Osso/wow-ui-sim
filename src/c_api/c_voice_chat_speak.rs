@@ -22,7 +22,13 @@ pub struct SpeakTextRequest {
 
 pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
     let namespace = super::ensure_namespace(state, "C_VoiceChat")?;
-    table_set_rust_fn_static(state, namespace, "SpeakText", speak_text)
+    table_set_rust_fn_static(state, namespace, "SpeakText", speak_text)?;
+    table_set_rust_fn_static(state, namespace, "StopSpeakingText", stop_speaking_text)
+}
+
+fn stop_speaking_text(state: &mut LuaState) -> LuaResult<u32> {
+    borrow_state_mut(state)?.voice_chat_speak_stop_count += 1;
+    Ok(0)
 }
 
 fn speak_text(state: &mut LuaState) -> LuaResult<u32> {
