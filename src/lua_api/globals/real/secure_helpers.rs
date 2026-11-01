@@ -8,6 +8,7 @@
 
 use crate::client_profile::{ACTIVE, ClientProfile};
 use crate::lua_api::methods::native_frame_id_from_val;
+use crate::lua_api::script_helpers::{call_error_handler_state, protected_lua_pcall_state};
 use crate::lua_api::taint::current_stack_taint;
 use rilua::stdlib::taint::{call_with_stack_taint, get_closure_taint};
 use rilua::vm::callinfo::LUA_MULTRET;
@@ -173,6 +174,33 @@ fn create_secure_delegate(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn invoke_secure_delegate(state: &mut LuaState) -> LuaResult<u32> {
+    let upvalues = current_upvalues(state)?;
+    let args: Vec<_> = (state.base..state.top)
+        .map(|index| state.stack_get(index))
+        .collect();
+    let target = new_rust_closure(
+        state,
+        call_secure_delegate_target,
+        "SecureDelegateTarget",
+        upvalues,
+    );
+    state.push(target);
+    match protected_lua_pcall_state(state, target, &args) {
+        Ok(results) => {
+            let count = results.len() as u32;
+            for value in results {
+                state.push(value);
+            }
+            Ok(count)
+        }
+        Err(error) => {
+            call_error_handler_state(state, &error);
+            Ok(0)
+        }
+    }
+}
+
+fn call_secure_delegate_target(state: &mut LuaState) -> LuaResult<u32> {
     let upvalues = current_upvalues(state)?;
     let wrap = matches!(upvalues[1], Val::Bool(true));
     call_through(state, upvalues[0], None, |state, value| {

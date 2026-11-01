@@ -35,6 +35,24 @@ fn selected_mixin_wraps_untrusted_delegate_arguments() {
 }
 
 #[test]
+fn original_unit_frame_delegate_reports_target_errors() {
+    let env = WowLuaEnv::new().unwrap();
+    let addons = wow_ui_sim::blizzard_ui_sync::default_cache_addons_path().unwrap();
+    let source = std::fs::read_to_string(addons.join("Blizzard_UnitFrame/Shared/UnitFrameUtil.lua")).unwrap();
+    env.exec(&source).unwrap();
+    env.exec(
+        r#"
+        local reported
+        seterrorhandler(function(message) reported = message end)
+        local count = select('#', UnitFrameUtil.UpdateUnitFrameRoleIcon(nil))
+        assert(count == 0, 'failed original delegate must return zero values')
+        assert(reported, 'original delegate failure must reach the error handler')
+        "#,
+    )
+    .unwrap();
+}
+
+#[test]
 fn securecopy_enforces_requested_traversal_depth() {
     let env = WowLuaEnv::new().unwrap();
     env.exec(
@@ -141,14 +159,17 @@ fn secure_delegate_honours_wrap_option_and_restores_taint_on_error() {
         unwrapped(untrusted)
         assert(received == untrusted)
 
+        local reported
+        seterrorhandler(function(message) reported = message end)
         local failing = CreateSecureDelegate(function() error('delegate failure') end)
         local function addon()
-            local ok, message = pcall(failing)
-            return ok, message, issecure()
+            local count = select('#', failing())
+            return count, issecure()
         end
         debug.setobjecttaint(addon, 'ErrorAddon')
-        local ok, message, secure = addon()
-        assert(not ok and string.find(message, 'delegate failure', 1, true))
+        local count, secure = addon()
+        assert(count == 0, 'failed delegate must return zero values')
+        assert(reported and string.find(reported, 'delegate failure', 1, true))
         assert(secure == false, 'caller taint must be restored after an error')
         "#,
     )
