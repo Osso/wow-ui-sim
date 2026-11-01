@@ -15,11 +15,11 @@ pub(crate) fn assert_insecure_session_actions_blocked(env: &WowLuaEnv) {
         let code = format!(
             r#"
             local taint
-            local events = {}
+            local events = {{}}
             local frame = CreateFrame('Frame')
             frame:RegisterEvent('ADDON_ACTION_FORBIDDEN')
             frame:SetScript('OnEvent', function(_, event, addon, action)
-                events[#events + 1] = {event, addon, action}
+                events[#events + 1] = {{event, addon, action}}
             end)
             local invoke = function()
                 taint = debug.getstacktaint()
