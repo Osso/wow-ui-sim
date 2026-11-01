@@ -787,7 +787,9 @@ fn dress_up_scene_uses_player_fallback_and_exported_race_actor() {
         scene:TransitionToModelSceneID(596, CAMERA_TRANSITION_TYPE_IMMEDIATE, CAMERA_MODIFICATION_TYPE_DISCARD, true)
         local player = scene:GetActorByTag('player')
         local tauren = scene:GetActorByTag('tauren-male')
+        _G.ModelBlendActor = player
         if not player or not tauren then return false end
+        if type(player.SetAnimationBlendOperation) ~= 'function' or CreateFrame('Frame').SetAnimationBlendOperation ~= nil or CreateFrame('PlayerModel').SetAnimationBlendOperation ~= nil then return false end
         if scene:GetPlayerActor(nil, nil, 'Human', 2) ~= player then return false end
         SetupPlayerForModelScene(scene, nil, nil, nil, nil, nil, nil, 'Human', 2)
         if player:GetModelUnitGUID() ~= UnitGUID('player') then return false end
@@ -796,6 +798,10 @@ fn dress_up_scene_uses_player_fallback_and_exported_race_actor() {
         return tauren:GetModelUnitGUID() == UnitGUID('player')
     "#).expect("original SetupPlayerForModelScene selects scene actors");
     assert!(ok);
+    env.exec("ModelBlendActor:SetAnimationBlendOperation(Enum.ModelBlendOperation.None); ModelBlendActor:SetAnimationBlendOperation(Enum.ModelBlendOperation.Anim)")
+        .expect("actor accepts documented blend operations");
+    assert!(env.exec("ModelBlendActor:SetAnimationBlendOperation('bad')").is_err());
+    assert!(env.exec("ModelBlendActor:SetAnimationBlendOperation(2)").is_err());
 }
 
 #[cfg(feature = "client-retail")]

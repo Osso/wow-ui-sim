@@ -33,13 +33,11 @@ def main():
     for rows in (scenes, actors, cameras):
         if len({row[0] for row in rows}) != len(rows):
             raise ValueError("duplicate row ID")
-    lines = ["//! Generated from UiModelScene{,Actor,Camera}.csv build 12.1.5.70391.", "", "pub static SCENES: &[(i64, i64)] = &["]
-    lines.extend(f"    ({scene}, {kind})," for scene, kind in sorted(scenes))
-    lines.extend(["];", "", "pub static ACTORS: &[(i64, i64, &str)] = &["])
+    scene_values = ", ".join(f"({scene}, {kind})" for scene, kind in sorted(scenes))
+    lines = ["//! Generated from UiModelScene{,Actor,Camera}.csv build 12.1.5.70391.", "", f"pub static SCENES: &[(i64, i64)] = &[{scene_values}];", "", "pub static ACTORS: &[(i64, i64, &str)] = &["]
     lines.extend(f"    ({actor}, {scene}, {json.dumps(tag, ensure_ascii=False)})," for actor, scene, tag in sorted(actors))
-    lines.extend(["];", "", "pub static CAMERAS: &[(i64, i64)] = &["])
-    lines.extend(f"    ({camera}, {scene})," for camera, scene in sorted(cameras))
-    lines.extend(["];", ""])
+    camera_values = ", ".join(f"({camera}, {scene})" for camera, scene in sorted(cameras))
+    lines.extend(["];", "", f"pub static CAMERAS: &[(i64, i64)] = &[{camera_values}];", ""])
     args.output.write_text("\n".join(lines), encoding="utf-8")
     print(f"Generated {len(scenes)} scenes, {len(actors)} actors, {len(cameras)} cameras")
 
