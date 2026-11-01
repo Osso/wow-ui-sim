@@ -73,6 +73,9 @@ fn diff_c_namespaces_extra_file_excludes_documented_blizzard_namespaces() {
 }
 
 #[test]
+// C_TableUtil is documented only by Era, Mists and Anniversary, and the pinned
+// GMTicketInfoDocumentation declares events only, so neither has a function to
+// require here (APIs are published per generated docs).
 fn seeded_missing_c_namespace_tables_exist_with_representative_methods() {
     let env = env();
     let result: String = env
@@ -84,7 +87,6 @@ fn seeded_missing_c_namespace_tables_exist_with_representative_methods() {
                 { "C_EncounterEvents", "GetEventList" },
                 { "C_PrototypeDialog", "SelectOption" },
                 { "C_Reincarnation", "StartReincarnation" },
-                { "C_TableUtil", "FindIndexedMismatch" },
                 { "C_TradeSkillUI", "GetTradeSkillLine" },
                 { "C_Tutorial", "GetTutorialStatus" },
             }
@@ -120,7 +122,6 @@ fn documented_extra_c_namespace_tables_exist_with_representative_methods() {
                 { "C_CinematicList", "GetUICinematicList" },
                 { "C_CombatLogSecure", "GetEntryCount" },
                 { "C_Console", "GetAllCommands" },
-                { "C_GMTicketInfo", "HasGMTicket" },
                 { "C_Guild", "IsInGuild" },
                 { "C_Login", "GetState" },
                 { "C_MacOptions", "GetGameBundleName" },
