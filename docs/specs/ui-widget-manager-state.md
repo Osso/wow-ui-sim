@@ -19,8 +19,8 @@ Production `0745fe84f` supplies full bar producers, HUD selectors and host feeds
 
 - [ ] `GetStatusBarWidgetVisualizationInfo` and `GetCaptureBarWidgetVisualizationInfo` return complete supplied 35-field StatusBar and 22-field CaptureBar records respectively, preserving field names, Lua types, enum scalars, and values from the current Retail/PTR documented schemas (equivalent except a blank line). Absent IDs return nil; IDs never infer records or catalog entries.
 - [ ] Every bar query returns a fresh record. StatusBar `partitionValues` preserves supplied array order and is a fresh nested array: caller element edits, insertion/removal, and outer-record mutation cannot alter host inputs, retained snapshots, or later queries. Supplied replacements affect later queries only; environments remain independent.
-- [ ] Four environment-local `f64` inputs select TopCenter, BelowMinimap, PowerBar, and ObjectiveTracker widget sets. Each corresponding query returns exactly one number from its input, including distinct explicit IDs without catalog membership. Default zero means no selected set by simulator model policy, not a proven native default. Later input changes affect queries without changing another environment.
-- [x] Active standard HUD containers execute their actual cached OnLoad using selections supplied before loading and explicit set/widget IDs. Assert selected-set registration and actual acquired consumers; default-zero loading leaves no active widget set. Query freshness does not imply dynamic rebinding of already loaded containers.
+- [ ] TopCenter, BelowMinimap, PowerBar and ObjectiveTracker queries return fixed set IDs 1, 2, 283 and 240 respectively. Retail build 70688 establishes local literals; their Lua publication is a best guess because the native middle path remains unknown.
+- [ ] Active standard HUD containers execute their actual cached OnLoad using those fixed IDs and explicit set/widget records. Assert registration and acquired consumers; without records the selected sets remain empty.
 - [x] Actual cached StatusBar/CaptureBar templates consume supplied bar fields through the manager path, without mock providers, templates, Setup, or pools. Assert concrete min/max/value, text/tooltip, partition order and geometry, capture neutral-zone geometry (including zero size), pool counts, hidden/restore transitions, incremental updates, membership removal, and unregister cleanup. Flush actual OnUpdate before asserting deferred layout/count cleanup.
 
 ### Host updates and consumer lifecycle
@@ -62,7 +62,7 @@ The cached manager assigns `widgetTag` when acquiring a frame; ordinary setup re
 ## Implementation inventory
 
 - `src/c_api/ui_widget_manager.rs` — modeled widget identities and existing ButtonHeader records; exports manager input records.
-- `src/c_api/ui_widget_manager/inputs.rs` — supplied set membership and IconAndText inputs; staged StatusBar/CaptureBar maps and four `f64` HUD selections with default-zero model policy.
+- `src/c_api/ui_widget_manager/inputs.rs` — supplied set membership and visualization inputs.
 - `src/c_api/ui_widget_manager/bar_records.rs` — complete supplied 35-field StatusBarRecord and 22-field CaptureBarRecord DTOs.
 - `src/c_api/ui_widget_manager/bars.rs` — full supplied bar snapshot producers, including fresh StatusBar partition arrays; five bar/HUD query cases passed.
 - `src/c_api/ui_widget_manager/hud.rs` — four live `f64` selectors, exactly one numeric return each, with default-zero model policy; bounded query and actual HUD OnLoad proof.
