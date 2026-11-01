@@ -307,6 +307,29 @@ fn load_panel_harness_blizzard_ui(env: &WowLuaEnv) -> HashSet<String> {
     closure.into_iter().map(|(name, _)| name).collect()
 }
 
+#[cfg(feature = "client-retail")]
+#[test]
+fn force_load_click_binding_runs_macro_bootstrap_first() {
+    let env = WowLuaEnv::new().expect("create Lua environment");
+    env.state().borrow_mut().addon_base_paths = vec![blizzard_ui_dir()];
+    reset_template_state();
+    common::load_profile_framexml(&env);
+    for (name, toc) in discover_all_blizzard_addons(&blizzard_ui_dir()) {
+        load_addon(&env.loader_env(), &toc).expect("force-load Blizzard addon");
+        if name == "Blizzard_ClickBindingUI" {
+            let errors = env.state().borrow().lua_errors.clone();
+            assert!(
+                !errors.iter().any(|error| error.contains("Blizzard_ClickBindingUI.lua:594")),
+                "Click Binding OnLoad must not fail at the macro bootstrap call: {errors:?}"
+            );
+            let present: bool = env.eval("return type(MacroFrame_LoadUI) == 'function' and ClickBindingFrame ~= nil").unwrap();
+            assert!(present, "the macro bootstrap and Click Binding frame must exist");
+            return;
+        }
+    }
+    panic!("Click Binding addon missing from force-load discovery");
+}
+
 #[test]
 fn all_blizzard_addon_load_errors_are_tracked_per_addon_name() {
     common::with_perf_lock(|| {
