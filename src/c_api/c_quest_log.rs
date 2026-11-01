@@ -19,6 +19,16 @@ pub struct QuestAdditionalHighlights {
 pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
     super::c_map_bounties::register_quest_queries(state)?;
     let namespace = ensure_namespace(state, "C_QuestLog")?;
+    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
+        // QuestLogDocumentation.lua:1033,1269.
+        table_set_rust_fn_static(
+            state,
+            namespace,
+            "UpdateCampaignHeaders",
+            update_campaign_headers,
+        )?;
+        table_set_rust_fn_static(state, namespace, "IsUnitOnQuest", is_unit_on_quest)?;
+    }
     table_set_rust_fn_static(
         state,
         namespace,
@@ -86,6 +96,56 @@ fn quest_can_have_war_mode_bonus(state: &mut LuaState) -> LuaResult<u32> {
         quest_id.is_some_and(|id| sim.quest_war_mode_eligibility.contains(&id))
     };
     state.push(Val::Bool(eligible));
+    Ok(1)
+}
+
+fn update_campaign_headers(_state: &mut LuaState) -> LuaResult<u32> {
+    // Campaign-header membership and ordering are not modeled.
+    Ok(0)
+}
+
+fn is_unit_on_quest(state: &mut LuaState) -> LuaResult<u32> {
+    use crate::lua_api::globals::unit_misc::{
+        existing_guid_for_unit, guid_for_unit, party_guid_for_index,
+    };
+    use crate::lua_api::methods::val_to_string;
+
+    let unit = rilua::table_security::unwrap_secret(state, stack_val(state, 1))?;
+    let unit = match unit {
+        Val::Str(_) => val_to_string(state, unit).unwrap_or_default(),
+        Val::Num(number) => number.to_string(),
+        _ => return Err(rilua::runtime_error("IsUnitOnQuest requires a unit")),
+    };
+    let identity = {
+        let sim = borrow_state(state)?;
+        existing_guid_for_unit(&sim, &unit)
+    };
+    let value = rilua::table_security::unwrap_secret(state, stack_val(state, 2))?;
+    let quest_id = validate_supplied_relation_id(value, "IsUnitOnQuest requires a questID")?;
+    let on_quest = {
+        let sim = borrow_state(state)?;
+        let log = &sim.quest_log_entries;
+        match (identity, quest_id.filter(|id| *id > 0)) {
+            (Some(guid), Some(quest_id)) if sim.party_group_active => {
+                if guid == guid_for_unit(&sim, "player") {
+                    log.entries.iter().any(|entry| entry.quest_id == quest_id)
+                } else if sim
+                    .party_members
+                    .iter()
+                    .enumerate()
+                    .any(|(index, _)| party_guid_for_index(index) == guid)
+                {
+                    log.party_quest_ids
+                        .get(&guid)
+                        .is_some_and(|quests| quests.contains(&quest_id))
+                } else {
+                    false
+                }
+            }
+            _ => false,
+        }
+    };
+    state.push(Val::Bool(on_quest));
     Ok(1)
 }
 
