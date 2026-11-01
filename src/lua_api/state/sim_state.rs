@@ -233,6 +233,9 @@ pub struct SimState {
     pub has_vehicle_action_bar: bool,
     pub vehicle_bar_index: i32,
     pub override_bar_skin: Option<i32>,
+    /// Override-bar flags read by `ShouldOverrideBarShow{Health,Mana}Bar`.
+    pub override_bar_shows_health_bar: bool,
+    pub override_bar_shows_mana_bar: bool,
     pub override_bar_index: i32,
     pub has_temp_shapeshift_action_bar: bool,
     pub temp_shapeshift_bar_index: i32,

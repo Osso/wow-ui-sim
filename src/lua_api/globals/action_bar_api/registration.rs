@@ -148,13 +148,21 @@ fn register_page_methods(state: &mut LuaState, table_ref: GcRef<Table>) -> LuaRe
 }
 
 fn register_state_queries(state: &mut LuaState, table_ref: GcRef<Table>) -> LuaResult<()> {
-    let methods: [(&'static str, RustFn); 6] = [
+    let methods: [(&'static str, RustFn); 8] = [
         ("HasVehicleActionBar", has_vehicle_action_bar),
         ("HasOverrideActionBar", has_override_action_bar),
         ("HasBonusActionBar", has_bonus_action_bar),
         ("HasTempShapeshiftActionBar", has_temp_shapeshift_action_bar),
         ("HasExtraActionBar", has_extra_action_bar),
         ("IsPossessBarVisible", is_possess_bar_visible),
+        (
+            "ShouldOverrideBarShowHealthBar",
+            should_override_bar_show_health_bar,
+        ),
+        (
+            "ShouldOverrideBarShowManaBar",
+            should_override_bar_show_mana_bar,
+        ),
     ];
     install_action_bar_methods(state, table_ref, &methods)
 }

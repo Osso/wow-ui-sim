@@ -194,6 +194,16 @@ fn has_override_action_bar(state: &mut LuaState) -> LuaResult<u32> {
     push_bool(state, has_override_action_bar)
 }
 
+fn should_override_bar_show_health_bar(state: &mut LuaState) -> LuaResult<u32> {
+    let shows = borrow_state(state)?.override_bar_shows_health_bar;
+    push_bool(state, shows)
+}
+
+fn should_override_bar_show_mana_bar(state: &mut LuaState) -> LuaResult<u32> {
+    let shows = borrow_state(state)?.override_bar_shows_mana_bar;
+    push_bool(state, shows)
+}
+
 fn has_bonus_action_bar(state: &mut LuaState) -> LuaResult<u32> {
     let has_bonus_action_bar = borrow_state(state)?.has_bonus_action_bar;
     push_bool(state, has_bonus_action_bar)

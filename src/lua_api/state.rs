@@ -187,6 +187,8 @@ macro_rules! build_empty_sim_state {
             vehicle_bar_index: 12,
             has_override_action_bar: false,
             override_bar_skin: None,
+            override_bar_shows_health_bar: false,
+            override_bar_shows_mana_bar: false,
             override_bar_index: 14,
             has_temp_shapeshift_action_bar: false,
             temp_shapeshift_bar_index: 1,
