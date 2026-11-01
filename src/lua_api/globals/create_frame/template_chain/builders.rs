@@ -40,7 +40,9 @@ pub(super) fn load_template(
     let result = crate::loader::chunk_cache::load_chunk(state, source, &cache_tag)
         .map_err(|error| rilua::runtime_error(error.to_string()));
     state.global_slots = saved_slots;
-    result
+    let function = result?;
+    apply_template_factory_environment(state, &function)?;
+    Ok(function)
 }
 
 pub(super) fn load_constant_template(
@@ -53,7 +55,26 @@ pub(super) fn load_constant_template(
     let result = crate::loader::chunk_cache::load_constant_chunk(state, source, &cache_tag)
         .map_err(|error| rilua::runtime_error(error.to_string()));
     state.global_slots = saved_slots;
-    result
+    let function = result?;
+    apply_template_factory_environment(state, &function)?;
+    Ok(function)
+}
+
+fn apply_template_factory_environment(
+    state: &mut LuaState,
+    function: &rilua::Function,
+) -> LuaResult<()> {
+    let secure = {
+        let sim = crate::lua_api::methods::borrow_state(state)?;
+        sim.loading_addon_index
+            .and_then(|index| sim.addons.get(index as usize))
+            .is_some_and(|addon| addon.use_secure_env)
+    };
+    if secure {
+        crate::lua_api::globals::security::mark_secure_state(state, function)?;
+    }
+    crate::lua_api::loader_env::apply_loading_scoped_fenv_state(state, function)
+        .map_err(|error| rilua::runtime_error(error.to_string()))
 }
 
 fn build_set_alpha_handler(state: &mut LuaState, alpha: f64) -> LuaResult<Val> {

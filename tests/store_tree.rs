@@ -458,6 +458,19 @@ fn store_catalog_button_slice_geometry_stays_bounded() {
 }
 
 prefork_full_ui_case! {
+fn store_notice_show_updates_cover(env: &WowLuaEnv) {
+    env.exec(r#"
+        StoreFrame:Show()
+        StoreFrame.Notice:Hide()
+        StoreFrame.Notice:Show()
+        assert(StoreFrame.Cover:IsShown(), "notice must show the store cover")
+    "#).expect("store notice show updates the cover");
+    let errors = env.state().borrow().lua_errors.clone();
+    assert!(errors.is_empty(), "store notice must not record Lua errors: {errors:#?}");
+}
+}
+
+prefork_full_ui_case! {
 fn store_product_card_buy_button_click_completes_without_store_upvalue_error(env: &WowLuaEnv) {
     let result: (bool, Option<String>) = env
         .eval(
