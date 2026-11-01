@@ -770,6 +770,16 @@ fn test_patch_12_1_spell_cooldown_payload() {
 #[test]
 fn test_patch_12_1_housing_and_forbidden_enums() {
     let env = WowLuaEnv::new().unwrap();
+    // 12.1.5 added two animation aspects in ac3ac03ac.
+    let (max_value, num_values) = if cfg!(feature = "forbidden-animation-aspects") {
+        (4096, 13)
+    } else {
+        (1024, 11)
+    };
+    env.exec(&format!(
+        "__aspect_max = {max_value}; __aspect_count = {num_values}"
+    ))
+    .unwrap();
     let result: String = env
         .eval(
             r#"
@@ -804,7 +814,7 @@ fn test_patch_12_1_housing_and_forbidden_enums() {
             if aspect.UntrustedLayoutScriptExecution ~= 8 or aspect.EventRegistrations ~= 16 or aspect.AlwaysPropagateInput ~= 32 then return "aspect-middle-1" end
             if aspect.ScriptedInput ~= 64 or aspect.QueryFocus ~= 128 or aspect.ChangeAnimationTarget ~= 256 then return "aspect-middle-2" end
             if aspect.RemoveSecretAspects ~= 512 or aspect.ChangeParent ~= 1024 then return "aspect-last" end
-            if aspectMeta.MinValue ~= 1 or aspectMeta.MaxValue ~= 1024 or aspectMeta.NumValues ~= 11 then return "aspect-metadata" end
+            if aspectMeta.MinValue ~= 1 or aspectMeta.MaxValue ~= __aspect_max or aspectMeta.NumValues ~= __aspect_count then return "aspect-metadata" end
             return "ok"
             "#,
         )
