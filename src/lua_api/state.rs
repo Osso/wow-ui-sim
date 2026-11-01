@@ -224,6 +224,7 @@ macro_rules! build_empty_sim_state {
             major_faction_renown_levels: HashMap::new(),
             major_faction_renown_rewards: HashMap::new(),
             recent_allies: crate::c_api::c_recent_allies::RecentAlliesInput::default(),
+            latest_transmog_appearance: None,
             account_wide_reputation_factions: HashSet::new(),
             faction_paragon: HashMap::new(),
             #[cfg(feature = "retail-12-0-5")]
