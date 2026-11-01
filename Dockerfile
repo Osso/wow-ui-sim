@@ -54,11 +54,15 @@ COPY data/ data/
 # Overwrite every binary stub with real sources. Test/example/bench stubs are
 # manifest-only inputs: the binary-only build below never compiles them.
 COPY src/ src/
-RUN mkdir -p /spell-bundle /cli-bundle /rarity-bundle \
+# Retail Blizzard UI comes from the pinned CDN build (data/blizzard-ui-builds/retail.json);
+# the sync writes the exact provenance the runtime requires, so the image starts offline.
+RUN mkdir -p /spell-bundle /cli-bundle /rarity-bundle /blizzard-ui-bundle \
     && case "$WOW_UI_SIM_PROFILE" in \
         retail) cargo build --release --bin wow-sim --bin wow-cli --no-default-features --features client-retail,gui,tools --locked \
             && mkdir -p /rarity-bundle/retail \
-            && /build/target/release/wow-cli casc sync-dungeon-score-rarity --output /rarity-bundle/retail/rarity.json ;; \
+            && /build/target/release/wow-cli casc sync-dungeon-score-rarity --output /rarity-bundle/retail/rarity.json \
+            && /build/target/release/wow-cli casc sync-blizzard-ui \
+            && cp -a /root/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/. /blizzard-ui-bundle/ ;; \
         wowforever) cargo build --release --bin wow-sim --bin wow-cli --no-default-features --features client-wowforever,gui,tools --locked \
             && /build/target/release/wow-cli casc sync-forever-spells --source cdn --output /spell-bundle/spells.json \
             && cp /build/target/release/wow-cli /cli-bundle/wow-cli ;; \
@@ -71,15 +75,17 @@ RUN mkdir -p /spell-bundle /cli-bundle /rarity-bundle \
              /usr/lib/x86_64-linux-gnu/libicudata.so.72 /icu-runtime/
 
 # =============================================================================
-# BlizzardUI Stage — sparse-checkout from Gethe/wow-ui-source
+# BlizzardUI Stage — Forever sparse-checkout from Gethe/wow-ui-source
+# (Retail is synced from the pinned CDN build in the builder stage.)
 # =============================================================================
 FROM alpine/git AS blizzard-ui
 ARG WOW_UI_SIM_PROFILE
 
 # Never publish a cache whose tree differs from the selected profile manifest.
-COPY data/blizzard-ui-files/retail.txt data/blizzard-ui-files/wowforever.txt /tmp/manifests/
-RUN case "$WOW_UI_SIM_PROFILE" in \
-        retail) revision=b9be9379719047977fca4dba1bb1d9988e8840b3; version=12.1.5.70448 ;; \
+COPY data/blizzard-ui-files/wowforever.txt /tmp/manifests/
+RUN mkdir -p /wow-ui-source/Interface/AddOns \
+    && if [ "$WOW_UI_SIM_PROFILE" = retail ]; then exit 0; fi \
+    && case "$WOW_UI_SIM_PROFILE" in \
         wowforever) revision=ca8368f2f2380cbe696854f7f2646387c278a61b; version=1.60.1.70532 ;; \
         *) echo "Unsupported profile: $WOW_UI_SIM_PROFILE" >&2; exit 1 ;; \
     esac \
@@ -127,6 +133,7 @@ COPY --from=builder /icu-runtime/ /usr/lib/x86_64-linux-gnu/
 # created in the blizzard-ui stage and tells the runtime the cache
 # is ready, skipping the CASC sync attempt.
 COPY --from=blizzard-ui /wow-ui-source/Interface/AddOns/ /root/.cache/wow-ui-sim/blizzard-ui/${WOW_UI_SIM_PROFILE}/AddOns/
+COPY --from=builder /blizzard-ui-bundle/ /root/.cache/wow-ui-sim/blizzard-ui/${WOW_UI_SIM_PROFILE}/AddOns/
 COPY --from=builder /spell-bundle/ /app/spells/wowforever/
 COPY --from=builder /rarity-bundle/ /app/dungeon-score-rarity/
 
