@@ -257,6 +257,48 @@ fn spell_display_unit_context_isolates_original_containers() {
 }
 
 #[test]
+fn unit_update_payload_reaches_other_attached_container() {
+    use wow_ui_sim::c_api::ui_widget_manager::{ProcessingUnit, WidgetId};
+
+    let env = load_and_register_spell_container_env(true);
+    assert_lua(&env, "second attached container", r#"
+        OtherContainer = CreateFrame('Frame', nil, UIParent, 'UIWidgetContainerTemplate')
+        OtherContainer:RegisterForWidgetSet(431, nil, nil, 'target')
+        observedPayloads = {}
+        local listener = CreateFrame('Frame')
+        listener:RegisterEvent('UPDATE_UI_WIDGET')
+        listener:SetScript('OnEvent', function(_, _, info)
+            table.insert(observedPayloads, info)
+        end)
+    "#);
+    for (unit, text) in [("player", "Player initial"), ("target", "Target initial")] {
+        let mut membership = entry();
+        membership.unit_token = Some(unit.into());
+        let mut row = supplied_record();
+        row.spell_info.text = text.into();
+        env.update_ui_widget(SET_ID, membership, WidgetVisualization::SpellDisplay(row)).unwrap();
+    }
+    let mut target = supplied_record();
+    target.spell_info.text = "Target refreshed".into();
+    env.state().borrow_mut().ui_widget_inputs.unit_context.unit_visualizations.insert(
+        (ProcessingUnit::Token("target".into()), WidgetId::from_number(ID)),
+        WidgetVisualization::SpellDisplay(target),
+    );
+    let mut player = entry();
+    player.unit_token = Some("player".into());
+    let mut row = supplied_record();
+    row.spell_info.text = "Player refreshed".into();
+    env.update_ui_widget(SET_ID, player, WidgetVisualization::SpellDisplay(row)).unwrap();
+    assert_lua(&env, "native payload and unfiltered original consumer", r#"
+        local info = observedPayloads[#observedPayloads]
+        assert(info.widgetID == 761301 and info.widgetSetID == 431 and info.widgetType == 13)
+        assert(OtherContainer.widgetFrames[761301].Spell.Text:GetText() == 'Target refreshed')
+        assert(SpellContainer.widgetFrames[761301].Spell.Text:GetText() == 'Player refreshed')
+        assert(info.unitToken == 'player' and info.unit == nil)
+    "#);
+}
+
+#[test]
 fn spell_display_remove_one_unit_preserves_other_container() {
     use wow_ui_sim::c_api::ui_widget_manager::ProcessingUnit;
     let env = load_and_register_spell_container_env(true);
