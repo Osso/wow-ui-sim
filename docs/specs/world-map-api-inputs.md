@@ -13,7 +13,7 @@ Retail's pinned `Blizzard_APIDocumentationGenerated/MinimapDocumentation.lua:28`
 
 ## Best-guess basis
 
-Native build 70688 evidence WM1–WM3 reports VERIFIED local decisions and EMULATED result publication. The Lua-visible connection is a best guess; no live client transition was observed. The default tracking mask is the verified initialized value `0x2f5aef`. The simulator resolves map membership through explicitly supplied bounty sets and reads explicitly supplied bounty rows; this is a best-guess projection, not a native catalog. Ambiguous supplied membership is rejected.
+Native build 70688 evidence WM1–WM3 reports VERIFIED local decisions and EMULATED result publication. WM15 establishes a local refresh and group-member lookup but not continuous Lua publication. The Lua-visible connections are best guesses; no live client transition was observed. The default tracking mask is the verified initialized value `0x2f5aef`. The simulator resolves map membership through explicitly supplied bounty sets and reads explicitly supplied bounty rows; this is a best-guess projection, not a native catalog. Ambiguous supplied membership is rejected.
 
 ## How it works
 
@@ -22,7 +22,7 @@ Native build 70688 evidence WM1–WM3 reports VERIFIED local decisions and EMULA
 
 ## Implementation inventory
 
-`src/c_api/c_minimap_tracking.rs`, `src/c_api/c_map_bounties.rs`: Retail API projections from tracking defaults and supplied state.
+`src/c_api/c_minimap_tracking.rs`, `src/c_api/c_map_bounties.rs`: Retail API projections from tracking defaults and supplied state. `src/c_api/c_quest_log.rs`: Retail campaign refresh and group quest membership queries.
 
 ## Tests asserting this spec
 
