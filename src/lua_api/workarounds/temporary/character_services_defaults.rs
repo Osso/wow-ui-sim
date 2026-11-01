@@ -52,6 +52,21 @@ if rawget(C_CharacterServices, "AssignPCTDistribution") == nil then
     function C_CharacterServices.AssignPCTDistribution()
     end
 end
+
+-- Copy-from-live-region services (CharacterSelect.lua) are not modeled; with no
+-- live-region link every copy/list service reports disabled.
+for _, name in ipairs({
+    "IsLiveRegionCharacterListEnabled",
+    "IsLiveRegionCharacterCopyEnabled",
+    "IsLiveRegionAccountCopyEnabled",
+    "IsLiveRegionKeyBindingsCopyEnabled",
+}) do
+    if rawget(C_CharacterServices, name) == nil then
+        C_CharacterServices[name] = function()
+            return false
+        end
+    end
+end
 "#;
 
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
