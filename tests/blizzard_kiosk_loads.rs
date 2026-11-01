@@ -397,35 +397,30 @@ fn blizzard_kiosk_kiosk_frame_mixin_carries_eleven_methods(env: &WowLuaEnv) {
 }
 
 prefork_full_ui_case! {
-fn blizzard_kiosk_glue_kiosk_frame_mixin_carries_nine_methods(env: &WowLuaEnv) {
+fn blizzard_kiosk_glue_mixin_is_not_published_on_game_screen(env: &WowLuaEnv) {
     load_kiosk(env);
-
-    let kind: String = env
-        .eval("return type(GlueKioskFrameMixin)")
-        .expect("GlueKioskFrameMixin probe should succeed");
-    assert_eq!(
-        kind, "table",
-        "GlueKioskFrameMixin must publish at `_G` as a table — Housing/Glue.lua line 2 creates \
-         the empty mixin table at file scope before binding 9 methods. Glue.lua is loaded on \
-         the Game screen too (the per-file `[AllowLoad Glue]` annotation is stripped but not \
-         filtered by the simulator's TOC parser), so the mixin still publishes during a \
-         Game-side load"
-    );
-
-    for method in GLUE_KIOSK_FRAME_MIXIN_METHODS {
-        let kind: String = env
-            .eval(&format!("return type(GlueKioskFrameMixin['{method}'])"))
-            .unwrap_or_else(|err| panic!("GlueKioskFrameMixin.{method} probe failed: {err}"));
-        assert_eq!(
-            kind, "function",
-            "GlueKioskFrameMixin.{method} must publish as a function — the glue mixin owns 9 \
-             methods. OnEvent extends KioskFrameMixin.OnEvent (manual delegation, not \
-             CreateFromMixins); the 8 Handle* methods are no-ops because HasGlueFlow returns \
-             false (Housing demo has no glue-side surface — kept around because character- \
-             select code still calls them unconditionally)"
-        );
-    }
+    let kind: String = env.eval("return type(GlueKioskFrameMixin)").unwrap();
+    assert_eq!(kind, "nil", "Housing/Glue.lua is restricted to the Glue screen");
 }
+}
+
+#[test]
+fn blizzard_kiosk_glue_kiosk_frame_mixin_carries_nine_methods() {
+    crate::common::blizzard_addon_harness::with_blizzard_addon_glue_smoke_shape_in_dir(
+        &blizzard_ui_dir(),
+        &["Blizzard_Kiosk"],
+        &[],
+        |env, _| {
+            let kind: String = env.eval("return type(GlueKioskFrameMixin)").unwrap();
+            assert_eq!(kind, "table", "Housing/Glue.lua publishes the Glue mixin");
+            for method in GLUE_KIOSK_FRAME_MIXIN_METHODS {
+                let kind: String = env
+                    .eval(&format!("return type(GlueKioskFrameMixin['{method}'])"))
+                    .unwrap_or_else(|err| panic!("GlueKioskFrameMixin.{method} probe failed: {err}"));
+                assert_eq!(kind, "function", "GlueKioskFrameMixin.{method}");
+            }
+        },
+    );
 }
 
 prefork_full_ui_case! {
