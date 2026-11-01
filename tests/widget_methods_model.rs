@@ -762,12 +762,13 @@ fn test_model_scene_mixin_transition_resolves_collectionator_player_actor() {
             human_male_actor = scene:GetActorByTag("human-male") ~= nil,
             human_actor = scene:GetActorByTag("human") ~= nil,
             player_actor = scene:GetActorByTag("player") ~= nil,
+            tauren_actor = scene:GetActorByTag("tauren-male") ~= nil,
         }
     "#,
     )
     .unwrap();
 
-    let actor_state: (bool, bool, String, bool, bool, bool, bool) = env
+    let actor_state: (bool, bool, String, bool, bool, bool, bool, bool) = env
         .eval(
             r#"
             local s = _G.collectionator_player_actor_state
@@ -777,7 +778,8 @@ fn test_model_scene_mixin_transition_resolves_collectionator_player_actor() {
                    s.set_model_by_unit,
                    s.human_male_actor,
                    s.human_actor,
-                   s.player_actor
+                   s.player_actor,
+                   s.tauren_actor
         "#,
         )
         .unwrap();
@@ -786,9 +788,10 @@ fn test_model_scene_mixin_transition_resolves_collectionator_player_actor() {
     assert!(actor_state.1);
     assert_eq!(actor_state.2, "ModelSceneActor");
     assert!(actor_state.3);
-    assert!(actor_state.4);
-    assert!(actor_state.5);
+    assert!(!actor_state.4);
+    assert!(!actor_state.5);
     assert!(actor_state.6);
+    assert!(actor_state.7);
 }
 
 #[test]

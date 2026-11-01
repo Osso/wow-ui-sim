@@ -14,6 +14,8 @@ pub mod items;
 pub mod manifest_interface_data;
 #[path = "../data/map_art.rs"]
 pub mod map_art;
+#[path = "../data/model_scenes.rs"]
+pub mod model_scenes;
 pub mod profession_item_overrides;
 #[path = "../data/quest_poi_blobs.rs"]
 pub mod quest_poi_blobs;

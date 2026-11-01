@@ -776,6 +776,30 @@ fn garrison_bonus_chest_onload_initializes_cinematic_camera() {
 
 #[cfg(feature = "client-retail")]
 #[test]
+fn dress_up_scene_uses_player_fallback_and_exported_race_actor() {
+    let env = WowLuaEnv::new().expect("create Lua environment");
+    env.state().borrow_mut().addon_base_paths = vec![blizzard_ui_dir()];
+    reset_template_state();
+    common::load_profile_framexml(&env);
+    load_force_load_startup(&env);
+    let ok: bool = env.eval(r#"
+        local scene = CreateFrame('ModelScene', nil, UIParent, 'ModelSceneMixinTemplate')
+        scene:TransitionToModelSceneID(596, CAMERA_TRANSITION_TYPE_IMMEDIATE, CAMERA_MODIFICATION_TYPE_DISCARD, true)
+        local player = scene:GetActorByTag('player')
+        local tauren = scene:GetActorByTag('tauren-male')
+        if not player or not tauren then return false end
+        if scene:GetPlayerActor(nil, nil, 'Human', 2) ~= player then return false end
+        SetupPlayerForModelScene(scene, nil, nil, nil, nil, nil, nil, 'Human', 2)
+        if player:GetModelUnitGUID() ~= UnitGUID('player') then return false end
+        if scene:GetPlayerActor(nil, nil, 'Tauren', 2) ~= tauren then return false end
+        SetupPlayerForModelScene(scene, nil, nil, nil, nil, nil, nil, 'Tauren', 2)
+        return tauren:GetModelUnitGUID() == UnitGUID('player')
+    "#).expect("original SetupPlayerForModelScene selects scene actors");
+    assert!(ok);
+}
+
+#[cfg(feature = "client-retail")]
+#[test]
 fn perks_celebration_scene_has_generated_fanfare_actor() {
     let env = WowLuaEnv::new().expect("create Lua environment");
     env.state().borrow_mut().addon_base_paths = vec![blizzard_ui_dir()];
