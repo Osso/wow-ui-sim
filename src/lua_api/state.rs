@@ -489,6 +489,7 @@ macro_rules! build_empty_sim_state {
             lfg_category_info: default_lfg_category_info(),
             lfg_active_categories: ::std::collections::HashSet::new(),
             lfg_queued_dungeons: ::std::collections::HashMap::new(),
+            lfg_expand_prompt: None,
             lfg_queue_pop_delay_seconds: DEFAULT_LFG_QUEUE_POP_DELAY_SECONDS,
             lfg_queue_pop_due_at: None,
             lfg_active_proposal: None,
