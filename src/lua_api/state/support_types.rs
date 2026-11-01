@@ -311,6 +311,8 @@ fn one_based_index(index: i32) -> Option<usize> {
 
 #[derive(Clone, Debug, Default)]
 pub struct HousingState {
+    /// Host-supplied charter edit capability; false when no component is supplied.
+    pub charter_can_edit: bool,
     pub initiative: crate::c_api::c_neighborhood_initiative::model::NeighborhoodInitiativeState,
     /// INFERRED: explicit host feature policy for the decor market tab,
     /// disabled until configured like the market shop.

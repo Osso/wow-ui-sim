@@ -16,6 +16,7 @@ pub enum HousingArea {
 
 mod basic_mode;
 pub mod catalog;
+mod charter;
 #[cfg(feature = "retail-12-0-0")]
 pub mod editor;
 pub mod exterior;
@@ -74,6 +75,9 @@ const BUDGET_TYPE_PET_DECOR: i32 = 2;
 pub(crate) fn register_c_housing_surface(state: &mut LuaState) -> LuaResult<()> {
     // Replaces an unconditional temporary surface, including non-retail profiles.
     catalog::register(state)?;
+    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
+        charter::register(state)?;
+    }
     if matches!(
         crate::client_profile::ACTIVE,
         crate::client_profile::ClientProfile::Retail | crate::client_profile::ClientProfile::Ptr

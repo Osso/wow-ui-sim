@@ -476,6 +476,21 @@ fn blizzard_housing_charter_request_signature_dialog_publishes_named_children(en
 }
 
 prefork_full_ui_case! {
+fn blizzard_housing_charter_settings_reflect_supplied_editability(env: &WowLuaEnv) {
+    load_housing_charter(env);
+    for can_edit in [false, true, false] {
+        env.state().borrow_mut().housing.charter_can_edit = can_edit;
+        env.exec("HousingCharterFrame:UpdateSettingsButton()")
+            .expect("original charter settings update should succeed");
+        let enabled: bool = env
+            .eval("return HousingCharterFrame.SettingsButton:IsEnabled()")
+            .expect("settings button state should be readable");
+        assert_eq!(enabled, can_edit);
+    }
+}
+}
+
+prefork_full_ui_case! {
 fn blizzard_housing_charter_registers_charter_events_on_show(env: &WowLuaEnv) {
     load_housing_charter(env);
 

@@ -29,6 +29,25 @@ fn game_rules_hardcore_flag_defaults_to_false() {
 }
 
 #[test]
+fn standard_mode_predicate_tracks_supplied_game_mode() {
+    use wow_ui_sim::client_profile::{ACTIVE, ClientProfile};
+
+    let env = env();
+    if ACTIVE == ClientProfile::Wrath {
+        assert!(env.eval::<bool>("return C_GameRules.IsStandard == nil").unwrap());
+        return;
+    }
+    for (mode, expected) in [("Standard", true), ("Plunderstorm", false)] {
+        env.exec(&format!("A_Admin.SetActiveGameMode(Enum.GameMode.{mode})"))
+            .unwrap();
+        let (actual, count): (bool, i64) = env
+            .eval("return C_GameRules.IsStandard(), select('#', C_GameRules.IsStandard())")
+            .unwrap();
+        assert_eq!((actual, count), (expected, 1), "{mode}");
+    }
+}
+
+#[test]
 fn active_game_mode_matches_published_enum() {
     let env = env();
     let standard: bool = env

@@ -1223,7 +1223,7 @@ fn generated_registry_lists_post_start_housing_batch(state: &ConformanceState) {
         ("blizzard_housing_house_finder_loads::", 20),
         ("blizzard_house_editor_loads::", 14),
         ("blizzard_house_list_loads::", 10),
-        ("blizzard_housing_charter_loads::", 13),
+        ("blizzard_housing_charter_loads::", 14),
         ("blizzard_housing_controls_loads::", 12),
         ("blizzard_housing_cornerstone_loads::", 20),
         ("blizzard_housing_inspect_mode_ui_loads::", 8),
@@ -1258,7 +1258,7 @@ fn generated_registry_lists_post_start_housing_batch(state: &ConformanceState) {
         );
         total += actual_count;
     }
-    assert_eq!(total, 190);
+    assert_eq!(total, 191);
 }
 
 #[cfg(feature = "client-retail")]
