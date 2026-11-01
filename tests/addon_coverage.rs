@@ -159,14 +159,15 @@ fn classify_error_count_changes(
     let mut increased = Vec::new();
     let mut decreased = Vec::new();
 
-    for (addon_name, known_count) in known {
+    for addon_name in known.keys().chain(actual.keys()).collect::<BTreeSet<_>>() {
+        let known_count = known.get(addon_name).copied().unwrap_or(0);
         let actual_count = actual.get(addon_name).copied().unwrap_or(0);
-        match actual_count.cmp(known_count) {
+        match actual_count.cmp(&known_count) {
             std::cmp::Ordering::Greater => {
-                increased.push((addon_name.clone(), *known_count, actual_count));
+                increased.push((addon_name.clone(), known_count, actual_count));
             }
             std::cmp::Ordering::Less => {
-                decreased.push((addon_name.clone(), *known_count, actual_count));
+                decreased.push((addon_name.clone(), known_count, actual_count));
             }
             std::cmp::Ordering::Equal => {}
         }
@@ -205,6 +206,20 @@ fn error_count_ratchet_detects_increases_and_decreases() {
 
     assert_eq!(changes.increased, vec![("Blizzard_A".to_string(), 2, 3)],);
     assert_eq!(changes.decreased, vec![("Blizzard_C".to_string(), 1, 0)],);
+}
+
+#[test]
+fn error_count_ratchet_rejects_unlisted_addon_errors() {
+    let known = BTreeMap::from([("Blizzard_Collections".to_string(), 2)]);
+    let actual = BTreeMap::from([
+        ("Blizzard_Collections".to_string(), 2),
+        ("Blizzard_EncounterJournal".to_string(), 2),
+    ]);
+    let changes = classify_error_count_changes(&known, &actual);
+    assert_eq!(
+        changes.increased,
+        vec![("Blizzard_EncounterJournal".to_string(), 0, 2)]
+    );
 }
 
 #[test]
