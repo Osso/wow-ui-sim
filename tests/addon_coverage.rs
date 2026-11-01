@@ -583,6 +583,57 @@ fn garrison_consumers_clear_and_read_empty_mission_lists() {
     assert!(env.exec("C_Garrison.GetAvailableMissions(true, 1)").is_err());
 }
 
+#[cfg(feature = "client-retail")]
+fn load_garrison_original_consumers() -> WowLuaEnv {
+    let env = WowLuaEnv::new().expect("create Lua environment");
+    env.state().borrow_mut().addon_base_paths = vec![blizzard_ui_dir()];
+    reset_template_state();
+    common::load_profile_framexml(&env);
+    load_force_load_startup(&env);
+    for (name, toc) in force_load_game_addons() {
+        load_addon(&env.loader_env(), &toc).expect("force-load Blizzard addon");
+        if name == "Blizzard_GarrisonUI" { return env; }
+    }
+    panic!("GarrisonUI missing from Game coverage");
+}
+
+#[cfg(feature = "client-retail")]
+#[test]
+fn shipyard_consumer_reads_empty_in_progress_missions() {
+    let env = load_garrison_original_consumers();
+    let ok: bool = env.eval(r#"
+        -- Test-only fixture for the missing GetAllBonusAbilityEffects API.
+        C_Garrison.GetAllBonusAbilityEffects = function() return {} end
+        local list = {missions={123}, missionFrames={}, bonusFrames={},
+            CompleteDialog={IsShown=function() return false end}}
+        GarrisonShipyardFrame = {MissionTab={MissionList=list}}
+        GarrisonShipyardMap_UpdateMissions()
+        return next(list.missions) == nil and next(list.bonusEffects) == nil
+    "#).expect("original Shipyard mission consumer runs");
+    assert!(ok);
+}
+
+#[cfg(feature = "client-retail")]
+#[test]
+fn landing_page_consumer_reads_empty_available_missions() {
+    let env = load_garrison_original_consumers();
+    let ok: bool = env.eval(r#"
+        -- Test-only fixture for the missing GetLandingPageItems API.
+        C_Garrison.GetLandingPageItems = function() return {} end
+        GarrisonLandingPage = {garrTypeID=3}
+        local function text() return {SetFormattedText=function() end, SetText=function() end} end
+        local list = {EmptyMissionText=text(), ScrollBox={SetDataProvider=function(self, provider)
+            self.size=provider:GetSize()
+        end}}
+        local available = {Text=text()}
+        GarrisonLandingPageReport = {List=list, InProgress={Text=text()}, Available=available,
+            selectedTab=available, GetParent=function() return GarrisonLandingPage end}
+        GarrisonLandingPageReportList_UpdateItems()
+        return next(list.AvailableItems) == nil and list.ScrollBox.size == 0
+    "#).expect("original Landing Page mission consumer runs");
+    assert!(ok);
+}
+
 #[test]
 fn all_blizzard_addon_load_errors_are_tracked_per_addon_name() {
     common::with_perf_lock(|| {
