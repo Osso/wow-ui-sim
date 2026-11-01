@@ -29,6 +29,21 @@ fn game_rules_hardcore_flag_defaults_to_false() {
 }
 
 #[test]
+fn active_game_mode_matches_published_enum() {
+    let env = env();
+    let standard: bool = env
+        .eval("return C_GameRules.GetActiveGameMode() == Enum.GameMode.Standard")
+        .unwrap();
+    env.exec("A_Admin.SetActiveGameMode(Enum.GameMode.Plunderstorm)")
+        .unwrap();
+    let plunderstorm: bool = env
+        .eval("return C_GameRules.GetActiveGameMode() == Enum.GameMode.Plunderstorm and C_GameRules.IsPlunderstorm()")
+        .unwrap();
+    assert!(standard, "the default mode must be Enum.GameMode.Standard");
+    assert!(plunderstorm, "the supplied mode must be Enum.GameMode.Plunderstorm");
+}
+
+#[test]
 fn defaults_no_rules_standard_mode_character_select() {
     let (active, f, i, s, plunder, mode, glue): (bool, f64, i64, String, bool, i64, String) = env()
         .eval(
