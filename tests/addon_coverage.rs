@@ -17,6 +17,7 @@ use wow_ui_sim::loader::{
 use wow_ui_sim::lua_api::WowLuaEnv;
 use wow_ui_sim::lua_errors::grouped_errors_by_addon;
 use wow_ui_sim::screen::ScreenKind;
+use wow_ui_sim::toc::TocFile;
 use wow_ui_sim::xml::{clear_templates, register_intrinsic_templates};
 
 const PANEL_COVERAGE_ADDONS: &[(&str, &str)] = &[
@@ -308,6 +309,26 @@ fn load_panel_harness_blizzard_ui(env: &WowLuaEnv) -> HashSet<String> {
     closure.into_iter().map(|(name, _)| name).collect()
 }
 
+fn force_load_game_addons() -> Vec<(String, PathBuf)> {
+    discover_all_blizzard_addons(&blizzard_ui_dir())
+}
+
+#[test]
+fn force_load_coverage_selects_only_game_eligible_addons() {
+    let addons = force_load_game_addons();
+    assert!(addons.iter().any(|(name, _)| name == "Blizzard_ClickBindingUI"));
+    for (name, path) in addons {
+        let toc = TocFile::from_file(&path).expect("parse addon TOC");
+        assert!(
+            toc.allows_screen(ScreenKind::Game)
+                && toc.allows_text_locale()
+                && !toc.is_ptr_only()
+                && !toc.is_game_type_restricted(),
+            "{name} is not eligible for the Game screen"
+        );
+    }
+}
+
 fn load_force_load_startup(env: &WowLuaEnv) {
     for addon in discover_blizzard_startup_addons_for_screen(&blizzard_ui_dir(), ScreenKind::Game) {
         load_startup_addon(&env.loader_env(), &addon.toc_path, addon.kind, None)
@@ -323,7 +344,7 @@ fn force_load_click_binding_runs_macro_bootstrap_first() {
     reset_template_state();
     common::load_profile_framexml(&env);
     load_force_load_startup(&env);
-    for (name, toc) in discover_all_blizzard_addons(&blizzard_ui_dir()) {
+    for (name, toc) in force_load_game_addons() {
         load_addon(&env.loader_env(), &toc).expect("force-load Blizzard addon");
         if name == "Blizzard_ClickBindingUI" {
             let errors = env.state().borrow().lua_errors.clone();
@@ -369,7 +390,7 @@ fn all_blizzard_addon_load_errors_are_tracked_per_addon_name() {
                 "active Blizzard UI cache roots must match committed manifest roots\ncache only: {cache_only:?}\nmanifest only: {manifest_only:?}"
             );
 
-            let addons = discover_all_blizzard_addons(&blizzard_ui_dir());
+            let addons = force_load_game_addons();
             let known_addons: HashSet<_> = addons.iter().map(|(name, _)| name.clone()).collect();
             let mut load_failures = Vec::new();
 
