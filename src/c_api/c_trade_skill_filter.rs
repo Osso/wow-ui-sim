@@ -154,7 +154,7 @@ fn push_bool(state: &mut LuaState, value: bool) -> LuaResult<u32> {
     Ok(1)
 }
 
-fn arg_truthy(state: &LuaState, index: usize) -> bool {
+fn arg_truthy(state: &LuaState, index: i32) -> bool {
     !matches!(stack_val(state, index), Val::Nil | Val::Bool(false))
 }
 
