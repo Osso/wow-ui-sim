@@ -774,6 +774,21 @@ fn garrison_bonus_chest_onload_initializes_cinematic_camera() {
     assert!(env.exec("GarrisonCameraProbe:InitializeCamera('bad')").is_err());
 }
 
+#[test]
+fn selected_scrapping_machine_profiles_expose_closed_state() {
+    use wow_ui_sim::client_profile::{ACTIVE, ClientProfile};
+    if !matches!(ACTIVE, ClientProfile::Retail | ClientProfile::Ptr | ClientProfile::WowForever) {
+        return;
+    }
+    let toc = TocFile::from_file(&blizzard_ui_dir().join("Blizzard_ScrappingMachineUI/Blizzard_ScrappingMachineUI.toc"))
+        .expect("parse selected ScrappingMachineUI TOC");
+    assert!(toc.allows_screen(ScreenKind::Game) && !toc.is_game_type_restricted());
+    let env = WowLuaEnv::new().expect("create Lua environment");
+    let closed: bool = env.eval("return not C_ScrappingMachineUI.HasScrappableItems() and C_ScrappingMachineUI.GetCurrentPendingScrapItemLocationByIndex(0) == nil")
+        .expect("query closed scrapping state");
+    assert!(closed);
+}
+
 #[cfg(feature = "client-retail")]
 #[test]
 fn scrapping_machine_closed_state_loads_and_updates_original_frame() {
