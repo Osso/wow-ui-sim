@@ -194,6 +194,7 @@ pub(crate) fn apply_temporary_bootstrap(lua: &mut rilua::Lua) -> crate::Result<(
 }
 
 fn apply_temporary_state_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
+    temporary::garrison_mission_lists::apply_bootstrap(lua)?;
     apply_runtime_state_bootstrap(lua)?;
     apply_account_and_social_state_bootstrap(lua)?;
     apply_player_state_bootstrap(lua)?;

@@ -91,6 +91,7 @@ pub(crate) mod frame_helper_defaults;
 pub(crate) mod game_rules_namespace_fallback;
 pub(crate) mod game_time_calendar_invites;
 pub(crate) mod gamepad_cursor_control_defaults;
+pub(crate) mod garrison_mission_lists;
 pub(crate) mod global_frame_defaults;
 pub(crate) mod global_placeholder_tables;
 pub(crate) mod glue_character_select_defaults;
