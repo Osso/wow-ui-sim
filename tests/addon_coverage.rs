@@ -634,6 +634,25 @@ fn landing_page_consumer_reads_empty_available_missions() {
     assert!(ok);
 }
 
+#[cfg(feature = "client-retail")]
+#[test]
+fn order_hall_hides_missing_combat_ally_and_uses_full_height() {
+    let env = load_garrison_original_consumers();
+    let ok: bool = env.eval(r#"
+        local ally = setmetatable({Hide=function(self) self.hidden=true end},
+            {__index=OrderHallCombatAllyMixin})
+        local list = setmetatable({combatAllyMission={stale=true}, CombatAllyUI=ally,
+            GetMissionFrame=function() return {followerTypeID=1} end,
+            SetHeight=function(self, height) self.height=height end},
+            {__index=OrderHallMissionListMixin})
+        list:UpdateCombatAllyMission()
+        return list.height == 565 and list.combatAllyMission == nil
+            and ally.missionInfo == nil and ally.hidden == true
+    "#).expect("Order Hall updates its combat ally layout");
+    assert!(ok);
+    assert!(env.exec("C_Garrison.GetCombatAllyMission('bad')").is_err());
+}
+
 #[test]
 fn all_blizzard_addon_load_errors_are_tracked_per_addon_name() {
     common::with_perf_lock(|| {
