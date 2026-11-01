@@ -851,6 +851,8 @@ pub struct SimState {
     pub voice_chat_speak_requests: Vec<crate::c_api::c_voice_chat_speak::SpeakTextRequest>,
     /// `C_VoiceChat.StopSpeakingText` calls; no playback is modeled to stop.
     pub voice_chat_speak_stop_count: u32,
+    /// Current `C_Container.SetItemSearch` text; empty means no search.
+    pub item_search_text: String,
     /// Ordered `C_AchievementTelemetry` reports.
     pub achievement_telemetry:
         Vec<crate::c_api::c_achievement_telemetry::AchievementTelemetryEvent>,

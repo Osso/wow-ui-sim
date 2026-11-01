@@ -642,3 +642,49 @@ fn test_backpack_bg_regions_have_color_fill() {
         "BottomEdge should be initialized via SetColorTexture"
     );
 }
+
+#[test]
+fn test_item_search_marks_container_buttons_by_item_name() {
+    let env = setup_env();
+    install_test_error_handler(&env);
+    clear_recorded_lua_errors(&env);
+    env.exec("ContainerFrameSettingsManager:SetUsingCombinedBags(false)")
+        .unwrap();
+    open_all_bags(&env);
+    assert_no_bag_open_errors(&env, "ToggleAllBags individual-bag open");
+
+    let matches_after = |search: &str| -> String {
+        env.eval(&format!(
+            r#"
+            C_Container.SetItemSearch({search:?})
+            local out = {{}}
+            for _, button in ContainerFrame1:EnumerateValidItems() do
+                local info = C_Container.GetContainerItemInfo(button:GetBagID(), button:GetID())
+                if info then
+                    local name = C_Item.GetItemNameByID(info.itemID) or tostring(info.itemID)
+                    out[#out + 1] = name .. "=" .. tostring(button:GetMatchesSearch())
+                end
+            end
+            table.sort(out)
+            return table.concat(out, ",")
+            "#
+        ))
+        .unwrap()
+    };
+
+    let searched = matches_after("HEARTH");
+    assert!(
+        searched.contains("Hearthstone=true"),
+        "case-insensitive name match should stay lit: {searched}"
+    );
+    assert!(
+        searched.split(',').any(|entry| entry.ends_with("=false")),
+        "non-matching items should be dimmed: {searched}"
+    );
+    let cleared = matches_after("");
+    assert!(
+        !cleared.contains("=false"),
+        "clearing the search should relight every item: {cleared}"
+    );
+    assert_no_bag_open_errors(&env, "item search");
+}

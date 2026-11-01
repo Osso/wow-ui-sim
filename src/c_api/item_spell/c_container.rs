@@ -5,7 +5,8 @@ use crate::c_api::item_spell::{
 };
 use crate::items;
 use crate::lua_api::methods::{
-    borrow_state, create_string, create_table, table_set, table_set_num, table_set_static,
+    borrow_state, borrow_state_mut, create_string, create_table, table_set, table_set_num,
+    table_set_static,
 };
 use crate::lua_api::state::BagItem;
 use crate::lua_bridge::{FromStack, stack_val, table_set_rust_fn_static};
@@ -89,6 +90,7 @@ fn register_container_query_methods(
             ("ContainerIDToInventoryID", c_container_id_to_inventory_id),
             ("GetBagName", c_container_get_bag_name),
             ("SetBagSlotFlag", c_container_set_bag_slot_flag),
+            ("SetItemSearch", c_container_set_item_search),
         ],
     )
 }
@@ -168,7 +170,7 @@ fn c_container_get_item_info(state: &mut LuaState) -> LuaResult<u32> {
         return Ok(1);
     };
 
-    let info = build_container_item_info(state, &bag_item);
+    let info = build_container_item_info(state, &bag_item)?;
     state.push(info);
     Ok(1)
 }
@@ -178,7 +180,24 @@ fn container_bag_item(state: &LuaState, bag: i32, slot: i32) -> LuaResult<Option
     Ok(bag_item)
 }
 
-fn build_container_item_info(state: &mut LuaState, bag_item: &BagItem) -> Val {
+/// Best guess, native UNKNOWN: native search also matches tooltip text; only the
+/// item name is modeled. Items without a known name never match a search.
+fn is_filtered_by_search(search: &str, item: Option<&items::ItemInfo>) -> bool {
+    if search.is_empty() {
+        return false;
+    }
+    let needle = search.to_lowercase();
+    !item.is_some_and(|item| item.name.to_lowercase().contains(&needle))
+}
+
+fn c_container_set_item_search(state: &mut LuaState) -> LuaResult<u32> {
+    let search = String::from_stack(state, 1)?;
+    borrow_state_mut(state)?.item_search_text = search;
+    crate::lua_api::script_helpers::fire_named_event_state(state, "INVENTORY_SEARCH_UPDATE", &[]);
+    Ok(0)
+}
+
+fn build_container_item_info(state: &mut LuaState, bag_item: &BagItem) -> LuaResult<Val> {
     let item_id = bag_item.item_id;
     let item = items::get_item(item_id);
     let info = create_table(state);
@@ -189,14 +208,15 @@ fn build_container_item_info(state: &mut LuaState, bag_item: &BagItem) -> Val {
         .unwrap_or(134400);
     let quality = item.map(|item| item.quality).unwrap_or(0);
     set_container_item_stack_and_quality(state, info, bag_item, icon_file_id, quality);
-    table_set_static(state, info, "isFiltered", Val::Bool(false));
+    let is_filtered = is_filtered_by_search(&borrow_state(state)?.item_search_text, item);
+    table_set_static(state, info, "isFiltered", Val::Bool(is_filtered));
     table_set_static(state, info, "isLocked", Val::Bool(false));
     table_set_static(state, info, "isBound", Val::Bool(false));
     table_set_static(state, info, "hasNoValue", Val::Bool(false));
     table_set_static(state, info, "isReadable", Val::Bool(false));
     table_set_static(state, info, "IsReadable", Val::Bool(false));
     set_container_item_hyperlink(state, info, bag_item);
-    info
+    Ok(info)
 }
 
 fn set_container_item_stack_and_quality(
