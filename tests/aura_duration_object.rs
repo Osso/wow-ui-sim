@@ -29,6 +29,9 @@ fn fixture_aura(id: i32, helpful: bool, expiration_time: f64) -> AuraInfo {
 
 fn fixture_env() -> WowLuaEnv {
     let env = WowLuaEnv::new().expect("create aura duration environment");
+    // A bare environment has no active group; activate the first seeded member.
+    env.exec("A_Admin.SetPartySize(1)")
+        .expect("activate seeded party1");
     {
         let mut state = env.state().borrow_mut();
         state.player.buffs = vec![
@@ -84,10 +87,7 @@ fn install_host_secrets(env: &WowLuaEnv) {
         lua.state_mut().pop();
         inserted.expect("root authentic host-secret STRING");
     }
-    for (name, number) in [
-        ("SecretTimedID", 301.0),
-        ("SecretPermanentID", 302.0),
-    ] {
+    for (name, number) in [("SecretTimedID", 301.0), ("SecretPermanentID", 302.0)] {
         let value = wrap_host_secret_number(lua.state_mut(), number);
         lua.state_mut().push(value);
         let inserted = lua.set_global_val(name, value);
