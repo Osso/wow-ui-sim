@@ -213,6 +213,10 @@ impl QuestLogState {
                 glittering_geodes_entry(),
                 earthen_relic_recovery_entry(),
             ],
+            abandon_ready_ids: HashSet::new(),
+            abandon_record_flags: HashMap::new(),
+            abandon_classification_flags: HashMap::new(),
+            abandon_conditional_blocked: HashMap::new(),
             #[cfg(feature = "client-wrath")]
             manual_watch_ids: Vec::new(),
             objective_progress: crate::c_api::quest_objectives::seeded_progress(),

@@ -603,6 +603,8 @@ pub struct SimState {
     pub lfg_queued_dungeons: std::collections::HashMap<i32, std::collections::BTreeSet<i32>>,
     /// Host-supplied expand-search prompt key and opaque data.
     pub lfg_expand_prompt: Option<(u64, Vec<u8>)>,
+    /// Host-supplied inspect response identity and specialization ID.
+    pub inspect_specialization_cache: Option<(String, u32)>,
     pub lfg_queue_pop_delay_seconds: f64,
     pub lfg_queue_pop_due_at: Option<Instant>,
     pub lfg_active_proposal: Option<LfgProposalState>,
