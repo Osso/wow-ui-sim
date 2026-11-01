@@ -30,6 +30,11 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
         end
         C_Garrison.GetInProgressMissions = empty_missions
         C_Garrison.GetAvailableMissions = empty_missions
+        function C_Garrison.GetCombatAllyMission(followerTypeID)
+            if type(followerTypeID) ~= "number" then
+                error("bad argument #1 (followerTypeID must be a number)", 2)
+            end
+        end
     "#,
     )?;
     Ok(())
