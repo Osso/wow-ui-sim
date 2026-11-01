@@ -5,8 +5,8 @@ Retail exposes the active event season separately from the player's timerunning 
 ## What it must do
 
 - [ ] Return the supplied signed active-season ID as one Lua number, including `0` for the no-season scenario.
-- [ ] Keep the active season independent of the player's timerunning season.
-- [ ] Let the pinned `Blizzard_TimerunningUtil` select its no-season and Pandaria configurations from the supplied value.
+- [x] Keep the active season independent of the player's timerunning season.
+- [x] Let the pinned `Blizzard_TimerunningUtil` select its no-season and Pandaria configurations from the supplied value.
 
 ## Best-guess basis
 
