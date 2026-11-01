@@ -41,6 +41,19 @@ end)
 
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     lua.exec(MINIMAP_TRACKING_DEFAULTS_LUA)?;
+    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
+        // Replace this default when minimap tracking state is modeled.
+        lua.exec(
+            r#"
+            if rawget(C_Minimap, "IsFilteredOut") == nil then
+                function C_Minimap.IsFilteredOut(filterType)
+                    assert(type(filterType) == "number", "filterType must be a number")
+                    return false
+                end
+            end
+        "#,
+        )?;
+    }
     Ok(())
 }
 
