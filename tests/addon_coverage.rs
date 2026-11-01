@@ -774,6 +774,34 @@ fn garrison_bonus_chest_onload_initializes_cinematic_camera() {
     assert!(env.exec("GarrisonCameraProbe:InitializeCamera('bad')").is_err());
 }
 
+#[cfg(feature = "client-retail")]
+#[test]
+fn perks_celebration_scene_has_generated_fanfare_actor() {
+    let env = WowLuaEnv::new().expect("create Lua environment");
+    env.state().borrow_mut().addon_base_paths = vec![blizzard_ui_dir()];
+    reset_template_state();
+    common::load_profile_framexml(&env);
+    load_force_load_startup(&env);
+    let mut found = false;
+    for (name, toc) in force_load_game_addons() {
+        if name == "Blizzard_PerksProgram" { clear_lua_error_tracking(&env); found = true; }
+        load_addon(&env.loader_env(), &toc).expect("force-load Blizzard addon");
+        if found { break; }
+    }
+    assert!(found, "PerksProgram must be Game eligible");
+    let dispatch: String = env.eval(r#"
+        local scene = PerksProgramFrame.ModelSceneContainerFrame.CelebrateModelScene
+        local info = debug.getinfo(scene.TransitionToModelSceneID, 'S')
+        return info.what .. ':' .. (info.source or '')
+    "#).expect("inspect the live celebration transition method");
+    println!("celebration transition dispatch: {dispatch}");
+    let errors = env.state().borrow().lua_errors.clone();
+    assert!(!errors.iter().any(|e| e.contains("fanfareActor")), "original celebration Init must find its actor: {errors:?}");
+    let found: bool = env.eval("return PerksProgramFrame.ModelSceneContainerFrame.CelebrateModelScene:GetActorByTag('fanfare') ~= nil")
+        .expect("query original celebration actor");
+    assert!(found);
+}
+
 #[test]
 fn selected_scrapping_machine_profiles_expose_closed_state() {
     use wow_ui_sim::client_profile::{ACTIVE, ClientProfile};
