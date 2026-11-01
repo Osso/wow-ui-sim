@@ -91,6 +91,7 @@ fn panel_open_runtime_baseline_overrides_known_side_loads() {
 
 #[test]
 fn panel_open_runtime_paths_stay_within_known_error_baseline() {
+    let _full_ui = lock_full_ui();
     common::with_perf_lock(|| {
         common::with_timeout(600, move || {
             let env = WowLuaEnv::new().expect("Failed to create Lua environment");
