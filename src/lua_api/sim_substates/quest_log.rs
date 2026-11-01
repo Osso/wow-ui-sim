@@ -102,6 +102,8 @@ pub struct QuestLogState {
     pub entries: Vec<QuestLogEntry>,
     /// Supplied ready records outside the current quest log.
     pub abandon_ready_ids: HashSet<i32>,
+    /// Supplied quest-record flags for the abandonability query.
+    pub abandon_record_flags: HashMap<i32, u32>,
     /// Supplied classification flags for ready quest records.
     pub abandon_classification_flags: HashMap<i32, u32>,
     /// Supplied result of the unknown flag-2048 condition.
