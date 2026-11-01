@@ -225,7 +225,10 @@ fn register_color_format_methods(state: &mut LuaState, t_ref: ColorTableRef) -> 
     })?;
     table_set_rust_fn_static(state, t_ref, "WrapTextInColorCode", |state| {
         let this = stack_val(state, 1);
-        let text = String::from_stack(state, 2)?;
+        let text = match stack_val(state, 2) {
+            value @ Val::Num(_) => value.to_string(),
+            _ => String::from_stack(state, 2)?,
+        };
         let (r, g, b) = color_rgb(state, this);
         let wrapped = format!("|c{}{}|r", hex_from_rgb(r, g, b), text);
         create_string(state, &wrapped).into_stack(state)
