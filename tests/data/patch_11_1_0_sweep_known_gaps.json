@@ -1,8 +1,5 @@
 [
   "wt-cvars-clearSeenDelvesCurios-204",
-  "wt-global-api-C_AchievementTelemetry.LinkAchievementInClub-51",
-  "wt-global-api-C_AchievementTelemetry.LinkAchievementInWhisper-52",
-  "wt-global-api-C_AchievementTelemetry.ShowAchievements-53",
   "wt-global-api-C_AddOns.DoesAddOnHaveLoadError-58",
   "wt-global-api-C_Commentator.SpellUsesItemCharges-63",
   "wt-global-api-C_Debug.ToggleDebugCharInfo-64",

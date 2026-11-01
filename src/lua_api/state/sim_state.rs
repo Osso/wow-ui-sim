@@ -851,6 +851,9 @@ pub struct SimState {
     pub voice_chat_speak_requests: Vec<crate::c_api::c_voice_chat_speak::SpeakTextRequest>,
     /// `C_VoiceChat.StopSpeakingText` calls; no playback is modeled to stop.
     pub voice_chat_speak_stop_count: u32,
+    /// Ordered `C_AchievementTelemetry` reports.
+    pub achievement_telemetry:
+        Vec<crate::c_api::c_achievement_telemetry::AchievementTelemetryEvent>,
     pub wrath_spell_slots: crate::lua_api::globals::real::wrath_spell_slots::SpellSlots,
     pub wrath_spell_selection: (Option<u32>, Option<u32>),
     pub known_spells: ::std::collections::HashSet<u32>,

@@ -281,6 +281,7 @@ pub(crate) mod unit_comparison;
 pub mod url_texture_inputs;
 #[cfg(feature = "retail-12-0-5")]
 pub use c_transmog_collection::IllusionInfo;
+pub mod c_achievement_telemetry;
 #[cfg(feature = "retail-12-0-5")]
 pub mod c_spell_maw_powers;
 pub mod c_toy_box_info;
