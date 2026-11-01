@@ -5,7 +5,7 @@ use crate::common::panel_fixtures::{blizzard_ui_dir, recorded_lua_errors};
 use wow_ui_sim::toc::TocFile;
 
 const ROOT: &str = "Blizzard_ArchaeologyUI";
-const ROOT_TOC_FILE: &str = "Blizzard_ArchaeologyUI_Mainline.toc";
+const ROOT_TOC_FILE: &str = "Blizzard_ArchaeologyUI.toc";
 const DECLARED_DEPENDENCIES: &[&str] = &["Blizzard_FrameXMLUtil", "Blizzard_HelpPlate"];
 
 post_wrath_ui_fixture! {

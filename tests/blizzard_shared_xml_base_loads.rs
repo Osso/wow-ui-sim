@@ -217,23 +217,15 @@ fn body_count_matches_filesystem_layout() {
 
     assert_eq!(
         toc.files.len(),
-        39,
-        "TOC body must list exactly 39 entries — the foundational primitive \
-         surface for the entire UI codebase. Got {} entries",
+        40,
+        "Retail 12.1.5.70575 TOC body lists exactly 40 entries — the foundational \
+         primitive surface for the entire UI codebase. Got {} entries",
         toc.files.len()
     );
     assert_eq!(
-        lua_count, 36,
-        "TOC body must list exactly 36 .lua files (one per primitive: \
-         Compat, ErrorUtil, Mixin, TableUtil, EnumUtil, LocaleUtil, \
-         FunctionUtil, ObjectUpdater, MathUtil, ExportUtil, Rectangle, \
-         TextureUtil, AddOnUtil, Flags, Event, CallbackRegistry, \
-         CallbackRegistrant, GlobalCallbackRegistry, CvarUtil, \
-         TemplateInfoCache, FrameUtil, FrameFactory, SecureTypes, ProxyUtil, \
-         Pools, ButtonStateBehavior, EnvironmentUtil, Color, ColorSwatch, \
-         FrameWatcher, TaggableObject, TimedCallback, RegionLayoutManager, \
-         ModelSceneUtil, AnchorUtil, CurveConstants, \
-         CombatAudioAlertConstants). Got {lua_count}"
+        lua_count, 37,
+        "Retail 12.1.5.70575 TOC body lists exactly 37 .lua files, ending with \
+         CurveConstants.lua and TimerUtil.lua. Got {lua_count}"
     );
     assert_eq!(
         xml_count, 3,

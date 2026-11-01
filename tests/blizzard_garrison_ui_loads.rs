@@ -166,14 +166,9 @@ fn blizzard_garrison_ui_toc_declares_lod_required_deps_game_only_mainline() {
 }
 
 #[test]
-fn blizzard_garrison_ui_toc_declares_allow_load_game_and_mainline() {
+fn blizzard_garrison_ui_toc_declares_mainline_game_type() {
     let toc_text =
         std::fs::read_to_string(garrison_ui_toc()).expect("Blizzard_GarrisonUI TOC should read");
-    assert!(
-        toc_text.contains("## AllowLoad: game"),
-        "Blizzard_GarrisonUI must declare `## AllowLoad: game` — the mission/landing \
-         UI is meaningful only on the in-world Game screen, never on Login/CharacterSelect"
-    );
     assert!(
         toc_text.contains("## AllowLoadGameType: mainline"),
         "Blizzard_GarrisonUI must declare `## AllowLoadGameType: mainline` — the \
@@ -183,33 +178,33 @@ fn blizzard_garrison_ui_toc_declares_allow_load_game_and_mainline() {
 }
 
 #[test]
-fn blizzard_garrison_ui_toc_lists_thirty_two_mainline_files_plus_localization() {
+fn blizzard_garrison_ui_toc_lists_thirty_two_family_files_plus_localization() {
     let toc_text =
         std::fs::read_to_string(garrison_ui_toc()).expect("Blizzard_GarrisonUI TOC should read");
-    let mainline_count = toc_text.matches("Mainline\\").count();
+    let family_count = toc_text.matches("[Family]\\").count();
     assert_eq!(
-        mainline_count, 32,
-        "Retail 12.1.0.69497 enumerates 32 `Mainline\\\\*` entries: the bootstrap Lua, \
-         15 Lua/XML pairs, and Localization.lua. Got: {mainline_count}"
+        family_count, 32,
+        "Retail 12.1.5.70575 enumerates 32 `[Family]\\\\*` entries: the bootstrap Lua, \
+         15 Lua/XML pairs, and Localization.lua. Got: {family_count}"
     );
     assert!(
-        toc_text.contains("Mainline\\Blizzard_GarrisonUI_Bootstrap.lua [Bootstrap]"),
-        "Retail 12.1.0.69497 loads Blizzard_GarrisonUI_Bootstrap.lua before the main UI files"
+        toc_text.contains("[Family]\\Blizzard_GarrisonUI_Bootstrap.lua [Bootstrap]"),
+        "Retail 12.1.5.70575 loads Blizzard_GarrisonUI_Bootstrap.lua before the main UI files"
     );
     assert!(
-        toc_text.contains("Mainline\\Localization.lua"),
+        toc_text.contains("[Family]\\Localization.lua"),
         "TOC must list Mainline\\Localization.lua — the per-locale l10nTable holds \
          localize() overrides for mission/follower display strings"
     );
     assert!(
-        toc_text.contains("Mainline\\Blizzard_GarrisonLandingPage.lua")
-            && toc_text.contains("Mainline\\Blizzard_GarrisonLandingPage.xml"),
+        toc_text.contains("[Family]\\Blizzard_GarrisonLandingPage.lua")
+            && toc_text.contains("[Family]\\Blizzard_GarrisonLandingPage.xml"),
         "TOC must list both LandingPage .lua + .xml — the entry point that publishes \
          GarrisonLandingPage and GarrisonLandingPageMixin"
     );
     assert!(
-        toc_text.contains("Mainline\\Blizzard_CovenantMissionUI.lua")
-            && toc_text.contains("Mainline\\Blizzard_CovenantMissionUI.xml"),
+        toc_text.contains("[Family]\\Blizzard_CovenantMissionUI.lua")
+            && toc_text.contains("[Family]\\Blizzard_CovenantMissionUI.xml"),
         "TOC must list both CovenantMissionUI .lua + .xml — the 9.0 adventure-board \
          entry point that publishes CovenantMissionFrame and CovenantMission mixin"
     );

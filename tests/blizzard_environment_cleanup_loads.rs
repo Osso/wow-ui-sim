@@ -123,7 +123,7 @@ fn blizzard_environment_cleanup_mainline_toc_declares_load_first_with_six_deps()
 }
 
 #[test]
-fn blizzard_environment_cleanup_classic_toc_declares_four_deps_and_classic_game_type() {
+fn blizzard_environment_cleanup_classic_toc_declares_five_deps_and_classic_game_type() {
     let toc = TocFile::from_file(&environment_cleanup_classic_toc())
         .expect("Blizzard_EnvironmentCleanup_Classic TOC should parse");
 
@@ -135,9 +135,11 @@ fn blizzard_environment_cleanup_classic_toc_declares_four_deps_and_classic_game_
             "Blizzard_ActionBar".to_string(),
             "Blizzard_UIPanels_Game".to_string(),
             "Blizzard_ScriptErrorsFrame".to_string(),
+            "Blizzard_UnitFrame".to_string(),
         ],
-        "Classic TOC declares four hard dependencies in this order: Blizzard_FrameXML, \
-         Blizzard_ActionBar, Blizzard_UIPanels_Game, Blizzard_ScriptErrorsFrame"
+        "Classic TOC declares five hard dependencies in this order: Blizzard_FrameXML, \
+         Blizzard_ActionBar, Blizzard_UIPanels_Game, Blizzard_ScriptErrorsFrame, \
+         Blizzard_UnitFrame"
     );
 
     assert!(

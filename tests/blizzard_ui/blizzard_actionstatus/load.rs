@@ -20,7 +20,7 @@ use wow_ui_sim::screen::ScreenKind;
 use wow_ui_sim::toc::TocFile;
 
 const ROOT: &str = "Blizzard_ActionStatus";
-const ROOT_TOC_FILE: &str = "Blizzard_ActionStatus_Mainline.toc";
+const ROOT_TOC_FILE: &str = "Blizzard_ActionStatus.toc";
 const REQUIRED_DEPS: [&str; 2] = ["Blizzard_FrameXML", "Blizzard_GlueXML"];
 const RAW_GAME_DEP_LINE: &str = "## Dep: Blizzard_FrameXML [AllowLoad game]";
 const RAW_GLUE_DEP_LINE: &str = "## Dep: Blizzard_GlueXML [AllowLoad glue]";

@@ -14,7 +14,7 @@ fn blizzard_ui_dir() -> PathBuf {
 }
 
 fn framerate_frame_toc() -> PathBuf {
-    blizzard_ui_dir().join("Blizzard_FramerateFrame/Blizzard_FramerateFrame_Mainline.toc")
+    blizzard_ui_dir().join("Blizzard_FramerateFrame/Blizzard_FramerateFrame.toc")
 }
 
 fn load_full_game_ui() -> WowLuaEnv {
@@ -60,17 +60,15 @@ fn blizzard_framerate_frame_toc_is_eager_with_action_bar_dep_and_allow_load_game
     assert_eq!(
         toc.dependencies(),
         vec!["Blizzard_ActionBar".to_string()],
-        "Blizzard_FramerateFrame declares `## Dependencies: Blizzard_ActionBar` — the \
+        "Blizzard_FramerateFrame declares `## Dep: Blizzard_ActionBar` — the \
          single dependency provides MicroMenu / MicroMenuContainer / \
          MicroMenuPositionEnum which OnLoad and UpdatePosition reference for anchoring \
          the FPS counter relative to the micro-menu position"
     );
     assert!(
         !toc.is_game_type_restricted(),
-        "Blizzard_FramerateFrame declares `## AllowLoadGameType: mainline` — `mainline` \
-         is one of the standard-retail tokens (src/toc.rs:299) so \
-         is_game_type_restricted() returns false and the addon IS reachable from \
-         standard-retail discovery"
+        "The 12.1.5 TOC carries no `## AllowLoadGameType` header, so the addon IS \
+         reachable from standard-retail discovery"
     );
 
     assert!(
@@ -83,22 +81,13 @@ fn blizzard_framerate_frame_toc_is_eager_with_action_bar_dep_and_allow_load_game
     let toc_text = std::fs::read_to_string(framerate_frame_toc())
         .expect("Blizzard_FramerateFrame TOC should read");
     assert!(
-        toc_text.contains("## DefaultState: enabled"),
-        "Blizzard_FramerateFrame declares `## DefaultState: enabled` — the addon is \
-         enabled by default; user can disable via the Addons UI to suppress the FPS \
-         display entirely"
+        !toc_text.contains("## AllowLoad:"),
+        "Blizzard_FramerateFrame declares no `## AllowLoad` line; the loader's Game-only \
+         default confines the FPS counter to the in-world screen"
     );
     assert!(
-        toc_text.contains("## AllowLoad: Game"),
-        "Blizzard_FramerateFrame declares `## AllowLoad: Game` (NOT Both) — the FPS \
-         counter only makes sense in-world, glue screens have their own framerate \
-         display logic"
-    );
-    assert!(
-        toc_text.contains("## AllowLoadGameType: mainline"),
-        "Blizzard_FramerateFrame declares `## AllowLoadGameType: mainline` — explicitly \
-         opts into mainline retail (no classic/plunderstorm variant exists for this \
-         addon)"
+        toc_text.contains("[Family]\\FramerateFrame.lua"),
+        "Body files resolve through the `[Family]` placeholder (Mainline on retail)"
     );
 }
 
@@ -109,7 +98,7 @@ fn blizzard_framerate_frame_allows_only_game_screen() {
 
     assert!(
         toc.allows_screen(ScreenKind::Game),
-        "`## AllowLoad: Game` must allow the Game screen (src/toc.rs:307)"
+        "The Game-only default must allow the Game screen"
     );
     assert!(
         !toc.allows_screen(ScreenKind::Login),

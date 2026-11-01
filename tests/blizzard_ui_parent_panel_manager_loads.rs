@@ -17,7 +17,7 @@ fn ui_parent_panel_manager_dir() -> PathBuf {
 }
 
 fn ui_parent_panel_manager_toc() -> PathBuf {
-    ui_parent_panel_manager_dir().join("Blizzard_UIParentPanelManager_Mainline.toc")
+    ui_parent_panel_manager_dir().join("Blizzard_UIParentPanelManager.toc")
 }
 
 const GLUE_SCREENS: &[ScreenKind] = &[
@@ -127,18 +127,13 @@ fn load_full_game_ui() -> WowLuaEnv {
 // Literal cached inputs absent from Wrath manifest1-382/cache; behavior cases stay enabled.
 post_wrath_ui_fixture! {
 #[test]
-fn find_toc_file_resolves_mainline_variant() {
+fn find_toc_file_resolves_single_toc() {
     let resolved =
         find_toc_file(&ui_parent_panel_manager_dir()).expect("UIParentPanelManager TOC resolves");
     assert_eq!(
         resolved,
         ui_parent_panel_manager_toc(),
-        "find_toc_file at src/loader/mod.rs:65-95 prefers \
-         `<addon>_Mainline.toc`. Blizzard_UIParentPanelManager ships ONLY \
-         the Mainline variant — no bare TOC, no Classic/Mists companion. \
-         The panel-stack management algorithm differs enough between \
-         flavors that Classic/Mists ship their own panel manager via a \
-         different addon (the legacy in-FrameXML implementation)"
+        "Blizzard_UIParentPanelManager ships one TOC in 12.1.5"
     );
 }
 }
@@ -160,7 +155,7 @@ fn toc_is_eager_with_two_dependencies() {
     let deps = toc.dependencies();
     assert_eq!(
         deps, TOC_DEPENDENCIES,
-        "Retail 12.1.0.69497 declares ManagedFrameSystem and GameMenuEsc before the panel \
+        "Retail 12.1.5.70575 declares ManagedFrameSystem and GameMenuEsc before the panel \
          manager installs its layout and panel-close hooks. Got: {deps:?}"
     );
     assert!(toc.load_with().is_empty());
@@ -180,7 +175,7 @@ fn allow_load_game_restricts_to_in_world() {
 
     assert!(
         toc.allows_screen(ScreenKind::Game),
-        "`## AllowLoad: game` (lowercase) hits toc.rs:308 → Game-only. \
+        "No `## AllowLoad` directive defaults to Game-only. \
          The panel-stack only exists in-world; glue screens have no \
          comparable concept"
     );
@@ -196,13 +191,12 @@ fn allow_load_game_restricts_to_in_world() {
 
 post_wrath_ui_fixture! {
 #[test]
-fn allow_load_game_type_mainline_is_not_restricted() {
+fn no_allow_load_game_type_means_unrestricted() {
     let toc = TocFile::from_file(&ui_parent_panel_manager_toc()).expect("TOC parses");
 
     assert!(
         !toc.is_game_type_restricted(),
-        "`## AllowLoadGameType: mainline` hits the non-restricting \
-         branch at toc.rs:294-302 (standard|mainline accepted)"
+        "The 12.1.5 TOC carries no `## AllowLoadGameType` directive"
     );
 }
 }
@@ -214,15 +208,12 @@ fn toc_raw_bytes_pin_directives_and_body_files_with_inline_annotations() {
 
     let expected_lines = [
         "## Title: Blizzard_UIParentPanelManager",
-        "## Author: Blizzard Entertainment",
-        "## DefaultState: enabled",
-        "## Dependencies: Blizzard_ManagedFrameSystem, Blizzard_GameMenuEsc",
-        "## AllowLoad: game",
-        "## AllowLoadGameType: mainline",
-        "Mainline\\UIPanelWindows.lua",
+        "## Dep: Blizzard_ManagedFrameSystem",
+        "## Dep: Blizzard_GameMenuEsc",
+        "[Family]\\UIPanelWindows.lua",
         "Shared\\UIPanelLayoutFrame.lua [AllowLoadEnvironment Global]",
         "Shared\\UIParentPanelManager.lua [AllowLoadEnvironment Global]",
-        "Mainline\\UIParentPanelManagerOverrides.lua [AllowLoadEnvironment Global]",
+        "[Family]\\UIParentPanelManagerOverrides.lua [AllowLoadEnvironment Global]",
         "Shared\\UpdateUIPanelPositions.lua [AllowLoadEnvironment Global]",
     ];
 

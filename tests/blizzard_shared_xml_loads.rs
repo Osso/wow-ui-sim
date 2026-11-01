@@ -272,18 +272,18 @@ fn mainline_toc_body_count_breakdown_matches_filesystem_layout() {
 
     assert_eq!(
         lua_count + xml_count,
-        218,
-        "Retail 12.1.0.69497 TOC body has 218 active Mainline file entries. \
+        220,
+        "Retail 12.1.5.70575 TOC body has 220 active Mainline file entries. \
          Got lua={lua_count} xml={xml_count}"
     );
     assert_eq!(
-        lua_count, 145,
-        "Retail 12.1.0.69497 TOC body has 145 active Mainline Lua entries. \
+        lua_count, 146,
+        "Retail 12.1.5.70575 TOC body has 146 active Mainline Lua entries. \
          Got: {lua_count}"
     );
     assert_eq!(
-        xml_count, 73,
-        "Retail 12.1.0.69497 TOC body has 73 active Mainline XML entries. \
+        xml_count, 74,
+        "Retail 12.1.5.70575 TOC body has 74 active Mainline XML entries. \
          Got: {xml_count}"
     );
 }

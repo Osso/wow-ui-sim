@@ -332,7 +332,7 @@ fn ui_parent_panel_manager_diagnostic_files_carry_allow_load_environment_global_
     for entry in &[
         "Shared\\UIPanelLayoutFrame.lua [AllowLoadEnvironment Global]",
         "Shared\\UIParentPanelManager.lua [AllowLoadEnvironment Global]",
-        "Mainline\\UIParentPanelManagerOverrides.lua [AllowLoadEnvironment Global]",
+        "[Family]\\UIParentPanelManagerOverrides.lua [AllowLoadEnvironment Global]",
         "Shared\\UpdateUIPanelPositions.lua [AllowLoadEnvironment Global]",
     ] {
         assert!(
@@ -405,7 +405,7 @@ fn ui_parent_lane_addons_restrict_to_game_screen_only() {
 }
 
 #[test]
-fn ui_parent_panel_manager_is_mainline_only_via_allow_load_game_type() {
+fn ui_parent_panel_manager_is_not_game_type_restricted() {
     if cfg!(feature = "client-wrath") {
         let toc = crate::common::native_framexml_toc();
         assert!(!toc.is_game_type_restricted());
@@ -417,13 +417,14 @@ fn ui_parent_panel_manager_is_mainline_only_via_allow_load_game_type() {
     let raw_panel = std::fs::read_to_string(lane_toc("Blizzard_UIParentPanelManager"))
         .expect("UIParentPanelManager TOC reads");
     assert!(
-        raw_panel.contains("## AllowLoadGameType: mainline"),
-        "UIParentPanelManager_Mainline.toc must carry `## AllowLoadGameType: mainline`"
+        !raw_panel.contains("## AllowLoadGameType"),
+        "The 12.1.5 UIParentPanelManager TOC carries no game-type header"
     );
     assert!(
-        !panel_manager.is_game_type_restricted(),
-        "UIParentPanelManager's mainline gate uses the inverse restriction semantics"
+        raw_panel.contains("[Family]\\UIPanelWindows.lua"),
+        "UIPanelWindows.lua resolves through the `[Family]` placeholder"
     );
+    assert!(!panel_manager.is_game_type_restricted());
 }
 
 #[test]

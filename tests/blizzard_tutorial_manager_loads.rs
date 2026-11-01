@@ -26,7 +26,12 @@ const GLUE_SCREENS: &[ScreenKind] = &[
     ScreenKind::CharacterCreate,
 ];
 
-const TOC_DEPENDENCIES: &[&str] = &["middleclass", "Blizzard_Dispatcher", "Blizzard_HelpPlate"];
+const TOC_DEPENDENCIES: &[&str] = &[
+    "middleclass",
+    "Blizzard_Dispatcher",
+    "Blizzard_TutorialTemplates",
+    "Blizzard_HelpPlate",
+];
 
 const MODULE_TABLES: &[&str] = &[
     "TutorialManager",
@@ -122,7 +127,7 @@ fn find_toc_file_resolves_bare_toc() {
 
 post_wrath_ui_fixture! {
 #[test]
-fn toc_is_eager_with_three_dependencies() {
+fn toc_is_eager_with_four_dependencies() {
     let toc = TocFile::from_file(&tutorial_manager_toc()).expect("TOC parses");
 
     assert!(

@@ -89,7 +89,7 @@ fn find_toc_file_resolves_bare_toc() {
 
 post_wrath_ui_fixture! {
 #[test]
-fn toc_declares_eager_both_with_four_hard_deps_and_per_character_saved_vars() {
+fn toc_declares_eager_both_with_four_hard_deps_and_account_saved_vars() {
     let toc = TocFile::from_file(&definitions_shared_toc())
         .expect("Blizzard_SettingsDefinitions_Shared TOC parses");
 
@@ -137,21 +137,17 @@ fn toc_declares_eager_both_with_four_hard_deps_and_per_character_saved_vars() {
     );
     assert!(toc.optional_deps().is_empty());
 
-    assert!(
-        toc.saved_variables().is_empty(),
-        "TOC must declare NO account-wide SavedVariables — only per-character"
-    );
-
-    let per_char = toc.saved_variables_per_character();
     assert_eq!(
-        per_char,
+        toc.saved_variables(),
         vec!["NewSettingsSeen".to_string()],
-        "TOC must declare exactly one `## SavedVariablesPerCharacter: \
-         NewSettingsSeen` — tracks which Setting elements the current character \
-         has seen, used by the settings panel to badge unseen entries with a \
-         'NEW' indicator. Per-character because new-element tracking should \
-         reset per alt; account-wide would be confusing when a new alt logs in \
-         and sees no badges despite never having opened settings on that char"
+        "Retail 12.1.5.70575 declares exactly one account-wide \
+         `## SavedVariables: NewSettingsSeen` — tracks which Setting elements \
+         have been seen, used by the settings panel to badge unseen entries \
+         with a 'NEW' indicator"
+    );
+    assert!(
+        toc.saved_variables_per_character().is_empty(),
+        "TOC declares no per-character SavedVariables"
     );
 }
 }
@@ -164,7 +160,7 @@ fn toc_raw_bytes_pin_load_saved_variables_first_for_pre_lua_sv_loading() {
 
     assert!(raw.contains("## Title: Blizzard_SettingsDefinitions_Shared"));
     assert!(raw.contains("## AllowLoad: Both"));
-    assert!(raw.contains("## SavedVariablesPerCharacter: NewSettingsSeen"));
+    assert!(raw.contains("## SavedVariables: NewSettingsSeen"));
 
     assert!(
         raw.contains("## LoadSavedVariablesFirst: 1"),

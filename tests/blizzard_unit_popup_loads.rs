@@ -17,11 +17,7 @@ fn unit_popup_dir() -> PathBuf {
 }
 
 fn unit_popup_toc() -> PathBuf {
-    unit_popup_dir().join("Blizzard_UnitPopup_Mainline.toc")
-}
-
-fn unit_popup_mists_toc() -> PathBuf {
-    unit_popup_dir().join("Blizzard_UnitPopup_Mists.toc")
+    unit_popup_dir().join("Blizzard_UnitPopup.toc")
 }
 
 const GLUE_SCREENS: &[ScreenKind] = &[
@@ -37,16 +33,16 @@ const REPRESENTATIVE_BODY_FILES: &[&str] = &[
     "UnitPopupSlider.xml",
     "UnitPopupCustomControls.lua",
     "UnitPopupCustomControls.xml",
-    "Mainline\\UnitPopupUtils.lua",
-    "Mainline\\UnitPopup.lua",
+    "[Family]\\UnitPopupUtils.lua",
+    "[Family]\\UnitPopup.lua [AllowLoadGameType mainline]",
 ];
 
-const FAMILY_PLACEHOLDER_BODY_FILE: &str = "Mainline\\UnitPopup.lua";
+const FAMILY_PLACEHOLDER_BODY_FILE: &str = "[Family]\\UnitPopup.lua";
 const FAMILY_PLACEHOLDER_RESOLVED_RELATIVE: &str = "Mainline/UnitPopup.lua";
 
 const GAME_PLACEHOLDER_BODY_FILES: &[&str] = &[
-    "[Game]\\UnitPopupButtons.lua [AllowLoadGameType standard, plunderstorm, wowhack]",
-    "[Game]\\UnitPopupMenus.lua [AllowLoadGameType standard, plunderstorm, wowhack]",
+    "[Game]\\UnitPopupButtons.lua [AllowLoadGameType standard, plunderstorm, wowhack, vanilla, tbc, wrath]",
+    "[Game]\\UnitPopupMenus.lua [AllowLoadGameType standard, plunderstorm, wowhack, vanilla, tbc, wrath]",
 ];
 
 const GAME_PLACEHOLDER_RESOLVED_RELATIVES: &[&str] = &[
@@ -141,16 +137,8 @@ fn find_toc_file_resolves_mainline_variant() {
     assert_eq!(
         resolved,
         unit_popup_toc(),
-        "find_toc_file at src/loader/mod.rs:65-95 prefers \
-         `<addon>_Mainline.toc`. Blizzard_UnitPopup ships TWO TOCs \
-         (Mainline + Mists, NOT a generic `_Classic.toc` like \
-         Blizzard_UnitFrame): the Mainline variant declares one hard \
-         dep (Blizzard_UnitPopupShared) and 8 body lines arranged \
-         across the addon root + Mainline/Standard subdirs, while the \
-         Mists companion adds Blizzard_VoiceToggleButton as a second \
-         dep, pulls Wrath/Classic/TBC body files, and carries \
-         `## AllowLoadGameType: mists` so it's filtered out on a \
-         mainline build"
+        "Blizzard_UnitPopup ships one TOC in 12.1.5; per-line \
+         `[AllowLoadGameType ...]` annotations select the flavor files"
     );
 }
 }
@@ -197,9 +185,7 @@ fn allow_load_game_restricts_to_in_world() {
 
     assert!(
         toc.allows_screen(ScreenKind::Game),
-        "`## AllowLoad: game` (lowercase here, but matched \
-         case-insensitively at toc.rs:308 via eq_ignore_ascii_case) \
-         hits → Game-only. Right-click unit popups are unit-targeted; \
+        "No `## AllowLoad` directive defaults to Game-only. Right-click unit popups are unit-targeted; \
          glue screens (Login, CharacterSelect, CharacterCreate) have \
          no UnitId concept and no chat/party plumbing"
     );
@@ -230,45 +216,13 @@ fn no_allow_load_game_type_means_unrestricted() {
 
 post_wrath_ui_fixture! {
 #[test]
-fn mists_companion_is_restricted_on_mainline_build() {
-    let mists = TocFile::from_file(&unit_popup_mists_toc()).expect("Mists TOC parses");
-
-    assert!(
-        mists.is_game_type_restricted(),
-        "Companion `_Mists.toc` carries `## AllowLoadGameType: mists` \
-         which hits toc.rs:294-302 as a non-{{standard,mainline}} value \
-         → restricted on a mainline build. The Mists body files \
-         (Wrath\\UnitPopupButtons.lua, Wrath\\UnitPopupMenus.lua, \
-         TBC\\UnitPopup.lua, Classic\\UnitPopupUtils.lua) only matter \
-         on Classic-flavor Mists builds; the Mainline build silently \
-         skips this TOC at discovery time"
-    );
-
-    assert_eq!(
-        mists.dependencies(),
-        vec![
-            "Blizzard_UnitPopupShared".to_string(),
-            "Blizzard_VoiceToggleButton".to_string(),
-        ],
-        "Mists companion adds Blizzard_VoiceToggleButton as a second \
-         hard dep — the Mainline build folds the voice toggle into \
-         Blizzard_UnitPopupShared's voice plumbing, but Classic Mists \
-         keeps it as a separately-loaded addon"
-    );
-}
-}
-
-post_wrath_ui_fixture! {
-#[test]
 fn toc_raw_bytes_pin_directives_and_representative_body_files() {
     let raw = std::fs::read_to_string(unit_popup_toc()).expect("TOC reads utf-8");
 
     let expected_directives = [
         "## Title: Blizzard_UnitPopup",
-        "## Author: Blizzard Entertainment",
-        "## DefaultState: enabled",
-        "## Dependencies: Blizzard_UnitPopupShared",
-        "## AllowLoad: game",
+        "## Dep: Blizzard_UnitPopupShared",
+        "## Dep: Blizzard_SocialUIShared [AllowLoadGameType mainline]",
     ];
 
     for line in expected_directives {

@@ -311,7 +311,7 @@ fn world_map_ships_only_a_mainline_toc_so_classic_clients_could_not_load_it() {
 }
 
 #[test]
-fn battlefield_map_mainline_toc_uses_space_separated_required_dep_form() {
+fn battlefield_map_toc_uses_per_line_dep_form() {
     if cfg!(feature = "client-wrath") {
         let toc = parse_lane_toc("Blizzard_BattlefieldMinimap");
         assert!(toc.dependencies().is_empty());
@@ -330,18 +330,22 @@ fn battlefield_map_mainline_toc_uses_space_separated_required_dep_form() {
     }
     let toc_path = blizzard_ui_dir()
         .join("Blizzard_BattlefieldMap")
-        .join("Blizzard_BattlefieldMap_Mainline.toc");
+        .join("Blizzard_BattlefieldMap.toc");
     let raw =
         std::fs::read_to_string(&toc_path).unwrap_or_else(|err| panic!("read {toc_path:?}: {err}"));
 
-    assert!(
-        raw.contains(
-            "## RequiredDep: Blizzard_MapCanvas Blizzard_SharedMapDataProviders \
-             Blizzard_ObjectiveTracker Blizzard_ColorPickerFrame"
-        ),
-        "BattlefieldMap_Mainline.toc must use the current space-separated RequiredDep form. \
-         Raw TOC bytes:\n{raw}"
-    );
+    for line in [
+        "## Dep: Blizzard_MapCanvas",
+        "## Dep: Blizzard_SharedMapDataProviders [AllowLoadGameType mainline]",
+        "## Dep: Blizzard_ObjectiveTracker [AllowLoadGameType mainline]",
+        "## Dep: Blizzard_ColorPickerFrame [AllowLoadGameType mainline]",
+    ] {
+        assert!(
+            raw.contains(line),
+            "BattlefieldMap.toc must declare `{line}` in the per-line Dep form. \
+             Raw TOC bytes:\n{raw}"
+        );
+    }
 }
 
 #[test]
