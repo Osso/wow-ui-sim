@@ -12,11 +12,16 @@ pub(super) fn frame_metatable_for_widget_type(
     base_mt_ref: GcRef<Table>,
     widget_type: WidgetType,
     plain_wrath_message_frame: bool,
+    cinematic_model: bool,
 ) -> Val {
+    let cinematic_model = cinematic_model
+        && widget_type == WidgetType::PlayerModel
+        && crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Wrath;
     let cache = registry_table_or_create(state, FRAME_MT_CACHE_KEY);
     // WorldFrame reports Frame but retains the otherwise complete base index.
     let key = match widget_type {
         WidgetType::WorldFrame => "WorldFrame",
+        WidgetType::PlayerModel if cinematic_model => "CinematicModel",
         WidgetType::MessageFrame if plain_wrath_message_frame => "WrathMessageFrame",
         _ => widget_type.as_str(),
     };
@@ -24,9 +29,13 @@ pub(super) fn frame_metatable_for_widget_type(
         return cached;
     }
 
-    let Some(mt) =
-        build_widget_metatable(state, base_mt_ref, widget_type, plain_wrath_message_frame)
-    else {
+    let Some(mt) = build_widget_metatable(
+        state,
+        base_mt_ref,
+        widget_type,
+        plain_wrath_message_frame,
+        cinematic_model,
+    ) else {
         return Val::Table(base_mt_ref);
     };
     table_set_static(state, cache, key, mt);
@@ -38,6 +47,7 @@ fn build_widget_metatable(
     base_mt_ref: GcRef<Table>,
     widget_type: WidgetType,
     plain_wrath_message_frame: bool,
+    cinematic_model: bool,
 ) -> Option<Val> {
     let source_index = metatable_index_table(state, base_mt_ref)?;
     let index_clone = clone_index_for_widget(state, source_index, widget_type)?;
@@ -46,6 +56,10 @@ fn build_widget_metatable(
             state,
             index_clone,
         );
+    }
+    if cinematic_model {
+        crate::lua_api::frame::methods::widgets::register_cinematic_methods(state, index_clone)
+            .expect("register CinematicModel methods");
     }
     let mt_clone = clone_metatable_with_index(state, base_mt_ref, index_clone)?;
     Some(Val::Table(mt_clone))

@@ -312,19 +312,28 @@ pub(crate) fn attach_frame_metatable(state: &mut LuaState, table_ref: GcRef<Tabl
         .map(|reg| reg.get_str(mt_key, &state.gc.string_arena))
         .unwrap_or(Val::Nil);
     if let Val::Table(mt_ref) = mt_val {
-        let (widget_type, plain_wrath_message_frame) = borrow_state(state)
+        let (widget_type, plain_wrath_message_frame, cinematic_model) = borrow_state(state)
             .ok()
             .and_then(|sim| {
                 sim.widgets.get(id).map(|frame| {
                     (
                         frame.widget_type,
                         super::message_frame::uses_wrath_row_lifecycle(frame),
+                        frame
+                            .object_type_name
+                            .as_deref()
+                            .is_some_and(|name| name.eq_ignore_ascii_case("CinematicModel")),
                     )
                 })
             })
-            .unwrap_or((WidgetType::Frame, false));
-        let type_mt =
-            frame_metatable_for_widget_type(state, mt_ref, widget_type, plain_wrath_message_frame);
+            .unwrap_or((WidgetType::Frame, false, false));
+        let type_mt = frame_metatable_for_widget_type(
+            state,
+            mt_ref,
+            widget_type,
+            plain_wrath_message_frame,
+            cinematic_model,
+        );
         if let Some(t) = state.gc.tables.get_mut(table_ref) {
             if let Val::Table(type_mt_ref) = type_mt {
                 t.set_metatable(Some(type_mt_ref));
