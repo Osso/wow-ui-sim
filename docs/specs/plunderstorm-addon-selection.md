@@ -4,7 +4,7 @@ Retail selects standard game type for addon loading. The pinned retail `Blizzard
 
 ## What it must do
 
-- [ ] Exclude these addons from standard Retail Game-screen discovery.
+- [x] Exclude these addons from standard Retail Game-screen discovery.
 
 ## How it works
 
