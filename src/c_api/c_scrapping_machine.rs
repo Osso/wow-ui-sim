@@ -6,7 +6,10 @@ use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
 
 pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
-    if ACTIVE != ClientProfile::Retail {
+    if !matches!(
+        ACTIVE,
+        ClientProfile::Retail | ClientProfile::Ptr | ClientProfile::WowForever
+    ) {
         return Ok(());
     }
     let namespace = super::ensure_namespace(state, "C_ScrappingMachineUI")?;
