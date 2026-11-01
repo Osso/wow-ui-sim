@@ -222,6 +222,12 @@ fn is_wowhack(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
+fn get_current_event_realm_queues(state: &mut LuaState) -> LuaResult<u32> {
+    let queues = borrow_state(state)?.game_rules.event_realm_queues;
+    state.push(Val::Num(f64::from(queues)));
+    Ok(1)
+}
+
 /// `GameModeDisplayInfo` is nilable; no game-mode display records are modeled,
 /// so every record ID reports no info and GameModeSelect uses the expansion logo.
 fn get_game_mode_display_info_by_record_id(state: &mut LuaState) -> LuaResult<u32> {
@@ -261,6 +267,12 @@ fn install_on_c_game_rules(state: &mut LuaState) -> LuaResult<()> {
             get_game_mode_display_info_by_record_id,
         )?;
         table_set_rust_fn(state, table_ref, "IsWoWHack", is_wowhack)?;
+        table_set_rust_fn(
+            state,
+            table_ref,
+            "GetCurrentEventRealmQueues",
+            get_current_event_realm_queues,
+        )?;
     }
     Ok(())
 }

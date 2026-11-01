@@ -85,3 +85,25 @@ fn blizzard_character_select_nav_bar_mixins_and_template_register() {
         "CharacterSelectNavBarTemplate should instantiate via CreateFrame"
     );
 }
+
+#[test]
+fn character_select_nav_bar_forces_game_modes_only_when_event_realm_queues_open() {
+    let env = load_character_select_screen();
+    let force_on_show = |env: &WowLuaEnv| -> bool {
+        env.eval(
+            "local nav = CreateFrame('Frame', nil, UIParent, 'CharacterSelectNavBarTemplate'); \
+             nav:Hide(); nav:Show(); return nav.tryForceShowModes == true",
+        )
+        .expect("nav bar OnShow should run")
+    };
+
+    assert!(
+        !force_on_show(&env),
+        "no event-realm queues (Enum.EventRealmQueues.None) must not force the game-mode drawer"
+    );
+    env.state().borrow_mut().game_rules.event_realm_queues = 1;
+    assert!(
+        force_on_show(&env),
+        "an open PlunderstormSolo queue must force the game-mode drawer"
+    );
+}

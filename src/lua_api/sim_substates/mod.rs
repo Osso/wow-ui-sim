@@ -144,6 +144,8 @@ pub struct GameRulesState {
     pub account_has_sd_enabled: bool,
     /// Last supplied SD/HD selection origin, with no native telemetry policy.
     pub sd_toggle_usage_location: Option<i32>,
+    /// `Enum.EventRealmQueues` flags; `0 = None` outside event realms.
+    pub event_realm_queues: i32,
 }
 
 impl Default for GameRulesState {
@@ -157,6 +159,7 @@ impl Default for GameRulesState {
             sd_hd_toggle_enabled: false,
             account_has_sd_enabled: false,
             sd_toggle_usage_location: None,
+            event_realm_queues: 0,
         }
     }
 }
