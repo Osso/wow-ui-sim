@@ -17,7 +17,8 @@ pub use archaeology::{ArchaeologyArtifact, ArchaeologyRace, ArchaeologyState, Se
 pub use arrow_callouts::{ArrowCalloutInfo, ArrowCalloutState};
 pub use gardenweald::GardenwealdState;
 pub use quest_log::{
-    QuestLogEntry, QuestLogState, QuestRewardCurrency, QuestRewardItem, QuestRewardSpell,
+    QuestBounty, QuestLogEntry, QuestLogState, QuestRewardCurrency, QuestRewardItem,
+    QuestRewardSpell,
 };
 pub use viewed_artifact::{
     ArtifactAppearanceInfo, ArtifactAppearanceSetInfo, ArtifactArtInfo, ArtifactPowerInfo,

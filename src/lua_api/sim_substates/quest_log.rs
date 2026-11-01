@@ -92,6 +92,16 @@ pub struct QuestRewardCurrency {
     pub base_reward_amount: Option<i32>,
 }
 
+/// Supplied bounty presentation for one bounty-set member.
+#[derive(Debug, Clone)]
+pub struct QuestBounty {
+    pub quest_id: i32,
+    pub faction_id: i32,
+    pub icon: Option<i32>,
+    pub num_objectives: i32,
+    pub turnin_requirement_text: Option<String>,
+}
+
 /// Backing state for `C_QuestLog.*` probes.
 #[derive(Debug, Clone, Default)]
 pub struct QuestLogState {
@@ -100,6 +110,10 @@ pub struct QuestLogState {
     /// Supplied chapter IDs in campaign order.
     pub campaign_chapter_ids: HashMap<i32, Vec<i32>>,
     pub entries: Vec<QuestLogEntry>,
+    /// Supplied native-style flags for entries in the current quest log.
+    pub threat_entry_flags: HashMap<i32, u16>,
+    /// Supplied bounties keyed by the existing bounty-set membership model.
+    pub bounties_by_set: HashMap<i32, Vec<QuestBounty>>,
     pub additional_highlights: HashMap<i32, crate::c_api::c_quest_log::QuestAdditionalHighlights>,
     /// Build-12340 manual append order; IDs survive row reorder until log refresh.
     #[cfg(feature = "client-wrath")]
@@ -199,6 +213,8 @@ impl QuestLogState {
         Self {
             campaign_ids: HashMap::new(),
             campaign_chapter_ids: HashMap::new(),
+            threat_entry_flags: HashMap::new(),
+            bounties_by_set: HashMap::new(),
             entries: vec![
                 lost_expedition_entry(),
                 defending_the_gates_entry(),

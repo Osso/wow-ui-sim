@@ -17,6 +17,7 @@ pub struct QuestAdditionalHighlights {
 }
 
 pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
+    super::c_map_bounties::register_quest_queries(state)?;
     let namespace = ensure_namespace(state, "C_QuestLog")?;
     table_set_rust_fn_static(
         state,

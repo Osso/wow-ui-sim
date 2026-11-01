@@ -159,6 +159,7 @@ pub(crate) mod c_map_bounties;
 pub mod c_map_exploration_info;
 pub mod c_merchant_frame;
 pub(crate) mod c_minimap_quest_blob;
+mod c_minimap_tracking;
 #[cfg(any(feature = "client-retail", feature = "client-ptr"))]
 mod c_mount_item;
 #[cfg(feature = "retail-12-0-5")]
@@ -456,6 +457,7 @@ pub(crate) fn register_utility_bootstrap_tables(state: &mut LuaState) -> LuaResu
     #[cfg(any(feature = "retail-12-1-0", feature = "client-wowforever"))]
     c_cvar_readiness::register(state)?;
     c_achievement_info_relations::register(state)?;
+    c_minimap_tracking::register(state)?;
     c_calendar::register(state)?;
     if matches!(
         crate::client_profile::ACTIVE,
