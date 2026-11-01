@@ -311,11 +311,27 @@ fn load_panel_harness_blizzard_ui(env: &WowLuaEnv) -> HashSet<String> {
 
 fn force_load_game_addons() -> Vec<(String, PathBuf)> {
     discover_all_blizzard_addons(&blizzard_ui_dir())
+        .into_iter()
+        .filter(|(_, path)| {
+            let toc = TocFile::from_file(path).expect("parse addon TOC");
+            toc.allows_screen(ScreenKind::Game)
+                && toc.allows_text_locale()
+                && !toc.is_ptr_only()
+                && !toc.is_game_type_restricted()
+        })
+        .collect()
 }
 
 #[test]
 fn force_load_coverage_selects_only_game_eligible_addons() {
     let addons = force_load_game_addons();
+    let selected: HashSet<_> = addons.iter().map(|(name, _)| name.as_str()).collect();
+    let excluded: Vec<_> = discover_all_blizzard_addons(&blizzard_ui_dir())
+        .into_iter()
+        .map(|(name, _)| name)
+        .filter(|name| !selected.contains(name.as_str()))
+        .collect();
+    println!("Excluded from Game coverage: {excluded:?}");
     assert!(addons.iter().any(|(name, _)| name == "Blizzard_ClickBindingUI"));
     for (name, path) in addons {
         let toc = TocFile::from_file(&path).expect("parse addon TOC");
