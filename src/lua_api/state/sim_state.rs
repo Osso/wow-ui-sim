@@ -889,6 +889,8 @@ pub struct SimState {
     pub item_overlay_flags: HashSet<(u32, crate::c_api::item_overlay::ItemOverlayFlag)>,
     pub equippable_items: ::std::collections::HashSet<u32>,
     pub consumable_items: ::std::collections::HashSet<u32>,
+    /// Host-supplied resolved item IDs in the current-item list.
+    pub current_item_ids: ::std::collections::HashSet<u32>,
     pub can_replace_guild_master: bool,
     pub auto_decline_guild_invites: bool,
     pub auto_decline_neighborhood_invites: bool,

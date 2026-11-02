@@ -737,6 +737,7 @@ macro_rules! build_empty_sim_state {
             item_dressability: HashMap::new(),
             equippable_items: ::std::collections::HashSet::new(),
             consumable_items: ::std::collections::HashSet::new(),
+            current_item_ids: ::std::collections::HashSet::new(),
             can_replace_guild_master: false,
             auto_decline_guild_invites: false,
             // INFERRED simulator initial preference, not a native default.
