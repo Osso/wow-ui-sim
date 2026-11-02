@@ -234,6 +234,8 @@ macro_rules! build_empty_sim_state {
             #[cfg(feature = "retail-12-0-5")]
             active_brawl: None,
             #[cfg(feature = "retail-12-0-5")]
+            special_event_brawl: None,
+            #[cfg(feature = "retail-12-0-5")]
             transmog_appearance_sources: HashMap::new(),
             #[cfg(feature = "retail-12-0-5")]
             transmog_illusions: Vec::new(),

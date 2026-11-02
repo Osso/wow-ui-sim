@@ -276,6 +276,9 @@ pub struct SimState {
     /// Explicit active-brawl input only; no native default record is assumed.
     #[cfg(feature = "retail-12-0-5")]
     pub active_brawl: Option<PvpBrawlInfo>,
+    /// Explicit special-event brawl record, independent of the active brawl.
+    #[cfg(feature = "retail-12-0-5")]
+    pub special_event_brawl: Option<PvpBrawlInfo>,
     /// Explicit ordered illusion inputs only; no fabricated native catalog.
     #[cfg(feature = "retail-12-0-5")]
     pub transmog_illusions: Vec<crate::c_api::c_transmog_collection::IllusionInfo>,
