@@ -293,6 +293,17 @@ Retail 12.1 removes public `_G.GetInventorySlotInfo`; current `Blizzard_Transmog
 
 Under `client-ptr`, `GetBuildInfo()` derives its reported version and build from the pinned PTR build metadata and returns `12.1.5`, `69594`, and interface `120105`. The date and remaining return slots are temporary simulator defaults, so this documents identity selection rather than a fully live-client-proven `GetBuildInfo()` contract. Retail remains `12.1.0` / `120100`.
 
+### Addon-message prefix registration
+
+`c_api::addon_message_prefixes` owns the environment-local subscription registry
+for `C_ChatInfo.RegisterAddonMessagePrefix`, `IsAddonMessagePrefixRegistered` and
+`GetRegisteredAddonMessagePrefixes`. All profiles except Wrath publish these
+functions. Prefixes retain case-sensitive byte identity; snapshots are fresh
+arrays, and duplicate/invalid/full outcomes preserve state. The
+[prefix contract](../../specs/addon-message-prefixes.md) records historical limits,
+inferred embedded-NUL handling, source pins and focused regression coverage.
+Registration does not change outbound logging or deliver incoming events.
+
 ### Forever outbound addon messages
 
 `client-wowforever` publishes chat senders from `c_api::registration` and the BattleNet sender from its existing namespace registrar. `c_api::addon_messages` checks types/secrets before consulting current group/guild or nested online game-account state, then appends accepted intent to the existing `SimState.message_log`. No inbound event or legacy-global replacement occurs. See [outbound message contract](../../specs/addon-messages.md) for inferred limits/result mappings, binary-string boundary, independently confirmed bounded 36/36 GREEN and single default fmt/check-offline passes at `255adcbde` (`verify-green.json`). No broader profile or inventory acceptance follows.

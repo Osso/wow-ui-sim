@@ -3268,3 +3268,12 @@ the independently acquired strict 70707 UI cache; the source retarget and local
 parser workaround remain excluded. Run receipts are retained locally under
 `docs/local/session-finalization-v2/` in `native-gui-completed`,
 `forever-identity-completed` and `wrath-identity-corrected`.
+
+## 2026-11-02 — Addon-message prefix registration
+
+[The prefix contract](../specs/addon-message-prefixes.md) documents the
+environment-local `C_ChatInfo` subscription registry, byte-preserving snapshots,
+result precedence and publication on all profiles except Wrath. Historical bounds
+and inferred embedded-NUL normalization remain distinct from measured native
+behavior. Focused regression tests cover registry state, capacity and isolation;
+outbound messaging and installed-addon startup proof remain separate.
