@@ -294,6 +294,9 @@ impl PetBattlePet {
 /// retail's modern shape unless a test seeds the struct.
 #[derive(Debug, Default, Clone)]
 pub struct PetState {
+    /// Supplied pet bar reaction cache and native control mask.
+    pub reaction: u8,
+    pub control_mask: u32,
     /// Independent summoned-pet melee haste percentage; None means no stat input.
     #[cfg(feature = "client-retail")]
     pub melee_haste_pct: Option<f64>,

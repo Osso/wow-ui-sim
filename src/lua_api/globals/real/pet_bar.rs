@@ -142,7 +142,21 @@ fn get_pet_action_info(state: &mut LuaState) -> LuaResult<u32> {
     let Some(zero_based) = slot_index_to_zero_based(index) else {
         return Ok(push_empty_pet_action_info(state));
     };
-    let slot = borrow_state(state)?.pet_actions.get(zero_based).cloned();
+    let slot = {
+        let sim = borrow_state(state)?;
+        sim.pet_actions.get(zero_based).cloned().map(|mut slot| {
+            if matches!(
+                crate::client_profile::ACTIVE,
+                crate::client_profile::ClientProfile::Retail
+                    | crate::client_profile::ClientProfile::Ptr
+            ) && slot.is_token
+                && slot.name.as_deref() == Some("PET_MODE_ASSIST")
+            {
+                slot.is_active = sim.pet.control_mask & 4 == 0 && sim.pet.reaction == 3;
+            }
+            slot
+        })
+    };
     let Some(slot) = slot else {
         return Ok(push_empty_pet_action_info(state));
     };
