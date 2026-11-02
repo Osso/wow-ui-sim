@@ -202,6 +202,17 @@ Enum.CurioRarityMeta = {
     MinValue = 1,
     NumValues = 5,
 }
+-- PingConstantsDocumentation.lua:37-48
+Enum.PingSetTargetState = {
+    Ok = 0,
+    Failed = 1,
+    FailedSilent = 2,
+}
+Enum.PingSetTargetStateMeta = {
+    MaxValue = 2,
+    MinValue = 0,
+    NumValues = 3,
+}
 "#;
 
 const MISSING_CONSTANTS_LUA: &str = include_str!("../globals/enum_data/missing_constants.lua");
