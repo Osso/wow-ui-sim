@@ -946,6 +946,8 @@ pub struct SimState {
     pub item_use_eligibility: HashMap<(u32, u32), bool>,
     /// Supplied alternate power bar identifier for item resource checks.
     pub item_use_power_bar_id: Option<u32>,
+    /// The two supplied identity words retained for an item-use confirmation.
+    pub pending_item_use_identity: Option<[u64; 2]>,
     pub item_overlay_flags: HashSet<(u32, crate::c_api::item_overlay::ItemOverlayFlag)>,
     pub equippable_items: ::std::collections::HashSet<u32>,
     pub consumable_items: ::std::collections::HashSet<u32>,
