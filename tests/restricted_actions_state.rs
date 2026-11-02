@@ -77,6 +77,21 @@ fn supplied_restriction_context_controls_encounter_pvp_map_and_chat() {
     .unwrap();
 }
 
+/// WM61 S1: Chat is derived from policy and context, not a direct input.
+#[test]
+fn direct_chat_input_cannot_bypass_restriction_context() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        local api = C_RestrictedActions
+        local ok = pcall(A_Admin.SetAddOnRestrictionActive, Enum.AddOnRestrictionType.Chat, true)
+        assert(not ok)
+        assert(not api.IsAddOnRestrictionActive(Enum.AddOnRestrictionType.Chat))
+    "#,
+    )
+    .unwrap();
+}
+
 #[test]
 fn restricted_actions_combat_transitions() {
     let env = WowLuaEnv::new().unwrap();
