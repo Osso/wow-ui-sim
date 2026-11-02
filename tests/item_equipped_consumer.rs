@@ -19,14 +19,15 @@ fn secure_item_action_uses_equipped_item_from_inventory_link(env: &WowLuaEnv) {
         sim.equippable_items.insert(6948);
     }
     env.exec(r#"
-        local name = SecureCmdItemParse('16')
+        local link = GetInventoryItemLink('player', 16)
+        local name = SecureCmdItemParse(link)
         assert(type(name) == 'string' and name:find('item:6948', 1, true))
         assert(C_Item.IsEquippableItem(name))
         local used = 0
-        hooksecurefunc('SecureCmdUseItem', function() used = used + 1 end)
+        SecureCmdUseItem = function(item) assert(item == link); used = used + 1 end
         local button = CreateFrame('Button', 'EquippedItemConsumerProbe', UIParent)
         button:SetAttribute('type', 'item')
-        button:SetAttribute('item', '16')
+        button:SetAttribute('item', link)
         SecureActionButton_OnClick(button, 'LeftButton', false, false, true)
         assert(used == 1)
     "#).unwrap();
