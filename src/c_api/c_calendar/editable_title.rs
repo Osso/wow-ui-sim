@@ -9,13 +9,26 @@ pub(super) fn register(
     state: &mut LuaState,
     namespace: rilua::vm::gc::arena::GcRef<rilua::vm::table::Table>,
 ) -> LuaResult<()> {
-    table_set_rust_fn_static(state, namespace, "EventSetTitle", set_title)
+    table_set_rust_fn_static(state, namespace, "EventSetTitle", set_title)?;
+    table_set_rust_fn_static(state, namespace, "EventSetDescription", set_description)
 }
 
 fn set_title(state: &mut LuaState) -> LuaResult<u32> {
+    set_text(state, true)
+}
+
+fn set_description(state: &mut LuaState) -> LuaResult<u32> {
+    set_text(state, false)
+}
+
+fn set_text(state: &mut LuaState, title: bool) -> LuaResult<u32> {
     let value = rilua::table_security::unwrap_secret(state, stack_val(state, 1))?;
     let Val::Str(value) = value else {
-        return Err(runtime_error("Usage: C_Calendar.EventSetTitle(title)"));
+        return Err(runtime_error(if title {
+            "Usage: C_Calendar.EventSetTitle(title)"
+        } else {
+            "Usage: C_Calendar.EventSetDescription(description)"
+        }));
     };
     let input = state
         .gc
@@ -39,30 +52,39 @@ fn set_title(state: &mut LuaState) -> LuaResult<u32> {
             .editable
             .as_mut()
             .expect("editable event checked above");
-        if event.title != input {
-            event.title = filter_title(&input);
+        let field = if title {
+            &mut event.title
+        } else {
+            &mut event.description
+        };
+        if *field != input {
+            *field = filter_text(&input, title);
             event.dirty = true;
         }
     }
     Ok(0)
 }
 
-fn filter_title(input: &[u8]) -> Vec<u8> {
+fn filter_text(input: &[u8], title: bool) -> Vec<u8> {
     let mut result = Vec::new();
     let mut count = 0;
+    let (max_bytes, max_count) = if title { (128, 32) } else { (1024, 256) };
     for (index, byte) in input.iter().copied().enumerate() {
-        if byte == b'\r' || byte == b'\n' || (byte == b'\\' && input.get(index + 1) == Some(&b'n'))
+        if title
+            && (byte == b'\r'
+                || byte == b'\n'
+                || (byte == b'\\' && input.get(index + 1) == Some(&b'n')))
         {
             break;
         }
         if byte == b'|' {
             continue;
         }
-        if result.len() == 128 {
+        if result.len() == max_bytes {
             break;
         }
         if byte & 0xc0 != 0x80 {
-            if count == 32 {
+            if count == max_count {
                 break;
             }
             count += 1;
