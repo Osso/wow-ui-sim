@@ -47,8 +47,8 @@ fn select_pet_talent_tree(sim: &SimState) -> Option<&'static str> {
     }
     let talent_type = family_talent_type(sim.pet.creature_family_id?)?;
     let specialization = find_specialization(PET_SPECIALIZATIONS, talent_type)?;
-    // INFERRED (WM49-B): the sex is the owner player's.
-    Some(specialization_name(specialization, sim.player.sex))
+    // WM55-Q1: the pet's own sex selects the name, not the owner's.
+    Some(specialization_name(specialization, sim.pet.sex))
 }
 
 /// A missing family or a negative talent index fails selection.
