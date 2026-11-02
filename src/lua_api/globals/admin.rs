@@ -119,10 +119,15 @@ pub fn register_all(lua: &mut rilua::Lua) -> LuaResult<()> {
     let builder = crate::c_api::c_stable_info::pet_spec_infos::register_admin(builder)?;
     let builder = crate::c_api::challenge_run::register_admin(builder)?;
     let builder = if crate::c_api::restricted_actions::supported() {
-        builder.set_function(
-            "SetAddOnRestrictionActive",
-            crate::c_api::restricted_actions::set_supplied_restriction,
-        )?
+        builder
+            .set_function(
+                "SetAddOnRestrictionActive",
+                crate::c_api::restricted_actions::set_supplied_restriction,
+            )?
+            .set_function(
+                "SetRestrictionContext",
+                crate::c_api::restricted_actions::set_supplied_context,
+            )?
     } else {
         builder
     };

@@ -668,6 +668,8 @@ macro_rules! build_empty_sim_state {
             social_restrictions: SocialRestrictionsState::default(),
             restricted_actions: [0; 6],
             restricted_actions_natural: [false; 6],
+            restriction_chat_client_flag: false,
+            restriction_map_matches: false,
             restricted_actions_dispatching: false,
             #[cfg(feature = "client-wrath")]
             selected_friend_guid: None,

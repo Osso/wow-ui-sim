@@ -9,6 +9,7 @@ Retail and PTR expose `C_RestrictedActions` state queries backed by six independ
 - [x] Deactivation sets Inactive (0) before synchronously emitting `ADDON_RESTRICTION_STATE_CHANGED(type, 0)`.
 - [x] Combat follows `A_Admin.SetInCombat`; the other types are independently supplied with `A_Admin.SetAddOnRestrictionActive(type, active)`.
 - [x] Each supplied natural condition is ORed with its matching `addon*RestrictionsForced` CVar. Changing a forced CVar recomputes that type. WM61 S1 verifies the six names and local transition rule; server inputs remain unknown.
+- [x] `A_Admin.SetRestrictionContext(status, counter, pvpState, mapClassification, mapFlags, chatClientFlag)` supplies encounter, PvP, map and Chat inputs. The natural Chat condition also uses `addonChatRestrictionsEnabled` and the active Encounter, ChallengeMode and PvPMatch states; Combat alone does not activate it. This is a supplied-state seam, not a server model.
 - [x] Encounter and PvP lifecycle events and challenge-run start/clear drive their respective types. These drivers are best guesses, not verified native triggers.
 - [x] Missing, nil, negative, out-of-range and nonnumeric type arguments fail. This validation is a best guess.
 - [ ] Challenge-run completion deactivates the challenge restriction. This path is implemented but not separately tested here.
