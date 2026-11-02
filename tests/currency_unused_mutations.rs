@@ -63,6 +63,22 @@ fn currency_unused_mutations_original_popup_shows_discovered_currency_checkbox()
 }
 
 #[test]
+fn currency_popup_propagates_list_currency_id_to_transfer_button() {
+    with_token_ui_env(|env| {
+        env.state().borrow_mut().currency_list.transfer_server_enabled = Some(false);
+        env.exec(r#"
+            local row = assert(C_CurrencyInfo.GetCurrencyListInfo(3))
+            row.currencyIndex = 3
+            local entry = CreateFrame("Button", nil, UIParent, "TokenEntryTemplate")
+            entry:Initialize(row)
+            TokenFrame:UpdatePopup(entry)
+            assert(TokenFramePopup.CurrencyTransferToggleButton.currencyID == 2806)
+            assert(not TokenFramePopup.CurrencyTransferToggleButton:IsEnabled())
+        "#).unwrap();
+    });
+}
+
+#[test]
 fn currency_transfer_button_refreshes_original_consumer_for_nontransferable_currency() {
     with_token_ui_env(|env| {
         {
