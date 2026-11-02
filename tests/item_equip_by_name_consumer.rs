@@ -99,8 +99,9 @@ fn binding_confirmation_reaches_the_original_game_event_consumer(env: &WowLuaEnv
         C_Item.EquipItemByName(25)
         assert(#bindCaptures == 1)
         local data = bindCaptures[1]
-        assert(type(data.slot) == 'number')
+        assert(data.slot == 0)
         assert(data.itemLocation.bagID == 0 and data.itemLocation.slotIndex == 2)
+        assert(data.itemLocation:IsBagAndSlot())
         assert(CursorHasItem() and not C_Container.GetContainerItemInfo(0, 2).isLocked)
     "#).unwrap();
     {
@@ -114,7 +115,7 @@ fn binding_confirmation_reaches_the_original_game_event_consumer(env: &WowLuaEnv
         C_Item.EquipItemByName(25, 16)
         assert(#bindCaptures == 2)
         local data = bindCaptures[2]
-        assert(type(data.slot) == 'number')
+        assert(data.slot == 1)
         assert(data.itemLocation.bagID == 0 and data.itemLocation.slotIndex == 3)
         assert(select(2, GetCursorInfo()) == 6948)
     "#).unwrap();

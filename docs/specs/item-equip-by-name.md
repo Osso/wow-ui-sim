@@ -8,6 +8,6 @@ With an explicit numeric destination, subtract one and truncate; the result must
 
 A refundable owned item takes priority for equip confirmation. Otherwise Bonding 2 or a tradeable bound item, together with item/player eligibility, selects binding or tradeable confirmation. Effective binding depends on the owned bound marker, binding enchantment or species flag 16, not Bonding 1 alone. The native clock basis and the full eligibility rule remain UNKNOWN; tests may supply the predicate inputs. VERIFIED tests, INFERRED state names (WM57).
 
-**Unimplemented:** The event payload for these three confirmations is UNKNOWN. The simulator currently returns an error instead of emitting an invented event. The automatic path retains the staged cursor; the direct path does not stage one. This is not complete confirmation behavior.
+Each selected confirmation publishes its corresponding `EQUIP_BIND_CONFIRM`, `EQUIP_BIND_REFUNDABLE_CONFIRM`, or `EQUIP_BIND_TRADEABLE_CONFIRM` with exactly two arguments: the zero-based deferred-record token and an `ItemLocationMixin` table containing the item's current location. A lookup miss produces an empty location table. The automatic path retains the staged cursor; the direct path does not stage one. VERIFIED (WM65). Deferred-record release and confirmation completion are UNKNOWN.
 
 The simulator records local requests and locks only. It does not synthesize a server equip response or alter equipment to claim success. Callback re-entry, exceptional paths, external completion and server results are UNKNOWN (WM44-B, WM57).

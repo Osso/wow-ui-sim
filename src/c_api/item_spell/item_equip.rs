@@ -79,6 +79,7 @@ pub struct ItemEquipState {
     pub inputs: HashMap<u64, OwnedItemEquipInputs>,
     pub requests: Vec<EquipRequest>,
     pub pending_confirmation: Option<PendingEquip>,
+    pub confirmations: Vec<PendingEquip>,
     pub(crate) staged: Option<StagedEquip>,
     /// UI initialization enables pickup control (WM57 Q7).
     pub pickup_control_enabled: bool,
@@ -91,6 +92,7 @@ impl Default for ItemEquipState {
             inputs: HashMap::new(),
             requests: Vec::new(),
             pending_confirmation: None,
+            confirmations: Vec::new(),
             staged: None,
             pickup_control_enabled: true,
         }
@@ -467,10 +469,57 @@ fn confirmation_for_staged(
     confirmation_for_item(inputs, bonding)
 }
 
-fn reject_unimplemented_confirmation(confirmation: EquipConfirmation) -> rilua::LuaResult<()> {
-    Err(rilua::runtime_error(format!(
-        "C_Item.EquipItemByName: {confirmation:?} confirmation payload is not established"
-    )))
+fn publish_equip_confirmation(
+    state: &mut rilua::vm::state::LuaState,
+    staged: StagedEquip,
+    destination: Option<i32>,
+    confirmation: EquipConfirmation,
+) -> rilua::LuaResult<()> {
+    use crate::lua_api::methods::{call_function_state, table_get};
+    use rilua::Val;
+
+    let (token, location) = {
+        let mut sim = crate::lua_api::methods::borrow_state_mut(state)?;
+        let token = sim.item_equip.confirmations.len();
+        sim.item_equip.confirmations.push(PendingEquip {
+            identity: staged.identity,
+            item_id: staged.item_id,
+            source: staged.source.into(),
+            destination,
+            confirmation,
+        });
+        (token, find_identity_slot(&sim, staged.identity))
+    };
+    let factory = crate::c_api::global_val(state, "ItemLocation");
+    let method = table_get(
+        state,
+        factory,
+        match location {
+            Some(ItemSlot::Bag(..)) => "CreateFromBagAndSlot",
+            Some(ItemSlot::Equipment(..)) => "CreateFromEquipmentSlot",
+            None => "CreateEmpty",
+        },
+    );
+    let mut args = vec![factory];
+    match location {
+        Some(ItemSlot::Bag(bag, slot)) => {
+            args.extend([Val::Num(f64::from(bag)), Val::Num(f64::from(slot))])
+        }
+        Some(ItemSlot::Equipment(slot)) => args.push(Val::Num(f64::from(slot))),
+        None => {}
+    }
+    let location = call_function_state(state, method, &args)?;
+    let event = match confirmation {
+        EquipConfirmation::Bind => "EQUIP_BIND_CONFIRM",
+        EquipConfirmation::Tradeable => "EQUIP_BIND_TRADEABLE_CONFIRM",
+        EquipConfirmation::Refundable => "EQUIP_BIND_REFUNDABLE_CONFIRM",
+        EquipConfirmation::AccountConversion => unreachable!("conversion has no token"),
+    };
+    crate::lua_api::globals::state_backed_queries::dispatch_event_now(
+        state,
+        event,
+        &[Val::Num(token as f64), location],
+    )
 }
 
 fn process_automatic(state: &mut rilua::vm::state::LuaState) -> rilua::LuaResult<()> {
@@ -503,7 +552,7 @@ fn process_automatic(state: &mut rilua::vm::state::LuaState) -> rilua::LuaResult
         (confirmation, conversion)
     };
     if let Some(confirmation) = confirmation {
-        return reject_unimplemented_confirmation(confirmation);
+        return publish_equip_confirmation(state, staged, None, confirmation);
     }
     if conversion {
         let pending = PendingEquip {
@@ -571,7 +620,8 @@ pub(super) fn equip_item_by_name(state: &mut rilua::vm::state::LuaState) -> rilu
                 confirmation_for_staged(&sim, staged)?
             };
             if let Some(confirmation) = confirmation {
-                reject_unimplemented_confirmation(confirmation)?;
+                publish_equip_confirmation(state, staged, Some(destination), confirmation)?;
+                return Ok(0);
             }
             submit_request(state, staged, Some(destination))?;
         }
