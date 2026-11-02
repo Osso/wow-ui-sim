@@ -23,6 +23,7 @@ fn is_inventory_item_locked_true_when_cursor_holds_that_slot() {
         item_id: 1,
         stack_count: 1,
         origin: CursorItemOrigin::Equipped { slot: 16 },
+        applied_transmog: None,
     });
     let b: bool = env.eval("return IsInventoryItemLocked(16)").unwrap();
     assert!(b);
@@ -42,6 +43,7 @@ fn get_inventory_item_durability_returns_full_durability_for_equipped_items() {
                 item_id: 19019,
                 enchant_id: 0,
                 gem_ids: [0; 3],
+                applied_transmog: None,
             },
         );
     }

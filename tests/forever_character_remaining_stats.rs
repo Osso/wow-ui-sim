@@ -14,6 +14,7 @@ mod forever {
             item_id,
             enchant_id: 0,
             gem_ids: [0; 3],
+            applied_transmog: None,
         }
     }
 

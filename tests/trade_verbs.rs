@@ -161,6 +161,7 @@ fn set_cursor_item_slot_moves_cursor_item_into_slot() {
             item_id: 6948,
             stack_count: 1,
             origin: CursorItemOrigin::Unknown,
+            applied_transmog: None,
         });
     }
     env.exec("SetCursorItemSlot(3)").unwrap();
@@ -179,6 +180,7 @@ fn set_cursor_item_slot_out_of_range_is_noop() {
             item_id: 123,
             stack_count: 1,
             origin: CursorItemOrigin::Unknown,
+            applied_transmog: None,
         });
     }
     env.exec("SetCursorItemSlot(99)").unwrap();

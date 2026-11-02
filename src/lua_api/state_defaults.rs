@@ -10,6 +10,7 @@ pub(super) fn default_equipped_items() -> HashMap<i32, EquippedItem> {
         item_id,
         enchant_id: 0,
         gem_ids: [0, 0, 0],
+        applied_transmog: None,
     };
     [
         (1, e(211993)),  // Head: Entombed Seraph's Casque

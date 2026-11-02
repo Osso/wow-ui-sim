@@ -36,6 +36,7 @@ fn p1127_dye_colors_read_catalog_inventory_and_fresh_color_snapshots() {
                 stack_count: 2,
                 hyperlink: None,
                 durability: None,
+                applied_transmog: None,
             },
         );
         sim.bag_items.insert(
@@ -45,6 +46,7 @@ fn p1127_dye_colors_read_catalog_inventory_and_fresh_color_snapshots() {
                 stack_count: 3,
                 hyperlink: None,
                 durability: None,
+                applied_transmog: None,
             },
         );
         sim.bag_items.insert(
@@ -54,6 +56,7 @@ fn p1127_dye_colors_read_catalog_inventory_and_fresh_color_snapshots() {
                 stack_count: 4,
                 hyperlink: None,
                 durability: None,
+                applied_transmog: None,
             },
         );
         sim.guild_bank_items.insert(
@@ -63,6 +66,7 @@ fn p1127_dye_colors_read_catalog_inventory_and_fresh_color_snapshots() {
                 stack_count: 9,
                 hyperlink: None,
                 durability: None,
+                applied_transmog: None,
             },
         );
     }

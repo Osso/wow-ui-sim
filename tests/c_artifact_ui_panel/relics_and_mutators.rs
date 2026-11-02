@@ -120,6 +120,7 @@ fn can_apply_cursor_relic_to_slot_requires_known_relic_and_unlocked_slot() {
             item_id: 777,
             stack_count: 1,
             origin: CursorItemOrigin::Unknown,
+            applied_transmog: None,
         });
     }
     let allowed: bool = env
@@ -144,6 +145,7 @@ fn can_apply_cursor_relic_to_slot_rejects_unknown_relic() {
             item_id: 1,
             stack_count: 1,
             origin: CursorItemOrigin::Unknown,
+            applied_transmog: None,
         });
     }
     let allowed: bool = env
@@ -350,6 +352,7 @@ fn apply_cursor_relic_to_slot_writes_into_slot() {
             item_id: 444,
             stack_count: 1,
             origin: CursorItemOrigin::Unknown,
+            applied_transmog: None,
         });
     }
     env.exec("C_ArtifactUI.ApplyCursorRelicToSlot(1)").unwrap();

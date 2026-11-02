@@ -327,6 +327,7 @@ fn item() -> BagItem {
         stack_count: 3,
         hyperlink: None,
         durability: None,
+        applied_transmog: None,
     }
 }
 

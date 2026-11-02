@@ -90,6 +90,7 @@ fn is_empowered_resolves_bag_and_slot() {
                 stack_count: 1,
                 hyperlink: None,
                 durability: None,
+                applied_transmog: None,
             },
         );
     }
@@ -111,6 +112,7 @@ fn is_empowered_resolves_equipment_slot() {
                 item_id: 158041,
                 enchant_id: 0,
                 gem_ids: [0, 0, 0],
+                applied_transmog: None,
             },
         );
     }

@@ -99,6 +99,7 @@ fn captured_reagent_bag_drives_all_capacity_queries_and_metadata() {
                 stack_count: 1,
                 hyperlink: None,
                 durability: None,
+                applied_transmog: None,
             },
         );
         state.bag_items.insert(
@@ -108,6 +109,7 @@ fn captured_reagent_bag_drives_all_capacity_queries_and_metadata() {
                 stack_count: 2,
                 hyperlink: None,
                 durability: None,
+                applied_transmog: None,
             },
         );
     }
@@ -146,6 +148,7 @@ fn captured_bag_item_link_preserves_bonus_context_across_container_queries() {
             stack_count: 1,
             hyperlink: Some(captured_link.to_string()),
             durability: None,
+            applied_transmog: None,
         },
     );
     let (item_link, info_link): (String, String) = env
@@ -197,6 +200,7 @@ fn total_free_slots_use_captured_capacities_including_bag_five() {
                 stack_count: 1,
                 hyperlink: None,
                 durability: None,
+                applied_transmog: None,
             },
         );
     }
@@ -217,6 +221,7 @@ fn backpack_placement_obeys_captured_zero_and_expanded_capacity() {
             item_id: 6948,
             stack_count: 1,
             origin: CursorItemOrigin::Unknown,
+            applied_transmog: None,
         });
     }
     let placed: bool = env
@@ -235,6 +240,7 @@ fn backpack_placement_obeys_captured_zero_and_expanded_capacity() {
                     stack_count: 1,
                     hyperlink: None,
                     durability: None,
+                    applied_transmog: None,
                 },
             );
         }
@@ -273,18 +279,21 @@ fn get_num_loot_items_counts_seeded_slots() {
             stack_count: 1,
             hyperlink: None,
             durability: None,
+            applied_transmog: None,
         },
         BagItem {
             item_id: 19019,
             stack_count: 1,
             hyperlink: None,
             durability: None,
+            applied_transmog: None,
         },
         BagItem {
             item_id: 36942,
             stack_count: 1,
             hyperlink: None,
             durability: None,
+            applied_transmog: None,
         },
     ];
     let n: i32 = env.eval("return GetNumLootItems()").unwrap();

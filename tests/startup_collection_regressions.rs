@@ -56,6 +56,47 @@ fn load_and_startup_env() -> WowLuaEnv {
 }
 
 prefork_full_ui_case! {
+fn startup_collection_secondary_transmog_reads_equipped_item(env: &WowLuaEnv) {
+    env.exec(r#"
+        local location = ItemLocation:CreateFromEquipmentSlot(1)
+        assert(C_Item.DoesItemExist(location))
+        assert(TransmogUtil.IsSecondaryTransmoggedForItemLocation(location) == false)
+        local info = C_Item.GetAppliedItemTransmogInfo(location)
+        assert(info and info.appearanceID == 0 and info.secondaryAppearanceID == 0 and info.illusionID == 0)
+    "#).unwrap();
+    {
+        use wow_ui_sim::lua_api::state::{AppliedTransmog, BagItem};
+        let state = env.state();
+        let mut sim = state.borrow_mut();
+        sim.player.equipped_items.get_mut(&1).unwrap().applied_transmog = Some(AppliedTransmog {
+            appearance_id: 111, secondary_appearance_id: 222, illusion_id: 333,
+        });
+        sim.bag_items.insert((0, 1), BagItem {
+            item_id: 211993, stack_count: 1, hyperlink: None, durability: None,
+            applied_transmog: Some(AppliedTransmog { appearance_id: 444, secondary_appearance_id: 0, illusion_id: 555 }),
+        });
+    }
+    env.exec(r#"
+        local equipped = ItemLocation:CreateFromEquipmentSlot(1)
+        local bag = ItemLocation:CreateFromBagAndSlot(0, 1)
+        local function check(location, appearance, secondary, illusion)
+            local info = C_Item.GetAppliedItemTransmogInfo(location)
+            assert(info.appearanceID == appearance and info.secondaryAppearanceID == secondary and info.illusionID == illusion)
+            assert(type(info.IsEqual) == 'function')
+            assert(TransmogUtil.IsSecondaryTransmoggedForItemLocation(location) == (secondary ~= 0))
+        end
+        check(equipped, 111, 222, 333)
+        check(bag, 444, 0, 555)
+        PickupInventoryItem(1)
+        C_Container.PickupContainerItem(0, 1)
+        check(bag, 111, 222, 333)
+        PickupInventoryItem(1)
+        check(equipped, 444, 0, 555)
+    "#).unwrap();
+}
+}
+
+prefork_full_ui_case! {
 fn startup_wardrobe_tab_has_transmog_locations(env: &WowLuaEnv) {
         let result: String = env
             .eval(

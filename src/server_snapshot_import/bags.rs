@@ -239,6 +239,7 @@ fn parse_item(state: &mut LuaState, row: Val, path: &str) -> crate::Result<BagIt
         stack_count: field_integer(state, row, "stackCount", 1, path)?,
         hyperlink: optional_text(state, row, "hyperlink", path)?,
         durability: None,
+        applied_transmog: None,
     })
 }
 
@@ -291,6 +292,7 @@ fn apply_equipped_bag(sim: &mut crate::lua_api::state::SimState, info: &BagInfo)
                     item_id,
                     enchant_id: 0,
                     gem_ids: [0; 3],
+                    applied_transmog: None,
                 },
             );
         }

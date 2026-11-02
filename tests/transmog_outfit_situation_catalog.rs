@@ -36,6 +36,7 @@ fn transmog_outfit_situation_catalog_equipped_option_reads_actual_item_inventory
     assert_eq!(env.eval::<Option<i32>>("return C_TransmogOutfitInfo.GetEquippedSlotOptionFromTransmogSlot(12)").unwrap(), None);
     env.state().borrow_mut().player.equipped_items.insert(16, EquippedItem {
         item_id: 250448, enchant_id: 0, gem_ids: [0;3],
+        applied_transmog: None,
     });
     assert_eq!(env.eval::<i32>("return C_TransmogOutfitInfo.GetEquippedSlotOptionFromTransmogSlot(12)").unwrap(), 2);
 }
