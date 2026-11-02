@@ -229,6 +229,12 @@ fn register_c_item_inventory_queries(
             "GetItemChildInfo",
             super::item_child::get_item_child_info,
         )?;
+        table_set_rust_fn_static(
+            state,
+            table_ref,
+            "GetItemCreationContext",
+            c_item_creation_context,
+        )?;
     }
     register_c_item_methods(
         state,
@@ -265,6 +271,27 @@ fn register_c_item_methods(
         table_set_rust_fn_static(state, table_ref, name, func)?;
     }
     Ok(())
+}
+
+fn c_item_creation_context(state: &mut LuaState) -> LuaResult<u32> {
+    let value = rilua::table_security::unwrap_secret(state, stack_val(state, 1))?;
+    let id = parse_item_id_from_val(state, value)
+        .ok_or_else(|| runtime_error("C_Item.GetItemCreationContext: expected itemInfo"))?;
+    let context = val_to_string(state, value)
+        .and_then(|text| {
+            if id <= 0 {
+                return None;
+            }
+            let (_, item) = text.split_once("item:")?;
+            let payload = item.split('|').next()?;
+            payload.split(':').nth(11)?.parse::<i64>().ok()
+        })
+        .unwrap_or(0) as u8;
+    let name = super::item_creation_context_data::CONTEXT_NAMES[usize::from(context)];
+    let name = create_string(state, name);
+    state.push(Val::Num(id as f64));
+    state.push(name);
+    Ok(2)
 }
 
 fn c_item_get_item_family(state: &mut LuaState) -> LuaResult<u32> {
