@@ -203,6 +203,14 @@ fn register_c_item_inventory_queries(
     state: &mut LuaState,
     table_ref: GcRef<Table>,
 ) -> LuaResult<()> {
+    if ACTIVE == ClientProfile::Retail {
+        table_set_rust_fn_static(
+            state,
+            table_ref,
+            "GetItemGem",
+            super::item_gem::get_item_gem,
+        )?;
+    }
     register_c_item_methods(
         state,
         table_ref,

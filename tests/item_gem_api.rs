@@ -12,9 +12,11 @@ fn item_gem_returns_selected_cached_gem_and_no_values_for_missing(env: &WowLuaEn
         assert(link1:find('|cnIQ4:|Hitem:22459:', 1, true), link1)
         assert(not link1:find('Fake Parent Label', 1, true), link1)
         assert(not link1:find('999999', 1, true), link1)
-        local name2, link2 = C_Item.GetItemGem(source, 2)
+        local other = 'item:211995:0:23094:0:0:0:0:0:1:2:0:5:0:0:1:1234:0:0::0'
+        local name2, link2 = C_Item.GetItemGem(other, 1)
         assert(name2 == 'Brilliant Blood Garnet', tostring(name2))
         assert(link2:find('|cnIQ2:|Hitem:23094:', 1, true), link2)
+        assert(link2:find(':1:1234:', 1, true), link2)
         assert(select('#', C_Item.GetItemGem(source, 3)) == 0)
         assert(select('#', C_Item.GetItemGem(source, 4)) == 0)
         assert(select('#', C_Item.GetItemGem('item:1:0:999999', 1)) == 0)
