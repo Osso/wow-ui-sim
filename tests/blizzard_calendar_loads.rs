@@ -158,3 +158,36 @@ fn calendar_show_and_hide_run_without_errors(env: &WowLuaEnv) {
     );
 }
 }
+
+prefork_full_ui_case! {
+fn calendar_selection_indices_follow_day_event_identity(env: &WowLuaEnv) {
+    use wow_ui_sim::c_api::c_calendar::day_event_record::{CalendarDayEventRecord, CalendarTimeRecord};
+    let time = CalendarTimeRecord { month_day: 15, month: 4, weekday: 4, year: 2026.0, hour: 12.0, minute: 0.0 };
+    let record = |id: &str| CalendarDayEventRecord {
+        event_id: id.into(), title: id.into(), is_custom_title: false,
+        start_time: time.clone(), end_time: time.clone(), calendar_type: "GUILD_EVENT".into(),
+        sequence_type: "".into(), event_type: 0, icon_texture: None, mod_status: "CREATOR".into(),
+        invite_status: 0, invited_by: "".into(), difficulty: 0.0, invite_type: 0,
+        sequence_index: 0, num_sequence_days: 1.0, difficulty_name: "".into(),
+        dont_display_banner: false, dont_display_end: false, club_id: "".into(), is_locked: false,
+    };
+    env.state().borrow_mut().calendar_day_events.insert((0, 15), vec![record("one"), record("two")]);
+    env.exec(r#"
+        assert(select('#', C_Calendar.GetEventIndex()) == 0)
+        assert(select('#', C_Calendar.ContextMenuGetEventIndex()) == 0)
+        C_Calendar.OpenEvent(0, 15, 2)
+        C_Calendar.ContextMenuSelectEvent(0, 15, 1)
+        local a, b = C_Calendar.GetEventIndex(), C_Calendar.ContextMenuGetEventIndex()
+        assert(a.offsetMonths == 0 and a.monthDay == 15 and a.eventIndex == 2)
+        assert(b.offsetMonths == 0 and b.monthDay == 15 and b.eventIndex == 1)
+    "#).unwrap();
+    env.state().borrow_mut().calendar_day_events.get_mut(&(0, 15)).unwrap().swap(0, 1);
+    env.exec(r#"
+        assert(C_Calendar.GetEventIndex().eventIndex == 1)
+        assert(C_Calendar.ContextMenuGetEventIndex().eventIndex == 2)
+        C_Calendar.CloseEvent()
+        assert(select('#', C_Calendar.GetEventIndex()) == 0)
+        assert(C_Calendar.ContextMenuGetEventIndex().eventIndex == 2)
+    "#).unwrap();
+}
+}
