@@ -102,6 +102,17 @@ fn register_c_map_methods(state: &mut LuaState, table_ref: LuaTableRef) -> LuaRe
     }
     if matches!(
         crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail | crate::client_profile::ClientProfile::Ptr
+    ) {
+        table_set_rust_fn_static(
+            state,
+            table_ref,
+            "CloseWorldMapInteraction",
+            close_world_map_interaction,
+        )?;
+    }
+    if matches!(
+        crate::client_profile::ACTIVE,
         crate::client_profile::ClientProfile::Mists
             | crate::client_profile::ClientProfile::Era
             | crate::client_profile::ClientProfile::Anniversary
@@ -114,6 +125,21 @@ fn register_c_map_methods(state: &mut LuaState, table_ref: LuaTableRef) -> LuaRe
         )?;
     }
     Ok(())
+}
+
+fn close_world_map_interaction(state: &mut LuaState) -> LuaResult<u32> {
+    const WORLD_MAP_INTERACTION: i32 = 29;
+    let was_active = borrow_state_mut(state)?
+        .active_player_interactions
+        .remove(&WORLD_MAP_INTERACTION);
+    if was_active {
+        crate::lua_api::script_helpers::fire_named_event_state(
+            state,
+            "PLAYER_INTERACTION_MANAGER_FRAME_HIDE",
+            &[Val::Num(f64::from(WORLD_MAP_INTERACTION))],
+        );
+    }
+    Ok(0)
 }
 
 const DEFAULT_PLAYER_MAP_ID: i32 = 2248;
