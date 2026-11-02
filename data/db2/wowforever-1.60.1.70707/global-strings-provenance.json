@@ -1,0 +1,10 @@
+{
+  "build": "1.60.1.70707",
+  "interface": 16001,
+  "source": "https://wago.tools/db2/GlobalStrings/csv?build=1.60.1.70707",
+  "sha256": "a8ac8fedd7a29d7a1e16960f9adeb459a0a04767cfecce4b0a7dc788273ffed5",
+  "rows": 27399,
+  "duplicate_tags": 0,
+  "regenerate": "python3 tools/gen_forever_global_strings.py",
+  "provenance_scope": "Build-specific Wago export; independent local-CASC equality is not established."
+}

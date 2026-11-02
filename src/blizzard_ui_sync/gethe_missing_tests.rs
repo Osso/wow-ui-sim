@@ -27,7 +27,7 @@ fn fixture(version: &str, bytes: &[u8]) -> (tempfile::TempDir, GetheTree) {
     std::fs::write(file, bytes).unwrap();
     std::fs::write(dir.path().join("version.txt"), format!("{version}\n")).unwrap();
     git(dir.path(), &["init", "--quiet"]);
-    git(dir.path(), &["add", "."]);
+    git(dir.path(), &["-c", "core.autocrlf=false", "add", "."]);
     git(
         dir.path(),
         &[
@@ -114,6 +114,85 @@ fn nonresident_mismatching_gethe_fails_without_writing() {
         "Gethe MD5 mismatch for Blizzard_Test/Example.lua (FDID 8379893): CKey=5d41402abc4b2a76b9719d911017c592, Gethe=2bda2998d9b0ee197da142a0447f6725"
     );
     assert!(!destination.exists());
+}
+
+#[test]
+fn matching_lf_gethe_bytes_remain_unchanged() {
+    let bytes = b"first\nsecond\n";
+    let (_source, tree) = fixture(VERSION, bytes);
+    let mut mapped = file(false);
+    mapped.content_key = ContentKey::from_data(bytes).to_hex();
+    assert_eq!(read_verified_gethe(&tree, &mapped).unwrap(), bytes);
+}
+
+#[test]
+fn load_locale_recovers_exact_crlf_bytes_identified_by_casc() {
+    // Exact published 70707 Gethe text; the installed enUS CKey identifies CRLF.
+    let bytes = b"-- This is a symbol available for people who need to know the locale (separate from GetLocale())\nLOCALE_enUS = true;\nUI_LOCALE = \"enUS\";";
+    let expected = b"-- This is a symbol available for people who need to know the locale (separate from GetLocale())\r\nLOCALE_enUS = true;\r\nUI_LOCALE = \"enUS\";";
+    let (_source, tree) = fixture(VERSION, bytes);
+    let mut mapped = file(false);
+    mapped.fdid = 5612369;
+    mapped.content_key = "2e4d4433534c95ee111c0e1a88863c01".into();
+    assert_eq!(
+        ContentKey::from_data(bytes).to_hex(),
+        "b7ebc7bc164f5fc042e6619f8413a44a"
+    );
+    let output = tempfile::tempdir().unwrap();
+    let destination = output.path().join(ENTRY);
+    let (result, record) = sync_mapped_file(
+        true,
+        || Ok(Some(mapped)),
+        &destination,
+        || unreachable!(),
+        || Ok(tree),
+    )
+    .unwrap();
+    assert!(matches!(result, EntrySyncResult::Extracted));
+    assert_eq!(std::fs::read(destination).unwrap(), expected);
+    assert_eq!(record.unwrap().ckey, "2e4d4433534c95ee111c0e1a88863c01");
+}
+
+#[test]
+fn crlf_recovery_preserves_existing_crlf_and_standalone_cr() {
+    let bytes = b"first\r\nsecond\nthird\rfourth\n";
+    let expected = b"first\r\nsecond\r\nthird\rfourth\r\n";
+    let (_source, tree) = fixture(VERSION, bytes);
+    assert_eq!(
+        read_pinned_blob(&tree, &format!("Interface/AddOns/{ENTRY}")).unwrap(),
+        bytes
+    );
+    let mut mapped = file(false);
+    mapped.content_key = ContentKey::from_data(expected).to_hex();
+    assert_eq!(read_verified_gethe(&tree, &mapped).unwrap(), expected);
+}
+
+#[test]
+fn crlf_recovery_rejects_wrong_hash_and_locale_without_writing() {
+    for (bytes, content_key) in [
+        (b"first\nsecond\n".as_slice(), HELLO_MD5),
+        (
+            b"LOCALE_ptPT = true;\nUI_LOCALE = \"ptPT\";".as_slice(),
+            "2e4d4433534c95ee111c0e1a88863c01",
+        ),
+    ] {
+        let (_source, tree) = fixture(VERSION, bytes);
+        let mut mapped = file(false);
+        mapped.content_key = content_key.into();
+        let output = tempfile::tempdir().unwrap();
+        let destination = output.path().join(ENTRY);
+        let error = sync_mapped_file(
+            true,
+            || Ok(Some(mapped)),
+            &destination,
+            || unreachable!(),
+            || Ok(tree),
+        )
+        .err()
+        .unwrap();
+        assert!(error.to_string().contains("Gethe MD5 mismatch"));
+        assert!(!destination.exists());
+    }
 }
 
 #[test]

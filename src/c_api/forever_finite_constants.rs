@@ -44,12 +44,12 @@ fn register_provider_experience_enums(state: &mut LuaState, enums: Val) {
         "VoiceProviderIDMeta",
         &[("MinValue", 0), ("MaxValue", 1), ("NumValues", 2)],
     );
-    // Selected Forever 1.60.1.70374 GameRulesDocumentation.lua.
+    // Selected Forever 1.60.1.70707 GameRulesDocumentation.lua.
     publish(
         state,
         enums,
         "ForeverExperiencePreset",
-        &[("Classic", 0), ("Modern", 1)],
+        &[("Classic", 0), ("Enhanced", 1)],
     );
     publish(
         state,
