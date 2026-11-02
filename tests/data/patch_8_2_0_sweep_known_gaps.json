@@ -35,7 +35,6 @@
   "wt-global-api-C_PvP.IsBattleground-121",
   "wt-global-api-C_PvP.IsMatchFactional-123",
   "wt-global-api-C_SpellBook.ContainsAnyDisenchantSpell-132",
-  "wt-global-api-C_UIWidgetManager.GetZoneControlVisualizationInfo-136",
   "wt-global-api-C_VoiceChat.IsChannelJoinPending-138",
   "wt-global-api-SetMoveEnabled-142",
   "wt-global-api-SetTurnEnabled-143",

@@ -8,6 +8,5 @@
   "wt-global-api-C_Minimap.SetMinimapInsetInfo-46",
   "wt-global-api-C_QuestLog.DoesQuestAwardReputationWithFaction-58",
   "wt-global-api-C_QuestLog.QuestContainsFirstTimeRepBonusForPlayer-47",
-  "wt-global-api-C_Traits.CanEditConfig-48",
-  "wt-global-api-C_UIWidgetManager.GetScenarioHeaderDelvesWidgetVisualizationInfo-49"
+  "wt-global-api-C_Traits.CanEditConfig-48"
 ]

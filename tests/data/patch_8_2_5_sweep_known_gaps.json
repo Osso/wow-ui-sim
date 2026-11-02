@@ -42,7 +42,6 @@
   "wt-global-api-C_RecruitAFriend.RemoveRAFRecruit-113",
   "wt-global-api-C_RecruitAFriend.RequestUpdatedRecruitmentInfo-114",
   "wt-global-api-C_SocialRestrictions.IsMuted-115",
-  "wt-global-api-C_UIWidgetManager.GetCaptureZoneVisualizationInfo-119",
   "wt-global-api-ConfirmBNRequestInviteFriend-120",
   "wt-global-api-GetExpansionForLevel-121",
   "wt-global-api-LeaveParty-161",
