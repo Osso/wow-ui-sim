@@ -86,6 +86,27 @@ fn blizzard_line_processing_defers_resize_until_show() {
 }
 
 #[test]
+fn blizzard_double_line_processing_defers_resize_until_show() {
+    let env = setup_full_env();
+    env.exec(
+        r#"
+        GameTooltip:SetOwner(UIParent, "ANCHOR_NONE")
+        assert(GameTooltip:ProcessInfo({ tooltipData = { lines = {
+            { type = 0, leftText = "Short" },
+        } } }))
+        local width, height = GameTooltip:GetWidth(), GameTooltip:GetHeight()
+        GameTooltip:AddLineDataText({ type = 0, leftText = "A longer left column", rightText = "Right column" })
+        assert(GameTooltip:GetWidth() == width, "double line resized width before Show")
+        assert(GameTooltip:GetHeight() == height, "double line resized height before Show")
+        GameTooltip:Show()
+        assert(GameTooltip:GetWidth() > width, "Show did not resize the tooltip")
+        assert(GameTooltip:GetHeight() > height, "Show did not update tooltip height")
+        "#,
+    )
+    .unwrap();
+}
+
+#[test]
 fn test_tooltip_mixins_load_in_full_env() {
     let env = setup_full_env();
 
