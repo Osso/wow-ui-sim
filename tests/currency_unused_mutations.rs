@@ -67,6 +67,7 @@ fn currency_popup_propagates_list_currency_id_to_transfer_button() {
     with_token_ui_env(|env| {
         env.state().borrow_mut().currency_list.transfer_server_enabled = Some(false);
         env.exec(r#"
+            assert(type(C_CurrencyInfo.GetCurrencyListInfo(1).currencyID) == "number")
             local row = assert(C_CurrencyInfo.GetCurrencyListInfo(3))
             row.currencyIndex = 3
             local entry = CreateFrame("Button", nil, UIParent, "TokenEntryTemplate")
@@ -74,6 +75,7 @@ fn currency_popup_propagates_list_currency_id_to_transfer_button() {
             TokenFrame:UpdatePopup(entry)
             assert(TokenFramePopup.CurrencyTransferToggleButton.currencyID == 2806)
             assert(not TokenFramePopup.CurrencyTransferToggleButton:IsEnabled())
+            assert(TokenFramePopup.CurrencyTransferToggleButton:GetDisabledTooltip() ~= nil)
         "#).unwrap();
     });
 }

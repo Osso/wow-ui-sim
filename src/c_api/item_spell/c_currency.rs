@@ -461,6 +461,13 @@ fn c_currency_get_list_info(state: &mut LuaState) -> LuaResult<u32> {
     table_set_static(
         state,
         info,
+        "currencyID",
+        Val::Num(entry.currency_id as f64),
+    );
+    #[cfg(feature = "client-retail")]
+    table_set_static(
+        state,
+        info,
         "currencyListDepth",
         Val::Num(entry.depth as f64),
     );
