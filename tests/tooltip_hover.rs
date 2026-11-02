@@ -174,6 +174,26 @@ fn api_padding_synchronously_lays_out_pending_tooltip_lines() {
 }
 
 #[test]
+fn blizzard_money_helper_defers_minimum_width_layout() {
+    let env = setup_full_env();
+    env.exec(
+        r#"
+        GameTooltip:SetOwner(UIParent, "ANCHOR_NONE")
+        GameTooltip:AddLine("Short")
+        GameTooltip:Show()
+        local width, height = GameTooltip:GetWidth(), GameTooltip:GetHeight()
+        SetTooltipMoney(GameTooltip, 123456789, nil, "Price:")
+        assert(GameTooltip:GetMinimumWidth() > 0, "money helper did not set minimum width")
+        assert(GameTooltip:GetWidth() == width, "money helper resized width before Show")
+        assert(GameTooltip:GetHeight() == height, "money helper resized height before Show")
+        GameTooltip:Show()
+        assert(GameTooltip:GetHeight() > height, "Show did not lay out money line")
+        "#,
+    )
+    .unwrap();
+}
+
+#[test]
 fn test_tooltip_mixins_load_in_full_env() {
     let env = setup_full_env();
 
