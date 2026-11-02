@@ -15,12 +15,13 @@ use std::collections::{HashMap, HashSet};
 
 use crate::c_api::ensure_namespace;
 use crate::event::Event;
+use crate::lua_api::globals::real::cursor_model;
 use crate::lua_api::methods::{
     borrow_state, borrow_state_mut, call_function_state, create_string, create_table, frame_ref,
     table_set_num, val_to_string,
 };
 use crate::lua_api::script_helpers::{get_event_listeners, get_scripts_for_dispatch};
-use crate::lua_api::state_types::{CharacterStats, EquipmentSet, EquippedItem};
+use crate::lua_api::state_types::{CharacterStats, CursorInfo, EquipmentSet, EquippedItem};
 use crate::lua_bridge::{FromStack, stack_val, table_set_rust_fn_static};
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
@@ -293,11 +294,13 @@ pub(crate) fn use_equipment_set_by_id(state: &mut LuaState, set_id: i32) -> LuaR
     Ok(exists)
 }
 
+/// Retail installs cursor mode 12 (WM46, WM54); the wrapper's guards are
+/// UNKNOWN, so any set ID is accepted. Other profiles keep the no-op.
 fn c_pickup_equipment_set(state: &mut LuaState) -> LuaResult<u32> {
-    // Cursor pickup of equipment sets is a hot-bar drag interaction
-    // we don't simulate; the call must succeed silently so the
-    // SecureHandlers attribute path doesn't error.
-    let _ = i32::from_stack(state, 1)?;
+    let set_id = i32::from_stack(state, 1)?;
+    if cursor_model::modeled() {
+        cursor_model::place(state, CursorInfo::EquipmentSet { set_id })?;
+    }
     Ok(0)
 }
 

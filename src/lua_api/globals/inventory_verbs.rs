@@ -340,14 +340,10 @@ fn get_cursor_info(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn push_cursor_info(state: &mut LuaState, cursor: CursorInfo) -> LuaResult<u32> {
-    if let CursorInfo::Item {
-        origin: CursorItemOrigin::Merchant { index },
-        ..
-    } = cursor
-        && cursor_model::modeled()
+    if cursor_model::modeled()
+        && let Some(count) = push_native_projection(state, &cursor)?
     {
-        // WM46 mode 5: the stored zero-based row plus one, the Lua index.
-        return push_cursor_kind_id(state, "merchant", index);
+        return Ok(count);
     }
     match cursor {
         CursorInfo::Action { spell_id, .. }
@@ -371,7 +367,75 @@ fn push_cursor_info(state: &mut LuaState, cursor: CursorInfo) -> LuaResult<u32> 
         CursorInfo::TransmogOutfit { outfit_id } => {
             push_cursor_kind_number(state, "transmogoutfit", outfit_id as f64)
         }
+        // Retail-only producers, projected above.
+        CursorInfo::EquipmentSet { .. } | CursorInfo::Currency { .. } => Ok(0),
     }
+}
+
+/// Retail WM46 projections that differ from the simulator's historical tuples;
+/// None leaves the payload to the shared match.
+fn push_native_projection(state: &mut LuaState, cursor: &CursorInfo) -> LuaResult<Option<u32>> {
+    let count = match *cursor {
+        // Mode 5: the stored zero-based row plus one, the Lua index.
+        CursorInfo::Item {
+            origin: CursorItemOrigin::Merchant { index },
+            ..
+        } => push_cursor_kind_id(state, "merchant", index)?,
+        // Mode 1: ("item", owned item ID, generated link or nil). The cursor
+        // carries no owned modifiers, so the link is built from the item ID.
+        CursorInfo::Item { item_id, .. } => {
+            let link = crate::c_api::item_spell::item_link_for_id(item_id);
+            push_cursor_kind_id(state, "item", item_id)?;
+            let link = link.map_or(Val::Nil, |link| create_string(state, &link));
+            state.push(link);
+            3
+        }
+        // Mode 12: the record's text, INFERRED to be the set name.
+        CursorInfo::EquipmentSet { set_id } => push_equipment_set_cursor(state, set_id)?,
+        // Mode 13: the metadata integer, INFERRED to be the icon; zero is nil.
+        CursorInfo::Currency { currency_id } => push_currency_cursor(state, currency_id)?,
+        // Mode 21.
+        CursorInfo::TransmogOutfit { outfit_id } => {
+            push_cursor_kind_number(state, "outfit", outfit_id as f64)?
+        }
+        _ => return Ok(None),
+    };
+    Ok(Some(count))
+}
+
+/// Zero values when the set record is missing (WM46).
+fn push_equipment_set_cursor(state: &mut LuaState, set_id: i32) -> LuaResult<u32> {
+    let name = borrow_state(state)?
+        .equipment_manager
+        .sets
+        .iter()
+        .find(|set| set.id == set_id)
+        .map(|set| set.name.clone());
+    let Some(name) = name else {
+        return Ok(0);
+    };
+    let kind = create_string(state, "equipmentset");
+    let name = create_string(state, &name);
+    state.push(kind);
+    state.push(name);
+    Ok(2)
+}
+
+/// Zero values when the currency record is missing (WM46).
+fn push_currency_cursor(state: &mut LuaState, currency_id: i32) -> LuaResult<u32> {
+    let icon = borrow_state(state)?
+        .currency_info
+        .get(&currency_id)
+        .map(|info| info.icon_file_id);
+    let Some(icon) = icon else {
+        return Ok(0);
+    };
+    push_cursor_kind_number(state, "currency", f64::from(currency_id))?;
+    state.push(match icon {
+        0 => Val::Nil,
+        icon => Val::Num(f64::from(icon)),
+    });
+    Ok(3)
 }
 
 /// WM44-A mode 6 (ActionBar): `("item", itemID, link)` rebuilt from the ID when item
@@ -431,7 +495,12 @@ fn place_action(state: &mut LuaState) -> LuaResult<u32> {
                 st.equipped_gear_outfit_action_slots.insert(slot);
             }
         }
-        CursorInfo::Item { .. } | CursorInfo::ActionBar { .. } | CursorInfo::Money { .. } => {
+        // Equipment-set and currency action slots are not modelled.
+        CursorInfo::Item { .. }
+        | CursorInfo::ActionBar { .. }
+        | CursorInfo::Money { .. }
+        | CursorInfo::EquipmentSet { .. }
+        | CursorInfo::Currency { .. } => {
             return Ok(0);
         }
     }

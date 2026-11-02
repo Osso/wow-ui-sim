@@ -30,6 +30,12 @@ pub enum CursorInfo {
     TransmogOutfit { outfit_id: i64 },
     /// Money in copper held on the cursor (PickupPlayerMoney → DropCursorMoney).
     Money { copper: u64 },
+    /// Native mode 12 (WM46): an equipment-set key from
+    /// `C_EquipmentSet.PickupEquipmentSet`. Retail only.
+    EquipmentSet { set_id: i32 },
+    /// Native mode 13 (WM46): a currency ID from `C_CurrencyInfo.PickupCurrency`.
+    /// Retail only.
+    Currency { currency_id: i32 },
 }
 
 /// Where a cursor-carried item came from — used to route drops back.

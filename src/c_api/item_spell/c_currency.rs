@@ -22,6 +22,8 @@ const CURRENCY_INFO_METHODS: &[(&str, rilua::RustFn)] = &[
     ("SetCurrencyBackpackByID", set_currency_backpack_by_id),
     #[cfg(feature = "client-retail")]
     ("SetCurrencyUnused", set_currency_unused),
+    #[cfg(feature = "client-retail")]
+    ("PickupCurrency", pickup_currency),
     ("GetCurrencyListSize", c_currency_get_list_size),
     ("GetCurrencyListInfo", c_currency_get_list_info),
     (
@@ -62,6 +64,16 @@ const CURRENCY_DISPLAY_INFO_HASH_FIELDS: usize = 6;
 const GOLD_COIN_ICON_FILE_ID: i32 = 133784;
 const SILVER_COIN_ICON_FILE_ID: i32 = 133785;
 const COPPER_COIN_ICON_FILE_ID: i32 = 133786;
+
+/// Cursor mode 13 (WM46, WM54). The wrapper's guards are UNKNOWN, so any
+/// currency ID is accepted; a missing record projects zero values.
+#[cfg(feature = "client-retail")]
+fn pickup_currency(state: &mut LuaState) -> LuaResult<u32> {
+    let currency_id = i32::from_stack(state, 1)?;
+    let cursor = crate::lua_api::state::CursorInfo::Currency { currency_id };
+    crate::lua_api::globals::real::cursor_model::place(state, cursor)?;
+    Ok(0)
+}
 
 pub(super) fn register_c_currency_info(state: &mut LuaState) -> LuaResult<()> {
     #[cfg(feature = "client-wrath")]

@@ -18,6 +18,8 @@ pub(crate) const MODE_PET_ACTION: u8 = 4;
 pub(crate) const MODE_MERCHANT: u8 = 5;
 pub(crate) const MODE_ACTION_BAR: u8 = 6;
 pub(crate) const MODE_MACRO: u8 = 7;
+pub(crate) const MODE_EQUIPMENT_SET: u8 = 12;
+pub(crate) const MODE_CURRENCY: u8 = 13;
 pub(crate) const MODE_OUTFIT: u8 = 21;
 
 /// Native cursor storage that outlives one payload.
@@ -49,6 +51,8 @@ pub(crate) fn native_mode(cursor: &CursorInfo) -> Option<u8> {
         CursorInfo::PetAction { .. } => Some(MODE_PET_ACTION),
         CursorInfo::ActionBar { .. } => Some(MODE_ACTION_BAR),
         CursorInfo::Macro { .. } => Some(MODE_MACRO),
+        CursorInfo::EquipmentSet { .. } => Some(MODE_EQUIPMENT_SET),
+        CursorInfo::Currency { .. } => Some(MODE_CURRENCY),
         CursorInfo::TransmogOutfit { .. } => Some(MODE_OUTFIT),
         CursorInfo::Talent { .. } => None,
     }

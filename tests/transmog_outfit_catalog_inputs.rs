@@ -70,7 +70,14 @@ fn transmog_outfit_catalog_inputs_sets_filter_and_stage_collected_sources() {
 
 #[test]
 fn transmog_outfit_catalog_inputs_pickup_sets_cursor_and_clear_works() {
+    // Retail projects cursor mode 21 as "outfit" (WM46).
+    let kind = if cfg!(feature = "client-retail") {
+        "outfit"
+    } else {
+        "transmogoutfit"
+    };
     let env = WowLuaEnv::new().unwrap();
+    env.exec(&format!("OUTFIT_KIND = '{kind}'")).unwrap();
     env.eval::<()>(
         r#"
         local api = C_TransmogOutfitInfo
@@ -78,20 +85,20 @@ fn transmog_outfit_catalog_inputs_pickup_sets_cursor_and_clear_works() {
         local id = api.GetOutfitInfoByName('Raid').outfitID
         api.PickupOutfit(id)
         local kind, cursorID = GetCursorInfo()
-        assert(kind == 'transmogoutfit' and cursorID == id)
+        assert(kind == OUTFIT_KIND and cursorID == id)
         PlaceAction(1)
         local actionKind, actionID = GetActionInfo(1)
         assert(actionKind == 'outfit' and actionID == id)
         assert(GetCursorInfo() == nil)
         PickupAction(1)
         kind, cursorID = GetCursorInfo()
-        assert(kind == 'transmogoutfit' and cursorID == id)
+        assert(kind == OUTFIT_KIND and cursorID == id)
         assert(not HasAction(1))
         ClearCursor()
         assert(GetCursorInfo() == nil)
         api.PickupOutfit(0)
         kind, cursorID = GetCursorInfo()
-        assert(kind == 'transmogoutfit' and cursorID == 0)
+        assert(kind == OUTFIT_KIND and cursorID == 0)
         PlaceAction(1)
         assert(C_ActionBar.IsEquippedGearOutfitAction(1))
     "#,
