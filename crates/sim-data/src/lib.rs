@@ -8,6 +8,8 @@ pub mod encounter_journal_data;
 pub mod garrison_currency;
 #[path = "../data/garrison_follower_xp.rs"]
 pub mod garrison_follower_xp;
+#[path = "../data/item_categories.rs"]
+pub mod item_categories;
 #[path = "../data/items.rs"]
 pub mod items;
 #[path = "../data/manifest_interface_data.rs"]

@@ -36,9 +36,97 @@ pub fn run() -> Result<(), Box<dyn std::error::Error>> {
 
     write_lookup_fn(&mut out)?;
     write_tests(&mut out)?;
+    write_item_categories(&wow_data, &required_ids)?;
 
     println!("Generated {} item entries ({} skipped)", count, skipped);
     println!("Output: {}", output_path.display());
+    Ok(())
+}
+
+/// Generate the item classification and localized names used by item-type queries.
+fn write_item_categories(
+    wow_data: &Path,
+    required_ids: &BTreeSet<u32>,
+) -> Result<(), Box<dyn std::error::Error>> {
+    let mut out = File::create("crates/sim-data/data/item_categories.rs")?;
+    writeln!(
+        out,
+        "//! Generated from wago.tools DB2 CSV exports, build 12.1.5.70391 (enUS)."
+    )?;
+    writeln!(out, "//! Regenerate with `wow-cli generate items`.")?;
+    writeln!(out, "pub static ITEMS: &[(u32, u8, u8, u8)] = &[")?;
+    let records = open_records(&wow_data.join("Item.csv"))?;
+    let mut iter = records.iter();
+    let idx = header_index(iter.next().ok_or("empty Item.csv")?);
+    let mut items = Vec::new();
+    for record in iter {
+        let fields = parse_csv_line(record);
+        let id = field(&fields, &idx, "ID").parse::<u32>()?;
+        if required_ids.contains(&id) {
+            let class = field(&fields, &idx, "ClassID").parse::<u8>()?;
+            let subclass = field(&fields, &idx, "SubclassID").parse::<u8>()?;
+            let inventory = field(&fields, &idx, "InventoryType").parse::<u8>()?;
+            items.push((id, class, subclass, inventory));
+        }
+    }
+    items.sort_unstable_by_key(|item| item.0);
+    for (id, class, subclass, inventory) in items {
+        writeln!(out, "    ({id}, {class}, {subclass}, {inventory}),")?;
+    }
+    writeln!(out, "];\n")?;
+    write_category_names(&mut out, wow_data)?;
+    Ok(())
+}
+
+fn write_category_names(out: &mut File, wow_data: &Path) -> Result<(), Box<dyn std::error::Error>> {
+    for (file, name, columns) in [
+        (
+            "ItemClass.csv",
+            "CLASSES",
+            &["ClassID", "ClassName_lang"][..],
+        ),
+        (
+            "ItemSubClass.csv",
+            "SUBCLASSES",
+            &[
+                "ClassID",
+                "SubClassID",
+                "DisplayName_lang",
+                "VerboseName_lang",
+            ][..],
+        ),
+        (
+            "ItemSubClassMask.csv",
+            "MASKS",
+            &["ClassID", "Mask", "Name_lang"][..],
+        ),
+    ] {
+        let records = open_records(&wow_data.join(file))?;
+        let mut iter = records.iter();
+        let idx = header_index(iter.next().ok_or("empty category CSV")?);
+        let ty = match name {
+            "CLASSES" => "(u8, &str)",
+            "SUBCLASSES" => "(u8, u8, &str, &str)",
+            _ => "(u8, u32, &str)",
+        };
+        writeln!(out, "pub static {name}: &[{ty}] = &[")?;
+        for record in iter {
+            let fields = parse_csv_line(record);
+            let values: Vec<String> = columns
+                .iter()
+                .map(|column| {
+                    let value = field(&fields, &idx, column);
+                    if column.ends_with("_lang") {
+                        format!("\"{}\"", escape_str(value))
+                    } else {
+                        value.to_owned()
+                    }
+                })
+                .collect();
+            writeln!(out, "    ({}),", values.join(", "))?;
+        }
+        writeln!(out, "];\n")?;
+    }
     Ok(())
 }
 
