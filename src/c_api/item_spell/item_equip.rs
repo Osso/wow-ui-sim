@@ -108,23 +108,26 @@ impl ItemEquipState {
 pub(crate) fn identity_at(sim: &SimState, slot: ItemSlot) -> Option<u64> {
     match slot {
         ItemSlot::Bag(bag, index) => sim.bag_items.get(&(bag, index))?.owned_identity,
-        ItemSlot::Equipment(index) => sim
-            .player
-            .equipped_items
-            .get(&index)
-            .and_then(|item| item.owned_identity)
-            .or_else(|| {
+        ItemSlot::Equipment(index) => {
+            let equipped = sim.player.equipped_items.get(&index);
+            equipped.and_then(|item| item.owned_identity).or_else(|| {
                 sim.bag_info
                     .values()
-                    .find(|bag| bag.inventory_slot == Some(index) && bag.item_id.is_some())
+                    .find(|bag| {
+                        bag.inventory_slot == Some(index)
+                            && bag.item_id.is_some()
+                            && equipped.is_none_or(|item| bag.item_id == Some(item.item_id))
+                    })
                     .and_then(|bag| bag.owned_identity)
-            }),
+            })
+        }
     }
 }
 
 /// Assign a session-local identity without reusing an explicitly supplied one.
 pub(crate) fn ensure_identity(sim: &mut SimState, slot: ItemSlot) -> Option<u64> {
     if let Some(id) = identity_at(sim, slot) {
+        write_identity(sim, slot, id)?;
         return Some(id);
     }
     let cursor_id = match sim.cursor_item.as_ref() {
@@ -147,24 +150,35 @@ pub(crate) fn ensure_identity(sim: &mut SimState, slot: ItemSlot) -> Option<u64>
         .chain([sim.item_equip.next_identity])
         .max()?;
     let id = maximum.checked_add(1)?;
+    write_identity(sim, slot, id)?;
+    sim.item_equip.next_identity = id;
+    Some(id)
+}
+
+fn write_identity(sim: &mut SimState, slot: ItemSlot, id: u64) -> Option<()> {
     match slot {
         ItemSlot::Bag(bag, index) => {
-            sim.bag_items.get_mut(&(bag, index))?.owned_identity = Some(id)
+            sim.bag_items.get_mut(&(bag, index))?.owned_identity = Some(id);
         }
         ItemSlot::Equipment(index) => {
-            if let Some(item) = sim.player.equipped_items.get_mut(&index) {
+            let item_id = if let Some(item) = sim.player.equipped_items.get_mut(&index) {
                 item.owned_identity = Some(id);
+                Some(item.item_id)
             } else {
-                let bag = sim
-                    .bag_info
-                    .values_mut()
-                    .find(|bag| bag.inventory_slot == Some(index) && bag.item_id.is_some())?;
+                None
+            };
+            if let Some(bag) = sim.bag_info.values_mut().find(|bag| {
+                bag.inventory_slot == Some(index)
+                    && bag.item_id.is_some()
+                    && item_id.is_none_or(|item| bag.item_id == Some(item))
+            }) {
                 bag.owned_identity = Some(id);
+            } else if item_id.is_none() {
+                return None;
             }
         }
     }
-    sim.item_equip.next_identity = id;
-    Some(id)
+    Some(())
 }
 
 /// Resolve the current location of a simulator-owned identity.
@@ -181,10 +195,9 @@ pub(crate) fn find_identity_slot(sim: &SimState, identity: u64) -> Option<ItemSl
         })
         .or_else(|| {
             sim.bag_info.values().find_map(|bag| {
-                (bag.owned_identity == Some(identity))
-                    .then_some(bag.inventory_slot)
-                    .flatten()
-                    .map(ItemSlot::Equipment)
+                let slot = ItemSlot::Equipment(bag.inventory_slot?);
+                (bag.owned_identity == Some(identity) && slot.item_id(sim) == bag.item_id)
+                    .then_some(slot)
             })
         })
 }
@@ -237,7 +250,9 @@ pub(crate) fn is_locked_at(sim: &SimState, slot: ItemSlot) -> bool {
             crate::c_api::c_challenge_mode::KeystoneLocation::Equipment(index)
         }
     };
-    sim.item_equip.is_locked(identity_at(sim, slot)) || sim.keystone.is_locked(keystone_slot)
+    sim.keystone.is_locked(keystone_slot)
+        || (crate::lua_api::globals::real::cursor_model::modeled()
+            && sim.item_equip.is_locked(identity_at(sim, slot)))
 }
 
 pub(super) fn is_locked(state: &mut rilua::vm::state::LuaState) -> rilua::LuaResult<u32> {
