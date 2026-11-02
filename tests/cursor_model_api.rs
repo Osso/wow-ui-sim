@@ -129,7 +129,7 @@ fn same_mode_replacement_reports_only_the_clear_except_owned_items() {
         -- WM54 Q1: a typed Spell-to-Spell replacement emits no set-side event.
         local log = record(function() C_Spell.PickupSpell(642) end)
         assert(log == 'ACTIONBAR_HIDEGRID;CURSOR_CHANGED,true,0,3,0;ACTIONBAR_SHOWGRID', log)
-        assert(select(4, GetCursorInfo()) == 642)
+        assert(CursorHasSpell())
         ClearCursor()
         -- Owned Item-to-Item still fires: its previous mode is read after the
         -- clear. Default backpack: Hearthstone in slot 1, water in slot 2.
