@@ -453,6 +453,8 @@ pub struct SimState {
     #[cfg(feature = "client-wrath")]
     pub wrath_unit_tap_states: HashMap<String, crate::lua_api::state::WrathUnitTapState>,
     pub current_target: Option<TargetInfo>,
+    /// Supplied target GUIDs for target, focus, and party unit tokens.
+    pub unit_target_guids: HashMap<String, String>,
     pub previous_target: Option<TargetInfo>,
     pub current_focus: Option<TargetInfo>,
     /// Explicit host NPC-follower identities for player-style display.

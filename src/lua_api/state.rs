@@ -359,6 +359,7 @@ macro_rules! build_empty_sim_state {
             #[cfg(feature = "client-wrath")]
             wrath_unit_tap_states: HashMap::new(),
             current_target: $runtime.current_target,
+            unit_target_guids: HashMap::new(),
             previous_target: None,
             current_focus: $runtime.current_focus,
             #[cfg(feature = "retail-12-0-5")]
