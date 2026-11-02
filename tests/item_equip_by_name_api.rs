@@ -137,3 +137,76 @@ fn account_conversion_retains_cursor_and_clear_restores_lock() {
     "#).unwrap();
     assert!(env.state().borrow().item_equip.requests.is_empty());
 }
+
+#[test]
+fn refused_staging_processes_the_previous_stored_item() {
+    let env = WowLuaEnv::new().unwrap();
+    {
+        let mut sim = env.state().borrow_mut();
+        sim.bag_items.clear();
+        sim.bag_items.insert((0, 1), item(7005, Some(42)));
+        sim.bag_items.insert((0, 2), item(6948, Some(43)));
+        sim.item_equip.inputs.insert(
+            42,
+            OwnedItemEquipInputs {
+                account_conversion: true,
+                ..Default::default()
+            },
+        );
+    }
+    env.exec("C_Item.EquipItemByName(7005); assert(CursorHasItem())")
+        .unwrap();
+    {
+        let mut sim = env.state().borrow_mut();
+        sim.item_equip.pickup_control_enabled = false;
+        sim.item_equip
+            .inputs
+            .get_mut(&42)
+            .unwrap()
+            .account_conversion = false;
+    }
+    env.exec(
+        r#"
+        C_Item.EquipItemByName(6948)
+        assert(GetCursorInfo() == nil)
+        assert(C_Container.GetContainerItemInfo(0, 1).isLocked)
+        assert(not C_Container.GetContainerItemInfo(0, 2).isLocked)
+    "#,
+    )
+    .unwrap();
+    let sim = env.state().borrow();
+    assert_eq!(sim.item_equip.requests.len(), 1);
+    assert_eq!(sim.item_equip.requests[0].identity, 42);
+}
+
+#[test]
+fn carried_bag_contents_take_priority_over_equipment() {
+    use wow_ui_sim::lua_api::state::EquippedItem;
+    let env = WowLuaEnv::new().unwrap();
+    {
+        let mut sim = env.state().borrow_mut();
+        sim.bag_items.clear();
+        sim.player.equipped_items.clear();
+        sim.bag_info.get_mut(&1).unwrap().item_id = Some(21841);
+        sim.bag_items.insert((1, 3), item(7005, Some(91)));
+        sim.player.equipped_items.insert(
+            16,
+            EquippedItem {
+                owned_identity: Some(92),
+                item_id: 7005,
+                enchant_id: 0,
+                gem_ids: [0; 3],
+                applied_transmog: None,
+            },
+        );
+    }
+    env.exec(
+        r#"
+        C_Item.EquipItemByName(7005)
+        assert(C_Container.GetContainerItemInfo(1, 3).isLocked)
+        assert(not C_Item.IsLocked({ equipmentSlotIndex = 16 }))
+    "#,
+    )
+    .unwrap();
+    assert_eq!(env.state().borrow().item_equip.requests[0].identity, 91);
+}
