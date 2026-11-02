@@ -679,6 +679,62 @@ fn calendar_create_events_report_native_notifications(env: &WowLuaEnv) {
 }
 
 prefork_full_ui_case! {
+fn calendar_create_events_follow_supplied_local_player(env: &WowLuaEnv) {
+    use wow_ui_sim::c_api::club_model::Club;
+    env.state().borrow_mut().clubs.clubs.insert("77".into(), Club {
+        id: "77".into(), name: "Guild".into(), description: String::new(),
+        club_type: 2, avatar_id: 0, members: Vec::new(), candidates: Default::default(),
+        invitations: Vec::new(), streams: Vec::new(),
+    });
+    for (level, invite_type, create) in [(37, 0, "CreatePlayerEvent"), (80, 1, "CreateGuildSignUpEvent"), (80, 1, "CreateCommunitySignUpEvent")] {
+        {
+            let mut state = env.state().borrow_mut();
+            state.player.present = true;
+            state.player.level = level;
+        }
+        env.exec(&format!(r#"
+            C_Calendar.{create}()
+            assert(C_Calendar.GetNumInvites() == 1)
+            local invite = C_Calendar.EventGetInvite(1)
+            assert(invite.inviteStatus == 3 and invite.modStatus == 'CREATOR')
+            assert(invite.type == {invite_type} and invite.level == {level} and invite.notes == '')
+            assert(invite.guid == UnitGUID('player') and invite.name == nil)
+        "#)).unwrap();
+        let state = env.state().borrow();
+        let event = state.calendar_context_policy.editable.as_ref().unwrap();
+        assert_eq!(event.creator_identity, "Player-1-00000001");
+        assert_eq!(event.invites[0].invite_id, "0");
+    }
+    env.state().borrow_mut().player.present = false;
+    for create in ["CreatePlayerEvent", "CreateGuildSignUpEvent", "CreateCommunitySignUpEvent", "CreateGuildAnnouncementEvent"] {
+        env.exec(&format!("C_Calendar.{create}(); assert(C_Calendar.GetNumInvites() == 0)")).unwrap();
+        assert_eq!(env.state().borrow().calendar_context_policy.editable.as_ref().unwrap().creator_identity, "");
+    }
+    env.state().borrow_mut().player.present = true;
+    env.exec("C_Calendar.CreateGuildAnnouncementEvent(); assert(C_Calendar.GetNumInvites() == 0)").unwrap();
+    for (create, flags, calendar_type) in [
+        ("CreatePlayerEvent", 0x1, "PLAYER"),
+        ("CreateGuildSignUpEvent", 0xc00, "GUILD_EVENT"),
+        ("CreateGuildAnnouncementEvent", 0x40, "GUILD_ANNOUNCEMENT"),
+        ("CreateCommunitySignUpEvent", 0x400, "COMMUNITY_EVENT"),
+    ] {
+        let shown: String = env.eval(&format!("C_Calendar.{create}(); return C_Calendar.EventGetCalendarType()")).unwrap();
+        assert_eq!(shown, calendar_type);
+        let state = env.state().borrow();
+        let event = state.calendar_context_policy.editable.as_ref().unwrap();
+        assert_eq!(event.category_flags, flags);
+        assert_eq!(event.event_id, "0");
+        assert_eq!((event.event_type, event.texture_id), (0, Some(4_294_967_295)));
+        assert!(event.title.is_empty() && event.description.is_empty());
+        assert!(!event.locked && !event.auto_approve);
+        assert_eq!(event.date, Some((-1, -1, -1)));
+        // The model stores time components as unsigned 32-bit words; native -1 is all ones.
+        assert_eq!(event.time, Some((u32::MAX, u32::MAX)));
+    }
+}
+}
+
+prefork_full_ui_case! {
 fn calendar_create_player_event_replaces_editable_record(env: &WowLuaEnv) {
     use wow_ui_sim::c_api::c_calendar::{CalendarEditableAccess, DisplayedMonth};
     load_addon(&env.loader_env(), &calendar_toc()).unwrap();
