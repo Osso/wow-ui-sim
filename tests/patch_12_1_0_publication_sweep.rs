@@ -42,6 +42,18 @@ fn inspect_specialization_deprecated_alias_matches_original_publisher(env: &WowL
         assert(GetCVarBool('loadDeprecationFallbacks'), 'deprecation fallback is disabled')
         assert(rawequal(GetInspectSpecialization, C_SpecializationInfo.GetInspectSpecialization),
             'Blizzard deprecated alias differs from C_SpecializationInfo.GetInspectSpecialization')
+        restoreSentinels = {
+            spec = C_SpecializationInfo.GetInspectSpecialization,
+            token = C_WowTokenSecure.GetTokenCount,
+            store = C_StoreSecure.GetProductGroups,
+        }
+    "#).unwrap();
+    env.restore_post_cleanup_globals();
+    env.exec(r#"
+        assert(rawequal(restoreSentinels.spec, C_SpecializationInfo.GetInspectSpecialization))
+        assert(rawequal(restoreSentinels.token, C_WowTokenSecure.GetTokenCount))
+        assert(rawequal(restoreSentinels.store, C_StoreSecure.GetProductGroups))
+        assert(rawequal(GetInspectSpecialization, C_SpecializationInfo.GetInspectSpecialization))
     "#).unwrap();
 }
 }
