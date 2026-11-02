@@ -263,9 +263,9 @@ fn blizzard_environment_cleanup_is_addon_loaded_returns_true(env: &WowLuaEnv) {
 
 prefork_full_ui_case! {
 fn blizzard_environment_cleanup_secure_namespaces_get_restored_post_load(env: &WowLuaEnv) {
-    // EnvironmentCleanup.lua nils these secure-only namespaces. The simulator's per-addon
-    // hook immediately restores its runtime bootstrap surface so later Blizzard addons and
-    // full startup can still invoke them.
+    // EnvironmentCleanup.lua:3–6 removes these public globals. Commit a07283768
+    // records that secure-only capsule APIs should stay nil after cleanup.
+    // Store and token restoration remains a temporary simulator workaround, not native parity.
 
     let restored: (bool, bool, bool, bool) = env
         .eval(
@@ -277,10 +277,9 @@ fn blizzard_environment_cleanup_secure_namespaces_get_restored_post_load(env: &W
         .expect("secure-only namespace probe should succeed");
     assert_eq!(
         restored,
-        (true, true, true, true),
-        "After Blizzard_EnvironmentCleanup loads, the explicit post-load workaround must \
-         restore C_StoreSecure / C_AuthChallenge / C_SecureTransfer / C_WowTokenSecure so \
-         the rest of startup can invoke those namespaces"
+        (true, false, false, true),
+        "Cleanup removes public C_AuthChallenge and C_SecureTransfer; the simulator \
+         temporarily restores C_StoreSecure and C_WowTokenSecure"
     );
 }
 }

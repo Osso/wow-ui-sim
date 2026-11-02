@@ -1,8 +1,8 @@
 //! Temporary EnvironmentCleanup runtime-surface restore.
 //!
-//! The simulator loads Blizzard_EnvironmentCleanup in the same run as later UI
-//! addons, so globals that the cleanup file nils still need to be restored for
-//! the rest of startup. Keep that repair out of the generic globals surface.
+//! This workaround restores C_StoreSecure and C_WowTokenSecure after cleanup,
+//! along with shared bootstrap globals. It does not restore C_AuthChallenge or
+//! C_SecureTransfer. Restored secure namespaces do not establish native parity.
 
 use crate::lua_api::SimState;
 use rilua::LuaApiMut;
