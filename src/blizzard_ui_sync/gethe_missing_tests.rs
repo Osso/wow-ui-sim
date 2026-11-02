@@ -50,6 +50,69 @@ fn fixture(version: &str, bytes: &[u8]) -> (tempfile::TempDir, GetheTree) {
     (dir, tree)
 }
 
+#[test]
+#[cfg(feature = "client-wowforever")]
+fn missing_pin_fetch_failure_preserves_existing_cache() {
+    const CHILD: &str = "WOW_SIM_GETHE_PREFLIGHT_TEST_CHILD";
+    if let Some(root) = std::env::var_os(CHILD) {
+        let root = PathBuf::from(root);
+        let pin = read_source_pin().unwrap();
+        let error = super::super::sync_blizzard_ui_to(&root).unwrap_err();
+        assert_eq!(
+            std::fs::read(root.join(super::super::COMPLETE_MARKER)).unwrap(),
+            b"ok\n"
+        );
+        assert_eq!(
+            std::fs::read(root.join(super::super::PROVENANCE_FILE)).unwrap(),
+            b"old provenance\n"
+        );
+        assert!(error.to_string().contains(&pin.gethe_revision), "{error}");
+        return;
+    }
+
+    let temp = tempfile::tempdir().unwrap();
+    let install = temp.path().join("install");
+    std::fs::create_dir_all(install.join("Data/data")).unwrap();
+    let mut product = include_bytes!("../../tests/fixtures/casc-installed-products.db").to_vec();
+    product.splice(0..7, [0x0a, 0xaa, 0x01, 0x12, 0x04, b'w', b'o', b'w', b'f']);
+    let old = b"12.1.0.69933";
+    let offset = product
+        .windows(old.len())
+        .position(|window| window == old)
+        .unwrap();
+    product[offset..offset + old.len()].copy_from_slice(b"1.60.1.70707");
+    std::fs::write(install.join(".product.db"), product).unwrap();
+    std::fs::write(
+        install.join(".build.info"),
+        "Branch!STRING:0|Active!DEC:1|Build Key!HEX:16|Version!STRING:0|Product!STRING:0\n",
+    )
+    .unwrap();
+
+    let cache = temp.path().join("cache");
+    let clone = cache.join("wow-ui-sim/wow-ui-source-git/forever");
+    std::fs::create_dir_all(&clone).unwrap();
+    git(&clone, &["init", "--quiet"]);
+    git(
+        &clone,
+        &["remote", "add", "origin", "/nonexistent/gethe-fixture"],
+    );
+    let addons = temp.path().join("AddOns");
+    std::fs::create_dir_all(&addons).unwrap();
+    std::fs::write(addons.join(super::super::COMPLETE_MARKER), b"ok\n").unwrap();
+    std::fs::write(
+        addons.join(super::super::PROVENANCE_FILE),
+        b"old provenance\n",
+    )
+    .unwrap();
+    let status = Command::new(std::env::current_exe().unwrap())
+        .args(["--exact", "blizzard_ui_sync::gethe_missing::tests::missing_pin_fetch_failure_preserves_existing_cache", "--nocapture"])
+        .env(CHILD, &addons)
+        .env("XDG_CACHE_HOME", &cache)
+        .env("WOW_INSTALL_PATH", &install)
+        .status().unwrap();
+    assert!(status.success(), "child sync test failed");
+}
+
 fn file(resident: bool) -> MappedFile {
     MappedFile {
         path: ENTRY.to_owned(),
