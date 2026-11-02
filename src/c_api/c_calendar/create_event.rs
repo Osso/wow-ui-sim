@@ -109,7 +109,7 @@ fn create(state: &mut LuaState, kind: Kind) -> LuaResult<u32> {
 
 /// The first kind-2 club record supplies the guild association. A record whose ID is
 /// not a numeric club ID (the legacy roster's simulator key) supplies none.
-fn find_guild_club_id(host: &SimState) -> Option<u64> {
+pub(super) fn find_guild_club_id(host: &SimState) -> Option<u64> {
     host.clubs
         .clubs
         .values()

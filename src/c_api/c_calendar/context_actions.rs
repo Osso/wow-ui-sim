@@ -8,15 +8,15 @@ use super::{
     editable_time::report_invalid,
     selection::context_row,
     submission_policy::{
-        DateParts, clamp_month_index, is_throttled, refresh_throttle, within_creation_window,
+        DateParts, Outcome, clamp_month_index, finish, is_throttled, refresh_throttle,
+        within_creation_window,
     },
 };
-use crate::lua_api::globals::state_backed_queries::dispatch_event_now;
 use crate::lua_api::methods::{borrow_state, borrow_state_mut};
 use crate::lua_api::state::SimState;
 use crate::lua_bridge::table_set_rust_fn_static;
 use rilua::vm::state::LuaState;
-use rilua::{LuaResult, Val, runtime_error};
+use rilua::{LuaResult, runtime_error};
 
 pub(super) fn register(
     state: &mut LuaState,
@@ -26,26 +26,6 @@ pub(super) fn register(
     table_set_rust_fn_static(state, namespace, "ContextMenuEventPaste", paste)?;
     table_set_rust_fn_static(state, namespace, "ContextMenuEventRemove", remove_context)?;
     table_set_rust_fn_static(state, namespace, "RemoveEvent", remove_own_invite)
-}
-
-enum Outcome {
-    Ignore,
-    Error(&'static str),
-    Request,
-}
-
-fn finish(state: &mut LuaState, outcome: Outcome) -> LuaResult<u32> {
-    match outcome {
-        Outcome::Ignore => Ok(0),
-        Outcome::Error(key) => report_invalid(state, key),
-        Outcome::Request => {
-            borrow_state_mut(state)?
-                .calendar_context_policy
-                .action_pending = true;
-            dispatch_event_now(state, "CALENDAR_ACTION_PENDING", &[Val::Bool(true)])?;
-            Ok(0)
-        }
-    }
 }
 
 /// WM41-A evaluates edit permission twice; a second denial would clear the clipboard.

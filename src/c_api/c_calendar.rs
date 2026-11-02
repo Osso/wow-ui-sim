@@ -17,6 +17,7 @@ mod editable_texture;
 mod editable_time;
 mod editable_title;
 mod editable_type;
+mod event_submission;
 mod selection;
 mod submission_policy;
 mod view_info;
@@ -169,6 +170,7 @@ pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
         context_policy::register(state, namespace)?;
         context_reads::register(state, namespace)?;
         context_actions::register(state, namespace)?;
+        event_submission::register(state, namespace)?;
         create_event::register(state, namespace)?;
         editable_reads::register(state, namespace)?;
         editable_status::register(state, namespace)?;
