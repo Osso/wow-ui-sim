@@ -56,6 +56,18 @@ fn load_and_startup_env() -> WowLuaEnv {
 }
 
 prefork_full_ui_case! {
+fn startup_collection_secondary_transmog_reads_equipped_item(env: &WowLuaEnv) {
+    env.exec(r#"
+        local location = ItemLocation:CreateFromEquipmentSlot(1)
+        assert(C_Item.DoesItemExist(location))
+        local info = C_Item.GetAppliedItemTransmogInfo(location)
+        assert(info and info.appearanceID == 0 and info.secondaryAppearanceID == 0 and info.illusionID == 0)
+        assert(TransmogUtil.IsSecondaryTransmoggedForItemLocation(location) == false)
+    "#).unwrap();
+}
+}
+
+prefork_full_ui_case! {
 fn startup_wardrobe_tab_has_transmog_locations(env: &WowLuaEnv) {
         let result: String = env
             .eval(
