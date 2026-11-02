@@ -46,7 +46,6 @@ const VIRTUAL_TEMPLATES_NOT_IN_GLOBALS: &[&str] =
     &["PingPinFrameTemplate", "PingSpotFrameTemplate"];
 
 const C_PING_SECURE_CALLBACKS: &[&str] = &[
-    "ClearPendingPingInfo",
     "CreateFrame",
     "DisplayError",
     "GetTargetPingReceiver",
@@ -537,6 +536,13 @@ fn blizzard_ping_ui_publishes_c_ping_secure_callback_setters_in_globals(env: &Wo
          `Blizzard_APIDocumentationGenerated` addon to be loaded first"
     );
 
+    // Blizzard_PingUI.lua:258 defines this on the mixin, not in the
+    // PingManagerSecureDocumentation.lua namespace.
+    let clear_pending_kind: String = env
+        .eval("return type(PingListenerFrameMixin.ClearPendingPingInfo)")
+        .expect("ClearPendingPingInfo mixin method probe succeeds");
+    assert_eq!(clear_pending_kind, "function");
+
     for func in C_PING_SECURE_CALLBACKS {
         let kind: String = env
             .eval(&format!("return type(C_PingSecure.{func})"))
@@ -552,11 +558,10 @@ fn blizzard_ping_ui_publishes_c_ping_secure_callback_setters_in_globals(env: &Wo
 
     assert_eq!(
         C_PING_SECURE_CALLBACKS.len(),
-        15,
-        "C_PING_SECURE_CALLBACKS must contain exactly 15 entries — the count is \
-         pinned to the PingManagerSecureDocumentation.lua surface (14 callback \
-         setters / probes + ClearPendingPingInfo). Adding/removing a function on \
-         vendor TAG bumps surfaces here"
+        14,
+        "C_PING_SECURE_CALLBACKS must contain exactly 14 entries — the count is \
+         pinned to the PingManagerSecureDocumentation.lua surface. Adding or removing \
+         a function on vendor TAG bumps surfaces here"
     );
 }
 }
