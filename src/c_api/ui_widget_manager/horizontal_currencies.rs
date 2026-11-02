@@ -79,7 +79,7 @@ fn write_display_strings(state: &mut LuaState, row: Val, record: &HorizontalCurr
     }
 }
 
-fn write_currencies(state: &mut LuaState, row: Val, records: &[UiWidgetCurrencyRecord]) {
+pub(super) fn write_currencies(state: &mut LuaState, row: Val, records: &[UiWidgetCurrencyRecord]) {
     let currencies = create_table(state);
     table_set(state, row, "currencies", currencies);
     for (index, record) in records.iter().enumerate() {

@@ -9,7 +9,7 @@ use wow_ui_sim::c_api::ui_widget_manager::{
     StackedResourceTrackerRecord, UiWidgetCurrencyRecord, WidgetId, WidgetSetEntry, WidgetSetRecord,
 };
 
-fn resource(text: &str, icon_file_id: u32) -> UiWidgetCurrencyRecord {
+pub(crate) fn resource(text: &str, icon_file_id: u32) -> UiWidgetCurrencyRecord {
     UiWidgetCurrencyRecord {
         icon_file_id,
         leading_text: String::new(),
