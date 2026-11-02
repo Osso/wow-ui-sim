@@ -134,3 +134,30 @@ fn currency_cursor_projects_id_and_icon_or_nil() {
     )
     .unwrap();
 }
+
+#[test]
+fn spell_cursor_projects_main_book_slot_type_and_id() {
+    let env = env();
+    env.state().borrow_mut().action_bars.insert(1, 853);
+    env.exec(
+        r#"
+        -- WM46/WM56: ("spell", book slot, book type, stored spell ID, override
+        -- or nil). Hammer of Justice is slot 7 of the Paladin main book.
+        C_Spell.PickupSpell(853)
+        assert(select('#', GetCursorInfo()) == 5)
+        local kind, slot, book, id, override = GetCursorInfo()
+        assert(kind == 'spell' and slot == 7 and book == 'spell', tostring(slot))
+        assert(id == 853 and override == nil, tostring(id))
+        -- WM56: a spell in neither book projects slot 0 and "spell".
+        C_Spell.PickupSpell(118)
+        kind, slot, book, id = GetCursorInfo()
+        assert(kind == 'spell' and slot == 0 and book == 'spell' and id == 118, tostring(slot))
+        -- Spell action content installs the same mode 3 payload.
+        ClearCursor()
+        PickupAction(1)
+        kind, slot, book, id = GetCursorInfo()
+        assert(kind == 'spell' and slot == 7 and book == 'spell' and id == 853, tostring(slot))
+    "#,
+    )
+    .unwrap();
+}
