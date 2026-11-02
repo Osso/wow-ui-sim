@@ -3,6 +3,7 @@ pub(crate) mod civil;
 mod club;
 mod context_policy;
 mod context_reads;
+mod create_event;
 mod day_event_projection;
 mod day_event_queries;
 pub mod day_event_record;
@@ -160,6 +161,7 @@ pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
         selection::register(state, namespace)?;
         context_policy::register(state, namespace)?;
         context_reads::register(state, namespace)?;
+        create_event::register(state, namespace)?;
         editable_reads::register(state, namespace)?;
         editable_status::register(state, namespace)?;
         editable_title::register(state, namespace)?;

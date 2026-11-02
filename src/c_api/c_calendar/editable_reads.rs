@@ -67,6 +67,9 @@ fn calendar_type(state: &mut LuaState) -> LuaResult<u32> {
                 "RAID_LOCKOUT"
             } else if flags & 0x200 != 0 {
                 "RAID_RESET"
+            } else if flags & 0x1 != 0 {
+                // WM40: 0x1 identifies player events; its priority is UNKNOWN, so it is last.
+                "PLAYER"
             } else {
                 ""
             };

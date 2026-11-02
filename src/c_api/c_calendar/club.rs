@@ -33,6 +33,16 @@ pub(super) fn club_id_value(state: &mut LuaState, value: Option<u64>) -> Val {
     }
 }
 
+/// Club record keys hold decimal or `0x`-prefixed hexadecimal club IDs.
+pub(super) fn parse_record_club_id(text: &str) -> Option<u64> {
+    match text.get(..2) {
+        Some(prefix) if prefix.eq_ignore_ascii_case("0x") => {
+            u64::from_str_radix(&text[2..], 16).ok()
+        }
+        _ => text.parse().ok(),
+    }
+}
+
 fn set_next_club_id(state: &mut LuaState) -> LuaResult<u32> {
     let value = rilua::table_security::unwrap_secret(state, stack_val(state, 1))?;
     let id = if matches!(value, Val::Nil) {

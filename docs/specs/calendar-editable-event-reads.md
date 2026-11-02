@@ -10,7 +10,7 @@ Retail calendar invite and edit controls read the separately supplied being-edit
 - [ ] `EventGetInviteSortCriterion` returns the supplied criterion and direction, or empty string and false without an editable event; the original sort controls follow the criterion.
 - [ ] `GetNumInvites` reflects the supplied invite list; zero without an editable event is a simulator best guess.
 
-- [ ] `EventGetCalendarType` projects the known guild, community, system, holiday, lockout and reset flags; without an editable event it returns nil.
+- [ ] `EventGetCalendarType` projects the known guild, community, system, holiday, lockout, reset and player flags; without an editable event it returns nil.
 - [ ] `EventGetClubId` returns the supplied club ID as an exact number or a prefixed, 16-digit uppercase hexadecimal string; without an editable event it returns nil.
 - [ ] `EventGetInviteResponseTime` returns the supplied invite's time table, or zero values when the event, invite or response time is absent.
 - [ ] `EventGetTextures` publishes supplied texture records: types 1 and 5 share a list, type 0 uses another, and types 2–4 return an empty list.
@@ -35,10 +35,10 @@ The result connections are based on Retail 70688 local decoding and inferred/emu
 
 ## Known gaps (current cycle)
 
-- [ ] `EventCanEdit` remains unimplemented. Event type's PLAYER flag masks and their priority relative to other flags are unknown.
+- [ ] `EventCanEdit` remains unimplemented. WM40 identifies 0x1 as the player flag; its priority relative to other flags is unknown.
 - [ ] Native name/class lookup and null slots in the invite list are not modeled.
 - [ ] `GetNumInvites` absent-event default, complete argument coercion, and secret restrictions are not verified.
 
 ## Out of scope
 
-- Invite mutations, server delivery and editable-event creation.
+- Invite mutations and server delivery. Creation is covered by [Calendar event creation](calendar-event-creation.md).
