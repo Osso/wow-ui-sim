@@ -256,6 +256,12 @@ fn register_c_item_inventory_queries(
         table_set_rust_fn_static(
             state,
             table_ref,
+            "PickupItem",
+            super::item_pickup::pickup_item,
+        )?;
+        table_set_rust_fn_static(
+            state,
+            table_ref,
             "GetItemSetInfo",
             super::item_set::get_item_set_info,
         )?;
