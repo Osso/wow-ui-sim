@@ -23,6 +23,9 @@ pub enum CursorInfo {
         origin: CursorItemOrigin,
         applied_transmog: Option<super::collections::AppliedTransmog>,
     },
+    /// Item picked up by ID through `C_Item.PickupItem` (native cursor mode 6);
+    /// it carries no owned-item identity.
+    ItemId { item_id: u32 },
     /// Outfit dragged from the transmog catalog; zero means equipped gear.
     TransmogOutfit { outfit_id: i64 },
     /// Money in copper held on the cursor (PickupPlayerMoney → DropCursorMoney).

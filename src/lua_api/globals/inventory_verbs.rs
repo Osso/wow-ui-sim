@@ -311,9 +311,9 @@ fn cursor_has_item(state: &mut LuaState) -> LuaResult<u32> {
 /// test surface are modeled.
 fn get_cursor_info(state: &mut LuaState) -> LuaResult<u32> {
     let cursor = borrow_state(state)?.cursor_item.clone();
+    // WM44-A: the empty cursor (mode 0) projects zero values.
     let Some(cursor) = cursor else {
-        state.push(Val::Nil);
-        return Ok(1);
+        return Ok(0);
     };
     push_cursor_info(state, cursor)
 }
@@ -335,12 +335,25 @@ fn push_cursor_info(state: &mut LuaState, cursor: CursorInfo) -> LuaResult<u32> 
             state.push(Val::Num(stack_count as f64));
             Ok(3)
         }
+        CursorInfo::ItemId { item_id } => push_item_id_cursor(state, item_id),
         CursorInfo::Money { copper } => push_cursor_kind_number(state, "money", copper as f64),
         // INFERRED cursor kind; native documentation does not specify outfit payloads.
         CursorInfo::TransmogOutfit { outfit_id } => {
             push_cursor_kind_number(state, "transmogoutfit", outfit_id as f64)
         }
     }
+}
+
+/// WM44-A mode 6: `("item", itemID, link)` rebuilt from the ID when item
+/// metadata is present, otherwise zero values.
+fn push_item_id_cursor(state: &mut LuaState, item_id: u32) -> LuaResult<u32> {
+    let Some(link) = crate::c_api::item_spell::item_link_for_id(item_id) else {
+        return Ok(0);
+    };
+    push_cursor_kind_id(state, "item", item_id)?;
+    let link = create_string(state, &link);
+    state.push(link);
+    Ok(3)
 }
 
 fn push_cursor_kind_id(state: &mut LuaState, kind: &str, id: u32) -> LuaResult<u32> {
@@ -388,7 +401,9 @@ fn place_action(state: &mut LuaState) -> LuaResult<u32> {
                 st.equipped_gear_outfit_action_slots.insert(slot);
             }
         }
-        CursorInfo::Item { .. } | CursorInfo::Money { .. } => return Ok(0),
+        CursorInfo::Item { .. } | CursorInfo::ItemId { .. } | CursorInfo::Money { .. } => {
+            return Ok(0);
+        }
     }
     st.cursor_item = None;
     drop(st);
