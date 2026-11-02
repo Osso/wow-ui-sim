@@ -92,13 +92,18 @@ fn is_mouse_button_down(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
+pub(crate) fn set_cursor_visibility(state: &mut LuaState, visible: bool) -> LuaResult<()> {
+    borrow_state_mut(state)?.forever_startup.cursor_visible = visible;
+    Ok(())
+}
+
 fn show_cursor(state: &mut LuaState) -> LuaResult<u32> {
-    borrow_state_mut(state)?.forever_startup.cursor_visible = true;
+    set_cursor_visibility(state, true)?;
     Ok(0)
 }
 
 fn hide_cursor(state: &mut LuaState) -> LuaResult<u32> {
-    borrow_state_mut(state)?.forever_startup.cursor_visible = false;
+    set_cursor_visibility(state, false)?;
     Ok(0)
 }
 

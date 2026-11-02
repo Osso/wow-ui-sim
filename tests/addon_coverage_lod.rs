@@ -71,6 +71,12 @@ fn commentator_consumer_updates_shared_mouse_availability() {
             assert_eq!(state.mouse_disabled, Some(true));
             assert_eq!(state.mouse_available, Some(true));
             assert!(state.forever_startup.cursor_visible);
+            drop(state);
+            let contract: (bool, bool, i32) = env
+                .eval("return pcall(C_Commentator.SetMouseDisabled), pcall(C_Commentator.SetMouseDisabled, nil), select('#', C_Commentator.SetMouseDisabled(0))")
+                .expect("argument and return contract should be queryable");
+            assert_eq!(contract, (false, false, 0));
+            assert_eq!(env.state().borrow().mouse_disabled, Some(true));
         });
     });
 }
