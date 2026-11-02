@@ -47,6 +47,7 @@ pub fn run() -> Result<(), Box<dyn std::error::Error>> {
     write_item_sets(&wow_data)?;
     write_item_classifiers(&wow_data)?;
     write_item_spell_ranges(&wow_data)?;
+    write_item_cursor_grid(&wow_data)?;
 
     println!("Generated {} item entries ({} skipped)", count, skipped);
     println!("Output: {}", output_path.display());
@@ -106,6 +107,52 @@ fn write_item_classifiers(wow_data: &Path) -> Result<(), Box<dyn std::error::Err
     }
     writeln!(out, "];")?;
     Ok(())
+}
+
+/// Base Item record inputs for the owned-item cursor grid (WM54 Q4):
+/// ID ranges with nonzero InventoryType, and class 17 item IDs.
+fn write_item_cursor_grid(wow_data: &Path) -> Result<(), Box<dyn std::error::Error>> {
+    const CLASS_BATTLE_PET: &str = "17";
+    let mut equipment_slotted = Vec::new();
+    let mut battle_pets = Vec::new();
+    for_each_csv_row(wow_data, "Item.csv", |row| {
+        let id = row.get("ID").parse::<u32>()?;
+        if row.get("InventoryType").parse::<u8>()? != 0 {
+            equipment_slotted.push(id);
+        }
+        if row.get("ClassID") == CLASS_BATTLE_PET {
+            battle_pets.push(id);
+        }
+        Ok(())
+    })?;
+    equipment_slotted.sort_unstable();
+    battle_pets.sort_unstable();
+    let mut out = File::create("crates/sim-data/data/item_cursor_grid.rs")?;
+    writeln!(
+        out,
+        "//! Generated from wago.tools DB2 CSV exports, build 12.1.5.70391 (enUS)."
+    )?;
+    writeln!(out, "//! Regenerate with `wow-cli generate items`.")?;
+    let ranges = collapse_id_ranges(&equipment_slotted);
+    write_rows(
+        &mut out,
+        "INVENTORY_TYPED_ITEM_RANGES: &[(u32, u32)]",
+        &ranges,
+    )?;
+    write_rows(&mut out, "CLASS_17_ITEMS: &[u32]", &battle_pets)?;
+    Ok(())
+}
+
+/// Inclusive runs of consecutive IDs from a sorted list.
+fn collapse_id_ranges(ids: &[u32]) -> Vec<(u32, u32)> {
+    let mut ranges: Vec<(u32, u32)> = Vec::new();
+    for &id in ids {
+        match ranges.last_mut() {
+            Some((_, end)) if end.checked_add(1) == Some(id) => *end = id,
+            _ => ranges.push((id, id)),
+        }
+    }
+    ranges
 }
 
 fn write_item_sets(wow_data: &Path) -> Result<(), Box<dyn std::error::Error>> {

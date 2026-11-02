@@ -27,6 +27,9 @@ pub mod item_classifiers;
 #[path = "../data/item_children.rs"]
 pub mod item_children;
 #[rustfmt::skip]
+#[path = "../data/item_cursor_grid.rs"]
+pub mod item_cursor_grid;
+#[rustfmt::skip]
 #[path = "../data/item_effects.rs"]
 pub mod item_effects;
 #[rustfmt::skip]
