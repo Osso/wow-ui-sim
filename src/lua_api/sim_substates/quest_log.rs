@@ -110,6 +110,14 @@ pub struct QuestLogState {
     /// Supplied chapter IDs in campaign order.
     pub campaign_chapter_ids: HashMap<i32, Vec<i32>>,
     pub entries: Vec<QuestLogEntry>,
+    /// Supplied ready records outside the current quest log.
+    pub abandon_ready_ids: HashSet<i32>,
+    /// Supplied quest-record flags for the abandonability query.
+    pub abandon_record_flags: HashMap<i32, u32>,
+    /// Supplied classification flags for ready quest records.
+    pub abandon_classification_flags: HashMap<i32, u32>,
+    /// Supplied result of the unknown flag-2048 condition.
+    pub abandon_conditional_blocked: HashMap<i32, bool>,
     /// Supplied native-style flags for entries in the current quest log.
     pub threat_entry_flags: HashMap<i32, u16>,
     /// Supplied bounties keyed by the existing bounty-set membership model.
@@ -224,6 +232,10 @@ impl QuestLogState {
                 glittering_geodes_entry(),
                 earthen_relic_recovery_entry(),
             ],
+            abandon_ready_ids: HashSet::new(),
+            abandon_record_flags: HashMap::new(),
+            abandon_classification_flags: HashMap::new(),
+            abandon_conditional_blocked: HashMap::new(),
             #[cfg(feature = "client-wrath")]
             manual_watch_ids: Vec::new(),
             objective_progress: crate::c_api::quest_objectives::seeded_progress(),

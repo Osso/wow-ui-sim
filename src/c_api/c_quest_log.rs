@@ -20,6 +20,7 @@ pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
     super::c_map_bounties::register_quest_queries(state)?;
     let namespace = ensure_namespace(state, "C_QuestLog")?;
     if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
+        table_set_rust_fn_static(state, namespace, "CanAbandonQuest", can_abandon_quest)?;
         // QuestLogDocumentation.lua:1033,1269.
         table_set_rust_fn_static(
             state,
@@ -53,6 +54,46 @@ pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
         super::c_quest_log_watches::register(state)?;
     }
     Ok(())
+}
+
+fn can_abandon_quest(state: &mut LuaState) -> LuaResult<u32> {
+    let value = stack_val(state, 1);
+    let number = match value {
+        Val::Num(number) => Some(number),
+        Val::Str(_) => crate::lua_api::methods::val_to_string(state, value)
+            .and_then(|text| text.trim().parse::<f64>().ok()),
+        _ => None,
+    }
+    .ok_or_else(|| {
+        rilua::runtime_error("Usage: local canAbandon = C_QuestLog.CanAbandonQuest(questID)")
+    })?;
+    if !number.is_finite() || number < i32::MIN as f64 || number > i32::MAX as f64 {
+        return Err(rilua::runtime_error("questID outside signed 32-bit range"));
+    }
+    let id = number as i32;
+    let can_abandon = {
+        let sim = borrow_state(state)?;
+        let quests = &sim.quest_log_entries;
+        let ready = id > 0
+            && (quests.abandon_ready_ids.contains(&id)
+                || quests.entries.iter().any(|entry| entry.quest_id == id));
+        let classification = quests
+            .abandon_classification_flags
+            .get(&id)
+            .copied()
+            .unwrap_or(0);
+        let flags = quests.abandon_record_flags.get(&id).copied().unwrap_or(0);
+        let conditional_blocked = if ready && flags & 2048 != 0 {
+            *quests.abandon_conditional_blocked.get(&id).ok_or_else(|| {
+                rilua::runtime_error("quest abandon conditional state is not supplied")
+            })?
+        } else {
+            false
+        };
+        ready && classification & 256 == 0 && !conditional_blocked
+    };
+    state.push(Val::Bool(can_abandon));
+    Ok(1)
 }
 
 #[cfg(feature = "client-wowforever")]

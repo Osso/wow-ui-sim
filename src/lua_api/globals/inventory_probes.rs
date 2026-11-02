@@ -98,6 +98,9 @@ fn can_inspect(state: &mut LuaState) -> LuaResult<u32> {
 
 fn notify_inspect(state: &mut LuaState) -> LuaResult<u32> {
     let unit = Option::<String>::from_stack(state, 1)?.unwrap_or_default();
+    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
+        borrow_state_mut(state)?.inspect_specialization_cache = None;
+    }
     let guid = {
         let st = borrow_state(state)?;
         if !can_inspect_unit(&st, &unit) {

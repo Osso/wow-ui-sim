@@ -379,8 +379,30 @@ fn objective_tracker_frame_layout_is_locked(env: &WowLuaEnv) {
         quest.title = "Tracker layout fixture".into();
         assert!(sim.quest_log_entries.entries.iter().all(|entry| entry.quest_id != quest.quest_id));
         sim.quest_log_entries.entries.push(quest);
+        sim.selected_quest_log_id = Some(80002);
         drop(sim);
         env.exec("assert(C_QuestLog.AddQuestWatch(80002))").unwrap();
+        {
+            let sim = state.borrow();
+            assert!(
+                sim.lua_errors.iter().all(|error| !error.contains("CanAbandonQuest")),
+                "quest map update must resolve the Retail abandonability query: {:?}",
+                sim.lua_errors
+            );
+        }
+        assert!(env.eval::<bool>("return QuestMapFrame.DetailsFrame.AbandonButton:IsEnabled()").unwrap());
+        {
+            let mut sim = state.borrow_mut();
+            sim.quest_log_entries.abandon_classification_flags.insert(80002, 256);
+        }
+        env.exec("assert(C_QuestLog.RemoveQuestWatch(80002))").unwrap();
+        assert!(!env.eval::<bool>("return QuestMapFrame.DetailsFrame.AbandonButton:IsEnabled()").unwrap());
+        {
+            let mut sim = state.borrow_mut();
+            sim.quest_log_entries.abandon_classification_flags.remove(&80002);
+            sim.quest_log_entries.abandon_ready_ids.insert(81234);
+        }
+        env.exec("assert(C_QuestLog.AddQuestWatch(80002)); assert(C_QuestLog.CanAbandonQuest(81234)); assert(not C_QuestLog.CanAbandonQuest(81235))").unwrap();
         settle_prefork_game_ui(env);
     }
 

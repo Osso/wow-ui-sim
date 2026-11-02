@@ -59,6 +59,14 @@ pub fn register_c_specialization_info(state: &mut LuaState) -> LuaResult<()> {
     // the table with a fresh one.
     let t_ref = ensure_namespace(state, "C_SpecializationInfo")?;
     register_c_specialization_info_methods(state, t_ref)?;
+    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
+        table_set_rust_fn_static(
+            state,
+            t_ref,
+            "GetInspectSpecialization",
+            get_inspect_specialization,
+        )?;
+    }
     if matches!(
         crate::client_profile::ACTIVE,
         crate::client_profile::ClientProfile::Ptr
@@ -104,6 +112,25 @@ pub fn register_c_specialization_info(state: &mut LuaState) -> LuaResult<()> {
         )?;
     }
     Ok(())
+}
+
+fn get_inspect_specialization(state: &mut LuaState) -> LuaResult<u32> {
+    use crate::lua_bridge::FromStack;
+    let unit = String::from_stack(state, 1)?;
+    let spec = {
+        let sim = borrow_state(state)?;
+        let identity = crate::lua_api::globals::unit_misc::existing_guid_for_unit(&sim, &unit);
+        match (&sim.inspect_specialization_cache, identity) {
+            (Some((cached, spec)), Some(identity)) if *cached == identity => *spec,
+            _ => 0,
+        }
+    };
+    state.push(Val::Num(spec as f64));
+    crate::lua_api::globals::real::unit_secret_predicates::finish_identity_restricted(
+        state,
+        &[&unit],
+        1,
+    )
 }
 
 fn can_use_pvp_talent_ui(state: &mut LuaState) -> LuaResult<u32> {

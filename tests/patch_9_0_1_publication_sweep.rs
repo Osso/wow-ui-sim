@@ -7,6 +7,17 @@ mod sweep;
 use wow_ui_sim::lua_api::WowLuaEnv;
 
 prefork_full_ui_case! {
+fn lfg_expand_prompt_accept_clears_supplied_state(env: &WowLuaEnv) {
+    for (key, data) in [(19, vec![1, 2]), (42, vec![3, 4, 5])] {
+        env.state().borrow_mut().lfg_expand_prompt = Some((key, data));
+        env.exec("assert(type(StaticPopupDialogs.LFG_QUEUE_EXPAND.OnAccept) == 'function'); StaticPopupDialogs.LFG_QUEUE_EXPAND.OnAccept()")
+            .expect("original LFG expand popup accept callback");
+        assert_eq!(env.state().borrow().lfg_expand_prompt, None);
+    }
+}
+}
+
+prefork_full_ui_case! {
 fn patch_9_0_1_publication_sweep(env: &WowLuaEnv) {
     sweep::run_publication_sweep(env, &sweep::SweepSpec {
         register: include_str!("../data/patch-api/sources/9.0.1-wikitext-register.json"),
