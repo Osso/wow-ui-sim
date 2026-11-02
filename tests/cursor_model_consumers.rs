@@ -75,3 +75,42 @@ fn owned_item_grid_reaches_action_bar(env: &WowLuaEnv) {
     "#).unwrap();
 }
 }
+
+prefork_full_ui_case! {
+fn secure_drag_picks_up_equipment_sets(env: &WowLuaEnv) {
+    env.exec(r#"
+        local source = debug.getinfo(SecureHandler_OnDragEvent, 'S').source:gsub('\\', '/')
+        assert(source:find('Blizzard_RestrictedAddOnEnvironment/SecureHandlers.lua', 1, true), source)
+        C_EquipmentSet.CreateEquipmentSet('Tank', 'Interface\\Icons\\INV_Shield_06')
+        local tank = C_EquipmentSet.GetEquipmentSetID('Tank')
+        local frame = CreateFrame('Frame', nil, UIParent, 'SecureHandlerDragTemplate')
+        frame:SetAttribute('_ondragstart', 'return "equipmentset", ' .. tank)
+        ClearCursor()
+        frame:GetScript('OnDragStart')(frame, 'LeftButton')
+        local kind, name = GetCursorInfo()
+        assert(kind == 'equipmentset' and name == 'Tank', tostring(kind))
+        ClearCursor()
+    "#).unwrap();
+}
+}
+
+prefork_full_ui_case! {
+fn icon_selector_accepts_outfit_cursors(env: &WowLuaEnv) {
+    env.exec(r#"
+        local source = debug.getinfo(IconSelectorPopupFrameTemplateMixin.UpdateStateFromCursorType, 'S').source:gsub('\\', '/')
+        assert(source:find('Blizzard_SharedXML/Mainline/SharedUIPanelTemplates.lua', 1, true), source)
+        local api = C_TransmogOutfitInfo
+        api.AddNewOutfit('Raid', 135771)
+        local outfit = api.GetOutfitInfoByName('Raid').outfitID
+        local popup = CreateFrame('Frame', nil, UIParent, 'IconSelectorPopupFrameTemplate')
+        ClearCursor()
+        popup:UpdateStateFromCursorType()
+        assert(not popup.BorderBox.IconDragArea:IsShown())
+        -- WM46 mode 21 projects "outfit", one of the selector's valid types.
+        api.PickupOutfit(outfit)
+        popup:UpdateStateFromCursorType()
+        assert(popup.BorderBox.IconDragArea:IsShown(), tostring(GetCursorInfo()))
+        ClearCursor()
+    "#).unwrap();
+}
+}
