@@ -13,6 +13,7 @@ mod editable_reads;
 mod editable_status;
 mod editable_time;
 mod editable_title;
+mod editable_type;
 mod selection;
 mod view_info;
 
@@ -161,6 +162,7 @@ pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
         editable_title::register(state, namespace)?;
         editable_time::register(state, namespace)?;
         editable_date::register(state, namespace)?;
+        editable_type::register(state, namespace)?;
         editable_flags::register(state, namespace)?;
         view_info::register(state, namespace)?;
         table_set_rust_fn_static(
