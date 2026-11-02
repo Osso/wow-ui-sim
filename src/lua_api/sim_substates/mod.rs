@@ -305,6 +305,9 @@ pub struct PetState {
     /// Supplied CreatureFamily ID of the summoned pet; the simulator has no
     /// creature model to resolve it. Drives `C_PetInfo.GetPetTalentTree`.
     pub creature_family_id: Option<u32>,
+    /// Supplied `UnitSex` value of the summoned pet (3 is female); zero is
+    /// unknown. Drives `C_PetInfo.GetPetTalentTree`.
+    pub sex: i32,
     /// Current XP within the pet's level. Drives `GetPetExperience`
     /// (first return).
     pub xp: i32,
