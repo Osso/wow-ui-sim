@@ -2821,12 +2821,7 @@ pub static SUBCLASSES: &[(u8, u8, &str, &str)] = &[
     (16, 11, "Druid", "Druid"),
     (16, 6, "Death Knight", "Death Knight"),
     (7, 14, "Item Enchantment (OBSOLETE)", ""),
-    (
-        7,
-        15,
-        "Weapon Enchantment - Obsolete",
-        "Weapon Enchantment - Obsolete",
-    ),
+    (7, 15, "Weapon Enchantment - Obsolete", "Weapon Enchantment - Obsolete"),
     (4, 10, "Sigil", "Sigils"),
     (1, 8, "Inscription Bag", ""),
     (9, 11, "Inscription", "Inscription"),
@@ -2903,3 +2898,4 @@ pub static MASKS: &[(u8, u32, &str)] = &[
     (2, 8337, "One-Handed Melee Weapon"),
     (4, 64, "Shield"),
 ];
+
