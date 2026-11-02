@@ -39,9 +39,150 @@ pub fn run() -> Result<(), Box<dyn std::error::Error>> {
     write_tests(&mut out)?;
     write_item_categories(&wow_data, &required_ids)?;
     write_gem_catalog(&wow_data)?;
+    write_item_effects(&wow_data)?;
+    write_item_children(&wow_data)?;
+    write_item_enchant_spells(&wow_data)?;
 
     println!("Generated {} item entries ({} skipped)", count, skipped);
     println!("Output: {}", output_path.display());
+    Ok(())
+}
+
+fn write_item_effects(wow_data: &Path) -> Result<(), Box<dyn std::error::Error>> {
+    let records = open_records(&wow_data.join("ItemEffect.csv"))?;
+    let mut iter = records.iter();
+    let idx = header_index(iter.next().ok_or("empty ItemEffect.csv")?);
+    let mut effects = HashMap::new();
+    for record in iter {
+        let fields = parse_csv_line(record);
+        let id = field(&fields, &idx, "ID").parse::<u32>()?;
+        let spell = field(&fields, &idx, "SpellID").parse::<u32>()?;
+        let trigger = field(&fields, &idx, "TriggerType").parse::<i32>()?;
+        let slot = field(&fields, &idx, "LegacySlotIndex").parse::<i32>()?;
+        let spec = field(&fields, &idx, "ChrSpecializationID").parse::<u32>()?;
+        let condition = field(&fields, &idx, "PlayerConditionID").parse::<u32>()?;
+        effects.insert(id, (spell, trigger, slot, spec, condition));
+    }
+    let records = open_records(&wow_data.join("ItemXItemEffect.csv"))?;
+    let mut iter = records.iter();
+    let idx = header_index(iter.next().ok_or("empty ItemXItemEffect.csv")?);
+    let mut rows = Vec::new();
+    for record in iter {
+        let fields = parse_csv_line(record);
+        let item = field(&fields, &idx, "ItemID").parse::<u32>()?;
+        let effect = field(&fields, &idx, "ItemEffectID").parse::<u32>()?;
+        let &(spell, trigger, slot, spec, condition) = effects
+            .get(&effect)
+            .ok_or_else(|| format!("missing ItemEffect {effect} for item {item}"))?;
+        rows.push((item, effect, spell, trigger, slot, spec, condition));
+    }
+    rows.sort_unstable();
+    let spell_ids: HashSet<u32> = rows.iter().map(|row| row.2).collect();
+    let mut out = File::create("crates/sim-data/data/item_effects.rs")?;
+    writeln!(
+        out,
+        "//! Generated from wago.tools DB2 CSV exports, build 12.1.5.70391 (enUS)."
+    )?;
+    writeln!(out, "//! Regenerate with `wow-cli generate items`.")?;
+    writeln!(
+        out,
+        "pub static ITEM_EFFECTS: &[(u32, u32, u32, i32, i32, u32, u32)] = &["
+    )?;
+    for (item, effect, spell, trigger, slot, spec, condition) in rows {
+        writeln!(
+            out,
+            "    ({item}, {effect}, {spell}, {trigger}, {slot}, {spec}, {condition}),"
+        )?;
+    }
+    writeln!(out, "];\n")?;
+    let records = open_records(&wow_data.join("SpellName.csv"))?;
+    let mut iter = records.iter();
+    let idx = header_index(iter.next().ok_or("empty SpellName.csv")?);
+    let mut names = Vec::new();
+    for record in iter {
+        let fields = parse_csv_line(record);
+        let id = field(&fields, &idx, "ID").parse::<u32>()?;
+        if spell_ids.contains(&id) {
+            names.push((id, escape_str(field(&fields, &idx, "Name_lang"))));
+        }
+    }
+    names.sort_unstable_by_key(|row| row.0);
+    writeln!(out, "pub static ITEM_SPELL_NAMES: &[(u32, &str)] = &[")?;
+    for (id, name) in names {
+        writeln!(out, "    ({id}, \"{name}\"),")?;
+    }
+    writeln!(out, "];")?;
+    Ok(())
+}
+
+fn write_item_enchant_spells(wow_data: &Path) -> Result<(), Box<dyn std::error::Error>> {
+    let records = open_records(&wow_data.join("SpellItemEnchantment.csv"))?;
+    let mut iter = records.iter();
+    let idx = header_index(iter.next().ok_or("empty SpellItemEnchantment.csv")?);
+    let mut spells = Vec::new();
+    for record in iter {
+        let fields = parse_csv_line(record);
+        for index in 0..3 {
+            if field(&fields, &idx, &format!("Effect_{index}")) == "7" {
+                let id = field(&fields, &idx, "ID").parse::<u32>()?;
+                let spell = field(&fields, &idx, &format!("EffectArg_{index}")).parse::<u32>()?;
+                spells.push((id, spell));
+                break;
+            }
+        }
+    }
+    let records = open_records(&wow_data.join("SpellName.csv"))?;
+    let mut iter = records.iter();
+    let idx = header_index(iter.next().ok_or("empty SpellName.csv")?);
+    let wanted: HashSet<u32> = spells.iter().map(|row| row.1).collect();
+    let mut names = HashMap::new();
+    for record in iter {
+        let fields = parse_csv_line(record);
+        let id = field(&fields, &idx, "ID").parse::<u32>()?;
+        if wanted.contains(&id) {
+            names.insert(id, escape_str(field(&fields, &idx, "Name_lang")));
+        }
+    }
+    spells.sort_unstable();
+    let mut out = File::create("crates/sim-data/data/item_enchants.rs")?;
+    writeln!(
+        out,
+        "//! Generated from wago.tools DB2 CSV exports, build 12.1.5.70391 (enUS)."
+    )?;
+    writeln!(out, "//! Regenerate with `wow-cli generate items`.")?;
+    writeln!(
+        out,
+        "pub static ENCHANT_SPELLS: &[(u32, u32, Option<&str>)] = &["
+    )?;
+    for (id, spell) in spells {
+        let name = names
+            .get(&spell)
+            .map_or_else(|| "None".to_owned(), |name| format!("Some(\"{name}\")"));
+        writeln!(out, "    ({id}, {spell}, {name}),")?;
+    }
+    writeln!(out, "];")?;
+    Ok(())
+}
+
+fn write_item_children(wow_data: &Path) -> Result<(), Box<dyn std::error::Error>> {
+    let records = open_records(&wow_data.join("ItemChildEquipment.csv"))?;
+    let mut iter = records.iter();
+    let idx = header_index(iter.next().ok_or("empty ItemChildEquipment.csv")?);
+    let mut out = File::create("crates/sim-data/data/item_children.rs")?;
+    writeln!(
+        out,
+        "//! Generated from wago.tools DB2 CSV export, build 12.1.5.70391 (enUS)."
+    )?;
+    writeln!(out, "//! Regenerate with `wow-cli generate items`.")?;
+    writeln!(out, "pub static ITEM_CHILDREN: &[(u32, u32, i32)] = &[")?;
+    for record in iter {
+        let fields = parse_csv_line(record);
+        let parent = field(&fields, &idx, "ParentItemID").parse::<u32>()?;
+        let child = field(&fields, &idx, "ChildItemID").parse::<u32>()?;
+        let slot = field(&fields, &idx, "ChildItemEquipSlot").parse::<i32>()?;
+        writeln!(out, "    ({parent}, {child}, {slot}),")?;
+    }
+    writeln!(out, "];")?;
     Ok(())
 }
 

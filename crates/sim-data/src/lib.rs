@@ -12,6 +12,10 @@ pub mod garrison_follower_xp;
 pub mod gem_items;
 #[path = "../data/item_categories.rs"]
 pub mod item_categories;
+#[path = "../data/item_children.rs"]
+pub mod item_children;
+#[path = "../data/item_effects.rs"]
+pub mod item_effects;
 #[path = "../data/items.rs"]
 pub mod items;
 #[path = "../data/manifest_interface_data.rs"]
