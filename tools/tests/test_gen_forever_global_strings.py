@@ -15,7 +15,7 @@ class ForeverStringGeneratorTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             source = Path(directory) / "input.csv"
             output = Path(directory) / "output.rs"
-            source.write_text('ID,BaseTag,TagText_lang,Flags\n1,HELP,"Line one\n""quoted"" %d",1\n')
+            source.write_text('ID,BaseTag,TagText_lang,Flags\n1,HELP,"Line one\n""quoted"" %d",1\n', newline="")
             GEN.generate(source, output)
             self.assertIn('"HELP" => "Line one\\n\\"quoted\\" %d",', output.read_text())
 

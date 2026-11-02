@@ -166,6 +166,26 @@ That capture's historical metadata bound the observation to source, manifest has
 
 ## Forever Lua Errors
 
+The 2026-11-02 capture uses the 70707 retarget worktree based on `eb548efc0`
+with matching `wowf 1.60.1.70707` UI inputs: **4 records / 4 occurrences,
+exit1; startup is not clean.** The raw stdout SHA-256 is
+`c7c80c6c2b80fda00632c192bc48692f8d6006d1df11f90dec8fb7a346571033`.
+[Metadata](wowforever-lua-errors.meta.json) records the source snapshot, sealed
+binary, cache identity and capture guards.
+
+All four records still concern missing `C_PetInfo.IsPetOrderMoveToPending`, now
+at `Blizzard_GamepadActionBars/MainActionBarFrame.lua:246`: OnLoad and OnEvent
+failures plus their ScriptErrors reports. Counts match the historical 70634
+capture below; changed source lines and traces make the raw messages different.
+
+The run used `--no-addons --no-saved-vars lua-errors`, an isolated explicit
+session, `WOW_SIM_CASC=0` and no version-mismatch override. Original persisted
+CVar stat/hash remained unchanged. Cache acquisition used a local-only parser
+workaround; the capture executable used committed dependencies. Local receipts
+are under `docs/local/70707/baseline-capture/`.
+
+### Historical 70634 capture
+
 Verified Windows game-screen capture on 2026-11-02 at runtime source
 `2e48a2960`, using the installed `wowf 1.60.1.70634` UI cache:
 **4 records / 4 occurrences, exit1; startup is not clean.**

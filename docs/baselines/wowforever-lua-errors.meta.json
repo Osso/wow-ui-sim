@@ -1,24 +1,25 @@
 {
   "schema": 1,
   "profile": "wowforever",
-  "capture_time_utc": "2026-11-02T06:23:37Z",
-  "runtime_source_revision": "2e48a29605c2f223bf971d6fc88b48654ab77391",
+  "capture_time_utc": "2026-11-02T17:04:06Z",
+  "runtime_source_revision": "eb548efc03014a87ffd812da73bba4774cf118e6",
   "features": "sound,gui,casc,client-wowforever,tools",
   "target": "x86_64-pc-windows-msvc",
   "command": [
-    "wow-sim",
-    "--allow-ui-version-mismatch",
+    "C:\\Repositories\\wow-ui-sim\\.claude\\worktrees\\forever-70707\\docs\\local\\70707\\bin\\wow-sim.exe",
+    "--session-wtf-path",
+    "C:\\Repositories\\wow-ui-sim\\.claude\\worktrees\\forever-70707\\docs\\local\\70707\\baseline-capture\\session",
     "--no-addons",
     "--no-saved-vars",
     "lua-errors"
   ],
-  "binary_sha256": "3106a21d2d2630e50a753d7768f5533b47c9621675d35667f0a086581e84cc33",
-  "baseline_sha256": "bd2c211638d3bfac11ad63bb8d5e5db8cd9ba47d90481f3afbaa181a7a0ab0d1",
+  "binary_sha256": "6b39bb34ff927f10d171dffbfe4629fb56781c014f5e4ebb2f59505718a5adbb",
+  "baseline_sha256": "c7c80c6c2b80fda00632c192bc48692f8d6006d1df11f90dec8fb7a346571033",
   "messages": 4,
   "occurrences": 4,
   "result": {
     "exit_code": 1,
-    "elapsed_seconds": 6.275
+    "elapsed_seconds": 8.414
   },
   "startup_clean": false,
   "disposition": "Failing simulator game-screen startup inventory; no clean-startup or native-parity claim.",
@@ -26,85 +27,93 @@
     "schema": "1",
     "profile": "wowforever",
     "product": "wowf",
-    "version": "1.60.1.70634",
-    "build_key": "7d8ae4cd9c1f639a3ea04fd47e21c746",
+    "version": "1.60.1.70707",
+    "build_key": "7feb61f3c994bcb168526b8db521514a",
     "install_key": "",
-    "manifest_sha256": "677e42138ca4c4aa7a9b4730b74bebe4c7f23b96e957e82c17f561216f921ccf",
+    "manifest_sha256": "dab42f71be89763eba40119a39fbf4a33faf6037f953945a8ad2d062fdff789e",
     "locale": "enUS",
     "content_filter": "none",
-    "source": "casc-local-or-cdn",
+    "source": "casc-local-or-gethe-md5",
     "fallback": "none",
-    "gethe_fallback": "disabled-version-mismatch",
-    "gethe_version": "1.60.1.70532",
-    "gethe_revision": "ca8368f2f2380cbe696854f7f2646387c278a61b"
+    "gethe_version": "1.60.1.70707",
+    "gethe_revision": "aff0d8cd53bf4d9ef1c1dd2786b94461a276fb16",
+    "gethe_file": "{\"path\":\"Blizzard_LoadLocale/LoadLocale.lua\",\"fdid\":5612369,\"ckey\":\"2e4d4433534c95ee111c0e1a88863c01\",\"gethe_revision\":\"aff0d8cd53bf4d9ef1c1dd2786b94461a276fb16\",\"source\":\"gethe\"}"
   },
-  "provenance_sha256": "fad6b22558421f94a1dc6a020c9eafcdd264c21c261c74961cd0fca341f36552",
+  "provenance_sha256": "3465d8fe5106bcfd3eb8cc59b555e35f696deaf1b38278f07d632bc3a62b53fa",
   "original_cvar_sha256": "d1175eab186a9399a5786605d53a30c7c23c35cda4dad2b8f9579704a3684ea9",
   "original_cvar_stat_hash_unchanged": true,
-  "cvar_isolation": "Byte-exact copy of current persisted CVars seeded before resuming the executable under deps, using its PID-specific temporary storage path; original CVars unchanged.",
-  "runtime_cache": "Existing Windows Forever profile cache, with --allow-ui-version-mismatch. Provenance hash unchanged; cache files were not copied or fully sealed.",
+  "cvar_isolation": "Byte-exact current persisted CVar copies seeded into child-only XDG_DATA_HOME/wow-sim/cvars.json and the explicit isolated session/cvars.json; original size/stat/hash unchanged.",
+  "runtime_cache": "Completed strict Windows 1.60.1.70707 cache with matching pin, Gethe revision and manifest. Cache acquisition used a separate CLI with a local parser patch and verified CRLF handling. The capture executable used committed dependencies with WOW_SIM_CASC=0 and no version override. Cache completion/provenance guards were unchanged; the full cache was not independently sealed.",
   "capture_evidence": {
-    "stdout": "target/forever-baseline-check-20261102T061338Z-confirmed/current-lua-errors.json",
-    "stderr": "target/forever-baseline-check-20261102T061338Z-confirmed/current.stderr.log",
-    "receipt": "target/forever-baseline-check-20261102T061338Z-confirmed/receipt.json",
-    "comparison": "target/forever-baseline-check-20261102T061338Z-confirmed/comparison.json"
+    "stdout": "docs/local/70707/baseline-capture/current-lua-errors.json",
+    "stderr": "docs/local/70707/baseline-capture/current.stderr.log",
+    "receipt": "docs/local/70707/baseline-capture/summary.json",
+    "previous_json": "docs/local/70707/baseline-capture/before-committed-wowforever-lua-errors.json",
+    "previous_metadata": "docs/local/70707/baseline-capture/before-committed-wowforever-lua-errors.meta.json"
   },
-  "build_evidence": "target/forever-baseline-check-20261102T061338Z/confirm-build.jsonl",
+  "build_evidence": "docs/local/70707/build-evidence.json",
   "before_after": {
-    "before_messages": 26,
-    "before_occurrences": 26,
+    "before_messages": 4,
+    "before_occurrences": 4,
     "after_messages": 4,
     "after_occurrences": 4,
-    "removed_messages": 26,
     "added_messages": 4,
+    "removed_messages": 4,
     "unchanged_messages": 0,
-    "net_occurrence_delta": -22,
-    "comparison_scope": "Previous capture used UI build 70532; this capture uses 70634 and a different simulator revision. Counts are observations, not controlled fix attribution."
+    "scope": "Exact raw message comparison; source and UI build both changed, so not controlled fix attribution.",
+    "net_occurrence_delta": 0
   },
   "classifications": [
     {
       "record": 1,
-      "message_sha256": "efbbedc2e7854eb61da637fe57624e04617a1ccc714421b925d2a5446652a621",
+      "message_sha256": "2816767a864470b922a1a0c52a7e11c353f9d689e4dd658500b0788377e41623",
       "symbol": "C_PetInfo.IsPetOrderMoveToPending",
       "classification": "missing simulator API",
       "reporting": "underlying startup error",
       "phase": "OnLoad",
       "count": 1,
-      "reason": "The selected 70634 GamepadMainActionBarFrame consumer calls this missing method at MainActionBarFrame.lua:244.",
-      "evidence": "target/forever-baseline-check-20261102T061338Z-confirmed/current-lua-errors.json"
+      "reason": "The selected 70707 GamepadMainActionBarFrame consumer calls this missing method at MainActionBarFrame.lua:246.",
+      "evidence": "docs/local/70707/baseline-capture/current-lua-errors.json"
     },
     {
       "record": 2,
-      "message_sha256": "993db9b8be3ca89ca3fc79d0f2a51b53b5967b4c4d3abf6a5258488f7b2a029c",
+      "message_sha256": "c5845eb0042178be3360e33fb53bd0c765da3fcfdac077d7700ecbee6d217873",
       "symbol": "C_PetInfo.IsPetOrderMoveToPending",
       "classification": "missing simulator API",
       "reporting": "Blizzard_ScriptErrors re-report",
       "phase": "OnLoad",
       "count": 1,
-      "reason": "The selected 70634 GamepadMainActionBarFrame consumer calls this missing method at MainActionBarFrame.lua:244.",
-      "evidence": "target/forever-baseline-check-20261102T061338Z-confirmed/current-lua-errors.json"
+      "reason": "The selected 70707 GamepadMainActionBarFrame consumer calls this missing method at MainActionBarFrame.lua:246.",
+      "evidence": "docs/local/70707/baseline-capture/current-lua-errors.json"
     },
     {
       "record": 3,
-      "message_sha256": "74ea3facc8ccf216d308653b0a3361d2cb82b85054755b5250026b0d7d3710a8",
+      "message_sha256": "e28f00b1af0603335041efa7c9cee37af189040ccf0742c093572ae30a531ec8",
       "symbol": "C_PetInfo.IsPetOrderMoveToPending",
       "classification": "missing simulator API",
       "reporting": "underlying startup error",
       "phase": "OnEvent",
       "count": 1,
-      "reason": "The selected 70634 GamepadMainActionBarFrame consumer calls this missing method at MainActionBarFrame.lua:244.",
-      "evidence": "target/forever-baseline-check-20261102T061338Z-confirmed/current-lua-errors.json"
+      "reason": "The selected 70707 GamepadMainActionBarFrame consumer calls this missing method at MainActionBarFrame.lua:246.",
+      "evidence": "docs/local/70707/baseline-capture/current-lua-errors.json"
     },
     {
       "record": 4,
-      "message_sha256": "085327fa66e1545d1c4f5e0b9cf09434f54079cf9a4eb435964e24ae025ed75b",
+      "message_sha256": "d5548bc0c396cad726e45c6e9827e838d9657c952f43738c9896f9653f245cb7",
       "symbol": "C_PetInfo.IsPetOrderMoveToPending",
       "classification": "missing simulator API",
       "reporting": "Blizzard_ScriptErrors re-report",
       "phase": "OnEvent",
       "count": 1,
-      "reason": "The selected 70634 GamepadMainActionBarFrame consumer calls this missing method at MainActionBarFrame.lua:244.",
-      "evidence": "target/forever-baseline-check-20261102T061338Z-confirmed/current-lua-errors.json"
+      "reason": "The selected 70707 GamepadMainActionBarFrame consumer calls this missing method at MainActionBarFrame.lua:246.",
+      "evidence": "docs/local/70707/baseline-capture/current-lua-errors.json"
     }
-  ]
+  ],
+  "runtime_source_state": "Staged 70707 retarget worktree at this base; the base revision alone does not identify the retarget source. See source snapshot and build evidence.",
+  "runtime_source_snapshot": {
+    "sha256": "26ea3e01ed34934b2fd68fc9a008fe5dc28e8f911df18a5d5306e50feda72970",
+    "files": 30016,
+    "evidence": "docs/local/70707/baseline-capture/source-files.json",
+    "unchanged_during_capture": true
+  }
 }

@@ -27,8 +27,8 @@ const CLIENT_VERSION: &str = if cfg!(feature = "client-wowforever") {
 
 #[cfg(not(feature = "client-ptr"))]
 const CLIENT_BUILD: &str = if cfg!(feature = "client-wowforever") {
-    // Gethe forever ca8368f2f2380cbe696854f7f2646387c278a61b version.txt.
-    "70532"
+    // Gethe forever aff0d8cd53bf4d9ef1c1dd2786b94461a276fb16 version.txt.
+    "70707"
 } else {
     "68256"
 };

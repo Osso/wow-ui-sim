@@ -3247,3 +3247,9 @@ BattleNet API, replacing sentinel coverage with complete setting construction.
 On the master-based branch, 55 focused integration tests and 14 loader unit tests
 pass with persisted CVars unchanged. Native behavior, full interactive GUI
 verification, other profiles and the game-screen baseline remain separate.
+
+## 2026-11-02 — Forever 70707 UI cache
+
+[Client profiles](systems/client-profiles.md#runtime-cache) record the 70707 pin,
+4,493-path manifest and raw-first Gethe recovery. A CRLF candidate is accepted only
+when its bytes match the selected CASC content key exactly.

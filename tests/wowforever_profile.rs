@@ -187,7 +187,8 @@ fn wowforever_profile_identity_and_manifest_are_distinct() {
     assert!(!cfg!(feature = "retail-12-0-0"));
     assert!(!cfg!(feature = "client-anniversary"));
     let entries: Vec<_> = wow_ui_sim::blizzard_ui_sync::manifest_entries().collect();
-    assert_eq!(entries.len(), 4486);
+    assert_eq!(entries.len(), 4493);
+    assert!(entries.contains(&"Blizzard_SettingsDefinitions_Shared/Preset.lua"));
     assert!(entries.contains(&"Blizzard_FrameXML/Camelot/StackSplitFrame.xml"));
     assert!(entries.contains(&"Blizzard_FrameXMLBase/Blizzard_FrameXMLBase.toc"));
     assert!(
@@ -210,7 +211,7 @@ fn wowforever_profile_reports_build_identity_and_finite_event_validation() {
         identity,
         (
             "1.60.1".to_owned(),
-            "70532".to_owned(),
+            "70707".to_owned(),
             "Jun 17 2026".to_owned(), // Temporary default, not a sourced native build date.
             16001,
         )

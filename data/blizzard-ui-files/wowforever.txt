@@ -2038,6 +2038,7 @@ Blizzard_GamepadSharedUtilitySecure/SecureBaseDialog.lua
 Blizzard_GamepadSharedUtilitySecure/SecureBaseDialog.xml
 Blizzard_GamepadSmartNavigation/Blizzard_GamepadSmartNavigation.toc
 Blizzard_GamepadSmartNavigation/Debug.lua
+Blizzard_GamepadSmartNavigation/SecureHelper.lua
 Blizzard_GamepadSmartNavigation/SmartNavigation.lua
 Blizzard_GamepadSmartNavigation/SmartNavigation.xml
 Blizzard_GamepadSmartNavigation/Utility.lua
@@ -2139,6 +2140,7 @@ Blizzard_GlueXML/Camelot/AccountLoginOverrides.lua
 Blizzard_GlueXML/Camelot/AccountReactivateOverrides.lua
 Blizzard_GlueXML/Camelot/CharacterCopy.lua
 Blizzard_GlueXML/Camelot/CharacterCopy.xml
+Blizzard_GlueXML/Camelot/CharacterSelect.lua
 Blizzard_GlueXML/Camelot/CharacterSelect/CharacterSelectList.lua
 Blizzard_GlueXML/Camelot/CharacterSelect/CharacterSelectListBackground.xml
 Blizzard_GlueXML/Camelot/CharacterSelect/CharacterSelectTemplates.lua
@@ -2884,6 +2886,10 @@ Blizzard_PTRFeedbackGlue/Blizzard_PTRFeedbackGlue.toc
 Blizzard_PTRFeedbackGlue/Blizzard_PTRFeedback_Events_Glue.lua
 Blizzard_PTRFeedbackGlue/Blizzard_Reports_Glue.lua
 Blizzard_PVPMatch/Blizzard_PVPMatch.toc
+Blizzard_PVPMatch/Camelot/PVPMatchResults.lua
+Blizzard_PVPMatch/Camelot/PVPMatchResults.xml
+Blizzard_PVPMatch/Camelot/PVPMatchScoreboard.lua
+Blizzard_PVPMatch/Camelot/PVPMatchScoreboard.xml
 Blizzard_PVPMatch/Camelot/PVPMatchTableOverrides.lua
 Blizzard_PVPMatch/PVPMatchResults.lua
 Blizzard_PVPMatch/PVPMatchResults.xml
@@ -3312,6 +3318,7 @@ Blizzard_SettingsDefinitions_Shared/Mainline/Text.lua
 Blizzard_SettingsDefinitions_Shared/Mainline/TextSizePreview.lua
 Blizzard_SettingsDefinitions_Shared/Mainline/TextSizePreview.xml
 Blizzard_SettingsDefinitions_Shared/Network.lua
+Blizzard_SettingsDefinitions_Shared/Preset.lua
 Blizzard_SettingsDefinitions_Shared/Subtitles.lua
 Blizzard_SettingsDefinitions_Shared/Subtitles.xml
 Blizzard_Settings_Shared/Blizzard_Category.lua

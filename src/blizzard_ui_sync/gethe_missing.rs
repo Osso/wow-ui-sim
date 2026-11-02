@@ -168,13 +168,24 @@ fn read_verified_gethe(tree: &GetheTree, file: &MappedFile) -> crate::Result<Vec
     require_version(&tree.version, version.trim_end_matches(['\r', '\n']))?;
     let bytes = read_pinned_blob(tree, &format!("Interface/AddOns/{}", file.path))?;
     let actual = ContentKey::from_data(&bytes).to_hex();
-    if actual != file.content_key {
-        return Err(crate::Error::Other(format!(
-            "Gethe MD5 mismatch for {} (FDID {}): CKey={}, Gethe={actual}",
-            file.path, file.fdid, file.content_key
-        )));
+    if actual == file.content_key {
+        return Ok(bytes);
     }
-    Ok(bytes)
+    // Gethe may retain LF where the selected CASC content key identifies CRLF bytes.
+    let mut crlf = Vec::with_capacity(bytes.len());
+    for (index, &byte) in bytes.iter().enumerate() {
+        if byte == b'\n' && (index == 0 || bytes[index - 1] != b'\r') {
+            crlf.push(b'\r');
+        }
+        crlf.push(byte);
+    }
+    if ContentKey::from_data(&crlf).to_hex() == file.content_key {
+        return Ok(crlf);
+    }
+    Err(crate::Error::Other(format!(
+        "Gethe MD5 mismatch for {} (FDID {}): CKey={}, Gethe={actual}",
+        file.path, file.fdid, file.content_key
+    )))
 }
 
 fn require_version(expected: &str, actual: &str) -> crate::Result<()> {

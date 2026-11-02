@@ -15,7 +15,7 @@ fn forever_strings_initialize_actual_gameplay_categories_and_format_tokens() {
     env.exec(
         r#"
         assert(CUSTOM_GAMEPLAY_SETTINGS_ORDER["Controls"] == 7)
-        assert(CUSTOM_GAMEPLAY_SETTINGS_ORDER["Gamepad (Alpha)"] == 12)
+        assert(CUSTOM_GAMEPLAY_SETTINGS_ORDER["Gamepad (Beta)"] == 12)
         assert(CUSTOM_GAMEPLAY_SETTINGS_ORDER["Nameplates"] == 16)
         assert(SLASH_CAA_HELP_SAY_COMBAT_START_SOUND ==
             "sound:[%d - %d] Choose a sound to indicate that combat has started")
@@ -37,6 +37,6 @@ fn forever_string_registration_preserves_functions_and_restoration_values() {
     )
     .unwrap();
     wow_ui_sim::lua_api::globals::strings::restore_missing_ui_strings(&mut lua).unwrap();
-    lua.exec("assert(CONTROLS_LABEL == 'custom'); assert(GAMEPAD_LABEL == 'Gamepad (Alpha)')")
+    lua.exec("assert(CONTROLS_LABEL == 'custom'); assert(GAMEPAD_LABEL == 'Gamepad (Beta)')")
         .unwrap();
 }

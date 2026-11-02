@@ -1,0 +1,2 @@
+# Preserve the source hash and line endings inside quoted CSV fields.
+GlobalStrings.csv -text

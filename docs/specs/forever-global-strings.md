@@ -2,7 +2,7 @@
 
 ## Contract
 
-- `client-wowforever` publishes the 27,388 unique tags from the committed build `1.60.1.70532` GlobalStrings CSV, the build of the pinned Forever Blizzard UI; other profiles retain their existing generated table.
+- `client-wowforever` publishes the 27,399 unique tags from the committed build `1.60.1.70707` GlobalStrings CSV, the build of the pinned Forever Blizzard UI; other profiles retain their existing generated table.
 - Preserve source text, format tokens, quoted and multiline CSV fields. Runtime uses the existing WoW escape resolver.
 - Initial publication replaces string values but preserves existing Lua functions. Missing-string restoration leaves all existing values unchanged.
 - Duplicate or empty tags fail generation before output replacement; no arbitrary winner or retail string fallback.
@@ -10,7 +10,7 @@
 
 ## Source and reproduction
 
-Snapshot: `data/db2/wowforever-1.60.1.70532/GlobalStrings.csv`.
+Snapshot: `data/db2/wowforever-1.60.1.70707/GlobalStrings.csv`.
 Build-specific source URL and SHA-256: adjacent `global-strings-provenance.json`.
 
 ```text
@@ -28,6 +28,16 @@ The 69913 table lacked strings the pinned 70532 UI reads. Forever `Audio.lua`:27
 - 85 changed values.
 
 The generator is unchanged apart from its default source and header, and regenerating from the 69913 CSV reproduces the previous table body byte for byte. The superseded 69913 GlobalStrings CSV and provenance are removed; that directory's atlas and listfile data stay at 69913.
+
+## Build update from 70532 to 70707 — 2026-11-02
+
+The 70532 table lacked preset labels the pinned 70707 UI reads. Forever `Blizzard_SettingsDefinitions_Shared/Preset.lua` uses `PRESET_LABEL` for category registration and new labels for its preset controls. The 70707 export (SHA-256 `a8ac8fedd7a29d7a1e16960f9adeb459a0a04767cfecce4b0a7dc788273ffed5`, 27,399 rows) differs from 70532 as follows:
+
+- 11 added tags, including `PRESET_LABEL` ("Preset"), the Classic/Enhanced preset-switch buttons, interface-toast and quest-POI options, and turn/strafe key labels;
+- 0 removed tags;
+- 7 changed values.
+
+The generator's default source and generated header now identify 70707. The superseded 70532 GlobalStrings CSV and provenance remain as historical inputs.
 
 ## Proof scope
 
