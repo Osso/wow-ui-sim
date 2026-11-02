@@ -15,11 +15,29 @@ pub(super) fn register(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResu
         namespace,
         "GetActiveBrawlInfo",
         get_active_brawl_info,
-    )
+    )?;
+    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
+        table_set_rust_fn_static(
+            state,
+            namespace,
+            "GetSpecialEventBrawlInfo",
+            get_special_event_brawl_info,
+        )?;
+    }
+    Ok(())
 }
 
 fn get_active_brawl_info(state: &mut LuaState) -> LuaResult<u32> {
     let record = borrow_state(state)?.active_brawl.clone();
+    push_brawl_info(state, record)
+}
+
+fn get_special_event_brawl_info(state: &mut LuaState) -> LuaResult<u32> {
+    let record = borrow_state(state)?.special_event_brawl.clone();
+    push_brawl_info(state, record)
+}
+
+fn push_brawl_info(state: &mut LuaState, record: Option<PvpBrawlInfo>) -> LuaResult<u32> {
     let result = match record {
         Some(record) => build_brawl_table(state, &record),
         None => Val::Nil,
