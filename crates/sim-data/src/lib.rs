@@ -60,6 +60,8 @@ pub mod map_challenge_modes;
 pub mod model_scenes;
 #[path = "../data/perks_categories.rs"]
 pub mod perks_categories;
+#[path = "../data/pet_talent_trees.rs"]
+pub mod pet_talent_trees;
 pub mod profession_item_overrides;
 #[path = "../data/quest_poi_blobs.rs"]
 pub mod quest_poi_blobs;
