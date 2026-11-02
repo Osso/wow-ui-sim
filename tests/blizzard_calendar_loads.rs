@@ -666,6 +666,24 @@ fn calendar_event_time_control_updates_supplied_event(env: &WowLuaEnv) {
     assert_eq!(event.time, Some((21, 45)));
     assert!(event.dirty);
     assert!(!state.calendar_context_policy.action_pending);
+    drop(state);
+    env.exec(r#"
+        CalendarCreateEventFrame.selectedHour = '23.9'
+        CalendarCreateEventFrame.selectedMinute = '59.9'
+        CalendarCreateEvent_SetEventTime()
+    "#).unwrap();
+    assert_eq!(env.state().borrow().calendar_context_policy.editable.as_ref().unwrap().time, Some((23, 59)));
+    env.exec(r#"
+        CalendarCreateEventFrame.selectedHour = 2147483648
+        CalendarCreateEventFrame.selectedMinute = 4294967295
+        CalendarCreateEvent_SetEventTime()
+    "#).unwrap();
+    assert_eq!(env.state().borrow().calendar_context_policy.editable.as_ref().unwrap().time, Some((2147483648, 4294967295)));
+    env.exec(r#"
+        CalendarCreateEventFrame.selectedHour = -1
+        assert(not pcall(CalendarCreateEvent_SetEventTime))
+    "#).unwrap();
+    assert_eq!(env.state().borrow().calendar_context_policy.editable.as_ref().unwrap().time, Some((2147483648, 4294967295)));
 }
 }
 
