@@ -777,6 +777,43 @@ fn calendar_texture_picker_uses_supplied_texture_list(env: &WowLuaEnv) {
 }
 
 prefork_full_ui_case! {
+fn calendar_community_dropdown_edits_supplied_club_id(env: &WowLuaEnv) {
+    use wow_ui_sim::c_api::c_calendar::CalendarEditableAccess;
+    use wow_ui_sim::c_api::club_model::Club;
+    load_addon(&env.loader_env(), &calendar_toc()).unwrap();
+    {
+        let mut state = env.state().borrow_mut();
+        state.calendar_context_policy.editable = Some(CalendarEditableAccess {
+            local_edit_credential: Some(123),
+            ..Default::default()
+        });
+        state.clubs.initialized = true;
+        for id in ["0x0020000000000000", "0x0020000000000001"] {
+            state.clubs.clubs.insert(id.into(), Club {
+                id: id.into(), name: id.into(), description: String::new(),
+                club_type: 1, avatar_id: 0, members: Vec::new(), candidates: Default::default(),
+                invitations: Vec::new(), streams: Vec::new(),
+            });
+        }
+    }
+    for (id, expected) in [("0x0020000000000000", 9_007_199_254_740_992_u64), ("0x0020000000000001", 9_007_199_254_740_993_u64)] {
+        env.exec(&format!(r#"
+            local dropdown = CalendarCreateEventFrame.CommunityDropdown
+            dropdown:GenerateMenu()
+            for _, entry in dropdown:GetMenuDescription():EnumerateElementDescriptions() do
+                if entry:GetData() == '{id}' then entry:Pick({{}}); return end
+            end
+            error('community entry not found')
+        "#)).unwrap();
+        let state = env.state().borrow();
+        let event = state.calendar_context_policy.editable.as_ref().unwrap();
+        assert_eq!(event.club_id, expected);
+        assert!(event.dirty);
+    }
+}
+}
+
+prefork_full_ui_case! {
 fn calendar_community_dropdown_tracks_supplied_club_id(env: &WowLuaEnv) {
     use wow_ui_sim::c_api::c_calendar::CalendarEditableAccess;
     use wow_ui_sim::c_api::club_model::Club;
