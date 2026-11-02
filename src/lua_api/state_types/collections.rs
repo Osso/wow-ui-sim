@@ -646,6 +646,14 @@ pub struct GuildBankTab {
     pub is_filtered: bool,
 }
 
+/// Supplied appearance modifiers on an individual item.
+#[derive(Debug, Clone, Copy, Default, PartialEq, Eq)]
+pub struct AppliedTransmog {
+    pub appearance_id: i32,
+    pub secondary_appearance_id: i32,
+    pub illusion_id: i32,
+}
+
 /// An item in a bag slot.
 #[derive(Debug, Clone)]
 pub struct BagItem {
@@ -653,6 +661,7 @@ pub struct BagItem {
     pub stack_count: i32,
     pub hyperlink: Option<String>,
     pub durability: Option<(u32, u32)>,
+    pub applied_transmog: Option<AppliedTransmog>,
 }
 
 /// An equipped item in an inventory slot.
@@ -661,4 +670,5 @@ pub struct EquippedItem {
     pub item_id: u32,
     pub enchant_id: u32,
     pub gem_ids: [u32; 3],
+    pub applied_transmog: Option<AppliedTransmog>,
 }

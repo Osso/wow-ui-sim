@@ -77,20 +77,22 @@ fn action_outfit_id(state: &mut LuaState, slot: u32) -> Option<i64> {
 }
 
 fn place_cursor_item_in_backpack(state: &mut LuaState) -> LuaResult<u32> {
-    let Some((item_id, stack_count)) = take_cursor_item(state) else {
+    let Some((item_id, stack_count, applied_transmog)) = take_cursor_item(state) else {
         return Ok(0);
     };
     let Some(slot) = find_first_free_backpack_slot(state) else {
         return Ok(0);
     };
 
-    store_cursor_item_in_backpack(state, slot, item_id, stack_count);
+    store_cursor_item_in_backpack(state, slot, item_id, stack_count, applied_transmog);
     fire_named_event_state(state, "CURSOR_CHANGED", &[]);
     state.push(Val::Bool(true));
     Ok(1)
 }
 
-fn take_cursor_item(state: &mut LuaState) -> Option<(u32, i32)> {
+fn take_cursor_item(
+    state: &mut LuaState,
+) -> Option<(u32, i32, Option<crate::lua_api::state::AppliedTransmog>)> {
     let Ok(st) = borrow_state(state) else {
         return None;
     };
@@ -98,12 +100,13 @@ fn take_cursor_item(state: &mut LuaState) -> Option<(u32, i32)> {
     let CursorInfo::Item {
         item_id,
         stack_count,
+        applied_transmog,
         ..
     } = cursor
     else {
         return None;
     };
-    Some((item_id, stack_count))
+    Some((item_id, stack_count, applied_transmog))
 }
 
 fn find_first_free_backpack_slot(state: &mut LuaState) -> Option<i32> {
@@ -113,7 +116,13 @@ fn find_first_free_backpack_slot(state: &mut LuaState) -> Option<i32> {
     (1..=st.bag_num_slots(0)).find(|slot| !st.bag_items.contains_key(&(0, *slot)))
 }
 
-fn store_cursor_item_in_backpack(state: &mut LuaState, slot: i32, item_id: u32, stack_count: i32) {
+fn store_cursor_item_in_backpack(
+    state: &mut LuaState,
+    slot: i32,
+    item_id: u32,
+    stack_count: i32,
+    applied_transmog: Option<crate::lua_api::state::AppliedTransmog>,
+) {
     if let Ok(mut st) = borrow_state_mut(state) {
         crate::c_api::item_upgrade_eligibility::swap_with_cursor(
             &mut st,
@@ -126,6 +135,7 @@ fn store_cursor_item_in_backpack(state: &mut LuaState, slot: i32, item_id: u32, 
                 stack_count,
                 hyperlink: None,
                 durability: None,
+                applied_transmog,
             },
         );
         st.cursor_item = None;
@@ -241,6 +251,7 @@ fn pickup_merchant_item(state: &mut LuaState) -> LuaResult<u32> {
         item_id: 100_000 + index,
         stack_count: 1,
         origin: CursorItemOrigin::Merchant { index },
+        applied_transmog: None,
     });
     Ok(0)
 }

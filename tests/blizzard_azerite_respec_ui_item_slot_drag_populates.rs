@@ -115,6 +115,7 @@ fn seed_cursor_item(env: &wow_ui_sim::lua_api::WowLuaEnv) {
             bag: BAG_ID,
             slot: SLOT_INDEX,
         },
+        applied_transmog: None,
     });
 }
 

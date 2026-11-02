@@ -195,6 +195,7 @@ fn server_snapshot_rejects_bag_mapping_to_profession_equipment() {
             item_id: 6256,
             enchant_id: 0,
             gem_ids: [0; 3],
+            applied_transmog: None,
         },
     );
     env.exec(

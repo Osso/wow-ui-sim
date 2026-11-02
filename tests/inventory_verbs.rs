@@ -21,6 +21,7 @@ fn pickup_container_item_moves_bag_item_to_cursor() {
                 stack_count: 1,
                 hyperlink: None,
                 durability: None,
+                applied_transmog: None,
             },
         );
     }
@@ -32,6 +33,7 @@ fn pickup_container_item_moves_bag_item_to_cursor() {
             item_id,
             stack_count,
             origin,
+            applied_transmog: None,
         }) => {
             assert_eq!(*item_id, 6948);
             assert_eq!(*stack_count, 1);
@@ -61,6 +63,7 @@ fn pickup_inventory_item_moves_equipped_slot_to_cursor() {
                 item_id: 19019, // Thunderfury
                 enchant_id: 0,
                 gem_ids: [0; 3],
+                applied_transmog: None,
             },
         );
     }
@@ -138,6 +141,7 @@ fn fishing_cursor_transfer_swaps_and_drops_bag_stacks() {
                 stack_count: 7,
                 hyperlink: None,
                 durability: None,
+                applied_transmog: None,
             },
         );
         env.exec(&format!("{pickup}(0, 5); {pickup}(0, 6)"))
@@ -155,6 +159,7 @@ fn fishing_cursor_transfer_swaps_and_drops_bag_stacks() {
                     item_id: 2589,
                     stack_count: 7,
                     origin: CursorItemOrigin::Bag { bag: 0, slot: 6 },
+                    applied_transmog: None,
                 })
             ));
         }
@@ -184,6 +189,7 @@ fn fishing_cursor_transfer_namespace_preserves_pickup_and_empty_slot_behavior() 
             item_id: 6256,
             stack_count: 1,
             origin: CursorItemOrigin::Bag { bag: 0, slot: 5 },
+            applied_transmog: None,
         })
     ));
 }
@@ -200,6 +206,7 @@ fn fishing_inventory(equipped: bool) -> WowLuaEnv {
                 stack_count: 1,
                 hyperlink: None,
                 durability: None,
+                applied_transmog: None,
             },
         );
         st.player.equipped_items.remove(&16);
@@ -210,6 +217,7 @@ fn fishing_inventory(equipped: bool) -> WowLuaEnv {
                     item_id: 19019,
                     enchant_id: 0,
                     gem_ids: [0; 3],
+                    applied_transmog: None,
                 },
             );
         }
@@ -256,6 +264,7 @@ fn put_item_in_backpack_moves_item_cursor_into_backpack() {
             item_id: 6948,
             stack_count: 1,
             origin: CursorItemOrigin::Unknown,
+            applied_transmog: None,
         });
     }
 
@@ -289,6 +298,7 @@ fn cursor_has_item_tracks_item_cursor_only() {
             item_id: 100,
             stack_count: 1,
             origin: CursorItemOrigin::Unknown,
+            applied_transmog: None,
         });
     }
     let item: bool = env.eval("return CursorHasItem()").unwrap();
@@ -316,6 +326,7 @@ fn equip_cursor_item_writes_to_equipped_slot() {
             item_id: 19019,
             stack_count: 1,
             origin: CursorItemOrigin::Unknown,
+            applied_transmog: None,
         });
     }
     env.exec("EquipCursorItem(16)").unwrap();
@@ -345,12 +356,14 @@ fn equip_cursor_item_swaps_with_existing_slot() {
                 item_id: 100,
                 enchant_id: 0,
                 gem_ids: [0; 3],
+                applied_transmog: None,
             },
         );
         st.cursor_item = Some(CursorInfo::Item {
             item_id: 200,
             stack_count: 1,
             origin: CursorItemOrigin::Unknown,
+            applied_transmog: None,
         });
     }
     env.exec("EquipCursorItem(16)").unwrap();
@@ -376,6 +389,7 @@ fn delete_cursor_item_clears_cursor() {
             item_id: 42,
             stack_count: 1,
             origin: CursorItemOrigin::Unknown,
+            applied_transmog: None,
         });
     }
     env.exec("DeleteCursorItem()").unwrap();
@@ -391,6 +405,7 @@ fn clear_cursor_clears_cursor() {
             item_id: 42,
             stack_count: 1,
             origin: CursorItemOrigin::Unknown,
+            applied_transmog: None,
         });
     }
     env.exec("ClearCursor()").unwrap();
@@ -423,6 +438,7 @@ fn place_action_with_item_cursor_is_noop() {
             item_id: 999,
             stack_count: 1,
             origin: CursorItemOrigin::Unknown,
+            applied_transmog: None,
         });
     }
     env.exec("PlaceAction(7)").unwrap();
@@ -451,6 +467,7 @@ fn pickup_bag_from_slot_aliases_pickup_inventory_item() {
                 item_id: 5571, // small red pouch
                 enchant_id: 0,
                 gem_ids: [0; 3],
+                applied_transmog: None,
             },
         );
     }
@@ -521,6 +538,7 @@ fn drop_cursor_money_leaves_non_money_cursor_alone() {
         item_id: 6948,
         stack_count: 1,
         origin: CursorItemOrigin::Bag { bag: 0, slot: 0 },
+        applied_transmog: None,
     });
     env.exec("DropCursorMoney()").unwrap();
     assert!(matches!(

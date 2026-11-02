@@ -258,6 +258,7 @@ fn add_output_item(
             stack_count: count,
             hyperlink: None,
             durability: None,
+            applied_transmog: None,
         },
     );
     key.0

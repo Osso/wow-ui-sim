@@ -158,6 +158,7 @@ fn insert_reagent_stack(sim: &mut SimState, item_id: u32, qty: i32) {
             stack_count: qty,
             hyperlink: None,
             durability: None,
+            applied_transmog: None,
         },
     );
 }

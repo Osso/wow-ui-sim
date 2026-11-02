@@ -21,6 +21,7 @@ pub enum CursorInfo {
         item_id: u32,
         stack_count: i32,
         origin: CursorItemOrigin,
+        applied_transmog: Option<super::collections::AppliedTransmog>,
     },
     /// Outfit dragged from the transmog catalog; zero means equipped gear.
     TransmogOutfit { outfit_id: i64 },

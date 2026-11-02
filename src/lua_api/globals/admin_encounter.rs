@@ -121,6 +121,7 @@ pub(super) fn add_loot_item(state: &mut LuaState) -> LuaResult<u32> {
         stack_count,
         hyperlink,
         durability: None,
+        applied_transmog: None,
     });
     sim.loot_frame_open = true;
     Ok(0)

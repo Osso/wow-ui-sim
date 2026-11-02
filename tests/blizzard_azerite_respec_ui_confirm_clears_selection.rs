@@ -160,6 +160,7 @@ fn seed_respec_item(env: &wow_ui_sim::lua_api::WowLuaEnv) {
             stack_count: 1,
             hyperlink: None,
             durability: None,
+            applied_transmog: None,
         },
     );
     state

@@ -1,6 +1,5 @@
 //! Shared bag/cursor/equipment transfers for C_Container and legacy globals.
 //!
-//! Retains the existing cursor representation: item ID, count, and origin only.
 //! Hyperlinks, enchants, and gems do not survive cursor transfer in this model.
 
 use crate::c_api::container_actions::ContainerUseRequest;
@@ -54,11 +53,13 @@ pub(crate) fn split_container_item(state: &mut LuaState) -> LuaResult<u32> {
     }
     item.stack_count -= amount;
     let item_id = item.item_id;
+    let applied_transmog = item.applied_transmog;
     item_upgrade_eligibility::discard_cursor(&mut sim);
     sim.cursor_item = Some(CursorInfo::Item {
         item_id,
         stack_count: amount,
         origin: CursorItemOrigin::Bag { bag, slot },
+        applied_transmog,
     });
     Ok(0)
 }
@@ -110,6 +111,7 @@ pub(crate) fn pickup_container_item(state: &mut LuaState) -> LuaResult<u32> {
             item_id: item.item_id,
             stack_count: item.stack_count,
             origin: CursorItemOrigin::Bag { bag, slot },
+            applied_transmog: item.applied_transmog,
         });
     }
     Ok(0)
@@ -120,12 +122,14 @@ fn read_cursor_bag_item(sim: &SimState) -> Option<BagItem> {
         Some(CursorInfo::Item {
             item_id,
             stack_count,
+            applied_transmog,
             ..
         }) => Some(BagItem {
             item_id: *item_id,
             stack_count: *stack_count,
             hyperlink: None,
             durability: None,
+            applied_transmog: *applied_transmog,
         }),
         _ => None,
     }
@@ -162,13 +166,19 @@ pub(crate) fn equip_cursor_item(state: &mut LuaState) -> LuaResult<u32> {
 // Existing EquipCursorItem swap operation, also used by PickupInventoryItem
 // when a cursor item is held (Camelot PaperDollFrame's auto-equip path).
 fn equip_held_item(sim: &mut SimState, slot: i32) {
-    let Some(CursorInfo::Item { item_id, .. }) = &sim.cursor_item else {
+    let Some(CursorInfo::Item {
+        item_id,
+        applied_transmog,
+        ..
+    }) = &sim.cursor_item
+    else {
         return;
     };
     let incoming = EquippedItem {
         item_id: *item_id,
         enchant_id: 0,
         gem_ids: [0; 3],
+        applied_transmog: *applied_transmog,
     };
     item_upgrade_eligibility::swap_with_cursor(sim, ItemSlot::Equipment(slot));
     let displaced = sim.player.equipped_items.insert(slot, incoming);
@@ -180,5 +190,6 @@ fn create_equipped_cursor(item: EquippedItem, slot: i32) -> CursorInfo {
         item_id: item.item_id,
         stack_count: 1,
         origin: CursorItemOrigin::Equipped { slot },
+        applied_transmog: item.applied_transmog,
     }
 }

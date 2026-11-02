@@ -69,6 +69,7 @@ fn returns_nil_for_merchant_origin() {
         item_id: 158041,
         stack_count: 1,
         origin: CursorItemOrigin::Merchant { index: 3 },
+        applied_transmog: None,
     });
     let kind: String = env.eval("return type(C_Cursor.GetCursorItem())").unwrap();
     assert_eq!(kind, "nil");
@@ -81,6 +82,7 @@ fn returns_nil_for_unknown_origin() {
         item_id: 158041,
         stack_count: 1,
         origin: CursorItemOrigin::Unknown,
+        applied_transmog: None,
     });
     let kind: String = env.eval("return type(C_Cursor.GetCursorItem())").unwrap();
     assert_eq!(kind, "nil");
@@ -93,6 +95,7 @@ fn bag_origin_returns_bag_and_slot_shape() {
         item_id: 158041,
         stack_count: 1,
         origin: CursorItemOrigin::Bag { bag: 2, slot: 5 },
+        applied_transmog: None,
     });
     let bag_id: f64 = env.eval("return C_Cursor.GetCursorItem().bagID").unwrap();
     let slot_index: f64 = env
@@ -113,6 +116,7 @@ fn equipped_origin_returns_equipment_slot_shape() {
         item_id: 158041,
         stack_count: 1,
         origin: CursorItemOrigin::Equipped { slot: 7 },
+        applied_transmog: None,
     });
     let equipment_slot: f64 = env
         .eval("return C_Cursor.GetCursorItem().equipmentSlotIndex")
@@ -132,6 +136,7 @@ fn bag_origin_exposes_item_location_mixin_methods() {
         item_id: 158041,
         stack_count: 1,
         origin: CursorItemOrigin::Bag { bag: 0, slot: 4 },
+        applied_transmog: None,
     });
     let is_bag: bool = env
         .eval("return C_Cursor.GetCursorItem():IsBagAndSlot()")
@@ -159,6 +164,7 @@ fn equipped_origin_exposes_item_location_mixin_methods() {
         item_id: 158041,
         stack_count: 1,
         origin: CursorItemOrigin::Equipped { slot: 5 },
+        applied_transmog: None,
     });
     let is_equipment: bool = env
         .eval("return C_Cursor.GetCursorItem():IsEquipmentSlot()")
@@ -182,6 +188,7 @@ fn item_locations_compare_equal_via_mixin() {
         item_id: 158041,
         stack_count: 1,
         origin: CursorItemOrigin::Bag { bag: 1, slot: 9 },
+        applied_transmog: None,
     });
     let equal: bool = env
         .eval(
