@@ -673,7 +673,28 @@ pub fn get_quest_log_reward_info(state: &mut LuaState) -> LuaResult<u32> {
             .find(|entry| entry.quest_id == quest_id)
             .and_then(|entry| entry.reward_items.get((item_index - 1) as usize).cloned())
     };
-    push_quest_reward_item(state, item)
+    let item_id = item.as_ref().and_then(|item| item.item_id);
+    let count = push_quest_reward_item(state, item)?;
+    // Retail consumers read itemID sixth (WorldMapFrame.lua:52,
+    // QuestUtils.lua:1011); an unsupplied ID publishes nil.
+    if count == 0 || crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Retail {
+        return Ok(count);
+    }
+    state.push(item_id.map_or(Val::Nil, |id| Val::Num(f64::from(id))));
+    Ok(count + 1)
+}
+
+/// Retail `GetNumQuestLogRewards(questID)`: item rewards supplied for that
+/// quest. Other profiles that share this registration keep reporting zero.
+pub fn get_num_quest_log_rewards(state: &mut LuaState) -> LuaResult<u32> {
+    let quest_id = Option::<f64>::from_stack(state, 1)?.map_or(0, |id| id as i32);
+    let count = if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
+        reward_items_for_quest(state, quest_id)?.len()
+    } else {
+        0
+    };
+    state.push(Val::Num(count as f64));
+    Ok(1)
 }
 
 pub(super) fn push_quest_reward_item(

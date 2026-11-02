@@ -129,7 +129,7 @@ pub const GLOBAL_QUEST_FUNCTIONS: &[(&str, SurfaceFn)] = &[
     ("GetQuestWatchIndex", get_quest_watch_index),
     #[cfg(not(feature = "client-wowforever"))]
     ("GetNumQuestWatches", get_num_quest_watches),
-    ("GetNumQuestLogRewards", return_zero),
+    ("GetNumQuestLogRewards", get_num_quest_log_rewards),
     ("GetNumQuestLogChoices", return_zero),
     ("GetQuestLogRewardInfo", get_quest_log_reward_info),
     ("GetQuestLogRewardMoney", return_zero),
