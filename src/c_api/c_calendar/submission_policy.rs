@@ -42,9 +42,9 @@ pub(super) fn finish(state: &mut LuaState, outcome: Outcome) -> LuaResult<u32> {
     }
 }
 
-/// INFERRED: the native cached tick counter is the simulator clock in milliseconds.
+/// WM41 addendum: the throttle counter is the cached GetTime millisecond clock.
 fn current_tick(host: &SimState) -> u32 {
-    host.clock_elapsed().as_millis() as u32
+    host.cached_clock_ms()
 }
 
 /// WM41: signed, wrapping 32-bit elapsed ticks since a nonzero previous timestamp.

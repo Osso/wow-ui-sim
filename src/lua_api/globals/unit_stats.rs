@@ -210,6 +210,11 @@ fn unit_token(state: &LuaState) -> String {
     unit_token_at(state, 1)
 }
 
+/// The simulator's `UnitReaction` value for `unit`.
+pub(crate) fn unit_reaction_in_state(sim: &SimState, unit: &str) -> i32 {
+    lookup_unit_stats(sim, unit).reaction
+}
+
 fn stats_for_unit(state: &LuaState, unit: &str) -> UnitStats {
     let sim = borrow_state(state).expect("sim state should exist");
     lookup_unit_stats(&sim, unit)

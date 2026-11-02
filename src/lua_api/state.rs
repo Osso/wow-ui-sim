@@ -71,6 +71,7 @@ macro_rules! build_empty_sim_state {
             restriction_report_active: false,
             ping_radial_frame: None,
             ping_pending: Default::default(),
+            ping_burst: Default::default(),
             wrath_glyph_sockets: Default::default(),
             wrath_unspent_talent_points: Default::default(),
             wrath_talent_tabs: Default::default(),

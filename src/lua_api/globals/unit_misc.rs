@@ -316,6 +316,18 @@ fn party_token_from_guid(sim: &crate::lua_api::state::SimState, guid: &str) -> O
     })
 }
 
+pub(crate) fn unit_token_for_guid(
+    sim: &crate::lua_api::state::SimState,
+    guid: &str,
+) -> Option<String> {
+    if guid == SEEDED_LOCAL_CHARACTER_GUID {
+        return Some("player".to_string());
+    }
+    target_or_focus_token_from_guid(sim, guid)
+        .map(str::to_string)
+        .or_else(|| party_token_from_guid(sim, guid))
+}
+
 fn unit_token_from_guid(state: &mut LuaState) -> LuaResult<u32> {
     let guid = Option::<String>::from_stack(state, 1)?.unwrap_or_default();
     let token = {
@@ -323,13 +335,7 @@ fn unit_token_from_guid(state: &mut LuaState) -> LuaResult<u32> {
             state.push(Val::Nil);
             return Ok(1);
         };
-        if guid == SEEDED_LOCAL_CHARACTER_GUID {
-            Some("player".to_string())
-        } else {
-            target_or_focus_token_from_guid(&sim, &guid)
-                .map(str::to_string)
-                .or_else(|| party_token_from_guid(&sim, &guid))
-        }
+        unit_token_for_guid(&sim, &guid)
     };
     match token {
         Some(token) => {

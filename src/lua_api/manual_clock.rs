@@ -19,6 +19,11 @@ impl SimState {
             .map_or_else(|| self.start_time.elapsed(), |clock| clock.elapsed)
     }
 
+    /// WM47 Q2: the cached unsigned millisecond clock that GetTime reads.
+    pub(crate) fn cached_clock_ms(&self) -> u32 {
+        self.clock_elapsed().as_millis() as u32
+    }
+
     /// Scheduling coordinate, independent of the chosen GetTime epoch.
     pub(crate) fn clock_now(&self) -> Instant {
         self.manual_clock

@@ -105,6 +105,7 @@ pub struct SimState {
     pub ping_radial_frame: Option<u64>,
     /// Supplied pending hit-test target; the simulator has no world hit selection.
     pub ping_pending: crate::c_api::c_ping_secure::PingPendingTarget,
+    pub ping_burst: crate::c_api::c_ping_secure::PingBurst,
     /// Explicit Wrath scenario inputs; empty means unsupplied.
     pub wrath_glyph_sockets: HashMap<(u32, u32), WrathGlyphSocket>,
     pub wrath_unspent_talent_points: HashMap<u32, u32>,
