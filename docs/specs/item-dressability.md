@@ -7,7 +7,7 @@ Retail/PTR `C_Item.IsDressableItemByID(itemInfo)` projects an explicit host-supp
 ### API and security
 
 - [ ] Expose the Retail/PTR public API and return exactly one boolean for numeric identities and supported item links, including the existing generated hyperlink consumed by PlayerChoice.
-- [ ] Reject absent/nil arguments and values outside the supported ItemInfo input types. Do not invent numeric range, coercion, item-name resolution, or malformed-string grammar contracts.
+- [ ] Reject absent/nil arguments and values outside the supported ItemInfo input types. Shared numeric, link and generated-name resolution follows [ItemInfo conversion](item-info-conversion.md); other coercion and malformed-link details remain unknown.
 - [ ] Authenticate original VM secrets before parsing or lookup: untainted callers may query wrapped supported inputs; tainted callers must be denied wrapped inputs, including malformed/nil payloads. Ordinary inputs remain usable by tainted callers. Preserve wrapper identity and caller taint through denial and subsequent secure recovery.
 
 ### Approved host input

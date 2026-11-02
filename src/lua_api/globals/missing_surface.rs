@@ -376,7 +376,7 @@ fn get_item_class_info_global(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn get_item_info_global(state: &mut LuaState) -> LuaResult<u32> {
-    let Some(item_id) = item_spell::parse_item_id_from_val(state, stack_val(state, 1)) else {
+    let Some(item_id) = item_spell::parse_item_id_key(state, stack_val(state, 1)) else {
         return Ok(0);
     };
     item_spell::push_item_info(state, item_id)

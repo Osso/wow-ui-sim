@@ -1,5 +1,5 @@
 //! Recipe quality snapshots supplied by the host; no DB2 quality catalog inferred.
-use super::item_spell::parse_item_id_from_val;
+use super::item_spell::parse_item_id_key;
 use crate::client_profile::{ACTIVE, ClientProfile};
 use crate::lua_api::methods::{borrow_state, create_string, create_table, table_set};
 use crate::lua_bridge::{stack_val, table_set_rust_fn_static};
@@ -84,7 +84,7 @@ fn crafted_item_quality(state: &mut LuaState) -> LuaResult<u32> {
             "C_TradeSkillUI.GetItemCraftedQualityInfo: itemInfo must be an item ID or link",
         ));
     }
-    let record = match parse_item_id_from_val(state, value) {
+    let record = match parse_item_id_key(state, value) {
         Some(item_id) => borrow_state(state)?
             .crafted_item_quality
             .get(&item_id)
@@ -110,7 +110,7 @@ fn reagent_item_quality(state: &mut LuaState) -> LuaResult<u32> {
             "C_TradeSkillUI.GetItemReagentQualityInfo: itemInfo must be an item ID or link",
         ));
     }
-    let record = match parse_item_id_from_val(state, value) {
+    let record = match parse_item_id_key(state, value) {
         Some(item_id) => borrow_state(state)?
             .recipe_quality_inputs
             .reagent_item_quality

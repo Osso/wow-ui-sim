@@ -79,7 +79,7 @@ fn query(state: &mut LuaState, flag: ItemOverlayFlag) -> LuaResult<u32> {
     if !matches!(value, Val::Num(_) | Val::Str(_)) {
         return Err(runtime_error("itemInfo must be an item ID or link"));
     }
-    let id = super::item_spell::parse_item_id_from_val(state, value);
+    let id = super::item_spell::parse_item_id_key(state, value);
     let result = {
         let sim = borrow_state(state)?;
         id.is_some_and(|id| sim.item_overlay_flags.contains(&(id, flag)))

@@ -1,6 +1,6 @@
 pub(super) use crate::c_api::item_spell::current_item_upgrade_location;
 pub(crate) use crate::c_api::item_spell::{
-    item_class_name, parse_item_guid, parse_item_id_from_val, parse_prefixed_id, push_item_info,
+    item_class_name, parse_item_guid, parse_item_id_key, parse_prefixed_id, push_item_info,
     spell_link_for_id,
 };
 

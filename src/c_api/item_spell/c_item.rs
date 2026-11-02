@@ -12,7 +12,8 @@ use rilua::vm::gc::arena::GcRef;
 use rilua::vm::state::LuaState;
 use rilua::vm::table::Table;
 use rilua::{LuaError, LuaResult, RuntimeError, Val, runtime_error};
-use std::collections::HashSet;
+use std::collections::{HashMap, HashSet};
+use std::sync::OnceLock;
 
 type CItemMethod = (&'static str, fn(&mut LuaState) -> LuaResult<u32>);
 
@@ -32,13 +33,43 @@ pub(crate) fn parse_prefixed_id(value: &str, prefix: &str) -> Option<u32> {
     digits.parse().ok()
 }
 
-pub(crate) fn parse_item_id_from_val(state: &LuaState, value: Val) -> Option<u32> {
+fn parse_item_id_from_val(state: &LuaState, value: Val) -> Option<i32> {
     match value {
-        Val::Num(number) if number > 0.0 => Some(number as u32),
-        Val::Str(_) => val_to_string(state, value)
-            .and_then(|text| parse_prefixed_id(&text, "item").or_else(|| text.parse().ok())),
+        Val::Num(number)
+            if number.is_finite() && number >= i32::MIN as f64 && number <= i32::MAX as f64 =>
+        {
+            Some(number as i32)
+        }
+        Val::Str(_) => val_to_string(state, value).map(|text| {
+            parse_prefixed_id(&text, "item")
+                .and_then(|id| i32::try_from(id).ok())
+                .or_else(|| text.parse::<i32>().ok())
+                .or_else(|| item_id_by_name(&text))
+                .unwrap_or(0)
+        }),
         _ => None,
     }
+}
+
+fn item_id_by_name(name: &str) -> Option<i32> {
+    static NAMES: OnceLock<HashMap<String, i32>> = OnceLock::new();
+    let names = NAMES.get_or_init(|| {
+        let mut names = HashMap::new();
+        for (&id, item) in items::ITEM_DB.entries() {
+            let Ok(id) = i32::try_from(id) else { continue };
+            names
+                .entry(item.name.to_lowercase())
+                .and_modify(|current: &mut i32| *current = (*current).min(id))
+                .or_insert(id);
+        }
+        names
+    });
+    names.get(&name.to_lowercase()).copied()
+}
+
+/// Inventory and generated-data maps use unsigned keys for signed native IDs.
+pub(crate) fn parse_item_id_key(state: &LuaState, value: Val) -> Option<u32> {
+    parse_item_id_from_val(state, value).map(|id| id as u32)
 }
 
 pub(crate) fn item_link_for_id(item_id: u32) -> Option<String> {
@@ -212,7 +243,7 @@ fn c_item_is_dressable_item_by_id(state: &mut LuaState) -> LuaResult<u32> {
             "C_Item.IsDressableItemByID: itemInfo must be a number or item link",
         ));
     }
-    let item_id = parse_item_id_from_val(state, value);
+    let item_id = parse_item_id_key(state, value);
     let dressable = {
         let sim = borrow_state(state)?;
         item_id
@@ -235,16 +266,11 @@ fn push_item_classification(
     state: &mut LuaState,
     item_ids: fn(&SimState) -> &HashSet<u32>,
 ) -> LuaResult<u32> {
-    let item_id = match stack_val(state, 1) {
-        Val::Num(number) if number >= 0.0 => number as u32,
-        _ => {
-            state.push(Val::Bool(false));
-            return Ok(1);
-        }
-    };
+    let value = rilua::table_security::unwrap_secret(state, stack_val(state, 1))?;
+    let item_id = parse_item_id_key(state, value);
     let classified = {
         let sim = borrow_state(state)?;
-        item_ids(&sim).contains(&item_id)
+        item_id.is_some_and(|id| item_ids(&sim).contains(&id))
     };
     state.push(Val::Bool(classified));
     Ok(1)
@@ -274,7 +300,7 @@ fn c_item_does_item_exist(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn c_item_does_item_exist_by_id(state: &mut LuaState) -> LuaResult<u32> {
-    let exists = parse_item_id_from_val(state, stack_val(state, 1))
+    let exists = parse_item_id_key(state, stack_val(state, 1))
         .map(item_id_may_exist)
         .unwrap_or(false);
     state.push(Val::Bool(exists));
@@ -321,7 +347,7 @@ fn resolve_equipped_location_item(sim: &SimState, slot: i32) -> Option<(u32, Opt
 fn item_id_from_location_or_item_info(state: &mut LuaState, value: Val) -> Option<u32> {
     match value {
         Val::Table(_) => location_item(state, value).map(|(item_id, _)| item_id),
-        _ => parse_item_id_from_val(state, value),
+        _ => parse_item_id_key(state, value),
     }
 }
 
@@ -344,7 +370,7 @@ fn c_item_is_item_bind_to_account(state: &mut LuaState) -> LuaResult<u32> {
 fn c_item_is_item_bind_to_account_until_equip(state: &mut LuaState) -> LuaResult<u32> {
     const BIND_TO_ACCOUNT_UNTIL_EQUIPPED: u8 = 9;
     let value = rilua::table_security::unwrap_secret(state, stack_val(state, 1))?;
-    let until_equipped = parse_item_id_from_val(state, value)
+    let until_equipped = parse_item_id_key(state, value)
         .and_then(items::get_item)
         .is_some_and(|item| item.bonding == BIND_TO_ACCOUNT_UNTIL_EQUIPPED);
     state.push(Val::Bool(until_equipped));
@@ -404,7 +430,7 @@ fn c_item_is_item_data_cached(state: &mut LuaState) -> LuaResult<u32> {
 fn item_may_exist(state: &mut LuaState, value: Val) -> LuaResult<bool> {
     Ok(match value {
         Val::Table(_) => location_item(state, value).is_some(),
-        _ => parse_item_id_from_val(state, value)
+        _ => parse_item_id_key(state, value)
             .map(item_id_may_exist)
             .unwrap_or(false),
     })
@@ -415,7 +441,7 @@ fn item_id_may_exist(item_id: u32) -> bool {
 }
 
 fn c_item_is_item_data_cached_by_id(state: &mut LuaState) -> LuaResult<u32> {
-    let cached = parse_item_id_from_val(state, stack_val(state, 1))
+    let cached = parse_item_id_key(state, stack_val(state, 1))
         .map(item_id_has_synthetic_data)
         .unwrap_or(false);
     state.push(Val::Bool(cached));
@@ -427,7 +453,7 @@ fn item_id_has_synthetic_data(item_id: u32) -> bool {
 }
 
 fn c_item_get_item_icon_by_id(state: &mut LuaState) -> LuaResult<u32> {
-    let item_id = parse_item_id_from_val(state, stack_val(state, 1)).unwrap_or(0);
+    let item_id = parse_item_id_key(state, stack_val(state, 1)).unwrap_or(0);
     let icon = items::get_item(item_id)
         .map(|item| {
             if item.icon_file_data_id == 0 {
@@ -442,7 +468,7 @@ fn c_item_get_item_icon_by_id(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn c_item_get_item_name_by_id(state: &mut LuaState) -> LuaResult<u32> {
-    let item_id = parse_item_id_from_val(state, stack_val(state, 1)).unwrap_or(0);
+    let item_id = parse_item_id_key(state, stack_val(state, 1)).unwrap_or(0);
     let name = items::get_item(item_id)
         .map(|item| item.name)
         .unwrap_or("Unknown");
@@ -452,7 +478,7 @@ fn c_item_get_item_name_by_id(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn c_item_get_item_quality_by_id(state: &mut LuaState) -> LuaResult<u32> {
-    let item_id = parse_item_id_from_val(state, stack_val(state, 1)).unwrap_or(0);
+    let item_id = parse_item_id_key(state, stack_val(state, 1)).unwrap_or(0);
     state.push(Val::Num(item_quality_for_id(item_id)));
     Ok(1)
 }
@@ -470,7 +496,7 @@ fn item_quality_for_id(item_id: u32) -> f64 {
 }
 
 fn c_item_get_item_max_stack_size_by_id(state: &mut LuaState) -> LuaResult<u32> {
-    let item_id = parse_item_id_from_val(state, stack_val(state, 1)).unwrap_or(0);
+    let item_id = parse_item_id_key(state, stack_val(state, 1)).unwrap_or(0);
     state.push(Val::Num(item_max_stack_size_for_id(item_id)));
     Ok(1)
 }
@@ -496,14 +522,15 @@ fn item_max_stack_size_for_id(item_id: u32) -> f64 {
 }
 
 fn c_item_get_item_info_instant(state: &mut LuaState) -> LuaResult<u32> {
-    let Some(item_id) = parse_item_id_from_val(state, stack_val(state, 1)) else {
+    let Some(signed_id) = parse_item_id_from_val(state, stack_val(state, 1)) else {
         return Ok(0);
     };
+    let item_id = signed_id as u32;
     let Some(item) = items::get_item(item_id) else {
         let class_name = create_string(state, "Miscellaneous");
         let subclass_name = create_string(state, "Junk");
         let empty = create_string(state, "");
-        state.push(Val::Num(item_id as f64));
+        state.push(Val::Num(signed_id as f64));
         state.push(class_name);
         state.push(subclass_name);
         state.push(empty);
@@ -515,7 +542,7 @@ fn c_item_get_item_info_instant(state: &mut LuaState) -> LuaResult<u32> {
     let class_name = create_string(state, item_class_from_inv_type(item.inventory_type));
     let subclass_name = create_string(state, inv_type_to_subclass(item.inventory_type));
     let empty = create_string(state, "");
-    state.push(Val::Num(item_id as f64));
+    state.push(Val::Num(signed_id as f64));
     state.push(class_name);
     state.push(subclass_name);
     state.push(empty);
@@ -610,14 +637,14 @@ fn push_item_info_values(
 }
 
 fn c_item_get_item_info(state: &mut LuaState) -> LuaResult<u32> {
-    let Some(item_id) = parse_item_id_from_val(state, stack_val(state, 1)) else {
+    let Some(item_id) = parse_item_id_key(state, stack_val(state, 1)) else {
         return Ok(0);
     };
     push_item_info(state, item_id)
 }
 
 fn c_item_get_detailed_item_level_info(state: &mut LuaState) -> LuaResult<u32> {
-    let item_id = parse_item_id_from_val(state, stack_val(state, 1)).unwrap_or(0);
+    let item_id = parse_item_id_key(state, stack_val(state, 1)).unwrap_or(0);
     let level = item_level_for_id(item_id);
     state.push(Val::Num(level));
     state.push(Val::Num(0.0));
@@ -669,7 +696,7 @@ fn c_item_get_item_id_for_item_info(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn c_item_get_item_count(state: &mut LuaState) -> LuaResult<u32> {
-    let item_id = parse_item_id_from_val(state, stack_val(state, 1)).unwrap_or(0);
+    let item_id = parse_item_id_key(state, stack_val(state, 1)).unwrap_or(0);
     let count = borrow_state(state)
         .map(|sim| {
             let bag_count = sim
@@ -738,7 +765,7 @@ fn c_item_get_item_link(state: &mut LuaState) -> LuaResult<u32> {
     let value = stack_val(state, 1);
     let item = match value {
         Val::Table(_) => location_item(state, value),
-        _ => parse_item_id_from_val(state, value).map(|item_id| (item_id, None)),
+        _ => parse_item_id_key(state, value).map(|item_id| (item_id, None)),
     };
     let link = item.and_then(|(item_id, captured)| captured.or_else(|| item_link_for_id(item_id)));
     match link {
@@ -752,7 +779,7 @@ fn c_item_get_item_link(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn c_item_get_item_cooldown(state: &mut LuaState) -> LuaResult<u32> {
-    let item_id = parse_item_id_from_val(state, stack_val(state, 1));
+    let item_id = parse_item_id_key(state, stack_val(state, 1));
     let (start, duration) = {
         let sim = borrow_state(state)?;
         item_cooldown_pair(&sim, item_id)

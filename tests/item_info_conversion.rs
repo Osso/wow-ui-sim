@@ -38,3 +38,25 @@ fn item_info_unresolved_strings_resolve_to_zero() {
         .unwrap();
     assert_eq!(id, 0);
 }
+
+#[test]
+fn item_info_classification_uses_the_shared_conversion() {
+    let env = WowLuaEnv::new().unwrap();
+    {
+        let state = env.state();
+        let mut sim = state.borrow_mut();
+        sim.equippable_items.insert(6948);
+        sim.consumable_items.insert(6948);
+    }
+    env.exec(
+        r#"
+        for _, value in ipairs({6948, 'item:6948', 'Hearthstone'}) do
+            assert(C_Item.IsEquippableItem(value))
+            assert(C_Item.IsConsumableItem(value))
+        end
+        assert(not C_Item.IsEquippableItem('no such item WM23'))
+        assert(not C_Item.IsConsumableItem('no such item WM23'))
+    "#,
+    )
+    .unwrap();
+}

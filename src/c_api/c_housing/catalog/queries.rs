@@ -4,7 +4,7 @@ use super::HousingCatalogEntryID;
 use super::input::{read_entry_id, read_public_integer, read_selector, read_variant_id};
 use super::snapshot;
 use crate::c_api::helpers::ensure_namespace;
-use crate::c_api::item_spell::parse_item_id_from_val;
+use crate::c_api::item_spell::parse_item_id_key;
 use crate::lua_api::methods::{borrow_state, table_set_static};
 use crate::lua_bridge::{FromStack, table_set_rust_fn_static};
 use rilua::LuaApiMut;
@@ -78,7 +78,7 @@ fn entry_info_by_item(state: &mut LuaState) -> LuaResult<u32> {
         ));
     }
     let Some(item_id) =
-        parse_item_id_from_val(state, selector).and_then(|item_id| i32::try_from(item_id).ok())
+        parse_item_id_key(state, selector).and_then(|item_id| i32::try_from(item_id).ok())
     else {
         // Item names have no resolver; catalog display names are not item names.
         state.push(Val::Nil);
