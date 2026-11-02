@@ -41,6 +41,42 @@ fn forced_restrictions_follow_cvars_and_preserve_supplied_state() {
     "#).unwrap();
 }
 
+/// No original consumer: searched pinned Retail AddOns for the restriction
+/// getters, forced CVars and restriction-change event; only API docs matched.
+#[test]
+fn supplied_restriction_context_controls_encounter_pvp_map_and_chat() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        local api = C_RestrictedActions
+        local function active(kind) return api.IsAddOnRestrictionActive(kind) end
+        SetCVar('addonChatRestrictionsEnabled', '1')
+        -- status, encounter count, PvP state, map classification, map flags, chat client flag
+        A_Admin.SetRestrictionContext(false, 0, 0, 1, 0, true)
+        assert(active(4) and not active(5))
+        A_Admin.SetInCombat(true)
+        assert(active(0) and not active(5), 'combat alone does not activate chat')
+        A_Admin.SetRestrictionContext(false, 1, 0, 1, 0, true)
+        assert(active(1) and active(5), 'encounter counter enables chat')
+        A_Admin.SetRestrictionContext(false, 0, 1, 1, 0, true)
+        assert(not active(1) and active(3) and active(5), 'waiting PvP enables chat')
+        A_Admin.SetRestrictionContext(false, 0, 4, 1, 0, true)
+        assert(active(3) and active(5), 'post-round remains active')
+        A_Admin.SetRestrictionContext(false, 0, 5, 1, 0, true)
+        assert(not active(3) and not active(5), 'complete clears PvP and chat')
+        A_Admin.SetRestrictionContext(true, 0, 0, 1, 512, true)
+        assert(active(1) and not active(4) and not active(5), 'map flag blocks map and chat')
+        A_Admin.SetRestrictionContext(true, 0, 0, 1, 0, false)
+        assert(active(1) and active(4) and not active(5), 'client flag gates chat')
+        A_Admin.SetRestrictionContext(true, 0, 0, 1, 0, true)
+        assert(active(5))
+        SetCVar('addonChatRestrictionsEnabled', '0')
+        assert(not active(5), 'chat policy gates activation')
+    "#,
+    )
+    .unwrap();
+}
+
 #[test]
 fn restricted_actions_combat_transitions() {
     let env = WowLuaEnv::new().unwrap();
