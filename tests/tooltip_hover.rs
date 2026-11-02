@@ -106,6 +106,73 @@ fn blizzard_double_line_processing_defers_resize_until_show() {
     .unwrap();
 }
 
+// API-level timing probes: TooltipDataHandler's original line consumer supplies
+// the pending line; each setter is invoked directly to isolate its timing.
+fn assert_setter_defers_tooltip_layout(setter: &str) {
+    let env = setup_full_env();
+    env.exec(
+        r#"
+        GameTooltip:SetOwner(UIParent, "ANCHOR_NONE")
+        assert(GameTooltip:ProcessInfo({ tooltipData = { lines = {
+            { type = 0, leftText = "Short" },
+        } } }))
+        timingWidth, timingHeight = GameTooltip:GetWidth(), GameTooltip:GetHeight()
+        GameTooltip:AddLineDataText({ type = 0, leftText = "A much longer pending tooltip row for layout timing" })
+        "#,
+    )
+    .unwrap();
+    env.exec(setter).unwrap();
+    env.exec(
+        r#"
+        assert(GameTooltip:GetWidth() == timingWidth, "setter resized width before Show")
+        assert(GameTooltip:GetHeight() == timingHeight, "setter resized height before Show")
+        GameTooltip:Show()
+        assert(GameTooltip:GetWidth() > timingWidth, "Show did not resize width")
+        assert(GameTooltip:GetHeight() > timingHeight, "Show did not resize height")
+        "#,
+    )
+    .unwrap();
+}
+
+#[test]
+fn api_wrap_width_defers_tooltip_layout() {
+    assert_setter_defers_tooltip_layout("GameTooltip:SetCustomWordWrapMinWidth(350)");
+}
+
+#[test]
+fn api_line_spacing_defers_tooltip_layout() {
+    assert_setter_defers_tooltip_layout("GameTooltip:SetCustomLineSpacing(9)");
+}
+
+#[test]
+fn api_shrink_to_fit_defers_tooltip_layout() {
+    assert_setter_defers_tooltip_layout("GameTooltip:SetShrinkToFitWrapped(false)");
+}
+
+#[test]
+fn api_minimum_width_defers_tooltip_layout() {
+    assert_setter_defers_tooltip_layout("GameTooltip:SetMinimumWidth(300, true)");
+}
+
+#[test]
+fn api_padding_synchronously_lays_out_pending_tooltip_lines() {
+    let env = setup_full_env();
+    env.exec(
+        r#"
+        GameTooltip:SetOwner(UIParent, "ANCHOR_NONE")
+        assert(GameTooltip:ProcessInfo({ tooltipData = { lines = {
+            { type = 0, leftText = "Short" },
+        } } }))
+        local width, height = GameTooltip:GetWidth(), GameTooltip:GetHeight()
+        GameTooltip:AddLineDataText({ type = 0, leftText = "A much longer pending tooltip row for layout timing" })
+        GameTooltip:SetPadding(0, 6)
+        assert(GameTooltip:GetWidth() > width, "SetPadding did not synchronously resize width")
+        assert(GameTooltip:GetHeight() > height, "SetPadding did not synchronously resize height")
+        "#,
+    )
+    .unwrap();
+}
+
 #[test]
 fn test_tooltip_mixins_load_in_full_env() {
     let env = setup_full_env();
