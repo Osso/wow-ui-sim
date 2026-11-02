@@ -74,7 +74,7 @@ fn missing_pin_fetch_failure_preserves_existing_cache() {
     let install = temp.path().join("install");
     std::fs::create_dir_all(install.join("Data/data")).unwrap();
     let mut product = include_bytes!("../../tests/fixtures/casc-installed-products.db").to_vec();
-    product.splice(0..7, [0x0a, 0xaa, 0x01, 0x12, 0x04, b'w', b'o', b'w', b'f']);
+    product.splice(0..8, [0x0a, 0xaa, 0x01, 0x12, 0x04, b'w', b'o', b'w', b'f']);
     let old = b"12.1.0.69933";
     let offset = product
         .windows(old.len())
