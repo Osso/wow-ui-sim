@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 """Generate item specialization inputs from build 12.1.5.70391 DB2 CSVs."""
 
+# ItemSparse.Flags_0 bit copied into the derived record's itemFlag27 (WM58).
+ITEM_FLAG_27 = 134217728
+
 import csv
 from pathlib import Path
 
@@ -22,7 +25,7 @@ def generate():
     with OUTPUT.open("w", encoding="utf-8", newline="\n") as out:
         out.write("//! Generated from wago.tools DB2 CSV exports, build 12.1.5.70391 (enUS).\n")
         out.write("//! Regenerate with `python3 tools/gen_item_spec_data.py`.\n")
-        out.write("pub static ITEMS: &[(u32, u8, u8, u8, i32, u32, [i8; 10])] = &[\n")
+        out.write("pub static ITEMS: &[(u32, u8, u8, u8, i32, u32, [i8; 10], u8, bool)] = &[\n")
         for row in sparse:
             item_id = int(row["ID"])
             item = items.get(item_id)
@@ -30,9 +33,11 @@ def generate():
                 continue
             stats = [int(row[f"StatModifier_bonusStat_{index}"]) for index in range(10)]
             gem_type = gems.get(int(row["Gem_properties"]), 0)
+            flag_27 = "true" if int(row["Flags_0"]) & ITEM_FLAG_27 else "false"
             out.write(
                 f"    ({item_id}, {item['ClassID']}, {item['SubclassID']}, "
-                f"{item['InventoryType']}, {row['AllowableClass']}, {gem_type}, {stats}),\n"
+                f"{item['InventoryType']}, {row['AllowableClass']}, {gem_type}, {stats}, "
+                f"{row['Bonding']}, {flag_27}),\n"
             )
         out.write("];\n\npub static RULES: &[(u8, u8, u8, u8, u8, u32)] = &[\n")
         for row in read_rows("ItemSpec"):
@@ -43,9 +48,9 @@ def generate():
         out.write("];\n\npub static OVERRIDES: &[(u32, u32)] = &[\n")
         for row in overrides:
             out.write(f"    ({row['ItemID']}, {row['SpecID']}),\n")
-        out.write("];\n\npub static SPEC_CLASSES: &[(u32, u8)] = &[\n")
+        out.write("];\n\npub static SPEC_CLASSES: &[(u32, u8, u8)] = &[\n")
         for row in specs:
-            out.write(f"    ({row['ID']}, {row['ClassID']}),\n")
+            out.write(f"    ({row['ID']}, {row['ClassID']}, {row['OrderIndex']}),\n")
         out.write("];\n")
 
 

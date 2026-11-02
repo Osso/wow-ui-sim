@@ -804,6 +804,8 @@ const EXISTING_ITEM_FIXTURE_IDS: &[u32] = &[
     // and head item and asserts their equip locations through GetItemInfo.
     // The 12.1.5.70391 journal tiers no longer list them.
     49803, 49812, 49819,
+    // tests/item_spec_info_* read these through GetItemInfo (WM48 examples).
+    892, 80773,
 ];
 
 /// Items addons name at file load that the teleport rule cannot see: their

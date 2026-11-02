@@ -268,6 +268,12 @@ fn register_c_item_inventory_queries(
         table_set_rust_fn_static(
             state,
             table_ref,
+            "GetItemSpecInfo",
+            super::item_spec::get_item_spec_info,
+        )?;
+        table_set_rust_fn_static(
+            state,
+            table_ref,
             "IsUsableItem",
             super::item_use::is_usable_item,
         )?;
