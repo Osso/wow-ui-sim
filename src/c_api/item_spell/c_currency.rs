@@ -29,6 +29,11 @@ const CURRENCY_INFO_METHODS: &[(&str, rilua::RustFn)] = &[
         account_currency_data_ready,
     ),
     #[cfg(feature = "client-retail")]
+    (
+        "RequestCurrencyDataForAccountCharacters",
+        request_account_currency_data,
+    ),
+    #[cfg(feature = "client-retail")]
     ("ExpandCurrencyList", expand_currency_list),
     #[cfg(feature = "client-retail")]
     ("SetCurrencyBackpack", set_currency_backpack),
@@ -223,6 +228,15 @@ fn account_currency_data_ready(state: &mut LuaState) -> LuaResult<u32> {
     let ready = borrow_state(state)?.currency_list.account_data_ready();
     state.push(Val::Bool(ready));
     Ok(1)
+}
+
+// Retail CurrencyInfoDocumentation.lua:516-518.
+#[cfg(feature = "client-retail")]
+fn request_account_currency_data(state: &mut LuaState) -> LuaResult<u32> {
+    borrow_state_mut(state)?
+        .currency_list
+        .request_account_data();
+    Ok(0)
 }
 
 #[cfg(feature = "client-retail")]

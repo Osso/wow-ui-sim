@@ -66,11 +66,22 @@ fn currency_filter_supplied_account_response_defers_projection() {
     let env = wow_ui_sim::lua_api::WowLuaEnv::new().unwrap();
     {
         let mut state = env.state().borrow_mut();
-        state.currency_list.account_currency_request = true;
+        state.currency_list.account_server_enabled = false;
         let mut info = state.currency_info.get(&2806).unwrap().clone();
         info.name = "Supplied account currency".into();
         state.currency_info.insert(990001, info);
     }
+    env.exec(r#"
+        C_CurrencyInfo.SetCurrencyFilter(2)
+        assert(C_CurrencyInfo.IsAccountCharacterCurrencyDataReady())
+    "#).unwrap();
+    {
+        let mut state = env.state().borrow_mut();
+        state.currency_list.account_server_enabled = true;
+        state.currency_list.account_context_present = false;
+    }
+    env.exec("C_CurrencyInfo.RequestCurrencyDataForAccountCharacters(); assert(C_CurrencyInfo.IsAccountCharacterCurrencyDataReady())").unwrap();
+    env.state().borrow_mut().currency_list.account_context_present = true;
     env.exec(r#"
         local watcher = CreateFrame("Frame")
         watcher:RegisterEvent("ACCOUNT_CHARACTER_CURRENCY_DATA_RECEIVED")
@@ -90,9 +101,32 @@ fn currency_filter_supplied_account_response_defers_projection() {
         assert(C_CurrencyInfo.IsAccountCharacterCurrencyDataReady())
         assert(C_CurrencyInfo.GetCurrencyListSize() == 20)
         assert(C_CurrencyInfo.GetCurrencyListInfo(20).name == "Supplied account currency")
+        C_CurrencyInfo.SetCurrencyFilter(2)
+        assert(C_CurrencyInfo.IsAccountCharacterCurrencyDataReady())
         C_CurrencyInfo.SetCurrencyFilter(1)
         assert(C_CurrencyInfo.GetCurrencyListSize() == 19)
     "#).unwrap();
+    {
+        let mut state = env.state().borrow_mut();
+        state.currency_list.account_cache_invalidated = true;
+        state.currency_list.cached_transaction_count = 2;
+        state.currency_list.transaction_loading = true;
+        state.currency_list.pending_character_requests = 1;
+    }
+    env.exec("C_CurrencyInfo.RequestCurrencyDataForAccountCharacters(); assert(not C_CurrencyInfo.IsAccountCharacterCurrencyDataReady())").unwrap();
+    {
+        let state = env.state().borrow();
+        assert!(state.currency_list.account_loading);
+        assert_eq!(state.currency_list.cached_transaction_count, 0);
+        assert!(!state.currency_list.account_cache_invalidated);
+    }
+    env.complete_account_currency_request(vec![]).unwrap();
+    {
+        let state = env.state().borrow();
+        assert!(!state.currency_list.account_loading);
+        assert!(state.currency_list.transaction_loading);
+        assert_eq!(state.currency_list.pending_character_requests, 1);
+    }
 }
 
 #[test]

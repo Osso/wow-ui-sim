@@ -9,12 +9,15 @@ pub struct CurrencyListState {
     collapsed_headers: HashSet<i32>,
     watched_overrides: HashMap<i32, bool>,
     filter: i32,
-    pub account_currency_request: bool,
+    pub account_server_enabled: bool,
+    pub account_context_present: bool,
+    pub account_cache_invalidated: bool,
+    pub cached_transaction_count: usize,
     pub account_loading: bool,
     pub transaction_loading: bool,
     pub pending_character_requests: usize,
     account_rows: Vec<CurrencyEntry>,
-    account_rows_visible: bool,
+    projected_account_rows: Vec<CurrencyEntry>,
 }
 
 impl Default for CurrencyListState {
@@ -23,12 +26,15 @@ impl Default for CurrencyListState {
             collapsed_headers: HashSet::new(),
             watched_overrides: HashMap::new(),
             filter: 1,
-            account_currency_request: false,
+            account_server_enabled: true,
+            account_context_present: true,
+            account_cache_invalidated: false,
+            cached_transaction_count: 0,
             account_loading: false,
             transaction_loading: false,
             pending_character_requests: 0,
             account_rows: Vec::new(),
-            account_rows_visible: false,
+            projected_account_rows: Vec::new(),
         }
     }
 }
@@ -44,21 +50,35 @@ impl CurrencyListState {
 
     pub(crate) fn set_filter(&mut self, filter: i32) {
         self.filter = filter;
-        if filter == 2 && self.account_currency_request {
-            self.account_loading = true;
+        if filter == 2 {
+            self.request_account_data();
         }
-        if filter != 2 || self.account_data_ready() {
-            self.account_rows_visible = filter == 2;
+        if filter != 2 {
+            self.projected_account_rows.clear();
+        } else if self.account_data_ready() {
+            self.projected_account_rows.clone_from(&self.account_rows);
+        }
+    }
+
+    pub(crate) fn request_account_data(&mut self) {
+        if !self.account_server_enabled || !self.account_context_present || self.account_loading {
+            return;
+        }
+        if self.account_cache_invalidated {
+            self.account_rows.clear();
+            self.cached_transaction_count = 0;
+            self.account_cache_invalidated = false;
+        }
+        if self.account_rows.is_empty() {
+            self.account_loading = true;
         }
     }
 
     pub fn complete_account_request(&mut self, rows: Vec<CurrencyEntry>) {
         self.account_loading = false;
-        self.transaction_loading = false;
-        self.pending_character_requests = 0;
         self.account_rows = rows;
-        if self.filter == 2 {
-            self.account_rows_visible = true;
+        if self.filter == 2 && self.account_data_ready() {
+            self.projected_account_rows.clone_from(&self.account_rows);
         }
     }
 
@@ -97,13 +117,11 @@ impl CurrencyListState {
                 currency_data::get_currency_list_entry(index).map(|entry| (index, *entry))
             })
             .collect();
-        if self.account_rows_visible {
-            for (offset, &entry) in self.account_rows.iter().enumerate() {
-                rows.push((
-                    currency_data::currency_list_size() + offset as i32 + 1,
-                    entry,
-                ));
-            }
+        for (offset, &entry) in self.projected_account_rows.iter().enumerate() {
+            rows.push((
+                currency_data::currency_list_size() + offset as i32 + 1,
+                entry,
+            ));
         }
         rows
     }
