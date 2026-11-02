@@ -7,6 +7,7 @@ mod day_event_projection;
 mod day_event_queries;
 pub mod day_event_record;
 mod editable_access;
+mod editable_date;
 mod editable_flags;
 mod editable_reads;
 mod editable_status;
@@ -158,6 +159,7 @@ pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
         editable_status::register(state, namespace)?;
         editable_title::register(state, namespace)?;
         editable_time::register(state, namespace)?;
+        editable_date::register(state, namespace)?;
         editable_flags::register(state, namespace)?;
         view_info::register(state, namespace)?;
         table_set_rust_fn_static(

@@ -36,7 +36,11 @@ fn set_time(state: &mut LuaState) -> LuaResult<u32> {
             return Ok(0);
         }
     }
-    let message = create_string(state, "CALENDAR_ERROR_INVALID_TIME");
+    report_invalid(state, "CALENDAR_ERROR_INVALID_TIME")
+}
+
+pub(super) fn report_invalid(state: &mut LuaState, reason: &str) -> LuaResult<u32> {
+    let message = create_string(state, reason);
     dispatch_event_now(state, "CALENDAR_UPDATE_ERROR", &[message])?;
     borrow_state_mut(state)?
         .calendar_context_policy
@@ -45,7 +49,7 @@ fn set_time(state: &mut LuaState) -> LuaResult<u32> {
     Ok(0)
 }
 
-fn read_component(state: &mut LuaState, index: i32, usage: &str) -> LuaResult<u32> {
+pub(super) fn read_component(state: &mut LuaState, index: i32, usage: &str) -> LuaResult<u32> {
     let number = numeric_argument(state, index)?
         .filter(|n| n.is_finite() && (0.0..=f64::from(u32::MAX)).contains(n))
         .ok_or_else(|| runtime_error(usage.to_owned()))?;
