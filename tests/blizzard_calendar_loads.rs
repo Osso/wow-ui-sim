@@ -647,6 +647,7 @@ fn calendar_create_player_event_replaces_editable_record(env: &WowLuaEnv) {
         C_Calendar.ContextMenuSelectEvent(0, 15, 1)
         local day = CreateFrame('Button')
         day:SetID(3)
+        day:SetHighlightTexture(day:CreateTexture())
         day.day = 15
         day.monthOffset = 0
         CalendarDayContextMenu_CreateEvent(day)
