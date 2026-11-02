@@ -1,0 +1,25 @@
+//! Supplied fill-up frames visualization.
+#[derive(Debug, Clone, PartialEq)]
+pub struct FillUpFramesRecord {
+    pub shown_state: u32,
+    pub fill_min: f64,
+    pub fill_max: f64,
+    pub fill_value: f64,
+    pub num_total_frames: f64,
+    pub num_full_frames: f64,
+    pub pulse_filling_frame: bool,
+    pub tooltip: String,
+    pub tooltip_loc: u32,
+    pub widget_size_setting: f64,
+    pub texture_kit: String,
+    pub frame_texture_kit: String,
+    pub has_timer: bool,
+    pub order_index: f64,
+    pub widget_tag: String,
+    pub in_anim_type: u32,
+    pub out_anim_type: u32,
+    pub widget_scale: u32,
+    pub layout_direction: u32,
+    pub model_scene_layer: u32,
+    pub scripted_animation_effect_id: f64,
+}

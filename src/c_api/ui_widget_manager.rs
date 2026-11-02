@@ -36,6 +36,8 @@ mod hud;
 pub use bar_records::{CaptureBarRecord, StatusBarRecord};
 pub use horizontal_currencies_record::HorizontalCurrenciesRecord;
 mod feed;
+mod fill_up_frames_record;
+pub use fill_up_frames_record::FillUpFramesRecord;
 mod fixtures;
 mod icon_text_and_background;
 mod icon_text_and_background_record;
