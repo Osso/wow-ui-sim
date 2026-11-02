@@ -18,7 +18,7 @@ Retail `Blizzard_APIDocumentationGenerated/PvpInfoDocumentation.lua:775` declare
 ## Tests asserting this spec
 
 - `tests/special_event_brawl_api.rs`: API-level absent/present/absent and integer-field coverage. The exact selector failed on the missing member at `8fae33884` and passed 1/0 at `9b137ba4f`; this does not prove the original consumer.
-- `tests/pending/special_event_brawl.rs`: prepared Retail PvP addon consumer and supplied absent/present/absent records. This file is outside the test harness until WM26 supplies the intervening reward and brawl queries; runtime reachability and RED/GREEN remain unproven.
+- `tests/special_event_brawl.rs`: Retail PvP addon consumer and supplied absent/present/absent records. WM26 supplies the intervening reward and brawl queries; original-consumer RED/GREEN remain unproven.
 
 ## Known gaps
 
