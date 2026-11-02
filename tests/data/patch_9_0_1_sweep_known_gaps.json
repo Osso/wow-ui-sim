@@ -172,8 +172,6 @@
   "wt-global-api-C_SuperTrack.IsSuperTrackingUserWaypoint-498",
   "wt-global-api-C_SuperTrack.SetSuperTrackedUserWaypoint-500",
   "wt-global-api-C_Transmog.GetItemIDForSource-506",
-  "wt-global-api-C_UIWidgetManager.GetScenarioHeaderTimerWidgetVisualizationInfo-510",
-  "wt-global-api-C_UIWidgetManager.GetTextureWithAnimationVisualizationInfo-511",
   "wt-global-api-C_UserFeedback.SubmitBug-516",
   "wt-global-api-C_UserFeedback.SubmitSuggestion-517",
   "wt-global-api-C_VoiceChat.GetJoinClubVoiceChannelError-518",
