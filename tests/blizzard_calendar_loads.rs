@@ -811,6 +811,11 @@ fn calendar_community_dropdown_edits_supplied_club_id(env: &WowLuaEnv) {
         assert_eq!(event.club_id, expected);
         assert!(event.dirty);
     }
+    env.exec("C_Calendar.EventSetClubId(nil)").unwrap();
+    assert_eq!(env.state().borrow().calendar_context_policy.editable.as_ref().unwrap().club_id, 0);
+    env.state().borrow_mut().calendar_context_policy.editable.as_mut().unwrap().local_edit_credential = None;
+    env.exec("C_Calendar.EventSetClubId('0x0020000000000000')").unwrap();
+    assert_eq!(env.state().borrow().calendar_context_policy.editable.as_ref().unwrap().club_id, 0);
 }
 }
 

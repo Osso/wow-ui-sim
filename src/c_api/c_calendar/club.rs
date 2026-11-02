@@ -1,4 +1,6 @@
 //! Calendar's optional next community selection.
+use super::editable_access::can_edit;
+use crate::lua_api::globals::state_backed_queries::dispatch_event_now;
 use crate::lua_api::methods::{borrow_state, borrow_state_mut, call_function_state, create_string};
 use crate::lua_bridge::{stack_val, table_set_rust_fn_static};
 use rilua::vm::state::LuaState;
@@ -12,7 +14,8 @@ pub(super) fn register(
     namespace: rilua::vm::gc::arena::GcRef<rilua::vm::table::Table>,
 ) -> LuaResult<()> {
     table_set_rust_fn_static(state, namespace, "GetNextClubId", get_next_club_id)?;
-    table_set_rust_fn_static(state, namespace, "SetNextClubId", set_next_club_id)
+    table_set_rust_fn_static(state, namespace, "SetNextClubId", set_next_club_id)?;
+    table_set_rust_fn_static(state, namespace, "EventSetClubId", set_event_club_id)
 }
 
 fn get_next_club_id(state: &mut LuaState) -> LuaResult<u32> {
@@ -35,13 +38,43 @@ fn set_next_club_id(state: &mut LuaState) -> LuaResult<u32> {
     let id = if matches!(value, Val::Nil) {
         None
     } else {
-        Some(read_club_id(state, value)?)
+        Some(read_club_id(state, value, USAGE)?)
     };
     borrow_state_mut(state)?.calendar_next_club_id = id;
     Ok(0)
 }
 
-fn read_club_id(state: &mut LuaState, value: Val) -> LuaResult<u64> {
+fn set_event_club_id(state: &mut LuaState) -> LuaResult<u32> {
+    let value = rilua::table_security::unwrap_secret(state, stack_val(state, 1))?;
+    let id = if matches!(value, Val::Nil) {
+        0
+    } else {
+        read_club_id(state, value, "Usage: C_Calendar.EventSetClubId([clubId])")?
+    };
+    let allowed = can_edit(&borrow_state(state)?);
+    if !allowed {
+        let message = create_string(state, "CALENDAR_ERROR_PERMISSIONS");
+        dispatch_event_now(state, "CALENDAR_UPDATE_ERROR", &[message])?;
+        borrow_state_mut(state)?
+            .calendar_context_policy
+            .action_pending = false;
+        dispatch_event_now(state, "CALENDAR_ACTION_PENDING", &[Val::Bool(false)])?;
+        return Ok(0);
+    }
+    let mut host = borrow_state_mut(state)?;
+    let event = host
+        .calendar_context_policy
+        .editable
+        .as_mut()
+        .expect("editable event checked above");
+    if event.club_id != id {
+        event.club_id = id;
+        event.dirty = true;
+    }
+    Ok(0)
+}
+
+fn read_club_id(state: &mut LuaState, value: Val, usage: &str) -> LuaResult<u64> {
     if let Val::Str(s) = value {
         let bytes = state
             .gc
@@ -59,7 +92,7 @@ fn read_club_id(state: &mut LuaState, value: Val) -> LuaResult<u64> {
             return if id > MAX_EXACT {
                 Ok(id)
             } else {
-                Err(runtime_error(USAGE))
+                Err(runtime_error(usage))
             };
         }
     }
@@ -76,7 +109,7 @@ fn read_club_id(state: &mut LuaState, value: Val) -> LuaResult<u64> {
     };
     match number {
         Some(n) if n.is_finite() && (0.0..=MAX_EXACT as f64).contains(&n) => Ok(n as u64),
-        Some(_) => Err(runtime_error(USAGE)),
+        Some(_) => Err(runtime_error(usage)),
         None => Ok(0),
     }
 }
