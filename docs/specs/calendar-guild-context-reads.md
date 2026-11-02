@@ -5,9 +5,9 @@ Retail guild-event navigation and context menus use the supplied guild-event sel
 ## What it must do
 
 - [ ] `GetGuildEventSelectionInfo` rematches the supplied indexed guild selection against the current day list and returns one index-info table, or zero values when no match exists.
-- [ ] `ContextMenuEventClipboard` returns one boolean for clipboard presence, independent of context selection.
+- [x] `ContextMenuEventClipboard` returns one boolean for clipboard presence, independent of context selection.
 - [ ] `ContextMenuEventGetCalendarType` resolves the current context selection and returns one string for a selected event, empty for unrecognized type, or one nil if absent.
-- [ ] Original Calendar guild navigation, context paste menu and delete confirmation consume these reads with supplied state.
+- [x] Original Calendar guild navigation, context paste menu and delete confirmation consume these reads with supplied state.
 
 These decisions derive from Retail 70688 recovered local behavior; protected publication is emulated, not live-client verified.
 
@@ -27,7 +27,6 @@ These decisions derive from Retail 70688 recovered local behavior; protected pub
 
 ## Known gaps (current cycle)
 
-- [ ] The tests and producer are committed but await RED and GREEN runs after the suite-admission build hold.
 - [ ] Secondary identities, occurrence matching, complete argument/secret behavior and runtime transition timing remain unknown or unmodeled.
 
 ## Out of scope
