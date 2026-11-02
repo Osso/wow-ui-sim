@@ -45,9 +45,65 @@ pub fn run() -> Result<(), Box<dyn std::error::Error>> {
     write_item_spell_metadata(&wow_data)?;
     write_item_uniqueness(&wow_data)?;
     write_item_sets(&wow_data)?;
+    write_item_classifiers(&wow_data)?;
 
     println!("Generated {} item entries ({} skipped)", count, skipped);
     println!("Output: {}", output_path.display());
+    Ok(())
+}
+
+/// Inputs for IsAnimaItemByID (ItemCurrencyValue rows) and
+/// IsArtifactPowerItem (spells whose difficulty-0 effect index 0 is type 240).
+fn write_item_classifiers(wow_data: &Path) -> Result<(), Box<dyn std::error::Error>> {
+    const GRANT_ARTIFACT_POWER: &str = "240";
+    let records = open_records(&wow_data.join("ItemCurrencyValue.csv"))?;
+    let mut iter = records.iter();
+    let idx = header_index(iter.next().ok_or("empty ItemCurrencyValue.csv")?);
+    let mut values = Vec::new();
+    for record in iter {
+        let fields = parse_csv_line(record);
+        let id = field(&fields, &idx, "ID").parse::<u32>()?;
+        let item = field(&fields, &idx, "ItemID").parse::<u32>()?;
+        let value = field(&fields, &idx, "Value").parse::<i32>()?;
+        let mut currencies = [0_u32; 4];
+        for (slot, currency) in currencies.iter_mut().enumerate() {
+            *currency = field(&fields, &idx, &format!("CurrencyID_{slot}")).parse()?;
+        }
+        values.push((item, id, value, currencies));
+    }
+    values.sort_unstable();
+    let records = open_records(&wow_data.join("SpellEffect.csv"))?;
+    let mut iter = records.iter();
+    let idx = header_index(iter.next().ok_or("empty SpellEffect.csv")?);
+    let mut spells = BTreeSet::new();
+    for record in iter {
+        let fields = parse_csv_line(record);
+        let first_effect = field(&fields, &idx, "EffectIndex") == "0";
+        let base_difficulty = field(&fields, &idx, "DifficultyID") == "0";
+        if first_effect && base_difficulty && field(&fields, &idx, "Effect") == GRANT_ARTIFACT_POWER
+        {
+            spells.insert(field(&fields, &idx, "SpellID").parse::<u32>()?);
+        }
+    }
+    let mut out = File::create("crates/sim-data/data/item_classifiers.rs")?;
+    writeln!(
+        out,
+        "//! Generated from wago.tools DB2 CSV exports, build 12.1.5.70391 (enUS)."
+    )?;
+    writeln!(out, "//! Regenerate with `wow-cli generate items`.")?;
+    writeln!(
+        out,
+        "pub static ITEM_CURRENCY_VALUES: &[(u32, i32, [u32; 4])] = &["
+    )?;
+    for (item, _, value, currencies) in values {
+        writeln!(out, "    ({item}, {value}, {currencies:?}),")?;
+    }
+    writeln!(out, "];\n")?;
+    writeln!(out, "pub static ARTIFACT_POWER_SPELLS: &[u32] = &[")?;
+    for spell in spells {
+        writeln!(out, "    {spell},")?;
+    }
+    writeln!(out, "];")?;
     Ok(())
 }
 
