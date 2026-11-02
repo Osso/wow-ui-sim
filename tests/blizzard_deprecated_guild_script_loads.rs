@@ -152,6 +152,76 @@ fn blizzard_deprecated_guild_script_installs_guild_management_function_shims(env
 }
 
 prefork_full_ui_case! {
+fn deprecated_guild_requests_validate_and_preserve_roster(env: &WowLuaEnv) {
+    use wow_ui_sim::c_api::c_guild_info::GuildRequest;
+    use wow_ui_sim::lua_api::state::GuildMember;
+
+    {
+        let mut sim = env.state().borrow_mut();
+        sim.world.guild_id = 42;
+        sim.world.guild_player_rank = 0;
+        sim.world.guild_members = vec![GuildMember {
+            name: "Alice".into(), rank_index: 2, online: true,
+        }];
+        sim.guild_request_inputs.transport_available = true;
+    }
+    env.exec(r#"
+        assert(not pcall(GuildDemote))
+        assert(not pcall(GuildSetLeader))
+        GuildDemote('aLiCe')
+        GuildDemote('Nobody')
+        GuildSetLeader('Bob')
+        GuildDisband()
+        assert(not pcall(GuildDemote, string.rep('x', 49)))
+    "#).expect("original deprecated guild aliases should validate and submit");
+    {
+        let sim = env.state().borrow();
+        assert_eq!(sim.world.guild_members.len(), 1);
+        assert_eq!(sim.world.guild_members[0].rank_index, 2);
+        assert_eq!(sim.world.guild_id, 42);
+        assert_eq!(sim.guild_request_inputs.submitted, vec![
+            GuildRequest::Demote("Alice".into()),
+            GuildRequest::SetLeader("Bob".into()),
+            GuildRequest::Disband,
+        ]);
+    }
+    env.state().borrow_mut().world.guild_player_rank = 1;
+    env.exec("assert(pcall(GuildSetLeader, string.rep('x', 306)))")
+        .expect("leader prerequisite must precede length validation");
+    env.state().borrow_mut().guild_request_inputs.action_disabled = true;
+    env.exec("assert(pcall(GuildDemote, string.rep('x', 49))); GuildDisband()")
+        .expect("disabled gate must precede length validation and submission");
+    assert_eq!(env.state().borrow().guild_request_inputs.submitted.len(), 3);
+}
+}
+
+prefork_full_ui_case! {
+fn deprecated_guild_requests_refuse_tainted_callers_after_parsing(env: &WowLuaEnv) {
+    {
+        let mut sim = env.state().borrow_mut();
+        sim.world.guild_id = 42;
+        sim.world.guild_player_rank = 0;
+        sim.guild_request_inputs.transport_available = true;
+    }
+    let (missing_ok, long_ok, refused): (bool, bool, i32) = env.eval(r#"
+        local count = 0
+        local listener = CreateFrame('Frame')
+        listener:RegisterEvent('ADDON_ACTION_FORBIDDEN')
+        listener:SetScript('OnEvent', function() count = count + 1 end)
+        local function missing() return GuildDemote() end
+        local function long() return GuildDemote(string.rep('x', 49)) end
+        debug.setobjecttaint(missing, 'GuildProbe')
+        debug.setobjecttaint(long, 'GuildProbe')
+        local missingOk = pcall(missing)
+        local longOk = pcall(long)
+        return missingOk, longOk, count
+    "#).expect("tainted guild request probes should execute");
+    assert_eq!((missing_ok, long_ok, refused), (false, true, 1));
+    assert!(env.state().borrow().guild_request_inputs.submitted.is_empty());
+}
+}
+
+prefork_full_ui_case! {
 fn blizzard_deprecated_guild_script_installs_guild_text_function_shims(env: &WowLuaEnv) {
 
     let installed: bool = env
