@@ -1,4 +1,4 @@
-//! Retail shared cursor clear and placement (WM46, WM44-A, WM44-B).
+//! Retail shared cursor clear and placement (WM46, WM54, WM44-A, WM44-B).
 //!
 //! Other profiles keep their historical behavior: the payload is assigned or
 //! dropped without native modes, stored item IDs or grid events.
@@ -34,8 +34,9 @@ pub(crate) fn modeled() -> bool {
     ACTIVE == ClientProfile::Retail
 }
 
-/// Native UICursorType of a payload. Talent cursors have none: native
-/// selection between Flyout 14 and Spell 3 is not established.
+/// Native UICursorType of a payload. Talent cursors have none: WM54's Flyout 14
+/// or Spell 3 selection needs talent records, spell relationships and flyout
+/// records that the simulator lacks.
 pub(crate) fn native_mode(cursor: &CursorInfo) -> Option<u8> {
     match cursor {
         CursorInfo::Item {
@@ -71,10 +72,15 @@ fn clear_zeroes_stored_id(mode: u8) -> bool {
     matches!(mode, 5 | 6 | 10 | 18 | 19 | 20)
 }
 
-/// Pickup paths that set the grid flag. Mode 1's resolution and eligibility
-/// predicates are not modelled, so owned items never show the grid.
-fn shows_grid(mode: u8) -> bool {
-    matches!(mode, 3 | 4 | 6 | 7 | 12 | 13 | 14 | 16 | 17 | 21)
+/// Whether a successful pickup sets the grid flag. Owned items (mode 1) use
+/// the WM54 Q4 predicate on their item ID.
+fn shows_grid(cursor: &CursorInfo, mode: u8) -> bool {
+    match cursor {
+        CursorInfo::Item { item_id, .. } if mode == MODE_ITEM => {
+            crate::c_api::item_spell::owned_item_shows_grid(*item_id)
+        }
+        _ => matches!(mode, 3 | 4 | 6 | 7 | 12 | 13 | 14 | 16 | 17 | 21),
+    }
 }
 
 /// Current native mode; zero for an empty cursor.
@@ -106,42 +112,67 @@ pub(crate) fn clear(state: &mut LuaState) -> LuaResult<()> {
     }
     match old {
         None => Ok(()),
-        Some(Some(mode)) => {
-            let payload = changed_payload(true, 0, mode, saved_id);
-            dispatch_event_now(state, "CURSOR_CHANGED", &payload)
-        }
+        Some(Some(mode)) => notify(state, mode, saved_id),
         // Talent cursors keep the simulator's argument-less event.
         Some(None) => dispatch_event_now(state, "CURSOR_CHANGED", &[]),
     }
 }
 
-/// Shared clear, then the payload. Item setters report S after the clear;
-/// typed setters report 0.
+/// Every setter runs the shared clear, even from an empty cursor (WM54 Q2),
+/// then installs its payload. The set-side event reports a previous mode and
+/// a stored ID that depend on the setter (WM46, WM54 Q1):
+/// - typed setters: the mode saved before the clear, and 0;
+/// - owned item (1): the mode saved after the clear, and 0;
+/// - item-ID setters (5, 6): the mode and S saved after the clear.
+///
+/// It fires only when that previous mode differs from the new one, so a
+/// same-mode typed replacement reports only the clear.
 pub(crate) fn place(state: &mut LuaState, cursor: CursorInfo) -> LuaResult<()> {
     if !modeled() {
         borrow_state_mut(state)?.cursor_item = Some(cursor);
         return Ok(());
     }
+    let pre_clear_mode = current_mode(state)?;
     clear(state)?;
+    let post_clear_mode = current_mode(state)?;
     let mode = native_mode(&cursor);
-    let reported_id = {
+    let grid = mode.is_some_and(|mode| shows_grid(&cursor, mode));
+    let post_clear_id = {
         let mut sim = borrow_state_mut(state)?;
         let post_clear_id = sim.cursor_storage.stored_item_id;
-        let written = stored_item_id(&cursor);
-        if let Some(item_id) = written {
+        if let Some(item_id) = stored_item_id(&cursor) {
             sim.cursor_storage.stored_item_id = item_id;
         }
         sim.cursor_item = Some(cursor);
-        written.map_or(0, |_| post_clear_id)
+        post_clear_id
     };
     let Some(mode) = mode else {
         return Ok(());
     };
-    if shows_grid(mode) {
+    if grid {
         dispatch_event_now(state, "ACTIONBAR_SHOWGRID", &[])?;
         borrow_state_mut(state)?.cursor_storage.grid_shown = true;
     }
-    let payload = changed_payload(false, mode, 0, reported_id);
+    let (previous, reported_id) = match mode {
+        MODE_ITEM => (post_clear_mode, 0),
+        MODE_MERCHANT | MODE_ACTION_BAR => (post_clear_mode, post_clear_id),
+        _ => (pre_clear_mode, 0),
+    };
+    if previous == mode {
+        return Ok(());
+    }
+    notify(state, previous, reported_id)
+}
+
+/// CURSOR_CHANGED with its first two arguments read from the cursor at
+/// notification time, so callback re-entry is reflected (WM54 Q1).
+fn notify(state: &mut LuaState, previous_mode: u8, stored_id: u32) -> LuaResult<()> {
+    let (empty, mode) = {
+        let sim = borrow_state(state)?;
+        let cursor = sim.cursor_item.as_ref();
+        (cursor.is_none(), cursor.and_then(native_mode).unwrap_or(0))
+    };
+    let payload = changed_payload(empty, mode, previous_mode, stored_id);
     dispatch_event_now(state, "CURSOR_CHANGED", &payload)
 }
 

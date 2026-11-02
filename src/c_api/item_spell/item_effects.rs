@@ -7,7 +7,7 @@ use rilua::{LuaResult, Val, runtime_error};
 use sim_data::item_effects::{ITEM_EFFECTS, ITEM_SPELL_NAMES};
 use sim_data::item_enchants::ENCHANT_SPELLS;
 
-fn use_spell_for_item(item: u32) -> Option<u32> {
+pub(super) fn use_spell_for_item(item: u32) -> Option<u32> {
     let start = ITEM_EFFECTS.partition_point(|row| row.0 < item);
     let end = ITEM_EFFECTS.partition_point(|row| row.0 <= item);
     let mut slots = [None; 5];

@@ -8,6 +8,7 @@ pub(crate) mod helpers;
 pub mod item_child;
 mod item_classifiers;
 mod item_creation_context_data;
+mod item_cursor_grid;
 mod item_effects;
 mod item_gem;
 mod item_pickup;
@@ -40,6 +41,7 @@ pub(crate) use c_item::{
 };
 pub(crate) use helpers::current_item_upgrade_location;
 pub(crate) use helpers::item_class_name;
+pub(crate) use item_cursor_grid::owned_item_shows_grid;
 
 pub(crate) fn register_item_and_spell_surfaces(state: &mut LuaState) -> LuaResult<()> {
     c_item::register_c_item(state)?;
