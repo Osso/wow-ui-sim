@@ -15,6 +15,12 @@ Retail 12.0.0+ keeps all 21 symbols in `tests/data/patch_12_0_0_deprecated.json`
 
 Proof: native behavior tests in `tests/retirement_successors.rs`, model migrations in existing integration tests, and cached retirement/successor proof in `tests/patch_12_0_0_deprecated.rs`. Cached generated API docs and unmodified consumer Lua are the compatibility target. No page-coverage ledger changes.
 
+## Item and socket global retirements
+
+Retail and PTR do not publish `SplitContainerItem`, `GetItemClassInfo`, `GetItemInfo`, `GetItemQualityColor`, `IsConsumableItem`, `IsEquippableItem`, `IsItemInRange`, `UseItemByName`, or `CloseSocketInfo` as native globals. Their current declarations are under `C_Container`, `C_Item`, and `C_ItemSocketInfo` in the profile-pinned API documentation. Classic profiles and WoW Forever keep the simulator's existing legacy registrations. Mists, Era and Anniversary also have cached `Blizzard_DeprecatedItemScript` / `Blizzard_DeprecatedItemSocketInfo` publishers; Retail and PTR do not. Mists declares the legacy publishers in `Blizzard_DeprecatedItemScript/Deprecated_ItemScript.lua` and `Blizzard_DeprecatedItemSocketInfo/Deprecated_ItemSocketInfo.lua`; the Retail and PTR manifests do not contain those addons.
+
+`tests/patch_10_2_6_publication_sweep.rs::removed_item_globals_are_absent_after_game_startup` checks Retail raw and ordinary global lookup after cached Game startup. Current-namespace item and socket behavior remains covered by the existing tests.
+
 ## Chat report retirement
 
 `C_ChatInfo.CanReportPlayer` was removed in the 8.1.5 source register. On current Retail both raw and ordinary lookups are nil. The current generated declaration is `C_ReportSystem.CanReportPlayer` in `ReportSystemDocumentation.lua:11-22`; its eligibility behavior is a separate contract. The 8.0.1 and 8.1.5 publication sweeps classify the old location as absent, not as a known gap.

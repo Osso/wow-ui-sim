@@ -76,6 +76,11 @@ pub const RETAIL_API_INTERFACE_VERSION: u32 = ACTIVE_RETAIL_API_EPOCH.interface_
 pub const ACTIVE_INTERFACE_VERSION: u32 = ACTIVE.interface_version();
 
 impl ClientProfile {
+    /// Retail and PTR expose these item APIs through their C_ namespaces.
+    pub const fn has_legacy_item_globals(self) -> bool {
+        !matches!(self, Self::Retail | Self::Ptr)
+    }
+
     /// Disable Midnight secrets on the four official Classic profiles.
     /// Forever retains its separate existing compatibility policy.
     pub const fn uses_secret_values(self) -> bool {

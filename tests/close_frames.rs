@@ -63,10 +63,14 @@ fn close_trainer_frame_fires_trainer_closed() {
 #[test]
 fn close_socket_info_fires_socket_info_close() {
     let env = env();
-    env.state().borrow_mut().socket_frame_open = true;
-    env.exec("CloseSocketInfo()").unwrap();
-    assert!(!env.state().borrow().socket_frame_open);
-    assert!(fired(&env, "SOCKET_INFO_CLOSE"));
+    if wow_ui_sim::client_profile::ACTIVE.has_legacy_item_globals() {
+        env.state().borrow_mut().socket_frame_open = true;
+        env.exec("CloseSocketInfo()").unwrap();
+        assert!(!env.state().borrow().socket_frame_open);
+        assert!(fired(&env, "SOCKET_INFO_CLOSE"));
+    } else {
+        env.exec("C_ItemSocketInfo._state.isOpen = true; assert(C_ItemSocketInfo.CloseSocketInfo()); assert(not C_ItemSocketInfo._state.isOpen)").unwrap();
+    }
 }
 
 #[test]

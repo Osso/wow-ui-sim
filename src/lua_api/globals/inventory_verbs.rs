@@ -459,7 +459,9 @@ fn get_cursor_money(state: &mut LuaState) -> LuaResult<u32> {
 /// full `register_globals` chain.
 pub fn register_all(lua: &mut rilua::Lua) -> crate::Result<()> {
     LuaApiMut::register_function(lua, "PickupContainerItem", pickup_container_item)?;
-    LuaApiMut::register_function(lua, "SplitContainerItem", split_container_item)?;
+    if crate::client_profile::ACTIVE.has_legacy_item_globals() {
+        LuaApiMut::register_function(lua, "SplitContainerItem", split_container_item)?;
+    }
     LuaApiMut::register_function(lua, "UseContainerItem", use_container_item)?;
     LuaApiMut::register_function(lua, "PickupInventoryItem", pickup_inventory_item)?;
     LuaApiMut::register_function(lua, "PickupBagFromSlot", pickup_bag_from_slot)?;

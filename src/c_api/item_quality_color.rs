@@ -19,7 +19,9 @@ const COLOR_NAMES: [&str; 9] = [
 ];
 
 pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
-    table_set_rust_fn_static(state, state.global, "GetItemQualityColor", get_color)?;
+    if ACTIVE.has_legacy_item_globals() {
+        table_set_rust_fn_static(state, state.global, "GetItemQualityColor", get_color)?;
+    }
     if ACTIVE != ClientProfile::Wrath {
         let item = super::helpers::ensure_namespace(state, "C_Item")?;
         table_set_rust_fn_static(state, item, "GetItemQualityColor", get_color)?;

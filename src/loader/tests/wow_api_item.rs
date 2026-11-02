@@ -59,16 +59,22 @@ fn test_c_item_get_item_info_returns_multi_value() {
 fn test_get_item_info_accepts_bare_item_strings() {
     let env = WowLuaEnv::new().unwrap();
     // AllTheThings queries items by bare item strings, not full links.
+    let function = if crate::client_profile::ACTIVE.has_legacy_item_globals() {
+        "GetItemInfo"
+    } else {
+        "C_Item.GetItemInfo"
+    };
     let results: String = env
         .eval(
-            r#"
-            local out = {}
-            for _, query in ipairs({ "item:6948", "item:6948:::::::::::1:1:3524:" }) do
-                local name, link, quality = GetItemInfo(query)
-                out[#out + 1] = tostring(name) .. "|" .. tostring(quality) .. "|" .. tostring(link == select(2, GetItemInfo(6948)))
+            &format!(r#"
+            local getter = {function}
+            local out = {{}}
+            for _, query in ipairs({{ "item:6948", "item:6948:::::::::::1:1:3524:" }}) do
+                local name, link, quality = getter(query)
+                out[#out + 1] = tostring(name) .. "|" .. tostring(quality) .. "|" .. tostring(link == select(2, getter(6948)))
             end
             return table.concat(out, ",")
-            "#,
+            "#),
         )
         .unwrap();
     assert_eq!(results, "Hearthstone|1|true,Hearthstone|1|true");

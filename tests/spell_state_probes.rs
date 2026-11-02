@@ -133,9 +133,10 @@ fn is_spell_in_range_requires_known_spell_and_visible_unit() {
 #[test]
 fn is_item_in_range_follows_unit_reachability() {
     let env = env();
-    let b: bool = env.eval(r#"return IsItemInRange(6948, "player")"#).unwrap();
+    let function = if wow_ui_sim::client_profile::ACTIVE.has_legacy_item_globals() { "IsItemInRange" } else { "C_Item.IsItemInRange" };
+    let b: bool = env.eval(&format!(r#"return {function}(6948, "player")"#)).unwrap();
     assert!(b);
-    let b: bool = env.eval(r#"return IsItemInRange(6948, "")"#).unwrap();
+    let b: bool = env.eval(&format!(r#"return {function}(6948, "")"#)).unwrap();
     assert!(!b);
 }
 

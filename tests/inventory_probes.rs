@@ -69,9 +69,10 @@ fn get_inventory_item_durability_returns_nil_for_empty_slots() {
 fn is_equippable_item_reads_state_set() {
     let env = env();
     env.state().borrow_mut().equippable_items.insert(19019);
-    let b: bool = env.eval("return IsEquippableItem(19019)").unwrap();
+    let function = if wow_ui_sim::client_profile::ACTIVE.has_legacy_item_globals() { "IsEquippableItem" } else { "C_Item.IsEquippableItem" };
+    let b: bool = env.eval(&format!("return {function}(19019)")).unwrap();
     assert!(b);
-    let b: bool = env.eval("return IsEquippableItem(6948)").unwrap();
+    let b: bool = env.eval(&format!("return {function}(6948)")).unwrap();
     assert!(!b);
 }
 
@@ -79,9 +80,10 @@ fn is_equippable_item_reads_state_set() {
 fn is_consumable_item_reads_state_set() {
     let env = env();
     env.state().borrow_mut().consumable_items.insert(6948);
-    let b: bool = env.eval("return IsConsumableItem(6948)").unwrap();
+    let function = if wow_ui_sim::client_profile::ACTIVE.has_legacy_item_globals() { "IsConsumableItem" } else { "C_Item.IsConsumableItem" };
+    let b: bool = env.eval(&format!("return {function}(6948)")).unwrap();
     assert!(b);
-    let b: bool = env.eval("return IsConsumableItem(19019)").unwrap();
+    let b: bool = env.eval(&format!("return {function}(19019)")).unwrap();
     assert!(!b);
 }
 

@@ -3,6 +3,8 @@ use wow_ui_sim::lua_api::WowLuaEnv;
 #[test]
 fn item_quality_color_reads_current_globals() {
     let env = WowLuaEnv::new().unwrap();
+    let getter = if wow_ui_sim::client_profile::ACTIVE == wow_ui_sim::client_profile::ClientProfile::Wrath { "GetItemQualityColor" } else { "C_Item.GetItemQualityColor" };
+    env.exec(&format!("__test_quality_getter = {getter}")).unwrap();
     env.exec(
         r#"
         local names = {'ITEM_POOR_COLOR', 'ITEM_STANDARD_COLOR', 'ITEM_GOOD_COLOR',
@@ -11,7 +13,7 @@ fn item_quality_color_reads_current_globals() {
         for i, name in ipairs(names) do
             _G[name] = CreateColor(i / 16, (i + 1) / 16, (i + 2) / 16, 1)
         end
-        local getter = C_Item.GetItemQualityColor or GetItemQualityColor
+        local getter = __test_quality_getter
         for i, name in ipairs(names) do
             local r, g, b, hex = getter(i - 1)
             local color = _G[name]

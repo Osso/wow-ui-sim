@@ -69,7 +69,9 @@ pub fn register_all(lua: &mut rilua::Lua) -> crate::Result<()> {
     LuaApiMut::register_function(lua, "CloseMerchant", close_merchant)?;
     LuaApiMut::register_function(lua, "CloseTabardCreation", close_tabard_creation)?;
     LuaApiMut::register_function(lua, "CloseTrainerFrame", close_trainer_frame)?;
-    LuaApiMut::register_function(lua, "CloseSocketInfo", close_socket_info)?;
+    if crate::client_profile::ACTIVE.has_legacy_item_globals() {
+        LuaApiMut::register_function(lua, "CloseSocketInfo", close_socket_info)?;
+    }
     LuaApiMut::register_function(lua, "CloseLoot", close_loot)?;
     LuaApiMut::register_function(lua, "CloseGuildRegistrar", close_guild_registrar)?;
     #[cfg(not(any(feature = "client-retail", feature = "client-ptr")))]

@@ -105,8 +105,10 @@ fn register_audio_and_utility_globals(lua: &mut rilua::Lua) -> LuaResult<()> {
 fn register_item_spell_globals(lua: &mut rilua::Lua) -> LuaResult<()> {
     LuaApiMut::register_function(lua, "GetSpellLink", get_spell_link_global)?;
     LuaApiMut::register_function(lua, "GetSpellIcon", get_spell_icon_global)?;
-    LuaApiMut::register_function(lua, "GetItemInfo", get_item_info_global)?;
-    LuaApiMut::register_function(lua, "GetItemClassInfo", get_item_class_info_global)?;
+    if crate::client_profile::ACTIVE.has_legacy_item_globals() {
+        LuaApiMut::register_function(lua, "GetItemInfo", get_item_info_global)?;
+        LuaApiMut::register_function(lua, "GetItemClassInfo", get_item_class_info_global)?;
+    }
     Ok(())
 }
 

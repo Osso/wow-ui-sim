@@ -32,7 +32,8 @@ fn test_c_encoding_util_base64() {
 #[test]
 fn test_legacy_get_item_info() {
     let env = env();
-    let name: String = env.eval("return GetItemInfo(1)").unwrap();
+    let function = if wow_ui_sim::client_profile::ACTIVE.has_legacy_item_globals() { "GetItemInfo" } else { "C_Item.GetItemInfo" };
+    let name: String = env.eval(&format!("return {function}(1)")).unwrap();
     assert_eq!(name, "Unknown");
 }
 
@@ -55,7 +56,8 @@ fn test_legacy_get_item_id_nil() {
 #[test]
 fn test_legacy_get_item_class_info() {
     let env = env();
-    let name: String = env.eval("return GetItemClassInfo(4)").unwrap();
+    let function = if wow_ui_sim::client_profile::ACTIVE.has_legacy_item_globals() { "GetItemClassInfo" } else { "C_Item.GetItemClassInfo" };
+    let name: String = env.eval(&format!("return {function}(4)")).unwrap();
     assert_eq!(name, "Armor");
 }
 

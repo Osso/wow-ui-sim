@@ -7,6 +7,20 @@ mod sweep;
 use wow_ui_sim::lua_api::WowLuaEnv;
 
 prefork_full_ui_case! {
+fn removed_item_globals_are_absent_after_game_startup(env: &WowLuaEnv) {
+    env.exec(r#"
+        for _, name in ipairs({
+            'SplitContainerItem', 'GetItemClassInfo', 'GetItemInfo', 'GetItemQualityColor',
+            'IsConsumableItem', 'IsEquippableItem', 'IsItemInRange', 'UseItemByName', 'CloseSocketInfo',
+        }) do
+            assert(rawget(_G, name) == nil, name .. ' raw global is present')
+            assert(_G[name] == nil, name .. ' global lookup is present')
+        end
+    "#).unwrap();
+}
+}
+
+prefork_full_ui_case! {
 fn patch_10_2_6_publication_sweep(env: &WowLuaEnv) {
     sweep::run_publication_sweep(env, &sweep::SweepSpec {
         register: include_str!("../data/patch-api/sources/10.2.6-wikitext-register.json"),

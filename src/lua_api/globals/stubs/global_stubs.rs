@@ -91,7 +91,6 @@ static GLOBAL_NIL_STUBS: &[&str] = &[
     "UpdateTransmogrifyOutfit",
     "UseAction",
     "UseInventoryItem",
-    "UseItemByName",
     "WardrobeFrame_OpenTransmogToItem",
 ];
 
@@ -302,6 +301,11 @@ fn stub_action_bar_toggles(state: &mut LuaState) -> rilua::LuaResult<u32> {
 }
 
 pub(super) fn register_global_stubs(state: &mut LuaState) {
+    if crate::client_profile::ACTIVE.has_legacy_item_globals()
+        && is_nil_global(state, "UseItemByName")
+    {
+        set_global_fn(state, "UseItemByName", stub_nil);
+    }
     for &name in GLOBAL_NIL_STUBS {
         #[cfg(feature = "retail-12-0-0")]
         if crate::c_api::RETIRED_4_0_1_GLOBALS.contains(&name) {

@@ -224,7 +224,9 @@ pub fn register_all(lua: &mut rilua::Lua) -> crate::Result<()> {
         is_spell_known_or_overrides,
     )?;
     LuaApiMut::register_function(lua, "IsSpellInRange", is_spell_in_range)?;
-    LuaApiMut::register_function(lua, "IsItemInRange", c_item_is_item_in_range)?;
+    if crate::client_profile::ACTIVE.has_legacy_item_globals() {
+        LuaApiMut::register_function(lua, "IsItemInRange", c_item_is_item_in_range)?;
+    }
     #[cfg(not(feature = "retail-12-0-0"))]
     LuaApiMut::register_function(lua, "IsUsableSpell", is_usable_spell)?;
     LuaApiMut::register_function(lua, "IsHarmfulSpell", is_harmful_spell)?;

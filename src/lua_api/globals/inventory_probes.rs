@@ -313,8 +313,10 @@ fn get_inventory_item_count(state: &mut LuaState) -> LuaResult<u32> {
 
 pub fn register_all(lua: &mut rilua::Lua) -> crate::Result<()> {
     LuaApiMut::register_function(lua, "IsInventoryItemLocked", is_inventory_item_locked)?;
-    LuaApiMut::register_function(lua, "IsEquippableItem", c_item_is_equippable_item)?;
-    LuaApiMut::register_function(lua, "IsConsumableItem", c_item_is_consumable_item)?;
+    if crate::client_profile::ACTIVE.has_legacy_item_globals() {
+        LuaApiMut::register_function(lua, "IsEquippableItem", c_item_is_equippable_item)?;
+        LuaApiMut::register_function(lua, "IsConsumableItem", c_item_is_consumable_item)?;
+    }
     LuaApiMut::register_function(lua, "CanLootUnit", can_loot_unit)?;
     LuaApiMut::register_function(lua, "CanMerchant", can_merchant)?;
     LuaApiMut::register_function(lua, "CanInspect", can_inspect)?;
