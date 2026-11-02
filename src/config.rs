@@ -1,19 +1,11 @@
 //! Simulator configuration persistence.
 //!
 //! Stores user preferences (player class, race, rot damage settings) as JSON
-//! at `~/.local/share/wow-sim/config.json`. Loaded once on startup; saved on
+//! at `config.json` inside the writable session WTF. Loaded once on startup; saved on
 //! every change so the file is always current.
 
 use serde::{Deserialize, Serialize};
-use std::path::PathBuf;
-
-/// Default config file path.
-fn default_path() -> PathBuf {
-    dirs::data_local_dir()
-        .unwrap_or_else(|| PathBuf::from("."))
-        .join("wow-sim")
-        .join("config.json")
-}
+use std::path::{Path, PathBuf};
 
 /// Persisted simulator settings.
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -66,6 +58,13 @@ fn default_xp_level() -> String {
 
 impl Default for SimConfig {
     fn default() -> Self {
+        Self::default_for_session(&crate::paths::default_session_wtf_path())
+    }
+}
+
+impl SimConfig {
+    /// Default preferences using this session's save destination.
+    pub fn default_for_session(root: &Path) -> Self {
         Self {
             player_class: default_class(),
             player_race: default_race(),
@@ -73,18 +72,23 @@ impl Default for SimConfig {
             xp_level: default_xp_level(),
             party_size: 0,
             movement: MovementConfig::default(),
-            path: default_path(),
+            path: root.join("config.json"),
         }
     }
-}
 
-impl SimConfig {
     /// Load from disk, falling back to defaults on any error.
     pub fn load() -> Self {
-        let path = default_path();
+        Self::load_from_session_wtf(&crate::paths::default_session_wtf_path())
+    }
+
+    /// Load preferences from this session's directory and retain its save destination.
+    pub fn load_from_session_wtf(root: &Path) -> Self {
+        let path = root.join("config.json");
         let mut config = match std::fs::read_to_string(&path) {
-            Ok(contents) => serde_json::from_str(&contents).unwrap_or_default(),
-            Err(_) => Self::default(),
+            Ok(contents) => {
+                serde_json::from_str(&contents).unwrap_or_else(|_| Self::default_for_session(root))
+            }
+            Err(_) => Self::default_for_session(root),
         };
         config.path = path;
         config

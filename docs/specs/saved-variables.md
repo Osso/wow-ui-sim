@@ -15,16 +15,24 @@ compatibility limits.
 
 ## Inputs and scopes
 
+[Runtime inputs](../runtime-inputs.md) select isolated writable storage.
 WTF imports are read-only. Source paths relative to the WTF root are:
 
 - Account: `Account/<account>/SavedVariables/<addon>.lua`.
 - Character: `Account/<account>/<realm>/<character>/SavedVariables/<addon>.lua`.
 
-Ordinary output uses `WOW_SIM_STORAGE_DIR`, or the platform data directory's
-`wow-sim/SavedVariables`: `<addon>.lua` for account data and
-`<realm>/<character>/<addon>.lua` for character data. Initial input defaults to a
-2 MiB limit per file; `WOW_SIM_MAX_SAVED_VARIABLE_BYTES=0` removes it. Oversized
-or unreadable input fails. Trusted ReloadUI files bypass that external size cap.
+Ordinary output uses `SavedVariables` beneath the writable
+`--session-wtf-path DIR` root, or the platform local-data directory's `wow-sim`
+root when the option is omitted: `<addon>.lua` for account data and
+`<realm>/<character>/<addon>.lua` for character data. Simulator preferences,
+CVars and private models use the same root. Local addon enablement defaults to
+`AddOns.txt` there; `WOW_SIM_ADDONS_TXT` can select a separate read/save file.
+See [persistence destinations](../runtime-inputs.md#persistence-destinations).
+The real WoW WTF import tree remains read-only.
+
+Initial input defaults to a 2 MiB limit per file;
+`WOW_SIM_MAX_SAVED_VARIABLE_BYTES=0` removes it. Oversized or unreadable input
+fails. Trusted ReloadUI files bypass that external size cap.
 
 Loading uses the fast data parser with Lua VM fallback. Imported Details geometry
 retains the simulator's existing normalization. Missing WTF scopes can fall back

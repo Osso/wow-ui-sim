@@ -43,6 +43,8 @@ fn run_tests_starts_with_demo_party_and_respects_no_party() {
                 "--addons-path",
             ])
             .arg(&addons)
+            .arg("--session-wtf-path")
+            .arg(root.path().join("data/wow-sim"))
             .args(["run-tests", "PartyStartupFixture"])
             .env("WOW_SIM_WTF_PATH", root.path().join("wtf"));
         if disabled {

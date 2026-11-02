@@ -3219,3 +3219,12 @@ resolved model; reload retains later selections. The late hook reaffirms CLI
 selections and emits notifications without duplicate specialization events.
 Spec-only input is validated against the initial class and re-resolved against
 the current class after startup.
+
+## 2026-11-02 — Writable session storage
+
+[Runtime inputs](../runtime-inputs.md#persistence-destinations) select writable
+storage with `--session-wtf-path DIR`. The supplied or default directory is
+resolved once before storage initialization and retained through reload.
+`WOW_SIM_ADDONS_TXT` supports separate addon-enable reads and saves; real WoW WTF
+imports remain read-only. Existing defaults, formats and shutdown behavior are
+unchanged.

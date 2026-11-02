@@ -1,9 +1,6 @@
 //! Tests for addon API functions (addon_api.rs).
 
 use std::collections::HashMap;
-use std::ffi::OsString;
-use std::path::Path;
-use std::sync::Mutex;
 
 use wow_ui_sim::lua_api::AddonInfo;
 use wow_ui_sim::lua_api::WowLuaEnv;
@@ -602,37 +599,12 @@ fn test_is_addon_default_enabled_unknown_returns_false() {
 
 // ── C_AddOns.SaveAddOns / ResetAddOns ─────────────────────────────────────────
 
-static ADDONS_TXT_ENV_LOCK: Mutex<()> = Mutex::new(());
-
-struct ScopedAddonsTxtEnv {
-    previous: Option<OsString>,
-}
-
-impl ScopedAddonsTxtEnv {
-    fn set(path: &Path) -> Self {
-        let previous = std::env::var_os("WOW_SIM_ADDONS_TXT");
-        unsafe {
-            std::env::set_var("WOW_SIM_ADDONS_TXT", path);
-        }
-        Self { previous }
-    }
-}
-
-impl Drop for ScopedAddonsTxtEnv {
-    fn drop(&mut self) {
-        match self.previous.take() {
-            Some(previous) => unsafe {
-                std::env::set_var("WOW_SIM_ADDONS_TXT", previous);
-            },
-            None => unsafe {
-                std::env::remove_var("WOW_SIM_ADDONS_TXT");
-            },
-        }
-    }
-}
-
 fn env_with_two_user_addons() -> WowLuaEnv {
     let env = WowLuaEnv::new().expect("Failed to create Lua environment");
+    with_two_user_addons(env)
+}
+
+fn with_two_user_addons(env: WowLuaEnv) -> WowLuaEnv {
     {
         let mut state = env.state().borrow_mut();
         state.addons.push(AddonInfo {
@@ -663,11 +635,28 @@ fn enabled_state(env: &WowLuaEnv, name: &str) -> bool {
 
 #[test]
 fn test_save_addons_writes_local_addons_txt() {
-    let _env_lock = ADDONS_TXT_ENV_LOCK.lock().expect("env lock");
-    let temp = tempfile::tempdir().expect("tempdir");
-    let path = temp.path().join("local").join("AddOns.txt");
-    let _env = ScopedAddonsTxtEnv::set(&path);
-    let env = env_with_two_user_addons();
+    const CHILD: &str = "WOW_SIM_SAVE_ADDONS_CHILD_TEST";
+    if std::env::var_os(CHILD).is_none() {
+        let output = std::process::Command::new(std::env::current_exe().unwrap())
+            .args(["test_save_addons_writes_local_addons_txt", "--nocapture"])
+            .env(CHILD, "1")
+            .env_remove("WOW_SIM_ADDONS_TXT")
+            .output()
+            .expect("run isolated SaveAddOns test");
+        assert!(
+            output.status.success(),
+            "{}\n{}",
+            String::from_utf8_lossy(&output.stdout),
+            String::from_utf8_lossy(&output.stderr)
+        );
+        return;
+    }
+    let root = tempfile::tempdir().expect("session WTF");
+    let path = wow_ui_sim::addon_enable_state::local_addons_txt_path(root.path());
+    let env = with_two_user_addons(
+        WowLuaEnv::with_session_wtf_path(root.path().to_path_buf())
+            .expect("Failed to create Lua environment"),
+    );
 
     env.exec("C_AddOns.DisableAddOn('AddonB')").unwrap();
     env.exec("C_AddOns.SaveAddOns()").unwrap();

@@ -13,18 +13,11 @@ const HOTFIX_SECURE_CVARS: [&str; 7] = [
     "SoftTargetInteractRange",
 ];
 
-fn isolated_env() -> WowLuaEnv {
-    // CVarStorage::new selects temp_dir()/wow-sim-cvars-PID-ID.json
-    // only when current_exe's parent ends with "deps". Refuse other contexts
-    // BEFORE WowLuaEnv::new constructs SimState and its CVarStorage.
-    let executable = std::env::current_exe().expect("locate test executable");
-    assert!(
-        executable
-            .parent()
-            .is_some_and(|parent| parent.ends_with("deps")),
-        "test requires the inspected Cargo-test temporary CVar storage convention"
-    );
-    WowLuaEnv::new().expect("create bare Lua API test environment")
+fn isolated_env() -> (WowLuaEnv, tempfile::TempDir) {
+    let session = tempfile::tempdir().expect("create secure-CVar session directory");
+    let env = WowLuaEnv::with_session_wtf_path(session.path().to_path_buf())
+        .expect("create bare Lua API test environment");
+    (env, session)
 }
 
 const WRITE_ASSERTIONS: &str = r#"
@@ -93,7 +86,7 @@ fn seed_old_value(env: &WowLuaEnv, name: &str) {
 }
 
 fn assert_write_case(name: &str, setter: &str, uppercase: bool, context: WriteContext) {
-    let env = isolated_env();
+    let (env, _session) = isolated_env();
     seed_old_value(&env, name);
     let in_combat = context != WriteContext::InsecureOutOfCombat;
     let tainted = context != WriteContext::SecureCombat;

@@ -22,8 +22,11 @@ fn cli_class_and_spec_are_visible_to_exec_lua() {
         ("Mage", "FIRE", "CLI_CONTEXT:Mage:2"),
     ] {
         let root = tempfile::tempdir().unwrap();
+        let data = isolated_data_dir(root.path());
         let output = Command::new("timeout")
             .args(["90", env!("CARGO_BIN_EXE_wow-sim")])
+            .arg("--session-wtf-path")
+            .arg(data.join("wow-sim"))
             .args([
                 "--no-addons",
                 "--no-saved-vars",
@@ -37,7 +40,7 @@ fn cli_class_and_spec_are_visible_to_exec_lua() {
                 "--filter",
                 "__no_such_frame__",
             ])
-            .env("XDG_DATA_HOME", isolated_data_dir(root.path()))
+            .env("XDG_DATA_HOME", data)
             .env("WOW_SIM_WTF_PATH", root.path().join("wtf"))
             .env("WOW_SIM_NO_SOUND", "1")
             .output()
@@ -54,8 +57,11 @@ fn assert_monk_specialization(spec: &str, expected: &str) {
         return;
     }
     let root = tempfile::tempdir().unwrap();
+    let data = isolated_data_dir(root.path());
     let output = Command::new("timeout")
         .args(["90", env!("CARGO_BIN_EXE_wow-sim")])
+        .arg("--session-wtf-path")
+        .arg(data.join("wow-sim"))
         .args([
             "--no-addons",
             "--no-saved-vars",
@@ -76,7 +82,7 @@ fn assert_monk_specialization(spec: &str, expected: &str) {
             "--filter",
             "__no_such_frame__",
         ])
-        .env("XDG_DATA_HOME", isolated_data_dir(root.path()))
+        .env("XDG_DATA_HOME", data)
         .env("WOW_SIM_WTF_PATH", root.path().join("wtf"))
         .env("WOW_SIM_NO_SOUND", "1")
         .output()
@@ -125,12 +131,15 @@ fn spec_without_class_is_seeded_then_resolved_again_after_startup() {
             end
         end)
     "#).unwrap();
+    let data = isolated_data_dir(root.path());
     let output = Command::new("timeout")
         .args(["90", env!("CARGO_BIN_EXE_wow-sim")])
         .arg("--no-saved-vars")
+        .arg("--session-wtf-path")
+        .arg(data.join("wow-sim"))
         .arg("--addons-path").arg(addons)
         .args(["--spec", "Holy", "--exec-lua", "print('EVENT_CONTEXT:' .. tostring(Issue5Observed) .. ':' .. tostring(Issue5WorldCount) .. ':' .. tostring(Issue5Initial))", "dump-tree", "--filter", "__no_such_frame__"])
-        .env("XDG_DATA_HOME", isolated_data_dir(root.path()))
+        .env("XDG_DATA_HOME", data)
         .env("WOW_SIM_WTF_PATH", root.path().join("wtf"))
         .env("WOW_SIM_NO_SOUND", "1")
         .output().unwrap();
@@ -157,12 +166,15 @@ fn unknown_class_and_specialization_report_valid_choices() {
         (vec!["--spec", "NotASpec"], "valid specializations: Holy"),
     ] {
         let root = tempfile::tempdir().unwrap();
+        let data = isolated_data_dir(root.path());
         let output = Command::new("timeout")
             .args(["90", env!("CARGO_BIN_EXE_wow-sim")])
+            .arg("--session-wtf-path")
+            .arg(data.join("wow-sim"))
             .args(["--no-addons", "--no-saved-vars"])
             .args(args)
             .arg("dump-tree")
-            .env("XDG_DATA_HOME", isolated_data_dir(root.path()))
+            .env("XDG_DATA_HOME", data)
             .env("WOW_SIM_WTF_PATH", root.path().join("wtf"))
             .env("WOW_SIM_NO_SOUND", "1")
             .output()
@@ -183,8 +195,11 @@ fn numeric_class_and_spec_indices_are_visible_to_exec_lua() {
         return;
     }
     let root = tempfile::tempdir().unwrap();
+    let data = isolated_data_dir(root.path());
     let output = Command::new("timeout")
         .args(["90", env!("CARGO_BIN_EXE_wow-sim")])
+        .arg("--session-wtf-path")
+        .arg(data.join("wow-sim"))
         .args([
             "--no-addons",
             "--no-saved-vars",
@@ -198,7 +213,7 @@ fn numeric_class_and_spec_indices_are_visible_to_exec_lua() {
             "--filter",
             "__no_such_frame__",
         ])
-        .env("XDG_DATA_HOME", isolated_data_dir(root.path()))
+        .env("XDG_DATA_HOME", data)
         .env("WOW_SIM_WTF_PATH", root.path().join("wtf"))
         .env("WOW_SIM_NO_SOUND", "1")
         .output()

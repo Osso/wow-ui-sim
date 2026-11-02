@@ -19,7 +19,8 @@ struct TimerTickOutcome {
 
 impl App {
     pub(super) fn save_config(&self) {
-        let mut config = crate::config::SimConfig::load();
+        let session_wtf_path = self.env.borrow().state().borrow().session_wtf_path.clone();
+        let mut config = crate::config::SimConfig::load_from_session_wtf(&session_wtf_path);
         config.player_class = self.selected_class.clone();
         config.player_race = self.selected_race.clone();
         config.rot_damage_level = self.selected_rot_level.clone();

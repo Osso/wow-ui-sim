@@ -1,3 +1,9 @@
+## [2026-11-02] architecture | Writable session storage
+
+[Runtime inputs](../runtime-inputs.md) describe the shared writable session root,
+the `WOW_SIM_ADDONS_TXT` selection override and read-only real WoW imports.
+The supplied or default directory is resolved once before storage initialization.
+
 ## [2026-10-31] architecture | Startup class and race
 
 [Startup player settings](../specs/cli-class-spec.md#initial-class-race-and-specialization)

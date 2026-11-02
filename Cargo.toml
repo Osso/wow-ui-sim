@@ -468,6 +468,10 @@ name = "should_know_unit_health"
 path = "tests/should_know_unit_health.rs"
 
 [[test]]
+name = "runtime_persistence_paths"
+path = "tests/runtime_persistence_paths.rs"
+
+[[test]]
 name = "forever_action_range"
 path = "tests/forever_action_range.rs"
 required-features = ["client-wowforever"]

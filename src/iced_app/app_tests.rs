@@ -57,7 +57,18 @@ fn gui_selectors_use_resolved_class_and_race() {
 }
 
 pub(super) fn build_test_app(screen_kind: ScreenKind) -> App {
-    let env = build_env();
+    build_test_app_with_config(
+        screen_kind,
+        build_env(),
+        crate::config::SimConfig::default(),
+    )
+}
+
+fn build_test_app_with_config(
+    screen_kind: ScreenKind,
+    env: Rc<RefCell<WowLuaEnv>>,
+    config: crate::config::SimConfig,
+) -> App {
     env.borrow().set_screen_mode(screen_kind);
     env.borrow().set_screen_size(800.0, 600.0);
 
@@ -78,8 +89,39 @@ pub(super) fn build_test_app(screen_kind: ScreenKind) -> App {
         debug_borders: false,
         debug_anchors: false,
         saved_vars: None,
-        config: crate::config::SimConfig::default(),
+        config,
     })
+}
+
+#[test]
+fn gui_preferences_load_and_save_in_the_explicit_session_directory() {
+    let root = tempfile::tempdir().unwrap();
+    let path = root.path().join("config.json");
+    std::fs::write(
+        &path,
+        r#"{"xp_level":"66%","party_size":3,"movement":{"moving":true}}"#,
+    )
+    .unwrap();
+    let env = Rc::new(RefCell::new(
+        WowLuaEnv::with_session_wtf_path(root.path().to_path_buf()).unwrap(),
+    ));
+    let config = crate::config::SimConfig::load_from_session_wtf(root.path());
+    let mut app = build_test_app_with_config(ScreenKind::Game, env, config);
+    assert_eq!(app.selected_xp_level, "66%");
+    assert_eq!(app.selected_party_size, "3");
+    assert!(app.movement.moving);
+
+    app.selected_xp_level = "100%".into();
+    app.selected_party_size = "4".into();
+    app.movement.swimming = true;
+    app.save_config();
+
+    let persisted: serde_json::Value =
+        serde_json::from_slice(&std::fs::read(path).unwrap()).unwrap();
+    assert_eq!(persisted["xp_level"], "100%");
+    assert_eq!(persisted["party_size"], 4);
+    assert_eq!(persisted["movement"]["moving"], true);
+    assert_eq!(persisted["movement"]["swimming"], true);
 }
 
 pub(super) fn draw_test_canvas(app: &App, size: Size) -> crate::render::WowUiPrimitive {

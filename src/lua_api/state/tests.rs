@@ -22,10 +22,30 @@ fn empty_runtime_state_new_seeds_expected_runtime_defaults() {
 
 #[test]
 fn post_event_workaround_marker_is_one_shot() {
-    let mut state = SimState::default();
+    let session = tempfile::tempdir().unwrap();
+    let mut state = SimState::with_session_wtf_path(session.path().to_path_buf());
 
     assert!(!state.post_event_workarounds_applied);
     assert!(state.mark_post_event_workarounds_applied());
     assert!(state.post_event_workarounds_applied);
     assert!(!state.mark_post_event_workarounds_applied());
+}
+
+#[test]
+fn session_directory_selects_cvar_reads_and_writes() {
+    let session = tempfile::tempdir().unwrap();
+    let path = session.path().join("cvars.json");
+    std::fs::write(&path, r#"{"sessionstorageprobe":"37"}"#).unwrap();
+
+    let state = SimState::with_session_wtf_path(session.path().to_path_buf());
+
+    assert_eq!(state.session_wtf_path, session.path());
+    assert_eq!(
+        state.cvars.get("sessionStorageProbe").as_deref(),
+        Some("37")
+    );
+    assert!(state.cvars.set("sessionStorageProbe", "41"));
+    let persisted: serde_json::Value =
+        serde_json::from_slice(&std::fs::read(&path).unwrap()).unwrap();
+    assert_eq!(persisted["sessionstorageprobe"], "41");
 }

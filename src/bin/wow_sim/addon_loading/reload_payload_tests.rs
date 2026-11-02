@@ -83,7 +83,10 @@ fn reload_real_addon_payload_retains_original_settings_consumer() {
         return;
     }
     let args = crate::Args::try_parse_from(["wow-sim", "--no-addons", "--no-saved-vars"]).unwrap();
-    let (env, _fonts, manager) = crate::startup::init_and_load(&args, ScreenKind::Game).unwrap();
+    let session = tempfile::tempdir().unwrap();
+    let (env, _fonts, manager) =
+        crate::startup::init_and_load(&args, ScreenKind::Game, session.path().to_path_buf())
+            .unwrap();
     assert!(manager.is_none());
     wow_ui_sim::startup::fire_startup_events(&env);
     env.exec("Settings.OpenToCategory(Settings.KEYBINDINGS_CATEGORY_ID)")

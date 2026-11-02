@@ -42,6 +42,10 @@ struct Args {
     #[arg(long, value_name = "DIR")]
     addons_path: Vec<PathBuf>,
 
+    /// Writable session WTF directory for all simulator state (real WoW imports stay read-only)
+    #[arg(long, value_name = "DIR", global = true)]
+    session_wtf_path: Option<PathBuf>,
+
     /// Show debug borders and anchor points on all elements
     #[arg(long)]
     debug_elements: bool,
@@ -193,6 +197,14 @@ enum Commands {
 }
 
 impl Args {
+    fn resolve_session_wtf_path(&self) -> std::io::Result<PathBuf> {
+        let path = self
+            .session_wtf_path
+            .clone()
+            .unwrap_or_else(wow_ui_sim::paths::default_session_wtf_path);
+        std::path::absolute(path)
+    }
+
     fn effective_screen(&self) -> ScreenKind {
         if self.character_select {
             ScreenKind::CharacterSelect
@@ -230,7 +242,6 @@ fn main() {
     wow_ui_sim::stack::ensure_large_stack();
     startup_trace::print_process_started();
     startup_trace::apply_resource_limits();
-    set_cwd_to_exe_dir_for_gui_launch();
     if let Err(error) = run_main() {
         report_fatal_error(error.as_ref());
         std::process::exit(1);
@@ -268,6 +279,8 @@ fn hires_atlases_wanted(ui_scale: f32, env_override: Option<&str>) -> bool {
 
 fn run_main() -> Result<(), Box<dyn std::error::Error>> {
     let args = Args::parse();
+    let session_wtf_path = args.resolve_session_wtf_path()?;
+    set_cwd_to_exe_dir_for_gui_launch();
     wow_ui_sim::blizzard_ui_sync::set_allow_ui_version_mismatch(args.allow_ui_version_mismatch);
     let selection = class_spec::parse_selection(
         args.class.as_deref(),
@@ -283,7 +296,7 @@ fn run_main() -> Result<(), Box<dyn std::error::Error>> {
         requested_ui_scale(&args.command),
         std::env::var("WOW_SIM_HIRES_ATLASES").ok().as_deref(),
     ));
-    let init = init_and_load(&args, screen)?;
+    let init = init_and_load(&args, screen, session_wtf_path)?;
     #[cfg(feature = "gui")]
     let (env, font_system, saved_vars) = init;
     #[cfg(not(feature = "gui"))]
@@ -459,6 +472,9 @@ fn startup_blizzard_ui_help(error: wow_ui_sim::Error) -> Box<dyn std::error::Err
 
 fn report_fatal_error(error: &dyn std::error::Error) {
     eprintln!("{error}");
+    if std::env::var_os("WOW_SIM_NO_ERROR_DIALOG").is_some() {
+        return;
+    }
     #[cfg(all(windows, feature = "gui"))]
     show_windows_error_message(&error.to_string());
     #[cfg(all(target_os = "macos", feature = "gui"))]
@@ -732,6 +748,47 @@ fn update_dump_layout_rects(env: &WowLuaEnv) {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn session_wtf_path_is_optional_and_accepts_subcommand_placement() {
+        let args = Args::try_parse_from(["wow-sim", "dump-tree"]).unwrap();
+        assert!(args.session_wtf_path.is_none());
+        for argv in [
+            ["wow-sim", "--session-wtf-path", "session-data", "dump-tree"],
+            ["wow-sim", "dump-tree", "--session-wtf-path", "session-data"],
+        ] {
+            let args = Args::try_parse_from(argv).unwrap();
+            assert_eq!(args.session_wtf_path, Some(PathBuf::from("session-data")));
+            assert!(matches!(args.command, Some(Commands::DumpTree { .. })));
+        }
+        assert!(Args::try_parse_from(["wow-sim", "--session-wtf-path"]).is_err());
+    }
+
+    #[test]
+    fn session_wtf_path_resolves_against_the_launch_directory_without_creating_it() {
+        let relative = format!("session-wtf-{}-not-created", std::process::id());
+        let expected = std::env::current_dir().unwrap().join(&relative);
+        let args = Args::try_parse_from(["wow-sim", "--session-wtf-path", &relative]).unwrap();
+        assert_eq!(args.resolve_session_wtf_path().unwrap(), expected);
+        assert!(!expected.exists());
+
+        let args = Args::try_parse_from([
+            std::ffi::OsStr::new("wow-sim"),
+            std::ffi::OsStr::new("--session-wtf-path"),
+            expected.as_os_str(),
+        ])
+        .unwrap();
+        assert_eq!(args.resolve_session_wtf_path().unwrap(), expected);
+    }
+
+    #[test]
+    fn session_wtf_path_defaults_to_platform_storage() {
+        let args = Args::try_parse_from(["wow-sim", "dump-tree"]).unwrap();
+        assert_eq!(
+            args.resolve_session_wtf_path().unwrap(),
+            std::path::absolute(wow_ui_sim::paths::default_session_wtf_path()).unwrap()
+        );
+    }
     use clap::Parser;
 
     #[test]

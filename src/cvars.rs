@@ -4,34 +4,12 @@
 //! Defaults come from WoW's built-in cvars, overrides are persisted to disk.
 
 use std::collections::HashMap;
-use std::path::PathBuf;
-use std::sync::{
-    RwLock,
-    atomic::{AtomicU64, Ordering},
-};
-
-static NEXT_TEST_STORAGE_ID: AtomicU64 = AtomicU64::new(1);
+use std::path::{Path, PathBuf};
+use std::sync::RwLock;
 
 /// Default path for persisted CVar overrides.
 fn default_storage_path() -> PathBuf {
-    let in_test_binary = std::env::current_exe()
-        .ok()
-        .and_then(|path| path.parent().map(|parent| parent.ends_with("deps")))
-        .unwrap_or(false);
-
-    if in_test_binary {
-        let storage_id = NEXT_TEST_STORAGE_ID.fetch_add(1, Ordering::Relaxed);
-        return std::env::temp_dir().join(format!(
-            "wow-sim-cvars-{}-{}.json",
-            std::process::id(),
-            storage_id
-        ));
-    }
-
-    dirs::data_local_dir()
-        .unwrap_or_else(|| PathBuf::from("."))
-        .join("wow-sim")
-        .join("cvars.json")
+    crate::paths::default_constructor_session_wtf_path().join("cvars.json")
 }
 
 /// CVar storage with defaults and overrides.
@@ -55,22 +33,14 @@ pub struct CVarStorage {
 impl CVarStorage {
     /// Create storage with defaults parsed from YAML, loading persisted overrides from disk.
     pub fn new() -> Self {
-        let path = default_storage_path();
-        let (defaults, original_names) = parse_default_cvars();
-        let overrides = load_overrides(&path);
-        Self {
-            defaults,
-            original_names,
-            registered_defaults: RwLock::new(HashMap::new()),
-            registered_original_names: RwLock::new(HashMap::new()),
-            overrides: RwLock::new(overrides),
-            temporary_overrides: RwLock::new(HashMap::new()),
-            storage_path: path,
-        }
+        Self::with_path(default_storage_path())
     }
 
-    /// Create storage with a custom path (for testing).
-    #[cfg(test)]
+    /// Load and persist CVars in an explicitly selected session directory.
+    pub fn with_session_wtf_path(root: &Path) -> Self {
+        Self::with_path(root.join("cvars.json"))
+    }
+
     fn with_path(path: PathBuf) -> Self {
         let (defaults, original_names) = parse_default_cvars();
         let overrides = load_overrides(&path);

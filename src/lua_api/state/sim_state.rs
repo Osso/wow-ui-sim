@@ -89,6 +89,8 @@ pub struct SimState {
     pub(crate) party_countdown_request:
         Option<crate::c_api::c_party_info::countdown::CountdownRequest>,
     pub quest_portrait_state: Option<QuestPortraitState>,
+    /// Writable session storage selected before any persisted state is loaded.
+    pub session_wtf_path: PathBuf,
     pub cvars: CVarStorage,
     /// User-approved signed legacy gamma; simulator state only, never host gamma.
     #[cfg(feature = "client-wrath")]

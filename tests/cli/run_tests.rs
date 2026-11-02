@@ -24,6 +24,8 @@ fn run_fixture(source: &str) -> Output {
     copy_current_cvars(&data);
     Command::new("timeout")
         .args(["90", env!("CARGO_BIN_EXE_wow-sim")])
+        .arg("--session-wtf-path")
+        .arg(data.join("wow-sim"))
         .args(["--no-addons", "--no-saved-vars", "--addons-path"])
         .arg(addons)
         .args(["run-tests", ADDON])
@@ -112,7 +114,9 @@ fn delay_dispatches_addon_timer_and_updates_before_exec_lua() {
                 "--no-saved-vars",
                 "--addons-path",
             ])
-            .arg(&addons);
+            .arg(&addons)
+            .arg("--session-wtf-path")
+            .arg(data.join("wow-sim"));
         if let Some(delay) = delay {
             command.args(["--delay", &delay.to_string()]);
         }

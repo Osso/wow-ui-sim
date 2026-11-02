@@ -3,17 +3,11 @@ use std::collections::HashMap;
 use std::io;
 use std::path::{Path, PathBuf};
 
-const ADDONS_TXT_ENV: &str = "WOW_SIM_ADDONS_TXT";
-
-pub fn local_addons_txt_path() -> PathBuf {
-    if let Some(path) = std::env::var_os(ADDONS_TXT_ENV) {
+pub fn local_addons_txt_path(session_wtf_path: &Path) -> PathBuf {
+    if let Some(path) = std::env::var_os("WOW_SIM_ADDONS_TXT") {
         return PathBuf::from(path);
     }
-
-    dirs::data_local_dir()
-        .unwrap_or_else(|| PathBuf::from("."))
-        .join("wow-sim")
-        .join("AddOns.txt")
+    session_wtf_path.join("AddOns.txt")
 }
 
 pub fn read_addon_enable_overrides(path: &Path) -> io::Result<HashMap<String, bool>> {
@@ -28,8 +22,11 @@ pub fn write_addon_enable_overrides(path: &Path, addons: &[AddonInfo]) -> io::Re
     std::fs::write(path, format_addons_txt(addons))
 }
 
-pub fn save_local_addon_enable_overrides(addons: &[AddonInfo]) -> io::Result<()> {
-    write_addon_enable_overrides(&local_addons_txt_path(), addons)
+pub fn save_local_addon_enable_overrides(
+    session_wtf_path: &Path,
+    addons: &[AddonInfo],
+) -> io::Result<()> {
+    write_addon_enable_overrides(&local_addons_txt_path(session_wtf_path), addons)
 }
 
 fn parse_addons_txt(text: &str) -> HashMap<String, bool> {

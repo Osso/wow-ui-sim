@@ -271,8 +271,10 @@ fn write_addon(root: &Path, name: &str, metadata: &str, files: &[(&str, &str)]) 
 }
 
 fn run_cli(root: &Path, no_addons: bool, code: &str) -> Output {
+    let session = tempfile::tempdir().expect("create CLI session directory");
     let mut command = Command::new("timeout");
     command.args(["90", env!("CARGO_BIN_EXE_wow-sim"), "--no-saved-vars"]);
+    command.arg("--session-wtf-path").arg(session.path());
     if no_addons {
         command.arg("--no-addons");
     }

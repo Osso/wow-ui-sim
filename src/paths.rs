@@ -1,6 +1,7 @@
 //! Default filesystem discovery for local WoW resources.
 
 use std::path::{Path, PathBuf};
+use std::sync::atomic::{AtomicU64, Ordering};
 
 use crate::saved_variables::WtfConfig;
 
@@ -11,6 +12,34 @@ const ENV_WTF_ACCOUNT: &str = "WOW_SIM_WTF_ACCOUNT";
 const ENV_WTF_REALM: &str = "WOW_SIM_WTF_REALM";
 const ENV_WTF_CHARACTER: &str = "WOW_SIM_WTF_CHARACTER";
 const ENV_INCLUDE_BETA_ADDONS: &str = "WOW_SIM_INCLUDE_BETA_ADDONS";
+
+/// Default writable session state, separate from the read-only WoW WTF import.
+pub fn default_session_wtf_path() -> PathBuf {
+    dirs::data_local_dir()
+        .unwrap_or_else(|| PathBuf::from("."))
+        .join("wow-sim")
+}
+
+/// Preserve automatic isolation for legacy default constructors in test binaries.
+/// Explicit runtime constructors always use the directory supplied by their caller.
+pub(crate) fn default_constructor_session_wtf_path() -> PathBuf {
+    static NEXT_TEST_SESSION_ID: AtomicU64 = AtomicU64::new(1);
+    let in_test_binary = std::env::current_exe()
+        .ok()
+        .and_then(|path| path.parent().map(|parent| parent.ends_with("deps")))
+        .unwrap_or(false);
+
+    if in_test_binary {
+        let session_id = NEXT_TEST_SESSION_ID.fetch_add(1, Ordering::Relaxed);
+        return std::env::temp_dir().join(format!(
+            "wow-sim-session-{}-{}",
+            std::process::id(),
+            session_id
+        ));
+    }
+
+    default_session_wtf_path()
+}
 
 #[derive(Debug, Clone)]
 pub struct WowResourcePaths {

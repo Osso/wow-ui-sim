@@ -353,7 +353,8 @@ impl App {
 
     pub fn boot() -> (Self, Task<Message>) {
         let (env_rc, saved_vars) = Self::take_init_params();
-        let config = crate::config::SimConfig::load();
+        let session_wtf_path = env_rc.borrow().state().borrow().session_wtf_path.clone();
+        let config = crate::config::SimConfig::load_from_session_wtf(&session_wtf_path);
         Self::apply_config_to_state(&env_rc, &config);
 
         let log_messages = Vec::new();
