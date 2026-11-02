@@ -10,5 +10,5 @@
   "wt-global-api-C_PingSecure.GetTargetPingReceiver-84",
   "wt-global-api-C_PingSecure.GetTargetWorldPing-85",
   "wt-global-api-C_PingSecure.GetTargetWorldPingAndSend-86",
-  "wt-global-api-C_PingSecure.SendPing-87",
+  "wt-global-api-C_PingSecure.SendPing-87"
 ]
