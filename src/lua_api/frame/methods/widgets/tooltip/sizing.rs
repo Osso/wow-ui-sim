@@ -15,7 +15,7 @@ const DOUBLE_LINE_GAP: f32 = 20.0;
 const APPROX_GLYPH_WIDTH: f32 = 0.55;
 const TEXTURE_LINE_SIZE: f32 = 28.0;
 
-pub(super) fn refresh_tooltip_geometry(sim: &mut crate::lua_api::state::SimState, tooltip_id: u64) {
+pub(crate) fn refresh_tooltip_geometry(sim: &mut crate::lua_api::state::SimState, tooltip_id: u64) {
     if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Wrath {
         sim.widgets.mark_rect_dirty(tooltip_id);
         return;
