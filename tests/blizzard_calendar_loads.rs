@@ -417,6 +417,8 @@ fn calendar_context_type_selects_delete_confirmation(env: &WowLuaEnv) {
     row.calendar_type = "GUILD_EVENT".into();
     env.state().borrow_mut().calendar_day_events.insert((0, 15), vec![row]);
     env.exec(r#"
+        CalendarDayContextMenu_DeleteEvent()
+        StaticPopup_Hide('CALENDAR_DELETE_EVENT')
         assert(select('#', C_Calendar.ContextMenuEventGetCalendarType()) == 1)
         assert(C_Calendar.ContextMenuEventGetCalendarType() == nil)
         C_Calendar.ContextMenuSelectEvent(0, 15, 1)
