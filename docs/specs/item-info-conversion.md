@@ -1,6 +1,6 @@
 # ItemInfo conversion
 
-C_Item queries share item identity conversion. Retail build 70688 evidence is recorded in the WM23 item-a handoff; the pinned declaration for `C_Item.GetItemIDForItemInfo` is `Blizzard_APIDocumentationGenerated/ItemDocumentation.lua:559`.
+C_Item queries share item identity conversion. Retail build 70688 evidence is recorded in the WM23 item-a handoff; the pinned declaration for `C_Item.GetItemIDForItemInfo` is `Blizzard_APIDocumentationGenerated/ItemDocumentation.lua:559`. That document also declares ItemInfo arguments for `GetItemIconByID` (589), `GetItemMaxStackSizeByID` (794), `GetItemNameByID` (824), `GetItemQualityByID` (884), `IsItemDataCachedByID` (1483), and `RequestLoadItemDataByID` (1673).
 
 ## What it must do
 
@@ -25,6 +25,7 @@ C_Item queries share item identity conversion. Retail build 70688 evidence is re
 
 - [ ] Exact native name matching, duplicate-name selection, locale and malformed-link behavior remain unknown. The simulator uses case-insensitive matching and the lowest generated ID for duplicate names.
 - [ ] Exceptional numbers, full coercion rules and secret restrictions require further native proof.
+- [ ] Classic and Forever native conversion remains unverified; WM23 evidence is Retail build 70688.
 - [ ] The existing C_Item.IsItemInRange placeholder ignores item identity; it does not yet use the shared conversion.
 
 ## Out of scope
