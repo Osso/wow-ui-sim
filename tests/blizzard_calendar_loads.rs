@@ -310,7 +310,7 @@ fn calendar_context_menu_reflects_supplied_permissions(env: &WowLuaEnv) {
 }
 
 prefork_full_ui_case! {
-fn calendar_holiday_and_raid_views_use_supplied_day_events(env: &WowLuaEnv) {
+fn calendar_holiday_view_uses_supplied_day_event(env: &WowLuaEnv) {
     use wow_ui_sim::c_api::c_calendar::day_event_record::CalendarHolidayRecord;
     load_addon(&env.loader_env(), &calendar_toc()).unwrap();
     let mut row = calendar_test_record("event");
@@ -325,17 +325,22 @@ fn calendar_holiday_and_raid_views_use_supplied_day_events(env: &WowLuaEnv) {
         CalendarViewHolidayFrame_Update()
         assert(CalendarViewHolidayFrame.ScrollingFont:GetFontString():GetText() == 'Gather the harvest')
     "#).unwrap();
-    {
-        let mut state = env.state().borrow_mut();
-        let row = &mut state.calendar_day_events.get_mut(&(0, 15)).unwrap()[0];
-        row.holiday = None;
-        row.calendar_type = "RAID_LOCKOUT".into();
-        row.raid_id = 42;
-        row.raid_name = Some("Sunken Vault".into());
-        row.difficulty_name = "Heroic".into();
-    }
+    env.state().borrow_mut().calendar_day_events.get_mut(&(0, 15)).unwrap()[0].holiday = None;
+    env.exec("assert(select('#', C_Calendar.GetHolidayInfo(0, 15, 1)) == 0)").unwrap();
+}
+}
+
+prefork_full_ui_case! {
+fn calendar_raid_view_uses_supplied_day_event(env: &WowLuaEnv) {
+    load_addon(&env.loader_env(), &calendar_toc()).unwrap();
+    let mut row = calendar_test_record("event");
+    row.calendar_type = "RAID_LOCKOUT".into();
+    row.raid_id = 42;
+    row.raid_name = Some("Sunken Vault".into());
+    row.difficulty_name = "Heroic".into();
+    env.state().borrow_mut().calendar_day_events.insert((0, 15), vec![row]);
     env.exec(r#"
-        assert(select('#', C_Calendar.GetHolidayInfo(0, 15, 1)) == 0)
+        C_Calendar.OpenEvent(0, 15, 1)
         CalendarViewRaidFrame_Update()
         assert(CalendarViewRaidFrame.ScrollingFont:GetFontString():GetText():find('Sunken Vault', 1, true))
     "#).unwrap();
