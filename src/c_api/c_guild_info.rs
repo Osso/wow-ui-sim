@@ -62,9 +62,8 @@ fn read_guild_name(state: &LuaState, usage: &str) -> LuaResult<String> {
     }
 }
 
-fn request_allowed(state: &mut LuaState, name: &str) -> LuaResult<bool> {
-    if crate::lua_api::globals::real::protected_globals::protected_call_refused(state, name, false)?
-    {
+fn request_allowed(state: &mut LuaState) -> LuaResult<bool> {
+    if crate::lua_api::globals::real::protected_globals::refuse_tainted_caller(state)? {
         return Ok(false);
     }
     Ok(!borrow_state(state)?.guild_request_inputs.action_disabled)
@@ -72,7 +71,7 @@ fn request_allowed(state: &mut LuaState, name: &str) -> LuaResult<bool> {
 
 fn demote(state: &mut LuaState) -> LuaResult<u32> {
     let name = read_guild_name(state, "Usage: C_GuildInfo.Demote(name)")?;
-    if !request_allowed(state, "C_GuildInfo.Demote")? {
+    if !request_allowed(state)? {
         return Ok(0);
     }
     if name.len() > 48 {
@@ -97,7 +96,7 @@ fn demote(state: &mut LuaState) -> LuaResult<u32> {
 
 fn set_leader(state: &mut LuaState) -> LuaResult<u32> {
     let name = read_guild_name(state, "Usage: C_GuildInfo.SetLeader(name)")?;
-    if !request_allowed(state, "C_GuildInfo.SetLeader")? {
+    if !request_allowed(state)? {
         return Ok(0);
     }
     let mut sim = borrow_state_mut(state)?;
@@ -119,7 +118,7 @@ fn set_leader(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn disband(state: &mut LuaState) -> LuaResult<u32> {
-    if !request_allowed(state, "C_GuildInfo.Disband")? {
+    if !request_allowed(state)? {
         return Ok(0);
     }
     let mut sim = borrow_state_mut(state)?;

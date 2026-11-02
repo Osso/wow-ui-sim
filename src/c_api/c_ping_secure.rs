@@ -1,24 +1,50 @@
-//! Minimal `C_PingSecure` surface.
+//! `C_PingSecure` callback slots, radial-frame creation and error display.
 //!
-//! Retail PingUI registers secure callbacks through this namespace during
-//! startup. The simulator does not model protected ping-wheel creation yet, so
-//! callbacks are accepted and retained as inert compatibility state while
-//! `CreateFrame` is a no-op.
+//! Retail 12.1.5 (WM38, WM38F) refuses tainted callers of every member before
+//! reading arguments, creates the radial frame once, and dispatches
+//! `PING_SYSTEM_ERROR`. Earlier epochs keep inert callback storage and a no-op
+//! `CreateFrame`. Hit testing and sends await native evidence (WM47).
 
 use crate::c_api::helpers::ensure_namespace;
-use crate::lua_api::methods::{create_table, table_set};
+use crate::lua_api::globals::create_frame::helpers_shared::create_frame_instance;
+use crate::lua_api::globals::real::protected_globals::refuse_tainted_caller;
+use crate::lua_api::globals::state_backed_queries::dispatch_event_now;
+use crate::lua_api::methods::{
+    borrow_state, borrow_state_mut, call_function_state, create_table, frame_ref, table_get,
+    table_set, val_to_string,
+};
+use crate::lua_api::script_helpers::call_error_handler_state;
 use crate::lua_bridge::{stack_val, table_set_rust_fn_static};
+use crate::widget::WidgetType;
+use rilua::table_security::unwrap_secret;
 use rilua::vm::state::LuaState;
-use rilua::{LuaResult, Val};
+use rilua::{LuaResult, Val, runtime_error};
 
 const CALLBACK_TABLE_KEY: &str = "__wow_ping_secure_callbacks";
+
+/// WM38 and PingManagerSecureDocumentation.lua describe the Retail 12.1.5 surface.
+fn is_retail_12_1_5() -> bool {
+    crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail
+        && cfg!(feature = "retail-12-1-5")
+}
 
 pub(crate) fn register_c_ping_secure_surface(state: &mut LuaState) -> LuaResult<()> {
     let table_ref = ensure_namespace(state, "C_PingSecure")?;
     table_set_rust_fn_static(state, table_ref, "CreateFrame", create_frame)?;
     #[cfg(any(feature = "retail-12-0-7", feature = "retail-12-1-0"))]
     register_global_callback_accessors(state)?;
-    register_callback_setters(state, table_ref)
+    register_callback_setters(state, table_ref)?;
+    if is_retail_12_1_5() {
+        // PingManagerSecureDocumentation.lua:21-30; the clear member is not declared.
+        table_set_rust_fn_static(state, table_ref, "DisplayError", display_error)
+    } else {
+        table_set_rust_fn_static(
+            state,
+            table_ref,
+            "ClearPendingPingOffScreenCallback",
+            clear_pending_ping_off_screen_callback,
+        )
+    }
 }
 
 #[cfg(any(feature = "retail-12-0-7", feature = "retail-12-1-0"))]
@@ -70,12 +96,7 @@ fn register_callback_setters(
     for (name, function) in PING_SECURE_CALLBACK_SETTERS {
         table_set_rust_fn_static(state, table_ref, name, *function)?;
     }
-    table_set_rust_fn_static(
-        state,
-        table_ref,
-        "ClearPendingPingOffScreenCallback",
-        clear_pending_ping_off_screen_callback,
-    )
+    Ok(())
 }
 
 const PING_SECURE_CALLBACK_SETTERS: &[(&str, fn(&mut LuaState) -> LuaResult<u32>)] = &[
@@ -110,16 +131,68 @@ const PING_SECURE_CALLBACK_SETTERS: &[(&str, fn(&mut LuaState) -> LuaResult<u32>
     ),
 ];
 
-fn create_frame(_state: &mut LuaState) -> LuaResult<u32> {
+/// WM38F: an unnamed native frame is created once, stored, then announced
+/// synchronously to the installed radial callback; repeats are no-ops.
+fn create_frame(state: &mut LuaState) -> LuaResult<u32> {
+    if !is_retail_12_1_5() || refuse_tainted_caller(state)? {
+        return Ok(0);
+    }
+    if borrow_state(state)?.ping_radial_frame.is_some() {
+        return Ok(0);
+    }
+    let frame_id =
+        create_frame_instance(state, WidgetType::Frame, "Frame", None, None, false, None)?;
+    borrow_state_mut(state)?.ping_radial_frame = Some(frame_id);
+    notify_radial_wheel_created(state, frame_id)?;
     Ok(0)
+}
+
+fn notify_radial_wheel_created(state: &mut LuaState, frame_id: u64) -> LuaResult<()> {
+    let callbacks = callback_table(state);
+    let callback = table_get(state, callbacks, "pingRadialWheelCreated");
+    if !matches!(callback, Val::Function(_)) {
+        return Ok(());
+    }
+    let frame = frame_ref(state, frame_id)?;
+    // WM38: callback wrappers isolate Lua errors from the native caller.
+    if let Err(error) = call_function_state(state, callback, &[frame]) {
+        call_error_handler_state(state, &error.to_string());
+    }
+    Ok(())
+}
+
+/// WM38: nonempty string-compatible text dispatches `PING_SYSTEM_ERROR`.
+fn display_error(state: &mut LuaState) -> LuaResult<u32> {
+    if refuse_tainted_caller(state)? {
+        return Ok(0);
+    }
+    let text = read_error_text(state)?;
+    if !text.is_empty() {
+        let message = Val::Str(state.gc.intern_string(text.as_bytes()));
+        dispatch_event_now(state, "PING_SYSTEM_ERROR", &[message])?;
+    }
+    Ok(0)
+}
+
+fn read_error_text(state: &LuaState) -> LuaResult<String> {
+    let value = unwrap_secret(state, stack_val(state, 1))?;
+    let text = match value {
+        Val::Str(_) => val_to_string(state, value),
+        Val::Num(_) => Some(value.to_string()),
+        _ => None,
+    };
+    text.ok_or_else(|| runtime_error("Usage: C_PingSecure.DisplayError(error)"))
 }
 
 #[cfg(any(feature = "retail-12-0-7", feature = "retail-12-1-0"))]
 fn set_pending_ping_off_screen_callback(state: &mut LuaState) -> LuaResult<u32> {
-    set_callback(state, "pendingPingOffScreen")
+    store_stack_callback(state, "pendingPingOffScreen")
 }
 
 fn set_namespace_pending_ping_off_screen_callback(state: &mut LuaState) -> LuaResult<u32> {
+    if is_retail_12_1_5() {
+        return set_namespace_callback(state, "pendingPingOffScreen");
+    }
     let callback = stack_val(state, 1);
     #[cfg(feature = "retail-12-0-7")]
     let callback = authenticate_pending_ping_callback(state, callback)?;
@@ -151,7 +224,7 @@ fn get_pending_ping_off_screen_callback(state: &mut LuaState) -> LuaResult<u32> 
 
 #[cfg(any(feature = "retail-12-0-7", feature = "retail-12-1-0"))]
 fn set_button_callback(state: &mut LuaState) -> LuaResult<u32> {
-    set_callback(state, "button")
+    store_stack_callback(state, "button")
 }
 
 #[cfg(any(feature = "retail-12-0-7", feature = "retail-12-1-0"))]
@@ -161,7 +234,7 @@ fn get_button_callback(state: &mut LuaState) -> LuaResult<u32> {
 
 #[cfg(any(feature = "retail-12-0-7", feature = "retail-12-1-0"))]
 fn set_toggle_run_callback(state: &mut LuaState) -> LuaResult<u32> {
-    set_callback(state, "toggleRun")
+    store_stack_callback(state, "toggleRun")
 }
 
 #[cfg(any(feature = "retail-12-0-7", feature = "retail-12-1-0"))]
@@ -174,34 +247,59 @@ fn clear_pending_ping_off_screen_callback(state: &mut LuaState) -> LuaResult<u32
 }
 
 fn set_ping_cooldown_started_callback(state: &mut LuaState) -> LuaResult<u32> {
-    set_callback(state, "pingCooldownStarted")
+    set_namespace_callback(state, "pingCooldownStarted")
 }
 
 fn set_ping_pin_frame_added_callback(state: &mut LuaState) -> LuaResult<u32> {
-    set_callback(state, "pingPinFrameAdded")
+    set_namespace_callback(state, "pingPinFrameAdded")
 }
 
 fn set_ping_pin_frame_removed_callback(state: &mut LuaState) -> LuaResult<u32> {
-    set_callback(state, "pingPinFrameRemoved")
+    set_namespace_callback(state, "pingPinFrameRemoved")
 }
 
 fn set_ping_pin_frame_screen_clamp_state_updated_callback(state: &mut LuaState) -> LuaResult<u32> {
-    set_callback(state, "pingPinFrameScreenClampStateUpdated")
+    set_namespace_callback(state, "pingPinFrameScreenClampStateUpdated")
 }
 
 fn set_ping_radial_wheel_created_callback(state: &mut LuaState) -> LuaResult<u32> {
-    set_callback(state, "pingRadialWheelCreated")
+    set_namespace_callback(state, "pingRadialWheelCreated")
 }
 
 fn set_send_macro_ping_callback(state: &mut LuaState) -> LuaResult<u32> {
-    set_callback(state, "sendMacroPing")
+    set_namespace_callback(state, "sendMacroPing")
 }
 
 fn set_toggle_ping_listener_callback(state: &mut LuaState) -> LuaResult<u32> {
-    set_callback(state, "togglePingListener")
+    set_namespace_callback(state, "togglePingListener")
 }
 
-fn set_callback(state: &mut LuaState, key: &str) -> LuaResult<u32> {
+/// Retail 12.1.5 setters refuse tainted callers, then replace the slot with a
+/// required callback; earlier epochs store the argument as given.
+fn set_namespace_callback(state: &mut LuaState, key: &str) -> LuaResult<u32> {
+    if !is_retail_12_1_5() {
+        return store_stack_callback(state, key);
+    }
+    if refuse_tainted_caller(state)? {
+        return Ok(0);
+    }
+    let callback = read_required_callback(state)?;
+    let callbacks = callback_table(state);
+    table_set(state, callbacks, key, callback);
+    Ok(0)
+}
+
+/// WM38: a required callback read through the secret-aware converter.
+/// INFERRED: only functions convert; missing, nil and other values are argument errors.
+fn read_required_callback(state: &LuaState) -> LuaResult<Val> {
+    let callback = unwrap_secret(state, stack_val(state, 1))?;
+    match callback {
+        Val::Function(_) => Ok(callback),
+        _ => Err(runtime_error("ping callback must be a function")),
+    }
+}
+
+fn store_stack_callback(state: &mut LuaState, key: &str) -> LuaResult<u32> {
     let callbacks = callback_table(state);
     table_set(state, callbacks, key, stack_val(state, 1));
     Ok(0)
@@ -216,7 +314,7 @@ fn clear_callback(state: &mut LuaState, key: &str) -> LuaResult<u32> {
 #[cfg(any(feature = "retail-12-0-7", feature = "retail-12-1-0"))]
 fn get_callback(state: &mut LuaState, key: &str) -> LuaResult<u32> {
     let callbacks = callback_table(state);
-    let callback = crate::lua_api::methods::table_get(state, callbacks, key);
+    let callback = table_get(state, callbacks, key);
     state.push(callback);
     Ok(1)
 }

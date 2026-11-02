@@ -1,7 +1,9 @@
 //! Protected-call policy based on the community API tags; native membership is unknown.
 
 use crate::lua_api::globals::state_backed_queries::dispatch_event_now;
-use crate::lua_api::methods::{borrow_state, create_string, registry_get, registry_set};
+use crate::lua_api::methods::{
+    borrow_state, borrow_state_mut, create_string, registry_get, registry_set,
+};
 use crate::lua_bridge::FromStack;
 use rilua::vm::state::LuaState;
 use rilua::{LuaApiMut, LuaResult, Val};
@@ -199,19 +201,60 @@ fn securecall_with_origin(state: &mut LuaState) -> LuaResult<u32> {
     Ok((state.top - start) as u32)
 }
 
+/// Taint provenance of the active stack, or the origin recorded by securecall.
+fn read_caller_origin(state: &mut LuaState) -> Val {
+    let origin = state.call_stack[..=state.ci]
+        .iter()
+        .rev()
+        .find_map(|frame| frame.taint.clone());
+    match origin {
+        Some(origin) => create_string(state, &origin),
+        None => registry_get(state, SECURECALL_ORIGIN),
+    }
+}
+
+/// Bytes the native diagnostic buffer keeps, including the `()` suffix (WM38F).
+const MAX_FUNCTION_NAME_BYTES: usize = 1023;
+
+/// WM38F reason-0 check shared by Retail 12.1.5 `C_PingSecure` and guild requests.
+/// A tainted caller is refused; outside reporter re-entry it is reported as
+/// `ADDON_ACTION_FORBIDDEN(source, liveDebugName .. "()")`.
+pub(crate) fn refuse_tainted_caller(state: &mut LuaState) -> LuaResult<bool> {
+    let origin = read_caller_origin(state);
+    if origin == Val::Nil {
+        return Ok(false);
+    }
+    let reentered = borrow_state(state)?.restriction_report_active;
+    if !reentered {
+        report_forbidden_call(state, origin)?;
+    }
+    Ok(true)
+}
+
+fn report_forbidden_call(state: &mut LuaState, origin: Val) -> LuaResult<()> {
+    let function_name = read_live_function_name(state);
+    let function_name = Val::Str(state.gc.intern_string(&function_name));
+    borrow_state_mut(state)?.restriction_report_active = true;
+    let dispatched = dispatch_event_now(state, "ADDON_ACTION_FORBIDDEN", &[origin, function_name]);
+    borrow_state_mut(state)?.restriction_report_active = false;
+    dispatched
+}
+
+/// The current function's Lua debug name plus `()`, or `UNKNOWN()`, cut to the buffer.
+fn read_live_function_name(state: &LuaState) -> Vec<u8> {
+    let debug_name = rilua::vm::debug_info::getfuncname(state, state.ci, &state.gc.string_arena)
+        .map_or_else(|| "UNKNOWN".to_owned(), |(_, name)| name);
+    let mut function_name = format!("{debug_name}()").into_bytes();
+    function_name.truncate(MAX_FUNCTION_NAME_BYTES);
+    function_name
+}
+
 pub(crate) fn protected_call_refused(
     state: &mut LuaState,
     name: &str,
     combat_only: bool,
 ) -> LuaResult<bool> {
-    let origin = state.call_stack[..=state.ci]
-        .iter()
-        .rev()
-        .find_map(|frame| frame.taint.clone());
-    let origin = match origin {
-        Some(origin) => create_string(state, &origin),
-        None => registry_get(state, SECURECALL_ORIGIN),
-    };
+    let origin = read_caller_origin(state);
     let blocked = origin != Val::Nil && (!combat_only || borrow_state(state)?.in_combat_lockdown());
     if blocked {
         let function = create_string(state, &format!("{name}()"));

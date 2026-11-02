@@ -99,6 +99,10 @@ pub struct SimState {
     pub guild_roster_selection: usize,
     pub guild_request_inputs: crate::c_api::c_guild_info::GuildRequestInputs,
     pub runeforge_interaction: crate::c_api::c_legendary_crafting::RuneforgeInteraction,
+    /// Set while a restriction report dispatches; nested refusals are not reported.
+    pub restriction_report_active: bool,
+    /// Retail 12.1.5 ping radial frame, created once by `C_PingSecure.CreateFrame`.
+    pub ping_radial_frame: Option<u64>,
     /// Explicit Wrath scenario inputs; empty means unsupplied.
     pub wrath_glyph_sockets: HashMap<(u32, u32), WrathGlyphSocket>,
     pub wrath_unspent_talent_points: HashMap<u32, u32>,
