@@ -1,0 +1,139 @@
+//! API-level WM57 tests for local equip requests and item locks.
+#![cfg(feature = "client-retail")]
+
+use wow_ui_sim::c_api::item_spell::item_equip::OwnedItemEquipInputs;
+use wow_ui_sim::lua_api::WowLuaEnv;
+use wow_ui_sim::lua_api::state::BagItem;
+
+fn item(item_id: u32, identity: Option<u64>) -> BagItem {
+    BagItem {
+        owned_identity: identity,
+        item_id,
+        stack_count: 1,
+        hyperlink: None,
+        durability: None,
+        applied_transmog: None,
+    }
+}
+
+#[test]
+fn first_matching_locked_copy_prevents_fallthrough() {
+    let env = WowLuaEnv::new().unwrap();
+    {
+        let mut sim = env.state().borrow_mut();
+        sim.bag_items.clear();
+        sim.bag_items.insert((0, 2), item(7005, Some(31)));
+        sim.bag_items.insert((0, 3), item(7005, Some(32)));
+        sim.item_equip.inputs.insert(
+            31,
+            OwnedItemEquipInputs {
+                native_flags: 2048,
+                ..Default::default()
+            },
+        );
+    }
+    env.exec(
+        r#"
+        local first = ItemLocation:CreateFromBagAndSlot(0, 2)
+        local second = ItemLocation:CreateFromBagAndSlot(0, 3)
+        assert(C_Item.IsLocked(first) and not C_Item.IsLocked(second))
+        C_Item.EquipItemByName('Skinning Knife')
+        assert(C_Item.IsLocked(first) and not C_Item.IsLocked(second))
+        assert(GetCursorInfo() == nil)
+    "#,
+    )
+    .unwrap();
+    assert!(env.state().borrow().item_equip.requests.is_empty());
+}
+
+#[test]
+fn direct_request_retains_cursor_and_lock_follows_the_owned_item() {
+    let env = WowLuaEnv::new().unwrap();
+    {
+        let mut sim = env.state().borrow_mut();
+        sim.bag_items.clear();
+        sim.player.equipped_items.clear();
+        sim.bag_items.insert((0, 2), item(7005, Some(71)));
+    }
+    env.exec(
+        r#"
+        C_Item.PickupItem(6948)
+        C_Item.EquipItemByName('item:7005', 16)
+        local kind, id = GetCursorInfo()
+        assert(kind == 'item' and id == 6948)
+        assert(C_Item.IsLocked(ItemLocation:CreateFromBagAndSlot(0, 2)))
+        ClearCursor()
+        assert(C_Container.GetContainerItemInfo(0, 2).isLocked)
+        assert(not pcall(C_Item.EquipItemByName, 7005, 20))
+    "#,
+    )
+    .unwrap();
+    {
+        let mut sim = env.state().borrow_mut();
+        assert_eq!(sim.item_equip.requests.len(), 1);
+        assert_eq!(sim.item_equip.requests[0].destination, Some(16));
+        assert!(sim.player.equipped_items.is_empty());
+        let moved = sim.bag_items.remove(&(0, 2)).unwrap();
+        sim.bag_items.insert((0, 5), moved);
+        sim.bag_items.insert((0, 2), item(7005, Some(72)));
+    }
+    env.exec(
+        r#"
+        assert(not C_Container.GetContainerItemInfo(0, 2).isLocked)
+        assert(C_Container.GetContainerItemInfo(0, 5).isLocked)
+        assert(C_Item.IsLocked(ItemLocation:CreateFromBagAndSlot(0, 5)))
+    "#,
+    )
+    .unwrap();
+}
+
+#[test]
+fn automatic_class_six_clears_without_request() {
+    let env = WowLuaEnv::new().unwrap();
+    {
+        let mut sim = env.state().borrow_mut();
+        sim.bag_items.clear();
+        sim.bag_items.insert((0, 1), item(24412, Some(11)));
+    }
+    env.exec(
+        r#"
+        C_Item.EquipItemByName(24412)
+        assert(GetCursorInfo() == nil)
+        assert(not C_Container.GetContainerItemInfo(0, 1).isLocked)
+    "#,
+    )
+    .unwrap();
+    assert!(env.state().borrow().item_equip.requests.is_empty());
+}
+
+#[test]
+fn account_conversion_retains_cursor_and_clear_restores_lock() {
+    let env = WowLuaEnv::new().unwrap();
+    {
+        let mut sim = env.state().borrow_mut();
+        sim.bag_items.clear();
+        sim.bag_items.insert((0, 1), item(7005, Some(42)));
+        sim.item_equip.inputs.insert(
+            42,
+            OwnedItemEquipInputs {
+                account_conversion: true,
+                ..Default::default()
+            },
+        );
+    }
+    env.exec(r#"
+        local seen = {}
+        local listener = CreateFrame('Frame')
+        for _, name in ipairs({'ITEM_LOCK_CHANGED', 'ITEM_LOCKED', 'ITEM_UNLOCKED', 'CONVERT_TO_BIND_TO_ACCOUNT_CONFIRM'}) do
+            listener:RegisterEvent(name)
+        end
+        listener:SetScript('OnEvent', function(_, name) seen[#seen + 1] = name end)
+        C_Item.EquipItemByName(7005)
+        assert(CursorHasItem() and C_Container.GetContainerItemInfo(0, 1).isLocked)
+        assert(table.concat(seen, ',') == 'ITEM_LOCK_CHANGED,ITEM_LOCKED,CONVERT_TO_BIND_TO_ACCOUNT_CONFIRM')
+        ClearCursor()
+        assert(not C_Container.GetContainerItemInfo(0, 1).isLocked)
+        assert(seen[4] == 'ITEM_LOCK_CHANGED' and seen[5] == 'ITEM_UNLOCKED')
+    "#).unwrap();
+    assert!(env.state().borrow().item_equip.requests.is_empty());
+}
