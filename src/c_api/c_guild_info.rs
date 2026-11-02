@@ -13,6 +13,20 @@ use crate::lua_bridge::{FromStack, table_set_rust_fn_static};
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val, runtime_error};
 
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub enum GuildRequest {
+    Demote(String),
+    SetLeader(String),
+    Disband,
+}
+
+#[derive(Debug, Default)]
+pub struct GuildRequestInputs {
+    pub action_disabled: bool,
+    pub transport_available: bool,
+    pub submitted: Vec<GuildRequest>,
+}
+
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub struct GuildTabardMetadata {
     pub emblem_file_id: u32,

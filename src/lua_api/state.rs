@@ -66,6 +66,7 @@ macro_rules! build_empty_sim_state {
             #[cfg(feature = "client-wrath")]
             legacy_gamma: 0.0,
             guild_roster_selection: 0,
+            guild_request_inputs: Default::default(),
             wrath_glyph_sockets: Default::default(),
             wrath_unspent_talent_points: Default::default(),
             wrath_talent_tabs: Default::default(),
