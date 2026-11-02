@@ -1,7 +1,8 @@
 use std::path::PathBuf;
 
 prefork_full_ui_case! {
-fn action_bar_settings_reflect_forced_visibility_rules(_env: &WowLuaEnv) {
+fn action_bar_settings_reflect_forced_visibility_rules(env: &WowLuaEnv) {
+    let _ = env;
     for (forced, hidden, expected) in [(0, 0, 7), (1, 0, 0), (0, -2, 0), (0, 0, 7)] {
         let env = load_game_ui_before_startup();
         let probe = format!(r#"
