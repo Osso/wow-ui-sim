@@ -70,7 +70,17 @@ pub(super) fn register_c_currency_info(state: &mut LuaState) -> LuaResult<()> {
     for &(name, func) in CURRENCY_INFO_METHODS {
         table_set_rust_fn_static(state, table_ref, name, func)?;
     }
-    if cfg!(any(feature = "client-retail", feature = "client-ptr")) {
+    if matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail | crate::client_profile::ClientProfile::Ptr
+    ) {
+        // Retail CurrencyInfoDocumentation.lua:442-455.
+        table_set_rust_fn_static(
+            state,
+            table_ref,
+            "IsCurrencyContainer",
+            is_currency_container,
+        )?;
         table_set_rust_fn_static(
             state,
             table_ref,
@@ -92,6 +102,35 @@ pub(super) fn register_c_currency_info(state: &mut LuaState) -> LuaResult<()> {
         c_currency_get_list_size,
     )?;
     Ok(())
+}
+
+fn read_container_integer(state: &LuaState, index: i32) -> LuaResult<i32> {
+    let value = stack_val(state, index);
+    let number = match value {
+        Val::Num(number) => Some(number),
+        Val::Str(_) => val_to_string(state, value).and_then(|text| text.trim().parse().ok()),
+        _ => None,
+    }
+    .ok_or_else(|| rilua::runtime_error("IsCurrencyContainer expects two numeric arguments"))?;
+    if !number.is_finite() || number < i32::MIN as f64 || number > i32::MAX as f64 {
+        return Err(rilua::runtime_error(
+            "IsCurrencyContainer argument out of range",
+        ));
+    }
+    Ok(number as i32)
+}
+
+fn is_currency_container(state: &mut LuaState) -> LuaResult<u32> {
+    let currency = read_container_integer(state, 1)?;
+    let quantity = read_container_integer(state, 2)?;
+    let rows = sim_data::currency_containers::CURRENCY_CONTAINERS;
+    let first = rows.partition_point(|row| row.0 < currency);
+    let found = rows[first..]
+        .iter()
+        .take_while(|row| row.0 == currency)
+        .any(|&(_, min, max)| quantity >= min && (max == 0 || quantity <= max));
+    state.push(Val::Bool(found));
+    Ok(1)
 }
 
 #[cfg(feature = "retail-12-0-0")]
