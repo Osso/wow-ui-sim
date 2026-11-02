@@ -382,6 +382,42 @@ fn calendar_guild_event_navigation_rematches_current_day_order(env: &WowLuaEnv) 
 }
 
 prefork_full_ui_case! {
+fn calendar_context_menu_copies_selected_event(env: &WowLuaEnv) {
+    use wow_ui_sim::c_api::c_calendar::{CivilDateTime, DisplayedMonth};
+    load_addon(&env.loader_env(), &calendar_toc()).unwrap();
+    {
+        let mut state = env.state().borrow_mut();
+        state.calendar_now = CivilDateTime { year: 2026, month: 4, day: 1, hour: 12, minute: 0 };
+        state.calendar_displayed_month = DisplayedMonth { year: 2026, month: 4 };
+        let mut first = calendar_test_record("first");
+        first.calendar_type = "PLAYER".into();
+        first.invite_role_markers = 6;
+        let mut second = calendar_test_record("second");
+        second.calendar_type = "PLAYER".into();
+        second.invite_role_markers = 6;
+        state.calendar_day_events.insert((0, 15), vec![first, second]);
+    }
+    env.exec(r#"
+        C_Calendar.ContextMenuSelectEvent(0, 15, 2)
+        local root = {buttons = {}}
+        function root:SetTag(_) end
+        function root:CreateButton(label, callback) self.buttons[label] = callback end
+        function root:QueueDivider() end
+        function root:HasElements() return next(self.buttons) ~= nil end
+        function root:AddMenuAcquiredCallback(_) end
+        function root:AddMenuReleasedCallback(_) end
+        GenerateDayContextMenu(nil, root, CALENDAR_CONTEXTMENU_FLAG_SHOWEVENT,
+            {day=15, monthOffset=0}, {eventIndex=2})
+        assert(type(root.buttons[CALENDAR_COPY_EVENT]) == 'function')
+        root.buttons[CALENDAR_COPY_EVENT]()
+        C_Calendar.ContextMenuSelectEvent(0, 15, 1)
+    "#).unwrap();
+    let state = env.state().borrow();
+    assert_eq!(state.calendar_clipboard.as_ref().map(|event| event.event_id.as_str()), Some("second"));
+}
+}
+
+prefork_full_ui_case! {
 fn calendar_context_clipboard_controls_paste_menu(env: &WowLuaEnv) {
     use wow_ui_sim::c_api::c_calendar::{CivilDateTime, DisplayedMonth};
     load_addon(&env.loader_env(), &calendar_toc()).unwrap();
