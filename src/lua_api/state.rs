@@ -440,6 +440,7 @@ macro_rules! build_empty_sim_state {
             item_cooldowns: ::std::collections::HashMap::new(),
             action_ui_buttons: $collections.action_ui_buttons,
             cursor_item: $runtime.cursor_item,
+            cursor_storage: Default::default(),
             container_actions: Default::default(),
             item_upgrade_eligibility: Default::default(),
             loading_addon_index: $runtime.loading_addon_index,

@@ -541,6 +541,8 @@ pub struct SimState {
     pub item_cooldowns: HashMap<u32, SpellCooldownState>,
     pub action_ui_buttons: Vec<(u64, u32)>,
     pub cursor_item: Option<CursorInfo>,
+    /// Retail native cursor storage beside the payload (WM46).
+    pub cursor_storage: crate::lua_api::globals::real::cursor_model::CursorStorage,
     pub container_actions: crate::c_api::container_actions::ContainerActions,
     pub item_upgrade_eligibility: crate::c_api::item_upgrade_eligibility::ItemUpgradeEligibility,
     pub loading_addon_index: Option<u16>,

@@ -84,7 +84,7 @@ fn pickup_spell(state: &mut LuaState) -> LuaResult<u32> {
     let Some(spell_id) = stack_u32(state, 1) else {
         return Ok(0);
     };
-    borrow_state_mut(state)?.cursor_item = Some(CursorInfo::Spell { spell_id });
+    crate::lua_api::globals::real::cursor_model::place(state, CursorInfo::Spell { spell_id })?;
     Ok(0)
 }
 
@@ -111,10 +111,11 @@ fn pickup_pet_action(state: &mut LuaState) -> LuaResult<u32> {
     let Some(slot) = stack_u32(state, 1) else {
         return Ok(0);
     };
-    borrow_state_mut(state)?.cursor_item = Some(CursorInfo::PetAction {
+    let cursor = CursorInfo::PetAction {
         slot,
         spell_id: PET_ACTION_SPELL_OFFSET.saturating_add(slot),
-    });
+    };
+    crate::lua_api::globals::real::cursor_model::place(state, cursor)?;
     Ok(0)
 }
 
@@ -123,7 +124,7 @@ fn pickup_macro(state: &mut LuaState) -> LuaResult<u32> {
     let Some(macro_index) = stack_u32(state, 1) else {
         return Ok(0);
     };
-    borrow_state_mut(state)?.cursor_item = Some(CursorInfo::Macro { macro_index });
+    crate::lua_api::globals::real::cursor_model::place(state, CursorInfo::Macro { macro_index })?;
     Ok(0)
 }
 

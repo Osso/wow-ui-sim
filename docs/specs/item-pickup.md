@@ -2,9 +2,8 @@
 
 ## What it must do
 
-- Retail `C_Item.PickupItem(itemInfo)` first clears the current cursor, then places the item ID on an ActionBar cursor (native mode 6; WM46 names it ActionBar, not Item, which is mode 1) for a nonzero item. Item ID 0 only clears.
-- Clearing a mode-6 cursor emits `ACTIONBAR_HIDEGRID`, then `CURSOR_CHANGED(true, 0, 6, oldItemID)`. Clearing an owned-item cursor (mode 1) emits `CURSOR_CHANGED(true, 0, 1, 0)`. An empty cursor emits nothing.
-- A new pickup emits `ACTIONBAR_SHOWGRID`, then `CURSOR_CHANGED(false, 6, 0, 0)`; the fourth value is the stored ID after clearing, not the new ID.
+- Retail `C_Item.PickupItem(itemInfo)` first runs the shared cursor clear, then places the item ID on an ActionBar cursor (native mode 6; WM46 names it ActionBar, not Item, which is mode 1) for a nonzero item. Item ID 0 only clears.
+- Clear, grid and `CURSOR_CHANGED` rules are the shared [cursor model](cursor-model.md). For this pickup: `ACTIONBAR_SHOWGRID`, then `CURSOR_CHANGED(false, 6, 0, S)`, where S is the stored ID after clearing, not the new ID.
 - `GetCursorInfo()` returns `("item", itemID, link)` for a mode-6 cursor with item metadata, and zero values without metadata or with an empty cursor. `CursorHasItem()` is false for mode 6.
 - A missing or unparseable item argument raises an error.
 
@@ -14,6 +13,5 @@ Retail `Blizzard_APIDocumentationGenerated/ItemDocumentation.lua` declares `Pick
 
 ## Known gaps
 
-- Replacing any other cursor kind (spell, action, pet action, macro, talent, money, transmog outfit) clears it with the simulator's argument-less `CURSOR_CHANGED`; native mode numbers and stored IDs await WM46. `ClearCursor` and other cursor producers keep argument-less events and do not hide the grid.
-- Owned-item replacement does not model lock-reason release or the old-item cleanup notification; the simulator drops the payload like `ClearCursor`. Placing a mode-6 cursor on an action bar is not modeled.
+- Owned-item replacement does not model lock-reason release or the old-item cleanup notification. Placing a mode-6 cursor on an action bar is not modeled.
 - PickupItem's own return count, listener delivery and server outcomes are unknown.

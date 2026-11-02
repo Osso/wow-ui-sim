@@ -3,8 +3,8 @@
 use crate::c_api::ensure_namespace;
 use crate::lua_api::globals::spellbook_data;
 use crate::lua_api::methods::{
-    borrow_state, borrow_state_mut, create_string, create_string_static, create_table,
-    create_table_with_capacity, frame_ref, table_set_num, table_set_static,
+    borrow_state, create_string, create_string_static, create_table, create_table_with_capacity,
+    frame_ref, table_set_num, table_set_static,
 };
 use crate::lua_api::script_helpers::{
     call_error_handler_state, get_event_listeners, get_scripts_for_dispatch,
@@ -730,10 +730,13 @@ fn c_spell_book_pickup_spell_book_item(state: &mut LuaState) -> LuaResult<u32> {
     let Some((_, entry, _)) = spellbook_data::get_spell_at_slot(slot) else {
         return Ok(0);
     };
-    borrow_state_mut(state)?.cursor_item = Some(CursorInfo::Spell {
+    let cursor = CursorInfo::Spell {
         spell_id: entry.spell_id,
-    });
-    fire_cursor_changed(state);
+    };
+    crate::lua_api::globals::real::cursor_model::place(state, cursor)?;
+    if !crate::lua_api::globals::real::cursor_model::modeled() {
+        fire_cursor_changed(state);
+    }
     Ok(0)
 }
 

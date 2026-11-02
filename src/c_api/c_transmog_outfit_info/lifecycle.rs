@@ -151,20 +151,20 @@ fn is_equipped_displayed(state: &mut LuaState) -> LuaResult<u32> {
 
 fn pickup_outfit(state: &mut LuaState) -> LuaResult<u32> {
     let id = i64::from_stack(state, 1)?;
-    {
-        let mut sim = borrow_state_mut(state)?;
-        if id != 0
-            && !sim
-                .transmog_outfit_catalog
-                .entries
-                .iter()
-                .any(|entry| entry.outfit_id == id)
-        {
-            return Err(rilua::runtime_error(format!("unknown outfit ID {id}")));
-        }
-        sim.cursor_item = Some(crate::lua_api::state::CursorInfo::TransmogOutfit { outfit_id: id });
+    let known = id == 0
+        || borrow_state_mut(state)?
+            .transmog_outfit_catalog
+            .entries
+            .iter()
+            .any(|entry| entry.outfit_id == id);
+    if !known {
+        return Err(rilua::runtime_error(format!("unknown outfit ID {id}")));
     }
-    dispatch_event_now(state, "CURSOR_CHANGED", &[])?;
+    let cursor = crate::lua_api::state::CursorInfo::TransmogOutfit { outfit_id: id };
+    crate::lua_api::globals::real::cursor_model::place(state, cursor)?;
+    if !crate::lua_api::globals::real::cursor_model::modeled() {
+        dispatch_event_now(state, "CURSOR_CHANGED", &[])?;
+    }
     Ok(0)
 }
 

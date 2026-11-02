@@ -22,6 +22,7 @@ use crate::c_api::container_inventory::{
     equip_cursor_item, pickup_container_item, pickup_inventory_item, split_container_item,
     use_container_item,
 };
+use crate::lua_api::globals::real::cursor_model;
 use crate::lua_api::methods::{
     borrow_state, borrow_state_mut, call_function_state, create_string, frame_ref, table_get,
 };
@@ -85,7 +86,8 @@ fn place_cursor_item_in_backpack(state: &mut LuaState) -> LuaResult<u32> {
     };
 
     store_cursor_item_in_backpack(state, slot, item_id, stack_count, applied_transmog);
-    fire_named_event_state(state, "CURSOR_CHANGED", &[]);
+    cursor_model::clear(state)?;
+    cursor_model::legacy_changed(state);
     state.push(Val::Bool(true));
     Ok(1)
 }
@@ -138,7 +140,6 @@ fn store_cursor_item_in_backpack(
                 applied_transmog,
             },
         );
-        st.cursor_item = None;
     }
 }
 
@@ -171,13 +172,13 @@ fn pickup_action(state: &mut LuaState) -> LuaResult<u32> {
     if !ignore_removal {
         crate::c_api::action_macros::clear_slot(&mut st, slot);
     }
-    st.cursor_item = Some(cursor);
     drop(st);
+    cursor_model::place(state, cursor)?;
     if !ignore_removal {
         fire_actionbar_slot_changed(state);
         refresh_action_ui_buttons(state, slot);
     }
-    fire_named_event_state(state, "CURSOR_CHANGED", &[]);
+    cursor_model::legacy_changed(state);
     Ok(0)
 }
 
@@ -244,15 +245,13 @@ fn pickup_merchant_item(state: &mut LuaState) -> LuaResult<u32> {
     let Some(index) = stack_u32(state, 1) else {
         return Ok(0);
     };
-    let Ok(mut st) = borrow_state_mut(state) else {
-        return Ok(0);
-    };
-    st.cursor_item = Some(CursorInfo::Item {
+    let cursor = CursorInfo::Item {
         item_id: 100_000 + index,
         stack_count: 1,
         origin: CursorItemOrigin::Merchant { index },
         applied_transmog: None,
-    });
+    };
+    cursor_model::place(state, cursor)?;
     Ok(0)
 }
 
@@ -286,24 +285,46 @@ fn clear_cursor(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn clear_cursor_payload(state: &mut LuaState) -> LuaResult<u32> {
-    let Ok(mut st) = borrow_state_mut(state) else {
-        return Ok(0);
-    };
-    crate::c_api::item_upgrade_eligibility::discard_cursor(&mut st);
-    st.cursor_item = None;
-    drop(st);
-    fire_named_event_state(state, "CURSOR_CHANGED", &[]);
+    crate::c_api::item_upgrade_eligibility::discard_cursor(&mut *borrow_state_mut(state)?);
+    cursor_model::clear(state)?;
+    cursor_model::legacy_changed(state);
     Ok(0)
 }
 
-/// `CursorHasItem()` — true when the cursor carries an item stack.
+/// `CursorHasItem()` — Retail tests native mode 1 only (WM46); other
+/// profiles accept any item stack, merchant rows included.
 fn cursor_has_item(state: &mut LuaState) -> LuaResult<u32> {
-    let has_item = borrow_state(state)?
-        .cursor_item
-        .as_ref()
-        .is_some_and(|cursor| matches!(cursor, CursorInfo::Item { .. }));
+    let has_item = if cursor_model::modeled() {
+        cursor_model::current_mode(state)? == cursor_model::MODE_ITEM
+    } else {
+        borrow_state(state)?
+            .cursor_item
+            .as_ref()
+            .is_some_and(|cursor| matches!(cursor, CursorInfo::Item { .. }))
+    };
     state.push(Val::Bool(has_item));
     Ok(1)
+}
+
+fn push_mode_test(state: &mut LuaState, mode: u8) -> LuaResult<u32> {
+    let matches = cursor_model::current_mode(state)? == mode;
+    state.push(Val::Bool(matches));
+    Ok(1)
+}
+
+/// Retail `CursorHasMoney()`: mode 2 only; guild-bank money fails (WM46).
+fn cursor_has_money(state: &mut LuaState) -> LuaResult<u32> {
+    push_mode_test(state, cursor_model::MODE_MONEY)
+}
+
+/// Retail `CursorHasSpell()`: mode 3 only (WM46).
+fn cursor_has_spell(state: &mut LuaState) -> LuaResult<u32> {
+    push_mode_test(state, cursor_model::MODE_SPELL)
+}
+
+/// Retail `CursorHasMacro()`: mode 7 only (WM46).
+fn cursor_has_macro(state: &mut LuaState) -> LuaResult<u32> {
+    push_mode_test(state, cursor_model::MODE_MACRO)
 }
 
 /// `GetCursorInfo()` — expose the cursor payload in WoW's coarse-grained
@@ -319,6 +340,15 @@ fn get_cursor_info(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn push_cursor_info(state: &mut LuaState, cursor: CursorInfo) -> LuaResult<u32> {
+    if let CursorInfo::Item {
+        origin: CursorItemOrigin::Merchant { index },
+        ..
+    } = cursor
+        && cursor_model::modeled()
+    {
+        // WM46 mode 5: the stored zero-based row plus one, the Lua index.
+        return push_cursor_kind_id(state, "merchant", index);
+    }
     match cursor {
         CursorInfo::Action { spell_id, .. }
         | CursorInfo::Spell { spell_id }
@@ -405,11 +435,11 @@ fn place_action(state: &mut LuaState) -> LuaResult<u32> {
             return Ok(0);
         }
     }
-    st.cursor_item = None;
     drop(st);
+    cursor_model::clear(state)?;
     fire_actionbar_slot_changed(state);
     refresh_action_ui_buttons(state, slot);
-    fire_named_event_state(state, "CURSOR_CHANGED", &[]);
+    cursor_model::legacy_changed(state);
     Ok(0)
 }
 
@@ -433,9 +463,9 @@ fn pickup_player_money(state: &mut LuaState) -> LuaResult<u32> {
         return Ok(0);
     }
     st.player.money -= amount as i64;
-    st.cursor_item = Some(CursorInfo::Money { copper: amount });
     drop(st);
-    fire_named_event_state(state, "CURSOR_CHANGED", &[]);
+    cursor_model::place(state, CursorInfo::Money { copper: amount })?;
+    cursor_model::legacy_changed(state);
     fire_named_event_state(state, "PLAYER_MONEY", &[]);
     Ok(0)
 }
@@ -452,9 +482,9 @@ fn drop_cursor_money(state: &mut LuaState) -> LuaResult<u32> {
         return Ok(0);
     };
     st.player.money += copper as i64;
-    st.cursor_item = None;
     drop(st);
-    fire_named_event_state(state, "CURSOR_CHANGED", &[]);
+    cursor_model::clear(state)?;
+    cursor_model::legacy_changed(state);
     fire_named_event_state(state, "PLAYER_MONEY", &[]);
     Ok(0)
 }
@@ -492,6 +522,11 @@ pub fn register_all(lua: &mut rilua::Lua) -> crate::Result<()> {
     LuaApiMut::register_function(lua, "ClearCursor", clear_cursor)?;
     LuaApiMut::register_function(lua, "GetCursorInfo", get_cursor_info)?;
     LuaApiMut::register_function(lua, "CursorHasItem", cursor_has_item)?;
+    if cursor_model::modeled() {
+        LuaApiMut::register_function(lua, "CursorHasMoney", cursor_has_money)?;
+        LuaApiMut::register_function(lua, "CursorHasSpell", cursor_has_spell)?;
+        LuaApiMut::register_function(lua, "CursorHasMacro", cursor_has_macro)?;
+    }
     LuaApiMut::register_function(lua, "PlaceAction", place_action)?;
     LuaApiMut::register_function(lua, "PickupPlayerMoney", pickup_player_money)?;
     LuaApiMut::register_function(lua, "DropCursorMoney", drop_cursor_money)?;
