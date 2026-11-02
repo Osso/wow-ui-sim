@@ -8,8 +8,8 @@ use super::{
     ItemDisplayRecord, ScenarioHeaderCurrenciesRecord, ScenarioHeaderTimerRecord, SpacerRecord,
     SpellDisplayRecord, StackedResourceTrackerRecord, StatusBarRecord,
     TextColumnRowVisualizationInfo, TextWithStateRecord, TextWithSubtextRecord,
-    TextureAndTextRecord, TextureAndTextRowRecord, TextureWithAnimationRecord, UnitPowerBarRecord,
-    WidgetId, WidgetVisualization, ZoneControlRecord,
+    TextureAndTextRecord, TextureAndTextRowRecord, TextureWithAnimationRecord, TugOfWarRecord,
+    UnitPowerBarRecord, WidgetId, WidgetVisualization, ZoneControlRecord,
 };
 
 #[derive(Debug, Clone, PartialEq)]
@@ -98,6 +98,7 @@ pub struct UiWidgetInputs {
     pub textures_with_animation: HashMap<WidgetId, TextureWithAnimationRecord>,
     pub unit_power_bars: HashMap<WidgetId, UnitPowerBarRecord>,
     pub fill_up_frames: HashMap<WidgetId, FillUpFramesRecord>,
+    pub tug_of_war: HashMap<WidgetId, TugOfWarRecord>,
     pub discrete_progress_steps: HashMap<WidgetId, DiscreteProgressStepsRecord>,
     pub spell_display: HashMap<WidgetId, SpellDisplayRecord>,
     pub spacers: HashMap<WidgetId, SpacerRecord>,
