@@ -629,6 +629,21 @@ fn calendar_description_edit_updates_supplied_event(env: &WowLuaEnv) {
 }
 
 prefork_full_ui_case! {
+fn calendar_texture_picker_sets_editable_event_type(env: &WowLuaEnv) {
+    use wow_ui_sim::c_api::c_calendar::CalendarEditableAccess;
+    load_addon(&env.loader_env(), &calendar_toc()).unwrap();
+    env.state().borrow_mut().calendar_context_policy.editable = Some(CalendarEditableAccess {
+        local_edit_credential: Some(123),
+        ..Default::default()
+    });
+    for event_type in [1_u8, 0_u8] {
+        env.exec(&format!("CalendarCreateEvent_SetSelectedIndex(1, {event_type})")).unwrap();
+        assert_eq!(env.state().borrow().calendar_context_policy.editable.as_ref().unwrap().event_type, event_type);
+    }
+}
+}
+
+prefork_full_ui_case! {
 fn calendar_create_event_projects_selected_date(env: &WowLuaEnv) {
     use wow_ui_sim::c_api::c_calendar::{CalendarEditableAccess, DisplayedMonth};
     load_addon(&env.loader_env(), &calendar_toc()).unwrap();
