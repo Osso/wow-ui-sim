@@ -8,13 +8,7 @@ prefork_full_ui_case! {
 fn original_pvp_consumers_submit_without_changing_desired_state(env: &WowLuaEnv) {
     env.state().borrow_mut().pvp_request_transport.state = Some(5);
     env.exec(r#"
-        local lookup = SlashCommandUtil.CheckAddSlashCommand
-        local callback
-        for i = 1, 20 do
-            local name, value = debug.getupvalue(lookup, i)
-            if not name then break end
-            if name == 'addonTbl' then callback = value.SlashCmdList[SLASH_COMMAND.PVP] end
-        end
+        local callback = SlashCmdList[SLASH_COMMAND.PVP]
         assert(callback, 'original PvP slash callback missing')
         assert(not GetPVPDesired())
         UnitPopupPvpEnableButtonMixin:OnClick({})
