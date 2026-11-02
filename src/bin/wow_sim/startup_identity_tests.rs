@@ -6,6 +6,7 @@ use std::path::{Path, PathBuf};
 use std::process::Command;
 
 const CHILD_ROOT: &str = "WOW_SIM_STARTUP_IDENTITY_TEST_ROOT";
+const CHILD_CASE: &str = "WOW_SIM_STARTUP_IDENTITY_TEST_CASE";
 const CHARACTER: &str = "Wörkspacé-Family";
 const REALM: &str = "Test Realm-One";
 
@@ -28,6 +29,10 @@ fn write(path: &Path, contents: &str) {
 }
 
 fn spawn_identity_case(test: &str, character: Option<&str>, missing_root: bool) {
+    spawn_identity_cases(test, character, missing_root, &["default"]);
+}
+
+fn spawn_identity_cases(test: &str, character: Option<&str>, missing_root: bool, cases: &[&str]) {
     let fixture = tempfile::tempdir().unwrap();
     let root = fixture.path();
     let wtf = root.join("WTF");
@@ -73,44 +78,50 @@ fn spawn_identity_case(test: &str, character: Option<&str>, missing_root: bool) 
         "#,
     );
 
-    let mut command = Command::new(std::env::current_exe().unwrap());
-    command
-        .args([
-            "--exact",
-            &format!("startup::identity_tests::{test}"),
-            "--nocapture",
-            "--test-threads=1",
-        ])
-        .env(CHILD_ROOT, root)
-        .env("WOW_SIM_STORAGE_DIR", root.join("session/SavedVariables"))
-        .env(
-            "WOW_SIM_WTF_PATH",
-            if missing_root {
-                root.join("missing-WTF")
-            } else {
-                wtf
-            },
-        )
-        .env("WOW_SIM_WTF_ACCOUNT", "IdentityAccount")
-        .env("WOW_SIM_WTF_REALM", REALM)
-        .env("WOW_SIM_NO_SOUND", "1")
-        .env("WOW_SIM_CASC", "0")
-        .env_remove("WOW_SIM_NO_ADDONS")
-        .env_remove("WOW_SIM_NO_SAVED_VARS")
-        .env_remove("WOW_SIM_ADDONS_TXT")
-        .env_remove("WOW_SIM_EDIT_MODE_LAYOUT");
-    if let Some(character) = character {
-        command.env("WOW_SIM_WTF_CHARACTER", character);
-    } else {
-        command.env_remove("WOW_SIM_WTF_CHARACTER");
+    for case in cases {
+        let mut command = Command::new(std::env::current_exe().unwrap());
+        command
+            .args([
+                "--exact",
+                &format!("startup::identity_tests::{test}"),
+                "--nocapture",
+                "--test-threads=1",
+            ])
+            .env(CHILD_ROOT, root)
+            .env(CHILD_CASE, case)
+            .env("WOW_SIM_STORAGE_DIR", root.join("session/SavedVariables"))
+            .env(
+                "WOW_SIM_WTF_PATH",
+                if missing_root {
+                    root.join("missing-WTF")
+                } else {
+                    wtf.clone()
+                },
+            )
+            .env("WOW_SIM_WTF_ACCOUNT", "IdentityAccount")
+            .env("WOW_SIM_WTF_REALM", REALM)
+            .env("WOW_SIM_NO_SOUND", "1")
+            .env("WOW_SIM_CASC", "0")
+            .env_remove("WOW_SIM_NO_ADDONS")
+            .env_remove("WOW_SIM_NO_SAVED_VARS")
+            .env_remove("WOW_SIM_ADDONS_TXT")
+            .env_remove("WOW_SIM_EDIT_MODE_LAYOUT");
+        if let Some(character) = character {
+            command.env("WOW_SIM_WTF_CHARACTER", character);
+        } else {
+            command.env_remove("WOW_SIM_WTF_CHARACTER");
+        }
+        let output = command.output().unwrap();
+        let stdout = String::from_utf8_lossy(&output.stdout);
+        assert!(
+            output.status.success()
+                && stdout
+                    .lines()
+                    .any(|line| line.starts_with("test result: ok. 1 passed; 0 failed;")),
+            "identity startup child {test}/{case} did not pass exactly one test:\n{stdout}\n{}",
+            String::from_utf8_lossy(&output.stderr),
+        );
     }
-    let output = command.output().unwrap();
-    assert!(
-        output.status.success(),
-        "identity startup child failed:\n{}\n{}",
-        String::from_utf8_lossy(&output.stdout),
-        String::from_utf8_lossy(&output.stderr),
-    );
 }
 
 fn child_root() -> Option<PathBuf> {
@@ -240,9 +251,51 @@ fn selected_character_is_seeded_with_persistence_disabled() {
     assert!(!root.join("session/SavedVariables").exists());
 }
 
+#[test]
+fn explicit_session_restores_changes_after_process_restart() {
+    let Some(root) = child_root() else {
+        spawn_identity_cases(
+            "explicit_session_restores_changes_after_process_restart",
+            Some(CHARACTER),
+            false,
+            &["save", "restore"],
+        );
+        return;
+    };
+    let mut args = startup_args(&root, false);
+    let session = root.join("session");
+    args.session_wtf_path = Some(session.clone());
+    let (mut env, _font_system, mut saved_vars) =
+        init_and_load(&args, ScreenKind::Game, session).unwrap();
+    match std::env::var(CHILD_CASE).unwrap().as_str() {
+        "save" => {
+            assert_addon_identity(&env, "selected", "MAGE", "Orc");
+            env.exec("IdentityProbeDB.profile = 'saved-session'")
+                .unwrap();
+            env.finalize_session(&mut saved_vars).unwrap();
+        }
+        "restore" => assert_addon_identity(&env, "saved-session", "MAGE", "Orc"),
+        case => panic!("unexpected session restoration case: {case}"),
+    }
+    let imported = root
+        .join("WTF/Account/IdentityAccount")
+        .join(REALM)
+        .join(CHARACTER)
+        .join("SavedVariables/IdentityProbe.lua");
+    assert_eq!(
+        std::fs::read_to_string(imported).unwrap(),
+        "IdentityProbeDB = { profile = 'selected' }\n"
+    );
+}
+
 fn assert_startup_selection_error(root: &Path, expected: &str) {
-    let args = startup_args(root, false);
-    let env = WowLuaEnv::new().unwrap();
+    let no_saved_vars = match std::env::var(CHILD_CASE).unwrap().as_str() {
+        "saved-vars" => false,
+        "no-saved-vars" => true,
+        case => panic!("unexpected selection failure case: {case}"),
+    };
+    let args = startup_args(root, no_saved_vars);
+    let env = WowLuaEnv::with_session_wtf_path(root.join("session")).unwrap();
     let state = env.state().clone();
     let initial_addons: Vec<_> = state
         .borrow()
@@ -272,10 +325,11 @@ fn assert_startup_selection_error(root: &Path, expected: &str) {
 #[test]
 fn missing_selected_character_rejects_startup_without_fallback() {
     let Some(root) = child_root() else {
-        spawn_identity_case(
+        spawn_identity_cases(
             "missing_selected_character_rejects_startup_without_fallback",
             Some("AbsentCharacter"),
             false,
+            &["saved-vars", "no-saved-vars"],
         );
         return;
     };
@@ -285,10 +339,11 @@ fn missing_selected_character_rejects_startup_without_fallback() {
 #[test]
 fn missing_selected_wtf_root_rejects_startup_without_fallback() {
     let Some(root) = child_root() else {
-        spawn_identity_case(
+        spawn_identity_cases(
             "missing_selected_wtf_root_rejects_startup_without_fallback",
             Some(CHARACTER),
             true,
+            &["saved-vars", "no-saved-vars"],
         );
         return;
     };
@@ -308,7 +363,7 @@ fn absent_or_empty_character_selection_keeps_default_identity() {
         return;
     };
     let args = startup_args(&root, false);
-    let env = WowLuaEnv::new().unwrap();
+    let env = WowLuaEnv::with_session_wtf_path(root.join("session")).unwrap();
     let original: (String, Option<String>, String, String) = env
         .eval("return UnitName('player'), nil, GetRealmName(), GetNormalizedRealmName()")
         .unwrap();

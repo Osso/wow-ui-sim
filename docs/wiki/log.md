@@ -3247,3 +3247,13 @@ BattleNet API, replacing sentinel coverage with complete setting construction.
 On the master-based branch, 55 focused integration tests and 14 loader unit tests
 pass with persisted CVars unchanged. Native behavior, full interactive GUI
 verification, other profiles and the game-screen baseline remain separate.
+
+## 2026-11-02 — Session finalization and reload recovery
+
+[Session finalization](../specs/session-finalization.md) adds explicit GUI
+close/Quit completion, shutdown-before-save ordering, protected failed-owner
+output and repairable reload reconstruction. Focused native Windows verification
+passes 67 Forever and 71 Wrath cases. Bounded real GUI Quit returns exit 0 with
+persistence disabled and exit 1 with no saves for the incomplete installed
+Forever cache. Successful enabled-persistence GUI relaunch and strict-cache
+startup identity cases remain unverified; see the contract's verification limits.

@@ -1,6 +1,7 @@
 //! App struct definition and core initialization.
 
 use iced::{Point, Size, Task};
+#[cfg(test)]
 use rilua::LuaApiMut;
 use rustc_hash::{FxHashMap, FxHashSet};
 use std::cell::RefCell;
@@ -61,6 +62,9 @@ impl GuiStartupProgress {
     fn advance(&mut self, env: &WowLuaEnv) -> bool {
         if self.timer_passes_remaining == 0 {
             crate::startup::fire_gui_startup_on_update_tick(env);
+            if env.state().borrow().simulator_exit_requested {
+                return false;
+            }
             self.on_update_ticks_remaining -= 1;
             self.timer_passes_remaining = GUI_STARTUP_TIMER_PASSES;
         }
@@ -84,12 +88,15 @@ pub struct DebugOptions {
     pub anchors: bool,
 }
 
+pub(super) type UiCompletion = Rc<RefCell<Option<Result<(), String>>>>;
+
 // Thread-local storage for init params
 thread_local! {
     pub static INIT_ENV: RefCell<Option<WowLuaEnv>> = const { RefCell::new(None) };
     pub static INIT_DEBUG: RefCell<Option<DebugOptions>> = const { RefCell::new(None) };
     pub static INIT_SAVED_VARS: RefCell<Option<SavedVariablesManager>> = const { RefCell::new(None) };
     pub static INIT_EXEC_LUA: RefCell<Option<(String, bool)>> = const { RefCell::new(None) };
+    pub(super) static INIT_COMPLETION: RefCell<Option<UiCompletion>> = const { RefCell::new(None) };
 }
 
 /// Fire the standard WoW startup events.
@@ -103,6 +110,7 @@ pub fn fire_startup_events(env: &Rc<RefCell<WowLuaEnv>>) {
 
 /// Application state.
 pub struct App {
+    pub(super) completion: UiCompletion,
     pub(crate) env: Rc<RefCell<WowLuaEnv>>,
     pub(crate) log_messages: Vec<String>,
     pub(crate) command_input: String,
@@ -122,6 +130,8 @@ pub struct App {
     pub(crate) screen_size: std::cell::Cell<Size>,
     /// True after startup events, deferred settling and cleanup have completed.
     pub(crate) gui_startup_complete: std::cell::Cell<bool>,
+    /// Essential startup callbacks have returned; settling may still be pending.
+    pub(super) gui_initialization_complete: std::cell::Cell<bool>,
     /// First real draw bounds; recording them must not execute Lua.
     first_canvas_size: std::cell::Cell<Option<Size>>,
     gui_startup_progress: Option<GuiStartupProgress>,
@@ -275,6 +285,7 @@ impl AppInitialSelections {
 macro_rules! app_from_initial_state {
     ($init:ident, $selections:ident, $now:ident, $initial_screen_size:ident) => {
         App {
+            completion: UiCompletion::default(),
             env: $init.env,
             log_messages: $init.log_messages,
             command_input: String::new(),
@@ -290,6 +301,7 @@ macro_rules! app_from_initial_state {
             scroll_offset: 0.0,
             screen_size: std::cell::Cell::new($initial_screen_size),
             gui_startup_complete: std::cell::Cell::new(false),
+            gui_initialization_complete: std::cell::Cell::new(false),
             first_canvas_size: std::cell::Cell::new(None),
             gui_startup_progress: None,
             debug_rx: Some($init.cmd_rx),
@@ -363,7 +375,7 @@ impl App {
         let (cmd_rx, lua_rx) = Self::init_servers();
         let (debug_borders, debug_anchors) = Self::resolve_debug_flags();
 
-        let app = Self::build_app(AppInit {
+        let mut app = Self::build_app(AppInit {
             env: env_rc,
             log_messages,
             texture_manager,
@@ -376,6 +388,9 @@ impl App {
             saved_vars,
             config,
         });
+        if let Some(completion) = INIT_COMPLETION.with(|cell| cell.borrow_mut().take()) {
+            app.completion = completion;
+        }
 
         (app, Task::none())
     }
@@ -399,14 +414,21 @@ impl App {
     }
 
     pub(super) fn service_pending_reload(&mut self) {
+        if self.exit_requested() {
+            return;
+        }
         let result = self.env.borrow_mut().service_reload(&mut self.saved_vars);
         match result {
             Ok(false) => return,
             Ok(true) => self.reset_reloaded_ui(),
             Err(error) => {
-                // A partially loaded VM must never overwrite the saved pre-reload values.
-                self.saved_vars = None;
-                panic!("ReloadUI failed: {error}");
+                let message = format!("ReloadUI failed: {error}");
+                crate::logging::eprintln_elapsed(&message);
+                self.log_messages.push(message);
+                if !self.env.borrow().is_ui_environment_usable() {
+                    self.reset_reloaded_ui();
+                }
+                return;
             }
         }
         self.log_messages
@@ -418,6 +440,7 @@ impl App {
         self.clear_render_caches();
         self.clear_pending_textures();
         self.gui_startup_complete.set(false);
+        self.gui_initialization_complete.set(false);
         self.gui_startup_progress = None;
         self.first_canvas_size.set(Some(self.screen_size.get()));
         self.last_on_update_time = std::time::Instant::now();
@@ -492,6 +515,9 @@ impl App {
                 return;
             };
             self.begin_gui_startup(size);
+            if self.exit_requested() || !self.env.borrow().is_ui_environment_usable() {
+                return;
+            }
             self.gui_startup_progress = Some(GuiStartupProgress::new());
         }
         let finished = {
@@ -499,7 +525,7 @@ impl App {
             let env = self.env.borrow();
             progress.advance(&env)
         };
-        if finished {
+        if finished && !self.exit_requested() {
             self.finish_gui_startup();
             self.gui_startup_progress = None;
         }
@@ -507,8 +533,14 @@ impl App {
 
     fn begin_gui_startup(&self, size: Size) {
         self.env.borrow().set_screen_size(size.width, size.height);
+        let first_error = self.env.borrow().state().borrow().lua_error_records.len();
         fire_startup_events(&self.env);
         let env = self.env.borrow();
+        env.record_addon_initialization_errors_since(first_error);
+        self.gui_initialization_complete.set(true);
+        if self.exit_requested() || !env.is_ui_environment_usable() {
+            return;
+        }
         env.apply_post_event_workarounds();
         crate::startup::settle_startup_animation_groups(&env);
     }
@@ -904,26 +936,57 @@ fn cooldown_elapsed_since_start(frame: &Frame, now: f64) -> f64 {
     (now - frame.cooldown_start) * mod_rate
 }
 
-impl Drop for App {
-    fn drop(&mut self) {
-        if let Some(ref saved_vars) = self.saved_vars {
-            let env = self.env.borrow();
-            let mut lua = env.rilua_mut();
-            match saved_vars.save_all(lua.state_mut()) {
-                Ok(()) => crate::logging::eprintln_elapsed(
-                    "[wow-sim] SavedVariables saved to simulator storage",
-                ),
-                Err(e) => crate::logging::eprintln_elapsed(&format!(
-                    "[wow-sim] SavedVariables save error: {e}"
-                )),
-            }
+impl App {
+    pub(super) fn is_finishing(&self) -> bool {
+        self.completion.borrow().is_some()
+    }
+
+    pub(super) fn exit_requested(&self) -> bool {
+        self.is_finishing() || self.env.borrow().state().borrow().simulator_exit_requested
+    }
+
+    pub(super) fn complete_session(&mut self) {
+        if self.is_finishing() {
+            return;
         }
+        if !self.gui_initialization_complete.get()
+            && self.env.borrow().is_ui_environment_usable()
+            && self
+                .saved_vars
+                .as_ref()
+                .is_some_and(|manager| !manager.registered_addons().is_empty())
+        {
+            self.record_completion(Err(
+                "UI closed before startup initialization completed".into()
+            ));
+            return;
+        }
+        let result = self
+            .env
+            .borrow_mut()
+            .finalize_session(&mut self.saved_vars)
+            .map_err(|error| error.to_string());
+        self.record_completion(result);
+    }
+
+    fn record_completion(&mut self, result: Result<(), String>) {
+        match &result {
+            Ok(()) => crate::logging::eprintln_elapsed("[wow-sim] Session finalization succeeded"),
+            Err(error) => crate::logging::eprintln_elapsed(&format!(
+                "[wow-sim] Session finalization failed: {error}"
+            )),
+        }
+        *self.completion.borrow_mut() = Some(result);
     }
 }
 
 #[cfg(test)]
 #[path = "app_tests.rs"]
 mod app_tests;
+
+#[cfg(test)]
+#[path = "app_session_tests.rs"]
+mod app_session_tests;
 
 #[cfg(test)]
 #[path = "app_startup_proof_tests.rs"]

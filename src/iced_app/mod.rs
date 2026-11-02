@@ -141,6 +141,7 @@ fn perf_logging_enabled() -> bool {
 #[cfg(feature = "gui")]
 #[derive(Debug, Clone)]
 pub enum Message {
+    CloseRequested,
     FireEvent(String),
     Scroll(f32, f32),
     ReloadUI,
@@ -204,6 +205,8 @@ pub fn run_iced_ui(
     exec_lua: Option<String>,
     exec_lua_secure: bool,
 ) -> Result<(), Box<dyn std::error::Error>> {
+    let completion = app::UiCompletion::default();
+    app::INIT_COMPLETION.with(|cell| *cell.borrow_mut() = Some(completion.clone()));
     INIT_ENV.with(|cell| *cell.borrow_mut() = Some(env));
     INIT_DEBUG.with(|cell| *cell.borrow_mut() = Some(debug));
     if let Some(sv) = saved_vars {
@@ -219,5 +222,13 @@ pub fn run_iced_ui(
         .subscription(App::subscription)
         .run()?;
 
-    Ok(())
+    ui_completion_result(&completion).map_err(Into::into)
+}
+
+#[cfg(feature = "gui")]
+fn ui_completion_result(completion: &app::UiCompletion) -> Result<(), String> {
+    completion
+        .borrow()
+        .clone()
+        .unwrap_or_else(|| Err("UI exited without completing session finalization".to_string()))
 }

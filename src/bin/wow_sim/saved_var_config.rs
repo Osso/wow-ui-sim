@@ -5,16 +5,20 @@ use wow_ui_sim::saved_variables::SavedVariablesManager;
 pub fn configure_saved_vars(
     no_saved_vars_arg: bool,
     session_wtf_path: &std::path::Path,
-    explicit: bool,
+    explicit_session: bool,
 ) -> wow_ui_sim::Result<Option<SavedVariablesManager>> {
     if should_skip_saved_vars(no_saved_vars_arg) {
         logging::println_elapsed("SavedVariables loading disabled");
         return Ok(None);
     }
 
-    let mut saved_vars = SavedVariablesManager::with_storage_dir(
-        wow_ui_sim::saved_variables::saved_variables_storage_dir(session_wtf_path, explicit),
-    );
+    let mut saved_vars = if explicit_session {
+        SavedVariablesManager::with_session_wtf_path(session_wtf_path)
+    } else {
+        SavedVariablesManager::with_storage_dir(
+            wow_ui_sim::saved_variables::saved_variables_storage_dir(session_wtf_path, false),
+        )
+    };
     if let Some(wtf) = wow_ui_sim::paths::try_default_wtf_config()? {
         logging::println_elapsed(&format!(
             "WTF import source (read-only): {} @ {}/{}",

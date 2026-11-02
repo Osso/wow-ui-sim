@@ -55,6 +55,8 @@ macro_rules! build_empty_sim_state {
             encounter_timeline: crate::c_api::c_encounter_timeline::Timeline::default(),
             scripts: ScriptRegistry::default(),
             ui_reload_requested: false,
+            session_lifecycle: super::env_lifecycle::SessionLifecycle::Active,
+            addon_initialization_failures: HashMap::new(),
             cinematic_active: false,
             in_world: false,
             reload_allows_protected_actions: false,

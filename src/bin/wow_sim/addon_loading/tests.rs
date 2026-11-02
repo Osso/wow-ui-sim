@@ -36,6 +36,257 @@ fn write_addon_with_lua(root: &Path, name: &str, metadata: &str, lua: &str) -> P
 }
 
 #[test]
+fn addon_load_failures_remain_diagnostic_without_persistence() {
+    for (name, metadata, lua, expected_error) in [
+        ("BrokenLua", "", "error('file failure')", "file failure"),
+        ("MissingLua", "", "", "missing.lua"),
+        ("BrokenXml", "", "", "broken.xml"),
+        ("UnreadableToc", "", "", "TOC"),
+        (
+            "BrokenEvent",
+            "",
+            "local f = CreateFrame('Frame'); f:RegisterEvent('ADDON_LOADED'); \
+             f:SetScript('OnEvent', function() error('event failure') end)",
+            "event failure",
+        ),
+        (
+            "MissingDependency",
+            "## Dependencies: MissingRequiredAddon\n",
+            "error('dependency must block execution')",
+            "MissingRequiredAddon",
+        ),
+    ] {
+        let temp = tempfile::tempdir().unwrap();
+        let toc = write_addon_with_lua(temp.path(), name, metadata, lua);
+        match name {
+            "MissingLua" => {
+                let content = std::fs::read_to_string(&toc).unwrap();
+                std::fs::write(&toc, format!("{content}missing.lua\n")).unwrap();
+            }
+            "BrokenXml" => {
+                let content = std::fs::read_to_string(&toc).unwrap();
+                std::fs::write(&toc, format!("{content}broken.xml\n")).unwrap();
+                std::fs::write(toc.parent().unwrap().join("broken.xml"), "<Ui><Frame></Ui>")
+                    .unwrap();
+            }
+            "UnreadableToc" => std::fs::write(&toc, [0xff]).unwrap(),
+            _ => {}
+        }
+        let addons = scan_addons(temp.path(), &[], ScreenKind::Game);
+        assert_eq!(
+            addons.len(),
+            1,
+            "selected input must remain observable: {name}"
+        );
+        let mut env = WowLuaEnv::new().unwrap();
+        let mut stats = LoadStats::default();
+        load_discovered_addons(&env, &addons, &mut None, None, &mut stats);
+
+        assert!(stats.fail_count > 0 || stats.total_warnings > 0, "{name}");
+        let diagnostics = format!("{:?}", env.state().borrow().lua_errors);
+        if !diagnostics.contains(expected_error) {
+            assert!(
+                stats.total_warnings > 0 || stats.load_failed_addons.contains(name),
+                "{name}: {diagnostics}"
+            );
+        }
+        env.finalize_session(&mut None).unwrap();
+    }
+}
+
+#[test]
+fn reload_recovers_failed_addon_without_losing_healthy_saved_variables() {
+    let temp = tempfile::tempdir().unwrap();
+    let broken_toc = write_addon_with_lua(
+        temp.path(),
+        "BrokenOwner",
+        "## SavedVariables: BrokenDB\n",
+        "BrokenDB = { value = 'unsafe default' }; error('owner initialization failed')",
+    );
+    let healthy_toc = write_addon_with_lua(
+        temp.path(),
+        "HealthyOwner",
+        "## SavedVariables: HealthyDB\n",
+        "HealthyDB = HealthyDB or {}",
+    );
+    let storage = temp.path().join("saved");
+    std::fs::create_dir(&storage).unwrap();
+    let preceding = b"BrokenDB = { value = 'preceding valid save' }\n";
+    std::fs::write(storage.join("BrokenOwner.lua"), preceding).unwrap();
+    std::fs::write(
+        storage.join("HealthyOwner.lua"),
+        "HealthyDB = { value = 1 }\n",
+    )
+    .unwrap();
+    let addons = vec![
+        ("BrokenOwner".into(), broken_toc.clone()),
+        ("HealthyOwner".into(), healthy_toc),
+    ];
+    let mut env = WowLuaEnv::new().unwrap();
+    let mut manager = Some(SavedVariablesManager::with_storage_dir(storage.clone()));
+    load_discovered_addons(&env, &addons, &mut manager, None, &mut LoadStats::default());
+    env.exec("HealthyDB.value = 'healthy unsaved edit'")
+        .unwrap();
+    let error = env.finalize_session(&mut manager).unwrap_err().to_string();
+    assert!(error.contains("owner initialization failed"), "{error}");
+    assert_eq!(
+        std::fs::read(storage.join("BrokenOwner.lua")).unwrap(),
+        preceding
+    );
+    // Wrath restores SavedVariables after addon files; both profiles have them at ADDON_LOADED.
+    std::fs::write(
+        broken_toc.parent().unwrap().join("main.lua"),
+        "local f = CreateFrame('Frame'); f:RegisterEvent('ADDON_LOADED'); \
+         f:SetScript('OnEvent', function(_, _, name) \
+             if name == 'BrokenOwner' then \
+                 assert(BrokenDB.value == 'preceding valid save'); \
+                 BrokenDB.value = 'recovered edit' \
+             end \
+         end)",
+    )
+    .unwrap();
+    env.set_reload_loader(move |env, manager| {
+        load_discovered_addons(env, &addons, manager, None, &mut LoadStats::default());
+        Ok(())
+    });
+    env.exec("ReloadUI()").unwrap();
+    assert!(env.service_reload(&mut manager).unwrap());
+    env.exec(
+        "assert(BrokenDB.value == 'recovered edit' and HealthyDB.value == 'healthy unsaved edit')",
+    )
+    .unwrap();
+    assert_eq!(
+        std::fs::read(storage.join("BrokenOwner.lua")).unwrap(),
+        preceding
+    );
+    env.finalize_session(&mut manager).unwrap();
+    let mut restored = rilua::Lua::new().unwrap();
+    restored
+        .exec(&std::fs::read_to_string(storage.join("BrokenOwner.lua")).unwrap())
+        .unwrap();
+    restored
+        .exec(&std::fs::read_to_string(storage.join("HealthyOwner.lua")).unwrap())
+        .unwrap();
+    restored.exec("assert(BrokenDB.value == 'recovered edit' and HealthyDB.value == 'healthy unsaved edit')").unwrap();
+}
+
+#[test]
+fn reload_rejects_missing_failed_input_and_retries_its_repaired_source() {
+    let temp = tempfile::tempdir().unwrap();
+    let toc = write_addon_with_lua(
+        temp.path(),
+        "InputOwner",
+        "## SavedVariables: InputDB\n",
+        "InputDB = InputDB or { value = 'unsafe default' }",
+    );
+    let config = wow_ui_sim::saved_variables::WtfConfig::new(
+        temp.path().join("WTF"),
+        "Account",
+        "Realm",
+        "Hero",
+    );
+    let source = config.account_saved_vars_file("InputOwner");
+    std::fs::create_dir_all(source.parent().unwrap()).unwrap();
+    std::fs::write(&source, "InputDB = { invalid").unwrap();
+    let storage = temp.path().join("saved");
+    std::fs::create_dir(&storage).unwrap();
+    let preceding = b"InputDB = { value = 'stale local data' }\n";
+    std::fs::write(storage.join("InputOwner.lua"), preceding).unwrap();
+    let mut manager = SavedVariablesManager::with_storage_dir(storage.clone());
+    manager.set_wtf_config(config);
+    let mut manager = Some(manager);
+    let mut env = WowLuaEnv::new().unwrap();
+    let addons = vec![("InputOwner".into(), toc)];
+    load_discovered_addons(&env, &addons, &mut manager, None, &mut LoadStats::default());
+    env.set_reload_loader(move |env, manager| {
+        load_discovered_addons(env, &addons, manager, None, &mut LoadStats::default());
+        Ok(())
+    });
+    std::fs::remove_file(&source).unwrap();
+    env.exec("ReloadUI()").unwrap();
+    let error = env.service_reload(&mut manager).unwrap_err().to_string();
+    assert!(error.contains("input is missing"), "{error}");
+    assert_eq!(
+        std::fs::read(storage.join("InputOwner.lua")).unwrap(),
+        preceding
+    );
+    std::fs::write(&source, "InputDB = { value = 'repaired original' }\n").unwrap();
+    env.exec("ReloadUI()").unwrap();
+    assert!(env.service_reload(&mut manager).unwrap());
+    env.exec("assert(InputDB.value == 'repaired original')")
+        .unwrap();
+    env.finalize_session(&mut manager).unwrap();
+    assert_eq!(
+        std::fs::read_to_string(source).unwrap(),
+        "InputDB = { value = 'repaired original' }\n"
+    );
+}
+
+#[test]
+fn optional_import_failures_do_not_block_registered_saved_variables() {
+    let temp = tempfile::tempdir().unwrap();
+    let config = wow_ui_sim::saved_variables::WtfConfig::new(
+        temp.path().join("WTF"),
+        "Account",
+        "Realm",
+        "Hero",
+    );
+    std::fs::create_dir_all(config.edit_mode_account_cache_file()).unwrap();
+    let snapshot = config.account_saved_vars_file("ServerSnapshot");
+    std::fs::create_dir_all(snapshot.parent().unwrap()).unwrap();
+    let invalid_snapshot = b"ServerSnapshotDB = { invalid";
+    std::fs::write(&snapshot, invalid_snapshot).unwrap();
+    let storage = temp.path().join("saved");
+    let mut manager = SavedVariablesManager::with_storage_dir(storage.clone());
+    manager.set_wtf_config(config);
+    let mut env = WowLuaEnv::new().unwrap();
+    env.loader_env()
+        .with_state(|state| manager.init_for_addon(state, "Healthy", &["HealthyDB".into()], &[]))
+        .unwrap();
+    env.exec("HealthyDB = { value = 'healthy edit' }").unwrap();
+    load_edit_mode_cache(&env, Some(&manager), None);
+    let mut manager = Some(manager);
+    let _ = merged_addon_enable_overrides(&env, &mut manager);
+    env.finalize_session(&mut manager).unwrap();
+    let mut restored = rilua::Lua::new().unwrap();
+    restored
+        .exec(&std::fs::read_to_string(storage.join("Healthy.lua")).unwrap())
+        .unwrap();
+    restored
+        .exec("assert(HealthyDB.value == 'healthy edit')")
+        .unwrap();
+    assert_eq!(std::fs::read(snapshot).unwrap(), invalid_snapshot);
+    assert!(!storage.join("ServerSnapshot.lua").exists());
+}
+
+#[test]
+fn optional_nil_probes_and_disabled_addons_allow_finalization() {
+    let temp = tempfile::tempdir().unwrap();
+    write_addon_with_lua(
+        temp.path(),
+        "OptionalProbe",
+        "",
+        "OptionalProbePassed = MissingOptionalGlobal == nil",
+    );
+    write_addon_with_lua(
+        temp.path(),
+        "DisabledBroken",
+        "## Dependencies: Blizzard_MissingDependency\n",
+        "error('disabled files must not execute')",
+    );
+    let addons = scan_addons(temp.path(), &[], ScreenKind::Game);
+    let mut env = WowLuaEnv::new().unwrap();
+    let overrides = HashMap::from([("DisabledBroken".to_string(), false)]);
+    let mut stats = LoadStats::default();
+    load_discovered_addons(&env, &addons, &mut None, Some(&overrides), &mut stats);
+
+    assert!(env.eval::<bool>("return OptionalProbePassed").unwrap());
+    assert_eq!(stats.success_count, 1);
+    assert_eq!(stats.fail_count, 0);
+    env.finalize_session(&mut None).unwrap();
+}
+
+#[test]
 #[cfg(feature = "client-retail")]
 fn retail_third_party_game_type_headers_select_startup_addons() {
     let temp = tempfile::tempdir().unwrap();

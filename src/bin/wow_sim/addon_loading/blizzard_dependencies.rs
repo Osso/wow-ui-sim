@@ -1,4 +1,4 @@
-use super::{is_addon_loaded, load_one_blizzard_addon};
+use super::{is_addon_loaded, load_one_blizzard_addon, should_load_registered_addon};
 use std::collections::HashSet;
 use std::path::PathBuf;
 use wow_ui_sim::loader::{LoadTiming, discover_blizzard_addon_closure_for_screen};
@@ -14,7 +14,7 @@ pub(super) fn load_required_blizzard_dependencies_for_addons(
     screen: ScreenKind,
     addons: &[(String, PathBuf)],
 ) {
-    let roots = required_blizzard_dependencies(addons);
+    let roots = required_blizzard_dependencies(env, addons);
     if roots.is_empty() {
         return;
     }
@@ -22,6 +22,20 @@ pub(super) fn load_required_blizzard_dependencies_for_addons(
     let blizzard_ui_path = match wow_ui_sim::paths::default_blizzard_ui_addons_path() {
         Ok(path) => path,
         Err(error) => {
+            for (name, toc_path) in addons {
+                if should_load_registered_addon(env, name)
+                    && TocFile::from_file(toc_path).is_ok_and(|toc| {
+                        toc.dependencies()
+                            .iter()
+                            .any(|dependency| dependency.starts_with("Blizzard_"))
+                    })
+                {
+                    env.mark_addon_initialization_failed(
+                        name,
+                        format!("Failed to resolve Blizzard addon dependencies: {error}"),
+                    );
+                }
+            }
             logging::println_elapsed(&format!(
                 "Skipping Blizzard addon dependencies for third-party addons: {error}"
             ));
@@ -57,10 +71,13 @@ pub(super) fn load_required_blizzard_dependencies_for_addons(
     }
 }
 
-fn required_blizzard_dependencies(addons: &[(String, PathBuf)]) -> Vec<String> {
+fn required_blizzard_dependencies(env: &WowLuaEnv, addons: &[(String, PathBuf)]) -> Vec<String> {
     let mut seen = HashSet::new();
     let mut dependencies = Vec::new();
-    for (_, toc_path) in addons {
+    for (name, toc_path) in addons {
+        if !should_load_registered_addon(env, name) {
+            continue;
+        }
         let Ok(toc) = TocFile::from_file(toc_path) else {
             continue;
         };
@@ -77,6 +94,7 @@ fn required_blizzard_dependencies(addons: &[(String, PathBuf)]) -> Vec<String> {
 mod tests {
     use super::required_blizzard_dependencies;
     use std::path::{Path, PathBuf};
+    use wow_ui_sim::lua_api::WowLuaEnv;
 
     fn write_addon_with_toc(root: &Path, name: &str, toc: &str) -> PathBuf {
         let addon_dir = root.join(name);
@@ -96,7 +114,19 @@ mod tests {
             "## Interface: 120005\n## Dependencies: Blizzard_Professions, Ace3\nmain.lua\n",
         );
 
-        let deps = required_blizzard_dependencies(&[("CraftSim".to_string(), toc_path)]);
+        let disabled_toc = write_addon_with_toc(
+            temp.path(),
+            "DisabledCraftSim",
+            "## Interface: 120005\n## Dependencies: Blizzard_MissingDependency\nmain.lua\n",
+        );
+        let addons = vec![
+            ("CraftSim".to_string(), toc_path),
+            ("DisabledCraftSim".to_string(), disabled_toc),
+        ];
+        let env = WowLuaEnv::new().unwrap();
+        let overrides = std::collections::HashMap::from([("DisabledCraftSim".to_string(), false)]);
+        super::super::register_discovered_addons(&env, &addons, Some(&overrides));
+        let deps = required_blizzard_dependencies(&env, &addons);
 
         assert_eq!(deps, vec!["Blizzard_Professions"]);
     }

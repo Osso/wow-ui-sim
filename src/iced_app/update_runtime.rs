@@ -31,6 +31,9 @@ impl App {
     }
 
     pub(super) fn flush_post_script_updates(&mut self) {
+        if self.exit_requested() || !self.env.borrow().is_ui_environment_usable() {
+            return;
+        }
         self.env.borrow().state().borrow_mut().ensure_layout_rects();
         if let Err(e) = self.env.borrow().fire_on_update(0.016) {
             crate::logging::eprintln_elapsed(&format!("[OnUpdate] post-script flush error: {e}"));
@@ -390,6 +393,12 @@ impl App {
     fn run_timer_tick_stages(&mut self, stage_timings: &mut TickStageTimings) -> TimerTickOutcome {
         let mut redraw_needed = self.preload_visible_textures_for_tick(stage_timings);
         redraw_needed |= self.run_pending_lua_for_tick(stage_timings);
+        if self.exit_requested() {
+            return TimerTickOutcome {
+                combined: 0,
+                redraw_needed: false,
+            };
+        }
 
         let combined = self.collect_tick_work(stage_timings);
         redraw_needed |= self.mark_tick_dirty(combined, stage_timings);

@@ -15,6 +15,7 @@ mod env;
 mod env_convert;
 mod env_events;
 mod env_init;
+mod env_lifecycle;
 mod env_rilua;
 mod env_runtime;
 #[cfg(feature = "retail-12-0-5")]

@@ -3,6 +3,8 @@
 [Runtime inputs](../runtime-inputs.md) describe the shared writable session root,
 the `WOW_SIM_ADDONS_TXT` selection override and read-only real WoW imports.
 The supplied or default directory is resolved once before storage initialization.
+Explicit session roots restore saved account/character scopes before imports;
+ordinary launches retain import priority. See [addon loading](systems/addon-loading.md#savedvariables-srcsaved_variablesrs).
 
 ## [2026-11-02] architecture | Explicit character identity
 
@@ -33,8 +35,16 @@ resolved model, and post-startup selection and notification.
 [SavedVariables persistence](../specs/saved-variables.md) documents the shared
 byte-preserving serializer, account/character loading, retained input errors and
 current lifecycle limits. [Native lifecycle evidence](../specs/saved-variables-native-evidence.md)
-distinguishes researched policy from measured behavior. Explicit lifecycle
-finalization remains unfinished.
+distinguishes researched policy from measured behavior. The
+[session finalizer](../specs/session-finalization.md) connects close/Quit to
+fallible shutdown and saving while retaining the existing ReloadUI path. The
+[storage and process contract](../specs/session-finalization.md#storage-and-process-results)
+describes configured output, interactive completion and partial-save limits.
+Explicit recovery preserves diagnostics and healthy edits while protecting failed
+declared inputs, uninitialized owners and partial reconstructed environments.
+[Bounded verification](../specs/session-finalization.md#verification) records 67
+Forever and 71 Wrath passing cases, real GUI exit outcomes, and remaining cache
+and relaunch limits.
 
 ## [2026-10-27] proof | Mists scenario defaults
 

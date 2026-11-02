@@ -131,11 +131,16 @@ fn load_one_blizzard_addon(
     verbose: bool,
     timing: &mut LoadTiming,
 ) {
+    let first_error = env.state().borrow().lua_error_records.len();
     let result = load_startup_addon(&env.loader_env(), toc_path, kind, saved_vars.as_mut());
     match result {
         Ok(r) => record_blizzard_addon_success(env, name, kind, verbose, timing, r),
-        Err(e) => println!("{} failed: {}", name, e),
+        Err(e) => {
+            env.mark_addon_initialization_failed(name, format!("Failed to load {name}: {e}"));
+            println!("{} failed: {}", name, e);
+        }
     }
+    env.record_addon_initialization_errors_since(first_error);
 }
 
 fn record_blizzard_addon_success(
@@ -146,12 +151,23 @@ fn record_blizzard_addon_success(
     timing: &mut LoadTiming,
     result: LoadResult,
 ) {
+    record_load_initialization(env, name, &result);
     print_verbose_blizzard_status(name, verbose, &result);
     print_load_diagnostics(&result);
     if kind == StartupAddonLoadKind::Full {
         fire_addon_loaded(env, name);
     }
     timing.accumulate(&result.timing);
+}
+
+fn record_load_initialization(env: &WowLuaEnv, name: &str, result: &LoadResult) {
+    // Actual loader failures protect this owner's output. Optional nil accesses
+    // and API requirements remain diagnostics.
+    if let Some(error) = result.warnings.first() {
+        env.mark_addon_initialization_failed(name, format!("Failed to load {name}: {error}"));
+    } else {
+        env.mark_addon_initialized(name);
+    }
 }
 
 fn print_verbose_blizzard_status(name: &str, verbose: bool, result: &LoadResult) {
@@ -199,6 +215,10 @@ fn fire_addon_loaded(env: &WowLuaEnv, name: &str) {
     let arguments =
         wow_ui_sim::loader::addon_loaded_arguments(&env.state().borrow(), name, name_value);
     if let Err(e) = env.fire_event_with_args("ADDON_LOADED", &arguments) {
+        env.mark_addon_initialization_failed(
+            name,
+            format!("Error firing ADDON_LOADED for {name}: {e}"),
+        );
         logging::println_elapsed(&format!("Error firing ADDON_LOADED for {name}: {e}"));
     }
 }
@@ -368,7 +388,12 @@ fn should_skip_addon_dir(name: &str, exclude: &[&str]) -> bool {
 
 fn loadable_toc_path(path: &Path, screen: ScreenKind) -> Option<PathBuf> {
     let toc_path = wow_ui_sim::loader::find_toc_file(path)?;
-    let toc = TocFile::from_file(&toc_path).ok()?;
+    let toc = match TocFile::from_file(&toc_path) {
+        Ok(toc) => toc,
+        // Keep failed input observable in the loading path instead of treating
+        // an unreadable selected TOC as an absent addon.
+        Err(_) => return Some(toc_path),
+    };
     let supports_screen = toc.allows_screen(screen);
     let supported_game_type = !toc.is_ptr_only() && !toc.is_game_type_restricted();
     let supported_interface = load_out_of_date_addons()
@@ -564,6 +589,10 @@ fn load_registered_single_addon(
     let toc = match TocFile::from_file(toc_path) {
         Ok(toc) => toc,
         Err(e) => {
+            env.mark_addon_initialization_failed(
+                name,
+                format!("Failed to read TOC for {name}: {e}"),
+            );
             println!("✗ {} failed: {}", name, e);
             stats.load_failed_addons.insert(name.to_string());
             return;
@@ -574,9 +603,11 @@ fn load_registered_single_addon(
     } else {
         StartupAddonLoadKind::Full
     };
+    let first_error = env.state().borrow().lua_error_records.len();
     let result = load_startup_addon(&env.loader_env(), toc_path, kind, saved_vars.as_mut());
     match result {
         Ok(r) => {
+            record_load_initialization(env, name, &r);
             if kind == StartupAddonLoadKind::Full {
                 mark_addon_loaded(env, name, &r);
                 fire_addon_loaded(env, name);
@@ -584,10 +615,12 @@ fn load_registered_single_addon(
             record_addon_success(name, &r, stats);
         }
         Err(e) => {
+            env.mark_addon_initialization_failed(name, format!("Failed to load {name}: {e}"));
             println!("✗ {} failed: {}", name, e);
             stats.load_failed_addons.insert(name.to_string());
         }
     }
+    env.record_addon_initialization_errors_since(first_error);
 }
 
 fn should_load_registered_addon(env: &WowLuaEnv, name: &str) -> bool {
@@ -626,6 +659,7 @@ fn missing_required_dependency_error(env: &WowLuaEnv, name: &str) -> Option<Stri
 }
 
 fn record_addon_load_error(env: &WowLuaEnv, name: &str, message: String) {
+    env.mark_addon_initialization_failed(name, message.clone());
     let mut state = env.state().borrow_mut();
     state.lua_errors.push(message.clone());
     state.lua_error_records.push(LuaErrorRecord {
