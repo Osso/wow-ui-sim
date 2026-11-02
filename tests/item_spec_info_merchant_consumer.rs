@@ -11,7 +11,7 @@ fn merchant_product_info_returns_class_filtered_specs(env: &WowLuaEnv) {
         sim.player.class_index = 2;
     }
     env.exec(r#"
-        C_AddOns.LoadAddOn('Blizzard_MerchantUI')
+        C_AddOns.LoadAddOn('Blizzard_UIPanels_Game')
         local source = debug.getinfo(MerchantFrame_GetProductInfo, 'S').source:gsub('\\', '/')
         assert(source:find('Blizzard_UIPanels_Game/Mainline/MerchantFrame.lua', 1, true), source)
         local button = CreateFrame('Button')
