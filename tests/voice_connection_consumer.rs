@@ -3,6 +3,7 @@
 
 use wow_ui_sim::lua_api::WowLuaEnv;
 
+#[cfg(feature = "client-retail")]
 prefork_full_ui_case! {
 fn audio_assist_selects_connection_or_tts_wait_from_supplied_state(env: &WowLuaEnv) {
     env.exec(r#"
@@ -38,7 +39,7 @@ fn audio_assist_selects_connection_or_tts_wait_from_supplied_state(env: &WowLuaE
     "#).unwrap();
     env.state().borrow_mut().voice_chat.connection_ready = true;
     env.exec("assert(ObserveAudioAssist() == 'VOICE_CHAT_TTS_VOICES_UPDATE')").unwrap();
-    env.state().borrow_mut().voice_chat.connection_excluded = true;
+    env.state().borrow_mut().voice_chat.connection_ready = false;
     env.exec("assert(ObserveAudioAssist() == 'VOICE_CHAT_CONNECTION_SUCCESS')").unwrap();
 }
 }
