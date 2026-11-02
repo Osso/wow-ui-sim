@@ -256,6 +256,12 @@ fn register_c_item_inventory_queries(
         table_set_rust_fn_static(
             state,
             table_ref,
+            "GetItemSetInfo",
+            super::item_set::get_item_set_info,
+        )?;
+        table_set_rust_fn_static(
+            state,
+            table_ref,
             "GetItemUniqueness",
             super::item_uniqueness::get_item_uniqueness,
         )?;
@@ -735,7 +741,7 @@ pub(crate) fn push_item_info(state: &mut LuaState, item_id: u32) -> LuaResult<u3
     state.push(Val::Num(0.0));
     state.push(Val::Num(item.bonding as f64));
     state.push(Val::Num(item.expansion_id as f64));
-    state.push(Val::Num(0.0));
+    state.push(super::item_set::item_set_id(item_id).map_or(Val::Nil, |set| Val::Num(set as f64)));
     state.push(Val::Bool(false));
     Ok(17)
 }
@@ -783,7 +789,7 @@ fn push_item_info_values(
     state.push(Val::Num(0.0));
     state.push(Val::Num(0.0));
     state.push(Val::Num(0.0));
-    state.push(Val::Num(0.0));
+    state.push(Val::Nil);
     state.push(Val::Bool(false));
 }
 

@@ -9,6 +9,7 @@ pub mod item_child;
 mod item_creation_context_data;
 mod item_effects;
 mod item_gem;
+mod item_set;
 pub mod item_spec;
 mod item_type;
 mod item_uniqueness;
