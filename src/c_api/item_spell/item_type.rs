@@ -90,19 +90,20 @@ pub(super) fn is_equipped_item_type(state: &mut LuaState) -> LuaResult<u32> {
     let inventory_type = find_inventory_type(state, &query).filter(|index| *index > 0);
     let found = {
         let sim = borrow_state(state)?;
-        sim.player.equipped_items.iter().any(|(slot, item)| {
-            if !(0..=18).contains(slot) {
-                return false;
-            }
-            let Ok(index) = ITEMS.binary_search_by_key(&item.item_id, |entry| entry.0) else {
-                return false;
-            };
-            let (_, class, subclass, inventory) = ITEMS[index];
-            match inventory_type {
-                Some(expected) => inventory == expected,
-                None => matches_category(&query, class, subclass),
-            }
-        })
+        sim.player.present
+            && sim.player.equipped_items.iter().any(|(slot, item)| {
+                if !(0..=18).contains(slot) {
+                    return false;
+                }
+                let Ok(index) = ITEMS.binary_search_by_key(&item.item_id, |entry| entry.0) else {
+                    return false;
+                };
+                let (_, class, subclass, inventory) = ITEMS[index];
+                match inventory_type {
+                    Some(expected) => inventory == expected,
+                    None => matches_category(&query, class, subclass),
+                }
+            })
     };
     state.push(Val::Bool(found));
     Ok(1)

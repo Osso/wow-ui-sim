@@ -2,7 +2,7 @@
 
 ## What it must do
 
-- Retail `C_Item.IsEquippedItemType(type)` searches supplied equipment slots 0–18 and returns one boolean. The required argument accepts strings and numbers; nil, missing, and other values raise an argument error.
+- Retail `C_Item.IsEquippedItemType(type)` searches supplied equipment slots 0–18 and returns one boolean. An absent player returns false. The required argument accepts strings and numbers; nil, missing, and other values raise an argument error.
 - Compare the 35 inventory tokens in native order, first against the literal and then against its localized global. A positive matching token requires the item's inventory type to equal its index. An index-zero match or no token match instead compares the item class name, both subclass names and applicable subclass-mask names.
 - Compare complete strings without case sensitivity. Item classification and English category names come from the generated Item, ItemClass, ItemSubClass and ItemSubClassMask catalog.
 
