@@ -385,6 +385,26 @@ fn spell_display_guid_context_delivers_to_original_container() {
 }
 
 #[test]
+fn duplicate_guid_registrations_keep_remaining_consumer_live() {
+    let env = load_and_register_spell_container_env(false);
+    assert_lua(&env, "two GUID containers", r#"
+        FirstGuidContainer = CreateFrame('Frame', nil, UIParent, 'UIWidgetContainerTemplate')
+        SecondGuidContainer = CreateFrame('Frame', nil, UIParent, 'UIWidgetContainerTemplate')
+        FirstGuidContainer:RegisterForWidgetSet(431, nil, nil, {unit='Creature-1', isGuid=true})
+        SecondGuidContainer:RegisterForWidgetSet(431, nil, nil, {unit='Creature-1', isGuid=true})
+        FirstGuidContainer:UnregisterForWidgetSet()
+    "#);
+    let mut membership = entry();
+    membership.unit_token = Some("Creature-1".into());
+    let mut row = supplied_record();
+    row.spell_info.text = "Still registered".into();
+    env.update_ui_widget_for_guid(SET_ID, membership, WidgetVisualization::SpellDisplay(row)).unwrap();
+    assert_lua(&env, "remaining original consumer", r#"
+        assert(SecondGuidContainer.widgetFrames[761301].Spell.Text:GetText() == 'Still registered')
+    "#);
+}
+
+#[test]
 fn spell_display_attached_player_context_separate_from_world_loot_policy() {
     let env = load_and_register_spell_container_env(true);
     supply(&env, supplied_record(), true);
