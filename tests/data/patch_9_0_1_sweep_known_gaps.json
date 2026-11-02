@@ -84,7 +84,6 @@
   "wt-global-api-C_Item.DoesItemMatchBonusTreeReplacement-316",
   "wt-global-api-C_Item.IsItemKeystoneByID-317",
   "wt-global-api-C_LFGInfo.CanPlayerUsePVP-321",
-  "wt-global-api-C_LegendaryCrafting.CloseRuneforgeInteraction-325",
   "wt-global-api-C_LegendaryCrafting.CraftRuneforgeLegendary-326",
   "wt-global-api-C_LegendaryCrafting.GetRuneforgeItemPreviewInfo-327",
   "wt-global-api-C_LegendaryCrafting.GetRuneforgeLegendaryComponentInfo-328",
