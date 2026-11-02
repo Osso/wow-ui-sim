@@ -57,7 +57,7 @@ WM citations below identify clean-room reports in `native-evidence-70688/secrets
 - **VERIFIED — WM61 S1:** Combat uses a transition input; Encounter uses a status flag or positive counter; ChallengeMode uses a running marker; PvPMatch is active in Waiting, StartUp, Engaged or PostRound; Map needs nonzero classification without flag 512. Chat requires its enabled policy, a client flag, the Map metadata condition, and an Active Encounter, ChallengeMode or PvPMatch. Combat alone does not activate Chat.
 - **VERIFIED — WM61 S1:** Activation stores 1, optionally emits `ADDON_RESTRICTION_STATE_CHANGED(type, 1)`, then stores 2; it emits no state-2 public event. Deactivation stores 0 before the optional event `(type, 0)`. No transition occurs for an unchanged target or an Activating reentry.
 - **UNKNOWN — WM61 S1:** Server transitions, callback effects, event-hook availability, scheduling, complete map classifications and the meanings of the Chat client flag and map flag 512. Missing map metadata bypasses an update; it is not proven to clear the state.
-- **SOURCE — WM61 S1:** `restricted_actions.rs` already supplies six indexed states and emits activation state 1 and deactivation state 0. Its host-event inputs and separate `unit_auras_restricted` flag do not yet establish the complete WM61 natural and forced-CVar model.
+- **SOURCE — WM61 S1:** `restricted_actions.rs` supplies six indexed states, activation state 1 and deactivation state 0, and natural-or-forced CVar transitions. Its host-event inputs and separate `unit_auras_restricted` flag do not yet establish the complete WM61 natural conditions.
 
 ### Secure invocation
 
@@ -85,7 +85,7 @@ WM citations below identify clean-room reports in `native-evidence-70688/secrets
 
 | Area | Today | Gap |
 |---|---|---|
-| Restriction trigger | `unit_auras_restricted` is a separate input; `restricted_actions.rs` models supplied indexed restriction transitions | The complete WM61 natural and forced-CVar conditions and their connection to aura publication are not established |
+| Restriction trigger | `unit_auras_restricted` is a separate input; `restricted_actions.rs` models supplied indexed transitions and forced CVars | The complete WM61 natural conditions and their connection to aura publication are not established |
 | AuraData | Whole table wrapped; tainted access denied; secure indexing returns plain fields | No per-field secrets; no `ConditionalSecret` contents |
 | Spell-keyed lookups | Never-secret spells stay plain; others return one nil to tainted callers (inferred) | WM61 S8 rejection fragments return zero results, not one nil; complete entry behavior remains UNKNOWN |
 | VM operations | Guarded truth/equality for wrapped booleans and nil, guarded ordering for numbers | Arithmetic, concat, `tostring`, `format` and table-key rules missing |

@@ -11,6 +11,14 @@ const INACTIVE: u8 = 0;
 const ACTIVATING: u8 = 1;
 const ACTIVE_STATE: u8 = 2;
 const CHALLENGE_MODE: usize = 2;
+const FORCED_CVARS: [&str; 6] = [
+    "addonCombatRestrictionsForced",
+    "addonEncounterRestrictionsForced",
+    "addonChallengeModeRestrictionsForced",
+    "addonPvPMatchRestrictionsForced",
+    "addonMapRestrictionsForced",
+    "addonChatRestrictionsForced",
+];
 
 pub(crate) fn supported() -> bool {
     matches!(ACTIVE, ClientProfile::Retail | ClientProfile::Ptr)
@@ -103,8 +111,30 @@ pub(crate) fn set_restriction(state: &mut LuaState, kind: usize, active: bool) -
     if !supported() {
         return Ok(());
     }
-    let old = borrow_state(state)?.restricted_actions[kind];
-    if (old != INACTIVE) == active {
+    borrow_state_mut(state)?.restricted_actions_natural[kind] = active;
+    recompute_restriction(state, kind)
+}
+
+pub(crate) fn update_forced_cvar(state: &mut LuaState, name: &str) -> LuaResult<()> {
+    if supported()
+        && let Some(kind) = FORCED_CVARS
+            .iter()
+            .position(|cvar| cvar.eq_ignore_ascii_case(name))
+    {
+        recompute_restriction(state, kind)?;
+    }
+    Ok(())
+}
+
+fn recompute_restriction(state: &mut LuaState, kind: usize) -> LuaResult<()> {
+    let (old, active) = {
+        let sim = borrow_state(state)?;
+        (
+            sim.restricted_actions[kind],
+            sim.restricted_actions_natural[kind] || sim.cvars.get_bool(FORCED_CVARS[kind]),
+        )
+    };
+    if old == ACTIVATING || (old == ACTIVE_STATE) == active {
         return Ok(());
     }
     let next = if active { ACTIVATING } else { INACTIVE };

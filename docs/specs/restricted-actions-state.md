@@ -8,13 +8,14 @@ Retail and PTR expose `C_RestrictedActions` state queries backed by six independ
 - [x] Activation sets Activating (1), synchronously emits `ADDON_RESTRICTION_STATE_CHANGED(type, 1)`, then sets Active (2). The predicate for the changing type is false inside the event.
 - [x] Deactivation sets Inactive (0) before synchronously emitting `ADDON_RESTRICTION_STATE_CHANGED(type, 0)`.
 - [x] Combat follows `A_Admin.SetInCombat`; the other types are independently supplied with `A_Admin.SetAddOnRestrictionActive(type, active)`.
+- [x] Each supplied natural condition is ORed with its matching `addon*RestrictionsForced` CVar. Changing a forced CVar recomputes that type. WM61 S1 verifies the six names and local transition rule; server inputs remain unknown.
 - [x] Encounter and PvP lifecycle events and challenge-run start/clear drive their respective types. These drivers are best guesses, not verified native triggers.
 - [x] Missing, nil, negative, out-of-range and nonnumeric type arguments fail. This validation is a best guess.
 - [ ] Challenge-run completion deactivates the challenge restriction. This path is implemented but not separately tested here.
 
 ## Best-guess basis
 
-**Best-guess, native UNKNOWN:** the initial inactive state, input validation, simulator drivers, exact activation-state storage and event ordering beyond the documented before-active/after-inactive ordering. The generated Retail and PTR `Blizzard_APIDocumentationGenerated/RestrictedActionsDocumentation.lua:29–41,55–67,91–101` declare the queries and synchronous event. `RestrictedActionsConstantsDocumentation.lua:6–32` declares the state and type values. The 12.1.5 native evidence verifies that the getter reads a per-index byte and the predicate compares it with 2; it does not establish writers or triggers. The simulator uses the documented enum values as indices.
+**Best-guess, native UNKNOWN:** the initial inactive state, input validation and complete simulator drivers. WM61 S1 (`S1-restriction-triggers-wm61.md`, Retail 12.1.5.70688) verifies the local writer's activating and inactive event order, reentry rule and natural-or-forced decision; server effects and callback outcomes remain UNKNOWN. The generated Retail and PTR `Blizzard_APIDocumentationGenerated/RestrictedActionsDocumentation.lua:29–41,55–67,91–101` declare the queries and synchronous event. `RestrictedActionsConstantsDocumentation.lua:6–32` declares the state and type values. The 12.1.5 native evidence verifies that the getter reads a per-index byte and the predicate compares it with 2; WM61 S1 additionally identifies local writers and trigger conditions. The simulator uses the documented enum values as indices.
 
 ## How it works
 
@@ -35,7 +36,7 @@ Retail and PTR expose `C_RestrictedActions` state queries backed by six independ
 
 ## Known gaps (current cycle)
 
-- [ ] Native writers, trigger conditions and validation details remain unknown.
+- [ ] Complete supplied inputs and validation details remain unknown; WM61 S1 establishes the local writer and its conditions.
 - [ ] The documentation says the predicate is always false during event dispatch; behavior when a *different* restriction is already active is not established by these tests. The implementation compares the queried state to 2.
 - [ ] Native relationships between `SecretWhen*` categories and restriction types are unknown; this model does not wire them together.
 - [ ] Protected-function permission enforcement remains outside this change.
