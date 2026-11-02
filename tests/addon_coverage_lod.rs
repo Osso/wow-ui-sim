@@ -45,6 +45,7 @@ fn blizzard_ui_dir() -> PathBuf {
         .expect("Blizzard UI cache should be available")
 }
 
+#[cfg(feature = "client-retail")]
 #[test]
 fn commentator_consumer_updates_shared_mouse_availability() {
     common::with_perf_lock(|| {
