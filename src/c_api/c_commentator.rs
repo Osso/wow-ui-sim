@@ -25,17 +25,25 @@ fn set_mouse_disabled(state: &mut LuaState) -> LuaResult<u32> {
         Val::Bool(false) => false,
         _ => true,
     };
-    let (available, changed) = {
+    let requested = {
         let mut sim = borrow_state_mut(state)?;
         sim.mouse_disabled = Some(disabled);
-        // EMULATED override pending the native availability truth table.
-        let available = !disabled || sim.mouse_availability_override;
+        let available = sim.mouse_force_available
+            || (!disabled
+                && sim.mouse_availability_source
+                && (!sim.mouse_availability_inhibited || sim.mouse_inhibition_cancelled));
         let changed = sim.mouse_available != Some(available);
         sim.mouse_available = Some(available);
-        (available, changed)
+        if !changed {
+            None
+        } else if available {
+            sim.mouse_available_cursor_requested
+        } else {
+            Some(false)
+        }
     };
-    if changed {
-        crate::lua_api::globals::real::mouse_probes::set_cursor_visibility(state, available)?;
+    if let Some(visible) = requested {
+        crate::lua_api::globals::real::mouse_probes::set_cursor_visibility(state, visible)?;
     }
     Ok(0)
 }

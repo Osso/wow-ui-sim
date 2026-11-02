@@ -415,8 +415,13 @@ pub struct SimState {
     pub mouse_position: Option<(f32, f32)>,
     /// Shared mouse-disable state; absent until the client or host sets it.
     pub mouse_disabled: Option<bool>,
-    /// EMULATED availability override supplied by the host.
-    pub mouse_availability_override: bool,
+    /// Supplied availability calculation inputs (force, inhibitor, cancel, source).
+    pub mouse_force_available: bool,
+    pub mouse_availability_inhibited: bool,
+    pub mouse_inhibition_cancelled: bool,
+    pub mouse_availability_source: bool,
+    /// Requested cursor visibility when available; absent when not supplied.
+    pub mouse_available_cursor_requested: Option<bool>,
     pub mouse_available: Option<bool>,
     pub hovered_frame: Option<u64>,
     pub active_drag_frame: Option<u64>,

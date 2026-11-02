@@ -53,6 +53,11 @@ fn commentator_consumer_updates_shared_mouse_availability() {
             env.set_screen_size(1024.0, 768.0);
             env.state().borrow_mut().addon_base_paths = vec![blizzard_ui_dir()];
             load_startup_blizzard_ui(&env);
+            {
+                let mut state = env.state().borrow_mut();
+                state.mouse_availability_source = true;
+                state.mouse_available_cursor_requested = Some(true);
+            }
             env.exec("C_AddOns.LoadAddOn('Blizzard_Commentator')")
                 .expect("original Commentator addon should load");
 
@@ -64,7 +69,7 @@ fn commentator_consumer_updates_shared_mouse_availability() {
                 assert_eq!(state.mouse_available, Some(!disabled));
                 assert_eq!(state.forever_startup.cursor_visible, !disabled);
             }
-            env.state().borrow_mut().mouse_availability_override = true;
+            env.state().borrow_mut().mouse_force_available = true;
             env.exec("CommentatorMixin:SetCommentatorMode(true)")
                 .expect("override scenario should execute the original consumer");
             let state = env.state().borrow();
@@ -72,6 +77,22 @@ fn commentator_consumer_updates_shared_mouse_availability() {
             assert_eq!(state.mouse_available, Some(true));
             assert!(state.forever_startup.cursor_visible);
             drop(state);
+            {
+                let mut state = env.state().borrow_mut();
+                state.mouse_force_available = false;
+                state.mouse_availability_inhibited = true;
+            }
+            env.exec("CommentatorMixin:SetCommentatorMode(false)")
+                .expect("inhibited availability should execute");
+            assert_eq!(env.state().borrow().mouse_available, Some(false));
+            env.state().borrow_mut().mouse_inhibition_cancelled = true;
+            env.exec("CommentatorMixin:SetCommentatorMode(false)")
+                .expect("cancelled inhibition should execute");
+            assert_eq!(env.state().borrow().mouse_available, Some(true));
+            env.state().borrow_mut().forever_startup.cursor_visible = false;
+            env.exec("CommentatorMixin:SetCommentatorMode(false)")
+                .expect("unchanged availability should execute");
+            assert!(!env.state().borrow().forever_startup.cursor_visible);
             let contract: (bool, bool, i32) = env
                 .eval("return pcall(C_Commentator.SetMouseDisabled), pcall(C_Commentator.SetMouseDisabled, nil), select('#', C_Commentator.SetMouseDisabled(0))")
                 .expect("argument and return contract should be queryable");
