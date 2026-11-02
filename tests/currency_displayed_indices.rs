@@ -70,7 +70,7 @@ fn currency_filter_supplied_account_response_defers_projection() {
     let env = wow_ui_sim::lua_api::WowLuaEnv::new().unwrap();
     {
         let mut state = env.state().borrow_mut();
-        state.currency_list.account_server_enabled = false;
+        state.currency_list.server_enabled = false;
         let mut info = state.currency_info.get(&2806).unwrap().clone();
         info.name = "Supplied account currency".into();
         state.currency_info.insert(990001, info);
@@ -81,7 +81,7 @@ fn currency_filter_supplied_account_response_defers_projection() {
     "#).unwrap();
     {
         let mut state = env.state().borrow_mut();
-        state.currency_list.account_server_enabled = true;
+        state.currency_list.server_enabled = true;
         state.currency_list.account_context_present = false;
     }
     env.exec("C_CurrencyInfo.RequestCurrencyDataForAccountCharacters(); assert(C_CurrencyInfo.IsAccountCharacterCurrencyDataReady())").unwrap();

@@ -18,11 +18,10 @@ pub struct CurrencyListState {
     collapsed_headers: HashSet<i32>,
     watched_overrides: HashMap<i32, bool>,
     filter: i32,
-    pub account_server_enabled: bool,
+    pub server_enabled: bool,
     pub account_context_present: bool,
     pub account_cache_invalidated: bool,
     pub cached_transaction_count: usize,
-    pub transfer_server_enabled: Option<bool>,
     pub transfer_rules: HashMap<i32, CurrencyTransferRules>,
     pub current_character_guid: Option<String>,
     pub account_currency_sources: HashMap<i32, Vec<(String, u64)>>,
@@ -39,11 +38,10 @@ impl Default for CurrencyListState {
             collapsed_headers: HashSet::new(),
             watched_overrides: HashMap::new(),
             filter: 1,
-            account_server_enabled: true,
+            server_enabled: false,
             account_context_present: true,
             account_cache_invalidated: false,
             cached_transaction_count: 0,
-            transfer_server_enabled: None,
             transfer_rules: HashMap::new(),
             current_character_guid: None,
             account_currency_sources: HashMap::new(),
@@ -78,7 +76,7 @@ impl CurrencyListState {
     }
 
     pub(crate) fn request_account_data(&mut self) {
-        if !self.account_server_enabled || !self.account_context_present || self.account_loading {
+        if !self.server_enabled || !self.account_context_present || self.account_loading {
             return;
         }
         if self.account_cache_invalidated {

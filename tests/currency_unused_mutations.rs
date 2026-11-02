@@ -89,7 +89,7 @@ fn currency_transfer_button_refreshes_original_consumer_for_nontransferable_curr
         {
             let mut state = env.state().borrow_mut();
             let list = &mut state.currency_list;
-            list.transfer_server_enabled = Some(true);
+            list.server_enabled = true;
             list.current_character_guid = Some("player-guid".into());
             list.transfer_rules.insert(1166, wow_ui_sim::c_api::currency_list::CurrencyTransferRules {
                 award_condition_met: Some(true), quantity_cap_reached: Some(false),
@@ -117,7 +117,7 @@ fn currency_transfer_eligibility_uses_supplied_policy_and_account_sources() {
     {
         let mut state = env.state().borrow_mut();
         let list = &mut state.currency_list;
-        list.transfer_server_enabled = Some(false);
+        list.server_enabled = false;
         list.current_character_guid = Some("self".into());
         list.transfer_rules.insert(1166, CurrencyTransferRules {
             award_condition_met: Some(true), quantity_cap_reached: Some(false),
@@ -131,7 +131,7 @@ fn currency_transfer_eligibility_uses_supplied_policy_and_account_sources() {
         local ok, reason = C_CurrencyInfo.CanTransferCurrency(1166)
         assert(not ok and reason == 10)
     "#).unwrap();
-    env.state().borrow_mut().currency_list.transfer_server_enabled = Some(true);
+    env.state().borrow_mut().currency_list.server_enabled = true;
     env.exec("local ok, reason = C_CurrencyInfo.CanTransferCurrency(1166); assert(not ok and reason == 6)").unwrap();
     env.state().borrow_mut().currency_list.account_currency_sources.insert(1166, vec![("self".into(), 99), ("other".into(), 7)]);
     env.exec("local ok, reason = C_CurrencyInfo.CanTransferCurrency(1166); assert(ok and reason == nil)").unwrap();
@@ -152,10 +152,10 @@ fn currency_transfer_eligibility_uses_supplied_policy_and_account_sources() {
     {
         let mut state = env.state().borrow_mut();
         state.currency_transfer_in_progress = true;
-        state.currency_list.transfer_server_enabled = Some(false);
+        state.currency_list.server_enabled = false;
     }
     env.exec("local ok, reason = C_CurrencyInfo.CanTransferCurrency(1166); assert(not ok and reason == 10)").unwrap();
-    env.state().borrow_mut().currency_list.transfer_server_enabled = Some(true);
+    env.state().borrow_mut().currency_list.server_enabled = true;
     env.exec("local ok, reason = C_CurrencyInfo.CanTransferCurrency(1166); assert(not ok and reason == 9)").unwrap();
 }
 

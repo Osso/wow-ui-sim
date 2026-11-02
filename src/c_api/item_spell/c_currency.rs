@@ -247,10 +247,7 @@ fn currency_transfer_rejection(
     id: i32,
 ) -> LuaResult<Option<Option<i32>>> {
     let list = &sim.currency_list;
-    let enabled = list
-        .transfer_server_enabled
-        .ok_or_else(|| rilua::runtime_error("currency transfer server control not modeled"))?;
-    if !enabled {
+    if !list.server_enabled {
         return Ok(Some(Some(10)));
     }
     if sim.currency_transfer_in_progress {
