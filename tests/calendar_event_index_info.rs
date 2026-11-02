@@ -182,12 +182,17 @@ fn calendar_event_index_restoration_preserves_namespace_and_unrelated_functions(
     )
     .expect("calendar cleanup fixture");
     env.restore_post_cleanup_globals();
-    env.exec(&format!(r#"{QUERY_ASSERTIONS}
-        index(0, 15, 1, get(910001))
+    // ad5b8fb59 (citing a07283768): post-cleanup restore does not re-register public
+    // namespace members, so the cleared getter stays nil.
+    env.exec(
+        r#"
+        assert(C_Calendar.GetEventIndexInfo == nil, 'cleared public getter stays nil')
         assert(rawequal(C_Calendar, CalendarNamespaceBefore), 'namespace preserved')
         assert(rawequal(C_Calendar.GetNumInvites, CalendarInviteSentinel), 'unrelated function preserved')
         assert(C_Calendar.GetNumInvites() == 7)
-        "#)).expect("restored real getter and preserved Calendar namespace");
+        "#,
+    )
+    .expect("cleared getter stays nil and Calendar namespace is preserved");
 }
 
 #[test]
