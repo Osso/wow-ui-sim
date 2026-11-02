@@ -293,7 +293,6 @@ pub struct SimState {
     #[cfg(feature = "retail-12-0-5")]
     pub transmog_appearance_sources: HashMap<i64, AppearanceSourceInfo>,
     /// Supplied source IDs marked new; acquisition and clearing policy is unknown.
-    #[cfg(feature = "retail-12-0-5")]
     pub transmog_new_sources: HashSet<i64>,
     /// Explicit (slot, type, option) inputs only; no viewed-outfit synthesis.
     #[cfg(feature = "retail-12-0-5")]
