@@ -166,11 +166,33 @@ That capture's historical metadata bound the observation to source, manifest has
 
 ## Forever Lua Errors
 
-Current 70532 stock capture at runtime source `1fcbddf67`: **26 records / 26
+Verified Windows game-screen capture on 2026-11-02 at runtime source
+`2e48a2960`, using the installed `wowf 1.60.1.70634` UI cache:
+**4 records / 4 occurrences, exit1; startup is not clean.**
+`wowforever-lua-errors.json` is byte-identical captured stdout (SHA256
+`bd2c211638d3bfac11ad63bb8d5e5db8cd9ba47d90481f3afbaa181a7a0ab0d1`).
+[Metadata](wowforever-lua-errors.meta.json) records the command, binary hash,
+cache provenance, CVar guards and all four record classifications.
+
+All four records concern missing `C_PetInfo.IsPetOrderMoveToPending` at
+`Blizzard_GamepadActionBars/MainActionBarFrame.lua:244`: one OnLoad failure and
+one OnEvent failure, each re-reported by Blizzard_ScriptErrors. Neither historical
+`GetTargetSpellID` nor `GetPreferredDatacenterLocalities` error appears.
+
+The run used `--allow-ui-version-mismatch --no-addons --no-saved-vars lua-errors`.
+Current persisted CVars were copied byte-for-byte into isolated child storage;
+the originals retained identical hash and stat. Cache provenance was unchanged,
+but the full cache was not sealed. The prior capture used build 70532; source
+and cache both differ, so the change from 26/26 to 4/4 is not controlled fix
+attribution. Local capture evidence: `target/forever-baseline-check-20261102T061338Z-confirmed/`.
+
+### Historical 70532 capture
+
+Historical 70532 stock capture at runtime source `1fcbddf67`: **26 records / 26
 occurrences, exit1; startup is not clean.** The JSON is byte-identical captured
 stdout (SHA256 `3f730c6ab7e75bf0c95c73239af1e60519633beea8988d6d2e6f0176bbe22abd`).
-[Metadata](wowforever-lua-errors.meta.json) classifies every record by index and
-message hash, and binds the source, ELF, copied cache, manifest and CVar guards.
+That capture's metadata classified every record by index and message hash, and
+bound the source, ELF, copied cache, manifest and CVar guards.
 
 | Native-unknown residue | Raw records / occurrences | Reason |
 |---|---:|---|
@@ -376,7 +398,7 @@ No native/font-identity, cached Blizzard startup/consumer, cache publication, GU
 
 [Player-storage contract and execution](../specs/forever-gamepad-player-storage.md#bounded-execution--2026-10-16) records simulator-owned slots4096–4179, three player acceptance cases and the existing pet control PASS at producer `0177adc75`. Normal sealed startup now reports **exit0,0 records/0 occurrences** with no third-party addons/SavedVariables/CASC/sound. Own preproducer startup reproduces **exit1,10 records/14 occurrences**:4 direct arithmetic,2 parent page-lookup and8 stance-anchor occurrences. Historical message equality differs only in the generated handler hash in four event rows. Fixing the producer resolves downstream initialization without map/anchor or vendor patches.
 
-`wowforever-lua-errors.json` remains the historical preproducer inventory, not the current bounded result. The linked receipt owns precise revisions, scope, diagnostics and private evidence; native/GUI, full integration and parent acceptance are not established.
+At this checkpoint, `wowforever-lua-errors.json` still held the preproducer inventory. The tracked JSON has since been refreshed as described in [Forever Lua Errors](#forever-lua-errors). The linked receipt owns precise revisions, scope, diagnostics and private evidence; native/GUI, full integration and parent acceptance are not established.
 
 ## Quest lifecycle integration
 
