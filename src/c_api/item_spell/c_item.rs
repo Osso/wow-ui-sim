@@ -210,6 +210,12 @@ fn register_c_item_inventory_queries(
             "GetItemGem",
             super::item_gem::get_item_gem,
         )?;
+        table_set_rust_fn_static(
+            state,
+            table_ref,
+            "IsEquippedItemType",
+            super::item_type::is_equipped_item_type,
+        )?;
     }
     register_c_item_methods(
         state,

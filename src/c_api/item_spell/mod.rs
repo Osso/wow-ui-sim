@@ -6,6 +6,7 @@ pub(crate) use c_equipment_set::use_equipment_set_by_id;
 mod c_item;
 pub(crate) mod helpers;
 mod item_gem;
+mod item_type;
 
 use super::c_spell;
 use super::c_spell_book;
