@@ -57,6 +57,11 @@ pub(super) fn item_bonding(item_id: u32) -> Option<u8> {
     find_item_row(item_id).map(|row| row.7)
 }
 
+/// Item class from the same resident base record.
+pub(super) fn item_class(item_id: u32) -> Option<u8> {
+    find_item_row(item_id).map(|row| row.1)
+}
+
 /// Build the derived record, or None when ItemSparse/Item data is missing.
 /// Normal derivation copies ItemSparse flag 134217728 into itemFlag27;
 /// accepted overrides leave it false (WM48).

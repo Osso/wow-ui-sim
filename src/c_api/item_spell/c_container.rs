@@ -170,9 +170,13 @@ fn c_container_get_item_info(state: &mut LuaState) -> LuaResult<u32> {
         return Ok(1);
     };
 
-    let locked = borrow_state(state)?.keystone.is_locked(
-        crate::c_api::c_challenge_mode::KeystoneLocation::Bag(bag, slot),
-    );
+    let locked = {
+        let sim = borrow_state(state)?;
+        super::item_equip::is_locked_at(
+            &sim,
+            crate::c_api::item_upgrade_eligibility::ItemSlot::Bag(bag, slot),
+        )
+    };
     let info = build_container_item_info(state, &bag_item, locked)?;
     state.push(info);
     Ok(1)

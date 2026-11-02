@@ -97,20 +97,43 @@ pub(crate) fn current_mode(state: &LuaState) -> LuaResult<u8> {
 /// S before the clear) for a nonempty cursor. Item-upgrade observations stay
 /// with the caller, which may have swapped them into a slot.
 pub(crate) fn clear(state: &mut LuaState) -> LuaResult<()> {
-    let (old, saved_id, grid_shown) = {
+    clear_with_restoration(state, true)
+}
+
+/// An equip request keeps reason 1 when it clears the staged cursor (WM57).
+pub(crate) fn clear_retaining_equip_lock(state: &mut LuaState) -> LuaResult<()> {
+    clear_with_restoration(state, false)
+}
+
+fn clear_with_restoration(state: &mut LuaState, restore: bool) -> LuaResult<()> {
+    let (old, saved_id, grid_shown, unlocked) = {
         let mut sim = borrow_state_mut(state)?;
         let old = sim.cursor_item.take();
         if !modeled() {
             return Ok(());
         }
+        let unlocked = if restore {
+            crate::c_api::item_spell::item_equip::restore_staged_lock(&mut sim)
+        } else {
+            sim.item_equip.staged = None;
+            None
+        };
         let storage = &mut sim.cursor_storage;
         let saved_id = storage.stored_item_id;
         let old = old.map(|cursor| native_mode(&cursor));
         if old.flatten().is_some_and(clear_zeroes_stored_id) {
             storage.stored_item_id = 0;
         }
-        (old, saved_id, std::mem::take(&mut storage.grid_shown))
+        (
+            old,
+            saved_id,
+            std::mem::take(&mut storage.grid_shown),
+            unlocked,
+        )
     };
+    if let Some(slot) = unlocked {
+        crate::c_api::item_spell::item_equip::dispatch_lock_transition(state, slot, false)?;
+    }
     if grid_shown {
         dispatch_event_now(state, "ACTIONBAR_HIDEGRID", &[])?;
     }
@@ -132,12 +155,39 @@ pub(crate) fn clear(state: &mut LuaState) -> LuaResult<()> {
 /// It fires only when that previous mode differs from the new one, so a
 /// same-mode typed replacement reports only the clear.
 pub(crate) fn place(state: &mut LuaState, cursor: CursorInfo) -> LuaResult<()> {
+    place_with_staged(state, cursor, None)
+}
+
+/// Install an owned item after the caller cleared and re-resolved its identity.
+pub(crate) fn place_staged_after_clear(
+    state: &mut LuaState,
+    cursor: CursorInfo,
+    staged: crate::c_api::item_spell::item_equip::StagedEquip,
+) -> LuaResult<()> {
+    let post_clear_mode = current_mode(state)?;
+    install_cursor(state, cursor, Some(staged), post_clear_mode)
+}
+
+fn place_with_staged(
+    state: &mut LuaState,
+    cursor: CursorInfo,
+    staged: Option<crate::c_api::item_spell::item_equip::StagedEquip>,
+) -> LuaResult<()> {
     if !modeled() {
         borrow_state_mut(state)?.cursor_item = Some(cursor);
         return Ok(());
     }
     let pre_clear_mode = current_mode(state)?;
     clear(state)?;
+    install_cursor(state, cursor, staged, pre_clear_mode)
+}
+
+fn install_cursor(
+    state: &mut LuaState,
+    cursor: CursorInfo,
+    staged: Option<crate::c_api::item_spell::item_equip::StagedEquip>,
+    pre_clear_mode: u8,
+) -> LuaResult<()> {
     let post_clear_mode = current_mode(state)?;
     let mode = native_mode(&cursor);
     let grid = mode.is_some_and(|mode| shows_grid(&cursor, mode));
@@ -148,6 +198,7 @@ pub(crate) fn place(state: &mut LuaState, cursor: CursorInfo) -> LuaResult<()> {
             sim.cursor_storage.stored_item_id = item_id;
         }
         sim.cursor_item = Some(cursor);
+        sim.item_equip.staged = staged;
         post_clear_id
     };
     let Some(mode) = mode else {

@@ -271,6 +271,13 @@ fn register_c_item_inventory_queries(
             "GetItemSpecInfo",
             super::item_spec::get_item_spec_info,
         )?;
+        table_set_rust_fn_static(state, table_ref, "IsLocked", super::item_equip::is_locked)?;
+        table_set_rust_fn_static(
+            state,
+            table_ref,
+            "EquipItemByName",
+            super::item_equip::equip_item_by_name,
+        )?;
         table_set_rust_fn_static(
             state,
             table_ref,

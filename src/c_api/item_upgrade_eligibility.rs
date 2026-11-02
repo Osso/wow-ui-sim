@@ -28,7 +28,7 @@ pub struct ItemUpgradeEligibility {
 }
 
 impl ItemSlot {
-    fn item_id(self, sim: &SimState) -> Option<u32> {
+    pub(crate) fn item_id(self, sim: &SimState) -> Option<u32> {
         match self {
             Self::Bag(bag, slot) => sim.bag_items.get(&(bag, slot)).map(|item| item.item_id),
             Self::Equipment(slot) => sim
@@ -45,7 +45,7 @@ impl ItemSlot {
         }
     }
 
-    fn cursor_origin(self) -> CursorItemOrigin {
+    pub(crate) fn cursor_origin(self) -> CursorItemOrigin {
         match self {
             Self::Bag(bag, slot) => CursorItemOrigin::Bag { bag, slot },
             Self::Equipment(slot) => CursorItemOrigin::Equipped { slot },

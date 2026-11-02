@@ -10,6 +10,7 @@ mod item_classifiers;
 mod item_creation_context_data;
 mod item_cursor_grid;
 mod item_effects;
+pub mod item_equip;
 mod item_gem;
 mod item_pickup;
 pub mod item_range;

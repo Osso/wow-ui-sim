@@ -593,6 +593,8 @@ pub struct SimState {
     pub pvp_honor: PvpHonorState,
     pub world: WorldState,
     pub bag_items: HashMap<(i32, i32), BagItem>,
+    /// Owned-item identity, local equip requests and lock inputs.
+    pub item_equip: crate::c_api::item_spell::item_equip::ItemEquipState,
     /// Host-supplied metadata keyed by item ID, not bag coordinates.
     pub container_item_quests:
         HashMap<u32, crate::c_api::container_quest::ContainerItemQuestMetadata>,

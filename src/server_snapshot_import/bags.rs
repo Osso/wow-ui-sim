@@ -185,6 +185,7 @@ fn parse_metadata(state: &mut LuaState, row: Val, path: &str) -> crate::Result<B
         inventory_slot: optional_inventory_slot(state, row, path)?,
         item_id: optional_item_id(state, row, path)?,
         hyperlink: optional_text(state, row, "hyperlink", path)?,
+        owned_identity: None,
     })
 }
 
