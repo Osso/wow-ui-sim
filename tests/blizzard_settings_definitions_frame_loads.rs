@@ -1,8 +1,9 @@
 use std::path::PathBuf;
 
 prefork_full_ui_case! {
-fn action_bar_settings_reflect_forced_visibility_rules(env: &WowLuaEnv) {
+fn action_bar_settings_reflect_forced_visibility_rules(_env: &WowLuaEnv) {
     for (forced, hidden, expected) in [(0, 0, 7), (1, 0, 0), (0, -2, 0), (0, 0, 7)] {
+        let env = load_game_ui_before_startup();
         let probe = format!(r#"
             A_Admin.SetGameRule('ForcedMultiActionBarSetting', {forced})
             A_Admin.SetGameRule('HideAllMultiActionBars', {hidden})
@@ -13,6 +14,7 @@ fn action_bar_settings_reflect_forced_visibility_rules(env: &WowLuaEnv) {
         let count: i32 = env.eval(&probe).expect("original action bar settings consumer");
         assert_eq!(count, expected, "forced={forced} hidden={hidden}");
     }
+    let env = load_game_ui_before_startup();
     env.exec(r#"
         A_Admin.SetGameRule('ForcedMultiActionBarSetting', '2')
         A_Admin.SetGameRule('HideAllMultiActionBars', 0)
@@ -77,6 +79,12 @@ const PUBLIC_GLOBAL_MIXINS: &[&str] = &[
 ];
 
 fn load_full_game_ui() -> WowLuaEnv {
+    let env = load_game_ui_before_startup();
+    fire_startup_events_for_screen(&env, ScreenKind::Game);
+    env
+}
+
+fn load_game_ui_before_startup() -> WowLuaEnv {
     let env = WowLuaEnv::new().expect("Failed to create Lua environment");
     env.set_screen_size(1024.0, 768.0);
     env.set_screen_mode(ScreenKind::Game);
@@ -95,7 +103,6 @@ fn load_full_game_ui() -> WowLuaEnv {
     }
 
     env.apply_post_load_workarounds();
-    fire_startup_events_for_screen(&env, ScreenKind::Game);
     env
 }
 
