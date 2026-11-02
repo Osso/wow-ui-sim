@@ -629,6 +629,34 @@ fn calendar_description_edit_updates_supplied_event(env: &WowLuaEnv) {
 }
 
 prefork_full_ui_case! {
+fn calendar_create_event_projects_selected_date(env: &WowLuaEnv) {
+    use wow_ui_sim::c_api::c_calendar::{CalendarEditableAccess, DisplayedMonth};
+    load_addon(&env.loader_env(), &calendar_toc()).unwrap();
+    {
+        let mut state = env.state().borrow_mut();
+        state.calendar_context_policy.editable = Some(CalendarEditableAccess {
+            local_edit_credential: Some(123),
+            ..Default::default()
+        });
+        state.calendar_displayed_month = DisplayedMonth { year: 2026, month: 4 };
+    }
+    env.exec(r#"
+        local day = CreateFrame('Button')
+        day:SetID(3)
+        day.day = 15
+        day.monthOffset = 0
+        CalendarCreateEventFrame.dayButton = day
+        CalendarCreateEventFrame.mode = 'create'
+        CalendarCreateEventFrame_Update()
+    "#).unwrap();
+    let state = env.state().borrow();
+    let event = state.calendar_context_policy.editable.as_ref().unwrap();
+    assert_eq!(event.date, Some((3, 14, 26)));
+    assert!(event.dirty);
+}
+}
+
+prefork_full_ui_case! {
 fn calendar_event_time_control_updates_supplied_event(env: &WowLuaEnv) {
     use wow_ui_sim::c_api::c_calendar::CalendarEditableAccess;
     load_addon(&env.loader_env(), &calendar_toc()).unwrap();
