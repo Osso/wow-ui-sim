@@ -506,17 +506,17 @@ fn process_automatic(state: &mut rilua::vm::state::LuaState) -> rilua::LuaResult
         return reject_unimplemented_confirmation(confirmation);
     }
     if conversion {
+        let pending = PendingEquip {
+            identity: staged.identity,
+            item_id: staged.item_id,
+            source: staged.source.into(),
+            destination: None,
+            confirmation: EquipConfirmation::AccountConversion,
+        };
+        crate::lua_api::methods::borrow_state_mut(state)?
+            .item_equip
+            .pending_confirmation = Some(pending);
         if lock_request_item(state, staged.identity)? {
-            let pending = PendingEquip {
-                identity: staged.identity,
-                item_id: staged.item_id,
-                source: staged.source.into(),
-                destination: None,
-                confirmation: EquipConfirmation::AccountConversion,
-            };
-            crate::lua_api::methods::borrow_state_mut(state)?
-                .item_equip
-                .pending_confirmation = Some(pending);
             crate::lua_api::globals::state_backed_queries::dispatch_event_now(
                 state,
                 "CONVERT_TO_BIND_TO_ACCOUNT_CONFIRM",
