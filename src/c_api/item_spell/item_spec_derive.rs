@@ -33,33 +33,50 @@ pub struct ItemSpecInput {
 /// SpecializationID.
 pub type ItemSpecRule = (u8, u8, u8, u8, u8, u32);
 
-fn find_item(item_id: u32) -> Option<ItemSpecInput> {
+type ItemRow = (u32, u8, u8, u8, i32, u32, [i8; 10], u8, bool);
+
+fn find_item_row(item_id: u32) -> Option<&'static ItemRow> {
     let index = ITEMS.binary_search_by_key(&item_id, |row| row.0).ok()?;
-    let (_, class, subclass, inventory_type, allowable_classes, gem_type, stats) = ITEMS[index];
-    Some(ItemSpecInput {
+    Some(&ITEMS[index])
+}
+
+fn item_input(row: &ItemRow) -> ItemSpecInput {
+    let &(_, class, subclass, inventory_type, allowable_classes, gem_type, stats, ..) = row;
+    ItemSpecInput {
         class,
         subclass,
         inventory_type,
         allowable_classes,
         gem_type,
         stats,
-    })
+    }
 }
 
 /// Build the derived record, or None when ItemSparse/Item data is missing.
+/// Normal derivation copies ItemSparse flag 134217728 into itemFlag27;
+/// accepted overrides leave it false (WM48).
 pub(super) fn derive_record(item_id: u32, level: i32) -> Option<ItemSpecRecord> {
-    let input = find_item(item_id)?;
+    let row = find_item_row(item_id)?;
+    let input = item_input(row);
     Some(
-        derive_overrides(item_id, &input)
-            .unwrap_or_else(|| derive_rule_record(&input, RULES, level)),
+        derive_overrides(item_id, &input).unwrap_or_else(|| ItemSpecRecord {
+            item_flag_27: row.8,
+            ..derive_rule_record(&input, RULES, level)
+        }),
     )
 }
 
-fn specialization_class(spec_id: u32) -> u8 {
-    SPEC_CLASSES
+/// ChrSpecialization ClassID and OrderIndex (INFERRED field name, WM48).
+pub(super) fn specialization_row(spec_id: u32) -> Option<(u8, u8)> {
+    let index = SPEC_CLASSES
         .binary_search_by_key(&spec_id, |row| row.0)
-        .ok()
-        .map_or(0, |index| SPEC_CLASSES[index].1)
+        .ok()?;
+    let (_, class, order_index) = SPEC_CLASSES[index];
+    Some((class, order_index))
+}
+
+fn specialization_class(spec_id: u32) -> u8 {
+    specialization_row(spec_id).map_or(0, |(class, _)| class)
 }
 
 /// Tests the ChrSpecialization.ClassID-minus-one bit; a missing row tests bit 31.
@@ -82,6 +99,7 @@ fn derive_overrides(item_id: u32, input: &ItemSpecInput) -> Option<ItemSpecRecor
         no_traits_and_specializations: false,
         no_stat_traits: false,
         reject_unmatched: true,
+        item_flag_27: false,
         specialization_ids,
     })
 }
@@ -221,6 +239,7 @@ pub fn derive_rule_record(
             && matcher.specialization_ids.is_empty(),
         no_stat_traits: traits.stat_count == 0,
         reject_unmatched: matcher.reject_unmatched,
+        item_flag_27: false,
         specialization_ids: matcher.specialization_ids,
     }
 }

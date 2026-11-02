@@ -19,6 +19,7 @@ fn item_spec_query_uses_supplied_derived_record_and_player_presence() {
             no_traits_and_specializations: false,
             no_stat_traits: false,
             reject_unmatched: true,
+            item_flag_27: false,
             specialization_ids: vec![65, 66],
         },
     );

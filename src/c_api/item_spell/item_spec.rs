@@ -13,6 +13,9 @@ pub struct ItemSpecRecord {
     pub no_stat_traits: bool,
     /// Native field selecting rejection of an unmatched specialization.
     pub reject_unmatched: bool,
+    /// Native itemFlag27, copied from ItemSparse flag 134217728 by normal
+    /// derivation; read by GetItemSpecInfo only (WM48).
+    pub item_flag_27: bool,
     pub specialization_ids: Vec<u32>,
 }
 
