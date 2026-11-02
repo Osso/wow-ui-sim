@@ -216,6 +216,7 @@ fn register_c_item_inventory_queries(
             "IsEquippedItemType",
             super::item_type::is_equipped_item_type,
         )?;
+        table_set_rust_fn_static(state, table_ref, "GetItemFamily", c_item_get_item_family)?;
     }
     register_c_item_methods(
         state,
@@ -252,6 +253,15 @@ fn register_c_item_methods(
         table_set_rust_fn_static(state, table_ref, name, func)?;
     }
     Ok(())
+}
+
+fn c_item_get_item_family(state: &mut LuaState) -> LuaResult<u32> {
+    let value = rilua::table_security::unwrap_secret(state, stack_val(state, 1))?;
+    let id = parse_item_id_key(state, value)
+        .ok_or_else(|| runtime_error("C_Item.GetItemFamily: expected itemInfo"))?;
+    let family = borrow_state(state)?.item_families.get(&id).copied();
+    state.push(family.map_or(Val::Nil, |family| Val::Num(family as f64)));
+    Ok(1)
 }
 
 fn c_item_is_dressable_item_by_id(state: &mut LuaState) -> LuaResult<u32> {
