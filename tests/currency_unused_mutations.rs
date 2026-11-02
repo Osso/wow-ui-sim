@@ -63,6 +63,23 @@ fn currency_unused_mutations_original_popup_shows_discovered_currency_checkbox()
 }
 
 #[test]
+fn currency_transfer_button_refreshes_original_consumer_for_nontransferable_currency() {
+    with_token_ui(
+        r#"
+        local button = TokenFramePopup.CurrencyTransferToggleButton
+        local currency = assert(C_CurrencyInfo.GetCurrencyInfo(2806))
+        assert(currency.currencyID == 2806)
+        button:Refresh(currency)
+        assert(not button:IsEnabled())
+        assert(not button:IsShown())
+        button:Refresh(assert(C_CurrencyInfo.GetCurrencyInfo(1166)))
+        assert(not button:IsEnabled())
+        assert(button:IsShown())
+        "#,
+    );
+}
+
+#[test]
 fn currency_unused_mutations_ignore_non_currency_indices_and_missing_supplied_rows() {
     let env = wow_ui_sim::lua_api::WowLuaEnv::new().unwrap();
     env.exec(
