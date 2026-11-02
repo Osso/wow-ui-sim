@@ -1,7 +1,8 @@
 //! Single-entry publication/absence probe shared by factory and sweep tests.
 //! Publication/absence only: no signature, output, security, or behavior parity claim.
 
-use std::collections::BTreeMap;
+use std::collections::{BTreeMap, BTreeSet};
+use std::sync::OnceLock;
 
 use serde::Deserialize;
 use wow_ui_sim::lua_api::WowLuaEnv;
@@ -22,7 +23,9 @@ type ProbeResult = (String, String, bool, Option<String>, Option<String>);
 
 // One classifier; constructor choices are per object kind, never per source symbol.
 const CLASSIFIER: &str = r#"
-local section, symbol, removed, entryKind, aliasTarget, aliasSource = ...
+local section, symbol, removed, entryKind, aliasTarget, aliasSource, secureOnly = ...
+-- Members of namespaces documented `Environment = "SecureOnly"` live in the secure environment.
+local root = secureOnly and __secureenv or _G
 local function result(kind, detail, ok, value, default)
     return kind, detail, ok, value, default
 end
@@ -55,7 +58,7 @@ local function removed_result(kind, detail, raw_value, raw, lookup)
     return result(kind, detail, matches_type(raw, lookup))
 end
 local function resolve_raw_path(path)
-    local value = _G
+    local value = root
     for part in string.gmatch(path, '[^.]+') do
         if type(value) ~= 'table' then return nil end
         value = rawget(value, part)
@@ -63,7 +66,7 @@ local function resolve_raw_path(path)
     return value
 end
 local function resolve_lookup_path(path)
-    local value = _G
+    local value = root
     for part in string.gmatch(path, '[^.:]+') do
         if value == nil then return nil end
         value = value[part]
@@ -259,15 +262,49 @@ pub(crate) fn probe_entry(
     aliases: &BTreeMap<String, (String, String)>,
 ) -> ProbeResult {
     let (target, source) = aliases.get(&entry.symbol).cloned().unwrap_or_default();
+    let namespace = entry.symbol.split(['.', ':']).next().unwrap_or_default();
+    let secure_only = read_secure_only_namespaces().contains(namespace);
     let code = format!(
-        "return (function(...) {CLASSIFIER} end)({}, {}, {}, {}, {}, {})",
+        "return (function(...) {CLASSIFIER} end)({}, {}, {}, {}, {}, {}, {})",
         quote_lua(&entry.section),
         quote_lua(&entry.symbol),
         removed,
         quote_lua(entry.kind.as_deref().unwrap_or("")),
         quote_lua(&target),
         quote_lua(&source),
+        secure_only,
     );
     env.eval::<ProbeResult>(&code)
         .unwrap_or_else(|error| ("probe-error".into(), error.to_string(), false, None, None))
+}
+
+/// Namespaces whose pinned system documentation declares `Environment = "SecureOnly"`
+/// (e.g. PingManagerSecureDocumentation.lua:6). Function-level markers are not namespaces.
+fn read_secure_only_namespaces() -> &'static BTreeSet<String> {
+    static NAMESPACES: OnceLock<BTreeSet<String>> = OnceLock::new();
+    NAMESPACES.get_or_init(|| {
+        let docs = wow_ui_sim::paths::default_blizzard_ui_addons_path()
+            .expect("Blizzard UI cache should be available")
+            .join("Blizzard_APIDocumentationGenerated");
+        let entries = std::fs::read_dir(&docs)
+            .unwrap_or_else(|error| panic!("read {}: {error}", docs.display()));
+        entries
+            .map(|entry| entry.expect("documentation directory entry").path())
+            .filter(|path| path.extension().is_some_and(|ext| ext == "lua"))
+            .filter_map(|path| secure_only_namespace(&std::fs::read_to_string(&path).ok()?))
+            .collect()
+    })
+}
+
+fn secure_only_namespace(documentation: &str) -> Option<String> {
+    let is_secure_only = documentation
+        .lines()
+        .any(|line| line == "\tEnvironment = \"SecureOnly\",");
+    if !is_secure_only {
+        return None;
+    }
+    documentation.lines().find_map(|line| {
+        let namespace = line.strip_prefix("\tNamespace = \"")?.strip_suffix("\",")?;
+        Some(namespace.to_owned())
+    })
 }
