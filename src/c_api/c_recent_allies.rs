@@ -10,6 +10,10 @@ use rilua::{LuaResult, Val};
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct RecentAlliesInput {
     pub enabled: bool,
+    /// Supplied feature state for the independent support predicate.
+    pub support_feature_enabled: bool,
+    /// Supplied result of the native support-exclusion predicate.
+    pub support_excluded: bool,
     pub entries: Vec<RecentAllyData>,
 }
 
