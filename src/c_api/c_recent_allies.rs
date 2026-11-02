@@ -85,6 +85,9 @@ pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
     ) {
         table_set_rust_fn_static(state, namespace, "IsSystemEnabled", is_system_enabled)?;
     }
+    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
+        table_set_rust_fn_static(state, namespace, "IsSystemSupported", is_system_supported)?;
+    }
     if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::WowForever {
         table_set_rust_fn_static(
             state,
@@ -132,6 +135,15 @@ fn query_recent_ally_identity(
 fn is_system_enabled(state: &mut LuaState) -> LuaResult<u32> {
     let enabled = borrow_state(state)?.recent_allies.enabled;
     state.push(Val::Bool(enabled));
+    Ok(1)
+}
+
+fn is_system_supported(state: &mut LuaState) -> LuaResult<u32> {
+    let supported = {
+        let sim = borrow_state(state)?;
+        sim.recent_allies.support_feature_enabled && !sim.recent_allies.support_excluded
+    };
+    state.push(Val::Bool(supported));
     Ok(1)
 }
 
