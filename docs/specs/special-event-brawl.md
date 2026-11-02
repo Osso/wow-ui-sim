@@ -4,7 +4,7 @@
 
 - [x] Retail `C_PvP.GetSpecialEventBrawlInfo()` returns one value: nil when no special-event brawl record is supplied, otherwise an independent `PvpBrawlInfo` snapshot.
 - [x] The supplied special-event record is independent of `GetActiveBrawlInfo`. It includes the documented brawl identity, level, queue, description, map and reward-display fields; it has no invented active flag. Minimum item level and optional time remaining are integer-typed inputs.
-- [ ] The original PvP honor frame uses the record to show or hide its special-event brawl button and display its supplied name.
+- [x] The original PvP honor frame uses the record to show or hide its special-event brawl button and display its supplied name.
 
 ## Best-guess basis
 
@@ -18,7 +18,7 @@ Retail `Blizzard_APIDocumentationGenerated/PvpInfoDocumentation.lua:775` declare
 ## Tests asserting this spec
 
 - `tests/special_event_brawl_api.rs`: API-level absent/present/absent and integer-field coverage. The exact selector failed on the missing member at `8fae33884` and passed 1/0 at `9b137ba4f`; this does not prove the original consumer.
-- `tests/special_event_brawl.rs`: Retail PvP addon consumer and supplied absent/present/absent records. WM26 supplies the intervening reward and brawl queries; original-consumer RED/GREEN remain unproven.
+- `tests/special_event_brawl.rs`: the original HonorFrame consumer passed absent/present/absent at `b94c49535`; producer-only RED `0b449e39d` reached the missing query at `Blizzard_PVPUI.lua:1110`.
 
 ## Known gaps
 

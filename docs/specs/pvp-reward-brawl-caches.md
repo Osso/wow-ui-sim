@@ -14,4 +14,4 @@ Cache inputs and empty initial values are simulator scenarios. Native cache rese
 
 ## Proof
 
-`tests/pvp_reward_consumers.rs` and `tests/pvp_available_brawl_consumer.rs` exercise the selected original HonorFrame consumer and distinct supplied states. RED/GREEN and the pending special-event consumer chain must be established separately.
+`tests/pvp_reward_consumers.rs` and `tests/pvp_available_brawl_consumer.rs` each passed their exact original HonorFrame selectors at `b94c49535`. Separate REDs reached the missing random, arena, epic and available-brawl members at `b945b5225`, `9355362c9`, `2503c5fe2` and `d721bb190`, respectively. The special-event consumer has a separate RED/GREEN record in [its spec](special-event-brawl.md).
