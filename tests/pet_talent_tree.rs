@@ -34,9 +34,10 @@ fn hunter_pet_family_selects_its_pet_specialization_name() {
 }
 
 #[test]
-fn female_owner_reads_the_female_name_column() {
+fn female_pet_reads_the_female_name_column() {
+    // WM55-Q1: the pet's own sex selects the column, not the owner's.
     let env = pet_env(HUNTER, Some(4));
-    env.state().borrow_mut().player.sex = UNIT_SEX_FEMALE;
+    env.state().borrow_mut().pet.sex = UNIT_SEX_FEMALE;
     // Both 70391 name columns of row 81 read "Tenacity".
     assert_eq!(talent_tree(&env), (1, Some("Tenacity".into())));
 }
