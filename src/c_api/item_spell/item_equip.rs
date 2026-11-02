@@ -28,6 +28,7 @@ pub struct OwnedItemEquipInputs {
 pub struct EquipRequest {
     pub identity: u64,
     pub item_id: u32,
+    pub source: EquipSource,
     pub destination: Option<i32>,
 }
 
@@ -272,8 +273,10 @@ fn find_owned_item(sim: &SimState, item_id: u32) -> Option<ItemSlot> {
         if bag != 0 {
             if let Some(info) = sim.bag_info.get(&bag) {
                 if info.item_id == Some(item_id) {
-                    if let Some(slot) = info.inventory_slot {
-                        return Some(ItemSlot::Equipment(slot));
+                    if let Some(slot) = info.inventory_slot.map(ItemSlot::Equipment) {
+                        if slot.item_id(sim) == Some(item_id) {
+                            return Some(slot);
+                        }
                     }
                 }
             }
@@ -403,6 +406,7 @@ fn submit_request(
     sim.item_equip.requests.push(EquipRequest {
         identity: staged.identity,
         item_id: staged.item_id,
+        source: staged.source.into(),
         destination,
     });
     Ok(())
@@ -548,9 +552,9 @@ pub(super) fn equip_item_by_name(state: &mut rilua::vm::state::LuaState) -> rilu
         if is_locked_at(&sim, source) {
             return Ok(0);
         }
-        let Some(identity) = ensure_identity(&mut sim, source) else {
-            return Ok(0);
-        };
+        let identity = ensure_identity(&mut sim, source).ok_or_else(|| {
+            rilua::runtime_error("C_Item.EquipItemByName: cannot assign owned item identity")
+        })?;
         StagedEquip {
             identity,
             item_id,
