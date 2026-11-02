@@ -104,6 +104,12 @@ pub fn create_secure_environment(lua: &mut rilua::Lua) -> LuaResult<()> {
         registry_set(state, "__secureenv", secureenv);
     }
     LuaApiMut::set_global_val(lua, "__secureenv", secureenv)?;
+    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail
+        && cfg!(feature = "retail-12-1-5")
+    {
+        // Retail 12.1.5 registers C_PingSecure only in the secure environment.
+        LuaApiMut::set_global_val(lua, "C_PingSecure", Val::Nil)?;
+    }
     Ok(())
 }
 

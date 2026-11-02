@@ -251,6 +251,7 @@ mod tests {
         let result: String = env
             .eval(
                 r#"
+                local C_PingSecure = __secureenv.C_PingSecure
                 if type(C_PingSecure) ~= "table" then return "namespace" end
                 if type(C_PingSecure.CreateFrame) ~= "function" then return "create_frame" end
                 if type(C_PingSecure.SetPendingPingOffScreenCallback) ~= "function" then return "pending_callback" end
