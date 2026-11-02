@@ -17,13 +17,17 @@ pub(super) fn register(
 
 fn get_next_club_id(state: &mut LuaState) -> LuaResult<u32> {
     let value = borrow_state(state)?.calendar_next_club_id;
-    let result = match value {
+    let result = club_id_value(state, value);
+    state.push(result);
+    Ok(1)
+}
+
+pub(super) fn club_id_value(state: &mut LuaState, value: Option<u64>) -> Val {
+    match value {
         None => Val::Nil,
         Some(id) if id <= MAX_EXACT => Val::Num(id as f64),
         Some(id) => create_string(state, &format!("0x{id:016X}")),
-    };
-    state.push(result);
-    Ok(1)
+    }
 }
 
 fn set_next_club_id(state: &mut LuaState) -> LuaResult<u32> {
