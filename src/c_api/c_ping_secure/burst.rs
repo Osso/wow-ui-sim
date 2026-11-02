@@ -6,6 +6,14 @@ const RESET_LIMIT: u32 = 2;
 const RESET_WINDOW_MS: u32 = 3000;
 const COOLDOWN_MS: u32 = 3000;
 
+/// WM51-F1: the stored cooldown timing pair that `C_Ping.GetCooldownInfo`
+/// reads, in cached milliseconds; (0, 0) when cleared.
+#[derive(Debug, Clone, Copy, Default, PartialEq)]
+pub struct PingCooldownInterval {
+    pub start_time_ms: u32,
+    pub end_time_ms: u32,
+}
+
 /// WM47: the burst count, limit and window, the last submission, and the
 /// deadline of an active cooldown.
 #[derive(Debug, Clone, Copy)]
@@ -16,6 +24,7 @@ pub struct PingBurst {
     window_start: u32,
     last_submit: u32,
     cooldown_deadline: Option<u32>,
+    pub interval: PingCooldownInterval,
 }
 
 impl Default for PingBurst {
@@ -28,6 +37,7 @@ impl Default for PingBurst {
             window_start: 0,
             last_submit: 0,
             cooldown_deadline: None,
+            interval: PingCooldownInterval::default(),
         }
     }
 }

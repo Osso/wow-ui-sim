@@ -128,9 +128,6 @@ pub struct SimState {
     /// Explicit (specialization, item) lists only; initially empty.
     #[cfg(feature = "retail-12-0-0")]
     pub item_set_bonuses: crate::c_api::ItemSetBonuses,
-    /// Explicit absolute milliseconds; (0, 0) default is simulator policy.
-    #[cfg(feature = "retail-12-0-0")]
-    pub ping_cooldown_interval: crate::c_api::PingCooldownInterval,
     /// Whole host-supplied mapping, empty by default; not a native kit catalog.
     #[cfg(feature = "retail-12-0-0")]
     pub ping_texture_kits: crate::c_api::PingTextureKits,

@@ -23,7 +23,7 @@ use rilua::{LuaResult, Val, runtime_error};
 mod burst;
 mod sends;
 
-pub use burst::PingBurst;
+pub use burst::{PingBurst, PingCooldownInterval};
 pub use sends::PingPendingTarget;
 
 const CALLBACK_TABLE_KEY: &str = "__wow_ping_secure_callbacks";

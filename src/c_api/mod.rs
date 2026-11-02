@@ -358,8 +358,7 @@ mod item_set_bonuses;
 pub use item_set_bonuses::ItemSetBonuses;
 #[cfg(feature = "retail-12-0-0")]
 mod c_ping_cooldown;
-#[cfg(feature = "retail-12-0-0")]
-pub use c_ping_cooldown::PingCooldownInterval;
+pub use c_ping_secure::PingCooldownInterval;
 #[cfg(feature = "retail-12-0-0")]
 mod c_ping_texture_kits;
 #[cfg(feature = "retail-12-0-0")]
