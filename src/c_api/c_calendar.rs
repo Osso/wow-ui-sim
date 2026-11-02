@@ -82,6 +82,7 @@ pub struct CalendarEditableAccess {
     pub category_flags: u32,
     pub associated_id: Option<u64>,
     pub creator_identity: String,
+    pub title: Vec<u8>,
     pub local_edit_credential: Option<u64>,
     pub dirty: bool,
     pub selected_invite_id: Option<String>,

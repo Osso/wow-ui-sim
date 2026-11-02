@@ -515,6 +515,45 @@ fn calendar_invite_sort_controls_reflect_supplied_criterion(env: &WowLuaEnv) {
 }
 
 prefork_full_ui_case! {
+fn calendar_title_edit_updates_supplied_event(env: &WowLuaEnv) {
+    use wow_ui_sim::c_api::c_calendar::CalendarEditableAccess;
+    load_addon(&env.loader_env(), &calendar_toc()).unwrap();
+    {
+        let mut state = env.state().borrow_mut();
+        state.calendar_context_policy.editable = Some(CalendarEditableAccess {
+            local_edit_credential: Some(123),
+            ..Default::default()
+        });
+    }
+    env.exec(r#"
+        CalendarCreateEventFrame.mode = 'edit'
+        CalendarCreateEventTitleEdit:SetText('Raid|night\\nignored')
+        CalendarCreateEventTitleEdit_OnTextChanged(CalendarCreateEventTitleEdit, true)
+    "#).unwrap();
+    {
+        let state = env.state().borrow();
+        let event = state.calendar_context_policy.editable.as_ref().unwrap();
+        assert_eq!(event.title, b"Raidnight");
+        assert!(event.dirty);
+    }
+    {
+        let mut state = env.state().borrow_mut();
+        let event = state.calendar_context_policy.editable.as_mut().unwrap();
+        event.dirty = false;
+        event.local_edit_credential = None;
+    }
+    env.exec(r#"
+        CalendarCreateEventTitleEdit:SetText('Denied')
+        CalendarCreateEventTitleEdit_OnTextChanged(CalendarCreateEventTitleEdit, true)
+    "#).unwrap();
+    let state = env.state().borrow();
+    let event = state.calendar_context_policy.editable.as_ref().unwrap();
+    assert_eq!(event.title, b"Raidnight");
+    assert!(!event.dirty);
+}
+}
+
+prefork_full_ui_case! {
 fn calendar_invite_autocomplete_tracks_editable_event_type(env: &WowLuaEnv) {
     use wow_ui_sim::c_api::c_calendar::CalendarEditableAccess;
     load_addon(&env.loader_env(), &calendar_toc()).unwrap();
