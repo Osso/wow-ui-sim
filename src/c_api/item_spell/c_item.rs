@@ -223,6 +223,12 @@ fn register_c_item_inventory_queries(
             super::item_type::is_equipped_item_type,
         )?;
         table_set_rust_fn_static(state, table_ref, "GetItemFamily", c_item_get_item_family)?;
+        table_set_rust_fn_static(
+            state,
+            table_ref,
+            "GetItemChildInfo",
+            super::item_child::get_item_child_info,
+        )?;
     }
     register_c_item_methods(
         state,
