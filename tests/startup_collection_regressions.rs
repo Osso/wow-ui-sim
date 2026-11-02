@@ -6,7 +6,8 @@ use wow_ui_sim::loader::{discover_blizzard_addons, load_addon};
 use wow_ui_sim::lua_api::WowLuaEnv;
 
 fn blizzard_ui_dir() -> PathBuf {
-    wow_ui_sim::paths::default_blizzard_ui_addons_path().expect("Blizzard UI cache should be available")
+    wow_ui_sim::paths::default_blizzard_ui_addons_path()
+        .expect("Blizzard UI cache should be available")
 }
 
 fn run_standard_startup(env: &WowLuaEnv, mut after_step: impl FnMut()) {
@@ -170,6 +171,42 @@ fn startup_wardrobe_can_switch_from_armor_to_weapon_slot(env: &WowLuaEnv) {
             .expect("wardrobe armor-to-weapon slot switch probe should run");
 
         assert_eq!(result, "ok");
+}
+}
+
+prefork_full_ui_case! {
+fn startup_wardrobe_new_badge_tracks_supplied_source(env: &WowLuaEnv) {
+    let visual_id: i32 = env.eval(r#"
+        ToggleCollectionsJournal(5)
+        CollectionsJournal_SetTab(CollectionsJournal, 5)
+        local items = WardrobeCollectionFrame.ItemsCollectionFrame
+        local location = TransmogUtil.GetTransmogLocation("MAINHANDSLOT", Enum.TransmogType.Appearance, false)
+        items:SetActiveSlot(location)
+        assert(items.filteredVisualsList[1], "weapon fixture must contain a visual")
+        return items.filteredVisualsList[1].visualID
+    "#).expect("original wardrobe must display a weapon visual");
+    let source_id = {
+        let sim = env.state().borrow();
+        sim.world.transmog_appearances.iter()
+            .find(|row| row.visual_id == visual_id)
+            .expect("displayed visual must have a source").source_id
+    };
+    for is_new in [true, false] {
+        {
+            let mut sim = env.state().borrow_mut();
+            if is_new {
+                sim.transmog_new_sources.insert(i64::from(source_id));
+            } else {
+                sim.transmog_new_sources.remove(&i64::from(source_id));
+            }
+        }
+        let shown: bool = env.eval(r#"
+            local items = WardrobeCollectionFrame.ItemsCollectionFrame
+            items:UpdateItems()
+            return items.Models[1].NewString:IsShown()
+        "#).expect("original wardrobe update must render the badge");
+        assert_eq!(shown, is_new);
+    }
 }
 }
 
