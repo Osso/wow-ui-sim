@@ -22,6 +22,7 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
     )?;
     super::bars::register(state)?;
     super::double_status_bar::register(state)?;
+    super::double_state_icon::register(state)?;
     super::double_icon_and_text::register(state)?;
     super::icon_text_and_background::register(state)?;
     super::icon_text_and_currencies::register(state)?;
