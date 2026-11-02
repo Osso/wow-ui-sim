@@ -1,6 +1,8 @@
 //! `C_SettingsUtil` settings-panel actions.
 
 use crate::c_api::ensure_namespace;
+use crate::client_profile::{ACTIVE, ClientProfile};
+use crate::lua_api::globals::state_backed_queries::dispatch_event_now;
 use crate::lua_api::methods::{call_function_state, table_get_static};
 use crate::lua_bridge::{FromStack, stack_val, table_set_rust_fn_static};
 use rilua::vm::state::LuaState;
@@ -13,7 +15,21 @@ pub(crate) fn register_c_settings_util_surface(state: &mut LuaState) -> LuaResul
         settings_util,
         "OpenSettingsPanel",
         open_settings_panel,
-    )
+    )?;
+    if ACTIVE == ClientProfile::Retail {
+        table_set_rust_fn_static(
+            state,
+            settings_util,
+            "NotifySettingsLoaded",
+            notify_settings_loaded,
+        )?;
+    }
+    Ok(())
+}
+
+fn notify_settings_loaded(state: &mut LuaState) -> LuaResult<u32> {
+    dispatch_event_now(state, "SETTINGS_LOADED", &[])?;
+    Ok(0)
 }
 
 fn open_settings_panel(state: &mut LuaState) -> LuaResult<u32> {
