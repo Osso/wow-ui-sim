@@ -529,6 +529,19 @@ fn blizzard_ping_ui_does_not_leak_virtual_templates_to_globals(env: &WowLuaEnv) 
 }
 
 prefork_full_ui_case! {
+fn blizzard_ping_ui_uses_secure_only_ping_namespace(env: &WowLuaEnv) {
+    let (public_nil, secure_table, consumer_loaded): (bool, bool, bool) = env
+        .eval(r#"
+            return rawget(_G, 'C_PingSecure') == nil,
+                type(rawget(__secureenv, 'C_PingSecure')) == 'table',
+                type(rawget(__secureenv, 'PingListenerFrameMixin')) == 'table'
+        "#)
+        .expect("secure PingUI namespace and consumer should be observable");
+    assert_eq!((public_nil, secure_table, consumer_loaded), (true, true, true));
+}
+}
+
+prefork_full_ui_case! {
 fn blizzard_ping_ui_publishes_c_ping_secure_callback_setters_in_globals(env: &WowLuaEnv) {
 
     // PingManagerSecureDocumentation.lua:3–6 declares SecureOnly; the Retail
