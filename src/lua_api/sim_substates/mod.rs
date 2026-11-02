@@ -378,6 +378,9 @@ pub struct VoiceChatState {
     /// Whether the voice-chat client is currently establishing a
     /// connection. Drives `VoiceChat_IsConnecting`.
     pub connecting: bool,
+    /// Supplied connection predicate inputs; their native lifecycle is unknown.
+    pub connection_ready: bool,
+    pub connection_excluded: bool,
     /// Whether the local player is currently transmitting voice.
     /// Drives `VoiceChat_IsTalking`.
     pub talking: bool,
@@ -426,6 +429,8 @@ impl Default for VoiceChatState {
             enabled: true,
             using: false,
             connecting: false,
+            connection_ready: false,
+            connection_excluded: false,
             talking: false,
             is_transcribing: false,
             is_speak_for_me_active: false,
