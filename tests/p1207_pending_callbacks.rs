@@ -16,6 +16,12 @@ fn is_pending_clear_published() -> bool {
     !is_retail_12_1_5_epoch()
 }
 
+/// WM38: Retail 12.1.5 refuses tainted callers before reading arguments, returning
+/// no values; tainted argument-error assertions belong to the 12.0.7 epoch.
+fn is_tainted_setter_parsed() -> bool {
+    !is_retail_12_1_5_epoch()
+}
+
 fn callback_env() -> WowLuaEnv {
     let env = WowLuaEnv::new().expect("pending callback environment");
     // WM38 and PingManagerSecureDocumentation.lua:3–6 place Retail 12.1.5
@@ -32,6 +38,11 @@ fn callback_env() -> WowLuaEnv {
         is_pending_clear_published()
     ))
     .expect("record the active epoch's pending-clear publication");
+    env.exec(&format!(
+        "TaintedSetterParsed = {}",
+        is_tainted_setter_parsed()
+    ))
+    .expect("record the active epoch's tainted-setter parsing");
     env.exec(
         r#"
         Slots = {
@@ -423,7 +434,7 @@ fn namespace_authenticates_extra_arguments_before_type_validation() {
             assert(debug.getstacktaint() == before)
         end
         debug.setobjecttaint(addon, 'PendingDeniedFixture')
-        addon()
+        if TaintedSetterParsed then addon() end
         collectgarbage('collect')
         assert(issecretvalue(PendingSecretFunction) and issecretvalue(PendingSecretNumber))
         assert(GetSecurePendingPingOffScreenCallback() == original)
