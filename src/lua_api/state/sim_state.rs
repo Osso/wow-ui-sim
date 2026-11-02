@@ -536,6 +536,7 @@ pub struct SimState {
     pub unit_auras_restricted: bool,
     /// INFERRED host input: active PvP match, not queue/instance presence.
     pub pvp_match_active: bool,
+    pub pvp_request_transport: crate::c_api::c_pvp::PvpRequestTransport,
     /// Explicit aura-filter classification and raid dispel capabilities.
     pub aura_filter_facts: crate::lua_api::game_data::AuraFilterFacts,
     /// Live target auras; seeded with the legacy target fixture.
