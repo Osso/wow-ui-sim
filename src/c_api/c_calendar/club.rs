@@ -51,7 +51,10 @@ fn set_event_club_id(state: &mut LuaState) -> LuaResult<u32> {
     } else {
         read_club_id(state, value, "Usage: C_Calendar.EventSetClubId([clubId])")?
     };
-    let allowed = can_edit(&borrow_state(state)?);
+    let allowed = {
+        let host = borrow_state(state)?;
+        can_edit(&host)
+    };
     if !allowed {
         let message = create_string(state, "CALENDAR_ERROR_PERMISSIONS");
         dispatch_event_now(state, "CALENDAR_UPDATE_ERROR", &[message])?;
