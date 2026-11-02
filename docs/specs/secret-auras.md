@@ -41,7 +41,7 @@ Evidence levels used below:
 
 ### Widget sinks and aspects
 - [ ] Widget methods apply their `SecretArguments` mode. STRING names three modes: never allowed, not allowed, and only allowed during untainted execution.
-- [ ] `SecretArgumentsAddAspect` setters mark the widget aspect secret, and `SecretReturnsForAspect` getters then return secrets (DOCS). Aspect semantics UNKNOWN (S6).
+- [ ] Apply `SecretArgumentsAddAspect` and `SecretReturnsForAspect` according to the bounded WM61 S6 findings below; complete getter publication remains UNKNOWN.
 - [ ] Shipped aura buttons can pass secret duration, text, icon, visibility and geometry to their widgets and render correctly (UI).
 
 ### Helpers
