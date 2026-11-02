@@ -657,6 +657,8 @@ pub struct AppliedTransmog {
 /// An item in a bag slot.
 #[derive(Debug, Clone)]
 pub struct BagItem {
+    /// Simulator-owned identity, assigned when an operation needs one.
+    pub owned_identity: Option<u64>,
     pub item_id: u32,
     pub stack_count: i32,
     pub hyperlink: Option<String>,
@@ -667,6 +669,8 @@ pub struct BagItem {
 /// An equipped item in an inventory slot.
 #[derive(Debug, Clone)]
 pub struct EquippedItem {
+    /// Simulator-owned identity, retained when the item changes location.
+    pub owned_identity: Option<u64>,
     pub item_id: u32,
     pub enchant_id: u32,
     pub gem_ids: [u32; 3],

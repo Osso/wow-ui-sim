@@ -28,6 +28,7 @@ pub(super) fn equip_item(state: &mut LuaState) -> LuaResult<u32> {
             enchant_id: 0,
             gem_ids: [0, 0, 0],
             applied_transmog: None,
+            owned_identity: None,
         },
     );
     st.player.stats = CharacterStats::compute(&st.player.equipped_items, st.player.class_index);

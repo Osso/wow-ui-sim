@@ -255,6 +255,7 @@ fn insert_heirloom_copy(state: &mut LuaState, item_id: u32) -> LuaResult<Option<
             hyperlink: None,
             durability: None,
             applied_transmog: None,
+            owned_identity: None,
         },
     );
     Ok(Some(slot))

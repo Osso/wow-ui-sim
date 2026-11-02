@@ -259,6 +259,7 @@ fn add_output_item(
             hyperlink: None,
             durability: None,
             applied_transmog: None,
+            owned_identity: None,
         },
     );
     key.0

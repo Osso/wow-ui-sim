@@ -122,6 +122,7 @@ pub(super) fn add_loot_item(state: &mut LuaState) -> LuaResult<u32> {
         hyperlink,
         durability: None,
         applied_transmog: None,
+        owned_identity: None,
     });
     sim.loot_frame_open = true;
     Ok(0)

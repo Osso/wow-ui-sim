@@ -171,5 +171,6 @@ fn default_bag_item(item_id: u32, stack_count: i32) -> BagItem {
         hyperlink: None,
         durability: None,
         applied_transmog: None,
+        owned_identity: None,
     }
 }

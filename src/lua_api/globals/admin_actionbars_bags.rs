@@ -96,6 +96,7 @@ pub(super) fn add_bag_item(state: &mut LuaState) -> LuaResult<u32> {
             hyperlink: None,
             durability: None,
             applied_transmog: None,
+            owned_identity: None,
         },
     );
     Ok(0)
@@ -159,6 +160,7 @@ pub(super) fn add_guild_bank_item(state: &mut LuaState) -> LuaResult<u32> {
             hyperlink: None,
             durability: None,
             applied_transmog: None,
+            owned_identity: None,
         },
     );
     Ok(0)

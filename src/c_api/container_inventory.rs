@@ -55,6 +55,7 @@ pub(crate) fn split_container_item(state: &mut LuaState) -> LuaResult<u32> {
         }
         item.stack_count -= amount;
         let cursor = CursorInfo::Item {
+            owned_identity: None,
             item_id: item.item_id,
             stack_count: amount,
             origin: CursorItemOrigin::Bag { bag, slot },
@@ -114,6 +115,7 @@ pub(crate) fn pickup_container_item(state: &mut LuaState) -> LuaResult<u32> {
     };
     if dropping || displaced.is_some() {
         let next = displaced.map(|item| CursorInfo::Item {
+            owned_identity: item.owned_identity,
             item_id: item.item_id,
             stack_count: item.stack_count,
             origin: CursorItemOrigin::Bag { bag, slot },
@@ -138,6 +140,7 @@ fn read_cursor_bag_item(sim: &SimState) -> Option<BagItem> {
             item_id,
             stack_count,
             applied_transmog,
+            owned_identity,
             ..
         }) => Some(BagItem {
             item_id: *item_id,
@@ -145,6 +148,7 @@ fn read_cursor_bag_item(sim: &SimState) -> Option<BagItem> {
             hyperlink: None,
             durability: None,
             applied_transmog: *applied_transmog,
+            owned_identity: *owned_identity,
         }),
         _ => None,
     }
@@ -194,6 +198,7 @@ fn equip_held_item(sim: &mut SimState, slot: i32) -> Option<Option<CursorInfo>> 
     let Some(CursorInfo::Item {
         item_id,
         applied_transmog,
+        owned_identity,
         ..
     }) = &sim.cursor_item
     else {
@@ -204,6 +209,7 @@ fn equip_held_item(sim: &mut SimState, slot: i32) -> Option<Option<CursorInfo>> 
         enchant_id: 0,
         gem_ids: [0; 3],
         applied_transmog: *applied_transmog,
+        owned_identity: *owned_identity,
     };
     item_upgrade_eligibility::swap_with_cursor(sim, ItemSlot::Equipment(slot));
     let displaced = sim.player.equipped_items.insert(slot, incoming);
@@ -212,6 +218,7 @@ fn equip_held_item(sim: &mut SimState, slot: i32) -> Option<Option<CursorInfo>> 
 
 fn create_equipped_cursor(item: EquippedItem, slot: i32) -> CursorInfo {
     CursorInfo::Item {
+        owned_identity: item.owned_identity,
         item_id: item.item_id,
         stack_count: 1,
         origin: CursorItemOrigin::Equipped { slot },
