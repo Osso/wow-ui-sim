@@ -1,6 +1,6 @@
-//! Supplied derived item-specialization records.
+//! Item-specialization membership over cached derived records (WM37, WM42).
 
-use crate::lua_api::methods::borrow_state;
+use crate::lua_api::methods::borrow_state_mut;
 use crate::lua_bridge::stack_val;
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val, runtime_error};
@@ -55,16 +55,46 @@ pub(super) fn does_item_contain_spec(state: &mut LuaState) -> LuaResult<u32> {
     } else {
         numeric_id(spec, "specID")?
     };
-    let result = if class == 0 {
-        true
-    } else {
-        let sim = borrow_state(state)?;
-        sim.player.present
-            && sim
-                .item_spec_records
-                .get(&item)
-                .is_none_or(|record| record_contains_spec(record, class, spec))
-    };
+    let result = class == 0 || player_item_contains_spec(state, item, class, spec)?;
     state.push(Val::Bool(result));
     Ok(1)
+}
+
+/// Cache band for the player-level selector: below 41, 41–109, 110 and above.
+pub fn level_band(level: i32) -> u8 {
+    match level {
+        110.. => 2,
+        41.. => 1,
+        _ => 0,
+    }
+}
+
+/// A cache hit is reused within its band. A miss builds once; missing item
+/// data or selector zero builds nothing, and the query accepts.
+fn player_item_contains_spec(
+    state: &LuaState,
+    item: u32,
+    class: i32,
+    spec: i32,
+) -> LuaResult<bool> {
+    let mut sim = borrow_state_mut(state)?;
+    if !sim.player.present {
+        return Ok(false);
+    }
+    let level = sim.player.level;
+    let key = (item, level_band(level));
+    if !sim.item_spec_records.contains_key(&key) {
+        let built = (level != 0)
+            .then(|| super::item_spec_derive::derive_record(item, level))
+            .flatten();
+        let Some(record) = built else {
+            return Ok(true);
+        };
+        sim.item_spec_records.insert(key, record);
+    }
+    Ok(record_contains_spec(
+        &sim.item_spec_records[&key],
+        class,
+        spec,
+    ))
 }

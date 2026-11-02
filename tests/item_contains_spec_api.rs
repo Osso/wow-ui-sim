@@ -1,7 +1,7 @@
 //! API-level test: no pinned retail Blizzard consumer calls DoesItemContainSpec.
 #![cfg(feature = "client-retail")]
 
-use wow_ui_sim::c_api::item_spell::item_spec::ItemSpecRecord;
+use wow_ui_sim::c_api::item_spell::item_spec::{ItemSpecRecord, level_band};
 use wow_ui_sim::lua_api::WowLuaEnv;
 
 #[test]
@@ -12,8 +12,9 @@ fn item_spec_query_uses_supplied_derived_record_and_player_presence() {
     env.state().borrow_mut().player.present = true;
     env.exec("assert(C_Item.DoesItemContainSpec(6948, 2, 65))")
         .unwrap();
+    let key = (6948, level_band(env.state().borrow().player.level));
     env.state().borrow_mut().item_spec_records.insert(
-        6948,
+        key,
         ItemSpecRecord {
             no_traits_and_specializations: false,
             no_stat_traits: false,
@@ -35,7 +36,7 @@ fn item_spec_query_uses_supplied_derived_record_and_player_presence() {
     env.state()
         .borrow_mut()
         .item_spec_records
-        .get_mut(&6948)
+        .get_mut(&key)
         .unwrap()
         .reject_unmatched = false;
     env.exec("assert(C_Item.DoesItemContainSpec(6948, 2, 70))")
@@ -43,7 +44,7 @@ fn item_spec_query_uses_supplied_derived_record_and_player_presence() {
     {
         let state = env.state();
         let mut sim = state.borrow_mut();
-        let record = sim.item_spec_records.get_mut(&6948).unwrap();
+        let record = sim.item_spec_records.get_mut(&key).unwrap();
         record.reject_unmatched = true;
         record.no_traits_and_specializations = true;
     }
@@ -52,7 +53,7 @@ fn item_spec_query_uses_supplied_derived_record_and_player_presence() {
     {
         let state = env.state();
         let mut sim = state.borrow_mut();
-        let record = sim.item_spec_records.get_mut(&6948).unwrap();
+        let record = sim.item_spec_records.get_mut(&key).unwrap();
         record.no_traits_and_specializations = false;
         record.no_stat_traits = true;
     }

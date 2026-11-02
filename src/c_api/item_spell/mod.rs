@@ -12,6 +12,7 @@ mod item_gem;
 mod item_pickup;
 mod item_set;
 pub mod item_spec;
+pub mod item_spec_derive;
 mod item_type;
 mod item_uniqueness;
 mod item_use;
