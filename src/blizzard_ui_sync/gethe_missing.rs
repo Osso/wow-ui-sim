@@ -131,6 +131,45 @@ fn load_pinned_tree() -> crate::Result<GetheTree> {
     })
 }
 
+pub(super) fn prepare_pinned_source(provenance: &str) -> crate::Result<()> {
+    if !gethe_fallback_enabled(provenance) {
+        return Ok(());
+    }
+    fetch_pinned_revision(&load_pinned_tree()?)
+}
+
+fn fetch_pinned_revision(tree: &GetheTree) -> crate::Result<()> {
+    let object = format!("{}^{{commit}}", tree.revision);
+    let present = std::process::Command::new("git")
+        .arg("-C")
+        .arg(&tree.root)
+        .args(["cat-file", "-e", &object])
+        .output()
+        .map_err(|cause| {
+            crate::Error::Other(format!("check Gethe revision {}: {cause}", tree.revision))
+        })?;
+    if present.status.success() {
+        return Ok(());
+    }
+    let output = std::process::Command::new("git")
+        .arg("-C")
+        .arg(&tree.root)
+        .args(["fetch", "--depth=1", "origin", &tree.revision])
+        .output()
+        .map_err(|cause| {
+            crate::Error::Other(format!("fetch Gethe revision {}: {cause}", tree.revision))
+        })?;
+    if !output.status.success() {
+        return Err(crate::Error::Other(format!(
+            "fetch Gethe revision {} in {}: {}",
+            tree.revision,
+            tree.root.display(),
+            String::from_utf8_lossy(&output.stderr).trim()
+        )));
+    }
+    Ok(())
+}
+
 fn sync_mapped_file(
     allow_gethe: bool,
     lookup: impl FnOnce() -> crate::Result<Option<MappedFile>>,

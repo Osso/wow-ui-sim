@@ -113,6 +113,27 @@ fn missing_pin_fetch_failure_preserves_existing_cache() {
     assert!(status.success(), "child sync test failed");
 }
 
+#[test]
+fn missing_pinned_revision_is_fetched_from_local_origin() {
+    let (source, original) = fixture(VERSION, b"hello");
+    let clone = tempfile::tempdir().unwrap();
+    git(clone.path(), &["init", "--quiet"]);
+    git(
+        clone.path(),
+        &["remote", "add", "origin", source.path().to_str().unwrap()],
+    );
+    let tree = GetheTree {
+        root: clone.path().to_owned(),
+        revision: original.revision,
+        version: original.version,
+    };
+    fetch_pinned_revision(&tree).unwrap();
+    assert_eq!(
+        read_pinned_blob(&tree, "version.txt").unwrap(),
+        format!("{VERSION}\n").as_bytes()
+    );
+}
+
 fn file(resident: bool) -> MappedFile {
     MappedFile {
         path: ENTRY.to_owned(),

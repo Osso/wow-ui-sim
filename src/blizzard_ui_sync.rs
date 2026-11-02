@@ -143,6 +143,10 @@ pub fn sync_blizzard_ui_to(root: &Path) -> crate::Result<SyncSummary> {
         return pinned::sync_retail_to(root);
     }
     let expected_provenance = expected_cache_provenance()?;
+    #[cfg(feature = "casc")]
+    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::WowForever {
+        gethe_missing::prepare_pinned_source(expected_provenance.contents())?;
+    }
     invalidate_cache_if_provenance_mismatched(root, &expected_provenance)?;
     sync_blizzard_ui_entries(root, sync_manifest_entries(), &expected_provenance)
 }
