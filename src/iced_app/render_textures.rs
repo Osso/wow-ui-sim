@@ -440,6 +440,8 @@ fn cursor_spell_icon_id(
         | CursorInfo::ActionBar { .. }
         | CursorInfo::Macro { .. }
         | CursorInfo::Money { .. }
+        | CursorInfo::EquipmentSet { .. }
+        | CursorInfo::Currency { .. }
         | CursorInfo::TransmogOutfit { .. } => None,
     }
 }

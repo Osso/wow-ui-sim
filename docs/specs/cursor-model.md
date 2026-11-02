@@ -15,6 +15,8 @@ Retail uses one shared clear and placement model for cursor payloads (`src/lua_a
 | Merchant row | `PickupMerchantItem` | 5 Merchant |
 | Item ID | `C_Item.PickupItem` | 6 ActionBar |
 | Macro | `PickupMacro`, `PickupAction` | 7 Macro |
+| Equipment set | `C_EquipmentSet.PickupEquipmentSet` | 12 EquipmentSet |
+| Currency | `C_CurrencyInfo.PickupCurrency` | 13 Currency |
 | Transmog outfit | `C_TransmogOutfitInfo.PickupOutfit`, `PickupAction` | 21 Outfit |
 
 VERIFIED (WM46): the mode names and the PickupAction rule that the slot's content selects the setter.
@@ -53,7 +55,19 @@ Swapping an owned item with a bag or equipment slot places the displaced item th
 ### Predicates and projections
 
 - `CursorHasItem()` is true only for mode 1, so merchant and ActionBar cursors fail it. `CursorHasMoney()` tests mode 2, `CursorHasSpell()` mode 3 and `CursorHasMacro()` mode 7. VERIFIED (WM46).
-- `GetCursorInfo()` for a merchant cursor returns `("merchant", index)`, the row index the pickup received. VERIFIED (WM46 projection; the stored zero-based row plus one).
+- `GetCursorInfo()` returns these tuples. VERIFIED (WM46) unless marked.
+
+  | Mode | Values |
+  |---|---|
+  | 1 Item | `"item"`, item ID, item link or nil. The cursor carries no owned modifiers, so the link is the one built from the item ID. |
+  | 2 Money | `"money"`, amount |
+  | 5 Merchant | `"merchant"`, the row index the pickup received (the stored zero-based row plus one) |
+  | 6 ActionBar | `"item"`, item ID, link; zero values without item metadata |
+  | 12 EquipmentSet | `"equipmentset"`, the set's name (INFERRED: WM46 verifies "the selected record's text"); zero values when the set no longer exists |
+  | 13 Currency | `"currency"`, currency ID, icon file ID or nil when zero (INFERRED: WM46 verifies "a metadata integer"); zero values without a `currency_info` record |
+  | 21 Outfit | `"outfit"`, outfit ID |
+
+- A missing record projects zero values but does not change the mode or clear the cursor. VERIFIED (WM46).
 
 ## Original consumers
 
@@ -68,4 +82,7 @@ Swapping an owned item with a bag or equipment slot places the displaced item th
 - The Spell setter's supplied clear-notification control is not modelled; its clear always notifies.
 - Native ordering between action-slot change events and cursor events in `PickupAction`/`PlaceAction` is not established.
 - Trade, mail and auction drops still release the cursor without the shared clear or its events.
+- `C_EquipmentSet.PickupEquipmentSet` and `C_CurrencyInfo.PickupCurrency` accept any ID: the wrapper guards are UNKNOWN. `PlaceAction` does not place equipment-set or currency cursors on action slots.
+- Spell 3 and PetAction 4 keep the simulator's `("spell", id)` tuple until WM56 settles the book type of an unbooked spell and the pet-action category. When they are projected, the pet book has no slot order in the simulator (an unordered set), so pet-book slots are not projected, and overrides are identity-only, so the override value is nil.
+- Macro 7 projects the picked-up index. Native matches a macro handle and follows the macro when slots move; the simulator has no handles.
 - Modes 8, 10–20 and their projections, guild-bank pickups, and the money storage read by `GetCursorMoney` are not modeled here.
