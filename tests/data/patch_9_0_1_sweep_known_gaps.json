@@ -82,7 +82,6 @@
   "wt-global-api-C_GossipInfo.GetPoiInfo-311",
   "wt-global-api-C_GossipInfo.SelectOption-315",
   "wt-global-api-C_Item.DoesItemMatchBonusTreeReplacement-316",
-  "wt-global-api-C_Item.IsItemKeystoneByID-317",
   "wt-global-api-C_LFGInfo.CanPlayerUsePVP-321",
   "wt-global-api-C_LegendaryCrafting.CraftRuneforgeLegendary-326",
   "wt-global-api-C_LegendaryCrafting.GetRuneforgeItemPreviewInfo-327",
