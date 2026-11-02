@@ -179,7 +179,7 @@ fn send_to_unit(
     if guid.is_empty() {
         return Ok(SendResult::failed(FAILED_UNSPECIFIED));
     }
-    let Some(unit) = unit_token_for_guid(&borrow_state(state)?, guid) else {
+    let Some(unit) = unit_token_for_guid(&*borrow_state(state)?, guid) else {
         return Ok(SendResult::failed(FAILED_OUT_OF_PING_AREA));
     };
     if unit != "player" {
@@ -210,7 +210,7 @@ fn send_to_point(state: &LuaState) -> LuaResult<SendResult> {
 /// WM47 Q3: 4 when the target can attack the player with reaction at most 1.
 fn contextual_unit_type(state: &mut LuaState, unit: &str) -> LuaResult<u8> {
     let threat = is_attackable_unit(state, unit)?
-        && unit_reaction_in_state(&borrow_state(state)?, unit) <= 1;
+        && unit_reaction_in_state(&*borrow_state(state)?, unit) <= 1;
     Ok(if threat {
         ALERT_THREAT
     } else {
