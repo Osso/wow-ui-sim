@@ -390,6 +390,13 @@ fn push_native_projection(state: &mut LuaState, cursor: &CursorInfo) -> LuaResul
             state.push(link);
             3
         }
+        // Mode 3, spell content of any producer.
+        CursorInfo::Spell { spell_id } | CursorInfo::Action { spell_id, .. } => {
+            push_spell_cursor(state, spell_id)?
+        }
+        CursorInfo::PetAction { packed_action, .. } => {
+            push_pet_action_cursor(state, packed_action)?
+        }
         // Mode 12: the record's text, INFERRED to be the set name.
         CursorInfo::EquipmentSet { set_id } => push_equipment_set_cursor(state, set_id)?,
         // Mode 13: the metadata integer, INFERRED to be the icon; zero is nil.
@@ -401,6 +408,39 @@ fn push_native_projection(state: &mut LuaState, cursor: &CursorInfo) -> LuaResul
         _ => return Ok(None),
     };
     Ok(Some(count))
+}
+
+/// Mode 3: ("spell", book slot, book type, spell ID, override or nil) (WM46,
+/// WM56). The main book is searched first; a miss is slot 0 with "spell".
+/// Gaps: only a pet-book hit selects "pet", but the simulator's pet book has no
+/// slot order, so its search is a miss; overrides are identity-only, so the
+/// override is nil; companion classification is not modelled.
+fn push_spell_cursor(state: &mut LuaState, spell_id: u32) -> LuaResult<u32> {
+    let slot = crate::lua_api::globals::spellbook_data::find_spell_slot(spell_id)
+        .map_or(0, |(slot, _)| slot);
+    push_cursor_kind_number(state, "spell", f64::from(slot))?;
+    let book = create_string(state, "spell");
+    state.push(book);
+    state.push(Val::Num(f64::from(spell_id)));
+    state.push(Val::Nil);
+    Ok(5)
+}
+
+/// Mode 4: ("petaction", low 24 bits, pet-book slot or nil, override or nil)
+/// (WM46, WM56). Only category `(word >> 24) & 63 == 1` enables the pet-book
+/// and override lookups. The pet-book search is a miss (0) and the override
+/// nil, for the same gaps as spells.
+fn push_pet_action_cursor(state: &mut LuaState, packed_action: u32) -> LuaResult<u32> {
+    const CATEGORY_SPELL: u32 = 1;
+    push_cursor_kind_number(state, "petaction", f64::from(packed_action & 0x00FF_FFFF))?;
+    let book = if (packed_action >> 24) & 63 == CATEGORY_SPELL {
+        Val::Num(0.0)
+    } else {
+        Val::Nil
+    };
+    state.push(book);
+    state.push(Val::Nil);
+    Ok(4)
 }
 
 /// Zero values when the set record is missing (WM46).
