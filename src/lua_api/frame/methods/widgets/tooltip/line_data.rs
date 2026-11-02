@@ -119,7 +119,7 @@ pub(super) fn add_line(state: &mut LuaState) -> LuaResult<u32> {
         wrap,
         texture: None,
     });
-    refresh_tooltip_geometry(&mut sim, id);
+    sim.widgets.mark_rect_dirty(id);
     drop(sim);
     let _ = sync_tooltip_line_frame(state, id, false, line_index)?;
     Ok(0)

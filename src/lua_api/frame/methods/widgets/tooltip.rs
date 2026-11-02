@@ -5,6 +5,7 @@ mod line_data;
 mod line_frames;
 mod owner;
 mod sizing;
+pub(crate) use sizing::refresh_tooltip_geometry;
 mod wrath;
 
 use self::content::*;

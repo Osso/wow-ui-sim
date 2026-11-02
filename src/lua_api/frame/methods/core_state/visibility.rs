@@ -62,6 +62,14 @@ pub fn set_shown(state: &mut LuaState) -> LuaResult<u32> {
 
 fn show_or_hide(state: &mut LuaState, id: u64, shown: bool) -> LuaResult<()> {
     let (needs_change, in_handler, parent_id) = read_show_hide_state(state, id, shown)?;
+    if shown {
+        let mut sim = borrow_state_mut(state)?;
+        if sim.widgets.get(id).is_some_and(|frame| {
+            frame.widget_type == WidgetType::GameTooltip && frame.tooltip_owner_id.is_some()
+        }) {
+            crate::lua_api::frame::methods::widgets::refresh_tooltip_geometry(&mut sim, id);
+        }
+    }
     if !shown {
         release_tooltip_owner(state, id)?;
     }
