@@ -732,6 +732,8 @@ pub struct SimState {
     pub calendar_now: crate::c_api::c_calendar::CivilDateTime,
     pub calendar_displayed_month: crate::c_api::c_calendar::DisplayedMonth,
     pub calendar_next_club_id: Option<u64>,
+    pub calendar_opened_selection: Option<crate::c_api::c_calendar::CalendarSelection>,
+    pub calendar_context_selection: Option<crate::c_api::c_calendar::CalendarSelection>,
     /// Explicit event identity positions; default records are simulator demo data.
     pub calendar_event_indices: HashMap<i32, crate::c_api::c_calendar::CalendarEventIndexInfo>,
     /// Host storage keyed by (offset_months, month_day); Vec order gives dense positions.

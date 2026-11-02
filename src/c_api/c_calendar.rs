@@ -4,6 +4,7 @@ mod club;
 mod day_event_projection;
 mod day_event_queries;
 pub mod day_event_record;
+mod selection;
 
 use super::helpers::ensure_namespace;
 use crate::lua_api::methods::{borrow_state, create_table, table_set};
@@ -58,6 +59,14 @@ pub struct CalendarEventIndexInfo {
     pub event_index: i32,
 }
 
+/// Selected event identity and absolute calendar month.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct CalendarSelection {
+    pub event_id: String,
+    pub month: i64,
+    pub month_day: u32,
+}
+
 pub(crate) fn seeded_event_indices() -> HashMap<i32, CalendarEventIndexInfo> {
     serde_json::from_str(include_str!("../../data/calendar/demo-event-indices.json")).expect(
         "failed to parse calendar event index fixture data/calendar/demo-event-indices.json",
@@ -69,6 +78,7 @@ pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
     if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
         civil::register(state, namespace)?;
         club::register(state, namespace)?;
+        selection::register(state, namespace)?;
     }
     table_set_rust_fn_static(
         state,

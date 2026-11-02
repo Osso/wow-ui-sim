@@ -36,7 +36,7 @@ pub(crate) fn current_calendar_time(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
-fn numeric_argument(state: &mut LuaState, index: i32) -> LuaResult<Option<f64>> {
+pub(super) fn numeric_argument(state: &mut LuaState, index: i32) -> LuaResult<Option<f64>> {
     let value = stack_val(state, index);
     let value = rilua::table_security::unwrap_secret(state, value)?;
     match value {
