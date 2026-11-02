@@ -45,7 +45,7 @@ fn read_rule_key(state: &mut LuaState) -> LuaResult<Option<String>> {
 /// Reverse-lookup `Enum.GameRule` to find the rule name whose numeric id
 /// matches `id`. Returns `None` when the enum table is missing or has no
 /// entry with that id.
-fn resolve_rule_name_from_enum_id(state: &mut LuaState, id: i64) -> Option<String> {
+pub(crate) fn resolve_rule_name_from_enum_id(state: &mut LuaState, id: i64) -> Option<String> {
     let rule_table = resolve_enum_game_rule_table(state)?;
     find_rule_name_for_id(state, rule_table, id)
 }
@@ -251,6 +251,12 @@ fn install_on_c_game_rules(state: &mut LuaState) -> LuaResult<()> {
     // which ships no generated documentation.
     if ACTIVE != ClientProfile::Wrath {
         table_set_rust_fn(state, table_ref, "IsStandard", game_mode::is_standard)?;
+        table_set_rust_fn(
+            state,
+            table_ref,
+            "GetGameRuleAsFrameStrata",
+            crate::c_api::game_rules_strata::query,
+        )?;
         table_set_rust_fn(
             state,
             table_ref,
