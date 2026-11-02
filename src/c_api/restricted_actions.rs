@@ -79,9 +79,9 @@ fn restriction_active(state: &mut LuaState) -> LuaResult<u32> {
 
 pub(crate) fn set_supplied_restriction(state: &mut LuaState) -> LuaResult<u32> {
     let kind = restriction_type(state)?;
-    if kind == 0 {
+    if kind == 0 || kind == 5 {
         return Err(rilua::runtime_error(
-            "combat restriction follows player combat state",
+            "restriction follows its supplied context",
         ));
     }
     let active = bool::from_stack(state, 2)?;
