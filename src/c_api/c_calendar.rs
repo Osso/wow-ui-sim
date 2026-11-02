@@ -95,6 +95,7 @@ pub struct CalendarEditableAccess {
     pub date: Option<(i32, i32, i32)>,
     pub time: Option<(u32, u32)>,
     pub event_type: u8,
+    pub texture_id: Option<u32>,
     pub auto_approve: bool,
     pub locked: bool,
     pub local_edit_credential: Option<u64>,
@@ -109,6 +110,7 @@ pub struct CalendarEditableAccess {
 /// Host-supplied resolved texture metadata.
 #[derive(Debug, Clone, Default)]
 pub struct CalendarTextureRecord {
+    pub id: u32,
     pub title: String,
     pub icon_texture: u32,
     pub expansion_level: i32,

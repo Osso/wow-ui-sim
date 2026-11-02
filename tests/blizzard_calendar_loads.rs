@@ -630,15 +630,23 @@ fn calendar_description_edit_updates_supplied_event(env: &WowLuaEnv) {
 
 prefork_full_ui_case! {
 fn calendar_texture_picker_sets_editable_event_type(env: &WowLuaEnv) {
-    use wow_ui_sim::c_api::c_calendar::CalendarEditableAccess;
+    use wow_ui_sim::c_api::c_calendar::{CalendarEditableAccess, CalendarTextureRecord};
     load_addon(&env.loader_env(), &calendar_toc()).unwrap();
-    env.state().borrow_mut().calendar_context_policy.editable = Some(CalendarEditableAccess {
-        local_edit_credential: Some(123),
-        ..Default::default()
-    });
-    for event_type in [1_u8, 0_u8] {
+    {
+        let mut state = env.state().borrow_mut();
+        state.calendar_context_policy.editable = Some(CalendarEditableAccess {
+            local_edit_credential: Some(123),
+            ..Default::default()
+        });
+        state.calendar_texture_lists[0] = vec![CalendarTextureRecord { id: 42, icon_texture: 111, ..Default::default() }];
+        state.calendar_texture_lists[1] = vec![CalendarTextureRecord { id: 84, icon_texture: 222, ..Default::default() }];
+    }
+    for (event_type, texture_id) in [(1_u8, 84), (0_u8, 42)] {
         env.exec(&format!("CalendarCreateEvent_SetSelectedIndex(1, {event_type})")).unwrap();
-        assert_eq!(env.state().borrow().calendar_context_policy.editable.as_ref().unwrap().event_type, event_type);
+        let state = env.state().borrow();
+        let event = state.calendar_context_policy.editable.as_ref().unwrap();
+        assert_eq!(event.event_type, event_type);
+        assert_eq!(event.texture_id, Some(texture_id));
     }
 }
 }
@@ -865,7 +873,7 @@ prefork_full_ui_case! {
 fn calendar_texture_picker_uses_supplied_texture_list(env: &WowLuaEnv) {
     use wow_ui_sim::c_api::c_calendar::CalendarTextureRecord;
     load_addon(&env.loader_env(), &calendar_toc()).unwrap();
-    env.state().borrow_mut().calendar_texture_lists[0] = vec![CalendarTextureRecord { title: "Test Vault".into(), icon_texture: 136116, expansion_level: 0, difficulty_id: 1, map_id: 42, is_lfr: false }];
+    env.state().borrow_mut().calendar_texture_lists[0] = vec![CalendarTextureRecord { id: 0, title: "Test Vault".into(), icon_texture: 136116, expansion_level: 0, difficulty_id: 1, map_id: 42, is_lfr: false }];
     env.exec(r#"
         CalendarTexturePickerFrame:Hide()
         CalendarTexturePickerFrame_Show(0)
