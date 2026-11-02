@@ -309,6 +309,20 @@ fn blizzard_deprecated_specialization_get_talent_info_returns_nil_when_backing_r
 }
 
 prefork_full_ui_case! {
+fn deprecated_talent_query_validates_arguments_and_empty_grid(env: &WowLuaEnv) {
+    env.exec(r#"
+        assert(GetTalentInfo(1, 1, 1, false, nil) == nil)
+        assert(GetTalentInfo(99, 9, 1, false, nil) == nil)
+        assert(not pcall(C_SpecializationInfo.GetTalentInfo, nil))
+        assert(not pcall(C_SpecializationInfo.GetTalentInfo, {}))
+        assert(not pcall(C_SpecializationInfo.GetTalentInfo, { tier = 1 }))
+        assert(not pcall(C_SpecializationInfo.GetTalentInfo, { tier = -1, column = 1 }))
+        assert(C_SpecializationInfo.GetTalentInfo({ tier = 0, column = 1 }) == nil)
+    "#).expect("original deprecated wrapper and query validation should execute");
+}
+}
+
+prefork_full_ui_case! {
 fn blizzard_deprecated_specialization_talent_constants_are_populated(env: &WowLuaEnv) {
 
     let (max_talent_tiers, num_talent_columns): (i32, i32) = env
