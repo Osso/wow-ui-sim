@@ -45,6 +45,31 @@ fn secure_item_action_requests_equip_and_exposes_the_lock(env: &WowLuaEnv) {
 }
 
 prefork_full_ui_case! {
+fn paper_doll_cursor_changed_highlights_compatible_item(env: &WowLuaEnv) {
+    {
+        let mut sim = env.state().borrow_mut();
+        sim.bag_items.clear();
+        sim.bag_items.insert((0, 2), BagItem {
+            item_id: 25, stack_count: 1, hyperlink: None,
+            durability: None, applied_transmog: None, owned_identity: Some(51),
+        });
+    }
+    env.exec(r#"
+        local source = debug.getinfo(PaperDollItemSlotButton_OnEvent, 'S').source:gsub('\\', '/')
+        assert(source:find('Blizzard_UIPanels_Game/Mainline/PaperDollFrame.lua', 1, true), source)
+        local button = { GetID = function() return 16 end,
+            LockHighlight = function(self) self.highlighted = true end,
+            UnlockHighlight = function(self) self.highlighted = false end }
+        PaperDollItemSlotButton_OnEvent(button, 'CURSOR_CHANGED')
+        assert(button.highlighted == false)
+        C_Container.PickupContainerItem(0, 2)
+        PaperDollItemSlotButton_OnEvent(button, 'CURSOR_CHANGED')
+        assert(button.highlighted == true)
+    "#).unwrap();
+}
+}
+
+prefork_full_ui_case! {
 fn binding_confirmation_reaches_the_original_game_event_consumer(env: &WowLuaEnv) {
     {
         let mut sim = env.state().borrow_mut();
