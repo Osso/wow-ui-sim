@@ -761,6 +761,7 @@ macro_rules! build_empty_sim_state {
             item_children: crate::c_api::item_spell::item_child::default_child_equipment(),
             item_spec_records: HashMap::new(),
             item_use_eligibility: HashMap::new(),
+            item_use_power_bar_id: None,
             equippable_items: ::std::collections::HashSet::new(),
             consumable_items: ::std::collections::HashSet::new(),
             current_item_ids: ::std::collections::HashSet::new(),

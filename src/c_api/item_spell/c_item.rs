@@ -247,6 +247,12 @@ fn register_c_item_inventory_queries(
             "DoesItemContainSpec",
             super::item_spec::does_item_contain_spec,
         )?;
+        table_set_rust_fn_static(
+            state,
+            table_ref,
+            "IsUsableItem",
+            super::item_use::is_usable_item,
+        )?;
     }
     register_c_item_methods(
         state,

@@ -923,6 +923,8 @@ pub struct SimState {
     pub item_spec_records: HashMap<u32, crate::c_api::item_spell::item_spec::ItemSpecRecord>,
     /// Supplied native spell-eligibility outcomes for an item and selected use spell.
     pub item_use_eligibility: HashMap<(u32, u32), bool>,
+    /// Supplied alternate power bar identifier for item resource checks.
+    pub item_use_power_bar_id: Option<u32>,
     pub item_overlay_flags: HashSet<(u32, crate::c_api::item_overlay::ItemOverlayFlag)>,
     pub equippable_items: ::std::collections::HashSet<u32>,
     pub consumable_items: ::std::collections::HashSet<u32>,
