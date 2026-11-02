@@ -515,6 +515,44 @@ fn calendar_invite_sort_controls_reflect_supplied_criterion(env: &WowLuaEnv) {
 }
 
 prefork_full_ui_case! {
+fn calendar_checkbox_updates_auto_approve(env: &WowLuaEnv) {
+    use wow_ui_sim::c_api::c_calendar::CalendarEditableAccess;
+    load_addon(&env.loader_env(), &calendar_toc()).unwrap();
+    env.state().borrow_mut().calendar_context_policy.editable = Some(CalendarEditableAccess { local_edit_credential: Some(1), ..Default::default() });
+    env.exec("CalendarCreateEventAutoApproveCheck:SetChecked(true); CalendarCreateEvent_SetAutoApprove()").unwrap();
+    {
+        let state = env.state().borrow();
+        let event = state.calendar_context_policy.editable.as_ref().unwrap();
+        assert!(event.auto_approve && event.dirty);
+    }
+    env.state().borrow_mut().calendar_context_policy.editable.as_mut().unwrap().dirty = false;
+    env.exec("CalendarCreateEventAutoApproveCheck:SetChecked(false); CalendarCreateEvent_SetAutoApprove()").unwrap();
+    let state = env.state().borrow();
+    let event = state.calendar_context_policy.editable.as_ref().unwrap();
+    assert!(!event.auto_approve && event.dirty);
+}
+}
+
+prefork_full_ui_case! {
+fn calendar_checkbox_updates_locked(env: &WowLuaEnv) {
+    use wow_ui_sim::c_api::c_calendar::CalendarEditableAccess;
+    load_addon(&env.loader_env(), &calendar_toc()).unwrap();
+    env.state().borrow_mut().calendar_context_policy.editable = Some(CalendarEditableAccess { local_edit_credential: Some(1), ..Default::default() });
+    env.exec("CalendarCreateEventLockEventCheck:SetChecked(true); CalendarCreateEvent_SetLockEvent()").unwrap();
+    {
+        let state = env.state().borrow();
+        let event = state.calendar_context_policy.editable.as_ref().unwrap();
+        assert!(event.locked && event.dirty);
+    }
+    env.state().borrow_mut().calendar_context_policy.editable.as_mut().unwrap().dirty = false;
+    env.exec("CalendarCreateEventLockEventCheck:SetChecked(false); CalendarCreateEvent_SetLockEvent()").unwrap();
+    let state = env.state().borrow();
+    let event = state.calendar_context_policy.editable.as_ref().unwrap();
+    assert!(!event.locked && event.dirty);
+}
+}
+
+prefork_full_ui_case! {
 fn calendar_title_edit_updates_supplied_event(env: &WowLuaEnv) {
     use wow_ui_sim::c_api::c_calendar::CalendarEditableAccess;
     load_addon(&env.loader_env(), &calendar_toc()).unwrap();
