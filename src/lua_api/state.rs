@@ -611,6 +611,8 @@ macro_rules! build_empty_sim_state {
             calendar_context_policy: Default::default(),
             calendar_opened_selection: None,
             calendar_context_selection: None,
+            calendar_guild_selections: Vec::new(),
+            calendar_clipboard: None,
             calendar_event_indices: HashMap::new(),
             calendar_day_events: HashMap::new(),
             achievement_guild_rep: ::std::collections::HashMap::new(),

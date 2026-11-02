@@ -354,3 +354,76 @@ fn calendar_raid_view_uses_supplied_day_event(env: &WowLuaEnv) {
     "#).unwrap();
 }
 }
+
+prefork_full_ui_case! {
+fn calendar_guild_event_navigation_rematches_current_day_order(env: &WowLuaEnv) {
+    use wow_ui_sim::c_api::c_calendar::CalendarSelection;
+    load_addon(&env.loader_env(), &calendar_toc()).unwrap();
+    env.exec("CalendarFrame:Show()").unwrap();
+    {
+        let mut state = env.state().borrow_mut();
+        let mut rows: Vec<_> = (1..=6).map(|i| calendar_test_record(&format!("event-{i}"))).collect();
+        for row in &mut rows { row.sequence_type = "ONGOING".into(); }
+        state.calendar_day_events.insert((0, 15), rows);
+        state.calendar_guild_selections = vec![CalendarSelection { event_id: "event-5".into(), month: 2026 * 12 + 3, month_day: 15 }];
+    }
+    env.exec(r#"
+        CalendarFrame_OpenToGuildEventIndex(1)
+        local info = C_Calendar.GetEventIndex()
+        assert(info and info.monthDay == 15 and info.eventIndex == 5)
+    "#).unwrap();
+    env.state().borrow_mut().calendar_day_events.get_mut(&(0, 15)).unwrap().swap(4, 5);
+    env.exec(r#"
+        CalendarFrame_OpenToGuildEventIndex(1)
+        local info = C_Calendar.GetEventIndex()
+        assert(info and info.monthDay == 15 and info.eventIndex == 6)
+    "#).unwrap();
+}
+}
+
+prefork_full_ui_case! {
+fn calendar_context_clipboard_controls_paste_menu(env: &WowLuaEnv) {
+    use wow_ui_sim::c_api::c_calendar::{CivilDateTime, DisplayedMonth};
+    load_addon(&env.loader_env(), &calendar_toc()).unwrap();
+    {
+        let mut state = env.state().borrow_mut();
+        state.calendar_now = CivilDateTime { year: 2024, month: 1, day: 1, hour: 12, minute: 0 };
+        state.calendar_displayed_month = DisplayedMonth { year: 2024, month: 1 };
+        state.calendar_clipboard = Some(calendar_test_record("copied"));
+    }
+    env.exec(r#"
+        function CalendarPasteMenuProbe()
+            local root = { buttons = {} }
+            function root:SetTag(_) end
+            function root:CreateButton(label) self.buttons[label] = true end
+            function root:QueueDivider() end
+            function root:HasElements() return next(self.buttons) ~= nil end
+            function root:AddMenuAcquiredCallback(_) end
+            function root:AddMenuReleasedCallback(_) end
+            GenerateDayContextMenu(nil, root, 0, {day=1, monthOffset=0}, nil)
+            return root.buttons[CALENDAR_PASTE_EVENT] == true
+        end
+        assert(CalendarPasteMenuProbe())
+    "#).unwrap();
+    env.state().borrow_mut().calendar_clipboard = None;
+    env.exec("assert(not CalendarPasteMenuProbe())").unwrap();
+}
+}
+
+prefork_full_ui_case! {
+fn calendar_context_type_selects_delete_confirmation(env: &WowLuaEnv) {
+    load_addon(&env.loader_env(), &calendar_toc()).unwrap();
+    let mut row = calendar_test_record("context");
+    row.calendar_type = "GUILD_EVENT".into();
+    env.state().borrow_mut().calendar_day_events.insert((0, 15), vec![row]);
+    env.exec(r#"
+        assert(select('#', C_Calendar.ContextMenuEventGetCalendarType()) == 1)
+        assert(C_Calendar.ContextMenuEventGetCalendarType() == nil)
+        C_Calendar.ContextMenuSelectEvent(0, 15, 1)
+        CalendarDayContextMenu_DeleteEvent()
+        local popup = StaticPopup_FindVisible('CALENDAR_DELETE_EVENT')
+        assert(popup and popup:IsShown())
+        assert(popup.text:GetText():find(CALENDAR_DELETE_GUILD_EVENT_CONFIRM, 1, true))
+    "#).unwrap();
+}
+}
