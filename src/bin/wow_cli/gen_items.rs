@@ -43,9 +43,55 @@ pub fn run() -> Result<(), Box<dyn std::error::Error>> {
     write_item_children(&wow_data)?;
     write_item_enchant_spells(&wow_data)?;
     write_item_spell_metadata(&wow_data)?;
+    write_item_uniqueness(&wow_data)?;
 
     println!("Generated {} item entries ({} skipped)", count, skipped);
     println!("Output: {}", output_path.display());
+    Ok(())
+}
+
+fn write_item_uniqueness(wow_data: &Path) -> Result<(), Box<dyn std::error::Error>> {
+    const BYPASS_LIMIT_CATEGORY: i32 = 524_288;
+    let records = open_records(&wow_data.join("ItemSparse.csv"))?;
+    let mut iter = records.iter();
+    let idx = header_index(iter.next().ok_or("empty ItemSparse.csv")?);
+    let mut candidates = Vec::new();
+    for record in iter {
+        let fields = parse_csv_line(record);
+        let id = field(&fields, &idx, "ID").parse::<u32>()?;
+        let category = field(&fields, &idx, "LimitCategory").parse::<u32>()?;
+        let flags = field(&fields, &idx, "Flags_0").parse::<i32>()?;
+        let bypass = flags & BYPASS_LIMIT_CATEGORY != 0;
+        if category != 0 || bypass {
+            candidates.push((id, category, bypass));
+        }
+    }
+    candidates.sort_unstable();
+    let records = open_records(&wow_data.join("ItemLimitCategory.csv"))?;
+    let mut iter = records.iter();
+    let idx = header_index(iter.next().ok_or("empty ItemLimitCategory.csv")?);
+    let mut categories = Vec::new();
+    for record in iter {
+        let fields = parse_csv_line(record);
+        categories.push(field(&fields, &idx, "ID").parse::<u32>()?);
+    }
+    categories.sort_unstable();
+    let mut out = File::create("crates/sim-data/data/item_uniqueness.rs")?;
+    writeln!(
+        out,
+        "//! Generated from wago.tools DB2 CSV exports, build 12.1.5.70391 (enUS)."
+    )?;
+    writeln!(out, "//! Regenerate with `wow-cli generate items`.")?;
+    writeln!(out, "pub static ITEM_UNIQUENESS: &[(u32, u32, bool)] = &[")?;
+    for (item, category, bypass) in candidates {
+        writeln!(out, "    ({item}, {category}, {bypass}),")?;
+    }
+    writeln!(out, "];\n")?;
+    writeln!(out, "pub static ITEM_LIMIT_CATEGORIES: &[u32] = &[")?;
+    for category in categories {
+        writeln!(out, "    {category},")?;
+    }
+    writeln!(out, "];")?;
     Ok(())
 }
 
