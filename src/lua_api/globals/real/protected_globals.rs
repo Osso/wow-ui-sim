@@ -199,9 +199,11 @@ fn securecall_with_origin(state: &mut LuaState) -> LuaResult<u32> {
     Ok((state.top - start) as u32)
 }
 
-fn refuse_call(state: &mut LuaState) -> LuaResult<u32> {
-    let name = String::from_stack(state, 1)?;
-    let combat_only = bool::from_stack(state, 2)?;
+pub(crate) fn protected_call_refused(
+    state: &mut LuaState,
+    name: &str,
+    combat_only: bool,
+) -> LuaResult<bool> {
     let origin = state.call_stack[..=state.ci]
         .iter()
         .rev()
@@ -220,6 +222,13 @@ fn refuse_call(state: &mut LuaState) -> LuaResult<u32> {
         };
         dispatch_event_now(state, event, &[origin, function])?;
     }
+    Ok(blocked)
+}
+
+fn refuse_call(state: &mut LuaState) -> LuaResult<u32> {
+    let name = String::from_stack(state, 1)?;
+    let combat_only = bool::from_stack(state, 2)?;
+    let blocked = protected_call_refused(state, &name, combat_only)?;
     state.push(Val::Bool(blocked));
     Ok(1)
 }
@@ -249,6 +258,16 @@ pub(crate) fn install(lua: &mut rilua::Lua) -> crate::Result<()> {
     );
     for (names, combat_only) in [(PROTECTED, false), (NO_COMBAT, true)] {
         for name in names {
+            if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail
+                && cfg!(feature = "retail-12-1-5")
+                && matches!(
+                    *name,
+                    "C_GuildInfo.Demote" | "C_GuildInfo.SetLeader" | "C_GuildInfo.Disband"
+                )
+            {
+                // These handlers parse required names before checking protection.
+                continue;
+            }
             source.push_str(&format!("wrap({name:?}, {combat_only})\n"));
         }
     }

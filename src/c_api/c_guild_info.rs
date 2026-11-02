@@ -7,9 +7,10 @@ use crate::c_api::{ensure_namespace, global_val};
 use crate::client_profile::{ACTIVE, ClientProfile};
 use crate::lua_api::methods::{
     borrow_state, borrow_state_mut, call_function_state, create_table, table_set_static,
+    val_to_string,
 };
 use crate::lua_api::state_types::GuildLogo;
-use crate::lua_bridge::{FromStack, table_set_rust_fn_static};
+use crate::lua_bridge::{FromStack, stack_val, table_set_rust_fn_static};
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val, runtime_error};
 
@@ -43,7 +44,91 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
         namespace,
         "GetGuildTabardInfo",
         get_guild_tabard_info,
-    )
+    )?;
+    if ACTIVE == ClientProfile::Retail && cfg!(feature = "retail-12-1-5") {
+        table_set_rust_fn_static(state, namespace, "Demote", demote)?;
+        table_set_rust_fn_static(state, namespace, "SetLeader", set_leader)?;
+        table_set_rust_fn_static(state, namespace, "Disband", disband)?;
+    }
+    Ok(())
+}
+
+fn read_guild_name(state: &LuaState, usage: &str) -> LuaResult<String> {
+    let value = rilua::table_security::unwrap_secret(state, stack_val(state, 1))?;
+    match value {
+        Val::Str(_) => val_to_string(state, value).ok_or_else(|| runtime_error(usage)),
+        Val::Num(_) => Ok(value.to_string()),
+        _ => Err(runtime_error(usage)),
+    }
+}
+
+fn request_allowed(state: &mut LuaState, name: &str) -> LuaResult<bool> {
+    if crate::lua_api::globals::real::protected_globals::protected_call_refused(state, name, false)?
+    {
+        return Ok(false);
+    }
+    Ok(!borrow_state(state)?.guild_request_inputs.action_disabled)
+}
+
+fn demote(state: &mut LuaState) -> LuaResult<u32> {
+    let name = read_guild_name(state, "Usage: C_GuildInfo.Demote(name)")?;
+    if !request_allowed(state, "C_GuildInfo.Demote")? {
+        return Ok(0);
+    }
+    if name.len() > 48 {
+        return Err(runtime_error("Name too long"));
+    }
+    let mut sim = borrow_state_mut(state)?;
+    let target = sim
+        .world
+        .guild_members
+        .iter()
+        .find(|member| member.name.to_lowercase() == name.to_lowercase())
+        .map(|member| member.name.clone());
+    if sim.guild_request_inputs.transport_available {
+        if let Some(target) = target {
+            sim.guild_request_inputs
+                .submitted
+                .push(GuildRequest::Demote(target));
+        }
+    }
+    Ok(0)
+}
+
+fn set_leader(state: &mut LuaState) -> LuaResult<u32> {
+    let name = read_guild_name(state, "Usage: C_GuildInfo.SetLeader(name)")?;
+    if !request_allowed(state, "C_GuildInfo.SetLeader")? {
+        return Ok(0);
+    }
+    let mut sim = borrow_state_mut(state)?;
+    if sim.world.guild_id == 0
+        || sim.world.guild_player_rank != 0
+        || sim.world.guild_ranks.is_empty()
+    {
+        return Ok(0);
+    }
+    if name.len() > 305 {
+        return Err(runtime_error("Name too long"));
+    }
+    if sim.guild_request_inputs.transport_available {
+        sim.guild_request_inputs
+            .submitted
+            .push(GuildRequest::SetLeader(name));
+    }
+    Ok(0)
+}
+
+fn disband(state: &mut LuaState) -> LuaResult<u32> {
+    if !request_allowed(state, "C_GuildInfo.Disband")? {
+        return Ok(0);
+    }
+    let mut sim = borrow_state_mut(state)?;
+    if sim.guild_request_inputs.transport_available {
+        sim.guild_request_inputs
+            .submitted
+            .push(GuildRequest::Disband);
+    }
+    Ok(0)
 }
 
 fn get_guild_tabard_info(state: &mut LuaState) -> LuaResult<u32> {

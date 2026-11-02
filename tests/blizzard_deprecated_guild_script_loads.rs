@@ -192,6 +192,14 @@ fn deprecated_guild_requests_validate_and_preserve_roster(env: &WowLuaEnv) {
     env.exec("assert(pcall(GuildDemote, string.rep('x', 49))); GuildDisband()")
         .expect("disabled gate must precede length validation and submission");
     assert_eq!(env.state().borrow().guild_request_inputs.submitted.len(), 3);
+    {
+        let mut sim = env.state().borrow_mut();
+        sim.guild_request_inputs.action_disabled = false;
+        sim.guild_request_inputs.transport_available = false;
+    }
+    env.exec("GuildDisband()")
+        .expect("request without transport should not mutate guild state");
+    assert_eq!(env.state().borrow().guild_request_inputs.submitted.len(), 3);
 }
 }
 
@@ -203,20 +211,25 @@ fn deprecated_guild_requests_refuse_tainted_callers_after_parsing(env: &WowLuaEn
         sim.world.guild_player_rank = 0;
         sim.guild_request_inputs.transport_available = true;
     }
-    let (missing_ok, long_ok, refused): (bool, bool, i32) = env.eval(r#"
+    let (missing_demote, missing_leader, long_demote, long_leader, disband_ok, refused):
+        (bool, bool, bool, bool, bool, i32) = env.eval(r#"
         local count = 0
         local listener = CreateFrame('Frame')
         listener:RegisterEvent('ADDON_ACTION_FORBIDDEN')
         listener:SetScript('OnEvent', function() count = count + 1 end)
-        local function missing() return GuildDemote() end
-        local function long() return GuildDemote(string.rep('x', 49)) end
-        debug.setobjecttaint(missing, 'GuildProbe')
-        debug.setobjecttaint(long, 'GuildProbe')
-        local missingOk = pcall(missing)
-        local longOk = pcall(long)
-        return missingOk, longOk, count
+        local function missingDemote() return GuildDemote() end
+        local function missingLeader() return GuildSetLeader() end
+        local function longDemote() return GuildDemote(string.rep('x', 49)) end
+        local function longLeader() return GuildSetLeader(string.rep('x', 306)) end
+        local function disband() return GuildDisband() end
+        for _, fn in ipairs({ missingDemote, missingLeader, longDemote, longLeader, disband }) do
+            debug.setobjecttaint(fn, 'GuildProbe')
+        end
+        return pcall(missingDemote), pcall(missingLeader), pcall(longDemote),
+            pcall(longLeader), pcall(disband), count
     "#).expect("tainted guild request probes should execute");
-    assert_eq!((missing_ok, long_ok, refused), (false, true, 1));
+    assert_eq!((missing_demote, missing_leader, long_demote, long_leader, disband_ok, refused),
+        (false, false, true, true, true, 3));
     assert!(env.state().borrow().guild_request_inputs.submitted.is_empty());
 }
 }

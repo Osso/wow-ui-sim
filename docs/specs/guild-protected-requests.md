@@ -1,0 +1,7 @@
+# Protected guild requests
+
+Retail 12.1.5 declares `C_GuildInfo.Demote(name)` and `Disband()` in `Blizzard_APIDocumentationGenerated/GuildInfoDocumentation.lua:47–58`; `SetLeader(name)` is declared at `GuildInfoDocumentation.lua:335–342`. `Blizzard_DeprecatedGuildScript/Deprecated_GuildScript.lua:9–16` assigns the methods to the original legacy globals.
+
+For Demote and SetLeader, required string-compatible argument conversion occurs before taint refusal. A refused caller produces no values and does not submit a request. After refusal, the supplied action-disable gate precedes further checks. Demote rejects names longer than 48 bytes and submits only for a matched roster member. SetLeader requires guild identity and a cached leader rank before rejecting names longer than 305 bytes. Disband has no required argument or guild prerequisite. Requests are recorded only when the host supplies an available transport; none of the three commands changes the roster, leader, guild membership or server outcome locally.
+
+**EMULATED inputs:** The host supplies transport and action-disable state; both default false for the empty simulator scenario. Best-guess basis: Retail 12.1.5 build 70688 WM33-B and its reviewed ordering follow-up. The submitted-request records model the local request boundary, not packet format or server acceptance. **Known gaps:** macro-source restriction reporting, exact native folded-name and categorized-guild-identity semantics, absent-player state, rank-cache retrieval side effects and server replies are not modeled.
