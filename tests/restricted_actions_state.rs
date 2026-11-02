@@ -127,6 +127,8 @@ fn restricted_actions_reject_invalid_types() {
 }
 
 #[test]
+// WM61 S1: Chat depends on other active states and is not independent.
+// Retail RestrictedActionsConstantsDocumentation.lua:19-32 declares the type values.
 fn restricted_actions_supplied_types_are_independent() {
     let env = WowLuaEnv::new().unwrap();
     env.exec(r#"
@@ -137,17 +139,17 @@ fn restricted_actions_supplied_types_are_independent() {
         listener:SetScript('OnEvent', function(_, _, kind, value)
             events[#events + 1] = {kind, value, api.GetAddOnRestrictionState(kind), api.IsAddOnRestrictionActive(kind)}
         end)
-        for kind = 1, 5 do
+        for kind = 1, 4 do
             A_Admin.SetAddOnRestrictionActive(kind, true)
             assert(api.IsAddOnRestrictionActive(kind))
             assert(events[kind][1] == kind and events[kind][2] == 1)
             assert(events[kind][3] == 1 and events[kind][4] == false)
         end
-        for kind = 1, 5 do
+        for kind = 1, 4 do
             A_Admin.SetAddOnRestrictionActive(kind, false)
             assert(not api.IsAddOnRestrictionActive(kind))
-            assert(events[kind + 5][1] == kind and events[kind + 5][2] == 0)
-            assert(events[kind + 5][3] == 0 and events[kind + 5][4] == false)
+            assert(events[kind + 4][1] == kind and events[kind + 4][2] == 0)
+            assert(events[kind + 4][3] == 0 and events[kind + 4][4] == false)
         end
     "#).unwrap();
 }
