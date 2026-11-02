@@ -7,7 +7,6 @@
   "wt-global-api-C_EventToastManager.GetNextToastToDisplay-34",
   "wt-global-api-C_EventToastManager.RemoveCurrentToast-35",
   "wt-global-api-C_Garrison.GetAutoMissionTargetingInfoForSpell-37",
-  "wt-global-api-C_Item.GetAppliedItemTransmogInfo-39",
   "wt-global-api-C_Item.GetBaseItemTransmogInfo-40",
   "wt-global-api-C_ItemUpgrade.GetItemUpgradeEffect-43",
   "wt-global-api-C_ItemUpgrade.GetNumItemUpgradeEffects-44",

@@ -50,7 +50,6 @@
   "wt-global-api-C_MajorFactions.GetMajorFactionRenownInfo-219",
   "wt-global-api-C_Map.IsCityMap-220",
   "wt-global-api-C_Map.IsMapValidForNavBarDropdown-221",
-  "wt-global-api-C_Minimap.GetDefaultTrackingValue-222",
   "wt-global-api-C_Minimap.IsTrackingAccountCompletedQuests-223",
   "wt-global-api-C_PaperDollInfo.GetInspectRatedBGBlitzData-229",
   "wt-global-api-C_PartyInfo.DelveTeleportOut-230",

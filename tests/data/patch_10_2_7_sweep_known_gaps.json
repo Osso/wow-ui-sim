@@ -19,7 +19,6 @@
   "wt-global-api-C_PetInfo.PetAbandon-69",
   "wt-global-api-C_PetInfo.PetRename-70",
   "wt-global-api-C_QuestLog.IsQuestFromContentPush-71",
-  "wt-global-api-C_QuestLog.UpdateCampaignHeaders-72",
   "wt-global-api-C_StableInfo.GetStablePetFoodTypes-80",
   "wt-global-api-C_StableInfo.GetStabledPetList-79",
   "wt-global-api-C_StableInfo.IsAtStableMaster-82",
