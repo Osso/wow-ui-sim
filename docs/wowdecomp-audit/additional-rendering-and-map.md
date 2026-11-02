@@ -4,7 +4,7 @@ Expanded pass against simulator `2da20225ba147dda579dd01164917cc16f0618ed`; exte
 
 ## T4 — FontString alpha gradients never reach glyph rendering
 
-**External:** `Engine/Source/Frame/CSimpleFontString_Scripts.cpp:137-157`, offset `0x0048D0F0`, calls `SetAlphaGradient(start,length)` and returns its outcome. `Engine/Source/Frame/CSimpleRender.cpp:1094-1100,1628-1629`, offset `0x00482230`, stores the gradient and applies it to an existing or subsequently created text block. `Engine/Source/Gxu/GxuFontString.cpp:697-750`, offset `0x006C78F0`, changes geometry alpha across the gradient span rather than merely retaining setter arguments.
+**External:** `Engine/Source/Frame/CSimpleFontString_Scripts.cpp:137-157`, calls `SetAlphaGradient(start,length)` and returns its outcome. `Engine/Source/Frame/CSimpleRender.cpp:1094-1100,1628-1629`, stores the gradient and applies it to an existing or subsequently created text block. `Engine/Source/Gxu/GxuFontString.cpp:697-750`, changes geometry alpha across the gradient span rather than merely retaining setter arguments.
 
 **Simulator:** `src/lua_api/frame/methods/misc/alpha_gradient.rs:54-70` records `alpha_gradients[0]`, clamps length and always returns true. A source-wide `alpha_gradients` search finds initialization and API storage/getters/clear only, no glyph/render consumer. Existing `src/loader/tests/frame_interaction.rs:266-310` and `tests/patch_11_2_0_publication_fixes.rs` exercise stored surface state, not rendered fading.
 
@@ -16,9 +16,9 @@ Expanded pass against simulator `2da20225ba147dda579dd01164917cc16f0618ed`; exte
 
 ## T5 — Font mutation claims success without validating a usable font
 
-**External:** `Engine/Source/Frame/CSimpleFontString_Scripts.cpp:285-320` validates positive height and reports success only if `SetFont` succeeds. `Engine/Source/Frame/CSimpleRender.cpp:1228-1266`, `CSimpleFontString::SetFont`, offset `0x00483750`, calls `TextBlockGenerateFont` before changing the existing handle/height; failed generation returns 0 with prior font intact. The failure chain is explicit: `Engine/Source/Services/TextBlock.cpp:333-379` → `Engine/Source/Gxu/GxuFontMain.cpp:862-898` → `Engine/Source/Gxu/GxuFontFont.cpp:217-239` → `Engine/Source/Gxu/GxuFontFace.cpp:72-112`; an uncached name whose file cannot be read yields no face/handle, not a default-font success.
+**External:** `Engine/Source/Frame/CSimpleFontString_Scripts.cpp:285-320` validates positive height and reports success only if `SetFont` succeeds. `Engine/Source/Frame/CSimpleRender.cpp:1228-1266`, `CSimpleFontString::SetFont`, calls `TextBlockGenerateFont` before changing the existing handle/height; failed generation returns 0 with prior font intact. The failure chain is explicit: `Engine/Source/Services/TextBlock.cpp:333-379` → `Engine/Source/Gxu/GxuFontMain.cpp:862-898` → `Engine/Source/Gxu/GxuFontFont.cpp:217-239` → `Engine/Source/Gxu/GxuFontFace.cpp:72-112`; an uncached name whose file cannot be read yields no face/handle, not a default-font success.
 
-The public `SetTextHeight` wrapper at `CSimpleFontString_Scripts.cpp:490-509`, offset `0x0048DDB0`, rejects nonpositive height **before** calling the core setter, and is registered at `:737`. The unvalidated internal setter at `CSimpleRender.cpp:1271-1277` does not bypass that public Lua boundary.
+The public `SetTextHeight` wrapper at `CSimpleFontString_Scripts.cpp:490-509`, rejects nonpositive height **before** calling the core setter, and is registered at `:737`. The unvalidated internal setter at `CSimpleRender.cpp:1271-1277` does not bypass that public Lua boundary.
 
 **Simulator:** `src/lua_api/frame/methods/text_attribute_event/text/formatting.rs:330-398` accepts any non-nil font path, stores path/size/outline and returns true without loading/validating the font. `:433-447` permits zero/negative size and aliases `SetTextHeight` to that assignment. The getter can therefore advertise an invalid requested font/height regardless of the renderer's eventual resource resolution.
 
@@ -32,7 +32,7 @@ The public `SetTextHeight` wrapper at `CSimpleFontString_Scripts.cpp:490-509`, o
 
 ## T6 — Shared FontObject mutations do not update existing FontStrings
 
-**External:** `Engine/Source/Frame/CSimpleFontable.cpp:20-37`, offset `0x00485160`, links an attached fontable to its Font object and applies initial attributes. `Engine/Source/Frame/CSimpleFont.cpp:145-155`, `UpdateObjects`, offset `0x004963F0`, walks those attachments on later mutations. Font `SetFont`, `SetTextColor` and `SetSpacing` invoke it (`Engine/Source/Frame/CSimpleFont_Scripts.cpp:143-166,182-194,273-289`). `Engine/Source/Frame/CSimpleFontStringAttributes.cpp:68-99,103-135` projects changed categories; local FontString setters clear inheritance bits for their overridden font/colour/spacing categories.
+**External:** `Engine/Source/Frame/CSimpleFontable.cpp:20-37`, links an attached fontable to its Font object and applies initial attributes. `Engine/Source/Frame/CSimpleFont.cpp:145-155`, `UpdateObjects`, walks those attachments on later mutations. Font `SetFont`, `SetTextColor` and `SetSpacing` invoke it (`Engine/Source/Frame/CSimpleFont_Scripts.cpp:143-166,182-194,273-289`). `Engine/Source/Frame/CSimpleFontStringAttributes.cpp:68-99,103-135` projects changed categories; local FontString setters clear inheritance bits for their overridden font/colour/spacing categories.
 
 **Simulator:** Font is a Lua table. `src/lua_api/globals/font_strings_collection/fonts.rs:102-116,181-195,234-244` mutates table fields without notifying attached strings. `src/lua_api/frame/methods/button_anchor_hierarchy/font_strings.rs:283-318,414-485` reads and applies snapshots to widget fields and stores the object reference. Rendering/measurement uses those widget fields, not a live dereference of the Font table. Returning the original object from `GetFontObject` therefore does not establish a live dependency.
 
@@ -54,7 +54,7 @@ The public `SetTextHeight` wrapper at `CSimpleFontString_Scripts.cpp:490-509`, o
 
 ## M2 — Minimap pings are raw coordinate storage, not position-derived state/events
 
-**External:** `WoW/Source/Ui/MinimapFrame_Scripts.cpp:235-310`, offsets `0x0057ED70`/`0x0057EFE0`, converts click coordinates using minimap dimensions, view radius, player location and rotation, stores a world position and derives subsequent relative coordinates from current player state. `WoW/Source/Ui/MinimapFrame.cpp:2165-2215`, `SetPingPosition`, offset `0x0057EB80`, signals `MINIMAP_PING(unit,x,y)` after resolving the sender.
+**External:** `WoW/Source/Ui/MinimapFrame_Scripts.cpp:235-310`, converts click coordinates using minimap dimensions, view radius, player location and rotation, stores a world position and derives subsequent relative coordinates from current player state. `WoW/Source/Ui/MinimapFrame.cpp:2165-2215`, `SetPingPosition`, signals `MINIMAP_PING(unit,x,y)` after resolving the sender.
 
 **Simulator:** `src/lua_api/frame/methods/map_frames.rs:641-664` merely records/replays the supplied `(x,y)` pair. It emits no event and the getter never consults player position, facing, zoom/radius or minimap dimensions. A source-wide `MINIMAP_PING` search finds event-name validity entries but no producer.
 
@@ -66,7 +66,7 @@ The public `SetTextHeight` wrapper at `CSimpleFontString_Scripts.cpp:490-509`, o
 
 ## M3 — Minimap zoom is disconnected from client view/CVar state
 
-**External:** `WoW/Source/Ui/MinimapFrame.cpp:3543-3567`, offsets `0x007F3AE0`/`0x007F3B40`/`0x007F3B60`, selects distinct indoor/outdoor zoom, clamps to five, marks view updates and writes `minimapInsideZoom` or `minimapZoom` when changed. Getter reads the active environment's zoom; six levels are exposed.
+**External:** `WoW/Source/Ui/MinimapFrame.cpp:3543-3567`, selects distinct indoor/outdoor zoom, clamps to five, marks view updates and writes `minimapInsideZoom` or `minimapZoom` when changed. Getter reads the active environment's zoom; six levels are exposed.
 
 **Simulator:** `src/lua_api/frame/methods/map_frames.rs:616-639` clamps into six levels but writes a private per-frame `__minimapZoom` field only. It does not synchronize either CVar or a view-radius/update model. The minimap renderer is the same static image independently of that field.
 
@@ -78,4 +78,4 @@ The public `SetTextHeight` wrapper at `CSimpleFontString_Scripts.cpp:490-509`, o
 
 ## Historical surface lead, not counted as a demonstrated modern defect
 
-`CSimpleFontString_Scripts.cpp:332-338`, offset `0x0048BC70`, registers `GetFieldSize` returning 8191; no occurrence exists in simulator `src/`. This is an absent historical method, but its required availability on each supported profile has not been established. Do not infer a universal 8191-byte text limit: the reconstructed FontString constructor sets `m_textMaxSize=0`, and `SetText` can allocate dynamically (`CSimpleRender.cpp:1039-1053,1281-1314`).
+`CSimpleFontString_Scripts.cpp:332-338`, registers `GetFieldSize` returning 8191; no occurrence exists in simulator `src/`. This is an absent historical method, but its required availability on each supported profile has not been established. Do not infer a universal 8191-byte text limit: the reconstructed FontString constructor sets `m_textMaxSize=0`, and `SetText` can allocate dynamically (`CSimpleRender.cpp:1039-1053,1281-1314`).

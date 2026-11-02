@@ -18,11 +18,11 @@ Static comparison only; no reconstruction code was executed, configured, built o
 
 **Kind:** existing contract conflict for changed setters/keyboard edits; missing notification capability for public `Insert`. The difference is concrete in source, but historical evidence alone does not authorize replacing the [current EditBox contract](../specs/editbox-text-position-selection.md).
 
-**Reconstructed producer:** 15595 `Engine/Source/Frame/CSimpleEditBox_Scripts.cpp:273–297` routes Lua `Insert` to `Insert(...,1,0,0)` and `SetText` to the setter. `CSimpleEditBox.cpp:1963–2081`, offset `0x005198A0/0x140165140`, mutates text/cursor metadata, marks text/cursor dirty, and invokes `OnChar` synchronously when `runScripts` is enabled. `:2371–2387`, offset `0x0051A370/0x140166090`, makes changed `SetText` call `Insert(...,0,0,1)`, then synchronous `OnTextSet`; same-value text returns early. Accepted characters use insertion (`:2223–2235`); deletion also marks text dirty (`DeleteSubstring`, `:593–684`).
+**Reconstructed producer:** 15595 `Engine/Source/Frame/CSimpleEditBox_Scripts.cpp:273–297` routes Lua `Insert` to `Insert(...,1,0,0)` and `SetText` to the setter. `CSimpleEditBox.cpp:1963–2081`, mutates text/cursor metadata, marks text/cursor dirty, and invokes `OnChar` synchronously when `runScripts` is enabled. `:2371–2387`, makes changed `SetText` call `Insert(...,0,0,1)`, then synchronous `OnTextSet`; same-value text returns early. Accepted characters use insertion (`:2223–2235`); deletion also marks text dirty (`DeleteSubstring`, `:593–684`).
 
-**Delivery:** `CSimpleEditBox.cpp:2579–2609`, offset `0x0051B440/0x140167520`, snapshots text dirtiness, refreshes visible text/highlight/cursor, then runs `OnTextChanged`. `:1786–1799` reads `userInput` from dirty bit `0x8`. Layer update calls this processor at `:2724–2727`; key-down processing also flushes pending state before handling its key (`:2761–2778`), as does mouse-down (`:2987–2994`). Therefore this is deferred to **dirty-state processing**, not an unconditional next-frame guarantee. The mouse-down call is not a post-key-handler flush.
+**Delivery:** `CSimpleEditBox.cpp:2579–2609`, snapshots text dirtiness, refreshes visible text/highlight/cursor, then runs `OnTextChanged`. `:1786–1799` reads `userInput` from dirty bit `0x8`. Layer update calls this processor at `:2724–2727`; key-down processing also flushes pending state before handling its key (`:2761–2778`), as does mouse-down (`:2987–2994`). Therefore this is deferred to **dirty-state processing**, not an unconditional next-frame guarantee. The mouse-down call is not a post-key-handler flush.
 
-**Older counterpart:** 12340 `CSimpleEditBox_Scripts.cpp:303–326`; `CSimpleEditBox.cpp:2049–2171` insertion, `:2318–2333` character input, `:636–727` deletion, `:2468–2483` setter, `:2685–2715` dirty processing, `:2829–2832` layer update, `:2868–2885` pre-key flush, `:3094–3102` mouse-down flush. Both source trees show the same bounded delivery model; the 15595 functions above have unprefixed 15595 address tags.
+**Older counterpart:** 12340 `CSimpleEditBox_Scripts.cpp:303–326`; `CSimpleEditBox.cpp:2049–2171` insertion, `:2318–2333` character input, `:636–727` deletion, `:2468–2483` setter, `:2685–2715` dirty processing, `:2829–2832` layer update, `:2868–2885` pre-key flush, `:3094–3102` mouse-down flush. Both source trees show the same bounded delivery model.
 
 **Simulator difference:** `src/lua_api/frame/methods/text_attribute_event/text.rs:74–97` dispatches changed setter `OnTextSet`, then `OnTextChanged(false)` before returning. `src/lua_api/key_dispatch.rs:337–357,392–406` dispatches accepted keyboard edit notifications immediately after mutation/character scripts. Public `Insert` at `src/lua_api/frame/methods/widgets/editbox.rs:777–796` only updates text/cache/caret and produces neither `OnChar` nor a pending changed notification. Callback acceptance is not a producer. C2 separately owns missing cursor geometry production.
 
@@ -48,7 +48,7 @@ Insertion sets `0x8` for `script=0` and clears it for `script=1` (`15595 :2014�
 
 **Open in the [exchange checklist](README.md#exchanged-implementation-checklist):** peer read-only triage corroborates the argument/model gap, not implementation or a supported-profile contract. C12/T7/T8 below likewise have no implementation proof from this exchange. Their simulator traces remain baseline-scoped.
 
-**Kind:** capability. 15595 `Engine/Source/Frame/CSimpleMessageScrollFrame_Scripts.cpp:381–386` forwards the optional access ID to `GetNumMessages`; core `CSimpleMessageScrollFrame.cpp:131–149`, offset `0x0051D470/0x140169D80`, returns total count for zero, otherwise scans retained entries for matching `m_accessID`. Older wrappers/core are `CSimpleMessageScrollFrame_Scripts.cpp:397–403` and `CSimpleMessageScrollFrame.cpp:148–166`. These are counts of retained messages, not just visible lines.
+**Kind:** capability. 15595 `Engine/Source/Frame/CSimpleMessageScrollFrame_Scripts.cpp:381–386` forwards the optional access ID to `GetNumMessages`; core `CSimpleMessageScrollFrame.cpp:131–149`, returns total count for zero, otherwise scans retained entries for matching `m_accessID`. Older wrappers/core are `CSimpleMessageScrollFrame_Scripts.cpp:397–403` and `CSimpleMessageScrollFrame.cpp:148–166`. These are counts of retained messages, not just visible lines.
 
 **Simulator:** `src/lua_api/frame/methods/widgets/message_frame/mod.rs:34` registers the getter; `getters.rs:49–60` always returns total stored messages and ignores the argument. `add.rs:69–95` reads only text/RGBA/message_id, and `src/lua_api/message_frame.rs` stores no independent access-ID field. Thus simply filtering the existing message ID would conflate distinct metadata.
 
@@ -58,7 +58,7 @@ Insertion sets `0x8` for `script=0` and clears it for `script=1` (`15595 :2014�
 
 ## C12 — Disabled checked button hides its only checked texture
 
-**Kind:** capability. 15595 `Engine/Source/Frame/CSimpleCheckbox.cpp:78–110`, offset `0x00515D80/0x140160430`, hides both checked textures, then selects the disabled texture only when it exists and the button is disabled; otherwise it selects the ordinary checked texture. Older `CSimpleCheckbox.cpp:97–133` has the same selection. This is a specific missing-disabled-slot case, not a claim that ordinary disabled-checked rendering is wholly absent.
+**Kind:** capability. 15595 `Engine/Source/Frame/CSimpleCheckbox.cpp:78–110`, hides both checked textures, then selects the disabled texture only when it exists and the button is disabled; otherwise it selects the ordinary checked texture. Older `CSimpleCheckbox.cpp:97–133` has the same selection. This is a specific missing-disabled-slot case, not a claim that ordinary disabled-checked rendering is wholly absent.
 
 **Simulator:** `src/lua_api/frame/methods/widgets/slider/checkbutton.rs:68–98` makes ordinary checked visibility `enabled && checked`, independently of whether a disabled-checked texture exists. `src/lua_api/frame/methods/button_anchor_hierarchy/textures.rs:22–59` uses the same visibility rule on texture assignment. The selected child is therefore hidden when checked+disabled even if it is the only configured checked texture. These are active rilua state/visibility paths, not the legacy mlua methods file.
 
@@ -68,7 +68,7 @@ Insertion sets `0x8` for `script=0` and clears it for `script=1` (`15595 :2014�
 
 ## T7 — FontString justification accepts invalid input instead of rejecting it
 
-**Kind:** boundary. 15595 `Engine/Source/Frame/CSimpleFontString_Scripts.cpp:525–545`, offset `0x0052E7D0/0x14017F670`, errors for non-string or unrecognized horizontal justification; older counterpart `:541–565` does likewise. The getter/registration is present in both trees (`15595 :518–521,737–738`; `12340 :533–536,740–741`).
+**Kind:** boundary. 15595 `Engine/Source/Frame/CSimpleFontString_Scripts.cpp:525–545`, errors for non-string or unrecognized horizontal justification; older counterpart `:541–565` does likewise. The getter/registration is present in both trees (`15595 :518–521,737–738`; `12340 :533–536,740–741`).
 
 **Simulator:** `src/lua_api/frame/methods/text_attribute_event/mod.rs:267–268` registers setter/getter. `text/style.rs:260–298` quietly returns for non-string input and stores `TextJustify::from_wow_str` for strings; `src/widget/frame_types.rs:264–273` maps an unknown string to `Left`. Real text consumers use justification in `src/render/text.rs:59,87–102`; this is not inert private storage.
 
@@ -78,7 +78,7 @@ Insertion sets `0x8` for `script=0` and clears it for `script=1` (`15595 :2014�
 
 ## T8 — FontString text-color defaults and clamping differ
 
-**Kind:** boundary. Both FontString wrappers call `FrameScript_GetColor` (`15595 CSimpleFontString_Scripts.cpp:366–375`; `12340 :388–398`). Its actual helper is in **`Engine/Source/Frame/CSimpleModel_Scripts.cpp`**, not FrameScript.cpp: 15595 `:27–53`, offset `0x0052BEE0/0x14018E7D0`, and 12340 `:28–54`. It consumes three positional RGB numbers, clamps each to `[0,1]`, and defaults omitted/nonnumeric alpha to one. Missing/nonnumeric RGB goes through Lua numeric conversion to zero. It does **not** establish a color-table overload.
+**Kind:** boundary. Both FontString wrappers call `FrameScript_GetColor` (`15595 CSimpleFontString_Scripts.cpp:366–375`; `12340 :388–398`). Its actual helper is in **`Engine/Source/Frame/CSimpleModel_Scripts.cpp`**, not FrameScript.cpp: 15595 `:27–53`, and 12340 `:28–54`. It consumes three positional RGB numbers, clamps each to `[0,1]`, and defaults omitted/nonnumeric alpha to one. Missing/nonnumeric RGB goes through Lua numeric conversion to zero. It does **not** establish a color-table overload.
 
 **Simulator:** `src/lua_api/frame/methods/text_attribute_event/text/style.rs:111–142` defaults failed RGB conversion to one and stores raw components using `Color::new`; `src/widget/frame_types.rs:32–35` does not clamp. Getter `style.rs:165–195` exposes stored values. Renderer saturation would not repair this getter difference. SimpleHTML's separate text-type branch is outside this comparison.
 
@@ -111,8 +111,8 @@ Simulator `misc/*` paths in this table are under `src/lua_api/frame/methods/`. T
 
 | Existing aspect | 15595 evidence | Disposition |
 |---|---|---|
-| C7 button font precedence | `Engine/Source/Frame/CSimpleButton.cpp:491–514`, offset `0x005148A0/0x14015EDF0`; lock refresh `:51–55` | Pushed applies offset but does not force normal font; disabled selects disabled font, otherwise active highlight layer selects highlight font. Supports prior bounded trace; nil-font policy/live inheritance remain separate. |
-| C9 explicit scroll-child refresh | `Engine/Source/Frame/CSimpleScrollFrame_Scripts.cpp:166–172`; `CSimpleScrollFrame.cpp:223–234`, offset `0x00520690/0x14016DE10` | Lua marks dirty; layer update calls range calculation. Same deferred boundary, not a new finding or universal frame-delay guarantee. |
+| C7 button font precedence | `Engine/Source/Frame/CSimpleButton.cpp:491–514`; lock refresh `:51–55` | Pushed applies offset but does not force normal font; disabled selects disabled font, otherwise active highlight layer selects highlight font. Supports prior bounded trace; nil-font policy/live inheritance remain separate. |
+| C9 explicit scroll-child refresh | `Engine/Source/Frame/CSimpleScrollFrame_Scripts.cpp:166–172`; `CSimpleScrollFrame.cpp:223–234` | Lua marks dirty; layer update calls range calculation. Same deferred boundary, not a new finding or universal frame-delay guarantee. |
 | Swapped indented-wrap registration | `Engine/Source/Frame/CSimpleFontString_Scripts.cpp:652–675,745–746` | Newer reconstruction retains getter/setter registration inversion. It does not resolve the older anomaly or justify inverting simulator APIs. |
 
 These confirmations do not increase the finding count or establish current-client parity. The [coverage ledger](coverage.md) owns compared-aspect counts and remaining gaps.

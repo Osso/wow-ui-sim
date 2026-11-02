@@ -4,7 +4,7 @@
 
 ## X1 — Non-frame virtual templates overwrite definitions without trust precedence
 
-**External evidence:** `Engine/Source/FrameXML/FrameXML.cpp:366-388`, `FrameXML_StoreHashNode`, offset `0x00813BE0`. Top-level virtual nodes reach this function at `:541-549`, independent of node kind. The duplicate-name policy is:
+**External evidence:** `Engine/Source/FrameXML/FrameXML.cpp:366-388`, `FrameXML_StoreHashNode`. Top-level virtual nodes reach this function at `:541-549`, independent of node kind. The duplicate-name policy is:
 
 | Existing definition | Incoming definition | Reconstructed outcome |
 |---|---|---|
@@ -24,7 +24,7 @@ Trust is stored metadata controlling replacement, **not part of the registry key
 
 ## X2 — Failed includes have inconsistent continuation and diagnostic behavior
 
-**External evidence:** `Engine/Source/FrameXML/FrameXML.cpp:56-76`, `FrameXML_LoadXML`, offset `0x00812530`, records file-open/parse errors; `:458-500,557-569`, `FrameXML_ProcessFile`, offset `0x00813EE0`, recursively processes Includes, ignores the recursive success integer, continues subsequent siblings and merges accumulated `CStatus` diagnostics. Missing `file` attribute is itself an error. `Engine/Source/FrameScript/FrameScript.cpp:851-907`, `FrameScript_ExecuteFile`, offset `0x00818F60`, explicitly records missing Lua file errors and returns 0 on read failure.
+**External evidence:** `Engine/Source/FrameXML/FrameXML.cpp:56-76`, `FrameXML_LoadXML`, records file-open/parse errors; `:458-500,557-569`, `FrameXML_ProcessFile`, recursively processes Includes, ignores the recursive success integer, continues subsequent siblings and merges accumulated `CStatus` diagnostics. Missing `file` attribute is itself an error. `Engine/Source/FrameScript/FrameScript.cpp:851-907`, `FrameScript_ExecuteFile`, explicitly records missing Lua file errors and returns 0 on read failure.
 
 **Simulator difference:** `src/loader/xml_file.rs:433-454` logs a failed Lua Include through tracing but returns a successful file count `Ok(1)`. `src/loader/lua_file.rs:20-28` returns an error for an unreadable file, so this includes missing Lua paths. For XML Includes, errors instead propagate to the `?` in the outer element loop at `xml_file.rs:40-53`, preventing later siblings from being processed. Top-level XML errors become warnings in `src/loader/addon.rs:631-649`; this does not restore skipped siblings. Runtime Lua error handling can additionally invoke the existing Lua error handler; this entry does not claim tracing is the only channel for every Lua failure.
 

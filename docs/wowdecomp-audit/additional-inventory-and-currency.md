@@ -4,7 +4,7 @@ Static comparison at the [expanded-pass revisions and profile limits](additional
 
 ## B1 — Stack splitting is a callable no-op
 
-**External:** `WoW/Source/Ui/ContainerFrame_Scripts.cpp:779-817`, offset `0x005D84F0`, validates an accessible unlocked item and amount, clears prior cursor/targeting, installs an item cursor with a pending split amount and locks the source. `WoW/Source/Ui/GameUI.cpp:5794-5826`, offset `0x00520770`, retains item/container/slot identity and `m_stackSplit` in cursor state.
+**External:** `WoW/Source/Ui/ContainerFrame_Scripts.cpp:779-817`, validates an accessible unlocked item and amount, clears prior cursor/targeting, installs an item cursor with a pending split amount and locks the source. `WoW/Source/Ui/GameUI.cpp:5794-5826`, retains item/container/slot identity and `m_stackSplit` in cursor state.
 
 **Simulator:** `src/lua_api/workarounds/temporary/container_default_shapes.rs:44-47` installs an empty `C_Container.SplitContainerItem` function when no provider exists. The existing cursor represents item ID/count/origin, not a pending split transaction. The local shape test demonstrates callability only.
 
@@ -14,7 +14,7 @@ Static comparison at the [expanded-pass revisions and profile limits](additional
 
 ## B2 — Whole-item cursor transfer discards instance information and lacks item-state validation
 
-**External:** `ContainerFrame_Scripts.cpp:416-459`, offset `0x005D7FF0`, operates on item/container identity with control, bank-access and lock checks. `GameUI.cpp:5794-5826` retains item GUID rather than reconstructing an item from its template ID; the source's subsequent item lookup can still address the same instance.
+**External:** `ContainerFrame_Scripts.cpp:416-459`, operates on item/container identity with control, bank-access and lock checks. `GameUI.cpp:5794-5826` retains item GUID rather than reconstructing an item from its template ID; the source's subsequent item lookup can still address the same instance.
 
 **Simulator:** `src/c_api/container_inventory.rs:29-63` removes/inserts whole `BagItem` records and puts only ID/count/origin on the cursor. When dropping it recreates `BagItem { item_id, stack_count, hyperlink: None }`. Its module explicitly states that hyperlinks, enchants and gems do not survive cursor transfer. `src/lua_api/state_types/collections.rs:624-628` has no bag lock state; `src/c_api/item_spell/c_container.rs:185-198` hardcodes lock/readability/binding-related flags rather than projecting an actual instance. Existing ordinary whole-item swapping is implemented; this is not an absent cursor API.
 
@@ -24,7 +24,7 @@ Static comparison at the [expanded-pass revisions and profile limits](additional
 
 ## B3 — Container item use has no stateful dispatch
 
-**External:** `ContainerFrame_Scripts.cpp:266-411`, offset `0x005D8650`, resolves bag/slot/target, checks lock and current context, then dispatches item targeting, repair, bank storage, sale, mail, auction, trade, equipment or item-use behavior. Not every branch is the same as casting a spell.
+**External:** `ContainerFrame_Scripts.cpp:266-411`, resolves bag/slot/target, checks lock and current context, then dispatches item targeting, repair, bank storage, sale, mail, auction, trade, equipment or item-use behavior. Not every branch is the same as casting a spell.
 
 **Simulator:** `src/lua_api/workarounds/temporary/container_default_shapes.rs:39-42` supplies an empty `C_Container.UseContainerItem` when no provider exists. Legacy item-use names also appear among generic stubs (`src/lua_api/globals/stubs/global_stubs.rs:92-95`). The placeholder's `pcall` success does not demonstrate consumption, equipment or contextual use.
 
@@ -34,7 +34,7 @@ Static comparison at the [expanded-pass revisions and profile limits](additional
 
 ## B4 — Quest-item metadata and quest-log relationship are always absent
 
-**External:** `ContainerFrame_Scripts.cpp:645-679`, offset `0x005D9400`, derives quest-bound/start-quest/active-quest information from item metadata and current quest state; missing item/stats has its own result.
+**External:** `ContainerFrame_Scripts.cpp:645-679`, derives quest-bound/start-quest/active-quest information from item metadata and current quest state; missing item/stats has its own result.
 
 **Simulator:** `src/lua_api/workarounds/temporary/container_default_shapes.rs:17-25` always returns `{ isQuestItem=false, questID=nil, isActive=false }` regardless of actual bag contents, item binding/start-quest metadata or quest-log membership.
 
@@ -44,7 +44,7 @@ Static comparison at the [expanded-pass revisions and profile limits](additional
 
 ## B5 — Currency list expansion/watch state is a static catalogue, not a mutable display list
 
-**External:** `WoW/Source/Ui/CurrencyTypes_Scripts.cpp:187-224`, offsets `0x005B0940`/`0x005B09B0`/`0x005B0A20`, mutates category expansion, unused and backpack selection then rebuilds the indexed display list. `:99-182` projects current display rows rather than a permanently expanded constant catalogue.
+**External:** `WoW/Source/Ui/CurrencyTypes_Scripts.cpp:187-224`, mutates category expansion, unused and backpack selection then rebuilds the indexed display list. `:99-182` projects current display rows rather than a permanently expanded constant catalogue.
 
 **Simulator:** `src/lua_api/globals/currency_data.rs:6-110` stores a static `CURRENCY_LIST`; headers are always expanded and watched entries are fixed constants. `src/c_api/item_spell/c_currency.rs:125-205` uses live supplied name/quantity/icon metadata for currency entries, **but** status fields still come from static row flags; backpack selection filters those same static entries. No mutable category/display-list or watch-selection mutation path was found. Successful quantity projection already exists and is not counted as missing.
 

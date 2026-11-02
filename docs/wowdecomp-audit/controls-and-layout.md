@@ -4,7 +4,7 @@
 
 ## C1 — Slider value assignment ignores its step
 
-**External evidence:** `Engine/Source/Frame/CSimpleSlider.cpp:65-78`, `SnapValueToStep`, offset `0x0096BC10`; `:248-273`, `SetValue`, offset `0x0096C090`; `:276-287`, `SetValueStep`, offset `0x0096C1B0`. Assignment clamps, snaps relative to the minimum/base, then applies endpoint corrections. Changing the step re-applies assignment to an existing value. The reconstructed endpoint corrections are more than simple rounding followed by clamping.
+**External evidence:** `Engine/Source/Frame/CSimpleSlider.cpp:65-78`, `SnapValueToStep`; `:248-273`, `SetValue`; `:276-287`, `SetValueStep`. Assignment clamps, snaps relative to the minimum/base, then applies endpoint corrections. Changing the step re-applies assignment to an existing value. The reconstructed endpoint corrections are more than simple rounding followed by clamping.
 
 **Simulator difference:** `src/lua_api/frame/methods/widgets/slider.rs:30-37` only stores `slider_step`; `:138-147` only clamps assigned values. The programmatic assignment path does not use the step and changing the step does not re-snap an existing value. Dragging behavior is a separate path and must not be inferred from this finding.
 
@@ -20,7 +20,7 @@
 
 **Historical baseline gap report superseded within the reported implementation scope.** See the [exchange checklist](README.md#exchanged-implementation-checklist) for cross-host Retail/Wrath results. Genuine Wrath scrolling-consumer proof remains open and its guard retained; the baseline trace below is not a current-tip missing-producer claim.
 
-**External evidence:** `Engine/Source/Frame/CSimpleEditBox.cpp:288-299`, `RunOnCursorChangedScript`, offset `0x009627E0`, passes four geometry numbers; `:1630-1700`, `UpdateVisibleCursor`, offset `0x00964A90`, calculates cursor geometry and calls that producer. `SetCursorPosition` at `:818-826`, offset `0x00963350`, dirties cursor layout rather than synthesizing an immediate geometry callback.
+**External evidence:** `Engine/Source/Frame/CSimpleEditBox.cpp:288-299`, `RunOnCursorChangedScript`, passes four geometry numbers; `:1630-1700`, `UpdateVisibleCursor`, calculates cursor geometry and calls that producer. `SetCursorPosition` at `:818-826`, dirties cursor layout rather than synthesizing an immediate geometry callback.
 
 **Simulator difference:** `src/lua_api/frame/methods/widgets/editbox.rs:151-160` changes cursor position without producing this event. A source-wide search found `OnCursorChanged` in script registration/validation (`src/event/mod.rs:142,238`; `src/lua_api/frame/methods/text_attribute_event/events.rs:409`) but no actual EditBox dispatch producer. `src/wrath/post_load.lua:6-27` already guards `ScrollingEdit_OnUpdate` when cursor geometry fields are absent; that workaround is downstream evidence, not a substitute for the missing producer.
 
@@ -32,7 +32,7 @@
 
 ## C3 — Reversed/negative `HighlightText` endpoints select the wrong range
 
-**External evidence:** `Engine/Source/Frame/CSimpleEditBox_Scripts.cpp:368-385`, offset `0x00976080`, defaults start/end to `0/-1`. `CSimpleEditBox.cpp:728-751`, `HighlightText`, offset `0x00963140`, clamps start, maps negative end to `-1`, then uses text length whenever end precedes start. It does not exchange endpoints.
+**External evidence:** `Engine/Source/Frame/CSimpleEditBox_Scripts.cpp:368-385`, defaults start/end to `0/-1`. `CSimpleEditBox.cpp:728-751`, `HighlightText`, clamps start, maps negative end to `-1`, then uses text length whenever end precedes start. It does not exchange endpoints.
 
 **Simulator difference:** `src/lua_api/frame/methods/widgets/editbox/selection.rs:7-25,37-45` converts offsets and swaps reversed endpoints. Negative end offsets become the beginning before normalization, not an end-of-text sentinel.
 
@@ -51,7 +51,7 @@ These outputs are derived from source, not observed executions.
 
 ## L1 — Protected frames can use region targets that the reconstruction rejects
 
-**External evidence:** `Engine/Source/Frame/CSimpleRegion.cpp:46-48`, `CanBeAnchorFor`, offset `0x004879B0`, rejects a protected recipient. `CLayoutFrame.cpp:827-844`, offset `0x0048A160`, recursively checks the target's active anchor dependencies; `:869-885`, `SetPoint`, offset `0x0048A260`, returns before mutation if the target is ineligible. `CScriptRegion_Scripts.cpp:464-548` exposes the Lua call into that path. Caller authorization and target eligibility are separate checks.
+**External evidence:** `Engine/Source/Frame/CSimpleRegion.cpp:46-48`, `CanBeAnchorFor`, rejects a protected recipient. `CLayoutFrame.cpp:827-844`, recursively checks the target's active anchor dependencies; `:869-885`, `SetPoint`, returns before mutation if the target is ineligible. `CScriptRegion_Scripts.cpp:464-548` exposes the Lua call into that path. Caller authorization and target eligibility are separate checks.
 
 **Simulator difference:** `src/lua_api/frame/methods/button_anchor_hierarchy/anchors.rs:422-459,612-638` checks caller/combat restrictions, forbidden-aspect inheritance and cycles, then changes dependencies/anchor state. It does not apply a protected-recipient/Texture-or-FontString target rule or its indirect-chain equivalent. `shared.rs:39-61` resolves identities without that eligibility policy.
 
