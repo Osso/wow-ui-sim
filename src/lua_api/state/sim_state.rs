@@ -919,6 +919,8 @@ pub struct SimState {
     pub item_families: HashMap<u32, u32>,
     /// Supplied ItemChildEquipment rows, indexed by parent item ID.
     pub item_children: HashMap<u32, Vec<crate::c_api::item_spell::item_child::ItemChildEquipment>>,
+    /// Supplied derived item-specialization records, keyed by item ID.
+    pub item_spec_records: HashMap<u32, crate::c_api::item_spell::item_spec::ItemSpecRecord>,
     pub item_overlay_flags: HashSet<(u32, crate::c_api::item_overlay::ItemOverlayFlag)>,
     pub equippable_items: ::std::collections::HashSet<u32>,
     pub consumable_items: ::std::collections::HashSet<u32>,

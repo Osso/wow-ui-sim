@@ -9,6 +9,7 @@ pub mod item_child;
 mod item_creation_context_data;
 mod item_effects;
 mod item_gem;
+pub mod item_spec;
 mod item_type;
 
 use super::c_spell;
