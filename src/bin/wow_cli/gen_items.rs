@@ -8,7 +8,7 @@
 //! Generates: crates/sim-data/data/items.rs
 
 use super::csv_util::{escape_str, parse_csv_line, read_csv_records, wow_data_dir};
-use std::collections::{BTreeSet, HashMap, HashSet};
+use std::collections::{BTreeMap, BTreeSet, HashMap, HashSet};
 use std::fs::File;
 use std::io::{BufReader, Write};
 use std::path::Path;
@@ -46,6 +46,7 @@ pub fn run() -> Result<(), Box<dyn std::error::Error>> {
     write_item_uniqueness(&wow_data)?;
     write_item_sets(&wow_data)?;
     write_item_classifiers(&wow_data)?;
+    write_item_spell_ranges(&wow_data)?;
 
     println!("Generated {} item entries ({} skipped)", count, skipped);
     println!("Output: {}", output_path.display());
@@ -250,6 +251,147 @@ fn write_item_spell_power(
         )?;
     }
     writeln!(out, "];\n")?;
+    Ok(())
+}
+
+/// Inputs for ItemHasRange (WM43): range fields, SpellRange arrays, target
+/// restrictions in CSV order, Difficulty fallbacks and difficulty-0 effect targets.
+fn write_item_spell_ranges(wow_data: &Path) -> Result<(), Box<dyn std::error::Error>> {
+    let spells = collect_item_referenced_spells(wow_data)?;
+    let mut misc = Vec::new();
+    for_each_csv_row(wow_data, "SpellMisc.csv", |row| {
+        let spell = row.get("SpellID").parse::<u32>()?;
+        if spells.contains(&spell) && row.get("DifficultyID") == "0" {
+            let attributes = row.get("Attributes_0").parse::<i32>()?;
+            misc.push((spell, attributes, row.get("RangeIndex").parse::<u32>()?));
+        }
+        Ok(())
+    })?;
+    misc.sort_unstable();
+    let mut ranges = Vec::new();
+    for_each_csv_row(wow_data, "SpellRange.csv", |row| {
+        let min: [f32; 2] = [
+            row.get("RangeMin_0").parse()?,
+            row.get("RangeMin_1").parse()?,
+        ];
+        let max: [f32; 2] = [
+            row.get("RangeMax_0").parse()?,
+            row.get("RangeMax_1").parse()?,
+        ];
+        ranges.push((row.get("ID").parse::<u32>()?, min, max));
+        Ok(())
+    })?;
+    ranges.sort_unstable_by_key(|row| row.0);
+    let mut restrictions = Vec::new();
+    for_each_csv_row(wow_data, "SpellTargetRestrictions.csv", |row| {
+        let spell = row.get("SpellID").parse::<u32>()?;
+        if spells.contains(&spell) {
+            let difficulty = row.get("DifficultyID").parse::<i32>()?;
+            restrictions.push((spell, difficulty, row.get("Targets").parse::<u32>()?));
+        }
+        Ok(())
+    })?;
+    // Stable sort: within a spell, the first CSV row for a difficulty wins.
+    restrictions.sort_by_key(|row| row.0);
+    let mut fallbacks = Vec::new();
+    for_each_csv_row(wow_data, "Difficulty.csv", |row| {
+        let fallback = row.get("FallbackDifficultyID").parse::<i32>()?;
+        fallbacks.push((row.get("ID").parse::<i32>()?, fallback));
+        Ok(())
+    })?;
+    fallbacks.sort_unstable();
+    reject_fallback_cycles(&fallbacks)?;
+    let effects = collect_effect_targets(wow_data, &spells)?;
+    let mut out = File::create("crates/sim-data/data/item_spell_ranges.rs")?;
+    writeln!(
+        out,
+        "//! Generated from wago.tools DB2 CSV exports, build 12.1.5.70391 (enUS)."
+    )?;
+    writeln!(out, "//! Regenerate with `wow-cli generate items`.")?;
+    write_rows(&mut out, "SPELL_MISC_RANGES: &[(u32, i32, u32)]", &misc)?;
+    write_rows(
+        &mut out,
+        "SPELL_RANGES: &[(u32, [f32; 2], [f32; 2])]",
+        &ranges,
+    )?;
+    write_rows(
+        &mut out,
+        "SPELL_TARGET_RESTRICTIONS: &[(u32, i32, u32)]",
+        &restrictions,
+    )?;
+    write_rows(&mut out, "DIFFICULTY_FALLBACKS: &[(i32, i32)]", &fallbacks)?;
+    write_rows(
+        &mut out,
+        "SPELL_EFFECT_TARGETS: &[(u32, i32, u32, u32)]",
+        &effects,
+    )?;
+    Ok(())
+}
+
+/// Spells reachable from ItemEffect rows or type-7 enchantment effects.
+fn collect_item_referenced_spells(
+    wow_data: &Path,
+) -> Result<HashSet<u32>, Box<dyn std::error::Error>> {
+    let mut spells = HashSet::new();
+    for_each_csv_row(wow_data, "ItemEffect.csv", |row| {
+        spells.insert(row.get("SpellID").parse::<u32>()?);
+        Ok(())
+    })?;
+    for_each_csv_row(wow_data, "SpellItemEnchantment.csv", |row| {
+        if let Some(index) = (0..3).find(|index| row.get(&format!("Effect_{index}")) == "7") {
+            spells.insert(row.get(&format!("EffectArg_{index}")).parse::<u32>()?);
+        }
+        Ok(())
+    })?;
+    Ok(spells)
+}
+
+/// Difficulty-0 effect targets, first row per effect index. The node route is
+/// not modelled, so a referenced spell with a nonzero Node fails generation.
+fn collect_effect_targets(
+    wow_data: &Path,
+    spells: &HashSet<u32>,
+) -> Result<Vec<(u32, i32, u32, u32)>, Box<dyn std::error::Error>> {
+    let mut slots = BTreeMap::new();
+    for_each_csv_row(wow_data, "SpellEffect.csv", |row| {
+        let spell = row.get("SpellID").parse::<u32>()?;
+        if !spells.contains(&spell) || row.get("DifficultyID") != "0" {
+            return Ok(());
+        }
+        if row.get("Node__Field_12_0_0_63534_001") != "0" {
+            return Err(
+                format!("spell {spell} has a node effect; ItemHasRange does not model it").into(),
+            );
+        }
+        let index = row.get("EffectIndex").parse::<u32>()?;
+        let targets = (
+            row.get("EffectAttributes").parse::<i32>()?,
+            row.get("ImplicitTarget_0").parse::<u32>()?,
+            row.get("ImplicitTarget_1").parse::<u32>()?,
+        );
+        slots.entry((spell, index)).or_insert(targets);
+        Ok(())
+    })?;
+    Ok(slots
+        .into_iter()
+        .map(|((spell, _), (attributes, first, second))| (spell, attributes, first, second))
+        .collect())
+}
+
+fn reject_fallback_cycles(fallbacks: &[(i32, i32)]) -> Result<(), Box<dyn std::error::Error>> {
+    let next: HashMap<i32, i32> = fallbacks.iter().copied().collect();
+    for &(start, _) in fallbacks {
+        let mut current = start;
+        for _ in 0..=fallbacks.len() {
+            match next.get(&current) {
+                Some(&fallback) => current = fallback,
+                None => break,
+            }
+        }
+        if next.contains_key(&current) {
+            return Err(format!("Difficulty {start} fallback chain does not terminate").into());
+        }
+    }
     Ok(())
 }
 
@@ -701,6 +843,47 @@ fn collect_journal_item_ids_for_encounters(
     }
     item_ids.remove(&0);
     Ok(item_ids)
+}
+
+/// One CSV record addressed by header name.
+struct CsvRow<'a> {
+    fields: Vec<String>,
+    idx: &'a HashMap<String, usize>,
+}
+
+impl CsvRow<'_> {
+    fn get(&self, key: &str) -> &str {
+        field(&self.fields, self.idx, key)
+    }
+}
+
+fn for_each_csv_row(
+    wow_data: &Path,
+    name: &str,
+    mut visit: impl FnMut(&CsvRow) -> Result<(), Box<dyn std::error::Error>>,
+) -> Result<(), Box<dyn std::error::Error>> {
+    let records = open_records(&wow_data.join(name))?;
+    let mut iter = records.iter();
+    let idx = header_index(iter.next().ok_or_else(|| format!("empty {name}"))?);
+    for record in iter {
+        visit(&CsvRow {
+            fields: parse_csv_line(record),
+            idx: &idx,
+        })?;
+    }
+    Ok(())
+}
+
+fn write_rows<T: std::fmt::Debug>(
+    out: &mut File,
+    declaration: &str,
+    rows: &[T],
+) -> std::io::Result<()> {
+    writeln!(out, "\npub static {declaration} = &[")?;
+    for row in rows {
+        writeln!(out, "    {row:?},")?;
+    }
+    writeln!(out, "];")
 }
 
 fn open_records(path: &Path) -> Result<Vec<String>, Box<dyn std::error::Error>> {
