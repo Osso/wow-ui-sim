@@ -2,7 +2,7 @@
 use super::{
     BulletTextListRecord, ButtonHeaderRecord, CaptureBarRecord, CaptureZoneRecord,
     DiscreteProgressStepsRecord, DoubleIconAndTextRecord, DoubleStateIconRowRecord,
-    DoubleStatusBarRecord, HorizontalCurrenciesRecord, IconAndTextRecord,
+    DoubleStatusBarRecord, FillUpFramesRecord, HorizontalCurrenciesRecord, IconAndTextRecord,
     IconTextAndBackgroundRecord, IconTextAndCurrenciesRecord, ItemDisplayRecord, ProcessingUnit,
     ScenarioHeaderCurrenciesRecord, ScenarioHeaderTimerRecord, SpacerRecord, SpellDisplayRecord,
     StackedResourceTrackerRecord, StatusBarRecord, TextColumnRowVisualizationInfo,
@@ -29,6 +29,7 @@ pub enum WidgetVisualization {
     CaptureZone(CaptureZoneRecord),
     TextureWithAnimation(TextureWithAnimationRecord),
     UnitPowerBar(UnitPowerBarRecord),
+    FillUpFrames(FillUpFramesRecord),
     TextureAndText(TextureAndTextRecord),
     TextureAndTextRow(TextureAndTextRowRecord),
     TextWithState(TextWithStateRecord),
@@ -63,6 +64,7 @@ impl WidgetVisualization {
             Self::CaptureZone(_) => 17,
             Self::TextureWithAnimation(_) => 18,
             Self::UnitPowerBar(_) => 23,
+            Self::FillUpFrames(_) => 24,
             Self::TextureAndText(_) => 12,
             Self::TextureAndTextRow(_) => 15,
             Self::TextWithState(_) => 8,
@@ -317,6 +319,7 @@ fn supply_visualization(sim: &mut crate::lua_api::SimState, id: f64, record: Wid
     inputs.capture_zones.remove(&key);
     inputs.textures_with_animation.remove(&key);
     inputs.unit_power_bars.remove(&key);
+    inputs.fill_up_frames.remove(&key);
     inputs.texture_and_text.remove(&key);
     inputs.texture_and_text_row.remove(&key);
     inputs.spacers.remove(&key);
@@ -362,6 +365,9 @@ fn supply_visualization(sim: &mut crate::lua_api::SimState, id: f64, record: Wid
         }
         WidgetVisualization::StatusBar(record) => {
             sim.ui_widget_inputs.status_bars.insert(key, record);
+        }
+        WidgetVisualization::FillUpFrames(record) => {
+            sim.ui_widget_inputs.fill_up_frames.insert(key, record);
         }
         WidgetVisualization::UnitPowerBar(record) => {
             sim.ui_widget_inputs.unit_power_bars.insert(key, record);
