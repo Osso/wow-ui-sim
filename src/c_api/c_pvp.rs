@@ -64,6 +64,9 @@ pub enum TrainingGroundKind {
 pub(crate) fn register_c_pvp_surface(state: &mut LuaState) -> LuaResult<()> {
     let ns = ensure_namespace(state, "C_PvP")?;
     if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
+        // Retail PvpInfoDocumentation.lua:1205-1214,1260-1264.
+        crate::lua_bridge::table_set_rust_fn_static(state, ns, "SetPVP", set_pvp)?;
+        crate::lua_bridge::table_set_rust_fn_static(state, ns, "TogglePVP", toggle_pvp)?;
         crate::lua_bridge::table_set_rust_fn_static(
             state,
             ns,
@@ -121,6 +124,32 @@ pub(crate) fn register_c_pvp_surface(state: &mut LuaState) -> LuaResult<()> {
     active_brawl::register(state, ns)?;
     register_patch_12_1_c_pvp_surface(state, ns)?;
     register_training_grounds(state, ns)
+}
+
+fn set_pvp(state: &mut LuaState) -> LuaResult<u32> {
+    if crate::lua_api::globals::real::protected_globals::refuse_tainted_caller(state)? {
+        return Ok(0);
+    }
+    let enabled = !matches!(
+        crate::lua_bridge::stack_val(state, 1),
+        rilua::Val::Nil | rilua::Val::Bool(false)
+    );
+    submit_pvp_request(state, PvpRequest::Set(enabled))
+}
+
+fn toggle_pvp(state: &mut LuaState) -> LuaResult<u32> {
+    if crate::lua_api::globals::real::protected_globals::refuse_tainted_caller(state)? {
+        return Ok(0);
+    }
+    submit_pvp_request(state, PvpRequest::Toggle)
+}
+
+fn submit_pvp_request(state: &mut LuaState, request: PvpRequest) -> LuaResult<u32> {
+    let mut sim = crate::lua_api::methods::borrow_state_mut(state)?;
+    if sim.pvp_request_transport.state == Some(5) {
+        sim.pvp_request_transport.submitted.push(request);
+    }
+    Ok(0)
 }
 
 fn is_match_active(state: &mut LuaState) -> LuaResult<u32> {
