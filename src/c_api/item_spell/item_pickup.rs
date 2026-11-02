@@ -1,4 +1,5 @@
-//! `C_Item.PickupItem` item-ID cursor (native cursor mode 6), per WM44-A.
+//! `C_Item.PickupItem` places an item ID on the native ActionBar cursor
+//! (mode 6), per WM44-A and its WM46 erratum.
 
 use crate::c_api::item_upgrade_eligibility;
 use crate::lua_api::globals::state_backed_queries::dispatch_event_now;
@@ -10,7 +11,7 @@ use rilua::{LuaResult, Val, runtime_error};
 
 const MODE_EMPTY: f64 = 0.0;
 const MODE_OWNED_ITEM: f64 = 1.0;
-const MODE_ITEM_ID: f64 = 6.0;
+const MODE_ACTION_BAR: f64 = 6.0;
 
 /// Cursor removed by the clear step. Only modes 1 and 6 have a known native
 /// mode number and stored ID; other cursor kinds await WM46.
@@ -30,8 +31,8 @@ fn take_cursor(state: &mut LuaState) -> LuaResult<ClearedCursor> {
     Ok(match sim.cursor_item.take() {
         None => ClearedCursor::Empty,
         // Mode 6 always shows the grid and stores its item ID.
-        Some(CursorInfo::ItemId { item_id }) => ClearedCursor::Modeled {
-            mode: MODE_ITEM_ID,
+        Some(CursorInfo::ActionBar { item_id }) => ClearedCursor::Modeled {
+            mode: MODE_ACTION_BAR,
             stored_id: item_id,
             grid_shown: true,
         },
@@ -78,13 +79,13 @@ pub(super) fn pickup_item(state: &mut LuaState) -> LuaResult<u32> {
     if item == 0 {
         return Ok(0);
     }
-    borrow_state_mut(state)?.cursor_item = Some(CursorInfo::ItemId { item_id: item });
+    borrow_state_mut(state)?.cursor_item = Some(CursorInfo::ActionBar { item_id: item });
     dispatch_event_now(state, "ACTIONBAR_SHOWGRID", &[])?;
     // The fourth argument is the stored ID after clearing, which is zero in
     // every modeled flow: clearing mode 6 zeros it and nothing sets it otherwise.
     let payload = [
         Val::Bool(false),
-        Val::Num(MODE_ITEM_ID),
+        Val::Num(MODE_ACTION_BAR),
         Val::Num(MODE_EMPTY),
         Val::Num(0.0),
     ];

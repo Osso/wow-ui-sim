@@ -437,7 +437,7 @@ fn cursor_spell_icon_id(
             crate::c_api::talent_spell::spell_id_for_talent(*talent_id, selected_entry_id)
         }
         CursorInfo::Item { .. }
-        | CursorInfo::ItemId { .. }
+        | CursorInfo::ActionBar { .. }
         | CursorInfo::Macro { .. }
         | CursorInfo::Money { .. }
         | CursorInfo::TransmogOutfit { .. } => None,

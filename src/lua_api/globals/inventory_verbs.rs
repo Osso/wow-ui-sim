@@ -335,7 +335,7 @@ fn push_cursor_info(state: &mut LuaState, cursor: CursorInfo) -> LuaResult<u32> 
             state.push(Val::Num(stack_count as f64));
             Ok(3)
         }
-        CursorInfo::ItemId { item_id } => push_item_id_cursor(state, item_id),
+        CursorInfo::ActionBar { item_id } => push_item_id_cursor(state, item_id),
         CursorInfo::Money { copper } => push_cursor_kind_number(state, "money", copper as f64),
         // INFERRED cursor kind; native documentation does not specify outfit payloads.
         CursorInfo::TransmogOutfit { outfit_id } => {
@@ -344,7 +344,7 @@ fn push_cursor_info(state: &mut LuaState, cursor: CursorInfo) -> LuaResult<u32> 
     }
 }
 
-/// WM44-A mode 6: `("item", itemID, link)` rebuilt from the ID when item
+/// WM44-A mode 6 (ActionBar): `("item", itemID, link)` rebuilt from the ID when item
 /// metadata is present, otherwise zero values.
 fn push_item_id_cursor(state: &mut LuaState, item_id: u32) -> LuaResult<u32> {
     let Some(link) = crate::c_api::item_spell::item_link_for_id(item_id) else {
@@ -401,7 +401,7 @@ fn place_action(state: &mut LuaState) -> LuaResult<u32> {
                 st.equipped_gear_outfit_action_slots.insert(slot);
             }
         }
-        CursorInfo::Item { .. } | CursorInfo::ItemId { .. } | CursorInfo::Money { .. } => {
+        CursorInfo::Item { .. } | CursorInfo::ActionBar { .. } | CursorInfo::Money { .. } => {
             return Ok(0);
         }
     }
