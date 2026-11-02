@@ -95,6 +95,14 @@ impl CVarStorage {
             .or_else(|| self.registered_defaults.read().unwrap().get(&key).cloned())
     }
 
+    /// Whether this name was registered at runtime rather than supplied by the catalog.
+    pub(crate) fn is_runtime_registered(&self, name: &str) -> bool {
+        self.registered_defaults
+            .read()
+            .unwrap()
+            .contains_key(&name.to_lowercase())
+    }
+
     /// Get a CVar as a boolean ("1" = true, anything else = false).
     pub fn get_bool(&self, name: &str) -> bool {
         self.get(name).as_deref() == Some("1")

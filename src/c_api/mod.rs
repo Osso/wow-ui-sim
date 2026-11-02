@@ -285,6 +285,7 @@ pub(crate) mod crafting_plan;
 pub mod crafting_reagents;
 pub(crate) mod crafting_tables;
 pub(crate) mod cvar_combat_policy;
+mod c_cvar_info;
 #[cfg(feature = "retail-12-0-5")]
 pub mod equipment_set_command;
 pub(crate) mod equipment_set_locks;
@@ -463,6 +464,7 @@ pub(crate) fn restore_cleanup_namespaces(state: &mut LuaState) -> LuaResult<()> 
 }
 
 pub(crate) fn register_utility_bootstrap_tables(state: &mut LuaState) -> LuaResult<()> {
+    c_cvar_info::register(state)?;
     c_engraving::register(state)?;
     c_social_restrictions::register(state)?;
     restricted_actions::register(state)?;
