@@ -38,6 +38,7 @@ pub fn record() -> CalendarDayEventRecord {
         event_type: 1,
         icon_texture: Some(136116),
         mod_status: "CREATOR".into(),
+        has_pending_invite: false,
         invite_status: 4,
         invited_by: "Host-Realm".into(),
         difficulty: 7.5,

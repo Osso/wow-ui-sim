@@ -1,11 +1,40 @@
 //! Queries over empty-default, host-supplied Calendar day records.
 
-use super::day_event_projection::push_day_event;
+use super::{civil, day_event_projection::push_day_event};
 use crate::c_api::helpers::validate_supplied_relation_id;
 use crate::lua_api::methods::borrow_state;
 use crate::lua_bridge::stack_val;
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
+
+pub(super) fn query_first_pending_invite(state: &mut LuaState) -> LuaResult<u32> {
+    const USAGE: &str = "Usage: local firstPendingInvite = C_Calendar.GetFirstPendingInvite(offsetMonths, monthDay)";
+    let offset = civil::numeric_argument(state, 1)?
+        .filter(|n| n.is_finite() && *n >= f64::from(i32::MIN) && *n <= f64::from(i32::MAX))
+        .ok_or_else(|| rilua::runtime_error(USAGE))? as i32;
+    let day = civil::numeric_argument(state, 2)?
+        .filter(|n| n.is_finite() && *n >= 0.0 && *n <= f64::from(u32::MAX))
+        .ok_or_else(|| rilua::runtime_error(USAGE))? as u32;
+    let position = {
+        let host = borrow_state(state)?;
+        let shown = host.calendar_displayed_month;
+        let month = i64::from(shown.year) * 12 + i64::from(shown.month) - 1 + i64::from(offset);
+        let year = month.div_euclid(12) as i32;
+        let month = (month.rem_euclid(12) + 1) as u8;
+        if !(-1..=1).contains(&offset)
+            || day == 0
+            || day > u32::from(civil::days_in_month(year, month))
+        {
+            None
+        } else {
+            host.calendar_day_events
+                .get(&(offset, day))
+                .and_then(|rows| rows.iter().position(|row| row.has_pending_invite))
+        }
+    };
+    state.push(position.map_or(Val::Nil, |index| Val::Num((index + 1) as f64)));
+    Ok(1)
+}
 
 pub(super) fn query_num_day_events(state: &mut LuaState) -> LuaResult<u32> {
     let [offset, day] =

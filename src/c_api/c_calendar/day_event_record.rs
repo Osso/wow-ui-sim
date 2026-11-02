@@ -24,6 +24,8 @@ pub struct CalendarDayEventRecord {
     pub event_type: i32,
     pub icon_texture: Option<u32>,
     pub mod_status: String,
+    /// Host-supplied pending-invite observation, independent of invite status.
+    pub has_pending_invite: bool,
     pub invite_status: i32,
     pub invited_by: String,
     pub difficulty: f64,

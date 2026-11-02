@@ -79,6 +79,12 @@ pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
         civil::register(state, namespace)?;
         club::register(state, namespace)?;
         selection::register(state, namespace)?;
+        table_set_rust_fn_static(
+            state,
+            namespace,
+            "GetFirstPendingInvite",
+            day_event_queries::query_first_pending_invite,
+        )?;
     }
     table_set_rust_fn_static(
         state,
