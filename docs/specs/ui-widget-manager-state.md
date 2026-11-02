@@ -25,7 +25,7 @@ Production `0745fe84f` supplies full bar producers, HUD selectors and host feeds
 
 ### Host updates and consumer lifecycle
 
-- [ ] Host `replace_ui_widget_set`, `update_ui_widget`, and `remove_ui_widget` publish new state before synchronous events. Unknown-set/type-mismatched updates fail without mutation or notification; membership removal preserves independent visualization snapshots.
+- [ ] Host `replace_ui_widget_set`, `update_ui_widget`, and `remove_ui_widget` publish new state before synchronous events. Unknown-set/type-mismatched updates fail without mutation or notification; membership removal preserves independent visualization snapshots. Replacing a widget's visualization type removes its previous type's record, so the old type's getter returns nil.
 - [ ] Host state updates become visible through the existing cached manager: `UPDATE_UI_WIDGET` performs incremental updates and `UPDATE_ALL_UI_WIDGETS` performs full reconciliation against current supplied state.
 - [ ] Incremental updates publish `unitToken`, not `unit`: unitless events omit it, token events contain the token, and GUID events contain an empty string. The cached consumer's `unit` filter therefore does not filter these events. `UPDATE_ALL_UI_WIDGETS` carries no payload.
 - [ ] GUID registrations are reference-counted, so unregistering one of multiple registrations keeps the others active. Registration accepts string-convertible values and treats `isGuid` according to Lua truthiness; processing-unit setters accept nil or a missing argument to clear the reference.
