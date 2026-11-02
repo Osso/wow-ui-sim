@@ -165,6 +165,7 @@ fn calendar_test_record(id: &str) -> wow_ui_sim::c_api::c_calendar::day_event_re
     CalendarDayEventRecord {
         event_id: id.into(), category_flags: 0, invite_role_markers: 0,
         primary_identity: "Player-1-OTHER".into(), alternate_identity: None,
+        holiday: None, raid_id: 0, raid_name: None,
         title: id.into(), is_custom_title: false,
         start_time: time.clone(), end_time: time.clone(), calendar_type: "GUILD_EVENT".into(),
         sequence_type: "".into(), event_type: 0, icon_texture: None, mod_status: "CREATOR".into(),
@@ -305,5 +306,46 @@ fn calendar_context_menu_reflects_supplied_permissions(env: &WowLuaEnv) {
     }
     let friend: (bool, bool, bool) = env.eval("return CalendarContextMenuProbe()").unwrap();
     assert_eq!(friend, (true, true, false));
+}
+}
+
+prefork_full_ui_case! {
+fn calendar_holiday_and_raid_views_use_supplied_day_events(env: &WowLuaEnv) {
+    use wow_ui_sim::c_api::c_calendar::day_event_record::CalendarHolidayRecord;
+    load_addon(&env.loader_env(), &calendar_toc()).unwrap();
+    let mut row = calendar_test_record("event");
+    row.calendar_type = "HOLIDAY".into();
+    row.holiday = Some(CalendarHolidayRecord {
+        name: Some("Harvest festival".into()),
+        description: Some("Gather the harvest".into()), texture: 77, multi_day: false,
+    });
+    env.state().borrow_mut().calendar_day_events.insert((0, 15), vec![row]);
+    env.exec(r#"
+        C_Calendar.OpenEvent(0, 15, 1)
+        CalendarViewHolidayFrame_Update()
+        assert(CalendarViewHolidayFrame.ScrollingFont:GetFontString():GetText() == 'Gather the harvest')
+    "#).unwrap();
+    {
+        let mut state = env.state().borrow_mut();
+        let row = &mut state.calendar_day_events.get_mut(&(0, 15)).unwrap()[0];
+        row.holiday = None;
+        row.calendar_type = "RAID_LOCKOUT".into();
+        row.raid_id = 42;
+        row.raid_name = Some("Sunken Vault".into());
+        row.difficulty_name = "Heroic".into();
+    }
+    env.exec(r#"
+        assert(select('#', C_Calendar.GetHolidayInfo(0, 15, 1)) == 0)
+        CalendarViewRaidFrame_Update()
+        assert(CalendarViewRaidFrame.ScrollingFont:GetFontString():GetText():find('Sunken Vault', 1, true))
+    "#).unwrap();
+    env.state().borrow_mut().calendar_day_events.get_mut(&(0, 15)).unwrap()[0].calendar_type = "PLAYER".into();
+    env.exec(r#"
+        local raid = C_Calendar.GetRaidInfo(0, 15, 1)
+        assert(raid and raid.raidID == 42 and raid.name == 'Sunken Vault')
+        CalendarViewRaidFrame.ScrollingFont:SetText('unchanged')
+        CalendarViewRaidFrame_Update()
+        assert(CalendarViewRaidFrame.ScrollingFont:GetFontString():GetText() == 'unchanged')
+    "#).unwrap();
 }
 }

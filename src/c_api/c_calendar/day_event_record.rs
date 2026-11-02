@@ -11,6 +11,15 @@ pub struct CalendarTimeRecord {
     pub minute: f64,
 }
 
+/// Supplied holiday metadata. Its presence marks a holiday event.
+#[derive(Debug, Clone, PartialEq)]
+pub struct CalendarHolidayRecord {
+    pub name: Option<String>,
+    pub description: Option<String>,
+    pub texture: u32,
+    pub multi_day: bool,
+}
+
 /// Owned day-event fields. Identifier strings are opaque, not numeric index-map keys.
 #[derive(Debug, Clone, PartialEq)]
 pub struct CalendarDayEventRecord {
@@ -19,6 +28,9 @@ pub struct CalendarDayEventRecord {
     pub invite_role_markers: u32,
     pub primary_identity: String,
     pub alternate_identity: Option<String>,
+    pub holiday: Option<CalendarHolidayRecord>,
+    pub raid_id: i32,
+    pub raid_name: Option<String>,
     pub title: String,
     pub is_custom_title: bool,
     pub start_time: CalendarTimeRecord,
