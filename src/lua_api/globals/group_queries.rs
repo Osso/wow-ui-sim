@@ -496,6 +496,13 @@ fn unit_exists(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 pub(crate) fn unit_exists_in_state(st: &crate::lua_api::state::SimState, unit: &str) -> bool {
+    if let Some(base) = unit.strip_suffix("target") {
+        let supported = matches!(base, "target" | "focus")
+            || crate::lua_api::globals::unit_api::parse_party_index(base).is_some();
+        if supported {
+            return unit_exists_in_state(st, base) && st.unit_target_guids.contains_key(base);
+        }
+    }
     match unit {
         "" => false,
         "player" => true,

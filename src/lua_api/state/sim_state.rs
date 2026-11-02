@@ -453,6 +453,8 @@ pub struct SimState {
     #[cfg(feature = "client-wrath")]
     pub wrath_unit_tap_states: HashMap<String, crate::lua_api::state::WrathUnitTapState>,
     pub current_target: Option<TargetInfo>,
+    /// Supplied target GUIDs for target, focus, and party unit tokens.
+    pub unit_target_guids: HashMap<String, String>,
     pub previous_target: Option<TargetInfo>,
     pub current_focus: Option<TargetInfo>,
     /// Explicit host NPC-follower identities for player-style display.
@@ -468,6 +470,8 @@ pub struct SimState {
     pub(crate) unit_raid_target_icons: HashMap<String, u8>,
     /// Modeled setting only; not linked to CVar state or audio playback.
     pub combat_audio_speaker_speed: f64,
+    /// Unit tokens are resolved again when the targeting list is scanned.
+    pub combat_audio_known_targets: Vec<CombatAudioUnitToken>,
     #[cfg(feature = "retail-12-0-5")]
     pub combat_audio_categories: crate::c_api::c_combat_audio_alert::CategorySettings,
     /// Explicit selection only; no combat-text event routing or native identity.

@@ -17,6 +17,24 @@ pub struct CategorySettings {
 
 pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
     let namespace = ensure_namespace(state, "C_CombatAudioAlert")?;
+    if matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail | crate::client_profile::ClientProfile::Ptr
+    ) {
+        // Retail CombatAudioAlertDocumentation.lua:11-23 and 121-133.
+        table_set_rust_fn_static(
+            state,
+            namespace,
+            "AddToKnownTargetingList",
+            add_known_target,
+        )?;
+        table_set_rust_fn_static(
+            state,
+            namespace,
+            "RemoveFromKnownTargetingList",
+            remove_known_target,
+        )?;
+    }
     #[cfg(feature = "retail-12-0-5")]
     register_category_settings(state, namespace)?;
     table_set_rust_fn_static(state, namespace, "GetSpeakerSpeed", get_speaker_speed)?;
@@ -34,6 +52,86 @@ pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
         table_set_rust_fn_static(state, namespace, "SetSpecSetting", set_spec_setting)?;
     }
     Ok(())
+}
+
+fn add_known_target(state: &mut LuaState) -> LuaResult<u32> {
+    update_known_target(state, true)
+}
+
+fn remove_known_target(state: &mut LuaState) -> LuaResult<u32> {
+    update_known_target(state, false)
+}
+
+fn update_known_target(state: &mut LuaState, add: bool) -> LuaResult<u32> {
+    if crate::lua_api::globals::real::protected_globals::refuse_tainted_caller(state)? {
+        return Ok(0);
+    }
+    let token = read_target_token(state, add)?;
+    let result = {
+        let mut sim = borrow_state_mut(state)?;
+        let identity = token.and_then(|token| token_guid(&sim, token));
+        if let Some(identity) = identity {
+            let existing = sim
+                .combat_audio_known_targets
+                .iter()
+                .position(|&token| token_guid(&sim, token).as_ref() == Some(&identity));
+            match (add, existing, token) {
+                (true, None, Some(token)) => {
+                    sim.combat_audio_known_targets.push(token);
+                    true
+                }
+                (false, Some(index), _) => {
+                    sim.combat_audio_known_targets.remove(index);
+                    true
+                }
+                _ => false,
+            }
+        } else {
+            false
+        }
+    };
+    state.push(Val::Bool(result));
+    Ok(1)
+}
+
+fn read_target_token(
+    state: &LuaState,
+    add: bool,
+) -> LuaResult<Option<crate::lua_api::state::CombatAudioUnitToken>> {
+    use crate::lua_api::state::CombatAudioUnitToken as Token;
+    let value = stack_val(state, 1);
+    let input = match value {
+        Val::Str(_) => crate::lua_api::methods::val_to_string(state, value),
+        Val::Num(number) => Some(number.to_string()),
+        _ => None,
+    }
+    .ok_or_else(|| {
+        rilua::runtime_error(if add {
+            "Usage: local added = C_CombatAudioAlert.AddToKnownTargetingList(unit)"
+        } else {
+            "Usage: local removed = C_CombatAudioAlert.RemoveFromKnownTargetingList(unit)"
+        })
+    })?;
+    Ok(match input.as_str() {
+        "player" => Some(Token::Player),
+        "target" => Some(Token::Target),
+        "focus" => Some(Token::Focus),
+        _ => crate::lua_api::globals::unit_api::parse_party_index(&input).map(Token::Party),
+    })
+}
+
+fn token_guid(
+    sim: &crate::lua_api::SimState,
+    token: crate::lua_api::state::CombatAudioUnitToken,
+) -> Option<String> {
+    use crate::lua_api::state::CombatAudioUnitToken as Token;
+    let token = match token {
+        Token::Player => "player".to_string(),
+        Token::Target => "target".to_string(),
+        Token::Focus => "focus".to_string(),
+        Token::Party(index) => format!("party{}", index + 1),
+    };
+    crate::lua_api::globals::unit_misc::existing_guid_for_unit(sim, &token)
 }
 
 #[cfg(feature = "retail-12-0-5")]

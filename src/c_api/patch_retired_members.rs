@@ -613,6 +613,12 @@ pub(crate) fn mark_retired_members(state: &mut LuaState) -> LuaResult<()> {
     Ok(())
 }
 
+/// Retail 12.1.5 generated documentation and the WM35-G census omit this member.
+#[cfg(feature = "retail-12-1-5")]
+pub(crate) fn mark_retail_table_util_retirement(state: &mut LuaState) -> LuaResult<()> {
+    mark_members(state, &[("C_TableUtil", &["FindIndexedMismatch"])])
+}
+
 fn mark_members(state: &mut LuaState, retired: &[(&'static str, &[&str])]) -> LuaResult<()> {
     for (namespace, members) in retired {
         let table = super::ensure_namespace(state, namespace)?;

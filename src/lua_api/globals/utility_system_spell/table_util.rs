@@ -268,7 +268,7 @@ pub fn register_table_util(state: &mut LuaState) -> LuaResult<()> {
         table_util_find_indexed_mismatch,
     )?;
     #[cfg(feature = "retail-12-1-5")]
-    {
+    if crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Retail {
         use crate::lua_api::methods::table_set_static;
         let removed = Val::Table(state.gc.alloc_table(Table::new()));
         table_set_static(state, removed, "FindIndexedMismatch", Val::Bool(true));
@@ -284,6 +284,10 @@ pub fn register_table_util(state: &mut LuaState) -> LuaResult<()> {
         );
     }
     state.gc.barrier_back(global_ref);
+    #[cfg(feature = "retail-12-1-5")]
+    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
+        crate::c_api::mark_retail_table_util_retirement(state)?;
+    }
     Ok(())
 }
 
