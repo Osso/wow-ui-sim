@@ -419,6 +419,242 @@ fn calendar_context_menu_copies_selected_event(env: &WowLuaEnv) {
 }
 
 prefork_full_ui_case! {
+fn calendar_context_copy_denial_preserves_clipboard(env: &WowLuaEnv) {
+    load_addon(&env.loader_env(), &calendar_toc()).unwrap();
+    {
+        let mut state = env.state().borrow_mut();
+        let mut row = calendar_test_record("second");
+        row.calendar_type = "PLAYER".into();
+        row.invite_role_markers = 6;
+        state.calendar_day_events.insert((0, 15), vec![row]);
+        state.calendar_clipboard = Some(calendar_test_record("older"));
+    }
+    env.exec(r#"
+        C_Calendar.ContextMenuSelectEvent(0, 15, 1)
+        local root = {buttons = {}}
+        function root:SetTag(_) end
+        function root:CreateButton(label, callback) self.buttons[label] = callback end
+        function root:QueueDivider() end
+        function root:HasElements() return next(self.buttons) ~= nil end
+        function root:AddMenuAcquiredCallback(_) end
+        function root:AddMenuReleasedCallback(_) end
+        GenerateDayContextMenu(nil, root, 2, {day=15, monthOffset=0}, {eventIndex=1})
+        CalendarStaleCopy = root.buttons[CALENDAR_COPY_EVENT]
+        calendarCopyEvents = {}
+        local observer = CreateFrame('Frame')
+        observer:RegisterEvent('CALENDAR_UPDATE_ERROR')
+        observer:RegisterEvent('CALENDAR_ACTION_PENDING')
+        observer:SetScript('OnEvent', function(_, name, value) table.insert(calendarCopyEvents, {name, value}) end)
+    "#).unwrap();
+    {
+        let mut state = env.state().borrow_mut();
+        state.calendar_day_events.get_mut(&(0, 15)).unwrap()[0].invite_role_markers = 0;
+        state.calendar_context_policy.action_pending = true;
+    }
+    env.exec(r#"
+        assert(select('#', CalendarStaleCopy()) == 0)
+        assert(#calendarCopyEvents == 2)
+        assert(calendarCopyEvents[1][1] == 'CALENDAR_UPDATE_ERROR' and calendarCopyEvents[1][2] == 'CALENDAR_ERROR_PERMISSIONS')
+        assert(calendarCopyEvents[2][1] == 'CALENDAR_ACTION_PENDING' and calendarCopyEvents[2][2] == false)
+    "#).unwrap();
+    let state = env.state().borrow();
+    assert_eq!(state.calendar_clipboard.as_ref().map(|event| event.event_id.as_str()), Some("older"));
+    assert!(!state.calendar_context_policy.action_pending);
+}
+}
+
+fn calendar_paste_observer(env: &WowLuaEnv) {
+    env.exec(r#"
+        A_Admin.SetManualClock(100)
+        calendarPasteEvents = {}
+        local observer = CreateFrame('Frame')
+        observer:RegisterEvent('CALENDAR_UPDATE_ERROR')
+        observer:RegisterEvent('CALENDAR_ACTION_PENDING')
+        observer:SetScript('OnEvent', function(_, name, ...)
+            table.insert(calendarPasteEvents, {name = name, count = select('#', ...), value = ...})
+        end)
+    "#).unwrap();
+}
+
+prefork_full_ui_case! {
+fn calendar_context_paste_follows_supplied_calendar_date(env: &WowLuaEnv) {
+    use wow_ui_sim::c_api::c_calendar::{CivilDateTime, DisplayedMonth};
+    load_addon(&env.loader_env(), &calendar_toc()).unwrap();
+    env.state().borrow_mut().calendar_clipboard = Some(calendar_test_record("copied"));
+    calendar_paste_observer(env);
+    // INFERRED window: the supplied calendar date through the last day of its month next
+    // year, within 2004-11-24..2030-12-31. The supplied clock time does not decide.
+    let cases = [
+        ((2026, 4, 14), (2026, 4), 13, false),
+        ((2026, 4, 14), (2026, 4), 14, true),
+        ((2026, 4, 14), (2027, 4), 30, true),
+        ((2026, 4, 14), (2027, 5), 1, false),
+        ((2030, 6, 10), (2030, 6), 9, false),
+        ((2030, 6, 10), (2030, 12), 31, true),
+    ];
+    for ((year, month, day), (shown_year, shown_month), target, accepted) in cases {
+        {
+            let mut state = env.state().borrow_mut();
+            state.calendar_now = CivilDateTime { year, month, day, hour: 23, minute: 59 };
+            state.calendar_displayed_month = DisplayedMonth { year: shown_year, month: shown_month };
+            state.calendar_context_policy.action_pending = false;
+        }
+        env.exec(&format!(r#"
+            calendarPasteEvents = {{}}
+            A_Admin.AdvanceTime(6)
+            CalendarDayContextMenu_PasteEvent({{monthOffset = 0, day = {target}}})
+            if {accepted} then
+                assert(#calendarPasteEvents == 1)
+                local event = calendarPasteEvents[1]
+                assert(event.name == 'CALENDAR_ACTION_PENDING' and event.count == 1 and event.value == true)
+            else
+                assert(#calendarPasteEvents == 0)
+            end
+        "#)).unwrap();
+        let state = env.state().borrow();
+        assert_eq!(state.calendar_context_policy.action_pending, accepted, "{year}-{month}-{day}: {shown_year}-{shown_month}-{target}");
+        assert_eq!(state.calendar_clipboard.as_ref().map(|event| event.event_id.as_str()), Some("copied"));
+    }
+}
+}
+
+prefork_full_ui_case! {
+fn calendar_context_paste_requires_idle_clipboard_and_throttle(env: &WowLuaEnv) {
+    use wow_ui_sim::c_api::c_calendar::{CivilDateTime, DisplayedMonth};
+    load_addon(&env.loader_env(), &calendar_toc()).unwrap();
+    {
+        let mut state = env.state().borrow_mut();
+        state.calendar_now = CivilDateTime { year: 2026, month: 4, day: 14, hour: 12, minute: 0 };
+        state.calendar_displayed_month = DisplayedMonth { year: 2026, month: 4 };
+        state.calendar_clipboard = Some(calendar_test_record("copied"));
+        state.calendar_context_policy.action_pending = true;
+    }
+    calendar_paste_observer(env);
+    let paste = |day: u32| {
+        env.exec(&format!("calendarPasteEvents = {{}}; CalendarDayContextMenu_PasteEvent({{monthOffset = 0, day = {day}}})")).unwrap();
+    };
+    let events = || -> i32 { env.eval("return #calendarPasteEvents").unwrap() };
+    paste(20);
+    assert_eq!(events(), 0);
+    assert!(env.state().borrow().calendar_context_policy.action_pending);
+    {
+        let mut state = env.state().borrow_mut();
+        state.calendar_context_policy.action_pending = false;
+        state.calendar_clipboard = None;
+    }
+    paste(20);
+    assert_eq!(events(), 0);
+    env.state().borrow_mut().calendar_clipboard = Some(calendar_test_record("copied"));
+    paste(31);
+    assert_eq!(events(), 0);
+    paste(20);
+    assert_eq!(events(), 1);
+    assert!(env.state().borrow().calendar_context_policy.action_pending);
+    env.state().borrow_mut().calendar_context_policy.action_pending = false;
+    env.exec("A_Admin.AdvanceTime(4.5)").unwrap();
+    paste(20);
+    env.exec(r#"
+        assert(#calendarPasteEvents == 2)
+        assert(calendarPasteEvents[1].name == 'CALENDAR_UPDATE_ERROR' and calendarPasteEvents[1].count == 1)
+        assert(calendarPasteEvents[1].value == 'CALENDAR_ERROR_EVENT_THROTTLED')
+        assert(calendarPasteEvents[2].name == 'CALENDAR_ACTION_PENDING' and calendarPasteEvents[2].value == false)
+    "#).unwrap();
+    assert!(!env.state().borrow().calendar_context_policy.action_pending);
+    env.exec("A_Admin.AdvanceTime(0.5)").unwrap();
+    paste(20);
+    assert_eq!(events(), 1);
+    assert!(env.state().borrow().calendar_context_policy.action_pending);
+}
+}
+
+prefork_full_ui_case! {
+fn calendar_delete_confirmation_requests_context_removal(env: &WowLuaEnv) {
+    load_addon(&env.loader_env(), &calendar_toc()).unwrap();
+    let mut row = calendar_test_record("context");
+    row.calendar_type = "PLAYER".into();
+    row.invite_role_markers = 0x4;
+    env.state().borrow_mut().calendar_day_events.insert((0, 15), vec![row]);
+    env.exec(r#"
+        calendarRemoveEvents = {}
+        local observer = CreateFrame('Frame')
+        observer:RegisterEvent('CALENDAR_UPDATE_ERROR')
+        observer:RegisterEvent('CALENDAR_ACTION_PENDING')
+        observer:SetScript('OnEvent', function(_, name, value) table.insert(calendarRemoveEvents, {name, value}) end)
+        C_Calendar.ContextMenuSelectEvent(0, 15, 1)
+        function CalendarConfirmDelete()
+            calendarRemoveEvents = {}
+            StaticPopupDialogs.CALENDAR_DELETE_EVENT.OnAccept()
+            return #calendarRemoveEvents
+        end
+        assert(CalendarConfirmDelete() == 1)
+        assert(calendarRemoveEvents[1][1] == 'CALENDAR_ACTION_PENDING' and calendarRemoveEvents[1][2] == true)
+        assert(C_Calendar.GetNumDayEvents(0, 15) == 1)
+        assert(C_Calendar.ContextMenuGetEventIndex().eventIndex == 1)
+        assert(CalendarConfirmDelete() == 0)
+    "#).unwrap();
+    assert!(env.state().borrow().calendar_context_policy.action_pending);
+    {
+        let mut state = env.state().borrow_mut();
+        state.calendar_context_policy.action_pending = false;
+        state.calendar_day_events.get_mut(&(0, 15)).unwrap()[0].invite_role_markers = 0x2;
+    }
+    env.exec("assert(CalendarConfirmDelete() == 1)").unwrap();
+    env.state().borrow_mut().calendar_day_events.get_mut(&(0, 15)).unwrap()[0].invite_role_markers = 0;
+    env.exec(r#"
+        assert(CalendarConfirmDelete() == 2)
+        assert(calendarRemoveEvents[1][1] == 'CALENDAR_UPDATE_ERROR' and calendarRemoveEvents[1][2] == 'CALENDAR_ERROR_PERMISSIONS')
+        assert(calendarRemoveEvents[2][1] == 'CALENDAR_ACTION_PENDING' and calendarRemoveEvents[2][2] == false)
+    "#).unwrap();
+    assert!(!env.state().borrow().calendar_context_policy.action_pending);
+}
+}
+
+prefork_full_ui_case! {
+fn calendar_view_remove_button_requests_own_invite_removal(env: &WowLuaEnv) {
+    use wow_ui_sim::c_api::c_calendar::{CalendarEditableAccess, CalendarInviteRecord};
+    use wow_ui_sim::lua_api::state::SEEDED_LOCAL_CHARACTER_GUID;
+    load_addon(&env.loader_env(), &calendar_toc()).unwrap();
+    let invite = |guid: &str, mod_status: &str| CalendarInviteRecord {
+        invite_id: "invite-1".into(), guid: guid.into(), mod_status: Some(mod_status.into()),
+        invite_status: Some(1), ..Default::default()
+    };
+    let editable = |invites| Some(CalendarEditableAccess { event_id: "event-a".into(), invites, ..Default::default() });
+    env.state().borrow_mut().calendar_context_policy.editable = editable(vec![invite(SEEDED_LOCAL_CHARACTER_GUID, "")]);
+    env.exec(r#"
+        calendarRemoveEvents = {}
+        local observer = CreateFrame('Frame')
+        observer:RegisterEvent('CALENDAR_UPDATE_ERROR')
+        observer:RegisterEvent('CALENDAR_ACTION_PENDING')
+        observer:SetScript('OnEvent', function(_, name, value) table.insert(calendarRemoveEvents, {name, value}) end)
+        function CalendarRemoveOwnInvite()
+            calendarRemoveEvents = {}
+            assert(select('#', CalendarViewEventRemoveButton_OnClick(CalendarViewEventRemoveButton)) == 0)
+            return #calendarRemoveEvents
+        end
+        assert(CalendarRemoveOwnInvite() == 1)
+        assert(calendarRemoveEvents[1][1] == 'CALENDAR_ACTION_PENDING' and calendarRemoveEvents[1][2] == true)
+        assert(C_Calendar.GetNumInvites() == 1)
+        assert(CalendarRemoveOwnInvite() == 0)
+    "#).unwrap();
+    assert!(env.state().borrow().calendar_context_policy.action_pending);
+    {
+        let mut state = env.state().borrow_mut();
+        state.calendar_context_policy.action_pending = false;
+        state.calendar_context_policy.editable = editable(vec![invite(SEEDED_LOCAL_CHARACTER_GUID, "CREATOR")]);
+    }
+    env.exec(r#"
+        assert(CalendarRemoveOwnInvite() == 2)
+        assert(calendarRemoveEvents[1][1] == 'CALENDAR_UPDATE_ERROR' and calendarRemoveEvents[1][2] == 'CALENDAR_ERROR_DELETE_CREATOR_FAILED')
+        assert(calendarRemoveEvents[2][1] == 'CALENDAR_ACTION_PENDING' and calendarRemoveEvents[2][2] == false)
+    "#).unwrap();
+    env.state().borrow_mut().calendar_context_policy.editable = editable(vec![invite("Player-1-OTHER", "")]);
+    env.exec("assert(CalendarRemoveOwnInvite() == 0)").unwrap();
+    env.exec("C_Calendar.CreatePlayerEvent(); assert(CalendarRemoveOwnInvite() == 0)").unwrap();
+    assert!(!env.state().borrow().calendar_context_policy.action_pending);
+}
+}
+
+prefork_full_ui_case! {
 fn calendar_context_clipboard_controls_paste_menu(env: &WowLuaEnv) {
     use wow_ui_sim::c_api::c_calendar::{CivilDateTime, DisplayedMonth};
     load_addon(&env.loader_env(), &calendar_toc()).unwrap();
