@@ -1,4 +1,5 @@
 pub mod battlefield_vehicles;
+mod battleground_enlistment;
 mod outdoor_wait_state;
 pub mod war_mode;
 pub use outdoor_wait_state::OutdoorPvpWorldState;
@@ -67,6 +68,9 @@ pub(crate) fn register_c_pvp_surface(state: &mut LuaState) -> LuaResult<()> {
             "IsMatchComplete",
             is_match_complete,
         )?;
+    }
+    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
+        battleground_enlistment::register(state, ns)?;
     }
     if cfg!(any(feature = "client-retail", feature = "client-ptr")) {
         war_mode::register(state, ns)?;
