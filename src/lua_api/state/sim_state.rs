@@ -916,6 +916,8 @@ pub struct SimState {
     pub item_dressability: HashMap<u32, bool>,
     /// Family values supplied for cached item records; absence means cache miss.
     pub item_families: HashMap<u32, u32>,
+    /// Supplied ItemChildEquipment rows, indexed by parent item ID.
+    pub item_children: HashMap<u32, Vec<crate::c_api::item_spell::item_child::ItemChildEquipment>>,
     pub item_overlay_flags: HashSet<(u32, crate::c_api::item_overlay::ItemOverlayFlag)>,
     pub equippable_items: ::std::collections::HashSet<u32>,
     pub consumable_items: ::std::collections::HashSet<u32>,
