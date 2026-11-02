@@ -488,6 +488,7 @@ fn test_double_line_width_includes_gap() {
         local owner = CreateFrame("Frame", "GapTestOwner", UIParent)
         GameTooltip:SetOwner(owner, "ANCHOR_NONE")
         GameTooltip:AddLine("Left text only")
+        GameTooltip:Show()
     "#,
     )
     .unwrap();
@@ -503,6 +504,7 @@ fn test_double_line_width_includes_gap() {
         r#"
         GameTooltip:ClearLines()
         GameTooltip:AddDoubleLine("Left text only", "Right text")
+        GameTooltip:Show()
     "#,
     )
     .unwrap();
