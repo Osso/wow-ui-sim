@@ -215,6 +215,32 @@ fn refused_staging_processes_retained_identity_even_when_cursor_mode_is_empty() 
 }
 
 #[test]
+fn replacing_the_selected_item_during_cursor_clear_does_not_transfer_its_identity() {
+    let env = WowLuaEnv::new().unwrap();
+    {
+        let mut sim = env.state().borrow_mut();
+        sim.bag_items.clear();
+        sim.bag_items.insert((0, 2), item(7005, None));
+    }
+    env.exec(
+        r#"
+        local listener = CreateFrame('Frame')
+        listener:RegisterEvent('ACTIONBAR_HIDEGRID')
+        listener:SetScript('OnEvent', function()
+            -- Replace the selected item with a distinct copy of the same ID.
+            A_Admin.AddBagItem(0, 2, 7005, 1)
+        end)
+        C_Item.PickupItem(6948)
+        C_Item.EquipItemByName(7005)
+        assert(GetCursorInfo() == nil)
+        assert(not C_Container.GetContainerItemInfo(0, 2).isLocked)
+    "#,
+    )
+    .unwrap();
+    assert!(env.state().borrow().item_equip.requests.is_empty());
+}
+
+#[test]
 fn carried_bag_contents_take_priority_over_equipment() {
     use wow_ui_sim::lua_api::state::EquippedItem;
     let env = WowLuaEnv::new().unwrap();
