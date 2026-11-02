@@ -4,7 +4,7 @@ Static source comparison at the [expanded-pass revisions and interpretation limi
 
 ## A1 — Translation, rotation and scale configuration does not animate the target
 
-**External:** `Engine/Source/Frame/CSimpleTranslationAnim.cpp:63-84`, offsets `0x00497FF0`/`0x00498040`, stores offsets and applies progress-scaled translation to the region. `CSimpleRotationAnim.cpp:63-70`, offset `0x00498090`, applies radians around an origin. `CSimpleScaleAnim.cpp:58-84`, offsets `0x00497720`/`0x004980F0`, stores scale change and applies it to the region. Their corresponding `_Scripts.cpp` tables expose the class-specific setters/getters.
+**External:** `Engine/Source/Frame/CSimpleTranslationAnim.cpp:63-84`, stores offsets and applies progress-scaled translation to the region. `CSimpleRotationAnim.cpp:63-70`, applies radians around an origin. `CSimpleScaleAnim.cpp:58-84`, stores scale change and applies it to the region. Their corresponding `_Scripts.cpp` tables expose the class-specific setters/getters.
 
 **Simulator:** `src/lua_api/frame/methods/button_anchor_hierarchy/mod.rs:548-574` routes `SetOffset`, `SetDegrees`, `SetOrigin`, `SetScaleFrom` and `SetScaleTo` to `animation_config_noop`. `animations/creation.rs:16-23` sends frame-backed `SetScale` to ordinary frame scaling, not a time-varying scale-animation target. `src/lua_api/animation.rs:80-109` has no translation offset/rotation angle/scale endpoint fields. `animations/runtime.rs:16-49` applies alpha/flipbook, vertex-colour and path outcomes, not those missing transform configurations. Existing Path movement does not implement a Translation animation's ignored setter.
 
@@ -16,7 +16,7 @@ Static source comparison at the [expanded-pass revisions and interpretation limi
 
 ## A2 — `GetLoopState` returns configured mode instead of live direction
 
-**External:** `Engine/Source/Frame/CSimpleAnimGroup_Scripts.cpp:125-130`, offset `0x004A7240`, returns `m_loopState`; `Engine/Source/FrameXML/LoadXML.cpp:104-108,343-352`, offset `0x00815330`, maps it to `NONE`, `FORWARD` or `REVERSE`. `CSimpleAnimGroup.cpp:889-906` sends that state to loop callbacks.
+**External:** `Engine/Source/Frame/CSimpleAnimGroup_Scripts.cpp:125-130`, returns `m_loopState`; `Engine/Source/FrameXML/LoadXML.cpp:104-108,343-352`, maps it to `NONE`, `FORWARD` or `REVERSE`. `CSimpleAnimGroup.cpp:889-906` sends that state to loop callbacks.
 
 **Simulator:** `src/lua_api/frame/methods/button_anchor_hierarchy/animations.rs:358-374` aliases `animation_group_get_loop_state` to `animation_group_get_looping`, which returns configured `NONE`, `REPEAT` or `BOUNCE`. Playback direction and configured repetition policy are distinct facts.
 
@@ -28,7 +28,7 @@ Static source comparison at the [expanded-pass revisions and interpretation limi
 
 ## A3 — Invalid loop mode silently resets configuration
 
-**External:** `Engine/Source/Frame/CSimpleAnimGroup_Scripts.cpp:96-114`, offset `0x004A7130`, errors for unknown mode rather than changing it.
+**External:** `Engine/Source/Frame/CSimpleAnimGroup_Scripts.cpp:96-114`, errors for unknown mode rather than changing it.
 
 **Simulator:** `animations.rs:345-355` feeds any input to `LoopType::from_str`; `src/lua_api/animation.rs:63-71` maps everything except REPEAT/BOUNCE to NONE.
 
@@ -38,7 +38,7 @@ Static source comparison at the [expanded-pass revisions and interpretation limi
 
 ## A4 — Animation order bounds are not enforced
 
-**External:** `Engine/Source/Frame/CSimpleAnim_Scripts.cpp:231-251`, offsets `0x004A5660`/`0x004A56F0`, converts public order to/from zero-based storage. `CSimpleAnim.cpp:519-532`, offset `0x0049AEC0`, clamps ordinary assignment to internal `[0,99]` (public `[1,100]`); its separate wrap behavior is not the same as clamping.
+**External:** `Engine/Source/Frame/CSimpleAnim_Scripts.cpp:231-251`, converts public order to/from zero-based storage. `CSimpleAnim.cpp:519-532`, clamps ordinary assignment to internal `[0,99]` (public `[1,100]`); its separate wrap behavior is not the same as clamping.
 
 **Simulator:** `src/lua_api/frame/methods/button_anchor_hierarchy/animations/fields.rs:66-76` accepts an unbounded nonnegative integer order; `animations.rs:600-602` returns it directly.
 
@@ -48,7 +48,7 @@ Static source comparison at the [expanded-pass revisions and interpretation limi
 
 ## A5 — Group initial offsets are neither exposed nor applied
 
-**External:** `Engine/Source/Frame/CSimpleAnimGroup_Scripts.cpp:141-180` exposes initial-offset accessors (offsets `0x004A72F0`/`0x004A73E0`). `CSimpleAnimGroup.cpp:210-218,446-463,984-996,1065-1066`, offset `0x004985A0` for the setter, stores XML/API initial offsets and adds the translation to the owner during group updates.
+**External:** `Engine/Source/Frame/CSimpleAnimGroup_Scripts.cpp:141-180` exposes initial-offset accessors (). `CSimpleAnimGroup.cpp:210-218,446-463,984-996,1065-1066` for the setter, stores XML/API initial offsets and adds the translation to the owner during group updates.
 
 **Simulator:** no `SetInitialOffset`/`GetInitialOffset` registration was found. `src/xml/types_animation.rs:9-39` group fields and `src/lua_api/animation.rs` group state omit the offsets; `src/loader/helpers_anim.rs` cannot forward them to playback.
 

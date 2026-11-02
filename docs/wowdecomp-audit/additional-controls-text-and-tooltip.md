@@ -4,7 +4,7 @@ Static comparison at the [expanded-pass revisions and limits](additional-renderi
 
 ## C4 — Password EditBox renders plaintext
 
-**External:** `Engine/Source/Frame/CSimpleEditBox.cpp:2519-2531`, `UpdateVisibleText`, offset `0x00966710`, selects an asterisk buffer for display when password flag `0x8` is enabled, retaining the original stored text.
+**External:** `Engine/Source/Frame/CSimpleEditBox.cpp:2519-2531`, `UpdateVisibleText`, selects an asterisk buffer for display when password flag `0x8` is enabled, retaining the original stored text.
 
 **Simulator:** `src/lua_api/frame/methods/widgets/editbox.rs:319-327` stores `editbox_password`. Actual EditBox rendering routes through `src/iced_app/quad_builders.rs:356-362` to `quad_builders_button.rs:463-479,523-564`, which emits `f.text` directly without checking the password flag.
 
@@ -14,7 +14,7 @@ Static comparison at the [expanded-pass revisions and limits](additional-renderi
 
 ## C5 — History getter reports occupancy instead of configured capacity
 
-**External:** `Engine/Source/Frame/CSimpleEditBox_Scripts.cpp:527-532`, offset `0x00976720`, returns `m_historyLines`. `CSimpleEditBox.cpp:1492-1504`, offset `0x00964690`, uses that value as fixed history capacity, storing nothing when zero.
+**External:** `Engine/Source/Frame/CSimpleEditBox_Scripts.cpp:527-532`, returns `m_historyLines`. `CSimpleEditBox.cpp:1492-1504`, uses that value as fixed history capacity, storing nothing when zero.
 
 **Simulator:** `src/lua_api/frame/methods/widgets/editbox.rs:624-659` already separates `editbox_history` from `editbox_history_max`, but `GetHistoryLines` returns vector length. Zero capacity means unlimited in this model (`src/widget/frame.rs:432-434`), unlike the reconstruction. This explicit current model policy is a compatibility question, not proof of a universal defect.
 
@@ -24,7 +24,7 @@ Static comparison at the [expanded-pass revisions and limits](additional-renderi
 
 ## C6 — Changing message visibility duration does not reset active message age
 
-**External:** `Engine/Source/Frame/CSimpleMessageFrame.cpp:46-58`, offset `0x00967DB0`, assigns the new `m_timeLeft` to each active row when `SetTimeVisible` is called.
+**External:** `Engine/Source/Frame/CSimpleMessageFrame.cpp:46-58`, assigns the new `m_timeLeft` to each active row when `SetTimeVisible` is called.
 
 **Simulator:** `src/lua_api/frame/methods/widgets/message_frame/getters.rs:109-116` changes only shared duration. `src/lua_api/message_frame.rs:5-34` retains message timestamps; actual `src/iced_app/message_frame_render.rs:82-101` computes age from the message/override timestamp. The setter does not update the fade origin.
 
@@ -34,7 +34,7 @@ Static comparison at the [expanded-pass revisions and limits](additional-renderi
 
 ## H1 — SimpleHTML loses document structure, styles and hyperlink hit regions
 
-**External:** `Engine/Source/Frame/CSimpleHTML.cpp:372-410,423-495`, `SetText` offset `0x0096D890`, parses HTML/BODY and heading/paragraph/line-break/image nodes, with hyperlink buttons for parsed links. Plain-text behavior is a parse-failure path, not the whole renderer. `CSimpleHTML_Scripts.cpp:240-249`, offset `0x009751E0`, refreshes hyperlink regions when enablement changes.
+**External:** `Engine/Source/Frame/CSimpleHTML.cpp:372-410,423-495`, `SetText`, parses HTML/BODY and heading/paragraph/line-break/image nodes, with hyperlink buttons for parsed links. Plain-text behavior is a parse-failure path, not the whole renderer. `CSimpleHTML_Scripts.cpp:240-249`, refreshes hyperlink regions when enablement changes.
 
 **Simulator:** `src/lua_api/frame/methods/text_attribute_event/text.rs:170-191` strips tag spans rather than creating document nodes. `src/lua_api/simple_html.rs:37-55` stores style preferences but no parsed document/link regions. Actual `src/iced_app/quad_builders.rs:352-354` routes SimpleHTML through generic FontString emission using `text_stripped`.
 
@@ -44,7 +44,7 @@ Static comparison at the [expanded-pass revisions and limits](additional-renderi
 
 ## U1 — Tooltip textures use the wrong attachment and argument model
 
-**External:** `WoW/Source/UIUtil/Tooltip_Scripts.cpp:1343-1374`, offset `0x0061D810`, accepts filename plus optional UVs. `Tooltip.cpp:3773-3817`, offset `0x0061C8B0`, attaches a texture to the last existing text row, with legacy row-count/texture-count prerequisites, and applies UVs.
+**External:** `WoW/Source/UIUtil/Tooltip_Scripts.cpp:1343-1374`, accepts filename plus optional UVs. `Tooltip.cpp:3773-3817`, attaches a texture to the last existing text row, with legacy row-count/texture-count prerequisites, and applies UVs.
 
 **Simulator:** `src/lua_api/frame/methods/widgets/tooltip/line_frames.rs:245-280` accepts numeric/FileDataID-like input, ignores UV arguments and appends a new empty text/texture row. A filename path is silently ignored. FileDataID support itself may be a valid modern extension; replacing it with a legacy-only form is not the proposed fix.
 
@@ -54,7 +54,7 @@ Static comparison at the [expanded-pass revisions and limits](additional-renderi
 
 ## U2 — Clearing an empty tooltip emits an extra callback
 
-**External:** `WoW/Source/UIUtil/Tooltip_Scripts.cpp:187-191`, offset `0x0061D7D0`, calls `ClearTooltip`; `Tooltip.cpp:895-954` records whether there were lines and invokes `OnTooltipCleared` only when that predicate was true.
+**External:** `WoW/Source/UIUtil/Tooltip_Scripts.cpp:187-191`, calls `ClearTooltip`; `Tooltip.cpp:895-954` records whether there were lines and invokes `OnTooltipCleared` only when that predicate was true.
 
 **Simulator:** `src/lua_api/frame/methods/widgets/tooltip/line_data.rs:19-39` unconditionally fires the callback after clearing modeled data.
 
@@ -64,7 +64,7 @@ Static comparison at the [expanded-pass revisions and limits](additional-renderi
 
 ## U3 — Double-column tooltip wrapping remains enabled when right text exists
 
-**External:** `WoW/Source/UIUtil/Tooltip.cpp:1568-1584`, `AddLine`, offset `0x0061FEC0`, forces `lineWrap=0` when nonempty right-column text is present, regardless of requested wrap.
+**External:** `WoW/Source/UIUtil/Tooltip.cpp:1568-1584`, `AddLine`, forces `lineWrap=0` when nonempty right-column text is present, regardless of requested wrap.
 
 **Simulator:** `src/lua_api/frame/methods/widgets/tooltip/line_data.rs:117-179` stores the caller's wrap flag unchanged for double lines; actual `src/iced_app/tooltip.rs:392-420,497-564` uses it for left-column layout.
 
@@ -74,7 +74,7 @@ Static comparison at the [expanded-pass revisions and limits](additional-renderi
 
 ## F1 — `SetAllPoints` bypasses protected mutation and named-target validation
 
-**External:** `Engine/Source/Frame/CScriptRegion_Scripts.cpp:550-594`, offset `0x0049DE40`, checks `ProtectedFunctionsAllowed`, resolves names/tables, and errors on missing/self/cyclic targets before applying anchors. `CScriptRegion.cpp:104-109`, offset `0x004884D0`, resolves a name through the actual script-object lookup rather than substituting the parent.
+**External:** `Engine/Source/Frame/CScriptRegion_Scripts.cpp:550-594`, checks `ProtectedFunctionsAllowed`, resolves names/tables, and errors on missing/self/cyclic targets before applying anchors. `CScriptRegion.cpp:104-109`, resolves a name through the actual script-object lookup rather than substituting the parent.
 
 **Simulator:** `src/lua_api/frame/methods/button_anchor_hierarchy/anchors.rs:651-691` checks cycles, but omits the caller-protection guard used by adjacent `SetPoint`; unrecognized string targets fall through to the parent instead of resolving/erroring. This is separate from L1's target-kind eligibility.
 
@@ -84,7 +84,7 @@ Static comparison at the [expanded-pass revisions and limits](additional-renderi
 
 ## F2 — Move/resize starts do not establish the full script-driven interaction
 
-**External:** `Engine/Source/Frame/CSimpleFrame_Scripts.cpp:1336-1392`, offsets `0x004A0A40`/`0x004A0B10`, errors on immovable/non-resizable frames and starts a single move/resize transaction using current cursor/frame mouse position when no transaction is active.
+**External:** `Engine/Source/Frame/CSimpleFrame_Scripts.cpp:1336-1392`, errors on immovable/non-resizable frames and starts a single move/resize transaction using current cursor/frame mouse position when no transaction is active.
 
 **Simulator:** `src/lua_api/frame/methods/misc/drag_input.rs:141-165` silently ignores invalid preconditions and otherwise only sets per-frame flags. `src/iced_app/mouse.rs:87-105` processes movement only when `active_drag_frame` already exists; the start methods do not establish it. Actual dragging/resizing helpers do exist (`mouse_drag.rs:20-67,104-151`), so this is **not** a claim that all pointer dragging is absent.
 

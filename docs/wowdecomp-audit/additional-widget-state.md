@@ -6,7 +6,7 @@ Static source comparison at the [expanded-pass revisions](additional-rendering-a
 
 **Historical baseline finding; reported implementation completed.** See the [exchange checklist](README.md#exchanged-implementation-checklist) for bounded Retail/Wrath results and unresolved native/live-font/nil-slot limits. The simulator trace below describes the audit baseline, not those later revisions.
 
-**External:** `Engine/Source/Frame/CSimpleButton_Scripts.cpp:175-198,251-274` updates state after assigning font objects. `CSimpleButton.cpp:522-549`, `UpdateTextState`, offset `0x0096F4A0`, chooses disabled/highlight/normal FontObject based on actual state and highlight layer, including pushed text offset. `LockHighlight` at `:64-69` also invokes text-state refresh.
+**External:** `Engine/Source/Frame/CSimpleButton_Scripts.cpp:175-198,251-274` updates state after assigning font objects. `CSimpleButton.cpp:522-549`, `UpdateTextState`, chooses disabled/highlight/normal FontObject based on actual state and highlight layer, including pushed text offset. `LockHighlight` at `:64-69` also invokes text-state refresh.
 
 **Simulator:** `src/lua_api/frame/methods/button_anchor_hierarchy/buttons.rs:379-394` applies a normal-font snapshot, but `:418-440` stores highlight/disabled references only in `__button_font_objects`. Source-wide searches find those slots only in their setter/getter paths. `src/lua_api/frame/methods/misc/highlight.rs:90-102` changes highlight lock/texture visibility without selecting the corresponding text FontObject. Correct highlight texture visibility does not establish correct text style.
 
@@ -16,7 +16,7 @@ Static source comparison at the [expanded-pass revisions](additional-rendering-a
 
 ## C8 — Slider range changes lack their script capability and value-transition lifecycle
 
-**External:** `Engine/Source/Frame/CSimpleSlider.cpp:49-61` produces `OnMinMaxChanged(min,max)`; `:351-369`, `SetMinMaxValues`, offset `0x0096C470`, commits the new range, invokes that callback and re-applies an initialized value through normal assignment. The existing value path can then produce `OnValueChanged` and applies C1 step rules.
+**External:** `Engine/Source/Frame/CSimpleSlider.cpp:49-61` produces `OnMinMaxChanged(min,max)`; `:351-369`, `SetMinMaxValues`, commits the new range, invokes that callback and re-applies an initialized value through normal assignment. The existing value path can then produce `OnValueChanged` and applies C1 step rules.
 
 **Simulator:** `src/lua_api/frame/methods/widgets/slider.rs:266-282,301-319` directly writes the range and clamps the value without either callback. `src/event/mod.rs` knows the `OnMinMaxChanged` name, but `src/lua_api/frame/methods/text_attribute_event/events.rs:397-435` has no Slider script-support case for it; the generic support predicate rejects an unrecognized handler. An enum entry alone does not make the public callback bindable.
 
