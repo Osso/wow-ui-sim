@@ -101,7 +101,8 @@ fn read_target_token(
     use crate::lua_api::state::CombatAudioUnitToken as Token;
     let value = stack_val(state, 1);
     let input = match value {
-        Val::Str(_) | Val::Num(_) => crate::lua_api::methods::val_to_string(state, value),
+        Val::Str(_) => crate::lua_api::methods::val_to_string(state, value),
+        Val::Num(number) => Some(number.to_string()),
         _ => None,
     }
     .ok_or_else(|| {
