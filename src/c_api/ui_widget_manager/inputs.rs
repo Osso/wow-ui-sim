@@ -3,10 +3,10 @@ use std::collections::HashMap;
 
 use super::{
     BulletTextListRecord, CaptureBarRecord, DiscreteProgressStepsRecord, DoubleIconAndTextRecord,
-    DoubleStatusBarRecord, HorizontalCurrenciesRecord, IconTextAndBackgroundRecord,
-    IconTextAndCurrenciesRecord, ItemDisplayRecord, ScenarioHeaderCurrenciesRecord, SpacerRecord,
-    SpellDisplayRecord, StackedResourceTrackerRecord, StatusBarRecord,
-    TextColumnRowVisualizationInfo, TextWithStateRecord, TextWithSubtextRecord,
+    DoubleStateIconRowRecord, DoubleStatusBarRecord, HorizontalCurrenciesRecord,
+    IconTextAndBackgroundRecord, IconTextAndCurrenciesRecord, ItemDisplayRecord,
+    ScenarioHeaderCurrenciesRecord, SpacerRecord, SpellDisplayRecord, StackedResourceTrackerRecord,
+    StatusBarRecord, TextColumnRowVisualizationInfo, TextWithStateRecord, TextWithSubtextRecord,
     TextureAndTextRecord, TextureAndTextRowRecord, WidgetId, WidgetVisualization,
 };
 
@@ -88,6 +88,7 @@ pub struct UiWidgetInputs {
     pub status_bars: HashMap<WidgetId, StatusBarRecord>,
     pub capture_bars: HashMap<WidgetId, CaptureBarRecord>,
     pub double_status_bars: HashMap<WidgetId, DoubleStatusBarRecord>,
+    pub double_state_icons: HashMap<WidgetId, DoubleStateIconRowRecord>,
     pub texture_and_text: HashMap<WidgetId, TextureAndTextRecord>,
     pub texture_and_text_row: HashMap<WidgetId, TextureAndTextRowRecord>,
     pub discrete_progress_steps: HashMap<WidgetId, DiscreteProgressStepsRecord>,
