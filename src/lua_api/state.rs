@@ -244,6 +244,8 @@ macro_rules! build_empty_sim_state {
             #[cfg(feature = "retail-12-0-5")]
             transmog_appearance_sources: HashMap::new(),
             #[cfg(feature = "retail-12-0-5")]
+            transmog_new_sources: HashSet::new(),
+            #[cfg(feature = "retail-12-0-5")]
             transmog_illusions: Vec::new(),
             #[cfg(feature = "retail-12-0-5")]
             viewed_outfit_slots: HashMap::new(),
