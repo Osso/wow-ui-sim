@@ -681,6 +681,10 @@ pub struct SimState {
     pub quest_choice_response_id: Option<u32>,
     pub quest_poi_map_id: Option<i32>,
     pub selected_quest_log_id: Option<u32>,
+    /// Ready server-supplied quest reward spell candidates, in source order.
+    pub quest_reward_spell_cache: std::collections::HashMap<u32, Vec<u32>>,
+    /// Current detail quest and its three supplied spell slots.
+    pub quest_detail_reward_spells: Option<(u32, [u32; 3])>,
     /// Explicit host quest favor records and nil-query context; empty by default.
     #[cfg(feature = "retail-12-0-5")]
     pub quest_favor: crate::c_api::c_quest_info_system::QuestFavorState,

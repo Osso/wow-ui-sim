@@ -557,6 +557,8 @@ macro_rules! build_empty_sim_state {
             quest_choice_response_id: None,
             quest_poi_map_id: None,
             selected_quest_log_id: None,
+            quest_reward_spell_cache: HashMap::new(),
+            quest_detail_reward_spells: None,
             #[cfg(feature = "retail-12-0-5")]
             quest_favor: Default::default(),
             #[cfg(feature = "retail-12-0-7")]
