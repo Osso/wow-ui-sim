@@ -89,7 +89,7 @@ impl CurrencyListState {
             self.cached_transaction_count = 0;
             self.account_cache_invalidated = false;
         }
-        if self.account_rows.is_empty() {
+        if self.account_rows.is_empty() && self.account_currency_sources.is_empty() {
             self.account_loading = true;
         }
     }
@@ -97,6 +97,7 @@ impl CurrencyListState {
     pub fn complete_account_request(&mut self, rows: Vec<CurrencyEntry>) {
         self.account_loading = false;
         self.account_rows = rows;
+        self.account_currency_sources.clear();
         if self.filter == 2 && self.account_data_ready() {
             self.projected_account_rows.clone_from(&self.account_rows);
         }
