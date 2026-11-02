@@ -643,6 +643,29 @@ fn calendar_event_time_control_updates_supplied_event(env: &WowLuaEnv) {
         assert_eq!(event.time, Some((hour, minute)));
         assert!(event.dirty);
     }
+    {
+        let mut state = env.state().borrow_mut();
+        state.calendar_context_policy.action_pending = true;
+        state.calendar_context_policy.editable.as_mut().unwrap().dirty = false;
+    }
+    env.exec(r#"
+        timeErrors = {}
+        local observer = CreateFrame('Frame')
+        observer:RegisterEvent('CALENDAR_UPDATE_ERROR')
+        observer:RegisterEvent('CALENDAR_ACTION_PENDING')
+        observer:SetScript('OnEvent', function(_, name, value) table.insert(timeErrors, {name, value}) end)
+        CalendarCreateEventFrame.selectedHour = 24
+        CalendarCreateEventFrame.selectedMinute = 12
+        CalendarCreateEvent_SetEventTime()
+        assert(#timeErrors == 2)
+        assert(timeErrors[1][1] == 'CALENDAR_UPDATE_ERROR' and timeErrors[1][2] == 'CALENDAR_ERROR_INVALID_TIME')
+        assert(timeErrors[2][1] == 'CALENDAR_ACTION_PENDING' and timeErrors[2][2] == false)
+    "#).unwrap();
+    let state = env.state().borrow();
+    let event = state.calendar_context_policy.editable.as_ref().unwrap();
+    assert_eq!(event.time, Some((21, 45)));
+    assert!(event.dirty);
+    assert!(!state.calendar_context_policy.action_pending);
 }
 }
 
