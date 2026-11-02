@@ -18,10 +18,8 @@
   "wt-global-api-C_MythicPlus.GetSeasonBestMythicRatingFromThisExpansion-60",
   "wt-global-api-C_PvP.GetBattlefieldFlagPosition-65",
   "wt-global-api-C_PvP.GetPVPSeasonRewardAchievementID-67",
-  "wt-global-api-C_PvP.GetSpecialEventBrawlInfo-68",
   "wt-global-api-C_TTSSettings.ShouldOverrideMessage-70",
   "wt-global-api-C_UI.GetTopRightNotchSafeRegion-73",
-  "wt-global-api-C_UIWidgetManager.GetUnitPowerBarWidgetVisualizationInfo-75",
   "wt-global-api-StartSoloShuffleWarGameByName-76",
   "wt-global-api-StartSpectatorSoloShuffleWarGame-77"
 ]
