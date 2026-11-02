@@ -70,6 +70,57 @@ fn paper_doll_cursor_changed_highlights_compatible_item(env: &WowLuaEnv) {
 }
 
 prefork_full_ui_case! {
+fn all_equip_confirmation_events_publish_token_and_current_location(env: &WowLuaEnv) {
+    {
+        let mut sim = env.state().borrow_mut();
+        sim.bag_items.clear();
+        sim.player.equipped_items.clear();
+        sim.bag_items.insert((0, 2), BagItem {
+            item_id: 25, stack_count: 1, hyperlink: None,
+            durability: None, applied_transmog: None, owned_identity: Some(51),
+        });
+        sim.item_equip.inputs.insert(51, OwnedItemEquipInputs {
+            confirmation_eligible: Some(true),
+            ..Default::default()
+        });
+    }
+    env.exec(r#"
+        confirmations = {}
+        local listener = CreateFrame('Frame')
+        for _, name in ipairs({'EQUIP_BIND_CONFIRM', 'EQUIP_BIND_TRADEABLE_CONFIRM', 'EQUIP_BIND_REFUNDABLE_CONFIRM'}) do
+            listener:RegisterEvent(name)
+        end
+        listener:SetScript('OnEvent', function(_, name, ...)
+            assert(select('#', ...) == 2)
+            local token, location = ...
+            confirmations[#confirmations + 1] = {name, token, location}
+        end)
+        C_Item.EquipItemByName(25, 16)
+        assert(confirmations[1][1] == 'EQUIP_BIND_CONFIRM' and confirmations[1][2] == 0)
+        assert(confirmations[1][3]:IsEqualToBagAndSlot(0, 2))
+    "#).unwrap();
+    {
+        let mut sim = env.state().borrow_mut();
+        let input = sim.item_equip.inputs.get_mut(&51).unwrap();
+        input.bound_marker = 1;
+        input.trade_flags = 256;
+        input.trade_timer_delta = Some(0);
+    }
+    env.exec(r#"
+        C_Item.EquipItemByName(25, 16)
+        assert(confirmations[2][1] == 'EQUIP_BIND_TRADEABLE_CONFIRM' and confirmations[2][2] == 1)
+        assert(confirmations[2][3]:IsEqualToBagAndSlot(0, 2))
+    "#).unwrap();
+    env.state().borrow_mut().item_equip.inputs.get_mut(&51).unwrap().refund_timer_delta = Some(0);
+    env.exec(r#"
+        C_Item.EquipItemByName(25, 16)
+        assert(confirmations[3][1] == 'EQUIP_BIND_REFUNDABLE_CONFIRM' and confirmations[3][2] == 2)
+        assert(confirmations[3][3]:IsEqualToBagAndSlot(0, 2))
+    "#).unwrap();
+}
+}
+
+prefork_full_ui_case! {
 fn binding_confirmation_reaches_the_original_game_event_consumer(env: &WowLuaEnv) {
     {
         let mut sim = env.state().borrow_mut();
