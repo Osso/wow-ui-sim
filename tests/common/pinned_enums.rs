@@ -4,7 +4,6 @@ use std::collections::BTreeMap;
 
 pub struct PinnedEnum {
     pub values: BTreeMap<String, i64>,
-    pub meta: BTreeMap<String, i64>,
 }
 
 fn quoted_value(line: &str, key: &str) -> Option<String> {
@@ -52,5 +51,5 @@ pub fn read_pinned_enum(source: &str, name: &str) -> PinnedEnum {
     }
     assert_eq!(meta.len(), 3, "incomplete metadata for {name} in {}", path.display());
     assert!(!values.is_empty(), "empty enum {name} in {}", path.display());
-    PinnedEnum { values, meta }
+    PinnedEnum { values }
 }

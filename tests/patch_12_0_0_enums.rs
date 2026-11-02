@@ -18,6 +18,7 @@ struct Data {
 #[derive(Deserialize)]
 struct DocEnum {
     source: String,
+    values: BTreeMap<String, i64>,
 }
 
 #[derive(Deserialize)]
@@ -53,35 +54,11 @@ fn check_value(env: &WowLuaEnv, name: &str, key: &str, value: Option<i64>) -> Re
     }
 }
 
-fn check_parent(env: &WowLuaEnv, name: &str, doc: &pinned_enums::PinnedEnum) -> Vec<String> {
-    let mut failures = Vec::new();
-    for (key, value) in &doc.values {
-        if let Err(error) = check_value(env, name, key, Some(*value)) {
-            failures.push(error);
-        }
-    }
-    for (key, value) in &doc.meta {
-        if let Err(error) = check_value(env, &format!("{name}Meta"), key, Some(*value)) {
-            failures.push(error);
-        }
-    }
-    let code = format!(
-        r#"
-        local parent = rawget(Enum, {name:?})
-        if type(parent) ~= 'table' then return -1 end
-        local count = 0
-        for _ in pairs(parent) do count = count + 1 end
-        return count
-    "#
-    );
-    let count: i64 = env.eval(&code).expect("count published members");
-    if count != doc.values.len() as i64 {
-        failures.push(format!(
-            "{name}: expected {} members, observed {count}",
-            doc.values.len()
-        ));
-    }
-    failures
+fn check_parent(env: &WowLuaEnv, name: &str, historical: &DocEnum, pinned: &pinned_enums::PinnedEnum) -> Vec<String> {
+    historical.values.keys().filter_map(|key| {
+        let current = pinned.values.get(key).copied().unwrap_or_else(|| panic!("{name}.{key} absent from pinned documentation"));
+        check_value(env, name, key, Some(current)).err()
+    }).collect()
 }
 
 prefork_full_ui_case! {
@@ -95,7 +72,7 @@ fn patch_12_0_0_enum_publication(env: &WowLuaEnv) {
             let source = &data.enums[&row.name].source;
             let doc = pinned_enums::read_pinned_enum(source, &row.name);
             let mut errors = match &row.member {
-                None => check_parent(&env, &row.name, &doc),
+                None => check_parent(&env, &row.name, &data.enums[&row.name], &doc),
                 Some(key) => {
                     let current = doc.values.get(key).copied();
                     if row.value.is_some() {

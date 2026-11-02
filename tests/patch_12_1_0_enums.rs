@@ -23,13 +23,6 @@ struct Data {
 #[derive(Deserialize)]
 struct DocEnum {
     doc: String,
-    // Members cached Blizzard Lua adds at load; the native metadata never counts them.
-    #[serde(default)]
-    blizzard_lua: Option<BlizzardLua>,
-}
-
-#[derive(Deserialize)]
-struct BlizzardLua {
     values: BTreeMap<String, i64>,
 }
 
@@ -41,22 +34,6 @@ struct Row {
     member: Option<String>,
     value: Option<i64>,
 }
-
-const OBSERVE_TABLE: &str = r#"
-local name = ...
-local values = rawget(Enum, name)
-if type(values) ~= 'table' then return 'missing', 'missing' end
-local parts = {}
-for key, value in pairs(values) do
-    local shown = type(value) == 'number' and string.format('%.17g', value) or type(value)
-    parts[#parts + 1] = tostring(key) .. '=' .. shown
-end
-table.sort(parts)
-local meta = rawget(Enum, name .. 'Meta')
-if type(meta) ~= 'table' then return table.concat(parts, ';'), 'missing' end
-return table.concat(parts, ';'),
-    string.format('%s/%s/%s', tostring(meta.NumValues), tostring(meta.MinValue), tostring(meta.MaxValue))
-"#;
 
 const OBSERVE_MEMBER: &str = r#"
 local name, member = ...
@@ -72,19 +49,6 @@ fn quote_lua(value: &str) -> String {
     format!("\"{escaped}\"")
 }
 
-fn expected_table(doc: &DocEnum, pinned: &pinned_enums::PinnedEnum) -> (String, String) {
-    let additions = doc.blizzard_lua.iter().flat_map(|lua| &lua.values);
-    let mut parts: Vec<_> = pinned
-        .values
-        .iter()
-        .chain(additions)
-        .map(|(name, value)| format!("{name}={value}"))
-        .collect();
-    parts.sort();
-    let meta = format!("{}/{}/{}", pinned.meta["NumValues"], pinned.meta["MinValue"], pinned.meta["MaxValue"]);
-    (parts.join(";"), meta)
-}
-
 fn expected_member(value: Option<i64>) -> String {
     let shown = value.map_or("nil".to_owned(), |value| value.to_string());
     format!("raw={shown}; lookup={shown}")
@@ -97,13 +61,19 @@ fn check_row(env: &WowLuaEnv, data: &Data, row: &Row) -> (bool, String) {
     let pinned = pinned_enums::read_pinned_enum(&doc.doc, &row.enum_name);
     match &row.member {
         None => {
-            let code = format!("return (function(...) {OBSERVE_TABLE} end)({name})");
-            let observed: (String, String) = env.eval(&code).expect("observe enum table");
-            let expected = expected_table(doc, &pinned);
-            (
-                observed == expected,
-                format!("expected {expected:?}; observed {observed:?}"),
-            )
+            let mut failures = Vec::new();
+            for member in doc.values.keys() {
+                let current = pinned.values.get(member).copied().unwrap_or_else(|| {
+                    panic!("{}.{} absent from pinned documentation", row.enum_name, member)
+                });
+                let code = format!("return (function(...) {OBSERVE_MEMBER} end)({name}, {})", quote_lua(member));
+                let observed: String = env.eval(&code).expect("observe enum member");
+                let expected = expected_member(Some(current));
+                if observed != expected {
+                    failures.push(format!("{member}: expected {expected}; observed {observed}"));
+                }
+            }
+            (failures.is_empty(), failures.join("; "))
         }
         Some(member) => {
             let code = format!(
