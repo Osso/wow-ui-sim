@@ -20,6 +20,8 @@ pub mod item_effects;
 pub mod item_enchants;
 #[path = "../data/item_spell_metadata.rs"]
 pub mod item_spell_metadata;
+#[path = "../data/item_sets.rs"]
+pub mod item_sets;
 #[path = "../data/item_uniqueness.rs"]
 pub mod item_uniqueness;
 #[path = "../data/items.rs"]

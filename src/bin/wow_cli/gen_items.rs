@@ -44,9 +44,52 @@ pub fn run() -> Result<(), Box<dyn std::error::Error>> {
     write_item_enchant_spells(&wow_data)?;
     write_item_spell_metadata(&wow_data)?;
     write_item_uniqueness(&wow_data)?;
+    write_item_sets(&wow_data)?;
 
     println!("Generated {} item entries ({} skipped)", count, skipped);
     println!("Output: {}", output_path.display());
+    Ok(())
+}
+
+fn write_item_sets(wow_data: &Path) -> Result<(), Box<dyn std::error::Error>> {
+    let records = open_records(&wow_data.join("ItemSparse.csv"))?;
+    let mut iter = records.iter();
+    let idx = header_index(iter.next().ok_or("empty ItemSparse.csv")?);
+    let mut members = Vec::new();
+    for record in iter {
+        let fields = parse_csv_line(record);
+        let set = field(&fields, &idx, "ItemSet").parse::<u32>()?;
+        if set != 0 {
+            members.push((field(&fields, &idx, "ID").parse::<u32>()?, set));
+        }
+    }
+    members.sort_unstable();
+    let records = open_records(&wow_data.join("ItemSet.csv"))?;
+    let mut iter = records.iter();
+    let idx = header_index(iter.next().ok_or("empty ItemSet.csv")?);
+    let mut names = Vec::new();
+    for record in iter {
+        let fields = parse_csv_line(record);
+        let id = field(&fields, &idx, "ID").parse::<u32>()?;
+        names.push((id, escape_str(field(&fields, &idx, "Name_lang"))));
+    }
+    names.sort_unstable();
+    let mut out = File::create("crates/sim-data/data/item_sets.rs")?;
+    writeln!(
+        out,
+        "//! Generated from wago.tools DB2 CSV exports, build 12.1.5.70391 (enUS)."
+    )?;
+    writeln!(out, "//! Regenerate with `wow-cli generate items`.")?;
+    writeln!(out, "pub static ITEM_SET_MEMBERS: &[(u32, u32)] = &[")?;
+    for (item, set) in members {
+        writeln!(out, "    ({item}, {set}),")?;
+    }
+    writeln!(out, "];\n")?;
+    writeln!(out, "pub static ITEM_SET_NAMES: &[(u32, &str)] = &[")?;
+    for (id, name) in names {
+        writeln!(out, "    ({id}, \"{name}\"),")?;
+    }
+    writeln!(out, "];")?;
     Ok(())
 }
 
