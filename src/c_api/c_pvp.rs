@@ -23,7 +23,7 @@ mod active_brawl;
 #[cfg(feature = "retail-12-0-5")]
 mod brawl_info;
 #[cfg(feature = "retail-12-0-5")]
-pub use brawl_info::PvpBrawlInfo;
+pub use brawl_info::{PvpBrawlInfo, SpecialEventBrawlInfo};
 
 #[cfg(feature = "retail-12-0-0")]
 pub mod catalog;

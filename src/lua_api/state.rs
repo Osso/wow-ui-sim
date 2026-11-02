@@ -763,7 +763,7 @@ macro_rules! build_empty_sim_state {
 }
 
 #[cfg(feature = "retail-12-0-5")]
-pub use crate::c_api::c_pvp::PvpBrawlInfo;
+pub use crate::c_api::c_pvp::{PvpBrawlInfo, SpecialEventBrawlInfo};
 #[cfg(feature = "retail-12-0-5")]
 pub use crate::c_api::c_transmog_collection::AppearanceSourceInfo;
 #[cfg(feature = "retail-12-0-5")]

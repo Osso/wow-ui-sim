@@ -3,7 +3,7 @@
 ## What it must do
 
 - [ ] Retail `C_PvP.GetSpecialEventBrawlInfo()` returns one value: nil when no special-event brawl record is supplied, otherwise an independent `PvpBrawlInfo` snapshot.
-- [ ] The supplied special-event record is independent of `GetActiveBrawlInfo`. It includes the documented brawl identity, level, queue, description, map and reward-display fields; it has no invented active flag.
+- [ ] The supplied special-event record is independent of `GetActiveBrawlInfo`. It includes the documented brawl identity, level, queue, description, map and reward-display fields; it has no invented active flag. Minimum item level and optional time remaining are integer-typed inputs.
 - [ ] The original PvP honor frame uses the record to show or hide its special-event brawl button and display its supplied name.
 
 ## Best-guess basis
@@ -13,7 +13,7 @@ Retail `Blizzard_APIDocumentationGenerated/PvpInfoDocumentation.lua:775` declare
 ## Implementation inventory
 
 - `src/c_api/c_pvp/active_brawl.rs`: Retail special-event registration and shared brawl serialization.
-- `SimState.special_event_brawl`: explicit record, independent of active-brawl input.
+- `SimState.special_event_brawl`: explicit integer-typed special-event record, independent of active-brawl input.
 
 ## Tests asserting this spec
 

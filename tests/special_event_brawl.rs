@@ -2,10 +2,10 @@
 #![cfg(feature = "client-retail")]
 
 use wow_ui_sim::lua_api::WowLuaEnv;
-use wow_ui_sim::lua_api::state::PvpBrawlInfo;
+use wow_ui_sim::lua_api::state::SpecialEventBrawlInfo;
 
-fn brawl() -> PvpBrawlInfo {
-    PvpBrawlInfo {
+fn brawl() -> SpecialEventBrawlInfo {
+    SpecialEventBrawlInfo {
         brawl_id: 701,
         name: "Fixture special brawl".into(),
         short_description: "Short".into(),
@@ -15,11 +15,11 @@ fn brawl() -> PvpBrawlInfo {
         max_level: 80,
         groups_allowed: false,
         cross_faction_allowed: true,
-        time_left_until_next_change: Some(91.0),
+        time_left_until_next_change: Some(91),
         brawl_type: 2,
         map_names: vec!["First map".into(), "Second map".into()],
         includes_all_arenas: false,
-        min_item_level: 123.0,
+        min_item_level: 123,
         should_hide_reward_icon: true,
     }
 }

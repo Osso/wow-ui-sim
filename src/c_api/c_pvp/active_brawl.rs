@@ -34,7 +34,7 @@ fn get_active_brawl_info(state: &mut LuaState) -> LuaResult<u32> {
 
 fn get_special_event_brawl_info(state: &mut LuaState) -> LuaResult<u32> {
     let record = borrow_state(state)?.special_event_brawl.clone();
-    push_brawl_info(state, record)
+    push_brawl_info(state, record.map(Into::into))
 }
 
 fn push_brawl_info(state: &mut LuaState, record: Option<PvpBrawlInfo>) -> LuaResult<u32> {
