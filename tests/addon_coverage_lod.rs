@@ -45,6 +45,36 @@ fn blizzard_ui_dir() -> PathBuf {
         .expect("Blizzard UI cache should be available")
 }
 
+#[test]
+fn commentator_consumer_updates_shared_mouse_availability() {
+    common::with_perf_lock(|| {
+        with_isolated_addon_coverage_state(|| {
+            let env = WowLuaEnv::new().expect("Lua environment");
+            env.set_screen_size(1024.0, 768.0);
+            env.state().borrow_mut().addon_base_paths = vec![blizzard_ui_dir()];
+            load_startup_blizzard_ui(&env);
+            env.exec("C_AddOns.LoadAddOn('Blizzard_Commentator')")
+                .expect("original Commentator addon should load");
+
+            for disabled in [true, false] {
+                env.exec(&format!("CommentatorMixin:SetCommentatorMode({disabled})"))
+                    .expect("original Commentator consumer should set mouse state");
+                let state = env.state().borrow();
+                assert_eq!(state.mouse_disabled, Some(disabled));
+                assert_eq!(state.mouse_available, Some(!disabled));
+                assert_eq!(state.forever_startup.cursor_visible, !disabled);
+            }
+            env.state().borrow_mut().mouse_availability_override = true;
+            env.exec("CommentatorMixin:SetCommentatorMode(true)")
+                .expect("override scenario should execute the original consumer");
+            let state = env.state().borrow();
+            assert_eq!(state.mouse_disabled, Some(true));
+            assert_eq!(state.mouse_available, Some(true));
+            assert!(state.forever_startup.cursor_visible);
+        });
+    });
+}
+
 fn known_load_on_demand_runtime_error_counts() -> BTreeMap<String, usize> {
     let mut counts = BTreeMap::from_iter(
         common::addon_coverage_baseline::KNOWN_ERRORS
