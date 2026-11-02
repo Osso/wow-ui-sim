@@ -5,10 +5,11 @@ use super::{
     BulletTextListRecord, CaptureBarRecord, CaptureZoneRecord, DiscreteProgressStepsRecord,
     DoubleIconAndTextRecord, DoubleStateIconRowRecord, DoubleStatusBarRecord,
     HorizontalCurrenciesRecord, IconTextAndBackgroundRecord, IconTextAndCurrenciesRecord,
-    ItemDisplayRecord, ScenarioHeaderCurrenciesRecord, SpacerRecord, SpellDisplayRecord,
-    StackedResourceTrackerRecord, StatusBarRecord, TextColumnRowVisualizationInfo,
-    TextWithStateRecord, TextWithSubtextRecord, TextureAndTextRecord, TextureAndTextRowRecord,
-    TextureWithAnimationRecord, WidgetId, WidgetVisualization, ZoneControlRecord,
+    ItemDisplayRecord, ScenarioHeaderCurrenciesRecord, ScenarioHeaderTimerRecord, SpacerRecord,
+    SpellDisplayRecord, StackedResourceTrackerRecord, StatusBarRecord,
+    TextColumnRowVisualizationInfo, TextWithStateRecord, TextWithSubtextRecord,
+    TextureAndTextRecord, TextureAndTextRowRecord, TextureWithAnimationRecord, WidgetId,
+    WidgetVisualization, ZoneControlRecord,
 };
 
 #[derive(Debug, Clone, PartialEq)]
@@ -100,6 +101,7 @@ pub struct UiWidgetInputs {
     pub spacers: HashMap<WidgetId, SpacerRecord>,
     pub stacked_resources: HashMap<WidgetId, StackedResourceTrackerRecord>,
     pub scenario_currencies: HashMap<WidgetId, ScenarioHeaderCurrenciesRecord>,
+    pub scenario_timers: HashMap<WidgetId, ScenarioHeaderTimerRecord>,
     pub text_with_state: HashMap<WidgetId, TextWithStateRecord>,
     pub text_with_subtext: HashMap<WidgetId, TextWithSubtextRecord>,
     pub double_icon_and_text: HashMap<WidgetId, DoubleIconAndTextRecord>,
