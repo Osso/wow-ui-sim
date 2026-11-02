@@ -20,6 +20,10 @@ use rilua::table_security::unwrap_secret;
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val, runtime_error};
 
+mod sends;
+
+pub use sends::PingPendingTarget;
+
 const CALLBACK_TABLE_KEY: &str = "__wow_ping_secure_callbacks";
 
 /// WM38 and PingManagerSecureDocumentation.lua describe the Retail 12.1.5 surface.

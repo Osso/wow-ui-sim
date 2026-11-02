@@ -103,6 +103,8 @@ pub struct SimState {
     pub restriction_report_active: bool,
     /// Retail 12.1.5 ping radial frame, created once by `C_PingSecure.CreateFrame`.
     pub ping_radial_frame: Option<u64>,
+    /// Supplied pending hit-test target; the simulator has no world hit selection.
+    pub ping_pending: crate::c_api::c_ping_secure::PingPendingTarget,
     /// Explicit Wrath scenario inputs; empty means unsupplied.
     pub wrath_glyph_sockets: HashMap<(u32, u32), WrathGlyphSocket>,
     pub wrath_unspent_talent_points: HashMap<u32, u32>,
