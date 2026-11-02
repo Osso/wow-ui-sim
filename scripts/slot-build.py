@@ -834,8 +834,20 @@ def find_stale_artifacts(current, previous_artifacts, artifacts):
         # targets) often leave an executable's bytes unchanged; fresh=false suffices.
         source_changed = {path for path in content_changed
                           if Path(path).name not in {"Cargo.toml", "Cargo.lock"}}
-        needs_changed_hash = bool(matched_input_changes(current, inputs, source_changed))
-        if name not in artifacts or (needs_changed_hash and not changed_hash):
+        required_changes = matched_input_changes(current, inputs, source_changed)
+        sibling_covers_changes = any(
+            sibling.get("executable") and artifact_path(sibling) != path
+            and sibling.get("fresh") is False
+            and (sibling_name := os.path.relpath(artifact_path(sibling), current["slot"]))
+                in previous_artifacts
+            and sibling_name in artifacts
+            and previous_artifacts[sibling_name] != artifacts[sibling_name]
+            and required_changes <= matched_input_changes(
+                current, current["target_inputs"].get(artifact_path(sibling), []), required_changes)
+            for sibling in current["reported_artifacts"]
+        ) if required_changes and not changed_hash else False
+        if name not in artifacts or (required_changes and not changed_hash
+                                     and not sibling_covers_changes):
             stale.append(name)
     return sorted(set(stale))
 

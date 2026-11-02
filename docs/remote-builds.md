@@ -196,9 +196,12 @@ executable, its SHA256 must also differ from the previous hash at the same path,
 unless the only changed content inputs are `Cargo.toml` or `Cargo.lock` files:
 manifest edits (dev-dependencies, workspace members, other targets) often leave
 executable bytes unchanged, so `fresh=false` is enough (user decision 2026-10-29).
-Otherwise the run fails with `stale artifacts`. Libraries do not require changed
-hashes. A changed library, `.rmeta`, or another executable cannot certify an
-executable whose own inputs changed. Unreported artifacts and records with
+An unchanged executable is also accepted when another executable reported in the
+same build has `fresh=false`, a changed SHA256, and inputs covering every changed
+non-manifest content input read by the unchanged executable (user decision
+2026-11-02). Missing artifacts remain stale. Otherwise the run fails with
+`stale artifacts`. Libraries do not require changed hashes. A changed library or
+`.rmeta` cannot certify an executable whose own inputs changed. Unreported artifacts and records with
 disjoint inputs are not judged for freshness. A test-only edit therefore does not
 reject an unaffected fresh bin, even within the same package. Records affected
 only by mtime refresh require `fresh=false`; executables also require a current
