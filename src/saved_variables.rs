@@ -147,9 +147,22 @@ pub struct SavedVariablesManager {
     load_results: HashMap<(String, bool), LoadResult>,
 }
 
+/// Resolve simulator SavedVariables storage, preserving the legacy environment override.
+pub fn saved_variables_storage_dir(session_wtf_path: &std::path::Path, explicit: bool) -> PathBuf {
+    if !explicit
+        && let Some(path) = std::env::var_os("WOW_SIM_STORAGE_DIR").filter(|path| !path.is_empty())
+    {
+        return PathBuf::from(path);
+    }
+    session_wtf_path.join("SavedVariables")
+}
+
 impl SavedVariablesManager {
     pub fn new() -> Self {
-        Self::with_storage_dir(crate::paths::default_session_wtf_path().join("SavedVariables"))
+        Self::with_storage_dir(saved_variables_storage_dir(
+            &crate::paths::default_session_wtf_path(),
+            false,
+        ))
     }
 
     pub fn with_storage_dir(storage_dir: PathBuf) -> Self {

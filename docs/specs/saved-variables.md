@@ -21,11 +21,12 @@ WTF imports are read-only. Source paths relative to the WTF root are:
 - Account: `Account/<account>/SavedVariables/<addon>.lua`.
 - Character: `Account/<account>/<realm>/<character>/SavedVariables/<addon>.lua`.
 
-Ordinary output uses `SavedVariables` beneath the writable
-`--session-wtf-path DIR` root, or the platform local-data directory's `wow-sim`
-root when the option is omitted: `<addon>.lua` for account data and
-`<realm>/<character>/<addon>.lua` for character data. Simulator preferences,
-CVars and private models use the same root. Local addon enablement defaults to
+Ordinary output uses `SavedVariables` beneath an explicit writable
+`--session-wtf-path DIR`. Without that option, a non-empty `WOW_SIM_STORAGE_DIR`
+selects the SavedVariables directory directly; otherwise it is `SavedVariables`
+under the platform local-data directory's `wow-sim` root. Account data uses
+`<addon>.lua`; character data uses `<realm>/<character>/<addon>.lua`.
+Simulator preferences, CVars and private models use the session root. Local addon enablement defaults to
 `AddOns.txt` there; `WOW_SIM_ADDONS_TXT` can select a separate read/save file.
 See [persistence destinations](../runtime-inputs.md#persistence-destinations).
 The real WoW WTF import tree remains read-only.

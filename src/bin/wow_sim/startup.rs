@@ -81,7 +81,10 @@ fn install_reload_loader(
         .cloned();
     let edit_mode_cache = cache_config.map(|config| {
         let mut cache = SavedVariablesManager::with_storage_dir(
-            env.state().borrow().session_wtf_path.join("SavedVariables"),
+            wow_ui_sim::saved_variables::saved_variables_storage_dir(
+                &env.state().borrow().session_wtf_path,
+                args.session_wtf_path.is_some(),
+            ),
         );
         cache.set_wtf_config(config);
         cache
@@ -452,6 +455,7 @@ fn configure_startup_state(
         saved_var_config::configure_saved_vars(
             args.no_saved_vars,
             &env.state().borrow().session_wtf_path,
+            args.session_wtf_path.is_some(),
         )
     })?;
     startup_trace::time_load_step("load keybindings", || {
@@ -459,7 +463,10 @@ fn configure_startup_state(
     });
     let edit_mode_cache_vars = if saved_vars.is_none() {
         startup_trace::time_load_step("configure edit mode cache", || {
-            saved_var_config::configure_edit_mode_cache_vars(&env.state().borrow().session_wtf_path)
+            saved_var_config::configure_edit_mode_cache_vars(
+                &env.state().borrow().session_wtf_path,
+                args.session_wtf_path.is_some(),
+            )
         })?
     } else {
         None

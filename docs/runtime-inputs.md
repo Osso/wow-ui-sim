@@ -27,8 +27,8 @@ Existing class/race/spec inputs are described in the [selection contract](specs/
 
 `--session-wtf-path DIR` selects one writable directory for session state. When
 omitted, the root remains the platform local-data directory's `wow-sim` folder.
-The option has no environment-variable fallback. Both the supplied and default
-directory use the same explicit runtime constructor before CVars, TTS and other
+The session root itself has no environment-variable fallback. Both the supplied
+and default directory use the same runtime constructor before CVars, TTS and other
 stores initialize.
 Individual stores derive their paths from this root:
 
@@ -40,6 +40,11 @@ Individual stores derive their paths from this root:
 | `cvars.json` | Persisted CVars |
 | `cvars/<profile>/SavedVariables/` | Private simulator models, including TTS preferences |
 | `AddOns.txt` | Local addon enablement unless `WOW_SIM_ADDONS_TXT` is set |
+
+For SavedVariables only, an explicit `--session-wtf-path` takes precedence.
+When the flag is absent, a non-empty `WOW_SIM_STORAGE_DIR` selects the
+SavedVariables directory directly. Otherwise, the default path above applies.
+Other stores continue to use the session root.
 
 `WOW_SIM_ADDONS_TXT` can select a separate local addon-enable file without
 switching the rest of the session state. When set, it takes precedence over
