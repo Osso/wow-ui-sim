@@ -63,6 +63,31 @@ fn build_currency_reward(currency_id: i32, amount: i32, name: &str) -> QuestRewa
     }
 }
 
+#[test]
+fn quest_currency_container_ranges_reach_original_reward_consumer() {
+    let env = currency_reward_env();
+    env.exec("EmbeddedItemTooltip_SetCurrencyByID = function() return true end").unwrap();
+    for (currency, quantity, expected) in [
+        (1553, 1, true), (1553, 25, true), (1553, 49, true),
+        (1553, 50, true), (1553, 0, false), (1822, 0, true),
+        (2003, 25, true), (2003, i32::MAX, true), (2003, 24, false),
+        (999999, 25, false),
+    ] {
+        {
+            let mut sim = env.state().borrow_mut();
+            let quest = sim.quest_log_entries.entries.iter_mut().find(|q| q.quest_id == QUEST_ID).unwrap();
+            quest.currency_rewards = vec![build_currency_reward(currency, quantity, "Fixture Marks")];
+            sim.currency_info.insert(currency, CurrencyInfo { name: "Fixture Marks".into(), quality: 2, ..CurrencyInfo::default() });
+        }
+        let observed: bool = env.eval(r#"
+            local _, container = QuestUtils_AddQuestCurrencyRewardsToTooltip(
+                901001, GameTooltip, { Tooltip = GameTooltip }, nil)
+            return container
+        "#).unwrap();
+        assert_eq!(observed, expected, "currency={currency} quantity={quantity}");
+    }
+}
+
 fn reward_lines(env: &WowLuaEnv) -> Vec<String> {
     render_reward_lines(env, 1)
 }
