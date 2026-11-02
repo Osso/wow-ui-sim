@@ -814,6 +814,9 @@ pub struct SimState {
     pub social_friends: Vec<SocialFriend>,
     pub social_restrictions: SocialRestrictionsState,
     pub restricted_actions: [u8; 6],
+    pub restricted_actions_natural: [bool; 6],
+    pub restriction_chat_client_flag: bool,
+    pub restriction_map_matches: bool,
     /// True while ADDON_RESTRICTION_STATE_CHANGED is being dispatched.
     pub restricted_actions_dispatching: bool,
     /// Wrath selection retains identity when the display projection changes.

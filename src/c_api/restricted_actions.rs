@@ -11,6 +11,14 @@ const INACTIVE: u8 = 0;
 const ACTIVATING: u8 = 1;
 const ACTIVE_STATE: u8 = 2;
 const CHALLENGE_MODE: usize = 2;
+const FORCED_CVARS: [&str; 6] = [
+    "addonCombatRestrictionsForced",
+    "addonEncounterRestrictionsForced",
+    "addonChallengeModeRestrictionsForced",
+    "addonPvPMatchRestrictionsForced",
+    "addonMapRestrictionsForced",
+    "addonChatRestrictionsForced",
+];
 
 pub(crate) fn supported() -> bool {
     matches!(ACTIVE, ClientProfile::Retail | ClientProfile::Ptr)
@@ -81,6 +89,41 @@ pub(crate) fn set_supplied_restriction(state: &mut LuaState) -> LuaResult<u32> {
     Ok(0)
 }
 
+/// Supply the native inputs whose server-side producers are not modeled.
+pub(crate) fn set_supplied_context(state: &mut LuaState) -> LuaResult<u32> {
+    let encounter_status = bool::from_stack(state, 1)?;
+    let encounter_count = u32::from_stack(state, 2)?;
+    let pvp_state = u32::from_stack(state, 3)?;
+    let map_classification = u32::from_stack(state, 4)?;
+    let map_flags = u32::from_stack(state, 5)?;
+    let chat_client_flag = bool::from_stack(state, 6)?;
+    let map_matches = map_classification != 0 && map_flags & 512 == 0;
+    {
+        let mut sim = borrow_state_mut(state)?;
+        sim.restriction_chat_client_flag = chat_client_flag;
+        sim.restriction_map_matches = map_matches;
+    }
+    set_restriction(state, 1, encounter_status || encounter_count > 0)?;
+    set_restriction(state, 3, (1..=4).contains(&pvp_state))?;
+    set_restriction(state, 4, map_matches)?;
+    recompute_chat(state)?;
+    Ok(0)
+}
+
+fn recompute_chat(state: &mut LuaState) -> LuaResult<()> {
+    let chat = {
+        let sim = borrow_state(state)?;
+        sim.cvars.get_bool("addonChatRestrictionsEnabled")
+            && sim.restriction_chat_client_flag
+            && sim.restriction_map_matches
+            && [1, 2, 3]
+                .iter()
+                .any(|&kind| sim.restricted_actions[kind] == ACTIVE_STATE)
+    };
+    borrow_state_mut(state)?.restricted_actions_natural[5] = chat;
+    recompute_restriction(state, 5)
+}
+
 pub(crate) fn apply_host_event(state: &mut LuaState, event: &str) -> LuaResult<()> {
     let transition = match event {
         "ENCOUNTER_START" => Some((1, true)),
@@ -103,8 +146,42 @@ pub(crate) fn set_restriction(state: &mut LuaState, kind: usize, active: bool) -
     if !supported() {
         return Ok(());
     }
-    let old = borrow_state(state)?.restricted_actions[kind];
-    if (old != INACTIVE) == active {
+    borrow_state_mut(state)?.restricted_actions_natural[kind] = active;
+    recompute_restriction(state, kind)?;
+    if (1..=3).contains(&kind) {
+        recompute_chat(state)?;
+    }
+    Ok(())
+}
+
+pub(crate) fn update_forced_cvar(state: &mut LuaState, name: &str) -> LuaResult<()> {
+    if !supported() {
+        return Ok(());
+    }
+    if name.eq_ignore_ascii_case("addonChatRestrictionsEnabled") {
+        return recompute_chat(state);
+    }
+    if let Some(kind) = FORCED_CVARS
+        .iter()
+        .position(|cvar| cvar.eq_ignore_ascii_case(name))
+    {
+        recompute_restriction(state, kind)?;
+        if (1..=3).contains(&kind) {
+            recompute_chat(state)?;
+        }
+    }
+    Ok(())
+}
+
+fn recompute_restriction(state: &mut LuaState, kind: usize) -> LuaResult<()> {
+    let (old, active) = {
+        let sim = borrow_state(state)?;
+        (
+            sim.restricted_actions[kind],
+            sim.restricted_actions_natural[kind] || sim.cvars.get_bool(FORCED_CVARS[kind]),
+        )
+    };
+    if old == ACTIVATING || (old == ACTIVE_STATE) == active {
         return Ok(());
     }
     let next = if active { ACTIVATING } else { INACTIVE };

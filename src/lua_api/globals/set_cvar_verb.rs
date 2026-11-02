@@ -87,6 +87,7 @@ fn set_cvar(state: &mut LuaState) -> LuaResult<u32> {
     let override_change = gamepad_override_change(state, &name, &value)?;
     let accepted = borrow_state_mut(state)?.cvars.set(&name, &value);
     if accepted {
+        crate::c_api::restricted_actions::update_forced_cvar(state, &name)?;
         let name_arg = create_string(state, &name);
         let value_arg = create_string(state, &value);
         dispatch_event_now(state, "CVAR_UPDATE", &[name_arg, value_arg])?;
