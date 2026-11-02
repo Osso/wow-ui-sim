@@ -168,7 +168,13 @@ fn clear_keystone(state: &mut LuaState) -> LuaResult<u32> {
 fn location_exists(sim: &crate::lua_api::SimState, location: KeystoneLocation) -> bool {
     match location {
         KeystoneLocation::Bag(bag, slot) => sim.get_bag_item(bag, slot).is_some(),
-        KeystoneLocation::Equipment(slot) => sim.player.equipped_items.contains_key(&slot),
+        KeystoneLocation::Equipment(slot) => {
+            sim.player.equipped_items.contains_key(&slot)
+                || sim
+                    .bag_info
+                    .values()
+                    .any(|bag| bag.inventory_slot == Some(slot) && bag.item_id.is_some())
+        }
     }
 }
 

@@ -111,7 +111,7 @@ fn challenges_keystone_filter_tracks_item_and_map_state(env: &WowLuaEnv) {
         let mut sim = env.state().borrow_mut();
         sim.keystone.item_modifiers.insert(
             KeystoneLocation::Bag(0, 1),
-            (158923, vec![(17, 2)]),
+            (158923, vec![(17, 2), (17, 56)]),
         );
         sim.keystone.current_map_selector = Some(960);
     }
@@ -129,6 +129,7 @@ fn challenges_keystone_filter_tracks_item_and_map_state(env: &WowLuaEnv) {
         assert(not C_Item.IsItemKeystoneByID(999999999))
         assert(not pcall(C_Item.IsItemKeystoneByID, nil))
         assert(not pcall(C_ChallengeMode.CanUseKeystoneInCurrentMap, 158923))
+        assert(not pcall(C_ChallengeMode.CanUseKeystoneInCurrentMap, ItemLocation:CreateFromBagAndSlot(0, 99)))
     "#).expect("item-info and location contracts should hold");
     env.state().borrow_mut().keystone.current_map_selector = Some(961);
     let matches: bool = env.eval(r#"
@@ -187,7 +188,7 @@ fn challenges_keystone_close_and_clear_keep_independent_state(env: &WowLuaEnv) {
         observer:RegisterEvent('ITEM_LOCK_CHANGED')
         observer:RegisterEvent('ITEM_UNLOCKED')
         observer:SetScript('OnEvent', function(_, event, bag, slot)
-            table.insert(keystoneLockEvents, event .. ':' .. bag .. ':' .. slot)
+            table.insert(keystoneLockEvents, event .. ':' .. bag .. ':' .. tostring(slot))
         end)
     "#).expect("lock event observer should register");
     {
@@ -205,6 +206,21 @@ fn challenges_keystone_close_and_clear_keep_independent_state(env: &WowLuaEnv) {
     let events: String = env.eval("return table.concat(keystoneLockEvents, ',')")
         .expect("lock events should be observable");
     assert_eq!(events, "ITEM_LOCK_CHANGED:0:1,ITEM_UNLOCKED:0:1");
+    {
+        let mut sim = env.state().borrow_mut();
+        let bag = sim.bag_info.get_mut(&1).expect("bag slot fixture");
+        bag.inventory_slot = Some(20);
+        bag.item_id = Some(158923);
+        let equipment = KeystoneLocation::Equipment(20);
+        sim.keystone.selected_guid = Some("Item-0-0-43".into());
+        sim.keystone.selected_location = Some(equipment);
+        sim.keystone.reason_one_locks.insert(equipment);
+    }
+    env.exec("assert(IsInventoryItemLocked(20)); C_ChallengeMode.ClearKeystone(); assert(not IsInventoryItemLocked(20))")
+        .expect("equipped bag lock should clear");
+    let events: String = env.eval("return table.concat(keystoneLockEvents, ',')")
+        .expect("equipment lock events should be observable");
+    assert!(events.ends_with("ITEM_LOCK_CHANGED:20:nil,ITEM_UNLOCKED:20:nil"));
 }
 }
 
