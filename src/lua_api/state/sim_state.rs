@@ -413,6 +413,11 @@ pub struct SimState {
     pub suppress_runtime_on_load_depth: u32,
     pub xml_load_addon_depth: u32,
     pub mouse_position: Option<(f32, f32)>,
+    /// Shared mouse-disable state; absent until the client or host sets it.
+    pub mouse_disabled: Option<bool>,
+    /// EMULATED availability override supplied by the host.
+    pub mouse_availability_override: bool,
+    pub mouse_available: Option<bool>,
     pub hovered_frame: Option<u64>,
     pub active_drag_frame: Option<u64>,
     pub active_slider_thumb_drag_frame: Option<u64>,
