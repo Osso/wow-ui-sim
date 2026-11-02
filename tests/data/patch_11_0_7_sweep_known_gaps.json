@@ -1,7 +1,6 @@
 [
   "wt-global-api-AreClassRolesSoftSuggestions-42",
   "wt-global-api-C_EndOfMatchUI.GetEndOfMatchDetails-57",
-  "wt-global-api-C_GameRules.GetGameRuleAsFrameStrata-60",
   "wt-global-api-C_Garrison.IsLandingPageMinimapButtonVisible-61",
   "wt-global-api-C_LFGInfo.AreCrossFactionGroupQueuesAllowed-62",
   "wt-global-api-C_LFGInfo.DoesActivePartyMeetPremadeLaunchCount-63",
