@@ -552,6 +552,9 @@ fn world_map_zone_timer_consumes_supplied_pvp_world_states() {
         assert(TestOutdoorTimer.TimeLabel:IsShown() and #TestOutdoorTimer.TimeLabel:GetText() > 0)
         local first = C_PvP.GetOutdoorPvPWaitTime(123)
         assert(first > 3500 and first <= 3600)
+        assert(C_PvP.GetOutdoorPvPWaitTime('123.9') > 3500)
+        assert(not pcall(C_PvP.GetOutdoorPvPWaitTime))
+        assert(not pcall(C_PvP.GetOutdoorPvPWaitTime, {}))
         WorldMapFrame:SetMapID(244)
         WorldMapZoneTimerMixin.OnUpdate(TestOutdoorTimer, 0)
         assert(TestOutdoorTimer.TimeLabel:IsShown())
@@ -565,6 +568,14 @@ fn world_map_zone_timer_consumes_supplied_pvp_world_states() {
         assert(not TestOutdoorTimer.TimeLabel:IsShown())
         assert(C_PvP.GetOutdoorPvPWaitTime(244) == nil)
     "#).unwrap();
+    {
+        let mut state = env.state().borrow_mut();
+        state.outdoor_pvp_world_state.values.insert(5387, 1);
+        state.outdoor_pvp_world_state.values.insert(5332, now - 1);
+    }
+    env.exec("assert(C_PvP.GetOutdoorPvPWaitTime(244) == nil)").unwrap();
+    env.state().borrow_mut().outdoor_pvp_world_state.values.remove(&5332);
+    env.exec("assert(C_PvP.GetOutdoorPvPWaitTime(244) == nil)").unwrap();
 }
 
 #[test]
