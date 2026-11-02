@@ -8,6 +8,7 @@
 - [ ] Apply the same cache match to the player as to other units.
 - [ ] `NotifyInspect` clears the existing Retail cache before a subsequent response is supplied.
 - [ ] Preserve the simulator's identity-restriction output policy.
+- [ ] Post-cleanup restoration preserves the identity of the Blizzard-published deprecated `GetInspectSpecialization` alias.
 
 ## Best-guess basis
 
@@ -26,6 +27,7 @@
 ## Tests asserting this spec
 
 - `tests/patch_12_1_0_publication_sweep.rs::inspected_spec_cache_is_read_by_player_spells` exercises two matching values, a mismatch and request clearing.
+- `tests/patch_12_1_0_publication_sweep.rs::inspect_specialization_deprecated_alias_matches_original_publisher` checks alias and namespace member identity after restoration.
 
 ## Known gaps (current cycle)
 
