@@ -36,6 +36,17 @@ fn inspected_spec_cache_is_read_by_player_spells(env: &WowLuaEnv) {
 }
 
 prefork_full_ui_case! {
+fn inspect_specialization_deprecated_alias_matches_original_publisher(env: &WowLuaEnv) {
+    env.exec(r#"
+        assert(C_AddOns.IsAddOnLoaded('Blizzard_Deprecated'), 'publisher is not loaded')
+        assert(GetCVarBool('loadDeprecationFallbacks'), 'deprecation fallback is disabled')
+        assert(rawequal(GetInspectSpecialization, C_SpecializationInfo.GetInspectSpecialization),
+            'Blizzard deprecated alias differs from C_SpecializationInfo.GetInspectSpecialization')
+    "#).unwrap();
+}
+}
+
+prefork_full_ui_case! {
 fn patch_12_1_0_publication_sweep(env: &WowLuaEnv) {
     sweep::run_publication_sweep(env, &sweep::SweepSpec {
         register: include_str!("../data/patch-api/sources/12.1.0-wikitext-register.json"),
