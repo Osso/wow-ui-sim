@@ -11,6 +11,8 @@ fn derived_item_specializations_use_overrides_rules_and_level_bands() {
         r#"
         assert(C_Item.DoesItemContainSpec(80773, 2, 65))
         assert(not C_Item.DoesItemContainSpec(80773, 2, 66))
+        assert(C_Item.DoesItemContainSpec(63684, 1, 71))
+        assert(not C_Item.DoesItemContainSpec(63684, 10, 268))
         assert(C_Item.DoesItemContainSpec(892, 8, 62))
         assert(not C_Item.DoesItemContainSpec(892, 8, 65))
         "#,
