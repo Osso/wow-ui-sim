@@ -34,6 +34,9 @@ pub mod item_enchants;
 #[path = "../data/item_spell_metadata.rs"]
 pub mod item_spell_metadata;
 #[rustfmt::skip]
+#[path = "../data/item_spell_ranges.rs"]
+pub mod item_spell_ranges;
+#[rustfmt::skip]
 #[path = "../data/item_sets.rs"]
 pub mod item_sets;
 #[rustfmt::skip]

@@ -11,6 +11,7 @@ mod item_creation_context_data;
 mod item_effects;
 mod item_gem;
 mod item_pickup;
+pub mod item_range;
 mod item_set;
 pub mod item_spec;
 pub mod item_spec_derive;

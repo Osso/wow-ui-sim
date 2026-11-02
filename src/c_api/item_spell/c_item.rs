@@ -256,6 +256,12 @@ fn register_c_item_inventory_queries(
         table_set_rust_fn_static(
             state,
             table_ref,
+            "ItemHasRange",
+            super::item_range::item_has_range,
+        )?;
+        table_set_rust_fn_static(
+            state,
+            table_ref,
             "DoesItemContainSpec",
             super::item_spec::does_item_contain_spec,
         )?;
