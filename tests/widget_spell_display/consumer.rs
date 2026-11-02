@@ -405,6 +405,28 @@ fn duplicate_guid_registrations_keep_remaining_consumer_live() {
 }
 
 #[test]
+fn numeric_guid_registration_reaches_original_container() {
+    let env = load_and_register_spell_container_env(false);
+    assert_lua(&env, "register numeric GUID", r#"
+        NumericContainer = CreateFrame('Frame', nil, UIParent, 'UIWidgetContainerTemplate')
+        NumericContainer:RegisterForWidgetSet(431, nil, nil, {unit='42', isGuid=true})
+        C_UIWidgetManager.UnregisterUnitForWidgetUpdates('42', true)
+        C_UIWidgetManager.RegisterUnitForWidgetUpdates(42, 0)
+    "#);
+    let mut membership = entry();
+    membership.unit_token = Some("42".into());
+    let mut row = supplied_record();
+    row.spell_info.text = "Numeric registration".into();
+    env.update_ui_widget_for_guid(SET_ID, membership, WidgetVisualization::SpellDisplay(row)).unwrap();
+    assert_lua(&env, "numeric registration consumer", r#"
+        assert(NumericContainer.widgetFrames[761301].Spell.Text:GetText() == 'Numeric registration')
+        C_UIWidgetManager.UnregisterUnitForWidgetUpdates(42, 0)
+        C_UIWidgetManager.SetProcessingUnit()
+        C_UIWidgetManager.SetProcessingUnitGuid()
+    "#);
+}
+
+#[test]
 fn spell_display_attached_player_context_separate_from_world_loot_policy() {
     let env = load_and_register_spell_container_env(true);
     supply(&env, supplied_record(), true);
