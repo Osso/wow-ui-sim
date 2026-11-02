@@ -15,6 +15,25 @@ const CURRENCY_INFO_METHODS: &[(&str, rilua::RustFn)] = &[
     #[cfg(feature = "retail-12-0-0")]
     ("IsCurrencyTransferInProgress", query_transfer_activity),
     #[cfg(feature = "client-retail")]
+    (
+        "DoesCurrentFilterRequireAccountCurrencyData",
+        currency_filter_requires_account_data,
+    ),
+    #[cfg(feature = "client-retail")]
+    ("GetCurrencyFilter", get_currency_filter),
+    #[cfg(feature = "client-retail")]
+    ("SetCurrencyFilter", set_currency_filter),
+    #[cfg(feature = "client-retail")]
+    (
+        "IsAccountCharacterCurrencyDataReady",
+        account_currency_data_ready,
+    ),
+    #[cfg(feature = "client-retail")]
+    (
+        "RequestCurrencyDataForAccountCharacters",
+        request_account_currency_data,
+    ),
+    #[cfg(feature = "client-retail")]
     ("ExpandCurrencyList", expand_currency_list),
     #[cfg(feature = "client-retail")]
     ("SetCurrencyBackpack", set_currency_backpack),
@@ -189,6 +208,64 @@ fn query_currency_faction_grant(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
+// Retail CurrencyInfoDocumentation.lua:27-33,225-231,555-563.
+#[cfg(feature = "client-retail")]
+fn currency_filter_requires_account_data(state: &mut LuaState) -> LuaResult<u32> {
+    let required = borrow_state(state)?.currency_list.filter() == 2;
+    state.push(Val::Bool(required));
+    Ok(1)
+}
+
+#[cfg(feature = "client-retail")]
+fn get_currency_filter(state: &mut LuaState) -> LuaResult<u32> {
+    let filter = borrow_state(state)?.currency_list.filter();
+    state.push(Val::Num(f64::from(filter)));
+    Ok(1)
+}
+
+#[cfg(feature = "client-retail")]
+fn account_currency_data_ready(state: &mut LuaState) -> LuaResult<u32> {
+    let ready = borrow_state(state)?.currency_list.account_data_ready();
+    state.push(Val::Bool(ready));
+    Ok(1)
+}
+
+// Retail CurrencyInfoDocumentation.lua:516-518.
+#[cfg(feature = "client-retail")]
+fn request_account_currency_data(state: &mut LuaState) -> LuaResult<u32> {
+    borrow_state_mut(state)?
+        .currency_list
+        .request_account_data();
+    Ok(0)
+}
+
+#[cfg(feature = "client-retail")]
+fn set_currency_filter(state: &mut LuaState) -> LuaResult<u32> {
+    let value = rilua::table_security::unwrap_secret(state, stack_val(state, 1))?;
+    let number = match value {
+        Val::Nil => return Err(rilua::runtime_error("currency filter is required")),
+        Val::Num(number) => number,
+        Val::Str(_) => val_to_string(state, value)
+            .and_then(|text| text.trim().parse::<f64>().ok())
+            .unwrap_or(0.0),
+        _ => 0.0,
+    };
+    if !number.is_finite() || number < i32::MIN as f64 || number > i32::MAX as f64 {
+        return Err(rilua::runtime_error("currency filter is out of range"));
+    }
+    let filter = number.trunc() as i32;
+    if !(0..=2).contains(&filter) {
+        return Err(rilua::runtime_error("currency filter is out of range"));
+    }
+    borrow_state_mut(state)?.currency_list.set_filter(filter);
+    crate::lua_api::globals::state_backed_queries::dispatch_event_now(
+        state,
+        "CURRENCY_DISPLAY_UPDATE",
+        &[],
+    )?;
+    Ok(0)
+}
+
 #[cfg(feature = "client-retail")]
 fn expand_currency_list(state: &mut LuaState) -> LuaResult<u32> {
     let index = i32::from_stack(state, 1)?;
@@ -211,7 +288,7 @@ fn c_currency_get_list_size(state: &mut LuaState) -> LuaResult<u32> {
 fn read_currency_list_entry(
     state: &LuaState,
     index: i32,
-) -> LuaResult<Option<&'static currency_data::CurrencyEntry>> {
+) -> LuaResult<Option<currency_data::CurrencyEntry>> {
     #[cfg(feature = "client-retail")]
     {
         Ok(borrow_state(state)?
@@ -222,7 +299,7 @@ fn read_currency_list_entry(
     #[cfg(not(feature = "client-retail"))]
     {
         let _ = state;
-        Ok(currency_data::get_currency_list_entry(index))
+        Ok(currency_data::get_currency_list_entry(index).copied())
     }
 }
 
@@ -249,7 +326,7 @@ fn c_currency_get_list_info(state: &mut LuaState) -> LuaResult<u32> {
         state.push(Val::Nil);
         return Ok(1);
     };
-    let Some(display) = read_currency_list_display_info(state, entry)? else {
+    let Some(display) = read_currency_list_display_info(state, &entry)? else {
         state.push(Val::Nil);
         return Ok(1);
     };
@@ -268,10 +345,10 @@ fn c_currency_get_list_info(state: &mut LuaState) -> LuaResult<u32> {
         Val::Num(entry.depth as f64),
     );
     write_currency_row_display_fields(state, info, &display);
-    write_currency_list_status_fields(state, info, entry);
+    write_currency_list_status_fields(state, info, &entry);
     #[cfg(feature = "client-retail")]
     {
-        let watched = borrow_state(state)?.currency_list.is_watched(entry);
+        let watched = borrow_state(state)?.currency_list.is_watched(&entry);
         table_set_static(state, info, "isShowInBackpack", Val::Bool(watched));
         table_set_static(
             state,

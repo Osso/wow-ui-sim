@@ -4,6 +4,7 @@
 //! The list is hierarchical: headers group currencies into categories.
 
 /// A currency entry in the currency list.
+#[derive(Clone, Copy)]
 pub struct CurrencyEntry {
     pub currency_id: i32,
     pub name: &'static str,

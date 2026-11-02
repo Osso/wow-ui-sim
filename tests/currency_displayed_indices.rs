@@ -33,6 +33,103 @@ pub(crate) fn with_token_ui(probe: &str) {
 }
 
 #[test]
+fn currency_filter_account_data_query_allows_original_token_ui_update() {
+    with_token_ui(
+        r##"
+        local C = C_CurrencyInfo
+        assert(C.GetCurrencyFilter() == 1)
+        assert(C.DoesCurrentFilterRequireAccountCurrencyData() == false)
+        assert(C.IsAccountCharacterCurrencyDataReady() == true)
+        local updates = 0
+        local watcher = CreateFrame("Frame")
+        watcher:RegisterEvent("CURRENCY_DISPLAY_UPDATE")
+        watcher:SetScript("OnEvent", function() updates = updates + 1 end)
+        for _, case in ipairs({{0, false}, {1.9, false}, {2, true}, {2, true}, {false, false}, {{}, false}}) do
+            assert(select("#", C.SetCurrencyFilter(case[1])) == 0)
+            assert(C.DoesCurrentFilterRequireAccountCurrencyData() == case[2])
+            TokenFrame:Update()
+            B5AssertProvider()
+        end
+        assert(C.GetCurrencyFilter() == 0 and updates == 6)
+        for _, invalid in ipairs({-1, 3, 2147483648}) do
+            assert(not pcall(C.SetCurrencyFilter, invalid))
+        end
+        assert(not pcall(C.SetCurrencyFilter))
+        assert(not pcall(C.SetCurrencyFilter, nil))
+        assert(C.GetCurrencyFilter() == 0 and updates == 6)
+        "##,
+    );
+}
+
+#[test]
+fn currency_filter_supplied_account_response_defers_projection() {
+    let env = wow_ui_sim::lua_api::WowLuaEnv::new().unwrap();
+    {
+        let mut state = env.state().borrow_mut();
+        state.currency_list.account_server_enabled = false;
+        let mut info = state.currency_info.get(&2806).unwrap().clone();
+        info.name = "Supplied account currency".into();
+        state.currency_info.insert(990001, info);
+    }
+    env.exec(r#"
+        C_CurrencyInfo.SetCurrencyFilter(2)
+        assert(C_CurrencyInfo.IsAccountCharacterCurrencyDataReady())
+    "#).unwrap();
+    {
+        let mut state = env.state().borrow_mut();
+        state.currency_list.account_server_enabled = true;
+        state.currency_list.account_context_present = false;
+    }
+    env.exec("C_CurrencyInfo.RequestCurrencyDataForAccountCharacters(); assert(C_CurrencyInfo.IsAccountCharacterCurrencyDataReady())").unwrap();
+    env.state().borrow_mut().currency_list.account_context_present = true;
+    env.exec(r#"
+        local watcher = CreateFrame("Frame")
+        watcher:RegisterEvent("ACCOUNT_CHARACTER_CURRENCY_DATA_RECEIVED")
+        watcher:SetScript("OnEvent", function() AccountEvents = (AccountEvents or 0) + 1 end)
+        C_CurrencyInfo.SetCurrencyFilter(2)
+        assert(not C_CurrencyInfo.IsAccountCharacterCurrencyDataReady())
+        assert(C_CurrencyInfo.GetCurrencyListSize() == 19)
+        C_CurrencyInfo.SetCurrencyFilter(1)
+        assert(not C_CurrencyInfo.IsAccountCharacterCurrencyDataReady())
+        C_CurrencyInfo.SetCurrencyFilter(2)
+    "#).unwrap();
+    let mut row = *wow_ui_sim::lua_api::globals::currency_data::get_currency_list_entry(3).unwrap();
+    row.currency_id = 990001;
+    env.complete_account_currency_request(vec![row]).unwrap();
+    env.exec(r#"
+        assert(AccountEvents == 1)
+        assert(C_CurrencyInfo.IsAccountCharacterCurrencyDataReady())
+        assert(C_CurrencyInfo.GetCurrencyListSize() == 20)
+        assert(C_CurrencyInfo.GetCurrencyListInfo(20).name == "Supplied account currency")
+        C_CurrencyInfo.SetCurrencyFilter(2)
+        assert(C_CurrencyInfo.IsAccountCharacterCurrencyDataReady())
+        C_CurrencyInfo.SetCurrencyFilter(1)
+        assert(C_CurrencyInfo.GetCurrencyListSize() == 19)
+    "#).unwrap();
+    {
+        let mut state = env.state().borrow_mut();
+        state.currency_list.account_cache_invalidated = true;
+        state.currency_list.cached_transaction_count = 2;
+        state.currency_list.transaction_loading = true;
+        state.currency_list.pending_character_requests = 1;
+    }
+    env.exec("C_CurrencyInfo.RequestCurrencyDataForAccountCharacters(); assert(not C_CurrencyInfo.IsAccountCharacterCurrencyDataReady())").unwrap();
+    {
+        let state = env.state().borrow();
+        assert!(state.currency_list.account_loading);
+        assert_eq!(state.currency_list.cached_transaction_count, 0);
+        assert!(!state.currency_list.account_cache_invalidated);
+    }
+    env.complete_account_currency_request(vec![]).unwrap();
+    {
+        let state = env.state().borrow();
+        assert!(!state.currency_list.account_loading);
+        assert!(state.currency_list.transaction_loading);
+        assert_eq!(state.currency_list.pending_character_requests, 1);
+    }
+}
+
+#[test]
 fn currency_displayed_indices_original_headers_collapse_shift_and_restore() {
     with_token_ui(
         r#"
