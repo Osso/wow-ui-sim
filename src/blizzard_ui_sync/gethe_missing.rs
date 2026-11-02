@@ -139,6 +139,18 @@ pub(super) fn prepare_pinned_source(provenance: &str) -> crate::Result<()> {
 }
 
 fn fetch_pinned_revision(tree: &GetheTree) -> crate::Result<()> {
+    if !tree.root.is_dir() {
+        return Ok(());
+    }
+    let repository = std::process::Command::new("git")
+        .arg("-C")
+        .arg(&tree.root)
+        .args(["rev-parse", "--git-dir"])
+        .output()
+        .map_err(|cause| crate::Error::Other(format!("inspect Gethe repository: {cause}")))?;
+    if !repository.status.success() {
+        return Ok(());
+    }
     let object = format!("{}^{{commit}}", tree.revision);
     let present = std::process::Command::new("git")
         .arg("-C")
