@@ -8,6 +8,19 @@ pub mod reward_cache;
 pub mod war_mode;
 pub use outdoor_wait_state::OutdoorPvpWorldState;
 
+/// Simulator-observable transport submissions, not server acceptance.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub enum PvpRequest {
+    Set(bool),
+    Toggle,
+}
+
+#[derive(Debug, Default)]
+pub struct PvpRequestTransport {
+    pub state: Option<i32>,
+    pub submitted: Vec<PvpRequest>,
+}
+
 /// Supplied inputs for the battleground enlistment query.
 #[derive(Debug, Default)]
 pub struct BattlegroundEnlistmentInputs {
