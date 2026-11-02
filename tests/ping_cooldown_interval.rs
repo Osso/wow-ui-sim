@@ -10,14 +10,14 @@ fn ping_env() -> WowLuaEnv {
 }
 
 // Host-owned explicit state fixture; never replaces the public Lua getter.
-fn supply_interval(env: &WowLuaEnv, start_time_ms: f64, end_time_ms: f64) {
-    env.state().borrow_mut().ping_cooldown_interval = PingCooldownInterval {
+fn supply_interval(env: &WowLuaEnv, start_time_ms: u32, end_time_ms: u32) {
+    env.state().borrow_mut().ping_burst.interval = PingCooldownInterval {
         start_time_ms,
         end_time_ms,
     };
 }
 
-fn assert_interval(env: &WowLuaEnv, start: f64, end: f64) {
+fn assert_interval(env: &WowLuaEnv, start: u32, end: u32) {
     env.exec(&format!(
         r#"
         assert(select('#', C_Ping.GetCooldownInfo()) == 1, 'one required DTO')
@@ -35,7 +35,7 @@ fn assert_interval(env: &WowLuaEnv, start: f64, end: f64) {
 #[test]
 fn default_interval_is_nonnil_zero_and_accessible_to_tainted_zeroarg_caller() {
     let env = ping_env();
-    assert_interval(&env, 0.0, 0.0);
+    assert_interval(&env, 0, 0);
     env.exec(
         r#"
         local function addonRead()
@@ -58,16 +58,16 @@ fn default_interval_is_nonnil_zero_and_accessible_to_tainted_zeroarg_caller() {
 #[test]
 fn supplied_interval_is_returned_as_absolute_milliseconds() {
     let env = ping_env();
-    supply_interval(&env, 12000.0, 15500.0);
+    supply_interval(&env, 12000, 15500);
     env.exec("GetTime = function() return 12 end")
         .expect("controlled consumer clock");
-    assert_interval(&env, 12000.0, 15500.0);
+    assert_interval(&env, 12000, 15500);
 }
 
 #[test]
 fn every_read_is_a_fresh_dto_and_mutation_does_not_change_state() {
     let env = ping_env();
-    supply_interval(&env, 12000.0, 15500.0);
+    supply_interval(&env, 12000, 15500);
     env.exec(
         r#"
         local first = C_Ping.GetCooldownInfo()
@@ -85,19 +85,19 @@ fn every_read_is_a_fresh_dto_and_mutation_does_not_change_state() {
         "#,
     )
     .expect("DTO identity and observable mutation independence");
-    assert_interval(&env, 12000.0, 15500.0);
+    assert_interval(&env, 12000, 15500);
 }
 
 #[test]
 fn live_state_replacement_and_explicit_reset_affect_the_next_read() {
     let env = ping_env();
-    supply_interval(&env, 12000.0, 15500.0);
+    supply_interval(&env, 12000, 15500);
     env.exec("SavedPingInterval = C_Ping.GetCooldownInfo()")
         .expect("retain caller snapshot");
-    supply_interval(&env, 22000.0, 24000.0);
-    assert_interval(&env, 22000.0, 24000.0);
-    env.state().borrow_mut().ping_cooldown_interval = PingCooldownInterval::default();
-    assert_interval(&env, 0.0, 0.0);
+    supply_interval(&env, 22000, 24000);
+    assert_interval(&env, 22000, 24000);
+    env.state().borrow_mut().ping_burst.interval = PingCooldownInterval::default();
+    assert_interval(&env, 0, 0);
     env.exec(
         "assert(SavedPingInterval.startTimeMs == 12000 and SavedPingInterval.endTimeMs == 15500)",
     )
@@ -108,14 +108,14 @@ fn live_state_replacement_and_explicit_reset_affect_the_next_read() {
 fn simultaneous_environments_do_not_share_interval_or_reset_state() {
     let first = ping_env();
     let second = ping_env();
-    supply_interval(&first, 12000.0, 15500.0);
-    assert_interval(&second, 0.0, 0.0);
-    supply_interval(&second, 22000.0, 24000.0);
-    assert_interval(&first, 12000.0, 15500.0);
-    assert_interval(&second, 22000.0, 24000.0);
-    first.state().borrow_mut().ping_cooldown_interval = PingCooldownInterval::default();
-    assert_interval(&first, 0.0, 0.0);
-    assert_interval(&second, 22000.0, 24000.0);
+    supply_interval(&first, 12000, 15500);
+    assert_interval(&second, 0, 0);
+    supply_interval(&second, 22000, 24000);
+    assert_interval(&first, 12000, 15500);
+    assert_interval(&second, 22000, 24000);
+    first.state().borrow_mut().ping_burst.interval = PingCooldownInterval::default();
+    assert_interval(&first, 0, 0);
+    assert_interval(&second, 22000, 24000);
 }
 
 #[test]
@@ -159,7 +159,7 @@ fn actual_vendor_onenter_uses_absolute_end_ms_and_requests_three_point_five_seco
     )
     .expect("actual vendor interprets default as inactive");
 
-    supply_interval(&env, 12000.0, 15500.0);
+    supply_interval(&env, 12000, 15500);
     env.exec(
         r#"
         PingDraftListener:OnEnter()
@@ -176,7 +176,7 @@ fn actual_vendor_onenter_uses_absolute_end_ms_and_requests_three_point_five_seco
         "#,
     )
     .expect("actual vendor millisecond interpretation and callback outputs");
-    assert_interval(&env, 12000.0, 15500.0);
+    assert_interval(&env, 12000, 15500);
 
     // Exact end boundary belongs to consumer interpretation, not getter auto-expiry.
     env.exec(
@@ -188,5 +188,5 @@ fn actual_vendor_onenter_uses_absolute_end_ms_and_requests_three_point_five_seco
         "#,
     )
     .expect("vendor treats nowMs == endTimeMs as inactive");
-    assert_interval(&env, 12000.0, 15500.0);
+    assert_interval(&env, 12000, 15500);
 }
