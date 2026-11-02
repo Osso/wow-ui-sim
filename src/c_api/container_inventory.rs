@@ -169,6 +169,7 @@ pub(crate) fn pickup_inventory_item(state: &mut LuaState) -> LuaResult<u32> {
                 .equipped_items
                 .remove(&slot)
                 .expect("checked equipment");
+            clear_equipped_bag_identity(&mut sim, slot, &item);
             Some(Some(create_equipped_cursor(item, slot)))
         } else {
             None
@@ -212,8 +213,32 @@ fn equip_held_item(sim: &mut SimState, slot: i32) -> Option<Option<CursorInfo>> 
         owned_identity: *owned_identity,
     };
     item_upgrade_eligibility::swap_with_cursor(sim, ItemSlot::Equipment(slot));
+    let incoming_id = incoming.item_id;
+    let incoming_identity = incoming.owned_identity;
     let displaced = sim.player.equipped_items.insert(slot, incoming);
+    if let Some(item) = &displaced {
+        clear_equipped_bag_identity(sim, slot, item);
+    }
+    if let Some(bag) = sim
+        .bag_info
+        .values_mut()
+        .find(|bag| bag.inventory_slot == Some(slot) && bag.item_id == Some(incoming_id))
+    {
+        bag.owned_identity = incoming_identity;
+    }
     Some(displaced.map(|item| create_equipped_cursor(item, slot)))
+}
+
+fn clear_equipped_bag_identity(sim: &mut SimState, slot: i32, item: &EquippedItem) {
+    if let Some(identity) = item.owned_identity {
+        if let Some(bag) = sim.bag_info.values_mut().find(|bag| {
+            bag.inventory_slot == Some(slot)
+                && bag.item_id == Some(item.item_id)
+                && bag.owned_identity == Some(identity)
+        }) {
+            bag.owned_identity = None;
+        }
+    }
 }
 
 fn create_equipped_cursor(item: EquippedItem, slot: i32) -> CursorInfo {
