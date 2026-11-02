@@ -16,6 +16,8 @@ pub mod item_categories;
 pub mod item_children;
 #[path = "../data/item_effects.rs"]
 pub mod item_effects;
+#[path = "../data/item_enchants.rs"]
+pub mod item_enchants;
 #[path = "../data/items.rs"]
 pub mod items;
 #[path = "../data/manifest_interface_data.rs"]
