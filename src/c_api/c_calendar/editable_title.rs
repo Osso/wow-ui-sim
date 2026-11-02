@@ -1,5 +1,5 @@
 //! Local title edits on the supplied editable Calendar event.
-use crate::lua_api::globals::unit_misc::existing_guid_for_unit;
+use super::editable_access::can_edit;
 use crate::lua_api::methods::{borrow_state, borrow_state_mut};
 use crate::lua_bridge::{stack_val, table_set_rust_fn_static};
 use rilua::vm::state::LuaState;
@@ -30,17 +30,7 @@ fn set_title(state: &mut LuaState) -> LuaResult<u32> {
         .to_vec();
     let allowed = {
         let host = borrow_state(state)?;
-        let policy = &host.calendar_context_policy;
-        policy.editable.as_ref().is_some_and(|event| {
-            if event.category_flags & 0x40 != 0 {
-                policy.announcement_edit_allowed
-            } else {
-                event.local_edit_credential.is_some_and(|id| id != 0)
-                    || existing_guid_for_unit(&host, "player")
-                        .as_deref()
-                        .is_some_and(|id| !id.is_empty() && id == event.creator_identity)
-            }
-        })
+        can_edit(&host)
     };
     if allowed {
         let mut host = borrow_state_mut(state)?;
