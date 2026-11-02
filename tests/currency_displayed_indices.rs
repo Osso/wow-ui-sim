@@ -36,9 +36,27 @@ pub(crate) fn with_token_ui(probe: &str) {
 fn currency_filter_account_data_query_allows_original_token_ui_update() {
     with_token_ui(
         r#"
-        assert(type(C_CurrencyInfo.DoesCurrentFilterRequireAccountCurrencyData()) == "boolean")
-        TokenFrame:Update()
-        B5AssertProvider()
+        local C = C_CurrencyInfo
+        assert(C.GetCurrencyFilter() == 1)
+        assert(C.DoesCurrentFilterRequireAccountCurrencyData() == false)
+        assert(C.IsAccountCharacterCurrencyDataReady() == true)
+        local updates = 0
+        local watcher = CreateFrame("Frame")
+        watcher:RegisterEvent("CURRENCY_DISPLAY_UPDATE")
+        watcher:SetScript("OnEvent", function() updates = updates + 1 end)
+        for _, case in ipairs({{0, false}, {1.9, false}, {2, true}, {2, true}, {false, false}, {{}, false}}) do
+            assert(select("#", C.SetCurrencyFilter(case[1])) == 0)
+            assert(C.DoesCurrentFilterRequireAccountCurrencyData() == case[2])
+            TokenFrame:Update()
+            B5AssertProvider()
+        end
+        assert(C.GetCurrencyFilter() == 0 and updates == 6)
+        for _, invalid in ipairs({-1, 3, 2147483648}) do
+            assert(not pcall(C.SetCurrencyFilter, invalid))
+        end
+        assert(not pcall(C.SetCurrencyFilter))
+        assert(not pcall(C.SetCurrencyFilter, nil))
+        assert(C.GetCurrencyFilter() == 0 and updates == 6)
         "#,
     );
 }
