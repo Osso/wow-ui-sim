@@ -247,6 +247,14 @@ fn install_on_c_game_rules(state: &mut LuaState) -> LuaResult<()> {
     for (name, func) in entries {
         table_set_rust_fn(state, table_ref, name, *func)?;
     }
+    if ACTIVE == ClientProfile::Retail {
+        table_set_rust_fn(
+            state,
+            table_ref,
+            "IsPersonalResourceDisplayEnabled",
+            crate::c_api::game_rules_personal_resource::is_enabled,
+        )?;
+    }
     // GameRulesDocumentation.lua declares these on every profile except Wrath,
     // which ships no generated documentation.
     if ACTIVE != ClientProfile::Wrath {
