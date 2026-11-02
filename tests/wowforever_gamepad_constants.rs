@@ -196,6 +196,7 @@ fn forever_gamepad_pet_storage_uses_existing_pet_slots() {
                 name: Some(format!("Pet{}", i + 1)),
                 spell_id: Some(16827 + i as u32),
                 cooldown: Some(SpellCooldownState {
+                    packed_action: 0,
                     start: 10.0,
                     duration: 20.0,
                 }),

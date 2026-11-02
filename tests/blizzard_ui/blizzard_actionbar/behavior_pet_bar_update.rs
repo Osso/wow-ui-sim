@@ -237,6 +237,7 @@ fn pet_bar_update_event_repopulates_button_icon_and_shows_bar_from_seeded_pet_ac
                 spell_id: Some(SEEDED_SPELL_ID),
                 passive: false,
                 cooldown: None,
+                packed_action: 0,
             };
         }
 
