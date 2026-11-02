@@ -531,20 +531,12 @@ fn blizzard_ping_ui_does_not_leak_virtual_templates_to_globals(env: &WowLuaEnv) 
 prefork_full_ui_case! {
 fn blizzard_ping_ui_publishes_c_ping_secure_callback_setters_in_globals(env: &WowLuaEnv) {
 
-    let ns_kind: String = env
-        .eval("return type(C_PingSecure)")
-        .expect("type(C_PingSecure) probe succeeds");
-    assert_eq!(
-        ns_kind, "table",
-        "C_PingSecure must publish as a global namespace table — the documentation \
-         table at \
-         Interface/BlizzardUI/Blizzard_APIDocumentationGenerated/PingManagerSecureDocumentation.lua \
-         names it `C_PingSecure` with `Environment = \"SecureOnly\"`. The simulator \
-         publishes the namespace eagerly so PingFrameMixin:OnLoad / \
-         PingListenerFrameMixin:OnLoad / PingManager:Initialize can use the \
-         declared members during the eager-load pass without needing the LoD \
-         `Blizzard_APIDocumentationGenerated` addon to be loaded first"
-    );
+    // PingManagerSecureDocumentation.lua:3–6 declares SecureOnly; the Retail
+    // 70688 WM38 registration evidence identifies a distinct secure environment.
+    let (public_kind, secure_kind): (String, String) = env
+        .eval("return type(rawget(_G, 'C_PingSecure')), type(__secureenv.C_PingSecure)")
+        .expect("public and secure namespace probes succeed");
+    assert_eq!((public_kind.as_str(), secure_kind.as_str()), ("nil", "table"));
 
     // Blizzard_PingUI.lua:258 defines this on the mixin, not in the
     // PingManagerSecureDocumentation.lua namespace.
@@ -555,8 +547,8 @@ fn blizzard_ping_ui_publishes_c_ping_secure_callback_setters_in_globals(env: &Wo
 
     for func in C_PING_SECURE_CALLBACKS {
         let kind: String = env
-            .eval(&format!("return type(C_PingSecure.{func})"))
-            .unwrap_or_else(|err| panic!("type(C_PingSecure.{func}) probe failed: {err}"));
+            .eval(&format!("return type(__secureenv.C_PingSecure.{func})"))
+            .unwrap_or_else(|err| panic!("secure C_PingSecure.{func} probe failed: {err}"));
         assert_eq!(
             kind, "function",
             "C_PingSecure.{func} must be a function — required by the load-time \
