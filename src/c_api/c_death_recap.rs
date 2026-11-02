@@ -10,7 +10,8 @@
 use crate::c_api::helpers::{ensure_namespace, set_table_array};
 use crate::client_profile::{ACTIVE, ClientProfile};
 use crate::lua_api::methods::{
-    borrow_state, create_string, create_table, table_set, val_to_string,
+    borrow_state, call_function_state, create_string, create_table, table_get, table_set,
+    val_to_string,
 };
 use crate::lua_api::state::{DeathRecapEntry, KillingBlowInfo};
 use crate::lua_bridge::{stack_val, table_set_rust_fn_static};
@@ -22,6 +23,7 @@ pub(crate) fn register_c_death_recap_surface(state: &mut LuaState) -> LuaResult<
     if ACTIVE == ClientProfile::Retail {
         table_set_rust_fn_static(state, table_ref, "GetRecapEvents", get_recap_events)?;
         table_set_rust_fn_static(state, table_ref, "HasRecapEvents", has_recap_events)?;
+        table_set_rust_fn_static(state, table_ref, "GetRecapLink", get_recap_link)?;
     }
     #[cfg(feature = "retail-12-0-5")]
     table_set_rust_fn_static(state, table_ref, "GetRecapMaxHealth", get_recap_max_health)?;
@@ -60,7 +62,7 @@ fn read_recap_id(state: &LuaState) -> LuaResult<Option<i32>> {
     Ok(Some(number as i32))
 }
 
-fn read_has_recap_id(state: &LuaState) -> LuaResult<Option<i32>> {
+fn read_strict_recap_id(state: &LuaState, usage: &str) -> LuaResult<Option<i32>> {
     let value = rilua::table_security::unwrap_secret(state, stack_val(state, 1))?;
     if value == Val::Nil {
         return Ok(None);
@@ -70,9 +72,7 @@ fn read_has_recap_id(state: &LuaState) -> LuaResult<Option<i32>> {
         Val::Str(_) => val_to_string(state, value).and_then(|text| text.trim().parse().ok()),
         _ => None,
     }
-    .ok_or_else(|| {
-        rilua::runtime_error("Usage: local hasEvents = C_DeathRecap.HasRecapEvents([recapID])")
-    })?;
+    .ok_or_else(|| rilua::runtime_error(usage))?;
     if !number.is_finite() || number < f64::from(i32::MIN) || number > f64::from(i32::MAX) {
         return Err(rilua::runtime_error(format!(
             "integer overflow attempting to store {number}"
@@ -81,17 +81,41 @@ fn read_has_recap_id(state: &LuaState) -> LuaResult<Option<i32>> {
     Ok(Some(number as i32))
 }
 
+fn find_recap(recaps: &[DeathRecapEntry], id: Option<i32>) -> Option<&DeathRecapEntry> {
+    let mut retained = recaps.iter().rev().take(60);
+    match id {
+        Some(id) => retained.find(|entry| i64::from(entry.recap_id) == i64::from(id)),
+        None => retained.find(|entry| entry.default_eligible),
+    }
+}
+
 fn has_recap_events(state: &mut LuaState) -> LuaResult<u32> {
-    let id = read_has_recap_id(state)?;
-    let found = {
-        let sim = borrow_state(state)?;
-        let mut recaps = sim.death_recaps.iter().rev().take(60);
-        match id {
-            Some(id) => recaps.any(|entry| i64::from(entry.recap_id) == i64::from(id)),
-            None => recaps.any(|entry| entry.default_eligible),
-        }
-    };
+    let id = read_strict_recap_id(
+        state,
+        "Usage: local hasEvents = C_DeathRecap.HasRecapEvents([recapID])",
+    )?;
+    let found = find_recap(&borrow_state(state)?.death_recaps, id).is_some();
     state.push(Val::Bool(found));
+    Ok(1)
+}
+
+fn get_recap_link(state: &mut LuaState) -> LuaResult<u32> {
+    let id = read_strict_recap_id(
+        state,
+        "Usage: local link = C_DeathRecap.GetRecapLink([recapID])",
+    )?;
+    let recap_id = find_recap(&borrow_state(state)?.death_recaps, id).map(|entry| entry.recap_id);
+    let globals = Val::Table(state.global);
+    let result = match recap_id {
+        Some(recap_id) => {
+            let template = table_get(state, globals, "DEATH_RECAP_LINK");
+            let strings = table_get(state, globals, "string");
+            let format = table_get(state, strings, "format");
+            call_function_state(state, format, &[template, Val::Num(f64::from(recap_id))])?
+        }
+        None => table_get(state, globals, "DEATH_RECAP_TEXT"),
+    };
+    state.push(result);
     Ok(1)
 }
 
@@ -99,12 +123,8 @@ fn get_recap_events(state: &mut LuaState) -> LuaResult<u32> {
     let id = read_recap_id(state)?;
     let events = {
         let sim = borrow_state(state)?;
-        let mut recaps = sim.death_recaps.iter().rev().take(60);
-        let recap = match id {
-            Some(id) => recaps.find(|entry| i64::from(entry.recap_id) == i64::from(id)),
-            None => recaps.find(|entry| entry.default_eligible),
-        };
-        recap.map(|entry| entry.events.iter().take(10).cloned().collect::<Vec<_>>())
+        find_recap(&sim.death_recaps, id)
+            .map(|entry| entry.events.iter().take(10).cloned().collect::<Vec<_>>())
     };
     let Some(events) = events else {
         return Ok(0);
