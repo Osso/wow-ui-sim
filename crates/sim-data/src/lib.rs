@@ -66,6 +66,8 @@ pub mod perks_categories;
 #[path = "../data/pet_talent_trees.rs"]
 pub mod pet_talent_trees;
 pub mod profession_item_overrides;
+#[path = "../data/profession_spec_reminders.rs"]
+pub mod profession_spec_reminders;
 #[path = "../data/quest_poi_blobs.rs"]
 pub mod quest_poi_blobs;
 #[path = "../data/quest_ui_map.rs"]
