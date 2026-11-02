@@ -43,7 +43,7 @@ fn initialize_and_load_env(args: &Args, screen: ScreenKind, mut env: WowLuaEnv) 
     env.set_screen_mode(screen);
 
     let (mut saved_vars, edit_mode_cache_vars, snapshot_edit_mode_layout) =
-        configure_startup_state(args, &env);
+        configure_startup_state(args, &env)?;
     load_startup_addons(
         args,
         screen,
@@ -51,7 +51,7 @@ fn initialize_and_load_env(args: &Args, screen: ScreenKind, mut env: WowLuaEnv) 
         &mut saved_vars,
         edit_mode_cache_vars.as_ref(),
         snapshot_edit_mode_layout.as_deref(),
-    );
+    )?;
 
     restart_gc_after_bootstrap(&env);
     install_reload_loader(
@@ -89,7 +89,7 @@ fn install_reload_loader(
             saved_vars,
             edit_mode_cache.as_ref(),
             initial_layout_name.as_deref(),
-        );
+        )?;
         restart_gc_after_bootstrap(env);
         Ok(())
     });
@@ -418,14 +418,18 @@ fn apply_initial_player_settings(
 #[path = "startup_player_tests.rs"]
 mod player_tests;
 
+#[cfg(all(test, any(feature = "casc", feature = "client-wrath")))]
+#[path = "startup_identity_tests.rs"]
+mod identity_tests;
+
 fn configure_startup_state(
     args: &Args,
     env: &WowLuaEnv,
-) -> (
+) -> wow_ui_sim::Result<(
     Option<SavedVariablesManager>,
     Option<SavedVariablesManager>,
     Option<String>,
-) {
+)> {
     // Pause GC across addon loading — addons allocate monotonically
     // (closures + frame tables + registry entries stay live), and we'd
     // rather walk them once in a final full_gc than mark them on every
@@ -433,7 +437,7 @@ fn configure_startup_state(
     startup_trace::time_load_step("stop GC", || env.gc_stop());
     let mut saved_vars = startup_trace::time_load_step("configure saved variables", || {
         saved_var_config::configure_saved_vars(args.no_saved_vars)
-    });
+    })?;
     startup_trace::time_load_step("load keybindings", || {
         saved_var_config::load_keybindings_from_wtf(&env, saved_vars.as_ref())
     });
@@ -441,7 +445,7 @@ fn configure_startup_state(
         startup_trace::time_load_step(
             "configure edit mode cache",
             saved_var_config::configure_edit_mode_cache_vars,
-        )
+        )?
     } else {
         None
     };
@@ -449,7 +453,7 @@ fn configure_startup_state(
     if let Some(layout) = snapshot_edit_mode_layout.as_deref() {
         logging::println_elapsed(&format!("ServerSnapshot active EditMode layout: {layout}"));
     }
-    (saved_vars, edit_mode_cache_vars, snapshot_edit_mode_layout)
+    Ok((saved_vars, edit_mode_cache_vars, snapshot_edit_mode_layout))
 }
 
 fn read_snapshot_edit_mode_layout(
@@ -480,7 +484,11 @@ fn load_startup_addons(
     saved_vars: &mut Option<SavedVariablesManager>,
     edit_mode_cache_vars: Option<&SavedVariablesManager>,
     snapshot_edit_mode_layout: Option<&str>,
-) {
+) -> wow_ui_sim::Result<()> {
+    saved_var_config::configure_character_identity(
+        env,
+        saved_vars.as_ref().or(edit_mode_cache_vars),
+    )?;
     load_edit_mode_cache_and_initial_snapshot(
         env,
         saved_vars,
@@ -509,6 +517,7 @@ fn load_startup_addons(
     });
     startup_trace::time_load_step("sync addon names to Lua", || env.sync_addon_names_to_lua());
     apply_post_load_workarounds(env);
+    Ok(())
 }
 
 fn load_edit_mode_cache_and_initial_snapshot(

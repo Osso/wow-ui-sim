@@ -98,12 +98,43 @@ fn unit_pvp_name(state: &mut LuaState) -> LuaResult<u32> {
 
 fn unit_full_name(state: &mut LuaState) -> LuaResult<u32> {
     let unit = Option::<String>::from_stack(state, 1)?.unwrap_or_default();
+    let forever = crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::WowForever;
+    let unit = if forever {
+        unit.to_ascii_lowercase()
+    } else {
+        unit
+    };
+    if forever
+        && unit != "none"
+        && !super::group_queries::unit_exists_in_state(&*borrow_state(state)?, &unit)
+    {
+        state.push(Val::Nil);
+        state.push(Val::Nil);
+        return Ok(2);
+    }
     let name = unit_name_for(state, &unit);
+    let second = if unit == "player" {
+        let sim = borrow_state(state)?;
+        if forever {
+            sim.player
+                .surname
+                .clone()
+                .or_else(|| sim.player.realm_name.clone())
+        } else {
+            sim.player.realm_name.clone()
+        }
+    } else {
+        None
+    };
     let secret = unit_identity_is_secret(state, &unit)?;
     let name = identity_output(state, &name, secret);
     state.push(name);
-    let realm = identity_output(state, SIM_REALM, secret);
-    state.push(realm);
+    let second = match second.as_deref() {
+        Some(value) => identity_output(state, value, secret),
+        None if forever && unit != "player" => Val::Nil,
+        None => identity_output(state, SIM_REALM, secret),
+    };
+    state.push(second);
     Ok(2)
 }
 

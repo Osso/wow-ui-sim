@@ -103,6 +103,65 @@ pub fn default_wtf_config() -> Option<WtfConfig> {
     Some(WtfConfig::new(wtf_path, &account, &realm, &character))
 }
 
+/// Keep optional discovery, but require an explicitly selected character to exist.
+pub fn try_default_wtf_config() -> crate::Result<Option<WtfConfig>> {
+    let Some(character) = env_string(ENV_WTF_CHARACTER) else {
+        return Ok(default_wtf_config());
+    };
+    let wtf_path = env_path("WOW_SIM_WTF_PATH")
+        .or_else(default_wtf_path)
+        .ok_or_else(|| {
+            crate::Error::Other(format!(
+                "cannot select WTF character {character:?}: no WTF directory found"
+            ))
+        })?;
+    explicit_wtf_config(
+        wtf_path,
+        env_string(ENV_WTF_ACCOUNT).as_deref(),
+        env_string(ENV_WTF_REALM).as_deref(),
+        &character,
+    )
+    .map(Some)
+}
+
+fn explicit_wtf_config(
+    wtf_path: PathBuf,
+    account: Option<&str>,
+    realm: Option<&str>,
+    character: &str,
+) -> crate::Result<WtfConfig> {
+    require_wtf_directory(&wtf_path, "root")?;
+    let account_root = wtf_path.join("Account");
+    let account = account.map(str::to_owned).unwrap_or_else(|| {
+        preferred_child_dir(&account_root, DEFAULT_ACCOUNT)
+            .unwrap_or_else(|| DEFAULT_ACCOUNT.to_owned())
+    });
+    let account_path = account_root.join(&account);
+    require_wtf_directory(&account_path, "account")?;
+    let realm = realm.map(str::to_owned).unwrap_or_else(|| {
+        preferred_child_dir(&account_path, DEFAULT_REALM)
+            .unwrap_or_else(|| DEFAULT_REALM.to_owned())
+    });
+    let realm_path = account_path.join(&realm);
+    require_wtf_directory(&realm_path, "realm")?;
+    require_wtf_directory(&realm_path.join(character), "character")?;
+    Ok(WtfConfig::new(wtf_path, &account, &realm, character))
+}
+
+fn require_wtf_directory(path: &Path, component: &str) -> crate::Result<()> {
+    match std::fs::metadata(path) {
+        Ok(metadata) if metadata.is_dir() => Ok(()),
+        Ok(_) => Err(crate::Error::Other(format!(
+            "selected WTF {component} is not a directory: {}",
+            path.display()
+        ))),
+        Err(error) => Err(crate::Error::Other(format!(
+            "cannot open selected WTF {component} directory {}: {error}",
+            path.display()
+        ))),
+    }
+}
+
 pub fn default_wtf_path() -> Option<PathBuf> {
     discover_wow_resources().wtf_path
 }
@@ -466,6 +525,102 @@ mod tests {
     use std::path::{Path, PathBuf};
 
     use super::*;
+
+    #[test]
+    fn explicit_wtf_character_resolves_exact_unicode_identity() {
+        let root = tempfile::tempdir().unwrap();
+        std::fs::create_dir_all(
+            root.path()
+                .join("Account/Chosen/Test Realm/Wörkspacé-Family"),
+        )
+        .unwrap();
+        let config = explicit_wtf_config(
+            root.path().to_path_buf(),
+            Some("Chosen"),
+            Some("Test Realm"),
+            "Wörkspacé-Family",
+        )
+        .unwrap();
+        assert_eq!(config.account, "Chosen");
+        assert_eq!(config.realm, "Test Realm");
+        assert_eq!(config.character, "Wörkspacé-Family");
+    }
+
+    #[test]
+    fn explicit_wtf_character_does_not_fall_back_to_another_character() {
+        let root = tempfile::tempdir().unwrap();
+        std::fs::create_dir_all(root.path().join("Account/Chosen/Realm/OtherCharacter")).unwrap();
+        let error = explicit_wtf_config(
+            root.path().to_path_buf(),
+            Some("Chosen"),
+            Some("Realm"),
+            "MissingCharacter",
+        )
+        .unwrap_err()
+        .to_string();
+        assert!(error.contains("character"), "{error}");
+        assert!(error.contains("MissingCharacter"), "{error}");
+    }
+
+    #[test]
+    fn explicit_wtf_account_and_realm_do_not_fall_back_to_other_directories() {
+        let root = tempfile::tempdir().unwrap();
+        std::fs::create_dir_all(root.path().join("Account/OtherAccount/OtherRealm/Hero")).unwrap();
+        for (account, realm, component, selected) in [
+            ("MissingAccount", "OtherRealm", "account", "MissingAccount"),
+            ("OtherAccount", "MissingRealm", "realm", "MissingRealm"),
+        ] {
+            let error = explicit_wtf_config(
+                root.path().to_path_buf(),
+                Some(account),
+                Some(realm),
+                "Hero",
+            )
+            .unwrap_err()
+            .to_string();
+            assert!(error.contains(component), "{error}");
+            assert!(error.contains(selected), "{error}");
+        }
+    }
+
+    #[test]
+    fn explicit_wtf_character_rejects_missing_roots_and_non_directory_components() {
+        let root = tempfile::tempdir().unwrap();
+        let missing = root.path().join("MissingWTF");
+        let error = explicit_wtf_config(missing, Some("Chosen"), Some("Realm"), "Hero")
+            .unwrap_err()
+            .to_string();
+        assert!(
+            error.contains("root") && error.contains("MissingWTF"),
+            "{error}"
+        );
+
+        let realm = root.path().join("Account/Chosen/Realm");
+        std::fs::create_dir_all(&realm).unwrap();
+        std::fs::write(realm.join("Hero"), b"not a directory").unwrap();
+        let error = explicit_wtf_config(
+            root.path().to_path_buf(),
+            Some("Chosen"),
+            Some("Realm"),
+            "Hero",
+        )
+        .unwrap_err()
+        .to_string();
+        assert!(
+            error.contains("character") && error.contains("not a directory"),
+            "{error}"
+        );
+    }
+
+    #[test]
+    fn explicit_wtf_character_keeps_discovery_for_unspecified_account_and_realm() {
+        let root = tempfile::tempdir().unwrap();
+        std::fs::create_dir_all(root.path().join("Account/OnlyAccount/OnlyRealm/Hero")).unwrap();
+        let config = explicit_wtf_config(root.path().to_path_buf(), None, None, "Hero").unwrap();
+        assert_eq!(config.account, "OnlyAccount");
+        assert_eq!(config.realm, "OnlyRealm");
+        assert_eq!(config.character, "Hero");
+    }
 
     #[test]
     fn explicit_addon_roots_keep_order_and_deduplicate_existing_paths() {

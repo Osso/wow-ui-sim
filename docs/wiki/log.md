@@ -3219,3 +3219,11 @@ resolved model; reload retains later selections. The late hook reaffirms CLI
 selections and emits notifications without duplicate specialization events.
 Spec-only input is validated against the initial class and re-resolved against
 the current class after startup.
+
+## 2026-11-02 — Explicit imported character identity
+
+[Character identity](../specs/character-identity.md) supplies the selected name and
+realm before addon loading and through ReloadUI. Missing explicit WTF selections
+fail startup. Forever name queries follow the build 70450 native first-name/surname
+tuple and nil arity; the contract records the native evidence and remaining
+unsurnamed-player and regional-consumer limits.

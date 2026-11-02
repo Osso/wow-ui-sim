@@ -8,7 +8,10 @@ Regional name policy projects explicit player inputs. The [consumer investigatio
 - [x] The regional flag defaults to false as explicit simulator policy, not an inferred native default. Changes apply immediately and environments remain independent.
 - [x] PTR publishes `C_PlayerInfo.ShouldDisplaySurname()` with one boolean from supplied `PlayerState.should_display_surname`. Unsupplied input raises an explicit error; it does not guess native policy.
 - [x] The selected original PTR `UnitFrame_Update` displays the whole local name when regional names are disabled or surnames are enabled, and the first name when regional names are enabled and surnames are disabled. Both policy transitions and nonplayer full names are preserved.
-- [x] Forever naming and PTR/Forever graveyard-port behavior remain unchanged.
+- [x] PTR/Forever graveyard-port behavior remains unchanged. [Explicit imported
+  identity](character-identity.md) can additionally supply a separate Forever
+  surname; that contract records its original-consumer coverage and remaining
+  regional first-name limitation.
 
 ## How it works
 

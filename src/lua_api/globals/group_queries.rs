@@ -534,10 +534,34 @@ fn unit_name_unmodified(state: &mut LuaState) -> LuaResult<u32> {
 
 fn push_unit_name(state: &mut LuaState, name_rules: bool) -> LuaResult<u32> {
     let unit = Option::<String>::from_stack(state, 1)?.unwrap_or_default();
+    let forever = crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::WowForever;
+    let unit = if forever {
+        unit.to_ascii_lowercase()
+    } else {
+        unit
+    };
+    if forever && unit != "none" && !unit_exists_in_state(&*borrow_state(state)?, &unit) {
+        state.push(Val::Nil);
+        state.push(Val::Nil);
+        return Ok(2);
+    }
     let name = unit_name_for(state, &unit)?;
     let secret = unit_identity_is_secret(state, &unit, &name, name_rules)?;
+    let surname = if forever && unit == "player" {
+        borrow_state(state)?.player.surname.clone()
+    } else {
+        None
+    };
     let value = identity_output(state, &name, secret);
     state.push(value);
+    if forever {
+        let surname = surname
+            .as_deref()
+            .map(|surname| identity_output(state, surname, secret))
+            .unwrap_or(Val::Nil);
+        state.push(surname);
+        return Ok(2);
+    }
     Ok(1)
 }
 

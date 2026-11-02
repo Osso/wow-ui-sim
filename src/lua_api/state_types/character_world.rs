@@ -231,6 +231,10 @@ pub struct PlayerState {
     /// Explicit active-player input for the native guild-info permission predicate.
     pub present: bool,
     pub name: String,
+    /// Supplied local surname; Forever UnitName queries return it separately.
+    pub surname: Option<String>,
+    /// Supplied local realm; None preserves the simulator's existing realm defaults.
+    pub realm_name: Option<String>,
     /// Simulator name policy; defaults false, not an inferred native default.
     pub regional_unique_names_enabled: bool,
     /// Supplied surname visibility; None leaves the native policy unknown.
