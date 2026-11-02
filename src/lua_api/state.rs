@@ -757,7 +757,7 @@ macro_rules! build_empty_sim_state {
             pvp_last_honor_gain: 0,
             item_dressability: HashMap::new(),
             item_families: HashMap::new(),
-            item_children: HashMap::new(),
+            item_children: crate::c_api::item_spell::item_child::default_child_equipment(),
             equippable_items: ::std::collections::HashSet::new(),
             consumable_items: ::std::collections::HashSet::new(),
             current_item_ids: ::std::collections::HashSet::new(),

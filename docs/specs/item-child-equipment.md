@@ -8,9 +8,9 @@
 
 ## Best-guess basis
 
-Retail `Blizzard_APIDocumentationGenerated/ItemDocumentation.lua:366` declares ItemInfo, optional luaIndex and a numeric table. WM23 and WM36 native evidence for retail 12.1.5/70688 establishes flat pairs and the slot adjustment; the ParentItemID, ChildItemID and ChildItemEquipSlot column names are inferred from matching DB2 metadata. Empty and two-number array publications are emulated, not observed on a live client. Supplied rows are simulator input, not an inferred default catalog.
+Retail `Blizzard_APIDocumentationGenerated/ItemDocumentation.lua:366` declares ItemInfo, optional luaIndex and a numeric table. WM23 and WM36 native evidence for retail 12.1.5/70688 establishes flat pairs and the slot adjustment; the ParentItemID, ChildItemID and ChildItemEquipSlot column names are inferred from matching DB2 metadata. Empty and two-number array publications are emulated, not observed on a live client. Initial rows come from the 12.1.5.70391 ItemChildEquipment CSV; a host can supply changes to those rows.
 
 ## Known gaps
 
-- Complete native iterator selection is not established. No ItemChildEquipment DB2 catalog is loaded automatically.
+- Complete native iterator selection and whether the 70391 catalog matches build 70688 are not established.
 - Exact numeric conversion, exceptional errors, loading behavior and live-client publication remain unverified.

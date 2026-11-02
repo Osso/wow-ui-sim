@@ -13,6 +13,17 @@ pub struct ItemChildEquipment {
     pub child_item_id: u32,
 }
 
+pub(crate) fn default_child_equipment() -> std::collections::HashMap<u32, Vec<ItemChildEquipment>> {
+    let mut result = std::collections::HashMap::<u32, Vec<ItemChildEquipment>>::new();
+    for &(parent, child_item_id, slot_index) in sim_data::item_children::ITEM_CHILDREN {
+        result.entry(parent).or_default().push(ItemChildEquipment {
+            slot_index,
+            child_item_id,
+        });
+    }
+    result
+}
+
 pub(super) fn get_item_child_info(state: &mut LuaState) -> LuaResult<u32> {
     let item = rilua::table_security::unwrap_secret(state, stack_val(state, 1))?;
     let slot = rilua::table_security::unwrap_secret(state, stack_val(state, 2))?;
