@@ -16,11 +16,11 @@ fn chat_link_inserts_use_for_item_spell_and_equip_for_armor(env: &WowLuaEnv) {
             Insert = function(_, text) inserted = text end,
         }
         local hearthstone = assert(C_Item.GetItemInfo(6948))
+        assert(ChatFrameUtil.InsertLink('item:6948'))
+        assert(inserted == SLASH_USE1 .. ' ' .. hearthstone .. '\n', tostring(inserted))
         local spellName, spellID = C_Item.GetItemSpell(6948)
         assert(spellName == 'Hearthstone' and spellID == 8690)
         assert(select('#', C_Item.GetItemSpell(211993)) == 0)
-        assert(ChatFrameUtil.InsertLink('item:6948'))
-        assert(inserted == SLASH_USE1 .. ' ' .. hearthstone .. '\n', tostring(inserted))
         local armor = assert(C_Item.GetItemInfo(211993))
         assert(ChatFrameUtil.InsertLink('item:211993'))
         assert(inserted == SLASH_EQUIP1 .. ' ' .. armor .. '\n', tostring(inserted))
