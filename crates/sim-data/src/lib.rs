@@ -22,6 +22,8 @@ pub mod item_enchants;
 pub mod item_spell_metadata;
 #[path = "../data/item_sets.rs"]
 pub mod item_sets;
+#[path = "../data/item_spec_inputs.rs"]
+pub mod item_spec_inputs;
 #[path = "../data/item_uniqueness.rs"]
 pub mod item_uniqueness;
 #[path = "../data/items.rs"]
