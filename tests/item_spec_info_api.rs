@@ -80,3 +80,15 @@ fn item_spec_info_rejects_markers_and_preserves_override_order() {
     env.exec("assert(select('#', C_Item.GetItemSpecInfo(80773)) == 0)")
         .unwrap();
 }
+
+#[test]
+fn item_flag_27_comes_from_flags_zero_not_flags_one() {
+    let env = WowLuaEnv::new().unwrap();
+    env.state().borrow_mut().player.level = 80;
+    env.exec("C_Item.GetItemSpecInfo(12185); C_Item.GetItemSpecInfo(30311)")
+        .unwrap();
+    let sim = env.state().borrow();
+    let band = level_band(80);
+    assert!(sim.item_spec_records[&(12185, band)].item_flag_27);
+    assert!(!sim.item_spec_records[&(30311, band)].item_flag_27);
+}

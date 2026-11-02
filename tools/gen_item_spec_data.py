@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 """Generate item specialization inputs from build 12.1.5.70391 DB2 CSVs."""
 
-# ItemSparse flag copied into the derived record's itemFlag27 (WM48); the
-# Flags_0 word is INFERRED.
+# ItemSparse.Flags_0 bit copied into the derived record's itemFlag27 (WM58).
 ITEM_FLAG_27 = 134217728
 
 import csv
