@@ -648,6 +648,32 @@ fn calendar_texture_picker_sets_editable_event_type(env: &WowLuaEnv) {
         assert_eq!(event.event_type, event_type);
         assert_eq!(event.texture_id, Some(texture_id));
     }
+    {
+        let mut state = env.state().borrow_mut();
+        let event = state.calendar_context_policy.editable.as_mut().unwrap();
+        event.event_type = 5;
+        event.dirty = false;
+    }
+    env.exec("C_Calendar.EventSetType(1)").unwrap();
+    {
+        let state = env.state().borrow();
+        let event = state.calendar_context_policy.editable.as_ref().unwrap();
+        assert_eq!(event.event_type, 5);
+        assert!(!event.dirty);
+    }
+    env.exec("C_Calendar.EventSetType(261); C_Calendar.EventSetTextureID(0.5)").unwrap();
+    {
+        let state = env.state().borrow();
+        let event = state.calendar_context_policy.editable.as_ref().unwrap();
+        assert_eq!(event.event_type, 5);
+        assert_eq!(event.texture_id, Some(84));
+        assert!(event.dirty);
+    }
+    env.exec("C_Calendar.EventSetType(-255); C_Calendar.EventSetTextureID(200)").unwrap();
+    let state = env.state().borrow();
+    let event = state.calendar_context_policy.editable.as_ref().unwrap();
+    assert_eq!(event.event_type, 5);
+    assert_eq!(event.texture_id, Some(84));
 }
 }
 
@@ -676,6 +702,29 @@ fn calendar_create_event_projects_selected_date(env: &WowLuaEnv) {
     let event = state.calendar_context_policy.editable.as_ref().unwrap();
     assert_eq!(event.date, Some((3, 14, 26)));
     assert!(event.dirty);
+    drop(state);
+    {
+        let mut state = env.state().borrow_mut();
+        state.calendar_context_policy.editable.as_mut().unwrap().dirty = false;
+        state.calendar_context_policy.action_pending = true;
+    }
+    env.exec(r#"
+        dateErrors = {}
+        local observer = CreateFrame('Frame')
+        observer:RegisterEvent('CALENDAR_UPDATE_ERROR')
+        observer:RegisterEvent('CALENDAR_ACTION_PENDING')
+        observer:SetScript('OnEvent', function(_, name, value) table.insert(dateErrors, {name, value}) end)
+        CalendarCreateEventFrame.dayButton.day = 32
+        CalendarCreateEventFrame_Update()
+        assert(#dateErrors == 2)
+        assert(dateErrors[1][1] == 'CALENDAR_UPDATE_ERROR' and dateErrors[1][2] == 'CALENDAR_ERROR_INVALID_DATE')
+        assert(dateErrors[2][1] == 'CALENDAR_ACTION_PENDING' and dateErrors[2][2] == false)
+    "#).unwrap();
+    let state = env.state().borrow();
+    let event = state.calendar_context_policy.editable.as_ref().unwrap();
+    assert_eq!(event.date, Some((3, 14, 26)));
+    assert!(event.dirty);
+    assert!(!state.calendar_context_policy.action_pending);
 }
 }
 
