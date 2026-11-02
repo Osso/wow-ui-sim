@@ -231,7 +231,10 @@ fn is_account_transferable_currency(state: &mut LuaState) -> LuaResult<u32> {
 #[cfg(feature = "client-retail")]
 fn can_transfer_currency(state: &mut LuaState) -> LuaResult<u32> {
     let id = i32::from_stack(state, 1)?;
-    let reason = currency_transfer_rejection(&borrow_state(state)?, id)?;
+    let reason = {
+        let sim = borrow_state(state)?;
+        currency_transfer_rejection(&sim, id)?
+    };
     state.push(Val::Bool(reason.is_none()));
     state.push(
         reason
