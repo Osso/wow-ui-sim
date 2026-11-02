@@ -23,6 +23,12 @@ pub(super) fn register(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResu
             "GetSpecialEventBrawlInfo",
             get_special_event_brawl_info,
         )?;
+        table_set_rust_fn_static(
+            state,
+            namespace,
+            "GetAvailableBrawlInfo",
+            get_available_brawl_info,
+        )?;
     }
     Ok(())
 }
@@ -35,6 +41,30 @@ fn get_active_brawl_info(state: &mut LuaState) -> LuaResult<u32> {
 fn get_special_event_brawl_info(state: &mut LuaState) -> LuaResult<u32> {
     let record = borrow_state(state)?.special_event_brawl.clone();
     push_brawl_info(state, record.map(Into::into))
+}
+
+fn get_available_brawl_info(state: &mut LuaState) -> LuaResult<u32> {
+    let record = {
+        let sim = borrow_state(state)?;
+        match &sim.available_brawl {
+            Some(cache) if cache.record.brawl_id != 0 => {
+                let deadline = cache
+                    .received_at
+                    .checked_add(cache.duration.unwrap_or_default())
+                    .ok_or_else(|| rilua::runtime_error("available brawl deadline overflow"))?;
+                let now = sim.clock_elapsed();
+                if now <= deadline {
+                    let mut record = cache.record.clone();
+                    record.time_left_until_next_change = Some((deadline - now).as_secs_f64());
+                    Some(record)
+                } else {
+                    None
+                }
+            }
+            _ => None,
+        }
+    };
+    push_brawl_info(state, record)
 }
 
 fn push_brawl_info(state: &mut LuaState, record: Option<PvpBrawlInfo>) -> LuaResult<u32> {

@@ -515,6 +515,171 @@ fn calendar_invite_sort_controls_reflect_supplied_criterion(env: &WowLuaEnv) {
 }
 
 prefork_full_ui_case! {
+fn calendar_checkbox_updates_auto_approve(env: &WowLuaEnv) {
+    use wow_ui_sim::c_api::c_calendar::CalendarEditableAccess;
+    load_addon(&env.loader_env(), &calendar_toc()).unwrap();
+    env.state().borrow_mut().calendar_context_policy.editable = Some(CalendarEditableAccess { local_edit_credential: Some(1), ..Default::default() });
+    env.exec("CalendarCreateEventAutoApproveCheck:SetChecked(true); CalendarCreateEvent_SetAutoApprove()").unwrap();
+    {
+        let state = env.state().borrow();
+        let event = state.calendar_context_policy.editable.as_ref().unwrap();
+        assert!(event.auto_approve && event.dirty);
+    }
+    env.state().borrow_mut().calendar_context_policy.editable.as_mut().unwrap().dirty = false;
+    env.exec("CalendarCreateEventAutoApproveCheck:SetChecked(false); CalendarCreateEvent_SetAutoApprove()").unwrap();
+    let state = env.state().borrow();
+    let event = state.calendar_context_policy.editable.as_ref().unwrap();
+    assert!(!event.auto_approve && event.dirty);
+}
+}
+
+prefork_full_ui_case! {
+fn calendar_checkbox_updates_locked(env: &WowLuaEnv) {
+    use wow_ui_sim::c_api::c_calendar::CalendarEditableAccess;
+    load_addon(&env.loader_env(), &calendar_toc()).unwrap();
+    env.state().borrow_mut().calendar_context_policy.editable = Some(CalendarEditableAccess { local_edit_credential: Some(1), ..Default::default() });
+    env.exec("CalendarCreateEventLockEventCheck:SetChecked(true); CalendarCreateEvent_SetLockEvent()").unwrap();
+    {
+        let state = env.state().borrow();
+        let event = state.calendar_context_policy.editable.as_ref().unwrap();
+        assert!(event.locked && event.dirty);
+    }
+    env.state().borrow_mut().calendar_context_policy.editable.as_mut().unwrap().dirty = false;
+    env.exec("CalendarCreateEventLockEventCheck:SetChecked(false); CalendarCreateEvent_SetLockEvent()").unwrap();
+    let state = env.state().borrow();
+    let event = state.calendar_context_policy.editable.as_ref().unwrap();
+    assert!(!event.locked && event.dirty);
+}
+}
+
+prefork_full_ui_case! {
+fn calendar_title_edit_updates_supplied_event(env: &WowLuaEnv) {
+    use wow_ui_sim::c_api::c_calendar::CalendarEditableAccess;
+    load_addon(&env.loader_env(), &calendar_toc()).unwrap();
+    {
+        let mut state = env.state().borrow_mut();
+        state.calendar_context_policy.editable = Some(CalendarEditableAccess {
+            local_edit_credential: Some(123),
+            ..Default::default()
+        });
+    }
+    env.exec(r#"
+        CalendarCreateEventFrame.mode = 'edit'
+        CalendarCreateEventTitleEdit:SetText('Raid|night\\nignored')
+        CalendarCreateEventTitleEdit_OnTextChanged(CalendarCreateEventTitleEdit, true)
+    "#).unwrap();
+    {
+        let state = env.state().borrow();
+        let event = state.calendar_context_policy.editable.as_ref().unwrap();
+        assert_eq!(event.title, b"Raidnight");
+        assert!(event.dirty);
+    }
+    {
+        let mut state = env.state().borrow_mut();
+        let event = state.calendar_context_policy.editable.as_mut().unwrap();
+        event.dirty = false;
+        event.local_edit_credential = None;
+    }
+    env.exec(r#"
+        CalendarCreateEventTitleEdit:SetText('Denied')
+        CalendarCreateEventTitleEdit_OnTextChanged(CalendarCreateEventTitleEdit, true)
+    "#).unwrap();
+    let state = env.state().borrow();
+    let event = state.calendar_context_policy.editable.as_ref().unwrap();
+    assert_eq!(event.title, b"Raidnight");
+    assert!(!event.dirty);
+}
+}
+
+prefork_full_ui_case! {
+fn calendar_invite_status_menu_uses_supplied_options(env: &WowLuaEnv) {
+    use wow_ui_sim::c_api::c_calendar::{CalendarEditableAccess, CalendarInviteRecord};
+    load_addon(&env.loader_env(), &calendar_toc()).unwrap();
+    let name: String = env.eval("return UnitName('player')").unwrap();
+    let invite = CalendarInviteRecord { invite_id: "one".into(), name: Some(name), invite_status: Some(0), mod_status: Some("CREATOR".into()), ..Default::default() };
+    env.state().borrow_mut().calendar_context_policy.editable = Some(CalendarEditableAccess { local_edit_credential: Some(1), invites: vec![invite], ..Default::default() });
+    env.exec(r#"
+        CalendarCreateEventFrame.mode = 'edit'
+        calendarStatusProbe = CreateFrame('Button', 'CalendarStatusProbe', UIParent)
+        calendarStatusProbe.inviteIndex = 1
+        CalendarCreateEventInviteListButton_OnClick(calendarStatusProbe, 'RightButton')
+        assert(Menu.GetManager():GetOpenMenu())
+        local options = C_Calendar.EventGetStatusOptions(1)
+        local expected = {'ACCEPTED', 'DECLINED', 'CONFIRMED', 'OUT', 'STANDBY', 'TENTATIVE'}
+        assert(#options == 6)
+        for i, status in ipairs({1, 2, 3, 4, 5, 8}) do
+            assert(options[i].status == status and options[i].statusString == 'CALENDAR_STATUS_' .. expected[i])
+        end
+        Menu.GetManager():CloseMenus()
+    "#).unwrap();
+    env.state().borrow_mut().calendar_context_policy.editable.as_mut().unwrap().invites[0].invite_status = Some(1);
+    env.exec(r#"
+        CalendarCreateEventInviteListButton_OnClick(calendarStatusProbe, 'RightButton')
+        assert(Menu.GetManager():GetOpenMenu())
+        local options = C_Calendar.EventGetStatusOptions(1)
+        assert(#options == 5 and options[1].status == 2)
+        Menu.GetManager():CloseMenus()
+    "#).unwrap();
+    {
+        let mut state = env.state().borrow_mut();
+        let event = state.calendar_context_policy.editable.as_mut().unwrap();
+        event.category_flags = 0x400;
+        event.invites[0].invite_status = Some(4);
+    }
+    env.exec(r#"
+        CalendarCreateEventInviteListButton_OnClick(calendarStatusProbe, 'RightButton')
+        assert(Menu.GetManager():GetOpenMenu())
+        local options = C_Calendar.EventGetStatusOptions(1)
+        assert(#options == 3 and options[1].status == 3 and options[2].status == 5 and options[3].status == 8)
+        Menu.GetManager():CloseMenus()
+        assert(select('#', C_Calendar.EventGetStatusOptions(99)) == 1 and #C_Calendar.EventGetStatusOptions(99) == 0)
+    "#).unwrap();
+    {
+        let mut state = env.state().borrow_mut();
+        state.calendar_context_policy.action_pending = true;
+        state.calendar_context_policy.editable.as_mut().unwrap().local_edit_credential = None;
+    }
+    env.exec(r#"
+        wm27events = {}
+        wm27observer = CreateFrame('Frame')
+        wm27observer:RegisterEvent('CALENDAR_UPDATE_ERROR')
+        wm27observer:RegisterEvent('CALENDAR_ACTION_PENDING')
+        wm27observer:SetScript('OnEvent', function(_, event, value) table.insert(wm27events, {event, value}) end)
+        assert(#C_Calendar.EventGetStatusOptions(99) == 0)
+        assert(#wm27events == 2)
+        assert(wm27events[1][1] == 'CALENDAR_UPDATE_ERROR' and wm27events[1][2] == 'CALENDAR_ERROR_PERMISSIONS')
+        assert(wm27events[2][1] == 'CALENDAR_ACTION_PENDING' and wm27events[2][2] == false)
+    "#).unwrap();
+    assert!(!env.state().borrow().calendar_context_policy.action_pending);
+    env.state().borrow_mut().calendar_context_policy.editable = None;
+    env.exec("wm27events = {}; assert(select('#', C_Calendar.EventGetStatusOptions(1)) == 1 and #C_Calendar.EventGetStatusOptions(1) == 0); assert(#wm27events == 0)").unwrap();
+}
+}
+
+prefork_full_ui_case! {
+fn calendar_view_invite_menu_tracks_pending_event_identity(env: &WowLuaEnv) {
+    use wow_ui_sim::c_api::c_calendar::{CalendarEditableAccess, CalendarInviteRecord};
+    load_addon(&env.loader_env(), &calendar_toc()).unwrap();
+    let invite = CalendarInviteRecord { invite_id: "one".into(), invite_status: Some(0), ..Default::default() };
+    env.state().borrow_mut().calendar_context_policy.editable = Some(CalendarEditableAccess { event_id: "event-a".into(), local_edit_credential: Some(1), invites: vec![invite], ..Default::default() });
+    env.exec(r#"
+        calendarPendingProbe = CreateFrame('Button', 'CalendarPendingProbe', UIParent)
+        calendarPendingProbe.inviteIndex = 1
+        CalendarViewEventFrame.myInviteIndex = 1
+        Menu.GetManager():CloseMenus()
+        CalendarViewEventInviteListButton_OnClick(calendarPendingProbe, 'RightButton')
+        assert(not Menu.GetManager():GetOpenMenu())
+    "#).unwrap();
+    env.state().borrow_mut().calendar_pending_invite_event_ids.insert("event-a".into());
+    env.exec(r#"
+        CalendarViewEventInviteListButton_OnClick(calendarPendingProbe, 'RightButton')
+        assert(Menu.GetManager():GetOpenMenu())
+        Menu.GetManager():CloseMenus()
+    "#).unwrap();
+}
+}
+
+prefork_full_ui_case! {
 fn calendar_invite_autocomplete_tracks_editable_event_type(env: &WowLuaEnv) {
     use wow_ui_sim::c_api::c_calendar::CalendarEditableAccess;
     load_addon(&env.loader_env(), &calendar_toc()).unwrap();

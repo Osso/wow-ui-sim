@@ -1,7 +1,10 @@
 pub mod area_poi;
+#[cfg(feature = "retail-12-0-5")]
+pub mod available_brawl;
 pub mod battlefield_vehicles;
 mod battleground_enlistment;
 mod outdoor_wait_state;
+pub mod reward_cache;
 pub mod war_mode;
 pub use outdoor_wait_state::OutdoorPvpWorldState;
 
@@ -80,6 +83,9 @@ pub(crate) fn register_c_pvp_surface(state: &mut LuaState) -> LuaResult<()> {
     }
     if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
         battleground_enlistment::register(state, ns)?;
+        reward_cache::register_random_bg(state, ns)?;
+        reward_cache::register_arena(state, ns)?;
+        reward_cache::register_epic_bg(state, ns)?;
     }
     if cfg!(any(feature = "client-retail", feature = "client-ptr")) {
         war_mode::register(state, ns)?;
