@@ -29,7 +29,7 @@ fn cursor_type_and_grid_reach_bag_bar_and_action_bar(env: &WowLuaEnv) {
         ClearCursor()
         C_Container.PickupContainerItem(0, 1)
         assert(expanded(), 'an owned item expands the bag bar')
-        assert(not grid(), 'owned items do not show the grid')
+        assert(grid(), 'the Hearthstone use spell shows the grid (WM54 Q4)')
         C_Item.PickupItem(6948)
         assert(not expanded(), 'an ActionBar cursor is not a bag cursor')
         assert(grid(), 'an ActionBar pickup shows the grid')

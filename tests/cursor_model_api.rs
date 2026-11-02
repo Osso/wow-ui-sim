@@ -55,23 +55,23 @@ fn item_setters_report_stored_ids_and_clears_zero_them() {
 }
 
 #[test]
-fn typed_setters_clear_first_and_report_zero() {
+fn typed_setters_clear_first_and_report_the_previous_mode() {
     let env = env();
     env.exec(
         r#"
-        -- INFERRED (WM54 pending): typed pickups run the shared clear, then
-        -- report (false, mode, 0, 0), from an empty and a nonempty cursor.
+        -- WM54 Q1/Q2: typed pickups run the shared clear, then report
+        -- (false, mode, mode before the clear, 0).
         local log = record(function() PickupPlayerMoney(10) end)
         assert(log == 'CURSOR_CHANGED,false,2,0,0', log)
         assert(CursorHasMoney() and not CursorHasItem() and not CursorHasSpell())
         log = record(function() C_Spell.PickupSpell(853) end)
-        assert(log == 'CURSOR_CHANGED,true,0,2,0;ACTIONBAR_SHOWGRID;CURSOR_CHANGED,false,3,0,0', log)
+        assert(log == 'CURSOR_CHANGED,true,0,2,0;ACTIONBAR_SHOWGRID;CURSOR_CHANGED,false,3,2,0', log)
         assert(CursorHasSpell() and not CursorHasMoney())
         log = record(function() PickupMacro(1) end)
-        assert(log == 'ACTIONBAR_HIDEGRID;CURSOR_CHANGED,true,0,3,0;ACTIONBAR_SHOWGRID;CURSOR_CHANGED,false,7,0,0', log)
+        assert(log == 'ACTIONBAR_HIDEGRID;CURSOR_CHANGED,true,0,3,0;ACTIONBAR_SHOWGRID;CURSOR_CHANGED,false,7,3,0', log)
         assert(CursorHasMacro() and not CursorHasSpell())
         log = record(function() PickupPetAction(1) end)
-        assert(log == 'ACTIONBAR_HIDEGRID;CURSOR_CHANGED,true,0,7,0;ACTIONBAR_SHOWGRID;CURSOR_CHANGED,false,4,0,0', log)
+        assert(log == 'ACTIONBAR_HIDEGRID;CURSOR_CHANGED,true,0,7,0;ACTIONBAR_SHOWGRID;CURSOR_CHANGED,false,4,7,0', log)
         assert(not CursorHasMacro())
         log = record(ClearCursor)
         assert(log == 'ACTIONBAR_HIDEGRID;CURSOR_CHANGED,true,0,4,0', log)
@@ -81,7 +81,7 @@ fn typed_setters_clear_first_and_report_zero() {
 }
 
 #[test]
-fn owned_items_use_mode_one_without_the_grid() {
+fn owned_items_use_mode_one() {
     let env = env();
     env.state().borrow_mut().bag_items.insert(
         (0, 1),
@@ -95,14 +95,16 @@ fn owned_items_use_mode_one_without_the_grid() {
     );
     env.exec(
         r#"
+        -- WM54 Q4: the Hearthstone's use spell shows the grid.
         local log = record(function() C_Container.PickupContainerItem(0, 1) end)
-        assert(log == 'CURSOR_CHANGED,false,1,0,0', log)
+        assert(log == 'ACTIONBAR_SHOWGRID;CURSOR_CHANGED,false,1,0,0', log)
         assert(CursorHasItem())
-        -- Dropping into the empty slot runs the shared clear.
-        log = record(function() C_Container.PickupContainerItem(0, 2) end)
-        assert(log == 'CURSOR_CHANGED,true,0,1,0', log)
+        -- Dropping into an empty slot runs the shared clear; the default
+        -- backpack fills slots 1-4.
+        log = record(function() C_Container.PickupContainerItem(0, 5) end)
+        assert(log == 'ACTIONBAR_HIDEGRID;CURSOR_CHANGED,true,0,1,0', log)
         assert(not CursorHasItem())
-        assert(C_Container.GetContainerItemID(0, 2) == 6948)
+        assert(C_Container.GetContainerItemID(0, 5) == 6948)
     "#,
     )
     .unwrap();
