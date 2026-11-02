@@ -7,6 +7,7 @@ Retail `Blizzard_APIDocumentationGenerated/CalendarDocumentation.lua:693,708,846
 - [ ] Project one host-supplied civil date, initially 2026-04-14 12:00, as current calendar time.
 - [ ] `SetAbsMonth` requires month and year, applies the current-year ±5 clamp followed by the 2004–2030 clamp, and selects the normalized month. It publishes `CALENDAR_UPDATE_EVENT_LIST`.
 - [ ] `GetMonthInfo` projects the displayed Gregorian month and supplied offset, with day count and first weekday.
+- [ ] `SetMonth` advances the displayed month by the supplied relative offset and bounds it to November 2004 through December 2030; the original month-navigation consumer reflects the new month.
 - [ ] The original calendar OnShow selects the current month for two supplied dates.
 - [ ] `SetNextClubId` retains an optional selection, including numeric zero; nil and omission clear it. The original calendar OnHide clears it.
 - [ ] Club numeric range, conversion, valid large hexadecimal inputs, and failure behavior follow WM17.
@@ -33,7 +34,7 @@ Retail 12.1.5 build 70688 evidence verifies local month calculation and club sta
 
 ## Known gaps (current cycle)
 
-- [ ] Native event timing, downstream calendar refresh effects, and exact secret-context behavior are unknown.
+- [ ] Native event timing, downstream calendar refresh effects, and exact secret-context behavior are unknown. `SetMonth` does not model the native shared refresh operation yet.
 - [ ] Club selection persistence across creation, closing, reload, or login is unknown; large-ID getter representation is unverified.
 - [ ] Existing temporary date-adjustment and epoch helpers do not model a complete server clock.
 

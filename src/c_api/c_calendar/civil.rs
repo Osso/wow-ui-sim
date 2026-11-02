@@ -13,6 +13,7 @@ pub(super) fn register(
     namespace: rilua::vm::gc::arena::GcRef<rilua::vm::table::Table>,
 ) -> LuaResult<()> {
     table_set_rust_fn_static(state, namespace, "SetAbsMonth", set_abs_month)?;
+    table_set_rust_fn_static(state, namespace, "SetMonth", set_month)?;
     table_set_rust_fn_static(state, namespace, "GetMonthInfo", get_month_info)
 }
 
@@ -79,6 +80,21 @@ fn set_abs_month(state: &mut LuaState) -> LuaResult<u32> {
         month: selected_month,
     };
     dispatch_event_now(state, "CALENDAR_UPDATE_EVENT_LIST", &[])?;
+    Ok(0)
+}
+
+fn set_month(state: &mut LuaState) -> LuaResult<u32> {
+    const USAGE: &str = "Usage: C_Calendar.SetMonth(offsetMonths)";
+    let offset = numeric_argument(state, 1)?
+        .filter(|n| n.is_finite() && *n >= f64::from(i32::MIN) && *n <= f64::from(i32::MAX))
+        .ok_or_else(|| runtime_error(USAGE))? as i32;
+    let shown = borrow_state(state)?.calendar_displayed_month;
+    let current = i64::from(shown.year) * 12 + i64::from(shown.month) - 1;
+    let month = (current + i64::from(offset)).clamp(2004 * 12 + 10, 2030 * 12 + 11);
+    borrow_state_mut(state)?.calendar_displayed_month = DisplayedMonth {
+        year: month.div_euclid(12) as i32,
+        month: (month.rem_euclid(12) + 1) as u8,
+    };
     Ok(0)
 }
 
