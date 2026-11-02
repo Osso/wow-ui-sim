@@ -96,7 +96,11 @@ fn write_currencies(state: &mut LuaState, row: Val, records: &[UiWidgetCurrencyR
     }
 }
 
-fn write_currency_numbers(state: &mut LuaState, row: Val, record: &UiWidgetCurrencyRecord) {
+pub(super) fn write_currency_numbers(
+    state: &mut LuaState,
+    row: Val,
+    record: &UiWidgetCurrencyRecord,
+) {
     for (key, value) in [
         ("iconFileID", f64::from(record.icon_file_id)),
         ("textFontType", f64::from(record.text_font_type)),
@@ -109,7 +113,11 @@ fn write_currency_numbers(state: &mut LuaState, row: Val, record: &UiWidgetCurre
     }
 }
 
-fn write_currency_strings(state: &mut LuaState, row: Val, record: &UiWidgetCurrencyRecord) {
+pub(super) fn write_currency_strings(
+    state: &mut LuaState,
+    row: Val,
+    record: &UiWidgetCurrencyRecord,
+) {
     for (key, text) in [
         ("leadingText", &record.leading_text),
         ("text", &record.text),

@@ -3,9 +3,9 @@ use super::{
     BulletTextListRecord, ButtonHeaderRecord, CaptureBarRecord, DiscreteProgressStepsRecord,
     DoubleIconAndTextRecord, DoubleStatusBarRecord, HorizontalCurrenciesRecord, IconAndTextRecord,
     IconTextAndBackgroundRecord, IconTextAndCurrenciesRecord, ItemDisplayRecord, ProcessingUnit,
-    SpacerRecord, SpellDisplayRecord, StatusBarRecord, TextColumnRowVisualizationInfo,
-    TextWithStateRecord, TextWithSubtextRecord, TextureAndTextRecord, TextureAndTextRowRecord,
-    WidgetId, WidgetSetEntry, WidgetSetRecord,
+    SpacerRecord, SpellDisplayRecord, StackedResourceTrackerRecord, StatusBarRecord,
+    TextColumnRowVisualizationInfo, TextWithStateRecord, TextWithSubtextRecord,
+    TextureAndTextRecord, TextureAndTextRowRecord, WidgetId, WidgetSetEntry, WidgetSetRecord,
 };
 use crate::lua_api::WowLuaEnv;
 use crate::{Error, Result};
@@ -30,6 +30,7 @@ pub enum WidgetVisualization {
     TextColumnRow(TextColumnRowVisualizationInfo),
     SpellDisplay(SpellDisplayRecord),
     Spacer(SpacerRecord),
+    StackedResourceTracker(StackedResourceTrackerRecord),
     DiscreteProgressSteps(DiscreteProgressStepsRecord),
     ButtonHeader(ButtonHeaderRecord),
     #[cfg(feature = "retail-12-0-0")]
@@ -56,6 +57,7 @@ impl WidgetVisualization {
             Self::TextColumnRow(_) => 21,
             Self::SpellDisplay(_) => 13,
             Self::Spacer(_) => 22,
+            Self::StackedResourceTracker(_) => 6,
             Self::DiscreteProgressSteps(_) => 19,
             Self::ButtonHeader(_) => 30,
             #[cfg(feature = "retail-12-0-0")]
@@ -296,6 +298,7 @@ fn supply_visualization(sim: &mut crate::lua_api::SimState, id: f64, record: Wid
     inputs.texture_and_text.remove(&key);
     inputs.texture_and_text_row.remove(&key);
     inputs.spacers.remove(&key);
+    inputs.stacked_resources.remove(&key);
     inputs.spell_display.remove(&key);
     inputs.text_with_state.remove(&key);
     inputs.text_with_subtext.remove(&key);
@@ -349,6 +352,9 @@ fn supply_visualization(sim: &mut crate::lua_api::SimState, id: f64, record: Wid
         }
         WidgetVisualization::Spacer(record) => {
             sim.ui_widget_inputs.spacers.insert(key, record);
+        }
+        WidgetVisualization::StackedResourceTracker(record) => {
+            sim.ui_widget_inputs.stacked_resources.insert(key, record);
         }
         WidgetVisualization::SpellDisplay(record) => {
             sim.ui_widget_inputs.spell_display.insert(key, record);
