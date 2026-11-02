@@ -4,6 +4,7 @@ use std::collections::HashMap;
 mod bar_records;
 mod bullet;
 mod bullet_record;
+mod capture_zone;
 mod capture_zone_record;
 pub use bullet_record::BulletTextListRecord;
 pub use capture_zone_record::CaptureZoneRecord;
