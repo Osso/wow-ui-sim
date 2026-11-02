@@ -4,7 +4,7 @@
 #![cfg(feature = "client-retail")]
 
 use wow_ui_sim::lua_api::WowLuaEnv;
-use wow_ui_sim::lua_api::state::{BagItem, CurrencyInfo};
+use wow_ui_sim::lua_api::state::{BagItem, CurrencyInfo, PetActionSlot};
 
 const RECORDER: &str = r#"
     local events = {}
@@ -130,6 +130,80 @@ fn currency_cursor_projects_id_and_icon_or_nil() {
         assert(select('#', GetCursorInfo()) == 0)
         log = record(ClearCursor)
         assert(log == 'ACTIONBAR_HIDEGRID;CURSOR_CHANGED,true,0,13,0', log)
+    "#,
+    )
+    .unwrap();
+}
+
+#[test]
+fn spell_cursor_projects_main_book_slot_type_and_id() {
+    let env = env();
+    env.state().borrow_mut().action_bars.insert(1, 853);
+    env.exec(
+        r#"
+        -- WM46/WM56: ("spell", book slot, book type, stored spell ID, override
+        -- or nil). Hammer of Justice is slot 7 of the Paladin main book.
+        C_Spell.PickupSpell(853)
+        assert(select('#', GetCursorInfo()) == 5)
+        local kind, slot, book, id, override = GetCursorInfo()
+        assert(kind == 'spell' and slot == 7 and book == 'spell', tostring(slot))
+        assert(id == 853 and override == nil, tostring(id))
+        -- WM56: a spell in neither book projects slot 0 and "spell".
+        C_Spell.PickupSpell(118)
+        kind, slot, book, id = GetCursorInfo()
+        assert(kind == 'spell' and slot == 0 and book == 'spell' and id == 118, tostring(slot))
+        -- Spell action content installs the same mode 3 payload.
+        ClearCursor()
+        PickupAction(1)
+        kind, slot, book, id = GetCursorInfo()
+        assert(kind == 'spell' and slot == 7 and book == 'spell' and id == 853, tostring(slot))
+    "#,
+    )
+    .unwrap();
+}
+
+#[test]
+fn pet_action_cursor_projects_the_packed_word_category() {
+    let env = env();
+    {
+        let mut sim = env.state().borrow_mut();
+        // Supplied packed words (WM56): category 1 with and without the
+        // high flags, reaction category 6 and command category 7.
+        let words = [
+            0x0100_0000 | 16_827,
+            0xC100_0000 | 17_253,
+            0x0600_0002,
+            0x0700_0001,
+        ];
+        for (slot, word) in words.into_iter().enumerate() {
+            sim.pet_actions[slot] = PetActionSlot {
+                has_action: true,
+                packed_action: word,
+                ..Default::default()
+            };
+        }
+        sim.pet_spells.clear();
+    }
+    env.exec(
+        r#"
+        -- WM46/WM56: ("petaction", low 24 bits, pet-book slot or nil,
+        -- override or nil). Only category (word >> 24) & 63 == 1 looks up the
+        -- pet book, where a miss is 0; the supplied pet book is empty.
+        local function project(slot)
+            PickupPetAction(slot)
+            assert(select('#', GetCursorInfo()) == 4)
+            local kind, action, book, override = GetCursorInfo()
+            assert(kind == 'petaction', tostring(kind))
+            return action, book, override
+        end
+        local action, book, override = project(1)
+        assert(action == 16827 and book == 0 and override == nil, tostring(book))
+        action, book, override = project(2)
+        assert(action == 17253 and book == 0 and override == nil, tostring(book))
+        action, book, override = project(3)
+        assert(action == 2 and book == nil and override == nil, tostring(book))
+        action, book, override = project(4)
+        assert(action == 1 and book == nil and override == nil, tostring(book))
     "#,
     )
     .unwrap();

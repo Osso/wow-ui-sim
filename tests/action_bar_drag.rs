@@ -128,7 +128,14 @@ fn pickup_action_accepts_ignore_removal_arg_and_place_restores_slot() {
     );
     assert!(!env.eval::<bool>("return HasAction(1)").unwrap());
 
-    let (cursor_type, cursor_spell_id): (String, i32) = env.eval("return GetCursorInfo()").unwrap();
+    // Retail projects mode 3 as ("spell", book slot, book type, spell ID, ...)
+    // (WM46, WM56); other profiles keep ("spell", spell ID).
+    let projection = if cfg!(feature = "client-retail") {
+        "local kind, _, _, spellID = GetCursorInfo(); return kind, spellID"
+    } else {
+        "return GetCursorInfo()"
+    };
+    let (cursor_type, cursor_spell_id): (String, i32) = env.eval(projection).unwrap();
     assert_eq!(cursor_type, "spell");
     assert_eq!(cursor_spell_id, 853);
 

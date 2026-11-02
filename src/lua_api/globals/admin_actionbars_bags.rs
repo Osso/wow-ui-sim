@@ -49,6 +49,7 @@ pub(super) fn set_pet_action_slot(state: &mut LuaState) -> LuaResult<u32> {
             spell_id,
             passive,
             cooldown: None,
+            packed_action: 0,
         };
     }
     drop(sim);

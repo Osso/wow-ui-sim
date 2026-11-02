@@ -25,6 +25,7 @@ fn env_with_pet_slots() -> WowLuaEnv {
             spell_id: Some(16827),
             passive: false,
             cooldown: None,
+            packed_action: 0,
         };
         state.pet_actions[1] = PetActionSlot {
             has_action: true,
@@ -37,6 +38,7 @@ fn env_with_pet_slots() -> WowLuaEnv {
             spell_id: None,
             passive: true,
             cooldown: None,
+            packed_action: 0,
         };
     }
     env

@@ -114,3 +114,20 @@ fn icon_selector_accepts_outfit_cursors(env: &WowLuaEnv) {
     "#).unwrap();
 }
 }
+
+prefork_full_ui_case! {
+fn icon_selector_reads_the_spell_id_fourth(env: &WowLuaEnv) {
+    env.exec(r#"
+        local source = debug.getinfo(IconSelectorPopupFrameTemplateMixin.SetIconFromMouse, 'S').source:gsub('\\', '/')
+        assert(source:find('Blizzard_SharedXML/Mainline/SharedUIPanelTemplates.lua', 1, true), source)
+        local popup = CreateFrame('Frame', nil, UIParent, 'IconSelectorPopupFrameTemplate')
+        -- Supplied stand-in for the icon list; the dropped icon is not in it.
+        popup.iconDataProvider = { GetIndexOfIcon = function() return nil end }
+        C_Spell.PickupSpell(853)
+        popup:SetIconFromMouse()
+        local icon = popup.BorderBox.SelectedIconArea.SelectedIconButton:GetIconTexture()
+        assert(icon == C_Spell.GetSpellTexture(853), tostring(icon))
+        assert(GetCursorInfo() == nil)
+    "#).unwrap();
+}
+}

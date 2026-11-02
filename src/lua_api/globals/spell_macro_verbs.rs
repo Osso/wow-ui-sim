@@ -111,9 +111,14 @@ fn pickup_pet_action(state: &mut LuaState) -> LuaResult<u32> {
     let Some(slot) = stack_u32(state, 1) else {
         return Ok(0);
     };
+    let packed_action = borrow_state(state)?
+        .pet_actions
+        .get((slot as usize).wrapping_sub(1))
+        .map_or(0, |action| action.packed_action);
     let cursor = CursorInfo::PetAction {
         slot,
         spell_id: PET_ACTION_SPELL_OFFSET.saturating_add(slot),
+        packed_action,
     };
     crate::lua_api::globals::real::cursor_model::place(state, cursor)?;
     Ok(0)

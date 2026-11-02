@@ -61,6 +61,8 @@ Swapping an owned item with a bag or equipment slot places the displaced item th
   |---|---|
   | 1 Item | `"item"`, item ID, item link or nil. The cursor carries no owned modifiers, so the link is the one built from the item ID. |
   | 2 Money | `"money"`, amount |
+  | 3 Spell | `"spell"`, main-book slot or 0, `"spell"`, spell ID, nil. VERIFIED (WM46, WM56): a spell in neither book projects slot 0 and `"spell"`. |
+  | 4 PetAction | `"petaction"`, the packed word's low 24 bits, then 0 and nil when the category `(word >> 24) & 63` is 1, otherwise nil and nil. VERIFIED (WM46, WM56). The word is the pet-bar slot's supplied `packed_action`, zero when unsupplied. |
   | 5 Merchant | `"merchant"`, the row index the pickup received (the stored zero-based row plus one) |
   | 6 ActionBar | `"item"`, item ID, link; zero values without item metadata |
   | 12 EquipmentSet | `"equipmentset"`, the set's name (INFERRED: WM46 verifies "the selected record's text"); zero values when the set no longer exists |
@@ -83,6 +85,7 @@ Swapping an owned item with a bag or equipment slot places the displaced item th
 - Native ordering between action-slot change events and cursor events in `PickupAction`/`PlaceAction` is not established.
 - Trade, mail and auction drops still release the cursor without the shared clear or its events.
 - `C_EquipmentSet.PickupEquipmentSet` and `C_CurrencyInfo.PickupCurrency` accept any ID: the wrapper guards are UNKNOWN. `PlaceAction` does not place equipment-set or currency cursors on action slots.
-- Spell 3 and PetAction 4 keep the simulator's `("spell", id)` tuple until WM56 settles the book type of an unbooked spell and the pet-action category. When they are projected, the pet book has no slot order in the simulator (an unordered set), so pet-book slots are not projected, and overrides are identity-only, so the override value is nil.
+- The simulator's pet book is an unordered set, so pet-book searches are misses: a spell only in the pet book projects slot 0 and `"spell"` instead of its pet slot and `"pet"`, and a category-1 pet action projects 0. Overrides are identity-only, so the override value is nil. Companion classification (the three-value `"companion"` tuple) is not modelled.
+- `PickupPetAction` installs the slot's supplied word even when it is zero; native entry guards are UNKNOWN. The autocast writers that change the word's high flags (WM56) are not modelled.
 - Macro 7 projects the picked-up index. Native matches a macro handle and follows the macro when slots move; the simulator has no handles.
 - Modes 8, 10–20 and their projections, guild-bank pickups, and the money storage read by `GetCursorMoney` are not modeled here.

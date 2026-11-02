@@ -108,7 +108,8 @@ fn pickup_pet_action_synthesizes_spell_id_from_slot() {
         env.state().borrow().cursor_item,
         Some(CursorInfo::PetAction {
             slot: 3,
-            spell_id: 1_000_003
+            spell_id: 1_000_003,
+            packed_action: 0
         })
     ));
 }

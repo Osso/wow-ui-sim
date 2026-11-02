@@ -133,6 +133,10 @@ pub struct PetActionSlot {
     pub spell_id: Option<u32>,
     pub passive: bool,
     pub cooldown: Option<SpellCooldownState>,
+    /// Supplied native packed word (WM56): low 24 bits are the action ID,
+    /// `(word >> 24) & 63` the category. Zero when unsupplied; native packet
+    /// values are UNKNOWN.
+    pub packed_action: u32,
 }
 
 /// Glyph cursor state read by `Blizzard_ActionBar/Shared/SpellFlyout.lua`'s
