@@ -8,6 +8,7 @@ use super::{
     ScenarioHeaderCurrenciesRecord, SpacerRecord, SpellDisplayRecord, StackedResourceTrackerRecord,
     StatusBarRecord, TextColumnRowVisualizationInfo, TextWithStateRecord, TextWithSubtextRecord,
     TextureAndTextRecord, TextureAndTextRowRecord, WidgetId, WidgetVisualization,
+    ZoneControlRecord,
 };
 
 #[derive(Debug, Clone, PartialEq)]
@@ -89,6 +90,7 @@ pub struct UiWidgetInputs {
     pub capture_bars: HashMap<WidgetId, CaptureBarRecord>,
     pub double_status_bars: HashMap<WidgetId, DoubleStatusBarRecord>,
     pub double_state_icons: HashMap<WidgetId, DoubleStateIconRowRecord>,
+    pub zone_controls: HashMap<WidgetId, ZoneControlRecord>,
     pub texture_and_text: HashMap<WidgetId, TextureAndTextRecord>,
     pub texture_and_text_row: HashMap<WidgetId, TextureAndTextRowRecord>,
     pub discrete_progress_steps: HashMap<WidgetId, DiscreteProgressStepsRecord>,
