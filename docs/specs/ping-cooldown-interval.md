@@ -1,6 +1,6 @@
 # Explicit ping cooldown interval
 
-`C_Ping.GetCooldownInfo()` projects an explicit per-environment interval from `src/c_api/c_ping_cooldown.rs`. Getter and utility-table registration are implemented; bounded Retail GREEN passes. Tests target `client-retail`/`client-ptr`; backing state uses their shared `retail-12-0-0` feature floor.
+`C_Ping.GetCooldownInfo()` projects the ping manager's stored cooldown pair from `src/c_api/c_ping_cooldown.rs`. WM51-F1 identifies it as the same pair that a Retail 12.1.5 send stores when it crosses the burst limit and clears at expiry; see [secure ping sends](ping-secure-publication.md#sends-and-pending-hit-test-information). Hosts can still supply the pair directly. Getter and utility-table registration are implemented; bounded Retail GREEN passes. Tests target `client-retail`/`client-ptr`; backing state uses their shared `retail-12-0-0` feature floor.
 
 Accepted draft cached Retail evidence: `Blizzard_APIDocumentationGenerated/PingManagerDocumentation.lua` declares no arguments and nonnil `PingCooldownInfo`, without secret/restriction annotations on this getter. `PingManagerSharedDocumentation.lua` requires numeric nonnil `startTimeMs`/`endTimeMs`. `Blizzard_PingUI/Blizzard_PingUI.lua:127–141,194–205` compares `GetTime()*1000 < endTimeMs` and requests `(endTimeMs/1000)-GetTime()` seconds. Sources are under `~/.cache/wow-ui-sim/blizzard-ui/retail/AddOns`; documentation and consumer lines were locally re-read on 2026-10-12, not freshly fetched or native-observed. Fresh DTO allocation and inactive `(0,0)` are accepted simulator assumptions; PTR/native parity is unverified.
 
@@ -19,10 +19,9 @@ Accepted draft cached Retail evidence: `Blizzard_APIDocumentationGenerated/PingM
 
 ## Implementation inventory
 
-- `src/c_api/c_ping_cooldown.rs`: public `PingCooldownInterval { start_time_ms: f64, end_time_ms: f64 }`; zero default. `pub(crate) register(state)` preserves the existing `C_Ping` namespace and installs the exact Rust `GetCooldownInfo` function. Getter copies both `f64` values, drops the state borrow before allocation, roots a fresh result table before setting its two fields, and returns one DTO. No argument/security checks or producer/clock/timer fields.
+- `src/c_api/c_ping_secure/burst.rs`: public `PingCooldownInterval { start_time_ms: u32, end_time_ms: u32 }` in cached milliseconds, held as `PingBurst.interval` in `SimState.ping_burst`; zero default.
+- `src/c_api/c_ping_cooldown.rs`: `pub(crate) register(state)` preserves the existing `C_Ping` namespace and installs the exact Rust `GetCooldownInfo` function. Getter copies the pair, drops the state borrow before allocation, roots a fresh result table before setting its two fields, and returns one DTO. No argument or security checks.
 - `src/c_api/mod.rs`: model re-export and getter registration alongside existing ping utility tables under the shared modern feature floor.
-- `src/lua_api/state/sim_state.rs`: public `ping_cooldown_interval` fixture field.
-- `src/lua_api/state.rs`: independent zero initialization.
 
 ## Tests asserting this spec
 
@@ -41,4 +40,4 @@ Vendor test reads the active profile cache without fallback and executes the unc
 
 ## Out of scope
 
-Send-ping/charge/refill generation, timer policy, automatic expiry/reset, events/callback dispatch, secret arguments, malformed interval validation, extra fields, full startup, other profiles, vendor/config/WTF edits.
+Charge/refill generation, timer policy, automatic expiry/reset, events/callback dispatch, secret arguments, malformed interval validation, extra fields, full startup, other profiles, vendor/config/WTF edits.

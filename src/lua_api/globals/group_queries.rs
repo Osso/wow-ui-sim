@@ -16,7 +16,7 @@
 //! share no code with it.
 
 #[path = "group_queries_relationships.rs"]
-pub(super) mod relationships;
+pub(crate) mod relationships;
 
 use super::unit_misc::identity_output;
 use crate::lua_api::game_data::CLASS_LABELS;

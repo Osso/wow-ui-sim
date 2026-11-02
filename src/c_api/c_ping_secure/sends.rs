@@ -1,10 +1,9 @@
-//! `C_PingSecure` sends and pending hit-test information (WM38, WM47).
+//! `C_PingSecure` sends and pending hit-test information (WM38, WM47, WM51).
 //!
-//! Every send applies the shared eligibility first. Only its cooldown check is
-//! modelled: the feature, leader and squelch predicates (results 4, 3 and 6) are
-//! known gaps (WM51-F2), and so is the cooldown-started callback (WM51-F1).
-//! Branches that need unmodelled native state raise "not modeled" errors.
+//! Every send applies the shared eligibility first. Branches that need
+//! unmodelled native state raise "not modeled" errors.
 
+use super::eligibility::{check_eligibility, record_submission};
 use crate::lua_api::globals::group_queries::is_attackable_unit;
 use crate::lua_api::globals::real::protected_globals::refuse_tainted_caller;
 use crate::lua_api::globals::unit_misc::unit_token_for_guid;
@@ -25,8 +24,7 @@ const POINT_THRESHOLD: f32 = 1.0 / 4_194_304.0;
 const SPELL_CATEGORIES: [i32; 3] = [4, 30, 1711];
 
 // Enum.PingResult and Enum.PingSubjectType (PingConstantsDocumentation.lua).
-const FAILED_GENERIC: u8 = 1;
-const FAILED_SPAMMING: u8 = 2;
+pub(super) const FAILED_GENERIC: u8 = 1;
 const FAILED_OUT_OF_PING_AREA: u8 = 5;
 const FAILED_UNSPECIFIED: u8 = 7;
 const ALERT_THREAT: u8 = 4;
@@ -56,13 +54,13 @@ pub struct PingPendingTarget {
 }
 
 /// WM38: the published table holds a numeric `result` and an optional `type`.
-struct SendResult {
+pub(super) struct SendResult {
     result: u8,
     kind: Option<u8>,
 }
 
 impl SendResult {
-    fn failed(result: u8) -> Self {
+    pub(super) fn failed(result: u8) -> Self {
         Self { result, kind: None }
     }
 
@@ -157,24 +155,25 @@ fn send_player_spell_category_ping(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 /// WM38: eligibility, then a zero ID produces 7.
-fn admit_player_data(state: &LuaState, id: i32) -> LuaResult<Option<SendResult>> {
-    if !admit(state)? {
-        return Ok(Some(SendResult::failed(FAILED_SPAMMING)));
+fn admit_player_data(state: &mut LuaState, id: i32) -> LuaResult<Option<SendResult>> {
+    if let Some(refusal) = check_eligibility(state)? {
+        return Ok(Some(SendResult::failed(refusal)));
     }
     Ok((id == 0).then(|| SendResult::failed(FAILED_UNSPECIFIED)))
 }
 
-/// WM38/WM47 Q7: eligibility (INFERRED first, WM51-F3), the empty GUID (7), then
-/// unit-object resolution (5). Past that only the local player is modelled: it
-/// bypasses the unit-flag rejection and redirection and passes the resource flag.
+/// WM47 Q7/WM51-F3: eligibility, the empty GUID (7), then unit-object resolution
+/// (5) over the simulator's token-backed units. Past that only the local player
+/// is modelled: it bypasses the suitability-flag rejection and redirection and
+/// passes the resource flag.
 fn send_to_unit(
     state: &mut LuaState,
     member: &str,
     guid: &str,
     kind: Option<u8>,
 ) -> LuaResult<SendResult> {
-    if !admit(state)? {
-        return Ok(SendResult::failed(FAILED_SPAMMING));
+    if let Some(refusal) = check_eligibility(state)? {
+        return Ok(SendResult::failed(refusal));
     }
     if guid.is_empty() {
         return Ok(SendResult::failed(FAILED_UNSPECIFIED));
@@ -185,7 +184,7 @@ fn send_to_unit(
     if unit != "player" {
         return not_modeled(
             member,
-            "non-self unit flags and redirection (WM47 Q7, WM51-F3)",
+            "non-self unit suitability flags and redirection (WM47 Q7, WM51-F3)",
         );
     }
     let kind = match kind {
@@ -197,13 +196,13 @@ fn send_to_unit(
 }
 
 /// WM47 Q7: the point sender repeats eligibility before its distance check.
-fn send_to_point(state: &LuaState) -> LuaResult<SendResult> {
-    if !admit(state)? {
-        return Ok(SendResult::failed(FAILED_SPAMMING));
+fn send_to_point(state: &mut LuaState) -> LuaResult<SendResult> {
+    if let Some(refusal) = check_eligibility(state)? {
+        return Ok(SendResult::failed(refusal));
     }
     not_modeled(
         "SendHitTestPing",
-        "the point distance check (WM47 Q7, WM51-F7)",
+        "the point distance check against the player position (WM51-F7)",
     )
 }
 
@@ -218,21 +217,7 @@ fn contextual_unit_type(state: &mut LuaState, unit: &str) -> LuaResult<u8> {
     })
 }
 
-fn admit(state: &LuaState) -> LuaResult<bool> {
-    let mut sim = borrow_state_mut(state)?;
-    let now = sim.cached_clock_ms();
-    Ok(sim.ping_burst.admit(now))
-}
-
-/// WM47 Q1: bookkeeping follows local processing; there is no network model.
-fn record_submission(state: &LuaState) -> LuaResult<()> {
-    let mut sim = borrow_state_mut(state)?;
-    let now = sim.cached_clock_ms();
-    sim.ping_burst.record_submission(now);
-    Ok(())
-}
-
-fn push_result(state: &mut LuaState, result: SendResult) -> LuaResult<u32> {
+pub(super) fn push_result(state: &mut LuaState, result: SendResult) -> LuaResult<u32> {
     let table = create_table(state);
     state.push(table);
     table_set_static(state, table, "result", Val::Num(f64::from(result.result)));
@@ -274,7 +259,7 @@ fn read_optional_type(state: &LuaState, index: i32) -> LuaResult<Option<u8>> {
     Ok(Some(kind))
 }
 
-fn read_number(state: &LuaState, value: Val) -> Option<f64> {
+pub(super) fn read_number(state: &LuaState, value: Val) -> Option<f64> {
     match value {
         Val::Num(number) => Some(number),
         Val::Str(_) => val_to_string(state, value)?.trim().parse().ok(),

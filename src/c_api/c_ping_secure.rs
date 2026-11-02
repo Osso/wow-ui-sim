@@ -1,9 +1,9 @@
 //! `C_PingSecure` callback slots, radial-frame creation, error display and sends.
 //!
-//! Retail 12.1.5 (WM38, WM38F, WM47) refuses tainted callers of every member
-//! before reading arguments, creates the radial frame once, dispatches
-//! `PING_SYSTEM_ERROR` and sends pings. Earlier epochs keep inert callback
-//! storage and a no-op `CreateFrame`. Hit-test selection awaits WM51.
+//! Retail 12.1.5 (WM38, WM38F, WM47, WM51) refuses tainted callers of every
+//! member before reading arguments, creates the radial frame once, dispatches
+//! `PING_SYSTEM_ERROR`, selects UI receivers and sends pings. Earlier epochs
+//! keep inert callback storage and a no-op `CreateFrame`.
 
 use crate::c_api::helpers::ensure_namespace;
 use crate::lua_api::globals::create_frame::helpers_shared::create_frame_instance;
@@ -21,12 +21,15 @@ use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val, runtime_error};
 
 mod burst;
+mod eligibility;
 mod sends;
+mod targeting;
 
 pub use burst::{PingBurst, PingCooldownInterval};
 pub use sends::PingPendingTarget;
 
 const CALLBACK_TABLE_KEY: &str = "__wow_ping_secure_callbacks";
+const RADIAL_FRAME_SIDE: f32 = 10.0;
 
 /// WM38 and PingManagerSecureDocumentation.lua describe the Retail 12.1.5 surface.
 fn is_retail_12_1_5() -> bool {
@@ -42,6 +45,7 @@ pub(crate) fn register_c_ping_secure_surface(state: &mut LuaState) -> LuaResult<
     register_callback_setters(state, table_ref)?;
     if is_retail_12_1_5() {
         sends::register(state, table_ref)?;
+        targeting::register(state, table_ref)?;
         // PingManagerSecureDocumentation.lua:21-30; the clear member is not declared.
         table_set_rust_fn_static(state, table_ref, "DisplayError", display_error)
     } else {
@@ -149,22 +153,24 @@ fn create_frame(state: &mut LuaState) -> LuaResult<u32> {
     }
     let frame_id =
         create_frame_instance(state, WidgetType::Frame, "Frame", None, None, false, None)?;
-    anchor_to_world_frame(state, frame_id)?;
+    place_radial_frame(state, frame_id)?;
     borrow_state_mut(state)?.ping_radial_frame = Some(frame_id);
     notify_radial_wheel_created(state, frame_id)?;
     Ok(0)
 }
 
 /// WM47 Q10: the parentless frame's CENTER is anchored to WorldFrame's BOTTOMLEFT
-/// at zero offsets; MEDIUM strata and level 0 are the frame defaults. The native
-/// size, 10/1024 scaled by the coordinate multiplier and UI scale, is a gap (WM51-F6).
-fn anchor_to_world_frame(state: &LuaState, frame_id: u64) -> LuaResult<()> {
+/// at zero offsets; MEDIUM strata and level 0 are the frame defaults. WM51-F5/F6:
+/// the native side (10/1024)/S x M is exactly 10 GetCursorPosition units, the
+/// simulator's layout canvas (INFERRED), on every screen.
+fn place_radial_frame(state: &LuaState, frame_id: u64) -> LuaResult<()> {
     let mut sim = borrow_state_mut(state)?;
     let world_frame = sim
         .widgets
         .get_id_by_name("WorldFrame")
         .ok_or_else(|| runtime_error("C_PingSecure.CreateFrame requires WorldFrame"))?;
     if let Some(frame) = sim.widgets.get_mut_for_anchor_edit(frame_id) {
+        frame.set_size(RADIAL_FRAME_SIDE, RADIAL_FRAME_SIDE);
         frame.set_point(
             AnchorPoint::Center,
             Some(world_frame as usize),
