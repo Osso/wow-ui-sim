@@ -182,6 +182,7 @@ pub mod c_party_info;
 mod c_perks_categories;
 pub mod c_pet_battles;
 pub mod c_pet_journal_hover;
+pub(crate) mod c_pet_talent_tree;
 pub mod c_photo_sharing;
 pub mod c_ping_secure;
 #[cfg(any(feature = "retail-12-1-0", feature = "client-wowforever"))]

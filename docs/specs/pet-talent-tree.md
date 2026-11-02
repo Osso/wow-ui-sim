@@ -1,0 +1,11 @@
+# Pet talent tree name
+
+Retail and PTR declare `C_PetInfo.GetPetTalentTree()` in `Blizzard_APIDocumentationGenerated/PetInfoDocumentation.lua:11`, with `MayReturnNothing = true` and one `talentTreeName` string. No Blizzard UI file calls it, so tests run at API level.
+
+The call reads no arguments. It needs a summoned pet whose owner (the player) has ChrClasses ID 3 (Hunter). The pet's CreatureFamily row supplies a signed `PetTalentType`. A missing family, a family with no row, or a negative type fails. The first ChrSpecialization row with `ClassID` 0, the same `PetTalentType` and no flag 32 is selected. Selection does not use the owner's active specialization. If the owner's sex is female (`UnitSex` 3, native sex 1), the female name is returned; otherwise the normal name is returned. A selected row with `OrderIndex` 4, or with empty text, returns `""`. A successful selection returns one string. A failed selection returns zero values, not `nil`.
+
+In 70391 data, type 0 selects Ferocity (74), type 1 Tenacity (81) and type 2 Cunning (79). Rows 535–537 have flag 32. Both name columns agree, so the sex choice cannot be observed with current data.
+
+**Evidence:** Retail 12.1.5 build 70688 WM49 part B. The class-3 test, family lookup, signed-index check, flag-32 exclusion, sex selection, `OrderIndex` 4 rule and selector 1 (the ChrSpecialization route) are VERIFIED. Zero-value failure is EMULATED. These points are INFERRED: class 3 means Hunter; the stored pet is owned by the player; the sex is the owner's (pending WM55 Q1); the 70391 assignments match 70688. `tools/gen_pet_talent_trees.py` generates `crates/sim-data/data/pet_talent_trees.rs` from CreatureFamily.csv and ChrSpecialization.csv, build 12.1.5.70391.
+
+**Simulator inputs:** the summoned pet is `PetState.icon` (the same input as `UnitExists("pet")`), and its family is the supplied `PetState.creature_family_id`. Both default to absent. **Known gaps:** the selector-0 TalentTab route (first row whose nonzero class mask contains the family-index bit) is not used by the Retail image and is not modeled. Classic profiles declare the member without native evidence and do not publish it. Stable-slot pet identities and live pet resolution are not modeled.
