@@ -34,8 +34,7 @@ fn stack_i32(state: &mut LuaState, index: i32) -> Option<i32> {
     }
 }
 
-/// `IsInventoryItemLocked(slot)` — true when the cursor is carrying the
-/// item from that equipment slot (i.e. the player is dragging it).
+/// `IsInventoryItemLocked(slot)` includes modeled item locks and equipment drags.
 fn is_inventory_item_locked(state: &mut LuaState) -> LuaResult<u32> {
     let Some(slot) = stack_i32(state, 1) else {
         state.push(Val::Bool(false));
@@ -49,7 +48,11 @@ fn is_inventory_item_locked(state: &mut LuaState) -> LuaResult<u32> {
                 origin: crate::lua_api::state_types::CursorItemOrigin::Equipped { slot: s },
                 ..
             }) if *s == slot,
-        )
+        ) || st
+            .keystone
+            .is_locked(crate::c_api::c_challenge_mode::KeystoneLocation::Equipment(
+                slot,
+            ))
     };
     state.push(Val::Bool(locked));
     Ok(1)

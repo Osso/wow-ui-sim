@@ -170,7 +170,10 @@ fn c_container_get_item_info(state: &mut LuaState) -> LuaResult<u32> {
         return Ok(1);
     };
 
-    let info = build_container_item_info(state, &bag_item)?;
+    let locked = borrow_state(state)?.keystone.is_locked(
+        crate::c_api::c_challenge_mode::KeystoneLocation::Bag(bag, slot),
+    );
+    let info = build_container_item_info(state, &bag_item, locked)?;
     state.push(info);
     Ok(1)
 }
@@ -197,7 +200,11 @@ fn c_container_set_item_search(state: &mut LuaState) -> LuaResult<u32> {
     Ok(0)
 }
 
-fn build_container_item_info(state: &mut LuaState, bag_item: &BagItem) -> LuaResult<Val> {
+fn build_container_item_info(
+    state: &mut LuaState,
+    bag_item: &BagItem,
+    locked: bool,
+) -> LuaResult<Val> {
     let item_id = bag_item.item_id;
     let item = items::get_item(item_id);
     let info = create_table(state);
@@ -210,7 +217,7 @@ fn build_container_item_info(state: &mut LuaState, bag_item: &BagItem) -> LuaRes
     set_container_item_stack_and_quality(state, info, bag_item, icon_file_id, quality);
     let is_filtered = is_filtered_by_search(&borrow_state(state)?.item_search_text, item);
     table_set_static(state, info, "isFiltered", Val::Bool(is_filtered));
-    table_set_static(state, info, "isLocked", Val::Bool(false));
+    table_set_static(state, info, "isLocked", Val::Bool(locked));
     table_set_static(state, info, "isBound", Val::Bool(false));
     table_set_static(state, info, "hasNoValue", Val::Bool(false));
     table_set_static(state, info, "isReadable", Val::Bool(false));

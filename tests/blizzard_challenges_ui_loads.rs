@@ -156,6 +156,9 @@ fn challenges_keystone_close_and_clear_keep_independent_state(env: &WowLuaEnv) {
         sim.keystone.reason_one_locks.insert(slot);
         sim.keystone.other_locks.insert(slot);
     }
+    let locked: bool = env.eval("return C_Container.GetContainerItemInfo(0, 1).isLocked")
+        .expect("selected item lock should be observable");
+    assert!(locked);
     env.exec("C_ChallengeMode.CloseKeystoneFrame()")
         .expect("receptacle close should execute");
     {
@@ -196,6 +199,9 @@ fn challenges_keystone_close_and_clear_keep_independent_state(env: &WowLuaEnv) {
     }
     env.exec("C_ChallengeMode.ClearKeystone()")
         .expect("clearing the last lock should execute");
+    let locked: bool = env.eval("return C_Container.GetContainerItemInfo(0, 1).isLocked")
+        .expect("unlocked item should be observable");
+    assert!(!locked);
     let events: String = env.eval("return table.concat(keystoneLockEvents, ',')")
         .expect("lock events should be observable");
     assert_eq!(events, "ITEM_LOCK_CHANGED:0:1,ITEM_UNLOCKED:0:1");

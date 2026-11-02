@@ -207,6 +207,12 @@ fn register_c_item_inventory_queries(
         table_set_rust_fn_static(
             state,
             table_ref,
+            "IsItemKeystoneByID",
+            is_item_keystone_by_id,
+        )?;
+        table_set_rust_fn_static(
+            state,
+            table_ref,
             "GetItemGem",
             super::item_gem::get_item_gem,
         )?;
@@ -332,6 +338,30 @@ fn push_item_classification(
         item_id.is_some_and(|id| item_ids(&sim).contains(&id))
     };
     state.push(Val::Bool(classified));
+    Ok(1)
+}
+
+fn is_item_keystone_by_id(state: &mut LuaState) -> LuaResult<u32> {
+    let value = rilua::table_security::unwrap_secret(state, stack_val(state, 1))?;
+    let id = match value {
+        Val::Num(_) => parse_item_id_from_val(state, value),
+        Val::Str(_) => val_to_string(state, value).map(|text| {
+            if text.contains("item:") {
+                parse_prefixed_id(&text, "item").and_then(|id| i32::try_from(id).ok())
+            } else {
+                item_id_by_name(&text)
+            }
+            .unwrap_or(0)
+        }),
+        _ => None,
+    }
+    .ok_or_else(|| rilua::runtime_error("Usage: C_Item.IsItemKeystoneByID(itemInfo)"))?;
+    let items = sim_data::item_categories::ITEMS;
+    let result = items
+        .binary_search_by_key(&(id as u32), |entry| entry.0)
+        .ok()
+        .is_some_and(|index| items[index].1 == 5 && items[index].2 == 1);
+    state.push(Val::Bool(result));
     Ok(1)
 }
 

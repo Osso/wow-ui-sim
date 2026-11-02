@@ -123,7 +123,7 @@ fn clear_eligibility(state: &mut LuaState) -> LuaResult<u32> {
     Ok(0)
 }
 
-fn read_item_slot(state: &mut LuaState, location: Val) -> Option<ItemSlot> {
+pub(crate) fn read_item_slot(state: &mut LuaState, location: Val) -> Option<ItemSlot> {
     if !matches!(location, Val::Table(_)) {
         return None;
     }
