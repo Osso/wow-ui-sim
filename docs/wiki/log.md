@@ -3228,3 +3228,11 @@ resolved once before storage initialization and retained through reload.
 `WOW_SIM_ADDONS_TXT` supports separate addon-enable reads and saves; real WoW WTF
 imports remain read-only. Existing defaults, formats and shutdown behavior are
 unchanged.
+
+## 2026-11-02 — Explicit imported character identity
+
+[Character identity](../specs/character-identity.md) supplies the selected name and
+realm before addon loading and through ReloadUI. Missing explicit WTF selections
+fail startup. Forever name queries follow the build 70450 native first-name/surname
+tuple and nil arity; the contract records the native evidence and remaining
+unsurnamed-player and regional-consumer limits.

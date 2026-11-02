@@ -4,6 +4,12 @@
 the `WOW_SIM_ADDONS_TXT` selection override and read-only real WoW imports.
 The supplied or default directory is resolved once before storage initialization.
 
+## [2026-11-02] architecture | Explicit character identity
+
+[Character identity](../specs/character-identity.md) describes strict explicit WTF
+selection, addon-visible names and realms before loading and after ReloadUI,
+Forever surname handling and the bounded original-consumer coverage.
+
 ## [2026-10-31] architecture | Startup class and race
 
 [Startup player settings](../specs/cli-class-spec.md#initial-class-race-and-specialization)
