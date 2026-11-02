@@ -235,6 +235,12 @@ fn register_c_item_inventory_queries(
             "GetItemCreationContext",
             c_item_creation_context,
         )?;
+        table_set_rust_fn_static(
+            state,
+            table_ref,
+            "GetItemSpell",
+            super::item_effects::get_item_spell,
+        )?;
     }
     register_c_item_methods(
         state,

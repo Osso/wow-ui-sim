@@ -7,6 +7,7 @@ mod c_item;
 pub(crate) mod helpers;
 pub mod item_child;
 mod item_creation_context_data;
+mod item_effects;
 mod item_gem;
 mod item_type;
 
