@@ -629,6 +629,56 @@ fn calendar_description_edit_updates_supplied_event(env: &WowLuaEnv) {
 }
 
 prefork_full_ui_case! {
+fn calendar_create_events_report_native_notifications(env: &WowLuaEnv) {
+    use wow_ui_sim::c_api::club_model::Club;
+    env.exec(r#"
+        calendarCreateEvents = {}
+        local observer = CreateFrame('Frame')
+        for _, name in ipairs({'CALENDAR_UPDATE_INVITE_LIST', 'CALENDAR_UPDATE_ERROR', 'CALENDAR_ACTION_PENDING'}) do
+            observer:RegisterEvent(name)
+        end
+        observer:SetScript('OnEvent', function(_, name, ...)
+            table.insert(calendarCreateEvents, {name = name, count = select('#', ...), value = ...})
+        end)
+        assert(select('#', C_Calendar.CreatePlayerEvent()) == 0)
+        assert(#calendarCreateEvents == 1)
+        assert(calendarCreateEvents[1].name == 'CALENDAR_UPDATE_INVITE_LIST')
+        assert(calendarCreateEvents[1].count == 1 and calendarCreateEvents[1].value == true)
+        calendarCreateEvents = {}
+        assert(select('#', C_Calendar.CreateGuildSignUpEvent()) == 0)
+        assert(#calendarCreateEvents == 2)
+        assert(calendarCreateEvents[1].name == 'CALENDAR_UPDATE_ERROR' and calendarCreateEvents[1].count == 1 and calendarCreateEvents[1].value == 'ERR_GUILD_PLAYER_NOT_IN_GUILD')
+        assert(calendarCreateEvents[2].name == 'CALENDAR_ACTION_PENDING' and calendarCreateEvents[2].count == 1 and calendarCreateEvents[2].value == false)
+    "#).unwrap();
+    for id in ["123", "456"] {
+        {
+            let mut state = env.state().borrow_mut();
+            state.clubs.clubs.clear();
+            state.clubs.clubs.insert(id.into(), Club {
+                id: id.into(), name: id.into(), description: String::new(),
+                club_type: 2, avatar_id: 0, members: Vec::new(), candidates: Default::default(),
+                invitations: Vec::new(), streams: Vec::new(),
+            });
+        }
+        env.exec(r#"
+            calendarCreateEvents = {}
+            assert(select('#', C_Calendar.CreateGuildSignUpEvent()) == 0)
+            assert(C_Calendar.EventGetCalendarType() == 'GUILD_EVENT')
+            assert(#calendarCreateEvents == 0)
+        "#).unwrap();
+        assert_eq!(env.state().borrow().calendar_context_policy.editable.as_ref().unwrap().club_id, id.parse::<u64>().unwrap());
+        env.exec(r#"
+            assert(select('#', C_Calendar.CreateGuildAnnouncementEvent()) == 0)
+            assert(C_Calendar.EventGetCalendarType() == 'GUILD_ANNOUNCEMENT')
+            assert(C_Calendar.GetNumInvites() == 0)
+            assert(select('#', C_Calendar.CreateCommunitySignUpEvent()) == 0)
+            assert(C_Calendar.EventGetCalendarType() == 'COMMUNITY_EVENT')
+        "#).unwrap();
+    }
+}
+}
+
+prefork_full_ui_case! {
 fn calendar_create_player_event_replaces_editable_record(env: &WowLuaEnv) {
     use wow_ui_sim::c_api::c_calendar::{CalendarEditableAccess, DisplayedMonth};
     load_addon(&env.loader_env(), &calendar_toc()).unwrap();
