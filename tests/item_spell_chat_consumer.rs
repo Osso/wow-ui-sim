@@ -2,6 +2,7 @@
 #![cfg(feature = "client-retail")]
 
 use wow_ui_sim::lua_api::WowLuaEnv;
+use wow_ui_sim::lua_api::state::EquippedItem;
 
 prefork_full_ui_case! {
 fn chat_link_inserts_use_for_item_spell_and_equip_for_armor(env: &WowLuaEnv) {
@@ -26,5 +27,12 @@ fn chat_link_inserts_use_for_item_spell_and_equip_for_armor(env: &WowLuaEnv) {
         assert(inserted == SLASH_EQUIP1 .. ' ' .. armor .. '\n', tostring(inserted))
         MacroFrameText = nil
     "#).unwrap();
+    env.state().borrow_mut().player.equipped_items.insert(1, EquippedItem {
+        item_id: 211993,
+        enchant_id: 3290,
+        gem_ids: [0; 3],
+        applied_transmog: None,
+    });
+    env.exec("local name, id = C_Item.GetItemSpell(211993); assert(name == 'Spring Loaded Cape' and id == 52641)").unwrap();
 }
 }
