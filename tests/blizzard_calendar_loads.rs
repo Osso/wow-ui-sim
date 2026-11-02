@@ -798,6 +798,7 @@ fn calendar_community_dropdown_edits_supplied_club_id(env: &WowLuaEnv) {
     }
     for (id, expected) in [("0x0020000000000000", 9_007_199_254_740_992_u64), ("0x0020000000000001", 9_007_199_254_740_993_u64)] {
         env.exec(&format!(r#"
+            CalendarCreateEventFrame.selectedEventType = 0
             local dropdown = CalendarCreateEventFrame.CommunityDropdown
             dropdown:GenerateMenu()
             for _, entry in dropdown:GetMenuDescription():EnumerateElementDescriptions() do
