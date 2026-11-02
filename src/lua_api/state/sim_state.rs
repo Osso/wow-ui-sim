@@ -98,6 +98,7 @@ pub struct SimState {
     /// Zero means none; other values are one-based guild roster indexes.
     pub guild_roster_selection: usize,
     pub guild_request_inputs: crate::c_api::c_guild_info::GuildRequestInputs,
+    pub runeforge_interaction: crate::c_api::c_legendary_crafting::RuneforgeInteraction,
     /// Explicit Wrath scenario inputs; empty means unsupplied.
     pub wrath_glyph_sockets: HashMap<(u32, u32), WrathGlyphSocket>,
     pub wrath_unspent_talent_points: HashMap<u32, u32>,
