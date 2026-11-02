@@ -8,7 +8,7 @@
 //! - `GetMouseFocus()`     → FrameRef for `SimState.hovered_frame`,
 //!   or `nil` when the cursor isn't over any widget.
 
-use crate::lua_api::methods::{borrow_state, frame_ref};
+use crate::lua_api::methods::{borrow_state, borrow_state_mut, frame_ref};
 use crate::lua_api::methods::{create_table, table_set_num};
 use crate::lua_bridge::FromStack;
 use rilua::vm::state::LuaState;
@@ -92,6 +92,16 @@ fn is_mouse_button_down(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
+fn show_cursor(state: &mut LuaState) -> LuaResult<u32> {
+    borrow_state_mut(state)?.forever_startup.cursor_visible = true;
+    Ok(0)
+}
+
+fn hide_cursor(state: &mut LuaState) -> LuaResult<u32> {
+    borrow_state_mut(state)?.forever_startup.cursor_visible = false;
+    Ok(0)
+}
+
 pub fn register_all(lua: &mut rilua::Lua) -> crate::Result<()> {
     LuaApiMut::register_function(lua, "GetCursorPosition", get_cursor_position)?;
     #[cfg(feature = "retail-12-0-0")]
@@ -99,5 +109,11 @@ pub fn register_all(lua: &mut rilua::Lua) -> crate::Result<()> {
     LuaApiMut::register_function(lua, "GetMouseFocus", get_mouse_focus)?;
     LuaApiMut::register_function(lua, "GetMouseFoci", get_mouse_foci)?;
     LuaApiMut::register_function(lua, "IsMouseButtonDown", is_mouse_button_down)?;
+    if cfg!(feature = "client-wowforever") {
+        // Share the visibility state queried by IsCursorVisible and the reticle;
+        // gamepad cursor-control capability remains a separate input.
+        LuaApiMut::register_function(lua, "ShowCursor", show_cursor)?;
+        LuaApiMut::register_function(lua, "HideCursor", hide_cursor)?;
+    }
     Ok(())
 }

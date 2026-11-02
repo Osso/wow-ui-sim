@@ -84,6 +84,7 @@ pub(crate) mod external_event_url_default;
 pub(crate) mod fog_of_war_pin;
 #[cfg(feature = "client-wowforever")]
 pub(crate) mod forever_bank_capability_defaults;
+pub(crate) mod forever_glue_display_defaults;
 #[cfg(feature = "client-wowforever")]
 pub(crate) mod forever_startup_capabilities;
 pub(crate) mod formatting_utility_defaults;
@@ -137,6 +138,8 @@ pub(crate) mod mythic_plus_cache_defaults;
 pub(crate) mod navigation_defaults;
 pub(crate) mod object_api_request_load_callbacks;
 pub(crate) mod objective_tracker_quest_header;
+#[cfg(feature = "client-wowforever")]
+pub(crate) mod offline_glue_credits;
 pub(crate) mod paging_controls_page_text;
 #[cfg(not(feature = "retail-12-0-0"))]
 pub(crate) mod party_ai_legacy;

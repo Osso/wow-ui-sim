@@ -3219,3 +3219,14 @@ resolved model; reload retains later selections. The late hook reaffirms CLI
 selections and emits notifications without duplicate specialization events.
 Spec-only input is validated against the initial class and re-resolved against
 the current class after startup.
+
+## 2026-11-02 — Forever login startup
+
+[Login investigation](investigations/forever-login-startup.md) records the observed
+38/58 login error map, CVar/API and loader causes, and approved offline catalog and
+capability defaults. The original Windows capture returned exact `[]` login error
+JSON. Review found and fixed the enabled high-resolution texture consumer's missing
+BattleNet API, replacing sentinel coverage with complete setting construction.
+On the master-based branch, 55 focused integration tests and 14 loader unit tests
+pass with persisted CVars unchanged. Native behavior, full interactive GUI
+verification, other profiles and the game-screen baseline remain separate.

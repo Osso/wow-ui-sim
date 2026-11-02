@@ -37,12 +37,14 @@ fn login_screen_discovers_glue_addons_not_game_base() {
     assert!(addons.iter().any(|name| name == "Blizzard_GlueParent"));
     assert!(addons.iter().any(|name| name == "Blizzard_GlueXML"));
     assert!(!addons.iter().any(|name| name == "Blizzard_UIParent"));
-    assert!(!addons.iter().any(|name| name == "Blizzard_CharacterCreate"));
-    assert!(
-        !addons
-            .iter()
-            .any(|name| name == "Blizzard_CharacterCustomize")
-    );
+    if crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::WowForever {
+        assert!(!addons.iter().any(|name| name == "Blizzard_CharacterCreate"));
+        assert!(
+            !addons
+                .iter()
+                .any(|name| name == "Blizzard_CharacterCustomize")
+        );
+    }
 }
 
 #[test]
@@ -310,6 +312,59 @@ fn objective_tracker_pulls_poi_button_owner_templates() {
         addons,
         vec!["Blizzard_POIButton", "Blizzard_ObjectiveTracker"],
         "ObjectiveTracker inherits POIButtonOwnerTemplate without declaring the addon"
+    );
+}
+
+#[test]
+fn only_forever_glue_feedback_pulls_customization_before_login_hooks() {
+    let ui = TempBlizzardUiDir::new("glue-feedback-customization");
+    ui.add_addon(
+        "Blizzard_PTRFeedbackGlue",
+        "## AllowLoad: Glue\nFeedback.lua\n",
+    );
+    ui.add_addon(
+        "Blizzard_CharacterCustomize",
+        "## AllowLoad: Both\n## LoadOnDemand: 1\n## Dependencies: Blizzard_CustomizationUI\nCustomize.xml\n",
+    );
+    ui.add_addon(
+        "Blizzard_CharacterCreate",
+        "## AllowLoad: Glue\n## Dependencies: Blizzard_CharacterCustomize\nCreate.xml\n",
+    );
+    ui.add_addon(
+        "Blizzard_CustomizationUI",
+        "## AllowLoad: Both\n## LoadOnDemand: 1\nCustomization.xml\n",
+    );
+
+    let expected =
+        if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::WowForever {
+            vec![
+                "Blizzard_CustomizationUI",
+                "Blizzard_CharacterCustomize",
+                "Blizzard_CharacterCreate",
+                "Blizzard_PTRFeedbackGlue",
+            ]
+        } else {
+            vec!["Blizzard_PTRFeedbackGlue"]
+        };
+    let discovered: Vec<String> = discover_blizzard_addons_for_screen(&ui.path, ScreenKind::Login)
+        .into_iter()
+        .map(|(name, _)| name)
+        .collect();
+    assert_eq!(discovered, expected);
+
+    let startup =
+        crate::loader::discover_blizzard_startup_addons_for_screen(&ui.path, ScreenKind::Login);
+    assert!(
+        startup
+            .iter()
+            .all(|addon| addon.kind == crate::loader::StartupAddonLoadKind::Full)
+    );
+    assert_eq!(
+        startup
+            .into_iter()
+            .map(|addon| addon.name)
+            .collect::<Vec<_>>(),
+        expected,
     );
 }
 

@@ -361,7 +361,7 @@ fn group_buff_alerts(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
-/// 70532 APIDocumentation event names; registration is not event generation.
+/// Pinned Forever API/selected-consumer event names; registration is not event generation.
 pub(crate) fn accepts_event(name: &str) -> bool {
     ACTIVE == ClientProfile::WowForever
         && matches!(
@@ -372,6 +372,12 @@ pub(crate) fn accepts_event(name: &str) -> bool {
                 | "EXTERNAL_EVENT_URL_CHANGED"
                 | "SOCIAL_UI_SOCIAL_QUEUE_SYSTEM_STATUS_UPDATED"
                 | "SOCIAL_UI_RAID_LIST_SYSTEM_STATUS_UPDATED"
+                // Selected Mainline glue consumers register these during OnLoad.
+                | "CHARACTER_UNDELETE_STARTED"
+                | "SUPER_DISTRICT_LIST_UPDATED"
+                | "GAME_RULES_CHANGED"
+                | "CHAR_SELECT_BACKGROUND_MODEL_READY"
+                | "CHAR_CREATE_BACKGROUND_MODEL_READY"
         )
 }
 

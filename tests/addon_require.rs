@@ -154,6 +154,37 @@ mod forever {
     }
 
     #[test]
+    fn toc_sibling_files_execute_with_source_module_identity() {
+        let addons = Addons::new();
+        addons.load("ImportUnrelated", "", &[("Value.lua", "return 71")]);
+        addons.load("ImportHost", "", &[
+            ("../ImportSibling/Value.lua", "return 67"),
+            ("../ImportSibling/Reader.lua", r#"
+                BorrowedTocOwner = ...
+                function ReadBorrowedModule()
+                    return import('.Value')
+                end
+                function BorrowedModuleCannotEscape()
+                    local ok, err = pcall(import, '..Value')
+                    assert(not ok and err:find('Relative imports may only be used within the same addon', 1, true))
+                    ok, err = pcall(import, 'ImportUnrelated.Value')
+                    assert(not ok and err:find('direct dependency', 1, true))
+                end
+                return ReadBorrowedModule
+            "#),
+        ]);
+        addons.check(
+            r#"
+            assert(BorrowedTocOwner == 'ImportHost')
+            assert(ReadBorrowedModule() == 67)
+            assert(import('ImportSibling.Value') == 67)
+            assert(rawequal(import('ImportSibling.Reader'), ReadBorrowedModule))
+            BorrowedModuleCannotEscape()
+        "#,
+        );
+    }
+
+    #[test]
     fn family_definitions_load_before_camelot_overrides_and_bare_dependents() {
         let addons = Addons::new();
         let toc = addons.write("FamilyOrdering", "", &[

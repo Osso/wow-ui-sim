@@ -87,6 +87,7 @@ pub(crate) mod c_campaign_info;
 pub mod c_catalog_shop;
 pub mod c_catalog_shop_products;
 pub mod c_challenge_mode;
+pub(crate) mod c_character_creation_naming;
 pub(crate) mod c_character_creation_seen;
 pub mod c_character_services;
 pub mod c_chat_bubbles;
@@ -521,6 +522,7 @@ fn register_specialization_and_model_tables(state: &mut LuaState) -> LuaResult<(
 fn register_glue_and_display_tables(state: &mut LuaState) -> LuaResult<()> {
     c_glue::register_c_glue(state)?;
     c_login::register_c_login(state)?;
+    c_character_creation_naming::register(state)?;
     c_ui::register(state)?;
     permanent_shims::c_ui::register_c_ui(state)
 }

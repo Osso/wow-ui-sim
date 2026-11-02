@@ -82,7 +82,7 @@ fn register_texture_methods(state: &mut LuaState, table_ref: BattleNetTable) -> 
     )?;
     // INFERRED: installed high-res textures toggle in place; otherwise the
     // client must download them and reload.
-    #[cfg(feature = "retail-12-1-0")]
+    #[cfg(any(feature = "retail-12-1-0", feature = "client-wowforever"))]
     table_set_rust_fn_static(
         state,
         table_ref,

@@ -150,7 +150,10 @@ fn module_registry_mut(state: &mut LuaState) -> LuaResult<&mut ModuleRegistry> {
 }
 
 fn file_identity(addon: &str, relative_path: &Path) -> LuaResult<ModuleIdentity> {
-    let mut path = Vec::new();
+    // TOCs may explicitly include a sibling addon's Lua files. Normalize their
+    // source identity from the AddOns root; logical imports keep their separate
+    // same-addon/direct-dependency checks in resolve_import.
+    let mut path = vec![addon.to_owned()];
     for component in relative_path.components() {
         match component {
             Component::Normal(value) => {
@@ -158,12 +161,16 @@ fn file_identity(addon: &str, relative_path: &Path) -> LuaResult<ModuleIdentity>
                 path.push(value.to_owned());
             }
             Component::CurDir => {}
-            Component::ParentDir if !path.is_empty() => {
-                path.pop();
+            Component::ParentDir => {
+                path.pop().ok_or_else(no_module)?;
             }
             _ => return Err(no_module()),
         }
     }
+    if path.len() < 2 {
+        return Err(no_module());
+    }
+    let source_addon = path.remove(0);
     let filename = path.last_mut().ok_or_else(no_module)?;
     let file = Path::new(filename);
     if !file
@@ -178,7 +185,7 @@ fn file_identity(addon: &str, relative_path: &Path) -> LuaResult<ModuleIdentity>
         .ok_or_else(no_module)?
         .to_owned();
     Ok(ModuleIdentity {
-        addon: addon.to_owned(),
+        addon: source_addon,
         path,
     })
 }

@@ -1,6 +1,7 @@
 use crate::lua_api::methods::{
-    borrow_state, borrow_state_mut, create_string, create_table, table_set,
+    borrow_state, borrow_state_mut, create_string, create_table, table_set, table_set_num,
 };
+use crate::lua_api::simple_html::document::parse_document;
 use crate::lua_api::simple_html::{SimpleHtmlData, TextStyle};
 use crate::widget::WidgetType;
 use rilua::Val;
@@ -12,6 +13,7 @@ struct SimpleHtmlTextDataSnapshot {
     hyperlink_format: String,
     hyperlinks_enabled: bool,
     text_styles: HashMap<String, TextStyle>,
+    default_alignment: String,
 }
 
 pub(super) fn is_simple_html_frame(state: &LuaState, id: u64) -> bool {
@@ -144,7 +146,8 @@ fn build_simple_html_text_data_table(
     text: Option<String>,
 ) -> Val {
     let table = create_table(state);
-    write_simple_html_text_data_fields(state, table, snapshot, text);
+    write_simple_html_text_data_fields(state, table, snapshot, text.as_deref());
+    write_simple_html_content_nodes(state, table, snapshot, text.as_deref().unwrap_or_default());
     let styles = build_simple_html_text_styles_table(state, &snapshot.text_styles);
     table_set(state, table, "textStyles", styles);
     table
@@ -154,10 +157,18 @@ fn capture_simple_html_text_data(
     state: &mut LuaState,
     id: u64,
 ) -> Option<SimpleHtmlTextDataSnapshot> {
+    let default_alignment = borrow_state(state)
+        .ok()?
+        .widgets
+        .get(id)?
+        .justify_h
+        .as_h_str()
+        .to_string();
     with_simple_html_data_mut(state, id, |data| SimpleHtmlTextDataSnapshot {
         hyperlink_format: data.hyperlink_format.clone(),
         hyperlinks_enabled: data.hyperlinks_enabled,
         text_styles: data.text_styles.clone(),
+        default_alignment,
     })
 }
 
@@ -165,7 +176,7 @@ fn write_simple_html_text_data_fields(
     state: &mut LuaState,
     table: Val,
     snapshot: &SimpleHtmlTextDataSnapshot,
-    text: Option<String>,
+    text: Option<&str>,
 ) {
     let hyperlink_format = create_string(state, &snapshot.hyperlink_format);
     table_set(state, table, "hyperlinkFormat", hyperlink_format);
@@ -176,8 +187,34 @@ fn write_simple_html_text_data_fields(
         Val::Bool(snapshot.hyperlinks_enabled),
     );
     if let Some(text) = text {
-        let text_value = create_string(state, &text);
+        let text_value = create_string(state, text);
         table_set(state, table, "text", text_value);
+    }
+}
+
+fn write_simple_html_content_nodes(
+    state: &mut LuaState,
+    table: Val,
+    snapshot: &SimpleHtmlTextDataSnapshot,
+    text: &str,
+) {
+    let Val::Table(table_ref) = table else {
+        return;
+    };
+    for (index, block) in parse_document(text).into_iter().enumerate() {
+        let node = create_table(state);
+        let text_value = create_string(state, &block.text);
+        let type_value = create_string(state, &block.role.to_ascii_uppercase());
+        let alignment = snapshot
+            .text_styles
+            .get(&block.role)
+            .map(|style| style.justify_h.as_str())
+            .unwrap_or(&snapshot.default_alignment);
+        let align_value = create_string(state, alignment);
+        table_set(state, node, "text", text_value);
+        table_set(state, node, "type", type_value);
+        table_set(state, node, "align", align_value);
+        table_set_num(state, table_ref, (index + 1) as f64, node);
     }
 }
 
