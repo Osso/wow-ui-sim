@@ -6,6 +6,8 @@
 
 #[path = "../data/currencies.rs"]
 pub mod currencies;
+#[path = "../data/currency_containers.rs"]
+pub mod currency_containers;
 #[path = "../data/encounter_journal.rs"]
 pub mod encounter_journal_data;
 #[path = "../data/garrison_currency.rs"]
