@@ -26,7 +26,25 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
     }
     // PetInfoDocumentation.lua:11 in Retail and PTR.
     let namespace = super::ensure_namespace(state, "C_PetInfo")?;
-    table_set_rust_fn_static(state, namespace, "GetPetTalentTree", get_pet_talent_tree)
+    table_set_rust_fn_static(state, namespace, "GetPetTalentTree", get_pet_talent_tree)?;
+    // PetInfoDocumentation.lua:76-78; enabled branch and return in WM52.
+    table_set_rust_fn_static(state, namespace, "PetAssistMode", pet_assist_mode)
+}
+
+fn pet_assist_mode(state: &mut LuaState) -> LuaResult<u32> {
+    let has_pet = {
+        let mut sim = crate::lua_api::methods::borrow_state_mut(state)?;
+        if sim.pet.icon.is_none() {
+            false
+        } else {
+            sim.pet.reaction = 3;
+            true
+        }
+    };
+    if has_pet {
+        crate::lua_api::script_helpers::fire_named_event_state(state, "PET_BAR_UPDATE", &[]);
+    }
+    Ok(0)
 }
 
 /// EMULATED (WM49-B): failed selection publishes zero values.
