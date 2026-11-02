@@ -73,14 +73,23 @@ fn assert_split(env: &WowLuaEnv) {
         cursor(env),
         Some((ITEM, 2, CursorItemOrigin::Bag { bag: 0, slot: 3 }))
     );
-    let projection: (String, i64, i32, bool) = env
-        .eval("local kind, id, count = GetCursorInfo(); return kind, id, count, CursorHasItem()")
+    // Retail mode 1 projects the item link third (WM46); other profiles keep
+    // the simulator's stack count.
+    let third = if cfg!(feature = "client-retail") {
+        "third == select(2, C_Item.GetItemInfo(id))"
+    } else {
+        "third == 2"
+    };
+    let projection: (String, i64, bool, bool) = env
+        .eval(&format!(
+            "local kind, id, third = GetCursorInfo(); return kind, id, {third}, CursorHasItem()"
+        ))
         .unwrap();
-    assert_eq!(projection, ("item".into(), i64::from(ITEM), 2, true));
+    assert_eq!(projection, ("item".into(), i64::from(ITEM), true, true));
     let remaining: i32 = env
         .eval("return C_Container.GetContainerItemInfo(0, 3).stackCount")
         .unwrap();
-    assert_eq!(remaining + projection.2, 5, "conserve supplied stack");
+    assert_eq!(remaining + 2, 5, "conserve supplied stack");
 }
 
 #[test]
