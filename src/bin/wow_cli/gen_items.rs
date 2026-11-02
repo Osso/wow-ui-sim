@@ -42,9 +42,69 @@ pub fn run() -> Result<(), Box<dyn std::error::Error>> {
     write_item_effects(&wow_data)?;
     write_item_children(&wow_data)?;
     write_item_enchant_spells(&wow_data)?;
+    write_item_spell_metadata(&wow_data)?;
 
     println!("Generated {} item entries ({} skipped)", count, skipped);
     println!("Output: {}", output_path.display());
+    Ok(())
+}
+
+fn write_item_spell_metadata(wow_data: &Path) -> Result<(), Box<dyn std::error::Error>> {
+    let mut out = File::create("crates/sim-data/data/item_spell_metadata.rs")?;
+    writeln!(
+        out,
+        "//! Generated from wago.tools DB2 CSV exports, build 12.1.5.70391 (enUS)."
+    )?;
+    writeln!(out, "//! Regenerate with `wow-cli generate items`.")?;
+    write_item_spell_power(&mut out, wow_data)?;
+    Ok(())
+}
+
+fn write_item_spell_power(
+    out: &mut File,
+    wow_data: &Path,
+) -> Result<(), Box<dyn std::error::Error>> {
+    let records = open_records(&wow_data.join("SpellPower.csv"))?;
+    let mut iter = records.iter();
+    let idx = header_index(iter.next().ok_or("empty SpellPower.csv")?);
+    let mut rows = Vec::new();
+    for record in iter {
+        let fields = parse_csv_line(record);
+        let spell = field(&fields, &idx, "SpellID").parse::<u32>()?;
+        let order = field(&fields, &idx, "OrderIndex").parse::<u32>()?;
+        let id = field(&fields, &idx, "ID").parse::<u32>()?;
+        let power = field(&fields, &idx, "PowerType").parse::<i32>()?;
+        let cost = field(&fields, &idx, "ManaCost").parse::<i32>()?;
+        let per_level = field(&fields, &idx, "ManaCostPerLevel").parse::<i32>()?;
+        let percent = field(&fields, &idx, "PowerCostPct").parse::<f32>()?;
+        let maximum_percent = field(&fields, &idx, "PowerCostMaxPct").parse::<f32>()?;
+        let bar = field(&fields, &idx, "AltPowerBarID").parse::<u32>()?;
+        let aura = field(&fields, &idx, "RequiredAuraSpellID").parse::<u32>()?;
+        rows.push((
+            spell,
+            order,
+            id,
+            power,
+            cost,
+            per_level,
+            percent,
+            maximum_percent,
+            bar,
+            aura,
+        ));
+    }
+    rows.sort_unstable_by_key(|row| (row.0, row.1, row.2));
+    writeln!(
+        out,
+        "pub static SPELL_POWER: &[(u32, u32, u32, i32, i32, i32, f32, f32, u32, u32)] = &["
+    )?;
+    for (spell, order, id, power, cost, per_level, percent, maximum_percent, bar, aura) in rows {
+        writeln!(
+            out,
+            "    ({spell}, {order}, {id}, {power}, {cost}, {per_level}, {percent:?}, {maximum_percent:?}, {bar}, {aura}),"
+        )?;
+    }
+    writeln!(out, "];\n")?;
     Ok(())
 }
 

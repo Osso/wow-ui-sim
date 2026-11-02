@@ -18,6 +18,8 @@ pub mod item_children;
 pub mod item_effects;
 #[path = "../data/item_enchants.rs"]
 pub mod item_enchants;
+#[path = "../data/item_spell_metadata.rs"]
+pub mod item_spell_metadata;
 #[path = "../data/items.rs"]
 pub mod items;
 #[path = "../data/manifest_interface_data.rs"]
