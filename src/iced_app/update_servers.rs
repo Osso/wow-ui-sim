@@ -18,6 +18,9 @@ use super::state::InspectorState;
 impl App {
     /// Drain both IPC channels (debug inspector + Lua REPL).
     pub(crate) fn process_ipc(&mut self) -> Task<Message> {
+        if self.exit_requested() {
+            return Task::none();
+        }
         let commands: Vec<_> = if let Some(ref mut rx) = self.debug_rx {
             let mut cmds = Vec::new();
             while let Ok(cmd) = rx.try_recv() {
@@ -32,6 +35,9 @@ impl App {
         for cmd in commands {
             if let Some(task) = self.handle_debug_command(cmd) {
                 tasks.push(task);
+            }
+            if self.exit_requested() {
+                break;
             }
         }
 
@@ -61,11 +67,20 @@ impl App {
     }
 
     pub(crate) fn process_lua_commands(&mut self) {
+        if self.exit_requested() {
+            return;
+        }
         let commands = drain_lua_commands(self.lua_rx.as_ref());
 
         for cmd in commands {
             self.handle_lua_command(cmd);
+            if self.exit_requested() {
+                break;
+            }
             self.service_pending_reload();
+            if self.exit_requested() {
+                break;
+            }
         }
     }
 
@@ -113,8 +128,12 @@ impl App {
     fn handle_lua_mouse_click(&mut self, x: f32, y: f32, respond: mpsc::Sender<LuaResponse>) {
         let point = iced::Point::new(x, y);
         self.handle_mouse_move(point);
-        self.handle_mouse_down(point);
-        self.handle_mouse_up(point);
+        if !self.exit_requested() {
+            self.handle_mouse_down(point);
+        }
+        if !self.exit_requested() {
+            self.handle_mouse_up(point);
+        }
         let target = self.hovered_frame_name();
         let _ = respond.send(LuaResponse::Output(target));
     }
@@ -297,7 +316,7 @@ fn drain_lua_commands(rx: Option<&mpsc::Receiver<LuaCommand>>) -> Vec<LuaCommand
 
 #[cfg(test)]
 mod tests {
-    use super::{App, drain_lua_commands};
+    use super::{App, DebugCommand, drain_lua_commands};
     use crate::iced_app::app::AppInit;
     use crate::lua_api::WowLuaEnv;
     use crate::lua_server::LuaCommand;
@@ -460,6 +479,290 @@ mod tests {
         assert_eq!(
             ticks, 1.0,
             "Lua IPC mutations should settle immediate layout OnUpdate work before the next command"
+        );
+    }
+
+    #[test]
+    fn inspector_quit_stops_later_inspector_and_lua_commands() {
+        let (lua_tx, lua_rx) = mpsc::channel();
+        let mut app = build_test_app_with_lua_rx(lua_rx);
+        let (debug_tx, debug_rx) = tokio::sync::mpsc::channel(2);
+        app.debug_rx = Some(debug_rx);
+        app.env
+            .borrow()
+            .exec(
+                "IPCTrace = ''; \
+                 SimCommands = { Toggle = function() IPCTrace = IPCTrace .. 'debug;' end }; \
+                 assert(SetBinding('F12', 'QUIT')); \
+                 assert(SetBinding('F11', 'TOGGLESIMCOMMANDS'))",
+            )
+            .unwrap();
+        let (quit_respond, mut quit_response) = tokio::sync::oneshot::channel();
+        let (late_respond, mut late_response) = tokio::sync::oneshot::channel();
+        for (key, respond) in [("F12", quit_respond), ("F11", late_respond)] {
+            debug_tx
+                .try_send(DebugCommand::Key {
+                    key: key.into(),
+                    respond,
+                })
+                .unwrap();
+        }
+        let (respond, lua_response) = mpsc::channel();
+        lua_tx
+            .send(LuaCommand::Exec {
+                code: "IPCTrace = IPCTrace .. 'lua;'".into(),
+                respond,
+            })
+            .unwrap();
+
+        let _ = app.process_ipc();
+
+        assert!(app.exit_requested());
+        assert_eq!(quit_response.try_recv(), Ok(Ok(())));
+        assert_eq!(
+            late_response.try_recv(),
+            Err(tokio::sync::oneshot::error::TryRecvError::Closed)
+        );
+        assert_eq!(
+            app.env.borrow().eval::<String>("return IPCTrace").unwrap(),
+            ""
+        );
+        drop(app);
+        assert!(matches!(
+            lua_response.try_recv(),
+            Err(mpsc::TryRecvError::Disconnected)
+        ));
+    }
+
+    #[test]
+    fn lua_quit_does_not_flush_on_update_after_the_chunk_returns() {
+        let (commands, receiver) = mpsc::channel();
+        let mut app = build_test_app_with_lua_rx(receiver);
+        let (respond, response) = mpsc::channel();
+        commands
+            .send(LuaCommand::Exec {
+                code: "local frame = CreateFrame('Frame'); frame:Show(); \
+                       frame:SetScript('OnUpdate', function() UpdatedAfterQuit = true end); \
+                       Quit()"
+                    .into(),
+                respond,
+            })
+            .unwrap();
+
+        app.process_lua_commands();
+
+        assert!(app.exit_requested());
+        assert!(matches!(
+            response.try_recv(),
+            Ok(crate::lua_server::Response::Output(_))
+        ));
+        assert!(
+            app.env
+                .borrow()
+                .eval::<bool>("return UpdatedAfterQuit == nil")
+                .unwrap()
+        );
+    }
+
+    #[test]
+    fn lua_mouse_click_preserves_order_and_stops_later_stages_after_quit() {
+        for (quit_handler, expected_trace, expected_value) in [
+            ("OnEnter", "enter;returned;", 1),
+            ("OnMouseDown", "enter;down;returned;", 2),
+            ("", "enter;down;up;click;", 4),
+        ] {
+            let (commands, receiver) = mpsc::channel();
+            let mut app = build_test_app_with_lua_rx(receiver);
+            app.env
+                .borrow()
+                .exec(&format!(
+                    r#"
+                    MouseClickTrace = ""
+                    MouseClickValue = 0
+                    local quit_handler = "{quit_handler}"
+                    local function step(label, value, handler)
+                        MouseClickTrace = MouseClickTrace .. label .. ";"
+                        MouseClickValue = value
+                        if quit_handler == handler then
+                            Quit()
+                            MouseClickTrace = MouseClickTrace .. "returned;"
+                        end
+                    end
+                    local frame = CreateFrame("Button", "IPCClickProbe", UIParent)
+                    frame:SetSize(100, 100)
+                    frame:SetPoint("TOPLEFT", UIParent, "TOPLEFT", 100, -100)
+                    frame:SetFrameStrata("DIALOG")
+                    frame:EnableMouse(true)
+                    frame:RegisterForMouse("LeftButtonDown", "LeftButtonUp")
+                    frame:RegisterForClicks("LeftButtonUp")
+                    frame:SetScript("OnEnter", function() step("enter", 1, "OnEnter") end)
+                    frame:SetScript("OnMouseDown", function() step("down", 2, "OnMouseDown") end)
+                    frame:SetScript("OnMouseUp", function() step("up", 3, "OnMouseUp") end)
+                    frame:SetScript("OnClick", function() step("click", 4, "OnClick") end)
+                    frame:Show()
+                    "#,
+                ))
+                .unwrap();
+            {
+                let env = app.env.borrow();
+                let mut state = env.state().borrow_mut();
+                state.ensure_layout_rects();
+                let buckets = state.get_strata_buckets().unwrap().clone();
+                let frames = crate::iced_app::frame_collect::collect_hittable_frames(
+                    &state.widgets,
+                    &buckets,
+                );
+                let rects =
+                    crate::iced_app::strata_emit::build_hittable_rects(&frames, &state.widgets);
+                let grid = crate::iced_app::hit_grid::HitGrid::new(rects, 800.0, 600.0);
+                *app.cached_hittable.borrow_mut() = Some(grid);
+            }
+            let (respond, response) = mpsc::channel();
+            commands
+                .send(LuaCommand::MouseClick {
+                    x: 150.0,
+                    y: 150.0,
+                    respond,
+                })
+                .unwrap();
+
+            app.process_lua_commands();
+
+            assert_eq!(app.exit_requested(), !quit_handler.is_empty());
+            assert!(matches!(
+                response.try_recv(),
+                Ok(crate::lua_server::Response::Output(target)) if target == "IPCClickProbe"
+            ));
+            let actual: (String, i32) = app
+                .env
+                .borrow()
+                .eval("return MouseClickTrace, MouseClickValue")
+                .unwrap();
+            assert_eq!(
+                actual,
+                (expected_trace.into(), expected_value),
+                "quit handler: {quit_handler}"
+            );
+        }
+    }
+
+    #[test]
+    fn pending_or_completed_exit_keeps_ipc_queues_unprocessed() {
+        for completed in [false, true] {
+            let (lua_tx, lua_rx) = mpsc::channel();
+            let mut app = build_test_app_with_lua_rx(lua_rx);
+            let (debug_tx, debug_rx) = tokio::sync::mpsc::channel(1);
+            app.debug_rx = Some(debug_rx);
+            app.env
+                .borrow()
+                .exec(
+                    "IPCTrace = ''; \
+                     SimCommands = { Toggle = function() IPCTrace = IPCTrace .. 'debug;' end }; \
+                     assert(SetBinding('F11', 'TOGGLESIMCOMMANDS'))",
+                )
+                .unwrap();
+            let (respond, mut debug_response) = tokio::sync::oneshot::channel();
+            debug_tx
+                .try_send(DebugCommand::Key {
+                    key: "F11".into(),
+                    respond,
+                })
+                .unwrap();
+            let (respond, lua_response) = mpsc::channel();
+            lua_tx
+                .send(LuaCommand::Exec {
+                    code: "IPCTrace = IPCTrace .. 'lua;'".into(),
+                    respond,
+                })
+                .unwrap();
+            if completed {
+                app.complete_session();
+            } else {
+                app.env.borrow().exec("Quit()").unwrap();
+            }
+
+            let _ = app.process_ipc();
+            app.process_lua_commands();
+
+            assert_eq!(
+                app.env.borrow().eval::<String>("return IPCTrace").unwrap(),
+                ""
+            );
+            assert_eq!(app.debug_rx.as_ref().unwrap().len(), 1);
+            assert_eq!(
+                debug_response.try_recv(),
+                Err(tokio::sync::oneshot::error::TryRecvError::Empty)
+            );
+            assert!(matches!(
+                lua_response.try_recv(),
+                Err(mpsc::TryRecvError::Empty)
+            ));
+            drop(app);
+            assert_eq!(
+                debug_response.try_recv(),
+                Err(tokio::sync::oneshot::error::TryRecvError::Closed)
+            );
+            assert!(matches!(
+                lua_response.try_recv(),
+                Err(mpsc::TryRecvError::Disconnected)
+            ));
+        }
+    }
+
+    #[test]
+    fn ordinary_ipc_preserves_inspector_then_lua_order_and_replies() {
+        let (lua_tx, lua_rx) = mpsc::channel();
+        let mut app = build_test_app_with_lua_rx(lua_rx);
+        let (debug_tx, debug_rx) = tokio::sync::mpsc::channel(1);
+        app.debug_rx = Some(debug_rx);
+        app.env
+            .borrow()
+            .exec(
+                "IPCTrace = ''; \
+                 SimCommands = { Toggle = function() IPCTrace = IPCTrace .. 'debug;' end }; \
+                 assert(SetBinding('F11', 'TOGGLESIMCOMMANDS'))",
+            )
+            .unwrap();
+        let (respond, mut debug_response) = tokio::sync::oneshot::channel();
+        debug_tx
+            .try_send(DebugCommand::Key {
+                key: "F11".into(),
+                respond,
+            })
+            .unwrap();
+        let (first_respond, first_response) = mpsc::channel();
+        let (second_respond, second_response) = mpsc::channel();
+        for (code, respond) in [
+            (
+                "IPCTrace = IPCTrace .. 'first;'; print('first')",
+                first_respond,
+            ),
+            (
+                "IPCTrace = IPCTrace .. 'second;'; print('second')",
+                second_respond,
+            ),
+        ] {
+            lua_tx
+                .send(LuaCommand::Exec {
+                    code: code.into(),
+                    respond,
+                })
+                .unwrap();
+        }
+
+        let _ = app.process_ipc();
+
+        assert!(!app.exit_requested());
+        assert_eq!(debug_response.try_recv(), Ok(Ok(())));
+        for (response, expected) in [(first_response, "first"), (second_response, "second")] {
+            assert!(matches!(
+                response.try_recv(),
+                Ok(crate::lua_server::Response::Output(output)) if output == expected
+            ));
+        }
+        assert_eq!(
+            app.env.borrow().eval::<String>("return IPCTrace").unwrap(),
+            "debug;first;second;"
         );
     }
 }

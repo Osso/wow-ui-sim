@@ -73,6 +73,7 @@ impl SimState {
 
     fn discard_addon_runtime(&mut self) {
         self.addons.clear();
+        self.addon_initialization_failures.clear();
         self.loading_addon_index = None;
         self.loading_addon_stack.clear();
         self.executing_addon_index = None;
@@ -87,14 +88,10 @@ impl SimState {
         self.suppress_runtime_on_load_depth = 0;
         self.xml_load_addon_depth = 0;
         self.addon_performance_messages_shown.clear();
-        self.lua_errors.clear();
-        self.lua_error_records.clear();
-        self.lua_error_counts.clear();
         self.nil_symbol_accesses.clear();
         self.global_publications.clear();
         self.secure_global_publications.clear();
         self.pending_nested_addon_diagnostics.clear();
-        self.runtime_addon_diagnostics = Default::default();
         self.console_output.clear();
     }
 

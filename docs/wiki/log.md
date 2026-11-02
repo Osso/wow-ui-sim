@@ -3253,3 +3253,18 @@ verification, other profiles and the game-screen baseline remain separate.
 [Client profiles](systems/client-profiles.md#runtime-cache) record the 70707 pin,
 4,493-path manifest and raw-first Gethe recovery. A CRLF candidate is accepted only
 when its bytes match the selected CASC content key exactly.
+
+## 2026-11-02 — Session finalization and reload recovery
+
+[Session finalization](../specs/session-finalization.md) adds explicit GUI
+close/Quit completion, shutdown-before-save ordering, protected failed-owner
+output and repairable reload reconstruction. Focused native Windows verification
+passes 73 Forever and 77 Wrath cases, including all six startup identity cases
+under each profile. Four real GUI processes verify saving, process-relaunch
+read-back, nonzero serialization failure with prior bytes preserved, and recovery.
+Wrath's fixture now respects its existing SavedVariables load order. Original
+persisted CVars remain unchanged. Forever's retained 70532 PR binaries consumed
+the independently acquired strict 70707 UI cache; the source retarget and local
+parser workaround remain excluded. Run receipts are retained locally under
+`docs/local/session-finalization-v2/` in `native-gui-completed`,
+`forever-identity-completed` and `wrath-identity-corrected`.

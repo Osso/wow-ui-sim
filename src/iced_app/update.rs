@@ -23,14 +23,28 @@ pub(super) fn request_redraw_task<T>() -> Task<T> {
     ))
 }
 
-fn request_runtime_exit_task() -> Task<Message> {
-    iced_runtime::exit()
-}
-
 impl App {
     pub fn update(&mut self, message: Message) -> Task<Message> {
+        if self.is_finishing() {
+            return iced_runtime::exit();
+        }
+        if matches!(message, Message::CloseRequested)
+            || matches!(&message, Message::KeyPress(key, _, _) if key == "CTRL-Q")
+        {
+            self.complete_session();
+            return iced_runtime::exit();
+        }
+        if self.exit_requested() {
+            return self.take_simulator_exit_task();
+        }
         self.service_pending_reload();
         let ipc_task = self.process_ipc();
+        if self.exit_requested() {
+            return self.take_simulator_exit_task();
+        }
+        if !self.env.borrow().is_ui_environment_usable() && !matches!(message, Message::ReloadUI) {
+            return ipc_task;
+        }
         let task = match message {
             Message::CanvasEvent(cm) => self.handle_canvas_event(cm),
             Message::ProcessTimers(captured_at) => self.handle_process_timers(captured_at),
@@ -44,7 +58,7 @@ impl App {
     fn dispatch_simple_message(&mut self, message: Message) -> Task<Message> {
         match message {
             Message::KeyPress(key, text, captured_at) => {
-                self.handle_key_press_message(&key, text.as_deref(), captured_at)
+                self.handle_simple_key_press(&key, text.as_deref(), captured_at)
             }
             Message::KeyRelease(key) => {
                 self.env.borrow().send_key_up(&key);
@@ -87,7 +101,8 @@ impl App {
             Message::MovementToggled(field, val) => self.handle_movement_toggled(field, val),
             Message::ModifiersChanged(modifiers) => self.handle_modifiers_changed(modifiers),
             // Handled before dispatch_non_key_message() or directly in update():
-            Message::KeyPress(_, _, _)
+            Message::CloseRequested
+            | Message::KeyPress(_, _, _)
             | Message::KeyRelease(_)
             | Message::CanvasEvent(_)
             | Message::ProcessTimers(_) => {
@@ -100,27 +115,17 @@ impl App {
         self.frames_panel_collapsed = !self.frames_panel_collapsed;
     }
 
-    fn take_simulator_exit_task(&self) -> Task<Message> {
-        let env = self.env.borrow();
-        let mut state = env.state().borrow_mut();
-        if !state.simulator_exit_requested {
+    fn take_simulator_exit_task(&mut self) -> Task<Message> {
+        let requested = {
+            let env = self.env.borrow();
+            let mut state = env.state().borrow_mut();
+            std::mem::take(&mut state.simulator_exit_requested)
+        };
+        if !requested && !self.is_finishing() {
             return Task::none();
         }
-        state.simulator_exit_requested = false;
-        request_runtime_exit_task()
-    }
-
-    fn handle_key_press_message(
-        &mut self,
-        key: &str,
-        text: Option<&str>,
-        captured_at: Instant,
-    ) -> Task<Message> {
-        if key == "CTRL-Q" {
-            return request_runtime_exit_task();
-        }
-
-        self.handle_simple_key_press(key, text, captured_at)
+        self.complete_session();
+        iced_runtime::exit()
     }
 
     fn handle_inspector_message(&mut self, message: Message) {
@@ -418,6 +423,10 @@ impl App {
         self.run_wow_timers();
         timings.timers = started.elapsed();
         let (m1, ids1) = self.take_render_dirty_with_ids();
+        if self.exit_requested() {
+            *self.pending_dirty_ids.borrow_mut() = merge_dirty_ids([pending_before, ids0, ids1]);
+            return (m0 | m1, timings);
+        }
 
         let t_layout = std::time::Instant::now();
         self.env.borrow().state().borrow_mut().ensure_layout_rects();
@@ -425,15 +434,21 @@ impl App {
 
         timings.on_update = self.fire_on_update();
         #[cfg(feature = "retail-12-0-7")]
-        self.dispatch_simulated_mouse_inputs();
+        if !self.exit_requested() {
+            self.dispatch_simulated_mouse_inputs();
+        }
         let (m2, ids2) = self.take_render_dirty_with_ids();
 
         let started = std::time::Instant::now();
-        self.tick_party_health();
+        if !self.exit_requested() {
+            self.tick_party_health();
+        }
         timings.party_health = started.elapsed();
 
         let started = std::time::Instant::now();
-        self.tick_casting();
+        if !self.exit_requested() {
+            self.tick_casting();
+        }
         timings.casting = started.elapsed();
         let (m3, ids3) = self.take_render_dirty_with_ids();
 

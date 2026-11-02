@@ -203,25 +203,111 @@ impl WowLuaEnv {
         if !eligible {
             return Ok(false);
         }
-        self.fire_wrath_reload_shutdown()?;
-        if let Some(manager) = saved_vars {
-            manager.save_all(self.rilua_mut().state_mut())?;
-            #[cfg(feature = "client-wrath")]
-            super::placed_frames::save(self, manager)?;
-            manager.retire_lua_environment();
+        self.state.borrow_mut().ui_reload_requested = false;
+        if matches!(
+            self.state.borrow().session_lifecycle,
+            super::env_lifecycle::SessionLifecycle::Finished
+        ) {
+            return Err(crate::Error::Other("session is already finalized".into()));
         }
+        let shutdown_state = self.capture_shutdown_state();
+        let result = self.reload_session(saved_vars);
+        if result.is_err() && self.is_ui_environment_usable() {
+            self.restore_shutdown_state(shutdown_state);
+        }
+        result.map(|()| true)
+    }
+
+    fn reload_session(
+        &mut self,
+        saved_vars: &mut Option<crate::saved_variables::SavedVariablesManager>,
+    ) -> Result<()> {
+        #[cfg(feature = "client-wrath")]
+        let mut layout_saved = false;
+        if self.is_ui_environment_usable() {
+            let mut exclusions = self.addon_save_exclusions();
+            if let Some(manager) = saved_vars {
+                self.retry_saved_inputs(manager)?;
+            }
+            let first_error = self.state.borrow().lua_error_records.len();
+            let shutdown = self.fire_shutdown_events(false);
+            let mut discard_current_outputs = !self.is_ui_environment_usable();
+            if shutdown.is_err() {
+                let state = self.state.borrow();
+                let records = &state.lua_error_records[first_error..];
+                discard_current_outputs |= records.is_empty();
+                for record in records {
+                    match &record.addon_name {
+                        Some(owner) if owner != "__BuiltIn" => {
+                            exclusions.insert(owner.clone());
+                        }
+                        _ => discard_current_outputs = true,
+                    }
+                }
+            }
+            exclusions.extend(self.addon_save_exclusions());
+            if let Some(manager) = saved_vars {
+                if discard_current_outputs {
+                    manager.discard_lua_environment();
+                } else {
+                    self.save_initialized_addons(manager, &exclusions)?;
+                    #[cfg(feature = "client-wrath")]
+                    if exclusions.is_empty() {
+                        super::placed_frames::save(self, manager)?;
+                        layout_saved = true;
+                    }
+                    manager.retire_lua_environment_excluding(&exclusions);
+                }
+            }
+        } else if let Some(manager) = saved_vars {
+            manager.discard_lua_environment();
+        }
+        self.state.borrow_mut().session_lifecycle =
+            super::env_lifecycle::SessionLifecycle::Incomplete(
+                "UI reconstruction did not complete".into(),
+            );
+        let rebuilt = self.reconstruct_session(
+            saved_vars,
+            #[cfg(feature = "client-wrath")]
+            layout_saved,
+        );
+        if let Err(error) = &rebuilt {
+            self.state.borrow_mut().session_lifecycle =
+                super::env_lifecycle::SessionLifecycle::Incomplete(format!(
+                    "ReloadUI reconstruction failed: {error}"
+                ));
+        }
+        rebuilt
+    }
+
+    fn reconstruct_session(
+        &mut self,
+        saved_vars: &mut Option<crate::saved_variables::SavedVariablesManager>,
+        #[cfg(feature = "client-wrath")] layout_saved: bool,
+    ) -> Result<()> {
         self.rebuild_lua_environment()?;
+        self.state.borrow_mut().session_lifecycle = super::env_lifecycle::SessionLifecycle::Active;
         if let Some(loader) = self.reload_loader.clone() {
             loader(self, saved_vars)?;
         }
+        self.ensure_ui_environment_usable()?;
         #[cfg(feature = "client-wrath")]
         if let Some(manager) = saved_vars {
+            // Recovery may have no previous layout. A normal reload must read the
+            // snapshot it just wrote; existing unreadable/invalid files still fail.
+            let path = manager.character_storage_dir().join("layout-local.txt");
+            if !layout_saved
+                && matches!(std::fs::symlink_metadata(&path), Err(error)
+                    if error.kind() == std::io::ErrorKind::NotFound)
+            {
+                return Ok(());
+            }
             super::placed_frames::load(self, manager)?;
         }
-        Ok(true)
+        Ok(())
     }
 
-    fn fire_wrath_reload_shutdown(&self) -> Result<()> {
+    pub(super) fn fire_wrath_reload_shutdown(&self) -> Result<()> {
         if crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Wrath {
             return Ok(());
         }

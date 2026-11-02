@@ -17,8 +17,9 @@ These are existing static native findings; they do not establish Forever chronol
 For Forever, the researched best guess is conditional argless
 `PLAYER_LEAVING_WORLD`, argless `PLAYER_LOGOUT`, then
 `ADDONS_UNLOADING(closingClient)` before serialization; proposed `closingClient` is true
-for normal close/Quit and false for ReloadUI. This is not implemented general
-shutdown behavior or measured native order. Public event/loading-order documentation
+for normal close/Quit and false for ReloadUI. This is now the simulator's Forever
+[shutdown policy](session-finalization.md), without measured native order.
+Public event/loading-order documentation
 supports the inference but includes incomplete shutdown sourcing:
 [PLAYER_LOGOUT](https://warcraft.wiki.gg/wiki/Event:PLAYER_LOGOUT),
 [ADDONS_UNLOADING](https://warcraft.wiki.gg/wiki/Event:ADDONS_UNLOADING),
@@ -42,8 +43,8 @@ data. This establishes callback significance, not every engine event's chronolog
   [Original developer explanation](https://us.forums.blizzard.com/en/wow/t/saving-local-variables-between-sessions/380081/4)
 - Lua strings contain arbitrary bytes, including zero. Binary SavedVariables are
   also real consumer data. Exact bytes and unambiguous decimal escapes are required;
-  UTF-8 replacement loses information. Fresh-VM checks prove simulator read-back,
-  not exhaustive native escape spelling.
+  UTF-8 replacement loses information. Fresh-VM serializer tests prove simulator
+  read-back, not exhaustive native escape spelling.
   [Lua lexical rules](https://www.lua.org/manual/5.1/manual.html#2.1),
   [WTFix consumer changelog](https://github.com/eggntoast/WTFix-Public/blob/main/CHANGELOG.md)
 - Sparse and explicit numeric keys occur in native output, with historical numeric
@@ -74,3 +75,18 @@ Crashes and forced termination cannot establish a completed save. Serializer
 fixtures establish simulator data preservation, not native multi-file atomicity
 or proof that production shutdown callbacks finished. Native parity remains a
 separate evidence requirement.
+
+## Recovery policy (2026-11-01)
+
+The existing Wrath shutdown evidence and researched Forever event order are
+unchanged. The archived
+Blizzard 5.4 announcement above was rechecked: it protects the affected addon's
+saved data after an out-of-memory loading failure, rather than establishing a
+permanent process-wide failure rule for every Lua or optional-import error.
+
+The simulator protects failed declared inputs and uninitialized owners, permits
+explicit recovery after repair, and never saves a structurally incomplete VM.
+Exact-source retry, owner exclusions and retryable reconstruction are simulator
+safety policy. They do not claim measured native behavior for filesystem failures
+or new native chronology. GUI settling counts do not establish initialization
+success or a native restriction on Quit.

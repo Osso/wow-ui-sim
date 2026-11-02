@@ -959,6 +959,8 @@ pub struct SimState {
     pub debug_anchors: bool,
     pub simulator_exit_requested: bool,
     pub ui_reload_requested: bool,
+    pub(crate) session_lifecycle: super::super::env_lifecycle::SessionLifecycle,
+    pub(crate) addon_initialization_failures: HashMap<String, String>,
     /// Explicit host-supplied cinematic playback state; no playback engine implied.
     pub cinematic_active: bool,
     /// World entry is distinct from IsLoggedIn; supplied/transitioned by the owner.

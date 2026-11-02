@@ -13,6 +13,7 @@ pub(super) fn settings() -> window::Settings {
         size: initial_window_size(),
         icon: window::icon::from_rgba(render_icon(), SIZE, SIZE).ok(),
         platform_specific: platform_settings(),
+        exit_on_close_request: false,
         ..window::Settings::default()
     }
 }
@@ -41,6 +42,7 @@ mod tests {
     #[test]
     fn settings_include_runtime_icon() {
         assert!(settings().icon.is_some());
+        assert!(!settings().exit_on_close_request);
     }
 
     #[cfg(target_os = "linux")]

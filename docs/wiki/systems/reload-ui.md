@@ -14,7 +14,7 @@ The GUI shortcut records the same request. App discards frame-ID input, hit-test
 
 ## Environment retirement
 
-Under Wrath, `WowLuaEnv::service_reload` opens the temporary protected-action window, synchronously emits argless PLAYER_REGEN_ENABLED, conditionally leaves world with argless PLAYER_LEAVING_WORLD, then emits argless PLAYER_LOGOUT. Only after handlers finish does it write declared SavedVariables, before VM destruction. An explicit in-world field is separate from IsLoggedIn. The combat bit stays intact; world entry ends the allowance and conditionally notifies PLAYER_REGEN_DISABLED so the original PlayerFrame rebuilds its hate-list display. The finer entry-helper slot is INFERRED simulator policy. Other profiles retain their previous shutdown behavior. The persistence manager forgets old `Val` handles and registrations; each enabled addon re-registers through normal TOC loading. Previously saved addons bypass WTF import and read simulator storage. Their just-written data bypasses the external import-size cap and retains scalar globals as well as tables; ordinary initial imports keep the existing limit. Disabled persistence stays disabled. Imported WTF files are never written.
+Under Wrath, `WowLuaEnv::service_reload` opens the temporary protected-action window, synchronously emits argless PLAYER_REGEN_ENABLED, conditionally leaves world with argless PLAYER_LEAVING_WORLD, then emits argless PLAYER_LOGOUT. Only after handlers finish does it write declared SavedVariables, before VM destruction. An explicit in-world field is separate from IsLoggedIn. The combat bit stays intact; world entry ends the allowance and conditionally notifies PLAYER_REGEN_DISABLED so the original PlayerFrame rebuilds its hate-list display. The finer entry-helper slot is INFERRED simulator policy. Forever uses the researched shutdown policy described under session finalization below; other profiles retain their previous shutdown behavior. The persistence manager forgets old `Val` handles and registrations; each enabled addon re-registers through normal TOC loading. Previously saved addons bypass WTF import and read simulator storage. Their just-written data bypasses the external import-size cap and retains scalar globals as well as tables; ordinary initial imports keep the existing limit. Disabled persistence stays disabled. Imported WTF files are never written.
 
 The old VM's self-reference and font handle are cleared before it drops. A fresh VM receives fresh app data, registries, API registration, templates and built-in frames. `SimState::discard_ui_environment` discards UI callbacks, animations, frames and addon runtime records without replacing player/world/party/session data. Selected target/focus and physical-input model fields (`mouse_position`, `mouse_buttons`, `pressed_keys`) are retained. Native keyboard/mouse persistence is INFERRED and unasserted pending lifecycle evidence; old frame-ID input caches are still discarded.
 
@@ -56,7 +56,21 @@ Startup registers an environment-local pending account-variables callback. The t
 
 ## Lifecycle evidence and failure
 
-The [Wrath 12340 requirements](../../specs/reload-ui.md#wrath-12340-requirements) now distinguish authenticated static native facts from implementation proof. Cinematic eligibility has bounded original-popup GREEN. Shutdown-before-save, post-code addon SV restore, readiness-driven VARIABLES_LOADED and selective placed-frame/mirror state retain separate proof rows. The supplied cinematic state is not a cinematic playback engine. Unnamed taint-gate production and feedback remain evidence-blocked. Retail and other-profile chronology remain UNKNOWN; do not copy Wrath ordering into them. App treats rebuild failure as fatal and prevents a partial VM from overwriting pre-reload SavedVariables.
+GUI close, Ctrl-Q and Lua Quit share the fallible
+[session finalizer](../../specs/session-finalization.md). Initialization and
+shutdown diagnostics survive reload while current failed-owner data remains
+protected. Intact failures can be retried after repair; incomplete VMs can only
+recover through reconstruction before saving. GUI destruction does not save.
+Forever runs its researched
+shutdown callbacks before saving, with `ADDONS_UNLOADING(false)` on reload and
+`true` on finalization. Its native chronology remains unmeasured. Wrath retains
+its separate existing sequence.
+
+The [storage and process contract](../../specs/session-finalization.md#storage-and-process-results)
+describes configured output, interactive exit status and partial-save limits.
+ReloadUI uses the same persistence storage without completing the session.
+
+The [Wrath 12340 requirements](../../specs/reload-ui.md#wrath-12340-requirements) now distinguish authenticated static native facts from implementation proof. Cinematic eligibility has bounded original-popup GREEN. Shutdown-before-save, post-code addon SV restore, readiness-driven VARIABLES_LOADED and selective placed-frame/mirror state retain separate proof rows. The supplied cinematic state is not a cinematic playback engine. Unnamed taint-gate production and feedback remain evidence-blocked. Retail and other-profile chronology remain UNKNOWN; do not copy Wrath ordering into them. Failed reconstruction prevents a partial VM from overwriting valid SavedVariables; an explicit retry can reconstruct from valid inputs and storage.
 
 ## Sources
 
@@ -66,6 +80,7 @@ The [Wrath 12340 requirements](../../specs/reload-ui.md#wrath-12340-requirements
 - [Launch bootstrap](../../../src/bin/wow_sim/startup.rs) — real addon reload loader.
 - [App](../../../src/iced_app/app.rs) and [IPC boundary](../../../src/iced_app/update_servers.rs) — cache/startup reset and response-before-rebuild sequencing.
 - [Persistence](../../../src/saved_variables.rs) — SavedVariables registration and storage.
+- [Session finalization](../../specs/session-finalization.md) — fallible close/Quit, retained failures and Forever shutdown policy.
 
 ## See Also
 

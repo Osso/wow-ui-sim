@@ -129,7 +129,17 @@ Frame creation generates and executes a Lua string: `CreateFrame(...)` + configu
 
 ## SavedVariables (`src/saved_variables.rs`)
 
-Priority: WTF loading (`WTF/Account/{account}/SavedVariables/{addon}.lua` and per-character variant) then JSON fallback stored in `~/.local/share/wow-sim/SavedVariables/`. `SavedVariablesManager` tracks registered variables per addon, loads before Lua execution, and persists after shutdown.
+WTF account and character imports are read-only. Ordinary launches load them
+before simulator Lua storage. An explicit `--session-wtf-path` instead restores
+the session's saved account and character scopes first, importing only missing
+scopes. Invalid selected input remains an error rather than selecting another
+source as recovery. `SavedVariablesManager` tracks registered variables per addon,
+loads before Lua execution, and restores saved scopes during ReloadUI. GUI close,
+Ctrl-Q and Lua Quit use the fallible
+[session finalizer](../../specs/session-finalization.md) after shutdown callbacks.
+Failed declared inputs and uninitialized owners are protected; dropping the GUI
+does not save. See the [SavedVariables contract](../../specs/saved-variables.md)
+and [runtime inputs](../../runtime-inputs.md).
 
 ## Startup Sequence
 

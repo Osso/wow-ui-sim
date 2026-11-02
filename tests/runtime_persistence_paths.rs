@@ -1,6 +1,5 @@
 //! Exercise explicit session paths with isolated import and legacy environments.
 
-use rilua::LuaApiMut;
 use std::path::{Path, PathBuf};
 use wow_ui_sim::lua_api::{AddonInfo, WowLuaEnv};
 use wow_ui_sim::saved_variables::{SavedVariablesManager, WtfConfig};
@@ -193,7 +192,7 @@ fn verify_isolated_persistence(root: &Path) {
         root.join("real-WTF").canonicalize().unwrap()
     );
     let mut env = WowLuaEnv::with_session_wtf_path(session.clone()).unwrap();
-    let mut manager = SavedVariablesManager::with_storage_dir(session.join("SavedVariables"));
+    let mut manager = SavedVariablesManager::with_session_wtf_path(&session);
     manager.set_wtf_config(source);
     register_probe(&env, &mut manager).unwrap();
     env.exec(
@@ -213,9 +212,7 @@ fn verify_isolated_persistence(root: &Path) {
          RuntimeIsolationProbe.value = 74; CharacterIsolationProbe.value = 92",
     )
     .unwrap();
-    env.loader_env()
-        .with_state(|state| manager.as_ref().unwrap().save_all(state))
-        .unwrap();
+    env.finalize_session(&mut manager).unwrap();
     #[cfg(feature = "client-wrath")]
     assert!(
         session
@@ -238,8 +235,8 @@ fn verify_isolated_persistence(root: &Path) {
         .unwrap();
 
     let restored = WowLuaEnv::with_session_wtf_path(session.clone()).unwrap();
-    let mut manager = SavedVariablesManager::with_storage_dir(session.join("SavedVariables"));
-    manager.set_character("Hero", "Realm");
+    let mut manager = SavedVariablesManager::with_session_wtf_path(&session);
+    manager.set_wtf_config(wow_ui_sim::paths::default_wtf_config().unwrap());
     register_probe(&restored, &mut manager).unwrap();
     restored
         .exec("assert(RuntimeIsolationProbe.value == 74 and CharacterIsolationProbe.value == 92)")

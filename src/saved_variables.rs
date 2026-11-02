@@ -7,9 +7,8 @@
 //! Storage uses WoW-compatible Lua format (`VarName = { ... }`), so files can
 //! be shared between the simulator and a real WoW installation.
 //!
-//! Loading priority:
-//! 1. WTF directory (real WoW installation, if configured)
-//! 2. Simulator storage (`~/.local/share/wow-sim/SavedVariables/`)
+//! Explicit session directories restore their saved scopes before falling back
+//! to read-only WTF imports. Ordinary simulator storage retains import priority.
 
 #[cfg(test)]
 #[path = "saved_variables_details_tests.rs"]
@@ -129,7 +128,16 @@ impl WtfConfig {
 enum LoadResult {
     Loaded,
     MissingImport,
-    Failed(String),
+    Failed(LoadFailure),
+}
+
+#[derive(Debug, Clone)]
+struct LoadFailure {
+    message: String,
+    path: PathBuf,
+    wtf_input: bool,
+    reload: bool,
+    retry_in_fresh_environment: bool,
 }
 
 /// Manages saved variables for all loaded addons.
@@ -145,6 +153,7 @@ pub struct SavedVariablesManager {
     reload_saved_addons: std::collections::HashSet<String>,
     max_load_bytes: Option<u64>,
     load_results: HashMap<(String, bool), LoadResult>,
+    prefer_session_storage: bool,
 }
 
 /// Resolve simulator SavedVariables storage, preserving the legacy environment override.
@@ -177,6 +186,15 @@ impl SavedVariablesManager {
             reload_saved_addons: std::collections::HashSet::new(),
             max_load_bytes: max_load_bytes_from_env(),
             load_results: HashMap::new(),
+            prefer_session_storage: false,
+        }
+    }
+
+    /// Reuse saved state from an explicit session, importing only missing scopes.
+    pub fn with_session_wtf_path(session: &Path) -> Self {
+        Self {
+            prefer_session_storage: true,
+            ..Self::with_storage_dir(session.join("SavedVariables"))
         }
     }
 
@@ -223,12 +241,45 @@ impl SavedVariablesManager {
     }
 
     /// Forget VM handles and declarations; the fresh addon graph registers them again.
+    #[cfg(test)]
     pub(crate) fn retire_lua_environment(&mut self) {
-        self.load_results.clear();
-        self.reload_saved_addons
-            .extend(self.registered.keys().cloned());
-        self.reload_saved_addons
-            .extend(self.registered_per_char.keys().cloned());
+        self.retire_lua_environment_excluding(&std::collections::HashSet::new());
+    }
+
+    /// Keep reload storage only for declarations actually saved by the retiring VM.
+    pub(crate) fn retire_lua_environment_excluding(
+        &mut self,
+        excluded_addons: &std::collections::HashSet<String>,
+    ) {
+        self.reload_saved_addons.extend(
+            self.registered
+                .keys()
+                .chain(self.registered_per_char.keys())
+                .filter(|addon| !excluded_addons.contains(*addon))
+                .cloned(),
+        );
+        self.discard_lua_environment();
+    }
+
+    /// Discard a partial VM without claiming that its declarations were saved.
+    pub(crate) fn discard_lua_environment(&mut self) {
+        let registered = &self.registered;
+        let registered_per_char = &self.registered_per_char;
+        self.load_results.retain(|(addon, per_character), result| {
+            let declarations = if *per_character {
+                registered_per_char.get(addon)
+            } else {
+                registered.get(addon)
+            };
+            if declarations.is_some_and(|names| !names.is_empty())
+                && let LoadResult::Failed(failure) = result
+            {
+                failure.retry_in_fresh_environment = true;
+                true
+            } else {
+                false
+            }
+        });
         self.registered.clear();
         self.registered_per_char.clear();
         self.loaded_values.clear();
@@ -260,7 +311,7 @@ impl SavedVariablesManager {
         self.max_load_bytes = max_load_bytes;
     }
 
-    /// Load WTF saved variables for an addon from a real WoW installation.
+    /// Load configured WTF scopes, restoring explicit session scopes first.
     ///
     /// Returns the number of files loaded (0, 1, or 2 for account + character).
     pub fn load_wtf_for_addon(
@@ -284,14 +335,22 @@ impl SavedVariablesManager {
                 .load_results
                 .get(&(addon_name.to_owned(), per_character))
             {
+                Some(LoadResult::Failed(error)) if error.retry_in_fresh_environment => {
+                    let failure = error.clone();
+                    match self.retry_failed_scope(state, addon_name, per_character, failure) {
+                        Ok(()) => loaded += 1,
+                        Err(error) => failures.push(error.to_string()),
+                    }
+                    continue;
+                }
                 Some(LoadResult::Failed(error)) => {
-                    failures.push(error.clone());
+                    failures.push(error.message.clone());
                     continue;
                 }
                 Some(_) => continue,
                 None => {}
             }
-            match self.load_scope_file(state, addon_name, per_character, &path, true, false) {
+            match self.load_import_scope(state, addon_name, per_character, &path) {
                 Ok(true) => loaded += 1,
                 Ok(false) => {}
                 Err(error) => failures.push(error.to_string()),
@@ -432,6 +491,7 @@ impl SavedVariablesManager {
 
     /// Save all registered variables for an addon in WoW-compatible Lua format.
     pub fn save_addon(&self, state: &mut LuaState, addon_name: &str) -> crate::Result<()> {
+        self.validate_inputs_for(Some(addon_name), &std::collections::HashSet::new())?;
         self.write_registered_file(state, addon_name, false)?;
         self.write_registered_file(state, addon_name, true)?;
         Ok(())
@@ -439,22 +499,135 @@ impl SavedVariablesManager {
 
     /// Save all registered variables for all addons.
     pub fn save_all(&self, state: &mut LuaState) -> crate::Result<()> {
-        let addon_names: Vec<String> = self
-            .registered
-            .keys()
-            .chain(self.registered_per_char.keys())
-            .cloned()
-            .collect();
-        for addon_name in addon_names {
-            self.save_addon(state, &addon_name)?;
+        self.validate_inputs()?;
+        for addon_name in self.registered_addons() {
+            self.write_registered_file(state, addon_name, false)?;
+            self.write_registered_file(state, addon_name, true)?;
         }
         Ok(())
+    }
+
+    /// Reject writes of declared scopes whose inputs failed in this VM.
+    pub fn validate_inputs(&self) -> crate::Result<()> {
+        self.validate_inputs_for(None, &std::collections::HashSet::new())
+    }
+
+    fn validate_inputs_for(
+        &self,
+        addon_name: Option<&str>,
+        excluded_addons: &std::collections::HashSet<String>,
+    ) -> crate::Result<()> {
+        let addons: Vec<_> = match addon_name {
+            Some(addon) => vec![addon],
+            None => self
+                .registered_addons()
+                .into_iter()
+                .map(String::as_str)
+                .collect(),
+        };
+        let mut failures = Vec::new();
+        for addon in addons {
+            if excluded_addons.contains(addon) {
+                continue;
+            }
+            for per_character in [false, true] {
+                if self.has_registered_scope(addon, per_character)
+                    && let Some(LoadResult::Failed(error)) =
+                        self.load_results.get(&(addon.to_owned(), per_character))
+                {
+                    failures.push(format!(
+                        "{addon} {} SavedVariables: {}",
+                        if per_character {
+                            "character"
+                        } else {
+                            "account"
+                        },
+                        error.message
+                    ));
+                }
+            }
+        }
+        if failures.is_empty() {
+            Ok(())
+        } else {
+            failures.sort();
+            Err(crate::Error::Other(failures.join("; ")))
+        }
+    }
+
+    /// Explicit recovery rereads only failed declared inputs, preserving healthy edits.
+    #[cfg(test)]
+    pub(crate) fn retry_failed_inputs(&mut self, state: &mut LuaState) -> crate::Result<()> {
+        self.retry_failed_inputs_excluding(state, &std::collections::HashSet::new())
+    }
+
+    pub(crate) fn retry_failed_inputs_excluding(
+        &mut self,
+        state: &mut LuaState,
+        excluded_addons: &std::collections::HashSet<String>,
+    ) -> crate::Result<()> {
+        let failed: Vec<_> = self
+            .load_results
+            .iter()
+            .filter_map(|((addon, per_character), result)| match result {
+                LoadResult::Failed(error)
+                    if !excluded_addons.contains(addon.as_str())
+                        && self.has_registered_scope(addon, *per_character) =>
+                {
+                    Some((addon.clone(), *per_character, error.clone()))
+                }
+                _ => None,
+            })
+            .collect();
+        for (addon, per_character, failure) in failed {
+            let _ = self.retry_failed_scope(state, &addon, per_character, failure);
+        }
+        self.validate_inputs_for(None, excluded_addons)
+    }
+
+    fn retry_failed_scope(
+        &mut self,
+        state: &mut LuaState,
+        addon: &str,
+        per_character: bool,
+        mut failure: LoadFailure,
+    ) -> crate::Result<()> {
+        match self.load_scope_file(
+            state,
+            addon,
+            per_character,
+            &failure.path,
+            failure.wtf_input,
+            failure.reload,
+        )? {
+            true => Ok(()),
+            false => {
+                failure.message = format!(
+                    "Previously failed SavedVariables input is missing: {}",
+                    failure.path.display()
+                );
+                failure.retry_in_fresh_environment = false;
+                let error = crate::Error::Other(failure.message.clone());
+                self.load_results.insert(
+                    (addon.to_owned(), per_character),
+                    LoadResult::Failed(failure),
+                );
+                Err(error)
+            }
+        }
+    }
+
+    fn has_registered_scope(&self, addon: &str, per_character: bool) -> bool {
+        self.registered_vars_for(addon, per_character)
+            .is_some_and(|variables| !variables.is_empty())
     }
 
     pub fn registered_addons(&self) -> Vec<&String> {
         self.registered
             .keys()
             .chain(self.registered_per_char.keys())
+            .collect::<std::collections::BTreeSet<_>>()
+            .into_iter()
             .collect()
     }
 
@@ -500,7 +673,13 @@ impl SavedVariablesManager {
             .get(&(addon_name.to_owned(), per_character))
         {
             Some(LoadResult::Loaded) => return Ok(()),
-            Some(LoadResult::Failed(error)) => return Err(crate::Error::Other(error.clone())),
+            Some(LoadResult::Failed(error)) if error.retry_in_fresh_environment => {
+                let failure = error.clone();
+                return self.retry_failed_scope(state, addon_name, per_character, failure);
+            }
+            Some(LoadResult::Failed(error)) => {
+                return Err(crate::Error::Other(error.message.clone()));
+            }
             Some(LoadResult::MissingImport) | None => {}
         }
         let reload = self.reload_saved_addons.contains(addon_name);
@@ -520,12 +699,28 @@ impl SavedVariablesManager {
             } else {
                 config.account_saved_vars_file(addon_name)
             };
-            if self.load_scope_file(state, addon_name, per_character, &path, true, false)? {
+            if self.load_import_scope(state, addon_name, per_character, &path)? {
                 return Ok(());
             }
         }
         self.load_scope_file(state, addon_name, per_character, &local_path, false, false)
             .map(|_| ())
+    }
+
+    fn load_import_scope(
+        &mut self,
+        state: &mut LuaState,
+        addon_name: &str,
+        per_character: bool,
+        import: &Path,
+    ) -> crate::Result<bool> {
+        if self.prefer_session_storage {
+            let local = self.storage_path(addon_name, per_character);
+            if self.load_scope_file(state, addon_name, per_character, &local, false, false)? {
+                return Ok(true);
+            }
+        }
+        self.load_scope_file(state, addon_name, per_character, import, true, false)
     }
 
     fn load_scope_file(
@@ -604,7 +799,13 @@ impl SavedVariablesManager {
         let result = match &loaded {
             Ok(false) if wtf_input => LoadResult::MissingImport,
             Ok(_) => LoadResult::Loaded,
-            Err(error) => LoadResult::Failed(error.to_string()),
+            Err(error) => LoadResult::Failed(LoadFailure {
+                message: error.to_string(),
+                path: path.to_path_buf(),
+                wtf_input,
+                reload,
+                retry_in_fresh_environment: false,
+            }),
         };
         self.load_results
             .insert((addon_name.to_owned(), per_character), result);

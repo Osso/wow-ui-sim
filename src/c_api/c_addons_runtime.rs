@@ -10,9 +10,28 @@ pub(super) fn load_runtime_addon(state: &mut LuaState, addon_name: &str) -> Resu
         state_handle(state).map_err(|err| LoadError::Lua(err.to_string()))?,
         state,
     );
+    let previous_errors = loader_env.state().borrow().lua_error_records.len();
     crate::lua_api::workarounds::apply_for_runtime_addon_preload(&loader_env, addon_name);
 
-    load_runtime_addon_recursive(state, &loader_env, addon_name)
+    let result = load_runtime_addon_recursive(state, &loader_env, addon_name);
+    let mut sim = loader_env.state().borrow_mut();
+    if let Err(error) = &result {
+        sim.mark_addon_initialization_failed(
+            addon_name,
+            format!("runtime addon {addon_name} failed: {error}"),
+        );
+    }
+    let errors = sim.lua_error_records[previous_errors..].to_vec();
+    for error in errors {
+        sim.mark_addon_initialization_failed(
+            error.addon_name.as_deref().unwrap_or(addon_name),
+            format!(
+                "runtime addon {addon_name} initialization failed: {}",
+                error.message
+            ),
+        );
+    }
+    result
 }
 
 fn load_runtime_addon_recursive(
@@ -60,6 +79,10 @@ fn load_runtime_addon_with_dependencies(
 
     crate::loader::trace_load_addon(origin, format!("files {addon_name}"));
     let mut result = load_runtime_addon_files(state, loader_env, addon_name, &toc)?;
+    loader_env
+        .state()
+        .borrow_mut()
+        .mark_addon_initialized(addon_name);
     crate::lua_api::workarounds::apply_for_runtime_addon_load(loader_env, addon_name);
     loading_guard.commit_loaded();
     fire_addon_loaded(state, loader_env, addon_name);
@@ -69,11 +92,28 @@ fn load_runtime_addon_with_dependencies(
         &mut result,
     );
     crate::loader::trace_load_result_diagnostics(origin, addon_name, &result);
+    retain_runtime_load_warning(loader_env, addon_name, &result);
     route_finalized_runtime_addon_diagnostics(loader_env, result.diagnostics());
     loader_env.state().borrow_mut().invalidate_strata_buckets();
     crate::loader::trace_load_addon(origin, format!("event {addon_name}"));
     crate::loader::trace_load_addon(origin, format!("loaded {addon_name}"));
     Ok(())
+}
+
+fn retain_runtime_load_warning(
+    loader_env: &LoaderEnv<'_>,
+    addon_name: &str,
+    result: &crate::loader::LoadResult,
+) {
+    if let Some(warning) = result.warnings.first() {
+        loader_env
+            .state()
+            .borrow_mut()
+            .mark_addon_initialization_failed(
+                addon_name,
+                format!("runtime addon {addon_name} failed: {warning}"),
+            );
+    }
 }
 
 fn route_finalized_runtime_addon_diagnostics(
@@ -107,6 +147,7 @@ fn apply_mists_runtime_preload(
         crate::mists::character_frame_preload::ensure_before_addon(loader_env, toc, toc_path)?
     {
         crate::loader::trace_load_result_diagnostics(origin, &result.name, &result);
+        retain_runtime_load_warning(loader_env, &result.name, &result);
     }
     Ok(())
 }
@@ -229,6 +270,20 @@ fn fire_addon_loaded(state: &mut LuaState, loader_env: &LoaderEnv<'_>, addon_nam
         addon_name,
         addon_name_val,
     );
-    let _ = loader_env.fire_event_with_args("ADDON_LOADED", &arguments);
+    if let Err(error) = loader_env.fire_event_with_args("ADDON_LOADED", &arguments) {
+        loader_env
+            .state()
+            .borrow_mut()
+            .mark_addon_initialization_failed(
+                addon_name,
+                format!(
+                    "runtime addon {addon_name} initialization callback dispatch failed: {error}"
+                ),
+            );
+    }
     state.top = saved_top;
 }
+
+#[cfg(test)]
+#[path = "c_addons_runtime_tests.rs"]
+mod tests;
