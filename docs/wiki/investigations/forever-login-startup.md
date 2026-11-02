@@ -77,6 +77,17 @@ path therefore still had a missing Forever API. Expose the existing CVar-backed
 producer to Forever and exercise the complete original setting registration,
 including the returned proxy value and both toggle-capability states.
 
+## Native client visual verification (2026-11-02)
+
+The installed Forever 1.60.1.70634 client displayed its login controls before
+sign-in with no visible error dialog.
+
+Credits displayed real text and two catalog entries: `World of Warcraft`, then
+`Forever` (selected). The simulator's single offline entry remains a placeholder.
+
+This visual check did not measure native Lua-error counts or API return values.
+Fully disconnected operation was not verified.
+
 ## Sources
 
 - [Glue regressions](../../../tests/glue_login.rs) — complete Login startup and screen-state transitions.
