@@ -16,6 +16,12 @@ fn item_creation_context_returns_id_and_empty_for_unrecognized_contexts() {
         local id2, context2 = C_Item.GetItemCreationContext(link(211993, 999))
         assert(id2 == 211993 and context2 == '')
         assert(select('#', C_Item.GetItemCreationContext(link(6948, 0))) == 2)
+        local _, normal = C_Item.GetItemCreationContext(link(6948, 1))
+        local _, bonus = C_Item.GetItemCreationContext(link(6948, 191))
+        local _, empty = C_Item.GetItemCreationContext(link(6948, 192))
+        assert(normal == 'dungeon-normal')
+        assert(bonus == 'bonus-roll-5')
+        assert(empty == '')
     "#,
     )
     .unwrap();
