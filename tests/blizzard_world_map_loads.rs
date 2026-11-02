@@ -524,3 +524,30 @@ fn world_map_tracking_filters_default_to_visible() {
         assert(not pcall(C_Minimap.IsFilteredOut, {}))
     "#).expect("WorldMapFilterMixin should read default tracking visibility");
 }
+
+prefork_full_ui_case! {
+fn world_map_show_applies_supplied_rule_strata(env: &WowLuaEnv) {
+    for (value, expected) in [(4, "HIGH"), (5, "DIALOG"), (10, "MEDIUM")] {
+        env.exec(&format!(r#"
+            A_Admin.SetGameRule('WorldMapFrameStrata', {value})
+            WorldMapFrame:SetFrameStrata('MEDIUM')
+            WorldMapMixin.OnShow(WorldMapFrame)
+            assert(WorldMapFrame:GetFrameStrata() == '{expected}')
+        "#)).unwrap();
+    }
+    env.exec(r#"
+        local strata = {'WORLD', 'BACKGROUND', 'LOW', 'MEDIUM', 'HIGH', 'DIALOG', 'FULLSCREEN', 'FULLSCREEN_DIALOG', 'TOOLTIP', 'BLIZZARD'}
+        for value = 0, 9 do
+            A_Admin.SetGameRule('WorldMapFrameStrata', value)
+            assert(C_GameRules.GetGameRuleAsFrameStrata(Enum.GameRule.WorldMapFrameStrata) == strata[value + 1])
+        end
+        assert(not pcall(C_GameRules.GetGameRuleAsFrameStrata, -12345))
+        A_Admin.SetGameRule('WorldMapFrameStrata', nil)
+        assert(select('#', C_GameRules.GetGameRuleAsFrameStrata(Enum.GameRule.WorldMapFrameStrata)) == 1)
+        assert(C_GameRules.GetGameRuleAsFrameStrata(Enum.GameRule.WorldMapFrameStrata) == nil)
+        WorldMapFrame:SetFrameStrata('MEDIUM')
+        WorldMapMixin.OnShow(WorldMapFrame)
+        assert(WorldMapFrame:GetFrameStrata() == 'MEDIUM')
+    "#).unwrap();
+}
+}
