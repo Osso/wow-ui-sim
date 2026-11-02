@@ -539,7 +539,7 @@ fn blizzard_ping_ui_publishes_c_ping_secure_callback_setters_in_globals(env: &Wo
     // Blizzard_PingUI.lua:258 defines this on the mixin, not in the
     // PingManagerSecureDocumentation.lua namespace.
     let clear_pending_kind: String = env
-        .eval("return type(PingListenerFrameMixin.ClearPendingPingInfo)")
+        .eval("return type(__secureenv.PingListenerFrameMixin.ClearPendingPingInfo)")
         .expect("ClearPendingPingInfo mixin method probe succeeds");
     assert_eq!(clear_pending_kind, "function");
 
