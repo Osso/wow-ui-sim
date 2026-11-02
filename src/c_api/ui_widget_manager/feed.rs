@@ -7,8 +7,8 @@ use super::{
     MapPinAnimationRecord, ProcessingUnit, ScenarioHeaderCurrenciesRecord,
     ScenarioHeaderTimerRecord, SpacerRecord, SpellDisplayRecord, StackedResourceTrackerRecord,
     StatusBarRecord, TextColumnRowVisualizationInfo, TextWithStateRecord, TextWithSubtextRecord,
-    TextureAndTextRecord, TextureAndTextRowRecord, TextureWithAnimationRecord, UnitPowerBarRecord,
-    WidgetId, WidgetSetEntry, WidgetSetRecord, ZoneControlRecord,
+    TextureAndTextRecord, TextureAndTextRowRecord, TextureWithAnimationRecord, TugOfWarRecord,
+    UnitPowerBarRecord, WidgetId, WidgetSetEntry, WidgetSetRecord, ZoneControlRecord,
 };
 use crate::lua_api::WowLuaEnv;
 use crate::{Error, Result};
@@ -31,6 +31,7 @@ pub enum WidgetVisualization {
     UnitPowerBar(UnitPowerBarRecord),
     FillUpFrames(FillUpFramesRecord),
     MapPinAnimation(MapPinAnimationRecord),
+    TugOfWar(TugOfWarRecord),
     TextureAndText(TextureAndTextRecord),
     TextureAndTextRow(TextureAndTextRowRecord),
     TextWithState(TextWithStateRecord),
@@ -67,6 +68,7 @@ impl WidgetVisualization {
             Self::UnitPowerBar(_) => 23,
             Self::FillUpFrames(_) => 24,
             Self::MapPinAnimation(_) => 26,
+            Self::TugOfWar(_) => 28,
             Self::TextureAndText(_) => 12,
             Self::TextureAndTextRow(_) => 15,
             Self::TextWithState(_) => 8,
@@ -323,6 +325,7 @@ fn supply_visualization(sim: &mut crate::lua_api::SimState, id: f64, record: Wid
     inputs.unit_power_bars.remove(&key);
     inputs.fill_up_frames.remove(&key);
     inputs.map_pin_animations.remove(&key);
+    inputs.tug_of_war.remove(&key);
     inputs.texture_and_text.remove(&key);
     inputs.texture_and_text_row.remove(&key);
     inputs.spacers.remove(&key);
@@ -368,6 +371,9 @@ fn supply_visualization(sim: &mut crate::lua_api::SimState, id: f64, record: Wid
         }
         WidgetVisualization::StatusBar(record) => {
             sim.ui_widget_inputs.status_bars.insert(key, record);
+        }
+        WidgetVisualization::TugOfWar(record) => {
+            sim.ui_widget_inputs.tug_of_war.insert(key, record);
         }
         WidgetVisualization::MapPinAnimation(record) => {
             sim.ui_widget_inputs.map_pin_animations.insert(key, record);

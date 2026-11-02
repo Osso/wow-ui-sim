@@ -50,6 +50,7 @@ mod item_display_record;
 mod map_pin_animation;
 mod map_pin_animation_record;
 pub use map_pin_animation_record::MapPinAnimationRecord;
+mod tug_of_war;
 mod tug_of_war_record;
 pub use tug_of_war_record::{TugOfWarRecord, WidgetIconRecord};
 mod unit_context;
