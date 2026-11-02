@@ -749,6 +749,9 @@ fn calendar_create_player_event_replaces_editable_record(env: &WowLuaEnv) {
         state.calendar_day_events.insert((0, 15), vec![calendar_test_record("old-event")]);
     }
     env.exec(r#"
+        -- The day context menu only exists on a shown calendar; the create frame's
+        -- OnShow runs CalendarCreateEventFrame_Update only while its parent is visible.
+        CalendarFrame:Show()
         C_Calendar.OpenEvent(0, 15, 1)
         C_Calendar.ContextMenuSelectEvent(0, 15, 1)
         local day = CreateFrame('Button')
