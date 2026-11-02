@@ -234,6 +234,36 @@ fn deprecated_guild_requests_refuse_tainted_callers_after_parsing(env: &WowLuaEn
 }
 }
 
+#[cfg(feature = "retail-12-1-5")]
+prefork_full_ui_case! {
+fn deprecated_guild_request_refusals_report_alias_names(env: &WowLuaEnv) {
+    // Deprecated_GuildScript.lua:12-16 aliases the members directly, so the
+    // live debug name is the global alias (WM38F).
+    env.state().borrow_mut().guild_request_inputs.transport_available = true;
+    let reports: String = env.eval(r#"
+        local reports = {}
+        local listener = CreateFrame('Frame')
+        listener:RegisterEvent('ADDON_ACTION_FORBIDDEN')
+        listener:SetScript('OnEvent', function(_, _, addon, functionName)
+            table.insert(reports, addon .. '|' .. functionName)
+        end)
+        local function addon()
+            GuildDemote('Alice')
+            GuildSetLeader('Bob')
+            GuildDisband()
+        end
+        debug.setobjecttaint(addon, 'GuildAliasProbe')
+        addon()
+        return table.concat(reports, ';')
+    "#).expect("tainted alias probes should execute");
+    assert_eq!(
+        reports,
+        "GuildAliasProbe|GuildDemote();GuildAliasProbe|GuildSetLeader();GuildAliasProbe|GuildDisband()"
+    );
+    assert!(env.state().borrow().guild_request_inputs.submitted.is_empty());
+}
+}
+
 prefork_full_ui_case! {
 fn blizzard_deprecated_guild_script_installs_guild_text_function_shims(env: &WowLuaEnv) {
 
