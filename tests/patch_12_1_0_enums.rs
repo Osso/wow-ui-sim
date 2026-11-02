@@ -6,6 +6,9 @@ use std::collections::{BTreeMap, BTreeSet};
 use serde::Deserialize;
 use wow_ui_sim::lua_api::WowLuaEnv;
 
+#[path = "common/pinned_enums.rs"]
+mod pinned_enums;
+
 // Frozen from the cached retail Blizzard_APIDocumentationGenerated declarations.
 const DATA: &str = include_str!("data/patch_12_1_0_enums.json");
 const KNOWN_GAPS: &str = include_str!("data/patch_12_1_0_enum_known_gaps.json");
@@ -19,8 +22,7 @@ struct Data {
 
 #[derive(Deserialize)]
 struct DocEnum {
-    meta: DocMeta,
-    values: BTreeMap<String, i64>,
+    doc: String,
     // Members cached Blizzard Lua adds at load; the native metadata never counts them.
     #[serde(default)]
     blizzard_lua: Option<BlizzardLua>,
@@ -29,14 +31,6 @@ struct DocEnum {
 #[derive(Deserialize)]
 struct BlizzardLua {
     values: BTreeMap<String, i64>,
-}
-
-#[derive(Deserialize)]
-#[serde(rename_all = "PascalCase")]
-struct DocMeta {
-    num_values: i64,
-    min_value: i64,
-    max_value: i64,
 }
 
 #[derive(Deserialize)]
@@ -78,17 +72,16 @@ fn quote_lua(value: &str) -> String {
     format!("\"{escaped}\"")
 }
 
-fn expected_table(doc: &DocEnum) -> (String, String) {
+fn expected_table(doc: &DocEnum, pinned: &pinned_enums::PinnedEnum) -> (String, String) {
     let additions = doc.blizzard_lua.iter().flat_map(|lua| &lua.values);
-    let mut parts: Vec<_> = doc
+    let mut parts: Vec<_> = pinned
         .values
         .iter()
         .chain(additions)
         .map(|(name, value)| format!("{name}={value}"))
         .collect();
     parts.sort();
-    let meta = &doc.meta;
-    let meta = format!("{}/{}/{}", meta.num_values, meta.min_value, meta.max_value);
+    let meta = format!("{}/{}/{}", pinned.meta["NumValues"], pinned.meta["MinValue"], pinned.meta["MaxValue"]);
     (parts.join(";"), meta)
 }
 
@@ -101,11 +94,12 @@ fn expected_member(value: Option<i64>) -> String {
 fn check_row(env: &WowLuaEnv, data: &Data, row: &Row) -> (bool, String) {
     let doc = &data.enums[&row.enum_name];
     let name = quote_lua(&row.enum_name);
+    let pinned = pinned_enums::read_pinned_enum(&doc.doc, &row.enum_name);
     match &row.member {
         None => {
             let code = format!("return (function(...) {OBSERVE_TABLE} end)({name})");
             let observed: (String, String) = env.eval(&code).expect("observe enum table");
-            let expected = expected_table(doc);
+            let expected = expected_table(doc, &pinned);
             (
                 observed == expected,
                 format!("expected {expected:?}; observed {observed:?}"),
@@ -117,7 +111,11 @@ fn check_row(env: &WowLuaEnv, data: &Data, row: &Row) -> (bool, String) {
                 quote_lua(member)
             );
             let observed: String = env.eval(&code).expect("observe enum member");
-            let expected = expected_member(row.value);
+            let current = pinned.values.get(member).copied();
+            if row.value.is_some() {
+                assert!(current.is_some(), "{}: introduced member absent from pinned documentation", row.source_id);
+            }
+            let expected = expected_member(current);
             (
                 observed == expected,
                 format!("{member}: expected {expected}; observed {observed}"),
@@ -132,16 +130,7 @@ fn read_data() -> Data {
     let ids: BTreeSet<_> = data.rows.iter().map(|row| &row.source_id).collect();
     assert_eq!(ids.len(), ROW_COUNT, "duplicate source IDs");
     for row in &data.rows {
-        let doc = &data.enums[&row.enum_name];
-        // Added members carry their cached value; removed members are absent from the cache.
-        if let Some(member) = &row.member {
-            assert_eq!(
-                doc.values.get(member).copied(),
-                row.value,
-                "{}",
-                row.source_id
-            );
-        }
+        assert!(data.enums.contains_key(&row.enum_name), "{}", row.source_id);
     }
     data
 }

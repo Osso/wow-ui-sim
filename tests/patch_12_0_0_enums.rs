@@ -6,6 +6,9 @@ use serde::Deserialize;
 use std::collections::BTreeMap;
 use wow_ui_sim::lua_api::WowLuaEnv;
 
+#[path = "common/pinned_enums.rs"]
+mod pinned_enums;
+
 #[derive(Deserialize)]
 struct Data {
     enums: BTreeMap<String, DocEnum>,
@@ -15,8 +18,6 @@ struct Data {
 #[derive(Deserialize)]
 struct DocEnum {
     source: String,
-    meta: BTreeMap<String, i64>,
-    values: BTreeMap<String, i64>,
 }
 
 #[derive(Deserialize)]
@@ -52,7 +53,7 @@ fn check_value(env: &WowLuaEnv, name: &str, key: &str, value: Option<i64>) -> Re
     }
 }
 
-fn check_parent(env: &WowLuaEnv, name: &str, doc: &DocEnum) -> Vec<String> {
+fn check_parent(env: &WowLuaEnv, name: &str, doc: &pinned_enums::PinnedEnum) -> Vec<String> {
     let mut failures = Vec::new();
     for (key, value) in &doc.values {
         if let Err(error) = check_value(env, name, key, Some(*value)) {
@@ -91,19 +92,23 @@ fn patch_12_0_0_enum_publication(env: &WowLuaEnv) {
     let failures = {
         let mut failures = Vec::new();
         for (id, row) in &data.rows {
-            let doc = &data.enums[&row.name];
+            let source = &data.enums[&row.name].source;
+            let doc = pinned_enums::read_pinned_enum(source, &row.name);
             let mut errors = match &row.member {
-                None => check_parent(&env, &row.name, doc),
+                None => check_parent(&env, &row.name, &doc),
                 Some(key) => {
-                    assert_eq!(doc.values.get(key).copied(), row.value, "{id}");
-                    check_value(&env, &row.name, key, row.value)
+                    let current = doc.values.get(key).copied();
+                    if row.value.is_some() {
+                        assert!(current.is_some(), "{id}: introduced member absent from pinned documentation");
+                    }
+                    check_value(&env, &row.name, key, current)
                         .err()
                         .into_iter()
                         .collect()
                 }
             };
             for key in &row.absent {
-                errors.extend(check_value(&env, &row.name, key, None).err());
+                errors.extend(check_value(&env, &row.name, key, doc.values.get(key).copied()).err());
             }
             if errors.is_empty() {
                 eprintln!(
@@ -111,7 +116,7 @@ fn patch_12_0_0_enum_publication(env: &WowLuaEnv) {
                     row.superseded_by
                 );
             } else {
-                failures.push(format!("{id} ({}): {}", doc.source, errors.join("; ")));
+                failures.push(format!("{id} ({source}): {}", errors.join("; ")));
             }
         }
         failures
