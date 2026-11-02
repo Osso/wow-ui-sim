@@ -654,6 +654,177 @@ fn calendar_view_remove_button_requests_own_invite_removal(env: &WowLuaEnv) {
 }
 }
 
+fn calendar_submit_fixture(env: &WowLuaEnv) {
+    use wow_ui_sim::c_api::c_calendar::CivilDateTime;
+    load_addon(&env.loader_env(), &calendar_toc()).unwrap();
+    {
+        let mut state = env.state().borrow_mut();
+        state.calendar_now = CivilDateTime { year: 2026, month: 4, day: 14, hour: 12, minute: 0 };
+        state.game_clock.time = Some((12, 0));
+    }
+    env.exec(r#"
+        A_Admin.SetManualClock(100)
+        calendarSubmitEvents = {}
+        local observer = CreateFrame('Frame')
+        for _, name in ipairs({'CALENDAR_UPDATE_ERROR', 'CALENDAR_UPDATE_ERROR_WITH_COUNT', 'CALENDAR_ACTION_PENDING'}) do
+            observer:RegisterEvent(name)
+        end
+        observer:SetScript('OnEvent', function(_, name, value) table.insert(calendarSubmitEvents, {name, value}) end)
+        function CalendarSubmit(mode)
+            calendarSubmitEvents = {}
+            CalendarCreateEventFrame.mode = mode
+            assert(select('#', CalendarCreateEventCreateButton_OnClick(CalendarCreateEventCreateButton)) == 0)
+            return #calendarSubmitEvents
+        end
+        function CalendarSubmitError(mode, key)
+            assert(CalendarSubmit(mode) == 2, 'expected one error')
+            assert(calendarSubmitEvents[1][1] == 'CALENDAR_UPDATE_ERROR' and calendarSubmitEvents[1][2] == key, calendarSubmitEvents[1][2])
+            assert(calendarSubmitEvents[2][1] == 'CALENDAR_ACTION_PENDING' and calendarSubmitEvents[2][2] == false)
+        end
+        function CalendarSubmitAccepted(mode)
+            assert(CalendarSubmit(mode) == 1, 'expected acceptance')
+            assert(calendarSubmitEvents[1][1] == 'CALENDAR_ACTION_PENDING' and calendarSubmitEvents[1][2] == true)
+        end
+    "#).unwrap();
+}
+
+fn calendar_new_event(date: (i32, i32, i32), time: (u32, u32)) -> wow_ui_sim::c_api::c_calendar::CalendarEditableAccess {
+    wow_ui_sim::c_api::c_calendar::CalendarEditableAccess {
+        event_id: "0".into(), category_flags: 0x1, is_new: true, title: b"Raid".to_vec(),
+        date: Some(date), time: Some(time), creator_identity: "Player-1-00000001".into(),
+        ..Default::default()
+    }
+}
+
+fn calendar_set_pending(env: &WowLuaEnv, pending: bool) {
+    env.state().borrow_mut().calendar_context_policy.action_pending = pending;
+}
+
+prefork_full_ui_case! {
+fn calendar_create_button_add_runs_ordered_local_checks(env: &WowLuaEnv) {
+    use wow_ui_sim::c_api::club_model::Club;
+    calendar_submit_fixture(env);
+    let valid = calendar_new_event((3, 19, 26), (20, 0));
+    let set = |event| env.state().borrow_mut().calendar_context_policy.editable = event;
+    set(Some(valid.clone()));
+    calendar_set_pending(env, true);
+    env.exec("assert(CalendarSubmit('create') == 0)").unwrap();
+    calendar_set_pending(env, false);
+    set(None);
+    env.exec("CalendarSubmitError('create', 'CALENDAR_ERROR_INTERNAL')").unwrap();
+    // The out-of-window date is rejected silently before the empty title is checked.
+    set(Some(wow_ui_sim::c_api::c_calendar::CalendarEditableAccess { title: Vec::new(), date: Some((3, 12, 26)), ..valid.clone() }));
+    env.exec("assert(CalendarSubmit('create') == 0)").unwrap();
+    set(Some(wow_ui_sim::c_api::c_calendar::CalendarEditableAccess { is_new: false, ..valid.clone() }));
+    env.exec("assert(CalendarSubmit('create') == 0)").unwrap();
+    set(Some(wow_ui_sim::c_api::c_calendar::CalendarEditableAccess { title: Vec::new(), ..valid.clone() }));
+    env.exec("CalendarSubmitError('create', 'CALENDAR_ERROR_NEEDS_TITLE')").unwrap();
+    set(Some(wow_ui_sim::c_api::c_calendar::CalendarEditableAccess { category_flags: 0xc00, ..valid.clone() }));
+    env.exec("CalendarSubmitError('create', 'ERR_GUILD_PLAYER_NOT_IN_GUILD')").unwrap();
+    set(Some(wow_ui_sim::c_api::c_calendar::CalendarEditableAccess { category_flags: 0x400, club_id: Some(0), ..valid.clone() }));
+    env.exec("CalendarSubmitError('create', 'ERR_COMMUNITY_PLAYER_NOT_IN_COMMUNITY')").unwrap();
+    for time in [(u32::MAX, 0), (20, u32::MAX)] {
+        set(Some(wow_ui_sim::c_api::c_calendar::CalendarEditableAccess { time: Some(time), ..valid.clone() }));
+        env.exec("CalendarSubmitError('create', 'CALENDAR_ERROR_INVALID_TIME')").unwrap();
+    }
+    // Unset date components are skipped by the window, then rejected as invalid.
+    for date in [(-1, -1, -1), (3, -1, 26)] {
+        set(Some(wow_ui_sim::c_api::c_calendar::CalendarEditableAccess { date: Some(date), ..valid.clone() }));
+        env.exec("CalendarSubmitError('create', 'CALENDAR_ERROR_INVALID_DATE')").unwrap();
+    }
+    env.state().borrow_mut().clubs.clubs.insert("77".into(), Club {
+        id: "77".into(), name: "Guild".into(), description: String::new(),
+        club_type: 2, avatar_id: 0, members: Vec::new(), candidates: Default::default(),
+        invitations: Vec::new(), streams: Vec::new(),
+    });
+    set(Some(wow_ui_sim::c_api::c_calendar::CalendarEditableAccess { category_flags: 0xc00, dirty: true, ..valid.clone() }));
+    env.exec("CalendarSubmitAccepted('create')").unwrap();
+    {
+        let state = env.state().borrow();
+        let event = state.calendar_context_policy.editable.as_ref().unwrap();
+        assert!(state.calendar_context_policy.action_pending && event.is_new && event.dirty);
+    }
+    calendar_set_pending(env, false);
+    env.exec("CalendarSubmitError('create', 'CALENDAR_ERROR_EVENT_THROTTLED')").unwrap();
+    // A silent window rejection does not refresh the throttle.
+    env.exec("A_Admin.AdvanceTime(5)").unwrap();
+    set(Some(wow_ui_sim::c_api::c_calendar::CalendarEditableAccess { date: Some((3, 12, 26)), ..valid.clone() }));
+    env.exec("assert(CalendarSubmit('create') == 0)").unwrap();
+    set(Some(valid));
+    env.exec("CalendarSubmitAccepted('create')").unwrap();
+}
+}
+
+prefork_full_ui_case! {
+fn calendar_create_button_add_cutoff_follows_local_game_clock(env: &WowLuaEnv) {
+    calendar_submit_fixture(env);
+    // INFERRED cutoff: the supplied calendar date with the game clock's hour and minute,
+    // minus one minute; an event at or before it has passed.
+    let cases: [(Option<(u8, u8)>, (i32, i32, i32), (u32, u32), bool); 7] = [
+        (Some((19, 0)), (3, 13, 26), (20, 0), true),
+        (Some((21, 0)), (3, 13, 26), (20, 0), false),
+        (Some((20, 1)), (3, 13, 26), (20, 0), false),
+        (Some((20, 0)), (3, 13, 26), (20, 0), true),
+        (Some((0, 0)), (3, 13, 26), (0, 0), true),
+        (None, (3, 13, 26), (23, 59), false),
+        (None, (3, 14, 26), (0, 0), true),
+    ];
+    for (clock, date, time, accepted) in cases {
+        {
+            let mut state = env.state().borrow_mut();
+            state.game_clock.time = clock;
+            state.calendar_context_policy.action_pending = false;
+            state.calendar_context_policy.editable = Some(calendar_new_event(date, time));
+        }
+        env.exec("A_Admin.AdvanceTime(6)").unwrap();
+        let script = if accepted {
+            "CalendarSubmitAccepted('create')"
+        } else {
+            "CalendarSubmitError('create', 'CALENDAR_ERROR_EVENT_TIME_PASSED')"
+        };
+        env.exec(script).unwrap_or_else(|error| panic!("{clock:?} {date:?} {time:?}: {error:?}"));
+    }
+}
+}
+
+prefork_full_ui_case! {
+fn calendar_create_button_updates_dirty_event(env: &WowLuaEnv) {
+    calendar_submit_fixture(env);
+    let event = wow_ui_sim::c_api::c_calendar::CalendarEditableAccess {
+        is_new: false, dirty: true, local_edit_credential: Some(1), ..calendar_new_event((3, 13, 26), (20, 0))
+    };
+    let set = |event| env.state().borrow_mut().calendar_context_policy.editable = event;
+    set(Some(event.clone()));
+    calendar_set_pending(env, true);
+    env.exec("assert(CalendarSubmit('edit') == 0)").unwrap();
+    calendar_set_pending(env, false);
+    set(None);
+    env.exec("assert(CalendarSubmit('edit') == 0)").unwrap();
+    set(Some(wow_ui_sim::c_api::c_calendar::CalendarEditableAccess { is_new: true, ..event.clone() }));
+    env.exec("assert(CalendarSubmit('edit') == 0)").unwrap();
+    set(Some(wow_ui_sim::c_api::c_calendar::CalendarEditableAccess {
+        local_edit_credential: None, creator_identity: "Player-1-OTHER".into(), ..event.clone()
+    }));
+    env.exec("CalendarSubmitError('edit', 'CALENDAR_ERROR_PERMISSIONS')").unwrap();
+    set(Some(wow_ui_sim::c_api::c_calendar::CalendarEditableAccess { dirty: false, ..event.clone() }));
+    env.exec("assert(CalendarSubmit('edit') == 0)").unwrap();
+    for (clock, accepted) in [((21, 0), false), ((19, 0), true)] {
+        env.state().borrow_mut().game_clock.time = Some(clock);
+        set(Some(event.clone()));
+        calendar_set_pending(env, false);
+        let script = if accepted { "CalendarSubmitAccepted('edit')" } else { "CalendarSubmitError('edit', 'CALENDAR_ERROR_EVENT_PASSED')" };
+        env.exec(script).unwrap();
+        let state = env.state().borrow();
+        assert!(!state.calendar_context_policy.editable.as_ref().unwrap().dirty, "dirty clears before the cutoff");
+        assert_eq!(state.calendar_context_policy.action_pending, accepted);
+    }
+    // Update repeats neither the throttle nor the creation window.
+    calendar_set_pending(env, false);
+    set(Some(wow_ui_sim::c_api::c_calendar::CalendarEditableAccess { date: Some((5, 0, 28)), ..event }));
+    env.exec("CalendarSubmitAccepted('edit')").unwrap();
+}
+}
+
 prefork_full_ui_case! {
 fn calendar_context_clipboard_controls_paste_menu(env: &WowLuaEnv) {
     use wow_ui_sim::c_api::c_calendar::{CivilDateTime, DisplayedMonth};
