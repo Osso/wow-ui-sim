@@ -18,7 +18,8 @@ pub fn run() -> Result<(), Box<dyn std::error::Error>> {
     let csv_path = wow_data.join("ItemSparse.csv");
     println!("Loading ItemSparse from {}...", csv_path.display());
 
-    let required_ids = collect_required_item_ids();
+    let mut required_ids = collect_required_item_ids();
+    required_ids.extend(collect_keystone_item_ids(&wow_data)?);
     println!("Required item IDs: {} (deduplicated)", required_ids.len());
 
     let file = File::open(&csv_path)?;
@@ -42,6 +43,20 @@ pub fn run() -> Result<(), Box<dyn std::error::Error>> {
     println!("Generated {} item entries ({} skipped)", count, skipped);
     println!("Output: {}", output_path.display());
     Ok(())
+}
+
+fn collect_keystone_item_ids(wow_data: &Path) -> Result<BTreeSet<u32>, Box<dyn std::error::Error>> {
+    let records = open_records(&wow_data.join("Item.csv"))?;
+    let mut iter = records.iter();
+    let idx = header_index(iter.next().ok_or("empty Item.csv")?);
+    let mut ids = BTreeSet::new();
+    for record in iter {
+        let fields = parse_csv_line(record);
+        if field(&fields, &idx, "ClassID") == "5" && field(&fields, &idx, "SubclassID") == "1" {
+            ids.insert(field(&fields, &idx, "ID").parse()?);
+        }
+    }
+    Ok(ids)
 }
 
 fn collect_gem_item_ids(wow_data: &Path) -> Result<BTreeSet<u32>, Box<dyn std::error::Error>> {
