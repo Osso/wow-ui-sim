@@ -28,7 +28,9 @@ const CONSUMER_SETUP: &str = r#"
     Manager = __secureenv.PingManager
     assert(type(Manager) == 'table' and type(Manager.SendPing) == 'function')
     for _, name in ipairs({'PING_FAILED_GENERIC', 'PING_FAILED_SPAMMING',
-            'PING_FAILED_OUT_OF_PING_AREA', 'PING_FAILED_UNSPECIFIED'}) do
+            'PING_FAILED_OUT_OF_PING_AREA', 'PING_FAILED_UNSPECIFIED',
+            'PING_FAILED_DISABLED_BY_SETTINGS', 'PING_FAILED_SQUELCHED',
+            'PING_FAILED_DISABLED_BY_LEADER'}) do
         assert(type(_G[name]) == 'string' and _G[name] ~= '', name)
     end
     Messages, Outcomes = {}, {}
@@ -43,6 +45,15 @@ const CONSUMER_SETUP: &str = r#"
     end
     function SelfPing(label)
         Step(label, {guid = UnitGUID('player')})
+    end
+    function Fresh(label)
+        A_Admin.AdvanceTime(3)
+        SelfPing(label)
+    end
+    function Record(label, action)
+        local before = #Messages
+        action()
+        table.insert(Outcomes, label .. '=' .. (Messages[before + 1] or 'ok'))
     end
     function Expect(expected)
         local actual = table.concat(Outcomes, ';')
@@ -259,4 +270,164 @@ fn clear_hit_test_ping_info_zeroes_the_pending_target() {
         .unwrap();
     assert_eq!(returned, 0);
     assert_eq!(pending(&env), PingPendingTarget::default());
+}
+
+#[cfg(feature = "retail-12-1-5")]
+prefork_full_ui_case! {
+fn ping_listener_receives_cooldown_info_before_the_crossing_send_returns(env: &WowLuaEnv) {
+    env.exec(CONSUMER_SETUP).expect("PingManager consumer setup");
+    // WM51-F1: the crossing stores {now, now + 3000} where C_Ping.GetCooldownInfo
+    // reads it, then synchronously calls Blizzard_PingUI.lua:77-81 before the send
+    // returns; expiry clears the pair.
+    env.exec(
+        r#"
+        Seen = {}
+        hooksecurefunc(PingListenerFrame, 'PingCooldownStarted', function(_, info, extra)
+            local stored = C_Ping.GetCooldownInfo()
+            table.insert(Seen, table.concat({info.startTimeMs, info.endTimeMs,
+                stored.startTimeMs, stored.endTimeMs, #Outcomes, tostring(extra)}, ','))
+        end)
+        SelfPing('10.0')
+        A_Admin.AdvanceTime(0.1) SelfPing('10.1')
+        A_Admin.AdvanceTime(0.1) SelfPing('10.2')
+        assert(table.concat(Seen, ';') == '10200,13200,10200,13200,2,nil', table.concat(Seen, ';'))
+        assert(PingListenerFrame.cooldownInfo.endTimeMs == 13200)
+        A_Admin.AdvanceTime(3) SelfPing('13.2')
+        local info = C_Ping.GetCooldownInfo()
+        assert(info.startTimeMs == 0 and info.endTimeMs == 0)
+        assert(#Seen == 1)
+        Expect({'10.0=ok', '10.1=ok', '10.2=ok', '13.2=ok'})
+        "#,
+    )
+    .expect("the cooldown-started callback receives the stored pair");
+}
+}
+
+#[cfg(feature = "retail-12-1-5")]
+prefork_full_ui_case! {
+fn ping_manager_reports_eligibility_gates_in_order(env: &WowLuaEnv) {
+    env.exec(CONSUMER_SETUP).expect("PingManager consumer setup");
+    // WM51-F2: enablePings (4) precedes the cooldown (2); squelch (6) and the
+    // leader restriction (3) apply only in a group.
+    env.exec(
+        r#"
+        SetCVar('enablePings', '0') Fresh('settings-off')
+        SetCVar('enablePings', '1') Fresh('on-1') SelfPing('on-2') SelfPing('on-3')
+        SelfPing('cooldown')
+        SetCVar('enablePings', '0') SelfPing('settings-off-in-cooldown')
+        SetCVar('enablePings', '1')
+        "#,
+    )
+    .unwrap();
+    env.state().borrow_mut().social_restrictions.is_squelched = true;
+    env.exec("Fresh('solo-squelched') A_Admin.SetPartySize(2) Fresh('group-squelched')")
+        .unwrap();
+    env.state().borrow_mut().social_restrictions.is_squelched = false;
+    env.exec(
+        r#"
+        C_PartyInfo.SetRestrictPings(Enum.RestrictPingsTo.Lead)
+        Fresh('lead-as-leader')
+        A_Admin.SetPartyLeader(1) Fresh('lead-as-member')
+        C_PartyInfo.SetRestrictPings(Enum.RestrictPingsTo.Assist)
+        Fresh('assist-as-member')
+        "#,
+    )
+    .unwrap();
+    env.state().borrow_mut().everyone_assistant = true;
+    env.exec("Fresh('assist-as-assistant')").unwrap();
+    env.state().borrow_mut().everyone_assistant = false;
+    env.exec(
+        r#"
+        C_PartyInfo.SetRestrictPings(Enum.RestrictPingsTo.TankHealer)
+        assert(UnitSetRole('player', 'DAMAGER')) Fresh('damager')
+        assert(UnitSetRole('player', 'TANK')) Fresh('tank')
+        assert(UnitSetRole('player', 'NONE')) Fresh('unassigned')
+        C_PartyInfo.SetRestrictPings(Enum.RestrictPingsTo.Lead)
+        A_Admin.SetPartySize(0) Fresh('solo-lead')
+        Expect({
+            'settings-off=' .. PING_FAILED_DISABLED_BY_SETTINGS,
+            'on-1=ok', 'on-2=ok', 'on-3=ok',
+            'cooldown=' .. PING_FAILED_SPAMMING,
+            'settings-off-in-cooldown=' .. PING_FAILED_DISABLED_BY_SETTINGS,
+            'solo-squelched=ok',
+            'group-squelched=' .. PING_FAILED_SQUELCHED,
+            'lead-as-leader=ok',
+            'lead-as-member=' .. PING_FAILED_DISABLED_BY_LEADER,
+            'assist-as-member=' .. PING_FAILED_DISABLED_BY_LEADER,
+            'assist-as-assistant=ok',
+            'damager=' .. PING_FAILED_DISABLED_BY_LEADER,
+            'tank=ok', 'unassigned=ok', 'solo-lead=ok',
+        })
+        "#,
+    )
+    .expect("eligibility gates report in native order");
+}
+}
+
+#[cfg(feature = "retail-12-1-5")]
+prefork_full_ui_case! {
+fn ping_manager_world_targets_miss_and_keep_the_pending_target(env: &WowLuaEnv) {
+    env.exec(CONSUMER_SETUP).expect("PingManager consumer setup");
+    // WM51-F4: the simulator has no world geometry, so every world query misses.
+    // Selection fails before storing anything; the immediate contextual send
+    // reports result 1 without eligibility, even during a cooldown.
+    supply_pending(&env, "Player-1-00000001", [400.0, 0.0, 0.0]);
+    env.exec(
+        r#"
+        assert(__secureenv.C_PingSecure.GetTargetPingReceiver(2, 2) == nil)
+        local target = Manager:DeterminePingTarget(2, 2)
+        assert(target.targetState == Enum.PingSetTargetState.Failed and not target.hasUITarget)
+        SelfPing('burst-1') SelfPing('burst-2') SelfPing('burst-3') SelfPing('burst-4')
+        Record('contextual', function() Manager:SendContextualWorldPing() end)
+        Expect({
+            'burst-1=ok', 'burst-2=ok', 'burst-3=ok',
+            'burst-4=' .. PING_FAILED_SPAMMING,
+            'contextual=' .. PING_FAILED_GENERIC,
+        })
+        "#,
+    )
+    .expect("world targeting misses without consuming the pending target");
+    assert_eq!(pending(env).target_guid, "Player-1-00000001");
+    assert_eq!(pending(env).position, [400.0, 0.0, 0.0]);
+}
+}
+
+#[cfg(feature = "retail-12-1-5")]
+prefork_full_ui_case! {
+fn ping_manager_targets_pingable_ui_frames(env: &WowLuaEnv) {
+    env.exec(CONSUMER_SETUP).expect("PingManager consumer setup");
+    // WM47 Q8/WM51-F5: PingAttributes.xml templates and PingableType.lua mixins
+    // drive Blizzard_PingManager.lua:110-185 through GetTargetPingReceiver.
+    env.exec(
+        r#"
+        local function Place(frame, strata)
+            frame:SetFrameStrata(strata)
+            frame:SetSize(80, 80)
+            frame:SetPoint('BOTTOMLEFT', WorldFrame, 'BOTTOMLEFT', 300, 300)
+        end
+        local unitFrame = CreateFrame('Frame', 'PingUnitFixture', nil, 'PingableUnitFrameTemplate')
+        unitFrame.unit = 'player'
+        Place(unitFrame, 'TOOLTIP')
+        local target = Manager:DeterminePingTarget(340, 340)
+        assert(target.targetState == Enum.PingSetTargetState.Ok)
+        assert(target.hasUITarget and target.allowRadialWheel)
+        assert(target.uiTargetInfo.guid == UnitGUID('player'))
+        Record('unit-frame', function() Manager:DeterminePingTargetAndSend(340, 340) end)
+
+        local blocker = CreateFrame('Frame', 'PingBlockerFixture')
+        blocker:SetToplevel(true)
+        Place(blocker, 'FULLSCREEN_DIALOG')
+        Record('blocked', function() Manager:DeterminePingTargetAndSend(340, 340) end)
+        blocker:Hide()
+
+        local passer = CreateFrame('Frame', 'PingPassFixture', nil,
+            'PingTopLevelPassThroughAttributeTemplate')
+        passer:SetToplevel(true)
+        Place(passer, 'FULLSCREEN_DIALOG')
+        Record('pass-through', function() Manager:DeterminePingTargetAndSend(340, 340) end)
+        Expect({'unit-frame=ok', 'blocked=' .. PING_FAILED_GENERIC, 'pass-through=ok'})
+        "#,
+    )
+    .expect("PingManager targets pingable UI frames");
+}
 }
