@@ -88,6 +88,7 @@ pub struct CalendarEditableAccess {
     pub associated_id: Option<u64>,
     pub creator_identity: String,
     pub title: Vec<u8>,
+    pub description: Vec<u8>,
     pub auto_approve: bool,
     pub locked: bool,
     pub local_edit_credential: Option<u64>,

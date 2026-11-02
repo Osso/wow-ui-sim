@@ -592,6 +592,43 @@ fn calendar_title_edit_updates_supplied_event(env: &WowLuaEnv) {
 }
 
 prefork_full_ui_case! {
+fn calendar_description_edit_updates_supplied_event(env: &WowLuaEnv) {
+    use wow_ui_sim::c_api::c_calendar::CalendarEditableAccess;
+    load_addon(&env.loader_env(), &calendar_toc()).unwrap();
+    env.state().borrow_mut().calendar_context_policy.editable = Some(CalendarEditableAccess {
+        local_edit_credential: Some(123),
+        ..Default::default()
+    });
+    env.exec(r#"
+        local box = CalendarCreateEventDescriptionContainer.ScrollingEditBox
+        box:SetText('First|line\nSecond')
+        box:TriggerEvent('OnTextChanged', box, true)
+    "#).unwrap();
+    {
+        let state = env.state().borrow();
+        let event = state.calendar_context_policy.editable.as_ref().unwrap();
+        assert_eq!(event.description, b"Firstline\nSecond");
+        assert!(event.dirty);
+    }
+    {
+        let mut state = env.state().borrow_mut();
+        let event = state.calendar_context_policy.editable.as_mut().unwrap();
+        event.dirty = false;
+        event.local_edit_credential = None;
+    }
+    env.exec(r#"
+        local box = CalendarCreateEventDescriptionContainer.ScrollingEditBox
+        box:SetText('Denied')
+        box:TriggerEvent('OnTextChanged', box, true)
+    "#).unwrap();
+    let state = env.state().borrow();
+    let event = state.calendar_context_policy.editable.as_ref().unwrap();
+    assert_eq!(event.description, b"Firstline\nSecond");
+    assert!(!event.dirty);
+}
+}
+
+prefork_full_ui_case! {
 fn calendar_invite_status_menu_uses_supplied_options(env: &WowLuaEnv) {
     use wow_ui_sim::c_api::c_calendar::{CalendarEditableAccess, CalendarInviteRecord};
     load_addon(&env.loader_env(), &calendar_toc()).unwrap();
