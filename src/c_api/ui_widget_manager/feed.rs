@@ -5,10 +5,11 @@ use super::{
     DoubleStatusBarRecord, FillUpFramesRecord, HorizontalCurrenciesRecord, IconAndTextRecord,
     IconTextAndBackgroundRecord, IconTextAndCurrenciesRecord, ItemDisplayRecord,
     MapPinAnimationRecord, ProcessingUnit, ScenarioHeaderCurrenciesRecord,
-    ScenarioHeaderTimerRecord, SpacerRecord, SpellDisplayRecord, StackedResourceTrackerRecord,
-    StatusBarRecord, TextColumnRowVisualizationInfo, TextWithStateRecord, TextWithSubtextRecord,
-    TextureAndTextRecord, TextureAndTextRowRecord, TextureWithAnimationRecord, TugOfWarRecord,
-    UnitPowerBarRecord, WidgetId, WidgetSetEntry, WidgetSetRecord, ZoneControlRecord,
+    ScenarioHeaderDelvesRecord, ScenarioHeaderTimerRecord, SpacerRecord, SpellDisplayRecord,
+    StackedResourceTrackerRecord, StatusBarRecord, TextColumnRowVisualizationInfo,
+    TextWithStateRecord, TextWithSubtextRecord, TextureAndTextRecord, TextureAndTextRowRecord,
+    TextureWithAnimationRecord, TugOfWarRecord, UnitPowerBarRecord, WidgetId, WidgetSetEntry,
+    WidgetSetRecord, ZoneControlRecord,
 };
 use crate::lua_api::WowLuaEnv;
 use crate::{Error, Result};
@@ -44,6 +45,7 @@ pub enum WidgetVisualization {
     StackedResourceTracker(StackedResourceTrackerRecord),
     ScenarioHeaderCurrencies(ScenarioHeaderCurrenciesRecord),
     ScenarioHeaderTimer(ScenarioHeaderTimerRecord),
+    ScenarioHeaderDelves(ScenarioHeaderDelvesRecord),
     DiscreteProgressSteps(DiscreteProgressStepsRecord),
     ButtonHeader(ButtonHeaderRecord),
     #[cfg(feature = "retail-12-0-0")]
@@ -81,6 +83,7 @@ impl WidgetVisualization {
             Self::StackedResourceTracker(_) => 6,
             Self::ScenarioHeaderCurrencies(_) => 11,
             Self::ScenarioHeaderTimer(_) => 20,
+            Self::ScenarioHeaderDelves(_) => 29,
             Self::DiscreteProgressSteps(_) => 19,
             Self::ButtonHeader(_) => 30,
             #[cfg(feature = "retail-12-0-0")]
@@ -332,6 +335,7 @@ fn supply_visualization(sim: &mut crate::lua_api::SimState, id: f64, record: Wid
     inputs.stacked_resources.remove(&key);
     inputs.scenario_currencies.remove(&key);
     inputs.scenario_timers.remove(&key);
+    inputs.scenario_delves.remove(&key);
     inputs.spell_display.remove(&key);
     inputs.text_with_state.remove(&key);
     inputs.text_with_subtext.remove(&key);
@@ -414,6 +418,9 @@ fn supply_visualization(sim: &mut crate::lua_api::SimState, id: f64, record: Wid
         }
         WidgetVisualization::StackedResourceTracker(record) => {
             sim.ui_widget_inputs.stacked_resources.insert(key, record);
+        }
+        WidgetVisualization::ScenarioHeaderDelves(record) => {
+            sim.ui_widget_inputs.scenario_delves.insert(key, record);
         }
         WidgetVisualization::ScenarioHeaderTimer(record) => {
             sim.ui_widget_inputs.scenario_timers.insert(key, record);

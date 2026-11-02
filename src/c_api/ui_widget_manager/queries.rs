@@ -42,6 +42,7 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
     super::fill_up_frames::register(state)?;
     super::map_pin_animation::register(state)?;
     super::tug_of_war::register(state)?;
+    super::scenario_delves::register(state)?;
     super::discrete::register(state)?;
     super::text_state::register(state)?;
     super::text_with_subtext::register(state)?;

@@ -93,7 +93,7 @@ fn write_spell_info(state: &mut LuaState, row: Val, record: &WidgetSpellInfoReco
     );
 }
 
-fn write_spell_numbers(state: &mut LuaState, row: Val, record: &WidgetSpellInfoRecord) {
+pub(super) fn write_spell_numbers(state: &mut LuaState, row: Val, record: &WidgetSpellInfoRecord) {
     for (key, value) in [
         ("spellID", record.spell_id),
         ("shownState", f64::from(record.shown_state)),
@@ -113,7 +113,7 @@ fn write_spell_numbers(state: &mut LuaState, row: Val, record: &WidgetSpellInfoR
     }
 }
 
-fn write_spell_strings(state: &mut LuaState, row: Val, record: &WidgetSpellInfoRecord) {
+pub(super) fn write_spell_strings(state: &mut LuaState, row: Val, record: &WidgetSpellInfoRecord) {
     for (key, text) in [("tooltip", &record.tooltip), ("text", &record.text)] {
         let value = create_string(state, text);
         table_set(state, row, key, value);
