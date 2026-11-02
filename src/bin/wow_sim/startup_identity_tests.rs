@@ -244,14 +244,26 @@ fn assert_startup_selection_error(root: &Path, expected: &str) {
     let args = startup_args(root, false);
     let env = WowLuaEnv::new().unwrap();
     let state = env.state().clone();
+    let initial_addons: Vec<_> = state
+        .borrow()
+        .addons
+        .iter()
+        .map(|addon| (addon.folder_name.clone(), addon.loaded))
+        .collect();
     let result = initialize_and_load_env(&args, ScreenKind::Game, env);
     let error = match result {
         Ok(_) => panic!("invalid explicit identity unexpectedly completed startup"),
         Err(error) => error.to_string(),
     };
     assert!(error.contains(expected), "{error}");
-    assert!(
-        state.borrow().addons.is_empty(),
+    let final_addons: Vec<_> = state
+        .borrow()
+        .addons
+        .iter()
+        .map(|addon| (addon.folder_name.clone(), addon.loaded))
+        .collect();
+    assert_eq!(
+        final_addons, initial_addons,
         "addons ran before selection failed"
     );
     assert!(!root.join("session/SavedVariables").exists());
