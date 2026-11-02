@@ -1,6 +1,6 @@
 # Secret auras
 
-Umbrella contract for Retail 12.x aura secrecy. When aura data is restricted, the client hands addon (tainted) code secret values instead of plain aura data, while Blizzard's untainted UI keeps working. This spec is the single place that records:
+Umbrella contract for Retail 12.x aura secrecy. Complete accessor behavior under restriction remains unknown; the bounded WM61 findings below distinguish field publication from caller access. This spec records:
 
 - what the simulator must do;
 - what it does today;
@@ -19,20 +19,20 @@ Evidence levels used below:
 ## What it must do
 
 ### Restriction trigger
-- [ ] Aura restriction is driven by game state, not by a test-only flag. STRING: the client's help text names its guard states as combat, lockdown, active encounter, challenge mode / Mythic+, current map type and PvP match state, and frames the outcome as "restricted, or may return secrets". The exact inputs, and whether the state is per unit, per aura or global, are UNKNOWN (native question S1).
+- [ ] Model the supplied restriction inputs and transitions described in WM61 S1 below. Server effects and scheduling remain UNKNOWN.
 - [ ] `UNIT_AURA` payloads are secret when auras are restricted (DOCS: `SecretWhenAurasRestricted`). `UNIT_AURA_BLOCKED` carries a secret aura ID (DOCS: `SecretValue`).
 
 ### Who sees secrets
-- [ ] Secrecy applies to tainted (addon) execution. Untainted Blizzard code keeps working on the same data. STRING: `DenyTaintedAccessWhenAurasAreSecret`; "Auras cannot be accessed when secret while tainted by '%s'". Exact rules UNKNOWN (S2).
+- [ ] Preserve source and secret markers through secure invocation as described in WM61 S2 below. Complete callback access remains UNKNOWN.
 - [x] Error messages report taint separately from secrecy: the four secret-value variants and the table guards follow the native templates ([taint error text](taint-error-text.md)).
 - [ ] Event handlers run under the taint the client gives them, not the taint of whoever caused the state change. UNKNOWN (S9). This decides issue #13's `CompactArenaFrame.lua:318` "secret access requires an untainted caller" case.
 
 ### Granularity
 - [ ] Aura secrecy can be queried by spell, by unit+index, by unit+auraInstanceID and by unit+slot (STRING).
-- [ ] Under restriction, `C_UnitAuras.GetAuraDataByIndex` / `GetAuraDataByAuraInstanceID` return AuraData with secret fields. `GetUnitAuras` declares `ConditionalSecretContents` (DOCS), and the client has a `ConditionalSecret<AuraData>` type (STRING). Which fields stay plain is UNKNOWN (S3).
+- [ ] Model field-level AuraData publication as bounded by WM61 S3 below. Complete accessor-to-publication behavior remains UNKNOWN.
 - [ ] The 22 Retail functions annotated `SecretWhenUnitAuraRestricted` return secrets only under restriction (DOCS).
 - [ ] `NeverSecret` returns are never secret (DOCS, 934 Retail annotations).
-- [ ] The `RequiresNonSecretAura` lookups (`GetAuraDataBySpellName`, `GetPlayerAuraBySpellID`, `GetUnitAuraBySpellID`) define their result for a secret aura. Whether that is nil, an error or a secret is UNKNOWN (S8).
+- [ ] Model the WM61 S8 pre-lookup rejection and data-driven spell classification below; do not generalize the fragment result to every matched aura.
 
 ### Operations on secret values
 - [ ] Tainted code gets defined results or errors for arithmetic, comparison, concatenation, `tostring`, `string.format`, `#`, table keys, table storage, truth tests and `type`. UNKNOWN (S4).
@@ -47,13 +47,47 @@ Evidence levels used below:
 ### Helpers
 - [ ] `issecretvalue`, `issecrettable`, `hasanysecretvalues`, `canaccessvalue`, `canaccessallvalues`, `canaccesstable`, `canaccesssecrets`, `scrubsecretvalues`, `dropsecretaccess`, `secretwrap`, `secretunwrap` and the widget `HasSecretValues` / `HasSecretAspect` / `HasAnySecretAspect` / `IsPreventingSecretValues` / `IsAnchoringSecret` match the client's usage strings and return counts. Usage strings are STRING; semantics UNKNOWN (S7).
 
+## WM61 evidence (Retail 12.1.5 build 70688)
+
+WM citations below identify clean-room reports in `native-evidence-70688/secrets/`. Local findings do not establish the full registered API path or apply to other builds.
+
+### Restriction inputs and transitions
+
+- **VERIFIED — WM61 S1** (`S1-restriction-triggers-wm61.md`): Six indexed types have states Inactive 0, Activating 1 and Active 2. Natural activation or the corresponding forced CVar selects Active. The forced CVars are `addonCombatRestrictionsForced`, `addonEncounterRestrictionsForced`, `addonChallengeModeRestrictionsForced`, `addonPvPMatchRestrictionsForced`, `addonMapRestrictionsForced`, and `addonChatRestrictionsForced`.
+- **VERIFIED — WM61 S1:** Combat uses a transition input; Encounter uses a status flag or positive counter; ChallengeMode uses a running marker; PvPMatch is active in Waiting, StartUp, Engaged or PostRound; Map needs nonzero classification without flag 512. Chat requires its enabled policy, a client flag, the Map metadata condition, and an Active Encounter, ChallengeMode or PvPMatch. Combat alone does not activate Chat.
+- **VERIFIED — WM61 S1:** Activation stores 1, optionally emits `ADDON_RESTRICTION_STATE_CHANGED(type, 1)`, then stores 2; it emits no state-2 public event. Deactivation stores 0 before the optional event `(type, 0)`. No transition occurs for an unchanged target or an Activating reentry.
+- **UNKNOWN — WM61 S1:** Server transitions, callback effects, event-hook availability, scheduling, complete map classifications and the meanings of the Chat client flag and map flag 512. Missing map metadata bypasses an update; it is not proven to clear the state.
+- **SOURCE CONTRADICTION — WM61 S1:** The simulator's explicit `unit_auras_restricted` input is not the six-state transition model and does not produce these transitions.
+
+### Secure invocation
+
+- **VERIFIED locally — WM61 S2** (`S2-secure-invocation-wm61.md`): `securecallfunction` saves the caller source and restores it after normal invocation when its metadata scope requires restoration. Entry does not replace that source with an untainted source. Surviving results receive the saved caller provenance without clearing the secret marker.
+- **EMULATED — WM61 S2:** Entry selects access policy 1, not unrestricted policy 2. Argument and result markers survive the tested transfers when the marker gate is enabled; the disabled gate clears copied markers.
+- **INFERRED — WM61 S2:** Source provenance and secrecy are separate; a secure invocation is not blanket permission to untaint or unsecret values. **UNKNOWN — WM61 S2:** callback access, full return connection and exceptional restoration.
+- **SOURCE CONTRADICTION — WM61 S2:** Rilua registers `securecallfunction` as `securecall`, which clears active ancestor frame taints for the call. This is not the observed source-preserving entry behavior.
+
+### AuraData publication and spell lookup
+
+- **VERIFIED locally — WM61 S3** (`S3-aura-field-granularity-wm61.md`): Publication policy 2 marks `auraInstanceID`, `spellId`, `icon`, `applications`, `duration`, `expirationTime`, `name`, `sourceUnit`, `dispelName`, `isHelpful`, and `isHarmful` individually; optional nil values remain unmarked. `points` is separately marked and its numeric elements use the field policy.
+- **EMULATED — WM61 S3:** Under the stated publication seeds the outer table value is unmarked by default, but an explicit table-policy override can mark it. **UNKNOWN — WM61 S3:** complete accessor reachability, `issecrettable`, populated points and table security flags. Policy 0 does not mark; policy 1 depends on current-frame operation state; policy 2 applies without that condition.
+- **SOURCE CONTRADICTION — WM61 S3:** `finish_aura_data` wraps the entire table and secure indexing returns plain fields, rather than applying the observed per-field publication policy.
+- **VERIFIED locally — WM61 S8** (`S8-requires-nonsecret-aura-wm61.md`): When tainted execution, the secrecy feature and at least one of four Active restriction states select the restrictive context, the ID lookups classify the requested spell before aura lookup; the name lookup resolves the name first. SpellMisc `Attributes[15]` mask 33554432 selects AlwaysSecret before mask 67108864 selects NeverSecret; otherwise the enabled feature yields ContextuallySecret. Schema names are inferred.
+- **EMULATED — WM61 S8 and S8a** (`S8a-unitauras-secret-emulated.md`): Selected rejection fragments return zero results, not one nil; separate outer fragments forward zero under their assumptions. **INFERRED — WM61 S8:** The relationship of these branches to `RequiresNonSecretAura`. **UNKNOWN — WM61 S8/S8a:** Complete registered-entry behavior, matched-aura outcomes and allowed-path publication.
+- **SOURCE CONTRADICTION — WM61 S8:** The simulator returns one nil for its tainted restricted spell-keyed rejection. Its ambiguous-flags error also conflicts with the locally verified AlwaysSecret precedence when both flags are set.
+
+### Text aspect
+
+- **VERIFIED locally — WM61 S6** (`S6-aspects-wm61.md`): Text aspect is 8. The marked-argument `SetText` path supplies it to a helper that checks prevention and script-handler policy before adding it to the direct set. `HasSecretAspect` checks either of two sets; `HasAnySecretAspect` checks whether either is nonempty. Prevention and anchoring use separate flags.
+- **EMULATED — WM61 S6:** With publication enabled, a Text aspect prepares forced-secret `GetText` return policy; a separate helper marks eligible strings under that policy. **UNKNOWN — WM61 S6:** the complete setter/getter path, second-set origin, propagation and clearing on plain reset, `SetToDefaults` or `ClearAllPoints`.
+- **SOURCE CONTRADICTION — WM61 S6:** The simulator derives object aspect state from prevention/protection and uses prevention for `IsAnchoringSecret`; these do not match the distinct native calculations. Its text sink does not establish the WM61 Text-aspect behavior.
+
 ## Current state (SOURCE, 2026-10-31)
 
 | Area | Today | Gap |
 |---|---|---|
 | Restriction trigger | `unit_auras_restricted` (Retail 12.1 feature) set only by tests | No production trigger; combat, encounters and M+ never restrict |
 | AuraData | Whole table wrapped; tainted access denied; secure indexing returns plain fields | No per-field secrets; no `ConditionalSecret` contents |
-| Spell-keyed lookups | Never-secret spells stay plain; others nil for tainted callers (inferred) | Native result UNKNOWN |
+| Spell-keyed lookups | Never-secret spells stay plain; others return one nil to tainted callers (inferred) | WM61 S8 rejection fragments return zero results, not one nil; complete entry behavior remains UNKNOWN |
 | VM operations | Guarded truth/equality for wrapped booleans and nil, guarded ordering for numbers | Arithmetic, concat, `tostring`, `format` and table-key rules missing |
 | Widget sinks | `SetText`, `SetShown`, geometry, texture and cooldown on gated paths | No general argument-mode or aspect model |
 | Event taint | `A_Admin.FireEvent` clears caller taint during dispatch (4.3.4-based comment) | Retail rule UNKNOWN; other dispatch paths unchecked |
@@ -76,7 +110,7 @@ Evidence levels used below:
 - `src/lua_api/globals/security/{secret_values,value_access}.rs`: helpers and the wrap/unwrap bridge.
 - `src/lua_api/frame/methods/{secret_origin.rs,misc/secret.rs}`: widget sinks and aspects.
 - `src/lua_api/globals/admin.rs`, `admin_events.rs`: admin event dispatch taint.
-- `/home/osso/Repos/rilua/src/{table_security.rs,stdlib/taint.rs}`: VM secret wrappers and taint.
+- `rilua/src/{table_security.rs,stdlib/taint.rs}`: VM secret wrappers and taint.
 
 ## Tests asserting this spec
 
@@ -98,17 +132,17 @@ Source: `native-evidence-70688/secrets/S13-restriction-surface-summary.md` (beha
 - VERIFIED: `GetAddOnRestrictionState(type)` returns one byte of a per-type state array, and `IsAddOnRestrictionActive(type)` is `state[type] == 2`. See [restricted-actions-state](restricted-actions-state.md).
 - VERIFIED structure, two builds: `canaccessvalue` returns its fallback `1` when the argument is missing or fails its check. INFERRED meaning: fail-open (access allowed). The simulator matches this: `canaccessvalue()` returns `true`. Do not apply one fail-closed default to the whole surface.
 - VERIFIED, three builds: `CreateSecureDelegate`, `secretunwrap` and `settablesecurity` refuse while a native singleton is set. They report an error and return `nil`; they do not raise. `secretwrap` has no guard. The singleton and its writer are native UNKNOWN, so the simulator does not model this refusal.
-- Native UNKNOWN (user decision: leave UNKNOWN, no live-client observation): the bodies of `securecopy` and `CreateSecureDelegate`, renown rewards, and the AuraData layout. In the first three, a computed decoy operand stands in for the value. The aura-granularity claim (S3) rests on type names only and has not been re-checked.
+- Earlier S3's type-name-only inference is superseded by the bounded WM61 S3 converter evidence below. No complete accessor path is established.
 
 ## Known gaps (current cycle)
 
 - [ ] Casting and threat restriction triggers: **best-guess, native UNKNOWN**; the shared simulated threat flag is not evidence of native threat-values behavior.
 - [ ] Native S1 §7 describes a generic indexed state-byte predicate path comparing the byte to 2. The mapping of restriction indices and any pairing of a particular predicate with a getter remain unverified; existing `GetSpellCastSecrecy` and `ShouldUnitSpellCastBeSecret` are computed independently.
 
-- [ ] Native behaviour questions: S10–S13 answered the restriction surface (above). `securecopy`/`CreateSecureDelegate` bodies, renown and the AuraData layout remain native UNKNOWN.
+- [ ] Complete accessor-to-AuraData publication and the remaining secret-operation behavior are UNKNOWN; see the WM61 boundaries below.
 - [ ] Restricted-helper refusal guard (`CreateSecureDelegate`, `secretunwrap`, `settablesecurity` return `nil` while a native singleton is set): not modelled; the singleton is UNKNOWN.
-- [ ] Production restriction trigger (after S1).
-- [ ] Per-field AuraData secrecy (after S3).
+- [ ] Production restriction inputs and transitions (WM61 S1).
+- [ ] Per-field AuraData secrecy (WM61 S3).
 - [ ] General operation rules for secrets in tainted code (after S4).
 - [ ] Event-dispatch taint rule, which fixes the issue #13 `CompactArenaFrame` case (after S9).
 
