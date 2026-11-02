@@ -108,6 +108,7 @@ fn currency_transfer_eligibility_uses_supplied_policy_and_account_sources() {
     env.exec(r#"
         assert(C_CurrencyInfo.IsAccountTransferableCurrency(1166))
         assert(not C_CurrencyInfo.IsAccountTransferableCurrency(2806))
+        assert(not C_CurrencyInfo.IsAccountTransferableCurrency(999999))
         local ok, reason = C_CurrencyInfo.CanTransferCurrency(1166)
         assert(not ok and reason == 10)
     "#).unwrap();
@@ -126,6 +127,24 @@ fn currency_transfer_eligibility_uses_supplied_policy_and_account_sources() {
     env.exec("local ok, reason = C_CurrencyInfo.CanTransferCurrency(1166); assert(not ok and reason == 8)").unwrap();
     env.state().borrow_mut().currency_list.transfer_rules.get_mut(&1166).unwrap().category_flags = Some(4);
     env.exec("local ok, reason = C_CurrencyInfo.CanTransferCurrency(1166); assert(not ok and reason == 5)").unwrap();
+    {
+        let mut state = env.state().borrow_mut();
+        let rule = state.currency_list.transfer_rules.get_mut(&1166).unwrap();
+        rule.category_flags = Some(0);
+        rule.currency_flags = Some(1 << 29);
+        rule.faction_key_0 = None;
+    }
+    env.exec("assert(not pcall(C_CurrencyInfo.CanTransferCurrency, 1166))").unwrap();
+    env.state().borrow_mut().currency_list.transfer_rules.get_mut(&1166).unwrap().faction_key_0 = Some(false);
+    env.exec("local ok, reason = C_CurrencyInfo.CanTransferCurrency(1166); assert(not ok and reason == 5)").unwrap();
+    {
+        let mut state = env.state().borrow_mut();
+        state.currency_transfer_in_progress = true;
+        state.currency_list.transfer_server_enabled = Some(false);
+    }
+    env.exec("local ok, reason = C_CurrencyInfo.CanTransferCurrency(1166); assert(not ok and reason == 10)").unwrap();
+    env.state().borrow_mut().currency_list.transfer_server_enabled = Some(true);
+    env.exec("local ok, reason = C_CurrencyInfo.CanTransferCurrency(1166); assert(not ok and reason == 9)").unwrap();
 }
 
 #[test]
