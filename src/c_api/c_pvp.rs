@@ -3,6 +3,17 @@ mod outdoor_wait_state;
 pub mod war_mode;
 pub use outdoor_wait_state::OutdoorPvpWorldState;
 
+/// Supplied inputs for the battleground enlistment query.
+#[derive(Debug, Default)]
+pub struct BattlegroundEnlistmentInputs {
+    pub player_level: Option<u32>,
+    pub prerequisites_present: bool,
+    pub flags_allow: bool,
+    pub configuration_key: Option<u8>,
+    pub cache_enabled: bool,
+    pub cached_values: std::collections::HashMap<i32, i64>,
+}
+
 #[cfg(all(
     feature = "retail-12-0-5",
     any(feature = "profile-retail", feature = "client-ptr")

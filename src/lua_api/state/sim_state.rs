@@ -254,6 +254,7 @@ pub struct SimState {
     pub model_scenes: HashMap<i64, Vec<String>>,
     pub active_player_interactions: HashSet<i32>,
     pub outdoor_pvp_world_state: crate::c_api::c_pvp::OutdoorPvpWorldState,
+    pub battleground_enlistment: crate::c_api::c_pvp::BattlegroundEnlistmentInputs,
     pub azerite_item: Option<AzeriteItemState>,
     pub azerite_essence: AzeriteEssenceState,
     pub azerite_empowered: AzeriteEmpoweredItemState,
