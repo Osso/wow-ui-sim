@@ -745,6 +745,7 @@ macro_rules! build_empty_sim_state {
             social_contract_accepted: true,
             spell_activation_overlays: ::std::collections::HashSet::new(),
             challenge_completion: Default::default(),
+            keystone: Default::default(),
             challenge_run: Default::default(),
             manual_clock: None,
             wrath_spell_slots: Default::default(),

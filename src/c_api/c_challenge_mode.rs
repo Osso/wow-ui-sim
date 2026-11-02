@@ -7,6 +7,26 @@ use crate::lua_api::methods::{
 use crate::lua_bridge::table_set_rust_fn_static;
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
+use std::collections::{BTreeMap, BTreeSet};
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
+pub enum KeystoneLocation {
+    Bag(i32, i32),
+    Equipment(i32),
+}
+
+#[derive(Debug, Default)]
+pub struct KeystoneState {
+    pub receptacle_guid: Option<String>,
+    pub selected_guid: Option<String>,
+    pub selected_location: Option<KeystoneLocation>,
+    pub selected_mode: Option<i32>,
+    pub item_modifiers: BTreeMap<KeystoneLocation, (u32, Vec<(u32, u32)>)>,
+    pub current_map_selector: Option<u32>,
+    pub reason_one_locks: BTreeSet<KeystoneLocation>,
+    pub other_locks: BTreeSet<KeystoneLocation>,
+    pub native_locks: BTreeSet<KeystoneLocation>,
+}
 
 /// Host-supplied result of the most recently completed challenge.
 #[derive(Debug, Clone, Default)]
