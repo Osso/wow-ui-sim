@@ -11,6 +11,7 @@ pub use discrete_record::DiscreteProgressStepsRecord;
 mod double_icon_and_text;
 mod double_icon_and_text_record;
 pub use double_icon_and_text_record::DoubleIconAndTextRecord;
+mod double_state_icon;
 mod double_state_icon_record;
 pub use double_state_icon_record::{DoubleStateIconRowRecord, WidgetStateIconRecord};
 mod double_status_bar;
