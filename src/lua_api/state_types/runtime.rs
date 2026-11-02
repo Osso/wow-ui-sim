@@ -12,8 +12,13 @@ pub enum CursorInfo {
     /// A talent picked from the talent frame. `pvp=true` when sourced
     /// from the PvP talent pane.
     Talent { talent_id: u32, pvp: bool },
-    /// A pet-action spell picked from the pet action bar.
-    PetAction { slot: u32, spell_id: u32 },
+    /// A pet-action spell picked from the pet action bar, with the slot's
+    /// supplied packed word.
+    PetAction {
+        slot: u32,
+        spell_id: u32,
+        packed_action: u32,
+    },
     /// A macro picked up by slot index.
     Macro { macro_index: u32 },
     /// An item picked up from a bag slot, equipment slot, or merchant.
