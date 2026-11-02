@@ -216,6 +216,8 @@ fn register_c_item_inventory_queries(
             ("IsBoundToAccountUntilEquip", c_item_is_bound),
             ("IsConsumableItem", c_item_is_consumable_item),
             ("IsEquippableItem", c_item_is_equippable_item),
+            #[cfg(feature = "client-retail")]
+            ("IsEquippedItem", c_item_is_equipped_item),
             ("IsItemInRange", c_item_is_item_in_range),
             (
                 "GetItemInventorySlotInfo",
@@ -251,6 +253,25 @@ fn c_item_is_dressable_item_by_id(state: &mut LuaState) -> LuaResult<u32> {
             .unwrap_or(false)
     };
     state.push(Val::Bool(dressable));
+    Ok(1)
+}
+
+#[cfg(feature = "client-retail")]
+fn c_item_is_equipped_item(state: &mut LuaState) -> LuaResult<u32> {
+    let value = rilua::table_security::unwrap_secret(state, stack_val(state, 1))?;
+    let item_id = parse_item_id_key(state, value);
+    let equipped = {
+        let sim = borrow_state(state)?;
+        item_id.is_some_and(|id| {
+            id != 0
+                && sim
+                    .player
+                    .equipped_items
+                    .values()
+                    .any(|item| item.item_id == id)
+        })
+    };
+    state.push(Val::Bool(equipped));
     Ok(1)
 }
 
