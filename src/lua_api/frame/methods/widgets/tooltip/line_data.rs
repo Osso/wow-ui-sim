@@ -221,7 +221,7 @@ fn push_double_tooltip_line(
         wrap: args.wrap,
         texture: None,
     });
-    refresh_tooltip_geometry(&mut sim, tooltip_id);
+    sim.widgets.mark_rect_dirty(tooltip_id);
     Ok(())
 }
 
