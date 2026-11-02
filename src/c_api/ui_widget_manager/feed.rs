@@ -6,8 +6,8 @@ use super::{
     IconTextAndBackgroundRecord, IconTextAndCurrenciesRecord, ItemDisplayRecord, ProcessingUnit,
     ScenarioHeaderCurrenciesRecord, SpacerRecord, SpellDisplayRecord, StackedResourceTrackerRecord,
     StatusBarRecord, TextColumnRowVisualizationInfo, TextWithStateRecord, TextWithSubtextRecord,
-    TextureAndTextRecord, TextureAndTextRowRecord, WidgetId, WidgetSetEntry, WidgetSetRecord,
-    ZoneControlRecord,
+    TextureAndTextRecord, TextureAndTextRowRecord, TextureWithAnimationRecord, WidgetId,
+    WidgetSetEntry, WidgetSetRecord, ZoneControlRecord,
 };
 use crate::lua_api::WowLuaEnv;
 use crate::{Error, Result};
@@ -26,6 +26,7 @@ pub enum WidgetVisualization {
     DoubleStateIconRow(DoubleStateIconRowRecord),
     ZoneControl(ZoneControlRecord),
     CaptureZone(CaptureZoneRecord),
+    TextureWithAnimation(TextureWithAnimationRecord),
     TextureAndText(TextureAndTextRecord),
     TextureAndTextRow(TextureAndTextRowRecord),
     TextWithState(TextWithStateRecord),
@@ -57,6 +58,7 @@ impl WidgetVisualization {
             Self::DoubleStateIconRow(_) => 14,
             Self::ZoneControl(_) => 16,
             Self::CaptureZone(_) => 17,
+            Self::TextureWithAnimation(_) => 18,
             Self::TextureAndText(_) => 12,
             Self::TextureAndTextRow(_) => 15,
             Self::TextWithState(_) => 8,
@@ -308,6 +310,7 @@ fn supply_visualization(sim: &mut crate::lua_api::SimState, id: f64, record: Wid
     inputs.double_state_icons.remove(&key);
     inputs.zone_controls.remove(&key);
     inputs.capture_zones.remove(&key);
+    inputs.textures_with_animation.remove(&key);
     inputs.texture_and_text.remove(&key);
     inputs.texture_and_text_row.remove(&key);
     inputs.spacers.remove(&key);
@@ -352,6 +355,11 @@ fn supply_visualization(sim: &mut crate::lua_api::SimState, id: f64, record: Wid
         }
         WidgetVisualization::StatusBar(record) => {
             sim.ui_widget_inputs.status_bars.insert(key, record);
+        }
+        WidgetVisualization::TextureWithAnimation(record) => {
+            sim.ui_widget_inputs
+                .textures_with_animation
+                .insert(key, record);
         }
         WidgetVisualization::CaptureZone(record) => {
             sim.ui_widget_inputs.capture_zones.insert(key, record);

@@ -36,6 +36,7 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
     super::scenario_currencies::register(state)?;
     super::zone_control::register(state)?;
     super::capture_zone::register(state)?;
+    super::texture_with_animation::register(state)?;
     super::discrete::register(state)?;
     super::text_state::register(state)?;
     super::text_with_subtext::register(state)?;
