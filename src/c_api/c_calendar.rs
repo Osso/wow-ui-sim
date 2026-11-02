@@ -7,6 +7,7 @@ mod day_event_projection;
 mod day_event_queries;
 pub mod day_event_record;
 mod editable_reads;
+mod editable_title;
 mod selection;
 mod view_info;
 
@@ -72,6 +73,7 @@ pub struct CalendarContextPolicy {
     pub guild_club_id: Option<u64>,
     pub guild_rank_rights: u32,
     pub edit_subsystem_available: bool,
+    pub announcement_edit_allowed: bool,
     pub editable: Option<CalendarEditableAccess>,
 }
 
@@ -144,6 +146,7 @@ pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
         context_policy::register(state, namespace)?;
         context_reads::register(state, namespace)?;
         editable_reads::register(state, namespace)?;
+        editable_title::register(state, namespace)?;
         view_info::register(state, namespace)?;
         table_set_rust_fn_static(
             state,
