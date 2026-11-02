@@ -21,6 +21,7 @@ fn combat_text_payload_is_scoped_to_original_consumer_dispatch(env: &WowLuaEnv) 
             CombatTextMixin.OnEvent(consumer, event, name)
             payloads[#payloads + 1] = { n = select('#', C_CombatText.GetCurrentEventInfo()), C_CombatText.GetCurrentEventInfo() }
         end)
+        assert(select('#', C_CombatText.GetCurrentEventInfo()) == 0)
         A_Admin.FireEvent('COMBAT_TEXT_UPDATE', 'DAMAGE', 123)
         assert(select('#', C_CombatText.GetCurrentEventInfo()) == 0)
         A_Admin.FireEvent('COMBAT_TEXT_UPDATE', 'SPELL_CAST', 'Fireball')
