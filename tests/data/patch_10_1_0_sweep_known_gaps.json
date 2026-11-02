@@ -19,7 +19,6 @@
   "wt-global-api-C_PartyPose.GetPartyPoseInfoByID-268",
   "wt-global-api-C_PartyPose.HasExtraAction-269",
   "wt-global-api-C_QuestInfoSystem.GetQuestRewardSpellInfo-270",
-  "wt-global-api-C_QuestInfoSystem.GetQuestRewardSpells-271",
   "wt-global-api-C_QuestInfoSystem.GetQuestShouldToastCompletion-272",
   "wt-global-api-C_QuestInfoSystem.HasQuestRewardSpells-273",
   "wt-global-api-C_TradeSkillUI.IsEnchantTargetValid-280",
