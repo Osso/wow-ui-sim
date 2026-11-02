@@ -278,6 +278,8 @@ pub struct SimState {
     /// Explicit active-brawl input only; no native default record is assumed.
     #[cfg(feature = "retail-12-0-5")]
     pub active_brawl: Option<PvpBrawlInfo>,
+    /// Supplied current area and AreaTable flags for PvP queries.
+    pub pvp_area_inputs: crate::c_api::c_pvp::area_poi::AreaPvpInputs,
     /// Explicit special-event brawl record, independent of the active brawl.
     #[cfg(feature = "retail-12-0-5")]
     pub special_event_brawl: Option<SpecialEventBrawlInfo>,

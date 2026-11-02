@@ -235,6 +235,7 @@ macro_rules! build_empty_sim_state {
             faction_paragon: HashMap::new(),
             #[cfg(feature = "retail-12-0-5")]
             active_brawl: None,
+            pvp_area_inputs: Default::default(),
             #[cfg(feature = "retail-12-0-5")]
             special_event_brawl: None,
             #[cfg(feature = "retail-12-0-5")]

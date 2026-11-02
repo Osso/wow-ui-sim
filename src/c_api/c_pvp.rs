@@ -1,3 +1,4 @@
+pub mod area_poi;
 pub mod battlefield_vehicles;
 mod battleground_enlistment;
 mod outdoor_wait_state;
