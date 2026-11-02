@@ -6,9 +6,28 @@ The [contract](../../specs/generated-data-crates.md) separates generated product
 
 `sim-data` has no client features and depends only on phf. Common tables therefore share a Cargo unit across profiles when toolchain, compilation flags and dependencies match. Items and profession overrides stay together because their lookups refer to each other.
 
-`sim-data-profile` contains atlas variants, global-string variants and the aura attribute table. Root feature bundles forward only the predicates used by these tables. Original cfg expressions remain on the selected modules. Root `client_profile` still rejects missing or conflicting profiles; leaf crates do not choose a runtime profile. Splitting the selected tables prevents forwarded features from invalidating the large common crate.
+`sim-data-profile` contains atlas variants, global-string variants, the aura attribute table, and profile-pinned item-effect catalogs. Root feature bundles forward only the predicates used by these tables. Original cfg expressions remain on the selected modules. Root `client_profile` still rejects missing or conflicting profiles; leaf crates do not choose a runtime profile. Splitting the selected tables prevents forwarded features from invalidating the large common crate.
 
-Root re-exports preserve existing paths and type identity. Generators write to each crate’s `data/` directory; non-Rust source data and provenance stay in root `data/`. Docker copies both crates before Cargo dependency resolution. No catalog contents are regenerated.
+Root re-exports preserve existing paths and type identity. Generators write to each crate’s `data/` directory; non-Rust source data and provenance stay in root `data/`. Docker copies both crates before Cargo dependency resolution. The original crate extraction did not regenerate catalog contents.
+
+Item effects now follow this boundary for all seven profiles. The former shared
+mapping and the separate preselected use-spell catalogs are replaced by one
+profile-specific effect mapping. Its flat core rows retain item/effect IDs,
+signed spell IDs, triggers and legacy slots; sparse effect-ID-keyed metadata
+retains nonzero specialization/condition fields, and spell names remain a separate
+table. Source-availability flags distinguish an absent metadata column from a
+captured zero. Keeping core rows flat avoids another lookup for the common query
+path; the sparse metadata avoids repeating mostly zero fields.
+
+`wow-cli generate items --profile PROFILE --build VERSION` owns these outputs and
+their provenance in `data/item-effects/`. The no-profile command continues to
+generate common item data but no longer emits the moved effect mapping. The four
+official Classic profiles read associations from `ItemEffect.ParentItemID`, while
+Retail, PTR and Forever use `ItemXItemEffect`. Retail generation merges the pinned
+historical mapping with its CSV source to retain existing rows and name bytes;
+only the resulting profile catalog participates in runtime lookup. See the
+[item-spell contract](../../specs/item-spell-query.md) for source pins, sparse
+metadata semantics and reproducible generation options.
 
 ## Proof status
 

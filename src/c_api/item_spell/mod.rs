@@ -42,6 +42,7 @@ pub(crate) use c_item::{
 pub(crate) use helpers::current_item_upgrade_location;
 pub(crate) use helpers::item_class_name;
 pub(crate) use item_cursor_grid::owned_item_shows_grid;
+pub(crate) use item_effects::get_item_spell;
 
 pub(crate) fn register_item_and_spell_surfaces(state: &mut LuaState) -> LuaResult<()> {
     c_item::register_c_item(state)?;

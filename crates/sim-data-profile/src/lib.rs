@@ -36,6 +36,25 @@ pub mod atlas_elements;
 )]
 pub mod global_strings;
 
+#[rustfmt::skip]
+#[cfg_attr(feature = "profile-retail", path = "../data/item_effects_retail.rs")]
+#[cfg_attr(feature = "client-ptr", path = "../data/item_effects_ptr.rs")]
+#[cfg_attr(feature = "client-wrath", path = "../data/item_effects_wrath.rs")]
+#[cfg_attr(feature = "client-mists", path = "../data/item_effects_mists.rs")]
+#[cfg_attr(feature = "client-era", path = "../data/item_effects_era.rs")]
+#[cfg_attr(
+    feature = "client-anniversary",
+    path = "../data/item_effects_anniversary.rs"
+)]
+#[cfg_attr(
+    feature = "client-wowforever",
+    path = "../data/item_effects_wowforever.rs"
+)]
+pub mod item_effects;
+
 #[cfg(feature = "aura-containers")]
 #[path = "../data/spell_aura_secrecy.rs"]
 pub mod spell_aura_secrecy;
+
+#[cfg(test)]
+mod item_effect_tests;

@@ -3268,3 +3268,17 @@ the independently acquired strict 70707 UI cache; the source retarget and local
 parser workaround remain excluded. Run receipts are retained locally under
 `docs/local/session-finalization-v2/` in `native-gui-completed`,
 `forever-identity-completed` and `wrath-identity-corrected`.
+
+## 2026-11-02 — Profile-pinned item effects and sparse metadata
+
+The [query contract](../specs/item-spell-query.md),
+[item investigation](investigations/shared-addon-api-gaps.md#item-associated-spells)
+and [data crate boundary](design/generated-data-crates.md) describe one full
+effect mapping per profile, sparse effect metadata and profile-aware selection.
+The old shared mapping is replaced while preserving passive, signed, unnamed
+and historical Retail data. Provenance records source-column availability,
+unresolved associations and the immutable Retail input; missing columns remain
+distinct from captured zero values. Classic legacy wrappers,
+Retail slot validation and enchantment precedence remain explicit. Non-Retail
+candidate ordering preserves the prior catalog policy, including Forever item
+`239695` when a non-use effect shares its slot; native parity remains unverified.

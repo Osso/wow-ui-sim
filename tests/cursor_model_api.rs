@@ -177,6 +177,42 @@ fn owned_item_grid_needs_a_use_spell_or_inventory_type_outside_class_17() {
 }
 
 #[test]
+fn owned_item_grid_uses_profile_item_effect_associations() {
+    for (item_id, spell_id) in [
+        (278743, 55884),
+        (281372, 1310965),
+        (282657, 55884),
+        (283360, 1314712),
+        (284572, 1316093),
+    ] {
+        let env = env();
+        env.state()
+            .borrow_mut()
+            .bag_items
+            .insert((0, 5), bag_item(item_id));
+        let (_, spell): (String, i64) = env
+            .eval(&format!("return C_Item.GetItemSpell({item_id})"))
+            .unwrap();
+        assert_eq!(spell, spell_id, "item {item_id}");
+
+        let log: String = env
+            .eval("return record(function() C_Container.PickupContainerItem(0, 5) end)")
+            .unwrap();
+        assert_eq!(
+            log, "ACTIONBAR_SHOWGRID;CURSOR_CHANGED,false,1,0,0",
+            "item {item_id}"
+        );
+        let cursor: (String, i64) = env.eval("return GetCursorInfo()").unwrap();
+        assert_eq!(cursor, ("item".to_string(), i64::from(item_id)));
+        let log: String = env.eval("return record(ClearCursor)").unwrap();
+        assert_eq!(
+            log, "ACTIONBAR_HIDEGRID;CURSOR_CHANGED,true,0,1,0",
+            "item {item_id}"
+        );
+    }
+}
+
+#[test]
 fn notification_reads_the_cursor_when_it_fires() {
     let env = env();
     env.exec(

@@ -30,9 +30,6 @@ pub mod item_children;
 #[path = "../data/item_cursor_grid.rs"]
 pub mod item_cursor_grid;
 #[rustfmt::skip]
-#[path = "../data/item_effects.rs"]
-pub mod item_effects;
-#[rustfmt::skip]
 #[path = "../data/item_enchants.rs"]
 pub mod item_enchants;
 #[rustfmt::skip]
