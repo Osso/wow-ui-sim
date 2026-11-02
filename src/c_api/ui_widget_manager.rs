@@ -62,6 +62,8 @@ pub use item_display_record::{ItemDisplayRecord, UiWidgetItemRecord};
 pub use zone_control_record::{ZoneControlRecord, ZoneEntryRecord};
 mod scenario_currencies;
 mod scenario_currencies_record;
+mod scenario_delves_record;
+pub use scenario_delves_record::{ScenarioHeaderDelvesRecord, WidgetRewardRecord};
 mod scenario_timer;
 mod scenario_timer_record;
 pub use scenario_currencies_record::ScenarioHeaderCurrenciesRecord;

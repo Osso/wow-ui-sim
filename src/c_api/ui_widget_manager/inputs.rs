@@ -6,10 +6,11 @@ use super::{
     DoubleIconAndTextRecord, DoubleStateIconRowRecord, DoubleStatusBarRecord, FillUpFramesRecord,
     HorizontalCurrenciesRecord, IconTextAndBackgroundRecord, IconTextAndCurrenciesRecord,
     ItemDisplayRecord, MapPinAnimationRecord, ScenarioHeaderCurrenciesRecord,
-    ScenarioHeaderTimerRecord, SpacerRecord, SpellDisplayRecord, StackedResourceTrackerRecord,
-    StatusBarRecord, TextColumnRowVisualizationInfo, TextWithStateRecord, TextWithSubtextRecord,
-    TextureAndTextRecord, TextureAndTextRowRecord, TextureWithAnimationRecord, TugOfWarRecord,
-    UnitPowerBarRecord, WidgetId, WidgetVisualization, ZoneControlRecord,
+    ScenarioHeaderDelvesRecord, ScenarioHeaderTimerRecord, SpacerRecord, SpellDisplayRecord,
+    StackedResourceTrackerRecord, StatusBarRecord, TextColumnRowVisualizationInfo,
+    TextWithStateRecord, TextWithSubtextRecord, TextureAndTextRecord, TextureAndTextRowRecord,
+    TextureWithAnimationRecord, TugOfWarRecord, UnitPowerBarRecord, WidgetId, WidgetVisualization,
+    ZoneControlRecord,
 };
 
 #[derive(Debug, Clone, PartialEq)]
@@ -106,6 +107,7 @@ pub struct UiWidgetInputs {
     pub stacked_resources: HashMap<WidgetId, StackedResourceTrackerRecord>,
     pub scenario_currencies: HashMap<WidgetId, ScenarioHeaderCurrenciesRecord>,
     pub scenario_timers: HashMap<WidgetId, ScenarioHeaderTimerRecord>,
+    pub scenario_delves: HashMap<WidgetId, ScenarioHeaderDelvesRecord>,
     pub text_with_state: HashMap<WidgetId, TextWithStateRecord>,
     pub text_with_subtext: HashMap<WidgetId, TextWithSubtextRecord>,
     pub double_icon_and_text: HashMap<WidgetId, DoubleIconAndTextRecord>,
