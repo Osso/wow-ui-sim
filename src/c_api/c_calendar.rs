@@ -59,6 +59,27 @@ pub struct CalendarEventIndexInfo {
     pub event_index: i32,
 }
 
+/// Supplied inputs for context-menu policy decisions.
+#[derive(Debug, Clone, Default)]
+pub struct CalendarContextPolicy {
+    pub action_pending: bool,
+    pub complaints_enabled: bool,
+    pub complaint_policy: i32,
+    pub guild_club_id: Option<u64>,
+    pub guild_rank_rights: u32,
+    pub edit_subsystem_available: bool,
+    pub editable: Option<CalendarEditableAccess>,
+}
+
+/// Access inputs from the separate being-edited event.
+#[derive(Debug, Clone, Default)]
+pub struct CalendarEditableAccess {
+    pub category_flags: u32,
+    pub associated_id: Option<u64>,
+    pub creator_identity: String,
+    pub local_edit_credential: Option<u64>,
+}
+
 /// Selected event identity and absolute calendar month.
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct CalendarSelection {

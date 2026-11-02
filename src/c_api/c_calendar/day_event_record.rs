@@ -15,6 +15,10 @@ pub struct CalendarTimeRecord {
 #[derive(Debug, Clone, PartialEq)]
 pub struct CalendarDayEventRecord {
     pub event_id: String,
+    pub category_flags: u32,
+    pub invite_role_markers: u32,
+    pub primary_identity: String,
+    pub alternate_identity: Option<String>,
     pub title: String,
     pub is_custom_title: bool,
     pub start_time: CalendarTimeRecord,

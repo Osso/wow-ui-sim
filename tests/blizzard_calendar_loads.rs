@@ -163,7 +163,9 @@ fn calendar_test_record(id: &str) -> wow_ui_sim::c_api::c_calendar::day_event_re
     use wow_ui_sim::c_api::c_calendar::day_event_record::{CalendarDayEventRecord, CalendarTimeRecord};
     let time = CalendarTimeRecord { month_day: 15, month: 4, weekday: 4, year: 2026.0, hour: 12.0, minute: 0.0 };
     CalendarDayEventRecord {
-        event_id: id.into(), title: id.into(), is_custom_title: false,
+        event_id: id.into(), category_flags: 0, invite_role_markers: 0,
+        primary_identity: "Player-1-OTHER".into(), alternate_identity: None,
+        title: id.into(), is_custom_title: false,
         start_time: time.clone(), end_time: time.clone(), calendar_type: "GUILD_EVENT".into(),
         sequence_type: "".into(), event_type: 0, icon_texture: None, mod_status: "CREATOR".into(),
         has_pending_invite: false, invite_status: 0, invited_by: "".into(), difficulty: 0.0, invite_type: 0,
@@ -230,5 +232,45 @@ fn calendar_month_navigation_projects_relative_month(env: &WowLuaEnv) {
     env.exec("C_Calendar.SetMonth(10000)").unwrap();
     let shown = env.state().borrow().calendar_displayed_month;
     assert_eq!(shown.year, 2030);
+}
+}
+
+prefork_full_ui_case! {
+fn calendar_context_menu_reflects_supplied_permissions(env: &WowLuaEnv) {
+    load_addon(&env.loader_env(), &calendar_toc()).unwrap();
+    let mut row = calendar_test_record("context");
+    row.calendar_type = "PLAYER".into();
+    row.invite_role_markers = 0x2;
+    {
+        let mut state = env.state().borrow_mut();
+        state.calendar_context_policy.complaints_enabled = true;
+        state.calendar_day_events.insert((0, 15), vec![row]);
+    }
+    env.exec(r#"
+        function CalendarContextMenuProbe()
+            local root = { buttons = {} }
+            function root:SetTag(_) end
+            function root:CreateButton(label) self.buttons[label] = true end
+            function root:QueueDivider() end
+            function root:ClearQueuedDescriptions() end
+            function root:HasElements() return next(self.buttons) ~= nil end
+            function root:AddMenuAcquiredCallback(_) end
+            function root:AddMenuReleasedCallback(_) end
+            GenerateDayContextMenu(nil, root, 2, {day=15, monthOffset=0}, {eventIndex=1})
+            return root.buttons[CALENDAR_COPY_EVENT] == true,
+                   root.buttons[CALENDAR_DELETE_EVENT] == true,
+                   root.buttons[REPORT_CALENDAR] == true
+        end
+    "#).unwrap();
+    let allowed: (bool, bool, bool) = env.eval("return CalendarContextMenuProbe()").unwrap();
+    assert_eq!(allowed, (true, true, true));
+    {
+        let mut state = env.state().borrow_mut();
+        let row = &mut state.calendar_day_events.get_mut(&(0, 15)).unwrap()[0];
+        row.invite_role_markers = 0;
+        row.category_flags = 0x8;
+    }
+    let rejected: (bool, bool, bool) = env.eval("return CalendarContextMenuProbe()").unwrap();
+    assert_eq!(rejected, (false, false, false));
 }
 }

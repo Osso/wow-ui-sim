@@ -608,6 +608,7 @@ macro_rules! build_empty_sim_state {
             calendar_now: Default::default(),
             calendar_displayed_month: Default::default(),
             calendar_next_club_id: None,
+            calendar_context_policy: Default::default(),
             calendar_opened_selection: None,
             calendar_context_selection: None,
             calendar_event_indices: HashMap::new(),

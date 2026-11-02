@@ -28,6 +28,10 @@ fn end_time() -> CalendarTimeRecord {
 pub fn record() -> CalendarDayEventRecord {
     CalendarDayEventRecord {
         event_id: "9007199254740997".into(),
+        category_flags: 0,
+        invite_role_markers: 0,
+        primary_identity: String::new(),
+        alternate_identity: None,
         club_id: "9007199254740995".into(),
         title: "Host raid".into(),
         is_custom_title: true,
