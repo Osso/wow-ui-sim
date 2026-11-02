@@ -406,7 +406,7 @@ fn calendar_context_menu_copies_selected_event(env: &WowLuaEnv) {
         function root:HasElements() return next(self.buttons) ~= nil end
         function root:AddMenuAcquiredCallback(_) end
         function root:AddMenuReleasedCallback(_) end
-        GenerateDayContextMenu(nil, root, CALENDAR_CONTEXTMENU_FLAG_SHOWEVENT,
+        GenerateDayContextMenu(nil, root, 2,
             {day=15, monthOffset=0}, {eventIndex=2})
         assert(root.labels[CALENDAR_COPY_EVENT], 'original menu must offer copy')
         assert(type(root.buttons[CALENDAR_COPY_EVENT]) == 'function', 'missing copy producer')
