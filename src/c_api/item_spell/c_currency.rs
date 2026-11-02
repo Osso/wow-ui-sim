@@ -46,6 +46,11 @@ const CURRENCY_INFO_METHODS: &[(&str, rilua::RustFn)] = &[
         "GetWarResourcesCurrencyID",
         c_currency_get_war_resources_currency_id,
     ),
+    #[cfg(feature = "client-retail")]
+    (
+        "GetDragonIslesSuppliesCurrencyID",
+        c_currency_get_dragon_isles_supplies_currency_id,
+    ),
 ];
 const CURRENCY_LIST_INFO_HASH_FIELDS: usize = if cfg!(feature = "client-retail") {
     12
@@ -580,6 +585,13 @@ fn c_currency_get_azerite_currency_id(state: &mut LuaState) -> LuaResult<u32> {
 
 fn c_currency_get_war_resources_currency_id(state: &mut LuaState) -> LuaResult<u32> {
     state.push(Val::Num(1560.0));
+    Ok(1)
+}
+
+/// VERIFIED (WM50): native writes this literal constant and publishes one number.
+#[cfg(feature = "client-retail")]
+fn c_currency_get_dragon_isles_supplies_currency_id(state: &mut LuaState) -> LuaResult<u32> {
+    state.push(Val::Num(2003.0));
     Ok(1)
 }
 
