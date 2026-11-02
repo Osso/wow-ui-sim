@@ -1,5 +1,7 @@
 pub mod battlefield_vehicles;
+mod outdoor_wait_state;
 pub mod war_mode;
+pub use outdoor_wait_state::OutdoorPvpWorldState;
 
 #[cfg(all(
     feature = "retail-12-0-5",

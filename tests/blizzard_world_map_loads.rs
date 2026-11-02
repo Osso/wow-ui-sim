@@ -512,6 +512,61 @@ fn world_map_frame_template_carries_scroll_container(env: &WowLuaEnv) {
 }
 }
 
+#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
+#[test]
+fn world_map_hide_closes_only_the_map_interaction() {
+    let env = load_full_game_ui();
+    env.exec(r#"
+        mapHideEvents = {}
+        local listener = CreateFrame('Frame')
+        listener:RegisterEvent('PLAYER_INTERACTION_MANAGER_FRAME_HIDE')
+        listener:SetScript('OnEvent', function(_, _, interaction) table.insert(mapHideEvents, interaction) end)
+        WorldMapFrame:Show()
+    "#).unwrap();
+    env.state().borrow_mut().active_player_interactions.insert(29);
+    env.exec("WorldMapFrame:Hide()").unwrap();
+    assert!(!env.state().borrow().active_player_interactions.contains(&29));
+    env.exec(r#"
+        assert(#mapHideEvents == 1 and mapHideEvents[1] == 29)
+        assert(select('#', C_Map.CloseWorldMapInteraction()) == 0)
+        assert(#mapHideEvents == 1)
+    "#).unwrap();
+    env.state().borrow_mut().active_player_interactions.insert(17);
+    env.exec("C_Map.CloseWorldMapInteraction(); assert(#mapHideEvents == 1)").unwrap();
+    assert!(env.state().borrow().active_player_interactions.contains(&17));
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
+#[test]
+fn world_map_zone_timer_consumes_supplied_pvp_world_states() {
+    let env = load_full_game_ui();
+    let now = std::time::SystemTime::now().duration_since(std::time::UNIX_EPOCH).unwrap().as_secs() as i64;
+    {
+        let mut state = env.state().borrow_mut();
+        state.outdoor_pvp_world_state.values.extend([(3801, 1), (4354, now + 3600), (5387, 1), (5332, now + 1800)]);
+    }
+    env.exec(r#"
+        WorldMapFrame:SetMapID(123)
+        TestOutdoorTimer = CreateFrame('Frame', nil, WorldMapFrame, 'WorldMapZoneTimerTemplate')
+        WorldMapZoneTimerMixin.OnUpdate(TestOutdoorTimer, 0)
+        assert(TestOutdoorTimer.TimeLabel:IsShown() and #TestOutdoorTimer.TimeLabel:GetText() > 0)
+        local first = C_PvP.GetOutdoorPvPWaitTime(123)
+        assert(first > 3500 and first <= 3600)
+        WorldMapFrame:SetMapID(244)
+        WorldMapZoneTimerMixin.OnUpdate(TestOutdoorTimer, 0)
+        assert(TestOutdoorTimer.TimeLabel:IsShown())
+        local second = C_PvP.GetOutdoorPvPWaitTime(244)
+        assert(second > 1700 and second <= 1800)
+        assert(C_PvP.GetOutdoorPvPWaitTime(999999) == nil)
+    "#).unwrap();
+    env.state().borrow_mut().outdoor_pvp_world_state.values.insert(5387, 0);
+    env.exec(r#"
+        WorldMapZoneTimerMixin.OnUpdate(TestOutdoorTimer, 0)
+        assert(not TestOutdoorTimer.TimeLabel:IsShown())
+        assert(C_PvP.GetOutdoorPvPWaitTime(244) == nil)
+    "#).unwrap();
+}
+
 #[test]
 fn world_map_tracking_filters_default_to_visible() {
     let env = load_full_game_ui();

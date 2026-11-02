@@ -214,6 +214,7 @@ macro_rules! build_empty_sim_state {
             allied_races: HashMap::new(),
             model_scenes: HashMap::new(),
             active_player_interactions: HashSet::new(),
+            outdoor_pvp_world_state: Default::default(),
             azerite_item: None,
             item_overlay_flags: HashSet::new(),
             azerite_essence: AzeriteEssenceState::default(),
