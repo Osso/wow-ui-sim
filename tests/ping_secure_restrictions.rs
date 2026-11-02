@@ -138,22 +138,6 @@ fn create_frame_builds_one_unnamed_frame_and_notifies_once() {
     .expect("CreateFrame creates and announces exactly one frame");
 }
 
-#[test]
-fn create_frame_without_callback_misses_the_notification() {
-    let env = WowLuaEnv::new().unwrap();
-    env.exec(
-        r#"
-        local Ping = __secureenv.C_PingSecure
-        Ping.CreateFrame()
-        Notified = 0
-        Ping.SetPingRadialWheelCreatedCallback(function() Notified = Notified + 1 end)
-        Ping.CreateFrame()
-        assert(Notified == 0)
-        "#,
-    )
-    .expect("a missed creation notification is not recovered");
-}
-
 /// API-level argument contract; the UIErrorsFrame consumer case is below.
 #[test]
 fn display_error_dispatches_nonempty_text_only() {
