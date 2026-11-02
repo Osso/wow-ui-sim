@@ -319,9 +319,13 @@ fn ping_manager_reports_eligibility_gates_in_order(env: &WowLuaEnv) {
         "#,
     )
     .unwrap();
+    // The full-UI fixture starts in a party; leave it to send solo first.
     env.state().borrow_mut().social_restrictions.is_squelched = true;
-    env.exec("Fresh('solo-squelched') A_Admin.SetPartySize(2) Fresh('group-squelched')")
-        .unwrap();
+    env.exec(
+        "A_Admin.SetPartySize(0) Fresh('solo-squelched') A_Admin.SetPartySize(2) \
+         Fresh('group-squelched')",
+    )
+    .unwrap();
     env.state().borrow_mut().social_restrictions.is_squelched = false;
     env.exec(
         r#"
@@ -407,7 +411,7 @@ fn ping_manager_targets_pingable_ui_frames(env: &WowLuaEnv) {
         end
         local unitFrame = CreateFrame('Frame', 'PingUnitFixture', nil, 'PingableUnitFrameTemplate')
         unitFrame.unit = 'player'
-        Place(unitFrame, 'TOOLTIP')
+        Place(unitFrame, 'DIALOG')
         local target = Manager:DeterminePingTarget(340, 340)
         assert(target.targetState == Enum.PingSetTargetState.Ok)
         assert(target.hasUITarget and target.allowRadialWheel)
