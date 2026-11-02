@@ -1,7 +1,7 @@
 //! Holiday and raid views of supplied calendar day rows.
 use super::{civil, day_event_projection::publish_time, day_event_record::CalendarDayEventRecord};
-use crate::lua_api::methods::{borrow_state, create_string, create_table};
-use crate::lua_bridge::{table_set_rust_fn_static, table_set_static};
+use crate::lua_api::methods::{borrow_state, create_string, create_table, table_set_static};
+use crate::lua_bridge::table_set_rust_fn_static;
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val, runtime_error};
 
