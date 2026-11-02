@@ -19,6 +19,9 @@ pub mod gem_items;
 #[path = "../data/item_categories.rs"]
 pub mod item_categories;
 #[rustfmt::skip]
+#[path = "../data/item_classifiers.rs"]
+pub mod item_classifiers;
+#[rustfmt::skip]
 #[path = "../data/item_children.rs"]
 pub mod item_children;
 #[rustfmt::skip]

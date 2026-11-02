@@ -244,6 +244,18 @@ fn register_c_item_inventory_queries(
         table_set_rust_fn_static(
             state,
             table_ref,
+            "IsAnimaItemByID",
+            super::item_classifiers::is_anima_item_by_id,
+        )?;
+        table_set_rust_fn_static(
+            state,
+            table_ref,
+            "IsArtifactPowerItem",
+            super::item_classifiers::is_artifact_power_item,
+        )?;
+        table_set_rust_fn_static(
+            state,
+            table_ref,
             "DoesItemContainSpec",
             super::item_spec::does_item_contain_spec,
         )?;
