@@ -26,7 +26,10 @@ fn use_spell_for_item(item: u32) -> Option<u32> {
         .find_map(|(spell, trigger)| (trigger == 0 && spell != 0).then_some(spell))
 }
 
-fn equipped_enchant_spell(state: &LuaState, item: u32) -> LuaResult<Option<(u32, &'static str)>> {
+fn equipped_enchant_spell(
+    state: &LuaState,
+    item: u32,
+) -> LuaResult<Option<(u32, Option<&'static str>)>> {
     let sim = borrow_state(state)?;
     let mut equipment: Vec<_> = sim.player.equipped_items.iter().collect();
     equipment.sort_unstable_by_key(|(slot, _)| *slot);
@@ -40,21 +43,30 @@ fn equipped_enchant_spell(state: &LuaState, item: u32) -> LuaResult<Option<(u32,
         return Ok(None);
     };
     let (_, spell, name) = ENCHANT_SPELLS[index];
-    Ok(name.filter(|_| spell != 0).map(|name| (spell, name)))
+    Ok((spell != 0).then_some((spell, name)))
+}
+
+pub(super) fn selected_item_spell(
+    state: &LuaState,
+    item: u32,
+) -> LuaResult<Option<(u32, Option<&'static str>)>> {
+    match use_spell_for_item(item) {
+        Some(spell) => {
+            let name = ITEM_SPELL_NAMES
+                .binary_search_by_key(&spell, |entry| entry.0)
+                .ok()
+                .map(|index| ITEM_SPELL_NAMES[index].1);
+            Ok(Some((spell, name)))
+        }
+        None => equipped_enchant_spell(state, item),
+    }
 }
 
 pub(super) fn get_item_spell(state: &mut LuaState) -> LuaResult<u32> {
     let value = rilua::table_security::unwrap_secret(state, stack_val(state, 1))?;
     let item = super::parse_item_id_key(state, value)
         .ok_or_else(|| runtime_error("C_Item.GetItemSpell: expected itemInfo"))?;
-    let selected = match use_spell_for_item(item) {
-        Some(spell) => ITEM_SPELL_NAMES
-            .binary_search_by_key(&spell, |entry| entry.0)
-            .ok()
-            .map(|index| (spell, ITEM_SPELL_NAMES[index].1)),
-        None => equipped_enchant_spell(state, item)?,
-    };
-    let Some((spell, name)) = selected else {
+    let Some((spell, Some(name))) = selected_item_spell(state, item)? else {
         return Ok(0);
     };
     let name = create_string(state, name);
