@@ -27,7 +27,7 @@ Production `0745fe84f` supplies full bar producers, HUD selectors and host feeds
 
 - [ ] Host `replace_ui_widget_set`, `update_ui_widget`, and `remove_ui_widget` publish new state before synchronous events. Unknown-set/type-mismatched updates fail without mutation or notification; membership removal preserves independent visualization snapshots.
 - [ ] Host state updates become visible through the existing cached manager: `UPDATE_UI_WIDGET` performs incremental updates and `UPDATE_ALL_UI_WIDGETS` performs full reconciliation against current supplied state.
-- [ ] Incremental updates activate newly available widgets and update existing consumers using their supplied type and visualization record. **Modeled event adapter:** preserve documented `unitToken` and also publish its supplied string as `unit`, because the current cached container filters that field against `attachedUnit`. Remove this adapter when the cached consumer uses `unitToken`; native event aliases and unit registration/data isolation are not established.
+- [ ] Incremental updates publish `unitToken`, not `unit`: unitless events omit it, token events contain the token, and GUID events contain an empty string. The cached consumer's `unit` filter therefore does not filter these events. `UPDATE_ALL_UI_WIDGETS` carries no payload.
 - [ ] Full reconciliation activates current members and removes consumers whose membership has been removed, preserving supplied ordering.
 - [ ] Hidden visualization state and subsequent activation are handled by actual manager consumers, rather than only by query snapshots.
 - [ ] IconAndText dynamic states 3/2 show the acquired dynamic child through normal supplied-state updates; ordinary state 1 hides it and hidden state 0 releases the frame. Cached-consumer child visibility is distinct from flash timing and native parity.
@@ -65,7 +65,7 @@ The cached manager assigns `widgetTag` when acquiring a frame; ordinary setup re
 - `src/c_api/ui_widget_manager/inputs.rs` — supplied set membership and visualization inputs.
 - `src/c_api/ui_widget_manager/bar_records.rs` — complete supplied 35-field StatusBarRecord and 22-field CaptureBarRecord DTOs.
 - `src/c_api/ui_widget_manager/bars.rs` — full supplied bar snapshot producers, including fresh StatusBar partition arrays; five bar/HUD query cases passed.
-- `src/c_api/ui_widget_manager/hud.rs` — four live `f64` selectors, exactly one numeric return each, with default-zero model policy; bounded query and actual HUD OnLoad proof.
+- `src/c_api/ui_widget_manager/hud.rs` — four fixed HUD set selectors, each returning one number.
 - `src/c_api/ui_widget_manager/queries.rs` — registration calls both implemented `bars` and `hud` modules.
 - `src/c_api/ui_widget_manager/text_with_subtext_record.rs` / `text_with_subtext.rs` — complete27-field supplied record and fresh projection, shared registration, owned input map and normal type25 feed; bounded Retail/PTR verification described above.
 - `src/c_api/ui_widget_manager/feed.rs` — `WidgetVisualization` integration for StatusBar type2 and CaptureBar type1; actual bar-consumer adaptation uses host feeds instead of direct state changes or manual events.

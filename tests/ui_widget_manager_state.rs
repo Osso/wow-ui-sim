@@ -212,6 +212,7 @@ fn host_widget_feed_publishes_state_before_events_and_rejects_invalid_updates() 
             else
                 feedUpdates = feedUpdates + 1
                 assert(info.widgetSetID == 417 and info.widgetID == 812 and info.widgetType == 0)
+                assert(info.unitToken == nil and info.unit == nil)
                 assert(C_UIWidgetManager.GetIconAndTextWidgetVisualizationInfo(812).text == 'Supplied text')
                 assert(#C_UIWidgetManager.GetAllWidgetsBySetID(417) == 1)
             end

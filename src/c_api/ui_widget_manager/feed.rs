@@ -141,7 +141,7 @@ impl WowLuaEnv {
             }
         }
         if deliver {
-            self.fire_ui_widget_update(set_id, &entry)?;
+            self.fire_ui_widget_update(set_id, &entry, is_guid)?;
         }
         Ok(())
     }
@@ -153,7 +153,7 @@ impl WowLuaEnv {
         widget_id: f64,
         unit: ProcessingUnit,
     ) -> Result<bool> {
-        let (entry, deliver) = {
+        let (entry, deliver, is_guid) = {
             let mut sim = self.state.borrow_mut();
             let id = WidgetId::from_number(widget_id);
             let Some(mut entry) = sim
@@ -197,10 +197,10 @@ impl WowLuaEnv {
                 }
             }
             entry.unit_token = Some(name);
-            (entry, deliver)
+            (entry, deliver, is_guid)
         };
         if deliver {
-            self.fire_ui_widget_update(set_id, &entry)?;
+            self.fire_ui_widget_update(set_id, &entry, is_guid)?;
         }
         Ok(true)
     }
@@ -228,19 +228,22 @@ impl WowLuaEnv {
         Ok(removed)
     }
 
-    fn fire_ui_widget_update(&self, set_id: f64, entry: &WidgetSetEntry) -> Result<()> {
+    fn fire_ui_widget_update(
+        &self,
+        set_id: f64,
+        entry: &WidgetSetEntry,
+        is_guid: bool,
+    ) -> Result<()> {
+        let mut event_entry = entry.clone();
+        if is_guid {
+            event_entry.unit_token = Some(String::new());
+        }
         let (payload, saved_top) = {
             let mut lua = self.lua.borrow_mut();
             let state = lua.state_mut();
             let saved_top = state.top;
-            let payload = super::queries::build_widget_info(state, set_id, entry);
+            let payload = super::queries::build_widget_info(state, set_id, &event_entry);
             state.push(payload);
-            // Cached containers filter `unit`, while API documentation names
-            // `unitToken`. Model this event adapter until that consumer changes.
-            if let Some(unit) = &entry.unit_token {
-                let value = crate::lua_api::methods::create_string(state, unit);
-                crate::lua_api::methods::table_set(state, payload, "unit", value);
-            }
             (payload, saved_top)
         };
         let result = self.fire_event_with_args("UPDATE_UI_WIDGET", &[payload]);

@@ -357,6 +357,9 @@ fn spell_display_guid_context_delivers_to_original_container() {
         r#"
         GuidContainer = CreateFrame('Frame', nil, UIParent, 'UIWidgetContainerTemplate')
         GuidContainer:RegisterForWidgetSet(431, nil, nil, {unit='Creature-1', isGuid=true})
+        local listener = CreateFrame('Frame')
+        listener:RegisterEvent('UPDATE_UI_WIDGET')
+        listener:SetScript('OnEvent', function(_, _, info) guidPayload = info end)
     "#,
     );
     let mut membership = entry();
@@ -370,6 +373,7 @@ fn spell_display_guid_context_delivers_to_original_container() {
         "GUID event and query",
         r#"
         assert(GuidContainer.widgetFrames[761301].Spell.Text:GetText() == 'GUID widget')
+        assert(guidPayload.unitToken == '' and guidPayload.unit == nil)
         C_UIWidgetManager.SetProcessingUnitGuid('Creature-1')
         assert(C_UIWidgetManager.GetSpellDisplayVisualizationInfo(761301).spellInfo.text == 'GUID widget')
         C_UIWidgetManager.SetProcessingUnit('Creature-1')
