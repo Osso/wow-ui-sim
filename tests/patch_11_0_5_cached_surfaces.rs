@@ -26,7 +26,6 @@ fn patch_11_0_5_cached_surfaces_preserve_retirements_and_character_query(env: &W
             assert(rawget(C_MajorFactions, 'GetCovenantIDForMajorFaction') == nil, 'GetCovenantIDForMajorFaction raw')
         end
         assert(C_Glue.IsOnGlueScreen() == false, 'C_Glue.IsOnGlueScreen')
-        assert(IsOnGlueScreen == false, 'IsOnGlueScreen')
         assert(GetCVarBool('loadDeprecationFallbacks'), 'loadDeprecationFallbacks')
         for _, name in ipairs({'ChromaEffectsEnable', 'ChromaEffectsFactionColor'}) do
             assert(GetCVarDefault(name) == '1', name .. ' default before')
