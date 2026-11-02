@@ -110,6 +110,15 @@ pub struct ShapeshiftForm {
 /// Forever shares this range; native Gamepad storage numbering is unverified.
 pub const FIRST_PET_ACTION_SLOT: i32 = 1;
 
+/// Compact simulator unit tokens retained by the combat-audio targeting list.
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub enum CombatAudioUnitToken {
+    Player,
+    Target,
+    Focus,
+    Party(usize),
+}
+
 /// One pet action-bar slot (10 slots total; `NUM_PET_ACTION_SLOTS = 10`).
 /// Drives `GetPetActionInfo`, `GetPetActionCooldown`, `CastPetAction`,
 /// `TogglePetAutocast`, and `PetHasActionBar` consumed by
