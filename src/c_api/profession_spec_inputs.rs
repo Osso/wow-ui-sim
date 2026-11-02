@@ -9,7 +9,8 @@ use std::collections::{HashMap, HashSet};
 /// reminders report nothing.
 #[derive(Debug, Default, Clone)]
 pub struct ProfessionSpecInputs {
-    /// Ranks of related SkillLines; base professions read `profession_data`.
+    /// Ranks of related SkillLines for the name query's learned gate; base
+    /// professions read `profession_data`.
     pub related_skill_ranks: HashMap<u32, SkillRank>,
     /// SkillLines whose cached specialization-enabled flag is set.
     pub enabled_skill_lines: HashSet<u32>,

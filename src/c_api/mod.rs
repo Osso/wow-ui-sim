@@ -194,6 +194,7 @@ pub(crate) mod c_player_info_name_policy;
 pub mod c_player_interaction_manager;
 #[cfg(feature = "retail-12-0-0")]
 pub mod c_prey;
+pub(crate) mod c_prof_specs_reminders;
 pub mod c_pvp;
 #[cfg(feature = "retail-12-0-5")]
 pub mod c_pvp_crowd_control;
