@@ -427,6 +427,37 @@ fn numeric_guid_registration_reaches_original_container() {
 }
 
 #[test]
+fn replaced_visualization_is_absent_from_original_spell_consumer() {
+    use wow_ui_sim::c_api::ui_widget_manager::IconAndTextRecord;
+
+    let env = load_and_register_spell_container_env(false);
+    supply(&env, supplied_record(), false);
+    assert_lua(&env, "spell before type replacement", r#"
+        assert(UIWidgetManager:GetWidgetTypeInfo(13).visInfoDataFunction(761301))
+        assert(C_UIWidgetManager.GetSpellDisplayVisualizationInfo(761301, 'extra'))
+        assert(UIWidgetManager:GetWidgetTypeInfo(13).visInfoDataFunction(999999) == nil)
+        SpellContainer:UnregisterForWidgetSet()
+    "#);
+    let mut membership = entry();
+    membership.widget_type = 0;
+    let record = IconAndTextRecord {
+        state: 1, text: "Replacement".into(), tooltip: String::new(),
+        dynamic_tooltip: String::new(), tooltip_loc: 0, shift_text_type: 0,
+        widget_size_setting: 160.0, texture_kit: String::new(),
+        frame_texture_kit: String::new(), has_timer: false, order_index: 1.0,
+        widget_tag: String::new(), in_anim_type: 0, out_anim_type: 0,
+        widget_scale: 0, layout_direction: 1, model_scene_layer: 0,
+        scripted_animation_effect_id: 0.0,
+    };
+    env.update_ui_widget(SET_ID, membership, WidgetVisualization::IconAndText(record)).unwrap();
+    assert_lua(&env, "original consumer after type replacement", r#"
+        assert(UIWidgetManager:GetWidgetTypeInfo(13).visInfoDataFunction(761301) == nil)
+        assert(C_UIWidgetManager.GetSpellDisplayVisualizationInfo(761301, 'extra') == nil)
+        assert(C_UIWidgetManager.GetIconAndTextWidgetVisualizationInfo(761301, 'extra').text == 'Replacement')
+    "#);
+}
+
+#[test]
 fn spell_display_attached_player_context_separate_from_world_loot_policy() {
     let env = load_and_register_spell_container_env(true);
     supply(&env, supplied_record(), true);
