@@ -31,6 +31,7 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
     super::texture_and_text_row::register(state)?;
     super::text_column_row::register(state)?;
     super::spacer::register(state)?;
+    super::stacked_resource::register(state)?;
     super::discrete::register(state)?;
     super::text_state::register(state)?;
     super::text_with_subtext::register(state)?;

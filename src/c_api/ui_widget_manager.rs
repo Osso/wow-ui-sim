@@ -41,6 +41,9 @@ pub use icon_text_and_currencies_record::{IconTextAndCurrenciesRecord, UiWidgetC
 pub use item_display_record::{ItemDisplayRecord, UiWidgetItemRecord};
 mod spacer;
 mod spacer_record;
+mod stacked_resource;
+mod stacked_resource_record;
+pub use stacked_resource_record::StackedResourceTrackerRecord;
 mod spell_display;
 mod spell_display_record;
 pub use spacer_record::SpacerRecord;
