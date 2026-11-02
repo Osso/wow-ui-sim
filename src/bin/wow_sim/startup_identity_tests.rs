@@ -172,9 +172,23 @@ fn assert_addon_identity(env: &WowLuaEnv, profile: &str, class: &str, race: &str
                  {observation}.class, {observation}.race"
             ))
             .unwrap();
+        // Wrath restores SavedVariables after addon files, before ADDON_LOADED.
+        let expected_profile = if wow_ui_sim::client_profile::ACTIVE
+            == wow_ui_sim::client_profile::ClientProfile::Wrath
+            && observation == "IdentityProbeFile"
+        {
+            "fresh"
+        } else {
+            profile
+        };
         assert_eq!(
             actual,
-            (REALM.into(), profile.into(), class.into(), race.into()),
+            (
+                REALM.into(),
+                expected_profile.into(),
+                class.into(),
+                race.into()
+            ),
             "{observation}"
         );
     }

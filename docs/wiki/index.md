@@ -42,9 +42,9 @@ fallible shutdown and saving while retaining the existing ReloadUI path. The
 describes configured output, interactive completion and partial-save limits.
 Explicit recovery preserves diagnostics and healthy edits while protecting failed
 declared inputs, uninitialized owners and partial reconstructed environments.
-[Bounded verification](../specs/session-finalization.md#verification) records 67
-Forever and 71 Wrath passing cases, real GUI exit outcomes, and remaining cache
-and relaunch limits.
+[Startup identity tests](../../src/bin/wow_sim/startup_identity_tests.rs) check
+explicit session restoration across processes and the profile-specific
+SavedVariables boundary at `ADDON_LOADED`.
 
 ## [2026-10-27] proof | Mists scenario defaults
 

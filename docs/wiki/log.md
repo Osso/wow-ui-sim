@@ -3253,7 +3253,12 @@ verification, other profiles and the game-screen baseline remain separate.
 [Session finalization](../specs/session-finalization.md) adds explicit GUI
 close/Quit completion, shutdown-before-save ordering, protected failed-owner
 output and repairable reload reconstruction. Focused native Windows verification
-passes 67 Forever and 71 Wrath cases. Bounded real GUI Quit returns exit 0 with
-persistence disabled and exit 1 with no saves for the incomplete installed
-Forever cache. Successful enabled-persistence GUI relaunch and strict-cache
-startup identity cases remain unverified; see the contract's verification limits.
+passes 73 Forever and 77 Wrath cases, including all six startup identity cases
+under each profile. Four real GUI processes verify saving, process-relaunch
+read-back, nonzero serialization failure with prior bytes preserved, and recovery.
+Wrath's fixture now respects its existing SavedVariables load order. Original
+persisted CVars remain unchanged. Forever's retained 70532 PR binaries consumed
+the independently acquired strict 70707 UI cache; the source retarget and local
+parser workaround remain excluded. Run receipts are retained locally under
+`docs/local/session-finalization-v2/` in `native-gui-completed`,
+`forever-identity-completed` and `wrath-identity-corrected`.

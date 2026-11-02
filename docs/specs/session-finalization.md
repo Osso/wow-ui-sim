@@ -110,53 +110,6 @@ back storage. Temporary world-departure/protected-action state is restored when
 an attempt fails before reconstruction, without undoing addon callback mutations.
 Regression fixtures cover serializer byte preservation and fresh-VM read-back.
 
-## Verification
-
-Native Windows verification on 2026-11-02 used Cargo/rustc 1.99.1, the committed
-locked dependencies, installed static ICU, and `sound,gui,casc` with the indicated
-client profile. The focused cases check returned errors, disk contents and Lua
-read-back, not only process status:
-
-| Cases | Forever | Wrath |
-| --- | ---: | ---: |
-| Lifecycle and recovery | 15 | 19 |
-| SavedVariables input selection and preservation | 17 | 17 |
-| GUI completion and recovery | 11 | 11 |
-| Runtime addon failures | 5 | 5 |
-| IPC ordering and exit boundaries | 9 | 9 |
-| VM lifetime | 1 | 1 |
-| Startup addon failure/recovery | 6 | 6 |
-| Persistence integration | 3 | 3 |
-| Total passing cases | 67 | 71 |
-
-The default Retail library and GUI binary also pass `cargo check --locked
---offline --lib --bin wow-sim`. The builds retain existing profile-specific unused
-imports; no zero-warning or Retail runtime result is claimed.
-
-The failed-owner startup fixture observes restored values at `ADDON_LOADED`,
-preserving Wrath's existing code-before-SavedVariables order. The six compiled
-startup identity tests include distinct writer/reader processes for explicit
-session restoration and isolated persistence-enabled/disabled failure cases.
-Those full-startup identity cases remain unexecuted here: the installed Forever
-cache is 1.60.1.70634 against the 1.60.1.70532 pin, and the Wrath runtime cache is
-absent. They are separate from the passing temporary-addon cases above.
-
-Two bounded real Forever GUI processes used the explicit UI-version-mismatch
-option. With persistence disabled, `Quit()` returned exit 0, logged successful
-finalization and created no SavedVariables. With persistence enabled, it returned
-exit 1 and created no SavedVariables because the selected
-`Blizzard_SettingsDefinitions_Shared` TOC references a missing `Preset.lua`.
-That newer-cache topology is absent from the committed manifest; loader, profile
-selection and manifest behavior are unchanged. See the
-[source topology limitation](../updating-blizzard-ui-to-a-new-patch.md).
-Successful enabled-persistence GUI save/relaunch remains unverified.
-
-Both GUI runs retained the original persisted CVar bytes, size and timestamps,
-and the sealed binary and cache provenance/completion hashes. Changed Rust files
-pass a focused `rustfmt --check`; the workspace-wide formatter aborted with an
-allocation error. Full-suite, seven-profile and measured native chronology
-coverage are not claimed.
-
 ## Sources
 
 - [Lifecycle](../../src/lua_api/env_lifecycle.rs) — callback/save boundary and retained outcome.
