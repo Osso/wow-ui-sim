@@ -136,12 +136,13 @@ fn test_c_item_get_item_id_for_item_info_link() {
 }
 
 #[test]
-fn test_c_item_get_item_id_for_item_info_invalid() {
+fn test_c_item_get_item_id_for_item_info_unresolved_name() {
     let env = env();
-    let is_nil: bool = env
-        .eval(r#"return C_Item.GetItemIDForItemInfo("not a link") == nil"#)
+    // WM23-item-a-C_Item-queries.md: unresolved strings can resolve to item ID zero.
+    let id: i32 = env
+        .eval(r#"return C_Item.GetItemIDForItemInfo("not a link")"#)
         .unwrap();
-    assert!(is_nil);
+    assert_eq!(id, 0);
 }
 
 #[test]
