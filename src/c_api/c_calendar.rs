@@ -78,6 +78,7 @@ pub struct CalendarContextPolicy {
 /// Access inputs from the separate being-edited event.
 #[derive(Debug, Clone, Default)]
 pub struct CalendarEditableAccess {
+    pub event_id: String,
     pub category_flags: u32,
     pub associated_id: Option<u64>,
     pub creator_identity: String,
@@ -88,6 +89,17 @@ pub struct CalendarEditableAccess {
     pub sort_criterion: String,
     pub sort_reverse: bool,
     pub club_id: u64,
+}
+
+/// Host-supplied resolved texture metadata.
+#[derive(Debug, Clone, Default)]
+pub struct CalendarTextureRecord {
+    pub title: String,
+    pub icon_texture: u32,
+    pub expansion_level: i32,
+    pub difficulty_id: i32,
+    pub map_id: i32,
+    pub is_lfr: bool,
 }
 
 /// Host-supplied invite data for a being-edited event.

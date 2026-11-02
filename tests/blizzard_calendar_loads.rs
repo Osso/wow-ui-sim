@@ -513,3 +513,145 @@ fn calendar_invite_sort_controls_reflect_supplied_criterion(env: &WowLuaEnv) {
     "#).unwrap();
 }
 }
+
+prefork_full_ui_case! {
+fn calendar_invite_autocomplete_tracks_editable_event_type(env: &WowLuaEnv) {
+    use wow_ui_sim::c_api::c_calendar::CalendarEditableAccess;
+    load_addon(&env.loader_env(), &calendar_toc()).unwrap();
+    env.state().borrow_mut().calendar_context_policy.editable = Some(CalendarEditableAccess { category_flags: 0x800, ..Default::default() });
+    env.exec(r#"
+        local edit = CalendarCreateEventInviteEdit
+        edit:GetScript('OnTextChanged')(edit, true)
+        assert(edit.autoCompleteParams[1] == AUTOCOMPLETE_LIST.CALENDARGUILDEVENT.include)
+        assert(edit.autoCompleteParams[2] == AUTOCOMPLETE_LIST.CALENDARGUILDEVENT.exclude)
+    "#).unwrap();
+    env.state().borrow_mut().calendar_context_policy.editable.as_mut().unwrap().category_flags = 0x40;
+    env.exec(r#"
+        local edit = CalendarCreateEventInviteEdit
+        edit:GetScript('OnTextChanged')(edit, true)
+        assert(edit.autoCompleteParams[1] == AUTOCOMPLETE_LIST.CALENDAREVENT.include)
+        assert(edit.autoCompleteParams[2] == AUTOCOMPLETE_LIST.CALENDAREVENT.exclude)
+    "#).unwrap();
+}
+}
+
+prefork_full_ui_case! {
+fn calendar_invite_hover_uses_supplied_response_time(env: &WowLuaEnv) {
+    use wow_ui_sim::c_api::c_calendar::{CalendarEditableAccess, CalendarInviteRecord, day_event_record::CalendarTimeRecord};
+    load_addon(&env.loader_env(), &calendar_toc()).unwrap();
+    let invite = CalendarInviteRecord { response_time: Some(CalendarTimeRecord { year: 2026.0, month: 4, month_day: 15, weekday: 4, hour: 12.0, minute: 30.0 }), ..Default::default() };
+    env.state().borrow_mut().calendar_context_policy.editable = Some(CalendarEditableAccess { invites: vec![invite], ..Default::default() });
+    env.exec(r#"
+        calendarResponseProbe = CreateFrame('Button', 'CalendarResponseProbe', UIParent)
+        calendarResponseProbe.inviteIndex = 1
+        GameTooltip:Hide()
+        CalendarEventInviteListButton_OnEnter(calendarResponseProbe)
+        assert(GameTooltip:IsShown())
+    "#).unwrap();
+    env.state().borrow_mut().calendar_context_policy.editable.as_mut().unwrap().invites[0].response_time = None;
+    env.exec(r#"
+        GameTooltip:Hide()
+        CalendarEventInviteListButton_OnEnter(calendarResponseProbe)
+        assert(not GameTooltip:IsShown())
+    "#).unwrap();
+}
+}
+
+prefork_full_ui_case! {
+fn calendar_texture_picker_uses_supplied_texture_list(env: &WowLuaEnv) {
+    use wow_ui_sim::c_api::c_calendar::CalendarTextureRecord;
+    load_addon(&env.loader_env(), &calendar_toc()).unwrap();
+    env.state().borrow_mut().calendar_texture_lists[0] = vec![CalendarTextureRecord { title: "Test Vault".into(), icon_texture: 136116, expansion_level: 0, difficulty_id: 1, map_id: 42, is_lfr: false }];
+    env.exec(r#"
+        CalendarTexturePickerFrame:Hide()
+        CalendarTexturePickerFrame_Show(0)
+        assert(CalendarTexturePickerFrame:IsShown())
+        assert(CalendarTexturePickerFrame.ScrollBox:GetDataProviderSize() > 0)
+        CalendarTexturePickerFrame_Hide()
+        CalendarTexturePickerFrame_Show(1)
+        assert(not CalendarTexturePickerFrame:IsShown())
+    "#).unwrap();
+}
+}
+
+prefork_full_ui_case! {
+fn calendar_community_dropdown_tracks_supplied_club_id(env: &WowLuaEnv) {
+    use wow_ui_sim::c_api::c_calendar::CalendarEditableAccess;
+    use wow_ui_sim::c_api::club_model::Club;
+    load_addon(&env.loader_env(), &calendar_toc()).unwrap();
+    let club_id = 9_007_199_254_740_992_u64;
+    {
+        let mut state = env.state().borrow_mut();
+        state.calendar_context_policy.editable = Some(CalendarEditableAccess { club_id, ..Default::default() });
+        state.clubs.initialized = true;
+        state.clubs.clubs.insert("0x0020000000000000".into(), Club {
+            id: "0x0020000000000000".into(), name: "Test community".into(), description: String::new(),
+            club_type: 1, avatar_id: 0, members: Vec::new(), candidates: Default::default(), invitations: Vec::new(), streams: Vec::new(),
+        });
+    }
+    env.exec(r#"
+        CalendarCreateEventFrame.selectedEventType = 0
+        function CalendarCommunitySelected()
+            local dropdown = CalendarCreateEventFrame.CommunityDropdown
+            dropdown:GenerateMenu()
+            local root = dropdown:GetMenuDescription()
+            for _, entry in root:EnumerateElementDescriptions() do
+                if entry:GetData() == '0x0020000000000000' then return entry:IsSelected() end
+            end
+            error('community entry not found')
+        end
+        assert(CalendarCommunitySelected())
+    "#).unwrap();
+    env.state().borrow_mut().calendar_context_policy.editable.as_mut().unwrap().club_id = 0;
+    env.exec("assert(not CalendarCommunitySelected())").unwrap();
+}
+}
+
+prefork_full_ui_case! {
+fn calendar_invite_status_menu_uses_supplied_options(env: &WowLuaEnv) {
+    use wow_ui_sim::c_api::c_calendar::{CalendarEditableAccess, CalendarInviteRecord};
+    load_addon(&env.loader_env(), &calendar_toc()).unwrap();
+    let name: String = env.eval("return UnitName('player')").unwrap();
+    let invite = CalendarInviteRecord { invite_id: "one".into(), name: Some(name), invite_status: Some(0), mod_status: Some("CREATOR".into()), ..Default::default() };
+    env.state().borrow_mut().calendar_context_policy.editable = Some(CalendarEditableAccess { local_edit_credential: Some(1), invites: vec![invite], ..Default::default() });
+    env.exec(r#"
+        CalendarCreateEventFrame.mode = 'edit'
+        calendarStatusProbe = CreateFrame('Button', 'CalendarStatusProbe', UIParent)
+        calendarStatusProbe.inviteIndex = 1
+        CalendarCreateEventInviteListButton_OnClick(calendarStatusProbe, 'RightButton')
+        assert(Menu.GetManager():GetOpenMenu())
+        assert(#C_Calendar.EventGetStatusOptions(1) == 6)
+        Menu.GetManager():CloseMenus()
+    "#).unwrap();
+    env.state().borrow_mut().calendar_context_policy.editable.as_mut().unwrap().invites[0].invite_status = Some(1);
+    env.exec(r#"
+        CalendarCreateEventInviteListButton_OnClick(calendarStatusProbe, 'RightButton')
+        assert(Menu.GetManager():GetOpenMenu())
+        assert(#C_Calendar.EventGetStatusOptions(1) == 5)
+        Menu.GetManager():CloseMenus()
+    "#).unwrap();
+}
+}
+
+prefork_full_ui_case! {
+fn calendar_view_invite_menu_tracks_pending_event_identity(env: &WowLuaEnv) {
+    use wow_ui_sim::c_api::c_calendar::{CalendarEditableAccess, CalendarInviteRecord};
+    load_addon(&env.loader_env(), &calendar_toc()).unwrap();
+    let invite = CalendarInviteRecord { invite_id: "one".into(), invite_status: Some(0), ..Default::default() };
+    env.state().borrow_mut().calendar_context_policy.editable = Some(CalendarEditableAccess { event_id: "event-a".into(), local_edit_credential: Some(1), invites: vec![invite], ..Default::default() });
+    env.exec(r#"
+        calendarPendingProbe = CreateFrame('Button', 'CalendarPendingProbe', UIParent)
+        calendarPendingProbe.inviteIndex = 1
+        CalendarViewEventFrame.myInviteIndex = 1
+        Menu.GetManager():CloseMenus()
+        CalendarViewEventInviteListButton_OnClick(calendarPendingProbe, 'RightButton')
+        assert(not Menu.GetManager():GetOpenMenu())
+    "#).unwrap();
+    env.state().borrow_mut().calendar_pending_invite_event_ids.insert("event-a".into());
+    env.exec(r#"
+        CalendarViewEventInviteListButton_OnClick(calendarPendingProbe, 'RightButton')
+        assert(Menu.GetManager():GetOpenMenu())
+        Menu.GetManager():CloseMenus()
+    "#).unwrap();
+}
+}

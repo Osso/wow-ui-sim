@@ -747,6 +747,8 @@ pub struct SimState {
     pub calendar_opened_selection: Option<crate::c_api::c_calendar::CalendarSelection>,
     pub calendar_context_selection: Option<crate::c_api::c_calendar::CalendarSelection>,
     pub calendar_guild_selections: Vec<crate::c_api::c_calendar::CalendarSelection>,
+    pub calendar_pending_invite_event_ids: HashSet<String>,
+    pub calendar_texture_lists: [Vec<crate::c_api::c_calendar::CalendarTextureRecord>; 2],
     pub calendar_clipboard:
         Option<crate::c_api::c_calendar::day_event_record::CalendarDayEventRecord>,
     /// Explicit event identity positions; default records are simulator demo data.

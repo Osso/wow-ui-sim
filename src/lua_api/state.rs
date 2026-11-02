@@ -619,6 +619,8 @@ macro_rules! build_empty_sim_state {
             calendar_opened_selection: None,
             calendar_context_selection: None,
             calendar_guild_selections: Vec::new(),
+            calendar_pending_invite_event_ids: HashSet::new(),
+            calendar_texture_lists: Default::default(),
             calendar_clipboard: None,
             calendar_event_indices: HashMap::new(),
             calendar_day_events: HashMap::new(),
