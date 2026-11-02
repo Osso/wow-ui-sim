@@ -24,6 +24,53 @@ fn reward_env() -> WowLuaEnv {
 }
 
 #[test]
+#[cfg(feature = "client-retail")]
+fn original_reward_panel_reads_cached_and_detail_spell_rewards() {
+    let env = reward_env();
+    env.exec(r#"
+        QuestInfoFrame.questLog = true
+        local original = C_QuestInfoSystem.GetQuestRewardSpells
+        C_QuestInfoSystem.GetQuestRewardSpells = function(...)
+            captured = { n = select('#', original(...)), original(...) }
+            omitted = { n = select('#', original()), original() }
+            return original(...)
+        end
+        seenSpellIDs = {}
+        C_QuestInfoSystem.GetQuestRewardSpellInfo = function(_, spellID)
+            seenSpellIDs[#seenSpellIDs + 1] = spellID
+            return nil
+        end
+    "#).unwrap();
+    {
+        let mut sim = env.state().borrow_mut();
+        sim.quest_reward_spell_cache.insert(80000, vec![5, 0, 5, 6, 7, 8]);
+        sim.quest_detail_reward_spells = Some((80000, [11, 11, 12]));
+    }
+    env.exec(r#"
+        QuestInfo_ShowRewards()
+        assert(captured.n == 1 and #captured[1] == 3)
+        assert(captured[1][1] == 5 and captured[1][2] == 6 and captured[1][3] == 7)
+        assert(omitted.n == 1 and #omitted[1] == 3)
+        assert(#seenSpellIDs == 3 and seenSpellIDs[1] == 5 and seenSpellIDs[3] == 7)
+    "#).unwrap();
+    env.state().borrow_mut().quest_reward_spell_cache.remove(&80000);
+    env.exec(r#"
+        seenSpellIDs = {}
+        QuestInfo_ShowRewards()
+        assert(captured.n == 1 and #captured[1] == 3)
+        assert(captured[1][1] == 11 and captured[1][2] == 11 and captured[1][3] == 12)
+        assert(omitted.n == 0, 'omission must not use detail fallback')
+        assert(#seenSpellIDs == 3 and seenSpellIDs[1] == 11 and seenSpellIDs[2] == 11)
+    "#).unwrap();
+    env.state().borrow_mut().quest_reward_spell_cache.insert(80000, vec![]);
+    env.exec(r#"
+        seenSpellIDs = {}
+        QuestInfo_ShowRewards()
+        assert(captured.n == 1 and #captured[1] == 0 and #seenSpellIDs == 0)
+    "#).unwrap();
+}
+
+#[test]
 fn original_reward_panel_is_empty_without_supplied_rewards() {
     let env = reward_env();
     let before = env.state().borrow().lua_error_counts.clone();
