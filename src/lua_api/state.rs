@@ -219,6 +219,9 @@ macro_rules! build_empty_sim_state {
             active_player_interactions: HashSet::new(),
             outdoor_pvp_world_state: Default::default(),
             battleground_enlistment: Default::default(),
+            pvp_reward_caches: Default::default(),
+            #[cfg(feature = "retail-12-0-5")]
+            available_brawl: None,
             azerite_item: None,
             item_overlay_flags: HashSet::new(),
             azerite_essence: AzeriteEssenceState::default(),

@@ -257,6 +257,9 @@ pub struct SimState {
     pub active_player_interactions: HashSet<i32>,
     pub outdoor_pvp_world_state: crate::c_api::c_pvp::OutdoorPvpWorldState,
     pub battleground_enlistment: crate::c_api::c_pvp::BattlegroundEnlistmentInputs,
+    pub pvp_reward_caches: crate::c_api::c_pvp::reward_cache::PvpRewardCaches,
+    #[cfg(feature = "retail-12-0-5")]
+    pub available_brawl: Option<crate::c_api::c_pvp::available_brawl::AvailableBrawlCache>,
     pub azerite_item: Option<AzeriteItemState>,
     pub azerite_essence: AzeriteEssenceState,
     pub azerite_empowered: AzeriteEmpoweredItemState,

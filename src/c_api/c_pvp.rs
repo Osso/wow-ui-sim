@@ -1,7 +1,10 @@
 pub mod area_poi;
+#[cfg(feature = "retail-12-0-5")]
+pub mod available_brawl;
 pub mod battlefield_vehicles;
 mod battleground_enlistment;
 mod outdoor_wait_state;
+pub mod reward_cache;
 pub mod war_mode;
 pub use outdoor_wait_state::OutdoorPvpWorldState;
 
