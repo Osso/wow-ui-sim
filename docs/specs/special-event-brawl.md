@@ -17,7 +17,8 @@ Retail `Blizzard_APIDocumentationGenerated/PvpInfoDocumentation.lua:775` declare
 
 ## Tests asserting this spec
 
-- `tests/special_event_brawl.rs`: selected Retail PvP addon consumer and supplied absent/present/absent records. Runtime reachability and RED/GREEN are pending.
+- `tests/special_event_brawl_api.rs`: API-level absent/present/absent and integer-field coverage; RED/GREEN are pending.
+- `tests/special_event_brawl.rs`: selected Retail PvP addon consumer and supplied absent/present/absent records. Runtime reachability and RED/GREEN are pending on WM25's earlier consumer prerequisite.
 
 ## Known gaps
 
