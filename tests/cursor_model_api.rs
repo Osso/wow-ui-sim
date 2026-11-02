@@ -107,3 +107,94 @@ fn owned_items_use_mode_one_without_the_grid() {
     )
     .unwrap();
 }
+
+fn bag_item(item_id: u32) -> wow_ui_sim::lua_api::state::BagItem {
+    wow_ui_sim::lua_api::state::BagItem {
+        item_id,
+        stack_count: 1,
+        hyperlink: None,
+        durability: None,
+        applied_transmog: None,
+    }
+}
+
+#[test]
+fn same_mode_replacement_reports_only_the_clear_except_owned_items() {
+    let env = env();
+    env.exec(
+        r#"
+        C_Spell.PickupSpell(853)
+        -- WM54 Q1: a typed Spell-to-Spell replacement emits no set-side event.
+        local log = record(function() C_Spell.PickupSpell(642) end)
+        assert(log == 'ACTIONBAR_HIDEGRID;CURSOR_CHANGED,true,0,3,0;ACTIONBAR_SHOWGRID', log)
+        assert(select(4, GetCursorInfo()) == 642)
+        ClearCursor()
+        -- Owned Item-to-Item still fires: its previous mode is read after the
+        -- clear. Default backpack: Hearthstone in slot 1, water in slot 2.
+        C_Container.PickupContainerItem(0, 1)
+        log = record(function() C_Container.PickupContainerItem(0, 2) end)
+        assert(log == 'ACTIONBAR_HIDEGRID;CURSOR_CHANGED,true,0,1,0;ACTIONBAR_SHOWGRID;CURSOR_CHANGED,false,1,0,0', log)
+        local kind, item = GetCursorInfo()
+        assert(kind == 'item' and item == 159, tostring(item))
+        assert(C_Container.GetContainerItemID(0, 2) == 6948)
+    "#,
+    )
+    .unwrap();
+}
+
+#[test]
+fn owned_item_grid_needs_a_use_spell_or_inventory_type_outside_class_17() {
+    let env = env();
+    {
+        let mut sim = env.state().borrow_mut();
+        // Worn Shortsword: InventoryType 21, no item effects.
+        sim.bag_items.insert((0, 5), bag_item(25));
+        // Linen Cloth: class 7, InventoryType 0, no item effects.
+        sim.bag_items.insert((0, 6), bag_item(2589));
+        // Pet Cage: class 17 with use spell 123302.
+        sim.bag_items.insert((0, 7), bag_item(82800));
+    }
+    env.exec(
+        r#"
+        local function pickup(slot)
+            ClearCursor()
+            local log = record(function() C_Container.PickupContainerItem(0, slot) end)
+            C_Container.PickupContainerItem(0, slot)
+            return log
+        end
+        local shown = 'ACTIONBAR_SHOWGRID;CURSOR_CHANGED,false,1,0,0'
+        local hidden = 'CURSOR_CHANGED,false,1,0,0'
+        -- Hearthstone: use spell 8690, InventoryType 0.
+        assert(pickup(1) == shown, 'use spell')
+        assert(pickup(5) == shown, 'inventory type')
+        assert(pickup(6) == hidden, 'neither')
+        assert(pickup(7) == hidden, 'class 17 wins over its use spell')
+    "#,
+    )
+    .unwrap();
+}
+
+#[test]
+fn notification_reads_the_cursor_when_it_fires() {
+    let env = env();
+    env.exec(
+        r#"
+        local reentered = false
+        local clearer = CreateFrame('Frame')
+        clearer:RegisterEvent('ACTIONBAR_SHOWGRID')
+        clearer:SetScript('OnEvent', function()
+            if not reentered then
+                reentered = true
+                ClearCursor()
+            end
+        end)
+        local log = record(function() C_Spell.PickupSpell(853) end)
+        -- The set-side event keeps its saved previous mode 0 but reports the
+        -- cursor the SHOWGRID handler emptied (WM54 Q1).
+        assert(log:sub(-#'CURSOR_CHANGED,true,0,0,0') == 'CURSOR_CHANGED,true,0,0,0', log)
+        assert(log:find('CURSOR_CHANGED,true,0,3,0', 1, true), log)
+        assert(GetCursorInfo() == nil)
+    "#,
+    )
+    .unwrap();
+}
