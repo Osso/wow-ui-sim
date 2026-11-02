@@ -1088,6 +1088,13 @@ impl Default for SimState {
 }
 
 impl SimState {
+    /// Resolve supplied item metadata before the generated catalog.
+    pub fn item_info(&self, item_id: u32) -> Option<&crate::items::ItemInfo> {
+        self.item_overrides
+            .get(&item_id)
+            .or_else(|| crate::items::get_item(item_id))
+    }
+
     fn seed_default_game_state(&mut self) {
         self.calendar_event_indices = crate::c_api::c_calendar::seeded_event_indices();
         self.action_bars = default_action_bars();

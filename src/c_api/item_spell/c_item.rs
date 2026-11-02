@@ -393,9 +393,11 @@ fn c_item_is_item_bind_to_account(state: &mut LuaState) -> LuaResult<u32> {
     // ItemConstantsDocumentation: ItemBind 7/8/9 are the three account modes.
     // INFERRED: the generic account predicate includes until-equipped mode;
     // this reads intrinsic metadata, not an individual item's bound/owner state.
-    let account_bound = id
-        .and_then(items::get_item)
-        .is_some_and(|item| matches!(item.bonding, 7..=9));
+    let account_bound = {
+        let host = borrow_state(state)?;
+        id.and_then(|id| host.item_info(id))
+            .is_some_and(|item| matches!(item.bonding, 7..=9))
+    };
     state.push(Val::Bool(account_bound));
     Ok(1)
 }
@@ -405,9 +407,12 @@ fn c_item_is_item_bind_to_account(state: &mut LuaState) -> LuaResult<u32> {
 fn c_item_is_item_bind_to_account_until_equip(state: &mut LuaState) -> LuaResult<u32> {
     const BIND_TO_ACCOUNT_UNTIL_EQUIPPED: u8 = 9;
     let value = rilua::table_security::unwrap_secret(state, stack_val(state, 1))?;
-    let until_equipped = parse_item_id_key(state, value)
-        .and_then(items::get_item)
-        .is_some_and(|item| item.bonding == BIND_TO_ACCOUNT_UNTIL_EQUIPPED);
+    let id = parse_item_id_key(state, value);
+    let until_equipped = {
+        let host = borrow_state(state)?;
+        id.and_then(|id| host.item_info(id))
+            .is_some_and(|item| item.bonding == BIND_TO_ACCOUNT_UNTIL_EQUIPPED)
+    };
     state.push(Val::Bool(until_equipped));
     Ok(1)
 }

@@ -6,7 +6,7 @@ Audit all 34 retained inventory occurrences against default retail 12.1.0. All t
 
 ## Bounded closures
 
-Three unused removed members remain absent after repeated ordinary/raw lookup. Neighbor namespaces stay callable; classic profiles retain prior registration. `C_Item.IsItemBindToAccountUntilEquip` reads intrinsic item bonding metadata (ItemBind 9), accepting ID, numeric string and item hyperlink. Unknown IDs/invalid strings return false. This does not model per-instance binding, ownership or refund eligibility. Existing secret argument boundary is reused; no new security parity claim.
+Three unused removed members remain absent after repeated ordinary/raw lookup. Neighbor namespaces stay callable; classic profiles retain prior registration. `C_Item.IsItemBindToAccountUntilEquip` reads intrinsic item bonding metadata (ItemBind 9), accepting ID, numeric string and item hyperlink. Explicit host item records take precedence over generated catalog data; the overlay is empty by default. Unknown IDs/invalid strings return false. This does not model per-instance binding, ownership or refund eligibility. Existing secret argument boundary is reused; no new security parity claim.
 
 ## Tests
 
