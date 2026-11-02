@@ -28,6 +28,7 @@ Production `0745fe84f` supplies full bar producers, HUD selectors and host feeds
 - [ ] Host `replace_ui_widget_set`, `update_ui_widget`, and `remove_ui_widget` publish new state before synchronous events. Unknown-set/type-mismatched updates fail without mutation or notification; membership removal preserves independent visualization snapshots.
 - [ ] Host state updates become visible through the existing cached manager: `UPDATE_UI_WIDGET` performs incremental updates and `UPDATE_ALL_UI_WIDGETS` performs full reconciliation against current supplied state.
 - [ ] Incremental updates publish `unitToken`, not `unit`: unitless events omit it, token events contain the token, and GUID events contain an empty string. The cached consumer's `unit` filter therefore does not filter these events. `UPDATE_ALL_UI_WIDGETS` carries no payload.
+- [ ] GUID registrations are reference-counted, so unregistering one of multiple registrations keeps the others active.
 - [ ] Full reconciliation activates current members and removes consumers whose membership has been removed, preserving supplied ordering.
 - [ ] Hidden visualization state and subsequent activation are handled by actual manager consumers, rather than only by query snapshots.
 - [ ] IconAndText dynamic states 3/2 show the acquired dynamic child through normal supplied-state updates; ordinary state 1 hides it and hidden state 0 releases the frame. Cached-consumer child visibility is distinct from flash timing and native parity.
