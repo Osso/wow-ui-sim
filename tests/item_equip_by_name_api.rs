@@ -88,6 +88,37 @@ fn direct_request_retains_cursor_and_lock_follows_the_owned_item() {
 }
 
 #[test]
+fn unbound_bop_and_ineligible_boe_items_do_not_open_a_binding_prompt() {
+    let env = WowLuaEnv::new().unwrap();
+    {
+        let mut sim = env.state().borrow_mut();
+        sim.bag_items.clear();
+        // 211993 has Bonding 1; 25 has Bonding 2 in the 70391 source data.
+        sim.bag_items.insert((0, 1), item(211993, Some(11)));
+        sim.bag_items.insert((0, 2), item(25, Some(12)));
+        sim.item_equip.inputs.insert(
+            12,
+            OwnedItemEquipInputs {
+                confirmation_eligible: Some(false),
+                ..Default::default()
+            },
+        );
+    }
+    env.exec(
+        r#"
+        C_Item.EquipItemByName(211993)
+        assert(not CursorHasItem() and C_Container.GetContainerItemInfo(0, 1).isLocked)
+        C_Item.EquipItemByName(25)
+        assert(not CursorHasItem() and C_Container.GetContainerItemInfo(0, 2).isLocked)
+    "#,
+    )
+    .unwrap();
+    let sim = env.state().borrow();
+    assert_eq!(sim.item_equip.requests.len(), 2);
+    assert!(sim.item_equip.pending_confirmation.is_none());
+}
+
+#[test]
 fn automatic_class_six_clears_without_request() {
     let env = WowLuaEnv::new().unwrap();
     {
