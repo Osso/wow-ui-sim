@@ -74,8 +74,14 @@ pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
         table_set_rust_fn_static(state, namespace, "SearchRecentAllies", search_recent_allies)?;
     }
     table_set_rust_fn_static(state, namespace, "GetRecentAllies", get_recent_allies)?;
-    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::WowForever {
+    if matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail
+            | crate::client_profile::ClientProfile::WowForever
+    ) {
         table_set_rust_fn_static(state, namespace, "IsSystemEnabled", is_system_enabled)?;
+    }
+    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::WowForever {
         table_set_rust_fn_static(
             state,
             namespace,
