@@ -44,7 +44,7 @@ fn set_date(state: &mut LuaState) -> LuaResult<u32> {
     report_invalid(state, "CALENDAR_ERROR_INVALID_DATE")
 }
 
-fn read_index(state: &mut LuaState, index: i32, usage: &str) -> LuaResult<i32> {
+pub(super) fn read_index(state: &mut LuaState, index: i32, usage: &str) -> LuaResult<i32> {
     let number = numeric_argument(state, index)?
         .filter(|n| n.is_finite() && (0.0..=f64::from(u32::MAX)).contains(n))
         .ok_or_else(|| runtime_error(usage.to_owned()))?
