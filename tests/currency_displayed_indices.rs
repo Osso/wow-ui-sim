@@ -35,7 +35,7 @@ pub(crate) fn with_token_ui(probe: &str) {
 #[test]
 fn currency_filter_account_data_query_allows_original_token_ui_update() {
     with_token_ui(
-        r#"
+        r##"
         local C = C_CurrencyInfo
         assert(C.GetCurrencyFilter() == 1)
         assert(C.DoesCurrentFilterRequireAccountCurrencyData() == false)
@@ -57,7 +57,7 @@ fn currency_filter_account_data_query_allows_original_token_ui_update() {
         assert(not pcall(C.SetCurrencyFilter))
         assert(not pcall(C.SetCurrencyFilter, nil))
         assert(C.GetCurrencyFilter() == 0 and updates == 6)
-        "#,
+        "##,
     );
 }
 
