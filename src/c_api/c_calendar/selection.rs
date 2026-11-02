@@ -90,6 +90,27 @@ fn get_context(state: &mut LuaState) -> LuaResult<u32> {
     get_selection(state, true)
 }
 
+pub(super) fn resolve_selection(
+    host: &crate::lua_api::state::SimState,
+    selection: &CalendarSelection,
+) -> Option<CalendarEventIndexInfo> {
+    let offset = selection.month - month_number(host.calendar_displayed_month);
+    if !(-1..=1).contains(&offset) {
+        return None;
+    }
+    let rows = host
+        .calendar_day_events
+        .get(&(offset as i32, selection.month_day))?;
+    let index = rows
+        .iter()
+        .position(|row| row.event_id == selection.event_id)?;
+    Some(CalendarEventIndexInfo {
+        offset_months: offset as i32,
+        month_day: selection.month_day as i32,
+        event_index: index as i32 + 1,
+    })
+}
+
 fn get_selection(state: &mut LuaState, context: bool) -> LuaResult<u32> {
     let result = {
         let host = borrow_state(state)?;
@@ -98,23 +119,9 @@ fn get_selection(state: &mut LuaState, context: bool) -> LuaResult<u32> {
         } else {
             &host.calendar_opened_selection
         };
-        selection.as_ref().and_then(|selection| {
-            let offset = selection.month - month_number(host.calendar_displayed_month);
-            if !(-1..=1).contains(&offset) {
-                return None;
-            }
-            let rows = host
-                .calendar_day_events
-                .get(&(offset as i32, selection.month_day))?;
-            let index = rows
-                .iter()
-                .position(|row| row.event_id == selection.event_id)?;
-            Some(CalendarEventIndexInfo {
-                offset_months: offset as i32,
-                month_day: selection.month_day as i32,
-                event_index: index as i32 + 1,
-            })
-        })
+        selection
+            .as_ref()
+            .and_then(|selection| resolve_selection(&host, selection))
     };
     if let Some(info) = result {
         push_event_index_info(state, Some(info));

@@ -2,6 +2,7 @@
 pub(crate) mod civil;
 mod club;
 mod context_policy;
+mod context_reads;
 mod day_event_projection;
 mod day_event_queries;
 pub mod day_event_record;
@@ -103,6 +104,7 @@ pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
         club::register(state, namespace)?;
         selection::register(state, namespace)?;
         context_policy::register(state, namespace)?;
+        context_reads::register(state, namespace)?;
         view_info::register(state, namespace)?;
         table_set_rust_fn_static(
             state,
