@@ -62,6 +62,40 @@ fn currency_filter_account_data_query_allows_original_token_ui_update() {
 }
 
 #[test]
+fn currency_filter_supplied_account_response_defers_projection() {
+    let env = wow_ui_sim::lua_api::WowLuaEnv::new().unwrap();
+    {
+        let mut state = env.state().borrow_mut();
+        state.currency_list.account_currency_request = true;
+        let mut info = state.currency_info.get(&2806).unwrap().clone();
+        info.name = "Supplied account currency".into();
+        state.currency_info.insert(990001, info);
+    }
+    env.exec(r#"
+        local watcher = CreateFrame("Frame")
+        watcher:RegisterEvent("ACCOUNT_CHARACTER_CURRENCY_DATA_RECEIVED")
+        watcher:SetScript("OnEvent", function() AccountEvents = (AccountEvents or 0) + 1 end)
+        C_CurrencyInfo.SetCurrencyFilter(2)
+        assert(not C_CurrencyInfo.IsAccountCharacterCurrencyDataReady())
+        assert(C_CurrencyInfo.GetCurrencyListSize() == 19)
+        C_CurrencyInfo.SetCurrencyFilter(1)
+        assert(not C_CurrencyInfo.IsAccountCharacterCurrencyDataReady())
+        C_CurrencyInfo.SetCurrencyFilter(2)
+    "#).unwrap();
+    let mut row = *wow_ui_sim::lua_api::globals::currency_data::get_currency_list_entry(3).unwrap();
+    row.currency_id = 990001;
+    env.complete_account_currency_request(vec![row]).unwrap();
+    env.exec(r#"
+        assert(AccountEvents == 1)
+        assert(C_CurrencyInfo.IsAccountCharacterCurrencyDataReady())
+        assert(C_CurrencyInfo.GetCurrencyListSize() == 20)
+        assert(C_CurrencyInfo.GetCurrencyListInfo(20).name == "Supplied account currency")
+        C_CurrencyInfo.SetCurrencyFilter(1)
+        assert(C_CurrencyInfo.GetCurrencyListSize() == 19)
+    "#).unwrap();
+}
+
+#[test]
 fn currency_displayed_indices_original_headers_collapse_shift_and_restore() {
     with_token_ui(
         r#"

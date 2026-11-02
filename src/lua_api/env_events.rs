@@ -223,6 +223,19 @@ fn matching_slash_handlers(
 }
 
 impl WowLuaEnv {
+    /// Supply an account-currency response and notify listeners.
+    #[cfg(feature = "client-retail")]
+    pub fn complete_account_currency_request(
+        &self,
+        rows: Vec<crate::lua_api::globals::currency_data::CurrencyEntry>,
+    ) -> Result<()> {
+        self.state()
+            .borrow_mut()
+            .currency_list
+            .complete_account_request(rows);
+        self.fire_event("ACCOUNT_CHARACTER_CURRENCY_DATA_RECEIVED")
+    }
+
     /// Fire an event to all registered frames.
     pub fn fire_event(&self, event: &str) -> Result<()> {
         self.fire_event_with_args(event, &[])

@@ -1,0 +1,7 @@
+# Retail currency filter and account data
+
+Retail initializes the session filter to `DiscoveredOnly` (1). Filters 0 and 1 use the base list; filter 2 requires account currency data. Every accepted selection emits `CURRENCY_DISPLAY_UPDATE`, including repeated selections. The setter accepts numeric conversion and truncation to a signed 32-bit value, rejects nil and values outside 0–2, and converts non-convertible non-nil inputs to 0. It returns no values.
+
+Readiness requires account and transaction loading to be clear and no pending character requests. It starts true. A supplied `account_currency_request` input controls whether selection 2 starts loading; its default is false. During loading, selection 2 retains the previous projection. A supplied response clears all blockers, installs supplied currency rows and emits `ACCOUNT_CHARACTER_CURRENCY_DATA_RECEIVED`. When filter 2 is selected, its rows are added to the base list. Other filters do not cancel requests.
+
+Native evidence: WM60, Retail 12.1.5 build 70688, establishes the filter mapping, initial value, conversion hazard, events, and readiness predicate. Persistence is inferred as session-only. The native request-start and suppression conditions, server response timing, and live delivery ordering are unknown; the supplied input is not a claim about those conditions. Account rows and their currency information must be supplied by the host.
