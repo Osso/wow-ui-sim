@@ -1,6 +1,7 @@
 //! Host-supplied Calendar day records and synthetic event-index relations.
 pub(crate) mod civil;
 mod club;
+mod context_actions;
 mod context_policy;
 mod context_reads;
 mod create_event;
@@ -17,6 +18,7 @@ mod editable_time;
 mod editable_title;
 mod editable_type;
 mod selection;
+mod submission_policy;
 mod view_info;
 
 use super::helpers::ensure_namespace;
@@ -76,6 +78,8 @@ pub struct CalendarEventIndexInfo {
 #[derive(Debug, Clone, Default)]
 pub struct CalendarContextPolicy {
     pub action_pending: bool,
+    /// Shared create/paste throttle timestamp in simulator ticks; 0 means none.
+    pub last_submit_tick: u32,
     pub complaints_enabled: bool,
     pub complaint_policy: i32,
     pub guild_club_id: Option<u64>,
@@ -102,6 +106,8 @@ pub struct CalendarEditableAccess {
     pub locked: bool,
     pub local_edit_credential: Option<u64>,
     pub dirty: bool,
+    /// Set by local creation until a server response replaces the record.
+    pub is_new: bool,
     pub selected_invite_id: Option<String>,
     pub invites: Vec<CalendarInviteRecord>,
     pub sort_criterion: String,
@@ -162,6 +168,7 @@ pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
         selection::register(state, namespace)?;
         context_policy::register(state, namespace)?;
         context_reads::register(state, namespace)?;
+        context_actions::register(state, namespace)?;
         create_event::register(state, namespace)?;
         editable_reads::register(state, namespace)?;
         editable_status::register(state, namespace)?;

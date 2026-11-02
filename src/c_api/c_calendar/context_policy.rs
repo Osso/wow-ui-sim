@@ -86,7 +86,7 @@ fn can_complain(state: &mut LuaState) -> LuaResult<u32> {
     query(state, "CanComplain", complaint_allowed)
 }
 
-fn can_modify(host: &SimState, row: &CalendarDayEventRecord, removal: bool) -> bool {
+pub(super) fn can_modify(host: &SimState, row: &CalendarDayEventRecord, removal: bool) -> bool {
     if row.category_flags & 0xc40 == 0 {
         return row.invite_role_markers & 0x6 != 0;
     }

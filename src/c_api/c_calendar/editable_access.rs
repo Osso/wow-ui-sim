@@ -13,6 +13,16 @@ pub(super) fn can_edit(host: &SimState) -> bool {
     })
 }
 
+/// INFERRED: native self-invites require nonzero GUID type bits. Every valid GUID kind
+/// has a nonzero type field and an empty GUID is zero, so a present player GUID maps
+/// to that condition.
+pub(super) fn local_player_guid(host: &SimState) -> Option<String> {
+    host.player
+        .present
+        .then(|| existing_guid_for_unit(host, "player"))
+        .flatten()
+}
+
 pub(super) fn has_local_authority(host: &SimState) -> bool {
     host.calendar_context_policy
         .editable

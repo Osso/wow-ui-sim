@@ -1,5 +1,8 @@
 //! Guild-list rematching and context-menu clipboard/type reads.
-use super::{civil, push_event_index_info, selection::resolve_selection};
+use super::{
+    civil, push_event_index_info,
+    selection::{context_row, resolve_selection},
+};
 use crate::lua_api::methods::{borrow_state, create_string};
 use crate::lua_bridge::table_set_rust_fn_static;
 use rilua::vm::state::LuaState;
@@ -59,15 +62,7 @@ fn clipboard_exists(state: &mut LuaState) -> LuaResult<u32> {
 fn context_calendar_type(state: &mut LuaState) -> LuaResult<u32> {
     let calendar_type = {
         let host = borrow_state(state)?;
-        host.calendar_context_selection
-            .as_ref()
-            .and_then(|selection| resolve_selection(&host, selection))
-            .and_then(|info| {
-                host.calendar_day_events
-                    .get(&(info.offset_months, info.month_day as u32))
-                    .and_then(|rows| rows.get(info.event_index as usize - 1))
-            })
-            .map(|row| row.calendar_type.clone())
+        context_row(&host).map(|row| row.calendar_type.clone())
     };
     let value = match calendar_type {
         Some(name) => {

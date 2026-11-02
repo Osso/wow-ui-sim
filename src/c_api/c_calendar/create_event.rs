@@ -1,10 +1,9 @@
 //! Local creation of a new editable Calendar event (Retail 70688 WM40).
 use super::{
     CalendarEditableAccess, CalendarInviteRecord, club::parse_record_club_id,
-    editable_time::report_invalid,
+    editable_access::local_player_guid, editable_time::report_invalid,
 };
 use crate::lua_api::globals::state_backed_queries::dispatch_event_now;
-use crate::lua_api::globals::unit_misc::existing_guid_for_unit;
 use crate::lua_api::methods::{borrow_state, borrow_state_mut};
 use crate::lua_api::state::SimState;
 use crate::lua_bridge::table_set_rust_fn_static;
@@ -118,16 +117,6 @@ fn find_guild_club_id(host: &SimState) -> Option<u64> {
         .and_then(|club| parse_record_club_id(&club.id))
 }
 
-/// INFERRED: native self-invites require nonzero GUID type bits. Every valid GUID kind
-/// has a nonzero type field and an empty GUID is zero, so a present player GUID maps
-/// to that condition.
-fn local_player_guid(host: &SimState) -> Option<String> {
-    host.player
-        .present
-        .then(|| existing_guid_for_unit(host, "player"))
-        .flatten()
-}
-
 fn new_record(host: &SimState, kind: Kind, guild_club_id: Option<u64>) -> CalendarEditableAccess {
     let player = local_player_guid(host);
     let invites = kind
@@ -150,6 +139,7 @@ fn new_record(host: &SimState, kind: Kind, guild_club_id: Option<u64>) -> Calend
         invites,
         club_id,
         dirty: club_id.is_some(),
+        is_new: true,
         ..Default::default()
     }
 }

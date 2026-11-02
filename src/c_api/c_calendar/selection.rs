@@ -111,6 +111,19 @@ pub(super) fn resolve_selection(
     })
 }
 
+/// The context-menu selection's current day row, rematched by event identity.
+pub(super) fn context_row(
+    host: &crate::lua_api::state::SimState,
+) -> Option<&super::day_event_record::CalendarDayEventRecord> {
+    let info = host
+        .calendar_context_selection
+        .as_ref()
+        .and_then(|selection| resolve_selection(host, selection))?;
+    host.calendar_day_events
+        .get(&(info.offset_months, info.month_day as u32))?
+        .get(info.event_index as usize - 1)
+}
+
 fn get_selection(state: &mut LuaState, context: bool) -> LuaResult<u32> {
     let result = {
         let host = borrow_state(state)?;

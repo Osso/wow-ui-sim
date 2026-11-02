@@ -7,7 +7,7 @@ Evidence: WM40, Retail 12.1.5 build 70688, reviewed static decoding (PARTIAL for
 ## What it must do
 
 - [ ] Each call returns zero values and parses no arguments.
-- [ ] A successful call replaces the editable event record and its invites, and clears the opened-event selection. The context-menu selection is kept.
+- [ ] A successful call replaces the editable event record and its invites, and clears the opened-event selection. The context-menu selection is kept. The new record is marked new; [removal and submission](calendar-context-actions.md) read that marker.
 - [ ] The new record has event ID 0, event type 0, empty title and description, texture ID 4294967295, and locked and auto-approve false. Its creator is the local-player GUID.
 - [ ] Month, day and relative year are -1 (unset). Hour and minute are -1, stored as all-ones unsigned 32-bit words. They are not the selected day or the current time.
 - [ ] Category flags are 0x1 (player), 0xc00 (guild signup), 0x40 (guild announcement) and 0x400 (community signup). `EventGetCalendarType` then reports `PLAYER`, `GUILD_EVENT`, `GUILD_ANNOUNCEMENT` and `COMMUNITY_EVENT`.
