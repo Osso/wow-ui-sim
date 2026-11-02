@@ -455,6 +455,7 @@ fn original_selection_renders_supplied_item_reward() {
             count: 3,
             quality: 2,
             is_usable: true,
+            item_id: None,
         });
     exec(&env, "QuestLog_SetSelection(1)");
     exec(

@@ -485,6 +485,7 @@ pub fn supply_choices(env: &ConsumerEnv, reversed: bool) {
         count: 1,
         quality: 3,
         is_usable: true,
+        item_id: None,
     };
     let seal = QuestRewardItem {
         name: "Patrol recovery seal".into(),
@@ -492,6 +493,7 @@ pub fn supply_choices(env: &ConsumerEnv, reversed: bool) {
         count: 3,
         quality: 2,
         is_usable: false,
+        item_id: None,
     };
     let mut sim = env.env.state().borrow_mut();
     sim.quest_log_entries

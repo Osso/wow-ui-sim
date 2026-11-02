@@ -66,6 +66,8 @@ pub struct QuestRewardItem {
     pub count: i32,
     pub quality: i32,
     pub is_usable: bool,
+    /// Supplied reward item ID; absent when the scenario does not name one.
+    pub item_id: Option<u32>,
 }
 
 /// Spell presentation returned to the original Wrath reward consumer.

@@ -38,6 +38,7 @@ fn seed_lost_expedition_one_reward(env: &WowLuaEnv) {
             count: 1,
             quality: 3,
             is_usable: true,
+            item_id: None,
         }],
     );
 }
@@ -108,6 +109,7 @@ fn get_quest_log_reward_info_indexes_each_reward_independently() {
                 count: 1,
                 quality: 2,
                 is_usable: true,
+                item_id: None,
             },
             QuestRewardItem {
                 name: "Second Reward".into(),
@@ -115,6 +117,7 @@ fn get_quest_log_reward_info_indexes_each_reward_independently() {
                 count: 5,
                 quality: 4,
                 is_usable: false,
+                item_id: None,
             },
         ],
     );
@@ -145,6 +148,7 @@ fn get_quest_log_reward_info_is_not_usable_field_round_trips_false() {
             count: 1,
             quality: 4,
             is_usable: false,
+            item_id: None,
         }],
     );
     let is_usable: bool = env

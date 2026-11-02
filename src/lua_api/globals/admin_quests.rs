@@ -247,6 +247,7 @@ fn seed_completed_quest_reward(entries: &mut [RichQuestLogEntry]) {
         count: 1,
         quality: 3,
         is_usable: true,
+        item_id: None,
     });
 }
 
