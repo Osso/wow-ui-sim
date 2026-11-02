@@ -629,6 +629,39 @@ fn calendar_description_edit_updates_supplied_event(env: &WowLuaEnv) {
 }
 
 prefork_full_ui_case! {
+fn calendar_create_player_event_replaces_editable_record(env: &WowLuaEnv) {
+    use wow_ui_sim::c_api::c_calendar::{CalendarEditableAccess, DisplayedMonth};
+    load_addon(&env.loader_env(), &calendar_toc()).unwrap();
+    {
+        let mut state = env.state().borrow_mut();
+        state.calendar_context_policy.editable = Some(CalendarEditableAccess {
+            title: b"old event".to_vec(),
+            local_edit_credential: Some(123),
+            ..Default::default()
+        });
+        state.calendar_displayed_month = DisplayedMonth { year: 2026, month: 4 };
+        state.calendar_day_events.insert((0, 15), vec![calendar_test_record("old-event")]);
+    }
+    env.exec(r#"
+        C_Calendar.OpenEvent(0, 15, 1)
+        C_Calendar.ContextMenuSelectEvent(0, 15, 1)
+        local day = CreateFrame('Button')
+        day:SetID(3)
+        day.day = 15
+        day.monthOffset = 0
+        CalendarDayContextMenu_CreateEvent(day)
+        assert(CalendarCreateEventFrame:IsShown())
+        assert(C_Calendar.GetEventIndex() == nil)
+        assert(C_Calendar.ContextMenuGetEventIndex().eventIndex == 1)
+    "#).unwrap();
+    let state = env.state().borrow();
+    let event = state.calendar_context_policy.editable.as_ref().expect("new editable event");
+    assert_ne!(event.title, b"old event");
+    assert_eq!(event.date, Some((3, 14, 26)));
+}
+}
+
+prefork_full_ui_case! {
 fn calendar_texture_picker_sets_editable_event_type(env: &WowLuaEnv) {
     use wow_ui_sim::c_api::c_calendar::{CalendarEditableAccess, CalendarTextureRecord};
     load_addon(&env.loader_env(), &calendar_toc()).unwrap();
