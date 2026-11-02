@@ -34,8 +34,8 @@ fn first_matching_locked_copy_prevents_fallthrough() {
     }
     env.exec(
         r#"
-        local first = ItemLocation:CreateFromBagAndSlot(0, 2)
-        local second = ItemLocation:CreateFromBagAndSlot(0, 3)
+        local first = { bagID = 0, slotIndex = 2 }
+        local second = { bagID = 0, slotIndex = 3 }
         assert(C_Item.IsLocked(first) and not C_Item.IsLocked(second))
         C_Item.EquipItemByName('Skinning Knife')
         assert(C_Item.IsLocked(first) and not C_Item.IsLocked(second))
@@ -61,7 +61,7 @@ fn direct_request_retains_cursor_and_lock_follows_the_owned_item() {
         C_Item.EquipItemByName('item:7005', 16)
         local kind, id = GetCursorInfo()
         assert(kind == 'item' and id == 6948)
-        assert(C_Item.IsLocked(ItemLocation:CreateFromBagAndSlot(0, 2)))
+        assert(C_Item.IsLocked({ bagID = 0, slotIndex = 2 }))
         ClearCursor()
         assert(C_Container.GetContainerItemInfo(0, 2).isLocked)
         assert(not pcall(C_Item.EquipItemByName, 7005, 20))
@@ -81,7 +81,7 @@ fn direct_request_retains_cursor_and_lock_follows_the_owned_item() {
         r#"
         assert(not C_Container.GetContainerItemInfo(0, 2).isLocked)
         assert(C_Container.GetContainerItemInfo(0, 5).isLocked)
-        assert(C_Item.IsLocked(ItemLocation:CreateFromBagAndSlot(0, 5)))
+        assert(C_Item.IsLocked({ bagID = 0, slotIndex = 5 }))
     "#,
     )
     .unwrap();
