@@ -32,6 +32,8 @@ fn item_child_info_selects_supplied_rows_and_returns_flat_pairs() {
         assert(#second == 2 and second[1] == 102 and second[2] == 1)
         assert(#C_Item.GetItemChildInfo(6948, 3) == 0)
         assert(#C_Item.GetItemChildInfo(7005) == 0)
+        local catalog = C_Item.GetItemChildInfo(127417, 16)
+        assert(#catalog == 2 and catalog[1] == 1728 and catalog[2] == 15)
         assert(not pcall(C_Item.GetItemChildInfo))
     "#,
     )
