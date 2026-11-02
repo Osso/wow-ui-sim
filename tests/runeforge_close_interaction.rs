@@ -76,12 +76,12 @@ fn runeforge_close_reenters_through_original_on_hide(env: &WowLuaEnv) {
     // so its hide carries 48 and the outer hide sees the reset type.
     assert_eq!(read_close_log(env), (2, "48,0".into(), false));
     let state = env.state().borrow();
-    // The item slot's own OnHide (Blizzard_RuneforgeItemSlot.lua:119-123) reaches
-    // Blizzard_RuneforgeFrame.lua:472, which calls the separately unmodeled
-    // GetRuneforgeModifiers; any other error fails.
-    let unrelated = "attempt to call field 'GetRuneforgeModifiers'";
+    // The item slot's own OnHide reset (Blizzard_RuneforgeItemSlot.lua:119-123,
+    // 236) notifies consumers that call the separately unmodeled
+    // IsValidRuneforgeBaseItem and GetRuneforgeModifiers; any other error fails.
+    let item_slot_reset = "in function 'ResetItemSlot'";
     assert!(
-        state.lua_errors.iter().all(|error| error.contains(unrelated)),
+        state.lua_errors.iter().all(|error| error.contains(item_slot_reset)),
         "close errors: {:?}",
         state.lua_errors
     );
