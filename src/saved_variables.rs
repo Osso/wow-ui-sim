@@ -149,16 +149,7 @@ pub struct SavedVariablesManager {
 
 impl SavedVariablesManager {
     pub fn new() -> Self {
-        let storage_dir = std::env::var_os("WOW_SIM_STORAGE_DIR")
-            .filter(|value| !value.is_empty())
-            .map(PathBuf::from)
-            .unwrap_or_else(|| {
-                dirs::data_local_dir()
-                    .unwrap_or_else(|| PathBuf::from("."))
-                    .join("wow-sim")
-                    .join("SavedVariables")
-            });
-        Self::with_storage_dir(storage_dir)
+        Self::with_storage_dir(crate::paths::default_session_wtf_path().join("SavedVariables"))
     }
 
     pub fn with_storage_dir(storage_dir: PathBuf) -> Self {

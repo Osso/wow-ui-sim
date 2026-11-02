@@ -2,13 +2,17 @@ use wow_ui_sim::logging;
 use wow_ui_sim::lua_api::WowLuaEnv;
 use wow_ui_sim::saved_variables::SavedVariablesManager;
 
-pub fn configure_saved_vars(no_saved_vars_arg: bool) -> Option<SavedVariablesManager> {
+pub fn configure_saved_vars(
+    no_saved_vars_arg: bool,
+    session_wtf_path: &std::path::Path,
+) -> Option<SavedVariablesManager> {
     if should_skip_saved_vars(no_saved_vars_arg) {
         logging::println_elapsed("SavedVariables loading disabled");
         return None;
     }
 
-    let mut saved_vars = SavedVariablesManager::new();
+    let mut saved_vars =
+        SavedVariablesManager::with_storage_dir(session_wtf_path.join("SavedVariables"));
     if let Some(wtf) = wow_ui_sim::paths::default_wtf_config() {
         logging::println_elapsed(&format!(
             "WTF import source (read-only): {} @ {}/{}",
@@ -21,8 +25,11 @@ pub fn configure_saved_vars(no_saved_vars_arg: bool) -> Option<SavedVariablesMan
     Some(saved_vars)
 }
 
-pub fn configure_edit_mode_cache_vars() -> Option<SavedVariablesManager> {
-    let mut saved_vars = SavedVariablesManager::new();
+pub fn configure_edit_mode_cache_vars(
+    session_wtf_path: &std::path::Path,
+) -> Option<SavedVariablesManager> {
+    let mut saved_vars =
+        SavedVariablesManager::with_storage_dir(session_wtf_path.join("SavedVariables"));
     if let Some(wtf) = wow_ui_sim::paths::default_wtf_config() {
         logging::println_elapsed(&format!(
             "EditMode cache source (read-only): {} @ {}/{}",

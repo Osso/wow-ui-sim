@@ -401,7 +401,7 @@ fn c_addons_save_addons(state: &mut LuaState) -> LuaResult<u32> {
     let mut sim = borrow_state_mut(state)?;
     sim.addon_saved_enable_state = Some(AddonEnableSnapshot::from_addons(&sim.addons));
     sim.addon_saved_version_check_enabled = Some(version_check_enabled);
-    if let Err(error) = save_local_addon_enable_overrides(&sim.addons) {
+    if let Err(error) = save_local_addon_enable_overrides(&sim.session_wtf_path, &sim.addons) {
         eprintln!("[C_AddOns] failed to save local AddOns.txt: {error}");
     }
     Ok(0)

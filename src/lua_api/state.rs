@@ -21,7 +21,8 @@ pub struct WrathUnitTapState {
 }
 
 macro_rules! build_empty_sim_state {
-    ($collections:ident, $runtime:ident) => {{
+    ($collections:ident, $runtime:ident, $session_wtf_path:ident) => {{
+        let cvars = CVarStorage::with_session_wtf_path(&$session_wtf_path);
         let quest_log_entries = QuestLogState::seeded();
         Self {
             loot_specialization: 0,
@@ -60,7 +61,8 @@ macro_rules! build_empty_sim_state {
             account_cvar_chunks_ready: [true; 2],
             account_cvar_callback_pending: false,
             ui_reloaded: false,
-            cvars: CVarStorage::new(),
+            session_wtf_path: $session_wtf_path,
+            cvars,
             #[cfg(feature = "client-wrath")]
             legacy_gamma: 0.0,
             guild_roster_selection: 0,
@@ -1070,13 +1072,21 @@ fn build_initialized_empty_runtime_state(start_time: Instant) -> EmptyRuntimeSta
 
 impl Default for SimState {
     fn default() -> Self {
-        let mut state = Self::new_empty();
-        state.seed_default_game_state();
-        state
+        Self::with_session_wtf_path(crate::paths::default_constructor_session_wtf_path())
     }
 }
 
 impl SimState {
+    pub(crate) fn with_session_wtf_path(session_wtf_path: PathBuf) -> Self {
+        let mut state = Self::build_empty_state(
+            EmptyStateCollections::new(),
+            EmptyRuntimeState::new(),
+            session_wtf_path,
+        );
+        state.seed_default_game_state();
+        state
+    }
+
     fn seed_default_game_state(&mut self) {
         self.calendar_event_indices = crate::c_api::c_calendar::seeded_event_indices();
         self.action_bars = default_action_bars();
@@ -1100,12 +1110,12 @@ impl SimState {
         ];
     }
 
-    fn new_empty() -> Self {
-        Self::build_empty_state(EmptyStateCollections::new(), EmptyRuntimeState::new())
-    }
-
-    fn build_empty_state(c: EmptyStateCollections, r: EmptyRuntimeState) -> Self {
-        build_empty_sim_state!(c, r)
+    fn build_empty_state(
+        c: EmptyStateCollections,
+        r: EmptyRuntimeState,
+        session_wtf_path: PathBuf,
+    ) -> Self {
+        build_empty_sim_state!(c, r, session_wtf_path)
     }
 
     /// Look up bag item at (bag, slot). Returns (item_id, stack_count).

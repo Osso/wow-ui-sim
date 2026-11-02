@@ -5,6 +5,8 @@ fn character_panel_movement_speed_survives_open_close_and_updates() {
     let root = tempfile::tempdir().unwrap();
     let output = std::process::Command::new("timeout")
         .args(["90", env!("CARGO_BIN_EXE_wow-sim")])
+        .arg("--session-wtf-path")
+        .arg(root.path().join("data/wow-sim"))
         .args([
             "--no-addons",
             "--no-saved-vars",

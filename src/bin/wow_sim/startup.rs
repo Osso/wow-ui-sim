@@ -24,8 +24,12 @@ type InitResult = Result<
     Box<dyn Error>,
 >;
 
-pub(super) fn init_and_load(args: &Args, screen: ScreenKind) -> InitResult {
-    let env = WowLuaEnv::new().expect("failed to create Lua env");
+pub(super) fn init_and_load(
+    args: &Args,
+    screen: ScreenKind,
+    session_wtf_path: std::path::PathBuf,
+) -> InitResult {
+    let env = WowLuaEnv::with_session_wtf_path(session_wtf_path).expect("failed to create Lua env");
     initialize_and_load_env(args, screen, env)
 }
 
@@ -37,7 +41,8 @@ fn initialize_and_load_env(args: &Args, screen: ScreenKind, mut env: WowLuaEnv) 
         args.race.as_deref(),
     )
     .map_err(wow_ui_sim::Error::Other)?;
-    apply_initial_player_settings(&env, &startup_player_config(args), selection.as_ref())?;
+    let config = startup_player_config(args, &env.state().borrow().session_wtf_path);
+    apply_initial_player_settings(&env, &config, selection.as_ref())?;
     let font_system = create_font_system(args);
     init_environment(args, &env, &font_system)?;
     env.set_screen_mode(screen);
@@ -75,7 +80,9 @@ fn install_reload_loader(
         .and_then(SavedVariablesManager::wtf_config)
         .cloned();
     let edit_mode_cache = cache_config.map(|config| {
-        let mut cache = SavedVariablesManager::new();
+        let mut cache = SavedVariablesManager::with_storage_dir(
+            env.state().borrow().session_wtf_path.join("SavedVariables"),
+        );
         cache.set_wtf_config(config);
         cache
     });
@@ -108,10 +115,12 @@ mod tests {
     #[cfg(feature = "gui")]
     #[test]
     fn reload_ui_rebuilds_the_real_no_addons_startup() {
+        let session = tempfile::tempdir().unwrap();
         let args =
             Args::try_parse_from(["wow-sim", "--no-addons"]).expect("reload startup arguments");
         let (env, _font_system, saved_vars) =
-            init_and_load(&args, ScreenKind::Game).expect("real no-addons startup must load");
+            init_and_load(&args, ScreenKind::Game, session.path().to_path_buf())
+                .expect("real no-addons startup must load");
         assert!(saved_vars.is_some());
         assert!(
             env.eval::<bool>("return UIParent ~= nil and PlayerFrame ~= nil")
@@ -183,8 +192,10 @@ mod tests {
 
     #[cfg(feature = "gui")]
     fn run_edit_mode_reload_consumer() {
+        let session = tempfile::tempdir().unwrap();
         let args = Args::try_parse_from(["wow-sim", "--no-addons"]).unwrap();
-        let (env, _font_system, saved_vars) = init_and_load(&args, ScreenKind::Game).unwrap();
+        let (env, _font_system, saved_vars) =
+            init_and_load(&args, ScreenKind::Game, session.path().to_path_buf()).unwrap();
         wow_ui_sim::startup::fire_startup_events(&env);
         let before: String = env
             .eval("return EditModeManagerFrame:GetActiveLayoutInfo().layoutName")
@@ -216,7 +227,7 @@ mod tests {
         const TEST_LIMIT: u64 = 100_000_000;
         const OWNERS: [&str; 3] = ["EnhanceQoL", "AllTheThings", "EnhanceQoLSharedMedia"];
         const EARLY_OWNERS: [&str; 2] = ["EnhanceQoL", "AllTheThings"];
-        let env = run_trusted_finite_budget_probe(&OWNERS, &EARLY_OWNERS, TEST_LIMIT);
+        let (env, _session) = run_trusted_finite_budget_probe(&OWNERS, &EARLY_OWNERS, TEST_LIMIT);
         // LoadOnDemand triggers depend on the installed addon/event sequence.
         // Settle ticks may reset usage: inspect loaded state without inferring its trigger.
         let sim = env.state().borrow();
@@ -243,7 +254,7 @@ mod tests {
         owners: &[&str],
         early_owners: &[&str],
         test_limit: u64,
-    ) -> WowLuaEnv {
+    ) -> (WowLuaEnv, tempfile::TempDir) {
         assert!(
             std::env::var("WOW_SIM_NO_SOUND")
                 .is_ok_and(|value| value == "1" || value.eq_ignore_ascii_case("true")),
@@ -256,7 +267,9 @@ mod tests {
         assert_eq!(command_screen_size(&args.command), (1600.0, 1200.0));
         let screen = args.effective_screen();
         assert_eq!(screen, ScreenKind::Game);
-        let env = WowLuaEnv::new().unwrap_or_else(|_| panic!("probe environment creation failed"));
+        let session = tempfile::tempdir().unwrap();
+        let env = WowLuaEnv::with_session_wtf_path(session.path().to_path_buf())
+            .unwrap_or_else(|_| panic!("probe environment creation failed"));
         env.loader_env()
             .with_state(|state| {
                 for &owner in owners {
@@ -326,7 +339,7 @@ mod tests {
         super::super::settle_headless_startup(&env);
         snapshot(&env, "after_headless_settle");
         // Reaching this boundary proves pipeline return, not clean startup or native parity.
-        env
+        (env, session)
     }
 }
 
@@ -362,11 +375,11 @@ fn create_font_system(args: &Args) -> Rc<RefCell<WowFontSystem>> {
 
 /// Saved GUI class/race preferences apply only to GUI launches; headless
 /// commands start from the defaults so their results do not depend on them.
-fn startup_player_config(args: &Args) -> SimConfig {
+fn startup_player_config(args: &Args, session_wtf_path: &std::path::Path) -> SimConfig {
     if args.command.is_none() {
-        SimConfig::load()
+        SimConfig::load_from_session_wtf(session_wtf_path)
     } else {
-        SimConfig::default()
+        SimConfig::default_for_session(session_wtf_path)
     }
 }
 
@@ -432,16 +445,18 @@ fn configure_startup_state(
     // threshold hit.
     startup_trace::time_load_step("stop GC", || env.gc_stop());
     let mut saved_vars = startup_trace::time_load_step("configure saved variables", || {
-        saved_var_config::configure_saved_vars(args.no_saved_vars)
+        saved_var_config::configure_saved_vars(
+            args.no_saved_vars,
+            &env.state().borrow().session_wtf_path,
+        )
     });
     startup_trace::time_load_step("load keybindings", || {
         saved_var_config::load_keybindings_from_wtf(&env, saved_vars.as_ref())
     });
     let edit_mode_cache_vars = if saved_vars.is_none() {
-        startup_trace::time_load_step(
-            "configure edit mode cache",
-            saved_var_config::configure_edit_mode_cache_vars,
-        )
+        startup_trace::time_load_step("configure edit mode cache", || {
+            saved_var_config::configure_edit_mode_cache_vars(&env.state().borrow().session_wtf_path)
+        })
     } else {
         None
     };

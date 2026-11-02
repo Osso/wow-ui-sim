@@ -35,6 +35,8 @@ fn stable_reads_cached_money_event() {
     let root = tempfile::tempdir().unwrap();
     let output = std::process::Command::new("timeout")
         .args(["90", env!("CARGO_BIN_EXE_wow-sim")])
+        .arg("--session-wtf-path")
+        .arg(root.path().join("data/wow-sim"))
         .args([
             "--no-addons",
             "--no-saved-vars",

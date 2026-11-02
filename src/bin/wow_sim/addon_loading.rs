@@ -287,7 +287,9 @@ fn merged_addon_enable_overrides(
     env: &WowLuaEnv,
     saved_vars: &mut Option<SavedVariablesManager>,
 ) -> Option<HashMap<String, bool>> {
-    let mut overrides = addon_enable_overrides(saved_vars.as_ref()).unwrap_or_default();
+    let mut overrides =
+        addon_enable_overrides(saved_vars.as_ref(), &env.state().borrow().session_wtf_path)
+            .unwrap_or_default();
 
     if !env.state().borrow().ui_reloaded
         && let Some(saved_vars) = saved_vars.as_mut()

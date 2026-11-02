@@ -1,5 +1,5 @@
 use std::collections::HashMap;
-use std::path::PathBuf;
+use std::path::{Path, PathBuf};
 
 use wow_ui_sim::addon_enable_state::{local_addons_txt_path, read_addon_enable_overrides};
 use wow_ui_sim::saved_variables::SavedVariablesManager;
@@ -21,10 +21,13 @@ pub(super) fn addon_enabled(
 
 pub(super) fn addon_enable_overrides(
     saved_vars: Option<&SavedVariablesManager>,
+    session_wtf_path: &Path,
 ) -> Option<HashMap<String, bool>> {
     let mut overrides = character_addon_enable_overrides(saved_vars).unwrap_or_default();
 
-    if let Ok(local_overrides) = read_addon_enable_overrides(&local_addons_txt_path()) {
+    if let Ok(local_overrides) =
+        read_addon_enable_overrides(&local_addons_txt_path(session_wtf_path))
+    {
         overrides.extend(local_overrides);
     }
 
@@ -146,33 +149,30 @@ fn effective_addon_enabled(name: &str, toc: &TocFile, effective: &HashMap<String
 mod tests {
     use super::*;
     use std::path::Path;
-    use std::sync::Mutex;
 
-    static ADDONS_TXT_ENV_LOCK: Mutex<()> = Mutex::new(());
-
-    struct ScopedAddonsTxtEnv {
-        previous: Option<std::ffi::OsString>,
-    }
-
-    impl ScopedAddonsTxtEnv {
-        fn set(path: &Path) -> Self {
-            let previous = std::env::var_os("WOW_SIM_ADDONS_TXT");
-            unsafe {
-                std::env::set_var("WOW_SIM_ADDONS_TXT", path);
-            }
-            Self { previous }
+    // Keep the established read-only import override out of parallel tests.
+    fn is_isolated_import_process(test_name: &str) -> bool {
+        const CHILD_TEST: &str = "WOW_SIM_ENABLE_STATE_CHILD_TEST";
+        if std::env::var(CHILD_TEST).as_deref() == Ok(test_name) {
+            return true;
         }
-    }
-
-    impl Drop for ScopedAddonsTxtEnv {
-        fn drop(&mut self) {
-            unsafe {
-                match &self.previous {
-                    Some(previous) => std::env::set_var("WOW_SIM_ADDONS_TXT", previous),
-                    None => std::env::remove_var("WOW_SIM_ADDONS_TXT"),
-                }
-            }
-        }
+        let output = std::process::Command::new(std::env::current_exe().unwrap())
+            .args([
+                "--exact",
+                &format!("addon_loading::enable_state::tests::{test_name}"),
+                "--nocapture",
+            ])
+            .env(CHILD_TEST, test_name)
+            .env_remove("WOW_SIM_ADDONS_TXT")
+            .output()
+            .expect("run isolated enable-state test");
+        assert!(
+            output.status.success(),
+            "{}\n{}",
+            String::from_utf8_lossy(&output.stdout),
+            String::from_utf8_lossy(&output.stderr)
+        );
+        false
     }
 
     struct ScopedWtfEnv {
@@ -273,9 +273,11 @@ mod tests {
 
     #[test]
     fn addon_enable_overrides_reads_character_addons_txt() {
-        let _guard = ADDONS_TXT_ENV_LOCK.lock().expect("env lock");
+        if !is_isolated_import_process("addon_enable_overrides_reads_character_addons_txt") {
+            return;
+        }
         let temp = tempfile::tempdir().expect("tempdir");
-        let _env = ScopedAddonsTxtEnv::set(&temp.path().join("missing-local-AddOns.txt"));
+        let session = temp.path().join("session");
         let addon_state_dir = temp.path().join("Account/Test/Burning Blade/Palaky");
         std::fs::create_dir_all(&addon_state_dir).expect("create character dir");
         std::fs::write(
@@ -284,7 +286,8 @@ mod tests {
         )
         .expect("write AddOns.txt");
 
-        let mut saved_vars = SavedVariablesManager::new();
+        let mut saved_vars =
+            SavedVariablesManager::with_storage_dir(session.join("SavedVariables"));
         saved_vars.set_wtf_config(wow_ui_sim::saved_variables::WtfConfig::new(
             temp.path(),
             "Test",
@@ -292,7 +295,8 @@ mod tests {
             "Palaky",
         ));
 
-        let overrides = addon_enable_overrides(Some(&saved_vars)).expect("read overrides");
+        let overrides =
+            addon_enable_overrides(Some(&saved_vars), &session).expect("read overrides");
 
         assert_eq!(overrides.get("EnabledAddon"), Some(&true));
         assert_eq!(overrides.get("DisabledAddon"), Some(&false));
@@ -300,12 +304,15 @@ mod tests {
 
     #[test]
     fn addon_enable_overrides_reads_character_addons_txt_without_saved_variables_manager() {
-        let _guard = ADDONS_TXT_ENV_LOCK.lock().expect("env lock");
+        if !is_isolated_import_process(
+            "addon_enable_overrides_reads_character_addons_txt_without_saved_variables_manager",
+        ) {
+            return;
+        }
         let temp = tempfile::tempdir().expect("tempdir");
-        let local_path = temp.path().join("missing-local-AddOns.txt");
-        let _addons_env = ScopedAddonsTxtEnv::set(&local_path);
 
         let wtf_dir = temp.path().join("wtf");
+        let session = temp.path().join("session");
         let addon_state_dir = wtf_dir.join("Account/Test/Burning Blade/Palaky");
         std::fs::create_dir_all(&addon_state_dir).expect("create character dir");
         std::fs::write(
@@ -315,7 +322,7 @@ mod tests {
         .expect("write WTF AddOns.txt");
         let _wtf_env = ScopedWtfEnv::set(&wtf_dir, "Test", "Burning Blade", "Palaky");
 
-        let overrides = addon_enable_overrides(None).expect("read overrides");
+        let overrides = addon_enable_overrides(None, &session).expect("read overrides");
 
         assert_eq!(overrides.get("EnabledAddon"), Some(&true));
         assert_eq!(overrides.get("EllesmereUIActionBars"), Some(&false));
@@ -323,10 +330,15 @@ mod tests {
 
     #[test]
     fn addon_enable_overrides_merges_local_over_character_addons_txt() {
-        let _guard = ADDONS_TXT_ENV_LOCK.lock().expect("env lock");
+        if !is_isolated_import_process(
+            "addon_enable_overrides_merges_local_over_character_addons_txt",
+        ) {
+            return;
+        }
         let temp = tempfile::tempdir().expect("tempdir");
-        let local_path = temp.path().join("local-AddOns.txt");
-        let _env = ScopedAddonsTxtEnv::set(&local_path);
+        let session = temp.path().join("session");
+        std::fs::create_dir(&session).unwrap();
+        let local_path = local_addons_txt_path(&session);
         std::fs::write(&local_path, "LocalDisabled: disabled\n").expect("write local AddOns.txt");
 
         let wtf_dir = temp.path().join("wtf");
@@ -337,7 +349,8 @@ mod tests {
             "LocalDisabled: enabled\nWtfDisabled: disabled\n",
         )
         .expect("write WTF AddOns.txt");
-        let mut saved_vars = SavedVariablesManager::new();
+        let mut saved_vars =
+            SavedVariablesManager::with_storage_dir(session.join("SavedVariables"));
         saved_vars.set_wtf_config(wow_ui_sim::saved_variables::WtfConfig::new(
             &wtf_dir,
             "Test",
@@ -345,7 +358,8 @@ mod tests {
             "Palaky",
         ));
 
-        let overrides = addon_enable_overrides(Some(&saved_vars)).expect("read overrides");
+        let overrides =
+            addon_enable_overrides(Some(&saved_vars), &session).expect("read overrides");
 
         assert_eq!(overrides.get("LocalDisabled"), Some(&false));
         assert_eq!(overrides.get("WtfDisabled"), Some(&false));

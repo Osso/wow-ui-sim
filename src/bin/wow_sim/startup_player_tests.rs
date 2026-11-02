@@ -270,14 +270,19 @@ mod modern_specs {
 
 #[test]
 fn headless_commands_ignore_saved_gui_player_preferences() {
+    let session = tempfile::tempdir().unwrap();
+    let mut saved = SimConfig::load_from_session_wtf(session.path());
+    saved.player_class = "Mage".into();
+    saved.player_race = "Orc".into();
+    saved.save();
     for argv in [
         vec!["wow-sim", "dump-tree"],
         vec!["wow-sim", "lua-errors"],
         vec!["wow-sim", "run-tests", "Example"],
     ] {
         let args = Args::try_parse_from(argv).unwrap();
-        let config = startup_player_config(&args);
-        let defaults = SimConfig::default();
+        let config = startup_player_config(&args, session.path());
+        let defaults = SimConfig::default_for_session(session.path());
         assert_eq!(
             (config.player_class, config.player_race),
             (defaults.player_class, defaults.player_race)

@@ -293,11 +293,11 @@ class CachedAddonRuntimeTests(unittest.TestCase):
         self.assertEqual(observer.read_text(), "caller-owned")
         self.assertFalse((self.staging / "Interface").exists())
 
-    def test_argv_sets_distinct_data_homes_without_overriding_shared_cache(self):
+    def test_argv_sets_distinct_session_roots_without_overriding_shared_cache(self):
         digest = self.make_zip()
         host_data = self.root / "host-data"
         shared_cache = self.root / "shared-cache"
-        data_homes = []
+        session_roots = []
         with patch.dict(
             os.environ,
             {"XDG_DATA_HOME": str(host_data), "XDG_CACHE_HOME": str(shared_cache)},
@@ -310,11 +310,15 @@ class CachedAddonRuntimeTests(unittest.TestCase):
                 argv = HELPER.build_argv(staged, self.root / "wow-sim")
                 homes = [arg for arg in argv if arg.startswith("XDG_DATA_HOME=")]
                 self.assertEqual(homes, [f"XDG_DATA_HOME={root}/xdg-data"])
-                data_homes.append(homes[0])
+                self.assertEqual(argv.count("--session-wtf-path"), 1)
+                session_root = argv[argv.index("--session-wtf-path") + 1]
+                self.assertEqual(session_root, str(root))
+                session_roots.append(session_root)
+                self.assertFalse(any(arg.startswith("WOW_SIM_SESSION_WTF_PATH=") for arg in argv))
                 self.assertFalse(any(arg.startswith("XDG_CACHE_HOME=") for arg in argv))
             self.assertEqual(os.environ["XDG_DATA_HOME"], str(host_data))
             self.assertEqual(os.environ["XDG_CACHE_HOME"], str(shared_cache))
-        self.assertNotEqual(data_homes[0], data_homes[1])
+        self.assertNotEqual(session_roots[0], session_roots[1])
 
     def test_staging_leaves_inherited_host_data_untouched(self):
         digest = self.make_zip()
@@ -340,14 +344,11 @@ class CachedAddonRuntimeTests(unittest.TestCase):
         expected = [(self.root / "first", "0"), (self.root / "second", "1")]
         for root, value in expected:
             HELPER.stage_packages([(self.archive, digest)], root, self.repo_addons)
-            data_home = root / "xdg-data"
-            self.assertTrue(data_home.is_dir())
-            cvars = data_home / "wow-sim/cvars.json"
-            cvars.parent.mkdir()
+            cvars = root / "cvars.json"
             cvars.write_text(json.dumps({"combopointlocation": value}))
         for root, value in expected:
             HELPER.stage_packages([(self.archive, digest)], root, self.repo_addons)
-            cvars = root / "xdg-data/wow-sim/cvars.json"
+            cvars = root / "cvars.json"
             self.assertEqual(
                 json.loads(cvars.read_text()), {"combopointlocation": value}
             )
@@ -362,9 +363,10 @@ class CachedAddonRuntimeTests(unittest.TestCase):
                 "env",
                 "-u",
                 "WOW_SIM_NO_ADDONS",
+                "-u",
+                "WOW_SIM_ADDONS_TXT",
                 f"XDG_DATA_HOME={self.staging}/xdg-data",
                 f"WOW_SIM_ADDONS_PATH={self.staging}/Interface/AddOns",
-                f"WOW_SIM_ADDONS_TXT={self.staging}/AddOns.txt",
                 f"WOW_INSTALL_PATH={self.staging}/fake-install",
                 f"WOW_DATA_PATH={self.staging}/fake-install",
                 f"WOW_SIM_WTF_PATH={self.staging}/wtf",
@@ -372,6 +374,8 @@ class CachedAddonRuntimeTests(unittest.TestCase):
                 "timeout",
                 "45",
                 str(binary),
+                "--session-wtf-path",
+                str(self.staging),
                 "--no-saved-vars",
                 "--exec-lua",
                 f"@{self.staging}/load-observer.lua",

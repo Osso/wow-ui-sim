@@ -76,12 +76,24 @@ impl Drop for WowLuaEnv {
 impl WowLuaEnv {
     /// Create a new WoW Lua environment with the API initialized.
     pub fn new() -> Result<Self> {
+        Self::new_with_session_storage(None)
+    }
+
+    /// Select writable session storage before CVars and Lua-backed models load.
+    pub fn with_session_wtf_path(path: std::path::PathBuf) -> Result<Self> {
+        Self::new_with_session_storage(Some(path))
+    }
+
+    fn new_with_session_storage(session_wtf_path: Option<std::path::PathBuf>) -> Result<Self> {
         if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::WowForever {
             crate::forever_spell_runtime::initialize().map_err(crate::Error::Other)?;
         }
         crate::logging::eprintln_elapsed("[Startup] WowLuaEnv::new begin");
         let state = timed_startup_phase("SimState::default complete", || {
-            Rc::new(RefCell::new(SimState::default()))
+            Rc::new(RefCell::new(match session_wtf_path {
+                Some(path) => SimState::with_session_wtf_path(path),
+                None => SimState::default(),
+            }))
         });
         crate::logging::init_process_start_time(state.borrow().start_time);
 
@@ -493,7 +505,8 @@ mod tests {
 
     #[test]
     fn drop_releases_rilua_vm() {
-        let env = WowLuaEnv::new().expect("env");
+        let session = tempfile::tempdir().unwrap();
+        let env = WowLuaEnv::with_session_wtf_path(session.path().to_path_buf()).expect("env");
         let weak_lua = Rc::downgrade(&env.lua);
 
         drop(env);

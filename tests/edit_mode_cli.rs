@@ -21,6 +21,8 @@ fn no_saved_vars_still_loads_edit_mode_cache() {
         .expect("write character edit mode cache");
 
     let output = Command::new(env!("CARGO_BIN_EXE_wow-sim"))
+        .arg("--session-wtf-path")
+        .arg(temp.path().join("data/wow-sim"))
         .arg("--no-saved-vars")
         .arg("--no-addons")
         .arg("--exec-lua")
