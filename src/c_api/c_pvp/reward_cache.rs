@@ -40,8 +40,20 @@ pub(super) fn register_random_bg(state: &mut LuaState, namespace: GcRef<Table>) 
     table_set_rust_fn_static(state, namespace, "GetRandomBGRewards", random_bg_rewards)
 }
 
+pub(super) fn register_arena(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResult<()> {
+    table_set_rust_fn_static(state, namespace, "GetArenaSkirmishRewards", arena_rewards)
+}
+
 fn random_bg_rewards(state: &mut LuaState) -> LuaResult<u32> {
     let cache = borrow_state(state)?.pvp_reward_caches.random_bg.clone();
+    push_rewards(state, &cache)
+}
+
+fn arena_rewards(state: &mut LuaState) -> LuaResult<u32> {
+    let cache = borrow_state(state)?
+        .pvp_reward_caches
+        .arena_skirmish
+        .clone();
     push_rewards(state, &cache)
 }
 
