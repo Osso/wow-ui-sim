@@ -65,8 +65,11 @@ fn currency_unused_mutations_original_popup_shows_discovered_currency_checkbox()
 #[test]
 fn currency_popup_propagates_list_currency_id_to_transfer_button() {
     with_token_ui_env(|env| {
-        env.state().borrow_mut().currency_list.transfer_server_enabled = Some(false);
         env.exec(r#"
+            local ok, reason = C_CurrencyInfo.CanTransferCurrency(1166)
+            assert(not ok and reason == 10)
+            C_CurrencyInfo.RequestCurrencyDataForAccountCharacters()
+            assert(C_CurrencyInfo.IsAccountCharacterCurrencyDataReady())
             assert(type(C_CurrencyInfo.GetCurrencyListInfo(1).currencyID) == "number")
             local row = assert(C_CurrencyInfo.GetCurrencyListInfo(3))
             row.currencyIndex = 3
