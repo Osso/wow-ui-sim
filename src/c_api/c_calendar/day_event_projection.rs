@@ -63,7 +63,12 @@ fn publish_boolean_fields(state: &mut LuaState, table: Val, record: &CalendarDay
     }
 }
 
-fn publish_time(state: &mut LuaState, outer: Val, key: &'static str, time: &CalendarTimeRecord) {
+pub(super) fn publish_time(
+    state: &mut LuaState,
+    outer: Val,
+    key: &'static str,
+    time: &CalendarTimeRecord,
+) {
     let table = create_table(state);
     state.push(table);
     for (field, value) in [

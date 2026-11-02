@@ -6,6 +6,7 @@ mod day_event_projection;
 mod day_event_queries;
 pub mod day_event_record;
 mod selection;
+mod view_info;
 
 use super::helpers::ensure_namespace;
 use crate::lua_api::methods::{borrow_state, create_table, table_set};
@@ -102,6 +103,7 @@ pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
         club::register(state, namespace)?;
         selection::register(state, namespace)?;
         context_policy::register(state, namespace)?;
+        view_info::register(state, namespace)?;
         table_set_rust_fn_static(
             state,
             namespace,
