@@ -49,6 +49,7 @@ fn captured_bag(num_slots: i32, inventory_slot: Option<i32>) -> BagInfo {
         inventory_slot,
         item_id: Some(194019),
         hyperlink: Some("|Hitem:194019|h[Captured reagent bag]|h".to_string()),
+        owned_identity: None,
     }
 }
 

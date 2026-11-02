@@ -332,6 +332,7 @@ fn item_location_equipped_bag_uses_modeled_inventory_slot_and_captured_link() {
             inventory_slot: Some(25),
             item_id: Some(194019),
             hyperlink: Some(captured.to_string()),
+            owned_identity: None,
         },
     );
     let (id, exists, link): (Option<i64>, bool, Option<String>) = env

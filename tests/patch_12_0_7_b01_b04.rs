@@ -325,6 +325,7 @@ fn bag(capacity: i32, family: i32) -> BagInfo {
         inventory_slot: None,
         item_id: None,
         hyperlink: None,
+        owned_identity: None,
     }
 }
 
