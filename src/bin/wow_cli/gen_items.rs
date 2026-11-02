@@ -37,9 +37,54 @@ pub fn run() -> Result<(), Box<dyn std::error::Error>> {
     write_lookup_fn(&mut out)?;
     write_tests(&mut out)?;
     write_item_categories(&wow_data, &required_ids)?;
+    write_gem_catalog(&wow_data)?;
 
     println!("Generated {} item entries ({} skipped)", count, skipped);
     println!("Output: {}", output_path.display());
+    Ok(())
+}
+
+fn collect_gem_item_ids(wow_data: &Path) -> Result<BTreeSet<u32>, Box<dyn std::error::Error>> {
+    let records = open_records(&wow_data.join("Item.csv"))?;
+    let mut iter = records.iter();
+    let idx = header_index(iter.next().ok_or("empty Item.csv")?);
+    let mut ids = BTreeSet::new();
+    for record in iter {
+        let fields = parse_csv_line(record);
+        if field(&fields, &idx, "ClassID") == "3" {
+            ids.insert(field(&fields, &idx, "ID").parse()?);
+        }
+    }
+    Ok(ids)
+}
+
+fn write_gem_catalog(wow_data: &Path) -> Result<(), Box<dyn std::error::Error>> {
+    let ids = collect_gem_item_ids(wow_data)?;
+    let records = open_records(&wow_data.join("ItemSparse.csv"))?;
+    let mut iter = records.iter();
+    let idx = header_index(iter.next().ok_or("empty ItemSparse.csv")?);
+    let mut gems = Vec::new();
+    for record in iter {
+        let fields = parse_csv_line(record);
+        let id = field(&fields, &idx, "ID").parse::<u32>()?;
+        if ids.contains(&id) {
+            let name = escape_str(field(&fields, &idx, "Display_lang"));
+            let quality = field(&fields, &idx, "OverallQualityID").parse::<u8>()?;
+            gems.push((id, name, quality));
+        }
+    }
+    gems.sort_unstable_by_key(|gem| gem.0);
+    let mut out = File::create("crates/sim-data/data/gem_items.rs")?;
+    writeln!(
+        out,
+        "//! Generated from wago.tools DB2 CSV exports, build 12.1.5.70391 (enUS)."
+    )?;
+    writeln!(out, "//! Regenerate with `wow-cli generate items`.")?;
+    writeln!(out, "pub static GEMS: &[(u32, &str, u8)] = &[")?;
+    for (id, name, quality) in gems {
+        writeln!(out, "    ({id}, \"{name}\", {quality}),")?;
+    }
+    writeln!(out, "];")?;
     Ok(())
 }
 
