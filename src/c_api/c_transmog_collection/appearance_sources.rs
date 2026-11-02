@@ -1,6 +1,8 @@
 //! Exact source-ID lookup with authenticated secret-selector access.
 
-use crate::lua_api::methods::{borrow_state, create_string, create_table, table_set};
+use crate::lua_api::methods::{
+    borrow_state, create_string, create_table, table_set, val_to_string,
+};
 use crate::lua_bridge::{stack_val, table_set_rust_fn_static};
 use rilua::vm::{gc::arena::GcRef, state::LuaState, table::Table};
 use rilua::{LuaResult, Val};
@@ -13,7 +15,28 @@ pub(super) fn register(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResu
         namespace,
         "GetAppearanceSourceInfo",
         get_appearance_source_info,
-    )
+    )?;
+    table_set_rust_fn_static(state, namespace, "IsNewAppearance", is_new_appearance)
+}
+
+fn is_new_appearance(state: &mut LuaState) -> LuaResult<u32> {
+    let value = rilua::table_security::unwrap_secret(state, stack_val(state, 1))?;
+    let number = match value {
+        Val::Num(number) => Some(number),
+        Val::Str(_) => val_to_string(state, value).and_then(|s| s.trim().parse::<f64>().ok()),
+        _ => None,
+    }
+    .filter(|n| n.is_finite() && *n >= f64::from(i32::MIN) && *n <= f64::from(i32::MAX))
+    .ok_or_else(|| rilua::runtime_error("IsNewAppearance requires a numeric visualID"))?;
+    let visual_id = number as i32;
+    let sim = borrow_state(state)?;
+    let is_new = sim.transmog_new_sources.iter().any(|id| {
+        super::read_source_info(&sim, *id)
+            .is_some_and(|source| source.item_appearance_id == i64::from(visual_id))
+    });
+    drop(sim);
+    state.push(Val::Bool(is_new));
+    Ok(1)
 }
 
 fn read_source_id(state: &LuaState) -> LuaResult<i64> {
