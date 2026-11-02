@@ -6,7 +6,6 @@
   "wt-global-api-C_PartyInfo.SetRestrictRaidPings-77",
   "wt-global-api-C_Ping.TogglePingListener-80",
   "wt-global-api-C_PingSecure.ClearPendingPingInfo-81",
-  "wt-global-api-C_PingSecure.GetTargetPingReceiver-84",
   "wt-global-api-C_PingSecure.GetTargetWorldPing-85",
   "wt-global-api-C_PingSecure.GetTargetWorldPingAndSend-86",
   "wt-global-api-C_PingSecure.SendPing-87"
