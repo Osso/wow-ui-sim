@@ -45,13 +45,23 @@ const PUBLIC_NAMED_FRAMES: &[&str] = &["PingFrame", "PingListenerFrame"];
 const VIRTUAL_TEMPLATES_NOT_IN_GLOBALS: &[&str] =
     &["PingPinFrameTemplate", "PingSpotFrameTemplate"];
 
+// Retail 12.1.5: PingManagerSecureDocumentation.lua:11–247 and
+// Blizzard_PingManager.lua:47–275 / Blizzard_PingUI.lua:24–239.
+// Intersection of declared functions and literal PingUI calls. The original
+// test (b695f5ace, 2026-04-29) predates these pinned declarations; the removed
+// GetTargetWorldPing, GetTargetWorldPingAndSend and SendPing names occur in neither.
 const C_PING_SECURE_CALLBACKS: &[&str] = &[
+    "ClearHitTestPingInfo",
     "CreateFrame",
     "DisplayError",
     "GetTargetPingReceiver",
-    "GetTargetWorldPing",
-    "GetTargetWorldPingAndSend",
-    "SendPing",
+    "SendHitTestPing",
+    "SendPlayerItemPing",
+    "SendPlayerSpellCategoryPing",
+    "SendPlayerSpellPing",
+    "SendUnitPing",
+    "SetHitTestPingTarget",
+    "SetHitTestTargetAndSendPing",
     "SetPendingPingOffScreenCallback",
     "SetPingCooldownStartedCallback",
     "SetPingPinFrameAddedCallback",
@@ -531,8 +541,8 @@ fn blizzard_ping_ui_publishes_c_ping_secure_callback_setters_in_globals(env: &Wo
          Interface/BlizzardUI/Blizzard_APIDocumentationGenerated/PingManagerSecureDocumentation.lua \
          names it `C_PingSecure` with `Environment = \"SecureOnly\"`. The simulator \
          publishes the namespace eagerly so PingFrameMixin:OnLoad / \
-         PingListenerFrameMixin:OnLoad / PingManager:Initialize can wire all 14 \
-         callback setters during the eager-load pass without needing the LoD \
+         PingListenerFrameMixin:OnLoad / PingManager:Initialize can use the \
+         declared members during the eager-load pass without needing the LoD \
          `Blizzard_APIDocumentationGenerated` addon to be loaded first"
     );
 
@@ -558,10 +568,9 @@ fn blizzard_ping_ui_publishes_c_ping_secure_callback_setters_in_globals(env: &Wo
 
     assert_eq!(
         C_PING_SECURE_CALLBACKS.len(),
-        14,
-        "C_PING_SECURE_CALLBACKS must contain exactly 14 entries — the count is \
-         pinned to the PingManagerSecureDocumentation.lua surface. Adding or removing \
-         a function on vendor TAG bumps surfaces here"
+        19,
+        "C_PING_SECURE_CALLBACKS must contain the 19 declared functions called by \
+         the pinned PingUI source"
     );
 }
 }
