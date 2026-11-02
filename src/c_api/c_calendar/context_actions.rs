@@ -79,7 +79,8 @@ fn paste(state: &mut LuaState) -> LuaResult<u32> {
         paste_outcome(&host, offset, day)
     };
     if matches!(outcome, Outcome::Request) {
-        refresh_throttle(&mut borrow_state_mut(state)?);
+        let mut host = borrow_state_mut(state)?;
+        refresh_throttle(&mut host);
     }
     finish(state, outcome)
 }
