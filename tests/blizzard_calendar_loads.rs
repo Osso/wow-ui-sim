@@ -212,3 +212,23 @@ fn calendar_pending_invite_uses_first_flagged_day_event(env: &WowLuaEnv) {
     env.exec("assert(C_Calendar.GetFirstPendingInvite(0, 15) == nil)").unwrap();
 }
 }
+
+prefork_full_ui_case! {
+fn calendar_month_navigation_projects_relative_month(env: &WowLuaEnv) {
+    use wow_ui_sim::c_api::c_calendar::DisplayedMonth;
+    load_addon(&env.loader_env(), &calendar_toc()).unwrap();
+    env.state().borrow_mut().calendar_displayed_month = DisplayedMonth { year: 2026, month: 12 };
+    env.exec("CalendarFrame_OffsetMonth(1)").unwrap();
+    let shown = env.state().borrow().calendar_displayed_month;
+    assert_eq!((shown.year, shown.month), (2027, 1));
+    env.exec("CalendarFrame_OffsetMonth(-2)").unwrap();
+    let shown = env.state().borrow().calendar_displayed_month;
+    assert_eq!((shown.year, shown.month), (2026, 11));
+    env.exec("C_Calendar.SetMonth(-10000)").unwrap();
+    let shown = env.state().borrow().calendar_displayed_month;
+    assert_eq!((shown.year, shown.month), (2004, 11));
+    env.exec("C_Calendar.SetMonth(10000)").unwrap();
+    let shown = env.state().borrow().calendar_displayed_month;
+    assert_eq!(shown.year, 2030);
+}
+}
