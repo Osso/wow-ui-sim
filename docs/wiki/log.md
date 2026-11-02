@@ -3236,3 +3236,14 @@ realm before addon loading and through ReloadUI. Missing explicit WTF selections
 fail startup. Forever name queries follow the build 70450 native first-name/surname
 tuple and nil arity; the contract records the native evidence and remaining
 unsurnamed-player and regional-consumer limits.
+
+## 2026-11-02 — Forever login startup
+
+[Login investigation](investigations/forever-login-startup.md) records the observed
+38/58 login error map, CVar/API and loader causes, and approved offline catalog and
+capability defaults. The original Windows capture returned exact `[]` login error
+JSON. Review found and fixed the enabled high-resolution texture consumer's missing
+BattleNet API, replacing sentinel coverage with complete setting construction.
+On the master-based branch, 55 focused integration tests and 14 loader unit tests
+pass with persisted CVars unchanged. Native behavior, full interactive GUI
+verification, other profiles and the game-screen baseline remain separate.

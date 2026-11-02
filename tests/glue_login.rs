@@ -210,6 +210,49 @@ fn login_boot_skips_current_known_glue_errors() {
 }
 
 #[test]
+#[cfg(feature = "client-wowforever")]
+fn forever_login_state_supports_glue_screen_transitions() {
+    test_timeout! {
+        let env = load_blizzard_screen(ScreenKind::Login);
+        env.exec(r#"
+            assert(GlueParent_IsScreenValid("login"))
+            assert(GlueParent_GetBestScreen() == "login")
+        "#).expect("Forever login consumers should accept the login-state table");
+
+        env.set_screen_mode(ScreenKind::CharacterSelect);
+        env.exec(r#"
+            assert(not GlueParent_IsScreenValid("login"))
+            assert(GlueParent_IsScreenValid("charselect"))
+        "#).expect("Forever glue consumers should observe the connected screen state");
+
+        env.set_screen_mode(ScreenKind::Login);
+        env.exec(r#"
+            assert(GlueParent_IsScreenValid("login"))
+            assert(GlueParent_GetBestScreen() == "login")
+        "#).expect("Forever glue consumers should observe the return to login");
+
+        let login_state_errors: Vec<String> = env.state().borrow().lua_errors.iter()
+            .filter(|error| error.contains("loginState"))
+            .cloned()
+            .collect();
+        assert!(login_state_errors.is_empty(),
+            "login boot should not fail to read login state: {login_state_errors:#?}");
+    }
+}
+
+#[test]
+#[cfg(feature = "client-wowforever")]
+fn forever_login_boot_has_no_lua_errors() {
+    test_timeout! {
+        let env = load_blizzard_screen(ScreenKind::Login);
+        let errors = env.state().borrow().lua_errors.clone();
+        assert!(errors.is_empty(), "Forever login Lua errors: {errors:#?}");
+        assert!(env.eval::<bool>("return AccountLogin:IsShown() and GlueParent_GetBestScreen() == 'login'")
+            .expect("login screen should remain selected and visible"));
+    }
+}
+
+#[test]
 fn login_boot_keeps_settings_preview_panels_wired_to_settings_panel() {
     test_timeout! {
         let env = load_blizzard_screen(ScreenKind::Login);

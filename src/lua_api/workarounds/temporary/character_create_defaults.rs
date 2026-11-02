@@ -511,6 +511,19 @@ end
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     lua.exec(CHARACTER_CREATION_NAMESPACE_DEFAULTS_LUA)?;
     crate::c_api::c_character_creation_seen::install(lua)?;
+    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::WowForever {
+        // User-approved offline cleanup: the excluded 3D preview has no choices.
+        // Retire this default when the character-creation preview-choice model
+        // can reset preview/saved choices; preserve any modeled producer.
+        lua.exec(
+            r#"
+            if rawget(C_CharacterCreation, "ClearPreviewChoices") == nil then
+                function C_CharacterCreation.ClearPreviewChoices(clearSavedChoices)
+                end
+            end
+            "#,
+        )?;
+    }
     if matches!(
         crate::client_profile::ACTIVE,
         crate::client_profile::ClientProfile::Retail | crate::client_profile::ClientProfile::Ptr

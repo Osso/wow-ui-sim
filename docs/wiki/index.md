@@ -10,6 +10,14 @@ The supplied or default directory is resolved once before storage initialization
 selection, addon-visible names and realms before loading and after ReloadUI,
 Forever surname handling and the bounded original-consumer coverage.
 
+## [2026-11-02] investigation | Forever login startup
+
+[Login startup](investigations/forever-login-startup.md) records missing profile data,
+TOC sibling provenance, customization initialization and the user-approved offline
+catalog/capability policy. The rebuilt Windows login reports zero Lua errors, down
+from 38 records/58 occurrences; 69 focused checks pass after review. This bounded verification
+is separate from the game-screen baseline and native parity.
+
 ## [2026-10-31] architecture | Startup class and race
 
 [Startup player settings](../specs/cli-class-spec.md#initial-class-race-and-specialization)

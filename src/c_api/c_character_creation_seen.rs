@@ -3,7 +3,10 @@
 use crate::client_profile::{ACTIVE, ClientProfile};
 
 pub(crate) fn install(lua: &mut rilua::Lua) -> crate::Result<()> {
-    if matches!(ACTIVE, ClientProfile::Retail | ClientProfile::Ptr) {
+    if matches!(
+        ACTIVE,
+        ClientProfile::Retail | ClientProfile::Ptr | ClientProfile::WowForever
+    ) {
         // User-approved, not native evidence: record all currently offered choices.
         lua.exec(
             r#"

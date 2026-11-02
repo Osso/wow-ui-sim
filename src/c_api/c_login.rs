@@ -1,6 +1,7 @@
 //! `C_Login` glue-screen connection state helpers.
 
 use crate::c_api::{ensure_namespace, permanent_shims};
+use crate::client_profile::{ACTIVE, ClientProfile};
 use crate::lua_api::methods::{borrow_state, create_table, table_set};
 use crate::lua_bridge::table_set_rust_fn_static;
 use rilua::vm::state::LuaState;
@@ -23,7 +24,7 @@ fn c_login_get_state(state: &mut LuaState) -> LuaResult<u32> {
     let screen_kind = borrow_state(state)?.screen_kind;
     let (aurora_state, connected_to_wow, wow_connection_state, has_realm_list) =
         screen_kind.login_state();
-    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Ptr {
+    if matches!(ACTIVE, ClientProfile::Ptr | ClientProfile::WowForever) {
         let result = create_table(state);
         for (key, value) in [
             ("auroraState", Val::Num(f64::from(aurora_state))),

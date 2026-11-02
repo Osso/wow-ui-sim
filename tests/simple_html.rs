@@ -330,6 +330,35 @@ fn test_get_text_data_returns_expected_fields() {
 }
 
 #[test]
+fn test_get_text_data_exposes_content_nodes_and_fresh_snapshots() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        local frame = CreateFrame("SimpleHTML", nil, UIParent)
+        frame:SetJustifyH("CENTER")
+        frame:SetText("<html><body><h1>Title</h1><p>One &amp; two<br/>Next line</p><h2>Subtitle</h2></body></html>")
+        local content = frame:GetTextData()
+        assert(#content == 3)
+        assert(content[1].type == "H1" and content[1].text == "Title")
+        assert(content[2].type == "P" and content[2].text == "One & two\nNext line")
+        assert(content[3].type == "H2" and content[3].text == "Subtitle")
+        for _, node in ipairs(content) do
+            assert(node.align == "CENTER")
+        end
+        content[1].text = "mutated"
+        assert(frame:GetTextData()[1].text == "Title")
+        frame:SetText("<html><body><p>Replacement</p></body></html>")
+        local replacement = frame:GetTextData()
+        assert(#replacement == 1 and replacement[1].text == "Replacement")
+        assert(#content == 3 and content[2].text == "One & two\nNext line")
+        frame:SetText("")
+        assert(#frame:GetTextData() == 0)
+        "#,
+    )
+    .expect("SimpleHTML content nodes should reflect the parsed document, independently of layout");
+}
+
+#[test]
 fn test_fontstring_settext_no_html_stripping() {
     // Verify that regular FontStrings do NOT strip HTML tags
     let env = WowLuaEnv::new().unwrap();

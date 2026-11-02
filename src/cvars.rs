@@ -247,10 +247,14 @@ fn insert_profile_cvars(
     defaults: &mut HashMap<String, String>,
     original_names: &mut HashMap<String, String>,
 ) {
-    // Native Forever 1.60.1.69913 probe; see docs/specs/forever-gamepad-cvars.md.
     for (name, value) in [
+        // Native Forever 1.60.1.69913 probe; see docs/specs/forever-gamepad-cvars.md.
         ("GamepadPossessBarOverride", "4"),
         ("GamepadStanceBarOverride", "3"),
+        // Selected Forever glue TextSizeManager requires this CVar. Availability
+        // is inferred from that consumer; reuse the modeled Retail/PTR scale,
+        // not a proven native Forever default.
+        ("userFontScaleGlue", "1.0"),
     ] {
         let key = name.to_lowercase();
         original_names.insert(key.clone(), name.to_string());

@@ -1,4 +1,4 @@
-//! Supplied PTR GameRules inputs and finite 70493 consumer declarations.
+//! Shared PTR/Forever SD/HD inputs and PTR-only 70493 consumer declarations.
 use crate::client_profile::{ACTIVE, ClientProfile};
 use crate::lua_api::methods::{borrow_state, borrow_state_mut, create_table, table_set};
 use crate::lua_bridge::{FromStack, table_set_rust_fn};
@@ -6,13 +6,11 @@ use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
 
 pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
-    if ACTIVE != ClientProfile::Ptr {
+    if !matches!(ACTIVE, ClientProfile::Ptr | ClientProfile::WowForever) {
         return Ok(());
     }
     let namespace = super::helpers::ensure_namespace(state, "C_GameRules")?;
     let functions: &[(&str, rilua::RustFn)] = &[
-        ("IsHardcoreActive", is_hardcore_active),
-        ("IsSelfFoundAllowed", is_self_found_allowed),
         ("IsSDHDToggleEnabled", is_sd_hd_toggle_enabled),
         ("AccountHasSDEnabled", account_has_sd_enabled),
         ("SetSDHDToggleValue", set_sd_hd_toggle_value),
@@ -22,7 +20,16 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
     }
     let enums = super::helpers::ensure_global_table(state, "Enum");
     register_usage_locations(state, enums);
-    register_recent_allies_categories(state, enums);
+    if ACTIVE == ClientProfile::Ptr {
+        table_set_rust_fn(state, namespace, "IsHardcoreActive", is_hardcore_active)?;
+        table_set_rust_fn(
+            state,
+            namespace,
+            "IsSelfFoundAllowed",
+            is_self_found_allowed,
+        )?;
+        register_recent_allies_categories(state, enums);
+    }
     Ok(())
 }
 
@@ -60,7 +67,7 @@ fn set_sd_hd_toggle_value(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn register_usage_locations(state: &mut LuaState, enums: Val) {
-    // 70493 GameRulesDocumentation.lua:467–477.
+    // PTR 70493 GameRulesDocumentation.lua:467–477; Forever 70634:419–430.
     publish(
         state,
         enums,

@@ -211,6 +211,15 @@ fn implicit_blizzard_startup_dependencies() -> HashMap<String, Vec<String>> {
     ) {
         dependencies.remove("Blizzard_Transmog");
     }
+    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::WowForever {
+        // The selected glue feedback scripts hook CharCustomizeFrame during load.
+        // Its CharacterCreate owner attaches it before visibility callbacks run,
+        // including on Login where character creation is not an eager root.
+        dependencies.insert(
+            "Blizzard_PTRFeedbackGlue".to_string(),
+            vec!["Blizzard_CharacterCreate".to_string()],
+        );
+    }
     dependencies
 }
 
