@@ -10,15 +10,17 @@ use crate::lua_api::state::{CursorInfo, SimState};
 pub struct OwnedItemEquipInputs {
     pub native_flags: u32,
     pub lock_reasons: u32,
-    pub bound_marker: bool,
+    pub bound_marker: u8,
+    /// Whether any supplied enchantment record has the binding flag.
     pub binding_enchantment: bool,
+    pub owned_data_flags: u32,
     pub species_flags: u32,
     /// Native refund timer value before the 7200-second comparison.
     pub refund_timer_delta: Option<i64>,
-    pub refund_disabled: bool,
+    pub refund_flags: u32,
     /// Native trade timer value before the 14400-second comparison.
     pub trade_timer_delta: Option<i64>,
-    pub trade_window: bool,
+    pub trade_flags: u32,
     pub confirmation_eligible: Option<bool>,
     pub account_conversion: bool,
 }
@@ -419,10 +421,11 @@ fn confirmation_for_item(
     const BINDING_ENCHANT_EXCLUDED: u32 = 8192;
     const SPECIES_BOUND: u32 = 16;
     let binding_enchantment =
-        inputs.binding_enchantment && inputs.native_flags & BINDING_ENCHANT_EXCLUDED == 0;
-    let bound =
-        inputs.bound_marker || binding_enchantment || inputs.species_flags & SPECIES_BOUND != 0;
-    let refundable = !inputs.refund_disabled
+        inputs.binding_enchantment && inputs.owned_data_flags & BINDING_ENCHANT_EXCLUDED == 0;
+    let bound = inputs.bound_marker == 1
+        || binding_enchantment
+        || inputs.species_flags & SPECIES_BOUND != 0;
+    let refundable = inputs.refund_flags & 1 == 0
         && inputs
             .refund_timer_delta
             .is_some_and(|delta| delta.saturating_add(7200) > 0);
@@ -430,7 +433,7 @@ fn confirmation_for_item(
         return Ok(Some(EquipConfirmation::Refundable));
     }
     let tradeable = bound
-        && inputs.trade_window
+        && inputs.trade_flags & 256 != 0
         && !binding_enchantment
         && inputs
             .trade_timer_delta
