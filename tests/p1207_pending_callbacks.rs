@@ -4,20 +4,34 @@ use rilua::LuaApiMut;
 use rilua::table_security::{wrap_host_secret_number, wrap_secret};
 use wow_ui_sim::lua_api::WowLuaEnv;
 
+/// Retail 12.1.5 epoch (WM38; PingManagerSecureDocumentation.lua).
+fn is_retail_12_1_5_epoch() -> bool {
+    wow_ui_sim::client_profile::ACTIVE == wow_ui_sim::client_profile::ClientProfile::Retail
+        && cfg!(feature = "retail-12-1-5")
+}
+
+/// The pinned 12.1.5 member list (PingManagerSecureDocumentation.lua:8–246) has no
+/// ClearPendingPingOffScreenCallback; its assertions belong to the 12.0.7 epoch.
+fn is_pending_clear_published() -> bool {
+    !is_retail_12_1_5_epoch()
+}
+
 fn callback_env() -> WowLuaEnv {
     let env = WowLuaEnv::new().expect("pending callback environment");
     // WM38 and PingManagerSecureDocumentation.lua:3–6 place Retail 12.1.5
     // C_PingSecure in the secure environment; retain the earlier epoch's lookup.
-    let namespace = if wow_ui_sim::client_profile::ACTIVE
-        == wow_ui_sim::client_profile::ClientProfile::Retail
-        && cfg!(feature = "retail-12-1-5")
-    {
+    let namespace = if is_retail_12_1_5_epoch() {
         "__secureenv.C_PingSecure"
     } else {
         "C_PingSecure"
     };
     env.exec(&format!("TestPingSecure = {namespace}"))
         .expect("select ping namespace for the active epoch");
+    env.exec(&format!(
+        "PendingClearPublished = {}",
+        is_pending_clear_published()
+    ))
+    .expect("record the active epoch's pending-clear publication");
     env.exec(
         r#"
         Slots = {
@@ -121,9 +135,13 @@ fn namespace_and_legacy_ping_share_one_live_slot() {
     env.exec("SetSecurePendingPingOffScreenCallback(second)")
         .unwrap();
     fire_probe(&env);
+    env.exec("assert(table.concat(Calls, ',') == 'namespace,legacy')")
+        .unwrap();
+    if !is_pending_clear_published() {
+        return;
+    }
     env.exec(
         r#"
-        assert(table.concat(Calls, ',') == 'namespace,legacy')
         assert(select('#', TestPingSecure.ClearPendingPingOffScreenCallback()) == 0)
         assert(GetSecurePendingPingOffScreenCallback() == nil)
         TestPingSecure.ClearPendingPingOffScreenCallback()
@@ -144,11 +162,19 @@ fn clear_ping_preserves_button_and_run_slots_and_environment_isolation() {
             r#"
         SetSecurePendingButtonCallback(function() table.insert(Calls, 'button') end)
         SetSecurePendingToggleRunCallback(function() table.insert(Calls, 'run') end)
-        TestPingSecure.SetPendingPingOffScreenCallback(function() table.insert(Calls, 'ping') end)
-        TestPingSecure.ClearPendingPingOffScreenCallback()
         "#,
         )
         .unwrap();
+    if is_pending_clear_published() {
+        first
+            .exec(
+                r#"
+            TestPingSecure.SetPendingPingOffScreenCallback(function() table.insert(Calls, 'ping') end)
+            TestPingSecure.ClearPendingPingOffScreenCallback()
+            "#,
+            )
+            .unwrap();
+    }
     second
         .exec(
             r#"
@@ -208,7 +234,7 @@ fn storage_operations_preserve_secure_and_tainted_caller_context() {
                 assert(slot[2]() == nil)
             end
             TestPingSecure.SetPendingPingOffScreenCallback(function() end)
-            TestPingSecure.ClearPendingPingOffScreenCallback()
+            if PendingClearPublished then TestPingSecure.ClearPendingPingOffScreenCallback() end
             assert(debug.getstacktaint() == before)
         end
         assert(issecure()); probe(); assert(issecure())
@@ -245,6 +271,8 @@ fn retrieved_callback_keeps_its_taint_when_event_consumer_invokes_it() {
         .unwrap();
 }
 
+// Clearing is this test's subject; Retail 12.1.5 does not publish the member.
+#[cfg(not(all(feature = "client-retail", feature = "retail-12-1-5")))]
 #[test]
 fn replacement_and_clear_inside_callback_take_effect_on_next_event() {
     let env = callback_env();
@@ -313,9 +341,12 @@ fn callback_error_does_not_change_slot_or_break_later_dispatch() {
     fire_probe(&env);
     env.exec("assert(failures == 2 and table.concat(Calls, ',') == 'continued,continued')")
         .unwrap();
+    if is_pending_clear_published() {
+        env.exec("TestPingSecure.ClearPendingPingOffScreenCallback()")
+            .unwrap();
+    }
     env.exec(
         r#"
-        TestPingSecure.ClearPendingPingOffScreenCallback()
         SetSecurePendingPingOffScreenCallback(function() table.insert(Calls, 'recovered') end)
         Probe:SetScript('OnEvent', function() GetSecurePendingPingOffScreenCallback()() end)
         "#,
