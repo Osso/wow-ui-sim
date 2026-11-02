@@ -8,6 +8,9 @@
 pub mod currencies;
 #[path = "../data/currency_containers.rs"]
 pub mod currency_containers;
+#[rustfmt::skip]
+#[path = "../data/currency_transfer.rs"]
+pub mod currency_transfer;
 #[path = "../data/encounter_journal.rs"]
 pub mod encounter_journal_data;
 #[path = "../data/garrison_currency.rs"]

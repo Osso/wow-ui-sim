@@ -12,6 +12,7 @@ Expose existing currency-list backing fields through `C_CurrencyInfo.GetCurrency
 ### Supplied-state display projection
 
 - [x] For existing non-header list rows, project current name, quantity, icon, quality and maximum quantity from `SimState.currency_info` selected by the static currency ID.
+- [x] Retail list rows publish numeric `currencyID` from the list entry, including the modeled header ID; `CurrencyInfoDocumentation.lua:681-689` declares it non-nil.
 - [x] For existing watched rows, backpack info projects current name, quantity and icon from that same supplied row.
 - [x] Observe successive supplied-state updates without changing list size/order, header records, currency IDs, static status flags or watched membership.
 - [x] Do not resurrect static display values when a listed currency is removed from supplied state: list info returns nil and backpack info returns no values. Headers do not require a supplied map row.

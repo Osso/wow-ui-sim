@@ -34,6 +34,13 @@ const CURRENCY_INFO_METHODS: &[(&str, rilua::RustFn)] = &[
         request_account_currency_data,
     ),
     #[cfg(feature = "client-retail")]
+    (
+        "IsAccountTransferableCurrency",
+        is_account_transferable_currency,
+    ),
+    #[cfg(feature = "client-retail")]
+    ("CanTransferCurrency", can_transfer_currency),
+    #[cfg(feature = "client-retail")]
     ("ExpandCurrencyList", expand_currency_list),
     #[cfg(feature = "client-retail")]
     ("SetCurrencyBackpack", set_currency_backpack),
@@ -208,6 +215,101 @@ fn query_currency_faction_grant(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
+// Retail CurrencyInfoDocumentation.lua:10-24, 463-475.
+#[cfg(feature = "client-retail")]
+fn is_account_transferable_currency(state: &mut LuaState) -> LuaResult<u32> {
+    let id = i32::from_stack(state, 1)?;
+    let transferable =
+        sim_data::currency_transfer::get(id).is_some_and(|(_, _, percentage)| percentage > 0.0);
+    state.push(Val::Bool(transferable));
+    Ok(1)
+}
+
+#[cfg(feature = "client-retail")]
+fn can_transfer_currency(state: &mut LuaState) -> LuaResult<u32> {
+    let id = i32::from_stack(state, 1)?;
+    let reason = {
+        let sim = borrow_state(state)?;
+        currency_transfer_rejection(&sim, id)?
+    };
+    state.push(Val::Bool(reason.is_none()));
+    state.push(
+        reason
+            .flatten()
+            .map_or(Val::Nil, |value| Val::Num(f64::from(value))),
+    );
+    Ok(2)
+}
+
+#[cfg(feature = "client-retail")]
+fn currency_transfer_rejection(
+    sim: &crate::lua_api::state::SimState,
+    id: i32,
+) -> LuaResult<Option<Option<i32>>> {
+    let list = &sim.currency_list;
+    if !list.server_enabled {
+        return Ok(Some(Some(10)));
+    }
+    if sim.currency_transfer_in_progress {
+        return Ok(Some(Some(9)));
+    }
+    if !list.account_context_present {
+        return Ok(Some(None));
+    }
+    let Some((flags, category, percentage)) = sim_data::currency_transfer::get(id) else {
+        return Ok(Some(Some(5)));
+    };
+    if percentage <= 0.0 || percentage.is_nan() || category & 12 != 0 {
+        return Ok(Some(Some(5)));
+    }
+    let rules = list
+        .transfer_rules
+        .get(&id)
+        .ok_or_else(|| rilua::runtime_error("currency transfer eligibility not modeled"))?;
+    if flags & (1 << 29) != 0
+        && !rules
+            .faction_key_0
+            .ok_or_else(|| rilua::runtime_error("currency faction key 0 not modeled"))?
+    {
+        return Ok(Some(Some(5)));
+    }
+    if flags & (1 << 28) != 0
+        && !rules
+            .faction_key_1
+            .ok_or_else(|| rilua::runtime_error("currency faction key 1 not modeled"))?
+    {
+        return Ok(Some(Some(5)));
+    }
+    if !rules
+        .award_condition_met
+        .ok_or_else(|| rilua::runtime_error("currency award condition not modeled"))?
+    {
+        return Ok(Some(Some(8)));
+    }
+    if rules
+        .quantity_cap_reached
+        .ok_or_else(|| rilua::runtime_error("currency quantity cap not modeled"))?
+        || rules
+            .weekly_cap_reached
+            .ok_or_else(|| rilua::runtime_error("currency weekly cap not modeled"))?
+    {
+        return Ok(Some(Some(4)));
+    }
+    let current = list
+        .current_character_guid
+        .as_ref()
+        .ok_or_else(|| rilua::runtime_error("currency current character GUID not modeled"))?;
+    let valid_source = list
+        .account_currency_sources
+        .get(&id)
+        .is_some_and(|sources| {
+            sources
+                .iter()
+                .any(|(guid, quantity)| guid != current && *quantity > 0)
+        });
+    Ok((!valid_source).then_some(Some(6)))
+}
+
 // Retail CurrencyInfoDocumentation.lua:27-33,225-231,555-563.
 #[cfg(feature = "client-retail")]
 fn currency_filter_requires_account_data(state: &mut LuaState) -> LuaResult<u32> {
@@ -335,6 +437,13 @@ fn c_currency_get_list_info(state: &mut LuaState) -> LuaResult<u32> {
         state,
         info,
         "currencyTypesID",
+        Val::Num(entry.currency_id as f64),
+    );
+    #[cfg(feature = "client-retail")]
+    table_set_static(
+        state,
+        info,
+        "currencyID",
         Val::Num(entry.currency_id as f64),
     );
     #[cfg(feature = "client-retail")]
