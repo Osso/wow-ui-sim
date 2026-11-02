@@ -5,6 +5,17 @@ use crate::lua_api::globals::currency_data::{self, CurrencyEntry};
 
 pub(crate) type CurrencyListRow = (i32, CurrencyEntry);
 
+#[derive(Default)]
+pub struct CurrencyTransferRules {
+    pub category_flags: Option<u32>,
+    pub currency_flags: Option<u32>,
+    pub faction_key_0: Option<bool>,
+    pub faction_key_1: Option<bool>,
+    pub award_condition_met: Option<bool>,
+    pub quantity_cap_reached: Option<bool>,
+    pub weekly_cap_reached: Option<bool>,
+}
+
 pub struct CurrencyListState {
     collapsed_headers: HashSet<i32>,
     watched_overrides: HashMap<i32, bool>,
@@ -13,6 +24,10 @@ pub struct CurrencyListState {
     pub account_context_present: bool,
     pub account_cache_invalidated: bool,
     pub cached_transaction_count: usize,
+    pub transfer_server_enabled: Option<bool>,
+    pub transfer_rules: HashMap<i32, CurrencyTransferRules>,
+    pub current_character_guid: Option<String>,
+    pub account_currency_sources: HashMap<i32, Vec<(String, u64)>>,
     pub account_loading: bool,
     pub transaction_loading: bool,
     pub pending_character_requests: usize,
@@ -30,6 +45,10 @@ impl Default for CurrencyListState {
             account_context_present: true,
             account_cache_invalidated: false,
             cached_transaction_count: 0,
+            transfer_server_enabled: None,
+            transfer_rules: HashMap::new(),
+            current_character_guid: None,
+            account_currency_sources: HashMap::new(),
             account_loading: false,
             transaction_loading: false,
             pending_character_requests: 0,
@@ -66,6 +85,7 @@ impl CurrencyListState {
         }
         if self.account_cache_invalidated {
             self.account_rows.clear();
+            self.account_currency_sources.clear();
             self.cached_transaction_count = 0;
             self.account_cache_invalidated = false;
         }

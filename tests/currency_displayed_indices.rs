@@ -6,6 +6,11 @@ use common::blizzard_addon_harness::with_blizzard_addon_smoke_shape_in_dir;
 // Original cached TokenUI.lua:23-31 (header), 363-404 (refresh), 459-475 (popup).
 // No vendor overrides, copied handlers, or namespace replacements.
 pub(crate) fn with_token_ui(probe: &str) {
+    let probe = probe.to_owned();
+    with_token_ui_env(move |env| env.exec(&probe).expect("currency consumer assertions"));
+}
+
+pub(crate) fn with_token_ui_env(probe: impl FnOnce(&wow_ui_sim::lua_api::WowLuaEnv) + Send + 'static) {
     let cache = dirs::home_dir()
         .expect("home directory")
         .join(".cache/wow-ui-sim/blizzard-ui/retail/AddOns");
@@ -14,7 +19,6 @@ pub(crate) fn with_token_ui(probe: &str) {
             .join("Blizzard_TokenUI/Blizzard_TokenUI.lua")
             .is_file()
     );
-    let probe = probe.to_owned();
     common::with_perf_lock(|| {
         common::with_timeout(90, move || {
             with_blizzard_addon_smoke_shape_in_dir(
@@ -25,7 +29,7 @@ pub(crate) fn with_token_ui(probe: &str) {
                     assert!(loaded.iter().any(|name| name == "Blizzard_TokenUI"));
                     env.exec(include_str!("fixtures/currency_displayed_indices.lua"))
                         .expect("original TokenUI fixture setup");
-                    env.exec(&probe).expect("currency consumer assertions");
+                    probe(env);
                 },
             );
         });
