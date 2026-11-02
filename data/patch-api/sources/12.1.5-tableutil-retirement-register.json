@@ -1,0 +1,12 @@
+{
+  "source": "data/patch-api/sources/12.1.5-register.json:15028",
+  "evidence": "Retail 70688 WM35-G census and pinned Retail generated documentation have no C_TableUtil registration; absence does not establish an exact removal date.",
+  "entries": [
+    {
+      "id": "retail-12.1.5-absent-C_TableUtil.FindIndexedMismatch",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_TableUtil.FindIndexedMismatch"
+    }
+  ]
+}

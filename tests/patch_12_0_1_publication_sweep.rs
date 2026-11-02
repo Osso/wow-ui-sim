@@ -18,6 +18,7 @@ fn patch_12_0_1_publication_sweep(env: &WowLuaEnv) {
             include_str!("../data/patch-api/sources/12.0.5-wikitext-register.json"),
             include_str!("../data/patch-api/sources/12.0.7-wikitext-register.json"),
             include_str!("../data/patch-api/sources/12.1.0-wikitext-register.json"),
+            include_str!("../data/patch-api/sources/12.1.5-tableutil-retirement-register.json"),
         ],
     });
 }
