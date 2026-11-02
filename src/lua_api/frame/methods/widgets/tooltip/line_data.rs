@@ -324,7 +324,7 @@ pub(super) fn set_custom_line_spacing(state: &mut LuaState) -> LuaResult<u32> {
     let spacing = val_to_f64(stack_val(state, 2)) as f32;
     let mut sim = borrow_state_mut(state)?;
     sim.tooltips.entry(id).or_default().line_spacing = Some(spacing);
-    refresh_tooltip_geometry(&mut sim, id);
+    sim.widgets.mark_rect_dirty(id);
     Ok(0)
 }
 
@@ -346,7 +346,7 @@ pub(super) fn set_minimum_width(state: &mut LuaState) -> LuaResult<u32> {
     let width = val_to_f64(stack_val(state, 2)) as f32;
     let mut sim = borrow_state_mut(state)?;
     sim.tooltips.entry(id).or_default().min_width = width;
-    refresh_tooltip_geometry(&mut sim, id);
+    sim.widgets.mark_rect_dirty(id);
     Ok(0)
 }
 
@@ -379,7 +379,7 @@ pub(super) fn set_custom_word_wrap_min_width(state: &mut LuaState) -> LuaResult<
         .entry(id)
         .or_default()
         .custom_word_wrap_min_width = Some(width);
-    refresh_tooltip_geometry(&mut sim, id);
+    sim.widgets.mark_rect_dirty(id);
     Ok(0)
 }
 
@@ -388,7 +388,6 @@ pub(super) fn set_shrink_to_fit_wrapped(state: &mut LuaState) -> LuaResult<u32> 
     let value = val_to_bool(stack_val(state, 2));
     let mut sim = borrow_state_mut(state)?;
     sim.tooltips.entry(id).or_default().shrink_to_fit_wrapped = value;
-    refresh_tooltip_geometry(&mut sim, id);
     Ok(0)
 }
 
