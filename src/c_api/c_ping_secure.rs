@@ -248,6 +248,13 @@ mod tests {
     #[test]
     fn registers_ping_secure_api() {
         let env = WowLuaEnv::new().expect("lua env");
+        // Retail 12.1.5 PingManagerSecureDocumentation.lua lists no
+        // ClearPendingPingOffScreenCallback; its checks belong to the 12.0.7 epoch.
+        let retail_12_1_5 = crate::client_profile::ACTIVE
+            == crate::client_profile::ClientProfile::Retail
+            && cfg!(feature = "retail-12-1-5");
+        env.exec(&format!("PendingClearPublished = {}", !retail_12_1_5))
+            .expect("record pending-clear publication");
         let result: String = env
             .eval(
                 r#"
@@ -255,7 +262,7 @@ mod tests {
                 if type(C_PingSecure) ~= "table" then return "namespace" end
                 if type(C_PingSecure.CreateFrame) ~= "function" then return "create_frame" end
                 if type(C_PingSecure.SetPendingPingOffScreenCallback) ~= "function" then return "pending_callback" end
-                if type(C_PingSecure.ClearPendingPingOffScreenCallback) ~= "function" then return "clear_pending_callback" end
+                if PendingClearPublished and type(C_PingSecure.ClearPendingPingOffScreenCallback) ~= "function" then return "clear_pending_callback" end
                 if type(C_PingSecure.SetPingCooldownStartedCallback) ~= "function" then return "cooldown_callback" end
                 if type(C_PingSecure.SetPingPinFrameAddedCallback) ~= "function" then return "pin_added_callback" end
                 if type(C_PingSecure.SetPingPinFrameRemovedCallback) ~= "function" then return "pin_removed_callback" end
@@ -267,8 +274,10 @@ mod tests {
                 local pending = function() return "pending" end
                 C_PingSecure.SetPendingPingOffScreenCallback(pending)
                 if __wow_ping_secure_callbacks.pendingPingOffScreen ~= pending then return "pending_stored" end
-                C_PingSecure.ClearPendingPingOffScreenCallback()
-                if __wow_ping_secure_callbacks.pendingPingOffScreen ~= nil then return "pending_cleared" end
+                if PendingClearPublished then
+                    C_PingSecure.ClearPendingPingOffScreenCallback()
+                    if __wow_ping_secure_callbacks.pendingPingOffScreen ~= nil then return "pending_cleared" end
+                end
                 C_PingSecure.SetPendingPingOffScreenCallback(function() end)
                 C_PingSecure.SetPingCooldownStartedCallback(function() end)
                 C_PingSecure.SetPingPinFrameAddedCallback(function() end)
