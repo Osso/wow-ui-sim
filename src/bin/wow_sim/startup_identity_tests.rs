@@ -180,7 +180,8 @@ fn selected_character_reaches_real_startup_and_reload() {
         return;
     };
     let args = startup_args(&root, false);
-    let (mut env, _font_system, mut saved_vars) = init_and_load(&args, ScreenKind::Game).unwrap();
+    let (mut env, _font_system, mut saved_vars) =
+        init_and_load(&args, ScreenKind::Game, root.join("session")).unwrap();
     assert!(saved_vars.is_some());
     assert_addon_identity(&env, "selected", "MAGE", "Orc");
 
@@ -228,7 +229,8 @@ fn selected_character_is_seeded_with_persistence_disabled() {
         return;
     };
     let args = startup_args(&root, true);
-    let (mut env, _font_system, mut saved_vars) = init_and_load(&args, ScreenKind::Game).unwrap();
+    let (mut env, _font_system, mut saved_vars) =
+        init_and_load(&args, ScreenKind::Game, root.join("session")).unwrap();
     assert!(saved_vars.is_none());
     assert_addon_identity(&env, "fresh", "MAGE", "Orc");
     env.state().borrow_mut().player.name = "ChangedAtRuntime".into();
