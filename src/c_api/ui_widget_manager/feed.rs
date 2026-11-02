@@ -284,6 +284,30 @@ fn upsert_membership(entries: &mut Vec<WidgetSetEntry>, entry: &WidgetSetEntry) 
 
 fn supply_visualization(sim: &mut crate::lua_api::SimState, id: f64, record: WidgetVisualization) {
     let key = WidgetId::from_number(id);
+    let inputs = &mut sim.ui_widget_inputs;
+    inputs.icon_and_text.remove(&key);
+    inputs.icon_text_and_background.remove(&key);
+    inputs.icon_text_and_currencies.remove(&key);
+    inputs.horizontal_currencies.remove(&key);
+    inputs.item_display.remove(&key);
+    inputs.capture_bars.remove(&key);
+    inputs.status_bars.remove(&key);
+    inputs.double_status_bars.remove(&key);
+    inputs.texture_and_text.remove(&key);
+    inputs.texture_and_text_row.remove(&key);
+    inputs.spacers.remove(&key);
+    inputs.spell_display.remove(&key);
+    inputs.text_with_state.remove(&key);
+    inputs.text_with_subtext.remove(&key);
+    inputs.double_icon_and_text.remove(&key);
+    inputs.discrete_progress_steps.remove(&key);
+    inputs.bullet_text_lists.remove(&key);
+    inputs.text_column_rows.remove(&key);
+    sim.button_header_inputs.widgets.remove(&key);
+    #[cfg(feature = "retail-12-0-0")]
+    if id > 0.0 && id <= u32::MAX as f64 && id.fract() == 0.0 {
+        sim.prey_inputs.widgets.remove(&(id as u32));
+    }
     match record {
         WidgetVisualization::IconAndText(record) => {
             sim.ui_widget_inputs.icon_and_text.insert(key, record);
