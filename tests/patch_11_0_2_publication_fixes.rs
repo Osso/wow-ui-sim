@@ -25,9 +25,12 @@ fn patch_11_0_2_retired_members_do_not_regrow_on_lookup() {
 #[test]
 fn patch_11_0_2_account_until_equipped_reads_intrinsic_item_metadata() {
     let env = WowLuaEnv::new().unwrap();
+    let mut supplied = wow_ui_sim::items::get_item(253451).unwrap().clone();
+    supplied.bonding = 9;
+    env.state().borrow_mut().item_overrides.insert(253451, supplied);
     env.exec(r#"
         assert(type(rawget(C_Item, 'IsItemBindToAccountUntilEquip')) == 'function')
-        -- Veilroot Fountain: generated ItemBind metadata is 9 (account until equipped).
+        -- The supplied item record has ItemBind 9 (account until equipped).
         for _, item in ipairs({253451, '253451', 'item:253451',
             '|cnIQ1:|Hitem:253451::::::::80:70:::::::::|h[Veilroot Fountain]|h|r'}) do
             assert(C_Item.IsItemBindToAccountUntilEquip(item) == true)
@@ -37,4 +40,6 @@ fn patch_11_0_2_account_until_equipped_reads_intrinsic_item_metadata() {
         assert(C_Item.IsItemBindToAccountUntilEquip('not-an-item') == false)
         assert(C_Item.IsItemBindToAccount(253451) == true)
     "#).unwrap();
+    env.state().borrow_mut().item_overrides.remove(&253451);
+    env.exec("assert(C_Item.IsItemBindToAccountUntilEquip(253451) == false)").unwrap();
 }

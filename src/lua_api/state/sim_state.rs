@@ -109,6 +109,8 @@ pub struct SimState {
     #[cfg(feature = "client-wrath")]
     pub who_routing: crate::c_api::who_routing::WhoRouting,
     pub tooltips: HashMap<u64, TooltipData>,
+    /// Explicit host-supplied item metadata, taking precedence over the generated catalog.
+    pub item_overrides: HashMap<u32, crate::items::ItemInfo>,
     /// Explicit exact-link fixtures only; initially empty, no catalog producer.
     #[cfg(feature = "retail-12-0-0")]
     pub item_stats: crate::c_api::ItemStatsState,
