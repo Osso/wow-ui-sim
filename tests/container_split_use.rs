@@ -60,6 +60,7 @@ fn cursor(env: &WowLuaEnv) -> Option<(u32, i32, CursorItemOrigin)> {
             stack_count,
             origin,
             applied_transmog: None,
+            ..
         }) => Some((item_id, stack_count, origin)),
         None => None,
         other => panic!("unexpected fixture cursor: {other:?}"),
@@ -127,6 +128,7 @@ fn b1_occupied_cursor_and_missing_source_are_inert() {
     for action in split_actions() {
         let env = supplied_env();
         env.state().borrow_mut().cursor_item = Some(CursorInfo::Item {
+            owned_identity: None,
             item_id: CONTROL,
             stack_count: 9,
             origin: CursorItemOrigin::Unknown,
@@ -153,6 +155,7 @@ fn b3_namespaced_and_legacy_use_record_the_same_supplied_request_model() {
         .usable_items
         .insert(ITEM);
     env.state().borrow_mut().cursor_item = Some(CursorInfo::Item {
+        owned_identity: None,
         item_id: CONTROL,
         stack_count: 9,
         origin: CursorItemOrigin::Unknown,

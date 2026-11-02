@@ -13,6 +13,7 @@ fn cursor_type_and_grid_reach_bag_bar_and_action_bar(env: &WowLuaEnv) {
         hyperlink: None,
         durability: None,
         applied_transmog: None,
+        owned_identity: None,
     });
     env.exec(r#"
         local source = debug.getinfo(MainMenuBarBagManager.OnCursorChanged, 'S').source:gsub('\\', '/')
@@ -55,6 +56,7 @@ fn owned_item_grid_reaches_action_bar(env: &WowLuaEnv) {
                 hyperlink: None,
                 durability: None,
                 applied_transmog: None,
+                owned_identity: None,
             });
         }
     }

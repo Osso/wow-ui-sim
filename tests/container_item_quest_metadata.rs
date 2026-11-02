@@ -16,6 +16,7 @@ fn supply_item(env: &WowLuaEnv, bag: i32, slot: i32, item_id: u32) {
             hyperlink: None,
             durability: None,
             applied_transmog: None,
+            owned_identity: None,
         },
     );
 }

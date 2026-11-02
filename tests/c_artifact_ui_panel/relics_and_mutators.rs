@@ -117,6 +117,7 @@ fn can_apply_cursor_relic_to_slot_requires_known_relic_and_unlocked_slot() {
         });
         st.artifact_relic_items.insert(777);
         st.cursor_item = Some(CursorInfo::Item {
+            owned_identity: None,
             item_id: 777,
             stack_count: 1,
             origin: CursorItemOrigin::Unknown,
@@ -142,6 +143,7 @@ fn can_apply_cursor_relic_to_slot_rejects_unknown_relic() {
             link: String::new(),
         });
         st.cursor_item = Some(CursorInfo::Item {
+            owned_identity: None,
             item_id: 1,
             stack_count: 1,
             origin: CursorItemOrigin::Unknown,
@@ -349,6 +351,7 @@ fn apply_cursor_relic_to_slot_writes_into_slot() {
         });
         st.artifact_relic_items.insert(444);
         st.cursor_item = Some(CursorInfo::Item {
+            owned_identity: None,
             item_id: 444,
             stack_count: 1,
             origin: CursorItemOrigin::Unknown,

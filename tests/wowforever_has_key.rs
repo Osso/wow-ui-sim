@@ -13,6 +13,7 @@ fn forever_has_key_tracks_keyring_inventory() {
         hyperlink: None,
         durability: None,
         applied_transmog: None,
+        owned_identity: None,
     };
     env.state()
         .borrow_mut()
@@ -62,6 +63,7 @@ fn forever_keyring_tutorial_consumer_checks_inventory() {
             hyperlink: None,
             durability: None,
             applied_transmog: None,
+            owned_identity: None,
         },
     );
     env.exec("KeyRingMixin.TriggerTutorial(ring); assert(GetCVarBool('showKeyring'))")

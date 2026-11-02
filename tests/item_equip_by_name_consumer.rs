@@ -13,6 +13,7 @@ fn secure_item_action_requests_equip_and_exposes_the_lock(env: &WowLuaEnv) {
         sim.bag_items.insert((0, 3), BagItem {
             item_id: 7005, stack_count: 1, hyperlink: None,
             durability: None, applied_transmog: None,
+            owned_identity: None,
         });
         sim.equippable_items.insert(7005);
     }

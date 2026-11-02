@@ -43,6 +43,7 @@ fn owned_item_projects_id_and_link_or_nil() {
             hyperlink: None,
             durability: None,
             applied_transmog: None,
+            owned_identity: None,
         },
     );
     env.exec(

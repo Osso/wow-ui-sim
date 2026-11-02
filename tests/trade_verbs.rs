@@ -158,6 +158,7 @@ fn set_cursor_item_slot_moves_cursor_item_into_slot() {
     {
         let mut st = env.state().borrow_mut();
         st.cursor_item = Some(CursorInfo::Item {
+            owned_identity: None,
             item_id: 6948,
             stack_count: 1,
             origin: CursorItemOrigin::Unknown,
@@ -177,6 +178,7 @@ fn set_cursor_item_slot_out_of_range_is_noop() {
     {
         let mut st = env.state().borrow_mut();
         st.cursor_item = Some(CursorInfo::Item {
+            owned_identity: None,
             item_id: 123,
             stack_count: 1,
             origin: CursorItemOrigin::Unknown,

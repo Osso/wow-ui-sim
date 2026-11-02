@@ -91,6 +91,7 @@ fn is_empowered_resolves_bag_and_slot() {
                 hyperlink: None,
                 durability: None,
                 applied_transmog: None,
+                owned_identity: None,
             },
         );
     }
@@ -113,6 +114,7 @@ fn is_empowered_resolves_equipment_slot() {
                 enchant_id: 0,
                 gem_ids: [0, 0, 0],
                 applied_transmog: None,
+                owned_identity: None,
             },
         );
     }

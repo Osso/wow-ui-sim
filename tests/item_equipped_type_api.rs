@@ -15,6 +15,7 @@ fn equipped_item_type_matches_equipped_item_categories(env: &WowLuaEnv) {
             enchant_id: 0,
             gem_ids: [0; 3],
             applied_transmog: None,
+            owned_identity: None,
         });
     }
     env.exec(r#"
@@ -36,6 +37,7 @@ fn equipped_item_type_matches_equipped_item_categories(env: &WowLuaEnv) {
             enchant_id: 0,
             gem_ids: [0; 3],
             applied_transmog: None,
+            owned_identity: None,
         });
     }
     env.exec(r#"

@@ -15,6 +15,7 @@ fn secure_item_action_uses_equipped_item_from_inventory_link(env: &WowLuaEnv) {
             enchant_id: 0,
             gem_ids: [0; 3],
             applied_transmog: None,
+            owned_identity: None,
         });
         sim.equippable_items.insert(6948);
     }

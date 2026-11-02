@@ -28,6 +28,7 @@ fn item_usability_checks_ownership_eligibility_and_spell_power() {
                 hyperlink: None,
                 durability: None,
                 applied_transmog: None,
+                owned_identity: None,
             },
         );
         sim.item_use_eligibility.insert((1434, 13424), false);

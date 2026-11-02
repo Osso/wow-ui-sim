@@ -20,6 +20,7 @@ fn is_inventory_item_locked_false_without_cursor_item() {
 fn is_inventory_item_locked_true_when_cursor_holds_that_slot() {
     let env = env();
     env.state().borrow_mut().cursor_item = Some(CursorInfo::Item {
+        owned_identity: None,
         item_id: 1,
         stack_count: 1,
         origin: CursorItemOrigin::Equipped { slot: 16 },
@@ -44,6 +45,7 @@ fn get_inventory_item_durability_returns_full_durability_for_equipped_items() {
                 enchant_id: 0,
                 gem_ids: [0; 3],
                 applied_transmog: None,
+                owned_identity: None,
             },
         );
     }
@@ -69,7 +71,11 @@ fn get_inventory_item_durability_returns_nil_for_empty_slots() {
 fn is_equippable_item_reads_state_set() {
     let env = env();
     env.state().borrow_mut().equippable_items.insert(19019);
-    let function = if wow_ui_sim::client_profile::ACTIVE.has_legacy_item_globals() { "IsEquippableItem" } else { "C_Item.IsEquippableItem" };
+    let function = if wow_ui_sim::client_profile::ACTIVE.has_legacy_item_globals() {
+        "IsEquippableItem"
+    } else {
+        "C_Item.IsEquippableItem"
+    };
     let b: bool = env.eval(&format!("return {function}(19019)")).unwrap();
     assert!(b);
     let b: bool = env.eval(&format!("return {function}(6948)")).unwrap();
@@ -80,7 +86,11 @@ fn is_equippable_item_reads_state_set() {
 fn is_consumable_item_reads_state_set() {
     let env = env();
     env.state().borrow_mut().consumable_items.insert(6948);
-    let function = if wow_ui_sim::client_profile::ACTIVE.has_legacy_item_globals() { "IsConsumableItem" } else { "C_Item.IsConsumableItem" };
+    let function = if wow_ui_sim::client_profile::ACTIVE.has_legacy_item_globals() {
+        "IsConsumableItem"
+    } else {
+        "C_Item.IsConsumableItem"
+    };
     let b: bool = env.eval(&format!("return {function}(6948)")).unwrap();
     assert!(b);
     let b: bool = env.eval(&format!("return {function}(19019)")).unwrap();

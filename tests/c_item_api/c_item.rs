@@ -309,6 +309,7 @@ fn item_location_bag_link_preserves_captured_hyperlink() {
             hyperlink: Some(captured.to_string()),
             durability: None,
             applied_transmog: None,
+            owned_identity: None,
         },
     );
     let (item_link, container_link): (String, String) = env.eval(

@@ -66,6 +66,7 @@ fn returns_nil_for_non_item_payloads() {
 fn returns_nil_for_merchant_origin() {
     let env = WowLuaEnv::new().expect("env");
     env.state().borrow_mut().cursor_item = Some(CursorInfo::Item {
+        owned_identity: None,
         item_id: 158041,
         stack_count: 1,
         origin: CursorItemOrigin::Merchant { index: 3 },
@@ -79,6 +80,7 @@ fn returns_nil_for_merchant_origin() {
 fn returns_nil_for_unknown_origin() {
     let env = WowLuaEnv::new().expect("env");
     env.state().borrow_mut().cursor_item = Some(CursorInfo::Item {
+        owned_identity: None,
         item_id: 158041,
         stack_count: 1,
         origin: CursorItemOrigin::Unknown,
@@ -92,6 +94,7 @@ fn returns_nil_for_unknown_origin() {
 fn bag_origin_returns_bag_and_slot_shape() {
     let env = WowLuaEnv::new().expect("env");
     env.state().borrow_mut().cursor_item = Some(CursorInfo::Item {
+        owned_identity: None,
         item_id: 158041,
         stack_count: 1,
         origin: CursorItemOrigin::Bag { bag: 2, slot: 5 },
@@ -113,6 +116,7 @@ fn bag_origin_returns_bag_and_slot_shape() {
 fn equipped_origin_returns_equipment_slot_shape() {
     let env = WowLuaEnv::new().expect("env");
     env.state().borrow_mut().cursor_item = Some(CursorInfo::Item {
+        owned_identity: None,
         item_id: 158041,
         stack_count: 1,
         origin: CursorItemOrigin::Equipped { slot: 7 },
@@ -133,6 +137,7 @@ fn bag_origin_exposes_item_location_mixin_methods() {
     let env = WowLuaEnv::new().expect("env");
     env.exec(ITEM_LOCATION_MIXIN_BOOTSTRAP).unwrap();
     env.state().borrow_mut().cursor_item = Some(CursorInfo::Item {
+        owned_identity: None,
         item_id: 158041,
         stack_count: 1,
         origin: CursorItemOrigin::Bag { bag: 0, slot: 4 },
@@ -161,6 +166,7 @@ fn equipped_origin_exposes_item_location_mixin_methods() {
     let env = WowLuaEnv::new().expect("env");
     env.exec(ITEM_LOCATION_MIXIN_BOOTSTRAP).unwrap();
     env.state().borrow_mut().cursor_item = Some(CursorInfo::Item {
+        owned_identity: None,
         item_id: 158041,
         stack_count: 1,
         origin: CursorItemOrigin::Equipped { slot: 5 },
@@ -185,6 +191,7 @@ fn item_locations_compare_equal_via_mixin() {
     let env = WowLuaEnv::new().expect("env");
     env.exec(ITEM_LOCATION_MIXIN_BOOTSTRAP).unwrap();
     env.state().borrow_mut().cursor_item = Some(CursorInfo::Item {
+        owned_identity: None,
         item_id: 158041,
         stack_count: 1,
         origin: CursorItemOrigin::Bag { bag: 1, slot: 9 },

@@ -16,6 +16,7 @@ fn env() -> WowLuaEnv {
             enchant_id: 0,
             gem_ids: [0; 3],
             applied_transmog: None,
+            owned_identity: None,
         },
     );
     let mut source = sim.world.transmog_appearances[0].clone();
@@ -105,6 +106,7 @@ fn transmog_outfit_visuals_item_eligibility_returns_boolean_and_error_enum() {
             enchant_id: 0,
             gem_ids: [0; 3],
             applied_transmog: None,
+            owned_identity: None,
         },
     );
     env.state().borrow_mut().player.equipped_items.remove(&17);
