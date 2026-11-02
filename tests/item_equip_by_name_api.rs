@@ -44,6 +44,38 @@ fn first_matching_locked_copy_prevents_fallthrough() {
     )
     .unwrap();
     assert!(env.state().borrow().item_equip.requests.is_empty());
+    {
+        let mut sim = env.state().borrow_mut();
+        let first = sim.item_equip.inputs.get_mut(&31).unwrap();
+        first.native_flags = 0;
+        first.lock_reasons = 4;
+    }
+    env.exec(
+        r#"
+        assert(C_Item.IsLocked({ bagID = 0, slotIndex = 2 }))
+        assert(C_Container.GetContainerItemInfo(0, 2).isLocked)
+        C_Item.EquipItemByName(7005)
+        assert(not C_Container.GetContainerItemInfo(0, 3).isLocked)
+    "#,
+    )
+    .unwrap();
+    assert!(env.state().borrow().item_equip.requests.is_empty());
+    env.state()
+        .borrow_mut()
+        .item_equip
+        .inputs
+        .get_mut(&31)
+        .unwrap()
+        .lock_reasons = 0;
+    env.exec(
+        r#"
+        C_Item.EquipItemByName(7005)
+        assert(C_Container.GetContainerItemInfo(0, 2).isLocked)
+        assert(not C_Container.GetContainerItemInfo(0, 3).isLocked)
+    "#,
+    )
+    .unwrap();
+    assert_eq!(env.state().borrow().item_equip.requests[0].identity, 31);
 }
 
 #[test]
@@ -170,6 +202,50 @@ fn account_conversion_retains_cursor_and_clear_restores_lock() {
 }
 
 #[test]
+fn clearing_one_reason_does_not_emit_unlock_when_another_reason_remains() {
+    let env = WowLuaEnv::new().unwrap();
+    {
+        let mut sim = env.state().borrow_mut();
+        sim.bag_items.clear();
+        sim.bag_items.insert((0, 1), item(7005, Some(42)));
+        sim.item_equip.inputs.insert(
+            42,
+            OwnedItemEquipInputs {
+                account_conversion: true,
+                ..Default::default()
+            },
+        );
+    }
+    env.exec(
+        r#"
+        lockEvents = {}
+        local listener = CreateFrame('Frame')
+        listener:RegisterEvent('ITEM_LOCK_CHANGED')
+        listener:RegisterEvent('ITEM_UNLOCKED')
+        listener:SetScript('OnEvent', function(_, name) lockEvents[#lockEvents + 1] = name end)
+        C_Item.EquipItemByName(7005)
+        assert(#lockEvents == 1 and lockEvents[1] == 'ITEM_LOCK_CHANGED')
+    "#,
+    )
+    .unwrap();
+    env.state()
+        .borrow_mut()
+        .item_equip
+        .inputs
+        .get_mut(&42)
+        .unwrap()
+        .lock_reasons |= 4;
+    env.exec(
+        r#"
+        ClearCursor()
+        assert(#lockEvents == 1)
+        assert(C_Container.GetContainerItemInfo(0, 1).isLocked)
+    "#,
+    )
+    .unwrap();
+}
+
+#[test]
 fn refused_staging_processes_the_previous_stored_item() {
     let env = WowLuaEnv::new().unwrap();
     {
@@ -269,6 +345,32 @@ fn replacing_the_selected_item_during_cursor_clear_does_not_transfer_its_identit
     )
     .unwrap();
     assert!(env.state().borrow().item_equip.requests.is_empty());
+}
+
+#[test]
+fn carried_bag_root_is_examined_before_its_contents() {
+    let env = WowLuaEnv::new().unwrap();
+    {
+        let mut sim = env.state().borrow_mut();
+        sim.bag_items.clear();
+        sim.player.equipped_items.clear();
+        let bag = sim.bag_info.get_mut(&1).unwrap();
+        bag.item_id = Some(21841);
+        bag.inventory_slot = Some(21);
+        sim.bag_items.insert((1, 2), item(21841, Some(51)));
+    }
+    env.exec(
+        r#"
+        C_Item.EquipItemByName(21841)
+        assert(GetCursorInfo() == nil)
+        assert(not C_Container.GetContainerItemInfo(1, 2).isLocked)
+    "#,
+    )
+    .unwrap();
+    let sim = env.state().borrow();
+    assert!(sim.item_equip.requests.is_empty());
+    assert!(sim.bag_info[&1].owned_identity.is_some());
+    assert_eq!(sim.bag_items[&(1, 2)].owned_identity, Some(51));
 }
 
 #[test]
