@@ -66,6 +66,46 @@ class SlotBuildTests(unittest.TestCase):
         rebuilt = {"debug/direct": "after", "debug/directory": "after"}
         self.assertEqual(self.module.find_stale_artifacts(current, previous, rebuilt), [])
 
+    def sibling_guard_fixture(self):
+        integration = str(self.slot / "debug/integration")
+        prefork = str(self.slot / "debug/prefork")
+        inputs = ["tests/data/first.json", "tests/data/second.json"]
+        current = {
+            "worktree": str(self.slot), "slot": str(self.slot),
+            "changed_paths": inputs, "content_changed_paths": inputs,
+            "target_inputs": {integration: inputs, prefork: inputs},
+            "reported_artifacts": [
+                {"executable": integration, "fresh": False},
+                {"executable": prefork, "fresh": False},
+            ],
+        }
+        previous = {"debug/integration": "same", "debug/prefork": "before"}
+        artifacts = {"debug/integration": "same", "debug/prefork": "after"}
+        return current, previous, artifacts
+
+    def test_changed_sibling_covering_all_inputs_accepts_unchanged_executable(self):
+        current, previous, artifacts = self.sibling_guard_fixture()
+        self.assertEqual(self.module.find_stale_artifacts(current, previous, artifacts), [])
+
+    def test_unchanged_executable_without_sibling_is_stale(self):
+        current, previous, artifacts = self.sibling_guard_fixture()
+        current["reported_artifacts"].pop()
+        self.assertEqual(self.module.find_stale_artifacts(current, previous, artifacts),
+                         ["debug/integration"])
+
+    def test_sibling_covering_only_some_inputs_does_not_certify_executable(self):
+        current, previous, artifacts = self.sibling_guard_fixture()
+        sibling = current["reported_artifacts"][1]["executable"]
+        current["target_inputs"][sibling] = ["tests/data/first.json"]
+        self.assertEqual(self.module.find_stale_artifacts(current, previous, artifacts),
+                         ["debug/integration"])
+
+    def test_fresh_sibling_does_not_certify_executable(self):
+        current, previous, artifacts = self.sibling_guard_fixture()
+        current["reported_artifacts"][1]["fresh"] = True
+        self.assertEqual(self.module.find_stale_artifacts(current, previous, artifacts),
+                         ["debug/integration", "debug/prefork"])
+
     def test_launch_argv_keeps_source_and_target_paths_stable(self):
         self.assertEqual(
             self.module.build_argv(3, Path("/home/osso/.worktrees/lane"),
