@@ -555,6 +555,10 @@ const EXISTING_ITEM_FIXTURE_IDS: &[u32] = &[
     // the file adds targeted journal coverage without pruning older fixtures.
     159, 4540, 6948, 7005, 122245, 210934, 210935, 211988, 211989, 211990, 211991, 211992, 211993,
     211994, 211995, 211996, 215135, 218715, 225748, 229181, 230637, 236914,
+    // tests/wrath_inventory_slot_candidates.rs equips and bags these two rings
+    // and head item and asserts their equip locations through GetItemInfo.
+    // The 12.1.5.70391 journal tiers no longer list them.
+    49803, 49812, 49819,
 ];
 
 /// Items addons name at file load that the teleport rule cannot see: their
