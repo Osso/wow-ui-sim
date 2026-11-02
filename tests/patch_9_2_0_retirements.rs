@@ -9,7 +9,7 @@ for _, name in ipairs({'GetSpecialEventDetails', 'GetSpecialEventInfo'}) do
     assert(C_PvP[name] == nil, name)
     assert(C_PvP[name] == nil, name)
 end
-assert(type(C_PvP.GetSpecialEventBrawlInfo) == 'function')
+assert(type(C_PvP.GetSpecialEventBrawlInfo) == 'function', 'GetSpecialEventBrawlInfo')
 "#;
 
 #[test]

@@ -18,21 +18,21 @@ fn patch_11_0_5_cached_surfaces_preserve_retirements_and_character_query(env: &W
     });
     env.exec(
         r#"
-        assert(C_BarberShop.HasAlteredForm() == true)
+        assert(C_BarberShop.HasAlteredForm() == true, 'HasAlteredForm')
         for i = 1, 2 do
-            assert(C_AuctionHouse.RequestFavorites == nil)
-            assert(rawget(C_AuctionHouse, 'RequestFavorites') == nil)
-            assert(C_MajorFactions.GetCovenantIDForMajorFaction == nil)
-            assert(rawget(C_MajorFactions, 'GetCovenantIDForMajorFaction') == nil)
+            assert(C_AuctionHouse.RequestFavorites == nil, 'RequestFavorites lookup')
+            assert(rawget(C_AuctionHouse, 'RequestFavorites') == nil, 'RequestFavorites raw')
+            assert(C_MajorFactions.GetCovenantIDForMajorFaction == nil, 'GetCovenantIDForMajorFaction lookup')
+            assert(rawget(C_MajorFactions, 'GetCovenantIDForMajorFaction') == nil, 'GetCovenantIDForMajorFaction raw')
         end
-        assert(C_Glue.IsOnGlueScreen() == false)
-        assert(IsOnGlueScreen == false)
-        assert(GetCVarBool('loadDeprecationFallbacks'))
+        assert(C_Glue.IsOnGlueScreen() == false, 'C_Glue.IsOnGlueScreen')
+        assert(IsOnGlueScreen == false, 'IsOnGlueScreen')
+        assert(GetCVarBool('loadDeprecationFallbacks'), 'loadDeprecationFallbacks')
         for _, name in ipairs({'ChromaEffectsEnable', 'ChromaEffectsFactionColor'}) do
-            assert(GetCVarDefault(name) == '1')
-            assert(SetCVar(name, '0'))
-            assert(C_CVar.GetCVarBool(name) == false)
-            assert(GetCVarDefault(name) == '1')
+            assert(GetCVarDefault(name) == '1', name .. ' default before')
+            assert(SetCVar(name, '0'), name .. ' set')
+            assert(C_CVar.GetCVarBool(name) == false, name .. ' value')
+            assert(GetCVarDefault(name) == '1', name .. ' default after')
         end
         "#,
     ).unwrap();
