@@ -218,6 +218,8 @@ fn register_c_item_inventory_queries(
             ("IsEquippableItem", c_item_is_equippable_item),
             #[cfg(feature = "client-retail")]
             ("IsEquippedItem", c_item_is_equipped_item),
+            #[cfg(feature = "client-retail")]
+            ("IsCurrentItem", c_item_is_current_item),
             ("IsItemInRange", c_item_is_item_in_range),
             (
                 "GetItemInventorySlotInfo",
@@ -253,6 +255,18 @@ fn c_item_is_dressable_item_by_id(state: &mut LuaState) -> LuaResult<u32> {
             .unwrap_or(false)
     };
     state.push(Val::Bool(dressable));
+    Ok(1)
+}
+
+#[cfg(feature = "client-retail")]
+fn c_item_is_current_item(state: &mut LuaState) -> LuaResult<u32> {
+    let value = rilua::table_security::unwrap_secret(state, stack_val(state, 1))?;
+    let item_id = parse_item_id_key(state, value);
+    let current = {
+        let sim = borrow_state(state)?;
+        item_id.is_some_and(|id| id != 0 && sim.current_item_ids.contains(&id))
+    };
+    state.push(Val::Bool(current));
     Ok(1)
 }
 
