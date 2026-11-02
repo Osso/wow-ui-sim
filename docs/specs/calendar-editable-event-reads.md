@@ -15,8 +15,10 @@ Retail calendar invite and edit controls read the separately supplied being-edit
 - [ ] `EventGetInviteResponseTime` returns the supplied invite's time table, or zero values when the event, invite or response time is absent.
 - [ ] `EventGetTextures` publishes supplied texture records: types 1 and 5 share a list, type 0 uses another, and types 2–4 return an empty list.
 - [ ] `EventHasPendingInvite` matches the editable event ID against the supplied pending IDs and returns false without an event or match.
+- [ ] `EventGetStatusOptions` checks local credential or creator authority before invite bounds. It returns ordered status/key pairs for 1, 2, 3, 4, 5 and 8, omitting the current status; signup flag 0x400 also excludes 1 and 2. No event or an invalid authorized index returns one empty table.
+- [ ] A status-options permission failure emits `CALENDAR_UPDATE_ERROR` with `CALENDAR_ERROR_PERMISSIONS`, clears pending and emits `CALENDAR_ACTION_PENDING(false)`, in that order.
 
-The result connections are based on Retail 70688 local decoding and inferred/emulated publication, not live-client proof.
+The result connections are based on Retail 70688 local decoding and inferred/emulated publication, not live-client proof. WM27 identifies the status option values, string keys and local authority; complete wrapper behavior and argument coercion remain unknown.
 
 ## How it works
 
@@ -33,7 +35,6 @@ The result connections are based on Retail 70688 local decoding and inferred/emu
 
 ## Known gaps (current cycle)
 
-- [ ] `EventGetStatusOptions` remains nil: native status strings and the complete permission predicate are unknown. The positive pending-invite menu also depends on this member.
 - [ ] `EventCanEdit` remains unimplemented. Event type's PLAYER flag masks and their priority relative to other flags are unknown.
 - [ ] Native name/class lookup and null slots in the invite list are not modeled.
 - [ ] `GetNumInvites` absent-event default, complete argument coercion, and secret restrictions are not verified.

@@ -243,7 +243,7 @@ fn invite(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
-fn read_invite_index(state: &mut LuaState, usage: &str) -> LuaResult<Option<usize>> {
+pub(super) fn read_invite_index(state: &mut LuaState, usage: &str) -> LuaResult<Option<usize>> {
     let index = civil::numeric_argument(state, 1)?
         .filter(|n| n.is_finite() && *n >= 0.0 && *n <= f64::from(u32::MAX))
         .ok_or_else(|| runtime_error(usage.to_owned()))?;
