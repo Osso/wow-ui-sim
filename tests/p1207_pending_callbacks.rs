@@ -6,6 +6,18 @@ use wow_ui_sim::lua_api::WowLuaEnv;
 
 fn callback_env() -> WowLuaEnv {
     let env = WowLuaEnv::new().expect("pending callback environment");
+    // WM38 and PingManagerSecureDocumentation.lua:3–6 place Retail 12.1.5
+    // C_PingSecure in the secure environment; retain the earlier epoch's lookup.
+    let namespace = if wow_ui_sim::client_profile::ACTIVE
+        == wow_ui_sim::client_profile::ClientProfile::Retail
+        && cfg!(feature = "retail-12-1-5")
+    {
+        "__secureenv.C_PingSecure"
+    } else {
+        "C_PingSecure"
+    };
+    env.exec(&format!("TestPingSecure = {namespace}"))
+        .expect("select ping namespace for the active epoch");
     env.exec(
         r#"
         Slots = {
@@ -100,7 +112,7 @@ fn namespace_and_legacy_ping_share_one_live_slot() {
         r#"
         first = function() table.insert(Calls, 'namespace') end
         second = function() table.insert(Calls, 'legacy') end
-        assert(select('#', C_PingSecure.SetPendingPingOffScreenCallback(first)) == 0)
+        assert(select('#', TestPingSecure.SetPendingPingOffScreenCallback(first)) == 0)
         assert(GetSecurePendingPingOffScreenCallback() == first)
         "#,
     )
@@ -112,9 +124,9 @@ fn namespace_and_legacy_ping_share_one_live_slot() {
     env.exec(
         r#"
         assert(table.concat(Calls, ',') == 'namespace,legacy')
-        assert(select('#', C_PingSecure.ClearPendingPingOffScreenCallback()) == 0)
+        assert(select('#', TestPingSecure.ClearPendingPingOffScreenCallback()) == 0)
         assert(GetSecurePendingPingOffScreenCallback() == nil)
-        C_PingSecure.ClearPendingPingOffScreenCallback()
+        TestPingSecure.ClearPendingPingOffScreenCallback()
         assert(GetSecurePendingPingOffScreenCallback() == nil)
         "#,
     )
@@ -132,8 +144,8 @@ fn clear_ping_preserves_button_and_run_slots_and_environment_isolation() {
             r#"
         SetSecurePendingButtonCallback(function() table.insert(Calls, 'button') end)
         SetSecurePendingToggleRunCallback(function() table.insert(Calls, 'run') end)
-        C_PingSecure.SetPendingPingOffScreenCallback(function() table.insert(Calls, 'ping') end)
-        C_PingSecure.ClearPendingPingOffScreenCallback()
+        TestPingSecure.SetPendingPingOffScreenCallback(function() table.insert(Calls, 'ping') end)
+        TestPingSecure.ClearPendingPingOffScreenCallback()
         "#,
         )
         .unwrap();
@@ -195,8 +207,8 @@ fn storage_operations_preserve_secure_and_tainted_caller_context() {
                 slot[1](nil)
                 assert(slot[2]() == nil)
             end
-            C_PingSecure.SetPendingPingOffScreenCallback(function() end)
-            C_PingSecure.ClearPendingPingOffScreenCallback()
+            TestPingSecure.SetPendingPingOffScreenCallback(function() end)
+            TestPingSecure.ClearPendingPingOffScreenCallback()
             assert(debug.getstacktaint() == before)
         end
         assert(issecure()); probe(); assert(issecure())
@@ -222,7 +234,7 @@ fn retrieved_callback_keeps_its_taint_when_event_consumer_invokes_it() {
             table.insert(Calls, 'tainted-body')
         end
         debug.setobjecttaint(callback, 'PendingCallbackFixture')
-        C_PingSecure.SetPendingPingOffScreenCallback(callback)
+        TestPingSecure.SetPendingPingOffScreenCallback(callback)
         assert(GetSecurePendingPingOffScreenCallback() == callback)
         collectgarbage('collect')
         "#,
@@ -240,11 +252,11 @@ fn replacement_and_clear_inside_callback_take_effect_on_next_event() {
         r#"
         local replacement = function()
             table.insert(Calls, 'second')
-            C_PingSecure.ClearPendingPingOffScreenCallback()
+            TestPingSecure.ClearPendingPingOffScreenCallback()
         end
-        C_PingSecure.SetPendingPingOffScreenCallback(function()
+        TestPingSecure.SetPendingPingOffScreenCallback(function()
             table.insert(Calls, 'first')
-            C_PingSecure.SetPendingPingOffScreenCallback(replacement)
+            TestPingSecure.SetPendingPingOffScreenCallback(replacement)
         end)
         "#,
     )
@@ -286,7 +298,7 @@ fn callback_error_does_not_change_slot_or_break_later_dispatch() {
             failures = failures + 1
             error('pending-callback-fixture-error')
         end
-        C_PingSecure.SetPendingPingOffScreenCallback(callback)
+        TestPingSecure.SetPendingPingOffScreenCallback(callback)
         Probe:SetScript('OnEvent', function()
             -- Error isolation belongs to this explicit consumer's pcall.
             local ok, err = pcall(GetSecurePendingPingOffScreenCallback())
@@ -303,7 +315,7 @@ fn callback_error_does_not_change_slot_or_break_later_dispatch() {
         .unwrap();
     env.exec(
         r#"
-        C_PingSecure.ClearPendingPingOffScreenCallback()
+        TestPingSecure.ClearPendingPingOffScreenCallback()
         SetSecurePendingPingOffScreenCallback(function() table.insert(Calls, 'recovered') end)
         Probe:SetScript('OnEvent', function() GetSecurePendingPingOffScreenCallback()() end)
         "#,
@@ -320,14 +332,14 @@ fn namespace_rejects_malformed_callback_atomically_and_recovers() {
     env.exec(
         r#"
         local original = function() table.insert(Calls, 'retained') end
-        C_PingSecure.SetPendingPingOffScreenCallback(original)
+        TestPingSecure.SetPendingPingOffScreenCallback(original)
         for _, invalid in ipairs({false, 23, 'callback', {}, CreateFrame('Frame')}) do
-            local ok, err = pcall(C_PingSecure.SetPendingPingOffScreenCallback, invalid)
+            local ok, err = pcall(TestPingSecure.SetPendingPingOffScreenCallback, invalid)
             assert(not ok and type(err) == 'string')
             assert(GetSecurePendingPingOffScreenCallback() == original)
         end
-        assert(not pcall(C_PingSecure.SetPendingPingOffScreenCallback))
-        assert(not pcall(C_PingSecure.SetPendingPingOffScreenCallback, nil))
+        assert(not pcall(TestPingSecure.SetPendingPingOffScreenCallback))
+        assert(not pcall(TestPingSecure.SetPendingPingOffScreenCallback, nil))
         assert(GetSecurePendingPingOffScreenCallback() == original)
         "#,
     )
@@ -344,7 +356,7 @@ fn namespace_unwraps_authentic_function_for_secure_caller() {
     env.exec(
         r#"
         assert(issecure() and issecretvalue(PendingSecretFunction))
-        C_PingSecure.SetPendingPingOffScreenCallback(PendingSecretFunction)
+        TestPingSecure.SetPendingPingOffScreenCallback(PendingSecretFunction)
         assert(GetSecurePendingPingOffScreenCallback() == SecretOriginal)
         collectgarbage('collect')
         assert(issecretvalue(PendingSecretFunction))
@@ -364,11 +376,11 @@ fn namespace_authenticates_extra_arguments_before_type_validation() {
     env.exec(
         r#"
         original = function() table.insert(Calls, 'preserved') end
-        C_PingSecure.SetPendingPingOffScreenCallback(original)
+        TestPingSecure.SetPendingPingOffScreenCallback(original)
         local function addon()
             local before = debug.getstacktaint()
             local function denied(...)
-                local ok, err = pcall(C_PingSecure.SetPendingPingOffScreenCallback, ...)
+                local ok, err = pcall(TestPingSecure.SetPendingPingOffScreenCallback, ...)
                 assert(not ok and string.find(err, 'untainted caller', 1, true))
                 assert(GetSecurePendingPingOffScreenCallback() == original)
             end
@@ -385,9 +397,9 @@ fn namespace_authenticates_extra_arguments_before_type_validation() {
         assert(issecretvalue(PendingSecretFunction) and issecretvalue(PendingSecretNumber))
         assert(GetSecurePendingPingOffScreenCallback() == original)
         -- Secure callers authenticate public/secret extras, then validate arg1.
-        assert(not pcall(C_PingSecure.SetPendingPingOffScreenCallback, 23, PendingSecretNumber))
-        assert(not pcall(C_PingSecure.SetPendingPingOffScreenCallback, PendingSecretNumber))
-        C_PingSecure.SetPendingPingOffScreenCallback(original, PendingSecretNumber)
+        assert(not pcall(TestPingSecure.SetPendingPingOffScreenCallback, 23, PendingSecretNumber))
+        assert(not pcall(TestPingSecure.SetPendingPingOffScreenCallback, PendingSecretNumber))
+        TestPingSecure.SetPendingPingOffScreenCallback(original, PendingSecretNumber)
         "#,
     )
     .unwrap();
