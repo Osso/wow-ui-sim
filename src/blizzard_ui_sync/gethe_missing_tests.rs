@@ -114,6 +114,25 @@ fn missing_pin_fetch_failure_preserves_existing_cache() {
 }
 
 #[test]
+fn absent_or_non_git_source_does_not_block_cache_sync() {
+    let temp = tempfile::tempdir().unwrap();
+    let addons = temp.path().join("AddOns");
+    std::fs::create_dir_all(&addons).unwrap();
+    let marker = addons.join(super::super::COMPLETE_MARKER);
+    std::fs::write(&marker, b"ok\n").unwrap();
+    let root = temp.path().join("not-a-repo");
+    let tree = GetheTree {
+        root: root.clone(),
+        revision: "a".repeat(40),
+        version: VERSION.into(),
+    };
+    fetch_pinned_revision(&tree).unwrap();
+    std::fs::create_dir(&root).unwrap();
+    fetch_pinned_revision(&tree).unwrap();
+    assert_eq!(std::fs::read(marker).unwrap(), b"ok\n");
+}
+
+#[test]
 fn missing_pinned_revision_is_fetched_from_local_origin() {
     let (source, original) = fixture(VERSION, b"hello");
     let clone = tempfile::tempdir().unwrap();
