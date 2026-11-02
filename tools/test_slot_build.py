@@ -1721,7 +1721,7 @@ class SourceFreshnessTests(unittest.TestCase):
         self.assertIn(b"stale artifacts", result.stderr)
         self.assertEqual(second["result"], "stale-artifacts")
 
-    def test_changed_executable_cannot_certify_another_unchanged_executable(self):
+    def test_changed_executable_certifies_sibling_with_same_inputs(self):
         result, first, second = self.run_mixed_output_pair(
             "src/main.rs", {"debug/probe": "B binary"},
             reported_names=["debug/probe", "debug/other"])
@@ -1729,8 +1729,8 @@ class SourceFreshnessTests(unittest.TestCase):
                             second["artifacts"]["debug/probe"])
         self.assertEqual(first["artifacts"]["debug/other"],
                          second["artifacts"]["debug/other"])
-        self.assertNotEqual(result.returncode, 0)
-        self.assertEqual(second["result"], "stale-artifacts")
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual(second["result"], "success")
 
     def test_manifest_change_accepts_rebuilt_identical_executable(self):
         result, first, second = self.run_mixed_output_pair(
