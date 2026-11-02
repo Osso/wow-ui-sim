@@ -152,10 +152,12 @@ pub(super) fn get_item_spec_info(state: &mut LuaState) -> LuaResult<u32> {
             })
             .collect::<Vec<_>>()
     };
-    let table = create_table(state);
+    let Val::Table(table) = create_table(state) else {
+        unreachable!("create_table returns a table")
+    };
     for (index, id) in filtered.into_iter().enumerate() {
         table_set_num(state, table, (index + 1) as f64, Val::Num(f64::from(id)));
     }
-    state.push(table);
+    state.push(Val::Table(table));
     Ok(1)
 }
