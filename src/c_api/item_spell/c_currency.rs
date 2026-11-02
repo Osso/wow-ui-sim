@@ -219,11 +219,8 @@ fn query_currency_faction_grant(state: &mut LuaState) -> LuaResult<u32> {
 #[cfg(feature = "client-retail")]
 fn is_account_transferable_currency(state: &mut LuaState) -> LuaResult<u32> {
     let id = i32::from_stack(state, 1)?;
-    let transferable = borrow_state(state)?
-        .currency_info
-        .get(&id)
-        .and_then(|info| info.transfer_percentage)
-        .is_some_and(|percentage| percentage > 0.0);
+    let transferable =
+        sim_data::currency_transfer::get(id).is_some_and(|(_, _, percentage)| percentage > 0.0);
     state.push(Val::Bool(transferable));
     Ok(1)
 }
@@ -262,28 +259,16 @@ fn currency_transfer_rejection(
     if !list.account_context_present {
         return Ok(Some(None));
     }
-    let Some(info) = sim.currency_info.get(&id) else {
+    let Some((flags, category, percentage)) = sim_data::currency_transfer::get(id) else {
         return Ok(Some(Some(5)));
     };
-    if !info
-        .transfer_percentage
-        .is_some_and(|percentage| percentage > 0.0)
-    {
+    if percentage <= 0.0 || percentage.is_nan() || category & 12 != 0 {
         return Ok(Some(Some(5)));
     }
     let rules = list
         .transfer_rules
         .get(&id)
         .ok_or_else(|| rilua::runtime_error("currency transfer eligibility not modeled"))?;
-    let category = rules
-        .category_flags
-        .ok_or_else(|| rilua::runtime_error("currency category flags not modeled"))?;
-    if category & 12 != 0 {
-        return Ok(Some(Some(5)));
-    }
-    let flags = rules
-        .currency_flags
-        .ok_or_else(|| rilua::runtime_error("currency flags not modeled"))?;
     if flags & (1 << 29) != 0
         && !rules
             .faction_key_0

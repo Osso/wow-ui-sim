@@ -7,8 +7,6 @@ pub(crate) type CurrencyListRow = (i32, CurrencyEntry);
 
 #[derive(Default)]
 pub struct CurrencyTransferRules {
-    pub category_flags: Option<u32>,
-    pub currency_flags: Option<u32>,
     pub faction_key_0: Option<bool>,
     pub faction_key_1: Option<bool>,
     pub award_condition_met: Option<bool>,

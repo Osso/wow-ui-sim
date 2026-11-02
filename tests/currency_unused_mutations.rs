@@ -89,7 +89,6 @@ fn currency_transfer_button_refreshes_original_consumer_for_nontransferable_curr
             list.transfer_server_enabled = Some(true);
             list.current_character_guid = Some("player-guid".into());
             list.transfer_rules.insert(1166, wow_ui_sim::c_api::currency_list::CurrencyTransferRules {
-                category_flags: Some(0), currency_flags: Some(0),
                 award_condition_met: Some(true), quantity_cap_reached: Some(false),
                 weekly_cap_reached: Some(false), ..Default::default()
             });
@@ -118,7 +117,6 @@ fn currency_transfer_eligibility_uses_supplied_policy_and_account_sources() {
         list.transfer_server_enabled = Some(false);
         list.current_character_guid = Some("self".into());
         list.transfer_rules.insert(1166, CurrencyTransferRules {
-            category_flags: Some(0), currency_flags: Some(0),
             award_condition_met: Some(true), quantity_cap_reached: Some(false),
             weekly_cap_reached: Some(false), ..Default::default()
         });
@@ -143,18 +141,11 @@ fn currency_transfer_eligibility_uses_supplied_policy_and_account_sources() {
         rule.award_condition_met = Some(false);
     }
     env.exec("local ok, reason = C_CurrencyInfo.CanTransferCurrency(1166); assert(not ok and reason == 8)").unwrap();
-    env.state().borrow_mut().currency_list.transfer_rules.get_mut(&1166).unwrap().category_flags = Some(4);
-    env.exec("local ok, reason = C_CurrencyInfo.CanTransferCurrency(1166); assert(not ok and reason == 5)").unwrap();
-    {
-        let mut state = env.state().borrow_mut();
-        let rule = state.currency_list.transfer_rules.get_mut(&1166).unwrap();
-        rule.category_flags = Some(0);
-        rule.currency_flags = Some(1 << 29);
-        rule.faction_key_0 = None;
-    }
-    env.exec("assert(not pcall(C_CurrencyInfo.CanTransferCurrency, 1166))").unwrap();
-    env.state().borrow_mut().currency_list.transfer_rules.get_mut(&1166).unwrap().faction_key_0 = Some(false);
-    env.exec("local ok, reason = C_CurrencyInfo.CanTransferCurrency(1166); assert(not ok and reason == 5)").unwrap();
+    env.exec("local ok, reason = C_CurrencyInfo.CanTransferCurrency(3008); assert(not ok and reason == 5)").unwrap();
+    env.state().borrow_mut().currency_list.transfer_rules.insert(1716, CurrencyTransferRules::default());
+    env.exec("assert(not pcall(C_CurrencyInfo.CanTransferCurrency, 1716))").unwrap();
+    env.state().borrow_mut().currency_list.transfer_rules.get_mut(&1716).unwrap().faction_key_0 = Some(false);
+    env.exec("local ok, reason = C_CurrencyInfo.CanTransferCurrency(1716); assert(not ok and reason == 5)").unwrap();
     {
         let mut state = env.state().borrow_mut();
         state.currency_transfer_in_progress = true;
