@@ -1,4 +1,8 @@
 //! Profile-independent generated catalogs, shared by all client builds.
+//!
+//! Item catalogs are committed exactly as their generators write them, so
+//! `rustfmt::skip` keeps cargo fmt from rewriting them; rustfmt also aborts
+//! on `item_spec_inputs.rs` with a terabyte allocation.
 
 #[path = "../data/currencies.rs"]
 pub mod currencies;
@@ -8,24 +12,34 @@ pub mod encounter_journal_data;
 pub mod garrison_currency;
 #[path = "../data/garrison_follower_xp.rs"]
 pub mod garrison_follower_xp;
+#[rustfmt::skip]
 #[path = "../data/gem_items.rs"]
 pub mod gem_items;
+#[rustfmt::skip]
 #[path = "../data/item_categories.rs"]
 pub mod item_categories;
+#[rustfmt::skip]
 #[path = "../data/item_children.rs"]
 pub mod item_children;
+#[rustfmt::skip]
 #[path = "../data/item_effects.rs"]
 pub mod item_effects;
+#[rustfmt::skip]
 #[path = "../data/item_enchants.rs"]
 pub mod item_enchants;
+#[rustfmt::skip]
 #[path = "../data/item_spell_metadata.rs"]
 pub mod item_spell_metadata;
+#[rustfmt::skip]
 #[path = "../data/item_sets.rs"]
 pub mod item_sets;
+#[rustfmt::skip]
 #[path = "../data/item_spec_inputs.rs"]
 pub mod item_spec_inputs;
+#[rustfmt::skip]
 #[path = "../data/item_uniqueness.rs"]
 pub mod item_uniqueness;
+#[rustfmt::skip]
 #[path = "../data/items.rs"]
 pub mod items;
 #[path = "../data/manifest_interface_data.rs"]
