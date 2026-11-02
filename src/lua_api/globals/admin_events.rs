@@ -22,7 +22,11 @@ pub(super) fn fire_event_admin(state: &mut LuaState) -> LuaResult<u32> {
     for i in 2..=nargs {
         event_args.push(stack_val(state, i));
     }
-    dispatch_event_now(state, &event_name, &event_args)?;
+    if event_name == "COMBAT_TEXT_UPDATE" {
+        crate::c_api::c_combat_text::dispatch_supplied_event(state, &event_args)?;
+    } else {
+        dispatch_event_now(state, &event_name, &event_args)?;
+    }
     Ok(0)
 }
 

@@ -17,7 +17,7 @@ A_Admin.FireEvent("CHAT_MSG_SAY", "Hello world", "Arthas", "", "", "Arthas")
 A_Admin.FireEvent("UNIT_HEALTH", "player")
 ```
 
-**Note:** `A_Admin.FireEvent` is a namespaced alias for the internal `FireEvent` global, making it clear in test scripts that this is a simulator-only call with no real WoW equivalent.
+**Note:** `A_Admin.FireEvent` is a simulator-only call. For `COMBAT_TEXT_UPDATE`, pass the event name followed by a validated payload; the payload is available only during dispatch. See [combat text current event](../specs/combat-text-current-event.md). Other events follow the internal `FireEvent` behavior.
 
 ### A_Admin.SimulateBossKill(encounterID, encounterName, difficultyID, groupSize[, encounterUnitStatus])
 

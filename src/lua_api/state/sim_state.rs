@@ -467,6 +467,7 @@ pub struct SimState {
     pub combat_audio_categories: crate::c_api::c_combat_audio_alert::CategorySettings,
     /// Explicit selection only; no combat-text event routing or native identity.
     pub combat_text_active_unit: Option<String>,
+    pub current_combat_text: Option<Vec<crate::c_api::c_combat_text::PayloadValue>>,
     /// Independent setting only; not linked to CVar state or audio playback.
     pub combat_audio_speaker_volume: f64,
     /// Numeric unit/type setting state only; no formatting or CVar coupling.

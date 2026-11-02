@@ -102,7 +102,7 @@ pub mod c_club;
 pub(crate) mod c_combat_audio_alert;
 #[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
 pub(crate) mod c_combat_log;
-mod c_combat_text;
+pub mod c_combat_text;
 mod c_commentator;
 pub(crate) mod c_console;
 pub mod c_cooldown_viewer;
