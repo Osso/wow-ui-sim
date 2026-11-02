@@ -180,6 +180,41 @@ fn refused_staging_processes_the_previous_stored_item() {
 }
 
 #[test]
+fn refused_staging_processes_retained_identity_even_when_cursor_mode_is_empty() {
+    let env = WowLuaEnv::new().unwrap();
+    {
+        let mut sim = env.state().borrow_mut();
+        sim.bag_items.clear();
+        sim.bag_items.insert((0, 1), item(7005, Some(42)));
+        sim.bag_items.insert((0, 2), item(6948, Some(43)));
+        sim.item_equip.inputs.insert(
+            42,
+            OwnedItemEquipInputs {
+                account_conversion: true,
+                ..Default::default()
+            },
+        );
+    }
+    env.exec("C_Item.EquipItemByName(7005); assert(CursorHasItem())")
+        .unwrap();
+    {
+        let mut sim = env.state().borrow_mut();
+        // Supplied mode-0 state with retained owned identity (WM44-B).
+        sim.cursor_item = None;
+        sim.item_equip.pickup_control_enabled = false;
+        sim.item_equip
+            .inputs
+            .get_mut(&42)
+            .unwrap()
+            .account_conversion = false;
+    }
+    env.exec("C_Item.EquipItemByName(6948)").unwrap();
+    let sim = env.state().borrow();
+    assert_eq!(sim.item_equip.requests.len(), 1);
+    assert_eq!(sim.item_equip.requests[0].identity, 42);
+}
+
+#[test]
 fn carried_bag_contents_take_priority_over_equipment() {
     use wow_ui_sim::lua_api::state::EquippedItem;
     let env = WowLuaEnv::new().unwrap();
