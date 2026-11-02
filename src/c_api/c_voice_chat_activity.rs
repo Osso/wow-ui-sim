@@ -20,7 +20,18 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
         return Ok(());
     }
     let namespace = super::ensure_namespace(state, "C_VoiceChat")?;
-    table_set_rust_fn_static(state, namespace, "IsSpeakForMeActive", query_activity)
+    table_set_rust_fn_static(state, namespace, "IsSpeakForMeActive", query_activity)?;
+    // Retail VoiceChatDocumentation.lua:604-610; WM35-B connection source.
+    if matches!(ACTIVE, ClientProfile::Retail | ClientProfile::Ptr) {
+        table_set_rust_fn_static(state, namespace, "IsVoiceChatConnected", query_connection)?;
+    }
+    Ok(())
+}
+
+fn query_connection(state: &mut LuaState) -> LuaResult<u32> {
+    let connected = borrow_state(state)?.voice_chat.connection_ready;
+    state.push(Val::Bool(connected));
+    Ok(1)
 }
 
 fn query_activity(state: &mut LuaState) -> LuaResult<u32> {
