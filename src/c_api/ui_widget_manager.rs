@@ -39,6 +39,8 @@ mod unit_context;
 pub use icon_text_and_background_record::IconTextAndBackgroundRecord;
 pub use icon_text_and_currencies_record::{IconTextAndCurrenciesRecord, UiWidgetCurrencyRecord};
 pub use item_display_record::{ItemDisplayRecord, UiWidgetItemRecord};
+mod scenario_currencies_record;
+pub use scenario_currencies_record::ScenarioHeaderCurrenciesRecord;
 mod spacer;
 mod spacer_record;
 mod stacked_resource;
