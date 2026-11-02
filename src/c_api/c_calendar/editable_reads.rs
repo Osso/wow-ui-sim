@@ -85,7 +85,7 @@ fn event_club_id(state: &mut LuaState) -> LuaResult<u32> {
         .calendar_context_policy
         .editable
         .as_ref()
-        .map(|event| event.club_id);
+        .and_then(|event| event.club_id);
     let value = club::club_id_value(state, id);
     state.push(value);
     Ok(1)

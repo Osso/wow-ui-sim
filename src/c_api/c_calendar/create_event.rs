@@ -136,9 +136,10 @@ fn new_record(host: &SimState, kind: Kind, guild_club_id: Option<u64>) -> Calend
         .map(|(invite_type, guid)| self_invite(host, guid, invite_type))
         .into_iter()
         .collect();
-    // Native initial clubId is UNKNOWN for every kind; 0 is the simulator placeholder.
-    // Guild assignment marks the record dirty only when it changes that prior value.
-    let club_id = guild_club_id.unwrap_or_default();
+    // WM40: player/community creation leaves clubId UNKNOWN, so it stays absent. Guild
+    // assignment marks the record dirty only when the prior value differs; that prior is
+    // UNKNOWN, and the simulator treats the absent prior as different.
+    let club_id = guild_club_id;
     CalendarEditableAccess {
         event_id: "0".into(),
         category_flags: kind.flags(),
@@ -148,7 +149,7 @@ fn new_record(host: &SimState, kind: Kind, guild_club_id: Option<u64>) -> Calend
         texture_id: Some(UNSET_TEXTURE),
         invites,
         club_id,
-        dirty: club_id != 0,
+        dirty: club_id.is_some(),
         ..Default::default()
     }
 }

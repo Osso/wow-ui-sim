@@ -106,7 +106,8 @@ pub struct CalendarEditableAccess {
     pub invites: Vec<CalendarInviteRecord>,
     pub sort_criterion: String,
     pub sort_reverse: bool,
-    pub club_id: u64,
+    /// None when no club ID is known; WM40 leaves the new record's initial value UNKNOWN.
+    pub club_id: Option<u64>,
 }
 
 /// Host-supplied resolved texture metadata.

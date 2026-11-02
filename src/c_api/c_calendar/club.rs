@@ -80,8 +80,8 @@ fn set_event_club_id(state: &mut LuaState) -> LuaResult<u32> {
         .editable
         .as_mut()
         .expect("editable event checked above");
-    if event.club_id != id {
-        event.club_id = id;
+    if event.club_id != Some(id) {
+        event.club_id = Some(id);
         event.dirty = true;
     }
     Ok(0)

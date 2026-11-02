@@ -666,13 +666,16 @@ fn calendar_create_events_report_native_notifications(env: &WowLuaEnv) {
             assert(C_Calendar.EventGetCalendarType() == 'GUILD_EVENT')
             assert(#calendarCreateEvents == 0)
         "#).unwrap();
-        assert_eq!(env.state().borrow().calendar_context_policy.editable.as_ref().unwrap().club_id, id.parse::<u64>().unwrap());
+        assert_eq!(env.state().borrow().calendar_context_policy.editable.as_ref().unwrap().club_id, Some(id.parse::<u64>().unwrap()));
         env.exec(r#"
             assert(select('#', C_Calendar.CreateGuildAnnouncementEvent()) == 0)
             assert(C_Calendar.EventGetCalendarType() == 'GUILD_ANNOUNCEMENT')
             assert(C_Calendar.GetNumInvites() == 0)
             assert(select('#', C_Calendar.CreateCommunitySignUpEvent()) == 0)
             assert(C_Calendar.EventGetCalendarType() == 'COMMUNITY_EVENT')
+            assert(C_Calendar.EventGetClubId() == nil)
+            C_Calendar.CreatePlayerEvent()
+            assert(C_Calendar.EventGetClubId() == nil)
         "#).unwrap();
     }
 }
@@ -1110,14 +1113,14 @@ fn calendar_community_dropdown_edits_supplied_club_id(env: &WowLuaEnv) {
         "#)).unwrap();
         let state = env.state().borrow();
         let event = state.calendar_context_policy.editable.as_ref().unwrap();
-        assert_eq!(event.club_id, expected);
+        assert_eq!(event.club_id, Some(expected));
         assert!(event.dirty);
     }
     env.exec("C_Calendar.EventSetClubId(nil)").unwrap();
-    assert_eq!(env.state().borrow().calendar_context_policy.editable.as_ref().unwrap().club_id, 0);
+    assert_eq!(env.state().borrow().calendar_context_policy.editable.as_ref().unwrap().club_id, Some(0));
     env.state().borrow_mut().calendar_context_policy.editable.as_mut().unwrap().local_edit_credential = None;
     env.exec("C_Calendar.EventSetClubId('0x0020000000000000')").unwrap();
-    assert_eq!(env.state().borrow().calendar_context_policy.editable.as_ref().unwrap().club_id, 0);
+    assert_eq!(env.state().borrow().calendar_context_policy.editable.as_ref().unwrap().club_id, Some(0));
 }
 }
 
@@ -1129,7 +1132,7 @@ fn calendar_community_dropdown_tracks_supplied_club_id(env: &WowLuaEnv) {
     let club_id = 9_007_199_254_740_992_u64;
     {
         let mut state = env.state().borrow_mut();
-        state.calendar_context_policy.editable = Some(CalendarEditableAccess { club_id, ..Default::default() });
+        state.calendar_context_policy.editable = Some(CalendarEditableAccess { club_id: Some(club_id), ..Default::default() });
         state.clubs.initialized = true;
         state.clubs.clubs.insert("0x0020000000000000".into(), Club {
             id: "0x0020000000000000".into(), name: "Test community".into(), description: String::new(),
@@ -1149,7 +1152,7 @@ fn calendar_community_dropdown_tracks_supplied_club_id(env: &WowLuaEnv) {
         end
         assert(CalendarCommunitySelected())
     "#).unwrap();
-    env.state().borrow_mut().calendar_context_policy.editable.as_mut().unwrap().club_id = 0;
+    env.state().borrow_mut().calendar_context_policy.editable.as_mut().unwrap().club_id = Some(0);
     env.exec("assert(not CalendarCommunitySelected())").unwrap();
 }
 }
