@@ -429,3 +429,87 @@ fn calendar_context_type_selects_delete_confirmation(env: &WowLuaEnv) {
     "#).unwrap();
 }
 }
+
+prefork_full_ui_case! {
+fn calendar_edit_button_reflects_supplied_dirty_state(env: &WowLuaEnv) {
+    use wow_ui_sim::c_api::c_calendar::CalendarEditableAccess;
+    load_addon(&env.loader_env(), &calendar_toc()).unwrap();
+    env.state().borrow_mut().calendar_context_policy.editable = Some(CalendarEditableAccess::default());
+    env.exec(r#"
+        CalendarCreateEventFrame.mode = 'edit'
+        CalendarCreateEventCreateButton_Update()
+        assert(not CalendarCreateEventCreateButton:IsEnabled())
+    "#).unwrap();
+    env.state().borrow_mut().calendar_context_policy.editable.as_mut().unwrap().dirty = true;
+    env.exec(r#"
+        CalendarCreateEventCreateButton_Update()
+        assert(CalendarCreateEventCreateButton:IsEnabled())
+    "#).unwrap();
+    env.state().borrow_mut().calendar_context_policy.editable = None;
+    env.exec(r#"
+        CalendarCreateEventCreateButton_Update()
+        assert(not CalendarCreateEventCreateButton:IsEnabled())
+    "#).unwrap();
+}
+}
+
+prefork_full_ui_case! {
+fn calendar_invite_button_projects_supplied_invitee(env: &WowLuaEnv) {
+    use wow_ui_sim::c_api::c_calendar::{CalendarEditableAccess, CalendarInviteRecord};
+    load_addon(&env.loader_env(), &calendar_toc()).unwrap();
+    let invite = CalendarInviteRecord { invite_id: "first".into(), name: Some("Alma".into()), invite_status: Some(0), ..Default::default() };
+    env.state().borrow_mut().calendar_context_policy.editable = Some(CalendarEditableAccess { invites: vec![invite], ..Default::default() });
+    env.exec(r#"
+        CalendarCreateEventFrame.mode = 'create'
+        calendarInviteProbe = CreateFrame('Button', 'CalendarInviteProbe', UIParent, 'CalendarCreateEventInviteListButtonTemplate')
+        CalendarCreateEventInviteList_InitButton(calendarInviteProbe, {index = 1})
+        assert(calendarInviteProbe.Name:GetText() == 'Alma')
+    "#).unwrap();
+    env.state().borrow_mut().calendar_context_policy.editable.as_mut().unwrap().invites[0].name = Some("Bora".into());
+    env.exec(r#"
+        CalendarCreateEventInviteList_InitButton(calendarInviteProbe, {index = 1})
+        assert(calendarInviteProbe.Name:GetText() == 'Bora')
+    "#).unwrap();
+}
+}
+
+prefork_full_ui_case! {
+fn calendar_invite_button_tracks_selected_identity(env: &WowLuaEnv) {
+    use wow_ui_sim::c_api::c_calendar::{CalendarEditableAccess, CalendarInviteRecord};
+    load_addon(&env.loader_env(), &calendar_toc()).unwrap();
+    let invite = CalendarInviteRecord { invite_id: "first".into(), ..Default::default() };
+    env.state().borrow_mut().calendar_context_policy.editable = Some(CalendarEditableAccess { invites: vec![invite], selected_invite_id: Some("first".into()), ..Default::default() });
+    env.exec(r#"
+        calendarSelectedInviteProbe = CreateFrame('Button', 'CalendarSelectedInviteProbe', UIParent, 'CalendarCreateEventInviteListButtonTemplate')
+        local info = {name='Alma', className='', inviteStatus=0, modStatus=''}
+        CalendarEventInviteList_InitButtonShared(calendarSelectedInviteProbe, 1, info)
+        assert(CalendarCreateEventFrame.selectedInvite == calendarSelectedInviteProbe)
+        CalendarCreateEventFrame_SetSelectedInvite(nil)
+    "#).unwrap();
+    env.state().borrow_mut().calendar_context_policy.editable.as_mut().unwrap().selected_invite_id = None;
+    env.exec(r#"
+        local info = {name='Alma', className='', inviteStatus=0, modStatus=''}
+        CalendarEventInviteList_InitButtonShared(calendarSelectedInviteProbe, 1, info)
+        assert(CalendarCreateEventFrame.selectedInvite == nil)
+    "#).unwrap();
+}
+}
+
+prefork_full_ui_case! {
+fn calendar_invite_sort_controls_reflect_supplied_criterion(env: &WowLuaEnv) {
+    use wow_ui_sim::c_api::c_calendar::CalendarEditableAccess;
+    load_addon(&env.loader_env(), &calendar_toc()).unwrap();
+    env.state().borrow_mut().calendar_context_policy.editable = Some(CalendarEditableAccess { sort_criterion: "class".into(), ..Default::default() });
+    env.exec(r#"
+        CalendarEventInviteList_UpdateSortButtons(CalendarCreateEventInviteList)
+        assert(CalendarCreateEventInviteListClassSortButtonDirection:IsShown())
+        assert(not CalendarCreateEventInviteListStatusSortButtonDirection:IsShown())
+    "#).unwrap();
+    env.state().borrow_mut().calendar_context_policy.editable.as_mut().unwrap().sort_criterion = "status".into();
+    env.exec(r#"
+        CalendarEventInviteList_UpdateSortButtons(CalendarCreateEventInviteList)
+        assert(not CalendarCreateEventInviteListClassSortButtonDirection:IsShown())
+        assert(CalendarCreateEventInviteListStatusSortButtonDirection:IsShown())
+    "#).unwrap();
+}
+}

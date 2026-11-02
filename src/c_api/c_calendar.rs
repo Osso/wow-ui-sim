@@ -81,6 +81,30 @@ pub struct CalendarEditableAccess {
     pub associated_id: Option<u64>,
     pub creator_identity: String,
     pub local_edit_credential: Option<u64>,
+    pub dirty: bool,
+    pub selected_invite_id: Option<String>,
+    pub invites: Vec<CalendarInviteRecord>,
+    pub sort_criterion: String,
+    pub sort_reverse: bool,
+    pub club_id: u64,
+}
+
+/// Host-supplied invite data for a being-edited event.
+#[derive(Debug, Clone, Default)]
+pub struct CalendarInviteRecord {
+    pub invite_id: String,
+    pub name: Option<String>,
+    pub level: f64,
+    pub class_name: Option<String>,
+    pub class_filename: Option<String>,
+    pub invite_status: Option<i32>,
+    pub mod_status: Option<String>,
+    pub invite_is_mine: bool,
+    pub invite_type: i32,
+    pub notes: String,
+    pub class_id: Option<i32>,
+    pub guid: String,
+    pub response_time: Option<day_event_record::CalendarTimeRecord>,
 }
 
 /// Selected event identity and absolute calendar month.
