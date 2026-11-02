@@ -241,6 +241,12 @@ fn register_c_item_inventory_queries(
             "GetItemSpell",
             super::item_effects::get_item_spell,
         )?;
+        table_set_rust_fn_static(
+            state,
+            table_ref,
+            "DoesItemContainSpec",
+            super::item_spec::does_item_contain_spec,
+        )?;
     }
     register_c_item_methods(
         state,
