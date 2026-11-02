@@ -26,7 +26,14 @@ fn pet_assist_updates_original_action_button(env: &WowLuaEnv) {
             events = events + 1
             assert(PetActionButtonMixin.GetActionButtonInfo(button).isActive == true)
         end)
-        assert(select('#', C_PetInfo.PetAssistMode()) == 0)
+        local callback
+        for i = 1, 20 do
+            local key, value = debug.getupvalue(SlashCommandUtil.CheckAddSecureSlashCommand, i)
+            if not key then break end
+            if key == 'addonTbl' then callback = value.SecureCmdList[SLASH_COMMAND.PET_ASSIST] end
+        end
+        assert(callback, 'runtime-selected Blizzard pet assist command missing')
+        assert(select('#', callback('pet')) == 0)
         assert(events == 1)
         assert(PetActionButtonMixin.GetActionButtonInfo(button).isActive == true)
     "#).unwrap();
