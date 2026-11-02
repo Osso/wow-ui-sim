@@ -747,6 +747,7 @@ macro_rules! build_empty_sim_state {
             pet_spells: ::std::collections::HashSet::new(),
             pvp_last_honor_gain: 0,
             item_dressability: HashMap::new(),
+            item_families: HashMap::new(),
             equippable_items: ::std::collections::HashSet::new(),
             consumable_items: ::std::collections::HashSet::new(),
             current_item_ids: ::std::collections::HashSet::new(),
