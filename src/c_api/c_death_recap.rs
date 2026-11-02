@@ -21,6 +21,7 @@ pub(crate) fn register_c_death_recap_surface(state: &mut LuaState) -> LuaResult<
     let table_ref = ensure_namespace(state, "C_DeathRecap")?;
     if ACTIVE == ClientProfile::Retail {
         table_set_rust_fn_static(state, table_ref, "GetRecapEvents", get_recap_events)?;
+        table_set_rust_fn_static(state, table_ref, "HasRecapEvents", has_recap_events)?;
     }
     #[cfg(feature = "retail-12-0-5")]
     table_set_rust_fn_static(state, table_ref, "GetRecapMaxHealth", get_recap_max_health)?;
@@ -57,6 +58,41 @@ fn read_recap_id(state: &LuaState) -> LuaResult<Option<i32>> {
         )));
     }
     Ok(Some(number as i32))
+}
+
+fn read_has_recap_id(state: &LuaState) -> LuaResult<Option<i32>> {
+    let value = rilua::table_security::unwrap_secret(state, stack_val(state, 1))?;
+    if value == Val::Nil {
+        return Ok(None);
+    }
+    let number = match value {
+        Val::Num(number) => Some(number),
+        Val::Str(_) => val_to_string(state, value).and_then(|text| text.trim().parse().ok()),
+        _ => None,
+    }
+    .ok_or_else(|| {
+        rilua::runtime_error("Usage: local hasEvents = C_DeathRecap.HasRecapEvents([recapID])")
+    })?;
+    if !number.is_finite() || number < f64::from(i32::MIN) || number > f64::from(i32::MAX) {
+        return Err(rilua::runtime_error(format!(
+            "integer overflow attempting to store {number}"
+        )));
+    }
+    Ok(Some(number as i32))
+}
+
+fn has_recap_events(state: &mut LuaState) -> LuaResult<u32> {
+    let id = read_has_recap_id(state)?;
+    let found = {
+        let sim = borrow_state(state)?;
+        let mut recaps = sim.death_recaps.iter().rev().take(60);
+        match id {
+            Some(id) => recaps.any(|entry| i64::from(entry.recap_id) == i64::from(id)),
+            None => recaps.any(|entry| entry.default_eligible),
+        }
+    };
+    state.push(Val::Bool(found));
+    Ok(1)
 }
 
 fn get_recap_events(state: &mut LuaState) -> LuaResult<u32> {
