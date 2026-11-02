@@ -272,5 +272,23 @@ fn calendar_context_menu_reflects_supplied_permissions(env: &WowLuaEnv) {
     }
     let rejected: (bool, bool, bool) = env.eval("return CalendarContextMenuProbe()").unwrap();
     assert_eq!(rejected, (false, false, false));
+    {
+        use wow_ui_sim::c_api::c_calendar::CalendarEditableAccess;
+        let mut state = env.state().borrow_mut();
+        state.world.guild_id = 7;
+        state.calendar_context_policy.guild_club_id = Some(42);
+        state.calendar_context_policy.guild_rank_rights = 0x100000;
+        state.calendar_context_policy.edit_subsystem_available = true;
+        state.calendar_context_policy.editable = Some(CalendarEditableAccess {
+            category_flags: 0x800, associated_id: Some(42), ..Default::default()
+        });
+        let row = &mut state.calendar_day_events.get_mut(&(0, 15)).unwrap()[0];
+        row.category_flags = 0x800;
+    }
+    let guild: (bool, bool, bool) = env.eval("return CalendarContextMenuProbe()").unwrap();
+    assert_eq!(guild, (true, false, false));
+    env.state().borrow_mut().calendar_day_events.get_mut(&(0, 15)).unwrap()[0].invite_role_markers = 0x4;
+    let creator: (bool, bool, bool) = env.eval("return CalendarContextMenuProbe()").unwrap();
+    assert_eq!(creator, (true, true, false));
 }
 }
