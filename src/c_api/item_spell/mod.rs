@@ -11,6 +11,7 @@ mod item_effects;
 mod item_gem;
 pub mod item_spec;
 mod item_type;
+mod item_uniqueness;
 mod item_use;
 
 use super::c_spell;

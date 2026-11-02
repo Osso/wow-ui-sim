@@ -253,6 +253,12 @@ fn register_c_item_inventory_queries(
             "IsUsableItem",
             super::item_use::is_usable_item,
         )?;
+        table_set_rust_fn_static(
+            state,
+            table_ref,
+            "GetItemUniqueness",
+            super::item_uniqueness::get_item_uniqueness,
+        )?;
     }
     register_c_item_methods(
         state,
