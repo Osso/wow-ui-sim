@@ -290,5 +290,20 @@ fn calendar_context_menu_reflects_supplied_permissions(env: &WowLuaEnv) {
     env.state().borrow_mut().calendar_day_events.get_mut(&(0, 15)).unwrap()[0].invite_role_markers = 0x4;
     let creator: (bool, bool, bool) = env.eval("return CalendarContextMenuProbe()").unwrap();
     assert_eq!(creator, (true, true, false));
+    {
+        use wow_ui_sim::lua_api::state::SocialFriend;
+        let mut state = env.state().borrow_mut();
+        let row = &mut state.calendar_day_events.get_mut(&(0, 15)).unwrap()[0];
+        row.category_flags = 0;
+        row.primary_identity = "Player-1-FRIEND".into();
+        state.social_friends = vec![SocialFriend {
+            name: "Friend".into(), level: 80, area: String::new(), class_name: String::new(),
+            note: String::new(), is_online: true, guid: "Player-1-FRIEND".into(),
+        }];
+        state.cvars.register("legacyFriendSystemEnabledClient", Some("0"));
+        assert!(state.cvars.set("legacyFriendSystemEnabledClient", "2"));
+    }
+    let friend: (bool, bool, bool) = env.eval("return CalendarContextMenuProbe()").unwrap();
+    assert_eq!(friend, (true, true, false));
 }
 }

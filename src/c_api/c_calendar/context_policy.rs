@@ -138,7 +138,12 @@ fn complaint_allowed(host: &SimState, row: &CalendarDayEventRecord) -> bool {
     {
         return false;
     }
-    if host.cvars.get_bool("legacyFriendSystemEnabledClient")
+    let legacy_friends_enabled = host
+        .cvars
+        .get("legacyFriendSystemEnabledClient")
+        .and_then(|value| value.parse::<i32>().ok())
+        .is_some_and(|value| value != 0);
+    if legacy_friends_enabled
         && host
             .social_friends
             .iter()
