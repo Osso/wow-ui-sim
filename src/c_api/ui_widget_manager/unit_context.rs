@@ -52,6 +52,7 @@ fn read_unit(state: &LuaState, nilable: bool) -> LuaResult<Option<String>> {
         Val::Str(_) => val_to_string(state, value)
             .map(Some)
             .ok_or_else(|| runtime_error("unit must be UTF-8")),
+        Val::Num(_) => Ok(Some(format!("{value}"))),
         _ => Err(runtime_error("unit must be a string")),
     }
 }
@@ -59,11 +60,7 @@ fn read_unit(state: &LuaState, nilable: bool) -> LuaResult<Option<String>> {
 fn read_registration(state: &LuaState) -> LuaResult<(String, bool)> {
     let token = read_unit(state, false)?.ok_or_else(|| runtime_error("unit must be a string"))?;
     let guid = rilua::table_security::unwrap_secret(state, stack_val(state, 2))?;
-    let is_guid = match guid {
-        Val::Nil => false,
-        Val::Bool(value) => value,
-        _ => return Err(runtime_error("isGuid must be a boolean")),
-    };
+    let is_guid = !matches!(guid, Val::Nil | Val::Bool(false));
     Ok((token, is_guid))
 }
 
