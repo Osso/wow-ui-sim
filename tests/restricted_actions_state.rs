@@ -1,5 +1,46 @@
 use wow_ui_sim::lua_api::WowLuaEnv;
 
+/// No original consumer: searched the pinned Retail AddOns tree for both
+/// C_RestrictedActions getters and all six addon*RestrictionsForced CVars;
+/// only Blizzard_APIDocumentationGenerated declares the getters.
+#[test]
+fn forced_restrictions_follow_cvars_and_preserve_supplied_state() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(r#"
+        local names = {
+            'addonCombatRestrictionsForced', 'addonEncounterRestrictionsForced',
+            'addonChallengeModeRestrictionsForced', 'addonPvPMatchRestrictionsForced',
+            'addonMapRestrictionsForced', 'addonChatRestrictionsForced',
+        }
+        local api, events = C_RestrictedActions, {}
+        for _, name in ipairs(names) do SetCVar(name, '0') end
+        local f = CreateFrame('Frame')
+        f:RegisterEvent('ADDON_RESTRICTION_STATE_CHANGED')
+        f:SetScript('OnEvent', function(_, _, kind, value)
+            events[#events + 1] = {kind, value, api.GetAddOnRestrictionState(kind)}
+        end)
+        for kind = 0, 5 do
+            assert(not api.IsAddOnRestrictionActive(kind))
+            assert(SetCVar(names[kind + 1], '1'))
+            assert(api.IsAddOnRestrictionActive(kind), names[kind + 1] .. ' did not activate')
+            assert(events[#events][1] == kind and events[#events][2] == 1 and events[#events][3] == 1)
+            local count = #events
+            SetCVar(names[kind + 1], '1')
+            assert(#events == count, 'unchanged CVar generated a transition')
+            SetCVar(names[kind + 1], '0')
+            assert(not api.IsAddOnRestrictionActive(kind))
+            assert(events[#events][1] == kind and events[#events][2] == 0 and events[#events][3] == 0)
+        end
+        assert(#events == 12, 'only activation and deactivation events are emitted')
+        A_Admin.SetAddOnRestrictionActive(1, true)
+        SetCVar(names[2], '1')
+        A_Admin.SetAddOnRestrictionActive(1, false)
+        assert(api.IsAddOnRestrictionActive(1), 'forced CVar must retain restriction')
+        SetCVar(names[2], '0')
+        assert(not api.IsAddOnRestrictionActive(1))
+    "#).unwrap();
+}
+
 #[test]
 fn restricted_actions_combat_transitions() {
     let env = WowLuaEnv::new().unwrap();
