@@ -17,6 +17,7 @@ pub enum ProcessingUnit {
 #[derive(Debug, Default)]
 pub struct WidgetUnitContext {
     pub registrations: HashSet<(String, bool)>,
+    guid_registration_counts: HashMap<String, usize>,
     pub processing_unit: Option<ProcessingUnit>,
     pub unit_visualizations: HashMap<(ProcessingUnit, WidgetId), WidgetVisualization>,
     pub unit_widget_ids: HashSet<WidgetId>,
@@ -68,21 +69,33 @@ fn read_registration(state: &LuaState) -> LuaResult<(String, bool)> {
 
 fn register_unit(state: &mut LuaState) -> LuaResult<u32> {
     let key = read_registration(state)?;
-    borrow_state_mut(state)?
-        .ui_widget_inputs
-        .unit_context
-        .registrations
-        .insert(key);
+    let mut sim = borrow_state_mut(state)?;
+    let context = &mut sim.ui_widget_inputs.unit_context;
+    if key.1 {
+        *context
+            .guid_registration_counts
+            .entry(key.0.clone())
+            .or_default() += 1;
+    }
+    context.registrations.insert(key);
     Ok(0)
 }
 
 fn unregister_unit(state: &mut LuaState) -> LuaResult<u32> {
     let key = read_registration(state)?;
-    borrow_state_mut(state)?
-        .ui_widget_inputs
-        .unit_context
-        .registrations
-        .remove(&key);
+    let mut sim = borrow_state_mut(state)?;
+    let context = &mut sim.ui_widget_inputs.unit_context;
+    if key.1 {
+        let Some(count) = context.guid_registration_counts.get_mut(&key.0) else {
+            return Ok(0);
+        };
+        *count -= 1;
+        if *count > 0 {
+            return Ok(0);
+        }
+        context.guid_registration_counts.remove(&key.0);
+    }
+    context.registrations.remove(&key);
     Ok(0)
 }
 
