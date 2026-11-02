@@ -1,4 +1,4 @@
-//! API-level: pinned Retail consumers contain no direct known-target list calls.
+//! Known-target identity and restriction cases complement the manager consumer.
 #![cfg(feature = "client-retail")]
 
 use wow_ui_sim::lua_api::{WowLuaEnv, state::TargetInfo};
