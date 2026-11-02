@@ -45,6 +45,7 @@ mod inputs;
 mod item_display;
 mod item_display_record;
 mod unit_context;
+mod unit_power_bar;
 mod unit_power_bar_record;
 pub use unit_power_bar_record::UnitPowerBarRecord;
 mod zone_control;

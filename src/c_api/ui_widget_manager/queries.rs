@@ -38,6 +38,7 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
     super::capture_zone::register(state)?;
     super::texture_with_animation::register(state)?;
     super::scenario_timer::register(state)?;
+    super::unit_power_bar::register(state)?;
     super::discrete::register(state)?;
     super::text_state::register(state)?;
     super::text_with_subtext::register(state)?;
