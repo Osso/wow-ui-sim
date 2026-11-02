@@ -422,6 +422,8 @@ mod helpers;
 mod patch_retired_members;
 #[cfg(feature = "retail-12-0-0")]
 pub(crate) use patch_retired_members::RETIRED_4_0_1_GLOBALS;
+#[cfg(feature = "retail-12-1-5")]
+pub(crate) use patch_retired_members::mark_retail_table_util_retirement;
 mod registration;
 pub(crate) mod restricted_actions;
 
