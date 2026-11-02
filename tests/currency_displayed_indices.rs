@@ -33,6 +33,17 @@ pub(crate) fn with_token_ui(probe: &str) {
 }
 
 #[test]
+fn currency_filter_account_data_query_allows_original_token_ui_update() {
+    with_token_ui(
+        r#"
+        assert(type(C_CurrencyInfo.DoesCurrentFilterRequireAccountCurrencyData()) == "boolean")
+        TokenFrame:Update()
+        B5AssertProvider()
+        "#,
+    );
+}
+
+#[test]
 fn currency_displayed_indices_original_headers_collapse_shift_and_restore() {
     with_token_ui(
         r#"
