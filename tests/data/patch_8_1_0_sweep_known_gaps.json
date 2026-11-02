@@ -1,8 +1,5 @@
 [
-  "wt-global-api-C_Calendar.EventGetClubId-120",
   "wt-global-api-C_Calendar.EventSetClubId-121",
-  "wt-global-api-C_Calendar.GetNextClubId-21",
-  "wt-global-api-C_Calendar.SetNextClubId-22",
   "wt-global-api-C_ChatInfo.ResetDefaultZoneChannels-24",
   "wt-global-api-C_ChatInfo.SwapChatChannelsByChannelIndex-25",
   "wt-global-api-C_Club.AddClubStreamChatChannel-26",
