@@ -423,7 +423,7 @@ fn calendar_context_type_selects_delete_confirmation(env: &WowLuaEnv) {
         CalendarDayContextMenu_DeleteEvent()
         local popup = StaticPopup_FindVisible('CALENDAR_DELETE_EVENT')
         assert(popup and popup:IsShown())
-        assert(popup.text:GetText():find(CALENDAR_DELETE_GUILD_EVENT_CONFIRM, 1, true))
+        assert(popup:GetTextFontString():GetText():find(CALENDAR_DELETE_GUILD_EVENT_CONFIRM, 1, true))
     "#).unwrap();
 }
 }
