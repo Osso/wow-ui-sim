@@ -113,6 +113,40 @@ fn customization_tooltip_places_first_text_at_native_padding_anchor() {
             && (actual_first[1] - expected_first[1]).abs() < 0.01,
         "first glyph position {actual_first:?}, expected {expected_first:?}"
     );
+    drop(state);
+    env.exec(
+        r#"
+        local line = CustomizationNoHeaderTooltip:GetLeftLine(1)
+        line:SetPoint("TOP", CustomizationNoHeaderTooltip, "TOP", 0, -55)
+        CustomizationNoHeaderTooltip:Show()
+    "#,
+    )
+    .unwrap();
+    let state = env.state().borrow();
+    let data = collect_tooltip_data(&state);
+    let mut moved = QuadBatch::new();
+    build_tooltip_quads(
+        TooltipRender {
+            batch: &mut moved,
+            bounds,
+            tooltip_data: Some(&data),
+            id,
+            eff_alpha: 1.0,
+            eff_scale: 1.0,
+            draw_background: false,
+        },
+        &mut Some((&mut fonts, &mut glyphs)),
+    );
+    let moved_first = moved
+        .vertices
+        .iter()
+        .find(|vertex| vertex.tex_index == wow_ui_sim::render::shader::GLYPH_ATLAS_TEX_INDEX)
+        .expect("moved tooltip glyph")
+        .position;
+    assert!(
+        (moved_first[1] - actual_first[1] - 34.0).abs() < 0.01,
+        "render must follow retained first-line anchor: {moved_first:?} vs {actual_first:?}"
+    );
 }
 
 #[cfg(any(feature = "client-retail", feature = "client-ptr"))]
