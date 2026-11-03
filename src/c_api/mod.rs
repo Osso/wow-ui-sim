@@ -220,6 +220,7 @@ pub mod store_public_eligibility;
 pub mod transmog_availability;
 pub use c_quest_log_watches::QuestWatchType;
 pub(crate) use c_quest_log_watches::seed_quest_watch_types;
+mod c_cvar_info;
 pub mod c_recent_allies;
 pub mod c_report_system;
 pub mod c_reputation;
@@ -285,7 +286,6 @@ pub(crate) mod crafting_plan;
 pub mod crafting_reagents;
 pub(crate) mod crafting_tables;
 pub(crate) mod cvar_combat_policy;
-mod c_cvar_info;
 #[cfg(feature = "retail-12-0-5")]
 pub mod equipment_set_command;
 pub(crate) mod equipment_set_locks;
