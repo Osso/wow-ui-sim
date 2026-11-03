@@ -141,7 +141,9 @@ fn anchor_tooltip_lines(sim: &mut crate::lua_api::state::SimState, tooltip_id: u
         }
         if has_right {
             if let Some(right_id) = right_id.filter(|&id| id != 0) {
-                if let Some(frame) = sim.widgets.get_mut_visual(right_id) {
+                if let Some(frame) = sim.widgets.get_mut_visual(right_id)
+                    && frame.visible
+                {
                     frame.anchors = vec![tooltip_line_anchor(
                         crate::widget::AnchorPoint::Right,
                         line_id,
