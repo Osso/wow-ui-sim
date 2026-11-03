@@ -27,10 +27,7 @@ const PANEL_ADDONS: &[(&str, &str)] = &[
         "Blizzard_UIPanelTemplates",
         "Blizzard_UIPanelTemplates_Mainline.toc",
     ),
-    (
-        "Blizzard_FrameXMLBase",
-        "Blizzard_FrameXMLBase_Mainline.toc",
-    ),
+    ("Blizzard_FrameXMLBase", "Blizzard_FrameXMLBase.toc"),
     ("Blizzard_FrameEffects", "Blizzard_FrameEffects.toc"),
     ("Blizzard_LoadLocale", "Blizzard_LoadLocale.toc"),
     ("Blizzard_Fonts_Shared", "Blizzard_Fonts_Shared.toc"),
@@ -60,7 +57,7 @@ const PANEL_ADDONS: &[(&str, &str)] = &[
     ("Blizzard_TransmogShared", "Blizzard_TransmogShared.toc"),
     (
         "Blizzard_UIParentPanelManager",
-        "Blizzard_UIParentPanelManager_Mainline.toc",
+        "Blizzard_UIParentPanelManager.toc",
     ),
     ("Blizzard_Settings_Shared", "Blizzard_Settings_Shared.toc"),
     (
@@ -79,7 +76,7 @@ const PANEL_ADDONS: &[(&str, &str)] = &[
         "Blizzard_UIPanels_Game",
         "Blizzard_UIPanels_Game_Mainline.toc",
     ),
-    ("Blizzard_ActionBar", "Blizzard_ActionBar_Mainline.toc"),
+    ("Blizzard_ActionBar", "Blizzard_ActionBar.toc"),
     ("Blizzard_UnitFrame", "Blizzard_UnitFrame_Mainline.toc"),
     ("Blizzard_TokenUI", "Blizzard_TokenUI.toc"),
 ];
