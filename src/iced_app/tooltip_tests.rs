@@ -413,7 +413,11 @@ fn tooltip_measurement_ignores_hidden_wow_markup_payload() {
         ..TooltipData::default()
     };
     let mut font_sys = WowFontSystem::new();
-    let measured = measure_tooltip_content_width(&tooltip, &mut font_sys);
+    let measured = measure_tooltip_content_width(
+        &tooltip,
+        &crate::widget::WidgetRegistry::default(),
+        &mut font_sys,
+    );
     let visible_width = font_sys.measure_text_width(visible_name, None, TOOLTIP_HEADER_FONT_SIZE);
 
     assert!(
