@@ -166,6 +166,7 @@ fn item_use_spell_retail_catalog_preserves_existing_and_new_associations() {
         1,
         EquippedItem {
             item_id: 278743,
+            owned_identity: None,
             enchant_id: 3290,
             gem_ids: [0; 3],
             applied_transmog: None,
@@ -212,6 +213,7 @@ fn item_use_spell_unnamed_selection_suppresses_enchantment_fallback() {
             1,
             EquippedItem {
                 item_id: 1165,
+                owned_identity: None,
                 enchant_id: 3290,
                 gem_ids: [0; 3],
                 applied_transmog: None,
