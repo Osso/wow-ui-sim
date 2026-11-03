@@ -7,9 +7,9 @@ was identified in this repository.
 
 ## What it must do
 
-- [ ] Read the current host-supplied text for the requested recipe ID.
-- [ ] Return nil when no text was supplied for that ID.
-- [ ] Keep separate recipe IDs independent and reflect host replacement or removal.
+- [x] Read the current host-supplied text for the requested recipe ID.
+- [x] Return nil when no text was supplied for that ID.
+- [x] Keep separate recipe IDs independent and reflect host removal.
 
 Argument error and secrecy behavior are not native-verified by this contract.
 
