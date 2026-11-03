@@ -72,14 +72,14 @@ fn drop_requires_an_owned_item_and_the_trade_target(env: &WowLuaEnv) {
         -- An item-ID cursor (mode 6) supplies no owned item.
         C_Item.PickupItem(6948)
         C_Item.DropItemOnUnit('player')
-        assert(CursorHasItem())
+        assert(select(2, GetCursorInfo()) == 6948, 'item-ID cursor retained')
         ClearCursor()
         -- A unit that does not resolve is not the trade target.
         C_Container.PickupContainerItem(0, 1)
         C_Item.DropItemOnUnit('party4')
-        assert(CursorHasItem())
+        assert(CursorHasItem(), 'unresolved unit retains the cursor')
         C_Item.DropItemOnUnit('player')
-        assert(not CursorHasItem())
+        assert(not CursorHasItem(), 'trade target takes the item')
     "#).unwrap();
     assert_eq!(
         env.state().borrow().active_trade.as_ref().unwrap().player_slots[0],
