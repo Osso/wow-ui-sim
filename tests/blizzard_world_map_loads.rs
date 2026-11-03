@@ -655,8 +655,8 @@ fn forever_minimap_tracking_static_filters_use_real_mask() {
 fn forever_tracking_rows_respect_class_and_initial_cvar() {
     for (class, mask, expected_count, poison, ammo) in [
         (1, "1", 23, false, false),
-        (3, "8", 24, false, true),
-        (5, "8", 24, true, false),
+        (2, "8", 24, false, true),
+        (5, "8", 25, true, true),
     ] {
         let env = WowLuaEnv::new().expect("Lua environment should initialize");
         {
