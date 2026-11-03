@@ -91,6 +91,7 @@ fn owned_items_use_mode_one() {
             hyperlink: None,
             durability: None,
             applied_transmog: None,
+            owned_identity: None,
         },
     );
     env.exec(
@@ -117,6 +118,7 @@ fn bag_item(item_id: u32) -> wow_ui_sim::lua_api::state::BagItem {
         hyperlink: None,
         durability: None,
         applied_transmog: None,
+        owned_identity: None,
     }
 }
 

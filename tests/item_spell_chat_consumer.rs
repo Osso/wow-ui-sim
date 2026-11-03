@@ -32,6 +32,7 @@ fn chat_link_inserts_use_for_item_spell_and_equip_for_armor(env: &WowLuaEnv) {
         enchant_id: 3290,
         gem_ids: [0; 3],
         applied_transmog: None,
+        owned_identity: None,
     });
     env.exec("local name, id = C_Item.GetItemSpell(211993); assert(name == 'Spring Loaded Cape' and id == 52641)").unwrap();
 }

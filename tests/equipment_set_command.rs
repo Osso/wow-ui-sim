@@ -17,6 +17,7 @@ fn equipset_command_env() -> WowLuaEnv {
                 enchant_id: 0,
                 gem_ids: [0; 3],
                 applied_transmog: None,
+                owned_identity: None,
             },
         );
         sim.player.equipped_items.insert(
@@ -26,6 +27,7 @@ fn equipset_command_env() -> WowLuaEnv {
                 enchant_id: 0,
                 gem_ids: [0; 3],
                 applied_transmog: None,
+                owned_identity: None,
             },
         );
         sim.equipment_manager.sets = vec![EquipmentSet {

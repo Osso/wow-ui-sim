@@ -216,11 +216,18 @@ fn b02_numeric_invitation_requests_replace_live_input_without_fake_friendship() 
 #[test]
 fn b02_cached_deprecated_dispatch_forwards_numeric_account_and_zero_results() {
     let env = new_env();
-    let addons = wow_ui_sim::client_profile::blizzard_ui_addons_dir_under(std::path::Path::new(env!("CARGO_MANIFEST_DIR")));
-    let source = std::fs::read_to_string(addons.join("Blizzard_DeprecatedBattleNet/Deprecated_BattleNet.lua")).unwrap();
-    env.exec("SetCVar('loadDeprecationFallbacks', '1')").unwrap();
+    let addons = wow_ui_sim::client_profile::blizzard_ui_addons_dir_under(std::path::Path::new(
+        env!("CARGO_MANIFEST_DIR"),
+    ));
+    let source = std::fs::read_to_string(
+        addons.join("Blizzard_DeprecatedBattleNet/Deprecated_BattleNet.lua"),
+    )
+    .unwrap();
+    env.exec("SetCVar('loadDeprecationFallbacks', '1')")
+        .unwrap();
     env.exec(&source).unwrap();
-    env.exec("assert(select('#', BNInviteFriend(80231)) == 0)").unwrap();
+    env.exec("assert(select('#', BNInviteFriend(80231)) == 0)")
+        .unwrap();
     assert_eq!(
         env.state().borrow().last_bnet_invite_game_account_id,
         Some(80231)
@@ -318,6 +325,7 @@ fn bag(capacity: i32, family: i32) -> BagInfo {
         inventory_slot: None,
         item_id: None,
         hyperlink: None,
+        owned_identity: None,
     }
 }
 
@@ -328,6 +336,7 @@ fn item() -> BagItem {
         hyperlink: None,
         durability: None,
         applied_transmog: None,
+        owned_identity: None,
     }
 }
 

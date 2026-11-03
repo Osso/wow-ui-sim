@@ -109,6 +109,7 @@ fn install_item_slot_spies(env: &wow_ui_sim::lua_api::WowLuaEnv) {
 
 fn seed_cursor_item(env: &wow_ui_sim::lua_api::WowLuaEnv) {
     env.state().borrow_mut().cursor_item = Some(CursorInfo::Item {
+        owned_identity: None,
         item_id: VALID_ITEM_ID,
         stack_count: 1,
         origin: CursorItemOrigin::Bag {

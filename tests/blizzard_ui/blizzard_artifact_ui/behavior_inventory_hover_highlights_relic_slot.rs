@@ -44,6 +44,7 @@ fn seed_viewed_artifact_with_relic_item(env: &wow_ui_sim::lua_api::WowLuaEnv) {
             hyperlink: Some(RELIC_ITEM_LINK.to_string()),
             durability: None,
             applied_transmog: None,
+            owned_identity: None,
         },
     );
 }

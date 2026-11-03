@@ -68,6 +68,9 @@ pub mod model_scenes;
 pub mod perks_categories;
 #[path = "../data/pet_talent_trees.rs"]
 pub mod pet_talent_trees;
+#[rustfmt::skip]
+#[path = "../data/profession_rows.rs"]
+pub mod profession_rows;
 pub mod profession_item_overrides;
 #[path = "../data/profession_spec_reminders.rs"]
 pub mod profession_spec_reminders;

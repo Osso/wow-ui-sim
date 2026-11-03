@@ -593,6 +593,8 @@ pub struct SimState {
     pub pvp_honor: PvpHonorState,
     pub world: WorldState,
     pub bag_items: HashMap<(i32, i32), BagItem>,
+    /// Owned-item identity, local equip requests and lock inputs.
+    pub item_equip: crate::c_api::item_spell::item_equip::ItemEquipState,
     /// Host-supplied metadata keyed by item ID, not bag coordinates.
     pub container_item_quests:
         HashMap<u32, crate::c_api::container_quest::ContainerItemQuestMetadata>,
@@ -946,6 +948,8 @@ pub struct SimState {
     pub item_use_eligibility: HashMap<(u32, u32), bool>,
     /// Supplied alternate power bar identifier for item resource checks.
     pub item_use_power_bar_id: Option<u32>,
+    /// Owned identity of the item awaiting a use confirmation (WM44-C).
+    pub pending_item_use: Option<u64>,
     pub item_overlay_flags: HashSet<(u32, crate::c_api::item_overlay::ItemOverlayFlag)>,
     pub equippable_items: ::std::collections::HashSet<u32>,
     pub consumable_items: ::std::collections::HashSet<u32>,

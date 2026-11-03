@@ -159,6 +159,7 @@ fn insert_reagent_stack(sim: &mut SimState, item_id: u32, qty: i32) {
             hyperlink: None,
             durability: None,
             applied_transmog: None,
+            owned_identity: None,
         },
     );
 }

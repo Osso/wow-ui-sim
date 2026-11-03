@@ -185,6 +185,7 @@ fn parse_metadata(state: &mut LuaState, row: Val, path: &str) -> crate::Result<B
         inventory_slot: optional_inventory_slot(state, row, path)?,
         item_id: optional_item_id(state, row, path)?,
         hyperlink: optional_text(state, row, "hyperlink", path)?,
+        owned_identity: None,
     })
 }
 
@@ -240,6 +241,7 @@ fn parse_item(state: &mut LuaState, row: Val, path: &str) -> crate::Result<BagIt
         hyperlink: optional_text(state, row, "hyperlink", path)?,
         durability: None,
         applied_transmog: None,
+        owned_identity: None,
     })
 }
 
@@ -293,6 +295,7 @@ fn apply_equipped_bag(sim: &mut crate::lua_api::state::SimState, info: &BagInfo)
                     enchant_id: 0,
                     gem_ids: [0; 3],
                     applied_transmog: None,
+                    owned_identity: None,
                 },
             );
         }

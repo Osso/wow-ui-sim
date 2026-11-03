@@ -341,6 +341,7 @@ fn remove_send_mail_item(state: &mut LuaState, slot: Option<usize>) -> bool {
         return false;
     };
     st.cursor_item = Some(CursorInfo::Item {
+        owned_identity: None,
         item_id: attachment.item_id,
         stack_count: attachment.count,
         origin: crate::lua_api::state_types::CursorItemOrigin::Unknown,

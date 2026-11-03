@@ -18,6 +18,7 @@ fn equipped_item_type_requires_player_and_ignores_slots_after_eighteen() {
                 enchant_id: 0,
                 gem_ids: [0; 3],
                 applied_transmog: None,
+                owned_identity: None,
             },
         );
         sim.player.present = false;

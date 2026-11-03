@@ -75,6 +75,7 @@ fn startup_collection_secondary_transmog_reads_equipped_item(env: &WowLuaEnv) {
         sim.bag_items.insert((0, 1), BagItem {
             item_id: 211993, stack_count: 1, hyperlink: None, durability: None,
             applied_transmog: Some(AppliedTransmog { appearance_id: 444, secondary_appearance_id: 0, illusion_id: 555 }),
+            owned_identity: None,
         });
     }
     env.exec(r#"

@@ -19,6 +19,7 @@ fn cfactory_m2_offhand_weapon_uses_equipment_identity() {
                     enchant_id: 0,
                     gem_ids: [0; 3],
                     applied_transmog: None,
+                    owned_identity: None,
                 },
             );
         }

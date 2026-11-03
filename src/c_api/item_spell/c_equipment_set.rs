@@ -146,6 +146,7 @@ fn apply_equipment_set(state: &mut LuaState, set_id: i32) -> LuaResult<bool> {
                         enchant_id: 0,
                         gem_ids: [0; 3],
                         applied_transmog: None,
+                        owned_identity: None,
                     },
                 );
             }

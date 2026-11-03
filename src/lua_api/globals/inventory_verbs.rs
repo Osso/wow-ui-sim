@@ -78,23 +78,21 @@ fn action_outfit_id(state: &mut LuaState, slot: u32) -> Option<i64> {
 }
 
 fn place_cursor_item_in_backpack(state: &mut LuaState) -> LuaResult<u32> {
-    let Some((item_id, stack_count, applied_transmog)) = take_cursor_item(state) else {
+    let Some(item) = take_cursor_item(state) else {
         return Ok(0);
     };
     let Some(slot) = find_first_free_backpack_slot(state) else {
         return Ok(0);
     };
 
-    store_cursor_item_in_backpack(state, slot, item_id, stack_count, applied_transmog);
+    store_cursor_item_in_backpack(state, slot, item);
     cursor_model::clear(state)?;
     cursor_model::legacy_changed(state);
     state.push(Val::Bool(true));
     Ok(1)
 }
 
-fn take_cursor_item(
-    state: &mut LuaState,
-) -> Option<(u32, i32, Option<crate::lua_api::state::AppliedTransmog>)> {
+fn take_cursor_item(state: &mut LuaState) -> Option<crate::lua_api::state::BagItem> {
     let Ok(st) = borrow_state(state) else {
         return None;
     };
@@ -103,12 +101,20 @@ fn take_cursor_item(
         item_id,
         stack_count,
         applied_transmog,
+        owned_identity,
         ..
     } = cursor
     else {
         return None;
     };
-    Some((item_id, stack_count, applied_transmog))
+    Some(crate::lua_api::state::BagItem {
+        item_id,
+        stack_count,
+        hyperlink: None,
+        durability: None,
+        applied_transmog,
+        owned_identity,
+    })
 }
 
 fn find_first_free_backpack_slot(state: &mut LuaState) -> Option<i32> {
@@ -121,25 +127,14 @@ fn find_first_free_backpack_slot(state: &mut LuaState) -> Option<i32> {
 fn store_cursor_item_in_backpack(
     state: &mut LuaState,
     slot: i32,
-    item_id: u32,
-    stack_count: i32,
-    applied_transmog: Option<crate::lua_api::state::AppliedTransmog>,
+    item: crate::lua_api::state::BagItem,
 ) {
     if let Ok(mut st) = borrow_state_mut(state) {
         crate::c_api::item_upgrade_eligibility::swap_with_cursor(
             &mut st,
             crate::c_api::item_upgrade_eligibility::ItemSlot::Bag(0, slot),
         );
-        st.bag_items.insert(
-            (0, slot),
-            crate::lua_api::state::BagItem {
-                item_id,
-                stack_count,
-                hyperlink: None,
-                durability: None,
-                applied_transmog,
-            },
-        );
+        st.bag_items.insert((0, slot), item);
     }
 }
 
@@ -246,6 +241,7 @@ fn pickup_merchant_item(state: &mut LuaState) -> LuaResult<u32> {
         return Ok(0);
     };
     let cursor = CursorInfo::Item {
+        owned_identity: None,
         item_id: 100_000 + index,
         stack_count: 1,
         origin: CursorItemOrigin::Merchant { index },

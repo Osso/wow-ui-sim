@@ -410,6 +410,7 @@ fn click_auction_sell_item_button(state: &mut LuaState) -> LuaResult<u32> {
             Some(crate::lua_api::state::CursorInfo::Item {
                 item_id,
                 stack_count,
+                owned_identity,
                 ..
             }) => Some(BagItem {
                 item_id,
@@ -417,6 +418,7 @@ fn click_auction_sell_item_button(state: &mut LuaState) -> LuaResult<u32> {
                 hyperlink: None,
                 durability: None,
                 applied_transmog: None,
+                owned_identity,
             }),
             _ => None,
         }

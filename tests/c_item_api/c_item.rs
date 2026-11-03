@@ -309,6 +309,7 @@ fn item_location_bag_link_preserves_captured_hyperlink() {
             hyperlink: Some(captured.to_string()),
             durability: None,
             applied_transmog: None,
+            owned_identity: None,
         },
     );
     let (item_link, container_link): (String, String) = env.eval(
@@ -331,6 +332,7 @@ fn item_location_equipped_bag_uses_modeled_inventory_slot_and_captured_link() {
             inventory_slot: Some(25),
             item_id: Some(194019),
             hyperlink: Some(captured.to_string()),
+            owned_identity: None,
         },
     );
     let (id, exists, link): (Option<i64>, bool, Option<String>) = env

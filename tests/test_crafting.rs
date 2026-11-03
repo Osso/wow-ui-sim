@@ -169,22 +169,35 @@ fn craft_recipe_respects_modeled_backpack_capacity_without_invalid_overflow_slot
     let env = env();
     {
         let mut sim = env.state().borrow_mut();
-        sim.bag_info.insert(0, BagInfo {
-            num_slots: 0, family: 0, name: Some("Backpack".to_string()),
-            inventory_slot: Some(20), item_id: None, hyperlink: None,
-        });
+        sim.bag_info.insert(
+            0,
+            BagInfo {
+                num_slots: 0,
+                family: 0,
+                name: Some("Backpack".to_string()),
+                inventory_slot: Some(20),
+                item_id: None,
+                hyperlink: None,
+                owned_identity: None,
+            },
+        );
     }
-    let result: String = env.eval(
-        r#"
+    let result: String = env
+        .eval(
+            r#"
         A_Admin.ClearBags()
         A_Admin.AddBagItem(0, 1, 210934, 12)
         A_Admin.AddBagItem(0, 2, 210937, 2)
         return tostring(C_TradeSkillUI.CraftRecipe(100001, 1))
         "#,
-    ).unwrap();
+        )
+        .unwrap();
     assert_eq!(result, "false");
     let sim = env.state().borrow();
-    assert_eq!(sim.bag_items.get(&(0, 1)).map(|item| item.stack_count), Some(12));
+    assert_eq!(
+        sim.bag_items.get(&(0, 1)).map(|item| item.stack_count),
+        Some(12)
+    );
     assert!(!sim.bag_items.keys().any(|(_, slot)| *slot < 1));
 }
 

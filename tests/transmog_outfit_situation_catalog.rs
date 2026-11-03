@@ -5,12 +5,23 @@ use wow_ui_sim::lua_api::{WowLuaEnv, state::EquippedItem};
 #[test]
 fn transmog_outfit_situation_catalog_options_reflect_pending_selection() {
     let env = WowLuaEnv::new().unwrap();
-    env.state().borrow_mut().transmog_outfits.situation_categories.push(SituationCategory {
-        trigger_id: 2, name: "Specialization".into(), description: "Select spec".into(), is_radio_button: true,
-        groups: vec![SituationGroup { group_id: 70, secondary_id: 3,
-            options: vec![("Retribution".into(), (2,70,3,4))] }],
-    });
-    env.eval::<()>(r#"
+    env.state()
+        .borrow_mut()
+        .transmog_outfits
+        .situation_categories
+        .push(SituationCategory {
+            trigger_id: 2,
+            name: "Specialization".into(),
+            description: "Select spec".into(),
+            is_radio_button: true,
+            groups: vec![SituationGroup {
+                group_id: 70,
+                secondary_id: 3,
+                options: vec![("Retribution".into(), (2, 70, 3, 4))],
+            }],
+        });
+    env.eval::<()>(
+        r#"
         local api = C_TransmogOutfitInfo
         api.AddNewOutfit('Raid',135771)
         api.ChangeViewedOutfit(api.GetOutfitInfoByName('Raid').outfitID)
@@ -26,17 +37,35 @@ fn transmog_outfit_situation_catalog_options_reflect_pending_selection() {
         assert(api.GetUISituationCategoriesAndOptions()[1].groupData[1].optionData[1].value)
         api.ClearAllPendingSituations()
         assert(not api.GetUISituationCategoriesAndOptions()[1].groupData[1].optionData[1].value)
-    "#).unwrap();
+    "#,
+    )
+    .unwrap();
 }
 
 #[test]
 fn transmog_outfit_situation_catalog_equipped_option_reads_actual_item_inventory_type() {
     let env = WowLuaEnv::new().unwrap();
     env.state().borrow_mut().player.equipped_items.clear();
-    assert_eq!(env.eval::<Option<i32>>("return C_TransmogOutfitInfo.GetEquippedSlotOptionFromTransmogSlot(12)").unwrap(), None);
-    env.state().borrow_mut().player.equipped_items.insert(16, EquippedItem {
-        item_id: 250448, enchant_id: 0, gem_ids: [0;3],
-        applied_transmog: None,
-    });
-    assert_eq!(env.eval::<i32>("return C_TransmogOutfitInfo.GetEquippedSlotOptionFromTransmogSlot(12)").unwrap(), 2);
+    assert_eq!(
+        env.eval::<Option<i32>>(
+            "return C_TransmogOutfitInfo.GetEquippedSlotOptionFromTransmogSlot(12)"
+        )
+        .unwrap(),
+        None
+    );
+    env.state().borrow_mut().player.equipped_items.insert(
+        16,
+        EquippedItem {
+            item_id: 250448,
+            enchant_id: 0,
+            gem_ids: [0; 3],
+            applied_transmog: None,
+            owned_identity: None,
+        },
+    );
+    assert_eq!(
+        env.eval::<i32>("return C_TransmogOutfitInfo.GetEquippedSlotOptionFromTransmogSlot(12)")
+            .unwrap(),
+        2
+    );
 }

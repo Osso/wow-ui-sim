@@ -23,6 +23,7 @@ pub enum CursorInfo {
     Macro { macro_index: u32 },
     /// An item picked up from a bag slot, equipment slot, or merchant.
     Item {
+        owned_identity: Option<u64>,
         item_id: u32,
         stack_count: i32,
         origin: CursorItemOrigin,

@@ -49,6 +49,7 @@ fn captured_bag(num_slots: i32, inventory_slot: Option<i32>) -> BagInfo {
         inventory_slot,
         item_id: Some(194019),
         hyperlink: Some("|Hitem:194019|h[Captured reagent bag]|h".to_string()),
+        owned_identity: None,
     }
 }
 
@@ -100,6 +101,7 @@ fn captured_reagent_bag_drives_all_capacity_queries_and_metadata() {
                 hyperlink: None,
                 durability: None,
                 applied_transmog: None,
+                owned_identity: None,
             },
         );
         state.bag_items.insert(
@@ -110,6 +112,7 @@ fn captured_reagent_bag_drives_all_capacity_queries_and_metadata() {
                 hyperlink: None,
                 durability: None,
                 applied_transmog: None,
+                owned_identity: None,
             },
         );
     }
@@ -149,6 +152,7 @@ fn captured_bag_item_link_preserves_bonus_context_across_container_queries() {
             hyperlink: Some(captured_link.to_string()),
             durability: None,
             applied_transmog: None,
+            owned_identity: None,
         },
     );
     let (item_link, info_link): (String, String) = env
@@ -201,6 +205,7 @@ fn total_free_slots_use_captured_capacities_including_bag_five() {
                 hyperlink: None,
                 durability: None,
                 applied_transmog: None,
+                owned_identity: None,
             },
         );
     }
@@ -218,6 +223,7 @@ fn backpack_placement_obeys_captured_zero_and_expanded_capacity() {
         state.bag_items.clear();
         state.bag_info.insert(0, captured_bag(0, Some(19)));
         state.cursor_item = Some(CursorInfo::Item {
+            owned_identity: None,
             item_id: 6948,
             stack_count: 1,
             origin: CursorItemOrigin::Unknown,
@@ -241,6 +247,7 @@ fn backpack_placement_obeys_captured_zero_and_expanded_capacity() {
                     hyperlink: None,
                     durability: None,
                     applied_transmog: None,
+                    owned_identity: None,
                 },
             );
         }
@@ -280,6 +287,7 @@ fn get_num_loot_items_counts_seeded_slots() {
             hyperlink: None,
             durability: None,
             applied_transmog: None,
+            owned_identity: None,
         },
         BagItem {
             item_id: 19019,
@@ -287,6 +295,7 @@ fn get_num_loot_items_counts_seeded_slots() {
             hyperlink: None,
             durability: None,
             applied_transmog: None,
+            owned_identity: None,
         },
         BagItem {
             item_id: 36942,
@@ -294,6 +303,7 @@ fn get_num_loot_items_counts_seeded_slots() {
             hyperlink: None,
             durability: None,
             applied_transmog: None,
+            owned_identity: None,
         },
     ];
     let n: i32 = env.eval("return GetNumLootItems()").unwrap();

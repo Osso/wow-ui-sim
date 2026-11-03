@@ -4,12 +4,15 @@ mod c_equipment_set;
 #[cfg(feature = "retail-12-0-5")]
 pub(crate) use c_equipment_set::use_equipment_set_by_id;
 mod c_item;
+pub(crate) mod cursor_slot_compatibility;
 pub(crate) mod helpers;
 pub mod item_child;
 mod item_classifiers;
 mod item_creation_context_data;
 mod item_cursor_grid;
+mod item_drop_on_unit;
 mod item_effects;
+pub mod item_equip;
 mod item_gem;
 mod item_pickup;
 pub mod item_range;
@@ -19,6 +22,8 @@ pub mod item_spec_derive;
 mod item_type;
 mod item_uniqueness;
 mod item_use;
+mod item_use_by_name;
+mod item_use_confirm;
 
 use super::c_spell;
 use super::c_spell_book;

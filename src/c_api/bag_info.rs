@@ -12,6 +12,8 @@ pub struct BagInfo {
     pub inventory_slot: Option<i32>,
     pub item_id: Option<u32>,
     pub hyperlink: Option<String>,
+    /// Identity of an equipped bag when no equipment item represents it.
+    pub owned_identity: Option<u64>,
 }
 
 impl BagInfo {
@@ -36,6 +38,7 @@ impl BagInfo {
                     inventory_slot: Some((20 + bag).max(0)),
                     item_id: None,
                     hyperlink: None,
+                    owned_identity: None,
                 },
             );
         }

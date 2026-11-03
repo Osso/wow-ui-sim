@@ -52,9 +52,19 @@ fn item_input(row: &ItemRow) -> ItemSpecInput {
     }
 }
 
+/// Item and ItemSparse metadata of a resident record.
+pub(super) fn item_spec_input(item_id: u32) -> Option<ItemSpecInput> {
+    find_item_row(item_id).map(item_input)
+}
+
 /// ItemSparse.Bonding keyed by item ID (field name INFERRED; WM48).
 pub(super) fn item_bonding(item_id: u32) -> Option<u8> {
     find_item_row(item_id).map(|row| row.7)
+}
+
+/// Item class from the same resident base record.
+pub(super) fn item_class(item_id: u32) -> Option<u8> {
+    find_item_row(item_id).map(|row| row.1)
 }
 
 /// Build the derived record, or None when ItemSparse/Item data is missing.
