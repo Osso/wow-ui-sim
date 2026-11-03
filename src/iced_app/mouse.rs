@@ -239,15 +239,21 @@ impl App {
 
     pub(super) fn handle_mouse_up(&mut self, pos: Point) {
         self.sync_mouse_position(pos);
-        {
-            let env = self.env.borrow();
-            let _ = env
-                .state()
-                .borrow_mut()
-                .set_mouse_button_down("LeftButton", false);
+        self.release_left_button(Some(pos));
+        self.update_hovered_frame(pos);
+    }
+
+    pub(super) fn handle_mouse_up_outside(&mut self) {
+        self.handle_mouse_leave();
+        if self.mouse_down_pos.is_some() || self.env.borrow().state().borrow().mouse_buttons.left {
+            self.release_left_button(None);
         }
+    }
+
+    fn release_left_button(&mut self, pos: Option<Point>) {
+        self.set_mouse_button_up("LeftButton");
         let (was_dragging, drag_source) = self.take_left_drag_state();
-        let released_on = self.hit_test_mouse_button(pos, "LeftButton", false);
+        let released_on = pos.and_then(|pos| self.hit_test_mouse_button(pos, "LeftButton", false));
 
         if was_dragging {
             self.finish_drag(drag_source, released_on);
@@ -258,7 +264,14 @@ impl App {
         self.mouse_down_pos = None;
         self.clear_pressed_frame();
         self.flush_post_script_updates();
-        self.update_hovered_frame(pos);
+    }
+
+    fn set_mouse_button_up(&self, button: &str) {
+        self.env
+            .borrow()
+            .state()
+            .borrow_mut()
+            .set_mouse_button_down(button, false);
     }
 
     fn clear_pressed_frame(&mut self) {
@@ -456,13 +469,7 @@ impl App {
 
     pub(super) fn handle_right_mouse_up(&mut self, pos: Point) {
         self.sync_mouse_position(pos);
-        {
-            let env = self.env.borrow();
-            let _ = env
-                .state()
-                .borrow_mut()
-                .set_mouse_button_down("RightButton", false);
-        }
+        self.set_mouse_button_up("RightButton");
         // Right-click clears the cursor (drops held spell/action) in WoW.
         // Use the Lua ClearCursor() function so events fire properly.
         let had_cursor_item = self.env.borrow().state().borrow().cursor_item.is_some();
@@ -515,6 +522,12 @@ impl App {
         }
         self.right_mouse_down_frame = None;
         self.update_hovered_frame(pos);
+    }
+
+    pub(super) fn handle_right_mouse_up_outside(&mut self) {
+        self.set_mouse_button_up("RightButton");
+        self.right_mouse_down_frame = None;
+        self.handle_mouse_leave();
     }
 
     fn frame_clicks_on_edge(&self, frame_id: u64, button_name: &str, down: bool) -> bool {

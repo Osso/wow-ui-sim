@@ -92,6 +92,8 @@ struct ShapeCacheEntry {
 /// Packs glyphs left-to-right, top-to-bottom into a single RGBA texture.
 /// Uses a simple row packer: each row has the height of the tallest glyph in it.
 pub struct GlyphAtlas {
+    /// Physical raster pixels per game layout unit, fixed for this atlas.
+    raster_scale: f32,
     /// RGBA pixel data for the atlas texture.
     pixels: Vec<u8>,
     /// Current packing position.
@@ -127,7 +129,13 @@ impl Default for GlyphAtlas {
 
 impl GlyphAtlas {
     pub fn new() -> Self {
+        Self::with_raster_scale(1.0)
+    }
+
+    pub(crate) fn with_raster_scale(raster_scale: f32) -> Self {
+        assert!(raster_scale.is_finite() && raster_scale > 0.0);
         Self {
+            raster_scale,
             pixels: vec![0u8; (GLYPH_ATLAS_SIZE * GLYPH_ATLAS_SIZE * 4) as usize],
             cursor_x: 0,
             cursor_y: 0,
@@ -183,6 +191,12 @@ impl GlyphAtlas {
             return Some(*entry);
         }
 
+        // Bound the raster em size before Swash allocates a bitmap.
+        let raster_size = f32::from_bits(cache_key.font_size_bits);
+        if !(raster_size > 0.0 && raster_size <= GLYPH_ATLAS_SIZE as f32) {
+            return None;
+        }
+
         let image = font_system
             .swash_cache
             .get_image(&mut font_system.font_system, cache_key)
@@ -232,6 +246,9 @@ impl GlyphAtlas {
     }
 
     fn reserve_glyph_slot(&mut self, width: u32, height: u32) -> Option<(u32, u32)> {
+        if width > GLYPH_ATLAS_SIZE || height > GLYPH_ATLAS_SIZE {
+            return None;
+        }
         if self.cursor_x + width > GLYPH_ATLAS_SIZE {
             self.start_next_glyph_row();
         }
@@ -505,7 +522,12 @@ fn scalar_positions_by_line(buffer: &Buffer) -> Vec<Vec<usize>> {
 }
 
 /// Extract glyph positions from layout runs into cacheable data.
-fn extract_layout_runs(buffer: &Buffer, max_lines: u32, spacing: f32) -> Vec<CachedLayoutRun> {
+fn extract_layout_runs(
+    buffer: &Buffer,
+    max_lines: u32,
+    spacing: f32,
+    raster_scale: f32,
+) -> Vec<CachedLayoutRun> {
     let scalar_positions = scalar_positions_by_line(buffer);
     let runs: Vec<_> = buffer.layout_runs().collect();
     let runs_slice = if max_lines > 0 {
@@ -521,7 +543,7 @@ fn extract_layout_runs(buffer: &Buffer, max_lines: u32, spacing: f32) -> Vec<Cac
                 .glyphs
                 .iter()
                 .map(|g| {
-                    let pg = g.physical((0.0, 0.0), 1.0);
+                    let pg = g.physical((0.0, 0.0), raster_scale);
                     CachedGlyph {
                         cache_key: pg.cache_key,
                         x: pg.x,
@@ -603,7 +625,14 @@ fn emit_cached_glyph(
         color[3] *= gradient.alpha_at(glyph.scalar_position);
     }
     batch.push_quad(
-        cached_glyph_bounds(request, run, x_offset, glyph, entry),
+        cached_glyph_bounds(
+            request,
+            run,
+            x_offset,
+            glyph,
+            entry,
+            glyph_atlas.raster_scale,
+        ),
         cached_glyph_uv(entry),
         color,
         request.glyph_tex_index,
@@ -617,16 +646,31 @@ fn cached_glyph_bounds(
     x_offset: f32,
     glyph: &CachedGlyph,
     entry: GlyphEntry,
+    raster_scale: f32,
 ) -> Rectangle {
-    let glyph_x =
-        request.bounds.x + x_offset + glyph.x as f32 + entry.left as f32 + request.offset.0;
-    let glyph_y = request.bounds.y + request.y_offset + run.line_y + glyph.y as f32
-        - entry.top as f32
-        + request.offset.1;
+    let (glyph_x, glyph_y) = if raster_scale == 1.0 {
+        let x = request.bounds.x + x_offset + glyph.x as f32 + entry.left as f32 + request.offset.0;
+        let y = request.bounds.y + request.y_offset + run.line_y + glyph.y as f32
+            - entry.top as f32
+            + request.offset.1;
+        (x, y)
+    } else {
+        // Align the line's origin to the same pixel grid as the glyph bitmap.
+        let origin_x = (request.bounds.x + x_offset + request.offset.0) * raster_scale;
+        let origin_y =
+            (request.bounds.y + request.y_offset + run.line_y + request.offset.1) * raster_scale;
+        (
+            (origin_x.round() + glyph.x as f32 + entry.left as f32) / raster_scale,
+            (origin_y.round() + glyph.y as f32 - entry.top as f32) / raster_scale,
+        )
+    };
 
     Rectangle::new(
         iced::Point::new(glyph_x, glyph_y),
-        iced::Size::new(entry.width as f32, entry.height as f32),
+        iced::Size::new(
+            entry.width as f32 / raster_scale,
+            entry.height as f32 / raster_scale,
+        ),
     )
 }
 
@@ -674,7 +718,7 @@ pub fn measure_text_height(
         return entry.total_height;
     }
     let (buffer, total_height) = shape_text_to_runs(font_system, shape);
-    let runs = extract_layout_runs(&buffer, 0, spacing);
+    let runs = extract_layout_runs(&buffer, 0, spacing, glyph_atlas.raster_scale);
     glyph_atlas.insert_shape_cache_entry(key, runs, total_height);
     total_height
 }

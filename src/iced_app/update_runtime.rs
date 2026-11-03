@@ -282,6 +282,9 @@ impl App {
     }
 
     pub(crate) fn sync_screen_size_to_state(&self, size: iced::Size) {
+        if self.has_fixed_display_size() {
+            return;
+        }
         let env = self.env.borrow();
         let state = env.state().borrow();
         if (state.screen_width - size.width).abs() > 0.5

@@ -26,7 +26,7 @@ mod tests {
             position: Point::new(150.0, 40.0),
         };
 
-        let action = handle_mouse_event(&event, bounds, mouse::Cursor::Unavailable)
+        let action = handle_mouse_event(&event, bounds, mouse::Cursor::Unavailable, None)
             .expect("outside canvas movement should publish a canvas leave event");
         let (message, _, _) = action.into_inner();
 
@@ -37,6 +37,76 @@ mod tests {
             ),
             "outside canvas movement should clear hover state"
         );
+    }
+
+    #[test]
+    fn window_size_maps_canvas_pointer_into_game_layout() {
+        let bounds = Rectangle::new(Point::new(20.0, 40.0), Size::new(1600.0, 900.0));
+        let scene_size = Some(Size::new(1365.3334, 768.0));
+        let position = Point::new(420.0, 490.0);
+        let cursor = mouse::Cursor::Available(position);
+        let moved = handle_mouse_event(
+            &mouse::Event::CursorMoved { position },
+            bounds,
+            cursor,
+            scene_size,
+        )
+        .unwrap();
+        let pressed = handle_mouse_event(
+            &mouse::Event::ButtonPressed(mouse::Button::Left),
+            bounds,
+            cursor,
+            scene_size,
+        )
+        .unwrap();
+        let Some(Message::CanvasEvent(CanvasMessage::MouseMove(moved))) = moved.into_inner().0
+        else {
+            panic!("expected a game-space pointer position");
+        };
+        let Some(Message::CanvasEvent(CanvasMessage::MouseDown(pressed))) = pressed.into_inner().0
+        else {
+            panic!("expected a game-space button position");
+        };
+        assert_eq!(moved, Point::new(341.33334, 384.0));
+        assert_eq!(pressed, moved);
+    }
+
+    #[test]
+    fn window_size_routes_letterbox_releases_and_covered_pointer_motion() {
+        let bounds = Rectangle::new(Point::new(20.0, 40.0), Size::new(1600.0, 900.0));
+        let scene = Some(Size::new(1365.3334, 768.0));
+        let letterbox_cursor = mouse::Cursor::Available(Point::new(15.0, 200.0));
+
+        for button in [mouse::Button::Left, mouse::Button::Right] {
+            let event = mouse::Event::ButtonReleased(button);
+            let message = handle_mouse_event(&event, bounds, letterbox_cursor, scene)
+                .unwrap()
+                .into_inner()
+                .0;
+            assert!(matches!(
+                (button, message),
+                (
+                    mouse::Button::Left,
+                    Some(Message::CanvasEvent(CanvasMessage::MouseUpOutside))
+                ) | (
+                    mouse::Button::Right,
+                    Some(Message::CanvasEvent(CanvasMessage::RightMouseUpOutside))
+                )
+            ));
+            assert!(handle_mouse_event(&event, bounds, letterbox_cursor, None).is_none());
+        }
+
+        let position = Point::new(100.0, 100.0);
+        let event = mouse::Event::CursorMoved { position };
+        let covered = mouse::Cursor::Levitating(position);
+        let message = handle_mouse_event(&event, bounds, covered, scene)
+            .unwrap()
+            .into_inner()
+            .0;
+        assert!(matches!(
+            message,
+            Some(Message::CanvasEvent(CanvasMessage::MouseLeave))
+        ));
     }
 
     #[test]

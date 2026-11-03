@@ -777,6 +777,42 @@ fn gui_startup_waits_for_canvas_before_running_lua() {
 }
 
 #[test]
+fn gui_startup_uses_canvas_bounds_after_initial_window_size() {
+    let mut app = build_test_app(ScreenKind::Game);
+    app.initial_window_size_pending = true;
+    app.record_canvas_size(Size::new(1024.0, 768.0));
+    let _ = app.update(Message::ProcessTimers(std::time::Instant::now()));
+    assert!(!app.gui_initialization_complete.get());
+
+    let _ = app.update(Message::InitialWindowSized);
+    app.record_canvas_size(Size::new(1266.0, 822.0));
+    let _ = app.update(Message::ProcessTimers(std::time::Instant::now()));
+    assert!(app.gui_initialization_complete.get());
+    assert_eq!(current_env_screen_size(&app.env), Size::new(1266.0, 822.0));
+}
+
+#[test]
+fn gui_window_size_preserves_fixed_display_after_canvas_resize() {
+    let mut app = build_test_app(ScreenKind::Game);
+    app.fixed_display_size = Some(Size::new(1536.0, 864.0));
+    app.record_canvas_size(Size::new(1228.8, 691.2));
+    app.advance_gui_startup();
+
+    app.record_canvas_size(Size::new(800.0, 450.0));
+    app.sync_screen_size_to_state(Size::new(800.0, 450.0));
+    let env = app.env.borrow();
+    let physical: (f32, f32) = env.eval("return GetPhysicalScreenSize()").unwrap();
+    assert_eq!(physical, (1536.0, 864.0));
+    let state = env.state().borrow();
+    assert!((state.screen_width - 1365.3334).abs() < 0.001);
+    assert_eq!(state.screen_height, 768.0);
+    assert_eq!(
+        app.fixed_canvas_size(),
+        Some(Size::new(state.screen_width, 768.0))
+    );
+}
+
+#[test]
 fn app_screen_size_starts_from_sim_state_size() {
     let app = build_test_app(ScreenKind::Game);
 

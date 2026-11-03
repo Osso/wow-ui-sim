@@ -25,9 +25,17 @@ pub struct CVarStorage {
     /// Runtime overrides (lowercase key -> value), persisted to disk.
     overrides: RwLock<HashMap<String, String>>,
     /// Effective session-only values, never included in persisted overrides.
-    temporary_overrides: RwLock<HashMap<String, String>>,
+    session_overrides: RwLock<HashMap<String, SessionCVar>>,
     /// Path to persist overrides.
     storage_path: PathBuf,
+}
+
+#[derive(Default)]
+struct SessionCVar {
+    /// Startup values replaced by regular writes.
+    imported: Option<String>,
+    /// Explicit temporary values that survive regular writes until removed.
+    temporary: Option<String>,
 }
 
 impl CVarStorage {
@@ -50,7 +58,7 @@ impl CVarStorage {
             registered_defaults: RwLock::new(HashMap::new()),
             registered_original_names: RwLock::new(HashMap::new()),
             overrides: RwLock::new(overrides),
-            temporary_overrides: RwLock::new(HashMap::new()),
+            session_overrides: RwLock::new(HashMap::new()),
             storage_path: path,
         }
     }
@@ -63,16 +71,21 @@ impl CVarStorage {
             .join("SavedVariables")
     }
 
-    /// Get the effective value (temporary, persisted, then default).
+    /// Get the effective value (temporary, imported, persisted, then default).
     pub fn get(&self, name: &str) -> Option<String> {
         let key = name.to_lowercase();
         if is_profile_removed_cvar_key(&key) {
             return None;
         }
-        if let Some(value) = self.temporary_overrides.read().unwrap().get(&key) {
+        if let Some(value) = self
+            .session_overrides
+            .read()
+            .unwrap()
+            .get(&key)
+            .and_then(|values| values.temporary.as_ref().or(values.imported.as_ref()))
+        {
             return Some(value.clone());
         }
-        // Persisted overrides remain separate from temporary effective values.
         if let Some(value) = self.overrides.read().unwrap().get(&key) {
             return Some(value.clone());
         }
@@ -106,25 +119,52 @@ impl CVarStorage {
         self.overrides
             .write()
             .unwrap()
-            .insert(key, value.to_string());
+            .insert(key.clone(), value.to_string());
+        if let std::collections::hash_map::Entry::Occupied(mut entry) =
+            self.session_overrides.write().unwrap().entry(key)
+        {
+            entry.get_mut().imported = None;
+            if entry.get().temporary.is_none() {
+                entry.remove();
+            }
+        }
         self.save();
         true
     }
 
-    /// Set an effective temporary value without changing or saving persisted state.
-    pub(crate) fn set_temporary(&self, name: &str, value: &str) {
-        self.temporary_overrides
+    /// Seed an imported value for this launch without writing it to disk.
+    pub fn set_imported(&self, name: &str, value: &str) {
+        self.session_overrides
             .write()
             .unwrap()
-            .insert(name.to_lowercase(), value.to_owned());
+            .entry(name.to_lowercase())
+            .or_default()
+            .imported = Some(value.to_string());
     }
 
-    /// Remove a temporary value so reads reveal the persisted value or default.
-    pub(crate) fn remove_temporary(&self, name: &str) {
-        self.temporary_overrides
+    /// Set an effective temporary value without changing or saving persisted state.
+    pub(crate) fn set_temporary(&self, name: &str, value: &str) {
+        self.session_overrides
             .write()
             .unwrap()
-            .remove(&name.to_lowercase());
+            .entry(name.to_lowercase())
+            .or_default()
+            .temporary = Some(value.to_owned());
+    }
+
+    /// Remove a temporary value so reads reveal the next available value.
+    pub(crate) fn remove_temporary(&self, name: &str) {
+        if let std::collections::hash_map::Entry::Occupied(mut entry) = self
+            .session_overrides
+            .write()
+            .unwrap()
+            .entry(name.to_lowercase())
+        {
+            entry.get_mut().temporary = None;
+            if entry.get().imported.is_none() {
+                entry.remove();
+            }
+        }
     }
 
     /// Get all known CVar names in original case (defaults + overrides).
@@ -136,6 +176,14 @@ impl CVarStorage {
         for key in self.overrides.read().unwrap().keys() {
             keys.insert(key.clone());
         }
+        keys.extend(
+            self.session_overrides
+                .read()
+                .unwrap()
+                .iter()
+                .filter(|(_, values)| values.imported.is_some())
+                .map(|(key, _)| key.clone()),
+        );
         keys.retain(|key| !is_profile_removed_cvar_key(key));
         let mut sorted: Vec<String> = keys
             .into_iter()

@@ -102,6 +102,89 @@ pub fn load_keybindings_from_wtf(env: &WowLuaEnv, saved_vars: Option<&SavedVaria
     }
 }
 
+#[cfg(feature = "gui")]
+pub(super) fn configure_imported_ui_scale(env: &WowLuaEnv) {
+    if let Some(path) = explicit_import_wtf_path() {
+        configure_ui_scale_from_wtf(env, &path);
+    }
+}
+
+#[cfg(feature = "gui")]
+pub(super) fn apply_session_ui_scale(env: &WowLuaEnv) {
+    if explicit_import_wtf_path().is_some() {
+        apply_current_ui_scale(env);
+    }
+}
+
+#[cfg(feature = "gui")]
+fn explicit_import_wtf_path() -> Option<std::path::PathBuf> {
+    std::env::var_os("WOW_SIM_WTF_PATH")
+        .filter(|path| !path.is_empty())
+        .map(std::path::PathBuf::from)
+}
+
+#[cfg(feature = "gui")]
+fn configure_ui_scale_from_wtf(env: &WowLuaEnv, path: &std::path::Path) {
+    if let Ok(bytes) = std::fs::read(path.join("Config.wtf")) {
+        let config = String::from_utf8_lossy(&bytes);
+        let state = env.state().borrow();
+        for name in ["useUiScale", "uiScale"] {
+            if let Some(value) = state.cvars.get_default(name) {
+                state.cvars.set_imported(name, &value);
+            }
+        }
+        for line in config.trim_start_matches('\u{feff}').lines() {
+            let mut fields = line.split_ascii_whitespace();
+            let (Some(command), Some(name), Some(value), None) =
+                (fields.next(), fields.next(), fields.next(), fields.next())
+            else {
+                continue;
+            };
+            if !command.eq_ignore_ascii_case("SET") {
+                continue;
+            }
+            let Some(value) = value
+                .strip_prefix('"')
+                .and_then(|value| value.strip_suffix('"'))
+            else {
+                continue;
+            };
+            if (name.eq_ignore_ascii_case("useUiScale") && matches!(value, "0" | "1"))
+                || (name.eq_ignore_ascii_case("uiScale") && parse_ui_scale(value).is_some())
+            {
+                state.cvars.set_imported(name, value);
+            }
+        }
+    }
+    apply_current_ui_scale(env);
+}
+
+#[cfg(feature = "gui")]
+fn apply_current_ui_scale(env: &WowLuaEnv) {
+    let scale = {
+        let state = env.state().borrow();
+        if !state.cvars.get_bool("useUiScale") {
+            return;
+        }
+        state
+            .cvars
+            .get("uiScale")
+            .as_deref()
+            .and_then(parse_ui_scale)
+    };
+    if let Some(scale) = scale {
+        wow_ui_sim::startup::apply_ui_scale(env, scale);
+    }
+}
+
+#[cfg(feature = "gui")]
+fn parse_ui_scale(value: &str) -> Option<f32> {
+    value
+        .parse::<f32>()
+        .ok()
+        .filter(|scale| scale.is_finite() && *scale > 0.0)
+}
+
 fn should_skip_saved_vars(no_saved_vars_arg: bool) -> bool {
     no_saved_vars_arg
         || std::env::var("WOW_SIM_NO_SAVED_VARS")
@@ -112,6 +195,68 @@ fn should_skip_saved_vars(no_saved_vars_arg: bool) -> bool {
 #[cfg(test)]
 mod tests {
     use super::selected_name;
+
+    #[cfg(feature = "gui")]
+    #[test]
+    fn window_size_imports_manual_ui_scale_without_persisting_it() {
+        let copy = tempfile::tempdir().unwrap();
+        let runtime = tempfile::tempdir().unwrap();
+        let config = copy.path().join("Config.wtf");
+        let contents =
+            "\u{feff}SET UseUiScale \"1\"\r\nset UIScale \"0.80\"\r\nSET unrelated \"example\"\r\n";
+        std::fs::write(&config, contents).unwrap();
+        let env = super::WowLuaEnv::with_session_wtf_path(runtime.path().to_path_buf()).unwrap();
+
+        super::configure_ui_scale_from_wtf(&env, copy.path());
+        let (scale, cvar, enabled, unrelated): (f32, String, String, bool) = env
+            .eval(
+                "return UIParent:GetEffectiveScale(), C_CVar.GetCVar('uiScale'), \
+                 C_CVar.GetCVar('useUiScale'), C_CVar.GetCVar('unrelated') == nil",
+            )
+            .unwrap();
+        assert_eq!((scale, cvar.as_str(), enabled.as_str()), (0.8, "0.80", "1"));
+        assert!(unrelated);
+        assert!(!runtime.path().join("cvars.json").exists());
+
+        env.exec("assert(C_CVar.SetCVar('uiScale', '0.9'))")
+            .unwrap();
+        let stored: serde_json::Value =
+            serde_json::from_slice(&std::fs::read(runtime.path().join("cvars.json")).unwrap())
+                .unwrap();
+        assert_eq!(stored, serde_json::json!({"uiscale": "0.9"}));
+        assert_eq!(
+            env.eval::<f32>("return UIParent:GetEffectiveScale()")
+                .unwrap(),
+            0.9
+        );
+        assert_eq!(std::fs::read_to_string(config).unwrap(), contents);
+    }
+
+    #[cfg(feature = "gui")]
+    #[test]
+    fn window_size_uses_automatic_ui_scale_without_a_manual_setting() {
+        let copy = tempfile::tempdir().unwrap();
+        let runtime = tempfile::tempdir().unwrap();
+        std::fs::write(
+            copy.path().join("Config.wtf"),
+            "SET GxMaximize \"0\"\nSET GxWindowedResolution \"3774x2113\"\n",
+        )
+        .unwrap();
+        let persisted_path = runtime.path().join("cvars.json");
+        let persisted = r#"{"useuiscale":"1","uiscale":"0.8"}"#;
+        std::fs::write(&persisted_path, persisted).unwrap();
+        let env = super::WowLuaEnv::with_session_wtf_path(runtime.path().to_path_buf()).unwrap();
+        super::configure_ui_scale_from_wtf(&env, copy.path());
+        assert_eq!(
+            env.eval::<(f32, String, bool)>(
+                "return UIParent:GetEffectiveScale(), C_CVar.GetCVar('useUiScale'), \
+                 C_CVar.GetCVar('uiScale') == C_CVar.GetCVarDefault('uiScale')",
+            )
+            .unwrap(),
+            (1.0, "0".into(), true)
+        );
+        assert_eq!(std::fs::read_to_string(persisted_path).unwrap(), persisted);
+    }
 
     #[test]
     fn selected_name_preserves_empty_parts_and_profile_specific_hyphens() {
