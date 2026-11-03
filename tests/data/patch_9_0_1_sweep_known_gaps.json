@@ -45,7 +45,6 @@
   "wt-global-api-C_CovenantSanctumUI.GetSanctumType-248",
   "wt-global-api-C_CurrencyInfo.GetCurrencyLink-257",
   "wt-global-api-C_CurrencyInfo.GetCurrencyListLink-259",
-  "wt-global-api-C_CurrencyInfo.PickupCurrency-261",
   "wt-global-api-C_GamePad.ApplyConfigs-270",
   "wt-global-api-C_GamePad.AxisIndexToConfigName-271",
   "wt-global-api-C_GamePad.ButtonBindingToIndex-272",
