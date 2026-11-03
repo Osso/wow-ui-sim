@@ -45,6 +45,7 @@ pub struct TooltipRenderData {
 /// A single line ready for rendering.
 pub struct TooltipLineRender {
     pub left_text: String,
+    pub left_hidden: bool,
     pub left_color: [f32; 4],
     pub left_segments: Vec<TooltipTextSegmentRender>,
     pub right_text: Option<String>,
@@ -282,7 +283,7 @@ pub fn collect_tooltip_data(state: &SimState) -> HashMap<u64, TooltipRenderData>
         let Some(alpha) = tooltip_alpha(state, id, td) else {
             continue;
         };
-        let lines = collect_tooltip_lines(td, alpha);
+        let lines = collect_tooltip_lines(td, &state.widgets, alpha);
         let line_spacing = td.line_spacing.unwrap_or(TOOLTIP_LINE_SPACING);
         result.insert(
             id,
@@ -377,12 +378,20 @@ fn tooltip_has_render_content(td: &crate::lua_api::tooltip::TooltipData) -> bool
 
 fn collect_tooltip_lines(
     td: &crate::lua_api::tooltip::TooltipData,
+    widgets: &crate::widget::WidgetRegistry,
     alpha: f32,
 ) -> Vec<TooltipLineRender> {
     td.lines
         .iter()
         .enumerate()
-        .map(|(i, line)| tooltip_line_render(i, line, alpha))
+        .map(|(i, line)| {
+            let hidden = matches!(
+                crate::client_profile::ACTIVE,
+                crate::client_profile::ClientProfile::Retail
+                    | crate::client_profile::ClientProfile::Ptr
+            ) && td.left_line_is_hidden(widgets, i);
+            tooltip_line_render(i, line, alpha, hidden)
+        })
         .collect()
 }
 
@@ -390,6 +399,7 @@ fn tooltip_line_render(
     index: usize,
     line: &crate::lua_api::tooltip::TooltipLine,
     alpha: f32,
+    left_hidden: bool,
 ) -> TooltipLineRender {
     let left_color = [
         line.left_color.0,
@@ -405,6 +415,7 @@ fn tooltip_line_render(
     ];
     TooltipLineRender {
         left_text: line.left_text.clone(),
+        left_hidden,
         left_color,
         left_segments: tooltip_text_segment_renders(&line.left_segments, alpha),
         right_text: line.right_text.clone(),
@@ -683,7 +694,9 @@ fn emit_tooltip_line(
     } else {
         placement
     };
-    emit_left_tooltip_text(tr, line, left_placement, left_width, font_size);
+    if !line.left_hidden {
+        emit_left_tooltip_text(tr, line, left_placement, left_width, font_size);
+    }
 
     if let Some(ref right_text) = line.right_text {
         if let (Some(origin), Some(offset)) = (left_origin, right_offset) {
