@@ -3313,3 +3313,9 @@ Documented the game startup fixes and their selected consumers, plus the MSAA
 capability required during login settings registration.
 [Game startup](investigations/forever-addon-startup-compatibility.md),
 [login graphics](investigations/forever-login-startup.md#msaa-capability)
+
+## 2026-11-03 — Flipped mask coordinates
+
+Documented the clamp panic reproduced with a flipped mask and the
+renderer change that preserves the flipped orientation.
+[Mask Texture](investigations/mask-texture.md#flipped-mask-coordinates)
