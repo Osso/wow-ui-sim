@@ -26,9 +26,14 @@ fn secure_target_action_fills_ordinary_trade_slots_in_order(env: &WowLuaEnv) {
         }
     }
     env.exec(r#"
-        local action = SECURE_ACTIONS.target
-        local source = debug.getinfo(action, 'S').source:gsub('\\', '/')
+        local source = debug.getinfo(SecureActionButton_OnClick, 'S').source:gsub('\\', '/')
         assert(source:find('Blizzard_FrameXML/SecureTemplates.lua', 1, true), source)
+        local button = CreateFrame('Button', nil, UIParent)
+        button:SetAttribute('type', 'target')
+        button:SetAttribute('unit', 'player')
+        local function action()
+            SecureActionButton_OnClick(button, 'LeftButton', false, false, true)
+        end
         tradeEvents = {}
         local listener = CreateFrame('Frame')
         listener:RegisterEvent('TRADE_PLAYER_ITEM_CHANGED')
@@ -38,13 +43,13 @@ fn secure_target_action_fills_ordinary_trade_slots_in_order(env: &WowLuaEnv) {
         InitiateTrade('player')
         for slot = 1, 6 do
             C_Container.PickupContainerItem(0, slot)
-            action(nil, 'player', 'LeftButton')
+            action()
             assert(not CursorHasItem(), 'slot ' .. slot)
         end
         assert(table.concat(tradeEvents, ',') == '1:1,1:2,1:3,1:4,1:5,1:6', table.concat(tradeEvents, ','))
         -- No ordinary slot is free: the cursor stays and no event fires.
         C_Container.PickupContainerItem(0, 7)
-        action(nil, 'player', 'LeftButton')
+        action()
         assert(CursorHasItem())
         assert(#tradeEvents == 6)
     "#).unwrap();
