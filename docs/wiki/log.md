@@ -3313,3 +3313,10 @@ Documented the game startup fixes and their selected consumers, plus the MSAA
 capability required during login settings registration.
 [Game startup](investigations/forever-addon-startup-compatibility.md),
 [login graphics](investigations/forever-login-startup.md#msaa-capability)
+
+## 2026-11-03 — Forever 70707 World Map
+
+Documented the profile registrations and Trivial Quests setting used when the
+World Map opens. The quest panel refresh must complete before the map can
+initialize zoom.
+[World map](investigations/forever-addon-startup-compatibility.md#world-map-after-startup)

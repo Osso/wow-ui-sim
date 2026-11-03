@@ -42,20 +42,23 @@ fn forever_world_map_show_and_sustained_updates_are_error_free() {
     let env = load_full_game_ui();
     env.state().borrow_mut().lua_errors.clear();
 
-    env.exec("WorldMapFrame:Show()")
-        .expect("showing the Forever world map should dispatch its handlers");
+    env.send_key_press("M", None)
+        .expect("the Forever world-map binding should dispatch its handlers");
     for _ in 0..60 {
         env.state().borrow_mut().ensure_layout_rects();
         fire_gui_startup_on_update_tick(&env);
         process_pending_timers(&env);
     }
 
-    let (target_scale, quest_limit): (f64, i64) = env
+    let (shown, map_id, target_scale, quest_limit): (bool, i64, f64, i64) = env
         .eval(
-            "return WorldMapFrame.ScrollContainer.targetScale, \
+            "return WorldMapFrame:IsShown(), WorldMapFrame:GetMapID(), \
+             WorldMapFrame.ScrollContainer.targetScale, \
              Constants.QuestLogConsts.MAXIMUM_NUM_QUESTS_LOG_CAN_ACCEPT",
         )
         .expect("Forever world-map runtime state should be initialized");
+    assert!(shown, "M should open the Forever world map");
+    assert!(map_id > 0, "the Forever world map should select a map");
     assert!(target_scale > 0.0);
     assert_eq!(quest_limit, 40);
 
@@ -65,6 +68,26 @@ fn forever_world_map_show_and_sustained_updates_are_error_free() {
         "showing and ticking the Forever world map emitted Lua errors:\n{}",
         errors.join("\n")
     );
+
+    let quest_id = {
+        let mut state = env.state().borrow_mut();
+        state.party_group_active = true;
+        state.quest_log_entries.entries[0].quest_id
+    };
+    let party_guid: String = env.eval("return UnitGUID('party1')").unwrap();
+    env.state()
+        .borrow_mut()
+        .quest_log_entries
+        .party_quest_ids
+        .insert(party_guid.clone(), [quest_id].into_iter().collect());
+    let count_script = format!("return QuestUtils_GetNumPartyMembersOnQuest({quest_id})");
+    assert_eq!(env.eval::<i32>(&count_script).unwrap(), 1);
+    env.state()
+        .borrow_mut()
+        .quest_log_entries
+        .party_quest_ids
+        .remove(&party_guid);
+    assert_eq!(env.eval::<i32>(&count_script).unwrap(), 0);
 }
 
 #[test]

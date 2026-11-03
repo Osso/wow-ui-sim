@@ -1,5 +1,6 @@
 //! Bounty set maps projected only from explicitly supplied simulator state.
 use super::helpers::{ensure_namespace, set_table_array};
+use crate::client_profile::{ACTIVE, ClientProfile};
 use crate::lua_api::methods::{
     borrow_state, create_string, create_table, table_set_static, val_to_string,
 };
@@ -16,9 +17,8 @@ pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
 }
 
 pub(super) fn register_quest_queries(state: &mut LuaState) -> LuaResult<()> {
-    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
+    if matches!(ACTIVE, ClientProfile::Retail | ClientProfile::WowForever) {
         let namespace = ensure_namespace(state, "C_QuestLog")?;
-        // Retail QuestLogDocumentation.lua:125,692.
         table_set_rust_fn_static(state, namespace, "GetBountiesForMapID", query_map_bounties)?;
         table_set_rust_fn_static(state, namespace, "HasActiveThreats", query_active_threats)?;
     }
