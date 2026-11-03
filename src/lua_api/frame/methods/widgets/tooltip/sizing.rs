@@ -39,6 +39,16 @@ pub(crate) fn size_tooltip_on_native_trigger(
     sim: &mut crate::lua_api::state::SimState,
     tooltip_id: u64,
 ) {
+    if matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail | crate::client_profile::ClientProfile::Ptr
+    ) && !sim
+        .tooltips
+        .get(&tooltip_id)
+        .is_some_and(|tooltip| tooltip.owner_id.is_some())
+    {
+        return;
+    }
     #[cfg(feature = "gui")]
     if matches!(
         crate::client_profile::ACTIVE,
