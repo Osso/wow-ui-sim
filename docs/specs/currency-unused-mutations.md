@@ -25,7 +25,7 @@ Retail unused flags for the original TokenUI checkbox and popup. Producer: `src/
 - `tests/currency_unused_mutations.rs` — original checkbox/current-index/provider transitions, real TokenEntryTemplate -> original popup visibility/checked state, supplied boolean controls, invalid/missing targets, idempotence and environment isolation. No copied/replaced consumers.
 - `tests/currency_displayed_indices.rs` — original header expansion/index/provider preservation.
 - `tests/currency_watched_mutations.rs` — existing displayed-index and ID-based watched behavior.
-- `tests/currency_info_probes.rs` — supplied display/missing-row preservation; Retail list field count12 includes the two new boolean fields.
+- `tests/currency_info_probes.rs` — supplied display/missing-row preservation; Retail list field count13 includes the two boolean fields and documented `currencyID`.
 
 ### Bounded proof
 
