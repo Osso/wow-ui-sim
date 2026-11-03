@@ -141,6 +141,7 @@ fn perf_logging_enabled() -> bool {
 #[cfg(feature = "gui")]
 #[derive(Debug, Clone)]
 pub enum Message {
+    InitialWindowSized,
     CloseRequested,
     FireEvent(String),
     Scroll(f32, f32),
@@ -190,6 +191,8 @@ pub enum Message {
     RotDamageLevelChanged(String),
     /// Toggle options modal visibility.
     ToggleOptionsModal,
+    /// Show or hide the simulator controls over the fixed game canvas.
+    ToggleSimulatorControls,
     /// Close options modal (backdrop click or Escape).
     CloseOptionsModal,
     /// Movement state toggle changed (field name, new value).
@@ -205,6 +208,22 @@ pub fn run_iced_ui(
     exec_lua: Option<String>,
     exec_lua_secure: bool,
 ) -> Result<(), Box<dyn std::error::Error>> {
+    run_iced_ui_with_window_size(env, debug, saved_vars, exec_lua, exec_lua_secure, None)
+}
+
+/// Run the iced UI with an optional initial client area in physical pixels.
+#[cfg(feature = "gui")]
+pub fn run_iced_ui_with_window_size(
+    env: WowLuaEnv,
+    debug: DebugOptions,
+    saved_vars: Option<SavedVariablesManager>,
+    exec_lua: Option<String>,
+    exec_lua_secure: bool,
+    window_size: Option<(u32, u32)>,
+) -> Result<(), Box<dyn std::error::Error>> {
+    if window_size.is_some_and(|(width, height)| width == 0 || height == 0) {
+        return Err("window dimensions must be positive".into());
+    }
     let completion = app::UiCompletion::default();
     app::INIT_COMPLETION.with(|cell| *cell.borrow_mut() = Some(completion.clone()));
     INIT_ENV.with(|cell| *cell.borrow_mut() = Some(env));
@@ -216,11 +235,17 @@ pub fn run_iced_ui(
         app::INIT_EXEC_LUA.with(|cell| *cell.borrow_mut() = Some((code, exec_lua_secure)));
     }
 
-    iced::application(App::boot, App::update, App::view)
-        .title(App::title)
-        .window(app_icon::settings())
-        .subscription(App::subscription)
-        .run()?;
+    let mut settings = app_icon::settings();
+    settings.visible = window_size.is_none();
+    iced::application(
+        move || App::boot_with_window_size(window_size),
+        App::update,
+        App::view,
+    )
+    .title(App::title)
+    .window(settings)
+    .subscription(App::subscription)
+    .run()?;
 
     ui_completion_result(&completion).map_err(Into::into)
 }

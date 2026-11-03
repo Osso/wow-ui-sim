@@ -16,6 +16,59 @@ mod aura_tooltip_motion;
 mod simulate_mouse;
 
 #[test]
+fn window_size_outside_release_ends_game_drag_without_clicking() {
+    let mut app = build_test_app(ScreenKind::Game);
+    setup_pass_through_test_frames(&app);
+    app.env
+        .borrow()
+        .exec(
+            r#"
+            __outside_drag_stops = 0
+            __outside_drag_receives = 0
+            PassThroughChild:RegisterForDrag("LeftButton")
+            PassThroughChild:SetScript("OnDragStart", function() end)
+            PassThroughChild:SetScript("OnDragStop", function()
+                __outside_drag_stops = __outside_drag_stops + 1
+            end)
+            PassThroughChild:SetScript("OnReceiveDrag", function()
+                __outside_drag_receives = __outside_drag_receives + 1
+            end)
+            "#,
+        )
+        .unwrap();
+    rebuild_hittable_cache(&app);
+    let inside = Point::new(150.0, 150.0);
+    app.handle_mouse_move(inside);
+    app.handle_mouse_down(inside);
+    app.handle_right_mouse_down(inside);
+    app.handle_mouse_move(Point::new(165.0, 150.0));
+    assert!(app.dragging);
+    assert!(app.right_mouse_down_frame.is_some());
+
+    let _ = app.update(Message::CanvasEvent(CanvasMessage::RightMouseUpOutside));
+    let buttons = app.env.borrow().state().borrow().mouse_buttons;
+    assert!(buttons.left);
+    assert!(!buttons.right);
+    assert!(app.right_mouse_down_frame.is_none());
+    assert!(app.dragging);
+
+    let _ = app.update(Message::CanvasEvent(CanvasMessage::MouseUpOutside));
+    let env = app.env.borrow();
+    let (stopped, received): (i32, i32) = env
+        .eval("return __outside_drag_stops, __outside_drag_receives")
+        .unwrap();
+    assert_eq!((stopped, received), (1, 0));
+    assert_eq!(read_pass_through_counters(&app), (0.0, 0.0, 0.0, 0.0));
+    let state = env.state().borrow();
+    assert!(!state.mouse_buttons.any_down());
+    assert!(state.active_drag_frame.is_none());
+    assert!(state.active_slider_thumb_drag_frame.is_none());
+    assert!(app.mouse_down_frame.is_none());
+    assert!(app.mouse_down_pos.is_none());
+    assert!(!app.dragging);
+}
+
+#[test]
 fn mouse_focus_order_tracks_gui_hover_after_raise_and_lower() {
     let mut app = build_test_app(ScreenKind::Game);
 

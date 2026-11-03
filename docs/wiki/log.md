@@ -3336,3 +3336,8 @@ initialize zoom.
 Documented the totem count, active slot metadata, and legacy talent lookup
 used when Edit Mode refreshes the Cooldown Viewer.
 [Cooldown Viewer in Edit Mode](investigations/forever-addon-startup-compatibility.md#cooldown-viewer-in-edit-mode)
+## 2026-11-03 — Mouse release outside the game canvas
+
+Documented how ordinary and fixed-resolution displays deliver an outside
+release to the frame that received the press and clear the held button state.
+[Mouse sizing capture](investigations/mouse-sizing-capture.md#release-outside-the-game-canvas)

@@ -58,7 +58,7 @@ impl shader::Program<Message> for &App {
         cursor: mouse::Cursor,
     ) -> Option<shader::Action<Message>> {
         match event {
-            Event::Mouse(me) => handle_mouse_event(me, bounds, cursor),
+            Event::Mouse(me) => handle_mouse_event(me, bounds, cursor, self.fixed_canvas_size()),
             Event::Window(window::Event::Unfocused | window::Event::Closed) => Some(
                 shader::Action::publish(Message::CanvasEvent(CanvasMessage::MouseLeave)),
             ),
@@ -161,6 +161,7 @@ impl App {
         let mut primitive = WowUiPrimitive {
             strata_batches: dirty_strata,
             overlay,
+            scene_size: self.fixed_canvas_size(),
             clear_color: [0.10, 0.11, 0.14, 1.0],
             textures,
             bc_textures,

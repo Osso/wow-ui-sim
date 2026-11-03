@@ -320,6 +320,129 @@ fn left_button_up_fires_mouse_up_before_click() {
 }
 
 #[test]
+fn mouse_up_returns_to_each_press_target_without_clicking_outside() {
+    use crate::iced_app::Message;
+    use iced::{Event, Rectangle, Size, mouse, widget::shader};
+
+    let mut app = build_test_app(ScreenKind::Game);
+    app.env
+        .borrow()
+        .exec(
+            r#"
+            MouseReleaseLog = {}
+            local function makeButton(name, x)
+                local frame = CreateFrame("Button", name, UIParent)
+                frame:SetSize(100, 100)
+                frame:SetPoint("TOPLEFT", UIParent, "TOPLEFT", x, -100)
+                frame:RegisterForClicks("LeftButtonUp", "RightButtonUp")
+                frame:SetScript("OnMouseUp", function(_, button, upInside)
+                    table.insert(MouseReleaseLog, name .. ":" .. button .. ":" .. tostring(upInside))
+                end)
+                frame:SetScript("OnClick", function()
+                    table.insert(MouseReleaseLog, name .. ":click")
+                end)
+            end
+            makeButton("MouseReleaseFirst", 100)
+            makeButton("MouseReleaseSecond", 300)
+            "#,
+        )
+        .expect("mouse release buttons should load");
+    rebuild_hittable_cache(&app);
+
+    let first = Point::new(150.0, 150.0);
+    let second = Point::new(350.0, 150.0);
+    let release_outside = |app: &mut App, button: mouse::Button| {
+        let event = Event::Mouse(mouse::Event::ButtonReleased(button));
+        let bounds = Rectangle::new(Point::ORIGIN, Size::new(800.0, 600.0));
+        let cursor = mouse::Cursor::Available(Point::new(850.0, 150.0));
+        let action =
+            <&App as shader::Program<Message>>::update(&&*app, &mut (), &event, bounds, cursor)
+                .expect("ordinary canvas should route the outside release");
+        let (message, _, _) = action.into_inner();
+        let _ = app.update(message.expect("release should publish a message"));
+    };
+    app.handle_mouse_down(first);
+    app.handle_right_mouse_down(second);
+    app.handle_mouse_up(second);
+    assert!(app.env.borrow().state().borrow().mouse_buttons.right);
+    release_outside(&mut app, mouse::Button::Right);
+
+    app.handle_mouse_down(first);
+    release_outside(&mut app, mouse::Button::Left);
+
+    app.handle_mouse_down(first);
+    app.handle_mouse_up(first);
+    app.handle_right_mouse_down(second);
+    app.handle_right_mouse_up(second);
+    app.handle_mouse_up(second);
+
+    let receipts: String = app
+        .env
+        .borrow()
+        .eval("return table.concat(MouseReleaseLog, ';')")
+        .expect("mouse release receipts should be readable");
+    assert_eq!(
+        receipts,
+        concat!(
+            "MouseReleaseFirst:LeftButton:false;",
+            "MouseReleaseSecond:RightButton:false;",
+            "MouseReleaseFirst:LeftButton:false;",
+            "MouseReleaseFirst:LeftButton:true;MouseReleaseFirst:click;",
+            "MouseReleaseSecond:click;MouseReleaseSecond:RightButton:true"
+        ),
+    );
+}
+
+#[test]
+fn clipped_mouse_up_reports_outside_without_clicking() {
+    let mut app = build_test_app(ScreenKind::Game);
+    app.env
+        .borrow()
+        .exec(
+            r#"
+            local parent = CreateFrame("Frame", nil, UIParent)
+            parent:SetSize(100, 100)
+            parent:SetPoint("TOPLEFT", UIParent, "TOPLEFT", 100, -100)
+            parent:SetClipsChildren(true)
+
+            local button = CreateFrame("Button", nil, parent)
+            button:SetSize(100, 100)
+            button:SetPoint("TOPLEFT", parent, "TOPLEFT", 50, 0)
+            button:SetScript("OnMouseUp", function(_, _, upInside)
+                ClippedReleaseInside = upInside
+            end)
+            button:SetScript("OnClick", function() ClippedReleaseClicked = true end)
+            "#,
+        )
+        .unwrap();
+    rebuild_hittable_cache(&app);
+
+    app.handle_mouse_down(Point::new(175.0, 150.0));
+    app.handle_mouse_up(Point::new(225.0, 150.0));
+    app.env
+        .borrow()
+        .exec("assert(ClippedReleaseInside == false and not ClippedReleaseClicked)")
+        .unwrap();
+}
+
+#[test]
+fn outside_release_without_a_game_press_preserves_hover() {
+    let mut app = build_test_app(ScreenKind::Game);
+    setup_pass_through_test_frames(&app);
+    rebuild_hittable_cache(&app);
+    let cursor = Point::new(150.0, 150.0);
+    app.handle_mouse_move(cursor);
+    let hovered = app.hovered_frame;
+    assert!(hovered.is_some());
+
+    app.handle_mouse_up_outside();
+    app.handle_right_mouse_up_outside();
+
+    assert_eq!(app.hovered_frame, hovered);
+    assert_eq!(app.mouse_position, Some(cursor));
+}
+
+#[test]
 fn right_click_handlers_see_held_alt_modifier() {
     let mut app = build_test_app(ScreenKind::Game);
 

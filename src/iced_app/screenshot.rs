@@ -4,7 +4,7 @@ use std::path::Path;
 
 use crate::lua_server::Response as LuaResponse;
 use crate::render::GlyphAtlas;
-use crate::render::headless::render_to_image;
+use crate::render::headless::{render_scene_to_image, scene_viewport};
 
 use super::app::App;
 const CROP_FORMAT_EXAMPLE: &str = "700x150+400+650";
@@ -20,11 +20,21 @@ impl App {
         crop: Option<&str>,
         png: bool,
     ) -> LuaResponse {
+        if width == 0 || height == 0 {
+            return LuaResponse::Error("Screenshot dimensions must be positive".to_string());
+        }
         let (batch, mut glyph_atlas) = self.build_screenshot_batch(width, height, filter);
         let glyph_data = glyph_atlas_data(&mut glyph_atlas);
         let texture_manager = self.env.borrow().state().borrow().texture_manager();
         let mut tex_mgr = texture_manager.borrow_mut();
-        let img = render_to_image(&batch, &mut tex_mgr, width, height, glyph_data);
+        let img = render_scene_to_image(
+            &batch,
+            &mut tex_mgr,
+            width,
+            height,
+            glyph_data,
+            self.fixed_canvas_size(),
+        );
         let img = match maybe_crop_image(img, crop) {
             Ok(img) => img,
             Err(e) => return LuaResponse::Error(e),
@@ -51,7 +61,12 @@ impl App {
         height: u32,
         filter: Option<&str>,
     ) -> (crate::render::QuadBatch, GlyphAtlas) {
-        let mut glyph_atlas = GlyphAtlas::new();
+        let scene_size = self.fixed_canvas_size();
+        let layout = scene_size.unwrap_or(iced::Size::new(width as f32, height as f32));
+        let raster_scale = scene_size.map_or(1.0, |size| {
+            scene_viewport(width, height, scene_size).height as f32 / size.height
+        });
+        let mut glyph_atlas = GlyphAtlas::with_raster_scale(raster_scale);
         let mut batch = {
             let env = self.env.borrow();
             let mut fs = self.font_system.borrow_mut();
@@ -66,7 +81,7 @@ impl App {
             super::build_quad_batch_for_registry_with_quest_blobs(
                 super::RegistryQuadBatchParams::new(
                     &state.widgets,
-                    (width as f32, height as f32),
+                    (layout.width, layout.height),
                     &buckets,
                 )
                 .root_name(filter)

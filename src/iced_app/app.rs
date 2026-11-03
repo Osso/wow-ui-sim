@@ -1,6 +1,6 @@
 //! App struct definition and core initialization.
 
-use iced::{Point, Size, Task};
+use iced::{Point, Size, Task, window};
 #[cfg(test)]
 use rilua::LuaApiMut;
 use rustc_hash::{FxHashMap, FxHashSet};
@@ -127,14 +127,17 @@ pub struct App {
     /// True once drag threshold is exceeded for the current press.
     pub(crate) dragging: bool,
     pub(crate) scroll_offset: f32,
-    /// Current canvas size (updated each frame for layout calculations).
+    /// Canvas size in game layout coordinates.
     pub(crate) screen_size: std::cell::Cell<Size>,
+    fixed_display_size: Option<Size>,
+    pub(super) simulator_controls_visible: bool,
     /// True after startup events, deferred settling and cleanup have completed.
     pub(crate) gui_startup_complete: std::cell::Cell<bool>,
     /// Essential startup callbacks have returned; settling may still be pending.
     pub(super) gui_initialization_complete: std::cell::Cell<bool>,
     /// First real draw bounds; recording them must not execute Lua.
     first_canvas_size: std::cell::Cell<Option<Size>>,
+    pub(super) initial_window_size_pending: bool,
     gui_startup_progress: Option<GuiStartupProgress>,
     pub(crate) debug_rx: Option<mpsc::Receiver<debug_server::Command>>,
     pub(crate) pending_screenshot: Option<oneshot::Sender<Result<ScreenshotData, String>>>,
@@ -302,9 +305,12 @@ macro_rules! app_from_initial_state {
             dragging: false,
             scroll_offset: 0.0,
             screen_size: std::cell::Cell::new($initial_screen_size),
+            fixed_display_size: None,
+            simulator_controls_visible: false,
             gui_startup_complete: std::cell::Cell::new(false),
             gui_initialization_complete: std::cell::Cell::new(false),
             first_canvas_size: std::cell::Cell::new(None),
+            initial_window_size_pending: false,
             gui_startup_progress: None,
             debug_rx: Some($init.cmd_rx),
             pending_screenshot: None,
@@ -361,11 +367,19 @@ macro_rules! app_from_initial_state {
 }
 
 impl App {
-    pub fn title(_state: &Self) -> String {
-        "WoW UI Simulator".to_string()
+    pub fn title(state: &Self) -> String {
+        if state.has_fixed_display_size() {
+            "WoW UI Simulator | Ctrl+Shift+F11 for controls".to_string()
+        } else {
+            "WoW UI Simulator".to_string()
+        }
     }
 
     pub fn boot() -> (Self, Task<Message>) {
+        Self::boot_with_window_size(None)
+    }
+
+    pub(super) fn boot_with_window_size(window_size: Option<(u32, u32)>) -> (Self, Task<Message>) {
         let (env_rc, saved_vars) = Self::take_init_params();
         let session_wtf_path = env_rc.borrow().state().borrow().session_wtf_path.clone();
         let config = crate::config::SimConfig::load_from_session_wtf(&session_wtf_path);
@@ -373,7 +387,11 @@ impl App {
 
         let log_messages = Vec::new();
 
-        let (texture_manager, font_system, glyph_atlas) = Self::init_rendering(&env_rc);
+        let raster_scale = window_size.map_or(1.0, |(_, height)| {
+            height as f32 / crate::lua_api::UI_REFERENCE_HEIGHT
+        });
+        let (texture_manager, font_system, glyph_atlas) =
+            Self::init_rendering(&env_rc, raster_scale);
         let (cmd_rx, lua_rx) = Self::init_servers();
         let (debug_borders, debug_anchors) = Self::resolve_debug_flags();
 
@@ -394,7 +412,24 @@ impl App {
             app.completion = completion;
         }
 
-        (app, Task::none())
+        let Some((width, height)) = window_size else {
+            return (app, Task::none());
+        };
+        app.fixed_display_size = Some(Size::new(width as f32, height as f32));
+        app.initial_window_size_pending = true;
+
+        // Iced runs boot tasks after opening the window. Its actual monitor DPI
+        // is then available, and the window can be sized before making it visible.
+        let resize = window::oldest()
+            .and_then(move |id| {
+                window::scale_factor(id).then(move |scale| {
+                    let logical_size = Size::new(width as f32 / scale, height as f32 / scale);
+                    window::resize(id, logical_size)
+                        .chain(window::set_mode(id, window::Mode::Windowed))
+                })
+            })
+            .chain(Task::done(Message::InitialWindowSized));
+        (app, resize)
     }
 
     /// Construct the App struct from initialized components.
@@ -504,10 +539,24 @@ impl App {
         crate::startup::resize_party_state(&mut state, usize::from(config.party_size.min(4)));
     }
 
+    pub(super) fn fixed_display_size(&self) -> Option<Size> {
+        self.fixed_display_size
+    }
+
+    pub(super) fn has_fixed_display_size(&self) -> bool {
+        self.fixed_display_size.is_some()
+    }
+
+    pub(super) fn fixed_canvas_size(&self) -> Option<Size> {
+        self.fixed_display_size.map(|_| self.screen_size.get())
+    }
+
     /// Record draw bounds only. Startup and resize callbacks run on the update path.
     pub(crate) fn record_canvas_size(&self, size: Size) {
-        self.screen_size.set(size);
-        if self.first_canvas_size.get().is_none() {
+        if !self.has_fixed_display_size() {
+            self.screen_size.set(size);
+        }
+        if !self.initial_window_size_pending && self.first_canvas_size.get().is_none() {
             self.first_canvas_size.set(Some(size));
         }
     }
@@ -535,7 +584,15 @@ impl App {
     }
 
     fn begin_gui_startup(&self, size: Size) {
-        self.env.borrow().set_screen_size(size.width, size.height);
+        if let Some(display) = self.fixed_display_size {
+            self.env
+                .borrow()
+                .set_display_size(display.width, display.height)
+                .expect("initial window dimensions must have been validated");
+            self.screen_size.set(current_env_screen_size(&self.env));
+        } else {
+            self.env.borrow().set_screen_size(size.width, size.height);
+        }
         let first_error = self.env.borrow().state().borrow().lua_error_records.len();
         fire_startup_events(&self.env);
         let env = self.env.borrow();
@@ -573,7 +630,7 @@ impl App {
     }
 
     /// Create texture manager, font system, and glyph atlas.
-    fn init_rendering(env_rc: &Rc<RefCell<WowLuaEnv>>) -> RenderResources {
+    fn init_rendering(env_rc: &Rc<RefCell<WowLuaEnv>>, raster_scale: f32) -> RenderResources {
         let texture_manager = {
             let env = env_rc.borrow();
             env.state().borrow().texture_manager()
@@ -602,7 +659,7 @@ impl App {
         drop(tex_mgr);
         let font_system = Rc::new(RefCell::new(WowFontSystem::new()));
         env_rc.borrow().set_font_system(Rc::clone(&font_system));
-        let glyph_atlas = Rc::new(RefCell::new(GlyphAtlas::new()));
+        let glyph_atlas = Rc::new(RefCell::new(GlyphAtlas::with_raster_scale(raster_scale)));
         (texture_manager, font_system, glyph_atlas)
     }
 
