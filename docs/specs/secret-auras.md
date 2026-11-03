@@ -79,7 +79,7 @@ WM citations below identify clean-room reports in `native-evidence-70688/secrets
 
 - **VERIFIED locally — WM61 S6** (`S6-aspects-wm61.md`): Text aspect is 8. The marked-argument `SetText` path supplies it to a helper that checks prevention and script-handler policy before adding it to the direct set. `HasSecretAspect` checks either of two sets; `HasAnySecretAspect` checks whether either is nonempty. Prevention and anchoring use separate flags.
 - **EMULATED — WM61 S6:** With publication enabled, a Text aspect prepares forced-secret `GetText` return policy; a separate helper marks eligible strings under that policy. **UNKNOWN — WM61 S6:** the complete setter/getter path, second-set origin, propagation and clearing on plain reset, `SetToDefaults` or `ClearAllPoints`.
-- **SOURCE CONTRADICTION — WM61 S6:** The simulator derives object aspect state from prevention/protection and uses prevention for `IsAnchoringSecret`; these do not match the distinct native calculations. Its text sink does not establish the WM61 Text-aspect behavior.
+- **SOURCE — WM61 S6:** Retail `SetText` adds the Text aspect for a secret input and rejects a frame that prevents secrets. The script-handler policy is not yet modeled. The simulator still derives object aspect state from prevention/protection and uses prevention for `IsAnchoringSecret`; these differ from the distinct native calculations.
 
 ## Current state (SOURCE, 2026-10-31)
 

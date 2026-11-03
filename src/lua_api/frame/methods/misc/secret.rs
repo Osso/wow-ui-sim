@@ -13,6 +13,7 @@ use rilua::vm::table::Table;
 use rilua::{LuaResult, Val};
 
 const OBJECT_SECRET_ASPECT: u32 = 1;
+pub(crate) const TEXT_SECRET_ASPECT: u32 = 8;
 #[cfg(feature = "client-wowforever")]
 const DENY_TAINTED_ACCESS_WHEN_AURAS_SECRET: u32 = 1;
 
