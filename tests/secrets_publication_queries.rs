@@ -17,7 +17,8 @@ fn probe_env() -> WowLuaEnv {
             run()
         end
         "#,
-    ).unwrap();
+    )
+    .unwrap();
     env
 }
 
@@ -51,7 +52,8 @@ fn secrets_publication_cooldown_queries_agree_with_all_three_outputs() {
             assert(not C_Secrets.ShouldSpellBookItemCooldownBeSecret(5, 1))
             assert(C_Secrets.GetSpellCooldownSecrecy(19750) == Enum.SecrecyLevel.ContextuallySecret)
             "#,
-        )).unwrap();
+        ))
+        .unwrap();
     }
 }
 
@@ -85,7 +87,11 @@ fn secrets_publication_aura_queries_agree_with_access_and_spell_exemptions() {
             assert(C_Secrets.ShouldAurasBeSecret() == {restricted})
             for _, pair in ipairs(pairs) do
                 assert(pair[1]() == {restricted})
-                assert(issecretvalue(pair[2]()) == pair[1]())
+                -- WM61 S3: field publication, not whole-table secrecy.
+                -- Retail UnitAuraDocumentation.lua:190,208,227 declares the queries.
+                local data = pair[2]()
+                assert(not issecretvalue(data))
+                assert(issecretvalue(data.spellId) == pair[1]())
             end
             AddonProbe(function()
                 for _, pair in ipairs(pairs) do
@@ -98,7 +104,9 @@ fn secrets_publication_aura_queries_agree_with_access_and_spell_exemptions() {
                 assert(not issecretvalue(public))
                 assert((C_UnitAuras.GetPlayerAuraBySpellID(9072) == nil) == {restricted})
             end)
-            assert(issecretvalue(C_UnitAuras.GetPlayerAuraBySpellID(9072)) == {restricted})
+            local aura = C_UnitAuras.GetPlayerAuraBySpellID(9072)
+            assert(not issecretvalue(aura))
+            assert(issecretvalue(aura.spellId) == {restricted})
             "#,
         )).unwrap();
     }
@@ -131,7 +139,8 @@ fn secrets_publication_identity_reads_live_classification_and_exemptions() {
                 assert(not C_Secrets.ShouldUnitIdentityBeSecret('absent'))
             end)
             "#,
-        )).unwrap();
+        ))
+        .unwrap();
     }
 }
 
@@ -162,7 +171,9 @@ fn secrets_publication_identity_queries_follow_map_group_and_owned_guid_changes(
             sim.instance_identity.player_owned_guids.clear();
             sim.identity_secret_guids.clear();
             if owned {
-                sim.instance_identity.player_owned_guids.insert(guid.clone());
+                sim.instance_identity
+                    .player_owned_guids
+                    .insert(guid.clone());
             }
             if override_secret {
                 sim.identity_secret_guids.insert(guid.clone());
@@ -226,7 +237,8 @@ fn secrets_publication_unmodeled_aspects_match_public_existing_outputs() {
             assert(C_Secrets.GetPowerTypeSecrecy(0) == Enum.SecrecyLevel.NeverSecret)
             assert(C_Secrets.GetSpellCastSecrecy(19750) == Enum.SecrecyLevel.NeverSecret)
             "#,
-        ).unwrap();
+        )
+        .unwrap();
     }
 }
 
@@ -274,5 +286,6 @@ fn secrets_publication_selector_authentication_preserves_caller_taint() {
             end
         end)
         "#,
-    ).unwrap();
+    )
+    .unwrap();
 }

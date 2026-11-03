@@ -31,7 +31,21 @@ pub(super) fn register_scrub_fallbacks(lua: &mut rilua::Lua) -> LuaResult<()> {
 pub(crate) fn register_retail_secret_values(lua: &mut rilua::Lua) -> LuaResult<()> {
     LuaApiMut::register_function(lua, "secretwrap", secretwrap_native)?;
     LuaApiMut::register_function(lua, "secretunwrap", secretunwrap_native)?;
+    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
+        LuaApiMut::register_function(lua, "securecallfunction", securecallfunction_source)?;
+    }
     Ok(())
+}
+
+/// WM61 S2: keep the caller source and secret values through invocation.
+#[cfg(feature = "retail-12-1-0")]
+fn securecallfunction_source(state: &mut LuaState) -> LuaResult<u32> {
+    if state.base >= state.top {
+        return Ok(0);
+    }
+    let function = state.base;
+    state.call_function(function, rilua::vm::callinfo::LUA_MULTRET)?;
+    Ok(state.top.saturating_sub(function) as u32)
 }
 
 #[cfg(feature = "retail-12-1-0")]
