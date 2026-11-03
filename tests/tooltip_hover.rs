@@ -134,6 +134,9 @@ fn assert_setter_defers_tooltip_layout(setter: &str) {
     .unwrap();
 }
 
+// Original consumer cannot observe pending content: SetOwner clears lines before
+// SetCustomWordWrapMinWidth (ProfessionsRecipeSchematicForm.lua:650-654;
+// tooltip/owner.rs::record_tooltip_owner). The consumer is tested separately.
 #[test]
 fn api_wrap_width_defers_tooltip_layout() {
     assert_setter_defers_tooltip_layout("GameTooltip:SetCustomWordWrapMinWidth(350)");
