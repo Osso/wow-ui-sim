@@ -184,7 +184,6 @@ mod c_perks_categories;
 pub mod c_pet_battles;
 pub mod c_pet_journal_hover;
 pub(crate) mod c_pet_talent_tree;
-pub(crate) mod pet_orders;
 pub mod c_photo_sharing;
 pub mod c_ping_secure;
 #[cfg(any(feature = "retail-12-1-0", feature = "client-wowforever"))]
@@ -213,6 +212,7 @@ pub mod engraving_inputs;
 mod forever_outfits;
 pub mod forever_startup;
 mod lfr_availability;
+pub(crate) mod pet_orders;
 pub mod profession_spec_inputs;
 pub(crate) use lfr_availability::stock_lfr_availability;
 pub mod outfit_entry;
