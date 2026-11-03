@@ -240,6 +240,7 @@ fn item_use_spell_keeps_equipped_enchantment_fallback_scoped_to_retail() {
         1,
         EquippedItem {
             item_id: 211993,
+            owned_identity: None,
             enchant_id: 3290,
             gem_ids: [0; 3],
             applied_transmog: None,
