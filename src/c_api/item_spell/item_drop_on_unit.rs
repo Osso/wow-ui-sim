@@ -18,7 +18,8 @@ const ORDINARY_TRADE_SLOTS: usize = 6;
 
 pub(super) fn drop_item_on_unit(state: &mut LuaState) -> LuaResult<u32> {
     let unit = String::from_stack(state, 1)?;
-    let Some(slot) = place_in_trade_slot(&mut borrow_state_mut(state)?, &unit) else {
+    let placed = place_in_trade_slot(&mut *borrow_state_mut(state)?, &unit);
+    let Some(slot) = placed else {
         return Ok(0);
     };
     dispatch_event_now(state, "TRADE_PLAYER_ITEM_CHANGED", &[Val::Num(slot as f64)])?;

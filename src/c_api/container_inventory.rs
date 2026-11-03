@@ -77,7 +77,7 @@ pub(crate) fn use_container_item(state: &mut LuaState) -> LuaResult<u32> {
     ) else {
         return Ok(0);
     };
-    submit_container_use(&mut borrow_state_mut(state)?, bag, slot);
+    submit_container_use(&mut *borrow_state_mut(state)?, bag, slot);
     Ok(0)
 }
 
