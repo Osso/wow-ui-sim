@@ -38,7 +38,7 @@ const TOOLTIP_CENTER_OVERLAP: f32 = 4.0;
 pub struct TooltipRenderData {
     pub lines: Vec<TooltipLineRender>,
     pub line_spacing: f32,
-    pub first_text_padding: [f32; 2],
+    pub first_text_offset: Option<[f32; 2]>,
 }
 
 /// A single line ready for rendering.
@@ -280,11 +280,36 @@ pub fn collect_tooltip_data(state: &SimState) -> HashMap<u64, TooltipRenderData>
             TooltipRenderData {
                 lines,
                 line_spacing,
-                first_text_padding: [td.padding[2], td.padding[3]],
+                first_text_offset: first_text_anchor_offset(state, id, td),
             },
         );
     }
     result
+}
+
+fn first_text_anchor_offset(
+    state: &SimState,
+    tooltip_id: u64,
+    td: &crate::lua_api::tooltip::TooltipData,
+) -> Option<[f32; 2]> {
+    use crate::widget::AnchorPoint;
+
+    if td.anchored_left_lines == 0 {
+        return None;
+    }
+    let id = *td.left_line_ids.first()?;
+    let frame = state.widgets.get(id)?;
+    let top = frame.anchors.iter().find(|anchor| {
+        anchor.point == AnchorPoint::Top
+            && anchor.relative_point == AnchorPoint::Top
+            && anchor.relative_to_id == Some(tooltip_id as usize)
+    })?;
+    let left = frame.anchors.iter().find(|anchor| {
+        anchor.point == AnchorPoint::Left
+            && anchor.relative_point == AnchorPoint::Left
+            && anchor.relative_to_id == Some(tooltip_id as usize)
+    })?;
+    Some([left.x_offset, -top.y_offset])
 }
 
 fn tooltip_alpha(
@@ -476,10 +501,12 @@ fn emit_tooltip_lines(
                         | crate::client_profile::ClientProfile::Ptr
                 )
             {
-                Some(Point::new(
-                    bounds.x + (10.0 + data.first_text_padding[0]) * eff_scale,
-                    bounds.y + (10.0 + data.first_text_padding[1]) * eff_scale,
-                ))
+                data.first_text_offset.map(|offset| {
+                    Point::new(
+                        bounds.x + offset[0] * eff_scale,
+                        bounds.y + offset[1] * eff_scale,
+                    )
+                })
             } else {
                 None
             },
