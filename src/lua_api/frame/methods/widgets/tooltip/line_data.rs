@@ -24,7 +24,7 @@ pub(super) fn clear_lines(state: &mut LuaState) -> LuaResult<u32> {
     let line_ids = {
         let td = sim.tooltips.entry(id).or_default();
         td.lines.clear();
-        td.first_left_anchored = false;
+        td.anchored_left_lines = 0;
         if wrath {
             td.min_width = 0.0;
             td.wrath_texture_rows.clear();
@@ -341,7 +341,7 @@ pub(super) fn set_custom_line_spacing(state: &mut LuaState) -> LuaResult<u32> {
     let mut sim = borrow_state_mut(state)?;
     let tooltip = sim.tooltips.entry(id).or_default();
     tooltip.line_spacing = Some(spacing);
-    tooltip.first_left_anchored = false;
+    tooltip.anchored_left_lines = 0;
     invalidate_tooltip_line_layout(&mut sim, id);
     Ok(0)
 }
@@ -397,7 +397,7 @@ pub(super) fn set_custom_word_wrap_min_width(state: &mut LuaState) -> LuaResult<
         .entry(id)
         .or_default()
         .custom_word_wrap_min_width = Some(width);
-    sim.tooltips.entry(id).or_default().first_left_anchored = false;
+    sim.tooltips.entry(id).or_default().anchored_left_lines = 0;
     invalidate_tooltip_line_layout(&mut sim, id);
     Ok(0)
 }
@@ -481,7 +481,7 @@ pub(super) fn set_padding(state: &mut LuaState) -> LuaResult<u32> {
     let top = opt_f32(state, 5);
     let mut sim = borrow_state_mut(state)?;
     let tooltip = sim.tooltips.entry(id).or_default();
-    tooltip.first_left_anchored = false;
+    tooltip.anchored_left_lines = 0;
     let padding = &mut tooltip.padding;
     padding[0] = right;
     if matches!(
@@ -528,7 +528,7 @@ pub(super) fn clear_padding(state: &mut LuaState) -> LuaResult<u32> {
     let mut sim = borrow_state_mut(state)?;
     if let Some(td) = sim.tooltips.get_mut(&id) {
         td.padding = [0.0; 4];
-        td.first_left_anchored = false;
+        td.anchored_left_lines = 0;
     }
     size_tooltip_on_native_trigger(&mut sim, id);
     Ok(0)

@@ -66,7 +66,7 @@ pub struct TooltipData {
     pub min_width: f32,
     /// Right, bottom, left, top, in layout units.
     pub padding: [f32; 4],
-    pub first_left_anchored: bool,
+    pub anchored_left_lines: usize,
     /// Spell ID set by `SetSpellByID`, returned by `GetSpell`.
     pub spell_id: Option<u32>,
     /// Unit token set by `SetUnit`, returned by `GetUnit`.
@@ -108,7 +108,7 @@ impl Default for TooltipData {
             custom_word_wrap_min_width: None,
             min_width: 0.0,
             padding: [0.0; 4],
-            first_left_anchored: false,
+            anchored_left_lines: 0,
             spell_id: None,
             unit_token: None,
             unit_name: None,

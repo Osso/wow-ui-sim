@@ -49,12 +49,6 @@ pub(crate) fn size_tooltip_on_native_trigger(
     {
         return;
     }
-    if matches!(
-        crate::client_profile::ACTIVE,
-        crate::client_profile::ClientProfile::Retail | crate::client_profile::ClientProfile::Ptr
-    ) {
-        anchor_first_tooltip_line(sim, tooltip_id);
-    }
     #[cfg(feature = "gui")]
     if matches!(
         crate::client_profile::ACTIVE,
@@ -67,54 +61,119 @@ pub(crate) fn size_tooltip_on_native_trigger(
             frame.height = height;
         }
         sim.widgets.mark_rect_dirty(tooltip_id);
+        anchor_tooltip_lines(sim, tooltip_id, width);
         return;
     }
     refresh_tooltip_geometry(sim, tooltip_id);
+    if matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail | crate::client_profile::ClientProfile::Ptr
+    ) {
+        if let Some(width) = sim.widgets.get(tooltip_id).map(|frame| frame.width) {
+            anchor_tooltip_lines(sim, tooltip_id, width);
+        }
+    }
 }
 
-fn anchor_first_tooltip_line(sim: &mut crate::lua_api::state::SimState, tooltip_id: u64) {
-    use crate::widget::{Anchor, AnchorPoint};
+fn anchor_tooltip_lines(sim: &mut crate::lua_api::state::SimState, tooltip_id: u64, width: f32) {
+    let Some(td) = sim.tooltips.get(&tooltip_id) else {
+        return;
+    };
+    let [_, _, left, top] = td.padding;
+    let content_width = width - td.native_outer_padding().0;
+    let spacing = td.line_spacing.unwrap_or(TOOLTIP_LINE_SPACING);
+    let rows: Vec<_> = td
+        .lines
+        .iter()
+        .enumerate()
+        .map(|(index, line)| {
+            (
+                td.left_line_ids.get(index).copied(),
+                td.right_line_ids.get(index).copied(),
+                line.right_text
+                    .as_ref()
+                    .is_some_and(|text| !text.is_empty()),
+                line.texture.is_some(),
+            )
+        })
+        .collect();
+    let mut anchored = td.anchored_left_lines;
+    for (index, &(line_id, right_id, has_right, has_attachment)) in rows.iter().enumerate() {
+        let Some(line_id) = line_id.filter(|&id| id != 0) else {
+            break;
+        };
+        if has_attachment {
+            break;
+        }
+        let previous = if index == 0 {
+            tooltip_id
+        } else if let Some(id) = rows[index - 1].0 {
+            id
+        } else {
+            break;
+        };
+        if index >= anchored {
+            let top_offset = if index == 0 { -10.0 - top } else { -spacing };
+            let relative_point = if index == 0 {
+                crate::widget::AnchorPoint::Top
+            } else {
+                crate::widget::AnchorPoint::Bottom
+            };
+            if let Some(frame) = sim.widgets.get_mut_visual(line_id) {
+                frame.anchors = vec![
+                    tooltip_line_anchor(
+                        crate::widget::AnchorPoint::Top,
+                        previous,
+                        relative_point,
+                        0.0,
+                        top_offset,
+                    ),
+                    tooltip_line_anchor(
+                        crate::widget::AnchorPoint::Left,
+                        tooltip_id,
+                        crate::widget::AnchorPoint::Left,
+                        10.0 + left,
+                        0.0,
+                    ),
+                ];
+                sim.widgets.mark_rect_dirty(line_id);
+                anchored = index + 1;
+            }
+        }
+        if has_right {
+            if let Some(right_id) = right_id.filter(|&id| id != 0) {
+                if let Some(frame) = sim.widgets.get_mut_visual(right_id) {
+                    frame.anchors = vec![tooltip_line_anchor(
+                        crate::widget::AnchorPoint::Right,
+                        line_id,
+                        crate::widget::AnchorPoint::Left,
+                        content_width,
+                        0.0,
+                    )];
+                    sim.widgets.mark_rect_dirty(right_id);
+                }
+            }
+        }
+    }
+    if let Some(td) = sim.tooltips.get_mut(&tooltip_id) {
+        td.anchored_left_lines = anchored;
+    }
+}
 
-    let Some(tooltip) = sim.tooltips.get(&tooltip_id) else {
-        return;
-    };
-    if tooltip.first_left_anchored {
-        return;
-    }
-    let Some(line) = tooltip.lines.first() else {
-        return;
-    };
-    if line.texture.is_some() {
-        return;
-    }
-    let Some(&line_id) = tooltip.left_line_ids.first() else {
-        return;
-    };
-    let [_, _, left, top] = tooltip.padding;
-    let Some(frame) = sim.widgets.get_mut_visual(line_id) else {
-        return;
-    };
-    frame.anchors = vec![
-        Anchor {
-            point: AnchorPoint::Top,
-            relative_to: None,
-            relative_to_id: Some(tooltip_id as usize),
-            relative_point: AnchorPoint::Top,
-            x_offset: 0.0,
-            y_offset: -10.0 - top,
-        },
-        Anchor {
-            point: AnchorPoint::Left,
-            relative_to: None,
-            relative_to_id: Some(tooltip_id as usize),
-            relative_point: AnchorPoint::Left,
-            x_offset: 10.0 + left,
-            y_offset: 0.0,
-        },
-    ];
-    sim.widgets.mark_rect_dirty(line_id);
-    if let Some(tooltip) = sim.tooltips.get_mut(&tooltip_id) {
-        tooltip.first_left_anchored = true;
+fn tooltip_line_anchor(
+    point: crate::widget::AnchorPoint,
+    relative_id: u64,
+    relative_point: crate::widget::AnchorPoint,
+    x_offset: f32,
+    y_offset: f32,
+) -> crate::widget::Anchor {
+    crate::widget::Anchor {
+        point,
+        relative_to: None,
+        relative_to_id: Some(relative_id as usize),
+        relative_point,
+        x_offset,
+        y_offset,
     }
 }
 
