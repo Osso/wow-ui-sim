@@ -87,7 +87,7 @@ fn forbidden_partition_preserves_native_parent_identity() {
         local child = CreateFrame("Frame", nil, forbidden)
         assert(child:GetParent() == parent, "partition identifies the same native parent")
         assert(parent:GetNumChildren() == 1)
-        assert(select(1, parent:GetChildren()) == child)
+        assert(GetForbiddenObjectTable(select(1, parent:GetChildren())) == GetForbiddenObjectTable(child))
 
         local setWidth = parent.SetWidth
         setWidth(forbidden, 72)
@@ -99,6 +99,27 @@ fn forbidden_partition_preserves_native_parent_identity() {
         "#,
     )
     .expect("forbidden partition remains the same native frame");
+}
+
+#[cfg(feature = "forbidden-aspects")]
+#[test]
+fn create_frame_returns_parent_table_view() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        local parent = CreateFrame("Frame", nil, UIParent)
+        local privateParent = GetForbiddenObjectTable(parent)
+        local publicChild = CreateFrame("Frame", nil, parent)
+        local privateChild = CreateFrame("Frame", nil, privateParent)
+        local defaultChild = CreateFrame("Frame", nil, nil)
+        assert(not rawequal(publicChild, GetForbiddenObjectTable(publicChild)))
+        assert(rawequal(privateChild, GetForbiddenObjectTable(privateChild)),
+            "a forbidden parent selects the forbidden child view")
+        assert(not rawequal(defaultChild, GetForbiddenObjectTable(defaultChild)))
+        assert(privateChild:GetParent() == parent)
+        "#,
+    )
+    .unwrap();
 }
 
 #[test]
