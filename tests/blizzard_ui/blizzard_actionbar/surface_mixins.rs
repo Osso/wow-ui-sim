@@ -154,6 +154,7 @@ fn plan_named_frames_have_their_mixins_applied() {
 }
 }
 
+#[cfg(not(feature = "client-wrath"))]
 #[test]
 fn edit_mode_action_bar_seeds_callable_base_method_aliases() {
     with_blizzard_addon_startup_shape(&[ROOT], &[], |env, _loaded| {
