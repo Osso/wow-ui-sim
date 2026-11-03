@@ -219,6 +219,18 @@ fn test_simcommands_minimap_placeholder_resolves_from_default_addons_path() {
 }
 
 #[test]
+fn test_simcommands_minimap_placeholder_resolves_with_exclusive_addon_root() {
+    let exclusive_root = TempDir::new().unwrap();
+    let mut mgr = TextureManager::new().with_addons_path(exclusive_root.path());
+
+    let data = mgr
+        .load(r"Interface\AddOns\SimCommands\textures\minimap-placeholder")
+        .expect("exclusive addon roots still use the bundled minimap placeholder");
+    assert!(data.width > 0 && data.height > 0);
+    assert_eq!(data.pixels.len(), (data.width * data.height * 4) as usize);
+}
+
+#[test]
 fn test_nonexistent_texture_returns_none() {
     let mut mgr = TextureManager::new();
 
