@@ -188,6 +188,29 @@ fn customization_tooltip_places_first_text_at_native_padding_anchor() {
 
 #[cfg(any(feature = "client-retail", feature = "client-ptr"))]
 #[test]
+fn blizzard_hidden_right_line_keeps_its_anchor_until_shown() {
+    let env = setup_full_env();
+    env.exec(r#"
+        GameTooltip:SetOwner(UIParent, "ANCHOR_NONE")
+        assert(GameTooltip:ProcessInfo({ tooltipData = { lines = {
+            { type = 0, leftText = "First", rightText = "Value" },
+        } } }))
+        local left, right = GameTooltip:GetLeftLine(1), GameTooltip:GetRightLine(1)
+        assert(right:IsShown(), "right line starts shown")
+        right:Hide()
+        right:SetPoint("RIGHT", left, "LEFT", 123, 0)
+        GameTooltip:Show()
+        local _, _, _, x = right:GetPoint(1)
+        assert(x == 123, "hidden right anchor must be retained")
+        right:Show()
+        GameTooltip:Show()
+        local _, _, _, rebuilt = right:GetPoint(1)
+        assert(math.abs(rebuilt - (GameTooltip:GetWidth() - 20.48)) < 0.01, "shown right anchor must be rebuilt")
+    "#).unwrap();
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
+#[test]
 fn customization_hidden_first_row_is_not_rendered() {
     use iced::{Point, Rectangle, Size};
     use wow_ui_sim::iced_app::tooltip::{TooltipRender, build_tooltip_quads, collect_tooltip_data};
