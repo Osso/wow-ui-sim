@@ -6,6 +6,67 @@
 
 use wow_ui_sim::lua_api::WowLuaEnv;
 
+#[cfg(feature = "profile-retail")]
+#[test]
+fn console_autocomplete_displays_cvar_values_and_scopes() {
+    let env = WowLuaEnv::new().unwrap();
+    let source = wow_ui_sim::paths::default_blizzard_ui_addons_path()
+        .unwrap()
+        .join("Blizzard_Console/Blizzard_Console_AutoComplete.lua");
+    env.loader_env()
+        .exec(&std::fs::read_to_string(source).unwrap())
+        .unwrap();
+    env.exec(r#"
+        local function color(name, r, g, b)
+            return { GetRGB = function() return r, g, b end,
+                WrapTextInColorCode = function(_, text) return name .. ':' .. text end }
+        end
+        GREEN_FONT_COLOR = color('green', 0, 1, 0)
+        RED_FONT_COLOR = color('red', 1, 0, 0)
+        BATTLENET_FONT_COLOR = color('blue', 0, 0, 1)
+        YELLOW_FONT_COLOR = color('yellow', 1, 1, 0)
+        CreateColor = function(r, g, b) return color('type', r, g, b) end
+        Enum.ConsoleCommandType = { Cvar = 1, Macro = 2 }
+        Enum.ConsoleCategory = { Debug = 1, Graphics = 2, Console = 3 }
+        local function widget()
+            return { SetText = function(self, text) self.text = text end,
+                SetTextColor = function(self, r, g, b) self.rgb = {r, g, b} end,
+                SetPoint = function() end, Show = function() end, Hide = function() end,
+                SetShown = function() end, SetWidth = function() end,
+                SetHeight = function() end, GetStringWidth = function() return 10 end,
+                GetWrappedWidth = function() return 10 end,
+                GetStringHeight = function() return 10 end }
+        end
+        local entry = widget()
+        entry.Text, entry.Type, entry.Help, entry.Value, entry.Selected = widget(), widget(), widget(), widget(), widget()
+        local tooltip = widget()
+        tooltip.Text = widget()
+        local console = setmetatable({
+            bestResults = {}, BackgroundElements = {}, Background = widget(), Tooltip = tooltip,
+            entryPool = { ReleaseAll = function() end, Acquire = function() return entry end },
+            CalculateMaxEntriesToDisplay = function() return 10 end,
+            GetEntryIndex = function() return 1 end,
+        }, { __index = DeveloperConsoleAutoCompleteMixin })
+        local function check(name, changed, expectedServer, expectedCharacter)
+            local default = GetCVarDefault(name)
+            assert(C_CVar.SetCVar(name, default))
+            console.bestResults = {{ command = name, commandType = Enum.ConsoleCommandType.Cvar }}
+            console:DisplayResults()
+            assert(entry.Value.text == default and entry.Value.rgb[2] == 1)
+            assert(C_CVar.SetCVar(name, changed))
+            console:DisplayResults()
+            assert(entry.Value.text == changed and entry.Value.rgb[1] == 1 and entry.Value.rgb[2] == 0)
+            console:OnEntryEnter(entry)
+            assert(tooltip.Text.text:find('Current: "' .. changed .. '"', 1, true))
+            assert(tooltip.Text.text:find('Default: "' .. default .. '"', 1, true))
+            assert(tooltip.Text.text:find('Is Server Stored: ' .. expectedServer, 1, true))
+            assert(tooltip.Text.text:find('Is Per Character: ' .. expectedCharacter, 1, true))
+        end
+        check('showTimestamps', 'changed', 'green:true', 'red:false')
+        check('nameplateMaxDistance', '61', 'red:false', 'green:true')
+    "#).unwrap();
+}
+
 #[test]
 fn cvar_info_returns_live_values_and_native_account_character_flags() {
     let env = WowLuaEnv::new().unwrap();
