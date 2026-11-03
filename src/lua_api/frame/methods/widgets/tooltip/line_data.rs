@@ -94,6 +94,9 @@ pub(super) fn add_line(state: &mut LuaState) -> LuaResult<u32> {
     use crate::lua_api::tooltip::TooltipLine;
     let id = frame_id_from_stack(state, 1)?;
     let text = opt_string(state, 2).unwrap_or_default();
+    if native_sizing_timing() && text.is_empty() {
+        return Ok(0);
+    }
     let (default_r, default_g, default_b) = normal_font_color(state);
     let r = opt_f32(state, 3).unwrap_or(default_r);
     let g = opt_f32(state, 4).unwrap_or(default_g);
@@ -129,6 +132,12 @@ pub(super) fn add_line(state: &mut LuaState) -> LuaResult<u32> {
 pub(super) fn add_double_line(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
     let args = double_line_args(state);
+    if native_sizing_timing()
+        && args.left_text.is_empty()
+        && args.right_text.as_deref().is_none_or(str::is_empty)
+    {
+        return Ok(0);
+    }
     let line_index = next_tooltip_line_index(state, id);
     let left_segments = processing_line_color_segments(
         state,

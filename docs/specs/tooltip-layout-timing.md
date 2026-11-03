@@ -18,6 +18,8 @@ from the tooltip. Shown right lines anchor RIGHT to the same left line's LEFT
 by the content width. An unforced, unwrapped two-column row reserves 38.4 in
 width selection (WM72). A nonempty right text disables a double line's
 requested wrap; an empty right text leaves the requested flag unchanged (WM72).
+Empty or absent text on both sides does not append a row. A space or nonempty
+right text does append a row (WM72).
 The renderer follows these matching anchors for
 attachment-free rows. Attachment offsets, forced-width layout, and manually
 reanchored rows outside those point pairs remain outside this slice. Ordinary
