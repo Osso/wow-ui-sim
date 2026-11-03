@@ -3316,6 +3316,6 @@ capability required during login settings registration.
 
 ## 2026-11-03 — Forever scroll input
 
-Documented press-recipient release, wheel targeting, and native Slider drag
-behavior for the AddOns menu, RestedXP, and EllesmereUI.
+Documented wheel targeting and native Slider drag behavior for RestedXP and
+EllesmereUI.
 [Hit testing](investigations/hit-testing.md#forever-scroll-controls)

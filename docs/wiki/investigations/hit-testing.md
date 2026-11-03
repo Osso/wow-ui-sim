@@ -24,7 +24,7 @@ The grid includes shown frames with resolved bounds that accept mouse clicks, mo
 |---|---|
 | Move | `hit_test` → update `hovered_frame` → fire `OnLeave`/`OnEnter` |
 | Down | `hit_test` → fire `OnMouseDown`, track for click/drag |
-| Up | Send `OnMouseUp(button, upInside)` to the press recipient. Use the release hit to decide clicks and drops. |
+| Up | Use the release hit to decide clicks and drops. |
 | Scroll | Select a target with the wheel hit test and walk its parents for an eligible `OnMouseWheel` handler. |
 | Middle click | `hit_test` → open inspector panel (simulator-only) |
 
@@ -32,13 +32,11 @@ Drag: 5px threshold from mouse-down position before firing `OnDragStart`.
 
 ## Forever scroll controls
 
-The AddOns menu's thumb installs a cursor-driven `OnUpdate` on press and clears it from the thumb's release callback. A release hit outside the thumb used to leave the update running. The captured release also lets controls such as RestedXP's resize grip finish their Lua cleanup.
-
 RestedXP's legacy guide inherits its wheel handler from Blizzard XML and uses a native Slider for the scrollbar. XML wheel handlers enable wheel input by default, with `autoEnableInput="false"` as the opt-out. Native Slider motion updates the value and dispatches `OnValueChanged`, which the Blizzard template uses to scroll the guide.
 
 EllesmereUI's settings viewport enables only wheel input. The hover lookup could reach it through a button and then skip it when the button scrolled out from under the pointer. Wheel targeting now includes that viewport directly.
 
-To check release on the original AddOns menu, drag the thumb, release beside it, and move the pointer again. The scroll percentage should stay at the release value and `GetScript("OnUpdate")` should return nil. The wheel regression holds the pointer stationary as a row scrolls away and checks that later wheel events continue moving the viewport.
+The wheel regression holds the pointer stationary as a row scrolls away and checks that later wheel events continue moving the viewport.
 
 ## Key Files
 
@@ -51,10 +49,9 @@ To check release on the original AddOns menu, drag the thumb, release beside it,
 ## Sources
 
 - [hit-testing.md](../../hit-testing.md) — full system description
-- [Mouse dispatch](../../../src/iced_app/mouse.rs) — press, release, and wheel delivery
+- [Mouse dispatch](../../../src/iced_app/mouse.rs) — wheel delivery
 - [Native Slider methods](../../../src/lua_api/frame/methods/widgets/slider.rs) — value and drag callbacks
 
 ## See Also
 
 - [[on-update-dirty]] — rendering pipeline context
-- [[mouse-sizing-capture]] — movement and resize capture

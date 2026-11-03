@@ -75,7 +75,7 @@ A 200x100 frame with `SetHitRectInsets(10, 20, 5, 15)` has an effective clickabl
 
 1. **Mouse move** updates active motion and hover, then fires any `OnLeave` and `OnEnter` transitions.
 2. **Mouse down** remembers the hit frame for that button and fires `OnMouseDown`.
-3. **Mouse up** sends `OnMouseUp(button, upInside)` to the press recipient. `upInside` uses the hit rectangle and ancestor clipping. The release hit still determines click and drop eligibility.
+3. **Mouse up** uses the release hit to determine click and drop eligibility.
 4. **Wheel** selects a target from the hit grid, including wheel-only frames, then walks up the parent chain to the first eligible `OnMouseWheel` handler. A click-only frame with an eligible ancestor can route the event to that ancestor. A click-only overlay without a handler on its parent chain lets the search continue.
 5. **Middle click** uses the hover hit to open the simulator inspector.
 

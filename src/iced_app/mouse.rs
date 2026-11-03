@@ -227,7 +227,13 @@ impl App {
 
     pub(super) fn handle_mouse_down(&mut self, pos: Point) {
         self.sync_mouse_position(pos);
-        self.set_mouse_button_state("LeftButton", true);
+        {
+            let env = self.env.borrow();
+            let _ = env
+                .state()
+                .borrow_mut()
+                .set_mouse_button_down("LeftButton", true);
+        }
         let hit_frame = self.hit_test_mouse_button(pos, "LeftButton", true);
 
         // Focus/unfocus EditBox on click
@@ -271,38 +277,40 @@ impl App {
             if clicks_on_down {
                 self.fire_left_click_sequence(frame_id, &env, &env.lua_string("LeftButton"), true);
             }
-            self.fire_propagated_mouse_script(frame_id, &env, "LeftButton", &button_val, true);
+            self.fire_propagated_mouse_script(
+                frame_id,
+                &env,
+                "OnMouseDown",
+                "LeftButton",
+                &button_val,
+                true,
+            );
         }
         self.flush_post_script_updates();
     }
 
     pub(super) fn handle_mouse_up(&mut self, pos: Point) {
         self.sync_mouse_position(pos);
-        self.set_mouse_button_state("LeftButton", false);
+        {
+            let env = self.env.borrow();
+            let _ = env
+                .state()
+                .borrow_mut()
+                .set_mouse_button_down("LeftButton", false);
+        }
         let (was_dragging, drag_source) = self.take_left_drag_state();
         let released_on = self.hit_test_mouse_button(pos, "LeftButton", false);
-        let had_cursor_item = self.cursor_holds_item();
 
         if was_dragging {
             self.finish_drag(drag_source, released_on);
-        } else if had_cursor_item && let Some(target) = released_on {
-            self.fire_receive_drag(target);
+        } else {
+            self.dispatch_left_mouse_release(released_on);
         }
-        // Finish the drop before mouse-up scripts can change the held item.
-        self.dispatch_left_mouse_release(released_on.filter(|_| !was_dragging && !had_cursor_item));
         self.mouse_down_frame = None;
         self.mouse_down_pos = None;
         self.clear_pressed_frame();
         self.flush_post_script_updates();
         self.update_hovered_frame(pos);
-    }
-
-    fn set_mouse_button_state(&self, button: &str, down: bool) {
-        self.env
-            .borrow()
-            .state()
-            .borrow_mut()
-            .set_mouse_button_down(button, down);
     }
 
     fn clear_pressed_frame(&mut self) {
@@ -328,10 +336,15 @@ impl App {
         (was_dragging, drag_source)
     }
 
-    fn dispatch_left_mouse_release(&self, click_target: Option<u64>) {
-        let Some(frame_id) = self.mouse_down_frame else {
+    fn dispatch_left_mouse_release(&mut self, released_on: Option<u64>) {
+        let Some(frame_id) = released_on else {
             return;
         };
+
+        if self.cursor_holds_item() {
+            self.fire_receive_drag(frame_id);
+            return;
+        }
 
         let clicks_on_up = self.frame_clicks_on_edge(frame_id, "LeftButton", false);
         self.log_click_dispatch_if_enabled(frame_id, clicks_on_up);
@@ -339,17 +352,24 @@ impl App {
         let button_val = env.lua_string("LeftButton");
 
         if self.frame_mouse_on_edge(frame_id, "LeftButton", false) {
-            self.fire_mouse_up(frame_id, &env, &button_val);
+            let _ = env.fire_script_handler(frame_id, "OnMouseUp", vec![button_val.clone()]);
         }
 
-        if click_target == Some(frame_id) {
+        if self.mouse_down_frame == Some(frame_id) {
             self.dispatch_simple_html_link(frame_id, &env);
             if clicks_on_up {
                 self.fire_left_click_sequence(frame_id, &env, &button_val, false);
             }
         }
 
-        self.fire_propagated_mouse_script(frame_id, &env, "LeftButton", &button_val, false);
+        self.fire_propagated_mouse_script(
+            frame_id,
+            &env,
+            "OnMouseUp",
+            "LeftButton",
+            &button_val,
+            false,
+        );
     }
 
     fn dispatch_simple_html_link(&self, id: u64, env: &crate::lua_api::WowLuaEnv) {
@@ -440,7 +460,13 @@ impl App {
 
     pub(super) fn handle_right_mouse_down(&mut self, pos: Point) {
         self.sync_mouse_position(pos);
-        self.set_mouse_button_state("RightButton", true);
+        {
+            let env = self.env.borrow();
+            let _ = env
+                .state()
+                .borrow_mut()
+                .set_mouse_button_down("RightButton", true);
+        }
         let Some(frame_id) = self.hit_test_mouse_button(pos, "RightButton", true) else {
             return;
         };
@@ -468,54 +494,79 @@ impl App {
                     vec![env.lua_string("RightButton"), down_val],
                 );
             }
-            self.fire_propagated_mouse_script(frame_id, &env, "RightButton", &button_val, true);
+            self.fire_propagated_mouse_script(
+                frame_id,
+                &env,
+                "OnMouseDown",
+                "RightButton",
+                &button_val,
+                true,
+            );
         }
         self.flush_post_script_updates();
     }
 
     pub(super) fn handle_right_mouse_up(&mut self, pos: Point) {
         self.sync_mouse_position(pos);
-        self.set_mouse_button_state("RightButton", false);
-        let pressed = self.right_mouse_down_frame.take();
+        {
+            let env = self.env.borrow();
+            let _ = env
+                .state()
+                .borrow_mut()
+                .set_mouse_button_down("RightButton", false);
+        }
         // Right-click clears the cursor (drops held spell/action) in WoW.
         // Use the Lua ClearCursor() function so events fire properly.
-        let clear_cursor = self.cursor_holds_item();
-        if clear_cursor {
+        let had_cursor_item = self.env.borrow().state().borrow().cursor_item.is_some();
+        if had_cursor_item {
             eprintln!("[cursor] Right-click ClearCursor");
-            let _ = self.env.borrow().call_global("ClearCursor", &[]);
+            {
+                let env = self.env.borrow();
+                let _ = env.call_global("ClearCursor", &[]);
+            }
+            self.right_mouse_down_frame = None;
+            self.flush_post_script_updates();
+            return;
         }
 
         let released_on = self.hit_test_mouse_button(pos, "RightButton", false);
-        if let Some(frame_id) = pressed {
-            let env = self.env.borrow();
-            let button_val = env.lua_string("RightButton");
-
-            if released_on == Some(frame_id)
-                && !clear_cursor
-                && self.frame_clicks_on_edge(frame_id, "RightButton", false)
+        if let Some(frame_id) = released_on {
+            let clicks_on_up = self.frame_clicks_on_edge(frame_id, "RightButton", false);
             {
-                let down_val = Val::Bool(false);
-                let _ = env.fire_script_handler(
-                    frame_id,
-                    "OnClick",
-                    vec![button_val.clone(), down_val.clone()],
-                );
-                let _ = env.fire_script_handler(
-                    frame_id,
-                    "PostClick",
-                    vec![button_val.clone(), down_val],
-                );
-            }
+                let env = self.env.borrow();
+                let button_val = env.lua_string("RightButton");
 
-            if self.frame_mouse_on_edge(frame_id, "RightButton", false) {
-                self.fire_mouse_up(frame_id, &env, &button_val);
+                if self.right_mouse_down_frame == Some(frame_id) && clicks_on_up {
+                    let down_val = Val::Bool(false);
+                    let _ = env.fire_script_handler(
+                        frame_id,
+                        "OnClick",
+                        vec![button_val.clone(), down_val.clone()],
+                    );
+                    let _ = env.fire_script_handler(
+                        frame_id,
+                        "PostClick",
+                        vec![button_val.clone(), down_val],
+                    );
+                }
+
+                if self.frame_mouse_on_edge(frame_id, "RightButton", false) {
+                    let _ =
+                        env.fire_script_handler(frame_id, "OnMouseUp", vec![button_val.clone()]);
+                }
+                self.fire_propagated_mouse_script(
+                    frame_id,
+                    &env,
+                    "OnMouseUp",
+                    "RightButton",
+                    &button_val,
+                    false,
+                );
             }
-            self.fire_propagated_mouse_script(frame_id, &env, "RightButton", &button_val, false);
+            self.flush_post_script_updates();
         }
-        self.flush_post_script_updates();
-        if !clear_cursor {
-            self.update_hovered_frame(pos);
-        }
+        self.right_mouse_down_frame = None;
+        self.update_hovered_frame(pos);
     }
 
     fn frame_clicks_on_edge(&self, frame_id: u64, button_name: &str, down: bool) -> bool {
@@ -536,31 +587,17 @@ impl App {
         crate::iced_app::frame_collect::frame_mouse_registration_matches(frame, button_name, down)
     }
 
-    fn fire_mouse_up(&self, frame_id: u64, env: &crate::lua_api::WowLuaEnv, button: &Val) {
-        let up_inside = self
-            .mouse_position
-            .is_some_and(|pos| self.mouse_release_inside(frame_id, pos));
-        let _ = env.fire_script_handler(
-            frame_id,
-            "OnMouseUp",
-            vec![button.clone(), Val::Bool(up_inside)],
-        );
-    }
-
     fn fire_propagated_mouse_script(
         &self,
         frame_id: u64,
         env: &crate::lua_api::WowLuaEnv,
+        script_name: &str,
         button_name: &str,
         button_val: &Val,
         down: bool,
     ) {
         for parent_id in self.propagated_mouse_targets(frame_id, button_name, down) {
-            if down {
-                let _ = env.fire_script_handler(parent_id, "OnMouseDown", vec![button_val.clone()]);
-            } else {
-                self.fire_mouse_up(parent_id, env, button_val);
-            }
+            let _ = env.fire_script_handler(parent_id, script_name, vec![button_val.clone()]);
         }
     }
 

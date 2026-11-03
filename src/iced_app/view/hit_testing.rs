@@ -49,25 +49,6 @@ impl App {
         })
     }
 
-    pub(crate) fn mouse_release_inside(&self, frame_id: u64, pos: iced::Point) -> bool {
-        if !self
-            .cached_hittable
-            .borrow()
-            .as_ref()
-            .is_some_and(|grid| grid.contains(frame_id, pos))
-        {
-            return false;
-        }
-        let env = self.env.borrow();
-        let state = env.state().borrow();
-        ancestor_clips_contain(
-            &state.widgets,
-            frame_id,
-            pos,
-            &mut ScrollOffsetCache::default(),
-        )
-    }
-
     pub(crate) fn hit_test_mouse_button(
         &self,
         pos: iced::Point,
