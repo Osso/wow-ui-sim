@@ -63,6 +63,7 @@ fn action_button_hover_preserves_spell_identity_for_tooltip_postcall() {
     );
 }
 
+#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
 #[test]
 fn blizzard_line_processing_defers_resize_until_show() {
     let env = setup_full_env();
@@ -85,6 +86,7 @@ fn blizzard_line_processing_defers_resize_until_show() {
     .unwrap();
 }
 
+#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
 #[test]
 fn blizzard_double_line_processing_defers_resize_until_show() {
     let env = setup_full_env();
@@ -108,6 +110,7 @@ fn blizzard_double_line_processing_defers_resize_until_show() {
 
 // API-level timing probes: TooltipDataHandler's original line consumer supplies
 // the pending line; each setter is invoked directly to isolate its timing.
+#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
 fn assert_setter_defers_tooltip_layout(setter: &str) {
     let env = setup_full_env();
     env.exec(
@@ -137,26 +140,31 @@ fn assert_setter_defers_tooltip_layout(setter: &str) {
 // Original consumer cannot observe pending content: SetOwner clears lines before
 // SetCustomWordWrapMinWidth (ProfessionsRecipeSchematicForm.lua:650-654;
 // tooltip/owner.rs::record_tooltip_owner). The consumer is tested separately.
+#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
 #[test]
 fn api_wrap_width_defers_tooltip_layout() {
     assert_setter_defers_tooltip_layout("GameTooltip:SetCustomWordWrapMinWidth(350)");
 }
 
+#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
 #[test]
 fn api_line_spacing_defers_tooltip_layout() {
     assert_setter_defers_tooltip_layout("GameTooltip:SetCustomLineSpacing(9)");
 }
 
+#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
 #[test]
 fn api_shrink_to_fit_defers_tooltip_layout() {
     assert_setter_defers_tooltip_layout("GameTooltip:SetShrinkToFitWrapped(false)");
 }
 
+#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
 #[test]
 fn api_minimum_width_defers_tooltip_layout() {
     assert_setter_defers_tooltip_layout("GameTooltip:SetMinimumWidth(300, true)");
 }
 
+#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
 #[test]
 fn api_padding_synchronously_lays_out_pending_tooltip_lines() {
     let env = setup_full_env();
@@ -176,6 +184,7 @@ fn api_padding_synchronously_lays_out_pending_tooltip_lines() {
     .unwrap();
 }
 
+#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
 #[test]
 fn api_ownerless_padding_does_not_size_content() {
     let env = setup_full_env();
@@ -192,6 +201,7 @@ fn api_ownerless_padding_does_not_size_content() {
     .unwrap();
 }
 
+#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
 #[test]
 fn blizzard_money_helper_defers_minimum_width_layout() {
     let env = setup_full_env();
@@ -212,6 +222,7 @@ fn blizzard_money_helper_defers_minimum_width_layout() {
     .unwrap();
 }
 
+#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
 #[test]
 fn blizzard_show_synchronously_uses_glyph_measurement() {
     let env = setup_full_env();
