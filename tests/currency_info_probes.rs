@@ -293,6 +293,7 @@ fn get_currency_list_info_reflects_successive_existing_currency_updates() {
                 r#"
                 local listed = C_CurrencyInfo.GetCurrencyListInfo(2)
                 assert(listed.currencyTypesID == 2245)
+                if {} then assert(listed.currencyID == 2245) end
                 assert(listed.isHeader == false)
                 assert(listed.isHeaderExpanded == false)
                 assert(listed.isShowInBackpack == true)
@@ -310,7 +311,12 @@ fn get_currency_list_info_reflects_successive_existing_currency_updates() {
                        listed.iconFileID, listed.quality
                 "#,
                 if cfg!(feature = "client-retail") {
-                    12
+                    "true"
+                } else {
+                    "false"
+                },
+                if cfg!(feature = "client-retail") {
+                    13
                 } else {
                     9
                 }
