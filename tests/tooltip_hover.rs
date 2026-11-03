@@ -250,6 +250,39 @@ fn blizzard_show_synchronously_uses_glyph_measurement() {
 }
 
 #[test]
+fn blizzard_line_processing_does_not_resize_on_render_before_show() {
+    let env = setup_full_env();
+    env.exec(
+        r#"
+        GameTooltip:SetOwner(UIParent, "ANCHOR_NONE")
+        assert(GameTooltip:ProcessInfo({ tooltipData = { lines = {
+            { type = 0, leftText = "Short" },
+        } } }))
+        "#,
+    )
+    .unwrap();
+    let mut font = wow_ui_sim::render::font::WowFontSystem::new();
+    wow_ui_sim::iced_app::tooltip::update_tooltip_sizes(&mut env.state().borrow_mut(), &mut font);
+    env.exec(
+        r#"
+        renderWidth, renderHeight = GameTooltip:GetWidth(), GameTooltip:GetHeight()
+        GameTooltip:AddLineDataText({ type = 0, leftText = "A much longer pending tooltip row that should wait for Show" })
+        "#,
+    )
+    .unwrap();
+    wow_ui_sim::iced_app::tooltip::update_tooltip_sizes(&mut env.state().borrow_mut(), &mut font);
+    env.exec(
+        r#"
+        assert(GameTooltip:GetWidth() == renderWidth, "render resized tooltip width before Show")
+        assert(GameTooltip:GetHeight() == renderHeight, "render resized tooltip height before Show")
+        GameTooltip:Show()
+        assert(GameTooltip:GetWidth() > renderWidth, "Show did not resize tooltip")
+        "#,
+    )
+    .unwrap();
+}
+
+#[test]
 fn test_tooltip_mixins_load_in_full_env() {
     let env = setup_full_env();
 
