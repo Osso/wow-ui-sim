@@ -29,6 +29,12 @@ independently of UI pins. Native selection limits remain in the
 [Client profiles](systems/client-profiles.md#runtime-cache) describe the 70707
 manifest and Gethe line-ending recovery verified against the selected CASC key.
 
+## [2026-11-03] system | Binary addon encoding
+
+[Binary encoding](systems/binary-encoding.md) describes Base64, compression
+and CBOR over raw Lua string bytes, format limits, and migration of the legacy
+Delves companion CVar.
+
 ## [2026-11-02] architecture | Writable session storage
 
 [Runtime inputs](../runtime-inputs.md) describe the shared writable session root,
