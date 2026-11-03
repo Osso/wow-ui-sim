@@ -3313,3 +3313,9 @@ Documented the game startup fixes and their selected consumers, plus the MSAA
 capability required during login settings registration.
 [Game startup](investigations/forever-addon-startup-compatibility.md),
 [login graphics](investigations/forever-login-startup.md#msaa-capability)
+
+## 2026-11-03 — Forever scroll input
+
+Documented press-recipient release, wheel targeting, and native Slider drag
+behavior for the AddOns menu, RestedXP, and EllesmereUI.
+[Hit testing](investigations/hit-testing.md#forever-scroll-controls)

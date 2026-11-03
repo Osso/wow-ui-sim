@@ -178,7 +178,7 @@ fn is_frame_hittable(
     id: u64,
     frame: &crate::widget::Frame,
 ) -> bool {
-    registry.is_ancestor_visible(id) && frame.accepts_mouse() && !is_hit_test_excluded(frame)
+    registry.is_ancestor_visible(id) && frame.has_hit_grid_input() && !is_hit_test_excluded(frame)
 }
 
 fn is_hit_test_excluded(frame: &crate::widget::Frame) -> bool {

@@ -21,6 +21,8 @@ pub(crate) use model::{register_cinematic_methods, register_model_scene_actor_me
 mod movie;
 pub(super) mod shared;
 mod slider;
+#[cfg(feature = "gui")]
+pub(crate) use slider::set_slider_value_from_drag;
 pub(crate) use slider::tick_scroll_range_updates;
 mod statusbar;
 mod texture;

@@ -1,6 +1,6 @@
 //! Standalone drag helper functions for mouse event handling.
 
-use crate::widget::{AnchorPoint, WidgetType};
+use crate::widget::AnchorPoint;
 
 pub(super) fn frame_motion_scripts_allowed(frame: &crate::widget::Frame) -> bool {
     frame_enabled(frame) || frame.motion_scripts_while_disabled
@@ -266,19 +266,70 @@ pub(super) fn find_drag_script_target(
     None
 }
 
-pub(super) fn find_slider_drag_target(
-    state: &crate::lua_api::state::SimState,
-    frame_id: u64,
-) -> Option<u64> {
-    let mut current = Some(frame_id);
-    while let Some(id) = current {
-        let frame = state.widgets.get(id)?;
-        if frame.widget_type == WidgetType::Slider {
-            return Some(id);
-        }
-        current = frame.parent_id;
+pub(super) struct SliderDragTrack {
+    vertical: bool,
+    start: f32,
+    travel: f32,
+}
+
+impl SliderDragTrack {
+    pub(super) fn new(
+        widgets: &crate::widget::WidgetRegistry,
+        slider: &crate::widget::Frame,
+    ) -> Option<Self> {
+        let track = crate::layout::apply_scroll_offsets(widgets, slider.id, slider.layout_rect?);
+        let thumb = slider
+            .children_keys
+            .get("ThumbTexture")
+            .and_then(|id| widgets.get(*id))
+            .and_then(|thumb| thumb.layout_rect);
+        let vertical = slider.slider_orientation == "VERTICAL";
+        let (origin, track_extent, thumb_extent) = if vertical {
+            (track.y, track.height, thumb.map_or(0.0, |rect| rect.height))
+        } else {
+            (track.x, track.width, thumb.map_or(0.0, |rect| rect.width))
+        };
+        let scale = crate::render::texture::UI_SCALE;
+        let start = (origin + thumb_extent * 0.5) * scale;
+        let travel = (track_extent - thumb_extent) * scale;
+        (start.is_finite() && travel.is_finite() && travel > 0.0).then_some(Self {
+            vertical,
+            start,
+            travel,
+        })
     }
-    None
+
+    fn cursor_axis(&self, pos: iced::Point) -> f32 {
+        if self.vertical { pos.y } else { pos.x }
+    }
+
+    pub(super) fn grab_offset(
+        &self,
+        slider: &crate::widget::Frame,
+        pos: iced::Point,
+    ) -> Option<f32> {
+        let span = slider.slider_max - slider.slider_min;
+        if !span.is_finite() || span <= 0.0 {
+            return None;
+        }
+        let fraction = ((slider.slider_value - slider.slider_min) / span).clamp(0.0, 1.0);
+        let offset = self.cursor_axis(pos) - (self.start + fraction as f32 * self.travel);
+        offset.is_finite().then_some(offset)
+    }
+
+    pub(super) fn value_at(
+        &self,
+        slider: &crate::widget::Frame,
+        pos: iced::Point,
+        grab_offset: f32,
+    ) -> Option<f64> {
+        let span = slider.slider_max - slider.slider_min;
+        let fraction = (self.cursor_axis(pos) - grab_offset - self.start) / self.travel;
+        if !span.is_finite() || span <= 0.0 || !fraction.is_finite() {
+            return None;
+        }
+        Some(slider.slider_min + span * f64::from(fraction.clamp(0.0, 1.0)))
+    }
 }
 
 #[cfg(test)]

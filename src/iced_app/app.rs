@@ -123,6 +123,7 @@ pub struct App {
     pub(crate) right_mouse_down_frame: Option<u64>,
     /// Position where mouse button was pressed (for drag threshold detection).
     pub(crate) mouse_down_pos: Option<Point>,
+    pub(super) slider_thumb_grab_offset: Option<f32>,
     /// True once drag threshold is exceeded for the current press.
     pub(crate) dragging: bool,
     pub(crate) scroll_offset: f32,
@@ -297,6 +298,7 @@ macro_rules! app_from_initial_state {
             mouse_down_frame: None,
             right_mouse_down_frame: None,
             mouse_down_pos: None,
+            slider_thumb_grab_offset: None,
             dragging: false,
             scroll_offset: 0.0,
             screen_size: std::cell::Cell::new($initial_screen_size),
@@ -453,6 +455,7 @@ impl App {
         self.mouse_down_frame = None;
         self.right_mouse_down_frame = None;
         self.mouse_down_pos = None;
+        self.slider_thumb_grab_offset = None;
         self.dragging = false;
         self.mouse_position = None;
         self.inspected_frame = None;

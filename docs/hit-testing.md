@@ -4,7 +4,7 @@ How the simulator determines which frame is under the mouse cursor.
 
 ## Overview
 
-Hit testing runs on every mouse event (move, click, scroll). It takes a screen-space point and returns the ID of the deepest mouse-enabled frame under that point, or `None`.
+Hit testing uses the screen-space pointer position and the input event to select a frame. Hover, button, and wheel events each apply their own eligibility rules.
 
 ## Hittable Frame Collection
 
@@ -14,7 +14,7 @@ A frame is **hittable** when all four conditions are met:
 
 1. The frame and its ancestors are shown.
 2. The frame has a resolved rectangle and valid render-layout ancestry.
-3. Mouse input is enabled, or the widget is an EditBox.
+3. The frame accepts mouse clicks, mouse motion, or wheel input, or it is an EditBox.
 4. Its name is not in `HIT_TEST_EXCLUDED`, the explicit non-interactive overlay list.
 
 Alpha is deliberately ignored: transparent mouse-enabled frames still accept input.
@@ -38,7 +38,7 @@ Once per input-update batch, current bucket ranks replace cached keys, frames no
 
 ## Hit Test Algorithm
 
-`hit_test(pos)` in `view.rs` runs two phases:
+The selectors in `view/hit_testing.rs` use two phases.
 
 ### Phase 1: Find topmost frame (grid lookup)
 
@@ -46,9 +46,7 @@ Computes which cell contains `pos`, then iterates that cell's frames in **revers
 
 ### Phase 2: Drill down to deepest child
 
-Starting from the initial hit, walks down the widget tree through `frame.children`. For each child (checked in reverse order), if the child is in the hittable set (`grid.contains(cid, pos)`) and its rect contains the point, it becomes the new current frame. Repeats until no hittable child contains the point.
-
-This produces the **deepest mouse-enabled descendant**, matching WoW's behavior where child frames receive clicks over parents regardless of frame level.
+Starting from the initial hit, the selector descends through visible children whose bounds contain the pointer. It checks scroll offsets and ancestor clipping. Traversal can cross a container that accepts no input to reach an eligible child.
 
 ## Hit Rect Insets
 
@@ -75,20 +73,20 @@ A 200x100 frame with `SetHitRectInsets(10, 20, 5, 15)` has an effective clickabl
 
 ## Mouse Event Flow
 
-1. **Mouse move** → `hit_test(pos)` → update `hovered_frame` → fire `OnLeave`/`OnEnter`
-2. **Mouse down** → `hit_test(pos)` → fire `OnMouseDown` → track for click/drag
-3. **Mouse up** → `hit_test(pos)` → if same frame as mouse down, fire `OnClick` + `PostClick`; otherwise fire `OnMouseUp`
-4. **Scroll** → `hit_test(pos)` → walk parent chain for `OnMouseWheel` handler
-5. **Middle click** → `hit_test(pos)` → open inspector panel (simulator-only)
+1. **Mouse move** updates active motion and hover, then fires any `OnLeave` and `OnEnter` transitions.
+2. **Mouse down** remembers the hit frame for that button and fires `OnMouseDown`.
+3. **Mouse up** sends `OnMouseUp(button, upInside)` to the press recipient. `upInside` uses the hit rectangle and ancestor clipping. The release hit still determines click and drop eligibility.
+4. **Wheel** selects a target from the hit grid, including wheel-only frames, then walks up the parent chain to the first eligible `OnMouseWheel` handler. A click-only frame with an eligible ancestor can route the event to that ancestor. A click-only overlay without a handler on its parent chain lets the search continue.
+5. **Middle click** uses the hover hit to open the simulator inspector.
 
 Drag detection uses a 5px threshold from the mouse-down position before firing `OnDragStart`.
 
 ## Key Files
 
 - `src/iced_app/hit_grid.rs` — `HitGrid` spatial index (grid construction, `topmost_at`, `contains`)
-- `src/iced_app/view.rs` — `hit_test()` implementation (Phase 1 + Phase 2)
+- `src/iced_app/view/hit_testing.rs` — hover, button, and wheel target selection
 - `src/iced_app/frame_collect.rs` — hittable list collection, `HIT_TEST_EXCLUDED`, visibility filter
-- `src/iced_app/render.rs` — `build_hittable_rects()` applies insets and scales, builds grid
+- `src/iced_app/strata_emit.rs` — `build_hittable_rects()` applies insets, scroll offsets and scale to grid rectangles
 - `src/iced_app/mouse.rs` — mouse event handlers calling `hit_test()`
 - `src/widget/frame.rs` — `hit_rect_insets` field
 - `src/lua_api/frame/methods/methods_attribute.rs` — `SetHitRectInsets`/`GetHitRectInsets`

@@ -4138,7 +4138,7 @@ The sixteen retail 12.0.0 `Enum.EditModeDamageMeterSetting.*` and `Enum.EditMode
 | [[hero-spec-dialog-anchors]] | LIGHTSMITH/TEMPLAR selection dialog: layer-children batched out of XML order + runtime templates skipped named-anchor re-resolution, dropping panel content to spec-frame edge |
 | [[hero-spec-icon-bug]] | Retired — 5 layers of evidence confirm icon renders correctly |
 | [[xml-scale-attribute]] | XML `scale` attribute was silently dropped (no `FrameXml` field); hero talents `scale="0.85"` never applied, node buttons overflowed the fixed 284×362 backplate |
-| [[hit-testing]] | Two-phase algorithm: HitGrid spatial index + depth-first child drill-down |
+| [[hit-testing]] | HitGrid ordering, event-specific targets, captured mouse-up, and Forever scroll controls |
 | [[journeys-midnight-empty]] | Journeys tab was empty because current expansion was Midnight but default major-faction data only seeded War Within rows |
 | [[keybinding-system]] | Two Lua tables, key press pipeline, default bindings, Lua API |
 | [[lfd-dungeon-list-empty]] | Dungeons & Raids panel showed empty Specific list: missing `GetLFGLockList` etc., never-fired `LFG_UPDATE_RANDOM_INFO`, header marked `is_random` |

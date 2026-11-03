@@ -678,6 +678,7 @@ impl Frame {
             WidgetType::Button
                 | WidgetType::CheckButton
                 | WidgetType::EditBox
+                | WidgetType::Slider
                 | WidgetType::SimpleHTML
         );
         let mut frame = Self {
@@ -702,10 +703,14 @@ impl Frame {
         self.mouse_motion_enabled = enable;
     }
 
-    /// Whether the frame takes part in mouse hit testing at all (IsMouseEnabled).
+    /// Whether the frame takes part in click or hover hit testing.
     /// INFERRED: either click or motion input qualifies; EditBoxes always do.
     pub fn accepts_mouse(&self) -> bool {
         self.mouse_enabled || self.mouse_motion_enabled || self.widget_type == WidgetType::EditBox
+    }
+
+    pub(crate) fn has_hit_grid_input(&self) -> bool {
+        self.accepts_mouse() || self.mouse_wheel_enabled
     }
 
     pub fn set_size(&mut self, width: f32, height: f32) {

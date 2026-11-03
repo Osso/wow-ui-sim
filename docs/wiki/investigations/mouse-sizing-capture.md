@@ -1,6 +1,6 @@
 # Original mouse sizing capture
 
-Original Retail DamageMeter resize callbacks exposed simulator motion-capture and release-routing defects. The bounded contract lives in [original mouse gestures](../../specs/original-mouse-gestures.md); native outside-release ordering and scaled-resize policy remain unproved.
+Original Retail DamageMeter resize callbacks exposed simulator motion-capture and release-routing defects. The bounded contract lives in [original mouse gestures](../../specs/original-mouse-gestures.md). Native outside-release ordering and scaled-resize policy remain unproved.
 
 ## Root cause
 
@@ -23,3 +23,4 @@ The [owning proof ledger](../../specs/original-mouse-gestures.md#tests-and-proof
 
 - [[widget-system]] — native widget state.
 - [[event-system]] — original script dispatch.
+- [[hit-testing]] — press-recipient release and wheel dispatch for Forever scroll controls.
