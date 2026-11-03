@@ -17,7 +17,7 @@ fn c_tooltip_info_toy_by_item_id_uses_seeded_toy_state() {
         .unwrap();
 
     assert_eq!(tooltip_type, 0);
-    assert_eq!(name, "Hearthstone Game Table");
+    assert_eq!(name, "Transmorpher Beacon");
 }
 
 #[test]
@@ -31,5 +31,5 @@ fn game_tooltip_set_toy_by_item_id_populates_item_lines() {
         .tooltips
         .get(&gt_id)
         .expect("tooltip data should exist");
-    assert_eq!(tooltip.lines[0].left_text, "Hearthstone Game Table");
+    assert_eq!(tooltip.lines[0].left_text, "Transmorpher Beacon");
 }

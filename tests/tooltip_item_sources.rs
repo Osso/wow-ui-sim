@@ -121,7 +121,7 @@ fn tooltip_item_and_toy_payloads_retain_modeled_identity() {
         local itemByLink = C_TooltipInfo.GetTooltipDataForItem("item:6948")
         assert(itemByLink.id == 6948)
         local toy = C_TooltipInfo.GetToyByItemID(166779)
-        assert(toy.id == 166779 and toy.lines[1].leftText == "Hearthstone Game Table")
+        assert(toy.id == 166779 and toy.lines[1].leftText == "Transmorpher Beacon")
         local mount = C_TooltipInfo.GetMountBySpellID(458)
         assert(mount.id == 458 and mount.lines[1].leftText == "Brown Horse")
         "#,

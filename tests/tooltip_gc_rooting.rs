@@ -65,7 +65,7 @@ fn currency_parent_survives_color_collection() {
 fn toy_parent_survives_color_collection() {
     let env = WowLuaEnv::new().unwrap();
     collect_in_colors(&env);
-    env.exec("local t = C_TooltipInfo.GetToyByItemID(166779); CheckTip(t, 'Hearthstone Game Table'); assert(t.id == 166779)").unwrap();
+    env.exec("local t = C_TooltipInfo.GetToyByItemID(166779); CheckTip(t, 'Transmorpher Beacon'); assert(t.id == 166779)").unwrap();
 }
 
 #[test]
@@ -109,10 +109,11 @@ fn mount_parent_survives_markup_color_collection() {
     {
         let mut state = env.state().borrow_mut();
         let mount = state.world.mounts.iter_mut().find(|m| m.spell_id == 23338).unwrap();
+        mount.spell_id = 4_000_000_001;
         mount.name = "|cffff0000Audit Mount|r".into();
     }
     collect_in_colors(&env);
-    env.exec("local t = C_TooltipInfo.GetMountBySpellID(23338); CheckTip(t, 'Audit Mount'); assert(t.id == 23338 and t.wordWrapMinWidth == 240)").unwrap();
+    env.exec("local t = C_TooltipInfo.GetMountBySpellID(4000000001); CheckTip(t, 'Audit Mount'); assert(t.id == 4000000001 and t.wordWrapMinWidth == 240)").unwrap();
 }
 
 #[test]

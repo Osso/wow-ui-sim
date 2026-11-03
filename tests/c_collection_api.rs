@@ -314,7 +314,7 @@ fn test_toy_box_filter_stubs() {
 fn test_toy_box_get_toy_link() {
     let env = env();
     let link: String = env.eval("return C_ToyBox.GetToyLink(166779)").unwrap();
-    assert!(link.contains("Hearthstone Game Table"));
+    assert!(link.contains("Transmorpher Beacon"));
     assert!(link.contains("|Hitem:166779"));
 }
 

@@ -123,8 +123,9 @@ pub(super) fn default_toys() -> Vec<ToyData> {
         is_collected: collected,
         is_usable: collected,
     };
+    let beacon = crate::items::get_item(166779).expect("seeded toy item must exist");
     vec![
-        t(166779, "Hearthstone Game Table", 2823166, true),
+        t(166779, beacon.name, beacon.icon_file_data_id, true),
         t(13379, "Piccolo of the Flaming Fire", 134208, true),
         t(34480, "Romantic Picnic Basket", 236571, true),
         t(33927, "Brewfest Pony Keg", 132790, true),
