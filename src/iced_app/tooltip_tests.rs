@@ -448,8 +448,52 @@ fn tooltip_text_quads_start_inside_rendered_border_bounds() {
         ),
         "rendered tooltip border should match tooltip bounds"
     );
-    assert_text_origin_matches_nine_slice_corner(bounds, &batch);
+    if matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail | crate::client_profile::ClientProfile::Ptr
+    ) {
+        // WM63-L23 and WM72: ordinary first left TOP/LEFT anchors are 10
+        // units from the tooltip, not the NineSlice-derived 15-unit inset.
+        // Compare the same renderer at that anchor; native glyph ink is unknown.
+        let mut reference = QuadBatch::new();
+        let mut font_sys = WowFontSystem::new();
+        let mut glyph_atlas = GlyphAtlas::new();
+        let line = single_header_tooltip_line();
+        emit_tooltip_text_run(
+            &mut reference,
+            &mut font_sys,
+            &mut glyph_atlas,
+            TooltipTextRun {
+                text: &line.left_text,
+                bounds: Rectangle::new(
+                    Point::new(bounds.x + 10.0, bounds.y + 10.0),
+                    Size::new(bounds.width - 30.0, line.measured_height),
+                ),
+                font_size: line.font_size,
+                color: line.left_color,
+                justify: TextJustify::Left,
+                wrap: false,
+            },
+        );
+        let expected = self::glyph_bounds(&reference).expect("reference glyphs");
+        for (actual, expected) in [
+            glyph_bounds.0,
+            glyph_bounds.1,
+            glyph_bounds.2,
+            glyph_bounds.3,
+        ]
+        .into_iter()
+        .zip([expected.0, expected.1, expected.2, expected.3])
+        {
+            assert!(
+                (actual - expected).abs() < 0.01,
+                "glyph bound {actual} != {expected}"
+            );
+        }
+        return;
+    }
 
+    assert_text_origin_matches_nine_slice_corner(bounds, &batch);
     let left_inset = glyph_bounds.0 - border_bounds.0;
     let top_inset = glyph_bounds.1 - border_bounds.1;
 
