@@ -166,6 +166,8 @@ fn profession_recipe_source_button_displays_supplied_tooltip_text() {
         local recipe = C_TradeSkillUI.GetRecipeInfo(100001)
         assert(recipe, "fixture recipe must exist")
         recipe.learned = false
+        recipe.disabled = true
+        recipe.disabledReason = "Requires a trainer"
         form:Init(recipe)
         assert(form.RecipeSourceButton:IsShown(), "recipe source button must be shown")
         form.RecipeSourceButton:GetScript("OnEnter")(form.RecipeSourceButton)
