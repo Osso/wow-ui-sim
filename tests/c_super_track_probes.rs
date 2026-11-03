@@ -60,14 +60,17 @@ fn supplied_map_pin_and_vignette_are_observable_and_clearable() {
 }
 
 #[test]
-fn unsupplied_highlights_fail_explicitly() {
+fn unsupplied_highlights_return_the_empty_set() {
     let env = WowLuaEnv::new().unwrap();
-    for quest_id in [0, 999999] {
-        let error = env
-            .exec(&format!(
-                "C_QuestLog.GetQuestAdditionalHighlights({quest_id})"
-            ))
-            .unwrap_err();
-        assert!(error.to_string().contains("no supplied row"), "{error}");
-    }
+    env.exec(
+        r#"
+        for _, questID in ipairs({0, 95774, 878, 899, 999999}) do
+            assert(select('#', C_QuestLog.GetQuestAdditionalHighlights(questID)) == 5)
+            local map, world, elite, dungeons, treasures = C_QuestLog.GetQuestAdditionalHighlights(questID)
+            assert(map == 0)
+            assert(world == false and elite == false and dungeons == false and treasures == false)
+        end
+    "#,
+    )
+    .unwrap();
 }

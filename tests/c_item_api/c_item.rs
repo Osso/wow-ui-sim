@@ -640,3 +640,93 @@ fn test_c_item_does_item_exist_by_id_resolves_profession_overrides() {
     );
     assert_eq!(name, "Copper Chain Pants");
 }
+
+#[cfg(feature = "client-retail")]
+#[test]
+fn item_use_spell_installed_trinket_consumer_records_real_use_and_passive_results() {
+    use std::path::{Path, PathBuf};
+    use wow_ui_sim::lua_api::state::EquippedItem;
+    use wow_ui_sim::toc::TocFile;
+
+    let Some(core_dir) = std::env::var_os("ELLESMERE_UI_PATH").map(PathBuf::from) else {
+        eprintln!(
+            "skipping installed trinket consumer: set ELLESMERE_UI_PATH to the EllesmereUI addon directory"
+        );
+        return;
+    };
+    let addon_dir = core_dir
+        .parent()
+        .expect("EllesmereUI must have an addon parent directory")
+        .join("EllesmereUICooldownManager");
+    let toc_path = wow_ui_sim::loader::find_toc_file(&addon_dir)
+        .expect("installed cooldown manager must have a profile-selected TOC");
+    let toc = TocFile::from_file(&toc_path).expect("parse installed cooldown manager TOC");
+    let consumer = "EUI_CDM_HookTrinkets.lua";
+    assert!(
+        toc.files.iter().any(|path| path == Path::new(consumer)),
+        "installed cooldown manager TOC must select the original trinket consumer"
+    );
+
+    let env = env();
+    let gate = std::fs::read_to_string(core_dir.join("EllesmereUI_ClientGate.lua"))
+        .expect("read unchanged installed client gate");
+    env.exec(&gate)
+        .expect("load unchanged installed client gate");
+    env.exec(
+        r#"
+        assert(not EUI_CLIENT_BLOCKED, 'installed EllesmereUI must allow this client')
+        -- Supply the surrounding framework's shell pool and empty collections.
+        -- Inventory, item/spell queries and the complete consumer remain real.
+        ItemSpellConsumer = {
+            _hookInternals = {hookFrameData = {}},
+            barDataByKey = {},
+            _ecmeFC = {},
+            TakeShell = function() return CreateFrame('Frame') end,
+        }
+        "#,
+    )
+    .unwrap();
+    let source = std::fs::read_to_string(addon_dir.join(consumer))
+        .expect("read complete unchanged installed trinket consumer");
+    let mut separator = String::from("=");
+    while source.contains(&format!("]{separator}]")) {
+        separator.push('=');
+    }
+    env.exec(&format!(
+        "assert(loadstring([{separator}[{source}]{separator}], '@{consumer}'))('EllesmereUICooldownManager', ItemSpellConsumer)"
+    ))
+    .expect("load complete unchanged installed trinket consumer");
+    env.exec(
+        "assert(ItemSpellConsumer._hookInternals.broken == false); ItemSpellConsumer._trinketFrames[13] = CreateFrame('Frame')",
+    )
+    .unwrap();
+
+    let item = |item_id| EquippedItem {
+        item_id,
+        enchant_id: 0,
+        gem_ids: [0; 3],
+        applied_transmog: None,
+    };
+    env.state()
+        .borrow_mut()
+        .player
+        .equipped_items
+        .insert(13, item(18820));
+    let use_spell: i64 = env
+        .eval("ItemSpellConsumer.UpdateTrinketFrame(13); return ItemSpellConsumer._trinketFrames[13]._trinketSpellID")
+        .expect("original consumer must store the equipped item's actual use spell");
+    assert_eq!(use_spell, 23271, "Talisman of Ephemeral Power use spell");
+
+    env.state()
+        .borrow_mut()
+        .player
+        .equipped_items
+        .insert(13, item(19379));
+    let passive_spell: Option<i64> = env
+        .eval("ItemSpellConsumer.UpdateTrinketFrame(13); return ItemSpellConsumer._trinketFrames[13]._trinketSpellID")
+        .expect("original consumer must clear the previous use spell for a passive trinket");
+    assert_eq!(
+        passive_spell, None,
+        "Neltharion's Tear has no activated use"
+    );
+}

@@ -1,15 +1,47 @@
-//! Integration tests for `src/lua_api/globals/missing_surface/c_spell.rs`.
-//!
-//! Covers all 10 handlers:
-//!   GetSpellInfo, GetSpellCooldown, GetMountFromSpell,
-//!   GetVisibilityInfo, IsPriorityAura, IsSelfBuff, IsSpellUsable,
-//!   TargetSpellIsEnchanting, TargetSpellJumpsUpgradeTrack,
-//!   TargetSpellReplacesBonusTree.
+//! Integration tests for spell lookup and related C_Spell queries.
 
 use wow_ui_sim::lua_api::WowLuaEnv;
 
 fn env() -> WowLuaEnv {
     WowLuaEnv::new().expect("WowLuaEnv init")
+}
+
+#[cfg(any(
+    feature = "client-retail",
+    feature = "client-ptr",
+    feature = "client-wowforever"
+))]
+#[test]
+fn spell_subtext_returns_catalog_text_and_distinguishes_empty_from_unknown() {
+    let env = env();
+    env.exec(
+        r#"
+        local getSubtext = assert(rawget(C_Spell, "GetSpellSubtext"))
+        assert(getSubtext(395296) == "Black")
+        assert(getSubtext("ebon might(Black)") == "Black")
+        assert(getSubtext(C_Spell.GetSpellLink(395296)) == "Black")
+        assert(getSubtext("Brown Horse") == "")
+        assert(select('#', getSubtext(458)) == 1)
+        assert(select('#', getSubtext(999999999)) == 0)
+        assert(select('#', getSubtext("Ebon Might(Unknown)")) == 0)
+        "#,
+    )
+    .unwrap();
+}
+
+#[cfg(feature = "client-wowforever")]
+#[test]
+fn spell_subtext_returns_rank_from_forever_spell_data() {
+    let env = env();
+    env.exec(
+        r#"
+        local getSubtext = assert(C_Spell.GetSpellSubtext)
+        assert(getSubtext(467) == "Rank 1")
+        assert(getSubtext(782) == "Rank 2")
+        assert(getSubtext("Thorns(Rank 2)") == "Rank 2")
+        "#,
+    )
+    .unwrap();
 }
 
 fn formatted_player_attack_power_damage(env: &WowLuaEnv, formula: &str) -> String {
@@ -159,6 +191,117 @@ fn test_get_spell_info_includes_cell_click_casting_resurrections() {
             "Soulstone",
         ]
     );
+}
+
+#[cfg(feature = "client-wowforever")]
+#[test]
+fn forever_supplemental_spell_info_preserves_catalog_metadata() {
+    for (id, name, icon, target) in [
+        (24705, "Invocation of the Wickerman", 135462, 21),
+        (30754, "Cenarion Favor", 136086, 25),
+    ] {
+        let spell = wow_ui_sim::spell_lookup::get_spell(id).expect("native spell must resolve");
+        assert_eq!(spell.name, name);
+        assert_eq!(spell.subtext, "");
+        assert_eq!(spell.icon_file_data_id, icon);
+        assert_eq!(spell.school_mask, 1);
+        assert_eq!(spell.implicit_target, target);
+    }
+    let env = env();
+    env.exec(
+        r#"
+        for _, expected in ipairs({
+            {24705, 'Invocation of the Wickerman', 135462},
+            {30754, 'Cenarion Favor', 136086},
+        }) do
+            local info = C_Spell.GetSpellInfo(expected[1])
+            assert(info.name == expected[2] and info.spellID == expected[1])
+            assert(info.iconID == expected[3])
+            local name, subtext, icon = GetSpellInfo(expected[1])
+            assert(name == expected[2] and subtext == nil and icon == expected[3])
+        end
+        assert(C_Spell.GetSpellInfo(999999999) == nil)
+    "#,
+    )
+    .unwrap();
+}
+
+#[cfg(feature = "client-wowforever")]
+#[test]
+fn forever_supplemental_spell_info_supports_installed_wowhead_lookup() {
+    use std::path::{Path, PathBuf};
+    use wow_ui_sim::screen::ScreenKind;
+    use wow_ui_sim::toc::TocFile;
+
+    let Some(addon_dir) = std::env::var_os("WOWHEAD_LOOTER_PATH").map(PathBuf::from) else {
+        eprintln!(
+            "skipping installed Wowhead consumer: set WOWHEAD_LOOTER_PATH to the addon directory"
+        );
+        return;
+    };
+    let toc_path = wow_ui_sim::loader::find_toc_file(&addon_dir)
+        .expect("installed Wowhead addon must have a profile-selected TOC");
+    let toc = TocFile::from_file(&toc_path).expect("parse selected Wowhead TOC");
+    assert_eq!(
+        toc_path.file_name().and_then(|s| s.to_str()),
+        Some("+Wowhead_Looter.toc")
+    );
+    assert_eq!(
+        toc.metadata.get("Interface").map(String::as_str),
+        Some("16001")
+    );
+    assert!(toc.allows_screen(ScreenKind::Game));
+    let index = toc
+        .files
+        .iter()
+        .position(|p| p == Path::new("Wowhead_Looter.xml"))
+        .expect("selected TOC must include the original XML");
+    assert!(
+        toc.file_screen_allows[index]
+            .as_deref()
+            .is_none_or(|screen| screen.eq_ignore_ascii_case("game"))
+    );
+    let xml = std::fs::read_to_string(addon_dir.join("Wowhead_Looter.xml")).unwrap();
+    assert!(xml.contains("<Script file=\"Wowhead_Looter.lua\" />"));
+    let source = std::fs::read_to_string(addon_dir.join("Wowhead_Looter.lua")).unwrap();
+    let start = source
+        .find("local GetSpellInfo = GetSpellInfo or function(spell)")
+        .expect("original native spell wrapper must exist");
+    let table_start = source[start..].find("local WL_REP_MODS = {").unwrap() + start;
+    let end = table_start + source[table_start..].find("\n};").unwrap() + 3;
+    let original = &source[start..end];
+    assert!(original.contains("[GetSpellInfo(24705)]"));
+    assert!(original.contains("[GetSpellInfo(30754)]"));
+    let chunk = format!("{original}\nreturn WL_REP_MODS");
+    let mut separator = String::from("=");
+    while chunk.contains(&format!("]{separator}]")) {
+        separator.push('=');
+    }
+    let env = env();
+    env.exec(&format!(
+        "WowheadReputationSpellMap = assert(loadstring([{separator}[{chunk}]{separator}], '@+Wowhead_Looter/Wowhead_Looter.lua'))()"
+    )).expect("unchanged selected reputation table must have non-nil distinct spell-name keys");
+    env.exec(
+        r#"
+        local map = WowheadReputationSpellMap
+        assert(map['Invocation of the Wickerman'][2] == 0.1)
+        assert(map['Cenarion Favor'][2] == 0.25)
+        local count = 0
+        for name in pairs(map) do
+            assert(type(name) == 'string')
+            count = count + 1
+        end
+        assert(count == 2, 'constant spell names must not collapse the original keys')
+        local first = C_Spell.GetSpellInfo(24705)
+        local second = C_Spell.GetSpellInfo(30754)
+        assert(first.name == 'Invocation of the Wickerman' and first.spellID == 24705)
+        assert(second.name == 'Cenarion Favor' and second.spellID == 30754)
+        assert(GetSpellInfo(24705) == first.name)
+        assert(GetSpellInfo(30754) == second.name)
+        assert(C_Spell.GetSpellInfo(999999999) == nil)
+    "#,
+    )
+    .unwrap();
 }
 
 #[test]

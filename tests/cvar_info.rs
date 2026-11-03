@@ -85,3 +85,86 @@ fn cvar_info_preserves_native_locked_secure_and_readonly_flags() {
     "#).unwrap();
     assert_eq!(result, "locked:secure:readonly");
 }
+
+#[cfg(feature = "client-retail")]
+#[test]
+fn cvar_info_installed_uninstall_records_follow_native_scope_flags() {
+    use std::path::{Path, PathBuf};
+    use wow_ui_sim::toc::TocFile;
+
+    let Some(addon_dir) = std::env::var_os("ELLESMERE_UI_PATH").map(PathBuf::from) else {
+        eprintln!(
+            "skipping installed CVar consumer: set ELLESMERE_UI_PATH to the EllesmereUI addon directory"
+        );
+        return;
+    };
+    let toc_path = wow_ui_sim::loader::find_toc_file(&addon_dir)
+        .expect("installed EllesmereUI must have a profile-selected TOC");
+    let toc = TocFile::from_file(&toc_path).expect("parse installed EllesmereUI TOC");
+    for name in ["EllesmereUI_ClientGate.lua", "EllesmereUI_Uninstall.lua"] {
+        assert!(
+            toc.files.iter().any(|path| path == Path::new(name)),
+            "installed EllesmereUI TOC must select {name}"
+        );
+    }
+
+    let env = WowLuaEnv::new().unwrap();
+    let gate = std::fs::read_to_string(addon_dir.join("EllesmereUI_ClientGate.lua"))
+        .expect("read unchanged installed client gate");
+    env.exec(&gate)
+        .expect("load unchanged installed client gate");
+    env.exec(
+        r#"
+        assert(not EUI_CLIENT_BLOCKED, 'installed EllesmereUI must allow this client')
+        EllesmereUIDB = {}
+        -- Supply only the outer framework lifecycle; API calls stay real.
+        EllesmereUI = { Lite = {
+            StoreFromBeforeLoad = function() return false end,
+            OnSavedVariablesLoaded = function(callback) callback() end,
+        } }
+        "#,
+    )
+    .unwrap();
+
+    let source = std::fs::read_to_string(addon_dir.join("EllesmereUI_Uninstall.lua"))
+        .expect("read unchanged installed uninstall consumer");
+    let mut separator = String::from("=");
+    while source.contains(&format!("]{separator}]")) {
+        separator.push('=');
+    }
+    env.exec(&format!(
+        "assert(loadstring([{separator}[{source}]{separator}], '@EllesmereUI_Uninstall.lua'))('EllesmereUI')"
+    ))
+        .expect("load entire unchanged uninstall file with its addon-name argument");
+
+    let observed: String = env
+        .eval(
+            r#"
+            local accountBefore = C_CVar.GetCVar('showTimestamps')
+            local characterBefore = C_CVar.GetCVar('nameplateMaxDistance')
+            assert(type(accountBefore) == 'string' and tonumber(characterBefore))
+            local accountAfter = accountBefore .. ':scope-probe'
+            local characterAfter = tostring(tonumber(characterBefore) + 1)
+            assert(EllesmereUI.SetCVar('showTimestamps', accountAfter, 'EllesmereUIChat'))
+            assert(EllesmereUI.SetCVar('nameplateMaxDistance', characterAfter, 'EllesmereUINameplates'))
+
+            local record = EllesmereUIDB.restoreOnUninstall
+            local character = assert(record.chars[UnitGUID('player')])
+            assert(record.fresh == true)
+            assert(record.cvar.showtimestamps.b == accountBefore)
+            assert(record.cvar.showtimestamps.a == accountAfter)
+            assert(record.cvar.showtimestamps.o == 'EllesmereUIChat')
+            assert(character.cvar.nameplatemaxdistance.b == characterBefore)
+            assert(character.cvar.nameplatemaxdistance.a == characterAfter)
+            assert(character.cvar.nameplatemaxdistance.o == 'EllesmereUINameplates')
+            assert(record.cvar.nameplatemaxdistance == nil, 'character CVar leaked into account record')
+            assert(character.cvar.showtimestamps == nil, 'account CVar leaked into character record')
+            return 'account=showtimestamps;character=nameplatemaxdistance'
+            "#,
+        )
+        .expect("original consumer must preserve native account and character scopes");
+    assert_eq!(
+        observed,
+        "account=showtimestamps;character=nameplatemaxdistance"
+    );
+}

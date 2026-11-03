@@ -510,6 +510,39 @@ C_Timer (After, NewTimer, NewTicker), C_Map (stub), C_Item (`IsConsumableItem`, 
 
 **Spell descriptions** — `C_Spell.GetSpellDescription()` and `C_TooltipInfo.GetSpellByID()` both route through `src/spell_description_resolver.rs` before text reaches Lua or tooltip lines. The resolver expands Blizzard DB2-style tokens such as `$s1`, `$<damage>`, `$<dmg>`, `$<shield>`, `${...}` arithmetic, `$STR`, `$INT`, `$AP`, `$MHP`, and simple conditional control tokens against `SimState` player stats and the simulator's spell-effect model. AP-scaled Paladin/Demon Hunter formulas are grounded in the local SimulationCraft dump (`~/Repos/simc/SpellDataDump/allspells.txt`): Avenger's Shield uses `1.55 * AP`, Crusader Strike `1.4 * AP`, Shield of the Righteous `0.95 * AP`, Eye Beam `$<dmg>` uses `10 * 0.4026 * AP`, and Shield of Vengeance `$<shield>` uses `30% max health * (1 + versatility damage)`. This keeps spellbook/tooltips from showing raw `$...` placeholders and prevents tooltip-only one-off replacements from drifting away from the C API surface.
 
+### Spell subtext
+
+Retail, PTR and Forever expose `C_Spell.GetSpellSubtext` for queries such as
+RXPGuides spell training. The lookup accepts a numeric ID, a spell link, a spell
+name or a name qualified by subtext. A known spell returns one string, including
+an empty string for a spell without subtext. An unknown spell returns zero values.
+Forever rank names are resolved through its profile spell catalog. [Spell subtext
+probes](../../../tests/c_spell_probes.rs)
+
+### Forever supplemental spell metadata
+
+The spell lookup facade checks the profile catalog before its supplemental
+records. Two Forever-only records supply the native spell names Wowhead Looter
+uses as keys in its reputation table.
+
+| Spell ID | Name | Icon file data ID | School mask | First implicit target |
+|---|---|---|---|---|
+| 24705 | Invocation of the Wickerman | 135462 | 1 | 21 |
+| 30754 | Cenarion Favor | 136086 | 1 | 25 |
+
+Both native subtexts are empty. The records come from wowf 1.60.1.70685, build
+key `002a8047a7c3a53de5e981936db76cce`. SpellName, Spell, SpellMisc and
+SpellEffect layouts are `782EE721`, `E3D134FB`, `434B3607` and `5362E3D4`.
+Selection uses difficulty 0 and effect index 0. The pinned DB2 decoder
+validates the selected column ranges against zero-filled data.
+[Pinned DB2 tables](../../../src/blizzard_ui_sync/forever_spells.rs)
+
+The generator retains these IDs in `ADDON_COMPAT_SPELL_IDS` so future runs
+read the records from their input catalogs. The legacy query returns nil for
+rank. Set `WOWHEAD_LOOTER_PATH` to also run the selected addon consumer test.
+[Supplemental records](../../../src/spell_lookup.rs) and
+[spell query probes](../../../tests/c_spell_probes.rs)
+
 ## Timer System
 
 `C_Timer.After(seconds, cb)`, `C_Timer.NewTimer(seconds, cb)` and `C_Timer.NewTicker(seconds, cb, iterations)` register native timers in `timer_layout.rs`; callbacks are retained in the Lua registry by timer ID. Container support wraps the original callback in `makeAfterInvoker` or `makeInvoker`. `process_timers()` fires due callbacks each tick; `next_timer_delay()` drives event-loop scheduling.
