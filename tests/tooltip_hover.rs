@@ -35,6 +35,12 @@ fn customization_tooltip_places_first_text_at_native_padding_anchor() {
         region:AddTooltipLine("Anchor")
         region:OnEnter()
         CustomizationNoHeaderTooltip:SetPadding(3, 5, 7, 11)
+        local line = CustomizationNoHeaderTooltip:GetLeftLine(1)
+        assert(line:GetNumPoints() == 2, "first left line must have two anchor points")
+        local point, relative, relativePoint, x, y = line:GetPoint(1)
+        assert(point == "TOP" and relative == CustomizationNoHeaderTooltip and relativePoint == "TOP" and x == 0 and y == -21, "first left vertical anchor")
+        point, relative, relativePoint, x, y = line:GetPoint(2)
+        assert(point == "LEFT" and relative == CustomizationNoHeaderTooltip and relativePoint == "LEFT" and x == 17 and y == 0, "first left horizontal anchor")
     "#,
     )
     .unwrap();
