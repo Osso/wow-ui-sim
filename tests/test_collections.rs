@@ -391,11 +391,11 @@ fn admin_collect_uncollect_toy() {
     let result: String = env
         .eval(
             r#"
-            -- Earpieces (187421) is not collected by default
-            A_Admin.CollectToy(187421)
+            -- Hearthstone Game Table (211946) is not collected by default
+            A_Admin.CollectToy(211946)
             local learned = C_ToyBox.GetNumLearnedDisplayedToys()
             if learned ~= 10 then return "learned=" .. tostring(learned) end
-            A_Admin.UncollectToy(187421)
+            A_Admin.UncollectToy(211946)
             local learned2 = C_ToyBox.GetNumLearnedDisplayedToys()
             if learned2 ~= 9 then return "learned2=" .. tostring(learned2) end
             return "ok"
