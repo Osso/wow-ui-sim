@@ -98,11 +98,11 @@ fn setup_env() -> WowLuaEnv {
     }
 
     let ui = blizzard_ui_dir();
-    for (name, toc) in PANEL_ADDONS {
-        let toc_path = ui.join(name).join(toc);
-        if !toc_path.exists() {
+    for (name, _) in PANEL_ADDONS {
+        // Retail's pinned manifest uses unsuffixed TOCs for several panel dependencies.
+        let Some(toc_path) = wow_ui_sim::loader::find_toc_file(&ui.join(name)) else {
             continue;
-        }
+        };
         if let Err(e) = load_addon(&env.loader_env(), &toc_path) {
             eprintln!("[load {name}] FAILED: {e}");
         }
