@@ -126,7 +126,6 @@ fn documented_extra_c_namespace_tables_exist_with_representative_methods() {
                 { "C_CombatLogSecure", "GetEntryCount" },
                 { "C_Login", "GetState" },
                 { "C_MacOptions", "GetGameBundleName" },
-                { "C_PingSecure", "CreateFrame" },
                 { "C_UnitAurasPrivate", "GetAllPrivateAuras" },
             }
 
@@ -149,4 +148,17 @@ fn documented_extra_c_namespace_tables_exist_with_representative_methods() {
         result, "ok",
         "documented Blizzard namespaces should exist with representative methods"
     );
+
+    // Retail 12.1.5 exposes this namespace only in the secure environment.
+    // See docs/specs/ping-secure-publication.md and PingManagerSecureDocumentation.lua:3-6.
+    let ping: String = env
+        .eval(
+            if cfg!(all(feature = "profile-retail", feature = "retail-12-1-5")) {
+                "return type(__secureenv.C_PingSecure and __secureenv.C_PingSecure.CreateFrame)"
+            } else {
+                "return type(C_PingSecure and C_PingSecure.CreateFrame)"
+            },
+        )
+        .unwrap();
+    assert_eq!(ping, "function", "C_PingSecure.CreateFrame");
 }
