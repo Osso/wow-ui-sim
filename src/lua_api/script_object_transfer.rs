@@ -83,6 +83,18 @@ pub(crate) fn project_forbidden(state: &mut LuaState, value: Val) -> LuaResult<V
     call_function_state(state, constructor, &[value])
 }
 
+pub(crate) fn project_created_frame(
+    state: &mut LuaState,
+    parent: Val,
+    frame: Val,
+) -> LuaResult<Val> {
+    if project_public(state, parent) == parent {
+        return Ok(frame);
+    }
+    let constructor = registry_get(state, FORBIDDEN_CONSTRUCTOR);
+    call_function_state(state, constructor, &[frame])
+}
+
 pub(crate) fn project_parent_return(state: &mut LuaState, value: Val) -> LuaResult<Val> {
     let secure = registry_get(state, "__secureenv");
     let caller = state.call_stack[..=state.ci]
