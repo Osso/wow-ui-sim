@@ -24,6 +24,8 @@ fn compact_unit_name_marks_text_aspect_for_secret_identity() {
         local frame = CompactArenaFrame.memberUnitFrames[1]
         assert(frame and frame.name)
         assert(not frame.name:HasSecretAspect(8), 'fixture starts without Text aspect')
+        local name = UnitName('party1')
+        assert(issecretvalue(name) and secretunwrap(name) == 'Aspect Name', 'fixture has a secret name')
         consumer(frame)
         assert(frame.name:HasSecretAspect(8), 'secret text must mark Text aspect 8')
         assert(frame.name:HasAnySecretAspect())
