@@ -454,9 +454,11 @@ fn duration_binding_assignment_supports_actual_custom_aura_button_duration_text(
                             local label = button:CreateFontString(nil, 'OVERLAY')
                             button:SetDurationText(label, {binding=source, textColor={
                                 curve=curve, property=Enum.DurationTextBindingProperty.RemainingDuration}})
-                            assert(button:GetDurationText() == label)
-                            local ownedBinding = GetForbiddenObjectTable(button):GetDurationTextBinding()
-                            assert(ownedBinding ~= source and ownedBinding:GetFontString() == label)
+                            local privateButton = GetForbiddenObjectTable(button)
+                            local stored = privateButton.durationText.element
+                            assert(button:GetDurationText() == stored and stored:GetObjectTable() == label)
+                            local ownedBinding = privateButton:GetDurationTextBinding()
+                            assert(ownedBinding ~= source and ownedBinding:GetFontString() == stored)
                             assert(ownedBinding:GetUpdateInterval() == 0.25)
                             assert(ownedBinding:GetTextColorCurve() == curve)
                             local r,g,b,a = curve:Evaluate(30):GetRGBA()
