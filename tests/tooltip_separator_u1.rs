@@ -2,7 +2,7 @@
 
 use iced::{Point, Rectangle, Size};
 use wow_ui_sim::iced_app::tooltip::{
-    TooltipRender, build_tooltip_quads, collect_tooltip_data, update_tooltip_sizes,
+    TooltipRender, build_tooltip_quads, collect_tooltip_data, prepare_tooltip_layout,
 };
 use wow_ui_sim::lua_api::WowLuaEnv;
 use wow_ui_sim::render::{GlyphAtlas, QuadBatch, WowFontSystem};
@@ -27,7 +27,7 @@ fn render_tooltip(env: &WowLuaEnv, scale: f32) -> (QuadBatch, Rectangle) {
     let mut fonts = WowFontSystem::new();
     let mut glyphs = GlyphAtlas::new();
     let mut state = env.state().borrow_mut();
-    update_tooltip_sizes(&mut state, &mut fonts);
+    prepare_tooltip_layout(&mut state, &mut fonts);
     let id = state.widgets.get_id_by_name("U1Tooltip").unwrap();
     let frame = state.widgets.get(id).unwrap();
     let bounds = Rectangle::new(

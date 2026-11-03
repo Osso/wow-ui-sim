@@ -239,7 +239,7 @@ fn blizzard_show_synchronously_uses_glyph_measurement() {
     )
     .unwrap();
     let mut font = wow_ui_sim::render::font::WowFontSystem::new();
-    wow_ui_sim::iced_app::tooltip::update_tooltip_sizes(&mut env.state().borrow_mut(), &mut font);
+    wow_ui_sim::iced_app::tooltip::prepare_tooltip_layout(&mut env.state().borrow_mut(), &mut font);
     env.exec(
         r#"
         assert(GameTooltip:GetWidth() == shownWidth, "Show did not synchronously measure glyph width")
@@ -262,7 +262,7 @@ fn blizzard_line_processing_does_not_resize_on_render_before_show() {
     )
     .unwrap();
     let mut font = wow_ui_sim::render::font::WowFontSystem::new();
-    wow_ui_sim::iced_app::tooltip::update_tooltip_sizes(&mut env.state().borrow_mut(), &mut font);
+    wow_ui_sim::iced_app::tooltip::prepare_tooltip_layout(&mut env.state().borrow_mut(), &mut font);
     env.exec(
         r#"
         renderWidth, renderHeight = GameTooltip:GetWidth(), GameTooltip:GetHeight()
@@ -270,7 +270,7 @@ fn blizzard_line_processing_does_not_resize_on_render_before_show() {
         "#,
     )
     .unwrap();
-    wow_ui_sim::iced_app::tooltip::update_tooltip_sizes(&mut env.state().borrow_mut(), &mut font);
+    wow_ui_sim::iced_app::tooltip::prepare_tooltip_layout(&mut env.state().borrow_mut(), &mut font);
     env.exec(
         r#"
         assert(GameTooltip:GetWidth() == renderWidth, "render resized tooltip width before Show")

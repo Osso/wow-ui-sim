@@ -74,7 +74,7 @@ fn test_tooltip_produces_quads_after_hover() {
     {
         let mut state = env.state().borrow_mut();
         let _ = state.widgets.take_render_dirty();
-        wow_ui_sim::iced_app::tooltip::update_tooltip_sizes(&mut state, &mut font_sys);
+        wow_ui_sim::iced_app::tooltip::prepare_tooltip_layout(&mut state, &mut font_sys);
     }
 
     // Check tooltip got sized
@@ -183,7 +183,7 @@ fn test_character_slot_hover_tooltip_produces_quads() {
     {
         let mut state = env.state().borrow_mut();
         let _ = state.widgets.take_render_dirty();
-        wow_ui_sim::iced_app::tooltip::update_tooltip_sizes(&mut state, &mut font_sys);
+        wow_ui_sim::iced_app::tooltip::prepare_tooltip_layout(&mut state, &mut font_sys);
     }
 
     let gt_id = env
@@ -305,7 +305,7 @@ fn test_character_slot_hover_tooltip_is_positioned_to_right_of_slot() {
     {
         let mut state = env.state().borrow_mut();
         let _ = state.widgets.take_render_dirty();
-        wow_ui_sim::iced_app::tooltip::update_tooltip_sizes(&mut state, &mut font_sys);
+        wow_ui_sim::iced_app::tooltip::prepare_tooltip_layout(&mut state, &mut font_sys);
     }
 
     let state = env.state().borrow();
@@ -363,7 +363,7 @@ fn test_character_slot_remains_hit_target_after_tooltip_resizes() {
     let mut font_sys = WowFontSystem::new();
     {
         let mut state = env.state().borrow_mut();
-        wow_ui_sim::iced_app::tooltip::update_tooltip_sizes(&mut state, &mut font_sys);
+        wow_ui_sim::iced_app::tooltip::prepare_tooltip_layout(&mut state, &mut font_sys);
         state.ensure_layout_rects();
     }
 
@@ -450,7 +450,7 @@ fn test_buff_icon_hover_tooltip_produces_quads() {
     {
         let mut state = env.state().borrow_mut();
         let _ = state.widgets.take_render_dirty();
-        wow_ui_sim::iced_app::tooltip::update_tooltip_sizes(&mut state, &mut font_sys);
+        wow_ui_sim::iced_app::tooltip::prepare_tooltip_layout(&mut state, &mut font_sys);
     }
 
     let gt_id = env
