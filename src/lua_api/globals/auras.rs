@@ -494,6 +494,15 @@ fn get_aura_data_by_aura_instance_id(state: &mut LuaState) -> LuaResult<u32> {
 fn get_aura_data_by_spell_name(state: &mut LuaState) -> LuaResult<u32> {
     let unit: String = Option::<String>::from_stack(state, 1)?.unwrap_or_default();
     let name = Option::<String>::from_stack(state, 2)?.unwrap_or_default();
+    if crate::c_api::unit_aura_access::auras_restricted(state)?
+        && !rilua::api::state_is_secure(state)
+    {
+        let spell_id = crate::c_api::c_spell::read_spell_identifier_at(state, 2)?
+            .ok_or_else(|| rilua::runtime_error("spell-name resolution is not modeled"))?;
+        if crate::c_api::unit_aura_access::reject_spell_keyed_lookup(state, spell_id)? {
+            return Ok(0);
+        }
+    }
     let found = collect_unit_auras(state, &unit, AuraFilter::Helpful)
         .into_iter()
         .chain(collect_unit_auras(state, &unit, AuraFilter::Harmful))
