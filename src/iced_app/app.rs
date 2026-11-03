@@ -121,6 +121,7 @@ pub struct App {
     pub(crate) pressed_frame: Option<u64>,
     pub(crate) mouse_down_frame: Option<u64>,
     pub(crate) right_mouse_down_frame: Option<u64>,
+    pub(super) last_button_click: Option<(u64, iced::advanced::mouse::Click)>,
     /// Position where mouse button was pressed (for drag threshold detection).
     pub(crate) mouse_down_pos: Option<Point>,
     /// True once drag threshold is exceeded for the current press.
@@ -296,6 +297,7 @@ macro_rules! app_from_initial_state {
             pressed_frame: None,
             mouse_down_frame: None,
             right_mouse_down_frame: None,
+            last_button_click: None,
             mouse_down_pos: None,
             dragging: false,
             scroll_offset: 0.0,
@@ -452,6 +454,7 @@ impl App {
         self.pressed_frame = None;
         self.mouse_down_frame = None;
         self.right_mouse_down_frame = None;
+        self.last_button_click = None;
         self.mouse_down_pos = None;
         self.dragging = false;
         self.mouse_position = None;

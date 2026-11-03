@@ -460,6 +460,16 @@ impl WowLuaEnv {
         handler_name: &str,
         extra_args: Vec<Val>,
     ) -> Result<()> {
+        self.dispatch_script_handler(widget_id, handler_name, extra_args)
+            .map(|_| ())
+    }
+
+    pub(crate) fn dispatch_script_handler(
+        &self,
+        widget_id: u64,
+        handler_name: &str,
+        extra_args: Vec<Val>,
+    ) -> Result<bool> {
         let addon_idx = self.handler_owner_addon(widget_id);
         let mut lua = self.lua.borrow_mut();
         let handlers = {
@@ -467,8 +477,8 @@ impl WowLuaEnv {
             crate::lua_api::script_helpers::get_scripts_for_dispatch(state, widget_id, handler_name)
         };
         if handlers.is_empty() {
-            return Ok(());
-        };
+            return Ok(false);
+        }
 
         let call_args = self.build_script_call_args(&mut lua, widget_id, extra_args)?;
         for handler in handlers {
@@ -481,7 +491,7 @@ impl WowLuaEnv {
                 &call_args,
             );
         }
-        Ok(())
+        Ok(true)
     }
 
     /// Check if a script handler is registered for a widget.

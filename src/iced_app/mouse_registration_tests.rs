@@ -361,6 +361,143 @@ fn right_click_handlers_see_held_alt_modifier() {
 }
 
 #[test]
+fn double_click_on_title_button_opens_content_on_second_release() {
+    let mut app = build_test_app(ScreenKind::Game);
+    app.env
+        .borrow()
+        .exec(
+            r##"
+            DoubleClickContent = CreateFrame("Frame", nil, UIParent)
+            DoubleClickContent:Hide()
+            DoubleClickTrace = ""
+
+            local function header(name, x)
+                local button = CreateFrame("Button", name, UIParent)
+                button:SetSize(100, 40)
+                button:SetPoint("TOPLEFT", UIParent, "TOPLEFT", x, -100)
+                button:RegisterForClicks("LeftButtonUp")
+                button:SetScript("OnDoubleClick", function(self, buttonName, ...)
+                    DoubleClickTarget = self:GetName()
+                    DoubleClickButton = buttonName
+                    DoubleClickExtraArgs = select("#", ...)
+                    DoubleClickTrace = DoubleClickTrace .. "double;"
+                    DoubleClickContent:Show()
+                end)
+            end
+
+            header("DoubleClickNeighbor", 100)
+            header("DoubleClickTitle", 200)
+            DoubleClickNeighbor:SetScript("OnClick", function()
+                DoubleClickTrace = DoubleClickTrace .. "click;"
+            end)
+            DoubleClickNeighbor:SetScript("PostClick", function()
+                DoubleClickTrace = DoubleClickTrace .. "post;"
+            end)
+            "##,
+        )
+        .expect("double-click header setup should succeed");
+    rebuild_hittable_cache(&app);
+
+    let neighbor = Point::new(199.0, 120.0);
+    let title = Point::new(201.0, 120.0);
+    let content_shown = |app: &App| {
+        app.env
+            .borrow()
+            .eval::<bool>("return DoubleClickContent:IsShown()")
+            .expect("content visibility should be readable")
+    };
+
+    app.handle_mouse_down(neighbor);
+    app.handle_mouse_up(neighbor);
+    assert!(
+        !content_shown(&app),
+        "a single click must leave content hidden"
+    );
+
+    app.handle_mouse_down(title);
+    app.handle_mouse_up(title);
+    assert!(
+        !content_shown(&app),
+        "nearby clicks on separate buttons must not pair"
+    );
+
+    app.handle_mouse_down(title);
+    assert!(
+        !content_shown(&app),
+        "LeftButtonUp registration must wait for release"
+    );
+    app.handle_mouse_up(title);
+    assert!(
+        content_shown(&app),
+        "the second title click must open content"
+    );
+    let (target, button, extra_args): (String, String, f64) = app
+        .env
+        .borrow()
+        .eval("return DoubleClickTarget, DoubleClickButton, DoubleClickExtraArgs")
+        .expect("read double-click arguments");
+    assert_eq!(target, "DoubleClickTitle");
+    assert_eq!(button, "LeftButton");
+    assert_eq!(extra_args, 0.0);
+
+    app.handle_mouse_down(neighbor);
+    app.handle_mouse_up(neighbor);
+    app.handle_mouse_down(neighbor);
+    app.handle_mouse_up(neighbor);
+    let trace: String = app
+        .env
+        .borrow()
+        .eval("return DoubleClickTrace")
+        .expect("read click dispatch sequence");
+    assert_eq!(trace, "click;post;double;click;post;double;");
+}
+
+#[test]
+fn right_double_click_dispatches_xml_postcall_without_a_normal_binding() {
+    let mut app = build_test_app(ScreenKind::Game);
+    load_click_xml_addon(
+        &app,
+        r#"
+        <Ui>
+          <Button name="XmlDoubleClick" parent="UIParent" registerForClicks="RightButtonUp">
+            <Size x="100" y="100"/>
+            <Anchors><Anchor point="TOPLEFT" relativeTo="UIParent" relativePoint="TOPLEFT" x="100" y="-100"/></Anchors>
+            <Scripts>
+              <OnClick>XmlClickReceipt(self, button, down)</OnClick>
+              <PostClick>XmlClickReceipt(self, button, "post")</PostClick>
+              <OnDoubleClick intrinsicOrder="postcall">XmlClickReceipt(self, button, "double")</OnDoubleClick>
+            </Scripts>
+          </Button>
+        </Ui>
+        "#,
+    );
+    app.env
+        .borrow()
+        .exec(
+            r#"
+            assert(XmlDoubleClick:GetScript("OnDoubleClick") == nil)
+            assert(type(XmlDoubleClick:GetScript("OnDoubleClick", 2)) == "function")
+            "#,
+        )
+        .expect("only the XML postcall binding should be installed");
+    rebuild_hittable_cache(&app);
+
+    let position = Point::new(150.0, 150.0);
+    app.handle_right_mouse_down(position);
+    app.handle_right_mouse_up(position);
+    assert_xml_click_receipts(
+        &app,
+        "XmlDoubleClick:RightButton:false;XmlDoubleClick:RightButton:post",
+    );
+    app.handle_right_mouse_down(position);
+    app.handle_right_mouse_up(position);
+    assert_xml_click_receipts(
+        &app,
+        "XmlDoubleClick:RightButton:false;XmlDoubleClick:RightButton:post;XmlDoubleClick:RightButton:double",
+    );
+}
+
+#[test]
 fn register_for_clicks_left_button_down_fires_click_on_mouse_down_only() {
     let mut app = build_test_app(ScreenKind::Game);
 

@@ -1,6 +1,7 @@
 //! Mouse event handlers for the iced application.
 
 use iced::Point;
+use iced::advanced::mouse::{Button, Click, click::Kind};
 use rilua::{LuaApiMut, Val};
 
 use super::app::App;
@@ -41,6 +42,7 @@ impl App {
 
     pub(super) fn handle_mouse_leave(&mut self) {
         self.mouse_position = None;
+        self.last_button_click = None;
         {
             let env = self.env.borrow();
             env.state().borrow_mut().set_mouse_position(None);
@@ -250,6 +252,7 @@ impl App {
         let released_on = self.hit_test_mouse_button(pos, "LeftButton", false);
 
         if was_dragging {
+            self.last_button_click = None;
             self.finish_drag(drag_source, released_on);
         } else {
             self.dispatch_left_mouse_release(released_on);
@@ -286,16 +289,20 @@ impl App {
 
     fn dispatch_left_mouse_release(&mut self, released_on: Option<u64>) {
         let Some(frame_id) = released_on else {
+            self.last_button_click = None;
             return;
         };
 
         if self.cursor_holds_item() {
+            self.last_button_click = None;
             self.fire_receive_drag(frame_id);
             return;
         }
 
         let clicks_on_up = self.frame_clicks_on_edge(frame_id, "LeftButton", false);
         self.log_click_dispatch_if_enabled(frame_id, clicks_on_up);
+        let click = (self.mouse_down_frame == Some(frame_id) && clicks_on_up).then_some(frame_id);
+        let double_click = self.record_button_release(click, Button::Left);
         let env = self.env.borrow();
         let button_val = env.lua_string("LeftButton");
 
@@ -305,7 +312,7 @@ impl App {
 
         if self.mouse_down_frame == Some(frame_id) {
             self.dispatch_simple_html_link(frame_id, &env);
-            if clicks_on_up {
+            if clicks_on_up && !dispatch_double_click(&env, frame_id, &button_val, double_click) {
                 self.fire_left_click_sequence(frame_id, &env, &button_val, false);
             }
         }
@@ -318,6 +325,20 @@ impl App {
             &button_val,
             false,
         );
+    }
+
+    fn record_button_release(&mut self, target: Option<u64>, button: Button) -> bool {
+        let previous = self.last_button_click.take();
+        let Some((frame_id, pos)) = target.zip(self.mouse_position) else {
+            return false;
+        };
+        let previous = previous
+            .filter(|(previous_id, _)| *previous_id == frame_id)
+            .map(|(_, click)| click);
+        let click = Click::new(pos, button, previous);
+        let double_click = click.kind() == Kind::Double;
+        self.last_button_click = (!double_click).then_some((frame_id, click));
+        double_click
     }
 
     fn dispatch_simple_html_link(&self, id: u64, env: &crate::lua_api::WowLuaEnv) {
@@ -467,6 +488,7 @@ impl App {
         // Use the Lua ClearCursor() function so events fire properly.
         let had_cursor_item = self.env.borrow().state().borrow().cursor_item.is_some();
         if had_cursor_item {
+            self.last_button_click = None;
             eprintln!("[cursor] Right-click ClearCursor");
             {
                 let env = self.env.borrow();
@@ -478,13 +500,19 @@ impl App {
         }
 
         let released_on = self.hit_test_mouse_button(pos, "RightButton", false);
+        let click = released_on.filter(|&frame_id| {
+            self.right_mouse_down_frame == Some(frame_id)
+                && self.frame_clicks_on_edge(frame_id, "RightButton", false)
+        });
+        let double_click = self.record_button_release(click, Button::Right);
         if let Some(frame_id) = released_on {
-            let clicks_on_up = self.frame_clicks_on_edge(frame_id, "RightButton", false);
             {
                 let env = self.env.borrow();
                 let button_val = env.lua_string("RightButton");
 
-                if self.right_mouse_down_frame == Some(frame_id) && clicks_on_up {
+                if click.is_some()
+                    && !dispatch_double_click(&env, frame_id, &button_val, double_click)
+                {
                     let down_val = Val::Bool(false);
                     let _ = env.fire_script_handler(
                         frame_id,
@@ -587,6 +615,7 @@ impl App {
     }
 
     pub(super) fn handle_middle_click(&mut self, pos: Point) {
+        self.last_button_click = None;
         if let Some(frame_id) = self.hit_test(pos) {
             self.populate_inspector(frame_id);
             self.inspected_frame = Some(frame_id);
@@ -758,6 +787,18 @@ impl App {
             .map(frame_motion_scripts_allowed)
             .unwrap_or(false)
     }
+}
+
+fn dispatch_double_click(
+    env: &crate::lua_api::WowLuaEnv,
+    frame_id: u64,
+    button: &Val,
+    double_click: bool,
+) -> bool {
+    double_click
+        && env
+            .dispatch_script_handler(frame_id, "OnDoubleClick", vec![button.clone()])
+            .unwrap_or(false)
 }
 
 pub(crate) fn frame_click_registration_matches(
