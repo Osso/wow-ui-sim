@@ -36,6 +36,17 @@ pub mod atlas_elements;
 )]
 pub mod global_strings;
 
+#[cfg_attr(feature = "profile-retail", path = "../data/cvar_info_retail.rs")]
+#[cfg_attr(feature = "client-ptr", path = "../data/cvar_info_ptr.rs")]
+#[cfg_attr(
+    feature = "client-wowforever",
+    path = "../data/cvar_info_wowforever.rs"
+)]
+pub mod cvar_info;
+
 #[cfg(feature = "aura-containers")]
 #[path = "../data/spell_aura_secrecy.rs"]
 pub mod spell_aura_secrecy;
+
+#[cfg(test)]
+mod cvar_info_tests;
