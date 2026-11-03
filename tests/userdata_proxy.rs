@@ -85,7 +85,8 @@ fn forbidden_partition_preserves_native_parent_identity() {
         assert(parent.privateValue == nil, "partition fields remain private")
 
         local child = CreateFrame("Frame", nil, forbidden)
-        assert(child:GetParent() == parent, "partition identifies the same native parent")
+        local expectedParent = rawequal(child, GetForbiddenObjectTable(child)) and forbidden or parent
+        assert(rawequal(child:GetParent(), expectedParent), "WM73: parent follows receiver view")
         assert(parent:GetNumChildren() == 1)
         assert(GetForbiddenObjectTable(select(1, parent:GetChildren())) == GetForbiddenObjectTable(child))
 
@@ -94,7 +95,7 @@ fn forbidden_partition_preserves_native_parent_identity() {
         assert(parent:GetWidth() == 72, "native methods accept the partition identity")
         child:SetParent(UIParent)
         child:SetParent(forbidden)
-        assert(child:GetParent() == parent)
+        assert(rawequal(child:GetParent(), expectedParent))
         assert(GetForbiddenObjectTable(parent).privateValue == "hidden")
         "#,
     )
@@ -116,7 +117,10 @@ fn create_frame_returns_parent_table_view() {
         assert(rawequal(privateChild, GetForbiddenObjectTable(privateChild)),
             "a forbidden parent selects the forbidden child view")
         assert(not rawequal(defaultChild, GetForbiddenObjectTable(defaultChild)))
-        assert(privateChild:GetParent() == parent)
+        assert(rawequal(privateChild:GetParent(), privateParent), "WM73: forbidden receiver selects forbidden parent")
+        assert(rawequal(publicChild:GetParent(), parent), "WM73: public receiver selects public parent")
+        assert(rawequal(privateChild:GetParent():GetParent(), GetForbiddenObjectTable(UIParent)),
+            "WM73: forbidden ancestor traversal retains its view")
         "#,
     )
     .unwrap();
