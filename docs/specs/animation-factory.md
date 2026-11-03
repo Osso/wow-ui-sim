@@ -20,6 +20,15 @@
 - [Addon loading](../addon-loading-pipeline.md)
 - [XML templates](../xml-template-system.md)
 
+### Animation ancestry
+
+Registered animation instances satisfy `IsObjectType("Animation")` while
+`GetObjectType()` returns their exact subtype. The query uses registered instance
+identity and excludes animation groups, control points and frame lookalikes.
+Forever's captured hierarchy places `Translation` under `TranslationBase` and
+`Animation`. The selected 70707 AuraContainer checks the base type during adoption.
+[Captured Forever type hierarchy](https://github.com/wowless/wowless/blob/69a3654e08305de6fd5ce3533faf7e5597135109/data/products/wow_classic_beta/uiobjects.yaml)
+
 ## Implementation inventory
 
 - `src/xml/animation_templates.rs`: dedicated virtual-animation registry and checked inheritance resolution.
@@ -31,6 +40,9 @@
 
 ## Tests asserting this spec
 
+- [Animation identity](../../tests/animation_object_type.rs) — subtype checks and
+  adoption by the selected Blizzard `CustomAuraButton`, including ownership and
+  forbidden-object partitioning.
 - `tests/animation_factory.rs`: retained real TOC/XML regression, optional arguments, named lifecycle.
 - `tests/animation_factory_templates.rs`: inheritance, alpha/flipbook configuration, child target, KeyValues/scripts, OnLoad ordering, instance isolation, invalid/cyclic templates, fresh-environment clearing, and inline/group inheritance.
 - `tests/xml_animation_group_onload.rs`, `tests/animation_group.rs`: existing regressions.

@@ -76,7 +76,6 @@
   "wt-global-api-C_Spell.GetSpellAutoCast-284",
   "wt-global-api-C_Spell.GetSpellLevelLearned-291",
   "wt-global-api-C_Spell.GetSpellSkillLineAbilityRank-296",
-  "wt-global-api-C_Spell.GetSpellSubtext-297",
   "wt-global-api-C_Spell.IsAutoRepeatSpell-301",
   "wt-global-api-C_Spell.IsClassTalentSpell-302",
   "wt-global-api-C_Spell.IsPvPTalentSpell-305",
