@@ -8,7 +8,7 @@ CF-2 supplies tracked targets through `src/c_api/c_super_track.rs` and per-quest
 - [ ] Start with absent quest/content/map-pin/vignette. Untracked quest returns nil: **documented-optional representation**, not established native sentinel parity. Pair queries return no results when absent; populated zero enum values remain valid.
 - [ ] Round-trip quest and content selection, replace targets within each category and clear them; quest setter argument 0 clears. Clear-all removes all supported targets. IsSuperTrackingAnything reflects supported stored targets without priority arbitration.
 - [ ] Publish committed state to the original selected Blizzard_QuestSuperTracking consumer through SUPER_TRACKING_CHANGED; its cached quest/content/highlight outputs must change and clear, including matching/nonmatching turn-in/watch events and eligible/ineligible auto-track branches.
-- [ ] Return the five highlight outputs from the supplied per-quest row. With no row, return map ID 0 and four false flags so the tracker can refresh without adding map highlights. This absence representation is inferred from the documented return types and the Blizzard consumer.
+- [ ] Return the five highlight outputs from the supplied per-quest row. **VERIFIED locally (WM71, Retail 12.1.5.70688):** a numeric cache miss or no selected POI returns map ID 0 and four false flags. A selected POI can return a nonzero map ID even when all flags are false. Zero/no quest produces defaults with the observed empty zero-key cache (**INFERRED**). Missing, nil, nonconvertible and out-of-range arguments error; finite in-range numbers truncate toward zero. Numeric coercion is attempted; exact string grammar is **UNKNOWN**. Secret access is AllowedWhenUntainted. No direct super-tracked-ID check exists; universal quest-log membership is **UNKNOWN**. Native flag masks for world, elite, dungeons and treasures are 8, 64, 16 and 32 respectively.
 
 ## How it works
 
@@ -33,7 +33,7 @@ CF-2 supplies tracked targets through `src/c_api/c_super_track.rs` and per-quest
 ## Known gaps (current cycle)
 
 - [ ] Execute the remaining quest/highlight packet beyond the content-only restoration below. Its broader historical staging claims are not established by the restored selectors.
-- [ ] Native untracked quest sentinel, exact highlight absence values, event timing/deduplication and cross-target coupling remain unestablished. Mutation calls synchronously notify after releasing the state borrow.
+- [ ] Native untracked quest sentinel, live quest POI cache state and selection, event timing/deduplication and cross-target coupling remain unestablished. Mutation calls synchronously notify after releasing the state borrow. WM71 evidence: `native-evidence-70688/WM71-quest-additional-highlights.md` (local handoff).
 - [ ] IsQuestTask is currently coupled to the static world-quest catalog. World/task rejection is covered together; independent task-only classification remains held, not mocked.
 
 ## Out of scope
