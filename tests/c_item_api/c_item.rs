@@ -705,6 +705,7 @@ fn item_use_spell_installed_trinket_consumer_records_real_use_and_passive_result
 
     let item = |item_id| EquippedItem {
         item_id,
+        owned_identity: None,
         enchant_id: 0,
         gem_ids: [0; 3],
         applied_transmog: None,
