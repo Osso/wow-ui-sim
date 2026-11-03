@@ -257,6 +257,13 @@ backslash paths with direct Jenkins96 ordering; control paths resolved to
 FDIDs 134400 and 2447783. This identifies names, not extraction availability:
 the first three content keys were locally indexed, while Stats was not.
 
+Forever's bag buttons and container frame request
+`Interface/Icons/ui-hud-actionbar-bag` by path. The reference is in the
+Blizzard UI cache, outside the limited generator's literal scan, so the
+override retains FDID 7349174. The installed Forever CASC root confirms the
+mapping, and the local archive provides the 256×256 BLP2 texture.
+[Community listfile release](https://github.com/wowdev/wow-listfile/releases/tag/202611012147)
+
 On September 20, 2026, refreshing the community listfile and regenerating this
 file added 592 `wowforever` path-to-FDID rows. Every one of the 4,398 paths in
 `data/blizzard-ui-files/wowforever.txt` then mapped, and the rebuilt

@@ -233,6 +233,14 @@ impl TextureManager {
                     return Some(result);
                 }
             }
+            // The renderer uses this bundled asset even with exclusive addon roots.
+            if addon_relative.eq_ignore_ascii_case("SimCommands/textures/minimap-placeholder")
+                && let Some(result) = crate::paths::bundled_addons_path_candidates()
+                    .iter()
+                    .find_map(|root| self.try_resolve_in_dir(root, addon_relative))
+            {
+                return Some(result);
+            }
         }
 
         if cfg!(feature = "client-mists")
