@@ -625,6 +625,33 @@ fn world_map_tracking_filters_default_to_visible() {
 
 #[test]
 #[cfg(feature = "client-wowforever")]
+fn forever_minimap_tracking_static_filters_use_real_mask() {
+    let env = load_full_game_ui();
+    env.exec(
+        r#"
+        local auction = MinimapUtil.GetFilterIndexForFilterID(1)
+        local flight = MinimapUtil.GetFilterIndexForFilterID(8)
+        assert(auction and flight and auction < flight)
+        local info = C_Minimap.GetTrackingInfo(flight)
+        assert(info.texture == 136456 and info.type == 'other' and info.subType == -1)
+        assert(info.spellID == nil)
+        assert(C_Minimap.GetDefaultTrackingValue(8))
+        assert(not C_Minimap.GetDefaultTrackingValue(1))
+        C_Minimap.SetTracking(auction, true)
+        C_Minimap.SetTracking(flight, false)
+        assert(not C_Minimap.IsFilteredOut(1))
+        assert(C_Minimap.IsFilteredOut(8))
+        assert(not C_Minimap.IsFilteredOut(9))
+        assert(not C_Minimap.IsFilteredOut(0))
+        assert(C_Minimap.GetTrackingInfo(auction).active)
+        assert(not C_Minimap.GetTrackingInfo(flight).active)
+        "#,
+    )
+    .expect("Forever minimap filters should expose and update native tracking rows");
+}
+
+#[test]
+#[cfg(feature = "client-wowforever")]
 fn forever_world_map_trivial_quest_filter_tracks_map_settings() {
     let env = load_full_game_ui();
     env.exec(
