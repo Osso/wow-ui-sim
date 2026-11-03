@@ -728,6 +728,7 @@ fn status_tracking_and_flyout_bar_mixins_publish_as_tables() {
 /// methods. Declared at `Mainline/AssistedCombatManager.lua:3`. Source
 /// has 11 additional methods PLAN omits (`ProcessCVars` etc.) — the
 /// PLAN list is the surface contract for this task.
+#[cfg(not(feature = "client-wrath"))]
 #[test]
 fn assisted_combat_manager_publishes_plan_named_methods() {
     let plan_methods = [
@@ -765,6 +766,7 @@ fn assisted_combat_manager_publishes_plan_named_methods() {
 
 /// Pin `ActionButtonSpellAlertManager` table + 3 PLAN-named methods
 /// at `Shared/ActionButtonSpellAlerts.lua` lua:1/114/125/132.
+#[cfg(not(feature = "client-wrath"))]
 #[test]
 fn action_button_spell_alert_manager_publishes_plan_named_methods() {
     with_blizzard_addon_startup_shape(&[ROOT], &[], |env, _loaded| {
