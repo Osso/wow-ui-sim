@@ -102,8 +102,8 @@ fn retail_u1_original_separator_attaches_and_emits_scaled_divider() {
         let left = 12.0 + (nine_slice.corner_tl.width as f32 - 4.0).max(0.0);
         let right = 12.0 + (nine_slice.corner_tr.width as f32 - 4.0).max(0.0);
         let top = 12.0 + (nine_slice.corner_tl.height as f32 - 4.0).max(0.0);
-        let bottom = 12.0 + (nine_slice.corner_bl.height as f32 - 4.0).max(0.0);
-        let expected_height = (17.0 + 15.0 + 15.0 + 4.0 + top + bottom) * scale;
+        // WM63-L23: outer height adds 20.48, independent of the rendered inset.
+        let expected_height = (17.0 + 15.0 + 15.0 + 4.0 + 20.48) * scale;
         assert!(
             (bounds.height - expected_height).abs() < 0.01,
             "Header, attached row, Footer and two spacings must determine height"
