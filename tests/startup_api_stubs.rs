@@ -665,10 +665,8 @@ fn startup_client_time_camera_and_channel_globals_are_callable() {
     );
     assert_eq!(pvp_lifetime_hks, 0.0);
     assert_eq!(pvp_lifetime_rank, 0.0);
-    // Raw environments have not loaded Blizzard_FrameXML's binding defaults.
-    if cfg!(feature = "client-retail") {
-        assert_eq!(modified_click_default, "NONE");
-    } else {
+    // Retail defaults are checked after loading FrameXML in keybindings.rs.
+    if !cfg!(feature = "client-retail") {
         assert_eq!(modified_click_default, "ALT");
     }
     assert_eq!(modified_click_updated, "NONE");
