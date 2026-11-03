@@ -607,10 +607,7 @@ fn right_double_click_dispatches_xml_postcall_without_a_normal_binding() {
     let position = Point::new(150.0, 150.0);
     app.handle_right_mouse_down(position);
     app.handle_right_mouse_up(position);
-    assert_xml_click_receipts(
-        &app,
-        "XmlDoubleClick:RightButton:false",
-    );
+    assert_xml_click_receipts(&app, "XmlDoubleClick:RightButton:false");
     app.handle_right_mouse_down(position);
     app.handle_right_mouse_up(position);
     assert_xml_click_receipts(
