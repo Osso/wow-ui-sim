@@ -264,7 +264,7 @@ fn forbidden_partition_aura_provider_creates_children_through_outbound_bridge() 
                     local forbidden = GetForbiddenObjectTable(container)
                     local provider = __secureenv.AuraContainerUtil.CreateCustomFrameProvider(forbidden, { batchSize = 1 })
                     local child = provider:AcquireFrame()
-                    assert(child:GetParent() == container)
+                    assert(rawequal(child:GetParent(), forbidden), "WM73: parent follows child view")
                     assert(provider:GetOwnedFrameCount() == 1)
                     assert(provider:GetOwnedFrame(1) == child)
                     assert(provider:IsFrameActive(child))
@@ -311,9 +311,9 @@ fn forbidden_partition_aura_initializer_keeps_public_and_private_views_isolated(
                     local child = provider:AcquireFrame()
                     assert(publicDisplayCalls == 0,
                         "secure display update must not consult the public override")
-                    assert(child == initializedButton,
-                        "public caller receives the same public view as the initializer")
-                    assert(initializedCooldown:GetParent() == child)
+                    assert(rawequal(child, GetForbiddenObjectTable(initializedButton)),
+                        "WM73: crossing environments preserves the provider's forbidden view")
+                    assert(rawequal(initializedCooldown:GetParent(), initializedButton))
                     local aspects = Enum.SecretAspect
                     assert(initializedCooldown:HasAnySecretAspect())
                     assert(initializedCooldown:HasSecretAspect(aspects.Cooldown))
@@ -323,11 +323,11 @@ fn forbidden_partition_aura_initializer_keeps_public_and_private_views_isolated(
                     assert(not initializedBar:HasSecretAspect(aspects.Cooldown))
                     assert(GetForbiddenObjectTable(initializedCooldown):HasSecretAspect(aspects.Cooldown))
                     assert(GetForbiddenObjectTable(initializedBar):HasSecretAspect(aspects.BarValue))
-                    assert(child:GetParent() == container)
+                    assert(rawequal(child:GetParent(), GetForbiddenObjectTable(container)))
                     local private = GetForbiddenObjectTable(child)
-                    assert(private ~= child)
+                    assert(rawequal(private, child))
                     assert(type(private.UpdateAuraDisplay) == "function")
-                    assert(private.UpdateAuraDisplay ~= child.UpdateAuraDisplay,
+                    assert(private.UpdateAuraDisplay ~= initializedButton.UpdateAuraDisplay,
                         "public assignment must not replace the private implementation")
                     assert(provider:GetOwnedFrame(1) == child)
                     "#,
