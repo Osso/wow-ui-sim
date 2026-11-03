@@ -96,6 +96,28 @@ const ORIGINAL_ITEM_CONSUMER: &str = r#"
 "#;
 
 #[test]
+fn player_choice_recognizes_pet_item_from_real_catalog() {
+    let ui = crate::common::blizzard_addon_harness::blizzard_ui_dir();
+    let env = crate::common::blizzard_addon_harness::new_blizzard_addon_env(&ui);
+    load_player_choice_closure(&env, &ui);
+    env.exec(
+        r#"
+        local reward = CreateFrame('Button', nil, UIParent,
+            'PlayerChoiceBaseOptionItemRewardTemplate')
+        assert(reward.IsDressupReward == PlayerChoiceBaseOptionItemRewardMixin.IsDressupReward)
+        reward.itemButton.itemLink = 'item:4401'
+        assert(not C_Item.IsDressableItemByID(reward.itemButton.itemLink))
+        assert(not C_MountJournal.GetMountFromItem(4401))
+        assert(reward:IsDressupReward({itemId=4401}), 'Mechanical Squirrel Box must be a pet reward')
+        reward.itemButton.itemLink = 'item:6948'
+        assert(not reward:IsDressupReward({itemId=6948}), 'Hearthstone is not a pet reward')
+        "#,
+    )
+    .expect("original PlayerChoice consumer distinguishes pet and non-pet items");
+    assert_no_recorded_errors(&env, "pet item PlayerChoice consumer");
+}
+
+#[test]
 fn mount_item_player_choice_real_item_consumer_returns_boolean() {
     let ui = crate::common::blizzard_addon_harness::blizzard_ui_dir();
     eprintln!("[mount-item consumer cache] {}", ui.display());
