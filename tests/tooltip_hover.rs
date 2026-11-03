@@ -208,6 +208,69 @@ fn blizzard_double_line_reserves_native_column_gap() {
         (width - expected).abs() < 0.01,
         "width {width} must include native two-column reservation {expected}"
     );
+    use iced::{Point, Rectangle, Size};
+    use wow_ui_sim::iced_app::tooltip::{TooltipRender, build_tooltip_quads, collect_tooltip_data};
+    use wow_ui_sim::render::glyph::emit_text_quads;
+    use wow_ui_sim::render::{GlyphAtlas, QuadBatch};
+    use wow_ui_sim::widget::{TextJustify, TextOutline};
+    let state = env.state().borrow();
+    let id = state.widgets.get_id_by_name("GameTooltip").unwrap();
+    let data = collect_tooltip_data(&state);
+    let height = state.widgets.get(id).unwrap().height;
+    let mut glyphs = GlyphAtlas::new();
+    let mut actual = QuadBatch::new();
+    build_tooltip_quads(
+        TooltipRender {
+            batch: &mut actual,
+            bounds: Rectangle::new(Point::new(100.0, 200.0), Size::new(width, height)),
+            tooltip_data: Some(&data),
+            id,
+            eff_alpha: 1.0,
+            eff_scale: 1.0,
+            draw_background: false,
+        },
+        &mut Some((&mut font, &mut glyphs)),
+    );
+    let actual_right = actual
+        .vertices
+        .iter()
+        .filter(|vertex| vertex.tex_index == wow_ui_sim::render::shader::GLYPH_ATLAS_TEX_INDEX)
+        .nth(20)
+        .expect("right glyph")
+        .position;
+    let mut reference = QuadBatch::new();
+    let right_edge = 110.0 + width - 20.48;
+    emit_text_quads(
+        &mut reference,
+        &mut font,
+        &mut glyphs,
+        "Value",
+        Rectangle::new(
+            Point::new(right_edge - 200.0, 210.0),
+            Size::new(200.0, 17.0),
+        ),
+        None,
+        14.0,
+        [1.0; 4],
+        TextJustify::Right,
+        TextJustify::Center,
+        wow_ui_sim::render::shader::GLYPH_ATLAS_TEX_INDEX,
+        None,
+        (0.0, 0.0),
+        TextOutline::None,
+        false,
+        0,
+        0.0,
+        false,
+        None,
+        None,
+    );
+    let expected_right = reference.vertices[0].position;
+    assert!(
+        (actual_right[0] - expected_right[0]).abs() < 0.01
+            && (actual_right[1] - expected_right[1]).abs() < 0.01,
+        "right glyph position {actual_right:?}, expected {expected_right:?}"
+    );
 }
 
 #[cfg(any(feature = "client-retail", feature = "client-ptr"))]
