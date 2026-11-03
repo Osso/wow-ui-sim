@@ -25,7 +25,7 @@ fn ringed_frame_tooltip_applies_native_outer_and_explicit_padding() {
         region:AddTooltipLine("x")
         region:OnEnter()
         local width, height = GameTooltip:GetWidth(), GameTooltip:GetHeight()
-        assert(math.abs(width - 326.48) < 0.01, "native outer width padding")
+        assert(math.abs(width - 326.48) < 0.01, "native outer width padding: " .. width .. " sides: " .. tostring(GameTooltip:GetPadding()))
         GameTooltip:SetPadding(3, 5, 7, 11)
         assert(math.abs(GameTooltip:GetWidth() - 330.48) < 0.01, "explicit horizontal sides")
         assert(math.abs(GameTooltip:GetHeight() - height - 10) < 0.01, "explicit vertical sides")
