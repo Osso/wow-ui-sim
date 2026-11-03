@@ -54,6 +54,7 @@ pub struct SimState {
     pub(crate) timed_signal_maps: HashMap<u64, crate::c_api::timed_signal_map::TimedSignalMapState>,
     pub focused_frame_id: Option<u64>,
     pub addons: Vec<AddonInfo>,
+    pub(crate) addon_message_prefixes: crate::c_api::addon_message_prefixes::AddonMessagePrefixes,
     pub addon_saved_enable_state: Option<AddonEnableSnapshot>,
     pub addon_saved_version_check_enabled: Option<bool>,
     pub system_chat_log: Vec<String>,

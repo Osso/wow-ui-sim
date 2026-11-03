@@ -2,6 +2,9 @@
 
 Forever exposes three state-backed namespace senders in `src/c_api/addon_messages.rs`. Successful calls append outbound intent to the existing environment-local `SimState.message_log`; they do not deliver messages. See [Lua API](../wiki/systems/lua-api.md#forever-outbound-addon-messages).
 
+[Addon-message prefix registration](addon-message-prefixes.md) is a separate
+environment-local subscription registry and does not change these senders.
+
 ## What it must do
 
 ### Documented surface and security
