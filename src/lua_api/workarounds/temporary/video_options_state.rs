@@ -141,6 +141,14 @@ if rawget(C_VideoOptions, "AreHighResTexturesAvailable") == nil then
     end
 end
 
+-- The UI renderer uses single-sample targets. Replace this unsupported capability
+-- when multisample render targets and MSAA mode enumeration are implemented.
+if rawget(_G, "MultiSampleAntiAliasingSupported") == nil then
+    function MultiSampleAntiAliasingSupported()
+        return false
+    end
+end
+
 -- The simulator renders 2D UI, without a 3D world renderer. These unsupported
 -- water, object-outline and secondary-lighting capabilities are not host GPU probes.
 -- Native world linear-lighting/Bloom startup mode is also absent; this does not

@@ -300,6 +300,21 @@ fn has_pet_ui(state: &mut LuaState) -> LuaResult<u32> {
     Ok(2)
 }
 
+fn pet_move_to(state: &mut LuaState) -> LuaResult<u32> {
+    crate::c_api::pet_orders::begin_move_to(state)?;
+    Ok(0)
+}
+
+fn camera_or_select_or_move_start(state: &mut LuaState) -> LuaResult<u32> {
+    crate::c_api::pet_orders::begin_screen_click(state)?;
+    Ok(0)
+}
+
+fn camera_or_select_or_move_stop(state: &mut LuaState) -> LuaResult<u32> {
+    crate::c_api::pet_orders::confirm_screen_click(state)?;
+    Ok(0)
+}
+
 pub fn register_all(lua: &mut rilua::Lua) -> crate::Result<()> {
     LuaApiMut::register_function(lua, "GetNumPetActions", get_num_pet_actions)?;
     LuaApiMut::register_function(lua, "GetPetActionInfo", get_pet_action_info)?;
@@ -311,5 +326,18 @@ pub fn register_all(lua: &mut rilua::Lua) -> crate::Result<()> {
     LuaApiMut::register_function(lua, "PetHasActionBar", pet_has_action_bar)?;
     LuaApiMut::register_function(lua, "GetPetIcon", get_pet_icon)?;
     LuaApiMut::register_function(lua, "HasPetUI", has_pet_ui)?;
+    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::WowForever {
+        LuaApiMut::register_function(lua, "PetMoveTo", pet_move_to)?;
+        LuaApiMut::register_function(
+            lua,
+            "CameraOrSelectOrMoveStart",
+            camera_or_select_or_move_start,
+        )?;
+        LuaApiMut::register_function(
+            lua,
+            "CameraOrSelectOrMoveStop",
+            camera_or_select_or_move_stop,
+        )?;
+    }
     Ok(())
 }

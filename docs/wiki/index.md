@@ -11,6 +11,19 @@ environment-local `C_ChatInfo` registry, byte-preserving queries, historical
 limits and inferred NUL normalization. The [Lua API](systems/lua-api.md#addon-message-prefix-registration)
 connects profile publication and backing state; outbound delivery remains separate.
 
+## [2026-11-02] investigation | Profile-pinned item effects
+
+[Item-associated spells](investigations/shared-addon-api-gaps.md#item-associated-spells)
+describes one full effect mapping per profile, sparse specialization/condition
+metadata, Classic legacy wrappers and profile-aware selection. Retail retains its
+slot validation and enchantment precedence; other profiles retain candidate
+ordering, including Forever use spells with a non-use effect in the same slot.
+The generator preserves historical Retail rows and name bytes while adding CSV
+associations; passive, signed and unnamed effects remain available to runtime
+consumers. Explicit data builds and provenance preserve source identity
+independently of UI pins. Native selection limits remain in the
+[query contract](../specs/item-spell-query.md).
+
 ## [2026-11-02] source | Forever 70707 UI cache
 
 [Client profiles](systems/client-profiles.md#runtime-cache) describe the 70707
@@ -37,6 +50,13 @@ TOC sibling provenance, customization initialization and the user-approved offli
 catalog/capability policy. The rebuilt Windows login reports zero Lua errors, down
 from 38 records/58 occurrences; 69 focused checks pass after review. This bounded verification
 is separate from the game-screen baseline and native parity.
+
+## [2026-11-03] investigation | Forever 70707 startup compatibility
+
+The game startup investigation connects the reported failures to their original
+consumers. The login follow-up covers the MSAA graphics capability.
+[Game startup](investigations/forever-addon-startup-compatibility.md),
+[login graphics](investigations/forever-login-startup.md#msaa-capability)
 
 ## [2026-10-31] architecture | Startup class and race
 
@@ -210,6 +230,14 @@ The [target-spell and flyout contract](../specs/spell-target-flyout.md) replaces
 ## [2026-10-26] proof | Supplied supertracking restoration
 
 [Content cache/listener preservation](systems/super-track-state.md#deferred-content-coverage-restoration) restores the two deferred supertracking obligations on Retail/PTR/Forever without producer changes. Each exact selector rejects a byte-identical producer-subtracted sibling. Stock maps remain 10/12, 216/282 and 26/26 with no raw-key/count changes; all three all-target checks have zero warnings, and fmt passes.
+
+## [2026-11-03] implementation | Quest and spell lookups for addons
+
+The tracker can refresh for a quest without highlight data. Spell training
+queries can read catalog subtext, and the Forever catalog supplies metadata for
+Wowhead Looter reputation modifiers.
+[Super-track state](systems/super-track-state.md#evidence-bounds),
+[Lua API](systems/lua-api.md#spell-subtext)
 
 ## [2026-10-26] proof | Forever temporary CVars
 

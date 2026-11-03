@@ -36,7 +36,6 @@
   "wt-global-api-C_Mail.GetCraftingOrderMailInfo-188",
   "wt-global-api-C_MythicPlus.GetEndOfRunGearSequenceLevel-189",
   "wt-global-api-C_PaperDollInfo.CanAutoEquipCursorItem-190",
-  "wt-global-api-C_PaperDollInfo.CanCursorCanGoInSlot-191",
   "wt-global-api-C_PlayerInfo.HasVisibleInvSlot-192",
   "wt-global-api-C_ProfSpecs.GetPerksForPath-387",
   "wt-global-api-C_ProfSpecs.ShouldShowPointsReminderForSkillLine-195",

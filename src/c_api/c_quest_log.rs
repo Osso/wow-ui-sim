@@ -1,13 +1,13 @@
 //! Quest queries projected from explicitly supplied simulator state.
 
 use super::helpers::{ensure_namespace, validate_supplied_relation_id};
-use crate::lua_api::methods::borrow_state;
+use crate::lua_api::methods::{borrow_state, val_to_string};
 use crate::lua_bridge::{stack_val, table_set_rust_fn_static};
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
 
-/// Supplied per-quest outputs; no default tuple for unknown IDs.
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+/// Map and categories highlighted by a quest. The default has no highlights.
+#[derive(Debug, Clone, Copy, Default, PartialEq, Eq)]
 pub struct QuestAdditionalHighlights {
     pub ui_map_id: i32,
     pub world_quests: bool,
@@ -220,20 +220,27 @@ fn get_quest_difficulty_level(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
-/// Supplied rows only. Unknown/zero-ID native behavior is an evidence gap.
+/// Project the quest's extra highlights, or the empty set if none are modeled.
+/// The empty set uses the numeric map ID and four booleans declared by Blizzard.
 fn additional_highlights(state: &mut LuaState) -> LuaResult<u32> {
-    let quest_id = validate_supplied_relation_id(stack_val(state, 1), "questID must be a number")?
-        .ok_or_else(|| rilua::runtime_error("questID must be a finite i32 integer"))?;
+    let value = rilua::table_security::unwrap_secret(state, stack_val(state, 1))?;
+    let number = match value {
+        Val::Num(number) => Some(number),
+        Val::Str(_) => val_to_string(state, value).and_then(|text| text.trim().parse().ok()),
+        _ => None,
+    };
+    let quest_id = number
+        .filter(|number: &f64| {
+            number.is_finite() && (f64::from(i32::MIN)..=f64::from(i32::MAX)).contains(number)
+        })
+        .ok_or_else(|| rilua::runtime_error("questID must be a finite i32 number"))?
+        as i32;
     let row = borrow_state(state)?
         .quest_log_entries
         .additional_highlights
         .get(&quest_id)
         .copied()
-        .ok_or_else(|| {
-            rilua::runtime_error(format!(
-                "C_QuestLog.GetQuestAdditionalHighlights: no supplied row for questID {quest_id}"
-            ))
-        })?;
+        .unwrap_or_default();
     state.push(Val::Num(f64::from(row.ui_map_id)));
     state.push(Val::Bool(row.world_quests));
     state.push(Val::Bool(row.world_quests_elite));

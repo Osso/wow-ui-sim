@@ -5,7 +5,6 @@
   "wt-global-api-C_Garrison.HasAdventures-32",
   "wt-global-api-C_Garrison.RushHealAllFollowers-33",
   "wt-global-api-C_GossipInfo.RefreshOptions-34",
-  "wt-global-api-C_Item.IsAnimaItemByID-35",
   "wt-global-api-C_Item.IsItemConduit-36",
   "wt-global-api-C_ScenarioInfo.GetJailersTowerTypeString-38",
   "wt-global-api-C_Soulbinds.CanSwitchActiveSoulbindTreeBranch-39",

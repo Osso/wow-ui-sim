@@ -44,6 +44,8 @@ fn create_frame_from_args(state: &mut LuaState, mut args: CreateFrameArgs) -> Lu
     ensure_untainted_creation_allowed(state, &args.frame_type)?;
     let (parent_id, parent_explicit) =
         resolve_parent_id(state, args.parent_val, args.default_parent_allowed)?;
+    #[cfg(feature = "forbidden-aspects")]
+    let parent_val = args.parent_val;
     let runtime_inherits = build_runtime_inherits(&args.frame_type, args.inherits.as_deref());
     let template_initializer = args.template_initializer;
     let initial_flags = args.initial_flags;
@@ -66,6 +68,10 @@ fn create_frame_from_args(state: &mut LuaState, mut args: CreateFrameArgs) -> Lu
         fire_options_initial_on_show(state, frame_id)?;
     }
     let frame_val = frame_ref(state, frame_id)?;
+    #[cfg(feature = "forbidden-aspects")]
+    let frame_val = crate::lua_api::script_object_transfer::project_created_frame(
+        state, parent_val, frame_val,
+    )?;
     state.push(frame_val);
     Ok(1)
 }

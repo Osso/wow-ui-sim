@@ -221,12 +221,16 @@ pub fn power(id: u32) -> Option<&'static [SpellPowerCost]> {
         .get(&id)
         .map(Vec::as_slice)
 }
-pub fn spell_id_by_name(name: &str) -> Option<u32> {
+pub fn spell_id_by_name(name: &str, subtext: Option<&str>) -> Option<u32> {
     catalog()
         .unwrap_or_else(|e| panic!("{e}"))
         .spells
         .iter()
-        .find_map(|(id, spell)| spell.name.eq_ignore_ascii_case(name).then_some(*id))
+        .find_map(|(id, spell)| {
+            (spell.name.eq_ignore_ascii_case(name)
+                && subtext.is_none_or(|text| spell.subtext.eq_ignore_ascii_case(text)))
+            .then_some(*id)
+        })
 }
 
 #[cfg(test)]

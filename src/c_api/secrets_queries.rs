@@ -3,6 +3,7 @@
 //! Missing native spell-cast/power attributes and health/power/comparison/totem
 //! restriction models are explicitly distinguished from modeled restrictions.
 
+use super::should_auras_be_secret;
 use crate::c_api::{c_spell, c_spell_book, charge_state, unit_aura_access};
 use crate::lua_api::globals::unit_misc;
 use crate::lua_api::methods::{borrow_state, val_to_string};
@@ -135,11 +136,6 @@ fn push_level(state: &mut LuaState, level: f64) -> LuaResult<u32> {
 fn has_secret_restrictions(state: &mut LuaState) -> LuaResult<u32> {
     // This is a build capability query, not a query of active restrictions.
     push_bool(state, cfg!(feature = "retail-12-0-0"))
-}
-
-fn should_auras_be_secret(state: &mut LuaState) -> LuaResult<u32> {
-    let restricted = unit_aura_access::auras_restricted(state)?;
-    push_bool(state, restricted)
 }
 
 fn should_spell_aura_be_secret(state: &mut LuaState) -> LuaResult<u32> {

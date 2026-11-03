@@ -270,8 +270,8 @@ enum GenerateTarget {
     PatchApiDocs(gen_patch_api_docs::Options),
     /// Generate crates/sim-data/data/spells.rs from SpellName/Spell/SpellMisc CSVs
     Spells,
-    /// Generate crates/sim-data/data/items.rs from ItemSparse CSV
-    Items,
+    /// Generate shared item data or profile-pinned full item effects
+    Items(gen_items::Options),
     /// Generate crates/sim-data-profile/data/atlas.rs from UiTextureAtlas CSVs
     Atlas(gen_atlas::Options),
     /// Generate crates/sim-data/data/currencies.rs from CurrencyTypes CSV
@@ -388,7 +388,7 @@ fn run_generator(target: GenerateTarget) {
     let result = match target {
         GenerateTarget::PatchApiDocs(options) => gen_patch_api_docs::run(options),
         GenerateTarget::Spells => gen_spells::run(),
-        GenerateTarget::Items => gen_items::run(),
+        GenerateTarget::Items(options) => gen_items::run(options),
         GenerateTarget::Atlas(options) => gen_atlas::run(options),
         GenerateTarget::Currencies => gen_currencies::run(),
         GenerateTarget::GlobalStrings => gen_global_strings::run(),

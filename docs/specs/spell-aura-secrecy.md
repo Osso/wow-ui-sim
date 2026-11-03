@@ -43,6 +43,18 @@ Focused proof at `721836971`: four Rust tests passed, including the actual secur
 - Spell `1317008`, base row `863018`, carries both aura flags. Neither the supplied flag definitions nor the API documentation establishes precedence. Querying it raises an explicit ambiguity error. It is absent from the current compact spell metadata and local name export, but that absence is not used to discard its native attributes.
 - Invalid/unknown-identifier native semantics remain unverified; this slice introduces no separate resolver or fallback classification policy.
 
+## Current aura-output predicate
+
+`C_Secrets.ShouldAurasBeSecret()` returns one public boolean from the aura
+output policy. The restriction gate requires `retail-12-1-0`, so Forever
+returns false even when `unit_auras_restricted` is set. The separate
+`auras_secret_in_context` input controls script-object access.
+
+The Forever checks cover publication, agreement with public AuraData and
+caller taint preservation. Retail covers both restriction states.
+[Forever preservation tests](../../tests/forever_aura_secrecy_predicate.rs)
+
 ## Out of scope
 
-`ShouldAurasBeSecret`, combat/reaction-dependent secrecy, cast/cooldown secrecy queries, and guessed unconditional `NeverSecret` results.
+New Forever combat/reaction-dependent secrecy or aura access enforcement,
+cast/cooldown secrecy queries, and guessed unconditional `NeverSecret` results.

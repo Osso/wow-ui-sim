@@ -9,3 +9,21 @@ Three per-environment slot lists hold server-provided snapshots. State replaceme
 Automatic countdown, enchant application/cancellation, persistence, and secret-value enforcement are outside this bounded snapshot/query change. No native conformance claim follows from simulator tests.
 
 Grouped tests cover empty slots, populated slots, updates/removal, result isolation, environment isolation, legacy agreement, and the actual cached BuffFrame `UpdateTemporaryEnchantmentBuffs` function with its authored texture mapping.
+
+## Temporary enchantment display query
+
+Forever also publishes the existing
+`C_PaperDollInfo.GetTemporaryEnchantmentInfo(inventorySlot)` implementation used
+by Retail 12.1+. Inventory slots 16, 17 and 18 select the first Temporary (2)
+snapshot from the same weapon-enchant lists. A match returns one fresh table
+with `enchantID`, `remainingTimeMs`, `chargesRemaining` and `hasExpirationTime`.
+An absent enchant or unsupported slot returns zero values.
+
+`remainingTimeMs` projects the supplied snapshot without automatic clock aging.
+The simulator infers `hasExpirationTime` from a positive snapshot time.
+`CancelTemporaryEnchantment` is available with `retail-12-1-0`.
+
+[Forever 70707 documentation](https://github.com/Gethe/wow-ui-source/blob/aff0d8cd53bf4d9ef1c1dd2786b94461a276fb16/Interface/AddOns/Blizzard_APIDocumentationGenerated/PaperDollInfoDocumentation.lua)
+declares the query and result shape. The focused regressions verify the
+selected AuraContainer display consumes the supplied snapshot and clears when
+it disappears. [Forever regressions](../../tests/forever_temporary_enchantment.rs)

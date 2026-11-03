@@ -18,7 +18,8 @@
 //!   whether anything was interrupted
 //! - `SpellCanTargetItem()`   — false until item-targeting cursor exists
 //! - `SpellCanTargetItemID()` — false until item-targeting cursor exists
-//! - `SpellStopTargeting()`   — no-op companion to `SpellIsTargeting`
+//! - `SpellStopTargeting()`   — cancels Forever's pending pet move-to command;
+//!   spell-targeting cursors remain unmodeled
 //! - `UseAction(slot)`        — cast/execute the spell in an action bar slot
 //! - `ActionButtonDown(id)` / `ActionButtonUp(id)` — main bar key dispatch
 //! - `MultiActionButtonDown(barName, id)` / `MultiActionButtonUp(...)` —
@@ -499,8 +500,14 @@ fn spell_can_target_item_id(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
-/// `SpellStopTargeting()` — silent no-op until targeting cursor state exists.
-fn spell_stop_targeting(_state: &mut LuaState) -> LuaResult<u32> {
+/// Pet move-to has its own pending state, although Back/Escape use this verb
+/// to cancel targeting. Other profiles preserve their existing empty return.
+fn spell_stop_targeting(state: &mut LuaState) -> LuaResult<u32> {
+    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::WowForever {
+        let stopped = crate::c_api::pet_orders::cancel_move_to(state)?;
+        state.push(Val::Bool(stopped));
+        return Ok(1);
+    }
     Ok(0)
 }
 

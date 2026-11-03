@@ -14,10 +14,32 @@ Retail 12.1+ and Forever secure Blizzard functions use a distinct object-table p
 
 Focused proof must cover projection identity, field isolation, native parent/method behavior, spoof rejection, and the unmodified provider boundary. Caller authority, secret accessibility, hooks, handler-storage isolation, and native security remain unverified.
 
+## CreateFrame parent-view selection
+
+Native evidence WM70, retail 12.1.5 build 70688 (partial):
+
+- **VERIFIED:** One native object has distinct cached public and forbidden Lua tables. Raw table identity distinguishes them; native lookup resolves either view to the same object.
+- **VERIFIED:** Creation classifies the supplied parent by raw table identity and publishes the new object's explicitly selected cached view. The cache selector does not consult the caller environment.
+- **INFERRED:** Ordinary `CreateFrame` results follow the supplied parent view; with no selected parent view, the ordinary view is returned. This is not established for every template or context.
+- **VERIFIED consumer evidence, source build unverified:** Secure frame pools retain the exact acquired table as a key and require that same key on release; their checked Lua pool and proxy paths do not invoke `GetForbiddenObjectTable`.
+- **UNKNOWN:** The guarded `GetForbiddenObjectTable` bridge, arbitrary secure-boundary conversion, and general equality semantics are not established. Do not infer universal equality or pool-key canonicalization.
+
+## GetParent and function boundaries
+
+Native evidence WM73, retail 12.1.5 build 70688 (partial):
+
+- **VERIFIED:** `GetParent` classifies the receiver's cached view and publishes the parent in that view, without using the calling environment to select it.
+- **INFERRED:** Normally completed calls on a default child return the default parent; calls on a forbidden child return the forbidden parent. Repeated forbidden-view ancestor traversal retains that view.
+- **VERIFIED:** The inspected `GetChildren`, `GetRegions`, and `GetPoint` relative-to output fragments use the default-only publisher, not `GetParent`'s view selection.
+- **VERIFIED:** The checked Lua and C argument, vararg, and result transfers copy table identity without selecting another cached view. **INFERRED:** Ordinary environment crossings do not canonicalize object tables.
+- **EMULATED:** The simulator's explicit XML delegate projection remains a scoped compatibility policy; WM73 does not establish its native mechanism. **UNKNOWN:** Getter guards and all engine callbacks were not fully traced.
+
 ## What it must do
 
 - [x] Preserve simulator frame identity in the forbidden partition: native parent arguments recognize the same frame while public and forbidden Lua tables remain distinct.
-- [x] Convert direct references to XML-partitioned frames across the covered secure-environment boundary; ordinary frame fields remain public and nested data is not recursively rewritten.
+- [ ] Return the new frame's parent-selected table view from `CreateFrame`, so an ordinary secure frame pool retains the same key when its consumer later releases it. TargetFrame consumer verification is pending.
+- [ ] Preserve the supplied frame-table identity across ordinary Lua environment crossings. Explicit XML delegates and native publication points retain their separate projection behavior; untraced engine callbacks remain UNKNOWN.
+- [ ] Publish `GetParent` in the receiver's view, independently of the calling environment; do not apply this selection to `GetChildren`, `GetRegions`, or `GetPoint`.
 - [x] Keep explicit native `GetObjectTable` results public for covered outbound addon initializers.
 - [x] Pass the mixed-argument XML delegate and unchanged native AuraContainer initializer regressions after scoped inbound argument projection.
 - [x] Intern forbidden views and make repeated `GetForbiddenObjectTable` projection idempotent.
@@ -27,8 +49,8 @@ Focused proof must cover projection identity, field isolation, native parent/met
 
 ## How it works
 
-- `rilua` optional environment-transfer hook, pinned to `b6387563c8cd7882194cec368e626ebc72a17b81`.
-- `src/lua_api/script_object_transfer.rs` registers a host conversion callback after secure-environment creation. Canonical registry mappings identify partitions, not user-controlled backlink fields alone.
+- The former simulator environment-transfer hook projected direct frame values on ordinary secure/global Lua crossings. This was an emulated partition policy, not a verified native rule. It changed pool object identities on the TargetFrame consumer path; ordinary crossings now retain their supplied values.
+- `src/lua_api/script_object_transfer.rs` registers the explicit projection constructor after secure-environment creation. Canonical registry mappings identify partitions, not user-controlled backlink fields alone.
 - `src/lua_api/env_init/shared_bootstrap.lua` constructs and interns forbidden tables. Its XML delegate wrapper uses a registered native argument projector only for the explicit forbidden secure-delegate boundary.
 - `src/lua_api/env_init/bootstrap.rs` registers that helper before either environment can use the wrapper and passes the compile-time capability into the bootstrap chunk; older profiles retain receiver-only XML behavior without a missing-helper fallback.
 

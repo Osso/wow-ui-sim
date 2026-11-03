@@ -216,6 +216,8 @@ pub fn is_object_type(state: &mut LuaState) -> LuaResult<u32> {
                 actual.eq_ignore_ascii_case(&requested)
                     || frame.widget_type.as_str().eq_ignore_ascii_case(&requested)
                     || widget_type_inherits(frame.widget_type, &requested)
+                    || (requested.eq_ignore_ascii_case("Animation")
+                        && sim.anim_frame_to_anim.contains_key(&id))
             })
             .unwrap_or(false)
     };
