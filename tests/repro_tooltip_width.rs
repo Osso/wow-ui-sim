@@ -37,7 +37,7 @@ fn test_tooltip_width_with_colors() {
 
 fn measure_tooltip_width(env: &WowLuaEnv, font_system: &mut WowFontSystem) -> f32 {
     let mut state = env.state().borrow_mut();
-    wow_ui_sim::iced_app::tooltip::update_tooltip_sizes(&mut state, font_system);
+    wow_ui_sim::iced_app::tooltip::prepare_tooltip_layout(&mut state, font_system);
     let id = state.widgets.get_id_by_name("GameTooltip").unwrap();
     state.widgets.get(id).unwrap().width
 }

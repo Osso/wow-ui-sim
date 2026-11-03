@@ -8,8 +8,46 @@ mod tooltip_hover_helpers;
 
 use tooltip_full_env_helpers::setup_full_env;
 use tooltip_hover_helpers::{open_character_panel, refresh_buff_frame};
+#[cfg(not(feature = "client-wrath"))]
 use wow_ui_sim::lua_api::WowLuaEnv;
 
+#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
+#[test]
+fn ringed_frame_tooltip_applies_native_outer_and_explicit_padding() {
+    let env = setup_full_env();
+    let addons = wow_ui_sim::paths::default_blizzard_ui_addons_path().unwrap();
+    wow_ui_sim::loader::load_addon(
+        &env.loader_env(),
+        &addons.join("Blizzard_CustomizationUI/Blizzard_CustomizationUI.toc"),
+    )
+    .unwrap();
+    env.exec(
+        r#"
+        local region = CreateFrame("Frame", nil, UIParent, "CustomizationFrameWithTooltipTemplate")
+        local PaddingTooltip = CustomizationNoHeaderTooltip
+        region.tooltipAnchor = "ANCHOR_NONE"
+        region.tooltipMinWidth = 300
+        region.tooltipPadding = 3
+        region:AddTooltipLine("x")
+        region:OnEnter()
+        local width, height = PaddingTooltip:GetWidth(), PaddingTooltip:GetHeight()
+        assert(math.abs(width - 326.48) < 0.01, "native outer width padding: " .. width .. " sides: " .. tostring(PaddingTooltip:GetPadding()))
+        PaddingTooltip:SetPadding(3, 5, 7, 11)
+        assert(math.abs(PaddingTooltip:GetWidth() - 330.48) < 0.01, "explicit horizontal sides")
+        assert(math.abs(PaddingTooltip:GetHeight() - height - 10) < 0.01, "explicit vertical sides")
+        local right, bottom, left, top = PaddingTooltip:GetPadding()
+        assert(right == 3 and bottom == 5 and left == 7 and top == 11, "padding side order")
+        PaddingTooltip:SetPadding(2, 4)
+        right, bottom, left, top = PaddingTooltip:GetPadding()
+        assert(right == 2 and bottom == 4 and left == 7 and top == 11, "omitted sides persist")
+        assert(math.abs(PaddingTooltip:GetWidth() - 329.48) < 0.01, "preserved left padding")
+        assert(math.abs(PaddingTooltip:GetHeight() - height - 9) < 0.01, "preserved top padding")
+        "#,
+    )
+    .unwrap();
+}
+
+#[cfg(not(feature = "client-wrath"))]
 #[test]
 fn action_button_hover_preserves_spell_identity_for_tooltip_postcall() {
     let env = setup_full_env();
@@ -230,7 +268,7 @@ fn blizzard_show_synchronously_uses_glyph_measurement() {
         r#"
         GameTooltip:SetOwner(UIParent, "ANCHOR_NONE")
         assert(GameTooltip:ProcessInfo({ tooltipData = { lines = {
-            { type = 0, leftText = "Wide WWW and narrow iii glyphs" },
+            { type = 0, leftText = "WWWWWWWWWW" },
         } } }))
         assert(GameTooltip:IsShown(), "processed tooltip must be shown")
         assert(GameTooltip:GetOwner() == UIParent, "processed tooltip must retain its owner")
@@ -239,16 +277,55 @@ fn blizzard_show_synchronously_uses_glyph_measurement() {
     )
     .unwrap();
     let mut font = wow_ui_sim::render::font::WowFontSystem::new();
-    wow_ui_sim::iced_app::tooltip::update_tooltip_sizes(&mut env.state().borrow_mut(), &mut font);
+    wow_ui_sim::iced_app::tooltip::prepare_tooltip_layout(&mut env.state().borrow_mut(), &mut font);
     env.exec(
         r#"
         assert(GameTooltip:GetWidth() == shownWidth, "Show did not synchronously measure glyph width")
         assert(GameTooltip:GetHeight() == shownHeight, "Show did not synchronously measure glyph height")
+        GameTooltip:ClearLines()
+        GameTooltip:AddLineDataText({ type = 0, leftText = "iiiiiiiiii" })
+        GameTooltip:Show()
+        assert(GameTooltip:GetWidth() < shownWidth, "equal-length glyphs must have distinct widths")
         "#,
     )
     .unwrap();
 }
 
+#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
+#[test]
+fn blizzard_line_processing_does_not_resize_on_render_before_show() {
+    let env = setup_full_env();
+    env.exec(
+        r#"
+        GameTooltip:SetOwner(UIParent, "ANCHOR_NONE")
+        assert(GameTooltip:ProcessInfo({ tooltipData = { lines = {
+            { type = 0, leftText = "Short" },
+        } } }))
+        "#,
+    )
+    .unwrap();
+    let mut font = wow_ui_sim::render::font::WowFontSystem::new();
+    wow_ui_sim::iced_app::tooltip::prepare_tooltip_layout(&mut env.state().borrow_mut(), &mut font);
+    env.exec(
+        r#"
+        renderWidth, renderHeight = GameTooltip:GetWidth(), GameTooltip:GetHeight()
+        GameTooltip:AddLineDataText({ type = 0, leftText = "A much longer pending tooltip row that should wait for Show" })
+        "#,
+    )
+    .unwrap();
+    wow_ui_sim::iced_app::tooltip::prepare_tooltip_layout(&mut env.state().borrow_mut(), &mut font);
+    env.exec(
+        r#"
+        assert(GameTooltip:GetWidth() == renderWidth, "render resized tooltip width before Show")
+        assert(GameTooltip:GetHeight() == renderHeight, "render resized tooltip height before Show")
+        GameTooltip:Show()
+        assert(GameTooltip:GetWidth() > renderWidth, "Show did not resize tooltip")
+        "#,
+    )
+    .unwrap();
+}
+
+#[cfg(not(feature = "client-wrath"))]
 #[test]
 fn test_tooltip_mixins_load_in_full_env() {
     let env = setup_full_env();
@@ -268,6 +345,7 @@ fn test_tooltip_mixins_load_in_full_env() {
     assert_eq!(tooltip_onload_type, "function");
 }
 
+#[cfg(not(feature = "client-wrath"))]
 #[test]
 fn test_game_tooltip_process_info_with_constructed_tooltip_info_populates_lines() {
     let env = setup_full_env();
@@ -423,6 +501,16 @@ fn test_buff_icon_hover_shows_aura_tooltip() {
 
     let expected_name: String = env
         .eval(
+            if wow_ui_sim::client_profile::ACTIVE == wow_ui_sim::client_profile::ClientProfile::Wrath {
+                // Wrath FrameXML/BuffFrame.xml:26-30 binds the original aura button script.
+                r#"
+                local button = assert(BuffButton1)
+                assert(button:IsShown(), "first Wrath buff button must be shown")
+                local name = assert(UnitBuff("player", button:GetID()))
+                assert(button:GetScript("OnEnter"))(button)
+                return name
+                "#
+            } else {
             r#"
             for _, button in ipairs(BuffFrame.auraFrames) do
                 if button:IsShown() and button.buttonInfo and button.buttonInfo.index then
@@ -431,7 +519,8 @@ fn test_buff_icon_hover_shows_aura_tooltip() {
                 end
             end
             error("No visible buff icon with tooltip data")
-            "#,
+            "#
+            },
         )
         .unwrap();
 
@@ -457,6 +546,7 @@ fn test_buff_icon_hover_shows_aura_tooltip() {
     assert_eq!(td.lines[0].left_text, expected_name);
 }
 
+#[cfg(not(feature = "client-wrath"))]
 #[test]
 fn test_world_loot_object_tooltip_shows_world_loot_data() {
     let env = setup_full_env();
@@ -502,6 +592,7 @@ fn test_world_loot_object_tooltip_shows_world_loot_data() {
     assert!(!td.lines[0].left_text.is_empty());
 }
 
+#[cfg(not(feature = "client-wrath"))]
 #[test]
 fn test_tooltip_comparison_manager_get_comparison_item_data_uses_guid_lookup() {
     let env = setup_full_env();
@@ -532,6 +623,7 @@ fn test_tooltip_comparison_manager_get_comparison_item_data_uses_guid_lookup() {
     );
 }
 
+#[cfg(not(feature = "client-wrath"))]
 #[test]
 fn test_tooltip_data_handler_set_owned_item_by_id_uses_owned_item_getter() {
     let env = setup_full_env();
@@ -564,6 +656,7 @@ fn test_tooltip_data_handler_set_owned_item_by_id_uses_owned_item_getter() {
     );
 }
 
+#[cfg(not(feature = "client-wrath"))]
 #[test]
 fn test_tooltip_data_handler_set_inventory_item_uses_inventory_getter() {
     let env = setup_full_env();
@@ -576,6 +669,7 @@ fn test_tooltip_data_handler_set_inventory_item_uses_inventory_getter() {
     );
 }
 
+#[cfg(not(feature = "client-wrath"))]
 fn inventory_item_tooltip_uses_inventory_getter(env: &WowLuaEnv) -> bool {
     env.eval(
         r#"
@@ -602,6 +696,7 @@ fn inventory_item_tooltip_uses_inventory_getter(env: &WowLuaEnv) -> bool {
     .unwrap()
 }
 
+#[cfg(not(feature = "client-wrath"))]
 #[test]
 fn test_tooltip_data_handler_set_recipe_result_item_uses_recipe_getters() {
     let env = setup_full_env();
@@ -655,6 +750,7 @@ fn test_tooltip_data_handler_set_recipe_result_item_uses_recipe_getters() {
     );
 }
 
+#[cfg(not(feature = "client-wrath"))]
 #[test]
 fn test_tooltip_data_handler_set_minimap_mouseover_uses_minimap_getter() {
     let env = setup_full_env();

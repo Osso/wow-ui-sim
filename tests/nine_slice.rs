@@ -58,6 +58,7 @@ fn nine_slice_corner_textures_have_atlas() {
 
 /// Direct NineSliceUtil.ApplyLayout("TooltipDefaultLayout") calls should create
 /// the tooltip pieces and assign the expected atlas names to them.
+#[cfg(not(feature = "client-wrath"))]
 #[test]
 fn nine_slice_apply_layout_tooltip_default_sets_child_piece_atlases() {
     let env = env_with_shared_xml();

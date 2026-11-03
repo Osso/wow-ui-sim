@@ -7,7 +7,7 @@ use rustc_hash::FxHashSet;
 use wow_ui_sim::iced_app::compute_frame_rect;
 use wow_ui_sim::iced_app::tooltip::{
     TooltipRender, TooltipRenderData, build_tooltip_quads, collect_tooltip_data,
-    update_tooltip_sizes,
+    prepare_tooltip_layout,
 };
 use wow_ui_sim::iced_app::{
     DirtyStrataRebuildParams, RegistryQuadBatchParams, build_quad_batch_for_registry,
@@ -154,7 +154,7 @@ pub fn measure_tooltip_collect_and_quad_emission(env: &WowLuaEnv) -> Duration {
 
 fn update_seeded_perf_tooltip_sizes(env: &WowLuaEnv, font_system: &mut WowFontSystem) {
     let mut state = env.state().borrow_mut();
-    update_tooltip_sizes(&mut state, font_system);
+    prepare_tooltip_layout(&mut state, font_system);
 }
 
 fn measure_seeded_perf_tooltip_quad_emission(

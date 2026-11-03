@@ -14,9 +14,20 @@ Retail 12.1+ and Forever secure Blizzard functions use a distinct object-table p
 
 Focused proof must cover projection identity, field isolation, native parent/method behavior, spoof rejection, and the unmodified provider boundary. Caller authority, secret accessibility, hooks, handler-storage isolation, and native security remain unverified.
 
+## CreateFrame parent-view selection
+
+Native evidence WM70, retail 12.1.5 build 70688 (partial):
+
+- **VERIFIED:** One native object has distinct cached public and forbidden Lua tables. Raw table identity distinguishes them; native lookup resolves either view to the same object.
+- **VERIFIED:** Creation classifies the supplied parent by raw table identity and publishes the new object's explicitly selected cached view. The cache selector does not consult the caller environment.
+- **INFERRED:** Ordinary `CreateFrame` results follow the supplied parent view; with no selected parent view, the ordinary view is returned. This is not established for every template or context.
+- **VERIFIED consumer evidence, source build unverified:** Secure frame pools retain the exact acquired table as a key and require that same key on release; their checked Lua pool and proxy paths do not invoke `GetForbiddenObjectTable`.
+- **UNKNOWN:** The guarded `GetForbiddenObjectTable` bridge, arbitrary secure-boundary conversion, and general equality semantics are not established. Do not infer universal equality or pool-key canonicalization.
+
 ## What it must do
 
 - [x] Preserve simulator frame identity in the forbidden partition: native parent arguments recognize the same frame while public and forbidden Lua tables remain distinct.
+- [ ] Return the new frame's parent-selected table view from `CreateFrame`, so an ordinary secure frame pool retains the same key when its consumer later releases it. TargetFrame consumer verification is pending.
 - [x] Convert direct references to XML-partitioned frames across the covered secure-environment boundary; ordinary frame fields remain public and nested data is not recursively rewritten.
 - [x] Keep explicit native `GetObjectTable` results public for covered outbound addon initializers.
 - [x] Pass the mixed-argument XML delegate and unchanged native AuraContainer initializer regressions after scoped inbound argument projection.

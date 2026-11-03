@@ -5,9 +5,9 @@
 mod tooltip_full_env_helpers;
 mod tooltip_hover_helpers;
 
+use iced::{Point, Rectangle};
 use tooltip_full_env_helpers::setup_full_env;
 use tooltip_hover_helpers::{open_character_panel, refresh_buff_frame};
-use iced::{Point, Rectangle};
 
 const HOVER_FIRST_VISIBLE_BUFF_ICON_LUA: &str = r#"
     local totalButtons = 0
@@ -45,6 +45,12 @@ const HOVER_FIRST_VISIBLE_BUFF_ICON_LUA: &str = r#"
 "#;
 
 fn hover_first_visible_buff_icon(env: &wow_ui_sim::lua_api::WowLuaEnv) {
+    if wow_ui_sim::client_profile::ACTIVE == wow_ui_sim::client_profile::ClientProfile::Wrath {
+        // Wrath FrameXML/BuffFrame.xml:26-30 supplies the original hover script.
+        env.exec("local button = assert(BuffButton1); assert(button:IsShown()); assert(button:GetScript('OnEnter'))(button)")
+            .expect("Failed to hover the original Wrath buff button");
+        return;
+    }
     env.exec(HOVER_FIRST_VISIBLE_BUFF_ICON_LUA)
         .expect("Failed to hover a visible buff icon");
 }
@@ -74,7 +80,7 @@ fn test_tooltip_produces_quads_after_hover() {
     {
         let mut state = env.state().borrow_mut();
         let _ = state.widgets.take_render_dirty();
-        wow_ui_sim::iced_app::tooltip::update_tooltip_sizes(&mut state, &mut font_sys);
+        wow_ui_sim::iced_app::tooltip::prepare_tooltip_layout(&mut state, &mut font_sys);
     }
 
     // Check tooltip got sized
@@ -183,7 +189,7 @@ fn test_character_slot_hover_tooltip_produces_quads() {
     {
         let mut state = env.state().borrow_mut();
         let _ = state.widgets.take_render_dirty();
-        wow_ui_sim::iced_app::tooltip::update_tooltip_sizes(&mut state, &mut font_sys);
+        wow_ui_sim::iced_app::tooltip::prepare_tooltip_layout(&mut state, &mut font_sys);
     }
 
     let gt_id = env
@@ -305,7 +311,7 @@ fn test_character_slot_hover_tooltip_is_positioned_to_right_of_slot() {
     {
         let mut state = env.state().borrow_mut();
         let _ = state.widgets.take_render_dirty();
-        wow_ui_sim::iced_app::tooltip::update_tooltip_sizes(&mut state, &mut font_sys);
+        wow_ui_sim::iced_app::tooltip::prepare_tooltip_layout(&mut state, &mut font_sys);
     }
 
     let state = env.state().borrow();
@@ -363,7 +369,7 @@ fn test_character_slot_remains_hit_target_after_tooltip_resizes() {
     let mut font_sys = WowFontSystem::new();
     {
         let mut state = env.state().borrow_mut();
-        wow_ui_sim::iced_app::tooltip::update_tooltip_sizes(&mut state, &mut font_sys);
+        wow_ui_sim::iced_app::tooltip::prepare_tooltip_layout(&mut state, &mut font_sys);
         state.ensure_layout_rects();
     }
 
@@ -402,10 +408,8 @@ fn topmost_hit_at(env: &wow_ui_sim::lua_api::WowLuaEnv, point: Point) -> Option<
         .get_strata_buckets()
         .expect("strata buckets should be available")
         .clone();
-    let collected = wow_ui_sim::iced_app::frame_collect::collect_hittable_frames(
-        &state.widgets,
-        &buckets,
-    );
+    let collected =
+        wow_ui_sim::iced_app::frame_collect::collect_hittable_frames(&state.widgets, &buckets);
     let hittable = wow_ui_sim::iced_app::build_hittable_rects(&collected, &state.widgets);
     hittable
         .iter()
@@ -450,7 +454,7 @@ fn test_buff_icon_hover_tooltip_produces_quads() {
     {
         let mut state = env.state().borrow_mut();
         let _ = state.widgets.take_render_dirty();
-        wow_ui_sim::iced_app::tooltip::update_tooltip_sizes(&mut state, &mut font_sys);
+        wow_ui_sim::iced_app::tooltip::prepare_tooltip_layout(&mut state, &mut font_sys);
     }
 
     let gt_id = env

@@ -11,6 +11,19 @@ environment-local `C_ChatInfo` registry, byte-preserving queries, historical
 limits and inferred NUL normalization. The [Lua API](systems/lua-api.md#addon-message-prefix-registration)
 connects profile publication and backing state; outbound delivery remains separate.
 
+## [2026-11-02] investigation | Profile-pinned item effects
+
+[Item-associated spells](investigations/shared-addon-api-gaps.md#item-associated-spells)
+describes one full effect mapping per profile, sparse specialization/condition
+metadata, Classic legacy wrappers and profile-aware selection. Retail retains its
+slot validation and enchantment precedence; other profiles retain candidate
+ordering, including Forever use spells with a non-use effect in the same slot.
+The generator preserves historical Retail rows and name bytes while adding CSV
+associations; passive, signed and unnamed effects remain available to runtime
+consumers. Explicit data builds and provenance preserve source identity
+independently of UI pins. Native selection limits remain in the
+[query contract](../specs/item-spell-query.md).
+
 ## [2026-11-02] source | Forever 70707 UI cache
 
 [Client profiles](systems/client-profiles.md#runtime-cache) describe the 70707

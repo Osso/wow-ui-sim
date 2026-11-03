@@ -70,6 +70,24 @@ fn legacy_macro_and_spellbook_globals_exist_for_addons() {
 #[cfg(not(feature = "retail-12-0-0"))]
 #[test]
 fn legacy_spell_globals_exist_for_addons() {
+    #[cfg(feature = "client-wrath")]
+    if wow_ui_sim::client_profile::ACTIVE == wow_ui_sim::client_profile::ClientProfile::Wrath {
+        let env = crate::common::action_bar_fixture::wrath_env();
+        // Wrath SpellBookFrame.lua:447,496 reads a slot and book type.
+        env.exec(
+            r#"
+            A_Admin.SetWrathSpellBookSlot('spell', 1, 6603, 'Auto Attack', '', 'icon', 164, 2)
+            A_Admin.SetWrathSpellBookSlot('spell', 2, 635, 'Holy Light', 'Rank 2', 'icon-two', 165, 3)
+            assert(GetSpellName(1, 'spell') == 'Auto Attack')
+            assert(GetSpellTexture(1, 'spell') == 'icon')
+            assert(GetSpellName(2, 'spell') == 'Holy Light')
+            assert(GetSpellTexture(2, 'spell') == 'icon-two')
+            assert(not IsPassiveSpell(1, 'spell'))
+            "#,
+        )
+        .expect("original Wrath spellbook slot queries should be callable");
+        return;
+    }
     let env = env();
     let result: String = env
         .eval(
@@ -178,6 +196,7 @@ fn player_login_legacy_globals_exist_for_addons() {
     );
 }
 
+#[cfg(not(feature = "client-wrath"))]
 #[test]
 fn restricted_actions_state_is_numeric_for_addons() {
     let env = env();

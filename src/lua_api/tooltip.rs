@@ -64,7 +64,8 @@ pub struct TooltipData {
     pub anchor_y_offset: f32,
     pub custom_word_wrap_min_width: Option<f32>,
     pub min_width: f32,
-    pub padding: f32,
+    /// Right, bottom, left, top, in layout units.
+    pub padding: [f32; 4],
     /// Spell ID set by `SetSpellByID`, returned by `GetSpell`.
     pub spell_id: Option<u32>,
     /// Unit token set by `SetUnit`, returned by `GetUnit`.
@@ -83,6 +84,15 @@ pub struct TooltipData {
     pub wrath_texture_rows: Vec<(usize, u64)>,
 }
 
+impl TooltipData {
+    /// WM63-L23: native outer allowance plus the explicitly stored sides.
+    pub(crate) fn native_outer_padding(&self) -> (f32, f32) {
+        const OUTER_PADDING: f32 = 20.48;
+        let [right, bottom, left, top] = self.padding;
+        (OUTER_PADDING + left + right, OUTER_PADDING + top + bottom)
+    }
+}
+
 impl Default for TooltipData {
     fn default() -> Self {
         Self {
@@ -96,7 +106,7 @@ impl Default for TooltipData {
             anchor_y_offset: 0.0,
             custom_word_wrap_min_width: None,
             min_width: 0.0,
-            padding: 0.0,
+            padding: [0.0; 4],
             spell_id: None,
             unit_token: None,
             unit_name: None,

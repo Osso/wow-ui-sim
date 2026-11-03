@@ -1,9 +1,12 @@
 #![cfg(feature = "gui")]
 
+#[cfg(not(feature = "client-wrath"))]
 #[path = "tooltip_full_env_helpers.rs"]
 mod tooltip_full_env_helpers;
 
+#[cfg(not(feature = "client-wrath"))]
 use tooltip_full_env_helpers::setup_full_env;
+#[cfg(not(feature = "client-wrath"))]
 use wow_ui_sim::iced_app::compute_frame_rect;
 use wow_ui_sim::lua_api::WowLuaEnv;
 
@@ -365,12 +368,12 @@ fn test_addline_wrap_flag_stored() {
     assert!(td.lines[1].wrap, "Second line (with wrap=true) should wrap");
 }
 
-fn update_tooltip_sizes(env: &WowLuaEnv) {
+fn prepare_tooltip_layout(env: &WowLuaEnv) {
     use wow_ui_sim::render::font::WowFontSystem;
 
     let mut font_sys = WowFontSystem::new();
     let mut state = env.state().borrow_mut();
-    wow_ui_sim::iced_app::tooltip::update_tooltip_sizes(&mut state, &mut font_sys);
+    wow_ui_sim::iced_app::tooltip::prepare_tooltip_layout(&mut state, &mut font_sys);
 }
 
 #[test]
@@ -389,7 +392,7 @@ fn test_wrapped_line_does_not_expand_width() {
     )
     .unwrap();
 
-    update_tooltip_sizes(&env);
+    prepare_tooltip_layout(&env);
 
     let state = env.state().borrow();
     let gt_id = state.widgets.get_id_by_name("GameTooltip").unwrap();
@@ -418,7 +421,7 @@ fn test_wrapped_only_line_still_sets_tooltip_width() {
     )
     .unwrap();
 
-    update_tooltip_sizes(&env);
+    prepare_tooltip_layout(&env);
 
     let state = env.state().borrow();
     let gt_id = state.widgets.get_id_by_name("GameTooltip").unwrap();
@@ -445,7 +448,7 @@ fn test_wrapped_line_increases_height() {
     "#,
     )
     .unwrap();
-    update_tooltip_sizes(&env);
+    prepare_tooltip_layout(&env);
     let height_one_line = {
         let state = env.state().borrow();
         let gt_id = state.widgets.get_id_by_name("GameTooltip").unwrap();
@@ -462,7 +465,7 @@ fn test_wrapped_line_increases_height() {
     "#,
     )
     .unwrap();
-    update_tooltip_sizes(&env);
+    prepare_tooltip_layout(&env);
 
     let height_with_wrap = {
         let state = env.state().borrow();
@@ -492,7 +495,7 @@ fn test_double_line_width_includes_gap() {
     "#,
     )
     .unwrap();
-    update_tooltip_sizes(&env);
+    prepare_tooltip_layout(&env);
     let width_single = {
         let state = env.state().borrow();
         let gt_id = state.widgets.get_id_by_name("GameTooltip").unwrap();
@@ -508,7 +511,7 @@ fn test_double_line_width_includes_gap() {
     "#,
     )
     .unwrap();
-    update_tooltip_sizes(&env);
+    prepare_tooltip_layout(&env);
     let width_double = {
         let state = env.state().borrow();
         let gt_id = state.widgets.get_id_by_name("GameTooltip").unwrap();
@@ -539,16 +542,14 @@ fn test_tooltip_sizing_includes_padding() {
     "#,
     )
     .unwrap();
-    update_tooltip_sizes(&env);
+    prepare_tooltip_layout(&env);
 
     let state = env.state().borrow();
     let gt_id = state.widgets.get_id_by_name("GameTooltip").unwrap();
     let frame = state.widgets.get(gt_id).unwrap();
 
-    // The tooltip text inset is the 12px content padding plus the 3px
-    // NineSlice inner border inset on each side (30 total per axis).
-    // Single line at 14px header: height = ceil(14*1.2) = 17 + 30 inset = 47.
-    // Width = text width + 24 padding.
+    // WM63-L23 specifies a 20.48 outer addition for Retail/PTR. Other
+    // profiles retain the renderer's previous NineSlice-based estimate.
     assert!(
         frame.width > 24.0,
         "Width should be > padding alone, got {}",
@@ -559,8 +560,12 @@ fn test_tooltip_sizing_includes_padding() {
         "Height should be > padding alone, got {}",
         frame.height
     );
-    // Single header line (14pt * 1.2 = ~17px) + 30px vertical inset = ~47px
-    let expected_height = (14.0_f32 * 1.2).ceil() + 30.0;
+    let outer_padding = if cfg!(any(feature = "client-retail", feature = "client-ptr")) {
+        20.48
+    } else {
+        30.0
+    };
+    let expected_height = (14.0_f32 * 1.2).ceil() + outer_padding;
     assert!(
         (frame.height - expected_height).abs() < 1.0,
         "Expected height ~{}, got {}",
@@ -582,7 +587,7 @@ fn test_tooltip_height_grows_with_lines() {
     "#,
     )
     .unwrap();
-    update_tooltip_sizes(&env);
+    prepare_tooltip_layout(&env);
     let h1 = {
         let state = env.state().borrow();
         let gt_id = state.widgets.get_id_by_name("GameTooltip").unwrap();
@@ -591,7 +596,7 @@ fn test_tooltip_height_grows_with_lines() {
 
     env.exec(r#"GameTooltip:AddLine("Line 2"); GameTooltip:Show()"#)
         .unwrap();
-    update_tooltip_sizes(&env);
+    prepare_tooltip_layout(&env);
     let h2 = {
         let state = env.state().borrow();
         let gt_id = state.widgets.get_id_by_name("GameTooltip").unwrap();
@@ -600,7 +605,7 @@ fn test_tooltip_height_grows_with_lines() {
 
     env.exec(r#"GameTooltip:AddLine("Line 3"); GameTooltip:Show()"#)
         .unwrap();
-    update_tooltip_sizes(&env);
+    prepare_tooltip_layout(&env);
     let h3 = {
         let state = env.state().borrow();
         let gt_id = state.widgets.get_id_by_name("GameTooltip").unwrap();
@@ -611,6 +616,7 @@ fn test_tooltip_height_grows_with_lines() {
     assert!(h3 > h2, "3 lines should be taller than 2: h2={h2}, h3={h3}");
 }
 
+#[cfg(not(feature = "client-wrath"))]
 #[test]
 fn test_tooltip_nineslice_child_accessible() {
     let env = setup_full_env();
@@ -691,7 +697,7 @@ fn test_blank_unwrapped_line_does_not_collapse_wrapped_tooltip_width() {
     )
     .unwrap();
 
-    update_tooltip_sizes(&env);
+    prepare_tooltip_layout(&env);
 
     let state = env.state().borrow();
     let gt_id = state.widgets.get_id_by_name("GameTooltip").unwrap();
@@ -726,7 +732,7 @@ fn test_tooltip_sizing_skipped_when_hidden() {
         frame.width
     };
 
-    update_tooltip_sizes(&env);
+    prepare_tooltip_layout(&env);
 
     let width_after_render = {
         let state = env.state().borrow();
@@ -754,15 +760,20 @@ fn test_tooltip_min_width_respected() {
     "#,
     )
     .unwrap();
-    update_tooltip_sizes(&env);
+    prepare_tooltip_layout(&env);
 
     let state = env.state().borrow();
     let gt_id = state.widgets.get_id_by_name("GameTooltip").unwrap();
     let frame = state.widgets.get(gt_id).unwrap();
 
-    // min_width=300 + 24px padding = 324
+    // WM63-L23 places the outer addition outside the content minimum.
+    let outer_padding = if cfg!(any(feature = "client-retail", feature = "client-ptr")) {
+        20.48
+    } else {
+        24.0
+    };
     assert!(
-        frame.width >= 324.0,
+        frame.width >= 300.0 + outer_padding - 0.01,
         "Width should respect min_width (300+padding), got {}",
         frame.width
     );

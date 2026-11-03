@@ -2,7 +2,7 @@
 
 use iced::{Point, Rectangle, Size};
 use wow_ui_sim::iced_app::tooltip::{
-    TooltipRender, build_tooltip_quads, collect_tooltip_data, update_tooltip_sizes,
+    TooltipRender, build_tooltip_quads, collect_tooltip_data, prepare_tooltip_layout,
 };
 use wow_ui_sim::lua_api::WowLuaEnv;
 use wow_ui_sim::render::{GlyphAtlas, QuadBatch, WowFontSystem};
@@ -27,7 +27,7 @@ fn render_tooltip(env: &WowLuaEnv, scale: f32) -> (QuadBatch, Rectangle) {
     let mut fonts = WowFontSystem::new();
     let mut glyphs = GlyphAtlas::new();
     let mut state = env.state().borrow_mut();
-    update_tooltip_sizes(&mut state, &mut fonts);
+    prepare_tooltip_layout(&mut state, &mut fonts);
     let id = state.widgets.get_id_by_name("U1Tooltip").unwrap();
     let frame = state.widgets.get(id).unwrap();
     let bounds = Rectangle::new(
@@ -58,6 +58,7 @@ fn retail_u1_original_separator_attaches_and_emits_scaled_divider() {
     env.exec(
         r#"
         U1Tooltip = CreateFrame("GameTooltip", "U1Tooltip", UIParent)
+        U1Tooltip:SetOwner(UIParent, "ANCHOR_NONE")
         U1Tooltip:SetAlpha(0.4)
         U1Tooltip:AddLine("Header makes the tooltip wider than the divider")
         SocialUIUtil.AddSeparatorToTooltip(U1Tooltip)
@@ -101,8 +102,8 @@ fn retail_u1_original_separator_attaches_and_emits_scaled_divider() {
         let left = 12.0 + (nine_slice.corner_tl.width as f32 - 4.0).max(0.0);
         let right = 12.0 + (nine_slice.corner_tr.width as f32 - 4.0).max(0.0);
         let top = 12.0 + (nine_slice.corner_tl.height as f32 - 4.0).max(0.0);
-        let bottom = 12.0 + (nine_slice.corner_bl.height as f32 - 4.0).max(0.0);
-        let expected_height = (17.0 + 15.0 + 15.0 + 4.0 + top + bottom) * scale;
+        // WM63-L23: outer height adds 20.48, independent of the rendered inset.
+        let expected_height = (17.0 + 15.0 + 15.0 + 4.0 + 20.48) * scale;
         assert!(
             (bounds.height - expected_height).abs() < 0.01,
             "Header, attached row, Footer and two spacings must determine height"

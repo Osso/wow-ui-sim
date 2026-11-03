@@ -550,9 +550,7 @@ impl App {
     ) -> (Vec<Vec<u64>>, Vec<u64>) {
         let mut state = env.state().borrow_mut();
         let t0 = std::time::Instant::now();
-        super::tooltip::update_tooltip_sizes(&mut state, font_sys);
-        let layout_roots = state.widgets.pending_layout_roots();
-        state.ensure_layout_rects();
+        let layout_roots = super::tooltip::prepare_tooltip_layout(&mut state, font_sys);
         let layout_dur = t0.elapsed();
         let t1 = std::time::Instant::now();
         let _ = state.get_strata_buckets();

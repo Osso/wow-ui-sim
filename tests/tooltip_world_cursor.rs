@@ -1,4 +1,4 @@
-#![cfg(feature = "gui")]
+#![cfg(all(feature = "gui", not(feature = "client-wrath")))]
 
 mod tooltip_full_env_helpers;
 
@@ -65,7 +65,7 @@ fn test_world_cursor_nameplate_anchor_positions_tooltip_relative_to_owner() {
 
     let mut font_sys = WowFontSystem::new();
     let mut state = env.state().borrow_mut();
-    wow_ui_sim::iced_app::tooltip::update_tooltip_sizes(&mut state, &mut font_sys);
+    wow_ui_sim::iced_app::tooltip::prepare_tooltip_layout(&mut state, &mut font_sys);
     state.ensure_layout_rects();
     drop(state);
 

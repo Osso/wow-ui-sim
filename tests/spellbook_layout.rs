@@ -51,6 +51,7 @@ fn restore_spellbook_tutorials(env: &WowLuaEnv) {
         .expect("Failed to restore spellbook tutorials mixin");
 }
 
+#[cfg(not(feature = "client-wrath"))]
 fn hover_first_spell_button(env: &WowLuaEnv) -> (String, f32, f32, f32, f32) {
     env.eval(
         r#"
@@ -652,6 +653,7 @@ fn spellbook_first_open_is_stable_with_real_tutorial_logic_restored() {
     }
 }
 
+#[cfg(not(feature = "client-wrath"))]
 #[test]
 fn spellbook_hover_shows_spell_tooltip() {
     test_timeout! {
@@ -679,6 +681,7 @@ fn spellbook_hover_shows_spell_tooltip() {
     }
 }
 
+#[cfg(not(feature = "client-wrath"))]
 #[test]
 fn spellbook_hover_tooltip_is_sized_and_on_screen() {
     test_timeout! {
@@ -692,7 +695,7 @@ fn spellbook_hover_tooltip_is_sized_and_on_screen() {
         {
             let mut state = env.state().borrow_mut();
             let _ = state.widgets.take_render_dirty();
-            wow_ui_sim::iced_app::tooltip::update_tooltip_sizes(&mut state, &mut font_sys);
+            wow_ui_sim::iced_app::tooltip::prepare_tooltip_layout(&mut state, &mut font_sys);
         }
 
         let tooltip_id = {

@@ -55,7 +55,7 @@ pub(crate) fn build_screenshot_like_batch(
     let buckets = {
         let mut state = env.state().borrow_mut();
         state.ensure_layout_rects();
-        wow_ui_sim::iced_app::tooltip::update_tooltip_sizes(&mut state, &mut font_system);
+        wow_ui_sim::iced_app::tooltip::prepare_tooltip_layout(&mut state, &mut font_system);
         let _ = state.get_strata_buckets();
         state.strata_buckets.as_ref().unwrap().clone()
     };

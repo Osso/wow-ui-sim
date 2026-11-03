@@ -39,7 +39,7 @@ fn b6_u3_height_depends_on_left_not_right() {
             "B6Tip:ClearLines(); B6Tip:AddDoubleLine('left',{right},1,1,1,1,1,1,true); B6Tip:Show()"
         ))
         .unwrap();
-        wow_ui_sim::iced_app::tooltip::update_tooltip_sizes(&mut env.state().borrow_mut(), fonts);
+        wow_ui_sim::iced_app::tooltip::prepare_tooltip_layout(&mut env.state().borrow_mut(), fonts);
         env.eval::<f64>("return B6Tip:GetHeight()").unwrap()
     };
     let short = measure("'R'", &mut fonts);
@@ -64,7 +64,7 @@ fn b6_u3_right_text_wrap_flag_does_not_change_measured_size() {
     );
     let measure = |wrap: bool, fonts: &mut wow_ui_sim::render::WowFontSystem| {
         env.exec(&format!("B6Tip:ClearLines(); B6Tip:AddLine('header'); B6Tip:AddDoubleLine(string.rep('word ',80),'R',1,1,1,1,1,1,{wrap}); B6Tip:Show()")).unwrap();
-        wow_ui_sim::iced_app::tooltip::update_tooltip_sizes(&mut env.state().borrow_mut(), fonts);
+        wow_ui_sim::iced_app::tooltip::prepare_tooltip_layout(&mut env.state().borrow_mut(), fonts);
         env.eval::<(f64, f64)>("return B6Tip:GetWidth(),B6Tip:GetHeight()")
             .unwrap()
     };
@@ -86,11 +86,11 @@ fn b6_u3_wrath_refinement_is_monotone_without_back_propagation() {
         "SETUP: fonts required"
     );
     env.exec("B6Tip:AddLine('base');B6Tip:Show()").unwrap();
-    wow_ui_sim::iced_app::tooltip::update_tooltip_sizes(&mut env.state().borrow_mut(), &mut fonts);
+    wow_ui_sim::iced_app::tooltip::prepare_tooltip_layout(&mut env.state().borrow_mut(), &mut fonts);
     let base: f64 = env.eval("return B6Tip:GetWidth()").unwrap();
     env.exec("B6Tip:AddLine(string.rep('wide words ',30),1,1,1,true);B6Tip:Show()")
         .unwrap();
-    wow_ui_sim::iced_app::tooltip::update_tooltip_sizes(&mut env.state().borrow_mut(), &mut fonts);
+    wow_ui_sim::iced_app::tooltip::prepare_tooltip_layout(&mut env.state().borrow_mut(), &mut fonts);
     let first: (f64, f64) = env
         .eval("return B6Tip:GetWidth(),B6Tip:GetLeftLine(2):GetWidth()")
         .unwrap();
@@ -99,7 +99,7 @@ fn b6_u3_wrath_refinement_is_monotone_without_back_propagation() {
         "wrapped candidate grows narrow shared width"
     );
     env.exec("B6Tip:AddLine(string.rep('WIDER differently segmented words ',40),1,1,1,true);B6Tip:Show()").unwrap();
-    wow_ui_sim::iced_app::tooltip::update_tooltip_sizes(&mut env.state().borrow_mut(), &mut fonts);
+    wow_ui_sim::iced_app::tooltip::prepare_tooltip_layout(&mut env.state().borrow_mut(), &mut fonts);
     let later: (f64, f64) = env
         .eval("return B6Tip:GetWidth(),B6Tip:GetLeftLine(2):GetWidth()")
         .unwrap();
@@ -126,7 +126,7 @@ fn b6_u3_local_double_column_gap_only_when_both_strings_shown() {
     );
     let measure = |left: &str, right: &str, fonts: &mut wow_ui_sim::render::WowFontSystem| {
         env.exec(&format!("B6Tip:ClearLines(); B6Tip:AddLine('h'); B6Tip:AddDoubleLine({left},{right}); B6Tip:Show()")).unwrap();
-        wow_ui_sim::iced_app::tooltip::update_tooltip_sizes(&mut env.state().borrow_mut(), fonts);
+        wow_ui_sim::iced_app::tooltip::prepare_tooltip_layout(&mut env.state().borrow_mut(), fonts);
         env.eval::<f64>("return B6Tip:GetWidth()").unwrap()
     };
     let right_text = "RRRRRRRRRRRR";
@@ -164,7 +164,7 @@ fn b6_u3_already_wide_shared_width_bypasses_refinement() {
     "#,
     )
     .unwrap();
-    wow_ui_sim::iced_app::tooltip::update_tooltip_sizes(&mut env.state().borrow_mut(), &mut fonts);
+    wow_ui_sim::iced_app::tooltip::prepare_tooltip_layout(&mut env.state().borrow_mut(), &mut fonts);
     env.exec("assert(B6Tip:GetLeftLine(2):GetWidth()==B6PreservedLeftWidth,'already wide shared width must bypass assignment')").unwrap();
     // 70 is a supplied fixture width, not a native numeric sizing oracle.
     // No assertion of absolute final tooltip width or final rendered line count.

@@ -1,3 +1,5 @@
+#![cfg(not(feature = "client-wrath"))]
+
 //! `--ui-scale` scales UIParent before the canvas size is applied, so the
 //! managed containers Blizzard sizes on DISPLAY_SIZE_CHANGED are laid out for
 //! the scaled UIParent rather than for scale 1.

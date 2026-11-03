@@ -68,10 +68,20 @@ struct TooltipTextInsets {
     bottom: f32,
 }
 
-/// Update tooltip frame sizes based on their text content.
-///
-/// Must be called before layout computation so anchors resolve with correct dimensions.
-pub fn update_tooltip_sizes(state: &mut SimState, font_system: &mut WowFontSystem) {
+/// Resolve layout geometry, preserving legacy-profile tooltip measurement.
+pub fn prepare_tooltip_layout(state: &mut SimState, font_system: &mut WowFontSystem) -> Vec<u64> {
+    if !matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail | crate::client_profile::ClientProfile::Ptr
+    ) {
+        measure_legacy_tooltip_sizes(state, font_system);
+    }
+    let roots = state.widgets.pending_layout_roots();
+    state.ensure_layout_rects();
+    roots
+}
+
+fn measure_legacy_tooltip_sizes(state: &mut SimState, font_system: &mut WowFontSystem) {
     let tooltip_ids: Vec<u64> = state.tooltips.keys().copied().collect();
     for id in tooltip_ids {
         let (has_render_content, visible) = {
@@ -144,10 +154,19 @@ pub(crate) fn measure_tooltip(
         total_height += line_height;
     }
 
-    let insets = tooltip_text_insets();
-    let width = content_width + insets.left + insets.right;
-    let height = total_height + insets.top + insets.bottom;
-    (width, height)
+    let (horizontal_padding, vertical_padding) = if matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail | crate::client_profile::ClientProfile::Ptr
+    ) {
+        td.native_outer_padding()
+    } else {
+        let insets = tooltip_text_insets();
+        (insets.left + insets.right, insets.top + insets.bottom)
+    };
+    (
+        content_width + horizontal_padding,
+        total_height + vertical_padding,
+    )
 }
 
 fn tooltip_column_gap(left: &str, right: Option<&str>, effective_scale: f32) -> f32 {
