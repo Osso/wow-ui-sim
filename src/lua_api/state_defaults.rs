@@ -116,25 +116,27 @@ pub(super) fn default_pets() -> Vec<PetData> {
 }
 
 pub(super) fn default_toys() -> Vec<ToyData> {
-    let t = |item_id, name: &str, icon, collected| ToyData {
-        item_id,
-        name: name.to_string(),
-        icon,
-        is_collected: collected,
-        is_usable: collected,
+    let t = |item_id, collected| {
+        let item = crate::items::get_item(item_id).expect("seeded toy item must exist");
+        ToyData {
+            item_id,
+            name: item.name.to_string(),
+            icon: item.icon_file_data_id,
+            is_collected: collected,
+            is_usable: collected,
+        }
     };
-    let beacon = crate::items::get_item(166779).expect("seeded toy item must exist");
     vec![
-        t(166779, beacon.name, beacon.icon_file_data_id, true),
-        t(13379, "Piccolo of the Flaming Fire", 134208, true),
-        t(34480, "Romantic Picnic Basket", 236571, true),
-        t(33927, "Brewfest Pony Keg", 132790, true),
-        t(119210, "Hearthstone Board", 134457, true),
-        t(69227, "Fool's Gold", 134112, true),
-        t(88589, "Cremating Torch", 135432, true),
-        t(86575, "Foxicopter Controller", 463485, true),
-        t(104324, "Foot Ball", 620832, true),
-        t(187421, "Ashen Liniment", 1500929, false),
+        t(166779, true),
+        t(13379, true),
+        t(34480, true),
+        t(33927, true),
+        t(119210, true),
+        t(69227, true),
+        t(88589, true),
+        t(86575, true),
+        t(104324, true),
+        t(211946, false),
     ]
 }
 

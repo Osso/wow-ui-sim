@@ -115,7 +115,14 @@ fn test_mount_journal_get_num_displayed_mounts() {
     let count: i32 = env
         .eval("return C_MountJournal.GetNumDisplayedMounts()")
         .unwrap();
-    assert_eq!(count, if cfg!(feature = "client-retail") { 0 } else { 10 });
+    assert_eq!(
+        count,
+        if cfg!(feature = "client-retail") {
+            0
+        } else {
+            10
+        }
+    );
 }
 
 #[test]
@@ -234,7 +241,7 @@ fn test_toy_box_is_toy_usable_collected() {
 #[test]
 fn test_toy_box_is_toy_usable_uncollected() {
     let env = env();
-    let usable: bool = env.eval("return C_ToyBox.IsToyUsable(187421)").unwrap();
+    let usable: bool = env.eval("return C_ToyBox.IsToyUsable(211946)").unwrap();
     assert!(!usable, "uncollected toy should not be usable");
 }
 
@@ -260,7 +267,7 @@ fn test_player_has_toy_reads_collected_toy_state() {
         .eval(
             r#"
             if not PlayerHasToy(166779) then return "missing_collected" end
-            if PlayerHasToy(187421) then return "uncollected_present" end
+            if PlayerHasToy(211946) then return "uncollected_present" end
             if PlayerHasToy(1) then return "unknown_present" end
             return "ok"
             "#,
