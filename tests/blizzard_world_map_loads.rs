@@ -652,6 +652,42 @@ fn forever_minimap_tracking_static_filters_use_real_mask() {
 
 #[test]
 #[cfg(feature = "client-wowforever")]
+fn forever_empty_talent_query_accepts_distinct_coordinates() {
+    let env = load_full_game_ui();
+    env.exec(
+        r#"
+        assert(C_SpecializationInfo.GetTalentInfo({tier = 1, column = 1}) == nil)
+        assert(C_SpecializationInfo.GetTalentInfo({tier = 2, column = 3, isInspect = true}) == nil)
+        assert(not pcall(C_SpecializationInfo.GetTalentInfo, {column = 1}))
+        assert(not pcall(C_SpecializationInfo.GetTalentInfo, {tier = 1}))
+        "#,
+    )
+    .expect("Forever's unpopulated legacy grid should validate the query");
+}
+
+#[test]
+#[cfg(feature = "client-wowforever")]
+fn forever_quest_trivial_ranges_reach_original_consumers() {
+    let env = load_full_game_ui();
+    env.exec(
+        r#"
+        assert(UnitQuestTrivialLevelRange('player') == 5)
+        assert(UnitQuestTrivialLevelRangeScaling('player') == 5)
+        assert(C_QuestLog.GetTrivialRange() == 5)
+        assert(DifficultyUtil.GetRelativeDifficultyColor(30, 25) == QuestDifficultyColors.standard)
+        assert(DifficultyUtil.GetRelativeDifficultyColor(30, 24) == QuestDifficultyColors.trivial)
+        assert(NameplateLevelFrameMixin:GetDifficultyColor(-5) == EASY_DIFFICULTY_COLOR)
+        assert(NameplateLevelFrameMixin:GetDifficultyColor(-6) == TRIVIAL_DIFFICULTY_COLOR)
+        "#,
+    )
+    .expect("Forever consumers should receive the unconfigured trivial ranges");
+    env.state().borrow_mut().player.present = false;
+    env.exec("assert(C_QuestLog.GetTrivialRange() == 0)")
+        .expect("missing player has no quest trivial range");
+}
+
+#[test]
+#[cfg(feature = "client-wowforever")]
 fn forever_world_map_trivial_quest_filter_tracks_map_settings() {
     let env = load_full_game_ui();
     env.exec(
