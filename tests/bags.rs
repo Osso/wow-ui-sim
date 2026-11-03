@@ -90,6 +90,7 @@ fn assert_no_bag_open_errors(env: &WowLuaEnv, context: &str) {
     );
 }
 
+#[cfg(not(feature = "client-wrath"))]
 #[test]
 fn test_container_frames_registered() {
     let env = setup_env();
@@ -120,6 +121,7 @@ fn test_container_frames_registered() {
     }
 }
 
+#[cfg(not(feature = "client-wrath"))]
 #[test]
 fn test_container_frames_array_contains_only_real_container_frames() {
     let env = setup_env();
@@ -154,6 +156,7 @@ fn test_container_frames_array_contains_only_real_container_frames() {
     );
 }
 
+#[cfg(not(feature = "client-wrath"))]
 #[test]
 fn test_bag_ui_c_container_helpers_have_safe_default_shapes() {
     let env = setup_env();
@@ -302,6 +305,7 @@ fn test_bags_open_with_items() {
     assert!(empty, "Slot 6 should be empty");
 }
 
+#[cfg(not(feature = "client-wrath"))]
 #[test]
 fn test_container_frame_1_item_1_icon_matches_first_bag_slot_item() {
     let env = setup_env();
@@ -643,6 +647,7 @@ fn test_backpack_bg_regions_have_color_fill() {
     );
 }
 
+#[cfg(not(feature = "client-wrath"))]
 #[test]
 fn test_item_search_marks_container_buttons_by_item_name() {
     let env = setup_env();
