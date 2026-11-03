@@ -38,7 +38,7 @@ const TOOLTIP_CENTER_OVERLAP: f32 = 4.0;
 pub struct TooltipRenderData {
     pub lines: Vec<TooltipLineRender>,
     pub line_spacing: f32,
-    pub first_text_offset: Option<[f32; 2]>,
+    pub left_text_offsets: Vec<Option<[f32; 2]>>,
 }
 
 /// A single line ready for rendering.
@@ -280,29 +280,37 @@ pub fn collect_tooltip_data(state: &SimState) -> HashMap<u64, TooltipRenderData>
             TooltipRenderData {
                 lines,
                 line_spacing,
-                first_text_offset: first_text_anchor_offset(state, id, td),
+                left_text_offsets: (0..td.lines.len())
+                    .map(|index| left_text_anchor_offset(state, id, td, index))
+                    .collect(),
             },
         );
     }
     result
 }
 
-fn first_text_anchor_offset(
+fn left_text_anchor_offset(
     state: &SimState,
     tooltip_id: u64,
     td: &crate::lua_api::tooltip::TooltipData,
+    index: usize,
 ) -> Option<[f32; 2]> {
     use crate::widget::AnchorPoint;
 
-    if td.anchored_left_lines == 0 {
+    if td.anchored_left_lines <= index {
         return None;
     }
-    let id = *td.left_line_ids.first()?;
+    let id = *td.left_line_ids.get(index)?;
     let frame = state.widgets.get(id)?;
+    let (previous, relative_point) = if index == 0 {
+        (tooltip_id, AnchorPoint::Top)
+    } else {
+        (*td.left_line_ids.get(index - 1)?, AnchorPoint::Bottom)
+    };
     let top = frame.anchors.iter().find(|anchor| {
         anchor.point == AnchorPoint::Top
-            && anchor.relative_point == AnchorPoint::Top
-            && anchor.relative_to_id == Some(tooltip_id as usize)
+            && anchor.relative_point == relative_point
+            && anchor.relative_to_id == Some(previous as usize)
     })?;
     let left = frame.anchors.iter().find(|anchor| {
         anchor.point == AnchorPoint::Left
@@ -465,6 +473,7 @@ fn emit_tooltip_lines(
     let content_x = bounds.x + insets.left;
     let content_width = bounds.width - insets.left - insets.right;
     let mut y = bounds.y + insets.top;
+    let mut left_bottom = Some(bounds.y);
 
     for (index, line) in data.lines.iter().enumerate() {
         let font_size = scaled_tooltip_font_size(line.font_size, eff_scale);
@@ -483,6 +492,24 @@ fn emit_tooltip_lines(
             line.measured_height * eff_scale
         };
 
+        let left_origin = if line.path_attachment.is_none()
+            && matches!(
+                crate::client_profile::ACTIVE,
+                crate::client_profile::ClientProfile::Retail
+                    | crate::client_profile::ClientProfile::Ptr
+            ) {
+            left_bottom
+                .zip(data.left_text_offsets.get(index).copied().flatten())
+                .map(|(previous_bottom, offset)| {
+                    Point::new(
+                        bounds.x + offset[0] * eff_scale,
+                        previous_bottom + offset[1] * eff_scale,
+                    )
+                })
+        } else {
+            None
+        };
+        left_bottom = left_origin.map(|origin| origin.y + line_height);
         emit_tooltip_line(
             text_renderer,
             line,
@@ -493,23 +520,7 @@ fn emit_tooltip_lines(
                 height: line_height,
             },
             eff_scale,
-            if index == 0
-                && line.path_attachment.is_none()
-                && matches!(
-                    crate::client_profile::ACTIVE,
-                    crate::client_profile::ClientProfile::Retail
-                        | crate::client_profile::ClientProfile::Ptr
-                )
-            {
-                data.first_text_offset.map(|offset| {
-                    Point::new(
-                        bounds.x + offset[0] * eff_scale,
-                        bounds.y + offset[1] * eff_scale,
-                    )
-                })
-            } else {
-                None
-            },
+            left_origin,
         );
 
         y += line_height + data.line_spacing * eff_scale;
@@ -595,7 +606,7 @@ fn emit_tooltip_line(
     line: &TooltipLineRender,
     placement: TooltipLinePlacement,
     eff_scale: f32,
-    first_left_origin: Option<Point>,
+    left_origin: Option<Point>,
 ) {
     if let Some(attachment) = &line.path_attachment {
         let (_, image_offset) = attachment.geometry(line.font_size);
@@ -623,7 +634,7 @@ fn emit_tooltip_line(
         Some(rw) if rw > 0.0 => (placement.width - rw - gap).max(0.0),
         _ => placement.width,
     };
-    let left_placement = if let Some(origin) = first_left_origin {
+    let left_placement = if let Some(origin) = left_origin {
         TooltipLinePlacement {
             x: origin.x,
             y: origin.y,
