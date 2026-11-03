@@ -48,33 +48,41 @@ impl SpellAuraDuration {
 }
 
 pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
+    if !cfg!(feature = "retail-12-0-5") && !cfg!(feature = "client-wowforever") {
+        return Ok(());
+    }
     let namespace = super::ensure_namespace(state, "C_UnitAuras")?;
-    table_set_rust_fn_static(
-        state,
-        namespace,
-        "GetAuraBaseDuration",
-        get_aura_base_duration,
-    )?;
-    table_set_rust_fn_static(
-        state,
-        namespace,
-        "DoesAuraHaveExpirationTime",
-        does_aura_have_expiration_time,
-    )?;
-    table_set_rust_fn_static(state, namespace, "GetAuraDuration", get_aura_duration)?;
-    table_set_rust_fn_static(
-        state,
-        namespace,
-        "GetRefreshExtendedDuration",
-        get_refresh_extended_duration,
-    )?;
-    #[cfg(feature = "retail-12-1-5")]
-    table_set_rust_fn_static(
-        state,
-        namespace,
-        "GetRefreshCarryOverDuration",
-        get_refresh_carryover_duration,
-    )?;
+    if cfg!(feature = "retail-12-0-5") {
+        table_set_rust_fn_static(
+            state,
+            namespace,
+            "GetAuraBaseDuration",
+            get_aura_base_duration,
+        )?;
+        table_set_rust_fn_static(
+            state,
+            namespace,
+            "DoesAuraHaveExpirationTime",
+            does_aura_have_expiration_time,
+        )?;
+        table_set_rust_fn_static(state, namespace, "GetAuraDuration", get_aura_duration)?;
+        table_set_rust_fn_static(
+            state,
+            namespace,
+            "GetRefreshExtendedDuration",
+            get_refresh_extended_duration,
+        )?;
+    }
+    // Forever's selected AuraContainerUtil consumes this same nullable number.
+    // Share explicit recast metadata without inventing production durations.
+    if cfg!(feature = "retail-12-1-5") || cfg!(feature = "client-wowforever") {
+        table_set_rust_fn_static(
+            state,
+            namespace,
+            "GetRefreshCarryOverDuration",
+            get_refresh_carryover_duration,
+        )?;
+    }
     Ok(())
 }
 
@@ -133,7 +141,6 @@ fn get_refresh_extended_duration(state: &mut LuaState) -> LuaResult<u32> {
     push_duration(state, DurationQuery::Extended)
 }
 
-#[cfg(feature = "retail-12-1-5")]
 fn get_refresh_carryover_duration(state: &mut LuaState) -> LuaResult<u32> {
     require_unit_aura_access(state, "C_UnitAuras.GetRefreshCarryOverDuration")?;
     push_duration(state, DurationQuery::Carryover)
@@ -143,7 +150,6 @@ fn get_refresh_carryover_duration(state: &mut LuaState) -> LuaResult<u32> {
 enum DurationQuery {
     Base,
     Extended,
-    #[cfg(feature = "retail-12-1-5")]
     Carryover,
 }
 
@@ -182,7 +188,6 @@ fn query_duration(state: &mut LuaState, query: DurationQuery) -> LuaResult<Optio
         DurationQuery::Extended => {
             metadata.refresh_duration(&aura, sim.clock_elapsed().as_secs_f64())
         }
-        #[cfg(feature = "retail-12-1-5")]
         DurationQuery::Carryover => metadata.carryover(&aura, sim.clock_elapsed().as_secs_f64()),
     })
 }

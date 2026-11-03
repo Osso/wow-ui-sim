@@ -3306,3 +3306,10 @@ distinct from captured zero values. Classic legacy wrappers,
 Retail slot validation and enchantment precedence remain explicit. Non-Retail
 candidate ordering preserves the prior catalog policy, including Forever item
 `239695` when a non-use effect shares its slot; native parity remains unverified.
+
+## 2026-11-03 — Forever 70707 startup compatibility
+
+Documented the game startup fixes and their selected consumers, plus the MSAA
+capability required during login settings registration.
+[Game startup](investigations/forever-addon-startup-compatibility.md),
+[login graphics](investigations/forever-login-startup.md#msaa-capability)

@@ -68,6 +68,7 @@ impl SimState {
         self.anim_frame_to_anim.clear();
         self.anim_sync_times.clear();
         self.secure_attribute_drivers.clear();
+        self.secure_state_dispatch_ready = false;
         self.global_show_hide_depth = 0;
     }
 
