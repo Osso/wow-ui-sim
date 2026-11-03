@@ -64,7 +64,7 @@ WM citations below identify clean-room reports in `native-evidence-70688/secrets
 - **VERIFIED locally — WM61 S2** (`S2-secure-invocation-wm61.md`): `securecallfunction` saves the caller source and restores it after normal invocation when its metadata scope requires restoration. Entry does not replace that source with an untainted source. Surviving results receive the saved caller provenance without clearing the secret marker.
 - **EMULATED — WM61 S2:** Entry selects access policy 1, not unrestricted policy 2. Argument and result markers survive the tested transfers when the marker gate is enabled; the disabled gate clears copied markers.
 - **INFERRED — WM61 S2:** Source provenance and secrecy are separate; a secure invocation is not blanket permission to untaint or unsecret values. **UNKNOWN — WM61 S2:** callback access, full return connection and exceptional restoration.
-- **SOURCE CONTRADICTION — WM61 S2:** Rilua registers `securecallfunction` as `securecall`, which clears active ancestor frame taints for the call. This is not the observed source-preserving entry behavior.
+- **SOURCE — WM61 S2:** Retail overrides rilua's ancestor-clearing `securecallfunction` registration with a source-preserving invocation. The simulator does not yet model the native policy-1 selector, result-provenance rewrite or exceptional restoration; WM61 S2 leaves complete callback access and exceptional behavior UNKNOWN.
 
 ### AuraData publication and spell lookup
 
