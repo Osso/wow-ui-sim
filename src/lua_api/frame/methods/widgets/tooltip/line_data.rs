@@ -24,6 +24,7 @@ pub(super) fn clear_lines(state: &mut LuaState) -> LuaResult<u32> {
     let line_ids = {
         let td = sim.tooltips.entry(id).or_default();
         td.lines.clear();
+        td.anchored_left_lines = 0;
         if wrath {
             td.min_width = 0.0;
             td.wrath_texture_rows.clear();
@@ -338,7 +339,9 @@ pub(super) fn set_custom_line_spacing(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
     let spacing = val_to_f64(stack_val(state, 2)) as f32;
     let mut sim = borrow_state_mut(state)?;
-    sim.tooltips.entry(id).or_default().line_spacing = Some(spacing);
+    let tooltip = sim.tooltips.entry(id).or_default();
+    tooltip.line_spacing = Some(spacing);
+    tooltip.anchored_left_lines = 0;
     invalidate_tooltip_line_layout(&mut sim, id);
     Ok(0)
 }
@@ -359,8 +362,11 @@ pub(super) fn get_custom_line_spacing(state: &mut LuaState) -> LuaResult<u32> {
 pub(super) fn set_minimum_width(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
     let width = val_to_f64(stack_val(state, 2)) as f32;
+    let force = val_to_bool(stack_val(state, 3));
     let mut sim = borrow_state_mut(state)?;
-    sim.tooltips.entry(id).or_default().min_width = width;
+    let tooltip = sim.tooltips.entry(id).or_default();
+    tooltip.min_width = width;
+    tooltip.force_min_width = force;
     invalidate_tooltip_line_layout(&mut sim, id);
     Ok(0)
 }
@@ -394,6 +400,7 @@ pub(super) fn set_custom_word_wrap_min_width(state: &mut LuaState) -> LuaResult<
         .entry(id)
         .or_default()
         .custom_word_wrap_min_width = Some(width);
+    sim.tooltips.entry(id).or_default().anchored_left_lines = 0;
     invalidate_tooltip_line_layout(&mut sim, id);
     Ok(0)
 }
@@ -476,7 +483,9 @@ pub(super) fn set_padding(state: &mut LuaState) -> LuaResult<u32> {
     let left = opt_f32(state, 4);
     let top = opt_f32(state, 5);
     let mut sim = borrow_state_mut(state)?;
-    let padding = &mut sim.tooltips.entry(id).or_default().padding;
+    let tooltip = sim.tooltips.entry(id).or_default();
+    tooltip.anchored_left_lines = 0;
+    let padding = &mut tooltip.padding;
     padding[0] = right;
     if matches!(
         crate::client_profile::ACTIVE,
@@ -522,6 +531,7 @@ pub(super) fn clear_padding(state: &mut LuaState) -> LuaResult<u32> {
     let mut sim = borrow_state_mut(state)?;
     if let Some(td) = sim.tooltips.get_mut(&id) {
         td.padding = [0.0; 4];
+        td.anchored_left_lines = 0;
     }
     size_tooltip_on_native_trigger(&mut sim, id);
     Ok(0)

@@ -76,7 +76,12 @@ fn ensure_tooltip_line_id(
     if let Some(existing_id) =
         find_existing_tooltip_line_id(state, tooltip_id, right_side, line_index)
     {
-        if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Wrath {
+        if matches!(
+            crate::client_profile::ACTIVE,
+            crate::client_profile::ClientProfile::Wrath
+                | crate::client_profile::ClientProfile::Retail
+                | crate::client_profile::ClientProfile::Ptr
+        ) {
             let mut sim = borrow_state_mut(state)?;
             record_tooltip_line_child_id(&mut sim, tooltip_id, existing_id, right_side, line_index);
         }

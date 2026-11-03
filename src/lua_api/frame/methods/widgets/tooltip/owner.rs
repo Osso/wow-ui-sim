@@ -94,6 +94,7 @@ fn record_tooltip_owner(
     td.anchor_x_offset = args.x_offset;
     td.anchor_y_offset = args.y_offset;
     td.lines.clear();
+    td.anchored_left_lines = 0;
     td.spell_id = None;
     sim.widgets.mark_rect_dirty(tooltip_id);
     sim.set_frame_visible(tooltip_id, false);
@@ -431,6 +432,7 @@ fn write_frame_stack_tooltip(
     let td = sim.tooltips.entry(tooltip_id).or_default();
     td.frame_stack_index = frame_stack_index;
     td.lines.clear();
+    td.anchored_left_lines = 0;
     td.lines.push(frame_stack_primary_line(frame_info.primary));
     td.lines
         .push(frame_stack_parent_line(frame_info.parent_label));
@@ -466,7 +468,9 @@ fn frame_stack_parent_line(parent_label: String) -> TooltipLine {
 
 fn clear_tooltip_lines(state: &mut LuaState, tooltip_id: u64) -> LuaResult<()> {
     let mut sim = borrow_state_mut(state)?;
-    sim.tooltips.entry(tooltip_id).or_default().lines.clear();
+    let tooltip = sim.tooltips.entry(tooltip_id).or_default();
+    tooltip.lines.clear();
+    tooltip.anchored_left_lines = 0;
     Ok(())
 }
 

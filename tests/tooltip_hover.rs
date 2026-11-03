@@ -13,6 +13,299 @@ use wow_ui_sim::lua_api::WowLuaEnv;
 
 #[cfg(any(feature = "client-retail", feature = "client-ptr"))]
 #[test]
+fn customization_tooltip_places_first_text_at_native_padding_anchor() {
+    use iced::{Point, Rectangle, Size};
+    use wow_ui_sim::iced_app::tooltip::{TooltipRender, build_tooltip_quads, collect_tooltip_data};
+    use wow_ui_sim::render::glyph::emit_text_quads;
+    use wow_ui_sim::render::{GlyphAtlas, QuadBatch, WowFontSystem};
+    use wow_ui_sim::widget::{TextJustify, TextOutline};
+
+    let env = setup_full_env();
+    let addons = wow_ui_sim::paths::default_blizzard_ui_addons_path().unwrap();
+    wow_ui_sim::loader::load_addon(
+        &env.loader_env(),
+        &addons.join("Blizzard_CustomizationUI/Blizzard_CustomizationUI.toc"),
+    )
+    .unwrap();
+    env.exec(
+        r#"
+        local region = CreateFrame("Frame", nil, UIParent, "CustomizationFrameWithTooltipTemplate")
+        region.tooltipAnchor = "ANCHOR_NONE"
+        region.tooltipPadding = 5
+        region:AddTooltipLine("Anchor")
+        region:AddTooltipLine("Anchor")
+        region:OnEnter()
+        CustomizationNoHeaderTooltip:SetPadding(3, 5, 7, 11)
+        local line = CustomizationNoHeaderTooltip:GetLeftLine(1)
+        assert(line:GetNumPoints() == 2, "first left line must have two anchor points")
+        local point, relative, relativePoint, x, y = line:GetPoint(1)
+        assert(point == "TOP" and relative == CustomizationNoHeaderTooltip and relativePoint == "TOP" and x == 0 and y == -21, "first left vertical anchor")
+        point, relative, relativePoint, x, y = line:GetPoint(2)
+        assert(point == "LEFT" and relative == CustomizationNoHeaderTooltip and relativePoint == "LEFT" and x == 17 and y == 0, "first left horizontal anchor")
+        line:SetPoint("TOP", CustomizationNoHeaderTooltip, "TOP", 0, -55)
+        CustomizationNoHeaderTooltip:Show()
+        local _, _, _, _, retainedY = line:GetPoint(1)
+        assert(retainedY == -55, "repeated Show must retain the anchored left prefix")
+        CustomizationNoHeaderTooltip:SetPadding(3, 5, 7, 11)
+        local _, _, _, _, resetY = line:GetPoint(1)
+        assert(resetY == -21, "SetPadding must invalidate and restore native anchors")
+    "#,
+    )
+    .unwrap();
+    let state = env.state().borrow();
+    let id = state
+        .widgets
+        .get_id_by_name("CustomizationNoHeaderTooltip")
+        .unwrap();
+    let data = collect_tooltip_data(&state);
+    let frame = state.widgets.get(id).unwrap();
+    let mut fonts = WowFontSystem::new();
+    let mut glyphs = GlyphAtlas::new();
+    let mut actual = QuadBatch::new();
+    let bounds = Rectangle::new(
+        Point::new(100.0, 200.0),
+        Size::new(frame.width, frame.height),
+    );
+    build_tooltip_quads(
+        TooltipRender {
+            batch: &mut actual,
+            bounds,
+            tooltip_data: Some(&data),
+            id,
+            eff_alpha: 1.0,
+            eff_scale: 1.0,
+            draw_background: false,
+        },
+        &mut Some((&mut fonts, &mut glyphs)),
+    );
+    let mut expected = QuadBatch::new();
+    emit_text_quads(
+        &mut expected,
+        &mut fonts,
+        &mut glyphs,
+        "Anchor",
+        Rectangle::new(Point::new(117.0, 221.0), Size::new(200.0, 17.0)),
+        None,
+        14.0,
+        [1.0; 4],
+        TextJustify::Left,
+        TextJustify::Center,
+        wow_ui_sim::render::shader::GLYPH_ATLAS_TEX_INDEX,
+        None,
+        (0.0, 0.0),
+        TextOutline::None,
+        false,
+        0,
+        0.0,
+        false,
+        None,
+        None,
+    );
+    assert!(!actual.vertices.is_empty() && !expected.vertices.is_empty());
+    let actual_first = actual
+        .vertices
+        .iter()
+        .find(|vertex| vertex.tex_index == wow_ui_sim::render::shader::GLYPH_ATLAS_TEX_INDEX)
+        .expect("tooltip glyph")
+        .position;
+    let expected_first = expected.vertices[0].position;
+    let actual_second = actual
+        .vertices
+        .iter()
+        .filter(|vertex| vertex.tex_index == wow_ui_sim::render::shader::GLYPH_ATLAS_TEX_INDEX)
+        .nth(24)
+        .expect("second line glyph")
+        .position;
+    let mut expected_second = QuadBatch::new();
+    emit_text_quads(
+        &mut expected_second,
+        &mut fonts,
+        &mut glyphs,
+        "Anchor",
+        Rectangle::new(Point::new(117.0, 240.0), Size::new(200.0, 15.0)),
+        None,
+        12.0,
+        [1.0; 4],
+        TextJustify::Left,
+        TextJustify::Center,
+        wow_ui_sim::render::shader::GLYPH_ATLAS_TEX_INDEX,
+        None,
+        (0.0, 0.0),
+        TextOutline::None,
+        false,
+        0,
+        0.0,
+        false,
+        None,
+        None,
+    );
+    let expected_second = expected_second.vertices[0].position;
+    assert!(
+        (actual_second[0] - expected_second[0]).abs() < 0.01
+            && (actual_second[1] - expected_second[1]).abs() < 0.01,
+        "second glyph position {actual_second:?}, expected {expected_second:?}"
+    );
+    assert!(
+        (actual_first[0] - expected_first[0]).abs() < 0.01
+            && (actual_first[1] - expected_first[1]).abs() < 0.01,
+        "first glyph position {actual_first:?}, expected {expected_first:?}"
+    );
+    drop(state);
+    env.exec(
+        r#"
+        local line = CustomizationNoHeaderTooltip:GetLeftLine(1)
+        line:SetPoint("TOP", CustomizationNoHeaderTooltip, "TOP", 0, -55)
+        CustomizationNoHeaderTooltip:Show()
+    "#,
+    )
+    .unwrap();
+    let state = env.state().borrow();
+    let data = collect_tooltip_data(&state);
+    let mut moved = QuadBatch::new();
+    build_tooltip_quads(
+        TooltipRender {
+            batch: &mut moved,
+            bounds,
+            tooltip_data: Some(&data),
+            id,
+            eff_alpha: 1.0,
+            eff_scale: 1.0,
+            draw_background: false,
+        },
+        &mut Some((&mut fonts, &mut glyphs)),
+    );
+    let moved_first = moved
+        .vertices
+        .iter()
+        .find(|vertex| vertex.tex_index == wow_ui_sim::render::shader::GLYPH_ATLAS_TEX_INDEX)
+        .expect("moved tooltip glyph")
+        .position;
+    assert!(
+        (moved_first[1] - actual_first[1] - 34.0).abs() < 0.01,
+        "render must follow retained first-line anchor: {moved_first:?} vs {actual_first:?}"
+    );
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
+#[test]
+fn blizzard_double_line_reserves_native_column_gap() {
+    let env = setup_full_env();
+    env.exec(
+        r#"
+        GameTooltip:SetOwner(UIParent, "ANCHOR_NONE")
+        assert(GameTooltip:ProcessInfo({ tooltipData = { lines = {
+            { type = 0, leftText = "First", rightText = "Value" },
+        } } }))
+    "#,
+    )
+    .unwrap();
+    let width: f32 = env.eval("return GameTooltip:GetWidth()").unwrap();
+    let mut font = wow_ui_sim::render::WowFontSystem::new();
+    let left = font.measure_text_width("First", None, 14.0);
+    let right = font.measure_text_width("Value", None, 14.0);
+    let expected = left + right + 38.4 + 20.48;
+    assert!(
+        (width - expected).abs() < 0.01,
+        "width {width} must include native two-column reservation {expected}"
+    );
+    use iced::{Point, Rectangle, Size};
+    use wow_ui_sim::iced_app::tooltip::{TooltipRender, build_tooltip_quads, collect_tooltip_data};
+    use wow_ui_sim::render::glyph::emit_text_quads;
+    use wow_ui_sim::render::{GlyphAtlas, QuadBatch};
+    use wow_ui_sim::widget::{TextJustify, TextOutline};
+    let state = env.state().borrow();
+    let id = state.widgets.get_id_by_name("GameTooltip").unwrap();
+    let data = collect_tooltip_data(&state);
+    let height = state.widgets.get(id).unwrap().height;
+    let mut glyphs = GlyphAtlas::new();
+    let mut actual = QuadBatch::new();
+    build_tooltip_quads(
+        TooltipRender {
+            batch: &mut actual,
+            bounds: Rectangle::new(Point::new(100.0, 200.0), Size::new(width, height)),
+            tooltip_data: Some(&data),
+            id,
+            eff_alpha: 1.0,
+            eff_scale: 1.0,
+            draw_background: false,
+        },
+        &mut Some((&mut font, &mut glyphs)),
+    );
+    let actual_right = actual
+        .vertices
+        .iter()
+        .filter(|vertex| vertex.tex_index == wow_ui_sim::render::shader::GLYPH_ATLAS_TEX_INDEX)
+        .nth(20)
+        .expect("right glyph")
+        .position;
+    let mut reference = QuadBatch::new();
+    let right_edge = 110.0 + width - 20.48;
+    emit_text_quads(
+        &mut reference,
+        &mut font,
+        &mut glyphs,
+        "Value",
+        Rectangle::new(
+            Point::new(right_edge - 200.0, 210.0),
+            Size::new(200.0, 17.0),
+        ),
+        None,
+        14.0,
+        [1.0; 4],
+        TextJustify::Right,
+        TextJustify::Center,
+        wow_ui_sim::render::shader::GLYPH_ATLAS_TEX_INDEX,
+        None,
+        (0.0, 0.0),
+        TextOutline::None,
+        false,
+        0,
+        0.0,
+        false,
+        None,
+        None,
+    );
+    let expected_right = reference.vertices[0].position;
+    assert!(
+        (actual_right[0] - expected_right[0]).abs() < 0.01
+            && (actual_right[1] - expected_right[1]).abs() < 0.01,
+        "right glyph position {actual_right:?}, expected {expected_right:?}"
+    );
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
+#[test]
+fn blizzard_line_handler_anchors_indexed_rows_and_right_column() {
+    let env = setup_full_env();
+    env.exec(
+        r#"
+        GameTooltip:SetOwner(UIParent, "ANCHOR_NONE")
+        assert(GameTooltip:ProcessInfo({ tooltipData = { lines = {
+            { type = 0, leftText = "First" },
+            { type = 0, leftText = "Second", rightText = "Value" },
+        } } }))
+        local first = GameTooltip:GetLeftLine(1)
+        local second = GameTooltip:GetLeftLine(2)
+        local right = GameTooltip:GetRightLine(2)
+        assert(second:GetNumPoints() == 2, "second left anchor count")
+        local point, relative, relativePoint, x, y = second:GetPoint(1)
+        assert(point == "TOP" and relative == first and relativePoint == "BOTTOM" and x == 0 and y == -2, "second left follows preceding index")
+        point, relative, relativePoint, x, y = second:GetPoint(2)
+        assert(point == "LEFT" and relative == GameTooltip and relativePoint == "LEFT" and x == 10 and y == 0, "second left horizontal anchor")
+        assert(right:GetNumPoints() == 1, "right anchor count")
+        point, relative, relativePoint, x, y = right:GetPoint(1)
+        assert(point == "RIGHT" and relative == second and relativePoint == "LEFT" and math.abs(x - (GameTooltip:GetWidth() - 20.48)) < 0.01 and y == 0, "right anchor uses selected content width")
+        GameTooltip:SetCustomLineSpacing(6)
+        GameTooltip:Show()
+        point, relative, relativePoint, x, y = second:GetPoint(1)
+        assert(relative == first and y == -6, "spacing invalidates later left anchors")
+        "#,
+    )
+    .unwrap();
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
+#[test]
 fn ringed_frame_tooltip_applies_native_outer_and_explicit_padding() {
     let env = setup_full_env();
     let addons = wow_ui_sim::paths::default_blizzard_ui_addons_path().unwrap();

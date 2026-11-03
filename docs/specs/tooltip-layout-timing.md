@@ -10,7 +10,16 @@ These timing rules do not establish native font metrics, markup widths, or
 money and status-bar heights. The simulator's font sizes and line-height
 multiplier are estimates, not native measurements. GUI builds use glyph-backed
 measurement at these triggers; builds without GUI use an estimator. Geometry
-and padding placement are outside this timing slice. For Retail/PTR, outer width
+and most text-anchor placement are outside this timing slice. For the first
+line without attachments, Retail/PTR layout assigns TOP and LEFT points: the
+first TOP is `-10 - top` from the tooltip; subsequent TOP points follow the
+preceding indexed left line with the configured spacing. LEFT is `10 + left`
+from the tooltip. Shown right lines anchor RIGHT to the same left line's LEFT
+by the content width. An unforced, unwrapped two-column row reserves 38.4 in
+width selection (WM72). The renderer follows these matching anchors for
+attachment-free rows. Attachment offsets, forced-width layout, and manually
+reanchored rows outside those point pairs remain outside this slice. Ordinary
+`GetPoint` publication is inferred, not observed. For Retail/PTR, outer width
 and height add 20.48 plus their explicit sides after content sizing. Padding
 sides are right, bottom, left, top; omitted left and top preserve their prior
 values. This arithmetic follows WM63-L23 (Retail 12.1.5.70688). Render and periodic
