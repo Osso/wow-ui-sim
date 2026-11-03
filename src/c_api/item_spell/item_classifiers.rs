@@ -4,7 +4,7 @@ use crate::lua_bridge::stack_val;
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val, runtime_error};
 use sim_data::item_classifiers::{ARTIFACT_POWER_SPELLS, ITEM_CURRENCY_VALUES};
-use sim_data::item_effects::ITEM_EFFECTS;
+use sim_data_profile::item_effects::ITEM_EFFECTS;
 
 const RESERVOIR_ANIMA_CURRENCY: u32 = 1813;
 /// Spell extraction rejects this trigger and any trigger above 10 (WM34-A).
@@ -41,7 +41,8 @@ fn grants_artifact_power(item: u32) -> bool {
         .any(|&(_, _, spell, trigger, ..)| {
             trigger != REJECTED_TRIGGER
                 && trigger <= MAX_TRIGGER
-                && ARTIFACT_POWER_SPELLS.binary_search(&spell).is_ok()
+                && u32::try_from(spell)
+                    .is_ok_and(|spell| ARTIFACT_POWER_SPELLS.binary_search(&spell).is_ok())
         })
 }
 
