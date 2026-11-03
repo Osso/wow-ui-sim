@@ -11,7 +11,6 @@ const TOOLTIP_PADDING_V: f32 = 12.0;
 const TOOLTIP_LINE_SPACING: f32 = 2.0;
 const TOOLTIP_HEADER_FONT_SIZE: f32 = 14.0;
 const TOOLTIP_BODY_FONT_SIZE: f32 = 12.0;
-const DOUBLE_LINE_GAP: f32 = 20.0;
 const APPROX_GLYPH_WIDTH: f32 = 0.55;
 const TEXTURE_LINE_SIZE: f32 = 28.0;
 
@@ -188,7 +187,7 @@ fn estimated_tooltip_size(td: Option<&TooltipData>) -> Option<(f32, f32)> {
     let line_spacing = td.line_spacing.unwrap_or(TOOLTIP_LINE_SPACING);
     for (index, line) in td.lines.iter().enumerate() {
         let font_size = tooltip_line_font_size(index);
-        width = width.max(estimated_line_width(line, font_size));
+        width = width.max(estimated_line_width(td, line, font_size));
         if index > 0 {
             height += line_spacing;
         }
@@ -214,7 +213,7 @@ fn wrapped_min_width(td: &TooltipData) -> f32 {
     }
 }
 
-fn estimated_line_width(line: &TooltipLine, font_size: f32) -> f32 {
+fn estimated_line_width(td: &TooltipData, line: &TooltipLine, font_size: f32) -> f32 {
     let left = estimated_text_width(&line.left_text, font_size);
     let right = line
         .right_text
@@ -222,7 +221,7 @@ fn estimated_line_width(line: &TooltipLine, font_size: f32) -> f32 {
         .map(|text| estimated_text_width(text, font_size))
         .unwrap_or(0.0);
     let text_width = if right > 0.0 {
-        left + right + DOUBLE_LINE_GAP
+        left + right + td.double_column_reservation(line)
     } else {
         left
     };

@@ -203,7 +203,7 @@ fn measure_tooltip_content_width(
             .map(|t| measure_tooltip_text_width(font_system, t, font_size))
             .unwrap_or(0.0);
         let line_width = if right_w > 0.0 {
-            left_w + right_w + DOUBLE_LINE_GAP
+            left_w + right_w + td.double_column_reservation(line)
         } else {
             left_w
         };

@@ -362,8 +362,11 @@ pub(super) fn get_custom_line_spacing(state: &mut LuaState) -> LuaResult<u32> {
 pub(super) fn set_minimum_width(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
     let width = val_to_f64(stack_val(state, 2)) as f32;
+    let force = val_to_bool(stack_val(state, 3));
     let mut sim = borrow_state_mut(state)?;
-    sim.tooltips.entry(id).or_default().min_width = width;
+    let tooltip = sim.tooltips.entry(id).or_default();
+    tooltip.min_width = width;
+    tooltip.force_min_width = force;
     invalidate_tooltip_line_layout(&mut sim, id);
     Ok(0)
 }

@@ -64,6 +64,7 @@ pub struct TooltipData {
     pub anchor_y_offset: f32,
     pub custom_word_wrap_min_width: Option<f32>,
     pub min_width: f32,
+    pub force_min_width: bool,
     /// Right, bottom, left, top, in layout units.
     pub padding: [f32; 4],
     pub anchored_left_lines: usize,
@@ -86,6 +87,20 @@ pub struct TooltipData {
 }
 
 impl TooltipData {
+    pub(crate) fn double_column_reservation(&self, line: &TooltipLine) -> f32 {
+        if matches!(
+            crate::client_profile::ACTIVE,
+            crate::client_profile::ClientProfile::Retail
+                | crate::client_profile::ClientProfile::Ptr
+        ) && !self.force_min_width
+            && !line.wrap
+        {
+            if line.left_text.is_empty() { 0.0 } else { 38.4 }
+        } else {
+            20.0
+        }
+    }
+
     /// WM63-L23: native outer allowance plus the explicitly stored sides.
     pub(crate) fn native_outer_padding(&self) -> (f32, f32) {
         const OUTER_PADDING: f32 = 20.48;
@@ -107,6 +122,7 @@ impl Default for TooltipData {
             anchor_y_offset: 0.0,
             custom_word_wrap_min_width: None,
             min_width: 0.0,
+            force_min_width: false,
             padding: [0.0; 4],
             anchored_left_lines: 0,
             spell_id: None,
