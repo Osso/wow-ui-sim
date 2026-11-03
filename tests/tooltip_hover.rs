@@ -188,6 +188,35 @@ fn customization_tooltip_places_first_text_at_native_padding_anchor() {
 
 #[cfg(any(feature = "client-retail", feature = "client-ptr"))]
 #[test]
+fn customization_hidden_first_row_keeps_indexed_anchor_but_not_height() {
+    let env = setup_full_env();
+    let addons = wow_ui_sim::paths::default_blizzard_ui_addons_path().unwrap();
+    wow_ui_sim::loader::load_addon(
+        &env.loader_env(),
+        &addons.join("Blizzard_CustomizationUI/Blizzard_CustomizationUI.toc"),
+    )
+    .unwrap();
+    env.exec(r#"
+        local region = CreateFrame("Frame", nil, UIParent, "CustomizationFrameWithTooltipTemplate")
+        region.tooltipAnchor = "ANCHOR_NONE"
+        region:AddTooltipLine("First")
+        region:AddTooltipLine("Second")
+        region:OnEnter()
+        local tip = CustomizationNoHeaderTooltip
+        local first, second = tip:GetLeftLine(1), tip:GetLeftLine(2)
+        assert(first:IsShown() and second:IsShown(), "original consumer shows both rows")
+        local oldHeight = tip:GetHeight()
+        first:Hide()
+        tip:SetCustomLineSpacing(6)
+        tip:Show()
+        assert(tip:GetHeight() < oldHeight, "hidden first row must not contribute height")
+        local point, relative, relativePoint, x, y = second:GetPoint(1)
+        assert(point == "TOP" and relative == first and relativePoint == "BOTTOM" and x == 0 and y == -6, "second row still anchors to hidden predecessor")
+    "#).unwrap();
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
+#[test]
 fn blizzard_line_handler_only_adds_nonempty_rows() {
     let env = setup_full_env();
     env.exec(
