@@ -8,7 +8,7 @@ CF-2 supplies tracked targets through `src/c_api/c_super_track.rs` and per-quest
 - [ ] Start with absent quest/content/map-pin/vignette. Untracked quest returns nil: **documented-optional representation**, not established native sentinel parity. Pair queries return no results when absent; populated zero enum values remain valid.
 - [ ] Round-trip quest and content selection, replace targets within each category and clear them; quest setter argument 0 clears. Clear-all removes all supported targets. IsSuperTrackingAnything reflects supported stored targets without priority arbitration.
 - [ ] Publish committed state to the original selected Blizzard_QuestSuperTracking consumer through SUPER_TRACKING_CHANGED; its cached quest/content/highlight outputs must change and clear, including matching/nonmatching turn-in/watch events and eligible/ineligible auto-track branches.
-- [ ] Return all five highlight outputs only from supplied per-quest rows. Unknown/0-ID calls without a row fail explicitly under simulator policy; **native evidence gap**, not a native empty-tuple contract. No fallback tuple.
+- [ ] Return the five highlight outputs from the supplied per-quest row. With no row, return map ID 0 and four false flags so the tracker can refresh without adding map highlights. This absence representation is inferred from the documented return types and the Blizzard consumer.
 
 ## How it works
 
@@ -27,13 +27,13 @@ CF-2 supplies tracked targets through `src/c_api/c_super_track.rs` and per-quest
 
 - `tests/cf2_supertrack_consumers.rs` — five original-consumer selectors, each with state transitions; original complete chunk loaded via selected TOC, no consumer/API replacements.
 - `tests/cf2_supertracking_restored.rs` — restored content shape and original listener-time cache transitions on Retail/PTR/Forever.
-- `tests/c_super_track_probes.rs` — public shapes after bootstrap, supplied map-pin/vignette state and explicit missing-highlight-row policy.
+- `tests/c_super_track_probes.rs` — public shapes after bootstrap, supplied map-pin/vignette state and empty highlight output for quests without a row.
 - Existing `tests/c_factory_m4_contracts.rs` absent-target assertions remain preservation, not producer RED.
 
 ## Known gaps (current cycle)
 
 - [ ] Execute the remaining quest/highlight packet beyond the content-only restoration below. Its broader historical staging claims are not established by the restored selectors.
-- [ ] Native untracked quest sentinel, unknown/zero highlight semantics, event timing/deduplication and cross-target coupling remain unestablished. Mutation calls synchronously notify after releasing state borrow; this is simulator policy, not native timing parity.
+- [ ] Native untracked quest sentinel, exact highlight absence values, event timing/deduplication and cross-target coupling remain unestablished. Mutation calls synchronously notify after releasing the state borrow.
 - [ ] IsQuestTask is currently coupled to the static world-quest catalog. World/task rejection is covered together; independent task-only classification remains held, not mocked.
 
 ## Out of scope
