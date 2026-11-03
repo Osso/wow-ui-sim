@@ -1,4 +1,4 @@
-//! Project frame references into the destination Lua environment's object table.
+//! Project frame references at explicit object-view publication boundaries.
 
 use super::methods::{
     call_function_state, native_frame_id_from_val, registry_get, registry_set, table_get,
@@ -67,25 +67,12 @@ pub(crate) fn project_created_frame(
     call_function_state(state, constructor, &[frame])
 }
 
-pub(crate) fn project_parent_return(state: &mut LuaState, value: Val) -> LuaResult<Val> {
-    let secure = registry_get(state, "__secureenv");
-    let caller = state.call_stack[..=state.ci]
-        .iter()
-        .rev()
-        .find_map(|frame| {
-            let Val::Function(function) = state.stack_get(frame.func) else {
-                return None;
-            };
-            match state.gc.closures.get(function) {
-                Some(rilua::vm::closure::Closure::Lua(closure)) => Some(Val::Table(closure.env)),
-                _ => None,
-            }
-        });
-    if caller == Some(secure) {
-        project_forbidden(state, value)
-    } else {
-        Ok(value)
-    }
+pub(crate) fn project_parent_return(
+    state: &mut LuaState,
+    receiver: Val,
+    parent: Val,
+) -> LuaResult<Val> {
+    project_created_frame(state, receiver, parent)
 }
 
 fn raw_field(state: &mut LuaState, value: Val, name: &'static [u8]) -> Val {

@@ -24,11 +24,22 @@ Native evidence WM70, retail 12.1.5 build 70688 (partial):
 - **VERIFIED consumer evidence, source build unverified:** Secure frame pools retain the exact acquired table as a key and require that same key on release; their checked Lua pool and proxy paths do not invoke `GetForbiddenObjectTable`.
 - **UNKNOWN:** The guarded `GetForbiddenObjectTable` bridge, arbitrary secure-boundary conversion, and general equality semantics are not established. Do not infer universal equality or pool-key canonicalization.
 
+## GetParent and function boundaries
+
+Native evidence WM73, retail 12.1.5 build 70688 (partial):
+
+- **VERIFIED:** `GetParent` classifies the receiver's cached view and publishes the parent in that view, without using the calling environment to select it.
+- **INFERRED:** Normally completed calls on a default child return the default parent; calls on a forbidden child return the forbidden parent. Repeated forbidden-view ancestor traversal retains that view.
+- **VERIFIED:** The inspected `GetChildren`, `GetRegions`, and `GetPoint` relative-to output fragments use the default-only publisher, not `GetParent`'s view selection.
+- **VERIFIED:** The checked Lua and C argument, vararg, and result transfers copy table identity without selecting another cached view. **INFERRED:** Ordinary environment crossings do not canonicalize object tables.
+- **EMULATED:** The simulator's explicit XML delegate projection remains a scoped compatibility policy; WM73 does not establish its native mechanism. **UNKNOWN:** Getter guards and all engine callbacks were not fully traced.
+
 ## What it must do
 
 - [x] Preserve simulator frame identity in the forbidden partition: native parent arguments recognize the same frame while public and forbidden Lua tables remain distinct.
 - [ ] Return the new frame's parent-selected table view from `CreateFrame`, so an ordinary secure frame pool retains the same key when its consumer later releases it. TargetFrame consumer verification is pending.
-- [ ] Preserve the supplied frame-table identity across ordinary Lua environment crossings. Explicit XML delegates and native publication points retain their separate projection behavior; native behavior for arbitrary crossings is UNKNOWN.
+- [ ] Preserve the supplied frame-table identity across ordinary Lua environment crossings. Explicit XML delegates and native publication points retain their separate projection behavior; untraced engine callbacks remain UNKNOWN.
+- [ ] Publish `GetParent` in the receiver's view, independently of the calling environment; do not apply this selection to `GetChildren`, `GetRegions`, or `GetPoint`.
 - [x] Keep explicit native `GetObjectTable` results public for covered outbound addon initializers.
 - [x] Pass the mixed-argument XML delegate and unchanged native AuraContainer initializer regressions after scoped inbound argument projection.
 - [x] Intern forbidden views and make repeated `GetForbiddenObjectTable` projection idempotent.
