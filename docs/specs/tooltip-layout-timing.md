@@ -10,7 +10,10 @@ These timing rules do not establish native font metrics, markup widths, or
 money and status-bar heights. The simulator's font sizes and line-height
 multiplier are estimates, not native measurements. GUI builds use glyph-backed
 measurement at these triggers; builds without GUI use an estimator. Geometry
-and padding placement are outside this timing slice. For Retail/PTR, outer width
+and most text-anchor placement are outside this timing slice. For the first
+left line without attachments, Retail/PTR layout uses TOP to tooltip TOP with
+`-10 - top` and LEFT to tooltip LEFT with `10 + left` (WM72). Ordinary
+`GetPoint` publication is inferred, not observed. For Retail/PTR, outer width
 and height add 20.48 plus their explicit sides after content sizing. Padding
 sides are right, bottom, left, top; omitted left and top preserve their prior
 values. This arithmetic follows WM63-L23 (Retail 12.1.5.70688). Render and periodic

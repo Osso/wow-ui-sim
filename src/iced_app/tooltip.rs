@@ -38,6 +38,7 @@ const TOOLTIP_CENTER_OVERLAP: f32 = 4.0;
 pub struct TooltipRenderData {
     pub lines: Vec<TooltipLineRender>,
     pub line_spacing: f32,
+    pub first_text_padding: [f32; 2],
 }
 
 /// A single line ready for rendering.
@@ -279,6 +280,7 @@ pub fn collect_tooltip_data(state: &SimState) -> HashMap<u64, TooltipRenderData>
             TooltipRenderData {
                 lines,
                 line_spacing,
+                first_text_padding: [td.padding[2], td.padding[3]],
             },
         );
     }
@@ -439,7 +441,7 @@ fn emit_tooltip_lines(
     let content_width = bounds.width - insets.left - insets.right;
     let mut y = bounds.y + insets.top;
 
-    for line in &data.lines {
+    for (index, line) in data.lines.iter().enumerate() {
         let font_size = scaled_tooltip_font_size(line.font_size, eff_scale);
         let line_height = if let Some(attachment) = &line.path_attachment {
             attachment.geometry(line.font_size).0 * eff_scale
@@ -466,6 +468,21 @@ fn emit_tooltip_lines(
                 height: line_height,
             },
             eff_scale,
+            if index == 0
+                && line.path_attachment.is_none()
+                && matches!(
+                    crate::client_profile::ACTIVE,
+                    crate::client_profile::ClientProfile::Retail
+                        | crate::client_profile::ClientProfile::Ptr
+                )
+            {
+                Some(Point::new(
+                    bounds.x + (10.0 + data.first_text_padding[0]) * eff_scale,
+                    bounds.y + (10.0 + data.first_text_padding[1]) * eff_scale,
+                ))
+            } else {
+                None
+            },
         );
 
         y += line_height + data.line_spacing * eff_scale;
@@ -551,6 +568,7 @@ fn emit_tooltip_line(
     line: &TooltipLineRender,
     placement: TooltipLinePlacement,
     eff_scale: f32,
+    first_left_origin: Option<Point>,
 ) {
     if let Some(attachment) = &line.path_attachment {
         let (_, image_offset) = attachment.geometry(line.font_size);
@@ -578,7 +596,16 @@ fn emit_tooltip_line(
         Some(rw) if rw > 0.0 => (placement.width - rw - gap).max(0.0),
         _ => placement.width,
     };
-    emit_left_tooltip_text(tr, line, placement, left_width, font_size);
+    let left_placement = if let Some(origin) = first_left_origin {
+        TooltipLinePlacement {
+            x: origin.x,
+            y: origin.y,
+            ..placement
+        }
+    } else {
+        placement
+    };
+    emit_left_tooltip_text(tr, line, left_placement, left_width, font_size);
 
     if let Some(ref right_text) = line.right_text {
         emit_right_tooltip_text(tr, line, placement, left_width, right_text, font_size);

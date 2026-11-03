@@ -49,6 +49,12 @@ pub(crate) fn size_tooltip_on_native_trigger(
     {
         return;
     }
+    if matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail | crate::client_profile::ClientProfile::Ptr
+    ) {
+        anchor_first_tooltip_line(sim, tooltip_id);
+    }
     #[cfg(feature = "gui")]
     if matches!(
         crate::client_profile::ACTIVE,
@@ -64,6 +70,46 @@ pub(crate) fn size_tooltip_on_native_trigger(
         return;
     }
     refresh_tooltip_geometry(sim, tooltip_id);
+}
+
+fn anchor_first_tooltip_line(sim: &mut crate::lua_api::state::SimState, tooltip_id: u64) {
+    use crate::widget::{Anchor, AnchorPoint};
+
+    let Some(tooltip) = sim.tooltips.get(&tooltip_id) else {
+        return;
+    };
+    let Some(line) = tooltip.lines.first() else {
+        return;
+    };
+    if line.texture.is_some() {
+        return;
+    }
+    let Some(&line_id) = tooltip.left_line_ids.first() else {
+        return;
+    };
+    let [_, _, left, top] = tooltip.padding;
+    let Some(frame) = sim.widgets.get_mut_visual(line_id) else {
+        return;
+    };
+    frame.anchors = vec![
+        Anchor {
+            point: AnchorPoint::Top,
+            relative_to: None,
+            relative_to_id: Some(tooltip_id),
+            relative_point: AnchorPoint::Top,
+            x_offset: 0.0,
+            y_offset: -10.0 - top,
+        },
+        Anchor {
+            point: AnchorPoint::Left,
+            relative_to: None,
+            relative_to_id: Some(tooltip_id),
+            relative_point: AnchorPoint::Left,
+            x_offset: 10.0 + left,
+            y_offset: 0.0,
+        },
+    ];
+    sim.widgets.mark_rect_dirty(line_id);
 }
 
 fn estimated_tooltip_size(td: Option<&TooltipData>) -> Option<(f32, f32)> {
