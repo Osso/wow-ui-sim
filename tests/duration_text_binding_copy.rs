@@ -2,6 +2,28 @@
 
 use wow_ui_sim::lua_api::WowLuaEnv;
 
+#[cfg(feature = "forbidden-aspects")]
+#[test]
+fn duration_binding_font_string_accepts_native_views_and_checks_taint() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        local label = CreateFrame('Frame'):CreateFontString()
+        local forbidden = GetForbiddenObjectTable(label)
+        assert(label ~= forbidden)
+        local binding = C_DurationUtil.CreateDurationTextBinding()
+        binding:SetFontString(label)
+        binding:SetFontString(forbidden)
+        local function addonSet(value) binding:SetFontString(value) end
+        debug.setobjecttaint(addonSet, 'FontStringProbe')
+        assert(pcall(addonSet, label))
+        local ok, err = pcall(addonSet, forbidden)
+        assert(not ok and err:find('Attempt to access forbidden object from code tainted by an AddOn - Usage: self:SetFontString(fontString)', 1, true))
+        "#,
+    )
+    .unwrap();
+}
+
 #[cfg(feature = "client-wowforever")]
 #[test]
 fn duration_binding_secret_duration_preserves_font_string_boundary() {

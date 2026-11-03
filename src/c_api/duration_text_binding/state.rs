@@ -116,8 +116,20 @@ pub(super) fn validate_font_string(state: &mut LuaState) -> LuaResult<u32> {
     use crate::lua_api::methods::{borrow_state, native_frame_id_from_val};
     use crate::widget::WidgetType;
 
-    let id = native_frame_id_from_val(state, stack_val(state, 1))
+    let value = stack_val(state, 1);
+    #[cfg(feature = "forbidden-aspects")]
+    let value = {
+        let public = crate::lua_api::script_object_transfer::project_public(state, value);
+        if public != value && !rilua::api::state_is_secure(state) {
+            return Err(runtime_error(
+                "Attempt to access forbidden object from code tainted by an AddOn - Usage: self:SetFontString(fontString)",
+            ));
+        }
+        public
+    };
+    let id = native_frame_id_from_val(state, value)
         .ok_or_else(|| runtime_error("FontString expected"))?;
+    crate::c_api::unit_aura_access::ensure_script_object_accessible(state, id)?;
     let sim = borrow_state(state)?;
     let frame = sim
         .widgets
