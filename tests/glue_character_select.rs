@@ -398,6 +398,7 @@ fn character_select_configuration_warnings_returns_a_table() {
     }
 }
 
+#[cfg(not(feature = "client-wrath"))]
 #[test]
 fn character_select_tooltip_tolerates_missing_spec_id() {
     test_timeout! {

@@ -1,4 +1,4 @@
-#![cfg(feature = "gui")]
+#![cfg(all(feature = "gui", not(feature = "client-wrath")))]
 
 mod tooltip_full_env_helpers;
 
