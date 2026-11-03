@@ -95,6 +95,33 @@ const ORIGINAL_ITEM_CONSUMER: &str = r#"
     return value, table.concat(observations, '\n')
 "#;
 
+#[cfg(feature = "client-retail")]
+#[test]
+fn pet_info_by_item_uses_native_tuple_and_argument_contract() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        local api = C_PetJournal.GetPetInfoByItemID
+        for _, value in ipairs({false, {}, 'not-a-number'}) do
+            local ok, err = pcall(api, value)
+            assert(not ok and err:find('Usage: Script_GetPetInfoByItemID(itemID)', 1, true))
+        end
+        local ok, err = pcall(api)
+        assert(not ok and err:find('Usage: Script_GetPetInfoByItemID(itemID)', 1, true))
+        assert(select('#', api(0)) == 0 and select('#', api(6948)) == 0)
+        assert(select('#', api(4401)) == 13)
+        local name, icon, petType, creature, source, description, wild, battle,
+              tradeable, unique, obtainable, display, species = api('4401', 'ignored')
+        assert(name == 'Mechanical Squirrel' and icon == 656559 and petType == 10)
+        assert(creature == 2671 and source == '|cFFFFD200Profession: |rEngineering')
+        assert(description == "A mechanical squirrel's logic center tells it to collect and store both nuts and bolts for the winter.")
+        assert(not wild and battle and tradeable and not unique and obtainable)
+        assert(display == 7937 and species == 39)
+        "#,
+    )
+    .unwrap();
+}
+
 #[test]
 fn player_choice_recognizes_pet_item_from_real_catalog() {
     let ui = crate::common::blizzard_addon_harness::blizzard_ui_dir();
