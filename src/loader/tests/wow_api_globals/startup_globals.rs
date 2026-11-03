@@ -218,6 +218,25 @@ fn test_patch_12_1_duration_binding_reference_lifetime_and_identity() {
 #[test]
 fn test_patch_12_0_7_safe_global_bridges() {
     let env = WowLuaEnv::new().unwrap();
+    let retail_12_1_5 = crate::client_profile::ACTIVE
+        == crate::client_profile::ClientProfile::Retail
+        && cfg!(feature = "retail-12-1-5");
+    let ping_check = if retail_12_1_5 {
+        r#"
+        assert(C_PingSecure == nil)
+        assert(__secureenv.C_PingSecure.ClearPendingPingOffScreenCallback == nil)
+        __secureenv.C_PingSecure.SetPendingPingOffScreenCallback(function() return "ping" end)
+        assert(type(GetSecurePendingPingOffScreenCallback()) == "function")
+        "#
+    } else {
+        r#"
+        C_PingSecure.SetPendingPingOffScreenCallback(function() return "ping" end)
+        assert(type(GetSecurePendingPingOffScreenCallback()) == "function")
+        C_PingSecure.ClearPendingPingOffScreenCallback()
+        assert(GetSecurePendingPingOffScreenCallback() == nil)
+        "#
+    };
+    env.exec(ping_check).unwrap();
     env.state()
         .borrow_mut()
         .known_shipped_asset_ids
@@ -293,10 +312,6 @@ fn test_patch_12_0_7_safe_global_bridges() {
             local beforeUninvite = GetNumGroupMembers()
             C_PartyInfo.UninviteUnit("party1")
             if GetNumGroupMembers() ~= beforeUninvite - 1 then return "party-uninvite" end
-            C_PingSecure.SetPendingPingOffScreenCallback(function() return "ping" end)
-            if type(GetSecurePendingPingOffScreenCallback()) ~= "function" then return "ping-callback" end
-            C_PingSecure.ClearPendingPingOffScreenCallback()
-            if GetSecurePendingPingOffScreenCallback() ~= nil then return "ping-clear" end
             if type(C_QuestHub.GetDragonridingRacesForAreaPOI(1)) ~= "table" then return "dragonraces" end
             if C_UIFileAsset.GetFileID(123) ~= 123 then return "file-id-number" end
             if C_UIFileAsset.GetFileID("Interface\\Icons\\Trade_Engineering.blp") ~= 136243 then return "file-id-known-path" end
