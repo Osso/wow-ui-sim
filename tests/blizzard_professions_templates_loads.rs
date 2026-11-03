@@ -153,6 +153,9 @@ fn load_full_game_ui() -> WowLuaEnv {
 fn profession_recipe_source_button_displays_supplied_tooltip_text() {
     let env = load_full_game_ui();
     load_addon(&env.loader_env(), &templates_toc()).expect("load original profession templates");
+    let profession_toc = find_toc_file(&blizzard_ui_dir().join("Blizzard_Professions"))
+        .expect("find original professions addon");
+    load_addon(&env.loader_env(), &profession_toc).expect("load original professions addon");
     env.state()
         .borrow_mut()
         .recipe_source_text
