@@ -39,6 +39,7 @@ pub struct TooltipRenderData {
     pub lines: Vec<TooltipLineRender>,
     pub line_spacing: f32,
     pub left_text_offsets: Vec<Option<[f32; 2]>>,
+    pub right_text_offsets: Vec<Option<f32>>,
 }
 
 /// A single line ready for rendering.
@@ -283,6 +284,9 @@ pub fn collect_tooltip_data(state: &SimState) -> HashMap<u64, TooltipRenderData>
                 left_text_offsets: (0..td.lines.len())
                     .map(|index| left_text_anchor_offset(state, id, td, index))
                     .collect(),
+                right_text_offsets: (0..td.lines.len())
+                    .map(|index| right_text_anchor_offset(state, td, index))
+                    .collect(),
             },
         );
     }
@@ -318,6 +322,28 @@ fn left_text_anchor_offset(
             && anchor.relative_to_id == Some(tooltip_id as usize)
     })?;
     Some([left.x_offset, -top.y_offset])
+}
+
+fn right_text_anchor_offset(
+    state: &SimState,
+    td: &crate::lua_api::tooltip::TooltipData,
+    index: usize,
+) -> Option<f32> {
+    use crate::widget::AnchorPoint;
+
+    let left_id = *td.left_line_ids.get(index)?;
+    let right_id = *td.right_line_ids.get(index)?;
+    let frame = state.widgets.get(right_id)?;
+    frame
+        .anchors
+        .iter()
+        .find(|anchor| {
+            anchor.point == AnchorPoint::Right
+                && anchor.relative_point == AnchorPoint::Left
+                && anchor.relative_to_id == Some(left_id as usize)
+                && anchor.y_offset == 0.0
+        })
+        .map(|anchor| anchor.x_offset)
 }
 
 fn tooltip_alpha(
@@ -521,6 +547,11 @@ fn emit_tooltip_lines(
             },
             eff_scale,
             left_origin,
+            data.right_text_offsets
+                .get(index)
+                .copied()
+                .flatten()
+                .map(|offset| offset * eff_scale),
         );
 
         y += line_height + data.line_spacing * eff_scale;
@@ -607,6 +638,7 @@ fn emit_tooltip_line(
     placement: TooltipLinePlacement,
     eff_scale: f32,
     left_origin: Option<Point>,
+    right_offset: Option<f32>,
 ) {
     if let Some(attachment) = &line.path_attachment {
         let (_, image_offset) = attachment.geometry(line.font_size);
@@ -646,7 +678,17 @@ fn emit_tooltip_line(
     emit_left_tooltip_text(tr, line, left_placement, left_width, font_size);
 
     if let Some(ref right_text) = line.right_text {
-        emit_right_tooltip_text(tr, line, placement, left_width, right_text, font_size);
+        if let (Some(origin), Some(offset)) = (left_origin, right_offset) {
+            let right_placement = TooltipLinePlacement {
+                x: origin.x,
+                y: origin.y,
+                width: offset,
+                ..placement
+            };
+            emit_right_tooltip_text(tr, line, right_placement, 0.0, right_text, font_size);
+        } else {
+            emit_right_tooltip_text(tr, line, placement, left_width, right_text, font_size);
+        }
     }
 }
 

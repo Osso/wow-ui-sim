@@ -107,6 +107,7 @@ fn build_single_line_tooltip_batch_with_scale(bounds: Rectangle, eff_scale: f32)
         lines: vec![single_header_tooltip_line()],
         line_spacing: TOOLTIP_LINE_SPACING,
         left_text_offsets: vec![Some([10.0; 2])],
+        right_text_offsets: Vec::new(),
     };
     let mut batch = QuadBatch::new();
     let mut font_sys = WowFontSystem::new();
@@ -303,6 +304,7 @@ fn tooltip_renderer_emits_inline_color_segments() {
         }],
         line_spacing: TOOLTIP_LINE_SPACING,
         left_text_offsets: vec![Some([10.0; 2])],
+        right_text_offsets: Vec::new(),
     };
 
     let mut batch = QuadBatch::new();
@@ -354,6 +356,7 @@ fn tooltip_renderer_wraps_inline_color_segments() {
         }],
         line_spacing: TOOLTIP_LINE_SPACING,
         left_text_offsets: vec![Some([10.0; 2])],
+        right_text_offsets: Vec::new(),
     };
 
     let mut batch = QuadBatch::new();
@@ -498,6 +501,7 @@ fn tooltip_renderer_skips_fallback_background_when_lua_nineslice_exists() {
         }],
         line_spacing: TOOLTIP_LINE_SPACING,
         left_text_offsets: vec![Some([10.0; 2])],
+        right_text_offsets: Vec::new(),
     };
 
     let mut batch = QuadBatch::new();
@@ -546,6 +550,7 @@ fn tooltip_renderer_keeps_opaque_center_when_lua_nineslice_exists() {
         }],
         line_spacing: TOOLTIP_LINE_SPACING,
         left_text_offsets: vec![Some([10.0; 2])],
+        right_text_offsets: Vec::new(),
     };
 
     let mut batch = QuadBatch::new();
