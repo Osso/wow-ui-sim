@@ -78,6 +78,9 @@ fn anchor_first_tooltip_line(sim: &mut crate::lua_api::state::SimState, tooltip_
     let Some(tooltip) = sim.tooltips.get(&tooltip_id) else {
         return;
     };
+    if tooltip.first_left_anchored {
+        return;
+    }
     let Some(line) = tooltip.lines.first() else {
         return;
     };
@@ -110,6 +113,9 @@ fn anchor_first_tooltip_line(sim: &mut crate::lua_api::state::SimState, tooltip_
         },
     ];
     sim.widgets.mark_rect_dirty(line_id);
+    if let Some(tooltip) = sim.tooltips.get_mut(&tooltip_id) {
+        tooltip.first_left_anchored = true;
+    }
 }
 
 fn estimated_tooltip_size(td: Option<&TooltipData>) -> Option<(f32, f32)> {
