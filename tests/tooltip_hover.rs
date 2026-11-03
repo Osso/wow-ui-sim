@@ -230,7 +230,7 @@ fn blizzard_show_synchronously_uses_glyph_measurement() {
         r#"
         GameTooltip:SetOwner(UIParent, "ANCHOR_NONE")
         assert(GameTooltip:ProcessInfo({ tooltipData = { lines = {
-            { type = 0, leftText = "Wide WWW and narrow iii glyphs" },
+            { type = 0, leftText = "WWWWWWWWWW" },
         } } }))
         assert(GameTooltip:IsShown(), "processed tooltip must be shown")
         assert(GameTooltip:GetOwner() == UIParent, "processed tooltip must retain its owner")
@@ -244,6 +244,10 @@ fn blizzard_show_synchronously_uses_glyph_measurement() {
         r#"
         assert(GameTooltip:GetWidth() == shownWidth, "Show did not synchronously measure glyph width")
         assert(GameTooltip:GetHeight() == shownHeight, "Show did not synchronously measure glyph height")
+        GameTooltip:ClearLines()
+        GameTooltip:AddLineDataText({ type = 0, leftText = "iiiiiiiiii" })
+        GameTooltip:Show()
+        assert(GameTooltip:GetWidth() < shownWidth, "equal-length glyphs must have distinct widths")
         "#,
     )
     .unwrap();
