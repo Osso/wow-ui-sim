@@ -478,7 +478,7 @@ pub(super) fn clear_padding(state: &mut LuaState) -> LuaResult<u32> {
     if let Some(td) = sim.tooltips.get_mut(&id) {
         td.padding = 0.0;
     }
-    refresh_tooltip_geometry(&mut sim, id);
+    size_tooltip_on_native_trigger(&mut sim, id);
     Ok(0)
 }
 
