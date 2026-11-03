@@ -34,7 +34,12 @@ fn friends_update_uses_blizzard_quick_join_toast() {
     let ui = crate::common::blizzard_addon_harness::blizzard_ui_dir();
     let (env, loaded) = crate::common::blizzard_addon_harness::build_blizzard_addon_closure_env(
         &ui,
-        &["Blizzard_CompactRaidFrames", "Blizzard_QuickJoin"],
+        &[
+            "Blizzard_AuraContainer",
+            "Blizzard_CompactRaidFrames",
+            "Blizzard_QuickJoin",
+            "Blizzard_RaidUI",
+        ],
         &[],
     );
     assert!(loaded.iter().any(|name| name == "Blizzard_QuickJoin"));
