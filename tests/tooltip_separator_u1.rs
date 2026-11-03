@@ -58,6 +58,7 @@ fn retail_u1_original_separator_attaches_and_emits_scaled_divider() {
     env.exec(
         r#"
         U1Tooltip = CreateFrame("GameTooltip", "U1Tooltip", UIParent)
+        U1Tooltip:SetOwner(UIParent, "ANCHOR_NONE")
         U1Tooltip:SetAlpha(0.4)
         U1Tooltip:AddLine("Header makes the tooltip wider than the divider")
         SocialUIUtil.AddSeparatorToTooltip(U1Tooltip)
