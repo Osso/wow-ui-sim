@@ -652,6 +652,39 @@ fn forever_minimap_tracking_static_filters_use_real_mask() {
 
 #[test]
 #[cfg(feature = "client-wowforever")]
+fn forever_tracking_rows_respect_class_and_initial_cvar() {
+    for (class, mask, expected_count, poison, ammo) in [
+        (1, "1", 23, false, false),
+        (3, "8", 24, false, true),
+        (5, "8", 24, true, false),
+    ] {
+        let env = WowLuaEnv::new().expect("Lua environment should initialize");
+        {
+            let state = env.state();
+            let mut state = state.borrow_mut();
+            state.player.class_index = class;
+            state.cvars.set_imported("minimapTrackedInfov4", mask);
+        }
+        let result: (i32, bool, bool, bool, bool) = env
+            .eval(
+                r#"
+                local poison, ammo = false, false
+                for i = 1, C_Minimap.GetNumTrackingTypes() do
+                    local filter = C_Minimap.GetTrackingFilter(i).filterID
+                    if filter == 1048576 then poison = true end
+                    if filter == 16777216 then ammo = true end
+                end
+                return C_Minimap.GetNumTrackingTypes(), poison, ammo,
+                       C_Minimap.IsFilteredOut(1), C_Minimap.IsFilteredOut(8)
+                "#,
+            )
+            .expect("tracking rows should reflect player class and CVar");
+        assert_eq!(result, (expected_count, poison, ammo, mask != "1", mask != "8"));
+    }
+}
+
+#[test]
+#[cfg(feature = "client-wowforever")]
 fn forever_empty_talent_query_accepts_distinct_coordinates() {
     let env = load_full_game_ui();
     env.exec(
