@@ -1,0 +1,140 @@
+{
+  "capture_contract": {
+    "enumeration": "ConsoleGetAllCommands",
+    "excluded_native_names": [
+      "cache-*",
+      "praisethesun",
+      "ttsusecharactersettings"
+    ],
+    "false_encoding": "Absent YAML flag fields mean false in the native comparison.",
+    "flag_return_positions": {
+      "account": 3,
+      "character": 4,
+      "locked": 5,
+      "readonly": 7,
+      "secure": 6
+    },
+    "query": "C_CVar.GetCVarInfo",
+    "return_count": 7
+  },
+  "capture_sources": {
+    "addon/Wowless/generated.lua": {
+      "sha256": "118d84d4cc1ea2b830a7201652d7454128272f81c210756be71dc912b686238c",
+      "url": "https://raw.githubusercontent.com/wowless/wowless/69a3654e08305de6fd5ce3533faf7e5597135109/addon/Wowless/generated.lua"
+    },
+    "tools/errsv.lua": {
+      "sha256": "4b2639ca8616c3b40baff5e94749ddd9bb8ded0e7b7d8ca1d4c91f05bf38e89e",
+      "url": "https://raw.githubusercontent.com/wowless/wowless/69a3654e08305de6fd5ce3533faf7e5597135109/tools/errsv.lua"
+    }
+  },
+  "evidence_limits": [
+    "Upstream maintained native-query expectations, not decompiled client data.",
+    "Snapshot versions and build configurations match immutable native-capture pins; individual flag capture receipts are not bundled.",
+    "Catalog last-change builds are recorded separately from current snapshot builds.",
+    "Missing names have no captured metadata; zero masks are retained for captured all-false rows.",
+    "Defaults and current CVar values are deliberately excluded.",
+    "No catalog is supplied for profiles without a matching pinned native snapshot."
+  ],
+  "flag_bits": {
+    "account": 1,
+    "character": 2,
+    "locked": 4,
+    "readonly": 16,
+    "secure": 8
+  },
+  "profiles": {
+    "ptr": {
+      "build_source_sha256": "e5358d4fb44049ffd25be0db5228ec6e1c40b7bc1b8e64726593f5c40a9f55ff",
+      "build_source_url": "https://raw.githubusercontent.com/wowless/wowless/69a3654e08305de6fd5ce3533faf7e5597135109/data/products/wowt/build.yaml",
+      "catalog_last_change_build": {
+        "build": "70493",
+        "date": "Oct 19 2026",
+        "hash": "fc3eaa61ff0ade6bf35dbab9727bc161",
+        "test": "true",
+        "tocversion": "120107",
+        "version": "12.1.7"
+      },
+      "catalog_last_change_build_sha256": "e5358d4fb44049ffd25be0db5228ec6e1c40b7bc1b8e64726593f5c40a9f55ff",
+      "catalog_last_change_build_url": "https://raw.githubusercontent.com/wowless/wowless/5dbc00c694af6c8a9ae386aa525f36d97bd3cdf4/data/products/wowt/build.yaml",
+      "catalog_last_change_revision": "5dbc00c694af6c8a9ae386aa525f36d97bd3cdf4",
+      "entries": 1780,
+      "output_path": "crates/sim-data-profile/data/cvar_info_ptr.rs",
+      "output_sha256": "70378a26de8db20b140e32a0b6890497993775c942029d347f3262cb089526e2",
+      "product": "wowt",
+      "snapshot_build": {
+        "build": "70493",
+        "date": "Oct 19 2026",
+        "hash": "fc3eaa61ff0ade6bf35dbab9727bc161",
+        "test": "true",
+        "tocversion": "120107",
+        "version": "12.1.7"
+      },
+      "snapshot_version": "12.1.7.70493",
+      "source_sha256": "67eb33ce3e607a639f611d4ffb1c163d5e541180e76fce2c78a2e3e9bbfb19e8",
+      "source_url": "https://raw.githubusercontent.com/wowless/wowless/69a3654e08305de6fd5ce3533faf7e5597135109/data/products/wowt/cvars.yaml"
+    },
+    "retail": {
+      "build_source_sha256": "28bd19665d3bb39466c4019108df607066887b12731118638ef8e366bfd7a7aa",
+      "build_source_url": "https://raw.githubusercontent.com/wowless/wowless/69a3654e08305de6fd5ce3533faf7e5597135109/data/products/wow/build.yaml",
+      "catalog_last_change_build": {
+        "build": "70448",
+        "date": "Oct 15 2026",
+        "hash": "88d5e8ef05ec5a8446cdec93d142d7c6",
+        "test": "false",
+        "tocversion": "120105",
+        "version": "12.1.5"
+      },
+      "catalog_last_change_build_sha256": "b559cda1f4ac4a25706e4498f13c3d3d800a9810de2ec0b2b78f4b79a1cff47a",
+      "catalog_last_change_build_url": "https://raw.githubusercontent.com/wowless/wowless/94a22268b77eae35d7b272c00bf8981efe820018/data/products/wow/build.yaml",
+      "catalog_last_change_revision": "94a22268b77eae35d7b272c00bf8981efe820018",
+      "entries": 1663,
+      "output_path": "crates/sim-data-profile/data/cvar_info_retail.rs",
+      "output_sha256": "7afd878f4e765ce1a21ba8d407c3c2900720be4d616e07cfc6130556e7826e15",
+      "product": "wow",
+      "snapshot_build": {
+        "build": "70575",
+        "date": "Oct 22 2026",
+        "hash": "d718abcc42604d8efbd35aecfa5bb75b",
+        "test": "false",
+        "tocversion": "120105",
+        "version": "12.1.5"
+      },
+      "snapshot_version": "12.1.5.70575",
+      "source_sha256": "4b6f59b9018ebe53ecd9c077ed05ff151bd7c3a8d3e26f9b69bc06512f1d71d0",
+      "source_url": "https://raw.githubusercontent.com/wowless/wowless/69a3654e08305de6fd5ce3533faf7e5597135109/data/products/wow/cvars.yaml"
+    },
+    "wowforever": {
+      "build_source_sha256": "4e8592d61be9c77a14b1b4630988aab6561ab5da1f349b66b59e53ca6051fa4d",
+      "build_source_url": "https://raw.githubusercontent.com/wowless/wowless/69a3654e08305de6fd5ce3533faf7e5597135109/data/products/wow_classic_beta/build.yaml",
+      "catalog_last_change_build": {
+        "build": "70450",
+        "date": "Oct 15 2026",
+        "hash": "84bea4233331e390fda8724c6f91ffa5",
+        "test": "false",
+        "tocversion": "16001",
+        "version": "1.60.1"
+      },
+      "catalog_last_change_build_sha256": "b52568f5c746d8493837ebd8f18b2e5698952263d5d6823668a83150e9ff43b7",
+      "catalog_last_change_build_url": "https://raw.githubusercontent.com/wowless/wowless/3b471c4d6eb37459cd6ed2df84db18fef4d5f1b3/data/products/wow_classic_beta/build.yaml",
+      "catalog_last_change_revision": "3b471c4d6eb37459cd6ed2df84db18fef4d5f1b3",
+      "entries": 1786,
+      "output_path": "crates/sim-data-profile/data/cvar_info_wowforever.rs",
+      "output_sha256": "c6e5883279ab3f9496f65fc8156b2f2cb997a3255095584f04bbd8aa9b5f59ac",
+      "product": "wow_classic_beta",
+      "snapshot_build": {
+        "build": "70532",
+        "date": "Oct 20 2026",
+        "hash": "ad1802f4455e427ed8b7769aab25b0c0",
+        "test": "false",
+        "tocversion": "16001",
+        "version": "1.60.1"
+      },
+      "snapshot_version": "1.60.1.70532",
+      "source_sha256": "302ba0591e9836677f1fbf97bc7f2a8cb4cc9ba3304d29ca65fb61b689b94628",
+      "source_url": "https://raw.githubusercontent.com/wowless/wowless/69a3654e08305de6fd5ce3533faf7e5597135109/data/products/wow_classic_beta/cvars.yaml"
+    }
+  },
+  "schema": 2,
+  "source_repository": "https://github.com/wowless/wowless",
+  "source_revision": "69a3654e08305de6fd5ce3533faf7e5597135109"
+}
