@@ -1,9 +1,12 @@
 #![cfg(feature = "gui")]
 
+#[cfg(not(feature = "client-wrath"))]
 #[path = "tooltip_full_env_helpers.rs"]
 mod tooltip_full_env_helpers;
 
+#[cfg(not(feature = "client-wrath"))]
 use tooltip_full_env_helpers::setup_full_env;
+#[cfg(not(feature = "client-wrath"))]
 use wow_ui_sim::iced_app::compute_frame_rect;
 use wow_ui_sim::lua_api::WowLuaEnv;
 
@@ -611,6 +614,7 @@ fn test_tooltip_height_grows_with_lines() {
     assert!(h3 > h2, "3 lines should be taller than 2: h2={h2}, h3={h3}");
 }
 
+#[cfg(not(feature = "client-wrath"))]
 #[test]
 fn test_tooltip_nineslice_child_accessible() {
     let env = setup_full_env();
