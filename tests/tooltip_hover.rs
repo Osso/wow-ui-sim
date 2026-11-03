@@ -18,24 +18,25 @@ fn ringed_frame_tooltip_applies_native_outer_and_explicit_padding() {
         r#"
         local region = CreateFrame("Frame", nil, UIParent)
         Mixin(region, RingedFrameWithTooltipMixin)
-        function region:GetAppropriateTooltip() return GameTooltip end
+        PaddingTooltip = CreateFrame("GameTooltip", "PaddingTooltip", UIParent)
+        function region:GetAppropriateTooltip() return PaddingTooltip end
         region.tooltipAnchor = "ANCHOR_NONE"
         region.tooltipMinWidth = 300
         region.tooltipPadding = 3
         region:AddTooltipLine("x")
         region:OnEnter()
-        local width, height = GameTooltip:GetWidth(), GameTooltip:GetHeight()
-        assert(math.abs(width - 326.48) < 0.01, "native outer width padding: " .. width .. " sides: " .. tostring(GameTooltip:GetPadding()))
-        GameTooltip:SetPadding(3, 5, 7, 11)
-        assert(math.abs(GameTooltip:GetWidth() - 330.48) < 0.01, "explicit horizontal sides")
-        assert(math.abs(GameTooltip:GetHeight() - height - 10) < 0.01, "explicit vertical sides")
-        local right, bottom, left, top = GameTooltip:GetPadding()
+        local width, height = PaddingTooltip:GetWidth(), PaddingTooltip:GetHeight()
+        assert(math.abs(width - 326.48) < 0.01, "native outer width padding: " .. width .. " sides: " .. tostring(PaddingTooltip:GetPadding()))
+        PaddingTooltip:SetPadding(3, 5, 7, 11)
+        assert(math.abs(PaddingTooltip:GetWidth() - 330.48) < 0.01, "explicit horizontal sides")
+        assert(math.abs(PaddingTooltip:GetHeight() - height - 10) < 0.01, "explicit vertical sides")
+        local right, bottom, left, top = PaddingTooltip:GetPadding()
         assert(right == 3 and bottom == 5 and left == 7 and top == 11, "padding side order")
-        GameTooltip:SetPadding(2, 4)
-        right, bottom, left, top = GameTooltip:GetPadding()
+        PaddingTooltip:SetPadding(2, 4)
+        right, bottom, left, top = PaddingTooltip:GetPadding()
         assert(right == 2 and bottom == 4 and left == 7 and top == 11, "omitted sides persist")
-        assert(math.abs(GameTooltip:GetWidth() - 329.48) < 0.01, "preserved left padding")
-        assert(math.abs(GameTooltip:GetHeight() - height - 9) < 0.01, "preserved top padding")
+        assert(math.abs(PaddingTooltip:GetWidth() - 329.48) < 0.01, "preserved left padding")
+        assert(math.abs(PaddingTooltip:GetHeight() - height - 9) < 0.01, "preserved top padding")
         "#,
     )
     .unwrap();
