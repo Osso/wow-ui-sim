@@ -188,6 +188,73 @@ fn customization_tooltip_places_first_text_at_native_padding_anchor() {
 
 #[cfg(any(feature = "client-retail", feature = "client-ptr"))]
 #[test]
+fn customization_hidden_first_row_is_not_rendered() {
+    use iced::{Point, Rectangle, Size};
+    use wow_ui_sim::iced_app::tooltip::{TooltipRender, build_tooltip_quads, collect_tooltip_data};
+    use wow_ui_sim::render::{GlyphAtlas, QuadBatch, WowFontSystem};
+    let env = setup_full_env();
+    let addons = wow_ui_sim::paths::default_blizzard_ui_addons_path().unwrap();
+    wow_ui_sim::loader::load_addon(
+        &env.loader_env(),
+        &addons.join("Blizzard_CustomizationUI/Blizzard_CustomizationUI.toc"),
+    )
+    .unwrap();
+    env.exec(
+        r#"
+        local region = CreateFrame("Frame", nil, UIParent, "CustomizationFrameWithTooltipTemplate")
+        region.tooltipAnchor = "ANCHOR_NONE"
+        region:AddTooltipLine("First")
+        region:AddTooltipLine("Second")
+        region:OnEnter()
+    "#,
+    )
+    .unwrap();
+    let count_glyph_vertices = || {
+        let state = env.state().borrow();
+        let id = state
+            .widgets
+            .get_id_by_name("CustomizationNoHeaderTooltip")
+            .unwrap();
+        let frame = state.widgets.get(id).unwrap();
+        let data = collect_tooltip_data(&state);
+        let mut fonts = WowFontSystem::new();
+        let mut glyphs = GlyphAtlas::new();
+        let mut batch = QuadBatch::new();
+        build_tooltip_quads(
+            TooltipRender {
+                batch: &mut batch,
+                bounds: Rectangle::new(
+                    Point::new(100.0, 200.0),
+                    Size::new(frame.width, frame.height),
+                ),
+                tooltip_data: Some(&data),
+                id,
+                eff_alpha: 1.0,
+                eff_scale: 1.0,
+                draw_background: false,
+            },
+            &mut Some((&mut fonts, &mut glyphs)),
+        );
+        batch
+            .vertices
+            .iter()
+            .filter(|vertex| vertex.tex_index == wow_ui_sim::render::shader::GLYPH_ATLAS_TEX_INDEX)
+            .count()
+    };
+    let before = count_glyph_vertices();
+    env.exec(
+        "CustomizationNoHeaderTooltip:GetLeftLine(1):Hide(); CustomizationNoHeaderTooltip:Show()",
+    )
+    .unwrap();
+    let after = count_glyph_vertices();
+    assert!(
+        after > 0 && after < before,
+        "hidden first row must not emit glyphs: before {before}, after {after}"
+    );
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
+#[test]
 fn customization_hidden_first_row_keeps_indexed_anchor_but_not_height() {
     let env = setup_full_env();
     let addons = wow_ui_sim::paths::default_blizzard_ui_addons_path().unwrap();
