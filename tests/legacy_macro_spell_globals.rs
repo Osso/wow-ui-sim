@@ -67,7 +67,7 @@ fn legacy_macro_and_spellbook_globals_exist_for_addons() {
     );
 }
 
-#[cfg(not(feature = "retail-12-0-0"))]
+#[cfg(all(not(feature = "retail-12-0-0"), not(feature = "client-wrath")))]
 #[test]
 fn legacy_spell_globals_exist_for_addons() {
     let env = env();
@@ -178,6 +178,7 @@ fn player_login_legacy_globals_exist_for_addons() {
     );
 }
 
+#[cfg(not(feature = "client-wrath"))]
 #[test]
 fn restricted_actions_state_is_numeric_for_addons() {
     let env = env();
