@@ -19,7 +19,7 @@ pub(crate) fn refresh_tooltip_geometry(sim: &mut crate::lua_api::state::SimState
         sim.widgets.mark_rect_dirty(tooltip_id);
         return;
     }
-    let Some((width, height)) = estimated_tooltip_size(sim.tooltips.get(&tooltip_id)) else {
+    let Some((width, height)) = estimated_tooltip_size(sim, tooltip_id) else {
         sim.widgets.mark_rect_dirty(tooltip_id);
         return;
     };
@@ -176,8 +176,11 @@ fn tooltip_line_anchor(
     }
 }
 
-fn estimated_tooltip_size(td: Option<&TooltipData>) -> Option<(f32, f32)> {
-    let td = td?;
+fn estimated_tooltip_size(
+    sim: &crate::lua_api::state::SimState,
+    tooltip_id: u64,
+) -> Option<(f32, f32)> {
+    let td = sim.tooltips.get(&tooltip_id)?;
     if td.lines.is_empty() {
         return None;
     }
@@ -188,7 +191,15 @@ fn estimated_tooltip_size(td: Option<&TooltipData>) -> Option<(f32, f32)> {
     for (index, line) in td.lines.iter().enumerate() {
         let font_size = tooltip_line_font_size(index);
         width = width.max(estimated_line_width(td, line, font_size));
-        if index > 0 {
+        let native = matches!(
+            crate::client_profile::ACTIVE,
+            crate::client_profile::ClientProfile::Retail
+                | crate::client_profile::ClientProfile::Ptr
+        );
+        if native && td.left_line_is_hidden(&sim.widgets, index) {
+            continue;
+        }
+        if (native && height > 0.0) || (!native && index > 0) {
             height += line_spacing;
         }
         height += estimated_line_height(line, font_size);

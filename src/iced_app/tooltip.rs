@@ -137,6 +137,14 @@ pub(crate) fn measure_tooltip(
     // Pass 2: sum line heights, using text measurement for wrapped lines.
     let mut total_height: f32 = 0.0;
     for (i, line) in td.lines.iter().enumerate() {
+        let native = matches!(
+            crate::client_profile::ACTIVE,
+            crate::client_profile::ClientProfile::Retail
+                | crate::client_profile::ClientProfile::Ptr
+        );
+        if native && td.left_line_is_hidden(&state.widgets, i) {
+            continue;
+        }
         let font_size = tooltip_line_font_size(i);
         let line_height = if let Some(TooltipTexture::PathAttachment(attachment)) = &line.texture {
             attachment.geometry(font_size).0
@@ -150,7 +158,7 @@ pub(crate) fn measure_tooltip(
         } else {
             (font_size * 1.2).ceil()
         };
-        if i > 0 {
+        if (native && total_height > 0.0) || (!native && i > 0) {
             total_height += line_spacing;
         }
         total_height += line_height;
