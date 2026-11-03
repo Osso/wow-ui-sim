@@ -392,7 +392,9 @@ fn startup_lfg_world_timer_and_bn_surfaces_return_empty_safe_shapes() {
 
 fn assert_inactive_world_elapsed_contract(env: &wow_ui_sim::lua_api::WowLuaEnv) {
     use wow_ui_sim::client_profile::{ACTIVE, ClientProfile};
-    let count: i32 = env.eval("return select('#', GetWorldElapsedTime(7))").unwrap();
+    let count: i32 = env
+        .eval("return select('#', GetWorldElapsedTime(7))")
+        .unwrap();
     if ACTIVE == ClientProfile::Wrath {
         // Excluded Wrath retains the old ungrounded placeholder for its own lane.
         let (id, elapsed, kind): (f64, f64, f64) =
@@ -649,15 +651,26 @@ fn startup_client_time_camera_and_channel_globals_are_callable() {
         !is_windows,
         "the Linux-hosted simulator should not report a Windows client"
     );
-    assert!(request_time_ok, "RequestTimePlayed should be a callable no-op");
-    assert!(camera_verbs_ok, "camera movement verbs should be callable no-ops");
+    assert!(
+        request_time_ok,
+        "RequestTimePlayed should be a callable no-op"
+    );
+    assert!(
+        camera_verbs_ok,
+        "camera movement verbs should be callable no-ops"
+    );
     assert_eq!(
         server_channel_count, 0,
         "sim should not seed any server-managed chat channels"
     );
     assert_eq!(pvp_lifetime_hks, 0.0);
     assert_eq!(pvp_lifetime_rank, 0.0);
-    assert_eq!(modified_click_default, "ALT");
+    // Raw environments have not loaded Blizzard_FrameXML's binding defaults.
+    if cfg!(feature = "client-retail") {
+        assert_eq!(modified_click_default, "NONE");
+    } else {
+        assert_eq!(modified_click_default, "ALT");
+    }
     assert_eq!(modified_click_updated, "NONE");
 }
 
@@ -689,10 +702,13 @@ fn is_character_newly_boosted_returns_false() {
 #[test]
 fn autocomplete_namespace_remains_live_without_retired_native_globals() {
     let env = env();
-    env.exec(r#"
+    env.exec(
+        r#"
         assert(rawget(_G, "GetAutoCompleteRealms") == nil)
         assert(rawget(_G, "GetAutoCompleteResults") == nil)
         assert(type(C_AutoComplete.GetAutoCompleteRealms) == "function")
         assert(#C_AutoComplete.GetAutoCompleteRealms() == 0)
-    "#).unwrap();
+    "#,
+    )
+    .unwrap();
 }
