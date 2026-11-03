@@ -24,6 +24,16 @@ pub(crate) fn supported() -> bool {
     matches!(ACTIVE, ClientProfile::Retail | ClientProfile::Ptr)
 }
 
+pub(crate) fn initial_states(cvars: &crate::cvars::CVarStorage) -> [u8; 6] {
+    std::array::from_fn(|kind| {
+        if supported() && cvars.get_bool(FORCED_CVARS[kind]) {
+            ACTIVE_STATE
+        } else {
+            INACTIVE
+        }
+    })
+}
+
 pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
     if !supported() {
         return Ok(());
@@ -79,9 +89,9 @@ fn restriction_active(state: &mut LuaState) -> LuaResult<u32> {
 
 pub(crate) fn set_supplied_restriction(state: &mut LuaState) -> LuaResult<u32> {
     let kind = restriction_type(state)?;
-    if kind == 0 {
+    if kind == 0 || kind == 5 {
         return Err(rilua::runtime_error(
-            "combat restriction follows player combat state",
+            "restriction follows its supplied context",
         ));
     }
     let active = bool::from_stack(state, 2)?;

@@ -23,6 +23,7 @@ pub struct WrathUnitTapState {
 macro_rules! build_empty_sim_state {
     ($collections:ident, $runtime:ident, $session_wtf_path:ident) => {{
         let cvars = CVarStorage::with_session_wtf_path(&$session_wtf_path);
+        let restricted_actions = crate::c_api::restricted_actions::initial_states(&cvars);
         let quest_log_entries = QuestLogState::seeded();
         Self {
             loot_specialization: 0,
@@ -667,7 +668,7 @@ macro_rules! build_empty_sim_state {
             bnet_custom_message: String::new(),
             social_friends: default_social_friends(),
             social_restrictions: SocialRestrictionsState::default(),
-            restricted_actions: [0; 6],
+            restricted_actions,
             restricted_actions_natural: [false; 6],
             restriction_chat_client_flag: false,
             restriction_map_matches: false,

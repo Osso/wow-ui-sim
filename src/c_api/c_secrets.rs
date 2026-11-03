@@ -9,8 +9,6 @@ mod queries;
 use crate::lua_api::methods::borrow_state;
 #[cfg(any(feature = "aura-containers", feature = "retail-12-0-5"))]
 use crate::lua_bridge::table_set_rust_fn_static;
-#[cfg(feature = "aura-containers")]
-use rilua::runtime_error;
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
 
@@ -18,7 +16,7 @@ use rilua::{LuaResult, Val};
 use sim_data_profile::spell_aura_secrecy as attributes;
 
 #[cfg(feature = "aura-containers")]
-const NEVER_SECRET: i32 = 0;
+pub(crate) const NEVER_SECRET: i32 = 0;
 #[cfg(feature = "aura-containers")]
 const ALWAYS_SECRET: i32 = 1;
 #[cfg(feature = "aura-containers")]
@@ -131,13 +129,13 @@ pub(crate) fn is_never_secret_aura(spell_id: i32) -> LuaResult<bool> {
 }
 
 #[cfg(feature = "aura-containers")]
-fn classify_aura_secrecy(spell_id: u32) -> LuaResult<i32> {
-    match attributes::aura_flags(spell_id) {
-        0 => Ok(CONTEXTUALLY_SECRET),
-        attributes::AURA_ALWAYS_SECRET => Ok(ALWAYS_SECRET),
-        attributes::AURA_NEVER_SECRET => Ok(NEVER_SECRET),
-        flags => Err(runtime_error(format!(
-            "C_Secrets.GetSpellAuraSecrecy: ambiguous aura secrecy flags {flags:#x} for spell {spell_id}; native precedence is unverified"
-        ))),
-    }
+pub(crate) fn classify_aura_secrecy(spell_id: u32) -> LuaResult<i32> {
+    let flags = attributes::aura_flags(spell_id);
+    Ok(if flags & attributes::AURA_ALWAYS_SECRET != 0 {
+        ALWAYS_SECRET
+    } else if flags & attributes::AURA_NEVER_SECRET != 0 {
+        NEVER_SECRET
+    } else {
+        CONTEXTUALLY_SECRET
+    })
 }
