@@ -9,4 +9,5 @@ assert(not MacroButton3:IsEnabled(), "empty macro slot disabled")
 assert(MacroButton1Name:GetText() == "Raid Beacon", "first macro name")
 assert(MacroFrameSelectedMacroName:GetText() == "Raid Beacon", "selected macro name")
 assert(MacroFrameText:GetText() == "/rw Stack on star", "selected macro body")
-assert(MacroFrameSelectedMacroButtonIcon:GetTexture() == 134400, "selected macro icon")
+-- Wrath Blizzard_MacroUI.lua:79,89 assigns the selected macro texture.
+assert(MacroFrameSelectedMacroButtonIcon:GetTexture():lower() == "interface\\icons\\inv_misc_questionmark", "selected macro icon")
