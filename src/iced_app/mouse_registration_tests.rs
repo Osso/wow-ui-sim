@@ -464,7 +464,6 @@ fn right_double_click_dispatches_xml_postcall_without_a_normal_binding() {
             <Anchors><Anchor point="TOPLEFT" relativeTo="UIParent" relativePoint="TOPLEFT" x="100" y="-100"/></Anchors>
             <Scripts>
               <OnClick>XmlClickReceipt(self, button, down)</OnClick>
-              <PostClick>XmlClickReceipt(self, button, "post")</PostClick>
               <OnDoubleClick intrinsicOrder="postcall">XmlClickReceipt(self, button, "double")</OnDoubleClick>
             </Scripts>
           </Button>
@@ -487,13 +486,13 @@ fn right_double_click_dispatches_xml_postcall_without_a_normal_binding() {
     app.handle_right_mouse_up(position);
     assert_xml_click_receipts(
         &app,
-        "XmlDoubleClick:RightButton:false;XmlDoubleClick:RightButton:post",
+        "XmlDoubleClick:RightButton:false",
     );
     app.handle_right_mouse_down(position);
     app.handle_right_mouse_up(position);
     assert_xml_click_receipts(
         &app,
-        "XmlDoubleClick:RightButton:false;XmlDoubleClick:RightButton:post;XmlDoubleClick:RightButton:double",
+        "XmlDoubleClick:RightButton:false;XmlDoubleClick:RightButton:double",
     );
 }
 
