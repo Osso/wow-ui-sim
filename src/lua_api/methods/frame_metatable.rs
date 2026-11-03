@@ -126,7 +126,10 @@ fn hidden_method_for_widget(widget_type: WidgetType, name: &str) -> bool {
         WidgetType::WorldFrame => false,
         WidgetType::MessageFrame => hidden_scroll_frame_method(name),
         WidgetType::ScrollFrame => name == "SetMaxLines" || hidden_message_frame_method(name),
-        WidgetType::StatusBar => hidden_scroll_frame_method(name) || name == "SetStatusBarAtlas",
+        WidgetType::StatusBar => {
+            hidden_scroll_frame_method(name)
+                || matches!(name, "SetStatusBarAtlas" | "RemoveMessagesByAccessID")
+        }
         _ => hidden_scroll_frame_method(name) || hidden_message_frame_method(name),
     }
 }

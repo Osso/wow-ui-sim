@@ -11,6 +11,7 @@ fn remove_messages_by_access_id_is_only_on_message_frames() {
         local parent = CreateFrame("Frame")
         assert(parent:CreateTexture().RemoveMessagesByAccessID == nil)
         assert(CreateFrame("Button").RemoveMessagesByAccessID == nil)
+        assert(CreateFrame("StatusBar").RemoveMessagesByAccessID == nil)
         assert(type(CreateFrame("ScrollingMessageFrame").RemoveMessagesByAccessID) == "function")
         assert(type(CreateFrame("MessageFrame").RemoveMessagesByAccessID) == "function")
         "#,
