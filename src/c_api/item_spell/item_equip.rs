@@ -83,6 +83,9 @@ pub struct ItemEquipState {
     pub(crate) staged: Option<StagedEquip>,
     /// UI initialization enables pickup control (WM57 Q7).
     pub pickup_control_enabled: bool,
+    /// Native enable marker for two-handed weapons in the off hand (WM67).
+    /// Its upstream meaning is UNKNOWN; best-guess default is clear.
+    pub offhand_two_hand_marker: bool,
 }
 
 impl Default for ItemEquipState {
@@ -95,6 +98,7 @@ impl Default for ItemEquipState {
             confirmations: Vec::new(),
             staged: None,
             pickup_control_enabled: true,
+            offhand_two_hand_marker: false,
         }
     }
 }

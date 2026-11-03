@@ -52,6 +52,11 @@ fn item_input(row: &ItemRow) -> ItemSpecInput {
     }
 }
 
+/// Item and ItemSparse metadata of a resident record.
+pub(super) fn item_spec_input(item_id: u32) -> Option<ItemSpecInput> {
+    find_item_row(item_id).map(item_input)
+}
+
 /// ItemSparse.Bonding keyed by item ID (field name INFERRED; WM48).
 pub(super) fn item_bonding(item_id: u32) -> Option<u8> {
     find_item_row(item_id).map(|row| row.7)

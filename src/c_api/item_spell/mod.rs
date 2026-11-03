@@ -4,6 +4,7 @@ mod c_equipment_set;
 #[cfg(feature = "retail-12-0-5")]
 pub(crate) use c_equipment_set::use_equipment_set_by_id;
 mod c_item;
+pub(crate) mod cursor_slot_compatibility;
 pub(crate) mod helpers;
 pub mod item_child;
 mod item_classifiers;

@@ -332,26 +332,31 @@ fn is_profession_unlearned(state: &LuaState, skill_line_id: i32) -> bool {
         .unwrap_or(false)
 }
 
+/// `PROFESSIONS` indices of the two learned primaries; survivors fill from slot 1.
+fn primary_profession_indices(state: &LuaState) -> [Option<usize>; 2] {
+    let mut primaries = profession_data::PROFESSIONS
+        .iter()
+        .enumerate()
+        .filter(|(_, profession)| {
+            profession.parent_profession_name.is_empty()
+                && !is_profession_unlearned(state, profession.skill_line_id)
+        })
+        .map(|(index, _)| index);
+    [primaries.next(), primaries.next()]
+}
+
+/// Skill lines of the first and second primary professions.
+pub(crate) fn primary_profession_skill_lines(state: &LuaState) -> [Option<i32>; 2] {
+    primary_profession_indices(state)
+        .map(|index| index.map(|index| profession_data::PROFESSIONS[index].skill_line_id))
+}
+
 fn get_professions_global(state: &mut LuaState) -> LuaResult<u32> {
-    // Slots 1-2 are the two primaries. Surviving primaries collapse to fill from slot 1.
-    let mut slot1 = Val::Nil;
-    let mut slot2 = Val::Nil;
-    let mut primary_slot = 0usize;
-    for (index, profession) in profession_data::PROFESSIONS.iter().enumerate() {
-        if profession.parent_profession_name.is_empty()
-            && !is_profession_unlearned(state, profession.skill_line_id)
-        {
-            primary_slot += 1;
-            let index_val = Val::Num((index + 1) as f64);
-            match primary_slot {
-                1 => slot1 = index_val,
-                2 => slot2 = index_val,
-                _ => break,
-            }
-        }
-    }
-    state.push(slot1);
-    state.push(slot2);
+    let to_slot =
+        |index: Option<usize>| index.map_or(Val::Nil, |index| Val::Num((index + 1) as f64));
+    let [first, second] = primary_profession_indices(state);
+    state.push(to_slot(first));
+    state.push(to_slot(second));
     state.push(Val::Nil);
     state.push(Val::Nil);
     state.push(Val::Nil);

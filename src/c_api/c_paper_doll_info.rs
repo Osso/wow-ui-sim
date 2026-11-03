@@ -40,6 +40,15 @@ pub(crate) fn register_c_paper_doll_info_surface(state: &mut LuaState) -> LuaRes
         is_inventory_slot_enabled,
     )?;
     table_set_rust_fn_static(state, ns, "GetInspectGuildInfo", get_inspect_guild_info)?;
+    // Retail PaperDollInfoDocumentation.lua:20.
+    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
+        table_set_rust_fn_static(
+            state,
+            ns,
+            "CanCursorCanGoInSlot",
+            crate::c_api::item_spell::cursor_slot_compatibility::can_cursor_go_in_slot,
+        )?;
+    }
     #[cfg(feature = "retail-12-1-0")]
     table_set_rust_fn_static(
         state,
