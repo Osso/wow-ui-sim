@@ -98,6 +98,17 @@ impl TooltipData {
             .is_some_and(|line| !line.visible)
     }
 
+    pub(crate) fn right_line_is_hidden(
+        &self,
+        widgets: &crate::widget::WidgetRegistry,
+        index: usize,
+    ) -> bool {
+        self.right_line_ids
+            .get(index)
+            .and_then(|id| widgets.get(*id))
+            .is_some_and(|line| !line.visible)
+    }
+
     pub(crate) fn double_column_reservation(&self, line: &TooltipLine) -> f32 {
         if matches!(
             crate::client_profile::ACTIVE,

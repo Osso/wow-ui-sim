@@ -133,7 +133,7 @@ pub(crate) fn measure_tooltip(
     let line_spacing = td.line_spacing.unwrap_or(TOOLTIP_LINE_SPACING);
 
     // Pass 1: determine content width from non-wrapping lines.
-    let content_width = measure_tooltip_content_width(td, font_system);
+    let content_width = measure_tooltip_content_width(td, &state.widgets, font_system);
 
     // Pass 2: sum line heights, using text measurement for wrapped lines.
     let mut total_height: f32 = 0.0;
@@ -196,6 +196,7 @@ fn tooltip_column_gap(left: &str, right: Option<&str>, effective_scale: f32) -> 
 /// Wrapping lines don't contribute to width — they wrap within it.
 fn measure_tooltip_content_width(
     td: &crate::lua_api::tooltip::TooltipData,
+    widgets: &crate::widget::WidgetRegistry,
     font_system: &mut WowFontSystem,
 ) -> f32 {
     let mut max_width: f32 = td.min_width;
@@ -206,18 +207,37 @@ fn measure_tooltip_content_width(
     }
     for (i, line) in td.lines.iter().enumerate() {
         let font_size = tooltip_line_font_size(i);
-        let left_w = measure_tooltip_text_width(font_system, &line.left_text, font_size);
-        let right_w = line
-            .right_text
-            .as_ref()
-            .map(|t| measure_tooltip_text_width(font_system, t, font_size))
-            .unwrap_or(0.0);
+        let native = matches!(
+            crate::client_profile::ACTIVE,
+            crate::client_profile::ClientProfile::Retail
+                | crate::client_profile::ClientProfile::Ptr
+        );
+        let left_w = if native && td.left_line_is_hidden(widgets, i) {
+            0.0
+        } else {
+            measure_tooltip_text_width(font_system, &line.left_text, font_size)
+        };
+        let right_w = if native && td.right_line_is_hidden(widgets, i) {
+            0.0
+        } else {
+            line.right_text
+                .as_ref()
+                .map(|t| measure_tooltip_text_width(font_system, t, font_size))
+                .unwrap_or(0.0)
+        };
         let line_width = if right_w > 0.0 {
-            left_w + right_w + td.double_column_reservation(line)
+            left_w
+                + right_w
+                + if native && left_w == 0.0 {
+                    0.0
+                } else {
+                    td.double_column_reservation(line)
+                }
         } else {
             left_w
         };
-        let has_width_text = tooltip_line_has_width_text(line);
+        let has_width_text =
+            tooltip_line_has_width_text(line) && (!native || left_w > 0.0 || right_w > 0.0);
         if line.wrap && td.shrink_to_fit_wrapped {
             if has_width_text {
                 wrapped_only_max_width = wrapped_only_max_width.max(line_width);

@@ -192,7 +192,13 @@ fn estimated_tooltip_size(
     let line_spacing = td.line_spacing.unwrap_or(TOOLTIP_LINE_SPACING);
     for (index, line) in td.lines.iter().enumerate() {
         let font_size = tooltip_line_font_size(index);
-        width = width.max(estimated_line_width(td, line, font_size));
+        width = width.max(estimated_line_width(
+            td,
+            line,
+            font_size,
+            &sim.widgets,
+            index,
+        ));
         let native = matches!(
             crate::client_profile::ACTIVE,
             crate::client_profile::ClientProfile::Retail
@@ -226,15 +232,37 @@ fn wrapped_min_width(td: &TooltipData) -> f32 {
     }
 }
 
-fn estimated_line_width(td: &TooltipData, line: &TooltipLine, font_size: f32) -> f32 {
-    let left = estimated_text_width(&line.left_text, font_size);
-    let right = line
-        .right_text
-        .as_deref()
-        .map(|text| estimated_text_width(text, font_size))
-        .unwrap_or(0.0);
+fn estimated_line_width(
+    td: &TooltipData,
+    line: &TooltipLine,
+    font_size: f32,
+    widgets: &crate::widget::WidgetRegistry,
+    index: usize,
+) -> f32 {
+    let native = matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail | crate::client_profile::ClientProfile::Ptr
+    );
+    let left = if native && td.left_line_is_hidden(widgets, index) {
+        0.0
+    } else {
+        estimated_text_width(&line.left_text, font_size)
+    };
+    let right = if native && td.right_line_is_hidden(widgets, index) {
+        0.0
+    } else {
+        line.right_text
+            .as_deref()
+            .map(|text| estimated_text_width(text, font_size))
+            .unwrap_or(0.0)
+    };
     let text_width = if right > 0.0 {
-        left + right + td.double_column_reservation(line)
+        left + right
+            + if native && left == 0.0 {
+                0.0
+            } else {
+                td.double_column_reservation(line)
+            }
     } else {
         left
     };
