@@ -378,6 +378,9 @@ fn keybind_f6_targets_enemy() {
 #[test]
 fn unit_frame_onleave_fades_out_game_tooltip() {
     test_timeout! {
+        #[cfg(feature = "client-wrath")]
+        let env = common::action_bar_fixture::wrath_env();
+        #[cfg(not(feature = "client-wrath"))]
         let env = setup_env();
 
         env.exec(
@@ -396,6 +399,10 @@ fn unit_frame_onleave_fades_out_game_tooltip() {
             "GameTooltip should be hidden after UnitFrame_OnLeave"
         );
 
+        // Wrath UnitFrame.lua:135-142 calls FadeOut without clearing these fields.
+        if wow_ui_sim::client_profile::ACTIVE == wow_ui_sim::client_profile::ClientProfile::Wrath {
+            return;
+        }
         let has_owner: bool = env.eval("return GameTooltip:GetOwner() ~= nil").unwrap();
         assert!(
             !has_owner,
