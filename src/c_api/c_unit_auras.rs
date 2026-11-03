@@ -17,10 +17,11 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
     ) {
         table_set_rust_fn_static(state, public, "ClearBlockedAuras", clear_blocked_auras)?;
     }
-    #[cfg(feature = "retail-12-1-5")]
-    table_set_rust_fn_static(state, public, "GetAuraCasterGUID", get_aura_caster_guid)?;
-    #[cfg(all(feature = "retail-12-1-0", not(feature = "retail-12-1-5")))]
-    {
+    // Forever 1.60.1.70707 declares this query and its selected aura source
+    // calls it. Share the existing aura/GUID model without enabling a Retail epoch.
+    if cfg!(feature = "retail-12-1-5") || cfg!(feature = "client-wowforever") {
+        table_set_rust_fn_static(state, public, "GetAuraCasterGUID", get_aura_caster_guid)?;
+    } else if cfg!(feature = "retail-12-1-0") {
         let removed = create_table(state);
         table_set(state, removed, "GetAuraCasterGUID", Val::Bool(true));
         table_set(state, Val::Table(public), "__wow_removed_keys", removed);
@@ -178,7 +179,6 @@ pub(crate) fn register_sound_trigger_enum(state: &mut LuaState, enums: Val) {
     table_set(state, enums, "UnitAuraSoundTriggerMeta", metadata);
 }
 
-#[cfg(feature = "retail-12-1-5")]
 fn get_aura_caster_guid(state: &mut LuaState) -> LuaResult<u32> {
     let unit = String::from_stack(state, 1)?;
     let (instance_id, secret_selector) = read_caster_instance(state)?;
@@ -207,7 +207,6 @@ fn get_aura_caster_guid(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
-#[cfg(feature = "retail-12-1-5")]
 fn read_caster_instance(state: &LuaState) -> LuaResult<(i32, bool)> {
     let value = crate::lua_bridge::stack_val(state, 2);
     let secret_selector = cfg!(any(feature = "profile-retail", feature = "client-ptr"))

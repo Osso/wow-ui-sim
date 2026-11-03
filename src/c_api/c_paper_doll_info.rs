@@ -23,6 +23,12 @@ pub(crate) fn register_c_paper_doll_info_surface(state: &mut LuaState) -> LuaRes
         feature = "client-wowforever"
     )) {
         register_inventory_slot_methods(state, ns)?;
+        table_set_rust_fn_static(
+            state,
+            ns,
+            "GetTemporaryEnchantmentInfo",
+            get_temporary_enchantment_info,
+        )?;
     }
     table_set_rust_fn_static(
         state,
@@ -47,13 +53,6 @@ pub(crate) fn register_c_paper_doll_info_surface(state: &mut LuaState) -> LuaRes
         "CancelTemporaryEnchantment",
         cancel_temporary_enchantment,
     )?;
-    #[cfg(feature = "retail-12-1-0")]
-    table_set_rust_fn_static(
-        state,
-        ns,
-        "GetTemporaryEnchantmentInfo",
-        get_temporary_enchantment_info,
-    )?;
     Ok(())
 }
 
@@ -65,7 +64,6 @@ fn get_min_item_level(state: &mut LuaState) -> LuaResult<u32> {
 
 /// Weapon enchant index for the main-hand (16), off-hand (17), or ranged (18)
 /// inventory slot.
-#[cfg(feature = "retail-12-1-0")]
 fn weapon_enchant_slot(inventory_slot: i32) -> Option<usize> {
     match inventory_slot {
         16 => Some(0),
@@ -103,7 +101,6 @@ fn cancel_temporary_enchantment(state: &mut LuaState) -> LuaResult<u32> {
 
 /// `TemporaryItemEnchantInfo` for the slot's temporary enchant, or nothing.
 /// INFERRED: enchants without remaining time have no expiration time.
-#[cfg(feature = "retail-12-1-0")]
 fn get_temporary_enchantment_info(state: &mut LuaState) -> LuaResult<u32> {
     let Some(weapon_slot) = weapon_enchant_slot(i32::from_stack(state, 1)?) else {
         return Ok(0);

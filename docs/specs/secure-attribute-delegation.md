@@ -19,11 +19,28 @@ Registered `OnAttributeChanged` scripts on explicitly protected frames provide t
 - `src/lua_api/frame/methods/text_attribute_event/attributes.rs` — eligible registered-callback boundary and protected write gate.
 - `src/lua_api/taint.rs` — save/clear/restore caller stack taint.
 
+## State snippet ownership
+
+Before the state template is ready, changed `state-*` attributes use the
+simulator's `_onstate-*` fallback, including on frames with an unrelated
+`OnAttributeChanged` observer.
+
+An untainted `SecureHandlerStateTemplate` declaration marks its VM ready.
+The selected TOC declares it after loading the restricted handlers and before
+the state-driver files. The vendor callback then dispatches state snippets
+with `self, stateid, newstate`. The restricted `self` handle provides
+`RunAttribute` and frame references in the managed environment. Plain frames
+receive their ordinary attribute callbacks. Lua global shadows and tainted
+template declarations leave VM readiness unchanged. Rebuilding the UI
+environment resets readiness.
+
 ## Tests asserting this spec
 
 - `tests/blizzard_restricted_addon_environment_loads.rs` — actual vendor execution/wrapping, host click, caller taint and addon-handler combat denial.
 - `tests/protected_attribute_enforcement.rs` — secure/insecure, combat/out-of-combat write controls.
 - `tests/secure_attribute_delegate.rs` — existing forbidden-frame delegate behavior.
+- [Forever state dispatch](../../tests/forever_secure_state_dispatch.rs) — restricted
+  callback arguments and exactly-once execution after a late tainted template replacement.
 
 ## Known gaps (current cycle)
 

@@ -30,12 +30,20 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
     #[cfg(feature = "retail-12-0-0")]
     queries::register(state, namespace)?;
     #[cfg(feature = "client-wowforever")]
-    table_set_rust_fn_static(
-        state,
-        namespace,
-        "ShouldUnitIdentityBeSecret",
-        forever_unit_identity_is_secret,
-    )?;
+    {
+        table_set_rust_fn_static(
+            state,
+            namespace,
+            "ShouldUnitIdentityBeSecret",
+            forever_unit_identity_is_secret,
+        )?;
+        table_set_rust_fn_static(
+            state,
+            namespace,
+            "ShouldAurasBeSecret",
+            should_auras_be_secret,
+        )?;
+    }
     #[cfg(feature = "aura-containers")]
     table_set_rust_fn_static(
         state,
@@ -61,6 +69,13 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
         should_cooldowns_be_secret,
     )?;
     Ok(())
+}
+
+#[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
+fn should_auras_be_secret(state: &mut LuaState) -> LuaResult<u32> {
+    let restricted = super::unit_aura_access::auras_restricted(state)?;
+    state.push(Val::Bool(restricted));
+    Ok(1)
 }
 
 #[cfg(all(

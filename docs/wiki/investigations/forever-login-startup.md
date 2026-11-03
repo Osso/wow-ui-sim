@@ -3,8 +3,8 @@
 The Windows Forever login screen exposed missing profile data, missing API surfaces,
 and loader ordering/provenance bugs. The initial rebuilt `wowf` 1.60.1.70634 capture
 contained 38 unique error records and 58 occurrences, including duplicate error-handler
-reports. These captures use the actual profile cache with the explicitly allowed UI
-version mismatch; the configured source target remains 1.60.1.70532.
+reports. Those captures used the actual profile cache with an explicitly allowed UI
+version mismatch. The configured source target at the time was 1.60.1.70532.
 
 ## Causes and fixes
 
@@ -77,6 +77,23 @@ path therefore still had a missing Forever API. Expose the existing CVar-backed
 producer to Forever and exercise the complete original setting registration,
 including the returned proxy value and both toggle-capability states.
 
+## MSAA capability
+
+Forever 1.60.1.70707 graphics settings call `MultiSampleAntiAliasingSupported()`
+during registration. The missing global interrupted initialization, and the
+incomplete settings addon caused session finalization to fail at close.
+
+The UI renderer uses single-sample targets. A guarded Forever capability
+returns one `false`, allowing the original settings code to finish without
+offering MSAA. The regression checks the return value and registration of
+`PROXY_MSAA` and `PROXY_MSAA_ALPHA`. Replace the temporary capability when
+multisample targets and mode enumeration are available.
+[Graphics settings regression](../../../tests/forever_login_catalog_defaults.rs)
+
+In an earlier rebuilt Windows login capture with the fix, the controls responded,
+the Lua error list was empty, and closing returned exit code 0. The persisted
+CVar file retained its bytes, size and modification time.
+
 ## Native client visual verification (2026-11-02)
 
 The installed Forever 1.60.1.70634 client displayed its login controls before
@@ -96,6 +113,7 @@ Fully disconnected operation was not verified.
 - [Temporary defaults](../../../src/lua_api/workarounds/temporary/forever_glue_display_defaults.rs) and [credits catalog](../../../src/lua_api/workarounds/temporary/offline_glue_credits.rs).
 - [HTML content nodes](../../../src/lua_api/frame/methods/text_attribute_event/text/simple_html.rs), [cursor state](../../../src/lua_api/globals/real/mouse_probes.rs), and [catalog consumer tests](../../../tests/forever_login_catalog_defaults.rs).
 - [Texture toggle capability](../../../src/c_api/c_battle_net.rs) — reuse the existing CVar-backed producer for the complete Forever graphics consumer.
+- [Video capabilities](../../../src/lua_api/workarounds/temporary/video_options_state.rs) and [UI pipeline](../../../src/render/shader/pipeline.rs) — unsupported MSAA policy for the single-sample renderer.
 
 ## See Also
 

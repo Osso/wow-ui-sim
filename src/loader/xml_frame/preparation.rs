@@ -92,6 +92,8 @@ pub(super) fn register_virtual_or_intrinsic(
         }
         let local_source = template_local_source(env);
         let declaration_taint = current_loading_template_taint(env);
+        let installs_secure_state_dispatch =
+            name.eq_ignore_ascii_case("SecureHandlerStateTemplate") && declaration_taint.is_none();
         crate::xml::register_template_with_local_source(
             name,
             widget_type,
@@ -99,6 +101,10 @@ pub(super) fn register_virtual_or_intrinsic(
             local_source,
             declaration_taint,
         );
+        if installs_secure_state_dispatch {
+            // Existing frames keep their vendor callback if an addon replaces the template.
+            env.state().borrow_mut().secure_state_dispatch_ready = true;
+        }
     }
     if let Some(ref sm) = frame.secure_mixin {
         super::secure_mixin::apply_secure_mixins(env, sm);

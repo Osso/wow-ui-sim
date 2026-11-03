@@ -87,7 +87,7 @@ Current simulator-owned secret values include party/raid identity strings return
 
 ## State Drivers
 
-`RegisterStateDriver`, `UnregisterStateDriver`, `RegisterAttributeDriver`, `UnregisterAttributeDriver` are backed by `SimState.secure_attribute_drivers`.
+Before Blizzard's restricted runtime loads, the fallback `RegisterStateDriver`, `UnregisterStateDriver`, `RegisterAttributeDriver` and `UnregisterAttributeDriver` use `SimState.secure_attribute_drivers`.
 
 - `RegisterStateDriver(frame, "visibility", ...)` maps to the `state-visibility` special case and toggles visibility plus `statehidden`
 - Other state/attribute drivers resolve the final clause of the driver string and write that value directly onto the frame
@@ -98,6 +98,11 @@ Driver limitations:
 - Conditional grammar is not fully evaluated in this path.
 - Driver values are not automatically reevaluated on every relevant state transition.
 - This is a compatibility fallback for addon bootstrap, not a full `SecureStateDriverManager`.
+
+The vendor state template supplies a restricted handle so `RunAttribute` and
+frame references use the managed environment. Its untainted declaration
+retires the raw-frame `_onstate-*` fallback for that VM.
+[State snippet ownership](../../specs/secure-attribute-delegation.md#state-snippet-ownership)
 
 ## Blizzard `issecure()` Call-Sites
 
@@ -146,6 +151,13 @@ Remaining audit gaps are branch-specific coverage gaps, not known missing implem
 - `tests/protected_frame_enforcement.rs` — combat lockdown coverage
 - `tests/secure_handler_fallback.rs` — SecureHandler fallback coverage
 - `tests/security_api.rs` — state driver and `securecallmethod` coverage
+- [Forever state dispatch](../../../tests/forever_secure_state_dispatch.rs) —
+  selected vendor handle execution and pre-vendor fallback lifetime
+- [Pinned Forever secure handlers](https://github.com/Gethe/wow-ui-source/blob/aff0d8cd53bf4d9ef1c1dd2786b94461a276fb16/Interface/AddOns/Blizzard_RestrictedAddOnEnvironment/SecureHandlers.lua)
+  and [restricted frame handles](https://github.com/Gethe/wow-ui-source/blob/aff0d8cd53bf4d9ef1c1dd2786b94461a276fb16/Interface/AddOns/Blizzard_RestrictedAddOnEnvironment/RestrictedFrames.lua)
+  — state callback signature, managed execution, `RunAttribute` and frame references
+- [Pinned state template](https://github.com/Gethe/wow-ui-source/blob/aff0d8cd53bf4d9ef1c1dd2786b94461a276fb16/Interface/AddOns/Blizzard_RestrictedAddOnEnvironment/SecureHandlerTemplates.xml)
+  — vendor-owned callback installation and template-readiness boundary
 - [click-binding interaction profile](../../specs/click-binding-interaction-profile.md) — bounded profile contract and current proof
 
 Removed/stale paths that older docs may mention:

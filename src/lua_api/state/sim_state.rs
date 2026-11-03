@@ -401,7 +401,6 @@ pub struct SimState {
     pub private_aura_sound_registrations:
         crate::c_api::private_aura_sounds::PrivateAuraSoundRegistrations,
     /// Explicit recast metadata only; empty means unknown, never current aura duration.
-    #[cfg(feature = "retail-12-0-5")]
     pub spell_aura_durations: HashMap<u32, crate::c_api::aura_duration::SpellAuraDuration>,
     #[cfg(feature = "base-spell-relationships")]
     pub base_spell_relationships: crate::c_api::spell_base::BaseSpellRelationships,
@@ -499,11 +498,9 @@ pub struct SimState {
     /// Last legacy string bytes, including unknown/ambiguous names; no playback implied.
     #[cfg(feature = "client-wrath")]
     pub last_sound_name_requested: Option<Vec<u8>>,
-    /// `C_CooldownViewer` entries keyed by cooldownID; empty until populated.
-    #[cfg(feature = "retail-12-0-0")]
-    pub encounter_policy: crate::c_api::c_instance_encounter::EncounterPolicy,
     #[cfg(feature = "retail-12-0-0")]
     pub encounter_warning_settings: crate::c_api::c_encounter_warnings::WarningSettings,
+    /// `C_CooldownViewer` entries keyed by cooldownID; empty until populated.
     pub cooldown_viewer_cooldowns:
         std::collections::BTreeMap<i32, crate::c_api::c_cooldown_viewer::CooldownViewerCooldown>,
     /// Explicit supplied availability; independent of cooldown catalog and UI settings.
@@ -515,6 +512,8 @@ pub struct SimState {
     pub last_launched_url: Option<String>,
     pub highlighted_map_scene_character_guid: Option<String>,
     pub secure_attribute_drivers: HashMap<u64, HashMap<String, String>>,
+    /// The current UI environment has installed the untainted secure state template.
+    pub(crate) secure_state_dispatch_ready: bool,
     pub rot_damage_level: usize,
     pub fps: f32,
     pub start_time: Instant,
@@ -592,6 +591,7 @@ pub struct SimState {
     pub bind_location: String,
     pub pvp_honor: PvpHonorState,
     pub world: WorldState,
+    pub encounter_policy: crate::c_api::c_instance_encounter::EncounterPolicy,
     pub bag_items: HashMap<(i32, i32), BagItem>,
     /// Host-supplied metadata keyed by item ID, not bag coordinates.
     pub container_item_quests:

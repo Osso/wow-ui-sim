@@ -25,6 +25,13 @@ catalog/capability policy. The rebuilt Windows login reports zero Lua errors, do
 from 38 records/58 occurrences; 69 focused checks pass after review. This bounded verification
 is separate from the game-screen baseline and native parity.
 
+## [2026-11-03] investigation | Forever 70707 startup compatibility
+
+The game startup investigation connects the reported failures to their original
+consumers. The login follow-up covers the MSAA graphics capability.
+[Game startup](investigations/forever-addon-startup-compatibility.md),
+[login graphics](investigations/forever-login-startup.md#msaa-capability)
+
 ## [2026-10-31] architecture | Startup class and race
 
 [Startup player settings](../specs/cli-class-spec.md#initial-class-race-and-specialization)

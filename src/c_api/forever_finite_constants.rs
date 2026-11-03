@@ -1,6 +1,6 @@
 //! Source-published Forever 1.60.1 finite enums and constants.
 
-use crate::lua_api::methods::{create_table, table_get, table_set};
+use crate::lua_api::methods::{create_string, create_table, table_get, table_set};
 use rilua::Val;
 use rilua::vm::state::LuaState;
 
@@ -96,6 +96,24 @@ fn register_gamepad_overrides(state: &mut LuaState, enums: Val) {
 
 fn register_constants(state: &mut LuaState) {
     let constants = super::helpers::ensure_global_table(state, "Constants");
+    // Native Forever 70425 camelot-enums.txt and Wowless 70532 globals.yaml:
+    // display names use a space between first name and surname; links use '-'.
+    let separators = match table_get(state, constants, "CharacterNameSeparatorConsts") {
+        table @ Val::Table(_) => table,
+        _ => {
+            let table = create_table(state);
+            table_set(state, constants, "CharacterNameSeparatorConsts", table);
+            table
+        }
+    };
+    for (name, separator) in [
+        ("CHARACTERNAME_LINK_SEPARATOR", "-"),
+        ("CHARACTERNAME_REALMNAME_SEPARATOR", "-"),
+        ("CHARACTERNAME_SURNAME_SEPARATOR", " "),
+    ] {
+        let value = create_string(state, separator);
+        table_set(state, separators, name, value);
+    }
     // Forever PetConstantsDocumentation: two stable slots plus one learned slot.
     publish(
         state,
