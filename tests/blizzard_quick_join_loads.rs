@@ -22,6 +22,13 @@ fn quick_join_toc() -> PathBuf {
     quick_join_dir().join("Blizzard_QuickJoin.toc")
 }
 
+#[test]
+fn quick_join_placeholder_is_absent_before_blizzard_loads() {
+    let env = WowLuaEnv::new().unwrap();
+    let absent: bool = env.eval("return QuickJoinToastButton == nil").unwrap();
+    assert!(absent, "QuickJoin owns the toast button");
+}
+
 const TOC_FILES: &[&str] = &[
     "QuickJoinToast.xml",
     "QuickJoin.xml",
