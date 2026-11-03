@@ -14,12 +14,16 @@ use wow_ui_sim::lua_api::WowLuaEnv;
 #[test]
 fn ringed_frame_tooltip_applies_native_outer_and_explicit_padding() {
     let env = setup_full_env();
+    let addons = wow_ui_sim::paths::default_blizzard_ui_addons_path().unwrap();
+    wow_ui_sim::loader::load_addon(
+        &env.loader_env(),
+        &addons.join("Blizzard_CustomizationUI/Blizzard_CustomizationUI.toc"),
+    )
+    .unwrap();
     env.exec(
         r#"
-        local region = CreateFrame("Frame", nil, UIParent)
-        Mixin(region, RingedFrameWithTooltipMixin)
-        PaddingTooltip = CreateFrame("GameTooltip", "PaddingTooltip", UIParent)
-        function region:GetAppropriateTooltip() return PaddingTooltip end
+        local region = CreateFrame("Frame", nil, UIParent, "CustomizationFrameWithTooltipTemplate")
+        local PaddingTooltip = CustomizationNoHeaderTooltip
         region.tooltipAnchor = "ANCHOR_NONE"
         region.tooltipMinWidth = 300
         region.tooltipPadding = 3
