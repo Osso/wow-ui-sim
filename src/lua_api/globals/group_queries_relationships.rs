@@ -1,6 +1,7 @@
 use super::super::real::unit_secret_predicates::{
     finish_identity_restricted, finish_possession_restricted,
 };
+use super::super::unit_api::{active_group_member_index, is_raid_group};
 use super::{is_friendly_unit, visible_party_member};
 use crate::lua_api::game_data::RACE_DATA;
 use crate::lua_api::methods::{borrow_state, create_string};
@@ -30,7 +31,7 @@ pub(super) fn unit_in_raid(state: &mut LuaState) -> LuaResult<u32> {
     let unit = Option::<String>::from_stack(state, 1)?.unwrap_or_default();
     let in_raid = {
         let st = borrow_state(state)?;
-        if !st.party_group_active || st.party_members.len() < 6 {
+        if !is_raid_group(&st) {
             false
         } else {
             matches!(unit.as_str(), "player" | "pet" | "vehicle")
@@ -245,7 +246,7 @@ pub(crate) fn is_group_leader(st: &crate::lua_api::state::SimState, unit: &str) 
         false
     } else if matches!(unit, "player" | "pet" | "vehicle") {
         st.party_leader_index.is_none()
-    } else if let Some(idx) = resolve_unit_party_index(st, unit) {
+    } else if let Some(idx) = active_group_member_index(st, unit) {
         st.party_leader_index == Some(idx)
     } else {
         false
@@ -290,8 +291,7 @@ pub(super) fn unit_is_raid_officer(state: &mut LuaState) -> LuaResult<u32> {
     let unit = Option::<String>::from_stack(state, 1)?.unwrap_or_default();
     let officer = {
         let st = borrow_state(state)?;
-        st.party_members.len() >= 6
-            && (is_group_leader(&st, &unit) || is_group_assistant(&st, &unit))
+        is_raid_group(&st) && (is_group_leader(&st, &unit) || is_group_assistant(&st, &unit))
     };
     state.push(Val::Bool(officer));
     finish_identity_restricted(state, &[&unit], 1)
@@ -309,7 +309,7 @@ pub(super) fn unit_leads_any_group(state: &mut LuaState) -> LuaResult<u32> {
             false
         } else if matches!(unit.as_str(), "player" | "pet" | "vehicle") {
             st.party_leader_index.is_none() || assistant
-        } else if let Some(idx) = resolve_unit_party_index(&st, &unit) {
+        } else if let Some(idx) = active_group_member_index(&st, &unit) {
             st.party_leader_index == Some(idx) || assistant
         } else {
             false
@@ -317,19 +317,6 @@ pub(super) fn unit_leads_any_group(state: &mut LuaState) -> LuaResult<u32> {
     };
     state.push(Val::Bool(leads));
     finish_identity_restricted(state, &[&unit], 1)
-}
-
-fn resolve_unit_party_index(st: &crate::lua_api::state::SimState, unit: &str) -> Option<usize> {
-    let party_len = st.party_members.len();
-    if let Some(idx) = crate::lua_api::globals::unit_api::parse_party_index(unit)
-        && idx < party_len
-    {
-        return Some(idx);
-    }
-    unit.strip_prefix("raid")
-        .and_then(|s| s.parse::<usize>().ok())
-        .and_then(|n| n.checked_sub(1))
-        .filter(|&n| n < party_len)
 }
 
 fn is_unit_dead(st: &crate::lua_api::state::SimState, unit: &str) -> bool {

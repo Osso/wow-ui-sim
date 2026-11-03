@@ -1,6 +1,6 @@
 //! State structs for the iced application.
 
-use iced::Point;
+use iced::{Point, mouse};
 
 /// Inspector panel state for editing frame properties.
 #[derive(Default, Clone)]
@@ -20,7 +20,19 @@ pub enum CanvasMessage {
     MouseLeave,
     MouseDown(Point),
     MouseUp(Point),
+    MouseUpOutside,
     RightMouseDown(Point),
     RightMouseUp(Point),
+    RightMouseUpOutside,
     MiddleClick(Point),
+}
+
+impl CanvasMessage {
+    pub(super) fn mouse_up_outside(button: mouse::Button) -> Option<Self> {
+        match button {
+            mouse::Button::Left => Some(Self::MouseUpOutside),
+            mouse::Button::Right => Some(Self::RightMouseUpOutside),
+            _ => None,
+        }
+    }
 }

@@ -3,6 +3,9 @@
 //! updated semantics and public outputs are simulator policies, not native proof.
 
 use crate::lua_api::globals::state_backed_queries::dispatch_event_now;
+use crate::lua_api::globals::unit_api::{
+    active_group_member_index, parse_party_index, parse_raid_index,
+};
 use crate::lua_api::methods::{borrow_state, borrow_state_mut, val_to_string};
 use crate::lua_api::state::{SEEDED_LOCAL_CHARACTER_GUID, SimState};
 use crate::lua_bridge::stack_val;
@@ -79,21 +82,9 @@ fn resolve_member_name(sim: &SimState, name: &str, exact: bool) -> Option<String
     if matches!(name, "player" | "pet" | "vehicle") || names_match(&sim.player.name, name, exact) {
         return Some(sim.player.name.clone());
     }
-    if let Some(index) = crate::lua_api::globals::unit_api::parse_party_index(name) {
-        return sim
-            .party_members
-            .get(index)
-            .map(|member| member.name.clone());
-    }
-    if let Some(index) = name
-        .strip_prefix("raid")
-        .and_then(|number| number.parse::<usize>().ok())
-        .and_then(|number| number.checked_sub(1))
-    {
-        return sim
-            .party_members
-            .get(index)
-            .map(|member| member.name.clone());
+    if parse_party_index(name).is_some() || parse_raid_index(name).is_some() {
+        return active_group_member_index(sim, name)
+            .map(|index| sim.party_members[index].name.clone());
     }
     // INFERRED: ambiguous short names do not select an arbitrary member.
     let mut matches = sim

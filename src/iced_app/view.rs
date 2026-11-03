@@ -5,8 +5,8 @@ mod options_modal;
 
 use iced::widget::shader::Shader;
 use iced::widget::{
-    Column, Container, button, checkbox, column, container, row, scrollable, space, stack, text,
-    text_input,
+    Column, Container, button, checkbox, column, container, responsive, row, scrollable, space,
+    stack, text, text_input,
 };
 use iced::{Border, Color, Element, Font, Length, Padding, Subscription};
 
@@ -15,6 +15,7 @@ use crate::LayoutRect;
 use super::Message;
 use super::app::App;
 use super::layout::compute_frame_rect;
+use super::state::CanvasMessage;
 use super::styles::{event_button_style, input_style, palette, run_button_style};
 
 /// Resolve a frame's display name, using the owner addon as fallback for anonymous frames.
@@ -95,8 +96,43 @@ fn message_from_keyboard_event(
     Some(Message::KeyPress(wow_key, raw_text, Instant::now()))
 }
 
-fn keyboard_subscription() -> Subscription<Message> {
-    iced::event::listen_with(|event, status, _window| message_from_keyboard_event(&event, status))
+fn input_subscription(fixed_display: bool) -> Subscription<Message> {
+    if fixed_display {
+        iced::event::listen_with(|event, status, _window| {
+            message_from_input_event(&event, status, true)
+        })
+    } else {
+        iced::event::listen_with(|event, status, _window| {
+            message_from_input_event(&event, status, false)
+        })
+    }
+}
+
+fn message_from_input_event(
+    event: &iced::Event,
+    status: iced::event::Status,
+    fixed_display: bool,
+) -> Option<Message> {
+    use iced::keyboard::{Event, Key, Modifiers, key::Named};
+
+    // An interactive overlay can capture the release before the game shader sees it.
+    if status == iced::event::Status::Captured
+        && let iced::Event::Mouse(iced::mouse::Event::ButtonReleased(button)) = event
+    {
+        return CanvasMessage::mouse_up_outside(*button).map(Message::CanvasEvent);
+    }
+    if fixed_display
+        && let iced::Event::Keyboard(Event::KeyPressed {
+            key: Key::Named(Named::F11),
+            modifiers,
+            repeat,
+            ..
+        }) = event
+        && *modifiers == (Modifiers::CTRL | Modifiers::SHIFT)
+    {
+        return (!*repeat).then_some(Message::ToggleSimulatorControls);
+    }
+    message_from_keyboard_event(event, status)
 }
 
 fn timer_subscription(interval: std::time::Duration) -> Subscription<Message> {
@@ -106,7 +142,9 @@ fn timer_subscription(interval: std::time::Duration) -> Subscription<Message> {
 impl App {
     /// Build the title bar with FPS counter, frame time, and canvas size.
     fn build_title_bar(&self) -> Element<'_, Message> {
-        let screen = self.screen_size.get();
+        let screen = self
+            .fixed_display_size()
+            .unwrap_or_else(|| self.screen_size.get());
         let screen_str = format!(" | screen:{}x{}", screen.width as i32, screen.height as i32);
         let title_text = format!(
             "WoW UI Simulator  [{}{}]",
@@ -128,10 +166,11 @@ impl App {
             shader.into()
         };
 
-        container(stacked)
-            .width(Length::Fill)
-            .height(Length::Fill)
-            .style(|_| container::Style {
+        let canvas = container(stacked).width(Length::Fill).height(Length::Fill);
+        if self.has_fixed_display_size() {
+            canvas
+        } else {
+            canvas.style(|_| container::Style {
                 background: Some(iced::Background::Color(palette::BG_DARK)),
                 border: Border {
                     color: palette::BORDER_HIGHLIGHT,
@@ -140,6 +179,7 @@ impl App {
                 },
                 ..Default::default()
             })
+        }
     }
 
     /// Build the collapsible frames sidebar panel.
@@ -253,16 +293,13 @@ impl App {
         })
     }
 
-    pub fn view(&self) -> Element<'_, Message> {
-        let title = self.build_title_bar();
-        let render_container = self.build_canvas_area();
-
-        // Position sidebar at top-right corner, stack over canvas
-        let sidebar_positioned = container(self.build_sidebar_panel())
+    fn build_positioned_sidebar(&self) -> Container<'_, Message> {
+        container(self.build_sidebar_panel())
             .width(Length::Fill)
-            .align_x(iced::alignment::Horizontal::Right);
-        let content_row = stack![render_container, sidebar_positioned];
+            .align_x(iced::alignment::Horizontal::Right)
+    }
 
+    fn build_control_column<'a>(&'a self, content: Element<'a, Message>) -> Column<'a, Message> {
         let bottom_row = row![
             button(text("Options").size(12))
                 .on_press(Message::ToggleOptionsModal)
@@ -272,11 +309,38 @@ impl App {
         .spacing(6)
         .align_y(iced::Alignment::Center);
 
-        let main_column = column![title, content_row, bottom_row, self.build_console()]
-            .spacing(5)
-            .padding(7);
+        column![
+            self.build_title_bar(),
+            content,
+            bottom_row,
+            self.build_console()
+        ]
+        .spacing(5)
+        .padding(7)
+    }
 
-        let base: Element<'_, Message> = container(main_column)
+    pub fn view(&self) -> Element<'_, Message> {
+        let content: Element<'_, Message> = if let Some(display) = self.fixed_display_size() {
+            let canvas = responsive(move |available| {
+                let scale =
+                    (available.width / display.width).min(available.height / display.height);
+                let canvas = self
+                    .build_canvas_area()
+                    .width(display.width * scale)
+                    .height(display.height * scale);
+                container(canvas).center(Length::Fill).into()
+            });
+            if self.simulator_controls_visible {
+                let sidebar_and_space = column![self.build_positioned_sidebar(), space::vertical()];
+                stack![canvas, self.build_control_column(sidebar_and_space.into())].into()
+            } else {
+                canvas.into()
+            }
+        } else {
+            let content_row = stack![self.build_canvas_area(), self.build_positioned_sidebar()];
+            self.build_control_column(content_row.into()).into()
+        };
+        let base: Element<'_, Message> = container(content)
             .width(Length::Fill)
             .height(Length::Fill)
             .style(|_| container::Style {
@@ -294,7 +358,7 @@ impl App {
 
     pub fn subscription(&self) -> Subscription<Message> {
         let input = Subscription::batch([
-            keyboard_subscription(),
+            input_subscription(self.has_fixed_display_size()),
             iced::window::close_requests().map(|_| Message::CloseRequested),
         ]);
 
@@ -714,7 +778,30 @@ fn truncate_sidebar_label(display: String) -> String {
 
 #[cfg(test)]
 mod tests {
-    use super::console_text_from_log_messages;
+    use super::{CanvasMessage, Message, console_text_from_log_messages, message_from_input_event};
+
+    #[test]
+    fn captured_control_releases_route_to_canvas_in_both_modes() {
+        use iced::{Event, event::Status, mouse};
+
+        for fixed_display in [false, true] {
+            for button in [mouse::Button::Left, mouse::Button::Right] {
+                let event = Event::Mouse(mouse::Event::ButtonReleased(button));
+                let message = message_from_input_event(&event, Status::Captured, fixed_display);
+                assert!(matches!(
+                    (button, message),
+                    (
+                        mouse::Button::Left,
+                        Some(Message::CanvasEvent(CanvasMessage::MouseUpOutside))
+                    ) | (
+                        mouse::Button::Right,
+                        Some(Message::CanvasEvent(CanvasMessage::RightMouseUpOutside))
+                    )
+                ));
+                assert!(message_from_input_event(&event, Status::Ignored, fixed_display).is_none());
+            }
+        }
+    }
 
     #[test]
     fn console_text_includes_full_scrollback_without_truncation() {

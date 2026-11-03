@@ -178,15 +178,16 @@ fn attach_font_string_to_button(state: &mut LuaState, id: u64, fs_id: u64) -> Lu
     {
         let mut sim = borrow_state_mut(state)?;
         super::super::methods_hierarchy::reparent_widget(&mut sim.widgets, fs_id, Some(id));
-        if let Some(fs) = sim.widgets.get_mut_visual(fs_id) {
-            fs.anchors.clear();
-            super::super::methods_helpers::set_all_points_anchors_pub(fs, id);
-        }
         if let Some(btn) = sim.widgets.get_mut_visual(id) {
             btn.children_keys.insert("Text".to_string(), fs_id);
         }
         if let Some(fs) = sim.widgets.get_mut_visual(fs_id) {
             fs.parent_key = Some("Text".to_string());
+            if fs.anchors.is_empty() {
+                super::super::methods_helpers::set_all_points_anchors_pub(fs, id);
+                sim.widgets.add_anchor_dependent(id, fs_id);
+                sim.widgets.mark_rect_dirty(fs_id);
+            }
         }
     }
     let _ = sync_child_to_rilua(state, id, "Text", fs_id);

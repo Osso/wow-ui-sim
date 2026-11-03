@@ -101,21 +101,12 @@ fn load_forever_title_consumer(env: &WowLuaEnv) {
     env.exec(
         r#"
         DifficultyUtil = {}
-        Enum.RelativeContentDifficulty = {Trivial=1, Easy=2, Fair=3, Difficult=4, Impossible=5}
         QuestDifficultyColors = {difficult={r=0.2, g=0.4, b=0.6}}
         QuestDifficultyHighlightColors = {difficult={r=0.3, g=0.5, b=0.7}}
         CVarCallbackRegistry = {enabled=true}
         function CVarCallbackRegistry:GetCVarValueBool(name)
             assert(name == "showQuestDifficultyColor")
             return self.enabled
-        end
-        C_QuestLog.IsEliteQuest = function(id)
-            assert(id == 80000 or id == 80001)
-            return id == 80001
-        end
-        C_PlayerInfo.GetContentDifficultyQuestForPlayer = function(id)
-            assert(id == 80000 or id == 80001)
-            return Enum.RelativeContentDifficulty.Fair
         end
         function CreateColor(r, g, b, a)
             assert(r == 0.2 and g == 0.4 and b == 0.6 and a == 1)
@@ -140,20 +131,37 @@ fn forever_quest_difficulty_whole_vendor_title_consumer_uses_live_level() {
     let env = WowLuaEnv::new().unwrap();
     {
         let mut state = env.state().borrow_mut();
+        state.player.level = 37;
         for entry in &mut state.quest_log_entries.entries {
             if entry.quest_id == 80000 || entry.quest_id == 80001 {
                 entry.level = 37;
+            }
+            if entry.quest_id == 80001 {
+                entry.tag_id = Some(1);
             }
         }
     }
     load_forever_title_consumer(&env);
     env.exec(
         r#"
+        assert(C_QuestLog.IsEliteQuest(999999) == false)
+        assert(C_PlayerInfo.GetContentDifficultyQuestForPlayer(80000) == Enum.RelativeContentDifficulty.Fair)
         assert(SetQuestTitleLevelAndDifficultyColor(80000, "Expedition") == "|cff336699[37] Expedition|r")
         assert(SetQuestTitleLevelAndDifficultyColor(80001, "Gates") == "|cff336699[37+] Gates|r")
         CVarCallbackRegistry.enabled = false
         assert(SetQuestTitleLevelAndDifficultyColor(80000, "Expedition") == "[37] Expedition")
         assert(SetQuestTitleLevelAndDifficultyColor(80001, "Gates") == "[37+] Gates")
+
+        local eliteID = secretwrap(80001)
+        assert(C_QuestLog.IsEliteQuest(eliteID))
+        assert(C_PlayerInfo.GetContentDifficultyQuestForPlayer(eliteID) == Enum.RelativeContentDifficulty.Fair)
+
+        local function taintedQuery(query)
+            debug.setstacktaint("QuestDifficultyProbe")
+            return query(eliteID)
+        end
+        assert(not pcall(taintedQuery, C_QuestLog.IsEliteQuest))
+        assert(not pcall(taintedQuery, C_PlayerInfo.GetContentDifficultyQuestForPlayer))
         "#,
     )
     .unwrap();

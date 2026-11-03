@@ -293,6 +293,8 @@ pub struct ScriptBodyXml {
     pub inherit: Option<String>,
     #[serde(rename = "@intrinsicOrder")]
     pub intrinsic_order: Option<String>,
+    #[serde(rename = "@autoEnableInput")]
+    pub auto_enable_input: Option<bool>,
 }
 
 /// Attributes container for frame attributes set via XML.

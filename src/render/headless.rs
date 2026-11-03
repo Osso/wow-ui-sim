@@ -334,22 +334,15 @@ fn clear_headless_render_target(
     device: &wgpu::Device,
     pipeline: &mut super::shader::WowUiPipeline,
     render_view: &wgpu::TextureView,
-    width: u32,
-    height: u32,
+    clip_bounds: iced::Rectangle<u32>,
 ) -> wgpu::CommandEncoder {
     let mut encoder = device.create_command_encoder(&wgpu::CommandEncoderDescriptor {
         label: Some("Screenshot Encoder"),
     });
-    let clip_bounds_u32 = iced::Rectangle {
-        x: 0u32,
-        y: 0u32,
-        width,
-        height,
-    };
     pipeline.render_clear(
         &mut encoder,
         render_view,
-        &clip_bounds_u32,
+        &clip_bounds,
         [0.05, 0.05, 0.08, 1.0],
     );
     encoder
@@ -370,9 +363,41 @@ pub fn render_to_image(
     height: u32,
     glyph_atlas_data: Option<(&[u8], u32)>,
 ) -> RgbaImage {
+    render_scene_to_image(batch, tex_mgr, width, height, glyph_atlas_data, None)
+}
+
+pub(crate) fn render_scene_to_image(
+    batch: &QuadBatch,
+    tex_mgr: &mut TextureManager,
+    width: u32,
+    height: u32,
+    glyph_atlas_data: Option<(&[u8], u32)>,
+    scene_size: Option<iced::Size>,
+) -> RgbaImage {
     let mut primitive = build_headless_primitive(batch, tex_mgr, glyph_atlas_data);
+    primitive.scene_size = scene_size;
     let mut context = HeadlessRenderContext::new(width, height);
     context.render(&mut primitive)
+}
+
+pub(crate) fn scene_viewport(
+    width: u32,
+    height: u32,
+    scene_size: Option<iced::Size>,
+) -> iced::Rectangle<u32> {
+    let (view_width, view_height) = scene_size.map_or((width, height), |size| {
+        let scale = (width as f32 / size.width).min(height as f32 / size.height);
+        (
+            ((size.width * scale).round() as u32).clamp(1, width),
+            ((size.height * scale).round() as u32).clamp(1, height),
+        )
+    });
+    iced::Rectangle {
+        x: (width - view_width) / 2,
+        y: (height - view_height) / 2,
+        width: view_width,
+        height: view_height,
+    }
 }
 
 /// Render multiple batches with one stable GPU texture atlas.
@@ -456,8 +481,7 @@ impl HeadlessRenderContext {
             &self.device,
             &mut self.pipeline,
             &self.render_view,
-            self.width,
-            self.height,
+            scene_viewport(self.width, self.height, primitive.scene_size),
         );
         read_back_pixels(
             &self.device,
@@ -480,6 +504,30 @@ mod tests {
         let instance = wgpu::Instance::new(&wgpu::InstanceDescriptor::default());
         pollster::block_on(instance.request_adapter(&wgpu::RequestAdapterOptions::default()))
             .is_ok()
+    }
+
+    #[test]
+    fn fixed_display_screenshot_projects_into_centered_viewport() {
+        if !gpu_adapter_available() {
+            eprintln!("Skipping fixed display screenshot test: no GPU adapter available");
+            return;
+        }
+
+        let scene = iced::Size::new(16.0, 8.0);
+        let mut batch = crate::render::QuadBatch::new();
+        batch.push_solid(
+            iced::Rectangle::new(iced::Point::ORIGIN, scene),
+            [1.0, 0.0, 0.0, 1.0],
+        );
+        let mut primitive = WowUiPrimitive::new_merged(std::sync::Arc::new(batch));
+        primitive.scene_size = Some(scene);
+
+        let image = super::HeadlessRenderContext::new(40, 40).render(&mut primitive);
+        assert_eq!(image.dimensions(), (40, 40));
+        assert_eq!(image.get_pixel(0, 10).0, [255, 0, 0, 255]);
+        assert_eq!(image.get_pixel(39, 29).0, [255, 0, 0, 255]);
+        assert_ne!(image.get_pixel(20, 9).0, [255, 0, 0, 255]);
+        assert_ne!(image.get_pixel(20, 30).0, [255, 0, 0, 255]);
     }
 
     /// The client magnifies UI art bilinearly; a nearest sampler turns every

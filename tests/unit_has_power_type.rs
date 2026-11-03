@@ -119,6 +119,9 @@ mod retail {
             r#"
             assert(UnitHasPowerType("target", 1))
             assert(not UnitHasPowerType("target", 9))
+            assert(UnitHasPowerType("party1", 2))
+            assert(not UnitHasPowerType("raid1", 2))
+            A_Admin.SetPartySize(6)
             for _, unit in ipairs({"party1", "raid1"}) do
                 assert(UnitHasPowerType(unit, 2), unit .. " primary")
                 assert(not UnitHasPowerType(unit, 9), unit .. " no secondary")

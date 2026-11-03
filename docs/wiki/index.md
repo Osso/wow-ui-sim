@@ -57,12 +57,24 @@ catalog/capability policy. The rebuilt Windows login reports zero Lua errors, do
 from 38 records/58 occurrences; 69 focused checks pass after review. This bounded verification
 is separate from the game-screen baseline and native parity.
 
+## [2026-11-03] investigation | Forever Cooldown Viewer in Edit Mode
+
+The Edit Mode investigation describes the totem slot metadata and legacy talent
+lookup used when the Cooldown Viewer refreshes.
+[Cooldown Viewer in Edit Mode](investigations/forever-addon-startup-compatibility.md#cooldown-viewer-in-edit-mode)
+
 ## [2026-11-03] investigation | Forever 70707 startup compatibility
 
 The game startup investigation connects the reported failures to their original
 consumers. The login follow-up covers the MSAA graphics capability.
 [Game startup](investigations/forever-addon-startup-compatibility.md),
 [login graphics](investigations/forever-login-startup.md#msaa-capability)
+
+## [2026-11-03] investigation | Forever 70707 World Map
+
+The World Map investigation describes the quest-panel queries, zoom
+initialization, and Trivial Quests setting.
+[World map](investigations/forever-addon-startup-compatibility.md#world-map-after-startup)
 
 ## [2026-10-31] architecture | Startup class and race
 
@@ -652,7 +664,7 @@ mapping remains unknown. Producer and tests staged only; no build/slot/runtime p
 
 ## [2026-10-18] investigation | Original sizing capture and release
 
-[Mouse sizing diagnosis](investigations/mouse-sizing-capture.md) links original-consumer geometry/release RED→GREEN and the registered-drag boundary. [AsyncRequest correlation](../specs/timer-callback-provenance.md#original-asyncrequest-correlation--bounded-retail-proof) records both-mode original-source/owner/ID proof and negative fixture controls, without a timer producer change.
+[Mouse sizing diagnosis](investigations/mouse-sizing-capture.md) links original-consumer geometry/release RED→GREEN and the registered-drag boundary. The [canvas release follow-up](investigations/mouse-sizing-capture.md#release-outside-the-game-canvas) describes release delivery in ordinary and fixed-resolution modes. [AsyncRequest correlation](../specs/timer-callback-provenance.md#original-asyncrequest-correlation--bounded-retail-proof) records both-mode original-source/owner/ID proof and negative fixture controls, without a timer producer change.
 
 ## [2026-10-19] source | Wrath legacy currency state
 
@@ -4144,12 +4156,12 @@ The sixteen retail 12.0.0 `Enum.EditModeDamageMeterSetting.*` and `Enum.EditMode
 | [[hero-spec-dialog-anchors]] | LIGHTSMITH/TEMPLAR selection dialog: layer-children batched out of XML order + runtime templates skipped named-anchor re-resolution, dropping panel content to spec-frame edge |
 | [[hero-spec-icon-bug]] | Retired — 5 layers of evidence confirm icon renders correctly |
 | [[xml-scale-attribute]] | XML `scale` attribute was silently dropped (no `FrameXml` field); hero talents `scale="0.85"` never applied, node buttons overflowed the fixed 284×362 backplate |
-| [[hit-testing]] | Two-phase algorithm: HitGrid spatial index + depth-first child drill-down |
+| [[hit-testing]] | HitGrid ordering, event-specific targets, and Forever scroll controls |
 | [[journeys-midnight-empty]] | Journeys tab was empty because current expansion was Midnight but default major-faction data only seeded War Within rows |
 | [[keybinding-system]] | Two Lua tables, key press pipeline, default bindings, Lua API |
 | [[lfd-dungeon-list-empty]] | Dungeons & Raids panel showed empty Specific list: missing `GetLFGLockList` etc., never-fired `LFG_UPDATE_RANDOM_INFO`, header marked `is_random` |
 | [[lfd-role-icon-slowness]] | LFD role icons use small button atlas crops from a 2048x2048 shared LFG prompt BLP; persistent crop caching avoids re-decoding the full source texture for repeated crop requests |
-| [[mask-texture]] | UV computation, useAtlasSize default, SmallActionButtonMixin override |
+| [[mask-texture]] | UV computation, flipped coordinate clamping, useAtlasSize default, SmallActionButtonMixin override |
 | [[method-dispatch-refactor]] | Runtime pollution fixed; target: direct Rust dispatch |
 | [[modelscene-player-actor-stub]] | ModelScene keeps 3D rendering stubbed, but `GetPlayerActor():SetModelByUnit("player")` must return a reusable actor for addon probes |
 | [[micro-menu-atlas-revert]] | Micro menu normal icons could disappear after hover because button atlas setters skipped child `atlas_tex_coords`, preventing restored normal textures from using isolated atlas crop requests |

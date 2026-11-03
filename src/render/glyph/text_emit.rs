@@ -105,7 +105,7 @@ pub(crate) fn emit_prepared_buffer_text_quads(
     glyph_atlas: &mut GlyphAtlas,
     request: PreparedBufferTextRequest<'_>,
 ) {
-    let runs = extract_layout_runs(request.buffer, 0, request.spacing);
+    let runs = extract_layout_runs(request.buffer, 0, request.spacing, glyph_atlas.raster_scale);
     let total_height = shaped_text_total_height(
         request.buffer,
         0,
@@ -234,7 +234,12 @@ fn populate_text_layout_cache(
         },
     );
     entry.insert(ShapeCacheEntry {
-        runs: extract_layout_runs(&buffer, request.max_lines, request.spacing),
+        runs: extract_layout_runs(
+            &buffer,
+            request.max_lines,
+            request.spacing,
+            glyph_atlas.raster_scale,
+        ),
         total_height,
         last_used: glyph_atlas.shape_cache_generation,
     });

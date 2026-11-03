@@ -1,9 +1,11 @@
-//! `SecureCmdOptionParse(options)` — returns the first option whose bracketed
-//! condition list matches current simulator state, plus its explicit unit selector.
+//! `SecureCmdOptionParse(options)` returns the first option with a matching
+//! condition group and the explicit unit selector from that group.
 
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val, runtime_error};
 
+use crate::lua_api::globals::group_queries::visible_party_member;
+use crate::lua_api::globals::unit_api::is_raid_group;
 use crate::lua_api::methods::borrow_state;
 
 pub(super) fn secure_cmd_option_parse(state: &mut LuaState) -> LuaResult<u32> {
@@ -68,50 +70,33 @@ fn resolve_cmd_option_with_explicit_unit<'a>(
     sim: &crate::lua_api::SimState,
 ) -> Option<(&'a str, Option<&'a str>)> {
     text.split(';')
-        .filter_map(parse_cmd_option_clause)
-        .find_map(|clause| {
-            clause.matches(sim).then(|| {
-                let unit = clause.conditions.and_then(explicit_condition_unit);
-                (clause.value, unit)
-            })
-        })
+        .find_map(|clause| match_cmd_option_clause(clause, sim))
 }
 
-struct CmdOptionClause<'a> {
-    conditions: Option<&'a str>,
-    value: &'a str,
-}
-
-impl<'a> CmdOptionClause<'a> {
-    fn matches(&self, sim: &crate::lua_api::SimState) -> bool {
-        self.conditions
-            .is_none_or(|conditions| condition_list_matches(conditions, sim))
+fn match_cmd_option_clause<'a>(
+    clause: &'a str,
+    sim: &crate::lua_api::SimState,
+) -> Option<(&'a str, Option<&'a str>)> {
+    let clause = clause.trim();
+    let mut value = clause;
+    let mut matched_group = None;
+    while let Some((conditions, rest)) = value
+        .strip_prefix('[')
+        .and_then(|group| group.split_once(']'))
+    {
+        if matched_group.is_none() && condition_list_matches(conditions, sim) {
+            matched_group = Some(conditions);
+        }
+        value = rest.trim_start();
     }
-}
 
-fn parse_cmd_option_clause(clause: &str) -> Option<CmdOptionClause<'_>> {
-    let trimmed = clause.trim();
-    if trimmed.is_empty() {
+    if value.is_empty() {
         return None;
     }
-    let Some(rest) = trimmed.strip_prefix('[') else {
-        return Some(CmdOptionClause {
-            conditions: None,
-            value: trimmed,
-        });
-    };
-    let Some(close_index) = rest.find(']') else {
-        return Some(CmdOptionClause {
-            conditions: None,
-            value: trimmed,
-        });
-    };
-    let conditions = &rest[..close_index];
-    let value = rest[close_index + 1..].trim();
-    (!value.is_empty()).then_some(CmdOptionClause {
-        conditions: Some(conditions),
-        value,
-    })
+    if value.len() == clause.len() {
+        return Some((value, None));
+    }
+    matched_group.map(|conditions| (value, explicit_condition_unit(conditions)))
 }
 
 fn condition_list_matches(conditions: &str, sim: &crate::lua_api::SimState) -> bool {
@@ -201,7 +186,9 @@ fn modifier_key_down(key: &str, sim: &crate::lua_api::SimState) -> bool {
 
 fn group_condition_matches(argument: &str, sim: &crate::lua_api::SimState) -> bool {
     match argument {
-        "" | "party" | "raid" => sim.party_group_active,
+        "" => sim.party_group_active,
+        "party" => sim.party_group_active && !is_raid_group(sim),
+        "raid" => is_raid_group(sim),
         _ => false,
     }
 }
@@ -211,7 +198,7 @@ fn unit_exists_for_option(unit: &str, sim: &crate::lua_api::SimState) -> bool {
         "player" | "pet" | "vehicle" => true,
         "target" => sim.current_target.is_some(),
         "focus" => sim.current_focus.is_some(),
-        other => visible_party_member_for_option(other, sim).is_some(),
+        other => visible_party_member(sim, other).is_some(),
     }
 }
 
@@ -226,7 +213,7 @@ fn unit_is_helpful(unit: &str, sim: &crate::lua_api::SimState) -> bool {
     match unit_target_info(unit, sim) {
         Some(target) => !target.is_enemy || target.reaction >= 4,
         None => {
-            visible_party_member_for_option(unit, sim).is_some()
+            visible_party_member(sim, unit).is_some()
                 || matches!(unit, "player" | "pet" | "vehicle")
         }
     }
@@ -235,8 +222,7 @@ fn unit_is_helpful(unit: &str, sim: &crate::lua_api::SimState) -> bool {
 fn unit_is_dead(unit: &str, sim: &crate::lua_api::SimState) -> bool {
     match unit_target_info(unit, sim) {
         Some(target) => target.health <= 0,
-        None => visible_party_member_for_option(unit, sim)
-            .is_some_and(|member| member.dead_since.is_some()),
+        None => visible_party_member(sim, unit).is_some_and(|member| member.dead_since.is_some()),
     }
 }
 
@@ -249,20 +235,4 @@ fn unit_target_info<'a>(
         "focus" => sim.current_focus.as_ref(),
         _ => None,
     }
-}
-
-fn visible_party_member_for_option<'a>(
-    unit: &str,
-    sim: &'a crate::lua_api::SimState,
-) -> Option<&'a crate::lua_api::state::PartyMember> {
-    if !sim.party_group_active {
-        return None;
-    }
-    if let Some(idx) = crate::lua_api::globals::unit_api::parse_party_index(unit) {
-        return sim.party_members.get(idx);
-    }
-    unit.strip_prefix("raid")
-        .and_then(|rest| rest.parse::<usize>().ok())
-        .and_then(|n| n.checked_sub(1))
-        .and_then(|idx| sim.party_members.get(idx))
 }

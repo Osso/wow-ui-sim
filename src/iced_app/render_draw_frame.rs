@@ -51,9 +51,8 @@ impl App {
     }
 
     fn sync_draw_bounds(&self, bounds: Rectangle) -> Size {
-        let size = bounds.size();
-        self.record_canvas_size(size);
-        size
+        self.record_canvas_size(bounds.size());
+        self.screen_size.get()
     }
 
     fn load_draw_textures(

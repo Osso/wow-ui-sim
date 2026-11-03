@@ -40,7 +40,7 @@ pub(super) fn set_value_step(state: &mut LuaState) -> LuaResult<u32> {
             (f.widget_type, f.slider_value)
         });
         match value {
-            Some((WidgetType::Slider, value)) => apply_slider_value(&mut sim, id, value),
+            Some((WidgetType::Slider, value)) => apply_slider_value(&mut sim, id, value, true),
             _ => None,
         }
     };
@@ -178,15 +178,41 @@ fn supports_slider_lattice(value: f64, min: f64, max: f64, step: f64) -> bool {
 }
 
 /// Apply a Slider assignment, returning its effective value only when changed.
-fn apply_slider_value(sim: &mut crate::lua_api::SimState, id: u64, value: f64) -> Option<f64> {
+fn apply_slider_value(
+    sim: &mut crate::lua_api::SimState,
+    id: u64,
+    value: f64,
+    obey_step: bool,
+) -> Option<f64> {
     let f = sim.widgets.get(id)?;
-    let clamped = quantize_slider_value(value, f.slider_min, f.slider_max, f.slider_step);
+    let step = if obey_step { f.slider_step } else { 0.0 };
+    let clamped = quantize_slider_value(value, f.slider_min, f.slider_max, step);
     if clamped == f.slider_value {
         return None;
     }
     sim.widgets.get_mut_visual(id).unwrap().slider_value = clamped;
     sim.widgets.mark_rect_dirty(id);
     Some(clamped)
+}
+
+#[cfg(feature = "gui")]
+pub(crate) fn set_slider_value_from_drag(
+    state: &mut LuaState,
+    id: u64,
+    value: f64,
+) -> LuaResult<()> {
+    let changed = {
+        let mut sim = borrow_state_mut(state)?;
+        let Some(slider) = sim.widgets.get(id) else {
+            return Ok(());
+        };
+        let obey_step = slider.slider_obey_step_on_drag;
+        apply_slider_value(&mut sim, id, value, obey_step)
+    };
+    if let Some(value) = changed {
+        fire_value_changed(state, id, value, Some(true))?;
+    }
+    Ok(())
 }
 
 /// Apply `value` to a StatusBar, clamping and updating interpolation state.
@@ -224,7 +250,7 @@ pub(super) fn shared_set_value(state: &mut LuaState) -> LuaResult<u32> {
         Some(WidgetType::Slider) => {
             let clamped = {
                 let mut sim = borrow_state_mut(state)?;
-                apply_slider_value(&mut sim, id, value)
+                apply_slider_value(&mut sim, id, value, true)
             };
             if let Some(value) = clamped {
                 let treat_as_mouse_event = val_to_bool(stack_val(state, 3));
@@ -314,7 +340,7 @@ pub(super) fn shared_set_min_max_values(state: &mut LuaState) -> LuaResult<u32> 
         fire_slider_range_changed(state, id, min, max)?;
         let changed = {
             let mut sim = borrow_state_mut(state)?;
-            apply_slider_value(&mut sim, id, value)
+            apply_slider_value(&mut sim, id, value, true)
         };
         if let Some(value) = changed {
             fire_value_changed(state, id, value, Some(false))?;

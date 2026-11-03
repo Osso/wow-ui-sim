@@ -3319,3 +3319,30 @@ Documented the game startup fixes and their selected consumers, plus the MSAA
 capability required during login settings registration.
 [Game startup](investigations/forever-addon-startup-compatibility.md),
 [login graphics](investigations/forever-login-startup.md#msaa-capability)
+
+## 2026-11-03 — Flipped mask coordinates
+
+Documented the clamp panic reproduced with a flipped mask and the
+renderer change that preserves the flipped orientation.
+[Mask Texture](investigations/mask-texture.md#flipped-mask-coordinates)
+## 2026-11-03 — Forever 70707 World Map
+
+Documented the profile registrations and Trivial Quests setting used when the
+World Map opens. The quest panel refresh must complete before the map can
+initialize zoom.
+[World map](investigations/forever-addon-startup-compatibility.md#world-map-after-startup)
+## 2026-11-03 — Forever Cooldown Viewer in Edit Mode
+
+Documented the totem count, active slot metadata, and legacy talent lookup
+used when Edit Mode refreshes the Cooldown Viewer.
+[Cooldown Viewer in Edit Mode](investigations/forever-addon-startup-compatibility.md#cooldown-viewer-in-edit-mode)
+## 2026-11-03 — Mouse release outside the game canvas
+
+Documented how ordinary and fixed-resolution displays deliver an outside
+release to the frame that received the press and clear the held button state.
+[Mouse sizing capture](investigations/mouse-sizing-capture.md#release-outside-the-game-canvas)
+## 2026-11-03 — Forever scroll input
+
+Documented wheel targeting and native Slider drag behavior for RestedXP and
+EllesmereUI.
+[Hit testing](investigations/hit-testing.md#forever-scroll-controls)

@@ -46,6 +46,57 @@ fn test_securecmdoptionparse_uses_first_matching_combat_clause() {
 }
 
 #[test]
+fn test_securecmdoptionparse_selects_first_matching_adjacent_group() {
+    env()
+        .exec(
+            r#"
+        local function check(text, expectedAction, expectedUnit)
+            local action, unit = SecureCmdOptionParse(text)
+            assert(action == expectedAction, text .. ": action " .. tostring(action))
+            assert(unit == expectedUnit, text .. ": unit " .. tostring(unit))
+        end
+
+        A_Admin.SetInCombat(false)
+        A_Admin.ClearFocus()
+        check('[@focus,exists][@player,exists] action; fallback', 'action', 'player')
+        check('[combat][@focus,exists] skip; plain', 'plain', nil)
+        A_Admin.SetFocus("Enemy", 70, 1, true)
+        check('[@focus,exists][@player,exists] first; [@player] later', 'first', 'focus')
+        check('[@focus,exists,combat][nocombat] action', 'action', nil)
+        check('[@focus,exists,combat] [@player,exists] action', 'action', 'player')
+        "#,
+        )
+        .unwrap();
+}
+
+#[test]
+fn test_securecmdoptionparse_ellesmere_party_visibility_distinguishes_group_modes() {
+    env()
+        .exec(
+            r#"
+        local visibility = "[@raid1,exists] hide; [@party1,exists][group] show; hide"
+        local groupMode = "[group:raid] raid; [group:party] party; solo"
+        local function check(size, mode, action, selectedUnit)
+            A_Admin.SetPartySize(size)
+            assert(IsInGroup() == (mode ~= "solo"), mode .. ": IsInGroup")
+            assert(IsInRaid() == (mode == "raid"), mode .. ": IsInRaid")
+            assert(UnitExists("raid1") == (mode == "raid"), mode .. ": UnitExists")
+            assert(SecureCmdOptionParse(groupMode) == mode, mode .. ": macro group mode")
+            local value, unit = SecureCmdOptionParse(visibility)
+            assert(value == action, mode .. ": visibility " .. tostring(value))
+            assert(unit == selectedUnit, mode .. ": visibility unit " .. tostring(unit))
+        end
+
+        check(0, "solo", "hide", nil)
+        check(1, "party", "show", "party1")
+        check(6, "raid", "hide", "raid1")
+        check(1, "party", "show", "party1")
+        "#,
+        )
+        .unwrap();
+}
+
+#[test]
 fn test_securecmdoptionparse_supports_harm_and_unit_override() {
     let env = env();
     env.exec(
