@@ -220,6 +220,7 @@ pub mod store_public_eligibility;
 pub mod transmog_availability;
 pub use c_quest_log_watches::QuestWatchType;
 pub(crate) use c_quest_log_watches::seed_quest_watch_types;
+pub mod c_garrison_combat_log_spell;
 pub mod c_recent_allies;
 pub mod c_report_system;
 pub mod c_reputation;
