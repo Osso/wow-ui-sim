@@ -1,3 +1,9 @@
+## [2026-11-02] implementation | CVar metadata
+
+[CVar metadata](investigations/cvar-metadata.md) describes the seven-return query,
+live-value and native-flag precedence, immutable Retail/PTR/Forever snapshots,
+generated profile maps, provenance and reproducible generator checks.
+
 ## [2026-11-02] source | Forever 70707 UI cache
 
 [Client profiles](systems/client-profiles.md#runtime-cache) describe the 70707

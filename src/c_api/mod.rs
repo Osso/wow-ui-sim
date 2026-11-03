@@ -220,6 +220,7 @@ pub mod store_public_eligibility;
 pub mod transmog_availability;
 pub use c_quest_log_watches::QuestWatchType;
 pub(crate) use c_quest_log_watches::seed_quest_watch_types;
+mod c_cvar_info;
 pub mod c_recent_allies;
 pub mod c_report_system;
 pub mod c_reputation;
@@ -463,6 +464,7 @@ pub(crate) fn restore_cleanup_namespaces(state: &mut LuaState) -> LuaResult<()> 
 }
 
 pub(crate) fn register_utility_bootstrap_tables(state: &mut LuaState) -> LuaResult<()> {
+    c_cvar_info::register(state)?;
     c_engraving::register(state)?;
     c_social_restrictions::register(state)?;
     restricted_actions::register(state)?;

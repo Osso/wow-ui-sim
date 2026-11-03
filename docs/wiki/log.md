@@ -3268,3 +3268,11 @@ the independently acquired strict 70707 UI cache; the source retarget and local
 parser workaround remain excluded. Run receipts are retained locally under
 `docs/local/session-finalization-v2/` in `native-gui-completed`,
 `forever-identity-completed` and `wrath-identity-corrected`.
+
+## 2026-11-02 — CVar metadata query and native profile maps
+
+[CVar metadata](investigations/cvar-metadata.md) describes the shared query's live
+values, seven-return contract and captured native storage/security flags. Static
+Retail/PTR/Forever maps retain immutable source pins, hashes and the upstream
+license. The standard-library generator supports reproducible check mode;
+portable generator, catalog and API regressions cover the bounded contract.
