@@ -370,8 +370,9 @@ fn clear_tracking(state: &mut LuaState) -> LuaResult<u32> {
     if !borrow_state(state)?.player.present {
         return Ok(0);
     }
-    if tracking_mask(state)? != 0 {
-        borrow_state_mut(state)?.minimap_tracking_mask = Some(0);
+    let mask = tracking_mask(state)?;
+    if mask & 1024 != 0 {
+        borrow_state_mut(state)?.minimap_tracking_mask = Some(mask & !1024);
         fire_named_event_state(state, "MINIMAP_UPDATE_TRACKING", &[]);
     }
     Ok(0)
