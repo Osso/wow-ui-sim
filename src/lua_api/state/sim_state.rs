@@ -401,6 +401,7 @@ pub struct SimState {
     pub private_aura_sound_registrations:
         crate::c_api::private_aura_sounds::PrivateAuraSoundRegistrations,
     /// Explicit recast metadata only; empty means unknown, never current aura duration.
+    #[cfg(feature = "aura-instance-enumeration")]
     pub spell_aura_durations: HashMap<u32, crate::c_api::aura_duration::SpellAuraDuration>,
     #[cfg(feature = "base-spell-relationships")]
     pub base_spell_relationships: crate::c_api::spell_base::BaseSpellRelationships,

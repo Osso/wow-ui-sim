@@ -41,6 +41,7 @@ pub mod action_usability;
 #[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
 mod addon_messages;
 pub(crate) mod applied_item_transmog;
+#[cfg(feature = "aura-instance-enumeration")]
 pub mod aura_duration;
 #[cfg(feature = "retail-12-0-5")]
 pub(crate) mod aura_entry;
