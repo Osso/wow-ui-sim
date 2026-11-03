@@ -5,12 +5,7 @@ use crate::support::env;
 fn test_c_encoding_util_compress_decompress() {
     let env = env();
     let result: String = env
-        .eval(r#"return C_EncodingUtil.CompressString("hello")"#)
-        .unwrap();
-    assert_eq!(result, "hello");
-
-    let result: String = env
-        .eval(r#"return C_EncodingUtil.DecompressString("hello")"#)
+        .eval(r#"return C_EncodingUtil.DecompressString(C_EncodingUtil.CompressString("hello"))"#)
         .unwrap();
     assert_eq!(result, "hello");
 }
@@ -21,10 +16,10 @@ fn test_c_encoding_util_base64() {
     let encoded: String = env
         .eval(r#"return C_EncodingUtil.EncodeBase64("data")"#)
         .unwrap();
-    assert_eq!(encoded, "data");
+    assert_eq!(encoded, "ZGF0YQ==");
 
     let decoded: String = env
-        .eval(r#"return C_EncodingUtil.DecodeBase64("data")"#)
+        .eval(r#"return C_EncodingUtil.DecodeBase64("ZGF0YQ==")"#)
         .unwrap();
     assert_eq!(decoded, "data");
 }

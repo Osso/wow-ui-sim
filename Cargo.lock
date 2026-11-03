@@ -7763,6 +7763,7 @@ name = "wow-ui-sim"
 version = "0.1.0"
 dependencies = [
  "asset-resolver",
+ "base64",
  "bytemuck",
  "casc-extract",
  "cascette-client-storage 0.2.0 (git+https://github.com/Osso/cascette-rs?rev=758d8dbfbc64d500b2f8f5b5c133d9f82fa79a48)",
