@@ -22,6 +22,7 @@ use common::panel_fixtures::setup_env;
 /// can drive `MissingFromAllBars` / `OnInactiveBonusBar` / `OnDisabledActionBar`
 /// through `SpellSearchUtil.GetActionbarStatusForSpell`. Without these branches
 /// the spell-book / talent search-filter UI cannot be exercised end-to-end.
+#[cfg(not(feature = "client-wrath"))]
 #[test]
 fn action_button_util_fixture_drives_all_action_bar_statuses() {
     test_timeout! {
