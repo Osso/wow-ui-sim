@@ -253,6 +253,7 @@ fn blizzard_show_synchronously_uses_glyph_measurement() {
     .unwrap();
 }
 
+#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
 #[test]
 fn blizzard_line_processing_does_not_resize_on_render_before_show() {
     let env = setup_full_env();
