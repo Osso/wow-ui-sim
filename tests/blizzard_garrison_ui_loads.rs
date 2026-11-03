@@ -111,14 +111,25 @@ fn adventures_board_aura_tooltip_applies_original_spacing() {
         r#"
         local socket = CreateFrame("Frame", nil, UIParent)
         Mixin(socket, AdventuresSocketMixin)
-        socket.activeBuffs, socket.activeDebuffs, socket.activeHealing = {}, {}, {}
+        socket.activeBuffs, socket.activeDebuffs, socket.activeHealing = {[4] = true}, {}, {}
         local aura = CreateFrame("Frame", nil, socket)
         Mixin(aura, AdventuresBoardAuraContainerMixin)
+        local paddingWidth, paddingHeight
+        local beforeShowWidth, beforeShowHeight
+        hooksecurefunc(GameSmallHeaderTooltip, "SetPadding", function(tip)
+            paddingWidth, paddingHeight = tip:GetWidth(), tip:GetHeight()
+        end)
+        hooksecurefunc(GameSmallHeaderTooltip, "SetCustomLineSpacing", function(tip)
+            beforeShowWidth, beforeShowHeight = tip:GetWidth(), tip:GetHeight()
+        end)
         aura:OnEnter()
+        assert(paddingWidth and beforeShowWidth, "original consumer must invoke both setters")
+        assert(beforeShowWidth == paddingWidth and beforeShowHeight == paddingHeight,
+            "line spacing must not resize before Show")
         assert(GameSmallHeaderTooltip:IsShown(), "aura hover must show tooltip")
         assert(GameSmallHeaderTooltip:GetOwner() == aura, "aura hover must own tooltip")
         assert(GameSmallHeaderTooltip:GetCustomLineSpacing() == 9, "aura hover must set spacing")
-        assert(GameSmallHeaderTooltip:NumLines() > 0, "aura hover must add its title")
+        assert(GameSmallHeaderTooltip:NumLines() == 2, "aura hover must add title and aura")
         "#,
     )
     .unwrap();
