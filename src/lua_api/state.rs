@@ -382,7 +382,6 @@ macro_rules! build_empty_sim_state {
             nameplate_configuration: Default::default(),
             recipe_quality_inputs: Default::default(),
             recipe_source_text: Default::default(),
-            garrison_spell_presentation: Default::default(),
             crafted_item_quality: Default::default(),
             #[cfg(feature = "retail-12-0-0")]
             pvp_catalog: Default::default(),

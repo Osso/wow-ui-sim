@@ -65,7 +65,6 @@
   "wt-global-api-C_Garrison.GetAutoMissionBoardState-287",
   "wt-global-api-C_Garrison.GetAutoMissionTargetingInfo-288",
   "wt-global-api-C_Garrison.GetAutoTroops-289",
-  "wt-global-api-C_Garrison.GetCombatLogSpellInfo-290",
   "wt-global-api-C_Garrison.GetFollowerAutoCombatSpells-291",
   "wt-global-api-C_Garrison.GetFollowerAutoCombatStats-292",
   "wt-global-api-C_Garrison.GetMissionDeploymentInfo-293",

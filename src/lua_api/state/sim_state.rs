@@ -204,8 +204,6 @@ pub struct SimState {
     pub recipe_quality_inputs: crate::c_api::c_trade_skill_quality::RecipeQualityInputs,
     /// Host-supplied recipe source text, keyed by recipe ID.
     pub recipe_source_text: HashMap<u32, String>,
-    pub garrison_spell_presentation:
-        HashMap<u32, crate::c_api::c_garrison_combat_log_spell::SpellPresentation>,
     /// Explicit per-item supplied quality; independent of recipe inputs, initially empty.
     pub crafted_item_quality:
         HashMap<u32, crate::c_api::c_trade_skill_quality::CraftingQualityInfo>,
