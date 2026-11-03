@@ -102,7 +102,6 @@ macro_rules! build_empty_sim_state {
             addon_saved_enable_state: None,
             addon_saved_version_check_enabled: None,
             system_chat_log: Vec::new(),
-            #[cfg(not(feature = "client-wrath"))]
             addon_message_prefixes: Default::default(),
             adventure_map: AdventureMapState::default(),
             encounter_journal: EncounterJournalState::default(),

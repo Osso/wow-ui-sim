@@ -220,7 +220,6 @@ pub mod store_public_eligibility;
 pub mod transmog_availability;
 pub use c_quest_log_watches::QuestWatchType;
 pub(crate) use c_quest_log_watches::seed_quest_watch_types;
-#[cfg(not(feature = "client-wrath"))]
 pub(crate) mod addon_message_prefixes;
 mod c_cvar_info;
 pub mod c_garrison_combat_log_spell;
@@ -476,8 +475,9 @@ pub(crate) fn register_utility_bootstrap_tables(state: &mut LuaState) -> LuaResu
     c_date_and_time::register(state)?;
     #[cfg(feature = "retail-12-0-5")]
     c_chat_info::register(state)?;
-    #[cfg(not(feature = "client-wrath"))]
-    addon_message_prefixes::register(state)?;
+    if crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Wrath {
+        addon_message_prefixes::register(state)?;
+    }
     #[cfg(feature = "retail-12-0-5")]
     c_navigation::register(state)?;
     c_weather::register(state)?;
