@@ -8,6 +8,7 @@ fn aura_priority_securecall_preserves_caller_source() {
     let env = load_env();
     env.exec(
         r#"
+        assert(rawget(_G, '__wow_internal_projection_call') == nil, 'internal boundary is not public')
         local consumer = AuraUtil.IsPriorityDebuff
         local target = AuraUtil.CheckIsPriorityAura
         local info = debug.getinfo(consumer, 'S')
