@@ -33,6 +33,7 @@ fn customization_tooltip_places_first_text_at_native_padding_anchor() {
         region.tooltipAnchor = "ANCHOR_NONE"
         region.tooltipPadding = 5
         region:AddTooltipLine("Anchor")
+        region:AddTooltipLine("Anchor")
         region:OnEnter()
         CustomizationNoHeaderTooltip:SetPadding(3, 5, 7, 11)
         local line = CustomizationNoHeaderTooltip:GetLeftLine(1)
@@ -108,6 +109,42 @@ fn customization_tooltip_places_first_text_at_native_padding_anchor() {
         .expect("tooltip glyph")
         .position;
     let expected_first = expected.vertices[0].position;
+    let actual_second = actual
+        .vertices
+        .iter()
+        .filter(|vertex| vertex.tex_index == wow_ui_sim::render::shader::GLYPH_ATLAS_TEX_INDEX)
+        .nth(24)
+        .expect("second line glyph")
+        .position;
+    let mut expected_second = QuadBatch::new();
+    emit_text_quads(
+        &mut expected_second,
+        &mut fonts,
+        &mut glyphs,
+        "Anchor",
+        Rectangle::new(Point::new(117.0, 240.0), Size::new(200.0, 15.0)),
+        None,
+        12.0,
+        [1.0; 4],
+        TextJustify::Left,
+        TextJustify::Center,
+        wow_ui_sim::render::shader::GLYPH_ATLAS_TEX_INDEX,
+        None,
+        (0.0, 0.0),
+        TextOutline::None,
+        false,
+        0,
+        0.0,
+        false,
+        None,
+        None,
+    );
+    let expected_second = expected_second.vertices[0].position;
+    assert!(
+        (actual_second[0] - expected_second[0]).abs() < 0.01
+            && (actual_second[1] - expected_second[1]).abs() < 0.01,
+        "second glyph position {actual_second:?}, expected {expected_second:?}"
+    );
     assert!(
         (actual_first[0] - expected_first[0]).abs() < 0.01
             && (actual_first[1] - expected_first[1]).abs() < 0.01,
