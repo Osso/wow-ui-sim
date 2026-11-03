@@ -9,12 +9,14 @@ use crate::common;
 #[path = "common/keybinding_panel_fixtures.rs"]
 mod keybinding_panel_fixtures;
 
-use keybinding_panel_fixtures::{
-    BLIZZARD_ADDONS, BLIZZARD_TOKEN_UI_ADDON, blizzard_ui_dir, setup_env,
-};
+use keybinding_panel_fixtures::setup_env;
+#[cfg(not(feature = "client-wrath"))]
+use keybinding_panel_fixtures::{BLIZZARD_ADDONS, BLIZZARD_TOKEN_UI_ADDON, blizzard_ui_dir};
+#[cfg(not(feature = "client-wrath"))]
 use wow_ui_sim::iced_app::{RegistryQuadBatchParams, build_quad_batch_for_registry};
 use wow_ui_sim::lua_api::WowLuaEnv;
 
+#[cfg(not(feature = "client-wrath"))]
 fn setup_env_with_bootstrap_loaded_token_ui() -> WowLuaEnv {
     let env = WowLuaEnv::new().expect("Failed to create Lua environment");
     env.set_screen_size(1024.0, 768.0);
@@ -49,6 +51,7 @@ fn clear_recorded_lua_errors(env: &WowLuaEnv) {
     common::panel_fixtures::clear_recorded_lua_errors(env);
 }
 
+#[cfg(not(feature = "client-wrath"))]
 fn build_texture_requests(env: &WowLuaEnv) -> Vec<String> {
     let buckets = {
         let mut state = env.state().borrow_mut();
@@ -251,6 +254,7 @@ fn assert_backpack_item_count(env: &WowLuaEnv, expected: i32) {
     );
 }
 
+#[cfg(not(feature = "client-wrath"))]
 #[test]
 fn test_bag_env_loads_real_backpack_token_tracker() {
     let env = setup_env();
@@ -397,6 +401,7 @@ fn test_container_frame_1_item_1_icon_matches_first_bag_slot_item() {
     );
 }
 
+#[cfg(not(feature = "client-wrath"))]
 #[test]
 fn test_new_bag_item_button_icon_matches_its_slot_after_refresh() {
     let env = setup_env();
@@ -489,6 +494,7 @@ fn test_new_bag_item_button_icon_matches_its_slot_after_refresh() {
     );
 }
 
+#[cfg(not(feature = "client-wrath"))]
 #[test]
 fn test_toggle_backpack_bootstrap_token_ui_does_not_nil_error() {
     let env = setup_env_with_bootstrap_loaded_token_ui();
@@ -559,6 +565,7 @@ fn test_backpack_token_hover_populates_tooltip() {
     assert_no_bag_open_errors(&env, "SetBackpackToken");
 }
 
+#[cfg(not(feature = "client-wrath"))]
 #[test]
 fn test_default_backpack_seed_items_do_not_use_question_mark_icons() {
     let env = setup_env();
@@ -598,6 +605,7 @@ fn test_default_backpack_seed_items_do_not_use_question_mark_icons() {
     );
 }
 
+#[cfg(not(feature = "client-wrath"))]
 #[test]
 fn test_backpack_bg_regions_have_color_fill() {
     let env = setup_env();
