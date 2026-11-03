@@ -104,7 +104,11 @@ pub fn update_tooltip_sizes(state: &mut SimState, font_system: &mut WowFontSyste
 ///
 /// Two-pass approach: first determine width from non-wrapping lines,
 /// then measure wrapped lines' heights against that width.
-fn measure_tooltip(state: &mut SimState, id: u64, font_system: &mut WowFontSystem) -> (f32, f32) {
+pub(crate) fn measure_tooltip(
+    state: &mut SimState,
+    id: u64,
+    font_system: &mut WowFontSystem,
+) -> (f32, f32) {
     if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Wrath {
         return wrath::measure_tooltip(state, id, font_system);
     }

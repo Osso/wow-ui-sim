@@ -148,6 +148,36 @@ fn load_full_game_ui() -> WowLuaEnv {
     env
 }
 
+#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
+#[test]
+fn profession_recipe_source_button_displays_supplied_tooltip_text() {
+    let env = load_full_game_ui();
+    load_addon(&env.loader_env(), &templates_toc()).expect("load original profession templates");
+    let profession_toc = find_toc_file(&blizzard_ui_dir().join("Blizzard_Professions"))
+        .expect("find original professions addon");
+    load_addon(&env.loader_env(), &profession_toc).expect("load original professions addon");
+    env.state()
+        .borrow_mut()
+        .recipe_source_text
+        .insert(100001, "Found in a weathered journal".into());
+    env.exec(
+        r#"
+        local form = CreateFrame("Frame", "RecipeSourceTimingForm", UIParent, "ProfessionsRecipeSchematicFormTemplate")
+        local recipe = C_TradeSkillUI.GetRecipeInfo(100001)
+        assert(recipe, "fixture recipe must exist")
+        recipe.learned = false
+        recipe.disabled = true
+        recipe.disabledReason = "Requires a trainer"
+        form:Init(recipe)
+        assert(form.RecipeSourceButton:IsShown(), "recipe source button must be shown")
+        form.RecipeSourceButton:GetScript("OnEnter")(form.RecipeSourceButton)
+        assert(GameTooltip:IsShown(), "recipe source hover must show tooltip")
+        assert(GameTooltip:GetLeftLine(1):GetText() == "Found in a weathered journal")
+        "#,
+    )
+    .unwrap();
+}
+
 // Literal cached inputs absent from Wrath manifest1-382/cache; behavior cases stay enabled.
 post_wrath_ui_fixture! {
 #[test]

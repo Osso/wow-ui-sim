@@ -48,6 +48,7 @@ pub(crate) fn register_spell_and_widget_tables(state: &mut LuaState) -> LuaResul
 pub(crate) fn register_item_power_tables(state: &mut LuaState) -> LuaResult<()> {
     super::c_garrison_currency::register(state)?;
     super::c_garrison_follower_xp::register(state)?;
+    super::c_garrison_combat_log_spell::register(state)?;
     super::c_scrapping_machine::register(state)?;
     super::c_perks_categories::register(state)?;
     super::c_legendary_crafting::register(state)?;
@@ -104,6 +105,7 @@ pub(crate) fn register_interaction_tables(state: &mut LuaState) -> LuaResult<()>
     #[cfg(feature = "retail-12-0-0")]
     super::c_encounter_warnings::register_settings(state)?;
     super::c_trade_skill_quality::register(state)?;
+    super::c_trade_skill_source::register(state)?;
     #[cfg(feature = "retail-12-0-0")]
     super::c_crafting_orders::register(state)?;
     #[cfg(feature = "retail-12-0-0")]

@@ -63,6 +63,192 @@ fn action_button_hover_preserves_spell_identity_for_tooltip_postcall() {
     );
 }
 
+#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
+#[test]
+fn blizzard_line_processing_defers_resize_until_show() {
+    let env = setup_full_env();
+    env.exec(
+        r#"
+        GameTooltip:SetOwner(UIParent, "ANCHOR_NONE")
+        assert(GameTooltip:ProcessInfo({ tooltipData = { lines = {
+            { type = 0, leftText = "Short" },
+        } } }))
+        local width, height = GameTooltip:GetWidth(), GameTooltip:GetHeight()
+        GameTooltip:AddLineDataText({ type = 0, leftText =
+            "A substantially longer line that must not resize the tooltip before Show" })
+        assert(GameTooltip:GetWidth() == width, "AddLineDataText resized width before Show")
+        assert(GameTooltip:GetHeight() == height, "AddLineDataText resized height before Show")
+        GameTooltip:Show()
+        assert(GameTooltip:GetWidth() > width, "Show did not resize the tooltip")
+        assert(GameTooltip:GetHeight() > height, "Show did not update tooltip height")
+        "#,
+    )
+    .unwrap();
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
+#[test]
+fn blizzard_double_line_processing_defers_resize_until_show() {
+    let env = setup_full_env();
+    env.exec(
+        r#"
+        GameTooltip:SetOwner(UIParent, "ANCHOR_NONE")
+        assert(GameTooltip:ProcessInfo({ tooltipData = { lines = {
+            { type = 0, leftText = "Short" },
+        } } }))
+        local width, height = GameTooltip:GetWidth(), GameTooltip:GetHeight()
+        GameTooltip:AddLineDataText({ type = 0, leftText = "A longer left column", rightText = "Right column" })
+        assert(GameTooltip:GetWidth() == width, "double line resized width before Show")
+        assert(GameTooltip:GetHeight() == height, "double line resized height before Show")
+        GameTooltip:Show()
+        assert(GameTooltip:GetWidth() > width, "Show did not resize the tooltip")
+        assert(GameTooltip:GetHeight() > height, "Show did not update tooltip height")
+        "#,
+    )
+    .unwrap();
+}
+
+// API-level timing probes: TooltipDataHandler's original line consumer supplies
+// the pending line; each setter is invoked directly to isolate its timing.
+#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
+fn assert_setter_defers_tooltip_layout(setter: &str) {
+    let env = setup_full_env();
+    env.exec(
+        r#"
+        GameTooltip:SetOwner(UIParent, "ANCHOR_NONE")
+        assert(GameTooltip:ProcessInfo({ tooltipData = { lines = {
+            { type = 0, leftText = "Short" },
+        } } }))
+        timingWidth, timingHeight = GameTooltip:GetWidth(), GameTooltip:GetHeight()
+        GameTooltip:AddLineDataText({ type = 0, leftText = "A much longer pending tooltip row for layout timing" })
+        "#,
+    )
+    .unwrap();
+    env.exec(setter).unwrap();
+    env.exec(
+        r#"
+        assert(GameTooltip:GetWidth() == timingWidth, "setter resized width before Show")
+        assert(GameTooltip:GetHeight() == timingHeight, "setter resized height before Show")
+        GameTooltip:Show()
+        assert(GameTooltip:GetWidth() > timingWidth, "Show did not resize width")
+        assert(GameTooltip:GetHeight() > timingHeight, "Show did not resize height")
+        "#,
+    )
+    .unwrap();
+}
+
+// Original consumer cannot observe pending content: SetOwner clears lines before
+// SetCustomWordWrapMinWidth (ProfessionsRecipeSchematicForm.lua:650-654;
+// tooltip/owner.rs::record_tooltip_owner). The consumer is tested separately.
+#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
+#[test]
+fn api_wrap_width_defers_tooltip_layout() {
+    assert_setter_defers_tooltip_layout("GameTooltip:SetCustomWordWrapMinWidth(350)");
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
+#[test]
+fn api_line_spacing_defers_tooltip_layout() {
+    assert_setter_defers_tooltip_layout("GameTooltip:SetCustomLineSpacing(9)");
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
+#[test]
+fn api_shrink_to_fit_defers_tooltip_layout() {
+    assert_setter_defers_tooltip_layout("GameTooltip:SetShrinkToFitWrapped(false)");
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
+#[test]
+fn api_minimum_width_defers_tooltip_layout() {
+    assert_setter_defers_tooltip_layout("GameTooltip:SetMinimumWidth(300, true)");
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
+#[test]
+fn api_padding_synchronously_lays_out_pending_tooltip_lines() {
+    let env = setup_full_env();
+    env.exec(
+        r#"
+        GameTooltip:SetOwner(UIParent, "ANCHOR_NONE")
+        assert(GameTooltip:ProcessInfo({ tooltipData = { lines = {
+            { type = 0, leftText = "Short" },
+        } } }))
+        local width, height = GameTooltip:GetWidth(), GameTooltip:GetHeight()
+        GameTooltip:AddLineDataText({ type = 0, leftText = "A much longer pending tooltip row for layout timing" })
+        GameTooltip:SetPadding(0, 6)
+        assert(GameTooltip:GetWidth() > width, "SetPadding did not synchronously resize width")
+        assert(GameTooltip:GetHeight() > height, "SetPadding did not synchronously resize height")
+        "#,
+    )
+    .unwrap();
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
+#[test]
+fn api_ownerless_padding_does_not_size_content() {
+    let env = setup_full_env();
+    env.exec(
+        r#"
+        GameTooltip:Hide()
+        local width, height = GameTooltip:GetWidth(), GameTooltip:GetHeight()
+        GameTooltip:AddLine("Ownerless text that must not trigger content sizing")
+        GameTooltip:SetPadding(1, 2)
+        assert(GameTooltip:GetWidth() == width, "ownerless SetPadding resized width")
+        assert(GameTooltip:GetHeight() == height, "ownerless SetPadding resized height")
+        "#,
+    )
+    .unwrap();
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
+#[test]
+fn blizzard_money_helper_defers_minimum_width_layout() {
+    let env = setup_full_env();
+    env.exec(
+        r#"
+        GameTooltip:SetOwner(UIParent, "ANCHOR_NONE")
+        GameTooltip:AddLine("Short")
+        GameTooltip:Show()
+        local width, height = GameTooltip:GetWidth(), GameTooltip:GetHeight()
+        SetTooltipMoney(GameTooltip, 123456789, nil, "Price:")
+        assert(GameTooltip:GetMinimumWidth() > 0, "money helper did not set minimum width")
+        assert(GameTooltip:GetWidth() == width, "money helper resized width before Show")
+        assert(GameTooltip:GetHeight() == height, "money helper resized height before Show")
+        GameTooltip:Show()
+        assert(GameTooltip:GetHeight() > height, "Show did not lay out money line")
+        "#,
+    )
+    .unwrap();
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
+#[test]
+fn blizzard_show_synchronously_uses_glyph_measurement() {
+    let env = setup_full_env();
+    env.exec(
+        r#"
+        GameTooltip:SetOwner(UIParent, "ANCHOR_NONE")
+        assert(GameTooltip:ProcessInfo({ tooltipData = { lines = {
+            { type = 0, leftText = "Wide WWW and narrow iii glyphs" },
+        } } }))
+        assert(GameTooltip:IsShown(), "processed tooltip must be shown")
+        assert(GameTooltip:GetOwner() == UIParent, "processed tooltip must retain its owner")
+        shownWidth, shownHeight = GameTooltip:GetWidth(), GameTooltip:GetHeight()
+        "#,
+    )
+    .unwrap();
+    let mut font = wow_ui_sim::render::font::WowFontSystem::new();
+    wow_ui_sim::iced_app::tooltip::update_tooltip_sizes(&mut env.state().borrow_mut(), &mut font);
+    env.exec(
+        r#"
+        assert(GameTooltip:GetWidth() == shownWidth, "Show did not synchronously measure glyph width")
+        assert(GameTooltip:GetHeight() == shownHeight, "Show did not synchronously measure glyph height")
+        "#,
+    )
+    .unwrap();
+}
+
 #[test]
 fn test_tooltip_mixins_load_in_full_env() {
     let env = setup_full_env();

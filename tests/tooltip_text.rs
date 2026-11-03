@@ -441,6 +441,7 @@ fn test_wrapped_line_increases_height() {
         local owner = CreateFrame("Frame", "WrapHeightOwner", UIParent)
         GameTooltip:SetOwner(owner, "ANCHOR_NONE")
         GameTooltip:AddLine("Short")
+        GameTooltip:Show()
     "#,
     )
     .unwrap();
@@ -457,6 +458,7 @@ fn test_wrapped_line_increases_height() {
         GameTooltip:ClearLines()
         GameTooltip:AddLine("Short")
         GameTooltip:AddLine("This is a long description that should definitely wrap onto multiple lines when rendered within the narrow tooltip width constraint", 1, 1, 1, true)
+        GameTooltip:Show()
     "#,
     )
     .unwrap();
@@ -486,6 +488,7 @@ fn test_double_line_width_includes_gap() {
         local owner = CreateFrame("Frame", "GapTestOwner", UIParent)
         GameTooltip:SetOwner(owner, "ANCHOR_NONE")
         GameTooltip:AddLine("Left text only")
+        GameTooltip:Show()
     "#,
     )
     .unwrap();
@@ -501,6 +504,7 @@ fn test_double_line_width_includes_gap() {
         r#"
         GameTooltip:ClearLines()
         GameTooltip:AddDoubleLine("Left text only", "Right text")
+        GameTooltip:Show()
     "#,
     )
     .unwrap();
@@ -574,6 +578,7 @@ fn test_tooltip_height_grows_with_lines() {
         local owner = CreateFrame("Frame", "GrowOwner", UIParent)
         GameTooltip:SetOwner(owner, "ANCHOR_NONE")
         GameTooltip:AddLine("Line 1")
+        GameTooltip:Show()
     "#,
     )
     .unwrap();
@@ -584,7 +589,8 @@ fn test_tooltip_height_grows_with_lines() {
         state.widgets.get(gt_id).unwrap().height
     };
 
-    env.exec(r#"GameTooltip:AddLine("Line 2")"#).unwrap();
+    env.exec(r#"GameTooltip:AddLine("Line 2"); GameTooltip:Show()"#)
+        .unwrap();
     update_tooltip_sizes(&env);
     let h2 = {
         let state = env.state().borrow();
@@ -592,7 +598,8 @@ fn test_tooltip_height_grows_with_lines() {
         state.widgets.get(gt_id).unwrap().height
     };
 
-    env.exec(r#"GameTooltip:AddLine("Line 3")"#).unwrap();
+    env.exec(r#"GameTooltip:AddLine("Line 3"); GameTooltip:Show()"#)
+        .unwrap();
     update_tooltip_sizes(&env);
     let h3 = {
         let state = env.state().borrow();
@@ -743,6 +750,7 @@ fn test_tooltip_min_width_respected() {
         GameTooltip:SetOwner(owner, "ANCHOR_NONE")
         GameTooltip:SetMinimumWidth(300)
         GameTooltip:AddLine("Short")
+        GameTooltip:Show()
     "#,
     )
     .unwrap();
