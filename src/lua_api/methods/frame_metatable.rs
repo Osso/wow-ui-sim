@@ -101,7 +101,8 @@ fn hidden_scroll_frame_method(name: &str) -> bool {
 fn hidden_message_frame_method(name: &str) -> bool {
     matches!(
         name,
-        "ScrollUp"
+        "RemoveMessagesByAccessID"
+            | "ScrollUp"
             | "ScrollDown"
             | "PageUp"
             | "PageDown"
