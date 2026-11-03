@@ -41,6 +41,13 @@ fn customization_tooltip_places_first_text_at_native_padding_anchor() {
         assert(point == "TOP" and relative == CustomizationNoHeaderTooltip and relativePoint == "TOP" and x == 0 and y == -21, "first left vertical anchor")
         point, relative, relativePoint, x, y = line:GetPoint(2)
         assert(point == "LEFT" and relative == CustomizationNoHeaderTooltip and relativePoint == "LEFT" and x == 17 and y == 0, "first left horizontal anchor")
+        line:SetPoint("TOP", CustomizationNoHeaderTooltip, "TOP", 0, -55)
+        CustomizationNoHeaderTooltip:Show()
+        local _, _, _, _, retainedY = line:GetPoint(1)
+        assert(retainedY == -55, "repeated Show must retain the anchored left prefix")
+        CustomizationNoHeaderTooltip:SetPadding(3, 5, 7, 11)
+        local _, _, _, _, resetY = line:GetPoint(1)
+        assert(resetY == -21, "SetPadding must invalidate and restore native anchors")
     "#,
     )
     .unwrap();
