@@ -32,7 +32,7 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
         // Forever QuestLogDocumentation.lua:684 and UnitDocumentation.lua:2895,2910.
         let quest_log = ensure_namespace(state, "C_QuestLog")?;
         table_set_rust_fn_static(state, quest_log, "GetTrivialRange", get_trivial_range)?;
-        let globals = Val::Table(state.global);
+        let globals = state.global;
         table_set_rust_fn_static(
             state,
             globals,
