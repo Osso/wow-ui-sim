@@ -139,12 +139,13 @@ end
 
 local function createForbiddenObjectTable(object)
   return setmetatable({ [0] = rawget(object, 0), __wowPublicObject = object }, {
-    __index = function(_, key)
+    __index = function(forbidden, key)
       local method = object[key]
       if type(method) ~= "function" then
         return nil
       end
-      return callPrivateProjectionFactory(bindPublicObjectMethod, object, method)
+      local receiver = key == "GetParent" and forbidden or object
+      return callPrivateProjectionFactory(bindPublicObjectMethod, receiver, method)
     end,
   })
 end

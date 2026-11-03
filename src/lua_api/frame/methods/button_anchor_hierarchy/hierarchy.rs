@@ -30,7 +30,10 @@ pub(super) fn get_parent(state: &mut LuaState) -> LuaResult<u32> {
         Some(pid) => {
             let val = frame_global_or_ref(state, pid)?;
             #[cfg(feature = "forbidden-aspects")]
-            let val = crate::lua_api::script_object_transfer::project_parent_return(state, val)?;
+            let val = {
+                let receiver = stack_val(state, 1);
+                crate::lua_api::script_object_transfer::project_parent_return(state, receiver, val)?
+            };
             state.push(val);
             Ok(1)
         }

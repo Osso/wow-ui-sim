@@ -502,6 +502,7 @@ fn target_frame_displays_target_auras_through_its_managed_container() {
         .push(debuff(3001, Some("Poison")));
     env.fire_unit_aura_full_update("target").unwrap();
     settle(&env);
+    assert_no_lua_errors(&env);
     assert_eq!(
         shown_target_buttons(),
         format!("target:{}", fixture_count + 1)
