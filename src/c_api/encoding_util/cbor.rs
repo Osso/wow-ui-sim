@@ -39,10 +39,9 @@ impl Decoder<'_> {
             .position
             .checked_add(length)
             .ok_or_else(|| error("invalid length"))?;
-        let bytes = self
-            .bytes
-            .get(self.position..end)
-            .ok_or_else(|| error("truncated value"))?;
+        let bytes = self.bytes.get(self.position..end).ok_or_else(|| {
+            error("attempted to deserialize an incomplete or ill-formed data item")
+        })?;
         self.position = end;
         Ok(bytes)
     }

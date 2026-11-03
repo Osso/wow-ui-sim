@@ -51,6 +51,23 @@ fn source_bytes(state: &LuaState) -> LuaResult<Vec<u8>> {
         .ok_or_else(|| runtime_error("C_EncodingUtil source string is unavailable"))
 }
 
+fn decoder_source(state: &LuaState, usage: Option<&str>) -> LuaResult<Vec<u8>> {
+    let value = unwrap_secret(state, stack_val(state, 1))?;
+    match value {
+        Val::Num(_) => Ok(value.to_string().into_bytes()),
+        Val::Str(reference) => state
+            .gc
+            .string_arena
+            .get(reference)
+            .map(|value| value.data().to_vec())
+            .ok_or_else(|| runtime_error("C_EncodingUtil source string is unavailable")),
+        _ => Err(runtime_error(match usage {
+            Some(usage) => usage.to_owned(),
+            None => format!("string expected, got {}", value.type_name()),
+        })),
+    }
+}
+
 fn optional_enum(state: &LuaState, index: i32, maximum: u8) -> LuaResult<u8> {
     match unwrap_secret(state, stack_val(state, index))? {
         Val::Nil => Ok(0),
@@ -87,7 +104,10 @@ fn encode_base64(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn decode_base64(state: &mut LuaState) -> LuaResult<u32> {
-    let source = source_bytes(state)?;
+    let source = decoder_source(
+        state,
+        Some("Usage: local output = C_EncodingUtil.DecodeBase64(source [, variant])"),
+    )?;
     let variant = optional_enum(state, 2, 1)?;
     let output = base64_engine(variant)
         .decode(source)
@@ -166,8 +186,16 @@ fn compress_string(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn decompress_string(state: &mut LuaState) -> LuaResult<u32> {
-    let source = source_bytes(state)?;
+    let source = decoder_source(
+        state,
+        Some("Usage: local output = C_EncodingUtil.DecompressString(source [, method])"),
+    )?;
     let method = optional_enum(state, 2, 2)?;
+    if source.is_empty() {
+        return Err(runtime_error(
+            "DecompressString(): internal decompression error",
+        ));
+    }
     let output = if method == 2 {
         let decoder = flate2::read::GzDecoder::new(source.as_slice());
         let mut output = Vec::new();
@@ -226,13 +254,9 @@ fn inflate(source: &[u8], zlib: bool) -> LuaResult<Vec<u8>> {
 }
 
 fn deserialize_cbor(state: &mut LuaState) -> LuaResult<u32> {
-    let source = source_bytes(state)?;
+    let source = decoder_source(state, None)?;
     if source.is_empty() {
-        // The native Forever CVar default is empty and selected CvarUtil.lua
-        // uses this API unguarded before `or {}`. Infer one nil for the empty
-        // sentinel from that consumer and the documented nilable return.
-        state.push(Val::Nil);
-        return Ok(1);
+        return Ok(0);
     }
     let value = cbor::decode(state, &source, STACK_SIZE_LIMIT)?;
     state.push(value);
