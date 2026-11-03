@@ -6,9 +6,9 @@ use rilua::{LuaApiMut, Val};
 
 use super::app::App;
 use super::mouse_drag::{
-    active_motion_drag_frame, apply_sizing, find_drag_script_target, find_slider_drag_target,
-    frame_motion_scripts_allowed, moving_drag_anchor_update, reanchor_moving_drag_frame,
-    sizing_drag_update,
+    SliderDragTrack, active_motion_drag_frame, apply_sizing, find_drag_script_target,
+    frame_enabled, frame_motion_scripts_allowed, moving_drag_anchor_update,
+    reanchor_moving_drag_frame, sizing_drag_update,
 };
 
 /// Minimum distance (in pixels) the mouse must move while held to start a drag.
@@ -35,9 +35,54 @@ impl App {
     pub(super) fn handle_mouse_move(&mut self, pos: Point) {
         let previous_pos = self.mouse_position;
         self.sync_mouse_position(pos);
-        self.maybe_start_drag(pos);
-        self.maybe_move_active_drag_frame(previous_pos, pos);
+        if !self.update_slider_thumb_drag(pos) {
+            self.maybe_start_drag(pos);
+            self.maybe_move_active_drag_frame(previous_pos, pos);
+        }
         self.update_hovered_frame(pos);
+    }
+
+    fn update_slider_thumb_drag(&mut self, pos: Point) -> bool {
+        let env = self.env.borrow();
+        let (id, value) = {
+            let mut state = env.state().borrow_mut();
+            let Some(id) = state.active_slider_thumb_drag_frame else {
+                return false;
+            };
+            let enabled = state.widgets.get(id).is_some_and(|slider| {
+                slider.mouse_enabled
+                    && frame_enabled(slider)
+                    && state.widgets.is_ancestor_visible(id)
+            });
+            if !enabled {
+                state.set_active_slider_thumb_drag_frame(None);
+                // The press belonged to the slider even if a callback disabled it.
+                self.mouse_down_pos = None;
+                return true;
+            }
+            let Some(grab_offset) = self.slider_thumb_grab_offset else {
+                return true;
+            };
+            state.ensure_layout_rects();
+            let value = state.widgets.get(id).and_then(|slider| {
+                SliderDragTrack::new(&state.widgets, slider)?.value_at(slider, pos, grab_offset)
+            });
+            (id, value)
+        };
+        if let Some(value) = value {
+            let mut lua = env.rilua_mut();
+            if let Err(error) = crate::lua_api::frame::methods::widgets::set_slider_value_from_drag(
+                lua.state_mut(),
+                id,
+                value,
+            ) {
+                crate::lua_api::script_helpers::call_error_handler_state(
+                    lua.state_mut(),
+                    &error.to_string(),
+                );
+            }
+        }
+        true
     }
 
     pub(super) fn handle_mouse_leave(&mut self) {
@@ -206,9 +251,16 @@ impl App {
         {
             let env = self.env.borrow();
             let mut state = env.state().borrow_mut();
-            let slider_drag_target = find_slider_drag_target(&state, frame_id);
             state.set_active_drag_frame(None);
-            state.set_active_slider_thumb_drag_frame(slider_drag_target);
+            let slider = state
+                .widgets
+                .get(frame_id)
+                .filter(|frame| frame.widget_type == crate::widget::WidgetType::Slider);
+            self.slider_thumb_grab_offset = slider.and_then(|slider| {
+                SliderDragTrack::new(&state.widgets, slider)?.grab_offset(slider, pos)
+            });
+            let slider_id = slider.map(|slider| slider.id);
+            state.set_active_slider_thumb_drag_frame(slider_id);
         }
 
         let clicks_on_down = self.frame_clicks_on_edge(frame_id, "LeftButton", true);
@@ -696,36 +748,18 @@ impl App {
             Some(p) => p,
             None => return false,
         };
-        let start_frame = match self.hit_test(pos) {
+        let start_frame = match self.hit_test_mouse_wheel(pos) {
             Some(f) => f,
             None => return false,
         };
 
         let env = self.env.borrow();
-        let mut current = Some(start_frame);
-        while let Some(frame_id) = current {
-            let (wheel_enabled, motion_allowed, parent_id) = {
-                let state = env.state().borrow();
-                state
-                    .widgets
-                    .get(frame_id)
-                    .map(|frame| {
-                        (
-                            frame.mouse_wheel_enabled,
-                            frame_motion_scripts_allowed(frame),
-                            frame.parent_id,
-                        )
-                    })
-                    .unwrap_or((false, false, None))
-            };
-            if motion_allowed && wheel_enabled && env.has_script_handler(frame_id, "OnMouseWheel") {
-                let delta_val = Val::Num(dy as f64);
-                let _ = env.fire_script_handler(frame_id, "OnMouseWheel", vec![delta_val]);
-                return true;
-            }
-            current = parent_id;
-        }
-        false
+        let recipient = mouse_wheel_handler(&env.state().borrow().widgets, &env, start_frame);
+        let Some(frame_id) = recipient else {
+            return false;
+        };
+        let _ = env.fire_script_handler(frame_id, "OnMouseWheel", vec![Val::Num(dy as f64)]);
+        true
     }
 
     /// Replay accepted `SimulateMouse*` input at the current cursor through the same
@@ -784,6 +818,25 @@ fn dispatch_double_click(
         && env
             .dispatch_script_handler(frame_id, "OnDoubleClick", vec![button.clone()])
             .unwrap_or(false)
+}
+
+pub(super) fn mouse_wheel_handler(
+    widgets: &crate::widget::WidgetRegistry,
+    env: &crate::lua_api::WowLuaEnv,
+    frame_id: u64,
+) -> Option<u64> {
+    let mut current = Some(frame_id);
+    while let Some(id) = current {
+        let frame = widgets.get(id)?;
+        if frame.mouse_wheel_enabled
+            && frame_motion_scripts_allowed(frame)
+            && env.has_script_handler(id, "OnMouseWheel")
+        {
+            return Some(id);
+        }
+        current = frame.parent_id;
+    }
+    None
 }
 
 pub(crate) fn frame_click_registration_matches(

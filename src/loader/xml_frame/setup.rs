@@ -367,6 +367,9 @@ fn apply_xml_properties_direct(
     direct::apply_xml_alpha(state, frame_id, frame, inherits);
     direct::apply_xml_scale(state, frame_id, frame, inherits);
     direct::apply_xml_enable_mouse(state, frame_id, frame, inherits);
+    if let Some(scripts) = frame.scripts() {
+        direct::apply_xml_mouse_wheel_script(state, frame_id, scripts);
+    }
     direct::apply_xml_motion_scripts_while_disabled(state, frame_id, frame, inherits);
     direct::apply_xml_register_for_clicks(state, frame_id, frame, inherits);
     direct::apply_xml_enable_keyboard(state, frame_id, frame, inherits);

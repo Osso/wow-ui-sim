@@ -3341,3 +3341,8 @@ used when Edit Mode refreshes the Cooldown Viewer.
 Documented how ordinary and fixed-resolution displays deliver an outside
 release to the frame that received the press and clear the held button state.
 [Mouse sizing capture](investigations/mouse-sizing-capture.md#release-outside-the-game-canvas)
+## 2026-11-03 — Forever scroll input
+
+Documented wheel targeting and native Slider drag behavior for RestedXP and
+EllesmereUI.
+[Hit testing](investigations/hit-testing.md#forever-scroll-controls)

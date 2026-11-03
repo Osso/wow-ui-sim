@@ -1,4 +1,5 @@
 use crate::iced_app::app::App;
+use crate::iced_app::mouse::mouse_wheel_handler;
 use crate::layout::ScrollOffsetCache;
 use rustc_hash::FxHashSet;
 
@@ -37,8 +38,34 @@ impl App {
 
         let env = self.env.borrow();
         let state = env.state().borrow();
-        let initial_id = grid.topmost_matching_at(pos, |_| true)?;
-        deepest_hover_target_through_visible_children(&state.widgets, grid, initial_id, pos)
+        let initial_id = grid.topmost_matching_at(pos, |id| {
+            state
+                .widgets
+                .get(id)
+                .is_some_and(|frame| frame.accepts_mouse())
+        })?;
+        deepest_hover_target_through_visible_children(&state.widgets, initial_id, pos)
+    }
+
+    pub(crate) fn hit_test_mouse_wheel(&self, pos: iced::Point) -> Option<u64> {
+        self.apply_hit_grid_changes();
+        let cache = self.cached_hittable.borrow();
+        let grid = cache.as_ref()?;
+
+        let env = self.env.borrow();
+        let state = env.state().borrow();
+        let mut offsets = ScrollOffsetCache::default();
+        grid.topmost_target_at(pos, |id| {
+            if !target_contains_point(&state.widgets, id, pos, &mut offsets) {
+                return None;
+            }
+            deepest_target_through_visible_children(&state.widgets, id, pos, |frame, id| {
+                accepts_hover(frame)
+                    || frame.mouse_wheel_enabled
+                    || (frame.mouse_enabled
+                        && mouse_wheel_handler(&state.widgets, &env, id).is_some())
+            })
+        })
     }
 
     pub(crate) fn hit_test_mouse_button(
@@ -53,59 +80,53 @@ impl App {
 
         let env = self.env.borrow();
         let state = env.state().borrow();
-        let initial_id = grid.topmost_matching_at(pos, |id| {
+        grid.topmost_target_at(pos, |id| {
+            if !state
+                .widgets
+                .get(id)
+                .is_some_and(|frame| frame.accepts_mouse())
+            {
+                return None;
+            }
             deepest_click_target_through_visible_children(
                 &state.widgets,
                 &env,
-                grid,
                 id,
                 pos,
                 button_name,
                 down,
             )
-            .is_some()
-        })?;
-        deepest_click_target_through_visible_children(
-            &state.widgets,
-            &env,
-            grid,
-            initial_id,
-            pos,
-            button_name,
-            down,
-        )
+        })
     }
 }
 
 fn deepest_hover_target_through_visible_children(
     widgets: &crate::widget::WidgetRegistry,
-    grid: &crate::iced_app::hit_grid::HitGrid,
     frame_id: u64,
     pos: iced::Point,
 ) -> Option<u64> {
-    deepest_target_through_visible_children(widgets, grid, frame_id, pos, |frame, _| {
-        frame.mouse_motion_enabled
-            || matches!(frame.widget_type, crate::widget::WidgetType::EditBox)
-    })
+    deepest_target_through_visible_children(widgets, frame_id, pos, |frame, _| accepts_hover(frame))
+}
+
+fn accepts_hover(frame: &crate::widget::Frame) -> bool {
+    frame.mouse_motion_enabled || matches!(frame.widget_type, crate::widget::WidgetType::EditBox)
 }
 
 fn deepest_click_target_through_visible_children(
     widgets: &crate::widget::WidgetRegistry,
     env: &crate::lua_api::WowLuaEnv,
-    grid: &crate::iced_app::hit_grid::HitGrid,
     frame_id: u64,
     pos: iced::Point,
     button_name: &str,
     down: bool,
 ) -> Option<u64> {
-    deepest_target_through_visible_children(widgets, grid, frame_id, pos, |frame, id| {
+    deepest_target_through_visible_children(widgets, frame_id, pos, |frame, id| {
         frame_has_mouse_button_action(frame, env, id, button_name, down)
     })
 }
 
 fn deepest_target_through_visible_children(
     widgets: &crate::widget::WidgetRegistry,
-    _grid: &crate::iced_app::hit_grid::HitGrid,
     frame_id: u64,
     pos: iced::Point,
     accepts_frame: impl Fn(&crate::widget::Frame, u64) -> bool,
@@ -317,9 +338,8 @@ mod tests {
         deepest_click_target_through_visible_children,
         deepest_hover_target_through_visible_children, frame_visually_contains,
     };
-    use crate::iced_app::hit_grid::HitGrid;
     use crate::widget::{Frame, WidgetRegistry, WidgetType};
-    use iced::{Point, Rectangle, Size};
+    use iced::Point;
 
     fn register_frame(
         registry: &mut WidgetRegistry,
@@ -353,31 +373,6 @@ mod tests {
             .get_mut_visual(frame_id)
             .expect("frame should exist")
             .set_mouse_enabled(true);
-    }
-
-    fn grid_for_all_frames(registry: &WidgetRegistry) -> HitGrid {
-        let mut frames: Vec<_> = registry
-            .iter_ids()
-            .filter_map(|id| {
-                let frame = registry.get(id)?;
-                let rect = frame.layout_rect?;
-                Some((
-                    id,
-                    Rectangle::new(
-                        Point::new(rect.x, rect.y),
-                        Size::new(rect.width, rect.height),
-                    ),
-                    (frame.frame_strata, frame.frame_level, frame.raise_order, id),
-                ))
-            })
-            .collect();
-        frames.sort_by_key(|entry| entry.2);
-        let ordered = frames
-            .into_iter()
-            .enumerate()
-            .map(|(rank, (id, rect, _))| (id, rect, rank))
-            .collect();
-        HitGrid::new(ordered, 200.0, 200.0)
     }
 
     #[test]
@@ -471,13 +466,10 @@ mod tests {
         }
         let leaf = register_frame(&mut registry, WidgetType::Button, Some(parent), hit_rect);
         set_mouse_enabled(&mut registry, leaf);
-        let grid = grid_for_all_frames(&registry);
-
         assert_eq!(
             deepest_click_target_through_visible_children(
                 &registry,
                 &env,
-                &grid,
                 root,
                 Point::new(50.0, 50.0),
                 "LeftButton",
@@ -499,15 +491,8 @@ mod tests {
             parent = register_frame(&mut registry, WidgetType::Frame, Some(parent), hit_rect);
             set_mouse_enabled(&mut registry, parent);
         }
-        let grid = grid_for_all_frames(&registry);
-
         assert_eq!(
-            deepest_hover_target_through_visible_children(
-                &registry,
-                &grid,
-                root,
-                Point::new(50.0, 50.0)
-            ),
+            deepest_hover_target_through_visible_children(&registry, root, Point::new(50.0, 50.0)),
             Some(parent)
         );
     }
