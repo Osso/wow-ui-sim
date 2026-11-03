@@ -27,13 +27,15 @@ fn toy_catalog_identity_is_consistent_across_toy_box_and_tooltip() {
         r#"
         local itemID, name, icon = C_ToyBox.GetToyInfo(86575)
         assert(itemID == 86575 and name == 'Chalice of Secrets' and icon == 305294)
-        GameTooltip:SetToyByItemID(86575)
-        assert(GameTooltipTextLeft1:GetText() == name)
         local _, piccolo, piccoloIcon = C_ToyBox.GetToyInfo(13379)
         assert(piccolo == 'Piccolo of the Flaming Fire' and piccoloIcon == 133942)
         "#,
     )
     .unwrap();
+    env.exec("GameTooltip:SetToyByItemID(86575)").unwrap();
+    let state = env.state().borrow();
+    let id = state.widgets.get_id_by_name("GameTooltip").unwrap();
+    assert_eq!(state.tooltips[&id].lines[0].left_text, "Chalice of Secrets");
 }
 
 #[test]
