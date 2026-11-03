@@ -188,6 +188,26 @@ fn customization_tooltip_places_first_text_at_native_padding_anchor() {
 
 #[cfg(any(feature = "client-retail", feature = "client-ptr"))]
 #[test]
+fn blizzard_line_handler_only_adds_nonempty_rows() {
+    let env = setup_full_env();
+    env.exec(
+        r#"
+        GameTooltip:SetOwner(UIParent, "ANCHOR_NONE")
+        GameTooltip:AddLineDataText({ leftText = "" })
+        assert(GameTooltip:NumLines() == 0, "empty single line must not append")
+        GameTooltip:AddLineDataText({ leftText = "", rightText = "" })
+        assert(GameTooltip:NumLines() == 0, "empty double line must not append")
+        GameTooltip:AddLineDataText({ leftText = " " })
+        assert(GameTooltip:NumLines() == 1, "space is a nonempty line")
+        GameTooltip:AddLineDataText({ leftText = "", rightText = "Right" })
+        assert(GameTooltip:NumLines() == 2, "right-only line must append")
+    "#,
+    )
+    .unwrap();
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
+#[test]
 fn blizzard_double_line_nonempty_right_disables_requested_wrap() {
     let env = setup_full_env();
     env.exec(
