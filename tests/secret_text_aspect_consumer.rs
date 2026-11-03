@@ -9,8 +9,14 @@ use crate::common::blizzard_addon_harness::{
 fn compact_unit_name_marks_text_aspect_for_secret_identity() {
     let ui = blizzard_ui_dir();
     let env = new_blizzard_addon_env(&ui);
-    let loaded =
-        load_blizzard_addon_closure_into_env(&env, &ui, &["Blizzard_CompactRaidFrames"], &[]);
+    // Blizzard_QuickJoin.toc:3-6 enables the FriendsFrame dependency by default;
+    // QuickJoinToast.lua:160 supplies UpdateDisplayedFriendCount.
+    let loaded = load_blizzard_addon_closure_into_env(
+        &env,
+        &ui,
+        &["Blizzard_CompactRaidFrames", "Blizzard_QuickJoin"],
+        &[],
+    );
     assert!(loaded.iter().any(|name| name == "Blizzard_UnitFrame"));
     env.exec("A_Admin.SetPartySize(1); A_Admin.SetPartyMember(1, 'Aspect Name', 1, 80); CompactUnitFrame_SetUnit(CompactArenaFrame.memberUnitFrames[1], 'party1')")
         .unwrap();
