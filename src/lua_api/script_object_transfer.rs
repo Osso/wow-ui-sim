@@ -3,9 +3,8 @@
 use super::methods::{
     call_function_state, native_frame_id_from_val, registry_get, registry_set, table_get,
 };
-use rilua::vm::{gc::arena::GcRef, state::LuaState, table::Table};
+use rilua::vm::state::LuaState;
 use rilua::{LuaApiMut, LuaResult, Val, runtime_error};
-use std::ops::Range;
 
 const FORBIDDEN_TABLES: &str = "__wow_forbidden_object_tables";
 const FORBIDDEN_CONSTRUCTOR: &str = "__wow_forbidden_object_constructor";
@@ -43,33 +42,6 @@ pub(crate) fn install(lua: &mut rilua::Lua) -> LuaResult<()> {
         ));
     }
     registry_set(state, FORBIDDEN_CONSTRUCTOR, constructor);
-    state.environment_transfer_hook = Some(transfer_script_objects);
-    Ok(())
-}
-
-fn transfer_script_objects(
-    state: &mut LuaState,
-    source: GcRef<Table>,
-    target: GcRef<Table>,
-    values: Range<usize>,
-) -> LuaResult<()> {
-    let Val::Table(secure) = registry_get(state, "__secureenv") else {
-        return Err(runtime_error(
-            "secure object transfer has no secure environment",
-        ));
-    };
-    if (source == secure) == (target == secure) {
-        return Ok(());
-    }
-    for slot in values {
-        let value = state.stack_get(slot);
-        let converted = if target == secure {
-            project_forbidden(state, value)?
-        } else {
-            project_public(state, value)
-        };
-        state.stack_set(slot, converted);
-    }
     Ok(())
 }
 

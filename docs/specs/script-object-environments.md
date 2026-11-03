@@ -28,7 +28,7 @@ Native evidence WM70, retail 12.1.5 build 70688 (partial):
 
 - [x] Preserve simulator frame identity in the forbidden partition: native parent arguments recognize the same frame while public and forbidden Lua tables remain distinct.
 - [ ] Return the new frame's parent-selected table view from `CreateFrame`, so an ordinary secure frame pool retains the same key when its consumer later releases it. TargetFrame consumer verification is pending.
-- [x] Convert direct references to XML-partitioned frames across the covered secure-environment boundary; ordinary frame fields remain public and nested data is not recursively rewritten.
+- [ ] Preserve the supplied frame-table identity across ordinary Lua environment crossings. Explicit XML delegates and native publication points retain their separate projection behavior; native behavior for arbitrary crossings is UNKNOWN.
 - [x] Keep explicit native `GetObjectTable` results public for covered outbound addon initializers.
 - [x] Pass the mixed-argument XML delegate and unchanged native AuraContainer initializer regressions after scoped inbound argument projection.
 - [x] Intern forbidden views and make repeated `GetForbiddenObjectTable` projection idempotent.
@@ -38,8 +38,8 @@ Native evidence WM70, retail 12.1.5 build 70688 (partial):
 
 ## How it works
 
-- `rilua` optional environment-transfer hook, pinned to `b6387563c8cd7882194cec368e626ebc72a17b81`.
-- `src/lua_api/script_object_transfer.rs` registers a host conversion callback after secure-environment creation. Canonical registry mappings identify partitions, not user-controlled backlink fields alone.
+- The former simulator environment-transfer hook projected direct frame values on ordinary secure/global Lua crossings. This was an emulated partition policy, not a verified native rule. It changed pool object identities on the TargetFrame consumer path; ordinary crossings now retain their supplied values.
+- `src/lua_api/script_object_transfer.rs` registers the explicit projection constructor after secure-environment creation. Canonical registry mappings identify partitions, not user-controlled backlink fields alone.
 - `src/lua_api/env_init/shared_bootstrap.lua` constructs and interns forbidden tables. Its XML delegate wrapper uses a registered native argument projector only for the explicit forbidden secure-delegate boundary.
 - `src/lua_api/env_init/bootstrap.rs` registers that helper before either environment can use the wrapper and passes the compile-time capability into the bootstrap chunk; older profiles retain receiver-only XML behavior without a missing-helper fallback.
 
