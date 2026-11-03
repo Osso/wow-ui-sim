@@ -5,6 +5,24 @@ frame and exposed missing queries and duplicate secure state dispatch.
 
 ## Content
 
+### Cooldown Viewer in Edit Mode
+
+The Game Menu's Edit Mode button refreshes the Forever Cooldown Viewer.
+`CooldownViewerItemData.lua` enumerates totem slots with `GetNumTotemSlots()`.
+Forever now reads that count from the same slot state as `GetTotemInfo()`.
+Active slots include the supplied spell ID and rate. When two totems share a
+spell ID, the Blizzard cache keeps the slot with the latest expiration.
+
+The next refresh step scans legacy talent slots for icons. Forever exposes
+`C_SpecializationInfo.GetTalentInfo()` with the existing query validation.
+The query returns nil for the unmodeled tier-and-column grid, so the icon
+provider skips those rows and continues collecting icons.
+
+The Edit Mode regression enters through the Game Menu and checks the Blizzard
+cache with populated totem slots. In the Windows 70707 check, Edit Mode became
+active, the default slot count returned four, and the `lua-errors` report was
+empty.
+
 ### Startup failures
 
 - AuraContainer needed the shared caster, carryover and enchantment queries.
@@ -41,6 +59,9 @@ because Blizzard can report the same error twice. [Runtime inputs](../../runtime
 - [Pet-order tests](../../../tests/forever_pet_move_order.rs),
   [channel tests](../../../tests/forever_permanent_channels.rs), and
   [encounter tests](../../../src/c_api/c_instance_encounter.rs).
+- [Totem queries](../../../src/lua_api/globals/real/totems.rs),
+  [talent query](../../../src/c_api/c_spec.rs), and
+  [Edit Mode regression](../../../tests/edit_mode_api.rs).
 
 ## See Also
 

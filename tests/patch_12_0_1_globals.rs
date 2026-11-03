@@ -6,16 +6,29 @@ use wow_ui_sim::lua_api::globals::real::totems::Totem;
 #[test]
 fn patch_12_0_1_totem_slots_and_duration_share_info_inputs() {
     let env = WowLuaEnv::new().unwrap();
-    env.exec(r#"
+    env.exec(
+        r#"
         assert(GetNumTotemSlots() == 4)
         assert(GetTotemDuration(1):GetTotalDuration() == 0)
         assert(GetTotemDuration(1):GetRemainingDuration() == 0)
-    "#).unwrap();
+    "#,
+    )
+    .unwrap();
     env.state().borrow_mut().totem_slots[0] = Some(Totem {
-        name: "Healing Stream".into(), start_time: 0.0, duration: 3600.0, icon: 135127,
+        name: "Healing Stream".into(),
+        start_time: 0.0,
+        duration: 3600.0,
+        icon: 135127,
+        mod_rate: 1.0,
+        spell_id: 0,
     });
     env.state().borrow_mut().totem_slots[1] = Some(Totem {
-        name: "Expired".into(), start_time: -20.0, duration: 1.0, icon: 135128,
+        name: "Expired".into(),
+        start_time: -20.0,
+        duration: 1.0,
+        icon: 135128,
+        mod_rate: 1.0,
+        spell_id: 0,
     });
     env.exec(r#"
         local active, name, start, duration, icon = GetTotemInfo(1)

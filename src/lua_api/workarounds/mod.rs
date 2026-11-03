@@ -4,6 +4,7 @@ mod logging;
 mod permanent;
 mod runtime_surfaces;
 mod temporary;
+pub(crate) use temporary::legacy_talent_skill_defaults::get_legacy_talent_info;
 pub(crate) use temporary::lfg_encounters::get_search_result_encounter_info;
 pub(crate) use temporary::minimap_tracking_defaults::RETAIL_TRACKING_DEFAULT_MASK;
 

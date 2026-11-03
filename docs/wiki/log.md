@@ -3313,3 +3313,9 @@ Documented the game startup fixes and their selected consumers, plus the MSAA
 capability required during login settings registration.
 [Game startup](investigations/forever-addon-startup-compatibility.md),
 [login graphics](investigations/forever-login-startup.md#msaa-capability)
+
+## 2026-11-03 — Forever Cooldown Viewer in Edit Mode
+
+Documented the totem count, active slot metadata, and legacy talent lookup
+used when Edit Mode refreshes the Cooldown Viewer.
+[Cooldown Viewer in Edit Mode](investigations/forever-addon-startup-compatibility.md#cooldown-viewer-in-edit-mode)

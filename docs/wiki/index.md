@@ -51,6 +51,12 @@ catalog/capability policy. The rebuilt Windows login reports zero Lua errors, do
 from 38 records/58 occurrences; 69 focused checks pass after review. This bounded verification
 is separate from the game-screen baseline and native parity.
 
+## [2026-11-03] investigation | Forever Cooldown Viewer in Edit Mode
+
+The Edit Mode investigation describes the totem slot metadata and legacy talent
+lookup used when the Cooldown Viewer refreshes.
+[Cooldown Viewer in Edit Mode](investigations/forever-addon-startup-compatibility.md#cooldown-viewer-in-edit-mode)
+
 ## [2026-11-03] investigation | Forever 70707 startup compatibility
 
 The game startup investigation connects the reported failures to their original
