@@ -260,6 +260,7 @@ pub(crate) mod c_tooltip_info_outfit;
 pub(crate) mod c_tooltip_info_spell_mount;
 pub(crate) mod c_trade_skill_filter;
 pub mod c_trade_skill_quality;
+mod c_trade_skill_source;
 #[cfg(feature = "retail-12-0-0")]
 pub(crate) mod c_transmog_collection;
 mod c_transmog_latest;
