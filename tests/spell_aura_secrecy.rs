@@ -43,20 +43,18 @@ fn spell_aura_secrecy_reuses_existing_spell_identifier_resolution() {
     .expect("spell names and numeric strings use the modeled resolver");
 }
 
+// WM61 S8 establishes AlwaysSecret precedence when both SpellMisc flags are set.
+// Retail SecretPredicateAPIDocumentation.lua:45 declares GetSpellAuraSecrecy.
 #[test]
-fn spell_aura_secrecy_rejects_conflicting_native_flags_without_guessing_precedence() {
+fn spell_aura_secrecy_prefers_always_secret_for_both_native_flags() {
     let env = WowLuaEnv::new().unwrap();
     env.exec(
         r#"
-        local ok, message = pcall(C_Secrets.GetSpellAuraSecrecy, 1317008)
-        assert(not ok, "dual native flags have no established precedence")
-        assert(string.find(message, "1317008", 1, true))
-        assert(string.find(message, "ambiguous", 1, true))
-        assert(C_Secrets.GetSpellAuraSecrecy(1126) == Enum.SecrecyLevel.NeverSecret,
-            "one ambiguous spell must not block unrelated known spells")
+        assert(C_Secrets.GetSpellAuraSecrecy(1317008) == Enum.SecrecyLevel.AlwaysSecret)
+        assert(C_Secrets.GetSpellAuraSecrecy(1126) == Enum.SecrecyLevel.NeverSecret)
         "#,
     )
-    .expect("ambiguous native data is reported explicitly");
+    .expect("AlwaysSecret takes precedence over NeverSecret");
 }
 
 #[test]
