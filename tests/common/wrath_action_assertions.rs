@@ -200,7 +200,9 @@ pub fn drag_round_trip() {
     seed_slot(&env, 1, 853);
     env.exec(
         r#"
-        assert(ActionButton1Icon:IsShown() and ActionButton1Icon:GetTexture() == 135963)
+        -- Wrath ActionButton.lua:169,246 passes the action texture filename through.
+        assert(GetActionTexture(1) == "ICONS/Spell_Holy_SealOfMight")
+        assert(ActionButton1Icon:IsShown() and ActionButton1Icon:GetTexture() == GetActionTexture(1))
         assert(ActionButton1:GetScript("OnDragStart") and ActionButton1:GetScript("OnReceiveDrag"))
         -- Native client option: unlock action dragging in this isolated fixture.
         LOCK_ACTIONBAR = "0"
@@ -218,7 +220,7 @@ pub fn drag_round_trip() {
         .unwrap();
     env.fire_script_handler(id, "OnReceiveDrag", vec![])
         .unwrap();
-    env.exec("assert(HasAction(1) and GetCursorInfo() == nil and ActionButton1Icon:IsShown() and ActionButton1Icon:GetTexture() == 135963)").unwrap();
+    env.exec("assert(HasAction(1) and GetCursorInfo() == nil and GetActionTexture(1) == 'ICONS/Spell_Holy_SealOfMight' and ActionButton1Icon:IsShown() and ActionButton1Icon:GetTexture() == GetActionTexture(1))").unwrap();
 }
 
 pub fn icon_identity() {
@@ -227,7 +229,7 @@ pub fn icon_identity() {
     env.exec(
         r#"
         assert(GetActionTexture(1) == "ICONS/Spell_Holy_SealOfMight")
-        assert(ActionButton1Icon:IsShown() and ActionButton1Icon:GetTexture() == 135963)
+        assert(ActionButton1Icon:IsShown() and ActionButton1Icon:GetTexture() == GetActionTexture(1))
     "#,
     )
     .unwrap();
@@ -270,7 +272,7 @@ pub fn slot_changed() {
     env.exec("assert(ActionButton1.action == 1 and not ActionButton1Icon:IsShown())")
         .unwrap();
     seed_slot(&env, 1, 853);
-    env.exec("assert(ActionButton1Icon:IsShown() and ActionButton1Icon:GetTexture() == 135963)")
+    env.exec("assert(GetActionTexture(1) == 'ICONS/Spell_Holy_SealOfMight' and ActionButton1Icon:IsShown() and ActionButton1Icon:GetTexture() == GetActionTexture(1))")
         .unwrap();
 }
 
