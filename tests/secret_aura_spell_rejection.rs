@@ -1,8 +1,43 @@
 //! WM61 S8 rejection through the runtime-selected CooldownViewer consumer.
 #![cfg(feature = "retail-12-1-0")]
 
-use crate::common::aura_container_harness::aura;
+use crate::common::aura_container_harness::{aura, load_env};
 use crate::common::blizzard_addon_harness::{blizzard_ui_dir, build_blizzard_addon_closure_env};
+
+#[test]
+fn aura_util_resolves_names_before_restricted_lookup() {
+    let env = load_env();
+    {
+        let mut state = env.state().borrow_mut();
+        let mut secret = aura(343960);
+        secret.name = "Sinstone Bond".into();
+        let mut public = aura(1126);
+        public.name = "Mark of the Wild".into();
+        state.player.buffs = vec![secret, public];
+        state
+            .spell_id_aliases
+            .insert("sinstone bond".into(), 343960);
+        state
+            .spell_id_aliases
+            .insert("mark of the wild".into(), 1126);
+        state.unit_auras_restricted = true;
+    }
+    env.exec(
+        r#"
+        local info = debug.getinfo(AuraUtil.FindAuraByName, 'S')
+        assert(info.what == 'Lua' and info.source:find('AuraUtil.lua', 1, true))
+        local function addon()
+            assert(AuraUtil.FindAuraByName('Sinstone Bond', 'player') == nil)
+            assert(AuraUtil.FindAuraByName('Mark of the Wild', 'player') == 'Mark of the Wild')
+            assert(select('#', C_UnitAuras.GetAuraDataBySpellName('player', 'Sinstone Bond')) == 0,
+                'name rejection must return zero values')
+        end
+        debug.setobjecttaint(addon, 'SecretAuraSpellProbe')
+        addon()
+    "#,
+    )
+    .unwrap();
+}
 
 #[test]
 fn cooldown_viewer_skips_restricted_spell_and_keeps_never_secret_aura() {
