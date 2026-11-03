@@ -320,7 +320,7 @@ fn toy_box_num_learned_displayed() {
 fn toy_box_get_toy_from_index() {
     let env = env();
     let id: i32 = env.eval("return C_ToyBox.GetToyFromIndex(1)").unwrap();
-    assert_eq!(id, 166779, "First toy should be Hearthstone Game Table");
+    assert_eq!(id, 166779, "First toy should be Transmorpher Beacon");
 }
 
 #[test]
