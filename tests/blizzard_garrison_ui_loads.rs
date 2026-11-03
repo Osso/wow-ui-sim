@@ -104,6 +104,27 @@ fn load_full_game_ui_with_lod_deps() -> WowLuaEnv {
 }
 
 #[test]
+fn adventures_board_aura_tooltip_applies_original_spacing() {
+    let env = load_full_game_ui_with_lod_deps();
+    load_addon(&env.loader_env(), &garrison_ui_toc()).expect("load original Garrison UI");
+    env.exec(
+        r#"
+        local socket = CreateFrame("Frame", nil, UIParent)
+        Mixin(socket, AdventuresSocketMixin)
+        socket.activeBuffs, socket.activeDebuffs, socket.activeHealing = {}, {}, {}
+        local aura = CreateFrame("Frame", nil, socket)
+        Mixin(aura, AdventuresBoardAuraContainerMixin)
+        aura:OnEnter()
+        assert(GameSmallHeaderTooltip:IsShown(), "aura hover must show tooltip")
+        assert(GameSmallHeaderTooltip:GetOwner() == aura, "aura hover must own tooltip")
+        assert(GameSmallHeaderTooltip:GetCustomLineSpacing() == 9, "aura hover must set spacing")
+        assert(GameSmallHeaderTooltip:NumLines() > 0, "aura hover must add its title")
+        "#,
+    )
+    .unwrap();
+}
+
+#[test]
 fn blizzard_garrison_ui_resolves_single_toc() {
     let resolved = find_toc_file(&garrison_ui_dir())
         .expect("Blizzard_GarrisonUI directory must contain a discoverable TOC");
