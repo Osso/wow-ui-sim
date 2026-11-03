@@ -17,7 +17,7 @@ fn test_allow_show_with_no_lines_keeps_zero_line_tooltip_renderable() {
     )
     .unwrap();
 
-    update_tooltip_sizes(&env);
+    prepare_tooltip_layout(&env);
 
     let state = env.state().borrow();
     let gt_id = state.widgets.get_id_by_name("GameTooltip").unwrap();
@@ -38,10 +38,10 @@ fn test_allow_show_with_no_lines_keeps_zero_line_tooltip_renderable() {
     );
 }
 
-fn update_tooltip_sizes(env: &WowLuaEnv) {
+fn prepare_tooltip_layout(env: &WowLuaEnv) {
     use wow_ui_sim::render::font::WowFontSystem;
 
     let mut font_sys = WowFontSystem::new();
     let mut state = env.state().borrow_mut();
-    wow_ui_sim::iced_app::tooltip::update_tooltip_sizes(&mut state, &mut font_sys);
+    wow_ui_sim::iced_app::tooltip::prepare_tooltip_layout(&mut state, &mut font_sys);
 }
