@@ -56,11 +56,11 @@ def generate(directory):
             raise ValueError(f"duplicate species creature ID disables index: {creature}")
         species[creature] = row
     creatures = {int(row["ID"]): row for row in rows(directory, "Creature")}
-    displays = defaultdict(set)
+    displays = defaultdict(list)
     for row in rows(directory, "CreatureXDisplayInfo"):
         display = int(row["CreatureDisplayInfoID"])
         if display:
-            displays[int(row["CreatureID"])].add(display)
+            displays[int(row["CreatureID"])].append((int(row["OrderIndex"]), display))
     result = []
     unresolved = []
     for item, spell in sorted(selected.items()):
@@ -78,7 +78,9 @@ def generate(directory):
         if pet is None:
             continue
         creature = creatures.get(creature_id)
-        choices = sorted(displays[creature_id]) if creature else []
+        candidates = displays[creature_id] if creature else []
+        first_order = min((order for order, _ in candidates), default=None)
+        choices = sorted({display for order, display in candidates if order == first_order})
         if len(choices) > 1:
             unresolved.append(item)
         flags = int(pet["Flags"])
@@ -111,13 +113,13 @@ def main():
     output = (json.dumps(result, ensure_ascii=False, separators=(",", ":")) + "\n").encode()
     args.output.write_bytes(output)
     provenance = {
-        "PROVENANCE": "Wago DB2 CSV, build 12.1.5.70391, enUS; WM78/WM78b selection",
+        "PROVENANCE": "Wago DB2 CSV, build 12.1.5.70391, enUS; WM78/WM78b/WM78c selection; SpellName presence EMULATED", 
         "generator": "python3 tools/generate_pet_item_catalog.py <csv_dir> <output> <provenance>",
         "inputs": {f"{table}.csv": hashlib.sha256((args.csv_dir / f"{table}.csv").read_bytes()).hexdigest() for table in TABLES},
         "output_sha256": hashlib.sha256(output).hexdigest(),
         "records": len(result),
-        "unresolved_multiple_displays": unresolved,
-        "notes": ["SpellName IDs approximate spell presence; native presence equivalence is unverified.", "Multiple display choices are unordered; provider selection is unresolved."],
+        "unresolved_equal_order_displays": unresolved,
+        "notes": ["EMULATED: SpellName IDs approximate spell presence; native presence equivalence is unverified.", "Equal lowest OrderIndex with distinct displays has no known winner."],
     }
     args.provenance.write_text(json.dumps(provenance, indent=2) + "\n", encoding="utf-8")
 
