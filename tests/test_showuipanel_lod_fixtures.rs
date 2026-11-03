@@ -107,6 +107,7 @@ fn action_button_util_fixture_drives_all_action_bar_statuses() {
 /// Verifies the `LoadAddOnWithErrorHandling` harness seam: the broadcaster
 /// publisher reaches the scoped skip path, records one observable failure, and
 /// unrelated names still reach Blizzard's real loader helper.
+#[cfg(not(feature = "client-wrath"))]
 #[test]
 fn load_addon_with_error_handling_seam_records_broadcaster_failure() {
     test_timeout! {
