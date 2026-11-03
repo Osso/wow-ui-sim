@@ -91,7 +91,22 @@ pub fn setup_full_env() -> WowLuaEnv {
     if wow_ui_sim::client_profile::ACTIVE == wow_ui_sim::client_profile::ClientProfile::Wrath {
         let env = WowLuaEnv::new().unwrap();
         env.set_screen_size(1024.0, 768.0);
+        env.set_screen_mode(wow_ui_sim::screen::ScreenKind::Game);
+        let ui = wow_ui_sim::paths::default_blizzard_ui_addons_path().unwrap();
+        env.state().borrow_mut().addon_base_paths = vec![ui.clone()];
         crate::common::load_profile_framexml(&env);
+        for addon in wow_ui_sim::loader::discover_blizzard_startup_addons_for_screen(
+            &ui,
+            wow_ui_sim::screen::ScreenKind::Game,
+        ) {
+            wow_ui_sim::loader::load_startup_addon(
+                &env.loader_env(),
+                &addon.toc_path,
+                addon.kind,
+                None,
+            )
+            .expect("original Wrath startup addon should load");
+        }
         env.apply_post_load_workarounds();
         wow_ui_sim::startup::fire_startup_events(&env);
         return env;
