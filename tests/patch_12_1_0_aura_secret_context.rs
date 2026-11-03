@@ -1,6 +1,7 @@
 //! 12.1.0 aura-secret context: while auras are secret, addon (tainted) callers
 //! cannot reach aura data by index, slot or instance ID, spell-keyed queries
-//! stay callable, and AuraData and UNIT_AURA payloads are secret.
+//! stay callable. WM61 S3 field publication replaces the old whole-table
+//! AuraData assumption; UNIT_AURA payload handling remains separate.
 #![cfg(feature = "retail-12-1-0")]
 
 use wow_ui_sim::lua_api::WowLuaEnv;
@@ -135,7 +136,8 @@ fn spell_keyed_queries_stay_callable_and_never_secret_spells_stay_plain() {
             assert(C_UnitAuras.GetAuraDataBySpellName('player', 'Hidden Hex') == nil)
         end)
         local hex = C_UnitAuras.GetUnitAuraBySpellID('player', 9072)
-        assert(issecretvalue(hex) and hex.auraInstanceID == 72, 'secure caller gets secret data')
+        assert(not issecretvalue(hex) and issecretvalue(hex.auraInstanceID))
+        assert(secretunwrap(hex.auraInstanceID) == 72, 'secure caller gets secret data')
         assert(not issecretvalue(C_UnitAuras.GetPlayerAuraBySpellID(1126)))
         "#,
     )
@@ -143,7 +145,9 @@ fn spell_keyed_queries_stay_callable_and_never_secret_spells_stay_plain() {
 }
 
 #[test]
-fn aura_data_is_fully_secret_while_auras_are_secret() {
+// WM61 S3 field granularity and WM61 S8 SpellMisc NeverSecret precedence.
+// Retail UnitAuraDocumentation.lua:190,227,493 declares the queried accessors.
+fn aura_data_marks_fields_while_auras_are_secret() {
     let env = seeded_env();
     set_restricted(&env, true);
     env.exec(
@@ -154,14 +158,15 @@ fn aura_data_is_fully_secret_while_auras_are_secret() {
         local list = C_UnitAuras.GetUnitAuras('player', 'HELPFUL')
         assert(not issecretvalue(list) and #list == 1)
         for _, data in ipairs({ byInstance, bySlot, byIndex, list[1] }) do
-            assert(issecretvalue(data), 'AuraData must be secret')
+            assert(not issecretvalue(data), 'outer AuraData value is plain')
         end
-        assert(byInstance.name == 'Wild Mark' and bySlot.spellId == 9072)
-        assert(byIndex.auraInstanceID == 72 and list[1].auraInstanceID == 71)
-        Held = byInstance
+        assert(byInstance.name == 'Wild Mark' and list[1].auraInstanceID == 71)
+        assert(issecretvalue(bySlot.spellId) and secretunwrap(bySlot.spellId) == 9072)
+        assert(issecretvalue(byIndex.auraInstanceID) and secretunwrap(byIndex.auraInstanceID) == 72)
+        Held = bySlot
         AddonProbe(function()
-            assert(not pcall(function() return Held.name end), 'addon cannot read secret AuraData')
-            assert(not canaccessvalue(Held))
+            assert(issecretvalue(Held.name), 'secret field remains marked for addon')
+            assert(not canaccessvalue(Held.name))
         end)
         "#,
     )
@@ -171,7 +176,7 @@ fn aura_data_is_fully_secret_while_auras_are_secret() {
         r#"
         local data = C_UnitAuras.GetAuraDataByAuraInstanceID('player', 71)
         assert(not issecretvalue(data) and data.name == 'Wild Mark')
-        assert(issecretvalue(Held), 'earlier secret data is not declassified')
+        assert(issecretvalue(Held.name), 'earlier secret field is not declassified')
         "#,
     )
     .unwrap();
