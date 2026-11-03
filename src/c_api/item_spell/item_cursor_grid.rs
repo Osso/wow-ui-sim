@@ -7,14 +7,14 @@
 //! Its enchantment route does not apply: cursor items carry no enchantments in
 //! this model. Gap: the item-action sub-branch with native flags.
 
-use super::item_effects::use_spell_for_item;
+use super::item_effects::selected_use_spell;
 use sim_data::item_cursor_grid::{CLASS_17_ITEMS, INVENTORY_TYPED_ITEM_RANGES};
 
 pub(crate) fn owned_item_shows_grid(item: u32) -> bool {
     if CLASS_17_ITEMS.binary_search(&item).is_ok() {
         return false;
     }
-    use_spell_for_item(item).is_some() || has_inventory_type(item)
+    selected_use_spell(item).is_some() || has_inventory_type(item)
 }
 
 fn has_inventory_type(item: u32) -> bool {

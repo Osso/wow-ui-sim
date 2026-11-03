@@ -107,6 +107,7 @@ pub(crate) fn parse_item_guid(guid: &str) -> Option<(i32, i32, u32)> {
 
 pub(super) fn register_c_item(state: &mut LuaState) -> LuaResult<()> {
     let table_ref = ensure_namespace(state, "C_Item")?;
+    table_set_rust_fn_static(state, table_ref, "GetItemSpell", super::get_item_spell)?;
     register_c_item_existence_queries(state, table_ref)?;
     register_c_item_metadata_queries(state, table_ref)?;
     register_c_item_inventory_queries(state, table_ref)?;
@@ -234,12 +235,6 @@ fn register_c_item_inventory_queries(
             table_ref,
             "GetItemCreationContext",
             c_item_creation_context,
-        )?;
-        table_set_rust_fn_static(
-            state,
-            table_ref,
-            "GetItemSpell",
-            super::item_effects::get_item_spell,
         )?;
         table_set_rust_fn_static(
             state,

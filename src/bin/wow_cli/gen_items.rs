@@ -7,13 +7,44 @@
 //!
 //! Generates: crates/sim-data/data/items.rs
 
+mod item_effects;
+
 use super::csv_util::{escape_str, parse_csv_line, read_csv_records, wow_data_dir};
+use clap::Args;
 use std::collections::{BTreeMap, BTreeSet, HashMap, HashSet};
 use std::fs::File;
 use std::io::{BufReader, Write};
-use std::path::Path;
+use std::path::{Path, PathBuf};
 
-pub fn run() -> Result<(), Box<dyn std::error::Error>> {
+#[derive(Args, Debug, Default)]
+pub struct Options {
+    /// Generate only the selected profile's full item-effect catalog and provenance.
+    #[arg(long, value_enum)]
+    profile: Option<item_effects::Profile>,
+    /// Read the profile CSV exports from this directory instead of downloading.
+    #[arg(long, requires = "profile")]
+    csv_dir: Option<PathBuf>,
+    /// Select a data build; required when the profile has no pinned build.
+    #[arg(long, requires = "profile")]
+    build: Option<String>,
+    /// Read the pinned historical Retail mapping from this file instead of downloading.
+    #[arg(long, requires = "profile")]
+    retail_baseline: Option<PathBuf>,
+}
+
+pub fn run(options: Options) -> Result<(), Box<dyn std::error::Error>> {
+    if let Some(profile) = options.profile {
+        return item_effects::run(
+            profile,
+            options.csv_dir.as_deref(),
+            options.build.as_deref(),
+            options.retail_baseline.as_deref(),
+        );
+    }
+    run_shared()
+}
+
+fn run_shared() -> Result<(), Box<dyn std::error::Error>> {
     let wow_data = wow_data_dir();
     let csv_path = wow_data.join("ItemSparse.csv");
     println!("Loading ItemSparse from {}...", csv_path.display());
@@ -39,7 +70,6 @@ pub fn run() -> Result<(), Box<dyn std::error::Error>> {
     write_tests(&mut out)?;
     write_item_categories(&wow_data, &required_ids)?;
     write_gem_catalog(&wow_data)?;
-    write_item_effects(&wow_data)?;
     write_item_children(&wow_data)?;
     write_item_enchant_spells(&wow_data)?;
     write_item_spell_metadata(&wow_data)?;
@@ -439,73 +469,6 @@ fn reject_fallback_cycles(fallbacks: &[(i32, i32)]) -> Result<(), Box<dyn std::e
             return Err(format!("Difficulty {start} fallback chain does not terminate").into());
         }
     }
-    Ok(())
-}
-
-fn write_item_effects(wow_data: &Path) -> Result<(), Box<dyn std::error::Error>> {
-    let records = open_records(&wow_data.join("ItemEffect.csv"))?;
-    let mut iter = records.iter();
-    let idx = header_index(iter.next().ok_or("empty ItemEffect.csv")?);
-    let mut effects = HashMap::new();
-    for record in iter {
-        let fields = parse_csv_line(record);
-        let id = field(&fields, &idx, "ID").parse::<u32>()?;
-        let spell = field(&fields, &idx, "SpellID").parse::<u32>()?;
-        let trigger = field(&fields, &idx, "TriggerType").parse::<i32>()?;
-        let slot = field(&fields, &idx, "LegacySlotIndex").parse::<i32>()?;
-        let spec = field(&fields, &idx, "ChrSpecializationID").parse::<u32>()?;
-        let condition = field(&fields, &idx, "PlayerConditionID").parse::<u32>()?;
-        effects.insert(id, (spell, trigger, slot, spec, condition));
-    }
-    let records = open_records(&wow_data.join("ItemXItemEffect.csv"))?;
-    let mut iter = records.iter();
-    let idx = header_index(iter.next().ok_or("empty ItemXItemEffect.csv")?);
-    let mut rows = Vec::new();
-    for record in iter {
-        let fields = parse_csv_line(record);
-        let item = field(&fields, &idx, "ItemID").parse::<u32>()?;
-        let effect = field(&fields, &idx, "ItemEffectID").parse::<u32>()?;
-        let &(spell, trigger, slot, spec, condition) = effects
-            .get(&effect)
-            .ok_or_else(|| format!("missing ItemEffect {effect} for item {item}"))?;
-        rows.push((item, effect, spell, trigger, slot, spec, condition));
-    }
-    rows.sort_unstable();
-    let spell_ids: HashSet<u32> = rows.iter().map(|row| row.2).collect();
-    let mut out = File::create("crates/sim-data/data/item_effects.rs")?;
-    writeln!(
-        out,
-        "//! Generated from wago.tools DB2 CSV exports, build 12.1.5.70391 (enUS)."
-    )?;
-    writeln!(out, "//! Regenerate with `wow-cli generate items`.")?;
-    writeln!(
-        out,
-        "pub static ITEM_EFFECTS: &[(u32, u32, u32, i32, i32, u32, u32)] = &["
-    )?;
-    for (item, effect, spell, trigger, slot, spec, condition) in rows {
-        writeln!(
-            out,
-            "    ({item}, {effect}, {spell}, {trigger}, {slot}, {spec}, {condition}),"
-        )?;
-    }
-    writeln!(out, "];\n")?;
-    let records = open_records(&wow_data.join("SpellName.csv"))?;
-    let mut iter = records.iter();
-    let idx = header_index(iter.next().ok_or("empty SpellName.csv")?);
-    let mut names = Vec::new();
-    for record in iter {
-        let fields = parse_csv_line(record);
-        let id = field(&fields, &idx, "ID").parse::<u32>()?;
-        if spell_ids.contains(&id) {
-            names.push((id, escape_str(field(&fields, &idx, "Name_lang"))));
-        }
-    }
-    names.sort_unstable_by_key(|row| row.0);
-    writeln!(out, "pub static ITEM_SPELL_NAMES: &[(u32, &str)] = &[")?;
-    for (id, name) in names {
-        writeln!(out, "    ({id}, \"{name}\"),")?;
-    }
-    writeln!(out, "];")?;
     Ok(())
 }
 
