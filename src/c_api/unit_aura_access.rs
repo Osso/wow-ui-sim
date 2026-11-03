@@ -3,8 +3,7 @@
 //!
 //! - `RequiresUnitAuraAccess` APIs (index, slot and instance-ID access) raise a
 //!   Lua error for tainted callers while auras are secret.
-//! - AuraData returned while auras are secret is a secret-wrapped table: secure
-//!   code indexes it as usual, tainted code cannot read it.
+//! - Restricted AuraData uses the bounded WM61 S3 per-field publication policy.
 //! - Spell-keyed (`RequiresNonSecretAura`) APIs stay callable; auras flagged
 //!   never-secret by `C_Secrets.GetSpellAuraSecrecy` return plain data.
 //! - `UNIT_AURA` update payloads are secret-wrapped while auras are secret.
@@ -13,7 +12,7 @@
 //!   PLAYER_ENTERING_WORLD before login) are forbidden to tainted callers only
 //!   while auras are secret; they become accessible again when auras do not.
 
-use crate::lua_api::methods::borrow_state;
+use crate::lua_api::methods::{borrow_state, table_get, table_set};
 use crate::lua_api::state::SimState;
 use crate::widget::Frame;
 use rilua::table_security::wrap_secret;
@@ -69,13 +68,45 @@ pub(crate) fn require_unit_aura_access(state: &LuaState, api_name: &str) -> LuaR
     Ok(())
 }
 
-/// AuraData is fully secret while auras are secret. Only secure callers reach
-/// this under restriction; `wrap_secret` rejects any other caller.
+/// Apply WM61 S3 field publication while preserving the outer table value.
 pub(crate) fn finish_aura_data(state: &mut LuaState, aura_data: Val) -> LuaResult<Val> {
-    if auras_restricted(state)? {
-        return wrap_secret(state, aura_data);
+    if !auras_restricted(state)? || matches!(aura_data, Val::Nil) {
+        return Ok(aura_data);
     }
+    if let Val::Num(spell_id) = table_get(state, aura_data, "spellId")
+        && !spell_keyed_aura_is_secret(state, spell_id as i32)?
+    {
+        return Ok(aura_data);
+    }
+    state.push(aura_data);
+    let result = mark_aura_fields(state, aura_data);
+    state.pop();
+    result?;
     Ok(aura_data)
+}
+
+fn mark_aura_fields(state: &mut LuaState, aura_data: Val) -> LuaResult<()> {
+    for field in [
+        "auraInstanceID",
+        "spellId",
+        "icon",
+        "applications",
+        "name",
+        "duration",
+        "expirationTime",
+        "sourceUnit",
+        "dispelName",
+        "isHelpful",
+        "isHarmful",
+        "points",
+    ] {
+        let value = table_get(state, aura_data, field);
+        if !matches!(value, Val::Nil) {
+            let secret = wrap_secret(state, value)?;
+            table_set(state, aura_data, field, secret);
+        }
+    }
+    Ok(())
 }
 
 /// `RequiresNonSecretAura`: never-secret spells stay plain for every caller.
@@ -92,7 +123,7 @@ pub(crate) fn finish_spell_keyed_aura_data(
     if !rilua::api::state_is_secure(state) {
         return Ok(Val::Nil);
     }
-    wrap_secret(state, aura_data)
+    finish_aura_data(state, aura_data)
 }
 
 /// Shared by spell-keyed outputs and the prospective C_Secrets query.
@@ -115,5 +146,8 @@ fn is_never_secret_aura(_spell_id: i32) -> LuaResult<bool> {
 /// `UNIT_AURA` update info while auras are secret. INFERRED: the unit token
 /// stays public because it routes `RegisterUnitEvent` delivery.
 pub(crate) fn unit_aura_event_payload(state: &mut LuaState, update_info: Val) -> LuaResult<Val> {
-    finish_aura_data(state, update_info)
+    if auras_restricted(state)? {
+        return wrap_secret(state, update_info);
+    }
+    Ok(update_info)
 }
