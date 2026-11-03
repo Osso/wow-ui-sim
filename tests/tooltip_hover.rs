@@ -174,6 +174,22 @@ fn api_padding_synchronously_lays_out_pending_tooltip_lines() {
 }
 
 #[test]
+fn api_ownerless_padding_does_not_size_content() {
+    let env = setup_full_env();
+    env.exec(
+        r#"
+        GameTooltip:Hide()
+        local width, height = GameTooltip:GetWidth(), GameTooltip:GetHeight()
+        GameTooltip:AddLine("Ownerless text that must not trigger content sizing")
+        GameTooltip:SetPadding(1, 2)
+        assert(GameTooltip:GetWidth() == width, "ownerless SetPadding resized width")
+        assert(GameTooltip:GetHeight() == height, "ownerless SetPadding resized height")
+        "#,
+    )
+    .unwrap();
+}
+
+#[test]
 fn blizzard_money_helper_defers_minimum_width_layout() {
     let env = setup_full_env();
     env.exec(
