@@ -24,6 +24,7 @@ fn install_button(env: &WowLuaEnv, name: &str, slot: u32) {
     .expect("create button");
 }
 
+#[cfg(not(feature = "client-wrath"))]
 #[test]
 fn try_use_action_button_fires_cast_when_checking_from_down() {
     let env = env();
@@ -56,6 +57,7 @@ fn try_use_action_button_skips_cast_when_not_from_down() {
     assert!(cast_name.is_none(), "release should not start a cast");
 }
 
+#[cfg(not(feature = "client-wrath"))]
 #[test]
 fn action_button_down_pushes_state_and_fires_cast() {
     let env = env();
@@ -125,6 +127,7 @@ fn action_button_up_only_acts_when_currently_pushed() {
     assert_eq!(state_after, "NORMAL", "up on NORMAL stays NORMAL");
 }
 
+#[cfg(not(feature = "client-wrath"))]
 #[test]
 fn multi_action_button_down_dispatches_via_action_buttons_table() {
     let env = env();
@@ -166,6 +169,7 @@ fn multi_action_button_up_releases_pushed_state() {
     assert_eq!(state_after, "NORMAL");
 }
 
+#[cfg(not(feature = "client-wrath"))]
 #[test]
 fn extra_action_button_key_down_fires_cast() {
     let env = env();

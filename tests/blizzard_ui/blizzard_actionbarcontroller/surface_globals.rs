@@ -33,6 +33,7 @@ fn action_bar_controller_surface_globals_are_functions() {
 }
 }
 
+#[cfg(not(feature = "client-wrath"))]
 #[test]
 fn action_bar_controller_onload_initializes_current_state_to_main() {
     with_blizzard_addon_smoke_shape(&[ROOT], &[], |env, _loaded| {

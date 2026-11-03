@@ -8,6 +8,7 @@ mod tooltip_hover_helpers;
 
 use tooltip_full_env_helpers::setup_full_env;
 use tooltip_hover_helpers::{open_character_panel, refresh_buff_frame};
+#[cfg(not(feature = "client-wrath"))]
 use wow_ui_sim::lua_api::WowLuaEnv;
 
 #[cfg(any(feature = "client-retail", feature = "client-ptr"))]
@@ -46,6 +47,7 @@ fn ringed_frame_tooltip_applies_native_outer_and_explicit_padding() {
     .unwrap();
 }
 
+#[cfg(not(feature = "client-wrath"))]
 #[test]
 fn action_button_hover_preserves_spell_identity_for_tooltip_postcall() {
     let env = setup_full_env();
@@ -323,6 +325,7 @@ fn blizzard_line_processing_does_not_resize_on_render_before_show() {
     .unwrap();
 }
 
+#[cfg(not(feature = "client-wrath"))]
 #[test]
 fn test_tooltip_mixins_load_in_full_env() {
     let env = setup_full_env();
@@ -342,6 +345,7 @@ fn test_tooltip_mixins_load_in_full_env() {
     assert_eq!(tooltip_onload_type, "function");
 }
 
+#[cfg(not(feature = "client-wrath"))]
 #[test]
 fn test_game_tooltip_process_info_with_constructed_tooltip_info_populates_lines() {
     let env = setup_full_env();
@@ -497,6 +501,16 @@ fn test_buff_icon_hover_shows_aura_tooltip() {
 
     let expected_name: String = env
         .eval(
+            if wow_ui_sim::client_profile::ACTIVE == wow_ui_sim::client_profile::ClientProfile::Wrath {
+                // Wrath FrameXML/BuffFrame.xml:26-30 binds the original aura button script.
+                r#"
+                local button = assert(BuffButton1)
+                assert(button:IsShown(), "first Wrath buff button must be shown")
+                local name = assert(UnitBuff("player", button:GetID()))
+                assert(button:GetScript("OnEnter"))(button)
+                return name
+                "#
+            } else {
             r#"
             for _, button in ipairs(BuffFrame.auraFrames) do
                 if button:IsShown() and button.buttonInfo and button.buttonInfo.index then
@@ -505,7 +519,8 @@ fn test_buff_icon_hover_shows_aura_tooltip() {
                 end
             end
             error("No visible buff icon with tooltip data")
-            "#,
+            "#
+            },
         )
         .unwrap();
 
@@ -531,6 +546,7 @@ fn test_buff_icon_hover_shows_aura_tooltip() {
     assert_eq!(td.lines[0].left_text, expected_name);
 }
 
+#[cfg(not(feature = "client-wrath"))]
 #[test]
 fn test_world_loot_object_tooltip_shows_world_loot_data() {
     let env = setup_full_env();
@@ -576,6 +592,7 @@ fn test_world_loot_object_tooltip_shows_world_loot_data() {
     assert!(!td.lines[0].left_text.is_empty());
 }
 
+#[cfg(not(feature = "client-wrath"))]
 #[test]
 fn test_tooltip_comparison_manager_get_comparison_item_data_uses_guid_lookup() {
     let env = setup_full_env();
@@ -606,6 +623,7 @@ fn test_tooltip_comparison_manager_get_comparison_item_data_uses_guid_lookup() {
     );
 }
 
+#[cfg(not(feature = "client-wrath"))]
 #[test]
 fn test_tooltip_data_handler_set_owned_item_by_id_uses_owned_item_getter() {
     let env = setup_full_env();
@@ -638,6 +656,7 @@ fn test_tooltip_data_handler_set_owned_item_by_id_uses_owned_item_getter() {
     );
 }
 
+#[cfg(not(feature = "client-wrath"))]
 #[test]
 fn test_tooltip_data_handler_set_inventory_item_uses_inventory_getter() {
     let env = setup_full_env();
@@ -650,6 +669,7 @@ fn test_tooltip_data_handler_set_inventory_item_uses_inventory_getter() {
     );
 }
 
+#[cfg(not(feature = "client-wrath"))]
 fn inventory_item_tooltip_uses_inventory_getter(env: &WowLuaEnv) -> bool {
     env.eval(
         r#"
@@ -676,6 +696,7 @@ fn inventory_item_tooltip_uses_inventory_getter(env: &WowLuaEnv) -> bool {
     .unwrap()
 }
 
+#[cfg(not(feature = "client-wrath"))]
 #[test]
 fn test_tooltip_data_handler_set_recipe_result_item_uses_recipe_getters() {
     let env = setup_full_env();
@@ -729,6 +750,7 @@ fn test_tooltip_data_handler_set_recipe_result_item_uses_recipe_getters() {
     );
 }
 
+#[cfg(not(feature = "client-wrath"))]
 #[test]
 fn test_tooltip_data_handler_set_minimap_mouseover_uses_minimap_getter() {
     let env = setup_full_env();
