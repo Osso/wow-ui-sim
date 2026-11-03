@@ -518,8 +518,9 @@ fn test_minimap_get_view_radius() {
         )
         .unwrap();
     assert!(radius > 0.0);
-    assert_eq!(tracking_count, 0);
-    assert!(info_is_nil);
+    let tracks_trivial_quests = cfg!(feature = "client-wowforever");
+    assert_eq!(tracking_count, i32::from(tracks_trivial_quests));
+    assert_eq!(info_is_nil, !tracks_trivial_quests);
     assert_eq!(filter_id, 0);
     assert_eq!(spell_id, 0);
 }

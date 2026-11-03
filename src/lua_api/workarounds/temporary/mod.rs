@@ -164,6 +164,7 @@ pub(crate) mod prototype_dialog_state;
 pub(crate) mod proxy_object_factories;
 pub(crate) mod ptr_bank_default;
 pub(crate) mod pvp_talent_defaults;
+pub(crate) mod quest_campaign_header_default;
 pub(crate) mod quest_log_mixin;
 pub(crate) mod quest_objective_defaults;
 pub(crate) mod quest_progress_requirements;

@@ -64,6 +64,12 @@ consumers. The login follow-up covers the MSAA graphics capability.
 [Game startup](investigations/forever-addon-startup-compatibility.md),
 [login graphics](investigations/forever-login-startup.md#msaa-capability)
 
+## [2026-11-03] investigation | Forever 70707 World Map
+
+The World Map investigation describes the quest-panel queries, zoom
+initialization, and Trivial Quests setting.
+[World map](investigations/forever-addon-startup-compatibility.md#world-map-after-startup)
+
 ## [2026-10-31] architecture | Startup class and race
 
 [Startup player settings](../specs/cli-class-spec.md#initial-class-race-and-specialization)

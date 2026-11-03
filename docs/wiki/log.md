@@ -3325,3 +3325,9 @@ capability required during login settings registration.
 Documented the clamp panic reproduced with a flipped mask and the
 renderer change that preserves the flipped orientation.
 [Mask Texture](investigations/mask-texture.md#flipped-mask-coordinates)
+## 2026-11-03 — Forever 70707 World Map
+
+Documented the profile registrations and Trivial Quests setting used when the
+World Map opens. The quest panel refresh must complete before the map can
+initialize zoom.
+[World map](investigations/forever-addon-startup-compatibility.md#world-map-after-startup)

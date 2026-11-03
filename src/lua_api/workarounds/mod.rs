@@ -6,6 +6,7 @@ mod runtime_surfaces;
 mod temporary;
 pub(crate) use temporary::lfg_encounters::get_search_result_encounter_info;
 pub(crate) use temporary::minimap_tracking_defaults::RETAIL_TRACKING_DEFAULT_MASK;
+pub(crate) use temporary::quest_campaign_header_default::update_campaign_headers;
 
 #[cfg(feature = "client-wrath")]
 pub(crate) use temporary::wrath_attack_action;

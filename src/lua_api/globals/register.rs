@@ -236,7 +236,6 @@ fn register_core_surfaces(lua: &mut rilua::Lua) -> crate::Result<()> {
     super::missing_surface::register_all(lua)?;
     crate::c_api::encoding_util::register(lua.state_mut())?;
     super::quest_surface::register_all(lua)?;
-    #[cfg(feature = "retail-12-0-5")]
     crate::c_api::c_quest_info_system::register(lua.state_mut())?;
     crate::c_api::quest_reward_currencies::register(lua.state_mut())?;
     crate::c_api::quest_reward_spells::register(lua.state_mut())?;

@@ -266,6 +266,7 @@ pub struct SimState {
     pub model_scenes: HashMap<i64, Vec<String>>,
     pub active_player_interactions: HashSet<i32>,
     pub outdoor_pvp_world_state: crate::c_api::c_pvp::OutdoorPvpWorldState,
+    pub track_trivial_quests: bool,
     pub battleground_enlistment: crate::c_api::c_pvp::BattlegroundEnlistmentInputs,
     pub pvp_reward_caches: crate::c_api::c_pvp::reward_cache::PvpRewardCaches,
     #[cfg(feature = "retail-12-0-5")]
@@ -701,7 +702,6 @@ pub struct SimState {
     #[cfg(feature = "retail-12-0-5")]
     pub quest_favor: crate::c_api::c_quest_info_system::QuestFavorState,
     /// Host-flagged quests whose expiration warning uses the critical threshold.
-    #[cfg(feature = "retail-12-0-7")]
     pub quest_short_expiration_warnings: HashSet<u32>,
     pub abandon_quest_id: Option<u32>,
     /// Unique tracked IDs in insertion order, shared by legacy tracking globals.

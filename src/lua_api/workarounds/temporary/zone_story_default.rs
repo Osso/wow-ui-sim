@@ -3,7 +3,10 @@
 use crate::client_profile::{ACTIVE, ClientProfile};
 
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
-    if matches!(ACTIVE, ClientProfile::Retail | ClientProfile::Ptr) {
+    if matches!(
+        ACTIVE,
+        ClientProfile::Retail | ClientProfile::Ptr | ClientProfile::WowForever
+    ) {
         lua.exec(
             r#"
             -- User-approved simulator default, not evidence of native behavior.

@@ -3,10 +3,11 @@
 use crate::c_api::helpers::{ensure_namespace, global_val};
 use crate::client_profile::{ACTIVE, ClientProfile};
 use crate::lua_api::methods::{borrow_state, table_get};
-use crate::lua_bridge::{FromStack, table_set_rust_fn_static};
+use crate::lua_bridge::{stack_val, table_set_rust_fn_static, val_to_i32};
 use rilua::{LuaResult, Val, vm::state::LuaState};
 
-// User-approved for Retail/PTR; values are Wrath 12340 native data, not 12.x evidence.
+// Wrath 12340 data used by the simulator's shared quest difficulty model.
+// The thresholds have not been measured in Retail, PTR, or Forever.
 const QUEST_GREEN_RANGES: [u8; 20] = [4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8];
 
 pub(crate) fn quest_green_range(level: i32) -> u8 {
@@ -15,7 +16,10 @@ pub(crate) fn quest_green_range(level: i32) -> u8 {
 }
 
 pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
-    if matches!(ACTIVE, ClientProfile::Retail | ClientProfile::Ptr) {
+    if matches!(
+        ACTIVE,
+        ClientProfile::Retail | ClientProfile::Ptr | ClientProfile::WowForever
+    ) {
         let namespace = ensure_namespace(state, "C_PlayerInfo")?;
         table_set_rust_fn_static(
             state,
@@ -28,7 +32,8 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
 }
 
 fn quest_difficulty(state: &mut LuaState) -> LuaResult<u32> {
-    let quest_id = i32::from_stack(state, 1)?;
+    let value = rilua::table_security::unwrap_secret(state, stack_val(state, 1))?;
+    let quest_id = val_to_i32(value, 1)?;
     let (quest_level, player_level) = {
         let sim = borrow_state(state)?;
         let level = sim
@@ -42,7 +47,7 @@ fn quest_difficulty(state: &mut LuaState) -> LuaResult<u32> {
             })?;
         (level, sim.player.level)
     };
-    // User-approved, not native evidence. DifficultyUtil.lua:33-45 maps these bands to colors.
+    // DifficultyUtil.lua maps these level bands to display colors.
     let diff = i64::from(quest_level) - i64::from(player_level);
     let name = if diff >= 5 {
         "Impossible"

@@ -26,6 +26,29 @@ frame and exposed missing queries and duplicate secure state dispatch.
   channel membership, and EllesmereUIRaidFrames needed Blizzard's encounter
   wrapper to read live state.
 
+### World map after startup
+
+On Forever 70707, the World Map key binding reached Blizzard's map and quest
+panels. Those panels called queries registered for Retail or Retail and PTR.
+The missing zone-story query interrupted `WorldMapMixin:OnShow` before map
+selection and zoom reset, leaving `targetScale` nil for `IsZoomingOut()`.
+
+Forever now exposes bounty, threat, and outdoor PvP queries over existing
+simulator state. The map and Settings share an in-memory Trivial Quests value
+that defaults to off. Campaign-header updates and zone-story queries use empty
+results while their backing data is unavailable.
+
+Quest titles read the supplied elite tag and use the existing quest difficulty
+model. The model's level bands for Forever are inferred. Party quest counts
+use supplied party quest membership, and world quest pins use the supplied
+short-expiration flag to select a countdown threshold.
+
+The map regression uses the `M` binding and checks map selection, zoom, and
+Lua errors across 60 updates. A Windows 70707 capture used `ToggleWorldMap()`
+with populated session data. It selected map 2248, reported a positive zoom
+target, and showed the quest list and pins. The capture reported terrain
+texture lookup failures.
+
 ### Verification
 
 The focused tests vary simulator state and exercise selected consumers.
@@ -36,6 +59,9 @@ because Blizzard can report the same error twice. [Runtime inputs](../../runtime
 
 ## Sources
 
+- [Map open and update test](../../../tests/blizzard_map_canvas_loads.rs),
+  [map filter and PvP tests](../../../tests/blizzard_world_map_loads.rs), and
+  [quest title test](../../../tests/wowforever_quest_difficulty.rs).
 - [Name constants](../../../src/c_api/forever_finite_constants.rs) and
   [caster GUID tests](../../../tests/forever_aura_caster_guid.rs).
 - [Pet-order tests](../../../tests/forever_pet_move_order.rs),
