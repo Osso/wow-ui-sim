@@ -319,6 +319,7 @@ These aliases build both `wow-sim` and `wow-cli` with `--release --no-default-fe
 
 ### CLI Arguments
 
+- `--window-size WIDTHxHEIGHT` - Set the initial GUI client area and fixed game display in physical pixels. See [window size](docs/specs/window-size.md).
 - `--exec-lua "code"` - Execute Lua code after startup events. Works in all modes: GUI (after first frame render), screenshot, and dump-tree. Prefix with `@` to load from file (e.g., `--exec-lua @/tmp/debug.lua`)
 - `--class <NAME|N>` / `--race <NAME|N>` / `--spec <NAME|N>` - Seed class, race and specialization before addon loading, then reapply them after startup, before `--exec-lua`. Names are case-insensitive; numeric indices are one-based. Without `--class`, `--spec` resolves against the class at that point. Saved GUI class/race preferences apply only to GUI launches. See [spec](docs/specs/cli-class-spec.md). Wrath, Era, and Anniversary reject `--spec`. These flags fire `PLAYER_SPECIALIZATION_CHANGED` with `player`; they do not repeat the world-entry lifecycle event.
 - `--no-addons` / `--no-saved-vars` - Same as environment variables below

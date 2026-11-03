@@ -139,6 +139,7 @@ Host noise: this machine mixes Zen 5 (CPUs 0-3, 12-15, 5.16 GHz) and Zen 5c (3.2
 
 | Flag | Effect |
 |------|--------|
+| `--window-size WIDTHxHEIGHT` | Set the initial GUI client area and fixed game display in physical pixels; see the [window-size contract](../../specs/window-size.md) |
 | `--no-addons` | Skip third-party addons |
 | `--addons-path DIR` | Exclusive third-party root; repeat for multiple roots |
 | `--no-saved-vars` | Skip WTF SavedVariables (~18% of load time) |
