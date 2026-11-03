@@ -8,7 +8,7 @@ Retail 12.1.5 `C_PetJournal.GetPetInfoByItemID` identifies a pet learned by an i
 - [ ] Return no values for zero, unknown, non-pet, and otherwise unmatched item IDs.
 - [ ] Return the 13-position WM78 species tuple for a matched item, including nil icon, name, or display positions where the source data requires them.
 - [ ] Derive matches from ItemSparse, ItemXItemEffect, ItemEffect, SpellEffect, SummonProperties, and BattlePetSpecies using WM78 and WM78b. Do not select a winner for competing difficulty rows.
-- [ ] Allow the unmodified PlayerChoice item reward consumer to distinguish a pet item from a non-pet item.
+- [x] Allow the unmodified PlayerChoice item reward consumer to distinguish a pet item from a non-pet item.
 
 ## How it works
 
