@@ -15,6 +15,15 @@ fn seeded_env() -> WowLuaEnv {
     {
         let mut state = env.state().borrow_mut();
         let template = state.player.buffs[0].clone();
+        // WM61 S8 resolves the spell name before aura lookup; Retail
+        // UnitAuraDocumentation.lua:245 declares GetAuraDataBySpellName.
+        // Supply the simulator's aliases for these existing fixture names.
+        state
+            .spell_id_aliases
+            .insert("wild mark".into(), NEVER_SECRET_SPELL as u32);
+        state
+            .spell_id_aliases
+            .insert("hidden hex".into(), CONTEXTUAL_SPELL as u32);
         state.player.buffs = [
             (71, NEVER_SECRET_SPELL, "Wild Mark", true),
             (72, CONTEXTUAL_SPELL, "Hidden Hex", false),
