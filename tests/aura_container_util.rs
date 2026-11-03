@@ -216,7 +216,9 @@ fn aura_options_support_the_real_custom_button_public_initializer() {
                             local count = button:CreateFontString(nil, 'OVERLAY')
                             button:SetApplicationCount(count)
                             local exported, options = button:GetApplicationCount()
-                            assert(exported == count and next(options) == nil)
+                            local stored = GetForbiddenObjectTable(button).applicationCount.element
+                            assert(exported == stored and stored:GetObjectTable() == count)
+                            assert(next(options) == nil)
                             auraOptionsInitializerRan = true
                         end })
                     assert(provider:AcquireFrame() ~= nil)
