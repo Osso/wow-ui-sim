@@ -23,6 +23,17 @@ pub struct OwnedItemEquipInputs {
     pub trade_flags: u32,
     pub confirmation_eligible: Option<bool>,
     pub account_conversion: bool,
+    pub use_prompts: UsePromptInputs,
+}
+
+/// Supplied outcomes of the item-use prompt predicates, whose conditions are
+/// UNKNOWN (WM68). The dispatcher tests them in field order.
+#[derive(Debug, Clone, Copy, Default)]
+pub struct UsePromptInputs {
+    pub bind: bool,
+    pub before_use: bool,
+    pub no_refund: bool,
+    pub end_bound_tradeable: bool,
 }
 
 /// A locally submitted equip request; no server success is implied.
