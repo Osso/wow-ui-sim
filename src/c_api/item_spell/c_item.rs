@@ -302,8 +302,8 @@ fn register_c_item_inventory_queries(
             "GetItemUniqueness",
             super::item_uniqueness::get_item_uniqueness,
         )?;
-        // ItemDocumentation.lua:84, :88 and :209.
-        for name in ["ConfirmNoRefundOnUse", "ConfirmOnUse"] {
+        // ItemDocumentation.lua:80, :84, :88, :199, :209 and :1703.
+        for name in ["ConfirmBindOnUse", "ConfirmNoRefundOnUse", "ConfirmOnUse"] {
             table_set_rust_fn_static(
                 state,
                 table_ref,
@@ -316,6 +316,18 @@ fn register_c_item_inventory_queries(
             table_ref,
             "EndBoundTradeable",
             super::item_use_confirm::end_bound_tradeable,
+        )?;
+        table_set_rust_fn_static(
+            state,
+            table_ref,
+            "UseItemByName",
+            super::item_use_by_name::use_item_by_name,
+        )?;
+        table_set_rust_fn_static(
+            state,
+            table_ref,
+            "DropItemOnUnit",
+            super::item_drop_on_unit::drop_item_on_unit,
         )?;
     }
     register_c_item_methods(

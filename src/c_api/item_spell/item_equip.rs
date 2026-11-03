@@ -286,8 +286,13 @@ pub(super) fn is_locked(state: &mut rilua::vm::state::LuaState) -> rilua::LuaRes
 }
 
 /// Selector 14 searches the backpack and carried bags first. Selector 0 then
-/// admits player root slots 0–29 (WM57). Each bag precedes its contents.
+/// admits player root slots 0–29 (WM57).
 fn find_owned_item(sim: &SimState, item_id: u32) -> Option<ItemSlot> {
+    find_carried_item(sim, item_id).or_else(|| find_root_item(sim, item_id))
+}
+
+/// Backpack and carried bags in order; each bag precedes its contents.
+pub(super) fn find_carried_item(sim: &SimState, item_id: u32) -> Option<ItemSlot> {
     for bag in 0..=5 {
         if bag != 0 {
             if let Some(info) = sim.bag_info.get(&bag) {
@@ -316,6 +321,11 @@ fn find_owned_item(sim: &SimState, item_id: u32) -> Option<ItemSlot> {
             return Some(ItemSlot::Bag(bag, slot));
         }
     }
+    None
+}
+
+/// Player root slots in increasing order.
+pub(super) fn find_root_item(sim: &SimState, item_id: u32) -> Option<ItemSlot> {
     sim.player
         .equipped_items
         .iter()

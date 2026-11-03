@@ -111,7 +111,7 @@ fn is_cursor_compatible(sim: &SimState, native_slot: u32, primaries: [Option<i32
 }
 
 /// Only cursor mode 1 supplies an owned item.
-fn cursor_owned_item(sim: &SimState) -> Option<(u32, CursorItemOrigin)> {
+pub(super) fn cursor_owned_item(sim: &SimState) -> Option<(u32, CursorItemOrigin)> {
     let cursor = sim.cursor_item.as_ref()?;
     if native_mode(cursor) != Some(MODE_ITEM) {
         return None;
