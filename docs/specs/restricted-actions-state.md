@@ -4,7 +4,7 @@ Retail and PTR expose `C_RestrictedActions` state queries backed by six independ
 
 ## What it must do
 
-- [x] A new environment starts with types 0–5 inactive. The getter returns the state and the predicate is true exactly when that state is Active (2).
+- [x] A new environment starts with types 0–5 inactive unless their persisted forced CVars are enabled. The getter returns the state and the predicate is true exactly when that state is Active (2). Startup event emission for persisted settings is native UNKNOWN.
 - [x] Activation sets Activating (1), synchronously emits `ADDON_RESTRICTION_STATE_CHANGED(type, 1)`, then sets Active (2). The predicate for the changing type is false inside the event.
 - [x] Deactivation sets Inactive (0) before synchronously emitting `ADDON_RESTRICTION_STATE_CHANGED(type, 0)`.
 - [x] Combat follows `A_Admin.SetInCombat`; types 1–4 can be supplied with `A_Admin.SetAddOnRestrictionActive(type, active)`. The direct seam rejects Combat and Chat: Combat uses its input and Chat uses its context (WM61 S1).
