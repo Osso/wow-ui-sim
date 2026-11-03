@@ -393,7 +393,8 @@ pub fn register_rilua_pet_journal(lua: &mut rilua::Lua) -> LuaResult<()> {
     let t = tb.build();
 
     set_global_val(lua.state_mut(), "C_PetJournal", t);
-    crate::c_api::c_pet_journal_hover::register(lua.state_mut())
+    crate::c_api::c_pet_journal_hover::register(lua.state_mut())?;
+    crate::c_api::c_pet_item::register(lua.state_mut())
 }
 
 fn register_pet_fanfare_stubs(tb: TableBuilder) -> LuaResult<TableBuilder> {
