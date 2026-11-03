@@ -65,6 +65,7 @@ WM citations below identify clean-room reports in `native-evidence-70688/secrets
 - **EMULATED — WM61 S2:** Entry selects access policy 1, not unrestricted policy 2. Argument and result markers survive the tested transfers when the marker gate is enabled; the disabled gate clears copied markers.
 - **INFERRED — WM61 S2:** Source provenance and secrecy are separate; a secure invocation is not blanket permission to untaint or unsecret values. **UNKNOWN — WM61 S2:** callback access, full return connection and exceptional restoration.
 - **SOURCE — WM61 S2:** Retail overrides rilua's ancestor-clearing `securecallfunction` registration with a source-preserving invocation. The simulator does not yet model the native policy-1 selector, result-provenance rewrite or exceptional restoration; WM61 S2 leaves complete callback access and exceptional behavior UNKNOWN.
+- **EMULATED — simulator boundary:** The simulator's internal forbidden-object projection and secure XML delegate machinery use a dedicated secure invocation supplied privately to the bootstrap. It is not the public `securecallfunction` contract. This models the native secure-client boundary; the exact native object-projection implementation is UNKNOWN.
 
 ### AuraData publication and spell lookup
 

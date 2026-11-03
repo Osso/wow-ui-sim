@@ -1,4 +1,4 @@
-local projectForbiddenDelegateArguments, retiredPortraitGlobal = ...
+local projectForbiddenDelegateArguments, retiredPortraitGlobal, callPrivateProjectionFactory = ...
 
 local function __wow_public_global_path(path)
   local first, rest = string.match(path, "^([^.]+)%.?(.*)$")
@@ -131,7 +131,6 @@ local function __wow_public_set(object, key, value)
   object[key] = value
 end
 
-local callPrivateProjectionFactory = securecallfunction
 local function bindPublicObjectMethod(object, method)
   return function(_, ...)
     return method(object, ...)
@@ -255,7 +254,7 @@ function __wow_apply_xml_mixin(object, mixin, targetPartition, inboundPartition,
       applied = function(_self, ...)
         local delegateSelf = wrapInbound and __wow_xml_object_partition(object, inboundName) or object
         if projectArguments then
-          return securecallfunction(fn, delegateSelf, __wow_project_forbidden_arguments(...))
+          return callPrivateProjectionFactory(fn, delegateSelf, __wow_project_forbidden_arguments(...))
         end
         return fn(delegateSelf, ...)
       end
