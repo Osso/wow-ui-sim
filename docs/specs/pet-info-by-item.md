@@ -26,8 +26,8 @@ Retail 12.1.5 `C_PetJournal.GetPetInfoByItemID` identifies a pet learned by an i
 
 ## Known gaps (current cycle)
 
-- [ ] Provider ordering for 42 multiple-display items is unknown. The simulator reports an explicit unresolved error rather than choosing an invented display.
-- [ ] SpellName record presence is used as a proxy for native spell presence; their equivalence is unverified.
+- [ ] Equal lowest `OrderIndex` rows with distinct display IDs have an unknown winner. The 70391 export has no affected pet items. The generator records any future cases; the simulator returns no values for them rather than choosing an invented display.
+- [ ] EMULATED: SpellName record presence backs the native spell-presence check; their equivalence is unverified. A failed check does not resume at a later item-effect slot.
 - [ ] Live item-cache request completion and event timing are unknown.
 - [ ] Secret-value and restriction behavior is unknown.
 - [ ] Native evidence is build 70688; the generated source data is 70391 and is not claimed to be identical.

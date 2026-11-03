@@ -67,14 +67,11 @@ fn item_id(state: &LuaState) -> LuaResult<i32> {
     Ok(number.trunc() as i32)
 }
 
-fn select_display(entry: &PetItem) -> LuaResult<Option<u32>> {
+fn select_display(entry: &PetItem) -> Option<Option<u32>> {
     match entry.display_choices.as_slice() {
-        [] => Ok(None),
-        [display] => Ok(Some(*display)),
-        _ => Err(runtime_error(format!(
-            "pet item {} display selection is unresolved",
-            entry.item_id
-        ))),
+        [] => Some(None),
+        [display] => Some(Some(*display)),
+        _ => None,
     }
 }
 
@@ -87,7 +84,9 @@ fn get_pet_info_by_item(state: &mut LuaState) -> LuaResult<u32> {
     let Some(entry) = u32::try_from(id).ok().and_then(|id| catalog().get(&id)) else {
         return Ok(0);
     };
-    let display = select_display(entry)?;
+    let Some(display) = select_display(entry) else {
+        return Ok(0);
+    };
     let name = entry
         .name
         .as_ref()

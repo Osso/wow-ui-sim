@@ -117,6 +117,8 @@ fn pet_info_by_item_uses_native_tuple_and_argument_contract() {
         assert(description == "A mechanical squirrel's logic center tells it to collect and store both nuts and bolts for the winter.")
         assert(not wild and battle and tradeable and not unique and obtainable)
         assert(display == 7937 and species == 39)
+        local _, _, _, _, _, _, _, _, _, _, _, worgDisplay, worgSpecies = api(12264)
+        assert(worgDisplay == 9563 and worgSpecies == 89)
         "#,
     )
     .unwrap();
