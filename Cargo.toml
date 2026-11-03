@@ -225,6 +225,10 @@ name = "integration"
 path = "tests/integration.rs"
 
 [[test]]
+name = "encoding_util_binary"
+path = "tests/encoding_util_binary.rs"
+
+[[test]]
 name = "run_tests_cli"
 path = "tests/cli/run_tests.rs"
 

@@ -1,5 +1,5 @@
-//! Binary encoding and decoding for C_EncodingUtil. JSON and hex remain
-//! separate compatibility surfaces.
+//! Binary encoding and decoding for C_EncodingUtil. JSON remains in the
+//! compatibility surface.
 //!
 //! Contracts: Forever 70707 EncodingUtil{,Constants}Documentation.lua;
 //! formats: RFC 4648, RFC 1951/1950/1952 and RFC 8949.
@@ -28,6 +28,8 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
     let namespace = super::ensure_namespace(state, "C_EncodingUtil")?;
     table_set_rust_fn_static(state, namespace, "EncodeBase64", encode_base64)?;
     table_set_rust_fn_static(state, namespace, "DecodeBase64", decode_base64)?;
+    table_set_rust_fn_static(state, namespace, "EncodeHex", encode_hex)?;
+    table_set_rust_fn_static(state, namespace, "DecodeHex", decode_hex)?;
     table_set_rust_fn_static(state, namespace, "CompressString", compress_string)?;
     table_set_rust_fn_static(state, namespace, "DecompressString", decompress_string)?;
     table_set_rust_fn_static(state, namespace, "SerializeCBOR", serialize_cbor)?;
@@ -90,6 +92,41 @@ fn decode_base64(state: &mut LuaState) -> LuaResult<u32> {
     let output = base64_engine(variant)
         .decode(source)
         .map_err(|error| runtime_error(format!("C_EncodingUtil.DecodeBase64: {error}")))?;
+    let value = create_string_bytes(state, &output);
+    state.push(value);
+    Ok(1)
+}
+
+fn encode_hex(state: &mut LuaState) -> LuaResult<u32> {
+    const DIGITS: &[u8; 16] = b"0123456789abcdef";
+
+    let source = source_bytes(state)?;
+    let mut output = Vec::with_capacity(source.len() * 2);
+    for byte in source {
+        output.push(DIGITS[usize::from(byte >> 4)]);
+        output.push(DIGITS[usize::from(byte & 0x0f)]);
+    }
+    let value = create_string_bytes(state, &output);
+    state.push(value);
+    Ok(1)
+}
+
+fn decode_hex(state: &mut LuaState) -> LuaResult<u32> {
+    let source = source_bytes(state)?;
+    if !source.len().is_multiple_of(2) {
+        return Err(runtime_error(
+            "C_EncodingUtil.DecodeHex requires an even number of bytes",
+        ));
+    }
+    let mut output = Vec::with_capacity(source.len() / 2);
+    for pair in source.chunks_exact(2) {
+        let high = char::from(pair[0]).to_digit(16);
+        let low = char::from(pair[1]).to_digit(16);
+        let (Some(high), Some(low)) = (high, low) else {
+            return Ok(0);
+        };
+        output.push(((high << 4) | low) as u8);
+    }
     let value = create_string_bytes(state, &output);
     state.push(value);
     Ok(1)

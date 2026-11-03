@@ -1,6 +1,41 @@
 use wow_ui_sim::lua_api::WowLuaEnv;
 
 #[test]
+fn encoding_util_hex_matches_wire_bytes() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        local encode, decode = C_EncodingUtil.EncodeHex, C_EncodingUtil.DecodeHex
+        local bytes = string.char(0, 1, 15, 16, 127, 128, 165, 255)
+        assert(encode(bytes) == '00010f107f80a5ff')
+        assert(decode('00010F107f80A5FF') == bytes)
+        assert(encode('') == '' and select('#', encode('')) == 1)
+        assert(decode('') == '' and select('#', decode('')) == 1)
+        "#,
+    )
+    .unwrap();
+}
+
+#[test]
+fn encoding_util_hex_rejects_malformed_input() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        local encode, decode = C_EncodingUtil.EncodeHex, C_EncodingUtil.DecodeHex
+        assert(not pcall(decode, 'abc'))
+        assert(select('#', decode('00g0')) == 0)
+        assert(select('#', decode('0g')) == 0)
+        assert(select('#', decode(' 0')) == 0)
+        assert(not pcall(encode))
+        assert(not pcall(decode))
+        assert(not pcall(encode, {}))
+        assert(not pcall(decode, {}))
+        "#,
+    )
+    .unwrap();
+}
+
+#[test]
 fn encoding_util_base64_preserves_bytes_and_supports_both_alphabets() {
     let env = WowLuaEnv::new().unwrap();
     env.exec(

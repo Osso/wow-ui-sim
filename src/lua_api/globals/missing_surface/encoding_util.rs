@@ -12,8 +12,6 @@ use rilua::{LuaResult, Val};
 pub(super) fn register_encoding_util_surface(state: &mut LuaState) -> LuaResult<()> {
     let table_ref = ensure_namespace(state, "C_EncodingUtil")?;
     let methods: &[(&'static str, RustFn)] = &[
-        ("EncodeHex", encoding_util_passthrough),
-        ("DecodeHex", encoding_util_passthrough),
         ("SerializeJSON", encoding_util_serialize_json),
         ("DeserializeJSON", encoding_util_deserialize_json),
     ];
@@ -21,16 +19,6 @@ pub(super) fn register_encoding_util_surface(state: &mut LuaState) -> LuaResult<
         table_set_rust_fn_static(state, table_ref, name, func)?;
     }
     Ok(())
-}
-
-fn encoding_util_passthrough(state: &mut LuaState) -> LuaResult<u32> {
-    let value = stack_val(state, 1);
-    let Some(text) = val_to_string(state, value) else {
-        return Ok(0);
-    };
-    let text = create_string(state, &text);
-    state.push(text);
-    Ok(1)
 }
 
 fn encoding_util_serialize_json(state: &mut LuaState) -> LuaResult<u32> {
