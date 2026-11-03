@@ -736,8 +736,7 @@ fn print_dump_tree(env: &WowLuaEnv, command: &DumpTreeCommand<'_>) {
 fn update_dump_layout_rects(env: &WowLuaEnv) {
     let mut font_system = wow_ui_sim::render::font::WowFontSystem::new();
     let mut state = env.state().borrow_mut();
-    wow_ui_sim::iced_app::tooltip::update_tooltip_sizes(&mut state, &mut font_system);
-    state.ensure_layout_rects();
+    wow_ui_sim::iced_app::tooltip::prepare_tooltip_layout(&mut state, &mut font_system);
 }
 
 #[cfg(not(feature = "gui"))]
