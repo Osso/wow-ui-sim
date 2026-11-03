@@ -18,6 +18,7 @@
 #[path = "group_queries_relationships.rs"]
 pub(crate) mod relationships;
 
+use super::unit_api::{active_group_member_index, is_raid_group};
 use super::unit_misc::identity_output;
 use crate::lua_api::game_data::CLASS_LABELS;
 use crate::lua_api::methods::{
@@ -285,8 +286,7 @@ fn is_in_group(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn is_in_raid(state: &mut LuaState) -> LuaResult<u32> {
-    // Sim currently models party only; treat a party ≥ 6 as a raid.
-    let in_raid = active_party_count(state)? >= 6;
+    let in_raid = is_raid_group(&*borrow_state(state)?);
     state.push(Val::Bool(in_raid));
     Ok(1)
 }
@@ -295,8 +295,13 @@ fn is_in_raid(state: &mut LuaState) -> LuaResult<u32> {
 /// when in a raid, else 0. Follows the same ≥ 6-party raid threshold as
 /// `IsInRaid`.
 fn get_num_raid_members(state: &mut LuaState) -> LuaResult<u32> {
-    let party_count = active_party_count(state)?;
-    let n = if party_count >= 6 { party_count + 1 } else { 0 };
+    let sim = borrow_state(state)?;
+    let n = if is_raid_group(&sim) {
+        sim.party_members.len() + 1
+    } else {
+        0
+    };
+    drop(sim);
     state.push(Val::Num(n as f64));
     Ok(1)
 }
@@ -513,19 +518,7 @@ pub(crate) fn unit_exists_in_state(st: &crate::lua_api::state::SimState, unit: &
             .is_some_and(|unit| !unit.interaction.is_game_object),
         "target" => st.current_target.is_some(),
         "focus" => st.current_focus.is_some(),
-        other => {
-            if let Some(idx) = crate::lua_api::globals::unit_api::parse_party_index(other) {
-                st.party_group_active && idx < st.party_members.len()
-            } else if let Some(rest) = other.strip_prefix("raid") {
-                st.party_group_active
-                    && rest
-                        .parse::<usize>()
-                        .ok()
-                        .is_some_and(|n| n > 0 && n - 1 < st.party_members.len())
-            } else {
-                false
-            }
-        }
+        other => active_group_member_index(st, other).is_some(),
     }
 }
 
@@ -688,27 +681,11 @@ fn unit_class(state: &mut LuaState) -> LuaResult<u32> {
     super::real::unit_secret_predicates::finish_identity_restricted(state, &[&unit], 3)
 }
 
-fn visible_party_member<'a>(
+pub(super) fn visible_party_member<'a>(
     st: &'a crate::lua_api::state::SimState,
     unit: &str,
 ) -> Option<&'a crate::lua_api::state::PartyMember> {
-    if !st.party_group_active {
-        return None;
-    }
-    if let Some(idx) = crate::lua_api::globals::unit_api::parse_party_index(unit) {
-        if idx < st.party_members.len() {
-            st.party_members.get(idx)
-        } else {
-            None
-        }
-    } else if let Some(rest) = unit.strip_prefix("raid") {
-        rest.parse::<usize>()
-            .ok()
-            .and_then(|n| n.checked_sub(1))
-            .and_then(|idx| st.party_members.get(idx))
-    } else {
-        None
-    }
+    active_group_member_index(st, unit).map(|index| &st.party_members[index])
 }
 
 fn unit_classification(state: &mut LuaState) -> LuaResult<u32> {
