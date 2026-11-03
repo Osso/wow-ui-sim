@@ -4,6 +4,14 @@ fn env() -> WowLuaEnv {
     WowLuaEnv::new().unwrap()
 }
 
+fn show_all_mounts(env: &WowLuaEnv) {
+    // Retail starts with zero filter masks; see docs/specs/mount-journal-filters.md.
+    env.exec(
+        "C_MountJournal.SetDefaultFilters(); C_MountJournal.SetCollectedFilterSetting(2, true); C_MountJournal.SetCollectedFilterSetting(3, true)",
+    )
+    .unwrap();
+}
+
 #[test]
 fn mount_journal_num_mounts() {
     let env = env();
@@ -14,6 +22,7 @@ fn mount_journal_num_mounts() {
 #[test]
 fn mount_journal_num_displayed_mounts() {
     let env = env();
+    show_all_mounts(&env);
     let count: i32 = env
         .eval("return C_MountJournal.GetNumDisplayedMounts()")
         .unwrap();
@@ -23,6 +32,7 @@ fn mount_journal_num_displayed_mounts() {
 #[test]
 fn mount_journal_get_displayed_mount_info() {
     let env = env();
+    show_all_mounts(&env);
     let result: String = env
         .eval(
             r#"
@@ -43,6 +53,7 @@ fn mount_journal_get_displayed_mount_info() {
 #[test]
 fn mount_journal_search_filters_displayed_mounts() {
     let env = env();
+    show_all_mounts(&env);
     let result: String = env
         .eval(
             r#"
@@ -76,6 +87,7 @@ fn mount_journal_search_filters_displayed_mounts() {
 #[test]
 fn mount_journal_displayed_info_uncollected() {
     let env = env();
+    show_all_mounts(&env);
     let result: String = env
         .eval(
             r#"
