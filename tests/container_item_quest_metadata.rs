@@ -73,6 +73,11 @@ fn abandon(env: &WowLuaEnv) {
         "QuestMapLogTitleButton_OnClick({QUEST_ID}); SetAbandonQuest()"
     ))
     .expect("abandon supplied quest through existing verbs");
+    // Wrath QuestLogFrame.lua:615 marks; StaticPopup.lua:1692 confirms.
+    if wow_ui_sim::client_profile::ACTIVE == wow_ui_sim::client_profile::ClientProfile::Wrath {
+        env.exec("AbandonQuest()")
+            .expect("confirm the marked Wrath quest abandonment");
+    }
     let sim = env.state().borrow();
     assert!(!sim.quest_log.contains(&(QUEST_ID as u32)));
     assert!(

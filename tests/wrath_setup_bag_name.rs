@@ -14,7 +14,8 @@ fn original_container_frame_displays_changing_bag_name() {
         first.item_id = Some(6948);
         let second = state.bag_info.get_mut(&2).unwrap();
         second.name = Some("Herb Satchel".into());
-        second.item_id = Some(109799);
+        // The pinned Wrath ContainerFrame.lua:507 requests the equipped item's portrait.
+        second.item_id = Some(32542);
     }
     env.exec(
         r#"
@@ -35,7 +36,7 @@ fn original_container_frame_displays_changing_bag_name() {
         local frame = _G["ContainerFrame" .. IsBagOpen(2)]
         assert(_G[frame:GetName() .. "Name"]:GetText() == "Herb Satchel")
         assert(_G[frame:GetName() .. "Portrait"]:GetTexture():lower() ==
-            "interface\\icons\\inv_leather_draenordungeon_c_01boot", "second supplied item icon")
+            "interface\\icons\\inv_potion_27", "second supplied item icon")
         "#,
     )
     .expect("original Wrath container must display the changed bag name");
