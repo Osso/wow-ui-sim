@@ -35,6 +35,27 @@ pub(crate) fn refresh_tooltip_geometry(sim: &mut crate::lua_api::state::SimState
     sim.widgets.mark_rect_dirty(tooltip_id);
 }
 
+pub(crate) fn size_tooltip_on_native_trigger(
+    sim: &mut crate::lua_api::state::SimState,
+    tooltip_id: u64,
+) {
+    #[cfg(feature = "gui")]
+    if matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail | crate::client_profile::ClientProfile::Ptr
+    ) {
+        let mut font = crate::render::font::WowFontSystem::new();
+        let (width, height) = crate::iced_app::tooltip::measure_tooltip(sim, tooltip_id, &mut font);
+        if let Some(frame) = sim.widgets.get_mut_visual(tooltip_id) {
+            frame.width = width;
+            frame.height = height;
+        }
+        sim.widgets.mark_rect_dirty(tooltip_id);
+        return;
+    }
+    refresh_tooltip_geometry(sim, tooltip_id);
+}
+
 fn estimated_tooltip_size(td: Option<&TooltipData>) -> Option<(f32, f32)> {
     let td = td?;
     if td.lines.is_empty() {

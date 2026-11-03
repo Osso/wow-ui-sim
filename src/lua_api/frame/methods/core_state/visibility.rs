@@ -67,7 +67,7 @@ fn show_or_hide(state: &mut LuaState, id: u64, shown: bool) -> LuaResult<()> {
         if sim.widgets.get(id).is_some_and(|frame| {
             frame.widget_type == WidgetType::GameTooltip && frame.tooltip_owner_id.is_some()
         }) {
-            crate::lua_api::frame::methods::widgets::refresh_tooltip_geometry(&mut sim, id);
+            crate::lua_api::frame::methods::widgets::size_tooltip_on_native_trigger(&mut sim, id);
         }
     }
     if !shown {

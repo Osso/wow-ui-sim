@@ -5,7 +5,7 @@ use super::content::fire_tooltip_script;
 use super::line_frames::{
     line_color_segments, normal_font_color, sync_tooltip_line_frame, table_array_get,
 };
-use super::sizing::refresh_tooltip_geometry;
+use super::sizing::{refresh_tooltip_geometry, size_tooltip_on_native_trigger};
 use crate::lua_api::methods::{
     borrow_state, borrow_state_mut, create_string, frame_id_from_stack, frame_ref, table_get,
     val_to_string,
@@ -456,7 +456,7 @@ pub(super) fn set_padding(state: &mut LuaState) -> LuaResult<u32> {
     let padding = val_to_f64(stack_val(state, 2)) as f32;
     let mut sim = borrow_state_mut(state)?;
     sim.tooltips.entry(id).or_default().padding = padding;
-    refresh_tooltip_geometry(&mut sim, id);
+    size_tooltip_on_native_trigger(&mut sim, id);
     Ok(0)
 }
 
@@ -489,6 +489,6 @@ pub(super) fn append_text(state: &mut LuaState) -> LuaResult<u32> {
     if let Some(last) = sim.tooltips.entry(id).or_default().lines.last_mut() {
         last.left_text.push_str(&text);
     }
-    refresh_tooltip_geometry(&mut sim, id);
+    size_tooltip_on_native_trigger(&mut sim, id);
     Ok(0)
 }

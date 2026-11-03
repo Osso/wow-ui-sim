@@ -5,7 +5,7 @@ mod line_data;
 mod line_frames;
 mod owner;
 mod sizing;
-pub(crate) use sizing::refresh_tooltip_geometry;
+pub(crate) use sizing::size_tooltip_on_native_trigger;
 mod wrath;
 
 use self::content::*;

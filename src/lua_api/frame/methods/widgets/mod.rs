@@ -25,7 +25,7 @@ pub(crate) use slider::tick_scroll_range_updates;
 mod statusbar;
 mod texture;
 mod tooltip;
-pub(crate) use tooltip::refresh_tooltip_geometry;
+pub(crate) use tooltip::size_tooltip_on_native_trigger;
 
 use crate::lua_api::methods::{borrow_state, frame_id_from_stack};
 use crate::lua_bridge::table_set_rust_fn_static;
