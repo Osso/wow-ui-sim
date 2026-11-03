@@ -213,6 +213,44 @@ fn blizzard_hidden_right_line_keeps_its_anchor_until_shown() {
 
 #[cfg(any(feature = "client-retail", feature = "client-ptr"))]
 #[test]
+fn blizzard_hidden_right_line_emits_no_glyphs() {
+    use iced::{Point, Rectangle, Size};
+    use wow_ui_sim::iced_app::tooltip::{TooltipRender, build_tooltip_quads, collect_tooltip_data};
+    use wow_ui_sim::render::{GlyphAtlas, QuadBatch, WowFontSystem};
+
+    let env = setup_full_env();
+    env.exec(r#"
+        GameTooltip:SetOwner(UIParent, "ANCHOR_NONE")
+        assert(GameTooltip:ProcessInfo({ tooltipData = { lines = {
+            { type = 0, leftText = "Left", rightText = "Right", leftColor = CreateColor(1, 1, 1), rightColor = CreateColor(1, 0, 0) },
+        } } }))
+        GameTooltip:GetRightLine(1):Hide()
+        GameTooltip:Show()
+    "#).unwrap();
+    let state = env.state().borrow();
+    let id = state.widgets.get_id_by_name("GameTooltip").unwrap();
+    let frame = state.widgets.get(id).unwrap();
+    let data = collect_tooltip_data(&state);
+    let mut fonts = WowFontSystem::new();
+    let mut glyphs = GlyphAtlas::new();
+    let mut batch = QuadBatch::new();
+    build_tooltip_quads(
+        TooltipRender {
+            batch: &mut batch,
+            bounds: Rectangle::new(Point::new(100.0, 200.0), Size::new(frame.width, frame.height)),
+            tooltip_data: Some(&data), id, eff_alpha: 1.0, eff_scale: 1.0, draw_background: false,
+        },
+        &mut Some((&mut fonts, &mut glyphs)),
+    );
+    let glyphs: Vec<_> = batch.vertices.iter().filter(|vertex|
+        vertex.tex_index == wow_ui_sim::render::shader::GLYPH_ATLAS_TEX_INDEX
+    ).collect();
+    assert!(glyphs.iter().any(|vertex| vertex.color == [1.0, 1.0, 1.0, 1.0]), "visible left glyphs must render");
+    assert!(!glyphs.iter().any(|vertex| vertex.color == [1.0, 0.0, 0.0, 1.0]), "hidden right glyphs must not render");
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
+#[test]
 fn customization_hidden_first_row_is_not_rendered() {
     use iced::{Point, Rectangle, Size};
     use wow_ui_sim::iced_app::tooltip::{TooltipRender, build_tooltip_quads, collect_tooltip_data};
