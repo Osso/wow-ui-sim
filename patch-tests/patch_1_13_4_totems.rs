@@ -10,12 +10,16 @@ fn existing_era_totem_info_tracks_slot_replacement_expiry_and_removal() {
         start_time: now,
         duration: 3600.0,
         icon: 135127,
+        mod_rate: 1.0,
+        spell_id: 0,
     });
     env.state().borrow_mut().totem_slots[1] = Some(Totem {
         name: "Expired".into(),
         start_time: -20.0,
         duration: 1.0,
         icon: 135128,
+        mod_rate: 1.0,
+        spell_id: 0,
     });
     let first: (bool, String, f64, f64, i32) = env
         .eval("return GetTotemInfo(1)")

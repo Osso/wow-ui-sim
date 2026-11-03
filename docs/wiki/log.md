@@ -3331,3 +3331,8 @@ Documented the profile registrations and Trivial Quests setting used when the
 World Map opens. The quest panel refresh must complete before the map can
 initialize zoom.
 [World map](investigations/forever-addon-startup-compatibility.md#world-map-after-startup)
+## 2026-11-03 — Forever Cooldown Viewer in Edit Mode
+
+Documented the totem count, active slot metadata, and legacy talent lookup
+used when Edit Mode refreshes the Cooldown Viewer.
+[Cooldown Viewer in Edit Mode](investigations/forever-addon-startup-compatibility.md#cooldown-viewer-in-edit-mode)
