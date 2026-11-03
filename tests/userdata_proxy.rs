@@ -121,6 +121,15 @@ fn create_frame_returns_parent_table_view() {
         assert(rawequal(publicChild:GetParent(), parent), "WM73: public receiver selects public parent")
         assert(rawequal(privateChild:GetParent():GetParent(), GetForbiddenObjectTable(UIParent)),
             "WM73: forbidden ancestor traversal retains its view")
+        local childPublic = select(2, parent:GetChildren())
+        assert(rawequal(select(2, privateParent:GetChildren()), childPublic),
+            "WM73: GetChildren publishes default views")
+        local texture = childPublic:CreateTexture()
+        assert(rawequal(select(1, privateChild:GetRegions()), texture),
+            "WM73: GetRegions publishes default views")
+        childPublic:SetPoint('CENTER', parent, 'CENTER')
+        local _, relative = privateChild:GetPoint()
+        assert(rawequal(relative, parent), "WM73: GetPoint publishes default relativeTo")
         "#,
     )
     .unwrap();
