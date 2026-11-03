@@ -209,7 +209,7 @@ fn encoding_util_native_input_contract() {
             ok, err = pcall(decompress, value)
             assert(not ok and err:find('Usage: local output = C_EncodingUtil.DecompressString(source [, method])', 1, true))
         end
-        for _, n in ipairs({12, 1234}) do
+        for _, n in ipairs({1234, 5678}) do
             assert(base64(n) == base64(tostring(n)))
             for _, f in ipairs({cbor, decompress}) do
                 local ok1, err1 = pcall(f, n)
