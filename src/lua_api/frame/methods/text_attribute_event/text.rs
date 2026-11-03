@@ -79,7 +79,24 @@ pub(super) fn set_text(state: &mut LuaState) -> LuaResult<u32> {
         return Err(rilua::runtime_error("expected text, not userdata"));
     }
     let text = read_text_arg(state, value);
+    if secret && cfg!(feature = "client-retail") {
+        mark_secret_text_aspect(state, id)?;
+    }
     set_frame_text_value(state, id, text, secret)
+}
+
+fn mark_secret_text_aspect(state: &LuaState, id: u64) -> LuaResult<()> {
+    let mut sim = borrow_state_mut(state)?;
+    let frame = sim
+        .widgets
+        .get_mut(id)
+        .ok_or_else(|| rilua::runtime_error("invalid frame"))?;
+    if frame.prevent_secret_values {
+        return Err(rilua::runtime_error("object prevents secret values"));
+    }
+    frame.explicit_secret_aspects |=
+        crate::lua_api::frame::methods::misc::secret::TEXT_SECRET_ASPECT;
+    Ok(())
 }
 
 pub(crate) fn set_frame_text_value(

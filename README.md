@@ -76,6 +76,20 @@ scripts/start-profile.sh live
 
 Use local while gaming on desktop. Raw Cargo stays local. See [native workflow, profile flags, and runtime proof limits](docs/remote-builds.md).
 
+### Rust formatting
+
+Use rustfmt for Rust code. `rust-toolchain.toml` pins Rust 1.99.1 and its rustfmt
+component; `rustfmt.toml` selects the Rust 2024 syntax and style editions.
+Rustup selects the pinned toolchain automatically inside this checkout.
+
+```sh
+cargo fmt --all --check
+```
+
+To format only a file you changed, use
+`rustfmt --config skip_children=true path/to/changed.rs`; `skip_children` prevents
+formatting its child modules. Avoid workspace-wide formatting for focused changes.
+
 ## Release packages
 
 GitHub releases provide Retail, Mists, and WoW Forever packages for Linux x86-64, Windows x86-64, and macOS Apple Silicon. Windows packages include a ZIP and an installer; macOS packages use a DMG. Forever package names include `forever`, and its installer and macOS app use separate identities.

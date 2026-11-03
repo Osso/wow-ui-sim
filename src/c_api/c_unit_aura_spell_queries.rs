@@ -24,6 +24,7 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
 
 fn get_player_aura_by_spell_id(state: &mut LuaState) -> LuaResult<u32> {
     match read_public_spell_identifier(state, 1)? {
+        Some(id) if super::unit_aura_access::reject_spell_keyed_lookup(state, id)? => return Ok(0),
         Some(id) => push_aura_by_spell_id(state, "player", id, false)?,
         None => state.push(Val::Nil),
     }
@@ -34,6 +35,11 @@ fn get_unit_aura_by_spell_id(state: &mut LuaState) -> LuaResult<u32> {
     // Validate the identifier even when the unit has no modeled aura store.
     let spell_id = read_public_spell_identifier(state, 2)?;
     let unit = read_public_unit(state)?;
+    if let Some(id) = spell_id
+        && super::unit_aura_access::reject_spell_keyed_lookup(state, id)?
+    {
+        return Ok(0);
+    }
     match (unit, spell_id) {
         // INFERRED first-match order: helpful then harmful; no visibility model.
         (Some(unit), Some(id)) => push_aura_by_spell_id(state, &unit, id, true)?,

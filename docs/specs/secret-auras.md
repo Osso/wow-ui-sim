@@ -64,29 +64,30 @@ WM citations below identify clean-room reports in `native-evidence-70688/secrets
 - **VERIFIED locally — WM61 S2** (`S2-secure-invocation-wm61.md`): `securecallfunction` saves the caller source and restores it after normal invocation when its metadata scope requires restoration. Entry does not replace that source with an untainted source. Surviving results receive the saved caller provenance without clearing the secret marker.
 - **EMULATED — WM61 S2:** Entry selects access policy 1, not unrestricted policy 2. Argument and result markers survive the tested transfers when the marker gate is enabled; the disabled gate clears copied markers.
 - **INFERRED — WM61 S2:** Source provenance and secrecy are separate; a secure invocation is not blanket permission to untaint or unsecret values. **UNKNOWN — WM61 S2:** callback access, full return connection and exceptional restoration.
-- **SOURCE CONTRADICTION — WM61 S2:** Rilua registers `securecallfunction` as `securecall`, which clears active ancestor frame taints for the call. This is not the observed source-preserving entry behavior.
+- **SOURCE — WM61 S2:** Retail overrides rilua's ancestor-clearing `securecallfunction` registration with a source-preserving invocation. The simulator does not yet model the native policy-1 selector, result-provenance rewrite or exceptional restoration; WM61 S2 leaves complete callback access and exceptional behavior UNKNOWN.
+- **EMULATED — simulator boundary:** The simulator's internal forbidden-object projection and secure XML delegate machinery use a dedicated secure invocation supplied privately to the bootstrap. It is not the public `securecallfunction` contract. This models the native secure-client boundary; the exact native object-projection implementation is UNKNOWN.
 
 ### AuraData publication and spell lookup
 
 - **VERIFIED locally — WM61 S3** (`S3-aura-field-granularity-wm61.md`): Publication policy 2 marks `auraInstanceID`, `spellId`, `icon`, `applications`, `duration`, `expirationTime`, `name`, `sourceUnit`, `dispelName`, `isHelpful`, and `isHarmful` individually; optional nil values remain unmarked. `points` is separately marked and its numeric elements use the field policy.
 - **EMULATED — WM61 S3:** Under the stated publication seeds the outer table value is unmarked by default, but an explicit table-policy override can mark it. **UNKNOWN — WM61 S3:** complete accessor reachability, `issecrettable`, populated points and table security flags. Policy 0 does not mark; policy 1 depends on current-frame operation state; policy 2 applies without that condition.
-- **SOURCE CONTRADICTION — WM61 S3:** `finish_aura_data` wraps the entire table and secure indexing returns plain fields, rather than applying the observed per-field publication policy.
+- **SOURCE — WM61 S3:** Restricted, non-NeverSecret AuraData now marks the locally identified fields and leaves the outer value plain. The simulator's points list is currently empty; populated-list publication remains untested. Complete accessor reachability is still UNKNOWN.
 - **VERIFIED locally — WM61 S8** (`S8-requires-nonsecret-aura-wm61.md`): When tainted execution, the secrecy feature and at least one of four Active restriction states select the restrictive context, the ID lookups classify the requested spell before aura lookup; the name lookup resolves the name first. SpellMisc `Attributes[15]` mask 33554432 selects AlwaysSecret before mask 67108864 selects NeverSecret; otherwise the enabled feature yields ContextuallySecret. Schema names are inferred.
 - **EMULATED — WM61 S8 and S8a** (`S8a-unitauras-secret-emulated.md`): Selected rejection fragments return zero results, not one nil; separate outer fragments forward zero under their assumptions. **INFERRED — WM61 S8:** The relationship of these branches to `RequiresNonSecretAura`. **UNKNOWN — WM61 S8/S8a:** Complete registered-entry behavior, matched-aura outcomes and allowed-path publication.
-- **SOURCE CONTRADICTION — WM61 S8:** The simulator returns one nil for its tainted restricted spell-keyed rejection. Its ambiguous-flags error also conflicts with the locally verified AlwaysSecret precedence when both flags are set.
+- **SOURCE — WM61 S8:** ID-based spell queries return zero values at the restricted tainted pre-lookup gate. The SpellMisc classifier gives AlwaysSecret precedence when both flags are set. The spell-name query uses supplied spell-name aliases before lookup; if restricted tainted name resolution has no supplied alias, that branch raises a not-modeled error. Native name-provider behavior is UNKNOWN (WM61 S8/S8a).
 
 ### Text aspect
 
 - **VERIFIED locally — WM61 S6** (`S6-aspects-wm61.md`): Text aspect is 8. The marked-argument `SetText` path supplies it to a helper that checks prevention and script-handler policy before adding it to the direct set. `HasSecretAspect` checks either of two sets; `HasAnySecretAspect` checks whether either is nonempty. Prevention and anchoring use separate flags.
 - **EMULATED — WM61 S6:** With publication enabled, a Text aspect prepares forced-secret `GetText` return policy; a separate helper marks eligible strings under that policy. **UNKNOWN — WM61 S6:** the complete setter/getter path, second-set origin, propagation and clearing on plain reset, `SetToDefaults` or `ClearAllPoints`.
-- **SOURCE CONTRADICTION — WM61 S6:** The simulator derives object aspect state from prevention/protection and uses prevention for `IsAnchoringSecret`; these do not match the distinct native calculations. Its text sink does not establish the WM61 Text-aspect behavior.
+- **SOURCE — WM61 S6:** Retail `SetText` adds the Text aspect for a secret input and rejects a frame that prevents secrets. The script-handler policy is not yet modeled. The simulator still derives object aspect state from prevention/protection and uses prevention for `IsAnchoringSecret`; these differ from the distinct native calculations.
 
 ## Current state (SOURCE, 2026-10-31)
 
 | Area | Today | Gap |
 |---|---|---|
 | Restriction trigger | `unit_auras_restricted` is a separate input; `restricted_actions.rs` models supplied indexed transitions and forced CVars | The complete WM61 natural conditions and their connection to aura publication are not established |
-| AuraData | Whole table wrapped; tainted access denied; secure indexing returns plain fields | No per-field secrets; no `ConditionalSecret` contents |
+| AuraData | Restricted, non-NeverSecret records mark identified fields; the outer value is plain | Full policy selection and `ConditionalSecret` contents are not established |
 | Spell-keyed lookups | Never-secret spells stay plain; others return one nil to tainted callers (inferred) | WM61 S8 rejection fragments return zero results, not one nil; complete entry behavior remains UNKNOWN |
 | VM operations | Guarded truth/equality for wrapped booleans and nil, guarded ordering for numbers | Arithmetic, concat, `tostring`, `format` and table-key rules missing |
 | Widget sinks | `SetText`, `SetShown`, geometry, texture and cooldown on gated paths | No general argument-mode or aspect model |

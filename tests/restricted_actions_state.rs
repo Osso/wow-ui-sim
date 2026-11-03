@@ -77,6 +77,57 @@ fn supplied_restriction_context_controls_encounter_pvp_map_and_chat() {
     .unwrap();
 }
 
+/// WM61 S1: Chat is derived from policy and context, not a direct input.
+#[test]
+fn direct_chat_input_cannot_bypass_restriction_context() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        local api = C_RestrictedActions
+        local ok = pcall(A_Admin.SetAddOnRestrictionActive, Enum.AddOnRestrictionType.Chat, true)
+        assert(not ok)
+        assert(not api.IsAddOnRestrictionActive(Enum.AddOnRestrictionType.Chat))
+    "#,
+    )
+    .unwrap();
+}
+
+/// WM61 S1: the forced setting contributes to each restriction's state.
+/// No original consumer: pinned Retail AddOns has declarations only.
+#[test]
+fn persisted_forced_cvars_activate_on_environment_creation() {
+    for enabled in [false, true] {
+        let root = tempfile::tempdir().unwrap();
+        let value = if enabled { "1" } else { "0" };
+        let names = [
+            "addoncombatrestrictionsforced",
+            "addonencounterrestrictionsforced",
+            "addonchallengemoderestrictionsforced",
+            "addonpvpmatchrestrictionsforced",
+            "addonmaprestrictionsforced",
+            "addonchatrestrictionsforced",
+        ];
+        let contents = names
+            .iter()
+            .map(|name| ((*name).to_owned(), value.to_owned()))
+            .collect::<std::collections::HashMap<_, _>>();
+        std::fs::write(
+            root.path().join("cvars.json"),
+            serde_json::to_vec(&contents).unwrap(),
+        )
+        .unwrap();
+        let env = WowLuaEnv::with_session_wtf_path(root.path().to_owned()).unwrap();
+        for (kind, name) in names.iter().enumerate() {
+            let result: bool = env
+                .eval(&format!(
+                    "return C_RestrictedActions.IsAddOnRestrictionActive({kind})"
+                ))
+                .unwrap();
+            assert_eq!(result, enabled, "persisted {name}={value}");
+        }
+    }
+}
+
 #[test]
 fn restricted_actions_combat_transitions() {
     let env = WowLuaEnv::new().unwrap();
