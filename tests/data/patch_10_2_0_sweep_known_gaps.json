@@ -1,7 +1,6 @@
 [
   "wt-global-api-C_AddOns.GetAddOnOptionalDependencies-75",
   "wt-global-api-C_AddOns.ResetDisabledAddOns-83",
-  "wt-global-api-C_CVar.GetCVarInfo-87",
   "wt-global-api-C_Console.GetAllCommands-116",
   "wt-global-api-C_Console.GetColorFromType-117",
   "wt-global-api-C_CurrencyInfo.GetDragonIslesSuppliesCurrencyID-86",
