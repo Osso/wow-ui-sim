@@ -55,7 +55,7 @@ mod reload_factory_tests;
 #[allow(dead_code)] // Phase 3 infrastructure — callers added during VM switch
 pub(crate) mod script_helpers;
 #[cfg(feature = "forbidden-aspects")]
-mod script_object_transfer;
+pub(crate) mod script_object_transfer;
 pub(crate) mod sim_substates;
 pub mod simple_html;
 #[cfg(feature = "retail-12-0-7")]

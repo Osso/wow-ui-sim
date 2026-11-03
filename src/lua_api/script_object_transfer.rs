@@ -88,7 +88,7 @@ fn raw_field(state: &mut LuaState, value: Val, name: &'static [u8]) -> Val {
         .unwrap_or(Val::Nil)
 }
 
-fn project_public(state: &mut LuaState, value: Val) -> Val {
+pub(crate) fn project_public(state: &mut LuaState, value: Val) -> Val {
     let public = raw_field(state, value, b"__wowPublicObject");
     if native_frame_id_from_val(state, public).is_none() {
         return value;

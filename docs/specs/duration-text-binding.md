@@ -65,6 +65,10 @@ Development RED: `/tmp/forever-addon-audit/binding-tick-red-8ubmhouy/` records s
 - `src/c_api/duration_text_binding.rs::tests::duration_binding_availability_preserves_client_versions` — profile availability, modern-method boundary, and formatted FontString output.
 - Existing copy/configuration and native CustomAuraButton tests also run on Forever; unrelated native aura dependencies remain separate failures, not reasons to weaken these assertions.
 
+## FontString object views (WM79)
+
+WM79 verifies that `SetFontString` resolves the native FontString rather than requiring one cached Lua view. It infers that an untainted caller may use either view and that a tainted caller cannot use the forbidden view. The tainted-view error uses the native forbidden-object reason and `self:SetFontString(fontString)` usage suffix. Full restriction and secret-value behavior remains unknown.
+
 ## Known gaps (current cycle)
 
 The availability RED recorded a nil binding before formatting. PTR automatic scheduler runtime remains unproven because `duration_text_binding_tick.rs` is Forever-gated; PTR proof covers compilation, binding copy, and native formatter regression only. Native timing cadence, first-update behavior, expiry behavior, and output equivalence remain unverified. Existing plain function/table formatter error suppression remains unchanged. At `9476efcf5`, `secure-chain-tests-ledger.json` records the Forever native binding/copy group 7/7 and `c_api::duration_text_binding::tests::` 1/1 after profile availability sharing. This proves factory publication and existing binding behavior, not formatter threshold parity, broader GUI aura display, or new formatting/clock/color/scheduling semantics.
