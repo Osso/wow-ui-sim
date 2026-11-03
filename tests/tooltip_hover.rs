@@ -13,6 +13,92 @@ use wow_ui_sim::lua_api::WowLuaEnv;
 
 #[cfg(any(feature = "client-retail", feature = "client-ptr"))]
 #[test]
+fn customization_tooltip_places_first_text_at_native_padding_anchor() {
+    use iced::{Point, Rectangle, Size};
+    use wow_ui_sim::iced_app::tooltip::{TooltipRender, build_tooltip_quads, collect_tooltip_data};
+    use wow_ui_sim::render::glyph::emit_text_quads;
+    use wow_ui_sim::render::{GlyphAtlas, QuadBatch, WowFontSystem};
+    use wow_ui_sim::widget::{TextJustify, TextOutline};
+
+    let env = setup_full_env();
+    let addons = wow_ui_sim::paths::default_blizzard_ui_addons_path().unwrap();
+    wow_ui_sim::loader::load_addon(
+        &env.loader_env(),
+        &addons.join("Blizzard_CustomizationUI/Blizzard_CustomizationUI.toc"),
+    )
+    .unwrap();
+    env.exec(
+        r#"
+        local region = CreateFrame("Frame", nil, UIParent, "CustomizationFrameWithTooltipTemplate")
+        region.tooltipAnchor = "ANCHOR_NONE"
+        region.tooltipPadding = 5
+        region:AddTooltipLine("Anchor")
+        region:OnEnter()
+        CustomizationNoHeaderTooltip:SetPadding(3, 5, 7, 11)
+    "#,
+    )
+    .unwrap();
+    let state = env.state().borrow();
+    let id = state
+        .widgets
+        .get_id_by_name("CustomizationNoHeaderTooltip")
+        .unwrap();
+    let data = collect_tooltip_data(&state);
+    let frame = state.widgets.get(id).unwrap();
+    let mut fonts = WowFontSystem::new();
+    let mut glyphs = GlyphAtlas::new();
+    let mut actual = QuadBatch::new();
+    let bounds = Rectangle::new(
+        Point::new(100.0, 200.0),
+        Size::new(frame.width, frame.height),
+    );
+    build_tooltip_quads(
+        TooltipRender {
+            batch: &mut actual,
+            bounds,
+            tooltip_data: Some(&data),
+            id,
+            eff_alpha: 1.0,
+            eff_scale: 1.0,
+            draw_background: false,
+        },
+        &mut Some((&mut fonts, &mut glyphs)),
+    );
+    let mut expected = QuadBatch::new();
+    emit_text_quads(
+        &mut expected,
+        &mut fonts,
+        &mut glyphs,
+        "Anchor",
+        Rectangle::new(Point::new(117.0, 221.0), Size::new(200.0, 17.0)),
+        None,
+        14.0,
+        [1.0; 4],
+        TextJustify::Left,
+        TextJustify::Center,
+        wow_ui_sim::render::shader::GLYPH_ATLAS_TEX_INDEX,
+        None,
+        (0.0, 0.0),
+        TextOutline::None,
+        false,
+        0,
+        0.0,
+        false,
+        None,
+        None,
+    );
+    assert!(!actual.vertices.is_empty() && !expected.vertices.is_empty());
+    let actual_first = actual.vertices[0].position;
+    let expected_first = expected.vertices[0].position;
+    assert!(
+        (actual_first[0] - expected_first[0]).abs() < 0.01
+            && (actual_first[1] - expected_first[1]).abs() < 0.01,
+        "first glyph position {actual_first:?}, expected {expected_first:?}"
+    );
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
+#[test]
 fn ringed_frame_tooltip_applies_native_outer_and_explicit_padding() {
     let env = setup_full_env();
     let addons = wow_ui_sim::paths::default_blizzard_ui_addons_path().unwrap();
