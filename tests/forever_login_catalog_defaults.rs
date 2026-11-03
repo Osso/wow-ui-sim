@@ -99,6 +99,10 @@ fn forever_offline_graphics_settings_skip_unsupported_3d_controls() {
     test_timeout! {
         let env = load_login_screen();
         env.exec(r#"
+            assert(select('#', MultiSampleAntiAliasingSupported()) == 1)
+            assert(MultiSampleAntiAliasingSupported() == false)
+            assert(Settings.GetSetting("PROXY_MSAA") ~= nil)
+            assert(Settings.GetSetting("PROXY_MSAA_ALPHA") ~= nil)
             assert(C_VideoOptions.IsPBRWaterSupported() == false)
             assert(C_VideoOptions.IsOutlineModeSupported() == false)
             assert(C_VideoOptions.IsSecondaryLightingSupported() == false)

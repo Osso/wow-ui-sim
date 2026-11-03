@@ -10,6 +10,8 @@
 //! - `JoinTemporaryChannel(name)` — alias of `JoinChannelByName`; retail
 //!                                   auto-removes these on logout. Not
 //!                                   modelled here.
+//! - `JoinPermanentChannel(name, password?, frameID?, hasVoice?)` — Forever
+//!   local-session membership, chat-window routing, and join notifications.
 //! - `ChannelLeave(name)`        — remove channel by name.
 //! - `ChannelBan(name, player)`  — add player to channel's banned set,
 //!                                   remove from members.
@@ -28,6 +30,8 @@
 use crate::lua_api::methods::{
     borrow_state, borrow_state_mut, create_string, create_table, table_set,
 };
+#[cfg(feature = "client-wowforever")]
+use crate::lua_api::script_helpers::fire_named_event_state;
 use crate::lua_api::state::ChatChannel;
 use crate::lua_bridge::{FromStack, stack_val, table_set_rust_fn_static};
 use rilua::vm::gc::arena::GcRef;
@@ -145,6 +149,113 @@ fn join_channel_by_name(state: &mut LuaState) -> LuaResult<u32> {
         });
     }
     Ok(0)
+}
+
+/// The selected Forever SlashCommands.lua and ChannelFrame.lua consume a
+/// truthy channel kind plus optional canonical name. The kind agrees with the
+/// existing PermanentChatChannelType-backed channel metadata query.
+///
+/// This local server model accepts the join immediately. Password authentication,
+/// voice transport, and rejoining across simulator sessions are not modeled.
+#[cfg(feature = "client-wowforever")]
+fn join_permanent_channel(state: &mut LuaState) -> LuaResult<u32> {
+    let Some(name) = required_string(state, 1) else {
+        return Ok(0);
+    };
+    let frame_id = stack_i32(state, 3).filter(|id| (1..=10).contains(id));
+    let (local_id, joined) = {
+        let mut sim = borrow_state_mut(state)?;
+        let (index, joined) = match channel_index(&sim.chat_channels, &name) {
+            Some(index) => (index, false),
+            None => {
+                let index = sim.chat_channels.len();
+                sim.chat_channels.push(ChatChannel {
+                    name: name.clone(),
+                    ..ChatChannel::default()
+                });
+                (index, true)
+            }
+        };
+        if let Some(frame_id) = frame_id {
+            let window = sim.chat_windows.entry(frame_id).or_default();
+            if window.channel_names.insert(name.clone()) {
+                window.channels.push(name.clone());
+            }
+        }
+        (index + 1, joined)
+    };
+    // Commit membership/routing before callbacks query GetChannelName. Event
+    // timing/order is an inferred local policy, not a native server recording.
+    if joined {
+        notify_channel_joined(state, local_id, &name);
+        fire_named_event_state(state, "CHANNEL_UI_UPDATE", &[]);
+    }
+    let canonical_name = create_string(state, &name);
+    state.push(Val::Num(channel_type(&name)));
+    state.push(canonical_name);
+    Ok(2)
+}
+
+#[cfg(feature = "client-wowforever")]
+fn notify_channel_joined(state: &mut LuaState, local_id: usize, name: &str) {
+    // Forever 70707 ChatInfoDocumentation.lua: ChatMsgChannelNotice has 18
+    // positional fields. No speaker/Discord message accompanies this notice.
+    let reason = create_string(state, "YOU_JOINED");
+    let empty = create_string(state, "");
+    let display = create_string(state, &format!("{local_id}. {name}"));
+    let base_name = create_string(state, name);
+    let discord = create_table(state);
+    for field in [
+        "userID",
+        "globalName",
+        "lastOnlineGUID",
+        "lastOnlineName",
+        "forwardedMessage",
+    ] {
+        table_set(state, discord, field, empty);
+    }
+    table_set(state, discord, "type", Val::Num(0.0));
+    for field in [
+        "hasAttachment",
+        "hasPoll",
+        "hasEmbed",
+        "hasSticker",
+        "hasEmoji",
+        "hasError",
+        "hasForwardedMessage",
+        "fromDiscord",
+    ] {
+        table_set(state, discord, field, Val::Bool(false));
+    }
+    let zone_id = if channel_type(name) == CHANNEL_TYPE_ZONE {
+        local_id as f64
+    } else {
+        0.0
+    };
+    fire_named_event_state(
+        state,
+        "CHAT_MSG_CHANNEL_NOTICE",
+        &[
+            reason,
+            empty,
+            empty,
+            display,
+            empty,
+            empty,
+            Val::Num(zone_id),
+            Val::Num(local_id as f64),
+            base_name,
+            Val::Num(0.0),
+            Val::Num(0.0),
+            empty,
+            Val::Num(0.0),
+            Val::Bool(false),
+            Val::Bool(false),
+            Val::Bool(false),
+            Val::Bool(false),
+            discord,
+        ],
+    );
 }
 
 fn get_channel_list(state: &mut LuaState) -> LuaResult<u32> {
@@ -349,6 +460,8 @@ fn register_channel_globals(lua: &mut rilua::Lua) -> crate::Result<()> {
     LuaApiMut::register_function(lua, "EnumerateServerChannels", enumerate_server_channels)?;
     LuaApiMut::register_function(lua, "JoinChannelByName", join_channel_by_name)?;
     LuaApiMut::register_function(lua, "JoinTemporaryChannel", join_temporary_channel)?;
+    #[cfg(feature = "client-wowforever")]
+    LuaApiMut::register_function(lua, "JoinPermanentChannel", join_permanent_channel)?;
     LuaApiMut::register_function(lua, "ChannelLeave", channel_leave)?;
     LuaApiMut::register_function(lua, "ChannelBan", channel_ban)?;
     LuaApiMut::register_function(lua, "ChannelInvite", channel_invite)?;

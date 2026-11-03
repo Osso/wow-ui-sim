@@ -318,7 +318,7 @@ macro_rules! build_empty_sim_state {
             aura_spell_classifications: Default::default(),
             #[cfg(feature = "retail-12-0-5")]
             private_aura_sound_registrations: Default::default(),
-            #[cfg(feature = "retail-12-0-5")]
+            #[cfg(feature = "aura-instance-enumeration")]
             spell_aura_durations: HashMap::new(),
             #[cfg(feature = "base-spell-relationships")]
             base_spell_relationships: Default::default(),
@@ -402,8 +402,6 @@ macro_rules! build_empty_sim_state {
             #[cfg(feature = "retail-12-0-0")]
             weekly_reward_progress: Default::default(),
             #[cfg(feature = "retail-12-0-0")]
-            encounter_policy: Default::default(),
-            #[cfg(feature = "retail-12-0-0")]
             encounter_warning_settings: Default::default(),
             #[cfg(feature = "retail-12-1-0")]
             last_sound_request: None,
@@ -426,6 +424,7 @@ macro_rules! build_empty_sim_state {
             last_launched_url: $runtime.last_launched_url,
             highlighted_map_scene_character_guid: $runtime.highlighted_map_scene_character_guid,
             secure_attribute_drivers: $collections.secure_attribute_drivers,
+            secure_state_dispatch_ready: false,
             rot_damage_level: $runtime.rot_damage_level,
             fps: $runtime.fps,
             start_time: $runtime.start_time,
@@ -488,6 +487,7 @@ macro_rules! build_empty_sim_state {
             bind_location: "Stormwind City".into(),
             pvp_honor: PvpHonorState::default(),
             world: super::state_types::seeded_world_state(),
+            encounter_policy: Default::default(),
             bag_items: $collections.bag_items,
             item_equip: crate::c_api::item_spell::item_equip::ItemEquipState::default(),
             container_item_quests: HashMap::new(),

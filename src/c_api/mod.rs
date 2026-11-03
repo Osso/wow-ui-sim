@@ -41,7 +41,7 @@ pub mod action_usability;
 #[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
 mod addon_messages;
 pub(crate) mod applied_item_transmog;
-#[cfg(feature = "retail-12-0-5")]
+#[cfg(feature = "aura-instance-enumeration")]
 pub mod aura_duration;
 #[cfg(feature = "retail-12-0-5")]
 pub(crate) mod aura_entry;
@@ -184,6 +184,7 @@ mod c_perks_categories;
 pub mod c_pet_battles;
 pub mod c_pet_journal_hover;
 pub(crate) mod c_pet_talent_tree;
+pub(crate) mod pet_orders;
 pub mod c_photo_sharing;
 pub mod c_ping_secure;
 #[cfg(any(feature = "retail-12-1-0", feature = "client-wowforever"))]
