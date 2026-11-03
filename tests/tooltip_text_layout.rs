@@ -3,12 +3,12 @@
 use wow_ui_sim::lua_api::WowLuaEnv;
 use wow_ui_sim::widget::AnchorPoint;
 
-fn update_tooltip_sizes(env: &WowLuaEnv) {
+fn prepare_tooltip_layout(env: &WowLuaEnv) {
     use wow_ui_sim::render::font::WowFontSystem;
 
     let mut font_sys = WowFontSystem::new();
     let mut state = env.state().borrow_mut();
-    wow_ui_sim::iced_app::tooltip::update_tooltip_sizes(&mut state, &mut font_sys);
+    wow_ui_sim::iced_app::tooltip::prepare_tooltip_layout(&mut state, &mut font_sys);
 }
 
 fn update_tooltip_layout(env: &WowLuaEnv) {
@@ -166,7 +166,7 @@ fn test_tooltip_layout_is_clamped_to_viewport_edges() {
     )
     .unwrap();
 
-    update_tooltip_sizes(&env);
+    prepare_tooltip_layout(&env);
     update_tooltip_layout(&env);
 
     let state = env.state().borrow();
@@ -229,7 +229,7 @@ fn test_tooltip_layout_is_clamped_to_top_left_viewport_edge() {
     )
     .unwrap();
 
-    update_tooltip_sizes(&env);
+    prepare_tooltip_layout(&env);
     update_tooltip_layout(&env);
 
     let state = env.state().borrow();

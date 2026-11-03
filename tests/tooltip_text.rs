@@ -368,12 +368,12 @@ fn test_addline_wrap_flag_stored() {
     assert!(td.lines[1].wrap, "Second line (with wrap=true) should wrap");
 }
 
-fn update_tooltip_sizes(env: &WowLuaEnv) {
+fn prepare_tooltip_layout(env: &WowLuaEnv) {
     use wow_ui_sim::render::font::WowFontSystem;
 
     let mut font_sys = WowFontSystem::new();
     let mut state = env.state().borrow_mut();
-    wow_ui_sim::iced_app::tooltip::update_tooltip_sizes(&mut state, &mut font_sys);
+    wow_ui_sim::iced_app::tooltip::prepare_tooltip_layout(&mut state, &mut font_sys);
 }
 
 #[test]
@@ -392,7 +392,7 @@ fn test_wrapped_line_does_not_expand_width() {
     )
     .unwrap();
 
-    update_tooltip_sizes(&env);
+    prepare_tooltip_layout(&env);
 
     let state = env.state().borrow();
     let gt_id = state.widgets.get_id_by_name("GameTooltip").unwrap();
@@ -421,7 +421,7 @@ fn test_wrapped_only_line_still_sets_tooltip_width() {
     )
     .unwrap();
 
-    update_tooltip_sizes(&env);
+    prepare_tooltip_layout(&env);
 
     let state = env.state().borrow();
     let gt_id = state.widgets.get_id_by_name("GameTooltip").unwrap();
@@ -448,7 +448,7 @@ fn test_wrapped_line_increases_height() {
     "#,
     )
     .unwrap();
-    update_tooltip_sizes(&env);
+    prepare_tooltip_layout(&env);
     let height_one_line = {
         let state = env.state().borrow();
         let gt_id = state.widgets.get_id_by_name("GameTooltip").unwrap();
@@ -465,7 +465,7 @@ fn test_wrapped_line_increases_height() {
     "#,
     )
     .unwrap();
-    update_tooltip_sizes(&env);
+    prepare_tooltip_layout(&env);
 
     let height_with_wrap = {
         let state = env.state().borrow();
@@ -495,7 +495,7 @@ fn test_double_line_width_includes_gap() {
     "#,
     )
     .unwrap();
-    update_tooltip_sizes(&env);
+    prepare_tooltip_layout(&env);
     let width_single = {
         let state = env.state().borrow();
         let gt_id = state.widgets.get_id_by_name("GameTooltip").unwrap();
@@ -511,7 +511,7 @@ fn test_double_line_width_includes_gap() {
     "#,
     )
     .unwrap();
-    update_tooltip_sizes(&env);
+    prepare_tooltip_layout(&env);
     let width_double = {
         let state = env.state().borrow();
         let gt_id = state.widgets.get_id_by_name("GameTooltip").unwrap();
@@ -542,7 +542,7 @@ fn test_tooltip_sizing_includes_padding() {
     "#,
     )
     .unwrap();
-    update_tooltip_sizes(&env);
+    prepare_tooltip_layout(&env);
 
     let state = env.state().borrow();
     let gt_id = state.widgets.get_id_by_name("GameTooltip").unwrap();
@@ -585,7 +585,7 @@ fn test_tooltip_height_grows_with_lines() {
     "#,
     )
     .unwrap();
-    update_tooltip_sizes(&env);
+    prepare_tooltip_layout(&env);
     let h1 = {
         let state = env.state().borrow();
         let gt_id = state.widgets.get_id_by_name("GameTooltip").unwrap();
@@ -594,7 +594,7 @@ fn test_tooltip_height_grows_with_lines() {
 
     env.exec(r#"GameTooltip:AddLine("Line 2"); GameTooltip:Show()"#)
         .unwrap();
-    update_tooltip_sizes(&env);
+    prepare_tooltip_layout(&env);
     let h2 = {
         let state = env.state().borrow();
         let gt_id = state.widgets.get_id_by_name("GameTooltip").unwrap();
@@ -603,7 +603,7 @@ fn test_tooltip_height_grows_with_lines() {
 
     env.exec(r#"GameTooltip:AddLine("Line 3"); GameTooltip:Show()"#)
         .unwrap();
-    update_tooltip_sizes(&env);
+    prepare_tooltip_layout(&env);
     let h3 = {
         let state = env.state().borrow();
         let gt_id = state.widgets.get_id_by_name("GameTooltip").unwrap();
@@ -695,7 +695,7 @@ fn test_blank_unwrapped_line_does_not_collapse_wrapped_tooltip_width() {
     )
     .unwrap();
 
-    update_tooltip_sizes(&env);
+    prepare_tooltip_layout(&env);
 
     let state = env.state().borrow();
     let gt_id = state.widgets.get_id_by_name("GameTooltip").unwrap();
@@ -730,7 +730,7 @@ fn test_tooltip_sizing_skipped_when_hidden() {
         frame.width
     };
 
-    update_tooltip_sizes(&env);
+    prepare_tooltip_layout(&env);
 
     let width_after_render = {
         let state = env.state().borrow();
@@ -758,7 +758,7 @@ fn test_tooltip_min_width_respected() {
     "#,
     )
     .unwrap();
-    update_tooltip_sizes(&env);
+    prepare_tooltip_layout(&env);
 
     let state = env.state().borrow();
     let gt_id = state.widgets.get_id_by_name("GameTooltip").unwrap();

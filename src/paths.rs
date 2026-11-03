@@ -314,7 +314,7 @@ pub fn find_bundled_test_framework_toc() -> Option<PathBuf> {
         .find_map(|root| crate::loader::find_toc_file(&root.join("TestFramework")))
 }
 
-fn bundled_addons_path_candidates() -> Vec<PathBuf> {
+pub(crate) fn bundled_addons_path_candidates() -> Vec<PathBuf> {
     let mut paths = Vec::new();
     if let Ok(exe_path) = std::env::current_exe() {
         paths.extend(bundled_addons_path_candidates_for_exe(&exe_path));

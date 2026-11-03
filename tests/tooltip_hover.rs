@@ -232,7 +232,7 @@ fn blizzard_show_synchronously_uses_glyph_measurement() {
         r#"
         GameTooltip:SetOwner(UIParent, "ANCHOR_NONE")
         assert(GameTooltip:ProcessInfo({ tooltipData = { lines = {
-            { type = 0, leftText = "Wide WWW and narrow iii glyphs" },
+            { type = 0, leftText = "WWWWWWWWWW" },
         } } }))
         assert(GameTooltip:IsShown(), "processed tooltip must be shown")
         assert(GameTooltip:GetOwner() == UIParent, "processed tooltip must retain its owner")
@@ -241,11 +241,49 @@ fn blizzard_show_synchronously_uses_glyph_measurement() {
     )
     .unwrap();
     let mut font = wow_ui_sim::render::font::WowFontSystem::new();
-    wow_ui_sim::iced_app::tooltip::update_tooltip_sizes(&mut env.state().borrow_mut(), &mut font);
+    wow_ui_sim::iced_app::tooltip::prepare_tooltip_layout(&mut env.state().borrow_mut(), &mut font);
     env.exec(
         r#"
         assert(GameTooltip:GetWidth() == shownWidth, "Show did not synchronously measure glyph width")
         assert(GameTooltip:GetHeight() == shownHeight, "Show did not synchronously measure glyph height")
+        GameTooltip:ClearLines()
+        GameTooltip:AddLineDataText({ type = 0, leftText = "iiiiiiiiii" })
+        GameTooltip:Show()
+        assert(GameTooltip:GetWidth() < shownWidth, "equal-length glyphs must have distinct widths")
+        "#,
+    )
+    .unwrap();
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
+#[test]
+fn blizzard_line_processing_does_not_resize_on_render_before_show() {
+    let env = setup_full_env();
+    env.exec(
+        r#"
+        GameTooltip:SetOwner(UIParent, "ANCHOR_NONE")
+        assert(GameTooltip:ProcessInfo({ tooltipData = { lines = {
+            { type = 0, leftText = "Short" },
+        } } }))
+        "#,
+    )
+    .unwrap();
+    let mut font = wow_ui_sim::render::font::WowFontSystem::new();
+    wow_ui_sim::iced_app::tooltip::prepare_tooltip_layout(&mut env.state().borrow_mut(), &mut font);
+    env.exec(
+        r#"
+        renderWidth, renderHeight = GameTooltip:GetWidth(), GameTooltip:GetHeight()
+        GameTooltip:AddLineDataText({ type = 0, leftText = "A much longer pending tooltip row that should wait for Show" })
+        "#,
+    )
+    .unwrap();
+    wow_ui_sim::iced_app::tooltip::prepare_tooltip_layout(&mut env.state().borrow_mut(), &mut font);
+    env.exec(
+        r#"
+        assert(GameTooltip:GetWidth() == renderWidth, "render resized tooltip width before Show")
+        assert(GameTooltip:GetHeight() == renderHeight, "render resized tooltip height before Show")
+        GameTooltip:Show()
+        assert(GameTooltip:GetWidth() > renderWidth, "Show did not resize tooltip")
         "#,
     )
     .unwrap();

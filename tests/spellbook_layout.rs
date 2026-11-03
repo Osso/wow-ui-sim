@@ -695,7 +695,7 @@ fn spellbook_hover_tooltip_is_sized_and_on_screen() {
         {
             let mut state = env.state().borrow_mut();
             let _ = state.widgets.take_render_dirty();
-            wow_ui_sim::iced_app::tooltip::update_tooltip_sizes(&mut state, &mut font_sys);
+            wow_ui_sim::iced_app::tooltip::prepare_tooltip_layout(&mut state, &mut font_sys);
         }
 
         let tooltip_id = {

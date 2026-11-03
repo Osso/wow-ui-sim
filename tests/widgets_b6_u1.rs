@@ -157,7 +157,7 @@ fn b6_u1_numeric_legacy_input_attaches_not_new_row() {
 #[cfg(feature = "gui")]
 fn b6_measure_tip(env: &WowLuaEnv, fonts: &mut wow_ui_sim::render::WowFontSystem) -> (f64, f64) {
     env.exec("B6Tip:Show()").unwrap();
-    wow_ui_sim::iced_app::tooltip::update_tooltip_sizes(&mut env.state().borrow_mut(), fonts);
+    wow_ui_sim::iced_app::tooltip::prepare_tooltip_layout(&mut env.state().borrow_mut(), fonts);
     env.eval("return B6Tip:GetWidth(),B6Tip:GetHeight()")
         .unwrap()
 }

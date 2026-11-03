@@ -10,6 +10,9 @@ These timing rules do not establish native font metrics, markup widths, or
 money and status-bar heights. The simulator's font sizes and line-height
 multiplier are estimates, not native measurements. GUI builds use glyph-backed
 measurement at these triggers; builds without GUI use an estimator. Geometry
-and padding side semantics are outside this timing slice. WM63 is evidence for
+and padding side semantics are outside this timing slice. Render and periodic
+update do not recalculate Retail/PTR content size; they resolve stored geometry.
+WM63-L4 line 27 verifies that the native periodic-update override does not call
+the content-sizing routine. WM63 is evidence for
 Retail 70688, not Wrath, Forever, Mists, Era or Anniversary; those profiles'
 sizing behavior is unchanged.

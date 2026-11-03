@@ -1,8 +1,9 @@
 //! Reusable texture decoding, crop operations and directory observations.
+mod blp;
 pub mod logging;
 pub mod resolve;
 pub mod source_index;
-use image_blp::{convert::blp_to_image, parser::load_blp, types::BlpContent};
+use image_blp::{convert::blp_to_image, types::BlpContent};
 use std::path::Path;
 use std::sync::Arc;
 use std::time::{Duration, Instant};
@@ -61,7 +62,7 @@ pub fn load_bc_texture_from_blp(
     telemetry: &mut BcLoadTelemetry,
 ) -> Option<BcTextureResult> {
     let parse_start = Instant::now();
-    let blp = load_blp(file_path).ok();
+    let blp = blp::load(file_path).ok();
     telemetry.parse_elapsed = parse_start.elapsed();
 
     let blp = blp?;
@@ -166,7 +167,7 @@ pub fn load_texture_file(
     if ext.eq_ignore_ascii_case("blp") {
         // Use image-blp for BLP files
         // Note: image-blp uses image 0.24, we use 0.25, so extract raw pixels directly
-        let blp = load_blp(path)?;
+        let blp = blp::load(path)?;
         let blp_img = blp_to_image(&blp, 0)?;
         // Get dimensions and convert to RGBA8 bytes
         let rgba = blp_img.to_rgba8();
