@@ -1,8 +1,7 @@
 //! Temporary `C_Minimap` tracking defaults.
 //!
-//! Minimap tracking data is not modeled yet. Widget-specific minimap methods
-//! remain on Minimap frames; these namespace-level defaults stay explicit here
-//! until real minimap tracking state exists.
+//! Supply defaults for tracking APIs that have no profile-specific provider.
+//! Widget-specific minimap methods remain on Minimap frames.
 
 /// Retail build 70688 initialized tracking-default mask.
 pub(crate) const RETAIL_TRACKING_DEFAULT_MASK: u32 = 0x2f5aef;
@@ -65,6 +64,7 @@ mod tests {
     use crate::lua_api::WowLuaEnv;
 
     #[test]
+    #[cfg(not(feature = "client-wowforever"))]
     fn installs_minimap_tracking_defaults() {
         let env = WowLuaEnv::new().expect("lua env should initialize");
 

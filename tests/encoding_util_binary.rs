@@ -170,7 +170,7 @@ fn encoding_util_cbor_rejects_malformed_unsupported_and_overdeep_values() {
     env.exec(
         r#"
         local decode = C_EncodingUtil.DeserializeCBOR
-        assert(decode('') == nil and select('#', decode('')) == 1)
+        assert(decode('') == nil and select('#', decode('')) == 0)
         for _, bytes in ipairs({string.char(24), string.char(67,1), string.char(129),
             string.char(161,1), string.char(192,0), string.char(159,255),
             string.char(28), string.char(255), string.char(0,0), string.char(161,246,0),
@@ -182,6 +182,45 @@ fn encoding_util_cbor_rejects_malformed_unsupported_and_overdeep_values() {
         local depth100 = string.rep(string.char(129), 100) .. string.char(0)
         assert(type(decode(depth100)) == 'table')
         assert(not pcall(decode, string.char(129) .. depth100))
+        "#,
+    )
+    .unwrap();
+}
+
+#[test]
+fn encoding_util_native_input_contract() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        local cbor = C_EncodingUtil.DeserializeCBOR
+        local base64 = C_EncodingUtil.DecodeBase64
+        local decompress = C_EncodingUtil.DecompressString
+        assert(select('#', cbor('')) == 0, 'empty CBOR return count')
+        assert(base64('') == '' and select('#', base64('')) == 1)
+        local ok, err = pcall(decompress, '')
+        assert(not ok and err:find('DecompressString(): internal decompression error', 1, true))
+        for _, input in ipairs({false, {}}) do
+            local value = input or nil
+            local kind = input and 'table' or 'nil'
+            ok, err = pcall(cbor, value)
+            assert(not ok and err:find('string expected, got ' .. kind, 1, true))
+            ok, err = pcall(base64, value)
+            assert(not ok and err:find('Usage: local output = C_EncodingUtil.DecodeBase64(source [, variant])', 1, true))
+            ok, err = pcall(decompress, value)
+            assert(not ok and err:find('Usage: local output = C_EncodingUtil.DecompressString(source [, method])', 1, true))
+        end
+        for _, n in ipairs({1234, 5678}) do
+            assert(base64(n) == base64(tostring(n)))
+            for _, f in ipairs({cbor, decompress}) do
+                local ok1, err1 = pcall(f, n)
+                local ok2, err2 = pcall(f, tostring(n))
+                assert(ok1 == ok2 and err1 == err2)
+            end
+        end
+        for _, byte in ipairs({24, 25, 26, 27}) do
+            ok, err = pcall(cbor, string.char(byte))
+            assert(not ok and err:find('attempted to deserialize an incomplete or ill-formed data item', 1, true))
+        end
         "#,
     )
     .unwrap();

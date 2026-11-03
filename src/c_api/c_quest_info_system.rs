@@ -1,10 +1,12 @@
 //! Host-seeded quest favor inputs for Retail 12.0.5 row 293 and per-quest short
-//! expiration warning flags (Retail 12.0.7).
+//! expiration warning flags (Retail 12.0.7 and Forever).
 //! INFERRED context selection, false default clamp, strict u32 IDs, zero on a miss
 //! and public outputs; cached declarations alone do not establish native parity.
 
+#[cfg(feature = "retail-12-0-5")]
 use std::collections::HashMap;
 
+use crate::client_profile::{ACTIVE, ClientProfile};
 use crate::lua_api::methods::borrow_state;
 use crate::lua_bridge::{stack_val, table_set_rust_fn_static};
 use rilua::table_security::unwrap_secret;
@@ -12,12 +14,14 @@ use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val, runtime_error};
 
 /// Exact host-declared amounts; no cap arithmetic or synthetic reward values.
+#[cfg(feature = "retail-12-0-5")]
 #[derive(Clone, Copy, Debug, PartialEq)]
 pub struct QuestRewardFavor {
     pub amount: f64,
     pub cycle_capped_amount: f64,
 }
 
+#[cfg(feature = "retail-12-0-5")]
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct QuestFavorState {
     pub rewards: HashMap<u32, QuestRewardFavor>,
@@ -26,24 +30,31 @@ pub struct QuestFavorState {
 }
 
 pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
+    let has_short_expiration_warning =
+        cfg!(feature = "retail-12-0-7") || ACTIVE == ClientProfile::WowForever;
+    if !has_short_expiration_warning && !cfg!(feature = "retail-12-0-5") {
+        return Ok(());
+    }
     let namespace = super::ensure_namespace(state, "C_QuestInfoSystem")?;
-    #[cfg(feature = "retail-12-0-7")]
-    table_set_rust_fn_static(
-        state,
-        namespace,
-        "GetQuestHasShortExpirationWarning",
-        get_quest_has_short_expiration_warning,
-    )?;
+    if has_short_expiration_warning {
+        table_set_rust_fn_static(
+            state,
+            namespace,
+            "GetQuestHasShortExpirationWarning",
+            get_quest_has_short_expiration_warning,
+        )?;
+    }
+    #[cfg(feature = "retail-12-0-5")]
     table_set_rust_fn_static(
         state,
         namespace,
         "GetQuestLogRewardFavor",
         get_quest_log_reward_favor,
-    )
+    )?;
+    Ok(())
 }
 
 /// AllowedWhenUntainted; INFERRED nil or unflagged quests have no short warning.
-#[cfg(feature = "retail-12-0-7")]
 fn get_quest_has_short_expiration_warning(state: &mut LuaState) -> LuaResult<u32> {
     const NAME: &str = "C_QuestInfoSystem.GetQuestHasShortExpirationWarning";
     let quest = unwrap_secret(state, stack_val(state, 1))?;
@@ -58,6 +69,7 @@ fn get_quest_has_short_expiration_warning(state: &mut LuaState) -> LuaResult<u32
     Ok(1)
 }
 
+#[cfg(feature = "retail-12-0-5")]
 fn get_quest_log_reward_favor(state: &mut LuaState) -> LuaResult<u32> {
     let (quest_id, clamp) = read_favor_arguments(state)?;
     let amount = read_favor_amount(state, quest_id, clamp)?;
@@ -66,6 +78,7 @@ fn get_quest_log_reward_favor(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 /// AllowedWhenUntainted: authenticate every supplied argument before validation.
+#[cfg(feature = "retail-12-0-5")]
 fn read_favor_arguments(state: &LuaState) -> LuaResult<(Option<u32>, bool)> {
     let quest = unwrap_secret(state, stack_val(state, 1))?;
     let clamp = unwrap_secret(state, stack_val(state, 2))?;
@@ -102,6 +115,7 @@ fn validate_quest_id(value: Val, function: &str) -> LuaResult<Option<u32>> {
     )))
 }
 
+#[cfg(feature = "retail-12-0-5")]
 fn read_favor_amount(state: &LuaState, quest_id: Option<u32>, clamp: bool) -> LuaResult<f64> {
     let sim = borrow_state(state)?;
     // INFERRED nil uses only this explicit host context, not selected quest state.

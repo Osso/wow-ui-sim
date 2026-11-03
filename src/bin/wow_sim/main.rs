@@ -93,6 +93,11 @@ struct Args {
     #[arg(long, hide = true)]
     character_select: bool,
 
+    /// Set the initial GUI client area and fixed game display in physical pixels.
+    #[cfg(feature = "gui")]
+    #[arg(long, value_name = "WIDTHxHEIGHT", value_parser = parse_window_size)]
+    window_size: Option<(u32, u32)>,
+
     #[command(subcommand)]
     command: Option<Commands>,
 }
@@ -238,6 +243,18 @@ impl Args {
     }
 }
 
+#[cfg(feature = "gui")]
+fn parse_window_size(value: &str) -> Result<(u32, u32), &'static str> {
+    let error = "expected WIDTHxHEIGHT with positive integer dimensions";
+    let (width, height) = value.split_once(['x', 'X']).ok_or(error)?;
+    let width = width.parse::<u32>().map_err(|_| error)?;
+    let height = height.parse::<u32>().map_err(|_| error)?;
+    if width == 0 || height == 0 {
+        return Err(error);
+    }
+    Ok((width, height))
+}
+
 fn main() {
     wow_ui_sim::stack::ensure_large_stack();
     startup_trace::print_process_started();
@@ -279,6 +296,10 @@ fn hires_atlases_wanted(ui_scale: f32, env_override: Option<&str>) -> bool {
 
 fn run_main() -> Result<(), Box<dyn std::error::Error>> {
     let args = Args::parse();
+    #[cfg(feature = "gui")]
+    if args.window_size.is_some() && args.command.is_some() {
+        return Err("--window-size is only available when opening the GUI".into());
+    }
     let session_wtf_path = args.resolve_session_wtf_path()?;
     set_cwd_to_exe_dir_for_gui_launch();
     wow_ui_sim::blizzard_ui_sync::set_allow_ui_version_mismatch(args.allow_ui_version_mismatch);
@@ -315,6 +336,8 @@ fn run_main() -> Result<(), Box<dyn std::error::Error>> {
         env,
         #[cfg(feature = "gui")]
         font_system,
+        #[cfg(feature = "gui")]
+        window_size: args.window_size,
         delay: args.delay,
         exec_lua,
         exec_lua_secure: args.exec_lua_secure,
@@ -557,6 +580,8 @@ struct CommandDispatch {
     env: WowLuaEnv,
     #[cfg(feature = "gui")]
     font_system: Rc<RefCell<WowFontSystem>>,
+    #[cfg(feature = "gui")]
+    window_size: Option<(u32, u32)>,
     delay: Option<u64>,
     exec_lua: Option<String>,
     exec_lua_secure: bool,

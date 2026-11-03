@@ -320,6 +320,129 @@ fn left_button_up_fires_mouse_up_before_click() {
 }
 
 #[test]
+fn mouse_up_returns_to_each_press_target_without_clicking_outside() {
+    use crate::iced_app::Message;
+    use iced::{Event, Rectangle, Size, mouse, widget::shader};
+
+    let mut app = build_test_app(ScreenKind::Game);
+    app.env
+        .borrow()
+        .exec(
+            r#"
+            MouseReleaseLog = {}
+            local function makeButton(name, x)
+                local frame = CreateFrame("Button", name, UIParent)
+                frame:SetSize(100, 100)
+                frame:SetPoint("TOPLEFT", UIParent, "TOPLEFT", x, -100)
+                frame:RegisterForClicks("LeftButtonUp", "RightButtonUp")
+                frame:SetScript("OnMouseUp", function(_, button, upInside)
+                    table.insert(MouseReleaseLog, name .. ":" .. button .. ":" .. tostring(upInside))
+                end)
+                frame:SetScript("OnClick", function()
+                    table.insert(MouseReleaseLog, name .. ":click")
+                end)
+            end
+            makeButton("MouseReleaseFirst", 100)
+            makeButton("MouseReleaseSecond", 300)
+            "#,
+        )
+        .expect("mouse release buttons should load");
+    rebuild_hittable_cache(&app);
+
+    let first = Point::new(150.0, 150.0);
+    let second = Point::new(350.0, 150.0);
+    let release_outside = |app: &mut App, button: mouse::Button| {
+        let event = Event::Mouse(mouse::Event::ButtonReleased(button));
+        let bounds = Rectangle::new(Point::ORIGIN, Size::new(800.0, 600.0));
+        let cursor = mouse::Cursor::Available(Point::new(850.0, 150.0));
+        let action =
+            <&App as shader::Program<Message>>::update(&&*app, &mut (), &event, bounds, cursor)
+                .expect("ordinary canvas should route the outside release");
+        let (message, _, _) = action.into_inner();
+        let _ = app.update(message.expect("release should publish a message"));
+    };
+    app.handle_mouse_down(first);
+    app.handle_right_mouse_down(second);
+    app.handle_mouse_up(second);
+    assert!(app.env.borrow().state().borrow().mouse_buttons.right);
+    release_outside(&mut app, mouse::Button::Right);
+
+    app.handle_mouse_down(first);
+    release_outside(&mut app, mouse::Button::Left);
+
+    app.handle_mouse_down(first);
+    app.handle_mouse_up(first);
+    app.handle_right_mouse_down(second);
+    app.handle_right_mouse_up(second);
+    app.handle_mouse_up(second);
+
+    let receipts: String = app
+        .env
+        .borrow()
+        .eval("return table.concat(MouseReleaseLog, ';')")
+        .expect("mouse release receipts should be readable");
+    assert_eq!(
+        receipts,
+        concat!(
+            "MouseReleaseFirst:LeftButton:false;",
+            "MouseReleaseSecond:RightButton:false;",
+            "MouseReleaseFirst:LeftButton:false;",
+            "MouseReleaseFirst:LeftButton:true;MouseReleaseFirst:click;",
+            "MouseReleaseSecond:click;MouseReleaseSecond:RightButton:true"
+        ),
+    );
+}
+
+#[test]
+fn clipped_mouse_up_reports_outside_without_clicking() {
+    let mut app = build_test_app(ScreenKind::Game);
+    app.env
+        .borrow()
+        .exec(
+            r#"
+            local parent = CreateFrame("Frame", nil, UIParent)
+            parent:SetSize(100, 100)
+            parent:SetPoint("TOPLEFT", UIParent, "TOPLEFT", 100, -100)
+            parent:SetClipsChildren(true)
+
+            local button = CreateFrame("Button", nil, parent)
+            button:SetSize(100, 100)
+            button:SetPoint("TOPLEFT", parent, "TOPLEFT", 50, 0)
+            button:SetScript("OnMouseUp", function(_, _, upInside)
+                ClippedReleaseInside = upInside
+            end)
+            button:SetScript("OnClick", function() ClippedReleaseClicked = true end)
+            "#,
+        )
+        .unwrap();
+    rebuild_hittable_cache(&app);
+
+    app.handle_mouse_down(Point::new(175.0, 150.0));
+    app.handle_mouse_up(Point::new(225.0, 150.0));
+    app.env
+        .borrow()
+        .exec("assert(ClippedReleaseInside == false and not ClippedReleaseClicked)")
+        .unwrap();
+}
+
+#[test]
+fn outside_release_without_a_game_press_preserves_hover() {
+    let mut app = build_test_app(ScreenKind::Game);
+    setup_pass_through_test_frames(&app);
+    rebuild_hittable_cache(&app);
+    let cursor = Point::new(150.0, 150.0);
+    app.handle_mouse_move(cursor);
+    let hovered = app.hovered_frame;
+    assert!(hovered.is_some());
+
+    app.handle_mouse_up_outside();
+    app.handle_right_mouse_up_outside();
+
+    assert_eq!(app.hovered_frame, hovered);
+    assert_eq!(app.mouse_position, Some(cursor));
+}
+
+#[test]
 fn right_click_handlers_see_held_alt_modifier() {
     let mut app = build_test_app(ScreenKind::Game);
 
@@ -358,6 +481,139 @@ fn right_click_handlers_see_held_alt_modifier() {
         .expect("alt right-click result should be readable");
     assert_eq!(button, "RightButton");
     assert!(alt_seen, "right-click handlers should see held Alt");
+}
+
+#[test]
+fn double_click_on_title_button_opens_content_on_second_release() {
+    let mut app = build_test_app(ScreenKind::Game);
+    app.env
+        .borrow()
+        .exec(
+            r##"
+            DoubleClickContent = CreateFrame("Frame", nil, UIParent)
+            DoubleClickContent:Hide()
+            DoubleClickTrace = ""
+
+            local function header(name, x)
+                local button = CreateFrame("Button", name, UIParent)
+                button:SetSize(100, 40)
+                button:SetPoint("TOPLEFT", UIParent, "TOPLEFT", x, -100)
+                button:RegisterForClicks("LeftButtonUp")
+                button:SetScript("OnDoubleClick", function(self, buttonName, ...)
+                    DoubleClickTarget = self:GetName()
+                    DoubleClickButton = buttonName
+                    DoubleClickExtraArgs = select("#", ...)
+                    DoubleClickTrace = DoubleClickTrace .. "double;"
+                    DoubleClickContent:Show()
+                end)
+            end
+
+            header("DoubleClickNeighbor", 100)
+            header("DoubleClickTitle", 200)
+            DoubleClickNeighbor:SetScript("OnClick", function()
+                DoubleClickTrace = DoubleClickTrace .. "click;"
+            end)
+            DoubleClickNeighbor:SetScript("PostClick", function()
+                DoubleClickTrace = DoubleClickTrace .. "post;"
+            end)
+            "##,
+        )
+        .expect("double-click header setup should succeed");
+    rebuild_hittable_cache(&app);
+
+    let neighbor = Point::new(199.0, 120.0);
+    let title = Point::new(201.0, 120.0);
+    let content_shown = |app: &App| {
+        app.env
+            .borrow()
+            .eval::<bool>("return DoubleClickContent:IsShown()")
+            .expect("content visibility should be readable")
+    };
+
+    app.handle_mouse_down(neighbor);
+    app.handle_mouse_up(neighbor);
+    assert!(
+        !content_shown(&app),
+        "a single click must leave content hidden"
+    );
+
+    app.handle_mouse_down(title);
+    app.handle_mouse_up(title);
+    assert!(
+        !content_shown(&app),
+        "nearby clicks on separate buttons must not pair"
+    );
+
+    app.handle_mouse_down(title);
+    assert!(
+        !content_shown(&app),
+        "LeftButtonUp registration must wait for release"
+    );
+    app.handle_mouse_up(title);
+    assert!(
+        content_shown(&app),
+        "the second title click must open content"
+    );
+    let (target, button, extra_args): (String, String, f64) = app
+        .env
+        .borrow()
+        .eval("return DoubleClickTarget, DoubleClickButton, DoubleClickExtraArgs")
+        .expect("read double-click arguments");
+    assert_eq!(target, "DoubleClickTitle");
+    assert_eq!(button, "LeftButton");
+    assert_eq!(extra_args, 0.0);
+
+    app.handle_mouse_down(neighbor);
+    app.handle_mouse_up(neighbor);
+    app.handle_mouse_down(neighbor);
+    app.handle_mouse_up(neighbor);
+    let trace: String = app
+        .env
+        .borrow()
+        .eval("return DoubleClickTrace")
+        .expect("read click dispatch sequence");
+    assert_eq!(trace, "click;post;double;click;post;double;");
+}
+
+#[test]
+fn right_double_click_dispatches_xml_postcall_without_a_normal_binding() {
+    let mut app = build_test_app(ScreenKind::Game);
+    load_click_xml_addon(
+        &app,
+        r#"
+        <Ui>
+          <Button name="XmlDoubleClick" parent="UIParent" registerForClicks="RightButtonUp">
+            <Size x="100" y="100"/>
+            <Anchors><Anchor point="TOPLEFT" relativeTo="UIParent" relativePoint="TOPLEFT" x="100" y="-100"/></Anchors>
+            <Scripts>
+              <OnClick>XmlClickReceipt(self, button, down)</OnClick>
+              <OnDoubleClick intrinsicOrder="postcall">XmlClickReceipt(self, button, "double")</OnDoubleClick>
+            </Scripts>
+          </Button>
+        </Ui>
+        "#,
+    );
+    app.env
+        .borrow()
+        .exec(
+            r#"
+            assert(XmlDoubleClick:GetScript("OnDoubleClick") == nil)
+            assert(type(XmlDoubleClick:GetScript("OnDoubleClick", 2)) == "function")
+            "#,
+        )
+        .expect("only the XML postcall binding should be installed");
+    rebuild_hittable_cache(&app);
+
+    let position = Point::new(150.0, 150.0);
+    app.handle_right_mouse_down(position);
+    app.handle_right_mouse_up(position);
+    assert_xml_click_receipts(&app, "XmlDoubleClick:RightButton:false");
+    app.handle_right_mouse_down(position);
+    app.handle_right_mouse_up(position);
+    assert_xml_click_receipts(
+        &app,
+        "XmlDoubleClick:RightButton:false;XmlDoubleClick:RightButton:double",
+    );
 }
 
 #[test]

@@ -22,6 +22,19 @@ For a 64×64 mask centered on a 45×45 icon:
 
 If mask size is 0×0 (broken), the full mask (0–1 UV) maps to the icon, clipping visible area at transparent borders.
 
+## Flipped mask coordinates
+
+A screenshot with a flipped mask reproduced a Rust clamp panic with lower
+bound `1.0` and upper bound `0.0`. The renderer used the texture
+endpoints both to interpolate UVs and to bound the result. When an axis
+is flipped, its first endpoint can be greater than its second.
+
+The renderer now uses the smaller and larger endpoint as the clamp bounds
+on each axis. Interpolation keeps the original endpoint order so the
+mask stays flipped, even when the quad extends beyond the mask's screen
+rectangle. The regression exercises both flipped axes and checks the
+exact UV at each of the four corners.
+
 ## Key Behavior: `useAtlasSize` Default
 
 MaskTextures default to `useAtlasSize=true` when not specified in XML. Without this, the mask frame is 0×0 and the full mask texture (including transparent borders) maps to the icon, shrinking the visible area.
@@ -57,6 +70,7 @@ Actual addon/SavedVariables GUI proof shows 35 active and six passive icons with
 ## Sources
 
 - [mask-texture-system.md](../../mask-texture-system.md) — full system description
+- [masking.rs](../../../src/iced_app/masking.rs) — flipped UV clamping and regression
 - `/tmp/pi-spell-icon-mask-evidence.json` — live row/mask evidence and supplied screenshot hash
 - `/tmp/pi-spell-mask-pixels-{red,green}.*` — rendered-pixel RED/GREEN proof
 - `/tmp/pi-spell-icons-after.webp` and `/tmp/pi-spell-icons-gui.json` — actual GUI visual/state proof
@@ -64,6 +78,7 @@ Actual addon/SavedVariables GUI proof shows 35 active and six passive icons with
 
 ## See Also
 
+- [[rendering-pipeline]] — shared quad and shader pipeline
 - [[action-button-icon-mask]] — earlier instance of black-RGB alpha coverage
 - [[action-bar-spell-icons]] — concrete use of IconMask on action buttons
 - [[talent-sheen]] — sheen animation uses MaskTexture for button shape clipping

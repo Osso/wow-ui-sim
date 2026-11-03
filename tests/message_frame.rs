@@ -2,6 +2,23 @@
 
 use wow_ui_sim::lua_api::WowLuaEnv;
 
+#[cfg(feature = "profile-retail")]
+#[test]
+fn remove_messages_by_access_id_is_only_on_message_frames() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        local parent = CreateFrame("Frame")
+        assert(parent:CreateTexture().RemoveMessagesByAccessID == nil)
+        assert(CreateFrame("Button").RemoveMessagesByAccessID == nil)
+        assert(CreateFrame("StatusBar").RemoveMessagesByAccessID == nil)
+        assert(type(CreateFrame("ScrollingMessageFrame").RemoveMessagesByAccessID) == "function")
+        assert(type(CreateFrame("MessageFrame").RemoveMessagesByAccessID) == "function")
+        "#,
+    )
+    .unwrap();
+}
+
 #[test]
 fn test_create_message_frame_type() {
     let env = WowLuaEnv::new().unwrap();
@@ -94,19 +111,26 @@ fn assert_clear_preserves_other_widgets(widget_type: &str) {
 #[test]
 fn clear_message_frame_history_preserves_other_widgets() {
     let env = WowLuaEnv::new().unwrap();
-    env.exec(r#"
+    env.exec(
+        r#"
         PlainClear = CreateFrame('MessageFrame', 'PlainClear')
         PlainOther = CreateFrame('MessageFrame', 'PlainOther')
         PlainClear:AddMessage('discard')
         PlainOther:AddMessage('keep')
         assert(select('#', PlainClear:Clear()) == 0)
-    "#).unwrap();
+    "#,
+    )
+    .unwrap();
     env.fire_on_update(0.0).unwrap();
     let sim = env.state().borrow();
     let cleared = sim.widgets.get_id_by_name("PlainClear").unwrap();
     let other = sim.widgets.get_id_by_name("PlainOther").unwrap();
     assert!(sim.message_frames[&cleared].messages.is_empty());
-    assert!(sim.message_frames[&cleared].pending_wrath_messages.is_empty());
+    assert!(
+        sim.message_frames[&cleared]
+            .pending_wrath_messages
+            .is_empty()
+    );
     assert_eq!(sim.message_frames[&other].messages[0].text, "keep");
 }
 
@@ -231,9 +255,8 @@ fn test_get_message_info() {
     )
     .unwrap();
 
-    let (text, first, second, third): (String, f64, f64, f64) = env
-        .eval("return TestMFInfo:GetMessageInfo(1)")
-        .unwrap();
+    let (text, first, second, third): (String, f64, f64, f64) =
+        env.eval("return TestMFInfo:GetMessageInfo(1)").unwrap();
     assert_eq!(text, "Hello");
     let expected = if cfg!(feature = "client-wrath") {
         [0.0, 0.0, 0.0] // accessID, typeID, extraData
@@ -404,8 +427,11 @@ fn test_text_copyable_set_get() {
 #[test]
 fn test_has_message_by_id() {
     let env = WowLuaEnv::new().unwrap();
-    env.exec(&format!("__SMF_WRATH_NATIVE = {}", cfg!(feature = "client-wrath")))
-        .unwrap();
+    env.exec(&format!(
+        "__SMF_WRATH_NATIVE = {}",
+        cfg!(feature = "client-wrath")
+    ))
+    .unwrap();
 
     env.exec(
         r#"
@@ -676,8 +702,11 @@ fn test_message_frame_transform_and_filter_apis_update_history() {
 #[test]
 fn test_message_frame_fontstring_lookup_and_fade_reset_update_runtime_state() {
     let env = WowLuaEnv::new().unwrap();
-    env.exec(&format!("__SMF_WRATH_NATIVE = {}", cfg!(feature = "client-wrath")))
-        .unwrap();
+    env.exec(&format!(
+        "__SMF_WRATH_NATIVE = {}",
+        cfg!(feature = "client-wrath")
+    ))
+    .unwrap();
     env.exec(
         r#"
         local f = CreateFrame("ScrollingMessageFrame", "TestMFFadeReset", UIParent)

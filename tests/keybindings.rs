@@ -351,6 +351,14 @@ fn c_keybindings_index_resolves_registry_rows() {
 
 #[test]
 fn modified_clicks_round_trip_through_runtime_surface() {
+    #[cfg(feature = "client-retail")]
+    let env = crate::common::blizzard_addon_harness::build_blizzard_addon_closure_env(
+        &crate::common::blizzard_addon_harness::blizzard_ui_dir(),
+        &["Blizzard_FrameXML"],
+        &[],
+    )
+    .0;
+    #[cfg(not(feature = "client-retail"))]
     let env = env();
     let (default_self_cast, updated_self_cast, unknown_default): (String, String, String) = env
         .eval(

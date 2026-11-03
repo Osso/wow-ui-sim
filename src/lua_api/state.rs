@@ -227,6 +227,7 @@ macro_rules! build_empty_sim_state {
             model_scenes: HashMap::new(),
             active_player_interactions: HashSet::new(),
             outdoor_pvp_world_state: Default::default(),
+            track_trivial_quests: false,
             battleground_enlistment: Default::default(),
             pvp_reward_caches: Default::default(),
             #[cfg(feature = "retail-12-0-5")]
@@ -571,7 +572,6 @@ macro_rules! build_empty_sim_state {
             quest_detail_reward_spells: None,
             #[cfg(feature = "retail-12-0-5")]
             quest_favor: Default::default(),
-            #[cfg(feature = "retail-12-0-7")]
             quest_short_expiration_warnings: ::std::collections::HashSet::new(),
             abandon_quest_id: None,
             tracked_achievements: Vec::new(),

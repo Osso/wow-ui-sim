@@ -1,7 +1,9 @@
 //! Quest queries projected from explicitly supplied simulator state.
 
 use super::helpers::{ensure_namespace, validate_supplied_relation_id};
+use crate::client_profile::{ACTIVE, ClientProfile};
 use crate::lua_api::methods::{borrow_state, val_to_string};
+use crate::lua_api::workarounds::update_campaign_headers;
 use crate::lua_bridge::{stack_val, table_set_rust_fn_static};
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
@@ -19,9 +21,10 @@ pub struct QuestAdditionalHighlights {
 pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
     super::c_map_bounties::register_quest_queries(state)?;
     let namespace = ensure_namespace(state, "C_QuestLog")?;
-    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
+    if ACTIVE == ClientProfile::Retail {
         table_set_rust_fn_static(state, namespace, "CanAbandonQuest", can_abandon_quest)?;
-        // QuestLogDocumentation.lua:1033,1269.
+    }
+    if matches!(ACTIVE, ClientProfile::Retail | ClientProfile::WowForever) {
         table_set_rust_fn_static(
             state,
             namespace,
@@ -105,6 +108,7 @@ fn register_forever_queries(state: &mut LuaState) -> LuaResult<()> {
         "GetQuestDifficultyLevel",
         get_quest_difficulty_level,
     )?;
+    table_set_rust_fn_static(state, namespace, "IsEliteQuest", is_elite_quest)?;
     Ok(())
 }
 
@@ -138,11 +142,6 @@ fn quest_can_have_war_mode_bonus(state: &mut LuaState) -> LuaResult<u32> {
     };
     state.push(Val::Bool(eligible));
     Ok(1)
-}
-
-fn update_campaign_headers(_state: &mut LuaState) -> LuaResult<u32> {
-    // Campaign-header membership and ordering are not modeled.
-    Ok(0)
 }
 
 fn is_unit_on_quest(state: &mut LuaState) -> LuaResult<u32> {
@@ -217,6 +216,22 @@ fn get_quest_difficulty_level(state: &mut LuaState) -> LuaResult<u32> {
         ))
     })?;
     state.push(Val::Num(f64::from(level)));
+    Ok(1)
+}
+
+#[cfg(feature = "client-wowforever")]
+fn is_elite_quest(state: &mut LuaState) -> LuaResult<u32> {
+    // Forever's QuestConstantsDocumentation declares this tag as QUEST_INFO_ELITE_ID.
+    const ELITE_TAG_ID: i32 = 1;
+    let value = rilua::table_security::unwrap_secret(state, stack_val(state, 1))?;
+    let quest_id =
+        validate_supplied_relation_id(value, "C_QuestLog.IsEliteQuest: questID must be a number")?;
+    let is_elite = borrow_state(state)?
+        .quest_log_entries
+        .entries
+        .iter()
+        .any(|entry| Some(entry.quest_id) == quest_id && entry.tag_id == Some(ELITE_TAG_ID));
+    state.push(Val::Bool(is_elite));
     Ok(1)
 }
 

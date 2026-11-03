@@ -272,6 +272,11 @@ fn write_addon(root: &Path, name: &str, metadata: &str, files: &[(&str, &str)]) 
 
 fn run_cli(root: &Path, no_addons: bool, code: &str) -> Output {
     let session = tempfile::tempdir().expect("create CLI session directory");
+    let wtf = session.path().join("source-wtf");
+    std::fs::create_dir_all(
+        wtf.join("Account/LuaErrorCliAccount/LuaErrorCliRealm/LuaErrorCliCharacter"),
+    )
+    .expect("create selected WTF character directory");
     let mut command = Command::new("timeout");
     command.args(["90", env!("CARGO_BIN_EXE_wow-sim"), "--no-saved-vars"]);
     command.arg("--session-wtf-path").arg(session.path());
@@ -284,7 +289,7 @@ fn run_cli(root: &Path, no_addons: bool, code: &str) -> Output {
         .env_remove("WOW_SIM_NO_ADDONS")
         .env_remove("WOW_SIM_LOAD_OUT_OF_DATE_ADDONS")
         .env("WOW_SIM_ADDONS_PATH", root)
-        .env("WOW_SIM_WTF_PATH", root)
+        .env("WOW_SIM_WTF_PATH", wtf)
         .env("WOW_SIM_WTF_ACCOUNT", "LuaErrorCliAccount")
         .env("WOW_SIM_WTF_REALM", "LuaErrorCliRealm")
         .env("WOW_SIM_WTF_CHARACTER", "LuaErrorCliCharacter")

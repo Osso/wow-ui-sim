@@ -84,7 +84,7 @@ fn hittable_rect(
     f: &crate::widget::Frame,
     offsets: &mut crate::layout::ScrollOffsetCache,
 ) -> Option<iced::Rectangle> {
-    if !f.accepts_mouse() || !registry.is_ancestor_visible(id) {
+    if !f.has_hit_grid_input() || !registry.is_ancestor_visible(id) {
         return None;
     }
     if !crate::layout::frame_has_render_layout(registry, id) {

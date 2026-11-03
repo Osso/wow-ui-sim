@@ -60,8 +60,9 @@ fn currency_flags_publish_no_bonus_xp_and_retain_old_members() {
 
 #[test]
 fn illusion_flags_publish_ranged_permission_and_retain_old_members() {
-    let ptr = cfg!(feature = "client-ptr");
-    let expected = if ptr {
+    // Retail 12.1.5: TransmogSharedDocumentation.lua:53-56.
+    let later_epoch = cfg!(feature = "retail-12-1-5");
+    let expected = if later_epoch {
         "{ HideUntilCollected=1, PlayerConditionGrantsOnLogin=2,
         AllowedRangedShieldsHoldables=4, HiddenIllusion=8 }"
     } else {
@@ -71,9 +72,9 @@ fn illusion_flags_publish_ranged_permission_and_retain_old_members() {
     assert_publication(
         "TransmogIllusionFlags",
         expected,
-        if ptr { 4 } else { 3 },
+        if later_epoch { 4 } else { 3 },
         1,
-        if ptr { 8 } else { 4 },
+        if later_epoch { 8 } else { 4 },
     );
 }
 
@@ -200,12 +201,13 @@ fn edit_mode_unit_frame_settings_publish_big_defensive_icon_size() {
 #[test]
 #[cfg(feature = "client-retail")]
 fn fragments_publish_dynamic_pathing_links_and_housing_decor_proxy_tag() {
-    // WowCSConstantsDocumentation.lua:6-90; source deltas:584-585.
-    assert_current_publication(
-        "FragmentID",
-        "{ FPathingDynamicLinks=40, TagHousingDecorProxyGameObject=226 }",
-        "{}",
-    );
+    // Retail 12.1.5: WowCSConstantsDocumentation.lua:53-54,84.
+    let expected = if cfg!(feature = "retail-12-1-5") {
+        "{ FPathingDynamicLinks=41, TagHousingDecorProxyGameObject=226 }"
+    } else {
+        "{ FPathingDynamicLinks=40, TagHousingDecorProxyGameObject=226 }"
+    };
+    assert_current_publication("FragmentID", expected, "{}");
 }
 
 #[test]

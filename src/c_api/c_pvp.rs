@@ -84,6 +84,7 @@ pub(crate) fn register_c_pvp_surface(state: &mut LuaState) -> LuaResult<()> {
             | crate::client_profile::ClientProfile::WowForever
     ) {
         crate::lua_bridge::table_set_rust_fn_static(state, ns, "IsMatchActive", is_match_active)?;
+        outdoor_wait_state::register(state, ns)?;
     }
     #[cfg(feature = "retail-12-0-0")]
     if matches!(
@@ -105,7 +106,6 @@ pub(crate) fn register_c_pvp_surface(state: &mut LuaState) -> LuaResult<()> {
     }
     if cfg!(any(feature = "client-retail", feature = "client-ptr")) {
         war_mode::register(state, ns)?;
-        outdoor_wait_state::register(state, ns)?;
     }
     if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::WowForever {
         crate::lua_bridge::table_set_rust_fn_static(

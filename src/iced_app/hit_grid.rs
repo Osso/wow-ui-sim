@@ -106,17 +106,26 @@ impl HitGrid {
     where
         F: FnMut(u64) -> bool,
     {
+        self.topmost_target_at(pos, |id| predicate(id).then_some(id))
+    }
+
+    /// Select a target from the first containing frame that yields one.
+    pub(super) fn topmost_target_at(
+        &self,
+        pos: Point,
+        select: impl FnMut(u64) -> Option<u64>,
+    ) -> Option<u64> {
         let col = ((pos.x / CELL_SIZE) as usize).min(self.cols.saturating_sub(1));
         let row = ((pos.y / CELL_SIZE) as usize).min(self.rows.saturating_sub(1));
         let cell = &self.cells[row * self.cols + col];
         cell.iter()
             .rev()
-            .find(|&&id| self.rects.get(&id).is_some_and(|r| r.contains(pos)) && predicate(id))
             .copied()
+            .filter(|id| self.rects.get(id).is_some_and(|rect| rect.contains(pos)))
+            .find_map(select)
     }
 
     /// Check if a frame is in the hittable set and contains `pos` (Phase 2).
-    #[cfg(test)]
     pub fn contains(&self, id: u64, pos: Point) -> bool {
         self.rects.get(&id).is_some_and(|r| r.contains(pos))
     }

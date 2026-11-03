@@ -46,6 +46,10 @@ impl App {
             return ipc_task;
         }
         let task = match message {
+            Message::InitialWindowSized => {
+                self.initial_window_size_pending = false;
+                request_redraw_task()
+            }
             Message::CanvasEvent(cm) => self.handle_canvas_event(cm),
             Message::ProcessTimers(captured_at) => self.handle_process_timers(captured_at),
             msg => self.dispatch_simple_message(msg),
@@ -96,12 +100,19 @@ impl App {
             Message::RotDamageLevelChanged(ref label) => {
                 self.handle_rot_damage_level_changed(label)
             }
+            Message::ToggleSimulatorControls => {
+                self.simulator_controls_visible = !self.simulator_controls_visible;
+                if !self.simulator_controls_visible {
+                    self.options_modal_visible = false;
+                }
+            }
             Message::ToggleOptionsModal => self.options_modal_visible = !self.options_modal_visible,
             Message::CloseOptionsModal => self.options_modal_visible = false,
             Message::MovementToggled(field, val) => self.handle_movement_toggled(field, val),
             Message::ModifiersChanged(modifiers) => self.handle_modifiers_changed(modifiers),
             // Handled before dispatch_non_key_message() or directly in update():
             Message::CloseRequested
+            | Message::InitialWindowSized
             | Message::KeyPress(_, _, _)
             | Message::KeyRelease(_)
             | Message::CanvasEvent(_)
@@ -201,8 +212,10 @@ impl App {
             CanvasMessage::MouseLeave => self.handle_mouse_leave(),
             CanvasMessage::MouseDown(pos) => self.handle_mouse_down(pos),
             CanvasMessage::MouseUp(pos) => self.handle_mouse_up(pos),
+            CanvasMessage::MouseUpOutside => self.handle_mouse_up_outside(),
             CanvasMessage::RightMouseDown(pos) => self.handle_right_mouse_down(pos),
             CanvasMessage::RightMouseUp(pos) => self.handle_right_mouse_up(pos),
+            CanvasMessage::RightMouseUpOutside => self.handle_right_mouse_up_outside(),
             CanvasMessage::MiddleClick(pos) => self.handle_middle_click(pos),
         }
         if self.canvas_event_needs_redraw(is_mouse_move) {

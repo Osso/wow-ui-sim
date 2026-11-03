@@ -102,14 +102,26 @@ if rawget(C_EditMode, "GetAccountSettings") == nil then
     return tokens
   end
 
-  local function __wow_edit_mode_read(tokens, cursor)
-    return tokens[cursor], cursor + 1
+  local function __wow_edit_mode_read(text, cursor)
+    local first, last = string.find(text, "%S+", cursor)
+    if first then
+      return string.sub(text, first, last), last + 1
+    end
+    return nil, #text + 1
   end
 
-  local function __wow_edit_mode_read_number(tokens, cursor, fallback)
+  local function __wow_edit_mode_read_number(text, cursor)
     local token
-    token, cursor = __wow_edit_mode_read(tokens, cursor)
-    return tonumber(token) or fallback or 0, cursor
+    token, cursor = __wow_edit_mode_read(text, cursor)
+    return tonumber(token), cursor
+  end
+
+  local function __wow_edit_mode_read_count(text, cursor)
+    local count
+    count, cursor = __wow_edit_mode_read_number(text, cursor)
+    if count and count >= 0 and count % 1 == 0 then
+      return count, cursor
+    end
   end
 
   local function __wow_edit_mode_decode_settings(encoded)
@@ -143,22 +155,27 @@ if rawget(C_EditMode, "GetAccountSettings") == nil then
     return settings
   end
 
-  local function __wow_edit_mode_parse_system(tokens, cursor)
+  local function __wow_edit_mode_parse_system(text, cursor)
     local system, systemIndex, isInDefaultPosition, point, relativePoint
-    local relativeTo, offsetX, offsetY, settingsText
-    system, cursor = __wow_edit_mode_read_number(tokens, cursor)
-    systemIndex, cursor = __wow_edit_mode_read_number(tokens, cursor, -1)
+    local relativeTo, offsetX, offsetY, secondaryAnchor, settingsText
+    system, cursor = __wow_edit_mode_read_number(text, cursor)
+    systemIndex, cursor = __wow_edit_mode_read_number(text, cursor)
+    isInDefaultPosition, cursor = __wow_edit_mode_read_number(text, cursor)
+    point, cursor = __wow_edit_mode_read_number(text, cursor)
+    relativePoint, cursor = __wow_edit_mode_read_number(text, cursor)
+    relativeTo, cursor = __wow_edit_mode_read(text, cursor)
+    offsetX, cursor = __wow_edit_mode_read_number(text, cursor)
+    offsetY, cursor = __wow_edit_mode_read_number(text, cursor)
+    secondaryAnchor, cursor = __wow_edit_mode_read(text, cursor)
+    settingsText, cursor = __wow_edit_mode_read(text, cursor)
+    if not (system and systemIndex and isInDefaultPosition and point and relativePoint
+        and relativeTo and not tonumber(relativeTo) and offsetX and offsetY
+        and secondaryAnchor and settingsText) then
+      return nil, cursor
+    end
     if systemIndex >= 0 then
       systemIndex = systemIndex + 1
     end
-    isInDefaultPosition, cursor = __wow_edit_mode_read_number(tokens, cursor)
-    point, cursor = __wow_edit_mode_read_number(tokens, cursor)
-    relativePoint, cursor = __wow_edit_mode_read_number(tokens, cursor)
-    relativeTo, cursor = __wow_edit_mode_read(tokens, cursor)
-    offsetX, cursor = __wow_edit_mode_read_number(tokens, cursor)
-    offsetY, cursor = __wow_edit_mode_read_number(tokens, cursor)
-    _, cursor = __wow_edit_mode_read(tokens, cursor)
-    settingsText, cursor = __wow_edit_mode_read(tokens, cursor)
 
     local statusTrackingSystem = Enum and Enum.EditModeSystem
       and Enum.EditModeSystem.StatusTrackingBar
@@ -171,7 +188,7 @@ if rawget(C_EditMode, "GetAccountSettings") == nil then
       isInDefaultPosition = isInDefaultPosition ~= 0,
       anchorInfo = {
         point = __wow_edit_mode_frame_points[point] or "CENTER",
-        relativeTo = relativeTo or "UIParent",
+        relativeTo = relativeTo,
         relativePoint = __wow_edit_mode_frame_points[relativePoint] or "CENTER",
         offsetX = offsetX,
         offsetY = offsetY,
@@ -180,44 +197,91 @@ if rawget(C_EditMode, "GetAccountSettings") == nil then
     }, cursor
   end
 
-  local function __wow_edit_mode_parse_account_cache(text)
-    local tokens = __wow_edit_mode_tokens(text)
-    local cursor = 1
-    local layoutCount, accountSettingCount
-    layoutCount, cursor = __wow_edit_mode_read_number(tokens, cursor)
-    accountSettingCount, cursor = __wow_edit_mode_read_number(tokens, cursor)
-
-    local accountSettings = {}
-    for setting = 0, accountSettingCount - 1 do
-      local value
-      value, cursor = __wow_edit_mode_read_number(tokens, cursor)
-      table.insert(accountSettings, { setting = setting, value = value })
+  local function __wow_edit_mode_read_layout_name(text, cursor, byteCount)
+    local afterName = cursor + byteCount + 1
+    if byteCount > 0 and afterName <= #text and string.find(text, "^%s", cursor)
+        and string.find(text, "^%s", afterName) then
+      return string.sub(text, cursor + 1, afterName - 1), afterName
     end
+  end
 
+  local function __wow_edit_mode_read_layouts(text, cursor, layoutCount, hasMetadata)
     local layouts = {}
-    local missingLayouts = false
     for _ = 1, layoutCount do
-      if cursor > #tokens then
-        missingLayouts = true
-        break
+      local layoutStart = cursor
+      local prefix, afterPrefix = __wow_edit_mode_read(text, cursor)
+      if not prefix then
+        return layouts, layoutStart
       end
-      local layoutIndex, layoutName, systemCount
-      layoutIndex, cursor = __wow_edit_mode_read_number(tokens, cursor)
-      layoutName, cursor = __wow_edit_mode_read(tokens, cursor)
-      systemCount, cursor = __wow_edit_mode_read_number(tokens, cursor)
+      local prefixNumber = tonumber(prefix)
+      if not prefixNumber or prefixNumber < 0 or prefixNumber % 1 ~= 0 then
+        return layouts, layoutStart
+      end
+      local layoutName, afterName, layoutIndex
+      if hasMetadata then
+        -- Forever stores a numeric field between the byte-counted name and system count.
+        layoutName, afterName = __wow_edit_mode_read_layout_name(text, afterPrefix, prefixNumber)
+        if not layoutName then return layouts, layoutStart end
+        local metadata
+        metadata, afterName = __wow_edit_mode_read_count(text, afterName)
+        if not metadata then return layouts, layoutStart end
+      else
+        -- Older inputs also use this field as an explicit index with a single-token name.
+        layoutIndex = prefixNumber
+        layoutName, afterName = __wow_edit_mode_read(text, afterPrefix)
+      end
+      local systemCount
+      systemCount, cursor = __wow_edit_mode_read_count(text, afterName)
+      if not (layoutName and systemCount) then return layouts, layoutStart end
       local systems = {}
       for systemIndex = 1, systemCount do
-        systems[systemIndex], cursor = __wow_edit_mode_parse_system(tokens, cursor)
+        local system
+        system, cursor = __wow_edit_mode_parse_system(text, cursor)
+        if not system then return layouts, layoutStart end
+        -- Blizzard looks up singleton systems such as ChatFrame with no index.
+        if hasMetadata and system.systemIndex == -1 then
+          system.systemIndex = nil
+        end
+        systems[systemIndex] = system
       end
       table.insert(layouts, {
         layoutIndex = layoutIndex,
-        layoutName = layoutName or "",
+        layoutName = layoutName,
         layoutType = Enum.EditModeLayoutType.Account,
         systems = systems,
       })
     end
 
-    return layouts, accountSettings, missingLayouts
+    return layouts, cursor
+  end
+
+  local function __wow_edit_mode_parse_account_cache(text)
+    if type(text) ~= "string" then return {}, {}, false end
+    text = string.gsub(text, "%z", "")
+    local layoutCount, cursor = __wow_edit_mode_read_count(text, 1)
+    if not layoutCount then return {}, {}, false end
+    local accountSettingCount
+    accountSettingCount, cursor = __wow_edit_mode_read_count(text, cursor)
+    if not accountSettingCount then return {}, {}, layoutCount > 0 end
+
+    local accountSettings = {}
+    for setting = 0, accountSettingCount - 1 do
+      local value
+      value, cursor = __wow_edit_mode_read_number(text, cursor)
+      if not value then return {}, accountSettings, layoutCount > 0 end
+      table.insert(accountSettings, { setting = setting, value = value })
+    end
+
+    local layouts, layoutsEnd = __wow_edit_mode_read_layouts(text, cursor, layoutCount, true)
+    if __wow_edit_mode_read(text, layoutsEnd) then
+      local legacy, legacyEnd = __wow_edit_mode_read_layouts(text, cursor, layoutCount, false)
+      -- A truncated record can leave both formats with the same number of
+      -- layouts. Prefer the one that consumed more of the complete records.
+      if legacyEnd >= layoutsEnd then
+        layouts = legacy
+      end
+    end
+    return layouts, accountSettings, #layouts < layoutCount
   end
 
   local function __wow_edit_mode_active_layout_from_character_cache(text, activeSpecIndex)

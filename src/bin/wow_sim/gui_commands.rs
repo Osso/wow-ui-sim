@@ -14,12 +14,13 @@ pub(super) fn run_gui(dispatch: CommandDispatch) -> Result<(), Box<dyn std::erro
     #[cfg(feature = "casc")]
     wow_ui_sim::asset_resolver_config::prepare_gui_casc_resolution_cache()?;
     let debug_options = dispatch.debug_options();
-    wow_ui_sim::run_iced_ui(
+    wow_ui_sim::iced_app::run_iced_ui_with_window_size(
         dispatch.env,
         debug_options,
         dispatch.saved_vars,
         dispatch.exec_lua,
         dispatch.exec_lua_secure,
+        dispatch.window_size,
     )
 }
 
