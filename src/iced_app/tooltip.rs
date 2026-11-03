@@ -405,12 +405,18 @@ fn collect_tooltip_lines(
         .iter()
         .enumerate()
         .map(|(i, line)| {
-            let hidden = matches!(
+            let native = matches!(
                 crate::client_profile::ACTIVE,
                 crate::client_profile::ClientProfile::Retail
                     | crate::client_profile::ClientProfile::Ptr
-            ) && td.left_line_is_hidden(widgets, i);
-            tooltip_line_render(i, line, alpha, hidden)
+            );
+            tooltip_line_render(
+                i,
+                line,
+                alpha,
+                native && td.left_line_is_hidden(widgets, i),
+                native && td.right_line_is_hidden(widgets, i),
+            )
         })
         .collect()
 }
@@ -420,6 +426,7 @@ fn tooltip_line_render(
     line: &crate::lua_api::tooltip::TooltipLine,
     alpha: f32,
     left_hidden: bool,
+    right_hidden: bool,
 ) -> TooltipLineRender {
     let left_color = [
         line.left_color.0,
@@ -438,7 +445,11 @@ fn tooltip_line_render(
         left_hidden,
         left_color,
         left_segments: tooltip_text_segment_renders(&line.left_segments, alpha),
-        right_text: line.right_text.clone(),
+        right_text: if right_hidden {
+            None
+        } else {
+            line.right_text.clone()
+        },
         right_color,
         right_segments: tooltip_text_segment_renders(&line.right_segments, alpha),
         font_size: tooltip_line_font_size(index),
