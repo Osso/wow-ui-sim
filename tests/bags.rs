@@ -280,6 +280,26 @@ fn test_bag_env_loads_real_backpack_token_tracker() {
 
 #[test]
 fn test_bags_open_with_items() {
+    if common::action_bar_fixture::is_wrath() {
+        let env = common::action_bar_fixture::wrath_env();
+        // Wrath FrameXML/ContainerFrame.lua:56 and :360 open legacy bag frames.
+        env.exec(
+            r#"
+            A_Admin.AddBagItem(0, 5, 6948, 1)
+            ToggleBackpack()
+            assert(IsBagOpen(0), "backpack should be open")
+            local count = 0
+            for slot = 1, 16 do
+                if GetContainerItemInfo(0, slot) then count = count + 1 end
+            end
+            assert(count == 5, "backpack should contain five items")
+            assert(string.find(GetContainerItemLink(0, 1), "Hearthstone", 1, true))
+            assert(GetContainerItemLink(0, 6) == nil)
+            "#,
+        )
+        .expect("original Wrath backpack should open with supplied items");
+        return;
+    }
     let env = setup_env();
     install_test_error_handler(&env);
     clear_recorded_lua_errors(&env);
