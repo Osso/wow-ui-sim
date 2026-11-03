@@ -117,6 +117,30 @@ fn customization_tooltip_places_first_text_at_native_padding_anchor() {
 
 #[cfg(any(feature = "client-retail", feature = "client-ptr"))]
 #[test]
+fn blizzard_double_line_reserves_native_column_gap() {
+    let env = setup_full_env();
+    env.exec(
+        r#"
+        GameTooltip:SetOwner(UIParent, "ANCHOR_NONE")
+        assert(GameTooltip:ProcessInfo({ tooltipData = { lines = {
+            { type = 0, leftText = "First", rightText = "Value" },
+        } } }))
+    "#,
+    )
+    .unwrap();
+    let width: f32 = env.eval("return GameTooltip:GetWidth()").unwrap();
+    let mut font = wow_ui_sim::render::WowFontSystem::new();
+    let left = font.measure_text_width("First", None, 14.0);
+    let right = font.measure_text_width("Value", None, 14.0);
+    let expected = left + right + 38.4 + 20.48;
+    assert!(
+        (width - expected).abs() < 0.01,
+        "width {width} must include native two-column reservation {expected}"
+    );
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
+#[test]
 fn blizzard_line_handler_anchors_indexed_rows_and_right_column() {
     let env = setup_full_env();
     env.exec(
