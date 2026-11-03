@@ -99,31 +99,40 @@ fn message_from_keyboard_event(
 fn input_subscription(fixed_display: bool) -> Subscription<Message> {
     if fixed_display {
         iced::event::listen_with(|event, status, _window| {
-            use iced::keyboard::{Event, Key, Modifiers, key::Named};
-
-            // An interactive overlay can capture the release before the game shader sees it.
-            if status == iced::event::Status::Captured
-                && let iced::Event::Mouse(iced::mouse::Event::ButtonReleased(button)) = &event
-            {
-                return CanvasMessage::mouse_up_outside(*button).map(Message::CanvasEvent);
-            }
-            if let iced::Event::Keyboard(Event::KeyPressed {
-                key: Key::Named(Named::F11),
-                modifiers,
-                repeat,
-                ..
-            }) = &event
-                && *modifiers == (Modifiers::CTRL | Modifiers::SHIFT)
-            {
-                return (!*repeat).then_some(Message::ToggleSimulatorControls);
-            }
-            message_from_keyboard_event(&event, status)
+            message_from_input_event(&event, status, true)
         })
     } else {
         iced::event::listen_with(|event, status, _window| {
-            message_from_keyboard_event(&event, status)
+            message_from_input_event(&event, status, false)
         })
     }
+}
+
+fn message_from_input_event(
+    event: &iced::Event,
+    status: iced::event::Status,
+    fixed_display: bool,
+) -> Option<Message> {
+    use iced::keyboard::{Event, Key, Modifiers, key::Named};
+
+    // An interactive overlay can capture the release before the game shader sees it.
+    if status == iced::event::Status::Captured
+        && let iced::Event::Mouse(iced::mouse::Event::ButtonReleased(button)) = event
+    {
+        return CanvasMessage::mouse_up_outside(*button).map(Message::CanvasEvent);
+    }
+    if fixed_display
+        && let iced::Event::Keyboard(Event::KeyPressed {
+            key: Key::Named(Named::F11),
+            modifiers,
+            repeat,
+            ..
+        }) = event
+        && *modifiers == (Modifiers::CTRL | Modifiers::SHIFT)
+    {
+        return (!*repeat).then_some(Message::ToggleSimulatorControls);
+    }
+    message_from_keyboard_event(event, status)
 }
 
 fn timer_subscription(interval: std::time::Duration) -> Subscription<Message> {
@@ -769,7 +778,30 @@ fn truncate_sidebar_label(display: String) -> String {
 
 #[cfg(test)]
 mod tests {
-    use super::console_text_from_log_messages;
+    use super::{CanvasMessage, Message, console_text_from_log_messages, message_from_input_event};
+
+    #[test]
+    fn captured_control_releases_route_to_canvas_in_both_modes() {
+        use iced::{Event, event::Status, mouse};
+
+        for fixed_display in [false, true] {
+            for button in [mouse::Button::Left, mouse::Button::Right] {
+                let event = Event::Mouse(mouse::Event::ButtonReleased(button));
+                let message = message_from_input_event(&event, Status::Captured, fixed_display);
+                assert!(matches!(
+                    (button, message),
+                    (
+                        mouse::Button::Left,
+                        Some(Message::CanvasEvent(CanvasMessage::MouseUpOutside))
+                    ) | (
+                        mouse::Button::Right,
+                        Some(Message::CanvasEvent(CanvasMessage::RightMouseUpOutside))
+                    )
+                ));
+                assert!(message_from_input_event(&event, Status::Ignored, fixed_display).is_none());
+            }
+        }
+    }
 
     #[test]
     fn console_text_includes_full_scrollback_without_truncation() {

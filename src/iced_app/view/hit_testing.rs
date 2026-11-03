@@ -3,6 +3,25 @@ use crate::layout::ScrollOffsetCache;
 use rustc_hash::FxHashSet;
 
 impl App {
+    pub(crate) fn mouse_release_inside(&self, frame_id: u64, pos: iced::Point) -> bool {
+        if !self
+            .cached_hittable
+            .borrow()
+            .as_ref()
+            .is_some_and(|grid| grid.contains(frame_id, pos))
+        {
+            return false;
+        }
+        let env = self.env.borrow();
+        let state = env.state().borrow();
+        ancestor_clips_contain(
+            &state.widgets,
+            frame_id,
+            pos,
+            &mut ScrollOffsetCache::default(),
+        )
+    }
+
     /// Hit test to find frame under cursor (uses cached rects from render pass).
     ///
     /// After finding the topmost frame at the cursor position (highest strata/level),

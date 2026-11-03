@@ -116,7 +116,6 @@ impl HitGrid {
     }
 
     /// Check if a frame is in the hittable set and contains `pos` (Phase 2).
-    #[cfg(test)]
     pub fn contains(&self, id: u64, pos: Point) -> bool {
         self.rects.get(&id).is_some_and(|r| r.contains(pos))
     }

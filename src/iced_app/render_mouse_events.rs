@@ -4,7 +4,7 @@ use iced::{Point, Rectangle, Size, mouse};
 use super::super::Message;
 use super::super::state::CanvasMessage;
 
-/// Map a mouse event inside `bounds` to a canvas message action.
+/// Map a mouse event to a canvas message action.
 pub(super) fn handle_mouse_event(
     mouse_event: &mouse::Event,
     bounds: Rectangle,
@@ -34,14 +34,7 @@ pub(super) fn handle_mouse_event(
         }
         mouse::Event::CursorLeft => publish_canvas_event(CanvasMessage::MouseLeave),
         mouse::Event::ButtonPressed(button) => handle_button_pressed(*button, cursor_position()),
-        mouse::Event::ButtonReleased(button) => {
-            let position = cursor_position();
-            if scene_size.is_some() && position.is_none() {
-                CanvasMessage::mouse_up_outside(*button).and_then(publish_canvas_event)
-            } else {
-                handle_button_released(*button, position)
-            }
-        }
+        mouse::Event::ButtonReleased(button) => handle_button_released(*button, cursor_position()),
         mouse::Event::WheelScrolled { delta } if scene_size.is_none() || cursor.is_over(bounds) => {
             publish_scroll_event(delta)
         }
@@ -67,13 +60,13 @@ fn handle_button_released(
     button: mouse::Button,
     position: Option<Point>,
 ) -> Option<shader::Action<Message>> {
-    let to_message = match button {
-        mouse::Button::Left => CanvasMessage::MouseUp,
-        mouse::Button::Right => CanvasMessage::RightMouseUp,
+    let message = match (button, position) {
+        (mouse::Button::Left, Some(position)) => CanvasMessage::MouseUp(position),
+        (mouse::Button::Right, Some(position)) => CanvasMessage::RightMouseUp(position),
+        (button, None) => CanvasMessage::mouse_up_outside(button)?,
         _ => return None,
     };
-
-    publish_cursor_event(position, to_message)
+    publish_canvas_event(message)
 }
 
 fn publish_cursor_event(

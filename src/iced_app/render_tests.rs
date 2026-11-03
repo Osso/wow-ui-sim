@@ -72,34 +72,36 @@ mod tests {
     }
 
     #[test]
-    fn window_size_routes_letterbox_releases_and_covered_pointer_motion() {
+    fn canvas_routes_outside_releases_in_both_modes() {
         let bounds = Rectangle::new(Point::new(20.0, 40.0), Size::new(1600.0, 900.0));
-        let scene = Some(Size::new(1365.3334, 768.0));
+        let fixed_scene = Some(Size::new(1365.3334, 768.0));
         let letterbox_cursor = mouse::Cursor::Available(Point::new(15.0, 200.0));
-
-        for button in [mouse::Button::Left, mouse::Button::Right] {
-            let event = mouse::Event::ButtonReleased(button);
-            let message = handle_mouse_event(&event, bounds, letterbox_cursor, scene)
-                .unwrap()
-                .into_inner()
-                .0;
-            assert!(matches!(
-                (button, message),
-                (
-                    mouse::Button::Left,
-                    Some(Message::CanvasEvent(CanvasMessage::MouseUpOutside))
-                ) | (
-                    mouse::Button::Right,
-                    Some(Message::CanvasEvent(CanvasMessage::RightMouseUpOutside))
-                )
-            ));
-            assert!(handle_mouse_event(&event, bounds, letterbox_cursor, None).is_none());
+        let position = Point::new(100.0, 100.0);
+        let covered = mouse::Cursor::Levitating(position);
+        for scene_size in [None, fixed_scene] {
+            for cursor in [letterbox_cursor, covered, mouse::Cursor::Unavailable] {
+                for button in [mouse::Button::Left, mouse::Button::Right] {
+                    let event = mouse::Event::ButtonReleased(button);
+                    let message = handle_mouse_event(&event, bounds, cursor, scene_size)
+                        .unwrap()
+                        .into_inner()
+                        .0;
+                    assert!(matches!(
+                        (button, message),
+                        (
+                            mouse::Button::Left,
+                            Some(Message::CanvasEvent(CanvasMessage::MouseUpOutside))
+                        ) | (
+                            mouse::Button::Right,
+                            Some(Message::CanvasEvent(CanvasMessage::RightMouseUpOutside))
+                        )
+                    ));
+                }
+            }
         }
 
-        let position = Point::new(100.0, 100.0);
         let event = mouse::Event::CursorMoved { position };
-        let covered = mouse::Cursor::Levitating(position);
-        let message = handle_mouse_event(&event, bounds, covered, scene)
+        let message = handle_mouse_event(&event, bounds, covered, fixed_scene)
             .unwrap()
             .into_inner()
             .0;

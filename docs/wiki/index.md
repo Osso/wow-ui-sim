@@ -605,7 +605,7 @@ mapping remains unknown. Producer and tests staged only; no build/slot/runtime p
 
 ## [2026-10-18] investigation | Original sizing capture and release
 
-[Mouse sizing diagnosis](investigations/mouse-sizing-capture.md) links original-consumer geometry/release RED→GREEN and the registered-drag boundary. [AsyncRequest correlation](../specs/timer-callback-provenance.md#original-asyncrequest-correlation--bounded-retail-proof) records both-mode original-source/owner/ID proof and negative fixture controls, without a timer producer change.
+[Mouse sizing diagnosis](investigations/mouse-sizing-capture.md) links original-consumer geometry/release RED→GREEN and the registered-drag boundary. The [canvas release follow-up](investigations/mouse-sizing-capture.md#release-outside-the-game-canvas) describes release delivery in ordinary and fixed-resolution modes. [AsyncRequest correlation](../specs/timer-callback-provenance.md#original-asyncrequest-correlation--bounded-retail-proof) records both-mode original-source/owner/ID proof and negative fixture controls, without a timer producer change.
 
 ## [2026-10-19] source | Wrath legacy currency state
 

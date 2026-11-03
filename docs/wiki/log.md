@@ -3268,3 +3268,9 @@ the independently acquired strict 70707 UI cache; the source retarget and local
 parser workaround remain excluded. Run receipts are retained locally under
 `docs/local/session-finalization-v2/` in `native-gui-completed`,
 `forever-identity-completed` and `wrath-identity-corrected`.
+
+## 2026-11-03 — Mouse release outside the game canvas
+
+Documented how ordinary and fixed-resolution displays deliver an outside
+release to the frame that received the press and clear the held button state.
+[Mouse sizing capture](investigations/mouse-sizing-capture.md#release-outside-the-game-canvas)
