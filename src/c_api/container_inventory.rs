@@ -77,17 +77,21 @@ pub(crate) fn use_container_item(state: &mut LuaState) -> LuaResult<u32> {
     ) else {
         return Ok(0);
     };
-    let mut sim = borrow_state_mut(state)?;
+    submit_container_use(&mut borrow_state_mut(state)?, bag, slot);
+    Ok(0)
+}
+
+/// Record an accepted use of the item at a container slot.
+pub(crate) fn submit_container_use(sim: &mut SimState, bag: i32, slot: i32) {
     let Some((item_id, count)) = sim.get_bag_item(bag, slot) else {
-        return Ok(0);
+        return;
     };
     if count <= 0 || !sim.container_actions.usable_items.contains(&item_id) {
-        return Ok(0);
+        return;
     }
     sim.container_actions
         .use_requests
         .push(ContainerUseRequest { bag, slot, item_id });
-    Ok(0)
 }
 
 fn read_slot_argument(state: &LuaState, index: i32) -> Option<i32> {

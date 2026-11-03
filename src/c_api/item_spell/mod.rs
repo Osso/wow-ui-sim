@@ -21,6 +21,7 @@ pub mod item_spec_derive;
 mod item_type;
 mod item_uniqueness;
 mod item_use;
+mod item_use_confirm;
 
 use super::c_spell;
 use super::c_spell_book;
