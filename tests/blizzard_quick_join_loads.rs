@@ -29,6 +29,30 @@ fn quick_join_placeholder_is_absent_before_blizzard_loads() {
     assert!(absent, "QuickJoin owns the toast button");
 }
 
+#[test]
+fn friends_update_uses_blizzard_quick_join_toast() {
+    let ui = crate::common::blizzard_addon_harness::blizzard_ui_dir();
+    let (env, loaded) = crate::common::blizzard_addon_harness::build_blizzard_addon_closure_env(
+        &ui,
+        &["Blizzard_CompactRaidFrames", "Blizzard_QuickJoin"],
+        &[],
+    );
+    assert!(loaded.iter().any(|name| name == "Blizzard_QuickJoin"));
+    env.exec(
+        r#"
+        assert(QuickJoinToastButton.UpdateDisplayedFriendCount == QuickJoinToastMixin.UpdateDisplayedFriendCount)
+        A_Admin.SetPartySize(1)
+        "#,
+    )
+    .unwrap();
+    let state = env.state().borrow();
+    assert!(
+        state.lua_errors.is_empty(),
+        "Lua errors: {:?}",
+        state.lua_errors
+    );
+}
+
 const TOC_FILES: &[&str] = &[
     "QuickJoinToast.xml",
     "QuickJoin.xml",
