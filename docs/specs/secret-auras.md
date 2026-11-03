@@ -73,7 +73,7 @@ WM citations below identify clean-room reports in `native-evidence-70688/secrets
 - **SOURCE — WM61 S3:** Restricted, non-NeverSecret AuraData now marks the locally identified fields and leaves the outer value plain. The simulator's points list is currently empty; populated-list publication remains untested. Complete accessor reachability is still UNKNOWN.
 - **VERIFIED locally — WM61 S8** (`S8-requires-nonsecret-aura-wm61.md`): When tainted execution, the secrecy feature and at least one of four Active restriction states select the restrictive context, the ID lookups classify the requested spell before aura lookup; the name lookup resolves the name first. SpellMisc `Attributes[15]` mask 33554432 selects AlwaysSecret before mask 67108864 selects NeverSecret; otherwise the enabled feature yields ContextuallySecret. Schema names are inferred.
 - **EMULATED — WM61 S8 and S8a** (`S8a-unitauras-secret-emulated.md`): Selected rejection fragments return zero results, not one nil; separate outer fragments forward zero under their assumptions. **INFERRED — WM61 S8:** The relationship of these branches to `RequiresNonSecretAura`. **UNKNOWN — WM61 S8/S8a:** Complete registered-entry behavior, matched-aura outcomes and allowed-path publication.
-- **SOURCE CONTRADICTION — WM61 S8:** The simulator returns one nil for its tainted restricted spell-keyed rejection. Its ambiguous-flags error also conflicts with the locally verified AlwaysSecret precedence when both flags are set.
+- **SOURCE — WM61 S8:** ID-based spell queries return zero values at the restricted tainted pre-lookup gate. The SpellMisc classifier gives AlwaysSecret precedence when both flags are set. The spell-name path still needs the equivalent pre-lookup behavior.
 
 ### Text aspect
 

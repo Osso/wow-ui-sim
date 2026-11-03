@@ -126,6 +126,22 @@ pub(crate) fn finish_spell_keyed_aura_data(
     finish_aura_data(state, aura_data)
 }
 
+/// WM61 S8 pre-lookup gate for the ID-based spell queries.
+pub(crate) fn reject_spell_keyed_lookup(state: &LuaState, spell_id: u32) -> LuaResult<bool> {
+    if !auras_restricted(state)? || rilua::api::state_is_secure(state) {
+        return Ok(false);
+    }
+    #[cfg(feature = "retail-12-1-0")]
+    {
+        Ok(super::c_secrets::classify_aura_secrecy(spell_id)? != super::c_secrets::NEVER_SECRET)
+    }
+    #[cfg(not(feature = "retail-12-1-0"))]
+    {
+        let _ = spell_id;
+        Ok(false)
+    }
+}
+
 /// Shared by spell-keyed outputs and the prospective C_Secrets query.
 /// Preserve the existing context-first policy, including its known limitation:
 /// always-secret spell flags do not yet force secrecy outside this context.
