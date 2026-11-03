@@ -280,6 +280,7 @@ fn test_bag_env_loads_real_backpack_token_tracker() {
 
 #[test]
 fn test_bags_open_with_items() {
+    #[cfg(feature = "client-wrath")]
     if common::action_bar_fixture::is_wrath() {
         let env = common::action_bar_fixture::wrath_env();
         // Wrath FrameXML/ContainerFrame.lua:56 and :360 open legacy bag frames.

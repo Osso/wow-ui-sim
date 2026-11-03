@@ -70,6 +70,7 @@ fn legacy_macro_and_spellbook_globals_exist_for_addons() {
 #[cfg(not(feature = "retail-12-0-0"))]
 #[test]
 fn legacy_spell_globals_exist_for_addons() {
+    #[cfg(feature = "client-wrath")]
     if wow_ui_sim::client_profile::ACTIVE == wow_ui_sim::client_profile::ClientProfile::Wrath {
         let env = crate::common::action_bar_fixture::wrath_env();
         // Wrath SpellBookFrame.lua:447,496 reads a slot and book type.
