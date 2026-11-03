@@ -95,7 +95,7 @@ fn anchor_first_tooltip_line(sim: &mut crate::lua_api::state::SimState, tooltip_
         Anchor {
             point: AnchorPoint::Top,
             relative_to: None,
-            relative_to_id: Some(tooltip_id),
+            relative_to_id: Some(tooltip_id as usize),
             relative_point: AnchorPoint::Top,
             x_offset: 0.0,
             y_offset: -10.0 - top,
@@ -103,7 +103,7 @@ fn anchor_first_tooltip_line(sim: &mut crate::lua_api::state::SimState, tooltip_
         Anchor {
             point: AnchorPoint::Left,
             relative_to: None,
-            relative_to_id: Some(tooltip_id),
+            relative_to_id: Some(tooltip_id as usize),
             relative_point: AnchorPoint::Left,
             x_offset: 10.0 + left,
             y_offset: 0.0,
