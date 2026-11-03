@@ -102,7 +102,7 @@ pub(super) fn reanchor_moving_drag_frame(
 }
 
 /// Calculate new size for a frame being resized via StartSizing.
-/// Returns (new_width, new_height) clamped to resize bounds, or None if not sizing.
+/// Returns the new size in frame units, clamped to resize bounds, or None if not sizing.
 pub(super) fn sizing_drag_update(
     state: &crate::lua_api::SimState,
     drag_id: u64,
@@ -129,8 +129,11 @@ pub(super) fn sizing_drag_update(
         AnchorPoint::Center => return None,
     };
 
-    let mut new_width = rect.width + dw;
-    let mut new_height = rect.height + dh;
+    // The layout rect and mouse deltas are in screen units. Resize bounds
+    // and Frame::set_size use frame units.
+    let scale = frame.effective_scale.max(1e-6);
+    let mut new_width = (rect.width + dw) / scale;
+    let mut new_height = (rect.height + dh) / scale;
 
     let (min_w, min_h) = frame.resize_bounds_min;
     new_width = new_width.max(min_w.max(1.0));
