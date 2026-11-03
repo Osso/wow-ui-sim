@@ -96,7 +96,7 @@ fn register_bootstrap_globals(lua: &mut rilua::Lua) -> crate::Result<()> {
     crate::c_api::c_unit_aura_altered_form::register(lua.state_mut())?;
     #[cfg(feature = "retail-12-0-5")]
     crate::c_api::c_unit_aura_filter_query::register(lua.state_mut())?;
-    #[cfg(feature = "retail-12-0-5")]
+    #[cfg(feature = "aura-instance-enumeration")]
     crate::c_api::aura_duration::register(lua.state_mut())?;
     crate::c_api::private_aura_anchors::register(lua.state_mut())?;
     #[cfg(feature = "aura-instance-enumeration")]
@@ -318,6 +318,7 @@ fn register_action_state_probes(lua: &mut rilua::Lua) -> crate::Result<()> {
     super::real::action_highlights::register_all(lua)?;
     super::real::shapeshift::register_all(lua)?;
     super::real::pet_bar::register_all(lua)?;
+    crate::c_api::pet_orders::register_all(lua)?;
     super::real::vehicle_possession::register_all(lua)?;
     super::real::glyph_state::register_all(lua)?;
     super::real::action_bar_state::register_all(lua)?;

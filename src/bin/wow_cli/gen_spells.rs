@@ -413,10 +413,11 @@ const BASELINE_SPELL_IDS: &[u32] = &[
 /// during file load, so `C_Spell.GetSpellInfo` must know these IDs before any
 /// character spellbook or trait data references them.
 const ADDON_COMPAT_SPELL_IDS: &[u32] = &[
-    // Cell/Defaults/Indicator_DefaultSpells.lua
-    430, 1064, 73920, 108280, 52042, 197995, 114911, 382311, 207778, 114083, 377509, 322118, 170906,
-    167152, 43182, 172786, 308433, 369162, 456574, 461063, 195181, 203819, 192081, 215479, 132403,
-    132404, // Cell/Defaults/ClickCasting_DefaultSpells.lua
+    // Wowhead_Looter.lua: reputation modifiers keyed by localized spell names.
+    24705, 30754, // Cell/Defaults/Indicator_DefaultSpells.lua
+    430, 1064, 73920, 108280, 52042, 197995, 114911, 382311, 207778, 114083, 377509, 322118,
+    170906, 167152, 43182, 172786, 308433, 369162, 456574, 461063, 195181, 203819, 192081, 215479,
+    132403, 132404, // Cell/Defaults/ClickCasting_DefaultSpells.lua
     61999, 20484, 50769, 212040, 361227, 361178, 115178, 212051, 391054, 7328, 212056, 2006,
     212036, 2008, 212048, 20707,
     // QuickRoute/Data/TeleportItems.lua: teleports the effect rule cannot

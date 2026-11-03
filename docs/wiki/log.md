@@ -3158,6 +3158,13 @@ Recorded [declarations and original consumers](investigations/ptr-edit-mode-decl
 
 [Restored content obligations](systems/super-track-state.md#deferred-content-coverage-restoration) pass two exact original-consumer selectors on Retail/PTR/Forever. Each rejects the producer-subtracted sibling with identical test bytes. Existing supplied pairs, clear/re-entry and listener-time cache state need no producer changes. Fresh base/restoration stock maps are identical at 10/12, 216/282 and 26/26; zero-warning all-target checks, fmt and manual Rust readability pass. Broader quest/highlight and native-policy obligations remain unverified by this lane.
 
+Follow-up (2026-11-03). Absent quest highlight rows now project an empty set,
+which lets the original tracking cache publish its refreshed state for
+RXPGuides. The spell catalog also supports subtext queries and supplies the
+two Forever reputation spells used by Wowhead Looter.
+[Super-track state](systems/super-track-state.md#evidence-bounds),
+[Lua API](systems/lua-api.md#spell-subtext)
+
 ## 2026-10-26 — Restored PTR loss-of-control consumer proof
 
 Updated the [active-effect model](systems/lua-api.md#restored-ptr-original-consumer-proof-2026-10-26) and [contract](../specs/active-loss-of-control.md#consumer-proof): reauthenticated pinned PTR declarations/selection, original OnLoad prerequisite, two exact byte-identical subtraction RED/GREEN cases, empty/supplied/clear display behavior and two-environment isolation. No producer change; bound PTR stock remains134/154 with no raw-key/count deltas. All seven separate full-feature canonical all-target checks have zero JSON/plain compiler warnings; formatting and changed-line readability pass.
@@ -3305,3 +3312,10 @@ distinct from captured zero values. Classic legacy wrappers,
 Retail slot validation and enchantment precedence remain explicit. Non-Retail
 candidate ordering preserves the prior catalog policy, including Forever item
 `239695` when a non-use effect shares its slot; native parity remains unverified.
+
+## 2026-11-03 — Forever 70707 startup compatibility
+
+Documented the game startup fixes and their selected consumers, plus the MSAA
+capability required during login settings registration.
+[Game startup](investigations/forever-addon-startup-compatibility.md),
+[login graphics](investigations/forever-login-startup.md#msaa-capability)

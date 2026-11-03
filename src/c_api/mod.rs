@@ -41,7 +41,7 @@ pub mod action_usability;
 #[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
 mod addon_messages;
 pub(crate) mod applied_item_transmog;
-#[cfg(feature = "retail-12-0-5")]
+#[cfg(feature = "aura-instance-enumeration")]
 pub mod aura_duration;
 #[cfg(feature = "retail-12-0-5")]
 pub(crate) mod aura_entry;
@@ -212,6 +212,7 @@ pub mod engraving_inputs;
 mod forever_outfits;
 pub mod forever_startup;
 mod lfr_availability;
+pub(crate) mod pet_orders;
 pub mod profession_spec_inputs;
 pub(crate) use lfr_availability::stock_lfr_availability;
 pub mod outfit_entry;

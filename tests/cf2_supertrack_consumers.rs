@@ -166,6 +166,13 @@ fn original_supertrack_quest_highlights_replace_and_reset() {
         "#).unwrap();
         assert_readiness_changes(&env);
         env.exec(r#"
+            local notifications = cf2_notifications
+            C_SuperTrack.SetSuperTrackedQuestID(878)
+            assert(cf2_notifications > notifications, 'no-highlight quest must publish its cache')
+            assert(cf2_manager.superTrackedQuestID == 878 and cf2_manager.uiMapID == 0)
+            assert(cf2_manager.worldQuests == false and cf2_manager.worldQuestsElite == false)
+            assert(cf2_manager.dungeons == false and cf2_manager.treasures == false)
+            assert(QuestSuperTracking_ShouldHighlightWorldQuests(84) == false)
             C_SuperTrack.SetSuperTrackedQuestID(0)
             assert(C_SuperTrack.GetSuperTrackedQuestID() == nil)
             assert(cf2_manager.superTrackedQuestID == nil and cf2_manager.uiMapID == nil)

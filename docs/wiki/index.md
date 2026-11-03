@@ -57,6 +57,13 @@ catalog/capability policy. The rebuilt Windows login reports zero Lua errors, do
 from 38 records/58 occurrences; 69 focused checks pass after review. This bounded verification
 is separate from the game-screen baseline and native parity.
 
+## [2026-11-03] investigation | Forever 70707 startup compatibility
+
+The game startup investigation connects the reported failures to their original
+consumers. The login follow-up covers the MSAA graphics capability.
+[Game startup](investigations/forever-addon-startup-compatibility.md),
+[login graphics](investigations/forever-login-startup.md#msaa-capability)
+
 ## [2026-10-31] architecture | Startup class and race
 
 [Startup player settings](../specs/cli-class-spec.md#initial-class-race-and-specialization)
@@ -229,6 +236,14 @@ The [target-spell and flyout contract](../specs/spell-target-flyout.md) replaces
 ## [2026-10-26] proof | Supplied supertracking restoration
 
 [Content cache/listener preservation](systems/super-track-state.md#deferred-content-coverage-restoration) restores the two deferred supertracking obligations on Retail/PTR/Forever without producer changes. Each exact selector rejects a byte-identical producer-subtracted sibling. Stock maps remain 10/12, 216/282 and 26/26 with no raw-key/count changes; all three all-target checks have zero warnings, and fmt passes.
+
+## [2026-11-03] implementation | Quest and spell lookups for addons
+
+The tracker can refresh for a quest without highlight data. Spell training
+queries can read catalog subtext, and the Forever catalog supplies metadata for
+Wowhead Looter reputation modifiers.
+[Super-track state](systems/super-track-state.md#evidence-bounds),
+[Lua API](systems/lua-api.md#spell-subtext)
 
 ## [2026-10-26] proof | Forever temporary CVars
 

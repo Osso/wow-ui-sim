@@ -294,6 +294,10 @@ impl PetBattlePet {
 /// retail's modern shape unless a test seeds the struct.
 #[derive(Debug, Default, Clone)]
 pub struct PetState {
+    /// Move-to command waiting for a ground click, independent of spell targeting.
+    pub move_to_pending: bool,
+    /// Screen press begun while that move-to confirmation was pending.
+    pub move_to_screen_click_started: bool,
     /// Supplied pet bar reaction cache and native control mask.
     pub reaction: u8,
     pub control_mask: u32,

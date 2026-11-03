@@ -18,7 +18,7 @@ The earlier staged stock selector also exercises content transitions: startup ab
 
 ## Evidence bounds
 
-Untracked quest nil is a **documented-optional representation**, not native sentinel parity. Unknown/0 highlight output is a **native evidence gap**: an absent supplied row raises an explicit simulator error, never an invented tuple. No native timing, deduplication, exclusivity or priority assertion is made.
+Untracked quest nil follows the documented optional return. When a tracked quest lacks a highlight row, the query returns map ID 0 and four false flags. This lets `Blizzard_QuestSuperTracking.lua` complete its cache refresh and publish `Supertracking.OnChanged` while each map highlight predicate remains false. The five non-nil return types are documented, and the exact absence values are inferred.
 
 Historical staging expectation, not the current baseline: frozen Retail stock receipt: 36 unique messages / 42 occurrences. Only the QuestSuperTracking :52 error and its ScriptErrors wrapper (count 2 each) are attributed here. Conditional expected remainder: 34 unique / 38 occurrences, with those exact two messages removed and every other message/count unchanged. :56 is latent, not part of the 36; any new :56 error fails acceptance. This is an expectation, not an executed result.
 

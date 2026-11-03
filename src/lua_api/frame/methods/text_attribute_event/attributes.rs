@@ -121,9 +121,13 @@ fn run_state_attribute_snippet(
     let Some(state_name) = attribute.strip_prefix("state-") else {
         return Ok(());
     };
-    let snippet_attribute = format!("_onstate-{state_name}");
     let snippet_body = {
         let sim = borrow_state(state)?;
+        // The vendor callback supplies the restricted handle and owns dispatch.
+        if sim.secure_state_dispatch_ready {
+            return Ok(());
+        }
+        let snippet_attribute = format!("_onstate-{state_name}");
         sim.widgets
             .get(id)
             .and_then(|frame| frame.attributes.get(&snippet_attribute))
