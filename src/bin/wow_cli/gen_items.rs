@@ -732,7 +732,6 @@ fn collect_required_item_ids() -> BTreeSet<u32> {
     // Equipped items seeded in state defaults: e(211993), e(211995), etc.
     if let Ok(src) = std::fs::read_to_string("src/lua_api/state_defaults.rs") {
         collect_number_literals_after(&src, "e(", &mut ids);
-        collect_number_literals_after(&src, "\n        t(", &mut ids);
     }
 
     // Legacy fallback for older layouts.

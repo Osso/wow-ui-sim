@@ -136,7 +136,7 @@ pub(super) fn default_toys() -> Vec<ToyData> {
         t(88589, true),
         t(86575, true),
         t(104324, true),
-        t(187421, false),
+        t(211946, false),
     ]
 }
 
