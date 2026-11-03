@@ -68,9 +68,6 @@ function __wow_apply_chat_voice_button_surface()
         end
     end
 
-    if QuickJoinToastButton == nil and type(CreateFrame) == "function" and UIParent ~= nil then
-        QuickJoinToastButton = CreateFrame("Button", "QuickJoinToastButton", UIParent)
-    end
 end
 
 _G.__wow_apply_chat_voice_button_surface()
@@ -179,8 +176,7 @@ mod tests {
             icon_points,
             icon_atlas,
             icon_shown,
-            quick_join_type,
-        ): (bool, bool, String, i64, i64, i64, String, bool, String) = env
+        ): (bool, bool, String, i64, i64, i64, String, bool) = env
             .eval(
                 r#"
                 local icon = ChatFrameChannelButton.Icon
@@ -191,8 +187,7 @@ mod tests {
                     icon.height,
                     icon.points,
                     icon.atlas,
-                    icon.shown,
-                    QuickJoinToastButton.frameType
+                    icon.shown
                 "#,
             )
             .expect("patched chat voice state should be readable");
@@ -205,6 +200,5 @@ mod tests {
         assert_eq!(icon_points, 1);
         assert_eq!(icon_atlas, "chatframe-button-icon-voicechat");
         assert!(icon_shown);
-        assert_eq!(quick_join_type, "Button");
     }
 }
