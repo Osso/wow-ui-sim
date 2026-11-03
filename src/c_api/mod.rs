@@ -221,6 +221,7 @@ pub mod transmog_availability;
 pub use c_quest_log_watches::QuestWatchType;
 pub(crate) use c_quest_log_watches::seed_quest_watch_types;
 mod c_cvar_info;
+pub mod c_garrison_combat_log_spell;
 pub mod c_recent_allies;
 pub mod c_report_system;
 pub mod c_reputation;
@@ -261,6 +262,7 @@ pub(crate) mod c_tooltip_info_outfit;
 pub(crate) mod c_tooltip_info_spell_mount;
 pub(crate) mod c_trade_skill_filter;
 pub mod c_trade_skill_quality;
+mod c_trade_skill_source;
 #[cfg(feature = "retail-12-0-0")]
 pub(crate) mod c_transmog_collection;
 mod c_transmog_latest;

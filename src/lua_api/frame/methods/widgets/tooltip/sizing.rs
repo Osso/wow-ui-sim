@@ -15,7 +15,7 @@ const DOUBLE_LINE_GAP: f32 = 20.0;
 const APPROX_GLYPH_WIDTH: f32 = 0.55;
 const TEXTURE_LINE_SIZE: f32 = 28.0;
 
-pub(super) fn refresh_tooltip_geometry(sim: &mut crate::lua_api::state::SimState, tooltip_id: u64) {
+pub(crate) fn refresh_tooltip_geometry(sim: &mut crate::lua_api::state::SimState, tooltip_id: u64) {
     if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Wrath {
         sim.widgets.mark_rect_dirty(tooltip_id);
         return;
@@ -33,6 +33,37 @@ pub(super) fn refresh_tooltip_geometry(sim: &mut crate::lua_api::state::SimState
     // layout rect from a previous owner/anchor. The measured size may be the
     // same, but the cached rect can still be stale until the next resize/dump.
     sim.widgets.mark_rect_dirty(tooltip_id);
+}
+
+pub(crate) fn size_tooltip_on_native_trigger(
+    sim: &mut crate::lua_api::state::SimState,
+    tooltip_id: u64,
+) {
+    if matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail | crate::client_profile::ClientProfile::Ptr
+    ) && !sim
+        .tooltips
+        .get(&tooltip_id)
+        .is_some_and(|tooltip| tooltip.owner_id.is_some())
+    {
+        return;
+    }
+    #[cfg(feature = "gui")]
+    if matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail | crate::client_profile::ClientProfile::Ptr
+    ) {
+        let mut font = crate::render::font::WowFontSystem::new();
+        let (width, height) = crate::iced_app::tooltip::measure_tooltip(sim, tooltip_id, &mut font);
+        if let Some(frame) = sim.widgets.get_mut_visual(tooltip_id) {
+            frame.width = width;
+            frame.height = height;
+        }
+        sim.widgets.mark_rect_dirty(tooltip_id);
+        return;
+    }
+    refresh_tooltip_geometry(sim, tooltip_id);
 }
 
 fn estimated_tooltip_size(td: Option<&TooltipData>) -> Option<(f32, f32)> {

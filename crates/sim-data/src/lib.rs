@@ -13,6 +13,8 @@ pub mod currency_containers;
 pub mod currency_transfer;
 #[path = "../data/encounter_journal.rs"]
 pub mod encounter_journal_data;
+#[path = "../data/garrison_auto_spell.rs"]
+pub mod garrison_auto_spell;
 #[path = "../data/garrison_currency.rs"]
 pub mod garrison_currency;
 #[path = "../data/garrison_follower_xp.rs"]
