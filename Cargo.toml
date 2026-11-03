@@ -78,6 +78,7 @@ reqwest = { version = "0.12", default-features = false, features = ["blocking", 
 httpdate = "1"
 tar = "0.4.45"
 flate2 = "1.1.9"
+base64 = "0.22.1"
 sha2 = "0.10"
 
 [[bin]]

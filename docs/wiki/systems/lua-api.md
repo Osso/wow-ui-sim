@@ -472,6 +472,13 @@ The four-producer pre-fix run at `080833f1d` selected 28 cases: 1 PASS / 27 genu
 
 ## C_* Namespaces
 
+### Binary addon encoding
+
+C_EncodingUtil provides Base64, compression and CBOR transformations over raw
+Lua string bytes. The reference covers supported formats, resource limits, the
+QuestieDB consumer test and migration of the legacy Delves companion CVar.
+[Binary encoding](binary-encoding.md)
+
 ### Retail 12.0.5 base-spell specialization security
 
 `815456e84` promotes the existing `C_Spell.GetBaseSpell` publication to the common C_Spell query registration under the literal shared Cargo capability `base-spell-relationships`, enabled by `retail-12-0-5` and `client-wowforever`. Existing `BaseSpellRelationships` is an empty-default per-environment host map: omitted/nil/zero specialization selects current specialization, explicit specialization selects its exact relationship, and an absent relationship returns the supplied spell ID under the documented identity contract. Public numeric/name resolution remains unchanged. Shared model/publication does not add a catalog, traversal or alias data; earlier profiles remain default-unpublished (static wiring, not execution proof).

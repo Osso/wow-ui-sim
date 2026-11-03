@@ -3,7 +3,7 @@
 //! CVars are configuration values that addons can read/write.
 //! Defaults come from WoW's built-in cvars, overrides are persisted to disk.
 
-use std::collections::HashMap;
+use std::collections::{BTreeMap, HashMap};
 use std::path::{Path, PathBuf};
 use std::sync::RwLock;
 
@@ -521,7 +521,40 @@ fn load_overrides(path: &PathBuf) -> HashMap<String, String> {
         Err(_) => HashMap::new(),
     };
     overrides.retain(|key, _| !is_session_only_cvar_key(key));
+    if let Some(value) = overrides.get_mut("lastlockedtieredentrancecompanionabilities")
+        && let Some(migrated) = migrate_legacy_delves_abilities(value)
+    {
+        *value = migrated;
+    }
     overrides
+}
+
+/// Older simulator codecs wrote JSON in place of Base64 CBOR. Recognize
+/// only the Delves companion's PDE ID → locked node ID → 1 shape in the
+/// persisted simulator store. Loading never rewrites the file.
+fn migrate_legacy_delves_abilities(value: &str) -> Option<String> {
+    fn id(key: &str) -> Option<u32> {
+        let value: u32 = key.parse().ok()?;
+        (value > 0 && value.to_string() == key).then_some(value)
+    }
+
+    if !value.starts_with('{') {
+        return None;
+    }
+    let maps: BTreeMap<String, BTreeMap<String, f64>> = serde_json::from_str(value).ok()?;
+    let maps = maps
+        .into_iter()
+        .map(|(pde, nodes)| {
+            let flags = nodes
+                .into_iter()
+                .map(|(node, flag)| if flag == 1.0 { id(&node) } else { None })
+                .collect::<Option<Vec<_>>>()?;
+            Some((id(&pde)?, flags))
+        })
+        .collect::<Option<Vec<_>>>()?;
+    Some(crate::c_api::encoding_util::encode_persisted_id_flag_maps(
+        &maps,
+    ))
 }
 
 /// Parse YAML in format `key: 'value'` or `key: value`.

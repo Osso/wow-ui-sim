@@ -288,6 +288,7 @@ pub(crate) mod cvar_combat_policy;
 #[cfg(feature = "retail-12-0-5")]
 pub mod equipment_set_command;
 pub(crate) mod equipment_set_locks;
+pub(crate) mod encoding_util;
 pub mod map_world_coordinates;
 #[cfg(feature = "retail-12-0-7")]
 pub(crate) mod patch_12_0_7_inputs;

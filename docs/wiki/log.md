@@ -3254,6 +3254,12 @@ verification, other profiles and the game-screen baseline remain separate.
 4,493-path manifest and raw-first Gethe recovery. A CRLF candidate is accepted only
 when its bytes match the selected CASC content key exactly.
 
+## [2026-11-03] system | Binary addon encoding
+
+[Binary encoding](systems/binary-encoding.md) documents Base64, compression
+and CBOR for the QuestieDB reader. The CVar loader converts recognized legacy
+Delves companion data to Base64 CBOR when reading persisted simulator settings.
+
 ## 2026-11-02 — Session finalization and reload recovery
 
 [Session finalization](../specs/session-finalization.md) adds explicit GUI

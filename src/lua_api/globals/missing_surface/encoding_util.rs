@@ -12,14 +12,8 @@ use rilua::{LuaResult, Val};
 pub(super) fn register_encoding_util_surface(state: &mut LuaState) -> LuaResult<()> {
     let table_ref = ensure_namespace(state, "C_EncodingUtil")?;
     let methods: &[(&'static str, RustFn)] = &[
-        ("CompressString", encoding_util_passthrough),
-        ("DecompressString", encoding_util_passthrough),
-        ("EncodeBase64", encoding_util_passthrough),
-        ("DecodeBase64", encoding_util_passthrough),
         ("EncodeHex", encoding_util_passthrough),
         ("DecodeHex", encoding_util_passthrough),
-        ("SerializeCBOR", encoding_util_serialize_cbor),
-        ("DeserializeCBOR", encoding_util_deserialize_cbor),
         ("SerializeJSON", encoding_util_serialize_json),
         ("DeserializeJSON", encoding_util_deserialize_json),
     ];
@@ -39,10 +33,6 @@ fn encoding_util_passthrough(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
-fn encoding_util_serialize_cbor(state: &mut LuaState) -> LuaResult<u32> {
-    encoding_util_serialize_json(state)
-}
-
 fn encoding_util_serialize_json(state: &mut LuaState) -> LuaResult<u32> {
     let value = stack_val(state, 1);
     let Some(json) = lua_value_to_json(state, value) else {
@@ -51,10 +41,6 @@ fn encoding_util_serialize_json(state: &mut LuaState) -> LuaResult<u32> {
     let text = create_string(state, &json.to_string());
     state.push(text);
     Ok(1)
-}
-
-fn encoding_util_deserialize_cbor(state: &mut LuaState) -> LuaResult<u32> {
-    encoding_util_deserialize_json(state)
 }
 
 fn encoding_util_deserialize_json(state: &mut LuaState) -> LuaResult<u32> {
