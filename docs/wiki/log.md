@@ -3283,3 +3283,12 @@ values, seven-return contract and captured native storage/security flags. Static
 Retail/PTR/Forever maps retain immutable source pins, hashes and the upstream
 license. The standard-library generator supports reproducible check mode;
 portable generator, catalog and API regressions cover the bounded contract.
+
+## 2026-11-02 — Addon-message prefix registration
+
+[The prefix contract](../specs/addon-message-prefixes.md) documents the
+environment-local `C_ChatInfo` subscription registry, byte-preserving snapshots,
+result precedence and publication on all profiles except Wrath. Historical bounds
+and inferred embedded-NUL normalization remain distinct from measured native
+behavior. Focused regression tests cover registry state, capacity and isolation;
+outbound messaging and installed-addon startup proof remain separate.

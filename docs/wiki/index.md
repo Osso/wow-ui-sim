@@ -4,6 +4,13 @@
 live-value and native-flag precedence, immutable Retail/PTR/Forever snapshots,
 generated profile maps, provenance and reproducible generator checks.
 
+## [2026-11-02] system | Addon-message prefix registration
+
+[Prefix registration](../specs/addon-message-prefixes.md) describes the
+environment-local `C_ChatInfo` registry, byte-preserving queries, historical
+limits and inferred NUL normalization. The [Lua API](systems/lua-api.md#addon-message-prefix-registration)
+connects profile publication and backing state; outbound delivery remains separate.
+
 ## [2026-11-02] source | Forever 70707 UI cache
 
 [Client profiles](systems/client-profiles.md#runtime-cache) describe the 70707
