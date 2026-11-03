@@ -16,6 +16,30 @@ const SUPPLEMENTAL_SPELLS: &[(u32, SpellInfo)] = &[
     (7328, spell("Redemption", 135955, 5)),
     (20484, spell("Rebirth", 136080, 5)),
     (20707, spell("Soulstone", 136210, 5)),
+    // Native wowf 1.60.1.70685 SpellName/Spell/SpellMisc/SpellEffect rows,
+    // using DifficultyID=0 and EffectIndex=0 for addon name-keyed lookups.
+    #[cfg(feature = "client-wowforever")]
+    (
+        24705,
+        SpellInfo {
+            name: "Invocation of the Wickerman",
+            subtext: "",
+            icon_file_data_id: 135462,
+            school_mask: 1,
+            implicit_target: 21,
+        },
+    ),
+    #[cfg(feature = "client-wowforever")]
+    (
+        30754,
+        SpellInfo {
+            name: "Cenarion Favor",
+            subtext: "",
+            icon_file_data_id: 136086,
+            school_mask: 1,
+            implicit_target: 25,
+        },
+    ),
     (52042, spell("Healing Stream Totem", 136243, 13)),
     (73920, spell("Healing Rain", 136037, 1)),
     (108280, spell("Healing Tide Totem", 538569, 13)),

@@ -6,6 +6,7 @@
 //! - `GetSpellCooldown(spellID)` → `SpellCooldownInfo` table from
 //!   `SimState.spell_cooldowns` (start/duration/isEnabled/isActive/modRate).
 //! - `GetSpellDescription(spellID)` → localized spell description, or empty.
+//! - `GetSpellSubtext(spellIdentifier)` → localized spell subtext, or no values.
 //! - `GetSpellTexture(spellID)` → `(iconID, originalIconID, conditionalIconID)`.
 //! - `GetSpellPowerCost(spellID)` → `SpellPowerCostInfo[]` table or nil.
 //! - `GetSchoolString(mask)` → localized school name for a bitmask.
@@ -30,7 +31,7 @@
 //!   `state.spell_loss_of_control`, or nil.
 
 use super::helpers::ensure_namespace;
-use crate::c_api::item_spell::spell_link_for_id;
+use crate::c_api::item_spell::{parse_prefixed_id, spell_link_for_id};
 use crate::lua_api::globals::spellbook_data;
 use crate::lua_api::methods::{
     borrow_state, create_string, create_string_static, create_table, create_table_with_capacity,
@@ -64,6 +65,14 @@ pub(crate) fn register_c_spell_surface(state: &mut LuaState) -> LuaResult<()> {
     }
     if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Ptr {
         table_set_rust_fn_static(state, ns, "GetItemCooldown", get_item_cooldown)?;
+    }
+    if matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail
+            | crate::client_profile::ClientProfile::Ptr
+            | crate::client_profile::ClientProfile::WowForever
+    ) {
+        table_set_rust_fn_static(state, ns, "GetSpellSubtext", get_spell_subtext)?;
     }
     #[cfg(feature = "retail-12-0-0")]
     table_set_rust_fn_static(
@@ -555,6 +564,28 @@ fn get_spell_name(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
+fn get_spell_subtext(state: &mut LuaState) -> LuaResult<u32> {
+    let spell_id =
+        read_public_spell_identifier_at(state, 1, "C_Spell.GetSpellSubtext")?.or_else(|| {
+            let identifier = val_to_string(state, stack_val(state, 1))?;
+            identifier
+                .parse::<u32>()
+                .ok()
+                .or_else(|| parse_prefixed_id(&identifier, "spell"))
+                .or_else(|| spell_id_by_name(&identifier, None))
+                .or_else(|| {
+                    let (name, subtext) = identifier.strip_suffix(')')?.rsplit_once('(')?;
+                    spell_id_by_name(name.trim_end(), Some(subtext))
+                })
+        });
+    let Some(spell) = spell_id.and_then(spells::get_spell) else {
+        return Ok(0);
+    };
+    let subtext = create_string_static(state, spell.subtext);
+    state.push(subtext);
+    Ok(1)
+}
+
 /// `C_Spell.GetSpellCooldown(spellID)` → `SpellCooldownInfo` table.
 ///
 /// Retail fields: `startTime, duration, isEnabled, isActive, modRate`.
@@ -850,22 +881,23 @@ pub(super) fn numeric_spell_id_value(state: &LuaState, value: Val) -> Option<u32
             input
                 .parse::<u32>()
                 .ok()
-                .or_else(|| spell_id_by_name(&input))
+                .or_else(|| spell_id_by_name(&input, None))
         }
         _ => None,
     }
 }
 
-fn spell_id_by_name(name: &str) -> Option<u32> {
+fn spell_id_by_name(name: &str, subtext: Option<&str>) -> Option<u32> {
     if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::WowForever {
-        if let Some(id) = crate::forever_spell_runtime::spell_id_by_name(name) {
+        if let Some(id) = crate::forever_spell_runtime::spell_id_by_name(name, subtext) {
             return Some(id);
         }
     }
-    let needle = name.to_ascii_lowercase();
-    SPELL_DB
-        .entries()
-        .find_map(|(id, spell)| (spell.name.to_ascii_lowercase() == needle).then_some(*id))
+    SPELL_DB.entries().find_map(|(id, spell)| {
+        (spell.name.eq_ignore_ascii_case(name)
+            && subtext.is_none_or(|text| spell.subtext.eq_ignore_ascii_case(text)))
+        .then_some(*id)
+    })
 }
 
 /// `C_Spell.GetSpellTradeSkillLink(spellID)` → trade-skill recipe link, or
