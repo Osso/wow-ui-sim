@@ -88,7 +88,12 @@ fn customization_tooltip_places_first_text_at_native_padding_anchor() {
         None,
     );
     assert!(!actual.vertices.is_empty() && !expected.vertices.is_empty());
-    let actual_first = actual.vertices[0].position;
+    let actual_first = actual
+        .vertices
+        .iter()
+        .find(|vertex| vertex.tex_index == wow_ui_sim::render::shader::GLYPH_ATLAS_TEX_INDEX)
+        .expect("tooltip glyph")
+        .position;
     let expected_first = expected.vertices[0].position;
     assert!(
         (actual_first[0] - expected_first[0]).abs() < 0.01
