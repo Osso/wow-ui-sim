@@ -427,6 +427,16 @@ fn test_buff_icon_hover_shows_aura_tooltip() {
 
     let expected_name: String = env
         .eval(
+            if wow_ui_sim::client_profile::ACTIVE == wow_ui_sim::client_profile::ClientProfile::Wrath {
+                // Wrath FrameXML/BuffFrame.xml:26-30 binds the original aura button script.
+                r#"
+                local button = assert(BuffButton1)
+                assert(button:IsShown(), "first Wrath buff button must be shown")
+                local name = assert(UnitBuff("player", button:GetID()))
+                assert(button:GetScript("OnEnter"))(button)
+                return name
+                "#
+            } else {
             r#"
             for _, button in ipairs(BuffFrame.auraFrames) do
                 if button:IsShown() and button.buttonInfo and button.buttonInfo.index then
@@ -435,7 +445,8 @@ fn test_buff_icon_hover_shows_aura_tooltip() {
                 end
             end
             error("No visible buff icon with tooltip data")
-            "#,
+            "#
+            },
         )
         .unwrap();
 

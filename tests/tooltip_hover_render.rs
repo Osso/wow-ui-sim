@@ -5,9 +5,9 @@
 mod tooltip_full_env_helpers;
 mod tooltip_hover_helpers;
 
+use iced::{Point, Rectangle};
 use tooltip_full_env_helpers::setup_full_env;
 use tooltip_hover_helpers::{open_character_panel, refresh_buff_frame};
-use iced::{Point, Rectangle};
 
 const HOVER_FIRST_VISIBLE_BUFF_ICON_LUA: &str = r#"
     local totalButtons = 0
@@ -45,6 +45,12 @@ const HOVER_FIRST_VISIBLE_BUFF_ICON_LUA: &str = r#"
 "#;
 
 fn hover_first_visible_buff_icon(env: &wow_ui_sim::lua_api::WowLuaEnv) {
+    if wow_ui_sim::client_profile::ACTIVE == wow_ui_sim::client_profile::ClientProfile::Wrath {
+        // Wrath FrameXML/BuffFrame.xml:26-30 supplies the original hover script.
+        env.exec("local button = assert(BuffButton1); assert(button:IsShown()); assert(button:GetScript('OnEnter'))(button)")
+            .expect("Failed to hover the original Wrath buff button");
+        return;
+    }
     env.exec(HOVER_FIRST_VISIBLE_BUFF_ICON_LUA)
         .expect("Failed to hover a visible buff icon");
 }
@@ -402,10 +408,8 @@ fn topmost_hit_at(env: &wow_ui_sim::lua_api::WowLuaEnv, point: Point) -> Option<
         .get_strata_buckets()
         .expect("strata buckets should be available")
         .clone();
-    let collected = wow_ui_sim::iced_app::frame_collect::collect_hittable_frames(
-        &state.widgets,
-        &buckets,
-    );
+    let collected =
+        wow_ui_sim::iced_app::frame_collect::collect_hittable_frames(&state.widgets, &buckets);
     let hittable = wow_ui_sim::iced_app::build_hittable_rects(&collected, &state.widgets);
     hittable
         .iter()
