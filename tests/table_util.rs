@@ -96,7 +96,7 @@ fn frozen_addon_namespace_does_not_freeze_callback_state_or_later_addons() {
 #[test]
 fn table_count_counts_all_non_nil_entries() {
     let env = env();
-    let counts: (i32, i32, i32) = env
+    let counts: (i32, i32) = env
         .eval(
             r#"
             local labels = {
@@ -106,24 +106,36 @@ fn table_count_counts_all_non_nil_entries() {
                 rank = "leader",
                 skipped = nil,
             }
-            return table.count(labels)
+            return table.count(labels), select('#', table.count(labels))
             "#,
         )
         .unwrap();
     assert_eq!(
         counts,
-        (4, 3, 4),
-        "table.count should return total nodes, array nodes, and max array index"
+        (
+            4,
+            if cfg!(feature = "retail-12-1-5") {
+                1
+            } else {
+                3
+            }
+        ),
+        "table.count should return the number of entries and the epoch-specific arity"
     );
 }
 
 #[test]
-fn table_count_returns_nothing_for_non_tables() {
+fn table_count_handles_non_tables_by_epoch() {
     let env = env();
-    let returned_count: i32 = env
-        .eval("return select('#', table.count('not-table'))")
+    let (ok, count): (bool, Option<i32>) = env
+        .eval("local ok, result = pcall(table.count, 'not-table'); return ok, ok and result or nil")
         .unwrap();
-    assert_eq!(returned_count, 0, "non-table inputs should return nothing");
+    if cfg!(feature = "retail-12-1-5") {
+        assert!(!ok, "12.1.5 rejects non-table inputs");
+    } else {
+        assert!(ok, "earlier epochs accept non-table inputs");
+        assert_eq!(count, None);
+    }
 }
 
 #[test]
@@ -140,6 +152,18 @@ fn table_count_errors_for_missing_argument() {
     assert!(!ok, "missing input should raise like nil");
 }
 
+// Retail retirement: 574474f73; PTR retirement: ac40ca2cd.
+#[cfg(any(feature = "profile-retail", feature = "retail-12-1-5"))]
+#[test]
+fn table_util_find_indexed_mismatch_is_retired() {
+    let env = env();
+    let absent: bool = env
+        .eval("return rawget(C_TableUtil, 'FindIndexedMismatch') == nil and C_TableUtil.FindIndexedMismatch == nil")
+        .unwrap();
+    assert!(absent);
+}
+
+#[cfg(not(any(feature = "profile-retail", feature = "retail-12-1-5")))]
 #[test]
 fn table_util_find_indexed_mismatch_returns_nil_for_equal_arrays() {
     let env = env();
@@ -155,6 +179,7 @@ fn table_util_find_indexed_mismatch_returns_nil_for_equal_arrays() {
     assert_eq!(mismatch_index, None, "equal arrays should not mismatch");
 }
 
+#[cfg(not(any(feature = "profile-retail", feature = "retail-12-1-5")))]
 #[test]
 fn table_util_find_indexed_mismatch_returns_first_mismatch_index() {
     let env = env();
@@ -174,6 +199,7 @@ fn table_util_find_indexed_mismatch_returns_first_mismatch_index() {
     );
 }
 
+#[cfg(not(any(feature = "profile-retail", feature = "retail-12-1-5")))]
 #[test]
 fn table_util_find_indexed_mismatch_detects_length_difference() {
     let env = env();
@@ -193,6 +219,7 @@ fn table_util_find_indexed_mismatch_detects_length_difference() {
     );
 }
 
+#[cfg(not(any(feature = "profile-retail", feature = "retail-12-1-5")))]
 #[test]
 fn table_util_find_indexed_mismatch_supports_comparator_function() {
     let env = env();
@@ -215,6 +242,7 @@ fn table_util_find_indexed_mismatch_supports_comparator_function() {
     );
 }
 
+#[cfg(not(any(feature = "profile-retail", feature = "retail-12-1-5")))]
 #[test]
 fn table_util_find_indexed_mismatch_returns_nil_for_non_tables() {
     let env = env();
