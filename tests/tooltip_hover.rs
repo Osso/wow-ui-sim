@@ -117,6 +117,37 @@ fn customization_tooltip_places_first_text_at_native_padding_anchor() {
 
 #[cfg(any(feature = "client-retail", feature = "client-ptr"))]
 #[test]
+fn blizzard_line_handler_anchors_indexed_rows_and_right_column() {
+    let env = setup_full_env();
+    env.exec(
+        r#"
+        GameTooltip:SetOwner(UIParent, "ANCHOR_NONE")
+        assert(GameTooltip:ProcessInfo({ tooltipData = { lines = {
+            { type = 0, leftText = "First" },
+            { type = 0, leftText = "Second", rightText = "Value" },
+        } } }))
+        local first = GameTooltip:GetLeftLine(1)
+        local second = GameTooltip:GetLeftLine(2)
+        local right = GameTooltip:GetRightLine(2)
+        assert(second:GetNumPoints() == 2, "second left anchor count")
+        local point, relative, relativePoint, x, y = second:GetPoint(1)
+        assert(point == "TOP" and relative == first and relativePoint == "BOTTOM" and x == 0 and y == -2, "second left follows preceding index")
+        point, relative, relativePoint, x, y = second:GetPoint(2)
+        assert(point == "LEFT" and relative == GameTooltip and relativePoint == "LEFT" and x == 10 and y == 0, "second left horizontal anchor")
+        assert(right:GetNumPoints() == 1, "right anchor count")
+        point, relative, relativePoint, x, y = right:GetPoint(1)
+        assert(point == "RIGHT" and relative == second and relativePoint == "LEFT" and math.abs(x - (GameTooltip:GetWidth() - 20.48)) < 0.01 and y == 0, "right anchor uses selected content width")
+        GameTooltip:SetCustomLineSpacing(6)
+        GameTooltip:Show()
+        point, relative, relativePoint, x, y = second:GetPoint(1)
+        assert(relative == first and y == -6, "spacing invalidates later left anchors")
+        "#,
+    )
+    .unwrap();
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
+#[test]
 fn ringed_frame_tooltip_applies_native_outer_and_explicit_padding() {
     let env = setup_full_env();
     let addons = wow_ui_sim::paths::default_blizzard_ui_addons_path().unwrap();
