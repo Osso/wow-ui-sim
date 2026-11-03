@@ -11,6 +11,42 @@ use tooltip_hover_helpers::{open_character_panel, refresh_buff_frame};
 #[cfg(not(feature = "client-wrath"))]
 use wow_ui_sim::lua_api::WowLuaEnv;
 
+#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
+#[test]
+fn ringed_frame_tooltip_applies_native_outer_and_explicit_padding() {
+    let env = setup_full_env();
+    let addons = wow_ui_sim::paths::default_blizzard_ui_addons_path().unwrap();
+    wow_ui_sim::loader::load_addon(
+        &env.loader_env(),
+        &addons.join("Blizzard_CustomizationUI/Blizzard_CustomizationUI.toc"),
+    )
+    .unwrap();
+    env.exec(
+        r#"
+        local region = CreateFrame("Frame", nil, UIParent, "CustomizationFrameWithTooltipTemplate")
+        local PaddingTooltip = CustomizationNoHeaderTooltip
+        region.tooltipAnchor = "ANCHOR_NONE"
+        region.tooltipMinWidth = 300
+        region.tooltipPadding = 3
+        region:AddTooltipLine("x")
+        region:OnEnter()
+        local width, height = PaddingTooltip:GetWidth(), PaddingTooltip:GetHeight()
+        assert(math.abs(width - 326.48) < 0.01, "native outer width padding: " .. width .. " sides: " .. tostring(PaddingTooltip:GetPadding()))
+        PaddingTooltip:SetPadding(3, 5, 7, 11)
+        assert(math.abs(PaddingTooltip:GetWidth() - 330.48) < 0.01, "explicit horizontal sides")
+        assert(math.abs(PaddingTooltip:GetHeight() - height - 10) < 0.01, "explicit vertical sides")
+        local right, bottom, left, top = PaddingTooltip:GetPadding()
+        assert(right == 3 and bottom == 5 and left == 7 and top == 11, "padding side order")
+        PaddingTooltip:SetPadding(2, 4)
+        right, bottom, left, top = PaddingTooltip:GetPadding()
+        assert(right == 2 and bottom == 4 and left == 7 and top == 11, "omitted sides persist")
+        assert(math.abs(PaddingTooltip:GetWidth() - 329.48) < 0.01, "preserved left padding")
+        assert(math.abs(PaddingTooltip:GetHeight() - height - 9) < 0.01, "preserved top padding")
+        "#,
+    )
+    .unwrap();
+}
+
 #[cfg(not(feature = "client-wrath"))]
 #[test]
 fn action_button_hover_preserves_spell_identity_for_tooltip_postcall() {

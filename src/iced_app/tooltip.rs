@@ -154,10 +154,19 @@ pub(crate) fn measure_tooltip(
         total_height += line_height;
     }
 
-    let insets = tooltip_text_insets();
-    let width = content_width + insets.left + insets.right;
-    let height = total_height + insets.top + insets.bottom;
-    (width, height)
+    let (horizontal_padding, vertical_padding) = if matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail | crate::client_profile::ClientProfile::Ptr
+    ) {
+        td.native_outer_padding()
+    } else {
+        let insets = tooltip_text_insets();
+        (insets.left + insets.right, insets.top + insets.bottom)
+    };
+    (
+        content_width + horizontal_padding,
+        total_height + vertical_padding,
+    )
 }
 
 fn tooltip_column_gap(left: &str, right: Option<&str>, effective_scale: f32) -> f32 {

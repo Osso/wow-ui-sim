@@ -471,9 +471,25 @@ pub(super) fn get_item(state: &mut LuaState) -> LuaResult<u32> {
 
 pub(super) fn set_padding(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
-    let padding = val_to_f64(stack_val(state, 2)) as f32;
+    let right = val_to_f64(stack_val(state, 2)) as f32;
+    let bottom = val_to_f64(stack_val(state, 3)) as f32;
+    let left = opt_f32(state, 4);
+    let top = opt_f32(state, 5);
     let mut sim = borrow_state_mut(state)?;
-    sim.tooltips.entry(id).or_default().padding = padding;
+    let padding = &mut sim.tooltips.entry(id).or_default().padding;
+    padding[0] = right;
+    if matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail | crate::client_profile::ClientProfile::Ptr
+    ) {
+        padding[1] = bottom;
+        if let Some(left) = left {
+            padding[2] = left;
+        }
+        if let Some(top) = top {
+            padding[3] = top;
+        }
+    }
     size_tooltip_on_native_trigger(&mut sim, id);
     Ok(0)
 }
@@ -481,20 +497,31 @@ pub(super) fn set_padding(state: &mut LuaState) -> LuaResult<u32> {
 pub(super) fn get_padding(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
     let sim = borrow_state(state)?;
-    let v = sim
+    let padding = sim
         .tooltips
         .get(&id)
-        .map(|td| td.padding as f64)
-        .unwrap_or(0.0);
+        .map(|td| td.padding)
+        .unwrap_or_default();
     drop(sim);
-    v.into_stack(state)
+    let count = if matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail | crate::client_profile::ClientProfile::Ptr
+    ) {
+        4
+    } else {
+        1
+    };
+    for side in padding.into_iter().take(count) {
+        (side as f64).into_stack(state)?;
+    }
+    Ok(count as u32)
 }
 
 pub(super) fn clear_padding(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
     let mut sim = borrow_state_mut(state)?;
     if let Some(td) = sim.tooltips.get_mut(&id) {
-        td.padding = 0.0;
+        td.padding = [0.0; 4];
     }
     size_tooltip_on_native_trigger(&mut sim, id);
     Ok(0)

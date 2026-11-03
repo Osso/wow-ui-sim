@@ -84,10 +84,15 @@ fn estimated_tooltip_size(td: Option<&TooltipData>) -> Option<(f32, f32)> {
         height += estimated_line_height(line, font_size);
     }
 
-    Some((
-        width + TOOLTIP_PADDING_H * 2.0,
-        height + TOOLTIP_PADDING_V * 2.0,
-    ))
+    let (horizontal_padding, vertical_padding) = if matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail | crate::client_profile::ClientProfile::Ptr
+    ) {
+        td.native_outer_padding()
+    } else {
+        (TOOLTIP_PADDING_H * 2.0, TOOLTIP_PADDING_V * 2.0)
+    };
+    Some((width + horizontal_padding, height + vertical_padding))
 }
 
 fn wrapped_min_width(td: &TooltipData) -> f32 {
