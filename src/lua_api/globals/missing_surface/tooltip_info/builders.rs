@@ -93,11 +93,29 @@ fn uses_modern_tooltip_data() -> bool {
 
 fn packed_color_table(state: &mut LuaState, r: f64, g: f64, b: f64) -> Val {
     let color = create_table(state);
+    let saved_top = state.top;
+    state.push(color);
+    let mixin = table_get(state, Val::Table(state.global), "ColorMixin");
+    if let (Val::Table(color_ref), Val::Table(_)) = (color, mixin) {
+        let metatable = create_table(state);
+        state.push(metatable);
+        table_set(state, metatable, "__index", mixin);
+        if let Val::Table(metatable_ref) = metatable {
+            state
+                .gc
+                .tables
+                .get_mut(color_ref)
+                .unwrap()
+                .set_metatable(Some(metatable_ref));
+            state.gc.barrier_back(color_ref);
+        }
+    }
     for (key, component) in [("r", r), ("g", g), ("b", b)] {
         let byte = (component.clamp(0.0, 1.0) * 255.0).round() as u8;
         let value = f64::from(f32::from(byte) * (1.0_f32 / 255.0));
         table_set(state, color, key, Val::Num(value));
     }
+    state.top = saved_top;
     color
 }
 
