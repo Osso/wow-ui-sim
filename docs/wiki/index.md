@@ -1,3 +1,9 @@
+## [2026-11-04] implementation | Bag-child tooltip selection
+
+[Tooltip data](systems/lua-api.md#tooltip-data-and-merchant-cursor-presentation)
+links the source-backed child item selector, generator inclusion rule and pinned
+ItemSparse misses. Retail original-accessor proof is separate from native parity.
+
 ## [2026-11-04] investigation | Parallel GPU test lifetimes
 
 [GPU test lifetimes](investigations/parallel-gpu-test-lifetimes.md) records the reproduced Vulkan loader SIGSEGV, the shared lifetime lock, and the concurrent atlas/readback regression.

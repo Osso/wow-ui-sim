@@ -6,6 +6,12 @@ The Lua API layer bridges Lua addon code with the Rust simulation engine. It pro
 
 ## Tooltip data and merchant cursor presentation
 
+[Bag-child tooltips](../../specs/tooltip-bag-child.md) compose bag state with
+source-derived child-equipment rows and the existing item builder on
+Retail/PTR/Forever. The item generator includes child IDs automatically; absent
+pinned ItemSparse rows remain explicit catalog misses. Native selector parity
+and miss arity are not claimed.
+
 Retail/PTR supplied loot and buyback slots feed the existing item tooltip builder.
 [The getter contract](../../specs/tooltip-loot-buyback.md) records the emulated
 missing-slot seam and strict-index limitation.

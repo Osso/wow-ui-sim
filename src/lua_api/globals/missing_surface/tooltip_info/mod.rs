@@ -49,6 +49,14 @@ fn register_c_tooltip_info(state: &mut LuaState) -> LuaResult<()> {
     let table_ref = ensure_namespace(state, "C_TooltipInfo")?;
     if matches!(
         crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail
+            | crate::client_profile::ClientProfile::Ptr
+            | crate::client_profile::ClientProfile::WowForever
+    ) {
+        crate::c_api::c_tooltip_info_bag_child::register(state, table_ref)?;
+    }
+    if matches!(
+        crate::client_profile::ACTIVE,
         crate::client_profile::ClientProfile::Retail | crate::client_profile::ClientProfile::Ptr
     ) {
         crate::c_api::c_tooltip_info_loot::register(state, table_ref)?;

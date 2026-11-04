@@ -3392,3 +3392,8 @@ EllesmereUI.
 ## 2026-11-03 — Timed area POI classification
 
 Added [static classification and provenance](systems/area-poi-timed.md).
+
+## 2026-11-04 — Bag-child tooltip selection
+
+Linked [bag-child selection](../specs/tooltip-bag-child.md), generated catalog
+inclusion and pinned-data miss limits from the Lua API system page and index.
