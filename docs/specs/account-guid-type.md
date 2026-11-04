@@ -8,6 +8,8 @@
 - [ ] Return true for the BNetAccount GUID kind and false for other kinds, independently of friends or presence. The BNet prefix is ASCII case-insensitive; its decimal part consumes at most 20 digits with wrapping arithmetic and must fit 58 bits. Partial payloads are accepted.
 - [ ] Reject secret input from tainted callers when secret access is restricted; untainted callers may use accessible secret input.
 - [ ] Let the original PlayerLocation `IsValid` consumer evaluate the account predicate for both BNet and non-BNet GUIDs.
+- [ ] `GetIDFromBattleNetAccountGUID` returns the low 32 bits of the parsed hexadecimal field, or one nil for a non-BNet GUID (ordinary returns INFERRED by WM80b).
+- [ ] `IsGUIDRelatedToLocalAccount` compares the full local BNet GUID when a local identity is modeled; with no local BNet identity it returns false. For other GUIDs, comparison to the current player is INFERRED by WM80b.
 
 ## How it works
 
@@ -24,7 +26,8 @@
 
 ## Known gaps (current cycle)
 
-- [ ] WM80 identifies two further native members, `GetIDFromBattleNetAccountGUID` and `IsGUIDRelatedToLocalAccount`. They remain unregistered pending WM80b and a modeled local-account identity.
+- [ ] Local Battle.net identity is not modeled; `BNGetInfo` is an inert workaround, not a state source. BNet relatedness is false while that state is absent.
+- [ ] Non-BNet relatedness compares the simulator's exact current-player GUID string; full native GUID normalization is not modeled.
 - [ ] Native opaque GUID aliases can map to BNetAccount GUIDs; the simulator does not model the opaque map.
 - [ ] Native output secrecy and locale-dependent prefix behavior are not fully established.
 

@@ -384,9 +384,16 @@ fn account_guid_siblings_project_id_and_current_player_identity() {
         assert(related(UnitGUID('player')) == true)
         assert(related('Player-999-00000001') == false)
         assert(related('BNetAccount-0-0000002A') == false)
-        for _, fn in ipairs({getID, related}) do
-            local ok, err = pcall(fn, false)
-            assert(not ok and err:find('Usage:', 1, true))
+        for _, case in ipairs({
+            {getID, 'Usage: local battleNetAccountID = C_AccountInfo.GetIDFromBattleNetAccountGUID(battleNetAccountGUID)'},
+            {related, 'Usage: local isLocalUser = C_AccountInfo.IsGUIDRelatedToLocalAccount(guid)'},
+        }) do
+            for _, value in ipairs({false, {}}) do
+                local ok, err = pcall(case[1], value)
+                assert(not ok and err:find(case[2], 1, true))
+            end
+            local ok, err = pcall(case[1])
+            assert(not ok and err:find(case[2], 1, true))
         end
         "#,
     )
