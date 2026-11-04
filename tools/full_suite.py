@@ -230,7 +230,11 @@ def run_integration_shards(command, checkout, log, env, costs, count):
     names = re.findall(r"^(.+): test$", discovery.stdout, re.M)
     if discovery.returncode or not names or len(names) != len(set(names)):
         raise ValueError(f"integration discovery failed: {discovery.stdout}{discovery.stderr}")
-    shards = partition_tests(names, costs, count)
+    # These cases reserve exclusive capacity while testing the global two-child
+    # semaphore. Shared workloads can otherwise starve their exclusive flock.
+    reserved = [name for name in names if name.startswith("timeout_reexec::")]
+    ordinary = [name for name in names if not name.startswith("timeout_reexec::")]
+    shards = ([reserved] if reserved else []) + partition_tests(ordinary, costs, count)
     base_unit = next(arg for arg in command if arg.startswith("--unit="))
     slot = Path(env.get("CARGO_TARGET_DIR", "integration")).name.removeprefix("slot-")
 
@@ -247,8 +251,11 @@ def run_integration_shards(command, checkout, log, env, costs, count):
         finally:
             confirm_terminated(unit, slot)
 
-    with ThreadPoolExecutor(max_workers=len(shards)) as executor:
-        results = list(executor.map(run_shard, range(len(shards))))
+    first_ordinary = 1 if reserved else 0
+    results = [run_shard(0)] if reserved else []
+    if first_ordinary < len(shards):
+        with ThreadPoolExecutor(max_workers=count) as executor:
+            results.extend(executor.map(run_shard, range(first_ordinary, len(shards))))
     for _, _, transcript in results:
         log.write(transcript)
     log.flush()
