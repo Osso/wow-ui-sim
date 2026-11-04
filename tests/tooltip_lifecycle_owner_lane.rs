@@ -3,18 +3,18 @@
 use wow_ui_sim::lua_api::WowLuaEnv;
 
 #[test]
-fn tooltip_lifecycle_totem_hover_uses_bottomright_owner_anchor() {
+fn tooltip_lifecycle_original_simple_tooltip_uses_bottomright_owner_anchor() {
     let env = WowLuaEnv::new().unwrap();
     let addons = wow_ui_sim::paths::default_blizzard_ui_addons_path().unwrap();
     let source =
-        std::fs::read_to_string(addons.join("Blizzard_UnitFrame/Mainline/TotemFrame.lua")).unwrap();
+        std::fs::read_to_string(addons.join("Blizzard_SharedXML/SharedTooltipTemplates.lua"))
+            .unwrap();
     env.exec(&source).unwrap();
     env.exec(r#"
         local owner = CreateFrame("Button", "LifecycleTotem", UIParent)
-        owner.slot = 1
-        TotemButtonMixin.OnEnter(owner)
+        GameTooltip_ShowSimpleTooltip(GameTooltip, "test", CreateColor(1, 1, 1), false, owner, "ANCHOR_BOTTOMRIGHT")
         local point, relative, relativePoint = GameTooltip:GetPoint(1)
-        assert(relative == owner and point == "TOPLEFT" and relativePoint == "BOTTOMRIGHT", "totem hover bottomright points")
+        assert(relative == owner and point == "TOPLEFT" and relativePoint == "BOTTOMRIGHT", "simple tooltip bottomright points")
     "#).unwrap();
 }
 
