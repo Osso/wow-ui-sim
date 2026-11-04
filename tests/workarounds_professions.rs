@@ -74,6 +74,10 @@ fn settle_env(env: &WowLuaEnv) {
 #[test]
 fn profession_source_filter_updates_are_deferred_and_coalesced() {
     let env = full_game_env();
+    let toc = blizzard_ui_dir()
+        .join("Blizzard_ProfessionsTemplates")
+        .join("Blizzard_ProfessionsTemplates.toc");
+    load_addon(&env.loader_env(), &toc).expect("load Blizzard Professions templates");
     env.exec(
         r#"
         professionFilterUpdates = 0
