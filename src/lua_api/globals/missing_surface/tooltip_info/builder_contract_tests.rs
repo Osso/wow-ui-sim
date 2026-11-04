@@ -1,5 +1,5 @@
 use super::{create_identified_tooltip, empty_tooltip, push_tooltip_line, table_get_int};
-use crate::lua_api::methods::{create_table, table_get, table_set};
+use crate::lua_api::methods::{create_table, table_get, table_set, val_to_string};
 use rilua::{Lua, LuaApiMut, Val};
 
 #[test]
@@ -23,6 +23,42 @@ fn tooltip_builder_creates_fresh_tables_and_incrementing_instances() {
     assert_eq!(second_id, first_id + 1.0);
     let no_identity = create_identified_tooltip(state, 1.0, 0);
     assert_eq!(table_get(state, no_identity, "id"), Val::Nil);
+}
+
+#[test]
+fn tooltip_builder_copies_markup_and_publishes_packed_rgb() {
+    let mut lua = Lua::new().unwrap();
+    let state = lua.state_mut();
+    let tooltip = empty_tooltip(state, 1.0);
+    state.push(tooltip);
+    let lines = table_get(state, tooltip, "lines");
+    push_tooltip_line(
+        state,
+        lines,
+        1,
+        0.0,
+        "|cffff0000Red|r",
+        Some((128.0 / 255.0, 64.0 / 255.0, 1.0)),
+        false,
+    );
+    let line = table_get_int(state, lines, 1);
+    assert_eq!(
+        val_to_string(state, table_get(state, line, "leftText")).as_deref(),
+        Some("|cffff0000Red|r")
+    );
+    assert_eq!(table_get(state, line, "leftColorSegments"), Val::Nil);
+    let color = table_get(state, line, "leftColor");
+    assert_eq!(
+        table_get(state, color, "r"),
+        Val::Num(f64::from(128.0_f32 / 255.0))
+    );
+    assert_eq!(
+        table_get(state, color, "g"),
+        Val::Num(f64::from(64.0_f32 / 255.0))
+    );
+    assert_eq!(table_get(state, color, "b"), Val::Num(1.0));
+    assert_eq!(table_get(state, color, "a"), Val::Nil);
+    assert_eq!(table_get(state, line, "rightColor"), Val::Nil);
 }
 
 #[test]
