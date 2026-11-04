@@ -35,18 +35,27 @@ fn tooltip_bag_child_original_accessor_selects_catalog_child_not_parent() {
             assert(info and info.getterName == 'GetBagItemChild', 'bag-child accessor missing')
             assert(data and data.id == {child}, 'must select child, not parent or constant')
             assert(data.type == Enum.TooltipDataType.Item and #data.lines > 0)
-            assert(type(data.dataInstanceID) == 'number')
+            if {modern} then
+                assert(type(data.dataInstanceID) == 'number')
+            end
             assert(data.lines[1].leftText == {name:?}, 'must use catalog item lines')
             assert(GameTooltip:GetLeftLine(1):GetText() == {name:?})
-            local color = data.lines[1].leftColor
-            assert(color and color.a == nil and type(color.GetRGB) == 'function')
-            local r, g, b = color:GetRGB()
-            for _, channel in ipairs({{r, g, b}}) do
-                local byte = math.floor(channel * 255 + 0.5)
-                assert(math.abs(channel - byte * 0.003921568859368563) < 0.0000001)
+            if {modern} then
+                local color = data.lines[1].leftColor
+                assert(color and color.a == nil and type(color.GetRGB) == 'function')
+                local r, g, b = color:GetRGB()
+                for _, channel in ipairs({{r, g, b}}) do
+                    local byte = math.floor(channel * 255 + 0.5)
+                    assert(math.abs(channel - byte * 0.003921568859368563) < 0.0000001)
+                end
             end
             "#,
             name = item.name,
+            modern = matches!(
+                wow_ui_sim::client_profile::ACTIVE,
+                wow_ui_sim::client_profile::ClientProfile::Retail
+                    | wow_ui_sim::client_profile::ClientProfile::Ptr
+            ),
         ))
         .unwrap();
     }
