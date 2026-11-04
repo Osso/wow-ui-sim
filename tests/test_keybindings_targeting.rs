@@ -160,12 +160,19 @@ fn setup_env() -> common::LockedEnv {
             state.addon_base_paths = vec![ui.clone()];
         }
 
-        for name in BLIZZARD_ADDONS {
-            if *name == "Blizzard_UnitFrame" {
-                common::load_blizzard_addon_bootstrap(&env, &ui, name, "Mainline/TargetFrame.lua");
+        if wow_ui_sim::client_profile::ACTIVE == wow_ui_sim::client_profile::ClientProfile::Wrath {
+            // FrameXML.toc:77 loads TargetFrame.xml; its OnLoad at :651-654
+            // initializes the target unit and registers PLAYER_TARGET_CHANGED.
+            // TargetFrame.lua:94-101 implements the visibility tested below.
+            common::load_profile_framexml(&env);
+        } else {
+            for name in BLIZZARD_ADDONS {
+                if *name == "Blizzard_UnitFrame" {
+                    common::load_blizzard_addon_bootstrap(&env, &ui, name, "Mainline/TargetFrame.lua");
+                }
+                common::load_required_blizzard_addon(&env, &ui, name);
+                env.apply_runtime_addon_load_workarounds(name);
             }
-            common::load_required_blizzard_addon(&env, &ui, name);
-            env.apply_runtime_addon_load_workarounds(name);
         }
         env.apply_post_load_workarounds();
         fire_startup_events(&env);
