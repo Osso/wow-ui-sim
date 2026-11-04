@@ -2,6 +2,8 @@
 use wow_ui_sim::lua_api::WowLuaEnv;
 
 fn collect_in_colors(env: &WowLuaEnv) {
+    env.exec(&format!("D56 = {}", matches!(wow_ui_sim::client_profile::ACTIVE,
+        wow_ui_sim::client_profile::ClientProfile::Retail | wow_ui_sim::client_profile::ClientProfile::Ptr))).unwrap();
     env.exec(r#"
         colorCalls = 0
         local original = CreateColor
@@ -87,7 +89,7 @@ fn pet_parent_survives_markup_color_collection() {
         pet.pet_id.clone()
     };
     collect_in_colors(&env);
-    env.exec(&format!("local t = C_TooltipInfo.GetCompanionPet({id:?}); CheckTip(t, 'Audit Pet'); assert(t.id == {id:?})")).unwrap();
+    env.exec(&format!("local t = C_TooltipInfo.GetCompanionPet({id:?}); CheckTip(t, D56 and '|cffff0000Audit Pet|r' or 'Audit Pet'); assert(t.id == {id:?})")).unwrap();
 }
 
 #[test]
@@ -100,7 +102,7 @@ fn achievement_parent_survives_markup_color_collection() {
         id
     };
     collect_in_colors(&env);
-    env.exec(&format!("CheckTip(C_TooltipInfo.GetAchievementByID({id}), 'Audit Achievement')")).unwrap();
+    env.exec(&format!("CheckTip(C_TooltipInfo.GetAchievementByID({id}), D56 and '|cffff0000Audit Achievement|r' or 'Audit Achievement')")).unwrap();
 }
 
 #[test]
@@ -113,7 +115,7 @@ fn mount_parent_survives_markup_color_collection() {
         mount.name = "|cffff0000Audit Mount|r".into();
     }
     collect_in_colors(&env);
-    env.exec("local t = C_TooltipInfo.GetMountBySpellID(4000000001); CheckTip(t, 'Audit Mount'); assert(t.id == 4000000001 and t.wordWrapMinWidth == 240)").unwrap();
+    env.exec("local t = C_TooltipInfo.GetMountBySpellID(4000000001); CheckTip(t, D56 and '|cffff0000Audit Mount|r' or 'Audit Mount'); assert(t.id == 4000000001 and t.wordWrapMinWidth == 240)").unwrap();
 }
 
 #[test]
@@ -123,13 +125,19 @@ fn markup_segments_and_shapeshift_parent_survive_color_collection() {
     collect_in_colors(&env);
     env.exec(r#"
         local tip = C_TooltipInfo.GetShapeshift(1)
-        CheckTip(tip, 'Plain Red End')
+        CheckTip(tip, D56 and 'Plain |cffff0000Red|r End' or 'Plain Red End')
         assert(tip.id == 465)
         local segments = tip.lines[1].leftColorSegments
-        assert(#segments == 3)
-        assert(segments[1].text == 'Plain ' and segments[2].text == 'Red' and segments[3].text == ' End')
-        local r,g,b = segments[2].color:GetRGB()
-        assert(r == 1 and g == 0 and b == 0)
-        assert(colorCalls == 3)
+        if D56 then
+            assert(segments == nil, 'D56 copies markup, no common segment array')
+            assert(tip.lines[1].leftColor.a == nil)
+            assert(colorCalls == 1, 'collect in the supplied side color factory')
+        else
+            assert(#segments == 3)
+            assert(segments[1].text == 'Plain ' and segments[2].text == 'Red' and segments[3].text == ' End')
+            local r,g,b = segments[2].color:GetRGB()
+            assert(r == 1 and g == 0 and b == 0)
+            assert(colorCalls == 3)
+        end
     "#).unwrap();
 }
