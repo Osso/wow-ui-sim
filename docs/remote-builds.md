@@ -26,8 +26,9 @@ The Python profile launcher preserves `live`/`retail`, `ptr`, `mists`, and `all`
 
 ## Local slot builds
 
-Use `scripts/slot-build.py` for shared-slot Cargo builds. Valid slots are 0, 1 and 3;
-slot 2 was retired on 2026-10-27 and both `slot-build.py --slot` and
+Use `scripts/slot-build.py` for shared-slot Cargo builds. Slots 0, 1 and 3 are
+for general use; slot 4 is dedicated to tooltip lanes. Slot 2 was retired on
+2026-10-27 and both `slot-build.py --slot` and
 `full-suite --target-dir` reject it. The Cargo command must pass
 `--message-format=json` before any `--`. Without it, artifact certification has no
 compiler-artifact records, so `slot-build.py` rejects the request before launch. It bind-mounts the lane
