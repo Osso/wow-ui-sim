@@ -258,6 +258,10 @@ pub struct SimState {
     pub has_bonus_action_bar: bool,
     pub bonus_bar_index: i32,
     pub action_bar_state: ActionBarStateInfo,
+    pub spell_range_visualization: crate::c_api::action_button_hover::SpellRangeVisualizationState,
+    pub action_combat_range: crate::c_api::action_combat_range_check::ActionCombatRangeState,
+    /// None = missing shared object; Some(flag) = supplied restrictive-rule flag.
+    pub bank_reagent_object: Option<bool>,
     pub action_highlights: ActionHighlightState,
     pub extra_action_button: ExtraActionButtonState,
     pub equipped_artifact: Option<ArtifactInfo>,

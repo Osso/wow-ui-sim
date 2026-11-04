@@ -1,3 +1,16 @@
+## [2026-11-04] bounded proof | WM93 counted combat range
+
+The [PTR tooltip investigation](investigations/ptr-tooltip-residue.md) records the
+now-GREEN original OnEnter selector, separate counted registrations, explicit
+supplied-result monitor and source-bound slot test execution. Native scheduling,
+target selection and security remain named UNKNOWN seams.
+
+## [2026-11-04] investigation | PTR tooltip residue
+
+Recorded [WM92 producers and remaining consumer boundary](investigations/ptr-tooltip-residue.md).
+Kept the 70668/70493 mismatch, unknown-policy seams, discriminating direct proof,
+consumer preservation limits and visibly failing WM93 selector explicit.
+
 ## [2026-11-04] implementation | D56 tooltip serialization
 
 Updated [Lua API](systems/lua-api.md#tooltip-data-and-merchant-cursor-presentation)

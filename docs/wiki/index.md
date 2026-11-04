@@ -1,3 +1,10 @@
+## [2026-11-04] investigation | PTR tooltip residue
+
+[PTR tooltip residue](investigations/ptr-tooltip-residue.md) links the fixture
+correction and bounded WM92 reagent/action producers. The contract keeps PTR
+70668 evidence distinct from pinned 70493 inputs. The rule-enabled original
+OnEnter is now GREEN with the separate [WM93 counted-channel contract](../specs/ptr-action-combat-range-check.md), whose monitor uses explicit supplied results rather than native schedule/geometry claims.
+
 ## [2026-11-04] correction | Publication gap expectations
 
 The [10.0.2](../specs/patch-10-0-2-publication-sweep.md#current-reconciliation--2026-11-04), [10.1.0](../specs/patch-10-1-0-publication-sweep.md#current-reconciliation--2026-11-04), [8.1.0](../specs/patch-8-1-0-publication-sweep.md#current-reconciliation--2026-11-04) and [8.1.5](../specs/patch-8-1-5-publication-sweep.md#current-reconciliation--2026-11-04) specs record resolved endpoints and producer commits. Historical audit captures are unchanged.
@@ -11,6 +18,9 @@ supplied character state, original TalentFrame consumer proof and native limits.
 
 [Lua API](systems/lua-api.md#tooltip-data-and-merchant-cursor-presentation) links
 supplied loot/buyback getters, populated-only instance counters and separate
+merchant cursor presentation. Its source-matched baseline evidence predates the
+[PTR residue follow-up](investigations/ptr-tooltip-residue.md). D56 text/color/nested publication,
+
 merchant cursor presentation. Retail tooltip/library tests pass. PTR failures
 match the source-matched master baseline for that lane. [D56 serialization](../specs/tooltip-data-serialization.md)
 now separates copied DTO markup from presentation runs and supports packed RGB,

@@ -152,6 +152,9 @@ fn load_full_game_ui() -> WowLuaEnv {
 #[test]
 fn profession_recipe_source_button_displays_supplied_tooltip_text() {
     let env = load_full_game_ui();
+    // WM92's universal character default is UNKNOWN. Supply a present object;
+    // the fixture's empty rule collection leaves CraftFromBankRestricted inactive.
+    env.state().borrow_mut().bank_reagent_object = Some(false);
     load_addon(&env.loader_env(), &templates_toc()).expect("load original profession templates");
     let profession_toc = find_toc_file(&blizzard_ui_dir().join("Blizzard_Professions"))
         .expect("find original professions addon");
