@@ -37,6 +37,9 @@ WORKER_SHARE_BYTES = 3 * GIB // 2
 TAIL_MEMORY_BYTES = 9 * GIB
 BATCH_TARGET_SECONDS = 20.0
 BATCH_MAX_NAMES = 25
+# Exact per-name CPU and memory is only worth a dedicated process where it pays:
+# measured expensive cases and cases with a reserved memory envelope.
+ISOLATE_SECONDS = 5.0
 WORKER = Path(__file__).with_name("full_suite_worker.py")
 PROFILES = ("retail", "ptr", "wrath", "mists", "wowforever", "era", "anniversary")
 # Slot 2 was retired on 2026-10-27 (user decision: three build slots).
@@ -300,11 +303,11 @@ def lane_plan(budget, has_tail):
     return lanes, max(1, budget.cpus - lanes)
 
 
-def take_batch(queue, costs):
+def take_batch(queue, costs, single=False):
     """Take a small cost-bounded batch from one queue."""
     batch = [queue.popleft()]
     load = costs.get(batch[0], 1)
-    while queue and len(batch) < BATCH_MAX_NAMES and load < BATCH_TARGET_SECONDS:
+    while not single and queue and len(batch) < BATCH_MAX_NAMES and load < BATCH_TARGET_SECONDS:
         name = queue.popleft()
         batch.append(name)
         load += costs.get(name, 1)
@@ -357,7 +360,9 @@ def run_dynamic_suite(command, checkout, log, env, costs, budget, timeout_tests,
                 else:
                     lock.wait(0.2)
                     continue
-                batch = take_batch(queue, costs)
+                single = (costs.get(queue[0], 0) >= ISOLATE_SECONDS
+                          or queue[0] in memory_costs["peak_bytes"])
+                batch = take_batch(queue, costs, single)
                 admission = admission_bytes(batch, memory_costs)
                 if state["admitted"] + admission <= budget.memory_bytes:
                     state["admitted"] += admission
@@ -387,7 +392,8 @@ def run_dynamic_suite(command, checkout, log, env, costs, budget, timeout_tests,
         manifest = workspace / f"batch-{index}.json"
         result_path = workspace / f"batch-{index}.result.json"
         manifest.write_text(json.dumps({"binary": command[-1], "names": batch,
-                                        "result": str(result_path), "measure_memory": True}))
+                                        "result": str(result_path), "measure_memory": True,
+                                        "isolate": len(batch) == 1 and kind != "reserved"}))
         try:
             step, output = run_step(
                 f"integration:{index}",
@@ -402,6 +408,7 @@ def run_dynamic_suite(command, checkout, log, env, costs, budget, timeout_tests,
             step["kind"] = kind
             step["memory_max_bytes"] = memory
             step["admission_bytes"] = admission
+            step["isolated"] = len(batch) == 1
             return step, output
         finally:
             for path in (manifest, result_path):

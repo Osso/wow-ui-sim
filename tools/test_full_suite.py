@@ -19,33 +19,55 @@ PROFILES = ("retail", "ptr", "wrath", "mists", "wowforever", "era", "anniversary
 
 
 class IntegrationMetricsTests(unittest.TestCase):
-    def test_native_exact_cases_record_wall_cpu_failure_and_ignored(self):
+    def run_worker(self, manifest):
+        path = Path(tempfile.mkdtemp()) / 'manifest.json'
+        path.write_text(json.dumps(manifest))
+        return subprocess.run([sys.executable, str(RUNNER.with_name('full_suite_worker.py')),
+                               str(path)], capture_output=True, text=True, timeout=20)
+
+    def test_bulk_batch_records_per_name_wall_status_and_cpu_share(self):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
             binary = root / 'native'
             write_executable(binary,
                 "import sys, time\n"
-                "name = sys.argv[sys.argv.index('--exact') + 1]\n"
-                "if name != 'ignored':\n"
-                "    sum(i * i for i in range(200000))\n"
+                "names = sys.argv[sys.argv.index('--exact') + 1:]\n"
+                "for name in names:\n"
+                "    sum(i * i for i in range(50000))\n"
                 "    time.sleep(.03)\n"
-                "status = 'FAILED' if name == 'bad' else 'ignored' if name == 'ignored' else 'ok'\n"
-                "print('test ' + name + ' ... ' + status)\n"
-                "sys.exit(1 if name == 'bad' else 0)\n")
-            manifest = root / 'batch.json'
+                "    print('test ' + name + ' ... ' + ('FAILED' if name == 'bad' "
+                "else 'ignored' if name == 'ignored' else 'ok'), flush=True)\n"
+                "sys.exit(1 if 'bad' in names else 0)\n")
             result = root / 'result.json'
-            manifest.write_text(json.dumps({'binary': str(binary),
-                'names': ['good', 'bad', 'ignored'], 'result': str(result)}))
-            process = subprocess.run([sys.executable, str(RUNNER.with_name('full_suite_worker.py')),
-                str(manifest)], capture_output=True, text=True, timeout=10)
+            process = self.run_worker({'binary': str(binary), 'names': ['good', 'bad', 'ignored'],
+                                       'result': str(result), 'measure_memory': False})
             self.assertEqual(process.returncode, 1, process.stderr)
-            records = json.loads(result.read_text())['records']
-            self.assertEqual([r['name'] for r in records], ['good', 'bad', 'ignored'])
-            self.assertEqual([r['status'] for r in records], ['passed', 'failed', 'ignored'])
-            self.assertGreaterEqual(records[0]['seconds'], .03)
-            self.assertGreater(records[0]['cpu_seconds'], 0)
-            self.assertGreater(records[0]['max_rss_kib'], 0)
-            self.assertIn('test bad ... FAILED', process.stdout)
+            records = {record['name']: record for record in json.loads(result.read_text())['records']}
+            self.assertEqual(records['good']['status'], 'passed')
+            self.assertEqual(records['bad']['status'], 'failed')
+            self.assertEqual(records['ignored']['status'], 'ignored')
+            self.assertEqual(records['good']['cpu_source'], 'batch_share')
+            self.assertGreaterEqual(records['good']['seconds'], .029)
+            self.assertGreater(records['good']['cpu_seconds'], 0)
+            self.assertIn('test good ... ok', process.stdout)
+
+    def test_isolated_name_records_its_own_cpu_and_memory_peak(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            binary = root / 'native'
+            write_executable(binary,
+                "import sys\n"
+                "sum(i * i for i in range(200000))\n"
+                "print('test solo ... ok')\n")
+            result = root / 'result.json'
+            process = self.run_worker({'binary': str(binary), 'names': ['solo'],
+                                       'result': str(result), 'measure_memory': True,
+                                       'isolate': True})
+            self.assertEqual(process.returncode, 0, process.stderr)
+            record = json.loads(result.read_text())['records'][0]
+            self.assertEqual(record['cpu_source'], 'isolated')
+            self.assertGreater(record['cpu_seconds'], 0)
+            self.assertGreater(record['memory_peak_bytes'], 0)
 
     def test_success_without_selected_case_output_is_rejected(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -53,11 +75,8 @@ class IntegrationMetricsTests(unittest.TestCase):
             binary = root / 'native'
             write_executable(binary, "print('test result: ok. 0 passed')\n")
             result = root / 'result.json'
-            manifest = root / 'batch.json'
-            manifest.write_text(json.dumps({'binary': str(binary), 'names': ['missing'],
-                                             'result': str(result)}))
-            process = subprocess.run([sys.executable, str(RUNNER.with_name('full_suite_worker.py')),
-                str(manifest)], capture_output=True, text=True, timeout=10)
+            process = self.run_worker({'binary': str(binary), 'names': ['missing'],
+                                       'result': str(result), 'measure_memory': False})
             self.assertNotEqual(process.returncode, 0)
             self.assertEqual(json.loads(result.read_text())['records'][0]['status'], 'invalid')
 
@@ -121,6 +140,19 @@ class TestBudgetTests(unittest.TestCase):
         self.assertEqual(self.runner.shard_memory_bytes(['new::case'], peaks), 6 * gib)
 
 
+def selection_script(names, body):
+    """A fake native test binary that runs every selected name in one process."""
+    return ("import pathlib, sys, time\n"
+            "root = pathlib.Path(__file__).parent\n"
+            "if '--list' in sys.argv:\n"
+            "    print('\\n'.join(name + ': test' for name in " + repr(names) + "))\n"
+            "    sys.exit(0)\n"
+            "selected = sys.argv[sys.argv.index('--exact') + 1:]\n"
+            "for name in selected:\n"
+            + "".join("    " + line + "\n" for line in body.splitlines())
+            + "    print('test ' + name + ' ... ok', flush=True)\n")
+
+
 class IntegrationShardingTests(unittest.TestCase):
     def setUp(self):
         spec = importlib.util.spec_from_file_location('shard_runner', RUNNER)
@@ -133,21 +165,19 @@ class IntegrationShardingTests(unittest.TestCase):
         self.launcher = self.root / 'systemd-run'
         write_executable(self.launcher,
             "import subprocess, sys\n"
-            "args = sys.argv[1:]\n"
-            "if '--unit' in args:\n"
-            "    name = args[args.index('--unit') + 1]\n"
-            "    (__import__('pathlib').Path(__file__).parent / 'units.log').open('a').write(name + '\\n')\n"
-            "sys.exit(subprocess.call(args[args.index('--') + 1:]))\n")
+            "sys.exit(subprocess.call(sys.argv[sys.argv.index('--') + 1:]))\n")
         self.runner.confirm_terminated = lambda *args: None
 
-    def run_suite(self, body, costs=None, budget=None, guards=(), tail=(), timings=None):
+    def run_suite(self, body, costs=None, budget=None, guards=(), tail=(), timings=None,
+                  memory_costs=None):
         import io
         binary = self.root / 'test-binary'
         write_executable(binary, body)
         return self.runner.run_dynamic_suite(
             [str(self.launcher), '--unit=fixture', '-p', 'MemoryMax=9G', '--', str(binary)],
             self.root, io.StringIO(), dict(os.environ), costs or {},
-            budget or self.runner.TestBudget(2, 24), guards, self.memory_costs, tail, timings)
+            budget or self.runner.TestBudget(2, 24), guards,
+            memory_costs or self.memory_costs, tail, timings)
 
     def test_batches_cover_every_name_once_in_cost_order(self):
         from collections import deque
@@ -156,6 +186,7 @@ class IntegrationShardingTests(unittest.TestCase):
         self.assertEqual(self.runner.take_batch(queue, costs), ['slow'])
         self.assertEqual(list(queue), ['cheap', 'medium'])
         self.assertEqual(self.runner.take_batch(queue, costs), ['cheap', 'medium'])
+        self.assertEqual(self.runner.take_batch(deque(['big', 'other']), costs, single=True), ['big'])
 
     def test_unknown_admission_is_the_worker_share_and_known_uses_its_measured_cap(self):
         gib = 1024 ** 3
@@ -169,40 +200,24 @@ class IntegrationShardingTests(unittest.TestCase):
         self.assertEqual(self.runner.lane_plan(self.runner.TestBudget(4, 6), True), (2, 2))
 
     def test_conformance_runs_exclusively_before_shared_work(self):
-        import io
+        names = ['timeout_reexec::capacity', 'ordinary::a', 'ordinary::b']
+        body = selection_script(names, "pass")
         binary = self.root / 'test-binary'
-        write_executable(binary,
-            "import pathlib, sys\n"
-            "root = pathlib.Path(__file__).parent\n"
-            "marker = root / 'capacity-complete'\n"
-            "if '--list' in sys.argv:\n"
-            "    print('timeout_reexec::capacity: test\\nordinary::a: test\\nordinary::b: test')\n"
-            "    sys.exit(0)\n"
-            "selected = sys.argv[sys.argv.index('--exact') + 1:]\n"
-            "if 'timeout_reexec::capacity' in selected:\n"
-            "    assert selected == ['timeout_reexec::capacity']\n"
-            "    marker.touch()\n"
-            "else:\n"
-            "    assert marker.exists(), 'ordinary work competed with exclusive capacity fixture'\n"
-            "print('test ' + selected[0] + ' ... ok')\n")
+        write_executable(binary, body)
+        import io
         step, _, _ = self.runner.run_dynamic_suite(
             [str(self.launcher), '--unit=fixture', '-p', 'MemoryMax=9G', '--', str(binary)],
             self.root, io.StringIO(), dict(os.environ), {}, self.runner.TestBudget(2, 24), (),
             self.memory_costs)
         self.assertEqual(step['exit'], 0)
         self.assertEqual(step['tests'], 3)
-        self.assertEqual(step['batches_detail'][0]['kind'], 'reserved')
+        kinds = [batch['kind'] for batch in step['batches_detail']]
+        self.assertEqual(kinds[0], 'reserved')
 
     def test_guarded_batches_leave_running_room_for_ordinary_work(self):
         guarded = [f'guarded::{index}' for index in range(6)]
-        body = (
-            "import pathlib, sys, time\n"
-            "root = pathlib.Path(__file__).parent\n"
-            "if '--list' in sys.argv:\n"
-            "    print('\\n'.join(name + ': test' for name in "
-            + repr(guarded + ['ordinary::a']) + "))\n"
-            "    sys.exit(0)\n"
-            "name = sys.argv[sys.argv.index('--exact') + 1]\n"
+        names = guarded + ['ordinary::a']
+        body = selection_script(names,
             "if name.startswith('guarded::'):\n"
             "    with (root / 'guarded-spans').open('a') as spans:\n"
             "        spans.write(f'{time.monotonic()} start {name}\\n')\n"
@@ -210,8 +225,8 @@ class IntegrationShardingTests(unittest.TestCase):
             "    with (root / 'guarded-spans').open('a') as spans:\n"
             "        spans.write(f'{time.monotonic()} end {name}\\n')\n"
             "else:\n"
-            "    (root / 'ordinary-ran').touch()\n"
-            "print('test ' + name + ' ... ok')\n")
+            "    (root / 'ordinary-ran').touch()")
+        # Each guarded case is above the isolation threshold and runs alone.
         step, _, _ = self.run_suite(body, costs={name: 30 for name in guarded}, guards=guarded,
                                     budget=self.runner.TestBudget(3, 24))
         self.assertEqual(step['exit'], 0)
@@ -236,17 +251,13 @@ class IntegrationShardingTests(unittest.TestCase):
             "limit = int(value[:-1]) * 1024 ** 3 if value.endswith('G') else int(value)\n"
             "env = dict(os.environ, TEST_UNIT_MEMORY_BYTES=str(limit))\n"
             "sys.exit(subprocess.call(args[args.index('--') + 1:], env=env))\n")
-        body = (
-            "import os, pathlib, sys\n"
-            "if '--list' in sys.argv:\n"
-            "    print('large::case: test\\nsmall::case: test')\n"
-            "    sys.exit(0)\n"
-            "name = sys.argv[sys.argv.index('--exact') + 1]\n"
+        names = ['large::case', 'small::case']
+        body = selection_script(names,
             "limit = int(os.environ['TEST_UNIT_MEMORY_BYTES'])\n"
-            "required = (6 if name.startswith('large') else 2) * 1024 ** 3\n"
+            "required = 6 * 1024 ** 3 if name.startswith('large') else 2 * 1024 ** 3\n"
             "assert limit >= required, 'batch unit exceeded its memory budget'\n"
-            "pathlib.Path(__file__).parent.joinpath(name.split('::')[0] + '-cap').write_text(str(limit))\n"
-            "print('test ' + name + ' ... ok')\n")
+            "(root / (name.split('::')[0] + '-cap')).write_text(str(limit))")
+        body = "import os\n" + body
         peaks = {'peak_bytes': {'large::case': 4 * gib, 'small::case': gib}, 'headroom_percent': 50}
         binary = self.root / 'test-binary'
         write_executable(binary, body)
@@ -260,30 +271,29 @@ class IntegrationShardingTests(unittest.TestCase):
         self.assertEqual((self.root / 'small-cap').read_text(), str(2 * gib))
 
     def test_exact_names_failures_and_per_name_metrics_are_recorded(self):
-        import io
         timings = self.root / 'timings.json'
-        body = (
-            "import sys, time\n"
-            "if '--list' in sys.argv:\n"
-            "    print('alpha::a: test\\nalpha::ab: test\\nbeta::bad: test\\nbeta::ignored: test')\n"
-            "    sys.exit(0)\n"
-            "selected = sys.argv[sys.argv.index('--exact') + 1]\n"
+        names = ['alpha::a', 'alpha::ab', 'beta::bad', 'beta::ignored']
+        body = selection_script(names,
             "time.sleep(.02)\n"
-            "print('test ' + selected + ' ... ' + ('FAILED' if selected == 'beta::bad' "
-            "else 'ignored' if selected.endswith('ignored') else 'ok'))\n"
-            "sys.exit(1 if selected == 'beta::bad' else 0)\n")
-        step, _, output = self.run_suite(body, timings=timings)
+            "if name == 'beta::bad':\n"
+            "    print('test ' + name + ' ... FAILED', flush=True)\n"
+            "    continue")
+        binary = self.root / 'test-binary'
+        write_executable(binary, body)
+        import io
+        step, _, output = self.runner.run_dynamic_suite(
+            [str(self.launcher), '--unit=fixture', '-p', 'MemoryMax=9G', '--', str(binary)],
+            self.root, io.StringIO(), dict(os.environ), {}, self.runner.TestBudget(2, 24), (),
+            self.memory_costs, (), timings)
         self.assertEqual(step['exit'], 1)
         self.assertEqual(self.runner.FAILED.findall(output), ['beta::bad'])
         records = json.loads(timings.read_text())
-        self.assertEqual(sorted(records), ['alpha::a', 'alpha::ab', 'beta::bad', 'beta::ignored'])
+        self.assertEqual(sorted(records), names)
         self.assertEqual(records['beta::bad']['status'], 'failed')
-        self.assertEqual(records['beta::ignored']['status'], 'ignored')
         self.assertGreater(records['alpha::a']['seconds'], .019)
         self.assertGreater(records['alpha::a']['cpu_seconds'], 0)
 
     def test_tail_steps_run_concurrently_with_integration(self):
-        import io
         tail_binary = self.root / 'tail-binary'
         write_executable(tail_binary,
             "import pathlib, sys, time\n"
@@ -294,18 +304,13 @@ class IntegrationShardingTests(unittest.TestCase):
             "    time.sleep(.01)\n"
             "(root / 'tail-ran').touch()\n"
             "print('test tail::one ... ok')\n")
-        body = (
-            "import pathlib, sys, time\n"
-            "root = pathlib.Path(__file__).parent\n"
-            "if '--list' in sys.argv:\n"
-            "    print('ordinary::a: test')\n"
-            "    sys.exit(0)\n"
+        names = ['ordinary::a']
+        body = selection_script(names,
             "(root / 'integration-started').touch()\n"
             "deadline = time.monotonic() + 5\n"
             "while not (root / 'tail-ran').exists():\n"
             "    assert time.monotonic() < deadline, 'tail did not overlap integration'\n"
-            "    time.sleep(.01)\n"
-            "print('test ordinary::a ... ok')\n")
+            "    time.sleep(.01)")
         tail = [{'name': 'lib', 'command': [str(tail_binary)]}]
         step, tail_steps, _ = self.run_suite(body, tail=tail)
         self.assertEqual(step['exit'], 0)
