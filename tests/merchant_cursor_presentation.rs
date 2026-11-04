@@ -59,7 +59,14 @@ fn repair_base_survives_overrides_and_clears_held_item() {
     env.state().borrow_mut().merchant_repair_capable = false;
     env.exec("PickupPlayerMoney(1); ShowRepairCursor(); assert(GetCursorInfo() == 'money'); assert(not InRepairMode())")
         .unwrap();
-    env.state().borrow_mut().merchant_repair_capable = true;
+    {
+        let mut state = env.state().borrow_mut();
+        state.merchant_repair_capable = true;
+        state.cursor_storage.presentation_gate_a = true;
+    }
+    env.exec("ShowRepairCursor(); assert(GetCursorInfo() == 'money'); assert(not InRepairMode())")
+        .unwrap();
+    env.state().borrow_mut().cursor_storage.presentation_gate_a = false;
     env.exec("ShowRepairCursor(); assert(GetCursorInfo() == nil); assert(InRepairMode())")
         .unwrap();
     {
