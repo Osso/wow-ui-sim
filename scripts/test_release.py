@@ -10,6 +10,24 @@ spec.loader.exec_module(release)
 
 
 class ReleaseTests(unittest.TestCase):
+    def test_checked_master_rejects_dirty_or_diverged_tree(self):
+        for replies, message in [
+            (["", "feature"], "requires master"),
+            (["", "master", "?? untracked"], "clean tree"),
+            (["", "master", "", "abc", "def"], "match origin/master"),
+        ]:
+            with self.subTest(message=message), patch.object(release, "git", side_effect=replies):
+                with self.assertRaisesRegex(ValueError, message):
+                    release.checked_master()
+
+    def test_success_tags_verified_head_then_pushes_tag(self):
+        with patch.object(release, "checked_master", return_value="abc"), \
+             patch.object(release, "git") as git, \
+             patch.object(release.subprocess, "run", return_value=subprocess.CompletedProcess([], 0, "PASS\n", "")):
+            release.release("1.2.3", "/slot")
+        self.assertEqual(git.call_args_list[0].args, ("tag", "-a", "v1.2.3", "-m", "v1.2.3", "abc"))
+        self.assertEqual(git.call_args_list[1].args, ("push", "origin", "refs/tags/v1.2.3:refs/tags/v1.2.3"))
+
     def test_dry_run_executes_optional_suite_without_tagging(self):
         with patch.object(release, "checked_master", return_value="abc") as checked, \
              patch.object(release, "git") as git, \
