@@ -137,7 +137,13 @@ including building, failed, and rejected runs; it never supplies the content or
 artifact baseline. Existing attempt-only slots have no verified baseline and
 receive the conservative unknown-source checks.
 Before Cargo starts, a changed verified identity refreshes mtimes for the
-HEAD-to-HEAD diff and both trees' dirty/untracked paths without changing bytes.
+content changes and current dirty/untracked paths without changing bytes. Content
+change candidates come from the HEAD-to-HEAD diff and both trees' dirty/untracked
+paths. A candidate counts only if its content digest differs from the previous
+verified receipt's `source_hashes`, or that receipt has no digest for the path.
+The hashes are the pre-build source snapshot already used by certification;
+old receipts without these hashes remain conservative. Thus editing one file in
+a primed dirty tree does not classify every unchanged dirty file as new content.
 An unknown baseline or unsuccessful previous attempt derives input roots from
 offline `cargo metadata --no-deps`:
 package manifest directories and path dependency directories, plus root

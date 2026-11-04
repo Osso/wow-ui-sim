@@ -349,7 +349,11 @@ def read_content_changes(worktree, identity, dirty, previous):
         changed.update(previous["dirty_paths"])
     except (subprocess.CalledProcessError, KeyError, ValueError):
         changed = full_source_inputs(worktree)
-    return changed.union(dirty)
+    candidates = changed.union(dirty)
+    recorded = (previous or {}).get("source_hashes", {})
+    hashes = read_input_hashes(worktree, candidates)
+    return {name for name in candidates
+            if name not in recorded or hashes[name] != recorded[name]}
 
 
 def prepare_source(worktree, previous, attempted=None):
@@ -1005,6 +1009,8 @@ def execute_build(request_path, cap_gib=130, recent_hours=2):
     previous = json.loads(verified.read_text()) if verified.exists() else None
     attempted = json.loads(state.read_text()) if state.exists() else None
     worktree = Path(request["worktree"])
+    stat_cache = slot / ".stat-cache.json"
+    load_stat_cache(stat_cache)
     current = prepare_source(worktree, previous, attempted)
     current.update(unit=request["unit"], cargo=request["cargo"], worktree=str(worktree),
                    slot=str(slot), package_roots=read_package_roots(worktree))
@@ -1013,8 +1019,6 @@ def execute_build(request_path, cap_gib=130, recent_hours=2):
     write_json(state, dict(current, artifacts={}, result="building"))
     receipt = Path(request["receipt"])
     write_json(receipt, summarize_receipt(dict(current, artifacts={}, result="building")))
-    stat_cache = slot / ".stat-cache.json"
-    load_stat_cache(stat_cache)
     try:
         return run_verified_build(slot, worktree, receipt, current, previous, request)
     finally:
@@ -1025,6 +1029,7 @@ def run_verified_build(slot, worktree, receipt, current, previous, request):
     guard_cpu = time.process_time()
     before = read_dep_info_snapshot(slot, worktree)
     source_before = snapshot_source_hashes(current, before)
+    current["source_hashes"] = source_before
     pre_cpu = time.process_time() - guard_cpu
     started_ns = time.time_ns()
     returncode, records = run_build_command(request["cargo"])
