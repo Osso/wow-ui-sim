@@ -10,7 +10,9 @@ The simulator has no minimap tracking model and reports zero tracking types. Unt
 
 Forever exposes eligible static tracking rows in native order. Their filter bits, texture IDs, class restrictions and signed subtypes come from the 1.60.1.70707 native evidence. The initial mask comes from `minimapTrackedInfov4`, or 2162728 when unavailable, restricted to eligible rows. `IsFilteredOut` tests whether any requested bit is enabled; zero is not filtered out. Changes update the in-memory mask.
 
-Dynamic tracking spells and the native save, server, and notification behavior remain unmodeled; initialization from the CVar does not establish persistence after a change.
+Forever 1.60.1.70707 WM77b establishes the CVar default as 2162728. `SetTracking` changes only the selected static bit. `ClearAllTracking` clears static bits 0–24 even without a player, preserving unrelated high bits. Neither operation immediately writes the CVar.
+
+Dynamic tracking spell effects, persistence triggers and notification timing remain unknown; initialization from the CVar does not establish persistence after a change.
 
 ## Tests
 
