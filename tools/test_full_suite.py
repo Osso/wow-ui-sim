@@ -18,6 +18,50 @@ SCOPES = ("integration", "prefork_full_ui", "lib")
 PROFILES = ("retail", "ptr", "wrath", "mists", "wowforever", "era", "anniversary")
 
 
+class IntegrationMetricsTests(unittest.TestCase):
+    def test_native_exact_cases_record_wall_cpu_failure_and_ignored(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            binary = root / 'native'
+            write_executable(binary,
+                "import sys, time\n"
+                "name = sys.argv[sys.argv.index('--exact') + 1]\n"
+                "if name != 'ignored':\n"
+                "    sum(i * i for i in range(200000))\n"
+                "    time.sleep(.03)\n"
+                "status = 'FAILED' if name == 'bad' else 'ignored' if name == 'ignored' else 'ok'\n"
+                "print('test ' + name + ' ... ' + status)\n"
+                "sys.exit(1 if name == 'bad' else 0)\n")
+            manifest = root / 'batch.json'
+            result = root / 'result.json'
+            manifest.write_text(json.dumps({'binary': str(binary),
+                'names': ['good', 'bad', 'ignored'], 'result': str(result)}))
+            process = subprocess.run([sys.executable, str(RUNNER.with_name('full_suite_worker.py')),
+                str(manifest)], capture_output=True, text=True, timeout=10)
+            self.assertEqual(process.returncode, 1, process.stderr)
+            records = json.loads(result.read_text())['records']
+            self.assertEqual([r['name'] for r in records], ['good', 'bad', 'ignored'])
+            self.assertEqual([r['status'] for r in records], ['passed', 'failed', 'ignored'])
+            self.assertGreaterEqual(records[0]['seconds'], .03)
+            self.assertGreater(records[0]['cpu_seconds'], 0)
+            self.assertGreater(records[0]['max_rss_kib'], 0)
+            self.assertIn('test bad ... FAILED', process.stdout)
+
+    def test_success_without_selected_case_output_is_rejected(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            binary = root / 'native'
+            write_executable(binary, "print('test result: ok. 0 passed')\n")
+            result = root / 'result.json'
+            manifest = root / 'batch.json'
+            manifest.write_text(json.dumps({'binary': str(binary), 'names': ['missing'],
+                                             'result': str(result)}))
+            process = subprocess.run([sys.executable, str(RUNNER.with_name('full_suite_worker.py')),
+                str(manifest)], capture_output=True, text=True, timeout=10)
+            self.assertNotEqual(process.returncode, 0)
+            self.assertEqual(json.loads(result.read_text())['records'][0]['status'], 'invalid')
+
+
 class TestBudgetTests(unittest.TestCase):
     def setUp(self):
         spec = importlib.util.spec_from_file_location('budget_runner', RUNNER)
