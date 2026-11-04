@@ -193,6 +193,27 @@ fn test_get_right_line_no_right_text_returns_nil_text() {
 
 // --- AddTexture / AddAtlas tests ---
 
+/// Retail/PTR attach images to the last existing row (WM63 S8L); other
+/// non-Wrath profiles still append a separate texture row.
+fn native_attachments() -> bool {
+    matches!(
+        wow_ui_sim::client_profile::ACTIVE,
+        wow_ui_sim::client_profile::ClientProfile::Retail
+            | wow_ui_sim::client_profile::ClientProfile::Ptr
+    )
+}
+
+/// Widget IDs of the attachment textures stored on GameTooltip rows.
+fn attachment_texture_ids(env: &WowLuaEnv) -> Vec<u64> {
+    let state = env.state().borrow();
+    let gt_id = state.widgets.get_id_by_name("GameTooltip").unwrap();
+    state.tooltips[&gt_id]
+        .lines
+        .iter()
+        .flat_map(|line| line.attachments().iter().map(|a| a.texture_id))
+        .collect()
+}
+
 #[test]
 fn test_add_texture_increments_numlines() {
     let env = WowLuaEnv::new().unwrap();
@@ -206,7 +227,12 @@ fn test_add_texture_increments_numlines() {
     .unwrap();
 
     let count: i32 = env.eval("return GameTooltip:NumLines()").unwrap();
-    assert_eq!(count, 2, "AddTexture should add a line");
+    if native_attachments() {
+        assert_eq!(count, 1, "AddTexture attaches to the existing row");
+        assert_eq!(attachment_texture_ids(&env).len(), 1);
+    } else {
+        assert_eq!(count, 2, "AddTexture should add a line");
+    }
 }
 
 #[test]
@@ -222,13 +248,27 @@ fn test_add_atlas_increments_numlines() {
     .unwrap();
 
     let count: i32 = env.eval("return GameTooltip:NumLines()").unwrap();
-    assert_eq!(count, 2, "AddAtlas should add a line");
+    if native_attachments() {
+        assert_eq!(count, 1, "AddAtlas attaches to the existing row");
+        assert_eq!(attachment_texture_ids(&env).len(), 1);
+    } else {
+        assert_eq!(count, 2, "AddAtlas should add a line");
+    }
 }
 
 #[test]
 fn test_add_texture_stores_file_data_id() {
     let env = WowLuaEnv::new().unwrap();
 
+    if native_attachments() {
+        env.exec("GameTooltip:AddLine('Header'); GameTooltip:AddTexture(136243)")
+            .unwrap();
+        let ids = attachment_texture_ids(&env);
+        let state = env.state().borrow();
+        let texture = state.widgets.get(ids[0]).unwrap();
+        assert_eq!(texture.texture_file_data_id, Some(136243));
+        return;
+    }
     env.exec("GameTooltip:AddTexture(136243)").unwrap();
 
     let state = env.state().borrow();
@@ -247,6 +287,15 @@ fn test_add_texture_stores_file_data_id() {
 fn test_add_atlas_stores_atlas_name() {
     let env = WowLuaEnv::new().unwrap();
 
+    if native_attachments() {
+        env.exec(r#"GameTooltip:AddLine("Header"); GameTooltip:AddAtlas("groupfinder-icon-friend")"#)
+            .unwrap();
+        let ids = attachment_texture_ids(&env);
+        let state = env.state().borrow();
+        let texture = state.widgets.get(ids[0]).unwrap();
+        assert_eq!(texture.atlas.as_deref(), Some("groupfinder-icon-friend"));
+        return;
+    }
     env.exec(r#"GameTooltip:AddAtlas("groupfinder-icon-friend")"#)
         .unwrap();
 
@@ -270,7 +319,11 @@ fn test_add_texture_with_string_id() {
     env.exec(r#"GameTooltip:AddTexture("136243")"#).unwrap();
 
     let count: i32 = env.eval("return GameTooltip:NumLines()").unwrap();
-    assert_eq!(count, 1, "AddTexture with string ID should add a line");
+    if native_attachments() {
+        assert_eq!(count, 0, "an empty tooltip has no row to attach to");
+    } else {
+        assert_eq!(count, 1, "AddTexture with string ID should add a line");
+    }
 }
 
 #[test]
@@ -279,6 +332,7 @@ fn test_clearlines_clears_texture_lines() {
 
     env.exec(
         r#"
+        GameTooltip:AddLine("Header")
         GameTooltip:AddTexture(136243)
         GameTooltip:AddAtlas("test-atlas")
         GameTooltip:ClearLines()
@@ -288,6 +342,7 @@ fn test_clearlines_clears_texture_lines() {
 
     let count: i32 = env.eval("return GameTooltip:NumLines()").unwrap();
     assert_eq!(count, 0, "ClearLines should remove texture lines too");
+    assert!(attachment_texture_ids(&env).is_empty());
 }
 
 // --- SetCustomLineSpacing / GetCustomLineSpacing tests ---

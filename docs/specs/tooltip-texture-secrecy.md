@@ -6,8 +6,8 @@ Bounded contracts for Retail audit rows `prose-2026-03-31-136` (texture insertio
 
 ### Texture insertion — March 31
 
-- [x] An ordinary file-data-ID texture added through the registered `AddTexture` appends a line without making existing public tooltip text unreadable to an addon.
-- [x] An ordinary named atlas added through the registered `AddAtlas` appends a line without making existing public tooltip text unreadable to an addon.
+- [x] An ordinary file-data-ID texture added through the registered `AddTexture` attaches to the last row ([attachments](tooltip-attachments.md)) without making existing public tooltip text unreadable to an addon.
+- [x] An ordinary named atlas added through the registered `AddAtlas` attaches to the last row without making existing public tooltip text unreadable to an addon.
 - [x] Texture and atlas insertion preserve an existing secret-origin text read restriction; neither operation declassifies private content or loses its secure-readable text.
 - [x] After texture lines are cleared, public text replacement and subsequent texture insertion remain readable; old texture history does not poison replacement content.
 - [x] Operations on one tooltip do not change another tooltip's text readability or secrecy.

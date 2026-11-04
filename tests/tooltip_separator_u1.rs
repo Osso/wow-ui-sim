@@ -1,11 +1,9 @@
 #![cfg(all(feature = "gui", feature = "client-retail"))]
 
-use iced::{Point, Rectangle, Size};
-use wow_ui_sim::iced_app::tooltip::{
-    TooltipRender, build_tooltip_quads, collect_tooltip_data, prepare_tooltip_layout,
+use wow_ui_sim::iced_app::{
+    RegistryQuadBatchParams, build_quad_batch_for_registry, compute_frame_rect,
 };
 use wow_ui_sim::lua_api::WowLuaEnv;
-use wow_ui_sim::render::{GlyphAtlas, QuadBatch, WowFontSystem};
 
 const DIVIDER: &str = "Interface\\Common\\UI-TooltipDivider-Transparent";
 
@@ -23,42 +21,51 @@ fn load_original_social_helper(env: &WowLuaEnv) {
         .unwrap_or_else(|error| panic!("execute original consumer {}: {error}", path.display()));
 }
 
-fn render_tooltip(env: &WowLuaEnv, scale: f32) -> (QuadBatch, Rectangle) {
-    let mut fonts = WowFontSystem::new();
-    let mut glyphs = GlyphAtlas::new();
+/// Emitted divider quads as (min x, min y, max x, max y) and their alphas.
+fn emitted_dividers(env: &WowLuaEnv) -> Vec<([f32; 4], Vec<f32>)> {
     let mut state = env.state().borrow_mut();
-    prepare_tooltip_layout(&mut state, &mut fonts);
-    let id = state.widgets.get_id_by_name("U1Tooltip").unwrap();
-    let frame = state.widgets.get(id).unwrap();
-    let bounds = Rectangle::new(
-        Point::new(100.0, 200.0),
-        Size::new(frame.width * scale, frame.height * scale),
+    state.ensure_layout_rects();
+    let buckets = state.get_strata_buckets().expect("render buckets").clone();
+    let batch = build_quad_batch_for_registry(
+        RegistryQuadBatchParams::new(&state.widgets, (1024.0, 768.0), &buckets)
+            .root_name(Some("U1Tooltip")),
     );
-    let data = collect_tooltip_data(&state);
-    let mut batch = QuadBatch::new();
-    build_tooltip_quads(
-        TooltipRender {
-            batch: &mut batch,
-            bounds,
-            tooltip_data: Some(&data),
-            id,
-            eff_alpha: 0.4,
-            eff_scale: scale,
-            draw_background: false,
-        },
-        &mut Some((&mut fonts, &mut glyphs)),
-    );
-    (batch, bounds)
+    batch
+        .texture_requests
+        .iter()
+        .filter(|request| request.path == DIVIDER)
+        .map(|request| {
+            let start = request.vertex_start as usize;
+            let vertices = &batch.vertices[start..start + request.vertex_count as usize];
+            let fold = |axis: usize, pick: fn(f32, f32) -> f32, init: f32| {
+                vertices
+                    .iter()
+                    .map(|vertex| vertex.position[axis])
+                    .fold(init, pick)
+            };
+            (
+                [
+                    fold(0, f32::min, f32::INFINITY),
+                    fold(1, f32::min, f32::INFINITY),
+                    fold(0, f32::max, f32::NEG_INFINITY),
+                    fold(1, f32::max, f32::NEG_INFINITY),
+                ],
+                vertices.iter().map(|vertex| vertex.color[3]).collect(),
+            )
+        })
+        .collect()
 }
 
 #[test]
-fn retail_u1_original_separator_attaches_and_emits_scaled_divider() {
+fn retail_u1_original_separator_spans_its_blank_row() {
     let env = WowLuaEnv::new().unwrap();
+    env.set_screen_size(1024.0, 768.0);
     load_original_social_helper(&env);
     env.exec(
         r#"
         U1Tooltip = CreateFrame("GameTooltip", "U1Tooltip", UIParent)
         U1Tooltip:SetOwner(UIParent, "ANCHOR_NONE")
+        U1Tooltip:SetPoint("TOPLEFT", UIParent, "TOPLEFT", 100, -100)
         U1Tooltip:SetAlpha(0.4)
         U1Tooltip:AddLine("Header makes the tooltip wider than the divider")
         SocialUIUtil.AddSeparatorToTooltip(U1Tooltip)
@@ -67,121 +74,63 @@ fn retail_u1_original_separator_attaches_and_emits_scaled_divider() {
         assert(U1Tooltip:NumLines() == 3, "attachment must not append a row")
         assert(U1Tooltip:GetLeftLine(2):GetText() == " ")
         assert(U1Tooltip:GetLeftLine(3):GetText() == "Footer")
+        -- All with zero horizontal margins and negative vertical margins
+        -- reserves nothing (WM84 section 1).
+        local blank = U1Tooltip:GetLeftLine(2)
+        assert(math.abs(select(4, blank:GetPoint(2)) - 10) < 0.01, "no left reservation")
+        assert(math.abs(select(5, U1Tooltip:GetLeftLine(3):GetPoint(1)) + 2) < 0.01, "no overflow")
+        local h = 0
+        for row = 1, 3 do h = h + U1Tooltip:GetLeftLine(row):GetHeight() end
+        assert(math.abs(U1Tooltip:GetHeight() - (h + 4 + 20.48)) < 0.01, "three text rows")
+        assert(math.abs(blank:GetWidth() - (U1Tooltip:GetWidth() - 20.48)) < 0.01,
+            "the wrapped blank row spans the content width")
         "#,
     )
     .unwrap();
 
-    for scale in [1.0, 0.5] {
-        let (batch, bounds) = render_tooltip(&env, scale);
-        let requests: Vec<_> = batch
-            .texture_requests
-            .iter()
-            .filter(|request| request.path == DIVIDER)
-            .collect();
-        assert_eq!(requests.len(), 1, "original helper must emit one divider");
-        let request = requests[0];
-        let start = request.vertex_start as usize;
-        let vertices = &batch.vertices[start..start + request.vertex_count as usize];
-        let min_x = vertices
-            .iter()
-            .map(|v| v.position[0])
-            .fold(f32::INFINITY, f32::min);
-        let min_y = vertices
-            .iter()
-            .map(|v| v.position[1])
-            .fold(f32::INFINITY, f32::min);
-        let max_x = vertices
-            .iter()
-            .map(|v| v.position[0])
-            .fold(f32::NEG_INFINITY, f32::max);
-        let max_y = vertices
-            .iter()
-            .map(|v| v.position[1])
-            .fold(f32::NEG_INFINITY, f32::max);
-        let nine_slice = wow_ui_sim::atlas::get_nine_slice_atlas_info("Tooltip").unwrap();
-        let left = 12.0 + (nine_slice.corner_tl.width as f32 - 4.0).max(0.0);
-        let right = 12.0 + (nine_slice.corner_tr.width as f32 - 4.0).max(0.0);
-        let top = 12.0 + (nine_slice.corner_tl.height as f32 - 4.0).max(0.0);
-        // WM63 L23:42-44: text rows use their FontString measurements.
+    let dividers = emitted_dividers(&env);
+    assert_eq!(dividers.len(), 1, "original helper must emit one divider");
+    let (bounds, alphas) = &dividers[0];
+    assert!(alphas.iter().all(|alpha| (alpha - 0.4).abs() < 0.001));
+    // The divider spans the blank FontString's layout rect under one scale.
+    let row = {
         let state = env.state().borrow();
         let id = state.widgets.get_id_by_name("U1Tooltip").unwrap();
-        let td = &state.tooltips[&id];
-        let header = state.widgets.get(td.left_line_ids[0]).unwrap();
-        let blank = state.widgets.get(td.left_line_ids[1]).unwrap();
-        let footer = state.widgets.get(td.left_line_ids[2]).unwrap();
-        let mut fonts = WowFontSystem::new();
-        let header_height = fonts.measure_text_height(
-            "Header makes the tooltip wider than the divider",
-            header.font.as_deref(),
-            header.font_size,
-            None,
-            header.text_line_spacing,
-            header.font_string_smooth_scaling,
-        ) * header.text_scale as f32;
-        let footer_height = fonts.measure_text_height(
-            "Footer",
-            footer.font.as_deref(),
-            footer.font_size,
-            None,
-            footer.text_line_spacing,
-            footer.font_string_smooth_scaling,
-        ) * footer.text_scale as f32;
-        let blank_height = (blank.font_size * 1.2).ceil();
-        drop(state);
-        let expected_height = (header_height + blank_height + footer_height + 4.0 + 20.48) * scale;
+        let blank = state.tooltips[&id].left_line_ids[1];
+        compute_frame_rect(&state.widgets, blank, 1024.0, 768.0)
+    };
+    let scale = (bounds[2] - bounds[0]) / row.width;
+    for (actual, expected) in [
+        (bounds[0], row.x * scale),
+        (bounds[1], row.y * scale),
+        (bounds[3] - bounds[1], row.height * scale),
+    ] {
         assert!(
-            (bounds.height - expected_height).abs() < 0.01,
-            "Header, attached row, Footer and two spacings must determine height"
-        );
-        // Accepted U1 policy: retain the blank row and center the 10-unit image.
-        let expected = [
-            bounds.x + left * scale,
-            bounds.y + (top + header_height + 2.0 + (blank_height - 10.0) / 2.0) * scale,
-            bounds.x + bounds.width - right * scale,
-            10.0 * scale,
-        ];
-        for (actual, expected) in [min_x, min_y, max_x, max_y - min_y]
-            .into_iter()
-            .zip(expected)
-        {
-            assert!(
-                (actual - expected).abs() < 0.01,
-                "actual={actual}, expected={expected}"
-            );
-        }
-        assert!(
-            vertices
-                .iter()
-                .all(|vertex| (vertex.color[3] - 0.4).abs() < 0.001)
+            (actual - expected).abs() < 0.01,
+            "actual={actual}, expected={expected}"
         );
     }
 
     env.exec("U1Tooltip:ClearLines(); U1Tooltip:AddLine('Replacement'); U1Tooltip:Show()")
         .unwrap();
-    let (batch, _) = render_tooltip(&env, 1.0);
-    assert!(
-        batch
-            .texture_requests
-            .iter()
-            .all(|request| request.path != DIVIDER)
-    );
+    assert!(emitted_dividers(&env).is_empty(), "cleared attachment is not drawn");
 }
 
 #[test]
-fn retail_u1_numeric_add_texture_still_appends_independent_rows() {
+fn retail_u1_numeric_add_texture_attaches_without_rows() {
     let env = WowLuaEnv::new().unwrap();
     env.exec(
         r#"
         local tooltip = CreateFrame("GameTooltip", "U1Numeric", UIParent)
         tooltip:AddLine("Header")
         tooltip:AddTexture(136243)
-        assert(tooltip:NumLines() == 2)
+        assert(tooltip:NumLines() == 1)
         tooltip:AddTexture("136244", { height = 10, anchor = Enum.TooltipTextureAnchor.All })
-        assert(tooltip:NumLines() == 3)
+        assert(tooltip:NumLines() == 1)
         tooltip:AddLine("Footer")
-        assert(tooltip:NumLines() == 4)
+        assert(tooltip:NumLines() == 2)
         assert(tooltip:GetLeftLine(1):GetText() == "Header")
-        assert(tooltip:GetLeftLine(4):GetText() == "Footer")
+        assert(tooltip:GetLeftLine(2):GetText() == "Footer")
         "#,
     )
     .unwrap();

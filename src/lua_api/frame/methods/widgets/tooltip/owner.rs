@@ -132,6 +132,7 @@ fn record_tooltip_owner(
     td.lines.clear();
     td.anchored_left_lines = 0;
     td.spell_id = None;
+    super::attachments::release_tooltip_attachments(sim, tooltip_id);
     sim.widgets.mark_rect_dirty(tooltip_id);
     if !native_owner_behavior() {
         sim.set_frame_visible(tooltip_id, false);
@@ -406,12 +407,22 @@ pub(super) fn copy_tooltip(state: &mut LuaState) -> LuaResult<u32> {
         return Ok(0);
     };
     let mut sim = borrow_state_mut(state)?;
+    super::attachments::release_tooltip_attachments(&mut sim, target_id);
     let target = sim.tooltips.entry(target_id).or_default();
     let preserved_owner = target.owner_id;
     let preserved_anchor = target.anchor_type.clone();
     let preserved_x = target.anchor_x_offset;
     let preserved_y = target.anchor_y_offset;
+    let preserved_pool = std::mem::take(&mut target.attachment_texture_ids);
     *target = source;
+    // CopyTooltip attachment behavior is UNKNOWN. The source's pooled
+    // textures belong to the source, so copied rows carry no attachments.
+    target.attachment_texture_ids = preserved_pool;
+    for line in &mut target.lines {
+        if !line.attachments().is_empty() {
+            line.texture = None;
+        }
+    }
     target.owner_id = preserved_owner;
     target.anchor_type = preserved_anchor;
     target.anchor_x_offset = preserved_x;
@@ -492,6 +503,7 @@ fn write_frame_stack_tooltip(
     td.lines.push(frame_stack_primary_line(frame_info.primary));
     td.lines
         .push(frame_stack_parent_line(frame_info.parent_label));
+    super::attachments::release_tooltip_attachments(&mut sim, tooltip_id);
     sim.set_frame_visible(tooltip_id, true);
     Ok(())
 }
@@ -506,6 +518,7 @@ fn frame_stack_primary_line(primary: String) -> TooltipLine {
         right_segments: Vec::new(),
         wrap: false,
         texture: None,
+        inset: 0.0,
     }
 }
 
@@ -519,6 +532,7 @@ fn frame_stack_parent_line(parent_label: String) -> TooltipLine {
         right_segments: Vec::new(),
         wrap: false,
         texture: None,
+        inset: 0.0,
     }
 }
 
@@ -527,6 +541,7 @@ fn clear_tooltip_lines(state: &mut LuaState, tooltip_id: u64) -> LuaResult<()> {
     let tooltip = sim.tooltips.entry(tooltip_id).or_default();
     tooltip.lines.clear();
     tooltip.anchored_left_lines = 0;
+    super::attachments::release_tooltip_attachments(&mut sim, tooltip_id);
     Ok(())
 }
 

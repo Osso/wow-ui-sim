@@ -415,7 +415,10 @@ fn clear_atlas_owned_tex_coords(frame: &mut crate::widget::Frame) {
     }
 }
 
-fn resolve_texture_value(state: &LuaState, value: Val) -> Option<(Option<String>, Option<i64>)> {
+pub(crate) fn resolve_texture_value(
+    state: &LuaState,
+    value: Val,
+) -> Option<(Option<String>, Option<i64>)> {
     match value {
         Val::Str(_) => Some(resolve_texture_string(state, value)),
         Val::Num(number) if number == 0.0 => Some((None, None)),

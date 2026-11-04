@@ -9,7 +9,9 @@ use iced::{Point, Rectangle, Size};
 
 use crate::atlas::{NineSliceAtlasInfo, get_nine_slice_atlas_info};
 use crate::lua_api::SimState;
-use crate::lua_api::tooltip::{TooltipPathAttachment, TooltipTexture};
+use crate::lua_api::tooltip::{
+    TOOLTIP_TEXTURE_REGION_RIGHT, attachment_overflow, attachment_width_groups,
+};
 use crate::render::QuadBatch;
 use crate::render::font::WowFontSystem;
 use crate::render::glyph::{GlyphAtlas, emit_text_quads};
@@ -55,7 +57,9 @@ pub struct TooltipLineRender {
     pub wrap: bool,
     /// Measured height for this line (accounts for word-wrap).
     pub measured_height: f32,
-    pub path_attachment: Option<TooltipPathAttachment>,
+    /// Retail/PTR assigned width of a wrapped left FontString, which excludes
+    /// the row inset and attachment reservation (WM63 L23).
+    pub left_width: Option<f32>,
 }
 
 pub struct TooltipTextSegmentRender {
@@ -153,9 +157,7 @@ pub(crate) fn measure_tooltip(
             continue;
         }
         let font_size = tooltip_line_font_size(i);
-        let line_height = if let Some(TooltipTexture::PathAttachment(attachment)) = &line.texture {
-            attachment.geometry(font_size).0
-        } else if line.wrap && !line.left_text.is_empty() {
+        let line_height = if line.wrap && !line.left_text.is_empty() {
             measure_tooltip_text_height(
                 font_system,
                 &line.left_text,
@@ -190,6 +192,19 @@ fn measure_native_tooltip(state: &mut SimState, id: u64, fonts: &mut WowFontSyst
     let Some(td) = state.tooltips.get(&id).cloned() else {
         return (0.0, 0.0);
     };
+    // WM63 L23 and WM84: every row reserves its stored inset plus the sum of
+    // its four attachment width groups in width selection and wrap width.
+    let mut reservations: Vec<_> = td
+        .lines
+        .iter()
+        .map(|line| attachment_width_groups(line.attachments()))
+        .collect();
+    let reserved: Vec<f32> = td
+        .lines
+        .iter()
+        .zip(&reservations)
+        .map(|(line, reservation)| line.inset + reservation.width())
+        .collect();
     let mut floor = td.min_width;
     let mut width = floor;
     let cap = td.custom_word_wrap_min_width.unwrap_or(230.4).max(0.0);
@@ -201,10 +216,10 @@ fn measure_native_tooltip(state: &mut SimState, id: u64, fonts: &mut WowFontSyst
         });
         has_right |= right > 0.0;
         if line.wrap || td.force_min_width {
-            width = width.max((left + tooltip_row_inset()).min(cap));
+            width = width.max((left + reserved[index]).min(cap));
         } else {
             let gap = if left > 0.0 && right > 0.0 { 38.4 } else { 0.0 };
-            floor = floor.max(left + right + gap);
+            floor = floor.max(left + right + gap + reserved[index]);
             width = width.max(floor);
         }
     }
@@ -221,9 +236,9 @@ fn measure_native_tooltip(state: &mut SimState, id: u64, fonts: &mut WowFontSyst
                     &text,
                     font.as_deref(),
                     size,
-                    (width - tooltip_row_inset()).max(0.0) / scale,
+                    (width - reserved[index]).max(0.0) / scale,
                 ) * scale
-                    + tooltip_row_inset(),
+                    + reserved[index],
             );
         }
         width = width.min(fitted);
@@ -231,10 +246,11 @@ fn measure_native_tooltip(state: &mut SimState, id: u64, fonts: &mut WowFontSyst
     let mut height = 0.0;
     for (index, line) in td.lines.iter().enumerate() {
         let wrapped = line.wrap || td.force_min_width;
+        let wrap_width = (width - reserved[index]).max(0.0);
         if wrapped {
             if let Some(line_id) = td.left_line_ids.get(index).copied() {
                 if let Some(frame) = state.widgets.get_mut_visual(line_id) {
-                    frame.width = (width - tooltip_row_inset()).max(0.0);
+                    frame.width = wrap_width;
                     frame.width_is_text_auto = false;
                 }
                 state.widgets.mark_rect_dirty(line_id);
@@ -245,18 +261,14 @@ fn measure_native_tooltip(state: &mut SimState, id: u64, fonts: &mut WowFontSyst
         }
         let (font, size, scale, spacing, smooth) = native_line_font(state, &td, index, false);
         let text = native_line_text(state, &td, index, false, &line.left_text);
-        let measured = if let Some(TooltipTexture::PathAttachment(attachment)) = &line.texture {
-            attachment.geometry(size).0
-        } else {
-            fonts.measure_text_height(
-                &text,
-                font.as_deref(),
-                size,
-                wrapped.then_some((width - tooltip_row_inset()).max(0.0) / scale),
-                spacing,
-                smooth,
-            ) * scale
-        };
+        let measured = fonts.measure_text_height(
+            &text,
+            font.as_deref(),
+            size,
+            wrapped.then_some(wrap_width / scale),
+            spacing,
+            smooth,
+        ) * scale;
         if let Some(line_id) = td.left_line_ids.get(index).copied() {
             if let Some(frame) = state.widgets.get_mut_visual(line_id) {
                 frame.height = measured;
@@ -264,18 +276,44 @@ fn measure_native_tooltip(state: &mut SimState, id: u64, fonts: &mut WowFontSyst
             }
             state.widgets.mark_rect_dirty(line_id);
         }
+        let right = native_right_text_height(state, &td, index, fonts);
+        let (top, bottom) = attachment_overflow(line.attachments(), measured, right);
+        reservations[index].top = top;
+        reservations[index].bottom = bottom;
         if height > 0.0 {
             height += td.line_spacing.unwrap_or(TOOLTIP_LINE_SPACING);
         }
-        height += measured;
+        height += measured + top + bottom;
+    }
+    if let Some(tooltip) = state.tooltips.get_mut(&id) {
+        tooltip.row_reservations = reservations;
     }
     let (horizontal, vertical) = td.native_outer_padding();
     (width + horizontal, height + vertical)
 }
 
-// WM63 L23 and WM72: the attachment model will set each row's inset.
-fn tooltip_row_inset() -> f32 {
-    0.0
+/// Measured height of a row's right text, used only by right-region
+/// attachments (WM84 section 1). A missing right text object contributes zero.
+fn native_right_text_height(
+    state: &SimState,
+    td: &crate::lua_api::tooltip::TooltipData,
+    index: usize,
+    fonts: &mut WowFontSystem,
+) -> f32 {
+    let line = &td.lines[index];
+    let selects_right = line
+        .attachments()
+        .iter()
+        .any(|attachment| attachment.region == TOOLTIP_TEXTURE_REGION_RIGHT);
+    let Some(right_text) = line.right_text.as_deref().filter(|_| selects_right) else {
+        return 0.0;
+    };
+    if td.right_line_is_hidden(&state.widgets, index) {
+        return 0.0;
+    }
+    let (font, size, scale, spacing, smooth) = native_line_font(state, td, index, true);
+    let text = native_line_text(state, td, index, true, right_text);
+    fonts.measure_text_height(&text, font.as_deref(), size, None, spacing, smooth) * scale
 }
 
 fn native_line_font(
@@ -584,6 +622,7 @@ fn collect_tooltip_lines(
                 if let Some(frame) = td.left_line_ids.get(i).and_then(|id| widgets.get(*id)) {
                     render.font_size = frame.font_size * frame.text_scale as f32;
                     render.measured_height = frame.height;
+                    render.left_width = render.wrap.then_some(frame.width);
                 }
             }
             render
@@ -625,10 +664,7 @@ fn tooltip_line_render(
         font_size: tooltip_line_font_size(index),
         wrap: line.wrap,
         measured_height: (tooltip_line_font_size(index) * 1.2).ceil(),
-        path_attachment: match &line.texture {
-            Some(TooltipTexture::PathAttachment(attachment)) => Some(attachment.clone()),
-            _ => None,
-        },
+        left_width: None,
     }
 }
 
@@ -723,9 +759,7 @@ fn emit_tooltip_lines(
 
     for (index, line) in data.lines.iter().enumerate() {
         let font_size = scaled_tooltip_font_size(line.font_size, eff_scale);
-        let line_height = if let Some(attachment) = &line.path_attachment {
-            attachment.geometry(line.font_size).0 * eff_scale
-        } else if matches!(
+        let line_height = if matches!(
             crate::client_profile::ACTIVE,
             crate::client_profile::ClientProfile::Retail
                 | crate::client_profile::ClientProfile::Ptr
@@ -744,12 +778,11 @@ fn emit_tooltip_lines(
             line.measured_height * eff_scale
         };
 
-        let left_origin = if line.path_attachment.is_none()
-            && matches!(
-                crate::client_profile::ACTIVE,
-                crate::client_profile::ClientProfile::Retail
-                    | crate::client_profile::ClientProfile::Ptr
-            ) {
+        let left_origin = if matches!(
+            crate::client_profile::ACTIVE,
+            crate::client_profile::ClientProfile::Retail
+                | crate::client_profile::ClientProfile::Ptr
+        ) {
             left_bottom
                 .zip(data.left_text_offsets.get(index).copied().flatten())
                 .map(|(previous_bottom, offset)| {
@@ -866,21 +899,6 @@ fn emit_tooltip_line(
     left_origin: Option<Point>,
     right_offset: Option<f32>,
 ) {
-    if let Some(attachment) = &line.path_attachment {
-        let (_, image_offset) = attachment.geometry(line.font_size);
-        let image_placement = TooltipLinePlacement {
-            y: placement.y + image_offset * eff_scale,
-            ..placement
-        };
-        emit_tooltip_path_attachment(
-            tr.batch,
-            attachment,
-            image_placement,
-            eff_scale,
-            line.left_color[3],
-        );
-        return;
-    }
     let font_size = scaled_tooltip_font_size(line.font_size, eff_scale);
     let right_width = line
         .right_text
@@ -888,8 +906,9 @@ fn emit_tooltip_line(
         .map(|t| measure_tooltip_text_width(tr.font_sys, t, font_size));
 
     let gap = tooltip_column_gap(&line.left_text, line.right_text.as_deref(), eff_scale);
-    let left_width = match right_width {
-        Some(rw) if rw > 0.0 => (placement.width - rw - gap).max(0.0),
+    let left_width = match (line.left_width, right_width) {
+        (Some(assigned), _) => assigned * eff_scale,
+        (None, Some(rw)) if rw > 0.0 => (placement.width - rw - gap).max(0.0),
         _ => placement.width,
     };
     let left_placement = if let Some(origin) = left_origin {
@@ -918,29 +937,6 @@ fn emit_tooltip_line(
             emit_right_tooltip_text(tr, line, placement, left_width, right_text, font_size);
         }
     }
-}
-
-fn emit_tooltip_path_attachment(
-    batch: &mut QuadBatch,
-    attachment: &TooltipPathAttachment,
-    placement: TooltipLinePlacement,
-    scale: f32,
-    alpha: f32,
-) {
-    let [left, right, _, _] = attachment.margins;
-    let bounds = Rectangle::new(
-        Point::new(placement.x + left * scale, placement.y),
-        Size::new(
-            (placement.width - (left + right) * scale).max(0.0),
-            attachment.height * scale,
-        ),
-    );
-    batch.push_textured_path(
-        bounds,
-        &attachment.path,
-        [1.0, 1.0, 1.0, alpha],
-        crate::BlendMode::Alpha,
-    );
 }
 
 fn emit_left_tooltip_text(
