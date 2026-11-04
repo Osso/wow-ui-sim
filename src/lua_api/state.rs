@@ -381,6 +381,7 @@ macro_rules! build_empty_sim_state {
             #[cfg(feature = "client-wrath")]
             last_sound_name_requested: None,
             cooldown_viewer_cooldowns: Default::default(),
+            cooldown_viewer_group_buffs: Vec::new(),
             cooldown_viewer_availability: Default::default(),
             #[cfg(feature = "retail-12-0-0")]
             spell_classifications: Default::default(),

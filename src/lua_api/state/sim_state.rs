@@ -512,6 +512,8 @@ pub struct SimState {
     /// `C_CooldownViewer` entries keyed by cooldownID; empty until populated.
     pub cooldown_viewer_cooldowns:
         std::collections::BTreeMap<i32, crate::c_api::c_cooldown_viewer::CooldownViewerCooldown>,
+    /// EMULATED: no group-buff catalog until supplied by the host.
+    pub cooldown_viewer_group_buffs: Vec<crate::c_api::c_cooldown_viewer::GroupBuffItem>,
     /// Explicit supplied availability; independent of cooldown catalog and UI settings.
     pub cooldown_viewer_availability: crate::c_api::c_cooldown_viewer::CooldownViewerAvailability,
     #[cfg(feature = "retail-12-1-0")]

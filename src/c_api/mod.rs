@@ -222,6 +222,8 @@ mod lfr_availability;
 pub(crate) mod pet_orders;
 pub mod profession_spec_inputs;
 pub(crate) use lfr_availability::stock_lfr_availability;
+#[cfg(all(test, feature = "client-wowforever"))]
+mod forever_lib_baseline_tests;
 pub mod outfit_entry;
 mod scenario_finder_availability;
 pub mod store_public_eligibility;

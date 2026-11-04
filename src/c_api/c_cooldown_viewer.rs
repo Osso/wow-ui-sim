@@ -35,6 +35,17 @@ pub struct CooldownViewerCooldown {
     pub valid_alert_types: Vec<u8>,
 }
 
+/// Supplied Forever `GroupBuffItem`; no rank or display-data derivation.
+#[derive(Clone, Debug, PartialEq, Eq)]
+pub struct GroupBuffItem {
+    pub spell_id: i32,
+    pub display_spell_id: i32,
+    pub name: String,
+    pub icon_id: u32,
+    pub flags: i32,
+    pub is_known: bool,
+}
+
 /// Explicit host availability, not a class/spec eligibility inference.
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub struct CooldownViewerAvailability {
