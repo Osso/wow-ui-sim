@@ -362,6 +362,8 @@ The build uses `scripts/slot-build.py` and `cargo test --no-run --all-targets --
 
 Only a PASSED attempt promotes `~/Projects/wow/full-suite-results/<sha>-<profile>.json`; master runs also promote the matching profile baseline. The worker stages and fsyncs both files, backs up existing files, then renames the baseline before the canonical result. The canonical rename is the commit point. A rename failure triggers rollback; a process or machine crash between the two renames is not covered by rollback. `status [REF]` displays canonical profile results, any legacy Retail result, and the latest attempt for the selected SHA. The attempt includes its status, finish timestamp, and phase inferred from recorded steps. Without REF, status selects the newest attempt, or the newest canonical result when no attempt exists; it also displays the newest PASSED canonical result if it belongs to another SHA.
 
+For a source-bound lane inventory, set `WOW_SIM_TIMEOUT_INVENTORY` to a fresh writable file path on the integration test processes. The default is off: no output or inventory file changes. Enabled parent timeout entries append one UTF-8 test name per line, with no arguments or payloads; guarded re-exec children and nested guards do not duplicate entries. File errors fail explicitly. Regeneration intersects the observed names with stable integration discovery, sorts/deduplicates them, and records the run identity in a separate data commit; the source-outline inventory misses Rust macros and is not authoritative.
+
 The Python tests use fake launchers and do not establish real systemd or suite behavior. Submit each profile separately against a coordinated approved slot.
 
 Main deploys with `./deploy.sh` from the repository root (a Python installer,

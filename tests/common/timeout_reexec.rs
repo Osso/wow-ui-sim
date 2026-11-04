@@ -22,6 +22,7 @@ const CHILD_POLL_INTERVAL: Duration = Duration::from_millis(10);
 const TERMINATION_GRACE: Duration = Duration::from_millis(100);
 const DEFAULT_TIMEOUT_CHILD_SLOTS: usize = 2;
 const TIMEOUT_CHILD_SLOTS_ENV: &str = "WOW_SIM_TIMEOUT_CHILD_SLOTS";
+const TIMEOUT_INVENTORY_ENV: &str = "WOW_SIM_TIMEOUT_INVENTORY";
 const TIMEOUT_SLOT_POLL_INTERVAL: Duration = Duration::from_millis(10);
 
 static HANDSHAKE_SEQUENCE: AtomicU64 = AtomicU64::new(0);
@@ -46,6 +47,7 @@ fn run_with_gate<F: FnOnce() + Send + 'static>(
         run_guarded_child(&test_name, guarded_test, closure);
         return;
     }
+    record_timeout_entry(&test_name);
 
     let run_parent = || run_parent(&test_name, secs, path.map(Path::to_path_buf), closure);
     if fixture_capacity_is_reserved() {
@@ -56,6 +58,18 @@ fn run_with_gate<F: FnOnce() + Send + 'static>(
         Some(path) => workload_gate::with_lock_at(path, mode, run_parent),
         None => workload_gate::with_lock(mode, run_parent),
     }
+}
+
+fn record_timeout_entry(test_name: &str) {
+    let Some(path) = env::var_os(TIMEOUT_INVENTORY_ENV) else {
+        return;
+    };
+    let mut file = OpenOptions::new()
+        .create(true)
+        .append(true)
+        .open(path)
+        .expect("open timeout entry inventory");
+    writeln!(file, "{test_name}").expect("write timeout entry inventory");
 }
 
 fn fixture_capacity_is_reserved() -> bool {

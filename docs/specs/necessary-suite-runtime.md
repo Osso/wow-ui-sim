@@ -19,6 +19,13 @@ The NECESSARY Retail suite must complete in at most 600 seconds of wall time on 
 - [x] Preserve the global timeout-slot semaphore and exclusive-workload gate; support a configured harness-policy bound from 2 through 6, defaulting to 2 when unset.
 - [ ] The runner scales permit/worker counts proportionally to its explicit budget, with at least two permits.
 
+### Timeout-entry inventory
+
+- [ ] With `WOW_SIM_TIMEOUT_INVENTORY` unset, preserve default behavior and output and create no inventory file.
+- [ ] When set to a writable file path, append the current test name and a newline at each parent `with_timeout` entry. Do not record arguments or payloads.
+- [ ] Do not duplicate entries for the guarded re-exec child or nested guards in that child. Report file I/O failures explicitly.
+- [ ] Regenerate the saved lane list from the source-identified production proof inventory, in a separate data commit. This observes macro-generated and indirect consumers without parsing Rust source.
+
 ## How it works
 
 - [Runner operation and recorded results](../remote-builds.md#asynchronous-full-suite)
