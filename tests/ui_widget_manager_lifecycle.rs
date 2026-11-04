@@ -520,15 +520,12 @@ fn cached_ui_widget_container_filters_supplied_unit_updates() {
                 supply_inputs(env);
                 assert_lua(
                     env,
-                    "two real containers with explicit attached-unit fixture state",
+                    "two real containers register their attached units",
                     r#"
                     UnitFilterPlayer = CreateFrame('Frame', nil, UIParent, 'UIWidgetContainerTemplate')
                     UnitFilterTarget = CreateFrame('Frame', nil, UIParent, 'UIWidgetContainerTemplate')
-                    UnitFilterPlayer:RegisterForWidgetSet(417)
-                    UnitFilterTarget:RegisterForWidgetSet(417)
-                    -- Fixture injection only; this does not prove native unit registration.
-                    UnitFilterPlayer.attachedUnit = 'player'
-                    UnitFilterTarget.attachedUnit = 'target'
+                    UnitFilterPlayer:RegisterForWidgetSet(417, nil, nil, 'player')
+                    UnitFilterTarget:RegisterForWidgetSet(417, nil, nil, 'target')
                     assert(UnitFilterPlayer.widgetFrames[760101].Text:GetText() == 'Supplied icon text')
                     assert(UnitFilterTarget.widgetFrames[760101].Text:GetText() == 'Supplied icon text')
                     "#,
@@ -552,10 +549,6 @@ fn cached_ui_widget_container_filters_supplied_unit_updates() {
                     r#"
                     local playerText = UnitFilterPlayer.widgetFrames[760101].Text:GetText()
                     local targetText = UnitFilterTarget.widgetFrames[760101].Text:GetText()
-                    -- Restore injected fixture fields before normal cleanup; unit
-                    -- registration/unregistration itself is outside this test.
-                    UnitFilterPlayer.attachedUnit = nil
-                    UnitFilterTarget.attachedUnit = nil
                     UnitFilterPlayer:UnregisterForWidgetSet()
                     UnitFilterTarget:UnregisterForWidgetSet()
                     assert(not UnitFilterPlayer:IsRegisteredForWidgetSet())
