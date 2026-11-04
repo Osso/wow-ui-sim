@@ -246,20 +246,31 @@ fn ipairs_on_non_table_reports_type_and_callsite() {
 #[test]
 fn restored_runtime_patches_match_master_shape() {
     let env = env();
-    let (has_alternate_form, in_alternate_form, widget_set_id): (bool, bool, i64) = env
+    let (has_alternate_form, in_alternate_form, top, minimap, power, objective): (
+        bool,
+        bool,
+        i64,
+        i64,
+        i64,
+        i64,
+    ) = env
         .eval(
             r#"
             UpdateUIParentPosition()
             local has_alt, in_alt = C_PlayerInfo.GetAlternateFormInfo()
-            local widget_set_id = C_UIWidgetManager.GetPowerBarWidgetSetID()
-            return has_alt, in_alt, widget_set_id
+            return has_alt, in_alt,
+                C_UIWidgetManager.GetTopCenterWidgetSetID(),
+                C_UIWidgetManager.GetBelowMinimapWidgetSetID(),
+                C_UIWidgetManager.GetPowerBarWidgetSetID(),
+                C_UIWidgetManager.GetObjectiveTrackerWidgetSetID()
             "#,
         )
         .unwrap();
 
     assert!(!has_alternate_form);
     assert!(!in_alternate_form);
-    assert_eq!(widget_set_id, 0);
+    // WM14a:27 records the four native HUD getter literals.
+    assert_eq!((top, minimap, power, objective), (1, 2, 283, 240));
 }
 
 #[test]
