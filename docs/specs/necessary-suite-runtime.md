@@ -13,18 +13,18 @@ The NECESSARY Retail suite must complete in at most 600 seconds of wall time on 
 
 ### Resource limits
 
-- [ ] Run single-threaded integration shards with measured process-tree memory envelopes plus headroom; use the largest observed envelope for unmeasured cases.
-- [ ] Request and enforce a private test-slice budget, default 16 CPUs/24 GiB, with lower `--test-cpus`/`--test-mem-gib` overrides and required capacity ADD admission.
-- [ ] Record budget, configured worker/permit counts and private slice in result JSON.
+- [x] Run single-threaded integration shards with measured process-tree memory envelopes plus headroom; use the largest observed envelope for unmeasured cases.
+- [x] Request and enforce a private test-slice budget, default 16 CPUs/24 GiB, with lower `--test-cpus`/`--test-mem-gib` overrides and required capacity ADD admission.
+- [x] Record budget, configured worker/permit counts and private slice in result JSON.
 - [x] Preserve the global timeout-slot semaphore and exclusive-workload gate; support a configured harness-policy bound from 2 through 6, defaulting to 2 when unset.
-- [ ] The runner scales permit/worker counts proportionally to its explicit budget, with at least two permits.
+- [x] The runner scales permit/worker counts proportionally to its explicit budget, with at least two permits.
 
 ### Timeout-entry inventory
 
-- [ ] With `WOW_SIM_TIMEOUT_INVENTORY` unset, preserve default behavior and output and create no inventory file.
-- [ ] When set to a writable file path, append the current test name and a newline at each parent `with_timeout` entry. Do not record arguments or payloads.
-- [ ] Do not duplicate entries for the guarded re-exec child or nested guards in that child. Report file I/O failures explicitly.
-- [ ] Regenerate the saved lane list from the source-identified production proof inventory, in a separate data commit. This observes macro-generated and indirect consumers without parsing Rust source.
+- [x] With `WOW_SIM_TIMEOUT_INVENTORY` unset, preserve default behavior and output and create no inventory file.
+- [x] When set to a writable file path, append the current test name and a newline at each parent `with_timeout` entry. Do not record arguments or payloads.
+- [x] Do not duplicate entries for the guarded re-exec child or nested guards in that child. Report file I/O failures explicitly.
+- [x] Regenerate the saved lane list from the source-identified production proof inventory, in a separate data commit. This observes macro-generated and indirect consumers without parsing Rust source.
 
 ## How it works
 
@@ -45,7 +45,7 @@ The NECESSARY Retail suite must complete in at most 600 seconds of wall time on 
 ## Known gaps (current cycle)
 
 - [x] Finish the per-test timing profile and compare two versus six timeout permits.
-- [ ] Complete the production budget/memory proof, then report startup CPU-reduction candidates before any fixture change.
+- [x] Complete the production budget/memory proof, then report startup CPU-reduction candidates before any fixture change. The [source-identified proof](../wiki/investigations/test-runtime-optimization.md#native-timeout-inventory-and-complete-budget-proof--2026-11-04) passed in 1146.645s; this does not satisfy the 600s runtime target.
 - [ ] Record the two complete passing runs and empty before/after test-list diff.
 
 ## Out of scope
