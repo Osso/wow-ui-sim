@@ -42,6 +42,15 @@ This extends the earlier display-info-only boundary above; Retail keeps its
 existing identifiers and metadata. The focused library test asserts both profiles'
 respective loss-of-control identifiers and metadata.
 
+UnitFrame `BuffIconSize` must be 22, with metadata spanning 0–24 (25 values),
+as declared in the same pinned document at797–828. Publish it before the PTR
+compatibility bootstrap rather than appending it after GrowDirection as 25.
+The original display-info constructor at
+`Blizzard_EditMode/Shared/EditModeSettingDisplayInfo.lua:427–438` must retain
+its buff slider at numeric key22 (range50–200, step10), with no entry at25.
+The original consumer regression rejects the former appended-key producer.
+Retail retains its 0–22 metadata and unchanged buff identifier.
+
 ## How it works
 
 - [Declaration and consumer evidence](../wiki/investigations/ptr-edit-mode-declarations.md).
