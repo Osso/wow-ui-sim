@@ -26,9 +26,9 @@ use professions_legacy_trainer::register_legacy_trainer_globals;
 use professions_registration::{register_crafting_order_namespace, register_trade_skill_namespace};
 use professions_tables::{
     all_profession_tables, category_table, item_icon, item_link_value,
-    profession_for_inventory_slot, profession_for_recipe, profession_slots, profession_table,
-    reagent_index_from_stack, reagent_info_table, recipe_id_table, recipe_info_table,
-    recipe_schematic_table, selected_profession, set_number_field, skill_line_id_table,
+    profession_for_inventory_slot, profession_slots, profession_table, reagent_index_from_stack,
+    reagent_info_table, recipe_id_table, recipe_info_table, recipe_schematic_table,
+    selected_profession, set_number_field, skill_line_id_table,
 };
 use professions_tracking::{
     c_trade_skill_ui_get_recipes_tracked, c_trade_skill_ui_is_recipe_learned,
@@ -264,7 +264,7 @@ fn c_trade_skill_ui_get_categories(state: &mut LuaState) -> LuaResult<u32> {
 
 fn c_trade_skill_ui_get_profession_info_by_recipe_id(state: &mut LuaState) -> LuaResult<u32> {
     let recipe_id = i32::from_stack(state, 1)?;
-    let profession = profession_for_recipe(recipe_id);
+    let profession = profession_data::get_profession_for_recipe(recipe_id);
     let table = profession_table(state, profession);
     state.push(table);
     Ok(1)

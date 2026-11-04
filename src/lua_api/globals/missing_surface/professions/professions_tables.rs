@@ -115,7 +115,14 @@ pub(super) fn recipe_info_table(
 ) -> Val {
     let table = create_table_with_capacity(state, RECIPE_INFO_HASH_FIELDS);
     match recipe {
-        Some(recipe) => populate_recipe_info_table(state, table, recipe),
+        Some(recipe) => {
+            let favorite = borrow_state(state)
+                .expect("crafting state installed")
+                .crafting
+                .recipe_favorites
+                .contains(recipe.recipe_id);
+            populate_recipe_info_table(state, table, recipe, favorite);
+        }
         None => populate_missing_recipe_info_table(state, table),
     }
     table
@@ -181,12 +188,6 @@ fn reagent_slot_schematic_table(
     crate::c_api::crafting_tables::schematic_slots(state, &slots)
 }
 
-pub(super) fn profession_for_recipe(
-    recipe_id: i32,
-) -> Option<&'static profession_data::ProfessionInfo> {
-    profession_data::get_recipe(recipe_id).and_then(|_| profession_data::get_profession_by_index(0))
-}
-
 fn populate_profession_table(
     state: &mut LuaState,
     table: Val,
@@ -227,6 +228,7 @@ fn populate_recipe_info_table(
     state: &mut LuaState,
     table: Val,
     recipe: &profession_data::RecipeEntry,
+    favorite: bool,
 ) {
     set_number_field(state, table, "recipeID", recipe.recipe_id as f64);
     set_string_field(state, table, "name", recipe.name);
@@ -236,7 +238,7 @@ fn populate_recipe_info_table(
     set_number_field(state, table, "categoryID", recipe.category_id as f64);
     set_number_field(state, table, "itemLevel", recipe.item_level as f64);
     set_number_field(state, table, "maxTrivialLevel", recipe.difficulty as f64);
-    set_bool_field(state, table, "favorite", false);
+    set_bool_field(state, table, "favorite", favorite);
 }
 
 fn populate_recipe_schematic_table(

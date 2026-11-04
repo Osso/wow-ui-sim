@@ -1,0 +1,120 @@
+//! Recipe favorite state and deferred notifications (WM83).
+
+use std::collections::HashSet;
+use std::ffi::{CStr, CString};
+
+use crate::lua_api::globals::profession_data;
+use crate::lua_api::methods::{borrow_state, borrow_state_mut};
+use crate::lua_api::script_helpers::fire_named_event_state;
+use crate::lua_bridge::{stack_val, table_set_rust_fn_static};
+use rilua::vm::state::LuaState;
+use rilua::{LuaResult, Val, runtime_error};
+
+/// An empty initial set is an emulated default, not a native preference claim.
+#[derive(Debug, Clone, Default)]
+pub(crate) struct RecipeFavorites {
+    favorites: HashSet<i32>,
+    pending: Vec<(bool, i32)>,
+}
+
+impl RecipeFavorites {
+    pub(crate) fn contains(&self, recipe_id: i32) -> bool {
+        self.favorites.contains(&recipe_id)
+    }
+
+    fn set(&mut self, recipe_id: i32, favorite: bool) {
+        let changed = if favorite {
+            self.favorites.insert(recipe_id)
+        } else {
+            self.favorites.remove(&recipe_id)
+        };
+        let event = (favorite, recipe_id);
+        if changed && !self.pending.contains(&event) {
+            self.pending.push(event);
+        }
+    }
+}
+
+pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
+    if crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Retail
+        || !cfg!(feature = "retail-12-1-5")
+    {
+        return Ok(());
+    }
+    let namespace = super::ensure_namespace(state, "C_TradeSkillUI")?;
+    table_set_rust_fn_static(state, namespace, "IsRecipeFavorite", is_recipe_favorite)?;
+    table_set_rust_fn_static(state, namespace, "SetRecipeFavorite", set_recipe_favorite)
+}
+
+fn recipe_id(state: &LuaState, usage: &str) -> LuaResult<i32> {
+    let value = stack_val(state, 1);
+    let number = match value {
+        Val::Num(number) => Some(number),
+        Val::Str(reference) => state
+            .gc
+            .string_arena
+            .get(reference)
+            .and_then(|string| parse_number(string.data())),
+        _ => None,
+    }
+    .ok_or_else(|| runtime_error(usage))?;
+    if !number.is_finite() || number < f64::from(i32::MIN) || number > f64::from(i32::MAX) {
+        return Err(runtime_error(format!(
+            "integer overflow attempting to store {number:.6}"
+        )));
+    }
+    Ok(number.trunc() as i32)
+}
+
+fn parse_number(bytes: &[u8]) -> Option<f64> {
+    let text = CString::new(bytes).ok()?;
+    let mut end = std::ptr::null_mut();
+    // strtod reads the terminated CString and returns a pointer within it.
+    let number = unsafe { libc::strtod(text.as_ptr(), &mut end) };
+    if end == text.as_ptr().cast_mut() {
+        return None;
+    }
+    let remaining = unsafe { CStr::from_ptr(end) }.to_bytes();
+    remaining
+        .iter()
+        .all(u8::is_ascii_whitespace)
+        .then_some(number)
+}
+
+fn is_recipe_favorite(state: &mut LuaState) -> LuaResult<u32> {
+    let recipe_id = recipe_id(state, "Usage: IsRecipeFavorite(recipeID)")?;
+    if profession_data::get_recipe(recipe_id).is_none() {
+        return Ok(0);
+    }
+    let favorite = borrow_state(state)?
+        .crafting
+        .recipe_favorites
+        .contains(recipe_id);
+    state.push(Val::Bool(favorite));
+    Ok(1)
+}
+
+fn set_recipe_favorite(state: &mut LuaState) -> LuaResult<u32> {
+    let recipe_id = recipe_id(state, "Usage: SetRecipeFavorite(recipeID, favorite)")?;
+    let favorite = !matches!(stack_val(state, 2), Val::Nil | Val::Bool(false));
+    let Some(profession) = profession_data::get_profession_for_recipe(recipe_id) else {
+        return Ok(0);
+    };
+    let mut sim = borrow_state_mut(state)?;
+    if sim.crafting.selected_profession_id == Some(profession.profession_id) {
+        sim.crafting.recipe_favorites.set(recipe_id, favorite);
+    }
+    Ok(0)
+}
+
+pub(crate) fn drain_pending(state: &mut LuaState) -> LuaResult<()> {
+    let events = std::mem::take(&mut borrow_state_mut(state)?.crafting.recipe_favorites.pending);
+    for (favorite, recipe_id) in events {
+        fire_named_event_state(
+            state,
+            "TRADE_SKILL_FAVORITES_CHANGED",
+            &[Val::Bool(favorite), Val::Num(f64::from(recipe_id))],
+        );
+    }
+    Ok(())
+}

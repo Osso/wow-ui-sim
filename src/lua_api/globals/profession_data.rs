@@ -519,6 +519,11 @@ pub fn get_recipe(recipe_id: i32) -> Option<&'static RecipeEntry> {
         .find(|r| r.recipe_id == recipe_id)
 }
 
+/// The current recipe catalog contains only Blacksmithing entries.
+pub fn get_profession_for_recipe(recipe_id: i32) -> Option<&'static ProfessionInfo> {
+    get_recipe(recipe_id).and_then(|_| get_profession_by_index(0))
+}
+
 pub fn get_all_recipe_ids() -> Vec<i32> {
     BLACKSMITHING_RECIPES.iter().map(|r| r.recipe_id).collect()
 }

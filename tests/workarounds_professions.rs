@@ -159,6 +159,7 @@ fn recipe_filter_setters_queue_only_changed_values() {
     }
 }
 
+#[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
 #[test]
 fn profession_favorites_feed_the_original_recipe_group() {
     let env = full_game_env();
@@ -197,6 +198,7 @@ fn profession_favorites_feed_the_original_recipe_group() {
         .unwrap();
 }
 
+#[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
 #[test]
 fn recipe_favorites_validate_state_and_defer_distinct_events() {
     let env = WowLuaEnv::new().expect("environment");
@@ -224,6 +226,9 @@ fn recipe_favorites_validate_state_and_defer_distinct_events() {
         end)
         assert(select('#', api.SetRecipeFavorite(2662, true)) == 0)
         assert(api.IsRecipeFavorite(2662) == false, 'no active context means no write')
+        api.SetProfessionChildSkillLineID(186)
+        api.SetRecipeFavorite(2662, true)
+        assert(api.IsRecipeFavorite(2662) == false, 'different profession means no write')
         api.SetProfessionChildSkillLineID(164)
         api.SetRecipeFavorite(99999999, true)
         assert(select('#', api.SetRecipeFavorite(' 2662.9 ', 0)) == 0)
@@ -246,9 +251,31 @@ fn recipe_favorites_validate_state_and_defer_distinct_events() {
         assert(favoriteEvents[3] == 'list', 'favorites drain before the list marker')
         assert(C_TradeSkillUI.IsRecipeFavorite(2662) == true)
         assert(C_TradeSkillUI.GetRecipeInfo(2662).favorite == true)
+        C_TradeSkillUI.SetRecipeFavorite(2662, true)
         "#,
     )
     .unwrap();
+    fire_one_on_update_tick(&env);
+    env.exec("assert(#favoriteEvents == 3, 'unchanged writes do not queue events')")
+        .unwrap();
+}
+
+#[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
+#[test]
+fn recipe_favorites_are_not_persisted_across_ui_reload() {
+    let mut env = WowLuaEnv::new().expect("environment");
+    env.exec(
+        r#"
+        C_TradeSkillUI.SetProfessionChildSkillLineID(164)
+        C_TradeSkillUI.SetRecipeFavorite(2662, true)
+        assert(C_TradeSkillUI.IsRecipeFavorite(2662))
+        ReloadUI()
+        "#,
+    )
+    .unwrap();
+    assert!(env.service_reload(&mut None).unwrap());
+    env.exec("assert(C_TradeSkillUI.IsRecipeFavorite(2662) == false)")
+        .unwrap();
 }
 
 #[test]
