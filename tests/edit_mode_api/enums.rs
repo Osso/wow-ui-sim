@@ -173,13 +173,17 @@ fn edit_mode_account_setting_ids_include_raid_warning_and_loss_of_control() {
 
     assert_eq!(raid_warning, 33);
     assert_eq!(totem_action_bar, 34);
-    // Forever's pinned EditModeManagerConstantsDocumentation.lua:242-246
-    // inserts ShowGroupFinder before ShowLossOfControl and adds ShowSwingTimer.
-    let forever = cfg!(feature = "client-wowforever");
-    assert_eq!(loss_of_control, if forever { 36 } else { 35 });
+    // Pinned EditModeManagerConstantsDocumentation.lua: Forever 242–246,
+    // PTR 70493 215–260: GroupFinder precedes LossOfControl; SwingTimer follows.
+    let expanded_account_settings = matches!(
+        wow_ui_sim::client_profile::ACTIVE,
+        wow_ui_sim::client_profile::ClientProfile::Ptr
+            | wow_ui_sim::client_profile::ClientProfile::WowForever
+    );
+    assert_eq!(loss_of_control, if expanded_account_settings { 36 } else { 35 });
     assert_eq!(min_value, 0);
-    assert_eq!(max_value, if forever { 37 } else { 35 });
-    assert_eq!(num_values, if forever { 38 } else { 36 });
+    assert_eq!(max_value, if expanded_account_settings { 37 } else { 35 });
+    assert_eq!(num_values, if expanded_account_settings { 38 } else { 36 });
 }
 }
 
@@ -226,6 +230,9 @@ fn edit_mode_profile_option_enums_match_blizzard_docs() {
     let env = WowLuaEnv::new().expect("create Lua environment");
     if cfg!(feature = "client-wowforever") {
         env.exec("foreverEditModeTest = true").unwrap();
+    }
+    if wow_ui_sim::client_profile::ACTIVE == wow_ui_sim::client_profile::ClientProfile::Ptr {
+        env.exec("ptrEditModeTest = true").unwrap();
     }
 
     env.exec(
@@ -340,10 +347,13 @@ fn edit_mode_profile_option_enums_match_blizzard_docs() {
             EditModeVehicleSeatIndicatorSetting = { "Size" },
         }
 
-        if foreverEditModeTest then
-            -- Forever EditModeManagerConstantsDocumentation.lua:242-246, 559-569.
+        if foreverEditModeTest or ptrEditModeTest then
+            -- EditModeManagerConstantsDocumentation.lua: Forever 242–246; PTR 70493 215–260.
             table.insert(settingEnums.EditModeAccountSetting, 36, "ShowGroupFinder")
             table.insert(settingEnums.EditModeAccountSetting, "ShowSwingTimer")
+        end
+        if foreverEditModeTest then
+            -- Forever EditModeManagerConstantsDocumentation.lua:559–569.
             settingEnums.EditModeMicroMenuSetting[4] = "DeprecatedEyeSize"
         end
 
