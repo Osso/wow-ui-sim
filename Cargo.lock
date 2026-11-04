@@ -285,12 +285,12 @@ dependencies = [
 [[package]]
 name = "asset-resolver"
 version = "0.1.0"
-source = "git+https://github.com/world-of-osso/asset-resolver?rev=03753d5f60e59aaa38420ecaea1433997d45a7c8#03753d5f60e59aaa38420ecaea1433997d45a7c8"
+source = "git+https://github.com/world-of-osso/asset-resolver?rev=33bfe439df82cd2f69257798fd163abc42f8f4a3#33bfe439df82cd2f69257798fd163abc42f8f4a3"
 dependencies = [
  "binrw",
- "cascette-client-storage 0.2.0 (git+https://github.com/Osso/cascette-rs?rev=027a1ac34c81b4ec23a0bfa36ea298f6642abe19)",
- "cascette-crypto 0.2.0 (git+https://github.com/Osso/cascette-rs?rev=027a1ac34c81b4ec23a0bfa36ea298f6642abe19)",
- "cascette-formats 0.2.0 (git+https://github.com/Osso/cascette-rs?rev=027a1ac34c81b4ec23a0bfa36ea298f6642abe19)",
+ "cascette-client-storage",
+ "cascette-crypto",
+ "cascette-formats",
  "rusqlite",
  "tokio",
 ]
@@ -742,12 +742,12 @@ dependencies = [
 [[package]]
 name = "casc-extract"
 version = "0.1.0"
-source = "git+https://github.com/Osso/casc-extract?rev=bbfb184066531b6eb674b50b63a6052eb871ab2f#bbfb184066531b6eb674b50b63a6052eb871ab2f"
+source = "git+https://github.com/Osso/casc-extract?rev=7621f90d4799ede1ecc4a21d7573c753ebb75465#7621f90d4799ede1ecc4a21d7573c753ebb75465"
 dependencies = [
  "anyhow",
- "cascette-client-storage 0.2.0 (git+https://github.com/Osso/cascette-rs?rev=758d8dbfbc64d500b2f8f5b5c133d9f82fa79a48)",
- "cascette-crypto 0.2.0 (git+https://github.com/Osso/cascette-rs?rev=758d8dbfbc64d500b2f8f5b5c133d9f82fa79a48)",
- "cascette-formats 0.2.0 (git+https://github.com/Osso/cascette-rs?rev=758d8dbfbc64d500b2f8f5b5c133d9f82fa79a48)",
+ "cascette-client-storage",
+ "cascette-crypto",
+ "cascette-formats",
  "cascette-protocol",
  "clap",
  "hex",
@@ -758,13 +758,13 @@ dependencies = [
 [[package]]
 name = "cascette-cache"
 version = "0.2.0"
-source = "git+https://github.com/Osso/cascette-rs?rev=758d8dbfbc64d500b2f8f5b5c133d9f82fa79a48#758d8dbfbc64d500b2f8f5b5c133d9f82fa79a48"
+source = "git+https://github.com/Osso/cascette-rs?rev=2f9f30d6eef8d16b8f49e7a62ff8ef3c20d9f7f0#2f9f30d6eef8d16b8f49e7a62ff8ef3c20d9f7f0"
 dependencies = [
  "async-trait",
  "base64",
  "bytes",
- "cascette-crypto 0.2.0 (git+https://github.com/Osso/cascette-rs?rev=758d8dbfbc64d500b2f8f5b5c133d9f82fa79a48)",
- "cascette-formats 0.2.0 (git+https://github.com/Osso/cascette-rs?rev=758d8dbfbc64d500b2f8f5b5c133d9f82fa79a48)",
+ "cascette-crypto",
+ "cascette-formats",
  "dashmap",
  "futures",
  "getrandom 0.4.3",
@@ -785,36 +785,11 @@ dependencies = [
 [[package]]
 name = "cascette-client-storage"
 version = "0.2.0"
-source = "git+https://github.com/Osso/cascette-rs?rev=027a1ac34c81b4ec23a0bfa36ea298f6642abe19#027a1ac34c81b4ec23a0bfa36ea298f6642abe19"
+source = "git+https://github.com/Osso/cascette-rs?rev=2f9f30d6eef8d16b8f49e7a62ff8ef3c20d9f7f0#2f9f30d6eef8d16b8f49e7a62ff8ef3c20d9f7f0"
 dependencies = [
  "binrw",
- "cascette-crypto 0.2.0 (git+https://github.com/Osso/cascette-rs?rev=027a1ac34c81b4ec23a0bfa36ea298f6642abe19)",
- "cascette-formats 0.2.0 (git+https://github.com/Osso/cascette-rs?rev=027a1ac34c81b4ec23a0bfa36ea298f6642abe19)",
- "dashmap",
- "flate2",
- "futures",
- "hex",
- "libc",
- "md5",
- "memmap2",
- "parking_lot",
- "prost",
- "serde",
- "serde_json",
- "thiserror 2.0.17",
- "tokio",
- "tracing",
- "winapi",
-]
-
-[[package]]
-name = "cascette-client-storage"
-version = "0.2.0"
-source = "git+https://github.com/Osso/cascette-rs?rev=758d8dbfbc64d500b2f8f5b5c133d9f82fa79a48#758d8dbfbc64d500b2f8f5b5c133d9f82fa79a48"
-dependencies = [
- "binrw",
- "cascette-crypto 0.2.0 (git+https://github.com/Osso/cascette-rs?rev=758d8dbfbc64d500b2f8f5b5c133d9f82fa79a48)",
- "cascette-formats 0.2.0 (git+https://github.com/Osso/cascette-rs?rev=758d8dbfbc64d500b2f8f5b5c133d9f82fa79a48)",
+ "cascette-crypto",
+ "cascette-formats",
  "dashmap",
  "flate2",
  "futures",
@@ -835,20 +810,7 @@ dependencies = [
 [[package]]
 name = "cascette-crypto"
 version = "0.2.0"
-source = "git+https://github.com/Osso/cascette-rs?rev=027a1ac34c81b4ec23a0bfa36ea298f6642abe19#027a1ac34c81b4ec23a0bfa36ea298f6642abe19"
-dependencies = [
- "binrw",
- "cipher",
- "hex",
- "md-5",
- "salsa20",
- "thiserror 2.0.17",
-]
-
-[[package]]
-name = "cascette-crypto"
-version = "0.2.0"
-source = "git+https://github.com/Osso/cascette-rs?rev=758d8dbfbc64d500b2f8f5b5c133d9f82fa79a48#758d8dbfbc64d500b2f8f5b5c133d9f82fa79a48"
+source = "git+https://github.com/Osso/cascette-rs?rev=2f9f30d6eef8d16b8f49e7a62ff8ef3c20d9f7f0#2f9f30d6eef8d16b8f49e7a62ff8ef3c20d9f7f0"
 dependencies = [
  "binrw",
  "cipher",
@@ -861,26 +823,10 @@ dependencies = [
 [[package]]
 name = "cascette-formats"
 version = "0.2.0"
-source = "git+https://github.com/Osso/cascette-rs?rev=027a1ac34c81b4ec23a0bfa36ea298f6642abe19#027a1ac34c81b4ec23a0bfa36ea298f6642abe19"
+source = "git+https://github.com/Osso/cascette-rs?rev=2f9f30d6eef8d16b8f49e7a62ff8ef3c20d9f7f0#2f9f30d6eef8d16b8f49e7a62ff8ef3c20d9f7f0"
 dependencies = [
  "binrw",
- "cascette-crypto 0.2.0 (git+https://github.com/Osso/cascette-rs?rev=027a1ac34c81b4ec23a0bfa36ea298f6642abe19)",
- "flate2",
- "hex",
- "lz4_flex",
- "md5",
- "serde",
- "serde_json",
- "thiserror 2.0.17",
-]
-
-[[package]]
-name = "cascette-formats"
-version = "0.2.0"
-source = "git+https://github.com/Osso/cascette-rs?rev=758d8dbfbc64d500b2f8f5b5c133d9f82fa79a48#758d8dbfbc64d500b2f8f5b5c133d9f82fa79a48"
-dependencies = [
- "binrw",
- "cascette-crypto 0.2.0 (git+https://github.com/Osso/cascette-rs?rev=758d8dbfbc64d500b2f8f5b5c133d9f82fa79a48)",
+ "cascette-crypto",
  "flate2",
  "hex",
  "lz4_flex",
@@ -893,15 +839,15 @@ dependencies = [
 [[package]]
 name = "cascette-protocol"
 version = "0.2.0"
-source = "git+https://github.com/Osso/cascette-rs?rev=758d8dbfbc64d500b2f8f5b5c133d9f82fa79a48#758d8dbfbc64d500b2f8f5b5c133d9f82fa79a48"
+source = "git+https://github.com/Osso/cascette-rs?rev=2f9f30d6eef8d16b8f49e7a62ff8ef3c20d9f7f0#2f9f30d6eef8d16b8f49e7a62ff8ef3c20d9f7f0"
 dependencies = [
  "asn1",
  "async-trait",
  "base64",
  "bytes",
  "cascette-cache",
- "cascette-crypto 0.2.0 (git+https://github.com/Osso/cascette-rs?rev=758d8dbfbc64d500b2f8f5b5c133d9f82fa79a48)",
- "cascette-formats 0.2.0 (git+https://github.com/Osso/cascette-rs?rev=758d8dbfbc64d500b2f8f5b5c133d9f82fa79a48)",
+ "cascette-crypto",
+ "cascette-formats",
  "cms",
  "dashmap",
  "der",
@@ -1607,7 +1553,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "39cab71617ae0d63f51a36d69f866391735b51691dbda63cf6f96d042b63efeb"
 dependencies = [
  "libc",
- "windows-sys 0.61.2",
+ "windows-sys 0.59.0",
 ]
 
 [[package]]
@@ -3593,7 +3539,7 @@ version = "0.50.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "7957b9740744892f114936ab4a57b3f487491bbeafaf8083688b16841a4240e5"
 dependencies = [
- "windows-sys 0.61.2",
+ "windows-sys 0.59.0",
 ]
 
 [[package]]
@@ -4659,7 +4605,7 @@ dependencies = [
  "once_cell",
  "socket2",
  "tracing",
- "windows-sys 0.60.2",
+ "windows-sys 0.59.0",
 ]
 
 [[package]]
@@ -5171,7 +5117,7 @@ dependencies = [
  "errno",
  "libc",
  "linux-raw-sys 0.11.0",
- "windows-sys 0.61.2",
+ "windows-sys 0.59.0",
 ]
 
 [[package]]
@@ -5228,7 +5174,7 @@ dependencies = [
  "security-framework",
  "security-framework-sys",
  "webpki-root-certs",
- "windows-sys 0.61.2",
+ "windows-sys 0.59.0",
 ]
 
 [[package]]
@@ -6043,7 +5989,7 @@ dependencies = [
  "getrandom 0.3.4",
  "once_cell",
  "rustix 1.1.3",
- "windows-sys 0.61.2",
+ "windows-sys 0.59.0",
 ]
 
 [[package]]
@@ -7147,7 +7093,7 @@ version = "0.1.11"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "c2a7b1c03c876122aa43f3020e6c3c3ee5c05081c9a00739faf7503aeba10d22"
 dependencies = [
- "windows-sys 0.48.0",
+ "windows-sys 0.59.0",
 ]
 
 [[package]]
@@ -7766,9 +7712,9 @@ dependencies = [
  "base64",
  "bytemuck",
  "casc-extract",
- "cascette-client-storage 0.2.0 (git+https://github.com/Osso/cascette-rs?rev=758d8dbfbc64d500b2f8f5b5c133d9f82fa79a48)",
- "cascette-crypto 0.2.0 (git+https://github.com/Osso/cascette-rs?rev=758d8dbfbc64d500b2f8f5b5c133d9f82fa79a48)",
- "cascette-formats 0.2.0 (git+https://github.com/Osso/cascette-rs?rev=758d8dbfbc64d500b2f8f5b5c133d9f82fa79a48)",
+ "cascette-client-storage",
+ "cascette-crypto",
+ "cascette-formats",
  "cc",
  "clap",
  "cosmic-text",

@@ -253,6 +253,23 @@ fn build_identity_reads_forever_when_build_info_omits_the_product() {
 
 #[test]
 #[cfg(feature = "casc")]
+fn build_identity_reads_bare_forever_product_and_reports_retail_mismatch() {
+    let root = installed_product_fixture();
+    // Synthetic wire fixture using the reported bare-record field layout.
+    std::fs::write(
+        root.path().join(".product.db"),
+        include_bytes!("../../tests/fixtures/casc-bare-forever-product.db"),
+    )
+    .unwrap();
+    let identity = super::read_active_build_identity(root.path(), "wowf").unwrap();
+    assert_eq!(identity.version, "1.60.1.70755");
+    assert_eq!(identity.build_key, "3bd89ce2721f7c75e7525dc83741076f");
+    let error = super::read_active_build_identity(root.path(), "wow").unwrap_err();
+    assert!(error.to_string().contains("found: wowf"), "{error}");
+}
+
+#[test]
+#[cfg(feature = "casc")]
 fn build_identity_uses_selected_product_not_stale_build_info() {
     let root = installed_product_fixture();
     let retail = super::read_active_build_identity(root.path(), "wow").unwrap();

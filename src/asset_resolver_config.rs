@@ -63,11 +63,10 @@ pub fn prepare_gui_casc_resolution_cache() -> Result<(), String> {
     if std::env::var("WOW_SIM_CASC").ok().as_deref() == Some("0") {
         return Ok(());
     }
+    configure_casc_product_env();
     let Some(install) = asset_resolver::wow_install_path() else {
         return Ok(());
     };
-
-    configure_casc_product_env();
     asset_resolver::casc_resolver::open_resolution_cache_for_install(install).map_err(|error| {
         format!(
             "prepare GUI CASC resolution cache for {}: {error}",

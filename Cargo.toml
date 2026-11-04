@@ -69,11 +69,11 @@ bytemuck = { version = "1.21", features = ["derive"], optional = true }
 pollster = { version = "0.4", optional = true }
 webp = { version = "0.3.1", optional = true }
 rustc-hash = "2.1.2"
-asset-resolver = { git = "https://github.com/world-of-osso/asset-resolver", rev = "03753d5f60e59aaa38420ecaea1433997d45a7c8", optional = true }
-cascette-client-storage = { git = "https://github.com/Osso/cascette-rs", rev = "758d8dbfbc64d500b2f8f5b5c133d9f82fa79a48", features = ["local-install"], optional = true }
-cascette-crypto = { git = "https://github.com/Osso/cascette-rs", rev = "758d8dbfbc64d500b2f8f5b5c133d9f82fa79a48", optional = true }
-cascette-formats = { git = "https://github.com/Osso/cascette-rs", rev = "758d8dbfbc64d500b2f8f5b5c133d9f82fa79a48", optional = true }
-casc-extract = { git = "https://github.com/Osso/casc-extract", rev = "bbfb184066531b6eb674b50b63a6052eb871ab2f", optional = true }
+asset-resolver = { git = "https://github.com/world-of-osso/asset-resolver", rev = "33bfe439df82cd2f69257798fd163abc42f8f4a3", optional = true }
+cascette-client-storage = { git = "https://github.com/Osso/cascette-rs", rev = "2f9f30d6eef8d16b8f49e7a62ff8ef3c20d9f7f0", features = ["local-install"], optional = true }
+cascette-crypto = { git = "https://github.com/Osso/cascette-rs", rev = "2f9f30d6eef8d16b8f49e7a62ff8ef3c20d9f7f0", optional = true }
+cascette-formats = { git = "https://github.com/Osso/cascette-rs", rev = "2f9f30d6eef8d16b8f49e7a62ff8ef3c20d9f7f0", optional = true }
+casc-extract = { git = "https://github.com/Osso/casc-extract", rev = "7621f90d4799ede1ecc4a21d7573c753ebb75465", optional = true }
 reqwest = { version = "0.12", default-features = false, features = ["blocking", "rustls-tls"] }
 httpdate = "1"
 tar = "0.4.45"
