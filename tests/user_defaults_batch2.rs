@@ -24,8 +24,11 @@ fn user_defaults_batch2_quest_difficulty_boundaries() {
     }
     env.exec(r#"
         local expected = { 'Impossible', 'Difficult', 'Difficult', 'Fair', 'Fair', 'Easy', 'Easy', 'Trivial', 'Trivial' }
+        local colors = { 'impossible', 'verydifficult', 'verydifficult', 'difficult', 'difficult', 'standard', 'standard', 'trivial', 'trivial' }
         for i, name in ipairs(expected) do
-            assert(C_PlayerInfo.GetContentDifficultyQuestForPlayer(49999 + i) == Enum.RelativeContentDifficulty[name], name)
+            local difficulty = C_PlayerInfo.GetContentDifficultyQuestForPlayer(49999 + i)
+            assert(GetDifficultyColor(difficulty) == QuestDifficultyColors[colors[i]], colors[i])
+            assert(difficulty == Enum.RelativeContentDifficulty[name], name)
         end
     "#).expect("quest levels must select each difficulty boundary");
 }

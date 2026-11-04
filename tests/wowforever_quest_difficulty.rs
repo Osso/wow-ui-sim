@@ -114,12 +114,16 @@ fn forever_quest_difficulty_absent_curve_boundaries() {
             })
             .collect();
     }
+    load_forever_title_consumer(&env);
     // WM89: five is the absent-configuration range, not a known populated curve value.
     env.exec(
         r#"
         local expected = { 'Fair', 'Easy', 'Easy', 'Easy', 'Trivial' }
+        local colors = { 'difficult', 'standard', 'standard', 'standard', 'trivial' }
         for i, name in ipairs(expected) do
-            assert(C_PlayerInfo.GetContentDifficultyQuestForPlayer(49999 + i) == Enum.RelativeContentDifficulty[name], name)
+            local difficulty = C_PlayerInfo.GetContentDifficultyQuestForPlayer(49999 + i)
+            assert(GetDifficultyColor(difficulty) == QuestDifficultyColors[colors[i]], colors[i])
+            assert(difficulty == Enum.RelativeContentDifficulty[name], name)
         end
         "#,
     )
@@ -131,7 +135,7 @@ fn load_forever_title_consumer(env: &WowLuaEnv) {
     env.exec(
         r#"
         DifficultyUtil = {}
-        QuestDifficultyColors = {difficult={r=0.2, g=0.4, b=0.6}}
+        QuestDifficultyColors = {difficult={r=0.2, g=0.4, b=0.6}, standard={}, trivial={}}
         QuestDifficultyHighlightColors = {difficult={r=0.3, g=0.5, b=0.7}}
         CVarCallbackRegistry = {enabled=true}
         function CVarCallbackRegistry:GetCVarValueBool(name)
