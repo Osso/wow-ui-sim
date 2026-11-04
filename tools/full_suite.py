@@ -398,7 +398,7 @@ def run(ref, build_jobs, target_dir, profile="retail", optional=False):
                                        *(f"--setenv={key}" for key in step_env), "--", binary]
                             try:
                                 if name == "integration" and profile == "retail":
-                                    costs = json.loads(Path(__file__).with_name("integration-costs.json").read_text())
+                                    costs = json.loads((checkout / "tools/integration-costs.json").read_text())
                                     command[command.index("MemoryMax=9G")] = "MemoryMax=3G"
                                     command.insert(2, "--slice=agents.slice")
                                     result["steps"][name], output = run_integration_shards(
