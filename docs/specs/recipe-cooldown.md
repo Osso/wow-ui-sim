@@ -1,0 +1,7 @@
+# Recipe cooldown
+
+Retail 12.1.5 `C_TradeSkillUI.GetRecipeCooldown(recipeID)` returns no values for a recipe absent from the simulator recipe catalog. For a present recipe it returns four values: remaining seconds or nil, day-cooldown flag, available charges, and maximum charges. Supplied spell cooldown and charge inputs are keyed by recipe ID. A recovering charge replaces the ordinary cooldown result; full charges leave the ordinary result intact. The simulator does not advance charge state or emit cooldown events automatically.
+
+Inputs accept numbers and unmarked numeric strings, truncate fractions toward zero, and reject nonnumeric or inaccessible secret values with the usage error. Out-of-range numbers raise integer overflow. Secret numeric access follows the VM's context policy.
+
+The absence of category-flag state produces **false as an emulated default**, not a native day-classification claim. Native category flag 8 determines the day flag; duration does not. Wrapped 32-bit remaining milliseconds are converted as unsigned to single-precision seconds; only positive ordered results are published. Ordinary expired timer candidates are rejected before conversion. A recovering charge's expired nonzero end is adjusted to the selected clock; a zero end is not. Final conversion reads the clock again. Live stale-state behavior and the global charge override remain unknown. Native evidence: handoff `native-evidence-70688/WM85-recipe-cooldown.md` and `WM85b-signedness.md`.

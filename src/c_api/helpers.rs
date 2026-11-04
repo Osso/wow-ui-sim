@@ -2,6 +2,22 @@ use rilua::vm::gc::arena::GcRef;
 use rilua::vm::state::LuaState;
 use rilua::vm::table::Table;
 use rilua::{LuaResult, Val};
+use std::ffi::{CStr, CString};
+
+pub(crate) fn parse_numeric_string(bytes: &[u8]) -> Option<f64> {
+    let text = CString::new(bytes).ok()?;
+    let mut end = std::ptr::null_mut();
+    // strtod reads the terminated CString and returns a pointer within it.
+    let number = unsafe { libc::strtod(text.as_ptr(), &mut end) };
+    if end == text.as_ptr().cast_mut() {
+        return None;
+    }
+    let remaining = unsafe { CStr::from_ptr(end) }.to_bytes();
+    remaining
+        .iter()
+        .all(u8::is_ascii_whitespace)
+        .then_some(number)
+}
 
 /// Reject nonnumeric inputs; unrepresented numeric identities cannot match supplied rows.
 pub(crate) fn validate_supplied_relation_id(

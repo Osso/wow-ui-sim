@@ -1,7 +1,6 @@
 //! Recipe favorite state and deferred notifications (WM83).
 
 use std::collections::HashSet;
-use std::ffi::{CStr, CString};
 
 use crate::lua_api::globals::profession_data;
 use crate::lua_api::methods::{borrow_state, borrow_state_mut};
@@ -54,7 +53,7 @@ fn recipe_id(state: &LuaState, usage: &str) -> LuaResult<i32> {
             .gc
             .string_arena
             .get(reference)
-            .and_then(|string| parse_number(string.data())),
+            .and_then(|string| super::helpers::parse_numeric_string(string.data())),
         _ => None,
     }
     .ok_or_else(|| runtime_error(usage))?;
@@ -64,21 +63,6 @@ fn recipe_id(state: &LuaState, usage: &str) -> LuaResult<i32> {
         )));
     }
     Ok(number.trunc() as i32)
-}
-
-fn parse_number(bytes: &[u8]) -> Option<f64> {
-    let text = CString::new(bytes).ok()?;
-    let mut end = std::ptr::null_mut();
-    // strtod reads the terminated CString and returns a pointer within it.
-    let number = unsafe { libc::strtod(text.as_ptr(), &mut end) };
-    if end == text.as_ptr().cast_mut() {
-        return None;
-    }
-    let remaining = unsafe { CStr::from_ptr(end) }.to_bytes();
-    remaining
-        .iter()
-        .all(u8::is_ascii_whitespace)
-        .then_some(number)
 }
 
 fn is_recipe_favorite(state: &mut LuaState) -> LuaResult<u32> {
