@@ -271,25 +271,20 @@ fn edit_mode_wtf_cache_can_override_active_layout_by_name() {
         .with_state(|state| saved_vars.load_edit_mode_cache(state, 2, None))
         .expect("load edit mode cache");
 
-    let (active, active_name): (i32, String) = env
+    let (active, active_name, preset_count): (i32, String, i32) = env
         .eval(
             r#"
             local info = C_EditMode.GetLayouts()
             local savedIndex = info.activeLayout - Enum.EditModePresetLayoutsMeta.NumValues
-            return info.activeLayout, info.layouts[savedIndex].layoutName
+            return info.activeLayout, info.layouts[savedIndex].layoutName,
+                Enum.EditModePresetLayoutsMeta.NumValues
             "#,
         )
         .expect("read overridden active edit mode layout");
 
-    // Forever EditModeManagerConstantsDocumentation.lua:625-635 adds Gamepad.
-    assert_eq!(
-        active,
-        if cfg!(feature = "client-wowforever") {
-            4
-        } else {
-            3
-        }
-    );
+    // PTR EditModeManagerConstantsDocumentation.lua:639-649 declares three
+    // presets; Retail declares two. The override selects the first saved row.
+    assert_eq!(active, preset_count + 1);
     assert_eq!(active_name, "Ultrawide");
 }
 
@@ -333,25 +328,20 @@ fn edit_mode_snapshot_layout_selects_active_layout_by_name() {
         .with_state(|state| saved_vars.load_edit_mode_cache(state, 2, Some("Ultrawide")))
         .expect("load edit mode cache");
 
-    let (active, active_name): (i32, String) = env
+    let (active, active_name, preset_count): (i32, String, i32) = env
         .eval(
             r#"
             local info = C_EditMode.GetLayouts()
             local savedIndex = info.activeLayout - Enum.EditModePresetLayoutsMeta.NumValues
-            return info.activeLayout, info.layouts[savedIndex].layoutName
+            return info.activeLayout, info.layouts[savedIndex].layoutName,
+                Enum.EditModePresetLayoutsMeta.NumValues
             "#,
         )
         .expect("read snapshot-selected active edit mode layout");
 
-    // Forever EditModeManagerConstantsDocumentation.lua:625-635 adds Gamepad.
-    assert_eq!(
-        active,
-        if cfg!(feature = "client-wowforever") {
-            4
-        } else {
-            3
-        }
-    );
+    // PTR EditModeManagerConstantsDocumentation.lua:639-649 declares three
+    // presets; Retail declares two. The override selects the first saved row.
+    assert_eq!(active, preset_count + 1);
     assert_eq!(active_name, "Ultrawide");
 }
 

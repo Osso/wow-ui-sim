@@ -1,3 +1,7 @@
+## [2026-11-04] investigation | PTR Edit Mode preset fixtures
+
+Recorded the [seven-failure reconciliation](investigations/editmode-layout.md#ptr-preset-and-startup-fixture-reconciliation--2026-11-04): five preset-count fixtures, one cast-bar Show lifecycle fixture and one missing declared quest query. Linked current contracts, native limits and bounded PTR/Retail proof.
+
 ## [2026-11-04] investigation | Parallel GPU test lifetimes
 
 Recorded six reproduced SIGSEGVs and three timeouts in ten concurrent GPU runs; linked the [shared lifetime boundary](investigations/parallel-gpu-test-lifetimes.md). The same regression passed 50 GREEN runs; integration caller modules passed five runs and library GPU subsets passed ten runs.

@@ -456,6 +456,13 @@ fn cast_bar_respects_edit_mode_lock_setting_after_startup_fix(env: &WowLuaEnv) {
                 .expect("settle the source startup fade before idle layout assertions");
         }
         probe_mists_cast_parent(env, "cast-case-before-original-assertions");
+        if !cfg!(feature = "client-mists") {
+            // PTR CastingBarFrame.xml:468-482 starts hidden under UIParent.
+            // CastingBarFrame.lua:1385-1389 and ManagedFrameSystem.lua:57-76
+            // reparent through the original OnShow, not while the bar is idle.
+            env.exec("PlayerCastingBarFrame:Show()")
+                .expect("show unlocked cast bar through its original managed-frame handler");
+        }
         let (lock_value, attached_after_post_event, parent_after_post_event): (i64, bool, String) = env
             .eval(
                 r#"
@@ -511,7 +518,7 @@ fn cast_bar_respects_edit_mode_lock_setting_after_startup_fix(env: &WowLuaEnv) {
         } else {
             assert_eq!(
                 parent_after_post_event, "BottomManagedFrameContainer",
-                "unlocked startup cast bar should remain frame-manager parented"
+                "shown unlocked cast bar should be frame-manager parented"
             );
         }
 

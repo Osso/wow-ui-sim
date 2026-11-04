@@ -1,11 +1,12 @@
 # Edit Mode layout selection
 
-Current Retail/PTR startup must preserve the active-layout index supplied by the character cache in Blizzard's combined preset-plus-custom selection space. The unchanged Blizzard manager prepends Modern/Classic presets without offsetting `activeLayout`. In the observed cache, index2 therefore selects Classic, not custom Widescreen. User WTF data must not be changed or orientation forced to hide a selection error.
+Current Retail/PTR startup must preserve the active-layout index supplied by the character cache in Blizzard's combined preset-plus-custom selection space. The unchanged Blizzard manager prepends its source-selected presets without offsetting `activeLayout`: Modern/Classic on pinned Retail, Modern/Classic/Gamepad on pinned PTR. In the observed cache, index2 therefore selects Classic, not custom Widescreen. User WTF data must not be changed or orientation forced to hide a selection error.
 
 ## What it must do
 
 - [x] Import provided account/character cache files before whole unchanged Game UI startup; preserve the character's active index through preset insertion. Native cache index2 selects Classic with horizontal Micro Menu geometry, even when the second custom layout is vertical Widescreen.
 - [x] Preserve saved layout content, names/identifiers and existing named environment/snapshot override selection and precedence. Resolve an explicit saved-layout name to the combined selection space; do not reinterpret native character indices as custom-list positions.
+- [x] Derive combined-list test expectations from the selected original preset manager, not a Retail-only count. PTR `Blizzard_EditMode/Mainline/EditModePresetLayouts.lua:1267–1285` supplies Gamepad; `Shared/EditModePresetLayoutsManager.lua:5–32` inserts all three maps; `Shared/EditModeManager.lua:1018–1020` prepends that list to saved layouts. The pinned Retail manager inserts only Modern/Classic at lines5–21.
 - [x] When the account cache declares more layouts than its token stream contains, do not fabricate layouts after exhaustion; emit a warning. This is a simulator scenario decision: native handling of the mismatch, and whether the client writes such a file, are unknown. Handling of partially started records is outside this contract.
 - [x] Keep selection, cache decoding and original consumer behavior distinct. No original WTF writes, vendor patches, forced orientation or guessed new numeric-override contract.
 
