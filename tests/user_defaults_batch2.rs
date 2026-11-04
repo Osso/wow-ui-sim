@@ -4,6 +4,7 @@
 mod keybinding_panel_fixtures;
 
 #[test]
+#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
 fn user_defaults_batch2_quest_difficulty_boundaries() {
     let env = keybinding_panel_fixtures::setup_env();
     {
