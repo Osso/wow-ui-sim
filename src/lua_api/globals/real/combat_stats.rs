@@ -277,6 +277,24 @@ fn get_hit_modifier(state: &mut LuaState) -> LuaResult<u32> {
     push_player_stat(state, |stats| stats.hit_modifier)
 }
 
+fn unit_uses_ammo(state: &mut LuaState) -> LuaResult<u32> {
+    let value =
+        rilua::table_security::unwrap_secret(state, crate::lua_bridge::stack_val(state, 1))?;
+    if !matches!(value, Val::Str(_) | Val::Num(_)) {
+        return Err(rilua::runtime_error(
+            "Usage: local result = UnitUsesAmmo(unit)",
+        ));
+    }
+    let token = crate::lua_api::methods::val_to_string(state, value)
+        .ok_or_else(|| rilua::runtime_error("Usage: local result = UnitUsesAmmo(unit)"))?;
+    let sim = borrow_state(state)?;
+    let uses_ammo = resolve_unit_snapshot(&sim, &token)
+        .is_some_and(|unit| unit.is_player && matches!(unit.class_index, 1 | 3 | 4));
+    drop(sim);
+    state.push(Val::Bool(uses_ammo));
+    Ok(1)
+}
+
 fn get_offhand_hit_modifier(state: &mut LuaState) -> LuaResult<u32> {
     push_player_stat(state, |stats| stats.offhand_hit_modifier)
 }
@@ -439,6 +457,8 @@ pub fn register_all(lua: &mut rilua::Lua) -> crate::Result<()> {
     // Forever 70707 PlayerScriptDocumentation.lua:660-668 and WM99.
     if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::WowForever {
         LuaApiMut::register_function(lua, "GetOffhandHitModifier", get_offhand_hit_modifier)?;
+        // WM101; Forever UnitDocumentation.lua:3359 declares the unit predicate.
+        LuaApiMut::register_function(lua, "UnitUsesAmmo", unit_uses_ammo)?;
     }
     #[cfg(feature = "client-retail")]
     retail_inputs::register_all(lua)?;
