@@ -52,11 +52,10 @@ fn blizzard_tooltip_process_info_rejects_empty_or_ownerless_show() {
 fn blizzard_backpack_tooltip_append_text_updates_pooled_title() {
     let env = setup_full_env();
     let addons = wow_ui_sim::paths::default_blizzard_ui_addons_path().unwrap();
-    wow_ui_sim::loader::load_addon(
-        &env.loader_env(),
-        &addons.join("Blizzard_MainMenuBarBagButtons/Blizzard_MainMenuBarBagButtons_Mainline.toc"),
-    )
-    .unwrap();
+    // Retail uses the Mainline TOC; pinned PTR uses the unified TOC and Shared Lua.
+    let toc = wow_ui_sim::loader::find_toc_file(&addons.join("Blizzard_MainMenuBarBagButtons"))
+        .expect("profile-selected original bag-button TOC");
+    wow_ui_sim::loader::load_addon(&env.loader_env(), &toc).unwrap();
     env.exec(
         r#"
         assert(not KeybindFrames_InQuickKeybindMode())
