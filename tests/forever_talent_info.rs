@@ -10,7 +10,6 @@ fn supplied_env() -> WowLuaEnv {
         let mut sim = env.state().borrow_mut();
         sim.player.class_index = 2;
         let grid = &mut sim.talents.forever;
-        grid.player_present = true;
         grid.allowance = Some(7);
         grid.groups = vec![
             TalentGroup { spec_id: 70, selected_ids: [901].into(), tier_mask: 0 },
@@ -127,7 +126,7 @@ fn forever_talent_missing_rows_and_specialization_order() {
     env.exec("assert(C_SpecializationInfo.GetTalentInfo{tier=1,column=1}.talentID == 902)").unwrap();
     env.state().borrow_mut().talents.forever.spell_names.remove(&9002);
     env.exec("assert(C_SpecializationInfo.GetTalentInfo{tier=1,column=1} == nil)").unwrap();
-    env.state().borrow_mut().talents.forever.player_present = false;
+    env.state().borrow_mut().player.present = false;
     env.exec("assert(C_SpecializationInfo.GetTalentInfo{tier=1,column=1} == nil)").unwrap();
 }
 
