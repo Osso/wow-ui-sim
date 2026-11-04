@@ -90,6 +90,7 @@ fn apply_tooltip_owner(
     args: &TooltipOwnerArgs,
 ) -> bool {
     let mouse_position = sim.mouse_position;
+    let screen_height = sim.screen_height;
     let Some(tooltip) = sim.widgets.get_mut_visual(tooltip_id) else {
         return false;
     };
@@ -99,6 +100,7 @@ fn apply_tooltip_owner(
         &args.anchor_kind,
         args.owner_id,
         mouse_position,
+        screen_height,
         args.x_offset,
         args.y_offset,
     );
@@ -162,6 +164,7 @@ fn apply_tooltip_anchor(
     anchor_kind: &str,
     owner_id: Option<u64>,
     mouse_position: Option<(f32, f32)>,
+    screen_height: f32,
     x_offset: f32,
     y_offset: f32,
 ) {
@@ -171,9 +174,15 @@ fn apply_tooltip_anchor(
     tooltip.anchors.clear();
     if is_cursor_tooltip_anchor(anchor_kind) {
         if let Some((mx, my)) = mouse_position {
-            tooltip
-                .anchors
-                .push(build_cursor_anchor(mx, my, x_offset, y_offset));
+            tooltip.anchors.push(build_cursor_anchor(
+                mx,
+                my,
+                x_offset,
+                y_offset,
+                anchor_kind,
+                screen_height,
+                tooltip.effective_scale,
+            ));
         }
         return;
     }
@@ -320,6 +329,7 @@ fn apply_anchor_type_to_tooltip(
 ) -> LuaResult<()> {
     let mut sim = borrow_state_mut(state)?;
     let mouse_position = sim.mouse_position;
+    let screen_height = sim.screen_height;
     let Some(tooltip) = sim.widgets.get_mut_visual(tooltip_id) else {
         return Ok(());
     };
@@ -328,6 +338,7 @@ fn apply_anchor_type_to_tooltip(
         anchor_kind,
         owner_id,
         mouse_position,
+        screen_height,
         x_offset,
         y_offset,
     );
