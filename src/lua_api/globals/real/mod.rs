@@ -16,6 +16,7 @@ pub mod combat_stats;
 pub mod combo_points;
 pub mod container_legacy;
 pub mod cursor_model;
+pub(crate) mod cursor_presentation;
 #[cfg(feature = "retail-12-0-0")]
 pub mod event_callbacks;
 #[cfg(feature = "client-wowforever")]

@@ -35,6 +35,12 @@ pub fn register_all(lua: &mut rilua::Lua) -> crate::Result<()> {
     LuaApiMut::register_function(lua, "UnitPowerBarTimerInfo", unit_power_bar_timer_info)?;
     LuaApiMut::register_function(lua, "SetCursor", set_cursor)?;
     LuaApiMut::register_function(lua, "ResetCursor", reset_cursor)?;
+    if matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail | crate::client_profile::ClientProfile::Ptr
+    ) {
+        super::real::cursor_presentation::register_all(lua)?;
+    }
     // Camelot uses C_SpecializationInfo; its deprecated alias addon is excluded.
     if crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::WowForever {
         LuaApiMut::register_function(lua, "GetSpecialization", get_specialization)?;
