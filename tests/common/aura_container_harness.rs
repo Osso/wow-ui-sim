@@ -22,6 +22,13 @@ const PRELUDE: &str = r#"
         if issecretvalue(value) then return secretunwrap(value) end
         return value
     end
+    function AuditParentIs(frame, parent)
+        local expected = parent:GetObjectTable()
+        if frame ~= frame:GetObjectTable() then
+            expected = GetForbiddenObjectTable(expected)
+        end
+        return frame:GetParent() == expected
+    end
     function AuditAddon(fn, ...)
         debug.setobjecttaint(fn, AUDIT_ADDON)
         return fn(...)

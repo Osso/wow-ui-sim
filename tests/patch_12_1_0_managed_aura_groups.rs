@@ -28,7 +28,7 @@ fn managed_container_creates_anchors_and_follows_live_unit_aura_in_batches_of_te
             for index = 1, AuditLive:GetAuraGroupFrameCount(key) do
                 local frame = AuditLive:GetAuraGroupFrame(key, index)
                 assert(frame:GetObjectType() == 'AuraButton', 'container creates AuraButtons')
-                assert(frame:GetParent() == AuditLive, 'buttons are parented to the container')
+                assert(AuditParentIs(frame, AuditLive), 'buttons are parented to the container')
                 if AuditIsShown(frame) then
                     local _, relativeTo = frame:GetPoint(1)
                     assert(AuditPlain(relativeTo) == AuditLive, 'shown buttons are anchored to the container')
@@ -101,9 +101,9 @@ fn managed_container_has_no_add_aura_frame_and_rejects_addon_reparenting() {
             local other = CreateFrame('Frame', nil, UIParent)
             local ok, err = pcall(button.SetParent, button, other)
             assert(not ok, 'addon reparenting of a managed aura button must fail')
-            assert(button:GetParent() == AuditOwned, 'parent is unchanged: ' .. tostring(err))
+            assert(AuditParentIs(button, AuditOwned), 'parent is unchanged: ' .. tostring(err))
             ok = pcall(button.SetParent, button, nil)
-            assert(not ok and button:GetParent() == AuditOwned)
+            assert(not ok and AuditParentIs(button, AuditOwned))
         end)
     "#,
     )
