@@ -1,5 +1,7 @@
 # Patch 10.1.0 API page audit
 
+Current gap reconciliation, verified 2026-11-04: [publication spec](../../specs/patch-10-1-0-publication-sweep.md#current-reconciliation--2026-11-04). Earlier counts and per-ID reviews below are historical snapshots, not current missing-endpoint lists.
+
 Page 230704, revision 2236681 (June 15, 2023, 22:35:50 UTC), retrieved October 7, 2026 UTC. Branch `p1010-page` starts from master `7745f013e`. Default retail carries 12.1.0, not reconstructed 10.1.0.
 
 ## Source accounting

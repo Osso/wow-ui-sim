@@ -18,6 +18,10 @@ Account for page 230704, revision 2236681 (2023-06-15T22:35:50Z) against current
 
 Historical epochs, speculative model producers, placeholders, 3D behavior, vendor/cache edits, linked-page expansion, full suites, push, merge and agents/models.
 
+## Current reconciliation — 2026-11-04
+
+Remove only `C_AreaPoiInfo.IsAreaPOITimed-325` from the current expected gaps (32 → 31). Producer `78365ca0b` registers the Retail getter and reads generated timed-POI classifications; see [timed POI contract](area-poi-timed.md). The row tests publication, not native parity. The current fixture owns the remaining gaps; earlier ledger counts are historical.
+
 ## Evidence
 
 [Page audit](../wiki/investigations/patch-10-1-0-api-audit.md) owns per-ID boundaries and complete sweep table. [Ledger](../../data/patch-api/sources/10.1.0-page-coverage.json): 416 IDs, 36 publication gaps, 238 pending substantive extracts and 49 metadata occurrences.

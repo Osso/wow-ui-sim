@@ -1,3 +1,7 @@
+## [2026-11-04] correction | Publication gap expectations
+
+Reconciled four current sweep fixtures with existing producers; linked current [10.0.2](../specs/patch-10-0-2-publication-sweep.md#current-reconciliation--2026-11-04), [10.1.0](../specs/patch-10-1-0-publication-sweep.md#current-reconciliation--2026-11-04), [8.1.0](../specs/patch-8-1-0-publication-sweep.md#current-reconciliation--2026-11-04) and [8.1.5](../specs/patch-8-1-5-publication-sweep.md#current-reconciliation--2026-11-04) contracts from the audit pages. Preserved historical evidence.
+
 ## [2026-11-04] bounded proof | Tooltip data and merchant cursor
 
 [Lua API](systems/lua-api.md#tooltip-data-and-merchant-cursor-presentation) links

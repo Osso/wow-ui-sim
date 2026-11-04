@@ -1,5 +1,7 @@
 # Patch 10.0.2 API page audit
 
+Current gap reconciliation, verified 2026-11-04: [publication spec](../../specs/patch-10-0-2-publication-sweep.md#current-reconciliation--2026-11-04). Earlier counts and per-ID reviews below are historical snapshots, not current missing-endpoint lists.
+
 Page 303146, revision 2926754 (January 27, 2023, 02:58:55 UTC), retrieved October 7, 2026 UTC. The requested page exists; no 10.0.0 substitution. Branch `p1002-page` starts from read-only `p1005-page` at `73f3c2834`. Default retail carries 12.1.0, not reconstructed Dragonflight launch semantics.
 
 ## Source accounting
