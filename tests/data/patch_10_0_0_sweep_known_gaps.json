@@ -60,7 +60,6 @@
   "wt-global-api-C_ProfSpecs.GetSpendEntryForPath-337",
   "wt-global-api-C_ProfSpecs.GetStateForPath-338",
   "wt-global-api-C_ProfSpecs.GetStateForPerk-339",
-  "wt-global-api-C_ProfSpecs.GetStateForTab-340",
   "wt-global-api-C_ProfSpecs.GetUnlockEntryForPath-342",
   "wt-global-api-C_ProfSpecs.GetUnlockRankForPerk-343",
   "wt-global-api-C_PvP.GetPersonalRatedSoloShuffleSpecStats-347",

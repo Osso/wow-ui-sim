@@ -66,6 +66,7 @@ pub(crate) fn register_character_progression_tables(state: &mut LuaState) -> Lua
     super::quest_difficulty::register(state)?;
     super::c_pet_talent_tree::register(state)?;
     super::c_prof_specs_reminders::register(state)?;
+    super::c_prof_specs_tab_state::register(state)?;
     if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Ptr {
         super::c_player_info_name_policy::register(state)?;
     }
