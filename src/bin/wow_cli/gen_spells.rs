@@ -54,8 +54,28 @@ const SPELL_LOOKUP_TESTS: &[&str] = &[
     "}",
 ];
 
-pub fn run() -> Result<(), Box<dyn std::error::Error>> {
+#[derive(clap::Args)]
+pub struct Options {
+    /// Add only Attributes_9 to the committed spell records; requires SpellMisc.csv only.
+    #[arg(long)]
+    augment_attributes: bool,
+}
+
+pub fn run(options: Options) -> Result<(), Box<dyn std::error::Error>> {
     let wow_data = wow_data_dir();
+    if options.augment_attributes {
+        let path = wow_data.join("SpellMisc.csv");
+        let misc = load_spell_misc(&path)?;
+        let output = Path::new("crates/sim-data/data/spells.rs");
+        let source = std::fs::read_to_string(output)?;
+        let augmented = augment_spell_attributes(&source, &misc, &spell_misc_hash(&path)?)?;
+        std::fs::write(output, augmented)?;
+        println!(
+            "Augmented Attributes_9 from CSV build 12.1.5.70391: {}",
+            output.display()
+        );
+        return Ok(());
+    }
     let spell_data = load_spell_data(&wow_data)?;
     std::fs::create_dir_all("data")?;
     let required_ids = collect_required_spell_ids()?;
@@ -109,7 +129,10 @@ fn generate_spell_table(
 ) -> Result<(), Box<dyn std::error::Error>> {
     let output_path = Path::new("crates/sim-data/data/spells.rs");
     let mut out = File::create(output_path)?;
-    write_header(&mut out)?;
+    write_header(
+        &mut out,
+        &spell_misc_hash(&wow_data_dir().join("SpellMisc.csv"))?,
+    )?;
     let count = build_spell_map(
         &mut out,
         &spell_data.spell_names,
@@ -201,8 +224,12 @@ fn build_spell_map(
     Ok(count)
 }
 
-fn write_header(out: &mut File) -> std::io::Result<()> {
+fn write_header(out: &mut File, misc_hash: &str) -> std::io::Result<()> {
     writeln!(out, "//! Auto-generated spell data from WoW CSV exports.")?;
+    writeln!(
+        out,
+        "//! SpellMisc.Attributes_9: build 12.1.5.70391; sha256={misc_hash}"
+    )?;
     writeln!(
         out,
         "//! Do not edit manually - regenerate with: wow-cli generate spells"
@@ -530,9 +557,64 @@ fn load_spell_misc(
     Ok(map)
 }
 
+fn spell_misc_hash(path: &Path) -> Result<String, Box<dyn std::error::Error>> {
+    use sha2::{Digest, Sha256};
+    Ok(format!("{:x}", Sha256::digest(std::fs::read(path)?)))
+}
+
+/// Preserve every existing byte except the new attribute field and its provenance.
+fn augment_spell_attributes(
+    source: &str,
+    misc: &HashMap<u32, (u32, u32, u32)>,
+    misc_hash: &str,
+) -> Result<String, Box<dyn std::error::Error>> {
+    let mut output = String::new();
+    let mut previous = "";
+    let mut spell_id = None;
+    let mut count = 0;
+    for line in source.split_inclusive('\n') {
+        let trimmed = line.trim();
+        if trimmed.starts_with("//! SpellMisc.Attributes_9:")
+            || trimmed.starts_with("/// SpellMisc.Attributes_9 ")
+            || trimmed.starts_with("pub attributes_9:")
+            || trimmed.starts_with("attributes_9:")
+        {
+            continue;
+        }
+        if trimmed == "SpellInfo {" {
+            spell_id = Some(previous.trim().trim_end_matches(',').parse::<u32>()?);
+        }
+        output.push_str(line);
+        if trimmed == "//! Auto-generated spell data from WoW CSV exports." {
+            output.push_str(&format!(
+                "//! SpellMisc.Attributes_9: build 12.1.5.70391; sha256={misc_hash}\n"
+            ));
+        }
+        if trimmed == "pub implicit_target: u8," {
+            output.push_str("    /// SpellMisc.Attributes_9 from CSV build 12.1.5.70391; None means no source row.\n    pub attributes_9: Option<u32>,\n");
+        }
+        if trimmed.starts_with("implicit_target:") {
+            let id = spell_id.ok_or("spell entry lacks numeric ID")?;
+            let attributes = misc.get(&id).map(|row| row.2);
+            let indent = &line[..line.len() - line.trim_start().len()];
+            output.push_str(&format!("{indent}attributes_9: {attributes:?},\n"));
+            count += 1;
+            spell_id = None;
+        }
+        previous = line;
+    }
+    if count == 0 {
+        return Err("generated spell table contains no formatted spell records".into());
+    }
+    Ok(output)
+}
+
 #[cfg(test)]
 mod tests {
-    use super::{collect_required_spell_ids, load_spell_descriptions, load_spell_misc};
+    use super::{
+        augment_spell_attributes, collect_required_spell_ids, load_spell_descriptions,
+        load_spell_misc,
+    };
     use std::collections::BTreeSet;
     use std::io::Write;
 
@@ -544,6 +626,35 @@ mod tests {
             458, 23338, 40192, 61425, 72286, 93326, 122708, 171851, 264058,
         ]);
         assert!(mount_spells.is_subset(&required));
+    }
+
+    #[test]
+    fn augment_attributes_preserves_existing_spell_bytes() {
+        let mut csv = tempfile::NamedTempFile::new().unwrap();
+        writeln!(csv, "{}", vec!["header"; 34].join(",")).unwrap();
+        for (difficulty, attributes) in [(0, "32768"), (1, "65536")] {
+            let mut fields = vec!["0".to_string(); 34];
+            fields[10] = attributes.into();
+            fields[18] = difficulty.to_string();
+            fields[33] = "91".into();
+            writeln!(csv, "{}", fields.join(",")).unwrap();
+        }
+        let source = "//! Auto-generated spell data from WoW CSV exports.\n    pub implicit_target: u8,\n        (\n            91,\n            SpellInfo {\n                name: \"Preserved\",\n                implicit_target: 21,\n            },\n        ),\n";
+        let misc = load_spell_misc(csv.path()).unwrap();
+        let actual = augment_spell_attributes(source, &misc, "fixture-hash").unwrap();
+        assert!(actual.contains("attributes_9: Some(32768),"));
+        let stripped = actual
+            .lines()
+            .filter(|line| {
+                !line.contains("SpellMisc.Attributes_9") && !line.contains("attributes_9:")
+            })
+            .map(|line| format!("{line}\n"))
+            .collect::<String>();
+        assert_eq!(stripped, source);
+        assert_eq!(
+            augment_spell_attributes(&actual, &misc, "fixture-hash").unwrap(),
+            actual
+        );
     }
 
     #[test]

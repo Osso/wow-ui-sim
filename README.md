@@ -194,6 +194,16 @@ See [the build contract](docs/specs/integration-bin-selection.md).
 
 Historical replay: add `--features tools` before `--` to the recorded Cargo utility commands in [patch audit milestone tests](docs/specs/patch-api-audit-manifest.md), [Mists world-map startup](docs/wiki/investigations/mists-world-map-startup.md), and [Windows port builds](docs/wiki/investigations/windows-port-build.md); original evidence is unchanged.
 
+### Attribute-only spell regeneration
+
+`wow-cli generate spells --augment-attributes` adds or refreshes only
+`SpellInfo.attributes_9` in the committed formatted spell table. It reads
+`SpellMisc.csv` from the normal WoW data directory, selects DifficultyID=0 like
+the full generator, and records the input hash and build 12.1.5.70391 in the
+output header. Existing spell IDs and all other bytes remain unchanged. This
+mode does not need `Spell.csv`; full `wow-cli generate spells` still requires
+all original CSV inputs and writes the same attribute field.
+
 ## Writing Tests
 
 Test files go in `tests/` under your addon directory. Available assertions:
