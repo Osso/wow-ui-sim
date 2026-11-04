@@ -42,8 +42,9 @@ fn tooltip_builder_copies_markup_and_publishes_packed_rgb() {
         false,
     );
     let line = table_get_int(state, lines, 1);
+    let text = table_get(state, line, "leftText");
     assert_eq!(
-        val_to_string(state, table_get(state, line, "leftText")).as_deref(),
+        val_to_string(state, text).as_deref(),
         Some("|cffff0000Red|r")
     );
     assert_eq!(table_get(state, line, "leftColorSegments"), Val::Nil);
