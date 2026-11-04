@@ -164,6 +164,8 @@ fn bnet_friends_reflect_sim_state_mutation() {
                 wow_account_guid: "Player-9-00000099".into(),
                 game_account_id: 9001,
                 character_name: "CustomChar".into(),
+                surname: String::new(),
+                name_separator: wow_ui_sim::lua_api::state_types::CharacterNameSeparator::Hyphen,
                 realm_name: "Test".into(),
                 realm_display_name: "Test".into(),
                 realm_id: 9,

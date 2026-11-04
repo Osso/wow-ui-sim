@@ -463,6 +463,49 @@ fn forever_character_tooltip_projects_two_supplied_character_names() {
 }
 
 #[test]
+#[cfg(feature = "client-wowforever")]
+fn forever_character_tooltip_composes_supplied_surname_and_separator() {
+    use wow_ui_sim::lua_api::state_types::CharacterNameSeparator;
+    let env = load_blizzard_screen(ScreenKind::CharacterSelect);
+    for (surname, separator, expected) in [
+        ("Dawn", CharacterNameSeparator::Space, "Aldren Dawn"),
+        ("Vale", CharacterNameSeparator::Hyphen, "Aldren-Vale"),
+        ("", CharacterNameSeparator::Space, "Aldren"),
+    ] {
+        {
+            let state = env.state();
+            let mut sim = state.borrow_mut();
+            let account = sim.bnet_friends.iter_mut()
+                .flat_map(|friend| friend.game_accounts.iter_mut())
+                .find(|account| account.client_program == "WoW").unwrap();
+            account.character_name = "Aldren".into();
+            account.surname = surname.into();
+            account.name_separator = separator;
+        }
+        env.exec(&format!(r#"
+            local info = CharacterSelectUtil.GetCharacterInfoTable(1)
+            assert(info.characterName == 'Aldren' and info.surname == {surname:?})
+            assert(info.fullName == {expected:?})
+            GlueTooltip:ClearLines()
+            assert(CharacterSelectUtil.SetTooltipForCharacterInfo(info, 1))
+            assert(GlueTooltip:GetLeftLine(1):GetText() == {expected:?})
+        "#)).expect("original Camelot tooltip uses composed name and surname");
+    }
+}
+
+#[test]
+#[cfg(feature = "client-wowforever")]
+fn forever_basic_character_info_requires_guid_and_unknown_returns_no_values() {
+    let env = load_blizzard_screen(ScreenKind::CharacterSelect);
+    for call in ["GetBasicCharacterInfo()", "GetBasicCharacterInfo(nil)"] {
+        let error = env.exec(call).expect_err("required GUID").to_string();
+        assert!(error.contains("Usage: local basicInfo = GetBasicCharacterInfo(guid)"), "{error}");
+    }
+    let arity: i32 = env.eval("return select('#', GetBasicCharacterInfo('Player-unknown'))").unwrap();
+    assert_eq!(arity, 0);
+}
+
+#[test]
 fn character_select_can_transition_to_character_create_without_lua_errors() {
     test_timeout! {
         let env = load_blizzard_screen(ScreenKind::CharacterSelect);
