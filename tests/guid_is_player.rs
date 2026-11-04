@@ -370,6 +370,29 @@ fn guid_is_player_original_object_api_consumer_accepts_represented_player() {
 }
 
 #[test]
+fn account_guid_predicate_accepts_permissive_native_inputs() {
+    let env = fresh_env();
+    env.exec(
+        r#"
+        local predicate = C_AccountInfo.IsGUIDBattleNetAccountType
+        for _, guid in ipairs({'BNetAccount-1-0000002A', 'BNetAccount-', 'BNetAccount-foo', 'BNetAccount-1X2', 'bnetaccount-1-2'}) do
+            assert(predicate(guid, {}) == true, guid)
+        end
+        for _, guid in ipairs({'BNetAccount', 'BNetAccount-288230376151711744-1', 'Player-1-2', 'junk', 42}) do
+            assert(predicate(guid) == false, tostring(guid))
+        end
+        for _, value in ipairs({false, {}}) do
+            local ok, err = pcall(predicate, value)
+            assert(not ok and err:find('Usage: local isBNet = C_AccountInfo.IsGUIDBattleNetAccountType(guid)', 1, true))
+        end
+        local ok, err = pcall(predicate)
+        assert(not ok and err:find('Usage: local isBNet = C_AccountInfo.IsGUIDBattleNetAccountType(guid)', 1, true))
+        "#,
+    )
+    .unwrap();
+}
+
+#[test]
 fn guid_is_player_original_consumer_preserves_actual_account_predicate_for_misses() {
     let env = fresh_env();
     supply_target_and_focus(&env);
@@ -387,7 +410,7 @@ fn guid_is_player_original_consumer_preserves_actual_account_predicate_for_misse
         local info = debug.getinfo(account, 'S')
         diagnostics[#diagnostics + 1] = table.concat({{'GUID account-provider', info.what, info.source,
             'raw-provider', type(rawget(namespace, 'IsGUIDBattleNetAccountType'))}}, '\t')
-        for _, guid in ipairs({{{NPC_FOCUS:?}, {UNKNOWN:?}}}) do
+        for _, guid in ipairs({{{NPC_FOCUS:?}, {UNKNOWN:?}, 'BNetAccount-1-0000002A'}}) do
             local accountOK, accountResult = pcall(account, guid)
             diagnostics[#diagnostics + 1] = table.concat({{'GUID account-return', guid,
                 tostring(accountOK), type(accountResult), tostring(accountResult)}}, '\t')
@@ -399,6 +422,11 @@ fn guid_is_player_original_consumer_preserves_actual_account_predicate_for_misse
                 tostring(ok), type(result), tostring(result)}}, '\t')
             assert(ok, 'BLOCKER: original miss consumer failed: ' .. tostring(result))
             assert(result == accountResult, 'unchanged account operand must determine false-classification consumer result')
+            if guid == 'BNetAccount-1-0000002A' then
+                assert(accountResult == true, 'native BNet kind reaches PlayerLocation')
+            else
+                assert(accountResult == false, 'non-BNet misses remain false')
+            end
             assert(namespace.IsGUIDBattleNetAccountType == account, 'account provider must remain unchanged')
             assert(debug.getinfo(account, 'S').source == info.source, 'account provenance retained')
         end
