@@ -19,7 +19,13 @@ const PERMIT_RELEASE_DIR_ENV: &str = "WOW_SIM_TIMEOUT_REEXEC_PERMIT_RELEASE_DIR"
 const PROCESS_DEATH_WAIT: Duration = Duration::from_secs(2);
 const FIXTURE_MARKER_WAIT: Duration = Duration::from_secs(4);
 const CONCURRENCY_HOLD: Duration = Duration::from_millis(600);
-const EXPECTED_TIMEOUT_CHILD_LIMIT: u32 = 2;
+fn expected_timeout_child_limit() -> u32 {
+    match std::env::var("WOW_SIM_TIMEOUT_CHILD_SLOTS") {
+        Ok(value) => value.parse().expect("configured timeout child limit is an integer"),
+        Err(std::env::VarError::NotPresent) => 2,
+        Err(error) => panic!("read configured timeout child limit: {error}"),
+    }
+}
 
 #[test]
 fn panic_failure_is_aggregated_and_later_sibling_runs() {
@@ -156,7 +162,7 @@ fn assert_concurrency_fixture() {
     let (active, peak) = read_concurrency_state(&state_path);
     assert_eq!(active, 0, "all timeout children must release their slots");
     assert_eq!(
-        peak, EXPECTED_TIMEOUT_CHILD_LIMIT,
+        peak, expected_timeout_child_limit(),
         "timeout child peak exceeded the intended bound"
     );
 }
