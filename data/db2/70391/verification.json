@@ -1,6 +1,6 @@
 {
   "result": "pass_with_recorded_encrypted_gaps",
-  "manifest_sha256": "252a047e50d1b4aac755f1d31e1f32516e05187616641beb6fab8f8f76a21358",
+  "manifest_sha256": "3ebec85eedf14768649f08d3e20dc179926d2ad5fb2afb548cbe9fa058f8ccd0",
   "integrity": [
     {
       "table": "ItemScalingConfig",
