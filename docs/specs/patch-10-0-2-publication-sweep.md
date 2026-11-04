@@ -48,9 +48,13 @@ No-run compile20.42s/exit0,741 Cargo records and six existing manifest deprecati
 
 Publication is not signature/populated-output/security/native parity. Broader/all-profile/render/full-parent acceptance stays open; broad `4fc115b93` does not cover later type25 changes.
 
+## Current reconciliation — 2026-11-04
+
+Remove only `GetLootItem-236` and `GetBuybackItem-214` from the current expected gaps (142 → 140). Producers `d6ac8fb0d` and `2026091d4` register real `C_TooltipInfo` getters backed by supplied loot/buyback slots; see [tooltip contract](tooltip-loot-buyback.md). These rows test publication, not populated output or native parity. Earlier counts and captures are historical.
+
 ## Known gaps
 
-- [ ] 148 current publication gaps; historical149-item review remains preserved;  [per-ID review](../../data/patch-api/evidence/10.0.2-session-2026-10-07/p1002-gap-review.json) owns reasons and source/cached references.
+- [ ] 140 current publication gaps in `tests/data/patch_10_0_2_sweep_known_gaps.json`; historical reviews remain preserved;  [per-ID review](../../data/patch-api/evidence/10.0.2-session-2026-10-07/p1002-gap-review.json) owns reasons and source/cached references.
 - [ ] 156 substantive extract occurrences; [literal scout](../../data/patch-api/evidence/10.0.2-session-2026-10-07/p1002-extract-scout.json) records every line and proof boundary.
 
 ## Out of scope

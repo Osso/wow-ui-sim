@@ -119,12 +119,12 @@ fn item_links_read_explicit_base() {
 
 #[test]
 fn item_names_do_not_use_catalog_display_names() {
-    let env = fixture_env();
+    let env = chair_env();
     env.exec(
         r#"
         assert(C_HousingCatalog.GetCatalogEntryInfoByItem('Catalog chair, not an item name') == nil)
-        assert(C_HousingCatalog.GetCatalogEntryInfoByItem('Hearthstone') == nil,
-            'item-name resolution is not modeled')
+        assertChair(C_HousingCatalog.GetCatalogEntryInfoByItem('Hearthstone'))
+        assertChair(C_HousingCatalog.GetCatalogEntryInfoByItem('hearthstone'))
     "#,
     )
     .unwrap();

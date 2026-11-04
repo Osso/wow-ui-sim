@@ -518,19 +518,29 @@ fn cached_ui_widget_container_filters_supplied_unit_updates() {
             |env, loaded| {
                 assert!(loaded.iter().any(|name| name == "Blizzard_UIWidgets"));
                 supply_inputs(env);
+                for (unit, text) in [
+                    ("player", "Supplied icon text"),
+                    ("target", "Target supplied icon text"),
+                ] {
+                    let mut entry = widget_entry(ICON_ID, ICON_AND_TEXT);
+                    entry.unit_token = Some(unit.into());
+                    env.update_ui_widget(
+                        SET_ID,
+                        entry,
+                        WidgetVisualization::IconAndText(icon_record(text, SHOWN)),
+                    )
+                    .expect("supply distinct unit records before container registration");
+                }
                 assert_lua(
                     env,
-                    "two real containers with explicit attached-unit fixture state",
+                    "two real containers register their attached units",
                     r#"
                     UnitFilterPlayer = CreateFrame('Frame', nil, UIParent, 'UIWidgetContainerTemplate')
                     UnitFilterTarget = CreateFrame('Frame', nil, UIParent, 'UIWidgetContainerTemplate')
-                    UnitFilterPlayer:RegisterForWidgetSet(417)
-                    UnitFilterTarget:RegisterForWidgetSet(417)
-                    -- Fixture injection only; this does not prove native unit registration.
-                    UnitFilterPlayer.attachedUnit = 'player'
-                    UnitFilterTarget.attachedUnit = 'target'
+                    UnitFilterPlayer:RegisterForWidgetSet(417, nil, nil, 'player')
+                    UnitFilterTarget:RegisterForWidgetSet(417, nil, nil, 'target')
                     assert(UnitFilterPlayer.widgetFrames[760101].Text:GetText() == 'Supplied icon text')
-                    assert(UnitFilterTarget.widgetFrames[760101].Text:GetText() == 'Supplied icon text')
+                    assert(UnitFilterTarget.widgetFrames[760101].Text:GetText() == 'Target supplied icon text')
                     "#,
                 );
                 let mut icon = env
@@ -548,20 +558,16 @@ fn cached_ui_widget_container_filters_supplied_unit_updates() {
                     .expect("update supplied player icon through host feed");
                 assert_lua(
                     env,
-                    "real OnEvent unit filter preserves target text",
+                    "real OnEvent selects each container's supplied unit record",
                     r#"
                     local playerText = UnitFilterPlayer.widgetFrames[760101].Text:GetText()
                     local targetText = UnitFilterTarget.widgetFrames[760101].Text:GetText()
-                    -- Restore injected fixture fields before normal cleanup; unit
-                    -- registration/unregistration itself is outside this test.
-                    UnitFilterPlayer.attachedUnit = nil
-                    UnitFilterTarget.attachedUnit = nil
                     UnitFilterPlayer:UnregisterForWidgetSet()
                     UnitFilterTarget:UnregisterForWidgetSet()
                     assert(not UnitFilterPlayer:IsRegisteredForWidgetSet())
                     assert(not UnitFilterTarget:IsRegisteredForWidgetSet())
                     assert(playerText == 'Player-only supplied icon text', 'player widget must refresh')
-                    assert(targetText == 'Supplied icon text', 'target widget must retain old text')
+                    assert(targetText == 'Target supplied icon text', 'target widget must retain its own supplied text')
                     "#,
                 );
             },

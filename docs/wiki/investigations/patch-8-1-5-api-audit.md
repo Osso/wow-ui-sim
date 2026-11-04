@@ -1,5 +1,7 @@
 # Patch 8.1.5 API audit
 
+Current gap reconciliation, verified 2026-11-04: [publication spec](../../specs/patch-8-1-5-publication-sweep.md#current-reconciliation--2026-11-04). Earlier counts and per-ID reviews below are historical snapshots, not current missing-endpoint lists.
+
 Verified 2026-10-08. Warcraft Wiki page **394493**, current revision **3789732** (2019-04-25T05:47:36Z), refetched from the revisions API. Audit current retail, not an 8.1.5 emulator. **66 inventory + 19 extract occurrences = 85 ledger IDs**, covering every nonblank raw-source line. Discovery **29 OK / 37 gaps** becomes **42 OK / 24 exact gaps** after one meaningful missing producer and twelve bounded retirements.
 
 ## Source and parsing

@@ -20,6 +20,7 @@
 ## Tests
 
 - `tests/widget_spell_display/consumer.rs` exercises two attached original Blizzard containers, unit-specific queries, replacement, removal, and registration-controlled event delivery.
+- `tests/ui_widget_manager_lifecycle.rs::cached_ui_widget_container_filters_supplied_unit_updates` supplies distinct player/target records and registers both through the original container's `RegisterForWidgetSet` attached-unit argument. It must not bypass registration by assigning `attachedUnit`: unit feeds have required registration since `3c9efa51f`. The legacy test name does not establish event filtering: the native-shaped payload has `unitToken`, while the pinned container checks `unit`. Both containers process the event and select their own record, as also covered by `6ddd996b9`.
 - `tests/widget_spell_display/unit_apis.rs` covers argument validation and context state.
 
 ## Out of scope

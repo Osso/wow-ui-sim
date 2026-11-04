@@ -30,7 +30,6 @@
   "wt-global-api-C_Item.CanViewItemPowers-72",
   "wt-global-api-C_Loot.IsLegacyLootModeEnabled-76",
   "wt-global-api-C_PartyInfo.GetInviteReferralInfo-81",
-  "wt-global-api-C_PetJournal.GetPetInfoByItemID-82",
   "wt-global-api-C_PvP.CanToggleWarModeInArea-84",
   "wt-global-api-C_PvP.GetRewardItemLevelsByTierEnum-85",
   "wt-global-api-C_PvP.GetWeeklyChestInfo-88",

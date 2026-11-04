@@ -1,3 +1,7 @@
+## [2026-11-04] correction | Publication gap expectations
+
+The [10.0.2](../specs/patch-10-0-2-publication-sweep.md#current-reconciliation--2026-11-04), [10.1.0](../specs/patch-10-1-0-publication-sweep.md#current-reconciliation--2026-11-04), [8.1.0](../specs/patch-8-1-0-publication-sweep.md#current-reconciliation--2026-11-04) and [8.1.5](../specs/patch-8-1-5-publication-sweep.md#current-reconciliation--2026-11-04) specs record resolved endpoints and producer commits. Historical audit captures are unchanged.
+
 ## [2026-11-04] implementation | Forever ordinary talent query
 
 [Forever talents](systems/forever-talents.md) documents WM90 grid lookup,

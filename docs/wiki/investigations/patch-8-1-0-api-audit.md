@@ -1,5 +1,7 @@
 # Patch 8.1.0 API audit
 
+Current gap reconciliation, verified 2026-11-04: [publication spec](../../specs/patch-8-1-0-publication-sweep.md#current-reconciliation--2026-11-04). Earlier counts and per-ID reviews below are historical snapshots, not current missing-endpoint lists.
+
 Verified source on 2026-10-08: Warcraft Wiki page **464337**, revision **4462737** (2021-12-04T17:01:42Z), refetched rather than inherited from the remaining-pages list. Audit targets current retail, not a reconstructed 8.1 client. [Spec](../../specs/patch-8-1-0-publication-sweep.md) defines the boundary.
 
 ## Source accounting

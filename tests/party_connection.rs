@@ -187,11 +187,18 @@ fn party_disconnect_preserves_non_party_connection_queries() {
         r#"
         A_Admin.SetTarget("Target", 80, 1, true)
         A_Admin.SetFocus("Focus", 80, 1, false)
+        assert(UnitIsConnected("raid1") == false, "party mode has no raid alias")
         A_Admin.SetPartyMemberConnected(1, false)
         assert(UnitIsConnected("party1") == false)
-        for _, unit in ipairs({"player", "pet", "vehicle", "target", "focus", "raid1"}) do
+        for _, unit in ipairs({"player", "pet", "vehicle", "target", "focus"}) do
             assert(UnitIsConnected(unit) == true, unit)
         end
+        assert(UnitIsConnected("raid1") == false, "disconnect must not create a raid alias")
+        A_Admin.SetPartySize(6)
+        assert(UnitIsConnected("raid1") == true, "raid mode retains presence-based aliases")
+        assert(UnitIsConnected("party1") == false, "roster growth preserves connection state")
+        A_Admin.SetPartySize(1)
+        assert(UnitIsConnected("raid1") == false, "leaving raid mode removes the alias")
         assert(UnitIsConnected("unknown") == false)
         A_Admin.ClearTarget()
         A_Admin.ClearFocus()

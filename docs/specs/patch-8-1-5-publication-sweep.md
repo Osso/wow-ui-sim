@@ -25,6 +25,10 @@ Audit current retail publication against pinned Warcraft Wiki page 394493, revis
 - `tests/patch_8_1_5_toy_fanfare.rs`: acquisition/repetition/clear/uncollection through Lua, including unknown ID.
 - Both Python parser fixture suites and evidence `validate.py`.
 
+## Current reconciliation — 2026-11-04
+
+Remove only `C_AccountInfo.GetIDFromBattleNetAccountGUID-10` from the current expected gaps (21 → 20). Producer `08d52d9cf` registers the Retail getter and parses the account ID from Battle.net GUIDs; see [account GUID contract](account-guid-type.md). The row tests publication, not native parity. Earlier counts remain historical; the current fixture owns the remaining gaps.
+
 ## Known gaps
 
 - [ ] Publication does not prove populated outputs, signatures, security, native acquisition events or historical defaults. Toy acquisition uses the existing admin producer; native NEW_TOY_ADDED payload/timing parity is not claimed.
