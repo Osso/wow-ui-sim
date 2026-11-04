@@ -1133,3 +1133,45 @@ fn forever_party_name_consumer_keeps_public_identity_accessible() {
         end
     "#).unwrap();
 }
+
+#[cfg(feature = "client-wowforever")]
+#[test]
+fn forever_loadstring_literals_are_public_but_secret_results_stay_secret() {
+    let env = env();
+    env.exec(r#"
+        local wrapped = secretwrap('private')
+        forceinsecure()
+        local f = loadstring("return 17, 'public', issecure()")
+        local number, text, secure = f()
+        assert(not secure and not issecure(), 'preserve execution taint')
+        assert(number == 17 and text == 'public')
+        assert(not issecretvalue(f) and canaccessvalue(f), 'public compiled closure')
+        assert(not issecretvalue(number) and not issecretvalue(text), 'public literals')
+        assert(canaccessallvalues(f, number, text), 'public values remain accessible')
+        assert(canaccesstable({callback = f, value = text}), 'deep check ignores ordinary taint')
+        local returned = loadstring('return ...')(wrapped)
+        assert(issecretvalue(returned), 'loadstring does not declassify secret results')
+        assert(not canaccessvalue(returned) and not canaccessallvalues(text, returned))
+        assert(not canaccesstable({nested = {returned}}), 'nested secret remains inaccessible')
+    "#).unwrap();
+}
+
+#[cfg(feature = "client-wowforever")]
+#[test]
+fn forever_original_secure_map_rejects_vm_secret_keys_and_values() {
+    let env = env();
+    let path = wow_ui_sim::blizzard_ui_sync::default_cache_addons_path()
+        .unwrap()
+        .join("Blizzard_SharedXMLBase/SecureTypes.lua");
+    env.exec(&std::fs::read_to_string(path).unwrap()).unwrap();
+    env.exec(r#"
+        local map = SecureTypes.CreateSecureMap()
+        local secret = secretwrap('private')
+        local ok, reason = pcall(function() map:SetValue(secret, 'public') end)
+        assert(not ok and reason:find('attempted to store a secret key in a SecureMap', 1, true))
+        ok, reason = pcall(function() map:SetValue('public', secret) end)
+        assert(not ok and reason:find('attempted to store a secret value in a SecureMap', 1, true))
+        map:SetValue('public', 19)
+        assert(map:GetValue('public') == 19)
+    "#).unwrap();
+}
