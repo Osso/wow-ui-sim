@@ -75,10 +75,11 @@ fn patch_12_1_0_aura_group_options_initialize_each_native_button_without_extra_t
         assert(count > 0 and callbacks == count, 'every created button initialized')
         for index=1,count do
             local frame = container:GetAuraGroupFrame('callback:group', index)
-            assert(seen[frame] and frame:GetWidth() == 23 and frame:GetHeight() == 31)
+            assert(seen[frame:GetObjectTable()], 'callback received this public frame')
+            assert(frame:GetWidth() == 23 and frame:GetHeight() == 31, 'callback size retained')
             assert(frame:GetIcon():GetNumPoints() > 0)
         end
-        assert(issecure())
+        assert(issecure(), 'caller security restored')
     "#).unwrap();
 }
 
