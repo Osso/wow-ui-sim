@@ -76,7 +76,8 @@ fn is_local_guid(state: &mut LuaState) -> LuaResult<u32> {
             // No local Battle.net identity is currently modeled.
             false
         } else if let Ok(guid) = std::str::from_utf8(text) {
-            existing_guid_for_unit(&borrow_state(state)?, "player").as_deref() == Some(guid)
+            let sim = borrow_state(state)?;
+            existing_guid_for_unit(&sim, "player").as_deref() == Some(guid)
         } else {
             false
         }
