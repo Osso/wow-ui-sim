@@ -311,31 +311,28 @@ fn test_reload_ui_exists() {
 }
 
 #[test]
-fn test_reload_ui_dispatches_entering_world_reload_event() {
+fn test_reload_ui_defers_entering_world_until_request_is_serviced() {
     let env = env();
-    let (received, is_initial, is_reload): (bool, bool, bool) = env
+    let received: bool = env
         .eval(
             r#"
             local received = false
-            local gotInitial, gotReload
             local frame = CreateFrame("Frame")
             frame:RegisterEvent("PLAYER_ENTERING_WORLD")
-            frame:SetScript("OnEvent", function(self, event, isInitial, isReloadUI)
-                if event == "PLAYER_ENTERING_WORLD" then
-                    received = true
-                    gotInitial = isInitial
-                    gotReload = isReloadUI
-                end
+            frame:SetScript("OnEvent", function(_, event)
+                if event == "PLAYER_ENTERING_WORLD" then received = true end
             end)
             ReloadUI()
-            return received, gotInitial, gotReload
+            return received
             "#,
         )
         .unwrap();
 
-    assert!(received);
-    assert!(!is_initial);
-    assert!(is_reload);
+    assert!(
+        !received,
+        "the old VM must not receive a synchronous reload event"
+    );
+    assert!(env.state().borrow().ui_reload_requested);
 }
 
 // ============================================================================

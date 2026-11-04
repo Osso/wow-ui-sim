@@ -64,7 +64,13 @@ fn quest_objective_tracker_populates_titles_via_normal_async_load_path() {
         })
         .unwrap();
 
-    assert_eq!(titles, "Defending the Gates|Supply Run|The Lost Expedition");
+    // Retail seeds two ordinary quests; the Wrath watch fixture supplies Supply Run too.
+    let expected = if cfg!(feature = "client-wrath") {
+        "Defending the Gates|Supply Run|The Lost Expedition"
+    } else {
+        "Defending the Gates|The Lost Expedition"
+    };
+    assert_eq!(titles, expected);
 }
 
 #[test]

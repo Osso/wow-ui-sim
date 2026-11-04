@@ -271,7 +271,7 @@ fn failed_casc_extraction_stays_quiet_until_root_or_reload() {
     const CHILD_FLAG: &str = "F1_CASC_FAILURE_FIXTURE";
     if let Some(fixture) = std::env::var_os(CHILD_FLAG) {
         let fixture = std::path::PathBuf::from(fixture);
-        let env = WowLuaEnv::new().unwrap();
+        let mut env = WowLuaEnv::new().unwrap();
         roots(&env, &[&fixture.join("addons-a")]);
         let manager = env.state().borrow().texture_manager();
         let request = "Interface/Icons/INV_Misc_QuestionMark";
@@ -293,6 +293,7 @@ fn failed_casc_extraction_stays_quiet_until_root_or_reload() {
         }
         eprintln!("F1_CASC_PHASE reload");
         env.exec("ReloadUI()").unwrap();
+        assert!(env.service_reload(&mut None).unwrap());
         for _ in 0..64 {
             load_missing_frame();
         }
@@ -449,7 +450,7 @@ mod directory_io {
         let leaf = root.path().join("F1/Media");
         fs::create_dir_all(&leaf).unwrap();
         fs::write(leaf.join("Present.blp"), []).unwrap();
-        let env = WowLuaEnv::new().unwrap();
+        let mut env = WowLuaEnv::new().unwrap();
         roots(&env, &[root.path()]);
         let mut observer = DirectoryObserver::new(&leaf);
         let request = "interface/addons/f1/media/present";
@@ -466,6 +467,7 @@ mod directory_io {
             "renderer must reuse setter's source listing"
         );
         env.exec("ReloadUI()").unwrap();
+        assert!(env.service_reload(&mut None).unwrap());
         assert_eq!(
             manager.borrow().resolve_path(request),
             Some(leaf.join("Present.blp"))
