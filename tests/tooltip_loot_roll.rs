@@ -11,7 +11,7 @@ fn tooltip_loot_roll_original_hover_selects_roll_link() {
         let item = wow_ui_sim::items::get_item(item_id).expect("generated catalog item");
         env.exec(&format!(
             r#"
-            Admin.StartLootRoll({roll}, 60000, {name:?}, '', 4, 0, 'item:{item_id}')
+            A_Admin.StartLootRoll({roll}, 60000, {name:?}, '', 4, 0, 'item:{item_id}')
             GroupLootFrame1.rollID = {roll}
             local icon = GroupLootFrame1.IconFrame
             assert(icon and icon:GetScript('OnEnter'), 'original loot icon hover must load')
@@ -30,7 +30,7 @@ fn tooltip_loot_roll_original_hover_selects_roll_link() {
     }
     env.exec(
         r#"
-        Admin.EndLootRoll(71)
+        A_Admin.EndLootRoll(71)
         GameTooltip:SetOwner(UIParent, 'ANCHOR_NONE')
         GameTooltip:SetLootRollItem(71)
         assert(GameTooltip:GetPrimaryTooltipData() == nil, 'removed roll must not reuse a prior item')
