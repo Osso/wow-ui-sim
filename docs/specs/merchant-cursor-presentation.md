@@ -4,10 +4,10 @@ Retail and PTR cursor presentation is separate from held cursor content. WM86 de
 
 ## What it must do
 
-- [ ] Buyback hover selects Buy or UnableBuy from supplied buyback price and player money. Invalid slots preserve the display. Two supplied gates and a Point base must permit the operation before argument validation.
-- [ ] Repair clears held content, selects the Repair base and displays Repair when the supplied gates and merchant repair capability permit it.
-- [ ] `InRepairMode` reads the base. `SetCursor` and `ResetCursor` do not leave repair mode or clear held content.
-- [ ] A changed presentation notifies with held-content state only when supplied refresh and notification controls permit it. Repeated selectors do not notify.
+- [x] Buyback hover selects Buy or UnableBuy from supplied buyback price and player money. Invalid slots preserve the display. Two supplied gates and a Point base must permit the operation before argument validation.
+- [x] Repair clears held content, selects the Repair base and displays Repair when the supplied gates and merchant repair capability permit it.
+- [x] `InRepairMode` reads the base. `SetCursor` and `ResetCursor` do not leave repair mode or clear held content.
+- [x] A changed presentation notifies with held-content state only when supplied refresh and notification controls permit it. Repeated selectors do not notify.
 
 ## How it works
 

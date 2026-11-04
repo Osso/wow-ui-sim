@@ -1,3 +1,11 @@
+## [2026-11-04] bounded proof | Tooltip data and merchant cursor
+
+[Lua API](systems/lua-api.md#tooltip-data-and-merchant-cursor-presentation) links
+supplied loot/buyback getters, populated-only instance counters and separate
+merchant cursor presentation. Retail tooltip/library tests pass. PTR failures
+match the source-matched master baseline. D56 text/color/nested publication,
+custom cursor assets and native listener timing remain open.
+
 ## [2026-11-02] implementation | CVar metadata
 
 [CVar metadata](investigations/cvar-metadata.md) describes the seven-return query,
