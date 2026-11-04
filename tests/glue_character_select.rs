@@ -465,7 +465,7 @@ fn forever_character_tooltip_projects_two_supplied_character_names() {
 #[test]
 #[cfg(feature = "client-wowforever")]
 fn forever_character_tooltip_composes_supplied_surname_and_separator() {
-    use wow_ui_sim::lua_api::state_types::CharacterNameSeparator;
+    use wow_ui_sim::lua_api::state::CharacterNameSeparator;
     let env = load_blizzard_screen(ScreenKind::CharacterSelect);
     for (surname, separator, expected) in [
         ("Dawn", CharacterNameSeparator::Space, "Aldren Dawn"),
