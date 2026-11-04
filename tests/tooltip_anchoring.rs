@@ -4,6 +4,15 @@ use wow_ui_sim::lua_api::WowLuaEnv;
 use wow_ui_sim::lua_api::compute_frame_rect;
 use wow_ui_sim::widget::AnchorPoint;
 
+// WM63 O17:20-41 applies to Retail and PTR.
+fn native_tooltip_anchors() -> bool {
+    matches!(
+        wow_ui_sim::client_profile::ACTIVE,
+        wow_ui_sim::client_profile::ClientProfile::Retail
+            | wow_ui_sim::client_profile::ClientProfile::Ptr
+    )
+}
+
 #[test]
 fn test_tooltip_anchor_right_sets_anchors() {
     let env = WowLuaEnv::new().unwrap();
@@ -26,13 +35,21 @@ fn test_tooltip_anchor_right_sets_anchors() {
     let anchor = &frame.anchors[0];
     assert_eq!(
         anchor.point,
-        AnchorPoint::Left,
-        "tooltip point should be Left"
+        if native_tooltip_anchors() {
+            AnchorPoint::BottomLeft
+        } else {
+            AnchorPoint::Left
+        },
+        "tooltip point for RIGHT"
     );
     assert_eq!(
         anchor.relative_point,
-        AnchorPoint::Right,
-        "owner point should be Right"
+        if native_tooltip_anchors() {
+            AnchorPoint::TopRight
+        } else {
+            AnchorPoint::Right
+        },
+        "owner point for RIGHT"
     );
 
     let owner_id = state.widgets.get_id_by_name("AnchorRightOwner").unwrap();
@@ -145,8 +162,22 @@ fn test_tooltip_anchor_preserve_keeps_existing_anchor_when_reowned() {
         "ANCHOR_PRESERVE should keep the existing anchor"
     );
     let anchor = &frame.anchors[0];
-    assert_eq!(anchor.point, AnchorPoint::Left);
-    assert_eq!(anchor.relative_point, AnchorPoint::Right);
+    assert_eq!(
+        anchor.point,
+        if native_tooltip_anchors() {
+            AnchorPoint::BottomLeft
+        } else {
+            AnchorPoint::Left
+        }
+    );
+    assert_eq!(
+        anchor.relative_point,
+        if native_tooltip_anchors() {
+            AnchorPoint::TopRight
+        } else {
+            AnchorPoint::Right
+        }
+    );
     assert_eq!(
         anchor.relative_to_id,
         Some(owner1_id as usize),
@@ -363,7 +394,14 @@ fn test_tooltip_anchor_cursor_uses_absolute_position() {
         "ANCHOR_CURSOR should set one anchor"
     );
     let anchor = &frame.anchors[0];
-    assert_eq!(anchor.point, AnchorPoint::TopLeft);
+    assert_eq!(
+        anchor.point,
+        if native_tooltip_anchors() {
+            AnchorPoint::Bottom
+        } else {
+            AnchorPoint::TopLeft
+        }
+    );
     assert!(
         anchor.relative_to_id.is_none(),
         "ANCHOR_CURSOR should not reference owner"
@@ -373,8 +411,15 @@ fn test_tooltip_anchor_cursor_uses_absolute_position() {
         "x_offset should be mouse x"
     );
     assert!(
-        (anchor.y_offset - 320.0).abs() < 0.1,
-        "y_offset should be mouse y + 20"
+        (anchor.y_offset
+            - if native_tooltip_anchors() {
+                state.screen_height - 300.0
+            } else {
+                320.0
+            })
+        .abs()
+            < 0.1,
+        "cursor y offset"
     );
 }
 
@@ -405,15 +450,29 @@ fn test_tooltip_side_cursor_anchors_use_absolute_position() {
             "{anchor_kind} should set one anchor"
         );
         let anchor = &frame.anchors[0];
-        assert_eq!(anchor.point, AnchorPoint::TopLeft);
+        let expected_point = if !native_tooltip_anchors() {
+            AnchorPoint::TopLeft
+        } else if anchor_kind == "ANCHOR_CURSOR_LEFT" {
+            AnchorPoint::BottomRight
+        } else {
+            AnchorPoint::BottomLeft
+        };
+        assert_eq!(anchor.point, expected_point);
         assert!(anchor.relative_to_id.is_none());
         assert!(
             (anchor.x_offset - 200.0).abs() < 0.1,
             "{anchor_kind} x_offset should be mouse x"
         );
         assert!(
-            (anchor.y_offset - 320.0).abs() < 0.1,
-            "{anchor_kind} y_offset should be mouse y + 20"
+            (anchor.y_offset
+                - if native_tooltip_anchors() {
+                    state.screen_height - 300.0
+                } else {
+                    320.0
+                })
+            .abs()
+                < 0.1,
+            "{anchor_kind} cursor y offset"
         );
     }
 }
@@ -445,14 +504,35 @@ fn test_tooltip_anchor_cursor_tracks_mouse_movement() {
 
     assert_eq!(frame.anchors.len(), 1);
     let anchor = &frame.anchors[0];
-    assert_eq!(anchor.point, AnchorPoint::TopLeft);
+    assert_eq!(
+        anchor.point,
+        if native_tooltip_anchors() {
+            AnchorPoint::Bottom
+        } else {
+            AnchorPoint::TopLeft
+        }
+    );
     assert!(anchor.relative_to_id.is_none());
     assert!(
-        (anchor.x_offset - 310.0).abs() < 0.1,
+        (anchor.x_offset
+            - if native_tooltip_anchors() {
+                300.0
+            } else {
+                310.0
+            })
+        .abs()
+            < 0.1,
         "x_offset should follow the updated mouse position"
     );
     assert!(
-        (anchor.y_offset - 480.0).abs() < 0.1,
+        (anchor.y_offset
+            - if native_tooltip_anchors() {
+                state.screen_height - 450.0
+            } else {
+                480.0
+            })
+        .abs()
+            < 0.1,
         "y_offset should follow the updated mouse position"
     );
 }
