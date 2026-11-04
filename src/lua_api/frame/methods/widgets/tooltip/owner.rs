@@ -44,6 +44,17 @@ fn native_owner_behavior() -> bool {
     )
 }
 
+pub(crate) fn clear_tooltip_for_hide(state: &mut LuaState, tooltip_id: u64) -> LuaResult<()> {
+    super::line_data::clear_lines(state)?;
+    let mut sim = borrow_state_mut(state)?;
+    if let Some(tooltip) = sim.tooltips.get_mut(&tooltip_id) {
+        tooltip.anchor_type = "ANCHOR_NONE".to_string();
+        tooltip.anchor_x_offset = 0.0;
+        tooltip.anchor_y_offset = 0.0;
+    }
+    Ok(())
+}
+
 struct TooltipOwnerArgs {
     owner_id: Option<u64>,
     anchor_kind: String,
