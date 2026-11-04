@@ -533,6 +533,39 @@ impl WowFontSystem {
         .0
     }
 
+    /// Width of the widest shaped run at the supplied wrapping width.
+    #[cfg(feature = "gui")]
+    pub(crate) fn measure_fitted_text_width(
+        &mut self,
+        text: &str,
+        font_path: Option<&str>,
+        font_size: f32,
+        width: f32,
+    ) -> f32 {
+        let Some(line_height) = line_height_for_font_size(font_size, false) else {
+            return 0.0;
+        };
+        if text.is_empty() || width <= 0.0 {
+            return 0.0;
+        }
+        let attrs = self.attrs_owned(font_path);
+        let metrics = cosmic_text::Metrics::new(font_size, line_height);
+        let mut buffer = cosmic_text::Buffer::new(&mut self.font_system, metrics);
+        buffer.set_size(&mut self.font_system, Some(width), Some(10000.0));
+        buffer.set_text(
+            &mut self.font_system,
+            text,
+            &attrs.as_attrs(),
+            cosmic_text::Shaping::Advanced,
+            None,
+        );
+        buffer.shape_until_scroll(&mut self.font_system, true);
+        buffer
+            .layout_runs()
+            .map(|run| run.line_w)
+            .fold(0.0, f32::max)
+    }
+
     /// Byte starts of wrapped runs, for consumers that measure the resulting ranges.
     #[cfg(feature = "gui")]
     pub(crate) fn measure_wrap_starts(
