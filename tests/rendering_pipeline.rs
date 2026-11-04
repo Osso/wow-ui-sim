@@ -552,10 +552,11 @@ fn layer5_parallel_gpu_lifetimes_complete() {
 
 #[test]
 fn layer5_gpu_atlas_upload_and_lookup() {
-    let Some((device, queue)) = common::try_create_gpu_device() else {
+    let Some(gpu) = common::try_create_gpu_device() else {
         eprintln!("Skipping GPU test: no adapter available");
         return;
     };
+    let (device, queue) = (&gpu.device, &gpu.queue);
 
     let mut tex_mgr = make_texture_manager();
 
@@ -604,10 +605,11 @@ fn layer5_gpu_atlas_upload_and_lookup() {
 
 #[test]
 fn layer5_gpu_atlas_tier_selection() {
-    let Some((device, queue)) = common::try_create_gpu_device() else {
+    let Some(gpu) = common::try_create_gpu_device() else {
         eprintln!("Skipping GPU test: no adapter available");
         return;
     };
+    let (device, queue) = (&gpu.device, &gpu.queue);
 
     let mut atlas = GpuTextureAtlas::new(&device);
 
@@ -685,10 +687,11 @@ fn layer5_gpu_atlas_tier_selection() {
 
 #[test]
 fn layer5_gpu_atlas_real_scroll_textures() {
-    let Some((device, queue)) = common::try_create_gpu_device() else {
+    let Some(gpu) = common::try_create_gpu_device() else {
         eprintln!("Skipping GPU test: no adapter available");
         return;
     };
+    let (device, queue) = (&gpu.device, &gpu.queue);
 
     let mut tex_mgr = make_texture_manager();
 
