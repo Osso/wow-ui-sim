@@ -44,17 +44,28 @@ fn milliseconds(seconds: f64) -> u32 {
     (seconds * 1000.0) as u64 as u32
 }
 
-fn remaining_seconds(start: f64, duration: f64, now: f64) -> Option<f64> {
-    let remaining = milliseconds(start)
-        .wrapping_add(milliseconds(duration))
-        .wrapping_sub(milliseconds(now));
-    let seconds = wrapped_milliseconds_to_seconds(remaining);
+fn end_milliseconds(start: f64, duration: f64) -> u32 {
+    milliseconds(start).wrapping_add(milliseconds(duration))
+}
+
+fn wrapped_milliseconds_to_seconds(remaining: u32) -> Option<f64> {
+    // WM85b: the wrapped u32 is zero-extended before conversion to f32.
+    let seconds = f64::from((remaining as f32) * 0.001_f32);
     (seconds > 0.0).then_some(seconds)
 }
 
-fn wrapped_milliseconds_to_seconds(remaining: u32) -> f64 {
-    // UNKNOWN (WM85b): signedness before float conversion, especially for stale records.
-    f64::from((remaining as f32) * 0.001_f32)
+fn ordinary_end(start: f64, duration: f64, now: u32) -> Option<u32> {
+    let end = end_milliseconds(start, duration);
+    ((end.wrapping_sub(now) as i32) > 0).then_some(end)
+}
+
+fn charge_end(start: f64, duration: f64, now: u32) -> u32 {
+    let end = end_milliseconds(start, duration);
+    if end != 0 && (end.wrapping_sub(now) as i32) < 0 {
+        now
+    } else {
+        end
+    }
 }
 
 fn is_day_cooldown() -> bool {
@@ -69,23 +80,29 @@ fn get_recipe_cooldown(state: &mut LuaState) -> LuaResult<u32> {
     }
     let (remaining, charges, maximum) = {
         let sim = borrow_state(state)?;
-        let now = sim.clock_elapsed().as_secs_f64();
+        let now = milliseconds(sim.clock_elapsed().as_secs_f64());
         let spell_id = id as u32;
-        let mut remaining = sim
+        let mut end = sim
             .spell_cooldowns
             .get(&spell_id)
-            .and_then(|cooldown| remaining_seconds(cooldown.start, cooldown.duration, now));
+            .and_then(|cooldown| ordinary_end(cooldown.start, cooldown.duration, now));
         let (charges, maximum) = match sim.spell_charges.get(&spell_id) {
             Some(charge) => {
                 let maximum = charge.max_charges.min(255);
                 if charge.current_charges < maximum {
-                    remaining =
-                        remaining_seconds(charge.recharge_start, charge.recharge_duration, now);
+                    end = Some(charge_end(
+                        charge.recharge_start,
+                        charge.recharge_duration,
+                        now,
+                    ));
                 }
                 (charge.current_charges, maximum)
             }
             None => (0, 0),
         };
+        let final_now = milliseconds(sim.clock_elapsed().as_secs_f64());
+        let remaining =
+            end.and_then(|end| wrapped_milliseconds_to_seconds(end.wrapping_sub(final_now)));
         (remaining, charges, maximum)
     };
     state.push(remaining.map_or(Val::Nil, Val::Num));
@@ -93,4 +110,20 @@ fn get_recipe_cooldown(state: &mut LuaState) -> LuaResult<u32> {
     state.push(Val::Num(f64::from(charges)));
     state.push(Val::Num(f64::from(maximum)));
     Ok(4)
+}
+
+#[cfg(test)]
+mod tests {
+    use super::wrapped_milliseconds_to_seconds;
+
+    #[test]
+    fn wrapped_high_bit_publishes_unsigned_seconds() {
+        let seconds = wrapped_milliseconds_to_seconds(0x8000_0000).unwrap();
+        assert!(seconds > 2_147_000.0 && seconds < 2_148_000.0);
+    }
+
+    #[test]
+    fn zero_delta_publishes_nil() {
+        assert_eq!(wrapped_milliseconds_to_seconds(0), None);
+    }
 }
