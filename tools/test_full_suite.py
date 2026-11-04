@@ -1,6 +1,7 @@
 """Bounded subprocess coverage of the detached full-suite worker."""
 
 import fcntl
+import importlib.util
 import json
 import os
 from pathlib import Path
@@ -80,6 +81,32 @@ class CertifiedSuiteTests(unittest.TestCase):
                          "(root / 'slot-argv.json').write_text(json.dumps(sys.argv[1:]))\n"
                          "print('guard rejected: owner mismatch', file=sys.stderr)\n"
                          "sys.exit(1)\n")
+
+    def test_optional_suite_includes_other_certified_test_targets(self):
+        spec = importlib.util.spec_from_file_location('full_suite', RUNNER)
+        runner = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(runner)
+        def artifact(name, kind, test=True, executable='/binary'):
+            return {'executable': executable, 'profile': {'test': test},
+                    'target': {'name': name, 'kind': [kind]}}
+        receipt = {'reported_artifacts': [artifact('integration', 'test'),
+                   artifact('enum_diff_coverage', 'test'),
+                   artifact('wow-sim', 'bin'), artifact('dependency', 'lib', False)]}
+        self.assertEqual(runner.additional_test_targets(receipt),
+                         [('test:enum_diff_coverage', 'enum_diff_coverage', 'test'),
+                          ('bin:wow-sim', 'wow-sim', 'bin')])
+
+    def test_optional_feature_is_forwarded_to_build(self):
+        process = subprocess.run(
+            [sys.executable, str(RUNNER), 'run', self.sha, '--profile', 'ptr',
+             '--target-dir', str(self.slot), '--optional'],
+            env=self.env, capture_output=True, text=True, timeout=10,
+        )
+        self.assertNotEqual(process.returncode, 0)
+        argv = json.loads((self.home / 'slot-argv.json').read_text())
+        self.assertIn('sound,gui,casc,client-ptr', argv)
+        self.assertIn('optional-tests', argv)
+        self.assertEqual(argv[argv.index('optional-tests') - 1], '--features')
 
     def status_output(self, ref=None):
         command = [sys.executable, str(RUNNER), 'status']
@@ -569,6 +596,7 @@ sys.exit(runner.run(sys.argv[2], 1, sys.argv[3], "ptr"))
                          "root = pathlib.Path(os.environ['HOME'])\n"
                          "(root / 'test-started').touch()\n"
                          "(root / 'test-ld-path').write_text(os.environ.get('LD_LIBRARY_PATH', ''))\n"
+                         "with (root / 'test-thread-counts').open('a') as log: log.write(os.environ['RUST_TEST_THREADS'] + '\\n')\n"
                          "while not (root / 'test-release').exists(): time.sleep(.01)\n")
         write_executable(self.bin / 'slot-build.py',
                          "import json, os, pathlib, sys, time\n"
@@ -583,7 +611,7 @@ sys.exit(runner.run(sys.argv[2], 1, sys.argv[3], "ptr"))
                          "receipt.parent.mkdir(exist_ok=True)\n"
                          "records = [{'executable': str(slot / 'integration-test'), "
                          "'target': {'name': n, 'kind': [k]}, 'profile': {'test': True}} "
-                         "for n, k in [('integration', 'test'), ('wow_ui_sim', 'lib')]]\n"
+                         "for n, k in [('integration', 'test'), ('wow_ui_sim', 'lib'), ('enum_diff_coverage', 'test')]]\n"
                          "receipt.write_text(json.dumps({'result': 'success', 'returncode': 0, "
                          "'reported_artifacts': records}))\n")
         write_executable(self.bin / 'systemctl',
@@ -608,6 +636,7 @@ sys.exit(runner.run(sys.argv[2], 1, sys.argv[3], "ptr"))
         self.assertEqual(process.returncode, 0, stderr)
         self.assertTrue(receipt.exists())
         self.assertEqual(json.loads(receipt.read_text())['status'], 'PASSED')
+        self.assertEqual(json.loads(receipt.read_text())['steps']['test:enum_diff_coverage']['exit'], 0)
         log = Path(json.loads(receipt.read_text())['log']).read_text()
         self.assertIn('cvar-before', log)
         self.assertIn('cvar-after', log)
@@ -621,6 +650,10 @@ sys.exit(runner.run(sys.argv[2], 1, sys.argv[3], "ptr"))
         self.assertIn(f'BindPaths={worktree}:{mount}', unit)
         self.assertIn(f'--working-directory={mount}', unit)
         self.assertEqual((self.home / 'test-ld-path').read_text(), str(self.slot))
+        self.assertEqual((self.home / 'test-thread-counts').read_text().splitlines(),
+                         [self.env.get('FULL_SUITE_INTEGRATION_JOBS', '3'),
+                          self.env.get('FULL_SUITE_JOBS', '16'),
+                          self.env.get('FULL_SUITE_JOBS', '16')])
         self.assertTrue(all(step.get('exit', 0) == 0
                             for step in json.loads(receipt.read_text())['steps'].values()))
         argv = json.loads((self.home / 'slot-argv.json').read_text())

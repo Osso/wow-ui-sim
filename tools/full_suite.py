@@ -19,6 +19,9 @@ REPO = ROOT / "wow-ui-sim"
 RESULTS = ROOT / "full-suite-results"
 LOCK = RESULTS / ".lock"
 JOBS = os.environ.get("FULL_SUITE_JOBS", "16")
+# Integration runs many full Blizzard-UI tests (~1.1-1.5 GiB each) in one process; 16 threads exceed
+# the 9G unit (cgroup oom-kill, 2026-11-03). User decision: fewer threads for this target.
+INTEGRATION_JOBS = os.environ.get("FULL_SUITE_INTEGRATION_JOBS", "3")
 PROFILES = ("retail", "ptr", "wrath", "mists", "wowforever", "era", "anniversary")
 # Slot 2 was retired on 2026-10-27 (user decision: three build slots).
 SLOTS = (0, 1, 3)
@@ -125,17 +128,19 @@ def confirm_terminated(unit, slot):
     return fields
 
 
-def build(checkout, target, sha, profile, jobs, owner, log):
+def build(checkout, target, sha, profile, jobs, owner, log, optional=False):
     slot = target.name.removeprefix("slot-")
     unit = f"full-suite-build-{sha[:12]}-{profile}-{time.time_ns()}"
     try:
-        return build_unit(checkout, target, profile, jobs, owner, log, unit, slot)
+        return build_unit(checkout, target, profile, jobs, owner, log, unit, slot, optional)
     finally:
         confirm_terminated(unit, slot)
 
 
-def build_unit(checkout, target, profile, jobs, owner, log, unit, slot):
+def build_unit(checkout, target, profile, jobs, owner, log, unit, slot, optional=False):
     features = [] if profile == "retail" else ["--no-default-features", "--features", f"sound,gui,casc,client-{profile}"]
+    if optional:
+        features += ["--features", "optional-tests"]
     cmd = ["slot-build.py", "--worktree", str(checkout), "--slot", slot, "--unit", unit,
            "--owner", owner, "--capacity-id", unit, "--", "cargo", "test", "--no-run",
            "--all-targets", "--locked", "--offline", "--message-format=json", f"-j{jobs}", *features]
@@ -175,6 +180,18 @@ def test_artifact(receipt, name, kind):
     if len(matches) != 1:
         raise ValueError(f"certified test artifact missing or ambiguous: {name}")
     return matches[0]
+
+
+def additional_test_targets(receipt):
+    targets = []
+    for artifact in receipt.get("reported_artifacts", []):
+        target = artifact.get("target", {})
+        kind = target.get("kind", [])
+        name = target.get("name")
+        if (artifact.get("executable") and artifact.get("profile", {}).get("test")
+                and name not in ("integration", "prefork_full_ui", "wow_ui_sim") and kind):
+            targets.append((f"{kind[0]}:{name}", name, kind[0]))
+    return targets
 
 
 def run_step(name, cmd, checkout, log, env):
@@ -277,7 +294,7 @@ def promote_result(canonical, baseline, result):
             path.unlink(missing_ok=True)
 
 
-def run(ref, build_jobs, target_dir, profile="retail"):
+def run(ref, build_jobs, target_dir, profile="retail", optional=False):
     target_dir = validate_target_dir(target_dir)
     RESULTS.mkdir(parents=True, exist_ok=True)
     with open(LOCK, "w") as lock:
@@ -287,7 +304,7 @@ def run(ref, build_jobs, target_dir, profile="retail"):
         if profile not in ("retail", "mists"):
             steps["prefork"] = {"status": "not_applicable", "reason": "prefork_full_ui supports only Retail/Mists"}
         failures = {name: [] for name, step in steps.items() if step["status"] != "not_applicable"}
-        result = {"ref": ref, "sha": sha, "profile": profile, "started": time.strftime("%Y-%m-%dT%H:%M:%S%z"), "steps": steps, "failures": failures}
+        result = {"ref": ref, "sha": sha, "profile": profile, "optional": optional, "started": time.strftime("%Y-%m-%dT%H:%M:%S%z"), "steps": steps, "failures": failures}
         phase = "setup"
         output_path = RESULTS / f"{sha}-{profile}.json"
         attempt = f"{sha}-{profile}-attempt-{time.time_ns()}"
@@ -300,26 +317,33 @@ def run(ref, build_jobs, target_dir, profile="retail"):
                     checkout = prepare_checkout(sha)
                     owner = claim_slot(target_dir, sha, profile)
                     phase = "build"
-                    receipt = build(checkout, target_dir, sha, profile, build_jobs, owner, log)
+                    receipt = build(checkout, target_dir, sha, profile, build_jobs, owner, log, optional)
                     phase = "setup"
                     env = dict(os.environ, CARGO_TARGET_DIR=str(target_dir), RUST_TEST_THREADS=JOBS, CARGO_TERM_COLOR="never")
                     with isolated_cvars(env, log) as env:
-                        for name, artifact, kind in [("integration", "integration", "test"), ("prefork", "prefork_full_ui", "test"), ("lib", "wow_ui_sim", "lib")]:
+                        targets = [("integration", "integration", "test"), ("prefork", "prefork_full_ui", "test"), ("lib", "wow_ui_sim", "lib")]
+                        extra_targets = additional_test_targets(receipt)
+                        targets.extend(extra_targets)
+                        for step, _, _ in extra_targets:
+                            result["steps"][step] = {"status": "not_run"}
+                            result["failures"][step] = []
+                        for name, artifact, kind in targets:
                             if name == "prefork" and profile not in ("retail", "mists"):
                                 result["steps"][name] = {"status": "not_applicable", "reason": "prefork_full_ui supports only Retail/Mists"}
                                 continue
                             phase = name
+                            step_env = dict(env, RUST_TEST_THREADS=INTEGRATION_JOBS if name == "integration" else JOBS)
                             binary = test_artifact(receipt, artifact, kind)
                             # Linux test executables link libwow_ui_sim_dylib.so from the same deps directory.
-                            env["LD_LIBRARY_PATH"] = str(Path(binary).parent)
+                            step_env["LD_LIBRARY_PATH"] = str(Path(binary).parent)
                             mount = Path.home() / ".cache/wow-ui-sim-srcmount" / target_dir.name
                             unit = f"full-suite-test-{sha[:12]}-{profile}-{name}-{time.time_ns()}"
                             command = ["systemd-run", "--user", f"--unit={unit}", "--wait", "--pipe", "--collect", "--quiet",
                                        "-p", "MemoryMax=9G", "-p", "MemorySwapMax=0",
                                        "-p", f"BindPaths={checkout}:{mount}", f"--working-directory={mount}",
-                                       *(f"--setenv={name}" for name in env), "--", binary]
+                                       *(f"--setenv={key}" for key in step_env), "--", binary]
                             try:
-                                result["steps"][name], output = run_step(name, command, checkout, log, env)
+                                result["steps"][name], output = run_step(name, command, checkout, log, step_env)
                             finally:
                                 confirm_terminated(unit, target_dir.name.removeprefix("slot-"))
                             if result["steps"][name]["exit"]:
@@ -366,7 +390,7 @@ def run(ref, build_jobs, target_dir, profile="retail"):
             except Exception as error:
                 result["status"] = "FAILED"
                 result["error"] = f"slot release failed: {error}"
-        if result["status"] == "PASSED":
+        if result["status"] == "PASSED" and not optional:
             try:
                 baseline = RESULTS / f"master-latest-{profile}.json" if ref in ("origin/master", "master") else None
                 promote_result(output_path, baseline, result)
@@ -379,10 +403,10 @@ def run(ref, build_jobs, target_dir, profile="retail"):
 
 
 
-def submit(ref, build_jobs, target_dir, profile="retail"):
+def submit(ref, build_jobs, target_dir, profile="retail", optional=False):
     target_dir = validate_target_dir(target_dir)
     unit = f"full-suite-{profile}-{int(time.time())}"
-    subprocess.run(["systemd-run", "--user", f"--unit={unit}", "--collect", "--slice=agents.slice", "-p", "CPUQuota=1200%", "-p", "MemoryMax=9G", "-p", "MemorySwapMax=0", f"--setenv=FULL_SUITE_JOBS={JOBS}", sys.executable, os.path.abspath(__file__), "run", ref, "--profile", profile, "--build-jobs", str(build_jobs), "--target-dir", str(target_dir)], check=True)
+    subprocess.run(["systemd-run", "--user", f"--unit={unit}", "--collect", "--slice=agents.slice", "-p", "CPUQuota=1200%", "-p", "MemoryMax=9G", "-p", "MemorySwapMax=0", f"--setenv=FULL_SUITE_JOBS={JOBS}", f"--setenv=FULL_SUITE_INTEGRATION_JOBS={INTEGRATION_JOBS}", sys.executable, os.path.abspath(__file__), "run", ref, "--profile", profile, "--build-jobs", str(build_jobs), "--target-dir", str(target_dir), *(["--optional"] if optional else [])], check=True)
     print(unit)
 
 
@@ -442,6 +466,7 @@ if __name__ == "__main__":
         command.add_argument("--profile", choices=PROFILES, default="retail")
         command.add_argument("--build-jobs", type=positive_build_jobs, default=1)
         command.add_argument("--target-dir", required=True)
+        command.add_argument("--optional", action="store_true")
     status_parser = actions.add_parser("status")
     status_parser.add_argument("ref", nargs="?")
     args = parser.parse_args(sys.argv[1:] or ["status"])
@@ -450,8 +475,8 @@ if __name__ == "__main__":
     else:
         try:
             if args.action == "run":
-                raise SystemExit(run(args.ref, args.build_jobs, args.target_dir, args.profile))
+                raise SystemExit(run(args.ref, args.build_jobs, args.target_dir, args.profile, args.optional))
             else:
-                submit(args.ref, args.build_jobs, args.target_dir, args.profile)
+                submit(args.ref, args.build_jobs, args.target_dir, args.profile, args.optional)
         except ValueError as error:
             parser.error(str(error))

@@ -6,6 +6,7 @@ mod sweep;
 
 use wow_ui_sim::lua_api::WowLuaEnv;
 
+#[cfg(feature = "optional-tests")]
 prefork_full_ui_case! {
 fn patch_10_0_0_publication_sweep(env: &WowLuaEnv) {
     sweep::run_publication_sweep(env, &sweep::SweepSpec {

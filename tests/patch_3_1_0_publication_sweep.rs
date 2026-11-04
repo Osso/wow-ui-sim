@@ -2,11 +2,13 @@
 //! No historical/native security or complete signature parity claim.
 #![cfg(feature = "client-retail")]
 
+#[cfg(feature = "optional-tests")]
 #[path = "common/publication_sweep.rs"]
 mod sweep;
 
 use wow_ui_sim::lua_api::WowLuaEnv;
 
+#[cfg(feature = "optional-tests")]
 prefork_full_ui_case! {
 fn patch_3_1_0_publication_sweep(env: &WowLuaEnv) {
     let register = include_str!("../data/patch-api/sources/3.1.0-wikitext-register.json");

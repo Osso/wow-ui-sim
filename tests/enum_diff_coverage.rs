@@ -1,13 +1,18 @@
+#[cfg(feature = "optional-tests")]
 use std::collections::BTreeSet;
+#[cfg(feature = "optional-tests")]
 use std::fs;
+#[cfg(feature = "optional-tests")]
 use std::path::PathBuf;
 
 use wow_ui_sim::lua_api::WowLuaEnv;
 
+#[cfg(feature = "optional-tests")]
 fn manifest_dir() -> PathBuf {
     PathBuf::from(env!("CARGO_MANIFEST_DIR"))
 }
 
+#[cfg(feature = "optional-tests")]
 fn parse_enum_names(file_name: &str) -> BTreeSet<String> {
     let path = manifest_dir().join("docs/wow-client-diff").join(file_name);
     fs::read_to_string(path)
@@ -19,6 +24,7 @@ fn parse_enum_names(file_name: &str) -> BTreeSet<String> {
         .collect()
 }
 
+#[cfg(feature = "optional-tests")]
 #[test]
 fn diff_enums_missing_matches_live_runtime_gaps() {
     let env = WowLuaEnv::new().unwrap();
@@ -471,6 +477,7 @@ fn unit_sex_is_available_with_expected_values() {
     assert_eq!(result, "ok");
 }
 
+#[cfg(feature = "optional-tests")]
 #[test]
 fn diff_enums_extra_is_empty_and_removed_runtime_enums_stay_absent() {
     let extra = parse_enum_names("diff_enums_extra.txt");

@@ -1,5 +1,7 @@
 # Test Suite Performance
 
+The default suite runs necessary tests; `optional-tests` adds historical snapshots and performance tests. `full-suite run --optional` runs the certified targets with that feature. `scripts/release.py` runs this Retail suite before creating and pushing a release tag; `--dry-run` skips tag and push.
+
 Measured default-retail test cost on 2026-10-07, then reuse the identical full-game preload for publication sweeps without deleting cases or weakening assertions. CI integration coverage remains an unapproved branch-only proposal.
 
 ## Per-addon budget diagnostics

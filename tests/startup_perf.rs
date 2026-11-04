@@ -1,27 +1,38 @@
 #![cfg(feature = "gui")]
 
+#[cfg(feature = "optional-tests")]
 use crate::common;
+#[cfg(feature = "optional-tests")]
 use crate::perf_base_game;
 
+#[cfg(feature = "optional-tests")]
 use std::time::Duration;
 
 #[path = "startup_perf/observation.rs"]
 mod observation;
+#[cfg(feature = "optional-tests")]
 use observation::{AddonLoadObservation, encode_addon_observation};
 
+#[cfg(feature = "optional-tests")]
 use wow_ui_sim::loader::{discover_blizzard_addons_for_screen, load_addon};
+#[cfg(feature = "optional-tests")]
 use wow_ui_sim::lua_api::WowLuaEnv;
+#[cfg(feature = "optional-tests")]
 use wow_ui_sim::screen::ScreenKind;
+#[cfg(feature = "optional-tests")]
 use wow_ui_sim::startup::fire_startup_events_for_screen;
 
+#[cfg(feature = "optional-tests")]
 const FULL_GAME_STARTUP_BUDGET: Duration = Duration::from_secs(20);
 
+#[cfg(feature = "optional-tests")]
 struct StartupPhaseTimings {
     addon_load_elapsed: Duration,
     post_load_workarounds_elapsed: Duration,
     startup_events_elapsed: Duration,
 }
 
+#[cfg(feature = "optional-tests")]
 struct LoadedGameUi {
     env: WowLuaEnv,
     phase_timings: StartupPhaseTimings,
@@ -29,6 +40,7 @@ struct LoadedGameUi {
     addon_observations: Vec<AddonLoadObservation>,
 }
 
+#[cfg(feature = "optional-tests")]
 fn load_timed_game_ui() -> LoadedGameUi {
     let started = std::time::Instant::now();
     let env = perf_base_game::new_game_env();
@@ -48,18 +60,21 @@ fn load_timed_game_ui() -> LoadedGameUi {
     }
 }
 
+#[cfg(feature = "optional-tests")]
 fn fire_startup_events(env: &WowLuaEnv) -> Duration {
     let started = std::time::Instant::now();
     fire_startup_events_for_screen(env, ScreenKind::Game);
     started.elapsed()
 }
 
+#[cfg(feature = "optional-tests")]
 fn apply_post_load_workarounds(env: &WowLuaEnv) -> Duration {
     let started = std::time::Instant::now();
     env.apply_post_load_workarounds();
     started.elapsed()
 }
 
+#[cfg(feature = "optional-tests")]
 fn load_game_ui_addons(env: &WowLuaEnv) -> (Duration, Vec<AddonLoadObservation>) {
     let started = std::time::Instant::now();
     let addons =
@@ -80,6 +95,7 @@ fn load_game_ui_addons(env: &WowLuaEnv) -> (Duration, Vec<AddonLoadObservation>)
     (started.elapsed(), observations)
 }
 
+#[cfg(feature = "optional-tests")]
 fn emit_startup_observations(loaded_ui: &LoadedGameUi, startup_ready: bool) {
     for (index, observation) in loaded_ui.addon_observations.iter().enumerate() {
         let row = encode_addon_observation(index + 1, observation);
@@ -99,6 +115,7 @@ fn emit_startup_observations(loaded_ui: &LoadedGameUi, startup_ready: bool) {
     eprintln!("[startup-observation] {summary}");
 }
 
+#[cfg(feature = "optional-tests")]
 #[test]
 fn full_game_startup_stays_under_budget() {
     perf_test_timeout! {

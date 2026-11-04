@@ -1,27 +1,42 @@
+#[cfg(feature = "optional-tests")]
 use crate::common;
 
+#[cfg(feature = "optional-tests")]
 use std::path::PathBuf;
+#[cfg(feature = "optional-tests")]
 use std::time::{Duration, Instant};
 
+#[cfg(feature = "optional-tests")]
 use wow_ui_sim::loader::{discover_blizzard_addons_for_screen, load_addon};
 use wow_ui_sim::lua_api::WowLuaEnv;
+#[cfg(feature = "optional-tests")]
 use wow_ui_sim::screen::ScreenKind;
+#[cfg(feature = "optional-tests")]
 use wow_ui_sim::startup::settle_headless_startup;
 
+#[cfg(feature = "optional-tests")]
 const TALENT_PANEL_VISIBLE_ONUPDATE_ADDED_CEILING: usize = 192;
+#[cfg(feature = "optional-tests")]
 const TALENT_PANEL_ONUPDATE_AVG_BUDGET: Duration = Duration::from_millis(35);
+#[cfg(feature = "optional-tests")]
 const TALENT_PANEL_ONUPDATE_MAX_BUDGET: Duration = Duration::from_millis(75);
+#[cfg(feature = "optional-tests")]
 const TALENT_PANEL_ONUPDATE_DELTA_BUDGET: Duration = Duration::from_millis(20);
+#[cfg(feature = "optional-tests")]
 const BASELINE_TICKS: usize = 20;
+#[cfg(feature = "optional-tests")]
 const TALENT_STEADY_TICKS: usize = 24;
+#[cfg(feature = "optional-tests")]
 const TALENT_SETTLE_TICKS: usize = 10;
 
+#[cfg(feature = "optional-tests")]
 fn blizzard_ui_dir() -> PathBuf {
     wow_ui_sim::client_profile::blizzard_ui_addons_dir_under(std::path::Path::new(env!(
         "CARGO_MANIFEST_DIR"
     )))
 }
 
+#[cfg(feature = "optional-tests")]
 fn load_settled_game_ui() -> WowLuaEnv {
     let env = WowLuaEnv::new().expect("Failed to create Lua environment");
     env.set_screen_size(1024.0, 768.0);
@@ -39,6 +54,7 @@ fn load_settled_game_ui() -> WowLuaEnv {
     env
 }
 
+#[cfg(feature = "optional-tests")]
 fn open_talent_panel(env: &WowLuaEnv) {
     env.exec("PlayerSpellsUtil.ToggleClassTalentFrame()")
         .expect("Talent panel toggle should succeed");
@@ -72,12 +88,14 @@ fn capture_visible_onupdate(env: &WowLuaEnv) -> (usize, Vec<String>) {
     (visible_ids.len(), names)
 }
 
+#[cfg(feature = "optional-tests")]
 fn sample_on_update_ticks(env: &WowLuaEnv, samples: usize, phase: &str) -> Vec<Duration> {
     (0..samples)
         .map(|tick| run_logged_headless_tick(env, phase, tick))
         .collect()
 }
 
+#[cfg(feature = "optional-tests")]
 fn run_logged_headless_tick(env: &WowLuaEnv, phase: &str, tick: usize) -> Duration {
     eprintln!("[talent-tick] phase={phase} tick={tick} begin");
     let duration = run_headless_tick(env);
@@ -85,6 +103,7 @@ fn run_logged_headless_tick(env: &WowLuaEnv, phase: &str, tick: usize) -> Durati
     duration
 }
 
+#[cfg(feature = "optional-tests")]
 fn run_headless_tick(env: &WowLuaEnv) -> Duration {
     let started = Instant::now();
     env.process_timers().unwrap();
@@ -93,6 +112,7 @@ fn run_headless_tick(env: &WowLuaEnv) -> Duration {
     started.elapsed()
 }
 
+#[cfg(feature = "optional-tests")]
 fn mean_duration(samples: &[Duration]) -> Duration {
     let total = samples
         .iter()
@@ -101,6 +121,7 @@ fn mean_duration(samples: &[Duration]) -> Duration {
     total / u32::try_from(samples.len()).expect("sample set should fit u32")
 }
 
+#[cfg(feature = "optional-tests")]
 fn max_duration(samples: &[Duration]) -> Duration {
     samples
         .iter()
@@ -208,6 +229,7 @@ fn visible_onupdate_collector_tracks_child_parent_visibility() {
     );
 }
 
+#[cfg(feature = "optional-tests")]
 #[test]
 fn talent_panel_open_visible_onupdate_handlers_stay_within_ceiling() {
     perf_test_timeout! {
@@ -235,6 +257,7 @@ fn talent_panel_open_visible_onupdate_handlers_stay_within_ceiling() {
     }
 }
 
+#[cfg(feature = "optional-tests")]
 #[test]
 fn talent_panel_open_onupdate_tick_latency_stays_under_budget() {
     perf_test_timeout! {

@@ -129,6 +129,7 @@ tempfile = "3"
 wow-ui-sim-dylib = { path = "crates/wow-ui-sim-dylib" }
 
 [features]
+optional-tests = []
 # Non-test utility binaries; integration tests need only wow-sim.
 tools = []
 # Opt-in installed Ellesmere AuraKit acceptance test; requires ELLESMERE_AURA_KIT_PATH.
