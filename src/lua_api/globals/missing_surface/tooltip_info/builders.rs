@@ -11,6 +11,10 @@ use crate::lua_bridge::stack_val;
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
 
+#[cfg(test)]
+#[path = "builder_contract_tests.rs"]
+mod builder_contract_tests;
+
 pub(super) fn color_table(state: &mut LuaState, r: f64, g: f64, b: f64, a: f64) -> Val {
     let key = state.gc.intern_string(b"CreateColor");
     let create_color = state
