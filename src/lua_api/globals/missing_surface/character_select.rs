@@ -1,7 +1,10 @@
 //! Glue-screen character-select helpers backed by seeded battle.net game
 //! accounts.
 
-use crate::lua_api::methods::{borrow_state, create_string, create_table, table_set};
+use crate::lua_api::methods::{
+    borrow_state, call_function_state, create_string, create_table, table_get, table_set,
+    val_to_string,
+};
 use crate::lua_api::state_types::BnetGameAccount;
 use crate::lua_bridge::{FromStack, table_set_rust_fn_static};
 use rilua::vm::state::LuaState;
@@ -207,6 +210,13 @@ fn get_character_race(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn get_basic_character_info(state: &mut LuaState) -> LuaResult<u32> {
+    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::WowForever
+        && matches!(crate::lua_bridge::stack_val(state, 1), Val::Nil)
+    {
+        return Err(rilua::runtime_error(
+            "Usage: local basicInfo = GetBasicCharacterInfo(guid)",
+        ));
+    }
     let guid = match crate::lua_bridge::stack_val(state, 1) {
         Val::Str(_) => {
             crate::lua_api::methods::val_to_string(state, crate::lua_bridge::stack_val(state, 1))
@@ -221,10 +231,14 @@ fn get_basic_character_info(state: &mut LuaState) -> LuaResult<u32> {
         .into_iter()
         .find(|ga| ga.wow_account_guid == guid)
     else {
+        // WM100: failed Forever lookup has no publisher (zero Lua results).
+        if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::WowForever {
+            return Ok(0);
+        }
         state.push(Val::Nil);
         return Ok(1);
     };
-    let character_info = build_character_info_table(state, &account);
+    let character_info = build_character_info_table(state, &account)?;
     state.push(character_info);
     Ok(1)
 }
@@ -248,13 +262,24 @@ fn seeded_character_accounts(state: &mut LuaState) -> Vec<BnetGameAccount> {
         .unwrap_or_default()
 }
 
-fn build_character_info_table(state: &mut LuaState, account: &BnetGameAccount) -> Val {
+fn build_character_info_table(state: &mut LuaState, account: &BnetGameAccount) -> LuaResult<Val> {
+    // Compose before allocating the result table: the Lua formatter can collect.
+    let full_name =
+        if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::WowForever {
+            Some(compose_forever_character_full_name(state, account)?)
+        } else {
+            None
+        };
     let table = create_table(state);
     set_character_info_strings(state, table, account);
+    if let Some(full_name) = full_name {
+        set_string_field(state, table, "fullName", &full_name);
+        set_string_field(state, table, "surname", &account.surname);
+    }
     set_character_info_numbers(state, table, account);
     set_character_info_flags(state, table);
     set_character_info_empty_tables(state, table);
-    table
+    Ok(table)
 }
 
 fn set_character_info_strings(state: &mut LuaState, table: Val, account: &BnetGameAccount) {
@@ -268,14 +293,6 @@ fn set_character_info_strings(state: &mut LuaState, table: Val, account: &BnetGa
         "name"
     };
     set_string_field(state, table, name_field, &account.character_name);
-    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::WowForever {
-        set_string_field(
-            state,
-            table,
-            "fullName",
-            emulate_forever_character_full_name(account),
-        );
-    }
     set_string_field(state, table, "realmName", &account.realm_name);
     set_string_field(state, table, "realmAddress", &account.realm_display_name);
     set_string_field(state, table, "guid", &account.wow_account_guid);
@@ -285,10 +302,38 @@ fn set_character_info_strings(state: &mut LuaState, table: Val, account: &BnetGa
     set_string_field(state, table, "faction", &account.faction_name);
 }
 
-/// EMULATED: supplied account names are already display text. Native surname
-/// composition awaits WM100; do not invent a surname from unrelated player state.
-fn emulate_forever_character_full_name(account: &BnetGameAccount) -> &str {
-    &account.character_name
+fn compose_forever_character_full_name(
+    state: &mut LuaState,
+    account: &BnetGameAccount,
+) -> LuaResult<String> {
+    if account.surname.is_empty() {
+        return Ok(account.character_name.clone());
+    }
+    let globals = Val::Table(state.global);
+    let format = table_get(state, globals, "FULL_PLAYER_NAME_WITH_SEPARATOR");
+    let format = if matches!(format, Val::Nil) {
+        create_string(state, emulate_missing_forever_full_name_format())
+    } else {
+        format
+    };
+    let strings = table_get(state, globals, "string");
+    let formatter = table_get(state, strings, "format");
+    let separator = match account.name_separator {
+        crate::lua_api::state_types::CharacterNameSeparator::Space => " ",
+        crate::lua_api::state_types::CharacterNameSeparator::Hyphen => "-",
+    };
+    let name = create_string(state, &account.character_name);
+    let separator = create_string(state, separator);
+    let surname = create_string(state, &account.surname);
+    let full_name = call_function_state(state, formatter, &[format, name, separator, surname])?;
+    val_to_string(state, full_name)
+        .ok_or_else(|| rilua::runtime_error("Forever full-name formatter did not return a string"))
+}
+
+/// EMULATED only when the pinned GlobalStrings key is absent. WM100 establishes
+/// the key and argument order, not its localized value. Retire with complete data.
+fn emulate_missing_forever_full_name_format() -> &'static str {
+    "%s%s%s"
 }
 
 fn set_character_info_numbers(state: &mut LuaState, table: Val, account: &BnetGameAccount) {
