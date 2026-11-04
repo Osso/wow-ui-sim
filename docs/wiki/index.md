@@ -1,3 +1,20 @@
+## [2026-11-04] implementation | Totem tooltip duration
+
+[Tooltip data](systems/lua-api.md#tooltip-data-and-merchant-cursor-presentation)
+links stored-name selection and the WM94 wrapping/rate/rounding pipeline, its
+nearest-even emulation seam and original-accessor coverage.
+
+## [2026-11-04] implementation | Modified-appearance item tooltip
+
+[Tooltip data](systems/lua-api.md#tooltip-data-and-merchant-cursor-presentation)
+links the Retail/PTR source-model lookup, original dress-up hover proof and
+shared UNKNOWN failure seam. Forever remains a separate follow-up.
+
+## [2026-11-04] implementation | Bag-child tooltip selection
+
+[Tooltip data](systems/lua-api.md#tooltip-data-and-merchant-cursor-presentation)
+links the source-backed child item selector, generator inclusion rule and pinned
+ItemSparse misses. Retail original-accessor proof is separate from native parity.
 ## [2026-11-04] investigation | PTR Edit Mode preset fixtures
 
 [Edit Mode reconciliation](investigations/editmode-layout.md#ptr-preset-and-startup-fixture-reconciliation--2026-11-04)

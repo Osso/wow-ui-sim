@@ -141,6 +141,25 @@ pub(super) fn empty_tooltip(state: &mut LuaState, tooltip_type: f64) -> Val {
     tooltip
 }
 
+/// WM94: totems have two plain lines and identity type 18 with zero native ID.
+pub(super) fn tooltip_for_totem_text(
+    state: &mut LuaState,
+    name: &str,
+    remaining: &str,
+) -> LuaResult<Val> {
+    let highlight = global_color(state, b"HIGHLIGHT_FONT_COLOR")
+        .ok_or_else(|| rilua::runtime_error("GetTotem requires HIGHLIGHT_FONT_COLOR"))?;
+    let saved_top = state.top;
+    let tooltip = empty_tooltip(state, 18.0);
+    state.push(tooltip);
+    stamp_data_instance(state, tooltip);
+    let lines = table_get(state, tooltip, "lines");
+    push_tooltip_line(state, lines, 1, 0.0, name, None, false);
+    push_tooltip_line(state, lines, 2, 0.0, remaining, Some(highlight), false);
+    state.top = saved_top;
+    Ok(tooltip)
+}
+
 pub(super) fn create_identified_tooltip(state: &mut LuaState, tooltip_type: f64, id: u32) -> Val {
     let tooltip = empty_tooltip(state, tooltip_type);
     table_set(state, tooltip, "id", Val::Num(id as f64));
