@@ -42,6 +42,12 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
     }
     let namespace = super::ensure_namespace(state, "C_TradeSkillUI")?;
     table_set_rust_fn_static(state, namespace, "IsRecipeFavorite", is_recipe_favorite)?;
+    table_set_rust_fn_static(
+        state,
+        namespace,
+        "HasFavoriteOrderRecipes",
+        has_favorite_order_recipes,
+    )?;
     table_set_rust_fn_static(state, namespace, "SetRecipeFavorite", set_recipe_favorite)
 }
 
@@ -89,6 +95,24 @@ fn set_recipe_favorite(state: &mut LuaState) -> LuaResult<u32> {
         sim.crafting.recipe_favorites.set(recipe_id, favorite);
     }
     Ok(0)
+}
+
+/// EMULATED/UNKNOWN (WM87): eligibility comes from CraftingOrder metadata the
+/// simulator does not export, so every row is treated as not order-eligible.
+fn is_order_eligible(_recipe_id: i32) -> bool {
+    false
+}
+
+/// WM87: any loaded row with both the favorite and order-eligibility flags.
+fn has_favorite_order_recipes(state: &mut LuaState) -> LuaResult<u32> {
+    let has_favorites = {
+        let favorites = &borrow_state(state)?.crafting.recipe_favorites;
+        profession_data::get_all_recipe_ids()
+            .into_iter()
+            .any(|recipe_id| favorites.contains(recipe_id) && is_order_eligible(recipe_id))
+    };
+    state.push(Val::Bool(has_favorites));
+    Ok(1)
 }
 
 pub(crate) fn drain_pending(state: &mut LuaState) -> LuaResult<()> {
