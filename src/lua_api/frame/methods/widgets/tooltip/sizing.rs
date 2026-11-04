@@ -92,7 +92,12 @@ fn anchor_tooltip_lines(sim: &mut crate::lua_api::state::SimState, tooltip_id: u
                 line.right_text
                     .as_ref()
                     .is_some_and(|text| !text.is_empty()),
-                line.texture.is_some(),
+                line.texture.as_ref().is_some_and(|texture| {
+                    !matches!(
+                        texture,
+                        crate::lua_api::tooltip::TooltipTexture::Attachments(_)
+                    )
+                }),
             )
         })
         .collect();
@@ -271,7 +276,12 @@ fn estimated_line_width(
         Some(crate::lua_api::tooltip::TooltipTexture::PathAttachment(_))
     ) {
         text_width
-    } else if line.texture.is_some() {
+    } else if line.texture.as_ref().is_some_and(|texture| {
+        !matches!(
+            texture,
+            crate::lua_api::tooltip::TooltipTexture::Attachments(_)
+        )
+    }) {
         text_width.max(TEXTURE_LINE_SIZE)
     } else {
         text_width
@@ -286,7 +296,12 @@ fn estimated_line_height(line: &TooltipLine, font_size: f32) -> f32 {
     if let Some(crate::lua_api::tooltip::TooltipTexture::PathAttachment(attachment)) = &line.texture
     {
         attachment.geometry(font_size).0
-    } else if line.texture.is_some() {
+    } else if line.texture.as_ref().is_some_and(|texture| {
+        !matches!(
+            texture,
+            crate::lua_api::tooltip::TooltipTexture::Attachments(_)
+        )
+    }) {
         TEXTURE_LINE_SIZE
     } else {
         (font_size * 1.2).ceil()

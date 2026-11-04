@@ -8,6 +8,43 @@ pub enum TooltipTexture {
     FileDataId(u32),
     Atlas(String),
     PathAttachment(TooltipPathAttachment),
+    Attachments(Vec<TooltipAttachment>),
+}
+
+#[derive(Clone)]
+pub enum TooltipAttachmentSource {
+    FileDataId(u32),
+    Path(String),
+    Atlas(String),
+}
+
+#[derive(Clone)]
+pub struct TooltipAttachment {
+    pub source: TooltipAttachmentSource,
+    pub width: f32,
+    pub height: f32,
+    pub vertical_offset: f32,
+    pub margins: [f32; 4],
+    pub anchor: u8,
+    pub region: u8,
+    pub tex_coords: [f32; 4],
+    pub color: [f32; 4],
+    pub desaturation: f32,
+}
+
+impl TooltipAttachment {
+    pub fn anchor_points(&self) -> &'static [(AnchorPoint, AnchorPoint)] {
+        use AnchorPoint::*;
+        match self.anchor {
+            0 => &[(TopRight, TopLeft)],
+            1 => &[(Right, Left)],
+            2 => &[(BottomRight, BottomLeft)],
+            3 => &[(TopLeft, TopRight)],
+            4 => &[(Left, Right)],
+            5 => &[(BottomLeft, BottomRight)],
+            _ => &[(BottomRight, BottomRight), (TopLeft, TopLeft)],
+        }
+    }
 }
 
 /// Path image attached to an existing wrapped blank tooltip row (Retail U1).
