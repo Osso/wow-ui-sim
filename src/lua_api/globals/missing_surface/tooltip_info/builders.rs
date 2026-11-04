@@ -4,8 +4,8 @@ use super::super::{
 };
 use crate::items;
 use crate::lua_api::methods::{
-    borrow_state, call_function_state, create_string, create_table, table_get, table_set,
-    val_to_string,
+    borrow_state, call_function_state, create_string, create_table, registry_get, registry_set,
+    table_get, table_set, val_to_string,
 };
 use crate::lua_bridge::stack_val;
 use rilua::vm::state::LuaState;
@@ -47,6 +47,7 @@ pub(super) fn push_tooltip_line(
     state.push(lines);
     let line = create_table(state);
     set_table_array(state, lines, index, line);
+    let line_type = remap_line_type(state, line_type, left_color);
     table_set(state, line, "type", Val::Num(line_type));
     let parsed = tooltip_line_text_and_color(state, left_text, left_color);
     let left_text_val = create_string(state, &parsed.text);
@@ -63,6 +64,19 @@ pub(super) fn push_tooltip_line(
         table_set(state, line, "wrapText", Val::Bool(true));
     }
     state.top = saved_top;
+}
+
+fn remap_line_type(state: &mut LuaState, line_type: f64, color: Option<(f64, f64, f64)>) -> f64 {
+    if line_type != 0.0 || color.is_none() {
+        return line_type;
+    }
+    if color == global_color(state, b"ERROR_COLOR") {
+        41.0
+    } else if color == global_color(state, b"DISABLED_FONT_COLOR") {
+        42.0
+    } else {
+        line_type
+    }
 }
 
 struct ParsedTooltipText {
@@ -254,6 +268,12 @@ fn rgb_from_argb_hex(hex: &str) -> Option<(f64, f64, f64)> {
 pub(super) fn empty_tooltip(state: &mut LuaState, tooltip_type: f64) -> Val {
     let tooltip = create_table(state);
     let lines = create_table(state);
+    let counter = match registry_get(state, "__tooltip_data_instance_counter") {
+        Val::Num(counter) => counter + 1.0,
+        _ => 1.0,
+    };
+    registry_set(state, "__tooltip_data_instance_counter", Val::Num(counter));
+    table_set(state, tooltip, "dataInstanceID", Val::Num(counter));
     table_set(state, tooltip, "type", Val::Num(tooltip_type));
     table_set(state, tooltip, "lines", lines);
     tooltip
@@ -261,7 +281,9 @@ pub(super) fn empty_tooltip(state: &mut LuaState, tooltip_type: f64) -> Val {
 
 pub(super) fn create_identified_tooltip(state: &mut LuaState, tooltip_type: f64, id: u32) -> Val {
     let tooltip = empty_tooltip(state, tooltip_type);
-    table_set(state, tooltip, "id", Val::Num(id as f64));
+    if id != 0 {
+        table_set(state, tooltip, "id", Val::Num(id as f64));
+    }
     tooltip
 }
 
