@@ -796,9 +796,23 @@ fn addon_tainted_table_slot_does_not_make_table_secret() {
     assert_eq!(stored, "stored");
 }
 
+// WM91 §§2–4: Forever keeps loadstring provenance separate from secrecy.
+// Other profiles retain their existing expectations in this bounded correction.
+fn tainted_loadstring_is_secret() -> bool {
+    let profile = wow_ui_sim::client_profile::ACTIVE;
+    profile.uses_secret_values()
+        && profile != wow_ui_sim::client_profile::ClientProfile::WowForever
+}
+
 #[test]
 fn test_secure_map_rejects_secret_keys_and_values() {
     let env = env();
+    if wow_ui_sim::client_profile::ACTIVE == wow_ui_sim::client_profile::ClientProfile::WowForever {
+        let path = wow_ui_sim::blizzard_ui_sync::default_cache_addons_path()
+            .unwrap()
+            .join("Blizzard_SharedXMLBase/SecureTypes.lua");
+        env.exec(&std::fs::read_to_string(path).unwrap()).unwrap();
+    }
     let (key_error, value_error, stored_value): (String, String, String) = env
         .eval(
             r#"
@@ -814,6 +828,8 @@ fn test_secure_map_rejects_secret_keys_and_values() {
                 map:SetValue("safe", secretValue)
             end)
 
+            if keyOk then assert(map:GetValue(secretKey) == "safe") end
+            if valueOk then assert(map:GetValue("safe") == secretValue) end
             map:SetValue("safe", "stored")
             return keyOk and "" or keyErr,
                 valueOk and "" or valueErr,
@@ -822,7 +838,7 @@ fn test_secure_map_rejects_secret_keys_and_values() {
         )
         .unwrap();
 
-    if wow_ui_sim::client_profile::ACTIVE.uses_secret_values() {
+    if tainted_loadstring_is_secret() {
         assert!(
             key_error.contains("attempted to store a secret key in a SecureMap"),
             "secret key should be rejected, got: {key_error}"
@@ -832,8 +848,8 @@ fn test_secure_map_rejects_secret_keys_and_values() {
             "secret value should be rejected, got: {value_error}"
         );
     } else {
-        assert_eq!(key_error, "", "Classic tainted function key is not secret");
-        assert_eq!(value_error, "", "Classic tainted function value is not secret");
+        assert_eq!(key_error, "", "taint alone does not make the key secret");
+        assert_eq!(value_error, "", "taint alone does not make the value secret");
     }
     assert_eq!(stored_value, "stored");
 }
@@ -863,8 +879,8 @@ fn test_issecretvalue_tainted() {
         .unwrap();
     assert_eq!(
         result,
-        wow_ui_sim::client_profile::ACTIVE.uses_secret_values(),
-        "loadstring secrecy follows the profile without removing closure taint"
+        tainted_loadstring_is_secret(),
+        "WM91: Forever loadstring provenance does not mark a value secret"
     );
 }
 
@@ -889,8 +905,8 @@ fn test_canaccessvalue_tainted() {
         .unwrap();
     assert_eq!(
         result,
-        !wow_ui_sim::client_profile::ACTIVE.uses_secret_values(),
-        "loadstring secret access follows the profile"
+        !tainted_loadstring_is_secret(),
+        "WM91: a nonsecret loadstring closure remains accessible"
     );
 }
 
@@ -917,8 +933,8 @@ fn test_canaccessallvalues_one_tainted() {
         .unwrap();
     assert_eq!(
         result,
-        !wow_ui_sim::client_profile::ACTIVE.uses_secret_values(),
-        "mixed secret access follows the profile"
+        !tainted_loadstring_is_secret(),
+        "WM91: nonsecret loadstring closures do not deny bulk access"
     );
 }
 
