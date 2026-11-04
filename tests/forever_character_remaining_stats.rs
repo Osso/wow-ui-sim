@@ -91,7 +91,7 @@ mod forever {
     fn offhand_hit_modifier_reads_independent_state_without_a_weapon() {
         let env = env();
         assert_eq!(env.eval::<f64>("return GetOffhandHitModifier()").unwrap(), 0.0);
-        env.state().borrow_mut().equipped_items.remove(&17);
+        env.state().borrow_mut().player.equipped_items.remove(&17);
         for value in [1.25, -2.5] {
             {
                 let state = env.state();
