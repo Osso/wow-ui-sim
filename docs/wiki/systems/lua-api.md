@@ -8,12 +8,17 @@ The Lua API layer bridges Lua addon code with the Rust simulation engine. It pro
 
 Retail/PTR supplied loot and buyback slots feed the existing item tooltip builder.
 [The getter contract](../../specs/tooltip-loot-buyback.md) records the emulated
-missing-slot seam, strict-index limitation and remaining D56 publication gaps.
+missing-slot seam and strict-index limitation.
 Populated builder results receive per-Lua-state `dataInstanceID` counters;
 zero-line misses retain their previous shape because WM82 leaves miss publication
 unknown. Cross-call payload tests compare all content but not instance numbers.
-Master's markup stripping, segment arrays and `CreateColor` output remain in use:
-removing them without presentation-layer markup parsing loses inline colors.
+[D56 serialization](../../specs/tooltip-data-serialization.md) copies markup without
+synthetic segment arrays, publishes packed RGB without alpha and omits populated
+zero IDs. The generic second-identity builder appends type-19 rows; no new
+getter-specific eligibility is invented. `src/c_api/tooltip_data.rs` owns the
+publication rules; widget presentation parses copied markup into internal runs.
+Float-to-byte scenario conversion is explicitly emulated, while native miss
+publication and complete ColorMixin contents remain unknown.
 
 `CursorStorage` holds separate base/display selectors alongside held-content
 storage. [Merchant presentation](../../specs/merchant-cursor-presentation.md) owns

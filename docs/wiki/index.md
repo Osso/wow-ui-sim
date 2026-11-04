@@ -3,7 +3,9 @@
 [Lua API](systems/lua-api.md#tooltip-data-and-merchant-cursor-presentation) links
 supplied loot/buyback getters, populated-only instance counters and separate
 merchant cursor presentation. Retail tooltip/library tests pass. PTR failures
-match the source-matched master baseline. D56 text/color/nested publication,
+match the source-matched master baseline for that lane. [D56 serialization](../specs/tooltip-data-serialization.md)
+now separates copied DTO markup from presentation runs and supports packed RGB,
+nonzero identity and generic nested publication. Getter-specific nested eligibility,
 custom cursor assets and native listener timing remain open.
 
 ## [2026-11-02] implementation | CVar metadata
