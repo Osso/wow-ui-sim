@@ -8,8 +8,7 @@ mod tooltip_full_env_helpers;
 
 use wow_ui_sim::lua_api::globals::real::merchant_buyback::BuybackItem;
 
-#[test]
-fn original_buyback_setter_uses_the_selected_buyback_item() {
+fn fixture() -> wow_ui_sim::lua_api::WowLuaEnv {
     let env = tooltip_full_env_helpers::setup_full_env();
     env.state().borrow_mut().merchant_buyback_items = vec![
         BuybackItem {
@@ -29,6 +28,12 @@ fn original_buyback_setter_uses_the_selected_buyback_item() {
             is_bound: false,
         },
     ];
+    env
+}
+
+#[test]
+fn original_buyback_setter_uses_the_selected_buyback_item() {
+    let env = fixture();
     env.exec(
         r#"
         for slot, name in ipairs({'Hearthstone', 'Copper Bar'}) do
@@ -37,6 +42,28 @@ fn original_buyback_setter_uses_the_selected_buyback_item() {
             local info = GameTooltip:GetPrimaryTooltipInfo()
             local data = GameTooltip:GetPrimaryTooltipData()
             assert(info and info.getterName == 'GetBuybackItem', 'GetBuybackItem info missing')
+            assert(data and data.lines[1].leftText == name)
+            assert(GameTooltip:GetLeftLine(1):GetText() == name)
+        end
+        "#,
+    )
+    .unwrap();
+}
+
+#[test]
+fn original_merchant_hover_uses_the_selected_buyback_item() {
+    let env = fixture();
+    env.exec(
+        r#"
+        assert(type(MerchantItemButton_OnEnter) == 'function')
+        MerchantFrame.selectedTab = 2
+        local button = CreateFrame('Button', nil, UIParent)
+        for slot, name in ipairs({'Hearthstone', 'Copper Bar'}) do
+            button:SetID(slot)
+            MerchantItemButton_OnEnter(button)
+            local info = GameTooltip:GetPrimaryTooltipInfo()
+            local data = GameTooltip:GetPrimaryTooltipData()
+            assert(info and info.getterName == 'GetBuybackItem')
             assert(data and data.lines[1].leftText == name)
             assert(GameTooltip:GetLeftLine(1):GetText() == name)
         end
