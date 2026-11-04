@@ -412,6 +412,8 @@ fn guid_is_player_original_consumer_preserves_actual_account_predicate_for_misse
     let diagnostics: String = env.eval(&format!(
         r#"
         local diagnostics = {{}}
+        local accountLocation = PlayerLocation:CreateFromGUID('BNetAccount-1-0000002A')
+        assert(accountLocation:IsValid() == true, 'PlayerLocation accepts the native BNet GUID kind')
         local namespace = C_AccountInfo
         assert(type(namespace) == 'table', 'BLOCKER: ordinary C_AccountInfo unavailable')
         local account = namespace.IsGUIDBattleNetAccountType
