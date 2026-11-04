@@ -1,6 +1,6 @@
 use super::{create_identified_tooltip, empty_tooltip, push_tooltip_line, table_get_int};
 use crate::lua_api::methods::{create_table, table_get, table_set};
-use rilua::{Lua, Val};
+use rilua::{Lua, LuaApiMut, Val};
 
 #[test]
 fn tooltip_builder_creates_fresh_tables_and_incrementing_instances() {
