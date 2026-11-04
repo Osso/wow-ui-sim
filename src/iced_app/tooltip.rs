@@ -562,13 +562,21 @@ fn collect_tooltip_lines(
                 crate::client_profile::ClientProfile::Retail
                     | crate::client_profile::ClientProfile::Ptr
             );
-            tooltip_line_render(
+            let mut render = tooltip_line_render(
                 i,
                 line,
                 alpha,
                 native && td.left_line_is_hidden(widgets, i),
                 native && td.right_line_is_hidden(widgets, i),
-            )
+            );
+            if native {
+                render.wrap |= td.force_min_width;
+                if let Some(frame) = td.left_line_ids.get(i).and_then(|id| widgets.get(*id)) {
+                    render.font_size = frame.font_size * frame.text_scale as f32;
+                    render.measured_height = frame.height;
+                }
+            }
+            render
         })
         .collect()
 }
@@ -707,6 +715,12 @@ fn emit_tooltip_lines(
         let font_size = scaled_tooltip_font_size(line.font_size, eff_scale);
         let line_height = if let Some(attachment) = &line.path_attachment {
             attachment.geometry(line.font_size).0 * eff_scale
+        } else if matches!(
+            crate::client_profile::ACTIVE,
+            crate::client_profile::ClientProfile::Retail
+                | crate::client_profile::ClientProfile::Ptr
+        ) {
+            line.measured_height * eff_scale
         } else if line.wrap && !line.left_text.is_empty() {
             text_renderer.font_sys.measure_text_height(
                 &line.left_text,
