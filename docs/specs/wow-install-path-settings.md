@@ -31,6 +31,9 @@ CASC product. Implementation lives in `src/install_paths.rs` and
       `Could not find a World of Warcraft installation` startup error.
 - [x] Treat a missing settings file as empty settings. Report unreadable or malformed
       content and continue startup.
+- [x] Accept the settings file as an explicit input. Entrypoints pass the platform default
+      path; library paths pass none, so library and test processes never read or write the
+      user's settings file.
 - [x] Leave settings and resolver state untouched when `WOW_SIM_CASC=0`.
 
 ## Out of scope
@@ -64,6 +67,7 @@ Library tests in `src/install_paths.rs`:
 - `persistence_round_trip_preserves_both_paths`
 - `products_keep_separate_install_paths`
 - `data_path_entry_resolves_to_parent_root`
+- `missing_settings_handle_uses_environment_without_touching_settings`
 - `missing_settings_file_is_empty_settings`
 - `env_names_are_derived_from_entry_field_names`
 

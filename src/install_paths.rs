@@ -168,22 +168,21 @@ pub struct ResolvedInstallPath {
     pub source: InstallPathSource,
 }
 
-/// Resolve the install root for one CASC product and persist what was learned.
+/// Resolve the install root for one CASC product and persist what was learned
+/// when a settings file is supplied.
 ///
 /// The first valid source wins: CLI, environment, stored settings, then
 /// `detect`. Invalid supplied or stored paths are reported and skipped. A
-/// detected path is stored under `product`.
+/// detected path is stored under `product`. `None` reads and writes no settings.
 pub fn resolve_install_path(
-    file: &SettingsFile,
+    file: Option<&SettingsFile>,
     product: &str,
     inputs: &InstallPathInputs,
     detect: impl FnOnce() -> Option<PathBuf>,
 ) -> Option<ResolvedInstallPath> {
-    let settings = file.load();
-    let stored = settings
-        .install_paths
-        .get(product)
-        .cloned()
+    let stored = file
+        .map(SettingsFile::load)
+        .and_then(|settings| settings.install_paths.get(product).cloned())
         .unwrap_or_default();
     let candidates = [
         (InstallPathSource::Cli, &inputs.cli),
@@ -251,7 +250,10 @@ fn candidate_root<'a>(
     Some(root)
 }
 
-fn persist_entry(file: &SettingsFile, product: &str, entry: &InstallPathEntry) {
+fn persist_entry(file: Option<&SettingsFile>, product: &str, entry: &InstallPathEntry) {
+    let Some(file) = file else {
+        return;
+    };
     if let Err(error) = file.store(product, entry) {
         eprintln!(
             "[install-paths] cannot store install path for product {product} in {}: {error}",
@@ -319,9 +321,10 @@ mod tests {
         let detected = installed(&temp.path().join("detected"));
         file.store("wow", &entry(&stored)).unwrap();
 
-        let resolved = resolve_install_path(&file, "wow", &inputs(Some(&cli), Some(&env)), || {
-            Some(detected.clone())
-        });
+        let resolved =
+            resolve_install_path(Some(&file), "wow", &inputs(Some(&cli), Some(&env)), || {
+                Some(detected.clone())
+            });
         assert_eq!(
             resolved,
             Some(ResolvedInstallPath {
@@ -330,7 +333,7 @@ mod tests {
             })
         );
 
-        let resolved = resolve_install_path(&file, "wow", &inputs(None, Some(&env)), || {
+        let resolved = resolve_install_path(Some(&file), "wow", &inputs(None, Some(&env)), || {
             Some(detected.clone())
         });
         assert_eq!(
@@ -342,8 +345,9 @@ mod tests {
         );
 
         file.store("wow", &entry(&stored)).unwrap();
-        let resolved =
-            resolve_install_path(&file, "wow", &inputs(None, None), || Some(detected.clone()));
+        let resolved = resolve_install_path(Some(&file), "wow", &inputs(None, None), || {
+            Some(detected.clone())
+        });
         assert_eq!(
             resolved,
             Some(ResolvedInstallPath {
@@ -359,7 +363,7 @@ mod tests {
         let file = settings_file(temp.path());
         let detected = installed(&temp.path().join("detected"));
 
-        let resolved = resolve_install_path(&file, "wowxptr", &inputs(None, None), || {
+        let resolved = resolve_install_path(Some(&file), "wowxptr", &inputs(None, None), || {
             Some(detected.clone())
         });
         assert_eq!(
@@ -383,8 +387,9 @@ mod tests {
         let detected = installed(&temp.path().join("detected"));
         file.store("wow", &entry(&stale)).unwrap();
 
-        let resolved =
-            resolve_install_path(&file, "wow", &inputs(None, None), || Some(detected.clone()));
+        let resolved = resolve_install_path(Some(&file), "wow", &inputs(None, None), || {
+            Some(detected.clone())
+        });
         assert_eq!(
             resolved,
             Some(ResolvedInstallPath {
@@ -404,9 +409,12 @@ mod tests {
         let file = settings_file(temp.path());
         let supplied = installed(&temp.path().join("supplied"));
 
-        resolve_install_path(&file, "wow_classic", &inputs(None, Some(&supplied)), || {
-            None
-        })
+        resolve_install_path(
+            Some(&file),
+            "wow_classic",
+            &inputs(None, Some(&supplied)),
+            || None,
+        )
         .expect("supplied path resolves");
 
         assert_eq!(
@@ -460,6 +468,30 @@ mod tests {
             data_path: Some(install.join("Data")),
         };
         assert_eq!(entry.root(), Some(install.as_path()));
+    }
+
+    #[test]
+    fn missing_settings_handle_uses_environment_without_touching_settings() {
+        let temp = tempfile::tempdir().unwrap();
+        let file = settings_file(temp.path());
+        let stored = installed(&temp.path().join("stored"));
+        let supplied = installed(&temp.path().join("supplied"));
+        file.store("wow", &entry(&stored)).unwrap();
+        let before = std::fs::read_to_string(file.path()).unwrap();
+
+        assert_eq!(
+            resolve_install_path(None, "wow", &inputs(None, None), || None),
+            None,
+            "a stored entry is invisible without a settings handle"
+        );
+        assert_eq!(
+            resolve_install_path(None, "wow", &inputs(None, Some(&supplied)), || None),
+            Some(ResolvedInstallPath {
+                root: supplied,
+                source: InstallPathSource::Env,
+            })
+        );
+        assert_eq!(std::fs::read_to_string(file.path()).unwrap(), before);
     }
 
     #[test]

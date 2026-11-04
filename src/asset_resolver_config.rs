@@ -19,47 +19,29 @@ pub fn configure_casc_product_env() {
             std::env::set_var("WOW_PRODUCT", active_profile_casc_product());
         }
     }
-    configure_casc_install_env();
 }
 
-/// Resolve the install root before the resolver caches it, and store what this
-/// launch learned. Later CASC use reads the standard `WOW_INSTALL_PATH`
-/// environment variable, so the stored path needs no separate plumbing.
+/// Resolve the install root from an explicitly supplied settings file and export
+/// it as `WOW_INSTALL_PATH` before the resolver caches a path. `None` uses only
+/// the environment and automatic discovery and never reads or writes settings;
+/// entrypoints pass [`crate::install_paths::SettingsFile::platform_default`].
 #[cfg(feature = "casc")]
-fn configure_casc_install_env() {
-    static CONFIGURED: OnceLock<()> = OnceLock::new();
-    CONFIGURED.get_or_init(|| {
-        if std::env::var("WOW_SIM_CASC").ok().as_deref() == Some("0") {
-            return;
-        }
-        if running_from_test_binary() {
-            return;
-        }
-        let Some(file) = crate::install_paths::SettingsFile::platform_default() else {
-            return;
-        };
-        let product = active_profile_casc_product();
-        let inputs = crate::install_paths::InstallPathInputs::from_process_env();
-        let resolved = crate::install_paths::resolve_install_path(&file, product, &inputs, || {
-            asset_resolver::wow_install_path().map(std::path::Path::to_path_buf)
-        });
-        let Some(resolved) = resolved else {
-            return;
-        };
-        unsafe {
-            std::env::set_var("WOW_INSTALL_PATH", &resolved.root);
-        }
+pub fn configure_casc_install_env(settings: Option<&crate::install_paths::SettingsFile>) {
+    configure_casc_product_env();
+    if std::env::var("WOW_SIM_CASC").ok().as_deref() == Some("0") {
+        return;
+    }
+    let product = active_profile_casc_product();
+    let inputs = crate::install_paths::InstallPathInputs::from_process_env();
+    let resolved = crate::install_paths::resolve_install_path(settings, product, &inputs, || {
+        asset_resolver::wow_install_path().map(std::path::Path::to_path_buf)
     });
-}
-
-/// Cargo test binaries link from `target/*/deps`; they must not read or rewrite
-/// the user's install settings. Sealed standalone executables keep persisting.
-#[cfg(feature = "casc")]
-fn running_from_test_binary() -> bool {
-    std::env::current_exe()
-        .ok()
-        .and_then(|path| path.parent().map(|parent| parent.ends_with("deps")))
-        .unwrap_or(false)
+    let Some(resolved) = resolved else {
+        return;
+    };
+    unsafe {
+        std::env::set_var("WOW_INSTALL_PATH", &resolved.root);
+    }
 }
 
 #[cfg(feature = "casc")]
