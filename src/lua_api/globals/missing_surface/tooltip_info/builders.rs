@@ -91,30 +91,20 @@ fn uses_modern_tooltip_data() -> bool {
     )
 }
 
+/// D56: packed RGB bytes scaled by the single-precision 1/255; no alpha is published.
+/// CreateColor supplies the ColorMixin methods consumers call (`GetRGB`).
 fn packed_color_table(state: &mut LuaState, r: f64, g: f64, b: f64) -> Val {
-    let color = create_table(state);
+    let [r, g, b] = [r, g, b].map(|component| {
+        let byte = (component.clamp(0.0, 1.0) * 255.0).round() as u8;
+        f64::from(f32::from(byte) * (1.0_f32 / 255.0))
+    });
+    let color = color_table(state, r, g, b, 1.0);
     let saved_top = state.top;
     state.push(color);
-    let mixin = table_get(state, Val::Table(state.global), "ColorMixin");
-    if let (Val::Table(color_ref), Val::Table(_)) = (color, mixin) {
-        let metatable = create_table(state);
-        state.push(metatable);
-        table_set(state, metatable, "__index", mixin);
-        if let Val::Table(metatable_ref) = metatable {
-            state
-                .gc
-                .tables
-                .get_mut(color_ref)
-                .unwrap()
-                .set_metatable(Some(metatable_ref));
-            state.gc.barrier_back(color_ref);
-        }
-    }
     for (key, component) in [("r", r), ("g", g), ("b", b)] {
-        let byte = (component.clamp(0.0, 1.0) * 255.0).round() as u8;
-        let value = f64::from(f32::from(byte) * (1.0_f32 / 255.0));
-        table_set(state, color, key, Val::Num(value));
+        table_set(state, color, key, Val::Num(component));
     }
+    table_set(state, color, "a", Val::Nil);
     state.top = saved_top;
     color
 }
