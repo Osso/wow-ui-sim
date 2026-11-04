@@ -40,3 +40,22 @@ WM63-L4 line 27 verifies that the native periodic-update override does not call
 the content-sizing routine. WM63 is evidence for
 Retail 70688, not Wrath, Forever, Mists, Era or Anniversary; those profiles'
 sizing behavior is unchanged.
+
+## AppendText
+
+On Retail/PTR, `AppendText` appends to the first left FontString's current
+text, including direct FontString edits. It does not select the last row or
+add a row. It updates pooled text and stored line presentation, then sizes
+synchronously. With no active rows it validates the argument but does not
+insert text or invoke layout. Strings and numbers are accepted; other types
+raise the usage error. Text concatenation stops at embedded NUL bytes.
+Evidence: WM95, Retail 12.1.5.70688. Existing ownerless layout returns without
+sizing; secret aspect propagation remains UNKNOWN beyond accepted conversion.
+
+`emulate_append_text_utf8_cap` is the single **EMULATED** byte-limit seam.
+Native truncates at 255 payload bytes, which can split a UTF-8 character.
+The simulator stores Rust strings and retains the largest complete-character
+prefix at or below 255 bytes. ASCII and a multibyte boundary crossing have
+behavioral tests through the original loaded tooltip processing flow.
+The backpack consumer is preservation coverage; the two-row `ProcessInfo`
+consumer rejects a last-row or DTO-only implementation.
