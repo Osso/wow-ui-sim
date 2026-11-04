@@ -625,6 +625,139 @@ fn world_map_tracking_filters_default_to_visible() {
 
 #[test]
 #[cfg(feature = "client-wowforever")]
+fn forever_minimap_tracking_static_filters_use_real_mask() {
+    let env = load_full_game_ui();
+    env.exec(
+        r#"
+        local auction = MinimapUtil.GetFilterIndexForFilterID(1)
+        local flight = MinimapUtil.GetFilterIndexForFilterID(8)
+        assert(auction and flight and auction < flight)
+        local info = C_Minimap.GetTrackingInfo(flight)
+        assert(info.texture == 136456 and info.type == 'other' and info.subType == -1)
+        assert(info.spellID == nil)
+        assert(C_Minimap.GetDefaultTrackingValue(8))
+        assert(not C_Minimap.GetDefaultTrackingValue(1))
+        C_Minimap.SetTracking(auction, true)
+        C_Minimap.SetTracking(flight, false)
+        assert(not C_Minimap.IsFilteredOut(1))
+        assert(C_Minimap.IsFilteredOut(8))
+        assert(not C_Minimap.IsFilteredOut(9))
+        assert(not C_Minimap.IsFilteredOut(0))
+        assert(C_Minimap.GetTrackingInfo(auction).active)
+        assert(not C_Minimap.GetTrackingInfo(flight).active)
+        "#,
+    )
+    .expect("Forever minimap filters should expose and update native tracking rows");
+}
+
+#[test]
+#[cfg(feature = "client-wowforever")]
+fn forever_tracking_rows_respect_class_and_initial_cvar() {
+    for (class, mask, expected_count, poison, ammo) in [
+        (1, "1", 23, false, false),
+        (2, "8", 24, false, true),
+        (5, "8", 25, true, true),
+    ] {
+        let env = WowLuaEnv::new().expect("Lua environment should initialize");
+        {
+            let state = env.state();
+            let mut state = state.borrow_mut();
+            state.player.class_index = class;
+            state.cvars.set_imported("minimapTrackedInfov4", mask);
+        }
+        let result: (i32, bool, bool, bool, bool) = env
+            .eval(
+                r#"
+                local poison, ammo = false, false
+                for i = 1, C_Minimap.GetNumTrackingTypes() do
+                    local filter = C_Minimap.GetTrackingFilter(i).filterID
+                    if filter == 1048576 then poison = true end
+                    if filter == 16777216 then ammo = true end
+                end
+                return C_Minimap.GetNumTrackingTypes(), poison, ammo,
+                       C_Minimap.IsFilteredOut(1), C_Minimap.IsFilteredOut(8)
+                "#,
+            )
+            .expect("tracking rows should reflect player class and CVar");
+        assert_eq!(result, (expected_count, poison, ammo, mask != "1", mask != "8"));
+    }
+}
+
+#[test]
+#[cfg(feature = "client-wowforever")]
+fn forever_tracking_wm77b_default_and_mutations() {
+    let env = WowLuaEnv::new().expect("Lua environment should initialize");
+    assert_eq!(env.state().borrow().cvars.get_default("minimapTrackedInfov4").as_deref(), Some("2162728"));
+    env.state().borrow().cvars.set_imported("minimapTrackedInfov4", "8");
+    env.exec(r#"
+        local index
+        for i = 1, C_Minimap.GetNumTrackingTypes() do
+            if C_Minimap.GetTrackingFilter(i).filterID == 1 then index = i end
+        end
+        assert(index)
+        C_Minimap.SetTracking(index, true)
+        assert(not C_Minimap.IsFilteredOut(1) and not C_Minimap.IsFilteredOut(8))
+        assert(GetCVar('minimapTrackedInfov4') == '8')
+        C_Minimap.ClearAllTracking()
+        assert(C_Minimap.IsFilteredOut(1) and C_Minimap.IsFilteredOut(8))
+        assert(GetCVar('minimapTrackedInfov4') == '8')
+    "#).expect("tracking changes should affect only the in-memory static mask");
+}
+
+#[test]
+#[cfg(feature = "client-wowforever")]
+fn forever_tracking_wm77b_clear_without_player_preserves_unrelated_bits() {
+    let env = WowLuaEnv::new().expect("Lua environment should initialize");
+    {
+        let state = env.state();
+        let mut state = state.borrow_mut();
+        state.minimap_tracking_mask = Some(0x83ff_ffff);
+        state.player.present = false;
+        state.cvars.set_imported("minimapTrackedInfov4", "8");
+    }
+    env.exec("C_Minimap.ClearAllTracking(); assert(GetCVar('minimapTrackedInfov4') == '8')")
+        .expect("clear should not write the CVar");
+    assert_eq!(env.state().borrow().minimap_tracking_mask, Some(0x8200_0000));
+}
+
+#[test]
+#[cfg(feature = "client-wowforever")]
+fn forever_empty_talent_query_accepts_distinct_coordinates() {
+    let env = load_full_game_ui();
+    env.exec(
+        r#"
+        assert(C_SpecializationInfo.GetTalentInfo({tier = 1, column = 1}) == nil)
+        assert(C_SpecializationInfo.GetTalentInfo({tier = 2, column = 3, isInspect = true}) == nil)
+        assert(not pcall(C_SpecializationInfo.GetTalentInfo, {column = 1}))
+        assert(not pcall(C_SpecializationInfo.GetTalentInfo, {tier = 1}))
+        "#,
+    )
+    .expect("Forever's unpopulated legacy grid should validate the query");
+}
+
+#[test]
+#[cfg(feature = "client-wowforever")]
+fn forever_quest_trivial_ranges_reach_original_consumers() {
+    let env = load_full_game_ui();
+    env.exec(
+        r#"
+        assert(UnitQuestTrivialLevelRange('player') == 5)
+        assert(UnitQuestTrivialLevelRangeScaling('player') == 5)
+        assert(C_QuestLog.GetTrivialRange() == 5)
+        assert(DifficultyUtil.GetRelativeDifficultyColor(30, 25) == QuestDifficultyColors.standard)
+        assert(DifficultyUtil.GetRelativeDifficultyColor(30, 24) == QuestDifficultyColors.trivial)
+        assert(NameplateLevelFrameMixin:GetDifficultyColor(-5) == EASY_DIFFICULTY_COLOR)
+        assert(NameplateLevelFrameMixin:GetDifficultyColor(-6) == TRIVIAL_DIFFICULTY_COLOR)
+        "#,
+    )
+    .expect("Forever consumers should receive the unconfigured trivial ranges");
+    env.state().borrow_mut().player.present = false;
+    env.exec("assert(C_QuestLog.GetTrivialRange() == 0)")
+        .expect("missing player has no quest trivial range");
+}
+
+#[test]
+#[cfg(feature = "client-wowforever")]
 fn forever_world_map_trivial_quest_filter_tracks_map_settings() {
     let env = load_full_game_ui();
     env.exec(

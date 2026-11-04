@@ -2,6 +2,10 @@
 
 Forever's `C_QuestLog.GetQuestDifficultyLevel` must expose the supplied rich quest-log row's `level`. Implementation belongs to `src/c_api/c_quest_log.rs`; [quest loading context](../addon-loading-pipeline.md). This equality and fail-fast missing-input policy are bounded simulator assumptions, not claims about native behavior.
 
+## Native trivial ranges
+
+Forever 1.60.1.70707 prepares 5 for both unit trivial-range APIs. `C_QuestLog.GetTrivialRange` returns 0 without a player and 5 with a player when the level curve is unconfigured. The simulator has no configured curve input. Curve values and Forever quest color bands remain unknown; the existing difficulty bands are unchanged.
+
 ## What it must do
 
 - [x] Publish a raw callable `GetQuestDifficultyLevel` through the Forever modeled registration.

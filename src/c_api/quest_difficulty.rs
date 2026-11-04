@@ -28,7 +28,42 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
             quest_difficulty,
         )?;
     }
+    if ACTIVE == ClientProfile::WowForever {
+        // Forever QuestLogDocumentation.lua:684 and UnitDocumentation.lua:2895,2910.
+        let quest_log = ensure_namespace(state, "C_QuestLog")?;
+        table_set_rust_fn_static(state, quest_log, "GetTrivialRange", get_trivial_range)?;
+        let globals = state.global;
+        table_set_rust_fn_static(
+            state,
+            globals,
+            "UnitQuestTrivialLevelRange",
+            unit_trivial_range,
+        )?;
+        table_set_rust_fn_static(
+            state,
+            globals,
+            "UnitQuestTrivialLevelRangeScaling",
+            unit_trivial_range,
+        )?;
+    }
     Ok(())
+}
+
+fn get_trivial_range(state: &mut LuaState) -> LuaResult<u32> {
+    let present = borrow_state(state)?.player.present;
+    state.push(Val::Num(if present { 5.0 } else { 0.0 }));
+    Ok(1)
+}
+
+fn unit_trivial_range(state: &mut LuaState) -> LuaResult<u32> {
+    let unit = rilua::table_security::unwrap_secret(state, stack_val(state, 1))?;
+    if !matches!(unit, Val::Str(_)) {
+        return Err(rilua::runtime_error(
+            "UnitQuestTrivialLevelRange requires a unit token",
+        ));
+    }
+    state.push(Val::Num(5.0));
+    Ok(1)
 }
 
 fn quest_difficulty(state: &mut LuaState) -> LuaResult<u32> {

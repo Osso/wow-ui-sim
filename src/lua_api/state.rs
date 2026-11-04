@@ -227,7 +227,7 @@ macro_rules! build_empty_sim_state {
             model_scenes: HashMap::new(),
             active_player_interactions: HashSet::new(),
             outdoor_pvp_world_state: Default::default(),
-            track_trivial_quests: false,
+            minimap_tracking_mask: None,
             battleground_enlistment: Default::default(),
             pvp_reward_caches: Default::default(),
             #[cfg(feature = "retail-12-0-5")]

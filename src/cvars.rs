@@ -258,6 +258,10 @@ impl Default for CVarStorage {
 
 fn parse_default_cvars() -> (HashMap<String, String>, HashMap<String, String>) {
     let (mut defaults, mut original_names) = parse_cvar_yaml(include_str!("cvars.yaml"));
+    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::WowForever {
+        // Forever 1.60.1.70707 WM77b native registration.
+        defaults.insert("minimaptrackedinfov4".into(), "2162728".into());
+    }
     #[cfg(feature = "retail-12-0-0")]
     for name in [
         "minimapTrackedInfov2",
