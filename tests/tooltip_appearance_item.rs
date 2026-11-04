@@ -7,7 +7,7 @@
 #[path = "tooltip_full_env_helpers.rs"]
 mod tooltip_full_env_helpers;
 
-use wow_ui_sim::c_api::c_transmog_collection::AppearanceSourceInfo;
+use wow_ui_sim::lua_api::state::AppearanceSourceInfo;
 
 #[test]
 fn tooltip_appearance_item_original_hover_reads_current_source_item() {
