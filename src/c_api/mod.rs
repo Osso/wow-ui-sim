@@ -21,6 +21,7 @@ pub(crate) mod game_mode;
 pub(crate) mod game_rules_personal_resource;
 pub(crate) mod game_rules_strata;
 pub(crate) mod game_rules_visibility;
+pub mod item_descriptor;
 pub mod item_overlay;
 pub(crate) mod item_quality_color;
 pub mod mount_filters;

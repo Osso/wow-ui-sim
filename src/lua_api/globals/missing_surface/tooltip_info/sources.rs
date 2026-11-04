@@ -3,10 +3,12 @@ use super::super::{
 };
 use super::builders::{
     empty_tooltip, item_quality_color, push_tooltip_line, stamp_data_instance, tooltip_for_item_id,
+    tooltip_for_item_info,
 };
 use crate::lua_api::globals::missing_surface::item_spell::parse_prefixed_id;
 use crate::lua_api::globals::{currency_data, profession_data};
 use crate::lua_api::methods::{borrow_state, table_get, table_set, val_to_string};
+use rilua::LuaResult;
 use rilua::Val;
 use rilua::vm::state::LuaState;
 
@@ -18,6 +20,31 @@ pub(super) fn tooltip_for_item_source(state: &mut LuaState, value: Val) -> Val {
             tooltip_for_optional_item_id(state, item_id)
         }
     }
+}
+
+pub(super) fn tooltip_for_item_link(
+    state: &mut LuaState,
+    link: &str,
+    item_id: u32,
+) -> LuaResult<Val> {
+    // WM97 evidence is Retail 12.1.5; other profiles keep the catalog-only path.
+    if !matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail | crate::client_profile::ClientProfile::Ptr
+    ) {
+        return Ok(tooltip_for_item_id(state, item_id));
+    }
+    let Some(parsed) = crate::c_api::item_descriptor::parse_item_link(link) else {
+        return Ok(tooltip_for_item_id(state, item_id));
+    };
+    let descriptor = parsed.descriptor;
+    let resolved = descriptor
+        .resolve()
+        .map_err(|error| rilua::runtime_error(format!("C_TooltipInfo.GetHyperlink: {error}")))?;
+    Ok(match resolved {
+        Some(item) => tooltip_for_item_info(state, descriptor.item_id, &item),
+        None => empty_tooltip(state, TOOLTIP_TYPE_ITEM),
+    })
 }
 
 fn tooltip_for_item_location(state: &mut LuaState, location: Val) -> Val {

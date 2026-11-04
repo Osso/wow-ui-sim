@@ -12,7 +12,7 @@ fn tooltip_item_descriptor_original_hyperlink_preserves_bonus_lists() {
         env.exec(&format!(
             r#"
             GameTooltip:SetOwner(UIParent, 'ANCHOR_NONE')
-            GameTooltip:SetHyperlink('item:1728:0:0:0:0:0:0:0:0:0:0:0:{bonuses}:0')
+            GameTooltip:SetHyperlink('item:1728:0:0:0:0:0:0:0:0:0:0:0:{bonuses}:0:0:0:0::0')
             local info = GameTooltip:GetPrimaryTooltipInfo()
             local data = GameTooltip:GetPrimaryTooltipData()
             assert(info and info.getterName == 'GetHyperlink', 'original accessor selected')
