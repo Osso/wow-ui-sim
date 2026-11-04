@@ -387,6 +387,15 @@ fn account_guid_predicate_accepts_permissive_native_inputs() {
         end
         local ok, err = pcall(predicate)
         assert(not ok and err:find('Usage: local isBNet = C_AccountInfo.IsGUIDBattleNetAccountType(guid)', 1, true))
+        debug.settaintmode(true)
+        local secret = secretwrap('BNetAccount-1-2')
+        assert(predicate(secret) == true)
+        local function addon()
+            local accepted, message = pcall(predicate, secret)
+            assert(not accepted and message:find('Secret values are only allowed during untainted execution', 1, true))
+        end
+        debug.setobjecttaint(addon, 'AccountGuidProbe')
+        addon()
         "#,
     )
     .unwrap();
