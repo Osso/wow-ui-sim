@@ -3376,3 +3376,7 @@ EllesmereUI.
 ## 2026-11-03 — Timed area POI classification
 
 Added [static classification and provenance](systems/area-poi-timed.md).
+
+## 2026-11-04 — NECESSARY Retail scheduling profile
+
+Recorded [integration timing and timeout-capacity contention](investigations/test-runtime-optimization.md#necessary-retail-scheduling-profile--2026-11-04). Stable exact-name sharding preserves test identities and the two-child semaphore. Two warm full-suite proofs remain open.

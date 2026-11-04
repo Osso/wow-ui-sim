@@ -8,7 +8,8 @@ The NECESSARY Retail suite must complete in at most 600 seconds of wall time on 
 - [x] Partition stable libtest discovery into disjoint exact-name selections, including the existing ignored-test entries.
 - [x] Balance tests using saved wall-time costs without unstable runtime flags. Give newly discovered tests a unit scheduling weight.
 - [x] Preserve failed-test names and a nonzero aggregate result when a shard fails.
-- [ ] Keep test assertions, importance classifications, and the complete test list unchanged.
+- [x] Finish timeout-capacity conformance before ordinary shards; keep known timeout waiters from occupying every ordinary worker.
+- [x] Keep test assertions, importance classifications, and the complete test list unchanged.
 
 ### Resource limits
 
@@ -23,6 +24,7 @@ The NECESSARY Retail suite must complete in at most 600 seconds of wall time on 
 
 - `tools/full_suite.py`: stable discovery, measured-cost partitioning, service launch and result aggregation.
 - `tools/integration-costs.json`: saved Retail integration wall-time weights.
+- `tools/integration-timeout-tests.json`: named timeout consumers assigned to dedicated lanes.
 - `tools/test_full_suite.py`: runner behavior tests using bounded child processes.
 
 ## Tests asserting this spec

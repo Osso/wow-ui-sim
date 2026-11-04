@@ -1,3 +1,7 @@
+## [2026-11-04] investigation | NECESSARY Retail scheduling
+
+[Runtime optimization](investigations/test-runtime-optimization.md#necessary-retail-scheduling-profile--2026-11-04) records all integration timings, exclusive timeout-fixture contention, and separate timeout-consumer lanes. The [warm-run target](../specs/necessary-suite-runtime.md) still requires two complete sub-600-second proofs.
+
 ## [2026-11-04] correction | Publication gap expectations
 
 The [10.0.2](../specs/patch-10-0-2-publication-sweep.md#current-reconciliation--2026-11-04), [10.1.0](../specs/patch-10-1-0-publication-sweep.md#current-reconciliation--2026-11-04), [8.1.0](../specs/patch-8-1-0-publication-sweep.md#current-reconciliation--2026-11-04) and [8.1.5](../specs/patch-8-1-5-publication-sweep.md#current-reconciliation--2026-11-04) specs record resolved endpoints and producer commits. Historical audit captures are unchanged.

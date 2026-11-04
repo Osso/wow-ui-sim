@@ -43,7 +43,26 @@ This is the correct fixture for addon API, TOC, registration, and load-state ass
 
 Never share a mutable `WowLuaEnv` across tests. Tests mutate Lua globals, frame trees, addon-loaded state, registries, SavedVariables, and seeded domain state. The safe optimization narrows each test's dependency closure while still creating a fresh environment per test. Reusing a live environment or persistent worker would make sibling order and state leakage part of the test contract.
 
+## NECESSARY Retail scheduling profile — 2026-11-04
+
+The [600-second warm-run contract](../../specs/necessary-suite-runtime.md) concerns the complete NECESSARY Retail set, not only the historical closure fixture above. Source `73d0de5b5` yielded 11,968 timed passing integration cases and 18 ignored entries. One-off libtest JSON timing collection used `RUSTC_BOOTSTRAP=1`; the adopted runner uses only stable discovery and saved metadata.
+
+The three-thread profile was continued in disjoint single-thread partitions after preserving its completed cases. The 8,725 remaining cases took 634.64 seconds under a 16-CPU cap, consumed 4,921.64 CPU-seconds and reached a 13,794,742,272-byte aggregate cgroup peak. No cgroup OOM occurred. This is profiling evidence, not a complete passing sub-600-second full-suite run.
+
+Three timeout-harness conformance cases measured 180.70, 237.99 and 295.78 seconds while competing for the exclusive workload gate. Their fixture launcher explicitly reserves exclusive capacity before testing the global two-child semaphore. The scheduling change runs the conformance module before ordinary shared workloads. It does not change the semaphore, timeout implementation, fixture or assertions.
+
+A separate exact LoD-shard probe passed in 5.63 seconds, consumed 5.57 CPU-seconds and reached 898,904,064 bytes, versus 72.40 seconds of queued wall time in the profile. Queued wall weights are not exclusive callback or startup CPU costs.
+
+Saved source inspection identifies 482 named `test_timeout!`/`with_timeout` consumers. Two dedicated scheduling lanes keep these semaphore waiters from occupying every ordinary worker; the other lanes can run ordinary tests while both child permits are occupied. Classification changes scheduling only: newly added or unclassified cases still encounter the unchanged global semaphore. The fixture-equivalence restrictions above remain binding; this work does not migrate tests to a broader prefork parent.
+
+The [runner operation](../../remote-builds.md#asynchronous-full-suite) describes the current scheduling implementation. Two complete warm NECESSARY runs, including incremental no-op builds, remain the acceptance requirement; the profile and bounded Python tests do not establish that target.
+
 ## Sources
+
+- [Scheduling contract](../../specs/necessary-suite-runtime.md) — warm-run target and unchanged coverage requirements
+- [Full-suite runner](../../../tools/full_suite.py) — stable discovery and exact-name scheduling
+- [Saved wall-time weights](../../../tools/integration-costs.json) — all 11,968 measured passing cases
+- [Timeout scheduling names](../../../tools/integration-timeout-tests.json) — source-inspected timeout consumers
 
 - [SharedMapDataProviders test](../../../tests/blizzard_shared_map_data_providers_loads.rs) — commit `e1f9b210b1790258a6f865cc3df0e85f6364e8e0`, implicit dependency override, and retained assertions
 - [Blizzard addon closure harness](../../../tests/common/blizzard_addon_harness.rs) — fresh environments and dependency-ordered closure loading
