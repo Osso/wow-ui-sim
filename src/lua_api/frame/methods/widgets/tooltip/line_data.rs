@@ -668,7 +668,8 @@ fn append_native_tooltip_text(state: &mut LuaState, id: u64) -> LuaResult<u32> {
         .unwrap()
         .lines[0] = first;
     sync_tooltip_line_frame(state, id, false, 1)?;
-    size_tooltip_on_native_trigger(&mut borrow_state_mut(state)?, id);
+    let mut sim = borrow_state_mut(state)?;
+    size_tooltip_on_native_trigger(&mut sim, id);
     Ok(0)
 }
 
