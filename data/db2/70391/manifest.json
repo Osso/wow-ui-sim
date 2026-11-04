@@ -1,0 +1,392 @@
+{
+  "schema_version": 1,
+  "verified": "2026-11-04",
+  "product": "wow",
+  "build": "12.1.5.70391",
+  "locale": "enUS",
+  "build_key": "334a36cf5f3c32a5f7a167405487fa14",
+  "build_config_sha256": "f30cdd30bcbb613795557606c0015411640ffa4a2710f7419ea75dae345c964d",
+  "root_content_key": "25c68dd1c7597cccd94252085c3367ed",
+  "encoding_content_key": "8d0576391f8e80ce55940381fc3f674a",
+  "source": "Pinned root/encoding metadata and immutable local CASC archive entries; not the active installed build. Build config retrieved by content key from Blizzard CDN.",
+  "active_local_retail_build_observed": "12.1.5.70783",
+  "definitions": {
+    "repository": "https://github.com/wowdev/WoWDBDefs",
+    "commit": "d6f50d4f351193e84226aa62a36faa0f58528afa",
+    "manifest_sha256": "4314266fe055e30207e1c39498a7a31058a1aa2ab6cd674726491b313d135265"
+  },
+  "exporter": {
+    "repository": "world-of-osso/game-engine",
+    "commit": "2ef01defc4fe6d8ff1ae0f12d954675256a9c353",
+    "files": {
+      "export_db2_csv.py": "dbd6c8f1d1e1785b65dcb668063ec2832c25a765d957babcf229da1732340f18",
+      "db2_dbd.py": "c63288def52f98fb52ebad33a74f1bc0e181923adcb1d02238c97b99aa6c5989",
+      "server_db2.py": "03b7436e6ea870547115fb6a5f772f4558aa8f0f814d00b264c14466143561f5",
+      "closure_casc.py": "e362d52fc0c44bafd008f6c466397064640eeb8205bed8eab7070fbef1e93d7f"
+    },
+    "decoder": {
+      "repository": "world-of-osso/game-server",
+      "file": "scripts/db2_casc.py",
+      "sha256": "c225f08461d33bcad5436b14f8342878b5f891ea64b9fef4a08ca0bef52aba4b"
+    },
+    "curve_blte_decoder": {
+      "name": "asset-resolver casc-local",
+      "binary_sha256": "b5a3bd2b8778fff7c1f1eb7a4b44ee44019d7fd47e90efdf0c008f6044377843",
+      "external_tactkeys_sha256": "6d83241ed776f9e74e27ed65d1ec52f1a1464a4e9b16bed497258fdd61020b52"
+    }
+  },
+  "reference_evidence": {
+    "name": "WM97-item-descriptor.md",
+    "section": "DQ3 (VERIFIED native Type dispatch)",
+    "build": "12.1.5.70688",
+    "sha256": "1aca19bc6c07fb194bfa56c993c90d6525ddc2badf83ee2ba99f89b70de80a55",
+    "limit": "The dispatch evidence is from70688, not native proof of70391. Only explicitly verified table selectors are checked. Unknown scalar meanings, descriptor modifiers absent from CSV, and unlisted ItemBonus Value positions are not inferred."
+  },
+  "tables": {
+    "ItemScalingConfig": {
+      "layout": "7BEABE68",
+      "rows": 418,
+      "unreadable_records": 0,
+      "id_column": "ID",
+      "file": "ItemScalingConfig.csv",
+      "fdid": 7322705,
+      "csv_sha256": "24d24f5f5d54b6f12027e40f334520cff32c2da455b913554558e457be233fe5",
+      "columns": [
+        "ID",
+        "ItemOffsetCurveID",
+        "ItemLevel",
+        "RequiredLevel",
+        "ItemSquishEraID",
+        "Flags"
+      ],
+      "definition_sha256": "60c0b8b17423f6edc0d8f108a7367d6499d0995cae93a8e14edddbf07f5e5d85",
+      "decoded_payload_sha256": "d8d5ae440f1db96dfd6a4a81a992975bc9d186c60391f2ad13445dc3f8628684",
+      "content_key_authenticated": true,
+      "source": {
+        "content_key": "921182df7d370085f53195848c401e4e",
+        "encoding_key": "3a2117a54e3626cf4fe215c1314fb302",
+        "encoded_blob_sha256": "f90643539034beb58b7d604c5a1e347ed0d8c539e46703de5c304c1bd53299d5",
+        "encoding_key_authenticated": true,
+        "decoded_size": 4043,
+        "local_archive": 49,
+        "local_offset": 445315583,
+        "local_length": 1839
+      },
+      "complete": true,
+      "missing_sections": [],
+      "header_record_count": 297,
+      "copied_records": 121,
+      "section_counts": [
+        297
+      ]
+    },
+    "ItemOffsetCurve": {
+      "layout": "6F2157CA",
+      "rows": 70,
+      "unreadable_records": 0,
+      "id_column": "ID",
+      "file": "ItemOffsetCurve.csv",
+      "fdid": 7322704,
+      "csv_sha256": "6a485dbe27cf0704bafeaa785d1b423d9ba5cbcbe0b1dabb56b3bb7c2666f4ef",
+      "columns": [
+        "ID",
+        "CurveID",
+        "Offset"
+      ],
+      "definition_sha256": "db51836e07f38f424ef96aed6f5b260973aab55375a4e9c4b027025048dd37e4",
+      "decoded_payload_sha256": "cfd000f86b4eb5f6cb95f9920e3b5d124497e0010bb32a76f658648efe487311",
+      "content_key_authenticated": true,
+      "source": {
+        "content_key": "d19d9f5f0a054b446e6505647bbca4b2",
+        "encoding_key": "d86af28e2817cb03d1ea2eb9e6c12bd4",
+        "encoded_blob_sha256": "5fa8dc813617c918eb4825f9be85f5cb29d6b32448ef31ac017e554688198e9f",
+        "encoding_key_authenticated": true,
+        "decoded_size": 891,
+        "local_archive": 64,
+        "local_offset": 688550118,
+        "local_length": 497
+      },
+      "complete": true,
+      "missing_sections": [],
+      "header_record_count": 47,
+      "copied_records": 23,
+      "section_counts": [
+        47
+      ]
+    },
+    "ItemSquishEra": {
+      "layout": "ED6F4ECF",
+      "rows": 2,
+      "unreadable_records": 0,
+      "id_column": "ID",
+      "file": "ItemSquishEra.csv",
+      "fdid": 7322706,
+      "csv_sha256": "03ff57ed2d9115f94d72e477086cba70e298dcf95dc0f1d137d0d25901bf3762",
+      "columns": [
+        "ID",
+        "Patch",
+        "CurveID",
+        "Flags"
+      ],
+      "definition_sha256": "9ccdbdc69cdb2d55b17705a7bbe3459d397c6b1b02ec25328e90bcc227bd768c",
+      "decoded_payload_sha256": "1f613ad70665f410d0f2791ae475c88e4e10b508e840ae080d1f36725d0b1a70",
+      "content_key_authenticated": true,
+      "source": {
+        "content_key": "04e328f532192674e6226b809d933380",
+        "encoding_key": "9a75992dbaea7f09147f1523e9b8bc38",
+        "encoded_blob_sha256": "de42b8b92a450f690a9f745cadaa6b776e86f8949b49e6b7aa8a3dbbb11bf0de",
+        "encoding_key_authenticated": true,
+        "decoded_size": 370,
+        "local_archive": 64,
+        "local_offset": 431743559,
+        "local_length": 189
+      },
+      "complete": true,
+      "missing_sections": [],
+      "header_record_count": 2,
+      "copied_records": 0,
+      "section_counts": [
+        2
+      ]
+    },
+    "ContentTuning": {
+      "layout": "A3E13004",
+      "rows": 2950,
+      "unreadable_records": 0,
+      "id_column": "ID",
+      "file": "ContentTuning.csv",
+      "fdid": 1962930,
+      "csv_sha256": "7889c77490469bc22fb40d898bce8841106c3bb8e604933f138c81d6dee49526",
+      "columns": [
+        "ID",
+        "Flags",
+        "ExpansionID",
+        "HPScalingCurveID",
+        "DMGScalingCurveID",
+        "HPPrimaryStatScalingCurveID",
+        "DMGPrimaryStatScalingCurveID",
+        "PrimaryStatScalingModPlayerDataElementCharacterID",
+        "PrimaryStatScalingModPlayerDataElementCharacterMultiplier",
+        "MinLevelSquish",
+        "MaxLevelSquish",
+        "MinLevelScalingOffset",
+        "MaxLevelScalingOffset",
+        "AllowedMinOffset",
+        "AllowedMaxOffset",
+        "LfgMinLevel",
+        "LfgMaxLevel",
+        "ILevel",
+        "XpMultQuest"
+      ],
+      "definition_sha256": "47221414bc27415e8e556a8380406600011690ade83afc6743f8f10900babf16",
+      "decoded_payload_sha256": "21c32fb05ac274a34c7638da68b100c51313fcb4baf107568c8b3a15a65bc947",
+      "content_key_authenticated": true,
+      "source": {
+        "content_key": "041db291555ac85ff98a1302ed050c78",
+        "encoding_key": "85b738fc0640c9a0ec035f4c91865944",
+        "encoded_blob_sha256": "0075c7545eab1ea2cadcd88e3e64c0a0afb34936ae50c601f7280ba3a011c508",
+        "encoding_key_authenticated": true,
+        "decoded_size": 29556,
+        "local_archive": 44,
+        "local_offset": 241896975,
+        "local_length": 13627
+      },
+      "complete": true,
+      "missing_sections": [],
+      "header_record_count": 2950,
+      "copied_records": 0,
+      "section_counts": [
+        2950
+      ]
+    },
+    "Curve": {
+      "layout": "D362535A",
+      "rows": 62817,
+      "unreadable_records": 2,
+      "id_column": "ID",
+      "file": "Curve.csv",
+      "fdid": 892585,
+      "csv_sha256": "2b0f3d6df69515ae3802373a0cb4cbc6740857a4590f38c9f3ee2301d3ee9f08",
+      "columns": [
+        "ID",
+        "Type",
+        "Flags"
+      ],
+      "definition_sha256": "a3d5db6045406fb09034c11983f3efa976f9053837c64dfcd7bd78591099cb45",
+      "decoded_payload_sha256": "09cd80f68ddaa292018bbea4e9adbbc99212375d93a14da3bd465b53e218f34a",
+      "content_key_authenticated": false,
+      "source": {
+        "content_key": "ef2a1fb6b40b94fa57edffc69627f4ac",
+        "encoding_key": "84a341a7bcb3424adcce1ce704e09428",
+        "encoded_blob_sha256": "d94e5502cbcb1de44b3cc23bc8d3a6b664552ff4398ed534741c2bedafb01188",
+        "encoding_key_authenticated": true,
+        "decoded_size": 188955,
+        "local_archive": 2,
+        "local_offset": 380949942,
+        "local_length": 146265
+      },
+      "complete": false,
+      "missing_sections": [
+        {
+          "tact_key_name": "DAC5AA105D0C1B67",
+          "record_ids": [
+            121405,
+            121406
+          ],
+          "record_count": 2,
+          "reason": "Unknown TACT key; omitted, not filled"
+        }
+      ],
+      "header_record_count": 62819,
+      "copied_records": 0,
+      "section_counts": [
+        62802,
+        15,
+        2
+      ]
+    },
+    "CurvePoint": {
+      "layout": "7D4954A1",
+      "rows": 172321,
+      "unreadable_records": 6,
+      "id_column": "ID",
+      "file": "CurvePoint.csv",
+      "fdid": 892586,
+      "csv_sha256": "1bb018d9a6d8615c1df228d6b30451b8f8902c5b838147c28c6c8fb17ed60f57",
+      "columns": [
+        "Pos_0",
+        "Pos_1",
+        "PosPreSquish_0",
+        "PosPreSquish_1",
+        "ID",
+        "CurveID",
+        "OrderIndex"
+      ],
+      "definition_sha256": "3d7af9ea2e638e5dc5dbc3da36394120a030f985871ccb15f25f88f40123aef5",
+      "decoded_payload_sha256": "126193c386de0ab9a00863fd2afae78b7f782fba391aa4451682d067cf9f6547",
+      "content_key_authenticated": false,
+      "source": {
+        "content_key": "0592fe1eeb004a7ba9e12207458e804c",
+        "encoding_key": "aa17b7d6dbaa2be9133aa14282c438a1",
+        "encoded_blob_sha256": "e0f602cd3be1631bff3ce95602fd56cf70752c7c312fc5291cb02695c87f5e89",
+        "encoding_key_authenticated": true,
+        "decoded_size": 5515186,
+        "local_archive": 8,
+        "local_offset": 1012159798,
+        "local_length": 1455435
+      },
+      "complete": false,
+      "missing_sections": [
+        {
+          "tact_key_name": "DAC5AA105D0C1B67",
+          "record_ids": [
+            355127,
+            355128,
+            355129,
+            355130,
+            355131,
+            355132
+          ],
+          "record_count": 6,
+          "reason": "Unknown TACT key; omitted, not filled"
+        }
+      ],
+      "header_record_count": 172327,
+      "copied_records": 0,
+      "section_counts": [
+        172274,
+        47,
+        6
+      ]
+    }
+  },
+  "item_bonus_input": {
+    "provenance": "wago.tools db2 CSV export, build 12.1.5.70391, enUS, fetched 2026-11-02",
+    "sha256": "bbb5dc694d41d2862432c18b637c327d31e43945c58b8e519dd33b9b6375d9f8",
+    "rows": 20272,
+    "copied_into_snapshot": false,
+    "identity": "ItemBonus.csv from the pinned 12.1.5.70391 wago.tools export (not copied)"
+  },
+  "reference_selectors": [
+    {
+      "consumer": "ItemScalingConfig",
+      "column": "ItemOffsetCurveID",
+      "target": "ItemOffsetCurve",
+      "evidence": "VERIFIED WM97 DQ3 schema (layout relation)",
+      "status": "verified"
+    },
+    {
+      "consumer": "ItemScalingConfig",
+      "column": "ItemSquishEraID",
+      "target": "ItemSquishEra",
+      "evidence": "VERIFIED WM97 DQ3 selector 48/49/51/52; WM97b pending",
+      "status": "verified"
+    },
+    {
+      "consumer": "ItemOffsetCurve",
+      "column": "CurveID",
+      "target": "Curve",
+      "evidence": "VERIFIED WM97 DQ3 secondary route ItemScalingConfig\u2192ItemOffsetCurve\u2192Curve",
+      "status": "verified"
+    },
+    {
+      "consumer": "CurvePoint",
+      "column": "CurveID",
+      "target": "Curve",
+      "evidence": "VERIFIED WM97 DQ3 CurvePoint groups by CurveID",
+      "status": "verified"
+    },
+    {
+      "consumer": "ContentTuning",
+      "column": "HPScalingCurveID,DMGScalingCurveID,HPPrimaryStatScalingCurveID,DMGPrimaryStatScalingCurveID",
+      "target": "Curve",
+      "evidence": "UNVERIFIED selector targets; WM97b-item-descriptor-scaling.md pending",
+      "status": "unverified"
+    },
+    {
+      "consumer": "ItemBonus types 11,13",
+      "column": "Value_3",
+      "target": "Curve",
+      "evidence": "VERIFIED WM97 DQ3 types 11/13 Value_3 selects player-level curve",
+      "status": "verified"
+    },
+    {
+      "consumer": "ItemBonus types 11,13",
+      "column": "Value_2",
+      "target": "ContentTuning",
+      "evidence": "VERIFIED WM97 DQ3 types 11/13 Value_2 supplies ContentTuning",
+      "status": "verified"
+    },
+    {
+      "consumer": "ItemBonus type 27",
+      "column": "Value_1",
+      "target": "ContentTuning",
+      "evidence": "VERIFIED WM97 DQ3 nonzero Value_1 can replace ContentTuning",
+      "status": "verified"
+    },
+    {
+      "consumer": "ItemBonus types 49,51",
+      "column": "Value_0",
+      "target": "ItemScalingConfig",
+      "evidence": "VERIFIED WM97 DQ3 Value_0 selects ItemScalingConfig",
+      "status": "verified"
+    },
+    {
+      "consumer": "ItemBonus type 48",
+      "column": "Value_0/Value_2",
+      "target": "Curve/ItemSquishEra",
+      "evidence": "VERIFIED WM97 DQ3 Value_0 offsets curve, Value_2 era; exact target table unverified",
+      "status": "unverified"
+    },
+    {
+      "consumer": "ItemBonus type 52",
+      "column": "Value_1",
+      "target": "ItemSquishEra",
+      "evidence": "VERIFIED WM97 DQ3 type52 uses Value_1 era selection; target table inference unverified",
+      "status": "unverified"
+    }
+  ],
+  "snapshot_path": "data/db2/70391",
+  "README": "README.md",
+  "verification": "verification.json"
+}
