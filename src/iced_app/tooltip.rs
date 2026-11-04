@@ -125,6 +125,12 @@ pub(crate) fn measure_tooltip(
     if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Wrath {
         return wrath::measure_tooltip(state, id, font_system);
     }
+    if matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail | crate::client_profile::ClientProfile::Ptr
+    ) {
+        return measure_native_tooltip(state, id, font_system);
+    }
     let td = match state.tooltips.get(&id) {
         Some(td) => td,
         None => return (0.0, 0.0),
@@ -178,6 +184,121 @@ pub(crate) fn measure_tooltip(
         content_width + horizontal_padding,
         total_height + vertical_padding,
     )
+}
+
+fn measure_native_tooltip(state: &mut SimState, id: u64, fonts: &mut WowFontSystem) -> (f32, f32) {
+    let Some(td) = state.tooltips.get(&id).cloned() else {
+        return (0.0, 0.0);
+    };
+    let mut floor = td.min_width;
+    let mut width = floor;
+    let cap = td.custom_word_wrap_min_width.unwrap_or(230.4).max(0.0);
+    let mut has_right = false;
+    for (index, line) in td.lines.iter().enumerate() {
+        let left = native_line_width(state, &td, index, false, &line.left_text, fonts);
+        let right = line.right_text.as_deref().map_or(0.0, |text| {
+            native_line_width(state, &td, index, true, text, fonts)
+        });
+        has_right |= right > 0.0;
+        if line.wrap || td.force_min_width {
+            width = width.max(left.min(cap));
+        } else {
+            let gap = if left > 0.0 && right > 0.0 { 38.4 } else { 0.0 };
+            floor = floor.max(left + right + gap);
+            width = width.max(floor);
+        }
+    }
+    if td.shrink_to_fit_wrapped && !td.force_min_width && !has_right {
+        let mut fitted = floor;
+        for (index, line) in td.lines.iter().enumerate().filter(|(_, line)| line.wrap) {
+            if td.left_line_is_hidden(&state.widgets, index) {
+                continue;
+            }
+            let (font, size, scale, _, _) = native_line_font(state, &td, index, false);
+            let text = tooltip_visible_text(&line.left_text);
+            fitted = fitted.max(
+                fonts.measure_fitted_text_width(&text, font.as_deref(), size, width / scale)
+                    * scale,
+            );
+        }
+        width = width.min(fitted);
+    }
+    let mut height = 0.0;
+    for (index, line) in td.lines.iter().enumerate() {
+        let wrapped = line.wrap || td.force_min_width;
+        if wrapped {
+            if let Some(line_id) = td.left_line_ids.get(index).copied() {
+                if let Some(frame) = state.widgets.get_mut_visual(line_id) {
+                    frame.width = width;
+                    frame.width_is_text_auto = false;
+                }
+                state.widgets.mark_rect_dirty(line_id);
+            }
+        }
+        if td.left_line_is_hidden(&state.widgets, index) {
+            continue;
+        }
+        let (font, size, scale, spacing, smooth) = native_line_font(state, &td, index, false);
+        let text = tooltip_visible_text(&line.left_text);
+        let measured = fonts.measure_text_height(
+            &text,
+            font.as_deref(),
+            size,
+            wrapped.then_some(width / scale),
+            spacing,
+            smooth,
+        ) * scale;
+        if height > 0.0 {
+            height += td.line_spacing.unwrap_or(TOOLTIP_LINE_SPACING);
+        }
+        height += measured;
+    }
+    let (horizontal, vertical) = td.native_outer_padding();
+    (width + horizontal, height + vertical)
+}
+
+fn native_line_font(
+    state: &SimState,
+    td: &crate::lua_api::tooltip::TooltipData,
+    index: usize,
+    right: bool,
+) -> (Option<String>, f32, f32, f32, bool) {
+    let ids = if right {
+        &td.right_line_ids
+    } else {
+        &td.left_line_ids
+    };
+    ids.get(index)
+        .and_then(|id| state.widgets.get(*id))
+        .map(|frame| {
+            (
+                frame.font.clone(),
+                frame.font_size,
+                (frame.text_scale as f32).max(f32::MIN_POSITIVE),
+                frame.text_line_spacing,
+                frame.font_string_smooth_scaling,
+            )
+        })
+        .unwrap_or((None, tooltip_line_font_size(index), 1.0, 0.0, false))
+}
+
+fn native_line_width(
+    state: &SimState,
+    td: &crate::lua_api::tooltip::TooltipData,
+    index: usize,
+    right: bool,
+    text: &str,
+    fonts: &mut WowFontSystem,
+) -> f32 {
+    if if right {
+        td.right_line_is_hidden(&state.widgets, index)
+    } else {
+        td.left_line_is_hidden(&state.widgets, index)
+    } {
+        return 0.0;
+    }
+    let (font, size, scale, _, _) = native_line_font(state, td, index, right);
+    fonts.measure_text_width(&tooltip_visible_text(text), font.as_deref(), size) * scale
 }
 
 fn tooltip_column_gap(left: &str, right: Option<&str>, effective_scale: f32) -> f32 {
