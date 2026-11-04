@@ -18,6 +18,55 @@ SCOPES = ("integration", "prefork_full_ui", "lib")
 PROFILES = ("retail", "ptr", "wrath", "mists", "wowforever", "era", "anniversary")
 
 
+class IntegrationShardingTests(unittest.TestCase):
+    def setUp(self):
+        spec = importlib.util.spec_from_file_location('shard_runner', RUNNER)
+        self.runner = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(self.runner)
+
+    def test_measured_cost_balancing_keeps_each_test_once(self):
+        names = ['ui::slow', 'api::a', 'api::b', 'ui::medium', 'new::test']
+        costs = {'ui::slow': 8, 'ui::medium': 5, 'api::a': 3, 'api::b': 2}
+        shards = self.runner.partition_tests(names, costs, 2)
+        self.assertEqual(sorted(name for shard in shards for name in shard), sorted(names))
+        self.assertEqual(sorted(sum(costs.get(name, 1) for name in shard) for shard in shards), [9, 10])
+        self.assertEqual(shards, self.runner.partition_tests(list(reversed(names)), costs, 2))
+
+    def test_stable_shards_execute_exact_names_and_report_failures(self):
+        import io
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            binary = root / 'test-binary'
+            write_executable(binary,
+                "import json, pathlib, sys\n"
+                "root = pathlib.Path(__file__).parent\n"
+                "names = ['alpha::a', 'alpha::ab', 'beta::bad', 'beta::ignored']\n"
+                "if '--list' in sys.argv:\n"
+                "    print('\\n'.join(name + ': test' for name in names))\n"
+                "    sys.exit(0)\n"
+                "assert '--exact' in sys.argv\n"
+                "selected = sys.argv[sys.argv.index('--exact') + 1:]\n"
+                "(root / ('selected-' + selected[0].replace(':', '_'))).write_text(json.dumps(selected))\n"
+                "for name in selected: print('test ' + name + ' ... ' + ('FAILED' if name == 'beta::bad' else 'ignored' if name.endswith('ignored') else 'ok'))\n"
+                "sys.exit(1 if 'beta::bad' in selected else 0)\n")
+            launcher = root / 'systemd-run'
+            write_executable(launcher,
+                "import subprocess, sys\n"
+                "sys.exit(subprocess.call(sys.argv[sys.argv.index('--') + 1:]))\n")
+            self.runner.confirm_terminated = lambda *args: None
+            command = [str(launcher), '--unit=fixture', '--', str(binary)]
+            log = io.StringIO()
+            step, output = self.runner.run_integration_shards(
+                command, root, log, dict(os.environ), {}, 3)
+            selected = [name for path in root.glob('selected-*') for name in json.loads(path.read_text())]
+            self.assertEqual(sorted(selected), ['alpha::a', 'alpha::ab', 'beta::bad', 'beta::ignored'])
+            self.assertEqual(step['exit'], 1)
+            self.assertEqual(self.runner.FAILED.findall(output), ['beta::bad'])
+            self.assertEqual(len(step['shards']), 3)
+            self.assertIn('beta::ignored ... ignored', output)
+            self.assertNotIn('RUSTC_BOOTSTRAP', log.getvalue())
+
+
 def write_executable(path, body):
     path.write_text(f"#!{sys.executable}\n" + body)
     path.chmod(0o755)
