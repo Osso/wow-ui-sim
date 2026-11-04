@@ -50,8 +50,21 @@ fn tooltip_bag_child_original_accessor_selects_catalog_child_not_parent() {
         ))
         .unwrap();
     }
+    env.state().borrow_mut().bag_items.insert(
+        (0, 3),
+        BagItem {
+            owned_identity: None,
+            item_id: 238720,
+            stack_count: 1,
+            hyperlink: None,
+            durability: None,
+            applied_transmog: None,
+        },
+    );
     env.exec(
         r#"
+        assert(C_TooltipInfo.GetBagItemChild(0, 3, 9) == nil,
+            'child 238721 is absent from pinned ItemSparse; must not invent lines')
         GameTooltip:SetOwner(UIParent, 'ANCHOR_NONE')
         GameTooltip:SetBagItemChild(0, 1, 17)
         assert(GameTooltip:GetPrimaryTooltipData() == nil, 'wrong equip slot must not select first child')
