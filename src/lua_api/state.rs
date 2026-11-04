@@ -587,7 +587,6 @@ macro_rules! build_empty_sim_state {
             guild_bank_tabs: Vec::new(),
             merchant_frame_open: false,
             // Inferred default scenario: no configured repair service.
-            #[cfg(feature = "client-wowforever")]
             merchant_repair_capable: false,
             tabard_frame_open: false,
             trainer_frame_open: false,
