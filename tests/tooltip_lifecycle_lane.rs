@@ -11,6 +11,7 @@ fn tooltip_lifecycle_original_insert_frame_uses_default_spacing() {
             .unwrap();
     env.exec(&source).unwrap();
     env.exec(r#"
+        Round = function(value) return math.floor(value + 0.5) end
         local tip = CreateFrame("GameTooltip", "LifecycleSpacingTip", UIParent)
         tip:AddLine("first")
         tip:AddLine("second")
