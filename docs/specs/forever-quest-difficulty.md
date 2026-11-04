@@ -1,6 +1,10 @@
-# Forever quest difficulty query
+# Quest difficulty query
 
-Forever's `C_QuestLog.GetQuestDifficultyLevel` must expose the supplied rich quest-log row's `level`. Implementation belongs to `src/c_api/c_quest_log.rs`; [quest loading context](../addon-loading-pipeline.md). This equality and fail-fast missing-input policy are bounded simulator assumptions, not claims about native behavior.
+Retail, PTR and Forever's `C_QuestLog.GetQuestDifficultyLevel` must expose the supplied rich quest-log row's `level`. Implementation belongs to `src/c_api/c_quest_log.rs`; [quest loading context](../addon-loading-pipeline.md). The named **UNKNOWN/EMULATED quest-difficulty-level** seam retains the existing equality and fail-fast missing-input policies; native tuning, unknown-ID, error and secrecy behavior are not established.
+
+## Declared-profile publication — 2026-11-04
+
+Pinned Retail, PTR and Forever `Blizzard_APIDocumentationGenerated/QuestLogDocumentation.lua:380–392` declare `questID -> level`. The four Classic profiles do not declare this endpoint in their pinned generated documentation. Publication now follows that declared set and reuses the existing model without changing Forever behavior. PTR's original `Blizzard_FrameXMLUtil/Mainline/DifficultyUtil.lua:84–88` requires it during startup. WM89 difficulty-band evidence does not prove that the stored quest level equals a native tuning-adjusted difficulty level.
 
 ## Native trivial ranges
 
@@ -10,7 +14,7 @@ For `C_PlayerInfo.GetContentDifficultyQuestForPlayer`, WM89 establishes Impossib
 
 ## What it must do
 
-- [x] Publish a raw callable `GetQuestDifficultyLevel` through the Forever modeled registration.
+- [ ] Publish a raw callable `GetQuestDifficultyLevel` through the modeled registration on Retail, PTR and Forever; preserve absence on the four Classic profiles.
 - [x] Return exactly one number from the exact current environment's `quest_log_entries.entries` row matching `quest_id`; observe non-80 live mutations and never consult a static catalog or fabricate a level.
 - [x] Fail explicitly with API/questID context for nonnumeric, nonfinite, fractional, out-of-i32-range or unrepresented identities and for removed rows. Missing valid integer identities include that ID in the error.
 - [x] Support unchanged whole cached Mainline DifficultyUtil plus Camelot QuestUtilsOverrides with explicit test fixtures for elite status, CVar selection and color dependencies; produce concrete ordinary/elite, colored/plain title prefixes.
@@ -38,10 +42,11 @@ Current source `f91eb7aab` has **18 quest model PASS**: membership8 + revised pr
 
 ## Implementation inventory
 
-- `src/c_api/c_quest_log.rs`: supplied-state lookup and Forever registration; existing Retail/PTR eligibility remains separate.
+- `src/c_api/c_quest_log.rs`: shared declared-profile supplied-state difficulty lookup; Forever elite and existing Retail/PTR eligibility queries remain separate.
 - `src/c_api/mod.rs`: narrowly extends the module and utility call gate to Forever.
 - `src/lua_api/globals/quest_surface/{register,handlers}.rs`: omit replaced static watch handlers only on Forever, preserving initial modeled publication.
-- `tests/wowforever_quest_difficulty.rs`: fresh-environment and unchanged whole-consumer behavior assertions.
+- `tests/wowforever_quest_difficulty.rs`: shared declared-profile live-row/isolation/error assertions and Forever-only whole-consumer assertions.
+- `tests/edit_mode_cache_startup.rs`: unchanged PTR/Retail process startup reaches the original DifficultyUtil title consumer; truncated account-cache warning remains observable.
 - `src/c_api/c_quest_log_watches.rs`: Forever membership mutators, type/count/index queries, legacy global mappings and synchronous notifications; seeded map stored in `SimState`.
 - `tests/wowforever_quest_watch_projection.rs`: revised live-row/explicit-membership projection assertions, four model cases PASS at source `f91eb7aab`.
 - `tests/wowforever_quest_watch_membership.rs` and `.lua`: membership, restore-call preservation and reentrant-event coverage, eight model cases PASS at source `f91eb7aab`; `tests/fixtures/quest_watch_membership_original.lua` retains the original probe.

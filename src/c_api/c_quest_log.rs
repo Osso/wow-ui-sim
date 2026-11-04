@@ -51,6 +51,18 @@ pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
             quest_can_have_war_mode_bonus,
         )?;
     }
+    // Retail/PTR/Forever QuestLogDocumentation.lua:380-392 declares this query.
+    if matches!(
+        ACTIVE,
+        ClientProfile::Retail | ClientProfile::Ptr | ClientProfile::WowForever
+    ) {
+        table_set_rust_fn_static(
+            state,
+            namespace,
+            "GetQuestDifficultyLevel",
+            get_quest_difficulty_level,
+        )?;
+    }
     #[cfg(feature = "client-wowforever")]
     register_forever_queries(state)?;
     if super::c_quest_log_watches::ENABLED {
@@ -102,12 +114,6 @@ fn can_abandon_quest(state: &mut LuaState) -> LuaResult<u32> {
 #[cfg(feature = "client-wowforever")]
 fn register_forever_queries(state: &mut LuaState) -> LuaResult<()> {
     let namespace = ensure_namespace(state, "C_QuestLog")?;
-    table_set_rust_fn_static(
-        state,
-        namespace,
-        "GetQuestDifficultyLevel",
-        get_quest_difficulty_level,
-    )?;
     table_set_rust_fn_static(state, namespace, "IsEliteQuest", is_elite_quest)?;
     Ok(())
 }
@@ -189,9 +195,9 @@ fn is_unit_on_quest(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
-/// Simulator policy: difficulty is the rich row's level; absent data is an error.
-/// This does not establish native unknown-ID, error, or secrecy behavior.
-#[cfg(feature = "client-wowforever")]
+/// UNKNOWN/EMULATED quest-difficulty-level: return the supplied rich row's level;
+/// absent data is an error. Native tuning, unknown-ID, error and secrecy behavior
+/// remain unverified. This is the existing model shared by declared profiles.
 fn get_quest_difficulty_level(state: &mut LuaState) -> LuaResult<u32> {
     let quest_id = validate_supplied_relation_id(
         stack_val(state, 1),
