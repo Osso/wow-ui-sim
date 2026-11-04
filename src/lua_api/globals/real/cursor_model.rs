@@ -23,12 +23,36 @@ pub(crate) const MODE_CURRENCY: u8 = 13;
 pub(crate) const MODE_OUTFIT: u8 = 21;
 
 /// Native cursor storage that outlives one payload.
-#[derive(Debug, Default, Clone)]
+#[derive(Debug, Clone)]
 pub struct CursorStorage {
+    /// Base and displayed cursor selectors; these are separate from held content.
+    pub presentation_base: u8,
+    pub presentation_display: u8,
+    /// WM86's two native gates have unknown meaning; supplied independently.
+    pub presentation_gate_a: bool,
+    pub presentation_gate_b: bool,
+    /// Supplied refresh and notification controls; native defaults are unknown.
+    pub presentation_refresh: bool,
+    pub presentation_notifications: bool,
     /// Shared item-ID storage S, reported as the previous stored ID.
     pub stored_item_id: u32,
     /// Grid flag: set by grid-showing pickups, cleared by the shared clear.
     pub grid_shown: bool,
+}
+
+impl Default for CursorStorage {
+    fn default() -> Self {
+        Self {
+            presentation_base: 1,
+            presentation_display: 1,
+            presentation_gate_a: false,
+            presentation_gate_b: false,
+            presentation_refresh: false,
+            presentation_notifications: false,
+            stored_item_id: 0,
+            grid_shown: false,
+        }
+    }
 }
 
 /// Whether this profile uses the native cursor model.

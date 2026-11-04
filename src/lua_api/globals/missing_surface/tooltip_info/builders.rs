@@ -4,12 +4,16 @@ use super::super::{
 };
 use crate::items;
 use crate::lua_api::methods::{
-    borrow_state, call_function_state, create_string, create_table, table_get, table_set,
-    val_to_string,
+    borrow_state, call_function_state, create_string, create_table, registry_get, registry_set,
+    table_get, table_set, val_to_string,
 };
 use crate::lua_bridge::stack_val;
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
+
+#[cfg(all(test, any(feature = "profile-retail", feature = "client-ptr")))]
+#[path = "builder_contract_tests.rs"]
+mod builder_contract_tests;
 
 pub(super) fn color_table(state: &mut LuaState, r: f64, g: f64, b: f64, a: f64) -> Val {
     let key = state.gc.intern_string(b"CreateColor");
@@ -43,7 +47,14 @@ pub(super) fn push_tooltip_line(
     state.push(lines);
     let line = create_table(state);
     set_table_array(state, lines, index, line);
+    let line_type = if uses_modern_tooltip_data() {
+        remap_line_type(state, line_type, left_color)
+    } else {
+        line_type
+    };
     table_set(state, line, "type", Val::Num(line_type));
+    // D56 copies markup without segment arrays; the simulator's tooltip renderer
+    // colors inline runs only from `leftColorSegments`, so this path keeps them.
     let parsed = tooltip_line_text_and_color(state, left_text, left_color);
     let left_text_val = create_string(state, &parsed.text);
     table_set(state, line, "leftText", left_text_val);
@@ -59,6 +70,40 @@ pub(super) fn push_tooltip_line(
         table_set(state, line, "wrapText", Val::Bool(true));
     }
     state.top = saved_top;
+}
+
+fn uses_modern_tooltip_data() -> bool {
+    matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail | crate::client_profile::ClientProfile::Ptr
+    )
+}
+
+/// D56 builder initialization: populated results get the next `dataInstanceID`.
+/// Miss results keep their prior shape because WM82 leaves miss publication UNKNOWN.
+pub(super) fn stamp_data_instance(state: &mut LuaState, tooltip: Val) {
+    if !uses_modern_tooltip_data() {
+        return;
+    }
+    let counter = match registry_get(state, "__tooltip_data_instance_counter") {
+        Val::Num(counter) => counter + 1.0,
+        _ => 1.0,
+    };
+    registry_set(state, "__tooltip_data_instance_counter", Val::Num(counter));
+    table_set(state, tooltip, "dataInstanceID", Val::Num(counter));
+}
+
+fn remap_line_type(state: &mut LuaState, line_type: f64, color: Option<(f64, f64, f64)>) -> f64 {
+    if line_type != 0.0 || color.is_none() {
+        return line_type;
+    }
+    if color == global_color(state, b"ERROR_COLOR") {
+        41.0
+    } else if color == global_color(state, b"DISABLED_FONT_COLOR") {
+        42.0
+    } else {
+        line_type
+    }
 }
 
 struct ParsedTooltipText {
@@ -569,6 +614,7 @@ pub(super) fn tooltip_for_item_info(
     item: &items::ItemInfo,
 ) -> Val {
     let tooltip = create_identified_tooltip(state, TOOLTIP_TYPE_ITEM, item_id);
+    stamp_data_instance(state, tooltip);
     populate_item_tooltip_lines(state, tooltip, item);
     tooltip
 }

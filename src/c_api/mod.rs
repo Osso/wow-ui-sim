@@ -6,6 +6,7 @@
 mod c_account_info;
 pub mod c_guild_info;
 pub mod c_recruit_a_friend;
+pub(crate) mod c_tooltip_info_loot;
 pub(crate) mod class_catalog;
 #[cfg(any(feature = "client-era", feature = "client-anniversary"))]
 pub(crate) mod classic_startup_data;

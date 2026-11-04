@@ -1,4 +1,4 @@
-//! Forever buyback reads; collection contents are an explicit simulator scenario.
+//! Buyback reads; collection contents are an explicit simulator scenario.
 
 use crate::items;
 use crate::lua_api::methods::{borrow_state, create_string};

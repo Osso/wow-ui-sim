@@ -4,6 +4,26 @@ The Lua API layer bridges Lua addon code with the Rust simulation engine. It pro
 
 
 
+## Tooltip data and merchant cursor presentation
+
+Retail/PTR supplied loot and buyback slots feed the existing item tooltip builder.
+[The getter contract](../../specs/tooltip-loot-buyback.md) records the emulated
+missing-slot seam, strict-index limitation and remaining D56 publication gaps.
+Populated builder results receive per-Lua-state `dataInstanceID` counters;
+zero-line misses retain their previous shape because WM82 leaves miss publication
+unknown. Cross-call payload tests compare all content but not instance numbers.
+Master's markup stripping, segment arrays and `CreateColor` output remain in use:
+removing them without presentation-layer markup parsing loses inline colors.
+
+`CursorStorage` holds separate base/display selectors alongside held-content
+storage. [Merchant presentation](../../specs/merchant-cursor-presentation.md) owns
+the WM86 contract and unknown native gates, custom assets and listener timing.
+Supplied repair capability is shared across profiles with its false scenario
+default unchanged; the new presentation operations register only on Retail/PTR.
+Original MerchantFrame buyback hover and the three presentation tests pass on
+both profiles. The full PTR tooltip/library runs retain the same failures as
+the source-matched master baseline; this is not a clean PTR startup claim.
+
 ## Group member counts
 
 The [group-count contract](../../specs/group-member-role-counts.md) distinguishes native build 70688 evidence from simulator coverage. Solo and class counts have selected Retail PartyUtil RED/GREEN proof; the native role bytes, skip flag, and separate raid container remain unmodeled.

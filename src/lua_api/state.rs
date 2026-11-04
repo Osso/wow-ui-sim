@@ -587,7 +587,6 @@ macro_rules! build_empty_sim_state {
             guild_bank_tabs: Vec::new(),
             merchant_frame_open: false,
             // Inferred default scenario: no configured repair service.
-            #[cfg(feature = "client-wowforever")]
             merchant_repair_capable: false,
             tabard_frame_open: false,
             trainer_frame_open: false,
@@ -606,7 +605,6 @@ macro_rules! build_empty_sim_state {
             #[cfg(feature = "retail-12-0-7")]
             merchant_currencies: Vec::new(),
             // Explicit empty buyback scenario; not a native account-state default.
-            #[cfg(feature = "client-wowforever")]
             merchant_buyback_items: Vec::new(),
             loot_slots: Vec::new(),
             last_loot_roll_choice: None,
