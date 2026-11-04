@@ -196,6 +196,7 @@ macro_rules! build_empty_sim_state {
             account_store_items: $collections.account_store_items,
             action_bar_state: ActionBarStateInfo::default(),
             spell_range_visualization: Default::default(),
+            action_combat_range: Default::default(),
             bank_reagent_object: super::globals::real::bank_reagents::unknown_character_default(),
             action_bar_page: 1,
             has_vehicle_action_bar: false,
