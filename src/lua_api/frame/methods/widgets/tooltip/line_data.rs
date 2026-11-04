@@ -365,10 +365,13 @@ pub(super) fn get_custom_line_spacing(state: &mut LuaState) -> LuaResult<u32> {
         .tooltips
         .get(&id)
         .and_then(|td| td.line_spacing)
-        .map(|s| s as f64)
-        .unwrap_or(0.0);
+        .map(|s| s as f64);
     drop(sim);
-    v.into_stack(state)
+    match v {
+        Some(spacing) => spacing.into_stack(state),
+        None if native_sizing_timing() => Ok(0),
+        None => 0.0_f64.into_stack(state),
+    }
 }
 
 pub(super) fn set_minimum_width(state: &mut LuaState) -> LuaResult<u32> {
