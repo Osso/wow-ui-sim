@@ -6,9 +6,9 @@ The query lives in `src/lua_api/globals/missing_surface/character_select.rs`.
 
 ## What it must do
 
-- [ ] Forever `GetBasicCharacterInfo` publishes `characterName` from the selected supplied account, not the legacy `name` field. PTR retains its existing path; other profiles are unchanged.
-- [ ] The original Shared CharacterSelectUtil lookup and Camelot tooltip must accept two distinct supplied names, including when specID is absent.
-- [ ] `fullName` passes through one named **EMULATED** seam: the supplied account name is already display text. No surname is invented or copied from a different character. Native composition awaits WM100 and will replace this seam.
+- [x] Forever `GetBasicCharacterInfo` publishes `characterName` from the selected supplied account, not the legacy `name` field. PTR retains its existing path; other profiles are unchanged.
+- [x] The original Shared CharacterSelectUtil lookup and Camelot tooltip must accept two distinct supplied names, including when specID is absent.
+- [x] `fullName` passes through one named **EMULATED** seam: the supplied account name is already display text. No surname is invented or copied from a different character. Native composition awaits WM100 and will replace this seam.
 
 ## How it works
 

@@ -7,9 +7,9 @@ protected entry-to-result continuity and live execution remain unverified.
 
 ## What it must do
 
-- [ ] Require an index. Omitted/nil input raises the native diagnostic body `Usage: local configID = C_SpecializationInfo.GetCombatConfigIDForSpecGroup(groupIndex)`. Context-dependent error decoration is not fixed.
-- [ ] Search supplied configurations in provider order, requiring combat kind and the selected group flag. Index 1 uses flag 1; every other accepted index, including 99, uses flag 8. No group-count validation is added.
-- [ ] Return exactly one matching numeric ID, including zero, or one nil if no match exists. The default supplied collection is empty. Do not alias the separately stored active configuration ID or the legacy talent grid.
+- [x] Require an index. Omitted/nil input raises the native diagnostic body `Usage: local configID = C_SpecializationInfo.GetCombatConfigIDForSpecGroup(groupIndex)`. Context-dependent error decoration is not fixed.
+- [x] Search supplied configurations in provider order, requiring combat kind and the selected group flag. Index 1 uses flag 1; every other accepted index, including 99, uses flag 8. No group-count validation is added.
+- [x] Return exactly one matching numeric ID, including zero, or one nil if no match exists. The default supplied collection is empty. Do not alias the separately stored active configuration ID or the legacy talent grid.
 - [ ] Publish only on Forever; preserve other profile surfaces.
 
 ## How it works

@@ -1,3 +1,9 @@
+## [2026-11-04] investigation | Forever tooltip baseline
+
+[Forever compatibility](investigations/forever-addon-startup-compatibility.md#tooltip-baseline-fixtures-and-producers)
+records Camelot fixture selection, modeled query publication, excluded GroupFinder
+frames, strict spellbook scenario inputs, WM99 state and remaining producer gaps.
+
 ## [2026-11-04] implementation | Totem tooltip duration
 
 [Tooltip data](systems/lua-api.md#tooltip-data-and-merchant-cursor-presentation)
