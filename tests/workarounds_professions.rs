@@ -72,6 +72,42 @@ fn settle_env(env: &WowLuaEnv) {
 }
 
 #[test]
+fn profession_source_filter_updates_are_deferred_and_coalesced() {
+    let env = full_game_env();
+    env.exec(
+        r#"
+        professionFilterUpdates = 0
+        professionFilterListener = CreateFrame('Frame')
+        professionFilterListener:RegisterEvent('TRADE_SKILL_LIST_UPDATE')
+        professionFilterListener:SetScript('OnEvent', function()
+            professionFilterUpdates = professionFilterUpdates + 1
+        end)
+        -- ProfessionsFrame:SetProfessionInfo uses this Blizzard helper when
+        -- opening Blacksmithing. Its no-op clear must not reenter the frame.
+        Professions.SetAllSourcesFiltered(false)
+        assert(professionFilterUpdates == 0, 'unchanged clear dispatched synchronously')
+        C_TradeSkillUI.SetRecipeSourceTypeFilter(1, true)
+        C_TradeSkillUI.SetOnlyShowMakeableRecipes(true)
+        Professions.SetAllSourcesFiltered(false)
+        assert(professionFilterUpdates == 0, 'changed filters dispatched synchronously')
+        "#,
+    )
+    .unwrap();
+    fire_one_on_update_tick(&env);
+    env.exec(
+        r#"
+        assert(professionFilterUpdates == 1, 'changed filters must coalesce into one update')
+        Professions.SetAllSourcesFiltered(false)
+        assert(professionFilterUpdates == 1, 'unchanged clear must not dispatch')
+        "#,
+    )
+    .unwrap();
+    fire_one_on_update_tick(&env);
+    env.exec("assert(professionFilterUpdates == 1, 'unchanged clear must not queue an update')")
+        .unwrap();
+}
+
+#[test]
 fn casting_blacksmithing_opens_professions_frame() {
     let env = full_game_env();
     env.state().borrow_mut().lua_errors.clear();
