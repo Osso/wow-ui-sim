@@ -32,7 +32,7 @@ pub(crate) fn get_legacy_talent_info(state: &mut LuaState) -> LuaResult<u32> {
     if !has_column {
         return Err(rilua::runtime_error("query.column must be specified."));
     }
-    // The Retail and Forever legacy tier/column grids are not modeled.
+    // The Retail legacy tier/column grid is not modeled. Forever uses c_api::forever_talents.
     state.push(Val::Nil);
     Ok(1)
 }

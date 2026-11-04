@@ -12,6 +12,7 @@ pub(crate) mod class_catalog;
 pub(crate) mod classic_startup_data;
 #[cfg(feature = "client-retail")]
 pub mod currency_list;
+pub mod forever_talents;
 pub(crate) mod game_mode;
 pub(crate) mod game_rules_personal_resource;
 pub(crate) mod game_rules_strata;

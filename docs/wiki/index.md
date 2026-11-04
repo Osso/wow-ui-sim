@@ -1,3 +1,8 @@
+## [2026-11-04] implementation | Forever ordinary talent query
+
+[Forever talents](systems/forever-talents.md) documents WM90 grid lookup,
+supplied character state, original TalentFrame consumer proof and native limits.
+
 ## [2026-11-04] bounded proof | Tooltip data and merchant cursor
 
 [Lua API](systems/lua-api.md#tooltip-data-and-merchant-cursor-presentation) links

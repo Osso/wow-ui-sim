@@ -65,7 +65,13 @@ pub fn register_c_specialization_info(state: &mut LuaState) -> LuaResult<()> {
         crate::client_profile::ClientProfile::Retail
             | crate::client_profile::ClientProfile::WowForever
     ) {
-        table_set_rust_fn_static(state, t_ref, "GetTalentInfo", get_legacy_talent_info)?;
+        let talent_info =
+            if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::WowForever {
+                super::forever_talents::get_talent_info
+            } else {
+                get_legacy_talent_info
+            };
+        table_set_rust_fn_static(state, t_ref, "GetTalentInfo", talent_info)?;
     }
     if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
         table_set_rust_fn_static(
@@ -362,7 +368,13 @@ fn c_spec_can_player_use_talent_ui(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn c_spec_get_active_spec_group(state: &mut LuaState) -> LuaResult<u32> {
-    state.push(Val::Num(1.0));
+    let group = if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::WowForever
+    {
+        borrow_state(state)?.talents.forever.current_group + 1
+    } else {
+        1
+    };
+    state.push(Val::Num(group as f64));
     Ok(1)
 }
 
