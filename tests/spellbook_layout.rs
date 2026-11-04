@@ -78,7 +78,16 @@ fn hover_first_spell_button(env: &WowLuaEnv) -> (String, f32, f32, f32, f32) {
             end
         end
 
-        error("No visible spellbook spell with tooltip data")
+        local entries = {}
+        for _, frame in paged:EnumerateFrames() do
+            local info = frame.spellBookItemInfo
+            entries[#entries + 1] = string.format('shown=%s valid=%s spell=%s button=%s',
+                tostring(frame:IsShown()), tostring(frame.HasValidData and frame:HasValidData()),
+                tostring(info and info.spellID), tostring(frame.Button and frame.Button:IsShown()))
+        end
+        error("No visible spellbook spell with tooltip data; " .. table.concat(entries, '; ')
+            .. '; first=' .. tostring(C_SpellBook.GetSpellBookItemInfo(1, Enum.SpellBookSpellBank.Player))
+            .. '; pageShown=' .. tostring(paged:IsShown()))
         "#,
     )
     .expect("Failed to hover a visible spellbook button")
