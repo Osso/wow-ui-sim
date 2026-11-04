@@ -77,6 +77,17 @@ fn show_or_hide(state: &mut LuaState, id: u64, shown: bool) -> LuaResult<()> {
         }
     }
     if !shown {
+        let clear_tooltip = matches!(
+            crate::client_profile::ACTIVE,
+            crate::client_profile::ClientProfile::Retail
+                | crate::client_profile::ClientProfile::Ptr
+        ) && borrow_state(state)?
+            .widgets
+            .get(id)
+            .is_some_and(|frame| frame.widget_type == WidgetType::GameTooltip);
+        if clear_tooltip {
+            crate::lua_api::frame::methods::widgets::clear_tooltip_for_hide(state, id)?;
+        }
         release_tooltip_owner(state, id)?;
     }
     if !needs_change {

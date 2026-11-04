@@ -3,6 +3,15 @@
 use wow_ui_sim::lua_api::WowLuaEnv;
 use wow_ui_sim::widget::AnchorPoint;
 
+// WM63 O17:20-41 applies to Retail and PTR.
+fn native_tooltip_anchors() -> bool {
+    matches!(
+        wow_ui_sim::client_profile::ACTIVE,
+        wow_ui_sim::client_profile::ClientProfile::Retail
+            | wow_ui_sim::client_profile::ClientProfile::Ptr
+    )
+}
+
 fn prepare_tooltip_layout(env: &WowLuaEnv) {
     use wow_ui_sim::render::font::WowFontSystem;
 
@@ -36,7 +45,11 @@ fn test_invalid_anchor_type_warns_and_defaults() {
         .lua_errors
         .iter()
         .any(|e| e.contains("invalid anchor type") && e.contains("INVALID_ANCHOR"));
-    assert!(has_warning, "Should warn about invalid anchor type");
+    assert_eq!(
+        has_warning,
+        !native_tooltip_anchors(),
+        "invalid anchor warning"
+    );
 }
 
 #[test]
@@ -90,8 +103,26 @@ fn test_anchor_cursor_custom_offsets() {
 
     assert_eq!(frame.anchors.len(), 1);
     let anchor = &frame.anchors[0];
-    assert!((anchor.x_offset - 110.0).abs() < 0.1);
-    assert!((anchor.y_offset - 230.0).abs() < 0.1);
+    assert!(
+        (anchor.x_offset
+            - if native_tooltip_anchors() {
+                100.0
+            } else {
+                110.0
+            })
+        .abs()
+            < 0.1
+    );
+    assert!(
+        (anchor.y_offset
+            - if native_tooltip_anchors() {
+                state.screen_height - 200.0
+            } else {
+                230.0
+            })
+        .abs()
+            < 0.1
+    );
 }
 
 #[test]
@@ -113,7 +144,16 @@ fn test_anchor_cursor_default_offset_when_none_specified() {
 
     let anchor = &frame.anchors[0];
     assert!((anchor.x_offset - 50.0).abs() < 0.1);
-    assert!((anchor.y_offset - 120.0).abs() < 0.1);
+    assert!(
+        (anchor.y_offset
+            - if native_tooltip_anchors() {
+                state.screen_height - 100.0
+            } else {
+                120.0
+            })
+        .abs()
+            < 0.1
+    );
 }
 
 #[test]
@@ -135,8 +175,22 @@ fn test_non_cursor_anchor_uses_offsets() {
     let frame = state.widgets.get(gt_id).unwrap();
 
     let anchor = &frame.anchors[0];
-    assert_eq!(anchor.point, AnchorPoint::Left);
-    assert_eq!(anchor.relative_point, AnchorPoint::Right);
+    assert_eq!(
+        anchor.point,
+        if native_tooltip_anchors() {
+            AnchorPoint::BottomLeft
+        } else {
+            AnchorPoint::Left
+        }
+    );
+    assert_eq!(
+        anchor.relative_point,
+        if native_tooltip_anchors() {
+            AnchorPoint::TopRight
+        } else {
+            AnchorPoint::Right
+        }
+    );
     assert!((anchor.x_offset - 5.0).abs() < 0.1);
     assert!((anchor.y_offset - 10.0).abs() < 0.1);
 }

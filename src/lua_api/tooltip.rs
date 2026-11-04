@@ -170,7 +170,33 @@ pub(crate) fn wrath_texture_gap(width: f32, height: f32) -> f32 {
 
 pub(crate) const DEFAULT_CURSOR_Y_OFFSET: f32 = 20.0;
 
-pub(crate) fn build_cursor_anchor(mx: f32, my: f32, x_offset: f32, y_offset: f32) -> Anchor {
+pub(crate) fn build_cursor_anchor(
+    mx: f32,
+    my: f32,
+    x_offset: f32,
+    y_offset: f32,
+    anchor_type: &str,
+    screen_height: f32,
+    scale: f32,
+) -> Anchor {
+    if matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail | crate::client_profile::ClientProfile::Ptr
+    ) {
+        let (point, x_offset, y_offset) = match anchor_type {
+            "ANCHOR_CURSOR_LEFT" => (AnchorPoint::BottomRight, x_offset, y_offset),
+            "ANCHOR_CURSOR_RIGHT" => (AnchorPoint::BottomLeft, x_offset, y_offset),
+            _ => (AnchorPoint::Bottom, 0.0, 0.0),
+        };
+        return Anchor {
+            point,
+            relative_to: None,
+            relative_to_id: None,
+            relative_point: AnchorPoint::BottomLeft,
+            x_offset: mx / scale + x_offset,
+            y_offset: (screen_height - my) / scale + y_offset,
+        };
+    }
     let cursor_y = if x_offset == 0.0 && y_offset == 0.0 {
         my + DEFAULT_CURSOR_Y_OFFSET
     } else {

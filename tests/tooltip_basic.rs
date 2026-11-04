@@ -155,7 +155,17 @@ fn tooltip_owner_hide_releases_owner_without_clearing_lines() {
     assert!(!shown);
     assert!(owner, "Hide must release tooltip ownership");
     assert!(!owned);
-    assert_eq!(lines, 1, "Hide must not clear tooltip lines");
+    // WM63 O17:45: mainline Hide clears active lines.
+    let expected = if matches!(
+        wow_ui_sim::client_profile::ACTIVE,
+        wow_ui_sim::client_profile::ClientProfile::Retail
+            | wow_ui_sim::client_profile::ClientProfile::Ptr
+    ) {
+        0
+    } else {
+        1
+    };
+    assert_eq!(lines, expected, "Hide line count");
     let sim = env.state().borrow();
     let id = sim.widgets.get_id_by_name("GameTooltip").unwrap();
     assert_eq!(sim.widgets.get(id).unwrap().tooltip_owner_id, None);
@@ -275,7 +285,17 @@ fn test_on_tooltip_cleared_fires_on_setowner() {
     .unwrap();
 
     let count: i32 = env.eval("return _G.cleared_count").unwrap();
-    assert_eq!(count, 1, "OnTooltipCleared should fire on SetOwner");
+    // WM63 O17:51: an empty clear does not dispatch the notification.
+    let expected = if matches!(
+        wow_ui_sim::client_profile::ACTIVE,
+        wow_ui_sim::client_profile::ClientProfile::Retail
+            | wow_ui_sim::client_profile::ClientProfile::Ptr
+    ) {
+        0
+    } else {
+        1
+    };
+    assert_eq!(count, expected, "SetOwner clear notification count");
 }
 
 #[test]
@@ -481,7 +501,10 @@ fn tooltip_content_lifecycle_setowner_hides_clears_and_retains_new_owner() {
     assert!(owned);
     let sim = env.state().borrow();
     let id = sim.widgets.get_id_by_name("GameTooltip").unwrap();
-    assert_eq!(sim.widgets.get(id).unwrap().tooltip_owner_id, sim.tooltips.get(&id).unwrap().owner_id);
+    assert_eq!(
+        sim.widgets.get(id).unwrap().tooltip_owner_id,
+        sim.tooltips.get(&id).unwrap().owner_id
+    );
     assert!(sim.tooltips.get(&id).unwrap().owner_id.is_some());
 }
 
