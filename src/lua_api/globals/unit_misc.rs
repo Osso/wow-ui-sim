@@ -57,7 +57,11 @@ pub(crate) fn unit_identity_is_secret(state: &mut LuaState, unit: &str) -> LuaRe
     any(feature = "profile-retail", feature = "client-ptr")
 )))]
 pub(crate) fn unit_identity_is_secret(_state: &mut LuaState, unit: &str) -> LuaResult<bool> {
-    Ok(crate::lua_api::globals::unit_api::parse_party_index(unit).is_some())
+    // WM91: ordinary Forever party tokens bypass explicit identity secrecy.
+    Ok(
+        crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::WowForever
+            && crate::lua_api::globals::unit_api::parse_party_index(unit).is_some(),
+    )
 }
 
 pub(crate) fn identity_output(state: &mut LuaState, text: &str, secret: bool) -> Val {
@@ -131,11 +135,17 @@ fn unit_full_name(state: &mut LuaState) -> LuaResult<u32> {
     state.push(name);
     let second = match second.as_deref() {
         Some(value) => identity_output(state, value, secret),
-        None if forever && unit != "player" => Val::Nil,
+        None if forever && unit != "player" => unresolved_forever_non_player_full_name_second(),
         None => identity_output(state, SIM_REALM, secret),
     };
     state.push(second);
     Ok(2)
+}
+
+// WM91 leaves the same-realm party payload UNKNOWN. Preserve the existing
+// absence until native evidence establishes which resolver branch supplies it.
+fn unresolved_forever_non_player_full_name_second() -> Val {
+    Val::Nil
 }
 
 fn unit_class_base(state: &mut LuaState) -> LuaResult<u32> {
