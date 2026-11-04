@@ -57,6 +57,14 @@ pub(crate) fn fire_state(
 }
 
 fn begin_tick(state: &mut LuaState, elapsed: f64) -> crate::Result<()> {
+    let pending = std::mem::take(
+        &mut borrow_state_mut(state)?
+            .crafting
+            .recipe_filter_update_pending,
+    );
+    if pending {
+        super::script_helpers::fire_named_event_state(state, "TRADE_SKILL_LIST_UPDATE", &[]);
+    }
     super::globals::real::loot_specialization::apply_pending(state)?;
     #[cfg(feature = "player-cast-durations")]
     super::channeling::tick(state)?;

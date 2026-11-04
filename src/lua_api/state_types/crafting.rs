@@ -12,6 +12,8 @@ pub struct CraftingState {
     pub recipe_name_filter: String,
     /// Recipe-list display filters other than the name search.
     pub recipe_filters: RecipeListFilters,
+    /// One deferred recipe-list update shared by filter changes.
+    pub recipe_filter_update_pending: bool,
     /// Currently-selected profession id (Skill Line ID — matches the
     /// values in `profession_data`). `None` until `C_TradeSkillUI.
     /// SetProfessionChildSkillLineID` is called or the player opens
