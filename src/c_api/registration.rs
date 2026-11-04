@@ -64,6 +64,7 @@ pub(crate) fn register_item_power_tables(state: &mut LuaState) -> LuaResult<()> 
 
 pub(crate) fn register_character_progression_tables(state: &mut LuaState) -> LuaResult<()> {
     super::trait_group_display::register(state)?;
+    super::trait_group_currency::register(state)?;
     super::quest_difficulty::register(state)?;
     super::c_pet_talent_tree::register(state)?;
     super::c_prof_specs_reminders::register(state)?;

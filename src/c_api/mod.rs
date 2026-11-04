@@ -31,6 +31,7 @@ pub mod quest_readiness;
 pub(crate) mod quest_reward_currencies;
 pub(crate) mod quest_reward_spells;
 pub(crate) mod tooltip_data;
+pub mod trait_group_currency;
 pub mod trait_group_display;
 pub mod ui_widget_manager;
 #[cfg(feature = "client-wrath")]
