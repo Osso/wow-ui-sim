@@ -126,6 +126,8 @@ fn forever_talent_missing_rows_and_specialization_order() {
     env.exec("assert(C_SpecializationInfo.GetTalentInfo{tier=1,column=1}.talentID == 902)").unwrap();
     env.state().borrow_mut().talents.forever.spell_names.remove(&9002);
     env.exec("assert(C_SpecializationInfo.GetTalentInfo{tier=1,column=1} == nil)").unwrap();
+    env.state().borrow_mut().talents.forever.spell_names.insert(9002, "Restored name".into());
+    env.exec("assert(C_SpecializationInfo.GetTalentInfo{tier=1,column=1}.talentID == 902)").unwrap();
     env.state().borrow_mut().player.present = false;
     env.exec("assert(C_SpecializationInfo.GetTalentInfo{tier=1,column=1} == nil)").unwrap();
 }
