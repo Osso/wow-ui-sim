@@ -28,6 +28,13 @@ fn tooltip_totem_original_accessor_uses_stored_name_and_two_lines() {
             spell_id: 19750,
         }),
     ];
+    {
+        let mut sim = env.state().borrow_mut();
+        let occupied = sim.totem_slots[0].clone();
+        sim.totem_slots.resize(9, None);
+        sim.totem_slots[7] = occupied.clone();
+        sim.totem_slots[8] = occupied;
+    }
     env.exec(
         r#"
         for slot, name in ipairs({'Searing Totem', 'Healing Stream Totem'}) do
@@ -44,9 +51,77 @@ fn tooltip_totem_original_accessor_uses_stored_name_and_two_lines() {
             assert(GameTooltip:GetLeftLine(2):GetText() == data.lines[2].leftText)
             assert(data.lines[2].leftColor and data.lines[2].leftColor.a == nil)
         end
+        assert(select('#', C_TooltipInfo.GetTotem(0)) == 0)
         assert(select('#', C_TooltipInfo.GetTotem(3)) == 0)
+        assert(C_TooltipInfo.GetTotem(8).lines[1].leftText == 'Searing Totem')
         assert(select('#', C_TooltipInfo.GetTotem(9)) == 0)
+        assert(select('#', C_TooltipInfo.GetTotem(4294967295)) == 0)
         "#,
     )
     .unwrap();
+}
+
+
+fn assert_remaining(
+    env: &wow_ui_sim::lua_api::WowLuaEnv,
+    start: f64,
+    duration: f64,
+    rate: f64,
+    key: &str,
+    count: u32,
+) {
+    env.state().borrow_mut().totem_slots[0] = Some(Totem {
+        name: "Searing Totem".into(),
+        start_time: start,
+        duration,
+        icon: 0,
+        mod_rate: rate,
+        spell_id: 19750,
+    });
+    env.exec(&format!(
+        r#"
+        GameTooltip:SetOwner(UIParent, 'ANCHOR_NONE')
+        GameTooltip:SetTotem(1)
+        local data = GameTooltip:GetPrimaryTooltipData()
+        assert(data and #data.lines == 2, 'occupied entry must retain both lines')
+        local expected = format({key}, {count})
+        assert(data.lines[2].leftText == expected,
+            'remaining-time mismatch: ' .. tostring(data.lines[2].leftText) .. ' vs ' .. expected)
+        assert(GameTooltip:GetLeftLine(2):GetText() == expected)
+        "#
+    ))
+    .unwrap();
+}
+
+#[test]
+fn tooltip_totem_original_accessor_preserves_rounding_units_expiry_and_clock_wrap() {
+    let env = tooltip_full_env_helpers::load_full_env_without_post_load();
+    env.exec("A_Admin.SetManualClock(100)").unwrap();
+    for (start, duration, rate, key, count) in [
+        (90.0, 20.0, 2.0, "SPELL_TIME_REMAINING_SEC", 5),
+        (100.0, 0.001, 2.0, "SPELL_TIME_REMAINING_SEC", 0),
+        (100.0, 0.003, 2.0, "SPELL_TIME_REMAINING_SEC", 1),
+        (100.0, 2.001, 2.0, "SPELL_TIME_REMAINING_SEC", 1),
+        (100.0, 2.003, 2.0, "SPELL_TIME_REMAINING_SEC", 2),
+        (100.0, 90.0, 1.0, "SPELL_TIME_REMAINING_SEC", 90),
+        (100.0, 90.001, 1.0, "SPELL_TIME_REMAINING_MIN", 2),
+        (100.0, 5400.0, 1.0, "SPELL_TIME_REMAINING_MIN", 90),
+        (100.0, 5400.001, 1.0, "SPELL_TIME_REMAINING_HOURS", 2),
+        (100.0, 129600.0, 1.0, "SPELL_TIME_REMAINING_HOURS", 36),
+        // The f32 conversion precedes unit selection: this rounds back to the boundary.
+        (100.0, 129600.001, 1.0, "SPELL_TIME_REMAINING_HOURS", 36),
+        (100.0, 129600.008, 1.0, "SPELL_TIME_REMAINING_DAYS", 2),
+        (0.0, 90.0, 1.0, "SPELL_TIME_REMAINING_SEC", 0),
+        (0.0, 0.0, 1.0, "SPELL_TIME_REMAINING_SEC", 0),
+    ] {
+        assert_remaining(&env, start, duration, rate, key, count);
+    }
+    let wrapped = tooltip_full_env_helpers::load_full_env_without_post_load();
+    wrapped.exec("A_Admin.SetManualClock(0.1)").unwrap();
+    assert_remaining(&wrapped, 4294966.796, 1.0, 1.0, "SPELL_TIME_REMAINING_SEC", 1);
+    // The occupied timer's wrapping end is zero, so native composition retains a zero line.
+    assert_remaining(&wrapped, 4294966.296, 1.0, 1.0, "SPELL_TIME_REMAINING_SEC", 0);
+    wrapped.state().borrow_mut().totem_slots[0].as_mut().unwrap().mod_rate = 0.0;
+    assert!(wrapped.exec("C_TooltipInfo.GetTotem(1)").is_err());
+    assert!(wrapped.exec("C_TooltipInfo.GetTotem(-1)").is_err());
 }

@@ -3402,3 +3402,8 @@ inclusion and pinned-data miss limits from the Lua API system page and index.
 
 Linked [appearance selection](../specs/tooltip-appearance-item.md), the original
 dress-up hover and the shared UNKNOWN failure seam from the system page and index.
+
+## 2026-11-04 — Totem tooltip duration
+
+Linked [Totem tooltip selection and time](../specs/tooltip-totem.md), WM94 numeric
+evidence and the explicit nearest-even emulation seam.

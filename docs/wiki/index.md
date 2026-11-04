@@ -1,3 +1,9 @@
+## [2026-11-04] implementation | Totem tooltip duration
+
+[Tooltip data](systems/lua-api.md#tooltip-data-and-merchant-cursor-presentation)
+links stored-name selection and the WM94 wrapping/rate/rounding pipeline, its
+nearest-even emulation seam and original-accessor coverage.
+
 ## [2026-11-04] implementation | Modified-appearance item tooltip
 
 [Tooltip data](systems/lua-api.md#tooltip-data-and-merchant-cursor-presentation)

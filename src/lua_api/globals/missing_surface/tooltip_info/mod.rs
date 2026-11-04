@@ -54,6 +54,7 @@ fn register_c_tooltip_info(state: &mut LuaState) -> LuaResult<()> {
             | crate::client_profile::ClientProfile::WowForever
     ) {
         crate::c_api::c_tooltip_info_bag_child::register(state, table_ref)?;
+        crate::c_api::c_tooltip_info_totem::register(state, table_ref)?;
     }
     if matches!(
         crate::client_profile::ACTIVE,
@@ -134,6 +135,15 @@ pub(crate) fn tooltip_for_selected_indexed_aura(
     aura: Option<crate::lua_api::state::AuraInfo>,
 ) -> rilua::Val {
     spell::tooltip_for_unit_aura(state, aura)
+}
+
+/// Feed the selected totem's text through the existing tooltip publication path.
+pub(crate) fn tooltip_for_totem_text(
+    state: &mut LuaState,
+    name: &str,
+    remaining: &str,
+) -> LuaResult<rilua::Val> {
+    builders::tooltip_for_totem_text(state, name, remaining)
 }
 
 type TooltipScriptFn = fn(&mut LuaState) -> LuaResult<u32>;
