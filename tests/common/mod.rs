@@ -280,6 +280,15 @@ pub fn load_profile_framexml(env: &WowLuaEnv) {
     }
 }
 
+/// Explicit Forever scenario: the player has no outfits. Unset is an error
+/// under docs/specs/forever-camelot-spellbook.md; Camelot's spellbook creates a
+/// transmog category (Camelot/SpellBook/Blizzard_SpellBookFrame.lua:138+).
+pub fn supply_empty_forever_spellbook_outfits(env: &WowLuaEnv) {
+    if wow_ui_sim::client_profile::ACTIVE == wow_ui_sim::client_profile::ClientProfile::WowForever {
+        env.state().borrow_mut().forever_outfits = Some(Some(Vec::new()));
+    }
+}
+
 /// Match production's game-screen startup stream, including bootstrap-only roots.
 /// Forever's CharacterFrame hides StatisticsFrame on every tab change; its
 /// Blizzard_Statistics.toc:2-3 is an eager Camelot root, not a UIPanels dependency.
