@@ -35,6 +35,7 @@ pub(crate) mod abbreviated_number_formatter;
 pub mod action_count_info;
 #[cfg(feature = "retail-12-0-5")]
 pub use action_count_info::ActionUseCountInfo;
+pub mod action_button_hover;
 pub mod action_macros;
 pub mod action_repeat;
 #[cfg(feature = "action-spell-range")]
