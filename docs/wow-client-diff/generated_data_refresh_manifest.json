@@ -1,6 +1,14 @@
 {
   "generated_files": [
     {
+      "path": "crates/sim-data/data/spells.rs",
+      "source": "~/Projects/wow/data/SpellMisc.csv",
+      "source_build": "12.1.5.70391",
+      "source_sha256": "99ca8265498bab7570fcd0614c35996d767ad6e1fd1cd338a563c07dd80bba86",
+      "mode": "wow-cli generate spells --augment-attributes",
+      "scope": "Attributes_9 only; 7057 records; all preexisting bytes preserved"
+    },
+    {
       "path": "src/lua_api/globals/enum_data/missing_enums.lua",
       "source": "~/Repos/wowless/data/products/wow/globals.yaml",
       "sha256": "60a333e293bcc26af280e487e3b546231330e3cd9feb51c77aecb258dab3f3a6",
