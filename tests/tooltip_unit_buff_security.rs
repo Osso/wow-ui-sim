@@ -114,17 +114,17 @@ const ASSERTIONS: &str = r#"
         assert(data.lines[3].type == Enum.TooltipDataLineType.SpellDescription)
         assert(type(data.lines[3].leftText) == 'string' and #data.lines[3].leftText > 0)
         assert(data.lines[3].wrapText == true)
-        for i=1,2 do
+        for i=1,3 do
             local color = data.lines[i].leftColor
-            assert(type(color.GetRGBA) == 'function')
+            assert(type(color.GetRGB) == 'function')
+            assert(color.a == nil, 'D56 supplied-side RGB without alpha')
             local function channels(...)
-                assert(select('#', ...) == 4)
+                assert(select('#', ...) == 3)
                 for _, value in ipairs({...}) do
                     assert(type(value) == 'number' and not issecretvalue(value))
                 end
-                assert(select(4, ...) == 1)
             end
-            channels(color:GetRGBA())
+            channels(color:GetRGB())
         end
         return data
     end

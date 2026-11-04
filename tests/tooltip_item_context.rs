@@ -45,7 +45,7 @@ const ASSERTIONS: &str = r#"
         assert(ITFrame:GetObjectType() == 'Frame')
         assert(ITTable.marker == 'PRIVATE-ItemContext' and ITTable.count == 37)
     end
-    function ITRGBA(value)
+    function ITRGB(value)
         if type(value) ~= 'table' and type(value) ~= 'userdata' then return nil end
         if type(value.GetRGB) ~= 'function' then return nil end
         assert(value.a == nil, 'D56 publishes RGB without alpha')
@@ -58,7 +58,7 @@ const ASSERTIONS: &str = r#"
         return channels(value:GetRGB())
     end
     function ITEqual(a,b)
-        local ac,bc = ITRGBA(a),ITRGBA(b)
+        local ac,bc = ITRGB(a),ITRGB(b)
         if ac or bc then
             assert(ac and bc)
             for i=1,3 do assert(ac[i] == bc[i], 'semantic RGB equality') end
@@ -76,7 +76,7 @@ const ASSERTIONS: &str = r#"
     end
     function ITPublic(value)
         assert(not issecretvalue(value), 'chosen public output; no native output-policy credit')
-        if ITRGBA(value) or type(value) ~= 'table' then return end
+        if ITRGB(value) or type(value) ~= 'table' then return end
         for k,v in pairs(value) do assert(not issecretvalue(k)); ITPublic(v) end
     end
     function ITData(...)
@@ -102,7 +102,7 @@ const ASSERTIONS: &str = r#"
         assert(data.lines[2].type == 31 and data.lines[2].leftText == 'Item Level '..level)
         assert(data.lines[3].type == 21 and data.lines[3].leftText == 'Feet')
         assert(data.lines[4].type == 20 and data.lines[4].leftText == ITEM_BIND_ON_PICKUP)
-        local name = ITRGBA(data.lines[1].leftColor)
+        local name = ITRGB(data.lines[1].leftColor)
         assert(name)
         -- D56 packed bytes 163/54/237 multiplied by float32 1/255.
         assert(name[1] == 0.6392157077789307)
@@ -116,8 +116,8 @@ const ASSERTIONS: &str = r#"
             local line = data.lines[i+4]
             local value = math.max(1,math.floor(level*2*spec[1]/10000*spec[2]+0.5))
             assert(line.type == 13 and line.leftText == '+'..value..' '..spec[3], 'existing budget heuristic')
-            local rgba = ITRGBA(line.leftColor)
-            assert(rgba and rgba[2] > rgba[1] and line.leftColor.a == nil, 'D56 RGB green stat')
+            local rgb = ITRGB(line.leftColor)
+            assert(rgb and rgb[2] > rgb[1] and line.leftColor.a == nil, 'D56 RGB green stat')
         end
         if ITBase then
             -- Compare every existing DTO field; only level/stat text may differ.

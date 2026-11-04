@@ -52,20 +52,21 @@ fn fixture_env() -> WowLuaEnv {
         function TMColorComponents(value, path)
             if type(value) ~= 'table' and type(value) ~= 'userdata' then return nil end
             local function components(...)
-                assert(select('#', ...) == 4, path .. ': exactly four RGBA components')
+                assert(select('#', ...) == 3, path .. ': exactly three RGB components')
+                assert(value.a == nil, path .. ': D56 no alpha')
                 local rgba = {...}
-                for index, channel in ipairs({'r', 'g', 'b', 'a'}) do
+                for index, channel in ipairs({'r', 'g', 'b'}) do
                     assert(not issecretvalue(rgba[index]) and type(rgba[index]) == 'number',
                         path .. '.' .. channel .. ': public numeric color component')
                 end
                 return rgba
             end
-            if type(value.GetRGBA) == 'function' then
-                return components(value:GetRGBA())
+            if type(value.GetRGB) == 'function' then
+                return components(value:GetRGB())
             end
             if type(value.r) == 'number' and type(value.g) == 'number'
-                and type(value.b) == 'number' and type(value.a) == 'number' then
-                return components(value.r, value.g, value.b, value.a)
+                and type(value.b) == 'number' then
+                return components(value.r, value.g, value.b)
             end
             return nil
         end
@@ -81,9 +82,9 @@ fn fixture_env() -> WowLuaEnv {
             if leftColor or rightColor then
                 assert(leftColor and rightColor, path .. ': color/value mismatch ('
                     .. type(left) .. '/' .. type(right) .. ')')
-                for index, channel in ipairs({'r', 'g', 'b', 'a'}) do
+                for index, channel in ipairs({'r', 'g', 'b'}) do
                     assert(leftColor[index] == rightColor[index], path .. '.' .. channel
-                        .. ': RGBA mismatch ' .. tostring(leftColor[index])
+                        .. ': RGB mismatch ' .. tostring(leftColor[index])
                         .. '/' .. tostring(rightColor[index]))
                 end
                 return

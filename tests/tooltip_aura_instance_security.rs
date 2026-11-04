@@ -69,7 +69,7 @@ const ASSERTIONS: &str = r#"
             ATPublic(child)
         end
     end
-    function ATRGBA(color)
+    function ATRGB(color)
         if type(color) ~= 'table' and type(color) ~= 'userdata' then return nil end
         if type(color.GetRGB) ~= 'function' then return nil end
         assert(color.a == nil, 'D56 publishes RGB without alpha')
@@ -84,7 +84,7 @@ const ASSERTIONS: &str = r#"
         return channels(color:GetRGB())
     end
     function ATEqual(left, right)
-        local lc, rc = ATRGBA(left), ATRGBA(right)
+        local lc, rc = ATRGB(left), ATRGB(right)
         if lc or rc then
             assert(lc and rc, 'both semantic colors')
             for i=1,3 do assert(lc[i] == rc[i], 'same RGB component') end
@@ -137,7 +137,7 @@ const ASSERTIONS: &str = r#"
         assert(type(data.lines[3].leftText) == 'string' and #data.lines[3].leftText > 0)
         assert(data.lines[3].wrapText == true)
         for i=1,3 do
-            local rgb = ATRGBA(data.lines[i].leftColor)
+            local rgb = ATRGB(data.lines[i].leftColor)
             assert(rgb, 'D56 every supplied side has public RGB')
             assert(data.lines[i].leftColor.a == nil, 'D56 no alpha')
         end
