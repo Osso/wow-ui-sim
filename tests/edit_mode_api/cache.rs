@@ -281,7 +281,15 @@ fn edit_mode_wtf_cache_can_override_active_layout_by_name() {
         )
         .expect("read overridden active edit mode layout");
 
-    assert_eq!(active, 3);
+    // Forever EditModeManagerConstantsDocumentation.lua:625-635 adds Gamepad.
+    assert_eq!(
+        active,
+        if cfg!(feature = "client-wowforever") {
+            4
+        } else {
+            3
+        }
+    );
     assert_eq!(active_name, "Ultrawide");
 }
 
@@ -335,7 +343,15 @@ fn edit_mode_snapshot_layout_selects_active_layout_by_name() {
         )
         .expect("read snapshot-selected active edit mode layout");
 
-    assert_eq!(active, 3);
+    // Forever EditModeManagerConstantsDocumentation.lua:625-635 adds Gamepad.
+    assert_eq!(
+        active,
+        if cfg!(feature = "client-wowforever") {
+            4
+        } else {
+            3
+        }
+    );
     assert_eq!(active_name, "Ultrawide");
 }
 
@@ -496,11 +512,14 @@ fn edit_mode_account_cache_preserves_all_legacy_values_and_fills_new_defaults() 
         )
         .expect("read account settings");
 
-    assert_eq!(
-        saved_values,
-        "0=1,1=20,2=1,3=1,4=0,5=0,6=0,7=1,8=0,9=1,10=0,11=0,12=1,13=0,14=0,15=0,16=0,17=0,18=0,19=0,20=0,21=0,22=0,23=1,24=0,25=0,26=0,27=0,28=1,29=1,30=1,31=1,32=1,33=1,34=1,35=1",
-        "legacy account cache values should be preserved and newer profile options should be default-filled"
-    );
+    let expected = "0=1,1=20,2=1,3=1,4=0,5=0,6=0,7=1,8=0,9=1,10=0,11=0,12=1,13=0,14=0,15=0,16=0,17=0,18=0,19=0,20=0,21=0,22=0,23=1,24=0,25=0,26=0,27=0,28=1,29=1,30=1,31=1,32=1,33=1,34=1,35=1";
+    // Forever's pinned account-setting enum puts ShowLossOfControl at 36.
+    let expected = if cfg!(feature = "client-wowforever") {
+        format!("{expected},36=1")
+    } else {
+        expected.to_owned()
+    };
+    assert_eq!(saved_values, expected, "legacy values and new defaults");
 }
 }
 

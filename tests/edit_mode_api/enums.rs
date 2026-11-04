@@ -173,10 +173,13 @@ fn edit_mode_account_setting_ids_include_raid_warning_and_loss_of_control() {
 
     assert_eq!(raid_warning, 33);
     assert_eq!(totem_action_bar, 34);
-    assert_eq!(loss_of_control, 35);
+    // Forever's pinned EditModeManagerConstantsDocumentation.lua:242-246
+    // inserts ShowGroupFinder before ShowLossOfControl and adds ShowSwingTimer.
+    let forever = cfg!(feature = "client-wowforever");
+    assert_eq!(loss_of_control, if forever { 36 } else { 35 });
     assert_eq!(min_value, 0);
-    assert_eq!(max_value, 35);
-    assert_eq!(num_values, 36);
+    assert_eq!(max_value, if forever { 37 } else { 35 });
+    assert_eq!(num_values, if forever { 38 } else { 36 });
 }
 }
 
@@ -221,6 +224,9 @@ post_wrath_ui_fixture! {
 #[test]
 fn edit_mode_profile_option_enums_match_blizzard_docs() {
     let env = WowLuaEnv::new().expect("create Lua environment");
+    if cfg!(feature = "client-wowforever") {
+        env.exec("foreverEditModeTest = true").unwrap();
+    }
 
     env.exec(
         r#"
@@ -333,6 +339,13 @@ fn edit_mode_profile_option_enums_match_blizzard_docs() {
             },
             EditModeVehicleSeatIndicatorSetting = { "Size" },
         }
+
+        if foreverEditModeTest then
+            -- Forever EditModeManagerConstantsDocumentation.lua:242-246, 559-569.
+            table.insert(settingEnums.EditModeAccountSetting, 36, "ShowGroupFinder")
+            table.insert(settingEnums.EditModeAccountSetting, "ShowSwingTimer")
+            settingEnums.EditModeMicroMenuSetting[4] = "DeprecatedEyeSize"
+        end
 
         for enumName, values in pairs(settingEnums) do
             expected[enumName] = expected[enumName] or {}
