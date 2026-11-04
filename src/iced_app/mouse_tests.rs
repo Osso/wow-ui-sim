@@ -16,6 +16,59 @@ mod aura_tooltip_motion;
 mod simulate_mouse;
 
 #[test]
+fn window_size_outside_release_ends_game_drag_without_clicking() {
+    let mut app = build_test_app(ScreenKind::Game);
+    setup_pass_through_test_frames(&app);
+    app.env
+        .borrow()
+        .exec(
+            r#"
+            __outside_drag_stops = 0
+            __outside_drag_receives = 0
+            PassThroughChild:RegisterForDrag("LeftButton")
+            PassThroughChild:SetScript("OnDragStart", function() end)
+            PassThroughChild:SetScript("OnDragStop", function()
+                __outside_drag_stops = __outside_drag_stops + 1
+            end)
+            PassThroughChild:SetScript("OnReceiveDrag", function()
+                __outside_drag_receives = __outside_drag_receives + 1
+            end)
+            "#,
+        )
+        .unwrap();
+    rebuild_hittable_cache(&app);
+    let inside = Point::new(150.0, 150.0);
+    app.handle_mouse_move(inside);
+    app.handle_mouse_down(inside);
+    app.handle_right_mouse_down(inside);
+    app.handle_mouse_move(Point::new(165.0, 150.0));
+    assert!(app.dragging);
+    assert!(app.right_mouse_down_frame.is_some());
+
+    let _ = app.update(Message::CanvasEvent(CanvasMessage::RightMouseUpOutside));
+    let buttons = app.env.borrow().state().borrow().mouse_buttons;
+    assert!(buttons.left);
+    assert!(!buttons.right);
+    assert!(app.right_mouse_down_frame.is_none());
+    assert!(app.dragging);
+
+    let _ = app.update(Message::CanvasEvent(CanvasMessage::MouseUpOutside));
+    let env = app.env.borrow();
+    let (stopped, received): (i32, i32) = env
+        .eval("return __outside_drag_stops, __outside_drag_receives")
+        .unwrap();
+    assert_eq!((stopped, received), (1, 0));
+    assert_eq!(read_pass_through_counters(&app), (0.0, 0.0, 0.0, 0.0));
+    let state = env.state().borrow();
+    assert!(!state.mouse_buttons.any_down());
+    assert!(state.active_drag_frame.is_none());
+    assert!(state.active_slider_thumb_drag_frame.is_none());
+    assert!(app.mouse_down_frame.is_none());
+    assert!(app.mouse_down_pos.is_none());
+    assert!(!app.dragging);
+}
+
+#[test]
 fn mouse_focus_order_tracks_gui_hover_after_raise_and_lower() {
     let mut app = build_test_app(ScreenKind::Game);
 
@@ -615,6 +668,130 @@ fn slider_reports_thumb_drag_state_while_mouse_is_held() {
         !after_mouse_up,
         "slider thumb drag state should clear on mouse up"
     );
+}
+
+#[test]
+fn vertical_slider_thumb_drag_scrolls_without_dragging_its_parent() {
+    let mut app = build_test_app(ScreenKind::Game);
+    app.env
+        .borrow()
+        .exec(
+            r#"
+        local parent = CreateFrame('Frame', 'SliderDragParent', UIParent)
+        parent:SetSize(100, 120)
+        parent:SetPoint('TOPLEFT', UIParent, 'TOPLEFT', 100, -100)
+        parent:EnableMouse(true)
+        parent:RegisterForDrag('LeftButton')
+        ParentDragStarts = 0
+        parent:SetScript('OnDragStart', function() ParentDragStarts = ParentDragStarts + 1 end)
+
+        local scroll = CreateFrame('ScrollFrame', 'SliderDragScroll', parent)
+        scroll:SetSize(80, 120)
+        scroll:SetPoint('TOPLEFT')
+        local content = CreateFrame('Frame', nil, scroll)
+        content:SetSize(80, 320)
+        scroll:SetScrollChild(content)
+
+        local slider = CreateFrame('Slider', 'SliderDragBar', scroll)
+        slider:SetSize(20, 120)
+        slider:SetPoint('TOPLEFT', scroll, 'TOPRIGHT')
+        slider:SetOrientation('VERTICAL')
+        local thumb = slider:CreateTexture(nil, 'OVERLAY')
+        thumb:SetSize(20, 20)
+        slider:SetThumbTexture(thumb)
+        slider:SetMinMaxValues(0, 200)
+        SliderDragChanges = 0
+        slider:SetScript('OnValueChanged', function(_, value, userInput)
+            assert(userInput == true)
+            SliderDragChanges = SliderDragChanges + 1
+            scroll:SetVerticalScroll(value)
+        end)
+    "#,
+        )
+        .unwrap();
+    rebuild_hittable_cache(&app);
+
+    let press = Point::new(190.0, 115.0);
+    app.handle_mouse_down(press);
+    assert_eq!(
+        app.env
+            .borrow()
+            .eval::<(f64, bool)>("return SliderDragBar:GetValue(), SliderDragBar:IsDraggingThumb()")
+            .unwrap(),
+        (0.0, true)
+    );
+    app.handle_mouse_move(Point::new(190.0, 165.0));
+    assert_eq!(
+        app.env
+            .borrow()
+            .eval::<(f64, f64)>(
+                "return SliderDragBar:GetValue(), SliderDragScroll:GetVerticalScroll()"
+            )
+            .unwrap(),
+        (100.0, 100.0)
+    );
+    let outside = Point::new(200.0, 300.0);
+    app.handle_mouse_move(outside);
+    app.handle_mouse_up(outside);
+    app.handle_mouse_move(press);
+    assert_eq!(
+        app.env
+            .borrow()
+            .eval::<(f64, f64, bool, i32, i32)>(
+                "return SliderDragBar:GetValue(), SliderDragScroll:GetVerticalScroll(),
+                SliderDragBar:IsDraggingThumb(), SliderDragChanges, ParentDragStarts"
+            )
+            .unwrap(),
+        (200.0, 200.0, false, 2, 0)
+    );
+}
+
+#[test]
+fn horizontal_slider_thumb_drag_respects_obey_step() {
+    let mut app = build_test_app(ScreenKind::Game);
+    app.env
+        .borrow()
+        .exec(
+            r#"
+        local slider = CreateFrame('Slider', 'SteppedDragSlider', UIParent)
+        slider:SetSize(120, 20)
+        slider:SetPoint('TOPLEFT', UIParent, 'TOPLEFT', 100, -100)
+        slider:SetOrientation('HORIZONTAL')
+        local thumb = slider:CreateTexture(nil, 'OVERLAY')
+        thumb:SetSize(20, 20)
+        slider:SetThumbTexture(thumb)
+        slider:SetMinMaxValues(10, 110)
+        slider:SetValueStep(25)
+        slider:SetObeyStepOnDrag(true)
+    "#,
+        )
+        .unwrap();
+    rebuild_hittable_cache(&app);
+
+    app.handle_mouse_down(Point::new(116.0, 110.0));
+    let first_end = Point::new(151.0, 110.0);
+    app.handle_mouse_move(first_end);
+    app.handle_mouse_up(first_end);
+    assert_eq!(
+        app.env
+            .borrow()
+            .eval::<f64>("return SteppedDragSlider:GetValue()")
+            .unwrap(),
+        35.0
+    );
+
+    app.env
+        .borrow()
+        .exec("SteppedDragSlider:SetObeyStepOnDrag(false)")
+        .unwrap();
+    app.handle_mouse_down(Point::new(135.0, 110.0));
+    app.handle_mouse_move(Point::new(145.0, 110.0));
+    let value: f64 = app
+        .env
+        .borrow()
+        .eval("return SteppedDragSlider:GetValue()")
+        .unwrap();
+    assert!((value - 45.0).abs() < 1e-5, "unexpected drag value {value}");
 }
 
 #[test]

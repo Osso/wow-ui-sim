@@ -1,8 +1,56 @@
-//! Temporary legacy talent, PvP talent, arena, and skill-window global defaults.
+//! Temporary legacy talent, PvP talent, arena, and skill-window defaults.
 //!
-//! These globals are explicit workarounds because the simulator does not yet
-//! model pre-MoP talent trees, retail PvP talent selections, arena rosters, or
-//! the removed legacy skill window.
+//! The simulator does not yet model legacy talent grids, retail PvP talent
+//! selections, arena rosters, or the removed legacy skill window.
+
+use crate::lua_api::methods::table_get;
+use crate::lua_bridge::stack_val;
+use rilua::{LuaResult, Val, vm::state::LuaState};
+
+pub(crate) fn get_legacy_talent_info(state: &mut LuaState) -> LuaResult<u32> {
+    let query = rilua::table_security::unwrap_secret(state, stack_val(state, 1))?;
+    if !matches!(query, Val::Table(_)) {
+        return Err(rilua::runtime_error("GetTalentInfo requires a query table"));
+    }
+    validate_talent_index(state, query, "groupIndex")?;
+    let has_tier = validate_talent_index(state, query, "tier")?;
+    let has_column = validate_talent_index(state, query, "column")?;
+    validate_talent_index(state, query, "specializationIndex")?;
+    validate_talent_index(state, query, "talentIndex")?;
+    for field in ["isInspect", "isPet"] {
+        let value = table_get(state, query, field);
+        rilua::table_security::unwrap_secret(state, value)?;
+    }
+    let target = table_get(state, query, "target");
+    let target = rilua::table_security::unwrap_secret(state, target)?;
+    if !matches!(target, Val::Nil | Val::Num(_) | Val::Str(_)) {
+        return Err(rilua::runtime_error("query.target requires a unit token"));
+    }
+    if !has_tier {
+        return Err(rilua::runtime_error("query.tier must be specified."));
+    }
+    if !has_column {
+        return Err(rilua::runtime_error("query.column must be specified."));
+    }
+    // The Retail and Forever legacy tier/column grids are not modeled.
+    state.push(Val::Nil);
+    Ok(1)
+}
+
+/// Validate a provided index and report whether the field was supplied.
+fn validate_talent_index(state: &mut LuaState, query: Val, field: &str) -> LuaResult<bool> {
+    let value = table_get(state, query, field);
+    let value = rilua::table_security::unwrap_secret(state, value)?;
+    match value {
+        Val::Nil => Ok(false),
+        Val::Num(number) if number.is_finite() && (0.0..=f64::from(u32::MAX)).contains(&number) => {
+            Ok(true)
+        }
+        _ => Err(rilua::runtime_error(format!(
+            "query.{field} requires an index"
+        ))),
+    }
+}
 
 const LEGACY_TALENT_ROW_DEFAULTS_LUA: &str = r#"
 if rawget(_G, "GetNumTalentTabs") == nil then

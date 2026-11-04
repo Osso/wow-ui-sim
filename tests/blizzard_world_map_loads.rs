@@ -536,16 +536,29 @@ fn world_map_hide_closes_only_the_map_interaction() {
     assert!(env.state().borrow().active_player_interactions.contains(&17));
 }
 
-#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
+#[cfg(any(
+    feature = "client-retail",
+    feature = "client-ptr",
+    feature = "client-wowforever"
+))]
 #[test]
 fn world_map_zone_timer_consumes_supplied_pvp_world_states() {
     let env = load_full_game_ui();
-    let now = std::time::SystemTime::now().duration_since(std::time::UNIX_EPOCH).unwrap().as_secs() as i64;
+    let now = std::time::SystemTime::now()
+        .duration_since(std::time::UNIX_EPOCH)
+        .unwrap()
+        .as_secs() as i64;
     {
         let mut state = env.state().borrow_mut();
-        state.outdoor_pvp_world_state.values.extend([(3801, 1), (4354, now + 3600), (5387, 1), (5332, now + 1800)]);
+        state.outdoor_pvp_world_state.values.extend([
+            (3801, 1),
+            (4354, now + 3600),
+            (5387, 1),
+            (5332, now + 1800),
+        ]);
     }
-    env.exec(r#"
+    env.exec(
+        r#"
         WorldMapFrame:SetMapID(123)
         TestOutdoorTimer = CreateFrame('Frame', nil, WorldMapFrame, 'WorldMapZoneTimerTemplate')
         WorldMapZoneTimerMixin.OnUpdate(TestOutdoorTimer, 0)
@@ -561,34 +574,80 @@ fn world_map_zone_timer_consumes_supplied_pvp_world_states() {
         local second = C_PvP.GetOutdoorPvPWaitTime(244)
         assert(second > 1700 and second <= 1800)
         assert(C_PvP.GetOutdoorPvPWaitTime(999999) == nil)
-    "#).unwrap();
-    env.state().borrow_mut().outdoor_pvp_world_state.values.insert(5387, 0);
-    env.exec(r#"
+    "#,
+    )
+    .unwrap();
+    env.state()
+        .borrow_mut()
+        .outdoor_pvp_world_state
+        .values
+        .insert(5387, 0);
+    env.exec(
+        r#"
         WorldMapZoneTimerMixin.OnUpdate(TestOutdoorTimer, 0)
         assert(not TestOutdoorTimer.TimeLabel:IsShown())
         assert(C_PvP.GetOutdoorPvPWaitTime(244) == nil)
-    "#).unwrap();
+    "#,
+    )
+    .unwrap();
     {
         let mut state = env.state().borrow_mut();
         state.outdoor_pvp_world_state.values.insert(5387, 1);
         state.outdoor_pvp_world_state.values.insert(5332, now - 1);
     }
-    env.exec("assert(C_PvP.GetOutdoorPvPWaitTime(244) == nil)").unwrap();
-    env.state().borrow_mut().outdoor_pvp_world_state.values.remove(&5332);
-    env.exec("assert(C_PvP.GetOutdoorPvPWaitTime(244) == nil)").unwrap();
+    env.exec("assert(C_PvP.GetOutdoorPvPWaitTime(244) == nil)")
+        .unwrap();
+    env.state()
+        .borrow_mut()
+        .outdoor_pvp_world_state
+        .values
+        .remove(&5332);
+    env.exec("assert(C_PvP.GetOutdoorPvPWaitTime(244) == nil)")
+        .unwrap();
 }
 
 #[test]
+#[cfg(feature = "client-retail")]
 fn world_map_tracking_filters_default_to_visible() {
     let env = load_full_game_ui();
-    env.exec(r#"
+    env.exec(
+        r#"
         local button = CreateFromMixins(WorldMapTrackingOptionsButtonMixin)
         button:BuildFilterTable()
         for _, name in ipairs({'trivialQuests', 'showAccountCompletedQuests'}) do
             assert(button:GetWorldMapFilter(name):Get() == true)
         end
         assert(not pcall(C_Minimap.IsFilteredOut, {}))
-    "#).expect("WorldMapFilterMixin should read default tracking visibility");
+    "#,
+    )
+    .expect("WorldMapFilterMixin should read default tracking visibility");
+}
+
+#[test]
+#[cfg(feature = "client-wowforever")]
+fn forever_world_map_trivial_quest_filter_tracks_map_settings() {
+    let env = load_full_game_ui();
+    env.exec(
+        r#"
+        local button = CreateFromMixins(WorldMapTrackingOptionsButtonMixin)
+        button:BuildFilterTable()
+        local filter = button:GetWorldMapFilter('trivialQuests')
+        local filterID = Enum.MinimapTrackingFilter.TrivialQuests
+        assert(filter:GetDefault() == false and filter:Get() == false)
+        assert(filter:IsDefault())
+        assert(not pcall(C_Minimap.IsFilteredOut, {}))
+
+        filter:Set(true)
+        local index = MinimapUtil.GetFilterIndexForFilterID(filterID)
+        assert(index and C_Minimap.GetTrackingInfo(index).active == true)
+        assert(filter:Get() == true and not filter:IsDefault())
+
+        filter:ResetToDefault()
+        assert(C_Minimap.GetTrackingInfo(index).active == false)
+        assert(filter:Get() == false and filter:IsDefault())
+        "#,
+    )
+    .expect("the Camelot map filter should update and reset tracking through Settings");
 }
 
 prefork_full_ui_case! {

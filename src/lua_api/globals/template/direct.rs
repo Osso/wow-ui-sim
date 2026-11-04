@@ -517,6 +517,30 @@ pub fn apply_xml_enable_mouse(
     }
 }
 
+/// An XML wheel script enables wheel input by default. Explicit opt-out leaves
+/// the input flag alone, including when a template already enabled it.
+pub(crate) fn apply_xml_mouse_wheel_script(
+    state: &Rc<RefCell<SimState>>,
+    frame_id: u64,
+    scripts: &crate::xml::ScriptsXml,
+) {
+    let Some(script) = scripts.on_mouse_wheel.last() else {
+        return;
+    };
+    if script.auto_enable_input == Some(false)
+        || crate::loader::helpers::script_clears_handler(script)
+    {
+        return;
+    }
+    let mut state = state.borrow_mut();
+    if let Some(frame) = state.widgets.get_mut(frame_id)
+        && !frame.mouse_wheel_enabled
+    {
+        frame.mouse_wheel_enabled = true;
+        state.queue_hit_grid_eligibility_change(frame_id);
+    }
+}
+
 /// Apply the Button XML motion flag, preserving explicit false overrides.
 pub fn apply_xml_motion_scripts_while_disabled(
     state: &Rc<RefCell<SimState>>,
@@ -881,8 +905,18 @@ pub fn apply_xml_slider_orientation(
             }
         }
     }
+    let mut sim = state.borrow_mut();
+    if orientation.is_none()
+        && sim
+            .widgets
+            .get(frame_id)
+            .is_some_and(|widget| widget.widget_type == crate::widget::WidgetType::Slider)
+    {
+        // SliderType in UI.xsd defaults to vertical, including legacy scrollbars.
+        orientation = Some("VERTICAL".to_string());
+    }
     if let Some(value) = orientation
-        && let Some(f) = state.borrow_mut().widgets.get_mut_visual(frame_id)
+        && let Some(f) = sim.widgets.get_mut_visual(frame_id)
     {
         f.slider_orientation = value.to_uppercase();
     }

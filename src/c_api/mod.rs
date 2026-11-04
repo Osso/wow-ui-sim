@@ -201,7 +201,6 @@ pub mod c_pvp;
 #[cfg(feature = "retail-12-0-5")]
 pub mod c_pvp_crowd_control;
 pub mod c_quest_hub;
-#[cfg(feature = "retail-12-0-5")]
 pub mod c_quest_info_system;
 pub mod c_quest_log;
 pub(crate) mod c_quest_log_watches;

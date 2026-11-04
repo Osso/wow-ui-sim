@@ -188,6 +188,52 @@ fn edit_mode_layout_api_loads_wtf_cache_files() {
 }
 
 #[test]
+fn edit_mode_cache_reads_length_prefixed_layout_names_and_systems() {
+    let env = WowLuaEnv::new().expect("create Lua environment");
+    env.exec(
+        r##"
+        local cache = "4 0 "
+            .. "15 Ellesmere Café 0 1 8 -1 1 6 6 UIParent 2.6 27.1 -1 ## "
+            .. "5 Empty 0 0 "
+            .. "8 Adjusted 0 1 8 -1 1 6 6 UIParent 35.0 145.0 -1 ##"
+            .. string.char(0)
+        local active = Enum.EditModePresetLayoutsMeta.NumValues + 3
+        local missing = C_EditMode.__LoadCache(cache, tostring(active), 1)
+        local info = C_EditMode.GetLayouts()
+        assert(missing and #info.layouts == 3, "complete layouts survive a missing row")
+        assert(info.activeLayout == active)
+        assert(info.layouts[1].layoutName == "Ellesmere Café")
+        assert(#info.layouts[1].systems == 1)
+        assert(info.layouts[2].layoutName == "Empty" and #info.layouts[2].systems == 0)
+        assert(info.layouts[3].layoutName == "Adjusted" and #info.layouts[3].systems == 1)
+        local chat = info.layouts[3].systems[1]
+        local anchor = chat.anchorInfo
+        assert(chat.system == 8 and chat.systemIndex == nil)
+        assert(anchor.point == "BOTTOMLEFT" and anchor.relativePoint == "BOTTOMLEFT")
+        assert(anchor.relativeTo == "UIParent" and anchor.offsetX == 35 and anchor.offsetY == 145)
+        "##,
+    )
+    .expect("decode the Forever account cache");
+}
+
+#[test]
+fn edit_mode_cache_keeps_complete_layout_before_truncated_record() {
+    let env = WowLuaEnv::new().expect("create Lua environment");
+    env.exec(
+        r##"
+        local cache = "2 0 4 Matt 0 1 8 -1 1 6 6 UIParent 35 145 -1 ## 3 New 0 1"
+        local missing = C_EditMode.__LoadCache(cache, nil, 1)
+        local layouts = C_EditMode.GetLayouts().layouts
+        assert(missing and #layouts == 1)
+        assert(layouts[1].layoutName == "Matt" and #layouts[1].systems == 1)
+        local anchor = layouts[1].systems[1].anchorInfo
+        assert(anchor.point == "BOTTOMLEFT" and anchor.offsetX == 35 and anchor.offsetY == 145)
+        "##,
+    )
+    .expect("preserve the last complete Forever layout");
+}
+
+#[test]
 fn edit_mode_wtf_cache_can_override_active_layout_by_name() {
     let temp = tempfile::tempdir().expect("create temp dir");
     let wtf_path = temp.path().join("WTF");

@@ -28,3 +28,6 @@ mod hover_tests;
 
 #[path = "mouse_hit_grid_tests.rs"]
 mod hit_grid_tests;
+
+#[path = "mouse_wheel_tests.rs"]
+mod wheel_tests;

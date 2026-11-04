@@ -136,6 +136,8 @@ pub struct WowUiPrimitive {
     pub strata_batches: [Option<Arc<QuadBatch>>; FrameStrata::COUNT],
     /// Small overlay batch (cursor, hover highlight) appended after world quads.
     pub overlay: QuadBatch,
+    /// Fixed scene extent in game layout units. The shader widget owns the destination bounds.
+    pub(crate) scene_size: Option<iced::Size>,
     /// Background clear color.
     pub clear_color: [f32; 4],
     /// Texture data to upload (path -> image data).
@@ -162,6 +164,7 @@ impl WowUiPrimitive {
         Self {
             strata_batches,
             overlay: QuadBatch::new(),
+            scene_size: None,
             clear_color: [0.10, 0.11, 0.14, 1.0],
             textures: Vec::new(),
             bc_textures: Vec::new(),
@@ -188,6 +191,7 @@ impl WowUiPrimitive {
         Self {
             strata_batches: std::array::from_fn(|_| None),
             overlay: QuadBatch::new(),
+            scene_size: None,
             clear_color: [0.10, 0.11, 0.14, 1.0],
             textures: Vec::new(),
             bc_textures: Vec::new(),
@@ -771,14 +775,19 @@ impl shader::Primitive for WowUiPrimitive {
         bounds: &Rectangle,
         viewport: &Viewport,
     ) {
-        let scale = viewport.scale_factor();
-        let physical_bounds = physical_prepare_bounds(bounds, scale);
+        let (scale, projection_bounds) = if let Some(size) = self.scene_size {
+            // Cached geometry stays in game units while the GPU viewport fits the scene.
+            (1.0, Rectangle::new(iced::Point::ORIGIN, size))
+        } else {
+            let scale = viewport.scale_factor();
+            (scale, physical_prepare_bounds(bounds, scale))
+        };
         let prepare_started = Instant::now();
         let texture_stats = self.prepare_frame_textures(pipeline, queue);
         self.trace_prepare_textures(texture_stats);
 
         crate::logging::set_blocking_phase("prepare_projection");
-        pipeline.update_projection(queue, &physical_bounds);
+        pipeline.update_projection(queue, &projection_bounds);
         let strata_elapsed =
             upload_dirty_strata_batches(pipeline, device, queue, scale, &self.strata_batches);
         let overlay_elapsed = upload_overlay_batch(pipeline, device, queue, scale, &self.overlay);

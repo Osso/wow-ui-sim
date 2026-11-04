@@ -106,3 +106,5 @@ pub use tooltip::TooltipData;
 
 // Crate-internal re-exports
 pub(crate) use env::next_timer_id;
+#[cfg(feature = "gui")]
+pub(crate) use env_runtime::UI_REFERENCE_HEIGHT;

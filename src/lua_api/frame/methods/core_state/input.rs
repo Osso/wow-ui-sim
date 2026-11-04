@@ -27,9 +27,9 @@ fn set_frame_input_flag(
     }
     let mut sim = borrow_state_mut(state)?;
     if let Some(frame) = sim.widgets.get_mut(id) {
-        let was_mouse_eligible = frame.accepts_mouse();
+        let was_mouse_eligible = frame.has_hit_grid_input();
         apply(frame, enable);
-        let is_mouse_eligible = frame.accepts_mouse();
+        let is_mouse_eligible = frame.has_hit_grid_input();
         if was_mouse_eligible != is_mouse_eligible {
             sim.queue_hit_grid_eligibility_change(id);
         }

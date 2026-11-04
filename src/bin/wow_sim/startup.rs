@@ -34,7 +34,7 @@ pub(super) fn init_and_load(
 }
 
 fn initialize_and_load_env(args: &Args, screen: ScreenKind, mut env: WowLuaEnv) -> InitResult {
-    configure_screen_size(&env, args);
+    configure_screen_size(&env, args)?;
     let selection = super::class_spec::parse_selection(
         args.class.as_deref(),
         args.spec.as_deref(),
@@ -45,6 +45,10 @@ fn initialize_and_load_env(args: &Args, screen: ScreenKind, mut env: WowLuaEnv) 
     apply_initial_player_settings(&env, &config, selection.as_ref())?;
     let font_system = create_font_system(args);
     init_environment(args, &env, &font_system)?;
+    #[cfg(feature = "gui")]
+    if args.window_size.is_some() && args.session_wtf_path.is_some() {
+        saved_var_config::configure_imported_ui_scale(&env);
+    }
     env.set_screen_mode(screen);
 
     let (mut saved_vars, edit_mode_cache_vars, snapshot_edit_mode_layout) =
@@ -92,6 +96,10 @@ fn install_reload_loader(
     let reload_args = args.clone();
     env.set_reload_loader(move |env, saved_vars| {
         env.gc_stop();
+        #[cfg(feature = "gui")]
+        if reload_args.window_size.is_some() && reload_args.session_wtf_path.is_some() {
+            saved_var_config::apply_session_ui_scale(env);
+        }
         load_startup_addons(
             &reload_args,
             screen,
@@ -114,6 +122,27 @@ mod tests {
         env!("CARGO_MANIFEST_DIR"),
         "/tests/common/profile_fixtures.rs"
     ));
+
+    #[cfg(feature = "gui")]
+    #[test]
+    fn window_size_seeds_the_gui_before_addon_loading() {
+        let args = Args::try_parse_from(["wow-sim", "--window-size", "1536x864"])
+            .expect("GUI window dimensions should parse");
+        let env = WowLuaEnv::new().expect("Lua environment should initialize");
+        configure_screen_size(&env, &args).unwrap();
+        let (physical_width, physical_height, ui_width, ui_height): (f32, f32, f32, f32) = env
+            .eval(
+                "local w, h = GetPhysicalScreenSize(); return w, h, GetScreenWidth(), GetScreenHeight()",
+            )
+            .expect("screen globals should return the seeded display and UI sizes");
+        assert_eq!((physical_width, physical_height), (1536.0, 864.0));
+        assert!((ui_width - 1365.3334).abs() < 0.001);
+        assert_eq!(ui_height, 768.0);
+
+        for invalid in ["0x720", "1280x0", "1280", "1280x720x8", "1280x-720"] {
+            assert!(Args::try_parse_from(["wow-sim", "--window-size", invalid]).is_err());
+        }
+    }
 
     #[cfg(feature = "gui")]
     #[test]
@@ -346,14 +375,26 @@ mod tests {
     }
 }
 
-fn configure_screen_size(env: &WowLuaEnv, args: &Args) {
-    let (w, h) = command_screen_size(&args.command);
+fn configure_screen_size(env: &WowLuaEnv, args: &Args) -> wow_ui_sim::Result<()> {
+    #[cfg(feature = "gui")]
+    let window_size = args.window_size;
+    #[cfg(not(feature = "gui"))]
+    let window_size: Option<(u32, u32)> = None;
     let phase_start = Instant::now();
-    env.set_screen_size(w, h);
+    let (w, h) = if let Some((width, height)) = window_size {
+        let (w, h) = (width as f32, height as f32);
+        env.set_display_size(w, h)?;
+        (w, h)
+    } else {
+        let (w, h) = command_screen_size(&args.command);
+        env.set_screen_size(w, h);
+        (w, h)
+    };
     logging::eprintln_elapsed(&format!(
         "[Startup] screen size set to {w:.0}x{h:.0} in {:.2?}",
         phase_start.elapsed()
     ));
+    Ok(())
 }
 
 fn command_screen_size(command: &Option<Commands>) -> (f32, f32) {

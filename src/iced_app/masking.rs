@@ -263,11 +263,13 @@ fn compute_mask_uvs_from_rects(
         (dy + icon_bounds.height) / mh,
     );
     // Clamp to mask's tex_coord range to avoid sampling outside the
-    // mask's atlas sub-region (GPU ClampToEdge would hit unrelated pixels).
-    let ul = (tl + u0 * (tr - tl)).clamp(tl, tr);
-    let ur = (tl + u1 * (tr - tl)).clamp(tl, tr);
-    let ut = (tt + v0 * (tb - tt)).clamp(tt, tb);
-    let ub = (tt + v1 * (tb - tt)).clamp(tt, tb);
+    // mask's atlas sub-region. Keep interpolation in the original orientation.
+    let (min_u, max_u) = (tl.min(tr), tl.max(tr));
+    let (min_v, max_v) = (tt.min(tb), tt.max(tb));
+    let ul = (tl + u0 * (tr - tl)).clamp(min_u, max_u);
+    let ur = (tl + u1 * (tr - tl)).clamp(min_u, max_u);
+    let ut = (tt + v0 * (tb - tt)).clamp(min_v, max_v);
+    let ub = (tt + v1 * (tb - tt)).clamp(min_v, max_v);
     [[ul, ut], [ur, ut], [ur, ub], [ul, ub]]
 }
 
@@ -329,6 +331,20 @@ mod tests {
         let clipped = Rectangle::new(iced::Point::new(55.0, 50.0), iced::Size::new(10.0, 20.0));
         let uvs = compute_mask_uvs_from_rects(mask, clipped, 0.0, 1.0, 0.0, 1.0);
         assert_eq!(uvs, [[0.25, 0.0], [0.75, 0.0], [0.75, 1.0], [0.25, 1.0]]);
+    }
+
+    #[test]
+    fn clipped_quad_preserves_flipped_mask_uvs() {
+        let mask = Rectangle::new(iced::Point::new(50.0, 50.0), iced::Size::new(20.0, 20.0));
+        let bounds = Rectangle::new(iced::Point::new(45.0, 55.0), iced::Size::new(15.0, 20.0));
+        let mut vertices = quad(bounds);
+
+        apply_mask_to_quad(&mut vertices, mask, 1.0, 0.0, 1.0, 0.0);
+
+        assert_eq!(
+            vertices.map(|vertex| vertex.mask_tex_coords),
+            [[1.0, 0.75], [0.5, 0.75], [0.5, 0.0], [1.0, 0.0]]
+        );
     }
 
     #[test]

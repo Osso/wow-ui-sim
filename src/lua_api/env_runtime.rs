@@ -16,7 +16,7 @@ use std::time::{Duration, Instant};
 
 const RECENT_FRAME_WINDOW_SIZE: usize = 60;
 // Blizzard SharedXML PixelUtil uses this reference height for pixel/UI conversion.
-const UI_REFERENCE_HEIGHT: f32 = 768.0;
+pub(crate) const UI_REFERENCE_HEIGHT: f32 = 768.0;
 
 #[cfg(feature = "timed-signal-maps")]
 fn next_timer_or_signal_delay(timer_delay: Option<Duration>, state: &SimState) -> Option<Duration> {

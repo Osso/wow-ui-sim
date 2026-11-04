@@ -452,6 +452,13 @@ fn apply_template_scripts_impl(
     scripts: &crate::xml::ScriptsXml,
     intrinsic_default_scripts: bool,
 ) -> LuaResult<()> {
+    if !scripts.on_mouse_wheel.is_empty() {
+        crate::lua_api::globals::template::direct::apply_xml_mouse_wheel_script(
+            &sim_state_rc(state)?,
+            frame_id,
+            scripts,
+        );
+    }
     if apply_fast_scripts(state, frame_id, scripts, intrinsic_default_scripts)? {
         return Ok(());
     }

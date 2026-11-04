@@ -188,6 +188,165 @@ fn customization_tooltip_places_first_text_at_native_padding_anchor() {
 
 #[cfg(any(feature = "client-retail", feature = "client-ptr"))]
 #[test]
+fn blizzard_hidden_right_line_keeps_its_anchor_until_shown() {
+    let env = setup_full_env();
+    env.exec(r#"
+        GameTooltip:SetOwner(UIParent, "ANCHOR_NONE")
+        assert(GameTooltip:ProcessInfo({ tooltipData = { lines = {
+            { type = 0, leftText = "First", rightText = "Value" },
+        } } }))
+        local left, right = GameTooltip:GetLeftLine(1), GameTooltip:GetRightLine(1)
+        assert(right:IsShown(), "right line starts shown")
+        local bothWidth = GameTooltip:GetWidth()
+        right:Hide()
+        right:SetPoint("RIGHT", left, "LEFT", 123, 0)
+        GameTooltip:Show()
+        local _, _, _, x = right:GetPoint(1)
+        assert(x == 123, "hidden right anchor must be retained")
+        assert(GameTooltip:GetWidth() < bothWidth, "hidden right line must not contribute width")
+        right:Show()
+        GameTooltip:Show()
+        local _, _, _, rebuilt = right:GetPoint(1)
+        assert(math.abs(rebuilt - (GameTooltip:GetWidth() - 20.48)) < 0.01, "shown right anchor must be rebuilt")
+    "#).unwrap();
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
+#[test]
+fn blizzard_hidden_right_line_emits_no_glyphs() {
+    use iced::{Point, Rectangle, Size};
+    use wow_ui_sim::iced_app::tooltip::{TooltipRender, build_tooltip_quads, collect_tooltip_data};
+    use wow_ui_sim::render::{GlyphAtlas, QuadBatch, WowFontSystem};
+
+    let env = setup_full_env();
+    env.exec(r#"
+        GameTooltip:SetOwner(UIParent, "ANCHOR_NONE")
+        assert(GameTooltip:ProcessInfo({ tooltipData = { lines = {
+            { type = 0, leftText = "Left", rightText = "Right", leftColor = CreateColor(1, 1, 1), rightColor = CreateColor(1, 0, 0) },
+        } } }))
+        GameTooltip:GetRightLine(1):Hide()
+        GameTooltip:Show()
+    "#).unwrap();
+    let state = env.state().borrow();
+    let id = state.widgets.get_id_by_name("GameTooltip").unwrap();
+    let frame = state.widgets.get(id).unwrap();
+    let data = collect_tooltip_data(&state);
+    let mut fonts = WowFontSystem::new();
+    let mut glyphs = GlyphAtlas::new();
+    let mut batch = QuadBatch::new();
+    build_tooltip_quads(
+        TooltipRender {
+            batch: &mut batch,
+            bounds: Rectangle::new(Point::new(100.0, 200.0), Size::new(frame.width, frame.height)),
+            tooltip_data: Some(&data), id, eff_alpha: 1.0, eff_scale: 1.0, draw_background: false,
+        },
+        &mut Some((&mut fonts, &mut glyphs)),
+    );
+    let glyphs: Vec<_> = batch.vertices.iter().filter(|vertex|
+        vertex.tex_index == wow_ui_sim::render::shader::GLYPH_ATLAS_TEX_INDEX
+    ).collect();
+    assert!(glyphs.iter().any(|vertex| vertex.color == [1.0, 1.0, 1.0, 1.0]), "visible left glyphs must render");
+    assert!(!glyphs.iter().any(|vertex| vertex.color == [1.0, 0.0, 0.0, 1.0]), "hidden right glyphs must not render");
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
+#[test]
+fn customization_hidden_first_row_is_not_rendered() {
+    use iced::{Point, Rectangle, Size};
+    use wow_ui_sim::iced_app::tooltip::{TooltipRender, build_tooltip_quads, collect_tooltip_data};
+    use wow_ui_sim::render::{GlyphAtlas, QuadBatch, WowFontSystem};
+    let env = setup_full_env();
+    let addons = wow_ui_sim::paths::default_blizzard_ui_addons_path().unwrap();
+    wow_ui_sim::loader::load_addon(
+        &env.loader_env(),
+        &addons.join("Blizzard_CustomizationUI/Blizzard_CustomizationUI.toc"),
+    )
+    .unwrap();
+    env.exec(
+        r#"
+        local region = CreateFrame("Frame", nil, UIParent, "CustomizationFrameWithTooltipTemplate")
+        region.tooltipAnchor = "ANCHOR_NONE"
+        region:AddTooltipLine("First")
+        region:AddTooltipLine("Second")
+        region:OnEnter()
+    "#,
+    )
+    .unwrap();
+    let count_glyph_vertices = || {
+        let state = env.state().borrow();
+        let id = state
+            .widgets
+            .get_id_by_name("CustomizationNoHeaderTooltip")
+            .unwrap();
+        let frame = state.widgets.get(id).unwrap();
+        let data = collect_tooltip_data(&state);
+        let mut fonts = WowFontSystem::new();
+        let mut glyphs = GlyphAtlas::new();
+        let mut batch = QuadBatch::new();
+        build_tooltip_quads(
+            TooltipRender {
+                batch: &mut batch,
+                bounds: Rectangle::new(
+                    Point::new(100.0, 200.0),
+                    Size::new(frame.width, frame.height),
+                ),
+                tooltip_data: Some(&data),
+                id,
+                eff_alpha: 1.0,
+                eff_scale: 1.0,
+                draw_background: false,
+            },
+            &mut Some((&mut fonts, &mut glyphs)),
+        );
+        batch
+            .vertices
+            .iter()
+            .filter(|vertex| vertex.tex_index == wow_ui_sim::render::shader::GLYPH_ATLAS_TEX_INDEX)
+            .count()
+    };
+    let before = count_glyph_vertices();
+    env.exec(
+        "CustomizationNoHeaderTooltip:GetLeftLine(1):Hide(); CustomizationNoHeaderTooltip:Show()",
+    )
+    .unwrap();
+    let after = count_glyph_vertices();
+    assert!(
+        after > 0 && after < before,
+        "hidden first row must not emit glyphs: before {before}, after {after}"
+    );
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
+#[test]
+fn customization_hidden_first_row_keeps_indexed_anchor_but_not_height() {
+    let env = setup_full_env();
+    let addons = wow_ui_sim::paths::default_blizzard_ui_addons_path().unwrap();
+    wow_ui_sim::loader::load_addon(
+        &env.loader_env(),
+        &addons.join("Blizzard_CustomizationUI/Blizzard_CustomizationUI.toc"),
+    )
+    .unwrap();
+    env.exec(r#"
+        local region = CreateFrame("Frame", nil, UIParent, "CustomizationFrameWithTooltipTemplate")
+        region.tooltipAnchor = "ANCHOR_NONE"
+        region:AddTooltipLine("First")
+        region:AddTooltipLine("Second")
+        region:OnEnter()
+        local tip = CustomizationNoHeaderTooltip
+        local first, second = tip:GetLeftLine(1), tip:GetLeftLine(2)
+        assert(first:IsShown() and second:IsShown(), "original consumer shows both rows")
+        local oldHeight = tip:GetHeight()
+        first:Hide()
+        tip:SetCustomLineSpacing(6)
+        tip:Show()
+        assert(tip:GetHeight() < oldHeight, "hidden first row must not contribute height")
+        local point, relative, relativePoint, x, y = second:GetPoint(1)
+        assert(point == "TOP" and relative == first and relativePoint == "BOTTOM" and x == 0 and y == -6, "second row still anchors to hidden predecessor")
+    "#).unwrap();
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
+#[test]
 fn blizzard_line_handler_only_adds_nonempty_rows() {
     let env = setup_full_env();
     env.exec(

@@ -1,5 +1,6 @@
 //! Host-supplied totem slots share one snapshot across info and duration queries.
 
+use crate::client_profile::{ACTIVE, ClientProfile};
 use crate::lua_api::methods::{borrow_state, create_string};
 use crate::lua_bridge::FromStack;
 use rilua::vm::state::LuaState;
@@ -11,15 +12,17 @@ pub struct Totem {
     pub start_time: f64,
     pub duration: f64,
     pub icon: u32,
+    pub mod_rate: f64,
+    pub spell_id: u32,
 }
 
 pub(crate) fn register(lua: &mut rilua::Lua) -> LuaResult<()> {
     LuaApiMut::register_function(lua, "GetTotemInfo", get_totem_info)?;
-    #[cfg(feature = "retail-12-0-5")]
-    {
+    if cfg!(feature = "retail-12-0-5") || ACTIVE == ClientProfile::WowForever {
         LuaApiMut::register_function(lua, "GetNumTotemSlots", get_num_totem_slots)?;
-        LuaApiMut::register_function(lua, "GetTotemDuration", get_totem_duration)?;
     }
+    #[cfg(feature = "retail-12-0-5")]
+    LuaApiMut::register_function(lua, "GetTotemDuration", get_totem_duration)?;
     Ok(())
 }
 
@@ -37,27 +40,29 @@ fn read_totem(state: &LuaState) -> LuaResult<Option<Totem>> {
 }
 
 fn get_totem_info(state: &mut LuaState) -> LuaResult<u32> {
-    match read_totem(state)? {
-        Some(totem) => {
-            state.push(Val::Bool(true));
-            let name = create_string(state, &totem.name);
-            state.push(name);
-            state.push(Val::Num(totem.start_time));
-            state.push(Val::Num(totem.duration));
-            state.push(Val::Num(f64::from(totem.icon)));
-        }
-        None => {
-            state.push(Val::Bool(false));
-            state.push(Val::Nil);
-            state.push(Val::Num(0.0));
-            state.push(Val::Num(0.0));
-            state.push(Val::Nil);
-        }
+    let Some(totem) = read_totem(state)? else {
+        state.push(Val::Bool(false));
+        state.push(Val::Nil);
+        state.push(Val::Num(0.0));
+        state.push(Val::Num(0.0));
+        state.push(Val::Nil);
+        return Ok(5);
+    };
+
+    state.push(Val::Bool(true));
+    let name = create_string(state, &totem.name);
+    state.push(name);
+    state.push(Val::Num(totem.start_time));
+    state.push(Val::Num(totem.duration));
+    state.push(Val::Num(f64::from(totem.icon)));
+    if ACTIVE == ClientProfile::WowForever {
+        state.push(Val::Num(totem.mod_rate));
+        state.push(Val::Num(f64::from(totem.spell_id)));
+        return Ok(7);
     }
     Ok(5)
 }
 
-#[cfg(feature = "retail-12-0-5")]
 fn get_num_totem_slots(state: &mut LuaState) -> LuaResult<u32> {
     let count = borrow_state(state)?.totem_slots.len();
     state.push(Val::Num(count as f64));

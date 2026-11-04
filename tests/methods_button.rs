@@ -630,7 +630,7 @@ fn test_set_and_get_button_state() {
 }
 
 // ============================================================================
-// SetFontString Method (stub)
+// SetFontString Method
 // ============================================================================
 
 #[test]
@@ -643,6 +643,63 @@ fn test_set_font_string_no_error() {
         local fs = btn:GetFontString()
         btn:SetFontString(fs)
     "#,
+    )
+    .unwrap();
+}
+
+#[test]
+fn test_set_font_string_preserves_centered_label() {
+    let env = WowLuaEnv::new().unwrap();
+
+    env.exec(
+        r#"
+        local button = CreateFrame("Button", nil, UIParent)
+        button:SetPoint("TOPLEFT", UIParent, "TOPLEFT", 40, -40)
+        button:SetSize(110, 32)
+        local label = button:CreateFontString(nil, "OVERLAY")
+        label:SetFont("Fonts/FRIZQT__.TTF", 13, "")
+        label:SetJustifyH("LEFT")
+        label:SetPoint("CENTER", button, "CENTER")
+
+        button:SetFontString(label)
+        button:SetText("Content")
+
+        assert(button:GetFontString() == label)
+        assert(label:GetText() == "Content" and label:GetJustifyH() == "LEFT")
+        assert(label:GetNumPoints() == 1, "button must preserve the label's anchor")
+        local point, relative, relativePoint = label:GetPoint(1)
+        assert(point == "CENTER" and relative == button and relativePoint == "CENTER")
+        local labelX, labelWidth = label:GetLeft(), label:GetWidth()
+        local buttonX, buttonWidth = button:GetLeft(), button:GetWidth()
+        assert(labelWidth > 0 and labelWidth < buttonWidth)
+        assert(math.abs(labelX + labelWidth / 2 - (buttonX + buttonWidth / 2)) < 0.01)
+        "#,
+    )
+    .unwrap();
+}
+
+#[test]
+fn test_set_font_string_resolves_default_anchors_after_geometry_query() {
+    let env = WowLuaEnv::new().unwrap();
+
+    env.exec(
+        r#"
+        local button = CreateFrame("Button", nil, UIParent)
+        button:SetPoint("TOPLEFT", UIParent, "TOPLEFT", 40, -40)
+        button:SetSize(110, 32)
+        local label = button:CreateFontString(nil, "OVERLAY")
+        local buttonRect = {button:GetRect()}
+        assert(label:GetRect() == nil, "unanchored label has no queryable rect")
+
+        button:SetFontString(label)
+
+        assert(button:GetFontString() == label and label:GetNumPoints() == 2)
+        local labelRect = {label:GetRect()}
+        assert(#labelRect == 4 and #buttonRect == 4)
+        for i = 1, 4 do
+            assert(math.abs(labelRect[i] - buttonRect[i]) < 0.01, "label should fill button")
+        end
+        "#,
     )
     .unwrap();
 }

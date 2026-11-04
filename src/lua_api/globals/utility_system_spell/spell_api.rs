@@ -1,6 +1,6 @@
 //! Spell-related globals: UnitHealth, UnitPower, UnitCastingInfo, CastSpellBy*.
 
-use crate::lua_api::globals::unit_api::parse_party_index;
+use crate::lua_api::globals::group_queries::{unit_exists_in_state, visible_party_member};
 use crate::lua_api::globals::unit_stats::secondary_power_max;
 use crate::lua_api::methods::{borrow_state, create_string, val_to_string};
 use crate::lua_api::state_types::SecondaryPowerState;
@@ -29,28 +29,16 @@ pub(super) fn lookup_unit_vitals(state: &LuaState, unit: &str) -> UnitVitals {
     if matches!(unit, "player" | "self" | "pet" | "vehicle") {
         return player_vitals(&sim.player);
     }
-    if !crate::lua_api::globals::group_queries::unit_exists_in_state(&sim, unit) {
-        return absent_vitals();
+    if let Some(member) = visible_party_member(&sim, unit) {
+        return member_vitals(member);
     }
-    if let Some(index) = vitals_group_index(unit) {
-        return sim
-            .party_members
-            .get(index)
-            .map(member_vitals)
-            .unwrap_or_else(absent_vitals);
+    if !unit_exists_in_state(&sim, unit) {
+        return absent_vitals();
     }
     crate::lua_api::globals::targeting_verbs::resolve_unit_snapshot(&sim, unit)
         .as_ref()
         .map(target_vitals)
         .unwrap_or_else(absent_vitals)
-}
-
-fn vitals_group_index(unit: &str) -> Option<usize> {
-    parse_party_index(unit).or_else(|| {
-        unit.strip_prefix("raid")
-            .and_then(|slot| slot.parse::<usize>().ok())
-            .and_then(|slot| slot.checked_sub(1))
-    })
 }
 
 fn player_vitals(player: &crate::lua_api::state::PlayerState) -> UnitVitals {

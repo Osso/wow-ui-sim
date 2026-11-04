@@ -527,6 +527,8 @@ fn slider_orientation_attribute_applies() {
         r#"
         <Ui xmlns="http://www.blizzard.com/wow/ui/">
             <Slider name="VerticalSlider" parent="UIParent" orientation="VERTICAL"/>
+            <Slider name="DefaultOrientationSlider" parent="UIParent"/>
+            <Slider name="DefaultOrientationSliderTemplate" virtual="true" enableMouse="false"/>
         </Ui>
         "#,
     );
@@ -534,6 +536,18 @@ fn slider_orientation_attribute_applies() {
     t.assert_lua_true(
         "return VerticalSlider:GetOrientation() == 'VERTICAL'",
         "Slider orientation attribute should seed GetOrientation",
+    );
+    t.env
+        .exec("InheritedOrientationSlider = CreateFrame('Slider', nil, UIParent, 'DefaultOrientationSliderTemplate')")
+        .unwrap();
+    t.assert_lua_true(
+        "return DefaultOrientationSlider:GetOrientation() == 'VERTICAL'
+            and InheritedOrientationSlider:GetOrientation() == 'VERTICAL'",
+        "XML sliders and runtime instances of Slider templates should default to vertical",
+    );
+    t.assert_lua_true(
+        "return DefaultOrientationSlider:IsMouseEnabled() and not InheritedOrientationSlider:IsMouseEnabled()",
+        "Runtime Slider templates should preserve an explicit mouse opt-out",
     );
 }
 

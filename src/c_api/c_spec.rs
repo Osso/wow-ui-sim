@@ -3,7 +3,8 @@
 use crate::lua_api::game_data::CastingState;
 use crate::lua_api::globals::real::specialization_helpers::push_specialization_identity;
 use crate::lua_api::globals::spellbook_data;
-use crate::lua_api::methods::{borrow_state, borrow_state_mut, create_table, table_get};
+use crate::lua_api::methods::{borrow_state, borrow_state_mut, create_table};
+use crate::lua_api::workarounds::get_legacy_talent_info;
 use crate::lua_bridge::{stack_val, table_set_rust_fn_static};
 use crate::specializations;
 use rilua::vm::gc::arena::GcRef;
@@ -50,50 +51,6 @@ const C_SPECIALIZATION_INFO_METHODS: &[(&str, RustLuaFn)] = &[
     ("SetSpecialization", c_spec_set_specialization),
 ];
 
-fn get_retail_talent_info(state: &mut LuaState) -> LuaResult<u32> {
-    let query = rilua::table_security::unwrap_secret(state, stack_val(state, 1))?;
-    if !matches!(query, Val::Table(_)) {
-        return Err(rilua::runtime_error("GetTalentInfo requires a query table"));
-    }
-    read_talent_index(state, query, "groupIndex")?;
-    let tier = read_talent_index(state, query, "tier")?;
-    let column = read_talent_index(state, query, "column")?;
-    read_talent_index(state, query, "specializationIndex")?;
-    read_talent_index(state, query, "talentIndex")?;
-    for field in ["isInspect", "isPet"] {
-        let value = table_get(state, query, field);
-        rilua::table_security::unwrap_secret(state, value)?;
-    }
-    let target = table_get(state, query, "target");
-    let target = rilua::table_security::unwrap_secret(state, target)?;
-    if !matches!(target, Val::Nil | Val::Num(_) | Val::Str(_)) {
-        return Err(rilua::runtime_error("query.target requires a unit token"));
-    }
-    if tier.is_none() {
-        return Err(rilua::runtime_error("query.tier must be specified."));
-    }
-    if column.is_none() {
-        return Err(rilua::runtime_error("query.column must be specified."));
-    }
-    // The Retail legacy tier/column grid is not present in the simulator state.
-    state.push(Val::Nil);
-    Ok(1)
-}
-
-fn read_talent_index(state: &mut LuaState, query: Val, field: &str) -> LuaResult<Option<f64>> {
-    let value = table_get(state, query, field);
-    let value = rilua::table_security::unwrap_secret(state, value)?;
-    match value {
-        Val::Nil => Ok(None),
-        Val::Num(number) if number.is_finite() && (0.0..=f64::from(u32::MAX)).contains(&number) => {
-            Ok(Some(number))
-        }
-        _ => Err(rilua::runtime_error(format!(
-            "query.{field} requires an index"
-        ))),
-    }
-}
-
 pub(crate) const SPEC_ACTIVATION_SPELL_ID: u32 = 200749;
 const SPEC_ACTIVATION_CAST_SECONDS: f64 = 1.5;
 
@@ -103,8 +60,14 @@ pub fn register_c_specialization_info(state: &mut LuaState) -> LuaResult<()> {
     // the table with a fresh one.
     let t_ref = ensure_namespace(state, "C_SpecializationInfo")?;
     register_c_specialization_info_methods(state, t_ref)?;
+    if matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail
+            | crate::client_profile::ClientProfile::WowForever
+    ) {
+        table_set_rust_fn_static(state, t_ref, "GetTalentInfo", get_legacy_talent_info)?;
+    }
     if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
-        table_set_rust_fn_static(state, t_ref, "GetTalentInfo", get_retail_talent_info)?;
         table_set_rust_fn_static(
             state,
             t_ref,

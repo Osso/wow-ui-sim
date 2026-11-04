@@ -13,11 +13,10 @@ Lua string bytes.
 | `CompressString`, `DecompressString` | Raw Deflate, Zlib and Gzip |
 | `SerializeCBOR`, `DeserializeCBOR` | The definite-length CBOR subset below |
 
-Each successful transformation returns one result. Binary strings preserve NUL
+Successful transformations return one result except empty CBOR input, which is inferred to return zero. Binary strings preserve NUL
 and invalid UTF-8 bytes. The VM applies `AllowedWhenUntainted` secret
 authentication to source arguments and serialization values under all options.
-Invalid input raises a Lua error. Native error text and coercion rules remain
-unverified.
+For the three decoders, ordinary numbers are converted using Lua's 14-significant-digit format. Nil and tables fail the source check; CBOR reports their type, while Base64 and decompression report their usage strings. These checks are supported by static native evidence, not client execution.
 
 Base64 encoding emits padding. Decoding accepts padded or unpadded input and
 rejects invalid alphabet characters and padding bits. Compression uses raw
@@ -39,10 +38,7 @@ Tags, indefinite lengths, unsupported simple values, nil/NaN map keys,
 nonempty truncated input, trailing CBOR data and excessive nesting are rejected.
 These rules describe simulator behavior.
 
-Empty input returns one nil as an inferred sentinel for Blizzard's CVar table
-reader. The selected reader decodes the native empty-string default without
-an empty check and falls back to an empty table. This preserves errors for
-nonempty malformed CBOR and invalid Base64.
+Native static analysis implies zero returns for empty CBOR, one empty string for empty Base64, and an internal decompression error for empty compressed input. These three end-to-end outcomes are **inferred**, because the native return or rethrow connections are not fully established. The selected CVar reader falls back to an empty table for empty CBOR. A truncated CBOR header raises `attempted to deserialize an incomplete or ill-formed data item`; native static analysis verifies that error path.
 
 Serialization uses inferred wire choices. An exact dense `1..N` table, including
 an empty table, becomes an array. Sparse or mixed tables become maps. Nil becomes

@@ -597,6 +597,16 @@ fn apply_runtime_child_direct_properties_with_inherits(
     crate::lua_api::globals::template::direct::apply_xml_slider_orientation(
         state, frame_id, frame, inherits,
     );
+    let is_slider = state
+        .borrow()
+        .widgets
+        .get(frame_id)
+        .is_some_and(|widget| widget.widget_type == crate::widget::WidgetType::Slider);
+    if is_slider {
+        crate::lua_api::globals::template::direct::apply_xml_enable_mouse(
+            state, frame_id, frame, inherits,
+        );
+    }
     crate::lua_api::globals::template::direct::apply_xml_widget_values(
         state, frame_id, frame, inherits,
     );
