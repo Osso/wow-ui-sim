@@ -308,13 +308,19 @@ fn test_set_custom_line_spacing_and_get() {
 fn test_get_custom_line_spacing_default_is_zero() {
     let env = WowLuaEnv::new().unwrap();
 
-    let spacing: f64 = env
-        .eval("return GameTooltip:GetCustomLineSpacing()")
+    // WM63 L23:40: mainline returns no values without a spacing override.
+    let (count, spacing): (i32, Option<f64>) = env
+        .eval("return select('#', GameTooltip:GetCustomLineSpacing()), GameTooltip:GetCustomLineSpacing()")
         .unwrap();
-    assert_eq!(
-        spacing, 0.0,
-        "Default should be 0 (meaning use default 2px)"
-    );
+    if matches!(
+        wow_ui_sim::client_profile::ACTIVE,
+        wow_ui_sim::client_profile::ClientProfile::Retail
+            | wow_ui_sim::client_profile::ClientProfile::Ptr
+    ) {
+        assert_eq!((count, spacing), (0, None));
+    } else {
+        assert_eq!((count, spacing), (1, Some(0.0)));
+    }
 }
 
 #[test]

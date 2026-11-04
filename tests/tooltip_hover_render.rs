@@ -330,12 +330,26 @@ fn test_character_slot_hover_tooltip_is_positioned_to_right_of_slot() {
         tooltip_rect,
         slot_rect
     );
-    assert!(
-        (tooltip_center_y - slot_center_y).abs() <= 3.0,
-        "Character slot hover tooltip should stay vertically centered or bottom-clamped on the slot: tooltip={:?} slot={:?}",
-        tooltip_rect,
-        slot_rect
-    );
+    // WM63 O17:23-24: mainline RIGHT anchors tooltip BOTTOMLEFT to owner TOPRIGHT.
+    if matches!(
+        wow_ui_sim::client_profile::ACTIVE,
+        wow_ui_sim::client_profile::ClientProfile::Retail
+            | wow_ui_sim::client_profile::ClientProfile::Ptr
+    ) {
+        let anchor = &state.widgets.get(gt_id).unwrap().anchors[0];
+        assert_eq!(anchor.point, wow_ui_sim::widget::AnchorPoint::BottomLeft);
+        assert_eq!(
+            anchor.relative_point,
+            wow_ui_sim::widget::AnchorPoint::TopRight
+        );
+    } else {
+        assert!(
+            (tooltip_center_y - slot_center_y).abs() <= 3.0,
+            "Character slot hover tooltip should stay vertically centered or bottom-clamped on the slot: tooltip={:?} slot={:?}",
+            tooltip_rect,
+            slot_rect
+        );
+    }
     assert!(
         tooltip_rect.x + tooltip_rect.width <= 1024.0 + 0.1,
         "Tooltip should remain on-screen after character slot hover: tooltip={:?}",

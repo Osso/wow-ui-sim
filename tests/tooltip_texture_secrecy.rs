@@ -151,6 +151,7 @@ fn tooltip_texture_secrecy_line_replacement_preserves_other_private_line() {
     env.exec(
         r#"
         local tooltip = CreateFrame('GameTooltip')
+        TTLineSecretTooltip = tooltip
         tooltip:AddLine('First line')
         tooltip:AddLine('Second line')
         local first = tooltip:GetLeftLine(1)
@@ -161,8 +162,6 @@ fn tooltip_texture_secrecy_line_replacement_preserves_other_private_line() {
         tooltip:AddTexture(134400)
         tooltip:AddAtlas('UI-HUD-UnitFrame-Player-PortraitOn-Bar-Health')
         assert(tooltip:NumLines() == 4)
-        tooltip:Hide()
-        tooltip:Show()
         TTTextureAddon(function() TTTexturePrivate(first); TTTexturePrivate(second) end)
         first:SetText('Public first line')
         TTTextureAddon(function()
@@ -171,7 +170,16 @@ fn tooltip_texture_secrecy_line_replacement_preserves_other_private_line() {
         end)
         "#,
     )
-    .expect("line replacement declassifies only replaced text; visibility does not");
+    .expect("line replacement declassifies only replaced text");
+    // WM63 O17:45-51: Hide clears active lines; secrecy after clear is unverified.
+    if matches!(
+        wow_ui_sim::client_profile::ACTIVE,
+        wow_ui_sim::client_profile::ClientProfile::Retail
+            | wow_ui_sim::client_profile::ClientProfile::Ptr
+    ) {
+        env.exec("TTLineSecretTooltip:Hide(); assert(TTLineSecretTooltip:NumLines() == 0)")
+            .expect("hide clears active lines");
+    }
 }
 
 #[test]
