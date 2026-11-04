@@ -5,7 +5,7 @@ use crate::lua_api::WowLuaEnv;
 #[test]
 fn merchant_info_reads_supplied_inventory() {
     let env = WowLuaEnv::new().unwrap();
-    env.state().borrow_mut().merchant_items = vec![6948, 117];
+    env.state().borrow_mut().merchant_items = vec![6948, 229181];
     let actual: (String, String, bool) = env
         .eval(
             r#"
@@ -15,12 +15,15 @@ fn merchant_info_reads_supplied_inventory() {
     "#,
         )
         .unwrap();
-    assert_eq!(actual, ("Hearthstone".into(), "Tough Jerky".into(), true));
-    env.state().borrow_mut().merchant_items = vec![117];
+    assert_eq!(
+        actual,
+        ("Hearthstone".into(), "Ordained Forge Maul".into(), true)
+    );
+    env.state().borrow_mut().merchant_items = vec![229181];
     assert_eq!(
         env.eval::<String>("return C_MerchantFrame.GetItemInfo(1).name")
             .unwrap(),
-        "Tough Jerky"
+        "Ordained Forge Maul"
     );
 }
 
