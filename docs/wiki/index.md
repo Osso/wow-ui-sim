@@ -3,7 +3,7 @@
 [PTR tooltip residue](investigations/ptr-tooltip-residue.md) links the fixture
 correction and bounded WM92 reagent/action producers. The contract keeps PTR
 70668 evidence distinct from pinned 70493 inputs. The rule-enabled original
-OnEnter remains failing pending WM93; Retail tooltip coverage passes.
+OnEnter is now GREEN with the separate [WM93 counted-channel contract](../specs/ptr-action-combat-range-check.md), whose monitor uses explicit supplied results rather than native schedule/geometry claims.
 
 ## [2026-11-04] bounded proof | Tooltip data and merchant cursor
 

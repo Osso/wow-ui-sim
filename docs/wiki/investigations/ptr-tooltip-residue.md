@@ -27,18 +27,31 @@ independent original Leave pass. Direct tests distinguish state lookup gates,
 matching/different Leave slots, parser errors, return arity and the explicitly
 emulated argument-access policy.
 
-## Remaining original-consumer boundary
+## Counted action-combat follow-up
 
-The new rule-enabled OnEnter selector remains failing pending WM93. Enabling
-rule 204 makes the original UpdateAction path call the missing
-`C_ActionBar.EnableActionCombatActionRangeCheck` through its registered callback
-(ActionButton.lua:433,1492,570,942,403). The test is retained with its error oracle;
-no callback stub, texture removal, vendor modification or assertion weakening
-was used. Main accepted this as a separate follow-up slice, not part of WM92.
+The rule-enabled original OnEnter selector is now GREEN with the separate
+[WM93 counted channel](../../specs/ptr-action-combat-range-check.md). It previously
+failed at the missing `C_ActionBar.EnableActionCombatActionRangeCheck` callback
+(ActionButton.lua:433,1492,570,942,403). Its assertions and original consumer path
+remain unchanged: no callback stub, texture removal or registration bypass.
+
+Registration only changes counts; explicit supplied-result sweeps drive observer
+notifications. The WM93 contract is the source of truth for the UNKNOWN
+scheduling, target-selection, security and native diagnostic/trap seams.
+
+## Source-bound slot test execution
+
+Slot builds compile `CARGO_MANIFEST_DIR` into the fixed source mount path. Outside
+the build unit, that host directory is empty. Direct test runs from the lane cwd
+alone therefore cannot resolve manifest-relative bundled SimCommands/TestFramework
+inputs. WM93 runs use the same `BindPaths=worktree:slot-source-mount` and working
+directory as the build, with a fresh child CVar copy. The earlier minimap failure
+and addon-test exit do not recur; no source or test patch was needed.
 
 ## Sources
 
 - [PTR contract and evidence authority](../../specs/ptr-bank-reagents-action-hover.md)
+- [WM93 counted-channel contract](../../specs/ptr-action-combat-range-check.md)
 - [Original keybinding fixture](../../../tests/test_keybindings.rs)
 - [Original consumer and direct selectors](../../../tests/ptr_tooltip_residue.rs)
 - [Independent Leave selector](../../../tests/ptr_tooltip_hover_leave.rs)

@@ -1,3 +1,10 @@
+## [2026-11-04] bounded proof | WM93 counted combat range
+
+The [PTR tooltip investigation](investigations/ptr-tooltip-residue.md) records the
+now-GREEN original OnEnter selector, separate counted registrations, explicit
+supplied-result monitor and source-bound slot test execution. Native scheduling,
+target selection and security remain named UNKNOWN seams.
+
 ## [2026-11-04] investigation | PTR tooltip residue
 
 Recorded [WM92 producers and remaining consumer boundary](investigations/ptr-tooltip-residue.md).

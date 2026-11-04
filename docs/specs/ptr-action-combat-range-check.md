@@ -14,30 +14,30 @@ stores the callback used by :403 via rule-enabled :942 and OnEnter:1492.
 
 ## What it must do
 
-- [ ] Publish the API on PTR only; Retail must reject the event registration and
+- [x] Publish the API on PTR only; Retail must reject the event registration and
   expose neither an ordinary nor raw API member. PTR's existing event table
   admits ACTION_COMBAT_ACTION_RANGE_CHECK_UPDATE; no Retail event is added.
-- [ ] Read numeric/numeric-string action identifiers with WM92's unsigned-number
+- [x] Read numeric/numeric-string action identifiers with WM92's unsigned-number
   validation and subtract-before-truncate conversion. Unlike Enter/Leave, retain
   converted keys outside 0–407: ordinary slot 0 registers key -1; 409 registers 408.
-- [ ] Require non-nil enable, then use accessible Lua truthiness: false disables;
+- [x] Require non-nil enable, then use accessible Lua truthiness: false disables;
   zero, empty string and all other non-nil values enable. Ignore extra ordinary
   arguments. Missing/nil usage errors identify the argument number; ordinary
   slot-range errors remain distinct from secret-access errors.
-- [ ] Under rule 204 only, enable increments and disable decrements the per-key
+- [x] Under rule 204 only, enable increments and disable decrements the per-key
   32-bit reference count. Multiple enables require balanced disables. Exactly zero
   removes the registration and its cached result. Do not change WM92 hover stores.
-- [ ] Registration, partial disable and final disable emit no update event.
+- [x] Registration, partial disable and final disable emit no update event.
   Ordinary permitted calls return zero values (**INFERRED** native return contract).
-- [ ] The explicit monitor initializes from supplied results, then emits on first
+- [x] The explicit monitor initializes from supplied results, then emits on first
   evaluation, a changed available range result, availability change or explicit
   force. Unchanged initialized results do not emit. Removing the registration
   discards initialization; a later re-enable can produce an initial event again.
-- [ ] Publish `(oneBasedSlot, inRangeBoolean, availableBoolean)`. When unavailable,
+- [x] Publish `(oneBasedSlot, inRangeBoolean, availableBoolean)`. When unavailable,
   retain the previous cached range Boolean; it is not a valid standalone answer.
   Converted keys outside 0–407 are unavailable even when the supplied snapshot
   requests availability. Never replace either Boolean with nil.
-- [ ] The unchanged rule-enabled original OnEnter/OnLeave selector passes without
+- [x] The unchanged rule-enabled original OnEnter/OnLeave selector passes without
   a callback stub, registration bypass, removed texture or weakened assertion.
 
 ## How it works
@@ -65,8 +65,20 @@ stores the callback used by :403 via rule-enabled :942 and OnEnter:1492.
 
 ## Known gaps (current cycle)
 
-- [ ] Record targeted RED/GREEN, PTR tooltip/lib and Retail tooltip/absence;
-  retain only the three accepted baseline PTR library failures.
+All five new direct selectors and the unchanged original OnEnter/OnLeave
+selector were observed RED before the producer and GREEN after it. Current
+full-filter proof (all enumerated selectors, source-bound test units):
+
+| Scope | Result |
+|---|---|
+| PTR `tooltip_` | 528 passed, 0 failed, 1 ignored |
+| PTR lib | 2194 passed, 3 accepted baseline failures, 1 ignored |
+| Retail `tooltip_` | 527 passed, 0 failed, 1 ignored, including raw/ordinary API and event absence |
+
+The three remaining library selectors are pinned PTR identity, edit-mode
+loss-of-control enum and hyperlink tooltip data. No other failure or incomplete
+result remains in this run. These are results on the lane's source, not a claim
+about unmerged later master tests or a fully passing PTR library profile.
 
 ## Out of scope
 

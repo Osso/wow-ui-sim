@@ -53,7 +53,7 @@ refer to the shared C_GameRules rule store.
 - [x] Leave clears enabled and value only for a matching converted slot. It
   preserves the stored slot, is not gated by rule 204 and preserves state for
   other or unusable slots.
-- [ ] Original OnEnter and OnLeave handlers execute without swallowed errors;
+- [x] Original OnEnter and OnLeave handlers execute without swallowed errors;
   two distinct supplied action records drive two distinct values.
 
 ## How it works
@@ -82,21 +82,14 @@ refer to the shared C_GameRules rule store.
 
 ## Known gaps (current cycle)
 
-- [ ] Rule-enabled original OnEnter is blocked by missing
-  `C_ActionBar.EnableActionCombatActionRangeCheck`: original ActionButton.lua:433
-  stores it as a callback; :1492 → :570 → :942 → :403 invokes nil before Enter.
-  Its detailed native contract is UNKNOWN, pending WM93. Keep the selector
-  visibly failing; do not bypass registration, remove the texture, or add a stub.
+The original rule-enabled OnEnter boundary is closed by the separate
+[WM93 counted channel](ptr-action-combat-range-check.md), not by a callback stub
+or a changed assertion. Current profile proof belongs to that follow-up contract.
+The earlier WM92-only failed selector and unbound-source library results remain
+historical handoff evidence, not the current profile result.
 
-The full requested filters were enumerated and run in bounded partitions. PTR
-`tooltip_`: 522 passed, 1 failed (WM93), 1 ignored; Retail: 526 passed, 0 failed,
-1 ignored, including raw and ordinary API absence. PTR library: 2192 passed,
-4 failed, 1 ignored, and one process-exit case with no completed result. Three
-library failures match the earlier tooltip-data report's selectors (identity,
-edit-mode enum and hyperlink); the exclusive-addon-root texture failure and
-`addon_tests::tests::synchronous_tests_reset_addon_instruction_usage` exit 1 are
-additional observed results, not newly attributed regressions. No source-matched
-RED library comparison was run. These do not establish a passing PTR profile.
+- [ ] Same-build 70493 native evidence remains unavailable; retain the 70668
+  evidence scope and UNKNOWN native security, geometry and scheduling limits.
 
 ## Out of scope
 
