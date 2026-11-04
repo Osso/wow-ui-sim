@@ -1681,7 +1681,7 @@ Owned specs/audits/index updated from queued to integrated: 3.4.3 `80a3fb104`, 3
 
 ## [2026-10-08] investigation | Patch 6.2.0 API audit
 
-Pinned parent page 149103/1460518: zero inventory, eleven accounted extract rows. Retail spell-link cost omission modeled; two item-link contracts recorded pending. All targeted tests, fixtures, format/Mists and matching addons-enabled startup [] pass; 49 registers/46 extracts reproduce, three inherited failures. Thirty prior validators plus own portable gate pass; no retirements. Wiki files preserved without shrinkage.
+Pinned parent page 149103/1460518: zero inventory, eleven accounted extract rows. Retail spell-link cost omission was modeled (superseded on 2026-11-04 by [WM98 eligibility](../specs/spell-tooltip-cost.md)); two item-link contracts recorded pending. All targeted tests, fixtures, format/Mists and matching addons-enabled startup [] pass; 49 registers/46 extracts reproduce, three inherited failures. Thirty prior validators plus own portable gate pass; no retirements. Wiki files preserved without shrinkage.
 
 ## [2026-10-08] investigation | Patch 6.1.0 API audit
 
