@@ -29,6 +29,19 @@ PTR publishes declaration-backed Edit Mode enums through `src/c_api/ptr_edit_mod
 - The whole unchanged selected Mainline `EditModePresetLayouts.lua` must complete. All three preset maps must preserve the original two EndCap records and three distinct SwingTimer records, settings and exact per-index anchors, including Gamepad's original Width/Height overrides. Producer-subtracted RED must stop at the first EndCap read (physical631); byte-identical GREEN must reach the end of the file.
 - This is complete preset construction, not a native default-layout policy or full Edit Mode lifecycle claim. No other declaration family is included.
 
+## PTR library baseline reconciliation
+
+The 70493 library baseline additionally requires `EditModeSystemMeta` to span
+0–30 (31 values), `EditModeAccountSetting.ShowGroupFinder=35`,
+`ShowLossOfControl=36`, `ShowSwingTimer=37`, and account metadata spanning
+0–37 (38 values). These declarations are in the pinned
+`Blizzard_APIDocumentationGenerated/EditModeManagerConstantsDocumentation.lua:215–260,745–782`.
+The original account-setting consumer reads ShowLossOfControl in
+`Blizzard_EditMode/Shared/EditModeManager.lua:971,2954`.
+This extends the earlier display-info-only boundary above; Retail keeps its
+existing identifiers and metadata. The focused library test asserts both profiles'
+respective loss-of-control identifiers and metadata.
+
 ## How it works
 
 - [Declaration and consumer evidence](../wiki/investigations/ptr-edit-mode-declarations.md).

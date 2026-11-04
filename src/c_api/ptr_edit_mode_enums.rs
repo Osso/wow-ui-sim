@@ -43,6 +43,23 @@ const DECLARATIONS: &[EnumFields] = &[
             ("GamepadMainActionBar", 30),
         ],
     ),
+    // System metadata at 745–749; account settings and metadata at 215–260.
+    (
+        "EditModeSystemMeta",
+        &[("NumValues", 31), ("MinValue", 0), ("MaxValue", 30)],
+    ),
+    (
+        "EditModeAccountSetting",
+        &[
+            ("ShowGroupFinder", 35),
+            ("ShowLossOfControl", 36),
+            ("ShowSwingTimer", 37),
+        ],
+    ),
+    (
+        "EditModeAccountSettingMeta",
+        &[("NumValues", 38), ("MinValue", 0), ("MaxValue", 37)],
+    ),
     // Individual setting declarations at 505–509, 520, 556 and 635.
     (
         "EditModeGamepadMainActionBarSetting",
