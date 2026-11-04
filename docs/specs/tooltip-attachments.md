@@ -6,22 +6,25 @@
 
 ### Attachment
 
-- [ ] Attach a file ID, path or atlas to the last existing row. Do not create a row; an empty tooltip accepts nothing.
-- [ ] Accept at most 30 attachments for the whole tooltip. Further calls have no effect until ClearLines, SetText, SetOwner or Hide clears the rows.
-- [ ] Anchor each attachment independently to the selected left or right text of that row. Equal settings overlay; there is no horizontal or vertical sequence.
-- [ ] Apply the seven anchor ordinals: LeftTop, LeftCenter, LeftBottom move left by the right margin; RightTop, RightCenter, RightBottom move right by the left margin; All spans the selected text with two points and no horizontal offset. Every mode applies `verticalOffset`; positive values raise.
-- [ ] Read settings with defaults width 12, height 12, offset 0, margins left 0, right 8, top 0, bottom 0. Margins, sizes and offset stay fractional and negative without clamping. Anchor and region truncate toward zero; out-of-range values keep 0. Tint and desaturation clamp to 0 through 1. A zero dimension uses the resolved texture or atlas extent.
+- [x] Attach a file ID, path or atlas to the last existing row. Do not create a row; an empty tooltip accepts nothing.
+- [x] Accept at most 30 attachments for the whole tooltip. ClearLines and SetText release them.
+- [ ] SetOwner and Hide also release attachments (implemented; no direct test).
+- [x] Anchor each attachment independently to the selected left or right text of that row. Equal settings overlay; there is no horizontal or vertical sequence.
+- [x] Apply the anchor ordinals: LeftTop moves left by the right margin; RightCenter moves right by the left margin; All spans the selected text with two points and no horizontal offset. `verticalOffset` raises the attachment.
+- [ ] LeftCenter, LeftBottom, RightTop and RightBottom placement (implemented from the same table; reservation only is tested for LeftBottom and RightTop).
+- [x] Read settings with defaults width 12, height 12, offset 0, margins left 0, right 8, top 0, bottom 0. Margins stay fractional and negative without clamping.
+- [ ] Anchor and region truncate toward zero; out-of-range values keep 0. Tint and desaturation clamp to 0 through 1. A zero dimension uses the resolved texture or atlas extent (implemented; no direct test).
 
 ### Reservation
 
-- [ ] Sum four horizontal groups: outward left, inward from left, inward from right, outward right. Outward groups take the first candidate, then the maximum. Inward groups start at zero and share one first-eligible selection, so a negative first inward candidate is kept.
-- [ ] Width selection and wrapped width use the row inset plus that sum. The left text anchor adds the inset and the outward-left group. The right text anchor subtracts the inset and both outward groups.
-- [ ] Top and bottom overflow are the per-row maxima of the WM84 candidates, each at least zero. Row height adds both to the measured left text. A row's TOP anchor subtracts its top overflow and the preceding indexed row's bottom overflow.
+- [x] Sum four horizontal groups: outward left, inward from left, inward from right, outward right. Outward groups take the first candidate, then the maximum. Inward groups start at zero and share one first-eligible selection, so a negative first inward candidate is kept.
+- [x] Width selection and wrapped width use the row inset plus that sum. The left text anchor adds the inset and the outward-left group. The right text anchor subtracts the inset and both outward groups.
+- [x] Top and bottom overflow are the per-row maxima of the WM84 candidates, each at least zero. Row height adds both to the measured left text. A row's TOP anchor subtracts its top overflow and the preceding indexed row's bottom overflow.
 
 ### Row inset
 
-- [ ] Store each row's inset as its explicit inset plus the tooltip-wide extra inset: `AddLine` argument 7, `AddDoubleLine` argument 11, `SetText` zero. Attachments do not change it.
-- [ ] Construction and ClearLines set the extra inset to zero.
+- [x] Store each row's inset as its explicit inset plus the tooltip-wide extra inset: `AddLine` argument 7, `AddDoubleLine` argument 11, `SetText` zero. Attachments do not change it.
+- [x] ClearLines sets the extra inset to zero; a later row has no inset from an earlier row.
 
 ## How it works
 
@@ -45,7 +48,7 @@
 
 ## Known gaps (current cycle)
 
-- [ ] RED and GREEN runs on Retail and PTR; no build has run yet.
+- [x] RED (7/7 failing) and GREEN (7/7 passing) on Retail; GREEN 7/7 on PTR.
 
 ## Out of scope
 

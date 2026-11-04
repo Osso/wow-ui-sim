@@ -9,9 +9,9 @@ Bounded simulator contract for the original cached Retail `SocialUIUtil.AddSepar
 ## What it must do
 
 - [ ] Execute the unchanged cached `retail/AddOns/Blizzard_SocialUIShared/SocialUIUtil.lua:138-152` and attach its path/options divider to the wrapped blank row it just added, without increasing NumLines again.
-- [ ] Emit one texture request for that path whose bounds equal the blank row's text rect under the render scale, with tooltip alpha.
-- [ ] ClearLines removes the attachment; rebuilding text-only content emits no stale divider.
-- [ ] Numeric and numeric-string AddTexture inputs attach to the last row without appending rows.
+- [x] Emit one texture request for that path whose bounds equal the blank row's text rect under the render scale, with tooltip alpha.
+- [x] ClearLines removes the attachment; rebuilding text-only content emits no stale divider.
+- [x] Numeric and numeric-string AddTexture inputs attach to the last row without appending rows.
 
 ## How it works
 
