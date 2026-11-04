@@ -696,6 +696,34 @@ sys.exit(runner.run(sys.argv[2], 1, sys.argv[3], "ptr"))
         second = json.loads((self.home / 'slot-argv.json').read_text())
         self.assertEqual(second[second.index('--worktree') + 1], str(worktree))
 
+    def test_wow_sim_bin_target_fits_the_measured_thread_budget(self):
+        for name in ('integration-tests', 'lib-tests', 'wow-sim-tests'):
+            write_executable(self.slot / name,
+                "import os, pathlib, sys\n"
+                "name = pathlib.Path(__file__).name\n"
+                "threads = int(os.environ['RUST_TEST_THREADS'])\n"
+                "(pathlib.Path(os.environ['HOME']) / (name + '-threads')).write_text(str(threads))\n"
+                "if name == 'wow-sim-tests' and threads > 3: sys.exit('full-UI bin tests exceed the 9G budget')\n")
+        write_executable(self.bin / 'slot-build.py',
+            "import json, os, pathlib, sys\n"
+            "slot = pathlib.Path(os.environ['HOME']) / '.cache/wow-ui-sim-targets/slot-3'\n"
+            "unit = sys.argv[sys.argv.index('--unit') + 1]\n"
+            "receipt = slot / 'receipts' / (unit + '.json')\n"
+            "receipt.parent.mkdir(exist_ok=True)\n"
+            "records = [{'executable': str(slot / binary), 'profile': {'test': True}, "
+            "'target': {'name': name, 'kind': [kind]}} for name, kind, binary in "
+            "[('integration', 'test', 'integration-tests'), ('wow_ui_sim', 'lib', 'lib-tests'), ('wow-sim', 'bin', 'wow-sim-tests')]]\n"
+            "receipt.write_text(json.dumps({'result': 'success', 'returncode': 0, 'reported_artifacts': records}))\n")
+        write_executable(self.bin / 'systemctl', "print('ActiveState=inactive\\nResult=success')\n")
+        write_executable(self.bin / 'systemd-run',
+            "import subprocess, sys\nsys.exit(subprocess.call(sys.argv[sys.argv.index('--') + 1:]))\n")
+        process = subprocess.run(
+            [sys.executable, str(RUNNER), 'run', self.sha, '--profile', 'ptr', '--target-dir', str(self.slot)],
+            env=dict(self.env, FULL_SUITE_JOBS='16'), capture_output=True, text=True, timeout=10)
+        self.assertEqual(process.returncode, 0, process.stdout + process.stderr)
+        self.assertEqual((self.home / 'wow-sim-tests-threads').read_text(), '3')
+        self.assertEqual((self.home / 'lib-tests-threads').read_text(), '16')
+
     def test_result_waits_for_certified_build_and_test_execution(self):
         test_binary = self.slot / 'integration-test'
         write_executable(test_binary,
