@@ -1,7 +1,7 @@
 //! WM92 PTR 70668 SpellRangeVisualization inputs and local stores.
 //! The pinned PTR UI is 70493; this is not same-build native evidence.
 
-mod unknown_policy;
+pub(crate) mod unknown_policy;
 
 use crate::client_profile::{ACTIVE, ClientProfile};
 use crate::lua_api::methods::{borrow_state_mut, table_get, table_set};
@@ -52,17 +52,22 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
     Ok(())
 }
 
-fn argument_error(function: &str, reason: &str) -> rilua::LuaError {
-    rilua::runtime_error(format!("bad argument #1 to '{function}' ({reason})"))
+pub(crate) fn argument_error(index: i32, function: &str, reason: &str) -> rilua::LuaError {
+    rilua::runtime_error(format!("bad argument #{index} to '{function}' ({reason})"))
 }
 
 /// Subtract before truncation: 0 is unusable, but 0.25 selects converted slot 0.
 fn read_slot(state: &LuaState, function: &str) -> LuaResult<Option<u32>> {
     let usage = format!("Usage: C_ActionBar.{function}(actionID)");
+    let converted = read_converted_slot(state, function, &usage)?;
+    Ok((0..408).contains(&converted).then_some(converted as u32))
+}
+
+pub(crate) fn read_converted_slot(state: &LuaState, function: &str, usage: &str) -> LuaResult<i32> {
     if matches!(stack_val(state, 1), Val::Nil) {
-        return Err(argument_error(function, &usage));
+        return Err(argument_error(1, function, usage));
     }
-    let value = unknown_policy::read_accessible_argument(state, &usage)?;
+    let value = unknown_policy::read_accessible_argument(state, 1, usage)?;
     let number = match value {
         Val::Num(number) => Some(number),
         Val::Str(reference) => state
@@ -76,15 +81,13 @@ fn read_slot(state: &LuaState, function: &str) -> LuaResult<Option<u32>> {
         .filter(|n| n.is_finite() && (0.0..=f64::from(u32::MAX)).contains(n))
         .ok_or_else(|| {
             argument_error(
+                1,
                 function,
                 &format!("outside of expected range 0 to 4294967295 - {usage}"),
             )
         })?;
     let converted = (number - 1.0).trunc();
-    // Values outside the signed conversion domain cannot select a usable slot.
-    Ok((0.0..408.0)
-        .contains(&converted)
-        .then_some(converted as u32))
+    Ok(unknown_policy::narrow_converted_slot(converted))
 }
 
 fn select_visualization(sim: &crate::lua_api::SimState, slot: u32) -> Option<u32> {
