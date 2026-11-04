@@ -258,12 +258,24 @@ fn build_character_info_table(state: &mut LuaState, account: &BnetGameAccount) -
 }
 
 fn set_character_info_strings(state: &mut LuaState, table: Val, account: &BnetGameAccount) {
-    let name_field = if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Ptr {
+    let name_field = if matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Ptr
+            | crate::client_profile::ClientProfile::WowForever
+    ) {
         "characterName"
     } else {
         "name"
     };
     set_string_field(state, table, name_field, &account.character_name);
+    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::WowForever {
+        set_string_field(
+            state,
+            table,
+            "fullName",
+            emulate_forever_character_full_name(account),
+        );
+    }
     set_string_field(state, table, "realmName", &account.realm_name);
     set_string_field(state, table, "realmAddress", &account.realm_display_name);
     set_string_field(state, table, "guid", &account.wow_account_guid);
@@ -271,6 +283,12 @@ fn set_character_info_strings(state: &mut LuaState, table: Val, account: &BnetGa
     set_string_field(state, table, "classFilename", &account.class_name);
     set_string_field(state, table, "areaName", &account.area_name);
     set_string_field(state, table, "faction", &account.faction_name);
+}
+
+/// EMULATED: supplied account names are already display text. Native surname
+/// composition awaits WM100; do not invent a surname from unrelated player state.
+fn emulate_forever_character_full_name(account: &BnetGameAccount) -> &str {
+    &account.character_name
 }
 
 fn set_character_info_numbers(state: &mut LuaState, table: Val, account: &BnetGameAccount) {
