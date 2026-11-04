@@ -47,6 +47,12 @@ pub(super) fn register_pet_info_surface(state: &mut LuaState) -> LuaResult<()> {
 
 fn register_c_tooltip_info(state: &mut LuaState) -> LuaResult<()> {
     let table_ref = ensure_namespace(state, "C_TooltipInfo")?;
+    if matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail | crate::client_profile::ClientProfile::Ptr
+    ) {
+        crate::c_api::c_tooltip_info_loot::register(state, table_ref)?;
+    }
     #[cfg(feature = "retail-12-0-5")]
     {
         crate::c_api::c_tooltip_info_item_context::register(state, table_ref)?;
@@ -64,7 +70,6 @@ fn register_c_tooltip_info(state: &mut LuaState) -> LuaResult<()> {
 }
 
 /// Dispatch the selected catalog clone through the unchanged item line builder.
-#[cfg(feature = "retail-12-0-5")]
 pub(crate) fn tooltip_for_item_context(
     state: &mut LuaState,
     item_id: u32,
