@@ -14,7 +14,7 @@ The NECESSARY Retail suite must complete in at most 600 seconds of wall time on 
 ### Resource limits
 
 - [ ] Run single-threaded integration shards with individual memory limits and account for shared host capacity.
-- [ ] Preserve the existing global two-child timeout semaphore and exclusive-workload gate.
+- [ ] Preserve the global timeout-slot semaphore and exclusive-workload gate; configure the slot count from the admitted runner budget. Standalone tests default to 2. Main approved this harness-policy parameter after the six-slot measurement.
 
 ## How it works
 
@@ -38,4 +38,4 @@ The NECESSARY Retail suite must complete in at most 600 seconds of wall time on 
 
 ## Out of scope
 
-Changing assertions, moving slow tests to OPTIONAL, modifying Blizzard code, or changing timeout semaphore semantics.
+Changing product fixture assertions or semantics, moving slow tests to OPTIONAL, or modifying Blizzard code. Harness conformance may assert its explicitly configured policy bound; the existing post-spawn deadlines and cleanup remain unchanged.

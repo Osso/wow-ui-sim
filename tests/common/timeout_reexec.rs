@@ -20,7 +20,8 @@ const CHILD_TEST_ENV: &str = "WOW_SIM_TIMEOUT_REEXEC_TEST";
 const HANDSHAKE_PATH_ENV: &str = "WOW_SIM_TIMEOUT_REEXEC_HANDSHAKE";
 const CHILD_POLL_INTERVAL: Duration = Duration::from_millis(10);
 const TERMINATION_GRACE: Duration = Duration::from_millis(100);
-const TIMEOUT_CHILD_SLOTS: usize = 2;
+const DEFAULT_TIMEOUT_CHILD_SLOTS: usize = 2;
+const TIMEOUT_CHILD_SLOTS_ENV: &str = "WOW_SIM_TIMEOUT_CHILD_SLOTS";
 const TIMEOUT_SLOT_POLL_INTERVAL: Duration = Duration::from_millis(10);
 
 static HANDSHAKE_SEQUENCE: AtomicU64 = AtomicU64::new(0);
@@ -228,10 +229,24 @@ impl TimeoutChildPermit {
     }
 }
 
+fn configured_timeout_child_slots() -> usize {
+    let value = match env::var(TIMEOUT_CHILD_SLOTS_ENV) {
+        Ok(value) => value,
+        Err(env::VarError::NotPresent) => return DEFAULT_TIMEOUT_CHILD_SLOTS,
+        Err(error) => panic!("read {TIMEOUT_CHILD_SLOTS_ENV}: {error}"),
+    };
+    value
+        .parse::<usize>()
+        .ok()
+        .filter(|slots| (2..=6).contains(slots))
+        .unwrap_or_else(|| panic!("{TIMEOUT_CHILD_SLOTS_ENV} must be an integer from 2 through 6"))
+}
+
 fn acquire_timeout_child_permit(workload_path: PathBuf) -> TimeoutChildPermit {
+    let slots = configured_timeout_child_slots();
     let prefix = workload_path.to_string_lossy();
     loop {
-        for slot in 0..TIMEOUT_CHILD_SLOTS {
+        for slot in 0..slots {
             let path = format!("{prefix}.timeout-slot-{slot}");
             let file = open_and_try_lock_timeout_slot(&path)
                 .unwrap_or_else(|error| panic!("acquire timeout child slot `{path}`: {error}"));
