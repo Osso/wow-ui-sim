@@ -1,3 +1,10 @@
+## [2026-11-04] correction | Forever library and shared tooltip costs
+
+[Forever publication](../specs/forever-lib-publication.md) records supplied-model
+queries and the pinned fifteen-bit enum. [WM98 eligibility](../specs/spell-tooltip-cost.md)
+replaces historical blanket cost omission with shared native outer gates and
+source-backed attribute data, with bounded three-profile proof.
+
 ## [2026-11-04] investigation | PTR Edit Mode preset fixtures
 
 [Edit Mode reconciliation](investigations/editmode-layout.md#ptr-preset-and-startup-fixture-reconciliation--2026-11-04)

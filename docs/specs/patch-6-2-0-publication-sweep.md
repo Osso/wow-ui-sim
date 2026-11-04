@@ -7,7 +7,7 @@ Audit pageid 149103, revision 1460518. This is a narrative page, not a redirect/
 - [x] Pin parent-page response, revision, wikitext and digest; preserve the automated-diff reference without pretending it was expanded.
 - [x] Account for every retained extract statement and generate a zero-entry publication register.
 - [x] Add a prefork publication sweep with chronological merged 6.2.2/6.2.4 registers.
-- [ ] Preserve modern eligible spell-link costs under the [WM98 shared cost contract](spell-tooltip-cost.md); the original omission requirement is superseded.
+- [x] Preserve modern eligible spell-link costs under the [WM98 shared cost contract](spell-tooltip-cost.md); the original omission requirement is superseded.
 - [x] Verify existing difficulty identifiers 23/24 without claiming native five-player difficulty metadata.
 - [x] Complete targeted tests, source reproduction, warning-clean Mists check and portable historical validators.
 - [ ] Historical item-link modifier/upgrade scaling and complete native spell/difficulty parity remain unmodeled.

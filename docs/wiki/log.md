@@ -1,3 +1,11 @@
+## [2026-11-04] correction | Forever library and WM98
+
+Reconciled the [Forever publication contract](../specs/forever-lib-publication.md)
+and [WM98 spell costs](../specs/spell-tooltip-cost.md). The historical audit now
+links the superseding native evidence limits; generated group-9 attributes retain
+70391 provenance without unrelated record changes. Library proof remains distinct
+from native parity and final all-profile acceptance.
+
 ## [2026-11-04] investigation | PTR Edit Mode preset fixtures
 
 Recorded the [seven-failure reconciliation](investigations/editmode-layout.md#ptr-preset-and-startup-fixture-reconciliation--2026-11-04): five preset-count fixtures, one cast-bar Show lifecycle fixture and one missing declared quest query. Linked current contracts, native limits and bounded PTR/Retail proof.

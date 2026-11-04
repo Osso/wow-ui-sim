@@ -8,18 +8,18 @@ why the older frame-method note is not a modern data-getter oracle.
 
 ## What it must do
 
-- [ ] Use one cost producer for all profiles and both spell-data getters.
+- [x] Use one cost producer for all profiles and both spell-data getters.
   `isLink` and `dontOverride` do not exclude cost text.
-- [ ] Exclude cost text when mode is 1, content suppression is set, or
+- [x] Exclude cost text when mode is 1, content suppression is set, or
   SpellMisc attribute group 9 mask 32768 is set. Other modes and masks alone
   must not suppress the existing eligible cost fixture.
-- [ ] Read supplied context first, otherwise normal mode 0 with content
+- [x] Read supplied context first, otherwise normal mode 0 with content
   suppression clear. Normal getter defaults are source-backed by WM98.
-- [ ] Read source attribute group 9 from generated CSV build 12.1.5.70391 or
+- [x] Read source attribute group 9 from generated CSV build 12.1.5.70391 or
   the selected Forever spell cache. Preserve absent-row identity as `None`.
   **UNKNOWN:** `unknown_spell_attributes_9` treats an absent attribute row as
   clear bits; this is the sole missing-attribute seam, not native parity.
-- [ ] Keep only the existing Flash of Light 19750 formatted resource fixture.
+- [x] Keep only the existing Flash of Light 19750 formatted resource fixture.
   No fixture means no manufactured resource-cost string. Retain other tooltip
   lines and spell identity; their exact native layout is not newly claimed.
 
@@ -48,6 +48,11 @@ why the older frame-method note is not a modern data-getter oracle.
   restoration and frame spell identity through the shared simulator producer.
 - `src/bin/wow_cli/gen_spells.rs` tests: signed attribute masks, default-difficulty
   selection, attribute-only byte preservation and idempotence.
+
+Bounded proof on runtime `d4fde71d1`: Forever targeted 18/18; Retail library
+2206/0/1 plus cost gates, bare links and original prefork consumer; PTR library
+2202/0/1 plus cost gates and bare links. Library counts include two new WM98
+tests. These are simulator tests, not new native runtime observations.
 
 ## Known gaps (current cycle)
 
