@@ -16,7 +16,7 @@ use rilua::{LuaResult, Val};
 pub(super) fn set_owner(state: &mut LuaState) -> LuaResult<u32> {
     let tooltip_id = frame_id_from_stack(state, 1)?;
     let args = tooltip_owner_args(state);
-    if native_owner_behavior() {
+    if owner_reassignment_uses_visibility_lifecycle() {
         let old_owner = current_tooltip_owner_id(state, tooltip_id)?;
         super::line_data::clear_lines(state)?;
         if old_owner.is_some() && old_owner != args.owner_id {
@@ -31,10 +31,22 @@ pub(super) fn set_owner(state: &mut LuaState) -> LuaResult<u32> {
     let fields = get_or_create_frame_fields(state, tooltip_id);
     let anchor_value = create_string(state, &args.anchor_kind);
     table_set(state, fields, "anchor", anchor_value);
-    if !native_owner_behavior() {
+    if !owner_reassignment_uses_visibility_lifecycle() {
         fire_tooltip_script(state, tooltip_id, "OnTooltipCleared");
     }
     Ok(0)
+}
+
+fn owner_reassignment_uses_visibility_lifecycle() -> bool {
+    // Forever's original TooltipDataHandler.lua:264-270 needs a real Hide
+    // transition to clear infoList after a failed lookup. This does not imply
+    // Retail's native anchor geometry or Hide-clears-lines contract.
+    matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail
+            | crate::client_profile::ClientProfile::Ptr
+            | crate::client_profile::ClientProfile::WowForever
+    )
 }
 
 fn native_owner_behavior() -> bool {
@@ -134,7 +146,7 @@ fn record_tooltip_owner(
     td.spell_id = None;
     super::attachments::release_tooltip_attachments(sim, tooltip_id);
     sim.widgets.mark_rect_dirty(tooltip_id);
-    if !native_owner_behavior() {
+    if !owner_reassignment_uses_visibility_lifecycle() {
         sim.set_frame_visible(tooltip_id, false);
     }
 }
