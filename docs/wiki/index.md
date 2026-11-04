@@ -9,8 +9,8 @@ source-backed attribute data, with bounded three-profile proof.
 
 [Forever compatibility](investigations/forever-addon-startup-compatibility.md#tooltip-baseline-fixtures-and-producers)
 records Camelot fixture selection, modeled query publication, excluded GroupFinder
-frames, strict spellbook scenario inputs, WM99–101 state and the remaining
-trait-currency producer gap.
+frames, strict spellbook scenario inputs and WM99–102 state. The original
+tab-switch regression now passes; native cost acquisition remains UNKNOWN.
 
 ## [2026-11-04] implementation | Totem tooltip duration
 

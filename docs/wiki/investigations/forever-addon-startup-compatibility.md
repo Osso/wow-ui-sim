@@ -96,15 +96,17 @@ and [spec-group configuration selection](../../specs/forever-spec-group-config.m
 WM101 adds the resolved-player/class ammunition predicate and supplied
 [trait-group display rows](../../specs/forever-trait-group-display.md), preserving
 provider order and missing SkillLine joins. The original character-panel flow
-now passes. The remaining tab-switch failure calls `C_Traits.GetGroupCurrencyInfo`;
-WM102 is pending. The [glue character name contract](../../specs/forever-glue-character-name.md)
+now passes. [WM102 group-currency selection](../../specs/forever-trait-group-currency.md)
+resolves the final tab-switch failure using supplied configuration memberships,
+provider orders and explicit resolved amounts. Unknown cost/source policies
+remain outside the model; missing populated inputs are not replaced with zeros. The [glue character name contract](../../specs/forever-glue-character-name.md)
 follows WM100's separate surname and supplied separator, uses the pinned localized
 format and preserves zero-result unknown GUID lookup. Only absent localized
 format data retains a named EMULATED seam. Original supplied-name and surname
 queries pass.
 
-The bounded Forever integration `tooltip` filter now reports 363 passed,
-1 pre-existing failure and 1 ignored. This is not full-profile acceptance.
+The bounded Forever integration `tooltip` filter now reports 364 passed,
+0 failures and 1 ignored. This is not full-profile acceptance.
 
 ### Verification
 
