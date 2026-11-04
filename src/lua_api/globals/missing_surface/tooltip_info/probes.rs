@@ -621,7 +621,9 @@ pub(super) fn c_tooltip_get_shapeshift(state: &mut LuaState) -> LuaResult<u32> {
     stamp_data_instance(state, tooltip);
     let lines = table_get(state, tooltip, "lines");
     push_plain_line(state, lines, 1, &form.name);
-    table_set(state, tooltip, "id", Val::Num(form.spell_id as f64));
+    if !crate::c_api::tooltip_data::enabled() || form.spell_id != 0 {
+        table_set(state, tooltip, "id", Val::Num(form.spell_id as f64));
+    }
     Ok(1)
 }
 

@@ -6,6 +6,7 @@ mod line_data;
 mod line_frames;
 mod owner;
 mod sizing;
+pub(crate) mod text_markup;
 pub(crate) use attachments::release_tooltip_attachments;
 pub(crate) use owner::clear_tooltip_for_hide;
 pub(crate) use sizing::size_tooltip_on_native_trigger;

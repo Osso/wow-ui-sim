@@ -411,13 +411,30 @@ pub(super) fn tooltip_line_from_table(state: &mut LuaState, line: Val) -> Option
     let left_text = val_to_string(state, left_text_val).unwrap_or_default();
     let right_text = val_to_string(state, right_text_val);
     let wrap = matches!(wrap_val, Val::Bool(true));
+    let left_color = line_color(state, line, "leftColor");
+    let right_color = line_color(state, line, "rightColor");
+    let modern = crate::c_api::tooltip_data::enabled();
+    let left_segments = if modern {
+        super::text_markup::presentation_segments(state, &left_text, left_color)
+    } else {
+        line_color_segments(state, line, "leftColorSegments")
+    };
+    let right_segments = if modern {
+        super::text_markup::presentation_segments(
+            state,
+            right_text.as_deref().unwrap_or(""),
+            right_color,
+        )
+    } else {
+        line_color_segments(state, line, "rightColorSegments")
+    };
     Some(TooltipLine {
         left_text,
-        left_color: line_color(state, line, "leftColor"),
-        left_segments: line_color_segments(state, line, "leftColorSegments"),
+        left_color,
+        left_segments,
         right_text,
-        right_color: line_color(state, line, "rightColor"),
-        right_segments: line_color_segments(state, line, "rightColorSegments"),
+        right_color,
+        right_segments,
         wrap,
         texture: None,
         inset: 0.0,

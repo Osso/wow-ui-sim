@@ -25,6 +25,7 @@ pub mod quest_objectives;
 pub mod quest_readiness;
 pub(crate) mod quest_reward_currencies;
 pub(crate) mod quest_reward_spells;
+pub(crate) mod tooltip_data;
 pub mod ui_widget_manager;
 #[cfg(feature = "client-wrath")]
 pub mod who_routing;

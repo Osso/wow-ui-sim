@@ -126,6 +126,7 @@ pub(super) fn add_line(state: &mut LuaState) -> LuaResult<u32> {
         "leftText",
         &text,
         "leftColorSegments",
+        (r, g, b),
     );
     let mut sim = borrow_state_mut(state)?;
     let td = sim.tooltips.entry(id).or_default();
@@ -183,6 +184,7 @@ pub(super) fn add_double_line(state: &mut LuaState) -> LuaResult<u32> {
         "leftText",
         &args.left_text,
         "leftColorSegments",
+        args.left_color,
     );
     let right_segments = processing_right_line_color_segments(state, id, line_index, &args);
     push_double_tooltip_line(state, id, args, left_segments, right_segments)?;
@@ -259,6 +261,7 @@ fn processing_right_line_color_segments(
                 "rightText",
                 text,
                 "rightColorSegments",
+                args.right_color,
             )
         })
         .unwrap_or_default()
@@ -336,7 +339,11 @@ fn processing_line_color_segments(
     text_key: &str,
     text: &str,
     segment_key: &str,
+    color: (f32, f32, f32),
 ) -> Vec<TooltipTextSegment> {
+    if native_sizing_timing() {
+        return super::text_markup::presentation_segments(state, text, color);
+    }
     let Some(line) = processing_tooltip_line(state, tooltip_id, line_index, text_key, text) else {
         return Vec::new();
     };

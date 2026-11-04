@@ -68,3 +68,29 @@ fn tooltip_d56_original_consumers_keep_markup_and_present_inline_colors() {
     assert_eq!(frame.text_segments[1].color.g, 0.0);
     assert_eq!(frame.text_segments[1].color.b, 0.0);
 }
+
+#[test]
+fn tooltip_d56_original_handler_keeps_nested_metadata_and_right_only_rows() {
+    let env = tooltip_full_env_helpers::setup_full_env();
+    env.exec(r#"
+        GameTooltip:SetOwner(UIParent, 'ANCHOR_NONE')
+        local data = {type = Enum.TooltipDataType.Spell, id = 19750, lines = {
+            {type = 0, rightText = '|cff00ff00Right|r', rightColor = CreateColor(1, 1, 1)},
+            {type = 19, leftText = '', leftColor = CreateColor(1, 1, 1), tooltipType = 0, tooltipID = 6948},
+            {type = 19, leftText = '', leftColor = CreateColor(1, 1, 1), tooltipType = 1},
+        }}
+        assert(GameTooltip:ProcessInfo({tooltipData = data}))
+        local nested = TooltipUtil.FindLinesFromData({Enum.TooltipDataLineType.NestedBlock}, data)
+        assert(#nested == 2 and nested[1] == data.lines[2] and nested[2].tooltipID == nil)
+        assert(GameTooltip:NumLines() == 1, 'empty nested rows must not append text rows')
+        assert(GameTooltip:GetRightLine(1):GetText() == '|cff00ff00Right|r')
+        local name, id = TooltipUtil.GetDisplayedSpell(GameTooltip)
+        assert(name == 'Flash of Light' and id == 19750)
+    "#).unwrap();
+    let state = env.state().borrow();
+    let id = state.widgets.get_id_by_name("GameTooltipTextRight1").unwrap();
+    let frame = state.widgets.get(id).unwrap();
+    assert_eq!(frame.text_stripped.as_deref(), Some("Right"));
+    assert_eq!(frame.text_segments[0].color.g, 1.0);
+    assert_eq!(frame.text_segments[0].color.r, 0.0);
+}
