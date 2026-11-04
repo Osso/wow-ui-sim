@@ -62,6 +62,37 @@ class IntegrationMetricsTests(unittest.TestCase):
             self.assertEqual(json.loads(result.read_text())['records'][0]['status'], 'invalid')
 
 
+class IntegrationCostRefreshTests(unittest.TestCase):
+    def test_measured_durations_replace_known_costs_and_keep_unobserved_names(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            timings = root / 'timings.json'
+            costs = root / 'costs.json'
+            timings.write_text(json.dumps({
+                'observed::case': {'seconds': 2.5, 'cpu_seconds': 2.1},
+                'new::case': {'seconds': 0.25, 'cpu_seconds': 0.2}}))
+            costs.write_text(json.dumps({'observed::case': 9.0, 'absent::case': 4.0}))
+            script = RUNNER.with_name('refresh_integration_costs.py')
+            process = subprocess.run([sys.executable, str(script), str(timings), str(costs)],
+                                     capture_output=True, text=True, timeout=10)
+            self.assertEqual(process.returncode, 0, process.stderr)
+            self.assertEqual(json.loads(costs.read_text()),
+                             {'absent::case': 4.0, 'new::case': 0.25, 'observed::case': 2.5})
+
+    def test_invalid_measurement_is_rejected_without_writing(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            timings = root / 'timings.json'
+            costs = root / 'costs.json'
+            timings.write_text(json.dumps({'bad::case': {'seconds': 0}}))
+            costs.write_text(json.dumps({'absent::case': 4.0}))
+            script = RUNNER.with_name('refresh_integration_costs.py')
+            process = subprocess.run([sys.executable, str(script), str(timings), str(costs)],
+                                     capture_output=True, text=True, timeout=10)
+            self.assertNotEqual(process.returncode, 0)
+            self.assertEqual(json.loads(costs.read_text()), {'absent::case': 4.0})
+
+
 class TestBudgetTests(unittest.TestCase):
     def setUp(self):
         spec = importlib.util.spec_from_file_location('budget_runner', RUNNER)
@@ -96,139 +127,190 @@ class IntegrationShardingTests(unittest.TestCase):
         self.runner = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(self.runner)
         self.memory_costs = {'peak_bytes': {'observed': 2 * 1024 ** 3}, 'headroom_percent': 50}
+        self.temp = tempfile.TemporaryDirectory()
+        self.addCleanup(self.temp.cleanup)
+        self.root = Path(self.temp.name)
+        self.launcher = self.root / 'systemd-run'
+        write_executable(self.launcher,
+            "import subprocess, sys\n"
+            "args = sys.argv[1:]\n"
+            "if '--unit' in args:\n"
+            "    name = args[args.index('--unit') + 1]\n"
+            "    (__import__('pathlib').Path(__file__).parent / 'units.log').open('a').write(name + '\\n')\n"
+            "sys.exit(subprocess.call(args[args.index('--') + 1:]))\n")
+        self.runner.confirm_terminated = lambda *args: None
 
-    def test_measured_cost_balancing_keeps_each_test_once(self):
-        names = ['ui::slow', 'api::a', 'api::b', 'ui::medium', 'new::test']
-        costs = {'ui::slow': 8, 'ui::medium': 5, 'api::a': 3, 'api::b': 2}
-        shards = self.runner.partition_tests(names, costs, 2)
-        self.assertEqual(sorted(name for shard in shards for name in shard), sorted(names))
-        self.assertEqual(sorted(sum(costs.get(name, 1) for name in shard) for shard in shards), [9, 10])
-        self.assertEqual(shards, self.runner.partition_tests(list(reversed(names)), costs, 2))
-
-    def test_timeout_capacity_cases_finish_before_ordinary_shards_start(self):
+    def run_suite(self, body, costs=None, budget=None, guards=(), tail=(), timings=None):
         import io
-        with tempfile.TemporaryDirectory() as tmp:
-            root = Path(tmp)
-            binary = root / 'test-binary'
-            write_executable(binary,
-                "import pathlib, sys\n"
-                "marker = pathlib.Path(__file__).with_name('capacity-complete')\n"
-                "if '--list' in sys.argv:\n"
-                "    print('timeout_reexec::capacity: test\\nordinary::a: test\\nordinary::b: test')\n"
-                "    sys.exit(0)\n"
-                "selected = sys.argv[sys.argv.index('--exact') + 1:]\n"
-                "if 'timeout_reexec::capacity' in selected:\n"
-                "    assert selected == ['timeout_reexec::capacity']\n"
-                "    marker.touch()\n"
-                "else:\n"
-                "    assert marker.exists(), 'ordinary work competed with exclusive capacity fixture'\n")
-            launcher = root / 'systemd-run'
-            write_executable(launcher,
-                "import subprocess, sys\n"
-                "sys.exit(subprocess.call(sys.argv[sys.argv.index('--') + 1:]))\n")
-            self.runner.confirm_terminated = lambda *args: None
-            step, _ = self.runner.run_integration_shards(
-                [str(launcher), '--unit=fixture', '-p', 'MemoryMax=9G', '--', str(binary)], root,
-                io.StringIO(), dict(os.environ), {}, self.runner.TestBudget(2, 24), (), self.memory_costs)
-            self.assertEqual(step['exit'], 0)
-            self.assertEqual(step['tests'], 3)
+        binary = self.root / 'test-binary'
+        write_executable(binary, body)
+        return self.runner.run_dynamic_suite(
+            [str(self.launcher), '--unit=fixture', '-p', 'MemoryMax=9G', '--', str(binary)],
+            self.root, io.StringIO(), dict(os.environ), costs or {},
+            budget or self.runner.TestBudget(2, 24), guards, self.memory_costs, tail, timings)
 
-    def test_timeout_waiters_cannot_occupy_every_ordinary_worker(self):
-        import io
-        with tempfile.TemporaryDirectory() as tmp:
-            root = Path(tmp)
-            binary = root / 'test-binary'
-            guarded = ['guarded::a', 'guarded::b', 'guarded::c', 'guarded::d']
-            write_executable(binary,
-                "import pathlib, sys, time\n"
-                "marker = pathlib.Path(__file__).with_name('ordinary-ran')\n"
-                "if '--list' in sys.argv:\n"
-                "    print('guarded::a: test\\nguarded::b: test\\nguarded::c: test\\nguarded::d: test\\nordinary::a: test')\n"
-                "    sys.exit(0)\n"
-                "for name in sys.argv[sys.argv.index('--exact') + 1:]:\n"
-                "    if name.startswith('guarded::'):\n"
-                "        deadline = time.monotonic() + 1\n"
-                "        while not marker.exists() and time.monotonic() < deadline: time.sleep(.01)\n"
-                "        assert marker.exists(), 'all workers waited for timeout capacity'\n"
-                "    else: marker.touch()\n")
-            launcher = root / 'systemd-run'
-            write_executable(launcher,
-                "import subprocess, sys\n"
-                "sys.exit(subprocess.call(sys.argv[sys.argv.index('--') + 1:]))\n")
-            self.runner.confirm_terminated = lambda *args: None
-            step, _ = self.runner.run_integration_shards(
-                [str(launcher), '--unit=fixture', '-p', 'MemoryMax=9G', '--', str(binary)], root,
-                io.StringIO(), dict(os.environ), {name: 100 for name in guarded},
-                self.runner.TestBudget(3, 24), guarded, self.memory_costs)
-            self.assertEqual(step['exit'], 0)
-            self.assertEqual(step['tests'], 5)
-            self.assertEqual(len(step['shards']), 3)
+    def test_batches_cover_every_name_once_in_cost_order(self):
+        from collections import deque
+        queue = deque(['slow', 'cheap', 'medium'])
+        costs = {'slow': 30, 'medium': 5}
+        self.assertEqual(self.runner.take_batch(queue, costs), ['slow'])
+        self.assertEqual(list(queue), ['cheap', 'medium'])
+        self.assertEqual(self.runner.take_batch(queue, costs), ['cheap', 'medium'])
 
-    def test_each_native_shard_receives_its_measured_memory_cap(self):
-        import io
+    def test_unknown_admission_is_the_worker_share_and_known_uses_its_measured_cap(self):
         gib = 1024 ** 3
-        with tempfile.TemporaryDirectory() as tmp:
-            root = Path(tmp)
-            binary = root / 'test-binary'
-            write_executable(binary,
-                "import os, pathlib, sys\n"
-                "if '--list' in sys.argv:\n"
-                "    print('large::case: test\\nsmall::case: test')\n"
-                "    sys.exit(0)\n"
-                "name = sys.argv[sys.argv.index('--exact') + 1]\n"
-                "limit = int(os.environ['TEST_UNIT_MEMORY_BYTES'])\n"
-                "required = (6 if name.startswith('large') else 2) * 1024 ** 3\n"
-                "assert limit >= required, 'native shard exceeded its memory budget'\n"
-                "pathlib.Path(__file__).with_name(name.split('::')[0] + '-cap').write_text(str(limit))\n")
-            launcher = root / 'systemd-run'
-            write_executable(launcher,
-                "import os, subprocess, sys\n"
-                "value = next(arg.split('=', 1)[1] for arg in sys.argv if arg.startswith('MemoryMax='))\n"
-                "limit = int(value[:-1]) * 1024 ** 3 if value.endswith('G') else int(value)\n"
-                "env = dict(os.environ, TEST_UNIT_MEMORY_BYTES=str(limit))\n"
-                "sys.exit(subprocess.call(sys.argv[sys.argv.index('--') + 1:], env=env))\n")
-            self.runner.confirm_terminated = lambda *args: None
-            peaks = {'peak_bytes': {'large::case': 4 * gib, 'small::case': gib}, 'headroom_percent': 50}
-            step, _ = self.runner.run_integration_shards(
-                [str(launcher), '--unit=fixture', '-p', 'MemoryMax=3G', '--', str(binary)], root,
-                io.StringIO(), dict(os.environ), {}, self.runner.TestBudget(2, 24), (), peaks)
-            self.assertEqual(step['exit'], 0)
-            self.assertEqual((root / 'large-cap').read_text(), str(6 * gib))
-            self.assertEqual((root / 'small-cap').read_text(), str(2 * gib))
+        self.assertEqual(self.runner.admission_bytes(['new::case'], self.memory_costs), 3 * gib // 2)
+        self.assertEqual(self.runner.admission_bytes(['observed'], self.memory_costs), 3 * gib)
 
-    def test_stable_shards_execute_exact_names_and_report_failures(self):
+    def test_tail_jobs_reserve_memory_and_threads_from_integration_lanes(self):
+        budget = self.runner.TestBudget(16, 24)
+        self.assertEqual(self.runner.lane_plan(budget, False), (16, 0))
+        self.assertEqual(self.runner.lane_plan(budget, True), (10, 6))
+        self.assertEqual(self.runner.lane_plan(self.runner.TestBudget(4, 6), True), (2, 2))
+
+    def test_conformance_runs_exclusively_before_shared_work(self):
         import io
-        with tempfile.TemporaryDirectory() as tmp:
-            root = Path(tmp)
-            binary = root / 'test-binary'
-            write_executable(binary,
-                "import json, pathlib, sys\n"
-                "root = pathlib.Path(__file__).parent\n"
-                "names = ['alpha::a', 'alpha::ab', 'beta::bad', 'beta::ignored']\n"
-                "if '--list' in sys.argv:\n"
-                "    print('\\n'.join(name + ': test' for name in names))\n"
-                "    sys.exit(0)\n"
-                "assert '--exact' in sys.argv\n"
-                "selected = sys.argv[sys.argv.index('--exact') + 1:]\n"
-                "(root / ('selected-' + selected[0].replace(':', '_'))).write_text(json.dumps(selected))\n"
-                "for name in selected: print('test ' + name + ' ... ' + ('FAILED' if name == 'beta::bad' else 'ignored' if name.endswith('ignored') else 'ok'))\n"
-                "sys.exit(1 if 'beta::bad' in selected else 0)\n")
-            launcher = root / 'systemd-run'
-            write_executable(launcher,
-                "import subprocess, sys\n"
-                "sys.exit(subprocess.call(sys.argv[sys.argv.index('--') + 1:]))\n")
-            self.runner.confirm_terminated = lambda *args: None
-            command = [str(launcher), '--unit=fixture', '-p', 'MemoryMax=9G', '--', str(binary)]
-            log = io.StringIO()
-            step, output = self.runner.run_integration_shards(
-                command, root, log, dict(os.environ), {}, self.runner.TestBudget(3, 24), (), self.memory_costs)
-            selected = [name for path in root.glob('selected-*') for name in json.loads(path.read_text())]
-            self.assertEqual(sorted(selected), ['alpha::a', 'alpha::ab', 'beta::bad', 'beta::ignored'])
-            self.assertEqual(step['exit'], 1)
-            self.assertEqual(self.runner.FAILED.findall(output), ['beta::bad'])
-            self.assertEqual(len(step['shards']), 3)
-            self.assertIn('beta::ignored ... ignored', output)
-            self.assertNotIn('RUSTC_BOOTSTRAP', log.getvalue())
+        binary = self.root / 'test-binary'
+        write_executable(binary,
+            "import pathlib, sys\n"
+            "root = pathlib.Path(__file__).parent\n"
+            "marker = root / 'capacity-complete'\n"
+            "if '--list' in sys.argv:\n"
+            "    print('timeout_reexec::capacity: test\\nordinary::a: test\\nordinary::b: test')\n"
+            "    sys.exit(0)\n"
+            "selected = sys.argv[sys.argv.index('--exact') + 1:]\n"
+            "if 'timeout_reexec::capacity' in selected:\n"
+            "    assert selected == ['timeout_reexec::capacity']\n"
+            "    marker.touch()\n"
+            "else:\n"
+            "    assert marker.exists(), 'ordinary work competed with exclusive capacity fixture'\n"
+            "print('test ' + selected[0] + ' ... ok')\n")
+        step, _, _ = self.runner.run_dynamic_suite(
+            [str(self.launcher), '--unit=fixture', '-p', 'MemoryMax=9G', '--', str(binary)],
+            self.root, io.StringIO(), dict(os.environ), {}, self.runner.TestBudget(2, 24), (),
+            self.memory_costs)
+        self.assertEqual(step['exit'], 0)
+        self.assertEqual(step['tests'], 3)
+        self.assertEqual(step['batches_detail'][0]['kind'], 'reserved')
+
+    def test_guarded_batches_leave_running_room_for_ordinary_work(self):
+        guarded = [f'guarded::{index}' for index in range(6)]
+        body = (
+            "import pathlib, sys, time\n"
+            "root = pathlib.Path(__file__).parent\n"
+            "if '--list' in sys.argv:\n"
+            "    print('\\n'.join(name + ': test' for name in "
+            + repr(guarded + ['ordinary::a']) + "))\n"
+            "    sys.exit(0)\n"
+            "name = sys.argv[sys.argv.index('--exact') + 1]\n"
+            "if name.startswith('guarded::'):\n"
+            "    with (root / 'guarded-spans').open('a') as spans:\n"
+            "        spans.write(f'{time.monotonic()} start {name}\\n')\n"
+            "    time.sleep(.3)\n"
+            "    with (root / 'guarded-spans').open('a') as spans:\n"
+            "        spans.write(f'{time.monotonic()} end {name}\\n')\n"
+            "else:\n"
+            "    (root / 'ordinary-ran').touch()\n"
+            "print('test ' + name + ' ... ok')\n")
+        step, _, _ = self.run_suite(body, costs={name: 30 for name in guarded}, guards=guarded,
+                                    budget=self.runner.TestBudget(3, 24))
+        self.assertEqual(step['exit'], 0)
+        self.assertEqual(step['tests'], 7)
+        self.assertTrue((self.root / 'ordinary-ran').exists())
+        spans = sorted((float(at), kind) for at, kind, _ in
+                       (line.split() for line in (self.root / 'guarded-spans').read_text().splitlines()))
+        active = peak = 0
+        for _, kind in spans:
+            active += 1 if kind == 'start' else -1
+            peak = max(peak, active)
+        self.assertGreaterEqual(peak, 2, 'guarded work ran fully serialized')
+        self.assertLessEqual(peak, 2, 'guarded work exceeded its permit-derived lane cap')
+
+    def test_each_batch_receives_its_measured_memory_cap(self):
+        gib = 1024 ** 3
+        launcher = self.root / 'systemd-run'
+        write_executable(launcher,
+            "import os, subprocess, sys\n"
+            "args = sys.argv[1:]\n"
+            "value = next(arg.split('=', 1)[1] for arg in args if arg.startswith('MemoryMax='))\n"
+            "limit = int(value[:-1]) * 1024 ** 3 if value.endswith('G') else int(value)\n"
+            "env = dict(os.environ, TEST_UNIT_MEMORY_BYTES=str(limit))\n"
+            "sys.exit(subprocess.call(args[args.index('--') + 1:], env=env))\n")
+        body = (
+            "import os, pathlib, sys\n"
+            "if '--list' in sys.argv:\n"
+            "    print('large::case: test\\nsmall::case: test')\n"
+            "    sys.exit(0)\n"
+            "name = sys.argv[sys.argv.index('--exact') + 1]\n"
+            "limit = int(os.environ['TEST_UNIT_MEMORY_BYTES'])\n"
+            "required = (6 if name.startswith('large') else 2) * 1024 ** 3\n"
+            "assert limit >= required, 'batch unit exceeded its memory budget'\n"
+            "pathlib.Path(__file__).parent.joinpath(name.split('::')[0] + '-cap').write_text(str(limit))\n"
+            "print('test ' + name + ' ... ok')\n")
+        peaks = {'peak_bytes': {'large::case': 4 * gib, 'small::case': gib}, 'headroom_percent': 50}
+        binary = self.root / 'test-binary'
+        write_executable(binary, body)
+        import io
+        step, _, _ = self.runner.run_dynamic_suite(
+            [str(launcher), '--unit=fixture', '-p', 'MemoryMax=3G', '--', str(binary)],
+            self.root, io.StringIO(), dict(os.environ), {'large::case': 30},
+            self.runner.TestBudget(2, 24), (), peaks)
+        self.assertEqual(step['exit'], 0)
+        self.assertEqual((self.root / 'large-cap').read_text(), str(6 * gib))
+        self.assertEqual((self.root / 'small-cap').read_text(), str(2 * gib))
+
+    def test_exact_names_failures_and_per_name_metrics_are_recorded(self):
+        import io
+        timings = self.root / 'timings.json'
+        body = (
+            "import sys, time\n"
+            "if '--list' in sys.argv:\n"
+            "    print('alpha::a: test\\nalpha::ab: test\\nbeta::bad: test\\nbeta::ignored: test')\n"
+            "    sys.exit(0)\n"
+            "selected = sys.argv[sys.argv.index('--exact') + 1]\n"
+            "time.sleep(.02)\n"
+            "print('test ' + selected + ' ... ' + ('FAILED' if selected == 'beta::bad' "
+            "else 'ignored' if selected.endswith('ignored') else 'ok'))\n"
+            "sys.exit(1 if selected == 'beta::bad' else 0)\n")
+        step, _, output = self.run_suite(body, timings=timings)
+        self.assertEqual(step['exit'], 1)
+        self.assertEqual(self.runner.FAILED.findall(output), ['beta::bad'])
+        records = json.loads(timings.read_text())
+        self.assertEqual(sorted(records), ['alpha::a', 'alpha::ab', 'beta::bad', 'beta::ignored'])
+        self.assertEqual(records['beta::bad']['status'], 'failed')
+        self.assertEqual(records['beta::ignored']['status'], 'ignored')
+        self.assertGreater(records['alpha::a']['seconds'], .019)
+        self.assertGreater(records['alpha::a']['cpu_seconds'], 0)
+
+    def test_tail_steps_run_concurrently_with_integration(self):
+        import io
+        tail_binary = self.root / 'tail-binary'
+        write_executable(tail_binary,
+            "import pathlib, sys, time\n"
+            "root = pathlib.Path(__file__).parent\n"
+            "deadline = time.monotonic() + 5\n"
+            "while not (root / 'integration-started').exists():\n"
+            "    assert time.monotonic() < deadline, 'tail started after integration'\n"
+            "    time.sleep(.01)\n"
+            "(root / 'tail-ran').touch()\n"
+            "print('test tail::one ... ok')\n")
+        body = (
+            "import pathlib, sys, time\n"
+            "root = pathlib.Path(__file__).parent\n"
+            "if '--list' in sys.argv:\n"
+            "    print('ordinary::a: test')\n"
+            "    sys.exit(0)\n"
+            "(root / 'integration-started').touch()\n"
+            "deadline = time.monotonic() + 5\n"
+            "while not (root / 'tail-ran').exists():\n"
+            "    assert time.monotonic() < deadline, 'tail did not overlap integration'\n"
+            "    time.sleep(.01)\n"
+            "print('test ordinary::a ... ok')\n")
+        tail = [{'name': 'lib', 'command': [str(tail_binary)]}]
+        step, tail_steps, _ = self.run_suite(body, tail=tail)
+        self.assertEqual(step['exit'], 0)
+        self.assertEqual(tail_steps['lib'][0]['exit'], 0)
+        self.assertGreater(step['tail_threads'], 0)
 
 
 def write_executable(path, body):

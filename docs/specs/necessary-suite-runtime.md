@@ -6,8 +6,11 @@ The NECESSARY Retail suite must complete in at most 600 seconds of wall time on 
 
 - [ ] Complete two passing NECESSARY Retail runs within 600 seconds each, with CPU and memory measurements.
 - [x] Partition stable libtest discovery into disjoint exact-name selections, including the existing ignored-test entries.
-- [x] Balance tests using saved wall-time costs without unstable runtime flags. Give newly discovered tests a unit scheduling weight.
-- [x] Preserve failed-test names and a nonzero aggregate result when a shard fails.
+- [x] Order tests using saved wall-time costs without unstable runtime flags. Give newly discovered tests a unit scheduling weight.
+- [x] Pull small cost-bounded batches from one shared queue until it is empty, so a lane that finishes early takes more work.
+- [x] Record per-test wall time, wait4 CPU, maximum RSS and kernel memory peak per name on stable libtest, and refresh the saved cost data from a finished run.
+- [x] Run library, prefork and other certified targets concurrently with integration inside the same requested CPU/memory budget.
+- [x] Preserve failed-test names and a nonzero aggregate result when a batch fails, and treat a missing selected-case outcome as a failure.
 - [x] Finish timeout-capacity conformance before ordinary shards; keep known timeout waiters from occupying every ordinary worker.
 - [x] Keep product fixture assertions, importance classifications, and test identities unchanged. Harness conformance checks its explicitly configured policy bound.
 
@@ -34,6 +37,8 @@ The NECESSARY Retail suite must complete in at most 600 seconds of wall time on 
 
 - `tools/full_suite.py`: stable discovery, measured-cost partitioning, service launch and result aggregation.
 - `tools/integration-costs.json`: saved Retail integration wall-time weights.
+- `tools/full_suite_worker.py`: per-name native invocation and resource recording.
+- `tools/refresh_integration_costs.py`: merges measured durations into the saved weights.
 - `tools/integration-timeout-tests.json`: named timeout consumers assigned to dedicated lanes.
 - `tools/integration-memory-peaks.json`: measured context-inclusive envelopes, OOM lower bounds and headroom policy.
 - `tools/test_full_suite.py`: runner behavior tests using bounded child processes.

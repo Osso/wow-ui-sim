@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Run a certified full suite for one frozen commit."""
 import argparse
+from collections import deque
 from concurrent.futures import ThreadPoolExecutor
 import heapq
 import io
@@ -13,6 +14,7 @@ import re
 import subprocess
 import sys
 import tempfile
+import threading
 import time
 from contextlib import contextmanager
 from dataclasses import dataclass
@@ -29,6 +31,13 @@ INTEGRATION_JOBS = os.environ.get("FULL_SUITE_INTEGRATION_JOBS", "3")
 MAX_TEST_CPUS = 16
 MAX_TEST_MEM_GIB = 24
 GIB = 1024 ** 3
+# Unknown integration cases are admitted at this share, matching the measured
+# 16-worker/24GiB policy rather than reserving each unit's 5GiB ceiling.
+WORKER_SHARE_BYTES = 3 * GIB // 2
+TAIL_MEMORY_BYTES = 9 * GIB
+BATCH_TARGET_SECONDS = 20.0
+BATCH_MAX_NAMES = 25
+WORKER = Path(__file__).with_name("full_suite_worker.py")
 PROFILES = ("retail", "ptr", "wrath", "mists", "wowforever", "era", "anniversary")
 # Slot 2 was retired on 2026-10-27 (user decision: three build slots).
 SLOTS = (0, 1, 3)
@@ -261,20 +270,6 @@ def run_step(name, cmd, checkout, log, env):
             "command": cmd, "environment": {"WOW_SIM_TIMEOUT_FIXTURE_CAPACITY": env.get("WOW_SIM_TIMEOUT_FIXTURE_CAPACITY")}}, output
 
 
-def partition_tests(names, costs, count):
-    """Longest measured tests first; new tests have a unit scheduling weight."""
-    if count < 1:
-        raise ValueError("integration shard count must be positive")
-    shards = [[] for _ in range(min(count, len(names)))]
-    loads = [(0, index) for index in range(len(shards))]
-    heapq.heapify(loads)
-    for name in sorted(names, key=lambda name: (-costs.get(name, 1), name)):
-        load, index = heapq.heappop(loads)
-        shards[index].append(name)
-        heapq.heappush(loads, (load + costs.get(name, 1), index))
-    return shards
-
-
 def shard_memory_bytes(names, memory_costs):
     peaks = memory_costs["peak_bytes"]
     if not peaks or min(peaks.values()) <= 0 or memory_costs["headroom_percent"] < 0:
@@ -286,9 +281,39 @@ def shard_memory_bytes(names, memory_costs):
     return ((required + GIB - 1) // GIB) * GIB
 
 
-def run_integration_shards(command, checkout, log, env, costs, budget, timeout_tests, memory_costs):
-    """Discover on stable libtest, then run disjoint exact-name selections."""
-    count = budget.shard_count
+def admission_bytes(names, memory_costs):
+    """Admit unknown work at the worker share; reserve measured envelopes only when known."""
+    peaks = memory_costs["peak_bytes"]
+    measured = max((peaks[name] for name in names if name in peaks), default=0)
+    if not measured:
+        return WORKER_SHARE_BYTES
+    required = (measured * (100 + memory_costs["headroom_percent"]) + 99) // 100
+    return max(WORKER_SHARE_BYTES, ((required + GIB - 1) // GIB) * GIB)
+
+
+def lane_plan(budget, has_tail):
+    """Keep integration lanes dense unless a tail job needs a reserved 9GiB slot."""
+    if not has_tail:
+        return budget.shard_count, 0
+    by_memory = (budget.memory_bytes - TAIL_MEMORY_BYTES) // WORKER_SHARE_BYTES
+    lanes = max(2, min(budget.shard_count, by_memory, budget.cpus - 1))
+    return lanes, max(1, budget.cpus - lanes)
+
+
+def take_batch(queue, costs):
+    """Take a small cost-bounded batch from one queue."""
+    batch = [queue.popleft()]
+    load = costs.get(batch[0], 1)
+    while queue and len(batch) < BATCH_MAX_NAMES and load < BATCH_TARGET_SECONDS:
+        name = queue.popleft()
+        batch.append(name)
+        load += costs.get(name, 1)
+    return batch
+
+
+def run_dynamic_suite(command, checkout, log, env, costs, budget, timeout_tests,
+                      memory_costs, tail_jobs=(), timing_path=None):
+    """One shared queue: lanes pull small batches; tail steps overlap where they fit."""
     started = time.monotonic()
     discovery = subprocess.run([command[-1], "--list", "--format=terse"],
                                cwd=checkout, env=env, capture_output=True, text=True)
@@ -301,49 +326,152 @@ def run_integration_shards(command, checkout, log, env, costs, budget, timeout_t
     timeout_tests = set(timeout_tests)
     guarded = [name for name in names if name not in reserved and name in timeout_tests]
     ordinary = [name for name in names if name not in reserved and name not in timeout_tests]
-    # Keep runnable ordinary work beside the semaphore-consuming lanes.
-    # A one-worker budget runs all non-reserved cases serially in that worker.
-    guard_workers = min(budget.timeout_slots, max(0, count - 1))
-    guard_shards = partition_tests(guarded, costs, guard_workers) if guard_workers else []
-    if not guard_workers:
-        ordinary.extend(guarded)
-    shards = ([reserved] if reserved else []) + guard_shards + partition_tests(
-        ordinary, costs, count - len(guard_shards))
-    memory_limits = [shard_memory_bytes(shard, memory_costs) for shard in shards]
-    if max(memory_limits) > budget.memory_bytes:
-        raise ValueError("test memory budget cannot fit a measured single-shard peak with headroom")
+    pending = deque(sorted(ordinary, key=lambda name: (-costs.get(name, 1), name)))
+    guards = deque(sorted(guarded, key=lambda name: (-costs.get(name, 1), name)))
+    lanes, tail_threads = lane_plan(budget, bool(tail_jobs))
+    # Guarded cases may wait on the global permit semaphore; keep running room
+    # for ordinary work, and never exceed the configured permit bound.
+    guard_cap = max(2, min(budget.timeout_slots, max(1, lanes - 1)))
+    if admission_bytes(names, memory_costs) > budget.memory_bytes:
+        raise ValueError("test memory budget cannot fit a measured single-case envelope")
     base_unit = next(arg for arg in command if arg.startswith("--unit="))
     slot = Path(env.get("CARGO_TARGET_DIR", "integration")).name.removeprefix("slot-")
+    workspace = Path(tempfile.mkdtemp(prefix="full-suite-batches-"))
+    lock = threading.Condition()
+    state = {"admitted": 0, "guarded": 0}
+    records = {}
+    steps = []
+    tail_results = []
+    sequence = [0]
 
-    def run_shard(index):
-        unit = f"{base_unit.removeprefix('--unit=')}-shard-{index}"
-        shard_command = [f"--unit={unit}" if arg == base_unit else arg for arg in command]
-        memory_index = next(i for i, arg in enumerate(shard_command) if arg.startswith("MemoryMax="))
-        shard_command[memory_index] = f"MemoryMax={memory_limits[index]}"
-        shard_command += ["--exact", *shards[index]]
-        shard_log = io.StringIO()
+    def requeue(queue, batch):
+        queue.extendleft(reversed(batch))
+
+    def next_job():
+        with lock:
+            while pending or guards:
+                if guards and state["guarded"] < guard_cap:
+                    queue, kind = guards, "guarded"
+                elif pending:
+                    queue, kind = pending, "ordinary"
+                else:
+                    lock.wait(0.2)
+                    continue
+                batch = take_batch(queue, costs)
+                admission = admission_bytes(batch, memory_costs)
+                if state["admitted"] + admission <= budget.memory_bytes:
+                    state["admitted"] += admission
+                    if kind == "guarded":
+                        state["guarded"] += 1
+                    return kind, batch, admission
+                requeue(queue, batch)
+                lock.wait(0.2)
+            return None, None, 0
+
+    def settle(kind, admission):
+        with lock:
+            state["admitted"] -= admission
+            if kind == "guarded":
+                state["guarded"] -= 1
+            lock.notify_all()
+
+    def run_batch(kind, batch, admission):
+        with lock:
+            sequence[0] += 1
+            index = sequence[0]
+        unit = f"{base_unit.removeprefix('--unit=')}-batch-{index}"
+        memory = shard_memory_bytes(batch, memory_costs)
+        batch_command = [f"--unit={unit}" if arg == base_unit else arg for arg in command]
+        memory_index = next(i for i, arg in enumerate(batch_command) if arg.startswith("MemoryMax="))
+        batch_command[memory_index] = f"MemoryMax={memory}"
+        manifest = workspace / f"batch-{index}.json"
+        result_path = workspace / f"batch-{index}.result.json"
+        manifest.write_text(json.dumps({"binary": command[-1], "names": batch,
+                                        "result": str(result_path), "measure_memory": True}))
         try:
-            step, output = run_step(f"integration:{index}", shard_command, checkout,
-                                    shard_log, dict(env, RUST_TEST_THREADS="1",
-                                                    WOW_SIM_TIMEOUT_CHILD_SLOTS=str(budget.timeout_slots)))
-            step["tests"] = len(shards[index])
-            step["memory_max_bytes"] = memory_limits[index]
-            return step, output, shard_log.getvalue()
+            step, output = run_step(
+                f"integration:{index}",
+                batch_command[:-1] + [sys.executable, str(WORKER), str(manifest)],
+                checkout, io.StringIO(),
+                dict(env, RUST_TEST_THREADS="1",
+                     WOW_SIM_TIMEOUT_CHILD_SLOTS=str(budget.timeout_slots)))
+            batch_records = json.loads(result_path.read_text()).get("records", []) if result_path.exists() else []
+            with lock:
+                records.update({record["name"]: record for record in batch_records if record.get("name")})
+            step["tests"] = len(batch)
+            step["kind"] = kind
+            step["memory_max_bytes"] = memory
+            step["admission_bytes"] = admission
+            return step, output
         finally:
+            for path in (manifest, result_path):
+                path.unlink(missing_ok=True)
             confirm_terminated(unit, slot)
 
-    first_ordinary = 1 if reserved else 0
-    results = [run_shard(0)] if reserved else []
-    if first_ordinary < len(shards):
-        with ThreadPoolExecutor(max_workers=count) as executor:
-            results.extend(executor.map(run_shard, range(first_ordinary, len(shards))))
-    for _, _, transcript in results:
-        log.write(transcript)
+    def lane():
+        while True:
+            kind, batch, admission = next_job()
+            if batch is None:
+                return
+            try:
+                step, output = run_batch(kind, batch, admission)
+            finally:
+                settle(kind, admission)
+            with lock:
+                steps.append({"step": step, "output": output})
+
+    def run_tail():
+        for job in tail_jobs:
+            step, output = run_step(job["name"], job["command"], checkout, io.StringIO(),
+                                    dict(env, RUST_TEST_THREADS=str(tail_threads),
+                                         WOW_SIM_TIMEOUT_CHILD_SLOTS=str(budget.timeout_slots)))
+            tail_results.append((job["name"], step, output))
+            log.write(output)
+            log.flush()
+
+    def run_reserved():
+        if not reserved:
+            return
+        unit = f"{base_unit.removeprefix('--unit=')}-conformance"
+        conformance = [f"--unit={unit}" if arg == base_unit else arg for arg in command]
+        step, output = run_step("integration:conformance", conformance + ["--exact", *reserved],
+                                checkout, io.StringIO(),
+                                dict(env, RUST_TEST_THREADS="1",
+                                     WOW_SIM_TIMEOUT_CHILD_SLOTS=str(budget.timeout_slots)))
+        step["tests"] = len(reserved)
+        step["kind"] = "reserved"
+        steps.append({"step": step, "output": output})
+
+    try:
+        run_reserved()
+        tail_worker = threading.Thread(target=run_tail, name="tail-overlap") if tail_jobs else None
+        if tail_worker is not None:
+            tail_worker.start()
+        try:
+            with ThreadPoolExecutor(max_workers=lanes) as executor:
+                list(executor.map(lambda _: lane(), range(lanes)))
+        finally:
+            if tail_worker is not None:
+                tail_worker.join()
+    finally:
+        for path in workspace.glob("*"):
+            path.unlink(missing_ok=True)
+        workspace.rmdir()
+    ordered = sorted(steps, key=lambda item: item["step"]["kind"] != "reserved")
+    for item in ordered:
+        log.write(f"===== integration batch ({item['step'].get('kind')}): "
+                  f"(exit {item['step']['exit']})\n{item['output']}\n")
     log.flush()
-    return {"exit": next((step["exit"] for step, _, _ in results if step["exit"]), 0),
-            "seconds": round(time.monotonic() - started, 1),
-            "tests": len(names), "shards": [step for step, _, _ in results]}, "\n".join(
-                output for _, output, _ in results)
+    if timing_path is not None:
+        timing_path.write_text(json.dumps(records, indent=2) + "\n")
+    all_steps = [item["step"] for item in ordered]
+    integration = {
+        "exit": next((step["exit"] for step in all_steps if step["exit"]), 0),
+        "seconds": round(time.monotonic() - started, 1), "tests": len(names),
+        "lanes": lanes, "tail_threads": tail_threads, "batches": len(all_steps),
+        "batches_detail": all_steps}
+    return (integration, {name: (step, output) for name, step, output in tail_results},
+            "\n".join(item["output"] for item in ordered))
 
 
 def new_failures(result):
@@ -436,6 +564,26 @@ def promote_result(canonical, baseline, result):
             path.unlink(missing_ok=True)
 
 
+def build_plan(name, artifact, kind, receipt, env, budget, test_slice, sha, profile, checkout, target_dir):
+    """Resolve one certified test target into a systemd-run test plan."""
+    threads = INTEGRATION_JOBS if name == "integration" else JOBS
+    step_env = dict(env, RUST_TEST_THREADS=str(min(int(threads), budget.cpus)))
+    if artifact == "wow-sim" and kind == "bin":
+        # Three full-UI bin cases peaked at 5.45 GiB; reserve 2 GiB per thread.
+        step_env["RUST_TEST_THREADS"] = str(min(3, int(JOBS), budget.cpus,
+                                               max(1, budget.mem_gib // 2)))
+    binary = test_artifact(receipt, artifact, kind)
+    # Linux test executables link libwow_ui_sim_dylib.so from the same deps directory.
+    step_env["LD_LIBRARY_PATH"] = str(Path(binary).parent)
+    mount = Path.home() / ".cache/wow-ui-sim-srcmount" / target_dir.name
+    unit = f"full-suite-test-{sha[:12]}-{profile}-{name}-{time.time_ns()}"
+    command = ["systemd-run", "--user", f"--slice={test_slice}", f"--unit={unit}", "--wait", "--pipe", "--collect", "--quiet",
+               "-p", f"MemoryMax={min(9, budget.mem_gib)}G", "-p", "MemorySwapMax=0",
+               "-p", f"BindPaths={checkout}:{mount}", f"--working-directory={mount}",
+               *(f"--setenv={key}" for key in step_env), "--", binary]
+    return {"name": name, "command": command, "unit": unit, "env": step_env}
+
+
 def run(ref, build_jobs, target_dir, profile="retail", optional=False,
         test_cpus=MAX_TEST_CPUS, test_mem_gib=MAX_TEST_MEM_GIB):
     budget = TestBudget(test_cpus, test_mem_gib)
@@ -478,40 +626,57 @@ def run(ref, build_jobs, target_dir, profile="retail", optional=False,
                         for step, _, _ in extra_targets:
                             result["steps"][step] = {"status": "not_run"}
                             result["failures"][step] = []
-                        for name, artifact, kind in targets:
-                            if name == "prefork" and profile not in ("retail", "mists"):
-                                result["steps"][name] = {"status": "not_applicable", "reason": "prefork_full_ui supports only Retail/Mists"}
-                                continue
-                            phase = name
-                            threads = INTEGRATION_JOBS if name == "integration" else JOBS
-                            step_env = dict(env, RUST_TEST_THREADS=str(min(int(threads), budget.cpus)))
-                            if artifact == "wow-sim" and kind == "bin":
-                                # Three full-UI bin cases peaked at 5.45 GiB; reserve 2 GiB per thread.
-                                step_env["RUST_TEST_THREADS"] = str(min(3, int(JOBS), budget.cpus,
-                                                                      max(1, budget.mem_gib // 2)))
-                            binary = test_artifact(receipt, artifact, kind)
-                            # Linux test executables link libwow_ui_sim_dylib.so from the same deps directory.
-                            step_env["LD_LIBRARY_PATH"] = str(Path(binary).parent)
-                            mount = Path.home() / ".cache/wow-ui-sim-srcmount" / target_dir.name
-                            unit = f"full-suite-test-{sha[:12]}-{profile}-{name}-{time.time_ns()}"
-                            command = ["systemd-run", "--user", f"--slice={test_slice}", f"--unit={unit}", "--wait", "--pipe", "--collect", "--quiet",
-                                       "-p", f"MemoryMax={min(9, budget.mem_gib)}G", "-p", "MemorySwapMax=0",
-                                       "-p", f"BindPaths={checkout}:{mount}", f"--working-directory={mount}",
-                                       *(f"--setenv={key}" for key in step_env), "--", binary]
-                            try:
-                                if name == "integration" and profile == "retail":
-                                    costs = json.loads((checkout / "tools/integration-costs.json").read_text())
-                                    timeout_tests = json.loads((checkout / "tools/integration-timeout-tests.json").read_text())
-                                    memory_costs = json.loads((checkout / "tools/integration-memory-peaks.json").read_text())
-                                    result["steps"][name], output = run_integration_shards(
-                                        command, checkout, log, step_env, costs, budget, timeout_tests, memory_costs)
-                                else:
-                                    result["steps"][name], output = run_step(name, command, checkout, log, step_env)
-                            finally:
-                                confirm_terminated(unit, target_dir.name.removeprefix("slot-"))
-                            if result["steps"][name]["exit"]:
-                                result["steps"][name]["status"] = "FAILED"
-                            result["failures"][name] = sorted(set(FAILED.findall(output)))
+                        plans = []
+                        if profile == "retail":
+                            for name, artifact, kind in targets:
+                                if name == "prefork" and profile not in ("retail", "mists"):
+                                    result["steps"][name] = {"status": "not_applicable", "reason": "prefork_full_ui supports only Retail/Mists"}
+                                    continue
+                                plans.append(build_plan(name, artifact, kind, receipt, env, budget,
+                                                        test_slice, sha, profile, checkout, target_dir))
+                            integration_plan = next(plan for plan in plans if plan["name"] == "integration")
+                            tail_plans = [plan for plan in plans if plan is not integration_plan]
+                            costs = json.loads((checkout / "tools/integration-costs.json").read_text())
+                            timeout_tests = json.loads((checkout / "tools/integration-timeout-tests.json").read_text())
+                            memory_costs = json.loads((checkout / "tools/integration-memory-peaks.json").read_text())
+                            timings = RESULTS / f"{attempt}-timings.json"
+                            phase = "integration"
+                            (result["steps"]["integration"], tail_results,
+                             output) = run_dynamic_suite(
+                                integration_plan["command"], checkout, log, integration_plan["env"],
+                                costs, budget, timeout_tests, memory_costs, tail_plans, timings)
+                            result["timings"] = str(timings)
+                            result["failures"]["integration"] = sorted(set(FAILED.findall(output)))
+                            if result["steps"]["integration"]["exit"]:
+                                result["steps"]["integration"]["status"] = "FAILED"
+                            for plan in tail_plans:
+                                name = plan["name"]
+                                step, tail_output = tail_results.get(name, (
+                                    {"status": "FAILED", "exit": 1,
+                                     "error": "overlapped tail step did not report"}, ""))
+                                try:
+                                    result["steps"][name] = step
+                                finally:
+                                    confirm_terminated(plan["unit"], target_dir.name.removeprefix("slot-"))
+                                result["failures"][name] = sorted(set(FAILED.findall(tail_output)))
+                                if step["exit"]:
+                                    result["steps"][name]["status"] = "FAILED"
+                        else:
+                            for name, artifact, kind in targets:
+                                if name == "prefork" and profile not in ("retail", "mists"):
+                                    result["steps"][name] = {"status": "not_applicable", "reason": "prefork_full_ui supports only Retail/Mists"}
+                                    continue
+                                plan = build_plan(name, artifact, kind, receipt, env, budget,
+                                                  test_slice, sha, profile, checkout, target_dir)
+                                phase = name
+                                try:
+                                    result["steps"][name], output = run_step(
+                                        name, plan["command"], checkout, log, plan["env"])
+                                finally:
+                                    confirm_terminated(plan["unit"], target_dir.name.removeprefix("slot-"))
+                                if result["steps"][name]["exit"]:
+                                    result["steps"][name]["status"] = "FAILED"
+                                result["failures"][name] = sorted(set(FAILED.findall(output)))
                     phase = "setup"
                     result["status"] = "FAILED" if any(step.get("exit", 0) for step in result["steps"].values()) else "PASSED"
                 except SlotStateUnknown as error:

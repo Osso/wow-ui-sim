@@ -54,7 +54,8 @@ def run_batch(manifest):
         for name in names if names is not None else [None]:
             command = [manifest['binary']]
             if name is not None:
-                command += ['--exact', name, '--test-threads=1', '--format=pretty', '--color=never']
+                command += ['--test-threads=1', '--format=pretty', '--color=never', '--exact', name]
+            publish(manifest['result'], records, name)
             record, text = measure_native(command, peak)
             sys.stdout.write(text)
             sys.stdout.flush()
@@ -67,9 +68,17 @@ def run_batch(manifest):
                     record['exit'] = 2
                     print(f'Invalid native result: selected case {name} was not reported', file=sys.stderr)
             records.append(record)
-    result = {'exit': next((r['exit'] for r in records if r['exit']), 0), 'records': records}
-    Path(manifest['result']).write_text(json.dumps(result, indent=2) + '\n')
-    return result['exit']
+            publish(manifest['result'], records, None)
+    return next((r['exit'] for r in records if r['exit']), 0)
+
+
+def publish(path, records, current):
+    result = {'exit': next((r['exit'] for r in records if r['exit']), 0),
+              'records': records, 'current_name': current}
+    destination = Path(path)
+    temporary = destination.with_suffix('.tmp')
+    temporary.write_text(json.dumps(result, indent=2) + '\n')
+    temporary.replace(destination)
 
 
 if __name__ == '__main__':

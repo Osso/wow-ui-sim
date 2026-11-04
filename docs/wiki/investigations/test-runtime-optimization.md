@@ -75,6 +75,14 @@ The complete run passed every target with zero failed cases; its 26 failure-map 
 
 Integration took 847.4s. After 8.5s conformance, ordinary shard 8 was last at 838.7s, selecting 1,146 names including 16 previously unclassified timeout consumers. Ordinary lanes took 788.9–838.7s; the six known-timeout lanes finished in 285.3–384.2s. All 197 newly observed ordinary-lane consumers still obeyed the global six-slot semaphore. Static lane completion leaves unused workers; exact startup-exclusive CPU attribution is not available from these wall timings. Prefork, lib and other serialized steps added 192.2s. This is a complete passing resource-budget proof, not the required sub-600-second acceptance.
 
+## Shared-queue and overlap runner — 2026-11-04
+
+The runner now keeps one cost-ordered queue and lets every lane pull small batches (about 20 measured seconds, at most 25 names). Each batch is one service that runs `tools/full_suite.py`'s worker: every name executes as its own native process with `--test-threads=1 --format=pretty --color=never --exact`, and the worker records wall time, wait4 user/system CPU, `ru_maxrss` and the kernel `memory.peak` of that name. Conformance still runs alone first; guarded batches are capped at the configured permit bound minus one lane so semaphore waiters cannot fill every worker.
+
+Library, prefork and the remaining certified targets run in one overlapping thread. While tail work is pending, integration lanes shrink to keep a 9 GiB tail unit inside the requested memory budget; the tail takes the remaining CPUs. Admission counts unmeasured work at the 1.5 GiB worker share and measured work at its recorded envelope, while each batch keeps the previous per-unit `MemoryMax` ceiling. Measured integration CPU averaged about 9.6 cores with 16 lanes, and the tail cost 192 serialized seconds, so overlap removes tail wall time rather than integration throughput.
+
+Per-name records are written beside the attempt result and merged into `tools/integration-costs.json` by `tools/refresh_integration_costs.py` in a separate data commit. The old fixed partitions balanced saved weights almost exactly but left six lanes idle for hundreds of seconds; the new queue reuses that capacity.
+
 ## Sources
 
 - [Scheduling contract](../../specs/necessary-suite-runtime.md) — warm-run target and unchanged coverage requirements
