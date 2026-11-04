@@ -23,8 +23,11 @@ For `C_PlayerInfo.GetContentDifficultyQuestForPlayer`, WM89 establishes Impossib
 At source `9c2eea67f`, the shared live-row/isolation/error controls pass2/2 on
 both PTR and Retail. PTR's full `edit_mode` filter passes46/46, including the
 original subprocess startup consumer that failed before publication. Retail's
-filter passes56/56. Classic absence is source-gated but has not been runtime
-verified in this lane; the cross-profile requirement above remains open.
+filter passes56/56. At documentation-only descendant `24bf77266`, all four
+existing Forever quest-difficulty selectors also pass, including the original
+whole title consumer and absent-curve boundaries. Classic absence is source-gated
+but has not been runtime verified in this lane; the cross-profile requirement
+above remains open.
 
 ## Ordinary-watch membership follow-up — bounded model execution
 
