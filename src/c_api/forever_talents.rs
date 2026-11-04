@@ -49,8 +49,19 @@ pub struct LevelAllowance {
     pub demon_hunter: u32,
 }
 
+/// WM99 loaded player configuration, in provider traversal order.
+#[derive(Clone, Debug, Default)]
+pub struct LoadedTraitConfig {
+    pub id: i32,
+    pub is_combat: bool,
+    /// ActiveForSpec = 1; SecondarySpec = 8. Independent of active_config_id.
+    pub combat_flags: u32,
+}
+
 #[derive(Clone, Debug, Default)]
 pub struct ForeverTalentState {
+    /// Explicit loaded configurations; an unseeded collection has no match.
+    pub loaded_configs: Vec<LoadedTraitConfig>,
     pub rows: Vec<TalentRow>,
     pub spell_names: HashMap<u32, String>,
     pub spell_icons: HashMap<u32, SpellIcons>,

@@ -60,6 +60,15 @@ pub fn register_c_specialization_info(state: &mut LuaState) -> LuaResult<()> {
     // the table with a fresh one.
     let t_ref = ensure_namespace(state, "C_SpecializationInfo")?;
     register_c_specialization_info_methods(state, t_ref)?;
+    // Forever 70707 SpecializationInfoDocumentation.lua:90-103; WM99.
+    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::WowForever {
+        table_set_rust_fn_static(
+            state,
+            t_ref,
+            "GetCombatConfigIDForSpecGroup",
+            combat_config_for_spec_group,
+        )?;
+    }
     if matches!(
         crate::client_profile::ACTIVE,
         crate::client_profile::ClientProfile::Retail
@@ -365,6 +374,27 @@ fn c_spec_can_player_use_talent_ui(state: &mut LuaState) -> LuaResult<u32> {
     state.push(Val::Bool(true));
     state.push(Val::Nil);
     Ok(2)
+}
+
+fn combat_config_for_spec_group(state: &mut LuaState) -> LuaResult<u32> {
+    let group = rilua::table_security::unwrap_secret(state, stack_val(state, 1))?;
+    if matches!(group, Val::Nil) {
+        return Err(rilua::runtime_error(
+            "Usage: local configID = C_SpecializationInfo.GetCombatConfigIDForSpecGroup(groupIndex)",
+        ));
+    }
+    let group = crate::lua_bridge::val_to_i32(group, 1)?;
+    // WM99: every accepted index other than 1 searches the secondary flag.
+    let flag = if group == 1 { 1 } else { 8 };
+    let config_id = borrow_state(state)?
+        .talents
+        .forever
+        .loaded_configs
+        .iter()
+        .find(|config| config.is_combat && config.combat_flags & flag != 0)
+        .map(|config| config.id);
+    state.push(config_id.map_or(Val::Nil, |id| Val::Num(f64::from(id))));
+    Ok(1)
 }
 
 fn c_spec_get_active_spec_group(state: &mut LuaState) -> LuaResult<u32> {
