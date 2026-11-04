@@ -456,7 +456,11 @@ fn supports_super_tracking() -> bool {
 }
 
 pub(crate) fn restore_cleanup_namespaces(state: &mut LuaState) -> LuaResult<()> {
-    if matches!(helpers::global_val(state, "C_StoreSecure"), rilua::Val::Nil) {
+    let store = helpers::global_val(state, "C_StoreSecure");
+    if matches!(
+        crate::lua_api::methods::table_get_static(state, store, "GetProductGroups"),
+        rilua::Val::Nil
+    ) {
         register_store_secure_table(state)?;
     }
     if matches!(
