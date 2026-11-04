@@ -48,6 +48,9 @@ fn merchant_buyback_cursor_tracks_affordability_and_preserves_invalid() {
     }
     env.exec("ShowBuybackSellCursor({})").unwrap();
     assert_eq!(env.state().borrow().cursor_storage.presentation_display, 49);
+    env.state().borrow_mut().cursor_storage.presentation_gate_b = false;
+    env.exec("PickupPlayerMoney(1); ShowBuybackSellCursor(1); assert(GetCursorInfo() == 'money')")
+        .unwrap();
 }
 
 #[test]
