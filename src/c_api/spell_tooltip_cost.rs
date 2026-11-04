@@ -1,6 +1,15 @@
 //! Resource-cost payload shared by C_TooltipInfo spell producers.
 //! Only Flash of Light has a cost fixture; unknown costs are not invented.
 
+/// Explicit host context for testing/feeding the native outer cost gates.
+/// Native normal getters use mode 0 with content suppression clear (WM98).
+#[derive(Clone, Copy, Debug, Default)]
+pub struct SpellTooltipCostContext {
+    pub mode: i32,
+    pub suppress_content: bool,
+    pub attributes_9: Option<u32>,
+}
+
 pub(crate) fn spell_cost_line(spell_id: u32, hyperlink: bool) -> Option<&'static str> {
     // 6.2.0 removed costs from spell hyperlinks, not direct spell tooltips.
     // Pre-Warlords profiles retain their existing direct/link behavior.

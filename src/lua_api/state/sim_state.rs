@@ -338,6 +338,8 @@ pub struct SimState {
     pub is_active_battlefield: bool,
     pub spell_trade_skill_links: HashMap<u32, String>,
     pub spell_id_aliases: HashMap<String, u32>,
+    pub spell_tooltip_cost_contexts:
+        HashMap<u32, crate::c_api::spell_tooltip_cost::SpellTooltipCostContext>,
     /// Host-declared Maw power atlas/link strings by resolved spell ID; empty by default.
     #[cfg(feature = "retail-12-0-5")]
     pub maw_powers: crate::c_api::c_spell_maw_powers::MawPowers,
