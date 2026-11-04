@@ -5,7 +5,7 @@
 The [query contract](../../specs/forever-talent-info.md) follows WM90
 (`native-evidence-70688/WM90-forever-get-talent-info.md`). The pinned Forever
 70707 `Blizzard_APIDocumentationGenerated/SpecializationInfoDocumentation.lua:316-329`
-declares the query-table API. `Blizzard_FrameXML/Blizzard_FrameXML.toc:98`
+declares the query-table API. `Blizzard_FrameXML/Blizzard_FrameXML.toc:96`
 selects `[Family]/TalentFrameBase.lua` for mainline. Forever's active game tags
 are camelot/mainline (`src/toc/mod.rs`), and Family resolves to Mainline.
 The original `Mainline/TalentFrameBase.lua:63-122` queries and displays cells.
@@ -13,7 +13,8 @@ The original `Mainline/TalentFrameBase.lua:63-122` queries and displays cells.
 ## Supplied character model
 
 Verified 2026-11-04: neither repository data nor `game-engine/data/db2/`
-contains the required Forever table exports. `TalentState.forever` is therefore
+contains the required Forever 70707 table exports (older Forever directories
+and Retail 70391 exports are not substituted). `TalentState.forever` is therefore
 an **EMULATED supplied-state seam**, populated through `WowLuaEnv::state()`.
 It defaults to an empty snapshot, not a fabricated populated character.
 Tests supply explicitly synthetic records and two distinct group selections;
@@ -31,7 +32,7 @@ allowance takes precedence; otherwise supplied NumTalentsAtLevel records limit
 effective NumTalents by the base-level class cap (classes 6 and 12 use their
 named columns). Effective/base lookup inputs are EMULATED because WM90 only
 infers those level meanings. Aura grants are pre-extracted enabled type-224
-talent IDs. Inspection uses a GUID-matched supplied group snapshot; token
+talent IDs; explicit aura subjects use a supplied GUID-keyed grant map. Inspection uses a GUID-matched supplied group snapshot; token
 resolution uses the existing unit identity model. Other target descriptor
 representations remain UNKNOWN.
 

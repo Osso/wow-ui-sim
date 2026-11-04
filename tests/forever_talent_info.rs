@@ -187,6 +187,25 @@ fn forever_talent_inspection_matches_guid_without_query_events() {
 }
 
 #[test]
+fn forever_talent_explicit_aura_subject_does_not_use_player_grants() {
+    let env = supplied_env();
+    {
+        let mut sim = env.state().borrow_mut();
+        let grid = &mut sim.talents.forever;
+        grid.aura_grants.insert(901);
+        grid.subject_aura_grants.insert("Creature-0-0-0-0-1-0000000001".into(), [903].into());
+    }
+    env.exec(r#"
+        local q = C_SpecializationInfo.GetTalentInfo
+        assert(q{tier=1,column=1}.grantedByAura)
+        assert(not q{tier=1,column=1,target='Creature-0-0-0-0-1-0000000001'}.grantedByAura)
+        local b = assert(q{tier=1,column=2,target='Creature-0-0-0-0-1-0000000001'})
+        assert(b.grantedByAura and not b.available)
+        assert(not q{tier=1,column=2}.grantedByAura)
+    "#).unwrap();
+}
+
+#[test]
 fn forever_talent_missing_coordinates_have_wm90_diagnostics() {
     let env = supplied_env();
     for (query, diagnostic) in [

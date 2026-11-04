@@ -166,13 +166,24 @@ fn build_result(sim: &SimState, q: &Query) -> Option<ResultRecord> {
             &inspection.groups,
             q.group.unwrap_or(inspection.current_group as i64),
         )?;
-        (inspection.class_id, group, &inspection.aura_grants)
+        (inspection.class_id, group, Some(&inspection.aura_grants))
     } else {
         if !grid.player_present {
             return None;
         }
         let group = group_at(&grid.groups, q.group.unwrap_or(grid.current_group as i64))?;
-        (sim.player.class_index as i32, group, &grid.aura_grants)
+        let grants = match q.target.as_deref() {
+            None | Some("player") => Some(&grid.aura_grants),
+            Some(target) => {
+                let guid = existing_guid_for_unit(sim, target).unwrap_or_else(|| target.to_owned());
+                if existing_guid_for_unit(sim, "player").as_deref() == Some(&guid) {
+                    Some(&grid.aura_grants)
+                } else {
+                    grid.subject_aura_grants.get(&guid)
+                }
+            }
+        };
+        (sim.player.class_index as i32, group, grants)
     };
     let row = select_row(grid, class_id, group.spec_id, q)?;
     if row.id == 0 {
@@ -187,7 +198,7 @@ fn build_result(sim: &SimState, q: &Query) -> Option<ResultRecord> {
         }
     });
     let selected = group.selected_ids.contains(&row.id);
-    let granted = grants.contains(&row.id);
+    let granted = grants.is_some_and(|grants| grants.contains(&row.id));
     let current = grid.groups.get(grid.current_group);
     let known = current.is_some_and(|g| g.selected_ids.contains(&row.id));
     let available = selected

@@ -66,5 +66,7 @@ pub struct ForeverTalentState {
     pub effective_level: u32,
     pub base_level: u32,
     pub aura_grants: HashSet<u32>,
+    /// Enabled type-224 grants for explicit non-player aura subjects, by GUID.
+    pub subject_aura_grants: HashMap<String, HashSet<u32>>,
     pub inspection: Option<Inspection>,
 }

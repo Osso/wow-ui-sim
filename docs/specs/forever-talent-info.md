@@ -6,11 +6,11 @@ separate verified WM90 behavior from EMULATED scenario inputs.
 
 ## What it must do
 
-- [ ] Use the queried group's specialization, first exact candidate and last neutral candidate in provider order; never substitute Retail data.
-- [ ] Publish the 18 WM90 fields, keeping a present result when icon data is zero or absent. Rank, maxRank and previewRank are one.
-- [ ] Read selected state from the queried group, known and availability from the current group; selected always implies available.
-- [ ] Return nil for absent player, invalid group/grid/candidate, zero talent ID, missing spell name or unusable inspection context.
-- [ ] Read all eight named query fields; unused specializationIndex, talentIndex and isPet do not alter lookup. Report missing coordinates with WM90's GetTalent literals.
+- [x] Use the queried group's specialization, first exact candidate and last neutral candidate in provider order; never substitute Retail data.
+- [x] Publish the 18 WM90 fields, keeping a present result when icon data is zero or absent. Rank, maxRank and previewRank are one.
+- [x] Read selected state from the queried group, known and availability from the current group; selected always implies available.
+- [x] Return nil for absent player, invalid group/grid/candidate, zero talent ID, missing spell name or unusable inspection context.
+- [x] Read all eight named query fields; unused specializationIndex, talentIndex and isPet do not alter lookup. Report missing coordinates with WM90's GetTalent literals.
 
 ## How it works
 
