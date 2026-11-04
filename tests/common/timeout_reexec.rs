@@ -69,7 +69,9 @@ fn record_timeout_entry(test_name: &str) {
         .append(true)
         .open(path)
         .expect("open timeout entry inventory");
-    writeln!(file, "{test_name}").expect("write timeout entry inventory");
+    let entry = format!("{test_name}\n");
+    file.write_all(entry.as_bytes())
+        .expect("write timeout entry inventory");
 }
 
 fn fixture_capacity_is_reserved() -> bool {
