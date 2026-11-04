@@ -289,6 +289,124 @@ fn recipe_favorites_are_not_persisted_across_ui_reload() {
         .unwrap();
 }
 
+#[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
+#[test]
+fn professions_consumer_uses_supplied_recipe_cooldown_and_charges() {
+    use wow_ui_sim::c_api::charge_state::SpellChargeState;
+    use wow_ui_sim::lua_api::state::SpellCooldownState;
+
+    let env = full_game_env();
+    let toc = blizzard_ui_dir()
+        .join("Blizzard_ProfessionsTemplates")
+        .join("Blizzard_ProfessionsTemplates.toc");
+    load_addon(&env.loader_env(), &toc).expect("load Blizzard Professions templates");
+    env.exec(
+        r#"
+        A_Admin.SetManualClock(100)
+        assert(not Professions.IsRecipeOnCooldown(2662), 'uncooldowned recipe')
+        "#,
+    )
+    .unwrap();
+    env.state().borrow_mut().spell_cooldowns.insert(
+        2662,
+        SpellCooldownState {
+            start: 90.0,
+            duration: 30.0,
+        },
+    );
+    env.exec("assert(Professions.IsRecipeOnCooldown(2662), 'active cooldown')")
+        .unwrap();
+    env.state().borrow_mut().spell_charges.insert(
+        2662,
+        SpellChargeState {
+            current_charges: 2,
+            max_charges: 3,
+            recharge_start: 96.0,
+            recharge_duration: 10.0,
+            charge_mod_rate: 1.0,
+        },
+    );
+    env.exec("assert(not Professions.IsRecipeOnCooldown(2662), 'available charges permit use')")
+        .unwrap();
+}
+
+#[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
+#[test]
+fn recipe_cooldown_projects_supplied_spell_state_and_validates_arguments() {
+    use wow_ui_sim::c_api::charge_state::SpellChargeState;
+    use wow_ui_sim::lua_api::state::SpellCooldownState;
+
+    let env = WowLuaEnv::new().expect("environment");
+    env.exec(
+        r#"
+        A_Admin.SetManualClock(100)
+        local api = C_TradeSkillUI.GetRecipeCooldown
+        assert(select('#', api(99999999)) == 0, 'missing cached recipe')
+        assert(select('#', api(2662)) == 4, 'cached recipe return count')
+        local remaining, day, charges, maximum = api(' 2662.9 ', 'ignored')
+        assert(remaining == nil and day == false and charges == 0 and maximum == 0)
+        local ok, err = pcall(api, nil)
+        assert(not ok and err:find('Usage: GetRecipeCooldown%(recipeID%)'))
+        ok, err = pcall(api, {})
+        assert(not ok and err:find('Usage: GetRecipeCooldown%(recipeID%)'))
+        ok, err = pcall(api, 2147483648)
+        assert(not ok and err:find('integer overflow attempting to store'))
+        local secretNumber = secretwrap(2662)
+        local function denied() return pcall(api, secretNumber) end
+        debug.setobjecttaint(denied, 'RecipeCooldownProbe')
+        ok, err = denied()
+        assert(not ok and err:find('Usage: GetRecipeCooldown%(recipeID%)'))
+        ok, err = pcall(api, secretwrap('2662'))
+        assert(not ok and err:find('Usage: GetRecipeCooldown%(recipeID%)'))
+        "#,
+    )
+    .unwrap();
+    env.state().borrow_mut().spell_cooldowns.insert(
+        2662,
+        SpellCooldownState {
+            start: 90.0,
+            duration: 30.0,
+        },
+    );
+    env.exec(
+        r#"
+        local remaining, day, charges, maximum = C_TradeSkillUI.GetRecipeCooldown(2662)
+        assert(math.abs(remaining - 20) < 0.001 and day == false and charges == 0 and maximum == 0)
+        "#,
+    )
+    .unwrap();
+    env.state().borrow_mut().spell_charges.insert(
+        2662,
+        SpellChargeState {
+            current_charges: 2,
+            max_charges: 3,
+            recharge_start: 96.0,
+            recharge_duration: 10.0,
+            charge_mod_rate: 1.0,
+        },
+    );
+    env.exec(
+        r#"
+        local remaining, day, charges, maximum = C_TradeSkillUI.GetRecipeCooldown(2662)
+        assert(math.abs(remaining - 6) < 0.001 and day == false and charges == 2 and maximum == 3)
+        "#,
+    )
+    .unwrap();
+    env.state()
+        .borrow_mut()
+        .spell_charges
+        .get_mut(&2662)
+        .unwrap()
+        .current_charges = 3;
+    env.exec(
+        r#"
+        local remaining, _, charges, maximum = C_TradeSkillUI.GetRecipeCooldown(2662)
+        assert(math.abs(remaining - 20) < 0.001 and charges == 3 and maximum == 3)
+        "#,
+    )
+    .unwrap();
+}
+
 #[test]
 fn casting_blacksmithing_opens_professions_frame() {
     let env = full_game_env();
