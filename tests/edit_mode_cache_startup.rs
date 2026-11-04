@@ -162,7 +162,11 @@ fn truncated_account_cache_warns_during_default_startup() {
                 .env_remove("RUST_LOG")
                 .env_remove("WOW_SIM_EDIT_MODE_LAYOUT")
                 .output().expect("run default startup");
-            assert!(output.status.success(), "startup failed for count {count}");
+            assert!(output.status.success(),
+                "startup failed for count {count}: {}\nstdout: {}\nstderr: {}",
+                output.status,
+                String::from_utf8_lossy(&output.stdout),
+                String::from_utf8_lossy(&output.stderr));
             let stderr = String::from_utf8_lossy(&output.stderr);
             assert!(stderr.contains("EditMode account cache declares layout rows that are missing"),
                 "missing default warning for count {count}: {stderr}");
