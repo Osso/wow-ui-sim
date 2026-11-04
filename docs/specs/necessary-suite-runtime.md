@@ -1,6 +1,6 @@
 # NECESSARY Retail runtime
 
-The NECESSARY Retail suite must complete in at most 600 seconds of test-execution wall time. Tests remain classified by importance, not duration. Scheduling is implemented in `tools/full_suite.py`; see [runner operation](../remote-builds.md#asynchronous-full-suite).
+The NECESSARY Retail suite must complete in at most 600 seconds of wall time on a warm target directory, including its incremental no-op build. Report cold compilation, warm no-op build, and test execution separately. Tests remain classified by importance, not duration. Scheduling is implemented in `tools/full_suite.py`; see [runner operation](../remote-builds.md#asynchronous-full-suite).
 
 ## What it must do
 

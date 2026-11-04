@@ -392,7 +392,7 @@ def run(ref, build_jobs, target_dir, profile="retail", optional=False):
                             step_env["LD_LIBRARY_PATH"] = str(Path(binary).parent)
                             mount = Path.home() / ".cache/wow-ui-sim-srcmount" / target_dir.name
                             unit = f"full-suite-test-{sha[:12]}-{profile}-{name}-{time.time_ns()}"
-                            command = ["systemd-run", "--user", f"--unit={unit}", "--wait", "--pipe", "--collect", "--quiet",
+                            command = ["systemd-run", "--user", "--slice=agents-fullsuite.slice", f"--unit={unit}", "--wait", "--pipe", "--collect", "--quiet",
                                        "-p", "MemoryMax=9G", "-p", "MemorySwapMax=0",
                                        "-p", f"BindPaths={checkout}:{mount}", f"--working-directory={mount}",
                                        *(f"--setenv={key}" for key in step_env), "--", binary]
@@ -400,7 +400,6 @@ def run(ref, build_jobs, target_dir, profile="retail", optional=False):
                                 if name == "integration" and profile == "retail":
                                     costs = json.loads((checkout / "tools/integration-costs.json").read_text())
                                     command[command.index("MemoryMax=9G")] = "MemoryMax=3G"
-                                    command.insert(2, "--slice=agents.slice")
                                     result["steps"][name], output = run_integration_shards(
                                         command, checkout, log, step_env, costs, INTEGRATION_SHARDS)
                                 else:
