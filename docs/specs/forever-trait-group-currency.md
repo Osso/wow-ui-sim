@@ -27,7 +27,7 @@ per-node cost merging, holdings/source policy or concrete accumulator traversal.
 ## Tests asserting this spec
 
 - `tests/forever_trait_group_currency.rs` — two supplied configurations, positive/zero ranks, memberships, duplicate and unknown groups, mixed trees, provider order, negative amounts, optional fields, empty arrays, detached results, input diagnostics and named UNKNOWN boundaries.
-- `tests/test_keybindings_spellbook_talents.rs` — unchanged original tab-switch tooltip/no-errors regression.
+- `tests/test_keybindings_spellbook_talents.rs` — unchanged original empty-scenario tab-switch preservation plus populated original Camelot headers. The populated case varies spent values twice and reverses display/currency group order; constant empty/no-op output cannot satisfy its text assertions.
 
 ## Known gaps (current cycle)
 

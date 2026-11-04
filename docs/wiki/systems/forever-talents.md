@@ -71,7 +71,9 @@ cost/holdings snapshots are an explicit UNKNOWN acquisition boundary; the model
 does not derive unknown native per-node merges or source eligibility. Missing
 populated sources raise named diagnostics. Native empty cases use the separately
 labelled inferred public empty-array result. The unchanged original Camelot
-ClassTalents tab-switch tooltip regression passes with this query.
+ClassTalents tab-switch tooltip regression passes with this query. A populated
+original header case also verifies group-ID matching across reversed provider
+orders and refreshed text from two distinct supplied spent snapshots.
 
 ## Event delivery seam
 

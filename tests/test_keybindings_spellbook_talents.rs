@@ -62,9 +62,12 @@ fn forever_trait_currency_headers_match_groups_and_refresh_spent_values() {
         {
             let state = env.state();
             let mut sim = state.borrow_mut();
-            let config=sim.talents.forever.group_currency.configs.get_mut(&config_id).unwrap();
-            config.amounts.get_mut(&(10,80)).unwrap().spent=11;
-            config.amounts.get_mut(&(20,80)).unwrap().spent=7;
+            let config = sim.talents.forever.group_currency.configs.get_mut(&config_id).unwrap();
+            for (group, spent) in [(10, 11), (20, 7)] {
+                let amounts = config.amounts.get_mut(&(group, 80)).unwrap();
+                amounts.spent = spent;
+                amounts.quantity = 30 - spent;
+            }
         }
         env.exec(r#"
             local frame=PlayerSpellsFrame.TalentsFrame
