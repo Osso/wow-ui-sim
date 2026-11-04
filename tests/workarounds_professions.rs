@@ -160,6 +160,98 @@ fn recipe_filter_setters_queue_only_changed_values() {
 }
 
 #[test]
+fn profession_favorites_feed_the_original_recipe_group() {
+    let env = full_game_env();
+    env.exec(
+        r#"
+        C_TradeSkillUI.SetProfessionChildSkillLineID(164)
+        assert(C_AddOns.LoadAddOn('Blizzard_Professions'))
+        function countFavoriteRecipe(recipeID)
+            local provider = Professions.GenerateCraftingDataProvider(164, false, false, nil)
+            local count = 0
+            for _, node in provider:EnumerateEntireRange() do
+                local info = node:GetData().recipeInfo
+                if info and info.recipeID == recipeID and info.favoritesInstance then
+                    count = count + 1
+                end
+            end
+            return count
+        end
+        assert(countFavoriteRecipe(2662) == 0, 'emulated initial favorites are empty')
+        C_TradeSkillUI.SetRecipeFavorite(2662, true)
+        "#,
+    )
+    .unwrap();
+    fire_one_on_update_tick(&env);
+    env.exec(
+        r#"
+        assert(C_TradeSkillUI.IsRecipeFavorite(2662) == true)
+        assert(C_TradeSkillUI.GetRecipeInfo(2662).favorite == true)
+        assert(countFavoriteRecipe(2662) == 1, 'Blizzard favorites group contains recipe')
+        C_TradeSkillUI.SetRecipeFavorite(2662, false)
+        "#,
+    )
+    .unwrap();
+    fire_one_on_update_tick(&env);
+    env.exec("assert(countFavoriteRecipe(2662) == 0, 'unfavorite removes the group entry')")
+        .unwrap();
+}
+
+#[test]
+fn recipe_favorites_validate_state_and_defer_distinct_events() {
+    let env = WowLuaEnv::new().expect("environment");
+    env.exec(
+        r#"
+        local api = C_TradeSkillUI
+        assert(select('#', api.IsRecipeFavorite(99999999)) == 0)
+        assert(api.IsRecipeFavorite(2662) == false, 'emulated initial state')
+        local ok, err = pcall(api.IsRecipeFavorite, {})
+        assert(not ok and err:find('Usage: IsRecipeFavorite%(recipeID%)'))
+        ok, err = pcall(api.SetRecipeFavorite, nil, true)
+        assert(not ok and err:find('Usage: SetRecipeFavorite%(recipeID, favorite%)'))
+        ok, err = pcall(api.IsRecipeFavorite, 2147483648)
+        assert(not ok and err:find('integer overflow attempting to store'))
+        favoriteEvents = {}
+        favoriteListener = CreateFrame('Frame')
+        favoriteListener:RegisterEvent('TRADE_SKILL_FAVORITES_CHANGED')
+        favoriteListener:RegisterEvent('TRADE_SKILL_LIST_UPDATE')
+        favoriteListener:SetScript('OnEvent', function(_, event, favorite, recipeID)
+            if event == 'TRADE_SKILL_FAVORITES_CHANGED' then
+                table.insert(favoriteEvents, tostring(favorite) .. ':' .. tostring(recipeID))
+            else
+                table.insert(favoriteEvents, 'list')
+            end
+        end)
+        assert(select('#', api.SetRecipeFavorite(2662, true)) == 0)
+        assert(api.IsRecipeFavorite(2662) == false, 'no active context means no write')
+        api.SetProfessionChildSkillLineID(164)
+        api.SetRecipeFavorite(99999999, true)
+        assert(select('#', api.SetRecipeFavorite(' 2662.9 ', 0)) == 0)
+        assert(api.IsRecipeFavorite('0xa66') == true)
+        assert(api.IsRecipeFavorite(2660) == false, 'favorites are per recipe')
+        api.SetRecipeFavorite(2662, true)
+        api.SetRecipeFavorite(2662, false)
+        api.SetRecipeFavorite(2662, true)
+        api.SetOnlyShowMakeableRecipes(true)
+        assert(#favoriteEvents == 0, 'favorite and list notifications are deferred')
+        "#,
+    )
+    .unwrap();
+    fire_one_on_update_tick(&env);
+    env.exec(
+        r#"
+        assert(#favoriteEvents == 3, 'identical pending pairs coalesce')
+        assert(favoriteEvents[1] == 'true:2662')
+        assert(favoriteEvents[2] == 'false:2662')
+        assert(favoriteEvents[3] == 'list', 'favorites drain before the list marker')
+        assert(C_TradeSkillUI.IsRecipeFavorite(2662) == true)
+        assert(C_TradeSkillUI.GetRecipeInfo(2662).favorite == true)
+        "#,
+    )
+    .unwrap();
+}
+
+#[test]
 fn casting_blacksmithing_opens_professions_frame() {
     let env = full_game_env();
     env.state().borrow_mut().lua_errors.clear();
