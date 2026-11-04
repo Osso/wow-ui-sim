@@ -319,8 +319,8 @@
       "consumer": "ItemScalingConfig",
       "column": "ItemSquishEraID",
       "target": "ItemSquishEra",
-      "evidence": "VERIFIED WM97 DQ3 selector 48/49/51/52; WM97b pending",
-      "status": "verified"
+      "evidence": "Schema field name and exact layout only; WM97 DQ3 does not name this field. WM97b-item-descriptor-scaling.md pending",
+      "status": "unverified"
     },
     {
       "consumer": "ItemOffsetCurve",
