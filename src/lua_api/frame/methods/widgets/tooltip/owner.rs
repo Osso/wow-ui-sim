@@ -9,12 +9,24 @@ use crate::lua_api::methods::{
 };
 use crate::lua_api::script_helpers::collect_lua_error;
 use crate::lua_api::tooltip::{TooltipLine, build_cursor_anchor};
+use crate::lua_bridge::stack_val;
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
 
 /// `Tooltip:SetOwner(frame, anchor, xOffset, yOffset)`
 pub(super) fn set_owner(state: &mut LuaState) -> LuaResult<u32> {
     let tooltip_id = frame_id_from_stack(state, 1)?;
+    if native_owner_behavior() && !matches!(stack_val(state, 2), Val::Table(_)) {
+        let sim = borrow_state(state)?;
+        let name = sim
+            .widgets
+            .get(tooltip_id)
+            .and_then(|frame| frame.name.as_deref());
+        return Err(rilua::runtime_error(format!(
+            "Usage: {}:SetOwner(region)",
+            name.unwrap_or("GameTooltip")
+        )));
+    }
     let args = tooltip_owner_args(state);
     if native_owner_behavior() {
         let old_owner = current_tooltip_owner_id(state, tooltip_id)?;

@@ -41,6 +41,14 @@ the content-sizing routine. WM63 is evidence for
 Retail 70688, not Wrath, Forever, Mists, Era or Anniversary; those profiles'
 sizing behavior is unchanged.
 
+## Owner argument admission
+
+Retail/PTR `SetOwner` rejects missing, nil and other non-table owner arguments
+before clearing or changing existing state. The native internal null-owner
+path used by `Hide` is not a public `SetOwner(nil)` operation (WM95).
+The original `GameTooltip_SetDefaultAnchor` consumer retains the existing
+owned tooltip when its caller supplies an invalid parent.
+
 ## AppendText
 
 On Retail/PTR, `AppendText` appends to the first left FontString's current
