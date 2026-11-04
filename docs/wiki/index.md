@@ -1,3 +1,9 @@
+## [2026-11-04] investigation | PTR Edit Mode preset fixtures
+
+[Edit Mode reconciliation](investigations/editmode-layout.md#ptr-preset-and-startup-fixture-reconciliation--2026-11-04)
+records source-selected preset counts, cast-bar Show lifecycle and the separately
+repaired declared-profile quest difficulty publication, with bounded PTR/Retail proof.
+
 ## [2026-11-04] investigation | Parallel GPU test lifetimes
 
 [GPU test lifetimes](investigations/parallel-gpu-test-lifetimes.md) records the reproduced Vulkan loader SIGSEGV, the shared lifetime lock, and the concurrent atlas/readback regression.

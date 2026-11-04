@@ -20,6 +20,12 @@ For `C_PlayerInfo.GetContentDifficultyQuestForPlayer`, WM89 establishes Impossib
 - [x] Support unchanged whole cached Mainline DifficultyUtil plus Camelot QuestUtilsOverrides with explicit test fixtures for elite status, CVar selection and color dependencies; produce concrete ordinary/elite, colored/plain title prefixes.
 - [ ] Preserve other profiles' existing surface and Retail/PTR `QuestCanHaveWarModeBonus` behavior in runtime verification.
 
+At source `9c2eea67f`, the shared live-row/isolation/error controls pass2/2 on
+both PTR and Retail. PTR's full `edit_mode` filter passes46/46, including the
+original subprocess startup consumer that failed before publication. Retail's
+filter passes56/56. Classic absence is source-gated but has not been runtime
+verified in this lane; the cross-profile requirement above remains open.
+
 ## Ordinary-watch membership follow-up — bounded model execution
 
 The Forever membership implementation replaces the all-ordinary-rows watch policy with explicit per-environment `quest_watch_types: HashMap<i32, QuestWatchType>` metadata. The contracts below are bounded simulator policies; current model execution is recorded below, not native parity or normal-startup acceptance.
