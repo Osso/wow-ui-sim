@@ -84,6 +84,7 @@ pub(super) fn init_lua_state(
     super::globals::real::heal_prediction::register(lua)?;
     super::globals::real::secure_helpers::register(lua)?;
     super::globals::real::totems::register(lua)?;
+    super::globals::real::bank_reagents::register(lua)?;
     crate::c_api::c_tts_settings::register(lua)?;
     crate::c_api::c_click_bindings::register(lua)?;
     #[cfg(feature = "retail-12-0-5")]
