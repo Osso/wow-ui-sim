@@ -1,0 +1,51 @@
+#![cfg(any(feature = "client-retail", feature = "client-ptr"))]
+
+use wow_ui_sim::lua_api::WowLuaEnv;
+
+#[test]
+fn tooltip_lifecycle_totem_hover_uses_bottomright_owner_anchor() {
+    let env = WowLuaEnv::new().unwrap();
+    let addons = wow_ui_sim::paths::default_blizzard_ui_addons_path().unwrap();
+    let source =
+        std::fs::read_to_string(addons.join("Blizzard_UnitFrame/Mainline/TotemFrame.lua")).unwrap();
+    env.exec(&source).unwrap();
+    env.exec(r#"
+        local owner = CreateFrame("Button", "LifecycleTotem", UIParent)
+        owner.slot = 1
+        TotemButtonMixin.OnEnter(owner)
+        local point, relative, relativePoint = GameTooltip:GetPoint(1)
+        assert(relative == owner and point == "TOPLEFT" and relativePoint == "BOTTOMRIGHT", "totem hover bottomright points")
+    "#).unwrap();
+}
+
+#[test]
+fn tooltip_lifecycle_reownership_clears_before_assigning_new_owner() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        local a = CreateFrame("Frame", nil, UIParent)
+        local b = CreateFrame("Frame", nil, UIParent)
+        local t = CreateFrame("GameTooltip", "LifecycleOwnerTip", UIParent)
+        t:SetOwner(a, "ANCHOR_NONE")
+        t:AddLine("old")
+        local line = t:GetLeftLine(1)
+        t:Show()
+        local events = {}
+        t:SetScript("OnTooltipCleared", function(self)
+            events[#events + 1] = self:GetOwner() == a and "clear-old" or "clear-other"
+        end)
+        t:SetOwner(a, "ANCHOR_NONE")
+        assert(t:IsShown(), "same owner retains visibility")
+        assert(t:NumLines() == 0 and not line:IsShown(), "cached line cleared and hidden")
+        assert(events[1] == "clear-old", "clear occurs with old owner")
+        t:ClearLines()
+        assert(#events == 1, "empty clear has no notification")
+        t:AddLine("another")
+        t:SetOwner(b, "ANCHOR_NONE")
+        assert(not t:IsShown(), "different owner hides tooltip")
+        assert(events[2] == "clear-old", "reassignment clears before changing owner")
+        assert(t:GetOwner() == b, "new owner assigned")
+    "#,
+    )
+    .unwrap();
+}
