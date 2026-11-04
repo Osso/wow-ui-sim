@@ -319,12 +319,11 @@ def run(ref, build_jobs, target_dir, profile="retail", optional=False):
                     env = dict(os.environ, CARGO_TARGET_DIR=str(target_dir), RUST_TEST_THREADS=JOBS, CARGO_TERM_COLOR="never")
                     with isolated_cvars(env, log) as env:
                         targets = [("integration", "integration", "test"), ("prefork", "prefork_full_ui", "test"), ("lib", "wow_ui_sim", "lib")]
-                        if optional:
-                            extra_targets = additional_test_targets(receipt)
-                            targets.extend(extra_targets)
-                            for step, _, _ in extra_targets:
-                                result["steps"][step] = {"status": "not_run"}
-                                result["failures"][step] = []
+                        extra_targets = additional_test_targets(receipt)
+                        targets.extend(extra_targets)
+                        for step, _, _ in extra_targets:
+                            result["steps"][step] = {"status": "not_run"}
+                            result["failures"][step] = []
                         for name, artifact, kind in targets:
                             if name == "prefork" and profile not in ("retail", "mists"):
                                 result["steps"][name] = {"status": "not_applicable", "reason": "prefork_full_ui supports only Retail/Mists"}
