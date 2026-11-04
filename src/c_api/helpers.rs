@@ -19,6 +19,53 @@ pub(crate) fn parse_numeric_string(bytes: &[u8]) -> Option<f64> {
         .then_some(number)
 }
 
+fn bad_argument(index: i32, function: &str, reason: &str) -> rilua::LuaError {
+    rilua::runtime_error(format!("bad argument #{index} to '{function}' ({reason})"))
+}
+
+/// Native shared signed 32-bit converter (WM87, WM88) for AllowedWhenUntainted
+/// arguments: required, inclusive bounds checked before truncation.
+pub(crate) fn read_untainted_signed32_argument(
+    state: &LuaState,
+    index: i32,
+    function: &str,
+    usage: &str,
+) -> LuaResult<i32> {
+    let original = crate::lua_bridge::stack_val(state, index);
+    if matches!(original, Val::Nil) {
+        return Err(bad_argument(index, function, usage));
+    }
+    let marked = rilua::table_security::is_secret_value(state, original);
+    let value = rilua::table_security::unwrap_secret(state, original).map_err(|_| {
+        let denied = format!(
+            "{usage}. Secret values are only allowed during untainted execution for this argument."
+        );
+        bad_argument(index, function, &denied)
+    })?;
+    let number = match value {
+        Val::Num(number) => Some(number),
+        Val::Str(reference) if !marked => state
+            .gc
+            .string_arena
+            .get(reference)
+            .and_then(|string| parse_numeric_string(string.data())),
+        _ => None,
+    };
+    let in_range = |number: &f64| (f64::from(i32::MIN)..=f64::from(i32::MAX)).contains(number);
+    let range_error = || {
+        let range = format!(
+            "outside of expected range {} to {} - {usage}",
+            i32::MIN,
+            i32::MAX
+        );
+        bad_argument(index, function, &range)
+    };
+    number
+        .filter(in_range)
+        .map(|number| number.trunc() as i32)
+        .ok_or_else(range_error)
+}
+
 /// Reject nonnumeric inputs; unrepresented numeric identities cannot match supplied rows.
 pub(crate) fn validate_supplied_relation_id(
     value: Val,

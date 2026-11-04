@@ -16,7 +16,7 @@ use rilua::{LuaResult, Val};
 
 const PROFESSION_TABLE_HASH_FIELDS: usize = 9;
 const CATEGORY_TABLE_HASH_FIELDS: usize = 4;
-const RECIPE_INFO_HASH_FIELDS: usize = 9;
+const RECIPE_INFO_HASH_FIELDS: usize = 10;
 const REAGENT_INFO_HASH_FIELDS: usize = 5;
 const RECIPE_SCHEMATIC_HASH_FIELDS: usize = 6;
 
@@ -239,6 +239,8 @@ fn populate_recipe_info_table(
     set_number_field(state, table, "itemLevel", recipe.item_level as f64);
     set_number_field(state, table, "maxTrivialLevel", recipe.difficulty as f64);
     set_bool_field(state, table, "favorite", favorite);
+    let first_craft = crate::c_api::c_trade_skill_first_craft::is_first_craft(recipe.recipe_id);
+    set_bool_field(state, table, "firstCraft", first_craft);
 }
 
 fn populate_recipe_schematic_table(

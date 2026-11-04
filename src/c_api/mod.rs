@@ -267,6 +267,7 @@ pub(crate) mod c_tooltip_info_spell_mount;
 pub(crate) mod c_trade_skill_cooldown;
 pub(crate) mod c_trade_skill_favorites;
 pub(crate) mod c_trade_skill_filter;
+pub(crate) mod c_trade_skill_first_craft;
 pub mod c_trade_skill_quality;
 mod c_trade_skill_source;
 #[cfg(feature = "retail-12-0-0")]
