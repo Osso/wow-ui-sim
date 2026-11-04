@@ -69,3 +69,23 @@ Library tests in `src/install_paths.rs`:
 
 They use temporary directories and injected detection results; no test reads or writes the
 real platform config directory, and none requires a local WoW install.
+
+## Verification status (2026-11-04)
+
+All builds used the canonical `scripts/slot-build.py`, slot 3, `-j4`, with Cargo
+1.99.0 and rustc 1.99.0.
+
+- RED `fa2e96fe8`: 7 of 9 targeted tests failed at `src/install_paths.rs:76`,
+  `:87`, and `:164` with `not implemented: install path ...`.
+- Targeted GREEN `c25f97580`: 9 passed, 0 failed. Unit
+  `install-path-persist-green2`, CPUUsageNSec 214461214000.
+- Retail library `c25f97580`: 2213 passed, 0 failed, 1 ignored (includes the 9
+  tests above), zero compiler warnings/errors. Unit
+  `install-path-persist-lib-full`, CPUUsageNSec 611184564000.
+- PTR library check `c25f97580`: success, zero compiler warnings/errors. Unit
+  `install-path-persist-ptr-check`, CPUUsageNSec 299311267000.
+- Retail binaries check `3de2fcc8e` (`--bins --features tools`): success, zero
+  compiler warnings/errors. Unit `install-path-persist-bins-check`,
+  CPUUsageNSec 31060229000.
+- Windows cross-check was not run: rustup is absent and no
+  `x86_64-pc-windows-gnu` target is installed.
