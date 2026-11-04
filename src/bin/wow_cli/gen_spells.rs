@@ -69,7 +69,7 @@ struct SpellData {
     spell_names: HashMap<u32, String>,
     spell_subtexts: HashMap<u32, String>,
     spell_descriptions: HashMap<u32, String>,
-    spell_misc: HashMap<u32, (u32, u32)>,
+    spell_misc: HashMap<u32, (u32, u32, u32)>,
     spell_power: HashMap<u32, Vec<SpellPowerRow>>,
     spell_targets: HashMap<u32, u8>,
 }
@@ -161,7 +161,7 @@ fn build_spell_map(
     out: &mut File,
     spell_names: &HashMap<u32, String>,
     spell_subtexts: &HashMap<u32, String>,
-    spell_misc: &HashMap<u32, (u32, u32)>,
+    spell_misc: &HashMap<u32, (u32, u32, u32)>,
     spell_targets: &HashMap<u32, u8>,
     required_ids: &BTreeSet<u32>,
 ) -> Result<u32, Box<dyn std::error::Error>> {
@@ -177,13 +177,16 @@ fn build_spell_map(
             .get(&spell_id)
             .map(|s| escape_str(s))
             .unwrap_or_default();
-        let (icon, school) = spell_misc.get(&spell_id).copied().unwrap_or((136243, 0));
+        let (icon, school, attributes_9) = spell_misc
+            .get(&spell_id)
+            .map(|&(icon, school, attributes)| (icon, school, Some(attributes)))
+            .unwrap_or((136243, 0, None));
         let implicit_target = spell_targets.get(&spell_id).copied().unwrap_or(0);
 
         let value = format!(
             "SpellInfo {{ name: \"{}\", subtext: \"{}\", icon_file_data_id: {}, \
-             school_mask: {}, implicit_target: {} }}",
-            escaped_name, subtext, icon, school, implicit_target
+             school_mask: {}, implicit_target: {}, attributes_9: {:?} }}",
+            escaped_name, subtext, icon, school, implicit_target, attributes_9
         );
         builder.entry(spell_id, &value);
         count += 1;
@@ -220,6 +223,11 @@ fn write_header(out: &mut File) -> std::io::Result<()> {
         "    /// Determines valid target type: 1=Self, 6=Enemy, 21=Ally, 25=Any, etc."
     )?;
     writeln!(out, "    pub implicit_target: u8,")?;
+    writeln!(
+        out,
+        "    /// SpellMisc.Attributes_9 from CSV build 12.1.5.70391; None means no source row."
+    )?;
+    writeln!(out, "    pub attributes_9: Option<u32>,")?;
     writeln!(out, "}}")?;
     writeln!(out)?;
     Ok(())
@@ -490,7 +498,9 @@ fn load_spell_effect_targets(path: &Path) -> Result<HashMap<u32, u8>, Box<dyn st
     Ok(map)
 }
 
-fn load_spell_misc(path: &Path) -> Result<HashMap<u32, (u32, u32)>, Box<dyn std::error::Error>> {
+fn load_spell_misc(
+    path: &Path,
+) -> Result<HashMap<u32, (u32, u32, u32)>, Box<dyn std::error::Error>> {
     let file = File::open(path)?;
     let reader = BufReader::new(file);
     let mut map = HashMap::new();
@@ -513,14 +523,16 @@ fn load_spell_misc(path: &Path) -> Result<HashMap<u32, (u32, u32)>, Box<dyn std:
         };
         let icon: u32 = fields[27].parse().unwrap_or(136243);
         let school: u32 = fields[23].parse().unwrap_or(0);
-        map.entry(spell_id).or_insert((icon, school));
+        // The export stores 32-bit attribute masks as signed integers.
+        let attributes_9 = fields[10].parse::<i32>()? as u32;
+        map.entry(spell_id).or_insert((icon, school, attributes_9));
     }
     Ok(map)
 }
 
 #[cfg(test)]
 mod tests {
-    use super::{collect_required_spell_ids, load_spell_descriptions};
+    use super::{collect_required_spell_ids, load_spell_descriptions, load_spell_misc};
     use std::collections::BTreeSet;
     use std::io::Write;
 
@@ -532,6 +544,23 @@ mod tests {
             458, 23338, 40192, 61425, 72286, 93326, 122708, 171851, 264058,
         ]);
         assert!(mount_spells.is_subset(&required));
+    }
+
+    #[test]
+    fn spell_misc_retains_signed_attribute_masks() {
+        let mut csv = tempfile::NamedTempFile::new().unwrap();
+        writeln!(csv, "{}", vec!["header"; 34].join(",")).unwrap();
+        for (id, attributes) in [(91, "32768"), (305, "-2147450880")] {
+            let mut fields = vec!["0".to_string(); 34];
+            fields[10] = attributes.into();
+            fields[23] = "2".into();
+            fields[27] = "123".into();
+            fields[33] = id.to_string();
+            writeln!(csv, "{}", fields.join(",")).unwrap();
+        }
+        let misc = load_spell_misc(csv.path()).unwrap();
+        assert_eq!(misc[&91], (123, 2, 32768));
+        assert_eq!(misc[&305], (123, 2, 2147516416));
     }
 
     #[test]
