@@ -75,6 +75,7 @@ fn settle_env_after_edit_mode_init(env: &WowLuaEnv) {
     }
 }
 
+#[cfg(not(feature = "client-wrath"))]
 fn bag_bar_anchor(env: &WowLuaEnv) -> (String, String, String, f32, f32) {
     env.eval(
         r#"
@@ -198,6 +199,10 @@ fn assert_rect_queries_match_layout_rect(env: &WowLuaEnv, name: &str) {
     assert_rect_matches(name, "GetRect", &actual.unscaled, &expected.unscaled);
 }
 
+// Wrath FrameXML/MainMenuBarBagButtons.xml:79-90 anchors the backpack directly
+// to MainMenuBarArtFrame. BagsBar is a Mainline edit-mode frame
+// (Blizzard_MainMenuBarBagButtons/Mainline/MainMenuBarBagButtons.xml:44).
+#[cfg(not(feature = "client-wrath"))]
 #[test]
 fn bags_bar_reanchor_replay_moves_the_bar_off_its_correct_rect() {
     let env = full_game_env_after_edit_mode_init();
@@ -245,6 +250,9 @@ fn bags_bar_reanchor_replay_moves_the_bar_off_its_correct_rect() {
     assert_ne!(after_rect, before_rect);
 }
 
+// Wrath FrameXML/MainMenuBarBagButtons.xml:17-76 uses legacy ItemButtonTemplate
+// callbacks, not MainMenuBarBagManager or item-context overlays.
+#[cfg(not(feature = "client-wrath"))]
 #[test]
 fn main_menu_bag_buttons_have_correct_item_context_without_overlay_replay() {
     let env = full_game_env_after_edit_mode_init();

@@ -8,10 +8,12 @@ use crate::common;
 #[path = "render_order_support.rs"]
 mod render_order_support;
 
+#[cfg(not(feature = "client-wrath"))]
 use image::RgbaImage;
 use std::path::PathBuf;
 use wow_ui_sim::lua_api::WowLuaEnv;
 use wow_ui_sim::lua_api::globals::global_frames;
+#[cfg(not(feature = "client-wrath"))]
 use wow_ui_sim::render::headless::render_to_image;
 
 fn blizzard_ui_dir() -> PathBuf {
@@ -55,12 +57,14 @@ fn drain_test_errors(env: &WowLuaEnv) -> Vec<String> {
     common::drain_string_table(env, "__test_errors")
 }
 
+#[cfg(not(feature = "client-wrath"))]
 fn sample_rect_pixel(image: &RgbaImage, rect: (f32, f32, f32, f32), u: f32, v: f32) -> [u8; 4] {
     let x = (rect.0 + rect.2 * u).round() as u32;
     let y = (rect.1 + rect.3 * v).round() as u32;
     image.get_pixel(x, y).0
 }
 
+#[cfg(not(feature = "client-wrath"))]
 fn max_channel_diff(lhs: [u8; 4], rhs: [u8; 4]) -> u8 {
     (0..4)
         .map(|channel| lhs[channel].abs_diff(rhs[channel]))
@@ -68,6 +72,7 @@ fn max_channel_diff(lhs: [u8; 4], rhs: [u8; 4]) -> u8 {
         .unwrap_or(0)
 }
 
+#[cfg(not(feature = "client-wrath"))]
 fn target_portrait_rect(env: &WowLuaEnv, width: f32, height: f32) -> (f32, f32, f32, f32) {
     let state = env.state().borrow();
     let target_frame_id = state
@@ -228,6 +233,9 @@ fn target_frame_shown_for_enemy() {
     }
 }
 
+// Wrath FrameXML/TargetFrame.xml:227-239 declares a standalone 64x64 portrait
+// without a mask. Mainline TargetFrame.xml:68 uses the CircleMask asserted here.
+#[cfg(not(feature = "client-wrath"))]
 #[test]
 fn target_frame_portrait_corners_match_background_when_replaced_with_class_icon() {
     test_timeout! {
