@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 """Run a certified full suite for one frozen commit."""
 import argparse
+from concurrent.futures import ThreadPoolExecutor
+import heapq
+import io
 import fcntl
 import hashlib
 import json
@@ -22,6 +25,7 @@ JOBS = os.environ.get("FULL_SUITE_JOBS", "16")
 # Integration runs many full Blizzard-UI tests (~1.1-1.5 GiB each) in one process; 16 threads exceed
 # the 9G unit (cgroup oom-kill, 2026-11-03). User decision: fewer threads for this target.
 INTEGRATION_JOBS = os.environ.get("FULL_SUITE_INTEGRATION_JOBS", "3")
+INTEGRATION_SHARDS = int(os.environ.get("FULL_SUITE_INTEGRATION_SHARDS", "16"))
 PROFILES = ("retail", "ptr", "wrath", "mists", "wowforever", "era", "anniversary")
 # Slot 2 was retired on 2026-10-27 (user decision: three build slots).
 SLOTS = (0, 1, 3)
@@ -204,6 +208,56 @@ def run_step(name, cmd, checkout, log, env):
             "command": cmd, "environment": {"WOW_SIM_TIMEOUT_FIXTURE_CAPACITY": env.get("WOW_SIM_TIMEOUT_FIXTURE_CAPACITY")}}, output
 
 
+def partition_tests(names, costs, count):
+    """Longest measured tests first; new tests have a unit scheduling weight."""
+    if count < 1:
+        raise ValueError("integration shard count must be positive")
+    shards = [[] for _ in range(min(count, len(names)))]
+    loads = [(0, index) for index in range(len(shards))]
+    heapq.heapify(loads)
+    for name in sorted(names, key=lambda name: (-costs.get(name, 1), name)):
+        load, index = heapq.heappop(loads)
+        shards[index].append(name)
+        heapq.heappush(loads, (load + costs.get(name, 1), index))
+    return shards
+
+
+def run_integration_shards(command, checkout, log, env, costs, count):
+    """Discover on stable libtest, then run disjoint exact-name selections."""
+    started = time.monotonic()
+    discovery = subprocess.run([command[-1], "--list", "--format=terse"],
+                               cwd=checkout, env=env, capture_output=True, text=True)
+    names = re.findall(r"^(.+): test$", discovery.stdout, re.M)
+    if discovery.returncode or not names or len(names) != len(set(names)):
+        raise ValueError(f"integration discovery failed: {discovery.stdout}{discovery.stderr}")
+    shards = partition_tests(names, costs, count)
+    base_unit = next(arg for arg in command if arg.startswith("--unit="))
+    slot = Path(env.get("CARGO_TARGET_DIR", "integration")).name.removeprefix("slot-")
+
+    def run_shard(index):
+        unit = f"{base_unit.removeprefix('--unit=')}-shard-{index}"
+        shard_command = [f"--unit={unit}" if arg == base_unit else arg for arg in command]
+        shard_command += ["--exact", *shards[index]]
+        shard_log = io.StringIO()
+        try:
+            step, output = run_step(f"integration:{index}", shard_command, checkout,
+                                    shard_log, dict(env, RUST_TEST_THREADS="1"))
+            step["tests"] = len(shards[index])
+            return step, output, shard_log.getvalue()
+        finally:
+            confirm_terminated(unit, slot)
+
+    with ThreadPoolExecutor(max_workers=len(shards)) as executor:
+        results = list(executor.map(run_shard, range(len(shards))))
+    for _, _, transcript in results:
+        log.write(transcript)
+    log.flush()
+    return {"exit": next((step["exit"] for step, _, _ in results if step["exit"]), 0),
+            "seconds": round(time.monotonic() - started, 1),
+            "tests": len(names), "shards": [step for step, _, _ in results]}, "\n".join(
+                output for _, output, _ in results)
+
+
 def new_failures(result):
     base_path = RESULTS / f"master-latest-{result['profile']}.json"
     if not base_path.exists():
@@ -343,7 +397,14 @@ def run(ref, build_jobs, target_dir, profile="retail", optional=False):
                                        "-p", f"BindPaths={checkout}:{mount}", f"--working-directory={mount}",
                                        *(f"--setenv={key}" for key in step_env), "--", binary]
                             try:
-                                result["steps"][name], output = run_step(name, command, checkout, log, step_env)
+                                if name == "integration" and profile == "retail":
+                                    costs = json.loads(Path(__file__).with_name("integration-costs.json").read_text())
+                                    command[command.index("MemoryMax=9G")] = "MemoryMax=3G"
+                                    command.insert(2, "--slice=agents.slice")
+                                    result["steps"][name], output = run_integration_shards(
+                                        command, checkout, log, step_env, costs, INTEGRATION_SHARDS)
+                                else:
+                                    result["steps"][name], output = run_step(name, command, checkout, log, step_env)
                             finally:
                                 confirm_terminated(unit, target_dir.name.removeprefix("slot-"))
                             if result["steps"][name]["exit"]:
@@ -406,7 +467,7 @@ def run(ref, build_jobs, target_dir, profile="retail", optional=False):
 def submit(ref, build_jobs, target_dir, profile="retail", optional=False):
     target_dir = validate_target_dir(target_dir)
     unit = f"full-suite-{profile}-{int(time.time())}"
-    subprocess.run(["systemd-run", "--user", f"--unit={unit}", "--collect", "--slice=agents.slice", "-p", "CPUQuota=1200%", "-p", "MemoryMax=9G", "-p", "MemorySwapMax=0", f"--setenv=FULL_SUITE_JOBS={JOBS}", f"--setenv=FULL_SUITE_INTEGRATION_JOBS={INTEGRATION_JOBS}", sys.executable, os.path.abspath(__file__), "run", ref, "--profile", profile, "--build-jobs", str(build_jobs), "--target-dir", str(target_dir), *(["--optional"] if optional else [])], check=True)
+    subprocess.run(["systemd-run", "--user", f"--unit={unit}", "--collect", "--slice=agents.slice", "-p", "CPUQuota=1200%", "-p", "MemoryMax=9G", "-p", "MemorySwapMax=0", f"--setenv=FULL_SUITE_JOBS={JOBS}", f"--setenv=FULL_SUITE_INTEGRATION_JOBS={INTEGRATION_JOBS}", f"--setenv=FULL_SUITE_INTEGRATION_SHARDS={INTEGRATION_SHARDS}", sys.executable, os.path.abspath(__file__), "run", ref, "--profile", profile, "--build-jobs", str(build_jobs), "--target-dir", str(target_dir), *(["--optional"] if optional else [])], check=True)
     print(unit)
 
 
