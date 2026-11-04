@@ -289,7 +289,7 @@ def run(ref, build_jobs, target_dir, profile="retail", optional=False):
         if profile not in ("retail", "mists"):
             steps["prefork"] = {"status": "not_applicable", "reason": "prefork_full_ui supports only Retail/Mists"}
         failures = {name: [] for name, step in steps.items() if step["status"] != "not_applicable"}
-        result = {"ref": ref, "sha": sha, "profile": profile, "started": time.strftime("%Y-%m-%dT%H:%M:%S%z"), "steps": steps, "failures": failures}
+        result = {"ref": ref, "sha": sha, "profile": profile, "optional": optional, "started": time.strftime("%Y-%m-%dT%H:%M:%S%z"), "steps": steps, "failures": failures}
         phase = "setup"
         output_path = RESULTS / f"{sha}-{profile}.json"
         attempt = f"{sha}-{profile}-attempt-{time.time_ns()}"
@@ -368,7 +368,7 @@ def run(ref, build_jobs, target_dir, profile="retail", optional=False):
             except Exception as error:
                 result["status"] = "FAILED"
                 result["error"] = f"slot release failed: {error}"
-        if result["status"] == "PASSED":
+        if result["status"] == "PASSED" and not optional:
             try:
                 baseline = RESULTS / f"master-latest-{profile}.json" if ref in ("origin/master", "master") else None
                 promote_result(output_path, baseline, result)
