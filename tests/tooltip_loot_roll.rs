@@ -5,6 +5,36 @@
 mod tooltip_full_env_helpers;
 
 #[test]
+fn tooltip_loot_roll_original_hover_resolves_stored_descriptor() {
+    let env = tooltip_full_env_helpers::load_full_env_without_post_load();
+    // WM97 DQ7: the ingress decodes the host link once; the getter reads the stored
+    // descriptor. Pinned list 591 adds 4 levels to catalog level 29.
+    env.exec(
+        r#"
+        A_Admin.StartLootRoll(93, 60000, 'Descriptor Sword', '', 4, 0,
+            'item:1728:0:0:0:0:0:0:0:0:0:0:0:1:591:0:0:0:0::0')
+        GroupLootFrame1.rollID = 93
+        local icon = GroupLootFrame1.IconFrame
+        assert(icon and icon:GetScript('OnEnter'), 'original loot icon hover must load')
+        icon:GetScript('OnEnter')(icon)
+        local data = GameTooltip:GetPrimaryTooltipData()
+        assert(data and data.id == 1728, 'roll selects its stored descriptor item ID')
+        assert(data.lines[2].leftText == 'Item Level 33', 'stored bonus list must reach the level line')
+        assert(GameTooltip:GetLeftLine(2):GetText() == 'Item Level 33')
+        "#,
+    )
+    .unwrap();
+    // A roll without a descriptor-bearing link stays a miss; no catalog item is invented.
+    env.exec(
+        r#"
+        A_Admin.StartLootRoll(94, 60000, 'No Link', '', 4, 0)
+        assert(select('#', C_TooltipInfo.GetLootRollItem(94)) == 0, 'descriptor-free roll is a miss')
+        "#,
+    )
+    .unwrap();
+}
+
+#[test]
 fn tooltip_loot_roll_original_hover_selects_roll_link() {
     let env = tooltip_full_env_helpers::load_full_env_without_post_load();
     for (roll, item_id) in [(71, 1728), (92, 127830)] {
