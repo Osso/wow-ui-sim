@@ -4,7 +4,7 @@ use super::super::{
 };
 use super::builders::{
     create_identified_tooltip, empty_tooltip, item_quality_color, push_tooltip_line,
-    tooltip_for_item_id,
+    stamp_data_instance, tooltip_for_item_id,
 };
 use crate::lua_api::game_data;
 use crate::lua_api::globals::spell_api;
@@ -220,6 +220,7 @@ fn tooltip_for_spell_source(state: &mut LuaState, spell_id: u32, hyperlink: bool
     };
     let saved_top = state.top;
     state.push(tooltip);
+    stamp_data_instance(state, tooltip);
     let lines = table_get(state, tooltip, "lines");
     push_spell_tooltip_lines(state, lines, spell_id, spell.name, hyperlink);
     set_spell_tooltip_width_hint(state, tooltip);
@@ -237,6 +238,7 @@ pub(super) fn tooltip_for_unit_aura(
     let saved_top = state.top;
     let tooltip = empty_tooltip(state, TOOLTIP_TYPE_UNIT_AURA);
     state.push(tooltip);
+    stamp_data_instance(state, tooltip);
     let lines = table_get(state, tooltip, "lines");
     push_highlight_spell_line(state, lines, 1, &aura.name);
     push_highlight_spell_line(state, lines, 2, "1 hr");
@@ -264,6 +266,7 @@ pub(super) fn tooltip_for_toy_item_id(state: &mut LuaState, item_id: u32) -> Val
     let saved_top = state.top;
     let tooltip = create_identified_tooltip(state, TOOLTIP_TYPE_ITEM, item_id);
     state.push(tooltip);
+    stamp_data_instance(state, tooltip);
     let lines = table_get(state, tooltip, "lines");
     push_tooltip_line(
         state,
@@ -302,6 +305,7 @@ fn build_mount_tooltip(state: &mut LuaState, spell_id: u32, mount_name: &str) ->
     let saved_top = state.top;
     let tooltip = create_identified_tooltip(state, TOOLTIP_TYPE_SPELL, spell_id);
     state.push(tooltip);
+    stamp_data_instance(state, tooltip);
     let lines = table_get(state, tooltip, "lines");
     push_tooltip_line(
         state,

@@ -3,7 +3,8 @@ use super::super::{
     TOOLTIP_TYPE_UNIT_AURA,
 };
 use super::builders::{
-    empty_tooltip, pet_action_spell_id, push_plain_line, push_tooltip_line, tooltip_for_item_id,
+    empty_tooltip, pet_action_spell_id, push_plain_line, push_tooltip_line, stamp_data_instance,
+    tooltip_for_item_id,
 };
 use super::sources::{
     inbox_attachment_item_id, merchant_item_id, parse_spell_source, recipe_output_item,
@@ -235,6 +236,7 @@ fn tooltip_for_companion_pet(state: &mut LuaState, pet_id: &str) -> Option<Val> 
     let saved_top = state.top;
     let tooltip = empty_tooltip(state, TOOLTIP_TYPE_COMPANION_PET);
     state.push(tooltip);
+    stamp_data_instance(state, tooltip);
     let lines = table_get(state, tooltip, "lines");
     push_plain_line(state, lines, 1, &pet.name);
     push_plain_line(
@@ -296,6 +298,7 @@ pub(super) fn c_tooltip_get_existing_socket_gem(state: &mut LuaState) -> LuaResu
 pub(super) fn c_tooltip_get_minimap_mouseover(state: &mut LuaState) -> LuaResult<u32> {
     use super::super::TOOLTIP_TYPE_MINIMAP_MOUSEOVER;
     let tooltip = empty_tooltip(state, TOOLTIP_TYPE_MINIMAP_MOUSEOVER);
+    stamp_data_instance(state, tooltip);
     let lines = table_get(state, tooltip, "lines");
     push_tooltip_line(
         state,
@@ -519,6 +522,7 @@ pub(super) fn c_tooltip_get_achievement_by_id(state: &mut LuaState) -> LuaResult
     };
     let tooltip = empty_tooltip(state, TOOLTIP_TYPE_SPELL);
     state.push(tooltip);
+    stamp_data_instance(state, tooltip);
     let lines = table_get(state, tooltip, "lines");
     push_plain_line(state, lines, 1, &name);
     Ok(1)
@@ -614,6 +618,7 @@ pub(super) fn c_tooltip_get_shapeshift(state: &mut LuaState) -> LuaResult<u32> {
     };
     let tooltip = empty_tooltip(state, TOOLTIP_TYPE_SPELL);
     state.push(tooltip);
+    stamp_data_instance(state, tooltip);
     let lines = table_get(state, tooltip, "lines");
     push_plain_line(state, lines, 1, &form.name);
     table_set(state, tooltip, "id", Val::Num(form.spell_id as f64));

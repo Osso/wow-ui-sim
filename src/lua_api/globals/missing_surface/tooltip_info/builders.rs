@@ -53,20 +53,8 @@ pub(super) fn push_tooltip_line(
         line_type
     };
     table_set(state, line, "type", Val::Num(line_type));
-    if uses_modern_tooltip_data() {
-        let text = create_string(state, left_text);
-        table_set(state, line, "leftText", text);
-        let (r, g, b) = left_color
-            .or_else(|| global_color(state, b"NORMAL_FONT_COLOR"))
-            .unwrap_or((1.0, 0.82, 0.0));
-        let color = packed_color_table(state, r, g, b);
-        table_set(state, line, "leftColor", color);
-        if wrap {
-            table_set(state, line, "wrapText", Val::Bool(true));
-        }
-        state.top = saved_top;
-        return;
-    }
+    // D56 copies markup without segment arrays; the simulator's tooltip renderer
+    // colors inline runs only from `leftColorSegments`, so this path keeps them.
     let parsed = tooltip_line_text_and_color(state, left_text, left_color);
     let left_text_val = create_string(state, &parsed.text);
     table_set(state, line, "leftText", left_text_val);
@@ -91,22 +79,18 @@ fn uses_modern_tooltip_data() -> bool {
     )
 }
 
-/// D56: packed RGB bytes scaled by the single-precision 1/255; no alpha is published.
-/// CreateColor supplies the ColorMixin methods consumers call (`GetRGB`).
-fn packed_color_table(state: &mut LuaState, r: f64, g: f64, b: f64) -> Val {
-    let [r, g, b] = [r, g, b].map(|component| {
-        let byte = (component.clamp(0.0, 1.0) * 255.0).round() as u8;
-        f64::from(f32::from(byte) * (1.0_f32 / 255.0))
-    });
-    let color = color_table(state, r, g, b, 1.0);
-    let saved_top = state.top;
-    state.push(color);
-    for (key, component) in [("r", r), ("g", g), ("b", b)] {
-        table_set(state, color, key, Val::Num(component));
+/// D56 builder initialization: populated results get the next `dataInstanceID`.
+/// Miss results keep their prior shape because WM82 leaves miss publication UNKNOWN.
+pub(super) fn stamp_data_instance(state: &mut LuaState, tooltip: Val) {
+    if !uses_modern_tooltip_data() {
+        return;
     }
-    table_set(state, color, "a", Val::Nil);
-    state.top = saved_top;
-    color
+    let counter = match registry_get(state, "__tooltip_data_instance_counter") {
+        Val::Num(counter) => counter + 1.0,
+        _ => 1.0,
+    };
+    registry_set(state, "__tooltip_data_instance_counter", Val::Num(counter));
+    table_set(state, tooltip, "dataInstanceID", Val::Num(counter));
 }
 
 fn remap_line_type(state: &mut LuaState, line_type: f64, color: Option<(f64, f64, f64)>) -> f64 {
@@ -311,14 +295,6 @@ fn rgb_from_argb_hex(hex: &str) -> Option<(f64, f64, f64)> {
 pub(super) fn empty_tooltip(state: &mut LuaState, tooltip_type: f64) -> Val {
     let tooltip = create_table(state);
     let lines = create_table(state);
-    if uses_modern_tooltip_data() {
-        let counter = match registry_get(state, "__tooltip_data_instance_counter") {
-            Val::Num(counter) => counter + 1.0,
-            _ => 1.0,
-        };
-        registry_set(state, "__tooltip_data_instance_counter", Val::Num(counter));
-        table_set(state, tooltip, "dataInstanceID", Val::Num(counter));
-    }
     table_set(state, tooltip, "type", Val::Num(tooltip_type));
     table_set(state, tooltip, "lines", lines);
     tooltip
@@ -326,9 +302,7 @@ pub(super) fn empty_tooltip(state: &mut LuaState, tooltip_type: f64) -> Val {
 
 pub(super) fn create_identified_tooltip(state: &mut LuaState, tooltip_type: f64, id: u32) -> Val {
     let tooltip = empty_tooltip(state, tooltip_type);
-    if id != 0 || !uses_modern_tooltip_data() {
-        table_set(state, tooltip, "id", Val::Num(id as f64));
-    }
+    table_set(state, tooltip, "id", Val::Num(id as f64));
     tooltip
 }
 
@@ -640,6 +614,7 @@ pub(super) fn tooltip_for_item_info(
     item: &items::ItemInfo,
 ) -> Val {
     let tooltip = create_identified_tooltip(state, TOOLTIP_TYPE_ITEM, item_id);
+    stamp_data_instance(state, tooltip);
     populate_item_tooltip_lines(state, tooltip, item);
     tooltip
 }

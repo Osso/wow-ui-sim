@@ -2,7 +2,7 @@ use super::super::{
     LINE_TYPE_UNIT_NAME, TOOLTIP_TYPE_UNIT, WORLD_CURSOR_GUID, WORLD_LOOT_TOOLTIP_INVENTORY_TYPE,
     WORLD_LOOT_TOOLTIP_SPELL_ID,
 };
-use super::builders::{empty_tooltip, push_plain_line, push_tooltip_line};
+use super::builders::{empty_tooltip, push_plain_line, push_tooltip_line, stamp_data_instance};
 use super::spell::tooltip_for_spell_id;
 use crate::lua_api::game_data::CLASS_LABELS;
 use crate::lua_api::methods::{borrow_state, create_string, table_get, table_set};
@@ -178,6 +178,7 @@ pub(super) fn tooltip_for_unit(state: &mut LuaState, unit: &str) -> Val {
     state.push(tooltip);
     let lines = table_get(state, tooltip, "lines");
     if let Some(info) = unit_tooltip_info(state, unit) {
+        stamp_data_instance(state, tooltip);
         push_unit_tooltip_lines(state, lines, &info);
         if let Some(guid) = unit_guid(state, unit) {
             let guid = create_string(state, &guid);

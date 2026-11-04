@@ -1,7 +1,9 @@
 use super::super::{
     LINE_TYPE_SPELL_DESCRIPTION, LINE_TYPE_SPELL_NAME, TOOLTIP_TYPE_CURRENCY, TOOLTIP_TYPE_ITEM,
 };
-use super::builders::{empty_tooltip, item_quality_color, push_tooltip_line, tooltip_for_item_id};
+use super::builders::{
+    empty_tooltip, item_quality_color, push_tooltip_line, stamp_data_instance, tooltip_for_item_id,
+};
 use crate::lua_api::globals::missing_surface::item_spell::parse_prefixed_id;
 use crate::lua_api::globals::{currency_data, profession_data};
 use crate::lua_api::methods::{borrow_state, table_get, table_set, val_to_string};
@@ -94,6 +96,7 @@ pub(super) fn tooltip_for_currency(
     let saved_top = state.top;
     let tooltip = empty_tooltip(state, TOOLTIP_TYPE_CURRENCY);
     state.push(tooltip);
+    stamp_data_instance(state, tooltip);
     let lines = table_get(state, tooltip, "lines");
     let amount = amount_override.unwrap_or(currency.quantity);
     let max_display = if currency.max_quantity > 0 {
