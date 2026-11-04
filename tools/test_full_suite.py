@@ -610,7 +610,7 @@ sys.exit(runner.run(sys.argv[2], 1, sys.argv[3], "ptr"))
                          "receipt.parent.mkdir(exist_ok=True)\n"
                          "records = [{'executable': str(slot / 'integration-test'), "
                          "'target': {'name': n, 'kind': [k]}, 'profile': {'test': True}} "
-                         "for n, k in [('integration', 'test'), ('wow_ui_sim', 'lib')]]\n"
+                         "for n, k in [('integration', 'test'), ('wow_ui_sim', 'lib'), ('enum_diff_coverage', 'test')]]\n"
                          "receipt.write_text(json.dumps({'result': 'success', 'returncode': 0, "
                          "'reported_artifacts': records}))\n")
         write_executable(self.bin / 'systemctl',
@@ -635,6 +635,7 @@ sys.exit(runner.run(sys.argv[2], 1, sys.argv[3], "ptr"))
         self.assertEqual(process.returncode, 0, stderr)
         self.assertTrue(receipt.exists())
         self.assertEqual(json.loads(receipt.read_text())['status'], 'PASSED')
+        self.assertEqual(json.loads(receipt.read_text())['steps']['test:enum_diff_coverage']['exit'], 0)
         log = Path(json.loads(receipt.read_text())['log']).read_text()
         self.assertIn('cvar-before', log)
         self.assertIn('cvar-after', log)
