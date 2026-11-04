@@ -140,6 +140,8 @@ fn default_loadout_states_for_spec(active_spec_id: u32) -> HashMap<i32, TalentLo
 
 /// Talent tree interactive state.
 pub struct TalentState {
+    /// EMULATED Forever legacy grid inputs, separate from Retail trait data.
+    pub forever: crate::c_api::forever_talents::ForeverTalentState,
     /// Supplied lifetime talent-award history; false means empty host history.
     /// Native acquisition and its relationship to level/current ranks are unknown.
     pub has_earned_talent_point: bool,
@@ -203,6 +205,7 @@ impl TalentState {
         let config_states = default_loadout_states_for_spec(active_spec_id);
 
         Self {
+            forever: crate::c_api::forever_talents::ForeverTalentState::default(),
             has_earned_talent_point: false,
             spec_selection_enabled: true,
             active_spec_id,
