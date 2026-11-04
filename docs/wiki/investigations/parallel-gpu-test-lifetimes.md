@@ -14,6 +14,12 @@ Headless rendering and GPU library tests already use `headless::lock_gpu_device_
 
 This is a host loader/driver workaround. It does not skip assertions or select a different backend. Retire the serialization only after concurrent creation, use and teardown pass on the affected loader/driver stack. A creation-only lock would leave the previously observed headless teardown/encoding deadlock boundary unprotected.
 
+## Targeted proof
+
+With the shared lock, the same concurrency regression passed 50 process runs without crashes or timeouts. Five further runs of the full rendering-pipeline module and all integration helper caller modules passed (25 tests per run). Ten runs of the library headless/shader subset passed (35 tests per run, including existing opt-in GPU readbacks). The integration helper selected Vulkan on NVIDIA GeForce RTX 5060 Ti, driver 615.78.08. Library color readback independently reported the same adapter.
+
+These are targeted lane results, not full-library or release acceptance. Original CVar bytes and stat metadata were unchanged across each stress service. Compiler diagnostics contained no Rust warnings, and formatting passed.
+
 ## Sources
 
 - [Shared GPU test helper](../../../tests/common/mod.rs)
@@ -22,4 +28,4 @@ This is a host loader/driver workaround. It does not skip assertions or select a
 
 ## See Also
 
-- [[rendering]] — production rendering pipeline.
+- [[rendering-pipeline]] — production rendering pipeline.
