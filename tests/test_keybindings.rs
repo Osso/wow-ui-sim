@@ -106,6 +106,12 @@ fn seed_addon_search_paths(env: &WowLuaEnv) {
 }
 
 fn load_base_blizzard_addons(env: &WowLuaEnv) {
+    if wow_ui_sim::client_profile::ACTIVE == wow_ui_sim::client_profile::ClientProfile::WowForever {
+        // Camelot CharacterFrameConstants.lua:1 and CharacterFrame.lua:110-113
+        // require StatisticsFrame (Blizzard_Statistics.toc:2-3), a startup root.
+        common::load_game_startup_inventory(env);
+        return;
+    }
     if cfg!(feature = "client-wrath") {
         common::panel_fixtures::load_wrath_panel_core(env);
         return;
