@@ -370,6 +370,30 @@ fn guid_is_player_original_object_api_consumer_accepts_represented_player() {
 }
 
 #[test]
+fn account_guid_siblings_project_id_and_current_player_identity() {
+    let env = fresh_env();
+    env.exec(
+        r#"
+        local getID = C_AccountInfo.GetIDFromBattleNetAccountGUID
+        local related = C_AccountInfo.IsGUIDRelatedToLocalAccount
+        assert(select('#', getID('Player-1-2')) == 1 and getID('Player-1-2') == nil)
+        assert(getID('BNetAccount-0-0000002A') == 42)
+        assert(getID('BNetAccount-7-000000010000002A') == 42)
+        assert(getID('BNetAccount-') == 0 and getID('BNetAccount-foo') == 0)
+        assert(getID('BNetAccount-1X2') == 2)
+        assert(related(UnitGUID('player')) == true)
+        assert(related('Player-999-00000001') == false)
+        assert(related('BNetAccount-0-0000002A') == false)
+        for _, fn in ipairs({getID, related}) do
+            local ok, err = pcall(fn, false)
+            assert(not ok and err:find('Usage:', 1, true))
+        end
+        "#,
+    )
+    .unwrap();
+}
+
+#[test]
 fn account_guid_predicate_accepts_permissive_native_inputs() {
     let env = fresh_env();
     env.exec(
