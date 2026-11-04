@@ -138,8 +138,27 @@ pub(super) fn add_line(state: &mut LuaState) -> LuaResult<u32> {
     });
     invalidate_tooltip_line_layout(&mut sim, id);
     drop(sim);
-    let _ = sync_tooltip_line_frame(state, id, false, line_index)?;
+    show_reused_tooltip_line(state, id, false, line_index)?;
     Ok(0)
+}
+
+fn show_reused_tooltip_line(
+    state: &mut LuaState,
+    id: u64,
+    right: bool,
+    index: usize,
+) -> LuaResult<()> {
+    let line = sync_tooltip_line_frame(state, id, right, index)?;
+    if native_sizing_timing()
+        && let Some(line_id) = line
+    {
+        let mut sim = borrow_state_mut(state)?;
+        if let Some(frame) = sim.widgets.get_mut_visual(line_id) {
+            frame.visible = frame.text.as_ref().is_some_and(|text| !text.is_empty());
+        }
+        sim.widgets.mark_rect_dirty(line_id);
+    }
+    Ok(())
 }
 
 pub(super) fn add_double_line(state: &mut LuaState) -> LuaResult<u32> {
@@ -162,8 +181,8 @@ pub(super) fn add_double_line(state: &mut LuaState) -> LuaResult<u32> {
     );
     let right_segments = processing_right_line_color_segments(state, id, line_index, &args);
     push_double_tooltip_line(state, id, args, left_segments, right_segments)?;
-    let _ = sync_tooltip_line_frame(state, id, false, line_index)?;
-    let _ = sync_tooltip_line_frame(state, id, true, line_index)?;
+    show_reused_tooltip_line(state, id, false, line_index)?;
+    show_reused_tooltip_line(state, id, true, line_index)?;
 
     Ok(0)
 }
