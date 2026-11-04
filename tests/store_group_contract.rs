@@ -31,6 +31,18 @@ fn store_group_shape_survives_original_environment_cleanup() {
     }
 }
 
+#[test]
+fn store_group_restore_preserves_existing_getter() {
+    let env = WowLuaEnv::new().expect("create fresh store API environment");
+    env.exec("StoreGroupCustomGetter = function() return 47 end; C_StoreSecure.GetProductGroups = StoreGroupCustomGetter")
+        .unwrap();
+    env.restore_post_cleanup_globals();
+    let unchanged: bool = env
+        .eval("return C_StoreSecure.GetProductGroups == StoreGroupCustomGetter and C_StoreSecure.GetProductGroups() == 47")
+        .unwrap();
+    assert!(unchanged);
+}
+
 fn assert_store_group_contract(env: &WowLuaEnv) {
     let mode = match ACTIVE {
         ClientProfile::Retail | ClientProfile::Ptr => "records",

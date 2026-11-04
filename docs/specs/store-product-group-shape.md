@@ -26,7 +26,7 @@ Concrete fresh demo values above are explicit simulator policy, not claims about
 
 ## Tests asserting this spec
 
-- `tests/store_group_contract.rs`: active-profile API contract in a fresh `WowLuaEnv` and after original cached EnvironmentCleanup loading, then explicit post-load workarounds; auto-discovered by integration harness. The second post-load check was unreached in retained cleanup RED.
+- `tests/store_group_contract.rs`: active-profile API contract in a fresh `WowLuaEnv` and after original cached EnvironmentCleanup loading, then explicit post-load workarounds; a separate case checks that restoration preserves an existing getter. Auto-discovered by the integration harness. The second post-load check was unreached in retained cleanup RED.
 - `tests/fixtures/store_group_contract.lua`: shared behavioral assertions; directly executable via normal `--exec-lua` with explicit mode prefix. New numeric/zero display-type assertions are authored before changing backing; earlier group-shape passes do not cover them.
 
 ## Known gaps (current cycle)
