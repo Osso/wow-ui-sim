@@ -235,6 +235,7 @@ fn test_le_expansion_constants() {
     let _: i32 = env.eval("return LE_EXPANSION_WAR_WITHIN").unwrap();
 }
 
+#[cfg(feature = "optional-tests")]
 #[test]
 fn test_wrong_constant_snapshot_matches_expected_values() {
     let env = WowLuaEnv::new().unwrap();

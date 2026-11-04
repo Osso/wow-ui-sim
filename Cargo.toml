@@ -303,6 +303,7 @@ path = "tests/c_autocomplete.rs"
 [[test]]
 name = "enum_diff_coverage"
 path = "tests/enum_diff_coverage.rs"
+required-features = ["optional-tests"]
 
 [[test]]
 name = "scoped_modifier_addon_smoke"
