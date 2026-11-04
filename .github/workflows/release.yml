@@ -56,11 +56,6 @@ jobs:
             platform: macos
             bin-dir: target/aarch64-apple-darwin/release
             features: sound,gui,client-retail
-          - name: mists-macos-aarch64
-            os: macos-latest
-            platform: macos
-            bin-dir: target/aarch64-apple-darwin/release
-            features: sound,gui,client-mists
           - name: forever-macos-aarch64
             os: macos-latest
             platform: macos
