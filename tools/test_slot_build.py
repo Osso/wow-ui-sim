@@ -742,6 +742,45 @@ class SourceFreshnessTests(unittest.TestCase):
             capture_output=True)
         return result, json.loads(receipt.read_text())
 
+    def prime_dirty_test_executable(self):
+        tests = self.tree / "tests"
+        tests.mkdir()
+        for name in ["first.rs", "second.rs"]:
+            (tests / name).write_text("original test")
+        self.git("add", "tests")
+        self.git("commit", "-qm", "test inputs")
+        for name in ["first.rs", "second.rs"]:
+            (tests / name).write_text("uncommitted test")
+        (tests / "shared.rs").write_text("untracked shared input")
+        (self.tree / "src/main.rs").write_text("uncommitted library comment")
+        mutation = ('binary.write_bytes(b"unchanged test executable"); '
+                    'binary.with_suffix(".d").write_text(str(binary) + '
+                    '": tests/first.rs tests/second.rs tests/shared.rs\\n")')
+        result, receipt = self.run_library_step("retail", mutation=mutation, executable=True)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual(receipt["result"], "success")
+        return mutation, receipt
+
+    def test_dirty_prime_then_library_edit_accepts_identical_test_executable(self):
+        mutation, first = self.prime_dirty_test_executable()
+        (self.tree / "src/main.rs").write_text("changed library comment only")
+        result, receipt = self.run_library_step("retail", mutation=mutation, executable=True)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual(receipt["result"], "success")
+        self.assertEqual(receipt["artifacts"], first["artifacts"])
+        self.assertEqual(receipt["content_changed_paths"], ["src/main.rs"])
+
+    def test_dirty_prime_then_test_edit_rejects_identical_test_executable(self):
+        mutation, first = self.prime_dirty_test_executable()
+        verified = (self.slot / ".verified-source-identity.json").read_bytes()
+        (self.tree / "tests/first.rs").write_text("genuinely changed test")
+        result, receipt = self.run_library_step("retail", mutation=mutation, executable=True)
+        self.assertNotEqual(result.returncode, 0)
+        self.assertEqual(receipt["result"], "stale-artifacts")
+        self.assertEqual(receipt["artifacts"], first["artifacts"])
+        self.assertIn("tests/first.rs", receipt["content_changed_paths"])
+        self.assertEqual((self.slot / ".verified-source-identity.json").read_bytes(), verified)
+
     def build_directory_library(self, executable=False):
         directory = self.tree / "tests/nested"
         directory.mkdir(parents=True)
