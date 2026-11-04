@@ -1,9 +1,11 @@
 use std::path::PathBuf;
 use std::time::Duration;
 
+#[cfg(not(feature = "client-wrath"))]
 #[path = "common/token_ui_fixtures.rs"]
 mod token_ui_fixtures;
 
+#[cfg(not(feature = "client-wrath"))]
 use token_ui_fixtures::load_token_ui;
 use wow_ui_sim::loader::{discover_blizzard_addons, load_addon};
 use wow_ui_sim::lua_api::{WowLuaEnv, compute_frame_rect};
@@ -43,7 +45,14 @@ fn full_game_env_after_edit_mode_init() -> WowLuaEnv {
         state.addon_base_paths = vec![blizzard_ui_dir()];
     }
 
-    load_all_blizzard_addons(&env);
+    if wow_ui_sim::client_profile::ACTIVE == wow_ui_sim::client_profile::ClientProfile::Wrath {
+        // Wrath FrameXML.toc:96,107 loads ContainerFrame.xml and
+        // MainMenuBarBagButtons.xml before split addons. ContainerFrame.lua:56-75
+        // opens the original bag frames; no ContainerFrameSettingsManager exists.
+        crate::common::load_profile_framexml(&env);
+    } else {
+        load_all_blizzard_addons(&env);
+    }
     settle_env_after_edit_mode_init(&env);
 
     env
@@ -75,6 +84,7 @@ fn settle_env_after_edit_mode_init(env: &WowLuaEnv) {
     }
 }
 
+#[cfg(not(feature = "client-wrath"))]
 fn bag_bar_anchor(env: &WowLuaEnv) -> (String, String, String, f32, f32) {
     env.eval(
         r#"
@@ -198,6 +208,10 @@ fn assert_rect_queries_match_layout_rect(env: &WowLuaEnv, name: &str) {
     assert_rect_matches(name, "GetRect", &actual.unscaled, &expected.unscaled);
 }
 
+// Wrath FrameXML/MainMenuBarBagButtons.xml:79-90 anchors the backpack directly
+// to MainMenuBarArtFrame. BagsBar is a Mainline edit-mode frame
+// (Blizzard_MainMenuBarBagButtons/Mainline/MainMenuBarBagButtons.xml:44).
+#[cfg(not(feature = "client-wrath"))]
 #[test]
 fn bags_bar_reanchor_replay_moves_the_bar_off_its_correct_rect() {
     let env = full_game_env_after_edit_mode_init();
@@ -245,6 +259,9 @@ fn bags_bar_reanchor_replay_moves_the_bar_off_its_correct_rect() {
     assert_ne!(after_rect, before_rect);
 }
 
+// Wrath FrameXML/MainMenuBarBagButtons.xml:17-76 uses legacy ItemButtonTemplate
+// callbacks, not MainMenuBarBagManager or item-context overlays.
+#[cfg(not(feature = "client-wrath"))]
 #[test]
 fn main_menu_bag_buttons_have_correct_item_context_without_overlay_replay() {
     let env = full_game_env_after_edit_mode_init();
@@ -280,15 +297,19 @@ fn main_menu_bag_buttons_have_correct_item_context_without_overlay_replay() {
 #[test]
 fn bag_frame_rect_queries_match_render_layout_rects() {
     let env = full_game_env_after_edit_mode_init();
+    #[cfg(not(feature = "client-wrath"))]
     load_token_ui(&env);
 
-    env.exec(
-        r#"
-        local ok, err = pcall(ToggleAllBags)
-        assert(ok, tostring(err))
-        "#,
-    )
-    .unwrap();
+    // Wrath Bindings.xml:629-631 calls OpenAllBags (ContainerFrame.lua:794),
+    // not the Mainline ToggleAllBags global. Both paths open original consumers.
+    let open_bags = if wow_ui_sim::client_profile::ACTIVE
+        == wow_ui_sim::client_profile::ClientProfile::Wrath
+    {
+        "OpenAllBags()"
+    } else {
+        "ToggleAllBags()"
+    };
+    env.exec(open_bags).expect("original bag UI should open");
     env.state().borrow_mut().ensure_layout_rects();
 
     let visible_bag_frame = visible_bag_frame_name(&env);
