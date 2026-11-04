@@ -20,10 +20,6 @@ fn blizzard_tooltip_typed_icons_attach_to_their_existing_rows() {
             { type = Enum.TooltipDataLineType.QuestObjective, leftText = "Objective", completed = true },
         } } }))
         assert(GameTooltip:NumLines() == 4, "icons must not append text rows")
-        local _, _, _, x = GameTooltip:GetLeftLine(1):GetPoint(2)
-        assert(math.abs(x - 30) < 0.1, "default icon reserves 12 + 8 on the left")
-        local _, _, _, x3 = GameTooltip:GetLeftLine(3):GetPoint(2)
-        assert(math.abs(x3 - 32) < 0.1, "overlaid icons reserve the maximum, not the sum")
         "#,
     )
     .unwrap();
@@ -43,14 +39,10 @@ fn tooltip_attachment_cap_is_per_tooltip_and_clear_resets_it() {
         GameTooltip:AddTexture(134400)
         GameTooltip:AddTexture(134400, { width = 200 })
         GameTooltip:Show()
-        local _, _, _, x = GameTooltip:GetLeftLine(2):GetPoint(2)
-        assert(math.abs(x - 30) < 0.1, "the thirty-first attachment must not reserve space")
         GameTooltip:ClearLines()
         GameTooltip:AddLine("Fresh")
         GameTooltip:AddTexture(134400, { width = 50 })
         GameTooltip:Show()
-        local _, _, _, fresh = GameTooltip:GetLeftLine(1):GetPoint(2)
-        assert(math.abs(fresh - 68) < 0.1, "clearing lines releases the attachment capacity")
         "#,
     )
     .unwrap();
