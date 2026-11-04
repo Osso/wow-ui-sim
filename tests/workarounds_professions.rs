@@ -256,8 +256,19 @@ fn recipe_favorites_validate_state_and_defer_distinct_events() {
     )
     .unwrap();
     fire_one_on_update_tick(&env);
-    env.exec("assert(#favoriteEvents == 3, 'unchanged writes do not queue events')")
-        .unwrap();
+    env.exec(
+        r#"
+        assert(#favoriteEvents == 3, 'unchanged writes do not queue events')
+        C_TradeSkillUI.SetRecipeFavorite(2662, false)
+        assert(#favoriteEvents == 3, 'favorite-only notification is deferred')
+        "#,
+    )
+    .unwrap();
+    fire_one_on_update_tick(&env);
+    env.exec(
+        "assert(#favoriteEvents == 4 and favoriteEvents[4] == 'false:2662', 'favorite setter does not queue a list update')",
+    )
+    .unwrap();
 }
 
 #[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]

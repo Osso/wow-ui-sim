@@ -28,7 +28,9 @@ The API members themselves are not declared in the pinned generated docs.
   Delivery is deferred to a later update tick. Equal pending pairs coalesce;
   opposite values remain separate, in order. The favorites queue is drained
   before the separate recipe-list update marker. A favorite write does not
-  directly request a list update; a native rebuild can request one later.
+  directly request a list update; a native rebuild can request one later. The
+  simulator does not yet model that rebuild-to-list-marker link, so automatic
+  favorite-driven list refresh remains open.
 - The update-tick boundary and immediate agreement of the two read APIs are
   simulator choices. Exact native delay and display-cache timing are unknown.
   Network submission, server acceptance and account-sharing behavior are not
