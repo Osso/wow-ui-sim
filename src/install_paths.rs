@@ -341,6 +341,7 @@ mod tests {
             })
         );
 
+        file.store("wow", &entry(&stored)).unwrap();
         let resolved =
             resolve_install_path(&file, "wow", &inputs(None, None), || Some(detected.clone()));
         assert_eq!(
