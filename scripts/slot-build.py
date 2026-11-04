@@ -21,8 +21,8 @@ import tomllib
 LIVE_RECEIPT_DAYS = 7
 TARGET_ROOT = Path("/home/osso/.cache/wow-ui-sim-targets")
 SOURCE_ROOT = Path("/home/osso/.cache/wow-ui-sim-srcmount")
-# Slot 2 was retired on 2026-10-27 (user decision: three build slots).
-SLOTS = (0, 1, 3)
+# Slot 2 is retired; slots 0, 1 and 3 are general, and slot 4 is tooltip-dedicated.
+SLOTS = (0, 1, 3, 4)
 CAPACITY = "/home/osso/.worktrees/logs/capacity.sh"
 LIBRARY_SUFFIXES = {".rlib", ".rmeta", ".so", ".a", ".dll", ".dylib"}
 

@@ -121,6 +121,13 @@ class SlotBuildTests(unittest.TestCase):
              "--", "cargo", "test", "--no-run"],
         )
 
+    def test_slot_four_is_accepted_for_prune_dry_run(self):
+        with patch.object(self.module, "prune_slot") as prune:
+            self.module.main(["--slot", "4", "--prune-dry-run"])
+        self.assertEqual(prune.call_args.args[0],
+                         self.module.TARGET_ROOT / "slot-4")
+        self.assertTrue(prune.call_args.kwargs["dry_run"])
+
     def test_retired_slot_two_is_rejected_before_launch(self):
         with contextlib.redirect_stderr(io.StringIO()) as stderr, \
                 self.assertRaises(SystemExit) as exit_info:
