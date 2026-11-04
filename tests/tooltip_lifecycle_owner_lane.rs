@@ -19,6 +19,37 @@ fn tooltip_lifecycle_original_simple_tooltip_uses_bottomright_owner_anchor() {
 }
 
 #[test]
+fn tooltip_lifecycle_cursor_modes_follow_cursor_with_native_points() {
+    let env = WowLuaEnv::new().unwrap();
+    env.set_screen_size(1000.0, 800.0);
+    env.state()
+        .borrow_mut()
+        .set_mouse_position(Some((100.0, 200.0)));
+    env.exec(r#"
+        CursorOwner = CreateFrame("Frame", nil, UIParent)
+        CursorTip = CreateFrame("GameTooltip", "LifecycleCursorTip", UIParent)
+        CursorTip:SetOwner(CursorOwner, "ANCHOR_CURSOR", 7, 9)
+        local point, _, relative, x, y = CursorTip:GetPoint(1)
+        assert(point == "BOTTOM" and relative == "BOTTOMLEFT" and x == 100 and y == 600, "cursor ignores offsets")
+        CursorTip:SetOwner(CursorOwner, "ANCHOR_CURSOR_RIGHT", 7, 9)
+        point, _, relative, x, y = CursorTip:GetPoint(1)
+        assert(point == "BOTTOMLEFT" and relative == "BOTTOMLEFT" and x == 107 and y == 609, "cursor right uses offsets")
+        CursorTip:AddLine("visible")
+        CursorTip:Show()
+    "#).unwrap();
+    env.state()
+        .borrow_mut()
+        .set_mouse_position(Some((150.0, 250.0)));
+    env.exec(r#"
+        local point, _, relative, x, y = CursorTip:GetPoint(1)
+        assert(point == "BOTTOMLEFT" and relative == "BOTTOMLEFT" and x == 157 and y == 559, "cursor movement updates anchor")
+        CursorTip:SetOwner(CursorOwner, "ANCHOR_CURSOR_LEFT", -3, 4)
+        point, _, relative, x, y = CursorTip:GetPoint(1)
+        assert(point == "BOTTOMRIGHT" and relative == "BOTTOMLEFT" and x == 147 and y == 554, "cursor left uses offsets")
+    "#).unwrap();
+}
+
+#[test]
 fn tooltip_lifecycle_reownership_clears_before_assigning_new_owner() {
     let env = WowLuaEnv::new().unwrap();
     env.exec(
