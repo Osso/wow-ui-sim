@@ -591,9 +591,13 @@ fn unit_identity_is_secret(
     name: &str,
     _name_rules: bool,
 ) -> LuaResult<bool> {
-    Ok(name != "Unknown"
-        && (crate::lua_api::globals::unit_api::parse_party_index(unit).is_some()
-            || unit.strip_prefix("raid").is_some()))
+    // WM91: group membership alone does not make Forever identity secret.
+    Ok(
+        crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::WowForever
+            && name != "Unknown"
+            && (crate::lua_api::globals::unit_api::parse_party_index(unit).is_some()
+                || unit.strip_prefix("raid").is_some()),
+    )
 }
 
 fn unit_name_for(state: &mut LuaState, unit: &str) -> LuaResult<String> {
