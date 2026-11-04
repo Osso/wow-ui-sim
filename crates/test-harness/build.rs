@@ -50,8 +50,6 @@ fn optional_test_module(name: &str) -> bool {
                 | "method_diff_coverage"
                 | "mists_panel_artifact_logs"
                 | "perf_infra"
-                | "startup_perf"
-                | "talent_panel_onupdate_perf"
                 | "text_perf"
                 | "widget_registry_perf"
         )
