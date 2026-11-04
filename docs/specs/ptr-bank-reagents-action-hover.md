@@ -25,32 +25,32 @@ refer to the shared C_GameRules rule store.
 
 ### Bank reagents
 
-- [ ] Publish the global on PTR only; return exactly one Boolean and ignore extra ordinary arguments.
-- [ ] Missing shared object returns false. A present object returns true when
+- [x] Publish the global on PTR only; return exactly one Boolean and ignore extra ordinary arguments.
+- [x] Missing shared object returns false. A present object returns true when
   CraftFromBankRestricted is absent/inactive; with that rule active it returns
   the supplied object flag. Do not infer bank-open, ownership, location or CVar state.
-- [ ] Original recipe-source consumer reaches ItemUtil.lua:315 and completes
+- [x] Original recipe-source consumer reaches ItemUtil.lua:315 and completes
   its supplied source-text tooltip. Its fixture explicitly supplies a present
   object with flag false and no restrictive rule.
 
 ### Action-button visualization
 
-- [ ] Publish both namespace members on PTR only, leaving both ordinary and raw
+- [x] Publish both namespace members on PTR only, leaving both ordinary and raw
   Retail lookup nil.
-- [ ] Accept ordinary numbers and convertible numeric strings in finite
+- [x] Accept ordinary numbers and convertible numeric strings in finite
   unsigned-number domain 0–4294967295. Subtract one before truncation toward
   zero. Only converted indices 0–407 perform action work. Thus integer 0/409
   return zero values; 0.25 selects index 0 and 408.9 selects index 407.
-- [ ] Missing/nil uses the member's Usage text. Conversion/domain failure has
+- [x] Missing/nil uses the member's Usage text. Conversion/domain failure has
   `outside of expected range 0 to 4294967295 - Usage: ...`; argument access
   errors remain distinct from ordinary parser errors. Successful/unusable calls
   return no values, not a Boolean.
-- [ ] Enter updates only with ActionCombatSpellHitIndicationEnabled active,
+- [x] Enter updates only with ActionCombatSpellHitIndicationEnabled active,
   an action in the shared action bar, a supplied action record and installed
   object, unequal supplied identities and a successful visualization lookup.
   Failure of any gate preserves all local stores. Successful lookup stores the
   converted slot, supplied SpellRangeVisualization value and enabled=true.
-- [ ] Leave clears enabled and value only for a matching converted slot. It
+- [x] Leave clears enabled and value only for a matching converted slot. It
   preserves the stored slot, is not gated by rule 204 and preserves state for
   other or unusable slots.
 - [ ] Original OnEnter and OnLeave handlers execute without swallowed errors;
@@ -82,7 +82,21 @@ refer to the shared C_GameRules rule store.
 
 ## Known gaps (current cycle)
 
-- [ ] Complete requested PTR tooltip/lib and Retail tooltip proof; retain baseline failures explicitly.
+- [ ] Rule-enabled original OnEnter is blocked by missing
+  `C_ActionBar.EnableActionCombatActionRangeCheck`: original ActionButton.lua:433
+  stores it as a callback; :1492 → :570 → :942 → :403 invokes nil before Enter.
+  Its detailed native contract is UNKNOWN, pending WM93. Keep the selector
+  visibly failing; do not bypass registration, remove the texture, or add a stub.
+
+The full requested filters were enumerated and run in bounded partitions. PTR
+`tooltip_`: 522 passed, 1 failed (WM93), 1 ignored; Retail: 526 passed, 0 failed,
+1 ignored, including raw and ordinary API absence. PTR library: 2192 passed,
+4 failed, 1 ignored, and one process-exit case with no completed result. Three
+library failures match the earlier tooltip-data report's selectors (identity,
+edit-mode enum and hyperlink); the exclusive-addon-root texture failure and
+`addon_tests::tests::synchronous_tests_reset_addon_instruction_usage` exit 1 are
+additional observed results, not newly attributed regressions. No source-matched
+RED library comparison was run. These do not establish a passing PTR profile.
 
 ## Out of scope
 

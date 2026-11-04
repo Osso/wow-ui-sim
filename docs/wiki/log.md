@@ -1,3 +1,9 @@
+## [2026-11-04] investigation | PTR tooltip residue
+
+Recorded [WM92 producers and remaining consumer boundary](investigations/ptr-tooltip-residue.md).
+Kept the 70668/70493 mismatch, unknown-policy seams, discriminating direct proof,
+consumer preservation limits and visibly failing WM93 selector explicit.
+
 ## [2026-11-04] bounded proof | Tooltip data and merchant cursor
 
 [Lua API](systems/lua-api.md#tooltip-data-and-merchant-cursor-presentation) links
