@@ -168,7 +168,7 @@ fn build_result(sim: &SimState, q: &Query) -> Option<ResultRecord> {
         )?;
         (inspection.class_id, group, Some(&inspection.aura_grants))
     } else {
-        if !grid.player_present {
+        if !sim.player.present {
             return None;
         }
         let group = group_at(&grid.groups, q.group.unwrap_or(grid.current_group as i64))?;
@@ -202,7 +202,7 @@ fn build_result(sim: &SimState, q: &Query) -> Option<ResultRecord> {
     let current = grid.groups.get(grid.current_group);
     let known = current.is_some_and(|g| g.selected_ids.contains(&row.id));
     let available = selected
-        || (grid.player_present
+        || (sim.player.present
             && !granted
             && current.is_some_and(|g| {
                 g.tier_mask & (1 << row.tier_id) == 0

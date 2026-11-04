@@ -51,8 +51,6 @@ pub struct LevelAllowance {
 
 #[derive(Clone, Debug, Default)]
 pub struct ForeverTalentState {
-    /// Whether this supplied snapshot has a normal player.
-    pub player_present: bool,
     pub rows: Vec<TalentRow>,
     pub spell_names: HashMap<u32, String>,
     pub spell_icons: HashMap<u32, SpellIcons>,
