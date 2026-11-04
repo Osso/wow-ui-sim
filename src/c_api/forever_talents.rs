@@ -62,6 +62,7 @@ pub struct LoadedTraitConfig {
 pub struct ForeverTalentState {
     /// Explicit loaded configurations; an unseeded collection has no match.
     pub loaded_configs: Vec<LoadedTraitConfig>,
+    pub group_display: crate::c_api::trait_group_display::GroupDisplayState,
     pub rows: Vec<TalentRow>,
     pub spell_names: HashMap<u32, String>,
     pub spell_icons: HashMap<u32, SpellIcons>,
