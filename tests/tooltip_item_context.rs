@@ -65,7 +65,12 @@ const ASSERTIONS: &str = r#"
         end
         assert(type(a) == type(b), 'DTO value type')
         if type(a) ~= 'table' then assert(a == b, 'DTO scalar'); return end
-        for k,v in pairs(a) do ITEqual(v,b[k]) end
+        for k,v in pairs(a) do
+            -- D56: every builder publication draws a fresh dataInstanceID.
+            if k == 'dataInstanceID' then
+                assert(type(v) == 'number' and type(b[k]) == 'number', 'D56 builder instance')
+            else ITEqual(v,b[k]) end
+        end
         for k in pairs(b) do assert(a[k] ~= nil, 'no extra DTO fields') end
     end
     function ITPublic(value)

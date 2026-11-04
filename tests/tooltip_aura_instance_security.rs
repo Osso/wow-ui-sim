@@ -94,7 +94,12 @@ const ASSERTIONS: &str = r#"
             assert(left == right, 'same public scalar')
             return
         end
-        for key, value in pairs(left) do ATEqual(value, right[key]) end
+        for key, value in pairs(left) do
+            -- D56: every builder publication draws a fresh dataInstanceID.
+            if key == 'dataInstanceID' then
+                assert(type(value) == 'number' and type(right[key]) == 'number', 'D56 builder instance')
+            else ATEqual(value, right[key]) end
+        end
         for key, value in pairs(right) do
             assert(left[key] ~= nil, 'no additional DTO field')
         end
@@ -105,12 +110,15 @@ const ASSERTIONS: &str = r#"
         assert(type(data) == 'table' and type(data.lines) == 'table')
         assert(data.type == Enum.TooltipDataType.UnitAura)
         ATPublic(data)
+        -- D56: builder initialization adds dataInstanceID; line-empty misses keep the prior shape.
+        local populated = next(data.lines) ~= nil
         local fields = 0
-        for key in pairs(data) do
-            assert(key == 'type' or key == 'lines', 'preserved top-level DTO; no ID/width change')
+        for key, value in pairs(data) do
+            assert(key == 'type' or key == 'lines'
+                or (populated and key == 'dataInstanceID' and type(value) == 'number'), 'preserved top-level DTO; no ID/width change')
             fields = fields + 1
         end
-        assert(fields == 2)
+        assert(fields == (populated and 3 or 2))
         return data
     end
     function ATCheck(id, name, ...)

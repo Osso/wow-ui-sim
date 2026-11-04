@@ -88,12 +88,15 @@ const ASSERTIONS: &str = r#"
         local data = ...
         assert(type(data) == 'table' and type(data.lines) == 'table')
         assert(data.type == Enum.TooltipDataType.UnitAura)
+        -- D56: builder initialization adds dataInstanceID; line-empty misses keep the prior shape.
+        local populated = next(data.lines) ~= nil
         local count = 0
-        for key in pairs(data) do
-            assert(key == 'type' or key == 'lines', 'current emptyTooltip shape')
+        for key, value in pairs(data) do
+            assert(key == 'type' or key == 'lines'
+                or (populated and key == 'dataInstanceID' and type(value) == 'number'), 'current emptyTooltip shape')
             count = count + 1
         end
-        assert(count == 2)
+        assert(count == (populated and 3 or 2))
         UBPublic(data)
         return data
     end

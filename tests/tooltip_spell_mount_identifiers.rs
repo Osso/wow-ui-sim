@@ -71,6 +71,11 @@ fn fixture_env() -> WowLuaEnv {
         end
         function TMEqual(left, right, path, linePosition)
             path = path or 'TooltipData'
+            if path == 'TooltipData.dataInstanceID' then
+                -- D56: every builder publication draws a fresh dataInstanceID.
+                assert(type(left) == 'number' and type(right) == 'number', path .. ': D56 builder instance')
+                return
+            end
             local leftColor = TMColorComponents(left, path .. '.query')
             local rightColor = TMColorComponents(right, path .. '.actual')
             if leftColor or rightColor then
