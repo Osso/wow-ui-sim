@@ -3397,3 +3397,8 @@ Added [static classification and provenance](systems/area-poi-timed.md).
 
 Linked [bag-child selection](../specs/tooltip-bag-child.md), generated catalog
 inclusion and pinned-data miss limits from the Lua API system page and index.
+
+## 2026-11-04 — Modified-appearance item tooltip
+
+Linked [appearance selection](../specs/tooltip-appearance-item.md), the original
+dress-up hover and the shared UNKNOWN failure seam from the system page and index.

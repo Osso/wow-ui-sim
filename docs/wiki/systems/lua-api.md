@@ -11,6 +11,10 @@ source-derived child-equipment rows and the existing item builder on
 Retail/PTR/Forever. The item generator includes child IDs automatically; absent
 pinned ItemSparse rows remain explicit catalog misses. Native selector parity
 and miss arity are not claimed.
+[Modified-appearance tooltips](../../specs/tooltip-appearance-item.md) reuse the
+existing Retail/PTR source model and shared item-link parser. Forever model
+promotion is separate. New missing-source paths use one named UNKNOWN seam with
+an explicit zero-return simulator policy, not asserted native arity.
 
 Retail/PTR supplied loot and buyback slots feed the existing item tooltip builder.
 [The getter contract](../../specs/tooltip-loot-buyback.md) records the emulated

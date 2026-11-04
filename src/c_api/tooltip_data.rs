@@ -10,6 +10,13 @@ use rilua::{Val, vm::state::LuaState};
 #[path = "tooltip_data_tests.rs"]
 mod tests;
 
+/// UNKNOWN native protected-failure arity (WM94).
+/// EMULATED simulator policy: publish no Lua values, never fabricate line data.
+/// Getters opt into this shared seam; it does not rewrite existing miss contracts.
+pub(crate) fn unknown_getter_failure() -> rilua::LuaResult<u32> {
+    Ok(0)
+}
+
 pub(crate) fn enabled() -> bool {
     matches!(
         crate::client_profile::ACTIVE,

@@ -51,7 +51,8 @@ fn tooltip_appearance_item_original_hover_reads_current_source_item() {
             DressUpFrameTransmogSetButtonMixin.OnLeave(button)
             assert(not GameTooltip:IsShown())
         end
-        assert(C_TooltipInfo.GetItemByItemModifiedAppearanceID(999999999) == nil)
+        assert(select('#', C_TooltipInfo.GetItemByItemModifiedAppearanceID(999999999)) == 0,
+            'UNKNOWN failure seam uses explicit zero-return simulator policy')
         "#,
     )
     .unwrap();

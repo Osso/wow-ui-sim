@@ -31,8 +31,7 @@ fn get_bag_item_child(state: &mut LuaState) -> LuaResult<u32> {
     };
     let item = child_id.and_then(|id| crate::items::get_item(id).map(|item| (id, item)));
     let Some((id, item)) = item else {
-        // EMULATED: MayReturnNothing permits a miss, but native result arity is unknown.
-        return Ok(0);
+        return crate::c_api::tooltip_data::unknown_getter_failure();
     };
     let tooltip = tooltip_for_item_context(state, id, Some(item));
     state.push(tooltip);

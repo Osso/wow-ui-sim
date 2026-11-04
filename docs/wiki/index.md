@@ -1,3 +1,9 @@
+## [2026-11-04] implementation | Modified-appearance item tooltip
+
+[Tooltip data](systems/lua-api.md#tooltip-data-and-merchant-cursor-presentation)
+links the Retail/PTR source-model lookup, original dress-up hover proof and
+shared UNKNOWN failure seam. Forever remains a separate follow-up.
+
 ## [2026-11-04] implementation | Bag-child tooltip selection
 
 [Tooltip data](systems/lua-api.md#tooltip-data-and-merchant-cursor-presentation)
