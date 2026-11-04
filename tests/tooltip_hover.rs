@@ -13,6 +13,73 @@ use wow_ui_sim::lua_api::WowLuaEnv;
 
 #[cfg(any(feature = "client-retail", feature = "client-ptr"))]
 #[test]
+fn blizzard_tooltip_process_info_rejects_empty_or_ownerless_show() {
+    let env = setup_full_env();
+    env.exec(
+        r#"
+        GameTooltip:SetOwner(UIParent, "ANCHOR_NONE")
+        assert(GameTooltip:ProcessInfo({ tooltipData = { lines = {
+            { leftText = "Previous content" },
+        } } }))
+        assert(GameTooltip:IsShown())
+        local width, height = GameTooltip:GetSize()
+        assert(GameTooltip:ProcessInfo({ tooltipData = { lines = {} } }))
+        assert(not GameTooltip:IsShown(), "empty ProcessInfo must hide the tooltip")
+        assert(GameTooltip:GetOwner() == nil, "rejected Show must release its owner")
+        assert(GameTooltip:GetWidth() == width and GameTooltip:GetHeight() == height,
+            "rejected Show must retain the previous dimensions")
+
+        GameTooltip:SetAllowShowWithNoLines(true)
+        assert(GameTooltip:ProcessInfo({ tooltipData = { lines = {
+            { leftText = "Ownerless content" },
+        } } }))
+        assert(not GameTooltip:IsShown(), "allow-empty does not permit ownerless Show")
+        assert(GameTooltip:NumLines() == 0, "ownerless Show must clear pending lines")
+
+        GameTooltip:SetOwner(UIParent, "ANCHOR_NONE")
+        assert(GameTooltip:ProcessInfo({ tooltipData = { lines = {} } }))
+        assert(GameTooltip:IsShown(), "owned allow-empty ProcessInfo must show")
+        assert(GameTooltip:GetOwner() == UIParent)
+        assert(math.abs(GameTooltip:GetWidth() - 20.48) < 0.01)
+        assert(math.abs(GameTooltip:GetHeight() - 20.48) < 0.01)
+        "#,
+    )
+    .expect("WM63 L4 rejected Show must use Hide, not resize empty content");
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
+#[test]
+fn blizzard_backpack_tooltip_append_text_updates_pooled_title() {
+    let env = setup_full_env();
+    let addons = wow_ui_sim::paths::default_blizzard_ui_addons_path().unwrap();
+    wow_ui_sim::loader::load_addon(
+        &env.loader_env(),
+        &addons.join("Blizzard_MainMenuBarBagButtons/Blizzard_MainMenuBarBagButtons_Mainline.toc"),
+    )
+    .unwrap();
+    env.exec(
+        r#"
+        assert(not KeybindFrames_InQuickKeybindMode())
+        for _, binding in ipairs({ "CTRL-F8", "ALT-F9" }) do
+            GameTooltip:Hide()
+            assert(SetBinding(binding, "TOGGLEBACKPACK"))
+            MainMenuBarBackpackButton:OnEnterInternal()
+            local key = GetBindingText(GetBindingKey("TOGGLEBACKPACK"))
+            local title = BACKPACK_TOOLTIP .. NORMAL_FONT_COLOR:WrapTextInColorCode(" (" .. key .. ")")
+            assert(GameTooltip:IsShown())
+            assert(GameTooltip:NumLines() == 2)
+            assert(GameTooltip:GetLeftLine(1):GetText() == title,
+                "backpack title FontString lost the appended binding")
+            assert(GameTooltip:GetLeftLine(2):GetText() == NUM_FREE_SLOTS:format(MainMenuBarBackpackButton.freeSlots or 0))
+            assert(SetBinding(binding))
+        end
+        "#,
+    )
+    .expect("original backpack OnEnter must publish the appended title to its FontString");
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
+#[test]
 fn customization_tooltip_places_first_text_at_native_padding_anchor() {
     use iced::{Point, Rectangle, Size};
     use wow_ui_sim::iced_app::tooltip::{TooltipRender, build_tooltip_quads, collect_tooltip_data};
