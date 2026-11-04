@@ -56,9 +56,39 @@ class IntegrationShardingTests(unittest.TestCase):
             self.runner.confirm_terminated = lambda *args: None
             step, _ = self.runner.run_integration_shards(
                 [str(launcher), '--unit=fixture', '--', str(binary)], root,
-                io.StringIO(), dict(os.environ), {}, 2)
+                io.StringIO(), dict(os.environ), {}, 2, ())
             self.assertEqual(step['exit'], 0)
             self.assertEqual(step['tests'], 3)
+
+    def test_timeout_waiters_cannot_occupy_every_ordinary_worker(self):
+        import io
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            binary = root / 'test-binary'
+            guarded = ['guarded::a', 'guarded::b', 'guarded::c', 'guarded::d']
+            write_executable(binary,
+                "import pathlib, sys, time\n"
+                "marker = pathlib.Path(__file__).with_name('ordinary-ran')\n"
+                "if '--list' in sys.argv:\n"
+                "    print('guarded::a: test\\nguarded::b: test\\nguarded::c: test\\nguarded::d: test\\nordinary::a: test')\n"
+                "    sys.exit(0)\n"
+                "for name in sys.argv[sys.argv.index('--exact') + 1:]:\n"
+                "    if name.startswith('guarded::'):\n"
+                "        deadline = time.monotonic() + 1\n"
+                "        while not marker.exists() and time.monotonic() < deadline: time.sleep(.01)\n"
+                "        assert marker.exists(), 'all workers waited for timeout capacity'\n"
+                "    else: marker.touch()\n")
+            launcher = root / 'systemd-run'
+            write_executable(launcher,
+                "import subprocess, sys\n"
+                "sys.exit(subprocess.call(sys.argv[sys.argv.index('--') + 1:]))\n")
+            self.runner.confirm_terminated = lambda *args: None
+            step, _ = self.runner.run_integration_shards(
+                [str(launcher), '--unit=fixture', '--', str(binary)], root,
+                io.StringIO(), dict(os.environ), {name: 100 for name in guarded}, 3, guarded)
+            self.assertEqual(step['exit'], 0)
+            self.assertEqual(step['tests'], 5)
+            self.assertEqual(len(step['shards']), 3)
 
     def test_stable_shards_execute_exact_names_and_report_failures(self):
         import io
@@ -85,7 +115,7 @@ class IntegrationShardingTests(unittest.TestCase):
             command = [str(launcher), '--unit=fixture', '--', str(binary)]
             log = io.StringIO()
             step, output = self.runner.run_integration_shards(
-                command, root, log, dict(os.environ), {}, 3)
+                command, root, log, dict(os.environ), {}, 3, ())
             selected = [name for path in root.glob('selected-*') for name in json.loads(path.read_text())]
             self.assertEqual(sorted(selected), ['alpha::a', 'alpha::ab', 'beta::bad', 'beta::ignored'])
             self.assertEqual(step['exit'], 1)
