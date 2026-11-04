@@ -3346,3 +3346,7 @@ release to the frame that received the press and clear the held button state.
 Documented wheel targeting and native Slider drag behavior for RestedXP and
 EllesmereUI.
 [Hit testing](investigations/hit-testing.md#forever-scroll-controls)
+
+## 2026-11-03 — Timed area POI classification
+
+Added [static classification and provenance](systems/area-poi-timed.md).

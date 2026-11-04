@@ -29,6 +29,10 @@ independently of UI pins. Native selection limits remain in the
 [Client profiles](systems/client-profiles.md#runtime-cache) describe the 70707
 manifest and Gethe line-ending recovery verified against the selected CASC key.
 
+## [2026-11-03] system | Timed area POI data
+
+[Timed area POI data](systems/area-poi-timed.md) describes the static classification, export provenance and native evidence limits.
+
 ## [2026-11-03] system | Binary addon encoding
 
 [Binary encoding](systems/binary-encoding.md) describes Base64, compression
