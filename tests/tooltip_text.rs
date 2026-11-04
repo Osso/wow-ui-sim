@@ -398,13 +398,25 @@ fn test_wrapped_line_does_not_expand_width() {
     let gt_id = state.widgets.get_id_by_name("GameTooltip").unwrap();
     let frame = state.widgets.get(gt_id).unwrap();
 
-    // Width should be determined by the short line, not the long wrapped one.
-    // "Short" at 14px ~ 40-60px + 24px padding = ~64-84px total.
-    assert!(
-        frame.width < 200.0,
-        "Tooltip width should be small (non-wrapping lines only), got {}",
-        frame.width
-    );
+    if matches!(
+        wow_ui_sim::client_profile::ACTIVE,
+        wow_ui_sim::client_profile::ClientProfile::Retail
+            | wow_ui_sim::client_profile::ClientProfile::Ptr
+    ) {
+        // WM63 L23:16-22: wrapped text contributes up to the default 230.4 cap.
+        let content_width = frame.width - 20.48;
+        let line_id = state.tooltips[&gt_id].left_line_ids[1];
+        let line_width = state.widgets.get(line_id).unwrap().width;
+        assert!(content_width > 150.0 && content_width <= 230.4);
+        assert!((line_width - content_width).abs() < 0.01);
+    } else {
+        // Legacy profiles retain the non-wrapped width rule.
+        assert!(
+            frame.width < 200.0,
+            "Tooltip width should be small (non-wrapping lines only), got {}",
+            frame.width
+        );
+    }
 }
 
 #[test]
