@@ -1,45 +1,28 @@
 # Tooltip Layout Timing
 
-Tooltip text and background were out of sync for one frame because tooltip sizing ran after layout had already been resolved.
+Retail/PTR tooltip content sizing runs synchronously at native operation boundaries, not during rendering. The [contract](../../specs/tooltip-layout-timing.md) separates WM63/WM95 native evidence from emulated text limits.
 
-## Root Cause
+## Current boundaries
 
-`update_tooltip_sizes()` computes tooltip width/height from `SimState.tooltips` and then mutates the tooltip frame. Its own doc comment says it "must be called before layout computation so anchors resolve with correct dimensions" (`src/iced_app/tooltip.rs:58-61`).
+- Line insertion, minimum width, wrapping and spacing setters store changes without resizing. `Show` and padding changes measure the current FontStrings before returning.
+- `Show` without an owner, or with no rows unless allow-empty is enabled, runs tooltip hiding instead. The original `TooltipDataHandlerMixin:ProcessInfo` flow exposed a missing rejection: an empty DTO left the tooltip shown. The shared visibility path now clears and releases ownership without sizing rejected content.
+- `AppendText` targets the first pooled left FontString's current text, not the last stored row. Its prior DTO-only update disagreed with glyph measurement, which reads pooled text. The producer now updates both representations before layout. A two-row original `ProcessInfo` fixture rejects the old implementation; the backpack hover is preservation coverage.
 
-The live render path does the opposite:
+## Evidence limits
 
-- `resolve_layout_and_buckets()` calls `ensure_layout_rects()` first
-- then calls `update_tooltip_sizes()`
-- then builds strata buckets and renders
+WM63 L4/L23 and WM95 establish bounded Retail 70688 static semantics, not full rendered-client parity. PTR uses the same modeled widget behavior. The UTF-8-safe 255-byte append cap is an explicit emulated seam. Native default font metrics, final cursor clamping, owner auto-hide and complete secret-aspect propagation remain unknown.
 
-That means the current frame uses the old `layout_rect` when the tooltip content changed. `build_render_list()` then prefers the stale cached `layout_rect` instead of recomputing it, so the tooltip background and text stay on the previous size for one frame.
-
-## What Is Not The Main Issue
-
-- `collect_tooltip_data()` is fresh. It only copies line text/colors/alpha from `state.tooltips`.
-- The mismatch is not primarily a stale tooltip-data copy problem.
-- Separate `FontString` children exist for `GetLeftLine()` / `GetRightLine()`, but they are API-facing handles, not the source of this timing bug.
-
-## Evidence
-
-- `src/iced_app/render.rs:460-474` calls layout before tooltip sizing.
-- `src/iced_app/tooltip.rs:58-87` mutates frame size and marks rect dirty.
-- `src/iced_app/strata_emit.rs:145-165` renders from cached `layout_rect` when present.
-- `src/iced_app/render/rebuild.rs:31-63` can also reuse cached strata quads, so stale geometry can persist until a dirty rebuild happens.
-
-## Likely Fix Shape
-
-Move tooltip sizing ahead of layout resolution, or run a second layout pass after sizing. That keeps the tooltip's measured box, anchors, and render bounds in the same frame.
+The historical one-frame render-order investigation predates this operation-boundary model. Moving sizing into each render would now violate the Retail/PTR timing contract.
 
 ## Sources
 
-- [tooltip.rs](../../../src/iced_app/tooltip.rs)
-- [render.rs](../../../src/iced_app/render.rs)
-- [strata_emit.rs](../../../src/iced_app/strata_emit.rs)
-- [render/rebuild.rs](../../../src/iced_app/render/rebuild.rs)
-- [widgets/tooltip.rs](../../../src/lua_api/frame/methods/widgets/tooltip.rs)
+- [Timing and append contract](../../specs/tooltip-layout-timing.md)
+- [Visibility transitions](../../../src/lua_api/frame/methods/core_state/visibility.rs)
+- [Tooltip line methods](../../../src/lua_api/frame/methods/widgets/tooltip/line_data.rs)
+- [Glyph measurement](../../../src/iced_app/tooltip.rs)
+- [Original-consumer regression tests](../../../tests/tooltip_hover.rs)
 
 ## See Also
 
-- [[tooltip-alignment]] — text inset math inside the tooltip shell
-- [[tooltip-double-shell]] — duplicate chrome issue in the tooltip render path
+- [[tooltip-owner-lifecycle]] — historical Wrath lifecycle evidence, separate from this Retail/PTR slice
+- [[lua-api]] — widget API boundary

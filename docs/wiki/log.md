@@ -1,3 +1,7 @@
+## [2026-11-04] investigation | Tooltip widget sizing boundaries
+
+Updated [tooltip layout timing](investigations/tooltip-layout-timing.md) with rejected empty/ownerless Show, first-title pooled text synchronization and the explicit UTF-8 append-cap seam. Original ProcessInfo tests distinguish these failures from backpack preservation coverage; final integration proof remains separate.
+
 ## [2026-11-04] investigation | PTR Edit Mode preset fixtures
 
 Recorded the [seven-failure reconciliation](investigations/editmode-layout.md#ptr-preset-and-startup-fixture-reconciliation--2026-11-04): five preset-count fixtures, one cast-bar Show lifecycle fixture and one missing declared quest query. Linked current contracts, native limits and bounded PTR/Retail proof.
