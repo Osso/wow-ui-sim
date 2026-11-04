@@ -15,8 +15,10 @@ import sys
 import time
 from contextlib import nullcontext
 
-TEST_LINE = re.compile(
-    r"^test (?P<name>[^ ]+?)(?: - [^\n]*)? \.\.\.(?: (?P<status>ok|ignored|FAILED)(?:,.*)?)?$")
+# A case may print its own text after "...", so the status can arrive on a
+# separate line; both forms are accepted.
+TEST_LINE = re.compile(r"^test (?P<name>[^ ]+?)(?: - [^\n]*)? \.\.\.(?P<rest>.*)$")
+LEADING_STATUS = re.compile(r"^(ok|ignored|FAILED)\b")
 STATUS_WORD = re.compile(r"^(ok|ignored|FAILED)$")
 SUMMARY = re.compile(r"^test result: (?:ok|FAILED)\. (\d+) passed; (\d+) failed; (\d+) ignored", re.M)
 
@@ -104,9 +106,10 @@ def run_bulk(manifest, peak):
         stripped = line.strip()
         match = TEST_LINE.match(stripped)
         if match and match.group("name") in wanted:
-            if match.group("status"):
+            status = LEADING_STATUS.match(match.group("rest").strip())
+            if status:
                 finished.append((match.group("name"), time.monotonic() - started,
-                                 match.group("status")))
+                                 status.group(1)))
                 pending = None
             else:
                 pending = match.group("name")

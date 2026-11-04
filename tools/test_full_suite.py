@@ -51,6 +51,32 @@ class IntegrationMetricsTests(unittest.TestCase):
             self.assertGreater(records['good']['cpu_seconds'], 0)
             self.assertIn('test good ... ok', process.stdout)
 
+    def test_case_written_output_and_ignored_reason_keep_their_outcomes(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            binary = root / 'native'
+            write_executable(binary,
+                "import sys\n"
+                "names = sys.argv[sys.argv.index('--exact') + 1:]\n"
+                "for name in names:\n"
+                "    if name == 'noisy':\n"
+                "        print('test ' + name + ' ... OK:5')\n"
+                "        print('ok', flush=True)\n"
+                "    elif name == 'skipped':\n"
+                "        print('test ' + name + ' ... ignored, not implemented', flush=True)\n"
+                "    else:\n"
+                "        print('test ' + name + ' ... ok', flush=True)\n")
+            result = root / 'result.json'
+            path = root / 'manifest.json'
+            path.write_text(json.dumps({'binary': str(binary), 'names': ['noisy', 'skipped', 'plain'],
+                                        'result': str(result), 'measure_memory': False}))
+            process = subprocess.run([sys.executable, str(RUNNER.with_name('full_suite_worker.py')),
+                                       str(path)], capture_output=True, text=True, timeout=20)
+            self.assertEqual(process.returncode, 0, process.stderr)
+            records = {record['name']: record['status']
+                       for record in json.loads(result.read_text())['records']}
+            self.assertEqual(records, {'noisy': 'passed', 'skipped': 'ignored', 'plain': 'passed'})
+
     def test_isolated_name_records_its_own_cpu_and_memory_peak(self):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
