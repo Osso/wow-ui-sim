@@ -165,6 +165,10 @@ fn setup_env() -> common::LockedEnv {
             // initializes the target unit and registers PLAYER_TARGET_CHANGED.
             // TargetFrame.lua:94-101 implements the visibility tested below.
             common::load_profile_framexml(&env);
+            // Wrath Bindings.xml:455-457 calls TargetNearestEnemy(), unlike the
+            // simulator's synthetic enemy1 binding. Supply a selectable enemy.
+            env.exec("A_Admin.SetEnemyPool({name='Targeting fixture enemy', level=11, class_index=1})")
+                .expect("seed the native nearest-enemy binding fixture");
         } else {
             for name in BLIZZARD_ADDONS {
                 if *name == "Blizzard_UnitFrame" {

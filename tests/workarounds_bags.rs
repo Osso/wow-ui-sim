@@ -300,13 +300,16 @@ fn bag_frame_rect_queries_match_render_layout_rects() {
     #[cfg(not(feature = "client-wrath"))]
     load_token_ui(&env);
 
-    env.exec(
-        r#"
-        local ok, err = pcall(ToggleAllBags)
-        assert(ok, tostring(err))
-        "#,
-    )
-    .unwrap();
+    // Wrath Bindings.xml:629-631 calls OpenAllBags (ContainerFrame.lua:794),
+    // not the Mainline ToggleAllBags global. Both paths open original consumers.
+    let open_bags = if wow_ui_sim::client_profile::ACTIVE
+        == wow_ui_sim::client_profile::ClientProfile::Wrath
+    {
+        "OpenAllBags()"
+    } else {
+        "ToggleAllBags()"
+    };
+    env.exec(open_bags).expect("original bag UI should open");
     env.state().borrow_mut().ensure_layout_rects();
 
     let visible_bag_frame = visible_bag_frame_name(&env);
