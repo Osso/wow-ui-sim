@@ -6,6 +6,9 @@ use crate::lua_bridge::{stack_val, table_set_rust_fn_static};
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val, runtime_error};
 
+#[path = "recipe_day_cooldown_data.rs"]
+mod day_cooldown_data;
+
 pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
     if crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Retail
         || !cfg!(feature = "retail-12-1-5")
@@ -68,9 +71,12 @@ fn charge_end(start: f64, duration: f64, now: u32) -> u32 {
     }
 }
 
-fn is_day_cooldown() -> bool {
-    // UNKNOWN: category flag 8 is not yet supplied; false is an EMULATED default.
-    false
+fn is_day_cooldown(recipe_id: i32) -> bool {
+    u32::try_from(recipe_id).ok().is_some_and(|id| {
+        day_cooldown_data::DAY_COOLDOWN_SPELLS
+            .binary_search(&id)
+            .is_ok()
+    })
 }
 
 fn get_recipe_cooldown(state: &mut LuaState) -> LuaResult<u32> {
@@ -106,7 +112,7 @@ fn get_recipe_cooldown(state: &mut LuaState) -> LuaResult<u32> {
         (remaining, charges, maximum)
     };
     state.push(remaining.map_or(Val::Nil, Val::Num));
-    state.push(Val::Bool(is_day_cooldown()));
+    state.push(Val::Bool(is_day_cooldown(id)));
     state.push(Val::Num(f64::from(charges)));
     state.push(Val::Num(f64::from(maximum)));
     Ok(4)
