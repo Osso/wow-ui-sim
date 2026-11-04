@@ -46,7 +46,7 @@ fn full_game_env_after_edit_mode_init() -> WowLuaEnv {
     }
 
     if wow_ui_sim::client_profile::ACTIVE == wow_ui_sim::client_profile::ClientProfile::Wrath {
-        // Wrath FrameXML.toc:105-107 loads ContainerFrame.xml and
+        // Wrath FrameXML.toc:96,107 loads ContainerFrame.xml and
         // MainMenuBarBagButtons.xml before split addons. ContainerFrame.lua:56-75
         // opens the original bag frames; no ContainerFrameSettingsManager exists.
         crate::common::load_profile_framexml(&env);
