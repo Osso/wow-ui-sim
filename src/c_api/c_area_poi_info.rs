@@ -17,7 +17,10 @@ use crate::lua_api::methods::{
 };
 use crate::lua_bridge::{FromStack, stack_val, table_set_rust_fn_static};
 use rilua::vm::state::LuaState;
-use rilua::{LuaResult, Val};
+use rilua::{LuaResult, Val, runtime_error};
+
+#[path = "area_poi_timed_data.rs"]
+mod timed_data;
 
 /// Minimal area-POI metadata keyed by area poi id in
 /// `SimState.area_pois`. Drives `C_AreaPoiInfo.GetAreaPOIInfo` and
@@ -70,7 +73,31 @@ pub(crate) fn register_area_poi_surface(state: &mut LuaState) -> LuaResult<()> {
         "GetAreaPOIForMap",
         c_area_poi_info_get_area_poi_for_map,
     )?;
+    if matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail | crate::client_profile::ClientProfile::Ptr
+    ) {
+        table_set_rust_fn_static(state, table_ref, "IsAreaPOITimed", is_area_poi_timed)?;
+    }
     Ok(())
+}
+
+fn is_area_poi_timed(state: &mut LuaState) -> LuaResult<u32> {
+    let value = match stack_val(state, 1) {
+        Val::Num(number) => Some(number),
+        Val::Str(_) => String::from_stack(state, 1)?.trim().parse::<f64>().ok(),
+        _ => None,
+    };
+    let number = value.filter(|n| n.is_finite() && *n >= i32::MIN as f64 && *n <= i32::MAX as f64)
+        .ok_or_else(|| runtime_error("bad argument #1 to 'IsAreaPOITimed' (outside of expected range -2147483648 to 2147483647); Usage: local isTimed, hideTimerInTooltip = C_AreaPoiInfo.IsAreaPOITimed(areaPoiID)"))?;
+    let poi_id = number as i32;
+    let hidden = timed_data::TIMED_AREA_POIS
+        .binary_search_by_key(&poi_id, |entry| entry.0)
+        .ok()
+        .map(|index| timed_data::TIMED_AREA_POIS[index].1);
+    state.push(Val::Bool(hidden.is_some()));
+    state.push(hidden.map_or(Val::Nil, Val::Bool));
+    Ok(2)
 }
 
 fn c_area_poi_info_get_area_poi_info(state: &mut LuaState) -> LuaResult<u32> {
