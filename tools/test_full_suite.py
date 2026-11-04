@@ -81,6 +81,18 @@ class CertifiedSuiteTests(unittest.TestCase):
                          "print('guard rejected: owner mismatch', file=sys.stderr)\n"
                          "sys.exit(1)\n")
 
+    def test_optional_feature_is_forwarded_to_build(self):
+        process = subprocess.run(
+            [sys.executable, str(RUNNER), 'run', self.sha, '--profile', 'ptr',
+             '--target-dir', str(self.slot), '--optional'],
+            env=self.env, capture_output=True, text=True, timeout=10,
+        )
+        self.assertNotEqual(process.returncode, 0)
+        argv = json.loads((self.home / 'slot-argv.json').read_text())
+        self.assertIn('sound,gui,casc,client-ptr', argv)
+        self.assertIn('optional-tests', argv)
+        self.assertEqual(argv[argv.index('optional-tests') - 1], '--features')
+
     def status_output(self, ref=None):
         command = [sys.executable, str(RUNNER), 'status']
         if ref:

@@ -125,17 +125,19 @@ def confirm_terminated(unit, slot):
     return fields
 
 
-def build(checkout, target, sha, profile, jobs, owner, log):
+def build(checkout, target, sha, profile, jobs, owner, log, optional=False):
     slot = target.name.removeprefix("slot-")
     unit = f"full-suite-build-{sha[:12]}-{profile}-{time.time_ns()}"
     try:
-        return build_unit(checkout, target, profile, jobs, owner, log, unit, slot)
+        return build_unit(checkout, target, profile, jobs, owner, log, unit, slot, optional)
     finally:
         confirm_terminated(unit, slot)
 
 
-def build_unit(checkout, target, profile, jobs, owner, log, unit, slot):
+def build_unit(checkout, target, profile, jobs, owner, log, unit, slot, optional=False):
     features = [] if profile == "retail" else ["--no-default-features", "--features", f"sound,gui,casc,client-{profile}"]
+    if optional:
+        features += ["--features", "optional-tests"]
     cmd = ["slot-build.py", "--worktree", str(checkout), "--slot", slot, "--unit", unit,
            "--owner", owner, "--capacity-id", unit, "--", "cargo", "test", "--no-run",
            "--all-targets", "--locked", "--offline", "--message-format=json", f"-j{jobs}", *features]
@@ -277,7 +279,7 @@ def promote_result(canonical, baseline, result):
             path.unlink(missing_ok=True)
 
 
-def run(ref, build_jobs, target_dir, profile="retail"):
+def run(ref, build_jobs, target_dir, profile="retail", optional=False):
     target_dir = validate_target_dir(target_dir)
     RESULTS.mkdir(parents=True, exist_ok=True)
     with open(LOCK, "w") as lock:
@@ -300,7 +302,7 @@ def run(ref, build_jobs, target_dir, profile="retail"):
                     checkout = prepare_checkout(sha)
                     owner = claim_slot(target_dir, sha, profile)
                     phase = "build"
-                    receipt = build(checkout, target_dir, sha, profile, build_jobs, owner, log)
+                    receipt = build(checkout, target_dir, sha, profile, build_jobs, owner, log, optional)
                     phase = "setup"
                     env = dict(os.environ, CARGO_TARGET_DIR=str(target_dir), RUST_TEST_THREADS=JOBS, CARGO_TERM_COLOR="never")
                     with isolated_cvars(env, log) as env:
@@ -379,10 +381,10 @@ def run(ref, build_jobs, target_dir, profile="retail"):
 
 
 
-def submit(ref, build_jobs, target_dir, profile="retail"):
+def submit(ref, build_jobs, target_dir, profile="retail", optional=False):
     target_dir = validate_target_dir(target_dir)
     unit = f"full-suite-{profile}-{int(time.time())}"
-    subprocess.run(["systemd-run", "--user", f"--unit={unit}", "--collect", "--slice=agents.slice", "-p", "CPUQuota=1200%", "-p", "MemoryMax=9G", "-p", "MemorySwapMax=0", f"--setenv=FULL_SUITE_JOBS={JOBS}", sys.executable, os.path.abspath(__file__), "run", ref, "--profile", profile, "--build-jobs", str(build_jobs), "--target-dir", str(target_dir)], check=True)
+    subprocess.run(["systemd-run", "--user", f"--unit={unit}", "--collect", "--slice=agents.slice", "-p", "CPUQuota=1200%", "-p", "MemoryMax=9G", "-p", "MemorySwapMax=0", f"--setenv=FULL_SUITE_JOBS={JOBS}", sys.executable, os.path.abspath(__file__), "run", ref, "--profile", profile, "--build-jobs", str(build_jobs), "--target-dir", str(target_dir), *(["--optional"] if optional else [])], check=True)
     print(unit)
 
 
@@ -442,6 +444,7 @@ if __name__ == "__main__":
         command.add_argument("--profile", choices=PROFILES, default="retail")
         command.add_argument("--build-jobs", type=positive_build_jobs, default=1)
         command.add_argument("--target-dir", required=True)
+        command.add_argument("--optional", action="store_true")
     status_parser = actions.add_parser("status")
     status_parser.add_argument("ref", nargs="?")
     args = parser.parse_args(sys.argv[1:] or ["status"])
@@ -450,8 +453,8 @@ if __name__ == "__main__":
     else:
         try:
             if args.action == "run":
-                raise SystemExit(run(args.ref, args.build_jobs, args.target_dir, args.profile))
+                raise SystemExit(run(args.ref, args.build_jobs, args.target_dir, args.profile, args.optional))
             else:
-                submit(args.ref, args.build_jobs, args.target_dir, args.profile)
+                submit(args.ref, args.build_jobs, args.target_dir, args.profile, args.optional)
         except ValueError as error:
             parser.error(str(error))
