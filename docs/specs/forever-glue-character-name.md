@@ -9,9 +9,9 @@ complete protected-wrapper continuity and live-client execution remain unknown.
 ## What it must do
 
 - [x] Forever `GetBasicCharacterInfo` publishes `characterName` from the selected supplied account, not legacy `name`. PTR retains its existing path; Retail keeps `name`.
-- [ ] Publish supplied `surname` separately. Empty surname makes `fullName` equal the first name. Otherwise format the first name, supplied separator (space or hyphen), and surname through `FULL_PLAYER_NAME_WITH_SEPARATOR` from the pinned GlobalStrings value. The live native separator-mode flag is unknown; the host supplies its choice.
+- [x] Publish supplied `surname` separately. Empty surname makes `fullName` equal the first name. Otherwise format the first name, supplied separator (space or hyphen), and surname through `FULL_PLAYER_NAME_WITH_SEPARATOR` from the pinned GlobalStrings value. The live native separator-mode flag is unknown; the host supplies its choice.
 - [ ] Only if that localized key is absent, use one named EMULATED missing-format seam. WM100 proves the key and argument order, not the localized literal. No title or realm is appended.
-- [ ] Missing/nil GUID raises the native usage body `Usage: local basicInfo = GetBasicCharacterInfo(guid)`. Unknown GUID returns zero Lua values, not one nil or a table. Zero-result evidence is WM100 post-lookup emulation, not live execution.
+- [x] Missing/nil GUID raises the native usage body `Usage: local basicInfo = GetBasicCharacterInfo(guid)`. Unknown GUID returns zero Lua values, not one nil or a table. Zero-result evidence is WM100 post-lookup emulation, not live execution.
 - [x] Original Shared CharacterSelectUtil lookup and Camelot tooltip accept two distinct supplied names when specID is absent. Supplied surname/separator changes must also reach the original tooltip.
 
 ## How it works

@@ -2,7 +2,8 @@
 
 [Forever compatibility](investigations/forever-addon-startup-compatibility.md#tooltip-baseline-fixtures-and-producers)
 records Camelot fixture selection, modeled query publication, excluded GroupFinder
-frames, strict spellbook scenario inputs, WM99 state and remaining producer gaps.
+frames, strict spellbook scenario inputs, WM99–101 state and the remaining
+trait-currency producer gap.
 
 ## [2026-11-04] implementation | Totem tooltip duration
 

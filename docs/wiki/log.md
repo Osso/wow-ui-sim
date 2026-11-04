@@ -2,7 +2,8 @@
 
 Updated [Forever compatibility](investigations/forever-addon-startup-compatibility.md#tooltip-baseline-fixtures-and-producers)
 and [talent state](systems/forever-talents.md#loaded-combat-configurations) with
-source-selected fixtures, supplied-query publication, WM99 proof and open gaps.
+source-selected fixtures, supplied-query publication, WM99–101 proof and the
+remaining trait-currency gap.
 
 ## [2026-11-04] investigation | Parallel GPU test lifetimes
 

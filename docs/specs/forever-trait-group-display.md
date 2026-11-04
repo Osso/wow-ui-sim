@@ -7,10 +7,10 @@ relation-column names and unknown-tree emptiness are inferred.
 
 ## What it must do
 
-- [ ] Require numeric treeID in signed 32-bit bounds, then truncate fractions toward zero. Zero has no special branch. Rejected types use `Usage: local displayInfos = C_Traits.GetGroupDisplayInfoByTreeID(treeID)`.
-- [ ] Return one fresh indexed array with groupID, requested treeID, skillLineID, orderIndex, displayName and icon per row. Preserve supplied order; do not sort by orderIndex.
-- [ ] Join supplied SkillLine display text/icon. A missing join retains the row with empty displayName and numeric-zero icon.
-- [ ] One named INFERRED seam maps an unknown tree without supplied relations to an empty array. Do not borrow Retail data or invent populated rows.
+- [x] Require numeric treeID in signed 32-bit bounds, then truncate fractions toward zero. Zero has no special branch. Rejected types use `Usage: local displayInfos = C_Traits.GetGroupDisplayInfoByTreeID(treeID)`.
+- [x] Return one fresh indexed array with groupID, requested treeID, skillLineID, orderIndex, displayName and icon per row. Preserve supplied order; do not sort by orderIndex.
+- [x] Join supplied SkillLine display text/icon. A missing join retains the row with empty displayName and numeric-zero icon.
+- [x] One named INFERRED seam maps an unknown tree without supplied relations to an empty array. Do not borrow Retail data or invent populated rows.
 - [ ] Publish only on Forever. The original Camelot class-talent tab must consume the result without a missing-method error.
 
 ## How it works

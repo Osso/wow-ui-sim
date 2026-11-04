@@ -93,14 +93,18 @@ and after that removal; unrelated legacy LFG helpers are unchanged.
 
 WM99 adds the independent supplied [off-hand hit modifier](../../specs/forever-character-remaining-stats.md)
 and [spec-group configuration selection](../../specs/forever-spec-group-config.md).
-The original no-errors flows advance to separate missing `UnitUsesAmmo` and
-`C_Traits.GetGroupDisplayInfoByTreeID` producers; those remain open. The
-[glue character name contract](../../specs/forever-glue-character-name.md) fixes
-Forever's `characterName` field and isolates full display text in one approved
-EMULATED seam pending WM100. Two supplied-name original tooltip cases pass.
+WM101 adds the resolved-player/class ammunition predicate and supplied
+[trait-group display rows](../../specs/forever-trait-group-display.md), preserving
+provider order and missing SkillLine joins. The original character-panel flow
+now passes. The remaining tab-switch failure calls `C_Traits.GetGroupCurrencyInfo`;
+WM102 is pending. The [glue character name contract](../../specs/forever-glue-character-name.md)
+follows WM100's separate surname and supplied separator, uses the pinned localized
+format and preserves zero-result unknown GUID lookup. Only absent localized
+format data retains a named EMULATED seam. Original supplied-name and surname
+queries pass.
 
-The bounded Forever integration `tooltip` filter now reports 361 passed,
-2 pre-existing failures and 1 ignored. This is not full-profile acceptance.
+The bounded Forever integration `tooltip` filter now reports 363 passed,
+1 pre-existing failure and 1 ignored. This is not full-profile acceptance.
 
 ### Verification
 

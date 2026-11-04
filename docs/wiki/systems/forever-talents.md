@@ -52,6 +52,15 @@ indices. Zero IDs remain present; no match returns nil. This is independent of
 legacy talent groups and the separately stored active configuration ID. The
 unseeded vector is empty; live native population and update timing remain unknown.
 
+## Trait-group display rows
+
+[WM101 display projection](../../specs/forever-trait-group-display.md) stores
+ordered relations separately from supplied SkillLine names/icons under
+`group_display`. Missing joins retain their relation row with empty text and zero
+icon. There is no implicit populated catalog and no sorting by orderIndex. One
+named inferred seam maps absent tree relations to an empty provider. Native
+relation acquisition and live provider behavior remain unknown.
+
 ## Event delivery seam
 
 `A_Admin.FireEvent` is the single host-controlled notification seam. Reading
