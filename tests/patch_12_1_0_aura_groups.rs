@@ -6,17 +6,30 @@ use wow_ui_sim::lua_api::{WowLuaEnv, state::AuraInfo};
 fn patch_12_1_0_aura_groups_filter_limit_and_refresh_actual_frames() {
     let ui = wow_ui_sim::blizzard_ui_sync::default_cache_addons_path().unwrap();
     let (env, _) = crate::common::blizzard_addon_harness::build_blizzard_addon_closure_env(
-        &ui, &["Blizzard_AuraContainer"], &[],
+        &ui,
+        &["Blizzard_AuraContainer"],
+        &[],
     );
     env.state().borrow_mut().player.buffs = [(11, "player"), (22, "party1"), (33, "player")]
-        .into_iter().map(|(id, source)| AuraInfo {
-            name: format!("Audit Aura {id}"), spell_id: 1000 + id, icon: 1,
-            duration: 30.0, expiration_time: 30.0, applications: 1,
-            source_unit: source.into(), is_helpful: true, is_raid: true,
-            is_nameplate_only: false, is_stealable: false, can_apply_aura: true,
-            is_from_player_or_player_pet: source == "player", dispel_type: None,
+        .into_iter()
+        .map(|(id, source)| AuraInfo {
+            name: format!("Audit Aura {id}"),
+            spell_id: 1000 + id,
+            icon: 1,
+            duration: 30.0,
+            expiration_time: 30.0,
+            applications: 1,
+            source_unit: source.into(),
+            is_helpful: true,
+            is_raid: true,
+            is_nameplate_only: false,
+            is_stealable: false,
+            can_apply_aura: true,
+            is_from_player_or_player_pet: source == "player",
+            dispel_type: None,
             aura_instance_id: id,
-        }).collect();
+        })
+        .collect();
     env.exec(r#"
         AuditGroups = CreateFrame('ManagedAuraContainer', nil, UIParent, 'CustomAuraContainerTemplate')
         AuditGroups:SetUnit('player')
@@ -36,7 +49,11 @@ fn patch_12_1_0_aura_groups_filter_limit_and_refresh_actual_frames() {
             local visible = 0
             for index=1, AuditGroups:GetAuraGroupFrameCount(key) do
                 local frame = AuditGroups:GetAuraGroupFrame(key, index)
-                assert(frame:GetObjectType() == 'AuraButton' and frame:GetParent() == AuditGroups)
+                local expectedParent = AuditGroups:GetObjectTable()
+                if frame ~= frame:GetObjectTable() then
+                    expectedParent = GetForbiddenObjectTable(expectedParent)
+                end
+                assert(frame:GetObjectType() == 'AuraButton' and frame:GetParent() == expectedParent)
                 local shown = frame:IsShown()
                 if issecretvalue(shown) then shown = secretunwrap(shown) end
                 if shown then visible = visible + 1 end
@@ -56,5 +73,9 @@ fn patch_12_1_0_aura_groups_filter_limit_and_refresh_actual_frames() {
         assert(AuditVisibleGroupFrames('all:custom-key') == 3, 'maxFrameCount increase refreshes presentation')
         assert(AuditVisibleGroupFrames('mine:custom-key') == 0, 'filter change hides old assignments')
     "#).unwrap();
-    assert!(env.state().borrow().lua_errors.is_empty(), "{:?}", env.state().borrow().lua_errors);
+    assert!(
+        env.state().borrow().lua_errors.is_empty(),
+        "{:?}",
+        env.state().borrow().lua_errors
+    );
 }

@@ -58,7 +58,7 @@ fn temporary_weapon_enchants_show_before_aura_groups_and_clear_when_disabled() {
         AuditEnchantHost = AuditContainer({{'buffs', 'HELPFUL'}})
         AuditMainHand = AuditAddEnchant(AuditEnchantHost, AuraContainerItemEnchantmentSlot.MainHand)
         AuditOffHand = AuditAddEnchant(AuditEnchantHost, AuraContainerItemEnchantmentSlot.OffHand)
-        assert(AuditMainHand:GetObjectType() == 'AuraButton' and AuditMainHand:GetParent() == AuditEnchantHost)
+        assert(AuditMainHand:GetObjectType() == 'AuraButton' and AuditParentIs(AuditMainHand, AuditEnchantHost))
     "#,
     )
     .unwrap();
@@ -71,13 +71,19 @@ fn temporary_weapon_enchants_show_before_aura_groups_and_clear_when_disabled() {
         )
         .unwrap()
     };
-    assert_eq!((main(), off(), buff()), ("shown@0".into(), "hidden".into(), "shown@20".into()));
+    assert_eq!(
+        (main(), off(), buff()),
+        ("shown@0".into(), "hidden".into(), "shown@20".into())
+    );
 
     // A newly applied off-hand enchant appears after WEAPON_ENCHANT_CHANGED.
     seed_temporary_enchant(&env, 1, 300_000.0);
     env.fire_event("WEAPON_ENCHANT_CHANGED").unwrap();
     settle(&env);
-    assert_eq!((main(), off(), buff()), ("shown@0".into(), "shown@20".into(), "shown@40".into()));
+    assert_eq!(
+        (main(), off(), buff()),
+        ("shown@0".into(), "shown@20".into(), "shown@40".into())
+    );
 
     env.exec("AuditAddon(function() AuditEnchantHost:SetEnabled(false) end)")
         .unwrap();
