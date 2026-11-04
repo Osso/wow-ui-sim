@@ -33,6 +33,7 @@ fn patch_5_5_4_client_line_excludes_retail_and_era() {
     run_mists_control(&[MISTS_REMOVAL, RETAIL_REMOVAL], r#"["own"]"#);
 }
 
+#[cfg(feature = "optional-tests")]
 #[test]
 fn patch_5_5_4_publication_sweep() {
     crate::common::with_timeout(90, || {

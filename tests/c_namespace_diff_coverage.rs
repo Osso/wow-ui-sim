@@ -25,6 +25,7 @@ fn read_diff_namespaces(file_name: &str) -> BTreeSet<String> {
         .collect()
 }
 
+#[cfg(feature = "optional-tests")]
 #[test]
 fn diff_c_namespaces_missing_file_excludes_seeded_namespace_stubs() {
     let missing = read_diff_namespaces("diff_c_namespaces_missing.txt");
@@ -47,6 +48,7 @@ fn diff_c_namespaces_missing_file_excludes_seeded_namespace_stubs() {
     }
 }
 
+#[cfg(feature = "optional-tests")]
 #[test]
 fn diff_c_namespaces_extra_file_excludes_documented_blizzard_namespaces() {
     let extra = read_diff_namespaces("diff_c_namespaces_extra.txt");

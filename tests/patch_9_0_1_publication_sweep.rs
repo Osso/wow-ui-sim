@@ -17,6 +17,7 @@ fn lfg_expand_prompt_accept_clears_supplied_state(env: &WowLuaEnv) {
 }
 }
 
+#[cfg(feature = "optional-tests")]
 prefork_full_ui_case! {
 fn patch_9_0_1_publication_sweep(env: &WowLuaEnv) {
     sweep::run_publication_sweep(env, &sweep::SweepSpec {

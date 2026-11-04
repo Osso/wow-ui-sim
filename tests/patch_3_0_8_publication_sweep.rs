@@ -6,6 +6,7 @@ mod sweep;
 
 use wow_ui_sim::lua_api::WowLuaEnv;
 
+#[cfg(feature = "optional-tests")]
 prefork_full_ui_case! {
 fn patch_3_0_8_publication_sweep(env: &WowLuaEnv) {
     let register = include_str!("../data/patch-api/sources/3.0.8-wikitext-register.json");

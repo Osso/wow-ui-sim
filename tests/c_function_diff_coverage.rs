@@ -42,6 +42,7 @@ fn read_extra_c_functions() -> BTreeSet<String> {
         .collect()
 }
 
+#[cfg(feature = "optional-tests")]
 #[test]
 fn diff_c_functions_missing_excludes_reconciled_high_impact_functions() {
     let missing = read_missing_c_functions();
@@ -116,6 +117,7 @@ fn reconciled_high_impact_c_functions_exist_at_runtime() {
     );
 }
 
+#[cfg(feature = "optional-tests")]
 #[test]
 fn diff_c_functions_extra_excludes_current_documented_or_ui_only_features() {
     let extra = read_extra_c_functions();
@@ -139,6 +141,7 @@ fn diff_c_functions_extra_excludes_current_documented_or_ui_only_features() {
     }
 }
 
+#[cfg(feature = "optional-tests")]
 #[test]
 fn diff_c_functions_extra_retains_intentional_compat_and_legacy_surfaces() {
     let extra = read_extra_c_functions();

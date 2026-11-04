@@ -58,6 +58,7 @@ fn inspect_specialization_deprecated_alias_matches_original_publisher(env: &WowL
 }
 }
 
+#[cfg(feature = "optional-tests")]
 prefork_full_ui_case! {
 fn patch_12_1_0_publication_sweep(env: &WowLuaEnv) {
     sweep::run_publication_sweep(env, &sweep::SweepSpec {

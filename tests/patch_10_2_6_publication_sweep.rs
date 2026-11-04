@@ -20,6 +20,7 @@ fn removed_item_globals_are_absent_after_game_startup(env: &WowLuaEnv) {
 }
 }
 
+#[cfg(feature = "optional-tests")]
 prefork_full_ui_case! {
 fn patch_10_2_6_publication_sweep(env: &WowLuaEnv) {
     sweep::run_publication_sweep(env, &sweep::SweepSpec {

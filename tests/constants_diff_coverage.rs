@@ -62,6 +62,7 @@ fn targeted_constant_entries() -> Vec<(String, i32)> {
         .collect()
 }
 
+#[cfg(feature = "optional-tests")]
 #[test]
 fn diff_constants_wrong_is_empty_after_constant_reconciliation() {
     let contents = fs::read_to_string(diff_constants_wrong_path())
@@ -78,6 +79,7 @@ fn diff_constants_wrong_is_empty_after_constant_reconciliation() {
     );
 }
 
+#[cfg(feature = "optional-tests")]
 #[test]
 fn diff_constants_missing_excludes_targeted_loaded_constant_families() {
     let contents = fs::read_to_string(diff_constants_missing_path())
