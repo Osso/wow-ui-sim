@@ -1,5 +1,15 @@
 use super::*;
 
+fn d56_tooltip_data() -> bool {
+    matches!(wow_ui_sim::client_profile::ACTIVE,
+        wow_ui_sim::client_profile::ClientProfile::Retail | wow_ui_sim::client_profile::ClientProfile::Ptr)
+}
+
+fn packed_tooltip_color(color: (f32, f32, f32)) -> (f32, f32, f32) {
+    let pack = |v: f32| (v * 255.0).round() * (1.0_f32 / 255.0);
+    (pack(color.0), pack(color.1), pack(color.2))
+}
+
 #[test]
 fn test_set_spell_by_id_get_left_line_uses_tooltip_line_color() {
     let env = WowLuaEnv::new().unwrap();
@@ -105,8 +115,9 @@ fn test_add_line_does_not_invent_processing_info_value_color_segments() {
 }
 
 #[test]
-fn test_add_line_preserves_explicit_processing_info_inline_color_segments() {
+fn test_add_line_preserves_processing_info_inline_colors() {
     let env = WowLuaEnv::new().unwrap();
+    env.exec(&format!("D56 = {}", d56_tooltip_data())).unwrap();
 
     env.exec(
         r#"
@@ -124,6 +135,11 @@ fn test_add_line_preserves_explicit_processing_info_inline_color_segments() {
                 },
             },
         }
+        if D56 then
+            -- D56 stores inline markup, not synthetic color arrays.
+            info.tooltipData.lines[1].leftText = 'Requires |cnHIGHLIGHT_FONT_COLOR:Clearcasting|r'
+            info.tooltipData.lines[1].leftColorSegments = nil
+        end
         GameTooltip.processingInfo = info
         GameTooltip:ClearLines()
         local lineData = info.tooltipData.lines[1]
@@ -177,8 +193,14 @@ fn test_set_spell_by_id_applies_full_line_inline_color_markup() {
         .iter()
         .find(|line| line.left_text.contains("Requires Clearcasting"))
         .unwrap();
-    assert_eq!(line.left_text, expected);
-    assert_eq!(line.left_color, base);
+    if d56_tooltip_data() {
+        assert_eq!(line.left_text, description);
+        assert_eq!(wow_ui_sim::render::strip_wow_markup(&line.left_text), expected);
+        assert_eq!(line.left_color, packed_tooltip_color(base));
+    } else {
+        assert_eq!(line.left_text, expected);
+        assert_eq!(line.left_color, base);
+    }
     let segment = line
         .left_segments
         .iter()
@@ -214,8 +236,15 @@ fn test_set_spell_by_id_applies_named_inline_color_markup() {
         .iter()
         .find(|line| line.left_text.contains("Season 1"))
         .unwrap();
-    assert_eq!(line.left_text, expected_text);
-    assert_eq!(line.left_color, expected);
+    if d56_tooltip_data() {
+        assert_eq!(line.left_text, description);
+        assert_eq!(wow_ui_sim::render::strip_wow_markup(&line.left_text), expected_text);
+        let base: (f32, f32, f32) = env.eval("return NORMAL_FONT_COLOR:GetRGB()").unwrap();
+        assert_eq!(line.left_color, packed_tooltip_color(base));
+    } else {
+        assert_eq!(line.left_text, expected_text);
+        assert_eq!(line.left_color, expected);
+    }
     let segment = line
         .left_segments
         .iter()

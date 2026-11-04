@@ -28,7 +28,7 @@ Retail and PTR tooltip getters select supplied loot and buyback slots and publis
 ## Known gaps (current cycle)
 
 - [ ] Native-compatible index coercion is not implemented: these getters retain strict integer parsing.
-- [ ] D56 copied markup, packed RGB, present-side colors and nested identity publication remain incomplete. The current renderer uses simulator segment arrays; restoring copied markup requires moving markup parsing into the presentation layer first.
+- [x] Shared D56 publication and presentation-side markup parsing follow the [serialization contract](tooltip-data-serialization.md). Getter-specific nested-row eligibility remains unknown.
 
 ## Out of scope
 

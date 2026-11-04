@@ -1,3 +1,12 @@
+## [2026-11-04] implementation | D56 tooltip serialization
+
+Updated [Lua API](systems/lua-api.md#tooltip-data-and-merchant-cursor-presentation)
+and the [serialization contract](../specs/tooltip-data-serialization.md): copied
+markup now reaches original consumers unchanged; presentation owns internal color
+runs. Packed RGB, supplied-side colors, populated nonzero IDs and generic nested
+identity publication have direct tests. Getter-specific nested eligibility and
+native miss publication remain unknown; scenario float-to-byte packing is emulated.
+
 ## [2026-11-04] correction | Publication gap expectations
 
 Reconciled four current sweep fixtures with existing producers; linked current [10.0.2](../specs/patch-10-0-2-publication-sweep.md#current-reconciliation--2026-11-04), [10.1.0](../specs/patch-10-1-0-publication-sweep.md#current-reconciliation--2026-11-04), [8.1.0](../specs/patch-8-1-0-publication-sweep.md#current-reconciliation--2026-11-04) and [8.1.5](../specs/patch-8-1-5-publication-sweep.md#current-reconciliation--2026-11-04) contracts from the audit pages. Preserved historical evidence.

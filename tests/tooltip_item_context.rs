@@ -45,22 +45,23 @@ const ASSERTIONS: &str = r#"
         assert(ITFrame:GetObjectType() == 'Frame')
         assert(ITTable.marker == 'PRIVATE-ItemContext' and ITTable.count == 37)
     end
-    function ITRGBA(value)
+    function ITRGB(value)
         if type(value) ~= 'table' and type(value) ~= 'userdata' then return nil end
-        if type(value.GetRGBA) ~= 'function' then return nil end
+        if type(value.GetRGB) ~= 'function' then return nil end
+        assert(value.a == nil, 'D56 publishes RGB without alpha')
         local function channels(...)
-            assert(select('#', ...) == 4)
+            assert(select('#', ...) == 3)
             local result = {...}
-            for i=1,4 do assert(type(result[i]) == 'number') end
+            for i=1,3 do assert(type(result[i]) == 'number') end
             return result
         end
-        return channels(value:GetRGBA())
+        return channels(value:GetRGB())
     end
     function ITEqual(a,b)
-        local ac,bc = ITRGBA(a),ITRGBA(b)
+        local ac,bc = ITRGB(a),ITRGB(b)
         if ac or bc then
             assert(ac and bc)
-            for i=1,4 do assert(ac[i] == bc[i], 'semantic RGBA equality') end
+            for i=1,3 do assert(ac[i] == bc[i], 'semantic RGB equality') end
             return
         end
         assert(type(a) == type(b), 'DTO value type')
@@ -75,7 +76,7 @@ const ASSERTIONS: &str = r#"
     end
     function ITPublic(value)
         assert(not issecretvalue(value), 'chosen public output; no native output-policy credit')
-        if ITRGBA(value) or type(value) ~= 'table' then return end
+        if ITRGB(value) or type(value) ~= 'table' then return end
         for k,v in pairs(value) do assert(not issecretvalue(k)); ITPublic(v) end
     end
     function ITData(...)
@@ -101,12 +102,12 @@ const ASSERTIONS: &str = r#"
         assert(data.lines[2].type == 31 and data.lines[2].leftText == 'Item Level '..level)
         assert(data.lines[3].type == 21 and data.lines[3].leftText == 'Feet')
         assert(data.lines[4].type == 20 and data.lines[4].leftText == ITEM_BIND_ON_PICKUP)
-        local name = ITRGBA(data.lines[1].leftColor)
+        local name = ITRGB(data.lines[1].leftColor)
         assert(name)
-        assert(name[1] == 0.64)
-        assert(name[2] == 0.21)
-        assert(name[3] == 0.93)
-        assert(name[4] == 1)
+        -- D56 packed bytes 163/54/237 multiplied by float32 1/255.
+        assert(name[1] == 0.6392157077789307)
+        assert(name[2] == 0.21176472306251526)
+        assert(name[3] == 0.9294118285179138)
         local specs = {
             {5259,1.2,ITEM_MOD_STRENGTH_SHORT}, {7889,1.8,ITEM_MOD_STAMINA_SHORT},
             {4799,0.75,ITEM_MOD_MASTERY_RATING_SHORT}, {2201,0.75,ITEM_MOD_VERSATILITY},
@@ -115,8 +116,8 @@ const ASSERTIONS: &str = r#"
             local line = data.lines[i+4]
             local value = math.max(1,math.floor(level*2*spec[1]/10000*spec[2]+0.5))
             assert(line.type == 13 and line.leftText == '+'..value..' '..spec[3], 'existing budget heuristic')
-            local rgba = ITRGBA(line.leftColor)
-            assert(rgba and rgba[2] > rgba[1] and rgba[4] == 1, 'opaque green stat')
+            local rgb = ITRGB(line.leftColor)
+            assert(rgb and rgb[2] > rgb[1] and line.leftColor.a == nil, 'D56 RGB green stat')
         end
         if ITBase then
             -- Compare every existing DTO field; only level/stat text may differ.

@@ -26,7 +26,7 @@ pub(crate) use slider::set_slider_value_from_drag;
 pub(crate) use slider::tick_scroll_range_updates;
 mod statusbar;
 mod texture;
-mod tooltip;
+pub(crate) mod tooltip;
 pub(crate) use tooltip::{
     clear_tooltip_for_hide, release_tooltip_attachments, size_tooltip_on_native_trigger,
 };
