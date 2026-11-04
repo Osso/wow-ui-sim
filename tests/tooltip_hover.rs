@@ -83,6 +83,55 @@ fn blizzard_backpack_tooltip_append_text_updates_pooled_title() {
 
 #[cfg(any(feature = "client-retail", feature = "client-ptr"))]
 #[test]
+fn blizzard_tooltip_append_text_uses_first_pooled_left_line_synchronously() {
+    let env = setup_full_env();
+    env.exec(
+        r#"
+        GameTooltip:SetOwner(UIParent, "ANCHOR_NONE")
+        assert(GameTooltip:ProcessInfo({ tooltipData = { lines = {
+            { leftText = "Title" }, { leftText = "Footer" },
+        } } }))
+        local title = GameTooltip:GetLeftLine(1)
+        title:SetText("Edited title")
+        local oldWidth = GameTooltip:GetWidth()
+        local suffix = string.rep("W", 30)
+        GameTooltip:AppendText(suffix)
+        assert(title:GetText() == "Edited title" .. suffix,
+            "AppendText must update the first pooled left FontString")
+        assert(GameTooltip:GetWidth() > oldWidth + 100,
+            "AppendText must size the updated title before returning")
+        assert(GameTooltip:GetLeftLine(1):GetText() == "Edited title" .. suffix,
+            "AppendText must retain the edited title in stored line state")
+        assert(GameTooltip:GetLeftLine(2):GetText() == "Footer",
+            "AppendText must not select the last row")
+        assert(GameTooltip:NumLines() == 2)
+
+        title:SetText(string.rep("A", 250))
+        GameTooltip:AppendText("123456789")
+        assert(title:GetText() == string.rep("A", 250) .. "12345", "255-byte payload cap")
+        title:SetText("Before" .. string.char(0) .. "After")
+        GameTooltip:AppendText("Suffix" .. string.char(0) .. "Ignored")
+        assert(title:GetText() == "BeforeSuffix", "native text concatenation stops at NUL")
+        title:SetText("Number")
+        assert(select("#", GameTooltip:AppendText(17)) == 0)
+        assert(title:GetText() == "Number17")
+
+        GameTooltip:ClearLines()
+        assert(select("#", GameTooltip:AppendText("No row")) == 0)
+        assert(GameTooltip:NumLines() == 0)
+        "#,
+    )
+    .expect("WM95 first-row pooled text, byte cap and synchronous layout");
+    for invalid in ["nil", "false", "{}"] {
+        assert!(
+            env.exec(&format!("GameTooltip:AppendText({invalid})")).is_err(),
+            "empty tooltip must still reject AppendText({invalid})"
+        );
+    }
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
+#[test]
 fn customization_tooltip_places_first_text_at_native_padding_anchor() {
     use iced::{Point, Rectangle, Size};
     use wow_ui_sim::iced_app::tooltip::{TooltipRender, build_tooltip_quads, collect_tooltip_data};
