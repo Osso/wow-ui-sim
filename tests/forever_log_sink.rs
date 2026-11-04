@@ -30,9 +30,8 @@ fn forever_error_sink_appends_exact_message_with_zero_returns() {
 
 #[cfg(any(feature = "client-retail", feature = "client-ptr"))]
 #[test]
-fn retail_ptr_keep_message_sink_without_explicit_error_binding() {
+fn retail_ptr_publish_message_and_error_sinks() {
     assert_message_sink("LogMessage");
-    let env = WowLuaEnv::new().unwrap();
-    env.exec("assert(rawget(C_Log, 'LogErrorMessage') == nil)")
-        .unwrap();
+    // Retail 12.1.5 LogDocumentation.lua:11 declares LogErrorMessage.
+    assert_message_sink("LogErrorMessage");
 }
