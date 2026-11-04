@@ -38,9 +38,13 @@ pub(super) fn set_owner(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn native_owner_behavior() -> bool {
+    // Forever is INFERRED: WM63 O17 (Retail 70688) plus its shared Mainline
+    // GameTooltip.lua:395-431 and TooltipDataHandler.lua:264-270,353-355.
     matches!(
         crate::client_profile::ACTIVE,
-        crate::client_profile::ClientProfile::Retail | crate::client_profile::ClientProfile::Ptr
+        crate::client_profile::ClientProfile::Retail
+            | crate::client_profile::ClientProfile::Ptr
+            | crate::client_profile::ClientProfile::WowForever
     )
 }
 

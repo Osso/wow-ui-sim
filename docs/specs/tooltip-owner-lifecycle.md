@@ -2,7 +2,34 @@
 
 `GameTooltip` ownership is separate from its lines and visibility. Explicit tooltip hiding releases ownership; `SetOwner` hides and clears content while retaining its newly assigned owner. This is documented-source corroboration, **not native execution**: [GameTooltip API reference](https://warcraft.wiki.gg/wiki/UIOBJECT_GameTooltip) describes owner, text, and append visibility behavior.
 
-## What it must do
+## Current Retail/PTR/Forever lifecycle
+
+The WM63 O17 Retail 12.1.5 / 70688 owner/hide contract supersedes the legacy
+requirements below for Retail/PTR. Forever uses this contract as **INFERRED**
+behavior, not native Forever proof. Its pinned Mainline `GameTooltip.lua` differs
+from Retail only by trailing whitespace, and its `GameTooltip.xml` matches PTR.
+`TooltipDataHandler.lua` and generated `FrameAPITooltipDocumentation.lua` are
+byte-identical across all three profiles; no source/API difference contradicts
+the shared lifecycle.
+
+- `SetOwner` clears content for the same or a different owner. Same-owner
+  assignment does not hide; reassignment hides through the ordinary lifecycle
+  before recording the new owner. Anchor modes follow the existing WM63 path.
+- `Hide` clears content even when already hidden, releases the owner and resets
+  its mode/displacements, without removing its existing points.
+- Forever's original `Blizzard_GameTooltip/Mainline/GameTooltip.xml:27` binds
+  `OnHide`; `GameTooltip.lua:395-431` clears handler information.
+  `Blizzard_SharedXMLGame/Tooltip/TooltipDataHandler.lua:264-270` hides on a
+  missing non-appended lookup, and `:353-355` clears `infoList`/`processingInfo`.
+  Silently hiding during same-owner `SetOwner` bypasses that later cleanup and
+  retains a previous successful tooltip's data.
+
+The `tooltip_bag_child` original-consumer regression stays unchanged. It rejects
+an unmatched equip slot after two successful distinct item selections; no
+fixture `Hide` or replacement consumer masks the lifecycle failure. Sizing,
+attachments, other profiles and getter selection are unchanged by this extension.
+
+## Legacy requirements (other profiles)
 
 - [x] `Hide` and `SetShown(false)` on a shown, owned tooltip hide it, release `GetOwner`/`IsOwned` ownership and keep both simulator owner fields synchronized without clearing lines.
 - [x] Explicit `Hide`, `SetShown(false)`, and `FadeOut` release ownership even if `SetOwner` already hid the tooltip; public protected-state checks still apply.
