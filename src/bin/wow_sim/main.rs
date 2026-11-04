@@ -469,6 +469,7 @@ fn startup_blizzard_ui_help(error: wow_ui_sim::Error) -> Box<dyn std::error::Err
              Fix:\n  \
              - Install WoW via the Battle.net launcher, OR\n  \
              - Set WOW_INSTALL_PATH to your WoW directory before launching wow-ui-sim.\n\n\
+             On Windows, the Battle.net Agent product.db is consulted before default paths.\n\n\
              Default search paths include /Applications/World of Warcraft (macOS), \
              C:\\Program Files (x86)\\World of Warcraft (Windows), and common Wine/Lutris locations on Linux."
         ),

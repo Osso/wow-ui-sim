@@ -291,6 +291,7 @@ fn expected_cache_provenance() -> crate::Result<CacheProvenance> {
     }
     #[cfg(feature = "casc")]
     {
+        crate::asset_resolver_config::configure_casc_product_env();
         let install_root =
             asset_resolver::wow_install_path().ok_or(crate::Error::WowInstallNotFound)?;
         let product = crate::asset_resolver_config::active_profile_casc_product();
@@ -796,6 +797,7 @@ fn casc_available() -> bool {
         if std::env::var("WOW_SIM_CASC").ok().as_deref() == Some("0") {
             return false;
         }
+        crate::asset_resolver_config::configure_casc_product_env();
         asset_resolver::wow_install_path().is_some()
     })
 }

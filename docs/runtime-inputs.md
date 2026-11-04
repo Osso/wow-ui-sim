@@ -34,6 +34,19 @@ account/realm values retain discovery. `--no-saved-vars` disables persistence wh
 still allowing identity from the read-only source. See the
 [identity contract](specs/character-identity.md) for query behavior and test limits.
 
+## Windows installation discovery
+
+Explicit `WOW_INSTALL_PATH` and `WOW_DATA_PATH` take precedence. Next, the
+resolver reads `ProgramData/Battle.net/Agent/product.db` on Windows drives and
+selects a `wow` family entry for the active `WOW_PRODUCT`. Its recorded root
+must contain `Data/data` and the recorded client flavor directory. Existing
+common installation paths are checked last.
+
+The install root's `.product.db` can contain a wrapped database or a bare product
+record. A missing-product error lists the installed product codes. For example,
+`found: wowf` means that a Retail executable cannot use that Forever-only install;
+use the matching client build.
+
 ## Persistence destinations
 
 `--session-wtf-path DIR` selects one writable directory for session state. When
