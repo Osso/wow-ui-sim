@@ -43,6 +43,23 @@ const DECLARATIONS: &[EnumFields] = &[
             ("GamepadMainActionBar", 30),
         ],
     ),
+    // System metadata at 745–749; account settings and metadata at 215–260.
+    (
+        "EditModeSystemMeta",
+        &[("NumValues", 31), ("MinValue", 0), ("MaxValue", 30)],
+    ),
+    (
+        "EditModeAccountSetting",
+        &[
+            ("ShowGroupFinder", 35),
+            ("ShowLossOfControl", 36),
+            ("ShowSwingTimer", 37),
+        ],
+    ),
+    (
+        "EditModeAccountSettingMeta",
+        &[("NumValues", 38), ("MinValue", 0), ("MaxValue", 37)],
+    ),
     // Individual setting declarations at 505–509, 520, 556 and 635.
     (
         "EditModeGamepadMainActionBarSetting",
@@ -78,14 +95,19 @@ const DECLARATIONS: &[EnumFields] = &[
         "EditModePersonalResourceDisplaySetting",
         &[("AllowMouseoverThrough", 15)],
     ),
-    // Individual unit-frame declarations at 823 and 827–828.
+    // Unit-frame declarations and metadata at 797–828.
     (
         "EditModeUnitFrameSetting",
         &[
             ("DebuffIconSize", 19),
+            ("BuffIconSize", 22),
             ("UseHorizontalLayout", 23),
             ("GrowDirection", 24),
         ],
+    ),
+    (
+        "EditModeUnitFrameSettingMeta",
+        &[("NumValues", 25), ("MinValue", 0), ("MaxValue", 24)],
     ),
     (
         "BossFrameGrowDirection",

@@ -1,5 +1,5 @@
 //! Spell resource-cost policy from the pinned 6.2.0 page, not native parity.
-#![cfg(feature = "profile-retail")]
+#![cfg(any(feature = "profile-retail", feature = "client-ptr"))]
 use wow_ui_sim::lua_api::WowLuaEnv;
 
 prefork_full_ui_case! {
