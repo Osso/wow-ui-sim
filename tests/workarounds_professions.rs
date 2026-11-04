@@ -466,6 +466,34 @@ fn recipe_cooldown_projects_supplied_spell_state_and_validates_arguments() {
     .unwrap();
 }
 
+#[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
+#[test]
+fn profession_day_cooldown_displays_midnight_for_truesteel() {
+    use wow_ui_sim::lua_api::state::SpellCooldownState;
+
+    let env = full_game_env();
+    env.exec("A_Admin.SetManualClock(100)").unwrap();
+    env.state().borrow_mut().spell_cooldowns.insert(
+        171690,
+        SpellCooldownState {
+            start: 90.0,
+            duration: 3600.0,
+        },
+    );
+    env.exec(
+        r#"
+        CastSpellByID(2018)
+        local form = ProfessionsFrame.CraftingPage.SchematicForm
+        local recipe = C_TradeSkillUI.GetRecipeInfo(171690)
+        assert(recipe and recipe.recipeID == 171690, 'Truesteel recipe is loaded')
+        form:Init(recipe)
+        assert(form.Cooldown:GetText() == COOLDOWN_EXPIRES_AT_MIDNIGHT,
+            'Truesteel cooldown should display midnight: ' .. tostring(form.Cooldown:GetText()))
+        "#,
+    )
+    .unwrap();
+}
+
 #[test]
 fn casting_blacksmithing_opens_professions_frame() {
     let env = full_game_env();
