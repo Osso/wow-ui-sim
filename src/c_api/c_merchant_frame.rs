@@ -8,21 +8,21 @@ pub mod junk;
 use crate::c_api::helpers::ensure_namespace;
 #[cfg(any(feature = "retail-12-0-7", feature = "retail-12-1-0"))]
 use crate::lua_api::methods::create_table;
-#[cfg(feature = "retail-12-0-0")]
 use crate::lua_api::methods::{
     borrow_state, create_string, create_table_with_capacity, table_set_static,
 };
-#[cfg(feature = "retail-12-0-0")]
-use crate::lua_bridge::FromStack;
-#[cfg(any(feature = "retail-12-0-0", feature = "retail-12-1-0"))]
-use crate::lua_bridge::table_set_rust_fn_static;
+use crate::lua_bridge::{FromStack, table_set_rust_fn_static};
 use rilua::LuaResult;
 use rilua::vm::state::LuaState;
 
 pub(crate) fn register_c_merchant_frame_surface(state: &mut LuaState) -> LuaResult<()> {
     let merchant = ensure_namespace(state, "C_MerchantFrame")?;
-    #[cfg(feature = "retail-12-0-0")]
-    table_set_rust_fn_static(state, merchant, "GetItemInfo", get_item_info)?;
+    // Forever 70707 MerchantFrameDocumentation.lua:27-39 shares this model.
+    if cfg!(feature = "retail-12-0-0")
+        || crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::WowForever
+    {
+        table_set_rust_fn_static(state, merchant, "GetItemInfo", get_item_info)?;
+    }
     register_patch_12_0_7_merchant_frame_surface(state, merchant)?;
     #[cfg(feature = "client-wowforever")]
     crate::lua_bridge::table_set_rust_fn_static(
@@ -36,7 +36,6 @@ pub(crate) fn register_c_merchant_frame_surface(state: &mut LuaState) -> LuaResu
 
 /// ID-only host inventory represents free, single-unit offers with unlimited
 /// stock. Prices, stock limits and eligibility are not supplied by this model.
-#[cfg(feature = "retail-12-0-0")]
 fn get_item_info(state: &mut LuaState) -> LuaResult<u32> {
     let index = i32::from_stack(state, 1)?;
     let item_id = {
@@ -57,7 +56,6 @@ fn get_item_info(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
-#[cfg(feature = "retail-12-0-0")]
 fn set_offer_fields(state: &mut LuaState, info: rilua::Val, icon_id: u32) {
     for (key, value) in [
         ("texture", f64::from(icon_id)),

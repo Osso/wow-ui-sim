@@ -1,10 +1,10 @@
 # Forever forbidden-aspect consumers
 
-Forever shares the existing forbidden-aspect model and query/mutation methods with Retail 12.1. Native enum publication follows each client's authored mask: Retail 12.1 has eleven bits; PTR 12.1.5 and Forever additionally expose `QueryAnimationProgress` and `AddAnimations`.
+Forever shares the existing forbidden-aspect model and query/mutation methods with Retail 12.1. Native enum publication follows each client's authored mask: Retail 12.1 has eleven bits; Retail/PTR 12.1.5 have thirteen. Forever 70707 has fifteen: `SetTexture=2048`, `QueryRotation=4096`, `QueryAnimationProgress=8192`, and `AddAnimations=16384` (pinned `ForbiddenAspectConstantsDocumentation.lua:8–11,24–27`).
 
 ## What it must do
 
-- [ ] Publish Forever's thirteen native mask values through 4096 and matching metadata, plus propagation paths `Hierarchy=0` and `Layout=1`.
+- [ ] Publish Forever 70707's fifteen native mask values through 16384 and matching metadata, plus propagation paths `Hierarchy=0` and `Layout=1`.
 - [ ] Let unchanged SecureHandlers accept an unmarked frame and reject a frame with forbidden aspects, including its static FrameRef method invocation.
 - [ ] Allow addon-tainted creation of the actual CustomAuraContainer shell and native aura-button group, retaining authored forbidden aspects and one-shot dirty dispatch.
 - [ ] Preserve existing hierarchy inheritance and reject later parent/anchor changes that would implicitly acquire forbidden aspects.
@@ -29,6 +29,7 @@ Forever shares the existing forbidden-aspect model and query/mutation methods wi
 
 ## Tests asserting this spec
 
+- `src/c_api/forever_lib_baseline_tests.rs::forbidden_aspects_publish_pinned_fifteen_bits`: exact 70707 enum values and metadata (publication only; no new restriction enforcement).
 - `tests/forever_forbidden_consumers.rs` and `tests/fixtures/forever_forbidden_consumers.lua`: native SecureHandlers and tainted aura consumer boundaries, masks, and relationship rejection.
 - `tests/userdata_proxy.rs::forbidden_partition_` cases: existing ordinary-frame transfer, real provider acquisition and initializer regressions shared with Forever; public/private identity, native parent identity, field isolation and private mixin dispatch remain asserted.
 

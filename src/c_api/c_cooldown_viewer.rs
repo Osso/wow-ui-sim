@@ -75,6 +75,10 @@ pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
             query_availability,
         )?;
     }
+    // Forever 70707 CooldownViewerDocumentation.lua:43-50,149-159.
+    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::WowForever {
+        table_set_rust_fn_static(state, namespace, "GetGroupBuffItems", get_group_buff_items)?;
+    }
     #[cfg(feature = "retail-12-0-0")]
     table_set_rust_fn_static(
         state,
@@ -94,6 +98,28 @@ pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
         "GetCooldownViewerCooldownInfo",
         get_cooldown_info,
     )
+}
+
+fn get_group_buff_items(state: &mut LuaState) -> LuaResult<u32> {
+    let entries = borrow_state(state)?.cooldown_viewer_group_buffs.clone();
+    let array = create_table(state);
+    for (index, entry) in entries.iter().enumerate() {
+        let row = create_table(state);
+        for (key, value) in [
+            ("spellID", f64::from(entry.spell_id)),
+            ("displaySpellID", f64::from(entry.display_spell_id)),
+            ("iconID", f64::from(entry.icon_id)),
+            ("flags", f64::from(entry.flags)),
+        ] {
+            table_set(state, row, key, Val::Num(value));
+        }
+        let name = crate::lua_api::methods::create_string(state, &entry.name);
+        table_set(state, row, "name", name);
+        table_set(state, row, "isKnown", Val::Bool(entry.is_known));
+        set_table_array(state, array, index as i64 + 1, row);
+    }
+    state.push(array);
+    Ok(1)
 }
 
 fn query_availability(state: &mut LuaState) -> LuaResult<u32> {
