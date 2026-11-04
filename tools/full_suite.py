@@ -19,6 +19,9 @@ REPO = ROOT / "wow-ui-sim"
 RESULTS = ROOT / "full-suite-results"
 LOCK = RESULTS / ".lock"
 JOBS = os.environ.get("FULL_SUITE_JOBS", "16")
+# Integration runs many full Blizzard-UI tests (~1.1-1.5 GiB each) in one process; 16 threads exceed
+# the 9G unit (cgroup oom-kill, 2026-11-03). User decision: fewer threads for this target.
+INTEGRATION_JOBS = os.environ.get("FULL_SUITE_INTEGRATION_JOBS", "3")
 PROFILES = ("retail", "ptr", "wrath", "mists", "wowforever", "era", "anniversary")
 # Slot 2 was retired on 2026-10-27 (user decision: three build slots).
 SLOTS = (0, 1, 3)
@@ -329,17 +332,18 @@ def run(ref, build_jobs, target_dir, profile="retail", optional=False):
                                 result["steps"][name] = {"status": "not_applicable", "reason": "prefork_full_ui supports only Retail/Mists"}
                                 continue
                             phase = name
+                            step_env = dict(env, RUST_TEST_THREADS=INTEGRATION_JOBS if name == "integration" else JOBS)
                             binary = test_artifact(receipt, artifact, kind)
                             # Linux test executables link libwow_ui_sim_dylib.so from the same deps directory.
-                            env["LD_LIBRARY_PATH"] = str(Path(binary).parent)
+                            step_env["LD_LIBRARY_PATH"] = str(Path(binary).parent)
                             mount = Path.home() / ".cache/wow-ui-sim-srcmount" / target_dir.name
                             unit = f"full-suite-test-{sha[:12]}-{profile}-{name}-{time.time_ns()}"
                             command = ["systemd-run", "--user", f"--unit={unit}", "--wait", "--pipe", "--collect", "--quiet",
                                        "-p", "MemoryMax=9G", "-p", "MemorySwapMax=0",
                                        "-p", f"BindPaths={checkout}:{mount}", f"--working-directory={mount}",
-                                       *(f"--setenv={name}" for name in env), "--", binary]
+                                       *(f"--setenv={key}" for key in step_env), "--", binary]
                             try:
-                                result["steps"][name], output = run_step(name, command, checkout, log, env)
+                                result["steps"][name], output = run_step(name, command, checkout, log, step_env)
                             finally:
                                 confirm_terminated(unit, target_dir.name.removeprefix("slot-"))
                             if result["steps"][name]["exit"]:
@@ -402,7 +406,7 @@ def run(ref, build_jobs, target_dir, profile="retail", optional=False):
 def submit(ref, build_jobs, target_dir, profile="retail", optional=False):
     target_dir = validate_target_dir(target_dir)
     unit = f"full-suite-{profile}-{int(time.time())}"
-    subprocess.run(["systemd-run", "--user", f"--unit={unit}", "--collect", "--slice=agents.slice", "-p", "CPUQuota=1200%", "-p", "MemoryMax=9G", "-p", "MemorySwapMax=0", f"--setenv=FULL_SUITE_JOBS={JOBS}", sys.executable, os.path.abspath(__file__), "run", ref, "--profile", profile, "--build-jobs", str(build_jobs), "--target-dir", str(target_dir), *(["--optional"] if optional else [])], check=True)
+    subprocess.run(["systemd-run", "--user", f"--unit={unit}", "--collect", "--slice=agents.slice", "-p", "CPUQuota=1200%", "-p", "MemoryMax=9G", "-p", "MemorySwapMax=0", f"--setenv=FULL_SUITE_JOBS={JOBS}", f"--setenv=FULL_SUITE_INTEGRATION_JOBS={INTEGRATION_JOBS}", sys.executable, os.path.abspath(__file__), "run", ref, "--profile", profile, "--build-jobs", str(build_jobs), "--target-dir", str(target_dir), *(["--optional"] if optional else [])], check=True)
     print(unit)
 
 
