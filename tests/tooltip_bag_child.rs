@@ -74,9 +74,16 @@ fn tooltip_bag_child_original_accessor_selects_catalog_child_not_parent() {
         r#"
         assert(C_TooltipInfo.GetBagItemChild(0, 3, 9) == nil,
             'child 238721 is absent from pinned ItemSparse; must not invent lines')
+        assert(select('#', C_TooltipInfo.GetBagItemChild(0, 1, 17)) == 0,
+            'wrong equip slot must return no data from the producer')
+        assert(select('#', C_TooltipInfo.GetBagItemChild(0, 99, 16)) == 0,
+            'missing bag item must return no data from the producer')
         GameTooltip:SetOwner(UIParent, 'ANCHOR_NONE')
+        local shownBeforeMiss = GameTooltip:IsShown()
         GameTooltip:SetBagItemChild(0, 1, 17)
-        assert(GameTooltip:GetPrimaryTooltipData() == nil, 'wrong equip slot must not select first child')
+        local stale = GameTooltip:GetPrimaryTooltipData()
+        assert(stale == nil, 'wrong equip slot must not select first child; shownBefore=' .. tostring(shownBeforeMiss)
+            .. ' shownAfter=' .. tostring(GameTooltip:IsShown()) .. ' staleID=' .. tostring(stale and stale.id))
         GameTooltip:SetBagItemChild(0, 99, 16)
         assert(GameTooltip:GetPrimaryTooltipData() == nil, 'missing bag item must not fabricate data')
         "#,
