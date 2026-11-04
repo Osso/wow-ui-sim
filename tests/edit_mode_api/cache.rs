@@ -513,8 +513,13 @@ fn edit_mode_account_cache_preserves_all_legacy_values_and_fills_new_defaults() 
         .expect("read account settings");
 
     let expected = "0=1,1=20,2=1,3=1,4=0,5=0,6=0,7=1,8=0,9=1,10=0,11=0,12=1,13=0,14=0,15=0,16=0,17=0,18=0,19=0,20=0,21=0,22=0,23=1,24=0,25=0,26=0,27=0,28=1,29=1,30=1,31=1,32=1,33=1,34=1,35=1";
-    // Forever's pinned account-setting enum puts ShowLossOfControl at 36.
-    let expected = if cfg!(feature = "client-wowforever") {
+    // Pinned EditModeManagerConstantsDocumentation.lua: Forever 242–246;
+    // PTR 70493 215–260: both put ShowLossOfControl at 36.
+    let expected = if matches!(
+        wow_ui_sim::client_profile::ACTIVE,
+        wow_ui_sim::client_profile::ClientProfile::Ptr
+            | wow_ui_sim::client_profile::ClientProfile::WowForever
+    ) {
         format!("{expected},36=1")
     } else {
         expected.to_owned()
