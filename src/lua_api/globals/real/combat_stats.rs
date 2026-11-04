@@ -277,6 +277,10 @@ fn get_hit_modifier(state: &mut LuaState) -> LuaResult<u32> {
     push_player_stat(state, |stats| stats.hit_modifier)
 }
 
+fn get_offhand_hit_modifier(state: &mut LuaState) -> LuaResult<u32> {
+    push_player_stat(state, |stats| stats.offhand_hit_modifier)
+}
+
 fn get_spell_hit_modifier(state: &mut LuaState) -> LuaResult<u32> {
     push_player_stat(state, |stats| stats.spell_hit_modifier)
 }
@@ -432,6 +436,10 @@ const COMBAT_STAT_GLOBALS: &[(&str, RustFn)] = &[
 ];
 
 pub fn register_all(lua: &mut rilua::Lua) -> crate::Result<()> {
+    // Forever 70707 PlayerScriptDocumentation.lua:660-668 and WM99.
+    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::WowForever {
+        LuaApiMut::register_function(lua, "GetOffhandHitModifier", get_offhand_hit_modifier)?;
+    }
     #[cfg(feature = "client-retail")]
     retail_inputs::register_all(lua)?;
     for &(name, function) in COMBAT_STAT_GLOBALS {

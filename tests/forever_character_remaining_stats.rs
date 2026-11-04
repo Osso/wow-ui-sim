@@ -88,6 +88,25 @@ mod forever {
     }
 
     #[test]
+    fn offhand_hit_modifier_reads_independent_state_without_a_weapon() {
+        let env = env();
+        assert_eq!(env.eval::<f64>("return GetOffhandHitModifier()").unwrap(), 0.0);
+        env.state().borrow_mut().equipped_items.remove(&17);
+        for value in [1.25, -2.5] {
+            {
+                let state = env.state();
+                let mut sim = state.borrow_mut();
+                sim.player.stats.hit_modifier = 19.0;
+                sim.player.stats.offhand_hit_modifier = value;
+            }
+            let (offhand, melee, count): (f64, f64, i32) = env
+                .eval("return GetOffhandHitModifier(), GetHitModifier(), select('#', GetOffhandHitModifier())")
+                .unwrap();
+            assert_eq!((offhand, melee, count), (value, 19.0, 1));
+        }
+    }
+
+    #[test]
     fn defense_skill_resolves_player_target_and_missing_unit_without_changing_unit_defense() {
         let env = env();
         env.state().borrow_mut().player.level = 12;
