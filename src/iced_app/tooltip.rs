@@ -215,7 +215,7 @@ fn measure_native_tooltip(state: &mut SimState, id: u64, fonts: &mut WowFontSyst
                 continue;
             }
             let (font, size, scale, _, _) = native_line_font(state, &td, index, false);
-            let text = tooltip_visible_text(&line.left_text);
+            let text = native_line_text(state, &td, index, false, &line.left_text);
             fitted = fitted.max(
                 fonts.measure_fitted_text_width(&text, font.as_deref(), size, width / scale)
                     * scale,
@@ -239,15 +239,26 @@ fn measure_native_tooltip(state: &mut SimState, id: u64, fonts: &mut WowFontSyst
             continue;
         }
         let (font, size, scale, spacing, smooth) = native_line_font(state, &td, index, false);
-        let text = tooltip_visible_text(&line.left_text);
-        let measured = fonts.measure_text_height(
-            &text,
-            font.as_deref(),
-            size,
-            wrapped.then_some(width / scale),
-            spacing,
-            smooth,
-        ) * scale;
+        let text = native_line_text(state, &td, index, false, &line.left_text);
+        let measured = if let Some(TooltipTexture::PathAttachment(attachment)) = &line.texture {
+            attachment.geometry(size).0
+        } else {
+            fonts.measure_text_height(
+                &text,
+                font.as_deref(),
+                size,
+                wrapped.then_some(width / scale),
+                spacing,
+                smooth,
+            ) * scale
+        };
+        if let Some(line_id) = td.left_line_ids.get(index).copied() {
+            if let Some(frame) = state.widgets.get_mut_visual(line_id) {
+                frame.height = measured;
+                frame.height_is_text_auto = true;
+            }
+            state.widgets.mark_rect_dirty(line_id);
+        }
         if height > 0.0 {
             height += td.line_spacing.unwrap_or(TOOLTIP_LINE_SPACING);
         }
@@ -282,6 +293,25 @@ fn native_line_font(
         .unwrap_or((None, tooltip_line_font_size(index), 1.0, 0.0, false))
 }
 
+fn native_line_text(
+    state: &SimState,
+    td: &crate::lua_api::tooltip::TooltipData,
+    index: usize,
+    right: bool,
+    fallback: &str,
+) -> String {
+    let ids = if right {
+        &td.right_line_ids
+    } else {
+        &td.left_line_ids
+    };
+    ids.get(index)
+        .and_then(|id| state.widgets.get(*id))
+        .and_then(|frame| frame.text.as_deref())
+        .map(tooltip_visible_text)
+        .unwrap_or_else(|| tooltip_visible_text(fallback))
+}
+
 fn native_line_width(
     state: &SimState,
     td: &crate::lua_api::tooltip::TooltipData,
@@ -298,7 +328,8 @@ fn native_line_width(
         return 0.0;
     }
     let (font, size, scale, _, _) = native_line_font(state, td, index, right);
-    fonts.measure_text_width(&tooltip_visible_text(text), font.as_deref(), size) * scale
+    let text = native_line_text(state, td, index, right, text);
+    fonts.measure_text_width(&text, font.as_deref(), size) * scale
 }
 
 fn tooltip_column_gap(left: &str, right: Option<&str>, effective_scale: f32) -> f32 {
