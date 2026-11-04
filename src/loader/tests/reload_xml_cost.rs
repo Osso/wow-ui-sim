@@ -238,6 +238,24 @@ fn reload_xml_layer_reconstruction_bounds_source_compiles() {
     // Only an exact, distinct test selector enters reconstruction. No ambient
     // marker can select a branch that skips this parent's budget assertion.
     let cache = tempfile::tempdir().unwrap();
+    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::WowForever {
+        // Preserve real input populated by `casc sync-forever-spells` while
+        // isolating the bytecode cache. Do not fetch assets inside this test.
+        let source = crate::blizzard_ui_sync::forever_spells::cache_path().unwrap();
+        let destination = cache
+            .path()
+            .join("wow-ui-sim/spells/wowforever/spells.json");
+        std::fs::create_dir_all(destination.parent().unwrap()).unwrap();
+        std::fs::copy(&source, &destination).unwrap_or_else(|error| {
+            panic!(
+                "copy Forever spell input {}: {error}; run `wow-cli casc sync-forever-spells` before this test",
+                source.display()
+            )
+        });
+        let mut permissions = std::fs::metadata(&destination).unwrap().permissions();
+        permissions.set_readonly(true);
+        std::fs::set_permissions(&destination, permissions).unwrap();
+    }
     let mut command = exact_test_command(CHILD_TEST_NAME);
     command
         .env("WOW_SIM_PROFILE_GENERATED_CHUNKS", "1")

@@ -27,6 +27,7 @@ const SUPPLEMENTAL_SPELLS: &[(u32, SpellInfo)] = &[
             icon_file_data_id: 135462,
             school_mask: 1,
             implicit_target: 21,
+            attributes_9: None,
         },
     ),
     #[cfg(feature = "client-wowforever")]
@@ -38,6 +39,7 @@ const SUPPLEMENTAL_SPELLS: &[(u32, SpellInfo)] = &[
             icon_file_data_id: 136086,
             school_mask: 1,
             implicit_target: 25,
+            attributes_9: None,
         },
     ),
     (52042, spell("Healing Stream Totem", 136243, 13)),
@@ -81,6 +83,7 @@ const SUPPLEMENTAL_SPELLS: &[(u32, SpellInfo)] = &[
             icon_file_data_id: 5061347,
             school_mask: 12,
             implicit_target: 1,
+            attributes_9: None,
         },
     ),
     (456574, spell("Cinder Nectar", 132805, 1)),
@@ -93,6 +96,7 @@ const SUPPLEMENTAL_SPELLS: &[(u32, SpellInfo)] = &[
             icon_file_data_id: 7539422,
             school_mask: 1,
             implicit_target: 1,
+            attributes_9: None,
         },
     ),
 ];
@@ -104,6 +108,7 @@ const fn spell(name: &'static str, icon_file_data_id: u32, implicit_target: u8) 
         icon_file_data_id,
         school_mask: 0,
         implicit_target,
+        attributes_9: None,
     }
 }
 

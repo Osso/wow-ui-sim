@@ -18,17 +18,20 @@ pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
         let namespace = ensure_namespace(state, "C_TransmogSets")?;
         table_set_rust_fn_static(state, namespace, "HasAnyValidSets", catalog::has_any_valid)?;
     }
-    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::WowForever {
-        return Ok(());
+    // Forever 70707 TransmogSetsDocumentation.lua declares both queries.
+    if cfg!(feature = "retail-12-0-0")
+        || crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::WowForever
+    {
+        let namespace = ensure_namespace(state, "C_TransmogSets")?;
+        table_set_rust_fn_static(state, namespace, "GetSetInfo", catalog::get_info)?;
+        table_set_rust_fn_static(state, namespace, "HasAvailableSets", catalog::has_available)?;
     }
     if !cfg!(feature = "retail-12-0-0") {
         return Ok(());
     }
     let namespace = ensure_namespace(state, "C_TransmogSets")?;
-    table_set_rust_fn_static(state, namespace, "GetSetInfo", catalog::get_info)?;
     table_set_rust_fn_static(state, namespace, "GetVariantSets", catalog::get_variants)?;
     table_set_rust_fn_static(state, namespace, "GetAvailableSets", catalog::get_available)?;
-    table_set_rust_fn_static(state, namespace, "HasAvailableSets", catalog::has_available)?;
     table_set_rust_fn_static(state, namespace, "GetSetsFilter", get_sets_filter)?;
     table_set_rust_fn_static(state, namespace, "SetSetsFilter", set_sets_filter)?;
     table_set_rust_fn_static(

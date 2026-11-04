@@ -227,6 +227,8 @@ mod lfr_availability;
 pub(crate) mod pet_orders;
 pub mod profession_spec_inputs;
 pub(crate) use lfr_availability::stock_lfr_availability;
+#[cfg(all(test, feature = "client-wowforever"))]
+mod forever_lib_baseline_tests;
 pub mod outfit_entry;
 mod scenario_finder_availability;
 pub mod store_public_eligibility;
@@ -314,6 +316,8 @@ pub mod map_world_coordinates;
 pub(crate) mod patch_12_0_7_inputs;
 mod spell_cooldown_output;
 pub(crate) mod spell_tooltip_cost;
+#[cfg(test)]
+mod spell_tooltip_cost_tests;
 pub(crate) mod talent_spell;
 pub(crate) mod unit_aura_access;
 #[cfg(feature = "retail-12-0-5")]

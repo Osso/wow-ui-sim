@@ -35,6 +35,17 @@ pub struct CooldownViewerCooldown {
     pub valid_alert_types: Vec<u8>,
 }
 
+/// Supplied Forever `GroupBuffItem`; no rank or display-data derivation.
+#[derive(Clone, Debug, PartialEq, Eq)]
+pub struct GroupBuffItem {
+    pub spell_id: i32,
+    pub display_spell_id: i32,
+    pub name: String,
+    pub icon_id: u32,
+    pub flags: i32,
+    pub is_known: bool,
+}
+
 /// Explicit host availability, not a class/spec eligibility inference.
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub struct CooldownViewerAvailability {
@@ -64,6 +75,10 @@ pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
             query_availability,
         )?;
     }
+    // Forever 70707 CooldownViewerDocumentation.lua:43-50,149-159.
+    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::WowForever {
+        table_set_rust_fn_static(state, namespace, "GetGroupBuffItems", get_group_buff_items)?;
+    }
     #[cfg(feature = "retail-12-0-0")]
     table_set_rust_fn_static(
         state,
@@ -83,6 +98,28 @@ pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
         "GetCooldownViewerCooldownInfo",
         get_cooldown_info,
     )
+}
+
+fn get_group_buff_items(state: &mut LuaState) -> LuaResult<u32> {
+    let entries = borrow_state(state)?.cooldown_viewer_group_buffs.clone();
+    let array = create_table(state);
+    for (index, entry) in entries.iter().enumerate() {
+        let row = create_table(state);
+        for (key, value) in [
+            ("spellID", f64::from(entry.spell_id)),
+            ("displaySpellID", f64::from(entry.display_spell_id)),
+            ("iconID", f64::from(entry.icon_id)),
+            ("flags", f64::from(entry.flags)),
+        ] {
+            table_set(state, row, key, Val::Num(value));
+        }
+        let name = crate::lua_api::methods::create_string(state, &entry.name);
+        table_set(state, row, "name", name);
+        table_set(state, row, "isKnown", Val::Bool(entry.is_known));
+        set_table_array(state, array, index as i64 + 1, row);
+    }
+    state.push(array);
+    Ok(1)
 }
 
 fn query_availability(state: &mut LuaState) -> LuaResult<u32> {

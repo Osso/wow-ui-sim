@@ -283,6 +283,7 @@ macro_rules! build_empty_sim_state {
             is_active_battlefield: false,
             spell_trade_skill_links: HashMap::new(),
             spell_id_aliases: HashMap::new(),
+            spell_tooltip_cost_contexts: HashMap::new(),
             #[cfg(feature = "retail-12-0-5")]
             maw_powers: Default::default(),
             has_active_delve: false,
@@ -381,6 +382,7 @@ macro_rules! build_empty_sim_state {
             #[cfg(feature = "client-wrath")]
             last_sound_name_requested: None,
             cooldown_viewer_cooldowns: Default::default(),
+            cooldown_viewer_group_buffs: Vec::new(),
             cooldown_viewer_availability: Default::default(),
             #[cfg(feature = "retail-12-0-0")]
             spell_classifications: Default::default(),

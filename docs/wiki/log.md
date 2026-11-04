@@ -1,3 +1,10 @@
+## [2026-11-04] correction | Forever library and WM98
+
+Reconciled the [Forever publication contract](../specs/forever-lib-publication.md)
+and [WM98 spell costs](../specs/spell-tooltip-cost.md). The historical audit now
+links the superseding native evidence limits; generated group-9 attributes retain
+70391 provenance without unrelated record changes. Library proof remains distinct
+from native parity and final all-profile acceptance.
 ## [2026-11-04] investigation | Forever tooltip baseline
 
 Updated [Forever compatibility](investigations/forever-addon-startup-compatibility.md#tooltip-baseline-fixtures-and-producers)
@@ -1691,7 +1698,7 @@ Owned specs/audits/index updated from queued to integrated: 3.4.3 `80a3fb104`, 3
 
 ## [2026-10-08] investigation | Patch 6.2.0 API audit
 
-Pinned parent page 149103/1460518: zero inventory, eleven accounted extract rows. Retail spell-link cost omission modeled; two item-link contracts recorded pending. All targeted tests, fixtures, format/Mists and matching addons-enabled startup [] pass; 49 registers/46 extracts reproduce, three inherited failures. Thirty prior validators plus own portable gate pass; no retirements. Wiki files preserved without shrinkage.
+Pinned parent page 149103/1460518: zero inventory, eleven accounted extract rows. Retail spell-link cost omission was modeled (superseded on 2026-11-04 by [WM98 eligibility](../specs/spell-tooltip-cost.md)); two item-link contracts recorded pending. All targeted tests, fixtures, format/Mists and matching addons-enabled startup [] pass; 49 registers/46 extracts reproduce, three inherited failures. Thirty prior validators plus own portable gate pass; no retirements. Wiki files preserved without shrinkage.
 
 ## [2026-10-08] investigation | Patch 6.1.0 API audit
 
