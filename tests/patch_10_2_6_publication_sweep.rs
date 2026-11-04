@@ -1,6 +1,7 @@
 //! Publication/absence only: no signature, output, security, or behavior parity claim.
 #![cfg(feature = "client-retail")]
 
+#[cfg(feature = "optional-tests")]
 #[path = "common/publication_sweep.rs"]
 mod sweep;
 

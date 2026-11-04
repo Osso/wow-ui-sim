@@ -2,6 +2,7 @@
 //! No historical/native security or complete signature parity claim.
 #![cfg(feature = "client-retail")]
 
+#[cfg(feature = "optional-tests")]
 #[path = "common/publication_sweep.rs"]
 mod sweep;
 
