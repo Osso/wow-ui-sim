@@ -796,9 +796,23 @@ fn addon_tainted_table_slot_does_not_make_table_secret() {
     assert_eq!(stored, "stored");
 }
 
+// WM91 §§2–4: Forever keeps loadstring provenance separate from secrecy.
+// Other profiles retain their existing expectations in this bounded correction.
+fn tainted_loadstring_is_secret() -> bool {
+    let profile = wow_ui_sim::client_profile::ACTIVE;
+    profile.uses_secret_values()
+        && profile != wow_ui_sim::client_profile::ClientProfile::WowForever
+}
+
 #[test]
 fn test_secure_map_rejects_secret_keys_and_values() {
     let env = env();
+    if wow_ui_sim::client_profile::ACTIVE == wow_ui_sim::client_profile::ClientProfile::WowForever {
+        let path = wow_ui_sim::blizzard_ui_sync::default_cache_addons_path()
+            .unwrap()
+            .join("Blizzard_SharedXMLBase/SecureTypes.lua");
+        env.exec(&std::fs::read_to_string(path).unwrap()).unwrap();
+    }
     let (key_error, value_error, stored_value): (String, String, String) = env
         .eval(
             r#"
@@ -814,6 +828,8 @@ fn test_secure_map_rejects_secret_keys_and_values() {
                 map:SetValue("safe", secretValue)
             end)
 
+            if keyOk then assert(map:GetValue(secretKey) == "safe") end
+            if valueOk then assert(map:GetValue("safe") == secretValue) end
             map:SetValue("safe", "stored")
             return keyOk and "" or keyErr,
                 valueOk and "" or valueErr,
@@ -822,7 +838,7 @@ fn test_secure_map_rejects_secret_keys_and_values() {
         )
         .unwrap();
 
-    if wow_ui_sim::client_profile::ACTIVE.uses_secret_values() {
+    if tainted_loadstring_is_secret() {
         assert!(
             key_error.contains("attempted to store a secret key in a SecureMap"),
             "secret key should be rejected, got: {key_error}"
@@ -832,8 +848,8 @@ fn test_secure_map_rejects_secret_keys_and_values() {
             "secret value should be rejected, got: {value_error}"
         );
     } else {
-        assert_eq!(key_error, "", "Classic tainted function key is not secret");
-        assert_eq!(value_error, "", "Classic tainted function value is not secret");
+        assert_eq!(key_error, "", "taint alone does not make the key secret");
+        assert_eq!(value_error, "", "taint alone does not make the value secret");
     }
     assert_eq!(stored_value, "stored");
 }
@@ -863,8 +879,8 @@ fn test_issecretvalue_tainted() {
         .unwrap();
     assert_eq!(
         result,
-        wow_ui_sim::client_profile::ACTIVE.uses_secret_values(),
-        "loadstring secrecy follows the profile without removing closure taint"
+        tainted_loadstring_is_secret(),
+        "WM91: Forever loadstring provenance does not mark a value secret"
     );
 }
 
@@ -889,8 +905,8 @@ fn test_canaccessvalue_tainted() {
         .unwrap();
     assert_eq!(
         result,
-        !wow_ui_sim::client_profile::ACTIVE.uses_secret_values(),
-        "loadstring secret access follows the profile"
+        !tainted_loadstring_is_secret(),
+        "WM91: a nonsecret loadstring closure remains accessible"
     );
 }
 
@@ -917,8 +933,8 @@ fn test_canaccessallvalues_one_tainted() {
         .unwrap();
     assert_eq!(
         result,
-        !wow_ui_sim::client_profile::ACTIVE.uses_secret_values(),
-        "mixed secret access follows the profile"
+        !tainted_loadstring_is_secret(),
+        "WM91: nonsecret loadstring closures do not deny bulk access"
     );
 }
 
@@ -943,13 +959,21 @@ fn create_explicit_secret_party_env() -> WowLuaEnv {
     env
 }
 
+// WM91 §1: ordinary Forever group tokens bypass explicit identity secrecy.
+// Retail fixtures above explicitly supply restricted identity GUIDs.
+fn party_fixture_is_secret() -> bool {
+    let profile = wow_ui_sim::client_profile::ACTIVE;
+    profile.uses_secret_values()
+        && profile != wow_ui_sim::client_profile::ClientProfile::WowForever
+}
+
 #[test]
 fn test_party_roster_name_is_secret_value() {
     let env = create_explicit_secret_party_env();
     let (secret, accessible): (bool, bool) = env
         .eval("local name = UnitName('party1'); return issecretvalue(name), canaccessvalue(name)")
         .unwrap();
-    let expected_secret = wow_ui_sim::client_profile::ACTIVE.uses_secret_values();
+    let expected_secret = party_fixture_is_secret();
     assert_eq!(secret, expected_secret, "party roster identity secrecy");
     assert_eq!(accessible, !expected_secret, "party roster identity access");
 }
@@ -965,9 +989,12 @@ fn test_party_full_name_marks_name_and_realm_secret() {
             "#,
         )
         .unwrap();
-    let expected_secret = wow_ui_sim::client_profile::ACTIVE.uses_secret_values();
+    let expected_secret = party_fixture_is_secret();
     assert_eq!(name_secret, expected_secret, "party full-name secrecy");
-    assert_eq!(realm_secret, expected_secret, "party realm secrecy");
+    // WM91: the same-realm Forever payload is UNKNOWN; do not choose nil or text here.
+    if wow_ui_sim::client_profile::ACTIVE != wow_ui_sim::client_profile::ClientProfile::WowForever {
+        assert_eq!(realm_secret, expected_secret, "party realm secrecy");
+    }
     assert_eq!(all_accessible, !expected_secret, "party bulk access");
 }
 
@@ -979,8 +1006,8 @@ fn test_table_containing_party_identity_is_not_accessible() {
         .unwrap();
     assert_eq!(
         accessible,
-        !wow_ui_sim::client_profile::ACTIVE.uses_secret_values(),
-        "nested party identity access follows the profile"
+        !party_fixture_is_secret(),
+        "WM91: ordinary Forever party identity remains accessible in tables"
     );
 }
 
@@ -1057,4 +1084,94 @@ fn test_issecretvalue_without_argument_ignores_stale_stack_slots() {
         .unwrap();
     assert!(!is_secret, "issecretvalue() with no argument returns false");
     assert!(accessible, "canaccessvalue() with no argument returns true");
+}
+
+// WM91: exercise the unchanged, TOC-selected Shared name consumer. Distinct
+// party fixtures reject constant/no-op identity producers; taint is not secrecy.
+#[cfg(feature = "client-wowforever")]
+#[test]
+fn forever_party_name_consumer_keeps_public_identity_accessible() {
+    let env = env();
+    let path = wow_ui_sim::blizzard_ui_sync::default_cache_addons_path()
+        .unwrap()
+        .join("Blizzard_UnitFrame/Shared/CompactUnitFrame.lua");
+    let source = std::fs::read_to_string(path).unwrap();
+    for declaration in [
+        "function CompactUnitFrame_IsTapDenied(frame)",
+        "function CompactUnitFrame_UpdateName(frame)",
+    ] {
+        let tail = &source[source.find(declaration).unwrap()..];
+        let end = tail.find("\nend").unwrap() + "\nend".len();
+        env.exec(&tail[..end]).unwrap();
+    }
+    env.exec(r#"
+        A_Admin.SetPartySize(4)
+        local holder = CreateFrame('Frame')
+        local text = holder:CreateFontString(nil, 'OVERLAY')
+        local frame = {
+            name = text, optionTable = {},
+            ShouldShowName = function() return true end,
+        }
+        local previous
+        for _, combat in ipairs({false, true}) do
+            A_Admin.SetInCombat(combat)
+            for _, token in ipairs({'party1', 'party2', 'party4'}) do
+                frame.unit = token
+                frame.displayedUnit = token
+                CompactUnitFrame_UpdateName(frame)
+                local name = UnitName(token)
+                local fullName = UnitFullName(token)
+                assert(type(name) == 'string' and name ~= 'Unknown')
+                assert(name ~= previous, 'distinct party fixtures')
+                previous = name
+                assert(text:GetText() == name and text:IsShown(), 'rendered party name')
+                assert(fullName == name, 'full-name first result')
+                assert(not issecretvalue(name) and canaccessvalue(name), 'public party name')
+                assert(not issecretvalue(fullName) and canaccessvalue(fullName), 'public full name')
+                assert(canaccesstable({name = name}), 'nested public identity')
+            end
+        end
+    "#).unwrap();
+}
+
+#[cfg(feature = "client-wowforever")]
+#[test]
+fn forever_loadstring_literals_are_public_but_secret_results_stay_secret() {
+    let env = env();
+    env.exec(r#"
+        local wrapped = secretwrap('private')
+        forceinsecure()
+        local f = loadstring("return 17, 'public', issecure()")
+        local number, text, secure = f()
+        assert(not secure and not issecure(), 'preserve execution taint')
+        assert(number == 17 and text == 'public')
+        assert(not issecretvalue(f) and canaccessvalue(f), 'public compiled closure')
+        assert(not issecretvalue(number) and not issecretvalue(text), 'public literals')
+        assert(canaccessallvalues(f, number, text), 'public values remain accessible')
+        assert(canaccesstable({callback = f, value = text}), 'deep check ignores ordinary taint')
+        local returned = loadstring('return ...')(wrapped)
+        assert(issecretvalue(returned), 'loadstring does not declassify secret results')
+        assert(not canaccessvalue(returned) and not canaccessallvalues(text, returned))
+        assert(not canaccesstable({nested = {returned}}), 'nested secret remains inaccessible')
+    "#).unwrap();
+}
+
+#[cfg(feature = "client-wowforever")]
+#[test]
+fn forever_original_secure_map_rejects_vm_secret_keys_and_values() {
+    let env = env();
+    let path = wow_ui_sim::blizzard_ui_sync::default_cache_addons_path()
+        .unwrap()
+        .join("Blizzard_SharedXMLBase/SecureTypes.lua");
+    env.exec(&std::fs::read_to_string(path).unwrap()).unwrap();
+    env.exec(r#"
+        local map = SecureTypes.CreateSecureMap()
+        local secret = secretwrap('private')
+        local ok, reason = pcall(function() map:SetValue(secret, 'public') end)
+        assert(not ok and reason:find('attempted to store a secret key in a SecureMap', 1, true))
+        ok, reason = pcall(function() map:SetValue('public', secret) end)
+        assert(not ok and reason:find('attempted to store a secret value in a SecureMap', 1, true))
+        map:SetValue('public', 19)
+        assert(map:GetValue('public') == 19)
+    "#).unwrap();
 }

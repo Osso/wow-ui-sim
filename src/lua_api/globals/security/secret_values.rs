@@ -127,12 +127,11 @@ pub(super) fn value_is_secret(
     value: Val,
     visited: &mut HashSet<rilua::vm::gc::arena::GcRef<Table>>,
 ) -> bool {
-    if is_secret_value(state, value) || value_has_secret_marker(state, value) {
+    if value_is_secret_shallow(state, value) {
         return true;
     }
 
     match value {
-        Val::Function(func_ref) => function_is_secret(state, func_ref),
         Val::Table(table_ref) => table_is_secret(state, table_ref, visited),
         _ => false,
     }
@@ -149,6 +148,11 @@ pub(super) fn value_is_secret(
 /// every released frame, plus SecureMap/SecureStack assertions on every
 /// reclaim).
 pub(super) fn value_is_secret_shallow(state: &mut LuaState, value: Val) -> bool {
+    // WM91: use the same value-level predicate as Forever's registered VM
+    // issecretvalue. Named closure taint and legacy string markers are not secrets.
+    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::WowForever {
+        return is_secret_value(state, value);
+    }
     if is_secret_value(state, value) || value_has_secret_marker(state, value) {
         return true;
     }
