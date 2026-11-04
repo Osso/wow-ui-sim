@@ -42,13 +42,26 @@ pub(super) fn clear_lines(state: &mut LuaState) -> LuaResult<u32> {
     clear_cached_tooltip_line_text(&mut sim, &line_ids);
     if wrath {
         hide_wrath_tooltip_children(&mut sim, id, &line_ids);
+    } else if native_sizing_timing() {
+        reset_tooltip_lines(&mut sim, &line_ids);
     }
     refresh_tooltip_geometry(&mut sim, id);
     drop(sim);
-    if !wrath || had_lines {
+    if had_lines || (!wrath && !native_sizing_timing()) {
         fire_tooltip_script(state, id, "OnTooltipCleared");
     }
     Ok(0)
+}
+
+fn reset_tooltip_lines(sim: &mut crate::lua_api::state::SimState, line_ids: &[u64]) {
+    for &id in line_ids {
+        if let Some(frame) = sim.widgets.get_mut_visual(id) {
+            frame.visible = false;
+            frame.width = 0.0;
+            frame.word_wrap = false;
+        }
+        sim.widgets.mark_rect_dirty(id);
+    }
 }
 
 fn hide_wrath_tooltip_children(
