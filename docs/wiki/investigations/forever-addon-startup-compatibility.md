@@ -14,9 +14,10 @@ Active slots include the supplied spell ID and rate. When two totems share a
 spell ID, the Blizzard cache keeps the slot with the latest expiration.
 
 The next refresh step scans legacy talent slots for icons. Forever exposes
-`C_SpecializationInfo.GetTalentInfo()` with the existing query validation.
-The query returns nil for the unmodeled tier-and-column grid, so the icon
-provider skips those rows and continues collecting icons.
+`C_SpecializationInfo.GetTalentInfo()` over a
+[supplied character grid](../systems/forever-talents.md). The default snapshot
+has no rows, so the icon provider skips them; supplied rows produce WM90 talent
+records. No populated Forever database export is assumed.
 
 The Edit Mode regression enters through the Game Menu and checks the Blizzard
 cache with populated totem slots. In the Windows 70707 check, Edit Mode became
