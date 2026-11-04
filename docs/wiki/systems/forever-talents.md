@@ -61,6 +61,18 @@ icon. There is no implicit populated catalog and no sorting by orderIndex. One
 named inferred seam maps absent tree relations to an empty provider. Native
 relation acquisition and live provider behavior remain unknown.
 
+## Trait-group currency snapshots
+
+[WM102 group currency](../../specs/forever-trait-group-currency.md) selects a
+supplied configuration's positive-rank node memberships and checks requested
+known groups for a common tree. Separate supplied accumulator and tree-currency
+orders preserve provider traversal without sorting or echoing requests. Resolved
+cost/holdings snapshots are an explicit UNKNOWN acquisition boundary; the model
+does not derive unknown native per-node merges or source eligibility. Missing
+populated sources raise named diagnostics. Native empty cases use the separately
+labelled inferred public empty-array result. The unchanged original Camelot
+ClassTalents tab-switch tooltip regression passes with this query.
+
 ## Event delivery seam
 
 `A_Admin.FireEvent` is the single host-controlled notification seam. Reading

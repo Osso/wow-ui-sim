@@ -7,12 +7,12 @@ per-node cost merging, holdings/source policy or concrete accumulator traversal.
 
 ## What it must do
 
-- [ ] Parse both required inputs before missing-state lookup. Config ID and group-array elements accept native numeric strings, check signed-32 bounds and truncate fractions toward zero. Read the table's Lua array-length segment at integer keys, not its string/hash keys as a group set. Rejected inputs include the native usage body `Usage: local groupCurrencyInfos = C_Traits.GetGroupCurrencyInfo(configID, groupIDs)`; parser/security errors are not empty-result cases.
-- [ ] Unknown configuration, no known requested group, no positive-rank requested membership, or known groups from different trees produce one empty array through a named **INFERRED public-result seam**. Unknown groups do not invalidate matching known groups, and duplicate requests do not multiply membership.
-- [ ] Only positive stored ranks create eligible group accumulators. Return them in explicitly supplied bucket/chain order, not request order or numeric sorting. Nested currency rows follow a separately supplied tree-currency provider order.
-- [ ] Each outer row has traitNodeGroupID and currencyInfos. Each nested row has traitCurrencyID, quantity and spent plus optional maxQuantity and spentInTree. Preserve signed values, absent optionals, empty nested arrays and detached snapshots.
-- [ ] Native unresolved cost/holdings and traversal are one explicit **UNKNOWN supplied-input boundary**: callers supply already-resolved signed-32 quantities/costs and accumulator order. Missing populated sources raise named diagnostics rather than silently inventing zero costs, holdings or order. No native acquisition, per-rank formula or merge policy is claimed by these snapshots.
-- [ ] Publish on Forever only. The original Camelot ClassTalents header path must reach the modeled query without a missing-method failure.
+- [x] Parse both required inputs before missing-state lookup. Config ID and group-array elements accept native numeric strings, check signed-32 bounds and truncate fractions toward zero. Read the table's Lua array-length segment at integer keys, not its string/hash keys as a group set. Rejected inputs include the native usage body `Usage: local groupCurrencyInfos = C_Traits.GetGroupCurrencyInfo(configID, groupIDs)`; parser/security errors are not empty-result cases.
+- [x] Unknown configuration, no known requested group, no positive-rank requested membership, or known groups from different trees produce one empty array through a named **INFERRED public-result seam**. Unknown groups do not invalidate matching known groups, and duplicate requests do not multiply membership.
+- [x] Only positive stored ranks create eligible group accumulators. Return them in explicitly supplied bucket/chain order, not request order or numeric sorting. Nested currency rows follow a separately supplied tree-currency provider order.
+- [x] Each outer row has traitNodeGroupID and currencyInfos. Each nested row has traitCurrencyID, quantity and spent plus optional maxQuantity and spentInTree. Preserve signed values, absent optionals, empty nested arrays and detached snapshots.
+- [x] Native unresolved cost/holdings and traversal are one explicit **UNKNOWN supplied-input boundary**: callers supply already-resolved signed-32 quantities/costs and accumulator order. Missing populated sources raise named diagnostics rather than silently inventing zero costs, holdings or order. No native acquisition, per-rank formula or merge policy is claimed by these snapshots.
+- [x] Publish on Forever only. The original Camelot ClassTalents header path must reach the modeled query without a missing-method failure.
 
 ## How it works
 
