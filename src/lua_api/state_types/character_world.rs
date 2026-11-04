@@ -246,6 +246,9 @@ pub struct PlayerState {
     pub class_index: i32,
     pub race_index: usize,
     pub level: i32,
+    /// Supplied effective-level field; zero selects the ordinary `level`, matching
+    /// the native standard interface (WM97c A).
+    pub effective_level: i32,
     pub sex: i32,
     pub power: i32,
     pub power_max: i32,

@@ -3,6 +3,8 @@
 
 mod bonus;
 mod link;
+mod scaling;
+mod tables;
 
 pub use link::{ParsedItemLink, parse_item_link};
 
@@ -42,12 +44,13 @@ impl ItemDescriptor {
     }
 
     /// Resolve into a copy, never mutate the catalog or the selected descriptor.
-    pub fn resolve(&self) -> Result<Option<crate::items::ItemInfo>, String> {
+    /// `player_level` is the inferred local-player context of WM97b step 3.
+    pub fn resolve(&self, player_level: i32) -> Result<Option<crate::items::ItemInfo>, String> {
         let Some(base) = crate::items::get_item(self.item_id) else {
             return Ok(None);
         };
         let mut item = base.clone();
-        bonus::apply(self, &mut item)?;
+        bonus::apply(self, &mut item, player_level)?;
         Ok(Some(item))
     }
 }

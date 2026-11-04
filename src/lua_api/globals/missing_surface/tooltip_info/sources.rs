@@ -38,8 +38,17 @@ pub(super) fn tooltip_for_item_link(
         return Ok(tooltip_for_item_id(state, item_id));
     };
     let descriptor = parsed.descriptor;
+    let player_level = {
+        let model = borrow_state(state)?;
+        let player = &model.player;
+        if player.effective_level != 0 {
+            player.effective_level
+        } else {
+            player.level
+        }
+    };
     let resolved = descriptor
-        .resolve()
+        .resolve(player_level)
         .map_err(|error| rilua::runtime_error(format!("C_TooltipInfo.GetHyperlink: {error}")))?;
     Ok(match resolved {
         Some(item) => tooltip_for_item_info(state, descriptor.item_id, &item),
