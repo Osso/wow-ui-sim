@@ -77,13 +77,10 @@ fn show_or_hide(state: &mut LuaState, id: u64, shown: bool) -> LuaResult<()> {
         }
     }
     if !shown {
-        // Forever follows the INFERRED WM63 O17 owner/hide contract; its
-        // Mainline GameTooltip.lua:395-431 uses the same OnHide cleanup.
         let clear_tooltip = matches!(
             crate::client_profile::ACTIVE,
             crate::client_profile::ClientProfile::Retail
                 | crate::client_profile::ClientProfile::Ptr
-                | crate::client_profile::ClientProfile::WowForever
         ) && borrow_state(state)?
             .widgets
             .get(id)
