@@ -28,3 +28,30 @@ fn blizzard_tooltip_typed_icons_attach_to_their_existing_rows() {
     )
     .unwrap();
 }
+
+#[test]
+fn tooltip_attachment_cap_is_per_tooltip_and_clear_resets_it() {
+    let env = setup_full_env();
+    env.exec(
+        r#"
+        GameTooltip:SetOwner(UIParent, "ANCHOR_NONE")
+        GameTooltip:AddTexture(134400, { width = 200 })
+        assert(GameTooltip:NumLines() == 0, "an empty tooltip has no attachment row")
+        GameTooltip:AddLine("First")
+        for i = 1, 29 do GameTooltip:AddTexture(134400) end
+        GameTooltip:AddLine("Second")
+        GameTooltip:AddTexture(134400)
+        GameTooltip:AddTexture(134400, { width = 200 })
+        GameTooltip:Show()
+        local _, _, _, x = GameTooltip:GetLeftLine(2):GetPoint(2)
+        assert(math.abs(x - 30) < 0.1, "the thirty-first attachment must not reserve space")
+        GameTooltip:ClearLines()
+        GameTooltip:AddLine("Fresh")
+        GameTooltip:AddTexture(134400, { width = 50 })
+        GameTooltip:Show()
+        local _, _, _, fresh = GameTooltip:GetLeftLine(1):GetPoint(2)
+        assert(math.abs(fresh - 68) < 0.1, "clearing lines releases the attachment capacity")
+        "#,
+    )
+    .unwrap();
+}
