@@ -152,6 +152,15 @@ fn complete_display_info_initializes_original_system_maps() {
             assert(gamepad[setting].type == Enum.EditModeSettingDisplayType.Checkbox)
         end
         assert(manager:GetSystemSettingDisplayInfoMap(2) ~= nil)
+        -- PTR 70493 EditModeManagerConstantsDocumentation.lua:797–828;
+        -- original EditModeSettingDisplayInfo.lua:427–438 publishes this slider.
+        local unitFrame = manager:GetSystemSettingDisplayInfoMap(3)
+        assert(unitFrame[22], 'missing declared BuffIconSize slider at key 22')
+        assert(unitFrame[22].setting == 22)
+        assert(unitFrame[22].minValue == 50 and unitFrame[22].maxValue == 200)
+        assert(unitFrame[22].stepSize == 10)
+        assert(unitFrame[22]:ConvertValueForDisplay(3) == 80)
+        assert(unitFrame[25] == nil, 'undeclared BuffIconSize key 25')
     "#,
     )
     .unwrap();

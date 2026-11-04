@@ -332,14 +332,16 @@ fn test_patch_12_1_cooldown_viewer_sound_enum() {
 
 #[cfg(feature = "client-ptr")]
 #[test]
-fn test_patch_12_1_5_get_build_info_uses_pinned_ptr_identity() {
+fn test_patch_12_1_7_get_build_info_uses_pinned_ptr_identity() {
+    // PTR source identity: src/blizzard_ui_sync/pinned.rs:44–46 and
+    // data/blizzard-ui-builds/ptr.json (12.1.7.70493), not the older 12.1.5 pin.
     let env = WowLuaEnv::new().unwrap();
     let result: String = env
         .eval(
             r#"
             local version, build, _, interface = GetBuildInfo()
-            if version ~= "12.1.5" then return "version:" .. tostring(version) end
-            if build ~= "69594" then return "build:" .. tostring(build) end
+            if version ~= "12.1.7" then return "version:" .. tostring(version) end
+            if build ~= "70493" then return "build:" .. tostring(build) end
             if interface ~= 120107 then return "interface:" .. tostring(interface) end
             return "ok"
             "#,
@@ -465,25 +467,34 @@ fn test_patch_12_1_lfg_lair_category_constant() {
 #[cfg(feature = "retail-12-1-0")]
 #[test]
 fn test_patch_12_1_edit_mode_loss_of_control_enums() {
+    // PTR 70493 Blizzard_APIDocumentationGenerated/
+    // EditModeManagerConstantsDocumentation.lua:215–260,538–548,745–782.
+    // Retail retains its 12.1.5 assertions; PTR added systems before LossOfControl.
+    let (loss_system, system_max, loss_account, account_max) =
+        if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Ptr {
+            (28, 30, 36, 37)
+        } else {
+            (26, 26, 35, 35)
+        };
     let env = WowLuaEnv::new().unwrap();
     let result: String = env
-        .eval(
+        .eval(&format!(
             r#"
             local system = Enum.EditModeSystem
-            if system.RaidWarning ~= 24 or system.TotemActionBar ~= 25 or system.LossOfControl ~= 26 then
+            if system.RaidWarning ~= 24 or system.TotemActionBar ~= 25 or system.LossOfControl ~= {loss_system} then
                 return "system"
             end
             local systemMeta = Enum.EditModeSystemMeta
-            if systemMeta.MinValue ~= 0 or systemMeta.MaxValue ~= 26 or systemMeta.NumValues ~= 27 then
+            if systemMeta.MinValue ~= 0 or systemMeta.MaxValue ~= {system_max} or systemMeta.NumValues ~= {system_count} then
                 return "system-meta"
             end
 
             local account = Enum.EditModeAccountSetting
-            if account.ShowRaidWarning ~= 33 or account.ShowTotemActionBar ~= 34 or account.ShowLossOfControl ~= 35 then
+            if account.ShowRaidWarning ~= 33 or account.ShowTotemActionBar ~= 34 or account.ShowLossOfControl ~= {loss_account} then
                 return "account"
             end
             local accountMeta = Enum.EditModeAccountSettingMeta
-            if accountMeta.MinValue ~= 0 or accountMeta.MaxValue ~= 35 or accountMeta.NumValues ~= 36 then
+            if accountMeta.MinValue ~= 0 or accountMeta.MaxValue ~= {account_max} or accountMeta.NumValues ~= {account_count} then
                 return "account-meta"
             end
 
@@ -495,7 +506,9 @@ fn test_patch_12_1_edit_mode_loss_of_control_enums() {
             end
             return "ok"
             "#,
-        )
+            system_count = system_max + 1,
+            account_count = account_max + 1,
+        ))
         .unwrap();
 
     assert_eq!(result, "ok");
