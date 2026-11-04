@@ -537,6 +537,10 @@ fn area_poi_timed_consumer_and_arguments(env: &WowLuaEnv) {
         assert(n == 2 and timed == false and hidden == nil, 'unknown POI return shape')
         n, timed, hidden = results(f('-2147483648'))
         assert(n == 2 and timed == false and hidden == nil, 'numeric string input')
+        n, timed, hidden = results(f(1099.9))
+        assert(n == 2 and timed == true and hidden == false, 'timed POI with visible timer')
+        n, timed, hidden = results(f('7459'))
+        assert(n == 2 and timed == true and hidden == true, 'timed POI with hidden timer')
         for _, value in ipairs({false, {}, 'not a number', 2147483648}) do
             local ok = pcall(f, value)
             assert(not ok, 'invalid argument must raise')
