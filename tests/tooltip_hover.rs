@@ -78,15 +78,20 @@ fn customization_tooltip_places_first_text_at_native_padding_anchor() {
         },
         &mut Some((&mut fonts, &mut glyphs)),
     );
+    // WM63 L23:42-44: each line's height comes from its FontString measurement.
+    let first_size = data[&id].lines[0].font_size;
+    let second_size = data[&id].lines[1].font_size;
+    let first_height = fonts.measure_text_height("Anchor", None, first_size, None, 0.0, false);
+    let second_height = fonts.measure_text_height("Anchor", None, second_size, None, 0.0, false);
     let mut expected = QuadBatch::new();
     emit_text_quads(
         &mut expected,
         &mut fonts,
         &mut glyphs,
         "Anchor",
-        Rectangle::new(Point::new(117.0, 221.0), Size::new(200.0, 17.0)),
+        Rectangle::new(Point::new(117.0, 221.0), Size::new(200.0, first_height)),
         None,
-        14.0,
+        first_size,
         [1.0; 4],
         TextJustify::Left,
         TextJustify::Center,
@@ -122,9 +127,12 @@ fn customization_tooltip_places_first_text_at_native_padding_anchor() {
         &mut fonts,
         &mut glyphs,
         "Anchor",
-        Rectangle::new(Point::new(117.0, 240.0), Size::new(200.0, 15.0)),
+        Rectangle::new(
+            Point::new(117.0, 221.0 + first_height + 2.0),
+            Size::new(200.0, second_height),
+        ),
         None,
-        12.0,
+        second_size,
         [1.0; 4],
         TextJustify::Left,
         TextJustify::Center,
@@ -237,16 +245,35 @@ fn blizzard_hidden_right_line_emits_no_glyphs() {
     build_tooltip_quads(
         TooltipRender {
             batch: &mut batch,
-            bounds: Rectangle::new(Point::new(100.0, 200.0), Size::new(frame.width, frame.height)),
-            tooltip_data: Some(&data), id, eff_alpha: 1.0, eff_scale: 1.0, draw_background: false,
+            bounds: Rectangle::new(
+                Point::new(100.0, 200.0),
+                Size::new(frame.width, frame.height),
+            ),
+            tooltip_data: Some(&data),
+            id,
+            eff_alpha: 1.0,
+            eff_scale: 1.0,
+            draw_background: false,
         },
         &mut Some((&mut fonts, &mut glyphs)),
     );
-    let glyphs: Vec<_> = batch.vertices.iter().filter(|vertex|
-        vertex.tex_index == wow_ui_sim::render::shader::GLYPH_ATLAS_TEX_INDEX
-    ).collect();
-    assert!(glyphs.iter().any(|vertex| vertex.color == [1.0, 1.0, 1.0, 1.0]), "visible left glyphs must render");
-    assert!(!glyphs.iter().any(|vertex| vertex.color == [1.0, 0.0, 0.0, 1.0]), "hidden right glyphs must not render");
+    let glyphs: Vec<_> = batch
+        .vertices
+        .iter()
+        .filter(|vertex| vertex.tex_index == wow_ui_sim::render::shader::GLYPH_ATLAS_TEX_INDEX)
+        .collect();
+    assert!(
+        glyphs
+            .iter()
+            .any(|vertex| vertex.color == [1.0, 1.0, 1.0, 1.0]),
+        "visible left glyphs must render"
+    );
+    assert!(
+        !glyphs
+            .iter()
+            .any(|vertex| vertex.color == [1.0, 0.0, 0.0, 1.0]),
+        "hidden right glyphs must not render"
+    );
 }
 
 #[cfg(any(feature = "client-retail", feature = "client-ptr"))]
