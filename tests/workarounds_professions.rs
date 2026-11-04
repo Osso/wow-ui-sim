@@ -473,13 +473,15 @@ fn profession_day_cooldown_displays_midnight_for_truesteel() {
 
     let env = full_game_env();
     env.exec("A_Admin.SetManualClock(100)").unwrap();
-    env.state().borrow_mut().spell_cooldowns.insert(
-        171690,
-        SpellCooldownState {
-            start: 90.0,
-            duration: 3600.0,
-        },
-    );
+    for recipe_id in [171690, 2662] {
+        env.state().borrow_mut().spell_cooldowns.insert(
+            recipe_id,
+            SpellCooldownState {
+                start: 90.0,
+                duration: 3600.0,
+            },
+        );
+    }
     env.exec(
         r#"
         CastSpellByID(2018)
@@ -489,6 +491,11 @@ fn profession_day_cooldown_displays_midnight_for_truesteel() {
         form:Init(recipe)
         assert(form.Cooldown:GetText() == COOLDOWN_EXPIRES_AT_MIDNIGHT,
             'Truesteel cooldown should display midnight: ' .. tostring(form.Cooldown:GetText()))
+        local ordinary = C_TradeSkillUI.GetRecipeInfo(2662)
+        form:Init(ordinary)
+        local text = form.Cooldown:GetText()
+        assert(text and text ~= '' and text ~= COOLDOWN_EXPIRES_AT_MIDNIGHT,
+            'ordinary recipe should display remaining time: ' .. tostring(text))
         "#,
     )
     .unwrap();
