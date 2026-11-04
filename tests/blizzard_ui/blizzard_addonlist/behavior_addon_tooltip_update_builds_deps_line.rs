@@ -34,6 +34,8 @@ fn addon_tooltip_update_builds_dependency_line() {
 
                 local owner = CreateFrame("Button", "AddonTooltipDepsProbeOwner", UIParent)
                 owner:SetID(FindAddonIndex("AddonTooltipDepsProbe"))
+                -- AddonListEntryMixin OnEnter (AddonList.lua:1002) owns the tooltip first.
+                AddonTooltip:SetOwner(owner, "ANCHOR_RIGHT", -270, 0)
                 AddonTooltip_Update(owner)
 
                 local titleLine = AddonTooltip:GetLeftLine(1)

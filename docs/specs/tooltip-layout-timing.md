@@ -4,7 +4,11 @@ For an owned tooltip with content, adding a line or double line and changing
 custom word-wrap width, custom line spacing, shrink-to-fit, or minimum width
 must not synchronously resize it. A subsequent `Show` sizes its current content.
 `SetPadding` synchronously lays out the current content. Repeated `Show` also
-performs layout. Native evidence: WM63-L4 and WM63-L23, Retail 12.1.5.70688.
+performs layout. On Retail/PTR, `Show` instead performs tooltip hiding when
+there is no owner, or when there are no rows and allow-empty is disabled.
+This clears content and ownership without resizing. An owned, allowed-empty
+`Show` can size empty content. The original `ProcessInfo` consumer follows
+these rules even when its supplied `lines` table is empty. Native evidence: WM63-L4 and WM63-L23, Retail 12.1.5.70688.
 
 These timing rules do not establish native font metrics, markup widths, or
 money and status-bar heights. The simulator's font sizes and line-height
@@ -36,3 +40,30 @@ WM63-L4 line 27 verifies that the native periodic-update override does not call
 the content-sizing routine. WM63 is evidence for
 Retail 70688, not Wrath, Forever, Mists, Era or Anniversary; those profiles'
 sizing behavior is unchanged.
+
+## Owner argument admission
+
+Retail/PTR `SetOwner` rejects missing, nil and other non-table owner arguments
+before clearing or changing existing state. The native internal null-owner
+path used by `Hide` is not a public `SetOwner(nil)` operation (WM95).
+The original `GameTooltip_SetDefaultAnchor` consumer retains the existing
+owned tooltip when its caller supplies an invalid parent.
+
+## AppendText
+
+On Retail/PTR, `AppendText` appends to the first left FontString's current
+text, including direct FontString edits. It does not select the last row or
+add a row. It updates pooled text and stored line presentation, then sizes
+synchronously. With no active rows it validates the argument but does not
+insert text or invoke layout. Strings and numbers are accepted; other types
+raise the usage error. Text concatenation stops at embedded NUL bytes.
+Evidence: WM95, Retail 12.1.5.70688. Existing ownerless layout returns without
+sizing; secret aspect propagation remains UNKNOWN beyond accepted conversion.
+
+`emulate_append_text_utf8_cap` is the single **EMULATED** byte-limit seam.
+Native truncates at 255 payload bytes, which can split a UTF-8 character.
+The simulator stores Rust strings and retains the largest complete-character
+prefix at or below 255 bytes. ASCII and a multibyte boundary crossing have
+behavioral tests through the original loaded tooltip processing flow.
+The backpack consumer is preservation coverage; the two-row `ProcessInfo`
+consumer rejects a last-row or DTO-only implementation.

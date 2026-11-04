@@ -61,6 +61,9 @@ pub fn set_shown(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn show_or_hide(state: &mut LuaState, id: u64, shown: bool) -> LuaResult<()> {
+    // WM63 L4: an ownerless or disallowed empty Show runs tooltip Hide
+    // before sizing, including its content and ownership cleanup.
+    let shown = shown && !tooltip_show_is_rejected(state, id)?;
     let (needs_change, in_handler, parent_id) = read_show_hide_state(state, id, shown)?;
     if shown
         && matches!(
@@ -128,6 +131,27 @@ fn show_or_hide(state: &mut LuaState, id: u64, shown: bool) -> LuaResult<()> {
     result?;
     super::size::mark_nearest_layout_parent_dirty(state, id);
     Ok(())
+}
+
+fn tooltip_show_is_rejected(state: &LuaState, id: u64) -> LuaResult<bool> {
+    if !matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail | crate::client_profile::ClientProfile::Ptr
+    ) {
+        return Ok(false);
+    }
+    let sim = borrow_state(state)?;
+    let Some(frame) = sim.widgets.get(id) else {
+        return Ok(false);
+    };
+    if frame.widget_type != WidgetType::GameTooltip {
+        return Ok(false);
+    }
+    Ok(frame.tooltip_owner_id.is_none()
+        || sim
+            .tooltips
+            .get(&id)
+            .is_none_or(|tooltip| tooltip.lines.is_empty() && !tooltip.allow_show_with_no_lines))
 }
 
 fn release_tooltip_owner(state: &mut LuaState, id: u64) -> LuaResult<()> {

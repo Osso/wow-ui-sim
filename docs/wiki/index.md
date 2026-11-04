@@ -4243,7 +4243,7 @@ The sixteen retail 12.0.0 `Enum.EditModeDamageMeterSetting.*` and `Enum.EditMode
 | [[transparent-wrapper-render-order]] | Regionless wrappers may hoist descendant regions; wrappers with owned regions retain raw frame-level ordering |
 | [[talent-sheen]] | 22s synchronized sweep; white rectangle bug when masking broken |
 | [[tooltip-alignment]] | NineSlice inner box vs outer bounds; 15px effective inset |
-| [[tooltip-layout-timing]] | Tooltip sizing ran after layout resolution, so one frame could use stale bounds |
+| [[tooltip-layout-timing]] | Retail/PTR native sizing boundaries, rejected empty/ownerless Show, and first-title AppendText synchronization |
 | [[tooltip-double-shell]] | Fake bootstrap `NineSlice` plus Rust fallback shell caused duplicate tooltip chrome; Lua-owned shell still needs center fill |
 | [[unanchored-frame-render-leak]] | Unanchored frames have no valid WoW rect but were rendered at parent origin; render-list filtering now skips them and their descendants |
 | [[glow-effects]] | Additive blending end-to-end; one gap: SetBorderBlendMode missing |

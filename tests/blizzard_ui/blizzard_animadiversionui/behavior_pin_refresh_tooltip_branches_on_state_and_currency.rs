@@ -42,11 +42,10 @@ local owner = {
 }
 
 local function buildPin(nodeData)
-    local pin = {
-        owner = owner,
-        nodeData = nodeData,
-    }
-    setmetatable(pin, { __index = AnimaDiversionPinMixin })
+    local pin = CreateFrame("Frame", nil, UIParent)
+    pin.owner = owner
+    pin.nodeData = nodeData
+    Mixin(pin, AnimaDiversionPinMixin)
     return pin
 end
 
@@ -74,7 +73,8 @@ end
 
 local function refresh(nodeData)
     local pin = buildPin(nodeData)
-    pin:RefreshTooltip()
+    -- Original OnMouseEnter sets the owner before RefreshTooltip (:278-279).
+    pin:OnMouseEnter()
     return pin
 end
 
