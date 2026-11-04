@@ -284,7 +284,8 @@ fn character_select_populates_character_roster() {
             "character-select screen should expose a guid for the first character"
         );
 
-        let name_field = if wow_ui_sim::client_profile::ACTIVE == wow_ui_sim::client_profile::ClientProfile::Ptr {
+        let name_field = if matches!(wow_ui_sim::client_profile::ACTIVE,
+            wow_ui_sim::client_profile::ClientProfile::Ptr | wow_ui_sim::client_profile::ClientProfile::WowForever) {
             "characterName"
         } else {
             "name"
@@ -430,6 +431,34 @@ fn character_select_tooltip_tolerates_missing_spec_id() {
             unexpected.is_empty(),
             "missing specID should not trigger specialization lookup Lua errors: {unexpected:#?}"
         );
+    }
+}
+
+#[test]
+#[cfg(feature = "client-wowforever")]
+fn forever_character_tooltip_projects_two_supplied_character_names() {
+    let env = load_blizzard_screen(ScreenKind::CharacterSelect);
+    for name in ["Aldren", "Mirelle"] {
+        env.state()
+            .borrow_mut()
+            .bnet_friends
+            .iter_mut()
+            .flat_map(|friend| friend.game_accounts.iter_mut())
+            .find(|account| account.client_program == "WoW")
+            .expect("supplied character account")
+            .character_name = name.into();
+        env.exec(&format!(
+            r#"
+            local info = CharacterSelectUtil.GetCharacterInfoTable(1)
+            assert(info and info.characterName == {name:?})
+            assert(info.fullName == {name:?})
+            info.specID = nil
+            GlueTooltip:ClearLines()
+            assert(CharacterSelectUtil.SetTooltipForCharacterInfo(info, 1))
+            assert(GlueTooltip:GetLeftLine(1):GetText() == {name:?})
+            "#,
+        ))
+        .expect("original Camelot tooltip uses supplied character display name");
     }
 }
 
