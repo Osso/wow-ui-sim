@@ -99,7 +99,8 @@ fn dispel_texture_cases() -> Vec<(&'static str, String, &'static str)> {
         ),
         (
             "helpful and untyped opt-ins",
-            "{showWhenHelpful = true, showWithoutDispelType = true, showWhenHarmful = false}".into(),
+            "{showWhenHelpful = true, showWithoutDispelType = true, showWhenHarmful = false}"
+                .into(),
             "ui-debuff-border-default-noicon - - -",
         ),
         (
@@ -240,9 +241,7 @@ fn dispel_type_text_validates_its_own_region_and_maps_dispel_types() {
         )
         .unwrap();
     assert_eq!(readout, "- M! C! -");
-    let error = env
-        .eval::<String>("return AuditSymbolErrors[1]")
-        .unwrap();
+    let error = env.eval::<String>("return AuditSymbolErrors[1]").unwrap();
     assert!(
         error.contains("expected object type 'FontString', got 'Texture'"),
         "{error}"
@@ -424,7 +423,8 @@ fn addons_configure_buttons_after_initialization_but_cannot_reparent_components(
     let readout = env
         .eval::<String>(
             r#"
-            local button = AuditButtonFor(AuditLate, 351)
+            local button = AuditButtonFor(AuditLate, 351):GetObjectTable()
+            local icon = button:GetIcon():GetObjectTable()
             local name = AuditAddon(function()
                 local text = button:CreateFontString(nil, 'OVERLAY', 'GameFontNormal')
                 button:SetSpellName(text)
@@ -432,7 +432,6 @@ fn addons_configure_buttons_after_initialization_but_cannot_reparent_components(
             end)
             local results = {AuditPlain(name:GetText())}
             AuditAddon(function()
-                local icon = button:GetIcon()
                 for _, target in ipairs({UIParent, button}) do
                     local ok = pcall(icon.SetParent, icon, target)
                     results[#results + 1] = ok and 'reparented' or 'blocked'
