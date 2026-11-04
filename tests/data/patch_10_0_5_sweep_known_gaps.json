@@ -21,7 +21,6 @@
   "wt-global-api-C_PvP.ArePvpTalentsUnlocked-59",
   "wt-global-api-C_PvP.GetPVPActiveRatedMatchDeserterPenalty-60",
   "wt-global-api-C_PvP.IsInRatedMatchWithDeserterPenalty-62",
-  "wt-global-api-C_TradeSkillUI.IsRecipeFirstCraft-64",
   "wt-global-api-C_Traits.GenerateInspectImportString-65",
   "wt-global-api-C_Traits.ResetTreeByCurrency-66",
   "wt-global-api-IsUsingGamepad-67",
