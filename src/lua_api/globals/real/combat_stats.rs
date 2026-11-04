@@ -280,13 +280,16 @@ fn get_hit_modifier(state: &mut LuaState) -> LuaResult<u32> {
 fn unit_uses_ammo(state: &mut LuaState) -> LuaResult<u32> {
     let value =
         rilua::table_security::unwrap_secret(state, crate::lua_bridge::stack_val(state, 1))?;
-    if !matches!(value, Val::Str(_) | Val::Num(_)) {
-        return Err(rilua::runtime_error(
-            "Usage: local result = UnitUsesAmmo(unit)",
-        ));
-    }
-    let token = crate::lua_api::methods::val_to_string(state, value)
-        .ok_or_else(|| rilua::runtime_error("Usage: local result = UnitUsesAmmo(unit)"))?;
+    let token = match value {
+        Val::Num(number) => number.to_string(),
+        Val::Str(_) => crate::lua_api::methods::val_to_string(state, value)
+            .ok_or_else(|| rilua::runtime_error("Usage: local result = UnitUsesAmmo(unit)"))?,
+        _ => {
+            return Err(rilua::runtime_error(
+                "Usage: local result = UnitUsesAmmo(unit)",
+            ));
+        }
+    };
     let sim = borrow_state(state)?;
     let uses_ammo = resolve_unit_snapshot(&sim, &token)
         .is_some_and(|unit| unit.is_player && matches!(unit.class_index, 1 | 3 | 4));
