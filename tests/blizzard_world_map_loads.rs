@@ -685,6 +685,43 @@ fn forever_tracking_rows_respect_class_and_initial_cvar() {
 
 #[test]
 #[cfg(feature = "client-wowforever")]
+fn forever_tracking_wm77b_default_and_mutations() {
+    let env = WowLuaEnv::new().expect("Lua environment should initialize");
+    assert_eq!(env.state().borrow().cvars.get_default("minimapTrackedInfov4").as_deref(), Some("2162728"));
+    env.state().borrow().cvars.set_imported("minimapTrackedInfov4", "8");
+    env.exec(r#"
+        local index
+        for i = 1, C_Minimap.GetNumTrackingTypes() do
+            if C_Minimap.GetTrackingFilter(i).filterID == 1 then index = i end
+        end
+        assert(index)
+        C_Minimap.SetTracking(index, true)
+        assert(not C_Minimap.IsFilteredOut(1) and not C_Minimap.IsFilteredOut(8))
+        assert(GetCVar('minimapTrackedInfov4') == '8')
+        C_Minimap.ClearAllTracking()
+        assert(C_Minimap.IsFilteredOut(1) and C_Minimap.IsFilteredOut(8))
+        assert(GetCVar('minimapTrackedInfov4') == '8')
+    "#).expect("tracking changes should affect only the in-memory static mask");
+}
+
+#[test]
+#[cfg(feature = "client-wowforever")]
+fn forever_tracking_wm77b_clear_without_player_preserves_unrelated_bits() {
+    let env = WowLuaEnv::new().expect("Lua environment should initialize");
+    {
+        let state = env.state();
+        let mut state = state.borrow_mut();
+        state.minimap_tracking_mask = Some(0x83ff_ffff);
+        state.player.present = false;
+        state.cvars.set_imported("minimapTrackedInfov4", "8");
+    }
+    env.exec("C_Minimap.ClearAllTracking(); assert(GetCVar('minimapTrackedInfov4') == '8')")
+        .expect("clear should not write the CVar");
+    assert_eq!(env.state().borrow().minimap_tracking_mask, Some(0x8200_0000));
+}
+
+#[test]
+#[cfg(feature = "client-wowforever")]
 fn forever_empty_talent_query_accepts_distinct_coordinates() {
     let env = load_full_game_ui();
     env.exec(
