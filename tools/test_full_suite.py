@@ -32,6 +32,34 @@ class IntegrationShardingTests(unittest.TestCase):
         self.assertEqual(sorted(sum(costs.get(name, 1) for name in shard) for shard in shards), [9, 10])
         self.assertEqual(shards, self.runner.partition_tests(list(reversed(names)), costs, 2))
 
+    def test_timeout_capacity_cases_finish_before_ordinary_shards_start(self):
+        import io
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            binary = root / 'test-binary'
+            write_executable(binary,
+                "import pathlib, sys\n"
+                "marker = pathlib.Path(__file__).with_name('capacity-complete')\n"
+                "if '--list' in sys.argv:\n"
+                "    print('timeout_reexec::capacity: test\\nordinary::a: test\\nordinary::b: test')\n"
+                "    sys.exit(0)\n"
+                "selected = sys.argv[sys.argv.index('--exact') + 1:]\n"
+                "if 'timeout_reexec::capacity' in selected:\n"
+                "    assert selected == ['timeout_reexec::capacity']\n"
+                "    marker.touch()\n"
+                "else:\n"
+                "    assert marker.exists(), 'ordinary work competed with exclusive capacity fixture'\n")
+            launcher = root / 'systemd-run'
+            write_executable(launcher,
+                "import subprocess, sys\n"
+                "sys.exit(subprocess.call(sys.argv[sys.argv.index('--') + 1:]))\n")
+            self.runner.confirm_terminated = lambda *args: None
+            step, _ = self.runner.run_integration_shards(
+                [str(launcher), '--unit=fixture', '--', str(binary)], root,
+                io.StringIO(), dict(os.environ), {}, 2)
+            self.assertEqual(step['exit'], 0)
+            self.assertEqual(step['tests'], 3)
+
     def test_stable_shards_execute_exact_names_and_report_failures(self):
         import io
         with tempfile.TemporaryDirectory() as tmp:
