@@ -959,13 +959,21 @@ fn create_explicit_secret_party_env() -> WowLuaEnv {
     env
 }
 
+// WM91 §1: ordinary Forever group tokens bypass explicit identity secrecy.
+// Retail fixtures above explicitly supply restricted identity GUIDs.
+fn party_fixture_is_secret() -> bool {
+    let profile = wow_ui_sim::client_profile::ACTIVE;
+    profile.uses_secret_values()
+        && profile != wow_ui_sim::client_profile::ClientProfile::WowForever
+}
+
 #[test]
 fn test_party_roster_name_is_secret_value() {
     let env = create_explicit_secret_party_env();
     let (secret, accessible): (bool, bool) = env
         .eval("local name = UnitName('party1'); return issecretvalue(name), canaccessvalue(name)")
         .unwrap();
-    let expected_secret = wow_ui_sim::client_profile::ACTIVE.uses_secret_values();
+    let expected_secret = party_fixture_is_secret();
     assert_eq!(secret, expected_secret, "party roster identity secrecy");
     assert_eq!(accessible, !expected_secret, "party roster identity access");
 }
@@ -981,9 +989,12 @@ fn test_party_full_name_marks_name_and_realm_secret() {
             "#,
         )
         .unwrap();
-    let expected_secret = wow_ui_sim::client_profile::ACTIVE.uses_secret_values();
+    let expected_secret = party_fixture_is_secret();
     assert_eq!(name_secret, expected_secret, "party full-name secrecy");
-    assert_eq!(realm_secret, expected_secret, "party realm secrecy");
+    // WM91: the same-realm Forever payload is UNKNOWN; do not choose nil or text here.
+    if wow_ui_sim::client_profile::ACTIVE != wow_ui_sim::client_profile::ClientProfile::WowForever {
+        assert_eq!(realm_secret, expected_secret, "party realm secrecy");
+    }
     assert_eq!(all_accessible, !expected_secret, "party bulk access");
 }
 
@@ -995,8 +1006,8 @@ fn test_table_containing_party_identity_is_not_accessible() {
         .unwrap();
     assert_eq!(
         accessible,
-        !wow_ui_sim::client_profile::ACTIVE.uses_secret_values(),
-        "nested party identity access follows the profile"
+        !party_fixture_is_secret(),
+        "WM91: ordinary Forever party identity remains accessible in tables"
     );
 }
 
@@ -1073,4 +1084,52 @@ fn test_issecretvalue_without_argument_ignores_stale_stack_slots() {
         .unwrap();
     assert!(!is_secret, "issecretvalue() with no argument returns false");
     assert!(accessible, "canaccessvalue() with no argument returns true");
+}
+
+// WM91: exercise the unchanged, TOC-selected Shared name consumer. Distinct
+// party fixtures reject constant/no-op identity producers; taint is not secrecy.
+#[cfg(feature = "client-wowforever")]
+#[test]
+fn forever_party_name_consumer_keeps_public_identity_accessible() {
+    let env = env();
+    let path = wow_ui_sim::blizzard_ui_sync::default_cache_addons_path()
+        .unwrap()
+        .join("Blizzard_UnitFrame/Shared/CompactUnitFrame.lua");
+    let source = std::fs::read_to_string(path).unwrap();
+    for declaration in [
+        "function CompactUnitFrame_IsTapDenied(frame)",
+        "function CompactUnitFrame_UpdateName(frame)",
+    ] {
+        let tail = &source[source.find(declaration).unwrap()..];
+        let end = tail.find("\nend").unwrap() + "\nend".len();
+        env.exec(&tail[..end]).unwrap();
+    }
+    env.exec(r#"
+        A_Admin.SetPartySize(4)
+        local holder = CreateFrame('Frame')
+        local text = holder:CreateFontString(nil, 'OVERLAY')
+        local frame = {
+            name = text, optionTable = {},
+            ShouldShowName = function() return true end,
+        }
+        local previous
+        for _, combat in ipairs({false, true}) do
+            A_Admin.SetInCombat(combat)
+            for _, token in ipairs({'party1', 'party2', 'party4'}) do
+                frame.unit = token
+                frame.displayedUnit = token
+                CompactUnitFrame_UpdateName(frame)
+                local name = UnitName(token)
+                local fullName = UnitFullName(token)
+                assert(type(name) == 'string' and name ~= 'Unknown')
+                assert(name ~= previous, 'distinct party fixtures')
+                previous = name
+                assert(text:GetText() == name and text:IsShown(), 'rendered party name')
+                assert(fullName == name, 'full-name first result')
+                assert(not issecretvalue(name) and canaccessvalue(name), 'public party name')
+                assert(not issecretvalue(fullName) and canaccessvalue(fullName), 'public full name')
+                assert(canaccesstable({name = name}), 'nested public identity')
+            end
+        end
+    "#).unwrap();
 }
