@@ -234,10 +234,18 @@ fn seconds_formatter_format_retail_epoch_formats_numeric_duration_units() {
             return Enum.SecondsFormatterInterval.Seconds
         end})
         assert(duration:FormatTotalDuration(formatter) == '93s')
-        assert(C_Intl == nil)
     "#,
     )
     .expect("retail 12.0.5+ uses the existing native duration formatter");
+    let intl: String = env.eval("return type(C_Intl)").unwrap();
+    assert_eq!(
+        intl,
+        if cfg!(feature = "retail-12-1-5") {
+            "table"
+        } else {
+            "nil"
+        }
+    );
 }
 
 #[cfg(all(
