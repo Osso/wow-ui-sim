@@ -4,7 +4,6 @@
 mod retail_inputs;
 
 use crate::c_api::c_secrets::push_stat_number;
-#[cfg(feature = "client-wowforever")]
 use crate::lua_api::globals::targeting_verbs::resolve_unit_snapshot;
 use crate::lua_api::methods::borrow_state;
 use crate::lua_api::state_types::CharacterStats;
