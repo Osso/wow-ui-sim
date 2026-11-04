@@ -1,3 +1,8 @@
+## [2026-11-04] implementation | Forever ordinary talent query
+
+[Forever talents](systems/forever-talents.md) documents WM90 grid lookup,
+supplied character state, original TalentFrame consumer proof and native limits.
+
 ## [2026-11-02] implementation | CVar metadata
 
 [CVar metadata](investigations/cvar-metadata.md) describes the seven-return query,

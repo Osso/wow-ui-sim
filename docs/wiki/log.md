@@ -1,3 +1,8 @@
+## [2026-11-04] implementation | Forever ordinary talent query
+
+[Forever talents](systems/forever-talents.md) documents WM90 grid lookup,
+supplied character state, original TalentFrame consumer proof and native limits.
+
 ## [2026-10-31] implementation | Taint and secret error text
 
 Added the [taint error text](../specs/taint-error-text.md) spec (native S9 templates, best-guess site mapping) and updated [taint system](systems/taint-system.md) for the fixed forbidden-object text.

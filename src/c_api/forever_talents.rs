@@ -4,6 +4,9 @@
 
 use std::collections::{HashMap, HashSet};
 
+mod query;
+pub(crate) use query::get_talent_info;
+
 #[derive(Clone, Debug, Default)]
 pub struct TalentRow {
     pub id: u32,

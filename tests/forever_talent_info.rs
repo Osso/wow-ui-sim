@@ -132,6 +132,61 @@ fn forever_talent_missing_rows_and_specialization_order() {
 }
 
 #[test]
+fn forever_talent_availability_uses_current_allowance_and_mask() {
+    use wow_ui_sim::c_api::forever_talents::LevelAllowance;
+    let env = supplied_env();
+    {
+        let mut sim = env.state().borrow_mut();
+        let grid = &mut sim.talents.forever;
+        grid.allowance = None;
+        grid.effective_level = 80;
+        grid.base_level = 10;
+        grid.level_allowances.insert(80, LevelAllowance { num_talents: 7, ..Default::default() });
+        grid.level_allowances.insert(10, LevelAllowance { num_talents: 0, death_knight: 1, demon_hunter: 2 });
+    }
+    env.exec("assert(not C_SpecializationInfo.GetTalentInfo{tier=1,column=2}.available)").unwrap();
+    {
+        let mut sim = env.state().borrow_mut();
+        sim.player.class_index = 6;
+        sim.talents.forever.rows[2].class_id = 6;
+    }
+    env.exec("assert(C_SpecializationInfo.GetTalentInfo{tier=1,column=2}.available)").unwrap();
+    env.state().borrow_mut().talents.forever.groups[0].tier_mask = 1;
+    env.exec("assert(not C_SpecializationInfo.GetTalentInfo{tier=1,column=2}.available)").unwrap();
+    env.state().borrow_mut().talents.forever.groups[0].selected_ids.insert(903);
+    env.exec("assert(C_SpecializationInfo.GetTalentInfo{tier=1,column=2}.available)").unwrap();
+}
+
+#[test]
+fn forever_talent_inspection_matches_guid_without_query_events() {
+    use wow_ui_sim::c_api::forever_talents::Inspection;
+    let env = supplied_env();
+    let guid: String = env.eval("return UnitGUID('player')").unwrap();
+    env.state().borrow_mut().talents.forever.inspection = Some(Inspection {
+        guid,
+        class_id: 2,
+        groups: vec![TalentGroup { spec_id: 65, selected_ids: [902].into(), tier_mask: 0 }],
+        current_group: 0,
+        aura_grants: [902].into(),
+    });
+    env.exec(r#"
+        local events = 0
+        local f = CreateFrame('Frame')
+        f:RegisterEvent('PLAYER_TALENT_UPDATE')
+        f:RegisterEvent('ACTIVE_TALENT_GROUP_CHANGED')
+        f:SetScript('OnEvent', function() events = events + 1 end)
+        local q = C_SpecializationInfo.GetTalentInfo
+        local a = assert(q{tier=1, column=1, isInspect=0, target='player'})
+        assert(a.talentID == 902 and a.selected and a.available and not a.known and a.grantedByAura)
+        assert(q{tier=1,column=1,isInspect=true,target='missing'} == nil)
+        assert(q{tier=1,column=1,isInspect=true,target='player',groupIndex=2} == nil)
+        assert(events == 0)
+    "#).unwrap();
+    env.state().borrow_mut().talents.forever.rows[1].id = 0;
+    env.exec("assert(C_SpecializationInfo.GetTalentInfo{tier=1,column=1,groupIndex=2} == nil)").unwrap();
+}
+
+#[test]
 fn forever_talent_missing_coordinates_have_wm90_diagnostics() {
     let env = supplied_env();
     for (query, diagnostic) in [
