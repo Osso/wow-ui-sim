@@ -31,7 +31,7 @@ fn original_loot_hover_uses_the_selected_loot_item() {
     ];
     env.exec(
         r#"
-        assert(type(LootFrameItemElementMixin.OnEnter) == 'function')
+        assert(type(LootFrameItemElementMixin.OnEnter) == 'function', 'loot consumer missing')
         local button = CreateFrame('Button', nil, UIParent)
         button.HighlightNameFrame = CreateFrame('Frame', nil, button)
         function button:GetItemSlotType() return Enum.LootSlotType.Item end
@@ -41,9 +41,9 @@ fn original_loot_hover_uses_the_selected_loot_item() {
             LootFrameItemElementMixin.OnEnter(button)
             local info = GameTooltip:GetPrimaryTooltipInfo()
             local data = GameTooltip:GetPrimaryTooltipData()
-            assert(info and info.getterName == 'GetLootItem')
-            assert(data and data.lines[1].leftText == name)
-            assert(GameTooltip:GetLeftLine(1):GetText() == name)
+            assert(info and info.getterName == 'GetLootItem', 'GetLootItem info missing')
+            assert(data and data.lines[1].leftText == name, 'GetLootItem data missing')
+            assert(GameTooltip:GetLeftLine(1):GetText() == name, 'loot text mismatch')
         end
         "#,
     )
