@@ -21,7 +21,8 @@ fn widget_unit_api_arguments_and_return_values() {
         assert(select('#', api.SetProcessingUnitGuid(nil)) == 0)
         assert(not pcall(api.RegisterUnitForWidgetUpdates, nil))
         assert(not pcall(api.UnregisterUnitForWidgetUpdates, {}))
-        assert(not pcall(api.RegisterUnitForWidgetUpdates, 'player', {}))
+        -- 91012fb19: isGuid follows Lua truthiness (ui-widget-manager-state.md).
+        assert(pcall(api.RegisterUnitForWidgetUpdates, 'player', {}))
         assert(not pcall(api.SetProcessingUnit, {}))
         assert(not pcall(api.SetProcessingUnitGuid, {}))
     "#,
