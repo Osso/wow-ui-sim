@@ -136,6 +136,36 @@ fn blizzard_tooltip_append_text_uses_first_pooled_left_line_synchronously() {
 
 #[cfg(any(feature = "client-retail", feature = "client-ptr"))]
 #[test]
+fn blizzard_default_tooltip_anchor_rejects_non_table_owner_without_clearing() {
+    let env = setup_full_env();
+    env.exec(
+        r#"
+        GameTooltip_SetDefaultAnchor(GameTooltip, UIParent)
+        GameTooltip_AddNormalLine(GameTooltip, "Retained title")
+        GameTooltip:Show()
+        "#,
+    )
+    .unwrap();
+    for invalid in ["nil", "false"] {
+        let result = env.exec(&format!(
+            "GameTooltip_SetDefaultAnchor(GameTooltip, {invalid})"
+        ));
+        assert!(result.is_err(), "WM95 rejects non-table owner {invalid}");
+        assert!(result.unwrap_err().to_string().contains("SetOwner(region)"));
+        env.exec(
+            r#"
+            assert(GameTooltip:GetOwner() == UIParent)
+            assert(GameTooltip:IsShown())
+            assert(GameTooltip:NumLines() == 1)
+            assert(GameTooltip:GetLeftLine(1):GetText() == "Retained title")
+            "#,
+        )
+        .expect("invalid owner must not clear or replace the existing tooltip");
+    }
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
+#[test]
 fn customization_tooltip_places_first_text_at_native_padding_anchor() {
     use iced::{Point, Rectangle, Size};
     use wow_ui_sim::iced_app::tooltip::{TooltipRender, build_tooltip_quads, collect_tooltip_data};
