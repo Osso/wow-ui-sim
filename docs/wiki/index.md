@@ -1,6 +1,6 @@
 ## [2026-11-04] investigation | NECESSARY Retail scheduling
 
-[Runtime optimization](investigations/test-runtime-optimization.md#necessary-retail-scheduling-profile--2026-11-04) records all integration timings, exclusive timeout-fixture contention, and separate timeout-consumer lanes. The [warm-run target](../specs/necessary-suite-runtime.md) still requires two complete sub-600-second proofs.
+[Runtime optimization](investigations/test-runtime-optimization.md#necessary-retail-scheduling-profile--2026-11-04) records integration timing, timeout-fixture contention, the macro-inventory gap, configured harness permits and measured memory envelopes. The [warm-run target](../specs/necessary-suite-runtime.md) still requires two complete sub-600-second proofs.
 
 ## [2026-11-04] correction | Publication gap expectations
 

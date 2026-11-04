@@ -3379,4 +3379,4 @@ Added [static classification and provenance](systems/area-poi-timed.md).
 
 ## 2026-11-04 — NECESSARY Retail scheduling profile
 
-Recorded [integration timing and timeout-capacity contention](investigations/test-runtime-optimization.md#necessary-retail-scheduling-profile--2026-11-04). Stable exact-name sharding preserves test identities and the two-child semaphore. Two warm full-suite proofs remain open.
+Recorded [integration timing and timeout-capacity contention](investigations/test-runtime-optimization.md#necessary-retail-scheduling-profile--2026-11-04). Stable exact-name sharding preserves test identities. Subsequent measurements led to an approved configurable harness permit policy and explicit private CPU/RAM budgets; measured OOM lower bounds now inform shard headroom. The two sub-600-second proofs remain open.

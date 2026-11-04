@@ -53,9 +53,19 @@ Three timeout-harness conformance cases measured 180.70, 237.99 and 295.78 secon
 
 A separate exact LoD-shard probe passed in 5.63 seconds, consumed 5.57 CPU-seconds and reached 898,904,064 bytes, versus 72.40 seconds of queued wall time in the profile. Queued wall weights are not exclusive callback or startup CPU costs.
 
-Saved source inspection identifies 482 named `test_timeout!`/`with_timeout` consumers. Two dedicated scheduling lanes keep these semaphore waiters from occupying every ordinary worker; the other lanes can run ordinary tests while both child permits are occupied. Classification changes scheduling only: newly added or unclassified cases still encounter the unchanged global semaphore. The fixture-equivalence restrictions above remain binding; this work does not migrate tests to a broader prefork parent.
+The initial source-outline inventory listed 482 named `test_timeout!`/`with_timeout` consumers. It omitted macro-wrapped and macro-generated functions, including the GenericTraitUI prior-state case and generated LoD shards, so it is not a complete inventory. Two dedicated scheduling lanes keep these semaphore waiters from occupying every ordinary worker; the other lanes can run ordinary tests while both child permits are occupied. Classification changes scheduling only: newly added or unclassified cases still encounter the unchanged global semaphore. The fixture-equivalence restrictions above remain binding; this work does not migrate tests to a broader prefork parent.
 
 The [runner operation](../../remote-builds.md#asynchronous-full-suite) describes the current scheduling implementation. Two complete warm NECESSARY runs, including incremental no-op builds, remain the acceptance requirement; the profile and bounded Python tests do not establish that target.
+
+## Explicit budgets and memory envelopes — 2026-11-04
+
+Main approved the timeout count as configurable harness policy, not native behavior. `WOW_SIM_TIMEOUT_CHILD_SLOTS` defaults to 2 and accepts 2 through 6. A source-bound targeted control first failed with observed 2 versus requested 6; the configured producer then passed explicit 4, explicit 6 and unset/default 2, and rejected 0. Product fixture assertions and test identities remain unchanged.
+
+The six-slot measurement completed all 469 explicitly assigned timeout consumers in 360.5–429.0 seconds without a genuine timeout failure. Its overall result was not full-coverage acceptance: two ordinary 3 GiB shards were OOM-killed, leaving 2,222 selected cases uncompleted. The two unchanged literal-two conformance assertions also failed in that experiment. Overall timing and CPU totals from that incomplete run must not be presented as complete-suite savings.
+
+The two same-process failure prefixes completed under a 9 GiB probe ceiling at process-tree peaks of 2,431,856,640 and 2,489,200,640 bytes. They did not reproduce the prior 3 GiB OOM in the quieter/warm probe context. The [memory table](../../../tools/integration-memory-peaks.json) retains the actual 3 GiB OOM observations as lower bounds, together with sampled retained-context envelopes. It applies 50% headroom and rounds up to GiB. Unmeasured cases use the largest observed envelope, giving a conservative 5 GiB shard ceiling rather than the failed fixed 3 GiB cap.
+
+The [runner](../../../tools/full_suite.py) requests a private 16-CPU/24-GiB test slice by default, requires capacity ADD before tests, and permits lower explicit CPU/RAM overrides. It derives workers and timeout permits from that requested budget and records the budget and slice resources. This is an enforced ceiling, not an exclusive host-RAM reservation. A complete warm production proof remains required after the policy and memory-budget changes.
 
 ## Sources
 

@@ -84,7 +84,7 @@ class IntegrationShardingTests(unittest.TestCase):
                 "sys.exit(subprocess.call(sys.argv[sys.argv.index('--') + 1:]))\n")
             self.runner.confirm_terminated = lambda *args: None
             step, _ = self.runner.run_integration_shards(
-                [str(launcher), '--unit=fixture', '--', str(binary)], root,
+                [str(launcher), '--unit=fixture', '-p', 'MemoryMax=9G', '--', str(binary)], root,
                 io.StringIO(), dict(os.environ), {}, self.runner.TestBudget(2, 24), (), self.memory_costs)
             self.assertEqual(step['exit'], 0)
             self.assertEqual(step['tests'], 3)
@@ -113,7 +113,7 @@ class IntegrationShardingTests(unittest.TestCase):
                 "sys.exit(subprocess.call(sys.argv[sys.argv.index('--') + 1:]))\n")
             self.runner.confirm_terminated = lambda *args: None
             step, _ = self.runner.run_integration_shards(
-                [str(launcher), '--unit=fixture', '--', str(binary)], root,
+                [str(launcher), '--unit=fixture', '-p', 'MemoryMax=9G', '--', str(binary)], root,
                 io.StringIO(), dict(os.environ), {name: 100 for name in guarded},
                 self.runner.TestBudget(3, 24), guarded, self.memory_costs)
             self.assertEqual(step['exit'], 0)
@@ -174,7 +174,7 @@ class IntegrationShardingTests(unittest.TestCase):
                 "import subprocess, sys\n"
                 "sys.exit(subprocess.call(sys.argv[sys.argv.index('--') + 1:]))\n")
             self.runner.confirm_terminated = lambda *args: None
-            command = [str(launcher), '--unit=fixture', '--', str(binary)]
+            command = [str(launcher), '--unit=fixture', '-p', 'MemoryMax=9G', '--', str(binary)]
             log = io.StringIO()
             step, output = self.runner.run_integration_shards(
                 command, root, log, dict(os.environ), {}, self.runner.TestBudget(3, 24), (), self.memory_costs)
@@ -787,12 +787,12 @@ sys.exit(runner.run(sys.argv[2], 1, sys.argv[3], "ptr"))
         self.assertEqual(record['test_budget'], {'cpus': 4, 'mem_gib': 12,
             'integration_shards': 4, 'timeout_child_slots': 2})
         controls = [json.loads(line) for line in (self.home / 'control-argv').read_text().splitlines()]
-        settings = next(args for args in controls if args[0] == 'set-property')
+        settings = next(args for args in controls if 'set-property' in args)
         self.assertIn('CPUQuota=400%', settings)
         self.assertIn('MemoryMax=12G', settings)
         self.assertIn('MemorySwapMax=0', settings)
         self.assertTrue(record['test_slice'].startswith('agents-fullsuite-'))
-        self.assertIn(['stop', record['test_slice']], controls)
+        self.assertIn(['--user', 'stop', record['test_slice']], controls)
 
     def test_wow_sim_bin_target_fits_the_measured_thread_budget(self):
         for name in ('integration-tests', 'lib-tests', 'wow-sim-tests'):

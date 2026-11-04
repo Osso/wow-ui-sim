@@ -15,6 +15,7 @@ import sys
 import tempfile
 import time
 from contextlib import contextmanager
+from dataclasses import dataclass
 from pathlib import Path
 
 ROOT = Path.home() / "Projects/wow"
@@ -25,11 +26,59 @@ JOBS = os.environ.get("FULL_SUITE_JOBS", "16")
 # Integration runs many full Blizzard-UI tests (~1.1-1.5 GiB each) in one process; 16 threads exceed
 # the 9G unit (cgroup oom-kill, 2026-11-03). User decision: fewer threads for this target.
 INTEGRATION_JOBS = os.environ.get("FULL_SUITE_INTEGRATION_JOBS", "3")
-INTEGRATION_SHARDS = int(os.environ.get("FULL_SUITE_INTEGRATION_SHARDS", "16"))
+MAX_TEST_CPUS = 16
+MAX_TEST_MEM_GIB = 24
+GIB = 1024 ** 3
 PROFILES = ("retail", "ptr", "wrath", "mists", "wowforever", "era", "anniversary")
 # Slot 2 was retired on 2026-10-27 (user decision: three build slots).
 SLOTS = (0, 1, 3)
 FAILED = re.compile(r"^test (\S+) \.\.\. FAILED", re.M)
+
+
+@dataclass(frozen=True)
+class TestBudget:
+    cpus: int = MAX_TEST_CPUS
+    mem_gib: int = MAX_TEST_MEM_GIB
+
+    def __post_init__(self):
+        if not 1 <= self.cpus <= MAX_TEST_CPUS or not 1 <= self.mem_gib <= MAX_TEST_MEM_GIB:
+            raise ValueError("test budget requires 1-16 CPUs and 1-24 GiB")
+
+    @property
+    def memory_bytes(self):
+        return self.mem_gib * GIB
+
+    @property
+    def shard_count(self):
+        return max(1, min(self.cpus, self.mem_gib * MAX_TEST_CPUS // MAX_TEST_MEM_GIB))
+
+    @property
+    def timeout_slots(self):
+        return max(2, min(6, self.cpus * 6 // MAX_TEST_CPUS,
+                          self.mem_gib * 6 // MAX_TEST_MEM_GIB))
+
+    def record(self):
+        return {"cpus": self.cpus, "mem_gib": self.mem_gib,
+                "integration_shards": self.shard_count, "timeout_child_slots": self.timeout_slots}
+
+
+def configure_test_slice(unit, budget):
+    subprocess.run(["systemctl", "--user", "set-property", "--runtime", unit,
+                    f"CPUQuota={budget.cpus * 100}%", f"MemoryMax={budget.mem_gib}G",
+                    "MemorySwapMax=0"], check=True, capture_output=True, text=True)
+
+
+def finish_test_slice(unit):
+    try:
+        result = subprocess.run(["systemctl", "--user", "show", unit, "-p", "CPUUsageNSec", "-p", "MemoryPeak"],
+                                check=True, capture_output=True, text=True)
+        fields = dict(line.split("=", 1) for line in result.stdout.splitlines() if "=" in line)
+        cpu = fields.get("CPUUsageNSec", "")
+        peak = fields.get("MemoryPeak", "")
+        return {"cpu_seconds": int(cpu) / 1e9 if cpu.isdecimal() else None,
+                "memory_peak_bytes": int(peak) if peak.isdecimal() else None}
+    finally:
+        subprocess.run(["systemctl", "--user", "stop", unit], check=True, capture_output=True, text=True)
 
 
 def git(*args, cwd=REPO):
@@ -71,13 +120,17 @@ def positive_build_jobs(value):
     return jobs
 
 
-def claim_slot(target, sha, profile):
+def require_capacity(sha, profile):
     capacity = Path.home() / ".worktrees/logs/capacity.sh"
     env = dict(os.environ, CAPACITY_ID=f"full-suite-{sha[:12]}-{profile}")
     env.pop("CAPACITY_PEEK", None)
     result = subprocess.run([str(capacity)], env=env, capture_output=True, text=True)
     if result.returncode or "| ADD:" not in result.stdout:
         raise ValueError(f"capacity refused: {result.stdout.strip()} {result.stderr.strip()}")
+
+
+def claim_slot(target, sha, profile):
+    require_capacity(sha, profile)
     owner = f"full-suite {sha[:12]} {profile}"
     try:
         fd = os.open(target / ".owner", os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
@@ -222,40 +275,59 @@ def partition_tests(names, costs, count):
     return shards
 
 
-def run_integration_shards(command, checkout, log, env, costs, count, timeout_tests):
+def shard_memory_bytes(names, memory_costs):
+    peaks = memory_costs["peak_bytes"]
+    if not peaks or min(peaks.values()) <= 0 or memory_costs["headroom_percent"] < 0:
+        raise ValueError("memory costs require positive byte peaks and nonnegative headroom")
+    # Unmeasured cases use the largest observed envelope, not a smaller guess.
+    largest = max(peaks.values())
+    peak = max(peaks.get(name, largest) for name in names)
+    required = (peak * (100 + memory_costs["headroom_percent"]) + 99) // 100
+    return ((required + GIB - 1) // GIB) * GIB
+
+
+def run_integration_shards(command, checkout, log, env, costs, budget, timeout_tests, memory_costs):
     """Discover on stable libtest, then run disjoint exact-name selections."""
+    count = budget.shard_count
     started = time.monotonic()
     discovery = subprocess.run([command[-1], "--list", "--format=terse"],
                                cwd=checkout, env=env, capture_output=True, text=True)
     names = re.findall(r"^(.+): test$", discovery.stdout, re.M)
     if discovery.returncode or not names or len(names) != len(set(names)):
         raise ValueError(f"integration discovery failed: {discovery.stdout}{discovery.stderr}")
-    # These cases reserve exclusive capacity while testing the global two-child
+    # These cases reserve exclusive capacity while testing the configured child
     # semaphore. Shared workloads can otherwise starve their exclusive flock.
     reserved = [name for name in names if name.startswith("timeout_reexec::")]
     timeout_tests = set(timeout_tests)
     guarded = [name for name in names if name not in reserved and name in timeout_tests]
     ordinary = [name for name in names if name not in reserved and name not in timeout_tests]
-    # Keep runnable ordinary work beside the two semaphore-consuming lanes.
+    # Keep runnable ordinary work beside the semaphore-consuming lanes.
     # A one-worker budget runs all non-reserved cases serially in that worker.
-    guard_workers = min(2, max(0, count - 1))
+    guard_workers = min(budget.timeout_slots, max(0, count - 1))
     guard_shards = partition_tests(guarded, costs, guard_workers) if guard_workers else []
     if not guard_workers:
         ordinary.extend(guarded)
     shards = ([reserved] if reserved else []) + guard_shards + partition_tests(
         ordinary, costs, count - len(guard_shards))
+    memory_limits = [shard_memory_bytes(shard, memory_costs) for shard in shards]
+    if max(memory_limits) > budget.memory_bytes:
+        raise ValueError("test memory budget cannot fit a measured single-shard peak with headroom")
     base_unit = next(arg for arg in command if arg.startswith("--unit="))
     slot = Path(env.get("CARGO_TARGET_DIR", "integration")).name.removeprefix("slot-")
 
     def run_shard(index):
         unit = f"{base_unit.removeprefix('--unit=')}-shard-{index}"
         shard_command = [f"--unit={unit}" if arg == base_unit else arg for arg in command]
+        memory_index = next(i for i, arg in enumerate(shard_command) if arg.startswith("MemoryMax="))
+        shard_command[memory_index] = f"MemoryMax={memory_limits[index]}"
         shard_command += ["--exact", *shards[index]]
         shard_log = io.StringIO()
         try:
             step, output = run_step(f"integration:{index}", shard_command, checkout,
-                                    shard_log, dict(env, RUST_TEST_THREADS="1"))
+                                    shard_log, dict(env, RUST_TEST_THREADS="1",
+                                                    WOW_SIM_TIMEOUT_CHILD_SLOTS=str(budget.timeout_slots)))
             step["tests"] = len(shards[index])
+            step["memory_max_bytes"] = memory_limits[index]
             return step, output, shard_log.getvalue()
         finally:
             confirm_terminated(unit, slot)
@@ -364,7 +436,9 @@ def promote_result(canonical, baseline, result):
             path.unlink(missing_ok=True)
 
 
-def run(ref, build_jobs, target_dir, profile="retail", optional=False):
+def run(ref, build_jobs, target_dir, profile="retail", optional=False,
+        test_cpus=MAX_TEST_CPUS, test_mem_gib=MAX_TEST_MEM_GIB):
+    budget = TestBudget(test_cpus, test_mem_gib)
     target_dir = validate_target_dir(target_dir)
     RESULTS.mkdir(parents=True, exist_ok=True)
     with open(LOCK, "w") as lock:
@@ -380,6 +454,8 @@ def run(ref, build_jobs, target_dir, profile="retail", optional=False):
         attempt = f"{sha}-{profile}-attempt-{time.time_ns()}"
         log_path = RESULTS / f"{attempt}.log"
         result["log"] = str(log_path)
+        result["test_budget"] = budget.record()
+        test_slice = None
         owner = None
         try:
             with open(log_path, "w") as log:
@@ -389,7 +465,12 @@ def run(ref, build_jobs, target_dir, profile="retail", optional=False):
                     phase = "build"
                     receipt = build(checkout, target_dir, sha, profile, build_jobs, owner, log, optional)
                     phase = "setup"
-                    env = dict(os.environ, CARGO_TARGET_DIR=str(target_dir), RUST_TEST_THREADS=JOBS, CARGO_TERM_COLOR="never")
+                    require_capacity(sha, profile)
+                    test_slice = f"agents-fullsuite-{time.time_ns()}.slice"
+                    result["test_slice"] = test_slice
+                    configure_test_slice(test_slice, budget)
+                    env = dict(os.environ, CARGO_TARGET_DIR=str(target_dir), RUST_TEST_THREADS=JOBS,
+                               WOW_SIM_TIMEOUT_CHILD_SLOTS=str(budget.timeout_slots), CARGO_TERM_COLOR="never")
                     with isolated_cvars(env, log) as env:
                         targets = [("integration", "integration", "test"), ("prefork", "prefork_full_ui", "test"), ("lib", "wow_ui_sim", "lib")]
                         extra_targets = additional_test_targets(receipt)
@@ -402,26 +483,28 @@ def run(ref, build_jobs, target_dir, profile="retail", optional=False):
                                 result["steps"][name] = {"status": "not_applicable", "reason": "prefork_full_ui supports only Retail/Mists"}
                                 continue
                             phase = name
-                            step_env = dict(env, RUST_TEST_THREADS=INTEGRATION_JOBS if name == "integration" else JOBS)
+                            threads = INTEGRATION_JOBS if name == "integration" else JOBS
+                            step_env = dict(env, RUST_TEST_THREADS=str(min(int(threads), budget.cpus)))
                             if artifact == "wow-sim" and kind == "bin":
-                                # Full-UI bin cases reached the 9G cgroup limit at 16 threads.
-                                step_env["RUST_TEST_THREADS"] = str(min(3, int(JOBS)))
+                                # Three full-UI bin cases peaked at 5.45 GiB; reserve 2 GiB per thread.
+                                step_env["RUST_TEST_THREADS"] = str(min(3, int(JOBS), budget.cpus,
+                                                                      max(1, budget.mem_gib // 2)))
                             binary = test_artifact(receipt, artifact, kind)
                             # Linux test executables link libwow_ui_sim_dylib.so from the same deps directory.
                             step_env["LD_LIBRARY_PATH"] = str(Path(binary).parent)
                             mount = Path.home() / ".cache/wow-ui-sim-srcmount" / target_dir.name
                             unit = f"full-suite-test-{sha[:12]}-{profile}-{name}-{time.time_ns()}"
-                            command = ["systemd-run", "--user", "--slice=agents-fullsuite.slice", f"--unit={unit}", "--wait", "--pipe", "--collect", "--quiet",
-                                       "-p", "MemoryMax=9G", "-p", "MemorySwapMax=0",
+                            command = ["systemd-run", "--user", f"--slice={test_slice}", f"--unit={unit}", "--wait", "--pipe", "--collect", "--quiet",
+                                       "-p", f"MemoryMax={min(9, budget.mem_gib)}G", "-p", "MemorySwapMax=0",
                                        "-p", f"BindPaths={checkout}:{mount}", f"--working-directory={mount}",
                                        *(f"--setenv={key}" for key in step_env), "--", binary]
                             try:
                                 if name == "integration" and profile == "retail":
                                     costs = json.loads((checkout / "tools/integration-costs.json").read_text())
-                                    command[command.index("MemoryMax=9G")] = "MemoryMax=3G"
                                     timeout_tests = json.loads((checkout / "tools/integration-timeout-tests.json").read_text())
+                                    memory_costs = json.loads((checkout / "tools/integration-memory-peaks.json").read_text())
                                     result["steps"][name], output = run_integration_shards(
-                                        command, checkout, log, step_env, costs, INTEGRATION_SHARDS, timeout_tests)
+                                        command, checkout, log, step_env, costs, budget, timeout_tests, memory_costs)
                                 else:
                                     result["steps"][name], output = run_step(name, command, checkout, log, step_env)
                             finally:
@@ -455,6 +538,13 @@ def run(ref, build_jobs, target_dir, profile="retail", optional=False):
             result["status"] = "FAILED"
             result["log_error"] = str(error)
             result.setdefault("error", str(error))
+        if test_slice is not None and owner is not None:
+            try:
+                result["test_resources"] = finish_test_slice(test_slice)
+            except Exception as error:
+                result["status"] = "FAILED"
+                result["cleanup_error"] = f"test slice cleanup failed: {error}"
+                owner = None  # Retain ownership when cleanup cannot be established.
         result["finished"] = time.strftime("%Y-%m-%dT%H:%M:%S%z")
         attempt_path = RESULTS / f"{attempt}.json"
         try:
@@ -483,10 +573,12 @@ def run(ref, build_jobs, target_dir, profile="retail", optional=False):
 
 
 
-def submit(ref, build_jobs, target_dir, profile="retail", optional=False):
+def submit(ref, build_jobs, target_dir, profile="retail", optional=False,
+           test_cpus=MAX_TEST_CPUS, test_mem_gib=MAX_TEST_MEM_GIB):
+    TestBudget(test_cpus, test_mem_gib)
     target_dir = validate_target_dir(target_dir)
     unit = f"full-suite-{profile}-{int(time.time())}"
-    subprocess.run(["systemd-run", "--user", f"--unit={unit}", "--collect", "--slice=agents.slice", "-p", "CPUQuota=1200%", "-p", "MemoryMax=9G", "-p", "MemorySwapMax=0", f"--setenv=FULL_SUITE_JOBS={JOBS}", f"--setenv=FULL_SUITE_INTEGRATION_JOBS={INTEGRATION_JOBS}", f"--setenv=FULL_SUITE_INTEGRATION_SHARDS={INTEGRATION_SHARDS}", sys.executable, os.path.abspath(__file__), "run", ref, "--profile", profile, "--build-jobs", str(build_jobs), "--target-dir", str(target_dir), *(["--optional"] if optional else [])], check=True)
+    subprocess.run(["systemd-run", "--user", f"--unit={unit}", "--collect", "--slice=agents.slice", "-p", "CPUQuota=1200%", "-p", "MemoryMax=9G", "-p", "MemorySwapMax=0", f"--setenv=FULL_SUITE_JOBS={JOBS}", f"--setenv=FULL_SUITE_INTEGRATION_JOBS={INTEGRATION_JOBS}", sys.executable, os.path.abspath(__file__), "run", ref, "--profile", profile, "--build-jobs", str(build_jobs), "--target-dir", str(target_dir), "--test-cpus", str(test_cpus), "--test-mem-gib", str(test_mem_gib), *(["--optional"] if optional else [])], check=True)
     print(unit)
 
 
@@ -547,6 +639,8 @@ if __name__ == "__main__":
         command.add_argument("--build-jobs", type=positive_build_jobs, default=1)
         command.add_argument("--target-dir", required=True)
         command.add_argument("--optional", action="store_true")
+        command.add_argument("--test-cpus", type=int, default=MAX_TEST_CPUS)
+        command.add_argument("--test-mem-gib", type=int, default=MAX_TEST_MEM_GIB)
     status_parser = actions.add_parser("status")
     status_parser.add_argument("ref", nargs="?")
     args = parser.parse_args(sys.argv[1:] or ["status"])
@@ -555,8 +649,10 @@ if __name__ == "__main__":
     else:
         try:
             if args.action == "run":
-                raise SystemExit(run(args.ref, args.build_jobs, args.target_dir, args.profile, args.optional))
+                raise SystemExit(run(args.ref, args.build_jobs, args.target_dir, args.profile, args.optional,
+                                     args.test_cpus, args.test_mem_gib))
             else:
-                submit(args.ref, args.build_jobs, args.target_dir, args.profile, args.optional)
+                submit(args.ref, args.build_jobs, args.target_dir, args.profile, args.optional,
+                       args.test_cpus, args.test_mem_gib)
         except ValueError as error:
             parser.error(str(error))
