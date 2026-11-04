@@ -57,6 +57,7 @@ pub(crate) fn fire_state(
 }
 
 fn begin_tick(state: &mut LuaState, elapsed: f64) -> crate::Result<()> {
+    crate::c_api::c_trade_skill_favorites::drain_pending(state)?;
     let pending = std::mem::take(
         &mut borrow_state_mut(state)?
             .crafting

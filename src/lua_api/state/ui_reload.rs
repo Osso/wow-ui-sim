@@ -15,6 +15,7 @@ impl SimState {
         self.discard_ui_callbacks();
         self.discard_addon_runtime();
         self.discard_ui_input();
+        self.crafting.recipe_favorites = Default::default();
         self.ui_reload_requested = false;
         self.ui_reloaded = true;
         self.is_logged_in = false;

@@ -14,6 +14,7 @@ pub struct CraftingState {
     pub recipe_filters: RecipeListFilters,
     /// One deferred recipe-list update shared by filter changes.
     pub recipe_filter_update_pending: bool,
+    pub(crate) recipe_favorites: crate::c_api::c_trade_skill_favorites::RecipeFavorites,
     /// Currently-selected profession id (Skill Line ID — matches the
     /// values in `profession_data`). `None` until `C_TradeSkillUI.
     /// SetProfessionChildSkillLineID` is called or the player opens
