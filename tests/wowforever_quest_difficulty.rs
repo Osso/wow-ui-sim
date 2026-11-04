@@ -1,5 +1,9 @@
-//! Forever's supplied quest difficulty and unchanged title consumers.
-#![cfg(feature = "client-wowforever")]
+//! Supplied quest difficulty on declared profiles, plus Forever title consumers.
+#![cfg(any(
+    feature = "client-retail",
+    feature = "client-ptr",
+    feature = "client-wowforever"
+))]
 
 use wow_ui_sim::lua_api::WowLuaEnv;
 
@@ -96,6 +100,7 @@ fn forever_quest_difficulty_rejects_invalid_and_unrepresented_ids_explicitly() {
     .unwrap();
 }
 
+#[cfg(feature = "client-wowforever")]
 #[test]
 fn forever_quest_difficulty_absent_curve_boundaries() {
     let env = WowLuaEnv::new().unwrap();
@@ -130,6 +135,7 @@ fn forever_quest_difficulty_absent_curve_boundaries() {
     .unwrap();
 }
 
+#[cfg(feature = "client-wowforever")]
 fn load_forever_title_consumer(env: &WowLuaEnv) {
     // Explicit test dependencies, not alternate production implementations.
     env.exec(
@@ -160,6 +166,7 @@ fn load_forever_title_consumer(env: &WowLuaEnv) {
     }
 }
 
+#[cfg(feature = "client-wowforever")]
 #[test]
 fn forever_quest_difficulty_whole_vendor_title_consumer_uses_live_level() {
     let env = WowLuaEnv::new().unwrap();
