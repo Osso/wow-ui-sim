@@ -52,6 +52,7 @@ fn run_shared() -> Result<(), Box<dyn std::error::Error>> {
 
     let mut required_ids = collect_required_item_ids();
     required_ids.extend(collect_keystone_item_ids(&wow_data)?);
+    required_ids.extend(collect_child_item_ids(&wow_data)?);
     required_ids.extend(collect_account_bound_item_ids(&csv_path)?);
     println!("Required item IDs: {} (deduplicated)", required_ids.len());
 
@@ -543,6 +544,16 @@ fn write_item_children(wow_data: &Path) -> Result<(), Box<dyn std::error::Error>
     }
     writeln!(out, "];")?;
     Ok(())
+}
+
+/// Child item tooltips need the same source-backed metadata as directly selected items.
+fn collect_child_item_ids(wow_data: &Path) -> Result<BTreeSet<u32>, Box<dyn std::error::Error>> {
+    let mut ids = BTreeSet::new();
+    for_each_csv_row(wow_data, "ItemChildEquipment.csv", |row| {
+        ids.insert(row.get("ChildItemID").parse::<u32>()?);
+        Ok(())
+    })?;
+    Ok(ids)
 }
 
 fn collect_keystone_item_ids(wow_data: &Path) -> Result<BTreeSet<u32>, Box<dyn std::error::Error>> {
