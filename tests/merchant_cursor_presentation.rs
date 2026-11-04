@@ -28,7 +28,7 @@ fn merchant_buyback_cursor_tracks_affordability_and_preserves_invalid() {
     env.exec("ShowBuybackSellCursor(1)").unwrap();
     assert_eq!(env.state().borrow().cursor_storage.presentation_display, 3);
     env.state().borrow_mut().player.money = 10;
-    env.exec("ShowBuybackSellCursor(1.9)").unwrap();
+    env.exec("ShowBuybackSellCursor('1.9')").unwrap();
     assert_eq!(env.state().borrow().cursor_storage.presentation_display, 49);
     env.exec("ShowBuybackSellCursor(0); ShowBuybackSellCursor(99)")
         .unwrap();
@@ -41,12 +41,23 @@ fn merchant_buyback_cursor_tracks_affordability_and_preserves_invalid() {
     env.state().borrow_mut().cursor_storage.presentation_gate_a = true;
     env.exec("ShowBuybackSellCursor({})").unwrap();
     assert_eq!(env.state().borrow().cursor_storage.presentation_display, 49);
+    {
+        let mut state = env.state().borrow_mut();
+        state.cursor_storage.presentation_gate_a = false;
+        state.cursor_storage.presentation_gate_b = true;
+    }
+    env.exec("ShowBuybackSellCursor({})").unwrap();
+    assert_eq!(env.state().borrow().cursor_storage.presentation_display, 49);
 }
 
 #[test]
 fn repair_base_survives_overrides_and_clears_held_item() {
     let env = fixture();
-    env.exec("PickupPlayerMoney(1); assert(GetCursorInfo() == 'money'); ShowRepairCursor(); assert(GetCursorInfo() == nil); assert(InRepairMode())")
+    env.state().borrow_mut().merchant_repair_capable = false;
+    env.exec("PickupPlayerMoney(1); ShowRepairCursor(); assert(GetCursorInfo() == 'money'); assert(not InRepairMode())")
+        .unwrap();
+    env.state().borrow_mut().merchant_repair_capable = true;
+    env.exec("ShowRepairCursor(); assert(GetCursorInfo() == nil); assert(InRepairMode())")
         .unwrap();
     {
         let state = env.state().borrow();
