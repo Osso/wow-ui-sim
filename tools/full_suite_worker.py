@@ -15,7 +15,8 @@ import sys
 import time
 from contextlib import nullcontext
 
-TEST_LINE = re.compile(r"^test (?P<name>[^ ]+?)(?: - [^\n]*)? \.\.\.(?: (?P<status>ok|ignored|FAILED))?$")
+TEST_LINE = re.compile(
+    r"^test (?P<name>[^ ]+?)(?: - [^\n]*)? \.\.\.(?: (?P<status>ok|ignored|FAILED)(?:,.*)?)?$")
 STATUS_WORD = re.compile(r"^(ok|ignored|FAILED)$")
 SUMMARY = re.compile(r"^test result: (?:ok|FAILED)\. (\d+) passed; (\d+) failed; (\d+) ignored", re.M)
 

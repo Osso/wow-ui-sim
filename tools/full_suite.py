@@ -274,6 +274,7 @@ def run_step(name, cmd, checkout, log, env):
 
 
 def shard_memory_bytes(names, memory_costs):
+    """Per-unit ceiling: measured envelope plus headroom, never below the conservative floor."""
     peaks = memory_costs["peak_bytes"]
     if not peaks or min(peaks.values()) <= 0 or memory_costs["headroom_percent"] < 0:
         raise ValueError("memory costs require positive byte peaks and nonnegative headroom")
@@ -281,7 +282,9 @@ def shard_memory_bytes(names, memory_costs):
     largest = max(peaks.values())
     peak = max(peaks.get(name, largest) for name in names)
     required = (peak * (100 + memory_costs["headroom_percent"]) + 99) // 100
-    return ((required + GIB - 1) // GIB) * GIB
+    # A measured small case can still exceed its own envelope when it bootstraps a
+    # second full environment, so keep the established 5 GiB conservative cap.
+    return max(5 * GIB, ((required + GIB - 1) // GIB) * GIB)
 
 
 def admission_bytes(names, memory_costs):

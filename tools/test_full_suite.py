@@ -132,10 +132,10 @@ class TestBudgetTests(unittest.TestCase):
             with self.subTest(cpus=cpus, memory=memory), self.assertRaises(ValueError):
                 self.runner.TestBudget(cpus, memory)
 
-    def test_measured_peak_caps_include_headroom_and_unknown_cases(self):
+    def test_measured_peak_caps_include_headroom_floor_and_unknown_cases(self):
         gib = 1024 ** 3
         peaks = {'peak_bytes': {'small::case': gib, 'large::case': 4 * gib}, 'headroom_percent': 50}
-        self.assertEqual(self.runner.shard_memory_bytes(['small::case'], peaks), 2 * gib)
+        self.assertEqual(self.runner.shard_memory_bytes(['small::case'], peaks), 5 * gib)
         self.assertEqual(self.runner.shard_memory_bytes(['large::case'], peaks), 6 * gib)
         self.assertEqual(self.runner.shard_memory_bytes(['new::case'], peaks), 6 * gib)
 
@@ -268,7 +268,7 @@ class IntegrationShardingTests(unittest.TestCase):
             self.runner.TestBudget(2, 24), (), peaks)
         self.assertEqual(step['exit'], 0)
         self.assertEqual((self.root / 'large-cap').read_text(), str(6 * gib))
-        self.assertEqual((self.root / 'small-cap').read_text(), str(2 * gib))
+        self.assertEqual((self.root / 'small-cap').read_text(), str(5 * gib))
 
     def test_exact_names_failures_and_per_name_metrics_are_recorded(self):
         timings = self.root / 'timings.json'
