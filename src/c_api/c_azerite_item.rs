@@ -48,7 +48,12 @@ pub(crate) fn register_c_azerite_item_surface(state: &mut LuaState) -> LuaResult
         is_azerite_item_at_max_level,
     )?;
     table_set_rust_fn_static(state, ns, "IsAzeriteItemEnabled", is_azerite_item_enabled)?;
-    if matches!(ACTIVE, ClientProfile::Retail | ClientProfile::Ptr) {
+    // Forever 70707 AzeriteItemDocumentation.lua:77-90 declares this same
+    // location query; its original paper-doll overlay consumes it at line 13.
+    if matches!(
+        ACTIVE,
+        ClientProfile::Retail | ClientProfile::Ptr | ClientProfile::WowForever
+    ) {
         table_set_rust_fn_static(state, ns, "IsAzeriteItem", is_azerite_item)?;
     }
     Ok(())

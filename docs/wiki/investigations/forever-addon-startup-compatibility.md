@@ -68,6 +68,44 @@ with populated session data. It selected map 2248, reported a positive zoom
 target, and showed the quest list and pins. The capture reported terrain
 texture lookup failures.
 
+### Tooltip baseline fixtures and producers
+
+The Camelot character panel uses mode tabs, not Mainline `numTabs`. Tooltip
+fixtures now enter through its original `ToggleCharacter` and load the complete
+Forever startup inventory, including `Blizzard_Statistics`. This removes two
+fixture errors without editing vendor Lua or assertions. Original item-button
+and paper-doll consumers then exposed missing publication of the existing
+[crafted-quality map](../../specs/crafted-item-quality-info.md#forever-publication)
+and [Azerite location query](../../specs/retail-corrupted-azerite-items.md).
+The five character-slot hover/render cases pass after those publications.
+
+Forever spellbook fixtures explicitly supply an empty outfit list and unavailable
+transmog. Both inputs are required by the existing strict
+[outfit](../../specs/forever-camelot-spellbook.md) and
+[availability](../../specs/transmog-availability.md) contracts; no production
+fallback is added. The original spellbook hover and layout cases then pass.
+
+`Blizzard_GroupFinder.toc:10` excludes camelot. Named test registration now omits
+its consumer cases on Forever and tests the original loader's false/MISSING
+result instead. Neither builtin frames nor the legacy LFG workaround synthesizes
+`LFGListFrame` on Forever. Source-bound stock startup JSON remained `[]` before
+and after that removal; unrelated legacy LFG helpers are unchanged.
+
+WM99 adds the independent supplied [off-hand hit modifier](../../specs/forever-character-remaining-stats.md)
+and [spec-group configuration selection](../../specs/forever-spec-group-config.md).
+WM101 adds the resolved-player/class ammunition predicate and supplied
+[trait-group display rows](../../specs/forever-trait-group-display.md), preserving
+provider order and missing SkillLine joins. The original character-panel flow
+now passes. The remaining tab-switch failure calls `C_Traits.GetGroupCurrencyInfo`;
+WM102 is pending. The [glue character name contract](../../specs/forever-glue-character-name.md)
+follows WM100's separate surname and supplied separator, uses the pinned localized
+format and preserves zero-result unknown GUID lookup. Only absent localized
+format data retains a named EMULATED seam. Original supplied-name and surname
+queries pass.
+
+The bounded Forever integration `tooltip` filter now reports 363 passed,
+1 pre-existing failure and 1 ignored. This is not full-profile acceptance.
+
 ### Verification
 
 The focused tests vary simulator state and exercise selected consumers.

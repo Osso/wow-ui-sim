@@ -42,6 +42,25 @@ nil; retaining explicit simulator errors is an EMULATED policy, not native proof
 Numeric fields accept the existing numeric range and subtract before truncation;
 string coercion and unusual native conversions remain UNKNOWN.
 
+## Loaded combat configurations
+
+The [spec-group configuration query](../../specs/forever-spec-group-config.md)
+uses a separate ordered `loaded_configs` vector in the same Forever state. Each
+record supplies its ID, combat-kind predicate and combat flags. WM99 establishes
+first-match selection with flag 1 for group 1 and flag 8 for other accepted
+indices. Zero IDs remain present; no match returns nil. This is independent of
+legacy talent groups and the separately stored active configuration ID. The
+unseeded vector is empty; live native population and update timing remain unknown.
+
+## Trait-group display rows
+
+[WM101 display projection](../../specs/forever-trait-group-display.md) stores
+ordered relations separately from supplied SkillLine names/icons under
+`group_display`. Missing joins retain their relation row with empty text and zero
+icon. There is no implicit populated catalog and no sorting by orderIndex. One
+named inferred seam maps absent tree relations to an empty provider. Native
+relation acquisition and live provider behavior remain unknown.
+
 ## Event delivery seam
 
 `A_Admin.FireEvent` is the single host-controlled notification seam. Reading

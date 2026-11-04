@@ -88,6 +88,51 @@ mod forever {
     }
 
     #[test]
+    fn ammo_predicate_resolves_player_class_without_equipment() {
+        let env = env();
+        env.state().borrow_mut().player.equipped_items.clear();
+        for (class, expected) in [(1, true), (3, true), (4, true), (2, false), (8, false)] {
+            env.state().borrow_mut().player.class_index = class;
+            let result: (bool, bool, i32) = env.eval("return UnitUsesAmmo('player'), UnitUsesAmmo('self'), select('#', UnitUsesAmmo('player'))").unwrap();
+            assert_eq!(result, (expected, expected, 1));
+        }
+        env.state().borrow_mut().current_target = Some(TargetInfo {
+            unit_id: "target".into(), name: "Ammo subject".into(), class_index: 3,
+            level: 20, health: 100, health_max: 100, power: 0, power_max: 0,
+            power_type: 0, power_type_name: "MANA".into(), is_player: true,
+            is_enemy: false, guid: "Player-2-3".into(), has_vehicle_ui: false,
+            interaction: Default::default(), classification: "normal".into(),
+            creature_type: "Humanoid".into(), reaction: 5,
+        });
+        assert!(env.eval::<bool>("return UnitUsesAmmo('target')").unwrap());
+        env.state().borrow_mut().current_target.as_mut().unwrap().is_player = false;
+        env.exec("assert(not UnitUsesAmmo('target')); assert(not UnitUsesAmmo('mouseover')); assert(not UnitUsesAmmo(123))").unwrap();
+        for call in ["UnitUsesAmmo()", "UnitUsesAmmo(nil)", "UnitUsesAmmo(false)", "UnitUsesAmmo({})"] {
+            let error = env.exec(call).expect_err("required string-compatible unit").to_string();
+            assert!(error.contains("Usage: local result = UnitUsesAmmo(unit)"), "{error}");
+        }
+    }
+
+    #[test]
+    fn offhand_hit_modifier_reads_independent_state_without_a_weapon() {
+        let env = env();
+        assert_eq!(env.eval::<f64>("return GetOffhandHitModifier()").unwrap(), 0.0);
+        env.state().borrow_mut().player.equipped_items.remove(&17);
+        for value in [1.25, -2.5] {
+            {
+                let state = env.state();
+                let mut sim = state.borrow_mut();
+                sim.player.stats.hit_modifier = 19.0;
+                sim.player.stats.offhand_hit_modifier = value;
+            }
+            let (offhand, melee, count): (f64, f64, i32) = env
+                .eval("return GetOffhandHitModifier(), GetHitModifier(), select('#', GetOffhandHitModifier())")
+                .unwrap();
+            assert_eq!((offhand, melee, count), (value, 19.0, 1));
+        }
+    }
+
+    #[test]
     fn defense_skill_resolves_player_target_and_missing_unit_without_changing_unit_defense() {
         let env = env();
         env.state().borrow_mut().player.level = 12;

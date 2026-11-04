@@ -1,3 +1,9 @@
+## [2026-11-04] investigation | Forever tooltip baseline
+
+Updated [Forever compatibility](investigations/forever-addon-startup-compatibility.md#tooltip-baseline-fixtures-and-producers)
+and [talent state](systems/forever-talents.md#loaded-combat-configurations) with
+source-selected fixtures, supplied-query publication, WM99–101 proof and the
+remaining trait-currency gap.
 ## [2026-11-04] investigation | Tooltip widget sizing boundaries
 
 Updated [tooltip layout timing](investigations/tooltip-layout-timing.md) with rejected empty/ownerless Show, first-title pooled text synchronization and the explicit UTF-8 append-cap seam. Original ProcessInfo tests distinguish these failures from backpack preservation coverage; final integration proof remains separate.

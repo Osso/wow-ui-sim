@@ -320,7 +320,11 @@ fn create_debuff_frame(widgets: &mut WidgetRegistry, ui_parent_id: u64, o: u16) 
 
 fn create_stub_frames(widgets: &mut WidgetRegistry, ui_parent_id: u64, o: u16) {
     register_stub_frame_specs(widgets, ui_parent_id, o, VISIBLE_STUB_FRAMES, true);
-    register_stub_frame_specs(widgets, ui_parent_id, o, HIDDEN_STUB_FRAMES, false);
+    // Forever Blizzard_GroupFinder.toc:10 excludes camelot; no synthetic
+    // LFGListFrame should precede an addon that cannot be selected.
+    if crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::WowForever {
+        register_stub_frame_specs(widgets, ui_parent_id, o, HIDDEN_STUB_FRAMES, false);
+    }
 }
 
 const VISIBLE_STUB_FRAMES: &[(&str, Option<(f32, f32)>)] = &[
