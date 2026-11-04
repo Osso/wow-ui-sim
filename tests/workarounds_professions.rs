@@ -112,6 +112,54 @@ fn profession_source_filter_updates_are_deferred_and_coalesced() {
 }
 
 #[test]
+fn recipe_filter_setters_queue_only_changed_values() {
+    let env = WowLuaEnv::new().expect("environment");
+    env.exec(
+        r#"
+        filterUpdates = 0
+        filterListener = CreateFrame('Frame')
+        filterListener:RegisterEvent('TRADE_SKILL_LIST_UPDATE')
+        filterListener:SetScript('OnEvent', function() filterUpdates = filterUpdates + 1 end)
+        "#,
+    )
+    .unwrap();
+    for (index, setter) in [
+        "C_TradeSkillUI.SetShowLearned(false)",
+        "C_TradeSkillUI.SetShowUnlearned(true)",
+        "C_TradeSkillUI.SetOnlyShowMakeableRecipes(true)",
+        "C_TradeSkillUI.SetOnlyShowSkillUpRecipes(true)",
+        "C_TradeSkillUI.SetOnlyShowFirstCraftRecipes(true)",
+        "C_TradeSkillUI.SetRecipeSourceTypeFilter(1, true)",
+        "C_TradeSkillUI.ClearRecipeSourceTypeFilter()",
+        "C_TradeSkillUI.SetSourceTypeFilter(2)",
+        "C_TradeSkillUI.ClearRecipeSourceTypeFilter()",
+        "C_TradeSkillUI.SetRecipeItemLevelFilter(590, 610)",
+        "C_TradeSkillUI.SetRecipeItemNameFilter('sharpening')",
+    ]
+    .into_iter()
+    .enumerate()
+    {
+        env.exec(setter).unwrap();
+        env.exec(setter).unwrap();
+        assert_eq!(
+            env.eval::<i32>("return filterUpdates").unwrap(),
+            index as i32
+        );
+        fire_one_on_update_tick(&env);
+        assert_eq!(
+            env.eval::<i32>("return filterUpdates").unwrap(),
+            index as i32 + 1
+        );
+        env.exec(setter).unwrap();
+        fire_one_on_update_tick(&env);
+        assert_eq!(
+            env.eval::<i32>("return filterUpdates").unwrap(),
+            index as i32 + 1
+        );
+    }
+}
+
+#[test]
 fn casting_blacksmithing_opens_professions_frame() {
     let env = full_game_env();
     env.state().borrow_mut().lua_errors.clear();
