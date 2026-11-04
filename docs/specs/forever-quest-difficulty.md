@@ -4,7 +4,9 @@ Forever's `C_QuestLog.GetQuestDifficultyLevel` must expose the supplied rich que
 
 ## Native trivial ranges
 
-Forever 1.60.1.70707 prepares 5 for both unit trivial-range APIs. `C_QuestLog.GetTrivialRange` returns 0 without a player and 5 with a player when the level curve is unconfigured. The simulator has no configured curve input. Curve values and Forever quest color bands remain unknown; the existing difficulty bands are unchanged.
+WM89 found that Forever 1.60.1.70707 prepares 5 for both unit trivial-range APIs. `C_QuestLog.GetTrivialRange` prepares 0 without a player and evaluates GlobalCurve selection keys 47 and 0 with a player; an absent configuration row selects 5. The simulator leaves these APIs unchanged and has no configured curve input.
+
+For `C_PlayerInfo.GetContentDifficultyQuestForPlayer`, WM89 establishes Impossible at difference ≥5, Difficult at 3–4, and Fair at −2 through 2. Below −2, Forever uses Easy through the inclusive negative curve range and Trivial below it. Populated curve values are unknown. The simulator emulates an absent configuration row with range 5; this is not a normal-client guarantee. Retail/PTR use fixed Easy −4 through −3 and Trivial at −5 or lower. Both paths currently use stored quest and player levels as emulated substitutes for ContentTuning and effective-level inputs.
 
 ## What it must do
 
