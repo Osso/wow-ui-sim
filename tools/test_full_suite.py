@@ -18,11 +18,40 @@ SCOPES = ("integration", "prefork_full_ui", "lib")
 PROFILES = ("retail", "ptr", "wrath", "mists", "wowforever", "era", "anniversary")
 
 
+class TestBudgetTests(unittest.TestCase):
+    def setUp(self):
+        spec = importlib.util.spec_from_file_location('budget_runner', RUNNER)
+        self.runner = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(self.runner)
+
+    def test_explicit_budget_scales_permits_and_workers(self):
+        for cpus, memory, workers, permits in ((16, 24, 16, 6), (8, 12, 8, 3), (4, 6, 4, 2), (1, 24, 1, 2)):
+            with self.subTest(cpus=cpus, memory=memory):
+                budget = self.runner.TestBudget(cpus, memory)
+                self.assertEqual(budget.shard_count, workers)
+                self.assertEqual(budget.timeout_slots, permits)
+                self.assertEqual(budget.record(), {'cpus': cpus, 'mem_gib': memory,
+                    'integration_shards': workers, 'timeout_child_slots': permits})
+
+    def test_budget_rejects_nonpositive_or_above_admitted_limits(self):
+        for cpus, memory in ((0, 24), (17, 24), (16, 0), (16, 25)):
+            with self.subTest(cpus=cpus, memory=memory), self.assertRaises(ValueError):
+                self.runner.TestBudget(cpus, memory)
+
+    def test_measured_peak_caps_include_headroom_and_unknown_cases(self):
+        gib = 1024 ** 3
+        peaks = {'peak_bytes': {'small::case': gib, 'large::case': 4 * gib}, 'headroom_percent': 50}
+        self.assertEqual(self.runner.shard_memory_bytes(['small::case'], peaks), 2 * gib)
+        self.assertEqual(self.runner.shard_memory_bytes(['large::case'], peaks), 6 * gib)
+        self.assertEqual(self.runner.shard_memory_bytes(['new::case'], peaks), 6 * gib)
+
+
 class IntegrationShardingTests(unittest.TestCase):
     def setUp(self):
         spec = importlib.util.spec_from_file_location('shard_runner', RUNNER)
         self.runner = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(self.runner)
+        self.memory_costs = {'peak_bytes': {'observed': 2 * 1024 ** 3}, 'headroom_percent': 50}
 
     def test_measured_cost_balancing_keeps_each_test_once(self):
         names = ['ui::slow', 'api::a', 'api::b', 'ui::medium', 'new::test']
@@ -56,7 +85,7 @@ class IntegrationShardingTests(unittest.TestCase):
             self.runner.confirm_terminated = lambda *args: None
             step, _ = self.runner.run_integration_shards(
                 [str(launcher), '--unit=fixture', '--', str(binary)], root,
-                io.StringIO(), dict(os.environ), {}, 2, ())
+                io.StringIO(), dict(os.environ), {}, self.runner.TestBudget(2, 24), (), self.memory_costs)
             self.assertEqual(step['exit'], 0)
             self.assertEqual(step['tests'], 3)
 
@@ -85,10 +114,43 @@ class IntegrationShardingTests(unittest.TestCase):
             self.runner.confirm_terminated = lambda *args: None
             step, _ = self.runner.run_integration_shards(
                 [str(launcher), '--unit=fixture', '--', str(binary)], root,
-                io.StringIO(), dict(os.environ), {name: 100 for name in guarded}, 3, guarded)
+                io.StringIO(), dict(os.environ), {name: 100 for name in guarded},
+                self.runner.TestBudget(3, 24), guarded, self.memory_costs)
             self.assertEqual(step['exit'], 0)
             self.assertEqual(step['tests'], 5)
             self.assertEqual(len(step['shards']), 3)
+
+    def test_each_native_shard_receives_its_measured_memory_cap(self):
+        import io
+        gib = 1024 ** 3
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            binary = root / 'test-binary'
+            write_executable(binary,
+                "import os, pathlib, sys\n"
+                "if '--list' in sys.argv:\n"
+                "    print('large::case: test\\nsmall::case: test')\n"
+                "    sys.exit(0)\n"
+                "name = sys.argv[sys.argv.index('--exact') + 1]\n"
+                "limit = int(os.environ['TEST_UNIT_MEMORY_BYTES'])\n"
+                "required = (6 if name.startswith('large') else 2) * 1024 ** 3\n"
+                "assert limit >= required, 'native shard exceeded its memory budget'\n"
+                "pathlib.Path(__file__).with_name(name.split('::')[0] + '-cap').write_text(str(limit))\n")
+            launcher = root / 'systemd-run'
+            write_executable(launcher,
+                "import os, subprocess, sys\n"
+                "value = next(arg.split('=', 1)[1] for arg in sys.argv if arg.startswith('MemoryMax='))\n"
+                "limit = int(value[:-1]) * 1024 ** 3 if value.endswith('G') else int(value)\n"
+                "env = dict(os.environ, TEST_UNIT_MEMORY_BYTES=str(limit))\n"
+                "sys.exit(subprocess.call(sys.argv[sys.argv.index('--') + 1:], env=env))\n")
+            self.runner.confirm_terminated = lambda *args: None
+            peaks = {'peak_bytes': {'large::case': 4 * gib, 'small::case': gib}, 'headroom_percent': 50}
+            step, _ = self.runner.run_integration_shards(
+                [str(launcher), '--unit=fixture', '-p', 'MemoryMax=3G', '--', str(binary)], root,
+                io.StringIO(), dict(os.environ), {}, self.runner.TestBudget(2, 24), (), peaks)
+            self.assertEqual(step['exit'], 0)
+            self.assertEqual((root / 'large-cap').read_text(), str(6 * gib))
+            self.assertEqual((root / 'small-cap').read_text(), str(2 * gib))
 
     def test_stable_shards_execute_exact_names_and_report_failures(self):
         import io
@@ -115,7 +177,7 @@ class IntegrationShardingTests(unittest.TestCase):
             command = [str(launcher), '--unit=fixture', '--', str(binary)]
             log = io.StringIO()
             step, output = self.runner.run_integration_shards(
-                command, root, log, dict(os.environ), {}, 3, ())
+                command, root, log, dict(os.environ), {}, self.runner.TestBudget(3, 24), (), self.memory_costs)
             selected = [name for path in root.glob('selected-*') for name in json.loads(path.read_text())]
             self.assertEqual(sorted(selected), ['alpha::a', 'alpha::ab', 'beta::bad', 'beta::ignored'])
             self.assertEqual(step['exit'], 1)
@@ -695,6 +757,42 @@ sys.exit(runner.run(sys.argv[2], 1, sys.argv[3], "ptr"))
         self.assertNotEqual(again.returncode, 0, again.stderr)
         second = json.loads((self.home / 'slot-argv.json').read_text())
         self.assertEqual(second[second.index('--worktree') + 1], str(worktree))
+
+    def test_cli_budget_reaches_native_tests_and_private_slice(self):
+        binary = self.slot / 'budget-test'
+        write_executable(binary,
+            "import os, sys\n"
+            "if os.environ.get('WOW_SIM_TIMEOUT_CHILD_SLOTS') != '2': sys.exit('incorrect configured permit count')\n")
+        write_executable(self.bin / 'slot-build.py',
+            "import json, os, pathlib, sys\n"
+            "slot = pathlib.Path(os.environ['HOME']) / '.cache/wow-ui-sim-targets/slot-3'\n"
+            "unit = sys.argv[sys.argv.index('--unit') + 1]\n"
+            "receipt = slot / 'receipts' / (unit + '.json')\n"
+            "receipt.parent.mkdir(exist_ok=True)\n"
+            "records = [{'executable': str(slot / 'budget-test'), 'profile': {'test': True}, "
+            "'target': {'name': name, 'kind': [kind]}} for name, kind in [('integration', 'test'), ('wow_ui_sim', 'lib')]]\n"
+            "receipt.write_text(json.dumps({'result': 'success', 'returncode': 0, 'reported_artifacts': records}))\n")
+        write_executable(self.bin / 'systemctl',
+            "import json, os, pathlib, sys\n"
+            "with (pathlib.Path(os.environ['HOME']) / 'control-argv').open('a') as log: log.write(json.dumps(sys.argv[1:]) + '\\n')\n"
+            "print('ActiveState=inactive\\nResult=success\\nCPUUsageNSec=0\\nMemoryPeak=0')\n")
+        write_executable(self.bin / 'systemd-run',
+            "import subprocess, sys\nsys.exit(subprocess.call(sys.argv[sys.argv.index('--') + 1:]))\n")
+        process = subprocess.run(
+            [sys.executable, str(RUNNER), 'run', self.sha, '--profile', 'ptr', '--target-dir', str(self.slot),
+             '--test-cpus', '4', '--test-mem-gib', '12'],
+            env=self.env, capture_output=True, text=True, timeout=10)
+        self.assertEqual(process.returncode, 0, process.stdout + process.stderr)
+        record = json.loads(self.latest_attempt().read_text())
+        self.assertEqual(record['test_budget'], {'cpus': 4, 'mem_gib': 12,
+            'integration_shards': 4, 'timeout_child_slots': 2})
+        controls = [json.loads(line) for line in (self.home / 'control-argv').read_text().splitlines()]
+        settings = next(args for args in controls if args[0] == 'set-property')
+        self.assertIn('CPUQuota=400%', settings)
+        self.assertIn('MemoryMax=12G', settings)
+        self.assertIn('MemorySwapMax=0', settings)
+        self.assertTrue(record['test_slice'].startswith('agents-fullsuite-'))
+        self.assertIn(['stop', record['test_slice']], controls)
 
     def test_wow_sim_bin_target_fits_the_measured_thread_budget(self):
         for name in ('integration-tests', 'lib-tests', 'wow-sim-tests'):
