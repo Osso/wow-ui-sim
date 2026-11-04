@@ -379,6 +379,8 @@ fn test_addon_compartment_frame_methods() {
     assert!(is_table);
 }
 
+// Forever Blizzard_GroupFinder.toc:10 excludes camelot.
+group_finder_ui_fixture! {
 #[test]
 fn test_lfg_list_frame_search_panel() {
     let env = env();
@@ -391,6 +393,8 @@ fn test_lfg_list_frame_search_panel() {
         box_exists,
         "LFGListFrame.SearchPanel.SearchBox should exist"
     );
+}
+
 }
 
 #[test]

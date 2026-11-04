@@ -684,6 +684,8 @@ fn toggle_guild_frame_opens_and_closes_communities_panel() {
     }
 }
 
+// Forever Blizzard_GroupFinder.toc:10 excludes camelot.
+group_finder_ui_fixture! {
 #[test]
 fn toggle_lfd_parent_frame_opens_and_closes_group_finder_panel() {
     test_timeout! {
@@ -726,6 +728,8 @@ fn toggle_lfd_parent_frame_opens_and_closes_group_finder_panel() {
             "ToggleLFDParentFrame() should open and close the group finder panel: {result}"
         );
     }
+}
+
 }
 
 #[test]
