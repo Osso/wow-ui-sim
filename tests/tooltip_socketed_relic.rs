@@ -34,12 +34,12 @@ fn tooltip_socketed_relic_original_hover_selects_viewed_slot() {
             local data = GameTooltip:GetPrimaryTooltipData()
             assert(info and info.getterName == 'GetSocketedRelic', 'socketed-relic accessor missing')
             assert(data and data.id == itemID, 'must use viewed slot, not equipped or constant item')
+            assert(data.type == Enum.TooltipDataType.Item and #data.lines > 0)
             local expected = C_TooltipInfo.GetItemByID(itemID)
-            assert(#data.lines > 0 and #data.lines == #expected.lines)
-            for lineIndex, line in ipairs(expected.lines) do
-                assert(data.lines[lineIndex].leftText == line.leftText, 'must preserve generated item lines')
-            end
-            assert(GameTooltip:GetLeftLine(1):GetText() == expected.lines[1].leftText)
+            -- WM96 section 7: socketed-relic mode can add relic-type and ilvl-increase
+            -- lines inside the item producer. Plain-item line-count/content equality is invalid.
+            assert(data.lines[1].leftText == expected.lines[1].leftText, 'must retain the selected item title')
+            assert(GameTooltip:GetLeftLine(1):GetText() == data.lines[1].leftText)
         end
         GameTooltip:SetOwner(UIParent, 'ANCHOR_NONE')
         GameTooltip:SetSocketedRelic(99)
