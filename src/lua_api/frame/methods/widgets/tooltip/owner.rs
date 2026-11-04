@@ -16,6 +16,13 @@ use rilua::{LuaResult, Val};
 pub(super) fn set_owner(state: &mut LuaState) -> LuaResult<u32> {
     let tooltip_id = frame_id_from_stack(state, 1)?;
     let args = tooltip_owner_args(state);
+    if native_owner_behavior() {
+        let old_owner = current_tooltip_owner_id(state, tooltip_id)?;
+        super::line_data::clear_lines(state)?;
+        if old_owner.is_some() && old_owner != args.owner_id {
+            crate::lua_api::frame::methods::core_state::hide(state)?;
+        }
+    }
     let mut sim = borrow_state_mut(state)?;
     if !apply_tooltip_owner(&mut sim, tooltip_id, &args) {
         return Ok(0);
@@ -24,8 +31,28 @@ pub(super) fn set_owner(state: &mut LuaState) -> LuaResult<u32> {
     let fields = get_or_create_frame_fields(state, tooltip_id);
     let anchor_value = create_string(state, &args.anchor_kind);
     table_set(state, fields, "anchor", anchor_value);
-    fire_tooltip_script(state, tooltip_id, "OnTooltipCleared");
+    if !native_owner_behavior() {
+        fire_tooltip_script(state, tooltip_id, "OnTooltipCleared");
+    }
     Ok(0)
+}
+
+fn native_owner_behavior() -> bool {
+    matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail | crate::client_profile::ClientProfile::Ptr
+    )
+}
+
+pub(crate) fn clear_tooltip_for_hide(state: &mut LuaState, tooltip_id: u64) -> LuaResult<()> {
+    super::line_data::clear_lines(state)?;
+    let mut sim = borrow_state_mut(state)?;
+    if let Some(tooltip) = sim.tooltips.get_mut(&tooltip_id) {
+        tooltip.anchor_type = "ANCHOR_NONE".to_string();
+        tooltip.anchor_x_offset = 0.0;
+        tooltip.anchor_y_offset = 0.0;
+    }
+    Ok(())
 }
 
 struct TooltipOwnerArgs {
@@ -49,15 +76,22 @@ fn tooltip_anchor_kind_arg(state: &mut LuaState) -> String {
 }
 
 fn normalized_tooltip_anchor_kind(state: &mut LuaState, stack_index: i32) -> String {
-    let anchor_kind = opt_string(state, stack_index).unwrap_or_else(|| "ANCHOR_NONE".to_string());
+    let default = if native_owner_behavior() {
+        "ANCHOR_LEFT"
+    } else {
+        "ANCHOR_NONE"
+    };
+    let anchor_kind = opt_string(state, stack_index).unwrap_or_else(|| default.to_string());
     if is_valid_tooltip_anchor(&anchor_kind) {
         return anchor_kind;
     }
 
-    let _ = collect_lua_error(
-        state,
-        &format!("invalid anchor type: {anchor_kind}; defaulting to ANCHOR_LEFT"),
-    );
+    if !native_owner_behavior() {
+        let _ = collect_lua_error(
+            state,
+            &format!("invalid anchor type: {anchor_kind}; defaulting to ANCHOR_LEFT"),
+        );
+    }
     "ANCHOR_LEFT".to_string()
 }
 
@@ -67,6 +101,7 @@ fn apply_tooltip_owner(
     args: &TooltipOwnerArgs,
 ) -> bool {
     let mouse_position = sim.mouse_position;
+    let screen_height = sim.screen_height;
     let Some(tooltip) = sim.widgets.get_mut_visual(tooltip_id) else {
         return false;
     };
@@ -76,6 +111,7 @@ fn apply_tooltip_owner(
         &args.anchor_kind,
         args.owner_id,
         mouse_position,
+        screen_height,
         args.x_offset,
         args.y_offset,
     );
@@ -97,7 +133,9 @@ fn record_tooltip_owner(
     td.anchored_left_lines = 0;
     td.spell_id = None;
     sim.widgets.mark_rect_dirty(tooltip_id);
-    sim.set_frame_visible(tooltip_id, false);
+    if !native_owner_behavior() {
+        sim.set_frame_visible(tooltip_id, false);
+    }
 }
 
 pub(super) fn set_object_tooltip_position(state: &mut LuaState) -> LuaResult<u32> {
@@ -137,6 +175,7 @@ fn apply_tooltip_anchor(
     anchor_kind: &str,
     owner_id: Option<u64>,
     mouse_position: Option<(f32, f32)>,
+    screen_height: f32,
     x_offset: f32,
     y_offset: f32,
 ) {
@@ -146,9 +185,15 @@ fn apply_tooltip_anchor(
     tooltip.anchors.clear();
     if is_cursor_tooltip_anchor(anchor_kind) {
         if let Some((mx, my)) = mouse_position {
-            tooltip
-                .anchors
-                .push(build_cursor_anchor(mx, my, x_offset, y_offset));
+            tooltip.anchors.push(build_cursor_anchor(
+                mx,
+                my,
+                x_offset,
+                y_offset,
+                anchor_kind,
+                screen_height,
+                tooltip.effective_scale,
+            ));
         }
         return;
     }
@@ -185,6 +230,15 @@ fn owner_tooltip_anchor_points(
         Bottom, BottomLeft, BottomRight, Left, Right, Top, TopLeft, TopRight,
     };
 
+    if native_owner_behavior() {
+        match anchor_kind {
+            "ANCHOR_RIGHT" => return Some((BottomLeft, TopRight)),
+            "ANCHOR_LEFT" => return Some((BottomRight, TopLeft)),
+            "ANCHOR_BOTTOMRIGHT" => return Some((TopLeft, BottomRight)),
+            "ANCHOR_BOTTOMLEFT" => return Some((TopRight, BottomLeft)),
+            _ => {}
+        }
+    }
     match anchor_kind {
         "ANCHOR_RIGHT" => Some((Left, Right)),
         "ANCHOR_LEFT" => Some((Right, Left)),
@@ -286,6 +340,7 @@ fn apply_anchor_type_to_tooltip(
 ) -> LuaResult<()> {
     let mut sim = borrow_state_mut(state)?;
     let mouse_position = sim.mouse_position;
+    let screen_height = sim.screen_height;
     let Some(tooltip) = sim.widgets.get_mut_visual(tooltip_id) else {
         return Ok(());
     };
@@ -294,6 +349,7 @@ fn apply_anchor_type_to_tooltip(
         anchor_kind,
         owner_id,
         mouse_position,
+        screen_height,
         x_offset,
         y_offset,
     );

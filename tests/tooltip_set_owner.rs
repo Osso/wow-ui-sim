@@ -59,8 +59,18 @@ fn anchor_right_attaches_left_of_tooltip_to_right_of_owner() {
             "#,
         )
         .unwrap();
-    assert_eq!(point, "LEFT");
-    assert_eq!(relative_point, "RIGHT");
+    // WM63 O17:20-30: mainline RIGHT uses bottom-left to top-right.
+    if matches!(
+        wow_ui_sim::client_profile::ACTIVE,
+        wow_ui_sim::client_profile::ClientProfile::Retail
+            | wow_ui_sim::client_profile::ClientProfile::Ptr
+    ) {
+        assert_eq!(point, "BOTTOMLEFT");
+        assert_eq!(relative_point, "TOPRIGHT");
+    } else {
+        assert_eq!(point, "LEFT");
+        assert_eq!(relative_point, "RIGHT");
+    }
     assert_eq!(x, 7.0);
     assert_eq!(y, -3.0);
 }
@@ -152,6 +162,16 @@ fn set_owner_without_explicit_anchor_defaults_to_no_anchor() {
             "#,
         )
         .unwrap();
-    assert_eq!(count, 0, "no anchor kind means no anchor applied");
+    // WM63 O17:32: absent anchor defaults to LEFT on mainline.
+    let expected = if matches!(
+        wow_ui_sim::client_profile::ACTIVE,
+        wow_ui_sim::client_profile::ClientProfile::Retail
+            | wow_ui_sim::client_profile::ClientProfile::Ptr
+    ) {
+        1
+    } else {
+        0
+    };
+    assert_eq!(count, expected, "default anchor count");
     assert!(has_owner, "owner is still recorded when anchor is omitted");
 }

@@ -14,9 +14,17 @@ fn collect_cursor_tooltip_positions(state: &SimState, mx: f32, my: f32) -> Vec<(
         .tooltips
         .iter()
         .filter_map(|(&tooltip_id, td)| {
-            let visible = state.widgets.get(tooltip_id)?.visible;
-            (td.anchor_type.starts_with("ANCHOR_CURSOR") && visible).then(|| {
-                let anchor = build_cursor_anchor(mx, my, td.anchor_x_offset, td.anchor_y_offset);
+            let frame = state.widgets.get(tooltip_id)?;
+            (td.anchor_type.starts_with("ANCHOR_CURSOR") && frame.visible).then(|| {
+                let anchor = build_cursor_anchor(
+                    mx,
+                    my,
+                    td.anchor_x_offset,
+                    td.anchor_y_offset,
+                    &td.anchor_type,
+                    state.screen_height,
+                    frame.effective_scale,
+                );
                 (tooltip_id, anchor)
             })
         })

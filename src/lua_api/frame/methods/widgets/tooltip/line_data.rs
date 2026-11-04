@@ -42,13 +42,26 @@ pub(super) fn clear_lines(state: &mut LuaState) -> LuaResult<u32> {
     clear_cached_tooltip_line_text(&mut sim, &line_ids);
     if wrath {
         hide_wrath_tooltip_children(&mut sim, id, &line_ids);
+    } else if native_sizing_timing() {
+        reset_tooltip_lines(&mut sim, &line_ids);
     }
     refresh_tooltip_geometry(&mut sim, id);
     drop(sim);
-    if !wrath || had_lines {
+    if had_lines || (!wrath && !native_sizing_timing()) {
         fire_tooltip_script(state, id, "OnTooltipCleared");
     }
     Ok(0)
+}
+
+fn reset_tooltip_lines(sim: &mut crate::lua_api::state::SimState, line_ids: &[u64]) {
+    for &id in line_ids {
+        if let Some(frame) = sim.widgets.get_mut_visual(id) {
+            frame.visible = false;
+            frame.width = 0.0;
+            frame.word_wrap = false;
+        }
+        sim.widgets.mark_rect_dirty(id);
+    }
 }
 
 fn hide_wrath_tooltip_children(
@@ -125,8 +138,27 @@ pub(super) fn add_line(state: &mut LuaState) -> LuaResult<u32> {
     });
     invalidate_tooltip_line_layout(&mut sim, id);
     drop(sim);
-    let _ = sync_tooltip_line_frame(state, id, false, line_index)?;
+    show_reused_tooltip_line(state, id, false, line_index)?;
     Ok(0)
+}
+
+fn show_reused_tooltip_line(
+    state: &mut LuaState,
+    id: u64,
+    right: bool,
+    index: usize,
+) -> LuaResult<()> {
+    let line = sync_tooltip_line_frame(state, id, right, index)?;
+    if native_sizing_timing()
+        && let Some(line_id) = line
+    {
+        let mut sim = borrow_state_mut(state)?;
+        if let Some(frame) = sim.widgets.get_mut_visual(line_id) {
+            frame.visible = frame.text.as_ref().is_some_and(|text| !text.is_empty());
+        }
+        sim.widgets.mark_rect_dirty(line_id);
+    }
+    Ok(())
 }
 
 pub(super) fn add_double_line(state: &mut LuaState) -> LuaResult<u32> {
@@ -149,8 +181,8 @@ pub(super) fn add_double_line(state: &mut LuaState) -> LuaResult<u32> {
     );
     let right_segments = processing_right_line_color_segments(state, id, line_index, &args);
     push_double_tooltip_line(state, id, args, left_segments, right_segments)?;
-    let _ = sync_tooltip_line_frame(state, id, false, line_index)?;
-    let _ = sync_tooltip_line_frame(state, id, true, line_index)?;
+    show_reused_tooltip_line(state, id, false, line_index)?;
+    show_reused_tooltip_line(state, id, true, line_index)?;
 
     Ok(0)
 }
@@ -365,10 +397,13 @@ pub(super) fn get_custom_line_spacing(state: &mut LuaState) -> LuaResult<u32> {
         .tooltips
         .get(&id)
         .and_then(|td| td.line_spacing)
-        .map(|s| s as f64)
-        .unwrap_or(0.0);
+        .map(|s| s as f64);
     drop(sim);
-    v.into_stack(state)
+    match v {
+        Some(spacing) => spacing.into_stack(state),
+        None if native_sizing_timing() => Ok(0),
+        None => 0.0_f64.into_stack(state),
+    }
 }
 
 pub(super) fn set_minimum_width(state: &mut LuaState) -> LuaResult<u32> {

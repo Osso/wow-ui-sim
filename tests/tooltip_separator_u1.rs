@@ -102,17 +102,41 @@ fn retail_u1_original_separator_attaches_and_emits_scaled_divider() {
         let left = 12.0 + (nine_slice.corner_tl.width as f32 - 4.0).max(0.0);
         let right = 12.0 + (nine_slice.corner_tr.width as f32 - 4.0).max(0.0);
         let top = 12.0 + (nine_slice.corner_tl.height as f32 - 4.0).max(0.0);
-        // WM63-L23: outer height adds 20.48, independent of the rendered inset.
-        let expected_height = (17.0 + 15.0 + 15.0 + 4.0 + 20.48) * scale;
+        // WM63 L23:42-44: text rows use their FontString measurements.
+        let state = env.state().borrow();
+        let id = state.widgets.get_id_by_name("U1Tooltip").unwrap();
+        let td = &state.tooltips[&id];
+        let header = state.widgets.get(td.left_line_ids[0]).unwrap();
+        let blank = state.widgets.get(td.left_line_ids[1]).unwrap();
+        let footer = state.widgets.get(td.left_line_ids[2]).unwrap();
+        let mut fonts = WowFontSystem::new();
+        let header_height = fonts.measure_text_height(
+            "Header makes the tooltip wider than the divider",
+            header.font.as_deref(),
+            header.font_size,
+            None,
+            header.text_line_spacing,
+            header.font_string_smooth_scaling,
+        ) * header.text_scale as f32;
+        let footer_height = fonts.measure_text_height(
+            "Footer",
+            footer.font.as_deref(),
+            footer.font_size,
+            None,
+            footer.text_line_spacing,
+            footer.font_string_smooth_scaling,
+        ) * footer.text_scale as f32;
+        let blank_height = (blank.font_size * 1.2).ceil();
+        drop(state);
+        let expected_height = (header_height + blank_height + footer_height + 4.0 + 20.48) * scale;
         assert!(
             (bounds.height - expected_height).abs() < 0.01,
             "Header, attached row, Footer and two spacings must determine height"
         );
-        // Accepted U1 policy: retain the 15-unit blank row, center the
-        // 10-unit image (2.5-unit offset), and keep both 2-unit spacings.
+        // Accepted U1 policy: retain the blank row and center the 10-unit image.
         let expected = [
             bounds.x + left * scale,
-            bounds.y + (top + 17.0 + 2.0 + 2.5) * scale,
+            bounds.y + (top + header_height + 2.0 + (blank_height - 10.0) / 2.0) * scale,
             bounds.x + bounds.width - right * scale,
             10.0 * scale,
         ];

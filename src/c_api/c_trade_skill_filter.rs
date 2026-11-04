@@ -11,7 +11,6 @@ use std::collections::BTreeSet;
 use crate::c_api::ensure_namespace;
 use crate::lua_api::globals::profession_data::{self, RecipeEntry};
 use crate::lua_api::methods::{borrow_state, borrow_state_mut, create_string, create_table};
-use crate::lua_api::script_helpers::fire_named_event_state;
 use crate::lua_api::state_types::crafting::RecipeListFilters;
 use crate::lua_bridge::{FromStack, stack_val, table_set_rust_fn_static};
 use rilua::vm::state::LuaState;
@@ -92,8 +91,11 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
 fn set_name_filter(state: &mut LuaState) -> LuaResult<u32> {
     // Cached ProfessionsTemplates explicitly uses nil to clear its search box.
     let filter = Option::<String>::from_stack(state, 1)?.unwrap_or_default();
-    borrow_state_mut(state)?.crafting.recipe_name_filter = filter;
-    fire_named_event_state(state, "TRADE_SKILL_LIST_UPDATE", &[]);
+    let mut sim = borrow_state_mut(state)?;
+    if sim.crafting.recipe_name_filter != filter {
+        sim.crafting.recipe_name_filter = filter;
+        sim.crafting.recipe_filter_update_pending = true;
+    }
     Ok(0)
 }
 
@@ -144,8 +146,12 @@ fn update_filters(
     state: &mut LuaState,
     update: impl FnOnce(&mut RecipeListFilters),
 ) -> LuaResult<u32> {
-    update(&mut borrow_state_mut(state)?.crafting.recipe_filters);
-    fire_named_event_state(state, "TRADE_SKILL_LIST_UPDATE", &[]);
+    let mut sim = borrow_state_mut(state)?;
+    let previous = sim.crafting.recipe_filters.clone();
+    update(&mut sim.crafting.recipe_filters);
+    if sim.crafting.recipe_filters != previous {
+        sim.crafting.recipe_filter_update_pending = true;
+    }
     Ok(0)
 }
 
