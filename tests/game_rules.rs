@@ -8,10 +8,15 @@ fn env() -> WowLuaEnv {
 
 #[test]
 fn game_rules_hardcore_flag_defaults_to_false() {
-    // Legacy coverage — IsHardcoreActive is still installed from the
-    // namespace-stub pass even though the PLAN-listed rule getters moved
-    // to SimState.
     let env = env();
+    // WM80: Retail 70688 has no native IsHardcoreActive registration.
+    if cfg!(any(feature = "profile-retail", feature = "client-ptr")) {
+        let absent: bool = env
+            .eval("return rawget(C_GameRules, 'IsHardcoreActive') == nil and C_GameRules.IsHardcoreActive == nil")
+            .unwrap();
+        assert!(absent);
+        return;
+    }
     let result: String = env
         .eval(
             r#"
@@ -34,7 +39,10 @@ fn standard_mode_predicate_tracks_supplied_game_mode() {
 
     let env = env();
     if ACTIVE == ClientProfile::Wrath {
-        assert!(env.eval::<bool>("return C_GameRules.IsStandard == nil").unwrap());
+        assert!(
+            env.eval::<bool>("return C_GameRules.IsStandard == nil")
+                .unwrap()
+        );
         return;
     }
     for (mode, expected) in [("Standard", true), ("Plunderstorm", false)] {
@@ -59,7 +67,10 @@ fn active_game_mode_matches_published_enum() {
         .eval("return C_GameRules.GetActiveGameMode() == Enum.GameMode.Plunderstorm and C_GameRules.IsPlunderstorm()")
         .unwrap();
     assert!(standard, "the default mode must be Enum.GameMode.Standard");
-    assert!(plunderstorm, "the supplied mode must be Enum.GameMode.Plunderstorm");
+    assert!(
+        plunderstorm,
+        "the supplied mode must be Enum.GameMode.Plunderstorm"
+    );
 }
 
 #[test]
@@ -197,7 +208,8 @@ fn set_active_game_mode_back_to_standard_resets_glue_default() {
     let env = env();
     env.exec(r#"A_Admin.SetActiveGameMode(Enum.GameMode.Plunderstorm, "PlunderstormLogin")"#)
         .unwrap();
-    env.exec(r#"A_Admin.SetActiveGameMode(Enum.GameMode.Standard)"#).unwrap();
+    env.exec(r#"A_Admin.SetActiveGameMode(Enum.GameMode.Standard)"#)
+        .unwrap();
     let (mode, plunder, glue): (i64, bool, String) = env
         .eval(
             r#"
