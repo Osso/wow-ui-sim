@@ -504,25 +504,37 @@ fn test_minimap_is_inside_quest_blob() {
 #[test]
 fn test_minimap_get_view_radius() {
     let env = env();
-    let (radius, tracking_count, info_is_nil, filter_id, spell_id): (f64, i32, bool, i32, i32) =
-        env.eval(
+    let radius: f64 = env.eval("return C_Minimap.GetViewRadius()").unwrap();
+    assert!(radius > 0.0);
+    if cfg!(feature = "client-wowforever") {
+        // WM77: static rows follow any dynamic spell entries and have no spellID.
+        env.exec(
             r#"
-            local filter = C_Minimap.GetTrackingFilter()
-            return
-                C_Minimap.GetViewRadius(),
-                C_Minimap.GetNumTrackingTypes(),
-                C_Minimap.GetTrackingInfo(1) == nil,
-                filter.filterID,
-                filter.spellID
+            local count = C_Minimap.GetNumTrackingTypes()
+            assert(count >= 23 and count <= 25)
+            local info = C_Minimap.GetTrackingInfo(1)
+            local filter = C_Minimap.GetTrackingFilter(1)
+            assert(info.type == 'other' and info.texture == 136452)
+            assert(info.subType == 2 and info.spellID == nil)
+            assert(filter.filterID == 1 and filter.spellID == nil)
+            assert(C_Minimap.GetTrackingInfo(count + 1) == nil)
+            local invalid = C_Minimap.GetTrackingFilter(count + 1)
+            assert(invalid.filterID == nil and invalid.spellID == nil)
             "#,
         )
         .unwrap();
-    assert!(radius > 0.0);
-    let tracks_trivial_quests = cfg!(feature = "client-wowforever");
-    assert_eq!(tracking_count, i32::from(tracks_trivial_quests));
-    assert_eq!(info_is_nil, !tracks_trivial_quests);
-    assert_eq!(filter_id, 0);
-    assert_eq!(spell_id, 0);
+    } else {
+        let (count, info_is_nil, filter_id, spell_id): (i32, bool, i32, i32) = env
+            .eval(
+                r#"
+                local filter = C_Minimap.GetTrackingFilter()
+                return C_Minimap.GetNumTrackingTypes(), C_Minimap.GetTrackingInfo(1) == nil,
+                       filter.filterID, filter.spellID
+                "#,
+            )
+            .unwrap();
+        assert_eq!((count, info_is_nil, filter_id, spell_id), (0, true, 0, 0));
+    }
 }
 
 #[test]
