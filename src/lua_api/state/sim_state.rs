@@ -741,7 +741,6 @@ pub struct SimState {
     pub merchant_items: Vec<u32>,
     #[cfg(feature = "retail-12-0-7")]
     pub merchant_currencies: Vec<i32>,
-    #[cfg(feature = "client-wowforever")]
     pub merchant_buyback_items: Vec<crate::lua_api::globals::real::merchant_buyback::BuybackItem>,
     pub loot_slots: Vec<BagItem>,
     pub last_loot_roll_choice: Option<i32>,

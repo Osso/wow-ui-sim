@@ -52,7 +52,6 @@ pub mod locale_info;
 pub mod loot_method;
 pub mod loot_specialization;
 pub mod math_extensions;
-#[cfg(feature = "client-wowforever")]
 pub mod merchant_buyback;
 #[cfg(feature = "client-wowforever")]
 pub mod merchant_repair;
