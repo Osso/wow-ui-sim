@@ -51,8 +51,11 @@ fn unit_frame_edit_mode_setting_meta_includes_big_defensive_icon_size() {
     assert_eq!(big_defensive_icon_size, 21);
     assert_eq!(buff_icon_size, 22);
     assert_eq!(min_value, 0);
-    assert_eq!(max_value, 22);
-    assert_eq!(num_values, 23);
+    // PTR 70493 EditModeManagerConstantsDocumentation.lua:797–828 adds
+    // UseHorizontalLayout=23 and GrowDirection=24 after BuffIconSize=22.
+    let ptr = wow_ui_sim::client_profile::ACTIVE == wow_ui_sim::client_profile::ClientProfile::Ptr;
+    assert_eq!(max_value, if ptr { 24 } else { 22 });
+    assert_eq!(num_values, if ptr { 25 } else { 23 });
 }
 }
 
