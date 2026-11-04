@@ -6,9 +6,7 @@ use crate::lua_api::globals::create_frame::create_frame_instance;
 use crate::lua_api::methods::{
     borrow_state, borrow_state_mut, frame_id_from_stack, frame_ref, table_get, val_to_string,
 };
-use crate::lua_api::tooltip::{
-    TooltipAttachment, TooltipAttachmentSource, TooltipLine, TooltipTextSegment, TooltipTexture,
-};
+use crate::lua_api::tooltip::{TooltipLine, TooltipTextSegment, TooltipTexture};
 use crate::lua_bridge::stack_val;
 use crate::widget::{TextJustify, WidgetType};
 use rilua::vm::state::LuaState;
@@ -277,6 +275,7 @@ fn add_texture_line(
             right_segments: Vec::new(),
             wrap: false,
             texture: Some(texture),
+            inset: 0.0,
         });
     refresh_tooltip_geometry(&mut sim, tooltip_id);
     Ok(0)
@@ -288,18 +287,7 @@ pub(super) fn add_texture(state: &mut LuaState) -> LuaResult<u32> {
         return super::wrath::attach_texture(state, tooltip_id);
     }
     if native_attachments() {
-        let value = stack_val(state, 2);
-        let source = match value {
-            Val::Num(number) if number >= 0.0 => {
-                Some(TooltipAttachmentSource::FileDataId(number as u32))
-            }
-            _ => val_to_string(state, value)
-                .filter(|s| !s.is_empty())
-                .map(TooltipAttachmentSource::Path),
-        };
-        if let Some(source) = source {
-            attach_native_texture(state, tooltip_id, source)?;
-        }
+        super::attachments::add_texture(state, tooltip_id)?;
         return Ok(0);
     }
     let texture = match stack_val(state, 2) {
@@ -309,76 +297,21 @@ pub(super) fn add_texture(state: &mut LuaState) -> LuaResult<u32> {
             .map(TooltipTexture::FileDataId),
     };
     let Some(texture) = texture else {
-        #[cfg(feature = "client-retail")]
-        attach_path_to_blank_line(state, tooltip_id)?;
         return Ok(0);
     };
     add_texture_line(state, tooltip_id, texture)
 }
 
-#[cfg(feature = "client-retail")]
-fn read_path_attachment(
-    state: &mut LuaState,
-) -> Option<crate::lua_api::tooltip::TooltipPathAttachment> {
-    let path = opt_string(state, 2)?;
-    let options = stack_val(state, 3);
-    let anchor = table_get(state, options, "anchor");
-    const TOOLTIP_TEXTURE_ANCHOR_ALL: f64 = 6.0;
-    if !matches!(anchor, Val::Num(value) if value == TOOLTIP_TEXTURE_ANCHOR_ALL) {
-        return None;
-    }
-    let Val::Num(height) = table_get(state, options, "height") else {
-        return None;
-    };
-    let margin = table_get(state, options, "margin");
-    let mut margins = [0.0; 4];
-    for (index, key) in ["left", "right", "top", "bottom"].iter().enumerate() {
-        let Val::Num(value) = table_get(state, margin, key) else {
-            return None;
-        };
-        margins[index] = value as f32;
-    }
-    Some(crate::lua_api::tooltip::TooltipPathAttachment {
-        path,
-        height: height as f32,
-        margins,
-    })
-}
-
-#[cfg(feature = "client-retail")]
-fn attach_path_to_blank_line(state: &mut LuaState, tooltip_id: u64) -> LuaResult<()> {
-    let Some(attachment) = read_path_attachment(state) else {
-        return Ok(());
-    };
-    let mut sim = borrow_state_mut(state)?;
-    let Some(line) = sim
-        .tooltips
-        .get_mut(&tooltip_id)
-        .and_then(|td| td.lines.last_mut())
-    else {
-        return Ok(());
-    };
-    // SocialUIUtil supplies this blank wrapped row before AddTexture.
-    // Other attachment forms remain outside the U1 contract.
-    if !line.wrap || line.left_text != " " || line.texture.is_some() {
-        return Ok(());
-    }
-    line.texture = Some(TooltipTexture::PathAttachment(attachment));
-    refresh_tooltip_geometry(&mut sim, tooltip_id);
-    Ok(())
-}
-
 pub(super) fn add_atlas(state: &mut LuaState) -> LuaResult<u32> {
     let tooltip_id = frame_id_from_stack(state, 1)?;
+    if native_attachments() {
+        super::attachments::add_atlas(state, tooltip_id)?;
+        return Ok(0);
+    }
     let Some(atlas) = opt_string(state, 2) else {
         return Ok(0);
     };
-    if native_attachments() {
-        attach_native_texture(state, tooltip_id, TooltipAttachmentSource::Atlas(atlas))?;
-        Ok(0)
-    } else {
-        add_texture_line(state, tooltip_id, TooltipTexture::Atlas(atlas))
-    }
+    add_texture_line(state, tooltip_id, TooltipTexture::Atlas(atlas))
 }
 
 fn native_attachments() -> bool {
@@ -386,76 +319,6 @@ fn native_attachments() -> bool {
         crate::client_profile::ACTIVE,
         crate::client_profile::ClientProfile::Retail | crate::client_profile::ClientProfile::Ptr
     )
-}
-
-fn setting_number(state: &mut LuaState, table: Val, key: &str, default: f32) -> f32 {
-    match table_get(state, table, key) {
-        Val::Num(value) => value as f32,
-        _ => default,
-    }
-}
-
-fn attach_native_texture(
-    state: &mut LuaState,
-    tooltip_id: u64,
-    source: TooltipAttachmentSource,
-) -> LuaResult<()> {
-    let options = stack_val(state, 3);
-    let margins = table_get(state, options, "margin");
-    let coords = table_get(state, options, "texCoords");
-    let color = table_get(state, options, "vertexColor");
-    let attachment = TooltipAttachment {
-        source,
-        width: setting_number(state, options, "width", 12.0),
-        height: setting_number(state, options, "height", 12.0),
-        vertical_offset: setting_number(state, options, "verticalOffset", 0.0),
-        margins: [
-            setting_number(state, margins, "left", 0.0),
-            setting_number(state, margins, "right", 8.0),
-            setting_number(state, margins, "top", 0.0),
-            setting_number(state, margins, "bottom", 0.0),
-        ],
-        anchor: (setting_number(state, options, "anchor", 0.0) as u8).min(6),
-        region: (setting_number(state, options, "relativeRegion", 0.0) as u8).min(1),
-        tex_coords: [
-            setting_number(state, coords, "left", 0.0),
-            setting_number(state, coords, "right", 1.0),
-            setting_number(state, coords, "top", 0.0),
-            setting_number(state, coords, "bottom", 1.0),
-        ],
-        color: [
-            setting_number(state, color, "r", 1.0),
-            setting_number(state, color, "g", 1.0),
-            setting_number(state, color, "b", 1.0),
-            setting_number(state, color, "a", 1.0),
-        ],
-        desaturation: setting_number(state, options, "desaturation", 0.0).clamp(0.0, 1.0),
-    };
-    let mut sim = borrow_state_mut(state)?;
-    let Some(td) = sim.tooltips.get_mut(&tooltip_id) else {
-        return Ok(());
-    };
-    let count: usize = td
-        .lines
-        .iter()
-        .map(|line| match &line.texture {
-            Some(TooltipTexture::Attachments(items)) => items.len(),
-            _ => 0,
-        })
-        .sum();
-    if count >= 30 {
-        return Ok(());
-    }
-    let Some(line) = td.lines.last_mut() else {
-        return Ok(());
-    };
-    match &mut line.texture {
-        Some(TooltipTexture::Attachments(items)) => items.push(attachment),
-        None => line.texture = Some(TooltipTexture::Attachments(vec![attachment])),
-        _ => return Ok(()),
-    }
-    td.anchored_left_lines = td.lines.len() - 1;
-    Ok(())
 }
 
 pub(super) fn get_left_line(state: &mut LuaState) -> LuaResult<u32> {
@@ -557,5 +420,6 @@ pub(super) fn tooltip_line_from_table(state: &mut LuaState, line: Val) -> Option
         right_segments: line_color_segments(state, line, "rightColorSegments"),
         wrap,
         texture: None,
+        inset: 0.0,
     })
 }

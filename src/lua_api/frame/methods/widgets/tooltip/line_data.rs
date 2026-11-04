@@ -25,6 +25,7 @@ pub(super) fn clear_lines(state: &mut LuaState) -> LuaResult<u32> {
         let td = sim.tooltips.entry(id).or_default();
         td.lines.clear();
         td.anchored_left_lines = 0;
+        td.extra_inset = 0.0;
         if wrath {
             td.min_width = 0.0;
             td.wrath_texture_rows.clear();
@@ -40,6 +41,7 @@ pub(super) fn clear_lines(state: &mut LuaState) -> LuaResult<u32> {
             .collect::<Vec<_>>()
     };
     clear_cached_tooltip_line_text(&mut sim, &line_ids);
+    super::attachments::release_tooltip_attachments(&mut sim, id);
     if wrath {
         hide_wrath_tooltip_children(&mut sim, id, &line_ids);
     } else if native_sizing_timing() {
@@ -115,6 +117,7 @@ pub(super) fn add_line(state: &mut LuaState) -> LuaResult<u32> {
     let g = opt_f32(state, 4).unwrap_or(default_g);
     let b = opt_f32(state, 5).unwrap_or(default_b);
     let wrap = val_to_bool(stack_val(state, 6));
+    let explicit_inset = explicit_row_inset(state, 7);
     let line_index = next_tooltip_line_index(state, id);
     let left_segments = processing_line_color_segments(
         state,
@@ -126,6 +129,7 @@ pub(super) fn add_line(state: &mut LuaState) -> LuaResult<u32> {
     );
     let mut sim = borrow_state_mut(state)?;
     let td = sim.tooltips.entry(id).or_default();
+    let inset = explicit_inset + td.extra_inset;
     td.lines.push(TooltipLine {
         left_text: text,
         left_color: (r, g, b),
@@ -135,6 +139,7 @@ pub(super) fn add_line(state: &mut LuaState) -> LuaResult<u32> {
         right_segments: Vec::new(),
         wrap,
         texture: None,
+        inset,
     });
     invalidate_tooltip_line_layout(&mut sim, id);
     drop(sim);
@@ -187,12 +192,23 @@ pub(super) fn add_double_line(state: &mut LuaState) -> LuaResult<u32> {
     Ok(0)
 }
 
+/// WM84 section 3: Retail/PTR explicit row inset, read as a float without
+/// clamping; absent means zero. Other profiles keep their argument lists.
+fn explicit_row_inset(state: &mut LuaState, index: i32) -> f32 {
+    if native_sizing_timing() {
+        opt_f32(state, index).unwrap_or(0.0)
+    } else {
+        0.0
+    }
+}
+
 struct DoubleLineArgs {
     left_text: String,
     right_text: Option<String>,
     left_color: (f32, f32, f32),
     right_color: (f32, f32, f32),
     wrap: bool,
+    explicit_inset: f32,
 }
 
 fn double_line_args(state: &mut LuaState) -> DoubleLineArgs {
@@ -223,6 +239,7 @@ fn double_line_args(state: &mut LuaState) -> DoubleLineArgs {
         left_color,
         right_color,
         wrap,
+        explicit_inset: explicit_row_inset(state, 11),
     }
 }
 
@@ -256,6 +273,7 @@ fn push_double_tooltip_line(
 ) -> LuaResult<()> {
     let mut sim = borrow_state_mut(state)?;
     let td = sim.tooltips.entry(tooltip_id).or_default();
+    let inset = args.explicit_inset + td.extra_inset;
     td.lines.push(TooltipLine {
         left_text: args.left_text,
         left_color: args.left_color,
@@ -265,6 +283,7 @@ fn push_double_tooltip_line(
         right_segments,
         wrap: args.wrap,
         texture: None,
+        inset,
     });
     invalidate_tooltip_line_layout(&mut sim, tooltip_id);
     Ok(())

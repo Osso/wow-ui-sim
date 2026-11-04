@@ -37,6 +37,19 @@ fn create_tooltip_texture_secret_env() -> WowLuaEnv {
             assert(text == expected, 'actual content, not placeholder')
             assert(not issecretvalue(text))
         end
+        -- WM63 S8L: images attach to the last row; count shown attachments.
+        function TTTextureAttached(tooltip)
+            local count = 0
+            for _, region in ipairs({ tooltip:GetRegions() }) do
+                if region:GetObjectType() == 'Texture' and region:IsShown() then
+                    local _, relativeTo = region:GetPoint(1)
+                    if relativeTo and relativeTo:GetObjectType() == 'FontString' then
+                        count = count + 1
+                    end
+                end
+            end
+            return count
+        end
         function TTTexturePrivate(object)
             local ok, err = pcall(object.GetText, object)
             assert(not ok, 'real secret-origin read gate must reject addon')
@@ -58,10 +71,12 @@ fn tooltip_texture_secrecy_public_texture_and_atlas_preserve_readability() {
         tooltip:SetText('Public tooltip content')
         TTTextureAddon(function() TTTexturePublic(tooltip, 'Public tooltip content') end)
         tooltip:AddTexture(134400)
-        assert(tooltip:NumLines() == 2, 'texture insertion actually occurred')
+        assert(tooltip:NumLines() == 1 and TTTextureAttached(tooltip) == 1,
+            'texture insertion actually occurred')
         TTTextureAddon(function() TTTexturePublic(tooltip, 'Public tooltip content') end)
         tooltip:AddAtlas('UI-HUD-UnitFrame-Player-PortraitOn-Bar-Health')
-        assert(tooltip:NumLines() == 3, 'atlas insertion actually occurred')
+        assert(tooltip:NumLines() == 1 and TTTextureAttached(tooltip) == 2,
+            'atlas insertion actually occurred')
         TTTextureAddon(function() TTTexturePublic(tooltip, 'Public tooltip content') end)
         "#,
     )
@@ -78,10 +93,10 @@ fn tooltip_texture_secrecy_private_texture_and_atlas_preserve_denial() {
         assert(tooltip:GetText() == 'Private tooltip content', 'secure decoded content')
         TTTextureAddon(function() TTTexturePrivate(tooltip) end)
         tooltip:AddTexture(134400)
-        assert(tooltip:NumLines() == 2)
+        assert(tooltip:NumLines() == 1 and TTTextureAttached(tooltip) == 1)
         TTTextureAddon(function() TTTexturePrivate(tooltip) end)
         tooltip:AddAtlas('UI-HUD-UnitFrame-Player-PortraitOn-Bar-Health')
-        assert(tooltip:NumLines() == 3)
+        assert(tooltip:NumLines() == 1 and TTTextureAttached(tooltip) == 2)
         TTTextureAddon(function() TTTexturePrivate(tooltip) end)
         assert(tooltip:GetText() == 'Private tooltip content', 'no content loss')
         "#,
@@ -103,10 +118,10 @@ fn tooltip_texture_secrecy_cleared_textures_allow_public_repopulation() {
         assert(tooltip:NumLines() == 0)
         assert(tooltip:GetLeftLine(1) == nil)
         tooltip:SetText('Public replacement')
-        assert(tooltip:NumLines() == 1)
+        assert(tooltip:NumLines() == 1 and TTTextureAttached(tooltip) == 0)
         TTTextureAddon(function() TTTexturePublic(tooltip, 'Public replacement') end)
         tooltip:AddTexture(134400)
-        assert(tooltip:NumLines() == 2)
+        assert(tooltip:NumLines() == 1 and TTTextureAttached(tooltip) == 1)
         TTTextureAddon(function() TTTexturePublic(tooltip, 'Public replacement') end)
         "#,
     )
@@ -161,7 +176,7 @@ fn tooltip_texture_secrecy_line_replacement_preserves_other_private_line() {
         TTTextureAddon(function() TTTexturePrivate(first); TTTexturePrivate(second) end)
         tooltip:AddTexture(134400)
         tooltip:AddAtlas('UI-HUD-UnitFrame-Player-PortraitOn-Bar-Health')
-        assert(tooltip:NumLines() == 4)
+        assert(tooltip:NumLines() == 2 and TTTextureAttached(tooltip) == 2)
         TTTextureAddon(function() TTTexturePrivate(first); TTTexturePrivate(second) end)
         first:SetText('Public first line')
         TTTextureAddon(function()
@@ -195,7 +210,7 @@ fn tooltip_texture_secrecy_cleared_cached_line_reuse_is_public() {
         TTTextureAddon(function() TTTexturePrivate(cached) end)
         tooltip:AddTexture(134400)
         tooltip:AddAtlas('UI-HUD-UnitFrame-Player-PortraitOn-Bar-Health')
-        assert(tooltip:NumLines() == 3)
+        assert(tooltip:NumLines() == 1 and TTTextureAttached(tooltip) == 2)
         tooltip:ClearLines()
         assert(tooltip:NumLines() == 0 and tooltip:GetLeftLine(1) == nil)
         tooltip:AddLine('Public reused line')

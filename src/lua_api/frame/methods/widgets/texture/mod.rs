@@ -9,6 +9,9 @@ mod draw_shadow;
 mod radial;
 mod rotation_mask;
 
+pub(super) use atlas::{apply_atlas_to_frame, resolve_texture_value};
+pub(super) use coords::apply_rect_tex_coords;
+
 use crate::lua_bridge::table_set_rust_fn;
 use rilua::LuaResult;
 use rilua::vm::gc::arena::GcRef;

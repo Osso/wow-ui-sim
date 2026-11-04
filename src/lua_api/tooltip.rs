@@ -7,64 +7,132 @@ use crate::widget::{Anchor, AnchorPoint};
 pub enum TooltipTexture {
     FileDataId(u32),
     Atlas(String),
-    PathAttachment(TooltipPathAttachment),
+    /// Retail/PTR images attached to this existing row (WM63 S8L, WM84).
     Attachments(Vec<TooltipAttachment>),
 }
 
-#[derive(Clone)]
-pub enum TooltipAttachmentSource {
-    FileDataId(u32),
-    Path(String),
-    Atlas(String),
-}
+/// `Enum.TooltipTextureAnchor.All`: two points span the selected text.
+pub const TOOLTIP_TEXTURE_ANCHOR_ALL: i32 = 6;
+/// `Enum.TooltipTextureRelativeRegion.RightLine`.
+pub const TOOLTIP_TEXTURE_REGION_RIGHT: i32 = 1;
 
-#[derive(Clone)]
+/// One texture or atlas anchored to a row's selected text region.
+#[derive(Clone, Debug)]
 pub struct TooltipAttachment {
-    pub source: TooltipAttachmentSource,
+    /// Pooled Texture region that displays this attachment.
+    pub texture_id: u64,
     pub width: f32,
     pub height: f32,
     pub vertical_offset: f32,
+    /// Left, right, top, bottom; parsed as floats and never clamped (WM84 §2).
     pub margins: [f32; 4],
-    pub anchor: u8,
-    pub region: u8,
-    pub tex_coords: [f32; 4],
-    pub color: [f32; 4],
-    pub desaturation: f32,
+    /// `Enum.TooltipTextureAnchor` ordinal, 0 through 6.
+    pub anchor: i32,
+    /// `Enum.TooltipTextureRelativeRegion`: 0 left line, 1 right line.
+    pub region: i32,
 }
 
 impl TooltipAttachment {
-    pub fn anchor_points(&self) -> &'static [(AnchorPoint, AnchorPoint)] {
+    /// WM63 S8L anchor table: (texture point, text point, x offset) per constraint.
+    pub fn anchor_points(&self) -> Vec<(AnchorPoint, AnchorPoint, f32)> {
         use AnchorPoint::*;
+        let [left, right, _, _] = self.margins;
         match self.anchor {
-            0 => &[(TopRight, TopLeft)],
-            1 => &[(Right, Left)],
-            2 => &[(BottomRight, BottomLeft)],
-            3 => &[(TopLeft, TopRight)],
-            4 => &[(Left, Right)],
-            5 => &[(BottomLeft, BottomRight)],
-            _ => &[(BottomRight, BottomRight), (TopLeft, TopLeft)],
+            0 => vec![(TopRight, TopLeft, -right)],
+            1 => vec![(Right, Left, -right)],
+            2 => vec![(BottomRight, BottomLeft, -right)],
+            3 => vec![(TopLeft, TopRight, left)],
+            4 => vec![(Left, Right, left)],
+            5 => vec![(BottomLeft, BottomRight, left)],
+            _ => vec![(BottomRight, BottomRight, 0.0), (TopLeft, TopLeft, 0.0)],
         }
     }
 }
 
-/// Path image attached to an existing wrapped blank tooltip row (Retail U1).
-#[derive(Clone)]
-pub struct TooltipPathAttachment {
-    pub path: String,
-    pub height: f32,
-    /// Left, right, top, bottom margins in unscaled UI units.
-    pub margins: [f32; 4],
+/// Attachment reservations for one row from one layout pass (WM84 §1).
+#[derive(Clone, Copy, Debug, Default, PartialEq)]
+pub struct TooltipRowReservation {
+    pub outward_left: f32,
+    pub inward_left: f32,
+    pub inward_right: f32,
+    pub outward_right: f32,
+    pub top: f32,
+    pub bottom: f32,
 }
 
-impl TooltipPathAttachment {
-    /// Selected U1 policy: retain the blank text row and center its image.
-    /// Vertical margins do not change reservation or centering.
-    /// Returns unscaled (row height, image offset from row top).
-    pub fn geometry(&self, font_size: f32) -> (f32, f32) {
-        let row_height = (font_size * 1.2).ceil();
-        let image_offset = (row_height - self.height) / 2.0;
-        (row_height, image_offset)
+impl TooltipRowReservation {
+    /// Total width reservation: the sum of the four horizontal groups.
+    pub fn width(&self) -> f32 {
+        self.outward_left + self.inward_left + self.inward_right + self.outward_right
     }
+}
+
+/// WM84 §1 horizontal groups. Outward groups take the first candidate, then
+/// the maximum. Both inward groups start at zero and share one first-eligible
+/// flag, so a negative first inward candidate replaces zero.
+pub fn attachment_width_groups(attachments: &[TooltipAttachment]) -> TooltipRowReservation {
+    let mut outward: [Option<f32>; 2] = [None; 2];
+    let mut inward = [0.0_f32; 2];
+    let mut inward_selected = false;
+    for attachment in attachments {
+        let [left, right, _, _] = attachment.margins;
+        let width = attachment.width + left + right;
+        let side = usize::from(attachment.region == TOOLTIP_TEXTURE_REGION_RIGHT);
+        let (outward_candidate, inward_candidate) = match (attachment.anchor, side) {
+            (0..=2, 0) => (Some(width), None),
+            (0..=2, _) => (None, Some(width)),
+            (3..=5, 0) => (None, Some(width)),
+            (3..=5, _) => (Some(width), None),
+            (_, 0) => (Some(left), Some(right)),
+            (_, _) => (Some(right), Some(left)),
+        };
+        if let Some(candidate) = outward_candidate {
+            outward[side] = Some(outward[side].map_or(candidate, |current| current.max(candidate)));
+        }
+        if let Some(candidate) = inward_candidate {
+            if !inward_selected || candidate > inward[side] {
+                inward[side] = candidate;
+            }
+            inward_selected = true;
+        }
+    }
+    TooltipRowReservation {
+        outward_left: outward[0].unwrap_or(0.0),
+        inward_left: inward[0],
+        inward_right: inward[1],
+        outward_right: outward[1].unwrap_or(0.0),
+        top: 0.0,
+        bottom: 0.0,
+    }
+}
+
+/// WM84 §1 top and bottom overflow, each at least zero. `left_height` and
+/// `right_height` are the selected text regions' measured heights; a missing
+/// text object contributes zero.
+pub fn attachment_overflow(
+    attachments: &[TooltipAttachment],
+    left_height: f32,
+    right_height: f32,
+) -> (f32, f32) {
+    attachments
+        .iter()
+        .fold((0.0_f32, 0.0_f32), |(top, bottom), attachment| {
+            let [_, _, margin_top, margin_bottom] = attachment.margins;
+            let text = if attachment.region == TOOLTIP_TEXTURE_REGION_RIGHT {
+                right_height
+            } else {
+                left_height
+            };
+            let spare = attachment.height + margin_top + margin_bottom - text;
+            let offset = attachment.vertical_offset;
+            let (above, below) = match attachment.anchor {
+                0 | 3 => (margin_top + offset, spare - offset),
+                1 | 4 => (spare / 2.0 + offset, spare / 2.0 - offset),
+                2 | 5 => (spare + offset, margin_bottom - offset),
+                _ => (margin_top + offset, margin_bottom - offset),
+            };
+            (top.max(above), bottom.max(below))
+        })
 }
 
 /// A text segment with its own color inside a tooltip line.
@@ -86,6 +154,18 @@ pub struct TooltipLine {
     pub wrap: bool,
     /// Inline texture icon (from `AddTexture` / `AddAtlas`).
     pub texture: Option<TooltipTexture>,
+    /// Stored row inset: explicit row inset plus the tooltip-wide extra inset
+    /// at append time (WM84 §3).
+    pub inset: f32,
+}
+
+impl TooltipLine {
+    pub fn attachments(&self) -> &[TooltipAttachment] {
+        match &self.texture {
+            Some(TooltipTexture::Attachments(attachments)) => attachments,
+            _ => &[],
+        }
+    }
 }
 
 /// State for a GameTooltip frame.
@@ -121,9 +201,29 @@ pub struct TooltipData {
     pub right_line_ids: Vec<u64>,
     /// Wrath template texture slots in attachment order: zero-based row, widget ID.
     pub wrath_texture_rows: Vec<(usize, u64)>,
+    /// Tooltip-wide extra row inset sampled by each appended row (WM84 §3).
+    /// Construction and ClearLines set it to zero. No writer of a nonzero
+    /// value is established (WM84 UNKNOWN), so nothing else assigns it.
+    pub extra_inset: f32,
+    /// Pooled Retail/PTR attachment Texture regions, reused in attachment order.
+    pub attachment_texture_ids: Vec<u64>,
+    /// Attachment reservations from the latest layout pass, indexed like `lines`.
+    pub row_reservations: Vec<TooltipRowReservation>,
 }
 
 impl TooltipData {
+    /// Attachments across the whole tooltip; the native limit is 30 (WM63 S8L).
+    pub(crate) fn attachment_count(&self) -> usize {
+        self.lines.iter().map(|line| line.attachments().len()).sum()
+    }
+
+    pub(crate) fn row_reservation(&self, index: usize) -> TooltipRowReservation {
+        self.row_reservations
+            .get(index)
+            .copied()
+            .unwrap_or_default()
+    }
+
     pub(crate) fn left_line_is_hidden(
         &self,
         widgets: &crate::widget::WidgetRegistry,
@@ -192,6 +292,9 @@ impl Default for TooltipData {
             left_line_ids: Vec::new(),
             right_line_ids: Vec::new(),
             wrath_texture_rows: Vec::new(),
+            extra_inset: 0.0,
+            attachment_texture_ids: Vec::new(),
+            row_reservations: Vec::new(),
         }
     }
 }

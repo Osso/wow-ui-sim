@@ -4,7 +4,10 @@
 //! such as `GameTooltip:GetWidth()` can run before the next draw. Keep the
 //! frame's stored size plausible as soon as tooltip content changes.
 
-use crate::lua_api::tooltip::{TooltipData, TooltipLine};
+use crate::lua_api::tooltip::{
+    TooltipData, TooltipLine, TooltipRowReservation, TooltipTexture, attachment_overflow,
+    attachment_width_groups,
+};
 
 const TOOLTIP_PADDING_H: f32 = 12.0;
 const TOOLTIP_PADDING_V: f32 = 12.0;
@@ -23,6 +26,9 @@ pub(crate) fn refresh_tooltip_geometry(sim: &mut crate::lua_api::state::SimState
         sim.widgets.mark_rect_dirty(tooltip_id);
         return;
     };
+    if let Some(td) = sim.tooltips.get_mut(&tooltip_id) {
+        td.row_reservations = estimated_row_reservations(td);
+    }
 
     if let Some(frame) = sim.widgets.get_mut_visual(tooltip_id) {
         frame.width = width;
@@ -92,23 +98,16 @@ fn anchor_tooltip_lines(sim: &mut crate::lua_api::state::SimState, tooltip_id: u
                 line.right_text
                     .as_ref()
                     .is_some_and(|text| !text.is_empty()),
-                line.texture.as_ref().is_some_and(|texture| {
-                    !matches!(
-                        texture,
-                        crate::lua_api::tooltip::TooltipTexture::Attachments(_)
-                    )
-                }),
+                line.inset,
+                td.row_reservation(index),
             )
         })
         .collect();
     let mut anchored = td.anchored_left_lines;
-    for (index, &(line_id, right_id, has_right, has_attachment)) in rows.iter().enumerate() {
+    for (index, &(line_id, right_id, has_right, inset, reservation)) in rows.iter().enumerate() {
         let Some(line_id) = line_id.filter(|&id| id != 0) else {
             break;
         };
-        if has_attachment {
-            break;
-        }
         let previous = if index == 0 {
             tooltip_id
         } else if let Some(id) = rows[index - 1].0 {
@@ -117,7 +116,13 @@ fn anchor_tooltip_lines(sim: &mut crate::lua_api::state::SimState, tooltip_id: u
             break;
         };
         if index >= anchored {
-            let top_offset = if index == 0 { -10.0 - top } else { -spacing };
+            // WM72/WM84: this row's top overflow and the preceding indexed
+            // row's bottom overflow separate the rows.
+            let top_offset = if index == 0 {
+                -10.0 - top - reservation.top
+            } else {
+                -spacing - reservation.top - rows[index - 1].4.bottom
+            };
             let relative_point = if index == 0 {
                 crate::widget::AnchorPoint::Top
             } else {
@@ -136,7 +141,7 @@ fn anchor_tooltip_lines(sim: &mut crate::lua_api::state::SimState, tooltip_id: u
                         crate::widget::AnchorPoint::Left,
                         tooltip_id,
                         crate::widget::AnchorPoint::Left,
-                        10.0 + left,
+                        10.0 + left + inset + reservation.outward_left,
                         0.0,
                     ),
                 ];
@@ -153,7 +158,10 @@ fn anchor_tooltip_lines(sim: &mut crate::lua_api::state::SimState, tooltip_id: u
                         crate::widget::AnchorPoint::Right,
                         line_id,
                         crate::widget::AnchorPoint::Left,
-                        content_width,
+                        content_width
+                            - inset
+                            - reservation.outward_left
+                            - reservation.outward_right,
                         0.0,
                     )];
                     sim.widgets.mark_rect_dirty(right_id);
@@ -195,15 +203,15 @@ fn estimated_tooltip_size(
     let mut width = td.min_width.max(wrapped_min_width(td));
     let mut height = 0.0;
     let line_spacing = td.line_spacing.unwrap_or(TOOLTIP_LINE_SPACING);
+    let reservations = estimated_row_reservations(td);
     for (index, line) in td.lines.iter().enumerate() {
         let font_size = tooltip_line_font_size(index);
-        width = width.max(estimated_line_width(
-            td,
-            line,
-            font_size,
-            &sim.widgets,
-            index,
-        ));
+        let reservation = reservations[index];
+        width = width.max(
+            estimated_line_width(td, line, font_size, &sim.widgets, index)
+                + line.inset
+                + reservation.width(),
+        );
         let native = matches!(
             crate::client_profile::ACTIVE,
             crate::client_profile::ClientProfile::Retail
@@ -215,7 +223,7 @@ fn estimated_tooltip_size(
         if (native && height > 0.0) || (!native && index > 0) {
             height += line_spacing;
         }
-        height += estimated_line_height(line, font_size);
+        height += estimated_line_height(line, font_size) + reservation.top + reservation.bottom;
     }
 
     let (horizontal_padding, vertical_padding) = if matches!(
@@ -271,17 +279,7 @@ fn estimated_line_width(
     } else {
         left
     };
-    if matches!(
-        line.texture,
-        Some(crate::lua_api::tooltip::TooltipTexture::PathAttachment(_))
-    ) {
-        text_width
-    } else if line.texture.as_ref().is_some_and(|texture| {
-        !matches!(
-            texture,
-            crate::lua_api::tooltip::TooltipTexture::Attachments(_)
-        )
-    }) {
+    if has_texture_row(line) {
         text_width.max(TEXTURE_LINE_SIZE)
     } else {
         text_width
@@ -293,19 +291,44 @@ fn estimated_text_width(text: &str, font_size: f32) -> f32 {
 }
 
 fn estimated_line_height(line: &TooltipLine, font_size: f32) -> f32 {
-    if let Some(crate::lua_api::tooltip::TooltipTexture::PathAttachment(attachment)) = &line.texture
-    {
-        attachment.geometry(font_size).0
-    } else if line.texture.as_ref().is_some_and(|texture| {
-        !matches!(
-            texture,
-            crate::lua_api::tooltip::TooltipTexture::Attachments(_)
-        )
-    }) {
+    if has_texture_row(line) {
         TEXTURE_LINE_SIZE
     } else {
         (font_size * 1.2).ceil()
     }
+}
+
+/// Profiles without native attachments append a separate texture row.
+fn has_texture_row(line: &TooltipLine) -> bool {
+    matches!(
+        line.texture,
+        Some(TooltipTexture::FileDataId(_) | TooltipTexture::Atlas(_))
+    )
+}
+
+/// WM84 reservations from estimated text heights, for builds without glyph
+/// measurement. The GUI layout replaces them with measured values.
+fn estimated_row_reservations(td: &TooltipData) -> Vec<TooltipRowReservation> {
+    td.lines
+        .iter()
+        .enumerate()
+        .map(|(index, line)| {
+            let text_height = (tooltip_line_font_size(index) * 1.2).ceil();
+            let right_height = if line
+                .right_text
+                .as_deref()
+                .is_some_and(|text| !text.is_empty())
+            {
+                text_height
+            } else {
+                0.0
+            };
+            let mut reservation = attachment_width_groups(line.attachments());
+            (reservation.top, reservation.bottom) =
+                attachment_overflow(line.attachments(), text_height, right_height);
+            reservation
+        })
+        .collect()
 }
 
 fn tooltip_line_font_size(index: usize) -> f32 {
@@ -333,6 +356,7 @@ mod tests {
             right_segments: Vec::new(),
             wrap: false,
             texture: None,
+            inset: 0.0,
         }
     }
 

@@ -101,6 +101,8 @@ fn apply_tooltip_lines(
 ) {
     let td = sim.tooltips.entry(tooltip_id).or_default();
     td.lines = lines;
+    super::attachments::release_tooltip_attachments(sim, tooltip_id);
+    let td = sim.tooltips.entry(tooltip_id).or_default();
     if let Some(word_wrap_min_width) = word_wrap_min_width {
         td.custom_word_wrap_min_width = Some(word_wrap_min_width);
     }
@@ -413,6 +415,7 @@ fn set_tooltip_single_line(
         right_segments: Vec::new(),
         wrap: false,
         texture: None,
+        inset: 0.0,
     };
     let mut sim = borrow_state_mut(state)?;
     apply_tooltip_lines(&mut sim, tooltip_id, vec![line], None, spell_id, true);

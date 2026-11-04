@@ -1,5 +1,7 @@
 # Retail tooltip path separator (U1)
 
+**Superseded (2026-11-04):** native evidence WM63 S8L and WM84 replaces the U1 geometry policy below. The divider now follows the native All anchor in [tooltip attachments](tooltip-attachments.md): it spans the blank row's left text and reserves no space for these margins. Numeric `AddTexture` attaches to the last row instead of appending one. The record below is kept as history.
+
 Integration checkpoint (2026-10-16): corrected user-selected geometry oracle reached Retail RED → GREEN; [bounded proof](../baselines/approved-batch-2026-10-16.md). No native-parity claim.
 
 Bounded simulator contract for the original cached Retail `SocialUIUtil.AddSeparatorToTooltip` consumer. Source: `src/lua_api/frame/methods/widgets/tooltip/line_frames.rs` and `src/iced_app/tooltip.rs`. Implemented simulator contract; numeric behavior is preserved. Geometry below is an explicit simulator policy, not established native semantics.
@@ -7,10 +9,9 @@ Bounded simulator contract for the original cached Retail `SocialUIUtil.AddSepar
 ## What it must do
 
 - [ ] Execute the unchanged cached `retail/AddOns/Blizzard_SocialUIShared/SocialUIUtil.lua:138-152` and attach its path/options divider to the wrapped blank row it just added, without increasing NumLines again.
-- [ ] Emit one deferred texture request for that path between Header and Footer, spanning the content width with zero horizontal margins.
-- [ ] Accepted simulator geometry policy (2026-10-16): keep the normal blank text-line height (15 body units here); center the supplied 10-unit image vertically in that row (2.5-unit offset). Supplied top/bottom margins do not shrink the row or shift the centered image. Existing inter-row spacing remains unchanged. Apply effective scale and tooltip alpha. The rejected alternative reserves 6 units (10 - 2 - 2) and starts the image at -2; it is not this contract.
+- [ ] Emit one texture request for that path whose bounds equal the blank row's text rect under the render scale, with tooltip alpha.
 - [ ] ClearLines removes the attachment; rebuilding text-only content emits no stale divider.
-- [ ] Numeric and numeric-string AddTexture inputs still append their own rows, including when an options table is supplied; keep FileDataId storage unchanged.
+- [ ] Numeric and numeric-string AddTexture inputs attach to the last row without appending rows.
 
 ## How it works
 

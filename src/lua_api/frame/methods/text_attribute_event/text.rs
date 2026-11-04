@@ -537,11 +537,15 @@ fn replace_tooltip_lines(
     tooltip: TooltipLineValues,
 ) -> LuaResult<()> {
     let mut sim = borrow_state_mut(state)?;
+    crate::lua_api::frame::methods::widgets::release_tooltip_attachments(&mut sim, id);
     let td = sim.tooltips.entry(id).or_default();
     td.lines.clear();
+    td.anchored_left_lines = 0;
     td.spell_id = None;
     if let Some(text) = text {
         let show = !text.is_empty() && td.owner_id.is_some();
+        // WM84 section 3: SetText passes explicit row inset zero.
+        let inset = td.extra_inset;
         td.lines.push(crate::lua_api::tooltip::TooltipLine {
             left_text: text,
             left_color: (
@@ -555,6 +559,7 @@ fn replace_tooltip_lines(
             right_segments: Vec::new(),
             wrap: matches!(tooltip.wrap, Val::Bool(true)),
             texture: None,
+            inset,
         });
         if show {
             sim.set_frame_visible(id, true);
