@@ -645,7 +645,7 @@ fn item_button_corruption_uses_supplied_identity() {
     .expect("original item overlay uses supplied corruption");
 }
 
-#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
+#[cfg(any(feature = "client-retail", feature = "client-ptr", feature = "client-wowforever"))]
 #[test]
 fn paper_doll_azerite_overlay_uses_supplied_location() {
     use wow_ui_sim::lua_api::{AzeriteItemState, ItemLocationData};
