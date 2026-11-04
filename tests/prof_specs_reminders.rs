@@ -196,3 +196,42 @@ fn an_ineligible_candidate_reads_no_currency() {
     set_quantity(&env, MIDNIGHT_MINING_KNOWLEDGE, 1);
     assert_eq!(points_reminder(&env), (1, false));
 }
+
+/// WM87: one numeric state from the supplied tab state; no relation is native 0.
+#[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
+#[test]
+fn get_state_for_tab_reads_supplied_tab_state_and_validates_arguments() {
+    let mut inputs = blacksmithing_tab(2);
+    inputs.tab_states.insert(KHAZ_ALGAR_MINING_TAB, 1);
+    let env = env_with(inputs);
+    env.exec(
+        r#"
+        local api = C_ProfSpecs.GetStateForTab
+        local usage = 'Usage: local tabInfo = C_ProfSpecs.GetStateForTab(tabTreeID, configID)'
+        local range = 'outside of expected range -2147483648 to 2147483647 - ' .. usage
+        assert(select('#', api(302, 1)) == 1)
+        assert(api(302, 1) == Enum.ProfessionsSpecTabState.Unlockable)
+        assert(api(' 983.9 ', '1', 'ignored') == Enum.ProfessionsSpecTabState.Unlocked)
+        assert(api(1, 1) == Enum.ProfessionsSpecTabState.Locked, 'missing tree is native 0')
+        assert(api(-2147483648, 2147483647) == 0, 'negative IDs are not rejected')
+        local ok, err = pcall(api, 302)
+        assert(not ok, 'configID is required')
+        ok, err = pcall(api, nil, 1)
+        assert(not ok, 'tabTreeID is required')
+        for _, bad in ipairs({2147483648, -2147483649, 'abc', {}, 0/0, math.huge}) do
+            ok, err = pcall(api, bad, 1)
+            assert(not ok and err:find(range, 1, true), tostring(err))
+            ok, err = pcall(api, 302, bad)
+            assert(not ok and err:find(range, 1, true), tostring(err))
+        end
+        local secretTree = secretwrap(302)
+        assert(api(secretTree, 1) == 2, 'untainted callers may pass secrets')
+        local function denied() return pcall(api, secretTree, 1) end
+        debug.setobjecttaint(denied, 'TabStateProbe')
+        ok, err = denied()
+        local secret = usage .. '. Secret values are only allowed during untainted execution for this argument.'
+        assert(not ok and err:find(secret, 1, true), tostring(err))
+        "#,
+    )
+    .unwrap();
+}

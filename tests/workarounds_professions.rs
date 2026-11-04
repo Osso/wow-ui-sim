@@ -289,6 +289,29 @@ fn recipe_favorites_are_not_persisted_across_ui_reload() {
         .unwrap();
 }
 
+/// WM87: with no favorite rows the original order-page button is disabled.
+#[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
+#[test]
+fn favorite_order_recipes_drive_the_original_orders_button() {
+    let env = full_game_env();
+    env.exec(
+        r#"
+        C_TradeSkillUI.SetProfessionChildSkillLineID(164)
+        assert(C_AddOns.LoadAddOn('Blizzard_Professions'))
+        local api = C_TradeSkillUI.HasFavoriteOrderRecipes
+        assert(select('#', api()) == 1 and api('ignored', 7) == false)
+        local page = ProfessionsFrame.OrdersPage
+        local button = page.BrowseFrame.FavoritesSearchButton
+        button:SetEnabled(true)
+        button.Icon:SetDesaturated(false)
+        page:UpdateFavoritesButton()
+        assert(not button:IsEnabled(), 'no favorite order rows disables search')
+        assert(button.Icon:IsDesaturated(), 'no favorite order rows desaturates icon')
+        "#,
+    )
+    .unwrap();
+}
+
 #[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
 #[test]
 fn professions_consumer_uses_supplied_recipe_cooldown_and_charges() {
