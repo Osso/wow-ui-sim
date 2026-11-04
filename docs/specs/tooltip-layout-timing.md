@@ -4,7 +4,11 @@ For an owned tooltip with content, adding a line or double line and changing
 custom word-wrap width, custom line spacing, shrink-to-fit, or minimum width
 must not synchronously resize it. A subsequent `Show` sizes its current content.
 `SetPadding` synchronously lays out the current content. Repeated `Show` also
-performs layout. Native evidence: WM63-L4 and WM63-L23, Retail 12.1.5.70688.
+performs layout. On Retail/PTR, `Show` instead performs tooltip hiding when
+there is no owner, or when there are no rows and allow-empty is disabled.
+This clears content and ownership without resizing. An owned, allowed-empty
+`Show` can size empty content. The original `ProcessInfo` consumer follows
+these rules even when its supplied `lines` table is empty. Native evidence: WM63-L4 and WM63-L23, Retail 12.1.5.70688.
 
 These timing rules do not establish native font metrics, markup widths, or
 money and status-bar heights. The simulator's font sizes and line-height
