@@ -401,6 +401,20 @@ fn test_c_tooltip_info_get_hyperlink_returns_item_and_spell_tooltips() {
             "#,
         )
         .unwrap();
+    if !has_real_tooltip {
+        let diagnostic: String = env.eval(r#"
+            local result = {}
+            for _, link in ipairs({"|cff0070dd|Hitem:211992:0:0:0:0:0:0:0:0:0|h[Entombed Seraph's Greaves]|h|r", GetSpellLink(19750)}) do
+                local t = C_TooltipInfo.GetHyperlink(link)
+                result[#result+1] = tostring(link) .. " type=" .. tostring(t and t.type)
+                for i, line in ipairs(t and t.lines or {}) do
+                    result[#result+1] = i .. ":" .. tostring(line.type) .. ":" .. tostring(line.leftText)
+                end
+            end
+            return table.concat(result, "\n")
+        "#).unwrap();
+        eprintln!("{diagnostic}");
+    }
     assert!(
         has_real_tooltip,
         "C_TooltipInfo.GetHyperlink should dispatch item and spell hyperlinks to tooltip data; \
