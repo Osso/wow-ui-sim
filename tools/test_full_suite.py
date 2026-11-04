@@ -1,6 +1,7 @@
 """Bounded subprocess coverage of the detached full-suite worker."""
 
 import fcntl
+import importlib.util
 import json
 import os
 from pathlib import Path
@@ -80,6 +81,20 @@ class CertifiedSuiteTests(unittest.TestCase):
                          "(root / 'slot-argv.json').write_text(json.dumps(sys.argv[1:]))\n"
                          "print('guard rejected: owner mismatch', file=sys.stderr)\n"
                          "sys.exit(1)\n")
+
+    def test_optional_suite_includes_other_certified_test_targets(self):
+        spec = importlib.util.spec_from_file_location('full_suite', RUNNER)
+        runner = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(runner)
+        def artifact(name, kind, test=True, executable='/binary'):
+            return {'executable': executable, 'profile': {'test': test},
+                    'target': {'name': name, 'kind': [kind]}}
+        receipt = {'reported_artifacts': [artifact('integration', 'test'),
+                   artifact('enum_diff_coverage', 'test'),
+                   artifact('wow-sim', 'bin'), artifact('dependency', 'lib', False)]}
+        self.assertEqual(runner.additional_test_targets(receipt),
+                         [('test:enum_diff_coverage', 'enum_diff_coverage', 'test'),
+                          ('bin:wow-sim', 'wow-sim', 'bin')])
 
     def test_optional_feature_is_forwarded_to_build(self):
         process = subprocess.run(

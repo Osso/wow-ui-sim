@@ -10,6 +10,9 @@
 
 ## Development build/run
 
+- Necessary tests run by default; historical snapshots and performance tests use `--features optional-tests`. `full-suite run --optional` includes all certified test targets.
+- Before release, run `python3 scripts/release.py X.Y.Z --target-dir <slot>`; it runs the Retail suite with optional tests before tagging and pushing. Use `--dry-run` to omit tagging and pushing.
+
 - Standing user authorization: delete binary artifacts from merged or superseded epochs under `~/.local/state/wow-ui-sim/{verification,handoff}`. Binary artifacts are ELF executables, rlib/rmeta/so/a files, and copied target/deps/incremental trees. Keep all text evidence and hashes. Record each deleted path, size and sha256 in a manifest. Skip epochs that active agents use and epochs modified in the last 6 hours.
 
 - Reuse the canonical `target/` by default. Alternate `CARGO_TARGET_DIR` caches are limited to four reusable slots: `~/.cache/wow-ui-sim-targets/slot-{0,1,3,4}` (slot 2 retired 2026-10-27; slot 4 is dedicated to tooltip lanes, added 2026-11-04). Never create per-task, per-revision, or per-worktree target directories. Slot builds must use `scripts/slot-build.py`: `CARGO_INCREMENTAL=1` relies on its fixed BindPaths source path per slot. [Measurement](~/.local/state/wow-ui-sim/handoff/compile-throughput-20261025/stablepath-experiment.md): touch 781→90 CPU-s, one-line edit 694→71 CPU-s, about 4.4 GiB for the measured workload, not a growth bound. The launcher prunes owned slots above a configurable cap; see [slot limits and usage](docs/remote-builds.md#local-slot-builds). Check active use before reassigning or pruning a slot; preserve proof logs and sealed artifacts outside build caches.
