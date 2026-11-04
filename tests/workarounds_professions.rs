@@ -312,6 +312,42 @@ fn favorite_order_recipes_drive_the_original_orders_button() {
     .unwrap();
 }
 
+/// WM88: one Boolean from the ability relation; GetRecipeInfo shares the predicate.
+#[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
+#[test]
+fn recipe_first_craft_resolves_ability_and_validates_arguments() {
+    let env = WowLuaEnv::new().expect("environment");
+    env.exec(
+        r#"
+        local api = C_TradeSkillUI.IsRecipeFirstCraft
+        local usage = 'Usage: local result = C_TradeSkillUI.IsRecipeFirstCraft(recipeID)'
+        local range = 'outside of expected range -2147483648 to 2147483647 - ' .. usage
+        assert(select('#', api(99999999)) == 1, 'unknown recipe publishes one value')
+        assert(api(99999999) == false, 'no ability relation is false')
+        assert(api(-2147483648) == false, 'negative IDs are not rejected')
+        assert(select('#', api(2662)) == 1)
+        assert(api(' 2662.9 ', 'ignored') == true, 'unavailable completion state reads clear')
+        assert(C_TradeSkillUI.GetRecipeInfo(2662).firstCraft == api(2662), 'recipe info shares the predicate')
+        local ok, err = pcall(api)
+        assert(not ok and err:find(usage, 1, true), tostring(err))
+        ok, err = pcall(api, nil)
+        assert(not ok and err:find(usage, 1, true), tostring(err))
+        for _, bad in ipairs({2147483648, -2147483649, 'abc', {}, 0/0, math.huge}) do
+            ok, err = pcall(api, bad)
+            assert(not ok and err:find(range, 1, true), tostring(err))
+        end
+        local secretRecipe = secretwrap(2662)
+        assert(api(secretRecipe) == true, 'untainted callers may pass secrets')
+        local function denied() return pcall(api, secretRecipe) end
+        debug.setobjecttaint(denied, 'FirstCraftProbe')
+        ok, err = denied()
+        local secret = usage .. '. Secret values are only allowed during untainted execution for this argument.'
+        assert(not ok and err:find(secret, 1, true), tostring(err))
+        "#,
+    )
+    .unwrap();
+}
+
 #[cfg(all(feature = "client-retail", feature = "retail-12-1-5"))]
 #[test]
 fn professions_consumer_uses_supplied_recipe_cooldown_and_charges() {

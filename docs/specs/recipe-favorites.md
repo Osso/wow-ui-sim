@@ -33,6 +33,8 @@ The API members themselves are not declared in the pinned generated docs.
   favorite-driven list refresh remains open.
 - `HasFavoriteOrderRecipes` also reads this model; see
   [favorite order recipes](profession-tab-state-favorite-orders.md).
+  The separate `firstCraft` field is described in
+  [recipe first craft](recipe-first-craft.md).
 - The update-tick boundary and immediate agreement of the two read APIs are
   simulator choices. Exact native delay and display-cache timing are unknown.
   Network submission, server acceptance and account-sharing behavior are not

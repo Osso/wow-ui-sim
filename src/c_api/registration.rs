@@ -108,6 +108,7 @@ pub(crate) fn register_interaction_tables(state: &mut LuaState) -> LuaResult<()>
     super::c_encounter_warnings::register_settings(state)?;
     super::c_trade_skill_cooldown::register(state)?;
     super::c_trade_skill_favorites::register(state)?;
+    super::c_trade_skill_first_craft::register(state)?;
     super::c_trade_skill_quality::register(state)?;
     super::c_trade_skill_source::register(state)?;
     #[cfg(feature = "retail-12-0-0")]

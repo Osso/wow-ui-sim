@@ -2,9 +2,9 @@
 
 use crate::lua_api::SimState;
 use crate::lua_api::methods::borrow_state;
-use crate::lua_bridge::{stack_val, table_set_rust_fn_static};
+use crate::lua_bridge::table_set_rust_fn_static;
 use rilua::vm::state::LuaState;
-use rilua::{LuaResult, Val, runtime_error};
+use rilua::{LuaResult, Val};
 
 const USAGE: &str = "Usage: local tabInfo = C_ProfSpecs.GetStateForTab(tabTreeID, configID)";
 /// `Enum.ProfessionsSpecTabState.Locked`, the native state without a tab relation.
@@ -20,46 +20,8 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
     table_set_rust_fn_static(state, namespace, "GetStateForTab", get_state_for_tab)
 }
 
-fn bad_argument(index: i32, reason: &str) -> rilua::LuaError {
-    runtime_error(format!(
-        "bad argument #{index} to 'GetStateForTab' ({reason})"
-    ))
-}
-
-/// Shared signed 32-bit converter: inclusive bounds, then truncation.
 fn read_id_argument(state: &LuaState, index: i32) -> LuaResult<i32> {
-    let original = stack_val(state, index);
-    if matches!(original, Val::Nil) {
-        return Err(bad_argument(index, USAGE));
-    }
-    let marked = rilua::table_security::is_secret_value(state, original);
-    let value = rilua::table_security::unwrap_secret(state, original).map_err(|_| {
-        let denied = format!(
-            "{USAGE}. Secret values are only allowed during untainted execution for this argument."
-        );
-        bad_argument(index, &denied)
-    })?;
-    let number = match value {
-        Val::Num(number) => Some(number),
-        Val::Str(reference) if !marked => state
-            .gc
-            .string_arena
-            .get(reference)
-            .and_then(|string| super::helpers::parse_numeric_string(string.data())),
-        _ => None,
-    };
-    let in_range = |number: &f64| (f64::from(i32::MIN)..=f64::from(i32::MAX)).contains(number);
-    number
-        .filter(in_range)
-        .map(|number| number.trunc() as i32)
-        .ok_or_else(|| {
-            let range = format!(
-                "outside of expected range {} to {} - {USAGE}",
-                i32::MIN,
-                i32::MAX
-            );
-            bad_argument(index, &range)
-        })
+    super::helpers::read_untainted_signed32_argument(state, index, "GetStateForTab", USAGE)
 }
 
 /// UNKNOWN (WM87): the simulator has no trait-configuration identity, so the
