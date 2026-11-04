@@ -19,6 +19,29 @@ fn tooltip_lifecycle_original_simple_tooltip_uses_bottomright_owner_anchor() {
 }
 
 #[test]
+fn tooltip_lifecycle_original_disabled_button_leave_clears_hidden_tooltip() {
+    let env = WowLuaEnv::new().unwrap();
+    let addons = wow_ui_sim::paths::default_blizzard_ui_addons_path().unwrap();
+    for path in [
+        "Blizzard_SharedXMLBase/FrameUtil.lua",
+        "Blizzard_SharedXML/SharedTooltipTemplates.lua",
+    ] {
+        env.exec(&std::fs::read_to_string(addons.join(path)).unwrap())
+            .unwrap();
+    }
+    env.exec(r#"
+        local owner = CreateFrame("Button", nil, UIParent)
+        GameTooltip:SetOwner(owner, "ANCHOR_NONE")
+        GameTooltip:Hide()
+        GameTooltip:AddLine("hidden content")
+        local line = GameTooltip:GetLeftLine(1)
+        DisabledTooltipButtonMixin.OnLeave(owner)
+        assert(GameTooltip:NumLines() == 0, "hide clears even when already hidden")
+        assert(GameTooltip:GetOwner() == nil and not line:IsShown(), "hide releases owner and cached line")
+    "#).unwrap();
+}
+
+#[test]
 fn tooltip_lifecycle_cursor_modes_follow_cursor_with_native_points() {
     let env = WowLuaEnv::new().unwrap();
     env.set_screen_size(1000.0, 800.0);
