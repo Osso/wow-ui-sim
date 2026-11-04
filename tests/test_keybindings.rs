@@ -53,6 +53,9 @@ const BLIZZARD_ADDONS: &[&str] = &[
     "Blizzard_MicroMenu",
     "Blizzard_ManagedFrameSystem",
     "Blizzard_EditMode",
+    // PTR split this out of ActionBar; Retail still loads its tracking bars there.
+    #[cfg(feature = "client-ptr")]
+    "Blizzard_StatusTrackingBar",
     "Blizzard_GarrisonBase",
     "Blizzard_GameTooltip",
     "Blizzard_StaticPopup_Game",
@@ -620,7 +623,8 @@ fn character_panel_inventory_tooltip_has_lines_and_closes_without_errors() {
 #[test]
 fn item_button_corruption_uses_supplied_identity() {
     let env = setup_env();
-    env.exec("A_Admin.SetItemOverlayFlag(900001, 'corrupted', true)").unwrap();
+    env.exec("A_Admin.SetItemOverlayFlag(900001, 'corrupted', true)")
+        .unwrap();
     env.exec(
         r#"
         local button = CreateFrame('Button', nil, UIParent)
@@ -641,7 +645,10 @@ fn paper_doll_azerite_overlay_uses_supplied_location() {
     use wow_ui_sim::lua_api::{AzeriteItemState, ItemLocationData};
     let env = setup_env();
     env.state().borrow_mut().azerite_item = Some(AzeriteItemState {
-        item_location: ItemLocationData { equipment_slot_index: Some(2), ..Default::default() },
+        item_location: ItemLocationData {
+            equipment_slot_index: Some(2),
+            ..Default::default()
+        },
         current_xp: 0,
         max_xp: 100,
         power_level: 42,
@@ -816,21 +823,25 @@ fn item_button_queries_authenticate_secret_arguments_by_caller_taint() {
 #[test]
 fn item_overlay_uncorrupted_items_reach_ordinary_path() {
     let env = setup_env();
-    env.exec(r#"
+    env.exec(
+        r#"
         local button = CreateFrame('Button', nil, UIParent)
         button.IconOverlay = button:CreateTexture(nil, 'OVERLAY')
         for _, id in ipairs({900011, 900012}) do
             SetItemButtonOverlay(button, id, Enum.ItemQuality.Common, false)
             assert(not button.IconOverlay:IsShown())
         end
-    "#).expect("ordinary items traverse original item overlay");
+    "#,
+    )
+    .expect("ordinary items traverse original item overlay");
 }
 
 #[cfg(any(feature = "client-retail", feature = "client-ptr"))]
 #[test]
 fn item_overlay_corruption_admin_input() {
     let env = setup_env();
-    env.exec(r#"
+    env.exec(
+        r#"
         local button = CreateFrame('Button', nil, UIParent)
         button.IconOverlay = button:CreateTexture(nil, 'OVERLAY')
         A_Admin.SetItemOverlayFlag(900021, "corrupted", true)
@@ -840,14 +851,17 @@ fn item_overlay_corruption_admin_input() {
         assert(button.IconOverlay:IsShown())
         SetItemButtonOverlay(button, 900022, Enum.ItemQuality.Common, false)
         assert(not button.IconOverlay:IsShown())
-    "#).expect("admin corruption input drives original overlay");
+    "#,
+    )
+    .expect("admin corruption input drives original overlay");
 }
 
 #[cfg(any(feature = "client-retail", feature = "client-ptr"))]
 #[test]
 fn item_overlay_supplied_flags_select_distinct_overlays() {
     let env = setup_env();
-    env.exec(r#"
+    env.exec(
+        r#"
         local button = CreateFrame('Button', nil, UIParent)
         button.IconOverlay = button:CreateTexture(nil, 'OVERLAY')
         button.IconOverlay2 = button:CreateTexture(nil, 'OVERLAY')
@@ -867,5 +881,7 @@ fn item_overlay_supplied_flags_select_distinct_overlays() {
         A_Admin.SetItemOverlayFlag(900031, 'cosmetic', false)
         SetItemButtonOverlay(button, 900031, Enum.ItemQuality.Common, false)
         assert(not button.IconOverlay:IsShown())
-    "#).expect("supplied classifications drive original item overlay");
+    "#,
+    )
+    .expect("supplied classifications drive original item overlay");
 }
