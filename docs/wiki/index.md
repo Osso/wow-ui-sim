@@ -1,3 +1,10 @@
+## [2026-11-04] correction | Forever library and shared tooltip costs
+
+[Forever publication](../specs/forever-lib-publication.md) records supplied-model
+queries and the pinned fifteen-bit enum. [WM98 eligibility](../specs/spell-tooltip-cost.md)
+replaces historical blanket cost omission with shared native outer gates and
+source-backed attribute data, with bounded three-profile proof.
+
 ## [2026-11-04] investigation | Forever tooltip baseline
 
 [Forever compatibility](investigations/forever-addon-startup-compatibility.md#tooltip-baseline-fixtures-and-producers)
@@ -1642,7 +1649,7 @@ mapping remains unknown. Producer and tests staged only; no build/slot/runtime p
 
 ## [2026-10-08] investigation | Patch 6.2.0 API audit
 
-[Audit](investigations/patch-6-2-0-api-audit.md): revision 1460518; zero inventory/eleven extract rows, modeled retail spell-link cost omission, two item-link contracts pending. 50 publication cases, scoped tooltip tests, fixtures 36/31/8, format/Mists and matching addons-enabled startup [] pass. 49 registers/46 extracts reproduce with three inherited failures; 30 prior validators plus portable own gate pass. No retirements.
+[Audit](investigations/patch-6-2-0-api-audit.md): revision 1460518; zero inventory/eleven extract rows, historical spell-link cost omission superseded by [WM98 shared eligibility](../specs/spell-tooltip-cost.md), two item-link contracts pending. 50 publication cases, scoped tooltip tests, fixtures 36/31/8, format/Mists and matching addons-enabled startup [] pass. 49 registers/46 extracts reproduce with three inherited failures; 30 prior validators plus portable own gate pass. No retirements.
 
 ## [2026-10-08] investigation | Patch 6.1.0 API audit
 

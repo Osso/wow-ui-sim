@@ -28,6 +28,17 @@ Focused default-retail GREEN: 5/5 tests, exit 0, on shared build revision `72220
 
 `tests/patch_12_0_5_outfit_catalog.rs` is discovered by the existing grouped `integration` target. Fixtures seed only `env.state()` with IDs 91/305 and explicit indices 7/42. Tests cover empty/missing results, all fields, case-insensitive lookup, sparse indices, nonalias returns, invalid inputs, and secret caller validation.
 
+## Forever 70707 singular lookup
+
+Pinned `TransmogOutfitInfoDocumentation.lua:312–325` declares `GetOutfitInfo`.
+Forever queries the same supplied `forever_outfits` entries as `GetOutfitsInfo`,
+not the Retail catalog. Supplied outfit IDs and entry fields are preserved in
+fresh snapshots. **EMULATED:** `emulated_singular_outfit_lookup` treats an
+unsupplied observation or a supplied no-list observation as no match, returning
+zero values; native missing-state arity is UNKNOWN. Enumeration retains its
+existing strict unsupplied-state error. The exact supplied-record and empty-state
+contract is exercised by `src/c_api/forever_lib_baseline_tests.rs`.
+
 ## Known gaps (current cycle)
 
 - [x] Independent315 bounded stored-index/DTO verification accepted; current-VM five tests PASS, applicable independent310 fmt/check reused, no readability issues. Exact scope below; no separate profile build requested.

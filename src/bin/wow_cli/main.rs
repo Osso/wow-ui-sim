@@ -269,7 +269,7 @@ enum GenerateTarget {
     /// Compare pinned generated Blizzard API documentation snapshots
     PatchApiDocs(gen_patch_api_docs::Options),
     /// Generate crates/sim-data/data/spells.rs from SpellName/Spell/SpellMisc CSVs
-    Spells,
+    Spells(gen_spells::Options),
     /// Generate shared item data or profile-pinned full item effects
     Items(gen_items::Options),
     /// Generate crates/sim-data-profile/data/atlas.rs from UiTextureAtlas CSVs
@@ -387,7 +387,7 @@ fn handle_extract_textures_command(addons: PathBuf, interface: PathBuf, output: 
 fn run_generator(target: GenerateTarget) {
     let result = match target {
         GenerateTarget::PatchApiDocs(options) => gen_patch_api_docs::run(options),
-        GenerateTarget::Spells => gen_spells::run(),
+        GenerateTarget::Spells(options) => gen_spells::run(options),
         GenerateTarget::Items(options) => gen_items::run(options),
         GenerateTarget::Atlas(options) => gen_atlas::run(options),
         GenerateTarget::Currencies => gen_currencies::run(),
