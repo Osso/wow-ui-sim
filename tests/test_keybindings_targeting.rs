@@ -8,10 +8,12 @@ use crate::common;
 #[path = "render_order_support.rs"]
 mod render_order_support;
 
+#[cfg(not(feature = "client-wrath"))]
 use image::RgbaImage;
 use std::path::PathBuf;
 use wow_ui_sim::lua_api::WowLuaEnv;
 use wow_ui_sim::lua_api::globals::global_frames;
+#[cfg(not(feature = "client-wrath"))]
 use wow_ui_sim::render::headless::render_to_image;
 
 fn blizzard_ui_dir() -> PathBuf {
@@ -55,12 +57,14 @@ fn drain_test_errors(env: &WowLuaEnv) -> Vec<String> {
     common::drain_string_table(env, "__test_errors")
 }
 
+#[cfg(not(feature = "client-wrath"))]
 fn sample_rect_pixel(image: &RgbaImage, rect: (f32, f32, f32, f32), u: f32, v: f32) -> [u8; 4] {
     let x = (rect.0 + rect.2 * u).round() as u32;
     let y = (rect.1 + rect.3 * v).round() as u32;
     image.get_pixel(x, y).0
 }
 
+#[cfg(not(feature = "client-wrath"))]
 fn max_channel_diff(lhs: [u8; 4], rhs: [u8; 4]) -> u8 {
     (0..4)
         .map(|channel| lhs[channel].abs_diff(rhs[channel]))
@@ -68,6 +72,7 @@ fn max_channel_diff(lhs: [u8; 4], rhs: [u8; 4]) -> u8 {
         .unwrap_or(0)
 }
 
+#[cfg(not(feature = "client-wrath"))]
 fn target_portrait_rect(env: &WowLuaEnv, width: f32, height: f32) -> (f32, f32, f32, f32) {
     let state = env.state().borrow();
     let target_frame_id = state
@@ -155,12 +160,23 @@ fn setup_env() -> common::LockedEnv {
             state.addon_base_paths = vec![ui.clone()];
         }
 
-        for name in BLIZZARD_ADDONS {
-            if *name == "Blizzard_UnitFrame" {
-                common::load_blizzard_addon_bootstrap(&env, &ui, name, "Mainline/TargetFrame.lua");
+        if wow_ui_sim::client_profile::ACTIVE == wow_ui_sim::client_profile::ClientProfile::Wrath {
+            // FrameXML.toc:77 loads TargetFrame.xml; its OnLoad at :651-654
+            // initializes the target unit and registers PLAYER_TARGET_CHANGED.
+            // TargetFrame.lua:94-101 implements the visibility tested below.
+            common::load_profile_framexml(&env);
+            // Wrath Bindings.xml:455-457 calls TargetNearestEnemy(), unlike the
+            // simulator's synthetic enemy1 binding. Supply a selectable enemy.
+            env.exec("A_Admin.SetEnemyPool({name='Targeting fixture enemy', level=11, class_index=1})")
+                .expect("seed the native nearest-enemy binding fixture");
+        } else {
+            for name in BLIZZARD_ADDONS {
+                if *name == "Blizzard_UnitFrame" {
+                    common::load_blizzard_addon_bootstrap(&env, &ui, name, "Mainline/TargetFrame.lua");
+                }
+                common::load_required_blizzard_addon(&env, &ui, name);
+                env.apply_runtime_addon_load_workarounds(name);
             }
-            common::load_required_blizzard_addon(&env, &ui, name);
-            env.apply_runtime_addon_load_workarounds(name);
         }
         env.apply_post_load_workarounds();
         fire_startup_events(&env);
@@ -228,6 +244,9 @@ fn target_frame_shown_for_enemy() {
     }
 }
 
+// Wrath FrameXML/TargetFrame.xml:227-239 declares a standalone 64x64 portrait
+// without a mask. Mainline TargetFrame.xml:68 uses the CircleMask asserted here.
+#[cfg(not(feature = "client-wrath"))]
 #[test]
 fn target_frame_portrait_corners_match_background_when_replaced_with_class_icon() {
     test_timeout! {

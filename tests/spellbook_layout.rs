@@ -1,4 +1,7 @@
-#![cfg(feature = "gui")]
+#![cfg(all(feature = "gui", not(feature = "client-wrath")))]
+// Wrath FrameXML/SpellBookFrame.xml:83-105,195,404 uses fixed SpellButtonTemplate
+// children, not Mainline PagedSpellsFrame or SpellBookFrameTutorialsMixin
+// (Blizzard_PlayerSpells/SpellBook/Blizzard_SpellBookFrame.lua:34,51-52).
 //! Tests for spellbook geometry, layout locking, and tooltip rendering.
 
 use crate::common;
