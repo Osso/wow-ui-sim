@@ -222,7 +222,7 @@ def partition_tests(names, costs, count):
     return shards
 
 
-def run_integration_shards(command, checkout, log, env, costs, count):
+def run_integration_shards(command, checkout, log, env, costs, count, timeout_tests):
     """Discover on stable libtest, then run disjoint exact-name selections."""
     started = time.monotonic()
     discovery = subprocess.run([command[-1], "--list", "--format=terse"],
@@ -233,8 +233,17 @@ def run_integration_shards(command, checkout, log, env, costs, count):
     # These cases reserve exclusive capacity while testing the global two-child
     # semaphore. Shared workloads can otherwise starve their exclusive flock.
     reserved = [name for name in names if name.startswith("timeout_reexec::")]
-    ordinary = [name for name in names if not name.startswith("timeout_reexec::")]
-    shards = ([reserved] if reserved else []) + partition_tests(ordinary, costs, count)
+    timeout_tests = set(timeout_tests)
+    guarded = [name for name in names if name not in reserved and name in timeout_tests]
+    ordinary = [name for name in names if name not in reserved and name not in timeout_tests]
+    # Keep runnable ordinary work beside the two semaphore-consuming lanes.
+    # A one-worker budget runs all non-reserved cases serially in that worker.
+    guard_workers = min(2, max(0, count - 1))
+    guard_shards = partition_tests(guarded, costs, guard_workers) if guard_workers else []
+    if not guard_workers:
+        ordinary.extend(guarded)
+    shards = ([reserved] if reserved else []) + guard_shards + partition_tests(
+        ordinary, costs, count - len(guard_shards))
     base_unit = next(arg for arg in command if arg.startswith("--unit="))
     slot = Path(env.get("CARGO_TARGET_DIR", "integration")).name.removeprefix("slot-")
 
@@ -407,8 +416,9 @@ def run(ref, build_jobs, target_dir, profile="retail", optional=False):
                                 if name == "integration" and profile == "retail":
                                     costs = json.loads((checkout / "tools/integration-costs.json").read_text())
                                     command[command.index("MemoryMax=9G")] = "MemoryMax=3G"
+                                    timeout_tests = json.loads((checkout / "tools/integration-timeout-tests.json").read_text())
                                     result["steps"][name], output = run_integration_shards(
-                                        command, checkout, log, step_env, costs, INTEGRATION_SHARDS)
+                                        command, checkout, log, step_env, costs, INTEGRATION_SHARDS, timeout_tests)
                                 else:
                                     result["steps"][name], output = run_step(name, command, checkout, log, step_env)
                             finally:
