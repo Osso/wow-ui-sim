@@ -6,13 +6,14 @@ use crate::lua_api::methods::{borrow_state, table_get};
 use crate::lua_bridge::{stack_val, table_set_rust_fn_static, val_to_i32};
 use rilua::{LuaResult, Val, vm::state::LuaState};
 
-// Wrath 12340 data used by the simulator's shared quest difficulty model.
-// The thresholds have not been measured in Retail, PTR, or Forever.
-const QUEST_GREEN_RANGES: [u8; 20] = [4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8];
+// WM89: UNKNOWN populated GlobalCurve; EMULATED absent configuration row.
+fn forever_quest_trivial_range(_player_comparison_level: i32) -> i32 {
+    5
+}
 
-pub(crate) fn quest_green_range(level: i32) -> u8 {
-    let band = (level.max(0) as usize / 5).min(QUEST_GREEN_RANGES.len() - 1);
-    QUEST_GREEN_RANGES[band]
+// EMULATED: ContentTuning and the native effective-level interface are not modeled here.
+fn quest_comparison_levels(quest_level: i32, player_level: i32) -> (i32, i32) {
+    (quest_level, player_level)
 }
 
 pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
@@ -82,15 +83,20 @@ fn quest_difficulty(state: &mut LuaState) -> LuaResult<u32> {
             })?;
         (level, sim.player.level)
     };
-    // DifficultyUtil.lua maps these level bands to display colors.
-    let diff = i64::from(quest_level) - i64::from(player_level);
+    let (quest_level, player_level) = quest_comparison_levels(quest_level, player_level);
+    let diff = quest_level.wrapping_sub(player_level);
     let name = if diff >= 5 {
         "Impossible"
     } else if diff >= 3 {
         "Difficult"
-    } else if diff >= -4 {
+    } else if diff >= -2 {
         "Fair"
-    } else if -diff <= i64::from(quest_green_range(player_level)) {
+    } else if diff
+        >= -match ACTIVE {
+            ClientProfile::WowForever => forever_quest_trivial_range(player_level),
+            _ => 4,
+        }
+    {
         "Easy"
     } else {
         "Trivial"

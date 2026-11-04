@@ -6,7 +6,7 @@ These are simulator scenario defaults, approved by the user on 2026-10-28. They 
 
 | Item | Value | Profiles | Consumer | Missing system |
 |---|---|---|---|---|
-| C_PlayerInfo.GetContentDifficultyQuestForPlayer | Quest level vs player level; user-approved, not native evidence. Green range: user-approved for Retail/PTR; values are Wrath 12340 native data, not 12.x evidence | Retail, PTR | Blizzard_UIPanels_Game/Mainline/QuestMapFrame.lua:1751 (Retail), :1835 (PTR); Blizzard_FrameXMLUtil/Mainline/DifficultyUtil.lua:33–45 | Native quest trivial-level range |
+| C_PlayerInfo.GetContentDifficultyQuestForPlayer | WM89 fixed Retail/PTR bands use emulated stored quest and player levels | Retail, PTR | Blizzard_UIPanels_Game/Mainline/QuestMapFrame.lua:1751 (Retail), :1835 (PTR) | ContentTuning and effective-level inputs |
 | C_AccountServices.GetPreferredDatacenterLocalities | Two empty tables; user-approved, not native evidence | PTR | Blizzard_Communities/GuildPreferredPlaySettings.lua:154; Blizzard_Settings_PreferredPlaySettings.lua:75 | Account datacenter preferences |
 | FORCE_DECLINE_CHARACTER | Register; do not emit | PTR | Blizzard_DeclensionFrame/Mainline/DeclensionFrameGlue.lua:12 | Declension flow |
 | C_Login.GetState | Preserve modeled connection fields; waitingForRealmList, superDistrictChoicePending, keepingCharacterListOnRealmJoin, waitingForRuleSets false; hasSelectedExperiencePreset true | PTR | Blizzard_GlueParent/Mainline/GlueParent.lua:222–254 | Login policy |

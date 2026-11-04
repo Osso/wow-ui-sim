@@ -96,12 +96,46 @@ fn forever_quest_difficulty_rejects_invalid_and_unrepresented_ids_explicitly() {
     .unwrap();
 }
 
+#[test]
+fn forever_quest_difficulty_absent_curve_boundaries() {
+    let env = WowLuaEnv::new().unwrap();
+    {
+        let mut state = env.state().borrow_mut();
+        state.player.level = 80;
+        let base = state.quest_log_entries.entries[0].clone();
+        state.quest_log_entries.entries = [78, 77, 76, 75, 74]
+            .into_iter()
+            .enumerate()
+            .map(|(index, level)| {
+                let mut row = base.clone();
+                row.quest_id = 50000 + index as i32;
+                row.level = level;
+                row
+            })
+            .collect();
+    }
+    load_forever_title_consumer(&env);
+    // WM89: five is the absent-configuration range, not a known populated curve value.
+    env.exec(
+        r#"
+        local expected = { 'Fair', 'Easy', 'Easy', 'Easy', 'Trivial' }
+        local colors = { 'difficult', 'standard', 'standard', 'standard', 'trivial' }
+        for i, name in ipairs(expected) do
+            local difficulty = C_PlayerInfo.GetContentDifficultyQuestForPlayer(49999 + i)
+            assert(GetDifficultyColor(difficulty) == QuestDifficultyColors[colors[i]], colors[i])
+            assert(difficulty == Enum.RelativeContentDifficulty[name], name)
+        end
+        "#,
+    )
+    .unwrap();
+}
+
 fn load_forever_title_consumer(env: &WowLuaEnv) {
     // Explicit test dependencies, not alternate production implementations.
     env.exec(
         r#"
         DifficultyUtil = {}
-        QuestDifficultyColors = {difficult={r=0.2, g=0.4, b=0.6}}
+        QuestDifficultyColors = {difficult={r=0.2, g=0.4, b=0.6}, standard={}, trivial={}}
         QuestDifficultyHighlightColors = {difficult={r=0.3, g=0.5, b=0.7}}
         CVarCallbackRegistry = {enabled=true}
         function CVarCallbackRegistry:GetCVarValueBool(name)
