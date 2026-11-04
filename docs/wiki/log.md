@@ -1,3 +1,7 @@
+## [2026-11-04] measured proof | NECESSARY Retail native timeout inventory
+
+[Runtime optimization](investigations/test-runtime-optimization.md#native-timeout-inventory-and-complete-budget-proof--2026-11-04) records the passing 1146.645s source-identified budget proof, zero failed cases against master, the ordinary-shard critical path and regenerated 672-name scheduling data. The 600s target is not met; no fixture optimization is adopted.
+
 ## [2026-11-04] implementation | D56 tooltip serialization
 
 Updated [Lua API](systems/lua-api.md#tooltip-data-and-merchant-cursor-presentation)

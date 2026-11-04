@@ -67,12 +67,20 @@ The two same-process failure prefixes completed under a 9 GiB probe ceiling at p
 
 The [runner](../../../tools/full_suite.py) requests a private 16-CPU/24-GiB test slice by default, requires capacity ADD before tests, and permits lower explicit CPU/RAM overrides. It derives workers and timeout permits from that requested budget and records the budget and slice resources. This is an enforced ceiling, not an exclusive host-RAM reservation. A complete warm production proof remains required after the policy and memory-budget changes.
 
+## Native timeout inventory and complete budget proof — 2026-11-04
+
+The saved lane list was regenerated from parent timeout entries in source `cb55bc12d4a8a024f43f54dbff0156d41fb82e84`, Retail NECESSARY run `production-budget16`, attempt `1793823945197603514` (2026-11-04 14:25:45–14:44:51 local). The raw inventory SHA256 is `462fa5e1f55eec484d9ac3249b1e457f90047302c1c8b96cc8e7f4f608ad8b91`. Sorting and deduplicating its lines gives exactly the 672 names in [the scheduling data](../../../tools/integration-timeout-tests.json). All names are registered integration cases. Relative to the old 482-name source inventory, 197 names are newly observed and seven old names were not entered in this run. This is observed execution coverage, not proof about every unexecuted branch or ignored body.
+
+The complete run passed every target with zero failed cases; its 26 failure-map values are empty arrays, as in master baseline `c2621a5aa5a771f26362ded5567b6958275d90be`. All 16,699 target-qualified identities are unchanged. End-to-end wall was 1146.645s: 45.329s warm build (695/695 artifacts fresh), 1039.6s sequential test steps and 61.716s other runner overhead. Cold compilation was not measured. Test CPU was 8872.819s and kernel aggregate peak was 17,600,987,136 bytes under the enforced 16-CPU/24-GiB budget; no OOM occurred.
+
+Integration took 847.4s. After 8.5s conformance, ordinary shard 8 was last at 838.7s, selecting 1,146 names including 16 previously unclassified timeout consumers. Ordinary lanes took 788.9–838.7s; the six known-timeout lanes finished in 285.3–384.2s. All 197 newly observed ordinary-lane consumers still obeyed the global six-slot semaphore. Static lane completion leaves unused workers; exact startup-exclusive CPU attribution is not available from these wall timings. Prefork, lib and other serialized steps added 192.2s. This is a complete passing resource-budget proof, not the required sub-600-second acceptance.
+
 ## Sources
 
 - [Scheduling contract](../../specs/necessary-suite-runtime.md) — warm-run target and unchanged coverage requirements
 - [Full-suite runner](../../../tools/full_suite.py) — stable discovery and exact-name scheduling
 - [Saved wall-time weights](../../../tools/integration-costs.json) — all 11,968 measured passing cases
-- [Timeout scheduling names](../../../tools/integration-timeout-tests.json) — source-inspected timeout consumers
+- [Timeout scheduling names](../../../tools/integration-timeout-tests.json) — native parent-entry observations from the source-identified proof above
 
 - [SharedMapDataProviders test](../../../tests/blizzard_shared_map_data_providers_loads.rs) — commit `e1f9b210b1790258a6f865cc3df0e85f6364e8e0`, implicit dependency override, and retained assertions
 - [Blizzard addon closure harness](../../../tests/common/blizzard_addon_harness.rs) — fresh environments and dependency-ordered closure loading
