@@ -528,6 +528,29 @@ fn blizzard_frame_xml_util_publishes_item_context_enums(env: &WowLuaEnv) {
 }
 
 prefork_full_ui_case! {
+fn area_poi_timed_consumer_and_arguments(env: &WowLuaEnv) {
+    env.eval::<()>(r#"
+        local f = C_AreaPoiInfo.IsAreaPOITimed
+        assert(type(f) == 'function', 'IsAreaPOITimed must be published')
+        local function results(...) return select('#', ...), ... end
+        local n, timed, hidden = results(f(-2147483648))
+        assert(n == 2 and timed == false and hidden == nil, 'unknown POI return shape')
+        n, timed, hidden = results(f('-2147483648'))
+        assert(n == 2 and timed == false and hidden == nil, 'numeric string input')
+        for _, value in ipairs({false, {}, 'not a number', 2147483648}) do
+            local ok = pcall(f, value)
+            assert(not ok, 'invalid argument must raise')
+        end
+        assert(not pcall(f), 'missing argument must raise')
+        assert(not pcall(f, nil), 'nil argument must raise')
+
+        local shown = AreaPoiUtil.TryShowTooltip(nil, nil, {areaPoiID = -2147483648})
+        assert(shown == false, 'unknown POI without tooltip content must not show')
+    "#).expect("selected AreaPoiUtil consumer and API contract");
+}
+}
+
+prefork_full_ui_case! {
 fn blizzard_frame_xml_util_publishes_dragonriding_and_arena_namespaces(env: &WowLuaEnv) {
 
     let extras: (bool, bool, bool, bool) = env
