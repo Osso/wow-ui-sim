@@ -92,7 +92,7 @@ formatting its child modules. Avoid workspace-wide formatting for focused change
 
 ## Release packages
 
-GitHub releases provide Retail, Mists, and WoW Forever packages for Linux x86-64, Windows x86-64, and macOS Apple Silicon. Windows packages include a ZIP and an installer; macOS packages use a DMG. Forever package names include `forever`, and its installer and macOS app use separate identities.
+GitHub releases provide Retail and WoW Forever packages for Linux x86-64, Windows x86-64, and macOS Apple Silicon. Mists packages are available for Linux x86-64 and Windows x86-64 only. Windows packages include a ZIP and an installer; macOS packages use a DMG. Forever package names include `forever`, and its installer and macOS app use separate identities.
 
 Forever packages include selected spell data. For a local Forever build, run `wow-cli casc sync-forever-spells` before starting the simulator. It uses the installed pinned Forever client when available, or downloads the pinned DB2 files from Blizzard's CDN. See the [spell data contract](docs/specs/forever-spell-data.md).
 
