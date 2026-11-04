@@ -1,5 +1,17 @@
 # Tooltip owner lifecycle
 
+## Profile scope
+
+The historical contract below records legacy-profile behavior, with Wrath
+simulator proof. Retail/PTR follow the newer WM63/WM95 behavior instead:
+`Hide` clears rows and releases ownership; same-owner `SetOwner` clears
+without an explicit hide, while changing owners hides first. A non-table
+owner is rejected before mutation. Rejected empty/ownerless `Show` also runs
+hiding. See the [current timing and admission contract](tooltip-layout-timing.md).
+Native execution, callback re-entry and owner-auto-hide remain unverified.
+
+## Historical legacy-profile contract
+
 `GameTooltip` ownership is separate from its lines and visibility. Explicit tooltip hiding releases ownership; `SetOwner` hides and clears content while retaining its newly assigned owner. This is documented-source corroboration, **not native execution**: [GameTooltip API reference](https://warcraft.wiki.gg/wiki/UIOBJECT_GameTooltip) describes owner, text, and append visibility behavior.
 
 ## What it must do
