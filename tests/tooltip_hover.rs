@@ -86,7 +86,7 @@ fn blizzard_backpack_tooltip_append_text_updates_pooled_title() {
 fn blizzard_tooltip_append_text_uses_first_pooled_left_line_synchronously() {
     let env = setup_full_env();
     env.exec(
-        r#"
+        r##"
         GameTooltip:SetOwner(UIParent, "ANCHOR_NONE")
         assert(GameTooltip:ProcessInfo({ tooltipData = { lines = {
             { leftText = "Title" }, { leftText = "Footer" },
@@ -109,6 +109,9 @@ fn blizzard_tooltip_append_text_uses_first_pooled_left_line_synchronously() {
         title:SetText(string.rep("A", 250))
         GameTooltip:AppendText("123456789")
         assert(title:GetText() == string.rep("A", 250) .. "12345", "255-byte payload cap")
+        title:SetText(string.rep("A", 254))
+        GameTooltip:AppendText("é")
+        assert(title:GetText() == string.rep("A", 254), "UTF-8 boundary emulation must not split a character")
         title:SetText("Before" .. string.char(0) .. "After")
         GameTooltip:AppendText("Suffix" .. string.char(0) .. "Ignored")
         assert(title:GetText() == "BeforeSuffix", "native text concatenation stops at NUL")
@@ -119,12 +122,13 @@ fn blizzard_tooltip_append_text_uses_first_pooled_left_line_synchronously() {
         GameTooltip:ClearLines()
         assert(select("#", GameTooltip:AppendText("No row")) == 0)
         assert(GameTooltip:NumLines() == 0)
-        "#,
+        "##,
     )
     .expect("WM95 first-row pooled text, byte cap and synchronous layout");
     for invalid in ["nil", "false", "{}"] {
         assert!(
-            env.exec(&format!("GameTooltip:AppendText({invalid})")).is_err(),
+            env.exec(&format!("GameTooltip:AppendText({invalid})"))
+                .is_err(),
             "empty tooltip must still reject AppendText({invalid})"
         );
     }
