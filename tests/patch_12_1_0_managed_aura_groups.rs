@@ -389,7 +389,7 @@ fn aura_slots_show_only_the_preferred_aura() {
                 initializeFrame = AuditInitIcon,
             })
         end)
-        assert(AuditSlot:GetObjectType() == 'AuraButton' and AuditSlot:GetParent() == AuditSlotHost)
+        assert(AuditSlot:GetObjectType() == 'AuraButton' and AuditParentIs(AuditSlot, AuditSlotHost))
         assert(AuditSlotHost:GetAuraGroupFrameCount('soonest') == 0, 'slots are not groups')
         function AuditSlotIcon()
             if not AuditIsShown(AuditSlot) then return 'hidden' end
