@@ -68,8 +68,11 @@ fn blizzard_backpack_tooltip_append_text_updates_pooled_title() {
             local title = BACKPACK_TOOLTIP .. NORMAL_FONT_COLOR:WrapTextInColorCode(" (" .. key .. ")")
             assert(GameTooltip:IsShown())
             assert(GameTooltip:NumLines() == 2)
-            assert(GameTooltip:GetLeftLine(1):GetText() == title,
+            local titleLine = GameTooltip:GetLeftLine(1)
+            assert(titleLine:GetText() == title,
                 "backpack title FontString lost the appended binding")
+            assert(GameTooltip:GetWidth() + 0.01 >= titleLine:GetStringWidth() + 20.48,
+                "backpack tooltip was sized using the title without its binding")
             assert(GameTooltip:GetLeftLine(2):GetText() == NUM_FREE_SLOTS:format(MainMenuBarBackpackButton.freeSlots or 0))
             assert(SetBinding(binding))
         end
