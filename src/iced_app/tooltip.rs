@@ -201,7 +201,7 @@ fn measure_native_tooltip(state: &mut SimState, id: u64, fonts: &mut WowFontSyst
         });
         has_right |= right > 0.0;
         if line.wrap || td.force_min_width {
-            width = width.max(left.min(cap));
+            width = width.max((left + tooltip_row_inset()).min(cap));
         } else {
             let gap = if left > 0.0 && right > 0.0 { 38.4 } else { 0.0 };
             floor = floor.max(left + right + gap);
@@ -217,8 +217,13 @@ fn measure_native_tooltip(state: &mut SimState, id: u64, fonts: &mut WowFontSyst
             let (font, size, scale, _, _) = native_line_font(state, &td, index, false);
             let text = native_line_text(state, &td, index, false, &line.left_text);
             fitted = fitted.max(
-                fonts.measure_fitted_text_width(&text, font.as_deref(), size, width / scale)
-                    * scale,
+                fonts.measure_fitted_text_width(
+                    &text,
+                    font.as_deref(),
+                    size,
+                    (width - tooltip_row_inset()).max(0.0) / scale,
+                ) * scale
+                    + tooltip_row_inset(),
             );
         }
         width = width.min(fitted);
@@ -229,7 +234,7 @@ fn measure_native_tooltip(state: &mut SimState, id: u64, fonts: &mut WowFontSyst
         if wrapped {
             if let Some(line_id) = td.left_line_ids.get(index).copied() {
                 if let Some(frame) = state.widgets.get_mut_visual(line_id) {
-                    frame.width = width;
+                    frame.width = (width - tooltip_row_inset()).max(0.0);
                     frame.width_is_text_auto = false;
                 }
                 state.widgets.mark_rect_dirty(line_id);
@@ -247,7 +252,7 @@ fn measure_native_tooltip(state: &mut SimState, id: u64, fonts: &mut WowFontSyst
                 &text,
                 font.as_deref(),
                 size,
-                wrapped.then_some(width / scale),
+                wrapped.then_some((width - tooltip_row_inset()).max(0.0) / scale),
                 spacing,
                 smooth,
             ) * scale
@@ -266,6 +271,11 @@ fn measure_native_tooltip(state: &mut SimState, id: u64, fonts: &mut WowFontSyst
     }
     let (horizontal, vertical) = td.native_outer_padding();
     (width + horizontal, height + vertical)
+}
+
+// WM63 L23 and WM72: the attachment model will set each row's inset.
+fn tooltip_row_inset() -> f32 {
+    0.0
 }
 
 fn native_line_font(
