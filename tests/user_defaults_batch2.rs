@@ -11,7 +11,7 @@ fn user_defaults_batch2_quest_difficulty_boundaries() {
         let mut sim = state.borrow_mut();
         sim.player.level = 80;
         let base = sim.quest_log_entries.entries[0].clone();
-        sim.quest_log_entries.entries = [85, 84, 83, 82, 76, 75, 72, 71]
+        sim.quest_log_entries.entries = [85, 84, 83, 82, 78, 77, 76, 75, 74]
             .into_iter()
             .enumerate()
             .map(|(index, level)| {
@@ -23,7 +23,7 @@ fn user_defaults_batch2_quest_difficulty_boundaries() {
             .collect();
     }
     env.exec(r#"
-        local expected = { 'Impossible', 'Difficult', 'Difficult', 'Fair', 'Fair', 'Easy', 'Easy', 'Trivial' }
+        local expected = { 'Impossible', 'Difficult', 'Difficult', 'Fair', 'Fair', 'Easy', 'Easy', 'Trivial', 'Trivial' }
         for i, name in ipairs(expected) do
             assert(C_PlayerInfo.GetContentDifficultyQuestForPlayer(49999 + i) == Enum.RelativeContentDifficulty[name], name)
         end
