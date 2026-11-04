@@ -403,6 +403,9 @@ def run(ref, build_jobs, target_dir, profile="retail", optional=False):
                                 continue
                             phase = name
                             step_env = dict(env, RUST_TEST_THREADS=INTEGRATION_JOBS if name == "integration" else JOBS)
+                            if artifact == "wow-sim" and kind == "bin":
+                                # Full-UI bin cases reached the 9G cgroup limit at 16 threads.
+                                step_env["RUST_TEST_THREADS"] = str(min(3, int(JOBS)))
                             binary = test_artifact(receipt, artifact, kind)
                             # Linux test executables link libwow_ui_sim_dylib.so from the same deps directory.
                             step_env["LD_LIBRARY_PATH"] = str(Path(binary).parent)
