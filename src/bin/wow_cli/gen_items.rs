@@ -11,6 +11,7 @@ mod item_effects;
 
 use super::csv_util::{escape_str, parse_csv_line, read_csv_records, wow_data_dir};
 use clap::Args;
+use sha2::{Digest, Sha256};
 use std::collections::{BTreeMap, BTreeSet, HashMap, HashSet};
 use std::fs::File;
 use std::io::{BufReader, Write};
@@ -51,6 +52,7 @@ fn run_shared() -> Result<(), Box<dyn std::error::Error>> {
 
     let mut required_ids = collect_required_item_ids();
     required_ids.extend(collect_keystone_item_ids(&wow_data)?);
+    required_ids.extend(collect_account_bound_item_ids(&csv_path)?);
     println!("Required item IDs: {} (deduplicated)", required_ids.len());
 
     let file = File::open(&csv_path)?;
@@ -62,7 +64,7 @@ fn run_shared() -> Result<(), Box<dyn std::error::Error>> {
     let output_path = Path::new("crates/sim-data/data/items.rs");
     let mut out = File::create(output_path)?;
 
-    write_header(&mut out)?;
+    write_header(&mut out, &csv_path)?;
 
     let (count, skipped) = build_item_map(&mut out, reader, &icon_map, &required_ids, &wow_data)?;
 
@@ -686,6 +688,26 @@ fn write_category_names(out: &mut File, wow_data: &Path) -> Result<(), Box<dyn s
         writeln!(out, "];\n")?;
     }
     Ok(())
+}
+
+/// Include all account-bound-until-equipped items from the selected source.
+fn collect_account_bound_item_ids(
+    path: &Path,
+) -> Result<BTreeSet<u32>, Box<dyn std::error::Error>> {
+    let records = read_csv_records(BufReader::new(File::open(path)?))?;
+    let mut rows = records.iter();
+    let columns = header_index(rows.next().ok_or("empty ItemSparse.csv")?);
+    if !columns.contains_key("ID") || !columns.contains_key("Bonding") {
+        return Err("ItemSparse.csv requires ID and Bonding columns".into());
+    }
+    let mut ids = BTreeSet::new();
+    for row in rows {
+        let fields = parse_csv_line(row);
+        if field(&fields, &columns, "Bonding") == "9" {
+            ids.insert(field(&fields, &columns, "ID").parse()?);
+        }
+    }
+    Ok(ids)
 }
 
 /// Collect item IDs referenced by the simulator from source files.
@@ -1364,8 +1386,13 @@ fn format_i16_array(values: &[i16; 10]) -> String {
     format_array(values)
 }
 
-fn write_header(out: &mut File) -> std::io::Result<()> {
+fn write_header(out: &mut File, item_sparse: &Path) -> std::io::Result<()> {
+    let hash = Sha256::digest(std::fs::read(item_sparse)?);
     writeln!(out, "//! Auto-generated item data from WoW CSV exports.")?;
+    writeln!(
+        out,
+        "//! PROVENANCE: ItemSparse.csv SHA-256 {hash:x}; 70391 enUS matches b370bc7d3ac06e2142824da92311bcf0542740e6ffefef240103cd12bcb19a40."
+    )?;
     writeln!(
         out,
         "//! Do not edit manually - regenerate with: wow-cli generate items"
