@@ -85,7 +85,6 @@
   "wt-global-api-C_TradeSkillUI.GetRecipeInfoForSkillLineAbility-296",
   "wt-global-api-C_TradeSkillUI.GetRecraftItems-403",
   "wt-global-api-C_TradeSkillUI.GetSkillLineForGear-299",
-  "wt-global-api-C_TradeSkillUI.HasFavoriteOrderRecipes-301",
   "wt-global-api-C_TradeSkillUI.IsNearProfessionSpellFocus-302",
   "wt-global-api-C_TradeSkillUI.IsRecipeInBaseSkillLine-303",
   "wt-global-api-C_TradeSkillUI.RecraftRecipeForOrder-304",
