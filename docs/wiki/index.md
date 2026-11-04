@@ -1,3 +1,6 @@
+## [2026-11-04] investigation | Parallel GPU test lifetimes
+
+[GPU test lifetimes](investigations/parallel-gpu-test-lifetimes.md) records the reproduced Vulkan loader SIGSEGV, the shared lifetime lock, and the concurrent atlas/readback regression.
 ## [2026-11-04] investigation | PTR tooltip residue
 
 [PTR tooltip residue](investigations/ptr-tooltip-residue.md) links the fixture

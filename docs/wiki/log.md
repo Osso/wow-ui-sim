@@ -1,3 +1,6 @@
+## [2026-11-04] investigation | Parallel GPU test lifetimes
+
+Recorded six reproduced SIGSEGVs and three timeouts in ten concurrent GPU runs; linked the [shared lifetime boundary](investigations/parallel-gpu-test-lifetimes.md). The same regression passed 50 GREEN runs; integration caller modules passed five runs and library GPU subsets passed ten runs.
 ## [2026-11-04] bounded proof | WM93 counted combat range
 
 The [PTR tooltip investigation](investigations/ptr-tooltip-residue.md) records the

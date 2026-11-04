@@ -175,10 +175,20 @@ macro_rules! perf_test_timeout {
     };
 }
 
+/// Keeps test GPU resources inside the headless renderer's lifetime lock.
+#[cfg(feature = "gui")]
+pub struct TestGpuDevice {
+    pub device: wgpu::Device,
+    pub queue: wgpu::Queue,
+    // Fields drop in declaration order: release the lock after GPU handles.
+    _lifetime: std::sync::MutexGuard<'static, ()>,
+}
+
 /// Try to create a wgpu device for GPU tests.
 /// Returns None if no adapter is available (e.g., headless CI).
 #[cfg(feature = "gui")]
-pub fn try_create_gpu_device() -> Option<(wgpu::Device, wgpu::Queue)> {
+pub fn try_create_gpu_device() -> Option<TestGpuDevice> {
+    let lifetime = wow_ui_sim::render::headless::lock_gpu_device_lifetime();
     let instance = wgpu::Instance::new(&wgpu::InstanceDescriptor {
         backends: wgpu::Backends::all(),
         ..Default::default()
@@ -191,13 +201,18 @@ pub fn try_create_gpu_device() -> Option<(wgpu::Device, wgpu::Queue)> {
     }))
     .ok()?;
 
+    eprintln!("test GPU adapter: {:?}", adapter.get_info());
     let (device, queue) = pollster::block_on(adapter.request_device(&wgpu::DeviceDescriptor {
         label: Some("Test GPU Device"),
         ..Default::default()
     }))
     .ok()?;
 
-    Some((device, queue))
+    Some(TestGpuDevice {
+        device,
+        queue,
+        _lifetime: lifetime,
+    })
 }
 
 fn blizzard_ui_dir() -> PathBuf {
@@ -382,7 +397,10 @@ const _: () = {
 
     #[cfg(feature = "gui")]
     {
-        let _ = try_create_gpu_device as fn() -> Option<(wgpu::Device, wgpu::Queue)>;
+        let _ = try_create_gpu_device as fn() -> Option<TestGpuDevice>;
+        let _ = |gpu: &TestGpuDevice| {
+            let _ = (&gpu.device, &gpu.queue);
+        };
     }
 };
 
