@@ -44,12 +44,6 @@ pub struct InstallPathSettings {
     pub install_paths: BTreeMap<String, InstallPathEntry>,
 }
 
-impl InstallPathSettings {
-    pub fn entry(&self, product: &str) -> Option<&InstallPathEntry> {
-        self.install_paths.get(product)
-    }
-}
-
 /// The JSON settings file at a resolved location.
 #[derive(Debug, Clone)]
 pub struct SettingsFile {
@@ -73,18 +67,43 @@ impl SettingsFile {
     /// Read the settings. A missing file is empty settings; unreadable content
     /// is reported and treated as empty so startup can continue.
     pub fn load(&self) -> InstallPathSettings {
-        unimplemented!("install path settings load")
+        match std::fs::read_to_string(&self.path) {
+            Ok(text) => serde_json::from_str(&text).unwrap_or_else(|error| {
+                eprintln!(
+                    "[install-paths] ignoring unreadable {}: {error}",
+                    self.path.display()
+                );
+                InstallPathSettings::default()
+            }),
+            Err(error) if error.kind() == std::io::ErrorKind::NotFound => {
+                InstallPathSettings::default()
+            }
+            Err(error) => {
+                eprintln!(
+                    "[install-paths] cannot read {}: {error}",
+                    self.path.display()
+                );
+                InstallPathSettings::default()
+            }
+        }
     }
 
     pub fn save(&self, settings: &InstallPathSettings) -> std::io::Result<()> {
-        let _ = settings;
-        unimplemented!("install path settings save")
+        if let Some(parent) = self.path.parent() {
+            std::fs::create_dir_all(parent)?;
+        }
+        let mut json = serde_json::to_vec_pretty(settings).map_err(std::io::Error::other)?;
+        json.push(b'\n');
+        std::fs::write(&self.path, json)
     }
 
     /// Insert or replace one product entry and write the file back.
     pub fn store(&self, product: &str, entry: &InstallPathEntry) -> std::io::Result<()> {
-        let _ = (product, entry);
-        unimplemented!("install path settings store")
+        let mut settings = self.load();
+        settings
+            .install_paths
+            .insert(product.to_owned(), entry.clone());
+        self.save(&settings)
     }
 }
 
@@ -160,8 +179,91 @@ pub fn resolve_install_path(
     inputs: &InstallPathInputs,
     detect: impl FnOnce() -> Option<PathBuf>,
 ) -> Option<ResolvedInstallPath> {
-    let _ = (file, product, inputs, detect);
-    unimplemented!("install path resolution")
+    let settings = file.load();
+    let stored = settings
+        .install_paths
+        .get(product)
+        .cloned()
+        .unwrap_or_default();
+    let candidates = [
+        (InstallPathSource::Cli, &inputs.cli),
+        (InstallPathSource::Env, &inputs.env),
+        (InstallPathSource::Stored, &stored),
+    ];
+    for (source, entry) in candidates {
+        let Some(root) = candidate_root(entry, source, product) else {
+            continue;
+        };
+        if source != InstallPathSource::Stored {
+            persist_entry(file, product, entry);
+        }
+        return Some(ResolvedInstallPath {
+            root: root.to_path_buf(),
+            source,
+        });
+    }
+
+    let root = detect()?;
+    if !is_wow_install(&root) {
+        eprintln!(
+            "[install-paths] ignoring auto-detected path {} for product {product}: missing <root>/Data/data",
+            root.display()
+        );
+        return None;
+    }
+    persist_entry(
+        file,
+        product,
+        &InstallPathEntry {
+            install_path: Some(root.clone()),
+            data_path: None,
+        },
+    );
+    Some(ResolvedInstallPath {
+        root,
+        source: InstallPathSource::Detected,
+    })
+}
+
+fn candidate_root<'a>(
+    entry: &'a InstallPathEntry,
+    source: InstallPathSource,
+    product: &str,
+) -> Option<&'a Path> {
+    if entry.is_empty() {
+        return None;
+    }
+    let Some(root) = entry.root() else {
+        eprintln!(
+            "[install-paths] ignoring {} data path for product {product}: no parent directory",
+            source.label()
+        );
+        return None;
+    };
+    if !is_wow_install(root) {
+        eprintln!(
+            "[install-paths] ignoring invalid {} install path {} for product {product}: missing <root>/Data/data",
+            source.label(),
+            root.display()
+        );
+        return None;
+    }
+    Some(root)
+}
+
+fn persist_entry(file: &SettingsFile, product: &str, entry: &InstallPathEntry) {
+    if let Err(error) = file.store(product, entry) {
+        eprintln!(
+            "[install-paths] cannot store install path for product {product} in {}: {error}",
+            file.path().display()
+        );
+    }
+}
+
+/// A validated WoW install contains the CASC data blobs in `<root>/Data/data`,
+/// the same check the asset resolver applies before it accepts a path.
+fn is_wow_install(root: &Path) -> bool {
+    root.join("Data").join("data").is_dir()
 }
 
 /// Settings file and key that store one product's install root, for error
@@ -266,7 +368,10 @@ mod tests {
                 source: InstallPathSource::Detected,
             })
         );
-        assert_eq!(file.load().entry("wowxptr"), Some(&entry(&detected)));
+        assert_eq!(
+            file.load().install_paths.get("wowxptr"),
+            Some(&entry(&detected))
+        );
     }
 
     #[test]
@@ -286,7 +391,10 @@ mod tests {
                 source: InstallPathSource::Detected,
             })
         );
-        assert_eq!(file.load().entry("wow"), Some(&entry(&detected)));
+        assert_eq!(
+            file.load().install_paths.get("wow"),
+            Some(&entry(&detected))
+        );
     }
 
     #[test]
@@ -300,7 +408,10 @@ mod tests {
         })
         .expect("supplied path resolves");
 
-        assert_eq!(file.load().entry("wow_classic"), Some(&entry(&supplied)));
+        assert_eq!(
+            file.load().install_paths.get("wow_classic"),
+            Some(&entry(&supplied))
+        );
     }
 
     #[test]
@@ -315,7 +426,7 @@ mod tests {
 
         file.store("wow", &stored).unwrap();
 
-        assert_eq!(file.load().entry("wow"), Some(&stored));
+        assert_eq!(file.load().install_paths.get("wow"), Some(&stored));
         let raw = std::fs::read_to_string(file.path()).unwrap();
         assert!(raw.contains("\"install_paths\""));
     }
@@ -331,9 +442,12 @@ mod tests {
         file.store("wow_classic", &entry(&classic)).unwrap();
 
         let settings = file.load();
-        assert_eq!(settings.entry("wow"), Some(&entry(&retail)));
-        assert_eq!(settings.entry("wow_classic"), Some(&entry(&classic)));
-        assert_eq!(settings.entry("wowxptr"), None);
+        assert_eq!(settings.install_paths.get("wow"), Some(&entry(&retail)));
+        assert_eq!(
+            settings.install_paths.get("wow_classic"),
+            Some(&entry(&classic))
+        );
+        assert_eq!(settings.install_paths.get("wowxptr"), None);
     }
 
     #[test]
