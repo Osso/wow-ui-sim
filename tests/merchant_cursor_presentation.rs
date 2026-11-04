@@ -95,6 +95,12 @@ fn presentation_change_notifies_with_held_content_not_display() {
         assert(events[1][1] == true and events[1][2] == 0 and events[1][3] == 0 and events[1][4] == 0)
         ShowBuybackSellCursor(1)
         assert(#events == 1)
+        ResetCursor()
+        PickupPlayerMoney(1)
+        events = {}
+        ShowBuybackSellCursor(1)
+        assert(#events == 1)
+        assert(events[1][1] == false and events[1][2] == 2 and events[1][3] == 2 and events[1][4] == 0)
         "#,
     )
     .unwrap();
