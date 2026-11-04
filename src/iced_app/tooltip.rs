@@ -45,6 +45,7 @@ pub struct TooltipRenderData {
 /// A single line ready for rendering.
 pub struct TooltipLineRender {
     pub left_text: String,
+    pub left_hidden: bool,
     pub left_color: [f32; 4],
     pub left_segments: Vec<TooltipTextSegmentRender>,
     pub right_text: Option<String>,
@@ -132,11 +133,19 @@ pub(crate) fn measure_tooltip(
     let line_spacing = td.line_spacing.unwrap_or(TOOLTIP_LINE_SPACING);
 
     // Pass 1: determine content width from non-wrapping lines.
-    let content_width = measure_tooltip_content_width(td, font_system);
+    let content_width = measure_tooltip_content_width(td, &state.widgets, font_system);
 
     // Pass 2: sum line heights, using text measurement for wrapped lines.
     let mut total_height: f32 = 0.0;
     for (i, line) in td.lines.iter().enumerate() {
+        let native = matches!(
+            crate::client_profile::ACTIVE,
+            crate::client_profile::ClientProfile::Retail
+                | crate::client_profile::ClientProfile::Ptr
+        );
+        if native && td.left_line_is_hidden(&state.widgets, i) {
+            continue;
+        }
         let font_size = tooltip_line_font_size(i);
         let line_height = if let Some(TooltipTexture::PathAttachment(attachment)) = &line.texture {
             attachment.geometry(font_size).0
@@ -150,7 +159,7 @@ pub(crate) fn measure_tooltip(
         } else {
             (font_size * 1.2).ceil()
         };
-        if i > 0 {
+        if (native && total_height > 0.0) || (!native && i > 0) {
             total_height += line_spacing;
         }
         total_height += line_height;
@@ -187,6 +196,7 @@ fn tooltip_column_gap(left: &str, right: Option<&str>, effective_scale: f32) -> 
 /// Wrapping lines don't contribute to width — they wrap within it.
 fn measure_tooltip_content_width(
     td: &crate::lua_api::tooltip::TooltipData,
+    widgets: &crate::widget::WidgetRegistry,
     font_system: &mut WowFontSystem,
 ) -> f32 {
     let mut max_width: f32 = td.min_width;
@@ -197,18 +207,37 @@ fn measure_tooltip_content_width(
     }
     for (i, line) in td.lines.iter().enumerate() {
         let font_size = tooltip_line_font_size(i);
-        let left_w = measure_tooltip_text_width(font_system, &line.left_text, font_size);
-        let right_w = line
-            .right_text
-            .as_ref()
-            .map(|t| measure_tooltip_text_width(font_system, t, font_size))
-            .unwrap_or(0.0);
+        let native = matches!(
+            crate::client_profile::ACTIVE,
+            crate::client_profile::ClientProfile::Retail
+                | crate::client_profile::ClientProfile::Ptr
+        );
+        let left_w = if native && td.left_line_is_hidden(widgets, i) {
+            0.0
+        } else {
+            measure_tooltip_text_width(font_system, &line.left_text, font_size)
+        };
+        let right_w = if native && td.right_line_is_hidden(widgets, i) {
+            0.0
+        } else {
+            line.right_text
+                .as_ref()
+                .map(|t| measure_tooltip_text_width(font_system, t, font_size))
+                .unwrap_or(0.0)
+        };
         let line_width = if right_w > 0.0 {
-            left_w + right_w + td.double_column_reservation(line)
+            left_w
+                + right_w
+                + if native && left_w == 0.0 {
+                    0.0
+                } else {
+                    td.double_column_reservation(line)
+                }
         } else {
             left_w
         };
-        let has_width_text = tooltip_line_has_width_text(line);
+        let has_width_text =
+            tooltip_line_has_width_text(line) && (!native || left_w > 0.0 || right_w > 0.0);
         if line.wrap && td.shrink_to_fit_wrapped {
             if has_width_text {
                 wrapped_only_max_width = wrapped_only_max_width.max(line_width);
@@ -274,7 +303,7 @@ pub fn collect_tooltip_data(state: &SimState) -> HashMap<u64, TooltipRenderData>
         let Some(alpha) = tooltip_alpha(state, id, td) else {
             continue;
         };
-        let lines = collect_tooltip_lines(td, alpha);
+        let lines = collect_tooltip_lines(td, &state.widgets, alpha);
         let line_spacing = td.line_spacing.unwrap_or(TOOLTIP_LINE_SPACING);
         result.insert(
             id,
@@ -369,12 +398,26 @@ fn tooltip_has_render_content(td: &crate::lua_api::tooltip::TooltipData) -> bool
 
 fn collect_tooltip_lines(
     td: &crate::lua_api::tooltip::TooltipData,
+    widgets: &crate::widget::WidgetRegistry,
     alpha: f32,
 ) -> Vec<TooltipLineRender> {
     td.lines
         .iter()
         .enumerate()
-        .map(|(i, line)| tooltip_line_render(i, line, alpha))
+        .map(|(i, line)| {
+            let native = matches!(
+                crate::client_profile::ACTIVE,
+                crate::client_profile::ClientProfile::Retail
+                    | crate::client_profile::ClientProfile::Ptr
+            );
+            tooltip_line_render(
+                i,
+                line,
+                alpha,
+                native && td.left_line_is_hidden(widgets, i),
+                native && td.right_line_is_hidden(widgets, i),
+            )
+        })
         .collect()
 }
 
@@ -382,6 +425,8 @@ fn tooltip_line_render(
     index: usize,
     line: &crate::lua_api::tooltip::TooltipLine,
     alpha: f32,
+    left_hidden: bool,
+    right_hidden: bool,
 ) -> TooltipLineRender {
     let left_color = [
         line.left_color.0,
@@ -397,9 +442,14 @@ fn tooltip_line_render(
     ];
     TooltipLineRender {
         left_text: line.left_text.clone(),
+        left_hidden,
         left_color,
         left_segments: tooltip_text_segment_renders(&line.left_segments, alpha),
-        right_text: line.right_text.clone(),
+        right_text: if right_hidden {
+            None
+        } else {
+            line.right_text.clone()
+        },
         right_color,
         right_segments: tooltip_text_segment_renders(&line.right_segments, alpha),
         font_size: tooltip_line_font_size(index),
@@ -675,7 +725,9 @@ fn emit_tooltip_line(
     } else {
         placement
     };
-    emit_left_tooltip_text(tr, line, left_placement, left_width, font_size);
+    if !line.left_hidden {
+        emit_left_tooltip_text(tr, line, left_placement, left_width, font_size);
+    }
 
     if let Some(ref right_text) = line.right_text {
         if let (Some(origin), Some(offset)) = (left_origin, right_offset) {

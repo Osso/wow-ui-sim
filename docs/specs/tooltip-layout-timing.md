@@ -13,9 +13,13 @@ measurement at these triggers; builds without GUI use an estimator. Geometry
 and most text-anchor placement are outside this timing slice. For the first
 line without attachments, Retail/PTR layout assigns TOP and LEFT points: the
 first TOP is `-10 - top` from the tooltip; subsequent TOP points follow the
-preceding indexed left line with the configured spacing. LEFT is `10 + left`
-from the tooltip. Shown right lines anchor RIGHT to the same left line's LEFT
-by the content width. An unforced, unwrapped two-column row reserves 38.4 in
+preceding indexed left line with the configured spacing. A hidden left line with a
+known frame is omitted from the height sum; spacing is added only after a
+nonzero accumulated height. Hidden lines still remain the indexed anchor
+reference (WM72). LEFT is `10 + left` from the tooltip. Shown right lines anchor RIGHT to the same left line's LEFT
+by the content width. A hidden right line retains its previous points until
+shown (WM72). Hidden columns do not contribute text width. An unforced,
+unwrapped two-column row reserves 38.4 in
 width selection (WM72). A nonempty right text disables a double line's
 requested wrap; an empty right text leaves the requested flag unchanged (WM72).
 Empty or absent text on both sides does not append a row. A space or nonempty

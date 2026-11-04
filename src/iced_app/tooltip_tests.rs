@@ -143,6 +143,7 @@ fn single_header_tooltip_line() -> TooltipLineRender {
         wrap: false,
         measured_height: (TOOLTIP_HEADER_FONT_SIZE * 1.2).ceil(),
         path_attachment: None,
+        left_hidden: false,
     }
 }
 
@@ -301,6 +302,7 @@ fn tooltip_renderer_emits_inline_color_segments() {
             wrap: false,
             measured_height: (TOOLTIP_HEADER_FONT_SIZE * 1.2).ceil(),
             path_attachment: None,
+            left_hidden: false,
         }],
         line_spacing: TOOLTIP_LINE_SPACING,
         left_text_offsets: vec![Some([10.0; 2])],
@@ -353,6 +355,7 @@ fn tooltip_renderer_wraps_inline_color_segments() {
             wrap: true,
             measured_height: (TOOLTIP_BODY_FONT_SIZE * 3.0).ceil(),
             path_attachment: None,
+            left_hidden: false,
         }],
         line_spacing: TOOLTIP_LINE_SPACING,
         left_text_offsets: vec![Some([10.0; 2])],
@@ -410,7 +413,11 @@ fn tooltip_measurement_ignores_hidden_wow_markup_payload() {
         ..TooltipData::default()
     };
     let mut font_sys = WowFontSystem::new();
-    let measured = measure_tooltip_content_width(&tooltip, &mut font_sys);
+    let measured = measure_tooltip_content_width(
+        &tooltip,
+        &crate::widget::WidgetRegistry::default(),
+        &mut font_sys,
+    );
     let visible_width = font_sys.measure_text_width(visible_name, None, TOOLTIP_HEADER_FONT_SIZE);
 
     assert!(
@@ -542,6 +549,7 @@ fn tooltip_renderer_skips_fallback_background_when_lua_nineslice_exists() {
             wrap: false,
             measured_height: (TOOLTIP_HEADER_FONT_SIZE * 1.2).ceil(),
             path_attachment: None,
+            left_hidden: false,
         }],
         line_spacing: TOOLTIP_LINE_SPACING,
         left_text_offsets: vec![Some([10.0; 2])],
@@ -591,6 +599,7 @@ fn tooltip_renderer_keeps_opaque_center_when_lua_nineslice_exists() {
             wrap: false,
             measured_height: (TOOLTIP_HEADER_FONT_SIZE * 1.2).ceil(),
             path_attachment: None,
+            left_hidden: false,
         }],
         line_spacing: TOOLTIP_LINE_SPACING,
         left_text_offsets: vec![Some([10.0; 2])],
