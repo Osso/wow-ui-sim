@@ -3,7 +3,7 @@
 //! Modern LFG list behavior is state-backed elsewhere. This module keeps small
 //! legacy global probes explicit until those callers are modeled properly.
 
-const LFG_LEGACY_DEFAULTS_LUA: &str = r#"
+const LFG_LIST_FRAME_DEFAULTS_LUA: &str = r#"
 local function __wow_lfg_ensure_child(parent, key, frameType)
     local child = rawget(parent, key)
     if child ~= nil then
@@ -33,6 +33,9 @@ do
     end
 end
 
+"#;
+
+const LFG_LEGACY_DEFAULTS_LUA: &str = r#"
 if GetLFGCategoryForID == nil then
     function GetLFGCategoryForID() return 0 end
 end
@@ -168,6 +171,11 @@ end
 "#;
 
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
+    // Forever's pinned Blizzard_GroupFinder.toc:10 excludes camelot. Do not
+    // publish a synthetic LFGListFrame for a consumer the runtime cannot load.
+    if crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::WowForever {
+        lua.exec(LFG_LIST_FRAME_DEFAULTS_LUA)?;
+    }
     lua.exec(LFG_LEGACY_DEFAULTS_LUA)?;
     Ok(())
 }
@@ -377,6 +385,10 @@ mod tests {
     #[test]
     fn installs_lfg_list_frame_search_surface() {
         let env = WowLuaEnv::new().expect("lua env should initialize");
+        if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::WowForever {
+            assert!(env.eval::<bool>("return LFGListFrame == nil").unwrap());
+            return;
+        }
 
         let result: String = env
             .eval(

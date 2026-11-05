@@ -459,6 +459,7 @@ fn keybind_a_opens_achievements() {
 
 // ── L → PVEFrame_ToggleFrame() ──────────────────────────────────────────
 
+group_finder_ui_fixture! {
 #[test]
 fn keybind_l_opens_group_finder() {
     test_timeout! {
@@ -508,7 +509,10 @@ fn keybind_l_opens_group_finder() {
     }
 }
 
+}
+
 post_wrath_ui_fixture! {
+group_finder_ui_fixture! {
 #[test]
 fn raid_finder_group_button_path_handles_empty_rf_dungeon_list() {
     test_timeout! {
@@ -524,7 +528,10 @@ fn raid_finder_group_button_path_handles_empty_rf_dungeon_list() {
 }
 }
 
+}
+
 post_wrath_ui_fixture! {
+group_finder_ui_fixture! {
 #[test]
 fn premade_group_category_buttons_can_be_clicked() {
     test_timeout! {
@@ -555,7 +562,10 @@ fn premade_group_category_buttons_can_be_clicked() {
 }
 }
 
+}
+
 post_wrath_ui_fixture! {
+group_finder_ui_fixture! {
 #[test]
 fn premade_group_categories_can_start_search() {
     test_timeout! {
@@ -639,6 +649,8 @@ fn premade_group_result_update_refreshes_selected_listing() {
     }
 }
 
+}
+
 // The exercised Mainline GroupFinder controls are selected by Retail and PTR.
 #[cfg(any(feature = "client-retail", feature = "client-ptr"))]
 #[test]
@@ -679,6 +691,7 @@ fn premade_group_search_text_filter_and_clear() {
 }
 
 post_wrath_ui_fixture! {
+group_finder_ui_fixture! {
 #[test]
 fn premade_group_search_result_tooltips_do_not_error() {
     test_timeout! {
@@ -698,6 +711,23 @@ fn premade_group_search_result_tooltips_do_not_error() {
         ).expect("Premade Group search result tooltips should not raise Lua errors");
     }
 }
+}
+
+}
+
+#[test]
+#[cfg(feature = "client-wowforever")]
+fn forever_group_finder_is_rejected_by_original_toc() {
+    let env = setup_env();
+    env.exec(
+        r#"
+        local loaded, reason = C_AddOns.LoadAddOn('Blizzard_GroupFinder')
+        assert(loaded == false and reason == 'MISSING')
+        assert(not C_AddOns.IsAddOnLoaded('Blizzard_GroupFinder'))
+        assert(LFGListFrame == nil and LFGListUtil_SetSearchEntryTooltip == nil)
+        "#,
+    )
+    .expect("Forever Blizzard_GroupFinder.toc:10 excludes camelot");
 }
 
 // ── O → ToggleFriendsFrame() ────────────────────────────────────────────

@@ -20,7 +20,9 @@ const CHILD_TEST_ENV: &str = "WOW_SIM_TIMEOUT_REEXEC_TEST";
 const HANDSHAKE_PATH_ENV: &str = "WOW_SIM_TIMEOUT_REEXEC_HANDSHAKE";
 const CHILD_POLL_INTERVAL: Duration = Duration::from_millis(10);
 const TERMINATION_GRACE: Duration = Duration::from_millis(100);
-const TIMEOUT_CHILD_SLOTS: usize = 2;
+const DEFAULT_TIMEOUT_CHILD_SLOTS: usize = 2;
+const TIMEOUT_CHILD_SLOTS_ENV: &str = "WOW_SIM_TIMEOUT_CHILD_SLOTS";
+const TIMEOUT_INVENTORY_ENV: &str = "WOW_SIM_TIMEOUT_INVENTORY";
 const TIMEOUT_SLOT_POLL_INTERVAL: Duration = Duration::from_millis(10);
 
 static HANDSHAKE_SEQUENCE: AtomicU64 = AtomicU64::new(0);
@@ -45,6 +47,7 @@ fn run_with_gate<F: FnOnce() + Send + 'static>(
         run_guarded_child(&test_name, guarded_test, closure);
         return;
     }
+    record_timeout_entry(&test_name);
 
     let run_parent = || run_parent(&test_name, secs, path.map(Path::to_path_buf), closure);
     if fixture_capacity_is_reserved() {
@@ -55,6 +58,20 @@ fn run_with_gate<F: FnOnce() + Send + 'static>(
         Some(path) => workload_gate::with_lock_at(path, mode, run_parent),
         None => workload_gate::with_lock(mode, run_parent),
     }
+}
+
+fn record_timeout_entry(test_name: &str) {
+    let Some(path) = env::var_os(TIMEOUT_INVENTORY_ENV) else {
+        return;
+    };
+    let mut file = OpenOptions::new()
+        .create(true)
+        .append(true)
+        .open(path)
+        .expect("open timeout entry inventory");
+    let entry = format!("{test_name}\n");
+    file.write_all(entry.as_bytes())
+        .expect("write timeout entry inventory");
 }
 
 fn fixture_capacity_is_reserved() -> bool {
@@ -228,10 +245,24 @@ impl TimeoutChildPermit {
     }
 }
 
+fn configured_timeout_child_slots() -> usize {
+    let value = match env::var(TIMEOUT_CHILD_SLOTS_ENV) {
+        Ok(value) => value,
+        Err(env::VarError::NotPresent) => return DEFAULT_TIMEOUT_CHILD_SLOTS,
+        Err(error) => panic!("read {TIMEOUT_CHILD_SLOTS_ENV}: {error}"),
+    };
+    value
+        .parse::<usize>()
+        .ok()
+        .filter(|slots| (2..=6).contains(slots))
+        .unwrap_or_else(|| panic!("{TIMEOUT_CHILD_SLOTS_ENV} must be an integer from 2 through 6"))
+}
+
 fn acquire_timeout_child_permit(workload_path: PathBuf) -> TimeoutChildPermit {
+    let slots = configured_timeout_child_slots();
     let prefix = workload_path.to_string_lossy();
     loop {
-        for slot in 0..TIMEOUT_CHILD_SLOTS {
+        for slot in 0..slots {
             let path = format!("{prefix}.timeout-slot-{slot}");
             let file = open_and_try_lock_timeout_slot(&path)
                 .unwrap_or_else(|error| panic!("acquire timeout child slot `{path}`: {error}"));

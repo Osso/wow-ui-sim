@@ -1,6 +1,6 @@
 # Crafted item quality information
 
-`C_TradeSkillUI.GetItemCraftedQualityInfo` queries crafted-item quality on Retail/PTR. Current cached declarations require `itemInfo: ItemInfo`, allow secret arguments only when untainted, and return nullable `CraftingQualityInfo`. See [Lua API architecture](../lua-api.md). An empty environment-owned per-item map supplies the existing thirteen-field record. The native getter projects those inputs after executed positive-query and whole-original-consumer RED on Retail/PTR. Independent runtime verification passes eight feature cases plus four preservation cases per profile; 24 GREEN outcomes and two separate startup passes are retained.
+`C_TradeSkillUI.GetItemCraftedQualityInfo` queries crafted-item quality on Retail/PTR/Forever. Current cached declarations require `itemInfo: ItemInfo`, allow secret arguments only when untainted, and return nullable `CraftingQualityInfo`. See [Lua API architecture](../lua-api.md). An empty environment-owned per-item map supplies the existing thirteen-field record. The native getter projects those inputs after executed positive-query and whole-original-consumer RED on Retail/PTR. Independent runtime verification passes eight feature cases plus four preservation cases per profile; 24 GREEN outcomes and two separate startup passes are retained.
 
 ## What it must do
 
@@ -25,7 +25,7 @@
 
 ## Implementation inventory
 
-- `src/c_api/c_trade_skill_quality.rs`: item-keyed native getter, original-secret validation, Retail/PTR registration and shared fresh snapshot projection; recipe queries retain their distinct input map.
+- `src/c_api/c_trade_skill_quality.rs`: item-keyed native getter, original-secret validation, Retail/PTR/Forever registration and shared fresh snapshot projection; recipe queries retain their distinct input map.
 - `src/lua_api/env_init/runtime_surface_bootstrap.lua`: missing namespace functions may become nil-returning compatibility callables; callability is not modeled behavior.
 - `src/lua_api/state/sim_state.rs` and `state.rs`: separate per-item input map, empty by default.
 - `tests/crafted_quality_api.rs`: public required-input and authentic VM-secret-nil boundary tests.
@@ -56,6 +56,15 @@
 ## Out of scope
 
 Native item-catalog/classification and exact-error parity remain unproved. Recipe-quality inputs do not establish crafted-item quality; no recipe, equipment or catalog inference is authorized by this contract. Rendered/native acceptance is separate from public Lua behavior.
+
+## Forever publication
+
+Forever 70707 `Blizzard_APIDocumentationGenerated/TradeSkillUIDocumentation.lua:349-361`
+declares the same nullable ItemInfo query. The original
+`Blizzard_ItemButton/Mainline/ItemButtonTemplate.lua:339` consumes it when the
+reagent query returns nil. Forever publishes the existing supplied-state getter;
+this adds no crafted-item catalog or inferred records. Original character-slot
+hover tests exercise that consumer through the Camelot character panel.
 
 ## Declaration evidence
 

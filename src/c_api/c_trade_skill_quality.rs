@@ -45,6 +45,13 @@ pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
     if matches!(ACTIVE, ClientProfile::Retail | ClientProfile::Ptr) {
         table_set_rust_fn_static(state, ns, "GetRecipeItemQualityInfo", item_quality)?;
         table_set_rust_fn_static(state, ns, "GetRecipeQualityReagentLink", reagent_link)?;
+    }
+    // Forever 70707 TradeSkillUIDocumentation.lua:349-361 declares this
+    // nullable supplied-state getter, consumed by ItemButtonTemplate.lua:339.
+    if matches!(
+        ACTIVE,
+        ClientProfile::Retail | ClientProfile::Ptr | ClientProfile::WowForever
+    ) {
         table_set_rust_fn_static(state, ns, "GetItemCraftedQualityInfo", crafted_item_quality)?;
     }
     table_set_rust_fn_static(state, ns, "GetItemReagentQualityInfo", reagent_item_quality)?;
