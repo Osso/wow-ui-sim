@@ -428,8 +428,8 @@ pub(crate) mod seconds_formatter;
 pub mod spell_base;
 #[cfg(feature = "timed-signal-maps")]
 pub mod timed_signal_map;
-#[cfg(feature = "retail-12-0-5")]
 pub(crate) mod tooltip_getter_args;
+#[cfg(feature = "retail-12-0-5")]
 pub mod tooltip_item_context;
 #[cfg(feature = "retail-12-0-5")]
 pub use tooltip_item_context::ItemTooltipContext;
