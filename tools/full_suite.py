@@ -310,15 +310,29 @@ def family_of(name):
     return name.split("::", 1)[0]
 
 
-def family_queues(names, costs):
-    """Group cases by family, heaviest family first, so one process holds one fixture."""
+def family_queues(names, costs, grouped_families=()):
+    """Keep verified grouped families contiguous; cost-order everything else.
+
+    Only a family that installs a shared forked fixture needs its cases in one
+    process. Every other family is batched by cost, so a run does not pay one
+    process launch per small family.
+    """
+    verified = set(grouped_families)
     families = {}
+    loose = []
     for name in names:
-        families.setdefault(family_of(name), []).append(name)
+        family = family_of(name)
+        if family in verified:
+            families.setdefault(family, []).append(name)
+        else:
+            loose.append(name)
     ordered = sorted(families.items(),
                      key=lambda item: (-sum(costs.get(name, 1) for name in item[1]), item[0]))
-    return deque(deque(sorted(cases, key=lambda name: (-costs.get(name, 1), name)))
-                 for _, cases in ordered)
+    queues = [deque(sorted(cases, key=lambda name: (-costs.get(name, 1), name)))
+              for _, cases in ordered]
+    if loose:
+        queues.append(deque(sorted(loose, key=lambda name: (-costs.get(name, 1), name))))
+    return deque(queues)
 
 
 def take_batch(families, costs, single=False):
@@ -350,7 +364,7 @@ def run_dynamic_suite(command, checkout, log, env, costs, budget, timeout_tests,
     timeout_tests = set(timeout_tests)
     guarded = [name for name in names if name not in reserved and name in timeout_tests]
     ordinary = [name for name in names if name not in reserved and name not in timeout_tests]
-    pending = family_queues(ordinary, costs)
+    pending = family_queues(ordinary, costs, grouped_families)
     guards = family_queues(guarded, costs)
     lanes, tail_threads = lane_plan(budget, bool(tail_jobs))
     # Guarded cases may wait on the global permit semaphore; keep running room

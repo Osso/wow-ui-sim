@@ -207,7 +207,8 @@ class IntegrationShardingTests(unittest.TestCase):
 
     def test_family_batches_keep_families_whole_and_heaviest_first(self):
         costs = {'alpha::slow': 30, 'alpha::cheap': 1, 'beta::a': 4}
-        families = self.runner.family_queues(['alpha::cheap', 'beta::a', 'alpha::slow'], costs)
+        families = self.runner.family_queues(['alpha::cheap', 'beta::a', 'alpha::slow'], costs,
+                                             ('alpha',))
         self.assertEqual([family[0] for family in families], ['alpha::slow', 'beta::a'])
         self.assertEqual(self.runner.take_batch(families, costs), ['alpha::slow'])
         self.assertEqual(self.runner.take_batch(families, costs), ['alpha::cheap'])
@@ -216,7 +217,8 @@ class IntegrationShardingTests(unittest.TestCase):
 
     def test_family_batches_never_mix_case_prefixes(self):
         costs = {f'fam{index}::{name}': 1 for index in range(3) for name in ('a', 'b')}
-        families = self.runner.family_queues(list(costs), costs)
+        families = self.runner.family_queues(list(costs), costs,
+                                             ('fam0', 'fam1', 'fam2'))
         batches = []
         while families:
             batches.append(self.runner.take_batch(families, costs))
@@ -224,6 +226,13 @@ class IntegrationShardingTests(unittest.TestCase):
         self.assertEqual(sorted(names), sorted(costs))
         for batch in batches:
             self.assertEqual(len({self.runner.family_of(name) for name in batch}), 1)
+
+    def test_only_verified_families_keep_contiguous_processes(self):
+        costs = {f'fam{index}::{name}': 1 for index in range(4) for name in ('a', 'b')}
+        families = self.runner.family_queues(list(costs), costs, ('fam0',))
+        self.assertEqual(len(families), 2)
+        self.assertEqual(sorted(families[0]), ['fam0::a', 'fam0::b'])
+        self.assertEqual(len(families[1]), 6)
 
     def test_unknown_admission_is_the_worker_share_and_known_uses_its_measured_cap(self):
         gib = 1024 ** 3
