@@ -60,6 +60,13 @@ producer therefore restores the WM107-verified type 0 after each highlight row
 is appended. Retire this when the named-colour surface models the GlobalColor
 data.
 
+## Profile gate
+
+The supplied brawl model is compiled for Retail, PTR and Forever because the
+pinned `PvpInfoDocumentation.lua` declares `C_PvP.GetActiveBrawlInfo` (:109) and
+`GetSpecialEventBrawlInfo` (:775) on all three profiles; the tooltip getter has no
+separate gate.
+
 ## Evidence and proof
 
 Clean-room native source: WM107
