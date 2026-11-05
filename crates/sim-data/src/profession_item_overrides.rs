@@ -31,6 +31,9 @@ const fn profession_item(
         icon_file_data_id,
         stat_percent_editor: [0; 10],
         stat_modifier_bonus_stat: [-1; 10],
+        artifact_id: 0,
+        socket_types: [0; 3],
+        gem_properties: 0,
     }
 }
 
