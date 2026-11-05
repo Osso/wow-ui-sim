@@ -49,3 +49,20 @@ macro_rules! post_wrath_ui_fixture {
         )*
     };
 }
+
+/// Retail, PTR and Forever pinned `TooltipInfoDocumentation.lua` declare
+/// `GetInventoryItemByID` (:407), `GetItemKey` (:484), `GetArtifactItem` (:43)
+/// and `GetEquipmentSet` (:271). Other profiles do not declare them.
+#[macro_export]
+macro_rules! tooltip_selection_getters_fixture {
+    ($($item:item)*) => {
+        $(
+            #[cfg(any(
+                feature = "profile-retail",
+                feature = "client-ptr",
+                feature = "client-wowforever"
+            ))]
+            $item
+        )*
+    };
+}
