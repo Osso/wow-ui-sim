@@ -31,9 +31,11 @@ tooltip_selection_getters_fixture! {
                 assert(name_line.leftText == name, 'quality-coloured spell name')
                 assert(name_line.type == 13, 'spell-name line type')
                 local expected = ({[2] = {0.12, 1.0, 0.0}, [3] = {0.0, 0.44, 0.87}, [4] = {0.64, 0.21, 0.93}})[quality]
-                assert(math.abs(name_line.leftColor.r - expected[1]) < 1e-6
-                    and math.abs(name_line.leftColor.g - expected[2]) < 1e-6
-                    and math.abs(name_line.leftColor.b - expected[3]) < 1e-6,
+                -- The published colour rounds each channel to a byte (D56).
+                local tolerance = 1 / 255
+                assert(math.abs(name_line.leftColor.r - expected[1]) <= tolerance
+                    and math.abs(name_line.leftColor.g - expected[2]) <= tolerance
+                    and math.abs(name_line.leftColor.b - expected[3]) <= tolerance,
                     'name colour must follow the rank quality')
                 assert(lines[2].leftText == label, 'conduit type label')
                 assert(lines[2].type == 0, 'label is a plain line')
