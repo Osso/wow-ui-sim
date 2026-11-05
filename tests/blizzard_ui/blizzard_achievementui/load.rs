@@ -34,6 +34,7 @@ const LANE_FILE_SCOPE_DISPATCH_TABLES: &[&str] = &[
 ];
 const LANE_FILE_SCOPE_PANEL_REGISTRATION_KEY: &str = "AchievementFrame";
 
+#[cfg(feature = "optional-tests")]
 #[test]
 fn achievement_ui_load_emits_no_lane_specific_lua_errors() {
     if crate::common::wrath_achievement_fixtures::assert_native(
@@ -103,6 +104,7 @@ const PANEL_ADDON_DEPENDENCIES: &[&str] = &["Blizzard_FrameXMLUtil"];
 const STANDARD_GAME_TYPE_FILTERED_DEPENDENCIES: &[&str] = &["Blizzard_Plunderstorm"];
 const CLOSURE_LOADED_ADDONS: &[&str] = &[ROOT];
 
+#[cfg(feature = "optional-tests")]
 #[test]
 fn achievement_ui_dependency_closure_includes_current_declared_dependencies() {
     if crate::common::wrath_achievement_fixtures::assert_native(
@@ -140,6 +142,7 @@ fn achievement_ui_dependency_closure_includes_current_declared_dependencies() {
     });
 }
 
+#[cfg(feature = "optional-tests")]
 #[test]
 fn achievement_ui_load_on_demand_root_executes_file_scope_code() {
     if crate::common::wrath_achievement_fixtures::assert_native(
@@ -227,6 +230,7 @@ fn achievement_ui_load_on_demand_root_executes_file_scope_code() {
 
 /// Verify the parser and closure walker preserve retail's direct TOC dependencies.
 
+#[cfg(feature = "optional-tests")]
 #[test]
 fn achievement_ui_loaded_set_contains_every_declared_toc_dependency() {
     if wow_ui_sim::client_profile::ACTIVE == wow_ui_sim::client_profile::ClientProfile::Wrath {
@@ -311,6 +315,7 @@ fn achievement_ui_loaded_set_contains_every_declared_toc_dependency() {
 /// `C_AddOns.LoadAddOn("Blizzard_AchievementUI")` then exercises
 /// `c_addons_load_addon` (src/c_api/c_addons.rs:570), which finds the TOC via
 /// `find_runtime_addon_toc`, parses it, and runs the file chunks.
+#[cfg(feature = "optional-tests")]
 #[test]
 fn achievement_ui_load_on_demand_triggers_via_lua_load_addon_api() {
     if crate::common::wrath_achievement_fixtures::assert_lazy(

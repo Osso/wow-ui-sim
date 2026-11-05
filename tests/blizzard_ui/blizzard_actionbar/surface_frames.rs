@@ -128,6 +128,7 @@ const XML_SITE: &str = "Mainline/MainActionBar.xml:29";
 const ACTION_BAR_LUA_SITE: &str = "Shared/ActionBar.lua:3-55";
 const NUM_BUTTONS: usize = 12;
 
+#[cfg(feature = "optional-tests")]
 #[test]
 fn main_action_bar_publishes_expected_panel_identity() {
     wrath_action_case!(callbacks::main_identity);
@@ -189,6 +190,7 @@ fn main_action_bar_publishes_expected_panel_identity() {
     });
 }
 
+#[cfg(feature = "optional-tests")]
 #[test]
 fn main_action_bar_publishes_action_button_globals_and_button_containers() {
     wrath_action_case!(callbacks::main_buttons);
@@ -313,6 +315,7 @@ const PLAN_NAMED_MULTI_BARS: &[(&str, &str)] = &[
 /// `UIParent.Hide()` cascade reach them. A different parent name
 /// here flags a regression in either the XML declaration or the
 /// EditMode reparenting logic firing pre-load.
+#[cfg(feature = "optional-tests")]
 #[test]
 fn multi_bars_publish_expected_panel_identity() {
     wrath_action_case!(callbacks::multibar_identity);
@@ -401,6 +404,7 @@ fn multi_bars_publish_expected_panel_identity() {
 /// `MultiBarBottomLeftButton1` and friends), OR (b) the OnLoad loop
 /// at `Shared/ActionBar.lua:13-44` failed before reaching slot N for
 /// the bar in question.
+#[cfg(feature = "optional-tests")]
 #[test]
 fn multi_bars_publish_their_button_globals_and_button_containers() {
     wrath_action_case!(callbacks::multibar_buttons);
@@ -483,6 +487,7 @@ fn multi_bars_publish_their_button_globals_and_button_containers() {
     });
 }
 
+#[cfg(feature = "optional-tests")]
 #[test]
 fn main_action_bar_does_not_publish_plan_named_button_globals() {
     wrath_action_case!(callbacks::main_alias_absence);
@@ -573,6 +578,7 @@ const PLAN_NAMED_EVENT_ROUTING_FRAMES: &[(&str, &str)] = &[
 ];
 
 post_wrath_ui_fixture! {
+#[cfg(feature = "optional-tests")]
 #[test]
 fn plan_named_event_routing_frames_exist_with_register_frame_surface() {
     with_blizzard_addon_startup_shape(&[ROOT], &[], |env, _loaded| {
@@ -644,6 +650,7 @@ post_wrath_ui_fixture! {
 /// `false` (the explicit Show/Hide state — `IsVisible()` would also
 /// be false because the parent chain matters, but `IsShown()` is the
 /// more direct pin on the XML's `hidden="true"`).
+#[cfg(feature = "optional-tests")]
 #[test]
 fn spell_flyout_publishes_dialog_strata_hidden_by_default() {
     with_blizzard_addon_startup_shape(&[ROOT], &[], |env, _loaded| {
@@ -714,6 +721,7 @@ post_wrath_ui_fixture! {
 /// reads both keys directly, so a regression that severs `parentKey`
 /// wiring while keeping the global name would crash every UpdateAll
 /// pass. The dual-axis pin below (global + field lookup) catches it.
+#[cfg(feature = "optional-tests")]
 #[test]
 fn status_tracking_bar_manager_publishes_main_and_secondary_parent_key_children() {
     with_blizzard_addon_startup_shape(&[ROOT], &[], |env, _loaded| {

@@ -11,6 +11,7 @@ const ROOT: &str = "Blizzard_APIDocumentation";
 
 // APIDocumentation vendor handlers/templates do not ship in Wrath; modeled API probes stay enabled.
 post_wrath_ui_fixture! {
+#[cfg(feature = "optional-tests")]
 #[test]
 fn api_documentation_loads_cleanly_and_expands_default_chat_history() {
     with_blizzard_addon_startup_shape(&[], &[], |env, _loaded| {
@@ -40,6 +41,7 @@ fn api_documentation_loads_cleanly_and_expands_default_chat_history() {
 }
 
 post_wrath_ui_fixture! {
+#[cfg(feature = "optional-tests")]
 #[test]
 fn api_documentation_loads_expected_mixin_tables() {
     with_blizzard_addon_startup_shape(&[], &[], |env, _loaded| {

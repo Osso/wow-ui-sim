@@ -7,6 +7,7 @@ use wow_ui_sim::startup::settle_headless_startup;
 const ROOT: &str = "Blizzard_ArdenwealdGardening";
 const NATURAL_CALLER: &str = "Blizzard_GarrisonUI";
 
+#[cfg(feature = "optional-tests")]
 #[test]
 fn ardenweald_gardening_loads_cleanly_with_no_recorded_lua_errors() {
     with_blizzard_addon_smoke_shape(&[ROOT], &[], |env, loaded| {
@@ -28,6 +29,7 @@ fn ardenweald_gardening_loads_cleanly_with_no_recorded_lua_errors() {
     });
 }
 
+#[cfg(feature = "optional-tests")]
 #[test]
 fn ardenweald_gardening_caller_shape_loads_garrison_ui() {
     assert_ardenweald_toc_has_no_dependencies();

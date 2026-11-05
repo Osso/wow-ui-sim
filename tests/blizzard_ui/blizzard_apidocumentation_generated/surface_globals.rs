@@ -12,6 +12,7 @@ const MIN_TABLES: i64 = 1_500;
 const MIN_FUNCTIONS: i64 = 5_000;
 const MIN_EVENTS: i64 = 1_500;
 
+#[cfg(feature = "optional-tests")]
 #[test]
 fn generated_api_documentation_populates_corpus_above_lower_bounds() {
     let env = load_generated_api_documentation();
@@ -50,6 +51,7 @@ fn generated_api_documentation_populates_corpus_above_lower_bounds() {
     );
 }
 
+#[cfg(feature = "optional-tests")]
 #[test]
 fn generated_api_documentation_entries_have_expected_mixin_shape() {
     let env = load_generated_api_documentation();
@@ -104,6 +106,7 @@ fn generated_api_documentation_entries_have_expected_mixin_shape() {
     );
 }
 
+#[cfg(feature = "optional-tests")]
 #[test]
 fn generated_api_documentation_registers_well_known_systems() {
     let env = load_generated_api_documentation();
@@ -146,6 +149,7 @@ fn generated_api_documentation_registers_well_known_systems() {
     );
 }
 
+#[cfg(feature = "optional-tests")]
 #[test]
 fn generated_api_documentation_registers_well_known_global_functions() {
     let env = load_generated_api_documentation();
@@ -247,6 +251,7 @@ fn generated_api_documentation_registers_well_known_global_functions() {
     );
 }
 
+#[cfg(feature = "optional-tests")]
 #[test]
 fn generated_api_documentation_registers_namespaced_map_function() {
     let env = load_generated_api_documentation();
@@ -280,6 +285,7 @@ fn generated_api_documentation_registers_namespaced_map_function() {
     );
 }
 
+#[cfg(feature = "optional-tests")]
 #[test]
 fn generated_api_documentation_registers_well_known_events() {
     let env = load_generated_api_documentation();

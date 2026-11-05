@@ -10,23 +10,18 @@ use crate::common;
 // Wrath manifest1-382/cache has no AccountSaveFrame or AccountSaveFrameMixin;
 // six other manifests ship Blizzard_AccountSaveUI's Glue UI publishers.
 post_wrath_ui_fixture! {
-#[cfg(feature = "optional-tests")]
 #[path = "blizzard_ui/blizzard_accountsaveui/load.rs"]
 mod load;
 
-#[cfg(feature = "optional-tests")]
 #[path = "blizzard_ui/blizzard_accountsaveui/surface_globals.rs"]
 mod surface_globals;
 
-#[cfg(feature = "optional-tests")]
 #[path = "blizzard_ui/blizzard_accountsaveui/surface_frames.rs"]
 mod surface_frames;
 
-#[cfg(feature = "optional-tests")]
 #[path = "blizzard_ui/blizzard_accountsaveui/surface_events.rs"]
 mod surface_events;
 
-#[cfg(feature = "optional-tests")]
 #[path = "blizzard_ui/blizzard_accountsaveui/surface_mixins.rs"]
 mod surface_mixins;
 

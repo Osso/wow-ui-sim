@@ -4,6 +4,7 @@ use crate::common::blizzard_addon_harness::with_blizzard_addon_smoke_shape;
 
 const ROOT: &str = "Blizzard_ArdenwealdGardening";
 
+#[cfg(feature = "optional-tests")]
 #[test]
 fn ardenweald_gardening_exports_public_globals() {
     with_blizzard_addon_smoke_shape(&[ROOT], &[], |env, _loaded| {

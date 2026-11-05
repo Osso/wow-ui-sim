@@ -14,6 +14,7 @@ const ACTION_STATUS_MIXIN_METHODS: &[&str] = &[
     "UpdateParent",
 ];
 
+#[cfg(feature = "optional-tests")]
 #[test]
 fn action_status_mixin_surface_global_exposes_expected_methods() {
     with_blizzard_addon_smoke_shape(&[ROOT], &[], |env, _loaded| {

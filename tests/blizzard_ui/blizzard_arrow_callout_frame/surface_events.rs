@@ -14,6 +14,7 @@ const REGISTERED_EVENTS: &[&str] = &[
 
 // Wrath has no ArrowCallout vendor widget/handler input; mixed and modeled probes remain enabled.
 post_wrath_ui_fixture! {
+#[cfg(feature = "optional-tests")]
 #[test]
 fn arrow_callout_frame_manager_registers_onload_events() {
     with_blizzard_addon_smoke_shape(&[], &[], |env, _loaded| {

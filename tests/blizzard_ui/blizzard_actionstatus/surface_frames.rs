@@ -39,6 +39,7 @@ struct ActionStatusTextSurface {
     font_matches_inherited_template: bool,
 }
 
+#[cfg(feature = "optional-tests")]
 #[test]
 fn action_status_frame_surface_matches_xml_contract() {
     with_blizzard_addon_smoke_shape(&[ROOT], &[], |env, _loaded| {

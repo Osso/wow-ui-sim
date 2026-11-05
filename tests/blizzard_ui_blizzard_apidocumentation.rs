@@ -47,14 +47,11 @@ mod behavior_handle_api_link_copyapi_records_clipboard;
 #[path = "blizzard_ui/blizzard_apidocumentation/behavior_handle_api_link_opendump_seeds_chat_edit.rs"]
 mod behavior_handle_api_link_opendump_seeds_chat_edit;
 
-#[cfg(feature = "optional-tests")]
 #[path = "blizzard_ui/blizzard_apidocumentation/load.rs"]
 mod load;
 
-#[cfg(feature = "optional-tests")]
 #[path = "blizzard_ui/blizzard_apidocumentation/surface_globals.rs"]
 mod surface_globals;
 
-#[cfg(feature = "optional-tests")]
 #[path = "blizzard_ui/blizzard_apidocumentation/surface_mixins.rs"]
 mod surface_mixins;

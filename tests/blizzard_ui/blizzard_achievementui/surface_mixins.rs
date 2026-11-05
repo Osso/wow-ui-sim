@@ -178,6 +178,7 @@ const ACHIEVEMENT_TEMPLATE_PLAN_METHODS: &[(&str, u32)] = &[
 /// `type(AchievementCategoryTemplateMixin.<method>) == "function"`. The
 /// precondition probe surfaces a missing mixin global with a precise
 /// message instead of a confusing nil-index error inside the loop.
+#[cfg(feature = "optional-tests")]
 #[test]
 fn achievement_category_template_mixin_exposes_plan_named_methods() {
     if crate::common::wrath_achievement_fixtures::assert_native(
@@ -273,6 +274,7 @@ fn achievement_category_template_mixin_exposes_plan_named_methods() {
 /// Three assertions: one precondition probe that the mixin global itself
 /// exists, then one per PLAN-named method (2) confirming
 /// `type(AchievementCategoryTemplateButtonMixin.<method>) == "function"`.
+#[cfg(feature = "optional-tests")]
 #[test]
 fn achievement_category_template_button_mixin_exposes_plan_named_methods() {
     if crate::common::wrath_achievement_fixtures::assert_native(
@@ -367,6 +369,7 @@ fn achievement_category_template_button_mixin_exposes_plan_named_methods() {
 /// `type(AchievementTemplateMixin.<method>) == "function"`. The precondition
 /// probe surfaces a missing mixin global with a precise message instead of
 /// a confusing nil-index error inside the loop.
+#[cfg(feature = "optional-tests")]
 #[test]
 fn achievement_template_mixin_exposes_plan_named_methods() {
     if crate::common::wrath_achievement_fixtures::assert_native(
@@ -496,6 +499,7 @@ fn achievement_template_mixin_exposes_plan_named_methods() {
 /// asserting `type(_G[mixin_name]) == "table"`. No precondition probe
 /// is needed because each mixin's own assertion IS the precondition for
 /// any future method-shape pin on the same mixin.
+#[cfg(feature = "optional-tests")]
 #[test]
 fn plan_named_table_only_mixins_exist_as_tables() {
     if crate::common::wrath_achievement_fixtures::assert_native(
@@ -574,6 +578,7 @@ fn plan_named_table_only_mixins_exist_as_tables() {
 /// `Achievement`, the failure message points the reader at both the
 /// source line that declares the misspelt name and the XML template
 /// that references it).
+#[cfg(feature = "optional-tests")]
 #[test]
 fn achivement_button_check_mixin_exposes_plan_named_methods() {
     if crate::common::wrath_achievement_fixtures::assert_native(

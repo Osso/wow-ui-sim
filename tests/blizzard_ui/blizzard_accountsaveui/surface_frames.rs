@@ -35,6 +35,7 @@ const PARENT_KEYS: &[&str] = &[
     "SaveButton",
 ];
 
+#[cfg(feature = "optional-tests")]
 #[test]
 fn account_save_frame_parent_and_strata() {
     with_blizzard_addon_glue_smoke_shape(&[ROOT], &[], |env, _loaded| {
@@ -69,6 +70,7 @@ fn account_save_frame_parent_and_strata() {
     });
 }
 
+#[cfg(feature = "optional-tests")]
 #[test]
 fn account_save_frame_exposes_all_parent_keys() {
     with_blizzard_addon_glue_smoke_shape(&[ROOT], &[], |env, _loaded| {
@@ -89,6 +91,7 @@ fn account_save_frame_exposes_all_parent_keys() {
     });
 }
 
+#[cfg(feature = "optional-tests")]
 #[test]
 fn account_save_frame_text_is_a_simple_html_widget() {
     with_blizzard_addon_glue_smoke_shape(&[ROOT], &[], |env, _loaded| {
@@ -107,6 +110,7 @@ fn account_save_frame_text_is_a_simple_html_widget() {
     });
 }
 
+#[cfg(feature = "optional-tests")]
 #[test]
 fn account_save_frame_lock_edit_box_caps_at_32_letters() {
     with_blizzard_addon_glue_smoke_shape(&[ROOT], &[], |env, _loaded| {
@@ -133,6 +137,7 @@ fn account_save_frame_lock_edit_box_caps_at_32_letters() {
     });
 }
 
+#[cfg(feature = "optional-tests")]
 #[test]
 fn account_save_frame_save_button_inherits_ui_panel_button_template() {
     with_blizzard_addon_glue_smoke_shape(&[ROOT], &[], |env, _loaded| {

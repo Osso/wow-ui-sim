@@ -11,6 +11,7 @@ const ROOT: &str = "Blizzard_APIDocumentation";
 
 // APIDocumentation vendor handlers/templates do not ship in Wrath; modeled API probes stay enabled.
 post_wrath_ui_fixture! {
+#[cfg(feature = "optional-tests")]
 #[test]
 fn api_documentation_singleton_exposes_mixin_methods_and_empty_registries() {
     with_blizzard_addon_startup_shape(&[], &[], |env, _loaded| {

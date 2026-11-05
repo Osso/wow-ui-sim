@@ -136,6 +136,7 @@ const PLAN_NAMED_EVENTS_ABSENT_ON_FRAME: &[(&str, &str)] = &[
 ];
 
 post_wrath_ui_fixture! {
+#[cfg(feature = "optional-tests")]
 #[test]
 fn account_store_frame_does_not_register_plan_named_events_after_onload() {
     with_blizzard_addon_smoke_shape(&[ROOT], &[], |env, _loaded| {
@@ -187,6 +188,7 @@ const ACTUAL_ITEM_DISPLAY_EVENTS: &[(&str, &str)] = &[
 const LANE_ABSENT_EVENT: &str = "STORE_FRONT_STATE_UPDATED";
 
 post_wrath_ui_fixture! {
+#[cfg(feature = "optional-tests")]
 #[test]
 fn account_store_item_display_onshow_registers_actual_event_list() {
     with_blizzard_addon_smoke_shape(&[ROOT], &[], |env, _loaded| {
@@ -300,6 +302,7 @@ const ACTUAL_EVENT_REGISTRY_CALLBACKS: &[(&str, &str)] = &[
 ];
 
 post_wrath_ui_fixture! {
+#[cfg(feature = "optional-tests")]
 #[test]
 fn account_store_item_display_event_registry_callbacks_match_actual_event_names() {
     with_blizzard_addon_smoke_shape(&[ROOT], &[], |env, _loaded| {
@@ -367,6 +370,7 @@ const PLAN_NAMED_EVENT_REGISTRY_CALLBACKS_ABSENT: &[(&str, &str)] = &[
 ];
 
 post_wrath_ui_fixture! {
+#[cfg(feature = "optional-tests")]
 #[test]
 fn account_store_item_display_does_not_register_event_registry_callbacks_for_plan_named_events() {
     with_blizzard_addon_smoke_shape(&[ROOT], &[], |env, _loaded| {

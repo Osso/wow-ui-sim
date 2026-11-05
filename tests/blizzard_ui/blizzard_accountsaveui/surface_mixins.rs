@@ -51,6 +51,7 @@ const MIXIN_METHODS: &[&str] = &[
     "UpdateSizing",
 ];
 
+#[cfg(feature = "optional-tests")]
 #[test]
 fn account_save_frame_mixin_exposes_all_methods() {
     with_blizzard_addon_glue_smoke_shape(&[ROOT], &[], |env, _loaded| {

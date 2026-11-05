@@ -38,6 +38,7 @@ const FRAME_TEMPLATES: &[&str] = &[
 
 const FONT_STRING_TEMPLATE: &str = "UserScaledFontStringTemplate";
 
+#[cfg(feature = "optional-tests")]
 #[test]
 fn accessibility_templates_registers_intrinsic_and_virtual_templates() {
     with_blizzard_addon_smoke_shape(&[ROOT], &[], |_env, _loaded| {

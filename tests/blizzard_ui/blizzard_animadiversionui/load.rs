@@ -37,6 +37,7 @@ const MIXIN_TABLES: &[&str] = &[
     "AnimaDiversionUtil",
 ];
 
+#[cfg(feature = "optional-tests")]
 #[test]
 fn anima_diversion_ui_loads_with_dependency_closure_and_no_lua_errors() {
     assert_toc_declares_no_required_dependencies();
@@ -48,6 +49,7 @@ fn anima_diversion_ui_loads_with_dependency_closure_and_no_lua_errors() {
     });
 }
 
+#[cfg(feature = "optional-tests")]
 #[test]
 fn anima_diversion_ui_publishes_expected_mixin_tables() {
     with_blizzard_addon_startup_shape(&[ROOT], CLOSURE_OVERRIDES, |env, loaded| {

@@ -5,22 +5,18 @@
 
 use crate::common;
 
-#[cfg(feature = "optional-tests")]
 #[path = "blizzard_ui/blizzard_archaeology_ui/load.rs"]
 mod load;
 
 // Wrath manifest1-382/cache has no ArchaeologyFrame or its Lua UI handlers.
 // Keep load.rs's mixed TOC/dependency/runtime assertion on every profile.
 post_wrath_ui_fixture! {
-#[cfg(feature = "optional-tests")]
 #[path = "blizzard_ui/blizzard_archaeology_ui/surface_globals.rs"]
 mod surface_globals;
 
-#[cfg(feature = "optional-tests")]
 #[path = "blizzard_ui/blizzard_archaeology_ui/surface_frames.rs"]
 mod surface_frames;
 
-#[cfg(feature = "optional-tests")]
 #[path = "blizzard_ui/blizzard_archaeology_ui/surface_events.rs"]
 mod surface_events;
 

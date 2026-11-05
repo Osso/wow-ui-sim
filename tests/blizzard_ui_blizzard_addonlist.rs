@@ -5,23 +5,18 @@
 
 use crate::common;
 
-#[cfg(feature = "optional-tests")]
 #[path = "blizzard_ui/blizzard_addonlist/load.rs"]
 mod load;
 
-#[cfg(feature = "optional-tests")]
 #[path = "blizzard_ui/blizzard_addonlist/surface_globals.rs"]
 pub(crate) mod surface_globals;
 
-#[cfg(feature = "optional-tests")]
 #[path = "blizzard_ui/blizzard_addonlist/surface_frames.rs"]
 pub(crate) mod surface_frames;
 
-#[cfg(feature = "optional-tests")]
 #[path = "blizzard_ui/blizzard_addonlist/surface_mixins.rs"]
 pub(crate) mod surface_mixins;
 
-#[cfg(feature = "optional-tests")]
 #[path = "blizzard_ui/blizzard_addonlist/surface_events.rs"]
 mod surface_events;
 

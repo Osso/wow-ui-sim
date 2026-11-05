@@ -25,6 +25,7 @@ use crate::common::blizzard_addon_harness::with_blizzard_addon_glue_smoke_shape;
 
 const ROOT: &str = "Blizzard_AccountSaveUI";
 
+#[cfg(feature = "optional-tests")]
 #[test]
 fn account_save_frame_mixin_is_a_table() {
     with_blizzard_addon_glue_smoke_shape(&[ROOT], &[], |env, _loaded| {
@@ -42,6 +43,7 @@ fn account_save_frame_mixin_is_a_table() {
     });
 }
 
+#[cfg(feature = "optional-tests")]
 #[test]
 fn account_save_kick_error_code_is_241() {
     with_blizzard_addon_glue_smoke_shape(&[ROOT], &[], |env, _loaded| {
@@ -59,6 +61,7 @@ fn account_save_kick_error_code_is_241() {
     });
 }
 
+#[cfg(feature = "optional-tests")]
 #[test]
 fn account_save_static_popup_dialogs_explicit_acknowledge() {
     with_blizzard_addon_glue_smoke_shape(&[ROOT], &[], |env, _loaded| {
@@ -93,6 +96,7 @@ fn account_save_static_popup_dialogs_explicit_acknowledge() {
     });
 }
 
+#[cfg(feature = "optional-tests")]
 #[test]
 fn account_save_frame_mixin_visual_state_enum() {
     with_blizzard_addon_glue_smoke_shape(&[ROOT], &[], |env, _loaded| {

@@ -10,6 +10,7 @@ const ROOT: &str = "Blizzard_ArrowCalloutFrame";
 
 // Wrath has no ArrowCallout vendor widget/handler input; mixed and modeled probes remain enabled.
 post_wrath_ui_fixture! {
+#[cfg(feature = "optional-tests")]
 #[test]
 fn arrow_callout_frame_loads_cleanly_with_no_recorded_lua_errors() {
     with_blizzard_addon_smoke_shape(&[], &[], |env, _loaded| {
@@ -30,6 +31,7 @@ fn arrow_callout_frame_loads_cleanly_with_no_recorded_lua_errors() {
 }
 
 post_wrath_ui_fixture! {
+#[cfg(feature = "optional-tests")]
 #[test]
 fn arrow_callout_frame_toc_declares_help_plate_dependency() {
     let toc = TocFile::from_file(&arrow_callout_toc())
@@ -62,6 +64,7 @@ fn arrow_callout_frame_toc_declares_help_plate_dependency() {
 }
 }
 
+#[cfg(feature = "optional-tests")]
 #[test]
 fn arrow_callout_frame_enum_values_match_generated_documentation() {
     with_blizzard_addon_smoke_shape(&[], &[], |env, _loaded| {

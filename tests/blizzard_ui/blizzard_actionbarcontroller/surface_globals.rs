@@ -16,6 +16,7 @@ const ACTION_BAR_CONTROLLER_FUNCTIONS: &[&str] = &[
     "ValidateActionBarTransition",
 ];
 
+#[cfg(feature = "optional-tests")]
 #[test]
 fn action_bar_controller_surface_globals_are_functions() {
     with_blizzard_addon_smoke_shape(&[ROOT], &[], |env, _loaded| {
@@ -34,6 +35,7 @@ fn action_bar_controller_surface_globals_are_functions() {
 }
 
 #[cfg(not(feature = "client-wrath"))]
+#[cfg(feature = "optional-tests")]
 #[test]
 fn action_bar_controller_onload_initializes_current_state_to_main() {
     with_blizzard_addon_smoke_shape(&[ROOT], &[], |env, _loaded| {

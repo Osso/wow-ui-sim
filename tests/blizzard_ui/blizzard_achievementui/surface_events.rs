@@ -87,6 +87,7 @@ const PLAN_NAMED_BUT_UNREGISTERED_EVENTS: &[&str] = &["CRITERIA_UPDATE", "ACHIEV
 /// global exists) and an absence half (2 assertions: the two
 /// PLAN-named-but-unregistered events are NOT registered as tripwires
 /// for spec drift).
+#[cfg(feature = "optional-tests")]
 #[test]
 fn achievement_frame_achievements_event_registration_split_presence_absence() {
     if crate::common::wrath_achievement_fixtures::assert_native(
@@ -251,6 +252,7 @@ const CATEGORIES_REGISTERED_EVENT: &str = "ADDON_LOADED";
 /// 3. `type(:GetScript("OnEvent")) == "nil"` — tripwire for a future
 ///    XML change adding an OnEvent script (which would mean Blizzard
 ///    started processing the registered event for the first time).
+#[cfg(feature = "optional-tests")]
 #[test]
 fn achievement_frame_categories_registers_addon_loaded_after_onload() {
     if crate::common::wrath_achievement_fixtures::assert_native(
@@ -403,6 +405,7 @@ const COMPARISON_ONSHOW_DYNAMIC_EVENTS: &[&str] = &[
 /// **Absence half (4 dynamic-event tripwires):**
 /// 5-8. Each of the four `_OnShow`-registered events is NOT registered
 /// at smoke time (because the frame is hidden by default).
+#[cfg(feature = "optional-tests")]
 #[test]
 fn achievement_frame_comparison_registers_inspect_achievement_ready_after_onload() {
     if crate::common::wrath_achievement_fixtures::assert_native(

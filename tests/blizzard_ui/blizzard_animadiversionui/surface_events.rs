@@ -78,6 +78,7 @@ local afterHide = collect(provider)
 return beforeShow, afterShow, afterHide
 "#;
 
+#[cfg(feature = "optional-tests")]
 #[test]
 fn anima_diversion_frame_registers_show_events_only_while_shown() {
     with_blizzard_addon_startup_shape(&[ROOT], CLOSURE_OVERRIDES, |env, _loaded| {
@@ -89,6 +90,7 @@ fn anima_diversion_frame_registers_show_events_only_while_shown() {
     });
 }
 
+#[cfg(feature = "optional-tests")]
 #[test]
 fn anima_diversion_data_provider_registers_events_only_while_map_is_shown() {
     with_blizzard_addon_startup_shape(&[ROOT], CLOSURE_OVERRIDES, |env, _loaded| {

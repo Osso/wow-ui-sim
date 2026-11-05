@@ -5,19 +5,15 @@
 
 use crate::common;
 
-#[cfg(feature = "optional-tests")]
 #[path = "blizzard_ui/blizzard_actionstatus/load.rs"]
 mod load;
 
-#[cfg(feature = "optional-tests")]
 #[path = "blizzard_ui/blizzard_actionstatus/surface_globals.rs"]
 mod surface_globals;
 
-#[cfg(feature = "optional-tests")]
 #[path = "blizzard_ui/blizzard_actionstatus/surface_frames.rs"]
 mod surface_frames;
 
-#[cfg(feature = "optional-tests")]
 #[path = "blizzard_ui/blizzard_actionstatus/surface_events.rs"]
 mod surface_events;
 
