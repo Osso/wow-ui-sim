@@ -1,6 +1,6 @@
 //! Generator for spells.rs, spell_descriptions.rs, and spell_power.rs from WoW CSV exports.
 //!
-//! Reads from ~/Projects/wow/data/:
+//! Reads from `--csv-dir`, else ~/Projects/wow/data/:
 //!   - SpellName.csv (ID, Name_lang)
 //!   - Spell.csv (ID, NameSubtext_lang, ...)
 //!   - SpellMisc.csv (ID, ..., DifficultyID[18], SchoolMask[23],
@@ -18,7 +18,7 @@ use super::gen_spells_power::{SpellPowerRow, load_spell_power, write_spell_power
 use std::collections::{BTreeSet, HashMap};
 use std::fs::File;
 use std::io::{BufReader, Write};
-use std::path::Path;
+use std::path::{Path, PathBuf};
 
 const SPELL_NAME_COLUMN: usize = 1;
 const SPELL_SUBTEXT_COLUMN: usize = 1;
@@ -59,10 +59,13 @@ pub struct Options {
     /// Add only Attributes_9 to the committed spell records; requires SpellMisc.csv only.
     #[arg(long)]
     augment_attributes: bool,
+    /// Explicit CSV directory; never uses the shared default data directory.
+    #[arg(long)]
+    csv_dir: Option<PathBuf>,
 }
 
 pub fn run(options: Options) -> Result<(), Box<dyn std::error::Error>> {
-    let wow_data = wow_data_dir();
+    let wow_data = options.csv_dir.clone().unwrap_or_else(wow_data_dir);
     if options.augment_attributes {
         let path = wow_data.join("SpellMisc.csv");
         let misc = load_spell_misc(&path)?;
@@ -78,8 +81,8 @@ pub fn run(options: Options) -> Result<(), Box<dyn std::error::Error>> {
     }
     let spell_data = load_spell_data(&wow_data)?;
     std::fs::create_dir_all("data")?;
-    let required_ids = collect_required_spell_ids()?;
-    generate_spell_table(&spell_data, &required_ids)?;
+    let required_ids = collect_required_spell_ids(&wow_data)?;
+    generate_spell_table(&spell_data, &required_ids, &wow_data)?;
     generate_spell_descriptions(&spell_data, &required_ids)?;
     generate_spell_power_table(&spell_data, &required_ids)?;
     Ok(())
@@ -126,13 +129,11 @@ fn load_spell_data(wow_data: &Path) -> Result<SpellData, Box<dyn std::error::Err
 fn generate_spell_table(
     spell_data: &SpellData,
     required_ids: &BTreeSet<u32>,
+    wow_data: &Path,
 ) -> Result<(), Box<dyn std::error::Error>> {
     let output_path = Path::new("crates/sim-data/data/spells.rs");
     let mut out = File::create(output_path)?;
-    write_header(
-        &mut out,
-        &spell_misc_hash(&wow_data_dir().join("SpellMisc.csv"))?,
-    )?;
+    write_header(&mut out, &spell_misc_hash(&wow_data.join("SpellMisc.csv"))?)?;
     let count = build_spell_map(
         &mut out,
         &spell_data.spell_names,
@@ -390,7 +391,9 @@ fn load_spell_text_column(
 /// - Seeded mount catalog: every summon spell, regardless of collection/usability
 /// - Hardcoded baseline: action bar spells, trinket/item procs not covered elsewhere
 /// - Addon compatibility: spell names that installed addons index directly during load
-fn collect_required_spell_ids() -> Result<BTreeSet<u32>, Box<dyn std::error::Error>> {
+fn collect_required_spell_ids(
+    wow_data: &Path,
+) -> Result<BTreeSet<u32>, Box<dyn std::error::Error>> {
     let trait_ids = collect_ids_from_file(
         "crates/sim-data/data/traits.rs",
         &[
@@ -434,7 +437,9 @@ fn collect_required_spell_ids() -> Result<BTreeSet<u32>, Box<dyn std::error::Err
     all.extend(&addon_compat_ids);
     // Everything that teleports: the use spells of toys and teleport items,
     // and the teleport spells on class skill lines.
-    all.extend(super::gen_teleport_selection::collect(&wow_data_dir()).spells);
+    all.extend(super::gen_teleport_selection::collect(wow_data).spells);
+    // Spell text for the Azerite, conduit and artifact-power tooltip getters.
+    all.extend(collect_power_catalog_spell_ids(wow_data)?);
     println!("Required spell IDs (deduplicated): {}", all.len());
     Ok(all)
 }
@@ -443,9 +448,75 @@ fn collect_required_spell_ids() -> Result<BTreeSet<u32>, Box<dyn std::error::Err
 /// that `C_TooltipInfo` getters select. The tables are additive inputs: a missing
 /// file contributes nothing, so a data directory without them still regenerates.
 fn collect_power_catalog_spell_ids(
-    _wow_data: &Path,
+    wow_data: &Path,
 ) -> Result<BTreeSet<u32>, Box<dyn std::error::Error>> {
-    Ok(BTreeSet::new())
+    let mut ids = BTreeSet::new();
+    for (table, columns) in power_catalog_tables() {
+        let added = collect_table_spell_ids(&mut ids, wow_data, table, columns)?;
+        println!("{table}.csv: {added} spell IDs");
+    }
+    Ok(ids)
+}
+
+/// Table and the columns that hold its spell IDs, in the pinned 70391 layout.
+fn power_catalog_tables() -> &'static [(&'static str, &'static [&'static str])] {
+    &[
+        ("AzeritePower", &["SpellID"]),
+        ("SoulbindConduitRank", &["SpellID"]),
+        ("ArtifactPowerRank", &["SpellID"]),
+        (
+            "AzeriteEssencePower",
+            &[
+                "MajorPowerDescription",
+                "MinorPowerDescription",
+                "MajorPowerActual",
+                "MinorPowerActual",
+            ],
+        ),
+    ]
+}
+
+/// Add every nonzero spell ID in `columns` of `table`. Columns are addressed by
+/// header name so a reordered export cannot silently select the wrong field.
+fn collect_table_spell_ids(
+    ids: &mut BTreeSet<u32>,
+    wow_data: &Path,
+    table: &str,
+    columns: &[&str],
+) -> Result<usize, Box<dyn std::error::Error>> {
+    let path = wow_data.join(format!("{table}.csv"));
+    let Ok(file) = File::open(&path) else {
+        return Ok(0);
+    };
+    let records = read_csv_records(BufReader::new(file))?;
+    let mut records = records.iter();
+    let header = records
+        .next()
+        .ok_or_else(|| format!("{table}.csv is empty"))?;
+    let header = parse_csv_line(header);
+    let indexes = columns
+        .iter()
+        .map(|column| {
+            header
+                .iter()
+                .position(|name| name == column)
+                .ok_or_else(|| format!("{table}.csv has no {column} column"))
+        })
+        .collect::<Result<Vec<_>, _>>()?;
+    let mut added = 0;
+    for record in records {
+        let fields = parse_csv_line(record);
+        for &index in &indexes {
+            let spell_id = fields
+                .get(index)
+                .and_then(|value| value.parse::<u32>().ok())
+                .unwrap_or(0);
+            if spell_id != 0 && ids.insert(spell_id) {
+                added += 1;
+            }
+        }
+    }
+    Ok(added)
 }
 
 const BASELINE_SPELL_IDS: &[u32] = &[
@@ -652,10 +723,7 @@ mod tests {
         .unwrap();
 
         let ids = collect_power_catalog_spell_ids(dir.path()).unwrap();
-        assert_eq!(
-            ids,
-            BTreeSet::from([19434, 55564, 293019, 294668, 340706])
-        );
+        assert_eq!(ids, BTreeSet::from([19434, 55564, 293019, 294668, 340706]));
     }
 
     #[test]
@@ -672,7 +740,8 @@ mod tests {
 
     #[test]
     fn required_spells_include_the_seeded_mount_catalog() {
-        let required = collect_required_spell_ids().unwrap();
+        let dir = tempfile::tempdir().unwrap();
+        let required = collect_required_spell_ids(dir.path()).unwrap();
         // Includes Brown Horse, a duplicate summon spell, and the uncollected Brutosaur.
         let mount_spells = BTreeSet::from([
             458, 23338, 40192, 61425, 72286, 93326, 122708, 171851, 264058,
