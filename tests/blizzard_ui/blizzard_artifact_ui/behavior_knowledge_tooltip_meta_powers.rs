@@ -7,7 +7,7 @@ const ROOT: &str = "Blizzard_ArtifactUI";
 const ARTIFACT_ICON: &str = "Interface/Icons/inv_sword_2h_artifactashbringer_d_01";
 const ARTIFACT_TITLE: &str = "The Ashbringer";
 // ArtifactUI vendor handlers/templates do not ship in Wrath; modeled API probes stay enabled.
-post_wrath_ui_fixture! {
+timerunning_util_panel_fixture! {
 #[test]
 fn knowledge_tooltip_lists_meta_power_descriptions_with_blank_separator_only_between_matches() {
     with_blizzard_addon_smoke_shape(&[], &[], |env, _loaded| {

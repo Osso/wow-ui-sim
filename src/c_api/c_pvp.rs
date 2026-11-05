@@ -1,5 +1,9 @@
 pub mod area_poi;
-#[cfg(feature = "retail-12-0-5")]
+// Supplied brawl model. The pinned Retail/PTR PvpInfoDocumentation.lua declares
+// GetActiveBrawlInfo (:109), GetAvailableBrawlInfo (:255),
+// GetSpecialEventBrawlInfo (:775) and the PvpBrawlInfo structure; the pinned
+// WowForever documentation declares the same names at the same lines.
+#[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
 pub mod available_brawl;
 pub mod battlefield_vehicles;
 mod battleground_enlistment;
@@ -32,14 +36,17 @@ pub struct BattlegroundEnlistmentInputs {
     pub cached_values: std::collections::HashMap<i32, i64>,
 }
 
-#[cfg(all(
-    feature = "retail-12-0-5",
-    any(feature = "profile-retail", feature = "client-ptr")
+#[cfg(any(
+    all(
+        feature = "retail-12-0-5",
+        any(feature = "profile-retail", feature = "client-ptr")
+    ),
+    feature = "client-wowforever"
 ))]
 mod active_brawl;
-#[cfg(feature = "retail-12-0-5")]
+#[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
 mod brawl_info;
-#[cfg(feature = "retail-12-0-5")]
+#[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
 pub use brawl_info::{PvpBrawlInfo, SpecialEventBrawlInfo};
 
 #[cfg(feature = "retail-12-0-0")]
@@ -117,9 +124,12 @@ pub(crate) fn register_c_pvp_surface(state: &mut LuaState) -> LuaResult<()> {
     }
     #[cfg(feature = "retail-12-0-0")]
     catalog::register(state, ns)?;
-    #[cfg(all(
-        feature = "retail-12-0-5",
-        any(feature = "profile-retail", feature = "client-ptr")
+    #[cfg(any(
+        all(
+            feature = "retail-12-0-5",
+            any(feature = "profile-retail", feature = "client-ptr")
+        ),
+        feature = "client-wowforever"
     ))]
     active_brawl::register(state, ns)?;
     register_patch_12_1_c_pvp_surface(state, ns)?;

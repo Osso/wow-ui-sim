@@ -394,6 +394,7 @@ fn keybind_f6_targets_enemy() {
     }
 }
 
+poi_button_panel_or_wrath_fixture! {
 #[test]
 fn unit_frame_onleave_fades_out_game_tooltip() {
     test_timeout! {
@@ -436,4 +437,5 @@ fn unit_frame_onleave_fades_out_game_tooltip() {
             "UnitFrame_OnLeave should clear frame.UpdateTooltip"
         );
     }
+}
 }

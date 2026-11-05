@@ -399,7 +399,7 @@ fn character_select_configuration_warnings_returns_a_table() {
     }
 }
 
-#[cfg(not(feature = "client-wrath"))]
+character_select_tooltip_fixture! {
 #[test]
 fn character_select_tooltip_tolerates_missing_spec_id() {
     test_timeout! {
@@ -432,6 +432,7 @@ fn character_select_tooltip_tolerates_missing_spec_id() {
             "missing specID should not trigger specialization lookup Lua errors: {unexpected:#?}"
         );
     }
+}
 }
 
 #[test]

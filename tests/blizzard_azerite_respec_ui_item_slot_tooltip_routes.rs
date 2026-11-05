@@ -35,7 +35,7 @@ const BAG_LOCATION_LUA: &str = r#"
 "#;
 
 // AzeriteRespecUI vendor handlers/templates do not ship in Wrath; modeled API probes stay enabled.
-post_wrath_ui_fixture! {
+timerunning_util_panel_fixture! {
 #[test]
 fn blizzard_azerite_respec_ui_item_slot_tooltip_routes_by_location_kind() {
     common::with_perf_lock(|| {

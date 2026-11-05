@@ -40,7 +40,10 @@ pub(crate) fn optional_unsigned(state: &LuaState, position: i32) -> LuaResult<Op
 
 /// Optional boolean flag; a missing/nil value defaults false and a present value
 /// uses Lua truthiness (WM94 §6), after the shared secret-access check.
-#[cfg(feature = "retail-12-0-5")]
+/// Optional boolean flag; a missing/nil value defaults false and a present value
+/// uses Lua truthiness (WM94 §6), after the shared secret-access check.
+/// Used only by the brawl tooltip getter on the profiles that publish it.
+#[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
 pub(crate) fn optional_bool(state: &LuaState, position: i32) -> LuaResult<bool> {
     let value = unwrap_secret(state, stack_val(state, position))?;
     Ok(value.is_truthy())
