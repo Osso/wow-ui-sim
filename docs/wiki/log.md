@@ -3430,3 +3430,8 @@ dress-up hover and the shared UNKNOWN failure seam from the system page and inde
 
 Linked [Totem tooltip selection and time](../specs/tooltip-totem.md), WM94 numeric
 evidence and the explicit nearest-even emulation seam.
+
+## 2026-11-04 — Persistent install path settings
+
+Linked the [install path settings contract](../specs/wow-install-path-settings.md)
+and per-product resolution order from the CASC asset cache page.

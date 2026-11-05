@@ -328,6 +328,11 @@ fn default_wowless_path() -> PathBuf {
 
 fn main() {
     let cli = Cli::parse();
+    #[cfg(feature = "casc")]
+    {
+        let settings = wow_ui_sim::install_paths::SettingsFile::platform_default();
+        wow_ui_sim::asset_resolver_config::configure_casc_install_env(settings.as_ref());
+    }
     wow_ui_sim::blizzard_ui_sync::set_allow_ui_version_mismatch(cli.allow_ui_version_mismatch);
     handle_command(cli.command);
 }

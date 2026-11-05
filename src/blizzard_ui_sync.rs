@@ -644,9 +644,11 @@ fn casc_feature_error() -> crate::Error {
 
 #[cfg(feature = "casc")]
 fn casc_unavailable_error() -> crate::Error {
-    crate::Error::Other(
-        "local WoW CASC data is not available; set WOW_INSTALL_PATH or WOW_DATA_PATH, and make sure WOW_SIM_CASC is not 0".to_string(),
-    )
+    let product = crate::asset_resolver_config::active_profile_casc_product();
+    crate::Error::Other(format!(
+        "local WoW CASC data is not available; set WOW_INSTALL_PATH or WOW_DATA_PATH, or add the install path to {}, and make sure WOW_SIM_CASC is not 0",
+        crate::install_paths::settings_hint(product)
+    ))
 }
 
 #[cfg(feature = "casc")]

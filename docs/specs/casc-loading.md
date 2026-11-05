@@ -10,7 +10,7 @@ The simulator reads textures and fonts directly from a live WoW install via the 
 - [ ] Building with `--no-default-features` (or `--features ""`) compiles cleanly with no CASC symbols and the loader skips the CASC tier entirely.
 - [ ] `WOW_SIM_CASC=0` at runtime disables the CASC tier without rebuilding (loader behaves as if the feature were off).
 - [ ] When `asset_resolver::wow_install_path()` returns `None` (no env override and no candidate path on disk), the loader does not panic — it just reports a CASC miss and continues.
-- [ ] `WOW_INSTALL_PATH` (install root) and `WOW_DATA_PATH` (`Data/` dir) override discovery; both are validated by checking that `<root>/Data/data` exists before they win.
+- [ ] `WOW_INSTALL_PATH` (install root) and `WOW_DATA_PATH` (`Data/` dir) override discovery; both are validated by checking that `<root>/Data/data` exists before they win. A stored per-product path is the next source; see [install path settings](wow-install-path-settings.md).
 - [ ] wow-ui-sim creates `asset_resolver::CascListfileResolver` with an explicit cache/shared-data location; runtime loading does not set or require `GAME_ENGINE_SHARED_ROOT`.
 
 ### Installed product identity

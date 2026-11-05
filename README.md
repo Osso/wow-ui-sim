@@ -76,6 +76,17 @@ scripts/start-profile.sh live
 
 Use local while gaming on desktop. Raw Cargo stays local. See [native workflow, profile flags, and runtime proof limits](docs/remote-builds.md).
 
+### WoW install location
+
+CASC profiles need a local WoW installation. Discovery uses `WOW_INSTALL_PATH`, then
+`WOW_DATA_PATH`, then a stored per-product path, then automatic detection (Windows also
+reads the Battle.net Agent `product.db`). The first path that contains `Data/data` is
+stored in `<platform config dir>/wow-ui-sim/install-paths.json` (`%APPDATA%` on Windows,
+`$XDG_CONFIG_HOME` on Linux), so later launches do not need the environment variable.
+To move the install, set `WOW_INSTALL_PATH` again or edit the product entry; an entry
+whose `Data/data` directory disappeared is ignored with a warning. See
+[install path settings](docs/specs/wow-install-path-settings.md).
+
 ### Rust formatting
 
 Use rustfmt for Rust code. `rust-toolchain.toml` pins Rust 1.99.1 and its rustfmt
