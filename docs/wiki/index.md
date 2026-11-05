@@ -1,6 +1,52 @@
 ## [2026-11-04] investigation | NECESSARY Retail scheduling
 
 [Runtime optimization](investigations/test-runtime-optimization.md#necessary-retail-scheduling-profile--2026-11-04) records integration timing, timeout-fixture contention, the 672-name native inventory, configured harness permits, memory envelopes and the complete 1146.645s budget proof. The [warm-run target](../specs/necessary-suite-runtime.md) still requires two complete sub-600-second proofs.
+## [2026-11-04] correction | Forever library and shared tooltip costs
+
+[Forever publication](../specs/forever-lib-publication.md) records supplied-model
+queries and the pinned fifteen-bit enum. [WM98 eligibility](../specs/spell-tooltip-cost.md)
+replaces historical blanket cost omission with shared native outer gates and
+source-backed attribute data, with bounded three-profile proof.
+
+## [2026-11-04] investigation | Forever tooltip baseline
+
+[Forever compatibility](investigations/forever-addon-startup-compatibility.md#tooltip-baseline-fixtures-and-producers)
+records Camelot fixture selection, modeled query publication, excluded GroupFinder
+frames, strict spellbook scenario inputs and WM99–102 state. The original
+tab-switch regression now passes; native cost acquisition remains UNKNOWN.
+
+## [2026-11-04] implementation | Totem tooltip duration
+
+[Tooltip data](systems/lua-api.md#tooltip-data-and-merchant-cursor-presentation)
+links stored-name selection and the WM94 wrapping/rate/rounding pipeline, its
+nearest-even emulation seam and original-accessor coverage.
+
+## [2026-11-04] implementation | Modified-appearance item tooltip
+
+[Tooltip data](systems/lua-api.md#tooltip-data-and-merchant-cursor-presentation)
+links the Retail/PTR source-model lookup, original dress-up hover proof and
+shared UNKNOWN failure seam. Forever remains a separate follow-up.
+
+## [2026-11-04] implementation | Bag-child tooltip selection
+
+[Tooltip data](systems/lua-api.md#tooltip-data-and-merchant-cursor-presentation)
+links the source-backed child item selector, generator inclusion rule and pinned
+ItemSparse misses. Retail original-accessor proof is separate from native parity.
+## [2026-11-04] investigation | PTR Edit Mode preset fixtures
+
+[Edit Mode reconciliation](investigations/editmode-layout.md#ptr-preset-and-startup-fixture-reconciliation--2026-11-04)
+records source-selected preset counts, cast-bar Show lifecycle and the separately
+repaired declared-profile quest difficulty publication, with bounded PTR/Retail proof.
+
+## [2026-11-04] investigation | Parallel GPU test lifetimes
+
+[GPU test lifetimes](investigations/parallel-gpu-test-lifetimes.md) records the reproduced Vulkan loader SIGSEGV, the shared lifetime lock, and the concurrent atlas/readback regression.
+## [2026-11-04] investigation | PTR tooltip residue
+
+[PTR tooltip residue](investigations/ptr-tooltip-residue.md) links the fixture
+correction and bounded WM92 reagent/action producers. The contract keeps PTR
+70668 evidence distinct from pinned 70493 inputs. The rule-enabled original
+OnEnter is now GREEN with the separate [WM93 counted-channel contract](../specs/ptr-action-combat-range-check.md), whose monitor uses explicit supplied results rather than native schedule/geometry claims.
 
 ## [2026-11-04] correction | Publication gap expectations
 
@@ -15,6 +61,9 @@ supplied character state, original TalentFrame consumer proof and native limits.
 
 [Lua API](systems/lua-api.md#tooltip-data-and-merchant-cursor-presentation) links
 supplied loot/buyback getters, populated-only instance counters and separate
+merchant cursor presentation. Its source-matched baseline evidence predates the
+[PTR residue follow-up](investigations/ptr-tooltip-residue.md). D56 text/color/nested publication,
+
 merchant cursor presentation. Retail tooltip/library tests pass. PTR failures
 match the source-matched master baseline for that lane. [D56 serialization](../specs/tooltip-data-serialization.md)
 now separates copied DTO markup from presentation runs and supports packed RGB,
@@ -1603,7 +1652,7 @@ mapping remains unknown. Producer and tests staged only; no build/slot/runtime p
 
 ## [2026-10-08] investigation | Patch 6.2.0 API audit
 
-[Audit](investigations/patch-6-2-0-api-audit.md): revision 1460518; zero inventory/eleven extract rows, modeled retail spell-link cost omission, two item-link contracts pending. 50 publication cases, scoped tooltip tests, fixtures 36/31/8, format/Mists and matching addons-enabled startup [] pass. 49 registers/46 extracts reproduce with three inherited failures; 30 prior validators plus portable own gate pass. No retirements.
+[Audit](investigations/patch-6-2-0-api-audit.md): revision 1460518; zero inventory/eleven extract rows, historical spell-link cost omission superseded by [WM98 shared eligibility](../specs/spell-tooltip-cost.md), two item-link contracts pending. 50 publication cases, scoped tooltip tests, fixtures 36/31/8, format/Mists and matching addons-enabled startup [] pass. 49 registers/46 extracts reproduce with three inherited failures; 30 prior validators plus portable own gate pass. No retirements.
 
 ## [2026-10-08] investigation | Patch 6.1.0 API audit
 
@@ -4211,7 +4260,7 @@ The sixteen retail 12.0.0 `Enum.EditModeDamageMeterSetting.*` and `Enum.EditMode
 | [[transparent-wrapper-render-order]] | Regionless wrappers may hoist descendant regions; wrappers with owned regions retain raw frame-level ordering |
 | [[talent-sheen]] | 22s synchronized sweep; white rectangle bug when masking broken |
 | [[tooltip-alignment]] | NineSlice inner box vs outer bounds; 15px effective inset |
-| [[tooltip-layout-timing]] | Tooltip sizing ran after layout resolution, so one frame could use stale bounds |
+| [[tooltip-layout-timing]] | Retail/PTR native sizing boundaries, rejected empty/ownerless Show, and first-title AppendText synchronization |
 | [[tooltip-double-shell]] | Fake bootstrap `NineSlice` plus Rust fallback shell caused duplicate tooltip chrome; Lua-owned shell still needs center fill |
 | [[unanchored-frame-render-leak]] | Unanchored frames have no valid WoW rect but were rendered at parent origin; render-list filtering now skips them and their descendants |
 | [[glow-effects]] | Additive blending end-to-end; one gap: SetBorderBlendMode missing |

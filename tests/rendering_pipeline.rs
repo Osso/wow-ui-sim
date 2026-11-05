@@ -529,12 +529,34 @@ fn find_vertex_near_rect(batch: &QuadBatch, rect: &wow_ui_sim::LayoutRect) -> bo
 // Layer 5: GPU atlas upload
 // ============================================================================
 
+/// Exercise both GPU entry points together, including creation and teardown.
+#[test]
+fn layer5_parallel_gpu_lifetimes_complete() {
+    let start = std::sync::Barrier::new(4);
+    std::thread::scope(|scope| {
+        for worker in 0..4 {
+            let start = &start;
+            scope.spawn(move || {
+                start.wait();
+                for _ in 0..8 {
+                    if worker % 2 == 0 {
+                        layer5_gpu_atlas_upload_and_lookup();
+                    } else {
+                        layer5_additive_quads_preserve_destination_color_in_overlap();
+                    }
+                }
+            });
+        }
+    });
+}
+
 #[test]
 fn layer5_gpu_atlas_upload_and_lookup() {
-    let Some((device, queue)) = common::try_create_gpu_device() else {
+    let Some(gpu) = common::try_create_gpu_device() else {
         eprintln!("Skipping GPU test: no adapter available");
         return;
     };
+    let (device, queue) = (&gpu.device, &gpu.queue);
 
     let mut tex_mgr = make_texture_manager();
 
@@ -583,10 +605,11 @@ fn layer5_gpu_atlas_upload_and_lookup() {
 
 #[test]
 fn layer5_gpu_atlas_tier_selection() {
-    let Some((device, queue)) = common::try_create_gpu_device() else {
+    let Some(gpu) = common::try_create_gpu_device() else {
         eprintln!("Skipping GPU test: no adapter available");
         return;
     };
+    let (device, queue) = (&gpu.device, &gpu.queue);
 
     let mut atlas = GpuTextureAtlas::new(&device);
 
@@ -664,10 +687,11 @@ fn layer5_gpu_atlas_tier_selection() {
 
 #[test]
 fn layer5_gpu_atlas_real_scroll_textures() {
-    let Some((device, queue)) = common::try_create_gpu_device() else {
+    let Some(gpu) = common::try_create_gpu_device() else {
         eprintln!("Skipping GPU test: no adapter available");
         return;
     };
+    let (device, queue) = (&gpu.device, &gpu.queue);
 
     let mut tex_mgr = make_texture_manager();
 

@@ -7,6 +7,7 @@
 pub mod action_bar_state;
 pub mod action_highlights;
 pub(crate) mod ambiguate;
+pub(crate) mod bank_reagents;
 #[cfg(feature = "client-retail")]
 pub(crate) mod bnet_friend_index;
 #[cfg(feature = "retail-12-0-5")]

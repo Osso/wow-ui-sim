@@ -177,10 +177,20 @@ macro_rules! perf_test_timeout {
     };
 }
 
+/// Keeps test GPU resources inside the headless renderer's lifetime lock.
+#[cfg(feature = "gui")]
+pub struct TestGpuDevice {
+    pub device: wgpu::Device,
+    pub queue: wgpu::Queue,
+    // Fields drop in declaration order: release the lock after GPU handles.
+    _lifetime: std::sync::MutexGuard<'static, ()>,
+}
+
 /// Try to create a wgpu device for GPU tests.
 /// Returns None if no adapter is available (e.g., headless CI).
 #[cfg(feature = "gui")]
-pub fn try_create_gpu_device() -> Option<(wgpu::Device, wgpu::Queue)> {
+pub fn try_create_gpu_device() -> Option<TestGpuDevice> {
+    let lifetime = wow_ui_sim::render::headless::lock_gpu_device_lifetime();
     let instance = wgpu::Instance::new(&wgpu::InstanceDescriptor {
         backends: wgpu::Backends::all(),
         ..Default::default()
@@ -193,13 +203,18 @@ pub fn try_create_gpu_device() -> Option<(wgpu::Device, wgpu::Queue)> {
     }))
     .ok()?;
 
+    eprintln!("test GPU adapter: {:?}", adapter.get_info());
     let (device, queue) = pollster::block_on(adapter.request_device(&wgpu::DeviceDescriptor {
         label: Some("Test GPU Device"),
         ..Default::default()
     }))
     .ok()?;
 
-    Some((device, queue))
+    Some(TestGpuDevice {
+        device,
+        queue,
+        _lifetime: lifetime,
+    })
 }
 
 fn blizzard_ui_dir() -> PathBuf {
@@ -265,6 +280,40 @@ pub fn load_profile_framexml(env: &WowLuaEnv) {
     if let Some(toc) = wow_ui_sim::client_profile::blizzard_ui_framexml_toc() {
         load_addon(&env.loader_env(), &toc).expect("native FrameXML should load");
     }
+}
+
+/// Explicit Forever scenario: the player has no outfits. Unset is an error
+/// under docs/specs/forever-camelot-spellbook.md; Camelot's spellbook creates a
+/// transmog category (Camelot/SpellBook/Blizzard_SpellBookFrame.lua:138+).
+/// Transmog is unavailable in this scenario, explicitly supplied as required by
+/// transmog-availability.md and Blizzard_SpellBookCategory.lua:506+.
+pub fn supply_empty_forever_spellbook_outfits(env: &WowLuaEnv) {
+    if wow_ui_sim::client_profile::ACTIVE == wow_ui_sim::client_profile::ClientProfile::WowForever {
+        let mut state = env.state().borrow_mut();
+        state.forever_outfits = Some(Some(Vec::new()));
+        state.transmog_availability.enabled = Some(false);
+    }
+}
+
+/// Match production's game-screen startup stream, including bootstrap-only roots.
+/// Forever's CharacterFrame hides StatisticsFrame on every tab change; its
+/// Blizzard_Statistics.toc:2-3 is an eager Camelot root, not a UIPanels dependency.
+pub fn load_game_startup_inventory(env: &WowLuaEnv) {
+    use wow_ui_sim::loader::{discover_blizzard_startup_addons_for_screen, load_startup_addon};
+    let ui = blizzard_ui_dir();
+    env.set_screen_mode(wow_ui_sim::screen::ScreenKind::Game);
+    load_profile_framexml(env);
+    for addon in discover_blizzard_startup_addons_for_screen(
+        &ui,
+        wow_ui_sim::screen::ScreenKind::Game,
+    ) {
+        load_startup_addon(&env.loader_env(), &addon.toc_path, addon.kind, None)
+            .unwrap_or_else(|error| panic!("load startup {}: {error}", addon.name));
+        if addon.name == "Blizzard_EnvironmentCleanup" {
+            env.restore_post_cleanup_globals();
+        }
+    }
+    env.sync_string_metatable_to_global_string();
 }
 
 /// Load the active profile's native panel templates, not a synthetic replacement.
@@ -384,7 +433,10 @@ const _: () = {
 
     #[cfg(feature = "gui")]
     {
-        let _ = try_create_gpu_device as fn() -> Option<(wgpu::Device, wgpu::Queue)>;
+        let _ = try_create_gpu_device as fn() -> Option<TestGpuDevice>;
+        let _ = |gpu: &TestGpuDevice| {
+            let _ = (&gpu.device, &gpu.queue);
+        };
     }
 };
 

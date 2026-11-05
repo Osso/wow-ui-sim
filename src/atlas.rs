@@ -231,17 +231,23 @@ mod tests {
             .get("_ui-frame-metal-edgetop-2x")
             .expect("metal edge top +2x entry should exist");
 
+        // Forever's authored base is 95x95 (atlas_wowforever.rs:18954),
+        // not half its 150x150 paired art. Preserve each profile's base size.
+        let logical_size = |key: &str, art: &super::AtlasInfo| {
+            ATLAS_DB.get(key).map_or_else(
+                || super::logical_nine_slice_piece_size(art, true),
+                |base| (base.width, base.height),
+            )
+        };
+        assert_eq!(ns_info.corner_tl.file, corner.file);
+        assert_eq!(ns_info.edge_top.file, edge_top.file);
         assert_eq!(
-            ns_info.corner_tl.width,
-            (corner.width as f32 / 2.0).round() as u32
+            (ns_info.corner_tl.width, ns_info.corner_tl.height),
+            logical_size("ui-frame-metal-cornertopleft", corner)
         );
         assert_eq!(
-            ns_info.edge_top.width,
-            (edge_top.width as f32 / 2.0).round() as u32
-        );
-        assert_eq!(
-            ns_info.edge_top.height,
-            (edge_top.height as f32 / 2.0).round() as u32
+            (ns_info.edge_top.width, ns_info.edge_top.height),
+            logical_size("_ui-frame-metal-edgetop", edge_top)
         );
     }
 

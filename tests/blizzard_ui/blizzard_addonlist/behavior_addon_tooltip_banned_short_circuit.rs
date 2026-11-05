@@ -33,6 +33,8 @@ fn addon_tooltip_update_banned_security_short_circuits_details() {
 
                 local owner = CreateFrame("Button", "AddonTooltipBannedProbeOwner", UIParent)
                 owner:SetID(addonIndex)
+                -- AddonListEntryMixin OnEnter (AddonList.lua:1002) owns the tooltip first.
+                AddonTooltip:SetOwner(owner, "ANCHOR_RIGHT", -270, 0)
                 AddonTooltip_Update(owner)
 
                 local firstLine = AddonTooltip:GetLeftLine(1)

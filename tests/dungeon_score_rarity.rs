@@ -45,6 +45,9 @@ fn original_lfg_result_tooltip_uses_supplied_scores() {
         C_LFGList.Search(2)
         local source = debug.getinfo(LFGListUtil_SetSearchEntryTooltip, 'S').source:gsub('\\', '/')
         assert(source:find('Blizzard_GroupFinder/', 1, true), source)
+        -- LFGListSearchEntry_OnEnter (LFGList.lua:3513) owns the tooltip first.
+        local entry = CreateFrame("Button", "DungeonScoreTooltipEntry", UIParent)
+        GameTooltip:SetOwner(entry, "ANCHOR_RIGHT", 25, 0)
         GameTooltip:ClearLines()
         LFGListUtil_SetSearchEntryTooltip(GameTooltip, 1)
         assert(C_LFGList.GetSearchResultEncounterInfo(1) == nil)
@@ -73,6 +76,7 @@ fn original_lfg_result_tooltip_uses_supplied_scores() {
     env.exec(
         r#"
         C_LFGList.Search(2)
+        GameTooltip:SetOwner(DungeonScoreTooltipEntry, "ANCHOR_RIGHT", 25, 0)
         GameTooltip:ClearLines()
         LFGListUtil_SetSearchEntryTooltip(GameTooltip, 1)
         local texts = ''
@@ -87,6 +91,7 @@ fn original_lfg_result_tooltip_uses_supplied_scores() {
         assert(texts:find('|cff1eff001000|r', 1, true), texts)
         assert(texts:find('|cffffffffFixture Dungeon|r', 1, true), texts)
         assert(C_LFGList.GetSearchResultEncounterInfo(2) == nil)
+        GameTooltip:SetOwner(DungeonScoreTooltipEntry, "ANCHOR_RIGHT", 25, 0)
         GameTooltip:ClearLines()
         LFGListUtil_SetSearchEntryTooltip(GameTooltip, 2)
         for i=1,GameTooltip:NumLines() do

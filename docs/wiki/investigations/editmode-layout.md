@@ -216,6 +216,36 @@ wraps `WatchFrame_Update()` so legacy quest-log code cannot resurrect it.
 
 Regression coverage lives in `tests/edit_mode_api.rs`.
 
+## PTR preset and startup fixture reconciliation — 2026-11-04
+
+The pinned PTR original preset manager inserts Modern, Classic and Gamepad;
+Retail inserts Modern and Classic. The [selection contract](../../specs/edit-mode-layout-selection.md)
+records the exact source lines. Five cache fixtures assumed Retail's two presets.
+They now use the published preset count or the original manager's copied preset
+list, while retaining saved-row identity, geometry and native Classic controls.
+
+The cast-bar lock fixture also assumed an idle bar already had a managed parent.
+PTR `Blizzard_UIPanels_Game/Mainline/CastingBarFrame.xml:468–482` starts it hidden
+under UIParent. `Shared/CastingBarFrame.lua:1385–1389` and
+`Blizzard_ManagedFrameSystem/Shared/ManagedFrameSystem.lua:17–18,46–76` move it
+through the original OnShow path. The fixture now shows the unlocked bar before
+asserting managed parenting, then retains the locked PlayerFrame attachment check.
+The existing Mists fade/hidden-parent assertions are unchanged.
+
+The seventh failure was not a preset mismatch: default `lua-errors` startup
+exited1 because original `Blizzard_FrameXMLUtil/Mainline/DifficultyUtil.lua:87`
+called the missing `C_QuestLog.GetQuestDifficultyLevel`. Its existing supplied-row
+producer was Forever-only. The [query contract](../../specs/forever-quest-difficulty.md#declared-profile-publication--2026-11-04)
+now records the declared Retail/PTR/Forever publication set and named emulation
+limits. No Blizzard Lua was changed.
+
+At source `9c2eea67f`, PTR integration `edit_mode` passes46/46, shared getter
+controls pass2/2 and the full PTR library passes2200 with one existing opt-in
+GPU test ignored. Retail integration `edit_mode` passes56/56 and getter controls
+pass2/2. The Retail filter does not run the cast-bar prefork selector; broader
+final verification belongs to the integration supervisor. These are bounded
+simulator proofs, not native parity.
+
 ## Files Modified
 
 - `src/lua_api/workarounds_editmode.rs`

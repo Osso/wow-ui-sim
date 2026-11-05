@@ -2,6 +2,17 @@
 
 Pinned pageid **149103**, revision **1460518** (2023-09-27T22:20:46Z), refetched 2026-10-08. Narrative parent page: no inventory rows, not a stub/redirect. Its automated-diff transclusion is an explicit unexpanded source boundary.
 
+## WM98 correction — 2026-11-04
+
+The historical cost-omission interpretation below is superseded by the
+[shared cost contract](../../specs/spell-tooltip-cost.md). WM98 establishes
+that Forever 70707, Retail 70688 and PTR 70668 permit eligible spell-hyperlink
+costs. Only mode 1, content suppression and group-9 mask 32768 are the verified
+outer cost-exclusion conditions; resource eligibility remains partial. PTR
+70493 native parity is UNKNOWN. Historical proof tables remain frozen evidence,
+not current acceptance. The existing one-spell formatted-cost fixture remains;
+no general resource formulas or new range/cast layout rules were inferred.
+
 ## Coverage
 
 | Statement | Coverage | Limit | Proof |
@@ -15,7 +26,7 @@ All eleven retained extract occurrences are accounted individually. Six metadata
 
 ## Implementation and retirement boundary
 
-`src/c_api/spell_tooltip_cost.rs` owns the existing one-spell resource-cost fixture and retail hyperlink policy. Existing C_TooltipInfo builder delegates to it; GameTooltip:SetHyperlink uses GetHyperlink rather than the direct spell producer. Pre-Warlords profiles retain costs. No shims or vendor edits.
+`src/c_api/spell_tooltip_cost.rs` owns the existing one-spell resource-cost fixture and shared WM98 gates. The C_TooltipInfo builder delegates to it; GameTooltip:SetHyperlink uses GetHyperlink rather than the direct spell producer. There is no profile-specific hyperlink cost exclusion. No shims or vendor edits.
 
 No explicitly removed member exists on this parent page; no retirement proposed. Full `/usr/bin/grep -w` src/tests caller scans are saved untruncated, including arbitrary call syntax. [Scan index](../../../data/patch-api/evidence/6.2.0-session-2026-10-08/p620-caller-scans.json) pins output hashes. [Retirement record](../../../data/patch-api/evidence/6.2.0-session-2026-10-08/p620-retirement-scans.json) records the empty member/cached-scan set and fixed master/p624 Git inventories; no later re-addition can apply to an empty set.
 

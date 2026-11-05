@@ -19,6 +19,12 @@ For non-pinned products, `692e36936`/`4eb32befa` select the requested product fr
 
 Without the resolution sqlite, first CASC use reads the selected local build config, extracts fresh `root.bin` and `encoding.bin` from the WoW install into the cache directory, and builds the sqlite. Warm starts become a single `Connection::open` plus per-FDID sqlite SELECTs.
 
+## Install path settings
+
+Before the resolver caches an install path, enabled CASC startup resolves the path for the active product and writes it back to `WOW_INSTALL_PATH`. The order is `WOW_INSTALL_PATH`, `WOW_DATA_PATH`, a stored entry, then the resolver's own detection (Windows Agent `product.db` and built-in candidates). Every candidate must contain `Data/data`.
+
+Stored entries live in `<platform config dir>/wow-ui-sim/install-paths.json` and are keyed by CASC product (`wow`, `wowxptr`, `wowf`, `wow_classic`, `wow_classic_era`). Each entry has an optional `install_path` (install root) and `data_path` (`Data`). A valid CLI or environment path and a detected path are stored on that launch, so the environment variable is only needed when the install moves. An invalid stored entry is reported and skipped, and an unreadable or missing settings file never stops startup. `WOW_SIM_CASC=0` leaves both settings and resolver state untouched. See [install path settings](../../specs/wow-install-path-settings.md).
+
 ## GUI preparation
 
 Before `run_iced_ui`, enabled CASC startup opens or builds the resolution cache, then forces the community lookup catalog to initialize with an empty-path query. The dependency has no catalog-preparation API; this query does not extract an asset and should be replaced if one becomes available. `WOW_SIM_CASC=0` and a missing install skip both steps.
@@ -147,6 +153,7 @@ The Forever `Blizzard_NewPlayerExperience/Camelot/Blizzard_TutorialData.lua` res
 ## Sources
 
 - [`docs/specs/casc-loading.md`](../../specs/casc-loading.md) — behavioral contract for CASC loading
+- [`docs/specs/wow-install-path-settings.md`](../../specs/wow-install-path-settings.md) — persistent per-product install path contract
 - `src/texture/resolve.rs` — `casc_enabled`, `try_casc_resolve`, `casc_extract_dir`
 - `src/blizzard_ui_sync.rs` — Blizzard UI source manifest sync into the user cache
 - `scripts/test-retail-casc-isolation.py` — Bubblewrap test that masks non-retail WoW flavors

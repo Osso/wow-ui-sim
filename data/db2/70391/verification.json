@@ -1,0 +1,226 @@
+{
+  "result": "pass_with_recorded_encrypted_gaps",
+  "manifest_sha256": "4fb759956ca4cddf601ff4aa6ef3267c16f6bd72830d4a711d9458a6a1c91d4e",
+  "integrity": [
+    {
+      "table": "ItemScalingConfig",
+      "sha256": "24d24f5f5d54b6f12027e40f334520cff32c2da455b913554558e457be233fe5",
+      "rows": 418,
+      "missing_record_ids": [],
+      "result": "pass"
+    },
+    {
+      "table": "ItemOffsetCurve",
+      "sha256": "6a485dbe27cf0704bafeaa785d1b423d9ba5cbcbe0b1dabb56b3bb7c2666f4ef",
+      "rows": 70,
+      "missing_record_ids": [],
+      "result": "pass"
+    },
+    {
+      "table": "ItemSquishEra",
+      "sha256": "03ff57ed2d9115f94d72e477086cba70e298dcf95dc0f1d137d0d25901bf3762",
+      "rows": 2,
+      "missing_record_ids": [],
+      "result": "pass"
+    },
+    {
+      "table": "ContentTuning",
+      "sha256": "7889c77490469bc22fb40d898bce8841106c3bb8e604933f138c81d6dee49526",
+      "rows": 2950,
+      "missing_record_ids": [],
+      "result": "pass"
+    },
+    {
+      "table": "Curve",
+      "sha256": "2b0f3d6df69515ae3802373a0cb4cbc6740857a4590f38c9f3ee2301d3ee9f08",
+      "rows": 62817,
+      "missing_record_ids": [
+        121405,
+        121406
+      ],
+      "result": "pass"
+    },
+    {
+      "table": "CurvePoint",
+      "sha256": "1bb018d9a6d8615c1df228d6b30451b8f8902c5b838147c28c6c8fb17ed60f57",
+      "rows": 172321,
+      "missing_record_ids": [
+        355127,
+        355128,
+        355129,
+        355130,
+        355131,
+        355132
+      ],
+      "result": "pass"
+    },
+    {
+      "table": "ItemBonusListLevelDelta",
+      "sha256": "affb804549c130f427752cecafcc9ca8c8440d978a4b1661c67b1e5393c0386d",
+      "rows": 1801,
+      "missing_record_ids": [],
+      "result": "pass"
+    }
+  ],
+  "item_bonus_input": {
+    "sha256": "bbb5dc694d41d2862432c18b637c327d31e43945c58b8e519dd33b9b6375d9f8",
+    "rows": 20272
+  },
+  "references": [
+    {
+      "source": "ItemScalingConfig",
+      "column": "ItemOffsetCurveID",
+      "target": "ItemOffsetCurve",
+      "nonzero_references": 418,
+      "distinct_target_ids": 65,
+      "missing": []
+    },
+    {
+      "source": "ItemScalingConfig",
+      "column": "ItemSquishEraID",
+      "target": "ItemSquishEra",
+      "nonzero_references": 140,
+      "distinct_target_ids": 2,
+      "missing": []
+    },
+    {
+      "source": "ItemOffsetCurve",
+      "column": "CurveID",
+      "target": "Curve",
+      "nonzero_references": 70,
+      "distinct_target_ids": 18,
+      "missing": []
+    },
+    {
+      "source": "ItemSquishEra",
+      "column": "CurveID",
+      "target": "Curve",
+      "nonzero_references": 1,
+      "distinct_target_ids": 1,
+      "missing": []
+    },
+    {
+      "source": "CurvePoint",
+      "column": "CurveID",
+      "target": "Curve",
+      "nonzero_references": 172321,
+      "distinct_target_ids": 50449,
+      "missing": []
+    },
+    {
+      "source": "ContentTuning",
+      "column": "HPScalingCurveID",
+      "target": "Curve",
+      "nonzero_references": 286,
+      "distinct_target_ids": 53,
+      "missing": []
+    },
+    {
+      "source": "ContentTuning",
+      "column": "DMGScalingCurveID",
+      "target": "Curve",
+      "nonzero_references": 237,
+      "distinct_target_ids": 50,
+      "missing": []
+    },
+    {
+      "source": "ContentTuning",
+      "column": "HPPrimaryStatScalingCurveID",
+      "target": "Curve",
+      "nonzero_references": 65,
+      "distinct_target_ids": 14,
+      "missing": []
+    },
+    {
+      "source": "ContentTuning",
+      "column": "DMGPrimaryStatScalingCurveID",
+      "target": "Curve",
+      "nonzero_references": 66,
+      "distinct_target_ids": 14,
+      "missing": []
+    },
+    {
+      "source": "ItemBonus types 11,13",
+      "column": "Value_3",
+      "target": "Curve",
+      "nonzero_references": 1355,
+      "distinct_target_ids": 488,
+      "missing": []
+    },
+    {
+      "source": "ItemBonus types 11,13",
+      "column": "Value_2",
+      "target": "ContentTuning",
+      "nonzero_references": 1194,
+      "distinct_target_ids": 210,
+      "missing": []
+    },
+    {
+      "source": "ItemBonus types 27",
+      "column": "Value_1",
+      "target": "ContentTuning",
+      "nonzero_references": 516,
+      "distinct_target_ids": 19,
+      "missing": []
+    },
+    {
+      "source": "ItemBonus types 49,51",
+      "column": "Value_0",
+      "target": "ItemScalingConfig",
+      "nonzero_references": 543,
+      "distinct_target_ids": 415,
+      "missing": []
+    },
+    {
+      "source": "ItemBonusListLevelDelta",
+      "column": "ID",
+      "target": "ItemBonus.ParentItemBonusListID",
+      "nonzero_references": 1801,
+      "distinct_target_ids": 1801,
+      "missing": []
+    }
+  ],
+  "used_curve_point_presence": [
+    {
+      "table": "ItemOffsetCurve",
+      "column": "CurveID",
+      "distinct_curves": 18,
+      "without_readable_points": []
+    },
+    {
+      "table": "ItemSquishEra",
+      "column": "CurveID",
+      "distinct_curves": 1,
+      "without_readable_points": []
+    },
+    {
+      "table": "ContentTuning",
+      "column": "HPScalingCurveID",
+      "distinct_curves": 53,
+      "without_readable_points": []
+    },
+    {
+      "table": "ContentTuning",
+      "column": "DMGScalingCurveID",
+      "distinct_curves": 50,
+      "without_readable_points": []
+    },
+    {
+      "table": "ContentTuning",
+      "column": "HPPrimaryStatScalingCurveID",
+      "distinct_curves": 14,
+      "without_readable_points": []
+    },
+    {
+      "table": "ContentTuning",
+      "column": "DMGPrimaryStatScalingCurveID",
+      "distinct_curves": 14,
+      "without_readable_points": []
+    }
+  ],
+  "limits": [
+    "Two Curve rows and six CurvePoint rows remain encrypted and omitted.",
+    "Native selector evidence is from70688, not70391.",
+    "Reference closure and point presence do not prove native curve completeness or item-level behavior."
+  ]
+}

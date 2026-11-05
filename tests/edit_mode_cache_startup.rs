@@ -130,7 +130,11 @@ fn truncated_account_cache_does_not_fabricate_layouts() {
                 assert(#layouts == 1, 'one real layout and no phantom saved layouts')
                 assert(layouts[1].layoutName == '{name}' and #layouts[1].systems == 52,
                     'complete first layout must survive')
-                assert(#EditModeManagerFrame.layoutInfo.layouts == 3, 'presets plus one saved layout')
+                -- PTR manager :5-32 includes Gamepad; Retail has two presets.
+                -- Shared/EditModeManager.lua:1018-1020 prepends that source list.
+                local presets = EditModePresetLayoutManager:GetCopyOfPresetLayouts()
+                assert(#EditModeManagerFrame.layoutInfo.layouts == #presets + 1,
+                    'presets plus one saved layout')
                 assert(PlayerFrame:GetNumPoints() > 0, 'PlayerFrame must retain anchors')
             "#)).expect("original EditMode manager initialization");
         }
@@ -162,7 +166,11 @@ fn truncated_account_cache_warns_during_default_startup() {
                 .env_remove("RUST_LOG")
                 .env_remove("WOW_SIM_EDIT_MODE_LAYOUT")
                 .output().expect("run default startup");
-            assert!(output.status.success(), "startup failed for count {count}");
+            assert!(output.status.success(),
+                "startup failed for count {count}: {}\nstdout: {}\nstderr: {}",
+                output.status,
+                String::from_utf8_lossy(&output.stdout),
+                String::from_utf8_lossy(&output.stderr));
             let stderr = String::from_utf8_lossy(&output.stderr);
             assert!(stderr.contains("EditMode account cache declares layout rows that are missing"),
                 "missing default warning for count {count}: {stderr}");
@@ -185,7 +193,9 @@ fn complete_account_cache_preserves_both_layouts() {
             assert(#layouts == 2, 'both saved layouts')
             assert(layouts[1].layoutName == 'LayoutOne' and #layouts[1].systems == 52)
             assert(layouts[2].layoutName == 'LayoutTwo' and #layouts[2].systems == 52)
-            assert(#EditModeManagerFrame.layoutInfo.layouts == 4, 'presets and saved layouts')
+            local presets = EditModePresetLayoutManager:GetCopyOfPresetLayouts()
+            assert(#EditModeManagerFrame.layoutInfo.layouts == #presets + 2,
+                'presets and saved layouts')
             assert(PlayerFrame:GetNumPoints() > 0, 'PlayerFrame must retain anchors')
         "#).expect("original EditMode manager initialization");
     }
@@ -228,7 +238,8 @@ fn explicit_layout_overrides_keep_widescreen_through_whole_startup() {
             import_cache(&env, temp.path(), Some(preferred), ACCOUNT_CACHE, CHARACTER_CACHE);
             let warnings = load_whole_game_ui(&env);
             env.exec(r#"
-                assert(EditModeManagerFrame.layoutInfo.activeLayout == 4,
+                local presets = EditModePresetLayoutManager:GetCopyOfPresetLayouts()
+                assert(EditModeManagerFrame.layoutInfo.activeLayout == #presets + 2,
                     'explicit Widescreen override must address the combined list')
                 assert(EditModeManagerFrame:GetActiveLayoutInfo().layoutName == 'Widescreen',
                     'explicit override identity must survive preset insertion')

@@ -49,12 +49,32 @@ fn register_c_tooltip_info(state: &mut LuaState) -> LuaResult<()> {
     let table_ref = ensure_namespace(state, "C_TooltipInfo")?;
     if matches!(
         crate::client_profile::ACTIVE,
-        crate::client_profile::ClientProfile::Retail | crate::client_profile::ClientProfile::Ptr
+        crate::client_profile::ClientProfile::Retail
+            | crate::client_profile::ClientProfile::Ptr
+            | crate::client_profile::ClientProfile::WowForever
+    ) {
+        crate::c_api::c_tooltip_info_bag_child::register(state, table_ref)?;
+        crate::c_api::c_tooltip_info_totem::register(state, table_ref)?;
+    }
+    // Retail, PTR and Forever pinned docs all declare the loot getters,
+    // including GetLootRollItem (Forever TooltipInfoDocumentation.lua:554-584).
+    if matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail
+            | crate::client_profile::ClientProfile::Ptr
+            | crate::client_profile::ClientProfile::WowForever
     ) {
         crate::c_api::c_tooltip_info_loot::register(state, table_ref)?;
     }
     #[cfg(feature = "retail-12-0-5")]
     {
+        if matches!(
+            crate::client_profile::ACTIVE,
+            crate::client_profile::ClientProfile::Retail
+                | crate::client_profile::ClientProfile::Ptr
+        ) {
+            crate::c_api::c_tooltip_info_appearance::register(state, table_ref)?;
+        }
         crate::c_api::c_tooltip_info_item_context::register(state, table_ref)?;
         crate::c_api::c_tooltip_info_outfit::register(state, table_ref)?;
     }
@@ -119,6 +139,15 @@ pub(crate) fn tooltip_for_selected_indexed_aura(
     aura: Option<crate::lua_api::state::AuraInfo>,
 ) -> rilua::Val {
     spell::tooltip_for_unit_aura(state, aura)
+}
+
+/// Feed the selected totem's text through the existing tooltip publication path.
+pub(crate) fn tooltip_for_totem_text(
+    state: &mut LuaState,
+    name: &str,
+    remaining: &str,
+) -> LuaResult<rilua::Val> {
+    builders::tooltip_for_totem_text(state, name, remaining)
 }
 
 type TooltipScriptFn = fn(&mut LuaState) -> LuaResult<u32>;

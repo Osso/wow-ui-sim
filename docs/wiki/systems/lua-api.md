@@ -6,6 +6,19 @@ The Lua API layer bridges Lua addon code with the Rust simulation engine. It pro
 
 ## Tooltip data and merchant cursor presentation
 
+[Bag-child tooltips](../../specs/tooltip-bag-child.md) compose bag state with
+source-derived child-equipment rows and the existing item builder on
+Retail/PTR/Forever. The item generator includes child IDs automatically; absent
+pinned ItemSparse rows remain explicit catalog misses. Native selector parity
+and miss arity are not claimed.
+[Modified-appearance tooltips](../../specs/tooltip-appearance-item.md) reuse the
+existing Retail/PTR source model and shared item-link parser. Forever model
+promotion is separate. New missing-source paths use one named UNKNOWN seam with
+an explicit zero-return simulator policy, not asserted native arity.
+[Totem tooltips](../../specs/tooltip-totem.md) use stored names and the WM94
+wrapping-clock/rate pipeline, with one named nearest-even emulation seam and
+native-duration unit thresholds. They do not use spell tooltip composition.
+
 Retail/PTR supplied loot and buyback slots feed the existing item tooltip builder.
 [The getter contract](../../specs/tooltip-loot-buyback.md) records the emulated
 missing-slot seam and strict-index limitation.

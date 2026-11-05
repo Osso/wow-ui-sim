@@ -50,15 +50,18 @@ fn load_batches_textures(
 
 static GPU_DEVICE_LIFETIME: std::sync::Mutex<()> = std::sync::Mutex::new(());
 
-/// Serializes headless wgpu instance/device lifetimes within one process.
+/// Serializes headless and test wgpu instance/device lifetimes within one process.
 ///
 /// Workaround: on the NVIDIA 615 Vulkan driver, concurrent instance/device
 /// teardown on one thread and command encoding on another deadlock inside
 /// libvulkan/libnvidia-eglcore (the parallel lib test run hung for hours).
-/// Hold the guard from before the instance is created until after the device
-/// is dropped. Retire when the driver no longer deadlocks under parallel GPU
-/// tests.
-pub(crate) fn lock_gpu_device_lifetime() -> std::sync::MutexGuard<'static, ()> {
+/// Parallel test adapter probes also crash in Vulkan extension enumeration
+/// while another thread initializes/unloads an ICD. Test-created devices must
+/// use this same lock, not a separate test-local mutex.
+/// Hold the guard from before the instance is created until after all device
+/// resources are dropped. Retire when parallel GPU lifetimes no longer crash
+/// or deadlock on the affected loader/driver stack.
+pub fn lock_gpu_device_lifetime() -> std::sync::MutexGuard<'static, ()> {
     GPU_DEVICE_LIFETIME
         .lock()
         .unwrap_or_else(std::sync::PoisonError::into_inner)

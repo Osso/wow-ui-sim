@@ -258,6 +258,10 @@ pub struct SimState {
     pub has_bonus_action_bar: bool,
     pub bonus_bar_index: i32,
     pub action_bar_state: ActionBarStateInfo,
+    pub spell_range_visualization: crate::c_api::action_button_hover::SpellRangeVisualizationState,
+    pub action_combat_range: crate::c_api::action_combat_range_check::ActionCombatRangeState,
+    /// None = missing shared object; Some(flag) = supplied restrictive-rule flag.
+    pub bank_reagent_object: Option<bool>,
     pub action_highlights: ActionHighlightState,
     pub extra_action_button: ExtraActionButtonState,
     pub equipped_artifact: Option<ArtifactInfo>,
@@ -334,6 +338,8 @@ pub struct SimState {
     pub is_active_battlefield: bool,
     pub spell_trade_skill_links: HashMap<u32, String>,
     pub spell_id_aliases: HashMap<String, u32>,
+    pub spell_tooltip_cost_contexts:
+        HashMap<u32, crate::c_api::spell_tooltip_cost::SpellTooltipCostContext>,
     /// Host-declared Maw power atlas/link strings by resolved spell ID; empty by default.
     #[cfg(feature = "retail-12-0-5")]
     pub maw_powers: crate::c_api::c_spell_maw_powers::MawPowers,
@@ -508,6 +514,8 @@ pub struct SimState {
     /// `C_CooldownViewer` entries keyed by cooldownID; empty until populated.
     pub cooldown_viewer_cooldowns:
         std::collections::BTreeMap<i32, crate::c_api::c_cooldown_viewer::CooldownViewerCooldown>,
+    /// EMULATED: no group-buff catalog until supplied by the host.
+    pub cooldown_viewer_group_buffs: Vec<crate::c_api::c_cooldown_viewer::GroupBuffItem>,
     /// Explicit supplied availability; independent of cooldown catalog and UI settings.
     pub cooldown_viewer_availability: crate::c_api::c_cooldown_viewer::CooldownViewerAvailability,
     #[cfg(feature = "retail-12-1-0")]

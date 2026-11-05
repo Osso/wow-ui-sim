@@ -76,6 +76,7 @@ pub fn register_all(lua: &mut rilua::Lua) -> crate::Result<()> {
     let state = lua.state_mut();
     let table_ref = ensure_namespace_table(state, C_ACTION_BAR);
     crate::c_api::c_action_bar::register_keyring(state)?;
+    crate::c_api::action_button_hover::register(state)?;
     register_general_methods(state, table_ref)?;
     register_page_methods(state, table_ref)?;
     register_state_queries(state, table_ref)?;

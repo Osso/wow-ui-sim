@@ -1,5 +1,5 @@
 //! Private positive-contract authorship; not executed RED/GREEN or native evidence.
-#![cfg(any(feature = "client-retail", feature = "client-ptr"))]
+#![cfg(any(feature = "client-retail", feature = "client-ptr", feature = "client-wowforever"))]
 
 use wow_ui_sim::c_api::c_trade_skill_quality::CraftingQualityInfo;
 use wow_ui_sim::lua_api::WowLuaEnv;

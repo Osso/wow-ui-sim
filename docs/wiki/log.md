@@ -1,6 +1,44 @@
 ## [2026-11-04] measured proof | NECESSARY Retail native timeout inventory
 
 [Runtime optimization](investigations/test-runtime-optimization.md#native-timeout-inventory-and-complete-budget-proof--2026-11-04) records the passing 1146.645s source-identified budget proof, zero failed cases against master, the ordinary-shard critical path and regenerated 672-name scheduling data. The 600s target is not met; no fixture optimization is adopted.
+## [2026-11-04] correction | Forever library and WM98
+
+Reconciled the [Forever publication contract](../specs/forever-lib-publication.md)
+and [WM98 spell costs](../specs/spell-tooltip-cost.md). The historical audit now
+links the superseding native evidence limits; generated group-9 attributes retain
+70391 provenance without unrelated record changes. Library proof remains distinct
+from native parity and final all-profile acceptance.
+## [2026-11-04] investigation | Forever tooltip baseline
+
+Updated [Forever compatibility](investigations/forever-addon-startup-compatibility.md#tooltip-baseline-fixtures-and-producers)
+and [talent state](systems/forever-talents.md#loaded-combat-configurations) with
+source-selected fixtures, supplied-query publication and WM99–102 proof. The
+original tab-switch tooltip passes; unknown native acquisition policies remain explicit.
+source-selected fixtures, supplied-query publication, WM99–101 proof and the
+remaining trait-currency gap.
+## [2026-11-04] investigation | Tooltip widget sizing boundaries
+
+Updated [tooltip layout timing](investigations/tooltip-layout-timing.md) with rejected empty/ownerless Show, first-title pooled text synchronization and the explicit UTF-8 append-cap seam. Original ProcessInfo tests distinguish these failures from backpack preservation coverage; final integration proof remains separate.
+
+## [2026-11-04] investigation | PTR Edit Mode preset fixtures
+
+Recorded the [seven-failure reconciliation](investigations/editmode-layout.md#ptr-preset-and-startup-fixture-reconciliation--2026-11-04): five preset-count fixtures, one cast-bar Show lifecycle fixture and one missing declared quest query. Linked current contracts, native limits and bounded PTR/Retail proof.
+
+## [2026-11-04] investigation | Parallel GPU test lifetimes
+
+Recorded six reproduced SIGSEGVs and three timeouts in ten concurrent GPU runs; linked the [shared lifetime boundary](investigations/parallel-gpu-test-lifetimes.md). The same regression passed 50 GREEN runs; integration caller modules passed five runs and library GPU subsets passed ten runs.
+## [2026-11-04] bounded proof | WM93 counted combat range
+
+The [PTR tooltip investigation](investigations/ptr-tooltip-residue.md) records the
+now-GREEN original OnEnter selector, separate counted registrations, explicit
+supplied-result monitor and source-bound slot test execution. Native scheduling,
+target selection and security remain named UNKNOWN seams.
+
+## [2026-11-04] investigation | PTR tooltip residue
+
+Recorded [WM92 producers and remaining consumer boundary](investigations/ptr-tooltip-residue.md).
+Kept the 70668/70493 mismatch, unknown-policy seams, discriminating direct proof,
+consumer preservation limits and visibly failing WM93 selector explicit.
 
 ## [2026-11-04] implementation | D56 tooltip serialization
 
@@ -1665,7 +1703,7 @@ Owned specs/audits/index updated from queued to integrated: 3.4.3 `80a3fb104`, 3
 
 ## [2026-10-08] investigation | Patch 6.2.0 API audit
 
-Pinned parent page 149103/1460518: zero inventory, eleven accounted extract rows. Retail spell-link cost omission modeled; two item-link contracts recorded pending. All targeted tests, fixtures, format/Mists and matching addons-enabled startup [] pass; 49 registers/46 extracts reproduce, three inherited failures. Thirty prior validators plus own portable gate pass; no retirements. Wiki files preserved without shrinkage.
+Pinned parent page 149103/1460518: zero inventory, eleven accounted extract rows. Retail spell-link cost omission was modeled (superseded on 2026-11-04 by [WM98 eligibility](../specs/spell-tooltip-cost.md)); two item-link contracts recorded pending. All targeted tests, fixtures, format/Mists and matching addons-enabled startup [] pass; 49 registers/46 extracts reproduce, three inherited failures. Thirty prior validators plus own portable gate pass; no retirements. Wiki files preserved without shrinkage.
 
 ## [2026-10-08] investigation | Patch 6.1.0 API audit
 
@@ -3384,3 +3422,22 @@ Added [static classification and provenance](systems/area-poi-timed.md).
 ## 2026-11-04 — NECESSARY Retail scheduling profile
 
 Recorded [integration timing and timeout-capacity contention](investigations/test-runtime-optimization.md#necessary-retail-scheduling-profile--2026-11-04). Stable exact-name sharding preserves test identities. Subsequent measurements led to an approved configurable harness permit policy and explicit private CPU/RAM budgets; measured OOM lower bounds now inform shard headroom. The two sub-600-second proofs remain open.
+## 2026-11-04 — Bag-child tooltip selection
+
+Linked [bag-child selection](../specs/tooltip-bag-child.md), generated catalog
+inclusion and pinned-data miss limits from the Lua API system page and index.
+
+## 2026-11-04 — Modified-appearance item tooltip
+
+Linked [appearance selection](../specs/tooltip-appearance-item.md), the original
+dress-up hover and the shared UNKNOWN failure seam from the system page and index.
+
+## 2026-11-04 — Totem tooltip duration
+
+Linked [Totem tooltip selection and time](../specs/tooltip-totem.md), WM94 numeric
+evidence and the explicit nearest-even emulation seam.
+
+## 2026-11-04 — Persistent install path settings
+
+Linked the [install path settings contract](../specs/wow-install-path-settings.md)
+and per-product resolution order from the CASC asset cache page.

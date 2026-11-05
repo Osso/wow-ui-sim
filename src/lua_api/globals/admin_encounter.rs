@@ -84,6 +84,9 @@ fn build_loot_roll_info(
         Val::Num(n) => n as i32,
         _ => 0,
     };
+    let item_link = opt_string_stack(state, 7, "");
+    let descriptor =
+        crate::c_api::item_descriptor::parse_item_link(&item_link).map(|parsed| parsed.descriptor);
     crate::lua_api::state::LootRollInfo {
         roll_id,
         roll_time,
@@ -97,7 +100,8 @@ fn build_loot_roll_info(
         can_disenchant: false,
         disenchant_level: 0,
         item_level,
-        item_link: opt_string_stack(state, 7, ""),
+        item_link,
+        descriptor,
     }
 }
 

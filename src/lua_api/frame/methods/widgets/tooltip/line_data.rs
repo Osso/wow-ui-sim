@@ -612,6 +612,9 @@ pub(super) fn clear_padding(state: &mut LuaState) -> LuaResult<u32> {
 
 pub(super) fn append_text(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
+    if native_sizing_timing() {
+        return append_native_tooltip_text(state, id);
+    }
     let text = opt_string(state, 2).unwrap_or_default();
     let mut sim = borrow_state_mut(state)?;
     if let Some(last) = sim.tooltips.entry(id).or_default().lines.last_mut() {
@@ -619,4 +622,67 @@ pub(super) fn append_text(state: &mut LuaState) -> LuaResult<u32> {
     }
     size_tooltip_on_native_trigger(&mut sim, id);
     Ok(0)
+}
+
+fn append_native_tooltip_text(state: &mut LuaState, id: u64) -> LuaResult<u32> {
+    let (value, _) =
+        crate::lua_api::frame::methods::secret_origin::unwrap_input(state, stack_val(state, 2))?;
+    let suffix = match value {
+        Val::Str(_) => val_to_string(state, value),
+        Val::Num(number) => Some(number.to_string()),
+        _ => None,
+    };
+    let Some(suffix) = suffix else {
+        let sim = borrow_state(state)?;
+        let name = sim.widgets.get(id).and_then(|frame| frame.name.as_deref());
+        return Err(rilua::runtime_error(format!(
+            "Usage: {}:AppendText(\"text\")",
+            name.unwrap_or("GameTooltip")
+        )));
+    };
+    let Some(mut first) = borrow_state(state)?
+        .tooltips
+        .get(&id)
+        .and_then(|tooltip| tooltip.lines.first())
+        .cloned()
+    else {
+        return Ok(0);
+    };
+    // WM95: use the pooled FontString's current text, including direct edits.
+    {
+        let sim = borrow_state(state)?;
+        if let Some(frame) = sim.tooltips[&id]
+            .left_line_ids
+            .first()
+            .and_then(|line_id| sim.widgets.get(*line_id))
+        {
+            first.left_text = frame.text.clone().unwrap_or_default();
+        }
+    }
+    first.left_text = emulate_append_text_utf8_cap(&first.left_text, &suffix);
+    first.left_segments =
+        super::text_markup::presentation_segments(state, &first.left_text, first.left_color);
+    borrow_state_mut(state)?
+        .tooltips
+        .get_mut(&id)
+        .unwrap()
+        .lines[0] = first;
+    sync_tooltip_line_frame(state, id, false, 1)?;
+    let mut sim = borrow_state_mut(state)?;
+    size_tooltip_on_native_trigger(&mut sim, id);
+    Ok(0)
+}
+
+/// EMULATED: native WM95 caps at 255 payload bytes, even inside UTF-8.
+/// Our text model stores String, so retain the largest complete-character prefix.
+fn emulate_append_text_utf8_cap(current: &str, suffix: &str) -> String {
+    let mut text = String::new();
+    text.push_str(current.split('\0').next().unwrap_or_default());
+    text.push_str(suffix.split('\0').next().unwrap_or_default());
+    let mut end = text.len().min(255);
+    while !text.is_char_boundary(end) {
+        end -= 1;
+    }
+    text.truncate(end);
+    text
 }

@@ -62,6 +62,111 @@ A minimal end-to-end example is at
 [Osso/test-wow-addon](https://github.com/Osso/test-wow-addon) — a TOC,
 one Lua file, a `tests/` folder, and a workflow that calls this action.
 
+## Configuration
+
+### WoW install location
+
+CASC profiles need a local WoW installation. `wow-sim` and `wow-cli` resolve the install
+root for the compiled client profile in this order:
+
+1. CLI override (library callers only; `wow-sim` passes none)
+2. `WOW_INSTALL_PATH`
+3. `WOW_DATA_PATH` (the `Data` directory; its parent is the root)
+4. The stored entry for the active product
+5. Automatic detection: the Battle.net Agent `product.db` on Windows, then common install
+   locations
+
+A candidate is accepted only when `<root>/Data/data` exists.
+
+### Settings file
+
+The resolved path is stored per CASC product in `install-paths.json`:
+
+| Platform | Location |
+| --- | --- |
+| Windows | `%APPDATA%\wow-ui-sim\install-paths.json` |
+| Linux | `$XDG_CONFIG_HOME/wow-ui-sim/install-paths.json` (`~/.config/...` when unset) |
+| macOS | `~/Library/Application Support/wow-ui-sim/install-paths.json` |
+
+The directory is the platform config directory (`dirs::config_dir()`). Entries are keyed by
+CASC product code, which the compiled `client-*` feature selects:
+
+| Key | Client profile |
+| --- | --- |
+| `wow` | Retail |
+| `wowxptr` | PTR |
+| `wowf` | WoW Forever |
+| `wow_classic` | Wrath of the Lich King, Mists of Pandaria |
+| `wow_classic_era` | Era, Anniversary |
+
+Each entry accepts `install_path` (the install root that contains `Data`) and `data_path`
+(the `Data` directory). `install_path` wins when both are present; a `data_path`-only entry
+uses its parent as the root. A complete example, also stored as
+[`docs/examples/install-paths.example.json`](docs/examples/install-paths.example.json):
+
+```json
+{
+  "install_paths": {
+    "wow": {
+      "install_path": "C:\\Program Files (x86)\\World of Warcraft"
+    },
+    "wowxptr": {
+      "install_path": "D:\\Games\\World of Warcraft PTR"
+    },
+    "wowf": {
+      "install_path": "D:\\Games\\World of Warcraft Forever"
+    },
+    "wow_classic": {
+      "install_path": "D:\\Games\\World of Warcraft Classic",
+      "data_path": "D:\\Games\\World of Warcraft Classic\\Data"
+    },
+    "wow_classic_era": {
+      "data_path": "D:\\Games\\World of Warcraft Era\\Data"
+    }
+  }
+}
+```
+
+The file is written when a valid path comes from `WOW_INSTALL_PATH`, `WOW_DATA_PATH`, or
+automatic detection; that entry replaces the stored one for the active product, so later
+launches need no variable. A valid stored entry is used as-is and not rewritten. An entry
+whose `<root>/Data/data` no longer exists is ignored with a stderr warning and replaced by
+the next valid source. A missing file means no stored entries; malformed content is
+reported and ignored, and startup continues. `WOW_SIM_CASC=0` neither reads nor writes the
+file.
+
+### Environment variables
+
+These are the variables a player normally sets:
+
+| Variable | Effect |
+| --- | --- |
+| `WOW_INSTALL_PATH` | WoW install root. Takes precedence over, and is stored over, the settings file. |
+| `WOW_DATA_PATH` | WoW `Data` directory; its parent is used as the root. Lower priority than `WOW_INSTALL_PATH`. |
+| `WOW_PRODUCT` | CASC product code used for detection. The compiled `client-*` feature fixes the client profile, so this cannot turn one client build into another. |
+| `WOW_SIM_NO_SOUND` | `1` or `true` skips audio initialization. |
+| `WOW_SIM_SOFTWARE_RENDER` | `1` or `true` forces the software GPU adapter for headless rendering (`screenshot`). |
+| `WOW_SIM_MAX_CORES` | Linux only: restrict the process to the first N CPUs (default `2`). |
+| `WOW_SIM_STORAGE_DIR` | SavedVariables directory used when `--session-wtf-path` is absent. |
+| `WOW_SIM_ADDONS_PATH` | Extra third-party addon root during default discovery. |
+| `WOW_SIM_ADDONS_PATH_EXCLUSIVE` | `1` or `true` makes `WOW_SIM_ADDONS_PATH` the only addon root. |
+
+`WOW_SIM_CASC=0` disables CASC asset loading, for example when game assets are unavailable.
+
+<details>
+<summary>Development and debugging variables</summary>
+
+| Variable | Effect |
+| --- | --- |
+| `WOW_SIM_NO_ADDONS` | `1` or `true` skips third-party addon loading. |
+| `WOW_SIM_NO_SAVED_VARS` | `1` or `true` skips loading WTF SavedVariables. |
+| `WOW_SIM_DEBUG_ELEMENTS` | `1` draws element borders and anchor points; see [debug tools](docs/debug-tools.md). |
+| `WOW_SIM_DEBUG_BORDERS` | `1` draws element borders only. |
+| `WOW_SIM_DEBUG_ANCHORS` | `1` draws anchor points only. |
+| `WOW_SIM_VERBOSE` | Enables verbose addon-loading logging. |
+
+</details>
+
 ## Native development
 
 Normal builds and runs use the shared desktop/local host selection:
@@ -92,7 +197,7 @@ formatting its child modules. Avoid workspace-wide formatting for focused change
 
 ## Release packages
 
-GitHub releases provide Retail, Mists, and WoW Forever packages for Linux x86-64, Windows x86-64, and macOS Apple Silicon. Windows packages include a ZIP and an installer; macOS packages use a DMG. Forever package names include `forever`, and its installer and macOS app use separate identities.
+GitHub releases provide Retail and WoW Forever packages for Linux x86-64, Windows x86-64, and macOS Apple Silicon. Mists packages are available for Linux x86-64 and Windows x86-64 only. Windows packages include a ZIP and an installer; macOS packages use a DMG. Forever package names include `forever`, and its installer and macOS app use separate identities.
 
 Forever packages include selected spell data. For a local Forever build, run `wow-cli casc sync-forever-spells` before starting the simulator. It uses the installed pinned Forever client when available, or downloads the pinned DB2 files from Blizzard's CDN. See the [spell data contract](docs/specs/forever-spell-data.md).
 
@@ -193,6 +298,16 @@ Build before using bare `wow-cli` commands; do not pass `--features tools` to th
 See [the build contract](docs/specs/integration-bin-selection.md).
 
 Historical replay: add `--features tools` before `--` to the recorded Cargo utility commands in [patch audit milestone tests](docs/specs/patch-api-audit-manifest.md), [Mists world-map startup](docs/wiki/investigations/mists-world-map-startup.md), and [Windows port builds](docs/wiki/investigations/windows-port-build.md); original evidence is unchanged.
+
+### Attribute-only spell regeneration
+
+`wow-cli generate spells --augment-attributes` adds or refreshes only
+`SpellInfo.attributes_9` in the committed formatted spell table. It reads
+`SpellMisc.csv` from the normal WoW data directory, selects DifficultyID=0 like
+the full generator, and records the input hash and build 12.1.5.70391 in the
+output header. Existing spell IDs and all other bytes remain unchanged. This
+mode does not need `Spell.csv`; full `wow-cli generate spells` still requires
+all original CSV inputs and writes the same attribute field.
 
 ## Writing Tests
 

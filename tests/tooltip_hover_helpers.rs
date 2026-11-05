@@ -5,6 +5,12 @@ use tooltip_full_env_helpers::refresh_aura_frames;
 use wow_ui_sim::lua_api::WowLuaEnv;
 
 pub fn open_character_panel(env: &WowLuaEnv) {
+    if wow_ui_sim::client_profile::ACTIVE == wow_ui_sim::client_profile::ClientProfile::WowForever {
+        // Camelot/CharacterFrame.lua:3-29,154 uses ModeTabs, not numTabs.
+        env.exec("ToggleCharacter('PaperDollFrame'); assert(CharacterFrame:IsShown()); assert(CharacterHeadSlot)")
+            .expect("Failed to open the original Forever character panel");
+        return;
+    }
     if wow_ui_sim::client_profile::ACTIVE == wow_ui_sim::client_profile::ClientProfile::Wrath {
         // Wrath FrameXML/CharacterFrame.lua:3 selects and opens a subframe.
         env.exec("ToggleCharacter('PaperDollFrame'); assert(CharacterFrame:IsShown()); assert(CharacterHeadSlot)")

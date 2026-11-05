@@ -6,8 +6,9 @@ The native API contract lives in [native Intl linking](specs/intl-native-linking
 
 ## Native releases
 
-[Release workflow](../.github/workflows/release.yml) preserves the six
-Retail/Mists platform builds and their `cargo release-*` aliases:
+[Release workflow](../.github/workflows/release.yml) builds Retail and Forever
+for Linux, Windows and macOS, and Mists for Linux and Windows only. These builds
+use the `cargo release-*` aliases:
 `--release --no-default-features --features sound,gui,client-<profile>`, explicit
 platform target, both `wow-sim` and `wow-cli`, CI Cargo configuration.
 
@@ -23,7 +24,7 @@ platform target, both `wow-sim` and `wow-cli`, CI Cargo configuration.
   copies the transitive ICU dylib closure into `Contents/Frameworks`, rewrites
   imports/IDs to bundle-relative paths, and rejects unresolved non-system imports.
   Sign dylibs before the outer app, verify the signature, then launch the packaged
-  executable with `--version`. Mists has no ICU bundling step.
+  executable with `--version`. Mists has no macOS release package.
 
 ## Docker
 

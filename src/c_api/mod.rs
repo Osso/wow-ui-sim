@@ -6,7 +6,11 @@
 mod c_account_info;
 pub mod c_guild_info;
 pub mod c_recruit_a_friend;
+#[cfg(feature = "retail-12-0-5")]
+pub(crate) mod c_tooltip_info_appearance;
+pub(crate) mod c_tooltip_info_bag_child;
 pub(crate) mod c_tooltip_info_loot;
+pub(crate) mod c_tooltip_info_totem;
 pub(crate) mod class_catalog;
 #[cfg(any(feature = "client-era", feature = "client-anniversary"))]
 pub(crate) mod classic_startup_data;
@@ -17,6 +21,7 @@ pub(crate) mod game_mode;
 pub(crate) mod game_rules_personal_resource;
 pub(crate) mod game_rules_strata;
 pub(crate) mod game_rules_visibility;
+pub mod item_descriptor;
 pub mod item_overlay;
 pub(crate) mod item_quality_color;
 pub mod mount_filters;
@@ -27,6 +32,8 @@ pub mod quest_readiness;
 pub(crate) mod quest_reward_currencies;
 pub(crate) mod quest_reward_spells;
 pub(crate) mod tooltip_data;
+pub mod trait_group_currency;
+pub mod trait_group_display;
 pub mod ui_widget_manager;
 #[cfg(feature = "client-wrath")]
 pub mod who_routing;
@@ -37,6 +44,8 @@ pub(crate) mod abbreviated_number_formatter;
 pub mod action_count_info;
 #[cfg(feature = "retail-12-0-5")]
 pub use action_count_info::ActionUseCountInfo;
+pub mod action_button_hover;
+pub mod action_combat_range_check;
 pub mod action_macros;
 pub mod action_repeat;
 #[cfg(feature = "action-spell-range")]
@@ -220,6 +229,8 @@ mod lfr_availability;
 pub(crate) mod pet_orders;
 pub mod profession_spec_inputs;
 pub(crate) use lfr_availability::stock_lfr_availability;
+#[cfg(all(test, feature = "client-wowforever"))]
+mod forever_lib_baseline_tests;
 pub mod outfit_entry;
 mod scenario_finder_availability;
 pub mod store_public_eligibility;
@@ -307,6 +318,8 @@ pub mod map_world_coordinates;
 pub(crate) mod patch_12_0_7_inputs;
 mod spell_cooldown_output;
 pub(crate) mod spell_tooltip_cost;
+#[cfg(test)]
+mod spell_tooltip_cost_tests;
 pub(crate) mod talent_spell;
 pub(crate) mod unit_aura_access;
 #[cfg(feature = "retail-12-0-5")]

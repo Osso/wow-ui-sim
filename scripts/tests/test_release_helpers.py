@@ -99,26 +99,115 @@ class MacOSBundleTests(unittest.TestCase):
 
 
 class DockerPublicationTests(unittest.TestCase):
-    def verify(self, startup, summary):
-        outputs = ["wow-sim 0.1.0\n", startup, summary]
-        results = [subprocess.CompletedProcess([], 0, output, "") for output in outputs]
-        with patch.object(DOCKER, "run_container", side_effect=results):
-            DOCKER.verify("synthetic-image")
+    QEMU = Path("/usr/bin/qemu-x86_64")
+    SMOKE = ["--no-addons", "--no-saved-vars", "run-tests", "PublicationSmoke"]
+
+    def verify(self, startup, summary, qemu):
+        """Record verify()'s container runs while returning canned outputs."""
+        runs = []
+
+        def fake_run_container(image, arguments, fixture=None, qemu=None):
+            runs.append((image, list(arguments), fixture, qemu))
+            if arguments[-1] == "lua-errors":
+                output = startup
+            elif "run-tests" in arguments:
+                output = summary
+            else:
+                output = "wow-sim 0.1.0\n"
+            return subprocess.CompletedProcess([], 0, output, "")
+
+        with patch.object(DOCKER, "run_container", side_effect=fake_run_container):
+            DOCKER.verify("synthetic-image", qemu)
+        return runs
+
+    def docker_runs(self, image, arguments, fixture=None, qemu=None):
+        """Record the docker commands run_container builds instead of executing them."""
+        commands = []
+
+        def fake_run(command, **kwargs):
+            commands.append(list(command))
+            return subprocess.CompletedProcess(command, 0, "wow-sim 0.1.0\n", "")
+
+        with patch.object(DOCKER.subprocess, "run", side_effect=fake_run):
+            DOCKER.run_container(image, arguments, fixture, qemu)
+        return commands
+
+    def test_run_container_uses_image_directly_without_qemu(self):
+        docker_run, cleanup = self.docker_runs("synthetic-image", ["--version"])
+        name = docker_run[docker_run.index("--name") + 1]
+        self.assertTrue(name.startswith("wow-ui-sim-proof-"))
+        self.assertEqual(docker_run, [
+            "docker", "run", "--rm", "--name", name, "--network", "none",
+            "-e", "WOW_SIM_CASC=0", "-e", "WOW_SIM_NO_ADDONS=1",
+            "synthetic-image", "--version",
+        ])
+        self.assertEqual(cleanup, ["docker", "rm", "-f", name])
+
+    def test_run_container_emulates_image_with_mounted_qemu(self):
+        fixture = Path("/proof/fixture")
+        docker_run, _ = self.docker_runs(
+            "synthetic-image", ["--version"], fixture, self.QEMU)
+        name = docker_run[docker_run.index("--name") + 1]
+        self.assertEqual(docker_run, [
+            "docker", "run", "--rm", "--name", name, "--network", "none",
+            "-e", "WOW_SIM_CASC=0", "-e", "WOW_SIM_NO_ADDONS=1",
+            "--init", "--ulimit", "core=0",
+            "--mount", f"type=bind,src={self.QEMU},dst=/qemu-x86_64-static,readonly",
+            "--entrypoint", "/qemu-x86_64-static",
+            "-v", f"{fixture}:/app/Interface/AddOns/PublicationSmoke:ro",
+            "synthetic-image", "-cpu", "Nehalem", "/app/wow-sim", "--version",
+        ])
+
+    def test_verify_emulates_and_runs_native_image_before_publishing(self):
+        runs = self.verify(
+            "[]\n", "\x1b[32m2 tests, 2 passed, 0 failed\x1b[0m\n", self.QEMU)
+        self.assertEqual(
+            [(arguments, qemu) for _, arguments, _, qemu in runs],
+            [
+                (["--version"], self.QEMU),
+                (["--version"], None),
+                (["--no-addons", "--no-saved-vars", "lua-errors"], None),
+                (self.SMOKE, self.QEMU),
+                (self.SMOKE, None),
+            ],
+        )
+        fixtures = [fixture for _, _, fixture, _ in runs if fixture is not None]
+        self.assertEqual(len(fixtures), 2)
+        for fixture in fixtures:
+            self.assertTrue(Path(fixture).name.startswith("wow-publication-smoke-"))
+        self.assertEqual({image for image, *unused in runs}, {"synthetic-image"})
+
+    def test_verify_without_qemu_runs_only_native_containers(self):
+        runs = self.verify("[]\n", "2 tests, 2 passed, 0 failed\n", None)
+        self.assertEqual(
+            [(arguments, qemu) for _, arguments, _, qemu in runs],
+            [
+                (["--version"], None),
+                (["--version"], None),
+                (["--no-addons", "--no-saved-vars", "lua-errors"], None),
+                (self.SMOKE, None),
+                (self.SMOKE, None),
+            ],
+        )
 
     def test_exact_two_test_success_is_accepted(self):
-        self.verify("[]\n", "\x1b[32m2 tests, 2 passed, 0 failed\x1b[0m\n")
+        self.verify("[]\n", "\x1b[32m2 tests, 2 passed, 0 failed\x1b[0m\n", self.QEMU)
 
     def test_zero_tests_cannot_publish(self):
         with self.assertRaisesRegex(RuntimeError, "exactly two"):
-            self.verify("[]\n", "0 tests, 0 passed, 0 failed\n")
+            self.verify("[]\n", "0 tests, 0 passed, 0 failed\n", self.QEMU)
 
     def test_failed_addon_test_cannot_publish(self):
         with self.assertRaisesRegex(RuntimeError, "exactly two"):
-            self.verify("[]\n", "2 tests, 1 passed, 1 failed\n")
+            self.verify("[]\n", "2 tests, 1 passed, 1 failed\n", self.QEMU)
 
     def test_startup_errors_cannot_publish(self):
         with self.assertRaisesRegex(RuntimeError, "startup Lua errors"):
-            self.verify('[{"message":"missing API"}]', "2 tests, 2 passed, 0 failed\n")
+            self.verify(
+                '[{"message":"missing API"}]',
+                "2 tests, 2 passed, 0 failed\n",
+                self.QEMU,
+            )
 
 
 if __name__ == "__main__":

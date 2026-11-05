@@ -10,6 +10,76 @@ use keybindings_panels_detail::{
     drain_test_errors, frame_is_shown, install_test_error_handler, setup_env,
 };
 
+#[cfg(feature = "client-wowforever")]
+#[test]
+fn forever_trait_currency_headers_match_groups_and_refresh_spent_values() {
+    use wow_ui_sim::c_api::trait_group_currency::{ConfigCurrencyInputs, CurrencyAmounts, RankedNode};
+    use wow_ui_sim::c_api::trait_group_display::{GroupDisplayRow, SkillLineDisplay};
+    test_timeout! {
+        let env = setup_env();
+        install_test_error_handler(&env);
+        env.exec(r#"
+            PlayerSpellsUtil.ToggleSpellBookFrame()
+            assert(PlayerSpellsFrame:TrySetTab(PlayerSpellsUtil.FrameTabs.ClassTalents))
+            local frame = PlayerSpellsFrame.TalentsFrame
+            local source = debug.getinfo(frame.RefreshTreeHeaders, 'S').source:gsub('\\\\', '/')
+            assert(source:find('Camelot/ClassTalents/Blizzard_ClassTalentsFrame.lua', 1, true), source)
+        "#).unwrap();
+        let (config_id, tree_id): (i32, i32) = env.eval("local f=PlayerSpellsFrame.TalentsFrame; return f:GetConfigID(), f:GetTalentTreeID()").unwrap();
+        {
+            let state = env.state();
+            let mut sim = state.borrow_mut();
+            let talents = &mut sim.talents.forever;
+            talents.group_display.rows_by_tree.insert(tree_id, vec![
+                GroupDisplayRow { group_id: 10, skill_line_id: 50, order_index: 1 },
+                GroupDisplayRow { group_id: 20, skill_line_id: 51, order_index: 2 },
+            ]);
+            talents.group_display.skill_lines.insert(50, SkillLineDisplay { name: "First supplied".into(), icon: 135920 });
+            talents.group_display.skill_lines.insert(51, SkillLineDisplay { name: "Second supplied".into(), icon: 135873 });
+            let currency = &mut talents.group_currency;
+            currency.group_trees.extend([(10, tree_id), (20, tree_id)]);
+            currency.node_groups.insert(100, vec![10,20]);
+            currency.tree_currencies.insert(tree_id, vec![80]);
+            let mut config = ConfigCurrencyInputs {
+                nodes: vec![RankedNode { node_id: 100, rank: 1 }],
+                accumulator_order: vec![20,10],
+                ..Default::default()
+            };
+            for (group, spent) in [(10,2), (20,14)] {
+                config.amounts.insert((group,80), CurrencyAmounts { quantity: 30-spent, max_quantity: Some(30), spent, spent_in_tree: None });
+            }
+            currency.configs.insert(config_id, config);
+        }
+        env.exec(r#"
+            local frame=PlayerSpellsFrame.TalentsFrame
+            frame:RefreshTreeHeaders()
+            assert(#frame.treeHeaders == 2)
+            assert(frame.treeHeaders[1].Name:GetText() == 'First supplied')
+            assert(frame.treeHeaders[2].Name:GetText() == 'Second supplied')
+            assert(frame.treeHeaders[1].Text:GetText() == '2')
+            assert(frame.treeHeaders[2].Text:GetText() == '14')
+        "#).expect("original headers match currency groups, not outer array positions");
+        {
+            let state = env.state();
+            let mut sim = state.borrow_mut();
+            let config = sim.talents.forever.group_currency.configs.get_mut(&config_id).unwrap();
+            for (group, spent) in [(10, 11), (20, 7)] {
+                let amounts = config.amounts.get_mut(&(group, 80)).unwrap();
+                amounts.spent = spent;
+                amounts.quantity = 30 - spent;
+            }
+        }
+        env.exec(r#"
+            local frame=PlayerSpellsFrame.TalentsFrame
+            frame:RefreshTreeHeaders()
+            assert(frame.treeHeaders[1].Text:GetText() == '11')
+            assert(frame.treeHeaders[2].Text:GetText() == '7')
+        "#).expect("original headers must refresh changed supplied spent values");
+        let errors=drain_test_errors(&env);
+        assert!(errors.is_empty(), "original header flow errors: {}", errors.join("\n"));
+    }
+}
+
 #[cfg(any(feature = "client-ptr", feature = "client-wowforever"))]
 #[test]
 fn supplied_spellbook_rank_is_observed() {

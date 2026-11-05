@@ -271,25 +271,20 @@ fn edit_mode_wtf_cache_can_override_active_layout_by_name() {
         .with_state(|state| saved_vars.load_edit_mode_cache(state, 2, None))
         .expect("load edit mode cache");
 
-    let (active, active_name): (i32, String) = env
+    let (active, active_name, preset_count): (i32, String, i32) = env
         .eval(
             r#"
             local info = C_EditMode.GetLayouts()
             local savedIndex = info.activeLayout - Enum.EditModePresetLayoutsMeta.NumValues
-            return info.activeLayout, info.layouts[savedIndex].layoutName
+            return info.activeLayout, info.layouts[savedIndex].layoutName,
+                Enum.EditModePresetLayoutsMeta.NumValues
             "#,
         )
         .expect("read overridden active edit mode layout");
 
-    // Forever EditModeManagerConstantsDocumentation.lua:625-635 adds Gamepad.
-    assert_eq!(
-        active,
-        if cfg!(feature = "client-wowforever") {
-            4
-        } else {
-            3
-        }
-    );
+    // PTR EditModeManagerConstantsDocumentation.lua:639-649 declares three
+    // presets; Retail declares two. The override selects the first saved row.
+    assert_eq!(active, preset_count + 1);
     assert_eq!(active_name, "Ultrawide");
 }
 
@@ -333,25 +328,20 @@ fn edit_mode_snapshot_layout_selects_active_layout_by_name() {
         .with_state(|state| saved_vars.load_edit_mode_cache(state, 2, Some("Ultrawide")))
         .expect("load edit mode cache");
 
-    let (active, active_name): (i32, String) = env
+    let (active, active_name, preset_count): (i32, String, i32) = env
         .eval(
             r#"
             local info = C_EditMode.GetLayouts()
             local savedIndex = info.activeLayout - Enum.EditModePresetLayoutsMeta.NumValues
-            return info.activeLayout, info.layouts[savedIndex].layoutName
+            return info.activeLayout, info.layouts[savedIndex].layoutName,
+                Enum.EditModePresetLayoutsMeta.NumValues
             "#,
         )
         .expect("read snapshot-selected active edit mode layout");
 
-    // Forever EditModeManagerConstantsDocumentation.lua:625-635 adds Gamepad.
-    assert_eq!(
-        active,
-        if cfg!(feature = "client-wowforever") {
-            4
-        } else {
-            3
-        }
-    );
+    // PTR EditModeManagerConstantsDocumentation.lua:639-649 declares three
+    // presets; Retail declares two. The override selects the first saved row.
+    assert_eq!(active, preset_count + 1);
     assert_eq!(active_name, "Ultrawide");
 }
 
@@ -513,8 +503,13 @@ fn edit_mode_account_cache_preserves_all_legacy_values_and_fills_new_defaults() 
         .expect("read account settings");
 
     let expected = "0=1,1=20,2=1,3=1,4=0,5=0,6=0,7=1,8=0,9=1,10=0,11=0,12=1,13=0,14=0,15=0,16=0,17=0,18=0,19=0,20=0,21=0,22=0,23=1,24=0,25=0,26=0,27=0,28=1,29=1,30=1,31=1,32=1,33=1,34=1,35=1";
-    // Forever's pinned account-setting enum puts ShowLossOfControl at 36.
-    let expected = if cfg!(feature = "client-wowforever") {
+    // Pinned EditModeManagerConstantsDocumentation.lua: Forever 242–246;
+    // PTR 70493 215–260: both put ShowLossOfControl at 36.
+    let expected = if matches!(
+        wow_ui_sim::client_profile::ACTIVE,
+        wow_ui_sim::client_profile::ClientProfile::Ptr
+            | wow_ui_sim::client_profile::ClientProfile::WowForever
+    ) {
         format!("{expected},36=1")
     } else {
         expected.to_owned()

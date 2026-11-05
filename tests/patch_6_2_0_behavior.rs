@@ -1,5 +1,5 @@
-//! Spell resource-cost policy from the pinned 6.2.0 page, not native parity.
-#![cfg(feature = "profile-retail")]
+//! WM98 modern data getters retain eligible costs; historical frame notes are not an oracle.
+#![cfg(any(feature = "profile-retail", feature = "client-ptr", feature = "client-wowforever"))]
 use wow_ui_sim::lua_api::WowLuaEnv;
 
 prefork_full_ui_case! {
@@ -12,13 +12,13 @@ fn patch_6_2_0_difficulty_identifiers(env: &WowLuaEnv) {
 }
 
 prefork_full_ui_case! {
-fn patch_6_2_0_spell_link_excludes_cost(env: &WowLuaEnv) {
+fn patch_6_2_0_spell_link_retains_eligible_cost(env: &WowLuaEnv) {
     check_spell_link_cost(env);
 }
 }
 
 #[test]
-fn patch_6_2_0_spell_link_excludes_cost_bare() {
+fn patch_6_2_0_spell_link_retains_eligible_cost_bare() {
     let env = WowLuaEnv::new().unwrap();
     check_spell_link_cost(&env);
 }
@@ -35,13 +35,9 @@ fn check_spell_link_cost(env: &WowLuaEnv) {
         end
         local directData = C_TooltipInfo.GetSpellByID(19750)
         local linkedData = C_TooltipInfo.GetHyperlink('spell:19750')
-        assert(#directData.lines == #linkedData.lines + 1)
-        local nextLinked = 1
-        for _, line in ipairs(directData.lines) do
-            if not line.leftText:find('MANA') then
-                assert(line.leftText == linkedData.lines[nextLinked].leftText)
-                nextLinked = nextLinked + 1
-            end
+        assert(#directData.lines == #linkedData.lines)
+        for index, line in ipairs(directData.lines) do
+            assert(line.leftText == linkedData.lines[index].leftText)
         end
         tooltip:SetSpellByID(19750)
         local direct = textLines()
@@ -50,7 +46,7 @@ fn check_spell_link_cost(env: &WowLuaEnv) {
             tooltip:SetHyperlink(link)
             local linked = textLines()
             assert(linked:find('Flash of Light'), linked)
-            assert(not linked:find('MANA'), linked)
+            assert(linked:find('MANA'), linked)
             local name, id = tooltip:GetSpell()
             assert(name == 'Flash of Light' and id == 19750)
         end

@@ -42,6 +42,39 @@ nil; retaining explicit simulator errors is an EMULATED policy, not native proof
 Numeric fields accept the existing numeric range and subtract before truncation;
 string coercion and unusual native conversions remain UNKNOWN.
 
+## Loaded combat configurations
+
+The [spec-group configuration query](../../specs/forever-spec-group-config.md)
+uses a separate ordered `loaded_configs` vector in the same Forever state. Each
+record supplies its ID, combat-kind predicate and combat flags. WM99 establishes
+first-match selection with flag 1 for group 1 and flag 8 for other accepted
+indices. Zero IDs remain present; no match returns nil. This is independent of
+legacy talent groups and the separately stored active configuration ID. The
+unseeded vector is empty; live native population and update timing remain unknown.
+
+## Trait-group display rows
+
+[WM101 display projection](../../specs/forever-trait-group-display.md) stores
+ordered relations separately from supplied SkillLine names/icons under
+`group_display`. Missing joins retain their relation row with empty text and zero
+icon. There is no implicit populated catalog and no sorting by orderIndex. One
+named inferred seam maps absent tree relations to an empty provider. Native
+relation acquisition and live provider behavior remain unknown.
+
+## Trait-group currency snapshots
+
+[WM102 group currency](../../specs/forever-trait-group-currency.md) selects a
+supplied configuration's positive-rank node memberships and checks requested
+known groups for a common tree. Separate supplied accumulator and tree-currency
+orders preserve provider traversal without sorting or echoing requests. Resolved
+cost/holdings snapshots are an explicit UNKNOWN acquisition boundary; the model
+does not derive unknown native per-node merges or source eligibility. Missing
+populated sources raise named diagnostics. Native empty cases use the separately
+labelled inferred public empty-array result. The unchanged original Camelot
+ClassTalents tab-switch tooltip regression passes with this query. A populated
+original header case also verifies group-ID matching across reversed provider
+orders and refreshed text from two distinct supplied spent snapshots.
+
 ## Event delivery seam
 
 `A_Admin.FireEvent` is the single host-controlled notification seam. Reading

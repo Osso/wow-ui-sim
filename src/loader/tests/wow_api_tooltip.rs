@@ -376,7 +376,7 @@ fn test_c_tooltip_info_get_hyperlink_returns_item_and_spell_tooltips() {
             local itemNameLine = itemTooltip.lines[1]
             local itemLevelLine = itemTooltip.lines[2]
             local spellNameLine = spellTooltip.lines[1]
-            local spellCastLine = spellTooltip.lines[2]
+            local spellCastLine = spellTooltip.lines[3]
             local spellHasCostLine = false
             for _, line in ipairs(spellTooltip.lines) do
                 if line.leftText == "10% of Base MANA" then
@@ -395,7 +395,7 @@ fn test_c_tooltip_info_get_hyperlink_returns_item_and_spell_tooltips() {
                 and spellNameLine
                 and spellNameLine.type == Enum.TooltipDataLineType.SpellName
                 and spellNameLine.leftText == "Flash of Light"
-                and not spellHasCostLine
+                and spellHasCostLine
                 and spellCastLine
                 and spellCastLine.leftText == "1.5 sec cast"
             "#,
@@ -403,8 +403,7 @@ fn test_c_tooltip_info_get_hyperlink_returns_item_and_spell_tooltips() {
         .unwrap();
     assert!(
         has_real_tooltip,
-        "C_TooltipInfo.GetHyperlink should dispatch item and spell hyperlinks to tooltip data; \
-         since 6.2.0 spell-link tooltips omit the resource cost (GetSpellByID keeps it)",
+        "C_TooltipInfo.GetHyperlink should dispatch item and spell hyperlinks, retaining eligible resource cost per WM98",
     );
 }
 

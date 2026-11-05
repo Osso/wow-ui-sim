@@ -13,6 +13,158 @@ use wow_ui_sim::lua_api::WowLuaEnv;
 
 #[cfg(any(feature = "client-retail", feature = "client-ptr"))]
 #[test]
+fn blizzard_tooltip_process_info_rejects_empty_or_ownerless_show() {
+    let env = setup_full_env();
+    env.exec(
+        r#"
+        GameTooltip:SetOwner(UIParent, "ANCHOR_NONE")
+        assert(GameTooltip:ProcessInfo({ tooltipData = { lines = {
+            { leftText = "Previous content" },
+        } } }))
+        assert(GameTooltip:IsShown())
+        local width, height = GameTooltip:GetSize()
+        assert(GameTooltip:ProcessInfo({ tooltipData = { lines = {} } }))
+        assert(not GameTooltip:IsShown(), "empty ProcessInfo must hide the tooltip")
+        assert(GameTooltip:GetOwner() == nil, "rejected Show must release its owner")
+        assert(GameTooltip:GetWidth() == width and GameTooltip:GetHeight() == height,
+            "rejected Show must retain the previous dimensions")
+
+        GameTooltip:SetAllowShowWithNoLines(true)
+        assert(GameTooltip:ProcessInfo({ tooltipData = { lines = {
+            { leftText = "Ownerless content" },
+        } } }))
+        assert(not GameTooltip:IsShown(), "allow-empty does not permit ownerless Show")
+        assert(GameTooltip:NumLines() == 0, "ownerless Show must clear pending lines")
+
+        GameTooltip:SetOwner(UIParent, "ANCHOR_NONE")
+        assert(GameTooltip:ProcessInfo({ tooltipData = { lines = {} } }))
+        assert(GameTooltip:IsShown(), "owned allow-empty ProcessInfo must show")
+        assert(GameTooltip:GetOwner() == UIParent)
+        assert(math.abs(GameTooltip:GetWidth() - 20.48) < 0.01)
+        assert(math.abs(GameTooltip:GetHeight() - 20.48) < 0.01)
+        "#,
+    )
+    .expect("WM63 L4 rejected Show must use Hide, not resize empty content");
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
+#[test]
+fn blizzard_backpack_tooltip_append_text_updates_pooled_title() {
+    let env = setup_full_env();
+    let addons = wow_ui_sim::paths::default_blizzard_ui_addons_path().unwrap();
+    // Retail uses the Mainline TOC; pinned PTR uses the unified TOC and Shared Lua.
+    let toc = wow_ui_sim::loader::find_toc_file(&addons.join("Blizzard_MainMenuBarBagButtons"))
+        .expect("profile-selected original bag-button TOC");
+    wow_ui_sim::loader::load_addon(&env.loader_env(), &toc).unwrap();
+    env.exec(
+        r#"
+        assert(not KeybindFrames_InQuickKeybindMode())
+        for _, binding in ipairs({ "CTRL-F8", "ALT-F9" }) do
+            GameTooltip:Hide()
+            assert(SetBinding(binding, "TOGGLEBACKPACK"))
+            MainMenuBarBackpackButton:OnEnterInternal()
+            local key = GetBindingText(GetBindingKey("TOGGLEBACKPACK"))
+            local title = BACKPACK_TOOLTIP .. NORMAL_FONT_COLOR:WrapTextInColorCode(" (" .. key .. ")")
+            assert(GameTooltip:IsShown())
+            assert(GameTooltip:NumLines() == 2)
+            local titleLine = GameTooltip:GetLeftLine(1)
+            assert(titleLine:GetText() == title,
+                "backpack title FontString lost the appended binding")
+            assert(GameTooltip:GetWidth() + 0.01 >= titleLine:GetStringWidth() + 20.48,
+                "backpack tooltip was sized using the title without its binding")
+            assert(GameTooltip:GetLeftLine(2):GetText() == NUM_FREE_SLOTS:format(MainMenuBarBackpackButton.freeSlots or 0))
+            assert(SetBinding(binding))
+        end
+        "#,
+    )
+    .expect("original backpack OnEnter must publish the appended title to its FontString");
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
+#[test]
+fn blizzard_tooltip_append_text_uses_first_pooled_left_line_synchronously() {
+    let env = setup_full_env();
+    env.exec(
+        r##"
+        GameTooltip:SetOwner(UIParent, "ANCHOR_NONE")
+        assert(GameTooltip:ProcessInfo({ tooltipData = { lines = {
+            { leftText = "Title" }, { leftText = "Footer" },
+        } } }))
+        local title = GameTooltip:GetLeftLine(1)
+        title:SetText("Edited title")
+        local oldWidth = GameTooltip:GetWidth()
+        local suffix = string.rep("W", 30)
+        GameTooltip:AppendText(suffix)
+        assert(title:GetText() == "Edited title" .. suffix,
+            "AppendText must update the first pooled left FontString")
+        assert(GameTooltip:GetWidth() > oldWidth + 100,
+            "AppendText must size the updated title before returning")
+        assert(GameTooltip:GetLeftLine(1):GetText() == "Edited title" .. suffix,
+            "AppendText must retain the edited title in stored line state")
+        assert(GameTooltip:GetLeftLine(2):GetText() == "Footer",
+            "AppendText must not select the last row")
+        assert(GameTooltip:NumLines() == 2)
+
+        title:SetText(string.rep("A", 250))
+        GameTooltip:AppendText("123456789")
+        assert(title:GetText() == string.rep("A", 250) .. "12345", "255-byte payload cap")
+        title:SetText(string.rep("A", 254))
+        GameTooltip:AppendText("é")
+        assert(title:GetText() == string.rep("A", 254), "UTF-8 boundary emulation must not split a character")
+        title:SetText("Before" .. string.char(0) .. "After")
+        GameTooltip:AppendText("Suffix" .. string.char(0) .. "Ignored")
+        assert(title:GetText() == "BeforeSuffix", "native text concatenation stops at NUL")
+        title:SetText("Number")
+        assert(select("#", GameTooltip:AppendText(17)) == 0)
+        assert(title:GetText() == "Number17")
+
+        GameTooltip:ClearLines()
+        assert(select("#", GameTooltip:AppendText("No row")) == 0)
+        assert(GameTooltip:NumLines() == 0)
+        "##,
+    )
+    .expect("WM95 first-row pooled text, byte cap and synchronous layout");
+    for invalid in ["nil", "false", "{}"] {
+        assert!(
+            env.exec(&format!("GameTooltip:AppendText({invalid})"))
+                .is_err(),
+            "empty tooltip must still reject AppendText({invalid})"
+        );
+    }
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
+#[test]
+fn blizzard_default_tooltip_anchor_rejects_non_table_owner_without_clearing() {
+    let env = setup_full_env();
+    env.exec(
+        r#"
+        GameTooltip_SetDefaultAnchor(GameTooltip, UIParent)
+        GameTooltip_AddNormalLine(GameTooltip, "Retained title")
+        GameTooltip:Show()
+        "#,
+    )
+    .unwrap();
+    for invalid in ["nil", "false"] {
+        let result = env.exec(&format!(
+            "GameTooltip_SetDefaultAnchor(GameTooltip, {invalid})"
+        ));
+        assert!(result.is_err(), "WM95 rejects non-table owner {invalid}");
+        assert!(result.unwrap_err().to_string().contains("SetOwner(region)"));
+        env.exec(
+            r#"
+            assert(GameTooltip:GetOwner() == UIParent)
+            assert(GameTooltip:IsShown())
+            assert(GameTooltip:NumLines() == 1)
+            assert(GameTooltip:GetLeftLine(1):GetText() == "Retained title")
+            "#,
+        )
+        .expect("invalid owner must not clear or replace the existing tooltip");
+    }
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
+#[test]
 fn customization_tooltip_places_first_text_at_native_padding_anchor() {
     use iced::{Point, Rectangle, Size};
     use wow_ui_sim::iced_app::tooltip::{TooltipRender, build_tooltip_quads, collect_tooltip_data};

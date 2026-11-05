@@ -128,7 +128,11 @@ pub fn load_full_env_without_post_load() -> WowLuaEnv {
     )));
     env.state().borrow_mut().addon_base_paths = vec![ui.clone()];
 
-    load_blizzard_addons(&env, &ui);
+    if wow_ui_sim::client_profile::ACTIVE == wow_ui_sim::client_profile::ClientProfile::WowForever {
+        crate::common::load_game_startup_inventory(&env);
+    } else {
+        load_blizzard_addons(&env, &ui);
+    }
     env.exec(
         r#"
         if type(UIPanelWindows) == "table" and type(UIPanelWindows_Initialize) == "function" then

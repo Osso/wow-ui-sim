@@ -62,6 +62,7 @@ pub(crate) fn setup_env() -> common::LockedEnv {
     common::lock_env(|| {
         let env = WowLuaEnv::new().expect("Failed to create Lua environment");
         env.set_screen_size(1024.0, 768.0);
+        common::supply_empty_forever_spellbook_outfits(&env);
         let ui = default_blizzard_ui_addons_path().expect("Blizzard UI cache should be synced");
 
         {
