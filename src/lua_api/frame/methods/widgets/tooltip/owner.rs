@@ -31,7 +31,10 @@ pub(super) fn set_owner(state: &mut LuaState) -> LuaResult<u32> {
     if owner_reassignment_uses_visibility_lifecycle() {
         let old_owner = current_tooltip_owner_id(state, tooltip_id)?;
         super::line_data::clear_lines(state)?;
-        if old_owner.is_some() && old_owner != args.owner_id {
+        // WM106 §3: a non-null request that differs from the stored owner runs
+        // Hide before the anchor mode is parsed, so a nil stored owner hides
+        // too. The owner core then installs the owner without showing.
+        if old_owner != args.owner_id {
             crate::lua_api::frame::methods::core_state::hide(state)?;
         }
     }

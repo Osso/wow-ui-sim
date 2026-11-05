@@ -62,6 +62,55 @@ fn load_artifact_ui(env: &wow_ui_sim::lua_api::WowLuaEnv) {
 }
 
 retail_relic_record_fixture! {
+#[test]
+fn tooltip_socketed_relic_type_line_uses_the_named_artifact_color() {
+    let env = tooltip_full_env_helpers::load_full_env_without_post_load();
+    load_artifact_ui(&env);
+    {
+        let mut state = env.state().borrow_mut();
+        state.viewed_artifact.info = Some(seeded_artifact());
+        state
+            .viewed_artifact
+            .relic_slots
+            .push(socket(LIFE_RELIC, Some(LEVEL_BONUS_LIST)));
+    }
+    env.exec(
+        r#"
+        local perks = CreateFrame('Frame', nil, UIParent)
+        Mixin(perks, ArtifactPerksMixin)
+        local title = CreateFrame('Frame', nil, perks)
+        Mixin(title, ArtifactTitleTemplateMixin)
+        local relic = CreateFrame('Frame', nil, title)
+        local _, _, slotType, link = C_ArtifactUI.GetRelicInfo(1)
+        relic.relicSlotIndex = 1
+        relic.relicType = slotType
+        relic.relicLink = link
+        GameTooltip:ClearHandlerInfo()
+        GameTooltip:SetOwner(UIParent, 'ANCHOR_NONE')
+        title:OnRelicSlotMouseEnter(relic)
+
+        local data = GameTooltip:GetPrimaryTooltipData()
+        local typeIndex
+        for index, line in ipairs(data.lines) do
+            if line.leftText == 'Life Artifact Relic' then
+                typeIndex = index
+            end
+        end
+        assert(typeIndex, 'artifact relic type line missing')
+        local fontString = GameTooltip:GetLeftLine(typeIndex)
+        assert(fontString and fontString:GetText() == 'Life Artifact Relic',
+            'rendered relic type line missing')
+        local r, g, b = fontString:GetTextColor()
+        local er, eg, eb = ITEM_ARTIFACT_COLOR:GetRGB()
+        assert(math.abs(r - er) < 0.001 and math.abs(g - eg) < 0.001
+            and math.abs(b - eb) < 0.001,
+            string.format('relic type line color %.3f,%.3f,%.3f must match ITEM_ARTIFACT_COLOR %.3f,%.3f,%.3f',
+                r, g, b, er, eg, eb))
+        "#,
+    )
+    .unwrap();
+}
+
 /// GemProperties 2550: Type 14 has no native token, effect 11 argument 0.
 const UNKNOWN_TYPE_RELIC: u32 = 130_162;
 

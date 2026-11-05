@@ -388,15 +388,9 @@ fn template_color(
 }
 
 fn named_color(state: &mut LuaState, name: &str) -> Option<crate::widget::Color> {
-    let table = table_get(state, Val::Table(state.global), name);
-    if !matches!(table, Val::Table(_)) {
-        return None;
-    }
+    let (r, g, b, a) = crate::lua_api::global_colors::global_color_rgba(state, name)?;
     Some(crate::widget::Color::new(
-        font_field_number(state, table.clone(), "r", "r").unwrap_or(1.0) as f32,
-        font_field_number(state, table.clone(), "g", "g").unwrap_or(1.0) as f32,
-        font_field_number(state, table.clone(), "b", "b").unwrap_or(1.0) as f32,
-        font_field_number(state, table, "a", "a").unwrap_or(1.0) as f32,
+        r as f32, g as f32, b as f32, a as f32,
     ))
 }
 
