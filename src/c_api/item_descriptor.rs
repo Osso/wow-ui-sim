@@ -45,12 +45,22 @@ impl ItemDescriptor {
 
     /// Resolve into a copy, never mutate the catalog or the selected descriptor.
     /// `player_level` is the inferred local-player context of WM97b step 3.
+    ///
+    /// The pinned bonus, scaling and era records are Retail 70391, so only Retail
+    /// and PTR apply descriptor content. Other profiles publish the same getters
+    /// but resolve the catalog item; their own record sets are not modelled.
     pub fn resolve(&self, player_level: i32) -> Result<Option<crate::items::ItemInfo>, String> {
         let Some(base) = crate::items::get_item(self.item_id) else {
             return Ok(None);
         };
         let mut item = base.clone();
-        bonus::apply(self, &mut item, player_level)?;
+        if matches!(
+            crate::client_profile::ACTIVE,
+            crate::client_profile::ClientProfile::Retail
+                | crate::client_profile::ClientProfile::Ptr
+        ) {
+            bonus::apply(self, &mut item, player_level)?;
+        }
         Ok(Some(item))
     }
 }

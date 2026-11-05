@@ -302,6 +302,11 @@ fn run_main() -> Result<(), Box<dyn std::error::Error>> {
     }
     let session_wtf_path = args.resolve_session_wtf_path()?;
     set_cwd_to_exe_dir_for_gui_launch();
+    #[cfg(feature = "casc")]
+    {
+        let settings = wow_ui_sim::install_paths::SettingsFile::platform_default();
+        wow_ui_sim::asset_resolver_config::configure_casc_install_env(settings.as_ref());
+    }
     wow_ui_sim::blizzard_ui_sync::set_allow_ui_version_mismatch(args.allow_ui_version_mismatch);
     let selection = class_spec::parse_selection(
         args.class.as_deref(),
@@ -468,10 +473,13 @@ fn startup_blizzard_ui_help(error: wow_ui_sim::Error) -> Box<dyn std::error::Err
              wow-ui-sim needs a local WoW install to load Blizzard UI files via CASC.\n\n\
              Fix:\n  \
              - Install WoW via the Battle.net launcher, OR\n  \
-             - Set WOW_INSTALL_PATH to your WoW directory before launching wow-ui-sim.\n\n\
+             - Set WOW_INSTALL_PATH to your WoW directory before launching wow-ui-sim, OR\n  \
+             - Add the WoW directory to {}.\n\n\
+             wow-ui-sim stores the resolved path there, so later launches do not need the variable.\n\n\
              On Windows, the Battle.net Agent product.db is consulted before default paths.\n\n\
              Default search paths include /Applications/World of Warcraft (macOS), \
-             C:\\Program Files (x86)\\World of Warcraft (Windows), and common Wine/Lutris locations on Linux."
+             C:\\Program Files (x86)\\World of Warcraft (Windows), and common Wine/Lutris locations on Linux.",
+            install_path_settings_hint()
         ),
         wow_ui_sim::Error::BlizzardUiPartial {
             missing,
@@ -492,6 +500,14 @@ fn startup_blizzard_ui_help(error: wow_ui_sim::Error) -> Box<dyn std::error::Err
         ),
     };
     Box::<dyn std::error::Error>::from(message)
+}
+
+fn install_path_settings_hint() -> String {
+    #[cfg(feature = "casc")]
+    let product = wow_ui_sim::asset_resolver_config::active_profile_casc_product();
+    #[cfg(not(feature = "casc"))]
+    let product = "wow";
+    wow_ui_sim::install_paths::settings_hint(product)
 }
 
 fn report_fatal_error(error: &dyn std::error::Error) {

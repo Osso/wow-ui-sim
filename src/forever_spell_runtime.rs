@@ -163,6 +163,7 @@ fn parse(data: FileData) -> Result<Catalog, String> {
                 subtext: text(texts, "NameSubtext_lang")?,
                 icon_file_data_id: integer(misc, "SpellIconFileDataID")?,
                 school_mask: integer(misc, "SchoolMask")?,
+                attributes_9: Some(number(misc, "Attributes_9")? as u32),
                 implicit_target: u8::try_from(integer(effect, "ImplicitTarget_0")?)
                     .map_err(|_| format!("Forever spell {id} has invalid target"))?,
             },

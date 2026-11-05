@@ -17,6 +17,7 @@ pub fn blizzard_ui_dir() -> PathBuf {
 pub fn setup_full_ui() -> WowLuaEnv {
     let env = WowLuaEnv::new().expect("Failed to create Lua environment");
     env.set_screen_size(1024.0, 768.0);
+    crate::common::supply_empty_forever_spellbook_outfits(&env);
 
     let ui = blizzard_ui_dir();
     {

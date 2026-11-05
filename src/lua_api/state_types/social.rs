@@ -74,6 +74,13 @@ pub struct BnetFriendInvite {
     pub creation_timestamp: i64,
 }
 
+/// Supplied Forever name-composition mode; native live mode selection is unknown.
+#[derive(Debug, Clone, Copy)]
+pub enum CharacterNameSeparator {
+    Space,
+    Hyphen,
+}
+
 /// One Blizzard game account (WoW character, D3 account, etc.) attached
 /// to a `BnetFriend`. Drives `C_BattleNet.GetGameAccountInfoByGUID`.
 #[derive(Debug, Clone)]
@@ -84,6 +91,9 @@ pub struct BnetGameAccount {
     pub game_account_id: i32,
     /// Character name, or empty string when not in WoW.
     pub character_name: String,
+    /// Explicit Forever surname, separate from first name and realm.
+    pub surname: String,
+    pub name_separator: CharacterNameSeparator,
     /// Realm name as shown in the UI.
     pub realm_name: String,
     /// Realm display name (may differ from `realm_name` in cross-realm contexts).

@@ -8,8 +8,15 @@ mod tooltip_full_env_helpers;
 fn tooltip_loot_roll_original_hover_resolves_stored_descriptor() {
     let env = tooltip_full_env_helpers::load_full_env_without_post_load();
     // WM97 DQ7: the ingress decodes the host link once; the getter reads the stored
-    // descriptor. Pinned list 591 adds 4 levels to catalog level 29.
-    env.exec(
+    // descriptor. Pinned list 591 adds 4 levels to catalog level 29 on the profiles
+    // whose record set is modelled (Retail/PTR). Forever publishes the same getters
+    // but has no pinned classic record set here, so it resolves the catalog item.
+    let level = if wow_ui_sim::client_profile::ACTIVE == wow_ui_sim::client_profile::ClientProfile::WowForever {
+        29
+    } else {
+        33
+    };
+    env.exec(&format!(
         r#"
         A_Admin.StartLootRoll(93, 60000, 'Descriptor Sword', '', 4, 0,
             'item:1728:0:0:0:0:0:0:0:0:0:0:0:1:591:0:0:0:0::0')
@@ -19,10 +26,10 @@ fn tooltip_loot_roll_original_hover_resolves_stored_descriptor() {
         icon:GetScript('OnEnter')(icon)
         local data = GameTooltip:GetPrimaryTooltipData()
         assert(data and data.id == 1728, 'roll selects its stored descriptor item ID')
-        assert(data.lines[2].leftText == 'Item Level 33', 'stored bonus list must reach the level line')
-        assert(GameTooltip:GetLeftLine(2):GetText() == 'Item Level 33')
+        assert(data.lines[2].leftText == 'Item Level {level}', 'stored descriptor must reach the level line')
+        assert(GameTooltip:GetLeftLine(2):GetText() == 'Item Level {level}')
         "#,
-    )
+    ))
     .unwrap();
     // A roll without a descriptor-bearing link stays a miss; no catalog item is invented.
     env.exec(

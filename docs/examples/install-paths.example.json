@@ -1,0 +1,20 @@
+{
+  "install_paths": {
+    "wow": {
+      "install_path": "C:\\Program Files (x86)\\World of Warcraft"
+    },
+    "wowxptr": {
+      "install_path": "D:\\Games\\World of Warcraft PTR"
+    },
+    "wowf": {
+      "install_path": "D:\\Games\\World of Warcraft Forever"
+    },
+    "wow_classic": {
+      "install_path": "D:\\Games\\World of Warcraft Classic",
+      "data_path": "D:\\Games\\World of Warcraft Classic\\Data"
+    },
+    "wow_classic_era": {
+      "data_path": "D:\\Games\\World of Warcraft Era\\Data"
+    }
+  }
+}

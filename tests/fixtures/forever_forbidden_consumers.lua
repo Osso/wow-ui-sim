@@ -49,9 +49,11 @@ end
 function ForeverForbiddenConsumers.enums_and_inheritance()
     local e = Enum.ForbiddenAspect
     assert(e.UntrustedScriptExecution == 4 and e.UntrustedLayoutScriptExecution == 8)
-    assert(e.QueryAnimationProgress == 2048 and e.AddAnimations == 4096)
+    -- Pinned 70707 ForbiddenAspectConstantsDocumentation.lua:24-27.
+    assert(e.SetTexture == 2048 and e.QueryRotation == 4096)
+    assert(e.QueryAnimationProgress == 8192 and e.AddAnimations == 16384)
     local meta = Enum.ForbiddenAspectMeta
-    assert(meta.MinValue == 1 and meta.MaxValue == 4096 and meta.NumValues == 13)
+    assert(meta.MinValue == 1 and meta.MaxValue == 16384 and meta.NumValues == 15)
     local paths = Enum.ScriptObjectPropagationPath
     assert(paths.Hierarchy == 0 and paths.Layout == 1)
     local parent = CreateFrame('Frame')

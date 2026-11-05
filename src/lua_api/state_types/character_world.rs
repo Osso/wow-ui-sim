@@ -41,6 +41,9 @@ pub struct CharacterStats {
     pub block_chance: f64,
     pub shield_block: f64,
     pub hit_modifier: f64,
+    /// WM99: independent stored off-hand modifier, not equipment-derived.
+    /// Percent units and unseeded zero are inferred scenario policy.
+    pub offhand_hit_modifier: f64,
     pub spell_hit_modifier: f64,
     /// Main-hand, off-hand, ranged.
     pub expertise: [f64; 3],
