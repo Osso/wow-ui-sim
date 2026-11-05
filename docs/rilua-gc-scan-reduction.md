@@ -99,14 +99,14 @@ Single arena borrow per table. Expected: ~50M fewer arena lookups (2.5% of start
 
 ### Insight
 
-Frames in wow-ui-sim are **never deleted**. Confirmed: `WidgetRegistry::register` exists at `src/widget/registry/mod.rs:86`, but no remove/delete method anywhere. Frame re-creation (CLAUDE.md: `Blizzard_GameTooltip` orphan case) creates a NEW id; the old entry lingers. `__rilua_frame_refs` and `__rilua_frame_fields` grow monotonically.
+Frames in wow-ui-sim are **never deleted**. Confirmed: `WidgetRegistry::register` exists at `src/widget/registry/mod.rs:86`, but no remove/delete method anywhere. Frame re-creation (AGENTS.md: `Blizzard_GameTooltip` orphan case) creates a NEW id; the old entry lingers. `__rilua_frame_refs` and `__rilua_frame_fields` grow monotonically.
 
 Frame backing tables (the values stored in `__rilua_frame_refs`) are effectively **leaf objects** in GC terms. They hold:
 
 - A `(lo, hi)` u32 backing pair — not a GcRef.
 - The shared `__rilua_frame_mt` metatable — bootstrap-allocated, lives forever.
 
-Crucially: addon-mutated state does NOT live on the frame backing table. Per CLAUDE.md, custom fields go to `__rilua_frame_fields[id]` (the env table at `debug.getfenv(frame)[1]`). The backing table itself never gains new outgoing references after creation.
+Crucially: addon-mutated state does NOT live on the frame backing table. Per AGENTS.md, custom fields go to `__rilua_frame_fields[id]` (the env table at `debug.getfenv(frame)[1]`). The backing table itself never gains new outgoing references after creation.
 
 ### What pinning gets us
 
@@ -167,7 +167,7 @@ impl Gc {
 
 1. **What if a frame backing table ever does gain a non-trivial outgoing reference?** Audit `attach_frame_metatable` and any `raw_set` on a frame Val::Table. Today the only writes are during the initial setup (metatable + backing pair). If wow-sim ever caches per-frame state directly on the backing table (not in fields), pinning becomes unsafe.
 2. **Tests that rely on frame GC.** Some tests may expect frames to be collectable — e.g., `frame = nil; collectgarbage("collect"); assert(weakref:get() == nil)`. Pinning breaks weak-ref tests for frames. Audit `tests/` for weak references to frames.
-3. **Frame re-creation memory cost.** CLAUDE.md describes the orphan case where `CreateFrame` with an existing name produces a new id, leaving the old frame stranded. With pinning, the stranded old frame is now permanently retained too. Memory cost: ~200 bytes × the orphan count. Audit `register_new_frame` and `migrate_children_to_new_frame` for orphan-frequency baseline.
+3. **Frame re-creation memory cost.** AGENTS.md describes the orphan case where `CreateFrame` with an existing name produces a new id, leaving the old frame stranded. With pinning, the stranded old frame is now permanently retained too. Memory cost: ~200 bytes × the orphan count. Audit `register_new_frame` and `migrate_children_to_new_frame` for orphan-frequency baseline.
 
 ## Track 2: Freeze `_G` and `__secureenv` after bootstrap
 

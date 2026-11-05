@@ -33,7 +33,7 @@
 //! prevents Update from clobbering the bar mid-vehicle-mount animation.
 //!
 //! The test pins the **actual source contract** rather than the inverted
-//! PLAN description. Per `CLAUDE.md`, "When a `C_*` function is missing or
+//! PLAN description. Per `AGENTS.md`, "When a `C_*` function is missing or
 //! wrong, default to implementing the backing system or state model. Do not
 //! reach for shims just to satisfy a failing test." Before this test landed,
 //! `C_ActionBar.IsPossessBarVisible` was a no-op stub

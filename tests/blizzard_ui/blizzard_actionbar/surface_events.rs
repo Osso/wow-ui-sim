@@ -359,7 +359,7 @@ const MAIN_ACTION_BAR_REGISTERED_EVENTS: &[&str] =
 /// wires `<OnLoad method="OnLoad" inherit="prepend"/>` plus an OnEvent
 /// dispatch at xml:173. The `inherit="prepend"` attribute means the
 /// inherited (template) OnLoad runs FIRST and the instance (mixin)
-/// OnLoad runs second — per the CLAUDE.md note on the counterintuitive
+/// OnLoad runs second — per the AGENTS.md note on the counterintuitive
 /// XML attribute. The template chain is `EditModeActionBarTemplate`
 /// (xml:29 `inherits=`) → `EditModeSystemTemplate` → so the EditMode
 /// system OnLoad runs before the mixin's two `RegisterEvent` calls,

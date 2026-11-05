@@ -82,4 +82,4 @@ Skip `isManagedFrame` frames in both `InitSystemAnchors` and `UpdateSystems` —
 - `src/lua_api/globals/c_stubs_api.rs` — `GetActionBarToggles` returns false (was 1)
 - `tests/frame_positions.rs` — removed PetFrame (hidden), updated count to 27
 - `tests/action_bar.rs` — added `test_right_action_bars_hidden_by_default`
-- `CLAUDE.md` — documented rawset/rawget limitation
+- `AGENTS.md` — documented rawset/rawget limitation

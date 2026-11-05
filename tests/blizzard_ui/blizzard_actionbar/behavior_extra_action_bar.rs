@@ -118,7 +118,7 @@
 //! extra ability writes both to the slot's action and to the
 //! HasExtraActionBar flag). The simulator splits them across two state
 //! fields because action-slot persistence and per-quest-grant overlays
-//! are independent concerns. Per `CLAUDE.md` ("When a `C_*` function is
+//! are independent concerns. Per `AGENTS.md` ("When a `C_*` function is
 //! missing or wrong, default to implementing the backing system or state
 //! model"), this test treats both fields as the canonical write seam
 //! rather than coupling them via a hidden helper that auto-mirrors one

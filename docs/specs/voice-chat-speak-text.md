@@ -23,7 +23,7 @@ Cached retail `Blizzard_APIDocumentationGenerated/VoiceChatDocumentation.lua` li
 ## How it works
 
 - [Lua API](../lua-api.md)
-- [C API boundary](../../CLAUDE.md#c-api-boundary)
+- [C API boundary](../../AGENTS.md#c-api-boundary)
 
 The provider validates original secret wrappers, constructs a public request, then appends it through a mutable SimState borrow. It never unwraps secrets or modifies caller taint. Pinned rilua `6044544` implements `unwrap_secret` with an untainted-caller guard; using it for tainted secret-text acceptance would misrepresent the declared permission.
 
