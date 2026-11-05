@@ -723,7 +723,7 @@ fn ringed_frame_tooltip_applies_native_outer_and_explicit_padding() {
     .unwrap();
 }
 
-#[cfg(not(feature = "client-wrath"))]
+retail_game_tooltip_data_fixture! {
 #[test]
 fn action_button_hover_preserves_spell_identity_for_tooltip_postcall() {
     let env = setup_full_env();
@@ -775,6 +775,7 @@ fn action_button_hover_preserves_spell_identity_for_tooltip_postcall() {
         env.state().borrow().lua_errors.is_empty(),
         "hover must not record a swallowed postcall error"
     );
+}
 }
 
 #[cfg(any(feature = "client-retail", feature = "client-ptr"))]
@@ -1001,7 +1002,7 @@ fn blizzard_line_processing_does_not_resize_on_render_before_show() {
     .unwrap();
 }
 
-#[cfg(not(feature = "client-wrath"))]
+retail_game_tooltip_data_fixture! {
 #[test]
 fn test_tooltip_mixins_load_in_full_env() {
     let env = setup_full_env();
@@ -1020,8 +1021,9 @@ fn test_tooltip_mixins_load_in_full_env() {
     assert_eq!(status_bar_onload_type, "function");
     assert_eq!(tooltip_onload_type, "function");
 }
+}
 
-#[cfg(not(feature = "client-wrath"))]
+retail_game_tooltip_data_fixture! {
 #[test]
 fn test_game_tooltip_process_info_with_constructed_tooltip_info_populates_lines() {
     let env = setup_full_env();
@@ -1057,6 +1059,7 @@ fn test_game_tooltip_process_info_with_constructed_tooltip_info_populates_lines(
         first_line, "Hearthstone",
         "GameTooltip:ProcessInfo should set the first tooltip line from the constructed tooltipInfo"
     );
+}
 }
 
 /// Test that hovering a micro menu button shows the tooltip with text.
@@ -1222,7 +1225,7 @@ fn test_buff_icon_hover_shows_aura_tooltip() {
     assert_eq!(td.lines[0].left_text, expected_name);
 }
 
-#[cfg(not(feature = "client-wrath"))]
+retail_game_tooltip_data_fixture! {
 #[test]
 fn test_world_loot_object_tooltip_shows_world_loot_data() {
     let env = setup_full_env();
@@ -1267,8 +1270,9 @@ fn test_world_loot_object_tooltip_shows_world_loot_data() {
         .expect("tooltip data should exist after SetWorldLootObject");
     assert!(!td.lines[0].left_text.is_empty());
 }
+}
 
-#[cfg(not(feature = "client-wrath"))]
+retail_game_tooltip_data_fixture! {
 #[test]
 fn test_tooltip_comparison_manager_get_comparison_item_data_uses_guid_lookup() {
     let env = setup_full_env();
@@ -1298,8 +1302,9 @@ fn test_tooltip_comparison_manager_get_comparison_item_data_uses_guid_lookup() {
         "TooltipComparisonManager should resolve GUID-backed comparison items through C_TooltipInfo.GetItemByGUID",
     );
 }
+}
 
-#[cfg(not(feature = "client-wrath"))]
+retail_game_tooltip_data_fixture! {
 #[test]
 fn test_tooltip_data_handler_set_owned_item_by_id_uses_owned_item_getter() {
     let env = setup_full_env();
@@ -1331,8 +1336,9 @@ fn test_tooltip_data_handler_set_owned_item_by_id_uses_owned_item_getter() {
         "TooltipDataHandler should populate GameTooltip:SetOwnedItemByID through C_TooltipInfo.GetOwnedItemByID",
     );
 }
+}
 
-#[cfg(not(feature = "client-wrath"))]
+retail_game_tooltip_data_fixture! {
 #[test]
 fn test_tooltip_data_handler_set_inventory_item_uses_inventory_getter() {
     let env = setup_full_env();
@@ -1343,6 +1349,7 @@ fn test_tooltip_data_handler_set_inventory_item_uses_inventory_getter() {
         has_real_tooltip,
         "TooltipDataHandler should populate GameTooltip:SetInventoryItem through C_TooltipInfo.GetInventoryItem",
     );
+}
 }
 
 #[cfg(not(feature = "client-wrath"))]
@@ -1372,7 +1379,7 @@ fn inventory_item_tooltip_uses_inventory_getter(env: &WowLuaEnv) -> bool {
     .unwrap()
 }
 
-#[cfg(not(feature = "client-wrath"))]
+retail_game_tooltip_data_fixture! {
 #[test]
 fn test_tooltip_data_handler_set_recipe_result_item_uses_recipe_getters() {
     let env = setup_full_env();
@@ -1425,8 +1432,9 @@ fn test_tooltip_data_handler_set_recipe_result_item_uses_recipe_getters() {
         "TooltipDataHandler should populate both recipe result item accessors through C_TooltipInfo",
     );
 }
+}
 
-#[cfg(not(feature = "client-wrath"))]
+retail_game_tooltip_data_fixture! {
 #[test]
 fn test_tooltip_data_handler_set_minimap_mouseover_uses_minimap_getter() {
     let env = setup_full_env();
@@ -1460,8 +1468,9 @@ fn test_tooltip_data_handler_set_minimap_mouseover_uses_minimap_getter() {
         "TooltipDataHandler should populate GameTooltip:SetMinimapMouseover through C_TooltipInfo.GetMinimapMouseover",
     );
 }
+}
 
-post_wrath_ui_fixture! {
+retail_game_tooltip_data_fixture! {
 #[test]
 fn test_tooltip_data_handler_set_upgrade_item_uses_upgrade_getter() {
     let env = setup_full_env();

@@ -24,7 +24,7 @@ Three empty C API backing inputs publish modeled structure snapshots through bou
 - `src/c_api/c_transmog_collection/appearance_sources.rs`: exact source-ID query.
 - `src/c_api/c_transmog_outfit_info/viewed_slots.rs`: exact `(slot, type, option)` query.
 - Owning parent registrations replace lazy namespace providers for only these three keys under `all(retail-12-0-5, any(profile-retail, client-ptr))`. Unrelated registrations and other-profile defaults remain unchanged.
-- `src/lua_api/state/sim_state.rs`, `src/lua_api/state.rs`: public type access, `active_brawl: None`, empty `transmog_appearance_sources` and `viewed_outfit_slots`, gated to `retail-12-0-5`.
+- `src/lua_api/state/sim_state.rs`, `src/lua_api/state.rs`: public type access, `active_brawl: None`, empty `transmog_appearance_sources` and `viewed_outfit_slots`, gated to `retail-12-0-5`; the brawl fields and `GetActiveBrawlInfo`/`GetAvailableBrawlInfo`/`GetSpecialEventBrawlInfo` are also compiled for `client-wowforever`, whose pinned `PvpInfoDocumentation.lua` declares the same queries (:109, :255, :775).
 
 ## Tests asserting this spec
 

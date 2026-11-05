@@ -95,7 +95,9 @@ fn select_remaining_unit(milliseconds: u32) -> (&'static str, u32) {
     }
 }
 
-fn format_remaining_time(state: &mut LuaState, milliseconds: u32) -> LuaResult<String> {
+/// Localized duration text shared with the brawl tooltip's EMULATED ends-in
+/// row; the unit selection and upward rounding are WM94 §9's Totem contract.
+pub(crate) fn format_remaining_time(state: &mut LuaState, milliseconds: u32) -> LuaResult<String> {
     let (key, count) = select_remaining_unit(milliseconds);
     let template = global_val(state, key);
     let formatter = global_val(state, "format");

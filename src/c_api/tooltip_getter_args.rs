@@ -37,3 +37,29 @@ pub(crate) fn optional_unsigned(state: &LuaState, position: i32) -> LuaResult<Op
         _ => unsigned(state, position).map(Some),
     }
 }
+
+/// Optional boolean flag; a missing/nil value defaults false and a present value
+/// uses Lua truthiness (WM94 §6), after the shared secret-access check.
+/// Optional boolean flag; a missing/nil value defaults false and a present value
+/// uses Lua truthiness (WM94 §6), after the shared secret-access check.
+/// Used only by the brawl tooltip getter on the profiles that publish it.
+#[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
+pub(crate) fn optional_bool(state: &LuaState, position: i32) -> LuaResult<bool> {
+    let value = unwrap_secret(state, stack_val(state, position))?;
+    Ok(value.is_truthy())
+}
+
+/// Optional owning-item link; WM94 §5 accepts a string or a number-convertible
+/// value and skips a missing/nil one. The present value is secret-checked before
+/// conversion; its parsed item fields only feed the native spell request.
+pub(crate) fn optional_link(state: &LuaState, position: i32) -> LuaResult<Option<String>> {
+    let value = unwrap_secret(state, stack_val(state, position))?;
+    if value.is_nil() {
+        return Ok(None);
+    }
+    crate::lua_api::methods::val_to_string(state, value)
+        .map(Some)
+        .ok_or_else(|| {
+            rilua::runtime_error(format!("expected a link value at argument {position}"))
+        })
+}

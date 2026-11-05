@@ -4,10 +4,10 @@ UIWidgetManager exposes supplied double-state icon rows to the original Blizzard
 
 ## What it must do
 
-- [ ] The getter returns nil for an absent ID and fresh complete records with ordered, fresh left and right icon rows for supplied IDs.
-- [ ] Host type 14 updates publish supplied records before notification; other visualization types do not return them.
-- [ ] The original double-state icon Setup consumes both sets of icons.
-- [ ] No output secrecy policy is inferred.
+- [x] The getter returns nil for an absent ID and fresh complete records with ordered, fresh left and right icon rows for supplied IDs.
+- [x] Host type 14 updates publish supplied records before notification; other visualization types do not return them.
+- [x] The original double-state icon Setup consumes both sets of icons.
+- [x] No output secrecy policy is inferred.
 
 ## How it works
 
@@ -16,6 +16,7 @@ UIWidgetManager exposes supplied double-state icon rows to the original Blizzard
 ## Tests asserting this spec
 
 - `tests/ui_widget_double_state_icon.rs`
+- `tests/ui_widget_visualization_feed.rs`
 
 ## Out of scope
 

@@ -4,10 +4,10 @@ UIWidgetManager exposes supplied capture-zone records to the original Blizzard t
 
 ## What it must do
 
-- [ ] The getter returns nil for an absent ID and fresh complete records with a fresh zone entry for supplied IDs.
-- [ ] Host type 17 updates publish supplied records before notification; other visualization types do not return them.
-- [ ] The original capture-zone Setup consumes the supplied zone entry.
-- [ ] No output secrecy policy is inferred.
+- [x] The getter returns nil for an absent ID and fresh complete records with a fresh zone entry for supplied IDs.
+- [x] Host type 17 updates publish supplied records before notification; other visualization types do not return them.
+- [x] The original capture-zone Setup consumes the supplied zone entry.
+- [x] No output secrecy policy is inferred.
 
 ## How it works
 
@@ -16,6 +16,7 @@ UIWidgetManager exposes supplied capture-zone records to the original Blizzard t
 ## Tests asserting this spec
 
 - `tests/ui_widget_capture_zone.rs`
+- `tests/ui_widget_visualization_feed.rs`
 
 ## Out of scope
 

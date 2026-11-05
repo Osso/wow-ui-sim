@@ -96,7 +96,7 @@ fn blizzard_quest_timer_toc_pins_classic_only_with_default_state_enabled() {
 }
 }
 
-post_wrath_ui_fixture! {
+retail_toc_metadata_fixture! {
 #[test]
 fn blizzard_quest_timer_toc_declares_game_tooltip_and_managed_frame_dependencies() {
     let toc = TocFile::from_file(&quest_timer_toc()).expect("TOC parses");

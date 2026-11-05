@@ -543,6 +543,7 @@ fn keybind_s_toggles_spellbook_closed_on_second_press() {
 }
 
 post_wrath_ui_fixture! {
+poi_button_panel_fixture! {
 #[test]
 fn spellbook_panel_spell_tooltip_has_lines_after_tab_switch_and_closes_without_errors() {
     test_timeout! {
@@ -621,6 +622,7 @@ fn spellbook_panel_spell_tooltip_has_lines_after_tab_switch_and_closes_without_e
             "Spellbook panel tooltip flow should open, switch tabs, populate tooltip lines, and close: {result}"
         );
     }
+}
 }
 }
 

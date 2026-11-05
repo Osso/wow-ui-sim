@@ -665,7 +665,7 @@ fn spellbook_first_open_is_stable_with_real_tutorial_logic_restored() {
     }
 }
 
-#[cfg(not(feature = "client-wrath"))]
+click_binding_ui_fixture! {
 #[test]
 fn spellbook_hover_shows_spell_tooltip() {
     test_timeout! {
@@ -692,8 +692,9 @@ fn spellbook_hover_shows_spell_tooltip() {
         assert_eq!(tooltip.lines[0].left_text, expected_name);
     }
 }
+}
 
-#[cfg(not(feature = "client-wrath"))]
+click_binding_ui_fixture! {
 #[test]
 fn spellbook_hover_tooltip_is_sized_and_on_screen() {
     test_timeout! {
@@ -760,4 +761,5 @@ fn spellbook_hover_tooltip_is_sized_and_on_screen() {
             "Quad batch should include tooltip geometry after spellbook hover"
         );
     }
+}
 }

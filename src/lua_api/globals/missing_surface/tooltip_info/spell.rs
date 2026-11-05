@@ -146,7 +146,7 @@ pub(super) fn tooltip_line_count(state: &LuaState, lines: Val) -> i64 {
     index - 1
 }
 
-fn resolved_spell_description(state: &LuaState, spell_id: u32) -> String {
+pub(super) fn resolved_spell_description(state: &LuaState, spell_id: u32) -> String {
     match borrow_state(state) {
         Ok(sim) => crate::spell_description_resolver::resolve_spell_description(&sim, spell_id),
         Err(_) => "No description available.".to_string(),

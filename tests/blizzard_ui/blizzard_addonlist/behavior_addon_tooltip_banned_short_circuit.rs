@@ -8,7 +8,7 @@ const BANNED_ADDON: &str = "AddonTooltipBannedProbe";
 const BANNED_DEP: &str = "AddonTooltipBannedDependency";
 
 // Wrath has no AddonList vendor widget/handler input; mixed and modeled probes remain enabled.
-post_wrath_ui_fixture! {
+timerunning_util_panel_fixture! {
 #[test]
 fn addon_tooltip_update_banned_security_short_circuits_details() {
     with_blizzard_addon_startup_shape(&[ROOT], &[], |env, _loaded| {

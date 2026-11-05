@@ -433,6 +433,30 @@ def save_stat_cache(path):
     temporary.replace(path)
 
 
+def dylib_artifact_hashes(slot, records, artifacts):
+    """Slot-relative dylib bytes the test runner must see before it starts a unit.
+
+    Cargo writes one unhashed dylib name per profile, so a build with another
+    feature set replaces the library a finished test binary loads.
+    """
+    hashes = {}
+    for record in records:
+        if not set(record.get("target", {}).get("kind", [])) & {"dylib", "cdylib"}:
+            continue
+        for output in [record.get("executable"), *record.get("filenames", [])]:
+            if not output:
+                continue
+            name = os.path.relpath(output, slot)
+            if artifacts.get(name) is None:
+                continue
+            hashes[name] = artifacts[name]
+            parent = Path(name).parent
+            twin = (parent.parent if parent.name == "deps" else parent / "deps") / Path(name).name
+            if artifacts.get(str(twin)) == artifacts[name]:
+                hashes[str(twin)] = artifacts[str(twin)]
+    return hashes
+
+
 def summarize_receipt(current):
     """Receipts keep a certificate count and digest; slot identity files keep the full map."""
     summary = dict(current)
@@ -440,6 +464,9 @@ def summarize_receipt(current):
     summary["artifact_certificate_count"] = len(certificates)
     summary["artifact_certificates_sha256"] = hashlib.sha256(
         json.dumps(certificates, sort_keys=True).encode()).hexdigest()
+    summary["dylib_sha256"] = dylib_artifact_hashes(
+        Path(summary["slot"]), summary.get("reported_artifacts", []),
+        summary.get("artifacts", {}))
     return summary
 
 
@@ -611,6 +638,8 @@ def read_record_inputs(current, record, before, after):
 def read_target_inputs(current, before, after):
     targets, errors = {}, []
     for record in current["reported_artifacts"]:
+        if not target_is_requested(current.get("cargo"), record):
+            continue
         if not is_repo_artifact(current, record):
             continue
         try:
@@ -789,6 +818,8 @@ def certify_artifacts(current, previous, source_before, artifacts, snapshot):
     current["rejected_artifacts"] = []
     errors = []
     for record in current["reported_artifacts"]:
+        if not target_is_requested(current.get("cargo"), record):
+            continue
         if not is_repo_artifact(current, record):
             continue
         try:
@@ -815,11 +846,58 @@ def matched_input_changes(current, inputs, changes):
         for parent in Path(name).parents)}
 
 
-def find_stale_artifacts(current, previous_artifacts, artifacts):
+def target_selectors(cargo):
+    """Target selectors from the Cargo command, or None when it selects every target."""
+    if not cargo:
+        return None
+    selectors, explicit = set(), False
+    args = cargo[1:cargo.index("--")] if "--" in cargo else cargo[1:]
+    index = 0
+    while index < len(args):
+        arg = args[index]
+        option, separator, value = arg.partition("=")
+        if option in {"--all-targets", "--lib", "--bins", "--tests",
+                      "--examples", "--benches"}:
+            explicit = True
+            selectors.add(option)
+        elif option in {"--bin", "--test", "--example", "--bench"}:
+            explicit = True
+            if not separator and index + 1 < len(args):
+                index += 1
+                value = args[index]
+            selectors.add((option, value))
+        index += 1
+    return selectors if explicit else None
+
+
+def target_is_requested(cargo, record):
+    """Cargo also builds bins for integration tests; do not guard unselected targets.
+
+    Libraries and build scripts stay guarded: a selected target links them as
+    dependencies, and their kind cannot prove that they were selected directly.
+    """
+    selectors = target_selectors(cargo)
+    if selectors is None:
+        return True
+    kind = next(iter(record.get("target", {}).get("kind", [])), "")
+    options = {"bin": ("--bins", "--bin"), "test": ("--tests", "--test"),
+               "example": ("--examples", "--example"),
+               "bench": ("--benches", "--bench")}.get(kind)
+    if options is None or "--all-targets" in selectors:
+        return True
+    name = record.get("target", {}).get("name", "")
+    return options[0] in selectors or (options[1], name) in selectors
+
+
+def find_stale_artifacts(current, previous_artifacts, artifacts,
+                         previous_certificates=None):
     stale = []
     changed = set(current["changed_paths"])
     content_changed = set(current["content_changed_paths"])
+    previous_certificates = previous_certificates or {}
     for record in current["reported_artifacts"]:
+        if not target_is_requested(current.get("cargo"), record):
+            continue
         path = artifact_path(record)
         inputs = current["target_inputs"].get(path, [])
         relevant_changes = matched_input_changes(current, inputs, changed)
@@ -850,8 +928,12 @@ def find_stale_artifacts(current, previous_artifacts, artifacts):
                 current, current["target_inputs"].get(artifact_path(sibling), []), required_changes)
             for sibling in current["reported_artifacts"]
         ) if required_changes and not changed_hash else False
+        # A comment-only edit rebuilds identical bytes. The prior certificate
+        # covers those exact bytes, so fresh=false plus a matching certificate
+        # hash is enough (user decision 2026-11-05).
+        prior_certified = (previous_certificates.get(name) or {}).get("sha256") == artifacts.get(name)
         if name not in artifacts or (required_changes and not changed_hash
-                                     and not sibling_covers_changes):
+                                     and not sibling_covers_changes and not prior_certified):
             stale.append(name)
     return sorted(set(stale))
 
@@ -868,8 +950,10 @@ def unread_package_paths(current):
 
 def finish_build(slot, receipt, current, previous, artifacts, returncode):
     previous_artifacts = (previous or {}).get("artifacts", {})
+    previous_certificates = (previous or {}).get("artifact_certificates", {})
     stale_paths = find_stale_artifacts(
-        current, previous_artifacts, artifacts) if returncode == 0 else []
+        current, previous_artifacts, artifacts,
+        previous_certificates) if returncode == 0 else []
     roots = [root for roots in current["package_roots"].values() for root in roots]
     missing_evidence = (returncode == 0 and not current["reported_artifacts"]
                         and package_inputs_changed(current, roots))

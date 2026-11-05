@@ -6,6 +6,7 @@ use tooltip_full_env_helpers::setup_full_env;
 use wow_ui_sim::render::font::WowFontSystem;
 use wow_ui_sim::widget::AnchorPoint;
 
+retail_game_tooltip_data_fixture! {
 #[test]
 fn test_world_cursor_tooltip_shows_world_cursor_data() {
     let env = setup_full_env();
@@ -48,7 +49,9 @@ fn test_world_cursor_tooltip_shows_world_cursor_data() {
         .expect("tooltip data should exist after SetWorldCursor");
     assert!(!td.lines[0].left_text.is_empty());
 }
+}
 
+retail_game_tooltip_data_fixture! {
 #[test]
 fn test_world_cursor_nameplate_anchor_positions_tooltip_relative_to_owner() {
     let env = setup_full_env();
@@ -95,4 +98,5 @@ fn test_world_cursor_nameplate_anchor_positions_tooltip_relative_to_owner() {
         tooltip_rect.y + tooltip_rect.height <= owner_rect.y + 0.1,
         "Tooltip should sit above the owner rect: tooltip={tooltip_rect:?} owner={owner_rect:?}"
     );
+}
 }
