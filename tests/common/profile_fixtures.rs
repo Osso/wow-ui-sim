@@ -231,8 +231,29 @@ macro_rules! timerunning_util_panel_or_wrath_fixture {
 /// `Blizzard_POIButton` has no entry in `data/blizzard-ui-files/mists.txt`,
 /// `era.txt`, `anniversary.txt` or `wrath.txt` (grep count 0), so the panel
 /// fixtures that require the addon root cannot load it on a classic profile.
-/// Wrath is included because these keybinding probes already ran their native
-/// Wrath branch in the baseline; only the classic manifests omit the addon.
+/// Use this form for a post-Wrath probe that must stay excluded on Wrath, and
+/// nest it under `post_wrath_ui_fixture!` so both reasons are explicit.
+#[macro_export]
+macro_rules! poi_button_panel_fixture {
+    ($($item:item)*) => {
+        $(
+            #[cfg(any(
+                feature = "client-retail",
+                feature = "client-ptr",
+                feature = "client-wowforever"
+            ))]
+            $item
+        )*
+    };
+}
+
+/// `Blizzard_POIButton` has no entry in `data/blizzard-ui-files/mists.txt`,
+/// `era.txt`, `anniversary.txt` or `wrath.txt` (grep count 0), so the panel
+/// fixtures that require the addon root cannot load it on a classic profile.
+/// Wrath is included, so use this only where the probe already ran on Wrath,
+/// or where an outer `post_wrath_ui_fixture!` still excludes it. A probe that
+/// was Wrath-excluded on master and is not nested must use
+/// `poi_button_panel_fixture!` instead.
 #[macro_export]
 macro_rules! poi_button_panel_or_wrath_fixture {
     ($($item:item)*) => {
