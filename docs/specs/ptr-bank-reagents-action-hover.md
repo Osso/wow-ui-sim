@@ -10,8 +10,11 @@ See [Lua API architecture](../lua-api.md) for runtime state and API registration
 WM92 (`WM92-ptr-actionbar-reagents.md`) is **PTR 12.1.7.70668** evidence applied
 to this PTR profile, whose UI inputs are pinned to **12.1.7.70493**. It does **not**
 prove these behaviors on 70493. WM92 used no running client; its contract is partial.
-The native-name absence comparison is Retail **12.1.5.70688**. No equivalent Retail
-native behavior or default is inferred from absence.
+WM103b (`WM103b-enter-action-button-closed.md`, same image) closes the entry state
+model: three standalone static values, exactly one writer pair and one builder
+reader, no protected wrapper, no combat-lockdown check, no events and no tooltip
+operation. The native-name absence comparison is Retail **12.1.5.70688**. No
+equivalent Retail native behavior or default is inferred from absence.
 
 Pinned PTR declarations: PlayerScriptDocumentation.lua:1611–1618 and
 ActionBarFrameDocumentation.lua:35–44,960–969. Original consumers:
@@ -55,6 +58,10 @@ refer to the shared C_GameRules rule store.
   other or unusable slots.
 - [x] Original OnEnter and OnLeave handlers execute without swallowed errors;
   two distinct supplied action records drive two distinct values.
+- [x] Expose the builder read as the named `range_visualization_override` seam:
+  flag zero returns no override; a zero value returns no override even with the
+  flag set; a set flag and non-zero value return the value. The stored slot is
+  not an input. No cursor, reticle, action-button or tooltip effect is modeled.
 
 ## How it works
 
@@ -64,7 +71,7 @@ refer to the shared C_GameRules rule store.
 ## Implementation inventory
 
 - `src/c_api/action_button_hover.rs`: supplied visualization records, local stores,
-  parser, PTR registrations and two game-rule enum entries.
+  the builder-read seam, parser, PTR registrations and two game-rule enum entries.
 - `src/c_api/action_button_hover/unknown_policy.rs`: named UNKNOWN execution-policy seam.
 - `src/lua_api/globals/real/bank_reagents.rs`: modeled non-C global and named
   UNKNOWN character-default/publication seams.
@@ -75,7 +82,8 @@ refer to the shared C_GameRules rule store.
 ## Tests asserting this spec
 
 - `tests/ptr_tooltip_residue.rs`: reagent matrix, ItemUtil consumer, parser/arity,
-  lookup gates, secret-policy distinction, original action handlers, Retail absence.
+  lookup gates, secret-policy distinction, range-visualization builder read,
+  original action handlers, Retail absence.
 - `tests/ptr_tooltip_hover_leave.rs`: independent original OnLeave consumer RED/GREEN.
 - `tests/blizzard_professions_templates_loads.rs`: original recipe-source tooltip.
 - `tests/tooltip_hover.rs`: original action hover retains spell tooltip postcall identity.
@@ -106,3 +114,7 @@ historical handoff evidence, not the current profile result.
   tooltip ownership, combat policy, cursor changes or taint reset is synthesized.
   Rendering geometry/reticle appearance and indirect native object operations are
   not modeled. Missing supplied records remain unavailable, not fabricated.
+- **UNKNOWN builder gameplay effect:** `range_visualization_override` is the only
+  named seam between the stored flag/value and the range-visualization model. The
+  verified read is modeled; the effect of the resolved spell-range-visualization
+  record on the cursor, reticle, action button or tooltip is not.
