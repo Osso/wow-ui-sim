@@ -72,12 +72,15 @@ fn get_pvp_brawl(state: &mut LuaState) -> LuaResult<u32> {
     let normal = named_color(state, "NORMAL_FONT_COLOR").unwrap_or(NORMAL_FALLBACK);
     let disabled = named_color(state, "DISABLED_FONT_COLOR").unwrap_or(DISABLED_FALLBACK);
     let tooltip = compose_tooltip(state, TOOLTIP_TYPE_PVP_BRAWL, None);
-    append_line(
+    keep_plain_type(
+        append_line(
+            state,
+            tooltip,
+            LINE_TYPE_PLAIN,
+            &rows.record.name,
+            Some(highlight),
+        ),
         state,
-        tooltip,
-        LINE_TYPE_PLAIN,
-        &rows.record.name,
-        Some(highlight),
     );
     if let Some(remaining) = rows.remaining {
         let text = ends_in_text(state, remaining)?;
@@ -86,13 +89,19 @@ fn get_pvp_brawl(state: &mut LuaState) -> LuaResult<u32> {
     if !rows.record.map_names.is_empty() {
         append_blank(state, tooltip, normal);
         let heading = map_heading(state, &rows.record)?;
-        append_line(state, tooltip, LINE_TYPE_PLAIN, &heading, Some(highlight));
+        keep_plain_type(
+            append_line(state, tooltip, LINE_TYPE_PLAIN, &heading, Some(highlight)),
+            state,
+        );
         append_map_rows(state, tooltip, &rows.record, normal)?;
     }
     if !rows.record.long_description.is_empty() {
         append_blank(state, tooltip, normal);
         let rules = required_global_text(state, "BRAWL_TOOLTIP_RULES")?;
-        append_line(state, tooltip, LINE_TYPE_PLAIN, &rules, Some(highlight));
+        keep_plain_type(
+            append_line(state, tooltip, LINE_TYPE_PLAIN, &rules, Some(highlight)),
+            state,
+        );
         append_line(
             state,
             tooltip,
@@ -125,6 +134,14 @@ fn select_rows(state: &mut LuaState, is_special: bool) -> LuaResult<Option<Brawl
             can_queue,
         }
     }))
+}
+
+/// WM107 verifies type 0 for these rows, but the shared value-based remap uses
+/// this environment's placeholder `ERROR_COLOR`/`DISABLED_FONT_COLOR`, which both
+/// resolve white, so a white highlight row would be re-typed to 41. Restore the
+/// verified type. Retire when the named-colour surface models GlobalColor.
+fn keep_plain_type(line: Val, state: &mut LuaState) {
+    crate::lua_api::methods::table_set(state, line, "type", Val::Num(LINE_TYPE_PLAIN));
 }
 
 fn append_blank(state: &mut LuaState, tooltip: Val, color: (f64, f64, f64)) {

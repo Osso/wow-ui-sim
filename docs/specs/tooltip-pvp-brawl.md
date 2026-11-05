@@ -51,8 +51,14 @@ simulator uses for every named colour constant, with WM107's measured values as
 fallbacks (white highlight, gold normal, `0.5019608` trivial/disabled). The
 measured values are used when the constant resolves to no colour table, so the
 published colours are WM107's. The ends-in row is published as type 42 directly
-rather than relying on the shared value-based remap, whose comparison target can
-also miss in this environment.
+rather than relying on the shared value-based remap.
+
+**Type restore:** the shared value-based remap compares a type-0 row's colour
+against this environment's placeholder `ERROR_COLOR` and `DISABLED_FONT_COLOR`,
+which both resolve white, so a white highlight row would be re-typed to 41. The
+producer therefore restores the WM107-verified type 0 after each highlight row
+is appended. Retire this when the named-colour surface models the GlobalColor
+data.
 
 ## Evidence and proof
 
