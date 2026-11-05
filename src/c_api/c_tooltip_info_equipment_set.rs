@@ -197,13 +197,8 @@ fn publish_count(
         return Ok(());
     }
     let text = format_global_numeric(state, key, f64::from(count))?;
-    append_line(
-        state,
-        tooltip,
-        LINE_TYPE_PLAIN,
-        &text,
-        named_color(state, color_key),
-    );
+    let color = named_color(state, color_key);
+    append_line(state, tooltip, LINE_TYPE_PLAIN, &text, color);
     Ok(())
 }
 
