@@ -1,5 +1,9 @@
 //! Original WeeklyRewards item hover over the exact reward-entry key seam.
-#![cfg(any(feature = "profile-retail", feature = "client-ptr"))]
+#![cfg(any(
+    feature = "profile-retail",
+    feature = "client-ptr",
+    feature = "client-wowforever"
+))]
 
 #[path = "tooltip_full_env_helpers.rs"]
 mod tooltip_full_env_helpers;
@@ -12,8 +16,16 @@ fn tooltip_weekly_reward_original_hover_reads_stored_descriptor() {
     wow_ui_sim::loader::load_addon(&env.loader_env(), &toc).unwrap();
     // WM97 DQ8: an exact 64-bit key selects an occupied, descriptor-bearing entry.
     // Large keys use the lossless 0x + 16 hex spelling; the pinned list 591 adds
-    // four levels to catalog level 29.
-    env.exec(
+    // four levels to catalog level 29 on Retail/PTR. Forever publishes the getter
+    // but has no pinned classic record set here, so it resolves the catalog item.
+    let level = if wow_ui_sim::client_profile::ACTIVE
+        == wow_ui_sim::client_profile::ClientProfile::WowForever
+    {
+        29
+    } else {
+        33
+    };
+    env.exec(&format!(
         r#"
         A_Admin.SetWeeklyRewardsReady(true)
         A_Admin.SetWeeklyRewardEntry('0x0020000000000001',
@@ -27,14 +39,14 @@ fn tooltip_weekly_reward_original_hover_reads_stored_descriptor() {
         local data = GameTooltip:GetPrimaryTooltipData()
         assert(info and info.getterName == 'GetWeeklyReward', 'weekly-reward accessor missing')
         assert(data and data.id == 1728, 'large lossless key must select its own entry')
-        assert(data.lines[2].leftText == 'Item Level 33', 'stored bonus list must reach the level line')
-        assert(GameTooltip:GetLeftLine(2):GetText() == 'Item Level 33')
+        assert(data.lines[2].leftText == 'Item Level {level}', 'stored descriptor must reach the level line')
+        assert(GameTooltip:GetLeftLine(2):GetText() == 'Item Level {level}')
         button.displayedItemDBID = 42
         button:OnEnter()
         data = GameTooltip:GetPrimaryTooltipData()
         assert(data and data.id == 127830, 'numeric key selects the other entry')
         "#,
-    )
+    ))
     .unwrap();
     env.exec(
         r#"

@@ -32,7 +32,10 @@ pub(crate) fn register(
 }
 
 pub(crate) fn register_admin(builder: TableBuilder) -> LuaResult<TableBuilder> {
-    if !matches!(ACTIVE, ClientProfile::Retail | ClientProfile::Ptr) {
+    if !matches!(
+        ACTIVE,
+        ClientProfile::Retail | ClientProfile::Ptr | ClientProfile::WowForever
+    ) {
         return Ok(builder);
     }
     builder
