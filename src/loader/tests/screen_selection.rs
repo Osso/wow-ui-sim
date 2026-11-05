@@ -53,7 +53,14 @@ fn character_select_screen_uses_glue_addon_set() {
     assert!(addons.iter().any(|name| name == "Blizzard_GlueParent"));
     assert!(addons.iter().any(|name| name == "Blizzard_GlueXML"));
     assert!(!addons.iter().any(|name| name == "Blizzard_UIParent"));
+}
+
+character_create_ui_fixture! {
+#[test]
+fn character_select_screen_includes_character_create() {
+    let addons = addon_names(ScreenKind::CharacterSelect);
     assert!(addons.iter().any(|name| name == "Blizzard_CharacterCreate"));
+}
 }
 
 #[test]
@@ -62,7 +69,14 @@ fn character_create_screen_uses_glue_addon_set() {
     assert!(addons.iter().any(|name| name == "Blizzard_GlueParent"));
     assert!(addons.iter().any(|name| name == "Blizzard_GlueXML"));
     assert!(!addons.iter().any(|name| name == "Blizzard_UIParent"));
+}
+
+character_create_ui_fixture! {
+#[test]
+fn character_create_screen_includes_character_create() {
+    let addons = addon_names(ScreenKind::CharacterCreate);
     assert!(addons.iter().any(|name| name == "Blizzard_CharacterCreate"));
+}
 }
 
 }
@@ -563,13 +577,18 @@ fn real_glue_load_first_addons_sort_before_non_load_first_addons() {
         .iter()
         .position(|name| name == "Blizzard_GlueMenuFrame")
         .expect("Blizzard_GlueMenuFrame should be present");
-    let login_warning_dialogs = addons
+    // Pinned `Blizzard_GlueMenuFrame_Classic.toc:4` depends on
+    // `Blizzard_LoginWarningDialogs`, so the dependency must load first on a
+    // classic profile and cannot be the comparator here. GameModeSelect is not
+    // an ancestor of GlueMenuFrame on either pinned variant
+    // (`Blizzard_GameModeSelect_Classic.toc` depends on Blizzard_SharedXML only).
+    let game_mode_select = addons
         .iter()
-        .position(|name| name == "Blizzard_LoginWarningDialogs")
-        .expect("Blizzard_LoginWarningDialogs should be present");
+        .position(|name| name == "Blizzard_GameModeSelect")
+        .expect("Blizzard_GameModeSelect should be present");
 
     assert!(
-        glue_menu_frame < login_warning_dialogs,
+        glue_menu_frame < game_mode_select,
         "Blizzard_GlueMenuFrame is tagged LoadFirst and should sort before comparable non-LoadFirst glue addons",
     );
 }

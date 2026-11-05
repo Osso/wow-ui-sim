@@ -414,6 +414,7 @@ fn ptr_aura_container_resolves_through_limited_listfile() {
     assert!(!manifest_entry_is_allowed_unmapped(entry));
 }
 
+casc_listfile_manifest_fixture! {
 #[test]
 fn manifest_entries_resolve_through_limited_listfile() {
     let missing: Vec<_> = manifest_entries()
@@ -425,6 +426,7 @@ fn manifest_entries_resolve_through_limited_listfile() {
         missing.is_empty(),
         "unmapped Blizzard UI files: {missing:?}"
     );
+}
 }
 
 #[test]
