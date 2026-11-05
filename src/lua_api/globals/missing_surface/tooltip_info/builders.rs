@@ -44,7 +44,7 @@ pub(super) fn push_tooltip_line(
     left_text: &str,
     left_color: Option<(f64, f64, f64)>,
     wrap: bool,
-) {
+) -> Val {
     // CreateColor executes Lua and may collect; Rust-held Vals are not GC roots.
     let saved_top = state.top;
     state.push(lines);
@@ -67,7 +67,7 @@ pub(super) fn push_tooltip_line(
             table_set(state, line, "wrapText", Val::Bool(true));
         }
         state.top = saved_top;
-        return;
+        return line;
     }
     let parsed = tooltip_line_text_and_color(state, left_text, left_color);
     let left_text_val = create_string(state, &parsed.text);
@@ -84,9 +84,10 @@ pub(super) fn push_tooltip_line(
         table_set(state, line, "wrapText", Val::Bool(true));
     }
     state.top = saved_top;
+    line
 }
 
-fn uses_modern_tooltip_data() -> bool {
+pub(super) fn uses_modern_tooltip_data() -> bool {
     crate::c_api::tooltip_data::enabled()
 }
 
@@ -327,7 +328,7 @@ fn table_color_component(state: &mut LuaState, table: Val, key: &[u8]) -> Option
     }
 }
 
-fn global_color(state: &mut LuaState, key: &[u8]) -> Option<(f64, f64, f64)> {
+pub(super) fn global_color(state: &mut LuaState, key: &[u8]) -> Option<(f64, f64, f64)> {
     let global_key = state.gc.intern_string(key);
     let color = state
         .gc

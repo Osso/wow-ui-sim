@@ -8,7 +8,11 @@ pub mod c_guild_info;
 pub mod c_recruit_a_friend;
 #[cfg(feature = "retail-12-0-5")]
 pub(crate) mod c_tooltip_info_appearance;
+pub(crate) mod c_tooltip_info_artifact_item;
 pub(crate) mod c_tooltip_info_bag_child;
+pub(crate) mod c_tooltip_info_equipment_set;
+pub(crate) mod c_tooltip_info_inventory_by_id;
+pub(crate) mod c_tooltip_info_item_key;
 pub(crate) mod c_tooltip_info_loot;
 pub(crate) mod c_tooltip_info_totem;
 pub(crate) mod class_catalog;
@@ -425,6 +429,7 @@ pub mod spell_base;
 #[cfg(feature = "timed-signal-maps")]
 pub mod timed_signal_map;
 #[cfg(feature = "retail-12-0-5")]
+pub(crate) mod tooltip_getter_args;
 pub mod tooltip_item_context;
 #[cfg(feature = "retail-12-0-5")]
 pub use tooltip_item_context::ItemTooltipContext;

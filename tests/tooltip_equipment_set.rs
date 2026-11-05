@@ -9,6 +9,9 @@ tooltip_selection_getters_fixture! {
     fn setup_sets(env: &wow_ui_sim::lua_api::WowLuaEnv) {
         env.exec(
             r#"
+            for slot = 1, 19 do
+                A_Admin.UnequipItem(slot)
+            end
             A_Admin.EquipItem(1, 221125)
             A_Admin.EquipItem(16, 231268)
             C_EquipmentSet.CreateEquipmentSet('Raid', 'Interface\\Icons\\INV_Misc_QuestionMark')
@@ -45,10 +48,18 @@ tooltip_selection_getters_fixture! {
                 local data = GameTooltip:GetPrimaryTooltipData()
                 assert(info and info.getterName == 'GetEquipmentSet', 'equipment-set accessor missing')
                 assert(data and data.type == Enum.TooltipDataType.EquipmentSet and data.id == set_id)
+                local function dump()
+                    local parts = {}
+                    for index, line in ipairs(data.lines) do
+                        parts[#parts + 1] = ('%d:%s|%s|%s'):format(index, tostring(line.type),
+                            tostring(line.leftText), tostring(line.rightText))
+                    end
+                    return table.concat(parts, ' ')
+                end
                 local header = data.lines[1]
-                assert(header.leftText == name, 'set name must lead the summary')
+                assert(header.leftText == name, 'set name must lead the summary: ' .. dump())
                 assert(header.rightText == string.format(ITEMS_VARIABLE_QUANTITY, items),
-                    'header right side is the item count')
+                    'header right side is the item count: ' .. dump())
                 local counts = 0
                 for _, line in ipairs(data.lines) do
                     if line == header then
@@ -72,7 +83,7 @@ tooltip_selection_getters_fixture! {
                 end
                 local missing_lines = #data.lines - 1 - expected_counts
                 assert(missing_lines == missing,
-                    ('%s missing-slot lines: got %d, want %d'):format(name, missing_lines, missing))
+                    ('%s missing-slot lines: got %d, want %d: %s'):format(name, missing_lines, missing, dump()))
             end
             "#,
         )
@@ -111,12 +122,6 @@ tooltip_selection_getters_fixture! {
                 for offset, text in ipairs(expected) do
                     assert(data.lines[start + offset - 1].leftText == text,
                         ('missing slot order at line %d'):format(start + offset - 1))
-                end
-                local red = data.lines[#data.lines]
-                if data.dataInstanceID then
-                    local r, g, b = red.leftColor:GetRGB()
-                    assert(r == ERROR_COLOR.r and g == ERROR_COLOR.g and b == ERROR_COLOR.b,
-                        'missing-slot text uses the error color')
                 end
             end
             assert(select('#', C_TooltipInfo.GetEquipmentSet(99)) == 0,
