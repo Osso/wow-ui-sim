@@ -110,13 +110,22 @@ mod tests {
     fn add_debuff_populates_player_harmful_aura_queries() {
         let env = WowLuaEnv::new().expect("lua env should initialize");
 
-        let result: String = env
-            .eval(
-                r#"
+        // Pinned Wrath `FrameXML/BuffFrame.lua:125` reads
+        // `name, rank, texture, count, debuffType, ...`, so the legacy tuple
+        // inserts `rank` at 2 and moves `debuffType` to 5. Other profiles use
+        // the rank-free tuple with `debuffType` at 4.
+        let dispel_index =
+            if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Wrath {
+                5
+            } else {
+                4
+            };
+        let probe = r#"
                 A_Admin.ClearBuffs()
                 A_Admin.AddDebuff(589, "Shadow Word: Pain", "136207", 30, 1, "Magic")
 
-                local name, icon, count, debuffName = UnitDebuff("player", 1)
+                local fields = {UnitDebuff("player", 1)}
+                local name, debuffName = fields[1], fields[DISPEL_INDEX]
                 if name ~= "Shadow Word: Pain" then
                     return "missing_unit_debuff"
                 end
@@ -130,9 +139,9 @@ mod tests {
                 end
 
                 return "ok"
-                "#,
-            )
-            .expect("admin aura probe should run");
+                "#
+        .replace("DISPEL_INDEX", &dispel_index.to_string());
+        let result: String = env.eval(&probe).expect("admin aura probe should run");
 
         assert_eq!(result, "ok");
     }
