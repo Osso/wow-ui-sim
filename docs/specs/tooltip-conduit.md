@@ -19,7 +19,7 @@ same supplied conduit catalog; that is **INFERRED**, not separate native proof.
 | Row | Content | Type | Colour |
 |---|---|---|---|
 | 1 | conduit spell name | 13 (`SpellName`) | rank `QualityID` from `CONDUIT_RANK_PROPERTIES` |
-| 2 | `CONDUIT_TYPE_FINESSE` / `_POTENCY` / `_ENDURANCE` | 0 (plain) | default |
+| 2 | `CONDUIT_TYPE_FINESSE` (type 0) / `_POTENCY` (1) / `_ENDURANCE` (2) | 0 (plain) | default |
 | 3 | `ITEM_LEVEL` formatted with the rank item level; carries integer `itemLevel` | 31 (`ItemLevel`) | default |
 | 4 | `ITEM_SOULBOUND` | 20 (`ItemBinding`) | default |
 | 5 | the conduit spell's resolved description | 34 (`SpellDescription`) | `GREEN_FONT_COLOR`, wrapped |

@@ -12,10 +12,11 @@ tooltip_selection_getters_fixture! {
             r#"
             for _, case in ipairs({
                 -- conduit, rank, spell name, type label, item level, quality
-                {5, 1, 'Stalwart Guardian', CONDUIT_TYPE_POTENCY, 145, 2},
-                {5, 5, 'Stalwart Guardian', CONDUIT_TYPE_POTENCY, 200, 4},
+                -- WM94 §5: type 0 = Finesse, 1 = Potency, 2 = Endurance.
+                {5, 1, 'Stalwart Guardian', CONDUIT_TYPE_ENDURANCE, 145, 2},
+                {5, 5, 'Stalwart Guardian', CONDUIT_TYPE_ENDURANCE, 200, 4},
                 {8, 3, 'Inspiring Presence', CONDUIT_TYPE_FINESSE, 171, 3},
-                {11, 4, 'Ashen Juggernaut', CONDUIT_TYPE_ENDURANCE, 184, 4},
+                {11, 4, 'Ashen Juggernaut', CONDUIT_TYPE_POTENCY, 184, 4},
             }) do
                 local conduit_id, rank, name, label, item_level, quality =
                     case[1], case[2], case[3], case[4], case[5], case[6]
