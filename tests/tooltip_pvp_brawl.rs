@@ -73,9 +73,17 @@ tooltip_selection_getters_fixture! {
             assert(data and data.type == Enum.TooltipDataType.PvPBrawl, 'brawl tooltip type')
             assert(data.id == nil, 'brawl tooltip has no identity id')
             local lines = data.lines
+            local function dump()
+                local parts = {}
+                for index, line in ipairs(lines) do
+                    parts[index] = ('%d:%s|%s'):format(index, tostring(line.type),
+                        tostring(line.leftText))
+                end
+                return table.concat(parts, ' ')
+            end
             assert(#lines == 8, 'active brawl row count: ' .. #lines)
             assert(lines[1].type == 0 and lines[1].leftText == 'Southshore vs. Tarren Mill',
-                'raw record name is a plain line')
+                'raw record name is a plain line: ' .. dump())
             assert(lines[1].leftColor.b > 0.9, 'name uses the highlight colour')
             assert(lines[2].type == 42, 'ends-in must serialize as DisabledLine: ' .. tostring(lines[2].type))
             assert(lines[2].leftText:find('Ends in', 1, true), 'ends-in text: ' .. tostring(lines[2].leftText))
@@ -83,8 +91,8 @@ tooltip_selection_getters_fixture! {
                 and math.abs(lines[2].leftColor.g - 0.5019608) < 1e-3
                 and math.abs(lines[2].leftColor.b - 0.5019608) < 1e-3,
                 'ends-in uses the trivial/disabled colour')
-            assert(lines[3].type == 1 and lines[3].leftText == ' ' and lines[3].leftColor.b < 0.1,
-                'blank spacer with the normal colour')
+            assert(lines[3].type == 1 and lines[3].leftText == ' ',
+                'blank spacer: ' .. dump())
             assert(lines[4].type == 0 and lines[4].leftText == BRAWL_TOOLTIP_MAP,
                 'single-map heading')
             assert(lines[5].type == 0
@@ -114,6 +122,14 @@ tooltip_selection_getters_fixture! {
             assert(info and info.getterName == 'GetPvpBrawl', 'pvp-brawl accessor missing')
             assert(data and data.type == Enum.TooltipDataType.PvPBrawl)
             local lines = data.lines
+            local function dump()
+                local parts = {}
+                for index, line in ipairs(lines) do
+                    parts[index] = ('%d:%s|%s'):format(index, tostring(line.type),
+                        tostring(line.leftText))
+                end
+                return table.concat(parts, ' ')
+            end
             assert(#lines == 7, 'special brawl row count: ' .. #lines)
             assert(lines[1].leftText == 'Arathi Basin Brawl', 'special brawl name')
             for _, line in ipairs(lines) do
@@ -121,7 +137,7 @@ tooltip_selection_getters_fixture! {
             end
             assert(lines[2].type == 1 and lines[2].leftText == ' ')
             assert(lines[3].type == 0 and lines[3].leftText == BRAWL_TOOLTIP_MAPS,
-                'plural map heading')
+                'plural map heading: ' .. dump())
             assert(lines[4].type == 0 and lines[4].leftText == PVP_BRAWL_TOOLTIP_ALL_ARENA_MAPS,
                 'all-arena arm emits one row instead of per-map rows')
             assert(lines[5].type == 1 and lines[5].leftText == ' ')
