@@ -58,6 +58,7 @@ return EmbeddedItemTooltip:IsShown(),
 "#;
 
 post_wrath_ui_fixture! {
+paragon_reputation_tooltip_fixture! {
 #[test]
 fn paragon_watch_bar_tooltip_uses_seeded_reward_quest_and_progress() {
     test_timeout! {
@@ -83,6 +84,7 @@ fn paragon_watch_bar_tooltip_uses_seeded_reward_quest_and_progress() {
         assert_eq!(result.progress_value, PARAGON_PROGRESS_VALUE);
     });
     }
+}
 }
 }
 

@@ -268,3 +268,31 @@ macro_rules! poi_button_panel_or_wrath_fixture {
         )*
     };
 }
+
+// classic-tooltip-residue
+
+/// The paragon reputation tooltip is Retail and WoW Forever content:
+/// `Blizzard_UIPanels_Game/Mainline/ReputationFrame.lua:686` defines
+/// `ReputationParagonWatchBar_OnEnter` there (WowForever `Camelot/ReputationFrame.lua:717`,
+/// also `Mainline/ReputationFrame.lua:707`). The classic TOCs select
+/// `Classic\ReputationFrame.lua [AllowLoadGameType wrath, cata, mists]`
+/// (`mists|era|anniversary/…/Blizzard_UIPanels_Game_Classic.toc:22`) or
+/// `Vanilla\ReputationFrame.lua [AllowLoadGameType vanilla, tbc]` (`:23`), and both
+/// files define the handler as an empty stub:
+/// `mists/…/Classic/ReputationFrame.lua:287`,
+/// `era|anniversary/…/Vanilla/ReputationFrame.lua:150`, each commented
+/// "No Paragon reputations for Classic!". The seeded-paragon assertions therefore
+/// describe a consumer those profiles do not ship.
+#[macro_export]
+macro_rules! paragon_reputation_tooltip_fixture {
+    ($($item:item)*) => {
+        $(
+            #[cfg(any(
+                feature = "client-retail",
+                feature = "client-ptr",
+                feature = "client-wowforever"
+            ))]
+            $item
+        )*
+    };
+}
