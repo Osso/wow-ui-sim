@@ -76,15 +76,20 @@ tooltip_selection_getters_fixture! {
             local function dump()
                 local parts = {}
                 for index, line in ipairs(lines) do
-                    parts[index] = ('%d:%s|%s'):format(index, tostring(line.type),
-                        tostring(line.leftText))
+                    parts[index] = ('%d:%s|%s|%s,%s,%s'):format(index, tostring(line.type),
+                        tostring(line.leftText), tostring(line.leftColor and line.leftColor.r),
+                        tostring(line.leftColor and line.leftColor.g),
+                        tostring(line.leftColor and line.leftColor.b))
                 end
                 return table.concat(parts, ' ')
             end
             assert(#lines == 8, 'active brawl row count: ' .. #lines)
             assert(lines[1].type == 0 and lines[1].leftText == 'Southshore vs. Tarren Mill',
                 'raw record name is a plain line: ' .. dump())
-            assert(lines[1].leftColor.b > 0.9, 'name uses the highlight colour')
+            assert(lines[1].leftColor.b > 0.9,
+                ('name uses the highlight colour: %s,%s,%s'):format(
+                    tostring(lines[1].leftColor.r), tostring(lines[1].leftColor.g),
+                    tostring(lines[1].leftColor.b)))
             assert(lines[2].type == 42, 'ends-in must serialize as DisabledLine: ' .. tostring(lines[2].type))
             assert(lines[2].leftText:find('Ends in', 1, true), 'ends-in text: ' .. tostring(lines[2].leftText))
             assert(math.abs(lines[2].leftColor.r - 0.5019608) < 1e-3
@@ -126,8 +131,10 @@ tooltip_selection_getters_fixture! {
             local function dump()
                 local parts = {}
                 for index, line in ipairs(lines) do
-                    parts[index] = ('%d:%s|%s'):format(index, tostring(line.type),
-                        tostring(line.leftText))
+                    parts[index] = ('%d:%s|%s|%s,%s,%s'):format(index, tostring(line.type),
+                        tostring(line.leftText), tostring(line.leftColor and line.leftColor.r),
+                        tostring(line.leftColor and line.leftColor.g),
+                        tostring(line.leftColor and line.leftColor.b))
                 end
                 return table.concat(parts, ' ')
             end
