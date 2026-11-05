@@ -57,6 +57,7 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
 mod tests {
     use crate::lua_api::WowLuaEnv;
 
+    modern_engine_namespace_fixture! {
     #[test]
     fn installs_transmog_sets_empty_inventory_defaults() {
         let env = WowLuaEnv::new().expect("lua env should initialize");
@@ -77,6 +78,7 @@ mod tests {
             .expect("transmog sets defaults should be callable");
 
         assert_eq!(result, "ok");
+    }
     }
 
     #[test]

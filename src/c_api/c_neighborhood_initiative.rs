@@ -13,10 +13,10 @@ use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
 
 pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
-    if !cfg!(any(
-        feature = "retail-12-0-0",
-        feature = "client-wowforever"
-    )) {
+    // Pinned Mists/Era/Anniversary NeighborhoodInitiativeDocumentation.lua:93-107
+    // declare GetTrackedInitiativeTasks and IsInitiativeEnabled; the pinned 3.3.5
+    // Wrath source references no C_NeighborhoodInitiative.
+    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Wrath {
         return Ok(());
     }
     let namespace = ensure_namespace(state, "C_NeighborhoodInitiative")?;

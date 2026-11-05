@@ -292,6 +292,7 @@ mod tests {
         );
     }
 
+    retail_namespace_fixture! {
     #[test]
     #[cfg(not(feature = "retail-12-0-5"))]
     fn outfit_state_methods_track_active_outfit_and_pending_sheathe_categories() {
@@ -332,6 +333,7 @@ mod tests {
             .expect("outfit state methods should be queryable");
 
         assert_eq!(result, "ok");
+    }
     }
 
     #[test]

@@ -18,10 +18,11 @@ pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
         let namespace = ensure_namespace(state, "C_TransmogSets")?;
         table_set_rust_fn_static(state, namespace, "HasAnyValidSets", catalog::has_any_valid)?;
     }
-    // Forever 70707 TransmogSetsDocumentation.lua declares both queries.
-    if cfg!(feature = "retail-12-0-0")
-        || crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::WowForever
-    {
+    // Forever 70707 TransmogSetsDocumentation.lua and the pinned
+    // Mists/Era/Anniversary TransmogSetsDocumentation.lua:325-332 declare
+    // HasAvailableSets and GetSetInfo. The pinned 3.3.5 Wrath source has no
+    // C_TransmogSets namespace.
+    if crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Wrath {
         let namespace = ensure_namespace(state, "C_TransmogSets")?;
         table_set_rust_fn_static(state, namespace, "GetSetInfo", catalog::get_info)?;
         table_set_rust_fn_static(state, namespace, "HasAvailableSets", catalog::has_available)?;
