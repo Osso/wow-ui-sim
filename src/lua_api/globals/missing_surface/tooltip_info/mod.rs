@@ -62,6 +62,20 @@ fn register_c_tooltip_info(state: &mut LuaState) -> LuaResult<()> {
         crate::c_api::c_tooltip_info_equipment_set::register(state, table_ref)?;
         crate::c_api::c_tooltip_info_inventory_by_id::register(state, table_ref)?;
         crate::c_api::c_tooltip_info_item_key::register(state, table_ref)?;
+        // WM94 §5: Retail, PTR and Forever pinned docs declare GetAzeritePower
+        // (TooltipInfoDocumentation.lua:102) and GetConduit (:204).
+        crate::c_api::c_tooltip_info_azerite_power::register(state, table_ref)?;
+        crate::c_api::c_tooltip_info_conduit::register(state, table_ref)?;
+        // WM108 §A/§B: Retail, PTR and Forever pinned docs declare
+        // GetArtifactPowerByID (TooltipInfoDocumentation.lua:53) and
+        // GetEnhancedConduit (:254).
+        crate::c_api::c_tooltip_info_artifact_power::register(state, table_ref)?;
+        crate::c_api::c_tooltip_info_enhanced_conduit::register(state, table_ref)?;
+        // WM107: the pinned docs declare GetPvpBrawl
+        // (TooltipInfoDocumentation.lua:710), but the supplied brawl state is
+        // compiled only for retail-12-0-5 profiles, so Forever is excluded.
+        #[cfg(feature = "retail-12-0-5")]
+        crate::c_api::c_tooltip_info_pvp_brawl::register(state, table_ref)?;
     }
     // Retail, PTR and Forever pinned docs all declare the loot getters,
     // including GetLootRollItem (Forever TooltipInfoDocumentation.lua:554-584).
@@ -117,6 +131,23 @@ pub(crate) fn tooltip_for_item_context(
         Some(item) => builders::tooltip_for_item_info(state, item_id, item),
         None => builders::empty_tooltip(state, super::TOOLTIP_TYPE_ITEM),
     }
+}
+
+/// Feed a spell ID through the existing spell payload builder. The identical
+/// bridge is used by every spell-identifying getter, so the published type/id and
+/// line set stay in one place.
+pub(crate) fn tooltip_for_spell(state: &mut LuaState, spell_id: u32) -> Val {
+    spell::tooltip_for_spell_id(state, spell_id)
+}
+
+/// Resolved spell description text for getters that compose their own rows.
+pub(crate) fn spell_description_text(state: &LuaState, spell_id: u32) -> String {
+    spell::resolved_spell_description(state, spell_id)
+}
+
+/// Item quality colour, shared by item and conduit composition.
+pub(crate) fn item_quality_color(quality: u8) -> (f64, f64, f64) {
+    builders::item_quality_color(quality)
 }
 
 /// WM97 DQ4: relic-aware item composition for the viewed artifact's socket.
@@ -286,7 +317,35 @@ pub(crate) fn format_global_numeric(
         .ok_or_else(|| rilua::runtime_error(format!("localized formatter did not return {key}")))
 }
 
+/// Format a pinned global string with two numeric arguments (for example
+/// `TOOLTIP_TALENT_RANK`, which carries a current and a maximum rank).
+pub(crate) fn format_global_pair(
+    state: &mut LuaState,
+    key: &str,
+    first: f64,
+    second: f64,
+) -> LuaResult<String> {
+    let template = crate::c_api::global_val(state, key);
+    let formatter = crate::c_api::global_val(state, "format");
+    let formatted = call_function_state(
+        state,
+        formatter,
+        &[template, Val::Num(first), Val::Num(second)],
+    )?;
+    val_to_string(state, formatted)
+        .ok_or_else(|| rilua::runtime_error(format!("localized formatter did not return {key}")))
+}
+
+/// Restore a plain line type that the shared value-based remap rewrote. The
+/// remap compares a type-0 row's colour against the named `ERROR_COLOR` and
+/// `DISABLED_FONT_COLOR` entries, which both resolve white while the colour
+/// table is a placeholder, so a verified white type-0 row would become 41.
+pub(crate) fn restore_plain_line_type(state: &mut LuaState, line: Val) {
+    crate::lua_api::methods::table_set(state, line, "type", Val::Num(0.0));
+}
+
 /// Format a pinned global string with one text argument.
+
 pub(crate) fn format_global_text(
     state: &mut LuaState,
     key: &str,
