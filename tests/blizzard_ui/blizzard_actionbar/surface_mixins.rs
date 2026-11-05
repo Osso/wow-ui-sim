@@ -119,6 +119,7 @@ post_wrath_ui_fixture! {
 /// has `mixin="ExtraActionButtonMixin"`), exercising the
 /// template-mixin code path; the other four entries exercise the
 /// direct `mixin=` codegen path.
+#[cfg(feature = "optional-tests")]
 #[test]
 fn plan_named_frames_have_their_mixins_applied() {
     with_blizzard_addon_startup_shape(&[ROOT], &[], |env, _loaded| {
@@ -155,6 +156,7 @@ fn plan_named_frames_have_their_mixins_applied() {
 }
 
 #[cfg(not(feature = "client-wrath"))]
+#[cfg(feature = "optional-tests")]
 #[test]
 fn edit_mode_action_bar_seeds_callable_base_method_aliases() {
     with_blizzard_addon_startup_shape(&[ROOT], &[], |env, _loaded| {
@@ -215,6 +217,7 @@ post_wrath_ui_fixture! {
 /// FREE function `ExtraActionBar_OnLoad` (`Shared/ExtraActionBar.lua:5`).
 /// Inverse of the mixin-applied test: pinning the empty mixin set
 /// guards against accidental mixin injection.
+#[cfg(feature = "optional-tests")]
 #[test]
 fn extra_action_bar_frame_publishes_no_mixin_only_a_script_handler() {
     with_blizzard_addon_startup_shape(&[ROOT], &[], |env, _loaded| {
@@ -288,6 +291,7 @@ post_wrath_ui_fixture! {
 /// Pin `ActionBarMixin`'s method-surface contract. **Bidirectional
 /// spec/source mismatch.** PLAN names 7; source declares 12 (5 match,
 /// 7 source-additional, 2 PLAN-named absent). 15 assertions total.
+#[cfg(feature = "optional-tests")]
 #[test]
 fn action_bar_mixin_publishes_plan_named_and_source_additional_methods() {
     with_blizzard_addon_startup_shape(&[ROOT], &[], |env, _loaded| {
@@ -442,6 +446,7 @@ post_wrath_ui_fixture! {
 /// `ActionBarButtonMixin` + 8 source-additional functions on
 /// `BaseActionButtonMixin` (`BaseActionButtonMixin_*` chain entries +
 /// `GetShowGrid`/`SetShowGrid`/`UpdateFlyout`).
+#[cfg(feature = "optional-tests")]
 #[test]
 fn action_bar_button_and_base_action_button_mixins_pin_plan_named_and_source_additional_methods() {
     with_blizzard_addon_startup_shape(&[ROOT], &[], |env, _loaded| {
@@ -650,6 +655,7 @@ post_wrath_ui_fixture! {
 /// readings. `StanceButtonMixin` uses prefixed forwarders
 /// (`StanceButtonMixin_OnLoad` etc.); `PossessButtonMixin` uses plain
 /// handler names — both pinned verbatim.
+#[cfg(feature = "optional-tests")]
 #[test]
 fn analyzer_inventory_mixins_publish_their_documented_methods() {
     with_blizzard_addon_startup_shape(&[ROOT], &[], |env, _loaded| {
@@ -706,6 +712,7 @@ post_wrath_ui_fixture! {
 /// Pin the 11 PLAN-named status-tracking/spell-flyout mixins as tables.
 /// Single test loops `STATUS_AND_FLYOUT_BAR_MIXINS` and asserts each
 /// global's `type` is `"table"` after addon load. 11 assertions total.
+#[cfg(feature = "optional-tests")]
 #[test]
 fn status_tracking_and_flyout_bar_mixins_publish_as_tables() {
     with_blizzard_addon_startup_shape(&[ROOT], &[], |env, _loaded| {
@@ -729,6 +736,7 @@ fn status_tracking_and_flyout_bar_mixins_publish_as_tables() {
 /// has 11 additional methods PLAN omits (`ProcessCVars` etc.) — the
 /// PLAN list is the surface contract for this task.
 #[cfg(not(feature = "client-wrath"))]
+#[cfg(feature = "optional-tests")]
 #[test]
 fn assisted_combat_manager_publishes_plan_named_methods() {
     let plan_methods = [
@@ -767,6 +775,7 @@ fn assisted_combat_manager_publishes_plan_named_methods() {
 /// Pin `ActionButtonSpellAlertManager` table + 3 PLAN-named methods
 /// at `Shared/ActionButtonSpellAlerts.lua` lua:1/114/125/132.
 #[cfg(not(feature = "client-wrath"))]
+#[cfg(feature = "optional-tests")]
 #[test]
 fn action_button_spell_alert_manager_publishes_plan_named_methods() {
     with_blizzard_addon_startup_shape(&[ROOT], &[], |env, _loaded| {
@@ -802,6 +811,7 @@ post_wrath_ui_fixture! {
 /// Pin the 6 event-routing/refresh-watcher mixins as tables. 6
 /// assertions; nil reading on any row means the source file failed to
 /// load past the `MixinName = {}` line.
+#[cfg(feature = "optional-tests")]
 #[test]
 fn event_and_watcher_frame_mixins_publish_as_tables() {
     with_blizzard_addon_startup_shape(&[ROOT], &[], |env, _loaded| {

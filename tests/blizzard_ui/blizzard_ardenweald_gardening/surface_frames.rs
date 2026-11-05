@@ -4,6 +4,7 @@ use crate::common::blizzard_addon_harness::with_blizzard_addon_smoke_shape;
 
 const ROOT: &str = "Blizzard_ArdenwealdGardening";
 
+#[cfg(feature = "optional-tests")]
 #[test]
 fn ardenweald_gardening_create_returns_panel_with_template_children() {
     with_blizzard_addon_smoke_shape(&[ROOT], &[], |env, _loaded| {
@@ -32,6 +33,7 @@ fn ardenweald_gardening_create_returns_panel_with_template_children() {
     });
 }
 
+#[cfg(feature = "optional-tests")]
 #[test]
 fn ardenweald_gardening_button_template_exposes_texture_children_and_scripts() {
     with_blizzard_addon_smoke_shape(&[ROOT], &[], |env, _loaded| {

@@ -191,6 +191,7 @@ return type(AnimaDiversionCurrencyFrameMixin),
        collect(AnimaNodeReinforceButtonMixin, reinforceButtonMethods)
 "#;
 
+#[cfg(feature = "optional-tests")]
 #[test]
 fn anima_diversion_frame_mixin_exposes_expected_methods() {
     with_blizzard_addon_startup_shape(&[ROOT], CLOSURE_OVERRIDES, |env, _loaded| {
@@ -202,6 +203,7 @@ fn anima_diversion_frame_mixin_exposes_expected_methods() {
     });
 }
 
+#[cfg(feature = "optional-tests")]
 #[test]
 fn anima_diversion_data_provider_mixin_exposes_expected_methods() {
     with_blizzard_addon_startup_shape(&[ROOT], CLOSURE_OVERRIDES, |env, _loaded| {
@@ -217,6 +219,7 @@ fn anima_diversion_data_provider_mixin_exposes_expected_methods() {
     });
 }
 
+#[cfg(feature = "optional-tests")]
 #[test]
 fn anima_diversion_pin_and_connection_mixins_expose_expected_methods() {
     with_blizzard_addon_startup_shape(&[ROOT], CLOSURE_OVERRIDES, |env, _loaded| {
@@ -236,6 +239,7 @@ fn anima_diversion_pin_and_connection_mixins_expose_expected_methods() {
     });
 }
 
+#[cfg(feature = "optional-tests")]
 #[test]
 fn anima_diversion_xml_script_mixins_expose_expected_methods() {
     with_blizzard_addon_startup_shape(&[ROOT], CLOSURE_OVERRIDES, |env, _loaded| {

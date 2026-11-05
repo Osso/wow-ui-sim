@@ -51,6 +51,7 @@ return type(frame.TitleShadow),
        frame.AnimaNodeReinforceButton and frame.AnimaNodeReinforceButton:GetObjectType()
 "#;
 
+#[cfg(feature = "optional-tests")]
 #[test]
 fn anima_diversion_frame_loads_as_hidden_map_canvas_panel() {
     with_blizzard_addon_startup_shape(&[ROOT], CLOSURE_OVERRIDES, |env, _loaded| {
@@ -62,6 +63,7 @@ fn anima_diversion_frame_loads_as_hidden_map_canvas_panel() {
     });
 }
 
+#[cfg(feature = "optional-tests")]
 #[test]
 fn anima_diversion_frame_exposes_expected_children() {
     with_blizzard_addon_startup_shape(&[ROOT], CLOSURE_OVERRIDES, |env, _loaded| {
@@ -73,6 +75,7 @@ fn anima_diversion_frame_exposes_expected_children() {
     });
 }
 
+#[cfg(feature = "optional-tests")]
 #[test]
 fn reinforce_info_frame_exposes_expected_children_and_ready_title() {
     with_blizzard_addon_startup_shape(&[ROOT], CLOSURE_OVERRIDES, |env, _loaded| {

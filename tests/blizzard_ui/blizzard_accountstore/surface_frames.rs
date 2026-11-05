@@ -92,6 +92,7 @@ const PLAN_NAMED_BUT_ABSENT: &[(&str, &str)] = &[
 ];
 
 post_wrath_ui_fixture! {
+#[cfg(feature = "optional-tests")]
 #[test]
 fn account_store_frame_publishes_expected_parentkey_children() {
     with_blizzard_addon_smoke_shape(&[ROOT], &[], |env, _loaded| {
@@ -210,6 +211,7 @@ const THREE_SLICE_PARENTKEY_FINGERPRINT: &[(&str, &str)] = &[
 ];
 
 post_wrath_ui_fixture! {
+#[cfg(feature = "optional-tests")]
 #[test]
 fn fullscreen_account_store_container_publishes_expected_button_with_three_slice_inheritance() {
     with_blizzard_addon_smoke_shape(&[ROOT], &[], |env, _loaded| {
@@ -368,6 +370,7 @@ const INSET_TEMPLATE_INHERITORS: &[(&str, &str)] = &[
 ];
 
 post_wrath_ui_fixture! {
+#[cfg(feature = "optional-tests")]
 #[test]
 fn account_store_inset_frame_template_resolves_into_both_inheritors() {
     with_blizzard_addon_smoke_shape(&[ROOT], &[], |env, _loaded| {

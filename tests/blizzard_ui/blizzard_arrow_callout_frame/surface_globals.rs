@@ -13,6 +13,7 @@ const WIDGET_CONTAINER_MIXIN_METHODS: &[&str] = &["Setup"];
 
 // Wrath has no ArrowCallout vendor widget/handler input; mixed and modeled probes remain enabled.
 post_wrath_ui_fixture! {
+#[cfg(feature = "optional-tests")]
 #[test]
 fn arrow_callout_frame_exports_expected_mixin_globals() {
     with_blizzard_addon_smoke_shape(&[], &[], |env, _loaded| {

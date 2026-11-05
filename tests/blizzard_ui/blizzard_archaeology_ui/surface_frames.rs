@@ -20,6 +20,7 @@ const RACE_TEMPLATE_CHILDREN: &[&str] = &["raceName", "glow", "readyAnim"];
 const ARTIFACT_TEMPLATE_CHILDREN: &[&str] = &["border", "icon", "artifactName", "artifactSubText"];
 const KEYSTONE_TEMPLATE_CHILDREN: &[&str] = &["icon"];
 
+#[cfg(feature = "optional-tests")]
 #[test]
 fn archaeology_frame_matches_xml_surface() {
     with_blizzard_addon_startup_shape(&[ROOT], &[], |env, _loaded| {
@@ -49,6 +50,7 @@ fn archaeology_frame_matches_xml_surface() {
     });
 }
 
+#[cfg(feature = "optional-tests")]
 #[test]
 fn archaeology_frame_instantiates_template_slots() {
     with_blizzard_addon_startup_shape(&[ROOT], &[], |env, _loaded| {

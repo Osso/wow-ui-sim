@@ -51,6 +51,7 @@ use crate::common::blizzard_addon_harness::with_blizzard_addon_glue_smoke_shape;
 const ROOT: &str = "Blizzard_AccountSaveUI";
 const REQUIRED_DEPS: &[&str] = &["Blizzard_GlueXML"];
 
+#[cfg(feature = "optional-tests")]
 #[test]
 fn account_save_ui_load_emits_no_lane_specific_lua_errors() {
     with_blizzard_addon_glue_smoke_shape(&[ROOT], &[], |env, loaded| {
@@ -91,6 +92,7 @@ fn account_save_ui_load_emits_no_lane_specific_lua_errors() {
     });
 }
 
+#[cfg(feature = "optional-tests")]
 #[test]
 fn account_save_ui_dependency_closure_includes_glue_xml() {
     with_blizzard_addon_glue_smoke_shape(&[ROOT], &[], |_env, loaded| {

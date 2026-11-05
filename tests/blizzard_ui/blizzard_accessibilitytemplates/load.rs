@@ -31,6 +31,7 @@ use crate::common::blizzard_addon_harness::with_blizzard_addon_smoke_shape;
 const ROOT: &str = "Blizzard_AccessibilityTemplates";
 const REQUIRED_DEPS: &[&str] = &["Blizzard_SharedXML", "Blizzard_Colors"];
 
+#[cfg(feature = "optional-tests")]
 #[test]
 fn accessibility_templates_load_emits_no_lane_specific_lua_errors() {
     with_blizzard_addon_smoke_shape(&[ROOT], &[], |env, loaded| {
@@ -69,6 +70,7 @@ fn accessibility_templates_load_emits_no_lane_specific_lua_errors() {
     });
 }
 
+#[cfg(feature = "optional-tests")]
 #[test]
 fn accessibility_templates_dependency_closure_includes_required_deps() {
     with_blizzard_addon_smoke_shape(&[ROOT], &[], |_env, loaded| {

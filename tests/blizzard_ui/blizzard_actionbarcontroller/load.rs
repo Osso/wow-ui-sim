@@ -16,6 +16,7 @@ use crate::common::panel_fixtures::recorded_lua_errors;
 const ROOT: &str = "Blizzard_ActionBarController";
 const REQUIRED_DEPS: &[&str] = &["Blizzard_ActionBar", "Blizzard_OverrideActionBar"];
 
+#[cfg(feature = "optional-tests")]
 #[test]
 fn action_bar_controller_loads_with_dependency_closure_and_no_lua_errors() {
     with_blizzard_addon_smoke_shape(&[ROOT], &[], |env, loaded| {

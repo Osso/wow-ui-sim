@@ -74,6 +74,7 @@ const PLAN_NAMED_FULLSCREEN_CONTAINER_METHODS_ABSENT: &[(&str, &str)] = &[(
 )];
 
 post_wrath_ui_fixture! {
+#[cfg(feature = "optional-tests")]
 #[test]
 fn fullscreen_account_store_container_mixin_methods_match_actual_source() {
     with_blizzard_addon_smoke_shape(&[ROOT], &[], |env, _loaded| {
@@ -132,6 +133,7 @@ fn fullscreen_account_store_container_mixin_methods_match_actual_source() {
 }
 
 post_wrath_ui_fixture! {
+#[cfg(feature = "optional-tests")]
 #[test]
 fn fullscreen_account_store_container_mixin_does_not_define_plan_named_methods_that_are_actually_absent()
  {

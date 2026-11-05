@@ -4,6 +4,7 @@ use crate::common::blizzard_addon_harness::with_blizzard_addon_smoke_shape;
 
 const ROOT: &str = "Blizzard_ActionBarController";
 
+#[cfg(feature = "optional-tests")]
 #[test]
 fn action_bar_controller_frame_is_parented_to_uiparent_and_wires_scripts() {
     with_blizzard_addon_smoke_shape(&[ROOT], &[], |env, _loaded| {

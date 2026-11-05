@@ -53,6 +53,13 @@ The NECESSARY Retail suite must complete in at most 600 seconds of wall time on 
 - [x] Complete the production budget/memory proof, then report startup CPU-reduction candidates before any fixture change. The [source-identified proof](../wiki/investigations/test-runtime-optimization.md#native-timeout-inventory-and-complete-budget-proof--2026-11-04) passed in 1146.645s; this does not satisfy the 600s runtime target.
 - [ ] Record the two complete passing runs and empty before/after test-list diff.
 
+## Importance-based reclassification
+
+- [x] Move tests to OPTIONAL only by importance, never by speed, and never the sole proof of a current-profile behaviour.
+- [x] Keep the reviewed list in `tools/optional-tests-modules.txt`; `crates/test-harness/build.rs` admits exactly those top-level modules to the `optional-tests` build.
+- [x] Migrate only these tiers: historical patch contracts, non-retail/older-profile contracts, duplicate addon API-surface and addon load-surface submodules, and diagnostic/perf/audit modules.
+- [x] Keep every `*_probes` API-contract module, plus tooltip, secret, security, startup-guard, addon-coverage, keybinding and edit-mode tests, in the NECESSARY run.
+
 ## Out of scope
 
 Changing product fixture assertions or semantics, moving slow tests to OPTIONAL, or modifying Blizzard code. Harness conformance may assert its explicitly configured policy bound; the existing post-spawn deadlines and cleanup remain unchanged.

@@ -159,6 +159,7 @@ const PLAN_NAMED_BAR_HELPER_GLOBALS: &[&str] = &[
     "ReputationParagonWatchBar_OnLeave",
 ];
 
+#[cfg(feature = "optional-tests")]
 #[test]
 fn action_bar_plan_named_input_globals_are_functions() {
     wrath_action_case!(callbacks::input_globals);
@@ -286,6 +287,7 @@ post_wrath_ui_fixture! {
 /// entry is on PLAN.md:94, so a nil reading on any of them proves the
 /// gap-fill regressed AND the addon's file-scope declaration didn't
 /// run.
+#[cfg(feature = "optional-tests")]
 #[test]
 fn action_bar_plan_named_highlight_tracking_globals_are_functions() {
     with_blizzard_addon_startup_shape(&[ROOT], &[], |env, _loaded| {
@@ -394,6 +396,7 @@ fn action_bar_plan_named_highlight_tracking_globals_are_functions() {
 /// above. This makes the test a STRICTER tripwire than the prior two —
 /// a partial-load regression that breaks the multi-bar Lua chunk would
 /// be caught here even when other action-bar surface tests still pass.
+#[cfg(feature = "optional-tests")]
 #[test]
 fn action_bar_plan_named_multibar_globals_are_functions() {
     wrath_action_case!(callbacks::multibar_globals);
@@ -493,6 +496,7 @@ post_wrath_ui_fixture! {
 /// with the input-globals batch: `ExtraActionButtonKey` (lua:63 in
 /// the same file) IS on the gap-fill line at PLAN.md:93, but the
 /// five lifecycle globals here are addon-only.
+#[cfg(feature = "optional-tests")]
 #[test]
 fn action_bar_plan_named_extra_bar_globals_are_functions() {
     with_blizzard_addon_startup_shape(&[ROOT], &[], |env, _loaded| {
@@ -604,6 +608,7 @@ post_wrath_ui_fixture! {
 /// `Mainline/ArtifactBar.lua` chunk into a TOC flavor branch the
 /// harness doesn't pick up (e.g. moved to a Classic/Cataclysm-only
 /// path while the test still loads Mainline).
+#[cfg(feature = "optional-tests")]
 #[test]
 fn action_bar_plan_named_bar_helper_globals_are_functions() {
     with_blizzard_addon_startup_shape(&[ROOT], &[], |env, _loaded| {

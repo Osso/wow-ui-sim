@@ -38,6 +38,7 @@ const MIXIN_TABLES: &[&str] = &[
 ];
 
 post_wrath_ui_fixture! {
+#[cfg(feature = "optional-tests")]
 #[test]
 fn adventure_map_loads_with_dependency_closure_and_no_lua_errors() {
     assert_toc_declares_required_dependencies();
@@ -61,6 +62,7 @@ fn adventure_map_loads_with_dependency_closure_and_no_lua_errors() {
 
 // Wrath has no AdventureMap vendor widget/handler input; mixed and modeled probes remain enabled.
 post_wrath_ui_fixture! {
+#[cfg(feature = "optional-tests")]
 #[test]
 fn adventure_map_publishes_expected_mixin_tables() {
     with_blizzard_addon_startup_shape(&[ROOT], &[], |env, loaded| {

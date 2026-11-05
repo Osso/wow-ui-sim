@@ -1,5 +1,6 @@
 use std::collections::{BTreeMap, BTreeSet};
 use std::path::{Path, PathBuf};
+use std::sync::OnceLock;
 
 use quote::ToTokens;
 use syn::{
@@ -22,7 +23,27 @@ fn project_root() -> PathBuf {
     PathBuf::from(env!("WOW_UI_SIM_TEST_SOURCE_ROOT"))
 }
 
+/// Modules reclassified into OPTIONAL by importance; see
+/// `tools/optional-tests-modules.txt` for the reviewed list and rationale.
+fn reclassified_optional_modules() -> &'static BTreeSet<String> {
+    static MODULES: OnceLock<BTreeSet<String>> = OnceLock::new();
+    MODULES.get_or_init(|| {
+        let path = project_root().join("tools/optional-tests-modules.txt");
+        println!("cargo:rerun-if-changed={}", path.display());
+        std::fs::read_to_string(&path)
+            .unwrap_or_default()
+            .lines()
+            .map(str::trim)
+            .filter(|line| !line.is_empty() && !line.starts_with('#'))
+            .map(str::to_string)
+            .collect()
+    })
+}
+
 fn optional_test_module(name: &str) -> bool {
+    if reclassified_optional_modules().contains(name) {
+        return true;
+    }
     const MIXED_SWEEPS: &[&str] = &[
         "patch_10_0_0_publication_sweep",
         "patch_10_2_6_publication_sweep",

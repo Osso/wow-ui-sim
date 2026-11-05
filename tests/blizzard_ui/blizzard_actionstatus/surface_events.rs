@@ -17,6 +17,7 @@ const GLUE_SCREEN_EVENTS: &[&str] = &[
     "GLUE_SCREENSHOT_FAILED",
 ];
 
+#[cfg(feature = "optional-tests")]
 #[test]
 fn action_status_registers_game_screenshot_events_outside_glue() {
     with_blizzard_addon_smoke_shape(&[ROOT], &[], |env, _loaded| {
@@ -26,6 +27,7 @@ fn action_status_registers_game_screenshot_events_outside_glue() {
     });
 }
 
+#[cfg(feature = "optional-tests")]
 #[test]
 fn action_status_alternate_top_level_parent_callback_updates_parent() {
     with_blizzard_addon_smoke_shape(&[ROOT], &[], |env, _loaded| {

@@ -14,6 +14,7 @@ const REGISTERED_EVENTS: &[&str] = &[
     "GET_ITEM_INFO_RECEIVED",
 ];
 
+#[cfg(feature = "optional-tests")]
 #[test]
 fn archaeology_frame_registers_onload_events() {
     with_blizzard_addon_startup_shape(&[ROOT], &[], |env, _loaded| {

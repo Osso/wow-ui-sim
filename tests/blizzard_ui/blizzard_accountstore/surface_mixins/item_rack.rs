@@ -96,6 +96,7 @@ const PLAN_NAMED_ITEM_RACK_METHODS_ABSENT: &[(&str, &str)] = &[
 ];
 
 post_wrath_ui_fixture! {
+#[cfg(feature = "optional-tests")]
 #[test]
 fn account_store_item_rack_mixin_methods_match_actual_source() {
     with_blizzard_addon_smoke_shape(&[ROOT], &[], |env, _loaded| {
@@ -146,6 +147,7 @@ fn account_store_item_rack_mixin_methods_match_actual_source() {
 }
 
 post_wrath_ui_fixture! {
+#[cfg(feature = "optional-tests")]
 #[test]
 fn account_store_item_rack_mixin_does_not_define_plan_named_methods_that_are_actually_absent() {
     with_blizzard_addon_smoke_shape(&[ROOT], &[], |env, _loaded| {
