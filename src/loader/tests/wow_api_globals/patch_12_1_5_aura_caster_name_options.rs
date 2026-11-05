@@ -3,6 +3,7 @@
 #[cfg(feature = "retail-12-1-5")]
 #[test]
 fn patch_12_1_5_aura_caster_name_options_defaults_and_booleans() {
+    use crate::lua_api::WowLuaEnv;
     let env = WowLuaEnv::new().expect("Lua environment should initialize");
     env.eval::<()>(
         r#"
