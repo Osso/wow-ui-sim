@@ -73,16 +73,14 @@ fn get_pvp_brawl(state: &mut LuaState) -> LuaResult<u32> {
     let normal = named_color(state, "NORMAL_FONT_COLOR").unwrap_or(NORMAL_FALLBACK);
     let disabled = named_color(state, "DISABLED_FONT_COLOR").unwrap_or(DISABLED_FALLBACK);
     let tooltip = compose_tooltip(state, TOOLTIP_TYPE_PVP_BRAWL, None);
-    restore_plain_line_type(
+    let name_line = append_line(
         state,
-        append_line(
-            state,
-            tooltip,
-            LINE_TYPE_PLAIN,
-            &rows.record.name,
-            Some(highlight),
-        ),
+        tooltip,
+        LINE_TYPE_PLAIN,
+        &rows.record.name,
+        Some(highlight),
     );
+    restore_plain_line_type(state, name_line);
     if let Some(remaining) = rows.remaining {
         let text = ends_in_text(state, remaining)?;
         append_line(state, tooltip, LINE_TYPE_DISABLED, &text, Some(disabled));
@@ -90,19 +88,15 @@ fn get_pvp_brawl(state: &mut LuaState) -> LuaResult<u32> {
     if !rows.record.map_names.is_empty() {
         append_blank(state, tooltip, normal);
         let heading = map_heading(state, &rows.record)?;
-        restore_plain_line_type(
-            state,
-            append_line(state, tooltip, LINE_TYPE_PLAIN, &heading, Some(highlight)),
-        );
+        let heading_line = append_line(state, tooltip, LINE_TYPE_PLAIN, &heading, Some(highlight));
+        restore_plain_line_type(state, heading_line);
         append_map_rows(state, tooltip, &rows.record, normal)?;
     }
     if !rows.record.long_description.is_empty() {
         append_blank(state, tooltip, normal);
         let rules = required_global_text(state, "BRAWL_TOOLTIP_RULES")?;
-        restore_plain_line_type(
-            state,
-            append_line(state, tooltip, LINE_TYPE_PLAIN, &rules, Some(highlight)),
-        );
+        let rules_line = append_line(state, tooltip, LINE_TYPE_PLAIN, &rules, Some(highlight));
+        restore_plain_line_type(state, rules_line);
         append_line(
             state,
             tooltip,

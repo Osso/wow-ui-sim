@@ -75,7 +75,7 @@ fn get_artifact_power_by_id(state: &mut LuaState) -> LuaResult<u32> {
     let Some(power) = power_record(power_id) else {
         return crate::c_api::tooltip_data::unknown_getter_failure();
     };
-    let stored = stored_power(power_id);
+    let stored = stored_power(state, power_id)?;
     let selected_rank = selected_rank(power.flags, stored.current_rank);
     let Some(spell_id) = rank_spell(power_id, selected_rank) else {
         return crate::c_api::tooltip_data::unknown_getter_failure();
@@ -86,7 +86,7 @@ fn get_artifact_power_by_id(state: &mut LuaState) -> LuaResult<u32> {
     }
     let hides_rank_row = power.flags & (FLAG_RANK_ONE | FLAG_END_GAME_UNLINKED) != 0;
     if !hides_rank_row {
-        let maximum = displayed_maximum(&power);
+        let maximum = displayed_maximum(state, &power)?;
         let text = format_global_pair(
             state,
             "TOOLTIP_TALENT_RANK",
@@ -134,14 +134,17 @@ fn power_record(power_id: i32) -> Option<PowerRecord> {
 
 /// The stored totals for one power. Missing state supplies zero counts, which is
 /// not an unconditional rejection (WM94 §5).
-fn stored_power(power_id: i32) -> crate::lua_api::state::ArtifactPowerInfo {
-    let state = borrow_state();
-    state
+fn stored_power(
+    state: &LuaState,
+    power_id: i32,
+) -> LuaResult<crate::lua_api::state::ArtifactPowerInfo> {
+    let sim = borrow_state(state)?;
+    Ok(sim
         .viewed_artifact
         .powers
         .get(&power_id)
         .cloned()
-        .unwrap_or_default()
+        .unwrap_or_default())
 }
 
 fn selected_rank(flags: u32, stored_rank: i32) -> i32 {
@@ -163,8 +166,9 @@ fn rank_spell(power_id: i32, rank: i32) -> Option<u32> {
 }
 
 /// `MaxPurchasableRank` plus the tier adjustment and the 255 rank limit.
-fn displayed_maximum(power: &PowerRecord) -> i64 {
-    let artifact_tier = borrow_state()
+fn displayed_maximum(state: &LuaState, power: &PowerRecord) -> LuaResult<i64> {
+    let sim = borrow_state(state)?;
+    let artifact_tier = sim
         .viewed_artifact
         .info
         .as_ref()
@@ -176,7 +180,7 @@ fn displayed_maximum(power: &PowerRecord) -> i64 {
     if power.flags & FLAG_RANK_LIMIT_UNCAPPED != 0 {
         maximum = RANK_LIMIT_UNCAPPED;
     }
-    maximum.clamp(0, RANK_LIMIT_UNCAPPED)
+    Ok(maximum.clamp(0, RANK_LIMIT_UNCAPPED))
 }
 
 /// `INCREASE_STAT_COLOR` for a nonzero displayed bonus, else `HIGHLIGHT_FONT_COLOR`.
