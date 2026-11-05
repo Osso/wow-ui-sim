@@ -429,7 +429,13 @@ fn loot_journal_displays_empty_runeforge_catalog_for_distinct_filters() {
     assert!(ok);
 }
 
-#[cfg(feature = "client-retail")]
+/// `C_TransmogCollection.GetLatestAppearance` is declared on Retail, PTR, WowForever
+/// and Mists (`TransmogItemsDocumentation.lua`: Retail `:553`, Mists `:524`), and
+/// the Mists `Blizzard_Collections/Classic/Blizzard_Wardrobe.lua:389` consumer calls
+/// it from `WardrobeItemsCollectionMixin:CheckLatestAppearance`. Era and Anniversary
+/// declare the getter too, but they ship no `_Vanilla`/`_Classic` Collections TOC, so
+/// `loader::find_toc_file` cannot discover that consumer there.
+#[cfg(any(feature = "client-retail", feature = "client-mists"))]
 #[test]
 fn wardrobe_latest_appearance_tracks_collections() {
     let _full_ui = lock_full_ui();
