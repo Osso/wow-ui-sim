@@ -172,7 +172,7 @@ pub(crate) fn reject_spell_keyed_lookup(state: &LuaState, spell_id: u32) -> LuaR
     #[cfg(not(feature = "retail-12-1-0"))]
     {
         let _ = spell_id;
-        Ok(false)
+        auras_restricted(state)
     }
 }
 
@@ -194,7 +194,7 @@ pub(crate) fn spell_keyed_aura_is_secret(state: &LuaState, spell_id: i32) -> Lua
     #[cfg(not(feature = "retail-12-1-0"))]
     {
         let _ = spell_id;
-        Ok(false)
+        auras_restricted(state)
     }
 }
 
