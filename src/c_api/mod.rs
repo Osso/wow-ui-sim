@@ -18,7 +18,9 @@ pub(crate) mod c_tooltip_info_equipment_set;
 pub(crate) mod c_tooltip_info_inventory_by_id;
 pub(crate) mod c_tooltip_info_item_key;
 pub(crate) mod c_tooltip_info_loot;
-#[cfg(feature = "retail-12-0-5")]
+// The pinned TooltipInfoDocumentation.lua:710 declares GetPvpBrawl on Retail,
+// PTR and Forever; the supplied-brawl model is compiled for the same profiles.
+#[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
 pub(crate) mod c_tooltip_info_pvp_brawl;
 pub(crate) mod c_tooltip_info_totem;
 pub(crate) mod c_tooltip_info_weekly;

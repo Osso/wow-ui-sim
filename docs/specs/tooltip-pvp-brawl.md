@@ -62,12 +62,19 @@ data.
 
 ## Profile gate
 
-The pinned `TooltipInfoDocumentation.lua` declares `GetPvpBrawl` on Retail, PTR
-and Forever, but the supplied brawl state (`active_brawl`, `special_event_brawl`,
-`available_brawl`) is compiled only for the `retail-12-0-5` profiles, so the getter
-is published on Retail and PTR. Publishing it on Forever would need the brawl
-state fields ungated there; that is a `C_PvP` state-model change, not a tooltip
-change, so Forever stays blocked.
+The pinned `TooltipInfoDocumentation.lua:710` declares `GetPvpBrawl` on Retail, PTR
+and Forever, and the pinned `PvpInfoDocumentation.lua` declares the supplied
+brawl state queries on those same profiles (`GetActiveBrawlInfo` :109,
+`GetAvailableBrawlInfo` :255, `GetSpecialEventBrawlInfo` :775). The brawl state
+fields and `GetPvpBrawl` are therefore compiled for `retail-12-0-5` profiles and
+for `client-wowforever`. The Forever field list and signatures are identical to
+Retail's (`PvpBrawlInfo` fields match exactly). Brawl records are host-supplied
+on every profile; no Forever brawl data is synthesized.
+
+The shared packed tooltip-data seam (`src/c_api/tooltip_data.rs`, WM82/WM63 D56)
+is Retail/PTR only, so Forever publishes the raw named line colours instead of
+the byte-packed ones. The Forever test therefore asserts the named-colour
+equality rather than the Retail-measured `0.5019608` value.
 
 ## Evidence and proof
 
@@ -83,3 +90,10 @@ true and `canQueue` false (seven rows, no type 42, forced queue permission,
 plural heading and the all-arena row). It also proves that a nonqueueable active
 record and a missing record take the missing route. Native protected-return arity
 and the localized ends-in text are not claimed.
+
+`tests/forever_brawl_state.rs` runs the Forever profile: the runtime-selected
+`Blizzard_PVPMatch/PVPMatchUtil.lua:20` consumer reads the supplied active
+record, the three pinned `C_PvP` brawl queries publish supplied records, and the
+`TooltipDataHandler` to `GetPvpBrawl` route composes the brawl tooltip.
+`Blizzard_PVPUI` is not a Forever runtime consumer: its
+`Blizzard_PVPUI.toc` excludes `camelot`.
