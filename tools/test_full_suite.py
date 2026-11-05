@@ -205,14 +205,25 @@ class IntegrationShardingTests(unittest.TestCase):
             budget or self.runner.TestBudget(2, 24), guards,
             memory_costs or self.memory_costs, tail, timings)
 
-    def test_batches_cover_every_name_once_in_cost_order(self):
-        from collections import deque
-        queue = deque(['slow', 'cheap', 'medium'])
-        costs = {'slow': 30, 'medium': 5}
-        self.assertEqual(self.runner.take_batch(queue, costs), ['slow'])
-        self.assertEqual(list(queue), ['cheap', 'medium'])
-        self.assertEqual(self.runner.take_batch(queue, costs), ['cheap', 'medium'])
-        self.assertEqual(self.runner.take_batch(deque(['big', 'other']), costs, single=True), ['big'])
+    def test_family_batches_keep_families_whole_and_heaviest_first(self):
+        costs = {'alpha::slow': 30, 'alpha::cheap': 1, 'beta::a': 4}
+        families = self.runner.family_queues(['alpha::cheap', 'beta::a', 'alpha::slow'], costs)
+        self.assertEqual([family[0] for family in families], ['alpha::slow', 'beta::a'])
+        self.assertEqual(self.runner.take_batch(families, costs), ['alpha::slow'])
+        self.assertEqual(self.runner.take_batch(families, costs), ['alpha::cheap'])
+        self.assertEqual(self.runner.take_batch(families, costs), ['beta::a'])
+        self.assertEqual(len(families), 0)
+
+    def test_family_batches_never_mix_case_prefixes(self):
+        costs = {f'fam{index}::{name}': 1 for index in range(3) for name in ('a', 'b')}
+        families = self.runner.family_queues(list(costs), costs)
+        batches = []
+        while families:
+            batches.append(self.runner.take_batch(families, costs))
+        names = [name for batch in batches for name in batch]
+        self.assertEqual(sorted(names), sorted(costs))
+        for batch in batches:
+            self.assertEqual(len({self.runner.family_of(name) for name in batch}), 1)
 
     def test_unknown_admission_is_the_worker_share_and_known_uses_its_measured_cap(self):
         gib = 1024 ** 3

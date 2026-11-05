@@ -22,79 +22,91 @@ fn loaded_env() -> WowLuaEnv {
 
 #[test]
 fn protected_method_set_id_routes_blocked_event_and_allows_trusted_calls() {
-    let env = loaded_env();
-    env.exec(
-        r#"
-        assert(type(GameEvent.HandleActionBlocked) == 'function')
-        local routed
-        hooksecurefunc(GameEvent, 'HandleActionBlocked', function(_, event, owner)
-            if event == 'ADDON_ACTION_BLOCKED' then routed = owner end
-        end)
-        local frame = CreateFrame('Frame', 'ProtectedMethodId', UIParent)
-        local events = {}
-        local listener = CreateFrame('Frame')
-        listener:RegisterEvent('ADDON_ACTION_BLOCKED')
-        listener:SetScript('OnEvent', function(_, _, owner, action)
-            events[#events + 1] = { owner, action }
-        end)
-        A_Admin.SetFrameProtected('ProtectedMethodId', true)
-        A_Admin.SetInCombat(false)
-        debug.setstacktaint('ProtectedMethodAddon')
-        frame:SetID(11)
-        assert(frame:GetID() == 11, 'out-of-combat insecure SetID must work')
-        debug.setstacktaint(nil)
-        A_Admin.SetInCombat(true)
-        frame:SetID(22)
-        assert(frame:GetID() == 22, 'secure combat SetID must work')
-        debug.setstacktaint('ProtectedMethodAddon')
-        frame:SetID(33)
-        debug.setstacktaint(nil)
-        assert(frame:GetID() == 22, 'insecure combat SetID must be refused')
-        assert(#events == 1, 'blocked action must fire once')
-        assert(events[1][1] == 'ProtectedMethodAddon')
-        assert(events[1][2] == 'ProtectedMethodId:SetID()')
-        assert(routed == 'ProtectedMethodAddon', 'Blizzard handler must receive the event')
-    "#,
-    )
-    .unwrap();
+    crate::common::grouped_fixture::with_env(
+        "protected_method_coverage",
+        loaded_env,
+        |env| {
+
+        env.exec(
+            r#"
+            assert(type(GameEvent.HandleActionBlocked) == 'function')
+            local routed
+            hooksecurefunc(GameEvent, 'HandleActionBlocked', function(_, event, owner)
+                if event == 'ADDON_ACTION_BLOCKED' then routed = owner end
+            end)
+            local frame = CreateFrame('Frame', 'ProtectedMethodId', UIParent)
+            local events = {}
+            local listener = CreateFrame('Frame')
+            listener:RegisterEvent('ADDON_ACTION_BLOCKED')
+            listener:SetScript('OnEvent', function(_, _, owner, action)
+                events[#events + 1] = { owner, action }
+            end)
+            A_Admin.SetFrameProtected('ProtectedMethodId', true)
+            A_Admin.SetInCombat(false)
+            debug.setstacktaint('ProtectedMethodAddon')
+            frame:SetID(11)
+            assert(frame:GetID() == 11, 'out-of-combat insecure SetID must work')
+            debug.setstacktaint(nil)
+            A_Admin.SetInCombat(true)
+            frame:SetID(22)
+            assert(frame:GetID() == 22, 'secure combat SetID must work')
+            debug.setstacktaint('ProtectedMethodAddon')
+            frame:SetID(33)
+            debug.setstacktaint(nil)
+            assert(frame:GetID() == 22, 'insecure combat SetID must be refused')
+            assert(#events == 1, 'blocked action must fire once')
+            assert(events[1][1] == 'ProtectedMethodAddon')
+            assert(events[1][2] == 'ProtectedMethodId:SetID()')
+            assert(routed == 'ProtectedMethodAddon', 'Blizzard handler must receive the event')
+        "#,
+        )
+        .unwrap();
+        },
+    );
 }
 
 fn assert_protected_input_method(method: &str, getter: &str) {
-    let env = loaded_env();
-    env.exec(&format!(
-        r#"
-        assert(type(GameEvent.HandleActionBlocked) == 'function')
-        local routed
-        hooksecurefunc(GameEvent, 'HandleActionBlocked', function(_, event, owner)
-            if event == 'ADDON_ACTION_BLOCKED' then routed = owner end
-        end)
-        local frame = CreateFrame('Frame', 'ProtectedInputMethod', UIParent)
-        local events = {{}}
-        local listener = CreateFrame('Frame')
-        listener:RegisterEvent('ADDON_ACTION_BLOCKED')
-        listener:SetScript('OnEvent', function(_, _, owner, action)
-            events[#events + 1] = {{ owner, action }}
-        end)
-        A_Admin.SetFrameProtected('ProtectedInputMethod', true)
-        A_Admin.SetInCombat(false)
-        debug.setstacktaint('ProtectedMethodAddon')
-        frame:{method}(true)
-        assert(frame:{getter}() == true, '{method} must work outside combat')
-        debug.setstacktaint(nil)
-        A_Admin.SetInCombat(true)
-        frame:{method}(false)
-        assert(frame:{getter}() == false, '{method} must work for secure callers')
-        debug.setstacktaint('ProtectedMethodAddon')
-        frame:{method}(true)
-        debug.setstacktaint(nil)
-        assert(frame:{getter}() == false, '{method} must be refused in combat')
-        assert(#events == 1, '{method} must emit one blocked event')
-        assert(events[1][1] == 'ProtectedMethodAddon')
-        assert(events[1][2] == 'ProtectedInputMethod:{method}()')
-        assert(routed == 'ProtectedMethodAddon', 'Blizzard handler must receive the event')
-    "#
-    ))
-    .unwrap();
+    crate::common::grouped_fixture::with_env(
+        "protected_method_coverage",
+        loaded_env,
+        |env| {
+
+        env.exec(&format!(
+            r#"
+            assert(type(GameEvent.HandleActionBlocked) == 'function')
+            local routed
+            hooksecurefunc(GameEvent, 'HandleActionBlocked', function(_, event, owner)
+                if event == 'ADDON_ACTION_BLOCKED' then routed = owner end
+            end)
+            local frame = CreateFrame('Frame', 'ProtectedInputMethod', UIParent)
+            local events = {{}}
+            local listener = CreateFrame('Frame')
+            listener:RegisterEvent('ADDON_ACTION_BLOCKED')
+            listener:SetScript('OnEvent', function(_, _, owner, action)
+                events[#events + 1] = {{ owner, action }}
+            end)
+            A_Admin.SetFrameProtected('ProtectedInputMethod', true)
+            A_Admin.SetInCombat(false)
+            debug.setstacktaint('ProtectedMethodAddon')
+            frame:{method}(true)
+            assert(frame:{getter}() == true, '{method} must work outside combat')
+            debug.setstacktaint(nil)
+            A_Admin.SetInCombat(true)
+            frame:{method}(false)
+            assert(frame:{getter}() == false, '{method} must work for secure callers')
+            debug.setstacktaint('ProtectedMethodAddon')
+            frame:{method}(true)
+            debug.setstacktaint(nil)
+            assert(frame:{getter}() == false, '{method} must be refused in combat')
+            assert(#events == 1, '{method} must emit one blocked event')
+            assert(events[1][1] == 'ProtectedMethodAddon')
+            assert(events[1][2] == 'ProtectedInputMethod:{method}()')
+            assert(routed == 'ProtectedMethodAddon', 'Blizzard handler must receive the event')
+        "#
+        ))
+        .unwrap();
+        },
+    );
 }
 
 macro_rules! protected_input_test {
@@ -195,41 +207,47 @@ fn assert_protected_transition(
     out_check: &str,
     secure_check: &str,
 ) {
-    let env = loaded_env();
-    env.exec(&format!(
-        r#"
-        local frame = CreateFrame('{kind}', 'ProtectedTransition', UIParent)
-        {setup}
-        local events = {{}}
-        local routed
-        hooksecurefunc(GameEvent, 'HandleActionBlocked', function(_, event, owner)
-            if event == 'ADDON_ACTION_BLOCKED' then routed = owner end
-        end)
-        local listener = CreateFrame('Frame')
-        listener:RegisterEvent('ADDON_ACTION_BLOCKED')
-        listener:SetScript('OnEvent', function(_, _, owner, action)
-            events[#events + 1] = {{ owner, action }}
-        end)
-        A_Admin.SetFrameProtected('ProtectedTransition', true)
-        A_Admin.SetInCombat(false)
-        debug.setstacktaint('ProtectedMethodAddon')
-        {out}
-        assert({out_check}, '{method} must work outside combat')
-        debug.setstacktaint(nil)
-        A_Admin.SetInCombat(true)
-        {secure}
-        assert({secure_check}, '{method} must work for secure callers')
-        debug.setstacktaint('ProtectedMethodAddon')
-        {blocked}
-        debug.setstacktaint(nil)
-        assert({secure_check}, '{method} must be refused in combat')
-        assert(#events == 1, '{method} must emit one blocked event')
-        assert(events[1][1] == 'ProtectedMethodAddon')
-        assert(events[1][2] == 'ProtectedTransition:{method}()')
-        assert(routed == 'ProtectedMethodAddon', 'Blizzard handler must receive the event')
-    "#
-    ))
-    .unwrap();
+    crate::common::grouped_fixture::with_env(
+        "protected_method_coverage",
+        loaded_env,
+        |env| {
+
+        env.exec(&format!(
+            r#"
+            local frame = CreateFrame('{kind}', 'ProtectedTransition', UIParent)
+            {setup}
+            local events = {{}}
+            local routed
+            hooksecurefunc(GameEvent, 'HandleActionBlocked', function(_, event, owner)
+                if event == 'ADDON_ACTION_BLOCKED' then routed = owner end
+            end)
+            local listener = CreateFrame('Frame')
+            listener:RegisterEvent('ADDON_ACTION_BLOCKED')
+            listener:SetScript('OnEvent', function(_, _, owner, action)
+                events[#events + 1] = {{ owner, action }}
+            end)
+            A_Admin.SetFrameProtected('ProtectedTransition', true)
+            A_Admin.SetInCombat(false)
+            debug.setstacktaint('ProtectedMethodAddon')
+            {out}
+            assert({out_check}, '{method} must work outside combat')
+            debug.setstacktaint(nil)
+            A_Admin.SetInCombat(true)
+            {secure}
+            assert({secure_check}, '{method} must work for secure callers')
+            debug.setstacktaint('ProtectedMethodAddon')
+            {blocked}
+            debug.setstacktaint(nil)
+            assert({secure_check}, '{method} must be refused in combat')
+            assert(#events == 1, '{method} must emit one blocked event')
+            assert(events[1][1] == 'ProtectedMethodAddon')
+            assert(events[1][2] == 'ProtectedTransition:{method}()')
+            assert(routed == 'ProtectedMethodAddon', 'Blizzard handler must receive the event')
+        "#
+        ))
+        .unwrap();
+        },
+    );
 }
 
 #[test]
@@ -514,38 +532,50 @@ fn protected_transition_clear_points_offset() {
 
 #[test]
 fn clear_attribute_reports_existence_and_dispatches_change() {
-    let env = loaded_env();
-    env.exec(
-        r#"
-        local frame = CreateFrame('Frame')
-        frame:SetAttribute('x', 11)
-        local calls = 0
-        frame:SetScript('OnAttributeChanged', function(_, name, value)
-            assert(name == 'x' and value == nil)
-            calls = calls + 1
-        end)
-        assert(frame:ClearAttribute('x') == true)
-        assert(frame:GetAttribute('x') == nil and calls == 1)
-        assert(frame:ClearAttribute('x') == false and calls == 1)
-    "#,
-    )
-    .unwrap();
+    crate::common::grouped_fixture::with_env(
+        "protected_method_coverage",
+        loaded_env,
+        |env| {
+
+        env.exec(
+            r#"
+            local frame = CreateFrame('Frame')
+            frame:SetAttribute('x', 11)
+            local calls = 0
+            frame:SetScript('OnAttributeChanged', function(_, name, value)
+                assert(name == 'x' and value == nil)
+                calls = calls + 1
+            end)
+            assert(frame:ClearAttribute('x') == true)
+            assert(frame:GetAttribute('x') == nil and calls == 1)
+            assert(frame:ClearAttribute('x') == false and calls == 1)
+        "#,
+        )
+        .unwrap();
+        },
+    );
 }
 
 #[test]
 fn clear_points_offset_resets_all_points_without_removing_them() {
-    let env = loaded_env();
-    env.exec(r#"
-        local frame = CreateFrame('Frame')
-        frame:SetPoint('TOPLEFT', UIParent, 'TOPLEFT', 11, 12)
-        frame:SetPoint('BOTTOMRIGHT', UIParent, 'BOTTOMRIGHT', 21, 22)
-        frame:ClearPointsOffset()
-        assert(frame:GetNumPoints() == 2)
-        local point, relative, relative_point, x, y = frame:GetPoint(1)
-        assert(point == 'TOPLEFT' and relative == UIParent and relative_point == 'TOPLEFT' and x == 0 and y == 0)
-        point, relative, relative_point, x, y = frame:GetPoint(2)
-        assert(point == 'BOTTOMRIGHT' and relative == UIParent and relative_point == 'BOTTOMRIGHT' and x == 0 and y == 0)
-    "#).unwrap();
+    crate::common::grouped_fixture::with_env(
+        "protected_method_coverage",
+        loaded_env,
+        |env| {
+
+        env.exec(r#"
+            local frame = CreateFrame('Frame')
+            frame:SetPoint('TOPLEFT', UIParent, 'TOPLEFT', 11, 12)
+            frame:SetPoint('BOTTOMRIGHT', UIParent, 'BOTTOMRIGHT', 21, 22)
+            frame:ClearPointsOffset()
+            assert(frame:GetNumPoints() == 2)
+            local point, relative, relative_point, x, y = frame:GetPoint(1)
+            assert(point == 'TOPLEFT' and relative == UIParent and relative_point == 'TOPLEFT' and x == 0 and y == 0)
+            point, relative, relative_point, x, y = frame:GetPoint(2)
+            assert(point == 'BOTTOMRIGHT' and relative == UIParent and relative_point == 'BOTTOMRIGHT' and x == 0 and y == 0)
+        "#).unwrap();
+        },
+    );
 }
 
 #[test]

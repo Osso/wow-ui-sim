@@ -306,14 +306,32 @@ def lane_plan(budget, has_tail):
     return lanes, max(1, budget.cpus - lanes)
 
 
-def take_batch(queue, costs, single=False):
-    """Take a small cost-bounded batch from one queue."""
-    batch = [queue.popleft()]
+def family_of(name):
+    return name.split("::", 1)[0]
+
+
+def family_queues(names, costs):
+    """Group cases by family, heaviest family first, so one process holds one fixture."""
+    families = {}
+    for name in names:
+        families.setdefault(family_of(name), []).append(name)
+    ordered = sorted(families.items(),
+                     key=lambda item: (-sum(costs.get(name, 1) for name in item[1]), item[0]))
+    return deque(deque(sorted(cases, key=lambda name: (-costs.get(name, 1), name)))
+                 for _, cases in ordered)
+
+
+def take_batch(families, costs, single=False):
+    """Take a small cost-bounded batch from the head family."""
+    family = families[0]
+    batch = [family.popleft()]
     load = costs.get(batch[0], 1)
-    while not single and queue and len(batch) < BATCH_MAX_NAMES and load < BATCH_TARGET_SECONDS:
-        name = queue.popleft()
+    while not single and family and len(batch) < BATCH_MAX_NAMES and load < BATCH_TARGET_SECONDS:
+        name = family.popleft()
         batch.append(name)
         load += costs.get(name, 1)
+    if not family:
+        families.popleft()
     return batch
 
 
@@ -332,8 +350,8 @@ def run_dynamic_suite(command, checkout, log, env, costs, budget, timeout_tests,
     timeout_tests = set(timeout_tests)
     guarded = [name for name in names if name not in reserved and name in timeout_tests]
     ordinary = [name for name in names if name not in reserved and name not in timeout_tests]
-    pending = deque(sorted(ordinary, key=lambda name: (-costs.get(name, 1), name)))
-    guards = deque(sorted(guarded, key=lambda name: (-costs.get(name, 1), name)))
+    pending = family_queues(ordinary, costs)
+    guards = family_queues(guarded, costs)
     lanes, tail_threads = lane_plan(budget, bool(tail_jobs))
     # Guarded cases may wait on the global permit semaphore; keep running room
     # for ordinary work, and never exceed the configured permit bound.
@@ -350,30 +368,31 @@ def run_dynamic_suite(command, checkout, log, env, costs, budget, timeout_tests,
     tail_results = []
     sequence = [0]
 
-    def requeue(queue, batch):
-        queue.extendleft(reversed(batch))
-
     def next_job():
         with lock:
             while pending or guards:
                 if guards and state["guarded"] < guard_cap:
-                    queue, kind = guards, "guarded"
+                    families, kind = guards, "guarded"
                 elif pending:
-                    queue, kind = pending, "ordinary"
+                    families, kind = pending, "ordinary"
                 else:
                     lock.wait(0.2)
                     continue
-                single = (costs.get(queue[0], 0) >= ISOLATE_SECONDS
-                          or queue[0] in memory_costs["peak_bytes"])
-                batch = take_batch(queue, costs, single)
+                head = families[0][0]
+                single = (costs.get(head, 0) >= ISOLATE_SECONDS
+                          or head in memory_costs["peak_bytes"])
+                # Families are ordered heaviest-first, so the head name bounds the
+                # batch's admission; check before taking so nothing must be requeued.
+                admission = admission_bytes([head], memory_costs)
+                if state["admitted"] + admission > budget.memory_bytes:
+                    lock.wait(0.2)
+                    continue
+                batch = take_batch(families, costs, single)
                 admission = admission_bytes(batch, memory_costs)
-                if state["admitted"] + admission <= budget.memory_bytes:
-                    state["admitted"] += admission
-                    if kind == "guarded":
-                        state["guarded"] += 1
-                    return kind, batch, admission
-                requeue(queue, batch)
-                lock.wait(0.2)
+                state["admitted"] += admission
+                if kind == "guarded":
+                    state["guarded"] += 1
+                return kind, batch, admission
             return None, None, 0
 
     def settle(kind, admission):
