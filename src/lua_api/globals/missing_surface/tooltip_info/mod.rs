@@ -66,6 +66,16 @@ fn register_c_tooltip_info(state: &mut LuaState) -> LuaResult<()> {
     ) {
         crate::c_api::c_tooltip_info_loot::register(state, table_ref)?;
     }
+    // Retail, PTR and Forever pinned docs declare GetSocketedRelic
+    // (TooltipInfoDocumentation.lua:1012). Forever keeps the catalog item.
+    if matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail
+            | crate::client_profile::ClientProfile::Ptr
+            | crate::client_profile::ClientProfile::WowForever
+    ) {
+        crate::c_api::c_tooltip_info_socketed_relic::register(state, table_ref)?;
+    }
     #[cfg(feature = "retail-12-0-5")]
     {
         if matches!(
@@ -76,16 +86,6 @@ fn register_c_tooltip_info(state: &mut LuaState) -> LuaResult<()> {
             crate::c_api::c_tooltip_info_appearance::register(state, table_ref)?;
         }
         crate::c_api::c_tooltip_info_item_context::register(state, table_ref)?;
-        // Retail, PTR and Forever pinned docs declare GetSocketedRelic
-        // (TooltipInfoDocumentation.lua:1012). Forever keeps the catalog item.
-        if matches!(
-            crate::client_profile::ACTIVE,
-            crate::client_profile::ClientProfile::Retail
-                | crate::client_profile::ClientProfile::Ptr
-                | crate::client_profile::ClientProfile::WowForever
-        ) {
-            crate::c_api::c_tooltip_info_socketed_relic::register(state, table_ref)?;
-        }
         crate::c_api::c_tooltip_info_outfit::register(state, table_ref)?;
     }
     register_item_spell_aura_methods(state, table_ref)?;

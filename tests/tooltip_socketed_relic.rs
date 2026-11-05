@@ -13,8 +13,6 @@ use wow_ui_sim::lua_api::state::{ArtifactInfo, RelicSlotInfo};
 const ARTIFACT_ITEM: i32 = 128_910;
 /// GemProperties 2603: Type 8192 (Life), effect 11 argument 708.
 const LIFE_RELIC: u32 = 132_300;
-/// GemProperties 2550: Type 14 has no native token, effect 11 argument 0.
-const UNKNOWN_TYPE_RELIC: u32 = 130_162;
 /// Bonus list 708 is one Type 1 row with Value_0 2.
 const LEVEL_BONUS_LIST: u32 = 708;
 
@@ -64,6 +62,9 @@ fn load_artifact_ui(env: &wow_ui_sim::lua_api::WowLuaEnv) {
 }
 
 crate::retail_relic_record_fixture! {
+/// GemProperties 2550: Type 14 has no native token, effect 11 argument 0.
+const UNKNOWN_TYPE_RELIC: u32 = 130_162;
+
 #[test]
 fn tooltip_socketed_relic_original_hover_selects_viewed_slot() {
     let env = tooltip_full_env_helpers::load_full_env_without_post_load();
