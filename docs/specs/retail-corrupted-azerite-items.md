@@ -4,4 +4,4 @@ Retail and PTR publish `C_Item.IsCorruptedItem(ItemInfo)` and `C_AzeriteItem.IsA
 
 Corruption is supplied by item ID. Azerite identity is supplied by the existing active Azerite item location. An item not marked by supplied scenario state returns false; this is a simulator scenario default, not a claim about native item data.
 
-The original Retail and PTR `SetItemButtonOverlay` and `AzeritePaperDollItemOverlayMixin:SetAzeriteItem` consumers must reflect distinct supplied values. Other profiles are outside this contract.
+The original Retail and PTR `SetItemButtonOverlay` and `AzeritePaperDollItemOverlayMixin:SetAzeriteItem` consumers must reflect distinct supplied values. Forever 70707 also publishes the existing supplied-location `C_AzeriteItem.IsAzeriteItem` query, declared in its `Blizzard_APIDocumentationGenerated/AzeriteItemDocumentation.lua:77-90` and consumed by `Blizzard_UIPanels_Game/Mainline/AzeritePaperDollItemOverlay.lua:13`. Its Camelot character-slot flow and original overlay must reflect distinct supplied locations. This extension does not publish the item-ID corruption query on Forever. Other profiles are outside this contract.

@@ -280,6 +280,40 @@ pub fn load_profile_framexml(env: &WowLuaEnv) {
     }
 }
 
+/// Explicit Forever scenario: the player has no outfits. Unset is an error
+/// under docs/specs/forever-camelot-spellbook.md; Camelot's spellbook creates a
+/// transmog category (Camelot/SpellBook/Blizzard_SpellBookFrame.lua:138+).
+/// Transmog is unavailable in this scenario, explicitly supplied as required by
+/// transmog-availability.md and Blizzard_SpellBookCategory.lua:506+.
+pub fn supply_empty_forever_spellbook_outfits(env: &WowLuaEnv) {
+    if wow_ui_sim::client_profile::ACTIVE == wow_ui_sim::client_profile::ClientProfile::WowForever {
+        let mut state = env.state().borrow_mut();
+        state.forever_outfits = Some(Some(Vec::new()));
+        state.transmog_availability.enabled = Some(false);
+    }
+}
+
+/// Match production's game-screen startup stream, including bootstrap-only roots.
+/// Forever's CharacterFrame hides StatisticsFrame on every tab change; its
+/// Blizzard_Statistics.toc:2-3 is an eager Camelot root, not a UIPanels dependency.
+pub fn load_game_startup_inventory(env: &WowLuaEnv) {
+    use wow_ui_sim::loader::{discover_blizzard_startup_addons_for_screen, load_startup_addon};
+    let ui = blizzard_ui_dir();
+    env.set_screen_mode(wow_ui_sim::screen::ScreenKind::Game);
+    load_profile_framexml(env);
+    for addon in discover_blizzard_startup_addons_for_screen(
+        &ui,
+        wow_ui_sim::screen::ScreenKind::Game,
+    ) {
+        load_startup_addon(&env.loader_env(), &addon.toc_path, addon.kind, None)
+            .unwrap_or_else(|error| panic!("load startup {}: {error}", addon.name));
+        if addon.name == "Blizzard_EnvironmentCleanup" {
+            env.restore_post_cleanup_globals();
+        }
+    }
+    env.sync_string_metatable_to_global_string();
+}
+
 /// Load the active profile's native panel templates, not a synthetic replacement.
 pub fn env_with_shared_xml() -> WowLuaEnv {
     let env = WowLuaEnv::new().expect("Failed to create Lua environment");

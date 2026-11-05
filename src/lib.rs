@@ -50,6 +50,7 @@ pub use sim_data_profile::global_strings;
 pub mod iced_app;
 #[cfg(not(target_os = "linux"))]
 pub mod inspector_server_stub;
+pub mod install_paths;
 pub use sim_data::items;
 mod key_names;
 pub mod keybinding_cache;

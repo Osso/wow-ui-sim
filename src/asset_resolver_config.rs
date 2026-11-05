@@ -13,18 +13,39 @@ pub fn resolver() -> &'static asset_resolver::CascListfileResolver {
 }
 
 #[cfg(feature = "casc")]
-pub(crate) fn configure_casc_product_env() {
-    if std::env::var_os("WOW_PRODUCT").is_some() {
+pub fn configure_casc_product_env() {
+    if std::env::var_os("WOW_PRODUCT").is_none() {
+        unsafe {
+            std::env::set_var("WOW_PRODUCT", active_profile_casc_product());
+        }
+    }
+}
+
+/// Resolve the install root from an explicitly supplied settings file and export
+/// it as `WOW_INSTALL_PATH` before the resolver caches a path. `None` uses only
+/// the environment and automatic discovery and never reads or writes settings;
+/// entrypoints pass [`crate::install_paths::SettingsFile::platform_default`].
+#[cfg(feature = "casc")]
+pub fn configure_casc_install_env(settings: Option<&crate::install_paths::SettingsFile>) {
+    configure_casc_product_env();
+    if std::env::var("WOW_SIM_CASC").ok().as_deref() == Some("0") {
         return;
     }
-
+    let product = active_profile_casc_product();
+    let inputs = crate::install_paths::InstallPathInputs::from_process_env();
+    let resolved = crate::install_paths::resolve_install_path(settings, product, &inputs, || {
+        asset_resolver::wow_install_path().map(std::path::Path::to_path_buf)
+    });
+    let Some(resolved) = resolved else {
+        return;
+    };
     unsafe {
-        std::env::set_var("WOW_PRODUCT", active_profile_casc_product());
+        std::env::set_var("WOW_INSTALL_PATH", &resolved.root);
     }
 }
 
 #[cfg(feature = "casc")]
-pub(crate) fn active_profile_casc_product() -> &'static str {
+pub fn active_profile_casc_product() -> &'static str {
     match crate::client_profile::ACTIVE {
         crate::client_profile::ClientProfile::Ptr => "wowxptr",
         crate::client_profile::ClientProfile::Wrath

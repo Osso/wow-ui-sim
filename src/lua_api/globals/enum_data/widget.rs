@@ -114,10 +114,28 @@ pub const FORBIDDEN_ASPECT: EnumDef = (
         ("ChangeAnimationTarget", 256),
         ("RemoveSecretAspects", 512),
         ("ChangeParent", 1024),
+        #[cfg(feature = "client-wowforever")]
+        ("SetTexture", 2048),
+        #[cfg(feature = "client-wowforever")]
+        ("QueryRotation", 4096),
         #[cfg(feature = "forbidden-animation-aspects")]
-        ("QueryAnimationProgress", 2048),
+        (
+            "QueryAnimationProgress",
+            if cfg!(feature = "client-wowforever") {
+                8192
+            } else {
+                2048
+            },
+        ),
         #[cfg(feature = "forbidden-animation-aspects")]
-        ("AddAnimations", 4096),
+        (
+            "AddAnimations",
+            if cfg!(feature = "client-wowforever") {
+                16384
+            } else {
+                4096
+            },
+        ),
     ],
 );
 
@@ -128,7 +146,9 @@ pub const FORBIDDEN_ASPECT_META: EnumDef = (
         ("MinValue", 1),
         (
             "MaxValue",
-            if cfg!(feature = "forbidden-animation-aspects") {
+            if cfg!(feature = "client-wowforever") {
+                16384
+            } else if cfg!(feature = "forbidden-animation-aspects") {
                 4096
             } else {
                 1024
@@ -136,7 +156,9 @@ pub const FORBIDDEN_ASPECT_META: EnumDef = (
         ),
         (
             "NumValues",
-            if cfg!(feature = "forbidden-animation-aspects") {
+            if cfg!(feature = "client-wowforever") {
+                15
+            } else if cfg!(feature = "forbidden-animation-aspects") {
                 13
             } else {
                 11
