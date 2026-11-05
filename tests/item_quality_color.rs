@@ -24,13 +24,69 @@ fn item_quality_color_reads_current_globals() {
         local r, g, b = getter(4)
         assert(r == 0.25 and g == 0.5 and b == 0.75, 'updated epic')
         ITEM_EPIC_COLOR = nil
-        for _, quality in ipairs({-1, 4, 9}) do
+        r, g, b = getter(4)
+        local cleared = _G.ITEM_EPIC_COLOR
+        assert(r == cleared.r and g == cleared.g and b == cleared.b,
+            'cleared epic follows global indexing')
+        for _, quality in ipairs({-1, 9}) do
             r, g, b = getter(quality)
             assert(r == 1 and g == 0 and b == 1, 'fallback ' .. quality)
         end
     "#,
     )
     .expect("item quality colors reflect current globals and magenta fallback");
+}
+
+/// The native function resolves the named colour globals (see
+/// `native-evidence-70688/GetItemQualityColor.md` sections 3 and 7), so a
+/// consumer must observe the same value as a Lua read of the global.
+#[cfg(any(
+    feature = "client-retail",
+    feature = "client-ptr",
+    feature = "client-wowforever"
+))]
+#[test]
+fn merchant_product_info_reports_the_indexed_quality_color() {
+    let env = WowLuaEnv::new().unwrap();
+    // The consumer registers itself with the player interaction manager when
+    // the file loads; that subsystem is outside this test's scope.
+    env.exec("RegisterPlayerInteraction = function() end")
+        .unwrap();
+
+    let addons = wow_ui_sim::client_profile::blizzard_ui_addons_dir_under(
+        std::path::Path::new(env!("CARGO_MANIFEST_DIR")),
+    );
+    let consumer_path = addons.join("Blizzard_UIPanels_Game/Mainline/MerchantFrame.lua");
+    let source = std::fs::read_to_string(&consumer_path)
+        .unwrap_or_else(|error| panic!("read {}: {error}", consumer_path.display()));
+    env.exec(&source)
+        .expect("execute the original MerchantFrame_GetProductInfo consumer");
+
+    let mismatch: Option<String> = env
+        .eval(
+            r#"
+            local itemButton = {
+                name = "Test Item",
+                texture = 0,
+                GetID = function() return 1 end,
+            }
+            local productInfo = MerchantFrame_GetProductInfo(itemButton)
+            local actual = productInfo.color
+            local expected = _G.ITEM_STANDARD_COLOR
+            if actual[1] == expected.r and actual[2] == expected.g and actual[3] == expected.b then
+                return nil
+            end
+            return string.format("expected (%.3f, %.3f, %.3f), got (%.3f, %.3f, %.3f)",
+                expected.r, expected.g, expected.b, actual[1], actual[2], actual[3])
+        "#,
+        )
+        .expect("merchant product colour must be readable");
+
+    assert!(
+        mismatch.is_none(),
+        "MerchantFrame_GetProductInfo colour must match ITEM_STANDARD_COLOR: {}",
+        mismatch.unwrap_or_default()
+    );
 }
 
 #[cfg(feature = "client-mists")]
