@@ -185,6 +185,35 @@ fn ptr_tooltip_action_hover_rule_and_lookup_gates_preserve_state() {
 
 #[cfg(feature = "client-ptr")]
 #[test]
+fn ptr_tooltip_range_visualization_builder_reads_flag_then_value() {
+    use wow_ui_sim::c_api::action_button_hover::SpellRangeVisualizationState;
+
+    let mut state = SpellRangeVisualizationState::default();
+    state.stored_slot = Some(4);
+    state.value = 71;
+    assert_eq!(
+        state.range_visualization_override(),
+        None,
+        "flag zero selects the fallback path"
+    );
+    state.enabled = true;
+    state.value = 0;
+    assert_eq!(
+        state.range_visualization_override(),
+        None,
+        "zero value disables the override even with the flag set"
+    );
+    state.value = 71;
+    state.stored_slot = None;
+    assert_eq!(
+        state.range_visualization_override(),
+        Some(71),
+        "the builder reads the flag and value, not the stored slot"
+    );
+}
+
+#[cfg(feature = "client-ptr")]
+#[test]
 fn ptr_tooltip_original_action_button_enter_and_leave_drive_visualization() {
     let env = tooltip_full_env_helpers::setup_full_env();
     supplied_visualization(&env);
