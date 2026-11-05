@@ -6,6 +6,15 @@
 
 use super::{bonus, tables};
 
+/// The relic joins are pinned Retail 70391 records and PTR shares that descriptor
+/// set. Other profiles publish `GetSocketedRelic` but keep the catalog item.
+fn relic_records_available() -> bool {
+    matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail | crate::client_profile::ClientProfile::Ptr
+    )
+}
+
 const RELIC_LEVEL_CURVE: u32 = 1718;
 const DISPLAY_LEVEL_MIN: i32 = 1;
 const DISPLAY_LEVEL_MAX: i32 = 1300;
@@ -24,7 +33,10 @@ pub struct RelicSlotType {
 /// EffectPointsMin.
 pub fn instance_socket_extra(instance_flags: u32, enchantment_id: i32) -> u32 {
     const ENCHANT_SCAN_SUPPRESSED: u32 = 8192;
-    if instance_flags & ENCHANT_SCAN_SUPPRESSED != 0 || enchantment_id <= 0 {
+    if !relic_records_available()
+        || instance_flags & ENCHANT_SCAN_SUPPRESSED != 0
+        || enchantment_id <= 0
+    {
         return 0;
     }
     tables::spell_enchantment(enchantment_id as u32)
@@ -68,6 +80,9 @@ pub fn relic_metadata(
     gem_properties: u32,
     display_level: i32,
 ) -> Result<Option<RelicMetadata>, String> {
+    if !relic_records_available() {
+        return Ok(None);
+    }
     let Some(gem) = tables::gem_properties(gem_properties) else {
         return Ok(None);
     };

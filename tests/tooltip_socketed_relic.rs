@@ -2,7 +2,6 @@
 //!
 //! Native behaviour: WM97 DQ4 and WM104 (Retail 12.1.5). Catalog and relic rows
 //! are the pinned 70391 exports.
-#![cfg(any(feature = "profile-retail", feature = "client-ptr"))]
 
 #[path = "tooltip_full_env_helpers.rs"]
 mod tooltip_full_env_helpers;
@@ -64,6 +63,7 @@ fn load_artifact_ui(env: &wow_ui_sim::lua_api::WowLuaEnv) {
     wow_ui_sim::loader::load_addon(&env.loader_env(), &toc).unwrap();
 }
 
+crate::retail_relic_record_fixture! {
 #[test]
 fn tooltip_socketed_relic_original_hover_selects_viewed_slot() {
     let env = tooltip_full_env_helpers::load_full_env_without_post_load();
@@ -155,7 +155,9 @@ fn tooltip_socketed_relic_original_hover_selects_viewed_slot() {
     )
     .unwrap();
 }
+}
 
+crate::socketed_relic_getter_fixture! {
 #[test]
 fn tooltip_socketed_relic_without_descriptor_is_a_miss() {
     let env = tooltip_full_env_helpers::load_full_env_without_post_load();
@@ -193,4 +195,60 @@ fn tooltip_socketed_relic_without_descriptor_is_a_miss() {
         "#,
     )
     .unwrap();
+}
+}
+
+crate::forever_catalog_relic_fixture! {
+#[test]
+fn tooltip_socketed_relic_forever_keeps_the_catalog_item() {
+    let env = tooltip_full_env_helpers::load_full_env_without_post_load();
+    load_artifact_ui(&env);
+    // Forever has no viewed-artifact state in play, so the shared miss path runs.
+    env.exec(
+        r#"
+        GameTooltip:ClearHandlerInfo()
+        GameTooltip:SetOwner(UIParent, 'ANCHOR_NONE')
+        GameTooltip:SetSocketedRelic(1)
+        assert(GameTooltip:GetPrimaryTooltipData() == nil, 'Forever without a viewed artifact must miss')
+        "#,
+    )
+    .unwrap();
+    {
+        let mut state = env.state().borrow_mut();
+        state.viewed_artifact.info = Some(seeded_artifact());
+        state
+            .viewed_artifact
+            .relic_slots
+            .push(socket(LIFE_RELIC, Some(LEVEL_BONUS_LIST)));
+    }
+    // A supplied socket resolves the shared catalog item; Retail 70391 relic and
+    // bonus records must not reach this profile.
+    env.exec(
+        r#"
+        local perks = CreateFrame('Frame', nil, UIParent)
+        Mixin(perks, ArtifactPerksMixin)
+        local title = CreateFrame('Frame', nil, perks)
+        Mixin(title, ArtifactTitleTemplateMixin)
+        local relic = CreateFrame('Frame', nil, title)
+        local _, _, slotType, link = C_ArtifactUI.GetRelicInfo(1)
+        relic.relicSlotIndex = 1
+        relic.relicType = slotType
+        relic.relicLink = link
+        title:OnRelicSlotMouseEnter(relic)
+        local info = GameTooltip:GetPrimaryTooltipInfo()
+        local data = GameTooltip:GetPrimaryTooltipData()
+        assert(info and info.getterName == 'GetSocketedRelic', 'socketed-relic accessor missing')
+        assert(data and data.id == 132300, 'must resolve the socket descriptor item ID')
+        assert(data.lines[2].leftText == 'Item Level 44', 'Forever keeps the catalog level; Retail bonus 708 must not apply')
+        for _, line in ipairs(data.lines) do
+            local text = line.leftText
+            assert(not (type(text) == 'string' and text:find('Artifact Relic', 1, true)),
+                'Retail relic type records must not reach Forever')
+            assert(not (type(text) == 'string' and text:find('Item Levels', 1, true)),
+                'Retail item-level contribution records must not reach Forever')
+        end
+        "#,
+    )
+    .unwrap();
+}
 }
