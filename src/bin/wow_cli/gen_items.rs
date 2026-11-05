@@ -802,6 +802,10 @@ const EXISTING_ITEM_FIXTURE_IDS: &[u32] = &[
     49803, 49812, 49819,
     // tests/item_spec_info_* read these through GetItemInfo (WM48 examples).
     892, 80773,
+    // WM97 DQ4 relic sockets: one artifact with two socket markers (128910) and
+    // backed 70391 relic rows for the effect-11 item-level contribution and the
+    // recognized (8192 = Life) and unrecognized (14) GemProperties.Type labels.
+    128910, 132300, 132343, 130162,
 ];
 
 /// Items addons name at file load that the teleport rule cannot see: their
@@ -1204,6 +1208,8 @@ const ITEM_SPARSE_REQUIRED_COLUMNS: &[&str] = &[
     "RequiredLevel",
     "InventoryType",
     "OverallQualityID",
+    "ArtifactID",
+    "Gem_properties",
 ];
 
 fn build_item_map(
@@ -1316,16 +1322,25 @@ fn format_item_info(
     let quality: u8 = field(fields, idx, "OverallQualityID").parse().unwrap_or(0);
     let stat_percent_editor = parse_stat_percent_editor(fields, idx);
     let stat_modifier_bonus_stat = parse_stat_modifier_bonus_stat(fields, idx);
+    let artifact_id: u32 = field(fields, idx, "ArtifactID").parse().unwrap_or(0);
+    let gem_properties: u32 = field(fields, idx, "Gem_properties").parse().unwrap_or(0);
+    let socket_types: [u8; 3] = std::array::from_fn(|index| {
+        array_field(fields, idx, "SocketType", index)
+            .parse::<u8>()
+            .unwrap_or(0)
+    });
 
     let stat_percent_editor = format_u16_array(&stat_percent_editor);
     let stat_modifier_bonus_stat = format_i16_array(&stat_modifier_bonus_stat);
+    let socket_types = format_array(&socket_types);
     format!(
         "ItemInfo {{ name: \"{escaped_name}\", quality: {quality}, item_level: {item_level}, \
          required_level: {required_level}, inventory_type: {inventory_type}, \
          sell_price: {sell_price}, stackable: {stackable}, bonding: {bonding}, \
          expansion_id: {expansion_id}, icon_file_data_id: {icon_file_data_id}, \
          stat_percent_editor: {stat_percent_editor}, \
-         stat_modifier_bonus_stat: {stat_modifier_bonus_stat} }}"
+         stat_modifier_bonus_stat: {stat_modifier_bonus_stat}, artifact_id: {artifact_id}, \
+         socket_types: {socket_types}, gem_properties: {gem_properties} }}"
     )
 }
 
@@ -1340,7 +1355,8 @@ fn format_search_item_info(fields: &[String], idx: &HashMap<String, usize>) -> S
          required_level: {required_level}, inventory_type: 0, sell_price: 0, \
          stackable: 1, bonding: 1, expansion_id: {expansion_id}, icon_file_data_id: 0, \
          stat_percent_editor: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], \
-         stat_modifier_bonus_stat: [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1] }}"
+         stat_modifier_bonus_stat: [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1], \
+         artifact_id: 0, socket_types: [0, 0, 0], gem_properties: 0 }}"
     )
 }
 
@@ -1423,6 +1439,21 @@ fn write_header(out: &mut File, item_sparse: &Path) -> std::io::Result<()> {
     writeln!(out, "    pub icon_file_data_id: u32,")?;
     writeln!(out, "    pub stat_percent_editor: [u16; 10],")?;
     writeln!(out, "    pub stat_modifier_bonus_stat: [i16; 10],")?;
+    writeln!(
+        out,
+        "    /// ItemSparse.ArtifactID: nonzero marks an artifact (`WM97` DQ4)."
+    )?;
+    writeln!(out, "    pub artifact_id: u32,")?;
+    writeln!(
+        out,
+        "    /// ItemSparse.SocketType_0..2; zero means the position is not a socket."
+    )?;
+    writeln!(out, "    pub socket_types: [u8; 3],")?;
+    writeln!(
+        out,
+        "    /// ItemSparse.Gem_properties: GemProperties row selector (`WM97` DQ4)."
+    )?;
+    writeln!(out, "    pub gem_properties: u32,")?;
     writeln!(out, "}}")?;
     writeln!(out)?;
     Ok(())

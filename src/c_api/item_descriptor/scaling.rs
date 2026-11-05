@@ -8,9 +8,9 @@
 //! image default (WM97c A: its runtime writer is UNKNOWN). The alternate level,
 //! unsquished companion and owned-instance level policies have no consumer here.
 
+use super::ItemDescriptor;
 use super::bonus::Accumulator;
 use super::tables::{self, ItemScaling};
-use super::{ItemDescriptor, unknown};
 
 /// Native expansion-level bases for indices zero through eleven.
 const EXPANSION_LEVEL_BASE: [i32; 12] = [30, 30, 30, 35, 35, 40, 45, 50, 60, 70, 80, 90];
@@ -203,50 +203,8 @@ fn apply_bounds(input: i32, bounds: Option<(i32, i32)>) -> i32 {
 /// WM97b: convert, evaluate, round halfway away from zero, then truncate.
 fn evaluate(curve_id: u32, input: i32) -> Result<i32, String> {
     let curve = tables::curve(curve_id)?;
-    let value = curve_value(curve, input as f32)?;
+    let value = tables::curve_value(curve, input as f32)?;
     Ok(round_half_away(value) as i64 as i32)
-}
-
-fn curve_value(curve: &tables::Curve, input: f32) -> Result<f32, String> {
-    match curve.kind {
-        0 => Ok(linear(curve, input)),
-        5 => Ok(previous_point(curve, input)),
-        kind => Err(unknown(format!(
-            "curve type {kind} is not implemented; WM97b curve types are partially modelled"
-        ))),
-    }
-}
-
-/// WM97b: left value plus the difference times the normalized input difference.
-fn linear(curve: &tables::Curve, input: f32) -> f32 {
-    let points = &curve.points;
-    let (Some(first), Some(last)) = (points.first(), points.last()) else {
-        return 0.0;
-    };
-    if input <= first.0 {
-        return first.1;
-    }
-    if input >= last.0 {
-        return last.1;
-    }
-    let index = points.partition_point(|point| point.0 <= input) - 1;
-    let (left_x, left_y) = points[index];
-    let (right_x, right_y) = points[index + 1];
-    let width = right_x - left_x;
-    if width <= 0.0 {
-        return right_y;
-    }
-    left_y + (right_y - left_y) * ((input - left_x) / width)
-}
-
-/// WM97b curve type 5: the interval selects its previous point.
-fn previous_point(curve: &tables::Curve, input: f32) -> f32 {
-    let points = &curve.points;
-    if points.is_empty() {
-        return 0.0;
-    }
-    let index = points.partition_point(|point| point.0 <= input);
-    points[index.saturating_sub(1).min(points.len() - 1)].1
 }
 
 fn round_half_away(value: f32) -> f32 {

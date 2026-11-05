@@ -77,6 +77,7 @@ fn sample_relic_slot() -> RelicSlotInfo {
         name: "Iron Relic".to_string(),
         icon: "Interface/Icons/inv_relics_idolofferocity".to_string(),
         link: "item:1234".to_string(),
+        socket: None,
     }
 }
 
