@@ -35,6 +35,42 @@ fn selected_mixin_wraps_untrusted_delegate_arguments() {
 }
 
 #[test]
+fn selected_mixin_wraps_every_function_argument_with_caller_source() {
+    let env = WowLuaEnv::new().unwrap();
+    let addons = wow_ui_sim::blizzard_ui_sync::default_cache_addons_path().unwrap();
+    let source = std::fs::read_to_string(addons.join("Blizzard_SharedXMLBase/Mixin.lua")).unwrap();
+    env.exec(&source).unwrap();
+    env.exec(
+        r#"
+        local seen = {}
+        local originalCallback = function()
+            seen.secure = issecure()
+            seen.taint = debug.getstacktaint()
+            return 'ran'
+        end
+        local methods = { run = function(callback)
+            assert(issecure(), 'delegate body runs without caller taint')
+            seen.wrapped = callback ~= originalCallback
+            seen.result = callback()
+        end }
+        ApplySecureDelegatesToTable(methods)
+        local function addon()
+            methods.run(originalCallback)
+        end
+        debug.setobjecttaint(addon, 'AddonCaller')
+        addon()
+        assert(seen.wrapped,
+            'every function-valued argument must be wrapped, not only stamped ones')
+        assert(seen.result == 'ran')
+        assert(seen.secure == false,
+            'the wrapped argument runs under the source captured at invocation')
+        assert(seen.taint == 'AddonCaller')
+        "#,
+    )
+    .unwrap();
+}
+
+#[test]
 fn original_unit_frame_delegate_reports_target_errors() {
     let env = WowLuaEnv::new().unwrap();
     let addons = wow_ui_sim::blizzard_ui_sync::default_cache_addons_path().unwrap();
