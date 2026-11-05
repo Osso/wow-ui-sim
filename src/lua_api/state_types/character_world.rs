@@ -756,6 +756,9 @@ pub struct LootRollInfo {
     pub item_level: i32,
     /// Item link string.
     pub item_link: String,
+    /// WM97 DQ7 ingress: the link is decoded once at ingress. The getter reads this
+    /// stored descriptor and never parses link text.
+    pub descriptor: Option<crate::c_api::item_descriptor::ItemDescriptor>,
 }
 
 /// A saved equipment ("gear") set surfaced through `C_EquipmentSet`.
