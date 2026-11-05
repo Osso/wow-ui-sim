@@ -360,6 +360,13 @@ post_wrath_ui_fixture! {
 fn direct_load_keeps_removed_inventory_slot_global_private() {
     let env = fresh_game_env();
     env.apply_post_event_workarounds();
+    // Retail 12.1.0 removed the public global (`src/lua_api/globals/register.rs`
+    // registers `inventory_slot` under `not(retail-12-1-0)`). WowForever is a
+    // pre-12.1 client and keeps it public, so assert the load does not change the
+    // profile's surface instead of hard-coding the Retail removal.
+    let before: bool = env
+        .eval("return GetInventorySlotInfo ~= nil")
+        .expect("GetInventorySlotInfo surface probe");
     load_addon(&env.loader_env(), &transmog_shared_toc())
         .expect("Blizzard_TransmogShared must load via Rust loader");
 
@@ -379,7 +386,19 @@ fn direct_load_keeps_removed_inventory_slot_global_private() {
         )
         .expect("direct TransmogShared compatibility probe should run");
 
-    assert_eq!(result, "ok");
+    let after: bool = env
+        .eval("return GetInventorySlotInfo ~= nil")
+        .expect("GetInventorySlotInfo surface probe");
+    assert_eq!(
+        after, before,
+        "loading Blizzard_TransmogShared must not change the public \
+         GetInventorySlotInfo surface"
+    );
+    if before {
+        assert_eq!(result, "public_after_load");
+    } else {
+        assert_eq!(result, "ok");
+    }
 }
 }
 
