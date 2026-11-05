@@ -485,7 +485,21 @@ mod tests {
                 "#,
             )
             .unwrap();
-        assert_eq!(binding, interface == 16001 || interface >= 120007);
-        assert_eq!(modern, interface == 16001 || interface >= 120100);
+        // The binding factory is a modeled capability, not a function of
+        // `GetBuildInfo`: docs/specs/duration-text-binding.md:7 exposes it on
+        // Forever and Retail-family 12.0.7+, and keeps color-curve methods to
+        // Forever and Retail-family 12.1+. Wrath's shared temporary
+        // `GetBuildInfo` default reports 120007, so interface alone misstates it.
+        let (expect_binding, expect_modern) = match crate::client_profile::ACTIVE {
+            crate::client_profile::ClientProfile::WowForever => (true, true),
+            crate::client_profile::ClientProfile::Retail
+            | crate::client_profile::ClientProfile::Ptr => (
+                crate::client_profile::ACTIVE_INTERFACE_VERSION >= 120007,
+                crate::client_profile::ACTIVE_INTERFACE_VERSION >= 120100,
+            ),
+            _ => (false, false),
+        };
+        assert_eq!(binding, expect_binding);
+        assert_eq!(modern, expect_modern);
     }
 }

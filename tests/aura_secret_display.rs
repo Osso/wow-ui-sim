@@ -201,6 +201,7 @@ fn aura_secret_texture_replaces_and_clears_without_plain_readout() {
     "#).unwrap();
 }
 
+modern_engine_namespace_fixture! {
 #[test]
 fn aura_geometry_texture_plain_handoffs_preserve_values() {
     let env = WowLuaEnv::new().unwrap();
@@ -224,4 +225,5 @@ fn aura_geometry_texture_plain_handoffs_preserve_values() {
     "#,
     )
     .unwrap();
+}
 }

@@ -430,6 +430,7 @@ mod tests {
         assert_eq!(result, "ok");
     }
 
+    modern_engine_namespace_fixture! {
     #[test]
     fn reapplies_after_blizzard_dispatcher_load() {
         let env = WowLuaEnv::new().expect("lua env should initialize");
@@ -446,5 +447,6 @@ mod tests {
             .expect("Dispatcher restore probe should run");
 
         assert!(restored);
+    }
     }
 }

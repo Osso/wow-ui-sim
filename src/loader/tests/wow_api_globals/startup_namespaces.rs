@@ -2,6 +2,7 @@
 
 use super::super::*;
 
+retail_only_namespace_member_fixture! {
 #[test]
 fn test_bootstrap_fills_existing_namespace_defaults() {
     let env = WowLuaEnv::new().unwrap();
@@ -39,6 +40,7 @@ fn test_bootstrap_fills_existing_namespace_defaults() {
     assert_eq!(hex_ty, "function");
     assert_eq!(campaign_ty, "function");
     assert!(campaign_missing);
+}
 }
 #[test]
 fn test_startup_bootstrap_namespaces_exist() {
@@ -120,6 +122,7 @@ fn test_startup_bootstrap_namespaces_exist() {
     assert_eq!(guaranteed_price_ty, "function");
     assert_eq!(guaranteed_price, 0);
 }
+modern_engine_namespace_fixture! {
 #[test]
 fn test_startup_service_namespaces_exist() {
     let env = WowLuaEnv::new().unwrap();
@@ -190,6 +193,7 @@ fn test_startup_service_namespaces_exist() {
     assert_eq!(token_secure_ty, "function");
     assert_eq!(price_lock_duration, 900);
     assert_eq!(token_count, 2);
+}
 }
 #[test]
 fn test_startup_runtime_method_and_namespace_gaps_exist() {

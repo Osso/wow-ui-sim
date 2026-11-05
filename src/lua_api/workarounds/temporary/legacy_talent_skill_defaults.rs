@@ -153,6 +153,7 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
 mod tests {
     use crate::lua_api::WowLuaEnv;
 
+    retail_removed_legacy_globals_fixture! {
     #[test]
     fn installs_legacy_talent_skill_default_shapes() {
         let env = WowLuaEnv::new().expect("lua env should initialize");
@@ -178,6 +179,7 @@ mod tests {
             .expect("legacy talent/skill defaults should be callable");
 
         assert_eq!(result, (0, true, true, 2, 0, 0, true, 0));
+    }
     }
 
     #[test]

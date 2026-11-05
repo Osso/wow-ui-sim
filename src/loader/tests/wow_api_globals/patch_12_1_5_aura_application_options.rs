@@ -2,6 +2,7 @@
 
 use crate::lua_api::WowLuaEnv;
 
+retail_namespace_fixture! {
 #[test]
 fn patch_12_1_5_aura_application_options_default() {
     let env = WowLuaEnv::new().expect("Lua environment should initialize");
@@ -20,7 +21,9 @@ fn patch_12_1_5_aura_application_options_default() {
     #[cfg(not(feature = "retail-12-1-5"))]
     assert_eq!(actual, (None, 5.0, 1.0));
 }
+}
 
+retail_namespace_fixture! {
 #[test]
 fn patch_12_1_5_aura_application_options_explicit() {
     let env = WowLuaEnv::new().expect("Lua environment should initialize");
@@ -38,4 +41,5 @@ fn patch_12_1_5_aura_application_options_explicit() {
     assert_eq!(actual, (Some(2.0), 7.0, 0.0));
     #[cfg(not(feature = "retail-12-1-5"))]
     assert_eq!(actual, (None, 7.0, 0.0));
+}
 }

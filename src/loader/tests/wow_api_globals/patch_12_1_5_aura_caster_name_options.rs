@@ -32,6 +32,7 @@ fn patch_12_1_5_aura_caster_name_options_defaults_and_booleans() {
 }
 
 #[cfg(not(feature = "retail-12-1-5"))]
+retail_namespace_fixture! {
 #[test]
 fn patch_12_1_5_aura_caster_name_options_absent_on_earlier_profiles() {
     let env = WowLuaEnv::new().expect("Lua environment should initialize");
@@ -39,4 +40,5 @@ fn patch_12_1_5_aura_caster_name_options_absent_on_earlier_profiles() {
         .eval("return C_AuraContainerUtil.ProcessCustomAuraButtonCasterNameOptions == nil")
         .expect("earlier-profile namespace should be readable");
     assert!(absent);
+}
 }

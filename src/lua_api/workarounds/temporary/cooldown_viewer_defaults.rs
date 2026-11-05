@@ -34,6 +34,7 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
 mod tests {
     use crate::lua_api::WowLuaEnv;
 
+    retail_only_namespace_member_fixture! {
     #[test]
     fn installs_empty_cooldown_viewer_defaults() {
         let env = WowLuaEnv::new().expect("lua env should initialize");
@@ -48,6 +49,7 @@ mod tests {
             .expect("cooldown viewer defaults should be callable");
 
         assert_eq!(result, (0, true));
+    }
     }
 
     #[test]

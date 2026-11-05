@@ -171,6 +171,7 @@ mod tests {
         );
     }
 
+    modern_engine_namespace_fixture! {
     #[test]
     fn updates_plain_item_button_texture_count_and_colors() {
         let env = WowLuaEnv::new().expect("lua env should initialize");
@@ -206,6 +207,7 @@ mod tests {
         assert_close(result.5, 0.4);
         assert_close(result.6, 0.5);
         assert_close(result.7, 0.6);
+    }
     }
 
     #[test]
