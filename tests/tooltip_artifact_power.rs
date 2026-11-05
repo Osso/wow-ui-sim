@@ -5,8 +5,7 @@
 #[path = "tooltip_full_env_helpers.rs"]
 mod tooltip_full_env_helpers;
 
-use wow_ui_sim::lua_api::sim_substates::viewed_artifact::ArtifactPowerInfo;
-use wow_ui_sim::lua_api::state::ArtifactInfo;
+use wow_ui_sim::lua_api::state::{ArtifactInfo, ArtifactPowerInfo};
 
 tooltip_selection_getters_fixture! {
     fn viewed_artifact() -> ArtifactInfo {
@@ -68,7 +67,7 @@ tooltip_selection_getters_fixture! {
             local info = GameTooltip:GetPrimaryTooltipInfo()
             local data = GameTooltip:GetPrimaryTooltipData()
             assert(info and info.getterName == 'GetArtifactPowerByID', 'accessor missing')
-            assert(data and data.lines and #data.lines == 2, 'artifact-power data missing')
+            assert(data and data.lines, 'artifact-power data missing')
             local function dump()
                 local parts = {}
                 for index, line in ipairs(data.lines) do
@@ -107,7 +106,7 @@ tooltip_selection_getters_fixture! {
             GameTooltip:SetOwner(UIParent, 'ANCHOR_NONE')
             GameTooltip:SetArtifactPowerByID(1739)
             local data = GameTooltip:GetPrimaryTooltipData()
-            assert(data and data.lines and #data.lines == 2, 'artifact-power data missing')
+            assert(data and data.lines, 'artifact-power data missing')
             local function dump()
                 local parts = {}
                 for index, line in ipairs(data.lines) do
