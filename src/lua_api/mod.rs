@@ -23,6 +23,7 @@ pub(crate) mod execution_budget;
 pub(crate) mod frame;
 pub(crate) mod frame_substates;
 pub(crate) mod game_data;
+pub(crate) mod global_colors;
 #[allow(dead_code)]
 // Track 3 sub-item 2: populator + read path; compiler fast path lands in sub-items 3-5
 pub(crate) mod global_slots;

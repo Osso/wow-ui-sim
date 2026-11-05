@@ -122,11 +122,16 @@ fn tooltip_word_wrap_min_width(state: &mut LuaState, tooltip: Val) -> Option<f32
 }
 
 fn tooltip_lines_from_table(state: &mut LuaState, lines_table: Val) -> Vec<TooltipLine> {
+    // Resolving named colors runs the `_G` `__index` bootstrap, which can
+    // allocate. Keep the line tables reachable while they are parsed.
+    let saved_top = state.top;
+    state.push(lines_table);
     let mut lines = Vec::new();
     let mut index = 1;
     loop {
         let line = table_array_get(state, lines_table, index);
         if !matches!(line, Val::Table(_)) {
+            state.top = saved_top;
             return lines;
         }
         if let Some(parsed) = tooltip_line_from_table(state, line) {

@@ -1,5 +1,5 @@
 //! Presentation-only interpretation of copied tooltip color markup.
-use rilua::{Val, vm::state::LuaState};
+use rilua::vm::state::LuaState;
 
 pub(super) fn presentation_segments(
     state: &mut LuaState,
@@ -193,33 +193,7 @@ fn rgb_from_argb_hex(hex: &str) -> Option<(f64, f64, f64)> {
     ))
 }
 
-fn table_color_component(state: &mut LuaState, table: Val, key: &[u8]) -> Option<f64> {
-    let Val::Table(table_ref) = table else {
-        return None;
-    };
-    let component_key = state.gc.intern_string(key);
-    let value = state
-        .gc
-        .tables
-        .get(table_ref)
-        .map(|tbl| tbl.get_str(component_key, &state.gc.string_arena))
-        .unwrap_or(Val::Nil);
-    match value {
-        Val::Num(component) => Some(component),
-        _ => None,
-    }
-}
-
 fn global_color(state: &mut LuaState, key: &[u8]) -> Option<(f64, f64, f64)> {
-    let global_key = state.gc.intern_string(key);
-    let color = state
-        .gc
-        .tables
-        .get(state.global)
-        .map(|globals| globals.get_str(global_key, &state.gc.string_arena))
-        .unwrap_or(Val::Nil);
-    let r = table_color_component(state, color, b"r")?;
-    let g = table_color_component(state, color, b"g")?;
-    let b = table_color_component(state, color, b"b")?;
-    Some((r, g, b))
+    let name = std::str::from_utf8(key).ok()?;
+    crate::lua_api::global_colors::global_color_rgb(state, name)
 }

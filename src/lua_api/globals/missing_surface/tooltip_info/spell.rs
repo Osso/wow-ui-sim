@@ -114,39 +114,10 @@ fn spell_color_from_global(
     color_name: &[u8],
     fallback: (f64, f64, f64),
 ) -> (f64, f64, f64) {
-    let color_key = state.gc.intern_string(color_name);
-    let color = state
-        .gc
-        .tables
-        .get(state.global)
-        .map(|globals| globals.get_str(color_key, &state.gc.string_arena))
-        .unwrap_or(Val::Nil);
-
-    table_color_components(state, color).unwrap_or(fallback)
-}
-
-fn table_color_components(state: &mut LuaState, color: Val) -> Option<(f64, f64, f64)> {
-    let red = table_color_component(state, color, b"r")?;
-    let green = table_color_component(state, color, b"g")?;
-    let blue = table_color_component(state, color, b"b")?;
-    Some((red, green, blue))
-}
-
-fn table_color_component(state: &mut LuaState, color: Val, component: &[u8]) -> Option<f64> {
-    let Val::Table(color_ref) = color else {
-        return None;
-    };
-    let component_key = state.gc.intern_string(component);
-    let component_value = state
-        .gc
-        .tables
-        .get(color_ref)
-        .map(|color| color.get_str(component_key, &state.gc.string_arena))
-        .unwrap_or(Val::Nil);
-    match component_value {
-        Val::Num(value) => Some(value),
-        _ => None,
-    }
+    std::str::from_utf8(color_name)
+        .ok()
+        .and_then(|name| crate::lua_api::global_colors::global_color_rgb(state, name))
+        .unwrap_or(fallback)
 }
 
 fn action_binding_line(slot: u32) -> String {
