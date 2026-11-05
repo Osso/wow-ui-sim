@@ -62,6 +62,111 @@ A minimal end-to-end example is at
 [Osso/test-wow-addon](https://github.com/Osso/test-wow-addon) — a TOC,
 one Lua file, a `tests/` folder, and a workflow that calls this action.
 
+## Configuration
+
+### WoW install location
+
+CASC profiles need a local WoW installation. `wow-sim` and `wow-cli` resolve the install
+root for the compiled client profile in this order:
+
+1. CLI override (library callers only; `wow-sim` passes none)
+2. `WOW_INSTALL_PATH`
+3. `WOW_DATA_PATH` (the `Data` directory; its parent is the root)
+4. The stored entry for the active product
+5. Automatic detection: the Battle.net Agent `product.db` on Windows, then common install
+   locations
+
+A candidate is accepted only when `<root>/Data/data` exists.
+
+### Settings file
+
+The resolved path is stored per CASC product in `install-paths.json`:
+
+| Platform | Location |
+| --- | --- |
+| Windows | `%APPDATA%\wow-ui-sim\install-paths.json` |
+| Linux | `$XDG_CONFIG_HOME/wow-ui-sim/install-paths.json` (`~/.config/...` when unset) |
+| macOS | `~/Library/Application Support/wow-ui-sim/install-paths.json` |
+
+The directory is the platform config directory (`dirs::config_dir()`). Entries are keyed by
+CASC product code, which the compiled `client-*` feature selects:
+
+| Key | Client profile |
+| --- | --- |
+| `wow` | Retail |
+| `wowxptr` | PTR |
+| `wowf` | WoW Forever |
+| `wow_classic` | Wrath of the Lich King, Mists of Pandaria |
+| `wow_classic_era` | Era, Anniversary |
+
+Each entry accepts `install_path` (the install root that contains `Data`) and `data_path`
+(the `Data` directory). `install_path` wins when both are present; a `data_path`-only entry
+uses its parent as the root. A complete example, also stored as
+[`docs/examples/install-paths.example.json`](docs/examples/install-paths.example.json):
+
+```json
+{
+  "install_paths": {
+    "wow": {
+      "install_path": "C:\\Program Files (x86)\\World of Warcraft"
+    },
+    "wowxptr": {
+      "install_path": "D:\\Games\\World of Warcraft PTR"
+    },
+    "wowf": {
+      "install_path": "D:\\Games\\World of Warcraft Forever"
+    },
+    "wow_classic": {
+      "install_path": "D:\\Games\\World of Warcraft Classic",
+      "data_path": "D:\\Games\\World of Warcraft Classic\\Data"
+    },
+    "wow_classic_era": {
+      "data_path": "D:\\Games\\World of Warcraft Era\\Data"
+    }
+  }
+}
+```
+
+The file is written when a valid path comes from `WOW_INSTALL_PATH`, `WOW_DATA_PATH`, or
+automatic detection; that entry replaces the stored one for the active product, so later
+launches need no variable. A valid stored entry is used as-is and not rewritten. An entry
+whose `<root>/Data/data` no longer exists is ignored with a stderr warning and replaced by
+the next valid source. A missing file means no stored entries; malformed content is
+reported and ignored, and startup continues. `WOW_SIM_CASC=0` neither reads nor writes the
+file.
+
+### Environment variables
+
+These are the variables a player normally sets:
+
+| Variable | Effect |
+| --- | --- |
+| `WOW_INSTALL_PATH` | WoW install root. Takes precedence over, and is stored over, the settings file. |
+| `WOW_DATA_PATH` | WoW `Data` directory; its parent is used as the root. Lower priority than `WOW_INSTALL_PATH`. |
+| `WOW_PRODUCT` | CASC product code used for detection. The compiled `client-*` feature fixes the client profile, so this cannot turn one client build into another. |
+| `WOW_SIM_NO_SOUND` | `1` or `true` skips audio initialization. |
+| `WOW_SIM_SOFTWARE_RENDER` | `1` or `true` forces the software GPU adapter for headless rendering (`screenshot`). |
+| `WOW_SIM_MAX_CORES` | Linux only: restrict the process to the first N CPUs (default `2`). |
+| `WOW_SIM_STORAGE_DIR` | SavedVariables directory used when `--session-wtf-path` is absent. |
+| `WOW_SIM_ADDONS_PATH` | Extra third-party addon root during default discovery. |
+| `WOW_SIM_ADDONS_PATH_EXCLUSIVE` | `1` or `true` makes `WOW_SIM_ADDONS_PATH` the only addon root. |
+
+`WOW_SIM_CASC=0` disables CASC asset loading, for example when game assets are unavailable.
+
+<details>
+<summary>Development and debugging variables</summary>
+
+| Variable | Effect |
+| --- | --- |
+| `WOW_SIM_NO_ADDONS` | `1` or `true` skips third-party addon loading. |
+| `WOW_SIM_NO_SAVED_VARS` | `1` or `true` skips loading WTF SavedVariables. |
+| `WOW_SIM_DEBUG_ELEMENTS` | `1` draws element borders and anchor points; see [debug tools](docs/debug-tools.md). |
+| `WOW_SIM_DEBUG_BORDERS` | `1` draws element borders only. |
+| `WOW_SIM_DEBUG_ANCHORS` | `1` draws anchor points only. |
+| `WOW_SIM_VERBOSE` | Enables verbose addon-loading logging. |
+
+</details>
+
 ## Native development
 
 Normal builds and runs use the shared desktop/local host selection:
@@ -75,17 +180,6 @@ scripts/start-profile.sh live
 ```
 
 Use local while gaming on desktop. Raw Cargo stays local. See [native workflow, profile flags, and runtime proof limits](docs/remote-builds.md).
-
-### WoW install location
-
-CASC profiles need a local WoW installation. Discovery uses `WOW_INSTALL_PATH`, then
-`WOW_DATA_PATH`, then a stored per-product path, then automatic detection (Windows also
-reads the Battle.net Agent `product.db`). The first path that contains `Data/data` is
-stored in `<platform config dir>/wow-ui-sim/install-paths.json` (`%APPDATA%` on Windows,
-`$XDG_CONFIG_HOME` on Linux), so later launches do not need the environment variable.
-To move the install, set `WOW_INSTALL_PATH` again or edit the product entry; an entry
-whose `Data/data` directory disappeared is ignored with a warning. See
-[install path settings](docs/specs/wow-install-path-settings.md).
 
 ### Rust formatting
 
