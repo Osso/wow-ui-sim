@@ -4,7 +4,7 @@
 #[path = "tooltip_full_env_helpers.rs"]
 mod tooltip_full_env_helpers;
 
-use wow_ui_sim::lua_api::state_types::ArtifactInfo;
+use wow_ui_sim::lua_api::state::ArtifactInfo;
 
 tooltip_selection_getters_fixture! {
     fn viewed_artifact(item_id: i32, name: &str) -> ArtifactInfo {
