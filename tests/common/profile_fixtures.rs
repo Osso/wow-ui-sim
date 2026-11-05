@@ -264,3 +264,17 @@ macro_rules! retail_removed_legacy_globals_fixture {
         )*
     };
 }
+
+/// Mists installs its own client identity in `src/mists/compat_bootstrap.lua:12-33`
+/// (MoP expansion level, 5.5.4/68042/Jun 2 2026/50504) and
+/// `tests/mists_compat_bootstrap.rs:91-110` covers it. The shared temporary
+/// client-info defaults therefore describe every profile except Mists.
+#[macro_export]
+macro_rules! non_mists_client_identity_fixture {
+    ($($item:item)*) => {
+        $(
+            #[cfg(not(feature = "client-mists"))]
+            $item
+        )*
+    };
+}
