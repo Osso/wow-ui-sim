@@ -27,6 +27,30 @@ const PVP_MATCH_TOC_FILES: &[&str] = &[
     "PVPMatchScoreboard.xml",
 ];
 
+/// WowForever's pinned `Blizzard_PVPMatch.toc:7-18` lists both the
+/// `[AllowLoadGameType standard]` Lua/XML pairs and their `[Game]` counterparts
+/// gated `[AllowLoadGameType camelot]`. `[Game]` resolves to `Camelot/` on that
+/// profile (`src/toc/mod.rs::game_subdir`) and the standard entries are filtered
+/// out, leaving the camelot overrides.
+const PVP_MATCH_CAMELOT_TOC_FILES: &[&str] = &[
+    "PVPMatchUtil.lua",
+    "PVPMatchTable.lua",
+    "Camelot/PVPMatchTableOverrides.lua",
+    "PVPMatchTable.xml",
+    "Camelot/PVPMatchResults.lua",
+    "Camelot/PVPMatchResults.xml",
+    "Camelot/PVPMatchScoreboard.lua",
+    "Camelot/PVPMatchScoreboard.xml",
+];
+
+fn expected_pvp_match_toc_files() -> &'static [&'static str] {
+    if wow_ui_sim::client_profile::ACTIVE == wow_ui_sim::client_profile::ClientProfile::WowForever {
+        PVP_MATCH_CAMELOT_TOC_FILES
+    } else {
+        PVP_MATCH_TOC_FILES
+    }
+}
+
 const REQUIRED_DEPS: &[&str] = &["Blizzard_UIWidgets", "Blizzard_LFGUtil"];
 
 const PUBLIC_MIXIN_GLOBALS: &[&str] = &[
@@ -269,7 +293,7 @@ fn blizzard_pvp_match_toc_declares_metadata_in_raw_bytes() {
 
 post_wrath_ui_fixture! {
 #[test]
-fn blizzard_pvp_match_toc_lists_four_files_with_xml_pulling_companion_lua() {
+fn blizzard_pvp_match_toc_lists_profile_files_with_xml_pulling_companion_lua() {
     let toc = TocFile::from_file(&pvp_match_toc()).expect("Blizzard_PVPMatch TOC parses");
     let listed: Vec<String> = toc
         .files
@@ -277,24 +301,23 @@ fn blizzard_pvp_match_toc_lists_four_files_with_xml_pulling_companion_lua() {
         .map(|p| p.to_string_lossy().into_owned())
         .collect();
     assert_eq!(
-        listed, PVP_MATCH_TOC_FILES,
-        "TOC must list exactly 4 files: PVPMatchUtil.lua FIRST (declares the \
+        listed,
+        expected_pvp_match_toc_files(),
+        "TOC must list the pinned profile body: PVPMatchUtil.lua (declares the \
          PVPMatchUtil global table with RowColors / CellColors palette tables, \
          the MatchTimeFormatter via `CreateFromMixins(SecondsFormatterMixin)`, \
          and ~20 helper functions InSoloShuffleBrawl / ModeUsesPvpRatingTiers / \
          IsActiveMatchComplete / GetColorIndex / GetRowColor / GetCellColor / \
-         InitScrollBox / UpdateDataProvider / etc.), then 3 XML files in canonical \
-         order: PVPMatchTable.xml (the row/cell template family — 14 virtual \
-         templates), PVPMatchResults.xml (the post-match results screen with the \
-         3-tab layout), PVPMatchScoreboard.xml (the in-match scoreboard overlay \
-         with the 3-tab layout). The 3 XML files each declare \
-         `<Script file=\"PVPMatchTable.lua\"/>` / `\"PVPMatchResults.lua\"` / \
-         `\"PVPMatchScoreboard.lua\"` at the top of the XML body — the companion \
-         Lua files are pulled in via XML rather than being listed in the TOC. \
-         This is the canonical XML-driven Lua-loading pattern: only PVPMatchUtil.lua \
-         (which has no companion XML) appears in the TOC body. Verify by reading \
-         the XML files directly: PVPMatchTable.xml line 3 = `<Script file=\
-         \"PVPMatchTable.lua\"/>`, etc."
+         InitScrollBox / UpdateDataProvider / etc.). Retail/PTR then list 3 XML \
+         files in canonical order: PVPMatchTable.xml (the row/cell template \
+         family — 14 virtual templates), PVPMatchResults.xml (the post-match \
+         results screen with the 3-tab layout), PVPMatchScoreboard.xml (the \
+         in-match scoreboard overlay with the 3-tab layout). The 3 XML files \
+         each declare `<Script file=\"PVPMatchTable.lua\"/>` / \
+         `\"PVPMatchResults.lua\"` / `\"PVPMatchScoreboard.lua\"` at the top of \
+         the XML body — the companion Lua files are pulled in via XML rather \
+         than being listed in the TOC. WowForever's extra entries are the \
+         `[Game]` camelot overrides at `Blizzard_PVPMatch.toc:7-18`."
     );
 }
 }

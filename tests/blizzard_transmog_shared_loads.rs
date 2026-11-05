@@ -360,6 +360,13 @@ post_wrath_ui_fixture! {
 fn direct_load_keeps_removed_inventory_slot_global_private() {
     let env = fresh_game_env();
     env.apply_post_event_workarounds();
+    // Retail 12.1.0 removed the public global (`src/lua_api/globals/register.rs`
+    // registers `inventory_slot` under `not(retail-12-1-0)`). WowForever is a
+    // pre-12.1 client and keeps it public, so assert the load does not change the
+    // profile's surface instead of hard-coding the Retail removal.
+    let before: bool = env
+        .eval("return GetInventorySlotInfo ~= nil")
+        .expect("GetInventorySlotInfo surface probe");
     load_addon(&env.loader_env(), &transmog_shared_toc())
         .expect("Blizzard_TransmogShared must load via Rust loader");
 
@@ -379,7 +386,19 @@ fn direct_load_keeps_removed_inventory_slot_global_private() {
         )
         .expect("direct TransmogShared compatibility probe should run");
 
-    assert_eq!(result, "ok");
+    let after: bool = env
+        .eval("return GetInventorySlotInfo ~= nil")
+        .expect("GetInventorySlotInfo surface probe");
+    assert_eq!(
+        after, before,
+        "loading Blizzard_TransmogShared must not change the public \
+         GetInventorySlotInfo surface"
+    );
+    if before {
+        assert_eq!(result, "public_after_load");
+    } else {
+        assert_eq!(result, "ok");
+    }
 }
 }
 
@@ -519,6 +538,25 @@ fn explicit_load_publishes_wardrobe_sets_data_provider_mixin() {
 }
 
 post_wrath_ui_fixture! {
+/// Read the `TransmogSlotOrder` declaration from the pinned profile source so the
+/// expectation follows the shipped body: PTR 12.1.7 and WowForever list 14
+/// entries including `INVSLOT_RANGED` at `Blizzard_TransmogShared.lua:28`
+/// (`:14-29`); Retail-era sources list 13 (`:14-28`).
+fn pinned_transmog_slot_order() -> Vec<String> {
+    let path = transmog_shared_dir().join("Blizzard_TransmogShared.lua");
+    let source =
+        std::fs::read_to_string(&path).expect("pinned Blizzard_TransmogShared.lua reads utf-8");
+    let mut lines = source
+        .lines()
+        .skip_while(|line| !line.starts_with("TransmogSlotOrder ="));
+    lines.next().expect("pinned TransmogSlotOrder declaration");
+    lines
+        .take_while(|line| line.trim() != "};")
+        .map(|line| line.trim().trim_end_matches(',').to_string())
+        .filter(|entry| !entry.is_empty())
+        .collect()
+}
+
 #[test]
 fn explicit_load_publishes_transmog_slot_order() {
     let env = fresh_game_env();
@@ -531,22 +569,33 @@ fn explicit_load_publishes_transmog_slot_order() {
     assert_eq!(
         kind, "table",
         "TransmogSlotOrder global must be a table — declared at \
-         lua:14-28 listing 13 INVSLOT_* values in display order \
-         (Head, Shoulder, Back, Chest, Body, Tabard, Wrist, Hand, \
-         Waist, Legs, Feet, MainHand, OffHand). Drives both the \
+         Blizzard_TransmogShared.lua:14 in display order. Drives both the \
          CreateCustomSetSlashCommand serializer and the \
          ParseCustomSetSlashCommand parser at lua:328-404"
     );
 
+    let expected = pinned_transmog_slot_order();
     let count: i64 = env
         .eval("return #TransmogSlotOrder")
         .expect("TransmogSlotOrder length probe");
     assert_eq!(
-        count, 13,
-        "TransmogSlotOrder must have exactly 13 entries — Head, \
-         Shoulder, Back, Chest, Body, Tabard, Wrist, Hand, Waist, \
-         Legs, Feet, MainHand, OffHand"
+        count,
+        expected.len() as i64,
+        "TransmogSlotOrder must publish exactly the entries the pinned source \
+         declares at Blizzard_TransmogShared.lua:14 ({expected:?})"
     );
+    for (index, slot) in expected.iter().enumerate() {
+        let matches: bool = env
+            .eval(&format!(
+                "return TransmogSlotOrder[{}] == {slot}",
+                index + 1
+            ))
+            .unwrap_or_else(|err| panic!("TransmogSlotOrder[{index}] probe failed: {err}"));
+        assert!(
+            matches,
+            "TransmogSlotOrder[{index}] must be `{slot}` in the pinned source order"
+        );
+    }
 }
 }
 

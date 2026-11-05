@@ -1,6 +1,6 @@
 # Addon restriction state
 
-Retail and PTR expose `C_RestrictedActions` state queries backed by six independent simulator restriction states. The model is in `src/c_api/restricted_actions.rs`.
+Retail, PTR and WowForever expose `C_RestrictedActions` state queries backed by six independent simulator restriction states. The model is in `src/c_api/restricted_actions.rs`.
 
 ## What it must do
 
@@ -16,7 +16,7 @@ Retail and PTR expose `C_RestrictedActions` state queries backed by six independ
 
 ## Best-guess basis
 
-**Best-guess, native UNKNOWN:** the initial inactive state, input validation and complete simulator drivers. WM61 S1 (`S1-restriction-triggers-wm61.md`, Retail 12.1.5.70688) verifies the local writer's activating and inactive event order, reentry rule and natural-or-forced decision; server effects and callback outcomes remain UNKNOWN. The generated Retail and PTR `Blizzard_APIDocumentationGenerated/RestrictedActionsDocumentation.lua:29–41,55–67,91–101` declare the queries and synchronous event. `RestrictedActionsConstantsDocumentation.lua:6–32` declares the state and type values. The 12.1.5 native evidence verifies that the getter reads a per-index byte and the predicate compares it with 2; WM61 S1 additionally identifies local writers and trigger conditions. The simulator uses the documented enum values as indices.
+**Best-guess, native UNKNOWN:** the initial inactive state, input validation and complete simulator drivers. WM61 S1 (`S1-restriction-triggers-wm61.md`, Retail 12.1.5.70688) verifies the local writer's activating and inactive event order, reentry rule and natural-or-forced decision; server effects and callback outcomes remain UNKNOWN. The generated Retail, PTR and WowForever `Blizzard_APIDocumentationGenerated/RestrictedActionsDocumentation.lua:5,29,45,55` declare the namespace and queries, and the three profiles pin byte-identical `RestrictedActionsConstantsDocumentation.lua:19-31` type values. WowForever consumers `Blizzard_GamepadSmartNavigation/SecureHelper.lua:14` and `SmartNavigation.lua:6` capture `IsAddOnRestrictionActive` and `Enum.AddOnRestrictionType.Combat`. The 12.1.5 native evidence verifies that the getter reads a per-index byte and the predicate compares it with 2; WM61 S1 additionally identifies local writers and trigger conditions. The simulator uses the documented enum values as indices.
 
 ## How it works
 

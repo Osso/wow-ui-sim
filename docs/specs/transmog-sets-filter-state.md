@@ -7,6 +7,7 @@
 - [x] Retain explicit boolean writes for ordinary filter indices 1–4 independently, including repeated replacement.
 - [x] Return one boolean for a stored filter and zero values from the setter.
 - [x] Keep distinct environments independent in both directions.
+- [x] WowForever publishes the same `C_TransmogSets` query surface as Retail and PTR: its pinned `TransmogSetsDocumentation.lua:231-491` declares `GetVariantSets`, `GetAvailableSets` and the filter calls, and original consumers call `C_TransmogSets.GetVariantSets` (`Blizzard_TransmogShared.lua:1045`).
 
 Simulator policy: storage starts empty, and an unset getter returns zero values, consistent with the pinned may-return-nothing contract but not proof of native defaults. Numeric indices and strict boolean values are required. Native coercion, bounds and validation remain unproven; proof is restricted to explicitly written indices 1–4.
 
@@ -17,7 +18,7 @@ Simulator policy: storage starts empty, and an unset getter returns zero values,
 ## Implementation inventory
 
 - `src/c_api/c_transmog_sets.rs`: merges getter/setter into the existing namespace.
-- `src/c_api/mod.rs`, `src/c_api/registration.rs`: publication gated at `retail-12-0-0`.
+- `src/c_api/mod.rs`, `src/c_api/registration.rs`: publication gated at `retail-12-0-0` or WowForever.
 - `src/lua_api/state/sim_state.rs`, `src/lua_api/state.rs`: per-environment filter map and initialization.
 
 ## Tests asserting this spec
