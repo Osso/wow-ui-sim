@@ -3,15 +3,12 @@
 use std::path::PathBuf;
 use std::process::Command;
 
+/// Cargo sets `CARGO_BIN_EXE_wow-sim` when it builds this test target, so the
+/// path is fixed at compile time. Reading the variable at run time falls back
+/// to `<manifest>/target/debug/wow-sim`, which does not exist when the test
+/// binary is executed from a shared target directory.
 fn wow_sim_binary() -> PathBuf {
-    std::env::var_os("CARGO_BIN_EXE_wow-sim")
-        .map(PathBuf::from)
-        .unwrap_or_else(|| {
-            PathBuf::from(env!("CARGO_MANIFEST_DIR"))
-                .join("target")
-                .join("debug")
-                .join("wow-sim")
-        })
+    PathBuf::from(env!("CARGO_BIN_EXE_wow-sim"))
 }
 
 #[test]
@@ -231,12 +228,13 @@ fn mists_collections_pet_row_selects_and_shows_tooltip() {
     assert_no_lua_errors(&stdout, &stderr);
 }
 
+/// The `lua-errors` command writes the authoritative JSON array on stdout and
+/// always writes a summary banner to stderr, whose `Lua errors: N unique` line
+/// contains the `Lua error` substring. Judge the array and the exit status
+/// instead; a real exec-lua failure also prints `[exec-lua] error`.
 fn assert_no_lua_errors(stdout: &str, stderr: &str) {
     assert!(
-        stdout.trim().ends_with("[]")
-            && !stdout.contains("Lua error")
-            && !stderr.contains("Lua error")
-            && !stderr.contains("[exec-lua] error"),
+        stdout.trim() == "[]" && !stderr.contains("[exec-lua] error"),
         "Collections panel flow emitted Lua errors\nstdout:\n{stdout}\nstderr:\n{stderr}"
     );
 }
