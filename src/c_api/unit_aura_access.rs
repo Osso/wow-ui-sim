@@ -1,8 +1,13 @@
-//! Retail 12.1.0 aura-secret context over the explicit `unit_auras_restricted`
-//! input (secret during combat, encounters, M+ and PvP matches).
+//! Retail 12.1.0 aura-secret context.
 //!
-//! - `RequiresUnitAuraAccess` APIs (index, slot and instance-ID access) raise a
-//!   Lua error for tainted callers while auras are secret.
+//! WM105 defines the gate in this order: an execution context, a recorded taint
+//! source (a null source permits), the generated-secrecy-policy flag, and any
+//! of restriction entries 0..3 (`Combat`, `Encounter`, `ChallengeMode`,
+//! `PvPMatch`) exactly `Active`. `Map` and `Chat` are never read, and the gate
+//! addresses the same six-entry array as `GetAddOnRestrictionState`.
+//!
+//! - `RequiresUnitAuraAccess` APIs raise
+//!   `<ApiName>(): <aura report> Lua Taint: <source>` for a denied caller.
 //! - Restricted AuraData uses the bounded WM61 S3 per-field publication policy.
 //! - Spell-keyed (`RequiresNonSecretAura`) APIs stay callable; auras flagged
 //!   never-secret by `C_Secrets.GetSpellAuraSecrecy` return plain data.
@@ -19,8 +24,28 @@ use rilua::table_security::wrap_secret;
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val, runtime_error};
 
+/// EMULATED (WM105 §2): the read-only generated-secrecy-policy byte is `1` in
+/// this build, and any nonzero value enables the state tests. No runtime writer
+/// was recovered, so the shipped value is the modelled one.
+pub(crate) const GENERATED_SECRECY_POLICY_ENABLED: bool = true;
+
+/// `AddOnRestrictionType` entries the aura gate reads (WM105 §1).
+const AURA_RESTRICTION_TYPES: usize = 4;
+/// `AddOnRestrictionState.Active` (WM105 §1); `Activating` is 1 and does not match.
+const ACTIVE: u8 = 2;
+
+/// WM105 §5: one rule shared by the aura gate, the S8 ContextuallySecret
+/// classifier and the accessor publication class.
+pub(crate) fn aura_secrecy_policy_active(sim: &SimState) -> bool {
+    GENERATED_SECRECY_POLICY_ENABLED
+        && sim.restricted_actions[..AURA_RESTRICTION_TYPES]
+            .iter()
+            .any(|&state| state == ACTIVE)
+}
+
 pub(crate) fn auras_restricted(state: &LuaState) -> LuaResult<bool> {
-    Ok(cfg!(feature = "retail-12-1-0") && borrow_state(state)?.unit_auras_restricted)
+    let sim = borrow_state(state)?;
+    Ok(cfg!(feature = "retail-12-1-0") && aura_secrecy_policy_active(&sim))
 }
 
 /// `Enum.ScriptObjectAccessRestriction.DenyTaintedAccessWhenAurasAreSecret`.
@@ -29,7 +54,7 @@ pub(crate) const DENY_TAINTED_ACCESS_WHEN_AURAS_SECRET: u32 = 1;
 /// Whether `frame`'s aura access restriction is in force right now.
 pub(crate) fn aura_access_restriction_active(sim: &SimState, frame: &Frame) -> bool {
     cfg!(feature = "retail-12-1-0")
-        && sim.unit_auras_restricted
+        && aura_secrecy_policy_active(sim)
         && frame.access_restrictions & DENY_TAINTED_ACCESS_WHEN_AURAS_SECRET != 0
 }
 
@@ -44,7 +69,7 @@ pub(crate) fn ensure_script_object_accessible(state: &LuaState, id: u64) -> LuaR
     }
     let restricted = {
         let sim = borrow_state(state)?;
-        sim.unit_auras_restricted
+        aura_secrecy_policy_active(&sim)
             && sim
                 .widgets
                 .get(id)
@@ -59,13 +84,22 @@ pub(crate) fn ensure_script_object_accessible(state: &LuaState, id: u64) -> LuaR
 }
 
 /// Enforce `RequiresUnitAuraAccess` before argument parsing or lookup.
+///
+/// WM105: the accessor raises `<ApiName>(): <aura report> Lua Taint: <source>`.
+/// The report is `Auras cannot be accessed when secret while tainted by
+/// '<source>'`; the wrapper appends `Lua Taint: <source>` (or `No Lua Taint`
+/// when no source is recorded, which permits and therefore never reaches here).
+/// The suffix separator is best-guess, native UNKNOWN.
 pub(crate) fn require_unit_aura_access(state: &LuaState, api_name: &str) -> LuaResult<()> {
-    if auras_restricted(state)? && !rilua::api::state_is_secure(state) {
-        return Err(runtime_error(format!(
-            "{api_name}: aura data cannot be accessed by addons while auras are secret"
-        )));
+    if !auras_restricted(state)? {
+        return Ok(());
     }
-    Ok(())
+    let Some(origin) = rilua::api::stack_taint_origin(state) else {
+        return Ok(());
+    };
+    Err(runtime_error(format!(
+        "{api_name}(): Auras cannot be accessed when secret while tainted by '{origin}' Lua Taint: {origin}"
+    )))
 }
 
 /// Apply WM61 S3 field publication while preserving the outer table value.
@@ -138,25 +172,30 @@ pub(crate) fn reject_spell_keyed_lookup(state: &LuaState, spell_id: u32) -> LuaR
     #[cfg(not(feature = "retail-12-1-0"))]
     {
         let _ = spell_id;
-        Ok(false)
+        auras_restricted(state)
     }
 }
 
-/// Shared by spell-keyed outputs and the prospective C_Secrets query.
-/// Preserve the existing context-first policy, including its known limitation:
-/// always-secret spell flags do not yet force secrecy outside this context.
+/// WM105 §5: the S8 `ContextuallySecret` outcome reads the same policy flag and
+/// the same four restriction entries as the aura gate. `AlwaysSecret` is secret
+/// for every caller; `NeverSecret` stays public.
 pub(crate) fn spell_keyed_aura_is_secret(state: &LuaState, spell_id: i32) -> LuaResult<bool> {
-    Ok(auras_restricted(state)? && !is_never_secret_aura(spell_id)?)
-}
-
-#[cfg(feature = "retail-12-1-0")]
-fn is_never_secret_aura(spell_id: i32) -> LuaResult<bool> {
-    super::c_secrets::is_never_secret_aura(spell_id)
-}
-
-#[cfg(not(feature = "retail-12-1-0"))]
-fn is_never_secret_aura(_spell_id: i32) -> LuaResult<bool> {
-    unreachable!("auras are never restricted before 12.1.0")
+    #[cfg(feature = "retail-12-1-0")]
+    {
+        let Ok(spell_id) = u32::try_from(spell_id) else {
+            return Ok(false);
+        };
+        Ok(match super::c_secrets::classify_aura_secrecy(spell_id)? {
+            super::c_secrets::NEVER_SECRET => false,
+            super::c_secrets::ALWAYS_SECRET => true,
+            _ => auras_restricted(state)?,
+        })
+    }
+    #[cfg(not(feature = "retail-12-1-0"))]
+    {
+        let _ = spell_id;
+        auras_restricted(state)
+    }
 }
 
 /// `UNIT_AURA` update info while auras are secret. INFERRED: the unit token

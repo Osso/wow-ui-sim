@@ -3,7 +3,7 @@
 //! - `SecretWhenUnitIdentityRestricted`: returns are secret when any queried
 //!   unit's identity is secret (`unit_identity_is_secret`).
 //! - `SecretWhenUnitPossessionRestricted`: returns are secret while auras are
-//!   secret (`unit_auras_restricted`), except for `player`, `pet` and `vehicle`.
+//!   secret (WM105 aura policy), except for `player`, `pet` and `vehicle`.
 //! - `SecretWhenUnitNameIdentityRestricted`: identity rules, except a player
 //!   unit queried during an active PvP match.
 //!
@@ -30,7 +30,7 @@ pub(crate) fn finish_identity_restricted(
     Ok(count)
 }
 
-/// Wrap the top `count` returns while auras are secret, except for units
+/// Wrap the top `count` returns while the WM105 aura policy is active, except for units
 /// under the player's direct control.
 pub(crate) fn finish_possession_restricted(
     state: &mut LuaState,
@@ -38,7 +38,11 @@ pub(crate) fn finish_possession_restricted(
     count: u32,
 ) -> LuaResult<u32> {
     let controlled = matches!(unit, "player" | "pet" | "vehicle");
-    if RETAIL_12_1_0 && !controlled && borrow_state(state)?.unit_auras_restricted {
+    let policy_active = {
+        let sim = borrow_state(state)?;
+        RETAIL_12_1_0 && crate::c_api::unit_aura_access::aura_secrecy_policy_active(&sim)
+    };
+    if !controlled && policy_active {
         wrap_returns(state, count);
     }
     Ok(count)

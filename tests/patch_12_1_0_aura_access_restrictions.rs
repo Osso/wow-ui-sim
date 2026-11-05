@@ -47,7 +47,7 @@ const UNRESTRICTED: &str =
     "size=ok access=true constrained=false forbidden=false restricted=false";
 
 fn set_auras_secret(env: &WowLuaEnv, secret: bool) {
-    env.state().borrow_mut().unit_auras_restricted = secret;
+    env.state().borrow_mut().restricted_actions[0] = if secret { 2 } else { 0 };
 }
 
 /// Logged-in env whose addon container already spawned buttons for two auras.

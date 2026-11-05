@@ -164,9 +164,9 @@ fn missing_unit_aura_paths_preserve_results_errors_and_access_checks() {
         env.state().borrow_mut().current_target = present.then(target);
         env.state().borrow_mut().party_group_active = present;
         env.exec(&format!("CheckStoredTargetAuras({present})")).unwrap();
-        env.state().borrow_mut().unit_auras_restricted = true;
+        env.state().borrow_mut().restricted_actions[0] = 2;
         env.exec("CheckRestrictedTargetAccess()").unwrap();
-        env.state().borrow_mut().unit_auras_restricted = false;
+        env.state().borrow_mut().restricted_actions[0] = 0;
         let sim = env.state().borrow();
         assert_eq!(sim.target_auras.len(), 2);
         assert_eq!(sim.target_auras[0].name, "Expose Weakness");

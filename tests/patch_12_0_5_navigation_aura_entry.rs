@@ -69,25 +69,32 @@ fn assert_player_aura_queries(env: &WowLuaEnv, old: &[i32], new: &[i32]) {
     }
     env.exec(&format!(
         r#"
+        -- Entry events activate restriction entries, so AuraData fields are
+        -- secret here; the fixture reads them through secretunwrap.
+        local function plain(value)
+            if issecretvalue(value) then return secretunwrap(value) end
+            return value
+        end
         local helpful = C_UnitAuras.GetAuraDataByAuraInstanceID('player', {})
         local harmful = C_UnitAuras.GetAuraDataByAuraInstanceID('player', {})
-        assert(helpful.name == 'Flash of Light' and helpful.spellId == 19750)
-        assert(harmful.name == 'Corruption' and harmful.spellId == 172)
-        assert(helpful.duration == 47 and harmful.duration == 47)
-        assert(helpful.expirationTime == 150 and harmful.expirationTime == 150)
-        assert(helpful.applications == 3 and harmful.applications == 3)
-        assert(helpful.sourceUnit == 'player' and harmful.sourceUnit == 'player')
-        assert(helpful.isHelpful and harmful.isHarmful)
-        assert(harmful.dispelName == 'Magic')
+        assert(plain(helpful.name) == 'Flash of Light' and plain(helpful.spellId) == 19750)
+        assert(plain(harmful.name) == 'Corruption' and plain(harmful.spellId) == 172)
+        assert(plain(helpful.duration) == 47 and plain(harmful.duration) == 47)
+        assert(plain(helpful.expirationTime) == 150 and plain(harmful.expirationTime) == 150)
+        assert(plain(helpful.applications) == 3 and plain(harmful.applications) == 3)
+        assert(plain(helpful.sourceUnit) == 'player' and plain(harmful.sourceUnit) == 'player')
+        assert(plain(helpful.isHelpful) and plain(harmful.isHarmful))
+        assert(plain(harmful.dispelName) == 'Magic')
         local _, helpfulSlot = C_UnitAuras.GetAuraSlots('player', 'HELPFUL')
         local _, harmfulSlot = C_UnitAuras.GetAuraSlots('player', 'HARMFUL')
-        assert(helpfulSlot == helpful.auraInstanceID)
-        assert(harmfulSlot == harmful.auraInstanceID)
-        assert(C_UnitAuras.GetAuraDataBySlot('player', helpfulSlot).spellId == 19750)
-        assert(C_UnitAuras.GetAuraDataBySlot('player', harmfulSlot).spellId == 172)
-        assert(C_UnitAuras.GetAuraDataByIndex('player', 1, 'HELPFUL').auraInstanceID == helpfulSlot)
-        assert(C_UnitAuras.GetPlayerAuraBySpellID(19750).auraInstanceID == helpfulSlot)
-        assert(EntryObserver.helpful == helpfulSlot and EntryObserver.harmful == harmfulSlot,
+        assert(plain(helpfulSlot) == plain(helpful.auraInstanceID))
+        assert(plain(harmfulSlot) == plain(harmful.auraInstanceID))
+        assert(plain(C_UnitAuras.GetAuraDataBySlot('player', helpfulSlot).spellId) == 19750)
+        assert(plain(C_UnitAuras.GetAuraDataBySlot('player', harmfulSlot).spellId) == 172)
+        assert(plain(C_UnitAuras.GetAuraDataByIndex('player', 1, 'HELPFUL').auraInstanceID) == plain(helpfulSlot))
+        assert(plain(C_UnitAuras.GetPlayerAuraBySpellID(19750).auraInstanceID) == plain(helpfulSlot))
+        assert(plain(EntryObserver.helpful) == plain(helpfulSlot)
+            and plain(EntryObserver.harmful) == plain(harmfulSlot),
             'entry consumer must observe committed IDs')
         "#,
         new[0], new[1]
@@ -271,12 +278,18 @@ fn aura_entry_rekeys_party_helpful_and_harmful_stores_without_changing_members()
         r#"
         assert(C_UnitAuras.GetAuraDataByAuraInstanceID('party1', 83) == nil)
         assert(C_UnitAuras.GetAuraDataByAuraInstanceID('party1', 94) == nil)
+        -- ENCOUNTER_START activates the Encounter restriction, so AuraData
+        -- fields are secret here; the fixture reads them through secretunwrap.
+        local function plain(value)
+            if issecretvalue(value) then return secretunwrap(value) end
+            return value
+        end
         local buff = C_UnitAuras.GetAuraDataByAuraInstanceID('party1', 802)
         local debuff = C_UnitAuras.GetAuraDataByAuraInstanceID('party1', 603)
-        assert(buff.name == 'Flash of Light' and buff.duration == 47)
-        assert(debuff.name == 'Corruption' and debuff.applications == 3)
-        assert(C_UnitAuras.GetAuraDataByIndex('party1', 1, 'HELPFUL').auraInstanceID == 802)
-        assert(C_UnitAuras.GetAuraDataByIndex('party1', 1, 'HARMFUL').auraInstanceID == 603)
+        assert(plain(buff.name) == 'Flash of Light' and plain(buff.duration) == 47)
+        assert(plain(debuff.name) == 'Corruption' and plain(debuff.applications) == 3)
+        assert(plain(C_UnitAuras.GetAuraDataByIndex('party1', 1, 'HELPFUL').auraInstanceID) == 802)
+        assert(plain(C_UnitAuras.GetAuraDataByIndex('party1', 1, 'HARMFUL').auraInstanceID) == 603)
         "#,
     )
     .unwrap();

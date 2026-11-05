@@ -145,7 +145,7 @@ fn caster_instance_misses_invalid_controls_and_existing_restriction_independence
     let env = fixture();
     let before_rows = snapshot_caster_rows(&env);
     for restricted in [false, true, false] {
-        env.state().borrow_mut().unit_auras_restricted = restricted;
+        env.state().borrow_mut().restricted_actions[0] = if restricted { 2 } else { 0 };
         env.exec(r#"
             local expectedTaint = nil
         local function probe()

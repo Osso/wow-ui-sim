@@ -260,8 +260,12 @@ fn wrap_loadstring_source(state: &mut LuaState, source: Val) -> Option<Val> {
     Some(Val::Str(state.gc.intern_string(&wrapped_source)))
 }
 
+/// WM105 §7: `forceinsecure()` installs the literal `*** TaintForced ***`
+/// source, not an empty one, so the aura gate still denies a forced caller.
+const FORCED_TAINT_SOURCE: &str = "*** TaintForced ***";
+
 fn forceinsecure(state: &mut LuaState) -> LuaResult<u32> {
-    taint_calling_frame(state, "");
+    taint_calling_frame(state, FORCED_TAINT_SOURCE);
     Ok(0)
 }
 

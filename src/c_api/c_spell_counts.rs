@@ -78,7 +78,10 @@ pub(crate) fn get_spell_max_cumulative_aura_applications(state: &mut LuaState) -
         let maximum = spell_id
             .and_then(|id| sim.spell_max_cumulative_aura_applications.get(&id).copied())
             .unwrap_or(0);
-        (f64::from(maximum), sim.unit_auras_restricted)
+        (
+            f64::from(maximum),
+            super::unit_aura_access::aura_secrecy_policy_active(&sim),
+        )
     };
     let result = if restricted {
         wrap_host_secret_number(state, maximum)
