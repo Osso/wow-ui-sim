@@ -156,7 +156,13 @@ previous build did not succeed.
 
 Each unit writes `slot-N/receipts/UNIT.json` with its source identity, changed
 paths (`changed_paths`, the mtime refresh set), content changes
-(`content_changed_paths`), command, result and artifact SHA256 values. The command arguments and
+(`content_changed_paths`), command, result and artifact SHA256 values. Receipts
+also record `dylib_sha256`, a map from slot-relative dylib path to the bytes this
+build produced. Cargo writes one unhashed dylib name per profile, so a later build
+with another feature set replaces the library a finished test binary loads. A
+runner must compare `dylib_sha256` with the files under `debug/deps` before it
+starts a unit and refuse on a mismatch; otherwise the binary fails at runtime with
+an undefined-symbol error. The command arguments and
 stdout/stderr bytes are passed through unchanged, including wrappers that capture
 Cargo JSON internally. The worker reads visible stdout for this build's Cargo
 `compiler-artifact` records, without changing the submitted arguments. Use Cargo's
@@ -167,7 +173,14 @@ Every repo-owned compiler-artifact record is judged on its own inputs, including
 libraries, binaries and tests. Ownership comes from `manifest_path` or target
 `src_path` under the worktree, fixed source mount or utility mount. Registry and
 Git package sources (`registry+`/`git+`) are external and excluded. Records without
-ownership paths cannot prove they are external and are checked.
+ownership paths cannot prove they are external and are checked. Records whose
+target kind the command does not select are not judged. An explicit `--bin`,
+`--test`, `--example` or `--bench` selection (or its plural form) limits that
+executable kind to matches; `--all-targets` selects everything. Libraries and
+build scripts remain guarded because selected targets link them as dependencies,
+and a dependency kind cannot prove direct selection. Cargo also builds bins to
+provide `CARGO_BIN_EXE_<name>` for integration tests, so `--lib --test
+integration` does not judge `debug/wow-sim`.
 
 The worker snapshots Cargo `.d` dep-info before the child starts and reads it
 again after the child exits.
@@ -206,8 +219,12 @@ executable bytes unchanged, so `fresh=false` is enough (user decision 2026-10-29
 An unchanged executable is also accepted when another executable reported in the
 same build has `fresh=false`, a changed SHA256, and inputs covering every changed
 non-manifest content input read by the unchanged executable (user decision
-2026-11-02). Missing artifacts remain stale. Otherwise the run fails with
-`stale artifacts`. Libraries do not require changed hashes. A changed library or
+2026-11-02). An unchanged executable is also accepted when the prior certificate
+for its exact path records the current SHA256 (user decision 2026-11-05): a
+comment-only edit rebuilds identical bytes, and those bytes are already certified.
+Missing artifacts and artifacts with no matching prior certificate remain stale.
+Otherwise the run fails with `stale artifacts`. Libraries do not require changed
+hashes. A changed library or
 `.rmeta` cannot certify an executable whose own inputs changed. Unreported artifacts and records with
 disjoint inputs are not judged for freshness. A test-only edit therefore does not
 reject an unaffected fresh bin, even within the same package. Records affected

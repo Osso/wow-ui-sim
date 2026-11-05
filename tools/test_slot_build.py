@@ -207,6 +207,110 @@ class SlotBuildTests(unittest.TestCase):
                          "WallTimeSec=1.075731\n")
 
 
+class StaleGuardDecisionTests(unittest.TestCase):
+    def setUp(self):
+        SlotBuildTests.setUp(self)
+        self.tree = self.slot / "worktree"
+        self.tree.mkdir()
+        self.manifest = str(self.tree / "Cargo.toml")
+        self.wow_sim = str(self.slot / "debug/wow-sim")
+        self.integration = str(self.slot / "debug/deps/integration-2677a8ed69ae370c")
+        self.lib = str(self.slot / "debug/libwow_ui_sim_dylib.so")
+        self.lib_deps = str(self.slot / "debug/deps/libwow_ui_sim_dylib.so")
+
+    def artifact(self, path, kind, name, fresh, executable=True):
+        return {"package_id": f"path+file://{self.tree}#wow-ui-sim@0.1.0",
+                "manifest_path": self.manifest,
+                "target": {"kind": [kind], "name": name},
+                "filenames": [path],
+                "executable": path if executable else None,
+                "fresh": fresh}
+
+    def current(self, records, changes=("src/lib.rs",), cargo=None):
+        return {"worktree": str(self.tree), "slot": str(self.slot),
+                "cargo": cargo or ["cargo", "test", "-p", "wow-ui-sim",
+                                   "--lib", "--test", "integration"],
+                "changed_paths": list(changes),
+                "content_changed_paths": list(changes),
+                "target_inputs": {path: ["src/lib.rs"] for path in
+                                  (self.wow_sim, self.integration)},
+                "reported_artifacts": records}
+
+    def test_unrequested_bin_is_ignored_by_stale_and_certification_guards(self):
+        wow_sim = self.artifact(self.wow_sim, "bin", "wow-sim", True)
+        integration = self.artifact(self.integration, "test", "integration", False)
+        previous = {"debug/wow-sim": "before",
+                    "debug/deps/integration-2677a8ed69ae370c": "same"}
+        artifacts = {"debug/wow-sim": "after",
+                     "debug/deps/integration-2677a8ed69ae370c": "same"}
+        certificates = {"debug/deps/integration-2677a8ed69ae370c":
+                        {"sha256": "same"}}
+        self.assertEqual(self.module.find_stale_artifacts(
+            self.current([wow_sim, integration]), previous, artifacts, certificates), [])
+        # Cargo emits fresh bin records for integration-test builds without dep-info.
+        _, errors = self.module.certify_artifacts(
+            self.current([wow_sim]), None, {}, {}, {"files": {}, "aliases": {}})
+        self.assertEqual(errors, [])
+
+    def test_selected_bin_target_is_still_guarded(self):
+        wow_sim = self.artifact(self.wow_sim, "bin", "wow-sim", True)
+        current = self.current(
+            [wow_sim], cargo=["cargo", "test", "--bin", "wow-sim"])
+        previous = {"debug/wow-sim": "before"}
+        artifacts = {"debug/wow-sim": "after"}
+        self.assertEqual(self.module.find_stale_artifacts(
+            current, previous, artifacts, {"debug/wow-sim": {"sha256": "after"}}),
+            ["debug/wow-sim"])
+
+    def test_rebuilt_unchanged_hash_with_prior_certificate_is_not_stale(self):
+        integration = self.artifact(self.integration, "test", "integration", False)
+        previous = {"debug/deps/integration-2677a8ed69ae370c": "same"}
+        artifacts = {"debug/deps/integration-2677a8ed69ae370c": "same"}
+        certificates = {"debug/deps/integration-2677a8ed69ae370c":
+                        {"sha256": "same"}}
+        self.assertEqual(self.module.find_stale_artifacts(
+            self.current([integration]), previous, artifacts, certificates), [])
+
+    def test_rebuilt_unchanged_hash_without_prior_certificate_is_stale(self):
+        integration = self.artifact(self.integration, "test", "integration", False)
+        previous = {"debug/deps/integration-2677a8ed69ae370c": "same"}
+        artifacts = {"debug/deps/integration-2677a8ed69ae370c": "same"}
+        self.assertEqual(self.module.find_stale_artifacts(
+            self.current([integration]), previous, artifacts, {}),
+            ["debug/deps/integration-2677a8ed69ae370c"])
+
+    def test_prior_certificate_for_other_bytes_is_stale(self):
+        integration = self.artifact(self.integration, "test", "integration", False)
+        previous = {"debug/deps/integration-2677a8ed69ae370c": "same"}
+        artifacts = {"debug/deps/integration-2677a8ed69ae370c": "same"}
+        certificates = {"debug/deps/integration-2677a8ed69ae370c":
+                        {"sha256": "other"}}
+        self.assertEqual(self.module.find_stale_artifacts(
+            self.current([integration]), previous, artifacts, certificates),
+            ["debug/deps/integration-2677a8ed69ae370c"])
+
+    def test_reused_artifact_with_changed_inputs_is_stale(self):
+        integration = self.artifact(self.integration, "test", "integration", True)
+        previous = {"debug/deps/integration-2677a8ed69ae370c": "same"}
+        artifacts = {"debug/deps/integration-2677a8ed69ae370c": "same"}
+        certificates = {"debug/deps/integration-2677a8ed69ae370c":
+                        {"sha256": "same"}}
+        self.assertEqual(self.module.find_stale_artifacts(
+            self.current([integration]), previous, artifacts, certificates),
+            ["debug/deps/integration-2677a8ed69ae370c"])
+
+    def test_receipt_records_dylib_hash_for_both_load_paths(self):
+        record = self.artifact(self.lib, "dylib", "wow_ui_sim_dylib", False,
+                               executable=False)
+        current = self.current([record], changes=())
+        current["artifacts"] = {"debug/libwow_ui_sim_dylib.so": "deadbeef",
+                                "debug/deps/libwow_ui_sim_dylib.so": "deadbeef"}
+        receipt = self.module.summarize_receipt(current)
+        self.assertEqual(receipt["dylib_sha256"], {
+            "debug/libwow_ui_sim_dylib.so": "deadbeef",
+            "debug/deps/libwow_ui_sim_dylib.so": "deadbeef"})
+
+
 class MountedDepInfoTests(unittest.TestCase):
     def setUp(self):
         SlotBuildTests.setUp(self)
@@ -770,11 +874,20 @@ class SourceFreshnessTests(unittest.TestCase):
         self.assertEqual(receipt["artifacts"], first["artifacts"])
         self.assertEqual(receipt["content_changed_paths"], ["src/main.rs"])
 
-    def test_dirty_prime_then_test_edit_rejects_identical_test_executable(self):
+    def test_dirty_prime_then_test_edit_accepts_identical_rebuilt_test_executable(self):
         mutation, first = self.prime_dirty_test_executable()
-        verified = (self.slot / ".verified-source-identity.json").read_bytes()
         (self.tree / "tests/first.rs").write_text("genuinely changed test")
         result, receipt = self.run_library_step("retail", mutation=mutation, executable=True)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual(receipt["result"], "success")
+        self.assertEqual(receipt["artifacts"], first["artifacts"])
+        self.assertIn("tests/first.rs", receipt["content_changed_paths"])
+
+    def test_dirty_prime_then_test_edit_rejects_reused_test_executable(self):
+        _, first = self.prime_dirty_test_executable()
+        verified = (self.slot / ".verified-source-identity.json").read_bytes()
+        (self.tree / "tests/first.rs").write_text("genuinely changed test")
+        result, receipt = self.run_library_step("retail", fresh=True, executable=True)
         self.assertNotEqual(result.returncode, 0)
         self.assertEqual(receipt["result"], "stale-artifacts")
         self.assertEqual(receipt["artifacts"], first["artifacts"])
@@ -894,20 +1007,18 @@ class SourceFreshnessTests(unittest.TestCase):
         self.assert_directory_change_rejected(
             lambda directory: (directory / "case.rs").unlink())
 
-    def test_directory_nested_edit_requires_changed_rebuilt_executable_hash(self):
+    def test_directory_nested_edit_accepts_identical_rebuilt_executable(self):
         first = self.build_directory_library(executable=True)
         output = Path(first["reported_artifacts"][0]["executable"])
         original = output.read_bytes()
-        verified = (self.slot / ".verified-source-identity.json").read_bytes()
         (self.tree / "tests/nested/case.rs").write_text("changed case")
         mutation = (f'binary.write_bytes({original!r}); '
                     'binary.with_suffix(".d").write_text('
                     'str(binary)+": src/main.rs tests\\n")')
         result, receipt = self.run_library_step("retail", mutation=mutation, executable=True)
-        self.assertNotEqual(result.returncode, 0)
-        self.assertEqual(receipt["result"], "stale-artifacts")
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual(receipt["result"], "success")
         self.assertEqual(output.read_bytes(), original)
-        self.assertEqual((self.slot / ".verified-source-identity.json").read_bytes(), verified)
         self.assertNotIn("tests/nested/case.rs", receipt["unread_package_paths"])
 
     def test_directory_mtime_only_refresh_rejects_fresh_record(self):
@@ -1574,7 +1685,7 @@ class SourceFreshnessTests(unittest.TestCase):
             '    binary.with_suffix(".d").write_text(f"{binary}: {source}\\n")\n'
             'if phase == "failed": sys.exit(7)\n'
             f'print(json.dumps({{"reason":"compiler-artifact", "package_id":{f"path+file://{self.tree}#probe@0.1.0"!r},\n'
-            '    "executable":str(binary), "fresh":phase == "missing"}))\n'
+            '    "executable":str(binary), "fresh":phase in ("missing", "retry")}))\n'
         )
         results, receipts = [], []
         for phase in ("A", "failed", "missing" if remove_dep_info else "retry"):
@@ -1619,7 +1730,7 @@ class SourceFreshnessTests(unittest.TestCase):
 
     def test_rejected_build_retry_does_not_advance_verified_content(self):
         result, first, stale = self.run_mixed_output_pair(
-            "src/main.rs", {"debug/probe": "A binary"},
+            "src/main.rs", {"debug/probe": "A binary"}, fresh=True,
             reported_names=["debug/probe"])
         self.assertNotEqual(result.returncode, 0)
         import sys
@@ -1754,7 +1865,7 @@ class SourceFreshnessTests(unittest.TestCase):
         self.assertNotEqual(result.returncode, 0)
         self.assertIn(b"no Cargo compiler-artifact records", result.stderr)
 
-    def test_changed_metadata_cannot_certify_unchanged_executable(self):
+    def test_changed_metadata_allows_identical_rebuilt_executable(self):
         result, first, second = self.run_mixed_output_pair(
             "src/main.rs", {"debug/deps/probe.rmeta": "B metadata"},
             reported_names=["debug/probe", "debug/deps/probe.rmeta"])
@@ -1763,9 +1874,8 @@ class SourceFreshnessTests(unittest.TestCase):
                          second["artifacts"]["debug/probe"])
         self.assertNotEqual(first["artifacts"]["debug/deps/probe.rmeta"],
                             second["artifacts"]["debug/deps/probe.rmeta"])
-        self.assertNotEqual(result.returncode, 0)
-        self.assertIn(b"stale artifacts", result.stderr)
-        self.assertEqual(second["result"], "stale-artifacts")
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual(second["result"], "success")
 
     def test_changed_executable_certifies_sibling_with_same_inputs(self):
         result, first, second = self.run_mixed_output_pair(
@@ -1801,7 +1911,7 @@ class SourceFreshnessTests(unittest.TestCase):
         self.git("commit", "-qm", "build script")
         result, first, second = self.run_mixed_output_pair(
             "build.rs", {"debug/deps/probe.rmeta": "B metadata"},
-            reported_names=["debug/probe"])
+            fresh=["debug/probe"], reported_names=["debug/probe"])
         self.assertNotEqual(result.returncode, 0)
         self.assertEqual(second["result"], "stale-artifacts")
 
