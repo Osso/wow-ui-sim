@@ -8,7 +8,7 @@ const TOOLTIP_ADDON: &str = "AddonTooltipDepsProbe";
 const TOOLTIP_DEP: &str = "AddonTooltipDependency";
 
 // Wrath has no AddonList vendor widget/handler input; mixed and modeled probes remain enabled.
-post_wrath_ui_fixture! {
+timerunning_util_panel_fixture! {
 #[test]
 fn addon_tooltip_update_builds_dependency_line() {
     with_blizzard_addon_startup_shape(&[ROOT], &[], |env, _loaded| {

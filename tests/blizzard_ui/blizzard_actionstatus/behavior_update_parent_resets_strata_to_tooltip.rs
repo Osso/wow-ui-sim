@@ -13,6 +13,7 @@ use crate::common::blizzard_addon_harness::with_blizzard_addon_smoke_shape;
 
 const ROOT: &str = "Blizzard_ActionStatus";
 
+timerunning_util_panel_fixture! {
 #[test]
 fn update_parent_resets_frame_strata_to_tooltip() {
     with_blizzard_addon_smoke_shape(&[ROOT], &[], |env, _loaded| {
@@ -45,4 +46,5 @@ fn update_parent_resets_frame_strata_to_tooltip() {
             "`UpdateParent()` must reset ActionStatus frame strata to TOOLTIP"
         );
     });
+}
 }

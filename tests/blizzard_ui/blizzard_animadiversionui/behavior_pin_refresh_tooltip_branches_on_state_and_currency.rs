@@ -146,6 +146,7 @@ return originMatches,
        rewardPin.UpdateTooltip == rewardPin.RefreshTooltip
 "#;
 
+timerunning_util_panel_fixture! {
 #[test]
 fn pin_refresh_tooltip_branches_on_state_currency_and_quest_rewards() {
     with_blizzard_addon_startup_shape(&[ROOT], CLOSURE_OVERRIDES, |env, _loaded| {
@@ -157,6 +158,7 @@ fn pin_refresh_tooltip_branches_on_state_currency_and_quest_rewards() {
 
         assert_tooltip_branch_state(state);
     });
+}
 }
 
 type TooltipBranchState = (bool, bool, bool, bool, bool, bool, i64, i64, bool);
