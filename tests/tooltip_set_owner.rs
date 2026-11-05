@@ -30,6 +30,31 @@ fn setup_tooltip_and_owner(env: &WowLuaEnv) {
     .unwrap();
 }
 
+#[cfg(feature = "client-wowforever")]
+#[test]
+fn set_owner_from_no_owner_hides_the_shown_tooltip() {
+    let env = env();
+    setup_tooltip_and_owner(&env);
+    env.exec(
+        r#"
+        -- Permanent 1.60.1 does not reject an ownerless Show, so this fixture
+        -- reaches the stored-nil-owner state WM106 §3 describes.
+        GameTooltip:ClearLines()
+        GameTooltip:Hide()
+        GameTooltip:Show()
+        assert(GameTooltip:GetOwner() == nil, 'fixture needs an ownerless tooltip')
+        assert(GameTooltip:IsShown(), 'fixture needs the ownerless tooltip shown')
+        -- WM106 §3: the non-null request differs from the stored owner, so Hide
+        -- runs before the anchor mode is parsed, then the owner is installed.
+        GameTooltip:SetOwner(UIParent, 'ANCHOR_NONE')
+        assert(GameTooltip:GetOwner() == UIParent, 'consumer installs the new owner')
+        assert(not GameTooltip:IsShown(),
+            'SetOwner from a nil owner must hide the tooltip')
+        "#,
+    )
+    .unwrap();
+}
+
 #[test]
 fn set_owner_records_owner_id_for_any_anchor_kind() {
     let env = env();
