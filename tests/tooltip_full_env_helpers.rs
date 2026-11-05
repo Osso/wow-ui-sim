@@ -10,81 +10,49 @@ use wow_ui_sim::lua_api::WowLuaEnv;
 #[path = "common/event_helpers.rs"]
 mod event_helpers;
 
-const TOOLTIP_TEST_ADDONS: &[(&str, &str)] = &[
-    ("Blizzard_SharedXMLBase", "Blizzard_SharedXMLBase.toc"),
-    ("Blizzard_Colors", "Blizzard_Colors_Mainline.toc"),
-    ("Blizzard_SharedXML", "Blizzard_SharedXML_Mainline.toc"),
-    (
-        "Blizzard_SharedXMLGame",
-        "Blizzard_SharedXMLGame_Mainline.toc",
-    ),
-    (
-        "Blizzard_UIPanelTemplates",
-        "Blizzard_UIPanelTemplates_Mainline.toc",
-    ),
-    (
-        "Blizzard_FrameXMLBase",
-        "Blizzard_FrameXMLBase_Mainline.toc",
-    ),
-    ("Blizzard_LoadLocale", "Blizzard_LoadLocale.toc"),
-    ("Blizzard_Fonts_Shared", "Blizzard_Fonts_Shared.toc"),
-    ("Blizzard_HelpPlate", "Blizzard_HelpPlate.toc"),
-    ("Blizzard_Menu", "Blizzard_Menu.toc"),
-    (
-        "Blizzard_AccessibilityTemplates",
-        "Blizzard_AccessibilityTemplates.toc",
-    ),
-    ("Blizzard_ObjectAPI", "Blizzard_ObjectAPI_Mainline.toc"),
-    ("Blizzard_UIParent", "Blizzard_UIParent_Mainline.toc"),
-    ("Blizzard_TextStatusBar", "Blizzard_TextStatusBar.toc"),
-    ("Blizzard_MoneyFrame", "Blizzard_MoneyFrame_Mainline.toc"),
-    ("Blizzard_POIButton", "Blizzard_POIButton.toc"),
-    ("Blizzard_Flyout", "Blizzard_Flyout.toc"),
-    ("Blizzard_StaticPopup", "Blizzard_StaticPopup.toc"),
-    ("Blizzard_GameTooltip", "Blizzard_GameTooltip_Mainline.toc"),
-    ("Blizzard_StaticPopup_Game", "Blizzard_StaticPopup_Game.toc"),
-    ("Blizzard_TransmogShared", "Blizzard_TransmogShared.toc"),
-    ("Blizzard_GameMenuEsc", "Blizzard_GameMenuEsc.toc"),
-    ("Blizzard_Communities", "Blizzard_Communities_Mainline.toc"),
-    ("Blizzard_StoreUI", "Blizzard_StoreUI_Mainline.toc"),
-    ("Blizzard_MicroMenu", "Blizzard_MicroMenu_Mainline.toc"),
-    (
-        "Blizzard_ManagedFrameSystem",
-        "Blizzard_ManagedFrameSystem_Mainline.toc",
-    ),
-    ("Blizzard_EditMode", "Blizzard_EditMode.toc"),
-    ("Blizzard_Minimap", "Blizzard_Minimap_Mainline.toc"),
-    ("Blizzard_BuffFrame", "Blizzard_BuffFrame.toc"),
-    ("Blizzard_GarrisonBase", "Blizzard_GarrisonBase.toc"),
-    (
-        "Blizzard_UIParentPanelManager",
-        "Blizzard_UIParentPanelManager_Mainline.toc",
-    ),
-    (
-        "Blizzard_Settings_Shared",
-        "Blizzard_Settings_Shared_Mainline.toc",
-    ),
-    (
-        "Blizzard_SettingsDefinitions_Shared",
-        "Blizzard_SettingsDefinitions_Shared.toc",
-    ),
-    (
-        "Blizzard_SettingsDefinitions_Frame",
-        "Blizzard_SettingsDefinitions_Frame_Mainline.toc",
-    ),
-    (
-        "Blizzard_FrameXMLUtil",
-        "Blizzard_FrameXMLUtil_Mainline.toc",
-    ),
-    ("Blizzard_ItemButton", "Blizzard_ItemButton_Mainline.toc"),
-    ("Blizzard_QuickKeybind", "Blizzard_QuickKeybind.toc"),
-    ("Blizzard_FrameXML", "Blizzard_FrameXML_Mainline.toc"),
-    (
-        "Blizzard_UIPanels_Game",
-        "Blizzard_UIPanels_Game_Mainline.toc",
-    ),
-    ("Blizzard_TokenUI", "Blizzard_TokenUI.toc"),
-    ("Blizzard_ActionBar", "Blizzard_ActionBar_Mainline.toc"),
+const TOOLTIP_TEST_ADDONS: &[&str] = &[
+    "Blizzard_SharedXMLBase",
+    "Blizzard_Colors",
+    "Blizzard_SharedXML",
+    "Blizzard_SharedXMLGame",
+    "Blizzard_UIPanelTemplates",
+    "Blizzard_FrameXMLBase",
+    "Blizzard_LoadLocale",
+    "Blizzard_Fonts_Shared",
+    "Blizzard_HelpPlate",
+    "Blizzard_Menu",
+    "Blizzard_AccessibilityTemplates",
+    "Blizzard_ObjectAPI",
+    "Blizzard_UIParent",
+    "Blizzard_TextStatusBar",
+    "Blizzard_MoneyFrame",
+    "Blizzard_POIButton",
+    "Blizzard_Flyout",
+    "Blizzard_StaticPopup",
+    "Blizzard_GameTooltip",
+    "Blizzard_StaticPopup_Game",
+    "Blizzard_TransmogShared",
+    "Blizzard_GameMenuEsc",
+    "Blizzard_Communities",
+    "Blizzard_StoreUI",
+    "Blizzard_MicroMenu",
+    "Blizzard_ManagedFrameSystem",
+    "Blizzard_EditMode",
+    "Blizzard_Minimap",
+    "Blizzard_BuffFrame",
+    "Blizzard_GarrisonBase",
+    "Blizzard_UIParentPanelManager",
+    "Blizzard_Settings_Shared",
+    "Blizzard_SettingsDefinitions_Shared",
+    "Blizzard_SettingsDefinitions_Frame",
+    "Blizzard_FrameXMLUtil",
+    "Blizzard_ItemButton",
+    "Blizzard_QuickKeybind",
+    "Blizzard_FrameXML",
+    "Blizzard_CharacterFrame",
+    "Blizzard_UIPanels_Game",
+    "Blizzard_TokenUI",
+    "Blizzard_ActionBar",
 ];
 
 pub fn setup_full_env() -> WowLuaEnv {
@@ -145,14 +113,13 @@ pub fn load_full_env_without_post_load() -> WowLuaEnv {
 }
 
 fn load_blizzard_addons(env: &WowLuaEnv, ui: &Path) {
-    for (name, toc) in TOOLTIP_TEST_ADDONS {
+    for name in TOOLTIP_TEST_ADDONS {
         let addon_dir = ui.join(name);
-        let requested_toc = addon_dir.join(toc);
-        let toc_path = if requested_toc.exists() {
-            requested_toc
-        } else if let Some(discovered_toc) = find_toc_file(&addon_dir) {
-            discovered_toc
-        } else {
+        // `find_toc_file` applies `active_profile_toc_suffixes()`. Classic
+        // caches also ship some Retail `_Mainline.toc` names without the
+        // Mainline body they list, so forcing that name leaves the template
+        // registry partially empty.
+        let Some(toc_path) = find_toc_file(&addon_dir) else {
             continue;
         };
         load_addon(&env.loader_env(), &toc_path)

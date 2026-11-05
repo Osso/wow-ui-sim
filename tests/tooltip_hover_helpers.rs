@@ -17,6 +17,19 @@ pub fn open_character_panel(env: &WowLuaEnv) {
             .expect("Failed to open the original Wrath character panel");
         return;
     }
+    if matches!(
+        wow_ui_sim::client_profile::ACTIVE,
+        wow_ui_sim::client_profile::ClientProfile::Mists
+            | wow_ui_sim::client_profile::ClientProfile::Era
+            | wow_ui_sim::client_profile::ClientProfile::Anniversary
+    ) {
+        // Blizzard_CharacterFrame/Cata/CharacterFrame.lua:31 (Mists) and
+        // Vanilla/CharacterFrame.lua:7 (Era/Anniversary) publish the classic
+        // ToggleCharacter path instead of Retail's ShowSubFrame mixin.
+        env.exec("ToggleCharacter('PaperDollFrame'); assert(CharacterFrame:IsShown()); assert(CharacterHeadSlot)")
+            .expect("Failed to open the classic character panel");
+        return;
+    }
     env.exec(
         r#"
         if CharacterFrame and CharacterFrame:IsShown() then
