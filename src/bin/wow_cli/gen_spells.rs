@@ -439,6 +439,15 @@ fn collect_required_spell_ids() -> Result<BTreeSet<u32>, Box<dyn std::error::Err
     Ok(all)
 }
 
+/// Spell IDs referenced by the Azerite, conduit and artifact-power catalog rows
+/// that `C_TooltipInfo` getters select. The tables are additive inputs: a missing
+/// file contributes nothing, so a data directory without them still regenerates.
+fn collect_power_catalog_spell_ids(
+    _wow_data: &Path,
+) -> Result<BTreeSet<u32>, Box<dyn std::error::Error>> {
+    Ok(BTreeSet::new())
+}
+
 const BASELINE_SPELL_IDS: &[u32] = &[
     100, 116, 2018, 2575, 2576, 2657, 372610, 395296, 1230084, 1232418, 1232421, 1234430, 1242031,
     1247534, 1272143, 1279510,
@@ -612,11 +621,54 @@ fn augment_spell_attributes(
 #[cfg(test)]
 mod tests {
     use super::{
-        augment_spell_attributes, collect_required_spell_ids, load_spell_descriptions,
-        load_spell_misc,
+        augment_spell_attributes, collect_power_catalog_spell_ids, collect_required_spell_ids,
+        load_spell_descriptions, load_spell_misc,
     };
     use std::collections::BTreeSet;
     use std::io::Write;
+
+    #[test]
+    fn power_catalog_tables_contribute_their_spell_columns() {
+        let dir = tempfile::tempdir().unwrap();
+        std::fs::write(
+            dir.path().join("AzeritePower.csv"),
+            "ID,SpellID,ItemBonusListID,SpecSetID,Flags\n1,55564,0,0,0\n2,0,0,0,0\n",
+        )
+        .unwrap();
+        std::fs::write(
+            dir.path().join("SoulbindConduitRank.csv"),
+            "ID,RankIndex,SpellID,AuraPointsOverride,SoulbindConduitID\n1,0,340706,0,5\n",
+        )
+        .unwrap();
+        std::fs::write(
+            dir.path().join("ArtifactPowerRank.csv"),
+            "ID,RankIndex,SpellID,ItemBonusListID,AuraPointsOverride,ArtifactPowerID\n1,0,19434,0,0,7\n",
+        )
+        .unwrap();
+        std::fs::write(
+            dir.path().join("AzeriteEssencePower.csv"),
+            "ID,SourceAlliance_lang,SourceHorde_lang,AzeriteEssenceID,Tier,MajorPowerDescription,MinorPowerDescription,MajorPowerActual,MinorPowerActual\n5,,,,1,293019,294668,293019,0\n",
+        )
+        .unwrap();
+
+        let ids = collect_power_catalog_spell_ids(dir.path()).unwrap();
+        assert_eq!(
+            ids,
+            BTreeSet::from([19434, 55564, 293019, 294668, 340706])
+        );
+    }
+
+    #[test]
+    fn power_catalog_missing_column_is_an_error() {
+        let dir = tempfile::tempdir().unwrap();
+        std::fs::write(dir.path().join("AzeritePower.csv"), "ID,Spell\n1,55564\n").unwrap();
+
+        let error = collect_power_catalog_spell_ids(dir.path())
+            .unwrap_err()
+            .to_string();
+        assert!(error.contains("AzeritePower.csv"), "{error}");
+        assert!(error.contains("SpellID"), "{error}");
+    }
 
     #[test]
     fn required_spells_include_the_seeded_mount_catalog() {
