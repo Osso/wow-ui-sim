@@ -336,7 +336,7 @@ def take_batch(families, costs, single=False):
 
 
 def run_dynamic_suite(command, checkout, log, env, costs, budget, timeout_tests,
-                      memory_costs, tail_jobs=(), timing_path=None):
+                      memory_costs, tail_jobs=(), timing_path=None, grouped_families=()):
     """One shared queue: lanes pull small batches; tail steps overlap where they fit."""
     started = time.monotonic()
     discovery = subprocess.run([command[-1], "--list", "--format=terse"],
@@ -417,12 +417,14 @@ def run_dynamic_suite(command, checkout, log, env, costs, budget, timeout_tests,
                                         "result": str(result_path), "measure_memory": True,
                                         "isolate": len(batch) == 1 and kind != "reserved"}))
         try:
+            batch_env = dict(env, RUST_TEST_THREADS="1",
+                             WOW_SIM_TIMEOUT_CHILD_SLOTS=str(budget.timeout_slots))
+            if grouped_families:
+                batch_env["WOW_SIM_GROUPED_FIXTURE_FAMILIES"] = ",".join(grouped_families)
             step, output = run_step(
                 f"integration:{index}",
                 batch_command[:-1] + [sys.executable, str(WORKER), str(manifest)],
-                checkout, io.StringIO(),
-                dict(env, RUST_TEST_THREADS="1",
-                     WOW_SIM_TIMEOUT_CHILD_SLOTS=str(budget.timeout_slots)))
+                checkout, io.StringIO(), batch_env)
             batch_records = json.loads(result_path.read_text()).get("records", []) if result_path.exists() else []
             with lock:
                 records.update({record["name"]: record for record in batch_records if record.get("name")})
@@ -666,6 +668,9 @@ def run(ref, build_jobs, target_dir, profile="retail", optional=False,
                             integration_plan = next(plan for plan in plans if plan["name"] == "integration")
                             tail_plans = [plan for plan in plans if plan is not integration_plan]
                             costs = json.loads((checkout / "tools/integration-costs.json").read_text())
+                            grouped = json.loads(
+                                (checkout / "tools/grouped-fixture-families.json").read_text())["families"]
+                            result["grouped_fixture_families"] = grouped
                             timeout_tests = json.loads((checkout / "tools/integration-timeout-tests.json").read_text())
                             memory_costs = json.loads((checkout / "tools/integration-memory-peaks.json").read_text())
                             timings = RESULTS / f"{attempt}-timings.json"
@@ -673,7 +678,8 @@ def run(ref, build_jobs, target_dir, profile="retail", optional=False,
                             (result["steps"]["integration"], tail_results,
                              output) = run_dynamic_suite(
                                 integration_plan["command"], checkout, log, integration_plan["env"],
-                                costs, budget, timeout_tests, memory_costs, tail_plans, timings)
+                                costs, budget, timeout_tests, memory_costs, tail_plans, timings,
+                                grouped)
                             result["timings"] = str(timings)
                             result["failures"]["integration"] = sorted(set(FAILED.findall(output)))
                             if result["steps"]["integration"]["exit"]:

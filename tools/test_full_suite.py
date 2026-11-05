@@ -330,6 +330,22 @@ class IntegrationShardingTests(unittest.TestCase):
         self.assertGreater(records['alpha::a']['seconds'], .019)
         self.assertGreater(records['alpha::a']['cpu_seconds'], 0)
 
+    def test_verified_grouped_families_reach_each_batch_environment(self):
+        names = ['fam::a']
+        body = selection_script(names,
+            "(root / 'grouped-env').write_text(os.environ.get("
+            "'WOW_SIM_GROUPED_FIXTURE_FAMILIES', '<unset>'))")
+        body = "import os\n" + body
+        import io
+        binary = self.root / 'test-binary'
+        write_executable(binary, body)
+        step, _, _ = self.runner.run_dynamic_suite(
+            [str(self.launcher), '--unit=fixture', '-p', 'MemoryMax=9G', '--', str(binary)],
+            self.root, io.StringIO(), dict(os.environ), {}, self.runner.TestBudget(2, 24), (),
+            self.memory_costs, (), None, ('fam',))
+        self.assertEqual(step['exit'], 0)
+        self.assertEqual((self.root / 'grouped-env').read_text(), 'fam')
+
     def test_tail_steps_run_concurrently_with_integration(self):
         tail_binary = self.root / 'tail-binary'
         write_executable(tail_binary,
