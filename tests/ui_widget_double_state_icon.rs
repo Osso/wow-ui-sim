@@ -1,5 +1,9 @@
 //! Original double-state icon row Setup over supplied records.
-#![cfg(any(feature = "client-retail", feature = "client-ptr"))]
+#![cfg(any(
+    feature = "client-retail",
+    feature = "client-ptr",
+    feature = "client-wowforever"
+))]
 
 use crate::common::blizzard_addon_harness::{load_blizzard_addon_closure_into_env, new_blizzard_addon_env};
 use wow_ui_sim::c_api::ui_widget_manager::{DoubleStateIconRowRecord, WidgetStateIconRecord, WidgetId, WidgetSetEntry, WidgetSetRecord};

@@ -4,10 +4,10 @@ UIWidgetManager exposes supplied texture-with-animation records to the original 
 
 ## What it must do
 
-- [ ] The getter returns nil for an absent ID and fresh complete records for supplied IDs.
-- [ ] Host type 18 updates publish supplied records before notification; other visualization types do not return them.
-- [ ] The original Setup consumes the supplied tooltip and texture kit.
-- [ ] No output secrecy policy is inferred.
+- [x] The getter returns nil for an absent ID and fresh complete records for supplied IDs.
+- [x] Host type 18 updates publish supplied records before notification; other visualization types do not return them.
+- [x] The original Setup consumes the supplied tooltip and texture kit.
+- [x] No output secrecy policy is inferred.
 
 ## How it works
 
@@ -16,6 +16,7 @@ UIWidgetManager exposes supplied texture-with-animation records to the original 
 ## Tests asserting this spec
 
 - `tests/ui_widget_texture_animation.rs`
+- `tests/ui_widget_visualization_feed.rs`
 
 ## Out of scope
 
