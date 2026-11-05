@@ -604,19 +604,33 @@ Debug.lua [AllowLoadEnvironment Global, SomeFlag]
 }
 
 #[test]
-fn test_family_placeholder_resolves_to_mainline() {
+fn test_family_placeholder_resolves_to_active_profile_family() {
+    // Pinned `Blizzard_Colors/Blizzard_Colors.toc:7-8` uses `[Family]` for both
+    // files (line 7 also carries `[AllowLoadGameType mainline]`). The shipped
+    // trees differ per profile: Retail/PTR/WowForever stage
+    // `Mainline/ColorConstants.lua` + `Mainline/ColorManager.lua`, while
+    // Wrath/Mists/Era/Anniversary stage only `Classic/ColorManager.lua`
+    // (data/blizzard-ui-files/{retail,ptr,wowforever,mists,era,anniversary}.txt).
+    // The gate is omitted here so this case exercises `[Family]` substitution only.
     let contents = r#"
 ## Title: Blizzard_Colors
-Shared\ColorOverrides.lua
+Shared\ColorConstants.lua
 [Family]\ColorConstants.lua
 [Family]\ColorManager.lua
 "#;
     let toc = TocFile::parse(Path::new("/addons/Blizzard_Colors"), contents);
+    let family = family_subdir();
 
     assert_eq!(toc.files.len(), 3);
-    assert_eq!(toc.files[0], PathBuf::from("Shared/ColorOverrides.lua"));
-    assert_eq!(toc.files[1], PathBuf::from("Mainline/ColorConstants.lua"));
-    assert_eq!(toc.files[2], PathBuf::from("Mainline/ColorManager.lua"));
+    assert_eq!(toc.files[0], PathBuf::from("Shared/ColorConstants.lua"));
+    assert_eq!(
+        toc.files[1],
+        PathBuf::from(format!("{family}/ColorConstants.lua"))
+    );
+    assert_eq!(
+        toc.files[2],
+        PathBuf::from(format!("{family}/ColorManager.lua"))
+    );
 }
 
 #[test]
