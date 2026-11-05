@@ -1,3 +1,7 @@
+## [2026-11-05] maintenance | Agent skills location and single instruction file
+
+Moved the flamegraph skill to [`.agents/skills/flamegraph/SKILL.md`](../../.agents/skills/flamegraph/SKILL.md), the cross-tool Agent Skills location that pi discovers, and removed the legacy `CLAUDE` instruction symlink so `AGENTS.md` is the only tracked instruction file. Live user-facing references in `AGENTS.md`, `docs/` and `tests/` now name `AGENTS.md` and `.agents/skills/`; historical evidence and baseline capture records keep their original paths.
+
 ## [2026-11-04] measured proof | NECESSARY Retail native timeout inventory
 
 [Runtime optimization](investigations/test-runtime-optimization.md#native-timeout-inventory-and-complete-budget-proof--2026-11-04) records the passing 1146.645s source-identified budget proof, zero failed cases against master, the ordinary-shard critical path and regenerated 672-name scheduling data. The 600s target is not met; no fixture optimization is adopted.

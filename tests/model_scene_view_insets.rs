@@ -1,7 +1,7 @@
 //! `ModelScene:SetViewInsets` / `GetViewInsets` round-trip.
 //!
 //! Stored on `Frame.model_scene_state.view_insets` as `(l, r, t, b)`.
-//! 3D rendering is intentionally out of scope (see CLAUDE.md
+//! 3D rendering is intentionally out of scope (see AGENTS.md
 //! "Intentional Gaps"), so the sim never consumes the value — these
 //! tests pin the storage-only contract.
 

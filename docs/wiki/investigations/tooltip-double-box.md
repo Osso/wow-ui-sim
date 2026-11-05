@@ -53,7 +53,7 @@ Total 19 `GameTooltip`-type widgets in the tree.
    coordinates `(250x150) @ x=1341,y=965` on frame levels `LOW:1` and `LOW:2`.
    Both are parented to `Blizzard_SharedXML`'s default container. Loader
    likely created one in the pre-register phase and another via XML. This
-   is the frame-re-creation pattern documented in `CLAUDE.md` ("Frame
+   is the frame-re-creation pattern documented in `AGENTS.md` ("Frame
    Re-creation and Orphaned Children").
 
 2. **`GameTooltip` and `AddonTooltip` resolve to the same userdata**:
@@ -113,7 +113,7 @@ through its child textures.
 - **`GameTooltip` itself is not duplicated.** `dump-tree | grep
   '^GameTooltip \[GameTooltip\]'` produces exactly one entry parented to
   `UIParent`. The spell-tooltip path is not hitting the frame
-  re-creation pattern from `CLAUDE.md`.
+  re-creation pattern from `AGENTS.md`.
 - **`SharedTooltipDefaultContainer` is duplicated** (LOW:1 and LOW:2,
   both `250x150` at the same screen-space anchor
   `$parent:BOTTOMRIGHT offset(-9,85) → (1591,1115)`). The `_G`

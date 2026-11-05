@@ -194,7 +194,7 @@ fn blizzard_global_fx_model_scenes_loads_without_non_three_d_errors(env: &WowLua
     assert!(
         fx_errors.is_empty(),
         "Blizzard_GlobalFXModelScenes emitted non-3D-model Lua errors during load \
-         (3D-rendering surface is an intentional permanent gap per CLAUDE.md — \
+         (3D-rendering surface is an intentional permanent gap per AGENTS.md — \
          Model/ModelScene/PlayerModel/DressUpModel methods are stub-only):\n  {}",
         fx_errors.join("\n  ")
     );

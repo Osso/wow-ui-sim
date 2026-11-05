@@ -31,7 +31,7 @@ Private per-run wall times, inclusive means/standard deviations/variances, seals
 - [Layout implementation](../../../src/layout.rs) and [cycle preservation](../../../tests/layout_cycle.rs).
 - [String registration and tests](../../../src/lua_api/globals/strings/mod.rs).
 - [Text preservation tests](../../../src/lua_api/frame/methods/text_attribute_event/text/tests.rs).
-- [Profiling protocol](../../../.claude/skills/flamegraph/SKILL.md) — acquisition guidance; private report records the matched cold-start protocol and recovery limitations.
+- [Profiling protocol](../../../.agents/skills/flamegraph/SKILL.md) — acquisition guidance; private report records the matched cold-start protocol and recovery limitations.
 
 ## See Also
 

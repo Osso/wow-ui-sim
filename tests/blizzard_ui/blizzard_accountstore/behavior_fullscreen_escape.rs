@@ -83,7 +83,7 @@
 //! - `on_key_down_with_escape_does_not_invoke_leave_store_button_click`
 //!   — replaces `LeaveStoreButton.Click` with a tracker (via the
 //!   `debug.getfenv(frame)[1]` per-instance override path documented in
-//!   CLAUDE.md), AND replaces SetAccountStoreShown with a tracker that
+//!   AGENTS.md), AND replaces SetAccountStoreShown with a tracker that
 //!   confirms the ESCAPE dispatch fired; asserts the LeaveStoreButton.Click
 //!   tracker received ZERO calls while the SetAccountStoreShown tracker
 //!   received exactly one. PLAN tripwire that flips if a future change

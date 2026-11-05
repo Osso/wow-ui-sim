@@ -326,7 +326,7 @@ prefork_full_ui_case! {
     assert!(
         load_errors.is_empty(),
         "Blizzard_PerksProgram emitted addon-specific Lua errors during load (excluding \
-         documented 3D ModelScene permanent gap — CLAUDE.md flags Model/ModelScene/ \
+         documented 3D ModelScene permanent gap — AGENTS.md flags Model/ModelScene/ \
          PlayerModel/DressUpModel as intentional ~38-stub permanent gaps. \
          PerksProgramModelSceneContainerFrameMixin:OnLoad calls \
          CelebrateModelScene:GetActorByTag(DEFAULT_FANFARE_ACTOR_TAG) and dereferences \
