@@ -365,7 +365,7 @@ fn blizzard_player_choice_loads_without_addon_specific_lua_errors(env: &WowLuaEn
     assert!(
         load_errors.is_empty(),
         "Blizzard_PlayerChoice emitted addon-specific Lua errors during load (excluding \
-         the documented 3D ModelScene permanent gap — CLAUDE.md flags Model/ModelScene/ \
+         the documented 3D ModelScene permanent gap — AGENTS.md flags Model/ModelScene/ \
          PlayerModel/DressUpModel as intentional ~38-stub permanent gaps; the \
          BorderLayerModelScene child of PlayerChoiceFrame inherits \
          ScriptAnimatedModelSceneTemplate and the `:AddEffect` / actor-based methods are \

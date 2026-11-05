@@ -37,7 +37,10 @@ fn create_controls() -> WowLuaEnv {
             blueTexture:SetColorTexture(0, 0, 1, 1)
             if i == 5 then
                 red:SetOwner(blue, 'ANCHOR_NONE')
-                -- SetOwner hides the model tooltip; this layering control must be visible.
+                -- WM106 (Retail 12.1.5.70688): an owned tooltip with no rows and
+                -- allow-empty off ends Show hidden. Opt this layering control into
+                -- the native empty Show so the TOOLTIP-strata control is visible.
+                red:SetAllowShowWithNoLines(true)
                 red:Show()
                 assert(red:GetParent() == UIParent)
             end

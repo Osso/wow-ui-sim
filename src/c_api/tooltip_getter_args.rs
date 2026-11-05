@@ -1,0 +1,39 @@
+//! Secret-checked argument readers shared by the `C_TooltipInfo` selectors.
+//!
+//! WM94 §1 establishes the numeric parsers: every supplied numeric argument
+//! passes a secret-access check before conversion, signed conversion rejects
+//! non-integers, and unsigned/index conversion rejects negatives.
+
+use crate::lua_bridge::{stack_val, val_to_i32};
+use rilua::table_security::unwrap_secret;
+use rilua::vm::state::LuaState;
+use rilua::{LuaResult, Val};
+
+/// Signed numeric argument (WM94 §1: `outside of expected range -2147483648 to 2147483647`).
+pub(crate) fn signed(state: &LuaState, position: i32) -> LuaResult<i32> {
+    val_to_i32(unwrap_secret(state, stack_val(state, position))?, position)
+}
+
+/// Unsigned numeric argument (WM94 §1: `outside of expected range 0 to 4294967295`).
+pub(crate) fn unsigned(state: &LuaState, position: i32) -> LuaResult<u32> {
+    match unwrap_secret(state, stack_val(state, position))? {
+        Val::Num(number)
+            if number.is_finite()
+                && number.fract() == 0.0
+                && (0.0..=f64::from(u32::MAX)).contains(&number) =>
+        {
+            Ok(number as u32)
+        }
+        _ => Err(rilua::runtime_error(format!(
+            "expected unsigned integer at argument {position}"
+        ))),
+    }
+}
+
+/// Optional unsigned numeric argument; a missing/nil value is skipped (WM94 §1).
+pub(crate) fn optional_unsigned(state: &LuaState, position: i32) -> LuaResult<Option<u32>> {
+    match stack_val(state, position) {
+        Val::Nil => Ok(None),
+        _ => unsigned(state, position).map(Some),
+    }
+}

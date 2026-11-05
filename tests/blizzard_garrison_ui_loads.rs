@@ -267,7 +267,7 @@ fn blizzard_garrison_ui_excluded_from_game_auto_discovery_due_to_lod() {
     );
 }
 
-/// Permanent 3D-rendering gaps documented in CLAUDE.md: Model / ModelScene /
+/// Permanent 3D-rendering gaps documented in AGENTS.md: Model / ModelScene /
 /// PlayerModel / DressUpModel are stub-only because the simulator renders 2D
 /// UI exclusively. Errors caused by mission UI driving these APIs (the WoD
 /// follower/shipyard model panels, the Shadowlands adventure-board ModelScene,

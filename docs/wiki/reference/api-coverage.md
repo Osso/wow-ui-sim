@@ -60,7 +60,7 @@ Only 16 C_* namespaces from BlizzardUI are completely unregistered. All are eith
 
 To implement a missing method, locate (or create) its namespace module under `src/c_api/`, add the method to the registry, and return values matching `Blizzard_APIDocumentationGenerated/*.lua`. State-backed implementations should read from / write to the simulator's state model rather than hardcoding constants.
 
-Per CLAUDE.md, missing or wrong `C_*` behavior should default to **implementing the backing system or state model** — not adding a shim. Permanent C API shims belong in `permanent_shims/` only for intentional unsupported domains. Temporary unmodeled defaults belong in `src/lua_api/workarounds/temporary/` with a retirement path.
+Per AGENTS.md, missing or wrong `C_*` behavior should default to **implementing the backing system or state model** — not adding a shim. Permanent C API shims belong in `permanent_shims/` only for intentional unsupported domains. Temporary unmodeled defaults belong in `src/lua_api/workarounds/temporary/` with a retirement path.
 
 The signature audit in `docs/c-api-signature-audit.md` documents the exact parameter/return types for high-priority namespaces. Live gaps come from `wow-cli audit-api --gaps`, which can also emit a PLAN.md-ready checkbox list (`--format plan`).
 

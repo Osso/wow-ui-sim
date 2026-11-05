@@ -5,15 +5,18 @@ mod spell;
 mod unit;
 
 use super::ensure_namespace;
+use crate::lua_api::methods::{
+    call_function_state, create_string, table_get, table_set, val_to_string,
+};
 use crate::lua_bridge::table_set_rust_fn_static;
 use builders::{
     ensure_pet_info_state, get_pet_tamers_for_map, get_spell_for_pet_action, is_pet_action_passive,
 };
 use probes::*;
-use rilua::LuaResult;
 use rilua::vm::gc::arena::GcRef;
 use rilua::vm::state::LuaState;
 use rilua::vm::table::Table;
+use rilua::{LuaResult, Val};
 
 pub(super) fn register_tooltip_surface(state: &mut LuaState) -> LuaResult<()> {
     register_pet_info_surface(state)?;
@@ -55,6 +58,10 @@ fn register_c_tooltip_info(state: &mut LuaState) -> LuaResult<()> {
     ) {
         crate::c_api::c_tooltip_info_bag_child::register(state, table_ref)?;
         crate::c_api::c_tooltip_info_totem::register(state, table_ref)?;
+        crate::c_api::c_tooltip_info_artifact_item::register(state, table_ref)?;
+        crate::c_api::c_tooltip_info_equipment_set::register(state, table_ref)?;
+        crate::c_api::c_tooltip_info_inventory_by_id::register(state, table_ref)?;
+        crate::c_api::c_tooltip_info_item_key::register(state, table_ref)?;
     }
     // Retail, PTR and Forever pinned docs all declare the loot getters,
     // including GetLootRollItem (Forever TooltipInfoDocumentation.lua:554-584).
@@ -169,6 +176,139 @@ pub(crate) fn tooltip_for_totem_text(
     remaining: &str,
 ) -> LuaResult<rilua::Val> {
     builders::tooltip_for_totem_text(state, name, remaining)
+}
+
+/// Bounded custom payload identity for getters that compose their own lines.
+/// The shared D56 stamp stays in one place; the caller supplies the declared
+/// `Enum.TooltipDataType` and, when the getter has one, its identity id.
+pub(crate) fn compose_tooltip(state: &mut LuaState, tooltip_type: f64, id: Option<f64>) -> Val {
+    let tooltip = builders::empty_tooltip(state, tooltip_type);
+    if let Some(id) = id {
+        table_set(state, tooltip, "id", Val::Num(id));
+    }
+    builders::stamp_data_instance(state, tooltip);
+    tooltip
+}
+
+/// Append one line after the payload's current last line.
+pub(crate) fn append_line(
+    state: &mut LuaState,
+    tooltip: Val,
+    line_type: f64,
+    text: &str,
+    color: Option<(f64, f64, f64)>,
+) -> Val {
+    append_line_with_right(state, tooltip, line_type, text, color, None, None)
+}
+
+/// Append one double line (left and right text) after the current last line.
+pub(crate) fn append_double_line(
+    state: &mut LuaState,
+    tooltip: Val,
+    line_type: f64,
+    left_text: &str,
+    left_color: Option<(f64, f64, f64)>,
+    right_text: &str,
+    right_color: Option<(f64, f64, f64)>,
+) -> Val {
+    append_line_with_right(
+        state,
+        tooltip,
+        line_type,
+        left_text,
+        left_color,
+        Some(right_text),
+        right_color,
+    )
+}
+
+fn append_line_with_right(
+    state: &mut LuaState,
+    tooltip: Val,
+    line_type: f64,
+    left_text: &str,
+    left_color: Option<(f64, f64, f64)>,
+    right_text: Option<&str>,
+    right_color: Option<(f64, f64, f64)>,
+) -> Val {
+    let saved_top = state.top;
+    state.push(tooltip);
+    let lines = table_get(state, tooltip, "lines");
+    let index = next_line_index(state, lines);
+    let line =
+        builders::push_tooltip_line(state, lines, index, line_type, left_text, left_color, false);
+    if let Some(right_text) = right_text {
+        if builders::uses_modern_tooltip_data() {
+            let rgb = right_color
+                .or_else(|| builders::global_color(state, b"NORMAL_FONT_COLOR"))
+                .unwrap_or((1.0, 0.82, 0.0));
+            let color = builders::color_table(state, rgb.0, rgb.1, rgb.2, 1.0);
+            crate::c_api::tooltip_data::publish_side(state, line, true, Some(right_text), color);
+        } else {
+            let text = create_string(state, right_text);
+            table_set(state, line, "rightText", text);
+            if let Some((r, g, b)) = right_color {
+                let color = builders::color_table(state, r, g, b, 1.0);
+                table_set(state, line, "rightColor", color);
+            }
+        }
+    }
+    state.top = saved_top;
+    line
+}
+
+fn next_line_index(state: &mut LuaState, lines: Val) -> i64 {
+    let Val::Table(lines_ref) = lines else {
+        return 1;
+    };
+    let mut index = 1;
+    while state
+        .gc
+        .tables
+        .get(lines_ref)
+        .is_some_and(|table| table.get_int(index) != Val::Nil)
+    {
+        index += 1;
+    }
+    index
+}
+
+/// Format a pinned global string with one numeric argument.
+pub(crate) fn format_global_numeric(
+    state: &mut LuaState,
+    key: &str,
+    value: f64,
+) -> LuaResult<String> {
+    let template = crate::c_api::global_val(state, key);
+    let formatter = crate::c_api::global_val(state, "format");
+    let formatted = call_function_state(state, formatter, &[template, Val::Num(value)])?;
+    val_to_string(state, formatted)
+        .ok_or_else(|| rilua::runtime_error(format!("localized formatter did not return {key}")))
+}
+
+/// Format a pinned global string with one text argument.
+pub(crate) fn format_global_text(
+    state: &mut LuaState,
+    key: &str,
+    value: &str,
+) -> LuaResult<String> {
+    let template = crate::c_api::global_val(state, key);
+    let formatter = crate::c_api::global_val(state, "format");
+    let text = create_string(state, value);
+    let formatted = call_function_state(state, formatter, &[template, text])?;
+    val_to_string(state, formatted)
+        .ok_or_else(|| rilua::runtime_error(format!("localized formatter did not return {key}")))
+}
+
+/// Pinned named color as RGB, or `None` when the global is absent.
+pub(crate) fn named_color(state: &mut LuaState, key: &str) -> Option<(f64, f64, f64)> {
+    builders::global_color(state, key.as_bytes())
+}
+
+/// Pinned global string value, or `None` when the global is absent.
+pub(crate) fn global_text(state: &mut LuaState, key: &str) -> Option<String> {
+    let value = crate::c_api::global_val(state, key);
+    val_to_string(state, value)
 }
 
 type TooltipScriptFn = fn(&mut LuaState) -> LuaResult<u32>;
