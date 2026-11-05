@@ -161,7 +161,7 @@ fn action_binding_line(slot: u32) -> String {
     }
 }
 
-fn tooltip_line_count(state: &LuaState, lines: Val) -> i64 {
+pub(super) fn tooltip_line_count(state: &LuaState, lines: Val) -> i64 {
     let Val::Table(lines_ref) = lines else {
         return 0;
     };

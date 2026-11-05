@@ -75,21 +75,14 @@ pub(super) struct Accumulator {
 }
 
 impl Accumulator {
-    fn new(item: &ItemInfo) -> Self {
-        let mut stats = [(0i16, 0u16); 10];
-        for (slot, entry) in stats.iter_mut().enumerate() {
-            *entry = (
-                item.stat_modifier_bonus_stat[slot],
-                item.stat_percent_editor[slot],
-            );
-        }
+    fn empty() -> Self {
         Self {
             level_delta: 0,
-            quality: item.quality,
+            quality: 0,
             quality_applied: false,
             required_level: None,
-            base_required_level: item.required_level.min(255) as u8,
-            stats,
+            base_required_level: 0,
+            stats: [(0, 0); 10],
             family: Family {
                 priority: DEFAULT_PRIORITY,
                 curve: 0,
@@ -112,6 +105,19 @@ impl Accumulator {
                 offset: 0,
             },
         }
+    }
+
+    fn new(item: &ItemInfo) -> Self {
+        let mut accumulator = Self::empty();
+        for (slot, entry) in accumulator.stats.iter_mut().enumerate() {
+            *entry = (
+                item.stat_modifier_bonus_stat[slot],
+                item.stat_percent_editor[slot],
+            );
+        }
+        accumulator.quality = item.quality;
+        accumulator.base_required_level = item.required_level.min(255) as u8;
+        accumulator
     }
 
     pub(super) fn level_delta(&self) -> i16 {
@@ -193,6 +199,24 @@ impl Accumulator {
         };
         i32::from(chosen as i16)
     }
+}
+
+/// WM104: one fresh accumulator per relic contribution call; the three effect
+/// slots apply their lists in order and repeated lists apply again.
+pub(super) fn contribution_accumulator() -> Accumulator {
+    Accumulator::empty()
+}
+
+/// WM104: the returned number is the absolute-level slot written by Type 42.
+pub(super) fn contribution_selected_level(accumulator: &Accumulator) -> u16 {
+    accumulator.base_level().unwrap_or(0)
+}
+
+pub(super) fn apply_contribution_list(
+    list_id: u32,
+    accumulator: &mut Accumulator,
+) -> Result<(), String> {
+    apply_list(list_id, accumulator, 0)
 }
 
 pub(super) fn apply(

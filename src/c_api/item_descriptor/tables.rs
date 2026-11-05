@@ -15,6 +15,10 @@ const SCALING_CONFIGS: &str =
     include_str!("../../../data/item-descriptor/70391/scaling-configs.tsv");
 const SQUISH_ERAS: &str = include_str!("../../../data/item-descriptor/70391/squish-eras.tsv");
 const CONTENT_TUNING: &str = include_str!("../../../data/item-descriptor/70391/content-tuning.tsv");
+const GEM_PROPERTIES: &str = include_str!("../../../data/item-descriptor/70391/gem-properties.tsv");
+const SPELL_ENCHANTMENTS: &str =
+    include_str!("../../../data/item-descriptor/70391/spell-enchantments.tsv");
+const LEVEL_DELTAS: &str = include_str!("../../../data/db2/70391/ItemBonusListLevelDelta.csv");
 
 fn columns(line: &str) -> impl Iterator<Item = &str> {
     line.split('\t')
@@ -187,6 +191,47 @@ fn pos_value(field: Option<&str>, default: f32) -> f32 {
     field.and_then(|text| text.parse().ok()).unwrap_or(default)
 }
 
+/// WM104: curve 1718 is evaluated on the relic display level before truncation.
+pub(super) fn curve_value(curve: &Curve, input: f32) -> Result<f32, String> {
+    match curve.kind {
+        0 => Ok(linear(curve, input)),
+        5 => Ok(previous_point(curve, input)),
+        kind => Err(super::unknown(format!(
+            "curve type {kind} is not implemented"
+        ))),
+    }
+}
+
+fn linear(curve: &Curve, input: f32) -> f32 {
+    let points = &curve.points;
+    let (Some(first), Some(last)) = (points.first(), points.last()) else {
+        return 0.0;
+    };
+    if input <= first.0 {
+        return first.1;
+    }
+    if input >= last.0 {
+        return last.1;
+    }
+    let index = points.partition_point(|point| point.0 <= input) - 1;
+    let (left_x, left_y) = points[index];
+    let (right_x, right_y) = points[index + 1];
+    let width = right_x - left_x;
+    if width <= 0.0 {
+        return right_y;
+    }
+    left_y + (right_y - left_y) * ((input - left_x) / width)
+}
+
+fn previous_point(curve: &Curve, input: f32) -> f32 {
+    let points = &curve.points;
+    if points.is_empty() {
+        return 0.0;
+    }
+    let index = points.partition_point(|point| point.0 <= input);
+    points[index.saturating_sub(1).min(points.len() - 1)].1
+}
+
 pub(super) struct OffsetCurve {
     pub curve_id: u32,
     pub offset: i32,
@@ -340,4 +385,106 @@ pub(super) fn content_tuning(id: u32) -> Result<&'static ContentTuning, String> 
             "ContentTuning {id} is absent from the pinned export"
         ))
     })
+}
+
+/// WM97 DQ4: `GemProperties` row selected by `ItemSparse.Gem_properties`.
+pub(super) struct GemProperty {
+    pub enchant_id: u32,
+    /// `GemProperties.Type`; not an enum, only the exact values are meaningful.
+    pub kind: u32,
+}
+
+struct GemTable(HashMap<u32, GemProperty>);
+
+static GEM_TABLE: OnceLock<GemTable> = OnceLock::new();
+
+pub(super) fn gem_properties(id: u32) -> Option<&'static GemProperty> {
+    let table = GEM_TABLE.get_or_init(|| {
+        GemTable(
+            GEM_PROPERTIES
+                .lines()
+                .skip(1)
+                .map(|line| {
+                    let mut fields = columns(line);
+                    let id = unsigned(fields.next());
+                    let entry = GemProperty {
+                        enchant_id: unsigned(fields.next()),
+                        kind: unsigned(fields.next()),
+                    };
+                    (id, entry)
+                })
+                .collect(),
+        )
+    });
+    table.0.get(&id)
+}
+
+/// One of the three `SpellItemEnchantment` effect positions kept by the export.
+#[derive(Clone, Copy)]
+pub(super) struct EnchantEffect {
+    pub kind: u8,
+    pub arg: i32,
+    pub points_min: i32,
+}
+
+pub(super) struct SpellEnchantment {
+    pub effects: [EnchantEffect; 3],
+}
+
+struct EnchantTable(HashMap<u32, SpellEnchantment>);
+
+static ENCHANT_TABLE: OnceLock<EnchantTable> = OnceLock::new();
+
+pub(super) fn spell_enchantment(id: u32) -> Option<&'static SpellEnchantment> {
+    let table = ENCHANT_TABLE.get_or_init(|| {
+        EnchantTable(
+            SPELL_ENCHANTMENTS
+                .lines()
+                .skip(1)
+                .map(|line| {
+                    let mut fields = columns(line);
+                    let id = unsigned(fields.next());
+                    let mut effects = [EnchantEffect {
+                        kind: 0,
+                        arg: 0,
+                        points_min: 0,
+                    }; 3];
+                    for effect in &mut effects {
+                        effect.kind = number(fields.next()) as u8;
+                    }
+                    for effect in &mut effects {
+                        effect.arg = number(fields.next());
+                    }
+                    for effect in &mut effects {
+                        effect.points_min = number(fields.next());
+                    }
+                    (id, SpellEnchantment { effects })
+                })
+                .collect(),
+        )
+    });
+    table.0.get(&id)
+}
+
+struct LevelDeltaTable(HashMap<i32, u32>);
+
+static LEVEL_DELTA_TABLE: OnceLock<LevelDeltaTable> = OnceLock::new();
+
+/// WM104: exact lookup on `ItemLevelDelta`; the matching row's `ID` is a bonus list.
+pub(super) fn level_delta_list(delta: i32) -> Option<u32> {
+    let table = LEVEL_DELTA_TABLE.get_or_init(|| {
+        LevelDeltaTable(
+            LEVEL_DELTAS
+                .lines()
+                .skip(1)
+                .filter_map(|line| {
+                    let mut fields = line.split(',');
+                    let delta = fields.next()?.parse().ok()?;
+                    let id = fields.next()?.parse().ok()?;
+                    Some((delta, id))
+                })
+                .collect(),
+        )
+    });
+    table.0.get(&delta).copied()
 }

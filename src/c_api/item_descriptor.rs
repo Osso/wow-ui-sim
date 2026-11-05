@@ -3,10 +3,12 @@
 
 mod bonus;
 mod link;
+mod relic;
 mod scaling;
 mod tables;
 
 pub use link::{ParsedItemLink, parse_item_link};
+pub use relic::{RelicMetadata, RelicSlotType, instance_socket_extra, relic_metadata};
 
 #[derive(Clone, Debug, Default, PartialEq, Eq)]
 pub struct ItemDescriptor {
