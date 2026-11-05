@@ -874,11 +874,20 @@ class SourceFreshnessTests(unittest.TestCase):
         self.assertEqual(receipt["artifacts"], first["artifacts"])
         self.assertEqual(receipt["content_changed_paths"], ["src/main.rs"])
 
-    def test_dirty_prime_then_test_edit_rejects_identical_test_executable(self):
+    def test_dirty_prime_then_test_edit_accepts_identical_rebuilt_test_executable(self):
         mutation, first = self.prime_dirty_test_executable()
-        verified = (self.slot / ".verified-source-identity.json").read_bytes()
         (self.tree / "tests/first.rs").write_text("genuinely changed test")
         result, receipt = self.run_library_step("retail", mutation=mutation, executable=True)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual(receipt["result"], "success")
+        self.assertEqual(receipt["artifacts"], first["artifacts"])
+        self.assertIn("tests/first.rs", receipt["content_changed_paths"])
+
+    def test_dirty_prime_then_test_edit_rejects_reused_test_executable(self):
+        _, first = self.prime_dirty_test_executable()
+        verified = (self.slot / ".verified-source-identity.json").read_bytes()
+        (self.tree / "tests/first.rs").write_text("genuinely changed test")
+        result, receipt = self.run_library_step("retail", fresh=True, executable=True)
         self.assertNotEqual(result.returncode, 0)
         self.assertEqual(receipt["result"], "stale-artifacts")
         self.assertEqual(receipt["artifacts"], first["artifacts"])
@@ -998,20 +1007,18 @@ class SourceFreshnessTests(unittest.TestCase):
         self.assert_directory_change_rejected(
             lambda directory: (directory / "case.rs").unlink())
 
-    def test_directory_nested_edit_requires_changed_rebuilt_executable_hash(self):
+    def test_directory_nested_edit_accepts_identical_rebuilt_executable(self):
         first = self.build_directory_library(executable=True)
         output = Path(first["reported_artifacts"][0]["executable"])
         original = output.read_bytes()
-        verified = (self.slot / ".verified-source-identity.json").read_bytes()
         (self.tree / "tests/nested/case.rs").write_text("changed case")
         mutation = (f'binary.write_bytes({original!r}); '
                     'binary.with_suffix(".d").write_text('
                     'str(binary)+": src/main.rs tests\\n")')
         result, receipt = self.run_library_step("retail", mutation=mutation, executable=True)
-        self.assertNotEqual(result.returncode, 0)
-        self.assertEqual(receipt["result"], "stale-artifacts")
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual(receipt["result"], "success")
         self.assertEqual(output.read_bytes(), original)
-        self.assertEqual((self.slot / ".verified-source-identity.json").read_bytes(), verified)
         self.assertNotIn("tests/nested/case.rs", receipt["unread_package_paths"])
 
     def test_directory_mtime_only_refresh_rejects_fresh_record(self):
@@ -1678,7 +1685,7 @@ class SourceFreshnessTests(unittest.TestCase):
             '    binary.with_suffix(".d").write_text(f"{binary}: {source}\\n")\n'
             'if phase == "failed": sys.exit(7)\n'
             f'print(json.dumps({{"reason":"compiler-artifact", "package_id":{f"path+file://{self.tree}#probe@0.1.0"!r},\n'
-            '    "executable":str(binary), "fresh":phase == "missing"}))\n'
+            '    "executable":str(binary), "fresh":phase in ("missing", "retry")}))\n'
         )
         results, receipts = [], []
         for phase in ("A", "failed", "missing" if remove_dep_info else "retry"):
@@ -1723,7 +1730,7 @@ class SourceFreshnessTests(unittest.TestCase):
 
     def test_rejected_build_retry_does_not_advance_verified_content(self):
         result, first, stale = self.run_mixed_output_pair(
-            "src/main.rs", {"debug/probe": "A binary"},
+            "src/main.rs", {"debug/probe": "A binary"}, fresh=True,
             reported_names=["debug/probe"])
         self.assertNotEqual(result.returncode, 0)
         import sys
@@ -1858,7 +1865,7 @@ class SourceFreshnessTests(unittest.TestCase):
         self.assertNotEqual(result.returncode, 0)
         self.assertIn(b"no Cargo compiler-artifact records", result.stderr)
 
-    def test_changed_metadata_cannot_certify_unchanged_executable(self):
+    def test_changed_metadata_allows_identical_rebuilt_executable(self):
         result, first, second = self.run_mixed_output_pair(
             "src/main.rs", {"debug/deps/probe.rmeta": "B metadata"},
             reported_names=["debug/probe", "debug/deps/probe.rmeta"])
@@ -1867,9 +1874,8 @@ class SourceFreshnessTests(unittest.TestCase):
                          second["artifacts"]["debug/probe"])
         self.assertNotEqual(first["artifacts"]["debug/deps/probe.rmeta"],
                             second["artifacts"]["debug/deps/probe.rmeta"])
-        self.assertNotEqual(result.returncode, 0)
-        self.assertIn(b"stale artifacts", result.stderr)
-        self.assertEqual(second["result"], "stale-artifacts")
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual(second["result"], "success")
 
     def test_changed_executable_certifies_sibling_with_same_inputs(self):
         result, first, second = self.run_mixed_output_pair(
@@ -1905,7 +1911,7 @@ class SourceFreshnessTests(unittest.TestCase):
         self.git("commit", "-qm", "build script")
         result, first, second = self.run_mixed_output_pair(
             "build.rs", {"debug/deps/probe.rmeta": "B metadata"},
-            reported_names=["debug/probe"])
+            fresh=["debug/probe"], reported_names=["debug/probe"])
         self.assertNotEqual(result.returncode, 0)
         self.assertEqual(second["result"], "stale-artifacts")
 
