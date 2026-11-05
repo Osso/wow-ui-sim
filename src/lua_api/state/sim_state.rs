@@ -228,6 +228,8 @@ pub struct SimState {
     #[cfg(feature = "retail-12-0-0")]
     pub weekly_reward_progress:
         HashMap<i32, Vec<crate::c_api::c_weekly_rewards::ActivityTierProgress>>,
+    /// WM97 DQ8 host seam: exact 64-bit keys with independent ready state.
+    pub weekly_rewards: crate::c_api::c_tooltip_info_weekly::WeeklyRewards,
     pub action_bars: HashMap<u32, u32>,
     /// Explicit slot-owned input; no cast/attack/spell-lifetime inference.
     pub(crate) action_repeat_active_slots: HashSet<u32>,

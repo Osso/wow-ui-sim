@@ -23,11 +23,19 @@ fn c_tooltip_info_currency_getters_expose_seeded_currency_lines() {
             if byId.lines[1].leftText ~= "Valorstones" then
                 return "currency_name"
             end
-            if byId.lines[2].leftText ~= "Amount: 1847" then
-                return "currency_amount"
+            -- WM97 DQ6: the supplied quantity is composition data, not an invented
+            -- "Amount: N/cap" text line.
+            if byId.quantity ~= 1847 then
+                return "currency_quantity"
             end
-            if overridden.lines[2].leftText ~= "Amount: 99" then
+            if overridden.quantity ~= 99 then
                 return "currency_override"
+            end
+            for index, line in ipairs(byId.lines) do
+                local text = line.leftText or ""
+                if text:find("Amount:", 1, true) then
+                    return "fabricated_amount_line"
+                end
             end
             if watched.lines[1].leftText ~= "Valorstones" then
                 return "currency_token"
