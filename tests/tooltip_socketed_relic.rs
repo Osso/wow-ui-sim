@@ -61,7 +61,7 @@ fn load_artifact_ui(env: &wow_ui_sim::lua_api::WowLuaEnv) {
     wow_ui_sim::loader::load_addon(&env.loader_env(), &toc).unwrap();
 }
 
-crate::retail_relic_record_fixture! {
+retail_relic_record_fixture! {
 /// GemProperties 2550: Type 14 has no native token, effect 11 argument 0.
 const UNKNOWN_TYPE_RELIC: u32 = 130_162;
 
@@ -158,7 +158,7 @@ fn tooltip_socketed_relic_original_hover_selects_viewed_slot() {
 }
 }
 
-crate::socketed_relic_getter_fixture! {
+socketed_relic_getter_fixture! {
 #[test]
 fn tooltip_socketed_relic_without_descriptor_is_a_miss() {
     let env = tooltip_full_env_helpers::load_full_env_without_post_load();
@@ -199,7 +199,7 @@ fn tooltip_socketed_relic_without_descriptor_is_a_miss() {
 }
 }
 
-crate::forever_catalog_relic_fixture! {
+forever_catalog_relic_fixture! {
 #[test]
 fn tooltip_socketed_relic_forever_keeps_the_catalog_item() {
     let env = tooltip_full_env_helpers::load_full_env_without_post_load();
