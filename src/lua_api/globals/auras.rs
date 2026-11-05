@@ -950,10 +950,13 @@ fn write_wrath_legacy_aura_origin(
     aura: &AuraInfo,
     party_fallback: bool,
 ) {
-    let source = if party_fallback || aura.source_unit.is_empty() {
+    // Keep the source projection written by `write_aura_identity`: a player aura
+    // reports "player" there, and recomputing from `aura.source_unit` would
+    // republish the raw caster token.
+    let source = if party_fallback {
         Val::Nil
     } else {
-        create_string(state, &aura.source_unit)
+        table_get(state, table, "sourceUnit")
     };
     let stealable = if !party_fallback && aura.is_stealable {
         Val::Num(1.0)
