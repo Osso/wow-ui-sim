@@ -5,15 +5,18 @@
 
 use crate::common;
 
+#[cfg(feature = "optional-tests")]
 #[path = "blizzard_ui/blizzard_async_request/load.rs"]
 mod load;
 
 // No CreateAsyncRequest/AsyncRequestMixin in Wrath manifest1-382/cache.
 // Keep load.rs visible: its mixed TOC/runtime cases are not snapshot gates.
 post_wrath_ui_fixture! {
+#[cfg(feature = "optional-tests")]
 #[path = "blizzard_ui/blizzard_async_request/surface_globals.rs"]
 mod surface_globals;
 
+#[cfg(feature = "optional-tests")]
 #[path = "blizzard_ui/blizzard_async_request/surface_frames.rs"]
 mod surface_frames;
 

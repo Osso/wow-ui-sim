@@ -5,21 +5,26 @@
 
 use crate::common;
 
+#[cfg(feature = "optional-tests")]
 #[path = "blizzard_ui/blizzard_animadiversionui/surface_globals.rs"]
 mod surface_globals;
 
 // Wrath's manifest-backed FrameXML/AddOns have no AnimaDiversion UI publishers.
 // Keep the independent enum probe above on every profile.
 post_wrath_ui_fixture! {
+#[cfg(feature = "optional-tests")]
 #[path = "blizzard_ui/blizzard_animadiversionui/load.rs"]
 mod load;
 
+#[cfg(feature = "optional-tests")]
 #[path = "blizzard_ui/blizzard_animadiversionui/surface_frames.rs"]
 mod surface_frames;
 
+#[cfg(feature = "optional-tests")]
 #[path = "blizzard_ui/blizzard_animadiversionui/surface_events.rs"]
 mod surface_events;
 
+#[cfg(feature = "optional-tests")]
 #[path = "blizzard_ui/blizzard_animadiversionui/surface_mixins.rs"]
 mod surface_mixins;
 

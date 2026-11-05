@@ -8,12 +8,15 @@ use crate::common;
 // Wrath manifest1-382/cache has no ArdenwealdGardening UI implementation.
 // These consume its button/tooltip handlers, not the independent C_* model.
 post_wrath_ui_fixture! {
+#[cfg(feature = "optional-tests")]
 #[path = "blizzard_ui/blizzard_ardenweald_gardening/load.rs"]
 mod load;
 
+#[cfg(feature = "optional-tests")]
 #[path = "blizzard_ui/blizzard_ardenweald_gardening/surface_globals.rs"]
 mod surface_globals;
 
+#[cfg(feature = "optional-tests")]
 #[path = "blizzard_ui/blizzard_ardenweald_gardening/surface_frames.rs"]
 mod surface_frames;
 

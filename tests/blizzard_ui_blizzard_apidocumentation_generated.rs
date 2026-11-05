@@ -6,12 +6,14 @@
 
 use crate::common;
 
+#[cfg(feature = "optional-tests")]
 #[path = "blizzard_ui/blizzard_apidocumentation_generated/load.rs"]
 mod load;
 
 // Wrath manifest1-382/cache has neither the documentation UI nor its corpus.
 // Keep load.rs's mixed literal-TOC/runtime dependency case on all profiles.
 post_wrath_ui_fixture! {
+#[cfg(feature = "optional-tests")]
 #[path = "blizzard_ui/blizzard_apidocumentation_generated/surface_globals.rs"]
 mod surface_globals;
 

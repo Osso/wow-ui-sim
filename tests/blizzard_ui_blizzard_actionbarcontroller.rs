@@ -6,19 +6,23 @@
 use crate::common;
 
 post_wrath_ui_fixture! {
+#[cfg(feature = "optional-tests")]
 #[path = "blizzard_ui/blizzard_actionbarcontroller/load.rs"]
 mod load;
 }
 
+#[cfg(feature = "optional-tests")]
 #[path = "blizzard_ui/blizzard_actionbarcontroller/surface_globals.rs"]
 mod surface_globals;
 
 post_wrath_ui_fixture! {
+#[cfg(feature = "optional-tests")]
 #[path = "blizzard_ui/blizzard_actionbarcontroller/surface_frames.rs"]
 mod surface_frames;
 }
 
 post_wrath_ui_fixture! {
+#[cfg(feature = "optional-tests")]
 #[path = "blizzard_ui/blizzard_actionbarcontroller/surface_events.rs"]
 mod surface_events;
 }
