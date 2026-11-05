@@ -21,7 +21,10 @@ const FORCED_CVARS: [&str; 6] = [
 ];
 
 pub(crate) fn supported() -> bool {
-    matches!(ACTIVE, ClientProfile::Retail | ClientProfile::Ptr)
+    matches!(
+        ACTIVE,
+        ClientProfile::Retail | ClientProfile::Ptr | ClientProfile::WowForever
+    )
 }
 
 pub(crate) fn initial_states(cvars: &crate::cvars::CVarStorage) -> [u8; 6] {
