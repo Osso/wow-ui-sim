@@ -27,7 +27,7 @@ use crate::c_api::c_pvp::PvpBrawlInfo;
 use crate::c_api::c_tooltip_info_totem::format_remaining_time;
 use crate::c_api::tooltip_getter_args::optional_bool;
 use crate::lua_api::globals::missing_surface::tooltip_info::{
-    append_line, compose_tooltip, format_global_text, global_text,
+    append_line, compose_tooltip, format_global_text, global_text, named_color,
 };
 use crate::lua_api::methods::borrow_state;
 use crate::lua_bridge::table_set_rust_fn_static;
@@ -42,8 +42,11 @@ const LINE_TYPE_BLANK: f64 = 1.0;
 /// WM107: the shared line constructor re-types the ends-in row by colour value.
 const LINE_TYPE_DISABLED: f64 = 42.0;
 const BLANK_TEXT: &str = " ";
+/// WM107 measured values; the named-colour seam is preferred when it resolves.
+const HIGHLIGHT_FALLBACK: (f64, f64, f64) = (1.0, 1.0, 1.0);
+const NORMAL_FALLBACK: (f64, f64, f64) = (1.0, 0.82, 0.0);
 /// WM107: `TRIVIAL_DIFFICULTY_COLOR` equals `DISABLED_FONT_COLOR`.
-const DISABLED_COLOR: (f64, f64, f64) = (0.5019608, 0.5019608, 0.5019608);
+const DISABLED_FALLBACK: (f64, f64, f64) = (0.5019608, 0.5019608, 0.5019608);
 
 pub(crate) fn register(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResult<()> {
     table_set_rust_fn_static(state, namespace, "GetPvpBrawl", get_pvp_brawl)
@@ -126,8 +129,8 @@ fn select_rows(state: &mut LuaState, is_special: bool) -> LuaResult<Option<Brawl
     }))
 }
 
-fn append_blank(state: &mut LuaState, tooltip: Val) {
-    append_line(state, tooltip, LINE_TYPE_BLANK, BLANK_TEXT, None);
+fn append_blank(state: &mut LuaState, tooltip: Val, color: (f64, f64, f64)) {
+    append_line(state, tooltip, LINE_TYPE_BLANK, BLANK_TEXT, Some(color));
 }
 
 fn map_heading(state: &mut LuaState, record: &PvpBrawlInfo) -> LuaResult<String> {
@@ -140,15 +143,20 @@ fn map_heading(state: &mut LuaState, record: &PvpBrawlInfo) -> LuaResult<String>
     required_global_text(state, key)
 }
 
-fn append_map_rows(state: &mut LuaState, tooltip: Val, record: &PvpBrawlInfo) -> LuaResult<()> {
+fn append_map_rows(
+    state: &mut LuaState,
+    tooltip: Val,
+    record: &PvpBrawlInfo,
+    color: (f64, f64, f64),
+) -> LuaResult<()> {
     if record.includes_all_arenas {
         let text = required_global_text(state, "PVP_BRAWL_TOOLTIP_ALL_ARENA_MAPS")?;
-        append_line(state, tooltip, LINE_TYPE_PLAIN, &text, None);
+        append_line(state, tooltip, LINE_TYPE_PLAIN, &text, Some(color));
         return Ok(());
     }
     for map in &record.map_names {
         let text = format_global_text(state, "BRAWL_TOOLTIP_MAP_ENTRY", map)?;
-        append_line(state, tooltip, LINE_TYPE_PLAIN, &text, None);
+        append_line(state, tooltip, LINE_TYPE_PLAIN, &text, Some(color));
     }
     Ok(())
 }

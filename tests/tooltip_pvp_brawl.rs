@@ -91,8 +91,9 @@ tooltip_selection_getters_fixture! {
                 and math.abs(lines[2].leftColor.g - 0.5019608) < 1e-3
                 and math.abs(lines[2].leftColor.b - 0.5019608) < 1e-3,
                 'ends-in uses the trivial/disabled colour')
-            assert(lines[3].type == 1 and lines[3].leftText == ' ',
-                'blank spacer: ' .. dump())
+            assert(lines[3].type == 1 and lines[3].leftText == ' '
+                and lines[3].leftColor.b < 0.1,
+                'blank spacer with the normal colour: ' .. dump())
             assert(lines[4].type == 0 and lines[4].leftText == BRAWL_TOOLTIP_MAP,
                 'single-map heading')
             assert(lines[5].type == 0
