@@ -22,7 +22,7 @@ tooltip from the conduit entry and its rank rows. Retail, PTR and Forever pinned
    exists, the Finesse/Potency/Endurance label, the `SOULBIND_CONDUIT_ENHANCED`
    label, an item-level row carrying integer `itemLevel`, `ITEM_SOULBOUND`, then
    the spell description in green. Highlight-colour tokens in the description
-   become enhanced-colour tokens.
+   become enhanced-colour tokens; the comparison ignores hex case.
 5. **Missing data.** An unknown conduit or a missing rank row returns no values.
    A missing rank-properties row uses quality 4 and item level 0.
 
@@ -31,7 +31,10 @@ tooltip from the conduit entry and its rank rows. Retail, PTR and Forever pinned
 The enhanced colour resolves through the simulator's named-colour surface. The
 pinned evidence does not record the `GlobalColor` value, so the token rewrite is
 a no-op while that surface publishes the placeholder white. No colour value is
-invented. Retire the seam when the colour table is modelled.
+invented. The enhanced label would also be re-typed from 0 to 41 by the shared
+value-based remap while the colour resolves white, so the producer restores the
+verified type 0 after appending it. Retire both behaviours when the colour table
+is modelled.
 
 ## Unverified
 

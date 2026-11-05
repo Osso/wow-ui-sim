@@ -27,7 +27,7 @@ use crate::c_api::tooltip_power_catalog_data::{
 };
 use crate::lua_api::globals::missing_surface::tooltip_info::{
     append_line, compose_tooltip, format_global_numeric, global_text, item_quality_color,
-    named_color, spell_description_text,
+    named_color, restore_plain_line_type, spell_description_text,
 };
 use crate::lua_api::methods::table_set;
 use crate::lua_bridge::table_set_rust_fn_static;
@@ -47,6 +47,8 @@ const DEFAULT_RANK_QUALITY: u8 = 4;
 const ENHANCED_RANK_BONUS: i64 = 2;
 /// The highlight-colour token the description rewrites (WM108 §B3 context).
 const HIGHLIGHT_TOKEN: &str = "|cffffffff";
+/// `|c` plus eight hex digits.
+const COLOR_TOKEN_LEN: usize = 10;
 
 pub(crate) fn register(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResult<()> {
     table_set_rust_fn_static(state, namespace, "GetEnhancedConduit", get_enhanced_conduit)
@@ -81,7 +83,11 @@ fn get_enhanced_conduit(state: &mut LuaState) -> LuaResult<u32> {
     let enhanced = enhanced_color(state);
     let enhanced_label =
         global_text(state, "SOULBIND_CONDUIT_ENHANCED").unwrap_or_else(|| "Enhanced".to_string());
-    append_line(state, tooltip, LINE_TYPE_PLAIN, &enhanced_label, enhanced);
+    let enhanced_line = append_line(state, tooltip, LINE_TYPE_PLAIN, &enhanced_label, enhanced);
+    // The enhanced colour resolves white through the placeholder colour surface,
+    // so the shared value-based remap re-types the row; WM94 §5 keeps this label a
+    // plain row, so restore it. Retire with a modelled GlobalColor table.
+    restore_plain_line_type(state, enhanced_line);
     let level_text = format_global_numeric(state, "ITEM_LEVEL", f64::from(item_level))?;
     let level_line = append_line(state, tooltip, LINE_TYPE_ITEM_LEVEL, &level_text, None);
     table_set(
@@ -190,7 +196,29 @@ fn enhanced_description(
         color_channel(green),
         color_channel(blue)
     );
-    description.replace(HIGHLIGHT_TOKEN, &token)
+    replace_color_token(&description, &token)
+}
+
+/// Replace every `|c` token whose eight hex digits equal the highlight colour,
+/// ignoring hex case, with `replacement`.
+fn replace_color_token(description: &str, replacement: &str) -> String {
+    let mut out = String::with_capacity(description.len());
+    let mut rest = description;
+    while let Some(index) = rest.find("|c") {
+        out.push_str(&rest[..index]);
+        let token_end = index + COLOR_TOKEN_LEN;
+        if token_end <= rest.len()
+            && rest[index + 2..token_end].eq_ignore_ascii_case(&HIGHLIGHT_TOKEN[2..])
+        {
+            out.push_str(replacement);
+            rest = &rest[token_end..];
+        } else {
+            out.push_str("|c");
+            rest = &rest[index + 2..];
+        }
+    }
+    out.push_str(rest);
+    out
 }
 
 fn color_channel(value: f64) -> u8 {
