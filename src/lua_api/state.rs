@@ -254,29 +254,77 @@ macro_rules! build_empty_sim_state {
             pvp_area_inputs: Default::default(),
             #[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
             special_event_brawl: None,
-            #[cfg(feature = "retail-12-0-5")]
+            #[cfg(any(
+                feature = "retail-12-0-0",
+                feature = "client-mists",
+                feature = "client-era",
+                feature = "client-anniversary"
+            ))]
             transmog_appearance_sources: HashMap::new(),
             transmog_new_sources: HashSet::new(),
-            #[cfg(feature = "retail-12-0-5")]
+            #[cfg(any(
+                feature = "retail-12-0-0",
+                feature = "client-mists",
+                feature = "client-era",
+                feature = "client-anniversary"
+            ))]
             transmog_illusions: Vec::new(),
-            #[cfg(feature = "retail-12-0-5")]
+            #[cfg(any(
+                feature = "retail-12-0-0",
+                feature = "client-mists",
+                feature = "client-era",
+                feature = "client-anniversary"
+            ))]
             viewed_outfit_slots: HashMap::new(),
-            #[cfg(feature = "retail-12-0-5")]
+            #[cfg(any(
+                feature = "retail-12-0-0",
+                feature = "client-mists",
+                feature = "client-era",
+                feature = "client-anniversary"
+            ))]
             pending_transmog_cost: None,
             transmog_outfit_locks: HashSet::new(),
-            #[cfg(feature = "retail-12-0-5")]
+            #[cfg(any(
+                feature = "retail-12-0-0",
+                feature = "client-mists",
+                feature = "client-era",
+                feature = "client-anniversary"
+            ))]
             transmog_outfit_catalog: crate::c_api::c_transmog_outfit_info::OutfitCatalog::default(),
-            #[cfg(feature = "retail-12-0-5")]
+            #[cfg(any(
+                feature = "retail-12-0-0",
+                feature = "client-mists",
+                feature = "client-era",
+                feature = "client-anniversary"
+            ))]
             transmog_outfits: crate::c_api::c_transmog_outfit_info::OutfitState::default(),
-            #[cfg(feature = "retail-12-0-5")]
+            #[cfg(any(
+                feature = "retail-12-0-0",
+                feature = "client-mists",
+                feature = "client-era",
+                feature = "client-anniversary"
+            ))]
             active_transmog_outfit_id: None,
-            #[cfg(feature = "retail-12-0-5")]
+            #[cfg(any(
+                feature = "retail-12-0-0",
+                feature = "client-mists",
+                feature = "client-era",
+                feature = "client-anniversary"
+            ))]
             viewed_transmog_outfit_id: None,
             // Simulator initial policy; native default is unverified.
             outfit_situations_enabled: false,
+            heirloom_class_filter: 0,
+            heirloom_spec_filter: 0,
+            heirloom_upgrade_targeting: Default::default(),
             transmog_set_filters: HashMap::new(),
             transmog_sets: crate::c_api::c_transmog_sets::TransmogSets::default(),
-            #[cfg(feature = "retail-12-0-0")]
+            #[cfg(any(
+                feature = "retail-12-0-0",
+                feature = "client-mists",
+                feature = "client-era",
+                feature = "client-anniversary"
+            ))]
             transmog_custom_sets: crate::c_api::c_transmog_collection::CustomSets::default(),
             equipped_outfit_locked: false,
             locked_action_slots: HashSet::new(),
@@ -811,9 +859,19 @@ macro_rules! build_empty_sim_state {
 
 #[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
 pub use crate::c_api::c_pvp::{PvpBrawlInfo, SpecialEventBrawlInfo};
-#[cfg(feature = "retail-12-0-5")]
+#[cfg(any(
+    feature = "retail-12-0-0",
+    feature = "client-mists",
+    feature = "client-era",
+    feature = "client-anniversary"
+))]
 pub use crate::c_api::c_transmog_collection::AppearanceSourceInfo;
-#[cfg(feature = "retail-12-0-5")]
+#[cfg(any(
+    feature = "retail-12-0-0",
+    feature = "client-mists",
+    feature = "client-era",
+    feature = "client-anniversary"
+))]
 pub use crate::c_api::c_transmog_outfit_info::ViewedOutfitSlotInfo;
 
 // Re-export game data types so existing `crate::lua_api::state::X` imports keep working.

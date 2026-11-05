@@ -149,7 +149,12 @@ pub(crate) fn register_interaction_tables(state: &mut LuaState) -> LuaResult<()>
     #[cfg(feature = "client-retail")]
     super::c_scenario_bonus::register(state)?;
     super::c_transmog_sets::register(state)?;
-    #[cfg(feature = "retail-12-0-0")]
+    #[cfg(any(
+        feature = "retail-12-0-0",
+        feature = "client-mists",
+        feature = "client-era",
+        feature = "client-anniversary"
+    ))]
     super::c_transmog_outfit_info::register(state)?;
     super::transmog_availability::register(state)?;
     super::c_spectating_ui::register(state)?;

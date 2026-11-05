@@ -70,6 +70,7 @@ fn clear_active_outfit(state: &mut LuaState) -> LuaResult<()> {
     Ok(())
 }
 
+#[cfg(feature = "retail-12-0-5")]
 pub(crate) fn run_outfit_command(state: &mut LuaState, argument: &str) -> LuaResult<()> {
     // Vendor SlashCommands clears an empty command. The existing condition
     // selector has no empty clause, so handle that documented command directly.

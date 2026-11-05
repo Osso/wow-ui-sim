@@ -1,51 +1,34 @@
-//! Outfit settings, catalog queries, and patch-gated applied selection.
+//! Outfit settings, catalog queries, and applied selection.
+//!
+//! The module is compiled for the retail API epochs and for the modern-engine
+//! classic profiles whose pinned `TransmogOutfitInfoDocumentation.lua` declares
+//! `C_TransmogOutfitInfo` (Mists 66 functions, Era and Anniversary 65; see
+//! `src/c_api/mod.rs`).
 
-#[cfg(feature = "retail-12-0-5")]
 mod catalog;
-#[cfg(feature = "retail-12-0-5")]
 pub use catalog::{OutfitCatalog, OutfitEntry};
 
-#[cfg(feature = "retail-12-0-5")]
 mod actions;
-#[cfg(feature = "retail-12-0-5")]
 mod viewed;
 #[cfg(feature = "retail-12-0-5")]
 pub(crate) use actions::run_outfit_command;
 
-#[cfg(feature = "retail-12-0-5")]
 mod pending_cost;
-#[cfg(feature = "retail-12-0-5")]
 mod pending_cost_info;
-#[cfg(feature = "retail-12-0-5")]
 pub use pending_cost_info::PendingTransmogCost;
 
-#[cfg(feature = "retail-12-0-5")]
 mod viewed_slot_info;
-#[cfg(all(
-    feature = "retail-12-0-5",
-    any(feature = "profile-retail", feature = "client-ptr")
-))]
 mod viewed_slots;
-#[cfg(feature = "retail-12-0-5")]
 pub use viewed_slot_info::ViewedOutfitSlotInfo;
 
-#[cfg(feature = "retail-12-0-5")]
 mod model;
-#[cfg(feature = "retail-12-0-5")]
 pub use model::{OutfitContents, OutfitState, SituationCategory, SituationGroup};
-#[cfg(feature = "retail-12-0-5")]
 mod imports;
-#[cfg(feature = "retail-12-0-5")]
 mod lifecycle;
-#[cfg(feature = "retail-12-0-5")]
 mod pending;
-#[cfg(feature = "retail-12-0-5")]
 mod situation_catalog;
-#[cfg(feature = "retail-12-0-5")]
 mod situations;
-#[cfg(feature = "retail-12-0-5")]
 mod slots;
-#[cfg(feature = "retail-12-0-5")]
 mod visuals;
 
 use super::helpers::ensure_namespace;
@@ -56,48 +39,31 @@ use rilua::{LuaResult, Val};
 
 pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
     let namespace = ensure_namespace(state, "C_TransmogOutfitInfo")?;
-    #[cfg(feature = "retail-12-0-5")]
-    {
-        table_set_rust_fn_static(state, namespace, "InTransmogEvent", |s| {
-            let value = borrow_state(s)?.transmog_outfits.in_event;
-            s.push(Val::Bool(value));
-            Ok(1)
-        })?;
-        table_set_rust_fn_static(state, namespace, "TransmogEventActive", |s| {
-            let value = borrow_state(s)?.transmog_outfits.event_active;
-            s.push(Val::Bool(value));
-            Ok(1)
-        })?;
-        table_set_rust_fn_static(state, namespace, "IsUsableDiscountAvailable", |s| {
-            let value = borrow_state(s)?.transmog_outfits.usable_discount_available;
-            s.push(Val::Bool(value));
-            Ok(1)
-        })?;
-    }
-    #[cfg(feature = "retail-12-0-5")]
+    table_set_rust_fn_static(state, namespace, "InTransmogEvent", |s| {
+        let value = borrow_state(s)?.transmog_outfits.in_event;
+        s.push(Val::Bool(value));
+        Ok(1)
+    })?;
+    table_set_rust_fn_static(state, namespace, "TransmogEventActive", |s| {
+        let value = borrow_state(s)?.transmog_outfits.event_active;
+        s.push(Val::Bool(value));
+        Ok(1)
+    })?;
+    table_set_rust_fn_static(state, namespace, "IsUsableDiscountAvailable", |s| {
+        let value = borrow_state(s)?.transmog_outfits.usable_discount_available;
+        s.push(Val::Bool(value));
+        Ok(1)
+    })?;
     pending_cost::register(state, namespace)?;
-    #[cfg(feature = "retail-12-0-5")]
     lifecycle::register(state, namespace)?;
-    #[cfg(feature = "retail-12-0-5")]
     pending::register(state, namespace)?;
-    #[cfg(feature = "retail-12-0-5")]
     situations::register(state, namespace)?;
-    #[cfg(feature = "retail-12-0-5")]
     slots::register(state, namespace)?;
-    #[cfg(feature = "retail-12-0-5")]
     imports::register(state, namespace)?;
-    #[cfg(feature = "retail-12-0-5")]
     visuals::register(state)?;
-    #[cfg(feature = "retail-12-0-5")]
     catalog::register(state, namespace)?;
-    #[cfg(feature = "retail-12-0-5")]
     actions::register(state, namespace)?;
-    #[cfg(feature = "retail-12-0-5")]
     viewed::register(state, namespace)?;
-    #[cfg(all(
-        feature = "retail-12-0-5",
-        any(feature = "profile-retail", feature = "client-ptr")
-    ))]
     viewed_slots::register(state, namespace)?;
     #[cfg(feature = "retail-12-1-0")]
     table_set_rust_fn_static(

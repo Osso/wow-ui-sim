@@ -188,12 +188,7 @@ fn register_heirloom_class_filter_fns(
     state: &mut LuaState,
     table_ref: GcRef<Table>,
 ) -> LuaResult<()> {
-    table_set_rust_fn_static(
-        state,
-        table_ref,
-        "GetClassAndSpecFilters",
-        c_heirloom_get_class_and_spec_filters,
-    )?;
+    crate::c_api::c_heirloom::register(state, table_ref)?;
     table_set_rust_fn_static(
         state,
         table_ref,
@@ -430,12 +425,6 @@ fn c_heirloom_set_source_filter(state: &mut LuaState) -> LuaResult<u32> {
     let _source = i32::from_stack(state, 1)?;
     let _enabled = bool::from_stack(state, 2)?;
     Ok(0)
-}
-
-fn c_heirloom_get_class_and_spec_filters(state: &mut LuaState) -> LuaResult<u32> {
-    state.push(Val::Num(0.0));
-    state.push(Val::Num(0.0));
-    Ok(2)
 }
 
 fn c_heirloom_can_upgrade_from_pending(state: &mut LuaState) -> LuaResult<u32> {
