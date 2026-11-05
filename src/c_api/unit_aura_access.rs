@@ -65,13 +65,22 @@ pub(crate) fn ensure_script_object_accessible(state: &LuaState, id: u64) -> LuaR
 /// (`Predicate check failed: RequiresUnitAuraAccess`, code 46, S14) is not
 /// modelled, so the accessor name stays unused. See `docs/specs/secret-auras.md`.
 pub(crate) fn require_unit_aura_access(state: &LuaState, _api_name: &str) -> LuaResult<()> {
-    if auras_restricted(state)? && !rilua::api::state_is_secure(state) {
-        let origin = rilua::api::stack_taint_origin(state).unwrap_or_default();
-        return Err(runtime_error(format!(
-            "Auras cannot be accessed when secret while tainted by '{origin}'"
-        )));
+    if !auras_restricted(state)? {
+        return Ok(());
     }
-    Ok(())
+    let Some(origin) = recorded_taint_source(state) else {
+        return Ok(());
+    };
+    Err(runtime_error(format!(
+        "Auras cannot be accessed when secret while tainted by '{origin}'"
+    )))
+}
+
+/// S2: the aura decision rejects only when a taint source is recorded. An
+/// empty source (`forceinsecure`) means no origin was recorded, so it permits
+/// access; the message selector in S9 treats the same state as untainted.
+fn recorded_taint_source(state: &LuaState) -> Option<&str> {
+    rilua::api::stack_taint_origin(state).filter(|origin| !origin.is_empty())
 }
 
 /// Apply WM61 S3 field publication while preserving the outer table value.
