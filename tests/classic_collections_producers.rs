@@ -17,6 +17,11 @@
 //! Mists (66 functions), Era and Anniversary (65; no `IsTransmogEnabled`).
 //! The legacy `C_Heirloom` namespace has no generated documentation; its
 //! consumer call sites are the evidence.
+//!
+//! The addon closure is loaded directly instead of through the Retail panel
+//! baseline: `tests/common/panel_fixtures.rs` requires `Blizzard_TimerunningUtil`,
+//! whose pinned TOC is `AllowLoadGameType mainline`, so that baseline cannot run
+//! on a classic profile.
 
 #![cfg(any(
     feature = "client-mists",
@@ -25,7 +30,9 @@
 ))]
 
 use crate::common;
-use common::blizzard_addon_harness::with_blizzard_addon_smoke_shape;
+use common::blizzard_addon_harness::{
+    blizzard_ui_dir, load_blizzard_addon_closure_into_env, new_blizzard_addon_env,
+};
 use wow_ui_sim::lua_api::WowLuaEnv;
 
 const HEIRLOOM_CONSUMER_LUA: &str = r#"
@@ -84,6 +91,18 @@ if type(collection[1].onClickCallback) ~= "function" then return "click_callback
 if type(collection[1].onEditCallback) ~= "function" then return "edit_callback" end
 return "ok"
 "#;
+
+fn load_consumer(root: &str) -> WowLuaEnv {
+    let ui = blizzard_ui_dir();
+    let env = new_blizzard_addon_env(&ui);
+    let loaded = load_blizzard_addon_closure_into_env(&env, &ui, &[root], &[]);
+    assert!(
+        loaded.iter().any(|name| name == root),
+        "{root} must load for its pinned consumer; loaded set: {loaded:?}"
+    );
+    env.apply_post_load_workarounds();
+    env
+}
 
 #[test]
 fn classic_outfit_namespace_matches_pinned_collections_documentation() {
@@ -147,33 +166,21 @@ fn classic_outfit_namespace_matches_pinned_collections_documentation() {
 #[test]
 fn heirloom_filters_round_trip_through_collections_consumer() {
     common::with_timeout(240, || {
-        with_blizzard_addon_smoke_shape(&["Blizzard_Collections"], &[], |env, loaded| {
-            assert!(
-                loaded.iter().any(|name| name == "Blizzard_Collections"),
-                "Blizzard_Collections must load for the pinned Heirloom consumer; \
-                 loaded set: {loaded:?}"
-            );
-            let result: String = env
-                .eval(HEIRLOOM_CONSUMER_LUA)
-                .expect("HeirloomsMixin filter consumer should run");
-            assert_eq!(result, "ok");
-        });
+        let env = load_consumer("Blizzard_Collections");
+        let result: String = env
+            .eval(HEIRLOOM_CONSUMER_LUA)
+            .expect("HeirloomsMixin filter consumer should run");
+        assert_eq!(result, "ok");
     });
 }
 
 #[test]
 fn transmog_outfit_consumer_refreshes_from_published_outfits() {
     common::with_timeout(240, || {
-        with_blizzard_addon_smoke_shape(&["Blizzard_Transmog"], &[], |env, loaded| {
-            assert!(
-                loaded.iter().any(|name| name == "Blizzard_Transmog"),
-                "Blizzard_Transmog must load for the pinned RefreshOutfits consumer; \
-                 loaded set: {loaded:?}"
-            );
-            let result: String = env
-                .eval(OUTFIT_CONSUMER_LUA)
-                .expect("TransmogFrameMixin:RefreshOutfits should run");
-            assert_eq!(result, "ok");
-        });
+        let env = load_consumer("Blizzard_Transmog");
+        let result: String = env
+            .eval(OUTFIT_CONSUMER_LUA)
+            .expect("TransmogFrameMixin:RefreshOutfits should run");
+        assert_eq!(result, "ok");
     });
 }
