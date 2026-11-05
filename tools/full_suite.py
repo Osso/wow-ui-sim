@@ -35,8 +35,8 @@ GIB = 1024 ** 3
 # 16-worker/24GiB policy rather than reserving each unit's 5GiB ceiling.
 WORKER_SHARE_BYTES = 3 * GIB // 2
 TAIL_MEMORY_BYTES = 9 * GIB
-BATCH_TARGET_SECONDS = 20.0
-BATCH_MAX_NAMES = 25
+BATCH_TARGET_SECONDS = 40.0
+BATCH_MAX_NAMES = 60
 # Exact per-name CPU and memory is only worth a dedicated process where it pays:
 # measured expensive cases and cases with a reserved memory envelope.
 ISOLATE_SECONDS = 5.0
@@ -393,7 +393,11 @@ def run_dynamic_suite(command, checkout, log, env, costs, budget, timeout_tests,
                     lock.wait(0.2)
                     continue
                 head = families[0][0]
-                single = (costs.get(head, 0) >= ISOLATE_SECONDS
+                # A guarded case may block on the global permit semaphore. Holding
+                # several of them in one lane would stall that lane for every name
+                # in the batch, so each guarded batch carries exactly one case.
+                single = (kind == "guarded"
+                          or costs.get(head, 0) >= ISOLATE_SECONDS
                           or head in memory_costs["peak_bytes"])
                 # Families are ordered heaviest-first, so the head name bounds the
                 # batch's admission; check before taking so nothing must be requeued.

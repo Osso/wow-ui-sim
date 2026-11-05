@@ -206,7 +206,7 @@ class IntegrationShardingTests(unittest.TestCase):
             memory_costs or self.memory_costs, tail, timings)
 
     def test_family_batches_keep_families_whole_and_heaviest_first(self):
-        costs = {'alpha::slow': 30, 'alpha::cheap': 1, 'beta::a': 4}
+        costs = {'alpha::slow': 100, 'alpha::cheap': 1, 'beta::a': 4}
         families = self.runner.family_queues(['alpha::cheap', 'beta::a', 'alpha::slow'], costs,
                                              ('alpha',))
         self.assertEqual([family[0] for family in families], ['alpha::slow', 'beta::a'])
@@ -338,6 +338,49 @@ class IntegrationShardingTests(unittest.TestCase):
         self.assertEqual(records['beta::bad']['status'], 'failed')
         self.assertGreater(records['alpha::a']['seconds'], .019)
         self.assertGreater(records['alpha::a']['cpu_seconds'], 0)
+
+    def test_guarded_batches_hold_one_name_so_a_lane_never_waits_on_permits_for_many(self):
+        guarded = [f'guarded::{index}' for index in range(6)]
+        names = guarded + ['ordinary::a', 'ordinary::b']
+        body = (
+            "import pathlib, sys\n"
+            "root = pathlib.Path(__file__).parent\n"
+            "if '--list' in sys.argv:\n"
+            "    print('\\n'.join(name + ': test' for name in " + repr(names) + "))\n"
+            "    sys.exit(0)\n"
+            "selected = sys.argv[sys.argv.index('--exact') + 1:]\n"
+            "with (root / 'launches').open('a') as log:\n"
+            "    log.write(','.join(selected) + '\\n')\n"
+            "for name in selected:\n"
+            "    print('test ' + name + ' ... ok', flush=True)\n")
+        step, _, _ = self.run_suite(body, costs={name: .5 for name in guarded},
+                                    guards=guarded, budget=self.runner.TestBudget(4, 24))
+        self.assertEqual(step['exit'], 0)
+        lines = (self.root / 'launches').read_text().splitlines()
+        guarded_launches = [line for line in lines if line.startswith('guarded::')]
+        self.assertEqual(len(guarded_launches), len(guarded))
+        for line in guarded_launches:
+            self.assertEqual(len(line.split(',')), 1, f'lane held several guarded names: {line}')
+
+    def test_batches_are_large_enough_to_avoid_a_launch_per_few_tests(self):
+        names = [f'bulk::case{index:02d}' for index in range(60)]
+        body = (
+            "import pathlib, sys\n"
+            "root = pathlib.Path(__file__).parent\n"
+            "if '--list' in sys.argv:\n"
+            "    print('\\n'.join(name + ': test' for name in " + repr(names) + "))\n"
+            "    sys.exit(0)\n"
+            "selected = sys.argv[sys.argv.index('--exact') + 1:]\n"
+            "with (root / 'launches').open('a') as log:\n"
+            "    log.write(','.join(selected) + '\\n')\n"
+            "for name in selected:\n"
+            "    print('test ' + name + ' ... ok', flush=True)\n")
+        step, _, _ = self.run_suite(body, costs={name: 1.0 for name in names},
+                                    budget=self.runner.TestBudget(4, 24))
+        self.assertEqual(step['exit'], 0)
+        lines = (self.root / 'launches').read_text().splitlines()
+        self.assertLessEqual(len(lines), 2, f'{len(lines)} launches for 60 one-second tests')
+        self.assertGreaterEqual(max(len(line.split(',')) for line in lines), 30)
 
     def test_verified_grouped_families_reach_each_batch_environment(self):
         names = ['fam::a']
