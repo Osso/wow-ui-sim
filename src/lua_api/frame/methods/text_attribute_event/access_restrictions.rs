@@ -5,6 +5,7 @@
 //! of `DenyTaintedAccessWhenAurasAreSecret` follows the live aura-secret state
 //! (`c_api::unit_aura_access`).
 
+#[cfg(not(feature = "client-wowforever"))]
 use crate::c_api::unit_aura_access::aura_access_restriction_active;
 use crate::lua_api::methods::{borrow_state, borrow_state_mut, frame_id_from_stack_unrestricted};
 use crate::lua_bridge::{FromStack, stack_val, table_set_rust_fn_static};
@@ -30,6 +31,11 @@ pub(super) fn register(state: &mut LuaState, table: GcRef<Table>) -> LuaResult<(
         "HasAnyAccessRestrictions",
         has_any_access_restrictions,
     )?;
+    // Forever publishes the declared secret-returning form from `misc::secret`
+    // (pinned SimpleFrameScriptObjectAPIDocumentation.lua:45-47,
+    // `SecretReturnsForAspect = ObjectSecurity`). This module registers later,
+    // so registering the plain-bool variant here would overwrite it.
+    #[cfg(not(feature = "client-wowforever"))]
     table_set_rust_fn_static(
         state,
         table,
@@ -41,6 +47,7 @@ pub(super) fn register(state: &mut LuaState, table: GcRef<Table>) -> LuaResult<(
 /// Secure execution may access anything; tainted execution is denied for
 /// forbidden objects and for objects whose aura access restriction is in force
 /// (auras currently secret).
+#[cfg(not(feature = "client-wowforever"))]
 fn can_be_accessed_in_context(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack_unrestricted(state, 1)?;
     let restricted = {
