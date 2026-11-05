@@ -18,7 +18,7 @@ use sim_data_profile::spell_aura_secrecy as attributes;
 #[cfg(feature = "aura-containers")]
 pub(crate) const NEVER_SECRET: i32 = 0;
 #[cfg(feature = "aura-containers")]
-const ALWAYS_SECRET: i32 = 1;
+pub(crate) const ALWAYS_SECRET: i32 = 1;
 #[cfg(feature = "aura-containers")]
 const CONTEXTUALLY_SECRET: i32 = 2;
 
@@ -132,15 +132,6 @@ fn get_spell_aura_secrecy(state: &mut LuaState) -> LuaResult<u32> {
     let secrecy = classify_aura_secrecy(spell_id)?;
     state.push(Val::Num(f64::from(secrecy)));
     Ok(1)
-}
-
-/// Whether a spell's aura stays public while auras are secret.
-#[cfg(feature = "retail-12-1-0")]
-pub(crate) fn is_never_secret_aura(spell_id: i32) -> LuaResult<bool> {
-    match u32::try_from(spell_id) {
-        Ok(spell_id) => Ok(classify_aura_secrecy(spell_id)? == NEVER_SECRET),
-        Err(_) => Ok(false),
-    }
 }
 
 #[cfg(feature = "aura-containers")]

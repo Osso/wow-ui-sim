@@ -19,7 +19,7 @@ fn fixture(restricted: bool) -> WowLuaEnv {
         sim.spell_charges.clear();
         sim.spell_id_aliases.clear();
         sim.cooldowns_restricted = restricted;
-        sim.unit_auras_restricted = restricted;
+        sim.restricted_actions[0] = if restricted { 2 } else { 0 };
     }
     let loader = env.loader_env();
     let mut lua = loader.rilua_mut();
@@ -281,7 +281,7 @@ fn count_and_aura_output_restrictions_transition_independently_for_secret_select
         {
             let mut sim = env.state().borrow_mut();
             sim.cooldowns_restricted = count_restricted;
-            sim.unit_auras_restricted = aura_restricted;
+            sim.restricted_actions[0] = if aura_restricted { 2 } else { 0 };
         }
         env.exec(&format!(
             r#"
@@ -310,7 +310,7 @@ fn count_and_aura_output_restrictions_transition_independently_for_secret_select
         .expect("live independent output restrictions, not selector-driven secrecy");
         let sim = env.state().borrow();
         assert_eq!(sim.cooldowns_restricted, count_restricted);
-        assert_eq!(sim.unit_auras_restricted, aura_restricted);
+        assert_eq!(sim.restricted_actions[0] == 2, aura_restricted);
         assert_eq!(sim.spell_cast_counts[&19750], 3);
         assert_eq!(sim.spell_max_cumulative_aura_applications[&19750], 7);
     }

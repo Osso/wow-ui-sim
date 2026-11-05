@@ -136,7 +136,7 @@ fn aura_duration_instance_controls_preserve_plain_results_and_nil_arity() {
     let env = fixture();
     let before_rows = snapshot_duration_rows(&env);
     for restricted in [false, true] {
-        env.state().borrow_mut().unit_auras_restricted = restricted;
+        env.state().borrow_mut().restricted_actions[0] = if restricted { 2 } else { 0 };
         env.exec(&format!(
             r#"
             Restricted = {}

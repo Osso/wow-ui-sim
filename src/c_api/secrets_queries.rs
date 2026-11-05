@@ -134,8 +134,13 @@ fn push_level(state: &mut LuaState, level: f64) -> LuaResult<u32> {
 }
 
 fn has_secret_restrictions(state: &mut LuaState) -> LuaResult<u32> {
-    // This is a build capability query, not a query of active restrictions.
-    push_bool(state, cfg!(feature = "retail-12-0-0"))
+    // WM105 §2: the read-only generated-secrecy-policy flag. A build capability
+    // query, not a query of active restrictions.
+    push_bool(
+        state,
+        cfg!(feature = "retail-12-0-0")
+            && crate::c_api::unit_aura_access::GENERATED_SECRECY_POLICY_ENABLED,
+    )
 }
 
 fn should_spell_aura_be_secret(state: &mut LuaState) -> LuaResult<u32> {

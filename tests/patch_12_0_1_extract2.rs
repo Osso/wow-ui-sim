@@ -95,7 +95,7 @@ fn patch_12_0_1_long_buff_exemptions_survive_restricted_aura_context() {
             aura.duration = 3600.0;
             aura.expiration_time = 7200.0;
             state.player.buffs = vec![aura];
-            state.unit_auras_restricted = true;
+            state.restricted_actions[0] = 2;
         }
         env.exec(&format!(r#"
             local spell = {spell}

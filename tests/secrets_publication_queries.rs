@@ -73,7 +73,7 @@ fn secrets_publication_aura_queries_agree_with_access_and_spell_exemptions() {
         state.player.buffs = vec![aura, public];
     }
     for restricted in [false, true, false] {
-        env.state().borrow_mut().unit_auras_restricted = restricted;
+        env.state().borrow_mut().restricted_actions[0] = if restricted { 2 } else { 0 };
         env.exec(&format!(
             r#"
             local pairs = {{
@@ -205,7 +205,7 @@ fn secrets_publication_unmodeled_aspects_match_public_existing_outputs() {
             let mut state = env.state().borrow_mut();
             state.unit_stats_restricted = restricted;
             state.cooldowns_restricted = restricted;
-            state.unit_auras_restricted = restricted;
+            state.restricted_actions[0] = if restricted { 2 } else { 0 };
             state.player.in_combat = restricted;
         }
         env.exec(

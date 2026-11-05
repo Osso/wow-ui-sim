@@ -134,7 +134,7 @@ function CheckRestrictedTargetAccess()
     local function probe()
         for _, callback in ipairs(access_queries) do
             fails(function() callback('target', {}, {}) end,
-                "Auras cannot be accessed when secret while tainted by 'MissingUnitAuraProbe'")
+                "Auras cannot be accessed when secret while tainted by 'MissingUnitAuraProbe' Lua Taint: MissingUnitAuraProbe")
         end
     end
     debug.setobjecttaint(probe, 'MissingUnitAuraProbe')

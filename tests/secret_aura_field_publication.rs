@@ -10,7 +10,7 @@ fn original_aura_source_publishes_restricted_aura_fields_individually() {
     {
         let mut state = env.state().borrow_mut();
         state.player.buffs = vec![aura(9072)];
-        state.unit_auras_restricted = true;
+        state.restricted_actions[0] = 2;
     }
     env.exec(
         r#"
