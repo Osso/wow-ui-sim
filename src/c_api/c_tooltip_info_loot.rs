@@ -9,7 +9,39 @@ use rilua::vm::{gc::arena::GcRef, state::LuaState, table::Table};
 
 pub(crate) fn register(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResult<()> {
     table_set_rust_fn_static(state, namespace, "GetLootItem", get_loot_item)?;
+    table_set_rust_fn_static(state, namespace, "GetLootRollItem", get_loot_roll_item)?;
     table_set_rust_fn_static(state, namespace, "GetBuybackItem", get_buyback_item)
+}
+
+/// WM97 DQ7: select the current roll by signed ID and submit its stored descriptor.
+fn get_loot_roll_item(state: &mut LuaState) -> LuaResult<u32> {
+    let roll_id = i32::from_stack(state, 1)?;
+    let descriptor = {
+        let model = borrow_state(state)?;
+        model
+            .world
+            .loot_rolls
+            .get(&roll_id)
+            .and_then(|roll| roll.descriptor.clone())
+    };
+    let Some(descriptor) = descriptor else {
+        return emulated_missing_tooltip();
+    };
+    let player_level = {
+        let model = borrow_state(state)?;
+        let player = &model.player;
+        if player.effective_level != 0 {
+            player.effective_level
+        } else {
+            player.level
+        }
+    };
+    let item = descriptor
+        .resolve(player_level)
+        .map_err(|error| rilua::runtime_error(format!("C_TooltipInfo.GetLootRollItem: {error}")))?;
+    let tooltip = tooltip_for_item_context(state, descriptor.item_id, item.as_ref());
+    state.push(tooltip);
+    Ok(1)
 }
 
 fn get_loot_item(state: &mut LuaState) -> LuaResult<u32> {

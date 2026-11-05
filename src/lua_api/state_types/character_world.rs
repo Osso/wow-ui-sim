@@ -249,6 +249,9 @@ pub struct PlayerState {
     pub class_index: i32,
     pub race_index: usize,
     pub level: i32,
+    /// Supplied effective-level field; zero selects the ordinary `level`, matching
+    /// the native standard interface (WM97c A).
+    pub effective_level: i32,
     pub sex: i32,
     pub power: i32,
     pub power_max: i32,
@@ -756,6 +759,9 @@ pub struct LootRollInfo {
     pub item_level: i32,
     /// Item link string.
     pub item_link: String,
+    /// WM97 DQ7 ingress: the link is decoded once at ingress. The getter reads this
+    /// stored descriptor and never parses link text.
+    pub descriptor: Option<crate::c_api::item_descriptor::ItemDescriptor>,
 }
 
 /// A saved equipment ("gear") set surfaced through `C_EquipmentSet`.

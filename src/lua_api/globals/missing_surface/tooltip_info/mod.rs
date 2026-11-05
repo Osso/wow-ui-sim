@@ -56,9 +56,13 @@ fn register_c_tooltip_info(state: &mut LuaState) -> LuaResult<()> {
         crate::c_api::c_tooltip_info_bag_child::register(state, table_ref)?;
         crate::c_api::c_tooltip_info_totem::register(state, table_ref)?;
     }
+    // Retail, PTR and Forever pinned docs all declare the loot getters,
+    // including GetLootRollItem (Forever TooltipInfoDocumentation.lua:554-584).
     if matches!(
         crate::client_profile::ACTIVE,
-        crate::client_profile::ClientProfile::Retail | crate::client_profile::ClientProfile::Ptr
+        crate::client_profile::ClientProfile::Retail
+            | crate::client_profile::ClientProfile::Ptr
+            | crate::client_profile::ClientProfile::WowForever
     ) {
         crate::c_api::c_tooltip_info_loot::register(state, table_ref)?;
     }
