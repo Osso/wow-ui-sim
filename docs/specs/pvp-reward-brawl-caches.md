@@ -3,7 +3,7 @@
 ## Contract
 
 - Retail `C_PvP.GetRandomBGRewards`, `GetArenaSkirmishRewards`, and `GetRandomEpicBGRewards` read three independent supplied caches through one serializer. A reset-empty cache returns exactly `0, 0, nil, nil, nil`; absent item and currency lists are nil. Item rows contain `id`, `name`, `texture`, `quantity`; currency rows contain `id`, `quantity`. The final role-shortage value is nil. The meanings honor and experience for the first two integers are inferred from FrameXML.
-- Retail `C_PvP.GetAvailableBrawlInfo` returns one `PvpBrawlInfo` snapshot or nil. A supplied nonzero regular-brawl ID remains available while simulator time is no later than receipt time plus duration. An absent duration counts as zero; equality returns a record with zero time remaining. A false `canQueue` does not hide the record.
+- Retail and Forever `C_PvP.GetAvailableBrawlInfo` returns one `PvpBrawlInfo` snapshot or nil. A supplied nonzero regular-brawl ID remains available while simulator time is no later than receipt time plus duration. An absent duration counts as zero; equality returns a record with zero time remaining. A false `canQueue` does not hide the record.
 - The original `HonorFrameBonusFrame_Update` consumes these values. The regular-brawl cache is independent of the special-event brawl cache.
 
 ## Evidence and limits
