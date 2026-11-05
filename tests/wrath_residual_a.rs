@@ -175,12 +175,18 @@ fn original_wrath_aura_button_consumes_rank_slot_and_numeric_deadline() {
             assert(tonumber(b.count:GetText()) == 3)
             assert(b.timeLeft > 10 and b.timeLeft <= 12)
             local name, rank, icon, count, dispel, duration, expiration, source, stealable, consolidated = {api}('player', 1)
-            assert(name == 'Residual aura' and rank == nil and icon == 135940 and count == 3)
+            -- Pinned BuffFrame.lua:125 destructures `texture` and passes it to
+            -- SetTexture, so the Wrath tuple carries an icon path and a rank
+            -- string (empty when the spell has none; see
+            -- wrath_casting_aura_contracts). The numeric fileID is the
+            -- C_UnitAuras field. Consolidation has no modeled input yet, so the
+            -- absent flag stays nil (wrath_startup_defaults.rs:57-59).
+            assert(name == 'Residual aura' and type(rank) == 'string' and type(icon) == 'string' and count == 3)
             assert(dispel == 'Magic' and duration == 30 and type(expiration) == 'number')
-            assert(expiration > now + 10 and source == 'player' and consolidated == false)
-            assert(_G['{prefix}1Icon']:GetTexture() == 135940)
+            assert(expiration > now + 10 and source == 'player' and consolidated == nil)
+            assert(_G['{prefix}1Icon']:GetTexture() == icon)
             local data = C_UnitAuras.GetAuraDataByIndex('player', 1, '{filter}')
-            assert(data.name == name and data.icon == icon and data.applications == count)
+            assert(data.name == name and data.icon == 135940 and data.applications == count)
             assert(data.duration == duration and data.expirationTime == expiration and data.sourceUnit == source)
             AuraButton_OnUpdate(b, 0.25)
             assert(b.timeLeft > 9 and b.timeLeft <= 11.75)
