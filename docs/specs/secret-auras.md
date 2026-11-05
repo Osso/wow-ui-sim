@@ -243,7 +243,7 @@ Source: `native-evidence-70688/secrets/S13-restriction-surface-summary.md` (beha
 - [ ] General operation rules for secrets in tainted code (after S4).
 - [ ] Event-dispatch taint rule, which fixes the issue #13 `CompactArenaFrame` case (after S9).
 - [ ] `RequiresUnitAuraAccess` predicate report: emit `Predicate check failed: RequiresUnitAuraAccess` with code 46 (S14). The accessor name reaches the gate but is unused until the report is modelled. Open questions: does the predicate failure raise, log, or return; is code 46 a log payload or an error code; does it fire before or after the aura denial diagnostic, and does the denial abort before the report?
-- [ ] Aura rejection condition: require a taint source, the flag and one Active restriction type, not one boolean (S2).
+- [ ] Aura rejection condition: the native gate requires a recorded taint source, an additional flag and at least one Active state among four restriction entries (S2). The simulator gates on one supplied boolean. Open: which four entries, what the flag is, and whether the entries are the same array the predicate trampolines index. Decomp questions are in the lane report.
 - [ ] Helper contracts left open by S7/S18: `canaccesssecrets` signature, `dropsecretaccess`, `mapvalues`, `settablesecurity`, `securecallmethod`, and success values of `secretunwrap`.
 
 ## Out of scope

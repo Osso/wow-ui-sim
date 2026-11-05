@@ -38,7 +38,7 @@ The documentation does not state these details, and decompiled bodies were not r
 
 ## Known gaps
 
-- **VERIFIED + EMULATED, single route:** `S4s7b-createsecuredelegate-emulated.md` reports that tainted construction is rejected; static inspection and emulation read the same client binary. The generated declaration's `HasRestrictions` does not independently identify this restriction. Its reporting effects are UNKNOWN.
+- **VERIFIED + EMULATED, single route:** `S4s7b-createsecuredelegate-emulated.md` reports that tainted construction is rejected; static inspection and emulation read the same client binary. The generated declaration's `HasRestrictions` does not independently identify this restriction. Its reporting effects are UNKNOWN. **Deliberately not implemented:** the simulator stamps every addon chunk with its addon name, so its taint means "insecure addon code"; native taint means "tainted data flowed here". A naive check would reject every addon-created delegate that native accepts.
 - **EMULATED only:** Delegate constructor accepts non-function values, and normal invocation forwards every target result (`S4s7b-createsecuredelegate-emulated.md`). Neither fact has independent complete-path corroboration.
 - **EMULATED only:** Secret wrapping and unwrapping marker and result counts for the complete handler paths, including denied unwrap, remain conditional on the modeled state and stubbed reporting helper (`S7a-secretwrap-emulated.md`).
 
