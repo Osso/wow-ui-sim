@@ -1,4 +1,6 @@
 //! WM92 PTR 70668 SpellRangeVisualization inputs and local stores.
+//! WM103b closes the same-image state model: three standalone values, the
+//! matching Leave comparison, and one builder reader of flag then value.
 //! The pinned PTR UI is 70493; this is not same-build native evidence.
 
 pub(crate) mod unknown_policy;
@@ -28,6 +30,23 @@ pub struct SpellRangeVisualizationState {
     pub stored_slot: Option<u32>,
     pub value: u32,
     pub enabled: bool,
+}
+
+impl SpellRangeVisualizationState {
+    /// VERIFIED WM103b: the reader used by the range-visualization builder.
+    /// It tests the flag first, then rejects a zero value even when the flag
+    /// is set, and never reads the stored slot.
+    ///
+    /// UNKNOWN - builder gameplay effect: whether the resolved record changes
+    /// the cursor, reticle, action button or tooltip is outside WM103b's
+    /// windows. Nothing consumes this override yet; this method is the named
+    /// seam to the future range-visualization model.
+    pub fn range_visualization_override(&self) -> Option<u32> {
+        if !self.enabled || self.value == 0 {
+            return None;
+        }
+        Some(self.value)
+    }
 }
 
 pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {

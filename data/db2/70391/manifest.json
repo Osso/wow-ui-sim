@@ -298,6 +298,39 @@
         47,
         6
       ]
+    },
+    "ItemBonusListLevelDelta": {
+      "layout": "52DF470F",
+      "rows": 1801,
+      "unreadable_records": 0,
+      "id_column": "ID",
+      "file": "ItemBonusListLevelDelta.csv",
+      "fdid": 1320358,
+      "csv_sha256": "affb804549c130f427752cecafcc9ca8c8440d978a4b1661c67b1e5393c0386d",
+      "columns": [
+        "ItemLevelDelta",
+        "ID"
+      ],
+      "definition_sha256": "d00e6213bb90715456e2c98995eb01f9d7d8a4d03f98e7c71aa158cc8a15702b",
+      "decoded_payload_sha256": "bee517391bae3c37c81d4688b61fa23bc51ecc96c51f82e071d1b2da194d3b35",
+      "content_key_authenticated": true,
+      "source": {
+        "content_key": "b19e6b2b0c5d68afb87a95d3d2078bff",
+        "encoding_key": "44d957918bb5f7bc7efff0980e416fff",
+        "encoded_blob_sha256": "c9b909c1fdb39ab9fd74f3b125ef0a7fbc777399f9c3da1e6dd66de20ea1c960",
+        "encoding_key_authenticated": true,
+        "decoded_size": 7506,
+        "local_archive": 45,
+        "local_offset": 874101399,
+        "local_length": 6443
+      },
+      "complete": true,
+      "missing_sections": [],
+      "header_record_count": 1801,
+      "copied_records": 0,
+      "section_counts": [
+        1801
+      ]
     }
   },
   "item_bonus_input": {
@@ -384,6 +417,13 @@
       "target": "ItemSquishEra",
       "evidence": "VERIFIED WM97 DQ3 type52 uses Value_1 era selection; target table inference unverified",
       "status": "unverified"
+    },
+    {
+      "consumer": "ItemBonusListLevelDelta",
+      "column": "ID",
+      "target": "ItemBonus.ParentItemBonusListID",
+      "evidence": "VERIFIED WM97 DQ3: the matching row ID is appended as a bonus-list key",
+      "status": "verified"
     }
   ],
   "snapshot_path": "data/db2/70391",
