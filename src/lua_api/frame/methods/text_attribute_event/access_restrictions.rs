@@ -41,7 +41,8 @@ pub(super) fn register(state: &mut LuaState, table: GcRef<Table>) -> LuaResult<(
         table,
         "CanBeAccessedInContext",
         can_be_accessed_in_context,
-    )
+    )?;
+    Ok(())
 }
 
 /// Secure execution may access anything; tainted execution is denied for
