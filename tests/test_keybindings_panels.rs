@@ -691,6 +691,7 @@ fn premade_group_search_text_filter_and_clear() {
 }
 
 post_wrath_ui_fixture! {
+poi_button_panel_or_wrath_fixture! {
 group_finder_ui_fixture! {
 #[test]
 fn premade_group_search_result_tooltips_do_not_error() {
@@ -710,6 +711,7 @@ fn premade_group_search_result_tooltips_do_not_error() {
             "#
         ).expect("Premade Group search result tooltips should not raise Lua errors");
     }
+}
 }
 }
 

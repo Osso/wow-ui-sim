@@ -556,6 +556,7 @@ fn keybind_c_toggles_character_without_errors() {
     }
 }
 
+poi_button_panel_or_wrath_fixture! {
 #[test]
 fn character_panel_inventory_tooltip_has_lines_and_closes_without_errors() {
     test_timeout! {
@@ -623,6 +624,7 @@ fn character_panel_inventory_tooltip_has_lines_and_closes_without_errors() {
             "Character panel inventory tooltip flow should open, populate tooltip lines, and close: {result}"
         );
     }
+}
 }
 
 #[cfg(any(feature = "client-retail", feature = "client-ptr"))]

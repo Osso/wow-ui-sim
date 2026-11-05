@@ -224,7 +224,7 @@ fn body_count_matches_filtered_filesystem_layout() {
 }
 }
 
-post_wrath_ui_fixture! {
+retail_toc_metadata_fixture! {
 #[test]
 fn tooltip_lua_precedes_dressup_and_loot_specialization() {
     let toc = TocFile::from_file(&shared_xml_game_toc()).expect("TOC parses");

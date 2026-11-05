@@ -24,7 +24,7 @@ AzeriteRespecFrame:UpdateAzeriteRespecButtonState()
 "#;
 
 // AzeriteRespecUI vendor handlers/templates do not ship in Wrath; modeled API probes stay enabled.
-post_wrath_ui_fixture! {
+timerunning_util_panel_fixture! {
 #[test]
 fn blizzard_azerite_respec_ui_button_disabled_tooltip_depends_on_money() {
     common::with_perf_lock(|| {

@@ -6,6 +6,7 @@ use crate::common::blizzard_addon_harness::with_blizzard_addon_smoke_shape;
 
 const ROOT: &str = "Blizzard_ArdenwealdGardening";
 
+timerunning_util_panel_fixture! {
 #[test]
 fn onleave_hides_tooltip_after_each_onenter_branch() {
     with_blizzard_addon_smoke_shape(&[ROOT], &[], |env, _loaded| {
@@ -13,6 +14,7 @@ fn onleave_hides_tooltip_after_each_onenter_branch() {
         assert_onleave_hides_tooltip_after(env, GardenTooltipSeed::ready());
         assert_onleave_hides_tooltip_after(env, GardenTooltipSeed::dormant());
     });
+}
 }
 
 type OnLeaveProbe = (bool, bool);

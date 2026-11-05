@@ -8,6 +8,7 @@ const ROOT: &str = "Blizzard_ActionBar";
 const SLOT: u32 = 3;
 const SPELL_ID: u32 = 853;
 
+timerunning_util_panel_or_wrath_fixture! {
 #[test]
 fn action_button_on_enter_sets_tooltip_for_populated_slot() {
     wrath_action_case!(tooltip);
@@ -45,4 +46,5 @@ fn action_button_on_enter_sets_tooltip_for_populated_slot() {
         );
     });
     }
+}
 }

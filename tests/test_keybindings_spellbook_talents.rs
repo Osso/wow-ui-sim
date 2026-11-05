@@ -542,7 +542,7 @@ fn keybind_s_toggles_spellbook_closed_on_second_press() {
 }
 }
 
-post_wrath_ui_fixture! {
+poi_button_panel_or_wrath_fixture! {
 #[test]
 fn spellbook_panel_spell_tooltip_has_lines_after_tab_switch_and_closes_without_errors() {
     test_timeout! {

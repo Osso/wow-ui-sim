@@ -52,7 +52,7 @@ GetAppropriateTooltip = originalGetAppropriateTooltip
 return table.concat(failures, "\n")
 "#;
 
-post_wrath_ui_fixture! {
+timerunning_util_panel_fixture! {
 #[test]
 fn blizzard_auto_complete_popup_list_row_leave_hides_tooltip() {
     common::with_perf_lock(|| {
