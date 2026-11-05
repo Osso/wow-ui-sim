@@ -62,10 +62,12 @@ data.
 
 ## Profile gate
 
-The supplied brawl model is compiled for Retail, PTR and Forever because the
-pinned `PvpInfoDocumentation.lua` declares `C_PvP.GetActiveBrawlInfo` (:109) and
-`GetSpecialEventBrawlInfo` (:775) on all three profiles; the tooltip getter has no
-separate gate.
+The pinned `TooltipInfoDocumentation.lua` declares `GetPvpBrawl` on Retail, PTR
+and Forever, but the supplied brawl state (`active_brawl`, `special_event_brawl`,
+`available_brawl`) is compiled only for the `retail-12-0-5` profiles, so the getter
+is published on Retail and PTR. Publishing it on Forever would need the brawl
+state fields ungated there; that is a `C_PvP` state-model change, not a tooltip
+change, so Forever stays blocked.
 
 ## Evidence and proof
 

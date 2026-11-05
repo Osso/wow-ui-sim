@@ -32,20 +32,14 @@ pub struct BattlegroundEnlistmentInputs {
     pub cached_values: std::collections::HashMap<i32, i64>,
 }
 
-// The pinned WowForever docs declare `C_PvP.GetActiveBrawlInfo`
-// (PvpInfoDocumentation.lua:109) and `GetSpecialEventBrawlInfo` (:775), so the
-// supplied-brawl model is part of that profile's surface too.
-#[cfg(any(
-    all(
-        feature = "retail-12-0-5",
-        any(feature = "profile-retail", feature = "client-ptr")
-    ),
-    feature = "client-wowforever"
+#[cfg(all(
+    feature = "retail-12-0-5",
+    any(feature = "profile-retail", feature = "client-ptr")
 ))]
 mod active_brawl;
-#[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
+#[cfg(feature = "retail-12-0-5")]
 mod brawl_info;
-#[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
+#[cfg(feature = "retail-12-0-5")]
 pub use brawl_info::{PvpBrawlInfo, SpecialEventBrawlInfo};
 
 #[cfg(feature = "retail-12-0-0")]
@@ -123,12 +117,9 @@ pub(crate) fn register_c_pvp_surface(state: &mut LuaState) -> LuaResult<()> {
     }
     #[cfg(feature = "retail-12-0-0")]
     catalog::register(state, ns)?;
-    #[cfg(any(
-        all(
-            feature = "retail-12-0-5",
-            any(feature = "profile-retail", feature = "client-ptr")
-        ),
-        feature = "client-wowforever"
+    #[cfg(all(
+        feature = "retail-12-0-5",
+        any(feature = "profile-retail", feature = "client-ptr")
     ))]
     active_brawl::register(state, ns)?;
     register_patch_12_1_c_pvp_surface(state, ns)?;

@@ -18,6 +18,7 @@ pub(crate) mod c_tooltip_info_equipment_set;
 pub(crate) mod c_tooltip_info_inventory_by_id;
 pub(crate) mod c_tooltip_info_item_key;
 pub(crate) mod c_tooltip_info_loot;
+#[cfg(feature = "retail-12-0-5")]
 pub(crate) mod c_tooltip_info_pvp_brawl;
 pub(crate) mod c_tooltip_info_totem;
 pub(crate) mod c_tooltip_info_weekly;
