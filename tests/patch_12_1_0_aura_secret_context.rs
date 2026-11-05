@@ -113,7 +113,7 @@ fn addon_index_slot_and_instance_access_errors_only_while_auras_are_secret() {
             for index, call in ipairs(AccessCalls) do
                 local ok, err = pcall(call)
                 assert(not ok, 'restricted call succeeded: ' .. index)
-                assert(err:find('cannot be accessed by addons while auras are secret', 1, true), err)
+                assert(err:find("Auras cannot be accessed when secret while tainted by 'AuraSecretProbe'", 1, true), err)
             end
         end)
         assert(C_UnitAuras.GetAuraDataByAuraInstanceID('player', 71) ~= nil, 'secure code keeps access')

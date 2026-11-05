@@ -174,7 +174,7 @@ The file-by-file pass also produced answers for units that are not secrecy surfa
 | Secret-value violation | raises, never returns (VERIFIED) | raises | matches |
 | Violation wording | four templates selected by resolved name × taint origin (VERIFIED) | same four forms ([taint error text](taint-error-text.md)) | matches |
 | Rejection at the aura path | needs taint source + flag + one Active type (VERIFIED) | `unit_auras_restricted` gate, no four-state conjunction | gap |
-| `GetAuraDataByIndex` predicate failure | reports `RequiresUnitAuraAccess`, code 46 (VERIFIED structure) | not modelled | gap |
+| `GetAuraDataByIndex` predicate failure | reports `RequiresUnitAuraAccess`, code 46 (VERIFIED structure) | raises `Auras cannot be accessed when secret while tainted by '<origin>'` before lookup | denial text matches S2/S9(b); the predicate report and code 46 are not modelled |
 | Marked operand in untainted code | conditional on mode and additional state (VERIFIED) | untainted callers pass the VM guard | partially matches; modes unmodelled |
 | Event-dispatch taint | UNKNOWN | admin dispatch clears caller taint | unverified best guess |
 
@@ -242,7 +242,7 @@ Source: `native-evidence-70688/secrets/S13-restriction-surface-summary.md` (beha
 - [ ] Per-field AuraData secrecy (WM61 S3).
 - [ ] General operation rules for secrets in tainted code (after S4).
 - [ ] Event-dispatch taint rule, which fixes the issue #13 `CompactArenaFrame` case (after S9).
-- [ ] `GetAuraDataByIndex` predicate failure: report `RequiresUnitAuraAccess` and return no aura data (S14).
+- [ ] `RequiresUnitAuraAccess` predicate report: emit `Predicate check failed: RequiresUnitAuraAccess` with code 46 (S14). The accessor name reaches the gate but is unused until the report is modelled. Open questions: does the predicate failure raise, log, or return; is code 46 a log payload or an error code; does it fire before or after the aura denial diagnostic, and does the denial abort before the report?
 - [ ] Aura rejection condition: require a taint source, the flag and one Active restriction type, not one boolean (S2).
 - [ ] Helper contracts left open by S7/S18: `canaccesssecrets` signature, `dropsecretaccess`, `mapvalues`, `settablesecurity`, `securecallmethod`, and success values of `secretunwrap`.
 

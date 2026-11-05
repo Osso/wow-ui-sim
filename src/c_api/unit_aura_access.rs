@@ -59,10 +59,16 @@ pub(crate) fn ensure_script_object_accessible(state: &LuaState, id: u64) -> LuaR
 }
 
 /// Enforce `RequiresUnitAuraAccess` before argument parsing or lookup.
-pub(crate) fn require_unit_aura_access(state: &LuaState, api_name: &str) -> LuaResult<()> {
+///
+/// The native aura-access decision reports `Auras cannot be accessed when
+/// secret while tainted by '%s'` (S2; S9 (b)). The separate predicate report
+/// (`Predicate check failed: RequiresUnitAuraAccess`, code 46, S14) is not
+/// modelled, so the accessor name stays unused. See `docs/specs/secret-auras.md`.
+pub(crate) fn require_unit_aura_access(state: &LuaState, _api_name: &str) -> LuaResult<()> {
     if auras_restricted(state)? && !rilua::api::state_is_secure(state) {
+        let origin = rilua::api::stack_taint_origin(state).unwrap_or_default();
         return Err(runtime_error(format!(
-            "{api_name}: aura data cannot be accessed by addons while auras are secret"
+            "Auras cannot be accessed when secret while tainted by '{origin}'"
         )));
     }
     Ok(())
