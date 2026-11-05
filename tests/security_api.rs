@@ -1038,6 +1038,7 @@ fn native_secret_contents_remain_inaccessible_in_public_table() {
     assert!(!wrapper_access);
 }
 
+classic_secret_values_fixture! {
 #[test]
 fn test_scrub_replaces_secret_and_non_scalar_values_with_nil() {
     let env = env();
@@ -1069,7 +1070,9 @@ fn test_scrub_replaces_secret_and_non_scalar_values_with_nil() {
     );
     assert_eq!(parts.next(), Some("3"), "scrub keeps the argument count");
 }
+}
 
+classic_secret_values_fixture! {
 #[test]
 fn test_issecretvalue_without_argument_ignores_stale_stack_slots() {
     let env = env();
@@ -1084,6 +1087,7 @@ fn test_issecretvalue_without_argument_ignores_stale_stack_slots() {
         .unwrap();
     assert!(!is_secret, "issecretvalue() with no argument returns false");
     assert!(accessible, "canaccessvalue() with no argument returns true");
+}
 }
 
 // WM91: exercise the unchanged, TOC-selected Shared name consumer. Distinct
