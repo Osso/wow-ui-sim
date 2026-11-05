@@ -62,6 +62,10 @@ fn register_c_tooltip_info(state: &mut LuaState) -> LuaResult<()> {
         crate::c_api::c_tooltip_info_equipment_set::register(state, table_ref)?;
         crate::c_api::c_tooltip_info_inventory_by_id::register(state, table_ref)?;
         crate::c_api::c_tooltip_info_item_key::register(state, table_ref)?;
+        // WM94 §5: Retail, PTR and Forever pinned docs declare GetAzeritePower
+        // (TooltipInfoDocumentation.lua:102) and GetConduit (:204).
+        crate::c_api::c_tooltip_info_azerite_power::register(state, table_ref)?;
+        crate::c_api::c_tooltip_info_conduit::register(state, table_ref)?;
     }
     // Retail, PTR and Forever pinned docs all declare the loot getters,
     // including GetLootRollItem (Forever TooltipInfoDocumentation.lua:554-584).
@@ -117,6 +121,23 @@ pub(crate) fn tooltip_for_item_context(
         Some(item) => builders::tooltip_for_item_info(state, item_id, item),
         None => builders::empty_tooltip(state, super::TOOLTIP_TYPE_ITEM),
     }
+}
+
+/// Feed a spell ID through the existing spell payload builder. The identical
+/// bridge is used by every spell-identifying getter, so the published type/id and
+/// line set stay in one place.
+pub(crate) fn tooltip_for_spell(state: &mut LuaState, spell_id: u32) -> Val {
+    spell::tooltip_for_spell_id(state, spell_id)
+}
+
+/// Resolved spell description text for getters that compose their own rows.
+pub(crate) fn spell_description_text(state: &LuaState, spell_id: u32) -> String {
+    spell::resolved_spell_description(state, spell_id)
+}
+
+/// Item quality colour, shared by item and conduit composition.
+pub(crate) fn item_quality_color(quality: u8) -> (f64, f64, f64) {
+    builders::item_quality_color(quality)
 }
 
 /// WM97 DQ4: relic-aware item composition for the viewed artifact's socket.

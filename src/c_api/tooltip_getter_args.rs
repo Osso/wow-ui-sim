@@ -37,3 +37,18 @@ pub(crate) fn optional_unsigned(state: &LuaState, position: i32) -> LuaResult<Op
         _ => unsigned(state, position).map(Some),
     }
 }
+
+/// Optional owning-item link; WM94 §5 accepts a string or a number-convertible
+/// value and skips a missing/nil one. The present value is secret-checked before
+/// conversion; its parsed item fields only feed the native spell request.
+pub(crate) fn optional_link(state: &LuaState, position: i32) -> LuaResult<Option<String>> {
+    let value = unwrap_secret(state, stack_val(state, position))?;
+    if value.is_nil() {
+        return Ok(None);
+    }
+    crate::lua_api::methods::val_to_string(state, value)
+        .map(Some)
+        .ok_or_else(|| {
+            rilua::runtime_error(format!("expected a link value at argument {position}"))
+        })
+}
