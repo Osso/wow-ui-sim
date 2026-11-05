@@ -26,6 +26,7 @@
 
 use crate::common;
 use common::blizzard_addon_harness::with_blizzard_addon_smoke_shape;
+use wow_ui_sim::lua_api::WowLuaEnv;
 
 const HEIRLOOM_CONSUMER_LUA: &str = r#"
 -- HeirloomsMixin:SetClassAndSpecFilters touches paging and the class menu;
@@ -83,6 +84,65 @@ if type(collection[1].onClickCallback) ~= "function" then return "click_callback
 if type(collection[1].onEditCallback) ~= "function" then return "edit_callback" end
 return "ok"
 "#;
+
+#[test]
+fn classic_outfit_namespace_matches_pinned_collections_documentation() {
+    // Pinned declaration source for the active profile cache.
+    let docs = common::blizzard_addon_harness::blizzard_ui_dir()
+        .join("Blizzard_APIDocumentationGenerated")
+        .join("TransmogOutfitInfoDocumentation.lua");
+    let text = std::fs::read_to_string(&docs)
+        .unwrap_or_else(|err| panic!("read {}: {err}", docs.display()));
+    let lines: Vec<&str> = text.lines().collect();
+    let mut declared = Vec::new();
+    for (index, line) in lines.iter().enumerate() {
+        let trimmed = line.trim();
+        let Some(rest) = trimmed.strip_prefix("Name = \"") else {
+            continue;
+        };
+        let Some(name) = rest.strip_suffix("\",") else {
+            continue;
+        };
+        let next = lines.get(index + 1).map(|line| line.trim());
+        if next == Some("Type = \"Function\",") {
+            declared.push(name);
+        }
+    }
+    assert!(
+        declared.len() >= 60,
+        "pinned {} must declare the outfit surface; found {}",
+        docs.display(),
+        declared.len()
+    );
+
+    let names = declared
+        .iter()
+        .map(|name| format!("\"{name}\""))
+        .collect::<Vec<_>>()
+        .join(",");
+    let env = WowLuaEnv::new().expect("create headless environment");
+    let result: String = env
+        .eval(&format!(
+            r#"
+            local declared = {{ {names} }}
+            local seen = {{}}
+            for _, name in ipairs(declared) do
+                if type(C_TransmogOutfitInfo[name]) ~= "function" then
+                    return "missing:" .. name
+                end
+                seen[name] = true
+            end
+            for name, value in pairs(C_TransmogOutfitInfo) do
+                if type(value) == "function" and not seen[name] and name:sub(1, 2) ~= "__" then
+                    return "extra:" .. name
+                end
+            end
+            return "ok"
+            "#
+        ))
+        .expect("declared outfit surface probe");
+    assert_eq!(result, "ok");
+}
 
 #[test]
 fn heirloom_filters_round_trip_through_collections_consumer() {
