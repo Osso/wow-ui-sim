@@ -61,7 +61,8 @@ pub(crate) fn register_c_battle_net_surface(state: &mut LuaState) -> LuaResult<(
             Ok(0)
         })?;
     }
-    #[cfg(feature = "retail-12-0-0")]
+    // Pinned Forever BattleNetDocumentation.lua:303 declares `SendGameData`.
+    #[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
     table_set_rust_fn_static(
         state,
         table_ref,

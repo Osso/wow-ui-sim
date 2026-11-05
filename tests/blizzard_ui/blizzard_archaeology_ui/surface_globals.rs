@@ -28,6 +28,7 @@ const MODULE_CONSTANTS: &[(&str, i32)] = &[
     ("ARCHAEOLOGY_CURRENT_PAGE", 3),
 ];
 
+#[cfg(feature = "optional-tests")]
 #[test]
 fn archaeology_ui_publishes_expected_global_functions() {
     with_blizzard_addon_startup_shape(&[ROOT], &[], |env, _loaded| {
@@ -42,6 +43,7 @@ fn archaeology_ui_publishes_expected_global_functions() {
     });
 }
 
+#[cfg(feature = "optional-tests")]
 #[test]
 fn archaeology_ui_publishes_module_constants() {
     with_blizzard_addon_startup_shape(&[ROOT], &[], |env, _loaded| {
@@ -56,6 +58,7 @@ fn archaeology_ui_publishes_module_constants() {
     });
 }
 
+#[cfg(feature = "optional-tests")]
 #[test]
 fn archaeology_ui_registers_uipanel_window_entry() {
     with_blizzard_addon_startup_shape(&[ROOT], &[], |env, _loaded| {

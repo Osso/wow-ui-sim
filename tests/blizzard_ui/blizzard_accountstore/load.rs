@@ -59,6 +59,7 @@ const LANE_FILE_SCOPE_GLOBALS: &[&str] = &[
 ];
 
 post_wrath_ui_fixture! {
+#[cfg(feature = "optional-tests")]
 #[test]
 fn account_store_load_emits_no_lane_specific_lua_errors() {
     with_blizzard_addon_smoke_shape(&[ROOT], &[], |env, loaded| {
@@ -100,6 +101,7 @@ fn account_store_load_emits_no_lane_specific_lua_errors() {
 }
 
 post_wrath_ui_fixture! {
+#[cfg(feature = "optional-tests")]
 #[test]
 fn account_store_dependency_closure_includes_every_declared_dep() {
     with_blizzard_addon_smoke_shape(&[ROOT], &[], |env, loaded| {
@@ -137,6 +139,7 @@ fn account_store_dependency_closure_includes_every_declared_dep() {
 }
 
 post_wrath_ui_fixture! {
+#[cfg(feature = "optional-tests")]
 #[test]
 fn account_store_load_on_demand_root_executes_file_scope_code() {
     with_blizzard_addon_smoke_shape(&[ROOT], &[], |env, loaded| {

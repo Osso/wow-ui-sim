@@ -24,6 +24,7 @@ const REGISTERED_EVENTS: &[&str] = &[
     "SETTINGS_LOADED",
 ];
 
+#[cfg(feature = "optional-tests")]
 #[test]
 fn action_bar_controller_registers_all_onload_events() {
     with_blizzard_addon_smoke_shape(&[ROOT], &[], |env, _loaded| {

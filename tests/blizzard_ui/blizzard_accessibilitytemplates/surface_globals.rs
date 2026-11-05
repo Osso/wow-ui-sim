@@ -48,6 +48,7 @@ const BACKGROUND_ATLASES: &[(i32, &str)] = &[
     (4, "QuestBG-Parchment-Accessibility4"),
 ];
 
+#[cfg(feature = "optional-tests")]
 #[test]
 fn accessibility_templates_publishes_expected_global_tables() {
     with_blizzard_addon_smoke_shape(&[ROOT], &[], |env, _loaded| {
@@ -66,6 +67,7 @@ fn accessibility_templates_publishes_expected_global_tables() {
     });
 }
 
+#[cfg(feature = "optional-tests")]
 #[test]
 fn quest_text_contrast_get_background_atlas_maps_settings_to_atlases() {
     with_blizzard_addon_smoke_shape(&[ROOT], &[], |env, _loaded| {

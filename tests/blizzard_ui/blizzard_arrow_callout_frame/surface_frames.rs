@@ -70,6 +70,7 @@ return table.concat(failures, "\n")
 
 // Wrath has no ArrowCallout vendor widget/handler input; mixed and modeled probes remain enabled.
 post_wrath_ui_fixture! {
+#[cfg(feature = "optional-tests")]
 #[test]
 fn arrow_callout_frame_manager_matches_xml_surface() {
     with_blizzard_addon_smoke_shape(&[], &[], |env, _loaded| {

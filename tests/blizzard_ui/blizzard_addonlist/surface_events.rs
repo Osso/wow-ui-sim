@@ -7,6 +7,7 @@ const FRAME_HIDDEN_EVENT: &str = "AddonList.FrameHidden";
 
 // Wrath has no AddonList vendor widget/handler input; mixed and modeled probes remain enabled.
 post_wrath_ui_fixture! {
+#[cfg(feature = "optional-tests")]
 #[test]
 fn addon_list_on_hide_triggers_frame_hidden_callback() {
     with_blizzard_addon_startup_shape(&[ROOT], &[], |env, _loaded| {

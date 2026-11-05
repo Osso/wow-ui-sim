@@ -1,0 +1,9 @@
+{
+  "comment": "Families whose shared-forked fixture showed identical per-name outcomes, forward/reversed/ungrouped, with measured CPU savings (see handoff GROUPED-FIXTURES.md).",
+  "families": [
+    "protected_method_coverage",
+    "blizzard_ui_blizzard_accountstore",
+    "blizzard_ui_blizzard_archaeology_ui",
+    "blizzard_ui_blizzard_apidocumentation"
+  ]
+}

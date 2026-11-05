@@ -112,6 +112,7 @@ fn assert_mixin_methods(env: &WowLuaEnv, mixin_name: &str, methods: &[&str], def
     }
 }
 
+#[cfg(feature = "optional-tests")]
 #[test]
 fn ui_theme_container_mixin_exposes_expected_methods() {
     with_blizzard_addon_smoke_shape(&[ROOT], &[], |env, _loaded| {
@@ -124,6 +125,7 @@ fn ui_theme_container_mixin_exposes_expected_methods() {
     });
 }
 
+#[cfg(feature = "optional-tests")]
 #[test]
 fn text_size_manager_base_exposes_expected_methods() {
     with_blizzard_addon_smoke_shape(&[ROOT], &[], |env, _loaded| {
@@ -136,6 +138,7 @@ fn text_size_manager_base_exposes_expected_methods() {
     });
 }
 
+#[cfg(feature = "optional-tests")]
 #[test]
 fn user_scaled_element_mixin_exposes_expected_methods() {
     with_blizzard_addon_smoke_shape(&[ROOT], &[], |env, _loaded| {

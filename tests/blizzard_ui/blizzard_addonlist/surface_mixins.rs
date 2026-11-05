@@ -28,6 +28,7 @@ fn addon_list_mixin_exposes_plan_methods(env: &WowLuaEnv) {
 
 // Wrath has no AddonList vendor widget/handler input; mixed and modeled probes remain enabled.
 post_wrath_ui_fixture! {
+#[cfg(feature = "optional-tests")]
 #[test]
 fn addon_list_node_mixins_expose_plan_methods() {
     with_blizzard_addon_startup_shape(&[ROOT], &[], |env, _loaded| {

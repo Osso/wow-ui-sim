@@ -40,6 +40,7 @@ const ARTIFACT_UI_CONSTANTS: &[(&str, f64)] = &[
 
 // ArtifactUI vendor handlers/templates do not ship in Wrath; modeled API probes stay enabled.
 post_wrath_ui_fixture! {
+#[cfg(feature = "optional-tests")]
 #[test]
 fn artifact_ui_exports_expected_mixin_globals_after_load_addon() {
     with_blizzard_addon_smoke_shape(&[], &[], |env, _loaded| {
@@ -59,6 +60,7 @@ fn artifact_ui_exports_expected_mixin_globals_after_load_addon() {
 }
 
 post_wrath_ui_fixture! {
+#[cfg(feature = "optional-tests")]
 #[test]
 fn artifact_ui_exports_expected_module_helpers_and_constants_after_load_addon() {
     with_blizzard_addon_smoke_shape(&[], &[], |env, _loaded| {

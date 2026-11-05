@@ -1,10 +1,11 @@
 //! Item quality colors resolve the current named Lua color globals.
 
 use crate::client_profile::{ACTIVE, ClientProfile};
-use crate::lua_api::methods::{create_string, table_get};
+use crate::lua_api::global_colors::global_color_rgb;
+use crate::lua_api::methods::create_string;
 use crate::lua_bridge::{FromStack, IntoStack, table_set_rust_fn_static};
+use rilua::LuaResult;
 use rilua::vm::state::LuaState;
-use rilua::{LuaResult, Val};
 
 const COLOR_NAMES: [&str; 9] = [
     "ITEM_POOR_COLOR",
@@ -17,6 +18,9 @@ const COLOR_NAMES: [&str; 9] = [
     "ITEM_SCALING_STAT_COLOR",
     "ITEM_WOW_TOKEN_COLOR",
 ];
+
+/// Opaque magenta for an unusable quality, as the native function returns.
+const FALLBACK_RGB: (f64, f64, f64) = (1.0, 0.0, 1.0);
 
 pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
     if ACTIVE.has_legacy_item_globals() {
@@ -31,18 +35,7 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
 
 fn get_color(state: &mut LuaState) -> LuaResult<u32> {
     let quality = i32::from_stack(state, 1)?;
-    let color = COLOR_NAMES
-        .get(quality as usize)
-        .map(|name| table_get(state, Val::Table(state.global), name))
-        .unwrap_or(Val::Nil);
-    let (r, g, b) = match color {
-        Val::Table(_) => (
-            channel(state, color, "r"),
-            channel(state, color, "g"),
-            channel(state, color, "b"),
-        ),
-        _ => (1.0, 0.0, 1.0),
-    };
+    let (r, g, b) = named_quality_color(state, quality).unwrap_or(FALLBACK_RGB);
     let hex = format!(
         "ff{:02x}{:02x}{:02x}",
         (r * 255.0) as u8,
@@ -53,9 +46,9 @@ fn get_color(state: &mut LuaState) -> LuaResult<u32> {
     (r, g, b, hex).into_stack(state)
 }
 
-fn channel(state: &mut LuaState, color: Val, name: &str) -> f64 {
-    match table_get(state, color, name) {
-        Val::Num(value) => value,
-        _ => 0.0,
-    }
+/// The named global is read through the Lua global index, so the simulator's
+/// synthesized colour constants are visible to the consumer.
+fn named_quality_color(state: &mut LuaState, quality: i32) -> Option<(f64, f64, f64)> {
+    let name = COLOR_NAMES.get(quality as usize)?;
+    global_color_rgb(state, name)
 }

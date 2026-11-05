@@ -48,21 +48,31 @@ pub fn with_blizzard_addon_startup_shape_in_dir<R, F>(
     assertions: F,
 ) -> R
 where
+    R: Default + 'static,
     F: FnOnce(&WowLuaEnv, &[String]) -> R,
 {
-    let env = new_blizzard_addon_env(ui_dir);
-    load_panel_addons(&env);
-    {
-        let mut state = env.state().borrow_mut();
-        state.lua_errors.clear();
-        state.lua_error_records.clear();
-        state.lua_error_counts.clear();
-    }
-    let loaded = load_blizzard_addon_closure_into_env(&env, ui_dir, roots, overrides);
-    ensure_player_frame_stub(&env);
-    env.apply_post_load_workarounds();
-    settle_headless_startup(&env);
-    assertions(&env, &loaded)
+    crate::common::grouped_fixture::with_fixture(
+        "startup",
+        ui_dir,
+        roots,
+        overrides,
+        || {
+            let env = new_blizzard_addon_env(ui_dir);
+            load_panel_addons(&env);
+            {
+                let mut state = env.state().borrow_mut();
+                state.lua_errors.clear();
+                state.lua_error_records.clear();
+                state.lua_error_counts.clear();
+            }
+            let loaded = load_blizzard_addon_closure_into_env(&env, ui_dir, roots, overrides);
+            ensure_player_frame_stub(&env);
+            env.apply_post_load_workarounds();
+            settle_headless_startup(&env);
+            (env, loaded)
+        },
+        assertions,
+    )
 }
 
 pub fn with_blizzard_addon_startup_shape<R, F>(
@@ -71,6 +81,7 @@ pub fn with_blizzard_addon_startup_shape<R, F>(
     assertions: F,
 ) -> R
 where
+    R: Default + 'static,
     F: FnOnce(&WowLuaEnv, &[String]) -> R,
 {
     with_blizzard_addon_startup_shape_in_dir(&blizzard_ui_dir(), roots, overrides, assertions)
@@ -95,13 +106,23 @@ pub fn with_blizzard_addon_smoke_shape_in_dir<R, F>(
     assertions: F,
 ) -> R
 where
+    R: Default + 'static,
     F: FnOnce(&WowLuaEnv, &[String]) -> R,
 {
-    let env = new_blizzard_addon_env(ui_dir);
-    load_panel_addons(&env);
-    clear_recorded_lua_errors(&env);
-    let loaded = load_blizzard_addon_closure_into_env(&env, ui_dir, roots, overrides);
-    assertions(&env, &loaded)
+    crate::common::grouped_fixture::with_fixture(
+        "smoke",
+        ui_dir,
+        roots,
+        overrides,
+        || {
+            let env = new_blizzard_addon_env(ui_dir);
+            load_panel_addons(&env);
+            clear_recorded_lua_errors(&env);
+            let loaded = load_blizzard_addon_closure_into_env(&env, ui_dir, roots, overrides);
+            (env, loaded)
+        },
+        assertions,
+    )
 }
 
 pub fn with_blizzard_addon_smoke_shape<R, F>(
@@ -110,6 +131,7 @@ pub fn with_blizzard_addon_smoke_shape<R, F>(
     assertions: F,
 ) -> R
 where
+    R: Default + 'static,
     F: FnOnce(&WowLuaEnv, &[String]) -> R,
 {
     with_blizzard_addon_smoke_shape_in_dir(&blizzard_ui_dir(), roots, overrides, assertions)

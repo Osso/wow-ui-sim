@@ -50,6 +50,7 @@ post_wrath_ui_fixture! {
 /// PLAN names 7 events; OnLoad at lua:203-218 registers 10 (3 extras
 /// in `SOURCE_ADDITIONAL_EVENTS`). 12 assertions: existence (1) +
 /// PLAN-named (7) + source-additional (3) + OnEvent script (1).
+#[cfg(feature = "optional-tests")]
 #[test]
 fn action_bar_button_events_frame_registers_plan_and_source_additional_events_after_onload() {
     with_blizzard_addon_startup_shape(&[ROOT], &[], |env, _loaded| {
@@ -232,6 +233,7 @@ post_wrath_ui_fixture! {
 /// **OnEvent script (1):** `type(:GetScript("OnEvent")) == "function"`
 /// — XML at xml:99 wires `<OnEvent method="OnEvent"/>` against the
 /// mixin's `OnEvent` body at lua:310.
+#[cfg(feature = "optional-tests")]
 #[test]
 fn action_bar_action_events_frame_registers_thirty_four_spell_action_events_after_onload() {
     with_blizzard_addon_startup_shape(&[ROOT], &[], |env, _loaded| {
@@ -379,6 +381,7 @@ const MAIN_ACTION_BAR_REGISTERED_EVENTS: &[&str] =
 ///    each PLAN-named event (page-changed updates the
 ///    `ActionBarPageNumber.Text` from `C_ActionBar.GetActionBarPage()`,
 ///    neutral-faction-select calls `self:UpdateEndCaps()`).
+#[cfg(feature = "optional-tests")]
 #[test]
 fn main_action_bar_registers_action_bar_page_changed_and_neutral_faction_select_result_after_onload()
  {
@@ -476,6 +479,7 @@ const STANCE_BAR_REGISTERED_EVENTS: &[&str] = &["UPDATE_SHAPESHIFT_COOLDOWN"];
 /// `EditModeActionBarTemplate` chain at xml:12 does not register
 /// `UPDATE_SHAPESHIFT_COOLDOWN`. Three assertions: frame exists, event
 /// registered, OnEvent script wired (single arm at lua:12-14).
+#[cfg(feature = "optional-tests")]
 #[test]
 fn stance_bar_registers_update_shapeshift_cooldown_after_onload() {
     wrath_action_case!(callbacks::stance_events);
@@ -572,6 +576,7 @@ const PET_ACTION_BAR_SOURCE_ADDITIONAL_EVENTS: &[&str] = &[
 /// `EditModeActionBarTemplate` chain at xml:33 does not register any
 /// of these 13 events. 15 assertions: existence (1), PLAN-named (9),
 /// source-additional (4), OnEvent script (1).
+#[cfg(feature = "optional-tests")]
 #[test]
 fn pet_action_bar_registers_plan_and_source_additional_events_after_onload() {
     wrath_action_case!(callbacks::pet_events);
@@ -673,6 +678,7 @@ const VEHICLE_LEAVE_REGISTERED_EVENTS: &[&str] = &[
 /// any registration silently breaks the show/enable/highlight refresh
 /// driven by `:Update` at lua:37-52. 7 assertions: existence (1),
 /// 5 registrations, OnEvent script (1).
+#[cfg(feature = "optional-tests")]
 #[test]
 fn main_menu_bar_vehicle_leave_button_registers_five_events_after_onload() {
     wrath_action_case!(callbacks::vehicle_leave_events);

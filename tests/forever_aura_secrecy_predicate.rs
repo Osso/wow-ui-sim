@@ -7,7 +7,7 @@ use wow_ui_sim::lua_api::WowLuaEnv;
 fn forever_aura_secrecy_predicate_agrees_with_current_aura_outputs() {
     let env = WowLuaEnv::new().unwrap();
     for restricted_input in [false, true, false] {
-        env.state().borrow_mut().unit_auras_restricted = restricted_input;
+        env.state().borrow_mut().restricted_actions[0] = if restricted_input { 2 } else { 0 };
         env.exec(
             r#"
             local query = rawget(C_Secrets, 'ShouldAurasBeSecret')

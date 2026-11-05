@@ -446,7 +446,6 @@ macro_rules! build_empty_sim_state {
             cooldowns_restricted: false,
             #[cfg(feature = "retail-12-0-5")]
             spell_max_cumulative_aura_applications: ::std::collections::HashMap::new(),
-            unit_auras_restricted: false,
             pvp_match_active: false,
             pvp_request_transport: Default::default(),
             aura_filter_facts: Default::default(),

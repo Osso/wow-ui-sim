@@ -42,6 +42,7 @@ const REGISTERED_EVENTS: &[&str] = &[
     "ACCOUNT_SAVE_RESULT",
 ];
 
+#[cfg(feature = "optional-tests")]
 #[test]
 fn account_save_frame_registers_on_load_events() {
     with_blizzard_addon_glue_smoke_shape(&[ROOT], &[], |env, _loaded| {

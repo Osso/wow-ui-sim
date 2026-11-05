@@ -57,7 +57,7 @@ WM citations below identify clean-room reports in `native-evidence-70688/secrets
 - **VERIFIED — WM61 S1:** Combat uses a transition input; Encounter uses a status flag or positive counter; ChallengeMode uses a running marker; PvPMatch is active in Waiting, StartUp, Engaged or PostRound; Map needs nonzero classification without flag 512. Chat requires its enabled policy, a client flag, the Map metadata condition, and an Active Encounter, ChallengeMode or PvPMatch. Combat alone does not activate Chat.
 - **VERIFIED — WM61 S1:** Activation stores 1, optionally emits `ADDON_RESTRICTION_STATE_CHANGED(type, 1)`, then stores 2; it emits no state-2 public event. Deactivation stores 0 before the optional event `(type, 0)`. No transition occurs for an unchanged target or an Activating reentry.
 - **UNKNOWN — WM61 S1:** Server transitions, callback effects, event-hook availability, scheduling, complete map classifications and the meanings of the Chat client flag and map flag 512. Missing map metadata bypasses an update; it is not proven to clear the state.
-- **SOURCE — WM61 S1:** `restricted_actions.rs` supplies six indexed states, activation state 1 and deactivation state 0, and natural-or-forced CVar transitions. Its host-event inputs and separate `unit_auras_restricted` flag do not yet establish the complete WM61 natural conditions.
+- **SOURCE — WM61 S1:** `restricted_actions.rs` supplies six indexed states, activation state 1 and deactivation state 0, and natural-or-forced CVar transitions. WM105 supersedes the former separate aura flag: the aura gate now reads entries 0..3 of this array.
 
 ### Secure invocation
 
@@ -143,7 +143,7 @@ Clean-room reports: `H/native-evidence-70688/secrets/` (S0–S11, S15, S18, and 
 ### Registration, predicates and protection (S4, S14, S15, S16)
 
 - **VERIFIED:** the registration class byte takes only 3, 6 and 7. Class 7 covers every secret/secure helper and also `Mixin` and the event-callback registrations, so the class does not separate secret from ordinary functions. `GetForbiddenObjectTable` is the only class 6 entry. Class meanings are **UNKNOWN**.
-- **VERIFIED:** the client carries exactly 16 `Predicate check failed: <Name>` messages. Each maps to one guarded API; `SetFont` carries two. `RequiresUnitAuraAccess` reports from `GetAuraDataByIndex`/`GetUnitAura` with numeric code 46 and does not return aura data.
+- **VERIFIED:** the client carries exactly 16 `Predicate check failed: <Name>` messages. Each maps to one guarded API; `SetFont` carries two. `RequiresUnitAuraAccess` guards `GetAuraDataByIndex`/`GetUnitAura`. WM105 corrects the earlier reading: there is no numeric code 46. The predicate text is pushed with an explicit string length of 46, exactly the character count of `Predicate check failed: RequiresUnitAuraAccess`.
 - **VERIFIED:** these named predicates are a separate mechanism from the restriction state array. **UNKNOWN:** the numeric codes and any shared storage.
 - **VERIFIED:** `addonCombatRestrictionsForced`, `addonEncounterRestrictionsForced`, `addonChallengeModeRestrictionsForced`, `addonPvPMatchRestrictionsForced`, `addonMapRestrictionsForced` and `addonChatRestrictionsForced` exist with their help text; `taintLogObjectSecrets` enables aspect logging.
 - **VERIFIED:** the 38-function registration family contains every restricted/secrecy helper. Membership does **not** encode protection: `GetMoney`, `RepopMe` and `RetrieveCorpse` sit in the large general family yet behave as protected.
@@ -173,8 +173,8 @@ The file-by-file pass also produced answers for units that are not secrecy surfa
 | `secretunwrap` on a tainted caller | **UNKNOWN** | raises `secret access requires an untainted caller without revoked access` | best guess |
 | Secret-value violation | raises, never returns (VERIFIED) | raises | matches |
 | Violation wording | four templates selected by resolved name × taint origin (VERIFIED) | same four forms ([taint error text](taint-error-text.md)) | matches |
-| Rejection at the aura path | needs taint source + flag + one Active type (VERIFIED) | `unit_auras_restricted` gate, no four-state conjunction | gap |
-| `GetAuraDataByIndex` predicate failure | reports `RequiresUnitAuraAccess`, code 46 (VERIFIED structure) | not modelled | gap |
+| Rejection at the aura path | context + recorded source + policy flag + any of entries 0..3 `Active` (VERIFIED, WM105) | same order over restriction entries 0..3; forced taint names its source | matches; suffix separator best-guess |
+| `GetAuraDataByIndex` denial | raises `<ApiName>(): Auras cannot be accessed when secret while tainted by '<origin>' Lua Taint: <origin>` (WM105 §6) | same form | matches; suffix separator is best-guess |
 | Marked operand in untainted code | conditional on mode and additional state (VERIFIED) | untainted callers pass the VM guard | partially matches; modes unmodelled |
 | Event-dispatch taint | UNKNOWN | admin dispatch clears caller taint | unverified best guess |
 
@@ -182,7 +182,7 @@ The file-by-file pass also produced answers for units that are not secrecy surfa
 
 | Area | Today | Gap |
 |---|---|---|
-| Restriction trigger | `unit_auras_restricted` is a separate input; `restricted_actions.rs` models supplied indexed transitions and forced CVars | The complete WM61 natural conditions and their connection to aura publication are not established |
+| Restriction trigger | Aura secrecy reads `restricted_actions[0..3] == Active` plus the WM105 policy flag; `restricted_actions.rs` models supplied indexed transitions and forced CVars | The complete WM61 natural conditions are still supplied inputs |
 | AuraData | Restricted, non-NeverSecret records mark identified fields; the outer value is plain | Full policy selection and `ConditionalSecret` contents are not established |
 | Spell-keyed lookups | Never-secret spells stay plain; others return one nil to tainted callers (inferred) | WM61 S8 rejection fragments return zero results, not one nil; complete entry behavior remains UNKNOWN |
 | VM operations | Guarded truth/equality for wrapped booleans and nil, guarded ordering for numbers; violations raise with the native templates | Arithmetic, concat, `tostring`, `format` and table-key rules missing; S5's operation-check modes and additional state are unmodelled |
@@ -242,8 +242,8 @@ Source: `native-evidence-70688/secrets/S13-restriction-surface-summary.md` (beha
 - [ ] Per-field AuraData secrecy (WM61 S3).
 - [ ] General operation rules for secrets in tainted code (after S4).
 - [ ] Event-dispatch taint rule, which fixes the issue #13 `CompactArenaFrame` case (after S9).
-- [ ] `GetAuraDataByIndex` predicate failure: report `RequiresUnitAuraAccess` and return no aura data (S14).
-- [ ] Aura rejection condition: require a taint source, the flag and one Active restriction type, not one boolean (S2).
+- [ ] `RequiresUnitAuraAccess` predicate string: WM105 §6 shows it is only the fallback when the pending-error lookup finds no report, so it never appears on the aura-denial path. The simulator does not model a no-report denial arm; no native route to it is known.
+- [x] Aura rejection condition (WM105): context, then a recorded taint source (a null source permits), then the generated-secrecy-policy flag, then any of restriction entries 0..3 equal to `Active`. `Map` and `Chat` are never read, `Activating` does not match, and the gate shares `GetAddOnRestrictionState`'s array. `forceinsecure()` installs `*** TaintForced ***`, so a forced caller is denied.
 - [ ] Helper contracts left open by S7/S18: `canaccesssecrets` signature, `dropsecretaccess`, `mapvalues`, `settablesecurity`, `securecallmethod`, and success values of `secretunwrap`.
 
 ## Out of scope

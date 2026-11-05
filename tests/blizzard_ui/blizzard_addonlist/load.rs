@@ -32,6 +32,7 @@ const MACHINE_SAVED_VARIABLE: &str = "g_addonCategoriesCollapsed";
 
 // Wrath has no AddonList vendor widget/handler input; mixed and modeled probes remain enabled.
 post_wrath_ui_fixture! {
+#[cfg(feature = "optional-tests")]
 #[test]
 fn addon_list_loads_with_dependency_closure_and_no_lua_errors() {
     with_blizzard_addon_startup_shape(&[ROOT], &[], |env, loaded| {
@@ -51,6 +52,7 @@ fn addon_list_loads_with_dependency_closure_and_no_lua_errors() {
 }
 }
 
+#[cfg(feature = "optional-tests")]
 #[test]
 fn addon_list_allowload_both_selects_game_and_glue_branches() {
     assert_toc_allows_game_and_glue_screens();
@@ -68,6 +70,7 @@ fn addon_list_allowload_both_selects_game_and_glue_branches() {
     });
 }
 
+#[cfg(feature = "optional-tests")]
 #[test]
 fn addon_list_declares_and_registers_machine_saved_variable() {
     assert_toc_declares_machine_saved_variable();

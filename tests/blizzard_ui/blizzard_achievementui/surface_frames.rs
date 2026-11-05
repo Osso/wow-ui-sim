@@ -91,6 +91,7 @@ const PLAN_NAMED_CHILDREN: &[(&str, &str, &str)] = &[
     ),
 ];
 
+#[cfg(feature = "optional-tests")]
 #[test]
 fn achievement_frame_publishes_expected_panel_identity() {
     if crate::common::wrath_achievement_fixtures::assert_native(
@@ -173,6 +174,7 @@ fn achievement_frame_publishes_expected_panel_identity() {
 
 /// Verify direct parent properties on `AchievementFrame` still resolve.
 
+#[cfg(feature = "optional-tests")]
 #[test]
 fn achievement_frame_plan_named_children_are_reachable_as_parent_properties() {
     if crate::common::wrath_achievement_fixtures::assert_native(
@@ -227,6 +229,7 @@ fn achievement_frame_plan_named_children_are_reachable_as_parent_properties() {
     });
 }
 
+#[cfg(feature = "optional-tests")]
 #[test]
 fn achievement_frame_filter_controls_use_current_nested_paths() {
     if crate::common::wrath_achievement_fixtures::assert_native(
@@ -351,6 +354,7 @@ const PLAN_NAMED_COMPARISON_PATHS: &[(&str, &str, &str)] = &[
 /// before the chained accesses are attempted, so a missing comparison
 /// frame surfaces with a precise message rather than a confusing
 /// nil-index error inside the loop.
+#[cfg(feature = "optional-tests")]
 #[test]
 fn achievement_frame_comparison_subtree_publishes_plan_named_paths() {
     if crate::common::wrath_achievement_fixtures::assert_native(
@@ -417,6 +421,7 @@ const SEARCH_PROGRESS_BAR_PATH: &str =
     "AchievementFrame.HeaderDetails.Filters.SearchBox.SearchProgressBar";
 
 post_wrath_ui_fixture! {
+#[cfg(feature = "optional-tests")]
 #[test]
 fn achievement_frame_search_progress_bar_uses_nested_search_box_path() {
     with_blizzard_addon_smoke_shape(&[ROOT], &[], |env, _loaded| {

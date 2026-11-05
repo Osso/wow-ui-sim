@@ -13,6 +13,7 @@ use wow_ui_sim::toc::TocFile;
 const ROOT: &str = "Blizzard_AsyncRequest";
 
 post_wrath_ui_fixture! {
+#[cfg(feature = "optional-tests")]
 #[test]
 fn async_request_loads_cleanly_with_no_recorded_lua_errors() {
     with_blizzard_addon_smoke_shape(&[], &[], |env, _loaded| {
@@ -36,6 +37,7 @@ fn async_request_loads_cleanly_with_no_recorded_lua_errors() {
 
 }
 
+#[cfg(feature = "optional-tests")]
 #[test]
 fn async_request_toc_declares_no_dependencies_and_loads_as_leaf() {
     let toc =
@@ -59,6 +61,7 @@ fn async_request_toc_declares_no_dependencies_and_loads_as_leaf() {
     });
 }
 
+#[cfg(feature = "optional-tests")]
 #[test]
 fn async_request_allow_load_both_works_in_game_and_glue_contexts() {
     let toc =

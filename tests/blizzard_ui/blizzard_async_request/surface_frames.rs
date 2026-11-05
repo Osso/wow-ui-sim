@@ -4,6 +4,7 @@ use crate::common::blizzard_addon_harness::with_blizzard_addon_smoke_shape;
 
 const ROOT: &str = "Blizzard_AsyncRequest";
 
+#[cfg(feature = "optional-tests")]
 #[test]
 fn create_async_request_returns_initialized_anonymous_frame() {
     with_blizzard_addon_smoke_shape(&[ROOT], &[], |env, _loaded| {

@@ -191,7 +191,7 @@ fn charm_and_possession_follow_aura_secrecy_except_player_controlled_tokens() {
         ("party1", true, true),
     ];
     for (unit, auras_secret, expected) in rows {
-        env.state().borrow_mut().unit_auras_restricted = auras_secret;
+        env.state().borrow_mut().restricted_actions[0] = if auras_secret { 2 } else { 0 };
         env.exec(&format!(
             r#"
             for _, api in ipairs({{UnitIsCharmed, UnitIsPossessed}}) do

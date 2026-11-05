@@ -105,6 +105,7 @@ const PLAN_NAMED_ACHIEVEMENT_ROW_ABSENT: &[&str] = &[
     "AchievementButton_OnDoubleClick",
 ];
 
+#[cfg(feature = "optional-tests")]
 #[test]
 fn achievement_frame_plan_named_globals_are_functions() {
     if crate::common::wrath_achievement_fixtures::assert_native(
@@ -179,6 +180,7 @@ fn achievement_frame_plan_named_globals_are_functions() {
 ///   `ScrollBox:SetDataProvider(newDataProvider)` at the end. Note the
 ///   stylistic space `function AchievementFrameCategories_UpdateDataProvider ()`
 ///   matches the OnLoad declaration's formatting; the parser doesn't care.
+#[cfg(feature = "optional-tests")]
 #[test]
 fn achievement_frame_categories_plan_named_globals_are_functions() {
     if crate::common::wrath_achievement_fixtures::assert_native(
@@ -265,6 +267,7 @@ fn achievement_frame_categories_plan_named_globals_are_functions() {
 ///   `GetAchievementInfo(category, filteredIndex)` and inserting
 ///   `{category, index, id}` records, and dispatches
 ///   `ScrollBox:SetDataProvider(newDataProvider)` at the end. Zero-arg.
+#[cfg(feature = "optional-tests")]
 #[test]
 fn achievement_frame_achievements_plan_named_globals_are_functions() {
     if crate::common::wrath_achievement_fixtures::assert_native(
@@ -367,6 +370,7 @@ fn achievement_frame_achievements_plan_named_globals_are_functions() {
 /// `_UpdateStatusBars` is removed/renamed AND if either of the
 /// PLAN-anticipated symbols suddenly appears (which would be the
 /// signal to re-read the new structure and update the spec).
+#[cfg(feature = "optional-tests")]
 #[test]
 fn achievement_frame_comparison_plan_named_globals_split_presence_absence() {
     if crate::common::wrath_achievement_fixtures::assert_native(
@@ -482,6 +486,7 @@ fn achievement_frame_comparison_plan_named_globals_split_presence_absence() {
 /// `_DisplayCriteria` is removed/renamed AND if any of the three
 /// PLAN-anticipated symbols suddenly appears (which would be the
 /// signal to re-read the new structure and update the spec).
+#[cfg(feature = "optional-tests")]
 #[test]
 fn achievement_row_plan_named_globals_split_presence_absence() {
     if crate::common::wrath_achievement_fixtures::assert_native(

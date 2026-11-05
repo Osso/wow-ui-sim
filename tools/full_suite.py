@@ -35,8 +35,8 @@ GIB = 1024 ** 3
 # 16-worker/24GiB policy rather than reserving each unit's 5GiB ceiling.
 WORKER_SHARE_BYTES = 3 * GIB // 2
 TAIL_MEMORY_BYTES = 9 * GIB
-BATCH_TARGET_SECONDS = 20.0
-BATCH_MAX_NAMES = 25
+BATCH_TARGET_SECONDS = 40.0
+BATCH_MAX_NAMES = 60
 # Exact per-name CPU and memory is only worth a dedicated process where it pays:
 # measured expensive cases and cases with a reserved memory envelope.
 ISOLATE_SECONDS = 5.0
@@ -306,19 +306,51 @@ def lane_plan(budget, has_tail):
     return lanes, max(1, budget.cpus - lanes)
 
 
-def take_batch(queue, costs, single=False):
-    """Take a small cost-bounded batch from one queue."""
-    batch = [queue.popleft()]
+def family_of(name):
+    return name.split("::", 1)[0]
+
+
+def family_queues(names, costs, grouped_families=()):
+    """Keep verified grouped families contiguous; cost-order everything else.
+
+    Only a family that installs a shared forked fixture needs its cases in one
+    process. Every other family is batched by cost, so a run does not pay one
+    process launch per small family.
+    """
+    verified = set(grouped_families)
+    families = {}
+    loose = []
+    for name in names:
+        family = family_of(name)
+        if family in verified:
+            families.setdefault(family, []).append(name)
+        else:
+            loose.append(name)
+    ordered = sorted(families.items(),
+                     key=lambda item: (-sum(costs.get(name, 1) for name in item[1]), item[0]))
+    queues = [deque(sorted(cases, key=lambda name: (-costs.get(name, 1), name)))
+              for _, cases in ordered]
+    if loose:
+        queues.append(deque(sorted(loose, key=lambda name: (-costs.get(name, 1), name))))
+    return deque(queues)
+
+
+def take_batch(families, costs, single=False):
+    """Take a small cost-bounded batch from the head family."""
+    family = families[0]
+    batch = [family.popleft()]
     load = costs.get(batch[0], 1)
-    while not single and queue and len(batch) < BATCH_MAX_NAMES and load < BATCH_TARGET_SECONDS:
-        name = queue.popleft()
+    while not single and family and len(batch) < BATCH_MAX_NAMES and load < BATCH_TARGET_SECONDS:
+        name = family.popleft()
         batch.append(name)
         load += costs.get(name, 1)
+    if not family:
+        families.popleft()
     return batch
 
 
 def run_dynamic_suite(command, checkout, log, env, costs, budget, timeout_tests,
-                      memory_costs, tail_jobs=(), timing_path=None):
+                      memory_costs, tail_jobs=(), timing_path=None, grouped_families=()):
     """One shared queue: lanes pull small batches; tail steps overlap where they fit."""
     started = time.monotonic()
     discovery = subprocess.run([command[-1], "--list", "--format=terse"],
@@ -332,8 +364,8 @@ def run_dynamic_suite(command, checkout, log, env, costs, budget, timeout_tests,
     timeout_tests = set(timeout_tests)
     guarded = [name for name in names if name not in reserved and name in timeout_tests]
     ordinary = [name for name in names if name not in reserved and name not in timeout_tests]
-    pending = deque(sorted(ordinary, key=lambda name: (-costs.get(name, 1), name)))
-    guards = deque(sorted(guarded, key=lambda name: (-costs.get(name, 1), name)))
+    pending = family_queues(ordinary, costs, grouped_families)
+    guards = family_queues(guarded, costs)
     lanes, tail_threads = lane_plan(budget, bool(tail_jobs))
     # Guarded cases may wait on the global permit semaphore; keep running room
     # for ordinary work, and never exceed the configured permit bound.
@@ -350,30 +382,35 @@ def run_dynamic_suite(command, checkout, log, env, costs, budget, timeout_tests,
     tail_results = []
     sequence = [0]
 
-    def requeue(queue, batch):
-        queue.extendleft(reversed(batch))
-
     def next_job():
         with lock:
             while pending or guards:
                 if guards and state["guarded"] < guard_cap:
-                    queue, kind = guards, "guarded"
+                    families, kind = guards, "guarded"
                 elif pending:
-                    queue, kind = pending, "ordinary"
+                    families, kind = pending, "ordinary"
                 else:
                     lock.wait(0.2)
                     continue
-                single = (costs.get(queue[0], 0) >= ISOLATE_SECONDS
-                          or queue[0] in memory_costs["peak_bytes"])
-                batch = take_batch(queue, costs, single)
+                head = families[0][0]
+                # A guarded case may block on the global permit semaphore. Holding
+                # several of them in one lane would stall that lane for every name
+                # in the batch, so each guarded batch carries exactly one case.
+                single = (kind == "guarded"
+                          or costs.get(head, 0) >= ISOLATE_SECONDS
+                          or head in memory_costs["peak_bytes"])
+                # Families are ordered heaviest-first, so the head name bounds the
+                # batch's admission; check before taking so nothing must be requeued.
+                admission = admission_bytes([head], memory_costs)
+                if state["admitted"] + admission > budget.memory_bytes:
+                    lock.wait(0.2)
+                    continue
+                batch = take_batch(families, costs, single)
                 admission = admission_bytes(batch, memory_costs)
-                if state["admitted"] + admission <= budget.memory_bytes:
-                    state["admitted"] += admission
-                    if kind == "guarded":
-                        state["guarded"] += 1
-                    return kind, batch, admission
-                requeue(queue, batch)
-                lock.wait(0.2)
+                state["admitted"] += admission
+                if kind == "guarded":
+                    state["guarded"] += 1
+                return kind, batch, admission
             return None, None, 0
 
     def settle(kind, admission):
@@ -398,12 +435,14 @@ def run_dynamic_suite(command, checkout, log, env, costs, budget, timeout_tests,
                                         "result": str(result_path), "measure_memory": True,
                                         "isolate": len(batch) == 1 and kind != "reserved"}))
         try:
+            batch_env = dict(env, RUST_TEST_THREADS="1",
+                             WOW_SIM_TIMEOUT_CHILD_SLOTS=str(budget.timeout_slots))
+            if grouped_families:
+                batch_env["WOW_SIM_GROUPED_FIXTURE_FAMILIES"] = ",".join(grouped_families)
             step, output = run_step(
                 f"integration:{index}",
                 batch_command[:-1] + [sys.executable, str(WORKER), str(manifest)],
-                checkout, io.StringIO(),
-                dict(env, RUST_TEST_THREADS="1",
-                     WOW_SIM_TIMEOUT_CHILD_SLOTS=str(budget.timeout_slots)))
+                checkout, io.StringIO(), batch_env)
             batch_records = json.loads(result_path.read_text()).get("records", []) if result_path.exists() else []
             with lock:
                 records.update({record["name"]: record for record in batch_records if record.get("name")})
@@ -647,6 +686,9 @@ def run(ref, build_jobs, target_dir, profile="retail", optional=False,
                             integration_plan = next(plan for plan in plans if plan["name"] == "integration")
                             tail_plans = [plan for plan in plans if plan is not integration_plan]
                             costs = json.loads((checkout / "tools/integration-costs.json").read_text())
+                            grouped = json.loads(
+                                (checkout / "tools/grouped-fixture-families.json").read_text())["families"]
+                            result["grouped_fixture_families"] = grouped
                             timeout_tests = json.loads((checkout / "tools/integration-timeout-tests.json").read_text())
                             memory_costs = json.loads((checkout / "tools/integration-memory-peaks.json").read_text())
                             timings = RESULTS / f"{attempt}-timings.json"
@@ -654,7 +696,8 @@ def run(ref, build_jobs, target_dir, profile="retail", optional=False,
                             (result["steps"]["integration"], tail_results,
                              output) = run_dynamic_suite(
                                 integration_plan["command"], checkout, log, integration_plan["env"],
-                                costs, budget, timeout_tests, memory_costs, tail_plans, timings)
+                                costs, budget, timeout_tests, memory_costs, tail_plans, timings,
+                                grouped)
                             result["timings"] = str(timings)
                             result["failures"]["integration"] = sorted(set(FAILED.findall(output)))
                             if result["steps"]["integration"]["exit"]:

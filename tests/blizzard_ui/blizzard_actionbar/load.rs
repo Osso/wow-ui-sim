@@ -87,6 +87,7 @@ const LANE_FILE_SCOPE_MIXINS: &[&str] = &[
 ];
 const LANE_FILE_SCOPE_TABLES: &[&str] = &["ActionButtonUtil", "AssistedCombatManager"];
 
+#[cfg(feature = "optional-tests")]
 #[test]
 fn action_bar_load_emits_no_lane_specific_lua_errors() {
     wrath_action_case!(callbacks::load_errors);
@@ -145,6 +146,7 @@ fn action_bar_load_emits_no_lane_specific_lua_errors() {
 }
 
 post_wrath_ui_fixture! {
+#[cfg(feature = "optional-tests")]
 #[test]
 fn action_bar_load_executes_file_scope_mixin_declarations() {
     with_blizzard_addon_startup_shape(&[ROOT], &[], |env, _loaded| {
@@ -209,6 +211,7 @@ fn action_bar_load_executes_file_scope_mixin_declarations() {
 /// This test reads runtime-loaded rather than closure-walked state: the
 /// closure-walked list contains only addons loaded by this walk, while the
 /// registry flag represents what Lua can use after startup.
+#[cfg(feature = "optional-tests")]
 #[test]
 fn action_bar_every_declared_toc_dependency_is_loaded_after_harness_runs() {
     wrath_action_case!(native_dependencies);

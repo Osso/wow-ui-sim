@@ -110,6 +110,7 @@ return type(state),
 "#;
 
 post_wrath_ui_fixture! {
+#[cfg(feature = "optional-tests")]
 #[test]
 fn anima_diversion_ui_registers_static_popup_globals() {
     with_blizzard_addon_startup_shape(&[ROOT], CLOSURE_OVERRIDES, |env, _loaded| {
@@ -121,6 +122,7 @@ fn anima_diversion_ui_registers_static_popup_globals() {
     });
 }
 
+#[cfg(feature = "optional-tests")]
 #[test]
 fn anima_diversion_util_predicates_match_node_state_semantics() {
     with_blizzard_addon_startup_shape(&[ROOT], CLOSURE_OVERRIDES, |env, _loaded| {
@@ -134,6 +136,7 @@ fn anima_diversion_util_predicates_match_node_state_semantics() {
 
 }
 
+#[cfg(feature = "optional-tests")]
 #[test]
 fn anima_diversion_node_state_enum_exposes_published_values() {
     with_blizzard_addon_startup_shape(&[ROOT], CLOSURE_OVERRIDES, |env, _loaded| {

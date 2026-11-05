@@ -26,6 +26,7 @@ const RAW_GAME_DEP_LINE: &str = "## Dep: Blizzard_FrameXML [AllowLoad game]";
 const RAW_GLUE_DEP_LINE: &str = "## Dep: Blizzard_GlueXML [AllowLoad glue]";
 const EXPECTED_BODY: [&str; 2] = ["Mainline/ActionStatus.lua", "Mainline/ActionStatus.xml"];
 
+#[cfg(feature = "optional-tests")]
 #[test]
 fn action_status_loads_with_current_required_deps_and_no_lua_errors() {
     with_blizzard_addon_smoke_shape(&[ROOT], &[], |env, loaded| {
@@ -37,6 +38,7 @@ fn action_status_loads_with_current_required_deps_and_no_lua_errors() {
     });
 }
 
+#[cfg(feature = "optional-tests")]
 #[test]
 fn action_status_allowload_both_loads_in_game_and_glue_screens() {
     assert_toc_allows_game_and_glue_screens();

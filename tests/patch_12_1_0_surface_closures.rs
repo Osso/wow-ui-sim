@@ -146,7 +146,7 @@ fn context_access_denies_tainted_callers_on_restricted_objects_while_auras_are_s
         (true, (true, true, false, true)),
     ] {
         let env = env();
-        env.state().borrow_mut().unit_auras_restricted = secret;
+        env.state().borrow_mut().restricted_actions[0] = if secret { 2 } else { 0 };
         let observed: (bool, bool, bool, bool) = env
             .eval(
                 r#"local open = CreateFrame("Frame")

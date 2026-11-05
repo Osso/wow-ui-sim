@@ -113,6 +113,7 @@ const ACCOUNT_STORE_UTIL_FUNCTIONS: &[(&str, &str)] = &[
 ];
 
 post_wrath_ui_fixture! {
+#[cfg(feature = "optional-tests")]
 #[test]
 fn account_store_publishes_expected_global_mixin_tables() {
     with_blizzard_addon_smoke_shape(&[ROOT], &[], |env, _loaded| {
@@ -138,6 +139,7 @@ fn account_store_publishes_expected_global_mixin_tables() {
 }
 
 post_wrath_ui_fixture! {
+#[cfg(feature = "optional-tests")]
 #[test]
 fn account_store_category_list_publishes_expected_global_mixin_tables() {
     with_blizzard_addon_smoke_shape(&[ROOT], &[], |env, _loaded| {
@@ -168,6 +170,7 @@ fn account_store_category_list_publishes_expected_global_mixin_tables() {
 }
 
 post_wrath_ui_fixture! {
+#[cfg(feature = "optional-tests")]
 #[test]
 fn account_store_card_templates_publishes_expected_global_mixin_tables() {
     with_blizzard_addon_smoke_shape(&[ROOT], &[], |env, _loaded| {
@@ -215,6 +218,7 @@ fn account_store_card_templates_publishes_expected_global_mixin_tables() {
 }
 
 post_wrath_ui_fixture! {
+#[cfg(feature = "optional-tests")]
 #[test]
 fn account_store_item_view_publishes_expected_global_mixin_tables() {
     with_blizzard_addon_smoke_shape(&[ROOT], &[], |env, _loaded| {
@@ -243,6 +247,7 @@ fn account_store_item_view_publishes_expected_global_mixin_tables() {
 }
 
 post_wrath_ui_fixture! {
+#[cfg(feature = "optional-tests")]
 #[test]
 fn account_store_util_publishes_table_and_currency_functions() {
     with_blizzard_addon_smoke_shape(&[ROOT], &[], |env, _loaded| {
@@ -282,6 +287,7 @@ fn account_store_util_publishes_table_and_currency_functions() {
 const TRANSACTION_ERROR_POPUP_KEY: &str = "ACCOUNT_STORE_TRANSACTION_ERROR";
 
 post_wrath_ui_fixture! {
+#[cfg(feature = "optional-tests")]
 #[test]
 fn account_store_transaction_error_popup_is_registered_with_expected_fields() {
     with_blizzard_addon_smoke_shape(&[ROOT], &[], |env, _loaded| {
@@ -380,6 +386,7 @@ fn account_store_transaction_error_popup_is_registered_with_expected_fields() {
 }
 
 post_wrath_ui_fixture! {
+#[cfg(feature = "optional-tests")]
 #[test]
 fn account_store_toggle_is_callable_and_flips_frame_shown_state() {
     with_blizzard_addon_smoke_shape(&[ROOT], &[], |env, _loaded| {

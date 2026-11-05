@@ -147,7 +147,7 @@ fn unit_aura_restriction_alone_makes_the_result_secret() {
     }
     env.exec("AssertMaxApplications(101, 7, false)")
         .expect("cooldown and unit-stat restrictions are unrelated");
-    env.state().borrow_mut().unit_auras_restricted = true;
+    env.state().borrow_mut().restricted_actions[0] = 2;
     env.exec(
         r#"
         Saved = AssertMaxApplications(101, 7, true)
@@ -156,7 +156,7 @@ fn unit_aura_restriction_alone_makes_the_result_secret() {
         "#,
     )
     .expect("restricted results, including the miss, are secret host numbers");
-    env.state().borrow_mut().unit_auras_restricted = false;
+    env.state().borrow_mut().restricted_actions[0] = 0;
     env.exec(
         r#"
         AssertMaxApplications(101, 7, false)
@@ -184,7 +184,7 @@ fn tainted_callers_keep_their_taint_and_cannot_open_restricted_results() {
         "#,
     )
     .expect("public queries work under taint without clearing it");
-    env.state().borrow_mut().unit_auras_restricted = true;
+    env.state().borrow_mut().restricted_actions[0] = 2;
     env.exec(
         r#"
         local function probe()

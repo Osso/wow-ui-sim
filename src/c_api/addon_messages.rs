@@ -9,7 +9,9 @@ use crate::lua_api::state::MessageLogEntry;
 use crate::lua_bridge::{stack_val, table_set_rust_fn_static};
 #[cfg(feature = "client-wowforever")]
 use rilua::table_security::is_secret_value;
-#[cfg(feature = "retail-12-0-0")]
+// Forever's pinned BattleNetDocumentation.lua:303 declares `SendGameData` with
+// `SecretArguments = "AllowedWhenUntainted"`, the same contract Retail uses.
+#[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
 use rilua::table_security::unwrap_secret;
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
@@ -27,12 +29,12 @@ const TARGET_REQUIRED: u32 = 6;
 const GENERAL_ERROR: u32 = 9;
 #[cfg(feature = "client-wowforever")]
 const NOT_IN_GUILD: u32 = 10;
-#[cfg(feature = "retail-12-0-0")]
+#[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
 const TARGET_OFFLINE: u32 = 12;
 const PREFIX_BYTE_LIMIT: usize = 16;
 #[cfg(feature = "client-wowforever")]
 const CHAT_BYTE_LIMIT: usize = 255;
-#[cfg(feature = "retail-12-0-0")]
+#[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
 const BNET_BYTE_LIMIT: usize = 4078;
 #[cfg(feature = "client-wowforever")]
 const RAID_ROSTER_MINIMUM: usize = 6;
@@ -117,7 +119,7 @@ fn set_custom_message(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
-#[cfg(feature = "retail-12-0-0")]
+#[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
 pub(super) fn send_game_data(state: &mut LuaState) -> LuaResult<u32> {
     // The VM authenticates secret access without clearing caller taint.
     let account = unwrap_secret(state, stack_val(state, 1))?;
@@ -234,7 +236,7 @@ fn validate_chat(sim: &SimState, prefix: &str, message: &str, channel: &str, tar
     }
 }
 
-#[cfg(feature = "retail-12-0-0")]
+#[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
 fn validate_bnet(sim: &SimState, account: f64, prefix: &str, data: &str) -> u32 {
     let result = validate_payload(prefix, data, BNET_BYTE_LIMIT);
     if result != SUCCESS {

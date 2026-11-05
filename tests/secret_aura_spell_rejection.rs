@@ -20,7 +20,7 @@ fn aura_util_resolves_names_before_restricted_lookup() {
         state
             .spell_id_aliases
             .insert("mark of the wild".into(), 1126);
-        state.unit_auras_restricted = true;
+        state.restricted_actions[0] = 2;
     }
     env.exec(
         r#"
@@ -47,7 +47,7 @@ fn cooldown_viewer_skips_restricted_spell_and_keeps_never_secret_aura() {
     {
         let mut state = env.state().borrow_mut();
         state.player.buffs = vec![aura(343960), aura(1126)];
-        state.unit_auras_restricted = true;
+        state.restricted_actions[0] = 2;
     }
     env.exec(
         r#"

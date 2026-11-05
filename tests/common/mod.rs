@@ -13,6 +13,8 @@ pub mod auction_fixtures;
 pub mod aura_container_harness;
 pub mod blizzard_addon_harness;
 pub mod blizzard_addon_manifest;
+#[cfg(target_os = "linux")]
+pub mod grouped_fixture;
 mod event_helpers;
 pub mod game_menu_fixture;
 pub mod panel_fixtures;

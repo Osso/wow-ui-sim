@@ -156,7 +156,13 @@ previous build did not succeed.
 
 Each unit writes `slot-N/receipts/UNIT.json` with its source identity, changed
 paths (`changed_paths`, the mtime refresh set), content changes
-(`content_changed_paths`), command, result and artifact SHA256 values. The command arguments and
+(`content_changed_paths`), command, result and artifact SHA256 values. Receipts
+also record `dylib_sha256`, a map from slot-relative dylib path to the bytes this
+build produced. Cargo writes one unhashed dylib name per profile, so a later build
+with another feature set replaces the library a finished test binary loads. A
+runner must compare `dylib_sha256` with the files under `debug/deps` before it
+starts a unit and refuse on a mismatch; otherwise the binary fails at runtime with
+an undefined-symbol error. The command arguments and
 stdout/stderr bytes are passed through unchanged, including wrappers that capture
 Cargo JSON internally. The worker reads visible stdout for this build's Cargo
 `compiler-artifact` records, without changing the submitted arguments. Use Cargo's
@@ -167,7 +173,14 @@ Every repo-owned compiler-artifact record is judged on its own inputs, including
 libraries, binaries and tests. Ownership comes from `manifest_path` or target
 `src_path` under the worktree, fixed source mount or utility mount. Registry and
 Git package sources (`registry+`/`git+`) are external and excluded. Records without
-ownership paths cannot prove they are external and are checked.
+ownership paths cannot prove they are external and are checked. Records whose
+target kind the command does not select are not judged. An explicit `--bin`,
+`--test`, `--example` or `--bench` selection (or its plural form) limits that
+executable kind to matches; `--all-targets` selects everything. Libraries and
+build scripts remain guarded because selected targets link them as dependencies,
+and a dependency kind cannot prove direct selection. Cargo also builds bins to
+provide `CARGO_BIN_EXE_<name>` for integration tests, so `--lib --test
+integration` does not judge `debug/wow-sim`.
 
 The worker snapshots Cargo `.d` dep-info before the child starts and reads it
 again after the child exits.
@@ -206,8 +219,12 @@ executable bytes unchanged, so `fresh=false` is enough (user decision 2026-10-29
 An unchanged executable is also accepted when another executable reported in the
 same build has `fresh=false`, a changed SHA256, and inputs covering every changed
 non-manifest content input read by the unchanged executable (user decision
-2026-11-02). Missing artifacts remain stale. Otherwise the run fails with
-`stale artifacts`. Libraries do not require changed hashes. A changed library or
+2026-11-02). An unchanged executable is also accepted when the prior certificate
+for its exact path records the current SHA256 (user decision 2026-11-05): a
+comment-only edit rebuilds identical bytes, and those bytes are already certified.
+Missing artifacts and artifacts with no matching prior certificate remain stale.
+Otherwise the run fails with `stale artifacts`. Libraries do not require changed
+hashes. A changed library or
 `.rmeta` cannot certify an executable whose own inputs changed. Unreported artifacts and records with
 disjoint inputs are not judged for freshness. A test-only edit therefore does not
 reject an unaffected fresh bin, even within the same package. Records affected
@@ -363,6 +380,8 @@ The build uses `scripts/slot-build.py` and `cargo test --no-run --all-targets --
 Retail integration uses one shared work queue. Stable `--list --format=terse` discovery supplies exact test names; the timeout re-execution conformance module runs first and alone, because its capacity fixtures acquire the exclusive workload gate and competing shared holders caused measured waits of 180–296 seconds. Remaining names are ordered by `tools/integration-costs.json` from the frozen checkout, and new tests have unit weight. Each lane pulls a small cost-bounded batch (target 20 measured seconds, at most 25 names) until the queue is empty, instead of receiving a fixed partition. Lanes therefore reuse capacity freed by a fast batch; measured static partitions left six of sixteen workers idle for hundreds of seconds.
 
 A batch is one `systemd-run` service that executes `tools/full_suite_worker.py`. By default the whole batch runs in one native process with `--test-threads=1 --format=pretty --color=never --exact NAME...` (stable libtest; no unstable flags), and each case's wall time comes from its own completed `test NAME ... ok` line. Per-name CPU is apportioned from the batch's wait4 CPU by wall share and labelled `batch_share`. One native process per case instead costs about 0.3 s of harness startup and linking per case: a measured attempt with 11,986 launches used 2,892 extra CPU-seconds (+33%) and took longer overall, so process isolation is reserved for cases where it pays. Cases whose saved cost is at least 5 seconds, or that have a reserved memory envelope, run alone and record their own wait4 CPU and kernel memory peak (`isolated`).
+
+`tools/grouped-fixture-families.json` lists the families verified for shared-forked fixtures. For those families the Blizzard addon harness builds the fixture once per process and runs each case's unchanged assertions in a forked child, with the bytecode cache read-only in the child. The runner passes the list to every integration batch as `WOW_SIM_GROUPED_FIXTURE_FAMILIES`; a family that is not listed builds its fixture in-process exactly as before, and `WOW_SIM_GROUPED_FIXTURE_REPORT` records each such fallback by test name. Only families with identical per-name outcomes forward, reversed and ungrouped, and a measured CPU saving, belong in that file.
 
 `tools/integration-timeout-tests.json` marks known timeout-wrapper consumers. A guarded case may block on the global permit semaphore, so at most `min(timeout child slots, lanes − 1)` guarded batches run at once, leaving lanes for ordinary work. `WOW_SIM_TIMEOUT_CHILD_SLOTS` is set to min(6, floor(6 × CPUs / 16), floor(6 × GiB / 24)), with a minimum of two, and defaults to two outside the runner. The semaphore itself is unchanged and shared by all lanes.
 
