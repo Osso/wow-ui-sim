@@ -1,7 +1,5 @@
 //! Ordinary option processing only; no rendering or security claims.
 
-use crate::lua_api::WowLuaEnv;
-
 #[cfg(feature = "retail-12-1-5")]
 #[test]
 fn patch_12_1_5_aura_caster_name_options_defaults_and_booleans() {
@@ -35,6 +33,7 @@ fn patch_12_1_5_aura_caster_name_options_defaults_and_booleans() {
 retail_namespace_fixture! {
 #[test]
 fn patch_12_1_5_aura_caster_name_options_absent_on_earlier_profiles() {
+    use crate::lua_api::WowLuaEnv;
     let env = WowLuaEnv::new().expect("Lua environment should initialize");
     let absent: bool = env
         .eval("return C_AuraContainerUtil.ProcessCustomAuraButtonCasterNameOptions == nil")

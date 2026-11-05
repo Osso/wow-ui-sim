@@ -421,7 +421,9 @@ fn manifest_entry_fdid(entry: &str) -> Option<u32> {
     crate::limited_listfile::lookup_path(&asset_path)
 }
 
-#[cfg(test)]
+// Only the CASC-listfile manifest case calls this; Wrath's snapshot manifest has
+// no listfile mapping to allow (see casc_listfile_manifest_fixture).
+#[cfg(all(test, not(feature = "client-wrath")))]
 fn manifest_entry_is_allowed_unmapped(entry: &str) -> bool {
     if profile_cache::MISTS_REQUIRED_PROFILE_CACHE_ENTRIES.contains(&entry) {
         return true;

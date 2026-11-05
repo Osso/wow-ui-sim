@@ -138,13 +138,6 @@ mod tests {
         super::apply_bootstrap(&mut lua).expect("item-button helper defaults should apply");
     }
 
-    fn assert_close(actual: f64, expected: f64) {
-        assert!(
-            (actual - expected).abs() < 0.0001,
-            "expected {actual} to be close to {expected}"
-        );
-    }
-
     #[test]
     fn installs_item_button_helper_defaults() {
         let env = WowLuaEnv::new().expect("lua env should initialize");
@@ -172,6 +165,13 @@ mod tests {
     }
 
     modern_engine_namespace_fixture! {
+    fn assert_close(actual: f64, expected: f64) {
+        assert!(
+            (actual - expected).abs() < 0.0001,
+            "expected {actual} to be close to {expected}"
+        );
+    }
+
     #[test]
     fn updates_plain_item_button_texture_count_and_colors() {
         let env = WowLuaEnv::new().expect("lua env should initialize");

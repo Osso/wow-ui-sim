@@ -1,10 +1,9 @@
 //! Application-bar option processing only, not aura rendering or security.
 
-use crate::lua_api::WowLuaEnv;
-
 retail_namespace_fixture! {
 #[test]
 fn patch_12_1_5_aura_application_options_default() {
+    use crate::lua_api::WowLuaEnv;
     let env = WowLuaEnv::new().expect("Lua environment should initialize");
     let actual: (Option<f64>, f64, f64) = env
         .eval(
@@ -26,6 +25,7 @@ fn patch_12_1_5_aura_application_options_default() {
 retail_namespace_fixture! {
 #[test]
 fn patch_12_1_5_aura_application_options_explicit() {
+    use crate::lua_api::WowLuaEnv;
     let env = WowLuaEnv::new().expect("Lua environment should initialize");
     let actual: (Option<f64>, f64, f64) = env
         .eval(
