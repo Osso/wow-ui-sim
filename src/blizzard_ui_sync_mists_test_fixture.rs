@@ -40,10 +40,11 @@ fn mists_core_entry_contents(entry: &str) -> Option<&'static str> {
             r#"<Ui><CheckButton name="ChatConfigCheckButtonTemplate"><FontString name="$parentText"/></CheckButton></Ui>"#
         }
         "Blizzard_MicroMenu/Blizzard_MicroMenu_Classic.toc" => {
-            "Cata\\MainMenuBarMicroButtons.xml [AllowLoadGameType mists]\n"
+            "Vanilla\\MicroMenuContainerOverrides.lua [AllowLoadGameType vanilla, tbc]\n\
+             [Game]\\MicroMenuContainerOverrides.lua [AllowLoadGameType wrath, cata, mists]\n"
         }
         "Blizzard_MicroMenu/Shared/MicroMenuContainer.lua" => {
-            "function MicroMenuContainerMixin:OnLoad()\nend\n"
+            "function MicroMenuMixin:AddButton(button)\n\tbutton:PostAddButtonCallback();\nend\n"
         }
         "Blizzard_Fonts_Shared/Classic/GameFonts.xml" => {
             r#"<Ui><FontFamily name="PriceFont"/></Ui>"#
