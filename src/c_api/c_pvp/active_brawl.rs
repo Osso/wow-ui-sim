@@ -16,7 +16,14 @@ pub(super) fn register(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResu
         "GetActiveBrawlInfo",
         get_active_brawl_info,
     )?;
-    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
+    // The pinned Retail and WowForever PvpInfoDocumentation.lua declare
+    // GetSpecialEventBrawlInfo (:775) and GetAvailableBrawlInfo (:255). PTR
+    // keeps its existing GetActiveBrawlInfo-only surface.
+    if matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail
+            | crate::client_profile::ClientProfile::WowForever
+    ) {
         table_set_rust_fn_static(
             state,
             namespace,

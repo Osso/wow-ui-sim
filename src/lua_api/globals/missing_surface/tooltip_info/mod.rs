@@ -72,9 +72,9 @@ fn register_c_tooltip_info(state: &mut LuaState) -> LuaResult<()> {
         crate::c_api::c_tooltip_info_artifact_power::register(state, table_ref)?;
         crate::c_api::c_tooltip_info_enhanced_conduit::register(state, table_ref)?;
         // WM107: the pinned docs declare GetPvpBrawl
-        // (TooltipInfoDocumentation.lua:710), but the supplied brawl state is
-        // compiled only for retail-12-0-5 profiles, so Forever is excluded.
-        #[cfg(feature = "retail-12-0-5")]
+        // (TooltipInfoDocumentation.lua:710) on Retail, PTR and Forever; the
+        // supplied brawl state is compiled for the same profiles.
+        #[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
         crate::c_api::c_tooltip_info_pvp_brawl::register(state, table_ref)?;
     }
     // Retail, PTR and Forever pinned docs all declare the loot getters,

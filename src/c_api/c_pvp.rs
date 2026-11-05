@@ -36,9 +36,12 @@ pub struct BattlegroundEnlistmentInputs {
     pub cached_values: std::collections::HashMap<i32, i64>,
 }
 
-#[cfg(all(
-    feature = "retail-12-0-5",
-    any(feature = "profile-retail", feature = "client-ptr")
+#[cfg(any(
+    all(
+        feature = "retail-12-0-5",
+        any(feature = "profile-retail", feature = "client-ptr")
+    ),
+    feature = "client-wowforever"
 ))]
 mod active_brawl;
 #[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
@@ -121,9 +124,12 @@ pub(crate) fn register_c_pvp_surface(state: &mut LuaState) -> LuaResult<()> {
     }
     #[cfg(feature = "retail-12-0-0")]
     catalog::register(state, ns)?;
-    #[cfg(all(
-        feature = "retail-12-0-5",
-        any(feature = "profile-retail", feature = "client-ptr")
+    #[cfg(any(
+        all(
+            feature = "retail-12-0-5",
+            any(feature = "profile-retail", feature = "client-ptr")
+        ),
+        feature = "client-wowforever"
     ))]
     active_brawl::register(state, ns)?;
     register_patch_12_1_c_pvp_surface(state, ns)?;

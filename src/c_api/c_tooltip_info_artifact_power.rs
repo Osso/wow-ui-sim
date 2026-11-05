@@ -43,7 +43,6 @@ use crate::lua_api::globals::missing_surface::tooltip_info::{
 use crate::lua_api::methods::borrow_state;
 use crate::lua_bridge::table_set_rust_fn_static;
 use rilua::LuaResult;
-use rilua::Val;
 use rilua::vm::{gc::arena::GcRef, state::LuaState, table::Table};
 
 /// EMULATED: WM94/WM108 leave the published data type UNKNOWN.

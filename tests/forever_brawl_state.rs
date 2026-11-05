@@ -66,7 +66,7 @@ fn forever_pvp_match_consumer_reads_the_supplied_active_brawl() {
         r#"
         local source = debug.getinfo(PVPMatchUtil.InSoloShuffleBrawl, 'S').source
         assert(source:find('PVPMatchUtil.lua', 1, true), source)
-        assert(PVPMatchUtil.InSoloShuffleBrawl() == false, 'no active record')
+        assert(not PVPMatchUtil.InSoloShuffleBrawl(), 'no active record')
         "#,
     )
     .unwrap();
@@ -124,7 +124,38 @@ fn forever_tooltip_data_handler_routes_set_pvp_brawl_to_the_getter() {
         assert(info and info.getterName == 'GetPvpBrawl', 'handler getter name')
         local data = GameTooltip:GetPrimaryTooltipData()
         assert(data and data.type == Enum.TooltipDataType.PvPBrawl, 'brawl tooltip data')
-        assert(data.lines[1].leftText == 'Fixture brawl name', 'record name row')
+        assert(data.id == nil, 'brawl tooltip has no identity id')
+        local lines = data.lines
+        local function dump()
+            local parts = {}
+            for index, line in ipairs(lines) do
+                parts[index] = ('%d:%s'):format(index, tostring(line.type))
+            end
+            return table.concat(parts, ' ')
+        end
+        -- The simulator's packed D56 tooltip-data seam is Retail/PTR only, so
+        -- Forever keeps the raw named colour instead of the packed byte.
+        assert(#lines == 8, 'active brawl row count: ' .. #lines)
+        assert(lines[1].type == 0 and lines[1].leftText == 'Fixture brawl name',
+            'raw record name is a plain line: ' .. dump())
+        assert(lines[1].leftColor.b > 0.9, 'name uses the highlight colour')
+        assert(lines[2].type == 42, 'ends-in must serialize as DisabledLine: ' .. dump())
+        assert(lines[2].leftText:find('Ends in', 1, true), 'ends-in text: ' .. tostring(lines[2].leftText))
+        assert(lines[2].leftColor.r == DISABLED_FONT_COLOR.r
+            and lines[2].leftColor.g == DISABLED_FONT_COLOR.g
+            and lines[2].leftColor.b == DISABLED_FONT_COLOR.b,
+            'ends-in uses the disabled named colour')
+        assert(lines[3].type == 1 and lines[3].leftText == ' ', 'blank spacer: ' .. dump())
+        assert(lines[4].type == 0 and lines[4].leftText == BRAWL_TOOLTIP_MAP,
+            'single-map heading')
+        assert(lines[5].type == 0
+            and lines[5].leftText == string.format(BRAWL_TOOLTIP_MAP_ENTRY, 'Fixture map'),
+            'explicit map row')
+        assert(lines[6].type == 1 and lines[6].leftText == ' ', 'rules spacer')
+        assert(lines[7].type == 0 and lines[7].leftText == BRAWL_TOOLTIP_RULES,
+            'rules heading')
+        assert(lines[8].type == 0 and lines[8].leftText == 'Fixture rules.',
+            'long description row')
         "#,
     )
     .unwrap();
