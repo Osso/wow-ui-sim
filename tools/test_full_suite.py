@@ -18,6 +18,332 @@ SCOPES = ("integration", "prefork_full_ui", "lib")
 PROFILES = ("retail", "ptr", "wrath", "mists", "wowforever", "era", "anniversary")
 
 
+class IntegrationMetricsTests(unittest.TestCase):
+    def run_worker(self, manifest):
+        path = Path(tempfile.mkdtemp()) / 'manifest.json'
+        path.write_text(json.dumps(manifest))
+        return subprocess.run([sys.executable, str(RUNNER.with_name('full_suite_worker.py')),
+                               str(path)], capture_output=True, text=True, timeout=20)
+
+    def test_bulk_batch_records_per_name_wall_status_and_cpu_share(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            binary = root / 'native'
+            write_executable(binary,
+                "import sys, time\n"
+                "names = sys.argv[sys.argv.index('--exact') + 1:]\n"
+                "for name in names:\n"
+                "    sum(i * i for i in range(50000))\n"
+                "    time.sleep(.03)\n"
+                "    print('test ' + name + ' ... ' + ('FAILED' if name == 'bad' "
+                "else 'ignored' if name == 'ignored' else 'ok'), flush=True)\n"
+                "sys.exit(1 if 'bad' in names else 0)\n")
+            result = root / 'result.json'
+            process = self.run_worker({'binary': str(binary), 'names': ['good', 'bad', 'ignored'],
+                                       'result': str(result), 'measure_memory': False})
+            self.assertEqual(process.returncode, 1, process.stderr)
+            records = {record['name']: record for record in json.loads(result.read_text())['records']}
+            self.assertEqual(records['good']['status'], 'passed')
+            self.assertEqual(records['bad']['status'], 'failed')
+            self.assertEqual(records['ignored']['status'], 'ignored')
+            self.assertEqual(records['good']['cpu_source'], 'batch_share')
+            self.assertGreaterEqual(records['good']['seconds'], .029)
+            self.assertGreater(records['good']['cpu_seconds'], 0)
+            self.assertIn('test good ... ok', process.stdout)
+
+    def test_case_written_output_and_ignored_reason_keep_their_outcomes(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            binary = root / 'native'
+            write_executable(binary,
+                "import sys\n"
+                "names = sys.argv[sys.argv.index('--exact') + 1:]\n"
+                "for name in names:\n"
+                "    if name == 'noisy':\n"
+                "        print('test ' + name + ' ... OK:5')\n"
+                "        print('ok', flush=True)\n"
+                "    elif name == 'skipped':\n"
+                "        print('test ' + name + ' ... ignored, not implemented', flush=True)\n"
+                "    else:\n"
+                "        print('test ' + name + ' ... ok', flush=True)\n")
+            result = root / 'result.json'
+            path = root / 'manifest.json'
+            path.write_text(json.dumps({'binary': str(binary), 'names': ['noisy', 'skipped', 'plain'],
+                                        'result': str(result), 'measure_memory': False}))
+            process = subprocess.run([sys.executable, str(RUNNER.with_name('full_suite_worker.py')),
+                                       str(path)], capture_output=True, text=True, timeout=20)
+            self.assertEqual(process.returncode, 0, process.stderr)
+            records = {record['name']: record['status']
+                       for record in json.loads(result.read_text())['records']}
+            self.assertEqual(records, {'noisy': 'passed', 'skipped': 'ignored', 'plain': 'passed'})
+
+    def test_isolated_name_records_its_own_cpu_and_memory_peak(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            binary = root / 'native'
+            write_executable(binary,
+                "import sys\n"
+                "sum(i * i for i in range(200000))\n"
+                "print('test solo ... ok')\n")
+            result = root / 'result.json'
+            process = self.run_worker({'binary': str(binary), 'names': ['solo'],
+                                       'result': str(result), 'measure_memory': True,
+                                       'isolate': True})
+            self.assertEqual(process.returncode, 0, process.stderr)
+            record = json.loads(result.read_text())['records'][0]
+            self.assertEqual(record['cpu_source'], 'isolated')
+            self.assertGreater(record['cpu_seconds'], 0)
+            self.assertGreater(record['memory_peak_bytes'], 0)
+
+    def test_success_without_selected_case_output_is_rejected(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            binary = root / 'native'
+            write_executable(binary, "print('test result: ok. 0 passed')\n")
+            result = root / 'result.json'
+            process = self.run_worker({'binary': str(binary), 'names': ['missing'],
+                                       'result': str(result), 'measure_memory': False})
+            self.assertNotEqual(process.returncode, 0)
+            self.assertEqual(json.loads(result.read_text())['records'][0]['status'], 'invalid')
+
+
+class IntegrationCostRefreshTests(unittest.TestCase):
+    def test_measured_durations_replace_known_costs_and_keep_unobserved_names(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            timings = root / 'timings.json'
+            costs = root / 'costs.json'
+            timings.write_text(json.dumps({
+                'observed::case': {'seconds': 2.5, 'cpu_seconds': 2.1},
+                'new::case': {'seconds': 0.25, 'cpu_seconds': 0.2}}))
+            costs.write_text(json.dumps({'observed::case': 9.0, 'absent::case': 4.0}))
+            script = RUNNER.with_name('refresh_integration_costs.py')
+            process = subprocess.run([sys.executable, str(script), str(timings), str(costs)],
+                                     capture_output=True, text=True, timeout=10)
+            self.assertEqual(process.returncode, 0, process.stderr)
+            self.assertEqual(json.loads(costs.read_text()),
+                             {'absent::case': 4.0, 'new::case': 0.25, 'observed::case': 2.5})
+
+    def test_invalid_measurement_is_rejected_without_writing(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            timings = root / 'timings.json'
+            costs = root / 'costs.json'
+            timings.write_text(json.dumps({'bad::case': {'seconds': 0}}))
+            costs.write_text(json.dumps({'absent::case': 4.0}))
+            script = RUNNER.with_name('refresh_integration_costs.py')
+            process = subprocess.run([sys.executable, str(script), str(timings), str(costs)],
+                                     capture_output=True, text=True, timeout=10)
+            self.assertNotEqual(process.returncode, 0)
+            self.assertEqual(json.loads(costs.read_text()), {'absent::case': 4.0})
+
+
+class TestBudgetTests(unittest.TestCase):
+    def setUp(self):
+        spec = importlib.util.spec_from_file_location('budget_runner', RUNNER)
+        self.runner = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(self.runner)
+
+    def test_explicit_budget_scales_permits_and_workers(self):
+        for cpus, memory, workers, permits in ((16, 24, 16, 6), (8, 12, 8, 3), (4, 6, 4, 2), (1, 24, 1, 2)):
+            with self.subTest(cpus=cpus, memory=memory):
+                budget = self.runner.TestBudget(cpus, memory)
+                self.assertEqual(budget.shard_count, workers)
+                self.assertEqual(budget.timeout_slots, permits)
+                self.assertEqual(budget.record(), {'cpus': cpus, 'mem_gib': memory,
+                    'integration_shards': workers, 'timeout_child_slots': permits})
+
+    def test_budget_rejects_nonpositive_or_above_admitted_limits(self):
+        for cpus, memory in ((0, 24), (17, 24), (16, 0), (16, 25)):
+            with self.subTest(cpus=cpus, memory=memory), self.assertRaises(ValueError):
+                self.runner.TestBudget(cpus, memory)
+
+    def test_measured_peak_caps_include_headroom_floor_and_unknown_cases(self):
+        gib = 1024 ** 3
+        peaks = {'peak_bytes': {'small::case': gib, 'large::case': 4 * gib}, 'headroom_percent': 50}
+        self.assertEqual(self.runner.shard_memory_bytes(['small::case'], peaks), 5 * gib)
+        self.assertEqual(self.runner.shard_memory_bytes(['large::case'], peaks), 6 * gib)
+        self.assertEqual(self.runner.shard_memory_bytes(['new::case'], peaks), 6 * gib)
+
+
+def selection_script(names, body):
+    """A fake native test binary that runs every selected name in one process."""
+    return ("import pathlib, sys, time\n"
+            "root = pathlib.Path(__file__).parent\n"
+            "if '--list' in sys.argv:\n"
+            "    print('\\n'.join(name + ': test' for name in " + repr(names) + "))\n"
+            "    sys.exit(0)\n"
+            "selected = sys.argv[sys.argv.index('--exact') + 1:]\n"
+            "for name in selected:\n"
+            + "".join("    " + line + "\n" for line in body.splitlines())
+            + "    print('test ' + name + ' ... ok', flush=True)\n")
+
+
+class IntegrationShardingTests(unittest.TestCase):
+    def setUp(self):
+        spec = importlib.util.spec_from_file_location('shard_runner', RUNNER)
+        self.runner = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(self.runner)
+        self.memory_costs = {'peak_bytes': {'observed': 2 * 1024 ** 3}, 'headroom_percent': 50}
+        self.temp = tempfile.TemporaryDirectory()
+        self.addCleanup(self.temp.cleanup)
+        self.root = Path(self.temp.name)
+        self.launcher = self.root / 'systemd-run'
+        write_executable(self.launcher,
+            "import subprocess, sys\n"
+            "sys.exit(subprocess.call(sys.argv[sys.argv.index('--') + 1:]))\n")
+        self.runner.confirm_terminated = lambda *args: None
+
+    def run_suite(self, body, costs=None, budget=None, guards=(), tail=(), timings=None,
+                  memory_costs=None):
+        import io
+        binary = self.root / 'test-binary'
+        write_executable(binary, body)
+        return self.runner.run_dynamic_suite(
+            [str(self.launcher), '--unit=fixture', '-p', 'MemoryMax=9G', '--', str(binary)],
+            self.root, io.StringIO(), dict(os.environ), costs or {},
+            budget or self.runner.TestBudget(2, 24), guards,
+            memory_costs or self.memory_costs, tail, timings)
+
+    def test_batches_cover_every_name_once_in_cost_order(self):
+        from collections import deque
+        queue = deque(['slow', 'cheap', 'medium'])
+        costs = {'slow': 30, 'medium': 5}
+        self.assertEqual(self.runner.take_batch(queue, costs), ['slow'])
+        self.assertEqual(list(queue), ['cheap', 'medium'])
+        self.assertEqual(self.runner.take_batch(queue, costs), ['cheap', 'medium'])
+        self.assertEqual(self.runner.take_batch(deque(['big', 'other']), costs, single=True), ['big'])
+
+    def test_unknown_admission_is_the_worker_share_and_known_uses_its_measured_cap(self):
+        gib = 1024 ** 3
+        self.assertEqual(self.runner.admission_bytes(['new::case'], self.memory_costs), 3 * gib // 2)
+        self.assertEqual(self.runner.admission_bytes(['observed'], self.memory_costs), 3 * gib)
+
+    def test_tail_jobs_reserve_memory_and_threads_from_integration_lanes(self):
+        budget = self.runner.TestBudget(16, 24)
+        self.assertEqual(self.runner.lane_plan(budget, False), (16, 0))
+        self.assertEqual(self.runner.lane_plan(budget, True), (10, 6))
+        self.assertEqual(self.runner.lane_plan(self.runner.TestBudget(4, 6), True), (2, 2))
+
+    def test_conformance_runs_exclusively_before_shared_work(self):
+        names = ['timeout_reexec::capacity', 'ordinary::a', 'ordinary::b']
+        body = selection_script(names, "pass")
+        binary = self.root / 'test-binary'
+        write_executable(binary, body)
+        import io
+        step, _, _ = self.runner.run_dynamic_suite(
+            [str(self.launcher), '--unit=fixture', '-p', 'MemoryMax=9G', '--', str(binary)],
+            self.root, io.StringIO(), dict(os.environ), {}, self.runner.TestBudget(2, 24), (),
+            self.memory_costs)
+        self.assertEqual(step['exit'], 0)
+        self.assertEqual(step['tests'], 3)
+        kinds = [batch['kind'] for batch in step['batches_detail']]
+        self.assertEqual(kinds[0], 'reserved')
+
+    def test_guarded_batches_leave_running_room_for_ordinary_work(self):
+        guarded = [f'guarded::{index}' for index in range(6)]
+        names = guarded + ['ordinary::a']
+        body = selection_script(names,
+            "if name.startswith('guarded::'):\n"
+            "    with (root / 'guarded-spans').open('a') as spans:\n"
+            "        spans.write(f'{time.monotonic()} start {name}\\n')\n"
+            "    time.sleep(.3)\n"
+            "    with (root / 'guarded-spans').open('a') as spans:\n"
+            "        spans.write(f'{time.monotonic()} end {name}\\n')\n"
+            "else:\n"
+            "    (root / 'ordinary-ran').touch()")
+        # Each guarded case is above the isolation threshold and runs alone.
+        step, _, _ = self.run_suite(body, costs={name: 30 for name in guarded}, guards=guarded,
+                                    budget=self.runner.TestBudget(3, 24))
+        self.assertEqual(step['exit'], 0)
+        self.assertEqual(step['tests'], 7)
+        self.assertTrue((self.root / 'ordinary-ran').exists())
+        spans = sorted((float(at), kind) for at, kind, _ in
+                       (line.split() for line in (self.root / 'guarded-spans').read_text().splitlines()))
+        active = peak = 0
+        for _, kind in spans:
+            active += 1 if kind == 'start' else -1
+            peak = max(peak, active)
+        self.assertGreaterEqual(peak, 2, 'guarded work ran fully serialized')
+        self.assertLessEqual(peak, 2, 'guarded work exceeded its permit-derived lane cap')
+
+    def test_each_batch_receives_its_measured_memory_cap(self):
+        gib = 1024 ** 3
+        launcher = self.root / 'systemd-run'
+        write_executable(launcher,
+            "import os, subprocess, sys\n"
+            "args = sys.argv[1:]\n"
+            "value = next(arg.split('=', 1)[1] for arg in args if arg.startswith('MemoryMax='))\n"
+            "limit = int(value[:-1]) * 1024 ** 3 if value.endswith('G') else int(value)\n"
+            "env = dict(os.environ, TEST_UNIT_MEMORY_BYTES=str(limit))\n"
+            "sys.exit(subprocess.call(args[args.index('--') + 1:], env=env))\n")
+        names = ['large::case', 'small::case']
+        body = selection_script(names,
+            "limit = int(os.environ['TEST_UNIT_MEMORY_BYTES'])\n"
+            "required = 6 * 1024 ** 3 if name.startswith('large') else 2 * 1024 ** 3\n"
+            "assert limit >= required, 'batch unit exceeded its memory budget'\n"
+            "(root / (name.split('::')[0] + '-cap')).write_text(str(limit))")
+        body = "import os\n" + body
+        peaks = {'peak_bytes': {'large::case': 4 * gib, 'small::case': gib}, 'headroom_percent': 50}
+        binary = self.root / 'test-binary'
+        write_executable(binary, body)
+        import io
+        step, _, _ = self.runner.run_dynamic_suite(
+            [str(launcher), '--unit=fixture', '-p', 'MemoryMax=3G', '--', str(binary)],
+            self.root, io.StringIO(), dict(os.environ), {'large::case': 30},
+            self.runner.TestBudget(2, 24), (), peaks)
+        self.assertEqual(step['exit'], 0)
+        self.assertEqual((self.root / 'large-cap').read_text(), str(6 * gib))
+        self.assertEqual((self.root / 'small-cap').read_text(), str(5 * gib))
+
+    def test_exact_names_failures_and_per_name_metrics_are_recorded(self):
+        timings = self.root / 'timings.json'
+        names = ['alpha::a', 'alpha::ab', 'beta::bad', 'beta::ignored']
+        body = selection_script(names,
+            "time.sleep(.02)\n"
+            "if name == 'beta::bad':\n"
+            "    print('test ' + name + ' ... FAILED', flush=True)\n"
+            "    continue")
+        binary = self.root / 'test-binary'
+        write_executable(binary, body)
+        import io
+        step, _, output = self.runner.run_dynamic_suite(
+            [str(self.launcher), '--unit=fixture', '-p', 'MemoryMax=9G', '--', str(binary)],
+            self.root, io.StringIO(), dict(os.environ), {}, self.runner.TestBudget(2, 24), (),
+            self.memory_costs, (), timings)
+        self.assertEqual(step['exit'], 1)
+        self.assertEqual(self.runner.FAILED.findall(output), ['beta::bad'])
+        records = json.loads(timings.read_text())
+        self.assertEqual(sorted(records), names)
+        self.assertEqual(records['beta::bad']['status'], 'failed')
+        self.assertGreater(records['alpha::a']['seconds'], .019)
+        self.assertGreater(records['alpha::a']['cpu_seconds'], 0)
+
+    def test_tail_steps_run_concurrently_with_integration(self):
+        tail_binary = self.root / 'tail-binary'
+        write_executable(tail_binary,
+            "import pathlib, sys, time\n"
+            "root = pathlib.Path(__file__).parent\n"
+            "deadline = time.monotonic() + 5\n"
+            "while not (root / 'integration-started').exists():\n"
+            "    assert time.monotonic() < deadline, 'tail started after integration'\n"
+            "    time.sleep(.01)\n"
+            "(root / 'tail-ran').touch()\n"
+            "print('test tail::one ... ok')\n")
+        names = ['ordinary::a']
+        body = selection_script(names,
+            "(root / 'integration-started').touch()\n"
+            "deadline = time.monotonic() + 5\n"
+            "while not (root / 'tail-ran').exists():\n"
+            "    assert time.monotonic() < deadline, 'tail did not overlap integration'\n"
+            "    time.sleep(.01)")
+        tail = [{'name': 'lib', 'command': [str(tail_binary)]}]
+        step, tail_steps, _ = self.run_suite(body, tail=tail)
+        self.assertEqual(step['exit'], 0)
+        self.assertEqual(tail_steps['lib'][0]['exit'], 0)
+        self.assertGreater(step['tail_threads'], 0)
+
+
 def write_executable(path, body):
     path.write_text(f"#!{sys.executable}\n" + body)
     path.chmod(0o755)
@@ -588,6 +914,70 @@ sys.exit(runner.run(sys.argv[2], 1, sys.argv[3], "ptr"))
         self.assertNotEqual(again.returncode, 0, again.stderr)
         second = json.loads((self.home / 'slot-argv.json').read_text())
         self.assertEqual(second[second.index('--worktree') + 1], str(worktree))
+
+    def test_cli_budget_reaches_native_tests_and_private_slice(self):
+        binary = self.slot / 'budget-test'
+        write_executable(binary,
+            "import os, sys\n"
+            "if os.environ.get('WOW_SIM_TIMEOUT_CHILD_SLOTS') != '2': sys.exit('incorrect configured permit count')\n")
+        write_executable(self.bin / 'slot-build.py',
+            "import json, os, pathlib, sys\n"
+            "slot = pathlib.Path(os.environ['HOME']) / '.cache/wow-ui-sim-targets/slot-3'\n"
+            "unit = sys.argv[sys.argv.index('--unit') + 1]\n"
+            "receipt = slot / 'receipts' / (unit + '.json')\n"
+            "receipt.parent.mkdir(exist_ok=True)\n"
+            "records = [{'executable': str(slot / 'budget-test'), 'profile': {'test': True}, "
+            "'target': {'name': name, 'kind': [kind]}} for name, kind in [('integration', 'test'), ('wow_ui_sim', 'lib')]]\n"
+            "receipt.write_text(json.dumps({'result': 'success', 'returncode': 0, 'reported_artifacts': records}))\n")
+        write_executable(self.bin / 'systemctl',
+            "import json, os, pathlib, sys\n"
+            "with (pathlib.Path(os.environ['HOME']) / 'control-argv').open('a') as log: log.write(json.dumps(sys.argv[1:]) + '\\n')\n"
+            "print('ActiveState=inactive\\nResult=success\\nCPUUsageNSec=0\\nMemoryPeak=0')\n")
+        write_executable(self.bin / 'systemd-run',
+            "import subprocess, sys\nsys.exit(subprocess.call(sys.argv[sys.argv.index('--') + 1:]))\n")
+        process = subprocess.run(
+            [sys.executable, str(RUNNER), 'run', self.sha, '--profile', 'ptr', '--target-dir', str(self.slot),
+             '--test-cpus', '4', '--test-mem-gib', '12'],
+            env=self.env, capture_output=True, text=True, timeout=10)
+        self.assertEqual(process.returncode, 0, process.stdout + process.stderr)
+        record = json.loads(self.latest_attempt().read_text())
+        self.assertEqual(record['test_budget'], {'cpus': 4, 'mem_gib': 12,
+            'integration_shards': 4, 'timeout_child_slots': 2})
+        controls = [json.loads(line) for line in (self.home / 'control-argv').read_text().splitlines()]
+        settings = next(args for args in controls if 'set-property' in args)
+        self.assertIn('CPUQuota=400%', settings)
+        self.assertIn('MemoryMax=12G', settings)
+        self.assertIn('MemorySwapMax=0', settings)
+        self.assertTrue(record['test_slice'].startswith('agents-fullsuite-'))
+        self.assertIn(['--user', 'stop', record['test_slice']], controls)
+
+    def test_wow_sim_bin_target_fits_the_measured_thread_budget(self):
+        for name in ('integration-tests', 'lib-tests', 'wow-sim-tests'):
+            write_executable(self.slot / name,
+                "import os, pathlib, sys\n"
+                "name = pathlib.Path(__file__).name\n"
+                "threads = int(os.environ['RUST_TEST_THREADS'])\n"
+                "(pathlib.Path(os.environ['HOME']) / (name + '-threads')).write_text(str(threads))\n"
+                "if name == 'wow-sim-tests' and threads > 3: sys.exit('full-UI bin tests exceed the 9G budget')\n")
+        write_executable(self.bin / 'slot-build.py',
+            "import json, os, pathlib, sys\n"
+            "slot = pathlib.Path(os.environ['HOME']) / '.cache/wow-ui-sim-targets/slot-3'\n"
+            "unit = sys.argv[sys.argv.index('--unit') + 1]\n"
+            "receipt = slot / 'receipts' / (unit + '.json')\n"
+            "receipt.parent.mkdir(exist_ok=True)\n"
+            "records = [{'executable': str(slot / binary), 'profile': {'test': True}, "
+            "'target': {'name': name, 'kind': [kind]}} for name, kind, binary in "
+            "[('integration', 'test', 'integration-tests'), ('wow_ui_sim', 'lib', 'lib-tests'), ('wow-sim', 'bin', 'wow-sim-tests')]]\n"
+            "receipt.write_text(json.dumps({'result': 'success', 'returncode': 0, 'reported_artifacts': records}))\n")
+        write_executable(self.bin / 'systemctl', "print('ActiveState=inactive\\nResult=success')\n")
+        write_executable(self.bin / 'systemd-run',
+            "import subprocess, sys\nsys.exit(subprocess.call(sys.argv[sys.argv.index('--') + 1:]))\n")
+        process = subprocess.run(
+            [sys.executable, str(RUNNER), 'run', self.sha, '--profile', 'ptr', '--target-dir', str(self.slot)],
+            env=dict(self.env, FULL_SUITE_JOBS='16'), capture_output=True, text=True, timeout=10)
+        self.assertEqual(process.returncode, 0, process.stdout + process.stderr)
+        self.assertEqual((self.home / 'wow-sim-tests-threads').read_text(), '3')
+        self.assertEqual((self.home / 'lib-tests-threads').read_text(), '16')
 
     def test_result_waits_for_certified_build_and_test_execution(self):
         test_binary = self.slot / 'integration-test'

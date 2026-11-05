@@ -1,3 +1,6 @@
+## [2026-11-04] measured proof | NECESSARY Retail native timeout inventory
+
+[Runtime optimization](investigations/test-runtime-optimization.md#native-timeout-inventory-and-complete-budget-proof--2026-11-04) records the passing 1146.645s source-identified budget proof, zero failed cases against master, the ordinary-shard critical path and regenerated 672-name scheduling data. The 600s target is not met; no fixture optimization is adopted.
 ## [2026-11-04] correction | Forever library and WM98
 
 Reconciled the [Forever publication contract](../specs/forever-lib-publication.md)
@@ -3416,6 +3419,9 @@ EllesmereUI.
 
 Added [static classification and provenance](systems/area-poi-timed.md).
 
+## 2026-11-04 — NECESSARY Retail scheduling profile
+
+Recorded [integration timing and timeout-capacity contention](investigations/test-runtime-optimization.md#necessary-retail-scheduling-profile--2026-11-04). Stable exact-name sharding preserves test identities. Subsequent measurements led to an approved configurable harness permit policy and explicit private CPU/RAM budgets; measured OOM lower bounds now inform shard headroom. The two sub-600-second proofs remain open.
 ## 2026-11-04 — Bag-child tooltip selection
 
 Linked [bag-child selection](../specs/tooltip-bag-child.md), generated catalog

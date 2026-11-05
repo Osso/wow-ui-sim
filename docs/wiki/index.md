@@ -1,3 +1,6 @@
+## [2026-11-04] investigation | NECESSARY Retail scheduling
+
+[Runtime optimization](investigations/test-runtime-optimization.md#necessary-retail-scheduling-profile--2026-11-04) records integration timing, timeout-fixture contention, the 672-name native inventory, configured harness permits, memory envelopes and the complete 1146.645s budget proof. The [warm-run target](../specs/necessary-suite-runtime.md) still requires two complete sub-600-second proofs.
 ## [2026-11-04] correction | Forever library and shared tooltip costs
 
 [Forever publication](../specs/forever-lib-publication.md) records supplied-model

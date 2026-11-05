@@ -19,7 +19,13 @@ const PERMIT_RELEASE_DIR_ENV: &str = "WOW_SIM_TIMEOUT_REEXEC_PERMIT_RELEASE_DIR"
 const PROCESS_DEATH_WAIT: Duration = Duration::from_secs(2);
 const FIXTURE_MARKER_WAIT: Duration = Duration::from_secs(4);
 const CONCURRENCY_HOLD: Duration = Duration::from_millis(600);
-const EXPECTED_TIMEOUT_CHILD_LIMIT: u32 = 2;
+fn expected_timeout_child_limit() -> u32 {
+    match std::env::var("WOW_SIM_TIMEOUT_CHILD_SLOTS") {
+        Ok(value) => value.parse().expect("configured timeout child limit is an integer"),
+        Err(std::env::VarError::NotPresent) => 2,
+        Err(error) => panic!("read configured timeout child limit: {error}"),
+    }
+}
 
 #[test]
 fn panic_failure_is_aggregated_and_later_sibling_runs() {
@@ -99,22 +105,39 @@ fn timeout_kills_descendant_and_later_sibling_runs() {
 fn nested_guards_execute_each_closure_once() {
     let temp = TempDir::new().expect("create nested fixture tempdir");
     let marker = temp.path().join("nested-closures");
-    let output = run_fixture(
-        "timeout_reexec::fixtures::nested_case::",
-        "nested",
-        &marker,
-        None,
-    );
-    let stdout = stdout(&output);
-    let stderr = stderr(&output);
+    let output = run_inventory_fixture(&marker, None);
+    let fixture_stdout = stdout(&output);
+    let fixture_stderr = stderr(&output);
 
     assert!(
         output.status.success(),
-        "nested timeout guards failed\nstdout:\n{stdout}\nstderr:\n{stderr}"
+        "nested timeout guards failed\nstdout:\n{fixture_stdout}\nstderr:\n{fixture_stderr}"
     );
     assert_eq!(
         std::fs::read_to_string(&marker).expect("read nested closure marker"),
         "first\nsecond\n"
+    );
+    assert!(fixture_stderr.is_empty(), "disabled inventory changed stderr: {fixture_stderr}");
+    let entries: Vec<_> = std::fs::read_dir(temp.path())
+        .expect("read fixture directory")
+        .map(|entry| entry.expect("fixture entry").file_name())
+        .collect();
+    assert_eq!(entries, vec![std::ffi::OsString::from("nested-closures")]);
+
+    let inventory = temp.path().join("timeout-entry.txt");
+    let recorded = run_inventory_fixture(&marker, Some(&inventory));
+    assert!(recorded.status.success(), "inventory fixture failed: {}", stderr(&recorded));
+    assert!(stderr(&recorded).is_empty());
+    let without_timing = |text: String| {
+        text.lines()
+            .map(|line| line.split("finished in").next().expect("timing prefix"))
+            .collect::<Vec<_>>()
+            .join("\n")
+    };
+    assert_eq!(without_timing(fixture_stdout), without_timing(stdout(&recorded)));
+    assert_eq!(
+        std::fs::read_to_string(inventory).expect("read timeout entry inventory"),
+        "timeout_reexec::fixtures::nested_case::nested_guards_run_both_closures\n"
     );
 }
 
@@ -156,7 +179,7 @@ fn assert_concurrency_fixture() {
     let (active, peak) = read_concurrency_state(&state_path);
     assert_eq!(active, 0, "all timeout children must release their slots");
     assert_eq!(
-        peak, EXPECTED_TIMEOUT_CHILD_LIMIT,
+        peak, expected_timeout_child_limit(),
         "timeout child peak exceeded the intended bound"
     );
 }
@@ -217,6 +240,20 @@ fn assert_permit_release_fixture() {
         &stdout,
         "timeout_reexec::fixtures::permit_release_case::a_times_out_holding_permit",
     );
+}
+
+fn run_inventory_fixture(marker: &Path, inventory: Option<&Path>) -> Output {
+    let mut command = Command::new(std::env::current_exe().expect("integration test binary"));
+    command
+        .args(["timeout_reexec::fixtures::nested_case::", "--test-threads=1", "--nocapture"])
+        .current_dir(marker.parent().expect("fixture directory"))
+        .env(FIXTURE_MODE_ENV, "nested")
+        .env(SIBLING_MARKER_ENV, marker)
+        .env_remove("WOW_SIM_TIMEOUT_INVENTORY");
+    if let Some(path) = inventory {
+        command.env("WOW_SIM_TIMEOUT_INVENTORY", path);
+    }
+    command.output().expect("run timeout inventory fixture")
 }
 
 fn run_fixture(
