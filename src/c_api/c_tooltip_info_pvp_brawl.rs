@@ -68,39 +68,37 @@ fn get_pvp_brawl(state: &mut LuaState) -> LuaResult<u32> {
     if !rows.can_queue {
         return crate::c_api::tooltip_data::unknown_getter_failure();
     }
+    let highlight = named_color(state, "HIGHLIGHT_FONT_COLOR").unwrap_or(HIGHLIGHT_FALLBACK);
+    let normal = named_color(state, "NORMAL_FONT_COLOR").unwrap_or(NORMAL_FALLBACK);
+    let disabled = named_color(state, "DISABLED_FONT_COLOR").unwrap_or(DISABLED_FALLBACK);
     let tooltip = compose_tooltip(state, TOOLTIP_TYPE_PVP_BRAWL, None);
-    // Plain and blank rows pass no colour: the simulator's named-colour surface
-    // resolves every unmodelled `*_COLOR` constant to white, so an explicit
-    // highlight colour would equal the disabled placeholder and be re-typed by
-    // the native value-based remap. The default normal colour publishes white,
-    // which matches the measured highlight value.
-    append_line(state, tooltip, LINE_TYPE_PLAIN, &rows.record.name, None);
+    append_line(
+        state,
+        tooltip,
+        LINE_TYPE_PLAIN,
+        &rows.record.name,
+        Some(highlight),
+    );
     if let Some(remaining) = rows.remaining {
         let text = ends_in_text(state, remaining)?;
-        append_line(
-            state,
-            tooltip,
-            LINE_TYPE_DISABLED,
-            &text,
-            Some(DISABLED_COLOR),
-        );
+        append_line(state, tooltip, LINE_TYPE_DISABLED, &text, Some(disabled));
     }
     if !rows.record.map_names.is_empty() {
-        append_blank(state, tooltip);
+        append_blank(state, tooltip, normal);
         let heading = map_heading(state, &rows.record)?;
-        append_line(state, tooltip, LINE_TYPE_PLAIN, &heading, None);
-        append_map_rows(state, tooltip, &rows.record)?;
+        append_line(state, tooltip, LINE_TYPE_PLAIN, &heading, Some(highlight));
+        append_map_rows(state, tooltip, &rows.record, normal)?;
     }
     if !rows.record.long_description.is_empty() {
-        append_blank(state, tooltip);
+        append_blank(state, tooltip, normal);
         let rules = required_global_text(state, "BRAWL_TOOLTIP_RULES")?;
-        append_line(state, tooltip, LINE_TYPE_PLAIN, &rules, None);
+        append_line(state, tooltip, LINE_TYPE_PLAIN, &rules, Some(highlight));
         append_line(
             state,
             tooltip,
             LINE_TYPE_PLAIN,
             &rows.record.long_description,
-            None,
+            Some(normal),
         );
     }
     state.push(tooltip);
