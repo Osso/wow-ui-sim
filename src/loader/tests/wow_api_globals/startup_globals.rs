@@ -1487,7 +1487,7 @@ fn test_addon_startup_time_and_difficulty_globals_exist() {
     assert_eq!(legacy_raid_difficulty_id, 3);
 }
 
-modern_engine_namespace_fixture! {
+retail_namespace_fixture! {
 #[test]
 fn test_addon_startup_frame_scale_and_merchant_namespaces_exist() {
     let env = WowLuaEnv::new().unwrap();

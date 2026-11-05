@@ -577,19 +577,31 @@ fn real_glue_load_first_addons_sort_before_non_load_first_addons() {
         .iter()
         .position(|name| name == "Blizzard_GlueMenuFrame")
         .expect("Blizzard_GlueMenuFrame should be present");
-    // Pinned `Blizzard_GlueMenuFrame_Classic.toc:4` depends on
-    // `Blizzard_LoginWarningDialogs`, so the dependency must load first on a
-    // classic profile and cannot be the comparator here. GameModeSelect is not
-    // an ancestor of GlueMenuFrame on either pinned variant
-    // (`Blizzard_GameModeSelect_Classic.toc` depends on Blizzard_SharedXML only).
-    let game_mode_select = addons
+    let login_warning_dialogs = addons
         .iter()
-        .position(|name| name == "Blizzard_GameModeSelect")
-        .expect("Blizzard_GameModeSelect should be present");
+        .position(|name| name == "Blizzard_LoginWarningDialogs")
+        .expect("Blizzard_LoginWarningDialogs should be present");
 
-    assert!(
-        glue_menu_frame < game_mode_select,
-        "Blizzard_GlueMenuFrame is tagged LoadFirst and should sort before comparable non-LoadFirst glue addons",
+    // Pinned `Blizzard_GlueMenuFrame_Classic.toc:4` depends on
+    // `Blizzard_LoginWarningDialogs`, so classic profiles must load the
+    // dependency first regardless of LoadFirst. The Mainline variant depends on
+    // GlueXMLBase/GlueParent only, so LoadFirst then sorts it ahead.
+    let classic_dependency = matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Mists
+            | crate::client_profile::ClientProfile::Era
+            | crate::client_profile::ClientProfile::Anniversary
     );
+    if classic_dependency {
+        assert!(
+            login_warning_dialogs < glue_menu_frame,
+            "pinned GlueMenuFrame_Classic.toc:4 dependency must load before the dependent",
+        );
+    } else {
+        assert!(
+            glue_menu_frame < login_warning_dialogs,
+            "Blizzard_GlueMenuFrame is tagged LoadFirst and should sort before comparable non-LoadFirst glue addons",
+        );
+    }
 }
 }

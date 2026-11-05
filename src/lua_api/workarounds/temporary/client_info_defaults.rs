@@ -262,12 +262,21 @@ mod tests {
     fn installs_client_info_defaults() {
         let env = WowLuaEnv::new().expect("lua env should initialize");
 
-        let (expected_version, expected_build) = super::client_identity().unwrap();
-        let expected_interface = super::CLIENT_INTERFACE;
+        // Mists installs its own identity before this workaround runs
+        // (`src/mists/compat_bootstrap.lua:31-33`: 5.5.4, 68042, Jun 2 2026,
+        // interface 50504); every other profile keeps the shared temporary
+        // identity that this module owns.
+        let (expected_version, expected_build, expected_date, expected_interface) =
+            if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Mists {
+                ("5.5.4".to_owned(), "68042".to_owned(), "Jun 2 2026", 50504)
+            } else {
+                let (version, build) = super::client_identity().unwrap();
+                (version, build, "Jun 17 2026", super::CLIENT_INTERFACE)
+            };
         let script = format!(
             r#"
                 local version, build, date, interface = GetBuildInfo()
-                if version ~= "{}" or build ~= "{}" or date ~= "Jun 17 2026" or interface ~= {} then
+                if version ~= "{}" or build ~= "{}" or date ~= "{}" or interface ~= {} then
                   return "build"
                 end
                 if GetRealmName() ~= "SimulatedRealm" or GetNormalizedRealmName() ~= "SimulatedRealm" then return "realm" end
@@ -300,6 +309,7 @@ mod tests {
                 "#,
             expected_version,
             expected_build,
+            expected_date,
             expected_interface,
             crate::client_profile::ACTIVE.expansion_level()
         );
