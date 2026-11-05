@@ -1,6 +1,4 @@
-use super::super::{
-    LINE_TYPE_SPELL_DESCRIPTION, LINE_TYPE_SPELL_NAME, TOOLTIP_TYPE_CURRENCY, TOOLTIP_TYPE_ITEM,
-};
+use super::super::{LINE_TYPE_SPELL_NAME, TOOLTIP_TYPE_CURRENCY, TOOLTIP_TYPE_ITEM};
 use super::builders::{
     empty_tooltip, item_quality_color, push_tooltip_line, stamp_data_instance, tooltip_for_item_id,
     tooltip_for_item_info,
@@ -134,12 +132,6 @@ pub(super) fn tooltip_for_currency(
     state.push(tooltip);
     stamp_data_instance(state, tooltip);
     let lines = table_get(state, tooltip, "lines");
-    let amount = amount_override.unwrap_or(currency.quantity);
-    let max_display = if currency.max_quantity > 0 {
-        format!("{amount} / {}", currency.max_quantity)
-    } else {
-        amount.to_string()
-    };
     push_tooltip_line(
         state,
         lines,
@@ -149,17 +141,11 @@ pub(super) fn tooltip_for_currency(
         Some(item_quality_color(currency.quality as u8)),
         false,
     );
-    push_tooltip_line(
-        state,
-        lines,
-        2,
-        LINE_TYPE_SPELL_DESCRIPTION,
-        &format!("Amount: {max_display}"),
-        None,
-        false,
-    );
+    // WM97 DQ6: quantity is composition data (zero for offer costs), not a
+    // separate wrapper amount text line. Flag-derived lines still need WM96 evidence.
+    let quantity = amount_override.unwrap_or(currency.quantity);
     table_set(state, tooltip, "id", Val::Num(currency.currency_id as f64));
-    table_set(state, tooltip, "quantity", Val::Num(amount as f64));
+    table_set(state, tooltip, "quantity", Val::Num(quantity as f64));
     state.top = saved_top;
     tooltip
 }

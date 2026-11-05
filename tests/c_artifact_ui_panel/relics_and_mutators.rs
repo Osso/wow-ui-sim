@@ -13,6 +13,7 @@ fn relic_slot_count_and_info_read_state() {
             name: "Iron Relic".to_string(),
             icon: "Interface/Icons/iron".to_string(),
             link: "item:111".to_string(),
+            socket: None,
         });
         st.viewed_artifact.relic_slots.push(RelicSlotInfo {
             slot_type: "Blood".to_string(),
@@ -20,6 +21,7 @@ fn relic_slot_count_and_info_read_state() {
             name: String::new(),
             icon: String::new(),
             link: String::new(),
+            socket: None,
         });
     }
     let total: f64 = env.eval("return C_ArtifactUI.GetNumRelicSlots()").unwrap();
@@ -49,6 +51,7 @@ fn get_relic_info_returns_nothing_for_unsocketed_slot() {
             name: String::new(),
             icon: String::new(),
             link: String::new(),
+            socket: None,
         });
     let nil: bool = env
         .eval("return C_ArtifactUI.GetRelicInfo(1) == nil")
@@ -69,6 +72,7 @@ fn get_relic_info_returns_four_values_for_socketed_slot() {
             name: "Hammer".to_string(),
             icon: "Interface/Icons/hammer".to_string(),
             link: "item:222".to_string(),
+            socket: None,
         });
     env.exec("name, icon, slotType, link = C_ArtifactUI.GetRelicInfo(1)")
         .unwrap();
@@ -95,6 +99,7 @@ fn get_relic_info_by_item_id_reads_state() {
                 name: "Fel Relic".to_string(),
                 icon: "Interface/Icons/fel".to_string(),
                 link: "item:555".to_string(),
+                socket: None,
             },
         );
     env.exec("name = C_ArtifactUI.GetRelicInfoByItemID(555)")
@@ -114,6 +119,7 @@ fn can_apply_cursor_relic_to_slot_requires_known_relic_and_unlocked_slot() {
             name: String::new(),
             icon: String::new(),
             link: String::new(),
+            socket: None,
         });
         st.artifact_relic_items.insert(777);
         st.cursor_item = Some(CursorInfo::Item {
@@ -141,6 +147,7 @@ fn can_apply_cursor_relic_to_slot_rejects_unknown_relic() {
             name: String::new(),
             icon: String::new(),
             link: String::new(),
+            socket: None,
         });
         st.cursor_item = Some(CursorInfo::Item {
             owned_identity: None,
@@ -167,6 +174,7 @@ fn can_apply_relic_item_id_to_slot_checks_lock_state() {
             name: String::new(),
             icon: String::new(),
             link: String::new(),
+            socket: None,
         });
         st.artifact_relic_items.insert(888);
     }
@@ -348,6 +356,7 @@ fn apply_cursor_relic_to_slot_writes_into_slot() {
             name: String::new(),
             icon: String::new(),
             link: String::new(),
+            socket: None,
         });
         st.artifact_relic_items.insert(444);
         st.cursor_item = Some(CursorInfo::Item {

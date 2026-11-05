@@ -480,6 +480,106 @@ pub(super) fn tooltip_for_item_info(
     tooltip
 }
 
+/// WM97 DQ4: relic lines run inside the item producer, after the shared item
+/// lines. The native line order is UNKNOWN; only the texts are asserted.
+pub(super) fn tooltip_for_socketed_relic(
+    state: &mut LuaState,
+    item_id: u32,
+    item: &items::ItemInfo,
+    relic: &crate::c_api::item_descriptor::RelicMetadata,
+) -> LuaResult<Val> {
+    let tooltip = tooltip_for_item_info(state, item_id, item);
+    append_socketed_relic_lines(state, tooltip, relic)?;
+    Ok(tooltip)
+}
+
+fn append_socketed_relic_lines(
+    state: &mut LuaState,
+    tooltip: Val,
+    relic: &crate::c_api::item_descriptor::RelicMetadata,
+) -> LuaResult<()> {
+    let type_text = relic_type_line(state, relic.slot_type)?;
+    let increase_text = if relic.item_levels > 0 {
+        Some(format_global_string(
+            state,
+            b"RELIC_TOOLTIP_ILVL_INCREASE",
+            "+%d Item Levels",
+            &[Val::Num(f64::from(relic.item_levels))],
+        )?)
+    } else {
+        None
+    };
+    let saved_top = state.top;
+    state.push(tooltip);
+    let lines = table_get(state, tooltip, "lines");
+    let mut index = super::spell::tooltip_line_count(state, lines) + 1;
+    let artifact_color = global_color_or_fallback(state, b"ITEM_ARTIFACT_COLOR", (0.9, 0.8, 0.5));
+    push_tooltip_line(
+        state,
+        lines,
+        index,
+        LINE_TYPE_SPELL_NAME,
+        &type_text,
+        Some(artifact_color),
+        false,
+    );
+    index += 1;
+    if let Some(text) = increase_text {
+        push_tooltip_line(
+            state,
+            lines,
+            index,
+            LINE_TYPE_SPELL_NAME,
+            &text,
+            None,
+            false,
+        );
+    }
+    state.top = saved_top;
+    Ok(())
+}
+
+fn relic_type_line(
+    state: &mut LuaState,
+    slot_type: Option<crate::c_api::item_descriptor::RelicSlotType>,
+) -> LuaResult<String> {
+    let label = match slot_type {
+        Some(slot_type) => {
+            let key = format!("RELIC_SLOT_TYPE_{}", slot_type.token);
+            global_string_or_fallback(state, key.as_bytes(), slot_type.label)
+        }
+        None => global_string_or_fallback(state, b"UNKNOWN", "Unknown"),
+    };
+    let label_val = create_string(state, &label);
+    format_global_string(
+        state,
+        b"RELIC_TOOLTIP_TYPE",
+        "%s Artifact Relic",
+        &[label_val],
+    )
+}
+
+/// Apply a global format string through `string.format`, preserving positional
+/// specifiers. Failures propagate; a missing localised shape is not masked.
+fn format_global_string(
+    state: &mut LuaState,
+    key: &[u8],
+    fallback: &str,
+    args: &[Val],
+) -> LuaResult<String> {
+    let format = global_string_or_fallback(state, key, fallback);
+    let format_val = create_string(state, &format);
+    let globals = Val::Table(state.global);
+    let string_table = table_get(state, globals, "string");
+    let format_fn = table_get(state, string_table, "format");
+    let mut call_args = Vec::with_capacity(args.len() + 1);
+    call_args.push(format_val);
+    call_args.extend_from_slice(args);
+    let formatted = call_function_state(state, format_fn, &call_args)?;
+    val_to_string(state, formatted)
+        .ok_or_else(|| rilua::runtime_error("string.format did not return a string"))
+}
+
 pub(super) fn populate_item_tooltip_lines(
     state: &mut LuaState,
     tooltip: Val,

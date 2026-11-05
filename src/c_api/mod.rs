@@ -15,6 +15,7 @@ pub(crate) mod c_tooltip_info_inventory_by_id;
 pub(crate) mod c_tooltip_info_item_key;
 pub(crate) mod c_tooltip_info_loot;
 pub(crate) mod c_tooltip_info_totem;
+pub(crate) mod c_tooltip_info_weekly;
 pub(crate) mod class_catalog;
 #[cfg(any(feature = "client-era", feature = "client-anniversary"))]
 pub(crate) mod classic_startup_data;
@@ -280,6 +281,7 @@ pub(crate) mod c_tooltip_info_indexed_aura;
 pub(crate) mod c_tooltip_info_item_context;
 #[cfg(feature = "retail-12-0-5")]
 pub(crate) mod c_tooltip_info_outfit;
+pub(crate) mod c_tooltip_info_socketed_relic;
 #[cfg(feature = "retail-12-0-5")]
 pub(crate) mod c_tooltip_info_spell_mount;
 pub(crate) mod c_trade_skill_cooldown;

@@ -60,7 +60,9 @@ fn unit_parent_survives_color_collection() {
 fn currency_parent_survives_color_collection() {
     let env = WowLuaEnv::new().unwrap();
     collect_in_colors(&env);
-    env.exec("local t = C_TooltipInfo.GetCurrencyByID(2245, 99); assert(t.id == 2245 and t.quantity == 99); assert(#t.lines == 2 and t.lines[2].leftText:find('99')); assert(colorCalls > 0)").unwrap();
+    // WM97 DQ6: composition carries quantity as data; the name line keeps the
+    // allocated color parent that must survive collection.
+    env.exec("local t = C_TooltipInfo.GetCurrencyByID(2245, 99); assert(t.id == 2245 and t.quantity == 99); assert(#t.lines == 1 and t.lines[1].leftText == 'Valorstones'); assert(t.lines[1].leftColor ~= nil and colorCalls > 0)").unwrap();
 }
 
 #[test]
