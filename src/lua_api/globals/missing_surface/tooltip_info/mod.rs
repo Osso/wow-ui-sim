@@ -66,6 +66,9 @@ fn register_c_tooltip_info(state: &mut LuaState) -> LuaResult<()> {
         // (TooltipInfoDocumentation.lua:102) and GetConduit (:204).
         crate::c_api::c_tooltip_info_azerite_power::register(state, table_ref)?;
         crate::c_api::c_tooltip_info_conduit::register(state, table_ref)?;
+        // WM107: Retail, PTR and Forever pinned docs declare GetPvpBrawl
+        // (TooltipInfoDocumentation.lua:710).
+        crate::c_api::c_tooltip_info_pvp_brawl::register(state, table_ref)?;
     }
     // Retail, PTR and Forever pinned docs all declare the loot getters,
     // including GetLootRollItem (Forever TooltipInfoDocumentation.lua:554-584).

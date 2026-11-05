@@ -38,6 +38,13 @@ pub(crate) fn optional_unsigned(state: &LuaState, position: i32) -> LuaResult<Op
     }
 }
 
+/// Optional boolean flag; a missing/nil value defaults false and a present value
+/// uses Lua truthiness (WM94 §6), after the shared secret-access check.
+pub(crate) fn optional_bool(state: &LuaState, position: i32) -> LuaResult<bool> {
+    let value = unwrap_secret(state, stack_val(state, position))?;
+    Ok(value.is_truthy())
+}
+
 /// Optional owning-item link; WM94 §5 accepts a string or a number-convertible
 /// value and skips a missing/nil one. The present value is secret-checked before
 /// conversion; its parsed item fields only feed the native spell request.
