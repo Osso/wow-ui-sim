@@ -228,12 +228,13 @@ fn mists_collections_pet_row_selects_and_shows_tooltip() {
     assert_no_lua_errors(&stdout, &stderr);
 }
 
+/// The `lua-errors` command writes the authoritative JSON array on stdout and
+/// always writes a summary banner to stderr, whose `Lua errors: N unique` line
+/// contains the `Lua error` substring. Judge the array and the exit status
+/// instead; a real exec-lua failure also prints `[exec-lua] error`.
 fn assert_no_lua_errors(stdout: &str, stderr: &str) {
     assert!(
-        stdout.trim().ends_with("[]")
-            && !stdout.contains("Lua error")
-            && !stderr.contains("Lua error")
-            && !stderr.contains("[exec-lua] error"),
+        stdout.trim() == "[]" && !stderr.contains("[exec-lua] error"),
         "Collections panel flow emitted Lua errors\nstdout:\n{stdout}\nstderr:\n{stderr}"
     );
 }
