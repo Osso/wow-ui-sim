@@ -107,6 +107,9 @@ pub struct RelicSlotInfo {
     pub name: String,
     pub icon: String,
     pub link: String,
+    /// WM97 DQ4: the live socket's item descriptor (item ID, context and bonus
+    /// lists). Supplied by the host; a socket without one cannot build a tooltip.
+    pub socket: Option<crate::c_api::item_descriptor::ItemDescriptor>,
 }
 
 /// `ArtifactMetaPowerInfo` row returned (one per stride of 3) by
@@ -193,6 +196,13 @@ pub struct ViewedArtifactState {
     pub relic_slots: Vec<RelicSlotInfo>,
     /// Relic info keyed by item id. Backs `GetRelicInfoByItemID`.
     pub relic_info_by_item_id: HashMap<i32, RelicSlotInfo>,
+    /// WM104 2: item-state flags word for the viewed artifact instance. Bit
+    /// 8192 suppresses enchant-derived scans, including the extra socket count.
+    /// The native field name is UNKNOWN; the host supplies the value.
+    pub instance_flags: u32,
+    /// WM104 2: enchantment entry index 6 of the instance's thirteen entries,
+    /// used only by the extra socket count. The game-facing slot name is UNKNOWN.
+    pub instance_enchantment_slot6: i32,
     /// Whether a respec NPC is currently interactable. Backs
     /// `CheckRespecNPC`.
     pub respec_npc_active: bool,

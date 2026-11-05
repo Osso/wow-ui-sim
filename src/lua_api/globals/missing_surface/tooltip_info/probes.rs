@@ -9,7 +9,8 @@ use super::builders::{
 use super::sources::{
     inbox_attachment_item_id, merchant_item_id, parse_spell_source, recipe_output_item,
     send_mail_attachment_item_id, tooltip_for_bag_item, tooltip_for_currency,
-    tooltip_for_inventory_slot, tooltip_for_item_source, trade_skill_item_id, trade_slot_item_id,
+    tooltip_for_inventory_slot, tooltip_for_item_link, tooltip_for_item_source,
+    trade_skill_item_id, trade_slot_item_id,
 };
 #[cfg(not(feature = "retail-12-0-5"))]
 use super::spell::lookup_player_aura_by_instance_id;
@@ -451,7 +452,7 @@ pub(super) fn c_tooltip_get_unit_aura_by_aura_instance_id(state: &mut LuaState) 
 pub(super) fn c_tooltip_get_hyperlink(state: &mut LuaState) -> LuaResult<u32> {
     let link = String::from_stack(state, 1)?;
     let tooltip = if let Some(item_id) = parse_prefixed_id(&link, "item") {
-        tooltip_for_item_id(state, item_id)
+        tooltip_for_item_link(state, &link, item_id)?
     } else if let Some(spell_id) = parse_prefixed_id(&link, "spell") {
         tooltip_for_spell_hyperlink(state, spell_id)
     } else if let Some(guid) = link.strip_prefix("unit:") {

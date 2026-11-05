@@ -32,6 +32,9 @@ fn poor_item() -> ItemInfo {
         icon_file_data_id: 134400,
         stat_percent_editor: [0; 10],
         stat_modifier_bonus_stat: [0; 10],
+        artifact_id: 0,
+        socket_types: [0; 3],
+        gem_properties: 0,
     }
 }
 

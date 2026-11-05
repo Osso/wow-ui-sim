@@ -162,6 +162,7 @@ fn register_player(b: TableBuilder) -> LuaResult<TableBuilder> {
         .set_function("SetPlayerClass", set_player_class)?
         .set_function("SetPlayerRace", set_player_race)?
         .set_function("SetPlayerLevel", set_player_level)?
+        .set_function("SetPlayerEffectiveLevel", set_player_effective_level)?
         .set_function("SetPlayerSex", set_player_sex)?
         .set_function("SetPlayerHealth", set_player_health)?
         .set_function("SetPlayerPower", set_player_power)?
@@ -545,6 +546,12 @@ fn set_player_race(state: &mut LuaState) -> LuaResult<u32> {
 fn set_player_level(state: &mut LuaState) -> LuaResult<u32> {
     let level = i32::from_stack(state, 1)?;
     borrow_state_mut(state)?.player.level = level;
+    Ok(0)
+}
+
+fn set_player_effective_level(state: &mut LuaState) -> LuaResult<u32> {
+    let level = i32::from_stack(state, 1)?;
+    borrow_state_mut(state)?.player.effective_level = level;
     Ok(0)
 }
 

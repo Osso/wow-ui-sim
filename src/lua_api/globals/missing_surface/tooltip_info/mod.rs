@@ -56,11 +56,25 @@ fn register_c_tooltip_info(state: &mut LuaState) -> LuaResult<()> {
         crate::c_api::c_tooltip_info_bag_child::register(state, table_ref)?;
         crate::c_api::c_tooltip_info_totem::register(state, table_ref)?;
     }
+    // Retail, PTR and Forever pinned docs all declare the loot getters,
+    // including GetLootRollItem (Forever TooltipInfoDocumentation.lua:554-584).
     if matches!(
         crate::client_profile::ACTIVE,
-        crate::client_profile::ClientProfile::Retail | crate::client_profile::ClientProfile::Ptr
+        crate::client_profile::ClientProfile::Retail
+            | crate::client_profile::ClientProfile::Ptr
+            | crate::client_profile::ClientProfile::WowForever
     ) {
         crate::c_api::c_tooltip_info_loot::register(state, table_ref)?;
+    }
+    // Retail, PTR and Forever pinned docs declare GetSocketedRelic
+    // (TooltipInfoDocumentation.lua:1012). Forever keeps the catalog item.
+    if matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail
+            | crate::client_profile::ClientProfile::Ptr
+            | crate::client_profile::ClientProfile::WowForever
+    ) {
+        crate::c_api::c_tooltip_info_socketed_relic::register(state, table_ref)?;
     }
     #[cfg(feature = "retail-12-0-5")]
     {
@@ -95,6 +109,16 @@ pub(crate) fn tooltip_for_item_context(
         Some(item) => builders::tooltip_for_item_info(state, item_id, item),
         None => builders::empty_tooltip(state, super::TOOLTIP_TYPE_ITEM),
     }
+}
+
+/// WM97 DQ4: relic-aware item composition for the viewed artifact's socket.
+pub(crate) fn tooltip_for_socketed_relic_context(
+    state: &mut LuaState,
+    item_id: u32,
+    item: &crate::items::ItemInfo,
+    relic: &crate::c_api::item_descriptor::RelicMetadata,
+) -> LuaResult<rilua::Val> {
+    builders::tooltip_for_socketed_relic(state, item_id, item, relic)
 }
 
 /// Bounded bridge to the existing payload model; no identifier parsing here.

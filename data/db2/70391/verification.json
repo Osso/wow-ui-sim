@@ -1,6 +1,6 @@
 {
   "result": "pass_with_recorded_encrypted_gaps",
-  "manifest_sha256": "3ebec85eedf14768649f08d3e20dc179926d2ad5fb2afb548cbe9fa058f8ccd0",
+  "manifest_sha256": "4fb759956ca4cddf601ff4aa6ef3267c16f6bd72830d4a711d9458a6a1c91d4e",
   "integrity": [
     {
       "table": "ItemScalingConfig",
@@ -52,6 +52,13 @@
         355131,
         355132
       ],
+      "result": "pass"
+    },
+    {
+      "table": "ItemBonusListLevelDelta",
+      "sha256": "affb804549c130f427752cecafcc9ca8c8440d978a4b1661c67b1e5393c0386d",
+      "rows": 1801,
+      "missing_record_ids": [],
       "result": "pass"
     }
   ],
@@ -162,6 +169,14 @@
       "target": "ItemScalingConfig",
       "nonzero_references": 543,
       "distinct_target_ids": 415,
+      "missing": []
+    },
+    {
+      "source": "ItemBonusListLevelDelta",
+      "column": "ID",
+      "target": "ItemBonus.ParentItemBonusListID",
+      "nonzero_references": 1801,
+      "distinct_target_ids": 1801,
       "missing": []
     }
   ],
