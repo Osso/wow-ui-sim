@@ -108,3 +108,46 @@ macro_rules! tooltip_selection_getters_fixture {
         )*
     };
 }
+
+// ptr-forever-pvp-residue
+
+/// WowForever's pinned `Blizzard_PVPUI/Blizzard_PVPUI.toc:8` declares
+/// `ExcludeLoadGameType: camelot`, and `wowforever` is a camelot client
+/// (`src/toc/mod.rs::active_game_types`), so the pinned client excludes the addon:
+/// `Blizzard_PVPUI` is not runtime-selected on Forever. Its TOC-body assertions
+/// (variant TOCs, Retail body text) therefore do not describe that profile.
+#[macro_export]
+macro_rules! pvp_ui_toc_fixture {
+    ($($item:item)*) => {
+        $(
+            #[cfg(any(
+                feature = "client-retail",
+                feature = "client-ptr",
+                feature = "client-mists",
+                feature = "client-era",
+                feature = "client-anniversary"
+            ))]
+            $item
+        )*
+    };
+}
+
+/// Only the Retail-era caches list `Blizzard_PVPUI_Mists.toc`
+/// (`data/blizzard-ui-files/retail.txt:2617`). PTR 12.1.7 and WowForever pin one
+/// bare TOC and no flavor variants (`data/blizzard-ui-files/ptr.txt:2931`,
+/// `data/blizzard-ui-files/wowforever.txt:2901`), so the Mists-variant cases are
+/// inapplicable there.
+#[macro_export]
+macro_rules! pvp_ui_variant_toc_fixture {
+    ($($item:item)*) => {
+        $(
+            #[cfg(any(
+                feature = "client-retail",
+                feature = "client-mists",
+                feature = "client-era",
+                feature = "client-anniversary"
+            ))]
+            $item
+        )*
+    };
+}

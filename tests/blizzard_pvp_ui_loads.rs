@@ -20,11 +20,30 @@ fn pvp_ui_mainline_toc() -> PathBuf {
     pvp_ui_dir().join("Blizzard_PVPUI_Mainline.toc")
 }
 
+/// PTR 12.1.7 (`data/blizzard-ui-files/ptr.txt:2931`) ships one bare
+/// `Blizzard_PVPUI.toc` whose `[Family]` entries resolve to `Mainline/`. The
+/// Retail-era caches pin flavor-split `_Mainline`/`_Mists` variants instead
+/// (`data/blizzard-ui-files/retail.txt:2616-2617`).
+fn pvp_ui_uses_single_toc_layout() -> bool {
+    !pvp_ui_mainline_toc().exists()
+}
+
+fn pvp_ui_toc() -> PathBuf {
+    find_toc_file(&pvp_ui_dir()).expect("Blizzard_PVPUI TOC resolves")
+}
+
 fn pvp_ui_mists_toc() -> PathBuf {
     pvp_ui_dir().join("Blizzard_PVPUI_Mists.toc")
 }
 
 const MAINLINE_TOC_FILES: &[&str] = &[
+    "Mainline/Blizzard_PVPUI_Bootstrap.lua",
+    "Mainline/Blizzard_PVPUI.lua",
+    "Mainline/Blizzard_PVPUI.xml",
+    "Localization.lua",
+];
+
+const SINGLE_TOC_FILES: &[&str] = &[
     "Mainline/Blizzard_PVPUI_Bootstrap.lua",
     "Mainline/Blizzard_PVPUI.lua",
     "Mainline/Blizzard_PVPUI.xml",
@@ -130,39 +149,53 @@ fn load_full_game_ui() -> WowLuaEnv {
 }
 
 // Literal cached inputs absent from Wrath manifest1-382/cache; behavior cases stay enabled.
-post_wrath_ui_fixture! {
+pvp_ui_toc_fixture! {
 #[test]
-fn blizzard_pvp_ui_find_toc_resolves_mainline_variant() {
+fn blizzard_pvp_ui_find_toc_resolves_profile_toc() {
     let resolved = find_toc_file(&pvp_ui_dir()).expect("Blizzard_PVPUI TOC resolves");
-    assert_eq!(
-        resolved,
-        pvp_ui_mainline_toc(),
-        "Blizzard_PVPUI ships Mainline + Mists variants and NO bare TOC. \
-         `find_toc_file` at src/loader/mod.rs:65-95 prefers the `_Mainline.toc` \
-         suffix first, so the resolver returns the Mainline variant — confirmed \
-         by the explicit suffix-priority list `[_Mainline.toc, .toc]` in \
-         `toc_variants`. The Mists variant exists for the Mists of Pandaria \
-         classic flavor and is excluded by the `_Mists` skip-list in the \
-         fallback walker at src/loader/mod.rs:87"
-    );
 
-    let bare = pvp_ui_dir().join("Blizzard_PVPUI.toc");
-    assert!(
-        !bare.exists(),
-        "There must be NO bare `Blizzard_PVPUI.toc` — variant TOCs only"
-    );
+    if pvp_ui_uses_single_toc_layout() {
+        let bare = pvp_ui_dir().join("Blizzard_PVPUI.toc");
+        assert_eq!(
+            resolved, bare,
+            "PTR 12.1.7 ships one bare `Blizzard_PVPUI.toc` and no `_Mainline`/\
+             `_Mists` variants (data/blizzard-ui-files/ptr.txt:2931). The\
+             `_Mainline` tier misses, so `find_toc_file` (src/loader/mod.rs:296)\
+             falls through to the bare tier"
+        );
+        for variant in ["Blizzard_PVPUI_Mainline.toc", "Blizzard_PVPUI_Mists.toc"] {
+            assert!(
+                !pvp_ui_dir().join(variant).exists(),
+                "PTR must not ship the Retail-era `{variant}` flavor variant"
+            );
+        }
+    } else {
+        assert_eq!(
+            resolved,
+            pvp_ui_mainline_toc(),
+            "Blizzard_PVPUI ships Mainline + Mists variants and NO bare TOC. \
+             `find_toc_file` at src/loader/mod.rs:296 prefers the `_Mainline`\
+             suffix first, so the resolver returns the Mainline variant. The\
+             Mists variant exists for the Mists of Pandaria classic flavor"
+        );
+
+        let bare = pvp_ui_dir().join("Blizzard_PVPUI.toc");
+        assert!(
+            !bare.exists(),
+            "There must be NO bare `Blizzard_PVPUI.toc` — variant TOCs only"
+        );
+    }
 }
 }
 
-post_wrath_ui_fixture! {
+pvp_ui_toc_fixture! {
 #[test]
 fn blizzard_pvp_ui_mainline_toc_pins_lod_game_only_mainline_only() {
-    let toc =
-        TocFile::from_file(&pvp_ui_mainline_toc()).expect("Blizzard_PVPUI_Mainline TOC parses");
+    let toc = TocFile::from_file(&pvp_ui_toc()).expect("Blizzard_PVPUI TOC parses");
 
     assert!(
         toc.is_load_on_demand(),
-        "Mainline TOC must declare `## LoadOnDemand: 1` — the PVP UI is loaded \
+        "The TOC must declare `## LoadOnDemand: 1` — the PVP UI is loaded \
          lazily when the player opens the PvP tab inside the PVEFrame via \
          `UIParentLoadAddOn(\"Blizzard_PVPUI\")` from the GroupFinder dispatch"
     );
@@ -172,17 +205,16 @@ fn blizzard_pvp_ui_mainline_toc_pins_lod_game_only_mainline_only() {
 
     assert!(
         !toc.is_game_type_restricted(),
-        "Mainline variant: `## AllowLoadGameType: mainline` — \
-         `is_game_type_restricted()` returns FALSE because `mainline` is in the \
-         cross-flavor allowlist at src/toc.rs:299. This is the canonical retail \
-         variant"
+        "The TOC's `## AllowLoadGameType:` includes `mainline`, which is in the \
+         active modern allowlist at src/toc/mod.rs::active_game_types, so \
+         `is_game_type_restricted()` returns FALSE on Retail and PTR"
     );
 
     assert!(
         toc.allows_screen(ScreenKind::Game),
-        "`## AllowLoad: game` (lowercase) — `allows_screen` at src/toc.rs:308 \
-         routes via `eq_ignore_ascii_case(\"game\")` so the lowercase form \
-         resolves the same as `## AllowLoad: Game`"
+        "`allows_screen` must accept the Game screen — Retail declares \
+         `## AllowLoad: game` and PTR omits `## AllowLoad:`, which defaults to \
+         Game-only"
     );
     for screen in [
         ScreenKind::Login,
@@ -198,7 +230,8 @@ fn blizzard_pvp_ui_mainline_toc_pins_lod_game_only_mainline_only() {
 }
 }
 
-post_wrath_ui_fixture! {
+pvp_ui_toc_fixture! {
+pvp_ui_variant_toc_fixture! {
 #[test]
 fn blizzard_pvp_ui_mists_toc_pins_classic_flavor_restriction() {
     let toc = TocFile::from_file(&pvp_ui_mists_toc()).expect("Blizzard_PVPUI_Mists TOC parses");
@@ -224,19 +257,21 @@ fn blizzard_pvp_ui_mists_toc_pins_classic_flavor_restriction() {
     );
 }
 }
+}
 
-post_wrath_ui_fixture! {
+pvp_ui_toc_fixture! {
 #[test]
 fn blizzard_pvp_ui_mainline_declares_four_dependencies() {
-    let toc =
-        TocFile::from_file(&pvp_ui_mainline_toc()).expect("Blizzard_PVPUI_Mainline TOC parses");
+    let toc = TocFile::from_file(&pvp_ui_toc()).expect("Blizzard_PVPUI TOC parses");
 
     let dependencies = toc.dependencies();
     let deps: Vec<&str> = dependencies.iter().map(|s| s.as_str()).collect();
     assert_eq!(
         deps, MAINLINE_DEPS,
-        "Retail 12.1.0.69497 Mainline TOC declares HelpPlate, GroupFinder, \
-         MatchmakingQueueDisplay, and FrameXMLUtil in published order"
+        "The TOC declares HelpPlate, GroupFinder, MatchmakingQueueDisplay, and \
+         FrameXMLUtil in published order. PTR writes them as repeated \
+         `## Dep:` lines annotated `[AllowLoadGameType mainline]`; the parser \
+         keeps those because `mainline` is active on PTR too"
     );
 
     assert_eq!(
@@ -247,7 +282,8 @@ fn blizzard_pvp_ui_mainline_declares_four_dependencies() {
 }
 }
 
-post_wrath_ui_fixture! {
+pvp_ui_toc_fixture! {
+pvp_ui_variant_toc_fixture! {
 #[test]
 fn blizzard_pvp_ui_mists_declares_two_dependencies_dropping_queue_display() {
     let toc = TocFile::from_file(&pvp_ui_mists_toc()).expect("Blizzard_PVPUI_Mists TOC parses");
@@ -264,11 +300,17 @@ fn blizzard_pvp_ui_mists_declares_two_dependencies_dropping_queue_display() {
     );
 }
 }
+}
 
-post_wrath_ui_fixture! {
+pvp_ui_toc_fixture! {
 #[test]
 fn blizzard_pvp_ui_toc_declares_no_saved_variables() {
-    for toc_path in [pvp_ui_mainline_toc(), pvp_ui_mists_toc()] {
+    let toc_paths = if pvp_ui_uses_single_toc_layout() {
+        vec![pvp_ui_dir().join("Blizzard_PVPUI.toc")]
+    } else {
+        vec![pvp_ui_mainline_toc(), pvp_ui_mists_toc()]
+    };
+    for toc_path in toc_paths {
         let toc = TocFile::from_file(&toc_path).expect("PVPUI TOC parses");
 
         assert!(
@@ -282,9 +324,39 @@ fn blizzard_pvp_ui_toc_declares_no_saved_variables() {
 }
 }
 
-post_wrath_ui_fixture! {
+pvp_ui_toc_fixture! {
 #[test]
 fn blizzard_pvp_ui_mainline_toc_declares_metadata_in_raw_bytes() {
+    if pvp_ui_uses_single_toc_layout() {
+        let path = pvp_ui_dir().join("Blizzard_PVPUI.toc");
+        let raw = std::fs::read_to_string(&path).expect("PTR PVPUI TOC reads utf-8");
+
+        assert!(raw.contains("## Title: Blizzard_PVPUI"));
+        assert!(raw.contains("## LoadOnDemand: 1"));
+        assert!(raw.contains("## OptionalDep: Blizzard_Plunderstorm"));
+        assert!(raw.contains("## Dep: Blizzard_HelpPlate"));
+        assert!(raw.contains(concat!(
+            "## Dep: Blizzard_MatchmakingQueueDisplay ",
+            "[AllowLoadGameType mainline]"
+        )));
+        assert!(raw.contains(concat!(
+            "## Dep: Blizzard_FrameXMLUtil ",
+            "[AllowLoadGameType mainline]"
+        )));
+        assert!(raw.contains("## AllowLoadGameType: mainline, mists"));
+        assert!(raw.contains("## ExcludeLoadGameType: camelot"));
+
+        assert!(
+            !raw.contains("## OnlyBetaAndPTR"),
+            "TOC must NOT declare `## OnlyBetaAndPTR:` — ships on live"
+        );
+        assert!(
+            !raw.contains("## SavedVariables"),
+            "TOC must NOT declare any SavedVariables directive"
+        );
+        return;
+    }
+
     let raw = std::fs::read_to_string(pvp_ui_mainline_toc()).expect("Mainline TOC reads utf-8");
 
     assert!(raw.contains("## Title: Blizzard PVP UI"));
@@ -312,15 +384,26 @@ fn blizzard_pvp_ui_mainline_toc_declares_metadata_in_raw_bytes() {
 }
 }
 
-post_wrath_ui_fixture! {
+pvp_ui_toc_fixture! {
 #[test]
 fn blizzard_pvp_ui_mainline_lists_bootstrap_then_three_files_with_variant_subdirectory() {
-    let toc = TocFile::from_file(&pvp_ui_mainline_toc()).expect("Mainline TOC parses");
+    let toc = TocFile::from_file(&pvp_ui_toc()).expect("PVPUI TOC parses");
     let listed: Vec<String> = toc
         .files
         .iter()
         .map(|p| p.to_string_lossy().into_owned())
         .collect();
+
+    if pvp_ui_uses_single_toc_layout() {
+        assert_eq!(
+            listed, SINGLE_TOC_FILES,
+            "PTR's bare TOC lists its `[Family]` entries, which resolve to the `Mainline/` \
+             family subdirectory (src/toc/mod.rs::family_subdir), before the shared \
+             localization file"
+        );
+        return;
+    }
+
     assert_eq!(
         listed, MAINLINE_TOC_FILES,
         "Retail 12.1.0.69497 Mainline TOC lists its bootstrap before the Lua, XML, \
@@ -329,7 +412,8 @@ fn blizzard_pvp_ui_mainline_lists_bootstrap_then_three_files_with_variant_subdir
 }
 }
 
-post_wrath_ui_fixture! {
+pvp_ui_toc_fixture! {
+pvp_ui_variant_toc_fixture! {
 #[test]
 fn blizzard_pvp_ui_mists_lists_bootstrap_then_three_files_with_mists_subdirectory() {
     let toc = TocFile::from_file(&pvp_ui_mists_toc()).expect("Mists TOC parses");
@@ -343,6 +427,7 @@ fn blizzard_pvp_ui_mists_lists_bootstrap_then_three_files_with_mists_subdirector
         "Retail 12.1.0.69497 Mists TOC lists its bootstrap before the flavor files \
          and shared localization"
     );
+}
 }
 }
 
@@ -391,7 +476,7 @@ fn blizzard_pvp_ui_loads_explicitly_after_eager_game_sweep(env: &WowLuaEnv) {
         state.lua_error_counts.clear();
     }
 
-    load_addon(&env.loader_env(), &pvp_ui_mainline_toc())
+    load_addon(&env.loader_env(), &pvp_ui_toc())
         .expect("Blizzard_PVPUI loads cleanly on top of the eager Game-screen stack");
 
     let load_errors: Vec<String> = env
@@ -418,7 +503,7 @@ fn blizzard_pvp_ui_loads_explicitly_after_eager_game_sweep(env: &WowLuaEnv) {
 
 prefork_full_ui_case! {
 fn blizzard_pvp_ui_publishes_twenty_two_mixin_globals(env: &WowLuaEnv) {
-    load_addon(&env.loader_env(), &pvp_ui_mainline_toc()).expect("Blizzard_PVPUI loads cleanly");
+    load_addon(&env.loader_env(), &pvp_ui_toc()).expect("Blizzard_PVPUI loads cleanly");
 
     for mixin in PUBLIC_MIXIN_GLOBALS {
         let kind: String = env
@@ -447,7 +532,7 @@ fn blizzard_pvp_ui_publishes_twenty_two_mixin_globals(env: &WowLuaEnv) {
 
 prefork_full_ui_case! {
 fn blizzard_pvp_ui_publishes_named_top_level_frames(env: &WowLuaEnv) {
-    load_addon(&env.loader_env(), &pvp_ui_mainline_toc()).expect("Blizzard_PVPUI loads cleanly");
+    load_addon(&env.loader_env(), &pvp_ui_toc()).expect("Blizzard_PVPUI loads cleanly");
 
     for frame_name in PUBLIC_NAMED_FRAMES {
         let kind: String = env
@@ -471,7 +556,7 @@ fn blizzard_pvp_ui_publishes_named_top_level_frames(env: &WowLuaEnv) {
 
 prefork_full_ui_case! {
 fn blizzard_pvp_ui_virtual_templates_not_in_global_env(env: &WowLuaEnv) {
-    load_addon(&env.loader_env(), &pvp_ui_mainline_toc()).expect("Blizzard_PVPUI loads cleanly");
+    load_addon(&env.loader_env(), &pvp_ui_toc()).expect("Blizzard_PVPUI loads cleanly");
 
     for template in VIRTUAL_TEMPLATES_SAMPLE {
         let kind: String = env
