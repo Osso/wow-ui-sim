@@ -11,6 +11,7 @@ pub(crate) mod c_tooltip_info_appearance;
 pub(crate) mod c_tooltip_info_bag_child;
 pub(crate) mod c_tooltip_info_loot;
 pub(crate) mod c_tooltip_info_totem;
+pub(crate) mod c_tooltip_info_weekly;
 pub(crate) mod class_catalog;
 #[cfg(any(feature = "client-era", feature = "client-anniversary"))]
 pub(crate) mod classic_startup_data;
