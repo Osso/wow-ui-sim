@@ -66,6 +66,11 @@ fn register_c_tooltip_info(state: &mut LuaState) -> LuaResult<()> {
         // (TooltipInfoDocumentation.lua:102) and GetConduit (:204).
         crate::c_api::c_tooltip_info_azerite_power::register(state, table_ref)?;
         crate::c_api::c_tooltip_info_conduit::register(state, table_ref)?;
+        // WM108 §A/§B: Retail, PTR and Forever pinned docs declare
+        // GetArtifactPowerByID (TooltipInfoDocumentation.lua:53) and
+        // GetEnhancedConduit (:254).
+        crate::c_api::c_tooltip_info_artifact_power::register(state, table_ref)?;
+        crate::c_api::c_tooltip_info_enhanced_conduit::register(state, table_ref)?;
         // WM107: Retail, PTR and Forever pinned docs declare GetPvpBrawl
         // (TooltipInfoDocumentation.lua:710).
         crate::c_api::c_tooltip_info_pvp_brawl::register(state, table_ref)?;
@@ -310,7 +315,35 @@ pub(crate) fn format_global_numeric(
         .ok_or_else(|| rilua::runtime_error(format!("localized formatter did not return {key}")))
 }
 
+/// Format a pinned global string with two numeric arguments (for example
+/// `TOOLTIP_TALENT_RANK`, which carries a current and a maximum rank).
+pub(crate) fn format_global_pair(
+    state: &mut LuaState,
+    key: &str,
+    first: f64,
+    second: f64,
+) -> LuaResult<String> {
+    let template = crate::c_api::global_val(state, key);
+    let formatter = crate::c_api::global_val(state, "format");
+    let formatted = call_function_state(
+        state,
+        formatter,
+        &[template, Val::Num(first), Val::Num(second)],
+    )?;
+    val_to_string(state, formatted)
+        .ok_or_else(|| rilua::runtime_error(format!("localized formatter did not return {key}")))
+}
+
+/// Restore a plain line type that the shared value-based remap rewrote. The
+/// remap compares a type-0 row's colour against the named `ERROR_COLOR` and
+/// `DISABLED_FONT_COLOR` entries, which both resolve white while the colour
+/// table is a placeholder, so a verified white type-0 row would become 41.
+pub(crate) fn restore_plain_line_type(state: &mut LuaState, line: Val) {
+    crate::lua_api::methods::table_set(state, line, "type", Val::Num(0.0));
+}
+
 /// Format a pinned global string with one text argument.
+
 pub(crate) fn format_global_text(
     state: &mut LuaState,
     key: &str,

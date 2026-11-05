@@ -9,9 +9,11 @@ pub mod c_recruit_a_friend;
 #[cfg(feature = "retail-12-0-5")]
 pub(crate) mod c_tooltip_info_appearance;
 pub(crate) mod c_tooltip_info_artifact_item;
+pub(crate) mod c_tooltip_info_artifact_power;
 pub(crate) mod c_tooltip_info_azerite_power;
 pub(crate) mod c_tooltip_info_bag_child;
 pub(crate) mod c_tooltip_info_conduit;
+pub(crate) mod c_tooltip_info_enhanced_conduit;
 pub(crate) mod c_tooltip_info_equipment_set;
 pub(crate) mod c_tooltip_info_inventory_by_id;
 pub(crate) mod c_tooltip_info_item_key;

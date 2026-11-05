@@ -4,8 +4,8 @@
 Usage: python3 tools/gen_tooltip_power_catalog.py <csv-dir>
 
 The CSV directory must hold AzeritePower.csv, SoulbindConduit.csv,
-SoulbindConduitRank.csv and SoulbindConduitRankProperties.csv from the same
-Retail build. The committed file records each input's sha256 so the data can be
+SoulbindConduitRank.csv, SoulbindConduitRankProperties.csv, ArtifactPower.csv
+and ArtifactPowerRank.csv from the same Retail build. The committed file records each input's sha256 so the data can be
 reproduced from the pinned export.
 """
 
@@ -20,6 +20,8 @@ TABLES = (
     "SoulbindConduit",
     "SoulbindConduitRank",
     "SoulbindConduitRankProperties",
+    "ArtifactPower",
+    "ArtifactPowerRank",
 )
 
 
@@ -69,6 +71,26 @@ def generate(csv_dir):
         (uint(row, "Rank"), uint(row, "ItemLevel"), uint(row, "QualityID"))
         for row in read_rows(csv_dir, "SoulbindConduitRankProperties")
     )
+    # WM108 §A1: Flags carries the rank-1 (64), end-game (4), rank-limit (8),
+    # bonus (16) and tier-scaled (32) masks read by the artifact-power getter.
+    artifact_powers = sorted(
+        (
+            uint(row, "ID"),
+            uint(row, "ArtifactID"),
+            uint(row, "MaxPurchasableRank"),
+            uint(row, "Flags"),
+            uint(row, "Tier"),
+        )
+        for row in read_rows(csv_dir, "ArtifactPower")
+    )
+    artifact_power_ranks = sorted(
+        (
+            uint(row, "ArtifactPowerID"),
+            uint(row, "RankIndex"),
+            uint(row, "SpellID"),
+        )
+        for row in read_rows(csv_dir, "ArtifactPowerRank")
+    )
 
     out = OUTPUT.open("w")
     out.write("//! Generated power-catalog rows for the `C_TooltipInfo` getters.\n")
@@ -106,6 +128,20 @@ def generate(csv_dir):
         "`(Rank 1-based, ItemLevel, QualityID)` used by both conduit getters.",
         rank_properties,
         "u8, u32, u8",
+    )
+    write_rows(
+        out,
+        "ARTIFACT_POWERS",
+        "`(powerID, ArtifactID, MaxPurchasableRank, Flags, Tier)`.",
+        artifact_powers,
+        "u32, u32, u32, u32, u32",
+    )
+    write_rows(
+        out,
+        "ARTIFACT_POWER_RANKS",
+        "`(powerID, RankIndex, spellID)`; RankIndex is zero-based.",
+        artifact_power_ranks,
+        "u32, u8, u32",
     )
     out.close()
     print(f"Wrote {OUTPUT}")
