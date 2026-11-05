@@ -1,7 +1,7 @@
 //! WM107: the original `SetPvpBrawl` accessor composes the brawl rows with the
 //! native line types, gate order and active/special-event differences.
 
-#![cfg(feature = "retail-12-0-5")]
+#![cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
 
 #[path = "tooltip_full_env_helpers.rs"]
 mod tooltip_full_env_helpers;

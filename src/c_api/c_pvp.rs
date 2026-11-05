@@ -1,5 +1,9 @@
 pub mod area_poi;
-#[cfg(feature = "retail-12-0-5")]
+// Supplied brawl model. The pinned Retail/PTR PvpInfoDocumentation.lua declares
+// GetActiveBrawlInfo (:109), GetAvailableBrawlInfo (:255),
+// GetSpecialEventBrawlInfo (:775) and the PvpBrawlInfo structure; the pinned
+// WowForever documentation declares the same names at the same lines.
+#[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
 pub mod available_brawl;
 pub mod battlefield_vehicles;
 mod battleground_enlistment;
@@ -37,9 +41,9 @@ pub struct BattlegroundEnlistmentInputs {
     any(feature = "profile-retail", feature = "client-ptr")
 ))]
 mod active_brawl;
-#[cfg(feature = "retail-12-0-5")]
+#[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
 mod brawl_info;
-#[cfg(feature = "retail-12-0-5")]
+#[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
 pub use brawl_info::{PvpBrawlInfo, SpecialEventBrawlInfo};
 
 #[cfg(feature = "retail-12-0-0")]

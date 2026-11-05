@@ -233,7 +233,7 @@ macro_rules! build_empty_sim_state {
             minimap_tracking_mask: None,
             battleground_enlistment: Default::default(),
             pvp_reward_caches: Default::default(),
-            #[cfg(feature = "retail-12-0-5")]
+            #[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
             available_brawl: None,
             azerite_item: None,
             item_overlay_flags: HashSet::new(),
@@ -249,10 +249,10 @@ macro_rules! build_empty_sim_state {
             latest_transmog_appearance: None,
             account_wide_reputation_factions: HashSet::new(),
             faction_paragon: HashMap::new(),
-            #[cfg(feature = "retail-12-0-5")]
+            #[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
             active_brawl: None,
             pvp_area_inputs: Default::default(),
-            #[cfg(feature = "retail-12-0-5")]
+            #[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
             special_event_brawl: None,
             #[cfg(feature = "retail-12-0-5")]
             transmog_appearance_sources: HashMap::new(),
@@ -810,7 +810,7 @@ macro_rules! build_empty_sim_state {
     }};
 }
 
-#[cfg(feature = "retail-12-0-5")]
+#[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
 pub use crate::c_api::c_pvp::{PvpBrawlInfo, SpecialEventBrawlInfo};
 #[cfg(feature = "retail-12-0-5")]
 pub use crate::c_api::c_transmog_collection::AppearanceSourceInfo;
