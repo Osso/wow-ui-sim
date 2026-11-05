@@ -278,3 +278,17 @@ macro_rules! non_mists_client_identity_fixture {
         )*
     };
 }
+
+/// `reputation_state::apply_bootstrap` seeds the Retail faction fixture only
+/// outside Era/Anniversary (src/lua_api/workarounds/temporary/reputation_state.rs:242-247,
+/// "Era/Anniversary have no selected Retail faction fixture"), so the seeded
+/// faction-count case describes the profiles that receive that fixture.
+#[macro_export]
+macro_rules! retail_faction_fixture {
+    ($($item:item)*) => {
+        $(
+            #[cfg(not(any(feature = "client-era", feature = "client-anniversary")))]
+            $item
+        )*
+    };
+}
