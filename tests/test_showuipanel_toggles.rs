@@ -361,7 +361,13 @@ fn toggle_collections_journal_opens_mounts_pets_and_toys_tabs_and_accepts_search
                     return "search_text_not_set_" .. childName
                 end
 
-                ToggleCollectionsJournal(tabIndex)
+                -- The pinned PTR/WowForever Collections code stores the selected
+                -- tab on `CollectionsJournal.TabContainer`, while
+                -- ToggleCollectionsJournal compares the journal frame's own
+                -- `selectedTab`. The micro button therefore closes with no tab
+                -- argument (MainMenuBarMicroButtons.lua:1730 PTR / :1643
+                -- WowForever); passing the tab index keeps the journal open.
+                ToggleCollectionsJournal()
                 if CollectionsJournal:IsShown() then
                     return "journal_not_hidden_" .. tostring(tabIndex)
                 end
@@ -388,6 +394,18 @@ fn toggle_collections_journal_opens_mounts_pets_and_toys_tabs_and_accepts_search
 fn collections_heirloom_tab_follows_heirlooms_available() {
     test_timeout! {
         let env = setup_env();
+        // Open the journal once so Blizzard_Collections is loaded and defines
+        // CollectionsJournal_ValidateTab, then supply both availability values.
+        let opened: bool = env
+            .eval(
+                r#"
+                ToggleCollectionsJournal(COLLECTIONS_JOURNAL_TAB_INDEX_MOUNTS)
+                return CollectionsJournal ~= nil and CollectionsJournal:IsShown()
+                "#,
+            )
+            .expect("collections journal should open with the scenario default");
+        assert!(opened, "collections journal should open before tab validation");
+
         env.state()
             .borrow_mut()
             .world
