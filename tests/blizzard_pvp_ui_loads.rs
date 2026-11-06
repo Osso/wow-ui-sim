@@ -531,7 +531,7 @@ fn blizzard_pvp_ui_does_not_appear_in_eager_discovery() {
     }
 }
 
-classic_pvp_residue_pvp_ui_fixture! {
+classic_pvp_residue_pvp_ui_inventory_fixture! {
 #[test]
 fn blizzard_pvp_ui_appears_in_full_addon_inventory() {
     let inventory = discover_all_blizzard_addons(&blizzard_ui_dir());

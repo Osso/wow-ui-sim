@@ -382,6 +382,25 @@ macro_rules! classic_pvp_residue_pvp_ui_variant_fixture {
     };
 }
 
+/// `discover_all_blizzard_addons` (`src/loader/mod.rs:574`) lists an addon only
+/// when `find_toc_file` resolves one of its TOCs. Retail, PTR, Mists and
+/// WowForever pin a resolvable `Blizzard_PVPUI` TOC; Era and Anniversary pin
+/// only `_Mainline`/`_Mists` TOCs that their suffix order never selects.
+#[macro_export]
+macro_rules! classic_pvp_residue_pvp_ui_inventory_fixture {
+    ($($item:item)*) => {
+        $(
+            #[cfg(any(
+                feature = "client-retail",
+                feature = "client-ptr",
+                feature = "client-mists",
+                feature = "client-wowforever"
+            ))]
+            $item
+        )*
+    };
+}
+
 /// `Blizzard_PVPMatch` has no entry in the classic manifests
 /// (`data/blizzard-ui-files/{mists,era,anniversary}.txt` grep count 0), so its
 /// TOC, eager-discovery and inventory fixtures cannot read or discover it there.
