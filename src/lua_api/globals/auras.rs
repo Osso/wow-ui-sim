@@ -1039,9 +1039,11 @@ pub(crate) fn full_update_info(state: &mut LuaState, unit: &str) -> Val {
     }
     let auras = all_unit_auras(state, unit);
     let added = create_table(state);
-    for (index, aura) in auras.iter().enumerate() {
-        let aura_data = build_aura_table(state, aura, unit);
-        table_set_num(state, added, (index + 1) as f64, aura_data);
+    if let Val::Table(added_ref) = added {
+        for (index, aura) in auras.iter().enumerate() {
+            let aura_data = build_aura_table(state, aura, unit);
+            table_set_num(state, added_ref, (index + 1) as f64, aura_data);
+        }
     }
     table_set(state, info, "addedAuras", added);
     info
@@ -1056,13 +1058,15 @@ pub(crate) fn removal_info(state: &mut LuaState, instance_ids: &[i32]) -> Val {
         return info;
     }
     let removed = create_table(state);
-    for (index, instance_id) in instance_ids.iter().enumerate() {
-        table_set_num(
-            state,
-            removed,
-            (index + 1) as f64,
-            Val::Num(f64::from(*instance_id)),
-        );
+    if let Val::Table(removed_ref) = removed {
+        for (index, instance_id) in instance_ids.iter().enumerate() {
+            table_set_num(
+                state,
+                removed_ref,
+                (index + 1) as f64,
+                Val::Num(f64::from(*instance_id)),
+            );
+        }
     }
     table_set(state, info, "removedAuraInstanceIDs", removed);
     info
