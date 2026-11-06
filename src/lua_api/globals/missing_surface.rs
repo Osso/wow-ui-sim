@@ -77,6 +77,7 @@ pub fn register_all(lua: &mut rilua::Lua) -> LuaResult<()> {
     register_world_namespace_surfaces(state)?;
     register_social_namespace_surfaces(state)?;
     register_group_activity_surfaces(state)?;
+    c_api::external_event_url::register(state)?;
     c_api::forever_startup::register(state)
 }
 

@@ -33,7 +33,7 @@ These are simulator scenario defaults, approved by the user on 2026-10-28. They 
 | `C_AccountServices.GetPreferredLocales` | Two empty tables | PTR | CommunitiesGuildPreferredPlaySettingsFrameMixin.InitializeLocaleDropdown | 2026-10-28 |
 | `C_VoiceChat.GetActiveVoiceProviderID` | `Enum.VoiceProviderID.Legacy` | PTR | VoiceTranscriptionFrame_UpdateVisibility | 2026-10-28 |
 | `C_Bank.ShouldUsePlayerBagsInBank` | `false` | PTR | BankPanelMixin.OnEvent | 2026-10-28 |
-| `C_ExternalEventURL` | `HasURL`, `IsNew`: false; `LaunchURL`: no-op; `CanShow`: false (PTR only) | Retail, PTR | GameMenuFrameMixin.ExternalEventClickCallback; PTR minimap | 2026-10-28 |
+| `C_ExternalEventURL` | No supplied promotion: `HasURL`, `IsNew` false; `LaunchURL` records nothing; `CanShow` false (PTR only). Now modeled host state; see [external event URL](external-event-url.md) | Retail, PTR, Mists, Era, Anniversary | GameMenuFrameMixin.ExternalEventClickCallback; PTR minimap | 2026-10-28 |
 | `C_QuestLog.GetZoneStoryInfo` | No values for unknown map | Retail, PTR | QuestLogQuests_Update | 2026-10-28 |
 | Ordinary quest watch seed | Every seeded non-world quest is Manual; user-approved for Retail/PTR, simulator policy, not native evidence | Retail, PTR | QuestLogQuests_AddQuestButton | 2026-10-28 |
 | `C_QuestLog.IsAccountQuest` | Supplied quest flag, otherwise false; user-approved, not native evidence | Retail, PTR | QuestLogQuests_AddQuestButton | 2026-10-28 |
@@ -42,6 +42,6 @@ These are simulator scenario defaults, approved by the user on 2026-10-28. They 
 Declaration references are relative to each profile's pinned `Blizzard_APIDocumentationGenerated`:
 
 - PTR `GameRulesDocumentation.lua:213–219`, `BankDocumentation.lua:322–328`, `VoiceChatDocumentation.lua:116–122` and `:1476–1484`.
-- `ExternalEventURLDocumentation.lua` beginning at line 11 in Retail and PTR; `StableInfoDocumentation.lua:24–30` in Retail and `:28–34` in PTR.
+- `ExternalEventURLDocumentation.lua:5` in Retail, PTR, Mists, Era and Anniversary; PTR declares `CanShow` at `:11`; `StableInfoDocumentation.lua:24–30` in Retail and `:28–34` in PTR.
 - `QuestLogDocumentation.lua:701` in Retail and `:719` in PTR declare `IsAccountQuest`; watch methods are declared in both profiles' `QuestLogDocumentation.lua`.
 - `QuestLogDocumentation.lua:675–689` in Retail and `:693–707` in PTR. No declaration was found for preferred locales; PTR `Blizzard_Communities/GuildPreferredPlaySettings.lua:130` consumes two return values.
