@@ -280,19 +280,25 @@ fn get_weekly_chest_reward_level_returns_four_zeros() {
 // ── GetOwnedKeystoneLevel ─────────────────────────────────────────────────────
 
 #[test]
-fn get_owned_keystone_level_returns_nothing_when_zero() {
+fn get_owned_keystone_level_publishes_zero_without_a_key() {
+    // The client reader takes the level from the same cached keystone context as
+    // the map ID and publishes 0 when no entry matches (P5, proved). Original
+    // consumer: Blizzard_ChallengesUI/Mainline/Blizzard_ChallengesUI.lua:383
+    // stores the result, and :246/:312 test it for truthiness.
     let env = env();
-    let count: i32 = env
+    let (count, level): (i32, i32) = env
         .eval(
             r#"
             local function count_rets(...)
                 return select('#', ...)
             end
-            return count_rets(C_MythicPlus.GetOwnedKeystoneLevel())
+            return count_rets(C_MythicPlus.GetOwnedKeystoneLevel()),
+                C_MythicPlus.GetOwnedKeystoneLevel()
             "#,
         )
         .unwrap();
-    assert_eq!(count, 0, "no key = mayreturnnothing");
+    assert_eq!(count, 1, "the keystone context publishes one value");
+    assert_eq!(level, 0, "no matching key entry carries 0");
 }
 
 #[test]
