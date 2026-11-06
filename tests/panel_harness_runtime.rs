@@ -93,6 +93,24 @@ fn load_panel_harness(env: &WowLuaEnv) {
     }
 }
 
+/// Pinned Blizzard_EncounterJournal/Blizzard_EncounterJournal.toc:7 allows only
+/// `standard, classic`. The Forever client mask is mainline+camelot
+/// (docs/wiki/reference/toc-game-type-tokens.md), so its LoadOnDemand panel
+/// cannot load on that profile.
+fn forever_without_encounter_journal(env: &WowLuaEnv) -> bool {
+    if !cfg!(feature = "client-wowforever") {
+        return false;
+    }
+    let loaded: bool = env
+        .eval(r#"return (C_AddOns.LoadAddOn("Blizzard_EncounterJournal"))"#)
+        .expect("encounter journal gate probe should return");
+    assert!(
+        !loaded,
+        "pinned Forever TOC should reject Blizzard_EncounterJournal"
+    );
+    true
+}
+
 #[test]
 fn achievement_addon_reports_runtime_load_reason() {
     if crate::common::wrath_achievement_fixtures::assert_lazy(
@@ -420,6 +438,12 @@ fn group_members_pin_acquire_keeps_data_provider_on_pin() {
     load_panel_harness(&env);
     load_blizzard_addon(&env, "Blizzard_MapCanvasSecureUtil");
     load_blizzard_addon(&env, "Blizzard_MapCanvas");
+    // Eager base addons in the game UI provide SoftCursor and SlashCommandUtil,
+    // which the pinned map consumers index directly.
+    #[cfg(feature = "client-wowforever")]
+    load_blizzard_addon(&env, "Blizzard_GamepadSoftCursor");
+    #[cfg(feature = "client-wowforever")]
+    load_blizzard_addon(&env, "Blizzard_ChatFrameBase");
     load_blizzard_addon(&env, "Blizzard_SharedMapDataProviders");
     load_blizzard_addon(&env, "Blizzard_BattlefieldMap");
 
@@ -476,6 +500,25 @@ fn achievement_toggle_loads_and_shows_frame() {
     env.set_screen_size(1024.0, 768.0);
     env.state().borrow_mut().addon_base_paths = vec![blizzard_ui_dir()];
     load_panel_harness(&env);
+
+    if cfg!(feature = "client-wowforever") {
+        // Pinned Blizzard_AchievementUI/Camelot/Blizzard_AchievementUI.lua:13
+        // replaces AchievementFrame_ToggleAchievementFrame with
+        // ToggleLegacyChallenges(), so the AchievementFrame panel never opens.
+        let loaded: bool = env
+            .eval(
+                r#"
+                ToggleAchievementFrame()
+                return C_AddOns.IsAddOnLoaded("Blizzard_AchievementUI")
+                "#,
+            )
+            .expect("forever achievement toggle probe should return");
+        assert!(
+            loaded,
+            "ToggleAchievementFrame should load Blizzard_AchievementUI through its Camelot override"
+        );
+        return;
+    }
 
     let (pre_toggle_source, pre_toggle_line): (Option<String>, i64) = env
         .eval(
@@ -641,6 +684,10 @@ fn encounter_toggle_loads_and_shows_frame() {
     env.exec("ToggleEncounterJournal()")
         .expect("ToggleEncounterJournal should execute");
 
+    if forever_without_encounter_journal(&env) {
+        return;
+    }
+
     let (loaded, shown): (bool, bool) = env
         .eval(
             r#"return C_AddOns.IsAddOnLoaded("Blizzard_EncounterJournal"), EncounterJournal and EncounterJournal:IsShown() or false"#,
@@ -693,6 +740,10 @@ fn encounter_journal_display_dungeon_instance_does_not_recurse() {
     env.state().borrow_mut().addon_base_paths = vec![blizzard_ui_dir()];
     load_panel_harness(&env);
 
+    if forever_without_encounter_journal(&env) {
+        return;
+    }
+
     env.exec("ToggleEncounterJournal()")
         .expect("ToggleEncounterJournal should execute");
     env.exec("EncounterJournal_DisplayInstance(1271)")
@@ -725,6 +776,10 @@ fn encounter_journal_journeys_frame_seeds_current_major_factions_without_tww_lea
 
     env.exec("ToggleEncounterJournal()")
         .expect("ToggleEncounterJournal should execute");
+
+    if forever_without_encounter_journal(&env) {
+        return;
+    }
 
     let (count, names, expansion): (i32, String, i32) = env
         .eval(

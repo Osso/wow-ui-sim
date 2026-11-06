@@ -657,6 +657,23 @@ fn toggle_achievement_frame_opens_and_closes_achievement_panel() {
     test_timeout! {
         let env = setup_env();
 
+        if cfg!(feature = "client-wowforever") {
+            // Pinned Blizzard_AchievementUI/Camelot/Blizzard_AchievementUI.lua:13
+            // replaces AchievementFrame_ToggleAchievementFrame with
+            // ToggleLegacyChallenges(), so the AchievementFrame panel never opens.
+            let loaded: bool = env
+                .eval(r#"
+                    ToggleAchievementFrame()
+                    return C_AddOns.IsAddOnLoaded("Blizzard_AchievementUI")
+                "#)
+                .expect("forever achievement toggle probe should return");
+            assert!(
+                loaded,
+                "ToggleAchievementFrame should load Blizzard_AchievementUI through its Camelot override"
+            );
+            return;
+        }
+
         let result: String = env.eval(r#"
             if not ToggleAchievementFrame then
                 return "missing_toggle_achievement_frame"
@@ -687,6 +704,20 @@ post_wrath_ui_fixture! {
 fn toggle_encounter_journal_opens_and_closes_panel() {
     test_timeout! {
         let env = setup_env();
+
+        if cfg!(feature = "client-wowforever") {
+            // Pinned Blizzard_EncounterJournal/Blizzard_EncounterJournal.toc:7
+            // allows `standard, classic`; the Forever client mask is mainline+camelot
+            // (docs/wiki/reference/toc-game-type-tokens.md), so the addon cannot load.
+            let loaded: bool = env
+                .eval(r#"return (C_AddOns.LoadAddOn("Blizzard_EncounterJournal"))"#)
+                .expect("forever encounter journal gate probe should return");
+            assert!(
+                !loaded,
+                "pinned Forever TOC should reject Blizzard_EncounterJournal"
+            );
+            return;
+        }
 
         let result: String = env.eval(r#"
             if not ToggleEncounterJournal then
@@ -990,6 +1021,42 @@ fn character_reputation_tab_click_selects_reputation_panel() {
             "#).expect("native third character tab selects reputation");
             return;
         }
+        if cfg!(feature = "client-wowforever") {
+            // Pinned Blizzard_UIPanels_Game/Camelot/CharacterFrame.xml:579 exposes the
+            // reputation side tab as CharacterFrame.ModeTabs.ReputationTab and routes
+            // clicks through CharacterModeTabButtonMixin:OnMouseUp -> OnModeTabClicked
+            // (Camelot/CharacterFrame.lua:959,219), not the Retail CharacterFrameTab2.
+            let result: String = env
+                .eval(r#"
+                    CHARACTERFRAME_SUBFRAMES = { "PaperDollFrame", "ReputationFrame", "TokenFrame" }
+                    ToggleCharacter("PaperDollFrame", true)
+                    local tab = CharacterFrame and CharacterFrame.ModeTabs
+                        and CharacterFrame.ModeTabs.ReputationTab
+                    if not tab then
+                        return "missing_reputation_tab"
+                    end
+
+                    tab:OnMouseUp("LeftButton", true)
+                    if not CharacterFrame or not CharacterFrame:IsShown() then
+                        return "character_frame_not_shown"
+                    end
+                    if not ReputationFrame or not ReputationFrame:IsShown() then
+                        return "reputation_frame_not_shown"
+                    end
+                    if PaperDollFrame and PaperDollFrame:IsShown() then
+                        return "paperdoll_should_be_hidden"
+                    end
+
+                    return "ok"
+                "#)
+                .unwrap();
+            assert_eq!(
+                result,
+                "ok",
+                "CharacterFrame.ModeTabs.ReputationTab should select the reputation panel: {result}"
+            );
+            return;
+        }
 
         let result: String = env.eval(r#"
             CHARACTERFRAME_SUBFRAMES = { "PaperDollFrame", "ReputationFrame", "TokenFrame" }
@@ -1182,6 +1249,19 @@ post_wrath_ui_fixture! {
 fn housing_dashboard_loads_and_opens_panel() {
     test_timeout! {
         let env = setup_env();
+        if cfg!(feature = "client-wowforever") {
+            // Pinned Blizzard_HousingDashboard/Blizzard_HousingDashboard.toc:5 allows
+            // `standard`; the Forever client mask is mainline+camelot
+            // (docs/wiki/reference/toc-game-type-tokens.md), so the addon cannot load.
+            let loaded: bool = env
+                .eval(r#"return (C_AddOns.LoadAddOn("Blizzard_HousingDashboard"))"#)
+                .expect("forever housing dashboard gate probe should return");
+            assert!(
+                !loaded,
+                "pinned Forever TOC should reject Blizzard_HousingDashboard"
+            );
+            return;
+        }
         let result: String = env
             .eval(
                 r#"
