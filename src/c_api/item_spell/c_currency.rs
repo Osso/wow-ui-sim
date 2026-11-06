@@ -959,43 +959,68 @@ mod tests {
     #[test]
     fn currency_list_link_names_the_row_currency_in_its_quality_colour() {
         let env = WowLuaEnv::new().expect("env should initialize");
-        let (link, expected, header_returns): (String, String, i32) = env
+        let (link, expected): (String, String) = env
             .eval(
                 r#"
-                local link, expected, header
+                local link, expected
                 for index = 1, C_CurrencyInfo.GetCurrencyListSize() do
                     local info = C_CurrencyInfo.GetCurrencyListInfo(index)
-                    if info.isHeader then
-                        header = header or select('#', C_CurrencyInfo.GetCurrencyListLink(index))
-                    elseif not link then
+                    if not info.isHeader and not link then
                         local hex = select(4, C_Item.GetItemQualityColor(info.quality))
                         link = C_CurrencyInfo.GetCurrencyListLink(index)
                         expected = "|c" .. hex .. "|Hcurrency:" .. info.currencyTypesID
                             .. "|h[" .. info.name .. "]|h|r"
                     end
                 end
-                return link, expected, header
+                return link, expected
                 "#,
             )
             .expect("currency list link should evaluate");
 
         assert_eq!(link, expected);
-        assert_eq!(header_returns, 0, "a header row names no currency");
     }
 
     #[test]
-    fn currency_list_link_returns_nothing_past_the_list() {
+    fn currency_list_link_covers_header_rows_like_any_other_row() {
         let env = WowLuaEnv::new().expect("env should initialize");
-        let count: i32 = env
+        let (link, expected): (String, String) = env
+            .eval(
+                r#"
+                local index
+                for candidate = 1, C_CurrencyInfo.GetCurrencyListSize() do
+                    if C_CurrencyInfo.GetCurrencyListInfo(candidate).isHeader then
+                        index = candidate
+                        break
+                    end
+                end
+                assert(index, "the displayed list holds a header row")
+                local info = C_CurrencyInfo.GetCurrencyListInfo(index)
+                local hex = select(4, C_Item.GetItemQualityColor(info.quality))
+                return C_CurrencyInfo.GetCurrencyListLink(index),
+                    "|c" .. hex .. "|Hcurrency:" .. info.currencyTypesID
+                        .. "|h[" .. info.name .. "]|h|r"
+                "#,
+            )
+            .expect("header row link should evaluate");
+
+        assert_eq!(link, expected);
+    }
+
+    #[test]
+    fn currency_list_link_returns_one_nil_past_the_list() {
+        let env = WowLuaEnv::new().expect("env should initialize");
+        let (count, value_is_nil): (i32, bool) = env
             .eval(
                 r#"
                 local size = C_CurrencyInfo.GetCurrencyListSize()
-                return select('#', C_CurrencyInfo.GetCurrencyListLink(size + 1))
+                return select('#', C_CurrencyInfo.GetCurrencyListLink(size + 1)),
+                    C_CurrencyInfo.GetCurrencyListLink(size + 1) == nil
                 "#,
             )
             .expect("out-of-range link should evaluate");
 
-        assert_eq!(count, 0);
+        assert_eq!(count, 1, "the publisher emits nil for a null link");
+        assert!(value_is_nil);
     }
 
     #[test]
