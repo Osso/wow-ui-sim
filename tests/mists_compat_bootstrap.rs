@@ -644,26 +644,30 @@ fn mists_bootstrap_supplies_pvp_currency_and_debugbar_shapes() {
 fn mists_bootstrap_supplies_legacy_bank_and_aura_shapes() {
     let env = WowLuaEnv::new().expect("Lua environment should initialize");
 
-    let result: (i32, i32, i32, i32, i32, i32) = env
+    let result: (i32, i32, i32, i32, i32, i32, String) = env
         .eval(
             r#"
             local _name, _icon, _count, _debuffType, duration, expirationTime,
-                _source, _stealable, _personal, _spellID, _unused1, _unused2, _unused3,
+                caster, _stealable, _personal, _spellID, _unused1, _unused2, _unused3,
                 _unused4, timeMod = UnitBuff("player", 1)
             return NUM_BANKGENERIC_SLOTS,
                 NUM_BANKBAGSLOTS,
                 Constants.InventoryConstants.NumGenericBankSlots,
                 Constants.InventoryConstants.NumBankBagSlots,
                 duration,
-                timeMod
+                timeMod,
+                caster ~= nil and tostring(caster) or '<nil>'
             "#,
         )
         .expect("Mists bank constants and legacy aura tuple should be callable");
 
     assert_eq!(
         result,
-        (28, 7, 28, 7, 3600, 1),
-        "Mists startup should see bank constants and the legacy UnitBuff tuple shape"
+        (28, 7, 28, 7, 3600, 1, "player".to_string()),
+        "Mists startup should see bank constants and the legacy UnitBuff tuple shape; \
+         the seventh value is the caster token that the pinned consumer reads as \
+         `caster` (Blizzard_UnitFrame/Classic/TargetFrame.lua:461) and resolves through \
+         `UnitIsUnit` (TargetFrame.lua:445, :629)"
     );
 }
 
