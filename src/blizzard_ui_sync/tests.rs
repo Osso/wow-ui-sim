@@ -405,7 +405,7 @@ fn retail_manifest_preserves_accessibility_family_sources_from_live_tree() {
 #[test]
 #[cfg(feature = "client-ptr")]
 fn ptr_aura_container_resolves_through_limited_listfile() {
-    use super::manifest_entry_fdid;
+    use super::{manifest_entry_fdid, manifest_entry_is_allowed_unmapped};
     let entry = "Blizzard_AuraContainer/Blizzard_AuraContainer.toc";
 
     assert_eq!(manifest_entry_fdid(entry), Some(8154511));
