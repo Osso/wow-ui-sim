@@ -439,10 +439,10 @@ fn group_members_pin_acquire_keeps_data_provider_on_pin() {
     load_blizzard_addon(&env, "Blizzard_MapCanvasSecureUtil");
     load_blizzard_addon(&env, "Blizzard_MapCanvas");
     // Eager base addons in the game UI provide SoftCursor and SlashCommandUtil,
-    // which the pinned map consumers index directly.
-    #[cfg(feature = "client-wowforever")]
+    // which the pinned Forever/PTR map consumers index directly.
+    #[cfg(any(feature = "client-wowforever", feature = "client-ptr"))]
     load_blizzard_addon(&env, "Blizzard_GamepadSoftCursor");
-    #[cfg(feature = "client-wowforever")]
+    #[cfg(any(feature = "client-wowforever", feature = "client-ptr"))]
     load_blizzard_addon(&env, "Blizzard_ChatFrameBase");
     load_blizzard_addon(&env, "Blizzard_SharedMapDataProviders");
     load_blizzard_addon(&env, "Blizzard_BattlefieldMap");
