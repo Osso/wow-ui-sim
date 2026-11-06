@@ -112,8 +112,12 @@ fn register_mythic_plus_probe_handlers(state: &mut LuaState, ns: GcRef<Table>) -
         get_weekly_chest_reward_level,
     )?;
     table_set_rust_fn_static(state, ns, "GetOwnedKeystoneLevel", get_owned_keystone_level)?;
-    if uses_display_seasons() {
-        // MythicPlusInfoDocumentation.lua:76-84, MayReturnNothing.
+    // MythicPlusInfoDocumentation.lua:76-84 (Retail, PTR, Forever) and 75-83
+    // (Mists, Era, Anniversary); Wrath pins no generated documentation.
+    if !matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Wrath
+    ) {
         table_set_rust_fn_static(
             state,
             ns,

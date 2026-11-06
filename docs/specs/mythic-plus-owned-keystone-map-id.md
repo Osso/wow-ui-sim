@@ -7,7 +7,7 @@ Authority: pinned declaration plus the client-handler decomp answer.
 
 - [ ] `GetOwnedKeystoneChallengeMapID()` publishes one number: the challenge-mode map ID of the key the player owns, or `0` when no key is owned.
 - [ ] It publishes a value in every state. It does not return nothing.
-- [ ] Publication is Retail, PTR and WowForever only.
+- [ ] Publication is every profile with a pinned declaration: Retail, PTR, Forever, Mists, Era and Anniversary. Wrath pins no generated documentation.
 
 ## Data source
 
@@ -24,7 +24,7 @@ The simulator supplies that cached state as `MythicPlusState::owned_keystone_cha
 
 ## Declarations
 
-`MythicPlusInfoDocumentation.lua`: Retail and PTR `76-84`, WowForever `76-84`, all with `MayReturnNothing`. Mists, Era and Anniversary declare the same member at `75-83` and do not publish it here.
+`MythicPlusInfoDocumentation.lua`: Retail and PTR `76-84`, WowForever `76-84`, Mists/Era/Anniversary `75-83`, all with `MayReturnNothing`.
 
 ## Implementation inventory
 

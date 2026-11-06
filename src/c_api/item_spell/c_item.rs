@@ -112,11 +112,9 @@ pub(super) fn register_c_item(state: &mut LuaState) -> LuaResult<()> {
     register_c_item_metadata_queries(state, table_ref)?;
     register_c_item_inventory_queries(state, table_ref)?;
     register_c_item_dressability_query(state, table_ref)?;
-    if matches!(
-        ACTIVE,
-        ClientProfile::Retail | ClientProfile::Ptr | ClientProfile::WowForever
-    ) {
-        // ItemDocumentation.lua:854-867 (Retail), 876-889 (PTR, Forever):
+    if ACTIVE != ClientProfile::Wrath {
+        // ItemDocumentation.lua:854-867 (Retail), 876-889 (PTR, Forever) and
+        // 586-598 (Mists, Era, Anniversary):
         // GetItemNumSockets(itemInfo) -> socketCount.
         table_set_rust_fn_static(
             state,

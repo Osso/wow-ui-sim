@@ -36,7 +36,7 @@ Observed tests-only RED: original collapse left 19 rows instead of 14 (`B5: chil
 ## Known gaps (current cycle)
 
 - [x] Retail behavioral RED/GREEN, existing currency preservation and startup observation executed; see the bounded proof limits.
-- [x] `GetCurrencyListLink` (Retail, PTR, Forever) reads the same displayed index. An index past the displayed count publishes one nil, and a header row takes the same link-builder path as any other row (client getter decomp, 12.1.5: range check against the displayed count, no header test).
+- [x] `GetCurrencyListLink` reads the same displayed index on every profile with a pinned declaration (Retail, PTR, Forever, Mists, Era, Anniversary; Wrath pins no generated documentation). An index past the displayed count publishes one nil, and a header row takes the same link-builder path as any other row (client getter decomp, 12.1.5: range check against the displayed count, no header test). Mists, Era and Anniversary `Blizzard_TokenUI` and `Blizzard_PTRFeedback` call it, so their rows now resolve a link instead of a nil call.
 ## Link text boundary
 
 The native link builder is unmodelled, so the payload fields (`currency:<id>` only, or extra fields such as quantity) and the colour source are not proved. The simulator emits `|c<quality hex>|Hcurrency:<row id>|h[<row name>]|h|r` as a documented best guess: the row's own ID, the row's name, and the colour `GetItemQualityColor` reports for the row's quality. Header rows in this model carry ID zero, so their link names no currency.

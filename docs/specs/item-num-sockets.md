@@ -8,7 +8,7 @@ Authority: pinned declaration plus the client-handler decomp answer; the bonus-s
 - [ ] `GetItemNumSockets(itemInfo)` publishes one non-nil number for any argument.
 - [ ] The argument resolves to an item like the other `itemInfo` readers: item ID, hyperlink, or item name.
 - [ ] An item that does not resolve, or is not cached, publishes `0`. It never publishes nil and never returns nothing.
-- [ ] Publication is Retail, PTR and WowForever only.
+- [ ] Publication is every profile with a pinned declaration: Retail, PTR, Forever, Mists, Era and Anniversary. Wrath pins no generated documentation.
 
 ## Count sources
 
@@ -21,7 +21,7 @@ The simulator models only the static source. Each item record carries three sock
 
 ## Declarations
 
-`ItemDocumentation.lua`: Retail `854-867`, PTR `876-889`, WowForever `876-889` declare `itemInfo: ItemInfo` in and `socketCount: number` (`Nilable = false`) out. Mists, Era and Anniversary declare the same function (`586-598` in the Mists and Era caches) but are not published here.
+`ItemDocumentation.lua`: Retail `854-867`, PTR `876-889`, WowForever `876-889`, Mists/Era/Anniversary `586-598`, all declaring `itemInfo: ItemInfo` in and `socketCount: number` (`Nilable = false`) out.
 
 ## Implementation inventory
 
@@ -34,4 +34,3 @@ The simulator models only the static source. Each item record carries three sock
 ## Known gaps
 
 - [ ] The bonus/instance addend has no backing table, so a link that would add instance sockets reports the record count.
-- [ ] Mists, Era and Anniversary declare the function and do not publish it.

@@ -132,13 +132,9 @@ pub(super) fn register_c_currency_info(state: &mut LuaState) -> LuaResult<()> {
             query_currency_faction_grant,
         )?;
     }
-    if matches!(
-        crate::client_profile::ACTIVE,
-        crate::client_profile::ClientProfile::Retail
-            | crate::client_profile::ClientProfile::Ptr
-            | crate::client_profile::ClientProfile::WowForever
-    ) {
-        // CurrencyInfoDocumentation.lua:312-326 (Retail, PTR, Forever).
+    if crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Wrath {
+        // CurrencyInfoDocumentation.lua:312-326 (Retail, PTR, Forever) and
+        // 117-128 (Mists, Era, Anniversary). Wrath pins no generated documentation.
         table_set_rust_fn_static(
             state,
             table_ref,
