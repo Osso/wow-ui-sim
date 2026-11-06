@@ -295,7 +295,12 @@ fn blizzard_pvp_ui_mists_toc_pins_classic_flavor_restriction() {
 classic_pvp_residue_pvp_ui_fixture! {
 #[test]
 fn blizzard_pvp_ui_mainline_declares_profile_dependencies() {
-    let toc = TocFile::from_file(&pvp_ui_mainline_toc()).expect("Blizzard_PVPUI_Mainline TOC parses");
+    let toc_path = if pvp_ui_uses_single_toc_layout() {
+        pvp_ui_toc()
+    } else {
+        pvp_ui_mainline_toc()
+    };
+    let toc = TocFile::from_file(&toc_path).expect("Blizzard_PVPUI_Mainline TOC parses");
 
     let dependencies = toc.dependencies();
     let deps: Vec<&str> = dependencies.iter().map(|s| s.as_str()).collect();
