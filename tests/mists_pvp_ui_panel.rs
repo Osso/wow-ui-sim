@@ -113,10 +113,17 @@ fn mists_toggle_pvp_frame_routes_through_group_finder_without_errors() {
 }
 
 fn assert_no_lua_errors(stdout: &str, stderr: &str) {
+    // The `lua-errors` subcommand prints the unique error array last on stdout
+    // and always writes a final summary to stderr (`=== Final observed Lua error
+    // summary ===`, `Lua errors: N unique`). A substring search for "Lua error"
+    // therefore matches that summary even when no error was recorded.
+    assert_eq!(
+        stdout.trim(),
+        "[]",
+        "PvP panel flow reported Lua errors\nstdout:\n{stdout}\nstderr:\n{stderr}"
+    );
     assert!(
-        !stdout.contains("Lua error")
-            && !stderr.contains("Lua error")
-            && !stderr.contains("[exec-lua] error"),
-        "PvP panel flow emitted Lua errors\nstdout:\n{stdout}\nstderr:\n{stderr}"
+        !stderr.contains("[exec-lua] error"),
+        "the exec-lua probe failed\nstdout:\n{stdout}\nstderr:\n{stderr}"
     );
 }
