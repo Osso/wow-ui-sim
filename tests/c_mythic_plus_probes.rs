@@ -308,6 +308,34 @@ fn get_owned_keystone_level_returns_level_when_set() {
     assert_eq!(level, 15);
 }
 
+// ── GetOwnedKeystoneChallengeMapID ────────────────────────────────────────────
+
+#[test]
+fn get_owned_keystone_challenge_map_id_returns_nothing_without_a_key() {
+    let env = env();
+    let count: i32 = env
+        .eval("return select('#', C_MythicPlus.GetOwnedKeystoneChallengeMapID())")
+        .unwrap();
+    assert_eq!(count, 0, "no key = mayreturnnothing");
+}
+
+#[test]
+fn get_owned_keystone_challenge_map_id_returns_the_owned_key_map() {
+    let env = env();
+    {
+        let mut sim = env.state().borrow_mut();
+        sim.mythic_plus.owned_keystone_level = 12;
+        sim.mythic_plus.owned_keystone_challenge_map_id = 499;
+    }
+    let (map_id, level): (i32, i32) = env
+        .eval(
+            "return C_MythicPlus.GetOwnedKeystoneChallengeMapID(), C_MythicPlus.GetOwnedKeystoneLevel()",
+        )
+        .unwrap();
+    assert_eq!(map_id, 499);
+    assert_eq!(level, 12);
+}
+
 // ── GetWeeklyBestForMap ───────────────────────────────────────────────────────
 
 #[test]

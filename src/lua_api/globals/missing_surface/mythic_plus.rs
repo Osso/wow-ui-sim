@@ -10,6 +10,8 @@
 //!   array + bestOverAllScore, or nothing if no data.
 //! - `GetWeeklyChestRewardLevel()` — returns four zeros when no run done.
 //! - `GetOwnedKeystoneLevel()` — returns owned keystone level or nothing.
+//! - `GetOwnedKeystoneChallengeMapID()` — returns the owned keystone's
+//!   challenge map or nothing (Retail, PTR, Forever).
 //! - `GetWeeklyBestForMap(mapChallengeModeID)` — returns
 //!   durationSec, level, completionDate=nil, fraction=0, affixIDs={},
 //!   members={}, or nothing if no data.
@@ -110,6 +112,15 @@ fn register_mythic_plus_probe_handlers(state: &mut LuaState, ns: GcRef<Table>) -
         get_weekly_chest_reward_level,
     )?;
     table_set_rust_fn_static(state, ns, "GetOwnedKeystoneLevel", get_owned_keystone_level)?;
+    if uses_display_seasons() {
+        // MythicPlusInfoDocumentation.lua:76-84, MayReturnNothing.
+        table_set_rust_fn_static(
+            state,
+            ns,
+            "GetOwnedKeystoneChallengeMapID",
+            get_owned_keystone_challenge_map_id,
+        )?;
+    }
     #[cfg(not(feature = "retail-12-0-7"))]
     table_set_rust_fn_static(state, ns, "GetWeeklyBestForMap", get_weekly_best_for_map)?;
     Ok(())
@@ -353,6 +364,17 @@ fn get_owned_keystone_level(state: &mut LuaState) -> LuaResult<u32> {
         return Ok(0);
     }
     state.push(Val::Num(level as f64));
+    Ok(1)
+}
+
+fn get_owned_keystone_challenge_map_id(state: &mut LuaState) -> LuaResult<u32> {
+    let map_id = borrow_state(state)?
+        .mythic_plus
+        .owned_keystone_challenge_map_id;
+    if map_id == 0 {
+        return Ok(0);
+    }
+    state.push(Val::Num(f64::from(map_id)));
     Ok(1)
 }
 
