@@ -3,15 +3,13 @@
 use std::path::PathBuf;
 use std::process::Command;
 
+/// Cargo sets `CARGO_BIN_EXE_wow-sim` when it builds this test target, so the
+/// path is fixed at compile time. Reading the variable at run time falls back
+/// to `<manifest>/target/debug/wow-sim`, which does not exist when the test
+/// binary is executed from a shared target directory (as `scripts/slot-build.py`
+/// does).
 fn wow_sim_binary() -> PathBuf {
-    std::env::var_os("CARGO_BIN_EXE_wow-sim")
-        .map(PathBuf::from)
-        .unwrap_or_else(|| {
-            PathBuf::from(env!("CARGO_MANIFEST_DIR"))
-                .join("target")
-                .join("debug")
-                .join("wow-sim")
-        })
+    PathBuf::from(env!("CARGO_BIN_EXE_wow-sim"))
 }
 
 #[test]

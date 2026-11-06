@@ -115,7 +115,7 @@ fn load_full_game_ui() -> WowLuaEnv {
 }
 
 // Literal cached inputs absent from Wrath manifest1-382/cache; behavior cases stay enabled.
-post_wrath_ui_fixture! {
+classic_pvp_residue_pvp_match_fixture! {
 #[test]
 fn blizzard_pvp_match_find_toc_resolves_bare_variant() {
     let resolved = find_toc_file(&pvp_match_dir()).expect("Blizzard_PVPMatch TOC resolves");
@@ -134,7 +134,7 @@ fn blizzard_pvp_match_find_toc_resolves_bare_variant() {
 }
 }
 
-post_wrath_ui_fixture! {
+classic_pvp_residue_pvp_match_fixture! {
 #[test]
 fn blizzard_pvp_match_toc_declares_explicit_load_on_demand_zero() {
     let toc = TocFile::from_file(&pvp_match_toc()).expect("Blizzard_PVPMatch TOC parses");
@@ -160,7 +160,7 @@ fn blizzard_pvp_match_toc_declares_explicit_load_on_demand_zero() {
 }
 }
 
-post_wrath_ui_fixture! {
+classic_pvp_residue_pvp_match_fixture! {
 #[test]
 fn blizzard_pvp_match_toc_pins_standard_game_type_as_unrestricted() {
     let toc = TocFile::from_file(&pvp_match_toc()).expect("Blizzard_PVPMatch TOC parses");
@@ -194,7 +194,7 @@ fn blizzard_pvp_match_toc_pins_standard_game_type_as_unrestricted() {
 }
 }
 
-post_wrath_ui_fixture! {
+classic_pvp_residue_pvp_match_fixture! {
 #[test]
 fn blizzard_pvp_match_toc_uses_singular_required_dep_form() {
     let toc = TocFile::from_file(&pvp_match_toc()).expect("Blizzard_PVPMatch TOC parses");
@@ -219,7 +219,7 @@ fn blizzard_pvp_match_toc_uses_singular_required_dep_form() {
 }
 }
 
-post_wrath_ui_fixture! {
+classic_pvp_residue_pvp_match_fixture! {
 #[test]
 fn blizzard_pvp_match_toc_declares_no_saved_variables() {
     let toc = TocFile::from_file(&pvp_match_toc()).expect("Blizzard_PVPMatch TOC parses");
@@ -237,7 +237,7 @@ fn blizzard_pvp_match_toc_declares_no_saved_variables() {
 }
 }
 
-post_wrath_ui_fixture! {
+classic_pvp_residue_pvp_match_fixture! {
 #[test]
 fn blizzard_pvp_match_toc_declares_metadata_in_raw_bytes() {
     let raw = std::fs::read_to_string(pvp_match_toc()).expect("Blizzard_PVPMatch TOC reads utf-8");
@@ -291,7 +291,7 @@ fn blizzard_pvp_match_toc_declares_metadata_in_raw_bytes() {
 }
 }
 
-post_wrath_ui_fixture! {
+classic_pvp_residue_pvp_match_fixture! {
 #[test]
 fn blizzard_pvp_match_toc_lists_profile_files_with_xml_pulling_companion_lua() {
     let toc = TocFile::from_file(&pvp_match_toc()).expect("Blizzard_PVPMatch TOC parses");
@@ -322,7 +322,7 @@ fn blizzard_pvp_match_toc_lists_profile_files_with_xml_pulling_companion_lua() {
 }
 }
 
-post_wrath_ui_fixture! {
+classic_pvp_residue_pvp_match_fixture! {
 #[test]
 fn blizzard_pvp_match_appears_in_eager_game_discovery() {
     let ui = blizzard_ui_dir();
@@ -354,7 +354,7 @@ fn blizzard_pvp_match_appears_in_eager_game_discovery() {
 }
 }
 
-post_wrath_ui_fixture! {
+classic_pvp_residue_pvp_match_fixture! {
 #[test]
 fn blizzard_pvp_match_appears_in_full_addon_inventory() {
     let inventory = discover_all_blizzard_addons(&blizzard_ui_dir());

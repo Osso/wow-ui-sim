@@ -1,6 +1,7 @@
 //! Retail 9.2.0 retirement must not alter classic lazy namespace lookup.
 #![cfg(feature = "client-mists")]
 
+classic_pvp_residue_retired_pvp_lookup_fixture! {
 #[test]
 fn patch_9_2_0_mists_preserves_legacy_pvp_lookup() {
     let env = wow_ui_sim::lua_api::WowLuaEnv::new().unwrap();
@@ -13,4 +14,5 @@ end
 "#,
     )
     .unwrap();
+}
 }

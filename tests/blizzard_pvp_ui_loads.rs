@@ -36,6 +36,42 @@ fn pvp_ui_mists_toc() -> PathBuf {
     pvp_ui_dir().join("Blizzard_PVPUI_Mists.toc")
 }
 
+/// `src/loader/mod.rs::active_profile_toc_suffixes` (`:227-238`) orders
+/// `_Mainline` first for Retail and `_Mists` first for Mists, and
+/// `find_toc_file` (`:296`) returns the first existing suffix. The classic
+/// variant caches pin the Retail-era flavor TOCs
+/// (`data/blizzard-ui-files/mists.txt:1879-1880`) without the Retail-only
+/// `*_Bootstrap.lua` files (`retail.txt:2621,2624`).
+fn pvp_ui_classic_variant() -> bool {
+    wow_ui_sim::client_profile::ACTIVE == wow_ui_sim::client_profile::ClientProfile::Mists
+}
+
+fn pvp_ui_active_variant_toc() -> PathBuf {
+    if pvp_ui_classic_variant() {
+        pvp_ui_mists_toc()
+    } else {
+        pvp_ui_mainline_toc()
+    }
+}
+
+const CLASSIC_MAINLINE_TOC_FILES: &[&str] = &[
+    "Mainline/Blizzard_PVPUI.lua",
+    "Mainline/Blizzard_PVPUI.xml",
+    "Localization.lua",
+];
+
+const CLASSIC_MISTS_TOC_FILES: &[&str] = &[
+    "Mists/Blizzard_PVPUI.lua",
+    "Mists/Blizzard_PVPUI.xml",
+    "Localization.lua",
+];
+
+const CLASSIC_MAINLINE_DEPS: &[&str] = &[
+    "Blizzard_HelpPlate",
+    "Blizzard_GroupFinder",
+    "Blizzard_MatchmakingQueueDisplay",
+];
+
 const MAINLINE_TOC_FILES: &[&str] = &[
     "Mainline/Blizzard_PVPUI_Bootstrap.lua",
     "Mainline/Blizzard_PVPUI.lua",
@@ -149,7 +185,7 @@ fn load_full_game_ui() -> WowLuaEnv {
 }
 
 // Literal cached inputs absent from Wrath manifest1-382/cache; behavior cases stay enabled.
-pvp_ui_toc_fixture! {
+classic_pvp_residue_pvp_ui_fixture! {
 #[test]
 fn blizzard_pvp_ui_find_toc_resolves_profile_toc() {
     let resolved = find_toc_file(&pvp_ui_dir()).expect("Blizzard_PVPUI TOC resolves");
@@ -172,11 +208,11 @@ fn blizzard_pvp_ui_find_toc_resolves_profile_toc() {
     } else {
         assert_eq!(
             resolved,
-            pvp_ui_mainline_toc(),
-            "Blizzard_PVPUI ships Mainline + Mists variants and NO bare TOC. \
-             `find_toc_file` at src/loader/mod.rs:296 prefers the `_Mainline`\
-             suffix first, so the resolver returns the Mainline variant. The\
-             Mists variant exists for the Mists of Pandaria classic flavor"
+            pvp_ui_active_variant_toc(),
+            "Blizzard_PVPUI ships flavor-split TOCs and NO bare TOC.\
+             `find_toc_file` (src/loader/mod.rs:296) walks\
+             `active_profile_toc_suffixes` (`:227-238`) in order, so Retail\
+             returns `_Mainline` first and Mists returns `_Mists` first"
         );
 
         let bare = pvp_ui_dir().join("Blizzard_PVPUI.toc");
@@ -188,9 +224,9 @@ fn blizzard_pvp_ui_find_toc_resolves_profile_toc() {
 }
 }
 
-pvp_ui_toc_fixture! {
+classic_pvp_residue_pvp_ui_fixture! {
 #[test]
-fn blizzard_pvp_ui_mainline_toc_pins_lod_game_only_mainline_only() {
+fn blizzard_pvp_ui_active_toc_pins_lod_game_only() {
     let toc = TocFile::from_file(&pvp_ui_toc()).expect("Blizzard_PVPUI TOC parses");
 
     assert!(
@@ -205,16 +241,16 @@ fn blizzard_pvp_ui_mainline_toc_pins_lod_game_only_mainline_only() {
 
     assert!(
         !toc.is_game_type_restricted(),
-        "The TOC's `## AllowLoadGameType:` includes `mainline`, which is in the \
-         active modern allowlist at src/toc/mod.rs::active_game_types, so \
-         `is_game_type_restricted()` returns FALSE on Retail and PTR"
+        "`find_toc_file` only resolves the flavor the active profile selects \
+         (src/loader/mod.rs:227-238), so its `## AllowLoadGameType:` value \
+         (`mainline` on Retail, `mists` on Mists) always matches the active \
+         types at src/toc/mod.rs::active_game_types"
     );
 
     assert!(
         toc.allows_screen(ScreenKind::Game),
-        "`allows_screen` must accept the Game screen — Retail declares \
-         `## AllowLoad: game` and PTR omits `## AllowLoad:`, which defaults to \
-         Game-only"
+        "`allows_screen` must accept the Game screen — both pinned variants \
+         declare `## AllowLoad: game`"
     );
     for screen in [
         ScreenKind::Login,
@@ -230,8 +266,7 @@ fn blizzard_pvp_ui_mainline_toc_pins_lod_game_only_mainline_only() {
 }
 }
 
-pvp_ui_toc_fixture! {
-pvp_ui_variant_toc_fixture! {
+classic_pvp_residue_pvp_ui_variant_fixture! {
 #[test]
 fn blizzard_pvp_ui_mists_toc_pins_classic_flavor_restriction() {
     let toc = TocFile::from_file(&pvp_ui_mists_toc()).expect("Blizzard_PVPUI_Mists TOC parses");
@@ -241,14 +276,13 @@ fn blizzard_pvp_ui_mists_toc_pins_classic_flavor_restriction() {
         "Mists TOC must also declare `## LoadOnDemand: 1`"
     );
 
-    assert!(
+    assert_eq!(
         toc.is_game_type_restricted(),
-        "Mists variant: `## AllowLoadGameType: mists` — \
-         `is_game_type_restricted()` returns TRUE because `mists` is NOT in the \
-         `mainline | standard` cross-flavor allowlist at src/toc.rs:299. The \
-         loader filter at src/loader/mod.rs:527 rejects this variant on retail. \
-         It only loads on the Mists of Pandaria classic client where the game \
-         type matches"
+        !pvp_ui_classic_variant(),
+        "The Mists variant declares `## AllowLoadGameType: mists`. It is \
+         restricted on Retail because `mists` is not in Retail's \
+         `mainline | standard` types, and unrestricted on Mists because `mists` \
+         is in `src/toc/mod.rs::active_game_types`"
     );
 
     assert!(
@@ -257,33 +291,42 @@ fn blizzard_pvp_ui_mists_toc_pins_classic_flavor_restriction() {
     );
 }
 }
-}
 
-pvp_ui_toc_fixture! {
+classic_pvp_residue_pvp_ui_fixture! {
 #[test]
-fn blizzard_pvp_ui_mainline_declares_four_dependencies() {
-    let toc = TocFile::from_file(&pvp_ui_toc()).expect("Blizzard_PVPUI TOC parses");
+fn blizzard_pvp_ui_mainline_declares_profile_dependencies() {
+    let toc = TocFile::from_file(&pvp_ui_mainline_toc()).expect("Blizzard_PVPUI_Mainline TOC parses");
 
     let dependencies = toc.dependencies();
     let deps: Vec<&str> = dependencies.iter().map(|s| s.as_str()).collect();
+    let expected: &[&str] = if pvp_ui_classic_variant() {
+        CLASSIC_MAINLINE_DEPS
+    } else {
+        MAINLINE_DEPS
+    };
     assert_eq!(
-        deps, MAINLINE_DEPS,
-        "The TOC declares HelpPlate, GroupFinder, MatchmakingQueueDisplay, and \
-         FrameXMLUtil in published order. PTR writes them as repeated \
-         `## Dep:` lines annotated `[AllowLoadGameType mainline]`; the parser \
-         keeps those because `mainline` is active on PTR too"
+        deps, expected,
+        "Retail 12.1.0 `_Mainline.toc` adds Blizzard_FrameXMLUtil; the classic \
+         variant caches pin the same TOC without it \
+         (`data/blizzard-ui-files/mists.txt:1879`)"
     );
 
-    assert_eq!(
-        toc.optional_deps(),
-        vec!["Blizzard_Plunderstorm".to_string()]
-    );
+    if pvp_ui_classic_variant() {
+        assert!(
+            toc.optional_deps().is_empty(),
+            "The classic variant `_Mainline.toc` declares no `## OptionalDeps:`"
+        );
+    } else {
+        assert_eq!(
+            toc.optional_deps(),
+            vec!["Blizzard_Plunderstorm".to_string()]
+        );
+    }
     assert!(toc.load_with().is_empty());
 }
 }
 
-pvp_ui_toc_fixture! {
-pvp_ui_variant_toc_fixture! {
+classic_pvp_residue_pvp_ui_variant_fixture! {
 #[test]
 fn blizzard_pvp_ui_mists_declares_two_dependencies_dropping_queue_display() {
     let toc = TocFile::from_file(&pvp_ui_mists_toc()).expect("Blizzard_PVPUI_Mists TOC parses");
@@ -300,9 +343,8 @@ fn blizzard_pvp_ui_mists_declares_two_dependencies_dropping_queue_display() {
     );
 }
 }
-}
 
-pvp_ui_toc_fixture! {
+classic_pvp_residue_pvp_ui_fixture! {
 #[test]
 fn blizzard_pvp_ui_toc_declares_no_saved_variables() {
     let toc_paths = if pvp_ui_uses_single_toc_layout() {
@@ -324,7 +366,7 @@ fn blizzard_pvp_ui_toc_declares_no_saved_variables() {
 }
 }
 
-pvp_ui_toc_fixture! {
+classic_pvp_residue_pvp_ui_fixture! {
 #[test]
 fn blizzard_pvp_ui_mainline_toc_declares_metadata_in_raw_bytes() {
     if pvp_ui_uses_single_toc_layout() {
@@ -364,9 +406,6 @@ fn blizzard_pvp_ui_mainline_toc_declares_metadata_in_raw_bytes() {
     assert!(raw.contains("## Version: 1.0"));
     assert!(raw.contains("## LoadOnDemand: 1"));
     assert!(raw.contains("## AllowLoad: game"));
-    assert!(raw.contains(
-        "## Dependencies: Blizzard_HelpPlate, Blizzard_GroupFinder, Blizzard_MatchmakingQueueDisplay, Blizzard_FrameXMLUtil"
-    ));
     assert!(raw.contains("## AllowLoadGameType: mainline"));
 
     assert!(
@@ -377,17 +416,38 @@ fn blizzard_pvp_ui_mainline_toc_declares_metadata_in_raw_bytes() {
         !raw.contains("## SavedVariables"),
         "TOC must NOT declare any SavedVariables directive"
     );
-    assert!(
-        raw.contains("## OptionalDeps: Blizzard_Plunderstorm"),
-        "Retail 12.1.0.69497 declares Blizzard_Plunderstorm as an optional dependency"
-    );
+
+    if pvp_ui_classic_variant() {
+        assert!(raw.contains(
+            "## Dependencies: Blizzard_HelpPlate, Blizzard_GroupFinder, Blizzard_MatchmakingQueueDisplay"
+        ));
+        assert!(
+            !raw.contains("## OptionalDeps"),
+            "The classic variant caches pin `_Mainline.toc` without the Retail-only \
+             `## OptionalDeps: Blizzard_Plunderstorm` line \
+             (`data/blizzard-ui-files/mists.txt:1879`)"
+        );
+    } else {
+        assert!(raw.contains(
+            "## Dependencies: Blizzard_HelpPlate, Blizzard_GroupFinder, Blizzard_MatchmakingQueueDisplay, Blizzard_FrameXMLUtil"
+        ));
+        assert!(
+            raw.contains("## OptionalDeps: Blizzard_Plunderstorm"),
+            "Retail 12.1.0.69497 declares Blizzard_Plunderstorm as an optional dependency"
+        );
+    }
 }
 }
 
-pvp_ui_toc_fixture! {
+classic_pvp_residue_pvp_ui_fixture! {
 #[test]
-fn blizzard_pvp_ui_mainline_lists_bootstrap_then_three_files_with_variant_subdirectory() {
-    let toc = TocFile::from_file(&pvp_ui_toc()).expect("PVPUI TOC parses");
+fn blizzard_pvp_ui_mainline_lists_profile_files_with_variant_subdirectory() {
+    let toc_path = if pvp_ui_uses_single_toc_layout() {
+        pvp_ui_toc()
+    } else {
+        pvp_ui_mainline_toc()
+    };
+    let toc = TocFile::from_file(&toc_path).expect("PVPUI TOC parses");
     let listed: Vec<String> = toc
         .files
         .iter()
@@ -404,30 +464,42 @@ fn blizzard_pvp_ui_mainline_lists_bootstrap_then_three_files_with_variant_subdir
         return;
     }
 
+    let expected: &[&str] = if pvp_ui_classic_variant() {
+        CLASSIC_MAINLINE_TOC_FILES
+    } else {
+        MAINLINE_TOC_FILES
+    };
     assert_eq!(
-        listed, MAINLINE_TOC_FILES,
+        listed, expected,
         "Retail 12.1.0.69497 Mainline TOC lists its bootstrap before the Lua, XML, \
-         and shared localization files"
+         and shared localization files; the classic variant caches pin the same \
+         TOC without the Retail-only `Mainline/Blizzard_PVPUI_Bootstrap.lua` \
+         (`data/blizzard-ui-files/mists.txt:1882-1883`)"
     );
 }
 }
 
-pvp_ui_toc_fixture! {
-pvp_ui_variant_toc_fixture! {
+classic_pvp_residue_pvp_ui_variant_fixture! {
 #[test]
-fn blizzard_pvp_ui_mists_lists_bootstrap_then_three_files_with_mists_subdirectory() {
+fn blizzard_pvp_ui_mists_lists_profile_files_with_mists_subdirectory() {
     let toc = TocFile::from_file(&pvp_ui_mists_toc()).expect("Mists TOC parses");
     let listed: Vec<String> = toc
         .files
         .iter()
         .map(|p| p.to_string_lossy().into_owned())
         .collect();
+    let expected: &[&str] = if pvp_ui_classic_variant() {
+        CLASSIC_MISTS_TOC_FILES
+    } else {
+        MISTS_TOC_FILES
+    };
     assert_eq!(
-        listed, MISTS_TOC_FILES,
+        listed, expected,
         "Retail 12.1.0.69497 Mists TOC lists its bootstrap before the flavor files \
-         and shared localization"
+         and shared localization; the classic variant caches pin the same TOC \
+         without the Retail-only `Mists/Blizzard_PVPUI_Bootstrap.lua` \
+         (`data/blizzard-ui-files/mists.txt:1884-1885`)"
     );
-}
 }
 }
 
@@ -454,7 +526,7 @@ fn blizzard_pvp_ui_does_not_appear_in_eager_discovery() {
     }
 }
 
-post_wrath_ui_fixture! {
+classic_pvp_residue_pvp_ui_fixture! {
 #[test]
 fn blizzard_pvp_ui_appears_in_full_addon_inventory() {
     let inventory = discover_all_blizzard_addons(&blizzard_ui_dir());
