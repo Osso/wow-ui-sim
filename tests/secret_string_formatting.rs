@@ -136,12 +136,16 @@ fn assert_inferred_tainted_formatting(precision: &str, width: &str) {
     assert_secret_payload(&env, "SecretWidthResult");
 }
 
+classic_secret_values_fixture! {
 #[test]
 fn inferred_tainted_direct_formatting_preserves_secrecy_and_stack_taint() {
     assert_inferred_tainted_formatting("%.5s", "%12s");
 }
+}
 
+classic_secret_values_fixture! {
 #[test]
 fn inferred_tainted_positional_formatting_preserves_secrecy_and_stack_taint() {
     assert_inferred_tainted_formatting("%1$.5s", "%1$12s");
+}
 }

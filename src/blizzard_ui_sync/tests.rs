@@ -1,7 +1,4 @@
-use super::{
-    CacheProvenance, invalidate_cache_if_provenance_mismatched, manifest_entries,
-    manifest_entry_fdid, manifest_entry_is_allowed_unmapped,
-};
+use super::{CacheProvenance, invalidate_cache_if_provenance_mismatched, manifest_entries};
 #[cfg(feature = "casc")]
 use std::cell::RefCell;
 use std::path::PathBuf;
@@ -408,14 +405,17 @@ fn retail_manifest_preserves_accessibility_family_sources_from_live_tree() {
 #[test]
 #[cfg(feature = "client-ptr")]
 fn ptr_aura_container_resolves_through_limited_listfile() {
+    use super::manifest_entry_fdid;
     let entry = "Blizzard_AuraContainer/Blizzard_AuraContainer.toc";
 
     assert_eq!(manifest_entry_fdid(entry), Some(8154511));
     assert!(!manifest_entry_is_allowed_unmapped(entry));
 }
 
+casc_listfile_manifest_fixture! {
 #[test]
 fn manifest_entries_resolve_through_limited_listfile() {
+    use super::{manifest_entry_fdid, manifest_entry_is_allowed_unmapped};
     let missing: Vec<_> = manifest_entries()
         .filter(|entry| manifest_entry_fdid(entry).is_none())
         .filter(|entry| !manifest_entry_is_allowed_unmapped(entry))
@@ -425,6 +425,7 @@ fn manifest_entries_resolve_through_limited_listfile() {
         missing.is_empty(),
         "unmapped Blizzard UI files: {missing:?}"
     );
+}
 }
 
 #[test]

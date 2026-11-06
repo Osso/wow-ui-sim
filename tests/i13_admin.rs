@@ -68,10 +68,18 @@ fn tainted_admin_dispatch_preserves_blizzard_and_addon_handler_ownership() {
 
 #[test]
 fn buff_caster_controls_aura_ownership() {
-    WowLuaEnv::new()
-        .unwrap()
-        .eval::<()>(
-            r#"
+    // Pinned Wrath `FrameXML/BuffFrame.lua:125` reads
+    // `name, rank, texture, count, debuffType, duration, expirationTime,
+    // unitCaster, ...`; the rank-free tuple used by other profiles puts the
+    // caster one slot earlier.
+    let caster_index = if wow_ui_sim::client_profile::ACTIVE
+        == wow_ui_sim::client_profile::ClientProfile::Wrath
+    {
+        8
+    } else {
+        7
+    };
+    let probe = r#"
         A_Admin.SetPartySize(1)
         A_Admin.SetPartyMember(1, 'Caster', 1, 80)
         A_Admin.ClearBuffs()
@@ -79,15 +87,15 @@ fn buff_caster_controls_aura_ownership() {
         local aura = C_UnitAuras.GetAuraDataByIndex('player', 1, 'HELPFUL')
         assert(aura.sourceUnit == 'player', 'player aura projection')
         assert(aura.isFromPlayerOrPlayerPet == false, 'player ownership')
-        local _, _, _, _, _, _, caster = UnitBuff('player', 1)
+        local caster = select(CASTER_INDEX, UnitBuff('player', 1))
         assert(caster == 'player', 'legacy player aura projection')
         A_Admin.ClearBuffs()
         A_Admin.AddBuff(21562, 'Test buff', 135987, 60, 1)
         aura = C_UnitAuras.GetAuraDataByIndex('player', 1, 'HELPFUL')
         assert(aura.sourceUnit == 'player' and aura.isFromPlayerOrPlayerPet)
-    "#,
-        )
-        .unwrap();
+    "#
+    .replace("CASTER_INDEX", &caster_index.to_string());
+    WowLuaEnv::new().unwrap().eval::<()>(&probe).unwrap();
 }
 
 #[test]

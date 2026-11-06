@@ -85,6 +85,7 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
 mod tests {
     use crate::lua_api::WowLuaEnv;
 
+    retail_namespace_fixture! {
     #[test]
     fn registers_and_updates_managed_frame_visibility() {
         let env = WowLuaEnv::new().expect("lua env should initialize");
@@ -109,6 +110,7 @@ mod tests {
             .expect("UIFrameManager defaults should update registered frames");
 
         assert_eq!((shown_before, shown_after), (false, true));
+    }
     }
 
     #[test]

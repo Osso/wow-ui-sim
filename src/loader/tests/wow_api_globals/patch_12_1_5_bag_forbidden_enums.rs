@@ -14,6 +14,7 @@ fn patch_12_1_5_bag_flag_publication() {
     assert_eq!(actual, (Some(4194304.0), 1.0, 134217728.0, 28.0));
 }
 
+retail_namespace_fixture! {
 #[test]
 fn patch_12_1_5_forbidden_aspect_publication() {
     let env = WowLuaEnv::new().expect("Lua environment should initialize");
@@ -28,4 +29,5 @@ fn patch_12_1_5_forbidden_aspect_publication() {
     } else {
         assert_eq!(actual, (None, None, 1.0, 1024.0, 11.0));
     }
+}
 }

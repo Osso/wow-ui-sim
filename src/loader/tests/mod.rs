@@ -1,6 +1,6 @@
 //! Tests for the addon loader.
 
-post_wrath_ui_fixture! {
+account_store_ui_fixture! {
     mod account_store;
 }
 mod button_text;

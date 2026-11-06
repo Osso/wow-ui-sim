@@ -112,6 +112,7 @@ mod tests {
         assert_eq!(texture, "portrait_texture");
     }
 
+    modern_engine_namespace_fixture! {
     #[test]
     fn installs_unit_portrait_texture_helpers_when_missing() {
         let env = WowLuaEnv::new().expect("lua env should initialize");
@@ -164,6 +165,7 @@ mod tests {
             (0.0, 0.25, 0.0, 0.25)
         );
         assert_eq!(result.5, 134400);
+    }
     }
 
     #[test]

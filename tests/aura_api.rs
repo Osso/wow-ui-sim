@@ -17,18 +17,30 @@ fn test_unit_buff_returns_data_for_player() {
     assert!(!name.is_empty(), "First buff name should be non-empty");
 }
 
+/// Pinned Wrath `FrameXML/BuffFrame.lua:125` reads
+/// `name, rank, texture, count, debuffType, duration, expirationTime, ...`,
+/// so its legacy tuple carries `rank` at slot 2 and shifts duration/spellId by
+/// one. Other profiles use the rank-free tuple.
+fn legacy_aura_tuple_indices() -> (usize, usize) {
+    if wow_ui_sim::client_profile::ACTIVE == wow_ui_sim::client_profile::ClientProfile::Wrath {
+        (6, 11)
+    } else {
+        (5, 10)
+    }
+}
+
 #[test]
 fn test_unit_buff_returns_all_fields() {
     let env = env();
-    let (has_name, has_spell_id, has_duration): (bool, bool, bool) = env
-        .eval(
-            r#"
-            local name, icon, count, dispelName, duration, expirationTime,
-                  source, isStealable, nspp, spellId = UnitBuff('player', 1)
-            return name ~= nil, spellId ~= nil, duration ~= nil
-        "#,
-        )
-        .unwrap();
+    let (duration_index, spell_id_index) = legacy_aura_tuple_indices();
+    let probe = r#"
+            return UnitBuff('player', 1) ~= nil,
+                select(SPELL_ID_INDEX, UnitBuff('player', 1)) ~= nil,
+                select(DURATION_INDEX, UnitBuff('player', 1)) ~= nil
+        "#
+    .replace("SPELL_ID_INDEX", &spell_id_index.to_string())
+    .replace("DURATION_INDEX", &duration_index.to_string());
+    let (has_name, has_spell_id, has_duration): (bool, bool, bool) = env.eval(&probe).unwrap();
     assert!(has_name, "UnitBuff should return name");
     assert!(has_spell_id, "UnitBuff should return spellId");
     assert!(has_duration, "UnitBuff should return duration");
@@ -113,27 +125,25 @@ fn test_get_player_aura_by_spell_id_unknown() {
 #[test]
 fn test_get_player_aura_by_spell_id_finds_buff() {
     let env = env();
-    let found: bool = env
-        .eval(
-            r#"
-            local name, icon, count, dispelName, duration, expirationTime,
-                  source, isStealable, nspp, spellId = UnitBuff('player', 1)
+    let (_, spell_id_index) = legacy_aura_tuple_indices();
+    let probe = r#"
+            local name = UnitBuff('player', 1)
+            local spellId = select(SPELL_ID_INDEX, UnitBuff('player', 1))
             if not spellId then return false end
             local data = GetPlayerAuraBySpellID(spellId)
             return data ~= nil and data.name == name
-        "#,
-        )
-        .unwrap();
+        "#
+    .replace("SPELL_ID_INDEX", &spell_id_index.to_string());
+    let found: bool = env.eval(&probe).unwrap();
     assert!(found, "GetPlayerAuraBySpellID should find an active buff");
 }
 
 #[test]
 fn test_get_player_aura_by_spell_id_table_fields() {
     let env = env();
-    let ok: bool = env
-        .eval(
-            r#"
-            local _, _, _, _, _, _, _, _, _, spellId = UnitBuff('player', 1)
+    let (_, spell_id_index) = legacy_aura_tuple_indices();
+    let probe = r#"
+            local spellId = select(SPELL_ID_INDEX, UnitBuff('player', 1))
             if not spellId then return false end
             local d = GetPlayerAuraBySpellID(spellId)
             return d.name ~= nil
@@ -142,9 +152,9 @@ fn test_get_player_aura_by_spell_id_table_fields() {
                 and d.isHelpful == true
                 and d.auraInstanceID ~= nil
                 and type(d.points) == "table"
-        "#,
-        )
-        .unwrap();
+        "#
+    .replace("SPELL_ID_INDEX", &spell_id_index.to_string());
+    let ok: bool = env.eval(&probe).unwrap();
     assert!(ok, "AuraData table should have expected fields");
 }
 

@@ -51,6 +51,7 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
 mod tests {
     use crate::lua_api::WowLuaEnv;
 
+    modern_engine_namespace_fixture! {
     #[test]
     fn installs_empty_tracking_namespace_defaults() {
         let env = WowLuaEnv::new().expect("lua env should initialize");
@@ -75,6 +76,7 @@ mod tests {
             .expect("tracking namespace defaults should be callable");
 
         assert_eq!(result, "ok");
+    }
     }
 
     #[test]

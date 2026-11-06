@@ -254,10 +254,10 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
 
 #[cfg(test)]
 mod tests {
-    use crate::lua_api::WowLuaEnv;
-
+    retail_faction_fixture! {
     #[test]
     fn installs_seeded_reputation_state_and_visibility_controls() {
+        use crate::lua_api::WowLuaEnv;
         let env = WowLuaEnv::new().expect("lua env should initialize");
 
         let result: String = env
@@ -343,5 +343,6 @@ mod tests {
             .expect("reputation state probe should run");
 
         assert_eq!(result, "ok");
+    }
     }
 }

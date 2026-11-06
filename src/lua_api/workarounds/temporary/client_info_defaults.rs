@@ -256,10 +256,10 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
 
 #[cfg(test)]
 mod tests {
-    use crate::lua_api::WowLuaEnv;
-
+    non_mists_client_identity_fixture! {
     #[test]
     fn installs_client_info_defaults() {
+        use crate::lua_api::WowLuaEnv;
         let env = WowLuaEnv::new().expect("lua env should initialize");
 
         let (expected_version, expected_build) = super::client_identity().unwrap();
@@ -308,5 +308,6 @@ mod tests {
             .expect("client info defaults probe should run");
 
         assert_eq!(result, "ok");
+    }
     }
 }

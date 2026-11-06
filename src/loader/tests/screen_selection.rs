@@ -53,7 +53,14 @@ fn character_select_screen_uses_glue_addon_set() {
     assert!(addons.iter().any(|name| name == "Blizzard_GlueParent"));
     assert!(addons.iter().any(|name| name == "Blizzard_GlueXML"));
     assert!(!addons.iter().any(|name| name == "Blizzard_UIParent"));
+}
+
+character_create_ui_fixture! {
+#[test]
+fn character_select_screen_includes_character_create() {
+    let addons = addon_names(ScreenKind::CharacterSelect);
     assert!(addons.iter().any(|name| name == "Blizzard_CharacterCreate"));
+}
 }
 
 #[test]
@@ -62,7 +69,14 @@ fn character_create_screen_uses_glue_addon_set() {
     assert!(addons.iter().any(|name| name == "Blizzard_GlueParent"));
     assert!(addons.iter().any(|name| name == "Blizzard_GlueXML"));
     assert!(!addons.iter().any(|name| name == "Blizzard_UIParent"));
+}
+
+character_create_ui_fixture! {
+#[test]
+fn character_create_screen_includes_character_create() {
+    let addons = addon_names(ScreenKind::CharacterCreate);
     assert!(addons.iter().any(|name| name == "Blizzard_CharacterCreate"));
+}
 }
 
 }
@@ -568,9 +582,26 @@ fn real_glue_load_first_addons_sort_before_non_load_first_addons() {
         .position(|name| name == "Blizzard_LoginWarningDialogs")
         .expect("Blizzard_LoginWarningDialogs should be present");
 
-    assert!(
-        glue_menu_frame < login_warning_dialogs,
-        "Blizzard_GlueMenuFrame is tagged LoadFirst and should sort before comparable non-LoadFirst glue addons",
+    // Pinned `Blizzard_GlueMenuFrame_Classic.toc:4` depends on
+    // `Blizzard_LoginWarningDialogs`, so classic profiles must load the
+    // dependency first regardless of LoadFirst. The Mainline variant depends on
+    // GlueXMLBase/GlueParent only, so LoadFirst then sorts it ahead.
+    let classic_dependency = matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Mists
+            | crate::client_profile::ClientProfile::Era
+            | crate::client_profile::ClientProfile::Anniversary
     );
+    if classic_dependency {
+        assert!(
+            login_warning_dialogs < glue_menu_frame,
+            "pinned GlueMenuFrame_Classic.toc:4 dependency must load before the dependent",
+        );
+    } else {
+        assert!(
+            glue_menu_frame < login_warning_dialogs,
+            "Blizzard_GlueMenuFrame is tagged LoadFirst and should sort before comparable non-LoadFirst glue addons",
+        );
+    }
 }
 }
