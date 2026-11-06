@@ -435,13 +435,32 @@ fn store_ui_xml_wraps_body_in_scoped_modifier_forbidden() {
 post_wrath_ui_fixture! {
 #[test]
 fn store_ui_inbound_outbound_secure_bridge_files_exist() {
-    let inbound = store_ui_dir().join("Blizzard_Shared_StoreUIInbound.lua");
-    let outbound = store_ui_dir().join("Blizzard_Shared_StoreUIOutbound.lua");
-    let secure = store_ui_dir().join("Blizzard_Shared_StoreUISecure.lua");
-    let insecure = store_ui_dir().join("Blizzard_Shared_StoreUIInsecure.lua");
+    // Mainline keeps the bridge bodies in `Blizzard_Shared_StoreUI<X>.lua` and scripts them from
+    // `Blizzard_Shared_StoreUI.xml`. Mists, Era and Anniversary pin
+    // `[Family]\Blizzard_StoreUI<X>.lua [AllowLoadGameType classic]` in the TOC body
+    // (era cache `Blizzard_StoreUI/Blizzard_StoreUI.toc:10-11,16`), where `[Family]` is
+    // `Classic` for those profiles (`src/toc/mod.rs:88-98`).
+    let classic = matches!(
+        wow_ui_sim::client_profile::ACTIVE,
+        wow_ui_sim::client_profile::ClientProfile::Mists
+            | wow_ui_sim::client_profile::ClientProfile::Era
+            | wow_ui_sim::client_profile::ClientProfile::Anniversary
+    );
+    let bridge = |name: &str| {
+        if classic {
+            store_ui_dir().join("Classic").join(format!("Blizzard_{name}"))
+        } else {
+            store_ui_dir().join(format!("Blizzard_Shared_{name}"))
+        }
+    };
 
-    for path in [&inbound, &outbound, &insecure] {
-        let raw = std::fs::read_to_string(path).expect("bridge file reads");
+    for name in [
+        "StoreUIInbound.lua",
+        "StoreUIOutbound.lua",
+        "StoreUIInsecure.lua",
+    ] {
+        let path = bridge(name);
+        let raw = std::fs::read_to_string(&path).expect("bridge file reads");
         assert!(
             raw.contains("SwapToGlobalEnvironment()"),
             "{} must call SwapToGlobalEnvironment() — bridge files \
@@ -451,6 +470,22 @@ fn store_ui_inbound_outbound_secure_bridge_files_exist() {
         );
     }
 
+    // The flavor secure body is a TOC-body entry only on the classic profiles; read the one the
+    // parsed TOC selects (`TBC` for tbc/wrath/cata/mists, `Vanilla` for vanilla).
+    let secure = if classic {
+        let toc = TocFile::from_file(&store_ui_toc()).expect("Blizzard_StoreUI TOC should parse");
+        let relative = toc
+            .files
+            .iter()
+            .find(|path| {
+                path.file_name().and_then(|value| value.to_str())
+                    == Some("Blizzard_StoreUISecure.lua")
+            })
+            .unwrap_or_else(|| panic!("TOC body must select a StoreUISecure body; got {:?}", toc.files));
+        store_ui_dir().join(relative)
+    } else {
+        store_ui_dir().join("Blizzard_Shared_StoreUISecure.lua")
+    };
     let secure_raw = std::fs::read_to_string(&secure).expect("secure file reads");
     assert!(
         !secure_raw.contains("SwapToGlobalEnvironment()"),

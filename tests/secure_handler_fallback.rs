@@ -169,6 +169,7 @@ fn execute_restricted_environment_allows_table_maxn_for_click_cast_loops() {
     assert_eq!(applied, "0");
 }
 
+classic_secret_values_fixture! {
 #[test]
 fn execute_callmethod_propagates_tainted_args_to_insecure_method() {
     let env = env();
@@ -196,6 +197,7 @@ fn execute_callmethod_propagates_tainted_args_to_insecure_method() {
         .unwrap();
     assert!(called);
     assert!(returned_is_secret);
+}
 }
 
 #[test]

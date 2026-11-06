@@ -1,5 +1,6 @@
 use crate::common;
 use crate::common::blizzard_addon_harness::build_blizzard_addon_closure_env;
+use crate::common::blizzard_addon_harness::load_blizzard_addon_closure_into_env;
 
 use std::path::PathBuf;
 use wow_ui_sim::loader::{discover_blizzard_addons, load_addon};
@@ -117,8 +118,26 @@ fn load_auto_hide_fixture() -> (WowLuaEnv, (f32, f32), (f32, f32)) {
 fn load_auto_hide_real_dependencies() -> WowLuaEnv {
     let ui = wow_ui_sim::paths::default_blizzard_ui_addons_path()
         .expect("auto-hide fixture requires the active profile Blizzard UI cache");
-    let (env, loaded) =
+    let (env, mut loaded) =
         build_blizzard_addon_closure_env(&ui, &["Blizzard_RestrictedAddOnEnvironment"], &[]);
+    // Classic `Blizzard_UIParent/Classic/WorldFrame.lua:47` ticks `ItemTextFrame` on every
+    // OnUpdate; the eager `Blizzard_UIPanels_Game` addon owns that frame
+    // (`Classic/ItemTextFrame.xml:3`). Load that real eager root after the closure on Era and
+    // Anniversary. Mists' UIPanels_Game also selects `Wrath/WatchFrame.lua`, whose
+    // `:471` parent-relative height arithmetic is unresolved in this partial closure, so Mists
+    // keeps the bare RestrictedAddOnEnvironment fixture.
+    if matches!(
+        wow_ui_sim::client_profile::ACTIVE,
+        wow_ui_sim::client_profile::ClientProfile::Era
+            | wow_ui_sim::client_profile::ClientProfile::Anniversary
+    ) {
+        loaded.extend(load_blizzard_addon_closure_into_env(
+            &env,
+            &ui,
+            &["Blizzard_UIPanels_Game"],
+            &[],
+        ));
+    }
     for prerequisite in ["Blizzard_FrameXML", "Blizzard_RestrictedAddOnEnvironment"] {
         assert!(
             loaded.iter().any(|name| name == prerequisite),

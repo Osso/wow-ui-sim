@@ -14,6 +14,7 @@ fn test_retail_create_forbidden_frame_is_absent() {
     assert_eq!(constructor_type, "nil");
 }
 
+classic_secur_residue_set_forbidden_restriction_fixture! {
 #[test]
 fn test_insecure_addon_created_normal_frame_set_forbidden_is_noop() {
     let env = env();
@@ -35,6 +36,7 @@ fn test_insecure_addon_created_normal_frame_set_forbidden_is_noop() {
     assert!(!before);
     assert!(!after_true);
     assert!(!after_false);
+}
 }
 
 #[test]

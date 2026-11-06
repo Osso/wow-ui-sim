@@ -333,13 +333,27 @@ fn token_frame_load_ui_is_absent_and_wow_token_ui_owns_secure_token_flow() {
             .unwrap_or_else(|err| panic!("[load {name}] FAILED: {err}"));
     }
 
+    let classic_legacy_token = matches!(
+        wow_ui_sim::client_profile::ACTIVE,
+        wow_ui_sim::client_profile::ClientProfile::Mists
+            | wow_ui_sim::client_profile::ClientProfile::Era
+            | wow_ui_sim::client_profile::ClientProfile::Anniversary
+    );
     let kind: String = env
         .eval("return type(TokenFrame_LoadUI)")
         .expect("TokenFrame_LoadUI probe");
-    assert_eq!(
-        kind, "nil",
-        "Retail 12.1.0.69497 no longer publishes the legacy TokenFrame_LoadUI global"
-    );
+    if classic_legacy_token {
+        assert_eq!(
+            kind, "function",
+            "Classic UIParent pins the legacy token flow: `Blizzard_UIParent/Shared/UIParent.lua:304` \
+             defines `TokenFrame_LoadUI` for Mists, Era and Anniversary"
+        );
+    } else {
+        assert_eq!(
+            kind, "nil",
+            "Retail 12.1.0.69497 no longer publishes the legacy TokenFrame_LoadUI global"
+        );
+    }
 
     let secure_toc_path = blizzard_ui_dir().join("Blizzard_WowTokenUI/Blizzard_WowTokenUI.toc");
     let secure_toc =
@@ -349,10 +363,16 @@ fn token_frame_load_ui_is_absent_and_wow_token_ui_owns_secure_token_flow() {
         "Retail token redemption flow belongs to Blizzard_WowTokenUI, which declares \
          UseSecureEnvironment: 1"
     );
+    let expected_deps: Vec<String> = if classic_legacy_token {
+        vec!["Blizzard_SharedXML".to_string(), "Blizzard_UIParent".to_string()]
+    } else {
+        vec!["Blizzard_SharedXML".to_string()]
+    };
     assert_eq!(
         secure_toc.dependencies(),
-        vec!["Blizzard_SharedXML".to_string()],
-        "Current Blizzard_WowTokenUI declares Blizzard_SharedXML as its required dependency"
+        expected_deps,
+        "Blizzard_WowTokenUI declares the profile's pinned `## RequiredDep` set; Mists, Era and \
+         Anniversary add Blizzard_UIParent (`Blizzard_WowTokenUI/Blizzard_WowTokenUI.toc:2`)"
     );
     let secure_body: Vec<String> = secure_toc
         .files
