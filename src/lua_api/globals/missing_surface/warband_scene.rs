@@ -31,7 +31,7 @@ pub(super) fn register_warband_scene_surface(state: &mut LuaState) -> LuaResult<
         search_warband_scene_entries,
     )?;
     table_set_rust_fn_static(state, table_ref, "SetFavorite", set_favorite)?;
-    Ok(())
+    crate::c_api::collections_availability::register_warband_scenes_available(state, table_ref)
 }
 
 fn get_random_entry_id(state: &mut LuaState) -> LuaResult<u32> {

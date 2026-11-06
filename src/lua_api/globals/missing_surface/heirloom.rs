@@ -218,7 +218,7 @@ fn register_heirloom_info_fns(state: &mut LuaState) -> LuaResult<()> {
         "SetDefaultFilters",
         c_heirloom_info_set_default_filters,
     )?;
-    Ok(())
+    crate::c_api::collections_availability::register_heirlooms_available(state, info_ref)
 }
 
 fn c_heirloom_create_heirloom(state: &mut LuaState) -> LuaResult<u32> {

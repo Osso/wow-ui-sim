@@ -5,7 +5,9 @@
 use crate::common;
 
 use std::path::PathBuf;
+use wow_ui_sim::loader::{discover_blizzard_addon_closure_for_screen, load_addon};
 use wow_ui_sim::lua_api::WowLuaEnv;
+use wow_ui_sim::screen::ScreenKind;
 
 fn blizzard_ui_dir() -> PathBuf {
     wow_ui_sim::client_profile::blizzard_ui_addons_dir_under(std::path::Path::new(env!(
@@ -22,8 +24,9 @@ fn load_player_spells(env: &WowLuaEnv) {
     assert!(loaded, "Blizzard_PlayerSpells should load: {reason:?}");
 }
 
-/// Eager panel publishers in dependency order. `load_required_blizzard_addon`
-/// resolves the active profile TOC and fails immediately for missing/invalid loads.
+/// Eager panel publishers. The loader resolves each root's declared TOC
+/// dependencies and the real `LoadFirst`/dependency order, so the fixture does
+/// not hand-order the shared FrameXML / ChatFrame / AutoComplete chain.
 const PANEL_ADDONS: &[&str] = &[
     "Blizzard_SharedXMLBase",
     "Blizzard_Colors",
@@ -93,8 +96,11 @@ fn setup_env() -> WowLuaEnv {
     }
 
     let ui = blizzard_ui_dir();
-    for addon_name in PANEL_ADDONS {
-        common::load_required_blizzard_addon(&env, &ui, addon_name);
+    for (name, toc_path) in
+        discover_blizzard_addon_closure_for_screen(&ui, ScreenKind::Game, PANEL_ADDONS)
+    {
+        load_addon(&env.loader_env(), &toc_path)
+            .unwrap_or_else(|error| panic!("[load {name}] FAILED: {error}"));
     }
     load_lod_bootstrap(&env, &ui, "Blizzard_Collections");
     load_lod_bootstrap(&env, &ui, "Blizzard_Professions");
@@ -356,7 +362,13 @@ fn toggle_collections_journal_opens_mounts_pets_and_toys_tabs_and_accepts_search
                     return "search_text_not_set_" .. childName
                 end
 
-                ToggleCollectionsJournal(tabIndex)
+                -- The pinned PTR/WowForever Collections code stores the selected
+                -- tab on `CollectionsJournal.TabContainer`, while
+                -- ToggleCollectionsJournal compares the journal frame's own
+                -- `selectedTab`. The micro button therefore closes with no tab
+                -- argument (MainMenuBarMicroButtons.lua:1730 PTR / :1643
+                -- WowForever); passing the tab index keeps the journal open.
+                ToggleCollectionsJournal()
                 if CollectionsJournal:IsShown() then
                     return "journal_not_hidden_" .. tostring(tabIndex)
                 end
@@ -368,6 +380,191 @@ fn toggle_collections_journal_opens_mounts_pets_and_toys_tabs_and_accepts_search
             result,
             "ok",
             "ToggleCollectionsJournal(tab) should open, switch tabs, accept search text, and close for mounts, pets, and toys: {result}"
+        );
+    }
+}
+
+/// The PTR 12.1.5 and WowForever 1.60.1 pins declare
+/// `C_HeirloomInfo.HeirloomsAvailable` at
+/// `Blizzard_APIDocumentationGenerated/HeirloomInfoDocumentation.lua:29`.
+/// The original consumer is
+/// `Blizzard_Collections/Shared/Blizzard_Collections.lua:25` (PTR) / `:21`
+/// (WowForever), which decides whether the Heirlooms tab exists.
+#[cfg(any(feature = "client-ptr", feature = "client-wowforever"))]
+#[test]
+fn collections_heirloom_tab_follows_heirlooms_available() {
+    test_timeout! {
+        let env = setup_env();
+        // Open the journal once so Blizzard_Collections is loaded and defines
+        // CollectionsJournal_ValidateTab, then supply both availability values.
+        let opened: bool = env
+            .eval(
+                r#"
+                ToggleCollectionsJournal(COLLECTIONS_JOURNAL_TAB_INDEX_MOUNTS)
+                return CollectionsJournal ~= nil and CollectionsJournal:IsShown()
+                "#,
+            )
+            .expect("collections journal should open with the scenario default");
+        assert!(opened, "collections journal should open before tab validation");
+
+        env.state()
+            .borrow_mut()
+            .world
+            .collections_availability
+            .heirlooms = false;
+        let hidden: bool = env
+            .eval(
+                r#"
+                return not CollectionsJournal_ValidateTab(COLLECTIONS_JOURNAL_TAB_INDEX_HEIRLOOMS)
+                "#,
+            )
+            .expect("heirloom tab validation should run with supplied availability");
+        assert!(
+            hidden,
+            "supplied heirlooms-unavailable state must hide the Heirlooms tab"
+        );
+
+        env.state()
+            .borrow_mut()
+            .world
+            .collections_availability
+            .heirlooms = true;
+        let shown: bool = env
+            .eval(
+                r#"
+                return CollectionsJournal_ValidateTab(COLLECTIONS_JOURNAL_TAB_INDEX_HEIRLOOMS)
+                "#,
+            )
+            .expect("heirloom tab validation should run with supplied availability");
+        assert!(
+            shown,
+            "supplied heirlooms-available state must show the Heirlooms tab"
+        );
+    }
+}
+
+/// The PTR 12.1.5 and WowForever 1.60.1 pins declare
+/// `C_MountJournal.MountEquipmentAvailable` at
+/// `Blizzard_APIDocumentationGenerated/MountJournalDocumentation.lua:498`.
+/// The original consumer is
+/// `Blizzard_Collections/Mainline/Blizzard_MountCollection.lua:161`
+/// (`MountJournal_OnLoad`), which wires the equipment inset when the getter is
+/// true and hides `BottomLeftInset` when it is false.
+#[cfg(any(feature = "client-ptr", feature = "client-wowforever"))]
+#[test]
+fn collections_mount_equipment_inset_follows_availability() {
+    test_timeout! {
+        let available_env = setup_env();
+        available_env
+            .state()
+            .borrow_mut()
+            .world
+            .collections_availability
+            .mount_equipment = true;
+        let available: String = available_env
+            .eval(
+                r#"
+                if type(C_MountJournal.MountEquipmentAvailable) ~= "function" then
+                    return "missing_mount_equipment_available"
+                end
+                if not C_MountJournal.MountEquipmentAvailable() then
+                    return "available_state_not_read"
+                end
+                ToggleCollectionsJournal(COLLECTIONS_JOURNAL_TAB_INDEX_MOUNTS)
+                if not MountJournal.BottomLeftInset:IsShown() then return "inset_hidden" end
+                if not MountJournal.SlotButton then return "slot_button_missing" end
+                return "ok"
+                "#,
+            )
+            .expect("mount journal should open with mount equipment available");
+        assert_eq!(
+            available, "ok",
+            "available state must keep the equipment inset wired: {available}"
+        );
+        drop(available_env);
+
+        let unavailable_env = setup_env();
+        unavailable_env
+            .state()
+            .borrow_mut()
+            .world
+            .collections_availability
+            .mount_equipment = false;
+        let unavailable: String = unavailable_env
+            .eval(
+                r#"
+                if C_MountJournal.MountEquipmentAvailable() then
+                    return "unavailable_state_not_read"
+                end
+                ToggleCollectionsJournal(COLLECTIONS_JOURNAL_TAB_INDEX_MOUNTS)
+                if MountJournal.BottomLeftInset:IsShown() then return "inset_shown" end
+                if MountJournal.SlotButton ~= nil then return "slot_button_wired" end
+                return "ok"
+                "#,
+            )
+            .expect("mount journal should open with mount equipment unavailable");
+        assert_eq!(
+            unavailable, "ok",
+            "unavailable state must hide the equipment inset: {unavailable}"
+        );
+    }
+}
+
+/// The PTR 12.1.5 and WowForever 1.60.1 pins declare
+/// `C_WarbandScene.WarbandScenesAvailable` at
+/// `Blizzard_APIDocumentationGenerated/WarbandSceneInfoDocumentation.lua:92`.
+/// The original consumer is
+/// `Blizzard_Collections/Shared/Blizzard_Collections.lua:29` (PTR) / `:25`
+/// (WowForever), which decides whether the Warband Scenes tab exists.
+#[cfg(any(feature = "client-ptr", feature = "client-wowforever"))]
+#[test]
+fn collections_warband_scene_tab_follows_availability() {
+    test_timeout! {
+        let env = setup_env();
+        // Open the journal once so Blizzard_Collections is loaded and defines
+        // CollectionsJournal_ValidateTab, then supply both availability values.
+        let opened: bool = env
+            .eval(
+                r#"
+                ToggleCollectionsJournal(COLLECTIONS_JOURNAL_TAB_INDEX_MOUNTS)
+                return CollectionsJournal ~= nil and CollectionsJournal:IsShown()
+                "#,
+            )
+            .expect("collections journal should open with the scenario default");
+        assert!(opened, "collections journal should open before tab validation");
+
+        env.state()
+            .borrow_mut()
+            .world
+            .collections_availability
+            .warband_scenes = false;
+        let hidden: bool = env
+            .eval(
+                r#"
+                return not CollectionsJournal_ValidateTab(COLLECTIONS_JOURNAL_TAB_INDEX_WARBAND_SCENES)
+                "#,
+            )
+            .expect("warband scene tab validation should run with supplied availability");
+        assert!(
+            hidden,
+            "supplied warband-scenes-unavailable state must hide the Warband Scenes tab"
+        );
+
+        env.state()
+            .borrow_mut()
+            .world
+            .collections_availability
+            .warband_scenes = true;
+        let shown: bool = env
+            .eval(
+                r#"
+                return CollectionsJournal_ValidateTab(COLLECTIONS_JOURNAL_TAB_INDEX_WARBAND_SCENES)
+                "#,
+            )
+            .expect("warband scene tab validation should run with supplied availability");
+        assert!(
+            shown,
+            "supplied warband-scenes-available state must show the Warband Scenes tab"
         );
     }
 }

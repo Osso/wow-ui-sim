@@ -220,15 +220,17 @@ fn mount_get_ids(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn register_mount_equipment_stubs(tb: TableBuilder) -> LuaResult<TableBuilder> {
-    tb.set_function("AreMountEquipmentEffectsSuppressed", |state| {
-        false.into_stack(state)
-    })?
-    .set_function("GetAppliedMountEquipmentID", |_state| Ok(0))?
-    .set_function("GetMountEquipmentUnlockLevel", |state| {
-        (0i32).into_stack(state)
-    })?
-    .set_function("IsItemMountEquipment", |state| false.into_stack(state))?
-    .set_function("IsMountEquipmentApplied", |state| false.into_stack(state))
+    let tb = tb
+        .set_function("AreMountEquipmentEffectsSuppressed", |state| {
+            false.into_stack(state)
+        })?
+        .set_function("GetAppliedMountEquipmentID", |_state| Ok(0))?
+        .set_function("GetMountEquipmentUnlockLevel", |state| {
+            (0i32).into_stack(state)
+        })?
+        .set_function("IsItemMountEquipment", |state| false.into_stack(state))?
+        .set_function("IsMountEquipmentApplied", |state| false.into_stack(state))?;
+    crate::c_api::collections_availability::register_mount_equipment_available(tb)
 }
 
 fn register_mount_fanfare_stubs(tb: TableBuilder) -> LuaResult<TableBuilder> {

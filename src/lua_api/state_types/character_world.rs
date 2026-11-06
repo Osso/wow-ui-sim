@@ -538,6 +538,10 @@ pub struct WorldState {
     /// Current mount journal search text. Drives displayed mount APIs.
     pub mount_search_text: String,
     pub mount_filters: crate::c_api::mount_filters::MountFilters,
+    /// Collections journal subsystem availability; reads the profile-pinned
+    /// `C_HeirloomInfo.HeirloomsAvailable` and
+    /// `C_MountJournal.MountEquipmentAvailable` getters on PTR and WowForever.
+    pub collections_availability: crate::c_api::collections_availability::CollectionsAvailability,
     pub collected_pets: HashSet<i32>,
     pub pets: Vec<PetData>,
     pub collected_toys: HashSet<i32>,
