@@ -227,7 +227,9 @@ fn inferred_unit_order_prefers_first_helpful_then_first_harmful_duplicate() {
 #[test]
 fn unit_target_query_uses_actual_builtin_harmful_fixture_not_invented_state() {
     let env = seeded_env();
-    env.exec("TargetUnit('player')").unwrap();
+    // The stored target aura state is the hostile-target projection, so the
+    // selected target must be a hostile unit rather than the player.
+    env.exec("TargetUnit('enemy1')").unwrap();
     env.exec(
         r#"
         local aura = C_UnitAuras.GetUnitAuraBySpellID('target', 113746)
