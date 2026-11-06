@@ -1345,3 +1345,166 @@ fn wrath_reputation_panel_renders_supplied_factions() {
             .expect("close reputation panel");
     }
 }
+
+/// `onlyShowCollectedItemsInJournal` gates the collected-only tab validation in
+/// `Blizzard_Collections/Shared/Blizzard_Collections.lua:32-49` (PTR) /
+/// `:28-45` (WowForever). The Retail pin's `CollectionsJournal_ValidateTab`
+/// (`Mainline/Blizzard_Collections.lua:13`) does not read the CVar and its
+/// `Blizzard_APIDocumentationGenerated` does not declare
+/// `C_MountJournal.HasDisplayableMount`, `C_ToyBoxInfo.HasAnyToy` or
+/// `C_TransmogCollection.HasAnyAppearance`.
+#[cfg(any(
+    feature = "profile-retail",
+    feature = "client-ptr",
+    feature = "client-wowforever"
+))]
+#[test]
+fn journal_only_show_collected_cvar_gates_tabs_on_collectible_state() {
+    test_timeout! {
+        let env = setup_env();
+        let loaded: bool = env
+            .eval(
+                r#"
+                ToggleCollectionsJournal(COLLECTIONS_JOURNAL_TAB_INDEX_MOUNTS)
+                local loaded = type(CollectionsJournal_ValidateTab) == "function"
+                if CollectionsJournal and CollectionsJournal:IsShown() then
+                    ToggleCollectionsJournal()
+                end
+                return loaded
+                "#,
+            )
+            .expect("Blizzard_Collections should load through the native journal toggle");
+        assert!(
+            loaded,
+            "Blizzard_Collections must define CollectionsJournal_ValidateTab"
+        );
+
+        let set_counts = |mounts: usize, pets: usize, toys: usize, appearances: usize| {
+            let mut state = env.state().borrow_mut();
+            for (index, mount) in state.world.mounts.iter_mut().enumerate() {
+                mount.is_collected = index < mounts;
+            }
+            for (index, pet) in state.world.pets.iter_mut().enumerate() {
+                pet.is_collected = index < pets;
+            }
+            for (index, toy) in state.world.toys.iter_mut().enumerate() {
+                toy.is_collected = index < toys;
+            }
+            for (index, appearance) in state.world.transmog_appearances.iter_mut().enumerate() {
+                appearance.is_collected = index < appearances;
+            }
+        };
+        let validate_tabs = || -> (bool, bool, bool, bool) {
+            env.eval(
+                r#"
+                return CollectionsJournal_ValidateTab(COLLECTIONS_JOURNAL_TAB_INDEX_MOUNTS),
+                       CollectionsJournal_ValidateTab(COLLECTIONS_JOURNAL_TAB_INDEX_PETS),
+                       CollectionsJournal_ValidateTab(COLLECTIONS_JOURNAL_TAB_INDEX_TOYS),
+                       CollectionsJournal_ValidateTab(COLLECTIONS_JOURNAL_TAB_INDEX_APPEARANCES)
+                "#,
+            )
+            .expect("tab validation should run")
+        };
+        let set_cvar = |value: &str| {
+            env.exec(&format!(
+                r#"C_CVar.SetCVar("onlyShowCollectedItemsInJournal", "{value}")"#
+            ))
+            .expect("the journal CVar should accept the supplied value");
+        };
+
+        set_cvar("1");
+        assert_eq!(
+            validate_tabs(),
+            (true, true, true, true),
+            "the seeded journal keeps every collected tab visible"
+        );
+
+        #[cfg(any(feature = "client-ptr", feature = "client-wowforever"))]
+        {
+            let default: String = env
+                .eval(r#"return GetCVarDefault("onlyShowCollectedItemsInJournal")"#)
+                .expect("the journal CVar must be registered");
+            assert_eq!(default, "1", "pinned CVar dump default is 1");
+            let (count, account): (i32, bool) = env
+                .eval(
+                    r#"
+                    local info = { C_CVar.GetCVarInfo("onlyShowCollectedItemsInJournal") }
+                    return #info, info[3]
+                    "#,
+                )
+                .expect("pinned CVar info should be readable");
+            assert_eq!(count, 7, "the pinned catalog must describe the journal CVar");
+            assert!(
+                account,
+                "the pinned catalog marks the journal CVar as account scoped"
+            );
+        }
+        #[cfg(feature = "profile-retail")]
+        {
+            let published: (bool, bool, bool) = env
+                .eval(
+                    r#"
+                    return C_MountJournal.HasDisplayableMount ~= nil,
+                           C_ToyBoxInfo.HasAnyToy ~= nil,
+                           C_TransmogCollection.HasAnyAppearance ~= nil
+                    "#,
+                )
+                .expect("the Retail surface must stay callable");
+            assert_eq!(
+                published,
+                (false, false, false),
+                "the Retail pin declares and consumes none of the collected-only predicates"
+            );
+        }
+
+        // Without a single collected entry, the pinned PTR/WowForever
+        // ValidateTab hides Mounts, Pets, Toys and Appearances; the Retail
+        // pin has no collected-only branch and keeps every tab visible.
+        set_counts(0, 0, 0, 0);
+        #[cfg(any(feature = "client-ptr", feature = "client-wowforever"))]
+        assert_eq!(
+            validate_tabs(),
+            (false, false, false, false),
+            "uncollected journal state must hide the collected-only tabs"
+        );
+        #[cfg(feature = "profile-retail")]
+        assert_eq!(
+            validate_tabs(),
+            (true, true, true, true),
+            "the Retail pin ignores the collected-only CVar"
+        );
+
+        for (mounts, pets, toys, appearances) in [
+            (1, 0, 0, 0),
+            (0, 1, 0, 0),
+            (0, 0, 1, 0),
+            (0, 0, 0, 1),
+        ] {
+            set_counts(mounts, pets, toys, appearances);
+            #[cfg(any(feature = "client-ptr", feature = "client-wowforever"))]
+            {
+                let expected = (mounts > 0, pets > 0, toys > 0, appearances > 0);
+                assert_eq!(
+                    validate_tabs(),
+                    expected,
+                    "each tab must read its own collection with {mounts} mounts, {pets} pets, \
+                     {toys} toys and {appearances} appearances"
+                );
+            }
+            #[cfg(feature = "profile-retail")]
+            assert_eq!(
+                validate_tabs(),
+                (true, true, true, true),
+                "the Retail pin ignores the collected-only CVar"
+            );
+        }
+
+        set_counts(0, 0, 0, 0);
+        set_cvar("0");
+        assert_eq!(
+            validate_tabs(),
+            (true, true, true, true),
+            "an unset collected-only CVar keeps every tab visible"
+        );
+    }
+}

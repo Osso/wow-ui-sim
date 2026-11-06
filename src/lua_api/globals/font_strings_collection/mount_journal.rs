@@ -172,9 +172,11 @@ fn mount_get_info_extra_by_id(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn register_mount_info(tb: TableBuilder) -> LuaResult<TableBuilder> {
-    tb.set_function("GetDisplayedMountInfo", mount_get_displayed_info)?
+    let tb = tb
+        .set_function("GetDisplayedMountInfo", mount_get_displayed_info)?
         .set_function("GetMountInfoByID", mount_get_info_by_id)?
-        .set_function("GetMountInfoExtraByID", mount_get_info_extra_by_id)
+        .set_function("GetMountInfoExtraByID", mount_get_info_extra_by_id)?;
+    crate::c_api::journal_collected::register_has_displayable_mount(tb)
 }
 
 fn register_mount_stubs(tb: TableBuilder) -> LuaResult<TableBuilder> {

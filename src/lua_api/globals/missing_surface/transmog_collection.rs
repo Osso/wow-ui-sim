@@ -38,6 +38,7 @@ const APPEARANCE_QUERY_FUNCTIONS: &[StaticFunction] = &[
 
 pub(super) fn register_transmog_collection_surface(state: &mut LuaState) -> LuaResult<()> {
     let table_ref = ensure_namespace(state, "C_TransmogCollection")?;
+    crate::c_api::journal_collected::register_has_any_appearance(state, table_ref)?;
     register_transmog_collection_appearance_queries(state, table_ref)?;
     register_transmog_collection_category_queries(state, table_ref)?;
     register_transmog_collection_flags(state, table_ref)?;
