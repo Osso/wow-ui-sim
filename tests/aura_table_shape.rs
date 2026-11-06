@@ -169,7 +169,10 @@ fn harmful_raid_fixture() -> AuraInfo {
 
 fn classification_env() -> WowLuaEnv {
     let env = env();
-    env.exec("TargetUnit('player')").unwrap();
+    // The `target` fixtures below are the stored target aura state, so the
+    // selected target must not be the player or a group member: `target`
+    // projects the targeted unit's own auras.
+    env.exec("TargetUnit('enemy1')").unwrap();
     let helpful = helpful_non_raid_fixture();
     let harmful = harmful_raid_fixture();
     let mut party_helpful = helpful.clone();
