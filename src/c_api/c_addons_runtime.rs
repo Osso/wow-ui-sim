@@ -181,13 +181,16 @@ fn load_runtime_addon_files(
 fn runtime_addon_dependencies(state: &LuaState, toc: &crate::toc::TocFile) -> Vec<String> {
     let mut deps = Vec::new();
     let mut seen = HashSet::new();
+    let screen = borrow_state(state)
+        .map(|sim| sim.screen_kind)
+        .unwrap_or(crate::screen::ScreenKind::Game);
 
-    for dep in toc.dependencies() {
+    for dep in toc.dependencies_for_screen(screen) {
         if required_dependency_applies_to_screen(state, &dep) && seen.insert(dep.clone()) {
             deps.push(dep);
         }
     }
-    for dep in toc.optional_deps() {
+    for dep in toc.optional_deps_for_screen(screen) {
         if super::find_runtime_addon_toc(state, &dep).is_some() && seen.insert(dep.clone()) {
             deps.push(dep);
         }

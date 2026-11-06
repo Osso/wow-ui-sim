@@ -46,6 +46,10 @@ pub struct TocFile<P: Selection> {
     pub file_env_allows: Vec<Option<bool>>,
     /// Per-file screen phase from `[AllowLoad Game]` or `[AllowLoad Glue]`.
     pub file_screen_allows: Vec<Option<String>>,
+    /// Per-dependency screen phase from `[AllowLoad Game]` or `[AllowLoad Glue]`
+    /// on metadata dependency lines. `None` means no phase annotation;
+    /// multiple entries preserve repeated declarations of the same dependency.
+    pub dependency_screen_phases: HashMap<String, Vec<Option<String>>>,
 }
 
 impl<P: Selection> std::fmt::Debug for TocFile<P> {
@@ -59,6 +63,7 @@ impl<P: Selection> std::fmt::Debug for TocFile<P> {
             .field("file_env_overrides", &self.file_env_overrides)
             .field("file_env_allows", &self.file_env_allows)
             .field("file_screen_allows", &self.file_screen_allows)
+            .field("dependency_screen_phases", &self.dependency_screen_phases)
             .finish()
     }
 }
@@ -178,11 +183,16 @@ fn replace_template_vars(value: &str) -> String {
     value.replace("@project-version@", "dev")
 }
 
-fn metadata_key_allows_repeats(key: &str) -> bool {
+fn is_dependency_metadata_key(key: &str) -> bool {
     matches!(
         key,
         "Dep" | "Dependencies" | "RequiredDep" | "RequiredDeps" | "OptionalDep" | "OptionalDeps"
     )
+}
+
+fn dependency_screen_phase(value: &str) -> Option<String> {
+    let lower = value.to_ascii_lowercase();
+    annotation_value(&lower, "[allowload ").map(|phase| phase.trim().to_owned())
 }
 
 /// Process a `## Key: Value` metadata line into the map.
@@ -190,7 +200,11 @@ fn metadata_key_allows_repeats(key: &str) -> bool {
 /// Skips `Interface` lines whose value consists entirely of unresolved
 /// `@toc-version-*@` packager tokens — the `#@debug@` block in the TOC
 /// provides the real fallback version for source-form TOC files.
-fn insert_metadata<P: Selection>(metadata: &mut HashMap<String, String>, rest: &str) {
+fn insert_metadata<P: Selection>(
+    metadata: &mut HashMap<String, String>,
+    dependency_screen_phases: &mut HashMap<String, Vec<Option<String>>>,
+    rest: &str,
+) {
     let Some((key, value)) = rest.split_once(':') else {
         return;
     };
@@ -207,12 +221,21 @@ fn insert_metadata<P: Selection>(metadata: &mut HashMap<String, String>, rest: &
     if key == "Interface" && is_all_template_versions(value) {
         return;
     }
+    if is_dependency_metadata_key(key) {
+        let screen_phase = dependency_screen_phase(value);
+        for name in split_metadata_list(strip_annotations(value)) {
+            dependency_screen_phases
+                .entry(name)
+                .or_default()
+                .push(screen_phase.clone());
+        }
+    }
     let value = if game_type_header {
         value.to_owned()
     } else {
         replace_template_vars(strip_annotations(value))
     };
-    if metadata_key_allows_repeats(key) {
+    if is_dependency_metadata_key(key) {
         metadata
             .entry(key.to_string())
             .and_modify(|existing| {
@@ -327,6 +350,7 @@ impl<P: Selection> TocFile<P> {
     pub fn parse(addon_dir: &Path, contents: &str) -> Self {
         let contents = contents.strip_prefix('\u{feff}').unwrap_or(contents);
         let mut metadata = HashMap::new();
+        let mut dependency_screen_phases = HashMap::new();
         let mut file_entries = ParsedFileEntries::default();
 
         for line in contents.lines() {
@@ -335,7 +359,11 @@ impl<P: Selection> TocFile<P> {
                 continue;
             }
             if let Some(rest) = line.strip_prefix("##") {
-                insert_metadata::<P>(&mut metadata, rest.trim_start());
+                insert_metadata::<P>(
+                    &mut metadata,
+                    &mut dependency_screen_phases,
+                    rest.trim_start(),
+                );
                 continue;
             }
             let line = line.trim_end();
@@ -355,6 +383,7 @@ impl<P: Selection> TocFile<P> {
             file_env_overrides: file_entries.file_env_overrides,
             file_env_allows: file_entries.file_env_allows,
             file_screen_allows: file_entries.file_screen_allows,
+            dependency_screen_phases,
         }
     }
 
@@ -404,6 +433,35 @@ impl<P: Selection> TocFile<P> {
     /// Get optional dependencies.
     pub fn optional_deps(&self) -> Vec<String> {
         collect_metadata_lists(&self.metadata, &["OptionalDep", "OptionalDeps"])
+    }
+
+    fn dependency_admits_screen(&self, dependency: &str, screen: P::Screen) -> bool {
+        self.dependency_screen_phases
+            .get(dependency)
+            .is_none_or(|phases| {
+                phases.iter().any(|phase| match phase {
+                    None => true,
+                    Some(value) => allows_screen_value::<P>(Some(value.trim()), screen),
+                })
+            })
+    }
+
+    /// Required dependencies whose `[AllowLoad ...]` phase annotation admits `screen`.
+    ///
+    /// An unannotated dependency applies to every screen.
+    pub fn dependencies_for_screen(&self, screen: P::Screen) -> Vec<String> {
+        self.dependencies()
+            .into_iter()
+            .filter(|dependency| self.dependency_admits_screen(dependency, screen))
+            .collect()
+    }
+
+    /// Optional dependencies whose `[AllowLoad ...]` phase annotation admits `screen`.
+    pub fn optional_deps_for_screen(&self, screen: P::Screen) -> Vec<String> {
+        self.optional_deps()
+            .into_iter()
+            .filter(|dependency| self.dependency_admits_screen(dependency, screen))
+            .collect()
     }
 
     /// Check if addon uses the secure Lua environment (UseSecureEnvironment: 1).
