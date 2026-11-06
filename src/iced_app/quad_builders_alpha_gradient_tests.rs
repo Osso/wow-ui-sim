@@ -177,6 +177,41 @@ mod consumer {
     use super::*;
     use crate::lua_api::WowLuaEnv;
 
+    /// Publish the profile's pinned `SOUNDKIT` table before the consumer files
+    /// run, because the real client loads it first.
+    ///
+    /// `Blizzard_UIPanels_Game_Classic.toc:41` loads `Classic\QuestFrame.lua`,
+    /// whose `:802` calls `PlaySound(SOUNDKIT.IG_WRITE_QUEST)`, and that addon
+    /// depends on the always-loaded `Blizzard_SharedXML`, whose TOC selects the
+    /// sound-kit file per profile (`Blizzard_SharedXML_Mists.toc:5`
+    /// `## AllowLoadGameType: mists`, `:45` `Wrath\SoundKitConstants.lua`).
+    /// The hand-picked file list below would otherwise omit that global.
+    #[cfg(feature = "client-mists")]
+    fn load_pinned_sound_kit_constants(root: &std::path::Path, env: &WowLuaEnv) {
+        let addon_dir = root.join("mists/AddOns/Blizzard_SharedXML");
+        let toc_path = crate::loader::find_toc_file(&addon_dir)
+            .expect("pinned Blizzard_SharedXML TOC required");
+        let toc = crate::toc::TocFile::from_file(&toc_path)
+            .unwrap_or_else(|error| panic!("{}: {error}", toc_path.display()));
+        let entries: Vec<&std::path::PathBuf> = toc
+            .files
+            .iter()
+            .filter(|file| {
+                file.file_name().and_then(|name| name.to_str()) == Some("SoundKitConstants.lua")
+            })
+            .collect();
+        assert_eq!(
+            entries.len(),
+            1,
+            "{}: expected one SoundKitConstants entry, got {entries:?}",
+            toc_path.display()
+        );
+        let path = addon_dir.join(entries[0]);
+        let source = std::fs::read_to_string(&path).expect("pinned sound-kit table required");
+        env.exec(&source)
+            .unwrap_or_else(|error| panic!("{}: {error}", path.display()));
+    }
+
     fn load_cached_consumer(env: &WowLuaEnv) {
         let root = dirs::home_dir()
             .unwrap()
@@ -186,6 +221,8 @@ mod consumer {
         // Mists: AddOns/Blizzard_UIPanels_Game/Classic/QuestFrame.lua:4-6,799-814.
         // Mists helper: AddOns/Blizzard_UIPanels_Game/Wrath/QuestInfo.lua:919-945.
         // Explicit Classic fixture does NOT establish Mists automatic branch selection.
+        #[cfg(feature = "client-mists")]
+        load_pinned_sound_kit_constants(&root, env);
         #[cfg(feature = "client-wrath")]
         let files = [
             "wrath/FrameXML/QuestFrame.lua",

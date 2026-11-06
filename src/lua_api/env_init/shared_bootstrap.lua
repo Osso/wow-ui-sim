@@ -270,6 +270,20 @@ function __wow_apply_xml_mixin(object, mixin, targetPartition, inboundPartition,
   return object
 end
 
+-- Blizzard assigns the whole `SOUNDKIT` table from each profile's pinned
+-- `Blizzard_SharedXML/<flavor>/SoundKitConstants.lua`
+-- (`Blizzard_SharedXML.toc:157` `[Family]\SoundKitConstants.lua`,
+-- `Blizzard_SharedXML_Mists.toc:45` `Wrath\SoundKitConstants.lua`,
+-- `Blizzard_SharedXML_Vanilla.toc:44` `Vanilla\SoundKitConstants.lua`).
+-- This table must nevertheless exist before that load: `__secureenv` is a
+-- snapshot of `_G` taken during env init, so secure-environment addons never see
+-- the Blizzard table. The always-loaded CatalogShop addons are
+-- `## UseSecureEnvironment: 1` (e.g.
+-- `Blizzard_CatalogShopRefundFlow_Elements.lua:25`
+-- `PlaySound(SOUNDKIT.CATALOG_SHOP_SELECT_GENERIC_UI_BUTTON)`) and resolve
+-- `SOUNDKIT` through secureenv. Every id below equals the pinned table
+-- (`Blizzard_SharedXML/Mainline/SoundKitConstants.lua`); retire this block when
+-- secureenv tracks `_G` after Blizzard UI load.
 SOUNDKIT = SOUNDKIT or {}
 if SOUNDKIT.CATALOG_SHOP_SELECT_NAV_MENU == nil then
   SOUNDKIT.CATALOG_SHOP_SELECT_NAV_MENU = 303824
