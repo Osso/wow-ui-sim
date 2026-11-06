@@ -11,7 +11,7 @@
 //! - `GetWeeklyChestRewardLevel()` — returns four zeros when no run done.
 //! - `GetOwnedKeystoneLevel()` — returns owned keystone level or nothing.
 //! - `GetOwnedKeystoneChallengeMapID()` — returns the owned keystone's
-//!   challenge map or nothing (Retail, PTR, Forever).
+//!   challenge map, or `0` without a key (Retail, PTR, Forever).
 //! - `GetWeeklyBestForMap(mapChallengeModeID)` — returns
 //!   durationSec, level, completionDate=nil, fraction=0, affixIDs={},
 //!   members={}, or nothing if no data.
@@ -367,13 +367,13 @@ fn get_owned_keystone_level(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
+/// The client reader takes the owned keystone from a cached client-side keystone
+/// context, not from bag items, and publishes `0` when no entry carries the
+/// keystone marker (1.60.1 decomp). The null-context arm is not proved.
 fn get_owned_keystone_challenge_map_id(state: &mut LuaState) -> LuaResult<u32> {
     let map_id = borrow_state(state)?
         .mythic_plus
         .owned_keystone_challenge_map_id;
-    if map_id == 0 {
-        return Ok(0);
-    }
     state.push(Val::Num(f64::from(map_id)));
     Ok(1)
 }
