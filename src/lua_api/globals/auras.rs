@@ -1136,4 +1136,68 @@ mod tests {
             filter_from_str("HELPFUL|EXTERNAL_DEFENSIVE")
         ));
     }
+
+    fn named_aura(name: &str, is_helpful: bool, aura_instance_id: i32) -> AuraInfo {
+        AuraInfo {
+            name: name.to_string(),
+            is_helpful,
+            aura_instance_id,
+            ..plain_helpful_aura()
+        }
+    }
+
+    fn selected_target(guid: &str) -> crate::lua_api::game_data::TargetInfo {
+        crate::lua_api::game_data::TargetInfo {
+            unit_id: "target".to_string(),
+            name: "Selected unit".to_string(),
+            class_index: 1,
+            level: 80,
+            health: 100,
+            health_max: 100,
+            power: 0,
+            power_max: 0,
+            power_type: 1,
+            power_type_name: "MANA".to_string(),
+            is_player: false,
+            is_enemy: true,
+            has_vehicle_ui: false,
+            guid: guid.to_string(),
+            classification: "normal".to_string(),
+            creature_type: "Humanoid".to_string(),
+            reaction: 1,
+            interaction: Default::default(),
+        }
+    }
+
+    fn aura_names(auras: Vec<AuraInfo>) -> Vec<String> {
+        auras.into_iter().map(|aura| aura.name).collect()
+    }
+
+    #[test]
+    fn target_auras_follow_the_selected_unit() {
+        let mut sim = crate::lua_api::state::SimState::default();
+        sim.player.buffs = vec![named_aura("Player Buff", true, 1)];
+        sim.player.buffs.push(named_aura("Player Debuff", false, 2));
+        sim.target_auras = vec![named_aura("Target Debuff", false, 3)];
+
+        assert!(target_unit_auras(&sim, AuraFilter::Helpful).is_empty());
+
+        sim.current_target = Some(selected_target(
+            crate::lua_api::state::SEEDED_LOCAL_CHARACTER_GUID,
+        ));
+        assert_eq!(
+            aura_names(target_unit_auras(&sim, AuraFilter::Helpful)),
+            vec!["Player Buff"]
+        );
+        assert_eq!(
+            aura_names(target_unit_auras(&sim, AuraFilter::Harmful)),
+            vec!["Player Debuff"]
+        );
+        sim.current_target = Some(selected_target("Creature-0-0-0-0-448-000001"));
+        assert!(target_unit_auras(&sim, AuraFilter::Helpful).is_empty());
+        assert_eq!(
+            aura_names(target_unit_auras(&sim, AuraFilter::Harmful)),
+            vec!["Target Debuff"]
+        );
+    }
 }
