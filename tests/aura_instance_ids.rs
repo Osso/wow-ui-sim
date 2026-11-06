@@ -34,7 +34,10 @@ fn seeded_env() -> WowLuaEnv {
 #[test]
 fn aura_instance_ids_follow_live_filters_and_blocking() {
     let env = seeded_env();
-    env.exec("TargetUnit('player')").unwrap();
+    // The `target` expectations read the stored target aura state, so the
+    // selected target must be a hostile unit: `target` projects the targeted
+    // unit's own auras. `player` queries do not depend on the selection.
+    env.exec("TargetUnit('enemy1')").unwrap();
     env.exec(
         r#"
         local function ids(unit, filter, ...)

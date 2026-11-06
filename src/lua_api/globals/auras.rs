@@ -303,41 +303,64 @@ fn collect_unit_auras(state: &mut LuaState, unit: &str, filter: AuraFilter) -> V
         return Vec::new();
     }
     use crate::lua_api::globals::unit_api::parse_party_index;
-    let auras: Vec<&AuraInfo> = if let Some(idx) = parse_party_index(unit) {
-        if let Some(member) = sim.party_members.get(idx) {
-            match filter {
-                AuraFilter::Helpful => member.buffs.iter().collect(),
-                AuraFilter::Harmful => member.debuffs.iter().collect(),
-                AuraFilter::ExternalDefensive => return Vec::new(),
-                AuraFilter::Maw => return Vec::new(),
-            }
-        } else {
-            return Vec::new();
-        }
+    let auras = if let Some(idx) = parse_party_index(unit) {
+        party_member_auras(&sim, idx, filter)
     } else if unit == "player" {
-        sim.player
-            .buffs
-            .iter()
-            .filter(|a| aura_matches_filter(a, filter))
-            .collect()
+        matching_auras(&sim.player.buffs, filter)
     } else if unit == "target" {
-        let target_auras = sim
-            .target_auras
-            .iter()
-            .filter(|a| aura_matches_filter(a, filter))
-            .cloned()
-            .collect();
-        #[cfg(feature = "retail-12-0-7")]
-        let target_auras =
-            classify_vehicle_auras(target_auras, &sim.player_controlled_vehicle_sources);
-        return target_auras;
+        target_unit_auras(&sim, filter)
     } else {
         return Vec::new();
     };
-    let copied = auras.into_iter().cloned().collect();
     #[cfg(feature = "retail-12-0-7")]
-    let copied = classify_vehicle_auras(copied, &sim.player_controlled_vehicle_sources);
-    copied
+    let auras = classify_vehicle_auras(auras, &sim.player_controlled_vehicle_sources);
+    auras
+}
+
+fn matching_auras(auras: &[AuraInfo], filter: AuraFilter) -> Vec<AuraInfo> {
+    auras
+        .iter()
+        .filter(|aura| aura_matches_filter(aura, filter))
+        .cloned()
+        .collect()
+}
+
+/// Party members store helpful and harmful auras in separate lists.
+fn party_member_auras(
+    sim: &crate::lua_api::state::SimState,
+    index: usize,
+    filter: AuraFilter,
+) -> Vec<AuraInfo> {
+    let Some(member) = sim.party_members.get(index) else {
+        return Vec::new();
+    };
+    match filter {
+        AuraFilter::Helpful => member.buffs.clone(),
+        AuraFilter::Harmful => member.debuffs.clone(),
+        AuraFilter::ExternalDefensive | AuraFilter::Maw => Vec::new(),
+    }
+}
+
+/// The `target` token names the selected unit, so its auras follow that unit's
+/// own state: the player's lists when the player is targeted, a grouped
+/// member's stored lists for a member target, and the stored target aura state
+/// (the hostile-target projection) otherwise.
+fn target_unit_auras(sim: &crate::lua_api::state::SimState, filter: AuraFilter) -> Vec<AuraInfo> {
+    let Some(target) = sim.current_target.as_ref() else {
+        return Vec::new();
+    };
+    if target.guid == crate::lua_api::state::SEEDED_LOCAL_CHARACTER_GUID {
+        return matching_auras(&sim.player.buffs, filter);
+    }
+    if let Some(index) = party_index_for_guid(sim, &target.guid) {
+        return party_member_auras(sim, index, filter);
+    }
+    matching_auras(&sim.target_auras, filter)
+}
+
+fn party_index_for_guid(sim: &crate::lua_api::state::SimState, guid: &str) -> Option<usize> {
+    (0..sim.party_members.len())
+        .find(|&index| crate::lua_api::globals::unit_misc::party_guid_for_index(index) == guid)
 }
 
 /// INFERRED token identity and live ownership timing; never mutates stored AuraInfo.
@@ -1112,5 +1135,69 @@ mod tests {
             &aura,
             filter_from_str("HELPFUL|EXTERNAL_DEFENSIVE")
         ));
+    }
+
+    fn named_aura(name: &str, is_helpful: bool, aura_instance_id: i32) -> AuraInfo {
+        AuraInfo {
+            name: name.to_string(),
+            is_helpful,
+            aura_instance_id,
+            ..plain_helpful_aura()
+        }
+    }
+
+    fn selected_target(guid: &str) -> crate::lua_api::game_data::TargetInfo {
+        crate::lua_api::game_data::TargetInfo {
+            unit_id: "target".to_string(),
+            name: "Selected unit".to_string(),
+            class_index: 1,
+            level: 80,
+            health: 100,
+            health_max: 100,
+            power: 0,
+            power_max: 0,
+            power_type: 1,
+            power_type_name: "MANA".to_string(),
+            is_player: false,
+            is_enemy: true,
+            has_vehicle_ui: false,
+            guid: guid.to_string(),
+            classification: "normal".to_string(),
+            creature_type: "Humanoid".to_string(),
+            reaction: 1,
+            interaction: Default::default(),
+        }
+    }
+
+    fn aura_names(auras: Vec<AuraInfo>) -> Vec<String> {
+        auras.into_iter().map(|aura| aura.name).collect()
+    }
+
+    #[test]
+    fn target_auras_follow_the_selected_unit() {
+        let mut sim = crate::lua_api::state::SimState::default();
+        sim.player.buffs = vec![named_aura("Player Buff", true, 1)];
+        sim.player.buffs.push(named_aura("Player Debuff", false, 2));
+        sim.target_auras = vec![named_aura("Target Debuff", false, 3)];
+
+        assert!(target_unit_auras(&sim, AuraFilter::Helpful).is_empty());
+
+        sim.current_target = Some(selected_target(
+            crate::lua_api::state::SEEDED_LOCAL_CHARACTER_GUID,
+        ));
+        assert_eq!(
+            aura_names(target_unit_auras(&sim, AuraFilter::Helpful)),
+            vec!["Player Buff"]
+        );
+        assert_eq!(
+            aura_names(target_unit_auras(&sim, AuraFilter::Harmful)),
+            vec!["Player Debuff"]
+        );
+        sim.current_target = Some(selected_target("Creature-0-0-0-0-448-000001"));
+        assert!(target_unit_auras(&sim, AuraFilter::Helpful).is_empty());
+        assert_eq!(
+            aura_names(target_unit_auras(&sim, AuraFilter::Harmful)),
+            vec!["Target Debuff"]
+        );
     }
 }
