@@ -34,7 +34,11 @@ Retail selects `Blizzard_ObjectiveTracker.toc` and `Blizzard_ChallengesUI_Mainli
 
 ## Inactive keystone boundary
 
-Without an active run `GetActiveKeystoneInfo` returns `0`, an empty table and `false`. The declaration (`ChallengeModeInfoDocumentation.lua:43-52`) has three non-nil outputs: number, table of numbers, bool. Pinned Retail `Blizzard_PTRFeedback/Blizzard_Reports.lua:339-341` reads it for any encounter report and treats `keystoneLevel > 0` as a keystone run, so the inactive level is a number that is not positive; `0` is used. Its affix list is only read inside that branch; the empty table satisfies the non-nil table output. No source establishes the inactive `wasActiveKeystoneCharged`; `false` is the remaining unverified choice. `GetDeathCount` returns nothing when inactive; the active-map query returns nil.
+`GetActiveKeystoneInfo` publishes three non-nil outputs (declaration `ChallengeModeInfoDocumentation.lua:43-52`: number, table of numbers, bool) and never returns nothing. The client getter has no "is a run active" test (decomp answer, 12.1.5): it publishes the level, the affix list and the charged flag straight from client state. The affix list is built from a fixed-capacity array of four ID slots and stops at the first zero slot; the charged flag is a separate boolean byte that the getter reads and does not derive from keystone spending.
+
+So without an active run the getter reports whatever that state holds, and a fresh session holds level `0`, an empty affix list and `false`. Pinned Retail `Blizzard_PTRFeedback/Blizzard_Reports.lua:339-341` reads it for any encounter report and treats `keystoneLevel > 0` as a keystone run, which agrees with a non-positive inactive level. `GetDeathCount` returns nothing when inactive; the active-map query returns nil.
+
+Not proved: whether the client clears those values when a run ends or only when the next run starts. The simulator clears them at run end and publishes the supplied affix list verbatim, including any zero entry and any length, so it does not yet reproduce the four-slot truncation.
 
 ## InTimeBL boundary
 
