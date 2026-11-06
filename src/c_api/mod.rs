@@ -27,6 +27,7 @@ pub(crate) mod c_tooltip_info_weekly;
 pub(crate) mod class_catalog;
 #[cfg(any(feature = "client-era", feature = "client-anniversary"))]
 pub(crate) mod classic_startup_data;
+pub(crate) mod collections_availability;
 #[cfg(feature = "client-retail")]
 pub mod currency_list;
 pub mod forever_talents;
