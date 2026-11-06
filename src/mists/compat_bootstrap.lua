@@ -798,8 +798,12 @@ local function mistsLegacyAuraTuple(original, unitToken, index, filter)
   if not name then
     return nil
   end
+  -- The seventh value is the caster token; the pinned consumer destructures it as
+  -- `caster` (Blizzard_UnitFrame/Classic/TargetFrame.lua:461) and resolves it with
+  -- UnitIsUnit (TargetFrame.lua:445, :629). The modern tuple already applies the
+  -- player-aura projection, so pass it through unchanged.
   return name, icon, applications or 0, dispelName, duration or 0, expirationTime or 0,
-      nil, isStealable or false, nil, spellID, nil, nil, sourceUnit == "player", false, 1, false
+      sourceUnit, isStealable or false, nil, spellID, nil, nil, sourceUnit == "player", false, 1, false
 end
 
 do

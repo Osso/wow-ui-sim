@@ -20,14 +20,50 @@ fn private_auras_toc() -> PathBuf {
     private_auras_dir().join("Blizzard_PrivateAurasUI.toc")
 }
 
-const PRIVATE_AURAS_TOC_FILES: &[&str] = &[
-    "Shared/PrivateAurasTooltip.lua",
-    "Mainline/PrivateAurasTooltip.lua",
-    "Mainline/PrivateAurasTooltip.xml",
-    "Blizzard_PrivateAurasUI.lua",
-    "Blizzard_PrivateAurasUI.xml",
-    "PrivateAuraInit.lua",
-];
+/// The pinned TOC selects its flavor body through `[Family]`
+/// (`AddOns/Blizzard_PrivateAurasUI/Blizzard_PrivateAurasUI.toc:8-9` in every
+/// profile cache), which resolves to `Classic` on Wrath/Mists/Era/Anniversary
+/// and to `Mainline` on Retail/PTR/WowForever (`src/toc/mod.rs:88-97`).
+fn family_dir() -> &'static str {
+    match wow_ui_sim::client_profile::ACTIVE {
+        wow_ui_sim::client_profile::ClientProfile::Retail
+        | wow_ui_sim::client_profile::ClientProfile::Ptr
+        | wow_ui_sim::client_profile::ClientProfile::WowForever => "Mainline",
+        wow_ui_sim::client_profile::ClientProfile::Wrath
+        | wow_ui_sim::client_profile::ClientProfile::Mists
+        | wow_ui_sim::client_profile::ClientProfile::Era
+        | wow_ui_sim::client_profile::ClientProfile::Anniversary => "Classic",
+    }
+}
+
+fn private_auras_toc_files() -> Vec<String> {
+    let family = family_dir();
+    vec![
+        "Shared/PrivateAurasTooltip.lua".to_string(),
+        format!("{family}/PrivateAurasTooltip.lua"),
+        format!("{family}/PrivateAurasTooltip.xml"),
+        "Blizzard_PrivateAurasUI.lua".to_string(),
+        "Blizzard_PrivateAurasUI.xml".to_string(),
+        "PrivateAuraInit.lua".to_string(),
+    ]
+}
+
+/// The classic body declares three hard dependencies
+/// (`mists|era|anniversary/AddOns/Blizzard_PrivateAurasUI/Blizzard_PrivateAurasUI.toc:3-5`);
+/// the mainline body adds `Blizzard_RaidWarning` and `Blizzard_VisualAlerts`
+/// (`retail/AddOns/Blizzard_PrivateAurasUI/Blizzard_PrivateAurasUI.toc:3-7`).
+fn private_auras_dependencies() -> Vec<&'static str> {
+    let mut deps = vec![
+        "Blizzard_SharedXMLGame",
+        "Blizzard_FrameXMLUtil",
+        "Blizzard_GameTooltip",
+    ];
+    if family_dir() == "Mainline" {
+        deps.push("Blizzard_RaidWarning");
+        deps.push("Blizzard_VisualAlerts");
+    }
+    deps
+}
 
 const PUBLIC_MIXIN_GLOBALS: &[&str] = &[
     "CompactDispelDebuffMixin",
@@ -148,14 +184,8 @@ fn blizzard_private_auras_ui_toc_uses_singular_dep_form() {
     let dependencies = toc.dependencies();
     assert_eq!(
         dependencies,
-        [
-            "Blizzard_SharedXMLGame",
-            "Blizzard_FrameXMLUtil",
-            "Blizzard_GameTooltip",
-            "Blizzard_RaidWarning",
-            "Blizzard_VisualAlerts",
-        ],
-        "Retail 12.1.0.69497 declares five hard dependencies through singular `## Dep:` lines"
+        private_auras_dependencies(),
+        "the pinned TOC declares its hard dependencies through singular `## Dep:` lines"
     );
 
     assert!(
@@ -191,15 +221,10 @@ fn blizzard_private_auras_ui_toc_declares_metadata_in_raw_bytes() {
          matching means the lowercase form still routes through the Game-only screen gate"
     );
 
-    for dep_line in [
-        "## Dep: Blizzard_SharedXMLGame",
-        "## Dep: Blizzard_FrameXMLUtil",
-        "## Dep: Blizzard_GameTooltip",
-        "## Dep: Blizzard_RaidWarning",
-        "## Dep: Blizzard_VisualAlerts",
-    ] {
+    for dep_line in private_auras_dependencies() {
+        let dep_line = format!("## Dep: {dep_line}");
         assert!(
-            raw.contains(dep_line),
+            raw.contains(&dep_line),
             "TOC must contain `{dep_line}` in raw bytes; the parser preserves singular \
              Dep entries as hard dependencies"
         );
@@ -247,7 +272,8 @@ fn blizzard_private_auras_ui_toc_lists_files_in_order() {
         .map(|p| p.to_string_lossy().into_owned())
         .collect();
     assert_eq!(
-        listed, PRIVATE_AURAS_TOC_FILES,
+        listed,
+        private_auras_toc_files(),
         "TOC body must list tooltip setup first, then Blizzard_PrivateAurasUI.lua \
          (publishes 5 mixin globals + addon-private PrivateAuras.unitWatchers / \
          PrivateAuras.PrivateAuraUnitWatcher bindings), Blizzard_PrivateAurasUI.xml \
@@ -450,18 +476,50 @@ fn blizzard_private_auras_ui_xml_uses_scoped_modifier_wrapper() {
         "PrivateAuraTemplate's Cooldown child must inherit CooldownFrameTemplate"
     );
     assert!(
-        raw.contains("inherits=\"RaidWarningFrameTemplate\""),
-        "RaidBossEmoteFramePrivate must inherit RaidWarningFrameTemplate"
+        raw.contains(&format!(
+            "inherits=\"{}\"",
+            raid_boss_emote_template()
+        )),
+        "RaidBossEmoteFramePrivate must inherit {} — the classic body (\
+         `mists|era|anniversary/…/Blizzard_PrivateAurasUI.xml:49`) uses the plain raid \
+         boss emote template, while the mainline body (line 82) uses \
+         RaidWarningFrameTemplate for the same frame",
+        raid_boss_emote_template()
     );
-    let tooltip_raw =
-        std::fs::read_to_string(private_auras_dir().join("Mainline/PrivateAurasTooltip.xml"))
-            .expect("Mainline/PrivateAurasTooltip.xml reads utf-8");
+    let tooltip_path = private_auras_dir().join(family_dir()).join("PrivateAurasTooltip.xml");
+    let tooltip_raw = std::fs::read_to_string(&tooltip_path)
+        .unwrap_or_else(|err| panic!("{} reads utf-8: {err}", tooltip_path.display()));
     assert!(
-        tooltip_raw.contains("inherits=\"SharedTooltipArtTemplate\""),
-        "PrivateAurasTooltip must inherit SharedTooltipArtTemplate — the standard tooltip \
-         art surface (border, NineSlice background) reused by every Blizzard tooltip"
+        tooltip_raw.contains(&format!("inherits=\"{}\"", tooltip_template())),
+        "PrivateAurasTooltip must inherit {} — `{}` differs from the mainline \
+         `Mainline/PrivateAurasTooltip.xml:4` SharedTooltipArtTemplate",
+        tooltip_template(),
+        tooltip_path.display()
     );
 }
+}
+
+/// `AddOns/Blizzard_PrivateAurasUI/Mainline/PrivateAurasTooltip.xml:4` inherits the
+/// shared tooltip art surface; `Classic/PrivateAurasTooltip.xml:4` inherits
+/// `GameTooltipTemplate` instead.
+fn tooltip_template() -> &'static str {
+    if family_dir() == "Mainline" {
+        "SharedTooltipArtTemplate"
+    } else {
+        "GameTooltipTemplate"
+    }
+}
+
+/// `AddOns/Blizzard_PrivateAurasUI/Blizzard_PrivateAurasUI.xml:82` on the mainline
+/// bodies names `RaidWarningFrameTemplate`, which requires the Blizzard_RaidWarning
+/// dependency their TOCs declare; the classic bodies (line 49) use
+/// `RaidBossEmoteFrameTemplate` instead.
+fn raid_boss_emote_template() -> &'static str {
+    if family_dir() == "Mainline" {
+        "RaidWarningFrameTemplate"
+    } else {
+        "RaidBossEmoteFrameTemplate"
+    }
 }
 
 prefork_full_ui_case! {
