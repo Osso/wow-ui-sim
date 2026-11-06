@@ -9,8 +9,8 @@ use super::admin::{build_admin_aura, build_admin_buff, opt_string_stack};
 use crate::lua_api::methods::{borrow_state_mut, create_string};
 use crate::lua_api::script_helpers::fire_named_event_state;
 use crate::lua_bridge::FromStack;
-use rilua::vm::state::LuaState;
 use rilua::LuaResult;
+use rilua::vm::state::LuaState;
 
 // ── Buffs ─────────────────────────────────────────────────────────────────────
 

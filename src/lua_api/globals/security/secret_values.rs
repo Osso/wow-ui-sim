@@ -31,13 +31,14 @@ pub(super) fn register_scrub_fallbacks(lua: &mut rilua::Lua) -> LuaResult<()> {
 pub(crate) fn register_retail_secret_values(lua: &mut rilua::Lua) -> LuaResult<()> {
     LuaApiMut::register_function(lua, "secretwrap", secretwrap_native)?;
     LuaApiMut::register_function(lua, "secretunwrap", secretunwrap_native)?;
-    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail {
+    if crate::client_profile::ACTIVE.uses_secret_values() {
         LuaApiMut::register_function(lua, "securecallfunction", securecallfunction_source)?;
     }
     Ok(())
 }
 
 /// WM61 S2: keep the caller source and secret values through invocation.
+/// Retail and PTR publish this override; see docs/specs/secret-auras.md.
 #[cfg(feature = "retail-12-1-0")]
 fn securecallfunction_source(state: &mut LuaState) -> LuaResult<u32> {
     if state.base >= state.top {
