@@ -784,3 +784,46 @@ fn mount_filter_events_follow_displayed_list_changes() {
     let events = env.state().borrow_mut().events.drain();
     assert_eq!(events.iter().filter(|event| event.name == "MOUNT_JOURNAL_SEARCH_UPDATED").count(), 1);
 }
+
+#[test]
+fn mail_frame_runtime_load_skips_glue_only_dependency() {
+    let env = WowLuaEnv::new().expect("Failed to create Lua environment");
+    env.set_screen_size(1024.0, 768.0);
+    env.state().borrow_mut().addon_base_paths = vec![blizzard_ui_dir()];
+    load_panel_harness(&env);
+
+    let (loaded, reason, mail_frame, unit_popup_shared, glue_xml): (
+        bool,
+        Option<String>,
+        bool,
+        bool,
+        bool,
+    ) = env
+        .eval(
+            r#"
+            local loaded, reason = C_AddOns.LoadAddOn("Blizzard_MailFrame")
+            return loaded,
+                   reason,
+                   MailFrame ~= nil,
+                   C_AddOns.IsAddOnLoaded("Blizzard_UnitPopupShared"),
+                   C_AddOns.IsAddOnLoaded("Blizzard_GlueXML")
+            "#,
+        )
+        .expect("MailFrame runtime load should return");
+
+    assert!(
+        loaded,
+        "Blizzard_MailFrame should load when its dependency chain contains a Glue-only \
+         dependency, reason: {}",
+        reason.unwrap_or_else(|| "<nil>".to_string())
+    );
+    assert!(mail_frame, "Blizzard_MailFrame XML should create MailFrame");
+    assert!(
+        unit_popup_shared,
+        "Blizzard_UnitPopupShared should load through FriendsFrame's optional dependency list"
+    );
+    assert!(
+        !glue_xml,
+        "Blizzard_GlueXML declares `## AllowLoad: Glue` and must not load on the Game screen"
+    );
+}
