@@ -134,6 +134,13 @@ use wow_ui_sim::lua_api::state::ShapeshiftForm;
 const ROOT: &str = "Blizzard_ActionBarController";
 const TARGET_INDEX: i32 = 2;
 
+// `with_blizzard_addon_startup_shape` loads `panel_fixtures::PANEL_ADDONS`,
+// which requires `Blizzard_TimerunningUtil` (tests/common/panel_fixtures.rs:119-133).
+// Its pinned TOC declares `## AllowLoadGameType: mainline`
+// (Blizzard_TimerunningUtil/Blizzard_TimerunningUtil.toc:5), so the shared panel
+// harness cannot build on Mists/Era/Anniversary and the seeded-aura assertions are
+// never reached there. Wrath keeps its own `wrath_action_case!` path.
+timerunning_util_panel_or_wrath_fixture! {
 #[test]
 fn seeded_paladin_aura_forms_populate_stance_bar_buttons() {
     wrath_action_case!(stance_icons);
@@ -174,6 +181,7 @@ fn seeded_paladin_aura_forms_populate_stance_bar_buttons() {
         );
     });
     }
+}
 }
 
 #[test]
