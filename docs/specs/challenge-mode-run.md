@@ -34,7 +34,7 @@ Retail selects `Blizzard_ObjectiveTracker.toc` and `Blizzard_ChallengesUI_Mainli
 
 ## Inactive keystone boundary
 
-The inactive `GetActiveKeystoneInfo` return is unimplemented pending native evidence. Its declaration has three non-nil outputs, and selected callers use them without an active-run guard. The simulator reports this gap explicitly instead of inventing a tuple. `GetDeathCount` returns nothing when inactive; the active-map query returns nil.
+Without an active run `GetActiveKeystoneInfo` returns `0`, an empty table and `false`. The declaration (`ChallengeModeInfoDocumentation.lua:43-52`) has three non-nil outputs: number, table of numbers, bool. Pinned Retail `Blizzard_PTRFeedback/Blizzard_Reports.lua:339-341` reads it for any encounter report and treats `keystoneLevel > 0` as a keystone run, so the inactive level is a number that is not positive; `0` is used. Its affix list is only read inside that branch; the empty table satisfies the non-nil table output. No source establishes the inactive `wasActiveKeystoneCharged`; `false` is the remaining unverified choice. `GetDeathCount` returns nothing when inactive; the active-map query returns nil.
 
 ## InTimeBL boundary
 
