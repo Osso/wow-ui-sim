@@ -116,7 +116,8 @@ pub(super) fn register_c_item(state: &mut LuaState) -> LuaResult<()> {
         ACTIVE,
         ClientProfile::Retail | ClientProfile::Ptr | ClientProfile::WowForever
     ) {
-        // ItemDocumentation.lua: GetItemNumSockets(itemInfo) -> socketCount.
+        // ItemDocumentation.lua:854-867 (Retail), 876-889 (PTR, Forever):
+        // GetItemNumSockets(itemInfo) -> socketCount.
         table_set_rust_fn_static(
             state,
             table_ref,
@@ -567,8 +568,10 @@ fn resolve_equipped_location_item(sim: &SimState, slot: i32) -> Option<(u32, Opt
         .or_else(|| bag.and_then(|bag| bag.item_id.map(|id| (id, bag.hyperlink.clone()))))
 }
 
-/// Sockets the item's own record declares (`ItemSparse.SocketType`). Sockets a
-/// bonus list adds to one instance are not modelled; an unknown item has none.
+/// Sockets the item's own record declares (`ItemSparse.SocketType`). The client
+/// handler also adds a bonus/instance socket count when the item info carries a
+/// resolving bonus key (PTR 12.1.7 decomp); the simulator has no such table, so
+/// only the record half contributes. An unresolved item publishes `0`.
 fn c_item_get_item_num_sockets(state: &mut LuaState) -> LuaResult<u32> {
     let item_id = parse_item_id_key(state, stack_val(state, 1));
     let count = {
