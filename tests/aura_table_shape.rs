@@ -53,7 +53,10 @@ fn buff_slot_table_has_every_documented_field() {
 #[test]
 fn debuff_slot_table_reports_harmful() {
     let env = env();
-    env.exec("TargetUnit('player')").unwrap();
+    // Slot 2 of the stored target aura state is the seeded Expose Weakness
+    // debuff, so the selected target must be a hostile unit rather than the
+    // player: `UnitAura('target')` projects the targeted unit's own auras.
+    env.exec("TargetUnit('enemy1')").unwrap();
     let (is_helpful, is_harmful, is_raid): (bool, bool, bool) = env
         .eval(
             r#"
