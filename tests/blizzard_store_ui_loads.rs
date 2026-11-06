@@ -417,7 +417,7 @@ fn store_ui_inbound_outbound_secure_bridge_files_exist() {
     );
     let bridge = |name: &str| {
         if classic {
-            store_ui_dir().join("Classic").join(name)
+            store_ui_dir().join("Classic").join(format!("Blizzard_{name}"))
         } else {
             store_ui_dir().join(format!("Blizzard_Shared_{name}"))
         }
