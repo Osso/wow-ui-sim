@@ -13,6 +13,7 @@
 //!   — returns the 6-field `CurrencyDisplayInfo` structure with
 //!   `actualAmount` / `displayAmount` set to the passed quantity.
 
+use wow_ui_sim::client_profile::{ACTIVE, ClientProfile};
 use wow_ui_sim::lua_api::WowLuaEnv;
 use wow_ui_sim::lua_api::state::CurrencyInfo;
 
@@ -500,4 +501,50 @@ fn get_currency_container_info_returns_nothing_for_unknown_id() {
         .eval("return select('#', C_CurrencyInfo.GetCurrencyContainerInfo(999999, 1))")
         .unwrap();
     assert_eq!(nret, 0);
+}
+
+#[test]
+fn get_currency_list_link_matches_the_displayed_row() {
+    // Pinned declarations: CurrencyInfoDocumentation.lua:312-326 (Retail, PTR,
+    // Forever) and 117-128 (Mists, Era, Anniversary). Original consumers read the
+    // link and match `currency:<id>` out of it:
+    // Blizzard_PTRFeedback/Blizzard_PTRFeedback_Tooltips.lua:44 (Mists cache) and
+    // :180 (Retail cache).
+    if ACTIVE == ClientProfile::Wrath {
+        return;
+    }
+    let env = env();
+    let (link, expected, past_the_list, header_returns_link): (String, String, i32, bool) = env
+        .eval(
+            r#"
+            local size = C_CurrencyInfo.GetCurrencyListSize()
+            assert(size > 0, "the currency list holds rows")
+            local index, info, headerIndex
+            for candidate = 1, size do
+                local row = C_CurrencyInfo.GetCurrencyListInfo(candidate)
+                if row and row.isHeader then
+                    headerIndex = headerIndex or candidate
+                elseif row and not index then
+                    index, info = candidate, row
+                end
+            end
+            assert(index, "a currency row")
+            local hex = select(4, C_Item.GetItemQualityColor(info.quality))
+            local link = C_CurrencyInfo.GetCurrencyListLink(index)
+            local consumerID = tonumber(string.match(link, "currency:(%d+)"))
+            assert(consumerID == info.currencyTypesID,
+                "the consumer extracts the row currency id")
+            return link,
+                "|c" .. hex .. "|Hcurrency:" .. info.currencyTypesID
+                    .. "|h[" .. info.name .. "]|h|r",
+                select('#', C_CurrencyInfo.GetCurrencyListLink(size + 1)),
+                headerIndex ~= nil
+                    and C_CurrencyInfo.GetCurrencyListLink(headerIndex) ~= nil
+            "#,
+        )
+        .expect("the currency list link should be readable on this profile");
+
+    assert_eq!(link, expected);
+    assert_eq!(past_the_list, 1, "the publisher emits nil for a null link");
+    assert!(header_returns_link, "a header row takes the same path");
 }
