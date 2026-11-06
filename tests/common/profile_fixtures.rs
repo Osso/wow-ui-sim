@@ -523,3 +523,49 @@ macro_rules! retail_faction_fixture {
         )*
     };
 }
+
+// classic-aura-residue
+
+/// The `TargetFrame.Auras` container and its `AuraButton` children are the
+/// mainline aura engine: `Blizzard_UnitFrame/Blizzard_UnitFrame_Mainline.toc:27-28`
+/// lists `Shared/TargetFrameAuraContainer.lua|.xml` and
+/// `Mainline/TargetFrame.xml` declares `parentKey="Auras"` (Retail, PTR and
+/// WowForever pin the same pair at `:48-49`). The classic TOC lists only
+/// `Shared/TargetFrame.lua`, `Classic/TargetFrame.lua` and
+/// `Classic/TargetFrame.xml` (`mists/AddOns/Blizzard_UnitFrame/Blizzard_UnitFrame_Classic.toc:24-27`),
+/// and `Classic/TargetFrame.lua:451-500` creates `TargetFrameBuff<N>`
+/// `TargetBuffFrameTemplate` buttons instead, so no private-partition
+/// `AuraButton.Count` exists to inspect on a classic profile.
+#[macro_export]
+macro_rules! target_frame_aura_container_fixture {
+    ($($item:item)*) => {
+        $(
+            #[cfg(any(
+                feature = "client-retail",
+                feature = "client-ptr",
+                feature = "client-wowforever"
+            ))]
+            $item
+        )*
+    };
+}
+
+/// Counterpart to `target_frame_aura_container_fixture`: the classic UnitFrame
+/// TOC selects `Classic/TargetFrame.xml`, whose `TargetFrameMixin:OnEvent`
+/// reads `C_PlayerInteractionManager.IsReplacingUnit()` on every
+/// `PLAYER_TARGET_CHANGED`
+/// (`mists|era|anniversary/AddOns/Blizzard_UnitFrame/Classic/TargetFrame.lua:168`)
+/// and whose `UpdateAuras` builds `TargetFrameBuff<N>` buttons (:451-500).
+#[macro_export]
+macro_rules! classic_target_frame_fixture {
+    ($($item:item)*) => {
+        $(
+            #[cfg(any(
+                feature = "client-mists",
+                feature = "client-era",
+                feature = "client-anniversary"
+            ))]
+            $item
+        )*
+    };
+}

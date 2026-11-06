@@ -32,6 +32,13 @@ fn blizzard_player_world_entry_updates_combo_frame_from_target_power() {
     });
 }
 
+// The private-partition `AuraButton.Count` case needs the mainline
+// `TargetFrame.Auras` container: `Blizzard_UnitFrame/Blizzard_UnitFrame_Mainline.toc:27-28`
+// lists `Shared/TargetFrameAuraContainer.lua|.xml`, and the classic UnitFrame TOC
+// (`mists/AddOns/Blizzard_UnitFrame/Blizzard_UnitFrame_Classic.toc:24-27`) lists
+// neither file while `Classic/TargetFrame.lua:451-500` creates `TargetFrameBuff<N>`
+// buttons instead. See `classic_target_frame_fixture!` for the classic consumer path.
+target_frame_aura_container_fixture! {
 #[test]
 fn blizzard_target_player_aura_updates_keep_count_region() {
     common::with_perf_lock(|| {
@@ -71,4 +78,48 @@ fn blizzard_target_player_aura_updates_keep_count_region() {
             assert!(public_field_stays_public, "ordinary Lua fields leaked into private partition");
         }
     });
+}
+}
+
+// Classic `TargetFrameMixin:OnEvent` reads
+// `C_PlayerInteractionManager.IsReplacingUnit()` on every PLAYER_TARGET_CHANGED
+// (`mists|era|anniversary/AddOns/Blizzard_UnitFrame/Classic/TargetFrame.lua:168`)
+// and `UpdateAuras` (:451-500) then builds `TargetFrameBuff<N>` buttons from the
+// `TargetBuffFrameTemplate` and sizes each one through ShouldAuraBeLarge(caster)
+// (:502), where `caster` is the seventh `AuraUtil.ForEachAura` value (:461).
+classic_target_frame_fixture! {
+#[test]
+fn blizzard_classic_target_player_aura_update_runs_without_errors() {
+    common::with_perf_lock(|| {
+        test_timeout! {
+            let env = env_with_full_ui();
+            install_test_error_handler(&env);
+            env.exec("TargetUnit('player')").expect("target player");
+            env.fire_on_update(0.016).expect("tick target auras");
+            let errors = drain_test_errors(&env);
+            assert!(errors.is_empty(), "classic target aura update errors: {errors:?}");
+            // The classic handler reaches `TargetFrameMixin:UpdateAuras`
+            // (Classic/TargetFrame.lua:146) after the IsReplacingUnit read. The
+            // `TargetFrameBuff<N>` buttons it builds (:469) need the target's
+            // helpful auras, which this build does not project for the `target`
+            // unit token; see the lane report.
+            let (has_target, has_buff_container): (bool, bool) = env
+                .eval(
+                    r#"
+                    return TargetFrame.unit == 'target' and UnitExists('target'),
+                        TargetFrame.buffs ~= nil
+                "#,
+                )
+                .expect("classic target frame probe");
+            assert!(
+                has_target,
+                "TargetFrame must remain the selected-target unit frame"
+            );
+            assert!(
+                has_buff_container,
+                "classic TargetFrame.xml:339 declares the `$parentBuffs` container"
+            );
+        }
+    });
+}
 }
