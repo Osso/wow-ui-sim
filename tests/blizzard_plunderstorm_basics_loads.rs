@@ -70,7 +70,7 @@ fn load_full_game_ui_with_plunderstorm_basics() -> WowLuaEnv {
 }
 
 // Literal cached inputs absent from Wrath manifest1-382/cache; behavior cases stay enabled.
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn blizzard_plunderstorm_basics_find_toc_resolves_bare_variant() {
     let resolved = find_toc_file(&plunderstorm_basics_dir())
@@ -94,7 +94,7 @@ fn blizzard_plunderstorm_basics_find_toc_resolves_bare_variant() {
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn blizzard_plunderstorm_basics_toc_declares_load_on_demand_with_allow_load_both() {
     let toc = TocFile::from_file(&plunderstorm_basics_toc())
@@ -152,7 +152,7 @@ fn blizzard_plunderstorm_basics_toc_declares_load_on_demand_with_allow_load_both
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn blizzard_plunderstorm_basics_toc_declares_metadata_in_raw_bytes() {
     let raw = std::fs::read_to_string(plunderstorm_basics_toc())
@@ -209,7 +209,7 @@ fn blizzard_plunderstorm_basics_toc_declares_metadata_in_raw_bytes() {
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn blizzard_plunderstorm_basics_toc_lists_two_files_in_canonical_order() {
     let toc = TocFile::from_file(&plunderstorm_basics_toc())
@@ -431,5 +431,20 @@ post_wrath_ui_fixture! {
 fn blizzard_plunderstorm_basics_loads_without_addon_specific_lua_errors() {
     let env = load_full_game_ui_with_plunderstorm_basics();
     blizzard_plunderstorm_basics_loads_without_addon_specific_lua_errors::run(&env);
+}
+}
+
+// The Mists/Era/Anniversary caches ship 218 addons each and Wrath ships 23;
+// none contains Blizzard_PlunderstormBasics, so the pinned TOC facts above
+// describe no file the classic loaders can read.
+classic_cache_absent_toc_fixture! {
+#[test]
+fn blizzard_plunderstorm_basics_toc_is_absent_from_classic_caches() {
+    let dir = plunderstorm_basics_dir();
+    assert!(
+        !dir.is_dir(),
+        "classic profile caches must not contain Blizzard_PlunderstormBasics"
+    );
+    assert!(wow_ui_sim::loader::find_toc_file(&dir).is_none());
 }
 }

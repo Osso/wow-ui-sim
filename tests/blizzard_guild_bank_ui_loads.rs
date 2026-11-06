@@ -8,6 +8,9 @@ use wow_ui_sim::screen::ScreenKind;
 use wow_ui_sim::startup::fire_startup_events_for_screen;
 use wow_ui_sim::toc::TocFile;
 
+#[path = "common/toc_layout.rs"]
+mod toc_layout;
+
 fn blizzard_ui_dir() -> PathBuf {
     wow_ui_sim::client_profile::blizzard_ui_addons_dir_under(std::path::Path::new(env!(
         "CARGO_MANIFEST_DIR"
@@ -61,8 +64,9 @@ fn blizzard_guild_bank_ui_find_toc_resolves_mainline_variant() {
     let resolved = guild_bank_toc();
     assert_eq!(
         resolved.file_name().and_then(|name| name.to_str()),
-        Some("Blizzard_GuildBankUI_Mainline.toc"),
-        "retail resolves the mainline GuildBankUI TOC through find_toc_file"
+        Some(toc_layout::expected_toc_name("Blizzard_GuildBankUI").as_str()),
+        "find_toc_file resolves the active profile's GuildBankUI TOC — `_Mainline.toc` in the \
+         Retail cache, the unified bare TOC in the pinned PTR cache"
     );
 }
 
@@ -98,9 +102,25 @@ fn blizzard_guild_bank_ui_toc_declares_lod_with_no_dependencies() {
 #[test]
 fn blizzard_guild_bank_ui_mainline_toc_declares_game_screen_mainline_gating() {
     let toc_text = std::fs::read_to_string(guild_bank_toc()).expect("GuildBankUI TOC should read");
-    assert!(toc_text.contains("## AllowLoad: game"));
-    assert!(toc_text.contains("## AllowLoadGameType: mainline"));
     assert!(toc_text.contains("## LoadOnDemand: 1"));
+    if toc_layout::unified_toc_tree() {
+        assert!(
+            !toc_text.contains("## AllowLoad:"),
+            "The unified PTR TOC relies on per-entry `[AllowLoadGameType ...]` filters, not a \
+             top-level AllowLoad directive"
+        );
+        assert!(
+            toc_text.contains("[Family]\\Blizzard_GuildBankUI.xml [AllowLoadGameType mainline]"),
+            "The unified PTR TOC must gate the Mainline family XML on the mainline game type"
+        );
+        assert!(
+            toc_text.contains("TBC\\Blizzard_GuildBankUI.xml [AllowLoadGameType tbc, wrath, cata]"),
+            "The unified PTR TOC must gate the TBC family XML on the classic game types"
+        );
+    } else {
+        assert!(toc_text.contains("## AllowLoad: game"));
+        assert!(toc_text.contains("## AllowLoadGameType: mainline"));
+    }
 }
 
 #[test]
@@ -113,13 +133,23 @@ fn blizzard_guild_bank_ui_toc_lists_bootstrap_xml_then_localization() {
         .collect();
     assert_eq!(
         files,
-        vec![
-            "Blizzard_GuildBankUI_Bootstrap.lua".to_string(),
-            "Mainline/Blizzard_GuildBankUI.xml".to_string(),
-            "Localization.lua".to_string(),
-        ],
-        "Blizzard_GuildBankUI Mainline TOC lists its bootstrap, Mainline XML, and Localization \
-         in published order. The XML loads its Lua sibling through `<Script file=\"...\"/>`."
+        if toc_layout::unified_toc_tree() {
+            vec![
+                "Blizzard_GuildBankUI_Bootstrap.lua".to_string(),
+                "Mainline/Blizzard_GuildBankUI.lua".to_string(),
+                "Mainline/Blizzard_GuildBankUI.xml".to_string(),
+                "Localization.lua".to_string(),
+            ]
+        } else {
+            vec![
+                "Blizzard_GuildBankUI_Bootstrap.lua".to_string(),
+                "Mainline/Blizzard_GuildBankUI.xml".to_string(),
+                "Localization.lua".to_string(),
+            ]
+        },
+        "Blizzard_GuildBankUI lists its bootstrap, Mainline Lua/XML pair, and Localization in \
+         published order. The unified PTR TOC lists the Lua sibling explicitly; the Retail TOC \
+         loads it through the XML `<Script file=\"...\"/>` directive."
     );
 }
 

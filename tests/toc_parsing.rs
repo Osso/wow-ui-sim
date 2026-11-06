@@ -1,6 +1,9 @@
 use std::path::{Path, PathBuf};
 use wow_ui_sim::toc::TocFile;
 
+#[path = "common/toc_layout.rs"]
+mod toc_layout;
+
 fn blizzard_shared_xml_base_toc() -> PathBuf {
     wow_ui_sim::client_profile::blizzard_ui_addons_dir_under(std::path::Path::new(env!(
         "CARGO_MANIFEST_DIR"
@@ -19,12 +22,41 @@ fn file_inventory_toc() -> PathBuf {
 
 const ACE3_TOC: &str = "/home/osso/Projects/wow/reference-addons/Ace3/Ace3.toc";
 
+/// The fixtures below gate on the `mainline` token. Retail, PTR and Forever
+/// admit it; the classic-flavor profiles do not.
 fn is_mainline_profile() -> bool {
-    matches!(
-        wow_ui_sim::client_profile::ACTIVE,
-        wow_ui_sim::client_profile::ClientProfile::Retail
-            | wow_ui_sim::client_profile::ClientProfile::Ptr
-    )
+    toc_layout::admits_game_type("mainline")
+}
+
+#[test]
+fn toc_layout_game_type_mirror_matches_parser_filtering() {
+    for token in [
+        "mainline",
+        "standard",
+        "camelot",
+        "classic",
+        "vanilla",
+        "wrath",
+        "mists",
+    ] {
+        let toc = TocFile::parse(
+            Path::new("GameTypeProbe"),
+            &format!("## AllowLoadGameType: {token}\n"),
+        );
+        // `camelot` is a recognized token only on PTR and Forever; on other
+        // profiles it has a zero game-type mask, which the parser treats as
+        // "no filter".
+        let parser_recognizes = token != "camelot" || toc_layout::unified_toc_tree();
+        assert_eq!(
+            !toc.is_game_type_restricted(),
+            if parser_recognizes {
+                toc_layout::admits_game_type(token)
+            } else {
+                true
+            },
+            "toc_layout::admits_game_type must mirror the parser's allow-list for `{token}`"
+        );
+    }
 }
 
 #[test]
@@ -69,7 +101,7 @@ fn metadata_game_type_accepts_mixed_token_lists_after_other_annotations() {
     let toc = TocFile::parse(
         Path::new("MixedMetadata"),
         "## Dep: Commas [AllowLoadGameType plunderstorm, mainline, classic]\n\
-         ## Dep: Spaces [AllowLoadGameType plunderstorm standard classic]\n\
+         ## Dep: Spaces [AllowLoadGameType plunderstorm mainline classic]\n\
          ## Dep: MultipleAnnotations [AllowLoad game] [AllowLoadGameType mainline, classic]\n\
          ## LoadFirst: 1 [AllowLoadGameType plunderstorm, mainline classic]\n",
     );
@@ -117,6 +149,8 @@ fn metadata_game_type_excludes_classic_edges_in_pinned_ptr_addons() {
             "Blizzard_EditMode",
             "Blizzard_TransmogShared",
             "Blizzard_GameMenuEsc",
+            "Blizzard_SharedXML",
+            "Blizzard_GamepadSharedUtility",
         ]
     );
     assert_eq!(
@@ -133,6 +167,7 @@ fn metadata_game_type_excludes_classic_edges_in_pinned_ptr_addons() {
             "Blizzard_MicroMenu",
             "Blizzard_PingUI",
             "Blizzard_GameMenuEsc",
+            "Blizzard_SpellTypeIconOverlay",
         ]
     );
 }

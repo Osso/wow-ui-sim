@@ -6,6 +6,9 @@ use wow_ui_sim::screen::ScreenKind;
 use wow_ui_sim::startup::fire_startup_events_for_screen;
 use wow_ui_sim::toc::TocFile;
 
+#[path = "common/toc_layout.rs"]
+mod toc_layout;
+
 fn blizzard_ui_dir() -> PathBuf {
     wow_ui_sim::paths::default_blizzard_ui_addons_path()
         .expect("Blizzard UI cache should be available")
@@ -179,15 +182,31 @@ fn toc_declares_optional_dep_singular_advisory_only() {
         .get("OptionalDep")
         .map(String::as_str)
         .unwrap_or("");
-    assert_eq!(
-        optional_dep_singular, "Blizzard_GlueParent",
-        "Retail 12.1.0.69497 declares Blizzard_GlueParent through singular OptionalDep metadata"
-    );
-    assert_eq!(
-        toc.optional_deps(),
-        vec!["Blizzard_GlueParent".to_string()],
-        "the singular `## OptionalDep:` directive exposes the current GlueParent advisory dependency"
-    );
+    if toc_layout::classic_cache() {
+        assert_eq!(
+            optional_dep_singular, "Blizzard_UIParent, Blizzard_GlueParent",
+            "the classic `Blizzard_ReportFrameShared.toc` lists both screen owners in one \
+             singular `## OptionalDep:` line"
+        );
+        assert_eq!(
+            toc.optional_deps(),
+            vec![
+                "Blizzard_UIParent".to_string(),
+                "Blizzard_GlueParent".to_string()
+            ],
+            "the singular `## OptionalDep:` directive splits on commas"
+        );
+    } else {
+        assert_eq!(
+            optional_dep_singular, "Blizzard_GlueParent",
+            "Retail 12.1.0.69497 declares Blizzard_GlueParent through singular OptionalDep metadata"
+        );
+        assert_eq!(
+            toc.optional_deps(),
+            vec!["Blizzard_GlueParent".to_string()],
+            "the singular `## OptionalDep:` directive exposes the current GlueParent advisory dependency"
+        );
+    }
 }
 }
 

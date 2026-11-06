@@ -76,7 +76,7 @@ fn load_full_game_ui() -> WowLuaEnv {
 }
 
 // Literal cached inputs absent from Wrath manifest1-382/cache; behavior cases stay enabled.
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn find_toc_file_resolves_bare_toc() {
     let resolved =
@@ -91,7 +91,7 @@ fn find_toc_file_resolves_bare_toc() {
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn toc_declares_minimal_load_on_demand_with_zero_dependencies() {
     let toc = TocFile::from_file(&scrapping_toc()).expect("Blizzard_ScrappingMachineUI TOC parses");
@@ -127,7 +127,7 @@ fn toc_declares_minimal_load_on_demand_with_zero_dependencies() {
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn toc_declares_metadata_in_raw_bytes_with_carried_over_blizzard_typo() {
     let raw = std::fs::read_to_string(scrapping_toc())
@@ -169,7 +169,7 @@ fn toc_declares_metadata_in_raw_bytes_with_carried_over_blizzard_typo() {
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn toc_lists_bootstrap_then_xml_with_lua_loaded_via_script_directive() {
     let toc = TocFile::from_file(&scrapping_toc()).expect("Blizzard_ScrappingMachineUI TOC parses");
@@ -235,7 +235,7 @@ fn excluded_from_eager_discovery_due_to_load_on_demand() {
     }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn root_directory_holds_bootstrap_lua_and_xml_next_to_toc() {
     let dir = scrapping_dir();
@@ -521,5 +521,20 @@ fn frame_pool_seeds_nine_scrap_button_slots_after_onload_grid(env: &WowLuaEnv) {
          grid is the BfA-era hardcoded scrapping capacity, the same number of pending \
          items C_ScrappingMachineUI.ValidateScrappingList expects to walk"
     );
+}
+}
+
+// The Mists/Era/Anniversary caches ship 218 addons each and Wrath ships 23;
+// none contains Blizzard_ScrappingMachineUI, so the pinned TOC facts above describe no file the
+// classic loaders can read.
+classic_cache_absent_toc_fixture! {
+#[test]
+fn blizzard_scrappingmachineui_toc_is_absent_from_classic_caches() {
+    let dir = scrapping_dir();
+    assert!(
+        !dir.is_dir(),
+        "classic profile caches must not contain Blizzard_ScrappingMachineUI"
+    );
+    assert!(wow_ui_sim::loader::find_toc_file(&dir).is_none());
 }
 }

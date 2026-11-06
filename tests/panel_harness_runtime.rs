@@ -70,6 +70,14 @@ fn load_panel_harness(env: &WowLuaEnv) {
             .unwrap_or_else(|error| panic!("{addon_name} should load in panel harness: {error}"));
     }
 
+    // Pinned PTR 12.1.7 adds Blizzard_GamepadSoftCursor. Blizzard_MapCanvas
+    // reads its `SoftCursor` frame and bounds helpers when a map scroll
+    // container refreshes, so the harness must publish that producer before
+    // any MapCanvas consumer loads.
+    if ui.join("Blizzard_GamepadSoftCursor").is_dir() {
+        load_blizzard_addon(env, "Blizzard_GamepadSoftCursor");
+    }
+
     for addon_name in [
         "Blizzard_MapCanvas",
         "Blizzard_SharedTalentUI",

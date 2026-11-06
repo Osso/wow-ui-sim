@@ -9,6 +9,9 @@ use wow_ui_sim::screen::ScreenKind;
 use wow_ui_sim::startup::fire_startup_events_for_screen;
 use wow_ui_sim::toc::TocFile;
 
+#[path = "common/toc_layout.rs"]
+mod toc_layout;
+
 fn blizzard_ui_dir() -> PathBuf {
     wow_ui_sim::paths::default_blizzard_ui_addons_path()
         .expect("Blizzard UI cache should be available")
@@ -54,6 +57,99 @@ const PLAYER_SPELLS_TOC_FILES: &[&str] = &[
     "SpellBook/Blizzard_SpellBookSearch.lua",
     "SpellBook/Blizzard_SpellBookFrame.xml",
     "Blizzard_PlayerSpellsFrame.xml",
+    "Blizzard_PlayerSpellsRegistration.lua",
+    "Localization.lua",
+];
+
+// The unified PTR TOC lists the Mainline overrides explicitly, adds the
+// SpellBook Category/Tutorials/Frame Lua files, and drops the Retail
+// ClassTalentSearch entry.
+const PTR_PLAYER_SPELLS_TOC_FILES: &[&str] = &[
+    "Blizzard_PlayerSpells_Bootstrap.lua",
+    "Mainline/ClassSpecializations/Blizzard_ClassSpecializationsFrame.xml",
+    "Mainline/ClassTalents/Blizzard_ClassTalentUtil.lua",
+    "ClassTalents/Blizzard_ClassTalentUtil.lua",
+    "ClassTalents/Blizzard_ClassTalentLoadoutDialogTemplates.xml",
+    "ClassTalents/Blizzard_ClassTalentImportExport.lua",
+    "ClassTalents/Blizzard_ClassTalentLoadoutImportDialog.xml",
+    "ClassTalents/Blizzard_ClassTalentLoadoutEditDialog.xml",
+    "ClassTalents/Blizzard_ClassTalentLoadoutCreateDialog.xml",
+    "ClassTalents/Blizzard_ClassTalentButtonTemplates.xml",
+    "ClassTalents/Blizzard_ClassTalentEdgeTemplates.lua",
+    "ClassTalents/Blizzard_ClassTalentEdgeTemplates.xml",
+    "ClassTalents/Blizzard_HeroTalentsSelectionDialog.lua",
+    "ClassTalents/Blizzard_HeroTalentsSelectionDialog.xml",
+    "ClassTalents/Blizzard_HeroTalentsContainer.lua",
+    "ClassTalents/Blizzard_HeroTalentsContainer.xml",
+    "ClassTalents/Blizzard_ClassTalentsFrame.lua",
+    "Mainline/ClassTalents/Blizzard_ClassTalentsFrame.lua",
+    "Mainline/ClassTalents/Blizzard_ClassTalentsFrame.xml",
+    "PvPTalents/Blizzard_PvPTalentListTemplates.xml",
+    "PvPTalents/Blizzard_PvPTalentSlotTemplates.xml",
+    "PvPTalents/Blizzard_WarmodeButtonTemplate.xml",
+    "Mainline/SpellBook/Blizzard_SpellBookTemplates.xml",
+    "SpellBook/Blizzard_SpellBookTemplates.xml",
+    "SpellBook/Blizzard_SpellBookItem.xml",
+    "SpellBook/Blizzard_SpellBookSearch.lua",
+    "SpellBook/Blizzard_SpellBookFrame.xml",
+    "SpellBook/Blizzard_SpellBookCategory.lua",
+    "SpellBook/Blizzard_SpellBookFrameTutorials.lua",
+    "SpellBook/Blizzard_SpellBookFrame.lua",
+    "Mainline/SpellBook/Blizzard_SpellBookFrame.lua",
+    "Blizzard_PlayerSpellsFrame.lua",
+    "Mainline/Blizzard_PlayerSpellsFrame.xml",
+    "Blizzard_PlayerSpellsRegistration.lua",
+    "Localization.lua",
+];
+
+fn player_spells_toc_files() -> &'static [&'static str] {
+    if toc_layout::forever() {
+        FOREVER_PLAYER_SPELLS_TOC_FILES
+    } else if toc_layout::unified_toc_tree() {
+        PTR_PLAYER_SPELLS_TOC_FILES
+    } else {
+        PLAYER_SPELLS_TOC_FILES
+    }
+}
+
+// The pinned Forever TOC resolves `[Family]`/`[Game]` to Camelot, so its
+// overrides are the Camelot ones, and it lists both the Mainline and Camelot
+// PlayerSpellsFrame Lua.
+const FOREVER_PLAYER_SPELLS_TOC_FILES: &[&str] = &[
+    "Blizzard_PlayerSpells_Bootstrap.lua",
+    "Camelot/ClassSpecializations/Blizzard_ClassSpecializationsFrame.xml",
+    "Camelot/ClassTalents/Blizzard_ClassTalentUtil.lua",
+    "ClassTalents/Blizzard_ClassTalentUtil.lua",
+    "ClassTalents/Blizzard_ClassTalentLoadoutDialogTemplates.xml",
+    "ClassTalents/Blizzard_ClassTalentImportExport.lua",
+    "ClassTalents/Blizzard_ClassTalentLoadoutImportDialog.xml",
+    "ClassTalents/Blizzard_ClassTalentLoadoutEditDialog.xml",
+    "ClassTalents/Blizzard_ClassTalentLoadoutCreateDialog.xml",
+    "ClassTalents/Blizzard_ClassTalentButtonTemplates.xml",
+    "ClassTalents/Blizzard_ClassTalentEdgeTemplates.lua",
+    "ClassTalents/Blizzard_ClassTalentEdgeTemplates.xml",
+    "ClassTalents/Blizzard_HeroTalentsSelectionDialog.lua",
+    "ClassTalents/Blizzard_HeroTalentsSelectionDialog.xml",
+    "ClassTalents/Blizzard_HeroTalentsContainer.lua",
+    "ClassTalents/Blizzard_HeroTalentsContainer.xml",
+    "ClassTalents/Blizzard_ClassTalentsFrame.lua",
+    "Camelot/ClassTalents/Blizzard_ClassTalentsFrame.lua",
+    "Camelot/ClassTalents/Blizzard_ClassTalentsFrame.xml",
+    "PvPTalents/Blizzard_PvPTalentListTemplates.xml",
+    "PvPTalents/Blizzard_PvPTalentSlotTemplates.xml",
+    "PvPTalents/Blizzard_WarmodeButtonTemplate.xml",
+    "Camelot/SpellBook/Blizzard_SpellBookTemplates.xml",
+    "SpellBook/Blizzard_SpellBookTemplates.xml",
+    "SpellBook/Blizzard_SpellBookItem.xml",
+    "SpellBook/Blizzard_SpellBookSearch.lua",
+    "SpellBook/Blizzard_SpellBookFrame.xml",
+    "SpellBook/Blizzard_SpellBookCategory.lua",
+    "SpellBook/Blizzard_SpellBookFrameTutorials.lua",
+    "SpellBook/Blizzard_SpellBookFrame.lua",
+    "Camelot/SpellBook/Blizzard_SpellBookFrame.lua",
+    "Blizzard_PlayerSpellsFrame.lua",
+    "Camelot/Blizzard_PlayerSpellsFrame.lua",
+    "Camelot/Blizzard_PlayerSpellsFrame.xml",
     "Blizzard_PlayerSpellsRegistration.lua",
     "Localization.lua",
 ];
@@ -259,7 +355,7 @@ fn mainline_spellbook_keybind_opens_and_closes_without_runtime_errors() {
 }
 
 // Literal cached inputs absent from Wrath manifest1-382/cache; behavior cases stay enabled.
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn blizzard_player_spells_find_toc_resolves_bare_variant() {
     let resolved = find_toc_file(&player_spells_dir()).expect("Blizzard_PlayerSpells TOC resolves");
@@ -282,7 +378,7 @@ fn blizzard_player_spells_find_toc_resolves_bare_variant() {
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn blizzard_player_spells_toc_declares_load_on_demand_with_three_dependencies() {
     let toc = TocFile::from_file(&player_spells_toc()).expect("Blizzard_PlayerSpells TOC parses");
@@ -345,7 +441,7 @@ fn blizzard_player_spells_toc_declares_load_on_demand_with_three_dependencies() 
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn blizzard_player_spells_toc_declares_metadata_in_raw_bytes() {
     let raw = std::fs::read_to_string(player_spells_toc())
@@ -402,7 +498,7 @@ fn blizzard_player_spells_toc_declares_metadata_in_raw_bytes() {
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn blizzard_player_spells_toc_lists_bootstrap_then_twenty_six_files_in_canonical_order() {
     let toc = TocFile::from_file(&player_spells_toc()).expect("Blizzard_PlayerSpells TOC parses");
@@ -412,10 +508,13 @@ fn blizzard_player_spells_toc_lists_bootstrap_then_twenty_six_files_in_canonical
         .map(|p| p.to_string_lossy().into_owned())
         .collect();
     assert_eq!(
-        listed, PLAYER_SPELLS_TOC_FILES,
-        "Retail 12.1.0.69497 lists the PlayerSpells bootstrap first, then twenty-six source \
-         files across ClassSpecializations, ClassTalents, PvPTalents, SpellBook, and the \
-         root-level frame, registration, and localization entries"
+        listed,
+        player_spells_toc_files(),
+        "The TOC lists the PlayerSpells bootstrap first, then its source files across \
+         ClassSpecializations, ClassTalents, PvPTalents, SpellBook, and the root-level frame, \
+         registration, and localization entries. The unified PTR TOC lists the Mainline \
+         overrides explicitly, adds the SpellBook Category/Tutorials/Frame Lua files, and \
+         drops the Retail ClassTalentSearch entry"
     );
 }
 }
@@ -884,4 +983,19 @@ fn blizzard_player_spells_loads_without_unrelated_lua_errors(env: &WowLuaEnv) {
 fn blizzard_player_spells_loads_without_unrelated_lua_errors() {
     let env = load_full_game_ui_with_player_spells();
     blizzard_player_spells_loads_without_unrelated_lua_errors::run(&env);
+}
+
+// The Mists/Era/Anniversary caches ship 218 addons each and Wrath ships 23;
+// none contains Blizzard_PlayerSpells, so the pinned TOC facts above describe
+// no file the classic loaders can read.
+classic_cache_absent_toc_fixture! {
+#[test]
+fn blizzard_player_spells_toc_is_absent_from_classic_caches() {
+    let dir = player_spells_dir();
+    assert!(
+        !dir.is_dir(),
+        "classic profile caches must not contain Blizzard_PlayerSpells"
+    );
+    assert!(wow_ui_sim::loader::find_toc_file(&dir).is_none());
+}
 }

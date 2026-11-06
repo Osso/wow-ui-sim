@@ -33,6 +33,9 @@ use wow_ui_sim::screen::ScreenKind;
 use wow_ui_sim::startup::fire_startup_events_for_screen;
 use wow_ui_sim::toc::TocFile;
 
+#[path = "common/toc_layout.rs"]
+mod toc_layout;
+
 fn blizzard_ui_dir() -> PathBuf {
     wow_ui_sim::paths::default_blizzard_ui_addons_path()
         .expect("Blizzard UI cache should be available")
@@ -43,7 +46,7 @@ fn definitions_frame_dir() -> PathBuf {
 }
 
 fn definitions_frame_toc() -> PathBuf {
-    definitions_frame_dir().join("Blizzard_SettingsDefinitions_Frame.toc")
+    find_toc_file(&definitions_frame_dir()).expect("Blizzard_SettingsDefinitions_Frame TOC resolves")
 }
 
 const HARD_DEPS: &[&str] = &[
@@ -189,9 +192,13 @@ post_wrath_ui_fixture! {
 fn find_toc_file_resolves_bare_variant() {
     assert_eq!(
         find_toc_file(&definitions_frame_dir())
-            .expect("Blizzard_SettingsDefinitions_Frame TOC resolves"),
-        definitions_frame_toc(),
-        "Retail ships the bare Blizzard_SettingsDefinitions_Frame.toc."
+            .expect("Blizzard_SettingsDefinitions_Frame TOC resolves")
+            .file_name()
+            .and_then(|name| name.to_str())
+            .map(str::to_string),
+        Some(toc_layout::expected_toc_name("Blizzard_SettingsDefinitions_Frame")),
+        "find_toc_file resolves the active profile's SettingsDefinitions_Frame TOC: Retail \
+         ships the bare TOC and the classic caches the `_Classic` companion"
     );
 }
 }
@@ -241,10 +248,15 @@ fn toc_declares_eager_game_only_with_three_hard_deps() {
     );
 
     let deps = toc.dependencies();
+    let expected_deps: Vec<String> = if toc_layout::classic_cache() {
+        vec!["Blizzard_SettingsDefinitions_Shared".to_string()]
+    } else {
+        HARD_DEPS.iter().map(|s| s.to_string()).collect()
+    };
     assert_eq!(
         deps,
-        HARD_DEPS.iter().map(|s| s.to_string()).collect::<Vec<_>>(),
-        "TOC must declare exactly 3 hard `## Dependencies:` in this order: \
+        expected_deps,
+        "the pinned TOC declares exactly these hard `## Dependencies:` in this order: \
          Blizzard_SharedXML (UIPanelDialogTemplate / FrameUtil / dropdown \
          controls), Blizzard_SettingsDefinitions_Shared (Setting / Category / \
          Layout primitives shared across category definitions), Blizzard_Colors \
@@ -269,9 +281,14 @@ fn toc_raw_bytes_pin_metadata_with_default_state_enabled() {
 
     assert!(raw.contains("## Title: Blizzard_SettingsDefinitions_Frame"));
     assert!(raw.contains("## AllowLoad: Game"));
-    assert!(raw.contains(
-        "## Dependencies: Blizzard_SettingsDefinitions_Shared, Blizzard_Colors, Blizzard_GameMenuEsc"
-    ));
+    if toc_layout::classic_cache() {
+        assert!(raw.contains("## Dependencies: Blizzard_SettingsDefinitions_Shared"));
+        assert!(raw.contains("## AllowLoadGameType: classic"));
+    } else {
+        assert!(raw.contains(
+            "## Dependencies: Blizzard_SettingsDefinitions_Shared, Blizzard_Colors, Blizzard_GameMenuEsc"
+        ));
+    }
     assert!(
         !raw.contains("## SavedVariables"),
         "TOC must NOT declare SavedVariables — categories register their own \
@@ -292,18 +309,69 @@ fn toc_body_lists_nine_mainline_overrides_then_current_main_files() {
         .map(|p| p.to_string_lossy().into_owned())
         .collect();
 
+    if toc_layout::classic_cache() {
+        let expected: &[&str] = &[
+            "Classic/GameplaySettingsGroup.lua",
+            "Classic/InterfaceOverrides.lua",
+            "Classic/ControlsOverrides.lua",
+            "Classic/CombatOverrides.lua",
+            "Classic/SocialOverrides.lua",
+            "Classic/ColorblindOverrides.lua",
+            "Classic/KeybindingsOverrides.lua",
+            "Classic/AccessibilityOverrides.lua",
+            "Classic/NameplatesOverrides.lua",
+            "Controls.xml",
+            "Interface.lua",
+            "Interface.xml",
+            "Combat.lua",
+            "ActionBars.lua",
+            "Social.lua",
+            "Keybindings.xml",
+            "Accessibility.lua",
+            "Classic/Colorblind.xml",
+            "CombatAudioAlertUtil.lua",
+            "AudioAssist.lua",
+            "AudioAssist.xml",
+            "Subtitles.xml",
+            "Nameplates.lua",
+            "Nameplates.xml",
+        ];
+        assert_eq!(
+            listed,
+            expected.iter().map(|s| s.to_string()).collect::<Vec<_>>(),
+            "the pinned classic TOC lists the nine Classic overrides then the current main files"
+        );
+        return;
+    }
+
     let first_nine: Vec<String> = listed.iter().take(9).cloned().collect();
-    let expected_overrides = [
-        "Mainline/GameplaySettingsGroup.lua",
-        "Mainline/InterfaceOverrides.lua",
-        "Mainline/ControlsOverrides.lua",
-        "Mainline/CombatOverrides.lua",
-        "Mainline/SocialOverrides.lua",
-        "Mainline/ColorblindOverrides.lua",
-        "Mainline/KeybindingsOverrides.lua",
-        "Mainline/AccessibilityOverrides.lua",
-        "Mainline/NameplatesOverrides.lua",
-    ];
+    // The pinned Forever TOC excludes ControlsOverrides on camelot and lists the
+    // Camelot Nameplates overrides after the Mainline block.
+    let expected_overrides: &[&str] = if toc_layout::forever() {
+        &[
+            "Mainline/GameplaySettingsGroup.lua",
+            "Mainline/InterfaceOverrides.lua",
+            "Mainline/CombatOverrides.lua",
+            "Mainline/SocialOverrides.lua",
+            "Mainline/ColorblindOverrides.lua",
+            "Mainline/KeybindingsOverrides.lua",
+            "Mainline/AccessibilityOverrides.lua",
+            "Mainline/NameplatesOverrides.lua",
+            "Camelot/NameplatesOverrides.lua",
+        ]
+    } else {
+        &[
+            "Mainline/GameplaySettingsGroup.lua",
+            "Mainline/InterfaceOverrides.lua",
+            "Mainline/ControlsOverrides.lua",
+            "Mainline/CombatOverrides.lua",
+            "Mainline/SocialOverrides.lua",
+            "Mainline/ColorblindOverrides.lua",
+            "Mainline/KeybindingsOverrides.lua",
+            "Mainline/AccessibilityOverrides.lua",
+            "Mainline/NameplatesOverrides.lua",
+        ]
+    };
     assert_eq!(
         first_nine,
         expected_overrides
@@ -317,28 +385,54 @@ fn toc_body_lists_nine_mainline_overrides_then_current_main_files() {
          GameplaySettingsGroup.lua MUST run first because it sets \
          `CUSTOM_GAMEPLAY_SETTINGS_ORDER` (a top-level global table mapping \
          CONTROLS_LABEL/INTERFACE_LABEL/etc. → numeric position) that downstream \
-         Register() functions read at parse time to set their category position"
+         Register() functions read at parse time to set their category position. \
+         On Forever, ControlsOverrides is camelot-excluded and the Camelot \
+         Nameplates overrides follow the Mainline block"
     );
 
-    for required in [
-        "Controls.xml",
-        "Interface.lua",
-        "Interface.xml",
-        "Combat.lua",
-        "ActionBars.lua",
-        "Social.lua",
-        "PingSystem.xml",
-        "Keybindings.xml",
-        "Accessibility.lua",
-        "Accessibility.xml",
-        "Mainline/Colorblind.xml",
-        "CombatAudioAlertConstants.lua",
-        "CombatAudioAlertUtil.lua",
-        "Mounts.lua",
-        "AdvancedOptions.lua",
-        "Nameplates.lua",
-        "Nameplates.xml",
-    ] {
+    let required_files: &[&str] = if toc_layout::forever() {
+        // Mounts.lua is `[ExcludeLoadGameType camelot classic]` in the Forever TOC.
+        &[
+            "Controls.xml",
+            "Interface.lua",
+            "Interface.xml",
+            "Combat.lua",
+            "ActionBars.lua",
+            "Social.lua",
+            "PingSystem.xml",
+            "Keybindings.xml",
+            "Accessibility.lua",
+            "Accessibility.xml",
+            "Mainline/Colorblind.xml",
+            "CombatAudioAlertConstants.lua",
+            "CombatAudioAlertUtil.lua",
+            "AdvancedOptions.lua",
+            "Nameplates.lua",
+            "Nameplates.xml",
+        ]
+    } else {
+        &[
+            "Controls.xml",
+            "Interface.lua",
+            "Interface.xml",
+            "Combat.lua",
+            "ActionBars.lua",
+            "Social.lua",
+            "PingSystem.xml",
+            "Keybindings.xml",
+            "Accessibility.lua",
+            "Accessibility.xml",
+            "Mainline/Colorblind.xml",
+            "CombatAudioAlertConstants.lua",
+            "CombatAudioAlertUtil.lua",
+            "Mounts.lua",
+            "AdvancedOptions.lua",
+            "Nameplates.lua",
+            "Nameplates.xml",
+        ]
+    };
+
+    for required in required_files {
         assert!(
             listed.iter().any(|p| p == required),
             "TOC body must list {required:?}. Got: {listed:?}"

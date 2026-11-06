@@ -6,6 +6,9 @@ use wow_ui_sim::lua_api::WowLuaEnv;
 use wow_ui_sim::screen::ScreenKind;
 use wow_ui_sim::toc::TocFile;
 
+#[path = "common/toc_layout.rs"]
+mod toc_layout;
+
 fn blizzard_ui_dir() -> PathBuf {
     wow_ui_sim::paths::default_blizzard_ui_addons_path()
         .expect("Blizzard UI cache should be available")
@@ -256,11 +259,19 @@ post_wrath_ui_fixture! {
 fn toc_raw_bytes_pin_three_metadata_directives() {
     let raw = std::fs::read_to_string(static_popup_game_toc()).expect("TOC reads utf-8");
 
-    let expected_directives = [
-        "## Title: Blizzard_StaticPopup_Game",
-        "## Dependencies: Blizzard_StaticPopup, Blizzard_ItemButton, Blizzard_AutoComplete, Blizzard_MoneyFrame, Blizzard_AccessibilityTemplates, Blizzard_GameMenuEsc",
-        "## AllowLoad: game",
-    ];
+    let expected_directives: &[&str] = if toc_layout::classic_cache() {
+        &[
+            "## Title: Blizzard_StaticPopup_Game",
+            "## Dependencies: Blizzard_StaticPopup, Blizzard_ItemButton, Blizzard_AutoComplete, Blizzard_MoneyFrame, Blizzard_AccessibilityTemplates",
+            "## AllowLoad: game",
+        ]
+    } else {
+        &[
+            "## Title: Blizzard_StaticPopup_Game",
+            "## Dependencies: Blizzard_StaticPopup, Blizzard_ItemButton, Blizzard_AutoComplete, Blizzard_MoneyFrame, Blizzard_AccessibilityTemplates, Blizzard_GameMenuEsc",
+            "## AllowLoad: game",
+        ]
+    };
 
     for directive in expected_directives {
         assert!(

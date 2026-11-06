@@ -7,6 +7,9 @@ use wow_ui_sim::screen::ScreenKind;
 use wow_ui_sim::startup::fire_startup_events_for_screen;
 use wow_ui_sim::toc::TocFile;
 
+#[path = "common/toc_layout.rs"]
+mod toc_layout;
+
 fn blizzard_ui_dir() -> PathBuf {
     wow_ui_sim::paths::default_blizzard_ui_addons_path()
         .expect("Blizzard UI cache should be available")
@@ -44,6 +47,81 @@ const REQUIRED_DEPS: &[&str] = &[
     "Blizzard_HelpPlate",
     "Blizzard_GameMenuEsc",
 ];
+
+// The unified PTR TOC also depends on Blizzard_ProfessionsBook.
+const PTR_REQUIRED_DEPS: &[&str] = &[
+    "Blizzard_ProfessionsTemplates",
+    "Blizzard_SharedTalentUI",
+    "Blizzard_Colors",
+    "Blizzard_HelpPlate",
+    "Blizzard_ProfessionsBook",
+    "Blizzard_GameMenuEsc",
+];
+
+fn required_deps() -> &'static [&'static str] {
+    if toc_layout::unified_toc_tree() {
+        PTR_REQUIRED_DEPS
+    } else {
+        REQUIRED_DEPS
+    }
+}
+
+// The unified PTR TOC lists the Lua siblings of the Crafting, Frame, and
+// OutputLog XML files and the shared FrameBase XML explicitly.
+const PTR_PROFESSIONS_TOC_FILES: &[&str] = &[
+    "Blizzard_Professions_Bootstrap.lua",
+    "Blizzard_ProfessionsGuildMemberList.xml",
+    "Blizzard_ProfessionsCraftingOutputLog.xml",
+    "Blizzard_ProfessionsRecipeLevel.xml",
+    "Blizzard_ProfessionsCrafting.lua",
+    "Blizzard_ProfessionsCrafting.xml",
+    "Blizzard_ProfessionsInspectRecipe.xml",
+    "Blizzard_ProfessionsSpecializationsTemplates.xml",
+    "Blizzard_ProfessionsSpecializations.xml",
+    "Blizzard_ProfessionsCrafterOrderView.xml",
+    "Blizzard_ProfessionsCrafterOrderPage.xml",
+    "Blizzard_ProfessionsFrame.lua",
+    "Blizzard_ProfessionsCraftingOutputLog.lua",
+    "Blizzard_ProfessionsFrameBase.xml",
+    "Mainline/Blizzard_ProfessionsFrame.xml",
+    "Blizzard_ProfessionsRegistration.lua",
+    "Localization.lua",
+];
+
+// The pinned Forever TOC resolves `[Game]` to Camelot, so it lists the Camelot
+// Crafting/Frame/OutputLog overrides and excludes the Mainline frame XML.
+const FOREVER_PROFESSIONS_TOC_FILES: &[&str] = &[
+    "Blizzard_Professions_Bootstrap.lua",
+    "Blizzard_ProfessionsGuildMemberList.xml",
+    "Blizzard_ProfessionsCraftingOutputLog.xml",
+    "Blizzard_ProfessionsRecipeLevel.xml",
+    "Blizzard_ProfessionsCrafting.lua",
+    "Camelot/Blizzard_ProfessionsCrafting.lua",
+    "Blizzard_ProfessionsCrafting.xml",
+    "Blizzard_ProfessionsInspectRecipe.xml",
+    "Blizzard_ProfessionsSpecializationsTemplates.xml",
+    "Blizzard_ProfessionsSpecializations.xml",
+    "Blizzard_ProfessionsCrafterOrderView.xml",
+    "Blizzard_ProfessionsCrafterOrderPage.xml",
+    "Blizzard_ProfessionsFrame.lua",
+    "Camelot/Blizzard_ProfessionsFrame.lua",
+    "Blizzard_ProfessionsCraftingOutputLog.lua",
+    "Camelot/Blizzard_ProfessionsCraftingOutputLog.lua",
+    "Blizzard_ProfessionsFrameBase.xml",
+    "Camelot/Blizzard_ProfessionsFrame.xml",
+    "Blizzard_ProfessionsRegistration.lua",
+    "Localization.lua",
+];
+
+fn professions_toc_files() -> &'static [&'static str] {
+    if toc_layout::forever() {
+        FOREVER_PROFESSIONS_TOC_FILES
+    } else if toc_layout::unified_toc_tree() {
+        PTR_PROFESSIONS_TOC_FILES
+    } else {
+        PROFESSIONS_TOC_FILES
+    }
+}
 
 const PUBLIC_MIXIN_GLOBALS: &[&str] = &[
     "ProfessionsMixin",
@@ -91,7 +169,7 @@ fn load_full_game_ui() -> WowLuaEnv {
 }
 
 // Literal cached inputs absent from Wrath manifest1-382/cache; behavior cases stay enabled.
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn blizzard_professions_find_toc_resolves_bare_variant() {
     let resolved = find_toc_file(&professions_dir()).expect("Blizzard_Professions TOC resolves");
@@ -113,7 +191,7 @@ fn blizzard_professions_find_toc_resolves_bare_variant() {
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn blizzard_professions_toc_declares_lod_mainline_game_only_addon() {
     let toc = TocFile::from_file(&professions_toc()).expect("Blizzard_Professions TOC parses");
@@ -161,7 +239,7 @@ fn blizzard_professions_toc_declares_lod_mainline_game_only_addon() {
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn blizzard_professions_toc_declares_five_dependencies() {
     let toc = TocFile::from_file(&professions_toc()).expect("Blizzard_Professions TOC parses");
@@ -169,9 +247,11 @@ fn blizzard_professions_toc_declares_five_dependencies() {
     let dependencies = toc.dependencies();
     let deps: Vec<&str> = dependencies.iter().map(|s| s.as_str()).collect();
     assert_eq!(
-        deps, REQUIRED_DEPS,
-        "Retail 12.1.0.69497 declares ProfessionsTemplates, SharedTalentUI, Colors, \
-         HelpPlate, and GameMenuEsc in published order"
+        deps,
+        required_deps(),
+        "TOC declares ProfessionsTemplates, SharedTalentUI, Colors, \
+         HelpPlate, and GameMenuEsc in published order; the unified PTR \
+         TOC also declares Blizzard_ProfessionsBook"
     );
 
     assert!(
@@ -181,7 +261,7 @@ fn blizzard_professions_toc_declares_five_dependencies() {
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn blizzard_professions_toc_declares_two_per_character_saved_vars() {
     let toc = TocFile::from_file(&professions_toc()).expect("Blizzard_Professions TOC parses");
@@ -211,7 +291,7 @@ fn blizzard_professions_toc_declares_two_per_character_saved_vars() {
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn blizzard_professions_toc_declares_metadata_in_raw_bytes() {
     let raw =
@@ -240,12 +320,16 @@ fn blizzard_professions_toc_declares_metadata_in_raw_bytes() {
         raw.contains("## AllowLoadGameType: mainline"),
         "TOC must declare `## AllowLoadGameType: mainline` — retail-only gate"
     );
+    let expected_deps_line: &str = if toc_layout::unified_toc_tree() {
+        "## Dependencies: Blizzard_ProfessionsTemplates, Blizzard_SharedTalentUI, \
+         Blizzard_Colors, Blizzard_HelpPlate, Blizzard_ProfessionsBook, Blizzard_GameMenuEsc"
+    } else {
+        "## Dependencies: Blizzard_ProfessionsTemplates, Blizzard_SharedTalentUI, \
+         Blizzard_Colors, Blizzard_HelpPlate, Blizzard_GameMenuEsc"
+    };
     assert!(
-        raw.contains(
-            "## Dependencies: Blizzard_ProfessionsTemplates, Blizzard_SharedTalentUI, \
-             Blizzard_Colors, Blizzard_HelpPlate, Blizzard_GameMenuEsc"
-        ),
-        "Retail 12.1.0.69497 declares all five dependencies on one comma-separated line"
+        raw.contains(expected_deps_line),
+        "TOC must declare all dependencies on one comma-separated line: {expected_deps_line}"
     );
     assert!(
         raw.contains(
@@ -285,7 +369,7 @@ fn blizzard_professions_toc_declares_metadata_in_raw_bytes() {
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn blizzard_professions_toc_lists_bootstrap_then_thirteen_files_in_canonical_load_order() {
     let toc = TocFile::from_file(&professions_toc()).expect("Blizzard_Professions TOC parses");
@@ -295,10 +379,12 @@ fn blizzard_professions_toc_lists_bootstrap_then_thirteen_files_in_canonical_loa
         .map(|p| p.to_string_lossy().into_owned())
         .collect();
     assert_eq!(
-        listed, PROFESSIONS_TOC_FILES,
-        "Retail 12.1.0.69497 lists its bootstrap first, then eleven XML entries, the \
-         registration Lua, and Localization. The XML entries continue to load paired Lua \
-         files through Script directives"
+        listed,
+        professions_toc_files(),
+        "The TOC lists its bootstrap first, then the XML entries, the \
+         registration Lua, and Localization. The unified PTR TOC lists the \
+         Lua siblings of the Crafting, Frame, and OutputLog XML files and the \
+         shared FrameBase XML explicitly"
     );
 }
 }
@@ -494,5 +580,20 @@ fn blizzard_professions_registers_two_ui_panels_with_uiparent(env: &WowLuaEnv) {
          both frames into the global UI-panel manager so /script ToggleProfessionsBook \
          + UIParent push/pop logic can reach them"
     );
+}
+}
+
+// The Mists/Era/Anniversary caches ship 218 addons each and Wrath ships 23;
+// none contains Blizzard_Professions, so the pinned TOC facts above describe no file the
+// classic loaders can read.
+classic_cache_absent_toc_fixture! {
+#[test]
+fn blizzard_professions_toc_is_absent_from_classic_caches() {
+    let dir = professions_dir();
+    assert!(
+        !dir.is_dir(),
+        "classic profile caches must not contain Blizzard_Professions"
+    );
+    assert!(wow_ui_sim::loader::find_toc_file(&dir).is_none());
 }
 }

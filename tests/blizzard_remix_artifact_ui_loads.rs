@@ -5,6 +5,9 @@ use wow_ui_sim::lua_api::WowLuaEnv;
 use wow_ui_sim::screen::ScreenKind;
 use wow_ui_sim::toc::TocFile;
 
+#[path = "common/toc_layout.rs"]
+mod toc_layout;
+
 fn blizzard_ui_dir() -> PathBuf {
     wow_ui_sim::paths::default_blizzard_ui_addons_path()
         .expect("Blizzard UI cache should be available")
@@ -56,7 +59,7 @@ fn load_remix_artifact_ui_with_dependency(env: &WowLuaEnv) {
 }
 
 // Literal cached inputs absent from Wrath manifest1-382/cache; behavior cases stay enabled.
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn find_toc_file_resolves_bare_toc() {
     let resolved =
@@ -72,7 +75,7 @@ fn find_toc_file_resolves_bare_toc() {
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn toc_declares_load_on_demand_standard_game_only_with_two_hard_deps() {
     let toc = TocFile::from_file(&remix_artifact_toc())
@@ -84,12 +87,13 @@ fn toc_declares_load_on_demand_standard_game_only_with_two_hard_deps() {
          CharacterMicroButton or the equipped-artifact slot, never auto-loaded with the rest of \
          the game UI"
     );
-    assert!(
-        !toc.is_game_type_restricted(),
-        "Blizzard_RemixArtifactUI declares `## AllowLoadGameType: standard` — `standard` matches \
-         the cross-flavor allowlist alongside `mainline` at src/toc.rs:294-302, so \
-         is_game_type_restricted returns FALSE. The C_RemixArtifactUI and C_Traits backends are \
-         retail-only but the directive is a server-side gate, not a client-side filter"
+    assert_eq!(
+        toc.is_game_type_restricted(),
+        !toc_layout::admits_game_type("standard"),
+        "Blizzard_RemixArtifactUI declares `## AllowLoadGameType: standard` — `standard` \
+         matches the Retail/PTR allow-list alongside `mainline`, so is_game_type_restricted \
+         returns FALSE there. The pinned Forever allow-list is `camelot, mainline`, so the \
+         same directive restricts the addon on that profile"
     );
     assert_eq!(
         toc.metadata.get("DefaultState").map(String::as_str),
@@ -124,7 +128,7 @@ fn toc_declares_load_on_demand_standard_game_only_with_two_hard_deps() {
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn toc_lists_bootstrap_and_two_files_in_root_directory() {
     let toc = TocFile::from_file(&remix_artifact_toc())
@@ -496,5 +500,20 @@ fn xml_uses_method_attribute_dispatch() {
          method= form, this resolves through `_G` instead of the mixin table because \
          GameTooltip_Hide is a free FrameXML helper, not a mixin method"
     );
+}
+}
+
+// The Mists/Era/Anniversary caches ship 218 addons each and Wrath ships 23;
+// none contains Blizzard_RemixArtifactUI, so the pinned TOC facts above describe no file the
+// classic loaders can read.
+classic_cache_absent_toc_fixture! {
+#[test]
+fn blizzard_remixartifactui_toc_is_absent_from_classic_caches() {
+    let dir = remix_artifact_dir();
+    assert!(
+        !dir.is_dir(),
+        "classic profile caches must not contain Blizzard_RemixArtifactUI"
+    );
+    assert!(wow_ui_sim::loader::find_toc_file(&dir).is_none());
 }
 }

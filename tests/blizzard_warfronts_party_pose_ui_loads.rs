@@ -42,7 +42,7 @@ fn load_warfronts_party_pose_ui_with_dependency(env: &WowLuaEnv) {
 }
 
 // Literal cached inputs absent from Wrath manifest1-382/cache; behavior cases stay enabled.
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn find_toc_file_resolves_bare_variant() {
     let resolved = find_toc_file(&warfronts_party_pose_dir())
@@ -56,7 +56,7 @@ fn find_toc_file_resolves_bare_variant() {
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn toc_declares_lod_with_one_required_dep() {
     let toc = TocFile::from_file(&warfronts_party_pose_toc())
@@ -98,7 +98,7 @@ fn toc_declares_lod_with_one_required_dep() {
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn toc_omits_allow_load_directives() {
     let toc = TocFile::from_file(&warfronts_party_pose_toc())
@@ -148,7 +148,7 @@ fn toc_omits_allow_load_directives() {
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn toc_lists_bootstrap_lua_then_xml_in_order() {
     let toc = TocFile::from_file(&warfronts_party_pose_toc())
@@ -171,7 +171,7 @@ fn toc_lists_bootstrap_lua_then_xml_in_order() {
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn toc_raw_bytes_pin_required_directives() {
     let raw = std::fs::read_to_string(warfronts_party_pose_toc())
@@ -462,5 +462,20 @@ fn leave_button_keeps_minimum_width_keyvalue(env: &WowLuaEnv) {
          this floor when ResizeToFit shrinks the button to fit the WARFRONTS_LEAVE locale \
          string so the button never collapses below 164px"
     );
+}
+}
+
+// The Mists/Era/Anniversary caches ship 218 addons each and Wrath ships 23;
+// none contains Blizzard_WarfrontsPartyPoseUI, so the pinned TOC facts above describe no file the
+// classic loaders can read.
+classic_cache_absent_toc_fixture! {
+#[test]
+fn blizzard_warfrontspartyposeui_toc_is_absent_from_classic_caches() {
+    let dir = warfronts_party_pose_dir();
+    assert!(
+        !dir.is_dir(),
+        "classic profile caches must not contain Blizzard_WarfrontsPartyPoseUI"
+    );
+    assert!(wow_ui_sim::loader::find_toc_file(&dir).is_none());
 }
 }

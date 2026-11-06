@@ -7,6 +7,9 @@ use wow_ui_sim::screen::ScreenKind;
 use wow_ui_sim::startup::fire_startup_events_for_screen;
 use wow_ui_sim::toc::TocFile;
 
+#[path = "common/toc_layout.rs"]
+mod toc_layout;
+
 fn blizzard_ui_dir() -> PathBuf {
     wow_ui_sim::paths::default_blizzard_ui_addons_path()
         .expect("Blizzard UI cache should be available")
@@ -17,7 +20,7 @@ fn unit_popup_dir() -> PathBuf {
 }
 
 fn unit_popup_toc() -> PathBuf {
-    unit_popup_dir().join("Blizzard_UnitPopup.toc")
+    wow_ui_sim::loader::find_toc_file(&unit_popup_dir()).expect("Blizzard_UnitPopup TOC resolves")
 }
 
 const GLUE_SCREENS: &[ScreenKind] = &[
@@ -44,6 +47,42 @@ const GAME_PLACEHOLDER_BODY_FILES: &[&str] = &[
     "[Game]\\UnitPopupButtons.lua [AllowLoadGameType standard, plunderstorm, wowhack, vanilla, tbc, wrath]",
     "[Game]\\UnitPopupMenus.lua [AllowLoadGameType standard, plunderstorm, wowhack, vanilla, tbc, wrath]",
 ];
+
+// The unified PTR TOC splits the Standard/Camelot buttons and menus into
+// separate family and game entries.
+const PTR_GAME_PLACEHOLDER_BODY_FILES: &[&str] = &[
+    "[Family]\\UnitPopupButtons.lua [AllowLoadGameType standard, camelot]",
+    "[Game]\\UnitPopupButtons.lua [AllowLoadGameType plunderstorm, wowhack, vanilla, tbc, wrath]",
+    "[Family]\\UnitPopupMenus.lua [AllowLoadGameType standard, camelot]",
+    "[Game]\\UnitPopupMenus.lua [AllowLoadGameType plunderstorm, wowhack, vanilla, tbc, wrath, camelot]",
+];
+
+const CLASSIC_REPRESENTATIVE_BODY_FILES: &[&str] = &[
+    "UnitPopupSlider.lua",
+    "UnitPopupSlider.xml",
+    "UnitPopupCustomControls.lua",
+    "UnitPopupCustomControls.xml",
+    "Classic\\UnitPopupUtils.lua",
+    "Classic\\UnitPopupButtons_Shared.lua",
+];
+
+fn representative_body_files() -> &'static [&'static str] {
+    if toc_layout::classic_cache() {
+        CLASSIC_REPRESENTATIVE_BODY_FILES
+    } else {
+        REPRESENTATIVE_BODY_FILES
+    }
+}
+
+fn game_placeholder_body_files() -> &'static [&'static str] {
+    if toc_layout::classic_cache() {
+        &[]
+    } else if toc_layout::unified_toc_tree() {
+        PTR_GAME_PLACEHOLDER_BODY_FILES
+    } else {
+        GAME_PLACEHOLDER_BODY_FILES
+    }
+}
 
 const GAME_PLACEHOLDER_RESOLVED_RELATIVES: &[&str] = &[
     "Standard/UnitPopupButtons.lua",
@@ -135,10 +174,10 @@ post_wrath_ui_fixture! {
 fn find_toc_file_resolves_mainline_variant() {
     let resolved = find_toc_file(&unit_popup_dir()).expect("UnitPopup TOC resolves");
     assert_eq!(
-        resolved,
-        unit_popup_toc(),
-        "Blizzard_UnitPopup ships one TOC in 12.1.5; per-line \
-         `[AllowLoadGameType ...]` annotations select the flavor files"
+        resolved.file_name().and_then(|name| name.to_str()),
+        Some(toc_layout::expected_toc_name("Blizzard_UnitPopup").as_str()),
+        "find_toc_file resolves the active profile's UnitPopup TOC: Retail ships the bare \
+         TOC, Mists `_Mists.toc` and Era/Anniversary `_Vanilla.toc`"
     );
 }
 }
@@ -158,6 +197,23 @@ fn toc_is_eager_with_one_dependency() {
     );
 
     let deps = toc.dependencies();
+    if toc_layout::classic_cache() {
+        assert_eq!(
+            deps,
+            vec![
+                "Blizzard_UnitPopupShared".to_string(),
+                "Blizzard_VoiceToggleButton".to_string()
+            ],
+            "the classic TOC adds Blizzard_VoiceToggleButton as a second hard dependency"
+        );
+        assert!(toc.optional_deps().is_empty());
+        assert!(toc.load_with().is_empty());
+        assert!(toc.saved_variables().is_empty());
+        assert!(toc.saved_variables_per_character().is_empty());
+        assert!(!toc.is_load_first());
+        assert!(toc.default_enabled());
+        return;
+    }
     assert_eq!(
         deps, TOC_DEPENDENCIES,
         "TOC must declare exactly Blizzard_UnitPopupShared as a hard \
@@ -219,17 +275,27 @@ post_wrath_ui_fixture! {
 fn toc_raw_bytes_pin_directives_and_representative_body_files() {
     let raw = std::fs::read_to_string(unit_popup_toc()).expect("TOC reads utf-8");
 
-    let expected_directives = [
-        "## Title: Blizzard_UnitPopup",
-        "## Dep: Blizzard_UnitPopupShared",
-        "## Dep: Blizzard_SocialUIShared [AllowLoadGameType mainline]",
-    ];
+    let expected_directives: &[&str] = if toc_layout::classic_cache() {
+        &[
+            "## Title: Blizzard_UnitPopup",
+            "## Author: Blizzard Entertainment",
+            "## DefaultState: enabled",
+            "## Dependencies: Blizzard_UnitPopupShared, Blizzard_VoiceToggleButton",
+            "## AllowLoad: game",
+        ]
+    } else {
+        &[
+            "## Title: Blizzard_UnitPopup",
+            "## Dep: Blizzard_UnitPopupShared",
+            "## Dep: Blizzard_SocialUIShared [AllowLoadGameType mainline]",
+        ]
+    };
 
     for line in expected_directives {
         assert!(raw.contains(line), "Raw TOC must pin directive `{line}`");
     }
 
-    for path in REPRESENTATIVE_BODY_FILES {
+    for path in representative_body_files() {
         assert!(
             raw.contains(path),
             "Raw TOC must pin body path `{path}`. Body order layers \
@@ -243,17 +309,16 @@ fn toc_raw_bytes_pin_directives_and_representative_body_files() {
         );
     }
 
-    for path in GAME_PLACEHOLDER_BODY_FILES {
+    for path in game_placeholder_body_files() {
         assert!(
             raw.contains(path),
-            "Raw TOC must pin `[Game]` body line `{path}`. The \
+            "Raw TOC must pin the `[Game]`/`[Family]` body line `{path}`. The \
              `[Game]` placeholder is substituted at toc.rs:146 to the \
              build's game directory (`Standard` for the Mainline \
-             build). The inline `[AllowLoadGameType standard, \
-             plunderstorm, wowhack]` annotation is then evaluated at \
+             build). The inline `[AllowLoadGameType ...]` annotation is then evaluated at \
              toc.rs:141 via is_allowed_game_type — `standard` is in \
              the allowed-set at toc.rs:56 ({{mainline, standard}}), so \
-             the line passes the filter and the resolved \
+             the allowed line passes the filter and the resolved \
              Standard\\UnitPopupButtons.lua / UnitPopupMenus.lua get \
              loaded"
         );
@@ -264,13 +329,17 @@ fn toc_raw_bytes_pin_directives_and_representative_body_files() {
     assert!(!raw.contains("## LoadWith"));
     assert!(!raw.contains("## OptionalDeps"));
     assert!(!raw.contains("## SavedVariables"));
-    assert!(
-        !raw.contains("## AllowLoadGameType"),
-        "Mainline TOC must not carry an AllowLoadGameType directive — \
-         the absence is what makes is_game_type_restricted() return \
-         false; presence with anything other than mainline/standard \
-         would skip the TOC at discovery"
-    );
+    if toc_layout::classic_cache() {
+        assert!(raw.contains("## AllowLoadGameType:"));
+    } else {
+        assert!(
+            !raw.contains("## AllowLoadGameType"),
+            "Mainline TOC must not carry an AllowLoadGameType directive — \
+             the absence is what makes is_game_type_restricted() return \
+             false; presence with anything other than mainline/standard \
+             would skip the TOC at discovery"
+        );
+    }
 }
 }
 

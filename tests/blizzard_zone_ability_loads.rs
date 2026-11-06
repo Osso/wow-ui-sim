@@ -6,6 +6,9 @@ use wow_ui_sim::screen::ScreenKind;
 use wow_ui_sim::startup::fire_startup_events_for_screen;
 use wow_ui_sim::toc::TocFile;
 
+#[path = "common/toc_layout.rs"]
+mod toc_layout;
+
 fn blizzard_ui_dir() -> PathBuf {
     wow_ui_sim::paths::default_blizzard_ui_addons_path()
         .expect("Blizzard UI cache should be available")
@@ -16,7 +19,7 @@ fn zone_ability_dir() -> PathBuf {
 }
 
 fn zone_ability_toc() -> PathBuf {
-    zone_ability_dir().join("Blizzard_ZoneAbility_Mainline.toc")
+    find_toc_file(&zone_ability_dir()).expect("Blizzard_ZoneAbility TOC should resolve")
 }
 
 const REQUIRED_DEPS: &[&str] = &[
@@ -84,25 +87,23 @@ fn load_full_game_ui() -> WowLuaEnv {
 }
 
 // Literal cached inputs absent from Wrath manifest1-382/cache; behavior cases stay enabled.
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn find_toc_file_resolves_mainline_only_variant() {
     let resolved =
         find_toc_file(&zone_ability_dir()).expect("Blizzard_ZoneAbility TOC should resolve");
     assert_eq!(
-        resolved,
-        zone_ability_toc(),
-        "Blizzard_ZoneAbility ships exactly one mainline-flavored TOC \
-         (`Blizzard_ZoneAbility_Mainline.toc`) — NO bare `Blizzard_ZoneAbility.toc`, NO \
-         `_Mists.toc`, NO `_Classic.toc`. find_toc_file probes the `_Mainline.toc` variant FIRST \
-         and resolves on the first hit. The mainline-only TOC matches the AllowLoadGameType \
-         restriction: zone-ability is a Shadowlands+ covenant/dragonriding/timerunning concept \
-         that does not exist on Classic flavors"
+        resolved.file_name().and_then(|name| name.to_str()),
+        Some(toc_layout::expected_toc_name("Blizzard_ZoneAbility").as_str()),
+        "find_toc_file resolves the active profile's ZoneAbility TOC: the Retail cache ships \
+         exactly one `_Mainline.toc` variant, while the pinned PTR cache ships one unified TOC \
+         restricted to the mainline game type. ZoneAbility is a Shadowlands+ \
+         covenant/dragonriding/timerunning concept that does not exist on Classic flavors"
     );
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn toc_declares_eager_load_with_two_required_deps() {
     let toc =
@@ -144,7 +145,7 @@ fn toc_declares_eager_load_with_two_required_deps() {
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn toc_restricts_to_game_screen_and_mainline_gametype() {
     let toc =
@@ -180,7 +181,7 @@ fn toc_restricts_to_game_screen_and_mainline_gametype() {
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn toc_lists_lua_then_xml_in_body() {
     let toc =
@@ -206,22 +207,37 @@ fn toc_lists_lua_then_xml_in_body() {
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn toc_raw_bytes_pin_directives() {
     let raw =
         std::fs::read_to_string(zone_ability_toc()).expect("Blizzard_ZoneAbility TOC should read");
 
-    for directive in [
-        "## Title: Blizzard_ZoneAbility",
-        "## Author: Blizzard Entertainment",
-        "## DefaultState: enabled",
-        "## Dependencies: Blizzard_UIPanels_Game, Blizzard_ActionBarController, Blizzard_ActionBar, Blizzard_PingUI",
-        "## AllowLoad: game",
-        "## AllowLoadGameType: mainline",
-        "ZoneAbility.lua",
-        "ZoneAbility.xml",
-    ] {
+    let expected_directives: &[&str] = if toc_layout::unified_toc_tree() {
+        &[
+            "## Title: Blizzard_ZoneAbility",
+            "## Dep: Blizzard_UIPanels_Game",
+            "## Dep: Blizzard_ActionBarController",
+            "## Dep: Blizzard_ActionBar",
+            "## Dep: Blizzard_PingUI",
+            "## AllowLoadGameType: mainline",
+            "ZoneAbility.lua",
+            "ZoneAbility.xml",
+        ]
+    } else {
+        &[
+            "## Title: Blizzard_ZoneAbility",
+            "## Author: Blizzard Entertainment",
+            "## DefaultState: enabled",
+            "## Dependencies: Blizzard_UIPanels_Game, Blizzard_ActionBarController, Blizzard_ActionBar, Blizzard_PingUI",
+            "## AllowLoad: game",
+            "## AllowLoadGameType: mainline",
+            "ZoneAbility.lua",
+            "ZoneAbility.xml",
+        ]
+    };
+
+    for directive in expected_directives {
         assert!(
             raw.contains(directive),
             "TOC raw bytes must contain `{directive}` — eager mainline-only zone-ability addon"
@@ -546,5 +562,20 @@ fn zone_ability_frame_inherits_template_children(env: &WowLuaEnv) {
              ManagedHorizontalLayoutFrameTemplate host that pools the spell buttons"
         );
     }
+}
+}
+
+// The Mists/Era/Anniversary caches ship 218 addons each and Wrath ships 23;
+// none contains Blizzard_ZoneAbility, so the pinned TOC facts above describe
+// no file the classic loaders can read.
+classic_cache_absent_toc_fixture! {
+#[test]
+fn blizzard_zone_ability_toc_is_absent_from_classic_caches() {
+    let dir = zone_ability_dir();
+    assert!(
+        !dir.is_dir(),
+        "classic profile caches must not contain Blizzard_ZoneAbility"
+    );
+    assert!(wow_ui_sim::loader::find_toc_file(&dir).is_none());
 }
 }

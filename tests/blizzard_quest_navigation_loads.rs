@@ -47,7 +47,7 @@ fn load_full_game_ui() -> WowLuaEnv {
 }
 
 // Literal cached inputs absent from Wrath manifest1-382/cache; behavior cases stay enabled.
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn blizzard_quest_navigation_find_toc_resolves_bare_variant() {
     let resolved =
@@ -74,7 +74,7 @@ fn blizzard_quest_navigation_find_toc_resolves_bare_variant() {
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn blizzard_quest_navigation_toc_pins_eager_no_lod_no_deps() {
     let toc =
@@ -129,7 +129,7 @@ fn blizzard_quest_navigation_toc_pins_eager_no_lod_no_deps() {
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn blizzard_quest_navigation_toc_declares_metadata_in_raw_bytes() {
     let raw = std::fs::read_to_string(quest_navigation_toc()).expect("TOC reads utf-8");
@@ -156,7 +156,7 @@ fn blizzard_quest_navigation_toc_declares_metadata_in_raw_bytes() {
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn blizzard_quest_navigation_toc_lists_one_xml_file() {
     let toc = TocFile::from_file(&quest_navigation_toc()).expect("TOC parses");
@@ -440,5 +440,20 @@ fn blizzard_quest_navigation_consumes_super_tracking_type_enum(env: &WowLuaEnv) 
          party-member portrait icon, and falls back to Quest when \
          GetHighestPrioritySuperTrackingType returns nil"
     );
+}
+}
+
+// The Mists/Era/Anniversary caches ship 218 addons each and Wrath ships 23;
+// none contains Blizzard_QuestNavigation, so the pinned TOC facts above describe no file the
+// classic loaders can read.
+classic_cache_absent_toc_fixture! {
+#[test]
+fn blizzard_questnavigation_toc_is_absent_from_classic_caches() {
+    let dir = quest_navigation_dir();
+    assert!(
+        !dir.is_dir(),
+        "classic profile caches must not contain Blizzard_QuestNavigation"
+    );
+    assert!(wow_ui_sim::loader::find_toc_file(&dir).is_none());
 }
 }

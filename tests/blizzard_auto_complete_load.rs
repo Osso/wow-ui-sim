@@ -67,13 +67,28 @@ fn blizzard_auto_complete_allowload_both_loads_in_game_and_glue_scopes() {
 
 post_wrath_ui_fixture! {
 #[test]
-fn blizzard_auto_complete_fonts_shared_loads_before_autocomplete() {
+fn blizzard_auto_complete_toc_dependencies_load_before_autocomplete() {
     assert_toc_declares_fonts_shared_dep();
 
     common::with_perf_lock(|| {
         common::with_timeout(240, || {
             with_blizzard_addon_closure(&[ROOT], &[], |env, loaded| {
-                assert_loaded_before(loaded, FONTS_SHARED, ROOT);
+                // Retail/PTR/Forever declare one `## Dep: Blizzard_Fonts_Shared`;
+                // the classic caches split the dependency by screen instead.
+                let first_dependency = if wow_ui_sim::client_profile::ACTIVE
+                    == wow_ui_sim::client_profile::ClientProfile::Mists
+                    || wow_ui_sim::client_profile::ACTIVE
+                        == wow_ui_sim::client_profile::ClientProfile::Era
+                    || wow_ui_sim::client_profile::ACTIVE
+                        == wow_ui_sim::client_profile::ClientProfile::Anniversary
+                    || wow_ui_sim::client_profile::ACTIVE
+                        == wow_ui_sim::client_profile::ClientProfile::Wrath
+                {
+                    "Blizzard_UIParent"
+                } else {
+                    FONTS_SHARED
+                };
+                assert_loaded_before(loaded, first_dependency, ROOT);
 
                 let (fonts_shared_loaded, autocomplete_loaded): (bool, bool) = env
                     .eval(
@@ -99,11 +114,26 @@ fn blizzard_auto_complete_fonts_shared_loads_before_autocomplete() {
 
 fn assert_toc_declares_fonts_shared_dep() {
     let toc = load_root_toc();
-    assert_eq!(
-        toc.dependencies(),
-        [FONTS_SHARED],
-        "`{ROOT}` must keep its sole current `## Dep: {FONTS_SHARED}` declaration"
+    let classic = matches!(
+        wow_ui_sim::client_profile::ACTIVE,
+        wow_ui_sim::client_profile::ClientProfile::Mists
+            | wow_ui_sim::client_profile::ClientProfile::Era
+            | wow_ui_sim::client_profile::ClientProfile::Anniversary
+            | wow_ui_sim::client_profile::ClientProfile::Wrath
     );
+    if classic {
+        assert_eq!(
+            toc.dependencies(),
+            ["Blizzard_UIParent", "Blizzard_GlueParent"],
+            "the classic pinned TOCs declare one `## Dep:` per screen: UIParent for game              and GlueParent for glue"
+        );
+    } else {
+        assert_eq!(
+            toc.dependencies(),
+            [FONTS_SHARED],
+            "`{ROOT}` must keep its sole current `## Dep: {FONTS_SHARED}` declaration"
+        );
+    }
 }
 
 fn assert_toc_allows_game_and_glue_scopes() {

@@ -5,6 +5,23 @@ use wow_ui_sim::lua_api::WowLuaEnv;
 use wow_ui_sim::screen::ScreenKind;
 use wow_ui_sim::toc::TocFile;
 
+#[path = "common/toc_layout.rs"]
+mod toc_layout;
+
+// The pinned PTR 12.1.7 manifest no longer ships this classic-only addon, so
+// its TOC/XML content assertions apply to the profiles that do ship it.
+fn reforging_ui_absent_from_active_cache() -> bool {
+    if toc_layout::unified_toc_tree() {
+        assert!(
+            !reforging_ui_dir().exists(),
+            "Pinned PTR/Forever manifest must not ship the classic-only Blizzard_ReforgingUI"
+        );
+        true
+    } else {
+        false
+    }
+}
+
 fn blizzard_ui_dir() -> PathBuf {
     wow_ui_sim::paths::default_blizzard_ui_addons_path()
         .expect("Blizzard UI cache should be available")
@@ -64,6 +81,9 @@ fn retail_toc_selection_excludes_classic_only_reforging() {
 post_wrath_ui_fixture! {
 #[test]
 fn toc_declares_load_on_demand_secure_classic_only_and_no_deps() {
+    if reforging_ui_absent_from_active_cache() {
+        return;
+    }
     let toc =
         TocFile::from_file(&reforging_ui_toc()).expect("Blizzard_ReforgingUI TOC should parse");
     assert!(
@@ -107,6 +127,9 @@ fn toc_declares_load_on_demand_secure_classic_only_and_no_deps() {
 post_wrath_ui_fixture! {
 #[test]
 fn toc_lists_bootstrap_and_three_files_in_classic_subdirectory() {
+    if reforging_ui_absent_from_active_cache() {
+        return;
+    }
     let toc =
         TocFile::from_file(&reforging_ui_toc()).expect("Blizzard_ReforgingUI TOC should parse");
     let listed: Vec<String> = toc
@@ -114,9 +137,22 @@ fn toc_lists_bootstrap_and_three_files_in_classic_subdirectory() {
         .iter()
         .map(|p| p.to_string_lossy().replace('\\', "/"))
         .collect();
+    let expected: Vec<String> = if toc_layout::classic_cache() {
+        [
+            "Classic/Blizzard_ReforgingUI.lua",
+            "Classic/Blizzard_ReforgingUI.xml",
+            "Classic/Localization.lua",
+        ]
+        .iter()
+        .map(|s| s.to_string())
+        .collect()
+    } else {
+        REFORGING_FILES.iter().map(|s| s.to_string()).collect()
+    };
     assert_eq!(
-        listed, REFORGING_FILES,
-        "Retail 12.1.0.69497 lists the bootstrap before the classic Lua, XML, and localization files"
+        listed, expected,
+        "Retail 12.1.0.69497 lists the bootstrap before the classic Lua, XML, and localization \
+         files; the classic `_Classic.toc` lists the three Classic entries only"
     );
 }
 }
@@ -372,6 +408,9 @@ fn defines_no_mixin_tables_pre_mixin_pattern(env: &WowLuaEnv) {
 post_wrath_ui_fixture! {
 #[test]
 fn xml_loads_via_script_directive_and_inline_lua_listed_in_toc() {
+    if reforging_ui_absent_from_active_cache() {
+        return;
+    }
     let xml_text =
         std::fs::read_to_string(reforging_ui_dir().join("Classic/Blizzard_ReforgingUI.xml"))
             .expect("Classic/Blizzard_ReforgingUI.xml should read");

@@ -7,6 +7,9 @@ use wow_ui_sim::screen::ScreenKind;
 use wow_ui_sim::startup::fire_startup_events_for_screen;
 use wow_ui_sim::toc::TocFile;
 
+#[path = "common/toc_layout.rs"]
+mod toc_layout;
+
 fn blizzard_ui_dir() -> PathBuf {
     wow_ui_sim::paths::default_blizzard_ui_addons_path()
         .expect("Blizzard UI cache should be available")
@@ -26,7 +29,47 @@ const PROFESSIONS_BOOK_TOC_FILES: &[&str] = &[
     "Blizzard_ProfessionsBook.xml",
 ];
 
+// The unified PTR TOC lists the shared and family Templates XML.
+const PTR_PROFESSIONS_BOOK_TOC_FILES: &[&str] = &[
+    "Blizzard_ProfessionsBook_Bootstrap.lua",
+    "Blizzard_ProfessionsBook.lua",
+    "Blizzard_ProfessionsBookTemplates.xml",
+    "Mainline/Blizzard_ProfessionsBookTemplates.xml",
+    "Blizzard_ProfessionsBook.xml",
+];
+
+// The pinned Forever TOC resolves `[Game]` to Camelot, so it lists the Camelot
+// Book Lua and Templates XML instead of the Mainline ones it excludes.
+const FOREVER_PROFESSIONS_BOOK_TOC_FILES: &[&str] = &[
+    "Blizzard_ProfessionsBook_Bootstrap.lua",
+    "Blizzard_ProfessionsBook.lua",
+    "Camelot/Blizzard_ProfessionsBook.lua",
+    "Blizzard_ProfessionsBookTemplates.xml",
+    "Camelot/Blizzard_ProfessionsBookTemplates.xml",
+];
+
+fn professions_book_toc_files() -> &'static [&'static str] {
+    if toc_layout::forever() {
+        FOREVER_PROFESSIONS_BOOK_TOC_FILES
+    } else if toc_layout::unified_toc_tree() {
+        PTR_PROFESSIONS_BOOK_TOC_FILES
+    } else {
+        PROFESSIONS_BOOK_TOC_FILES
+    }
+}
+
 const REQUIRED_DEPS: &[&str] = &["Blizzard_HelpPlate"];
+
+// The unified PTR TOC also depends on Blizzard_ProfessionsTemplates.
+const PTR_REQUIRED_DEPS: &[&str] = &["Blizzard_HelpPlate", "Blizzard_ProfessionsTemplates"];
+
+fn required_deps() -> &'static [&'static str] {
+    if toc_layout::unified_toc_tree() {
+        PTR_REQUIRED_DEPS
+    } else {
+        REQUIRED_DEPS
+    }
+}
 
 const PUBLIC_MIXIN_GLOBALS: &[&str] = &[
     "ProfessionSpellButtonMixin",
@@ -94,7 +137,7 @@ fn load_full_game_ui() -> WowLuaEnv {
 }
 
 // Literal cached inputs absent from Wrath manifest1-382/cache; behavior cases stay enabled.
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn blizzard_professions_book_find_toc_resolves_bare_variant() {
     let resolved =
@@ -117,7 +160,7 @@ fn blizzard_professions_book_find_toc_resolves_bare_variant() {
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn blizzard_professions_book_toc_declares_lod_game_only_addon() {
     let toc =
@@ -161,7 +204,7 @@ fn blizzard_professions_book_toc_declares_lod_game_only_addon() {
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn blizzard_professions_book_toc_declares_one_dependency() {
     let toc =
@@ -170,11 +213,11 @@ fn blizzard_professions_book_toc_declares_one_dependency() {
     let dependencies = toc.dependencies();
     let deps: Vec<&str> = dependencies.iter().map(|s| s.as_str()).collect();
     assert_eq!(
-        deps, REQUIRED_DEPS,
-        "TOC must declare exactly 1 dep: Blizzard_HelpPlate — supplies the HelpPlate \
-         tutorial-overlay system referenced by ProfessionsBook_ToggleTutorial which \
-         calls HelpPlate.Show / HelpPlate.Hide / HelpPlate.IsShowingHelpInfo against the \
-         module-local ProfessionsFrame_HelpPlate config table"
+        deps,
+        required_deps(),
+        "TOC must declare Blizzard_HelpPlate (which supplies the HelpPlate tutorial-overlay \
+         system referenced by ProfessionsBook_ToggleTutorial); the unified PTR TOC also \
+         declares Blizzard_ProfessionsTemplates"
     );
 
     assert!(
@@ -184,7 +227,7 @@ fn blizzard_professions_book_toc_declares_one_dependency() {
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn blizzard_professions_book_toc_declares_no_saved_variables() {
     let toc =
@@ -204,7 +247,7 @@ fn blizzard_professions_book_toc_declares_no_saved_variables() {
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn blizzard_professions_book_toc_declares_metadata_in_raw_bytes() {
     let raw = std::fs::read_to_string(professions_book_toc())
@@ -259,7 +302,7 @@ fn blizzard_professions_book_toc_declares_metadata_in_raw_bytes() {
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn blizzard_professions_book_toc_lists_bootstrap_then_two_files_in_canonical_order() {
     let toc =
@@ -270,10 +313,12 @@ fn blizzard_professions_book_toc_lists_bootstrap_then_two_files_in_canonical_ord
         .map(|p| p.to_string_lossy().into_owned())
         .collect();
     assert_eq!(
-        listed, PROFESSIONS_BOOK_TOC_FILES,
-        "Retail 12.1.0.69497 lists its bootstrap first, then Blizzard_ProfessionsBook.lua \
-         before Blizzard_ProfessionsBook.xml so mixins and script-bound functions exist \
-         before XML parsing"
+        listed,
+        professions_book_toc_files(),
+        "The TOC lists its bootstrap first, then Blizzard_ProfessionsBook.lua \
+         before Blizzard_ProfessionsBook.xml so mixins and script-bound functions \
+         exist before XML parsing; the unified PTR TOC also lists the shared and \
+         family Templates XML"
     );
 }
 }
@@ -490,5 +535,20 @@ fn blizzard_professions_book_profession_ranks_table_has_eleven_entries(env: &Wow
          recent classic-style tier before the Dragonflight ranks system superseded \
          the linear cap progression"
     );
+}
+}
+
+// The Mists/Era/Anniversary caches ship 218 addons each and Wrath ships 23;
+// none contains Blizzard_ProfessionsBook, so the pinned TOC facts above describe no file the
+// classic loaders can read.
+classic_cache_absent_toc_fixture! {
+#[test]
+fn blizzard_professionsbook_toc_is_absent_from_classic_caches() {
+    let dir = professions_book_dir();
+    assert!(
+        !dir.is_dir(),
+        "classic profile caches must not contain Blizzard_ProfessionsBook"
+    );
+    assert!(wow_ui_sim::loader::find_toc_file(&dir).is_none());
 }
 }

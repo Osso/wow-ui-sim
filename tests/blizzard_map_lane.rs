@@ -67,6 +67,9 @@ use wow_ui_sim::screen::ScreenKind;
 use wow_ui_sim::startup::fire_startup_events_for_screen;
 use wow_ui_sim::toc::TocFile;
 
+#[path = "common/toc_layout.rs"]
+mod toc_layout;
+
 fn blizzard_ui_dir() -> PathBuf {
     wow_ui_sim::paths::default_blizzard_ui_addons_path()
         .expect("Blizzard UI cache should be available")
@@ -138,6 +141,13 @@ fn each_lane_addon_directory_resolves_with_a_toc() {
     }
     for name in LANE_ADDONS {
         let dir = blizzard_ui_dir().join(name);
+        if toc_layout::classic_cache() && !dir.is_dir() {
+            assert!(
+                matches!(*name, "Blizzard_MapCanvasSecureUtil" | "Blizzard_AdventureMap"),
+                "only the two retail-only map addons may be absent from the classic caches"
+            );
+            continue;
+        }
         assert!(
             dir.is_dir(),
             "Lane addon `{name}` directory must exist at \
@@ -298,6 +308,22 @@ fn world_map_ships_only_a_mainline_toc_so_classic_clients_could_not_load_it() {
         .filter(|name| name.ends_with(".toc"))
         .collect();
 
+    if toc_layout::classic_cache() {
+        let mut sorted = entries.clone();
+        sorted.sort();
+        assert_eq!(
+            sorted,
+            vec![
+                "Blizzard_WorldMap_Cata.toc",
+                "Blizzard_WorldMap_Mists.toc",
+                "Blizzard_WorldMap_TBC.toc",
+                "Blizzard_WorldMap_Vanilla.toc",
+                "Blizzard_WorldMap_Wrath.toc",
+            ],
+            "the classic cache ships one WorldMap TOC per flavor and no `_Mainline.toc`"
+        );
+        return;
+    }
     assert_eq!(
         entries,
         vec!["Blizzard_WorldMap_Mainline.toc"],
@@ -334,12 +360,17 @@ fn battlefield_map_toc_uses_per_line_dep_form() {
     let raw =
         std::fs::read_to_string(&toc_path).unwrap_or_else(|err| panic!("read {toc_path:?}: {err}"));
 
-    for line in [
-        "## Dep: Blizzard_MapCanvas",
-        "## Dep: Blizzard_SharedMapDataProviders [AllowLoadGameType mainline]",
-        "## Dep: Blizzard_ObjectiveTracker [AllowLoadGameType mainline]",
-        "## Dep: Blizzard_ColorPickerFrame [AllowLoadGameType mainline]",
-    ] {
+    let required: &[&str] = if toc_layout::classic_cache() {
+        &["## RequiredDep: Blizzard_MapCanvas"]
+    } else {
+        &[
+            "## Dep: Blizzard_MapCanvas",
+            "## Dep: Blizzard_SharedMapDataProviders [AllowLoadGameType mainline]",
+            "## Dep: Blizzard_ObjectiveTracker [AllowLoadGameType mainline]",
+            "## Dep: Blizzard_ColorPickerFrame [AllowLoadGameType mainline]",
+        ]
+    };
+    for line in required {
         assert!(
             raw.contains(line),
             "BattlefieldMap.toc must declare `{line}` in the per-line Dep form. \

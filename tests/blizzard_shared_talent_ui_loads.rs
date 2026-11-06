@@ -5,6 +5,9 @@ use wow_ui_sim::lua_api::WowLuaEnv;
 use wow_ui_sim::screen::ScreenKind;
 use wow_ui_sim::toc::TocFile;
 
+#[path = "common/toc_layout.rs"]
+mod toc_layout;
+
 fn blizzard_ui_dir() -> PathBuf {
     wow_ui_sim::paths::default_blizzard_ui_addons_path()
         .expect("Blizzard UI cache should be available")
@@ -103,13 +106,21 @@ fn toc_declares_explicit_load_on_demand_zero_with_single_dep() {
     assert!(!toc.is_glue_only());
 
     let deps = toc.dependencies();
+    let expected_deps: Vec<String> = if toc_layout::unified_toc_tree() && !toc_layout::forever() {
+        vec![
+            "Blizzard_SpellSearch".to_string(),
+            "Blizzard_SpellTypeIconOverlay".to_string(),
+        ]
+    } else {
+        vec!["Blizzard_SpellSearch".to_string()]
+    };
     assert_eq!(
-        deps,
-        ["Blizzard_SpellSearch"],
-        "TOC must declare exactly one hard Dependency: Blizzard_SpellSearch. \
-         The talent button mixins reference SpellSearch globals \
-         (SpellSearchUtil, the search-icon mixin's tag registration) so the \
-         dep must resolve before this addon's Lua runs. Got: {deps:?}"
+        deps, expected_deps,
+        "TOC must declare Blizzard_SpellSearch as a hard Dependency; the unified PTR TOC \
+         also depends on Blizzard_SpellTypeIconOverlay, while the Forever TOC keeps the \
+         single Retail dep. The talent button mixins reference SpellSearch \
+         globals (SpellSearchUtil, the search-icon mixin's tag registration) so the dep must \
+         resolve before this addon's Lua runs. Got: {deps:?}"
     );
     assert!(toc.optional_deps().is_empty());
     assert!(toc.saved_variables().is_empty());
@@ -203,6 +214,69 @@ fn toc_body_starts_with_util_then_edge_templates_then_button_templates() {
 
 #[test]
 fn toc_body_ends_with_frame_grid_then_auto_commit_frame() {
+    let expected_tail = [
+        "Blizzard_TalentFrameGrid.lua",
+        "Blizzard_TalentFrameGrid.xml",
+        "Blizzard_AutoCommitTraitFrame.lua",
+        "Blizzard_AutoCommitTraitFrame.xml",
+    ];
+
+    if toc_layout::forever() {
+        // The pinned Forever TOC keeps the camelot-gated overrides at the end.
+        let toc = TocFile::from_file(&talent_ui_toc()).expect("TOC parses");
+        let tail: Vec<String> = toc
+            .files
+            .iter()
+            .rev()
+            .take(6)
+            .rev()
+            .map(|path| path.to_string_lossy().into_owned())
+            .collect();
+        assert_eq!(
+            tail,
+            [
+                "Blizzard_TalentFrameGrid.lua",
+                "Blizzard_TalentFrameGrid.xml",
+                "Blizzard_ClassTalentSearch.lua",
+                "Blizzard_AutoCommitTraitFrame.lua",
+                "Blizzard_AutoCommitTraitFrame.xml",
+                "Camelot/Blizzard_SharedTalentOverrides.lua",
+            ],
+            "Resolved TOC body MUST end with the FrameGrid pair before the \
+             AutoCommitTraitFrame pair, followed by the Camelot overrides. Got: {tail:?}"
+        );
+        return;
+    }
+
+    if toc_layout::unified_toc_tree() {
+        // The unified PTR TOC appends a camelot-gated override after the pair
+        // and lists Blizzard_ClassTalentSearch between the FrameGrid and
+        // AutoCommitTraitFrame entries.
+        let toc = TocFile::from_file(&talent_ui_toc()).expect("TOC parses");
+        let tail: Vec<String> = toc
+            .files
+            .iter()
+            .rev()
+            .take(5)
+            .rev()
+            .map(|path| path.to_string_lossy().into_owned())
+            .collect();
+        assert_eq!(
+            tail,
+            [
+                "Blizzard_TalentFrameGrid.lua",
+                "Blizzard_TalentFrameGrid.xml",
+                "Blizzard_ClassTalentSearch.lua",
+                "Blizzard_AutoCommitTraitFrame.lua",
+                "Blizzard_AutoCommitTraitFrame.xml",
+            ],
+            "Resolved TOC body MUST end with the FrameGrid pair before the \
+             AutoCommitTraitFrame pair. The unified PTR TOC lists \
+             Blizzard_ClassTalentSearch.lua between them. Got: {tail:?}"
+        );
+        return;
+    }
+
     let raw = std::fs::read_to_string(talent_ui_toc()).expect("TOC reads utf-8");
 
     let body_lines: Vec<&str> = raw
@@ -216,12 +290,7 @@ fn toc_body_ends_with_frame_grid_then_auto_commit_frame() {
     let last_four = &body_lines[body_lines.len() - 4..];
     assert_eq!(
         last_four,
-        [
-            "Blizzard_TalentFrameGrid.lua",
-            "Blizzard_TalentFrameGrid.xml",
-            "Blizzard_AutoCommitTraitFrame.lua",
-            "Blizzard_AutoCommitTraitFrame.xml",
-        ],
+        expected_tail,
         "TOC body MUST end with the FrameGrid pair followed by the \
          AutoCommitTraitFrame pair. FrameGrid completes the shared layout \
          chain before AutoCommitTraitFrame consumes the published talent \
@@ -244,16 +313,29 @@ fn toc_body_count_breakdown_matches_filesystem_layout() {
         .filter(|f| f.extension().is_some_and(|ext| ext == "xml"))
         .count();
 
+    let expected_total = if toc_layout::forever() {
+        36
+    } else if toc_layout::unified_toc_tree() {
+        35
+    } else {
+        34
+    };
+    let expected_lua = if toc_layout::forever() {
+        19
+    } else if toc_layout::unified_toc_tree() {
+        18
+    } else {
+        17
+    };
     assert_eq!(
         lua_count + xml_count,
-        34,
-        "TOC body lists exactly 34 file entries from the active retail \
-         Blizzard UI cache. Got lua={lua_count} xml={xml_count}"
+        expected_total,
+        "TOC body lists {expected_total} file entries from the active Blizzard UI cache. Got lua={lua_count} xml={xml_count}"
     );
     assert_eq!(
-        lua_count, 17,
-        "TOC body must list exactly 17 .lua entries (Util + AnimUtil + \
-         per-component files, including AutoCommitTraitFrame). 4 additional \
+        lua_count, expected_lua,
+        "TOC body must list {expected_lua} .lua entries (Util + AnimUtil + \
+         per-component files, including AutoCommitTraitFrame). Additional \
          .lua siblings (EdgeTemplates, SelectionTemplates, FrameTemplates, \
          Frame) are loaded indirectly via `<Script file=...>` from their \
          companion .xml and so are NOT listed in the TOC body. Got: \

@@ -59,7 +59,7 @@ fn load_full_game_ui() -> WowLuaEnv {
 }
 
 // Literal cached inputs absent from Wrath manifest1-382/cache; behavior cases stay enabled.
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn find_toc_file_resolves_bare_toc() {
     let resolved = find_toc_file(&ui_frame_manager_dir()).expect("UIFrameManager TOC resolves");
@@ -72,7 +72,7 @@ fn find_toc_file_resolves_bare_toc() {
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn toc_is_eager_with_no_dependencies() {
     let toc = TocFile::from_file(&ui_frame_manager_toc()).expect("TOC parses");
@@ -128,7 +128,7 @@ fn allow_load_absent_implies_game_only() {
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn toc_raw_bytes_pin_two_directives_and_two_body_files() {
     let raw = std::fs::read_to_string(ui_frame_manager_toc()).expect("TOC reads utf-8");
@@ -371,5 +371,20 @@ fn full_game_load_emits_no_addon_specific_errors(env: &WowLuaEnv) {
          the dispatch tables and register FRAME_MANAGER_UPDATE_* events \
          without raising. Found: {addon_specific:?}"
     );
+}
+}
+
+// The Mists/Era/Anniversary caches ship 218 addons each and Wrath ships 23;
+// none contains Blizzard_UIFrameManager, so the pinned TOC facts above describe no file the
+// classic loaders can read.
+classic_cache_absent_toc_fixture! {
+#[test]
+fn blizzard_uiframemanager_toc_is_absent_from_classic_caches() {
+    let dir = ui_frame_manager_dir();
+    assert!(
+        !dir.is_dir(),
+        "classic profile caches must not contain Blizzard_UIFrameManager"
+    );
+    assert!(wow_ui_sim::loader::find_toc_file(&dir).is_none());
 }
 }

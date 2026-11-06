@@ -7,6 +7,9 @@ use wow_ui_sim::screen::ScreenKind;
 use wow_ui_sim::startup::fire_startup_events_for_screen;
 use wow_ui_sim::toc::TocFile;
 
+#[path = "common/toc_layout.rs"]
+mod toc_layout;
+
 fn blizzard_ui_dir() -> PathBuf {
     wow_ui_sim::paths::default_blizzard_ui_addons_path()
         .expect("Blizzard UI cache should be populated for ItemButton load tests")
@@ -17,7 +20,7 @@ fn item_button_dir() -> PathBuf {
 }
 
 fn item_button_toc() -> PathBuf {
-    item_button_dir().join("Blizzard_ItemButton_Mainline.toc")
+    find_toc_file(&item_button_dir()).expect("Blizzard_ItemButton TOC should resolve")
 }
 
 const ITEM_BUTTON_FILES: &[&str] = &[
@@ -26,11 +29,39 @@ const ITEM_BUTTON_FILES: &[&str] = &[
     "Mainline/ItemButtonTemplate.xml",
 ];
 
+// Pinned PTR 12.1.7 ships one unified TOC that also lists the Mainline Lua
+// sibling and gates the family XML on `mainline`.
+const PTR_ITEM_BUTTON_FILES: &[&str] = &[
+    "Shared/ItemButtonTemplate.lua",
+    "Shared/ItemButtonTemplate.xml",
+    "Mainline/ItemButtonTemplate.lua",
+    "Mainline/ItemButtonTemplate.xml",
+];
+
 const ITEM_BUTTON_DEPENDENCIES: &[&str] = &[
     "Blizzard_Fonts_Shared",
     "Blizzard_SharedXML",
     "Blizzard_Colors",
 ];
+
+// Blizzard_Fonts_Shared is not a dependency of the unified PTR TOC.
+const PTR_ITEM_BUTTON_DEPENDENCIES: &[&str] = &["Blizzard_SharedXML", "Blizzard_Colors"];
+
+fn item_button_files() -> &'static [&'static str] {
+    if toc_layout::unified_toc_tree() {
+        PTR_ITEM_BUTTON_FILES
+    } else {
+        ITEM_BUTTON_FILES
+    }
+}
+
+fn item_button_dependencies() -> &'static [&'static str] {
+    if toc_layout::unified_toc_tree() {
+        PTR_ITEM_BUTTON_DEPENDENCIES
+    } else {
+        ITEM_BUTTON_DEPENDENCIES
+    }
+}
 
 const ITEM_BUTTON_VIRTUAL_TEMPLATES: &[&str] = &[
     "CircularItemButtonTemplate",
@@ -148,12 +179,11 @@ fn blizzard_item_button_find_toc_resolves_mainline_variant() {
     let resolved =
         find_toc_file(&item_button_dir()).expect("Blizzard_ItemButton TOC should resolve");
     assert_eq!(
-        resolved,
-        item_button_toc(),
-        "Blizzard_ItemButton ships exactly one `_Mainline.toc` variant — `find_toc_file` prefers \
-         the suffixed variant before falling back to a bare `.toc`. The Shared/Mainline split \
-         lets non-mainline flavors keep their own TOC + lua/xml even though only the Mainline \
-         flavor exists today"
+        resolved.file_name().and_then(|name| name.to_str()),
+        Some(toc_layout::expected_toc_name("Blizzard_ItemButton").as_str()),
+        "find_toc_file must resolve the active profile's ItemButton TOC: the Retail cache \
+         ships only `_Mainline.toc`, while the pinned PTR cache folds the Mainline flavor \
+         into the bare unified TOC"
     );
 }
 
@@ -170,15 +200,14 @@ fn blizzard_item_button_toc_declares_three_dependencies_and_default_enabled() {
     assert!(!toc.is_secure_env());
     assert_eq!(
         toc.dependencies(),
-        ITEM_BUTTON_DEPENDENCIES
+        item_button_dependencies()
             .iter()
             .map(|s| (*s).to_string())
             .collect::<Vec<_>>(),
-        "Blizzard_ItemButton declares three `## Dependencies:` entries — Blizzard_Fonts_Shared \
-         (NumberFontNormal / NumberFontNormalYellow / NumberFontNormalSmall used by Count and \
-         Stock fontstrings), Blizzard_SharedXML (UI.xsd schema reference + ItemButtonUtil / \
-         FrameUtil / EventRegistry / TextureKitConstants), and Blizzard_Colors (ColorManager \
-         used by SetItemButtonQuality_Base for quality-driven border colors)"
+        "Blizzard_ItemButton declares its `## Dep` entries in published order — one per \
+         collaborator (ItemButtonUtil / FrameUtil / EventRegistry, NumberFontNormal and \
+         ColorManager). The Retail TOC also lists Blizzard_Fonts_Shared; the unified PTR \
+         TOC does not"
     );
     assert!(
         toc.optional_deps().is_empty(),
@@ -202,39 +231,53 @@ fn blizzard_item_button_toc_is_mainline_only_and_loads_on_both_screens() {
          and the auto-discovery sweep at src/loader/mod.rs:527 keeps it"
     );
 
+    // The unified PTR TOC carries no `## AllowLoad` directive, so the addon is
+    // in-game only there; the Retail TOC loads it on both screen families.
+    let glue_allowed = !toc_layout::unified_toc_tree();
+    assert!(
+        toc.allows_screen(ScreenKind::Game),
+        "Blizzard_ItemButton must load on the Game screen — every item-bearing HUD surface \
+         depends on the `ItemButton` intrinsic + ItemButtonMixin"
+    );
     for screen in [
-        ScreenKind::Game,
         ScreenKind::Login,
         ScreenKind::CharacterSelect,
         ScreenKind::CharacterCreate,
     ] {
-        assert!(
+        assert_eq!(
             toc.allows_screen(screen),
-            "Blizzard_ItemButton must load on every ScreenKind — `## AllowLoad: Both` returns \
-             true from allows_screen for all screens (src/toc.rs:307). The intrinsic `ItemButton` \
-             type is needed even on glue screens because shared profile / armory / character \
-             select previews can reference item-bearing templates. (Screen tested: {screen:?})"
+            glue_allowed,
+            "Blizzard_ItemButton glue-screen loading follows the active TOC's AllowLoad \
+             directive. (Screen tested: {screen:?})"
         );
     }
 
     let raw =
         std::fs::read_to_string(item_button_toc()).expect("Blizzard_ItemButton TOC should read");
-    assert!(
-        raw.contains("## AllowLoadGameType: mainline"),
-        "TOC must declare `## AllowLoadGameType: mainline` exactly — the Shared/Mainline file \
-         layout exists so non-mainline flavors can ship a different lua/xml split, but the \
-         current TOC scopes the addon to retail only"
-    );
-    assert!(
-        raw.contains("## AllowLoad: Both"),
-        "TOC must declare `## AllowLoad: Both` — item button surfaces appear on both the in-game \
-         HUD (bags, vendor, etc.) and on glue screens (character select item previews)"
-    );
-    assert!(
-        raw.contains("## DefaultState: enabled"),
-        "TOC must declare `## DefaultState: enabled` — auto-enabled because every item-bearing \
-         UI depends on `ItemButton` intrinsic + ItemButtonMixin"
-    );
+    if toc_layout::unified_toc_tree() {
+        assert!(
+            !raw.contains("## AllowLoadGameType"),
+            "The unified PTR TOC scopes flavors per entry, so it must not declare a \
+             top-level `## AllowLoadGameType`"
+        );
+    } else {
+        assert!(
+            raw.contains("## AllowLoadGameType: mainline"),
+            "TOC must declare `## AllowLoadGameType: mainline` exactly — the Shared/Mainline file \
+             layout exists so non-mainline flavors can ship a different lua/xml split, but the \
+             current TOC scopes the addon to retail only"
+        );
+        assert!(
+            raw.contains("## AllowLoad: Both"),
+            "TOC must declare `## AllowLoad: Both` — item button surfaces appear on both the \
+             in-game HUD (bags, vendor, etc.) and on glue screens (character select previews)"
+        );
+        assert!(
+            raw.contains("## DefaultState: enabled"),
+            "TOC must declare `## DefaultState: enabled` — auto-enabled because every \
+             item-bearing UI depends on `ItemButton` intrinsic + ItemButtonMixin"
+        );
+    }
 }
 
 #[test]
@@ -246,8 +289,8 @@ fn blizzard_item_button_toc_lists_three_files_lua_first_then_shared_xml_then_mai
         .map(|p| p.to_string_lossy().into_owned())
         .collect();
     assert_eq!(
-        actual_files, ITEM_BUTTON_FILES,
-        "TOC body must list exactly these 3 files in this order: Shared\\ItemButtonTemplate.lua \
+        actual_files, item_button_files(),
+        "TOC body must list exactly these files in this order: Shared\\ItemButtonTemplate.lua \
          loads FIRST (publishes ItemButtonMixin + ItemButtonConstants + GetItemButtonIconTexture \
          at file scope) so Shared\\ItemButtonTemplate.xml's `mixin=\"ItemButtonMixin\"` resolves \
          the table; Mainline\\ItemButtonTemplate.xml loads LAST and uses `<Script file=...>` to \

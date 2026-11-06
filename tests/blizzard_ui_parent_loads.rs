@@ -7,6 +7,9 @@ use wow_ui_sim::screen::ScreenKind;
 use wow_ui_sim::startup::fire_startup_events_for_screen;
 use wow_ui_sim::toc::TocFile;
 
+#[path = "common/toc_layout.rs"]
+mod toc_layout;
+
 fn blizzard_ui_dir() -> PathBuf {
     wow_ui_sim::paths::default_blizzard_ui_addons_path()
         .expect("Blizzard UI cache should be available")
@@ -17,7 +20,7 @@ fn ui_parent_dir() -> PathBuf {
 }
 
 fn ui_parent_toc() -> PathBuf {
-    ui_parent_dir().join("Blizzard_UIParent.toc")
+    wow_ui_sim::loader::find_toc_file(&ui_parent_dir()).expect("Blizzard_UIParent TOC resolves")
 }
 
 const GLUE_SCREENS: &[ScreenKind] = &[
@@ -113,9 +116,10 @@ post_wrath_ui_fixture! {
 fn find_toc_file_resolves_bare_toc() {
     let resolved = find_toc_file(&ui_parent_dir()).expect("UIParent TOC resolves");
     assert_eq!(
-        resolved,
-        ui_parent_toc(),
-        "Retail 12.1 ships one bare Blizzard_UIParent.toc; loader discovery must select it"
+        resolved.file_name().and_then(|name| name.to_str()),
+        Some(toc_layout::expected_toc_name("Blizzard_UIParent").as_str()),
+        "find_toc_file resolves the active profile's UIParent TOC: Retail ships the bare TOC, \
+         Mists `_Mists.toc` and Era/Anniversary `_Vanilla.toc`"
     );
 }
 }
@@ -126,12 +130,24 @@ fn toc_is_eager_with_shared_xml_base_dependency() {
     let toc = TocFile::from_file(&ui_parent_toc()).expect("TOC parses");
 
     assert!(!toc.is_load_on_demand());
-    assert_eq!(toc.dependencies(), vec!["Blizzard_SharedXMLBase".to_string()]);
+    let expected_deps: Vec<String> = if toc_layout::classic_cache() {
+        vec![
+            "Blizzard_FrameXMLBase".to_string(),
+            "Blizzard_ObjectAPI".to_string(),
+        ]
+    } else {
+        vec!["Blizzard_SharedXMLBase".to_string()]
+    };
+    assert_eq!(toc.dependencies(), expected_deps);
     assert!(toc.optional_deps().is_empty());
     assert!(toc.saved_variables().is_empty());
     assert!(toc.saved_variables_per_character().is_empty());
-    assert!(!toc.is_load_first());
-    assert!(!toc.is_game_type_restricted());
+    assert_eq!(toc.is_load_first(), toc_layout::classic_cache());
+    assert_eq!(
+        toc.is_game_type_restricted(),
+        !toc_layout::admits_game_type(if toc_layout::mists() { "mists" } else { "vanilla" })
+            && toc_layout::classic_cache()
+    );
     assert!(toc.default_enabled());
 }
 }
@@ -159,11 +175,30 @@ post_wrath_ui_fixture! {
 #[test]
 fn toc_body_resolves_to_single_ui_parent_lua_file() {
     let toc = TocFile::from_file(&ui_parent_toc()).expect("TOC parses");
-    assert_eq!(
-        toc.files,
-        vec![PathBuf::from("UIParent.lua")],
-        "Retail 12.1 UIParent TOC must resolve exactly one body file"
-    );
+    if toc_layout::classic_cache() {
+        let family = if toc_layout::mists() { "Mists" } else { "Vanilla" };
+        assert_eq!(
+            toc.files,
+            vec![
+                PathBuf::from("ChatBubbleTemplates.xml"),
+                PathBuf::from("Classic/WorldFrame.lua"),
+                PathBuf::from("Classic/WorldFrame.xml"),
+                PathBuf::from("Classic/UIParentDebugMenu.lua"),
+                PathBuf::from("Classic/UIParent.lua"),
+                PathBuf::from("Shared/UIParent.lua"),
+                PathBuf::from(format!("{family}/UIParent.lua")),
+                PathBuf::from("Classic/UIParent.xml"),
+                PathBuf::from("Shared/Localization.lua"),
+            ],
+            "the classic UIParent TOC resolves nine body files"
+        );
+    } else {
+        assert_eq!(
+            toc.files,
+            vec![PathBuf::from("UIParent.lua")],
+            "Retail 12.1 UIParent TOC must resolve exactly one body file"
+        );
+    }
 }
 }
 
@@ -171,14 +206,55 @@ post_wrath_ui_fixture! {
 #[test]
 fn toc_raw_bytes_pin_current_three_line_contract() {
     let raw = std::fs::read_to_string(ui_parent_toc()).expect("TOC reads utf-8");
-    assert_eq!(
-        raw.lines().collect::<Vec<_>>(),
-        [
+    let expected: &[&str] = if toc_layout::mists() {
+        &[
+            "## Title: Blizzard_UIParent",
+            "## Author: Blizzard Entertainment",
+            "## DefaultState: enabled",
+            "## Dependencies: Blizzard_FrameXMLBase, Blizzard_ObjectAPI",
+            "## LoadFirst: 1",
+            "## AllowLoad: game",
+            "## AllowLoadGameType: mists",
+            "ChatBubbleTemplates.xml",
+            "Classic\\WorldFrame.lua",
+            "Classic\\WorldFrame.xml",
+            "Classic\\UIParentDebugMenu.lua",
+            "Classic\\UIParent.lua",
+            "Shared\\UIParent.lua",
+            "Mists\\UIParent.lua",
+            "Classic\\UIParent.xml",
+            "Shared\\Localization.lua",
+        ]
+    } else if toc_layout::classic_cache() {
+        &[
+            "## Title: Blizzard_UIParent",
+            "## Author: Blizzard Entertainment",
+            "## DefaultState: enabled",
+            "## Dependencies: Blizzard_FrameXMLBase, Blizzard_ObjectAPI",
+            "## LoadFirst: 1",
+            "## AllowLoad: game",
+            "## AllowLoadGameType: vanilla",
+            "ChatBubbleTemplates.xml",
+            "Classic\\WorldFrame.lua",
+            "Classic\\WorldFrame.xml",
+            "Classic\\UIParentDebugMenu.lua",
+            "Classic\\UIParent.lua",
+            "Shared\\UIParent.lua",
+            "Vanilla\\UIParent.lua",
+            "Classic\\UIParent.xml",
+            "Shared\\Localization.lua",
+        ]
+    } else {
+        &[
             "## Title: Blizzard_UIParent",
             "## Dep: Blizzard_SharedXMLBase",
             "UIParent.lua",
-        ],
-        "Retail 12.1 UIParent TOC must remain the current two-directive, one-body-file contract"
+        ]
+    };
+    assert_eq!(
+        raw.lines().collect::<Vec<_>>(),
+        expected,
+        "the pinned UIParent TOC must match the active profile's contract"
     );
 }
 }

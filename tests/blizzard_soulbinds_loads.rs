@@ -77,7 +77,7 @@ fn load_full_game_ui() -> WowLuaEnv {
 }
 
 // Literal cached inputs absent from Wrath manifest1-382/cache; behavior cases stay enabled.
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn toc_declares_load_on_demand_with_current_dependencies() {
     let toc = TocFile::from_file(&soulbinds_toc()).expect("Soulbinds TOC parses");
@@ -104,7 +104,7 @@ fn toc_declares_load_on_demand_with_current_dependencies() {
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn toc_omits_optional_metadata_directives() {
     let toc = TocFile::from_file(&soulbinds_toc()).expect("Soulbinds TOC parses");
@@ -121,7 +121,7 @@ fn toc_omits_optional_metadata_directives() {
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn toc_raw_bytes_pin_four_metadata_directives() {
     let raw = std::fs::read_to_string(soulbinds_toc()).expect("TOC reads utf-8");
@@ -638,5 +638,20 @@ fn conduit_install_texture_template_registers_under_node_xml(env: &WowLuaEnv) {
          doesn't accept template inheritance the pcall fails benignly \
          — this test pins the surface contract"
     );
+}
+}
+
+// The Mists/Era/Anniversary caches ship 218 addons each and Wrath ships 23;
+// none contains Blizzard_Soulbinds, so the pinned TOC facts above describe no file the
+// classic loaders can read.
+classic_cache_absent_toc_fixture! {
+#[test]
+fn blizzard_soulbinds_toc_is_absent_from_classic_caches() {
+    let dir = soulbinds_dir();
+    assert!(
+        !dir.is_dir(),
+        "classic profile caches must not contain Blizzard_Soulbinds"
+    );
+    assert!(wow_ui_sim::loader::find_toc_file(&dir).is_none());
 }
 }

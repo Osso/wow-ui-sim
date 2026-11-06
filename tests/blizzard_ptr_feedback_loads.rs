@@ -7,6 +7,9 @@ use wow_ui_sim::screen::ScreenKind;
 use wow_ui_sim::startup::fire_startup_events_for_screen;
 use wow_ui_sim::toc::TocFile;
 
+#[path = "common/toc_layout.rs"]
+mod toc_layout;
+
 fn blizzard_ui_dir() -> PathBuf {
     wow_ui_sim::paths::default_blizzard_ui_addons_path()
         .expect("Blizzard UI cache should be available")
@@ -28,6 +31,38 @@ const PTR_FEEDBACK_TOC_FILES: &[&str] = &[
     "Blizzard_PTRFeedback_Events.lua",
     "Blizzard_Reports.lua",
 ];
+
+// The unified PTR TOC also lists the Gamepad plugin Lua.
+const UNIFIED_PTR_FEEDBACK_TOC_FILES: &[&str] = &[
+    "Blizzard_PTRFeedback_FrameTemplates.xml",
+    "Blizzard_PTRFeedback.lua",
+    "Blizzard_PTRFeedback_Tooltips.lua",
+    "Blizzard_PTRFeedback_Frames.lua",
+    "Blizzard_PTRFeedback_Events.lua",
+    "Blizzard_PTRFeedback_Gamepad.lua",
+    "Blizzard_Reports.lua",
+];
+
+// The classic TOC lists the six legacy Lua files without the FrameTemplates
+// XML prelude.
+const CLASSIC_PTR_FEEDBACK_TOC_FILES: &[&str] = &[
+    "Blizzard_PTRFeedback.lua",
+    "Blizzard_PTRFeedback_Tooltips.lua",
+    "Blizzard_PTRFeedback_Frames.lua",
+    "Blizzard_PTRFeedback_Events.lua",
+    "Blizzard_PTRFeedback_Constants.lua",
+    "Blizzard_Reports.lua",
+];
+
+fn ptr_feedback_toc_files() -> &'static [&'static str] {
+    if toc_layout::classic_cache() {
+        CLASSIC_PTR_FEEDBACK_TOC_FILES
+    } else if toc_layout::unified_toc_tree() {
+        UNIFIED_PTR_FEEDBACK_TOC_FILES
+    } else {
+        PTR_FEEDBACK_TOC_FILES
+    }
+}
 
 const REQUIRED_DEPS: &[&str] = &["Blizzard_HelpPlate"];
 
@@ -92,12 +127,16 @@ fn blizzard_ptr_feedback_toc_marks_addon_as_ptr_and_beta_only() {
     let toc = TocFile::from_file(&ptr_feedback_toc()).expect("Blizzard_PTRFeedback TOC parses");
 
     assert!(
+        toc.metadata.get("OnlyBetaAndPTR").map(String::as_str) == Some("1"),
+        "TOC must declare `## OnlyBetaAndPTR: 1`. The PTR Issue Reporter is a developer tool \
+         that ships with the live client tree but is gated to PTR / beta realms only"
+    );
+    assert_eq!(
         toc.is_ptr_only(),
-        "TOC must declare `## OnlyBetaAndPTR: 1` — `is_ptr_only()` at src/toc.rs:285-290 \
-         flips true. The PTR Issue Reporter is a developer tool that ships with the \
-         live client tree but is gated to PTR / beta realms only. The simulator \
-         emulates the live-client gate by filtering PTR-only addons out of eager \
-         discovery via `is_ptr_only()` at src/loader/mod.rs:527"
+        !toc_layout::unified_toc_tree(),
+        "`is_ptr_only()` gates the addon out of eager discovery on profiles that do not \
+         permit PTR-only addons; the PTR and Forever profiles admit them, so the gate is \
+         inactive there (src/toc/mod.rs permits_ptr_only)"
     );
 }
 }
@@ -141,11 +180,15 @@ fn blizzard_ptr_feedback_toc_declares_eager_no_lod_with_one_dep() {
 
     let dependencies = toc.dependencies();
     let deps: Vec<&str> = dependencies.iter().map(|s| s.as_str()).collect();
+    let expected_deps: &[&str] = if toc_layout::classic_cache() {
+        &[]
+    } else {
+        REQUIRED_DEPS
+    };
     assert_eq!(
-        deps, REQUIRED_DEPS,
-        "TOC must declare exactly 1 dep: Blizzard_HelpPlate (publishes the HelpPlate \
-         tutorial-overlay machinery used by the bug-report tutorial popup that \
-         introduces the F6 keybinding to first-time PTR testers)"
+        deps, expected_deps,
+        "TOC must declare exactly 1 dep: Blizzard_HelpPlate on Retail/PTR/Forever; the \
+         classic TOC declares none"
     );
 
     assert!(
@@ -183,18 +226,24 @@ fn blizzard_ptr_feedback_toc_declares_metadata_in_raw_bytes() {
     let raw =
         std::fs::read_to_string(ptr_feedback_toc()).expect("Blizzard_PTRFeedback TOC reads utf-8");
 
+    let (expected_title, expected_notes) = if toc_layout::classic_cache() {
+        ("## Title: PTR Bug Reporter", "## Notes: Tool for gathering bugs from PTR")
+    } else {
+        (
+            "## Title: PTR Issue Reporter",
+            "## Notes: Tool for gathering issues from PTR",
+        )
+    };
     assert!(
-        raw.contains("## Title: PTR Issue Reporter"),
-        "TOC must declare `## Title: PTR Issue Reporter` — note the title does NOT \
-         carry the `Blizzard ` prefix that almost every other Blizzard_* addon \
-         uses; the player-facing label is the historical pre-modern name"
+        raw.contains(expected_title),
+        "TOC must declare the pinned player-facing reporter title"
     );
     assert!(
         raw.contains("## OnlyBetaAndPTR: 1"),
         "TOC must declare `## OnlyBetaAndPTR: 1` exactly"
     );
     assert!(
-        raw.contains("## Notes: Tool for gathering issues from PTR"),
+        raw.contains(expected_notes),
         "TOC must declare `## Notes:` — one of the few Blizzard_* addons that \
          carries a Notes line. The Notes field is consumed by the AddOn list UI \
          to render a tooltip describing the addon's purpose"
@@ -204,10 +253,12 @@ fn blizzard_ptr_feedback_toc_declares_metadata_in_raw_bytes() {
         "TOC must declare `## SavedVariables:` with the historical \
          `Blizzard_PTRIssueReporter_Saved` global name"
     );
-    assert!(
-        raw.contains("## Dependencies: Blizzard_HelpPlate"),
-        "TOC must declare `## Dependencies: Blizzard_HelpPlate`"
-    );
+    if !toc_layout::classic_cache() {
+        assert!(
+            raw.contains("## Dependencies: Blizzard_HelpPlate"),
+            "TOC must declare `## Dependencies: Blizzard_HelpPlate`"
+        );
+    }
 
     assert!(
         !raw.contains("## Author"),
@@ -243,17 +294,13 @@ fn blizzard_ptr_feedback_toc_lists_six_files_in_canonical_order() {
         .map(|p| p.to_string_lossy().into_owned())
         .collect();
     assert_eq!(
-        listed, PTR_FEEDBACK_TOC_FILES,
-        "TOC must list exactly 6 files in this canonical XML-then-Lua order: \
-         Blizzard_PTRFeedback_FrameTemplates.xml first (publishes the \
-         UIPanelBugButton virtual template that subsequent frame-creation calls \
-         instantiate), Blizzard_PTRFeedback.lua second (declares the \
-         PTR_IssueReporter root Frame + the PTR_IssueReporter.Data / .Assets / \
-         .DataCollectorTypes namespace tables), then 4 plugin Lua files in \
-         dependency order: Tooltips → Frames → Events → Reports. Note that \
-         Bindings.xml exists in the addon directory but is NOT listed in the TOC \
-         body — it is auto-loaded by the keybinding subsystem via the special-case \
-         filename lookup, not via the TOC file enumeration. The Bindings.xml \
+        listed,
+        ptr_feedback_toc_files(),
+        "TOC must list the FrameTemplates XML, the root Lua, then the plugin \
+         Lua files in dependency order — Tooltips → Frames → Events → Gamepad (unified PTR \
+         TOC only) → Reports. Note that Bindings.xml exists in the addon directory but is \
+         NOT listed in the TOC body — it is auto-loaded by the keybinding subsystem via the \
+         special-case filename lookup, not via the TOC file enumeration. The Bindings.xml \
          registers the F6 default keybinding for `PTR_IssueReporter.HandleTooltipKeypress()`"
     );
 }

@@ -7,6 +7,9 @@ use wow_ui_sim::screen::ScreenKind;
 use wow_ui_sim::startup::fire_startup_events_for_screen;
 use wow_ui_sim::toc::TocFile;
 
+#[path = "common/toc_layout.rs"]
+mod toc_layout;
+
 fn blizzard_ui_dir() -> PathBuf {
     wow_ui_sim::client_profile::blizzard_ui_addons_dir_under(std::path::Path::new(env!(
         "CARGO_MANIFEST_DIR"
@@ -29,6 +32,27 @@ const MACRO_UI_TOC_FILES: &[&str] = &[
     "Blizzard_MacroIconSelector.xml",
     "Localization.lua",
 ];
+
+// The unified PTR 12.1.7 TOC lists the MacroDefine/MacroScrollFrame Mainline
+// files explicitly and lists both MacroIconSelector sources.
+const PTR_MACRO_UI_TOC_FILES: &[&str] = &[
+    "Blizzard_MacroUI_Bootstrap.lua",
+    "Mainline/Blizzard_MacroDefine.lua",
+    "Mainline/Blizzard_MacroScrollFrame.xml",
+    "Blizzard_MacroUI.lua",
+    "Blizzard_MacroUI.xml",
+    "Blizzard_MacroIconSelector.lua",
+    "Blizzard_MacroIconSelector.xml",
+    "Localization.lua",
+];
+
+fn macro_ui_toc_files() -> &'static [&'static str] {
+    if toc_layout::unified_toc_tree() {
+        PTR_MACRO_UI_TOC_FILES
+    } else {
+        MACRO_UI_TOC_FILES
+    }
+}
 
 const MACRO_DEFINE_CONSTANTS: &[(&str, i64)] = &[
     ("MACRO_SCROLL_BAR_OFFSET_X", -14),
@@ -197,20 +221,32 @@ fn blizzard_macro_ui_toc_raw_bytes_declare_load_on_demand_mainline_with_plunders
         "TOC must declare `## LoadOnDemand: 1` exactly — keeps the macro editor out of the \
          Game-screen auto-discovery sweep until ShowUIPanel(MacroFrame) flips the load"
     );
-    assert!(
-        raw.contains("## AllowLoadGameType: mainline"),
-        "TOC must declare `## AllowLoadGameType: mainline` exactly — the new macro editor \
-         (with the IconSelectorPopupFrameTemplate-driven icon picker + the \
-         ScrollBoxSelectorTemplate-driven macro list) is retail-only. Classic flavors ship \
-         the legacy macro UI through a separate addon path"
-    );
+    if toc_layout::unified_toc_tree() {
+        assert!(
+            !raw.contains("## AllowLoadGameType"),
+            "The unified PTR TOC is shared by every flavor and carries no top-level game-type \
+             restriction"
+        );
+        assert!(
+            raw.contains("## OptionalDep: Blizzard_Plunderstorm"),
+            "TOC must declare Blizzard_Plunderstorm as an optional dependency"
+        );
+    } else {
+        assert!(
+            raw.contains("## AllowLoadGameType: mainline"),
+            "TOC must declare `## AllowLoadGameType: mainline` exactly — the new macro editor \
+             (with the IconSelectorPopupFrameTemplate-driven icon picker + the \
+             ScrollBoxSelectorTemplate-driven macro list) is retail-only. Classic flavors ship \
+             the legacy macro UI through a separate addon path"
+        );
+        assert!(
+            raw.contains("## OptionalDeps: Blizzard_Plunderstorm"),
+            "TOC must declare Blizzard_Plunderstorm as an optional dependency"
+        );
+    }
     assert!(
         !raw.contains("## Dependencies:"),
         "TOC must NOT declare required `## Dependencies:`"
-    );
-    assert!(
-        raw.contains("## OptionalDeps: Blizzard_Plunderstorm"),
-        "TOC must declare Blizzard_Plunderstorm as an optional dependency"
     );
     assert!(
         !raw.contains("## AllowLoad:"),
@@ -232,7 +268,7 @@ fn blizzard_macro_ui_toc_lists_bootstrap_then_five_ui_files_in_dependency_order(
             .iter()
             .map(|p| p.to_string_lossy().into_owned())
             .collect::<Vec<_>>(),
-        MACRO_UI_TOC_FILES,
+        macro_ui_toc_files(),
         "TOC body must list the bootstrap, MacroDefine.lua, three XML files, then \
          Localization.lua. The bootstrap publishes MacroFrame_LoadUI/ShowMacroFrame before \
          the on-demand UI body, while XML Script directives load the mixin Lua files"

@@ -6,6 +6,9 @@ use wow_ui_sim::screen::ScreenKind;
 use wow_ui_sim::startup::fire_startup_events_for_screen;
 use wow_ui_sim::toc::TocFile;
 
+#[path = "common/toc_layout.rs"]
+mod toc_layout;
+
 fn blizzard_ui_dir() -> PathBuf {
     wow_ui_sim::paths::default_blizzard_ui_addons_path()
         .expect("Blizzard UI cache should be available")
@@ -60,7 +63,7 @@ fn load_full_game_ui() -> WowLuaEnv {
 }
 
 // Literal cached inputs absent from Wrath manifest1-382/cache; behavior cases stay enabled.
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn find_toc_file_resolves_bare_toc() {
     let resolved = find_toc_file(&rpe_dir()).expect("Blizzard_RPE_TurnStrafe TOC should resolve");
@@ -76,7 +79,7 @@ fn find_toc_file_resolves_bare_toc() {
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn toc_declares_eager_standard_only_with_zero_dependencies() {
     let toc = TocFile::from_file(&rpe_toc()).expect("Blizzard_RPE_TurnStrafe TOC should parse");
@@ -90,13 +93,12 @@ fn toc_declares_eager_standard_only_with_zero_dependencies() {
          entire turn-strafe migration prompt past initial bindings load and break the prompt's \
          trigger chain"
     );
-    assert!(
-        !toc.is_game_type_restricted(),
-        "## AllowLoadGameType: standard — `standard` IS in the mainline-allowlist match arm at \
-         src/toc.rs:294-302 (matches!(t.trim(), \"mainline\" | \"standard\")), so \
-         is_game_type_restricted returns FALSE. The addon ships in retail builds only — the \
-         turn/strafe binding system is mainline-specific and classic clients have no \
-         C_KeyBindings.GetTurnStrafeStyle to call"
+    assert_eq!(
+        toc.is_game_type_restricted(),
+        !toc_layout::admits_game_type("standard"),
+        "## AllowLoadGameType: standard — `standard` is in the Retail/PTR allow-list, so \
+         is_game_type_restricted returns FALSE there. The pinned Forever allow-list is \
+         `camelot, mainline`, so the same directive restricts the addon on that profile"
     );
     assert!(
         toc.dependencies().is_empty(),
@@ -119,7 +121,7 @@ fn toc_declares_eager_standard_only_with_zero_dependencies() {
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn toc_lists_two_files_in_root_directory() {
     let toc = TocFile::from_file(&rpe_toc()).expect("Blizzard_RPE_TurnStrafe TOC should parse");
@@ -200,6 +202,7 @@ fn included_in_eager_discovery_for_game_screen_only() {
 }
 }
 
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn root_directory_holds_lua_and_xml_next_to_toc() {
     let mut entries: Vec<String> = std::fs::read_dir(rpe_dir())
@@ -218,6 +221,7 @@ fn root_directory_holds_lua_and_xml_next_to_toc() {
         "Blizzard_RPE_TurnStrafe/ root must hold exactly the lua/xml pair next to the TOC — no \
          localization stub and no per-flavor subdirectory"
     );
+}
 }
 
 prefork_full_ui_case! {
@@ -381,5 +385,20 @@ fn xml_declares_two_virtual_templates_and_zero_named_frames() {
          dispatch — these are the bindings that register/unregister UPDATE_BINDINGS so the \
          popup refreshes when keybinds change while it is visible"
     );
+}
+}
+
+// The Mists/Era/Anniversary caches ship 218 addons each and Wrath ships 23;
+// none contains Blizzard_RPE_TurnStrafe, so the pinned TOC facts above describe no file the
+// classic loaders can read.
+classic_cache_absent_toc_fixture! {
+#[test]
+fn blizzard_rpe_turnstrafe_toc_is_absent_from_classic_caches() {
+    let dir = rpe_dir();
+    assert!(
+        !dir.is_dir(),
+        "classic profile caches must not contain Blizzard_RPE_TurnStrafe"
+    );
+    assert!(wow_ui_sim::loader::find_toc_file(&dir).is_none());
 }
 }

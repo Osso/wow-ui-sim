@@ -71,7 +71,7 @@ fn load_full_game_ui() -> WowLuaEnv {
 }
 
 // Literal cached inputs absent from Wrath manifest1-382/cache; behavior cases stay enabled.
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn find_toc_file_resolves_bare_toc() {
     let resolved = find_toc_file(&torghast_dir()).expect("TorghastLevelPicker TOC resolves");
@@ -85,7 +85,7 @@ fn find_toc_file_resolves_bare_toc() {
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn toc_is_load_on_demand_with_single_blizzard_colors_dependency() {
     let toc = TocFile::from_file(&torghast_toc()).expect("TOC parses");
@@ -145,7 +145,7 @@ fn allow_load_absent_defaults_to_game_only_screen() {
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn toc_raw_bytes_pin_five_metadata_directives() {
     let raw = std::fs::read_to_string(torghast_toc()).expect("TOC reads utf-8");
@@ -410,5 +410,20 @@ fn explicit_load_emits_no_addon_specific_errors(env: &WowLuaEnv) {
         addon_specific.len(),
         addon_specific
     );
+}
+}
+
+// The Mists/Era/Anniversary caches ship 218 addons each and Wrath ships 23;
+// none contains Blizzard_TorghastLevelPicker, so the pinned TOC facts above describe no file the
+// classic loaders can read.
+classic_cache_absent_toc_fixture! {
+#[test]
+fn blizzard_torghastlevelpicker_toc_is_absent_from_classic_caches() {
+    let dir = torghast_dir();
+    assert!(
+        !dir.is_dir(),
+        "classic profile caches must not contain Blizzard_TorghastLevelPicker"
+    );
+    assert!(wow_ui_sim::loader::find_toc_file(&dir).is_none());
 }
 }

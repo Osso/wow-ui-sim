@@ -60,7 +60,7 @@ fn load_full_game_ui() -> WowLuaEnv {
 }
 
 // Literal cached inputs absent from Wrath manifest1-382/cache; behavior cases stay enabled.
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn find_toc_file_resolves_bare_variant() {
     let resolved = find_toc_file(&weekly_rewards_util_dir())
@@ -76,7 +76,7 @@ fn find_toc_file_resolves_bare_variant() {
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn toc_declares_explicit_lod_zero() {
     let toc = TocFile::from_file(&weekly_rewards_util_toc())
@@ -109,7 +109,7 @@ fn toc_declares_explicit_lod_zero() {
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn toc_omits_allow_load_directives() {
     let toc = TocFile::from_file(&weekly_rewards_util_toc())
@@ -140,7 +140,7 @@ fn toc_omits_allow_load_directives() {
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn toc_lists_only_lua_body_file() {
     let toc = TocFile::from_file(&weekly_rewards_util_toc())
@@ -160,7 +160,7 @@ fn toc_lists_only_lua_body_file() {
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn toc_raw_bytes_pin_minimal_directives() {
     let raw = std::fs::read_to_string(weekly_rewards_util_toc())
@@ -469,5 +469,20 @@ fn weekly_reward_mixin_on_mouse_up_calls_show_ui_for_left_click_inside(env: &Wow
          trigger the vault open — the MMO standard click-to-open contract from the chest button \
          in the Mythic+ challenges panel"
     );
+}
+}
+
+// The Mists/Era/Anniversary caches ship 218 addons each and Wrath ships 23;
+// none contains Blizzard_WeeklyRewardsUtil, so the pinned TOC facts above describe no file the
+// classic loaders can read.
+classic_cache_absent_toc_fixture! {
+#[test]
+fn blizzard_weeklyrewardsutil_toc_is_absent_from_classic_caches() {
+    let dir = weekly_rewards_util_dir();
+    assert!(
+        !dir.is_dir(),
+        "classic profile caches must not contain Blizzard_WeeklyRewardsUtil"
+    );
+    assert!(wow_ui_sim::loader::find_toc_file(&dir).is_none());
 }
 }

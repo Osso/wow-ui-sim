@@ -47,7 +47,7 @@ fn load_weekly_rewards(env: &WowLuaEnv) {
 }
 
 // Literal cached inputs absent from Wrath manifest1-382/cache; behavior cases stay enabled.
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn find_toc_file_resolves_bare_variant() {
     let resolved =
@@ -63,7 +63,7 @@ fn find_toc_file_resolves_bare_variant() {
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn toc_declares_lod_with_zero_dependencies() {
     let toc =
@@ -102,7 +102,7 @@ fn toc_declares_lod_with_zero_dependencies() {
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn toc_omits_allow_load_directives() {
     let toc =
@@ -134,7 +134,7 @@ fn toc_omits_allow_load_directives() {
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn toc_lists_bootstrap_then_xml_body_file() {
     let toc =
@@ -158,7 +158,7 @@ fn toc_lists_bootstrap_then_xml_body_file() {
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn toc_raw_bytes_pin_minimal_directives() {
     let raw = std::fs::read_to_string(weekly_rewards_toc())
@@ -483,5 +483,20 @@ fn confirm_select_static_popup_dialog_registers_at_file_scope(env: &WowLuaEnv) {
          registration runs the moment the lua file is loaded via the XML's `<Script file>` \
          directive, NOT lazily on first use"
     );
+}
+}
+
+// The Mists/Era/Anniversary caches ship 218 addons each and Wrath ships 23;
+// none contains Blizzard_WeeklyRewards, so the pinned TOC facts above describe no file the
+// classic loaders can read.
+classic_cache_absent_toc_fixture! {
+#[test]
+fn blizzard_weeklyrewards_toc_is_absent_from_classic_caches() {
+    let dir = weekly_rewards_dir();
+    assert!(
+        !dir.is_dir(),
+        "classic profile caches must not contain Blizzard_WeeklyRewards"
+    );
+    assert!(wow_ui_sim::loader::find_toc_file(&dir).is_none());
 }
 }

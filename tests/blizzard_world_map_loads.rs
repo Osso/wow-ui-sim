@@ -6,6 +6,9 @@ use wow_ui_sim::screen::ScreenKind;
 use wow_ui_sim::startup::fire_startup_events_for_screen;
 use wow_ui_sim::toc::TocFile;
 
+#[path = "common/toc_layout.rs"]
+mod toc_layout;
+
 fn blizzard_ui_dir() -> PathBuf {
     wow_ui_sim::paths::default_blizzard_ui_addons_path()
         .expect("Blizzard UI cache should be available")
@@ -16,7 +19,7 @@ fn world_map_dir() -> PathBuf {
 }
 
 fn world_map_toc() -> PathBuf {
-    world_map_dir().join("Blizzard_WorldMap_Mainline.toc")
+    wow_ui_sim::loader::find_toc_file(&world_map_dir()).expect("Blizzard_WorldMap TOC resolves")
 }
 
 const REQUIRED_DEPS: &[&str] = &[
@@ -34,6 +37,80 @@ const MAINLINE_BODY_FILES: &[&str] = &[
     "Blizzard_WorldMapTemplates.xml",
     "Blizzard_WorldMap.xml",
 ];
+
+// The PTR Mainline TOC lists the family constants, templates, and overrides
+// explicitly; the plunderstorm entries stay filtered out.
+const PTR_MAINLINE_BODY_FILES: &[&str] = &[
+    "Mainline/Blizzard_WorldMapConstants.lua",
+    "QuestLogOwnerMixin.lua",
+    "MapTexturePreloader.lua",
+    "WM_WorldQuestDataProvider.xml",
+    "WM_EventOverlayDataProvider.xml",
+    "WM_DebugDataProvider.xml",
+    "Mainline/Blizzard_WorldMapTemplates.xml",
+    "Blizzard_WorldMapTemplates.xml",
+    "Blizzard_WorldMapTemplates.lua",
+    "Mainline/Blizzard_WorldMapTemplates.lua",
+    "Blizzard_WorldMap.lua",
+    "Blizzard_WorldMap.xml",
+];
+
+// The pinned Forever TOC resolves `[Game]` to Camelot, so the Camelot
+// constants/templates/overrides replace the Mainline ones gated out there.
+const FOREVER_BODY_FILES: &[&str] = &[
+    "Camelot/Blizzard_WorldMapConstants.lua",
+    "QuestLogOwnerMixin.lua",
+    "MapTexturePreloader.lua",
+    "WM_WorldQuestDataProvider.xml",
+    "WM_EventOverlayDataProvider.xml",
+    "WM_DebugDataProvider.xml",
+    "Camelot/Blizzard_WorldMapTemplates.xml",
+    "Blizzard_WorldMapTemplates.xml",
+    "Blizzard_WorldMapTemplates.lua",
+    "Camelot/Blizzard_WorldMapTemplates.lua",
+    "Blizzard_WorldMap.lua",
+    "Camelot/Blizzard_WorldMap.lua",
+    "Blizzard_WorldMap.xml",
+];
+
+// The classic `_Mists.toc` maps the Cata\WorldMap pair; the Era/Anniversary
+// `_Vanilla.toc` maps the Vanilla pair and keeps `LoadOnDemand: 0`.
+const MISTS_BODY_FILES: &[&str] = &[
+    "Wrath/QuestLogOwnerMixin.lua",
+    "MapTexturePreloader.lua",
+    "WM_WorldQuestDataProvider.xml",
+    "WM_InvasionDataProvider.xml",
+    "WM_DebugDataProvider.xml",
+    "Blizzard_WorldMapTemplates.xml",
+    "Cata/Blizzard_WorldMap.lua",
+    "Cata/Blizzard_WorldMap.xml",
+    "Blizzard_WorldMapTooltip.xml",
+];
+
+const VANILLA_BODY_FILES: &[&str] = &[
+    "MapTexturePreloader.lua",
+    "WM_WorldQuestDataProvider.xml",
+    "WM_InvasionDataProvider.xml",
+    "WM_DebugDataProvider.xml",
+    "Blizzard_WorldMapTemplates.xml",
+    "Vanilla/Blizzard_WorldMap.lua",
+    "Blizzard_WorldMap.xml",
+    "Blizzard_WorldMapTooltip.xml",
+];
+
+fn mainline_body_files() -> &'static [&'static str] {
+    if toc_layout::mists() {
+        MISTS_BODY_FILES
+    } else if toc_layout::classic_cache() {
+        VANILLA_BODY_FILES
+    } else if toc_layout::forever() {
+        FOREVER_BODY_FILES
+    } else if toc_layout::unified_toc_tree() {
+        PTR_MAINLINE_BODY_FILES
+    } else {
+        MAINLINE_BODY_FILES
+    }
+}
 
 const PRIMARY_MIXINS: &[&str] = &[
     "WorldMapMixin",
@@ -110,12 +187,10 @@ post_wrath_ui_fixture! {
 fn find_toc_file_resolves_mainline_variant() {
     let resolved = find_toc_file(&world_map_dir()).expect("Blizzard_WorldMap TOC should resolve");
     assert_eq!(
-        resolved,
-        world_map_toc(),
-        "Blizzard_WorldMap ships only `Blizzard_WorldMap_Mainline.toc` — find_toc_file probes \
-         the `_Mainline.toc` variant first and hits. The classic-flavor map UI ships its own \
-         standalone Blizzard_WorldMap_ClassicEra/_TBC/_Wrath/etc. addons rather than sharing this \
-         one"
+        resolved.file_name().and_then(|name| name.to_str()),
+        Some(toc_layout::expected_toc_name("Blizzard_WorldMap").as_str()),
+        "find_toc_file resolves the active profile's WorldMap TOC: Retail ships `_Mainline.toc`, \
+         Mists `_Mists.toc` and Era/Anniversary `_Vanilla.toc`"
     );
 }
 }
@@ -126,12 +201,17 @@ fn toc_declares_three_required_deps_via_singular_directive() {
     let toc = TocFile::from_file(&world_map_toc()).expect("Blizzard_WorldMap TOC should parse");
 
     let deps: Vec<String> = toc.dependencies().to_vec();
+    let expected_deps: Vec<String> = if toc_layout::classic_cache() {
+        vec![
+            "Blizzard_MapCanvas".to_string(),
+            "Blizzard_SharedMapDataProviders".to_string(),
+        ]
+    } else {
+        REQUIRED_DEPS.iter().map(|s| s.to_string()).collect()
+    };
     assert_eq!(
         deps,
-        REQUIRED_DEPS
-            .iter()
-            .map(|s| s.to_string())
-            .collect::<Vec<_>>(),
+        expected_deps,
         "Blizzard_WorldMap declares `## RequiredDep: Blizzard_MapCanvas, Blizzard_SharedMapDataProviders, \
          Blizzard_HelpPlate` (singular `RequiredDep` with a comma-list of 3 deps). FIRST campaign \
          addon analyzed exercising the multi-dep singular RequiredDep variant — toc.rs:210-217 \
@@ -140,7 +220,7 @@ fn toc_declares_three_required_deps_via_singular_directive() {
          dependencies() vector"
     );
 
-    assert!(!toc.is_load_on_demand());
+    assert_eq!(toc.is_load_on_demand(), false);
     assert!(!toc.is_load_first());
     assert!(!toc.is_secure_env());
     assert!(toc.optional_deps().is_empty());
@@ -170,11 +250,8 @@ fn toc_omits_allow_load_directives() {
 
     assert!(
         !toc.is_game_type_restricted(),
-        "Without a top-level `## AllowLoadGameType`, is_game_type_restricted returns false. The \
-         per-file `[AllowLoadGameType plunderstorm]` annotations on lines 10-11 of the TOC body \
-         only gate THOSE TWO files (the WoWLabs/WM_WoWLabsAreaDataProvider.lua + .xml plunderstorm \
-         overlay) — they do NOT restrict the addon itself; the rest of the addon ships on every \
-         retail flavor"
+        "the active profile's WorldMap TOC admits its own game type, so is_game_type_restricted \
+         returns false"
     );
 }
 }
@@ -192,24 +269,29 @@ fn toc_body_excludes_plunderstorm_files_on_mainline_build() {
 
     assert_eq!(
         body_files,
-        MAINLINE_BODY_FILES
+        mainline_body_files()
             .iter()
             .map(|s| s.to_string())
             .collect::<Vec<_>>(),
-        "TOC body must collapse to 7 files on mainline — the 2 lines tagged \
+        "TOC body must collapse to the Mainline entries on a mainline build — the 2 lines tagged \
          `[AllowLoadGameType plunderstorm]` (WoWLabs/WM_WoWLabsAreaDataProvider.lua + .xml) are \
-         dropped at toc.rs:141 by push_file_entry's is_allowed_game_type guard since plunderstorm \
-         is not in {{mainline, standard}}. FIRST campaign addon analyzed exercising the per-file \
+         dropped at push_file_entry's is_allowed_game_type guard since plunderstorm is not in \
+         {{mainline, standard}}. FIRST campaign addon analyzed exercising the per-file \
          game-type gate (distinct from Blizzard_WorldLootObjectList's TOP-LEVEL \
          `## AllowLoadGameType: plunderstorm`, which restricts the entire addon)"
     );
 
-    for excluded_file in [
-        "WoWLabs/WM_WoWLabsAreaDataProvider.lua",
-        "WoWLabs/WM_WoWLabsAreaDataProvider.xml",
-        "WoWLabs\\WM_WoWLabsAreaDataProvider.lua",
-        "WoWLabs\\WM_WoWLabsAreaDataProvider.xml",
-    ] {
+    let excluded: &[&str] = if toc_layout::classic_cache() {
+        &[]
+    } else {
+        &[
+            "WoWLabs/WM_WoWLabsAreaDataProvider.lua",
+            "WoWLabs/WM_WoWLabsAreaDataProvider.xml",
+            "WoWLabs\\WM_WoWLabsAreaDataProvider.lua",
+            "WoWLabs\\WM_WoWLabsAreaDataProvider.xml",
+        ]
+    };
+    for excluded_file in excluded {
         assert!(
             !body_files.iter().any(|f| f == excluded_file),
             "TOC body must NOT include `{excluded_file}` on a mainline build"
@@ -223,17 +305,31 @@ post_wrath_ui_fixture! {
 fn toc_raw_bytes_pin_directives_and_per_file_gates() {
     let raw = std::fs::read_to_string(world_map_toc()).expect("Blizzard_WorldMap TOC should read");
 
-    for directive in [
-        "## Title: Blizzard_WorldMap",
-        "## Author: Blizzard Entertainment",
-        "## RequiredDep: Blizzard_MapCanvas, Blizzard_SharedMapDataProviders, Blizzard_HelpPlate",
-    ] {
+    let required: &[&str] = if toc_layout::classic_cache() {
+        &[
+            "## Title: Blizzard World Map UI",
+            "## Author: Blizzard Entertainment",
+            "## RequiredDep: Blizzard_MapCanvas, Blizzard_SharedMapDataProviders",
+            "## AllowLoad: game",
+        ]
+    } else {
+        &[
+            "## Title: Blizzard_WorldMap",
+            "## Author: Blizzard Entertainment",
+            "## RequiredDep: Blizzard_MapCanvas, Blizzard_SharedMapDataProviders, Blizzard_HelpPlate",
+        ]
+    };
+    for directive in required {
         assert!(
             raw.contains(directive),
             "TOC must contain directive line `{directive}`"
         );
     }
 
+    if toc_layout::classic_cache() {
+        assert!(raw.contains("## AllowLoadGameType:"));
+        return;
+    }
     assert!(
         raw.contains("WoWLabs/WM_WoWLabsAreaDataProvider.lua [AllowLoadGameType plunderstorm]"),
         "TOC raw bytes must pin the per-file `[AllowLoadGameType plunderstorm]` annotation on \

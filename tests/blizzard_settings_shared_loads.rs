@@ -7,6 +7,9 @@ use wow_ui_sim::screen::ScreenKind;
 use wow_ui_sim::startup::fire_startup_events_for_screen;
 use wow_ui_sim::toc::TocFile;
 
+#[path = "common/toc_layout.rs"]
+mod toc_layout;
+
 fn blizzard_ui_dir() -> PathBuf {
     wow_ui_sim::paths::default_blizzard_ui_addons_path()
         .expect("Blizzard UI cache should be available")
@@ -17,7 +20,7 @@ fn settings_shared_dir() -> PathBuf {
 }
 
 fn settings_shared_toc() -> PathBuf {
-    settings_shared_dir().join("Blizzard_Settings_Shared.toc")
+    find_toc_file(&settings_shared_dir()).expect("Blizzard_Settings_Shared TOC resolves")
 }
 
 const HARD_DEPS: &[&str] = &[
@@ -25,6 +28,109 @@ const HARD_DEPS: &[&str] = &[
     "Blizzard_HelpPlate",
     "Blizzard_StaticPopup_Glue",
     "Blizzard_StaticPopup_Game",
+];
+
+// The unified PTR TOC adds two unconditional hard deps; the Forever TOC adds
+// only Blizzard_GamepadSharedUtility.
+const PTR_HARD_DEPS: &[&str] = &[
+    "Blizzard_SharedXML",
+    "Blizzard_HelpPlate",
+    "Blizzard_StaticPopup_Glue",
+    "Blizzard_StaticPopup_Game",
+    "Blizzard_GamepadSharedUtility",
+    "Blizzard_UIParentPanelManager",
+];
+
+const FOREVER_HARD_DEPS: &[&str] = &[
+    "Blizzard_SharedXML",
+    "Blizzard_HelpPlate",
+    "Blizzard_StaticPopup_Glue",
+    "Blizzard_StaticPopup_Game",
+    "Blizzard_GamepadSharedUtility",
+];
+
+// The classic pinned `_Classic.toc` keeps the two hard dependencies and moves
+// the two screen-scoped static popup addons into `## OptionalDep:`.
+const CLASSIC_HARD_DEPS: &[&str] = &["Blizzard_SharedXML", "Blizzard_HelpPlate"];
+const CLASSIC_OPTIONAL_DEPS: &[&str] = &["Blizzard_StaticPopup_Glue", "Blizzard_StaticPopup_Game"];
+
+fn hard_deps() -> &'static [&'static str] {
+    if toc_layout::classic_cache() {
+        CLASSIC_HARD_DEPS
+    } else if toc_layout::forever() {
+        FOREVER_HARD_DEPS
+    } else if toc_layout::unified_toc_tree() {
+        PTR_HARD_DEPS
+    } else {
+        HARD_DEPS
+    }
+}
+
+// Resolved body order of the unified PTR TOC: it lists the Lua siblings of
+// CategoryList, SettingsList, SettingControls, Keybindings, and the Preferred
+// Play settings explicitly, and gates the Camelot overrides out of Mainline.
+const PTR_BODY: &[&str] = &[
+    "NewDefinitionsFramework.lua",
+    "NewDefinitionsFramework.xml",
+    "Mainline/NewDefinitions.lua",
+    "Blizzard_SettingsRegistrar.lua",
+    "Blizzard_Settings.lua",
+    "Blizzard_Category.lua",
+    "Blizzard_CategoryList.lua",
+    "Blizzard_CategoryList.xml",
+    "Blizzard_SettingsList.lua",
+    "Blizzard_SettingsList.xml",
+    "Blizzard_Setting.lua",
+    "Blizzard_SettingControls.lua",
+    "Blizzard_SettingControls.xml",
+    "Mainline/Blizzard_SettingsPanelTemplates.xml",
+    "Blizzard_SettingsPanel.lua",
+    "Blizzard_SettingsPanel.xml",
+    "Blizzard_Keybindings.lua",
+    "Blizzard_Keybindings.xml",
+    "Blizzard_Dialogs.lua",
+    "Blizzard_SettingsLayouts.lua",
+    "Blizzard_Registration.lua",
+    "Blizzard_SettingsInbound.lua",
+    "Blizzard_Deprecated.lua",
+    "Mainline/GraphicsOverrides.lua",
+    "Mainline/AudioOverrides.lua",
+    "Blizzard_Settings_PreferredPlaySettings.lua",
+    "Mainline/LanguagesOverrides.lua",
+];
+
+// Resolved body order of the pinned Forever TOC: it resolves `[Game]` to
+// Camelot, so the Camelot NewDefinitions/AudioOverrides/LanguagesOverrides
+// entries replace the Mainline ones gated out by `ExcludeLoadGameType camelot`.
+const FOREVER_BODY: &[&str] = &[
+    "NewDefinitionsFramework.lua",
+    "NewDefinitionsFramework.xml",
+    "Camelot/NewDefinitions.lua",
+    "Blizzard_SettingsRegistrar.lua",
+    "Blizzard_Settings.lua",
+    "Blizzard_Category.lua",
+    "Blizzard_CategoryList.lua",
+    "Blizzard_CategoryList.xml",
+    "Blizzard_SettingsList.lua",
+    "Blizzard_SettingsList.xml",
+    "Blizzard_Setting.lua",
+    "Blizzard_SettingControls.lua",
+    "Blizzard_SettingControls.xml",
+    "Mainline/Blizzard_SettingsPanelTemplates.xml",
+    "Blizzard_SettingsPanel.lua",
+    "Blizzard_SettingsPanel.xml",
+    "Blizzard_Keybindings.lua",
+    "Blizzard_Keybindings.xml",
+    "Blizzard_Dialogs.lua",
+    "Blizzard_SettingsLayouts.lua",
+    "Blizzard_Registration.lua",
+    "Blizzard_SettingsInbound.lua",
+    "Blizzard_Deprecated.lua",
+    "Mainline/GraphicsOverrides.lua",
+    "Mainline/AudioOverrides.lua",
+    "Camelot/AudioOverrides.lua",
+    "Blizzard_Settings_PreferredPlaySettings.lua",
+    "Camelot/LanguagesOverrides.lua",
 ];
 
 const PUBLIC_MIXINS: &[&str] = &[
@@ -126,9 +232,10 @@ fn find_toc_file_resolves_bare_variant() {
     let resolved =
         find_toc_file(&settings_shared_dir()).expect("Blizzard_Settings_Shared TOC resolves");
     assert_eq!(
-        resolved,
-        settings_shared_toc(),
-        "Retail 12.1.0.69497 ships the bare Blizzard_Settings_Shared.toc variant"
+        resolved.file_name().and_then(|name| name.to_str()),
+        Some(toc_layout::expected_toc_name("Blizzard_Settings_Shared").as_str()),
+        "find_toc_file resolves the active profile's Settings_Shared TOC: Retail ships the \
+         bare TOC and the classic caches the `_Classic` companion"
     );
 }
 }
@@ -153,10 +260,10 @@ fn toc_declares_eager_both_with_four_dep_entries() {
     let deps = toc.dependencies();
     assert_eq!(
         deps.len(),
-        HARD_DEPS.len(),
-        "Retail 12.1.0.69497 declares four Dep entries in published order. Got: {deps:?}"
+        hard_deps().len(),
+        "TOC declares its Dep entries in published order. Got: {deps:?}"
     );
-    for (i, expected) in HARD_DEPS.iter().enumerate() {
+    for (i, expected) in hard_deps().iter().enumerate() {
         assert_eq!(deps[i], *expected, "Hard dep #{i} must be {expected}");
     }
 
@@ -176,10 +283,21 @@ post_wrath_ui_fixture! {
 fn toc_uses_dep_entries_without_optional_dependencies() {
     let toc = TocFile::from_file(&settings_shared_toc()).expect("TOC parses");
 
-    assert!(
-        toc.optional_deps().is_empty(),
-        "Retail 12.1.0.69497 uses Dep entries, not OptionalDep metadata"
-    );
+    if toc_layout::classic_cache() {
+        assert_eq!(
+            toc.optional_deps(),
+            CLASSIC_OPTIONAL_DEPS
+                .iter()
+                .map(|s| s.to_string())
+                .collect::<Vec<_>>(),
+            "the classic TOC declares the two screen-scoped static popup addons as optional"
+        );
+    } else {
+        assert!(
+            toc.optional_deps().is_empty(),
+            "Retail 12.1.0.69497 uses Dep entries, not OptionalDep metadata"
+        );
+    }
 }
 }
 
@@ -213,13 +331,23 @@ fn toc_raw_bytes_pin_current_dep_entries_and_allow_load_both() {
         std::fs::read_to_string(settings_shared_toc()).expect("Settings_Shared TOC reads utf-8");
 
     assert!(raw.contains("## Title: Blizzard_Settings_Shared"));
-    for directive in [
-        "## Dep: Blizzard_SharedXML",
-        "## Dep: Blizzard_HelpPlate",
-        "## Dep: Blizzard_StaticPopup_Glue [AllowLoad glue]",
-        "## Dep: Blizzard_StaticPopup_Game [AllowLoad game]",
-        "## AllowLoad: Both",
-    ] {
+    let expected: &[&str] = if toc_layout::classic_cache() {
+        &[
+            "## Dependencies: Blizzard_SharedXML, Blizzard_HelpPlate",
+            "## OptionalDep: Blizzard_StaticPopup_Glue, Blizzard_StaticPopup_Game",
+            "## AllowLoad: Both",
+            "## AllowLoadGameType: classic",
+        ]
+    } else {
+        &[
+            "## Dep: Blizzard_SharedXML",
+            "## Dep: Blizzard_HelpPlate",
+            "## Dep: Blizzard_StaticPopup_Glue [AllowLoad glue]",
+            "## Dep: Blizzard_StaticPopup_Game [AllowLoad game]",
+            "## AllowLoad: Both",
+        ]
+    };
+    for directive in expected {
         assert!(
             raw.contains(directive),
             "missing current directive: {directive}"
@@ -235,7 +363,9 @@ fn toc_raw_bytes_pin_current_dep_entries_and_allow_load_both() {
     assert!(!raw.contains("## LoadFirst"));
     assert!(!raw.contains("## UseSecureEnvironment"));
     assert!(!raw.contains("## RequiredDep"));
-    assert!(!raw.contains("## OptionalDep"));
+    if !toc_layout::classic_cache() {
+        assert!(!raw.contains("## OptionalDep"));
+    }
 }
 }
 
@@ -244,6 +374,38 @@ post_wrath_ui_fixture! {
 fn toc_body_load_order_runs_definitions_framework_before_namespace_seed() {
     let raw = std::fs::read_to_string(settings_shared_toc()).expect("TOC reads utf-8");
 
+    if toc_layout::forever() {
+        let toc = TocFile::from_file(&settings_shared_toc()).expect("TOC parses");
+        let body: Vec<String> = toc
+            .files
+            .iter()
+            .map(|path| path.to_string_lossy().replace('\\', "/"))
+            .collect();
+        assert_eq!(
+            body,
+            FOREVER_BODY.iter().map(|s| s.to_string()).collect::<Vec<_>>(),
+            "The pinned Forever TOC resolves to this load order: the definitions framework \
+             and namespace seed run first, then the category/settings/panel/registration chain"
+        );
+        return;
+    }
+
+    if toc_layout::unified_toc_tree() {
+        let toc = TocFile::from_file(&settings_shared_toc()).expect("TOC parses");
+        let body: Vec<String> = toc
+            .files
+            .iter()
+            .map(|path| path.to_string_lossy().replace('\\', "/"))
+            .collect();
+        assert_eq!(
+            body,
+            PTR_BODY.iter().map(|s| s.to_string()).collect::<Vec<_>>(),
+            "The unified PTR TOC resolves to this load order: the definitions framework and \
+             namespace seed run first, then the category/settings/panel/registration chain"
+        );
+        return;
+    }
+
     let body_lines: Vec<&str> = raw
         .lines()
         .filter(|line| {
@@ -251,6 +413,35 @@ fn toc_body_load_order_runs_definitions_framework_before_namespace_seed() {
             !trimmed.is_empty() && !trimmed.starts_with('#')
         })
         .collect();
+
+    if toc_layout::classic_cache() {
+        let expected_body = vec![
+            "NewDefinitionsFramework.lua",
+            "Blizzard_SettingsRegistrar.lua",
+            "Blizzard_Settings.lua",
+            "Blizzard_Category.lua",
+            "Blizzard_CategoryList.xml",
+            "Blizzard_SettingsList.xml",
+            "Blizzard_Setting.lua",
+            "Blizzard_SettingControls.xml",
+            "Classic\\Blizzard_SettingsPanelTemplates.xml",
+            "Blizzard_SettingsPanel.lua",
+            "Blizzard_SettingsPanel.xml",
+            "Blizzard_Keybindings.xml",
+            "Blizzard_Dialogs.lua",
+            "Blizzard_SettingsLayouts.lua",
+            "Blizzard_Registration.lua",
+            "Blizzard_SettingsInbound.lua",
+            "Blizzard_Deprecated.lua",
+            "Classic\\GraphicsOverrides.lua",
+            "Classic\\AudioOverrides.lua",
+        ];
+        assert_eq!(
+            body_lines, expected_body,
+            "the pinned classic TOC lists these Settings_Shared body entries in this exact order"
+        );
+        return;
+    }
 
     let expected_body = vec![
         "NewDefinitionsFramework.lua",
@@ -297,13 +488,23 @@ fn toc_entry_count_breakdown_matches_filesystem_layout() {
         .iter()
         .filter(|f| f.extension().is_some_and(|ext| ext == "xml"))
         .count();
+    let expected_lua = if toc_layout::classic_cache() {
+        13
+    } else if toc_layout::forever() {
+        21
+    } else if toc_layout::unified_toc_tree() {
+        20
+    } else {
+        14
+    };
+    let expected_xml = if toc_layout::classic_cache() { 6 } else { 7 };
     assert_eq!(
-        lua_count, 14,
-        "Retail 12.1.0.69497 lists 14 Lua entries. Got: {lua_count}"
+        lua_count, expected_lua,
+        "TOC body lists {expected_lua} Lua entries. Got: {lua_count}"
     );
     assert_eq!(
-        xml_count, 7,
-        "Retail 12.1.0.69497 lists seven XML entries, including NewDefinitionsFramework.xml. Got: {xml_count}"
+        xml_count, expected_xml,
+        "TOC body lists {expected_xml} XML entries, including NewDefinitionsFramework.xml. Got: {xml_count}"
     );
 }
 }

@@ -7,6 +7,9 @@ use wow_ui_sim::screen::ScreenKind;
 use wow_ui_sim::startup::fire_startup_events_for_screen;
 use wow_ui_sim::toc::TocFile;
 
+#[path = "common/toc_layout.rs"]
+mod toc_layout;
+
 fn blizzard_ui_dir() -> PathBuf {
     wow_ui_sim::paths::default_blizzard_ui_addons_path()
         .expect("Blizzard UI cache should be available")
@@ -38,6 +41,70 @@ const TEMPLATES_TOC_FILES: &[&str] = &[
     "Blizzard_ProfessionsQualityDialog.xml",
     "Blizzard_ProfessionsRecipeSchematicForm.xml",
 ];
+
+// The unified PTR TOC lists every Lua sibling explicitly, splits the schematic
+// form XML into shared/family bodies, and moves the RankBar XML last.
+const PTR_TEMPLATES_TOC_FILES: &[&str] = &[
+    "Blizzard_Professions.lua",
+    "Blizzard_ProfessionsRecipeLoader.lua",
+    "Blizzard_ProfessionsTransaction.lua",
+    "Blizzard_ProfessionsTemplates.lua",
+    "Blizzard_ProfessionsTemplates.xml",
+    "Blizzard_ProfessionsRecipeList.lua",
+    "Blizzard_ProfessionsRecipeList.xml",
+    "Blizzard_ProfessionsRecipeCrafterDetails.xml",
+    "Blizzard_ProfessionsRecipeSlotBase.lua",
+    "Blizzard_ProfessionsRecipeReagentSlotBase.xml",
+    "Blizzard_ProfessionsRecipeReagentSlot.xml",
+    "Blizzard_ProfessionsRecipeSalvageSlot.xml",
+    "Blizzard_ProfessionsRecipeEnchantSlot.xml",
+    "Blizzard_ProfessionsRecipeRecraftSlot.xml",
+    "Blizzard_ProfessionsRecipeFlyout.xml",
+    "Blizzard_ProfessionsRecipeFlyoutInstance.lua",
+    "Blizzard_ProfessionsQualityDialog.xml",
+    "Blizzard_ProfessionsRecipeSchematicForm.lua",
+    "Mainline/Blizzard_ProfessionsRecipeSchematicForm.xml",
+    "Blizzard_ProfessionsRecipeSchematicForm.xml",
+    "Blizzard_ProfessionsRankBar.xml",
+];
+
+// The pinned Forever TOC resolves `[Game]` to Camelot, so it lists the Camelot
+// Profession and schematic-form overrides.
+const FOREVER_TEMPLATES_TOC_FILES: &[&str] = &[
+    "Blizzard_Professions.lua",
+    "Camelot/Blizzard_Professions.lua",
+    "Blizzard_ProfessionsRecipeLoader.lua",
+    "Blizzard_ProfessionsTransaction.lua",
+    "Blizzard_ProfessionsTemplates.lua",
+    "Blizzard_ProfessionsTemplates.xml",
+    "Blizzard_ProfessionsRecipeList.lua",
+    "Blizzard_ProfessionsRecipeList.xml",
+    "Blizzard_ProfessionsRecipeCrafterDetails.xml",
+    "Blizzard_ProfessionsRecipeSlotBase.lua",
+    "Blizzard_ProfessionsRecipeReagentSlotBase.xml",
+    "Blizzard_ProfessionsRecipeReagentSlot.xml",
+    "Blizzard_ProfessionsRecipeSalvageSlot.xml",
+    "Blizzard_ProfessionsRecipeEnchantSlot.xml",
+    "Blizzard_ProfessionsRecipeRecraftSlot.xml",
+    "Blizzard_ProfessionsRecipeFlyout.xml",
+    "Blizzard_ProfessionsRecipeFlyoutInstance.lua",
+    "Blizzard_ProfessionsQualityDialog.xml",
+    "Blizzard_ProfessionsRecipeSchematicForm.lua",
+    "Camelot/Blizzard_ProfessionsRecipeSchematicFormOverride.lua",
+    "Camelot/Blizzard_ProfessionsRecipeSchematicForm.xml",
+    "Blizzard_ProfessionsRecipeSchematicForm.xml",
+    "Blizzard_ProfessionsRankBar.xml",
+];
+
+fn templates_toc_files() -> &'static [&'static str] {
+    if toc_layout::forever() {
+        FOREVER_TEMPLATES_TOC_FILES
+    } else if toc_layout::unified_toc_tree() {
+        PTR_TEMPLATES_TOC_FILES
+    } else {
+        TEMPLATES_TOC_FILES
+    }
+}
 
 const REQUIRED_DEPS: &[&str] = &["Blizzard_Colors"];
 
@@ -182,7 +249,7 @@ fn profession_recipe_source_button_displays_supplied_tooltip_text() {
 }
 
 // Literal cached inputs absent from Wrath manifest1-382/cache; behavior cases stay enabled.
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn blizzard_professions_templates_find_toc_resolves_bare_variant() {
     let resolved =
@@ -203,7 +270,7 @@ fn blizzard_professions_templates_find_toc_resolves_bare_variant() {
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn blizzard_professions_templates_toc_declares_lod_with_load_with_triggers() {
     let toc =
@@ -244,7 +311,7 @@ fn blizzard_professions_templates_toc_declares_lod_with_load_with_triggers() {
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn blizzard_professions_templates_toc_declares_load_with_triggers() {
     let toc =
@@ -268,7 +335,7 @@ fn blizzard_professions_templates_toc_declares_load_with_triggers() {
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn blizzard_professions_templates_toc_declares_one_dependency() {
     let toc =
@@ -294,7 +361,7 @@ fn blizzard_professions_templates_toc_declares_one_dependency() {
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn blizzard_professions_templates_toc_declares_no_saved_variables() {
     let toc =
@@ -313,7 +380,7 @@ fn blizzard_professions_templates_toc_declares_no_saved_variables() {
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn blizzard_professions_templates_toc_declares_metadata_in_raw_bytes() {
     let raw = std::fs::read_to_string(templates_toc())
@@ -366,7 +433,7 @@ fn blizzard_professions_templates_toc_declares_metadata_in_raw_bytes() {
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn blizzard_professions_templates_toc_lists_sixteen_files_in_canonical_order() {
     let toc =
@@ -377,23 +444,24 @@ fn blizzard_professions_templates_toc_lists_sixteen_files_in_canonical_order() {
         .map(|p| p.to_string_lossy().into_owned())
         .collect();
     assert_eq!(
-        listed, TEMPLATES_TOC_FILES,
-        "TOC must list 16 files in this canonical ordering: 3 Lua bootstraps first \
-         (Blizzard_Professions.lua publishes ProfessionsTableConstants + the helper \
-         globals; ProfessionsRecipeLoader.lua publishes the recipe-data lazy-load \
-         shim; ProfessionsTransaction.lua publishes ProfessionsRecipeTransactionMixin \
-         which models a pending craft as a transaction object), then 3 multi-template \
-         XML files (Templates.xml ships the table-cell families; RecipeList.xml ships \
-         the scrollable list templates; RecipeCrafterDetails.xml ships the crafter \
-         detail panel), then 1 base-slot Lua (RecipeSlotBase.lua publishes the shared \
-         slot mixin) followed by 5 slot-variant XML files in dependency order \
-         (ReagentSlotBase, then 4 derived: Reagent / Salvage / Enchant / Recraft), \
-         then Flyout.xml + FlyoutInstance.lua (the flyout selector for picking a \
-         reagent / mod), and finally QualityDialog.xml + RecipeSchematicForm.xml \
-         (the heaviest two: the quality-tier dialog and the 53KB recipe schematic \
-         form template). The interleaved Lua/XML ordering is critical — each XML \
-         file's `mixin=...` attributes resolve at parse time against globals \
-         declared by the preceding Lua files"
+        listed,
+        templates_toc_files(),
+        "TOC must list the Lua bootstraps first (Blizzard_Professions.lua \
+         publishes ProfessionsTableConstants + the helper globals; \
+         ProfessionsRecipeLoader.lua publishes the recipe-data lazy-load \
+         shim; ProfessionsTransaction.lua publishes \
+         ProfessionsRecipeTransactionMixin which models a pending craft as a \
+         transaction object), then the multi-template XML files \
+         (Templates.xml ships the table-cell families; RecipeList.xml ships \
+         the scrollable list templates; RecipeCrafterDetails.xml ships the \
+         crafter detail panel), then the base-slot Lua followed by the \
+         slot-variant XML files in dependency order, then Flyout.xml + \
+         FlyoutInstance.lua, and finally QualityDialog.xml + the schematic \
+         form (the heaviest template). The interleaved Lua/XML ordering is \
+         critical — each XML file's `mixin=...` attributes resolve at parse \
+         time against globals declared by the preceding Lua files. The unified \
+         PTR TOC lists every Lua sibling explicitly, splits the schematic form \
+         into shared/family bodies, and moves the RankBar XML last"
     );
 }
 }
@@ -610,5 +678,20 @@ fn blizzard_professions_templates_publishes_no_named_top_level_frames(env: &WowL
          shared-templates addon: declare virtual templates + mixins, never \
          materialize a named frame"
     );
+}
+}
+
+// The Mists/Era/Anniversary caches ship 218 addons each and Wrath ships 23;
+// none contains Blizzard_ProfessionsTemplates, so the pinned TOC facts above describe no file the
+// classic loaders can read.
+classic_cache_absent_toc_fixture! {
+#[test]
+fn blizzard_professionstemplates_toc_is_absent_from_classic_caches() {
+    let dir = templates_dir();
+    assert!(
+        !dir.is_dir(),
+        "classic profile caches must not contain Blizzard_ProfessionsTemplates"
+    );
+    assert!(wow_ui_sim::loader::find_toc_file(&dir).is_none());
 }
 }

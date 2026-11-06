@@ -242,6 +242,7 @@ fn excluded_from_game_screen_discovery() {
     );
 }
 
+post_wrath_ui_fixture! {
 #[test]
 fn root_directory_holds_xml_and_lua_next_to_toc() {
     let mut entries: Vec<String> = std::fs::read_dir(report_frame_glue_dir())
@@ -258,6 +259,7 @@ fn root_directory_holds_xml_and_lua_next_to_toc() {
          the xml is listed in the TOC body — the lua is pulled in by ReportFrame.xml's \
          <Script file=\"ReportFrame.lua\"/> directive at parse time"
     );
+}
 }
 
 #[test]

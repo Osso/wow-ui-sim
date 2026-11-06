@@ -7,6 +7,9 @@ use wow_ui_sim::screen::ScreenKind;
 use wow_ui_sim::startup::settle_headless_startup;
 use wow_ui_sim::toc::TocFile;
 
+#[path = "common/toc_layout.rs"]
+mod toc_layout;
+
 fn blizzard_ui_dir() -> PathBuf {
     wow_ui_sim::paths::default_blizzard_ui_addons_path()
         .expect("Blizzard UI cache should be available")
@@ -31,7 +34,7 @@ const PTR_FEEDBACK_GLUE_TOC_FILES: &[&str] = &[
 const SAVED_VARIABLES: &[&str] = &["Blizzard_PTRIssueReporter_Saved"];
 
 // Literal cached inputs absent from Wrath manifest1-382/cache; behavior cases stay enabled.
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn blizzard_ptr_feedback_glue_find_toc_resolves_bare_variant() {
     let resolved =
@@ -51,22 +54,29 @@ fn blizzard_ptr_feedback_glue_find_toc_resolves_bare_variant() {
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn blizzard_ptr_feedback_glue_toc_marks_addon_as_ptr_and_beta_only() {
     let toc =
         TocFile::from_file(&ptr_feedback_glue_toc()).expect("Blizzard_PTRFeedbackGlue TOC parses");
 
     assert!(
-        toc.is_ptr_only(),
+        toc.metadata.get("OnlyBetaAndPTR").map(String::as_str) == Some("1"),
         "TOC must declare `## OnlyBetaAndPTR: 1` — same PTR/beta gate as the Game-side \
          Blizzard_PTRFeedback variant. The Glue counterpart inherits the same release \
          restriction so the bug-report tooling never reaches live realms"
     );
+    assert_eq!(
+        toc.is_ptr_only(),
+        !toc_layout::unified_toc_tree(),
+        "`is_ptr_only()` gates the addon out of eager discovery on profiles that do not \
+         permit PTR-only addons; the PTR and Forever profiles admit them, so the gate is \
+         inactive there (src/toc/mod.rs permits_ptr_only)"
+    );
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn blizzard_ptr_feedback_glue_toc_pins_glue_only_screen_gate() {
     let toc =
@@ -102,7 +112,7 @@ fn blizzard_ptr_feedback_glue_toc_pins_glue_only_screen_gate() {
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn blizzard_ptr_feedback_glue_toc_declares_eager_no_lod_no_deps() {
     let toc =
@@ -172,7 +182,7 @@ fn blizzard_ptr_feedback_glue_shares_saved_variable_with_game_variant() {
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn blizzard_ptr_feedback_glue_toc_declares_metadata_in_raw_bytes() {
     let raw = std::fs::read_to_string(ptr_feedback_glue_toc())
@@ -372,5 +382,20 @@ fn blizzard_ptr_feedback_glue_loads_explicitly_on_glue_screen() {
          frame at file scope, so loading just the Glue TOC is sufficient to \
          publish the entire PTR_IssueReporter namespace on a fresh env"
     );
+}
+}
+
+// The Mists/Era/Anniversary caches ship 218 addons each and Wrath ships 23;
+// none contains Blizzard_PTRFeedbackGlue, so the pinned TOC facts above describe no file the
+// classic loaders can read.
+classic_cache_absent_toc_fixture! {
+#[test]
+fn blizzard_ptrfeedbackglue_toc_is_absent_from_classic_caches() {
+    let dir = ptr_feedback_glue_dir();
+    assert!(
+        !dir.is_dir(),
+        "classic profile caches must not contain Blizzard_PTRFeedbackGlue"
+    );
+    assert!(wow_ui_sim::loader::find_toc_file(&dir).is_none());
 }
 }

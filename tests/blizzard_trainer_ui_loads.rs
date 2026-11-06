@@ -7,6 +7,9 @@ use wow_ui_sim::screen::ScreenKind;
 use wow_ui_sim::startup::fire_startup_events_for_screen;
 use wow_ui_sim::toc::TocFile;
 
+#[path = "common/toc_layout.rs"]
+mod toc_layout;
+
 fn blizzard_ui_dir() -> PathBuf {
     wow_ui_sim::paths::default_blizzard_ui_addons_path().expect("Blizzard UI cache should be available")
 }
@@ -80,8 +83,9 @@ fn find_toc_file_resolves_mainline_toc() {
     let resolved = trainer_toc();
     assert_eq!(
         resolved.file_name().and_then(|name| name.to_str()),
-        Some("Blizzard_TrainerUI_Mainline.toc"),
-        "retail resolves the mainline TrainerUI TOC through find_toc_file"
+        Some(toc_layout::expected_toc_name("Blizzard_TrainerUI").as_str()),
+        "find_toc_file resolves the active profile's TrainerUI TOC: the Retail cache ships \
+         `_Mainline.toc`, while the pinned PTR cache ships the bare unified TOC"
     );
 }
 
@@ -108,13 +112,27 @@ fn toc_is_load_on_demand_with_no_dependencies() {
         toc.dependencies()
     );
     assert!(toc.optional_deps().is_empty());
-    assert!(toc.saved_variables().is_empty());
+    if toc_layout::wrath() {
+        assert!(toc.saved_variables().is_empty());
+    } else if toc_layout::classic_cache() {
+        assert_eq!(
+            toc.saved_variables(),
+            vec![
+                "TRAINER_FILTER_AVAILABLE_BOOL".to_string(),
+                "TRAINER_FILTER_UNAVAILABLE_BOOL".to_string(),
+                "TRAINER_FILTER_USED_BOOL".to_string(),
+            ],
+            "the classic Blizzard_TrainerUI.toc declares the three trainer filter flags"
+        );
+    } else {
+        assert!(toc.saved_variables().is_empty());
+    }
     assert!(toc.saved_variables_per_character().is_empty());
     assert!(!toc.is_load_first());
     assert!(!toc.is_secure_env());
     assert!(
         !toc.is_game_type_restricted(),
-        "AllowLoadGameType: mainline is the active profile's non-restricting game type"
+        "the active profile's TrainerUI TOC carries no restricting game-type directive"
     );
     assert!(toc.default_enabled());
 }
@@ -139,9 +157,37 @@ fn allow_load_game_restricts_to_in_world_screen() {
 #[test]
 fn toc_raw_bytes_pin_current_mainline_contract() {
     let raw = std::fs::read_to_string(trainer_toc()).expect("TOC reads utf-8");
-    assert_eq!(
-        raw.lines().collect::<Vec<_>>(),
-        [
+    let expected_lines: &[&str] = if toc_layout::wrath() {
+        &[
+            "## Interface: 30300",
+            "## Title: Blizzard Trainer UI",
+            "## Secure: 1",
+            "## LoadOnDemand: 1",
+            "Blizzard_TrainerUI.xml",
+            "Localization.lua",
+        ]
+    } else if toc_layout::classic_cache() {
+        &[
+            "## Title: Blizzard Trainer UI",
+            "## LoadOnDemand: 1",
+            "## SavedVariables: TRAINER_FILTER_AVAILABLE_BOOL, TRAINER_FILTER_UNAVAILABLE_BOOL, TRAINER_FILTER_USED_BOOL",
+            "Blizzard_TrainerUI.xml",
+            "Localization.lua",
+        ]
+    } else if toc_layout::unified_toc_tree() {
+        &[
+            "## Title: Blizzard_TrainerUI",
+            "## LoadOnDemand: 1",
+            "## SavedVariables: TRAINER_FILTER_AVAILABLE_BOOL, TRAINER_FILTER_UNAVAILABLE_BOOL, TRAINER_FILTER_USED_BOOL [AllowLoadGameType classic]",
+            "",
+            "Blizzard_TrainerUI_Bootstrap.lua [Bootstrap]",
+            "[Family]\\Blizzard_TrainerUI.lua",
+            "[Family]\\Blizzard_TrainerUI_Camelot.lua [AllowLoadGameType camelot]",
+            "[Family]\\Blizzard_TrainerUI.xml",
+            "Localization.lua",
+        ]
+    } else {
+        &[
             "## Title: Blizzard Trainer UI",
             "## LoadOnDemand: 1",
             "## AllowLoad: game",
@@ -149,8 +195,14 @@ fn toc_raw_bytes_pin_current_mainline_contract() {
             "Blizzard_TrainerUI_Bootstrap.lua [Bootstrap]",
             "Mainline\\Blizzard_TrainerUI.xml",
             "Localization.lua",
-        ],
-        "Retail 12.1 TrainerUI TOC must retain its current directives, bootstrap, and Mainline XML body"
+        ]
+    };
+    assert_eq!(
+        raw.lines().collect::<Vec<_>>(),
+        expected_lines,
+        "TrainerUI TOC must retain its current directives, bootstrap, and Mainline body: the \
+         unified PTR TOC lists the family sources with per-entry game-type gates instead of \
+         top-level AllowLoad directives"
     );
 }
 

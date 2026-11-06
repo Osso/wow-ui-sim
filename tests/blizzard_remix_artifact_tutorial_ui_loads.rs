@@ -5,6 +5,9 @@ use wow_ui_sim::lua_api::WowLuaEnv;
 use wow_ui_sim::screen::ScreenKind;
 use wow_ui_sim::toc::TocFile;
 
+#[path = "common/toc_layout.rs"]
+mod toc_layout;
+
 fn blizzard_ui_dir() -> PathBuf {
     wow_ui_sim::paths::default_blizzard_ui_addons_path()
         .expect("Blizzard UI cache should be available")
@@ -72,13 +75,13 @@ fn toc_declares_load_on_demand_standard_game_only_and_no_deps() {
          The OnLoad guard `if not PlayerIsTimerunning() then return end` further short-circuits \
          on non-timerunning characters even after explicit load"
     );
-    assert!(
-        !toc.is_game_type_restricted(),
+    assert_eq!(
+        toc.is_game_type_restricted(),
+        !toc_layout::admits_game_type("standard"),
         "Blizzard_RemixArtifactTutorialUI declares `## AllowLoadGameType: standard` — the \
-         `standard` token matches the cross-flavor allowlist at src/toc.rs:294-302 alongside \
-         `mainline`, so is_game_type_restricted returns FALSE. Distinct from \
-         Blizzard_ReforgingUI's `## AllowLoadGameType: classic` which fails the allowlist and \
-         restricts to legacy clients"
+         `standard` token matches the Retail/PTR allow-list alongside `mainline`, so \
+         is_game_type_restricted returns FALSE there. The pinned Forever allow-list is \
+         `camelot, mainline`, so the same directive restricts the addon on that profile"
     );
     assert_eq!(
         toc.metadata.get("AllowLoadGameType").map(String::as_str),
@@ -127,9 +130,18 @@ fn toc_lists_bootstrap_and_two_files_in_root_directory() {
         .iter()
         .map(|p| p.to_string_lossy().replace('\\', "/"))
         .collect();
+    let expected: &[&str] = if toc_layout::classic_cache() {
+        &[
+            "Blizzard_RemixArtifactTutorialUI.lua",
+            "Blizzard_RemixArtifactTutorialUI.xml",
+        ]
+    } else {
+        REMIX_FILES
+    };
     assert_eq!(
-        listed, REMIX_FILES,
-        "Retail 12.1.0.69497 lists the tutorial bootstrap before its Lua and XML files"
+        listed, expected,
+        "Retail 12.1.0.69497 lists the tutorial bootstrap before its Lua and XML files; the \
+         classic TOC lists the Lua and XML pair only"
     );
 }
 }

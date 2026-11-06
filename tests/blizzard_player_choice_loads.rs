@@ -7,6 +7,9 @@ use wow_ui_sim::screen::ScreenKind;
 use wow_ui_sim::startup::fire_startup_events_for_screen;
 use wow_ui_sim::toc::TocFile;
 
+#[path = "common/toc_layout.rs"]
+mod toc_layout;
+
 fn blizzard_ui_dir() -> PathBuf {
     wow_ui_sim::paths::default_blizzard_ui_addons_path()
         .expect("Blizzard UI cache should be available")
@@ -43,6 +46,42 @@ const PLAYER_CHOICE_TOC_FILES: &[&str] = &[
     "Blizzard_PlayerChoiceTimer.lua",
     "Blizzard_PlayerChoiceTimer.xml",
 ];
+
+// The unified PTR TOC also ships the Talebound option template pair.
+const PTR_PLAYER_CHOICE_TOC_FILES: &[&str] = &[
+    "Blizzard_PlayerChoice_Bootstrap.lua",
+    "Blizzard_PlayerChoiceToggleButton.lua",
+    "Blizzard_PlayerChoiceToggleButton.xml",
+    "Blizzard_PlayerChoiceOptionBase.lua",
+    "Blizzard_PlayerChoiceOptionBase.xml",
+    "Blizzard_PlayerChoiceNormalOptionTemplate.lua",
+    "Blizzard_PlayerChoiceNormalOptionTemplate.xml",
+    "Blizzard_PlayerChoicePowerChoiceTemplate.lua",
+    "Blizzard_PlayerChoicePowerChoiceTemplate.xml",
+    "Blizzard_PlayerChoiceTorghastOptionTemplate.lua",
+    "Blizzard_PlayerChoiceTorghastOptionTemplate.xml",
+    "Blizzard_PlayerChoiceCovenantChoiceOptionTemplate.lua",
+    "Blizzard_PlayerChoiceCovenantChoiceOptionTemplate.xml",
+    "Blizzard_PlayerChoiceCypherOptionTemplate.lua",
+    "Blizzard_PlayerChoiceCypherOptionTemplate.xml",
+    "Blizzard_PlayerChoiceGenericPowerChoiceOptionTemplate.lua",
+    "Blizzard_PlayerChoiceGenericPowerChoiceOptionTemplate.xml",
+    "Blizzard_PlayerChoiceTaleboundOptionTemplate.lua",
+    "Blizzard_PlayerChoiceTaleboundOptionTemplate.xml",
+    "Blizzard_PlayerChoice.lua",
+    "Blizzard_PlayerChoice.xml",
+    "Blizzard_PlayerChoiceTimer.lua",
+    "Blizzard_PlayerChoiceTimer.xml",
+];
+
+fn player_choice_toc_files() -> &'static [&'static str] {
+    // The pinned Forever TOC has no Talebound pair, so it matches Retail.
+    if toc_layout::unified_toc_tree() && !toc_layout::forever() {
+        PTR_PLAYER_CHOICE_TOC_FILES
+    } else {
+        PLAYER_CHOICE_TOC_FILES
+    }
+}
 
 const REQUIRED_DEPS: &[&str] = &[
     "Blizzard_Colors",
@@ -145,7 +184,7 @@ fn load_full_game_ui_with_player_choice() -> WowLuaEnv {
 }
 
 // Literal cached inputs absent from Wrath manifest1-382/cache; behavior cases stay enabled.
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn blizzard_player_choice_find_toc_resolves_bare_variant() {
     let resolved = find_toc_file(&player_choice_dir()).expect("Blizzard_PlayerChoice TOC resolves");
@@ -167,7 +206,7 @@ fn blizzard_player_choice_find_toc_resolves_bare_variant() {
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn blizzard_player_choice_toc_declares_load_on_demand_with_split_dependency_keys() {
     let toc = TocFile::from_file(&player_choice_toc()).expect("Blizzard_PlayerChoice TOC parses");
@@ -224,7 +263,7 @@ fn blizzard_player_choice_toc_declares_load_on_demand_with_split_dependency_keys
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn blizzard_player_choice_toc_declares_metadata_in_raw_bytes() {
     let raw = std::fs::read_to_string(player_choice_toc())
@@ -282,7 +321,7 @@ fn blizzard_player_choice_toc_declares_metadata_in_raw_bytes() {
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn blizzard_player_choice_toc_lists_bootstrap_then_twenty_files_in_canonical_order() {
     let toc = TocFile::from_file(&player_choice_toc()).expect("Blizzard_PlayerChoice TOC parses");
@@ -292,9 +331,11 @@ fn blizzard_player_choice_toc_lists_bootstrap_then_twenty_files_in_canonical_ord
         .map(|p| p.to_string_lossy().into_owned())
         .collect();
     assert_eq!(
-        listed, PLAYER_CHOICE_TOC_FILES,
-        "Retail 12.1.0.69497 lists its bootstrap first, then twenty PlayerChoice source files \
-         in the established paired Lua-then-XML module order"
+        listed,
+        player_choice_toc_files(),
+        "The TOC lists its bootstrap first, then the PlayerChoice source \
+         files in the established paired Lua-then-XML module order. The unified \
+         PTR TOC also ships the Talebound option template pair"
     );
 }
 }
@@ -625,5 +666,20 @@ post_wrath_ui_fixture! {
 fn blizzard_player_choice_uiwidgets_dep_loaded_via_eager_discovery() {
     let env = load_full_game_ui_with_player_choice();
     blizzard_player_choice_uiwidgets_dep_loaded_via_eager_discovery::run(&env);
+}
+}
+
+// The Mists/Era/Anniversary caches ship 218 addons each and Wrath ships 23;
+// none contains Blizzard_PlayerChoice, so the pinned TOC facts above describe
+// no file the classic loaders can read.
+classic_cache_absent_toc_fixture! {
+#[test]
+fn blizzard_player_choice_toc_is_absent_from_classic_caches() {
+    let dir = player_choice_dir();
+    assert!(
+        !dir.is_dir(),
+        "classic profile caches must not contain Blizzard_PlayerChoice"
+    );
+    assert!(wow_ui_sim::loader::find_toc_file(&dir).is_none());
 }
 }
