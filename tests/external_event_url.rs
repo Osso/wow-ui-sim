@@ -21,6 +21,15 @@ use wow_ui_sim::lua_api::WowLuaEnv;
 use wow_ui_sim::screen::ScreenKind;
 use wow_ui_sim::toc::TocFile;
 
+fn supplied(url: &str, is_new: bool, can_show: bool) -> ExternalEventUrlState {
+    ExternalEventUrlState {
+        url: Some(url.to_owned()),
+        is_new,
+        can_show,
+    }
+}
+
+#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
 fn load_game_menu() -> WowLuaEnv {
     let ui = blizzard_ui_dir();
     let toc = TocFile::from_file(&find_toc_file(&ui.join("Blizzard_GameMenu")).unwrap()).unwrap();
@@ -42,16 +51,9 @@ fn load_game_menu() -> WowLuaEnv {
     env
 }
 
-fn supplied(url: &str, is_new: bool, can_show: bool) -> ExternalEventUrlState {
-    ExternalEventUrlState {
-        url: Some(url.to_owned()),
-        is_new,
-        can_show,
-    }
-}
-
+#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
 #[test]
-fn game_menu_click_launches_only_a_supplied_event_url() {
+fn modern_game_menu_click_launches_only_a_supplied_event_url() {
     let env = load_game_menu();
     env.exec(
         r#"
@@ -95,6 +97,7 @@ fn game_menu_click_launches_only_a_supplied_event_url() {
     );
 }
 
+#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
 #[test]
 fn declared_is_new_projects_host_newness() {
     let env = load_game_menu();
@@ -106,6 +109,108 @@ fn declared_is_new_projects_host_newness() {
             .expect("declared IsNew returns one non-nil boolean");
         assert_eq!(observed, is_new);
     }
+}
+
+#[cfg(any(feature = "client-mists", feature = "client-era", feature = "client-anniversary"))]
+fn load_full_game_ui() -> WowLuaEnv {
+    use wow_ui_sim::loader::{discover_blizzard_addons_for_screen, load_addon};
+    use wow_ui_sim::startup::settle_headless_startup;
+
+    let ui = blizzard_ui_dir();
+    let env = WowLuaEnv::new().expect("Failed to create Lua environment");
+    env.set_screen_size(1024.0, 768.0);
+    env.set_screen_mode(ScreenKind::Game);
+    env.state().borrow_mut().addon_base_paths = vec![ui.clone()];
+    crate::common::load_profile_framexml(&env);
+    for (name, toc_path) in discover_blizzard_addons_for_screen(&ui, ScreenKind::Game) {
+        load_addon(&env.loader_env(), &toc_path)
+            .unwrap_or_else(|error| panic!("Failed to load Blizzard addon {name}: {error}"));
+    }
+    env.apply_post_load_workarounds();
+    settle_headless_startup(&env);
+    env
+}
+
+/// Mists, Era and Anniversary call `C_ExternalEventURL` from the local callback
+/// built inside `GameMenuFrameMixin:InitButtons`, so the original game menu is
+/// the consumer.
+#[cfg(any(feature = "client-mists", feature = "client-era", feature = "client-anniversary"))]
+#[test]
+fn classic_game_menu_builds_the_external_event_button_from_host_state() {
+    let env = load_full_game_ui();
+    env.exec(
+        r#"
+        local source = debug.getinfo(GameMenuFrameMixin.InitButtons, 'S').source:gsub('\\', '/')
+        assert(source:find('Shared/GameMenuFrame.lua', 1, true))
+        local function activeButtons()
+            local buttons = {}
+            for button in GameMenuFrame.buttonPool:EnumerateActive() do
+                buttons[#buttons + 1] = button
+            end
+            return buttons
+        end
+        local function firstButton()
+            for _, button in ipairs(activeButtons()) do
+                if button.layoutIndex == 1 then
+                    return button
+                end
+            end
+        end
+        GameMenuFrame:InitButtons()
+        baselineButtons = #activeButtons()
+        -- The external event AddButton is the first call in the original method.
+        assert(firstButton() ~= nil)
+        assert(not C_ExternalEventURL.HasURL())
+        assert(not GameMenuFrame.NewExternalEventFrame:IsShown())
+    "#,
+    )
+    .expect("original game menu omits the external event button without a URL");
+
+    env.state().borrow_mut().external_event_url =
+        supplied("https://example.invalid/promotion", true, false);
+    env.exec(
+        r#"
+        local function activeButtons()
+            local buttons = {}
+            for button in GameMenuFrame.buttonPool:EnumerateActive() do
+                buttons[#buttons + 1] = button
+            end
+            return buttons
+        end
+        local function firstButton()
+            for _, button in ipairs(activeButtons()) do
+                if button.layoutIndex == 1 then
+                    return button
+                end
+            end
+        end
+        GameMenuFrame:InitButtons()
+        assert(#activeButtons() == baselineButtons + 1)
+        local button = firstButton()
+        assert(button, "original game menu adds the supplied external event button")
+        if type(GAMEMENU_EXTERNALEVENT) == "string" then
+            assert(button:GetText() == GAMEMENU_EXTERNALEVENT)
+        end
+        assert(GameMenuFrame.NewExternalEventFrame:IsShown())
+        local onclick = button:GetScript("OnClick")
+        assert(type(onclick) == "function")
+        onclick(button)
+    "#,
+    )
+    .expect("original game menu launches the supplied promotion URL");
+    assert_eq!(
+        env.state().borrow().last_launched_url.as_deref(),
+        Some("https://example.invalid/promotion")
+    );
+
+    env.state().borrow_mut().external_event_url.is_new = false;
+    env.exec(
+        r#"
+        GameMenuFrame:InitButtons()
+        assert(not GameMenuFrame.NewExternalEventFrame:IsShown())
+    "#,
+    )
+    .expect("original game menu hides the new badge for a seen promotion");
 }
 
 #[cfg(feature = "client-ptr")]
