@@ -41,6 +41,23 @@ For CASC-backed profiles, there is no repo-source fallback. Missing manifest ent
 
 TOC parsing strips `#` comments, applies the [modeled text-locale rule](../../addon-loading-pipeline.md#toc-file-parsing) (see [locale/BOM investigation](../investigations/integrated-source-and-factory-proof-2026-10-09.md#toc-locale-selection-and-bom-metadata--later-runtime-green-pending) for source-only repairs and pending GREEN proof), and skips `[AllowLoadGameType]` lines unless any inline gametype matches the active profile's allow-list (retail: mainline/standard; wrath: wrath/wrath_classic/classic; mists: mists/mists_classic/classic; era: vanilla/classic_era/classic; anniversary: vanilla/classic_anniversary/classic; Forever: camelot/classic). Inline game types may be comma- or whitespace-delimited, so `[AllowLoadGameType vanilla tbc mainline]` admits the current retail `mainline` file. It substitutes `[Family]` for the profile's family-subdir (Mainline for retail/PTR/Forever; Classic for wrath/mists/era/anniversary), substitutes `[Game]` for the active profile's game subdir (Forever: Camelot), and normalizes backslashes. Forever's Mainline family directory does not widen its annotation allow-list to `mainline`. Path resolution is case-insensitive for Windows/macOS compatibility. See [[client-profiles]] for the full profile-aware tables.
 
+### Screen-qualified dependency declarations
+
+A TOC dependency metadata line can carry a trailing `[AllowLoad Game]` or `[AllowLoad Glue]`
+annotation, for example `## Dep: Blizzard_GlueXML [AllowLoad glue]` in
+`Blizzard_UnitPopupShared.toc`. The runtime resolver applies that annotation to the dependency
+itself: outside the annotated screen the dependency is skipped, the same way an optional
+dependency is skipped when its addon is not loadable. An unannotated required dependency still
+blocks the load on every screen when its addon is unavailable.
+`TocFile::dependencies_for_screen` / `optional_deps_for_screen` expose the screen-filtered lists.
+Static screen discovery needs no extra filter because it already removes addons outside that
+screen's TOC set before ordering dependencies.
+
+The rule is derived from shipped Blizzard TOCs, not a native-client trace. PTR and Forever
+`Blizzard_UnitPopupShared` declare `## AllowLoad: both` and reach Glue-only `Blizzard_GlueXML`
+through a glue-annotated `## Dep:` line; Retail declares the same link as `## OptionalDeps:`.
+The general `[AllowLoad]` grammar is the one already used for addon headers and file entries.
+
 `[Bootstrap]` never reorders files within an eager TOC: `Before.lua → Bootstrap.lua [Bootstrap] → Normal.lua` stays literal. Under the cumulative `retail-12-1-0` startup path (retail 12.1 and PTR), eligible Blizzard LoadOnDemand TOCs with annotated files enter the same dependency-ordered startup stream as `BootstrapOnly` nodes; this is not a global pre-pass. They execute only their annotated entries and return to not-loaded state. The first later full load skips already-executed bootstrap files; later full loads remain idempotent. Classic profiles retain their existing startup selection. Bootstrap files referenced by an active profile's manifest or TOC must be represented in that profile's required-entry set so stale completed caches are rejected when the file is missing. Retail and PTR both require `Blizzard_CooldownBroadcaster_Bootstrap.lua` for the current 12.1 manifest; stale PTR-only filtering previously let retail accept an incomplete cache.
 
 ### Bootstrap-only dependency boundary

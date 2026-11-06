@@ -218,3 +218,89 @@ fn absent_disabled_optional_probes_and_nil_observations_do_not_reject_a_complete
     let saved = fs::read_to_string(fixture.saved_path()).unwrap();
     assert!(saved.contains("complete save"), "{saved}");
 }
+
+struct ScreenDependencyFixture {
+    _root: TempDir,
+    env: WowLuaEnv,
+}
+
+impl ScreenDependencyFixture {
+    fn new(probe_toc_extra: &str) -> Self {
+        let root = tempdir().unwrap();
+        let probe = root.path().join("RuntimeScreenProbe");
+        fs::create_dir(&probe).unwrap();
+        fs::write(
+            probe.join("RuntimeScreenProbe.toc"),
+            format!("## Title: RuntimeScreenProbe\n{probe_toc_extra}\nRuntimeScreenProbe.lua\n"),
+        )
+        .unwrap();
+        fs::write(
+            probe.join("RuntimeScreenProbe.lua"),
+            "RuntimeScreenProbeRan = true",
+        )
+        .unwrap();
+
+        let glue_only = root.path().join("GlueOnlyProbe");
+        fs::create_dir(&glue_only).unwrap();
+        fs::write(
+            glue_only.join("GlueOnlyProbe.toc"),
+            "## Title: GlueOnlyProbe\n## AllowLoad: Glue\nGlueOnlyProbe.lua\n",
+        )
+        .unwrap();
+        fs::write(
+            glue_only.join("GlueOnlyProbe.lua"),
+            "GlueOnlyProbeRan = true",
+        )
+        .unwrap();
+
+        let env = WowLuaEnv::new().unwrap();
+        env.state().borrow_mut().addon_base_paths = vec![root.path().to_path_buf()];
+        Self { _root: root, env }
+    }
+
+    fn load(&self) -> (bool, Option<String>) {
+        self.env
+            .eval("return C_AddOns.LoadAddOn('RuntimeScreenProbe')")
+            .unwrap()
+    }
+
+    fn probe_ran(&self) -> bool {
+        self.env
+            .eval("return RuntimeScreenProbeRan == true")
+            .unwrap()
+    }
+
+    fn glue_only_loaded(&self) -> bool {
+        self.env.eval("return GlueOnlyProbeRan == true").unwrap()
+    }
+}
+
+#[test]
+fn runtime_required_dependency_for_another_screen_still_blocks_load() {
+    let fixture = ScreenDependencyFixture::new("## Dependencies: GlueOnlyProbe");
+    let (loaded, reason) = fixture.load();
+    assert!(
+        !loaded,
+        "a required Glue-only dependency must still block a Game-screen runtime load"
+    );
+    let reason = reason.expect("a blocked load should report the dependency addon");
+    assert!(reason.contains("GlueOnlyProbe"), "{reason}");
+    assert!(!fixture.probe_ran(), "blocked addon files must not run");
+    assert!(!fixture.glue_only_loaded());
+}
+
+#[test]
+fn runtime_optional_dependency_for_another_screen_is_skipped() {
+    let fixture = ScreenDependencyFixture::new("## OptionalDeps: GlueOnlyProbe");
+    assert_eq!(fixture.load(), (true, None));
+    assert!(fixture.probe_ran());
+    assert!(!fixture.glue_only_loaded());
+}
+
+#[test]
+fn runtime_screen_annotated_dependency_is_skipped_outside_its_screen() {
+    let fixture = ScreenDependencyFixture::new("## Dep: GlueOnlyProbe [AllowLoad glue]");
+    assert_eq!(fixture.load(), (true, None));
+    assert!(fixture.probe_ran());
+    assert!(!fixture.glue_only_loaded());
+}
