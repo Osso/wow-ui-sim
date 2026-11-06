@@ -107,12 +107,16 @@ fn is_active(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
+/// Without a run the three non-nil outputs are level 0, an empty affix list
+/// and `false`; see docs/specs/challenge-mode-run.md, inactive keystone.
 fn active_keystone(state: &mut LuaState) -> LuaResult<u32> {
     let run = borrow_state(state)?.challenge_run.active.clone();
     let Some(run) = run else {
-        return Err(rilua::runtime_error(
-            "GetActiveKeystoneInfo: inactive return is unimplemented pending native evidence",
-        ));
+        state.push(Val::Num(0.0));
+        let affixes = create_table(state);
+        state.push(affixes);
+        state.push(Val::Bool(false));
+        return Ok(3);
     };
     state.push(Val::Num(f64::from(run.level)));
     let affixes = create_table(state);
