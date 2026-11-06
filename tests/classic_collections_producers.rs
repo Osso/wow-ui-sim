@@ -35,6 +35,7 @@ use common::blizzard_addon_harness::{
 };
 use wow_ui_sim::lua_api::WowLuaEnv;
 
+#[cfg(feature = "client-mists")]
 const HEIRLOOM_CONSUMER_LUA: &str = r#"
 -- HeirloomsMixin:SetClassAndSpecFilters touches paging and the class menu;
 -- every other statement is the pinned consumer body verbatim.
@@ -163,6 +164,12 @@ fn classic_outfit_namespace_matches_pinned_collections_documentation() {
     assert_eq!(result, "ok");
 }
 
+// The pinned Era and Anniversary caches ship only `Blizzard_Collections_Cata.toc`,
+// `_Mists.toc` and `_Wrath.toc`; `find_toc_file` accepts `_Vanilla`, the bare
+// name, or `_Classic` for those profiles, so the original Collections addon
+// cannot load there. The C_Heirloom producer is still compiled and registered on
+// every profile; Mists is the profile whose pinned tests exercise this consumer.
+#[cfg(feature = "client-mists")]
 #[test]
 fn heirloom_filters_round_trip_through_collections_consumer() {
     common::with_timeout(240, || {
