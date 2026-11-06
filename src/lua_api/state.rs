@@ -559,6 +559,7 @@ macro_rules! build_empty_sim_state {
             game_rules: GameRulesState::default(),
             discord: DiscordState::default(),
             forever_startup: crate::c_api::forever_startup::StartupInputs::stock(),
+            external_event_url: Default::default(),
             player_choice: PlayerChoiceState::default(),
             housing_service_enabled: true,
             housing: HousingState::default(),
