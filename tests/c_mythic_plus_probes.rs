@@ -311,12 +311,16 @@ fn get_owned_keystone_level_returns_level_when_set() {
 // ── GetOwnedKeystoneChallengeMapID ────────────────────────────────────────────
 
 #[test]
-fn get_owned_keystone_challenge_map_id_returns_nothing_without_a_key() {
+fn get_owned_keystone_challenge_map_id_returns_zero_without_a_key() {
     let env = env();
-    let count: i32 = env
-        .eval("return select('#', C_MythicPlus.GetOwnedKeystoneChallengeMapID())")
+    let (count, map_id): (i32, i32) = env
+        .eval(
+            "return select('#', C_MythicPlus.GetOwnedKeystoneChallengeMapID()), \
+             C_MythicPlus.GetOwnedKeystoneChallengeMapID()",
+        )
         .unwrap();
-    assert_eq!(count, 0, "no key = mayreturnnothing");
+    assert_eq!(count, 1, "the keystone context publishes one value");
+    assert_eq!(map_id, 0, "no matching key entry carries 0");
 }
 
 #[test]
