@@ -9,7 +9,8 @@
 //! - `GetSeasonBestAffixScoreInfoForMap(mapID)` — returns affixScores
 //!   array + bestOverAllScore, or nothing if no data.
 //! - `GetWeeklyChestRewardLevel()` — returns four zeros when no run done.
-//! - `GetOwnedKeystoneLevel()` — returns owned keystone level or nothing.
+//! - `GetOwnedKeystoneLevel()` — returns the owned keystone level, or `0`
+//!   without a key.
 //! - `GetOwnedKeystoneChallengeMapID()` — returns the owned keystone's
 //!   challenge map, or `0` without a key (Retail, PTR, Forever).
 //! - `GetWeeklyBestForMap(mapChallengeModeID)` — returns
@@ -361,12 +362,11 @@ fn get_weekly_chest_reward_level(state: &mut LuaState) -> LuaResult<u32> {
     Ok(4)
 }
 
+/// The client reader takes the level from the cached keystone context and
+/// publishes `0` when no entry matches (P5 decomp, proved). The absent-context
+/// arm is not proved.
 fn get_owned_keystone_level(state: &mut LuaState) -> LuaResult<u32> {
     let level = borrow_state(state)?.mythic_plus.owned_keystone_level;
-    if level == 0 {
-        // mayreturnnothing: return nothing when player has no key.
-        return Ok(0);
-    }
     state.push(Val::Num(level as f64));
     Ok(1)
 }

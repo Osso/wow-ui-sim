@@ -15,6 +15,10 @@ The client reads a cached client-side keystone context, not the player's bags: i
 
 The simulator supplies that cached state as `MythicPlusState::owned_keystone_challenge_map_id`, next to `owned_keystone_level`. `0` means no key, and the reader publishes it. No bag item is scanned.
 
+`GetOwnedKeystoneLevel` publishes the same way: the client reader takes the level from the cached keystone context and publishes integer `0` when no entry matches (P5, proved). Its absent-context arm is also unproved.
+
+`GetOwnedKeystoneMapID` is unchanged: its publication was not reconstructed.
+
 ## Not proved
 
 - [ ] The null-context arm: the answer covers a context with no matching entry, not an absent context. The simulator has no separate absent state, so the no-key case publishes `0`.
@@ -33,4 +37,4 @@ The simulator supplies that cached state as `MythicPlusState::owned_keystone_cha
 
 ## Tests asserting this spec
 
-`tests/c_mythic_plus_probes.rs`: zero with one published value without a key, and the supplied map ID next to the supplied level.
+`tests/c_mythic_plus_probes.rs`: zero with one published value without a key, and the supplied map ID next to the supplied level, for both the map-ID and the level reader.
