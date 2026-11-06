@@ -249,7 +249,7 @@ fn profession_recipe_source_button_displays_supplied_tooltip_text() {
 }
 
 // Literal cached inputs absent from Wrath manifest1-382/cache; behavior cases stay enabled.
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn blizzard_professions_templates_find_toc_resolves_bare_variant() {
     let resolved =
@@ -270,7 +270,7 @@ fn blizzard_professions_templates_find_toc_resolves_bare_variant() {
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn blizzard_professions_templates_toc_declares_lod_with_load_with_triggers() {
     let toc =
@@ -311,7 +311,7 @@ fn blizzard_professions_templates_toc_declares_lod_with_load_with_triggers() {
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn blizzard_professions_templates_toc_declares_load_with_triggers() {
     let toc =
@@ -335,7 +335,7 @@ fn blizzard_professions_templates_toc_declares_load_with_triggers() {
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn blizzard_professions_templates_toc_declares_one_dependency() {
     let toc =
@@ -361,7 +361,7 @@ fn blizzard_professions_templates_toc_declares_one_dependency() {
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn blizzard_professions_templates_toc_declares_no_saved_variables() {
     let toc =
@@ -380,7 +380,7 @@ fn blizzard_professions_templates_toc_declares_no_saved_variables() {
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn blizzard_professions_templates_toc_declares_metadata_in_raw_bytes() {
     let raw = std::fs::read_to_string(templates_toc())
@@ -433,7 +433,7 @@ fn blizzard_professions_templates_toc_declares_metadata_in_raw_bytes() {
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn blizzard_professions_templates_toc_lists_sixteen_files_in_canonical_order() {
     let toc =
@@ -678,5 +678,20 @@ fn blizzard_professions_templates_publishes_no_named_top_level_frames(env: &WowL
          shared-templates addon: declare virtual templates + mixins, never \
          materialize a named frame"
     );
+}
+}
+
+// The Mists/Era/Anniversary caches ship 218 addons each and Wrath ships 23;
+// none contains Blizzard_ProfessionsTemplates, so the pinned TOC facts above describe no file the
+// classic loaders can read.
+classic_cache_absent_toc_fixture! {
+#[test]
+fn blizzard_professionstemplates_toc_is_absent_from_classic_caches() {
+    let dir = templates_dir();
+    assert!(
+        !dir.is_dir(),
+        "classic profile caches must not contain Blizzard_ProfessionsTemplates"
+    );
+    assert!(wow_ui_sim::loader::find_toc_file(&dir).is_none());
 }
 }

@@ -6,6 +6,9 @@ use wow_ui_sim::startup::{
 };
 use wow_ui_sim::toc::TocFile;
 
+#[path = "common/toc_layout.rs"]
+mod toc_layout;
+
 #[path = "blizzard_map_canvas_loads/support.rs"]
 mod support;
 
@@ -90,6 +93,7 @@ fn forever_world_map_show_and_sustained_updates_are_error_free() {
     assert_eq!(env.eval::<i32>(&count_script).unwrap(), 0);
 }
 
+post_wrath_ui_fixture! {
 #[test]
 fn blizzard_map_canvas_find_toc_resolves_bare_variant() {
     let resolved = find_toc_file(&map_canvas_dir()).expect("Blizzard_MapCanvas TOC should resolve");
@@ -104,7 +108,9 @@ fn blizzard_map_canvas_find_toc_resolves_bare_variant() {
          lookup misses"
     );
 }
+}
 
+post_wrath_ui_fixture! {
 #[test]
 fn blizzard_map_canvas_toc_declares_load_on_demand_with_required_deps() {
     let toc = TocFile::from_file(&map_canvas_toc()).expect("Blizzard_MapCanvas TOC parses");
@@ -119,9 +125,14 @@ fn blizzard_map_canvas_toc_declares_load_on_demand_with_required_deps() {
     );
     assert!(!toc.is_load_first());
     assert!(!toc.is_secure_env());
+    let expected_deps: Vec<String> = if toc_layout::classic_cache() {
+        Vec::new()
+    } else {
+        MAP_CANVAS_DEPENDENCIES.iter().map(|s| s.to_string()).collect()
+    };
     assert_eq!(
         toc.dependencies(),
-        MAP_CANVAS_DEPENDENCIES,
+        expected_deps,
         "TOC declares `## RequiredDep: Blizzard_SharedXMLBase, Blizzard_MapCanvasSecureUtil` \
          — `dependencies()` reads from RequiredDep at src/toc.rs:212 (one of the three \
          aliased keys: RequiredDep / Dependencies / RequiredDeps). Blizzard_SharedXMLBase \
@@ -165,7 +176,9 @@ fn blizzard_map_canvas_toc_declares_load_on_demand_with_required_deps() {
         );
     }
 }
+}
 
+post_wrath_ui_fixture! {
 #[test]
 fn blizzard_map_canvas_toc_lists_three_files_excluding_cross_xml_lua() {
     let toc = TocFile::from_file(&map_canvas_toc()).expect("Blizzard_MapCanvas TOC parses");
@@ -183,6 +196,7 @@ fn blizzard_map_canvas_toc_lists_three_files_excluding_cross_xml_lua() {
          (Blizzard_MapCanvasDetailLayer.lua, MapCanvas_ScrollContainerMixin.lua, \
          Blizzard_MapCanvas.lua) NOT listed in the TOC body"
     );
+}
 }
 
 #[test]
@@ -735,4 +749,14 @@ fn blizzard_map_canvas_pin_frame_levels_manager_default_range_seeds_at_2000(env:
          allocator on either side, but the default itself stays minimal"
     );
 }
+}
+
+// The 23-addon Wrath cache ships no Blizzard_MapCanvas directory, so the
+// pinned MapCanvas TOC facts describe no file that profile can read.
+#[cfg(feature = "client-wrath")]
+#[test]
+fn blizzard_map_canvas_toc_is_absent_from_wrath_cache() {
+    let dir = map_canvas_dir();
+    assert!(!dir.is_dir(), "the Wrath cache must not contain Blizzard_MapCanvas");
+    assert!(find_toc_file(&dir).is_none());
 }

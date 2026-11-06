@@ -6,6 +6,9 @@ use wow_ui_sim::screen::ScreenKind;
 use wow_ui_sim::startup::fire_startup_events_for_screen;
 use wow_ui_sim::toc::TocFile;
 
+#[path = "common/toc_layout.rs"]
+mod toc_layout;
+
 fn blizzard_ui_dir() -> PathBuf {
     wow_ui_sim::paths::default_blizzard_ui_addons_path()
         .expect("Blizzard UI cache should be available")
@@ -109,15 +112,18 @@ fn toc_declares_secure_environment_with_two_required_deps() {
     );
 
     let deps: Vec<String> = toc.dependencies().to_vec();
+    let expected_deps: Vec<String> = if toc_layout::classic_cache() {
+        vec![
+            "Blizzard_SharedXML".to_string(),
+            "Blizzard_UIParent".to_string(),
+        ]
+    } else {
+        REQUIRED_DEPS.iter().map(|s| s.to_string()).collect()
+    };
     assert_eq!(
-        deps,
-        REQUIRED_DEPS
-            .iter()
-            .map(|s| s.to_string())
-            .collect::<Vec<_>>(),
-        "Blizzard_WowTokenUI declares exactly `## RequiredDep: Blizzard_SharedXML`. The \
-         secure-environment addon has one explicit loader dependency: Blizzard_SharedXML, \
-         which supplies shared UI templates before the token XML files load"
+        deps, expected_deps,
+        "Blizzard_WowTokenUI declares `## RequiredDep: Blizzard_SharedXML`; the classic \
+         `Blizzard_WowTokenUI.toc` adds Blizzard_UIParent as the second loader dependency"
     );
 
     assert!(

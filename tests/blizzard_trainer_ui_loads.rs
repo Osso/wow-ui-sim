@@ -112,13 +112,27 @@ fn toc_is_load_on_demand_with_no_dependencies() {
         toc.dependencies()
     );
     assert!(toc.optional_deps().is_empty());
-    assert!(toc.saved_variables().is_empty());
+    if toc_layout::wrath() {
+        assert!(toc.saved_variables().is_empty());
+    } else if toc_layout::classic_cache() {
+        assert_eq!(
+            toc.saved_variables(),
+            vec![
+                "TRAINER_FILTER_AVAILABLE_BOOL".to_string(),
+                "TRAINER_FILTER_UNAVAILABLE_BOOL".to_string(),
+                "TRAINER_FILTER_USED_BOOL".to_string(),
+            ],
+            "the classic Blizzard_TrainerUI.toc declares the three trainer filter flags"
+        );
+    } else {
+        assert!(toc.saved_variables().is_empty());
+    }
     assert!(toc.saved_variables_per_character().is_empty());
     assert!(!toc.is_load_first());
     assert!(!toc.is_secure_env());
     assert!(
         !toc.is_game_type_restricted(),
-        "AllowLoadGameType: mainline is the active profile's non-restricting game type"
+        "the active profile's TrainerUI TOC carries no restricting game-type directive"
     );
     assert!(toc.default_enabled());
 }
@@ -143,7 +157,24 @@ fn allow_load_game_restricts_to_in_world_screen() {
 #[test]
 fn toc_raw_bytes_pin_current_mainline_contract() {
     let raw = std::fs::read_to_string(trainer_toc()).expect("TOC reads utf-8");
-    let expected_lines: &[&str] = if toc_layout::unified_toc_tree() {
+    let expected_lines: &[&str] = if toc_layout::wrath() {
+        &[
+            "## Interface: 30300",
+            "## Title: Blizzard Trainer UI",
+            "## Secure: 1",
+            "## LoadOnDemand: 1",
+            "Blizzard_TrainerUI.xml",
+            "Localization.lua",
+        ]
+    } else if toc_layout::classic_cache() {
+        &[
+            "## Title: Blizzard Trainer UI",
+            "## LoadOnDemand: 1",
+            "## SavedVariables: TRAINER_FILTER_AVAILABLE_BOOL, TRAINER_FILTER_UNAVAILABLE_BOOL, TRAINER_FILTER_USED_BOOL",
+            "Blizzard_TrainerUI.xml",
+            "Localization.lua",
+        ]
+    } else if toc_layout::unified_toc_tree() {
         &[
             "## Title: Blizzard_TrainerUI",
             "## LoadOnDemand: 1",

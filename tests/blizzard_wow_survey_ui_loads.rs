@@ -5,6 +5,9 @@ use wow_ui_sim::lua_api::WowLuaEnv;
 use wow_ui_sim::screen::ScreenKind;
 use wow_ui_sim::toc::TocFile;
 
+#[path = "common/toc_layout.rs"]
+mod toc_layout;
+
 fn blizzard_ui_dir() -> PathBuf {
     wow_ui_sim::paths::default_blizzard_ui_addons_path()
         .expect("Blizzard UI cache should be available")
@@ -137,9 +140,17 @@ fn toc_lists_bootstrap_lua_and_xml_body_files() {
         .map(|p| p.to_string_lossy().into_owned())
         .collect();
 
+    let expected_body: Vec<String> = if toc_layout::classic_cache() {
+        ["Blizzard_WowSurveyUI.lua", "Blizzard_WowSurveyUI.xml"]
+            .iter()
+            .map(|s| s.to_string())
+            .collect()
+    } else {
+        BODY_FILES.iter().map(|s| s.to_string()).collect()
+    };
     assert_eq!(
         body_files,
-        BODY_FILES.iter().map(|s| s.to_string()).collect::<Vec<_>>(),
+        expected_body,
         "Retail 12.1.0.69497 TOC lists the bootstrap, then `Blizzard_WowSurveyUI.lua`, then \
          `Blizzard_WowSurveyUI.xml`. The lua file declares `WowSurveyStatusMixin = {{}}` and \
          attaches OnLoad/OnEvent/OnClick to it BEFORE \
@@ -156,14 +167,25 @@ fn toc_raw_bytes_pin_directives() {
     let raw =
         std::fs::read_to_string(wow_survey_toc()).expect("Blizzard_WowSurveyUI TOC should read");
 
-    for directive in [
-        "## Title: Blizzard_WowSurveyUI",
-        "## LoadOnDemand: 1",
-        "## Dependencies: Blizzard_StatusUI",
-        "Blizzard_WowSurveyUI_Bootstrap.lua [Bootstrap]",
-        "Blizzard_WowSurveyUI.lua",
-        "Blizzard_WowSurveyUI.xml",
-    ] {
+    let required: &[&str] = if toc_layout::classic_cache() {
+        &[
+            "## Title: Blizzard_WowSurveyUI",
+            "## LoadOnDemand: 1",
+            "## Dependencies: Blizzard_StatusUI",
+            "Blizzard_WowSurveyUI.lua",
+            "Blizzard_WowSurveyUI.xml",
+        ]
+    } else {
+        &[
+            "## Title: Blizzard_WowSurveyUI",
+            "## LoadOnDemand: 1",
+            "## Dependencies: Blizzard_StatusUI",
+            "Blizzard_WowSurveyUI_Bootstrap.lua [Bootstrap]",
+            "Blizzard_WowSurveyUI.lua",
+            "Blizzard_WowSurveyUI.xml",
+        ]
+    };
+    for directive in required {
         assert!(
             raw.contains(directive),
             "TOC raw bytes must contain `{directive}` — load-on-demand survey UI"

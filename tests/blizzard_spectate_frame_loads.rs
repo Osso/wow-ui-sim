@@ -53,7 +53,7 @@ fn load_spectate_frame(env: &WowLuaEnv) {
 }
 
 // Literal cached inputs absent from Wrath manifest1-382/cache; behavior cases stay enabled.
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn find_toc_resolves_bare_variant() {
     let resolved = find_toc_file(&spectate_dir()).expect("SpectateFrame TOC should resolve");
@@ -67,7 +67,7 @@ fn find_toc_resolves_bare_variant() {
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn toc_declares_six_directives_and_current_dependencies() {
     let toc = TocFile::from_file(&spectate_toc()).expect("SpectateFrame TOC parses");
@@ -101,7 +101,7 @@ fn toc_declares_six_directives_and_current_dependencies() {
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn toc_is_plunderstorm_only_and_game_only() {
     let toc = TocFile::from_file(&spectate_toc()).expect("SpectateFrame TOC parses");
@@ -535,5 +535,20 @@ fn match_details_and_leave_match_buttons_publish_via_parent_keys(env: &WowLuaEnv
          template, and the MatchDetails button anchors LEFT of the \
          LeaveMatch button (-12 px gap)"
     );
+}
+}
+
+// The Mists/Era/Anniversary caches ship 218 addons each and Wrath ships 23;
+// none contains Blizzard_SpectateFrame, so the pinned TOC facts above describe no file the
+// classic loaders can read.
+classic_cache_absent_toc_fixture! {
+#[test]
+fn blizzard_spectateframe_toc_is_absent_from_classic_caches() {
+    let dir = spectate_dir();
+    assert!(
+        !dir.is_dir(),
+        "classic profile caches must not contain Blizzard_SpectateFrame"
+    );
+    assert!(wow_ui_sim::loader::find_toc_file(&dir).is_none());
 }
 }

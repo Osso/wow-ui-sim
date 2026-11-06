@@ -47,11 +47,26 @@ const PTR_REQUIRED_DEPS: &[&str] = &[
     "Blizzard_FriendsFrame",
 ];
 
+// The classic pinned `_Classic.toc` declares only UIPanels_Game and UnitFrame.
+const CLASSIC_REQUIRED_DEPS: &[&str] = &["Blizzard_UIPanels_Game", "Blizzard_UnitFrame"];
+
 fn raid_frame_deps() -> &'static [&'static str] {
-    if toc_layout::unified_toc_tree() {
+    if toc_layout::classic_cache() {
+        CLASSIC_REQUIRED_DEPS
+    } else if toc_layout::unified_toc_tree() {
         PTR_REQUIRED_DEPS
     } else {
         REQUIRED_DEPS
+    }
+}
+
+fn raid_frame_body_files() -> &'static [&'static str] {
+    if toc_layout::mists() {
+        &["Classic/RaidFrame.lua", "Wrath/RaidFrame.xml"]
+    } else if toc_layout::classic_cache() {
+        &["Classic/RaidFrame.lua", "Classic/RaidFrame.xml"]
+    } else {
+        TOC_FILES
     }
 }
 
@@ -131,7 +146,9 @@ fn blizzard_raid_frame_find_toc_resolves_mainline_variant() {
          gates the Wrath\\RaidFrame.xml lines on the classic game types"
     );
 
-    let absent_variants: &[&str] = if toc_layout::unified_toc_tree() {
+    let absent_variants: &[&str] = if toc_layout::classic_cache() {
+        &["_Mainline.toc", ".toc", "_Mists.toc", "_Wrath.toc"]
+    } else if toc_layout::unified_toc_tree() {
         &["_Mainline.toc", "_Mists.toc", "_Wrath.toc", "_Classic.toc"]
     } else {
         &[".toc", "_Mists.toc", "_Wrath.toc", "_Classic.toc"]
@@ -198,7 +215,7 @@ fn blizzard_raid_frame_toc_pins_eager_mainline_only_with_default_state_enabled()
         );
     }
 
-    let expected_optional = if toc_layout::unified_toc_tree() {
+    let expected_optional = if toc_layout::classic_cache() || toc_layout::unified_toc_tree() {
         Vec::new()
     } else {
         vec!["Blizzard_SocialUIShared".to_string()]
@@ -258,7 +275,13 @@ fn blizzard_raid_frame_toc_declares_metadata_in_raw_bytes() {
     let raw = std::fs::read_to_string(raid_frame_mainline_toc()).expect("TOC reads utf-8");
 
     assert!(raw.contains("## Title: Blizzard_RaidFrame"));
-    if toc_layout::unified_toc_tree() {
+    if toc_layout::classic_cache() {
+        assert!(raw.contains("## Author: Blizzard Entertainment"));
+        assert!(raw.contains("## DefaultState: enabled"));
+        assert!(raw.contains("## Dependencies: Blizzard_UIPanels_Game, Blizzard_UnitFrame"));
+        assert!(raw.contains("## AllowLoadGameType: classic"));
+        assert!(!raw.contains("## OptionalDeps"));
+    } else if toc_layout::unified_toc_tree() {
         assert!(raw.contains("## Dep: Blizzard_SocialUIShared [AllowLoadGameType mainline]"));
         assert!(raw.contains("## Dep: Blizzard_UIPanels_Game"));
         assert!(raw.contains("## Dep: Blizzard_UnitFrame"));
@@ -316,9 +339,11 @@ fn blizzard_raid_frame_toc_lists_two_files_lua_then_xml() {
         .map(|p| p.to_string_lossy().into_owned())
         .collect();
     assert_eq!(
-        listed, TOC_FILES,
+        listed,
+        raid_frame_body_files(),
         "The TOC lists the core RaidFrame Lua/XML pair followed by \
-         RaidFrameSocialView and RaidInfoFrameSocialView Lua/XML pairs"
+         RaidFrameSocialView and RaidInfoFrameSocialView Lua/XML pairs; the \
+         classic `_Classic.toc` lists only the Classic pair"
     );
 }
 }

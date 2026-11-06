@@ -59,7 +59,7 @@ fn load_remix_artifact_ui_with_dependency(env: &WowLuaEnv) {
 }
 
 // Literal cached inputs absent from Wrath manifest1-382/cache; behavior cases stay enabled.
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn find_toc_file_resolves_bare_toc() {
     let resolved =
@@ -75,7 +75,7 @@ fn find_toc_file_resolves_bare_toc() {
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn toc_declares_load_on_demand_standard_game_only_with_two_hard_deps() {
     let toc = TocFile::from_file(&remix_artifact_toc())
@@ -128,7 +128,7 @@ fn toc_declares_load_on_demand_standard_game_only_with_two_hard_deps() {
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn toc_lists_bootstrap_and_two_files_in_root_directory() {
     let toc = TocFile::from_file(&remix_artifact_toc())
@@ -500,5 +500,20 @@ fn xml_uses_method_attribute_dispatch() {
          method= form, this resolves through `_G` instead of the mixin table because \
          GameTooltip_Hide is a free FrameXML helper, not a mixin method"
     );
+}
+}
+
+// The Mists/Era/Anniversary caches ship 218 addons each and Wrath ships 23;
+// none contains Blizzard_RemixArtifactUI, so the pinned TOC facts above describe no file the
+// classic loaders can read.
+classic_cache_absent_toc_fixture! {
+#[test]
+fn blizzard_remixartifactui_toc_is_absent_from_classic_caches() {
+    let dir = remix_artifact_dir();
+    assert!(
+        !dir.is_dir(),
+        "classic profile caches must not contain Blizzard_RemixArtifactUI"
+    );
+    assert!(wow_ui_sim::loader::find_toc_file(&dir).is_none());
 }
 }

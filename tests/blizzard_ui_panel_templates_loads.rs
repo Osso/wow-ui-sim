@@ -207,7 +207,22 @@ post_wrath_ui_fixture! {
 fn toc_raw_bytes_pin_six_directives_and_six_body_files() {
     let raw = std::fs::read_to_string(ui_panel_templates_toc()).expect("TOC reads utf-8");
 
-    let expected_lines: &[&str] = if toc_layout::unified_toc_tree() {
+    let expected_lines: &[&str] = if toc_layout::classic_cache() {
+        &[
+            "## Title: Blizzard_UIPanelTemplates",
+            "## Author: Blizzard Entertainment",
+            "## DefaultState: enabled",
+            "## Dependencies: Blizzard_SharedXMLGame",
+            "## AllowLoad: game",
+            "## AllowLoadGameType: classic",
+            "Classic\\AutoCastTemplates.lua",
+            "Classic\\AutoCastTemplates.xml",
+            "Shared\\UIPanelSpellButtonFrame.lua",
+            "Shared\\UIPanelSpellButtonFrame.xml",
+            "Classic\\UIPanelTemplates.lua",
+            "Classic\\UIPanelTemplates.xml",
+        ]
+    } else if toc_layout::unified_toc_tree() {
         &[
             "## Title: Blizzard_UIPanelTemplates",
             "## Dep: Blizzard_SharedXMLGame",

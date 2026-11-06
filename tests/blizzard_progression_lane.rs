@@ -155,17 +155,33 @@ fn talent_ui_ships_only_a_mists_toc_variant_unresolvable_by_find_toc_file() {
     }
 
     let resolved = find_toc_file(&talent_ui_dir);
-    assert!(
-        resolved.is_none(),
-        "SIMULATOR/SOURCE GAP — find_toc_file returns None for Blizzard_TalentUI because the \
-         addon ships ONLY `Blizzard_TalentUI_Mists.toc`. The variant resolver at \
-         src/loader/mod.rs:65-95 probes (1) `<name>_Mainline.toc`, (2) `<name>.toc`, then \
-         (3) any non-Classic/Wrath/TBC/Vanilla/Mists `.toc` file in the directory — and the \
-         Mists exclusion at the fallback explicitly skips `_Mists.toc` filenames. So \
-         Blizzard_TalentUI is invisible to the standard load path on a Mainline target. \
-         Real WoW selects flavor variants based on the running build; the simulator hard-codes \
-         Mainline preference. Got: {resolved:?}"
+    let expected: Option<&str> = if toc_layout::mists() {
+        Some("Blizzard_TalentUI_Mists.toc")
+    } else if toc_layout::wrath() {
+        Some("Blizzard_TalentUI.toc")
+    } else if toc_layout::classic_cache() {
+        Some("Blizzard_TalentUI_Vanilla.toc")
+    } else {
+        None
+    };
+    assert_eq!(
+        resolved
+            .as_deref()
+            .and_then(|path| path.file_name())
+            .and_then(|name| name.to_str()),
+        expected,
+        "the Retail cache ships only `_Mists.toc`, which its suffix list never probes; each \
+         classic profile resolves its own flavor TOC. Got: {resolved:?}"
     );
+
+    if toc_layout::wrath() {
+        let bare = talent_ui_dir.join("Blizzard_TalentUI.toc");
+        assert!(bare.exists(), "the Wrath cache ships the bare Blizzard_TalentUI.toc");
+        let toc = TocFile::from_file(&bare).expect("Wrath Blizzard_TalentUI TOC parses");
+        assert!(toc.is_load_on_demand());
+        assert!(toc.dependencies().is_empty());
+        return;
+    }
 
     let mists_toc = talent_ui_dir.join("Blizzard_TalentUI_Mists.toc");
     assert!(

@@ -7,6 +7,9 @@ use wow_ui_sim::screen::ScreenKind;
 use wow_ui_sim::startup::fire_startup_events_for_screen;
 use wow_ui_sim::toc::TocFile;
 
+#[path = "common/toc_layout.rs"]
+mod toc_layout;
+
 fn blizzard_ui_dir() -> PathBuf {
     wow_ui_sim::paths::default_blizzard_ui_addons_path()
         .expect("Blizzard UI cache should be available")
@@ -194,9 +197,34 @@ post_wrath_ui_fixture! {
 #[test]
 fn toc_raw_bytes_pin_current_directives_and_body() {
     let raw = std::fs::read_to_string(transmog_toc()).expect("TOC reads utf-8");
-    assert_eq!(
-        raw.lines().collect::<Vec<_>>(),
-        [
+    let expected_lines: &[&str] = if toc_layout::mists() {
+        &[
+            "## Title: Blizzard_Transmog",
+            "## LoadOnDemand: 1",
+            "## AllowLoad: Game",
+            "## Dependencies: Blizzard_SharedXML, Blizzard_SharedXMLGame, Blizzard_FrameXMLBase, Blizzard_FrameXMLUtil, Blizzard_UIPanelTemplates, Blizzard_StaticPopup_Game, Blizzard_TransmogShared, Blizzard_PagedContent, Blizzard_GameTooltip, Blizzard_MoneyFrame, Blizzard_Menu, Blizzard_HelpPlate, Blizzard_FrameEffects",
+            "Blizzard_TransmogTemplates.xml",
+            "Blizzard_Transmog.lua",
+            "[Family]\\Blizzard_TransmogOverrides.lua",
+            "Blizzard_Transmog.xml",
+            "Blizzard_TransmogRegistration.lua",
+        ]
+    } else if toc_layout::classic_cache() {
+        // Era and Anniversary resolve the bare TOC, which lists the Lua file
+        // before the template XML.
+        &[
+            "## Title: Blizzard_Transmog",
+            "## LoadOnDemand: 1",
+            "## AllowLoad: Game",
+            "## Dependencies: Blizzard_SharedXML, Blizzard_SharedXMLGame, Blizzard_FrameXMLBase, Blizzard_FrameXMLUtil, Blizzard_UIPanelTemplates, Blizzard_StaticPopup_Game, Blizzard_TransmogShared, Blizzard_PagedContent, Blizzard_GameTooltip, Blizzard_MoneyFrame, Blizzard_Menu, Blizzard_HelpPlate, Blizzard_FrameEffects",
+            "Blizzard_Transmog.lua",
+            "[Family]\\Blizzard_TransmogOverrides.lua",
+            "Blizzard_TransmogTemplates.xml",
+            "Blizzard_Transmog.xml",
+            "Blizzard_TransmogRegistration.lua",
+        ]
+    } else {
+        &[
             "## Title: Blizzard_Transmog",
             "## LoadOnDemand: 1",
             "## AllowLoad: Game",
@@ -207,8 +235,12 @@ fn toc_raw_bytes_pin_current_directives_and_body() {
             "[Family]\\Blizzard_TransmogOverrides.lua",
             "Blizzard_Transmog.xml",
             "Blizzard_TransmogRegistration.lua",
-        ],
-        "Retail 12.1 Transmog TOC must retain its current directives and six ordered body entries"
+        ]
+    };
+    assert_eq!(
+        raw.lines().collect::<Vec<_>>(),
+        expected_lines,
+        "the pinned Transmog TOC must retain its directives and ordered body entries"
     );
 }
 }

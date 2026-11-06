@@ -20,7 +20,7 @@ fn settings_shared_dir() -> PathBuf {
 }
 
 fn settings_shared_toc() -> PathBuf {
-    settings_shared_dir().join("Blizzard_Settings_Shared.toc")
+    find_toc_file(&settings_shared_dir()).expect("Blizzard_Settings_Shared TOC resolves")
 }
 
 const HARD_DEPS: &[&str] = &[
@@ -49,8 +49,15 @@ const FOREVER_HARD_DEPS: &[&str] = &[
     "Blizzard_GamepadSharedUtility",
 ];
 
+// The classic pinned `_Classic.toc` keeps the two hard dependencies and moves
+// the two screen-scoped static popup addons into `## OptionalDep:`.
+const CLASSIC_HARD_DEPS: &[&str] = &["Blizzard_SharedXML", "Blizzard_HelpPlate"];
+const CLASSIC_OPTIONAL_DEPS: &[&str] = &["Blizzard_StaticPopup_Glue", "Blizzard_StaticPopup_Game"];
+
 fn hard_deps() -> &'static [&'static str] {
-    if toc_layout::forever() {
+    if toc_layout::classic_cache() {
+        CLASSIC_HARD_DEPS
+    } else if toc_layout::forever() {
         FOREVER_HARD_DEPS
     } else if toc_layout::unified_toc_tree() {
         PTR_HARD_DEPS
@@ -225,9 +232,10 @@ fn find_toc_file_resolves_bare_variant() {
     let resolved =
         find_toc_file(&settings_shared_dir()).expect("Blizzard_Settings_Shared TOC resolves");
     assert_eq!(
-        resolved,
-        settings_shared_toc(),
-        "Retail 12.1.0.69497 ships the bare Blizzard_Settings_Shared.toc variant"
+        resolved.file_name().and_then(|name| name.to_str()),
+        Some(toc_layout::expected_toc_name("Blizzard_Settings_Shared").as_str()),
+        "find_toc_file resolves the active profile's Settings_Shared TOC: Retail ships the \
+         bare TOC and the classic caches the `_Classic` companion"
     );
 }
 }
@@ -275,10 +283,21 @@ post_wrath_ui_fixture! {
 fn toc_uses_dep_entries_without_optional_dependencies() {
     let toc = TocFile::from_file(&settings_shared_toc()).expect("TOC parses");
 
-    assert!(
-        toc.optional_deps().is_empty(),
-        "Retail 12.1.0.69497 uses Dep entries, not OptionalDep metadata"
-    );
+    if toc_layout::classic_cache() {
+        assert_eq!(
+            toc.optional_deps(),
+            CLASSIC_OPTIONAL_DEPS
+                .iter()
+                .map(|s| s.to_string())
+                .collect::<Vec<_>>(),
+            "the classic TOC declares the two screen-scoped static popup addons as optional"
+        );
+    } else {
+        assert!(
+            toc.optional_deps().is_empty(),
+            "Retail 12.1.0.69497 uses Dep entries, not OptionalDep metadata"
+        );
+    }
 }
 }
 
@@ -312,13 +331,23 @@ fn toc_raw_bytes_pin_current_dep_entries_and_allow_load_both() {
         std::fs::read_to_string(settings_shared_toc()).expect("Settings_Shared TOC reads utf-8");
 
     assert!(raw.contains("## Title: Blizzard_Settings_Shared"));
-    for directive in [
-        "## Dep: Blizzard_SharedXML",
-        "## Dep: Blizzard_HelpPlate",
-        "## Dep: Blizzard_StaticPopup_Glue [AllowLoad glue]",
-        "## Dep: Blizzard_StaticPopup_Game [AllowLoad game]",
-        "## AllowLoad: Both",
-    ] {
+    let expected: &[&str] = if toc_layout::classic_cache() {
+        &[
+            "## Dependencies: Blizzard_SharedXML, Blizzard_HelpPlate",
+            "## OptionalDep: Blizzard_StaticPopup_Glue, Blizzard_StaticPopup_Game",
+            "## AllowLoad: Both",
+            "## AllowLoadGameType: classic",
+        ]
+    } else {
+        &[
+            "## Dep: Blizzard_SharedXML",
+            "## Dep: Blizzard_HelpPlate",
+            "## Dep: Blizzard_StaticPopup_Glue [AllowLoad glue]",
+            "## Dep: Blizzard_StaticPopup_Game [AllowLoad game]",
+            "## AllowLoad: Both",
+        ]
+    };
+    for directive in expected {
         assert!(
             raw.contains(directive),
             "missing current directive: {directive}"
@@ -334,7 +363,9 @@ fn toc_raw_bytes_pin_current_dep_entries_and_allow_load_both() {
     assert!(!raw.contains("## LoadFirst"));
     assert!(!raw.contains("## UseSecureEnvironment"));
     assert!(!raw.contains("## RequiredDep"));
-    assert!(!raw.contains("## OptionalDep"));
+    if !toc_layout::classic_cache() {
+        assert!(!raw.contains("## OptionalDep"));
+    }
 }
 }
 
@@ -383,6 +414,35 @@ fn toc_body_load_order_runs_definitions_framework_before_namespace_seed() {
         })
         .collect();
 
+    if toc_layout::classic_cache() {
+        let expected_body = vec![
+            "NewDefinitionsFramework.lua",
+            "Blizzard_SettingsRegistrar.lua",
+            "Blizzard_Settings.lua",
+            "Blizzard_Category.lua",
+            "Blizzard_CategoryList.xml",
+            "Blizzard_SettingsList.xml",
+            "Blizzard_Setting.lua",
+            "Blizzard_SettingControls.xml",
+            "Classic\\Blizzard_SettingsPanelTemplates.xml",
+            "Blizzard_SettingsPanel.lua",
+            "Blizzard_SettingsPanel.xml",
+            "Blizzard_Keybindings.xml",
+            "Blizzard_Dialogs.lua",
+            "Blizzard_SettingsLayouts.lua",
+            "Blizzard_Registration.lua",
+            "Blizzard_SettingsInbound.lua",
+            "Blizzard_Deprecated.lua",
+            "Classic\\GraphicsOverrides.lua",
+            "Classic\\AudioOverrides.lua",
+        ];
+        assert_eq!(
+            body_lines, expected_body,
+            "the pinned classic TOC lists these Settings_Shared body entries in this exact order"
+        );
+        return;
+    }
+
     let expected_body = vec![
         "NewDefinitionsFramework.lua",
         "NewDefinitionsFramework.xml",
@@ -428,14 +488,16 @@ fn toc_entry_count_breakdown_matches_filesystem_layout() {
         .iter()
         .filter(|f| f.extension().is_some_and(|ext| ext == "xml"))
         .count();
-    let expected_lua = if toc_layout::forever() {
+    let expected_lua = if toc_layout::classic_cache() {
+        13
+    } else if toc_layout::forever() {
         21
     } else if toc_layout::unified_toc_tree() {
         20
     } else {
         14
     };
-    let expected_xml = 7;
+    let expected_xml = if toc_layout::classic_cache() { 6 } else { 7 };
     assert_eq!(
         lua_count, expected_lua,
         "TOC body lists {expected_lua} Lua entries. Got: {lua_count}"

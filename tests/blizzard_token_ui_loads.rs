@@ -20,7 +20,7 @@ fn token_ui_dir() -> PathBuf {
 }
 
 fn token_ui_toc() -> PathBuf {
-    token_ui_dir().join("Blizzard_TokenUI.toc")
+    find_toc_file(&token_ui_dir()).expect("Blizzard_TokenUI TOC resolves")
 }
 
 const ALL_GLUE_SCREENS: &[ScreenKind] = &[
@@ -97,10 +97,11 @@ fn load_full_game_ui() -> WowLuaEnv {
 fn find_toc_file_resolves_bare_toc() {
     let resolved = find_toc_file(&token_ui_dir()).expect("TokenUI TOC resolves");
     assert_eq!(
-        resolved,
-        token_ui_toc(),
-        "Bare TOC — no flavor suffix; in-game character-frame token \
-         tab + currency-transfer dialog ships universally on mainline"
+        resolved.file_name().and_then(|name| name.to_str()),
+        Some(toc_layout::expected_toc_name("Blizzard_TokenUI").as_str()),
+        "find_toc_file resolves the active profile's TokenUI TOC: Retail ships the bare \
+         `Blizzard_TokenUI.toc`, PTR/Forever the unified bare TOC, Mists the `_Mists` \
+         companion and Era/Anniversary the bare classic TOC"
     );
 }
 
@@ -160,7 +161,34 @@ fn allow_load_absent_defaults_to_game_only_screen() {
 fn toc_raw_bytes_pin_single_metadata_directive_and_five_body_files() {
     let raw = std::fs::read_to_string(token_ui_toc()).expect("TOC reads utf-8");
 
-    let expected_lines: &[&str] = if toc_layout::forever() {
+    let expected_lines: &[&str] = if toc_layout::wrath() {
+        &[
+            "## Interface: 30300",
+            "## Title: Blizzard_TokenUI",
+            "## Secure: 1",
+            "Blizzard_TokenUI.lua",
+            "Blizzard_TokenUI.xml",
+            "Localization.lua",
+        ]
+    } else if toc_layout::mists() {
+        &[
+            "## Title: Blizzard Token UI",
+            "## Secure: 1",
+            "## AllowLoad: game",
+            "## AllowLoadGameType: mists",
+            "Cata\\Blizzard_TokenUI.lua",
+            "Cata\\Blizzard_TokenUI.xml",
+            "Localization.lua",
+        ]
+    } else if toc_layout::classic_cache() {
+        &[
+            "## Title: Blizzard Token UI",
+            "## Secure: 1",
+            "Blizzard_TokenUI.lua",
+            "Blizzard_TokenUI.xml",
+            "Localization.lua",
+        ]
+    } else if toc_layout::forever() {
         &[
             "## Title: Blizzard_TokenUI",
             "Blizzard_CurrencyTransfer.lua",
@@ -203,18 +231,27 @@ fn toc_raw_bytes_pin_single_metadata_directive_and_five_body_files() {
         );
     }
 
-    assert!(!raw.contains("## Author"));
     assert!(!raw.contains("## DefaultState"));
     assert!(!raw.contains("## LoadOnDemand"));
     assert!(!raw.contains("## Dependencies"));
     assert!(!raw.contains("## RequiredDep"));
     assert!(!raw.contains("## OptionalDep"));
     assert!(!raw.contains("## SavedVariables"));
-    assert!(!raw.contains("## AllowLoad:"));
     assert!(!raw.contains("## UseSecureEnvironment"));
     assert!(!raw.contains("## LoadFirst"));
-    if !toc_layout::unified_toc_tree() || toc_layout::forever() {
-        assert!(!raw.contains("## AllowLoadGameType"));
+    if toc_layout::wrath() {
+        assert!(raw.contains("## Interface: 30300"));
+        assert!(raw.contains("## Secure: 1"));
+        assert!(!raw.contains("## AllowLoad"));
+    } else if toc_layout::classic_cache() {
+        assert!(raw.contains("## Author: Blizzard Entertainment"));
+        assert!(raw.contains("## Version: 1.0"));
+    } else {
+        assert!(!raw.contains("## Author"));
+        assert!(!raw.contains("## AllowLoad:"));
+        if !toc_layout::unified_toc_tree() || toc_layout::forever() {
+            assert!(!raw.contains("## AllowLoadGameType"));
+        }
     }
 }
 

@@ -102,7 +102,7 @@ fn load_full_game_ui() -> WowLuaEnv {
 }
 
 // Literal cached inputs absent from Wrath manifest1-382/cache; behavior cases stay enabled.
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn find_toc_file_resolves_bare_toc() {
     let resolved = find_toc_file(&runeforge_dir()).expect("Blizzard_RuneforgeUI TOC resolves");
@@ -116,7 +116,7 @@ fn find_toc_file_resolves_bare_toc() {
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn toc_declares_load_on_demand_with_blizzard_colors_dependency() {
     let toc = TocFile::from_file(&runeforge_toc()).expect("Blizzard_RuneforgeUI TOC parses");
@@ -156,7 +156,7 @@ fn toc_declares_load_on_demand_with_blizzard_colors_dependency() {
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn toc_declares_metadata_in_raw_bytes() {
     let raw =
@@ -197,7 +197,7 @@ fn toc_declares_metadata_in_raw_bytes() {
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn toc_lists_bootstrap_and_seven_xml_files() {
     let toc = TocFile::from_file(&runeforge_toc()).expect("Blizzard_RuneforgeUI TOC parses");
@@ -273,7 +273,7 @@ fn excluded_from_eager_discovery_due_to_load_on_demand() {
     }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn root_directory_holds_seven_lua_xml_pairs_next_to_toc() {
     let dir = runeforge_dir();
@@ -519,5 +519,20 @@ fn callback_registry_mixin_publishes_eight_runeforge_events(env: &WowLuaEnv) {
          CallbackRegistryMixin.GenerateCallbackEvents stamps Event[name]=name on the \
          mixin so child mixins can register without typo-ing the keys at the call site"
     );
+}
+}
+
+// The Mists/Era/Anniversary caches ship 218 addons each and Wrath ships 23;
+// none contains Blizzard_RuneforgeUI, so the pinned TOC facts above describe no file the
+// classic loaders can read.
+classic_cache_absent_toc_fixture! {
+#[test]
+fn blizzard_runeforgeui_toc_is_absent_from_classic_caches() {
+    let dir = runeforge_dir();
+    assert!(
+        !dir.is_dir(),
+        "classic profile caches must not contain Blizzard_RuneforgeUI"
+    );
+    assert!(wow_ui_sim::loader::find_toc_file(&dir).is_none());
 }
 }

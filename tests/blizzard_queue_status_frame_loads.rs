@@ -42,8 +42,15 @@ const FOREVER_TOC_FILES: &[&str] = &[
     "Mainline/QueueStatusFrame.xml",
 ];
 
+const CLASSIC_TOC_FILES: &[&str] = &[
+    "Classic/QueueStatusFrame.lua",
+    "Classic/QueueStatusFrame.xml",
+];
+
 fn queue_status_toc_files() -> &'static [&'static str] {
-    if toc_layout::forever() {
+    if toc_layout::classic_cache() {
+        CLASSIC_TOC_FILES
+    } else if toc_layout::forever() {
         FOREVER_TOC_FILES
     } else if toc_layout::unified_toc_tree() {
         PTR_TOC_FILES
@@ -59,7 +66,9 @@ const REQUIRED_DEPS: &[&str] = &["Blizzard_ActionBar", "Blizzard_LFGUtil"];
 const PTR_REQUIRED_DEPS: &[&str] = &["Blizzard_LFGUtil"];
 
 fn queue_status_deps() -> &'static [&'static str] {
-    if toc_layout::unified_toc_tree() && !toc_layout::forever() {
+    if toc_layout::classic_cache() {
+        &["Blizzard_ActionBar"]
+    } else if toc_layout::unified_toc_tree() && !toc_layout::forever() {
         PTR_REQUIRED_DEPS
     } else {
         REQUIRED_DEPS
@@ -172,7 +181,9 @@ fn blizzard_queue_status_frame_find_toc_resolves_mainline_variant() {
          ships a single `_Mainline.toc`, while the pinned PTR cache ships the bare unified TOC"
     );
 
-    let absent_variants: &[&str] = if toc_layout::unified_toc_tree() {
+    let absent_variants: &[&str] = if toc_layout::classic_cache() {
+        &["_Mainline.toc", ".toc", "_Mists.toc", "_Wrath.toc"]
+    } else if toc_layout::unified_toc_tree() {
         &["_Mainline.toc", "_Mists.toc", "_Wrath.toc", "_Classic.toc"]
     } else {
         &[".toc", "_Mists.toc", "_Wrath.toc", "_Classic.toc"]
@@ -273,9 +284,14 @@ fn blizzard_queue_status_frame_toc_declares_metadata_in_raw_bytes() {
             "TOC must declare `## DefaultState: enabled` — the AddOn list UI shows \
              the addon enabled by default for users who toggle it manually"
         );
-        assert!(raw.contains("## Dependencies: Blizzard_ActionBar, Blizzard_LFGUtil"));
+        if toc_layout::classic_cache() {
+            assert!(raw.contains("## Dependencies: Blizzard_ActionBar"));
+            assert!(raw.contains("## AllowLoadGameType: classic"));
+        } else {
+            assert!(raw.contains("## Dependencies: Blizzard_ActionBar, Blizzard_LFGUtil"));
+            assert!(raw.contains("## AllowLoadGameType: mainline"));
+        }
         assert!(raw.contains("## AllowLoad: game"));
-        assert!(raw.contains("## AllowLoadGameType: mainline"));
     }
 
     assert!(

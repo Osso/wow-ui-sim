@@ -43,8 +43,21 @@ const UNIFIED_PTR_FEEDBACK_TOC_FILES: &[&str] = &[
     "Blizzard_Reports.lua",
 ];
 
+// The classic TOC lists the six legacy Lua files without the FrameTemplates
+// XML prelude.
+const CLASSIC_PTR_FEEDBACK_TOC_FILES: &[&str] = &[
+    "Blizzard_PTRFeedback.lua",
+    "Blizzard_PTRFeedback_Tooltips.lua",
+    "Blizzard_PTRFeedback_Frames.lua",
+    "Blizzard_PTRFeedback_Events.lua",
+    "Blizzard_PTRFeedback_Constants.lua",
+    "Blizzard_Reports.lua",
+];
+
 fn ptr_feedback_toc_files() -> &'static [&'static str] {
-    if toc_layout::unified_toc_tree() {
+    if toc_layout::classic_cache() {
+        CLASSIC_PTR_FEEDBACK_TOC_FILES
+    } else if toc_layout::unified_toc_tree() {
         UNIFIED_PTR_FEEDBACK_TOC_FILES
     } else {
         PTR_FEEDBACK_TOC_FILES
@@ -167,11 +180,15 @@ fn blizzard_ptr_feedback_toc_declares_eager_no_lod_with_one_dep() {
 
     let dependencies = toc.dependencies();
     let deps: Vec<&str> = dependencies.iter().map(|s| s.as_str()).collect();
+    let expected_deps: &[&str] = if toc_layout::classic_cache() {
+        &[]
+    } else {
+        REQUIRED_DEPS
+    };
     assert_eq!(
-        deps, REQUIRED_DEPS,
-        "TOC must declare exactly 1 dep: Blizzard_HelpPlate (publishes the HelpPlate \
-         tutorial-overlay machinery used by the bug-report tutorial popup that \
-         introduces the F6 keybinding to first-time PTR testers)"
+        deps, expected_deps,
+        "TOC must declare exactly 1 dep: Blizzard_HelpPlate on Retail/PTR/Forever; the \
+         classic TOC declares none"
     );
 
     assert!(
@@ -209,18 +226,24 @@ fn blizzard_ptr_feedback_toc_declares_metadata_in_raw_bytes() {
     let raw =
         std::fs::read_to_string(ptr_feedback_toc()).expect("Blizzard_PTRFeedback TOC reads utf-8");
 
+    let (expected_title, expected_notes) = if toc_layout::classic_cache() {
+        ("## Title: PTR Bug Reporter", "## Notes: Tool for gathering bugs from PTR")
+    } else {
+        (
+            "## Title: PTR Issue Reporter",
+            "## Notes: Tool for gathering issues from PTR",
+        )
+    };
     assert!(
-        raw.contains("## Title: PTR Issue Reporter"),
-        "TOC must declare `## Title: PTR Issue Reporter` — note the title does NOT \
-         carry the `Blizzard ` prefix that almost every other Blizzard_* addon \
-         uses; the player-facing label is the historical pre-modern name"
+        raw.contains(expected_title),
+        "TOC must declare the pinned player-facing reporter title"
     );
     assert!(
         raw.contains("## OnlyBetaAndPTR: 1"),
         "TOC must declare `## OnlyBetaAndPTR: 1` exactly"
     );
     assert!(
-        raw.contains("## Notes: Tool for gathering issues from PTR"),
+        raw.contains(expected_notes),
         "TOC must declare `## Notes:` — one of the few Blizzard_* addons that \
          carries a Notes line. The Notes field is consumed by the AddOn list UI \
          to render a tooltip describing the addon's purpose"
@@ -230,10 +253,12 @@ fn blizzard_ptr_feedback_toc_declares_metadata_in_raw_bytes() {
         "TOC must declare `## SavedVariables:` with the historical \
          `Blizzard_PTRIssueReporter_Saved` global name"
     );
-    assert!(
-        raw.contains("## Dependencies: Blizzard_HelpPlate"),
-        "TOC must declare `## Dependencies: Blizzard_HelpPlate`"
-    );
+    if !toc_layout::classic_cache() {
+        assert!(
+            raw.contains("## Dependencies: Blizzard_HelpPlate"),
+            "TOC must declare `## Dependencies: Blizzard_HelpPlate`"
+        );
+    }
 
     assert!(
         !raw.contains("## Author"),

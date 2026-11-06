@@ -6,6 +6,9 @@ use wow_ui_sim::lua_api::WowLuaEnv;
 use wow_ui_sim::screen::ScreenKind;
 use wow_ui_sim::toc::TocFile;
 
+#[path = "common/toc_layout.rs"]
+mod toc_layout;
+
 fn blizzard_ui_dir() -> PathBuf {
     wow_ui_sim::paths::default_blizzard_ui_addons_path()
         .expect("Blizzard UI cache should be available")
@@ -24,7 +27,7 @@ fn shared_xml_selector_dir() -> PathBuf {
 }
 
 // Literal cached inputs absent from Wrath manifest1-382/cache; behavior cases stay enabled.
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn find_toc_file_resolves_bare_toc() {
     let resolved = find_toc_file(&selector_ui_dir()).expect("Blizzard_SelectorUI TOC resolves");
@@ -40,7 +43,7 @@ fn find_toc_file_resolves_bare_toc() {
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn toc_declares_only_title_and_load_on_demand() {
     let toc = TocFile::from_file(&selector_ui_toc()).expect("Blizzard_SelectorUI TOC parses");
@@ -77,7 +80,7 @@ fn toc_declares_only_title_and_load_on_demand() {
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn toc_lacks_allow_load_so_falls_through_to_game_only() {
     let toc = TocFile::from_file(&selector_ui_toc()).expect("Blizzard_SelectorUI TOC parses");
@@ -103,7 +106,7 @@ fn toc_lacks_allow_load_so_falls_through_to_game_only() {
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn toc_raw_bytes_contain_only_title_and_load_on_demand_lines() {
     let raw =
@@ -159,7 +162,7 @@ fn lod_addon_excluded_from_eager_discovery_on_every_screen() {
     }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn root_directory_holds_only_the_toc_with_no_body_files() {
     let dir = selector_ui_dir();
@@ -217,11 +220,22 @@ fn actual_selector_code_lives_in_shared_xml_body_not_this_folder() {
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn shared_xml_toc_lists_selector_files_in_its_body() {
-    let shared_xml_toc = blizzard_ui_dir().join("Blizzard_SharedXML/Blizzard_SharedXML.toc");
+    let shared_xml_dir = blizzard_ui_dir().join("Blizzard_SharedXML");
+    let shared_xml_toc =
+        find_toc_file(&shared_xml_dir).expect("Blizzard_SharedXML TOC resolves");
     let raw = std::fs::read_to_string(&shared_xml_toc).expect("Blizzard_SharedXML.toc reads utf-8");
+
+    // Retail, PTR and Forever resolve the `[Family]` placeholder to the
+    // Mainline selector file; the classic caches ship the concrete `Classic`
+    // subdirectory in the same body position.
+    let scroll_box_xml = if toc_layout::classic_cache() {
+        "Classic\\Selector\\Blizzard_ScrollBoxSelector.xml"
+    } else {
+        "[Family]\\Selector\\Blizzard_ScrollBoxSelector.xml"
+    };
 
     for line in [
         "Shared\\Selector\\Blizzard_SelectorUI.lua",
@@ -229,7 +243,7 @@ fn shared_xml_toc_lists_selector_files_in_its_body() {
         "Shared\\Selector\\Blizzard_GridSelectorUI.lua",
         "Shared\\Selector\\Blizzard_GridSelectorUI.xml",
         "Shared\\Selector\\Blizzard_ScrollBoxSelector.lua",
-        "[Family]\\Selector\\Blizzard_ScrollBoxSelector.xml",
+        scroll_box_xml,
     ] {
         assert!(
             raw.contains(line),
@@ -301,5 +315,20 @@ fn is_addon_loaded_transitions_false_to_true_after_explicit_load() {
          AddOn state machine; downstream callers can use this to gate behavior \
          on the shell's nominal presence"
     );
+}
+}
+
+// The Mists/Era/Anniversary caches ship 218 addons each and Wrath ships 23;
+// none contains Blizzard_SelectorUI, so the pinned TOC facts above describe no file the
+// classic loaders can read.
+classic_cache_absent_toc_fixture! {
+#[test]
+fn blizzard_selectorui_toc_is_absent_from_classic_caches() {
+    let dir = selector_ui_dir();
+    assert!(
+        !dir.is_dir(),
+        "classic profile caches must not contain Blizzard_SelectorUI"
+    );
+    assert!(wow_ui_sim::loader::find_toc_file(&dir).is_none());
 }
 }

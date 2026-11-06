@@ -69,7 +69,7 @@ fn load_full_game_ui() -> WowLuaEnv {
 }
 
 // Literal cached inputs absent from Wrath manifest1-382/cache; behavior cases stay enabled.
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn blizzard_poi_button_find_toc_resolves_bare_variant() {
     let resolved = find_toc_file(&poi_button_dir()).expect("Blizzard_POIButton TOC resolves");
@@ -92,7 +92,7 @@ fn blizzard_poi_button_find_toc_resolves_bare_variant() {
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn blizzard_poi_button_toc_declares_eager_in_game() {
     let toc = TocFile::from_file(&poi_button_toc()).expect("Blizzard_POIButton TOC parses");
@@ -165,7 +165,7 @@ fn blizzard_poi_button_toc_declares_eager_in_game() {
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn blizzard_poi_button_toc_declares_metadata_in_raw_bytes() {
     let raw =
@@ -230,7 +230,7 @@ fn blizzard_poi_button_toc_declares_metadata_in_raw_bytes() {
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn blizzard_poi_button_toc_lists_six_files_in_canonical_order() {
     let toc = TocFile::from_file(&poi_button_toc()).expect("Blizzard_POIButton TOC parses");
@@ -533,5 +533,20 @@ fn blizzard_poi_button_loads_without_addon_specific_lua_errors(env: &WowLuaEnv) 
         "Blizzard_POIButton emitted addon-specific Lua errors during load:\n  {}",
         load_errors.join("\n  ")
     );
+}
+}
+
+// The Mists/Era/Anniversary caches ship 218 addons each and Wrath ships 23;
+// none contains Blizzard_POIButton, so the pinned TOC facts above describe no file the
+// classic loaders can read.
+classic_cache_absent_toc_fixture! {
+#[test]
+fn blizzard_poibutton_toc_is_absent_from_classic_caches() {
+    let dir = poi_button_dir();
+    assert!(
+        !dir.is_dir(),
+        "classic profile caches must not contain Blizzard_POIButton"
+    );
+    assert!(wow_ui_sim::loader::find_toc_file(&dir).is_none());
 }
 }

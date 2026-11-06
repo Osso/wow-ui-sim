@@ -63,7 +63,7 @@ fn load_full_game_ui() -> WowLuaEnv {
 }
 
 // Literal cached inputs absent from Wrath manifest1-382/cache; behavior cases stay enabled.
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn find_toc_file_resolves_bare_toc() {
     let resolved = find_toc_file(&rpe_dir()).expect("Blizzard_RPE_TurnStrafe TOC should resolve");
@@ -79,7 +79,7 @@ fn find_toc_file_resolves_bare_toc() {
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn toc_declares_eager_standard_only_with_zero_dependencies() {
     let toc = TocFile::from_file(&rpe_toc()).expect("Blizzard_RPE_TurnStrafe TOC should parse");
@@ -121,7 +121,7 @@ fn toc_declares_eager_standard_only_with_zero_dependencies() {
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn toc_lists_two_files_in_root_directory() {
     let toc = TocFile::from_file(&rpe_toc()).expect("Blizzard_RPE_TurnStrafe TOC should parse");
@@ -202,6 +202,7 @@ fn included_in_eager_discovery_for_game_screen_only() {
 }
 }
 
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn root_directory_holds_lua_and_xml_next_to_toc() {
     let mut entries: Vec<String> = std::fs::read_dir(rpe_dir())
@@ -220,6 +221,7 @@ fn root_directory_holds_lua_and_xml_next_to_toc() {
         "Blizzard_RPE_TurnStrafe/ root must hold exactly the lua/xml pair next to the TOC — no \
          localization stub and no per-flavor subdirectory"
     );
+}
 }
 
 prefork_full_ui_case! {
@@ -383,5 +385,20 @@ fn xml_declares_two_virtual_templates_and_zero_named_frames() {
          dispatch — these are the bindings that register/unregister UPDATE_BINDINGS so the \
          popup refreshes when keybinds change while it is visible"
     );
+}
+}
+
+// The Mists/Era/Anniversary caches ship 218 addons each and Wrath ships 23;
+// none contains Blizzard_RPE_TurnStrafe, so the pinned TOC facts above describe no file the
+// classic loaders can read.
+classic_cache_absent_toc_fixture! {
+#[test]
+fn blizzard_rpe_turnstrafe_toc_is_absent_from_classic_caches() {
+    let dir = rpe_dir();
+    assert!(
+        !dir.is_dir(),
+        "classic profile caches must not contain Blizzard_RPE_TurnStrafe"
+    );
+    assert!(wow_ui_sim::loader::find_toc_file(&dir).is_none());
 }
 }

@@ -355,7 +355,7 @@ fn mainline_spellbook_keybind_opens_and_closes_without_runtime_errors() {
 }
 
 // Literal cached inputs absent from Wrath manifest1-382/cache; behavior cases stay enabled.
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn blizzard_player_spells_find_toc_resolves_bare_variant() {
     let resolved = find_toc_file(&player_spells_dir()).expect("Blizzard_PlayerSpells TOC resolves");
@@ -378,7 +378,7 @@ fn blizzard_player_spells_find_toc_resolves_bare_variant() {
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn blizzard_player_spells_toc_declares_load_on_demand_with_three_dependencies() {
     let toc = TocFile::from_file(&player_spells_toc()).expect("Blizzard_PlayerSpells TOC parses");
@@ -441,7 +441,7 @@ fn blizzard_player_spells_toc_declares_load_on_demand_with_three_dependencies() 
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn blizzard_player_spells_toc_declares_metadata_in_raw_bytes() {
     let raw = std::fs::read_to_string(player_spells_toc())
@@ -498,7 +498,7 @@ fn blizzard_player_spells_toc_declares_metadata_in_raw_bytes() {
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn blizzard_player_spells_toc_lists_bootstrap_then_twenty_six_files_in_canonical_order() {
     let toc = TocFile::from_file(&player_spells_toc()).expect("Blizzard_PlayerSpells TOC parses");
@@ -983,4 +983,19 @@ fn blizzard_player_spells_loads_without_unrelated_lua_errors(env: &WowLuaEnv) {
 fn blizzard_player_spells_loads_without_unrelated_lua_errors() {
     let env = load_full_game_ui_with_player_spells();
     blizzard_player_spells_loads_without_unrelated_lua_errors::run(&env);
+}
+
+// The Mists/Era/Anniversary caches ship 218 addons each and Wrath ships 23;
+// none contains Blizzard_PlayerSpells, so the pinned TOC facts above describe
+// no file the classic loaders can read.
+classic_cache_absent_toc_fixture! {
+#[test]
+fn blizzard_player_spells_toc_is_absent_from_classic_caches() {
+    let dir = player_spells_dir();
+    assert!(
+        !dir.is_dir(),
+        "classic profile caches must not contain Blizzard_PlayerSpells"
+    );
+    assert!(wow_ui_sim::loader::find_toc_file(&dir).is_none());
+}
 }

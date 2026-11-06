@@ -7,6 +7,9 @@ use wow_ui_sim::screen::ScreenKind;
 use wow_ui_sim::startup::fire_startup_events_for_screen;
 use wow_ui_sim::toc::TocFile;
 
+#[path = "common/toc_layout.rs"]
+mod toc_layout;
+
 fn blizzard_ui_dir() -> PathBuf {
     wow_ui_sim::paths::default_blizzard_ui_addons_path()
         .expect("Blizzard UI cache should be available")
@@ -17,7 +20,8 @@ fn ui_parent_panel_manager_dir() -> PathBuf {
 }
 
 fn ui_parent_panel_manager_toc() -> PathBuf {
-    ui_parent_panel_manager_dir().join("Blizzard_UIParentPanelManager.toc")
+    wow_ui_sim::loader::find_toc_file(&ui_parent_panel_manager_dir())
+        .expect("Blizzard_UIParentPanelManager TOC resolves")
 }
 
 const GLUE_SCREENS: &[ScreenKind] = &[
@@ -131,9 +135,10 @@ fn find_toc_file_resolves_single_toc() {
     let resolved =
         find_toc_file(&ui_parent_panel_manager_dir()).expect("UIParentPanelManager TOC resolves");
     assert_eq!(
-        resolved,
-        ui_parent_panel_manager_toc(),
-        "Blizzard_UIParentPanelManager ships one TOC in 12.1.5"
+        resolved.file_name().and_then(|name| name.to_str()),
+        Some(toc_layout::expected_toc_name("Blizzard_UIParentPanelManager").as_str()),
+        "find_toc_file resolves the active profile's UIParentPanelManager TOC: Retail ships \
+         the bare TOC and the classic caches the `_Classic` companion"
     );
 }
 }
@@ -153,12 +158,17 @@ fn toc_is_eager_with_two_dependencies() {
     );
 
     let deps = toc.dependencies();
-    assert_eq!(
-        deps, TOC_DEPENDENCIES,
-        "Retail 12.1.5.70575 declares ManagedFrameSystem and GameMenuEsc before the panel \
-         manager installs its layout and panel-close hooks. Got: {deps:?}"
-    );
-    assert!(toc.load_with().is_empty());
+    if toc_layout::classic_cache() {
+        assert_eq!(deps, vec!["Blizzard_UIParent".to_string()]);
+        assert_eq!(toc.load_with(), vec!["Blizzard_UIParent".to_string()]);
+    } else {
+        assert_eq!(
+            deps, TOC_DEPENDENCIES,
+            "Retail 12.1.5.70575 declares ManagedFrameSystem and GameMenuEsc before the panel \
+             manager installs its layout and panel-close hooks. Got: {deps:?}"
+        );
+        assert!(toc.load_with().is_empty());
+    }
 
     assert!(toc.optional_deps().is_empty());
     assert!(toc.saved_variables().is_empty());
@@ -206,16 +216,32 @@ post_wrath_ui_fixture! {
 fn toc_raw_bytes_pin_directives_and_body_files_with_inline_annotations() {
     let raw = std::fs::read_to_string(ui_parent_panel_manager_toc()).expect("TOC reads utf-8");
 
-    let expected_lines = [
-        "## Title: Blizzard_UIParentPanelManager",
-        "## Dep: Blizzard_ManagedFrameSystem",
-        "## Dep: Blizzard_GameMenuEsc",
-        "[Family]\\UIPanelWindows.lua",
-        "Shared\\UIPanelLayoutFrame.lua [AllowLoadEnvironment Global]",
-        "Shared\\UIParentPanelManager.lua [AllowLoadEnvironment Global]",
-        "[Family]\\UIParentPanelManagerOverrides.lua [AllowLoadEnvironment Global]",
-        "Shared\\UpdateUIPanelPositions.lua [AllowLoadEnvironment Global]",
-    ];
+    let expected_lines: &[&str] = if toc_layout::classic_cache() {
+        &[
+            "## Title: Blizzard_UIParentPanelManager",
+            "## Author: Blizzard Entertainment",
+            "## DefaultState: enabled",
+            "## Dependencies: Blizzard_UIParent",
+            "## LoadWith: Blizzard_UIParent",
+            "## AllowLoad: game",
+            "## AllowLoadGameType: classic",
+            "Classic\\UIPanelWindows.lua",
+            "Shared\\UIParentPanelManager.lua [AllowLoadEnvironment Global]",
+            "Classic\\UIParentPanelManagerOverrides.lua [AllowLoadEnvironment Global]",
+            "Shared\\UpdateUIPanelPositions.lua [AllowLoadEnvironment Global]",
+        ]
+    } else {
+        &[
+            "## Title: Blizzard_UIParentPanelManager",
+            "## Dep: Blizzard_ManagedFrameSystem",
+            "## Dep: Blizzard_GameMenuEsc",
+            "[Family]\\UIPanelWindows.lua",
+            "Shared\\UIPanelLayoutFrame.lua [AllowLoadEnvironment Global]",
+            "Shared\\UIParentPanelManager.lua [AllowLoadEnvironment Global]",
+            "[Family]\\UIParentPanelManagerOverrides.lua [AllowLoadEnvironment Global]",
+            "Shared\\UpdateUIPanelPositions.lua [AllowLoadEnvironment Global]",
+        ]
+    };
 
     for line in expected_lines {
         assert!(

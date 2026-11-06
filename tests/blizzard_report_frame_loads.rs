@@ -6,6 +6,9 @@ use wow_ui_sim::screen::ScreenKind;
 use wow_ui_sim::startup::fire_startup_events_for_screen;
 use wow_ui_sim::toc::TocFile;
 
+#[path = "common/toc_layout.rs"]
+mod toc_layout;
+
 fn blizzard_ui_dir() -> PathBuf {
     wow_ui_sim::paths::default_blizzard_ui_addons_path()
         .expect("Blizzard UI cache should be available")
@@ -111,10 +114,16 @@ fn toc_declares_eager_game_only_with_two_hard_deps() {
          addon entirely on the Game screen"
     );
     let deps = toc.dependencies();
+    let expected_dependencies: &[&str] = if toc_layout::classic_cache() {
+        &["Blizzard_ReportFrameShared"]
+    } else {
+        HARD_DEPENDENCIES
+    };
     assert_eq!(
         deps.iter().map(String::as_str).collect::<Vec<_>>(),
-        HARD_DEPENDENCIES,
-        "Retail 12.1.0.69497 declares ReportFrameShared and GameMenuEsc as ReportFrame hard dependencies"
+        expected_dependencies,
+        "Retail 12.1.0.69497 declares ReportFrameShared and GameMenuEsc as ReportFrame hard \
+         dependencies; the classic `Blizzard_ReportFrame.toc` declares ReportFrameShared only"
     );
     assert!(
         toc.optional_deps().is_empty(),

@@ -74,7 +74,7 @@ fn load_character_select_screen() -> WowLuaEnv {
 }
 
 // Literal cached inputs absent from Wrath manifest1-382/cache; behavior cases stay enabled.
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn find_toc_file_resolves_bare_toc() {
     let resolved =
@@ -89,7 +89,7 @@ fn find_toc_file_resolves_bare_toc() {
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn toc_is_load_on_demand_with_three_required_deps() {
     let toc = TocFile::from_file(&timerunning_toc()).expect("TOC parses");
@@ -155,7 +155,7 @@ fn allow_load_glue_surfaces_on_three_glue_screens_only() {
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn toc_raw_bytes_pin_five_metadata_directives() {
     let raw = std::fs::read_to_string(timerunning_toc()).expect("TOC reads utf-8");
@@ -405,5 +405,20 @@ fn three_required_dep_directories_exist_on_disk() {
              find_toc_file (mainline-flavor or bare). Got: {toc:?}"
         );
     }
+}
+}
+
+// The Mists/Era/Anniversary caches ship 218 addons each and Wrath ships 23;
+// none contains Blizzard_TimerunningCharacterCreate, so the pinned TOC facts above describe no file the
+// classic loaders can read.
+classic_cache_absent_toc_fixture! {
+#[test]
+fn blizzard_timerunningcharactercreate_toc_is_absent_from_classic_caches() {
+    let dir = timerunning_dir();
+    assert!(
+        !dir.is_dir(),
+        "classic profile caches must not contain Blizzard_TimerunningCharacterCreate"
+    );
+    assert!(wow_ui_sim::loader::find_toc_file(&dir).is_none());
 }
 }

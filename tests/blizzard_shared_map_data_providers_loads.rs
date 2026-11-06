@@ -10,6 +10,9 @@ use wow_ui_sim::lua_api::WowLuaEnv;
 use wow_ui_sim::screen::ScreenKind;
 use wow_ui_sim::toc::TocFile;
 
+#[path = "common/toc_layout.rs"]
+mod toc_layout;
+
 const ROOT_ADDON: &str = "Blizzard_SharedMapDataProviders";
 const IMPLICIT_DEPENDENCIES: &[&str] = &[
     "Blizzard_SharedXML",
@@ -31,7 +34,8 @@ fn map_data_providers_dir() -> PathBuf {
 }
 
 fn map_data_providers_toc() -> PathBuf {
-    map_data_providers_dir().join("Blizzard_SharedMapDataProviders_Mainline.toc")
+    find_toc_file(&map_data_providers_dir())
+        .expect("Blizzard_SharedMapDataProviders TOC resolves")
 }
 
 const PROVIDER_MIXINS: &[&str] = &[
@@ -128,14 +132,10 @@ fn find_toc_file_resolves_mainline_variant() {
     let resolved =
         find_toc_file(&map_data_providers_dir()).expect("SharedMapDataProviders TOC resolves");
     assert_eq!(
-        resolved,
-        map_data_providers_toc(),
-        "Blizzard_SharedMapDataProviders ships only the `_Mainline.toc` flavor — \
-         no bare `.toc`. The data-provider family is Mainline-only because it \
-         depends on retail-flavor map APIs (C_Map.GetMapPosFromWorldPos, \
-         C_AreaPoiInfo, C_QuestOffer, C_DragonRiding, C_Delves, C_DigSites, etc.) \
-         that don't exist in Classic flavors. Classic clients ship a different \
-         data-provider family with reduced surface area"
+        resolved.file_name().and_then(|name| name.to_str()),
+        Some(toc_layout::expected_toc_name("Blizzard_SharedMapDataProviders").as_str()),
+        "find_toc_file resolves the active profile's SharedMapDataProviders TOC: Retail ships \
+         `_Mainline.toc`, Mists `_Mists.toc`, and Era/Anniversary the `_Classic` companion"
     );
 }
 }
@@ -179,6 +179,14 @@ fn toc_declares_account_saved_variable_for_glow_hub_quest_acknowledgements() {
     let toc = TocFile::from_file(&map_data_providers_toc()).expect("TOC parses");
 
     let saved = toc.saved_variables();
+    if toc_layout::classic_cache() {
+        assert!(
+            saved.is_empty(),
+            "the classic data-provider TOC declares no account SavedVariables. Got: {saved:?}"
+        );
+        assert!(toc.saved_variables_per_character().is_empty());
+        return;
+    }
     assert_eq!(
         saved.len(),
         1,
@@ -231,18 +239,30 @@ fn toc_raw_bytes_pin_lod_with_account_sv_and_mainline_game_type() {
     let raw = std::fs::read_to_string(map_data_providers_toc())
         .expect("SharedMapDataProviders TOC reads utf-8");
 
-    assert!(raw.contains("## Title: Blizzard Shared Map Data Providers"));
-    assert!(raw.contains("## Author: Blizzard Entertainment"));
-    assert!(raw.contains("## Version: 1.0"));
-    assert!(raw.contains("## LoadOnDemand: 1"));
-    assert!(raw.contains("## AllowLoad: game"));
-    assert!(raw.contains("## AllowLoadGameType: mainline"));
-    assert!(raw.contains("## SavedVariables: GLOW_HUB_QUESTS_ACKNOWLEDGED"));
-    assert!(
-        !raw.contains("## SavedVariablesPerCharacter"),
-        "TOC must NOT declare per-character SavedVariables — quest \
-         acknowledgements are account-shared"
-    );
+    if toc_layout::mists() {
+        assert!(raw.contains("## Title: Blizzard_SharedMapDataProviders"));
+        assert!(raw.contains("## Author: Blizzard Entertainment"));
+        assert!(raw.contains("## LoadOnDemand: 1"));
+        assert!(raw.contains("## AllowLoad: game"));
+        assert!(raw.contains("## AllowLoadGameType: mists"));
+        assert!(!raw.contains("## Version"));
+    } else if toc_layout::classic_cache() {
+        assert!(raw.contains("## Title: Blizzard Shared Map Data Providers"));
+        assert!(raw.contains("## Author: Blizzard Entertainment"));
+        assert!(raw.contains("## Version: 1.0"));
+        assert!(raw.contains("## LoadOnDemand: 1"));
+        assert!(raw.contains("## AllowLoad: game"));
+        assert!(raw.contains("## AllowLoadGameType: vanilla, tbc"));
+    } else {
+        assert!(raw.contains("## Title: Blizzard Shared Map Data Providers"));
+        assert!(raw.contains("## Author: Blizzard Entertainment"));
+        assert!(raw.contains("## Version: 1.0"));
+        assert!(raw.contains("## LoadOnDemand: 1"));
+        assert!(raw.contains("## AllowLoad: game"));
+        assert!(raw.contains("## AllowLoadGameType: mainline"));
+        assert!(raw.contains("## SavedVariables: GLOW_HUB_QUESTS_ACKNOWLEDGED"));
+    }
+    assert!(!raw.contains("## SavedVariablesPerCharacter"));
     assert!(!raw.contains("## Dependencies"));
     assert!(!raw.contains("## RequiredDep"));
     assert!(!raw.contains("## OptionalDep"));
@@ -264,6 +284,19 @@ fn toc_body_lists_initialization_files_before_data_provider_xml_pairs() {
         .collect();
 
     let first_three = &body_lines[..3];
+    if toc_layout::classic_cache() {
+        assert_eq!(
+            first_three,
+            [
+                "SharedMapPoiTemplates.xml",
+                "QuestDataProvider.xml",
+                "GroupMembersDataProvider.xml",
+            ],
+            "the classic data-provider TOC starts with the shared POI templates and the quest \
+             providers, without the mainline MapPinTags/FrameCloneManager prelude"
+        );
+        return;
+    }
     assert_eq!(
         first_three,
         [
@@ -302,6 +335,14 @@ fn toc_body_count_breakdown_matches_filesystem_layout() {
         .filter(|f| f.extension().is_some_and(|ext| ext == "xml"))
         .count();
 
+    if toc_layout::classic_cache() {
+        if toc_layout::mists() {
+            assert_eq!((lua_count, xml_count), (2, 32), "pinned Mists data-provider counts");
+        } else {
+            assert_eq!((lua_count, xml_count), (1, 30), "pinned Era/Anniversary data-provider counts");
+        }
+        return;
+    }
     assert!(
         lua_count >= 5,
         "TOC must list at least 5 .lua entries: MapPinTags, FrameCloneManager, \

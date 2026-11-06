@@ -115,19 +115,31 @@ fn toc_is_load_on_demand_with_current_dependencies() {
          calls UIParentLoadAddOn) or runs /tm /timer /stopwatch slash \
          commands"
     );
-    assert_eq!(
-        toc.dependencies(),
+    let expected_dependencies: Vec<String> = if toc_layout::classic_cache() {
+        Vec::new()
+    } else {
         vec![
             "Blizzard_FrameXMLUtil".to_string(),
             "Blizzard_RaidWarning".to_string(),
             "Blizzard_GameMenuEsc".to_string(),
-        ],
-        "Retail 12.1.0.69497 declares TimeManager dependencies in published order"
+        ]
+    };
+    assert_eq!(
+        toc.dependencies(),
+        expected_dependencies,
+        "Retail 12.1.0.69497 declares TimeManager dependencies in published order; the \
+         classic `_Classic.toc` declares none"
     );
+    let expected_optional: Vec<String> = if toc_layout::classic_cache() {
+        Vec::new()
+    } else {
+        vec!["Blizzard_Plunderstorm".to_string()]
+    };
     assert_eq!(
         toc.optional_deps(),
-        vec!["Blizzard_Plunderstorm".to_string()],
-        "Retail 12.1.0.69497 declares Blizzard_Plunderstorm as the optional dependency"
+        expected_optional,
+        "Retail 12.1.0.69497 declares Blizzard_Plunderstorm as the optional dependency; the \
+         classic TOC declares none"
     );
     assert!(!toc.is_load_first());
     assert!(!toc.is_secure_env());
@@ -195,7 +207,19 @@ post_wrath_ui_fixture! {
 fn toc_raw_bytes_pin_current_metadata_directives_and_bootstrap() {
     let raw = std::fs::read_to_string(time_manager_toc()).expect("TOC reads utf-8");
 
-    let expected_directives: &[&str] = if toc_layout::unified_toc_tree() {
+    let expected_directives: &[&str] = if toc_layout::classic_cache() {
+        &[
+            "## Title: Blizzard Time Manager",
+            "## Author: Blizzard Entertainment",
+            "## LoadOnDemand: 1",
+            "## SavedVariablesPerCharacter: BlizzardStopwatchOptions",
+            "## AllowLoad: game",
+            "## AllowLoadGameType: classic",
+            "Classic\\Blizzard_TimeManager.lua",
+            "Classic\\Blizzard_TimeManager.xml",
+            "Classic\\Localization.lua",
+        ]
+    } else if toc_layout::unified_toc_tree() {
         &[
             "## Title: Blizzard_TimeManager",
             "## LoadOnDemand: 1",

@@ -7,6 +7,9 @@ use wow_ui_sim::screen::ScreenKind;
 use wow_ui_sim::startup::fire_startup_events_for_screen;
 use wow_ui_sim::toc::TocFile;
 
+#[path = "common/toc_layout.rs"]
+mod toc_layout;
+
 fn blizzard_ui_dir() -> PathBuf {
     wow_ui_sim::paths::default_blizzard_ui_addons_path()
         .expect("Blizzard UI cache should be available")
@@ -92,8 +95,14 @@ fn toc_dependencies_include_shared_and_screen_scoped_addons() {
     let toc = TocFile::from_file(&store_ui_toc()).expect("TOC parses");
 
     let deps = toc.dependencies();
-    assert_eq!(
-        deps,
+    let expected_deps: Vec<String> = if toc_layout::classic_cache() {
+        vec![
+            "Blizzard_SharedXML".to_string(),
+            "Blizzard_SimpleCheckout".to_string(),
+            "Blizzard_GlueParent".to_string(),
+            "Blizzard_FrameXMLBase".to_string(),
+        ]
+    } else {
         vec![
             "Blizzard_SharedXML".to_string(),
             "Blizzard_GameMenuEsc".to_string(),
@@ -101,7 +110,11 @@ fn toc_dependencies_include_shared_and_screen_scoped_addons() {
             "Blizzard_CatalogShop".to_string(),
             "Blizzard_GlueParent".to_string(),
             "Blizzard_FrameXMLBase".to_string(),
-        ],
+        ]
+    };
+    assert_eq!(
+        deps,
+        expected_deps,
         "Repeated `## Dep:` directives include shared dependencies plus \
          screen-scoped glue and game dependencies. Got: {deps:?}"
     );
@@ -113,10 +126,16 @@ post_wrath_ui_fixture! {
 fn toc_declares_plunderstorm_as_optional_dependency() {
     let toc = TocFile::from_file(&store_ui_toc()).expect("TOC parses");
 
+    let expected_optional: Vec<String> = if toc_layout::classic_cache() {
+        Vec::new()
+    } else {
+        vec!["Blizzard_Plunderstorm".to_string()]
+    };
     assert_eq!(
         toc.optional_deps(),
-        vec!["Blizzard_Plunderstorm".to_string()],
-        "Retail 12.1.0.69497 declares Blizzard_Plunderstorm as StoreUI's optional dependency"
+        expected_optional,
+        "Retail 12.1.0.69497 declares Blizzard_Plunderstorm as StoreUI's optional dependency; \
+         the classic TOC declares none"
     );
 }
 }
@@ -184,18 +203,30 @@ post_wrath_ui_fixture! {
 fn toc_raw_bytes_pin_current_metadata_directives() {
     let raw = std::fs::read_to_string(store_ui_toc()).expect("TOC reads utf-8");
 
-    let expected_directives = [
-        "## Title: Blizzard_StoreUI",
-        "## AllowLoad: Both",
-        "## Dep: Blizzard_SharedXML",
-        "## Dep: Blizzard_GameMenuEsc",
-        "## Dep: Blizzard_SimpleCheckout",
-        "## Dep: Blizzard_CatalogShop",
-        "## Dep: Blizzard_GlueParent [AllowLoad glue]",
-        "## Dep: Blizzard_FrameXMLBase [AllowLoad game]",
-        "## OptionalDeps: Blizzard_Plunderstorm",
-        "## UseSecureEnvironment: 1",
-    ];
+    let expected_directives: &[&str] = if toc_layout::classic_cache() {
+        &[
+            "## Title: Blizzard_StoreUI",
+            "## AllowLoad: Both",
+            "## Dep: Blizzard_SharedXML",
+            "## Dep: Blizzard_SimpleCheckout",
+            "## Dep: Blizzard_GlueParent [AllowLoad glue]",
+            "## Dep: Blizzard_FrameXMLBase [AllowLoad game]",
+            "## UseSecureEnvironment: 1",
+        ]
+    } else {
+        &[
+            "## Title: Blizzard_StoreUI",
+            "## AllowLoad: Both",
+            "## Dep: Blizzard_SharedXML",
+            "## Dep: Blizzard_GameMenuEsc",
+            "## Dep: Blizzard_SimpleCheckout",
+            "## Dep: Blizzard_CatalogShop",
+            "## Dep: Blizzard_GlueParent [AllowLoad glue]",
+            "## Dep: Blizzard_FrameXMLBase [AllowLoad game]",
+            "## OptionalDeps: Blizzard_Plunderstorm",
+            "## UseSecureEnvironment: 1",
+        ]
+    };
 
     for directive in expected_directives {
         assert!(

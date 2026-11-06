@@ -34,7 +34,7 @@ fn load_full_game_ui() -> WowLuaEnv {
     env
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn blizzard_major_factions_find_toc_resolves_bare_variant() {
     let resolved =
@@ -51,7 +51,7 @@ fn blizzard_major_factions_find_toc_resolves_bare_variant() {
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn blizzard_major_factions_toc_declares_eager_load_with_default_allow_load_game() {
     let toc = TocFile::from_file(&major_factions_toc()).expect("Blizzard_MajorFactions TOC parses");
@@ -113,7 +113,7 @@ fn blizzard_major_factions_toc_declares_eager_load_with_default_allow_load_game(
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn blizzard_major_factions_toc_lists_seven_files_in_load_order() {
     let toc = TocFile::from_file(&major_factions_toc()).expect("Blizzard_MajorFactions TOC parses");
@@ -668,5 +668,20 @@ fn blizzard_major_factions_localization_module_is_empty_placeholder() {
          contract; either appearing here would mean Blizzard added per-locale post-load \
          tweaks (a meaningful upstream change worth flagging)"
     );
+}
+}
+
+// The Mists/Era/Anniversary caches ship 218 addons each and Wrath ships 23;
+// none contains Blizzard_MajorFactions, so the pinned TOC facts above describe no file the
+// classic loaders can read.
+classic_cache_absent_toc_fixture! {
+#[test]
+fn blizzard_majorfactions_toc_is_absent_from_classic_caches() {
+    let dir = major_factions_dir();
+    assert!(
+        !dir.is_dir(),
+        "classic profile caches must not contain Blizzard_MajorFactions"
+    );
+    assert!(wow_ui_sim::loader::find_toc_file(&dir).is_none());
 }
 }

@@ -64,8 +64,22 @@ const PTR_TOC_DEPENDENCIES: &[&str] = &[
     "Blizzard_GameMenuEsc",
 ];
 
+// The classic pinned `_Classic.toc` declares eight dependencies.
+const CLASSIC_TOC_DEPENDENCIES: &[&str] = &[
+    "Blizzard_GameTooltip",
+    "Blizzard_UIPanelTemplates",
+    "Blizzard_FrameXML",
+    "Blizzard_CharacterFrame",
+    "Blizzard_ActionBar",
+    "Blizzard_Minimap",
+    "Blizzard_AccessibilityTemplates",
+    "Blizzard_HelpPlate",
+];
+
 fn toc_dependencies() -> &'static [&'static str] {
-    if toc_layout::unified_toc_tree() {
+    if toc_layout::classic_cache() {
+        CLASSIC_TOC_DEPENDENCIES
+    } else if toc_layout::unified_toc_tree() {
         PTR_TOC_DEPENDENCIES
     } else {
         TOC_DEPENDENCIES
@@ -190,7 +204,7 @@ fn toc_is_eager_with_thirteen_dependencies() {
     assert_eq!(toc.optional_deps(), expected_optional);
     assert!(toc.saved_variables().is_empty());
     assert!(toc.saved_variables_per_character().is_empty());
-    assert!(!toc.is_load_first());
+    assert_eq!(toc.is_load_first(), toc_layout::classic_cache());
     assert!(!toc.is_secure_env());
     assert!(toc.default_enabled());
 }
@@ -268,9 +282,11 @@ fn classic_toc_uses_load_first_directive() {
          (e.g. Blizzard_ActionBar declares Blizzard_UIPanels_Game as a \
          hard dep on Classic but not on Mainline)"
     );
-    assert!(
+    assert_eq!(
         classic.is_game_type_restricted(),
-        "_Classic.toc has `AllowLoadGameType: classic` which IS restricted out — toc.rs:294-302 only treats `mainline`/`standard` as non-restricting"
+        !toc_layout::admits_game_type("classic"),
+        "_Classic.toc has `AllowLoadGameType: classic`: restricted out on the mainline \
+         allow-lists and admitted on the classic profiles"
     );
 }
 }
@@ -280,7 +296,22 @@ post_wrath_ui_fixture! {
 fn toc_raw_bytes_pin_six_directives_and_localization_trailer() {
     let raw = std::fs::read_to_string(ui_panels_game_mainline_toc()).expect("TOC reads utf-8");
 
-    let expected_lines: &[&str] = if toc_layout::unified_toc_tree() {
+    let expected_lines: &[&str] = if toc_layout::classic_cache() {
+        &[
+            "## Title: Blizzard_UIPanels_Game",
+            "## Author: Blizzard Entertainment",
+            "## DefaultState: enabled",
+            "## Dependencies: Blizzard_GameTooltip, Blizzard_UIPanelTemplates, Blizzard_FrameXML, Blizzard_CharacterFrame, Blizzard_ActionBar, Blizzard_Minimap, Blizzard_AccessibilityTemplates, Blizzard_HelpPlate",
+            "## LoadFirst: 1",
+            "## AllowLoad: game",
+            "## AllowLoadGameType: classic",
+            "Shared\\CastingBarFrameTemplates.lua",
+            "Classic\\SpellBookFrame.lua",
+            "Shared\\ExtraAbilityContainer.lua",
+            "Classic\\Localization.lua",
+            "Shared\\PlayerInteractionFrameManager.lua",
+        ]
+    } else if toc_layout::unified_toc_tree() {
         &[
             "## Title: Blizzard_UIPanels_Game",
             "## Dep: Blizzard_GameTooltip",
@@ -340,6 +371,10 @@ fn toc_raw_bytes_pin_six_directives_and_localization_trailer() {
                 && raw.contains("[ExcludeLoadGameType camelot]"),
             "The unified PTR TOC gates each family entry on the game types it serves"
         );
+    } else if toc_layout::classic_cache() {
+        assert!(raw.contains("## LoadFirst: 1"));
+        assert!(!raw.contains("## OptionalDeps"));
+        assert!(!raw.contains("[Family]"));
     } else {
         assert!(!raw.contains("## LoadFirst"));
         assert!(!raw.contains("## OptionalDeps"));

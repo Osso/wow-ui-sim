@@ -63,7 +63,7 @@ fn load_full_game_ui() -> WowLuaEnv {
 }
 
 // Literal cached inputs absent from Wrath manifest1-382/cache; behavior cases stay enabled.
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn blizzard_recent_allies_toc_pins_eager_template_only_addon_with_spaced_title() {
     let toc = TocFile::from_file(&recent_allies_toc()).expect("Blizzard_RecentAllies TOC parse");
@@ -143,7 +143,7 @@ fn blizzard_recent_allies_toc_pins_eager_template_only_addon_with_spaced_title()
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn blizzard_recent_allies_toc_lists_three_files_in_dependency_order() {
     let toc = TocFile::from_file(&recent_allies_toc()).expect("Blizzard_RecentAllies TOC parse");
@@ -372,7 +372,7 @@ fn blizzard_recent_allies_list_mixin_event_registration_is_lazy(env: &WowLuaEnv)
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn blizzard_recent_allies_xml_loaded_via_explicit_toc_listing_not_script_directive() {
     let xml_path =
@@ -436,5 +436,20 @@ fn blizzard_recent_allies_entry_mixin_exposes_tooltip_pipeline_methods(env: &Wow
          independently — and AddInteractionDataToTooltip can return early if there are \
          no recorded interactions yet"
     );
+}
+}
+
+// The Mists/Era/Anniversary caches ship 218 addons each and Wrath ships 23;
+// none contains Blizzard_RecentAllies, so the pinned TOC facts above describe no file the
+// classic loaders can read.
+classic_cache_absent_toc_fixture! {
+#[test]
+fn blizzard_recentallies_toc_is_absent_from_classic_caches() {
+    let dir = blizzard_ui_dir().join("Blizzard_RecentAllies");
+    assert!(
+        !dir.is_dir(),
+        "classic profile caches must not contain Blizzard_RecentAllies"
+    );
+    assert!(wow_ui_sim::loader::find_toc_file(&dir).is_none());
 }
 }

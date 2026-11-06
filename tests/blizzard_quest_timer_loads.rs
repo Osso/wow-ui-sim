@@ -142,7 +142,11 @@ fn blizzard_quest_timer_toc_declares_metadata_in_raw_bytes() {
         "TOC must declare `## DefaultState: enabled` — the AddOn list UI shows \
          the addon enabled by default for users who toggle it manually"
     );
-    assert!(raw.contains("## Dependencies: Blizzard_GameTooltip, Blizzard_ManagedFrameSystem"));
+    if toc_layout::classic_cache() {
+        assert!(raw.contains("## Dependencies: Blizzard_UIParent, Blizzard_GameTooltip"));
+    } else {
+        assert!(raw.contains("## Dependencies: Blizzard_GameTooltip, Blizzard_ManagedFrameSystem"));
+    }
     assert!(raw.contains("## AllowLoad: game"));
     assert!(raw.contains("## AllowLoadGameType: classic"));
 

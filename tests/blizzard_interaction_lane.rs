@@ -68,6 +68,9 @@ use wow_ui_sim::screen::ScreenKind;
 use wow_ui_sim::startup::fire_startup_events_for_screen;
 use wow_ui_sim::toc::TocFile;
 
+#[path = "common/toc_layout.rs"]
+mod toc_layout;
+
 fn blizzard_ui_dir() -> PathBuf {
     wow_ui_sim::paths::default_blizzard_ui_addons_path()
         .expect("Blizzard UI cache should be available")
@@ -158,6 +161,19 @@ fn each_lane_addon_directory_resolves_with_a_toc() {
 
     for name in &all {
         let dir = blizzard_ui_dir().join(name);
+        if toc_layout::classic_cache() && !dir.is_dir() {
+            assert!(
+                matches!(
+                    *name,
+                    "Blizzard_TutorialManager"
+                        | "Blizzard_Tutorials"
+                        | "Blizzard_HousingTutorials"
+                        | "Blizzard_BoostTutorial"
+                ),
+                "only the four retail-only tutorial addons may be absent from the classic caches"
+            );
+            continue;
+        }
         assert!(
             dir.is_dir(),
             "Interaction lane addon `{name}` directory must exist at \

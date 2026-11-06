@@ -418,13 +418,29 @@ fn test_secure_env_toc_annotations_are_exhaustive() {
     }
     secure_files.sort();
 
-    let expected = vec![
-        "Blizzard_ChatFrameBase/Shared/ChatFrameFiltersSecure.lua".to_string(),
-        "Blizzard_CooldownViewer/CooldownViewerSecure.lua".to_string(),
-        "Blizzard_RestrictedAddOnEnvironment/RestrictedEnvironment.lua".to_string(),
-        "Blizzard_UnitFrame/Shared/TargetFrameAuraButton.lua".to_string(),
-        "Blizzard_UnitFrame/Shared/TargetFrameAuraContainer.lua".to_string(),
-    ];
+    let expected: Vec<String> = if wow_ui_sim::client_profile::ACTIVE
+        == wow_ui_sim::client_profile::ClientProfile::Wrath
+    {
+        Vec::new()
+    } else if matches!(
+        wow_ui_sim::client_profile::ACTIVE,
+        wow_ui_sim::client_profile::ClientProfile::Mists
+            | wow_ui_sim::client_profile::ClientProfile::Era
+            | wow_ui_sim::client_profile::ClientProfile::Anniversary
+    ) {
+        vec![
+            "Blizzard_ChatFrameBase/Shared/ChatFrameFiltersSecure.lua".to_string(),
+            "Blizzard_RestrictedAddOnEnvironment/RestrictedEnvironment.lua".to_string(),
+        ]
+    } else {
+        vec![
+            "Blizzard_ChatFrameBase/Shared/ChatFrameFiltersSecure.lua".to_string(),
+            "Blizzard_CooldownViewer/CooldownViewerSecure.lua".to_string(),
+            "Blizzard_RestrictedAddOnEnvironment/RestrictedEnvironment.lua".to_string(),
+            "Blizzard_UnitFrame/Shared/TargetFrameAuraButton.lua".to_string(),
+            "Blizzard_UnitFrame/Shared/TargetFrameAuraContainer.lua".to_string(),
+        ]
+    };
     assert_eq!(
         secure_files, expected,
         "the set of [LoadIntoEnvironment secure] files drifted; update this test \

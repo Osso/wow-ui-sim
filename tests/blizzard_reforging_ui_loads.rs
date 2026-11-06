@@ -137,9 +137,22 @@ fn toc_lists_bootstrap_and_three_files_in_classic_subdirectory() {
         .iter()
         .map(|p| p.to_string_lossy().replace('\\', "/"))
         .collect();
+    let expected: Vec<String> = if toc_layout::classic_cache() {
+        [
+            "Classic/Blizzard_ReforgingUI.lua",
+            "Classic/Blizzard_ReforgingUI.xml",
+            "Classic/Localization.lua",
+        ]
+        .iter()
+        .map(|s| s.to_string())
+        .collect()
+    } else {
+        REFORGING_FILES.iter().map(|s| s.to_string()).collect()
+    };
     assert_eq!(
-        listed, REFORGING_FILES,
-        "Retail 12.1.0.69497 lists the bootstrap before the classic Lua, XML, and localization files"
+        listed, expected,
+        "Retail 12.1.0.69497 lists the bootstrap before the classic Lua, XML, and localization \
+         files; the classic `_Classic.toc` lists the three Classic entries only"
     );
 }
 }

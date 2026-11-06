@@ -7,6 +7,9 @@ use wow_ui_sim::screen::ScreenKind;
 use wow_ui_sim::startup::fire_startup_events_for_screen;
 use wow_ui_sim::toc::TocFile;
 
+#[path = "common/toc_layout.rs"]
+mod toc_layout;
+
 fn blizzard_ui_dir() -> PathBuf {
     wow_ui_sim::paths::default_blizzard_ui_addons_path()
         .expect("Blizzard UI cache should be available")
@@ -230,9 +233,18 @@ fn toc_is_eager_with_four_dependencies() {
     );
 
     let deps = toc.dependencies();
+    let expected_deps: Vec<String> = if toc_layout::classic_cache() {
+        ["Blizzard_Minimap", "Blizzard_Colors"]
+            .iter()
+            .map(|s| s.to_string())
+            .collect()
+    } else {
+        TOC_DEPENDENCIES.iter().map(|s| s.to_string()).collect()
+    };
     assert_eq!(
-        deps, TOC_DEPENDENCIES,
-        "TOC must declare the current Minimap, Colors, LFGUtil, and ManagedFrameSystem dependencies. Got: {deps:?}"
+        deps, expected_deps,
+        "TOC must declare the current Minimap, Colors, LFGUtil, and ManagedFrameSystem \
+         dependencies; the classic cache declares Minimap and Colors only. Got: {deps:?}"
     );
 
     assert!(toc.optional_deps().is_empty());
@@ -281,11 +293,19 @@ post_wrath_ui_fixture! {
 fn toc_raw_bytes_pin_directives_and_representative_body_files() {
     let raw = std::fs::read_to_string(ui_widgets_toc()).expect("TOC reads utf-8");
 
-    let expected_directives = [
-        "## Title: Blizzard_UIWidgets",
-        "## Dependencies: Blizzard_Minimap, Blizzard_Colors, Blizzard_LFGUtil, Blizzard_ManagedFrameSystem",
-        "## AllowLoad: game",
-    ];
+    let expected_directives: &[&str] = if toc_layout::classic_cache() {
+        &[
+            "## Title: Blizzard_UIWidgets",
+            "## Dependencies: Blizzard_Minimap, Blizzard_Colors",
+            "## AllowLoad: game",
+        ]
+    } else {
+        &[
+            "## Title: Blizzard_UIWidgets",
+            "## Dependencies: Blizzard_Minimap, Blizzard_Colors, Blizzard_LFGUtil, Blizzard_ManagedFrameSystem",
+            "## AllowLoad: game",
+        ]
+    };
 
     for line in expected_directives {
         assert!(raw.contains(line), "Raw TOC must pin directive `{line}`");

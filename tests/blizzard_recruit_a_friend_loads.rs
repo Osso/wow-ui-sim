@@ -128,7 +128,7 @@ fn load_full_game_ui() -> WowLuaEnv {
 }
 
 // Literal cached inputs absent from Wrath manifest1-382/cache; behavior cases stay enabled.
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn blizzard_recruit_a_friend_toc_pins_eager_game_only_with_optional_social_dependencies() {
     let toc = TocFile::from_file(&raf_toc()).expect("Blizzard_RecruitAFriend TOC parse");
@@ -209,7 +209,7 @@ fn blizzard_recruit_a_friend_toc_pins_eager_game_only_with_optional_social_depen
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn blizzard_recruit_a_friend_toc_carries_rare_suppress_local_table_ref_directive() {
     let toc = TocFile::from_file(&raf_toc()).expect("RAF TOC parse");
@@ -234,7 +234,7 @@ fn blizzard_recruit_a_friend_toc_carries_rare_suppress_local_table_ref_directive
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn blizzard_recruit_a_friend_toc_lists_frame_and_social_view_sources() {
     let toc = TocFile::from_file(&raf_toc()).expect("RAF TOC parse");
@@ -608,5 +608,20 @@ fn blizzard_recruit_a_friend_frame_registers_six_events_in_onload(env: &WowLuaEn
              ready)"
         );
     }
+}
+}
+
+// The Mists/Era/Anniversary caches ship 218 addons each and Wrath ships 23;
+// none contains Blizzard_RecruitAFriend, so the pinned TOC facts above describe no file the
+// classic loaders can read.
+classic_cache_absent_toc_fixture! {
+#[test]
+fn blizzard_recruitafriend_toc_is_absent_from_classic_caches() {
+    let dir = blizzard_ui_dir().join("Blizzard_RecruitAFriend");
+    assert!(
+        !dir.is_dir(),
+        "classic profile caches must not contain Blizzard_RecruitAFriend"
+    );
+    assert!(wow_ui_sim::loader::find_toc_file(&dir).is_none());
 }
 }

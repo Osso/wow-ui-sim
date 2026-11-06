@@ -18,7 +18,7 @@ fn shared_xml_dir() -> PathBuf {
 }
 
 fn shared_xml_toc() -> PathBuf {
-    shared_xml_dir().join("Blizzard_SharedXML.toc")
+    find_toc_file(&shared_xml_dir()).expect("Blizzard_SharedXML TOC resolves")
 }
 
 const HARD_DEPS: &[&str] = &[
@@ -122,24 +122,53 @@ post_wrath_ui_fixture! {
 fn find_toc_file_resolves_bare_toc() {
     let resolved = find_toc_file(&shared_xml_dir()).expect("SharedXML TOC resolves");
     assert_eq!(
-        resolved,
-        shared_xml_toc(),
-        "Retail 12.1.0.69497 ships a single bare Blizzard_SharedXML.toc"
+        resolved.file_name().and_then(|name| name.to_str()),
+        Some(toc_layout::expected_toc_name("Blizzard_SharedXML").as_str()),
+        "find_toc_file resolves the active profile's SharedXML TOC: Retail ships the bare \
+         TOC, PTR/Forever the unified bare TOC, Mists `_Mists.toc` and Era/Anniversary \
+         `_Vanilla.toc`"
     );
 }
 }
 
 #[test]
 fn profile_specific_toc_variants_are_absent() {
-    assert!(
-        !shared_xml_dir()
-            .join("Blizzard_SharedXML_Mainline.toc")
-            .exists()
-            && !shared_xml_dir()
-                .join("Blizzard_SharedXML_Mists.toc")
-                .exists(),
-        "Retail 12.1.0.69497 does not ship profile-specific SharedXML TOCs"
-    );
+    if toc_layout::wrath() {
+        assert!(
+            !shared_xml_dir().is_dir(),
+            "the 23-addon Wrath cache ships no Blizzard_SharedXML directory"
+        );
+    } else if toc_layout::mists() {
+        assert!(
+            !shared_xml_dir()
+                .join("Blizzard_SharedXML_Mainline.toc")
+                .exists()
+                && shared_xml_dir()
+                    .join("Blizzard_SharedXML_Mists.toc")
+                    .exists(),
+            "the Mists cache ships `_Mists.toc` and no `_Mainline.toc`"
+        );
+    } else if toc_layout::classic_cache() {
+        assert!(
+            !shared_xml_dir()
+                .join("Blizzard_SharedXML_Mainline.toc")
+                .exists()
+                && shared_xml_dir()
+                    .join("Blizzard_SharedXML_Vanilla.toc")
+                    .exists(),
+            "the Era and Anniversary caches ship `_Vanilla.toc` and no `_Mainline.toc`"
+        );
+    } else {
+        assert!(
+            !shared_xml_dir()
+                .join("Blizzard_SharedXML_Mainline.toc")
+                .exists()
+                && !shared_xml_dir()
+                    .join("Blizzard_SharedXML_Mists.toc")
+                    .exists(),
+            "Retail 12.1.0.69497 does not ship profile-specific SharedXML TOCs"
+        );
+    }
 }
 
 post_wrath_ui_fixture! {
@@ -148,10 +177,24 @@ fn toc_declares_eight_hard_deps_in_published_order() {
     let toc = TocFile::from_file(&shared_xml_toc()).expect("SharedXML TOC parses");
 
     let deps = toc.dependencies();
+    let expected_deps: Vec<String> = if toc_layout::classic_cache() {
+        [
+            "Blizzard_Fonts_Shared",
+            "Blizzard_SharedXMLBase",
+            "Blizzard_PrintHandler",
+            "Blizzard_Menu",
+        ]
+        .iter()
+        .map(|s| s.to_string())
+        .collect()
+    } else {
+        HARD_DEPS.iter().map(|s| s.to_string()).collect()
+    };
     assert_eq!(
-        deps, HARD_DEPS,
+        deps, expected_deps,
         "Retail 12.1.0.69497 declares eight SharedXML dependencies in published \
-         order, including ProjectConstants first and Narration last. Got: {deps:?}"
+         order, including ProjectConstants first and Narration last; the classic \
+         TOCs declare four. Got: {deps:?}"
     );
     assert!(toc.optional_deps().is_empty());
     assert!(toc.saved_variables().is_empty());
@@ -199,14 +242,23 @@ fn toc_raw_bytes_pin_metadata_lines_and_no_savedvars() {
 
     assert!(raw.contains("## Title: Blizzard_SharedXML"));
     assert!(raw.contains("## AllowLoad: Both"));
-    assert!(raw.contains(
-        "## Dependencies: Blizzard_ProjectConstants, Blizzard_Fonts_Shared, \
-         Blizzard_SharedXMLBase, Blizzard_PrintHandler, Blizzard_Menu, \
-         Blizzard_Colors, Blizzard_HelpPlate, Blizzard_Narration"
-    ));
-    assert!(!raw.contains("## Author"));
-    assert!(!raw.contains("## DefaultState"));
-    assert!(!raw.contains("## AllowLoadGameType"));
+    if toc_layout::classic_cache() {
+        assert!(raw.contains(
+            "## Dependencies: Blizzard_Fonts_Shared, Blizzard_SharedXMLBase, Blizzard_PrintHandler, Blizzard_Menu"
+        ));
+        assert!(raw.contains("## Author: Blizzard Entertainment"));
+        assert!(raw.contains("## DefaultState: enabled"));
+        assert!(raw.contains("## AllowLoadGameType:"));
+    } else {
+        assert!(raw.contains(
+            "## Dependencies: Blizzard_ProjectConstants, Blizzard_Fonts_Shared, \
+             Blizzard_SharedXMLBase, Blizzard_PrintHandler, Blizzard_Menu, \
+             Blizzard_Colors, Blizzard_HelpPlate, Blizzard_Narration"
+        ));
+        assert!(!raw.contains("## Author"));
+        assert!(!raw.contains("## DefaultState"));
+        assert!(!raw.contains("## AllowLoadGameType"));
+    }
 
     assert!(
         !raw.contains("## SavedVariables"),
@@ -218,12 +270,14 @@ fn toc_raw_bytes_pin_metadata_lines_and_no_savedvars() {
     assert!(!raw.contains("## OptionalDep"));
     assert!(!raw.contains("## LoadOnDemand"));
     assert!(!raw.contains("## LoadFirst"));
-    assert!(
-        raw.contains(
-            "## HybridScrollFrame is deprecated. Retained only for addons and legacy content"
-        ),
-        "TOC must retain the current HybridScrollFrame deprecation annotation"
-    );
+    if !toc_layout::classic_cache() {
+        assert!(
+            raw.contains(
+                "## HybridScrollFrame is deprecated. Retained only for addons and legacy content"
+            ),
+            "TOC must retain the current HybridScrollFrame deprecation annotation"
+        );
+    }
 }
 }
 
@@ -241,7 +295,13 @@ fn mainline_toc_body_starts_with_localization_machinery_then_constants() {
         .collect();
 
     let first_three = &body_lines[..3];
-    let expected_first_three: &[&str] = if toc_layout::unified_toc_tree() {
+    let expected_first_three: &[&str] = if toc_layout::classic_cache() {
+        &[
+            "Shared\\LocalizationMachinery.lua",
+            "ProjectConstants.lua",
+            "SharedConstants.lua",
+        ]
+    } else if toc_layout::unified_toc_tree() {
         &[
             "Shared\\LocalizationMachinery.lua",
             "Shared\\GamepadConstants.lua",
@@ -282,14 +342,22 @@ fn mainline_toc_body_count_breakdown_matches_filesystem_layout() {
         .filter(|f| f.extension().is_some_and(|ext| ext == "xml"))
         .count();
 
-    let expected_lua = if toc_layout::forever() {
+    let expected_lua = if toc_layout::mists() {
+        134
+    } else if toc_layout::classic_cache() {
+        130
+    } else if toc_layout::forever() {
         155
     } else if toc_layout::unified_toc_tree() {
         153
     } else {
         146
     };
-    let expected_xml = if toc_layout::forever() {
+    let expected_xml = if toc_layout::mists() {
+        65
+    } else if toc_layout::classic_cache() {
+        63
+    } else if toc_layout::forever() {
         77
     } else if toc_layout::unified_toc_tree() {
         78

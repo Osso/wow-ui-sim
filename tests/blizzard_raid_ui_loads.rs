@@ -116,9 +116,7 @@ fn load_full_game_ui() -> WowLuaEnv {
 fn blizzard_raid_ui_find_toc_resolves_active_mainline_variant() {
     assert_eq!(
         raid_ui_toc(),
-        raid_ui_dir().join(if cfg!(feature = "client-wrath") {
-            "Blizzard_RaidUI.toc"
-        } else if toc_layout::unified_toc_tree() {
+        raid_ui_dir().join(if toc_layout::classic_cache() || toc_layout::unified_toc_tree() {
             "Blizzard_RaidUI.toc"
         } else {
             "Blizzard_RaidUI_Mainline.toc"
@@ -252,6 +250,10 @@ fn blizzard_raid_ui_toc_declares_metadata_in_raw_bytes() {
         assert!(raw.contains("## Secure: 1"));
         assert!(!raw.contains("## AllowLoad:"));
         assert!(!raw.contains("## AllowLoadGameType:"));
+    } else if toc_layout::classic_cache() {
+        assert!(raw.contains("## AllowLoad: game"));
+        assert!(raw.contains("## AllowLoadGameType: classic"));
+        assert!(!raw.contains("## Dependencies"));
     } else if toc_layout::unified_toc_tree() {
         assert!(
             !raw.contains("## AllowLoad:"),
@@ -296,6 +298,16 @@ fn blizzard_raid_ui_toc_lists_bootstrap_xml_then_localization() {
         listed,
         if cfg!(feature = "client-wrath") {
             &["Blizzard_RaidUI.xml", "Localization.lua"][..]
+        } else if toc_layout::classic_cache() {
+            if toc_layout::mists() {
+                &[
+                    "Blizzard_RaidUI.lua",
+                    "Mists/Blizzard_RaidUI.xml",
+                    "Localization.lua",
+                ][..]
+            } else {
+                &["Blizzard_RaidUI.lua", "Blizzard_RaidUI.xml", "Localization.lua"][..]
+            }
         } else if toc_layout::unified_toc_tree() {
             &[
                 "Blizzard_RaidUI_Bootstrap.lua",

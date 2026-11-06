@@ -46,7 +46,7 @@ fn definitions_frame_dir() -> PathBuf {
 }
 
 fn definitions_frame_toc() -> PathBuf {
-    definitions_frame_dir().join("Blizzard_SettingsDefinitions_Frame.toc")
+    find_toc_file(&definitions_frame_dir()).expect("Blizzard_SettingsDefinitions_Frame TOC resolves")
 }
 
 const HARD_DEPS: &[&str] = &[
@@ -192,9 +192,13 @@ post_wrath_ui_fixture! {
 fn find_toc_file_resolves_bare_variant() {
     assert_eq!(
         find_toc_file(&definitions_frame_dir())
-            .expect("Blizzard_SettingsDefinitions_Frame TOC resolves"),
-        definitions_frame_toc(),
-        "Retail ships the bare Blizzard_SettingsDefinitions_Frame.toc."
+            .expect("Blizzard_SettingsDefinitions_Frame TOC resolves")
+            .file_name()
+            .and_then(|name| name.to_str())
+            .map(str::to_string),
+        Some(toc_layout::expected_toc_name("Blizzard_SettingsDefinitions_Frame")),
+        "find_toc_file resolves the active profile's SettingsDefinitions_Frame TOC: Retail \
+         ships the bare TOC and the classic caches the `_Classic` companion"
     );
 }
 }
@@ -244,10 +248,15 @@ fn toc_declares_eager_game_only_with_three_hard_deps() {
     );
 
     let deps = toc.dependencies();
+    let expected_deps: Vec<String> = if toc_layout::classic_cache() {
+        vec!["Blizzard_SettingsDefinitions_Shared".to_string()]
+    } else {
+        HARD_DEPS.iter().map(|s| s.to_string()).collect()
+    };
     assert_eq!(
         deps,
-        HARD_DEPS.iter().map(|s| s.to_string()).collect::<Vec<_>>(),
-        "TOC must declare exactly 3 hard `## Dependencies:` in this order: \
+        expected_deps,
+        "the pinned TOC declares exactly these hard `## Dependencies:` in this order: \
          Blizzard_SharedXML (UIPanelDialogTemplate / FrameUtil / dropdown \
          controls), Blizzard_SettingsDefinitions_Shared (Setting / Category / \
          Layout primitives shared across category definitions), Blizzard_Colors \
@@ -272,9 +281,14 @@ fn toc_raw_bytes_pin_metadata_with_default_state_enabled() {
 
     assert!(raw.contains("## Title: Blizzard_SettingsDefinitions_Frame"));
     assert!(raw.contains("## AllowLoad: Game"));
-    assert!(raw.contains(
-        "## Dependencies: Blizzard_SettingsDefinitions_Shared, Blizzard_Colors, Blizzard_GameMenuEsc"
-    ));
+    if toc_layout::classic_cache() {
+        assert!(raw.contains("## Dependencies: Blizzard_SettingsDefinitions_Shared"));
+        assert!(raw.contains("## AllowLoadGameType: classic"));
+    } else {
+        assert!(raw.contains(
+            "## Dependencies: Blizzard_SettingsDefinitions_Shared, Blizzard_Colors, Blizzard_GameMenuEsc"
+        ));
+    }
     assert!(
         !raw.contains("## SavedVariables"),
         "TOC must NOT declare SavedVariables — categories register their own \
@@ -294,6 +308,41 @@ fn toc_body_lists_nine_mainline_overrides_then_current_main_files() {
         .iter()
         .map(|p| p.to_string_lossy().into_owned())
         .collect();
+
+    if toc_layout::classic_cache() {
+        let expected: &[&str] = &[
+            "Classic/GameplaySettingsGroup.lua",
+            "Classic/InterfaceOverrides.lua",
+            "Classic/ControlsOverrides.lua",
+            "Classic/CombatOverrides.lua",
+            "Classic/SocialOverrides.lua",
+            "Classic/ColorblindOverrides.lua",
+            "Classic/KeybindingsOverrides.lua",
+            "Classic/AccessibilityOverrides.lua",
+            "Classic/NameplatesOverrides.lua",
+            "Controls.xml",
+            "Interface.lua",
+            "Interface.xml",
+            "Combat.lua",
+            "ActionBars.lua",
+            "Social.lua",
+            "Keybindings.xml",
+            "Accessibility.lua",
+            "Classic/Colorblind.xml",
+            "CombatAudioAlertUtil.lua",
+            "AudioAssist.lua",
+            "AudioAssist.xml",
+            "Subtitles.xml",
+            "Nameplates.lua",
+            "Nameplates.xml",
+        ];
+        assert_eq!(
+            listed,
+            expected.iter().map(|s| s.to_string()).collect::<Vec<_>>(),
+            "the pinned classic TOC lists the nine Classic overrides then the current main files"
+        );
+        return;
+    }
 
     let first_nine: Vec<String> = listed.iter().take(9).cloned().collect();
     // The pinned Forever TOC excludes ControlsOverrides on camelot and lists the

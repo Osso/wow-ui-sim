@@ -50,6 +50,60 @@ macro_rules! post_wrath_ui_fixture {
     };
 }
 
+/// Addons that only the Retail, PTR and Forever caches ship. Their TOC
+/// fixtures pin Retail-era bytes, and the classic caches (218 addons each for
+/// Mists/Era/Anniversary, 23 for Wrath) do not contain the addon directory at
+/// all. The companion `classic_cache_absent_toc_fixture` asserts that absence
+/// so the gap is recorded instead of silently skipped.
+#[macro_export]
+macro_rules! retail_ptr_forever_toc_fixture {
+    ($($item:item)*) => {
+        $(
+            #[cfg(any(
+                feature = "client-retail",
+                feature = "client-ptr",
+                feature = "client-wowforever"
+            ))]
+            $item
+        )*
+    };
+}
+
+/// Counterpart of `retail_ptr_forever_toc_fixture`: classic caches, where the
+/// pinned tree has no TOC for the addon the Retail fixture describes.
+#[macro_export]
+macro_rules! classic_cache_absent_toc_fixture {
+    ($($item:item)*) => {
+        $(
+            #[cfg(any(
+                feature = "client-mists",
+                feature = "client-era",
+                feature = "client-anniversary",
+                feature = "client-wrath"
+            ))]
+            $item
+        )*
+    };
+}
+
+/// Retail plus the classic caches, excluding PTR and Forever. Used by addons
+/// whose TOC bytes exist in the Retail and classic caches only.
+#[macro_export]
+macro_rules! retail_and_classic_toc_fixture {
+    ($($item:item)*) => {
+        $(
+            #[cfg(any(
+                feature = "client-retail",
+                feature = "client-mists",
+                feature = "client-era",
+                feature = "client-anniversary",
+                feature = "client-wrath"
+            ))]
+            $item
+        )*
+    };
+}
+
 /// Profiles whose pinned `TooltipInfoDocumentation.lua:1012` declares
 /// `GetSocketedRelic`: Retail, PTR and Forever. Their tooltip getter exists, so
 /// the artifact/socket selection paths can be exercised without Retail records.

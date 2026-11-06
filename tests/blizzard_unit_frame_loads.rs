@@ -90,8 +90,29 @@ const PTR_REPRESENTATIVE_BODY_FILES: &[&str] = &[
     "[Family]\\Localization.lua",
 ];
 
+// The classic `_Classic.toc` layers Classic\ overlays over the Shared\ base
+// and keeps the `[Family]` placeholder for the compact-options file.
+const CLASSIC_REPRESENTATIVE_BODY_FILES: &[&str] = &[
+    "Classic\\UnitPowerBarAlt.xml",
+    "Shared\\StatusBarOverlaySegment.lua",
+    "Shared\\UnitFrame.lua",
+    "Classic\\UnitFrame.lua",
+    "Shared\\UnitFrame.xml",
+    "Shared\\PlayerFrame.lua",
+    "Classic\\PlayerFrame.lua",
+    "Shared\\TargetFrame.lua",
+    "Classic\\TargetFrame.lua",
+    "Classic\\PetFrame.lua",
+    "Shared\\CompactUnitFrame.lua",
+    "Shared\\CompactRaidGroup.xml",
+    "[Family]\\CompactUnitFrameOptions.lua",
+    "Classic\\Localization.lua",
+];
+
 fn representative_body_files() -> &'static [&'static str] {
-    if toc_layout::unified_toc_tree() {
+    if toc_layout::classic_cache() {
+        CLASSIC_REPRESENTATIVE_BODY_FILES
+    } else if toc_layout::unified_toc_tree() {
         PTR_REPRESENTATIVE_BODY_FILES
     } else {
         REPRESENTATIVE_BODY_FILES
@@ -312,11 +333,27 @@ fn toc_is_eager_with_ten_dependencies() {
     );
 
     let deps = toc.dependencies();
+    let expected_deps: Vec<String> = if toc_layout::classic_cache() {
+        [
+            "Blizzard_SettingsDefinitions_Frame",
+            "Blizzard_UIParent",
+            "Blizzard_BuffFrame",
+            "Blizzard_UIPanels_Game",
+            "Blizzard_TextStatusBar",
+            "Blizzard_ReadyCheck",
+            "Blizzard_UIParentPanelManager",
+        ]
+        .iter()
+        .map(|s| s.to_string())
+        .collect()
+    } else {
+        TOC_DEPENDENCIES.iter().map(|s| s.to_string()).collect()
+    };
     assert_eq!(
-        deps, TOC_DEPENDENCIES,
+        deps, expected_deps,
         "Retail 12.1.0.69497 declares ten UnitFrame dependencies in published order, \
-         including PingUI, ColorPickerFrame, ManagedFrameSystem, and StatusTrayManager. \
-         Got: {deps:?}"
+         including PingUI, ColorPickerFrame, ManagedFrameSystem, and StatusTrayManager; \
+         the classic TOC declares seven. Got: {deps:?}"
     );
 
     assert!(toc.optional_deps().is_empty());
@@ -386,7 +423,15 @@ post_wrath_ui_fixture! {
 fn toc_raw_bytes_pin_directives_and_representative_body_files() {
     let raw = std::fs::read_to_string(unit_frame_toc()).expect("TOC reads utf-8");
 
-    let expected_directives: &[&str] = if toc_layout::unified_toc_tree() {
+    let expected_directives: &[&str] = if toc_layout::classic_cache() {
+        &[
+            "## Title: Blizzard_UnitFrame",
+            "## Author: Blizzard Entertainment",
+            "## Dependencies: Blizzard_SettingsDefinitions_Frame, Blizzard_UIParent, Blizzard_BuffFrame, Blizzard_UIPanels_Game, Blizzard_TextStatusBar, Blizzard_ReadyCheck, Blizzard_UIParentPanelManager",
+            "## AllowLoad: Game",
+            "## AllowLoadGameType: classic",
+        ]
+    } else if toc_layout::unified_toc_tree() {
         &[
             "## Title: Blizzard_UnitFrame",
             "## Dep: Blizzard_SettingsDefinitions_Frame",

@@ -132,7 +132,7 @@ fn load_full_game_ui() -> WowLuaEnv {
 }
 
 // Literal cached inputs absent from Wrath manifest1-382/cache; behavior cases stay enabled.
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn find_toc_resolves_bare_variant() {
     let resolved = find_toc_file(&stable_ui_dir()).expect("Blizzard_StableUI TOC should resolve");
@@ -148,7 +148,7 @@ fn find_toc_resolves_bare_variant() {
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn toc_declares_three_directives_with_help_plate_dependency() {
     let toc = TocFile::from_file(&stable_ui_toc()).expect("Blizzard_StableUI TOC should parse");
@@ -189,7 +189,7 @@ fn toc_declares_three_directives_with_help_plate_dependency() {
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn toc_is_standard_only_via_allow_load_game_type() {
     let toc = TocFile::from_file(&stable_ui_toc()).expect("TOC parses");
@@ -728,5 +728,20 @@ fn active_pet_list_materializes_five_pet_buttons_and_secondary(env: &WowLuaEnv) 
          StableBeastMasterSecondaryPetButtonMixin) on the right of the \
          divider. Report: {report}"
     );
+}
+}
+
+// The Mists/Era/Anniversary caches ship 218 addons each and Wrath ships 23;
+// none contains Blizzard_StableUI, so the pinned TOC facts above describe no file the
+// classic loaders can read.
+classic_cache_absent_toc_fixture! {
+#[test]
+fn blizzard_stableui_toc_is_absent_from_classic_caches() {
+    let dir = stable_ui_dir();
+    assert!(
+        !dir.is_dir(),
+        "classic profile caches must not contain Blizzard_StableUI"
+    );
+    assert!(wow_ui_sim::loader::find_toc_file(&dir).is_none());
 }
 }

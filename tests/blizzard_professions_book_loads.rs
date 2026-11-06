@@ -137,7 +137,7 @@ fn load_full_game_ui() -> WowLuaEnv {
 }
 
 // Literal cached inputs absent from Wrath manifest1-382/cache; behavior cases stay enabled.
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn blizzard_professions_book_find_toc_resolves_bare_variant() {
     let resolved =
@@ -160,7 +160,7 @@ fn blizzard_professions_book_find_toc_resolves_bare_variant() {
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn blizzard_professions_book_toc_declares_lod_game_only_addon() {
     let toc =
@@ -204,7 +204,7 @@ fn blizzard_professions_book_toc_declares_lod_game_only_addon() {
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn blizzard_professions_book_toc_declares_one_dependency() {
     let toc =
@@ -227,7 +227,7 @@ fn blizzard_professions_book_toc_declares_one_dependency() {
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn blizzard_professions_book_toc_declares_no_saved_variables() {
     let toc =
@@ -247,7 +247,7 @@ fn blizzard_professions_book_toc_declares_no_saved_variables() {
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn blizzard_professions_book_toc_declares_metadata_in_raw_bytes() {
     let raw = std::fs::read_to_string(professions_book_toc())
@@ -302,7 +302,7 @@ fn blizzard_professions_book_toc_declares_metadata_in_raw_bytes() {
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn blizzard_professions_book_toc_lists_bootstrap_then_two_files_in_canonical_order() {
     let toc =
@@ -535,5 +535,20 @@ fn blizzard_professions_book_profession_ranks_table_has_eleven_entries(env: &Wow
          recent classic-style tier before the Dragonflight ranks system superseded \
          the linear cap progression"
     );
+}
+}
+
+// The Mists/Era/Anniversary caches ship 218 addons each and Wrath ships 23;
+// none contains Blizzard_ProfessionsBook, so the pinned TOC facts above describe no file the
+// classic loaders can read.
+classic_cache_absent_toc_fixture! {
+#[test]
+fn blizzard_professionsbook_toc_is_absent_from_classic_caches() {
+    let dir = professions_book_dir();
+    assert!(
+        !dir.is_dir(),
+        "classic profile caches must not contain Blizzard_ProfessionsBook"
+    );
+    assert!(wow_ui_sim::loader::find_toc_file(&dir).is_none());
 }
 }

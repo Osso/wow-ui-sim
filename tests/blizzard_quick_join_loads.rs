@@ -132,7 +132,7 @@ fn load_full_game_ui() -> WowLuaEnv {
 
 // Wrath manifest1-382/cache has no Blizzard_QuickJoin packaged input.
 // Only literal TOC/discovery snapshots; all prefork behavior stays enabled.
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn blizzard_quick_join_find_toc_resolves_bare_variant() {
     let resolved = find_toc_file(&quick_join_dir()).expect("Blizzard_QuickJoin TOC resolves");
@@ -158,6 +158,7 @@ fn blizzard_quick_join_find_toc_resolves_bare_variant() {
     }
 }
 
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn blizzard_quick_join_toc_pins_eager_mainline_only_with_default_state_enabled() {
     let toc = TocFile::from_file(&quick_join_toc()).expect("Blizzard_QuickJoin TOC parses");
@@ -213,7 +214,9 @@ fn blizzard_quick_join_toc_pins_eager_mainline_only_with_default_state_enabled()
     );
     assert!(toc.saved_variables_per_character().is_empty());
 }
+}
 
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn blizzard_quick_join_toc_declares_one_dependency() {
     let toc = TocFile::from_file(&quick_join_toc()).expect("TOC parses");
@@ -230,7 +233,9 @@ fn blizzard_quick_join_toc_declares_one_dependency() {
          friends frame's tab-registration code"
     );
 }
+}
 
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn blizzard_quick_join_toc_declares_metadata_in_raw_bytes() {
     let raw = std::fs::read_to_string(quick_join_toc()).expect("TOC reads utf-8");
@@ -272,7 +277,9 @@ fn blizzard_quick_join_toc_declares_metadata_in_raw_bytes() {
          Blizzard_QuestTimer / Blizzard_QueueStatusFrame)"
     );
 }
+}
 
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn blizzard_quick_join_toc_lists_current_toast_frame_and_social_view_files() {
     let toc = TocFile::from_file(&quick_join_toc()).expect("TOC parses");
@@ -290,6 +297,7 @@ fn blizzard_quick_join_toc_lists_current_toast_frame_and_social_view_files() {
          direct TOC entries, not XML Script inclusions, so the load contract is the literal \
          four-entry ordered list"
     );
+}
 }
 
 #[test]
@@ -504,5 +512,20 @@ fn blizzard_quick_join_toast_registers_four_events_in_onload(env: &WowLuaEnv) {
              OnHide, so it is NOT in this OnLoad-registered set"
         );
     }
+}
+}
+
+// The Mists/Era/Anniversary caches ship 218 addons each and Wrath ships 23;
+// none contains Blizzard_QuickJoin, so the pinned TOC facts above describe no
+// file the classic loaders can read.
+classic_cache_absent_toc_fixture! {
+#[test]
+fn blizzard_quickjoin_toc_is_absent_from_classic_caches() {
+    let dir = quick_join_dir();
+    assert!(
+        !dir.is_dir(),
+        "classic profile caches must not contain Blizzard_QuickJoin"
+    );
+    assert!(wow_ui_sim::loader::find_toc_file(&dir).is_none());
 }
 }

@@ -44,18 +44,35 @@ const ALL_FOUR_SCREENS: &[ScreenKind] = &[
 #[test]
 fn find_toc_file_returns_none_on_mainline_target() {
     let resolved = find_toc_file(&talent_ui_dir());
-    assert!(
-        resolved.is_none(),
-        "find_toc_file must return None — addon ships ONLY \
-         `Blizzard_TalentUI_Mists.toc`, no `_Mainline.toc` and no bare \
-         `Blizzard_TalentUI.toc`. The fallback at src/loader/mod.rs:78-92 \
-         explicitly excludes `_Mists` filenames so the simulator's \
-         mainline target finds no eligible TOC. Got: {resolved:?}"
+    let expected: Option<&str> = if toc_layout::mists() {
+        Some("Blizzard_TalentUI_Mists.toc")
+    } else if toc_layout::wrath() {
+        Some("Blizzard_TalentUI.toc")
+    } else if toc_layout::classic_cache() {
+        Some("Blizzard_TalentUI_Vanilla.toc")
+    } else {
+        None
+    };
+    assert_eq!(
+        resolved
+            .as_deref()
+            .and_then(|path| path.file_name())
+            .and_then(|name| name.to_str()),
+        expected,
+        "the pinned Retail cache ships only `_Mists.toc`, which the Retail suffix list never \
+         probes; each classic profile resolves its own flavor TOC. Got: {resolved:?}"
     );
 }
 
 #[test]
 fn mists_toc_file_exists_at_expected_path() {
+    if toc_layout::wrath() {
+        assert!(
+            !talent_ui_mists_toc().exists(),
+            "the Wrath cache ships the bare Blizzard_TalentUI.toc, not a `_Mists` variant"
+        );
+        return;
+    }
     if talent_ui_absent_from_active_cache() {
         return;
     }
@@ -131,18 +148,31 @@ fn mists_toc_raw_bytes_pin_three_metadata_directives() {
     }
     let raw = std::fs::read_to_string(talent_ui_mists_toc()).expect("TOC reads utf-8");
 
-    let expected_directives = [
-        "## Title: Blizzard Talent UI",
-        "## LoadOnDemand: 1",
-        "## Dependencies: Blizzard_HelpPlate",
-        "Blizzard_TalentUI_Bootstrap.lua [Bootstrap]",
-        "Mists\\Blizzard_TalentUI_Bootstrap.lua [Bootstrap]",
-        "Classic\\Blizzard_TalentUI_Shared.lua",
-        "Classic\\Blizzard_TalentUI_Shared.xml",
-        "Mists\\Blizzard_TalentUI.lua",
-        "Mists\\Blizzard_TalentUI.xml",
-        "Classic\\Localization.lua",
-    ];
+    let expected_directives: &[&str] = if toc_layout::classic_cache() {
+        &[
+            "## Title: Blizzard Talent UI",
+            "## LoadOnDemand: 1",
+            "## Dependencies: Blizzard_HelpPlate",
+            "Classic\\Blizzard_TalentUI_Shared.lua",
+            "Classic\\Blizzard_TalentUI_Shared.xml",
+            "Mists\\Blizzard_TalentUI.lua",
+            "Mists\\Blizzard_TalentUI.xml",
+            "Classic\\Localization.lua",
+        ]
+    } else {
+        &[
+            "## Title: Blizzard Talent UI",
+            "## LoadOnDemand: 1",
+            "## Dependencies: Blizzard_HelpPlate",
+            "Blizzard_TalentUI_Bootstrap.lua [Bootstrap]",
+            "Mists\\Blizzard_TalentUI_Bootstrap.lua [Bootstrap]",
+            "Classic\\Blizzard_TalentUI_Shared.lua",
+            "Classic\\Blizzard_TalentUI_Shared.xml",
+            "Mists\\Blizzard_TalentUI.lua",
+            "Mists\\Blizzard_TalentUI.xml",
+            "Classic\\Localization.lua",
+        ]
+    };
 
     for directive in expected_directives {
         assert!(

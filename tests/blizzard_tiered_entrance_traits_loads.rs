@@ -6,6 +6,9 @@ use wow_ui_sim::screen::ScreenKind;
 use wow_ui_sim::startup::fire_startup_events_for_screen;
 use wow_ui_sim::toc::TocFile;
 
+#[path = "common/toc_layout.rs"]
+mod toc_layout;
+
 fn blizzard_ui_dir() -> std::path::PathBuf {
     default_blizzard_ui_addons_path().expect("Blizzard UI cache should be synced")
 }
@@ -121,11 +124,11 @@ fn toc_is_eager_with_two_required_deps_and_mainline_gametype() {
     assert!(toc.saved_variables().is_empty());
     assert!(!toc.is_load_first());
     assert!(!toc.is_secure_env());
-    assert!(
-        !toc.is_game_type_restricted(),
-        "`## AllowLoadGameType: mainline` — toc.rs:294-302 permits \
-         `mainline`/`standard` tokens. is_game_type_restricted MUST \
-         return false even though the directive is present"
+    assert_eq!(
+        toc.is_game_type_restricted(),
+        !toc_layout::admits_game_type("mainline"),
+        "`## AllowLoadGameType: mainline` is admitted on Retail and PTR (and on Forever as \
+         `mainline`), but not on the classic allow-lists"
     );
     assert!(toc.default_enabled());
 }

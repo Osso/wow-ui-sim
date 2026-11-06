@@ -112,7 +112,7 @@ fn load_full_game_ui() -> WowLuaEnv {
 }
 
 // Literal cached inputs absent from Wrath manifest1-382/cache; behavior cases stay enabled.
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn find_toc_file_resolves_bare_toc() {
     let resolved = find_toc_file(&tutorial_manager_dir()).expect("TutorialManager TOC resolves");
@@ -125,7 +125,7 @@ fn find_toc_file_resolves_bare_toc() {
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn toc_is_eager_with_four_dependencies() {
     let toc = TocFile::from_file(&tutorial_manager_toc()).expect("TOC parses");
@@ -191,7 +191,7 @@ fn allow_load_absent_implies_game_only() {
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn toc_raw_bytes_pin_three_directives_and_nine_body_files() {
     let raw = std::fs::read_to_string(tutorial_manager_toc()).expect("TOC reads utf-8");
@@ -468,5 +468,20 @@ fn full_game_load_emits_no_addon_specific_errors(env: &WowLuaEnv) {
          C_TutorialState/C_QuestLog/etc. stubs without raising. \
          Found: {addon_specific:?}"
     );
+}
+}
+
+// The Mists/Era/Anniversary caches ship 218 addons each and Wrath ships 23;
+// none contains Blizzard_TutorialManager, so the pinned TOC facts above describe no file the
+// classic loaders can read.
+classic_cache_absent_toc_fixture! {
+#[test]
+fn blizzard_tutorialmanager_toc_is_absent_from_classic_caches() {
+    let dir = tutorial_manager_dir();
+    assert!(
+        !dir.is_dir(),
+        "classic profile caches must not contain Blizzard_TutorialManager"
+    );
+    assert!(wow_ui_sim::loader::find_toc_file(&dir).is_none());
 }
 }

@@ -76,7 +76,7 @@ fn load_full_game_ui() -> WowLuaEnv {
 }
 
 // Literal cached inputs absent from Wrath manifest1-382/cache; behavior cases stay enabled.
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn blizzard_photo_sharing_find_toc_resolves_bare_variant() {
     let resolved = find_toc_file(&photo_sharing_dir()).expect("Blizzard_PhotoSharing TOC resolves");
@@ -98,7 +98,7 @@ fn blizzard_photo_sharing_find_toc_resolves_bare_variant() {
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn blizzard_photo_sharing_toc_declares_eager_mainline_only_with_game_menu_dependency() {
     let toc = TocFile::from_file(&photo_sharing_toc()).expect("Blizzard_PhotoSharing TOC parses");
@@ -160,7 +160,7 @@ fn blizzard_photo_sharing_toc_declares_eager_mainline_only_with_game_menu_depend
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn blizzard_photo_sharing_toc_declares_metadata_in_raw_bytes() {
     let raw = std::fs::read_to_string(photo_sharing_toc())
@@ -212,7 +212,7 @@ fn blizzard_photo_sharing_toc_declares_metadata_in_raw_bytes() {
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn blizzard_photo_sharing_toc_lists_four_files_in_canonical_order() {
     let toc = TocFile::from_file(&photo_sharing_toc()).expect("Blizzard_PhotoSharing TOC parses");
@@ -496,5 +496,20 @@ fn blizzard_photo_sharing_c_photo_sharing_authorization_probe_works(env: &WowLua
          exercises this default path and must take the `else` branch (showing the \
          `Sign in` button) without erroring"
     );
+}
+}
+
+// The Mists/Era/Anniversary caches ship 218 addons each and Wrath ships 23;
+// none contains Blizzard_PhotoSharing, so the pinned TOC facts above describe
+// no file the classic loaders can read.
+classic_cache_absent_toc_fixture! {
+#[test]
+fn blizzard_photo_sharing_toc_is_absent_from_classic_caches() {
+    let dir = photo_sharing_dir();
+    assert!(
+        !dir.is_dir(),
+        "classic profile caches must not contain Blizzard_PhotoSharing"
+    );
+    assert!(wow_ui_sim::loader::find_toc_file(&dir).is_none());
 }
 }

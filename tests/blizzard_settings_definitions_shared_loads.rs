@@ -20,7 +20,8 @@ fn definitions_shared_dir() -> PathBuf {
 }
 
 fn definitions_shared_toc() -> PathBuf {
-    definitions_shared_dir().join("Blizzard_SettingsDefinitions_Shared.toc")
+    find_toc_file(&definitions_shared_dir())
+        .expect("Blizzard_SettingsDefinitions_Shared TOC resolves")
 }
 
 const HARD_DEPS: &[&str] = &[
@@ -183,18 +184,27 @@ fn toc_declares_eager_both_with_four_hard_deps_and_account_saved_vars() {
     );
     assert!(toc.optional_deps().is_empty());
 
-    assert_eq!(
-        toc.saved_variables(),
-        vec!["NewSettingsSeen".to_string()],
-        "Retail 12.1.5.70575 declares exactly one account-wide \
-         `## SavedVariables: NewSettingsSeen` — tracks which Setting elements \
-         have been seen, used by the settings panel to badge unseen entries \
-         with a 'NEW' indicator"
-    );
-    assert!(
-        toc.saved_variables_per_character().is_empty(),
-        "TOC declares no per-character SavedVariables"
-    );
+    if toc_layout::classic_cache() {
+        assert!(toc.saved_variables().is_empty());
+        assert_eq!(
+            toc.saved_variables_per_character(),
+            vec!["NewSettingsSeen".to_string()],
+            "the classic TOC stores NewSettingsSeen per character instead of account-wide"
+        );
+    } else {
+        assert_eq!(
+            toc.saved_variables(),
+            vec!["NewSettingsSeen".to_string()],
+            "Retail 12.1.5.70575 declares exactly one account-wide \
+             `## SavedVariables: NewSettingsSeen` — tracks which Setting elements \
+             have been seen, used by the settings panel to badge unseen entries \
+             with a 'NEW' indicator"
+        );
+        assert!(
+            toc.saved_variables_per_character().is_empty(),
+            "TOC declares no per-character SavedVariables"
+        );
+    }
 }
 }
 
@@ -206,7 +216,11 @@ fn toc_raw_bytes_pin_load_saved_variables_first_for_pre_lua_sv_loading() {
 
     assert!(raw.contains("## Title: Blizzard_SettingsDefinitions_Shared"));
     assert!(raw.contains("## AllowLoad: Both"));
-    assert!(raw.contains("## SavedVariables: NewSettingsSeen"));
+    if toc_layout::classic_cache() {
+        assert!(raw.contains("## SavedVariablesPerCharacter: NewSettingsSeen"));
+    } else {
+        assert!(raw.contains("## SavedVariables: NewSettingsSeen"));
+    }
 
     assert!(
         raw.contains("## LoadSavedVariablesFirst: 1"),
@@ -236,6 +250,23 @@ fn family_placeholder_in_toc_body_resolves_to_mainline_subdir() {
         .iter()
         .map(|p| p.to_string_lossy().into_owned())
         .collect();
+
+    if toc_layout::classic_cache() {
+        assert_eq!(
+            listed,
+            vec![
+                "Groups.lua".to_string(),
+                "Graphics.xml".to_string(),
+                "Audio.xml".to_string(),
+                "Languages.xml".to_string(),
+                "Network.lua".to_string(),
+                "Mac.lua".to_string(),
+                "AccessibilitySettingsPreview.lua".to_string(),
+            ],
+            "the classic TOC resolves its body without the mainline-gated preview files"
+        );
+        return;
+    }
 
     for resolved in [
         "Mainline/QuestTextPreview.lua",

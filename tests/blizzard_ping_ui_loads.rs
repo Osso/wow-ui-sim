@@ -112,7 +112,7 @@ fn load_full_game_ui() -> WowLuaEnv {
 }
 
 // Literal cached inputs absent from Wrath manifest1-382/cache; behavior cases stay enabled.
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn blizzard_ping_ui_find_toc_resolves_bare_variant() {
     let resolved = find_toc_file(&ping_ui_dir()).expect("Blizzard_PingUI TOC resolves");
@@ -135,7 +135,7 @@ fn blizzard_ping_ui_find_toc_resolves_bare_variant() {
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn blizzard_ping_ui_toc_declares_eager_secure_mainline_only_with_sharedxml_dep() {
     let toc = TocFile::from_file(&ping_ui_toc()).expect("Blizzard_PingUI TOC parses");
@@ -212,7 +212,7 @@ fn blizzard_ping_ui_toc_declares_eager_secure_mainline_only_with_sharedxml_dep()
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn blizzard_ping_ui_toc_declares_metadata_in_raw_bytes() {
     let raw = std::fs::read_to_string(ping_ui_toc()).expect("Blizzard_PingUI TOC reads utf-8");
@@ -272,7 +272,7 @@ fn blizzard_ping_ui_toc_declares_metadata_in_raw_bytes() {
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn blizzard_ping_ui_toc_lists_four_files_in_canonical_order() {
     let toc = TocFile::from_file(&ping_ui_toc()).expect("Blizzard_PingUI TOC parses");
@@ -669,5 +669,20 @@ fn blizzard_ping_ui_radial_wheel_frame_mixin_is_provided_by_shared_xml(env: &Wow
          RadialWheelFrameMixin lives in `_G` and is visible from inside Blizzard_PingUI's \
          secureenv via the shared globals lookup chain"
     );
+}
+}
+
+// The Mists/Era/Anniversary caches ship 218 addons each and Wrath ships 23;
+// none contains Blizzard_PingUI, so the pinned TOC facts above describe no
+// file the classic loaders can read.
+classic_cache_absent_toc_fixture! {
+#[test]
+fn blizzard_ping_ui_toc_is_absent_from_classic_caches() {
+    let dir = ping_ui_dir();
+    assert!(
+        !dir.is_dir(),
+        "classic profile caches must not contain Blizzard_PingUI"
+    );
+    assert!(wow_ui_sim::loader::find_toc_file(&dir).is_none());
 }
 }

@@ -87,7 +87,7 @@ fn load_full_game_ui() -> WowLuaEnv {
 }
 
 // Literal cached inputs absent from Wrath manifest1-382/cache; behavior cases stay enabled.
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn find_toc_file_resolves_mainline_only_variant() {
     let resolved =
@@ -103,7 +103,7 @@ fn find_toc_file_resolves_mainline_only_variant() {
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn toc_declares_eager_load_with_two_required_deps() {
     let toc =
@@ -145,7 +145,7 @@ fn toc_declares_eager_load_with_two_required_deps() {
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn toc_restricts_to_game_screen_and_mainline_gametype() {
     let toc =
@@ -181,7 +181,7 @@ fn toc_restricts_to_game_screen_and_mainline_gametype() {
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn toc_lists_lua_then_xml_in_body() {
     let toc =
@@ -207,7 +207,7 @@ fn toc_lists_lua_then_xml_in_body() {
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn toc_raw_bytes_pin_directives() {
     let raw =
@@ -562,5 +562,20 @@ fn zone_ability_frame_inherits_template_children(env: &WowLuaEnv) {
              ManagedHorizontalLayoutFrameTemplate host that pools the spell buttons"
         );
     }
+}
+}
+
+// The Mists/Era/Anniversary caches ship 218 addons each and Wrath ships 23;
+// none contains Blizzard_ZoneAbility, so the pinned TOC facts above describe
+// no file the classic loaders can read.
+classic_cache_absent_toc_fixture! {
+#[test]
+fn blizzard_zone_ability_toc_is_absent_from_classic_caches() {
+    let dir = zone_ability_dir();
+    assert!(
+        !dir.is_dir(),
+        "classic profile caches must not contain Blizzard_ZoneAbility"
+    );
+    assert!(wow_ui_sim::loader::find_toc_file(&dir).is_none());
 }
 }

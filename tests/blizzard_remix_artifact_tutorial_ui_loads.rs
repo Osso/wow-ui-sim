@@ -130,9 +130,18 @@ fn toc_lists_bootstrap_and_two_files_in_root_directory() {
         .iter()
         .map(|p| p.to_string_lossy().replace('\\', "/"))
         .collect();
+    let expected: &[&str] = if toc_layout::classic_cache() {
+        &[
+            "Blizzard_RemixArtifactTutorialUI.lua",
+            "Blizzard_RemixArtifactTutorialUI.xml",
+        ]
+    } else {
+        REMIX_FILES
+    };
     assert_eq!(
-        listed, REMIX_FILES,
-        "Retail 12.1.0.69497 lists the tutorial bootstrap before its Lua and XML files"
+        listed, expected,
+        "Retail 12.1.0.69497 lists the tutorial bootstrap before its Lua and XML files; the \
+         classic TOC lists the Lua and XML pair only"
     );
 }
 }

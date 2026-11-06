@@ -169,7 +169,7 @@ fn load_full_game_ui() -> WowLuaEnv {
 }
 
 // Literal cached inputs absent from Wrath manifest1-382/cache; behavior cases stay enabled.
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn blizzard_professions_find_toc_resolves_bare_variant() {
     let resolved = find_toc_file(&professions_dir()).expect("Blizzard_Professions TOC resolves");
@@ -191,7 +191,7 @@ fn blizzard_professions_find_toc_resolves_bare_variant() {
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn blizzard_professions_toc_declares_lod_mainline_game_only_addon() {
     let toc = TocFile::from_file(&professions_toc()).expect("Blizzard_Professions TOC parses");
@@ -239,7 +239,7 @@ fn blizzard_professions_toc_declares_lod_mainline_game_only_addon() {
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn blizzard_professions_toc_declares_five_dependencies() {
     let toc = TocFile::from_file(&professions_toc()).expect("Blizzard_Professions TOC parses");
@@ -261,7 +261,7 @@ fn blizzard_professions_toc_declares_five_dependencies() {
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn blizzard_professions_toc_declares_two_per_character_saved_vars() {
     let toc = TocFile::from_file(&professions_toc()).expect("Blizzard_Professions TOC parses");
@@ -291,7 +291,7 @@ fn blizzard_professions_toc_declares_two_per_character_saved_vars() {
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn blizzard_professions_toc_declares_metadata_in_raw_bytes() {
     let raw =
@@ -369,7 +369,7 @@ fn blizzard_professions_toc_declares_metadata_in_raw_bytes() {
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn blizzard_professions_toc_lists_bootstrap_then_thirteen_files_in_canonical_load_order() {
     let toc = TocFile::from_file(&professions_toc()).expect("Blizzard_Professions TOC parses");
@@ -580,5 +580,20 @@ fn blizzard_professions_registers_two_ui_panels_with_uiparent(env: &WowLuaEnv) {
          both frames into the global UI-panel manager so /script ToggleProfessionsBook \
          + UIParent push/pop logic can reach them"
     );
+}
+}
+
+// The Mists/Era/Anniversary caches ship 218 addons each and Wrath ships 23;
+// none contains Blizzard_Professions, so the pinned TOC facts above describe no file the
+// classic loaders can read.
+classic_cache_absent_toc_fixture! {
+#[test]
+fn blizzard_professions_toc_is_absent_from_classic_caches() {
+    let dir = professions_dir();
+    assert!(
+        !dir.is_dir(),
+        "classic profile caches must not contain Blizzard_Professions"
+    );
+    assert!(wow_ui_sim::loader::find_toc_file(&dir).is_none());
 }
 }

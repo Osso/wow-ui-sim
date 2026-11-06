@@ -71,7 +71,7 @@ fn load_full_game_ui() -> WowLuaEnv {
 }
 
 // Literal cached inputs absent from Wrath manifest1-382/cache; behavior cases stay enabled.
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn find_toc_file_resolves_bare_toc() {
     let resolved =
@@ -84,7 +84,7 @@ fn find_toc_file_resolves_bare_toc() {
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn toc_is_load_on_demand_with_no_dependencies() {
     let toc = TocFile::from_file(&subscription_interstitial_toc()).expect("TOC parses");
@@ -105,7 +105,7 @@ fn toc_is_load_on_demand_with_no_dependencies() {
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn toc_has_no_allow_load_or_game_type_restriction_or_secure_env() {
     let toc = TocFile::from_file(&subscription_interstitial_toc()).expect("TOC parses");
@@ -138,7 +138,7 @@ fn allow_load_absent_restricts_to_game_screen_only() {
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn toc_raw_bytes_pin_metadata_and_bootstrap_xml_body() {
     let raw = std::fs::read_to_string(subscription_interstitial_toc()).expect("TOC reads utf-8");
@@ -484,5 +484,20 @@ fn subscription_interstitial_button_templates_materialize_via_create_frame(env: 
          would crash. Verify both concrete inheritors exist as children \
          of SubscriptionInterstitialFrame instead"
     );
+}
+}
+
+// The Mists/Era/Anniversary caches ship 218 addons each and Wrath ships 23;
+// none contains Blizzard_SubscriptionInterstitialUI, so the pinned TOC facts above describe no file the
+// classic loaders can read.
+classic_cache_absent_toc_fixture! {
+#[test]
+fn blizzard_subscriptioninterstitialui_toc_is_absent_from_classic_caches() {
+    let dir = subscription_interstitial_dir();
+    assert!(
+        !dir.is_dir(),
+        "classic profile caches must not contain Blizzard_SubscriptionInterstitialUI"
+    );
+    assert!(wow_ui_sim::loader::find_toc_file(&dir).is_none());
 }
 }

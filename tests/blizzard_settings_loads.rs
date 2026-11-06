@@ -24,7 +24,7 @@ fn settings_lua() -> PathBuf {
 }
 
 // Literal cached inputs absent from Wrath manifest1-382/cache; behavior cases stay enabled.
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn find_toc_file_resolves_bare_toc() {
     let resolved = find_toc_file(&settings_dir()).expect("Blizzard_Settings TOC resolves");
@@ -39,7 +39,7 @@ fn find_toc_file_resolves_bare_toc() {
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn toc_declares_load_on_demand_with_blizzard_author_no_deps() {
     let toc = TocFile::from_file(&settings_toc()).expect("Blizzard_Settings TOC parses");
@@ -69,7 +69,7 @@ fn toc_declares_load_on_demand_with_blizzard_author_no_deps() {
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn toc_lacks_allow_load_so_falls_through_to_game_only() {
     let toc = TocFile::from_file(&settings_toc()).expect("Blizzard_Settings TOC parses");
@@ -98,7 +98,7 @@ fn toc_lacks_allow_load_so_falls_through_to_game_only() {
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn toc_raw_bytes_pin_three_metadata_lines_with_single_lua_body() {
     let raw = std::fs::read_to_string(settings_toc()).expect("Blizzard_Settings TOC reads utf-8");
@@ -172,7 +172,7 @@ fn lod_addon_excluded_from_eager_discovery_on_every_screen() {
     }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn root_directory_holds_only_the_toc_and_one_lua_file() {
     let dir = settings_dir();
@@ -312,5 +312,20 @@ fn settings_addon_loaded_consumer_lives_in_settings_shared_addon() {
          comment `-- Loaded for tracking` documents intent: this is a one-shot \
          load-time event that downstream code can key off"
     );
+}
+}
+
+// The Mists/Era/Anniversary caches ship 218 addons each and Wrath ships 23;
+// none contains Blizzard_Settings, so the pinned TOC facts above describe no file the
+// classic loaders can read.
+classic_cache_absent_toc_fixture! {
+#[test]
+fn blizzard_settings_toc_is_absent_from_classic_caches() {
+    let dir = settings_dir();
+    assert!(
+        !dir.is_dir(),
+        "classic profile caches must not contain Blizzard_Settings"
+    );
+    assert!(wow_ui_sim::loader::find_toc_file(&dir).is_none());
 }
 }

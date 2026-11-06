@@ -66,7 +66,18 @@ const PTR_REPRESENTATIVE_BODY_FILES: &[&str] = &[
     "UnitPopupSharedMenus.lua",
 ];
 
+// The classic TOC carries the four root files with no Mainline overlay.
+const CLASSIC_REPRESENTATIVE_BODY_FILES: &[&str] = &[
+    "UnitPopupSharedUtils.lua",
+    "UnitPopupSharedButtonMixins.lua",
+    "UnitPopupShared.lua",
+    "UnitPopupSharedMenus.lua",
+];
+
 fn representative_body_files() -> &'static [&'static str] {
+    if toc_layout::classic_cache() {
+        return CLASSIC_REPRESENTATIVE_BODY_FILES;
+    }
     if toc_layout::unified_toc_tree() {
         PTR_REPRESENTATIVE_BODY_FILES
     } else {
@@ -220,11 +231,12 @@ fn toc_is_eager_with_two_dependencies_and_two_optional_deps() {
     );
 
     let opt_deps = toc.optional_deps();
-    let expected_optional: &[&str] = if toc_layout::unified_toc_tree() {
-        &[]
-    } else {
-        TOC_OPTIONAL_DEPS
-    };
+    let expected_optional: &[&str] =
+        if toc_layout::classic_cache() || toc_layout::unified_toc_tree() {
+            &[]
+        } else {
+            TOC_OPTIONAL_DEPS
+        };
     assert_eq!(
         opt_deps, expected_optional,
         "The Retail TOC declares Blizzard_GlueXML and \
@@ -288,7 +300,16 @@ fn allow_load_game_type_mainline_is_not_restricted() {
 fn toc_raw_bytes_pin_directives_and_representative_body_files() {
     let raw = std::fs::read_to_string(unit_popup_shared_toc()).expect("TOC reads utf-8");
 
-    let expected_directives: &[&str] = if toc_layout::unified_toc_tree() {
+    let expected_directives: &[&str] = if toc_layout::classic_cache() {
+        &[
+            "## Title: Blizzard_UnitPopupShared",
+            "## Author: Blizzard Entertainment",
+            "## DefaultState: enabled",
+            "## Dependencies: Blizzard_SharedXML, Blizzard_Colors",
+            "## AllowLoad: Game",
+            "## AllowLoadGameType: classic",
+        ]
+    } else if toc_layout::unified_toc_tree() {
         &[
             "## Title: Blizzard_UnitPopupShared",
             "## Dep: Blizzard_SharedXML",

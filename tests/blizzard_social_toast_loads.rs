@@ -19,7 +19,7 @@ fn social_toast_dir() -> PathBuf {
 }
 
 fn social_toast_toc() -> PathBuf {
-    social_toast_dir().join("Blizzard_SocialToast.toc")
+    find_toc_file(&social_toast_dir()).expect("Blizzard_SocialToast TOC resolves")
 }
 
 const PUBLISHED_MIXINS: &[&str] = &[
@@ -67,15 +67,11 @@ post_wrath_ui_fixture! {
 fn find_toc_file_resolves_bare_toc() {
     let resolved = find_toc_file(&social_toast_dir()).expect("SocialToast TOC resolves");
     assert_eq!(
-        resolved,
-        social_toast_toc(),
-        "Blizzard_SocialToast ships a single bare \
-         `Blizzard_SocialToast.toc` (NO `_Mainline.toc` flavor variant). \
-         Per-flavor gating is expressed via the `## AllowLoadGameType: \
-         mainline` directive instead — the toast frame template + \
-         alert-frame helpers are mainline-only because Mists/classic do \
-         not have the same Battle.net friend / Communities feature \
-         surface that drives the social toast queue"
+        resolved.file_name().and_then(|name| name.to_str()),
+        Some(toc_layout::expected_toc_name("Blizzard_SocialToast").as_str()),
+        "find_toc_file resolves the active profile's SocialToast TOC: Retail ships the \
+         bare `Blizzard_SocialToast.toc`, PTR/Forever the unified bare TOC, and the \
+         classic caches the `_Classic` companion"
     );
 }
 }
@@ -168,7 +164,16 @@ post_wrath_ui_fixture! {
 fn toc_raw_bytes_pin_six_metadata_directives() {
     let raw = std::fs::read_to_string(social_toast_toc()).expect("TOC reads utf-8");
 
-    let expected_directives: &[&str] = if toc_layout::unified_toc_tree() {
+    let expected_directives: &[&str] = if toc_layout::classic_cache() {
+        &[
+            "## Title: Blizzard_SocialToast",
+            "## Author: Blizzard Entertainment",
+            "## DefaultState: enabled",
+            "## AllowLoad: game",
+            "## AllowLoadGameType: classic",
+            "## Dependencies: Blizzard_SharedXML",
+        ]
+    } else if toc_layout::unified_toc_tree() {
         &[
             "## Title: Blizzard_SocialToast",
             "## AllowLoad: both [AllowLoadGameType mainline]",
