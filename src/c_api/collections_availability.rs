@@ -18,6 +18,13 @@
 //! constant. The defaults are best-guess scenario defaults for the two clients
 //! that ship the respective collection surface.
 
+use crate::lua_api::methods::borrow_state;
+use crate::lua_bridge::{IntoStack, TableBuilder};
+use rilua::LuaResult;
+use rilua::vm::gc::arena::GcRef;
+use rilua::vm::state::LuaState;
+use rilua::vm::table::Table;
+
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct CollectionsAvailability {
     /// Whether the heirloom journal is available to the current character.
@@ -33,4 +40,50 @@ impl Default for CollectionsAvailability {
             mount_equipment: true,
         }
     }
+}
+
+fn publishes_availability() -> bool {
+    matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Ptr
+            | crate::client_profile::ClientProfile::WowForever
+    )
+}
+
+pub(crate) fn register_mount_equipment_available(tb: TableBuilder) -> LuaResult<TableBuilder> {
+    if !publishes_availability() {
+        return Ok(tb);
+    }
+    tb.set_function("MountEquipmentAvailable", mount_equipment_available)
+}
+
+fn mount_equipment_available(state: &mut LuaState) -> LuaResult<u32> {
+    let available = borrow_state(state)?
+        .world
+        .collections_availability
+        .mount_equipment;
+    available.into_stack(state)
+}
+
+pub(crate) fn register_heirlooms_available(
+    state: &mut LuaState,
+    namespace: GcRef<Table>,
+) -> LuaResult<()> {
+    if !publishes_availability() {
+        return Ok(());
+    }
+    crate::lua_bridge::table_set_rust_fn_static(
+        state,
+        namespace,
+        "HeirloomsAvailable",
+        heirlooms_available,
+    )
+}
+
+fn heirlooms_available(state: &mut LuaState) -> LuaResult<u32> {
+    let available = borrow_state(state)?
+        .world
+        .collections_availability
+        .heirlooms;
+    available.into_stack(state)
 }
