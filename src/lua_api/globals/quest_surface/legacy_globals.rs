@@ -401,3 +401,25 @@ pub fn get_quest_progress_bar_percent(state: &mut LuaState) -> LuaResult<u32> {
     state.push(Val::Num(0.0));
     Ok(1)
 }
+
+/// Classic `GetQuestGreenRange`: one number derived from the current player level.
+///
+/// The classic `Blizzard_UIParent` TOCs select the `Vanilla`/`Mists` body whose
+/// `GetRelativeDifficultyColor` calls this global (`era` cache
+/// `Blizzard_UIParent/Vanilla/UIParent.lua:1419`, `mists` cache
+/// `Blizzard_UIParent/Mists/UIParent.lua:1628`). No pinned
+/// `Blizzard_APIDocumentationGenerated` declares it, so the signature comes from
+/// that consumer: no arguments, one number.
+///
+/// The level/5 band table is the source-derived Wrath 12340 table
+/// (`docs/specs/wrath-quest-abandon.md`). Native Mists/Era/Anniversary bands are
+/// UNKNOWN; applying the classic-family table there is an EMULATED default that
+/// only moves the displayed quest-difficulty color.
+pub(super) fn get_quest_green_range(state: &mut LuaState) -> LuaResult<u32> {
+    const QUEST_GREEN_RANGES: [u8; 20] =
+        [4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8];
+    let level = borrow_state(state)?.player.level;
+    let band = (level.max(0) as usize / 5).min(QUEST_GREEN_RANGES.len() - 1);
+    state.push(Val::Num(f64::from(QUEST_GREEN_RANGES[band])));
+    Ok(1)
+}

@@ -276,6 +276,18 @@ pub fn register_all(lua: &mut rilua::Lua) -> crate::Result<()> {
     for (name, func) in super::wrath_quest_watch::MANUAL_WATCH_FUNCTIONS {
         LuaApiMut::register_function(lua, name, *func)?;
     }
+    if matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Mists
+            | crate::client_profile::ClientProfile::Era
+            | crate::client_profile::ClientProfile::Anniversary
+    ) {
+        LuaApiMut::register_function(
+            lua,
+            "GetQuestGreenRange",
+            super::legacy_globals::get_quest_green_range,
+        )?;
+    }
     if crate::c_api::quest_objectives::ENABLED {
         for (name, func) in LIVE_QUEST_GLOBALS {
             LuaApiMut::register_function(lua, name, *func)?;

@@ -19,7 +19,10 @@ pub(super) const LEGACY_READS: &[(&str, super::SurfaceFn)] = &[
         super::wrath_objectives::get_quest_log_quest_text,
     ),
     ("GetQuestLogGroupNum", get_quest_log_group_num),
-    ("GetQuestGreenRange", get_quest_green_range),
+    (
+        "GetQuestGreenRange",
+        super::legacy_globals::get_quest_green_range,
+    ),
     ("GetDailyQuestsCompleted", get_daily_quests_completed),
     ("GetMaxDailyQuests", get_max_daily_quests),
     ("GetNumQuestLogRewards", get_num_quest_log_rewards),
@@ -125,15 +128,6 @@ pub(super) fn get_quest_log_group_num(state: &mut LuaState) -> LuaResult<u32> {
             .unwrap_or(0)
     };
     state.push(Val::Num(group_size as f64));
-    Ok(1)
-}
-
-pub(super) fn get_quest_green_range(state: &mut LuaState) -> LuaResult<u32> {
-    const QUEST_GREEN_RANGES: [u8; 20] =
-        [4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8];
-    let level = borrow_state(state)?.player.level;
-    let band = (level.max(0) as usize / 5).min(QUEST_GREEN_RANGES.len() - 1);
-    state.push(Val::Num(f64::from(QUEST_GREEN_RANGES[band])));
     Ok(1)
 }
 
