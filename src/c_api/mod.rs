@@ -240,6 +240,7 @@ pub mod c_super_track;
 pub(crate) mod challenge_run;
 pub mod container_quest;
 pub mod engraving_inputs;
+pub mod external_event_url;
 mod forever_outfits;
 pub mod forever_startup;
 mod lfr_availability;

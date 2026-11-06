@@ -772,6 +772,8 @@ pub struct SimState {
     pub wrath_trainer_filters: [bool; 3],
     /// Host inputs for Forever 70532; other profiles do not publish these probes.
     pub forever_startup: crate::c_api::forever_startup::StartupInputs,
+    /// Host-supplied promotion state for the declared `C_ExternalEventURL` namespace.
+    pub external_event_url: crate::c_api::external_event_url::ExternalEventUrlState,
     pub bank_frame_open: bool,
     pub guild_bank_frame_open: bool,
     pub bank_purchased_slots: i32,
