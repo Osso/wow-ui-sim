@@ -1,5 +1,6 @@
 //! Catalog-backed active outfit selection shared by secure actions and /outfit.
 
+#[cfg(feature = "retail-12-0-5")]
 use crate::lua_api::globals::security::resolve_cmd_option;
 use crate::lua_api::methods::{borrow_state, borrow_state_mut};
 use crate::lua_bridge::{stack_val, table_set_rust_fn_static};
