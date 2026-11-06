@@ -609,6 +609,7 @@ fn micro_menu_player_spells_button_loads_and_opens_panel() {
     );
 }
 
+poi_button_panel_fixture! {
 post_wrath_ui_fixture! {
 #[test]
 fn micro_menu_collections_button_loads_and_opens_panel() {
@@ -622,6 +623,7 @@ fn micro_menu_collections_button_loads_and_opens_panel() {
         frame_is_shown(&env, "CollectionsJournal"),
         "CollectionsJournal should be shown after clicking CollectionsMicroButton"
     );
+}
 }
 }
 

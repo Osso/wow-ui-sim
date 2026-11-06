@@ -314,6 +314,7 @@ fn toggle_player_spells_frame_opens_and_closes_talent_panel() {
     }
 }
 
+poi_button_panel_fixture! {
 post_wrath_ui_fixture! {
 #[test]
 fn toggle_collections_journal_opens_mounts_pets_and_toys_tabs_and_accepts_search_text() {
@@ -371,7 +372,9 @@ fn toggle_collections_journal_opens_mounts_pets_and_toys_tabs_and_accepts_search
     }
 }
 }
+}
 
+poi_button_panel_or_wrath_fixture! {
 #[test]
 fn collections_mount_list_count_matches_displayed_mount_count() {
     test_timeout! {
@@ -449,6 +452,7 @@ fn collections_mount_list_count_matches_displayed_mount_count() {
             "MountJournal scrollbox data-provider size should match C_MountJournal.GetNumDisplayedMounts(): {result}"
         );
     }
+}
 }
 
 #[test]

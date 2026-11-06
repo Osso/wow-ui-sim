@@ -297,6 +297,7 @@ fn mount_filter_reset_consumer_restores_defaults() {
     .expect("mount filter consumer should reset filters");
 }
 
+poi_button_panel_fixture! {
 post_wrath_ui_fixture! {
 #[test]
 fn collections_addon_load_creates_collections_journal() {
@@ -323,6 +324,7 @@ fn collections_addon_load_creates_collections_journal() {
         frame_exists,
         "Blizzard_Collections should create CollectionsJournal when loaded"
     );
+}
 }
 }
 
@@ -596,6 +598,7 @@ fn achievement_toggle_loads_and_shows_frame() {
     );
 }
 
+poi_button_panel_fixture! {
 post_wrath_ui_fixture! {
 #[test]
 fn collections_toggle_loads_and_shows_frame() {
@@ -623,6 +626,7 @@ fn collections_toggle_loads_and_shows_frame() {
 
     assert!(loaded, "collections toggle should load the addon");
     assert!(shown, "collections toggle should show the frame");
+}
 }
 }
 

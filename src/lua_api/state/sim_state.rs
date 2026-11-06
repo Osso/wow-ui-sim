@@ -304,36 +304,88 @@ pub struct SimState {
     #[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
     pub special_event_brawl: Option<SpecialEventBrawlInfo>,
     /// Explicit ordered illusion inputs only; no fabricated native catalog.
-    #[cfg(feature = "retail-12-0-5")]
+    #[cfg(any(
+        feature = "retail-12-0-0",
+        feature = "client-mists",
+        feature = "client-era",
+        feature = "client-anniversary"
+    ))]
     pub transmog_illusions: Vec<crate::c_api::c_transmog_collection::IllusionInfo>,
     /// Explicit itemModifiedAppearanceID-keyed inputs only.
-    #[cfg(feature = "retail-12-0-5")]
+    #[cfg(any(
+        feature = "retail-12-0-0",
+        feature = "client-mists",
+        feature = "client-era",
+        feature = "client-anniversary"
+    ))]
     pub transmog_appearance_sources: HashMap<i64, AppearanceSourceInfo>,
     /// Supplied source IDs marked new; acquisition and clearing policy is unknown.
     pub transmog_new_sources: HashSet<i64>,
     /// Explicit (slot, type, option) inputs only; no viewed-outfit synthesis.
-    #[cfg(feature = "retail-12-0-5")]
+    #[cfg(any(
+        feature = "retail-12-0-0",
+        feature = "client-mists",
+        feature = "client-era",
+        feature = "client-anniversary"
+    ))]
     pub viewed_outfit_slots: HashMap<(i32, i32, i32), ViewedOutfitSlotInfo>,
     /// Explicit host snapshot only; absence does not fabricate a price.
-    #[cfg(feature = "retail-12-0-5")]
+    #[cfg(any(
+        feature = "retail-12-0-0",
+        feature = "client-mists",
+        feature = "client-era",
+        feature = "client-anniversary"
+    ))]
     pub pending_transmog_cost: Option<crate::c_api::c_transmog_outfit_info::PendingTransmogCost>,
     pub transmog_outfit_locks: HashSet<i64>,
-    #[cfg(feature = "retail-12-0-5")]
+    #[cfg(any(
+        feature = "retail-12-0-0",
+        feature = "client-mists",
+        feature = "client-era",
+        feature = "client-anniversary"
+    ))]
     pub transmog_outfit_catalog: crate::c_api::c_transmog_outfit_info::OutfitCatalog,
-    #[cfg(feature = "retail-12-0-5")]
+    #[cfg(any(
+        feature = "retail-12-0-0",
+        feature = "client-mists",
+        feature = "client-era",
+        feature = "client-anniversary"
+    ))]
     pub transmog_outfits: crate::c_api::c_transmog_outfit_info::OutfitState,
     /// Explicit applied selection; independent of viewed/pending outfit metadata.
-    #[cfg(feature = "retail-12-0-5")]
+    #[cfg(any(
+        feature = "retail-12-0-0",
+        feature = "client-mists",
+        feature = "client-era",
+        feature = "client-anniversary"
+    ))]
     pub active_transmog_outfit_id: Option<i64>,
     /// Explicit catalog-backed viewed selection; independent of active/pending state.
-    #[cfg(feature = "retail-12-0-5")]
+    #[cfg(any(
+        feature = "retail-12-0-0",
+        feature = "client-mists",
+        feature = "client-era",
+        feature = "client-anniversary"
+    ))]
     pub viewed_transmog_outfit_id: Option<i64>,
     /// Global setting only; no per-outfit or pending-situation behavior.
     pub outfit_situations_enabled: bool,
+    /// Explicit class/spec heirloom filters; both zero means unfiltered
+    /// (`Blizzard_ClassMenu/Blizzard_ClassMenu.lua:1-2`).
+    pub heirloom_class_filter: i32,
+    pub heirloom_spec_filter: i32,
+    /// Host-supplied pending upgrade target. None reports no pending upgrade;
+    /// the native targeting flow is UNKNOWN.
+    pub heirloom_upgrade_targeting: crate::c_api::c_heirloom::HeirloomUpgradeTargeting,
     /// Explicit filter values only; native defaults and set filtering are unmodeled.
     pub transmog_set_filters: HashMap<i32, bool>,
     pub transmog_sets: crate::c_api::c_transmog_sets::TransmogSets,
-    #[cfg(feature = "retail-12-0-0")]
+    #[cfg(any(
+        feature = "retail-12-0-0",
+        feature = "client-mists",
+        feature = "client-era",
+        feature = "client-anniversary"
+    ))]
     pub transmog_custom_sets: crate::c_api::c_transmog_collection::CustomSets,
     pub equipped_outfit_locked: bool,
     pub locked_action_slots: HashSet<i32>,

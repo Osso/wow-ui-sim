@@ -254,9 +254,19 @@ mod tests {
             )
             .expect("outfit slot helpers should be queryable");
 
-        #[cfg(feature = "retail-12-0-5")]
+        #[cfg(any(
+            feature = "retail-12-0-5",
+            feature = "client-mists",
+            feature = "client-era",
+            feature = "client-anniversary"
+        ))]
         assert_eq!(result, (13, true, true));
-        #[cfg(not(feature = "retail-12-0-5"))]
+        #[cfg(not(any(
+            feature = "retail-12-0-5",
+            feature = "client-mists",
+            feature = "client-era",
+            feature = "client-anniversary"
+        )))]
         assert_eq!(result, (16, true, true));
     }
 
@@ -294,7 +304,12 @@ mod tests {
 
     retail_namespace_fixture! {
     #[test]
-    #[cfg(not(feature = "retail-12-0-5"))]
+    #[cfg(not(any(
+        feature = "retail-12-0-5",
+        feature = "client-mists",
+        feature = "client-era",
+        feature = "client-anniversary"
+    )))]
     fn outfit_state_methods_track_active_outfit_and_pending_sheathe_categories() {
         let env = WowLuaEnv::new().expect("lua env should initialize");
         let result: String = env

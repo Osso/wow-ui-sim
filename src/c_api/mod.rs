@@ -5,6 +5,7 @@
 
 mod c_account_info;
 pub mod c_guild_info;
+pub mod c_heirloom;
 pub mod c_recruit_a_friend;
 #[cfg(feature = "retail-12-0-5")]
 pub(crate) mod c_tooltip_info_appearance;
@@ -299,7 +300,15 @@ pub(crate) mod c_trade_skill_filter;
 pub(crate) mod c_trade_skill_first_craft;
 pub mod c_trade_skill_quality;
 mod c_trade_skill_source;
-#[cfg(feature = "retail-12-0-0")]
+// The pinned classic TransmogItemsDocumentation.lua / TransmogOutfitInfoDocumentation.lua
+// declare these namespaces on Mists, Era and Anniversary, so the backing model
+// is compiled for those profiles together with the retail API epochs.
+#[cfg(any(
+    feature = "retail-12-0-0",
+    feature = "client-mists",
+    feature = "client-era",
+    feature = "client-anniversary"
+))]
 pub(crate) mod c_transmog_collection;
 mod c_transmog_latest;
 pub(crate) mod c_voice_chat_activity;
@@ -340,7 +349,12 @@ pub(crate) mod unit_aura_access;
 #[cfg(feature = "retail-12-0-5")]
 pub(crate) mod unit_comparison;
 pub mod url_texture_inputs;
-#[cfg(feature = "retail-12-0-5")]
+#[cfg(any(
+    feature = "retail-12-0-0",
+    feature = "client-mists",
+    feature = "client-era",
+    feature = "client-anniversary"
+))]
 pub use c_transmog_collection::IllusionInfo;
 pub mod c_achievement_telemetry;
 pub mod c_social_contract_glue;
@@ -348,7 +362,12 @@ pub mod c_social_contract_glue;
 pub mod c_spell_maw_powers;
 mod c_timerunning_ui;
 pub mod c_toy_box_info;
-#[cfg(feature = "retail-12-0-0")]
+#[cfg(any(
+    feature = "retail-12-0-0",
+    feature = "client-mists",
+    feature = "client-era",
+    feature = "client-anniversary"
+))]
 pub mod c_transmog_outfit_info;
 pub mod c_transmog_sets;
 pub(crate) mod c_ui;
