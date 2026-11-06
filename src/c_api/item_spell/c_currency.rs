@@ -132,6 +132,20 @@ pub(super) fn register_c_currency_info(state: &mut LuaState) -> LuaResult<()> {
             query_currency_faction_grant,
         )?;
     }
+    if matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail
+            | crate::client_profile::ClientProfile::Ptr
+            | crate::client_profile::ClientProfile::WowForever
+    ) {
+        // CurrencyInfoDocumentation.lua:312-326 (Retail, PTR, Forever).
+        table_set_rust_fn_static(
+            state,
+            table_ref,
+            "GetCurrencyListLink",
+            c_currency_get_list_link,
+        )?;
+    }
     #[cfg(feature = "client-mists")]
     table_set_rust_fn_static(
         state,
@@ -501,6 +515,30 @@ fn read_currency_list_display_info(
         .currency_info
         .get(&entry.currency_id)
         .cloned())
+}
+
+/// The currency hyperlink of a list row, coloured by the row's quality like
+/// `|cffffffff|Hcurrency:1744|h[Corrupted Memento]|h|r`. Header rows and
+/// indices outside the list name no currency and return nothing.
+fn c_currency_get_list_link(state: &mut LuaState) -> LuaResult<u32> {
+    let index = i32::from_stack(state, 1)?;
+    let Some(entry) = read_currency_list_entry(state, index)? else {
+        return Ok(0);
+    };
+    if entry.is_header {
+        return Ok(0);
+    }
+    let Some(display) = read_currency_list_display_info(state, &entry)? else {
+        return Ok(0);
+    };
+    let color = crate::c_api::item_quality_color::quality_hex(state, display.quality);
+    let link = format!(
+        "|c{color}|Hcurrency:{}|h[{}]|h|r",
+        entry.currency_id, display.name
+    );
+    let link = create_string(state, &link);
+    state.push(link);
+    Ok(1)
 }
 
 fn write_currency_row_display_fields(state: &mut LuaState, table: Val, display: &CurrencyInfo) {
@@ -916,6 +954,48 @@ mod tests {
 
         assert_eq!(name, "Valorstones");
         assert_eq!(field_count, CURRENCY_INFO_HASH_FIELDS as i32);
+    }
+
+    #[test]
+    fn currency_list_link_names_the_row_currency_in_its_quality_colour() {
+        let env = WowLuaEnv::new().expect("env should initialize");
+        let (link, expected, header_returns): (String, String, i32) = env
+            .eval(
+                r#"
+                local link, expected, header
+                for index = 1, C_CurrencyInfo.GetCurrencyListSize() do
+                    local info = C_CurrencyInfo.GetCurrencyListInfo(index)
+                    if info.isHeader then
+                        header = header or select('#', C_CurrencyInfo.GetCurrencyListLink(index))
+                    elseif not link then
+                        local hex = select(4, C_Item.GetItemQualityColor(info.quality))
+                        link = C_CurrencyInfo.GetCurrencyListLink(index)
+                        expected = "|c" .. hex .. "|Hcurrency:" .. info.currencyTypesID
+                            .. "|h[" .. info.name .. "]|h|r"
+                    end
+                end
+                return link, expected, header
+                "#,
+            )
+            .expect("currency list link should evaluate");
+
+        assert_eq!(link, expected);
+        assert_eq!(header_returns, 0, "a header row names no currency");
+    }
+
+    #[test]
+    fn currency_list_link_returns_nothing_past_the_list() {
+        let env = WowLuaEnv::new().expect("env should initialize");
+        let count: i32 = env
+            .eval(
+                r#"
+                local size = C_CurrencyInfo.GetCurrencyListSize()
+                return select('#', C_CurrencyInfo.GetCurrencyListLink(size + 1))
+                "#,
+            )
+            .expect("out-of-range link should evaluate");
+
+        assert_eq!(count, 0);
     }
 
     #[test]
