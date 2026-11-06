@@ -490,6 +490,65 @@ fn collections_mount_equipment_inset_follows_availability() {
         );
     }
 }
+
+/// The PTR 12.1.5 and WowForever 1.60.1 pins declare
+/// `C_WarbandScene.WarbandScenesAvailable` at
+/// `Blizzard_APIDocumentationGenerated/WarbandSceneInfoDocumentation.lua:92`.
+/// The original consumer is
+/// `Blizzard_Collections/Shared/Blizzard_Collections.lua:29` (PTR) / `:25`
+/// (WowForever), which decides whether the Warband Scenes tab exists.
+#[cfg(any(feature = "client-ptr", feature = "client-wowforever"))]
+#[test]
+fn collections_warband_scene_tab_follows_availability() {
+    test_timeout! {
+        let env = setup_env();
+        // Open the journal once so Blizzard_Collections is loaded and defines
+        // CollectionsJournal_ValidateTab, then supply both availability values.
+        let opened: bool = env
+            .eval(
+                r#"
+                ToggleCollectionsJournal(COLLECTIONS_JOURNAL_TAB_INDEX_MOUNTS)
+                return CollectionsJournal ~= nil and CollectionsJournal:IsShown()
+                "#,
+            )
+            .expect("collections journal should open with the scenario default");
+        assert!(opened, "collections journal should open before tab validation");
+
+        env.state()
+            .borrow_mut()
+            .world
+            .collections_availability
+            .warband_scenes = false;
+        let hidden: bool = env
+            .eval(
+                r#"
+                return not CollectionsJournal_ValidateTab(COLLECTIONS_JOURNAL_TAB_INDEX_WARBAND_SCENES)
+                "#,
+            )
+            .expect("warband scene tab validation should run with supplied availability");
+        assert!(
+            hidden,
+            "supplied warband-scenes-unavailable state must hide the Warband Scenes tab"
+        );
+
+        env.state()
+            .borrow_mut()
+            .world
+            .collections_availability
+            .warband_scenes = true;
+        let shown: bool = env
+            .eval(
+                r#"
+                return CollectionsJournal_ValidateTab(COLLECTIONS_JOURNAL_TAB_INDEX_WARBAND_SCENES)
+                "#,
+            )
+            .expect("warband scene tab validation should run with supplied availability");
+        assert!(
+            shown,
+            "supplied warband-scenes-available state must show the Warband Scenes tab"
+        );
+    }
+}
 }
 
 #[test]
