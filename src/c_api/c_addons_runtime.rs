@@ -199,46 +199,15 @@ fn runtime_addon_dependencies(state: &LuaState, toc: &crate::toc::TocFile) -> Ve
 }
 
 fn required_dependency_applies_to_screen(state: &LuaState, dependency: &str) -> bool {
-    let screen_kind = borrow_state(state)
-        .map(|sim| sim.screen_kind)
-        .unwrap_or(crate::screen::ScreenKind::Game);
-    let is_glue = screen_kind.is_glue();
+    let is_glue = borrow_state(state)
+        .map(|sim| sim.screen_kind.is_glue())
+        .unwrap_or(false);
 
     match (dependency, is_glue) {
-        ("Blizzard_GlueParent", false) | ("Blizzard_UIParent", true) => false,
-        _ => dependency_toc_allows_screen(state, dependency, screen_kind),
+        ("Blizzard_GlueParent", false) => false,
+        ("Blizzard_UIParent", true) => false,
+        _ => true,
     }
-}
-
-/// A required dependency whose own TOC is restricted to another screen is not
-/// loaded here. Pinned `Blizzard_UnitPopupShared.toc:4` requires
-/// `Blizzard_GlueXML [AllowLoad glue]`, and `Blizzard_GlueXML.toc:15` declares
-/// `## AllowLoad: Glue`, so the Glue dependency must not load in Game.
-fn dependency_toc_allows_screen(
-    state: &LuaState,
-    dependency: &str,
-    screen_kind: crate::screen::ScreenKind,
-) -> bool {
-    let Ok(sim) = borrow_state(state) else {
-        return true;
-    };
-    let bases = if sim.addon_base_paths.is_empty() {
-        super::default_runtime_addon_bases()
-    } else {
-        sim.addon_base_paths.clone()
-    };
-    drop(sim);
-
-    for base in bases {
-        let Some(toc_path) = crate::loader::find_toc_file(&base.join(dependency)) else {
-            continue;
-        };
-        return crate::toc::TocFile::from_file(&toc_path)
-            .map(|toc| toc.allows_screen(screen_kind))
-            .unwrap_or(true);
-    }
-    // Unresolvable dependencies keep the existing load error.
-    true
 }
 
 fn runtime_foundation_dependencies(state: &LuaState, addon_name: &str) -> Vec<&'static str> {
