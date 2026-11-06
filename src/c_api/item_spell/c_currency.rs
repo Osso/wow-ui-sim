@@ -518,27 +518,39 @@ fn read_currency_list_display_info(
 }
 
 /// The currency hyperlink of a list row, coloured by the row's quality like
-/// `|cffffffff|Hcurrency:1744|h[Corrupted Memento]|h|r`. Header rows and
-/// indices outside the list name no currency and return nothing.
+/// `|cffffffff|Hcurrency:1744|h[Corrupted Memento]|h|r`.
+///
+/// The client getter range-checks the displayed count and publishes one nil for
+/// a null link. It has no header test, so a header row reaches the same link
+/// builder with its own ID. The link text is the model's best guess: the native
+/// builder is unmodelled, so neither the payload fields nor the colour source
+/// are proved.
 fn c_currency_get_list_link(state: &mut LuaState) -> LuaResult<u32> {
     let index = i32::from_stack(state, 1)?;
-    let Some(entry) = read_currency_list_entry(state, index)? else {
-        return Ok(0);
-    };
-    if entry.is_header {
-        return Ok(0);
+    match read_displayed_currency_link(state, index)? {
+        Some(link) => {
+            let link = create_string(state, &link);
+            state.push(link);
+        }
+        None => state.push(Val::Nil),
     }
+    Ok(1)
+}
+
+/// Link text for a displayed row, or `None` when the row is outside the list or
+/// its supplied display data is missing.
+fn read_displayed_currency_link(state: &mut LuaState, index: i32) -> LuaResult<Option<String>> {
+    let Some(entry) = read_currency_list_entry(state, index)? else {
+        return Ok(None);
+    };
     let Some(display) = read_currency_list_display_info(state, &entry)? else {
-        return Ok(0);
+        return Ok(None);
     };
     let color = crate::c_api::item_quality_color::quality_hex(state, display.quality);
-    let link = format!(
+    Ok(Some(format!(
         "|c{color}|Hcurrency:{}|h[{}]|h|r",
         entry.currency_id, display.name
-    );
-    let link = create_string(state, &link);
-    state.push(link);
-    Ok(1)
+    )))
 }
 
 fn write_currency_row_display_fields(state: &mut LuaState, table: Val, display: &CurrencyInfo) {
