@@ -36,7 +36,8 @@ Observed tests-only RED: original collapse left 19 rows instead of 14 (`B5: chil
 ## Known gaps (current cycle)
 
 - [x] Retail behavioral RED/GREEN, existing currency preservation and startup observation executed; see the bounded proof limits.
-- [ ] Index-selected siblings without an existing modeled reader (for example GetCurrencyListLink) remain outside this producer; no blanket list API coverage.
+- [x] `GetCurrencyListLink` (Retail, PTR, Forever) reads the same displayed index; header rows and indices outside the list return nothing.
+- [ ] Other index-selected siblings without an existing modeled reader remain outside this producer; no blanket list API coverage.
 
 ## Out of scope
 

@@ -36,14 +36,23 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
 fn get_color(state: &mut LuaState) -> LuaResult<u32> {
     let quality = i32::from_stack(state, 1)?;
     let (r, g, b) = named_quality_color(state, quality).unwrap_or(FALLBACK_RGB);
-    let hex = format!(
+    let hex = create_string(state, &rgb_hex(r, g, b));
+    (r, g, b, hex).into_stack(state)
+}
+
+/// `ffRRGGBB` of a quality, the colour `GetItemQualityColor` reports.
+pub(crate) fn quality_hex(state: &mut LuaState, quality: i32) -> String {
+    let (r, g, b) = named_quality_color(state, quality).unwrap_or(FALLBACK_RGB);
+    rgb_hex(r, g, b)
+}
+
+fn rgb_hex(r: f64, g: f64, b: f64) -> String {
+    format!(
         "ff{:02x}{:02x}{:02x}",
         (r * 255.0) as u8,
         (g * 255.0) as u8,
         (b * 255.0) as u8
-    );
-    let hex = create_string(state, &hex);
-    (r, g, b, hex).into_stack(state)
+    )
 }
 
 /// The named global is read through the Lua global index, so the simulator's
