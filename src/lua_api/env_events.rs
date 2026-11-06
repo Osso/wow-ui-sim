@@ -241,13 +241,12 @@ impl WowLuaEnv {
         self.fire_event_with_args(event, &[])
     }
 
-    /// Fire `UNIT_AURA(unit, {isFullUpdate=true})` with the payload secrecy
-    /// applied to live aura updates.
+    /// Fire `UNIT_AURA(unit, <UnitAuraUpdateInfo>)` with the native full-update
+    /// payload and the payload secrecy applied to live aura updates.
     pub fn fire_unit_aura_full_update(&self, unit: &str) -> Result<()> {
-        let info = self.eval::<Val>("return { isFullUpdate = true }")?;
-        let info = crate::c_api::unit_aura_access::unit_aura_event_payload(
+        let info = crate::c_api::unit_aura_access::full_update_payload(
             self.lua.borrow_mut().state_mut(),
-            info,
+            unit,
         )?;
         // Allocate the token after Lua payload construction can collect.
         let unit = self.lua_string(unit);

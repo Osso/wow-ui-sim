@@ -638,13 +638,11 @@ pub fn call_unit_frame_set_unit(env: &WowLuaEnv) {
     }
 }
 
-/// Fire UNIT_AURA("player", {isFullUpdate=true}) to populate buff frames.
+/// Fire `UNIT_AURA("player", <UnitAuraUpdateInfo>)` from modelled state to
+/// populate buff frames.
 fn fire_unit_aura(env: &WowLuaEnv) {
     log_with_timestamp(env, "[Startup] Firing UNIT_AURA");
-    let unit = env.lua_string("player");
-    if let Ok(info) = env.eval::<Val>("return { isFullUpdate = true }")
-        && let Err(e) = env.fire_event_with_args("UNIT_AURA", &[unit, info])
-    {
+    if let Err(e) = env.fire_unit_aura_full_update("player") {
         log_with_timestamp(env, &format!("Error firing UNIT_AURA: {e}"));
     }
 }

@@ -6,11 +6,11 @@
 //! them into the A_Admin TableBuilder chain.
 
 use super::admin::{build_admin_aura, build_admin_buff, opt_string_stack};
-use crate::lua_api::methods::{borrow_state_mut, create_string, create_table, table_set};
+use crate::lua_api::methods::{borrow_state_mut, create_string};
 use crate::lua_api::script_helpers::fire_named_event_state;
 use crate::lua_bridge::FromStack;
+use rilua::LuaResult;
 use rilua::vm::state::LuaState;
-use rilua::{LuaResult, Val};
 
 // ── Buffs ─────────────────────────────────────────────────────────────────────
 
@@ -28,10 +28,8 @@ fn icon_string_from_stack(state: &mut LuaState, index: i32) -> LuaResult<String>
 /// event listeners in Blizzard's BuffFrame/DebuffFrame which ignore the event
 /// unless `unitAuraUpdateInfo` reports changed auras.
 fn fire_player_unit_aura(state: &mut LuaState) -> LuaResult<()> {
+    let info = crate::c_api::unit_aura_access::full_update_payload(state, "player")?;
     let unit = create_string(state, "player");
-    let info = create_table(state);
-    table_set(state, info, "isFullUpdate", Val::Bool(true));
-    let info = crate::c_api::unit_aura_access::unit_aura_event_payload(state, info)?;
     fire_named_event_state(state, "UNIT_AURA", &[unit, info]);
     Ok(())
 }

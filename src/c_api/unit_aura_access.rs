@@ -206,3 +206,17 @@ pub(crate) fn unit_aura_event_payload(state: &mut LuaState, update_info: Val) ->
     }
     Ok(update_info)
 }
+
+/// Build the native full-update `UnitAuraUpdateInfo` from modelled state and
+/// apply the live aura-secrecy publication policy.
+pub(crate) fn full_update_payload(state: &mut LuaState, unit: &str) -> LuaResult<Val> {
+    let update_info = crate::lua_api::globals::auras::full_update_info(state, unit);
+    unit_aura_event_payload(state, update_info)
+}
+
+/// Build the native incremental-removal `UnitAuraUpdateInfo`.
+#[cfg(feature = "retail-12-1-0")]
+pub(crate) fn removal_payload(state: &mut LuaState, instance_ids: &[i32]) -> LuaResult<Val> {
+    let update_info = crate::lua_api::globals::auras::removal_info(state, instance_ids);
+    unit_aura_event_payload(state, update_info)
+}

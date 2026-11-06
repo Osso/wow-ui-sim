@@ -155,7 +155,7 @@ fn cached_secure_aura_header_sorts_finite_before_permanent() {
     );
 
     env.state().borrow_mut().player.buffs = vec![short, second_permanent, long, permanent];
-    env.fire_event_with_args("UNIT_AURA", &[env.lua_string("player")])
+    env.fire_unit_aura_full_update("player")
         .expect("real template OnEvent updates a shuffled aura stream");
     let shuffled_order = header_order(&env);
     assert!(
@@ -185,7 +185,7 @@ fn cached_secure_aura_header_reorders_and_hides_stale_children() {
         state.player.buffs[2].duration = 0.0;
         state.player.buffs[2].expiration_time = 0.0;
     }
-    env.fire_event_with_args("UNIT_AURA", &[env.lua_string("player")])
+    env.fire_unit_aura_full_update("player")
         .expect("finite-to-permanent update");
     let order = header_order(&env);
     assert!(order == "312,311,313" || order == "312,313,311", "{order}");
@@ -193,7 +193,7 @@ fn cached_secure_aura_header_reorders_and_hides_stale_children() {
         .expect("vendor header reuses its positional child");
 
     env.state().borrow_mut().player.buffs.remove(0);
-    env.fire_event_with_args("UNIT_AURA", &[env.lua_string("player")])
+    env.fire_unit_aura_full_update("player")
         .expect("aura removal update");
     assert_eq!(header_order(&env), "312,313");
     env.exec("assert(not HeaderProbe:GetAttribute('child3'):IsShown())")
@@ -203,7 +203,7 @@ fn cached_secure_aura_header_reorders_and_hides_stale_children() {
         .player
         .buffs
         .push(aura(311, 20.0, now + 20.0));
-    env.fire_event_with_args("UNIT_AURA", &[env.lua_string("player")])
+    env.fire_unit_aura_full_update("player")
         .expect("aura readdition update");
     assert_eq!(header_order(&env), "311,312,313");
     assert_no_lua_errors(&env);

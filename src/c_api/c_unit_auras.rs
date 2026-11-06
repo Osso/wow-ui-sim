@@ -240,14 +240,8 @@ fn cancel_aura_by_instance_id(state: &mut LuaState) -> LuaResult<u32> {
         sim.player.buffs.len() != before
     };
     if removed {
+        let update_info = super::unit_aura_access::removal_payload(state, &[instance_id])?;
         let unit = crate::lua_api::methods::create_string(state, "player");
-        let update_info = create_table(state);
-        let removed_ids = create_table(state);
-        if let Val::Table(ids) = removed_ids {
-            table_set_num(state, ids, 1.0, Val::Num(f64::from(instance_id)));
-        }
-        table_set(state, update_info, "removedAuraInstanceIDs", removed_ids);
-        let update_info = super::unit_aura_access::unit_aura_event_payload(state, update_info)?;
         crate::lua_api::script_helpers::fire_named_event_state(
             state,
             "UNIT_AURA",

@@ -395,16 +395,7 @@ fn is_blocked_aura(state: &mut LuaState, unit: &str, aura_instance_id: i32) -> b
 /// Every helpful and harmful aura on `unit`, including display-blocked ones.
 #[cfg(feature = "retail-12-0-5")]
 pub(crate) fn collect_all_unit_auras(state: &mut LuaState, unit: &str) -> Vec<AuraInfo> {
-    let mut auras = collect_unit_auras(state, unit, AuraFilter::Helpful);
-    for aura in collect_unit_auras(state, unit, AuraFilter::Harmful) {
-        if !auras
-            .iter()
-            .any(|seen| seen.aura_instance_id == aura.aura_instance_id)
-        {
-            auras.push(aura);
-        }
-    }
-    auras
+    all_unit_auras(state, unit)
 }
 
 pub(crate) fn collect_visible_unit_auras(
@@ -1034,6 +1025,88 @@ fn push_legacy_aura_tuple(state: &mut LuaState, aura: Val) -> u32 {
 
 fn is_truthy(value: Val) -> bool {
     !matches!(value, Val::Nil | Val::Bool(false))
+}
+
+// ── UNIT_AURA payload ────────────────────────────────────────────────────────
+
+/// Whether the pinned documentation for `profile` declares the
+/// `UnitAuraUpdateInfo` payload on `UNIT_AURA`.
+///
+/// Retail, PTR and Forever declare it at
+/// `Blizzard_APIDocumentationGenerated/UnitConstantsDocumentation.lua:56-64`;
+/// Mists, Era and Anniversary declare it at `:32-40` of the same file. Wrath
+/// publishes no generated documentation for this event, so it keeps the
+/// existing `isFullUpdate`-only payload.
+fn declares_unit_aura_update_info(profile: crate::client_profile::ClientProfile) -> bool {
+    use crate::client_profile::ClientProfile;
+    matches!(
+        profile,
+        ClientProfile::Retail
+            | ClientProfile::Ptr
+            | ClientProfile::WowForever
+            | ClientProfile::Mists
+            | ClientProfile::Era
+            | ClientProfile::Anniversary
+    )
+}
+
+/// Native `UnitAuraUpdateInfo` for a full update of `unit`.
+///
+/// `isFullUpdate` is non-nilable; the change lists are nilable, so a full
+/// update lists every current aura in `addedAuras` and omits the other lists.
+pub(crate) fn full_update_info(state: &mut LuaState, unit: &str) -> Val {
+    let info = create_table(state);
+    table_set(state, info, "isFullUpdate", Val::Bool(true));
+    if !declares_unit_aura_update_info(crate::client_profile::ACTIVE) {
+        return info;
+    }
+    let auras = all_unit_auras(state, unit);
+    let added = create_table(state);
+    if let Val::Table(added_ref) = added {
+        for (index, aura) in auras.iter().enumerate() {
+            let aura_data = build_aura_table(state, aura, unit);
+            table_set_num(state, added_ref, (index + 1) as f64, aura_data);
+        }
+    }
+    table_set(state, info, "addedAuras", added);
+    info
+}
+
+/// Native `UnitAuraUpdateInfo` for an incremental removal.
+#[cfg(feature = "retail-12-1-0")]
+pub(crate) fn removal_info(state: &mut LuaState, instance_ids: &[i32]) -> Val {
+    let info = create_table(state);
+    table_set(state, info, "isFullUpdate", Val::Bool(false));
+    if !declares_unit_aura_update_info(crate::client_profile::ACTIVE) {
+        return info;
+    }
+    let removed = create_table(state);
+    if let Val::Table(removed_ref) = removed {
+        for (index, instance_id) in instance_ids.iter().enumerate() {
+            table_set_num(
+                state,
+                removed_ref,
+                (index + 1) as f64,
+                Val::Num(f64::from(*instance_id)),
+            );
+        }
+    }
+    table_set(state, info, "removedAuraInstanceIDs", removed);
+    info
+}
+
+/// Every helpful and harmful aura on `unit`, including display-blocked ones.
+fn all_unit_auras(state: &mut LuaState, unit: &str) -> Vec<AuraInfo> {
+    let mut auras = collect_unit_auras(state, unit, AuraFilter::Helpful);
+    for aura in collect_unit_auras(state, unit, AuraFilter::Harmful) {
+        if !auras
+            .iter()
+            .any(|seen| seen.aura_instance_id == aura.aura_instance_id)
+        {
+            auras.push(aura);
+        }
+    }
+    auras
 }
 
 // ── Aura table builder ───────────────────────────────────────────────────────

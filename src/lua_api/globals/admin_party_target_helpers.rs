@@ -266,10 +266,9 @@ pub(super) fn set_party_member(state: &mut LuaState) -> LuaResult<u32> {
     };
     if changed {
         dispatch_event_now(state, "GROUP_ROSTER_UPDATE", &[])?;
-        let unit = crate::lua_api::methods::create_string(state, &format!("party{idx}"));
-        let info = crate::lua_api::methods::create_table(state);
-        crate::lua_api::methods::table_set(state, info, "isFullUpdate", rilua::Val::Bool(true));
-        let info = crate::c_api::unit_aura_access::unit_aura_event_payload(state, info)?;
+        let unit_token = format!("party{idx}");
+        let info = crate::c_api::unit_aura_access::full_update_payload(state, &unit_token)?;
+        let unit = crate::lua_api::methods::create_string(state, &unit_token);
         dispatch_event_now(state, "UNIT_AURA", &[unit, info])?;
     }
     Ok(0)
