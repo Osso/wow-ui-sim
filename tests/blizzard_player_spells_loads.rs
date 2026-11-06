@@ -103,12 +103,56 @@ const PTR_PLAYER_SPELLS_TOC_FILES: &[&str] = &[
 ];
 
 fn player_spells_toc_files() -> &'static [&'static str] {
-    if toc_layout::unified_toc_tree() {
+    if toc_layout::forever() {
+        FOREVER_PLAYER_SPELLS_TOC_FILES
+    } else if toc_layout::unified_toc_tree() {
         PTR_PLAYER_SPELLS_TOC_FILES
     } else {
         PLAYER_SPELLS_TOC_FILES
     }
 }
+
+// The pinned Forever TOC resolves `[Family]`/`[Game]` to Camelot, so its
+// overrides are the Camelot ones, and it lists both the Mainline and Camelot
+// PlayerSpellsFrame Lua.
+const FOREVER_PLAYER_SPELLS_TOC_FILES: &[&str] = &[
+    "Blizzard_PlayerSpells_Bootstrap.lua",
+    "Camelot/ClassSpecializations/Blizzard_ClassSpecializationsFrame.xml",
+    "Camelot/ClassTalents/Blizzard_ClassTalentUtil.lua",
+    "ClassTalents/Blizzard_ClassTalentUtil.lua",
+    "ClassTalents/Blizzard_ClassTalentLoadoutDialogTemplates.xml",
+    "ClassTalents/Blizzard_ClassTalentImportExport.lua",
+    "ClassTalents/Blizzard_ClassTalentLoadoutImportDialog.xml",
+    "ClassTalents/Blizzard_ClassTalentLoadoutEditDialog.xml",
+    "ClassTalents/Blizzard_ClassTalentLoadoutCreateDialog.xml",
+    "ClassTalents/Blizzard_ClassTalentButtonTemplates.xml",
+    "ClassTalents/Blizzard_ClassTalentEdgeTemplates.lua",
+    "ClassTalents/Blizzard_ClassTalentEdgeTemplates.xml",
+    "ClassTalents/Blizzard_HeroTalentsSelectionDialog.lua",
+    "ClassTalents/Blizzard_HeroTalentsSelectionDialog.xml",
+    "ClassTalents/Blizzard_HeroTalentsContainer.lua",
+    "ClassTalents/Blizzard_HeroTalentsContainer.xml",
+    "ClassTalents/Blizzard_ClassTalentsFrame.lua",
+    "Camelot/ClassTalents/Blizzard_ClassTalentsFrame.lua",
+    "Camelot/ClassTalents/Blizzard_ClassTalentsFrame.xml",
+    "PvPTalents/Blizzard_PvPTalentListTemplates.xml",
+    "PvPTalents/Blizzard_PvPTalentSlotTemplates.xml",
+    "PvPTalents/Blizzard_WarmodeButtonTemplate.xml",
+    "Camelot/SpellBook/Blizzard_SpellBookTemplates.xml",
+    "SpellBook/Blizzard_SpellBookTemplates.xml",
+    "SpellBook/Blizzard_SpellBookItem.xml",
+    "SpellBook/Blizzard_SpellBookSearch.lua",
+    "SpellBook/Blizzard_SpellBookFrame.xml",
+    "SpellBook/Blizzard_SpellBookCategory.lua",
+    "SpellBook/Blizzard_SpellBookFrameTutorials.lua",
+    "SpellBook/Blizzard_SpellBookFrame.lua",
+    "Camelot/SpellBook/Blizzard_SpellBookFrame.lua",
+    "Blizzard_PlayerSpellsFrame.lua",
+    "Camelot/Blizzard_PlayerSpellsFrame.lua",
+    "Camelot/Blizzard_PlayerSpellsFrame.xml",
+    "Blizzard_PlayerSpellsRegistration.lua",
+    "Localization.lua",
+];
 
 const PUBLIC_NAMED_FRAMES: &[&str] = &[
     "PlayerSpellsFrame",

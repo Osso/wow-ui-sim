@@ -68,8 +68,38 @@ const PTR_TEMPLATES_TOC_FILES: &[&str] = &[
     "Blizzard_ProfessionsRankBar.xml",
 ];
 
+// The pinned Forever TOC resolves `[Game]` to Camelot, so it lists the Camelot
+// Profession and schematic-form overrides.
+const FOREVER_TEMPLATES_TOC_FILES: &[&str] = &[
+    "Blizzard_Professions.lua",
+    "Camelot/Blizzard_Professions.lua",
+    "Blizzard_ProfessionsRecipeLoader.lua",
+    "Blizzard_ProfessionsTransaction.lua",
+    "Blizzard_ProfessionsTemplates.lua",
+    "Blizzard_ProfessionsTemplates.xml",
+    "Blizzard_ProfessionsRecipeList.lua",
+    "Blizzard_ProfessionsRecipeList.xml",
+    "Blizzard_ProfessionsRecipeCrafterDetails.xml",
+    "Blizzard_ProfessionsRecipeSlotBase.lua",
+    "Blizzard_ProfessionsRecipeReagentSlotBase.xml",
+    "Blizzard_ProfessionsRecipeReagentSlot.xml",
+    "Blizzard_ProfessionsRecipeSalvageSlot.xml",
+    "Blizzard_ProfessionsRecipeEnchantSlot.xml",
+    "Blizzard_ProfessionsRecipeRecraftSlot.xml",
+    "Blizzard_ProfessionsRecipeFlyout.xml",
+    "Blizzard_ProfessionsRecipeFlyoutInstance.lua",
+    "Blizzard_ProfessionsQualityDialog.xml",
+    "Blizzard_ProfessionsRecipeSchematicForm.lua",
+    "Camelot/Blizzard_ProfessionsRecipeSchematicFormOverride.lua",
+    "Camelot/Blizzard_ProfessionsRecipeSchematicForm.xml",
+    "Blizzard_ProfessionsRecipeSchematicForm.xml",
+    "Blizzard_ProfessionsRankBar.xml",
+];
+
 fn templates_toc_files() -> &'static [&'static str] {
-    if toc_layout::unified_toc_tree() {
+    if toc_layout::forever() {
+        FOREVER_TEMPLATES_TOC_FILES
+    } else if toc_layout::unified_toc_tree() {
         PTR_TEMPLATES_TOC_FILES
     } else {
         TEMPLATES_TOC_FILES

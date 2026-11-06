@@ -35,8 +35,17 @@ const PTR_TOC_FILES: &[&str] = &[
     "Mainline/QueueStatusFrame.xml",
 ];
 
+// The Forever TOC gates the Mainline override out and keeps the Camelot one.
+const FOREVER_TOC_FILES: &[&str] = &[
+    "Mainline/QueueStatusFrame.lua",
+    "Camelot/QueueStatusFrameOverrides.lua",
+    "Mainline/QueueStatusFrame.xml",
+];
+
 fn queue_status_toc_files() -> &'static [&'static str] {
-    if toc_layout::unified_toc_tree() {
+    if toc_layout::forever() {
+        FOREVER_TOC_FILES
+    } else if toc_layout::unified_toc_tree() {
         PTR_TOC_FILES
     } else {
         TOC_FILES
@@ -45,11 +54,12 @@ fn queue_status_toc_files() -> &'static [&'static str] {
 
 const REQUIRED_DEPS: &[&str] = &["Blizzard_ActionBar", "Blizzard_LFGUtil"];
 
-// The unified PTR TOC no longer depends on Blizzard_ActionBar.
+// The unified PTR TOC no longer depends on Blizzard_ActionBar; the Forever TOC
+// keeps both hard dependencies.
 const PTR_REQUIRED_DEPS: &[&str] = &["Blizzard_LFGUtil"];
 
 fn queue_status_deps() -> &'static [&'static str] {
-    if toc_layout::unified_toc_tree() {
+    if toc_layout::unified_toc_tree() && !toc_layout::forever() {
         PTR_REQUIRED_DEPS
     } else {
         REQUIRED_DEPS
@@ -243,7 +253,7 @@ fn blizzard_queue_status_frame_toc_declares_action_bar_and_lfg_util_dependencies
     assert_eq!(
         deps, queue_status_deps(),
         "QueueStatusFrame declares its published dependencies in order; the unified PTR TOC \
-         drops Blizzard_ActionBar from the Retail pair"
+         drops Blizzard_ActionBar from the Retail pair, while the Forever TOC keeps it"
     );
 }
 }
@@ -302,7 +312,8 @@ fn blizzard_queue_status_frame_toc_lists_two_files_with_variant_subdirectory() {
         queue_status_toc_files(),
         "TOC body lists the Lua sources before the XML that declares the mixins, virtual \
          templates, and the QueueStatusButton + QueueStatusFrame named frames. The unified \
-         PTR TOC also lists the Mainline override Lua"
+         PTR TOC also lists the Mainline override Lua; the Forever TOC lists its Camelot \
+         override instead"
     );
 }
 }

@@ -7,6 +7,9 @@ use wow_ui_sim::screen::ScreenKind;
 use wow_ui_sim::startup::fire_startup_events_for_screen;
 use wow_ui_sim::toc::TocFile;
 
+#[path = "common/toc_layout.rs"]
+mod toc_layout;
+
 fn blizzard_ui_dir() -> PathBuf {
     wow_ui_sim::paths::default_blizzard_ui_addons_path()
         .expect("Blizzard UI cache should be available")
@@ -111,15 +114,13 @@ fn blizzard_photo_sharing_toc_declares_eager_mainline_only_with_game_menu_depend
     assert!(!toc.is_load_first());
     assert!(!toc.is_secure_env());
 
-    assert!(
-        !toc.is_game_type_restricted(),
-        "TOC declares `## AllowLoadGameType: standard` so `is_game_type_restricted()` \
-         returns false (NOT restricted from Mainline). The `standard` token at \
-         src/toc.rs:294-302 is the canonical Mainline alias — same as `mainline` — and \
-         passes the allow-list, which means the addon is loadable on retail. Classic / \
-         Hardcore / SoD installs would see `is_game_type_restricted()` return true and \
-         would skip the addon, because the social photo-sharing service is \
-         retail-only"
+    assert_eq!(
+        toc.is_game_type_restricted(),
+        !toc_layout::admits_game_type("standard"),
+        "TOC declares `## AllowLoadGameType: standard` — `standard` is the canonical \
+         Mainline alias on Retail and PTR, so the addon loads there. The pinned \
+         Forever allow-list is `camelot, mainline`, so the same directive restricts \
+         the addon on that profile"
     );
 
     assert!(

@@ -6,6 +6,9 @@ use wow_ui_sim::screen::ScreenKind;
 use wow_ui_sim::startup::fire_startup_events_for_screen;
 use wow_ui_sim::toc::TocFile;
 
+#[path = "common/toc_layout.rs"]
+mod toc_layout;
+
 fn blizzard_ui_dir() -> PathBuf {
     wow_ui_sim::paths::default_blizzard_ui_addons_path()
         .expect("Blizzard UI cache should be available")
@@ -90,13 +93,12 @@ fn toc_declares_eager_standard_only_with_zero_dependencies() {
          entire turn-strafe migration prompt past initial bindings load and break the prompt's \
          trigger chain"
     );
-    assert!(
-        !toc.is_game_type_restricted(),
-        "## AllowLoadGameType: standard — `standard` IS in the mainline-allowlist match arm at \
-         src/toc.rs:294-302 (matches!(t.trim(), \"mainline\" | \"standard\")), so \
-         is_game_type_restricted returns FALSE. The addon ships in retail builds only — the \
-         turn/strafe binding system is mainline-specific and classic clients have no \
-         C_KeyBindings.GetTurnStrafeStyle to call"
+    assert_eq!(
+        toc.is_game_type_restricted(),
+        !toc_layout::admits_game_type("standard"),
+        "## AllowLoadGameType: standard — `standard` is in the Retail/PTR allow-list, so \
+         is_game_type_restricted returns FALSE there. The pinned Forever allow-list is \
+         `camelot, mainline`, so the same directive restricts the addon on that profile"
     );
     assert!(
         toc.dependencies().is_empty(),

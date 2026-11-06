@@ -141,7 +141,7 @@ fn toc_declares_eager_both_with_secure_env_and_required_dep_singular() {
     }
 
     let deps = toc.dependencies();
-    let expected_deps: Vec<String> = if toc_layout::unified_toc_tree() {
+    let expected_deps: Vec<String> = if toc_layout::unified_toc_tree() && !toc_layout::forever() {
         vec![
             "Blizzard_SharedXML".to_string(),
             "Blizzard_CatalogShopSharedUtil".to_string(),
@@ -157,7 +157,8 @@ fn toc_declares_eager_both_with_secure_env_and_required_dep_singular() {
          `Dependencies` -> `RequiredDeps` so all three resolve to the same list. \
          SharedXML provides SecureDialogBorderTemplate (used by the Border child) \
          and the FrameUtil / CreateAtlasMarkup helpers; the unified PTR TOC also \
-         requires Blizzard_CatalogShopSharedUtil"
+         requires Blizzard_CatalogShopSharedUtil, while the Forever TOC keeps the \
+         Retail single dep"
     );
     assert!(toc.optional_deps().is_empty());
     assert!(toc.saved_variables().is_empty());

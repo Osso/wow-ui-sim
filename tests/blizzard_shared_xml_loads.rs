@@ -282,8 +282,20 @@ fn mainline_toc_body_count_breakdown_matches_filesystem_layout() {
         .filter(|f| f.extension().is_some_and(|ext| ext == "xml"))
         .count();
 
-    let expected_lua = if toc_layout::unified_toc_tree() { 153 } else { 146 };
-    let expected_xml = if toc_layout::unified_toc_tree() { 78 } else { 74 };
+    let expected_lua = if toc_layout::forever() {
+        155
+    } else if toc_layout::unified_toc_tree() {
+        153
+    } else {
+        146
+    };
+    let expected_xml = if toc_layout::forever() {
+        77
+    } else if toc_layout::unified_toc_tree() {
+        78
+    } else {
+        74
+    };
     assert_eq!(
         lua_count + xml_count,
         expected_lua + expected_xml,

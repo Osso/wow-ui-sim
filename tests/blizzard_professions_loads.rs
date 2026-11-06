@@ -88,8 +88,35 @@ const PTR_PROFESSIONS_TOC_FILES: &[&str] = &[
     "Localization.lua",
 ];
 
+// The pinned Forever TOC resolves `[Game]` to Camelot, so it lists the Camelot
+// Crafting/Frame/OutputLog overrides and excludes the Mainline frame XML.
+const FOREVER_PROFESSIONS_TOC_FILES: &[&str] = &[
+    "Blizzard_Professions_Bootstrap.lua",
+    "Blizzard_ProfessionsGuildMemberList.xml",
+    "Blizzard_ProfessionsCraftingOutputLog.xml",
+    "Blizzard_ProfessionsRecipeLevel.xml",
+    "Blizzard_ProfessionsCrafting.lua",
+    "Camelot/Blizzard_ProfessionsCrafting.lua",
+    "Blizzard_ProfessionsCrafting.xml",
+    "Blizzard_ProfessionsInspectRecipe.xml",
+    "Blizzard_ProfessionsSpecializationsTemplates.xml",
+    "Blizzard_ProfessionsSpecializations.xml",
+    "Blizzard_ProfessionsCrafterOrderView.xml",
+    "Blizzard_ProfessionsCrafterOrderPage.xml",
+    "Blizzard_ProfessionsFrame.lua",
+    "Camelot/Blizzard_ProfessionsFrame.lua",
+    "Blizzard_ProfessionsCraftingOutputLog.lua",
+    "Camelot/Blizzard_ProfessionsCraftingOutputLog.lua",
+    "Blizzard_ProfessionsFrameBase.xml",
+    "Camelot/Blizzard_ProfessionsFrame.xml",
+    "Blizzard_ProfessionsRegistration.lua",
+    "Localization.lua",
+];
+
 fn professions_toc_files() -> &'static [&'static str] {
-    if toc_layout::unified_toc_tree() {
+    if toc_layout::forever() {
+        FOREVER_PROFESSIONS_TOC_FILES
+    } else if toc_layout::unified_toc_tree() {
         PTR_PROFESSIONS_TOC_FILES
     } else {
         PROFESSIONS_TOC_FILES

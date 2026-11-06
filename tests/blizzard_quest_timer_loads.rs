@@ -74,13 +74,13 @@ post_wrath_ui_fixture! {
 fn blizzard_quest_timer_toc_pins_classic_only_with_default_state_enabled() {
     let toc = TocFile::from_file(&quest_timer_toc()).expect("Blizzard_QuestTimer TOC parses");
 
-    assert!(
+    assert_eq!(
         toc.is_game_type_restricted(),
-        "TOC declares `## AllowLoadGameType: classic` — `is_game_type_restricted()` \
-         at src/toc.rs:294-302 returns TRUE because `classic` is NOT in the \
-         `mainline | standard` cross-flavor allowlist. The loader filter at \
-         src/loader/mod.rs:527 rejects this addon on retail; it only loads on \
-         the Classic Era client where the game type matches"
+        !(toc_layout::admits_game_type("classic") || toc_layout::admits_game_type("camelot")),
+        "TOC declares `## AllowLoadGameType: classic, camelot`. Retail and PTR admit \
+         neither token, so is_game_type_restricted returns TRUE there and the loader \
+         filter at src/loader/mod.rs:527 rejects the addon. Forever admits `camelot`, \
+         so the same directive does not restrict it on that profile"
     );
 
     assert!(

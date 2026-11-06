@@ -160,7 +160,18 @@ fn allow_load_absent_defaults_to_game_only_screen() {
 fn toc_raw_bytes_pin_single_metadata_directive_and_five_body_files() {
     let raw = std::fs::read_to_string(token_ui_toc()).expect("TOC reads utf-8");
 
-    let expected_lines: &[&str] = if toc_layout::unified_toc_tree() {
+    let expected_lines: &[&str] = if toc_layout::forever() {
+        &[
+            "## Title: Blizzard_TokenUI",
+            "Blizzard_CurrencyTransfer.lua",
+            "Blizzard_CurrencyTransfer.xml",
+            "Mainline/Blizzard_TokenUI.lua [ExcludeLoadGameType camelot]",
+            "Mainline/Blizzard_TokenUI.xml [ExcludeLoadGameType camelot]",
+            "Camelot/Blizzard_TokenUI.lua [AllowLoadGameType camelot]",
+            "Camelot/Blizzard_TokenUI.xml [AllowLoadGameType camelot]",
+            "Localization.lua",
+        ]
+    } else if toc_layout::unified_toc_tree() {
         &[
             "## Title: Blizzard_TokenUI",
             "## AllowLoadGameType: standard, camelot, wowhack",
@@ -202,7 +213,7 @@ fn toc_raw_bytes_pin_single_metadata_directive_and_five_body_files() {
     assert!(!raw.contains("## AllowLoad:"));
     assert!(!raw.contains("## UseSecureEnvironment"));
     assert!(!raw.contains("## LoadFirst"));
-    if !toc_layout::unified_toc_tree() {
+    if !toc_layout::unified_toc_tree() || toc_layout::forever() {
         assert!(!raw.contains("## AllowLoadGameType"));
     }
 }

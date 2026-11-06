@@ -106,7 +106,7 @@ fn toc_declares_explicit_load_on_demand_zero_with_single_dep() {
     assert!(!toc.is_glue_only());
 
     let deps = toc.dependencies();
-    let expected_deps: Vec<String> = if toc_layout::unified_toc_tree() {
+    let expected_deps: Vec<String> = if toc_layout::unified_toc_tree() && !toc_layout::forever() {
         vec![
             "Blizzard_SpellSearch".to_string(),
             "Blizzard_SpellTypeIconOverlay".to_string(),
@@ -116,8 +116,9 @@ fn toc_declares_explicit_load_on_demand_zero_with_single_dep() {
     };
     assert_eq!(
         deps, expected_deps,
-        "TOC must declare Blizzard_SpellSearch as a hard Dependency; the unified PTR TOC also \
-         depends on Blizzard_SpellTypeIconOverlay. The talent button mixins reference SpellSearch \
+        "TOC must declare Blizzard_SpellSearch as a hard Dependency; the unified PTR TOC \
+         also depends on Blizzard_SpellTypeIconOverlay, while the Forever TOC keeps the \
+         single Retail dep. The talent button mixins reference SpellSearch \
          globals (SpellSearchUtil, the search-icon mixin's tag registration) so the dep must \
          resolve before this addon's Lua runs. Got: {deps:?}"
     );
@@ -220,6 +221,33 @@ fn toc_body_ends_with_frame_grid_then_auto_commit_frame() {
         "Blizzard_AutoCommitTraitFrame.xml",
     ];
 
+    if toc_layout::forever() {
+        // The pinned Forever TOC keeps the camelot-gated overrides at the end.
+        let toc = TocFile::from_file(&talent_ui_toc()).expect("TOC parses");
+        let tail: Vec<String> = toc
+            .files
+            .iter()
+            .rev()
+            .take(6)
+            .rev()
+            .map(|path| path.to_string_lossy().into_owned())
+            .collect();
+        assert_eq!(
+            tail,
+            [
+                "Blizzard_TalentFrameGrid.lua",
+                "Blizzard_TalentFrameGrid.xml",
+                "Blizzard_ClassTalentSearch.lua",
+                "Blizzard_AutoCommitTraitFrame.lua",
+                "Blizzard_AutoCommitTraitFrame.xml",
+                "Camelot/Blizzard_SharedTalentOverrides.lua",
+            ],
+            "Resolved TOC body MUST end with the FrameGrid pair before the \
+             AutoCommitTraitFrame pair, followed by the Camelot overrides. Got: {tail:?}"
+        );
+        return;
+    }
+
     if toc_layout::unified_toc_tree() {
         // The unified PTR TOC appends a camelot-gated override after the pair
         // and lists Blizzard_ClassTalentSearch between the FrameGrid and
@@ -285,8 +313,20 @@ fn toc_body_count_breakdown_matches_filesystem_layout() {
         .filter(|f| f.extension().is_some_and(|ext| ext == "xml"))
         .count();
 
-    let expected_total = if toc_layout::unified_toc_tree() { 35 } else { 34 };
-    let expected_lua = if toc_layout::unified_toc_tree() { 18 } else { 17 };
+    let expected_total = if toc_layout::forever() {
+        36
+    } else if toc_layout::unified_toc_tree() {
+        35
+    } else {
+        34
+    };
+    let expected_lua = if toc_layout::forever() {
+        19
+    } else if toc_layout::unified_toc_tree() {
+        18
+    } else {
+        17
+    };
     assert_eq!(
         lua_count + xml_count,
         expected_total,

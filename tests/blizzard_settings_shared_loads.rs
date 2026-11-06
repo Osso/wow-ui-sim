@@ -30,7 +30,8 @@ const HARD_DEPS: &[&str] = &[
     "Blizzard_StaticPopup_Game",
 ];
 
-// The unified PTR TOC adds two unconditional hard deps.
+// The unified PTR TOC adds two unconditional hard deps; the Forever TOC adds
+// only Blizzard_GamepadSharedUtility.
 const PTR_HARD_DEPS: &[&str] = &[
     "Blizzard_SharedXML",
     "Blizzard_HelpPlate",
@@ -40,8 +41,18 @@ const PTR_HARD_DEPS: &[&str] = &[
     "Blizzard_UIParentPanelManager",
 ];
 
+const FOREVER_HARD_DEPS: &[&str] = &[
+    "Blizzard_SharedXML",
+    "Blizzard_HelpPlate",
+    "Blizzard_StaticPopup_Glue",
+    "Blizzard_StaticPopup_Game",
+    "Blizzard_GamepadSharedUtility",
+];
+
 fn hard_deps() -> &'static [&'static str] {
-    if toc_layout::unified_toc_tree() {
+    if toc_layout::forever() {
+        FOREVER_HARD_DEPS
+    } else if toc_layout::unified_toc_tree() {
         PTR_HARD_DEPS
     } else {
         HARD_DEPS
@@ -79,6 +90,40 @@ const PTR_BODY: &[&str] = &[
     "Mainline/AudioOverrides.lua",
     "Blizzard_Settings_PreferredPlaySettings.lua",
     "Mainline/LanguagesOverrides.lua",
+];
+
+// Resolved body order of the pinned Forever TOC: it resolves `[Game]` to
+// Camelot, so the Camelot NewDefinitions/AudioOverrides/LanguagesOverrides
+// entries replace the Mainline ones gated out by `ExcludeLoadGameType camelot`.
+const FOREVER_BODY: &[&str] = &[
+    "NewDefinitionsFramework.lua",
+    "NewDefinitionsFramework.xml",
+    "Camelot/NewDefinitions.lua",
+    "Blizzard_SettingsRegistrar.lua",
+    "Blizzard_Settings.lua",
+    "Blizzard_Category.lua",
+    "Blizzard_CategoryList.lua",
+    "Blizzard_CategoryList.xml",
+    "Blizzard_SettingsList.lua",
+    "Blizzard_SettingsList.xml",
+    "Blizzard_Setting.lua",
+    "Blizzard_SettingControls.lua",
+    "Blizzard_SettingControls.xml",
+    "Mainline/Blizzard_SettingsPanelTemplates.xml",
+    "Blizzard_SettingsPanel.lua",
+    "Blizzard_SettingsPanel.xml",
+    "Blizzard_Keybindings.lua",
+    "Blizzard_Keybindings.xml",
+    "Blizzard_Dialogs.lua",
+    "Blizzard_SettingsLayouts.lua",
+    "Blizzard_Registration.lua",
+    "Blizzard_SettingsInbound.lua",
+    "Blizzard_Deprecated.lua",
+    "Mainline/GraphicsOverrides.lua",
+    "Mainline/AudioOverrides.lua",
+    "Camelot/AudioOverrides.lua",
+    "Blizzard_Settings_PreferredPlaySettings.lua",
+    "Camelot/LanguagesOverrides.lua",
 ];
 
 const PUBLIC_MIXINS: &[&str] = &[
@@ -298,6 +343,22 @@ post_wrath_ui_fixture! {
 fn toc_body_load_order_runs_definitions_framework_before_namespace_seed() {
     let raw = std::fs::read_to_string(settings_shared_toc()).expect("TOC reads utf-8");
 
+    if toc_layout::forever() {
+        let toc = TocFile::from_file(&settings_shared_toc()).expect("TOC parses");
+        let body: Vec<String> = toc
+            .files
+            .iter()
+            .map(|path| path.to_string_lossy().replace('\\', "/"))
+            .collect();
+        assert_eq!(
+            body,
+            FOREVER_BODY.iter().map(|s| s.to_string()).collect::<Vec<_>>(),
+            "The pinned Forever TOC resolves to this load order: the definitions framework \
+             and namespace seed run first, then the category/settings/panel/registration chain"
+        );
+        return;
+    }
+
     if toc_layout::unified_toc_tree() {
         let toc = TocFile::from_file(&settings_shared_toc()).expect("TOC parses");
         let body: Vec<String> = toc
@@ -367,7 +428,13 @@ fn toc_entry_count_breakdown_matches_filesystem_layout() {
         .iter()
         .filter(|f| f.extension().is_some_and(|ext| ext == "xml"))
         .count();
-    let expected_lua = if toc_layout::unified_toc_tree() { 20 } else { 14 };
+    let expected_lua = if toc_layout::forever() {
+        21
+    } else if toc_layout::unified_toc_tree() {
+        20
+    } else {
+        14
+    };
     let expected_xml = 7;
     assert_eq!(
         lua_count, expected_lua,

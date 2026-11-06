@@ -51,8 +51,22 @@ const RETAIL_FIRST_SEVEN: &[&str] = &[
     "AccessibilitySettingsPreview.lua",
 ];
 
+// The pinned Forever TOC lists the camelot `Preset.lua` between Graphics.xml
+// and Audio.xml.
+const FOREVER_FIRST_SEVEN: &[&str] = &[
+    "Groups.lua",
+    "Graphics.xml",
+    "Preset.lua",
+    "Audio.xml",
+    "Languages.xml",
+    "Network.lua",
+    "Gamepad.lua",
+];
+
 fn first_seven_entries() -> &'static [&'static str] {
-    if toc_layout::unified_toc_tree() {
+    if toc_layout::forever() {
+        FOREVER_FIRST_SEVEN
+    } else if toc_layout::unified_toc_tree() {
         PTR_FIRST_SEVEN
     } else {
         RETAIL_FIRST_SEVEN

@@ -38,8 +38,20 @@ const PTR_PROFESSIONS_BOOK_TOC_FILES: &[&str] = &[
     "Blizzard_ProfessionsBook.xml",
 ];
 
+// The pinned Forever TOC resolves `[Game]` to Camelot, so it lists the Camelot
+// Book Lua and Templates XML instead of the Mainline ones it excludes.
+const FOREVER_PROFESSIONS_BOOK_TOC_FILES: &[&str] = &[
+    "Blizzard_ProfessionsBook_Bootstrap.lua",
+    "Blizzard_ProfessionsBook.lua",
+    "Camelot/Blizzard_ProfessionsBook.lua",
+    "Blizzard_ProfessionsBookTemplates.xml",
+    "Camelot/Blizzard_ProfessionsBookTemplates.xml",
+];
+
 fn professions_book_toc_files() -> &'static [&'static str] {
-    if toc_layout::unified_toc_tree() {
+    if toc_layout::forever() {
+        FOREVER_PROFESSIONS_BOOK_TOC_FILES
+    } else if toc_layout::unified_toc_tree() {
         PTR_PROFESSIONS_BOOK_TOC_FILES
     } else {
         PROFESSIONS_BOOK_TOC_FILES

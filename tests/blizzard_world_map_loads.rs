@@ -55,8 +55,28 @@ const PTR_MAINLINE_BODY_FILES: &[&str] = &[
     "Blizzard_WorldMap.xml",
 ];
 
+// The pinned Forever TOC resolves `[Game]` to Camelot, so the Camelot
+// constants/templates/overrides replace the Mainline ones gated out there.
+const FOREVER_BODY_FILES: &[&str] = &[
+    "Camelot/Blizzard_WorldMapConstants.lua",
+    "QuestLogOwnerMixin.lua",
+    "MapTexturePreloader.lua",
+    "WM_WorldQuestDataProvider.xml",
+    "WM_EventOverlayDataProvider.xml",
+    "WM_DebugDataProvider.xml",
+    "Camelot/Blizzard_WorldMapTemplates.xml",
+    "Blizzard_WorldMapTemplates.xml",
+    "Blizzard_WorldMapTemplates.lua",
+    "Camelot/Blizzard_WorldMapTemplates.lua",
+    "Blizzard_WorldMap.lua",
+    "Camelot/Blizzard_WorldMap.lua",
+    "Blizzard_WorldMap.xml",
+];
+
 fn mainline_body_files() -> &'static [&'static str] {
-    if toc_layout::unified_toc_tree() {
+    if toc_layout::forever() {
+        FOREVER_BODY_FILES
+    } else if toc_layout::unified_toc_tree() {
         PTR_MAINLINE_BODY_FILES
     } else {
         MAINLINE_BODY_FILES

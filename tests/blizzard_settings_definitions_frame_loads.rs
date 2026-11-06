@@ -33,6 +33,9 @@ use wow_ui_sim::screen::ScreenKind;
 use wow_ui_sim::startup::fire_startup_events_for_screen;
 use wow_ui_sim::toc::TocFile;
 
+#[path = "common/toc_layout.rs"]
+mod toc_layout;
+
 fn blizzard_ui_dir() -> PathBuf {
     wow_ui_sim::paths::default_blizzard_ui_addons_path()
         .expect("Blizzard UI cache should be available")
@@ -293,17 +296,33 @@ fn toc_body_lists_nine_mainline_overrides_then_current_main_files() {
         .collect();
 
     let first_nine: Vec<String> = listed.iter().take(9).cloned().collect();
-    let expected_overrides = [
-        "Mainline/GameplaySettingsGroup.lua",
-        "Mainline/InterfaceOverrides.lua",
-        "Mainline/ControlsOverrides.lua",
-        "Mainline/CombatOverrides.lua",
-        "Mainline/SocialOverrides.lua",
-        "Mainline/ColorblindOverrides.lua",
-        "Mainline/KeybindingsOverrides.lua",
-        "Mainline/AccessibilityOverrides.lua",
-        "Mainline/NameplatesOverrides.lua",
-    ];
+    // The pinned Forever TOC excludes ControlsOverrides on camelot and lists the
+    // Camelot Nameplates overrides after the Mainline block.
+    let expected_overrides: &[&str] = if toc_layout::forever() {
+        &[
+            "Mainline/GameplaySettingsGroup.lua",
+            "Mainline/InterfaceOverrides.lua",
+            "Mainline/CombatOverrides.lua",
+            "Mainline/SocialOverrides.lua",
+            "Mainline/ColorblindOverrides.lua",
+            "Mainline/KeybindingsOverrides.lua",
+            "Mainline/AccessibilityOverrides.lua",
+            "Mainline/NameplatesOverrides.lua",
+            "Camelot/NameplatesOverrides.lua",
+        ]
+    } else {
+        &[
+            "Mainline/GameplaySettingsGroup.lua",
+            "Mainline/InterfaceOverrides.lua",
+            "Mainline/ControlsOverrides.lua",
+            "Mainline/CombatOverrides.lua",
+            "Mainline/SocialOverrides.lua",
+            "Mainline/ColorblindOverrides.lua",
+            "Mainline/KeybindingsOverrides.lua",
+            "Mainline/AccessibilityOverrides.lua",
+            "Mainline/NameplatesOverrides.lua",
+        ]
+    };
     assert_eq!(
         first_nine,
         expected_overrides
@@ -317,28 +336,54 @@ fn toc_body_lists_nine_mainline_overrides_then_current_main_files() {
          GameplaySettingsGroup.lua MUST run first because it sets \
          `CUSTOM_GAMEPLAY_SETTINGS_ORDER` (a top-level global table mapping \
          CONTROLS_LABEL/INTERFACE_LABEL/etc. → numeric position) that downstream \
-         Register() functions read at parse time to set their category position"
+         Register() functions read at parse time to set their category position. \
+         On Forever, ControlsOverrides is camelot-excluded and the Camelot \
+         Nameplates overrides follow the Mainline block"
     );
 
-    for required in [
-        "Controls.xml",
-        "Interface.lua",
-        "Interface.xml",
-        "Combat.lua",
-        "ActionBars.lua",
-        "Social.lua",
-        "PingSystem.xml",
-        "Keybindings.xml",
-        "Accessibility.lua",
-        "Accessibility.xml",
-        "Mainline/Colorblind.xml",
-        "CombatAudioAlertConstants.lua",
-        "CombatAudioAlertUtil.lua",
-        "Mounts.lua",
-        "AdvancedOptions.lua",
-        "Nameplates.lua",
-        "Nameplates.xml",
-    ] {
+    let required_files: &[&str] = if toc_layout::forever() {
+        // Mounts.lua is `[ExcludeLoadGameType camelot classic]` in the Forever TOC.
+        &[
+            "Controls.xml",
+            "Interface.lua",
+            "Interface.xml",
+            "Combat.lua",
+            "ActionBars.lua",
+            "Social.lua",
+            "PingSystem.xml",
+            "Keybindings.xml",
+            "Accessibility.lua",
+            "Accessibility.xml",
+            "Mainline/Colorblind.xml",
+            "CombatAudioAlertConstants.lua",
+            "CombatAudioAlertUtil.lua",
+            "AdvancedOptions.lua",
+            "Nameplates.lua",
+            "Nameplates.xml",
+        ]
+    } else {
+        &[
+            "Controls.xml",
+            "Interface.lua",
+            "Interface.xml",
+            "Combat.lua",
+            "ActionBars.lua",
+            "Social.lua",
+            "PingSystem.xml",
+            "Keybindings.xml",
+            "Accessibility.lua",
+            "Accessibility.xml",
+            "Mainline/Colorblind.xml",
+            "CombatAudioAlertConstants.lua",
+            "CombatAudioAlertUtil.lua",
+            "Mounts.lua",
+            "AdvancedOptions.lua",
+            "Nameplates.lua",
+            "Nameplates.xml",
+        ]
+    };
+
+    for required in required_files {
         assert!(
             listed.iter().any(|p| p == required),
             "TOC body must list {required:?}. Got: {listed:?}"

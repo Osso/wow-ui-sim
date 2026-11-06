@@ -5,6 +5,9 @@ use wow_ui_sim::lua_api::WowLuaEnv;
 use wow_ui_sim::screen::ScreenKind;
 use wow_ui_sim::toc::TocFile;
 
+#[path = "common/toc_layout.rs"]
+mod toc_layout;
+
 fn blizzard_ui_dir() -> PathBuf {
     wow_ui_sim::paths::default_blizzard_ui_addons_path()
         .expect("Blizzard UI cache should be available")
@@ -84,12 +87,13 @@ fn toc_declares_load_on_demand_standard_game_only_with_two_hard_deps() {
          CharacterMicroButton or the equipped-artifact slot, never auto-loaded with the rest of \
          the game UI"
     );
-    assert!(
-        !toc.is_game_type_restricted(),
-        "Blizzard_RemixArtifactUI declares `## AllowLoadGameType: standard` — `standard` matches \
-         the cross-flavor allowlist alongside `mainline` at src/toc.rs:294-302, so \
-         is_game_type_restricted returns FALSE. The C_RemixArtifactUI and C_Traits backends are \
-         retail-only but the directive is a server-side gate, not a client-side filter"
+    assert_eq!(
+        toc.is_game_type_restricted(),
+        !toc_layout::admits_game_type("standard"),
+        "Blizzard_RemixArtifactUI declares `## AllowLoadGameType: standard` — `standard` \
+         matches the Retail/PTR allow-list alongside `mainline`, so is_game_type_restricted \
+         returns FALSE there. The pinned Forever allow-list is `camelot, mainline`, so the \
+         same directive restricts the addon on that profile"
     );
     assert_eq!(
         toc.metadata.get("DefaultState").map(String::as_str),

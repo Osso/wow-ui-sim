@@ -75,7 +75,8 @@ const PTR_PLAYER_CHOICE_TOC_FILES: &[&str] = &[
 ];
 
 fn player_choice_toc_files() -> &'static [&'static str] {
-    if toc_layout::unified_toc_tree() {
+    // The pinned Forever TOC has no Talebound pair, so it matches Retail.
+    if toc_layout::unified_toc_tree() && !toc_layout::forever() {
         PTR_PLAYER_CHOICE_TOC_FILES
     } else {
         PLAYER_CHOICE_TOC_FILES
