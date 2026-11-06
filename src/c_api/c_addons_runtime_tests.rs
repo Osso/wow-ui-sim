@@ -261,5 +261,8 @@ fn glue_only_required_dependency_is_not_loaded_in_game() {
         .unwrap();
     assert!(game_ran, "the game addon's own files should run");
     assert!(!glue_ran, "a Glue-only dependency must not run in Game");
-    assert!(!glue_loaded, "a Glue-only dependency must not be marked loaded");
+    assert!(
+        !glue_loaded,
+        "a Glue-only dependency must not be marked loaded"
+    );
 }
