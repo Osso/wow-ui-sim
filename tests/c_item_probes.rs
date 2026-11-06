@@ -165,3 +165,25 @@ fn c_item_probes_accept_item_hyperlinks() {
     assert_eq!(name, "Aqirite");
     assert_eq!(quality, 3);
 }
+
+#[test]
+fn get_item_num_sockets_counts_the_record_sockets() {
+    let env = env();
+    let (by_id, by_link, by_name, plain, unknown): (i32, i32, i32, i32, i32) = env
+        .eval(
+            r#"
+            local link = "|cnIQ4:|Hitem:268265::::::::90:::::::::|h[Aqirbane Reliquary]|h|r"
+            return C_Item.GetItemNumSockets(128910),
+                   C_Item.GetItemNumSockets(link),
+                   C_Item.GetItemNumSockets("Aqirbane Reliquary"),
+                   C_Item.GetItemNumSockets(212440),
+                   C_Item.GetItemNumSockets(999999999)
+            "#,
+        )
+        .unwrap();
+    assert_eq!(by_id, 2, "Strom'kar declares two relic sockets");
+    assert_eq!(by_link, 1);
+    assert_eq!(by_name, 1);
+    assert_eq!(plain, 0);
+    assert_eq!(unknown, 0);
+}
