@@ -48,6 +48,38 @@ fn supplied_criteria_order_step_selection_and_detached_snapshots() {
 }
 
 #[test]
+fn active_keystone_affixes_fill_four_slots_and_stop_at_zero() {
+    if !matches!(
+        ACTIVE,
+        ClientProfile::Retail | ClientProfile::Ptr | ClientProfile::WowForever
+    ) {
+        return;
+    }
+    let env = WowLuaEnv::new().unwrap();
+    let (level, capped, zero_stops, leading_zero): (i32, i32, i32, i32) = env
+        .eval(
+            r#"
+            local function start(affixIDs)
+                A_Admin.StartChallengeRun({mapChallengeModeID=9011, eventMapID=7011, level=9,
+                    affixIDs=affixIDs, wasActiveKeystoneCharged=true, numDeaths=0, timeLost=0})
+                local level, affixes = C_ChallengeMode.GetActiveKeystoneInfo()
+                A_Admin.ClearChallengeRun()
+                return level, #affixes
+            end
+            local level, capped = start({3, 5, 7, 9, 10, 12})
+            local _, zero_stops = start({3, 0, 7})
+            local _, leading_zero = start({0, 5})
+            return level, capped, zero_stops, leading_zero
+            "#,
+        )
+        .unwrap();
+    assert_eq!(level, 9, "the supplied level is published");
+    assert_eq!(capped, 4, "the affix array holds four slots");
+    assert_eq!(zero_stops, 1, "the first zero slot truncates the list");
+    assert_eq!(leading_zero, 0, "a leading zero publishes no affix");
+}
+
+#[test]
 fn challenge_run_members_follow_pinned_profile_declarations() {
     let env = WowLuaEnv::new().unwrap();
     if ACTIVE == ClientProfile::Wrath {
