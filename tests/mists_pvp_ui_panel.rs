@@ -3,15 +3,13 @@
 use std::path::PathBuf;
 use std::process::Command;
 
+/// Cargo sets `CARGO_BIN_EXE_wow-sim` when it builds this test target, so the
+/// path is fixed at compile time. Reading the variable at run time falls back
+/// to `<manifest>/target/debug/wow-sim`, which does not exist when the test
+/// binary is executed from a shared target directory (as `scripts/slot-build.py`
+/// does).
 fn wow_sim_binary() -> PathBuf {
-    std::env::var_os("CARGO_BIN_EXE_wow-sim")
-        .map(PathBuf::from)
-        .unwrap_or_else(|| {
-            PathBuf::from(env!("CARGO_MANIFEST_DIR"))
-                .join("target")
-                .join("debug")
-                .join("wow-sim")
-        })
+    PathBuf::from(env!("CARGO_BIN_EXE_wow-sim"))
 }
 
 #[test]
@@ -115,10 +113,17 @@ fn mists_toggle_pvp_frame_routes_through_group_finder_without_errors() {
 }
 
 fn assert_no_lua_errors(stdout: &str, stderr: &str) {
+    // The `lua-errors` subcommand prints the unique error array last on stdout
+    // and always writes a final summary to stderr (`=== Final observed Lua error
+    // summary ===`, `Lua errors: N unique`). A substring search for "Lua error"
+    // therefore matches that summary even when no error was recorded.
+    assert_eq!(
+        stdout.trim(),
+        "[]",
+        "PvP panel flow reported Lua errors\nstdout:\n{stdout}\nstderr:\n{stderr}"
+    );
     assert!(
-        !stdout.contains("Lua error")
-            && !stderr.contains("Lua error")
-            && !stderr.contains("[exec-lua] error"),
-        "PvP panel flow emitted Lua errors\nstdout:\n{stdout}\nstderr:\n{stderr}"
+        !stderr.contains("[exec-lua] error"),
+        "the exec-lua probe failed\nstdout:\n{stdout}\nstderr:\n{stderr}"
     );
 }

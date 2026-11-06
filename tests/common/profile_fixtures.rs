@@ -523,3 +523,120 @@ macro_rules! retail_faction_fixture {
         )*
     };
 }
+
+// classic-pvp-residue
+
+/// Era and Anniversary pin `Blizzard_PVPUI/Blizzard_PVPUI_Mainline.toc`
+/// (`## AllowLoadGameType: mainline`, `data/blizzard-ui-files/era.txt:1880`,
+/// `anniversary.txt:1880`) and `Blizzard_PVPUI_Mists.toc`
+/// (`## AllowLoadGameType: mists`, `era.txt:1881`, `anniversary.txt:1881`) with no
+/// bare TOC. `find_toc_file` (`src/loader/mod.rs:296`) tries
+/// `active_profile_toc_suffixes` (`:227-238`) `_Vanilla`, `""`, `_Classic` for
+/// those profiles, so no TOC resolves; `discover_all_blizzard_addons`
+/// (`src/loader/mod.rs:574`) then drops the addon. Their game types are
+/// `vanilla | classic_era | classic` and `vanilla | classic_anniversary |
+/// classic` (`src/toc/mod.rs:88-95`), which also match neither TOC's
+/// `AllowLoadGameType`. The PVPUI TOC-body fixtures therefore describe no file
+/// those profiles can load.
+#[macro_export]
+macro_rules! classic_pvp_residue_pvp_ui_fixture {
+    ($($item:item)*) => {
+        $(
+            #[cfg(any(
+                feature = "client-retail",
+                feature = "client-ptr",
+                feature = "client-mists"
+            ))]
+            $item
+        )*
+    };
+}
+
+/// Only the Retail-era caches pin `Blizzard_PVPUI_Mists.toc`
+/// (`data/blizzard-ui-files/retail.txt:2617`, `mists.txt:1880`). PTR 12.1.7 ships
+/// one bare TOC (`ptr.txt:2931`), so the `_Mists` variant cases cannot resolve
+/// there.
+#[macro_export]
+macro_rules! classic_pvp_residue_pvp_ui_variant_fixture {
+    ($($item:item)*) => {
+        $(
+            #[cfg(any(feature = "client-retail", feature = "client-mists"))]
+            $item
+        )*
+    };
+}
+
+/// `discover_all_blizzard_addons` (`src/loader/mod.rs:574`) lists an addon only
+/// when `find_toc_file` resolves one of its TOCs. Retail, PTR, Mists and
+/// WowForever pin a resolvable `Blizzard_PVPUI` TOC; Era and Anniversary pin
+/// only `_Mainline`/`_Mists` TOCs that their suffix order never selects.
+#[macro_export]
+macro_rules! classic_pvp_residue_pvp_ui_inventory_fixture {
+    ($($item:item)*) => {
+        $(
+            #[cfg(any(
+                feature = "client-retail",
+                feature = "client-ptr",
+                feature = "client-mists",
+                feature = "client-wowforever"
+            ))]
+            $item
+        )*
+    };
+}
+
+/// `Blizzard_PVPMatch` has no entry in the classic manifests
+/// (`data/blizzard-ui-files/{mists,era,anniversary}.txt` grep count 0), so its
+/// TOC, eager-discovery and inventory fixtures cannot read or discover it there.
+#[macro_export]
+macro_rules! classic_pvp_residue_pvp_match_fixture {
+    ($($item:item)*) => {
+        $(
+            #[cfg(any(
+                feature = "client-retail",
+                feature = "client-ptr",
+                feature = "client-wowforever"
+            ))]
+            $item
+        )*
+    };
+}
+
+/// `Blizzard_PlayerSpells` has no entry in the classic manifests
+/// (`data/blizzard-ui-files/{mists,era,anniversary}.txt` grep count 0). The
+/// PvP-talent and Warmode mixins live only in that addon's
+/// `PvPTalents/Blizzard_PvPTalentListTemplates.lua` and
+/// `PvPTalents/Blizzard_WarmodeButtonTemplate.lua`, so
+/// `load_full_game_ui_with_player_spells`
+/// (`tests/blizzard_player_spells_loads.rs:197`) cannot load it there.
+#[macro_export]
+macro_rules! classic_pvp_residue_player_spells_pvp_fixture {
+    ($($item:item)*) => {
+        $(
+            #[cfg(any(
+                feature = "client-retail",
+                feature = "client-ptr",
+                feature = "client-wowforever"
+            ))]
+            $item
+        )*
+    };
+}
+
+/// Mists' pinned `Blizzard_APIDocumentationGenerated/PvpInfoDocumentation.lua`
+/// (907 lines) declares neither `GetSpecialEventDetails` nor
+/// `GetSpecialEventInfo`, and no shipped Mists addon calls them (`rg
+/// GetSpecialEvent` under the Mists cache matches only `GetSpecialEventBrawlInfo`,
+/// e.g. `Blizzard_PVPUI/Mainline/Blizzard_PVPUI.lua:755`).
+/// `src/c_api/patch_retired_members.rs:254-255` retires those two names for
+/// Retail 9.2.0. The "legacy classic lookup" this fixture requires has no
+/// declaration on any pinned profile.
+#[macro_export]
+macro_rules! classic_pvp_residue_retired_pvp_lookup_fixture {
+    ($($item:item)*) => {
+        $(
+            #[cfg(any())]
+            $item
+        )*
+    };
+}

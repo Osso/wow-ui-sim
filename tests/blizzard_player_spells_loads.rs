@@ -795,7 +795,7 @@ fn blizzard_player_spells_publishes_pvp_and_warmode_mixins(env: &WowLuaEnv) {
 }
 }
 
-post_wrath_ui_fixture! {
+classic_pvp_residue_player_spells_pvp_fixture! {
 #[cfg(not(feature = "client-retail"))]
 #[test]
 fn blizzard_player_spells_publishes_pvp_and_warmode_mixins() {

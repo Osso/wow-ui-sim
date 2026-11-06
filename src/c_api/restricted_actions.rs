@@ -23,7 +23,12 @@ const FORCED_CVARS: [&str; 6] = [
 pub(crate) fn supported() -> bool {
     matches!(
         ACTIVE,
-        ClientProfile::Retail | ClientProfile::Ptr | ClientProfile::WowForever
+        ClientProfile::Retail
+            | ClientProfile::Ptr
+            | ClientProfile::WowForever
+            | ClientProfile::Mists
+            | ClientProfile::Era
+            | ClientProfile::Anniversary
     )
 }
 
