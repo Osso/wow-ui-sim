@@ -7,6 +7,9 @@ use wow_ui_sim::screen::ScreenKind;
 use wow_ui_sim::startup::fire_startup_events_for_screen;
 use wow_ui_sim::toc::TocFile;
 
+#[path = "common/toc_layout.rs"]
+mod toc_layout;
+
 fn blizzard_ui_dir() -> PathBuf {
     wow_ui_sim::paths::default_blizzard_ui_addons_path()
         .expect("Blizzard UI cache should be available")
@@ -43,6 +46,41 @@ const PLAYER_CHOICE_TOC_FILES: &[&str] = &[
     "Blizzard_PlayerChoiceTimer.lua",
     "Blizzard_PlayerChoiceTimer.xml",
 ];
+
+// The unified PTR TOC also ships the Talebound option template pair.
+const PTR_PLAYER_CHOICE_TOC_FILES: &[&str] = &[
+    "Blizzard_PlayerChoice_Bootstrap.lua",
+    "Blizzard_PlayerChoiceToggleButton.lua",
+    "Blizzard_PlayerChoiceToggleButton.xml",
+    "Blizzard_PlayerChoiceOptionBase.lua",
+    "Blizzard_PlayerChoiceOptionBase.xml",
+    "Blizzard_PlayerChoiceNormalOptionTemplate.lua",
+    "Blizzard_PlayerChoiceNormalOptionTemplate.xml",
+    "Blizzard_PlayerChoicePowerChoiceTemplate.lua",
+    "Blizzard_PlayerChoicePowerChoiceTemplate.xml",
+    "Blizzard_PlayerChoiceTorghastOptionTemplate.lua",
+    "Blizzard_PlayerChoiceTorghastOptionTemplate.xml",
+    "Blizzard_PlayerChoiceCovenantChoiceOptionTemplate.lua",
+    "Blizzard_PlayerChoiceCovenantChoiceOptionTemplate.xml",
+    "Blizzard_PlayerChoiceCypherOptionTemplate.lua",
+    "Blizzard_PlayerChoiceCypherOptionTemplate.xml",
+    "Blizzard_PlayerChoiceGenericPowerChoiceOptionTemplate.lua",
+    "Blizzard_PlayerChoiceGenericPowerChoiceOptionTemplate.xml",
+    "Blizzard_PlayerChoiceTaleboundOptionTemplate.lua",
+    "Blizzard_PlayerChoiceTaleboundOptionTemplate.xml",
+    "Blizzard_PlayerChoice.lua",
+    "Blizzard_PlayerChoice.xml",
+    "Blizzard_PlayerChoiceTimer.lua",
+    "Blizzard_PlayerChoiceTimer.xml",
+];
+
+fn player_choice_toc_files() -> &'static [&'static str] {
+    if toc_layout::unified_toc_tree() {
+        PTR_PLAYER_CHOICE_TOC_FILES
+    } else {
+        PLAYER_CHOICE_TOC_FILES
+    }
+}
 
 const REQUIRED_DEPS: &[&str] = &[
     "Blizzard_Colors",
@@ -292,9 +330,11 @@ fn blizzard_player_choice_toc_lists_bootstrap_then_twenty_files_in_canonical_ord
         .map(|p| p.to_string_lossy().into_owned())
         .collect();
     assert_eq!(
-        listed, PLAYER_CHOICE_TOC_FILES,
-        "Retail 12.1.0.69497 lists its bootstrap first, then twenty PlayerChoice source files \
-         in the established paired Lua-then-XML module order"
+        listed,
+        player_choice_toc_files(),
+        "The TOC lists its bootstrap first, then the PlayerChoice source \
+         files in the established paired Lua-then-XML module order. The unified \
+         PTR TOC also ships the Talebound option template pair"
     );
 }
 }

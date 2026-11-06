@@ -7,6 +7,9 @@ use wow_ui_sim::screen::ScreenKind;
 use wow_ui_sim::startup::fire_startup_events_for_screen;
 use wow_ui_sim::toc::TocFile;
 
+#[path = "common/toc_layout.rs"]
+mod toc_layout;
+
 fn blizzard_ui_dir() -> PathBuf {
     wow_ui_sim::paths::default_blizzard_ui_addons_path()
         .expect("Blizzard UI cache should be available")
@@ -17,7 +20,7 @@ fn unit_frame_dir() -> PathBuf {
 }
 
 fn unit_frame_toc() -> PathBuf {
-    unit_frame_dir().join("Blizzard_UnitFrame_Mainline.toc")
+    find_toc_file(&unit_frame_dir()).expect("UnitFrame TOC resolves")
 }
 
 fn unit_frame_classic_toc() -> PathBuf {
@@ -63,6 +66,37 @@ const REPRESENTATIVE_BODY_FILES: &[&str] = &[
     "DevourerFuryBar.lua",
     "Mainline\\Localization.lua",
 ];
+
+// The unified PTR TOC keeps the family sources behind `[Family]` lines and
+// lists the class-resource bars without a family prefix.
+const PTR_REPRESENTATIVE_BODY_FILES: &[&str] = &[
+    "[Family]\\BuilderSpenderFrame.lua",
+    "[Family]\\PowerBarColorUtil.lua",
+    "Shared\\StatusBarOverlaySegment.lua",
+    "Shared\\UnitFrame.lua",
+    "[Family]\\UnitFrame.lua",
+    "Shared\\UnitFrame.xml",
+    "Shared\\PlayerFrame.lua",
+    "[Family]\\PlayerFrameTemplates.xml",
+    "Shared\\TargetFrame.lua",
+    "[Family]\\TargetFrameTemplates.xml",
+    "[Family]\\RuneFrame.xml",
+    "[Family]\\ClassPowerBar.xml",
+    "Shared\\CompactUnitFrame.lua",
+    "Shared\\CompactRaidGroup.xml",
+    "[Family]\\CompactArenaFrame.lua",
+    "DemonHunterSoulFragmentsBar.lua",
+    "DevourerFuryBar.lua",
+    "[Family]\\Localization.lua",
+];
+
+fn representative_body_files() -> &'static [&'static str] {
+    if toc_layout::unified_toc_tree() {
+        PTR_REPRESENTATIVE_BODY_FILES
+    } else {
+        REPRESENTATIVE_BODY_FILES
+    }
+}
 
 const FAMILY_PLACEHOLDER_BODY_FILE: &str = "[Family]\\CompactUnitFrameOptions.lua";
 const FAMILY_PLACEHOLDER_RESOLVED_RELATIVE: &str = "Mainline/CompactUnitFrameOptions.lua";
@@ -255,19 +289,11 @@ post_wrath_ui_fixture! {
 fn find_toc_file_resolves_mainline_variant() {
     let resolved = find_toc_file(&unit_frame_dir()).expect("UnitFrame TOC resolves");
     assert_eq!(
-        resolved,
-        unit_frame_toc(),
-        "find_toc_file at src/loader/mod.rs:65-95 prefers \
-         `<addon>_Mainline.toc`. Blizzard_UnitFrame ships TWO TOCs \
-         (Mainline + Classic) — the Mainline variant has 7 hard deps \
-         and ~53 body files arranged across Shared / Mainline subdirs, \
-         while the Classic companion drops Blizzard_ActionBar + \
-         Blizzard_SpellDiminishUI deps and adds Blizzard_ReadyCheck + \
-         Blizzard_UIParentPanelManager (different dispatch chain), \
-         pulls in Wrath/Cata/Mists/Vanilla flavor-suffixed body files \
-         via inline `[AllowLoadGameType ...]` annotations, and \
-         restricts gametype to `classic` so it's filtered out on a \
-         mainline build"
+        resolved.file_name().and_then(|name| name.to_str()),
+        Some(toc_layout::expected_toc_name("Blizzard_UnitFrame").as_str()),
+        "find_toc_file resolves the active profile's UnitFrame TOC: the Retail cache ships \
+         `_Mainline.toc` and `_Classic.toc` variants, while the pinned PTR cache ships one \
+         unified TOC that annotates the Classic-only dependencies and body files in place"
     );
 }
 }
@@ -360,22 +386,40 @@ post_wrath_ui_fixture! {
 fn toc_raw_bytes_pin_directives_and_representative_body_files() {
     let raw = std::fs::read_to_string(unit_frame_toc()).expect("TOC reads utf-8");
 
-    let expected_directives = [
-        "## Title: Blizzard_UnitFrame",
-        "## Author: Blizzard Entertainment",
-        "## Dependencies: Blizzard_SettingsDefinitions_Frame, \
-         Blizzard_BuffFrame, Blizzard_UIPanels_Game, Blizzard_ActionBar, \
-         Blizzard_TextStatusBar, Blizzard_SpellDiminishUI, Blizzard_PingUI, \
-         Blizzard_ColorPickerFrame, Blizzard_ManagedFrameSystem, Blizzard_StatusTrayManager",
-        "## AllowLoad: Game",
-        "## AllowLoadGameType: mainline",
-    ];
+    let expected_directives: &[&str] = if toc_layout::unified_toc_tree() {
+        &[
+            "## Title: Blizzard_UnitFrame",
+            "## Dep: Blizzard_SettingsDefinitions_Frame",
+            "## Dep: Blizzard_BuffFrame",
+            "## Dep: Blizzard_UIPanels_Game",
+            "## Dep: Blizzard_ActionBar [AllowLoadGameType mainline]",
+            "## Dep: Blizzard_TextStatusBar",
+            "## Dep: Blizzard_ReadyCheck [AllowLoadGameType classic]",
+            "## Dep: Blizzard_UIParentPanelManager [AllowLoadGameType classic]",
+            "## Dep: Blizzard_SpellDiminishUI [AllowLoadGameType mainline]",
+            "## Dep: Blizzard_PingUI [AllowLoadGameType mainline]",
+            "## Dep: Blizzard_ColorPickerFrame",
+            "## Dep: Blizzard_ManagedFrameSystem",
+            "## Dep: Blizzard_StatusTrayManager [AllowLoadGameType mainline]",
+        ]
+    } else {
+        &[
+            "## Title: Blizzard_UnitFrame",
+            "## Author: Blizzard Entertainment",
+            "## Dependencies: Blizzard_SettingsDefinitions_Frame, \
+             Blizzard_BuffFrame, Blizzard_UIPanels_Game, Blizzard_ActionBar, \
+             Blizzard_TextStatusBar, Blizzard_SpellDiminishUI, Blizzard_PingUI, \
+             Blizzard_ColorPickerFrame, Blizzard_ManagedFrameSystem, Blizzard_StatusTrayManager",
+            "## AllowLoad: Game",
+            "## AllowLoadGameType: mainline",
+        ]
+    };
 
     for line in expected_directives {
         assert!(raw.contains(line), "Raw TOC must pin directive `{line}`");
     }
 
-    for path in REPRESENTATIVE_BODY_FILES {
+    for path in representative_body_files() {
         assert!(
             raw.contains(path),
             "Raw TOC must pin body path `{path}`. Body order layers \

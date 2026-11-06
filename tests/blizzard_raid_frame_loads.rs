@@ -7,6 +7,9 @@ use wow_ui_sim::screen::ScreenKind;
 use wow_ui_sim::startup::fire_startup_events_for_screen;
 use wow_ui_sim::toc::TocFile;
 
+#[path = "common/toc_layout.rs"]
+mod toc_layout;
+
 fn blizzard_ui_dir() -> PathBuf {
     wow_ui_sim::paths::default_blizzard_ui_addons_path()
         .expect("Blizzard UI cache should be available")
@@ -17,7 +20,7 @@ fn raid_frame_dir() -> PathBuf {
 }
 
 fn raid_frame_mainline_toc() -> PathBuf {
-    raid_frame_dir().join("Blizzard_RaidFrame_Mainline.toc")
+    find_toc_file(&raid_frame_dir()).expect("Blizzard_RaidFrame TOC resolves")
 }
 
 const TOC_FILES: &[&str] = &[
@@ -34,6 +37,23 @@ const REQUIRED_DEPS: &[&str] = &[
     "Blizzard_UnitFrame",
     "Blizzard_FriendsFrame",
 ];
+
+// The unified PTR TOC turns Blizzard_SocialUIShared into a hard dependency and
+// keeps it in declaration order.
+const PTR_REQUIRED_DEPS: &[&str] = &[
+    "Blizzard_SocialUIShared",
+    "Blizzard_UIPanels_Game",
+    "Blizzard_UnitFrame",
+    "Blizzard_FriendsFrame",
+];
+
+fn raid_frame_deps() -> &'static [&'static str] {
+    if toc_layout::unified_toc_tree() {
+        PTR_REQUIRED_DEPS
+    } else {
+        REQUIRED_DEPS
+    }
+}
 
 const PUBLIC_NAMED_FRAMES: &[&str] = &["RaidParentFrame", "RaidFrame"];
 
@@ -104,25 +124,24 @@ post_wrath_ui_fixture! {
 fn blizzard_raid_frame_find_toc_resolves_mainline_variant() {
     let resolved = find_toc_file(&raid_frame_dir()).expect("Blizzard_RaidFrame TOC resolves");
     assert_eq!(
-        resolved,
-        raid_frame_mainline_toc(),
-        "Blizzard_RaidFrame ships a SINGLE `_Mainline.toc` variant (NO bare \
-         `.toc`, NO Mists / Wrath / Classic variant). The retail RaidFrame is \
-         distinct from the legacy Wrath RaidFrame which ships a separate \
-         Wrath/RaidFrame.xml that the Mainline TOC does NOT reference. \
-         `find_toc_file` walks the suffix-priority list `[_Mainline.toc, \
-         .toc]` at src/loader/mod.rs:65-95 and picks the Mainline-suffixed \
-         form first"
+        resolved.file_name().and_then(|name| name.to_str()),
+        Some(toc_layout::expected_toc_name("Blizzard_RaidFrame").as_str()),
+        "find_toc_file resolves the active profile's RaidFrame TOC: the Retail cache ships a \
+         single `_Mainline.toc`, while the pinned PTR cache ships the bare unified TOC that \
+         gates the Wrath\\RaidFrame.xml lines on the classic game types"
     );
 
-    for variant_suffix in [".toc", "_Mists.toc", "_Wrath.toc", "_Classic.toc"] {
+    let absent_variants: &[&str] = if toc_layout::unified_toc_tree() {
+        &["_Mainline.toc", "_Mists.toc", "_Wrath.toc", "_Classic.toc"]
+    } else {
+        &[".toc", "_Mists.toc", "_Wrath.toc", "_Classic.toc"]
+    };
+    for variant_suffix in absent_variants {
         let variant = raid_frame_dir().join(format!("Blizzard_RaidFrame{variant_suffix}"));
         assert!(
             !variant.exists(),
-            "Blizzard_RaidFrame must NOT ship a {variant_suffix} variant — \
-             single Mainline TOC only. The Wrath/ subdirectory ships a \
-             separate RaidFrame.xml but no companion Wrath TOC; the Wrath \
-             flavor builds use a different addon graph entirely"
+            "Blizzard_RaidFrame must NOT ship a {variant_suffix} variant — the active profile \
+             resolves one TOC that selects the flavor's RaidFrame sources"
         );
     }
 }
@@ -179,10 +198,16 @@ fn blizzard_raid_frame_toc_pins_eager_mainline_only_with_default_state_enabled()
         );
     }
 
+    let expected_optional = if toc_layout::unified_toc_tree() {
+        Vec::new()
+    } else {
+        vec!["Blizzard_SocialUIShared".to_string()]
+    };
     assert_eq!(
         toc.optional_deps(),
-        vec!["Blizzard_SocialUIShared".to_string()],
-        "Retail 12.1.0.69497 declares Blizzard_SocialUIShared as an optional dependency"
+        expected_optional,
+        "The Retail TOC declares Blizzard_SocialUIShared as an optional dependency; the \
+         unified PTR TOC makes it a hard `## Dep:` entry instead"
     );
     assert!(toc.load_with().is_empty());
     assert!(
@@ -204,9 +229,9 @@ fn blizzard_raid_frame_toc_declares_three_dependencies() {
     let dependencies = toc.dependencies();
     let deps: Vec<&str> = dependencies.iter().map(|s| s.as_str()).collect();
     assert_eq!(
-        deps, REQUIRED_DEPS,
-        "TOC must declare exactly 3 hard deps in `## Dependencies:` (plural \
-         form, comma-separated, in declaration order): \
+        deps,
+        raid_frame_deps(),
+        "TOC must declare its hard deps in `## Dep` declaration order: \
          Blizzard_UIPanels_Game (publishes ButtonFrameTemplate which the \
          RaidParentFrame inherits — provides the title strip + close button \
          + portrait area common to all in-world panels), Blizzard_UnitFrame \
@@ -221,7 +246,8 @@ fn blizzard_raid_frame_toc_declares_three_dependencies() {
          Order matters: UIPanels_Game first because the FriendsFrame from \
          Blizzard_FriendsFrame inherits from ButtonFrameTemplate which \
          UIPanels_Game publishes, so the dep graph must walk \
-         UIPanels_Game → UnitFrame → FriendsFrame → RaidFrame"
+         UIPanels_Game → UnitFrame → FriendsFrame → RaidFrame. The unified \
+         PTR TOC also lists Blizzard_SocialUIShared first"
     );
 }
 }
@@ -232,16 +258,23 @@ fn blizzard_raid_frame_toc_declares_metadata_in_raw_bytes() {
     let raw = std::fs::read_to_string(raid_frame_mainline_toc()).expect("TOC reads utf-8");
 
     assert!(raw.contains("## Title: Blizzard_RaidFrame"));
-    assert!(raw.contains("## Author: Blizzard Entertainment"));
-    assert!(
-        raw.contains("## DefaultState: enabled"),
-        "TOC must declare `## DefaultState: enabled`"
-    );
-    assert!(raw.contains(
-        "## Dependencies: Blizzard_UIPanels_Game, Blizzard_UnitFrame, Blizzard_FriendsFrame"
-    ));
-    assert!(raw.contains("## AllowLoadGameType: mainline"));
-    assert!(raw.contains("## OptionalDeps: Blizzard_SocialUIShared"));
+    if toc_layout::unified_toc_tree() {
+        assert!(raw.contains("## Dep: Blizzard_SocialUIShared [AllowLoadGameType mainline]"));
+        assert!(raw.contains("## Dep: Blizzard_UIPanels_Game"));
+        assert!(raw.contains("## Dep: Blizzard_UnitFrame"));
+        assert!(raw.contains("## Dep: Blizzard_FriendsFrame [AllowLoadGameType mainline]"));
+    } else {
+        assert!(raw.contains("## Author: Blizzard Entertainment"));
+        assert!(
+            raw.contains("## DefaultState: enabled"),
+            "TOC must declare `## DefaultState: enabled`"
+        );
+        assert!(raw.contains(
+            "## Dependencies: Blizzard_UIPanels_Game, Blizzard_UnitFrame, Blizzard_FriendsFrame"
+        ));
+        assert!(raw.contains("## AllowLoadGameType: mainline"));
+        assert!(raw.contains("## OptionalDeps: Blizzard_SocialUIShared"));
+    }
 
     assert!(
         !raw.contains("## AllowLoad:"),
@@ -284,7 +317,7 @@ fn blizzard_raid_frame_toc_lists_two_files_lua_then_xml() {
         .collect();
     assert_eq!(
         listed, TOC_FILES,
-        "Retail 12.1.0.69497 lists the core RaidFrame Lua/XML pair followed by \
+        "The TOC lists the core RaidFrame Lua/XML pair followed by \
          RaidFrameSocialView and RaidInfoFrameSocialView Lua/XML pairs"
     );
 }

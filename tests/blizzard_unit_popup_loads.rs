@@ -7,6 +7,9 @@ use wow_ui_sim::screen::ScreenKind;
 use wow_ui_sim::startup::fire_startup_events_for_screen;
 use wow_ui_sim::toc::TocFile;
 
+#[path = "common/toc_layout.rs"]
+mod toc_layout;
+
 fn blizzard_ui_dir() -> PathBuf {
     wow_ui_sim::paths::default_blizzard_ui_addons_path()
         .expect("Blizzard UI cache should be available")
@@ -44,6 +47,23 @@ const GAME_PLACEHOLDER_BODY_FILES: &[&str] = &[
     "[Game]\\UnitPopupButtons.lua [AllowLoadGameType standard, plunderstorm, wowhack, vanilla, tbc, wrath]",
     "[Game]\\UnitPopupMenus.lua [AllowLoadGameType standard, plunderstorm, wowhack, vanilla, tbc, wrath]",
 ];
+
+// The unified PTR TOC splits the Standard/Camelot buttons and menus into
+// separate family and game entries.
+const PTR_GAME_PLACEHOLDER_BODY_FILES: &[&str] = &[
+    "[Family]\\UnitPopupButtons.lua [AllowLoadGameType standard, camelot]",
+    "[Game]\\UnitPopupButtons.lua [AllowLoadGameType plunderstorm, wowhack, vanilla, tbc, wrath]",
+    "[Family]\\UnitPopupMenus.lua [AllowLoadGameType standard, camelot]",
+    "[Game]\\UnitPopupMenus.lua [AllowLoadGameType plunderstorm, wowhack, vanilla, tbc, wrath, camelot]",
+];
+
+fn game_placeholder_body_files() -> &'static [&'static str] {
+    if toc_layout::unified_toc_tree() {
+        PTR_GAME_PLACEHOLDER_BODY_FILES
+    } else {
+        GAME_PLACEHOLDER_BODY_FILES
+    }
+}
 
 const GAME_PLACEHOLDER_RESOLVED_RELATIVES: &[&str] = &[
     "Standard/UnitPopupButtons.lua",
@@ -243,17 +263,16 @@ fn toc_raw_bytes_pin_directives_and_representative_body_files() {
         );
     }
 
-    for path in GAME_PLACEHOLDER_BODY_FILES {
+    for path in game_placeholder_body_files() {
         assert!(
             raw.contains(path),
-            "Raw TOC must pin `[Game]` body line `{path}`. The \
+            "Raw TOC must pin the `[Game]`/`[Family]` body line `{path}`. The \
              `[Game]` placeholder is substituted at toc.rs:146 to the \
              build's game directory (`Standard` for the Mainline \
-             build). The inline `[AllowLoadGameType standard, \
-             plunderstorm, wowhack]` annotation is then evaluated at \
+             build). The inline `[AllowLoadGameType ...]` annotation is then evaluated at \
              toc.rs:141 via is_allowed_game_type — `standard` is in \
              the allowed-set at toc.rs:56 ({{mainline, standard}}), so \
-             the line passes the filter and the resolved \
+             the allowed line passes the filter and the resolved \
              Standard\\UnitPopupButtons.lua / UnitPopupMenus.lua get \
              loaded"
         );

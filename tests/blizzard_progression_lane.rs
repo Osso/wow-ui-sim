@@ -36,6 +36,9 @@ use wow_ui_sim::screen::ScreenKind;
 use wow_ui_sim::startup::fire_startup_events_for_screen;
 use wow_ui_sim::toc::TocFile;
 
+#[path = "common/toc_layout.rs"]
+mod toc_layout;
+
 fn blizzard_ui_dir() -> PathBuf {
     wow_ui_sim::paths::default_blizzard_ui_addons_path()
         .expect("Blizzard UI cache should be available")
@@ -142,6 +145,14 @@ fn shared_talent_ui_is_the_only_eager_load_in_the_lane() {
 #[test]
 fn talent_ui_ships_only_a_mists_toc_variant_unresolvable_by_find_toc_file() {
     let talent_ui_dir = blizzard_ui_dir().join("Blizzard_TalentUI");
+
+    if toc_layout::unified_toc_tree() {
+        assert!(
+            !talent_ui_dir.exists(),
+            "Pinned PTR/Forever manifest must not ship the classic-only Blizzard_TalentUI"
+        );
+        return;
+    }
 
     let resolved = find_toc_file(&talent_ui_dir);
     assert!(

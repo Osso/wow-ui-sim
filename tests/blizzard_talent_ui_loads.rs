@@ -4,6 +4,23 @@ use wow_ui_sim::loader::{discover_blizzard_addons_for_screen, find_toc_file};
 use wow_ui_sim::screen::ScreenKind;
 use wow_ui_sim::toc::TocFile;
 
+#[path = "common/toc_layout.rs"]
+mod toc_layout;
+
+// The pinned PTR 12.1.7 manifest no longer ships this classic-only addon, so
+// the Mists TOC/body assertions apply to the profiles that do ship it.
+fn talent_ui_absent_from_active_cache() -> bool {
+    if toc_layout::unified_toc_tree() {
+        assert!(
+            !talent_ui_dir().exists(),
+            "Pinned PTR/Forever manifest must not ship the classic-only Blizzard_TalentUI"
+        );
+        true
+    } else {
+        false
+    }
+}
+
 fn blizzard_ui_dir() -> PathBuf {
     wow_ui_sim::paths::default_blizzard_ui_addons_path()
         .expect("Blizzard UI cache should be available")
@@ -39,6 +56,9 @@ fn find_toc_file_returns_none_on_mainline_target() {
 
 #[test]
 fn mists_toc_file_exists_at_expected_path() {
+    if talent_ui_absent_from_active_cache() {
+        return;
+    }
     assert!(
         talent_ui_mists_toc().exists(),
         "Blizzard_TalentUI_Mists.toc must exist on disk — direct parse \
@@ -74,6 +94,9 @@ fn flavor_subdirs_present_classic_subdir_absent() {
 post_wrath_ui_fixture! {
 #[test]
 fn mists_toc_parses_with_load_on_demand_and_help_plate_dep() {
+    if talent_ui_absent_from_active_cache() {
+        return;
+    }
     let toc = TocFile::from_file(&talent_ui_mists_toc()).expect("Mists TOC parses");
 
     assert!(
@@ -103,6 +126,9 @@ fn mists_toc_parses_with_load_on_demand_and_help_plate_dep() {
 post_wrath_ui_fixture! {
 #[test]
 fn mists_toc_raw_bytes_pin_three_metadata_directives() {
+    if talent_ui_absent_from_active_cache() {
+        return;
+    }
     let raw = std::fs::read_to_string(talent_ui_mists_toc()).expect("TOC reads utf-8");
 
     let expected_directives = [

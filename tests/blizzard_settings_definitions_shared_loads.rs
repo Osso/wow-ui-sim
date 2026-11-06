@@ -7,6 +7,9 @@ use wow_ui_sim::screen::ScreenKind;
 use wow_ui_sim::startup::fire_startup_events_for_screen;
 use wow_ui_sim::toc::TocFile;
 
+#[path = "common/toc_layout.rs"]
+mod toc_layout;
+
 fn blizzard_ui_dir() -> PathBuf {
     wow_ui_sim::paths::default_blizzard_ui_addons_path()
         .expect("Blizzard UI cache should be available")
@@ -26,6 +29,35 @@ const HARD_DEPS: &[&str] = &[
     "Blizzard_Colors",
     "Blizzard_AccessibilityTemplates",
 ];
+
+// The unified PTR TOC places Gamepad.lua between Network.lua and Mac.lua.
+const PTR_FIRST_SEVEN: &[&str] = &[
+    "Groups.lua",
+    "Graphics.xml",
+    "Audio.xml",
+    "Languages.xml",
+    "Network.lua",
+    "Gamepad.lua",
+    "Mac.lua",
+];
+
+const RETAIL_FIRST_SEVEN: &[&str] = &[
+    "Groups.lua",
+    "Graphics.xml",
+    "Audio.xml",
+    "Languages.xml",
+    "Network.lua",
+    "Mac.lua",
+    "AccessibilitySettingsPreview.lua",
+];
+
+fn first_seven_entries() -> &'static [&'static str] {
+    if toc_layout::unified_toc_tree() {
+        PTR_FIRST_SEVEN
+    } else {
+        RETAIL_FIRST_SEVEN
+    }
+}
 
 const PUBLIC_GLOBAL_MIXINS: &[&str] = &[
     "AccessibilityFontPreviewMixin",
@@ -236,15 +268,10 @@ fn toc_body_first_seven_entries_are_cross_flavor_files_in_declared_order() {
     let first_seven: Vec<String> = listed.iter().take(7).cloned().collect();
     assert_eq!(
         first_seven,
-        vec![
-            "Groups.lua".to_string(),
-            "Graphics.xml".to_string(),
-            "Audio.xml".to_string(),
-            "Languages.xml".to_string(),
-            "Network.lua".to_string(),
-            "Mac.lua".to_string(),
-            "AccessibilitySettingsPreview.lua".to_string(),
-        ],
+        first_seven_entries()
+            .iter()
+            .map(|s| s.to_string())
+            .collect::<Vec<_>>(),
         "First 7 body entries must be the cross-flavor files in declared order. \
          Groups.lua MUST run first — it gates `if C_Glue.IsOnGlueScreen()` and \
          calls `Settings.GetOrCreateSettingsGroup(SETTING_GROUP_SYSTEM, ...)` / \

@@ -7,6 +7,9 @@ use wow_ui_sim::screen::ScreenKind;
 use wow_ui_sim::startup::fire_startup_events_for_screen;
 use wow_ui_sim::toc::TocFile;
 
+#[path = "common/toc_layout.rs"]
+mod toc_layout;
+
 fn blizzard_ui_dir() -> PathBuf {
     wow_ui_sim::paths::default_blizzard_ui_addons_path()
         .expect("Blizzard UI cache should be available")
@@ -17,7 +20,7 @@ fn queue_status_dir() -> PathBuf {
 }
 
 fn queue_status_mainline_toc() -> PathBuf {
-    queue_status_dir().join("Blizzard_QueueStatusFrame_Mainline.toc")
+    find_toc_file(&queue_status_dir()).expect("Blizzard_QueueStatusFrame TOC resolves")
 }
 
 const TOC_FILES: &[&str] = &[
@@ -25,7 +28,33 @@ const TOC_FILES: &[&str] = &[
     "Mainline/QueueStatusFrame.xml",
 ];
 
+// The unified PTR TOC also lists the Mainline override Lua.
+const PTR_TOC_FILES: &[&str] = &[
+    "Mainline/QueueStatusFrame.lua",
+    "Mainline/QueueStatusFrameOverrides.lua",
+    "Mainline/QueueStatusFrame.xml",
+];
+
+fn queue_status_toc_files() -> &'static [&'static str] {
+    if toc_layout::unified_toc_tree() {
+        PTR_TOC_FILES
+    } else {
+        TOC_FILES
+    }
+}
+
 const REQUIRED_DEPS: &[&str] = &["Blizzard_ActionBar", "Blizzard_LFGUtil"];
+
+// The unified PTR TOC no longer depends on Blizzard_ActionBar.
+const PTR_REQUIRED_DEPS: &[&str] = &["Blizzard_LFGUtil"];
+
+fn queue_status_deps() -> &'static [&'static str] {
+    if toc_layout::unified_toc_tree() {
+        PTR_REQUIRED_DEPS
+    } else {
+        REQUIRED_DEPS
+    }
+}
 
 const PUBLIC_MIXIN_GLOBALS: &[&str] = &[
     "EyeTemplateMixin",
@@ -127,21 +156,23 @@ fn blizzard_queue_status_frame_find_toc_resolves_mainline_variant() {
     let resolved =
         find_toc_file(&queue_status_dir()).expect("Blizzard_QueueStatusFrame TOC resolves");
     assert_eq!(
-        resolved,
-        queue_status_mainline_toc(),
-        "Blizzard_QueueStatusFrame ships a SINGLE `_Mainline.toc` variant — \
-         retail-only with NO bare TOC, NO Mists / Wrath / Classic variant. \
-         `find_toc_file` walks the suffix-priority list `[_Mainline.toc, .toc]` \
-         at src/loader/mod.rs:65-95 and picks the Mainline-suffixed form first"
+        resolved.file_name().and_then(|name| name.to_str()),
+        Some(toc_layout::expected_toc_name("Blizzard_QueueStatusFrame").as_str()),
+        "find_toc_file resolves the active profile's QueueStatusFrame TOC: the Retail cache \
+         ships a single `_Mainline.toc`, while the pinned PTR cache ships the bare unified TOC"
     );
 
-    for variant_suffix in [".toc", "_Mists.toc", "_Wrath.toc", "_Classic.toc"] {
+    let absent_variants: &[&str] = if toc_layout::unified_toc_tree() {
+        &["_Mainline.toc", "_Mists.toc", "_Wrath.toc", "_Classic.toc"]
+    } else {
+        &[".toc", "_Mists.toc", "_Wrath.toc", "_Classic.toc"]
+    };
+    for variant_suffix in absent_variants {
         let variant = queue_status_dir().join(format!("Blizzard_QueueStatusFrame{variant_suffix}"));
         assert!(
             !variant.exists(),
             "Blizzard_QueueStatusFrame must NOT ship a {variant_suffix} variant — \
-             single Mainline TOC only; the queue-status button only ships on retail \
-             where the unified MicroMenuContainer parent layout exists"
+             one TOC covers the queue-status button on the active profile"
         );
     }
 }
@@ -210,9 +241,9 @@ fn blizzard_queue_status_frame_toc_declares_action_bar_and_lfg_util_dependencies
     let dependencies = toc.dependencies();
     let deps: Vec<&str> = dependencies.iter().map(|s| s.as_str()).collect();
     assert_eq!(
-        deps, REQUIRED_DEPS,
-        "Retail 12.1.0.69497 declares Blizzard_ActionBar and Blizzard_LFGUtil \
-         in published order"
+        deps, queue_status_deps(),
+        "QueueStatusFrame declares its published dependencies in order; the unified PTR TOC \
+         drops Blizzard_ActionBar from the Retail pair"
     );
 }
 }
@@ -223,15 +254,19 @@ fn blizzard_queue_status_frame_toc_declares_metadata_in_raw_bytes() {
     let raw = std::fs::read_to_string(queue_status_mainline_toc()).expect("TOC reads utf-8");
 
     assert!(raw.contains("## Title: Blizzard_QueueStatusFrame"));
-    assert!(raw.contains("## Author: Blizzard Entertainment"));
-    assert!(
-        raw.contains("## DefaultState: enabled"),
-        "TOC must declare `## DefaultState: enabled` — the AddOn list UI shows \
-         the addon enabled by default for users who toggle it manually"
-    );
-    assert!(raw.contains("## Dependencies: Blizzard_ActionBar, Blizzard_LFGUtil"));
-    assert!(raw.contains("## AllowLoad: game"));
-    assert!(raw.contains("## AllowLoadGameType: mainline"));
+    if toc_layout::unified_toc_tree() {
+        assert!(raw.contains("## Dep: Blizzard_LFGUtil"));
+    } else {
+        assert!(raw.contains("## Author: Blizzard Entertainment"));
+        assert!(
+            raw.contains("## DefaultState: enabled"),
+            "TOC must declare `## DefaultState: enabled` — the AddOn list UI shows \
+             the addon enabled by default for users who toggle it manually"
+        );
+        assert!(raw.contains("## Dependencies: Blizzard_ActionBar, Blizzard_LFGUtil"));
+        assert!(raw.contains("## AllowLoad: game"));
+        assert!(raw.contains("## AllowLoadGameType: mainline"));
+    }
 
     assert!(
         !raw.contains("## LoadOnDemand"),
@@ -263,17 +298,11 @@ fn blizzard_queue_status_frame_toc_lists_two_files_with_variant_subdirectory() {
         .map(|p| p.to_string_lossy().into_owned())
         .collect();
     assert_eq!(
-        listed, TOC_FILES,
-        "TOC body lists EXACTLY 2 files (paths normalized to forward slashes by \
-         src/toc.rs:147) in canonical Lua-then-XML order: \
-         Mainline/QueueStatusFrame.lua FIRST (declares all 3 mixins + 24 \
-         module-scoped global helper functions for the dropdown menus and the \
-         per-queue-type entry setup pipeline), Mainline/QueueStatusFrame.xml \
-         SECOND (publishes 3 virtual templates plus the 2 named non-virtual \
-         frames QueueStatusButton + QueueStatusFrame). The variant-subdirectory \
-         file layout is the canonical pattern even though only Mainline ships — \
-         the structure is in place to add Mists/Wrath/Classic variants later \
-         without restructuring"
+        listed,
+        queue_status_toc_files(),
+        "TOC body lists the Lua sources before the XML that declares the mixins, virtual \
+         templates, and the QueueStatusButton + QueueStatusFrame named frames. The unified \
+         PTR TOC also lists the Mainline override Lua"
     );
 }
 }

@@ -7,6 +7,9 @@ use wow_ui_sim::screen::ScreenKind;
 use wow_ui_sim::startup::fire_startup_events_for_screen;
 use wow_ui_sim::toc::TocFile;
 
+#[path = "common/toc_layout.rs"]
+mod toc_layout;
+
 fn blizzard_ui_dir() -> PathBuf {
     wow_ui_sim::paths::default_blizzard_ui_addons_path()
         .expect("Blizzard UI cache should be available")
@@ -157,21 +160,35 @@ fn allow_load_absent_defaults_to_game_only_screen() {
 fn toc_raw_bytes_pin_single_metadata_directive_and_five_body_files() {
     let raw = std::fs::read_to_string(token_ui_toc()).expect("TOC reads utf-8");
 
-    let expected_lines = [
-        "## Title: Blizzard_TokenUI",
-        "Blizzard_CurrencyTransfer.lua",
-        "Blizzard_CurrencyTransfer.xml",
-        "Blizzard_TokenUI.lua",
-        "Blizzard_TokenUI.xml",
-        "Localization.lua",
-    ];
+    let expected_lines: &[&str] = if toc_layout::unified_toc_tree() {
+        &[
+            "## Title: Blizzard_TokenUI",
+            "## AllowLoadGameType: standard, camelot, wowhack",
+            "Blizzard_CurrencyTransfer.lua",
+            "Blizzard_CurrencyTransfer.xml",
+            "Mainline/Blizzard_TokenUI.lua",
+            "Mainline/Blizzard_TokenUI.xml",
+            "Camelot/Blizzard_TokenUI.lua",
+            "Localization.lua",
+        ]
+    } else {
+        &[
+            "## Title: Blizzard_TokenUI",
+            "Blizzard_CurrencyTransfer.lua",
+            "Blizzard_CurrencyTransfer.xml",
+            "Blizzard_TokenUI.lua",
+            "Blizzard_TokenUI.xml",
+            "Localization.lua",
+        ]
+    };
 
     for directive in expected_lines {
         assert!(
             raw.contains(directive),
-            "Raw TOC must pin `{directive}` — minimum-viable shape: 1 \
-             metadata directive (Title) + 5 body files (CurrencyTransfer \
-             lua/xml first, then TokenUI lua/xml, then Localization)"
+            "Raw TOC must pin `{directive}` — minimum-viable shape: the Title \
+             directive plus the CurrencyTransfer lua/xml pair first, then the \
+             TokenUI family lua/xml pair, then Localization. The unified PTR \
+             TOC gates each family entry on its game type"
         );
     }
 
@@ -182,10 +199,12 @@ fn toc_raw_bytes_pin_single_metadata_directive_and_five_body_files() {
     assert!(!raw.contains("## RequiredDep"));
     assert!(!raw.contains("## OptionalDep"));
     assert!(!raw.contains("## SavedVariables"));
-    assert!(!raw.contains("## AllowLoad"));
-    assert!(!raw.contains("## AllowLoadGameType"));
+    assert!(!raw.contains("## AllowLoad:"));
     assert!(!raw.contains("## UseSecureEnvironment"));
     assert!(!raw.contains("## LoadFirst"));
+    if !toc_layout::unified_toc_tree() {
+        assert!(!raw.contains("## AllowLoadGameType"));
+    }
 }
 
 #[test]

@@ -7,6 +7,9 @@ use wow_ui_sim::screen::ScreenKind;
 use wow_ui_sim::startup::fire_startup_events_for_screen;
 use wow_ui_sim::toc::TocFile;
 
+#[path = "common/toc_layout.rs"]
+mod toc_layout;
+
 fn blizzard_ui_dir() -> PathBuf {
     wow_ui_sim::paths::default_blizzard_ui_addons_path()
         .expect("Blizzard UI cache should be available")
@@ -17,7 +20,7 @@ fn time_manager_dir() -> PathBuf {
 }
 
 fn time_manager_toc() -> PathBuf {
-    time_manager_dir().join("Blizzard_TimeManager_Mainline.toc")
+    find_toc_file(&time_manager_dir()).expect("TimeManager TOC resolves")
 }
 
 const ALL_FOUR_SCREENS: &[ScreenKind] = &[
@@ -91,12 +94,11 @@ post_wrath_ui_fixture! {
 fn find_toc_file_resolves_mainline_flavor_toc() {
     let resolved = find_toc_file(&time_manager_dir()).expect("TimeManager TOC resolves");
     assert_eq!(
-        resolved,
-        time_manager_toc(),
-        "Mainline flavor TOC — addon ships ONLY \
-         `Blizzard_TimeManager_Mainline.toc` (no bare TOC). \
-         find_toc_file at src/loader/mod.rs:65-95 tries \
-         `_Mainline.toc` first and resolves it directly"
+        resolved.file_name().and_then(|name| name.to_str()),
+        Some(toc_layout::expected_toc_name("Blizzard_TimeManager").as_str()),
+        "find_toc_file resolves the active profile's TimeManager TOC: the Retail cache ships \
+         only `Blizzard_TimeManager_Mainline.toc`, while the pinned PTR cache ships the bare \
+         unified TOC"
     );
 }
 }
@@ -193,20 +195,36 @@ post_wrath_ui_fixture! {
 fn toc_raw_bytes_pin_current_metadata_directives_and_bootstrap() {
     let raw = std::fs::read_to_string(time_manager_toc()).expect("TOC reads utf-8");
 
-    let expected_directives = [
-        "## Title: Blizzard Time Manager",
-        "## Author: Blizzard Entertainment",
-        "## LoadOnDemand: 1",
-        "## Dependencies: Blizzard_FrameXMLUtil, Blizzard_RaidWarning, Blizzard_GameMenuEsc",
-        "## OptionalDeps: Blizzard_Plunderstorm",
-        "## SavedVariablesPerCharacter: BlizzardStopwatchOptions",
-        "## AllowLoad: game",
-        "## AllowLoadGameType: mainline",
-        "Blizzard_TimeManager_Bootstrap.lua [Bootstrap]",
-        "Mainline\\Blizzard_TimeManager.lua",
-        "Mainline\\Blizzard_TimeManager.xml",
-        "Mainline\\Localization.lua",
-    ];
+    let expected_directives: &[&str] = if toc_layout::unified_toc_tree() {
+        &[
+            "## Title: Blizzard_TimeManager",
+            "## LoadOnDemand: 1",
+            "## Dep: Blizzard_FrameXMLUtil",
+            "## Dep: Blizzard_RaidWarning [AllowLoadGameType mainline]",
+            "## Dep: Blizzard_GameMenuEsc [AllowLoadGameType mainline]",
+            "## OptionalDep: Blizzard_Plunderstorm",
+            "## SavedVariablesPerCharacter: BlizzardStopwatchOptions",
+            "Blizzard_TimeManager_Bootstrap.lua [Bootstrap]",
+            "[Family]\\Blizzard_TimeManager.lua",
+            "[Family]\\Blizzard_TimeManager.xml",
+            "[Family]\\Localization.lua",
+        ]
+    } else {
+        &[
+            "## Title: Blizzard Time Manager",
+            "## Author: Blizzard Entertainment",
+            "## LoadOnDemand: 1",
+            "## Dependencies: Blizzard_FrameXMLUtil, Blizzard_RaidWarning, Blizzard_GameMenuEsc",
+            "## OptionalDeps: Blizzard_Plunderstorm",
+            "## SavedVariablesPerCharacter: BlizzardStopwatchOptions",
+            "## AllowLoad: game",
+            "## AllowLoadGameType: mainline",
+            "Blizzard_TimeManager_Bootstrap.lua [Bootstrap]",
+            "Mainline\\Blizzard_TimeManager.lua",
+            "Mainline\\Blizzard_TimeManager.xml",
+            "Mainline\\Localization.lua",
+        ]
+    };
 
     for directive in expected_directives {
         assert!(

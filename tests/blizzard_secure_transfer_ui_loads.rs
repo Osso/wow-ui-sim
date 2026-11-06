@@ -7,6 +7,9 @@ use wow_ui_sim::screen::ScreenKind;
 use wow_ui_sim::startup::fire_startup_events_for_screen;
 use wow_ui_sim::toc::TocFile;
 
+#[path = "common/toc_layout.rs"]
+mod toc_layout;
+
 fn blizzard_ui_dir() -> PathBuf {
     wow_ui_sim::paths::default_blizzard_ui_addons_path()
         .expect("Blizzard UI cache should be available")
@@ -138,15 +141,23 @@ fn toc_declares_eager_both_with_secure_env_and_required_dep_singular() {
     }
 
     let deps = toc.dependencies();
+    let expected_deps: Vec<String> = if toc_layout::unified_toc_tree() {
+        vec![
+            "Blizzard_SharedXML".to_string(),
+            "Blizzard_CatalogShopSharedUtil".to_string(),
+        ]
+    } else {
+        vec!["Blizzard_SharedXML".to_string()]
+    };
     assert_eq!(
-        deps,
-        vec!["Blizzard_SharedXML".to_string()],
-        "TOC must declare exactly one `## RequiredDep: Blizzard_SharedXML` — note \
-         the SINGULAR `RequiredDep` key (not `RequiredDeps` and not `Dependencies`); \
-         the simulator's `dependencies()` accessor at src/toc.rs:210-217 falls \
-         through `RequiredDep` → `Dependencies` → `RequiredDeps` so all three \
-         resolve to the same list. SharedXML provides SecureDialogBorderTemplate \
-         (used by the Border child) and the FrameUtil / CreateAtlasMarkup helpers"
+        deps, expected_deps,
+        "TOC must declare its `## RequiredDep:` list — note the SINGULAR \
+         `RequiredDep` key (not `RequiredDeps` and not `Dependencies`); the \
+         simulator's `dependencies()` accessor falls through `RequiredDep` -> \
+         `Dependencies` -> `RequiredDeps` so all three resolve to the same list. \
+         SharedXML provides SecureDialogBorderTemplate (used by the Border child) \
+         and the FrameUtil / CreateAtlasMarkup helpers; the unified PTR TOC also \
+         requires Blizzard_CatalogShopSharedUtil"
     );
     assert!(toc.optional_deps().is_empty());
     assert!(toc.saved_variables().is_empty());

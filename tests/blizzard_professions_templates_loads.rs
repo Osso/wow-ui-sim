@@ -7,6 +7,9 @@ use wow_ui_sim::screen::ScreenKind;
 use wow_ui_sim::startup::fire_startup_events_for_screen;
 use wow_ui_sim::toc::TocFile;
 
+#[path = "common/toc_layout.rs"]
+mod toc_layout;
+
 fn blizzard_ui_dir() -> PathBuf {
     wow_ui_sim::paths::default_blizzard_ui_addons_path()
         .expect("Blizzard UI cache should be available")
@@ -38,6 +41,40 @@ const TEMPLATES_TOC_FILES: &[&str] = &[
     "Blizzard_ProfessionsQualityDialog.xml",
     "Blizzard_ProfessionsRecipeSchematicForm.xml",
 ];
+
+// The unified PTR TOC lists every Lua sibling explicitly, splits the schematic
+// form XML into shared/family bodies, and moves the RankBar XML last.
+const PTR_TEMPLATES_TOC_FILES: &[&str] = &[
+    "Blizzard_Professions.lua",
+    "Blizzard_ProfessionsRecipeLoader.lua",
+    "Blizzard_ProfessionsTransaction.lua",
+    "Blizzard_ProfessionsTemplates.lua",
+    "Blizzard_ProfessionsTemplates.xml",
+    "Blizzard_ProfessionsRecipeList.lua",
+    "Blizzard_ProfessionsRecipeList.xml",
+    "Blizzard_ProfessionsRecipeCrafterDetails.xml",
+    "Blizzard_ProfessionsRecipeSlotBase.lua",
+    "Blizzard_ProfessionsRecipeReagentSlotBase.xml",
+    "Blizzard_ProfessionsRecipeReagentSlot.xml",
+    "Blizzard_ProfessionsRecipeSalvageSlot.xml",
+    "Blizzard_ProfessionsRecipeEnchantSlot.xml",
+    "Blizzard_ProfessionsRecipeRecraftSlot.xml",
+    "Blizzard_ProfessionsRecipeFlyout.xml",
+    "Blizzard_ProfessionsRecipeFlyoutInstance.lua",
+    "Blizzard_ProfessionsQualityDialog.xml",
+    "Blizzard_ProfessionsRecipeSchematicForm.lua",
+    "Mainline/Blizzard_ProfessionsRecipeSchematicForm.xml",
+    "Blizzard_ProfessionsRecipeSchematicForm.xml",
+    "Blizzard_ProfessionsRankBar.xml",
+];
+
+fn templates_toc_files() -> &'static [&'static str] {
+    if toc_layout::unified_toc_tree() {
+        PTR_TEMPLATES_TOC_FILES
+    } else {
+        TEMPLATES_TOC_FILES
+    }
+}
 
 const REQUIRED_DEPS: &[&str] = &["Blizzard_Colors"];
 
@@ -377,23 +414,24 @@ fn blizzard_professions_templates_toc_lists_sixteen_files_in_canonical_order() {
         .map(|p| p.to_string_lossy().into_owned())
         .collect();
     assert_eq!(
-        listed, TEMPLATES_TOC_FILES,
-        "TOC must list 16 files in this canonical ordering: 3 Lua bootstraps first \
-         (Blizzard_Professions.lua publishes ProfessionsTableConstants + the helper \
-         globals; ProfessionsRecipeLoader.lua publishes the recipe-data lazy-load \
-         shim; ProfessionsTransaction.lua publishes ProfessionsRecipeTransactionMixin \
-         which models a pending craft as a transaction object), then 3 multi-template \
-         XML files (Templates.xml ships the table-cell families; RecipeList.xml ships \
-         the scrollable list templates; RecipeCrafterDetails.xml ships the crafter \
-         detail panel), then 1 base-slot Lua (RecipeSlotBase.lua publishes the shared \
-         slot mixin) followed by 5 slot-variant XML files in dependency order \
-         (ReagentSlotBase, then 4 derived: Reagent / Salvage / Enchant / Recraft), \
-         then Flyout.xml + FlyoutInstance.lua (the flyout selector for picking a \
-         reagent / mod), and finally QualityDialog.xml + RecipeSchematicForm.xml \
-         (the heaviest two: the quality-tier dialog and the 53KB recipe schematic \
-         form template). The interleaved Lua/XML ordering is critical — each XML \
-         file's `mixin=...` attributes resolve at parse time against globals \
-         declared by the preceding Lua files"
+        listed,
+        templates_toc_files(),
+        "TOC must list the Lua bootstraps first (Blizzard_Professions.lua \
+         publishes ProfessionsTableConstants + the helper globals; \
+         ProfessionsRecipeLoader.lua publishes the recipe-data lazy-load \
+         shim; ProfessionsTransaction.lua publishes \
+         ProfessionsRecipeTransactionMixin which models a pending craft as a \
+         transaction object), then the multi-template XML files \
+         (Templates.xml ships the table-cell families; RecipeList.xml ships \
+         the scrollable list templates; RecipeCrafterDetails.xml ships the \
+         crafter detail panel), then the base-slot Lua followed by the \
+         slot-variant XML files in dependency order, then Flyout.xml + \
+         FlyoutInstance.lua, and finally QualityDialog.xml + the schematic \
+         form (the heaviest template). The interleaved Lua/XML ordering is \
+         critical — each XML file's `mixin=...` attributes resolve at parse \
+         time against globals declared by the preceding Lua files. The unified \
+         PTR TOC lists every Lua sibling explicitly, splits the schematic form \
+         into shared/family bodies, and moves the RankBar XML last"
     );
 }
 }

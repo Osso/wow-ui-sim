@@ -6,6 +6,9 @@ use wow_ui_sim::screen::ScreenKind;
 use wow_ui_sim::startup::fire_startup_events_for_screen;
 use wow_ui_sim::toc::TocFile;
 
+#[path = "common/toc_layout.rs"]
+mod toc_layout;
+
 fn blizzard_ui_dir() -> PathBuf {
     wow_ui_sim::paths::default_blizzard_ui_addons_path()
         .expect("Blizzard UI cache should be available")
@@ -197,11 +200,17 @@ fn toc_declares_eager_game_only_with_classic_standard_allowlist() {
          action — clicks on action buttons, party/raid frame headers, aura buttons — relies on \
          this restricted-execution sandbox regardless of game flavor"
     );
+    let expected_allow_list = if toc_layout::unified_toc_tree() {
+        "classic, standard, camelot"
+    } else {
+        "classic, standard"
+    };
     assert_eq!(
         toc.metadata.get("AllowLoadGameType").map(String::as_str),
-        Some("classic, standard"),
+        Some(expected_allow_list),
         "AllowLoadGameType must round-trip the comma-separated list verbatim — both classic and \
-         standard tokens are required because the secure-handler subsystem is shared infrastructure"
+         standard tokens are required because the secure-handler subsystem is shared \
+         infrastructure; the unified PTR TOC also admits camelot"
     );
     assert!(
         !toc.metadata.contains_key("DefaultState"),

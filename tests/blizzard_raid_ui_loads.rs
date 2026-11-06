@@ -7,6 +7,9 @@ use wow_ui_sim::screen::ScreenKind;
 use wow_ui_sim::startup::fire_startup_events_for_screen;
 use wow_ui_sim::toc::TocFile;
 
+#[path = "common/toc_layout.rs"]
+mod toc_layout;
+
 fn blizzard_ui_dir() -> PathBuf {
     wow_ui_sim::paths::default_blizzard_ui_addons_path()
         .expect("Blizzard UI cache should be available")
@@ -115,10 +118,13 @@ fn blizzard_raid_ui_find_toc_resolves_active_mainline_variant() {
         raid_ui_toc(),
         raid_ui_dir().join(if cfg!(feature = "client-wrath") {
             "Blizzard_RaidUI.toc"
+        } else if toc_layout::unified_toc_tree() {
+            "Blizzard_RaidUI.toc"
         } else {
             "Blizzard_RaidUI_Mainline.toc"
         }),
-        "Retail must select Blizzard_RaidUI_Mainline.toc through find_toc_file."
+        "find_toc_file selects the active profile's RaidUI TOC: the Retail cache ships \
+         `_Mainline.toc`, the pinned PTR cache ships the unified bare TOC"
     );
 }
 
@@ -217,13 +223,15 @@ fn blizzard_raid_ui_toc_declares_metadata_in_raw_bytes() {
     let raw = std::fs::read_to_string(raid_ui_toc()).expect("TOC reads utf-8");
 
     assert!(
-        raw.contains("## Title: Blizzard Raid UI"),
-        "TOC must declare the SPACED title `## Title: Blizzard Raid UI` \
-         (with whitespace separators, NOT the underscored form \
-         `Blizzard_RaidUI`). Distinct from sibling Blizzard_RaidFrame which \
-         uses `## Title: Blizzard_RaidFrame` (underscored). The user-facing \
-         AddOns list shows the spaced form; the internal addon name is \
-         still Blizzard_RaidUI"
+        if toc_layout::unified_toc_tree() {
+            raw.contains("## Title: Blizzard_RaidUI")
+        } else {
+            raw.contains("## Title: Blizzard Raid UI")
+        },
+        "TOC must declare its published Title: the Retail TOC uses the SPACED form \
+         `## Title: Blizzard Raid UI` (with whitespace separators), while the unified PTR TOC \
+         uses the underscored `Blizzard_RaidUI` form. The user-facing AddOns list shows the \
+         declared title; the internal addon name is still Blizzard_RaidUI"
     );
     assert!(raw.contains("## LoadOnDemand: 1"));
     assert!(
@@ -244,6 +252,17 @@ fn blizzard_raid_ui_toc_declares_metadata_in_raw_bytes() {
         assert!(raw.contains("## Secure: 1"));
         assert!(!raw.contains("## AllowLoad:"));
         assert!(!raw.contains("## AllowLoadGameType:"));
+    } else if toc_layout::unified_toc_tree() {
+        assert!(
+            !raw.contains("## AllowLoad:"),
+            "The unified PTR TOC carries no top-level `## AllowLoad:` directive"
+        );
+        assert!(
+            raw.contains("[Family]\\Blizzard_RaidUI.xml")
+                && raw.contains("[AllowLoadGameType mainline, vanilla, tbc]"),
+            "The unified PTR TOC gates the Mainline family XML on the mainline, vanilla and tbc \
+             game types"
+        );
     } else {
         assert!(
             raw.contains("## AllowLoad: game"),
@@ -277,6 +296,13 @@ fn blizzard_raid_ui_toc_lists_bootstrap_xml_then_localization() {
         listed,
         if cfg!(feature = "client-wrath") {
             &["Blizzard_RaidUI.xml", "Localization.lua"][..]
+        } else if toc_layout::unified_toc_tree() {
+            &[
+                "Blizzard_RaidUI_Bootstrap.lua",
+                "Mainline/Blizzard_RaidUI.lua",
+                "Mainline/Blizzard_RaidUI.xml",
+                "Localization.lua",
+            ][..]
         } else {
             TOC_FILES
         },

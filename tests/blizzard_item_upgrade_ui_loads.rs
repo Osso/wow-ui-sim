@@ -8,6 +8,9 @@ use wow_ui_sim::screen::ScreenKind;
 use wow_ui_sim::startup::fire_startup_events_for_screen;
 use wow_ui_sim::toc::TocFile;
 
+#[path = "common/toc_layout.rs"]
+mod toc_layout;
+
 fn blizzard_ui_dir() -> PathBuf {
     wow_ui_sim::client_profile::blizzard_ui_addons_dir_under(std::path::Path::new(env!(
         "CARGO_MANIFEST_DIR"
@@ -19,7 +22,7 @@ fn item_upgrade_dir() -> PathBuf {
 }
 
 fn item_upgrade_mainline_toc() -> PathBuf {
-    item_upgrade_dir().join("Blizzard_ItemUpgradeUI_Mainline.toc")
+    find_toc_file(&item_upgrade_dir()).expect("Blizzard_ItemUpgradeUI TOC should resolve")
 }
 
 const ITEM_UPGRADE_MAINLINE_FILES: &[&str] = &[
@@ -142,12 +145,11 @@ fn blizzard_item_upgrade_find_toc_resolves_mainline_variant() {
     let resolved =
         find_toc_file(&item_upgrade_dir()).expect("Blizzard_ItemUpgradeUI TOC should resolve");
     assert_eq!(
-        resolved,
-        item_upgrade_mainline_toc(),
-        "Blizzard_ItemUpgradeUI ships flavor-suffixed TOCs (`_Mainline.toc` and `_Mists.toc`) — \
-         `find_toc_file` (src/loader/mod.rs:65) prefers the suffixed `_Mainline.toc` for the \
-         retail flavor before falling through to a bare-name lookup. The Mists variant ships in \
-         parallel for the Mists-of-Pandaria classic flavor with its own Mists/ source subdir"
+        resolved.file_name().and_then(|name| name.to_str()),
+        Some(toc_layout::expected_toc_name("Blizzard_ItemUpgradeUI").as_str()),
+        "find_toc_file resolves the active profile's ItemUpgradeUI TOC: the Retail cache ships \
+         `_Mainline.toc` and `_Mists.toc` variants, while the pinned PTR cache folds both \
+         flavors into the bare unified TOC"
     );
 }
 
@@ -235,9 +237,8 @@ fn blizzard_item_upgrade_toc_declares_mainline_game_type_restriction() {
     );
     assert!(
         raw.contains("## AllowLoadGameType: mainline"),
-        "TOC must declare `## AllowLoadGameType: mainline` exactly — the retail flavor TOC is \
-         the one the auto-discovery sweep picks under retail; the parallel `_Mists.toc` carries \
-         `## AllowLoadGameType: mists` to load the Mists/ source variants on the classic flavor"
+        "TOC must admit the `mainline` game type — the Retail `_Mainline.toc` restricts to \
+         `mainline` alone while the unified PTR TOC lists `mainline, mists`"
     );
     assert!(
         !raw.contains("## AllowLoad:"),

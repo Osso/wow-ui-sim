@@ -6,6 +6,9 @@ use wow_ui_sim::lua_api::WowLuaEnv;
 use wow_ui_sim::screen::ScreenKind;
 use wow_ui_sim::toc::TocFile;
 
+#[path = "common/toc_layout.rs"]
+mod toc_layout;
+
 fn blizzard_ui_dir() -> PathBuf {
     wow_ui_sim::paths::default_blizzard_ui_addons_path()
         .expect("Blizzard UI cache should be available")
@@ -165,21 +168,28 @@ post_wrath_ui_fixture! {
 fn toc_raw_bytes_pin_six_metadata_directives() {
     let raw = std::fs::read_to_string(social_toast_toc()).expect("TOC reads utf-8");
 
-    let expected_directives = [
-        "## Title: Blizzard_SocialToast",
-        "## Author: Blizzard Entertainment",
-        "## DefaultState: enabled",
-        "## AllowLoad: both",
-        "## AllowLoadGameType: mainline",
-        "## Dependencies: Blizzard_SharedXML",
-    ];
+    let expected_directives: &[&str] = if toc_layout::unified_toc_tree() {
+        &[
+            "## Title: Blizzard_SocialToast",
+            "## AllowLoad: both [AllowLoadGameType mainline]",
+            "## Dep: Blizzard_SharedXML",
+        ]
+    } else {
+        &[
+            "## Title: Blizzard_SocialToast",
+            "## Author: Blizzard Entertainment",
+            "## DefaultState: enabled",
+            "## AllowLoad: both",
+            "## AllowLoadGameType: mainline",
+            "## Dependencies: Blizzard_SharedXML",
+        ]
+    };
 
     for directive in expected_directives {
         assert!(
             raw.contains(directive),
             "Raw bytes MUST pin the `{directive}` directive — \
-             SocialToast's TOC is small (6 metadata lines + 2 body \
-             entries) so each directive is load-bearing"
+             SocialToast's TOC is small so each directive is load-bearing"
         );
     }
 

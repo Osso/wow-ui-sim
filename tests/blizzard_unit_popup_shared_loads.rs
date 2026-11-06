@@ -7,6 +7,9 @@ use wow_ui_sim::screen::ScreenKind;
 use wow_ui_sim::startup::fire_startup_events_for_screen;
 use wow_ui_sim::toc::TocFile;
 
+#[path = "common/toc_layout.rs"]
+mod toc_layout;
+
 fn blizzard_ui_dir() -> PathBuf {
     wow_ui_sim::paths::default_blizzard_ui_addons_path()
         .expect("Blizzard UI cache should be available")
@@ -17,7 +20,7 @@ fn unit_popup_shared_dir() -> PathBuf {
 }
 
 fn unit_popup_shared_toc() -> PathBuf {
-    unit_popup_shared_dir().join("Blizzard_UnitPopupShared_Mainline.toc")
+    find_toc_file(&unit_popup_shared_dir()).expect("UnitPopupShared TOC resolves")
 }
 
 const GLUE_SCREENS: &[ScreenKind] = &[
@@ -28,6 +31,23 @@ const GLUE_SCREENS: &[ScreenKind] = &[
 
 const TOC_DEPENDENCIES: &[&str] = &["Blizzard_SharedXML", "Blizzard_Colors"];
 
+// The unified PTR TOC turns the two Retail optional dependencies into hard
+// `## Dep` entries, keeping their screen/game-type annotations in place.
+const PTR_TOC_DEPENDENCIES: &[&str] = &[
+    "Blizzard_SharedXML",
+    "Blizzard_Colors",
+    "Blizzard_GlueXML",
+    "Blizzard_FrameXMLBase",
+];
+
+fn toc_dependencies() -> &'static [&'static str] {
+    if toc_layout::unified_toc_tree() {
+        PTR_TOC_DEPENDENCIES
+    } else {
+        TOC_DEPENDENCIES
+    }
+}
+
 const TOC_OPTIONAL_DEPS: &[&str] = &["Blizzard_GlueXML", "Blizzard_FrameXMLBase"];
 
 const REPRESENTATIVE_BODY_FILES: &[&str] = &[
@@ -37,6 +57,22 @@ const REPRESENTATIVE_BODY_FILES: &[&str] = &[
     "UnitPopupShared.lua",
     "UnitPopupSharedMenus.lua",
 ];
+
+const PTR_REPRESENTATIVE_BODY_FILES: &[&str] = &[
+    "UnitPopupSharedUtils.lua",
+    "UnitPopupSharedButtonMixins.lua",
+    "[Family]\\UnitPopupSharedButtonMixins.lua",
+    "UnitPopupShared.lua",
+    "UnitPopupSharedMenus.lua",
+];
+
+fn representative_body_files() -> &'static [&'static str] {
+    if toc_layout::unified_toc_tree() {
+        PTR_REPRESENTATIVE_BODY_FILES
+    } else {
+        REPRESENTATIVE_BODY_FILES
+    }
+}
 
 const REPRESENTATIVE_BUTTON_BASE_METHODS: &[&str] = &[
     "GetEntries",
@@ -141,15 +177,11 @@ post_wrath_ui_fixture! {
 fn find_toc_file_resolves_mainline_variant() {
     let resolved = find_toc_file(&unit_popup_shared_dir()).expect("UnitPopupShared TOC resolves");
     assert_eq!(
-        resolved,
-        unit_popup_shared_toc(),
-        "find_toc_file at src/loader/mod.rs:65-95 prefers \
-         `<addon>_Mainline.toc`. Blizzard_UnitPopupShared ships ONE \
-         TOC (`_Mainline.toc` only — no `_Mists.toc` or `_Classic.toc` \
-         companion) because the shared base is mainline-only; the \
-         classic-flavor unit popup ships its own self-contained \
-         Blizzard_UnitPopup_Mists addon and does not depend on this \
-         shared core"
+        resolved.file_name().and_then(|name| name.to_str()),
+        Some(toc_layout::expected_toc_name("Blizzard_UnitPopupShared").as_str()),
+        "find_toc_file resolves the active profile's UnitPopupShared TOC: the Retail cache \
+         ships only `_Mainline.toc`, while the pinned PTR cache ships the bare unified TOC \
+         because the shared base is mainline-only"
     );
 }
 
@@ -172,11 +204,14 @@ fn toc_is_eager_with_two_dependencies_and_two_optional_deps() {
 
     let deps = toc.dependencies();
     assert_eq!(
-        deps, TOC_DEPENDENCIES,
-        "TOC must declare exactly Blizzard_SharedXML and \
-         Blizzard_Colors as hard deps. Blizzard_SharedXML provides \
-         Mixin/CreateFromMixins, MenuUtil.CreateContextMenu (the \
-         backing primitive for UnitPopupManager:OpenMenu), and \
+        deps,
+        toc_dependencies(),
+        "TOC must declare Blizzard_SharedXML and \
+         Blizzard_Colors as hard deps; the unified PTR TOC also makes \
+         Blizzard_GlueXML and Blizzard_FrameXMLBase hard dependencies. \
+         Blizzard_SharedXML provides Mixin/CreateFromMixins, \
+         MenuUtil.CreateContextMenu (the backing primitive for \
+         UnitPopupManager:OpenMenu), and \
          PropertyButtonMixin/PropertySliderMixin (extended by the \
          voice and difficulty mixins); Blizzard_Colors publishes the \
          named CreateColor/CreateColorFromHexString helpers and the \
@@ -185,16 +220,19 @@ fn toc_is_eager_with_two_dependencies_and_two_optional_deps() {
     );
 
     let opt_deps = toc.optional_deps();
+    let expected_optional: &[&str] = if toc_layout::unified_toc_tree() {
+        &[]
+    } else {
+        TOC_OPTIONAL_DEPS
+    };
     assert_eq!(
-        opt_deps, TOC_OPTIONAL_DEPS,
-        "TOC must declare Blizzard_GlueXML and Blizzard_FrameXMLBase \
-         as optional deps. The glue dep is consulted only on glue \
-         screens (where Mainline/UnitPopupSharedButtonMixins.lua's \
-         three C_WoWLabsMatchmaking-driven mixins fire); the \
-         FrameXMLBase dep gates a few enum/global names that exist \
-         only when the mainline FrameXML core is present. Optional \
-         means absence is tolerated: on a glue-only build with no \
-         FrameXML, the addon still loads. Got: {opt_deps:?}"
+        opt_deps, expected_optional,
+        "The Retail TOC declares Blizzard_GlueXML and \
+         Blizzard_FrameXMLBase as optional deps; the unified PTR TOC \
+         declares them as hard deps. The glue dep is consulted only on \
+         glue screens; the FrameXMLBase dep gates enum/global names \
+         that exist only when the mainline FrameXML core is present. \
+         Got: {opt_deps:?}"
     );
 
     assert!(toc.load_with().is_empty());
@@ -250,21 +288,32 @@ fn allow_load_game_type_mainline_is_not_restricted() {
 fn toc_raw_bytes_pin_directives_and_representative_body_files() {
     let raw = std::fs::read_to_string(unit_popup_shared_toc()).expect("TOC reads utf-8");
 
-    let expected_directives = [
-        "## Title: Blizzard_UnitPopupShared",
-        "## Author: Blizzard Entertainment",
-        "## DefaultState: enabled",
-        "## Dependencies: Blizzard_SharedXML, Blizzard_Colors",
-        "## OptionalDeps: Blizzard_GlueXML, Blizzard_FrameXMLBase",
-        "## AllowLoad: both",
-        "## AllowLoadGameType: mainline",
-    ];
+    let expected_directives: &[&str] = if toc_layout::unified_toc_tree() {
+        &[
+            "## Title: Blizzard_UnitPopupShared",
+            "## Dep: Blizzard_SharedXML",
+            "## Dep: Blizzard_Colors",
+            "## Dep: Blizzard_GlueXML [AllowLoad glue]",
+            "## Dep: Blizzard_FrameXMLBase [AllowLoad game] [AllowLoadGameType mainline]",
+            "## AllowLoad: both [AllowLoadGameType mainline]",
+        ]
+    } else {
+        &[
+            "## Title: Blizzard_UnitPopupShared",
+            "## Author: Blizzard Entertainment",
+            "## DefaultState: enabled",
+            "## Dependencies: Blizzard_SharedXML, Blizzard_Colors",
+            "## OptionalDeps: Blizzard_GlueXML, Blizzard_FrameXMLBase",
+            "## AllowLoad: both",
+            "## AllowLoadGameType: mainline",
+        ]
+    };
 
     for line in expected_directives {
         assert!(raw.contains(line), "Raw TOC must pin directive `{line}`");
     }
 
-    for path in REPRESENTATIVE_BODY_FILES {
+    for path in representative_body_files() {
         assert!(
             raw.contains(path),
             "Raw TOC must pin body path `{path}`. Body order is \

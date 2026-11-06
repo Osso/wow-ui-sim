@@ -117,6 +117,8 @@ fn metadata_game_type_excludes_classic_edges_in_pinned_ptr_addons() {
             "Blizzard_EditMode",
             "Blizzard_TransmogShared",
             "Blizzard_GameMenuEsc",
+            "Blizzard_SharedXML",
+            "Blizzard_GamepadSharedUtility",
         ]
     );
     assert_eq!(
@@ -133,6 +135,7 @@ fn metadata_game_type_excludes_classic_edges_in_pinned_ptr_addons() {
             "Blizzard_MicroMenu",
             "Blizzard_PingUI",
             "Blizzard_GameMenuEsc",
+            "Blizzard_SpellTypeIconOverlay",
         ]
     );
 }

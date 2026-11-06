@@ -9,6 +9,9 @@ use wow_ui_sim::screen::ScreenKind;
 use wow_ui_sim::startup::fire_startup_events_for_screen;
 use wow_ui_sim::toc::TocFile;
 
+#[path = "common/toc_layout.rs"]
+mod toc_layout;
+
 fn blizzard_ui_dir() -> PathBuf {
     wow_ui_sim::paths::default_blizzard_ui_addons_path()
         .expect("Blizzard UI cache should be available")
@@ -57,6 +60,55 @@ const PLAYER_SPELLS_TOC_FILES: &[&str] = &[
     "Blizzard_PlayerSpellsRegistration.lua",
     "Localization.lua",
 ];
+
+// The unified PTR TOC lists the Mainline overrides explicitly, adds the
+// SpellBook Category/Tutorials/Frame Lua files, and drops the Retail
+// ClassTalentSearch entry.
+const PTR_PLAYER_SPELLS_TOC_FILES: &[&str] = &[
+    "Blizzard_PlayerSpells_Bootstrap.lua",
+    "Mainline/ClassSpecializations/Blizzard_ClassSpecializationsFrame.xml",
+    "Mainline/ClassTalents/Blizzard_ClassTalentUtil.lua",
+    "ClassTalents/Blizzard_ClassTalentUtil.lua",
+    "ClassTalents/Blizzard_ClassTalentLoadoutDialogTemplates.xml",
+    "ClassTalents/Blizzard_ClassTalentImportExport.lua",
+    "ClassTalents/Blizzard_ClassTalentLoadoutImportDialog.xml",
+    "ClassTalents/Blizzard_ClassTalentLoadoutEditDialog.xml",
+    "ClassTalents/Blizzard_ClassTalentLoadoutCreateDialog.xml",
+    "ClassTalents/Blizzard_ClassTalentButtonTemplates.xml",
+    "ClassTalents/Blizzard_ClassTalentEdgeTemplates.lua",
+    "ClassTalents/Blizzard_ClassTalentEdgeTemplates.xml",
+    "ClassTalents/Blizzard_HeroTalentsSelectionDialog.lua",
+    "ClassTalents/Blizzard_HeroTalentsSelectionDialog.xml",
+    "ClassTalents/Blizzard_HeroTalentsContainer.lua",
+    "ClassTalents/Blizzard_HeroTalentsContainer.xml",
+    "ClassTalents/Blizzard_ClassTalentsFrame.lua",
+    "Mainline/ClassTalents/Blizzard_ClassTalentsFrame.lua",
+    "Mainline/ClassTalents/Blizzard_ClassTalentsFrame.xml",
+    "PvPTalents/Blizzard_PvPTalentListTemplates.xml",
+    "PvPTalents/Blizzard_PvPTalentSlotTemplates.xml",
+    "PvPTalents/Blizzard_WarmodeButtonTemplate.xml",
+    "Mainline/SpellBook/Blizzard_SpellBookTemplates.xml",
+    "SpellBook/Blizzard_SpellBookTemplates.xml",
+    "SpellBook/Blizzard_SpellBookItem.xml",
+    "SpellBook/Blizzard_SpellBookSearch.lua",
+    "SpellBook/Blizzard_SpellBookFrame.xml",
+    "SpellBook/Blizzard_SpellBookCategory.lua",
+    "SpellBook/Blizzard_SpellBookFrameTutorials.lua",
+    "SpellBook/Blizzard_SpellBookFrame.lua",
+    "Mainline/SpellBook/Blizzard_SpellBookFrame.lua",
+    "Blizzard_PlayerSpellsFrame.lua",
+    "Mainline/Blizzard_PlayerSpellsFrame.xml",
+    "Blizzard_PlayerSpellsRegistration.lua",
+    "Localization.lua",
+];
+
+fn player_spells_toc_files() -> &'static [&'static str] {
+    if toc_layout::unified_toc_tree() {
+        PTR_PLAYER_SPELLS_TOC_FILES
+    } else {
+        PLAYER_SPELLS_TOC_FILES
+    }
+}
 
 const PUBLIC_NAMED_FRAMES: &[&str] = &[
     "PlayerSpellsFrame",
@@ -412,10 +464,13 @@ fn blizzard_player_spells_toc_lists_bootstrap_then_twenty_six_files_in_canonical
         .map(|p| p.to_string_lossy().into_owned())
         .collect();
     assert_eq!(
-        listed, PLAYER_SPELLS_TOC_FILES,
-        "Retail 12.1.0.69497 lists the PlayerSpells bootstrap first, then twenty-six source \
-         files across ClassSpecializations, ClassTalents, PvPTalents, SpellBook, and the \
-         root-level frame, registration, and localization entries"
+        listed,
+        player_spells_toc_files(),
+        "The TOC lists the PlayerSpells bootstrap first, then its source files across \
+         ClassSpecializations, ClassTalents, PvPTalents, SpellBook, and the root-level frame, \
+         registration, and localization entries. The unified PTR TOC lists the Mainline \
+         overrides explicitly, adds the SpellBook Category/Tutorials/Frame Lua files, and \
+         drops the Retail ClassTalentSearch entry"
     );
 }
 }

@@ -7,6 +7,9 @@ use wow_ui_sim::screen::ScreenKind;
 use wow_ui_sim::startup::fire_startup_events_for_screen;
 use wow_ui_sim::toc::TocFile;
 
+#[path = "common/toc_layout.rs"]
+mod toc_layout;
+
 fn blizzard_ui_dir() -> PathBuf {
     wow_ui_sim::paths::default_blizzard_ui_addons_path()
         .expect("Blizzard UI cache should be available")
@@ -17,7 +20,7 @@ fn ui_panel_templates_dir() -> PathBuf {
 }
 
 fn ui_panel_templates_toc() -> PathBuf {
-    ui_panel_templates_dir().join("Blizzard_UIPanelTemplates_Mainline.toc")
+    find_toc_file(&ui_panel_templates_dir()).expect("UIPanelTemplates TOC resolves")
 }
 
 const GLUE_SCREENS: &[ScreenKind] = &[
@@ -112,12 +115,11 @@ post_wrath_ui_fixture! {
 fn find_toc_file_resolves_mainline_variant() {
     let resolved = find_toc_file(&ui_panel_templates_dir()).expect("UIPanelTemplates TOC resolves");
     assert_eq!(
-        resolved,
-        ui_panel_templates_toc(),
-        "find_toc_file at src/loader/mod.rs:65-95 prefers \
-         `<addon>_Mainline.toc`. The addon ships ONLY the Mainline \
-         variant (no bare TOC, no Classic variant) — Classic builds get \
-         their templates from a different addon"
+        resolved.file_name().and_then(|name| name.to_str()),
+        Some(toc_layout::expected_toc_name("Blizzard_UIPanelTemplates").as_str()),
+        "find_toc_file resolves the active profile's UIPanelTemplates TOC: the Retail cache \
+         ships only the `_Mainline.toc` variant, while the pinned PTR cache ships the bare \
+         unified TOC"
     );
 }
 }
@@ -205,40 +207,62 @@ post_wrath_ui_fixture! {
 fn toc_raw_bytes_pin_six_directives_and_six_body_files() {
     let raw = std::fs::read_to_string(ui_panel_templates_toc()).expect("TOC reads utf-8");
 
-    let expected_lines = [
-        "## Title: Blizzard_UIPanelTemplates",
-        "## Author: Blizzard Entertainment",
-        "## DefaultState: enabled",
-        "## Dependencies: Blizzard_SharedXMLGame",
-        "## AllowLoad: game",
-        "## AllowLoadGameType: mainline",
-        "Mainline\\AutoCastTemplates.lua",
-        "Mainline\\AutoCastTemplates.xml",
-        "Shared\\UIPanelSpellButtonFrame.lua",
-        "Shared\\UIPanelSpellButtonFrame.xml",
-        "Mainline\\UIPanelTemplates.lua",
-        "Mainline\\UIPanelTemplates.xml",
-    ];
+    let expected_lines: &[&str] = if toc_layout::unified_toc_tree() {
+        &[
+            "## Title: Blizzard_UIPanelTemplates",
+            "## Dep: Blizzard_SharedXMLGame",
+            "[Family]\\AutoCastTemplates.lua",
+            "[Family]\\AutoCastTemplates.xml",
+            "Shared\\UIPanelSpellButtonFrame.lua",
+            "Shared\\UIPanelSpellButtonFrame.xml",
+            "Shared\\UIPanelTemplatesShared.lua",
+            "[Family]\\UIPanelTemplates.lua",
+            "[Family]\\UIPanelTemplates.xml",
+            "[Family]\\UIPanelTemplatesOverrides.xml",
+            "[Game]\\UIPanelTemplatesOverrides.xml [AllowLoadGameType camelot]",
+        ]
+    } else {
+        &[
+            "## Title: Blizzard_UIPanelTemplates",
+            "## Author: Blizzard Entertainment",
+            "## DefaultState: enabled",
+            "## Dependencies: Blizzard_SharedXMLGame",
+            "## AllowLoad: game",
+            "## AllowLoadGameType: mainline",
+            "Mainline\\AutoCastTemplates.lua",
+            "Mainline\\AutoCastTemplates.xml",
+            "Shared\\UIPanelSpellButtonFrame.lua",
+            "Shared\\UIPanelSpellButtonFrame.xml",
+            "Mainline\\UIPanelTemplates.lua",
+            "Mainline\\UIPanelTemplates.xml",
+        ]
+    };
 
     for line in expected_lines {
         assert!(
             raw.contains(line),
-            "Raw TOC must pin `{line}` — body order is 3 lua/xml pairs \
-             with the heaviest pair last: AutoCastTemplates (25-line \
-             lua + 42-line xml) → UIPanelSpellButtonFrame (181 lua + \
-             63 xml in Shared/) → UIPanelTemplates (712 lua + 1490 \
-             xml in Mainline/). The lua-before-xml ordering within each \
-             pair lets the XML's `mixin=` attributes resolve against \
-             published mixin tables"
+            "Raw TOC must pin `{line}` — body order is the lua/xml pairs \
+             with the heaviest pair last: AutoCastTemplates → \
+             UIPanelSpellButtonFrame (Shared/) → UIPanelTemplates. The \
+             lua-before-xml ordering within each pair lets the XML's \
+             `mixin=` attributes resolve against published mixin tables"
         );
     }
 
     assert!(!raw.contains("## LoadOnDemand"));
-    assert!(!raw.contains("## LoadFirst"));
-    assert!(!raw.contains("## OptionalDeps"));
     assert!(!raw.contains("## SavedVariables"));
     assert!(!raw.contains("## RequiredDep"));
-    assert!(!raw.contains("[Family]"));
+    if toc_layout::unified_toc_tree() {
+        assert!(
+            raw.contains("[ExcludeLoadGameType classic, camelot]"),
+            "The unified PTR TOC excludes the shared overrides XML from the classic and \
+             camelot flavors"
+        );
+    } else {
+        assert!(!raw.contains("## LoadFirst"));
+        assert!(!raw.contains("## OptionalDeps"));
+        assert!(!raw.contains("[Family]"));
+    }
 }
 }
 

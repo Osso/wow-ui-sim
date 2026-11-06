@@ -7,6 +7,9 @@ use wow_ui_sim::screen::ScreenKind;
 use wow_ui_sim::startup::fire_startup_events_for_screen;
 use wow_ui_sim::toc::TocFile;
 
+#[path = "common/toc_layout.rs"]
+mod toc_layout;
+
 fn blizzard_ui_dir() -> PathBuf {
     wow_ui_sim::paths::default_blizzard_ui_addons_path()
         .expect("Blizzard UI cache should be available")
@@ -17,7 +20,7 @@ fn ui_panels_game_dir() -> PathBuf {
 }
 
 fn ui_panels_game_mainline_toc() -> PathBuf {
-    ui_panels_game_dir().join("Blizzard_UIPanels_Game_Mainline.toc")
+    find_toc_file(&ui_panels_game_dir()).expect("UIPanels_Game TOC resolves")
 }
 
 const GLUE_SCREENS: &[ScreenKind] = &[
@@ -41,6 +44,33 @@ const TOC_DEPENDENCIES: &[&str] = &[
     "Blizzard_ManagedFrameSystem",
     "Blizzard_GameMenuEsc",
 ];
+
+// The unified PTR TOC also depends on Blizzard_StatusTrackingBar and makes
+// Blizzard_GamepadSharedUtility an optional dependency.
+const PTR_TOC_DEPENDENCIES: &[&str] = &[
+    "Blizzard_GameTooltip",
+    "Blizzard_UIPanelTemplates",
+    "Blizzard_FrameXML",
+    "Blizzard_EditMode",
+    "Blizzard_POIButton",
+    "Blizzard_MoneyFrame",
+    "Blizzard_AccessibilityTemplates",
+    "Blizzard_Colors",
+    "Blizzard_HelpPlate",
+    "Blizzard_TransmogShared",
+    "Blizzard_StatusTrackingBar",
+    "Blizzard_FrameXMLUtil",
+    "Blizzard_ManagedFrameSystem",
+    "Blizzard_GameMenuEsc",
+];
+
+fn toc_dependencies() -> &'static [&'static str] {
+    if toc_layout::unified_toc_tree() {
+        PTR_TOC_DEPENDENCIES
+    } else {
+        TOC_DEPENDENCIES
+    }
+}
 
 const REPRESENTATIVE_MIXINS: &[&str] = &[
     "CharacterFrameMixin",
@@ -107,13 +137,11 @@ post_wrath_ui_fixture! {
 fn find_toc_file_resolves_mainline_variant() {
     let resolved = find_toc_file(&ui_panels_game_dir()).expect("UIPanels_Game TOC resolves");
     assert_eq!(
-        resolved,
-        ui_panels_game_mainline_toc(),
-        "find_toc_file at src/loader/mod.rs:65-95 prefers \
-         `<addon>_Mainline.toc` over the bare TOC. The directory \
-         carries TWO flavor-suffixed TOCs (Blizzard_UIPanels_Game_Mainline.toc \
-         and Blizzard_UIPanels_Game_Classic.toc) — _Classic is in the \
-         fallback ladder but _Mainline wins on the first variants pass"
+        resolved.file_name().and_then(|name| name.to_str()),
+        Some(toc_layout::expected_toc_name("Blizzard_UIPanels_Game").as_str()),
+        "find_toc_file resolves the active profile's UIPanels_Game TOC: the Retail cache ships \
+         `_Mainline.toc` and `_Classic.toc` variants, while the pinned PTR cache ships one \
+         unified TOC whose entries are gated per game type"
     );
 }
 }
@@ -135,13 +163,13 @@ fn toc_is_eager_with_thirteen_dependencies() {
     let deps = toc.dependencies();
     assert_eq!(
         deps.len(),
-        TOC_DEPENDENCIES.len(),
-        "Mainline TOC must declare exactly {} hard deps. Got {}: {:?}",
-        TOC_DEPENDENCIES.len(),
+        toc_dependencies().len(),
+        "TOC must declare exactly {} hard deps. Got {}: {:?}",
+        toc_dependencies().len(),
         deps.len(),
         deps
     );
-    for expected in TOC_DEPENDENCIES {
+    for expected in toc_dependencies() {
         assert!(
             deps.iter().any(|d| d == expected),
             "TOC must declare `{expected}` — UIPanels_Game leans on \
@@ -154,7 +182,12 @@ fn toc_is_eager_with_thirteen_dependencies() {
         );
     }
 
-    assert!(toc.optional_deps().is_empty());
+    let expected_optional: Vec<String> = if toc_layout::unified_toc_tree() {
+        vec!["Blizzard_GamepadSharedUtility".to_string()]
+    } else {
+        Vec::new()
+    };
+    assert_eq!(toc.optional_deps(), expected_optional);
     assert!(toc.saved_variables().is_empty());
     assert!(toc.saved_variables_per_character().is_empty());
     assert!(!toc.is_load_first());
@@ -204,6 +237,26 @@ fn allow_load_game_type_mainline_is_not_restricted() {
 post_wrath_ui_fixture! {
 #[test]
 fn classic_toc_uses_load_first_directive() {
+    if toc_layout::unified_toc_tree() {
+        // One unified TOC carries the classic-only LoadFirst directive as a
+        // game-type-gated metadata line; the mainline parse must reject it.
+        let raw = std::fs::read_to_string(ui_panels_game_mainline_toc())
+            .expect("UIPanels_Game TOC reads");
+        assert!(
+            raw.contains("## LoadFirst: 1 [AllowLoadGameType classic]"),
+            "The unified PTR TOC carries the classic-only `## LoadFirst: 1` directive gated by \
+             `[AllowLoadGameType classic]` — Classic builds need the in-world panels available \
+             before everything else because the Classic dependency graph differs"
+        );
+        let toc = TocFile::from_file(&ui_panels_game_mainline_toc())
+            .expect("UIPanels_Game TOC parses");
+        assert!(
+            !toc.is_load_first(),
+            "The classic-gated LoadFirst directive must not apply to the mainline parse"
+        );
+        return;
+    }
+
     let classic_toc_path = ui_panels_game_dir().join("Blizzard_UIPanels_Game_Classic.toc");
     let classic = TocFile::from_file(&classic_toc_path).expect("Classic TOC parses");
 
@@ -227,21 +280,40 @@ post_wrath_ui_fixture! {
 fn toc_raw_bytes_pin_six_directives_and_localization_trailer() {
     let raw = std::fs::read_to_string(ui_panels_game_mainline_toc()).expect("TOC reads utf-8");
 
-    let expected_lines = [
-        "## Title: Blizzard_UIPanels_Game",
-        "## Author: Blizzard Entertainment",
-        "## DefaultState: enabled",
-        "## Dependencies: Blizzard_FrameXML, Blizzard_EditMode, Blizzard_GameTooltip, Blizzard_UIPanelTemplates, Blizzard_POIButton, Blizzard_MoneyFrame, Blizzard_AccessibilityTemplates, Blizzard_Colors, Blizzard_HelpPlate, Blizzard_TransmogShared, Blizzard_FrameXMLUtil, Blizzard_ManagedFrameSystem, Blizzard_GameMenuEsc",
-        "## AllowLoad: game",
-        "## AllowLoadGameType: mainline",
-        "Mainline\\Localization.lua",
-        "Mainline\\CharacterFrame.lua",
-        "Mainline\\WorldMapFrame.lua",
-        "Mainline\\QuestFrame.lua",
-        "Mainline\\MerchantFrame.lua",
-        "Mainline\\BankFrame.lua",
-        "Shared\\PlayerInteractionFrameManager.lua",
-    ];
+    let expected_lines: &[&str] = if toc_layout::unified_toc_tree() {
+        &[
+            "## Title: Blizzard_UIPanels_Game",
+            "## Dep: Blizzard_GameTooltip",
+            "## Dep: Blizzard_EditMode [AllowLoadGameType mainline]",
+            "## Dep: Blizzard_CharacterFrame [AllowLoadGameType classic]",
+            "## Dep: Blizzard_TransmogShared [AllowLoadGameType mainline]",
+            "## Dep: Blizzard_StatusTrackingBar [AllowLoadGameType mainline]",
+            "## OptionalDep: Blizzard_GamepadSharedUtility [AllowLoadGameType mainline]",
+            "## LoadFirst: 1 [AllowLoadGameType classic]",
+            "[Family]\\Localization.lua",
+            "[Family]\\CharacterFrame.lua",
+            "[Family]\\WorldMapFrame.lua",
+            "[Family]\\MerchantFrame.lua",
+            "[Family]\\BankFrame.xml",
+            "Shared\\PlayerInteractionFrameManager.lua",
+        ]
+    } else {
+        &[
+            "## Title: Blizzard_UIPanels_Game",
+            "## Author: Blizzard Entertainment",
+            "## DefaultState: enabled",
+            "## Dependencies: Blizzard_FrameXML, Blizzard_EditMode, Blizzard_GameTooltip, Blizzard_UIPanelTemplates, Blizzard_POIButton, Blizzard_MoneyFrame, Blizzard_AccessibilityTemplates, Blizzard_Colors, Blizzard_HelpPlate, Blizzard_TransmogShared, Blizzard_FrameXMLUtil, Blizzard_ManagedFrameSystem, Blizzard_GameMenuEsc",
+            "## AllowLoad: game",
+            "## AllowLoadGameType: mainline",
+            "Mainline\\Localization.lua",
+            "Mainline\\CharacterFrame.lua",
+            "Mainline\\WorldMapFrame.lua",
+            "Mainline\\QuestFrame.lua",
+            "Mainline\\MerchantFrame.lua",
+            "Mainline\\BankFrame.lua",
+            "Shared\\PlayerInteractionFrameManager.lua",
+        ]
+    };
 
     for line in expected_lines {
         assert!(
@@ -250,7 +322,7 @@ fn toc_raw_bytes_pin_six_directives_and_localization_trailer() {
              two subdirs (Shared\\ for cross-flavor utilities like \
              CastingBarFrame, ExtraAbilityContainer, TaxiFrame, \
              SocialQueue, VehicleSeatIndicator, WorldMapPOIQuantizer, \
-             PlayerInteractionFrameManager and Mainline\\ for \
+             PlayerInteractionFrameManager and the family subdir for \
              flavor-specific panels). The Localization.lua trailer must \
              load LAST so its localized strings overlay any defaults the \
              panels declared at module-load"
@@ -258,11 +330,21 @@ fn toc_raw_bytes_pin_six_directives_and_localization_trailer() {
     }
 
     assert!(!raw.contains("## LoadOnDemand"));
-    assert!(!raw.contains("## LoadFirst"));
-    assert!(!raw.contains("## OptionalDeps"));
     assert!(!raw.contains("## SavedVariables"));
     assert!(!raw.contains("## RequiredDep"));
-    assert!(!raw.contains("[Family]"));
+    if toc_layout::unified_toc_tree() {
+        assert!(raw.contains("[Family]"));
+        assert!(
+            raw.contains("[AllowLoadGameType standard]")
+                && raw.contains("[AllowLoadGameType mainline]")
+                && raw.contains("[ExcludeLoadGameType camelot]"),
+            "The unified PTR TOC gates each family entry on the game types it serves"
+        );
+    } else {
+        assert!(!raw.contains("## LoadFirst"));
+        assert!(!raw.contains("## OptionalDeps"));
+        assert!(!raw.contains("[Family]"));
+    }
 }
 }
 

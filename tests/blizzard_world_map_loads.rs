@@ -6,6 +6,9 @@ use wow_ui_sim::screen::ScreenKind;
 use wow_ui_sim::startup::fire_startup_events_for_screen;
 use wow_ui_sim::toc::TocFile;
 
+#[path = "common/toc_layout.rs"]
+mod toc_layout;
+
 fn blizzard_ui_dir() -> PathBuf {
     wow_ui_sim::paths::default_blizzard_ui_addons_path()
         .expect("Blizzard UI cache should be available")
@@ -34,6 +37,31 @@ const MAINLINE_BODY_FILES: &[&str] = &[
     "Blizzard_WorldMapTemplates.xml",
     "Blizzard_WorldMap.xml",
 ];
+
+// The PTR Mainline TOC lists the family constants, templates, and overrides
+// explicitly; the plunderstorm entries stay filtered out.
+const PTR_MAINLINE_BODY_FILES: &[&str] = &[
+    "Mainline/Blizzard_WorldMapConstants.lua",
+    "QuestLogOwnerMixin.lua",
+    "MapTexturePreloader.lua",
+    "WM_WorldQuestDataProvider.xml",
+    "WM_EventOverlayDataProvider.xml",
+    "WM_DebugDataProvider.xml",
+    "Mainline/Blizzard_WorldMapTemplates.xml",
+    "Blizzard_WorldMapTemplates.xml",
+    "Blizzard_WorldMapTemplates.lua",
+    "Mainline/Blizzard_WorldMapTemplates.lua",
+    "Blizzard_WorldMap.lua",
+    "Blizzard_WorldMap.xml",
+];
+
+fn mainline_body_files() -> &'static [&'static str] {
+    if toc_layout::unified_toc_tree() {
+        PTR_MAINLINE_BODY_FILES
+    } else {
+        MAINLINE_BODY_FILES
+    }
+}
 
 const PRIMARY_MIXINS: &[&str] = &[
     "WorldMapMixin",
@@ -192,14 +220,14 @@ fn toc_body_excludes_plunderstorm_files_on_mainline_build() {
 
     assert_eq!(
         body_files,
-        MAINLINE_BODY_FILES
+        mainline_body_files()
             .iter()
             .map(|s| s.to_string())
             .collect::<Vec<_>>(),
-        "TOC body must collapse to 7 files on mainline — the 2 lines tagged \
+        "TOC body must collapse to the Mainline entries on a mainline build — the 2 lines tagged \
          `[AllowLoadGameType plunderstorm]` (WoWLabs/WM_WoWLabsAreaDataProvider.lua + .xml) are \
-         dropped at toc.rs:141 by push_file_entry's is_allowed_game_type guard since plunderstorm \
-         is not in {{mainline, standard}}. FIRST campaign addon analyzed exercising the per-file \
+         dropped at push_file_entry's is_allowed_game_type guard since plunderstorm is not in \
+         {{mainline, standard}}. FIRST campaign addon analyzed exercising the per-file \
          game-type gate (distinct from Blizzard_WorldLootObjectList's TOP-LEVEL \
          `## AllowLoadGameType: plunderstorm`, which restricts the entire addon)"
     );

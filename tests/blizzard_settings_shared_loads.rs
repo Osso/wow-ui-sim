@@ -7,6 +7,9 @@ use wow_ui_sim::screen::ScreenKind;
 use wow_ui_sim::startup::fire_startup_events_for_screen;
 use wow_ui_sim::toc::TocFile;
 
+#[path = "common/toc_layout.rs"]
+mod toc_layout;
+
 fn blizzard_ui_dir() -> PathBuf {
     wow_ui_sim::paths::default_blizzard_ui_addons_path()
         .expect("Blizzard UI cache should be available")
@@ -25,6 +28,57 @@ const HARD_DEPS: &[&str] = &[
     "Blizzard_HelpPlate",
     "Blizzard_StaticPopup_Glue",
     "Blizzard_StaticPopup_Game",
+];
+
+// The unified PTR TOC adds two unconditional hard deps.
+const PTR_HARD_DEPS: &[&str] = &[
+    "Blizzard_SharedXML",
+    "Blizzard_HelpPlate",
+    "Blizzard_StaticPopup_Glue",
+    "Blizzard_StaticPopup_Game",
+    "Blizzard_GamepadSharedUtility",
+    "Blizzard_UIParentPanelManager",
+];
+
+fn hard_deps() -> &'static [&'static str] {
+    if toc_layout::unified_toc_tree() {
+        PTR_HARD_DEPS
+    } else {
+        HARD_DEPS
+    }
+}
+
+// Resolved body order of the unified PTR TOC: it lists the Lua siblings of
+// CategoryList, SettingsList, SettingControls, Keybindings, and the Preferred
+// Play settings explicitly, and gates the Camelot overrides out of Mainline.
+const PTR_BODY: &[&str] = &[
+    "NewDefinitionsFramework.lua",
+    "NewDefinitionsFramework.xml",
+    "Mainline/NewDefinitions.lua",
+    "Blizzard_SettingsRegistrar.lua",
+    "Blizzard_Settings.lua",
+    "Blizzard_Category.lua",
+    "Blizzard_CategoryList.lua",
+    "Blizzard_CategoryList.xml",
+    "Blizzard_SettingsList.lua",
+    "Blizzard_SettingsList.xml",
+    "Blizzard_Setting.lua",
+    "Blizzard_SettingControls.lua",
+    "Blizzard_SettingControls.xml",
+    "Mainline/Blizzard_SettingsPanelTemplates.xml",
+    "Blizzard_SettingsPanel.lua",
+    "Blizzard_SettingsPanel.xml",
+    "Blizzard_Keybindings.lua",
+    "Blizzard_Keybindings.xml",
+    "Blizzard_Dialogs.lua",
+    "Blizzard_SettingsLayouts.lua",
+    "Blizzard_Registration.lua",
+    "Blizzard_SettingsInbound.lua",
+    "Blizzard_Deprecated.lua",
+    "Mainline/GraphicsOverrides.lua",
+    "Mainline/AudioOverrides.lua",
+    "Blizzard_Settings_PreferredPlaySettings.lua",
+    "Mainline/LanguagesOverrides.lua",
 ];
 
 const PUBLIC_MIXINS: &[&str] = &[
@@ -153,10 +207,10 @@ fn toc_declares_eager_both_with_four_dep_entries() {
     let deps = toc.dependencies();
     assert_eq!(
         deps.len(),
-        HARD_DEPS.len(),
-        "Retail 12.1.0.69497 declares four Dep entries in published order. Got: {deps:?}"
+        hard_deps().len(),
+        "TOC declares its Dep entries in published order. Got: {deps:?}"
     );
-    for (i, expected) in HARD_DEPS.iter().enumerate() {
+    for (i, expected) in hard_deps().iter().enumerate() {
         assert_eq!(deps[i], *expected, "Hard dep #{i} must be {expected}");
     }
 
@@ -244,6 +298,22 @@ post_wrath_ui_fixture! {
 fn toc_body_load_order_runs_definitions_framework_before_namespace_seed() {
     let raw = std::fs::read_to_string(settings_shared_toc()).expect("TOC reads utf-8");
 
+    if toc_layout::unified_toc_tree() {
+        let toc = TocFile::from_file(&settings_shared_toc()).expect("TOC parses");
+        let body: Vec<String> = toc
+            .files
+            .iter()
+            .map(|path| path.to_string_lossy().replace('\\', "/"))
+            .collect();
+        assert_eq!(
+            body,
+            PTR_BODY.iter().map(|s| s.to_string()).collect::<Vec<_>>(),
+            "The unified PTR TOC resolves to this load order: the definitions framework and \
+             namespace seed run first, then the category/settings/panel/registration chain"
+        );
+        return;
+    }
+
     let body_lines: Vec<&str> = raw
         .lines()
         .filter(|line| {
@@ -297,13 +367,15 @@ fn toc_entry_count_breakdown_matches_filesystem_layout() {
         .iter()
         .filter(|f| f.extension().is_some_and(|ext| ext == "xml"))
         .count();
+    let expected_lua = if toc_layout::unified_toc_tree() { 20 } else { 14 };
+    let expected_xml = 7;
     assert_eq!(
-        lua_count, 14,
-        "Retail 12.1.0.69497 lists 14 Lua entries. Got: {lua_count}"
+        lua_count, expected_lua,
+        "TOC body lists {expected_lua} Lua entries. Got: {lua_count}"
     );
     assert_eq!(
-        xml_count, 7,
-        "Retail 12.1.0.69497 lists seven XML entries, including NewDefinitionsFramework.xml. Got: {xml_count}"
+        xml_count, expected_xml,
+        "TOC body lists {expected_xml} XML entries, including NewDefinitionsFramework.xml. Got: {xml_count}"
     );
 }
 }

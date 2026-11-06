@@ -5,6 +5,9 @@ use wow_ui_sim::lua_api::WowLuaEnv;
 use wow_ui_sim::screen::ScreenKind;
 use wow_ui_sim::toc::TocFile;
 
+#[path = "common/toc_layout.rs"]
+mod toc_layout;
+
 fn blizzard_ui_dir() -> PathBuf {
     wow_ui_sim::paths::default_blizzard_ui_addons_path()
         .expect("Blizzard UI cache should be available")
@@ -238,18 +241,27 @@ fn mainline_toc_body_starts_with_localization_machinery_then_constants() {
         .collect();
 
     let first_three = &body_lines[..3];
-    assert_eq!(
-        first_three,
-        [
+    let expected_first_three: &[&str] = if toc_layout::unified_toc_tree() {
+        &[
+            "Shared\\LocalizationMachinery.lua",
+            "Shared\\GamepadConstants.lua",
+            "SharedConstants.lua",
+        ]
+    } else {
+        &[
             "Shared\\LocalizationMachinery.lua",
             "SharedConstants.lua",
             "ColorUtil.lua",
-        ],
+        ]
+    };
+    assert_eq!(
+        first_three, expected_first_three,
         "TOC body MUST start with these 3 entries in order. (1) \
          Shared\\LocalizationMachinery.lua bootstraps the Localization() \
-         helper used by every later file's localized strings. (2) \
-         SharedConstants.lua publishes shared UI constants. (3) ColorUtil.lua \
-         publishes color helpers consumed by later widget files. Got: {first_three:?}"
+         helper used by every later file's localized strings. (2) the \
+         constants module publishes shared UI constants. (3) ColorUtil.lua \
+         publishes color helpers consumed by later widget files. The unified \
+         PTR TOC inserts Shared\\GamepadConstants.lua second. Got: {first_three:?}"
     );
 }
 }
@@ -270,20 +282,23 @@ fn mainline_toc_body_count_breakdown_matches_filesystem_layout() {
         .filter(|f| f.extension().is_some_and(|ext| ext == "xml"))
         .count();
 
+    let expected_lua = if toc_layout::unified_toc_tree() { 153 } else { 146 };
+    let expected_xml = if toc_layout::unified_toc_tree() { 78 } else { 74 };
     assert_eq!(
         lua_count + xml_count,
-        220,
-        "Retail 12.1.5.70575 TOC body has 220 active Mainline file entries. \
-         Got lua={lua_count} xml={xml_count}"
+        expected_lua + expected_xml,
+        "TOC body has {expected_total} active Mainline file entries. \
+         Got lua={lua_count} xml={xml_count}",
+        expected_total = expected_lua + expected_xml
     );
     assert_eq!(
-        lua_count, 146,
-        "Retail 12.1.5.70575 TOC body has 146 active Mainline Lua entries. \
+        lua_count, expected_lua,
+        "TOC body has {expected_lua} active Mainline Lua entries. \
          Got: {lua_count}"
     );
     assert_eq!(
-        xml_count, 74,
-        "Retail 12.1.5.70575 TOC body has 74 active Mainline XML entries. \
+        xml_count, expected_xml,
+        "TOC body has {expected_xml} active Mainline XML entries. \
          Got: {xml_count}"
     );
 }

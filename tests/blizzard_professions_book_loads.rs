@@ -7,6 +7,9 @@ use wow_ui_sim::screen::ScreenKind;
 use wow_ui_sim::startup::fire_startup_events_for_screen;
 use wow_ui_sim::toc::TocFile;
 
+#[path = "common/toc_layout.rs"]
+mod toc_layout;
+
 fn blizzard_ui_dir() -> PathBuf {
     wow_ui_sim::paths::default_blizzard_ui_addons_path()
         .expect("Blizzard UI cache should be available")
@@ -26,7 +29,35 @@ const PROFESSIONS_BOOK_TOC_FILES: &[&str] = &[
     "Blizzard_ProfessionsBook.xml",
 ];
 
+// The unified PTR TOC lists the shared and family Templates XML.
+const PTR_PROFESSIONS_BOOK_TOC_FILES: &[&str] = &[
+    "Blizzard_ProfessionsBook_Bootstrap.lua",
+    "Blizzard_ProfessionsBook.lua",
+    "Blizzard_ProfessionsBookTemplates.xml",
+    "Mainline/Blizzard_ProfessionsBookTemplates.xml",
+    "Blizzard_ProfessionsBook.xml",
+];
+
+fn professions_book_toc_files() -> &'static [&'static str] {
+    if toc_layout::unified_toc_tree() {
+        PTR_PROFESSIONS_BOOK_TOC_FILES
+    } else {
+        PROFESSIONS_BOOK_TOC_FILES
+    }
+}
+
 const REQUIRED_DEPS: &[&str] = &["Blizzard_HelpPlate"];
+
+// The unified PTR TOC also depends on Blizzard_ProfessionsTemplates.
+const PTR_REQUIRED_DEPS: &[&str] = &["Blizzard_HelpPlate", "Blizzard_ProfessionsTemplates"];
+
+fn required_deps() -> &'static [&'static str] {
+    if toc_layout::unified_toc_tree() {
+        PTR_REQUIRED_DEPS
+    } else {
+        REQUIRED_DEPS
+    }
+}
 
 const PUBLIC_MIXIN_GLOBALS: &[&str] = &[
     "ProfessionSpellButtonMixin",
@@ -170,11 +201,11 @@ fn blizzard_professions_book_toc_declares_one_dependency() {
     let dependencies = toc.dependencies();
     let deps: Vec<&str> = dependencies.iter().map(|s| s.as_str()).collect();
     assert_eq!(
-        deps, REQUIRED_DEPS,
-        "TOC must declare exactly 1 dep: Blizzard_HelpPlate — supplies the HelpPlate \
-         tutorial-overlay system referenced by ProfessionsBook_ToggleTutorial which \
-         calls HelpPlate.Show / HelpPlate.Hide / HelpPlate.IsShowingHelpInfo against the \
-         module-local ProfessionsFrame_HelpPlate config table"
+        deps,
+        required_deps(),
+        "TOC must declare Blizzard_HelpPlate (which supplies the HelpPlate tutorial-overlay \
+         system referenced by ProfessionsBook_ToggleTutorial); the unified PTR TOC also \
+         declares Blizzard_ProfessionsTemplates"
     );
 
     assert!(
@@ -270,10 +301,12 @@ fn blizzard_professions_book_toc_lists_bootstrap_then_two_files_in_canonical_ord
         .map(|p| p.to_string_lossy().into_owned())
         .collect();
     assert_eq!(
-        listed, PROFESSIONS_BOOK_TOC_FILES,
-        "Retail 12.1.0.69497 lists its bootstrap first, then Blizzard_ProfessionsBook.lua \
-         before Blizzard_ProfessionsBook.xml so mixins and script-bound functions exist \
-         before XML parsing"
+        listed,
+        professions_book_toc_files(),
+        "The TOC lists its bootstrap first, then Blizzard_ProfessionsBook.lua \
+         before Blizzard_ProfessionsBook.xml so mixins and script-bound functions \
+         exist before XML parsing; the unified PTR TOC also lists the shared and \
+         family Templates XML"
     );
 }
 }

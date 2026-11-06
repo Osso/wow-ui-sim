@@ -7,6 +7,9 @@ use wow_ui_sim::screen::ScreenKind;
 use wow_ui_sim::startup::settle_headless_startup;
 use wow_ui_sim::toc::TocFile;
 
+#[path = "common/toc_layout.rs"]
+mod toc_layout;
+
 fn blizzard_ui_dir() -> PathBuf {
     wow_ui_sim::paths::default_blizzard_ui_addons_path()
         .expect("Blizzard UI cache should be available")
@@ -58,10 +61,17 @@ fn blizzard_ptr_feedback_glue_toc_marks_addon_as_ptr_and_beta_only() {
         TocFile::from_file(&ptr_feedback_glue_toc()).expect("Blizzard_PTRFeedbackGlue TOC parses");
 
     assert!(
-        toc.is_ptr_only(),
+        toc.metadata.get("OnlyBetaAndPTR").map(String::as_str) == Some("1"),
         "TOC must declare `## OnlyBetaAndPTR: 1` — same PTR/beta gate as the Game-side \
          Blizzard_PTRFeedback variant. The Glue counterpart inherits the same release \
          restriction so the bug-report tooling never reaches live realms"
+    );
+    assert_eq!(
+        toc.is_ptr_only(),
+        !toc_layout::unified_toc_tree(),
+        "`is_ptr_only()` gates the addon out of eager discovery on profiles that do not \
+         permit PTR-only addons; the PTR and Forever profiles admit them, so the gate is \
+         inactive there (src/toc/mod.rs permits_ptr_only)"
     );
 }
 }

@@ -5,6 +5,9 @@ use wow_ui_sim::loader::{discover_all_blizzard_addons, discover_blizzard_addons_
 use wow_ui_sim::screen::ScreenKind;
 use wow_ui_sim::toc::TocFile;
 
+#[path = "common/toc_layout.rs"]
+mod toc_layout;
+
 fn blizzard_ui_dir() -> PathBuf {
     wow_ui_sim::paths::default_blizzard_ui_addons_path()
         .expect("Blizzard UI cache should be available")
@@ -19,6 +22,23 @@ fn quest_timer_toc() -> PathBuf {
 }
 
 const TOC_FILES: &[&str] = &["Blizzard_QuestTimer.lua", "Blizzard_QuestTimer.xml"];
+
+// The unified PTR TOC lists the family overrides and the shared button
+// template before the core Lua/XML pair.
+const PTR_TOC_FILES: &[&str] = &[
+    "Mainline/Blizzard_QuestTimerOverrides.lua",
+    "QuestTimerButtonTemplate.xml",
+    "Blizzard_QuestTimer.lua",
+    "Mainline/Blizzard_QuestTimer.xml",
+];
+
+fn quest_timer_files() -> &'static [&'static str] {
+    if toc_layout::unified_toc_tree() {
+        PTR_TOC_FILES
+    } else {
+        TOC_FILES
+    }
+}
 
 const REQUIRED_DEPS: &[&str] = &["Blizzard_GameTooltip", "Blizzard_ManagedFrameSystem"];
 
@@ -156,18 +176,19 @@ fn blizzard_quest_timer_toc_lists_two_files_lua_then_xml() {
         .map(|p| p.to_string_lossy().into_owned())
         .collect();
     assert_eq!(
-        listed, TOC_FILES,
-        "TOC body lists EXACTLY 2 files in canonical Lua-then-XML order: \
-         Blizzard_QuestTimer.lua FIRST (declares both QuestTimerMixin and \
+        listed,
+        quest_timer_files(),
+        "TOC body lists the mixin Lua before the XML that consumes it: \
+         Blizzard_QuestTimer.lua declares both QuestTimerMixin and \
          QuestTimerButtonMixin at file scope, with the QuestTimerMixin owning \
-         the OnLoad/OnEvent/OnUpdate/Update/UpdateQuestTimers state machine), \
-         Blizzard_QuestTimer.xml SECOND (publishes QuestTimerButtonTemplate as \
+         the OnLoad/OnEvent/OnUpdate/Update/UpdateQuestTimers state machine. \
+         Blizzard_QuestTimer.xml then publishes QuestTimerButtonTemplate as \
          a virtual button template plus the QuestTimerFrame toplevel container \
          with 25 numbered child Buttons QuestTimer1..QuestTimer25 each \
          inheriting QuestTimerButtonTemplate and anchored to the previous \
-         numbered button via `relativeTo=\"QuestTimer<n-1>\"`). UNLIKE \
-         Blizzard_QuestNavigation, this addon DOES list its companion Lua \
-         explicitly in the TOC body — the older eager-load pattern"
+         numbered button via `relativeTo=\"QuestTimer<n-1>\"`. The unified \
+         PTR TOC also lists the family overrides Lua and the shared button \
+         template before the core pair"
     );
 }
 }
