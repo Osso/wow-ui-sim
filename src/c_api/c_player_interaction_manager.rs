@@ -28,12 +28,11 @@ const ALLIED_RACE_DETAILS_GIVER: i32 = 9;
 pub(crate) fn register_c_player_interaction_manager_surface(state: &mut LuaState) -> LuaResult<()> {
     let ns = ensure_namespace(state, "C_PlayerInteractionManager")?;
     table_set_rust_fn_static(state, ns, "ClearInteraction", clear_interaction)?;
-    // Retail and Forever PlayerInteractionManagerDocumentation.lua:64-70.
-    if matches!(
-        crate::client_profile::ACTIVE,
-        crate::client_profile::ClientProfile::Retail
-            | crate::client_profile::ClientProfile::WowForever
-    ) {
+    // Retail/PTR/WowForever PlayerInteractionManagerDocumentation.lua:64-70 and
+    // Mists/Era/Anniversary PlayerInteractionManagerDocumentation.lua:60-65 declare
+    // `IsReplacingUnit`; Blizzard_UnitFrame/Classic/TargetFrame.lua:168 calls it on
+    // every target change. The pinned 3.3.5 Wrath tree has no such documentation file.
+    if crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Wrath {
         table_set_rust_fn_static(state, ns, "IsReplacingUnit", is_replacing_unit)?;
     }
     Ok(())
