@@ -109,15 +109,23 @@ fn toc_declares_secure_environment_with_two_required_deps() {
     );
 
     let deps: Vec<String> = toc.dependencies().to_vec();
+    // Mists, Era and Anniversary pin `## RequiredDep: Blizzard_SharedXML, Blizzard_UIParent`
+    // (era cache `Blizzard_WowTokenUI/Blizzard_WowTokenUI.toc:2`); Retail, PTR and WowForever
+    // declare only `Blizzard_SharedXML` (retail cache `:2`).
+    let expected: Vec<String> = if matches!(
+        wow_ui_sim::client_profile::ACTIVE,
+        wow_ui_sim::client_profile::ClientProfile::Mists
+            | wow_ui_sim::client_profile::ClientProfile::Era
+            | wow_ui_sim::client_profile::ClientProfile::Anniversary
+    ) {
+        vec!["Blizzard_SharedXML".to_string(), "Blizzard_UIParent".to_string()]
+    } else {
+        REQUIRED_DEPS.iter().map(|s| s.to_string()).collect()
+    };
     assert_eq!(
         deps,
-        REQUIRED_DEPS
-            .iter()
-            .map(|s| s.to_string())
-            .collect::<Vec<_>>(),
-        "Blizzard_WowTokenUI declares exactly `## RequiredDep: Blizzard_SharedXML`. The \
-         secure-environment addon has one explicit loader dependency: Blizzard_SharedXML, \
-         which supplies shared UI templates before the token XML files load"
+        expected,
+        "Blizzard_WowTokenUI declares the profile's pinned `## RequiredDep` set"
     );
 
     assert!(

@@ -117,8 +117,21 @@ fn load_auto_hide_fixture() -> (WowLuaEnv, (f32, f32), (f32, f32)) {
 fn load_auto_hide_real_dependencies() -> WowLuaEnv {
     let ui = wow_ui_sim::paths::default_blizzard_ui_addons_path()
         .expect("auto-hide fixture requires the active profile Blizzard UI cache");
-    let (env, loaded) =
-        build_blizzard_addon_closure_env(&ui, &["Blizzard_RestrictedAddOnEnvironment"], &[]);
+    // Classic `Blizzard_UIParent/Classic/WorldFrame.lua:47` ticks `ItemTextFrame` on every
+    // OnUpdate; the eager `Blizzard_UIPanels_Game` addon owns that frame
+    // (`Classic/ItemTextFrame.xml:3`). Add that real eager root on the classic profiles so the
+    // vendor WorldFrame OnUpdate runs against the frame set native startup provides.
+    let roots: &[&str] = if matches!(
+        wow_ui_sim::client_profile::ACTIVE,
+        wow_ui_sim::client_profile::ClientProfile::Mists
+            | wow_ui_sim::client_profile::ClientProfile::Era
+            | wow_ui_sim::client_profile::ClientProfile::Anniversary
+    ) {
+        &["Blizzard_RestrictedAddOnEnvironment", "Blizzard_UIPanels_Game"]
+    } else {
+        &["Blizzard_RestrictedAddOnEnvironment"]
+    };
+    let (env, loaded) = build_blizzard_addon_closure_env(&ui, roots, &[]);
     for prerequisite in ["Blizzard_FrameXML", "Blizzard_RestrictedAddOnEnvironment"] {
         assert!(
             loaded.iter().any(|name| name == prerequisite),

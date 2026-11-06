@@ -15,8 +15,10 @@ fn social_toast_dir() -> PathBuf {
     blizzard_ui_dir().join("Blizzard_SocialToast")
 }
 
+/// Era and Anniversary pin only `Blizzard_SocialToast_Classic.toc` in their
+/// caches; the Mainline cache ships the bare `Blizzard_SocialToast.toc`.
 fn social_toast_toc() -> PathBuf {
-    social_toast_dir().join("Blizzard_SocialToast.toc")
+    find_toc_file(&social_toast_dir()).expect("Blizzard_SocialToast TOC should resolve")
 }
 
 const PUBLISHED_MIXINS: &[&str] = &[

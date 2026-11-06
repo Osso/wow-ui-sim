@@ -404,13 +404,26 @@ fn store_ui_xml_wraps_body_in_scoped_modifier_forbidden() {
 post_wrath_ui_fixture! {
 #[test]
 fn store_ui_inbound_outbound_secure_bridge_files_exist() {
-    let inbound = store_ui_dir().join("Blizzard_Shared_StoreUIInbound.lua");
-    let outbound = store_ui_dir().join("Blizzard_Shared_StoreUIOutbound.lua");
-    let secure = store_ui_dir().join("Blizzard_Shared_StoreUISecure.lua");
-    let insecure = store_ui_dir().join("Blizzard_Shared_StoreUIInsecure.lua");
+    let toc = TocFile::from_file(&store_ui_toc()).expect("Blizzard_StoreUI TOC should parse");
+    let selected = |name: &str| {
+        toc.files
+            .iter()
+            .find(|path| path.file_name().and_then(|value| value.to_str()) == Some(name))
+            .unwrap_or_else(|| panic!("TOC body must select {name}; got {:?}", toc.files))
+            .clone()
+    };
 
-    for path in [&inbound, &outbound, &insecure] {
-        let raw = std::fs::read_to_string(path).expect("bridge file reads");
+    // Mainline pins `Blizzard_Shared_StoreUI<X>.lua [AllowLoadGameType mainline]`;
+    // Mists/Era/Anniversary pin `[Family]\Blizzard_StoreUI<X>.lua [AllowLoadGameType classic]`
+    // (era cache `Blizzard_StoreUI/Blizzard_StoreUI.toc:10-11,16`). Read whichever body the
+    // parsed TOC selects for this profile.
+    for name in [
+        "Blizzard_StoreUIInbound.lua",
+        "Blizzard_StoreUIOutbound.lua",
+        "Blizzard_StoreUIInsecure.lua",
+    ] {
+        let path = store_ui_dir().join(selected(name));
+        let raw = std::fs::read_to_string(&path).expect("bridge file reads");
         assert!(
             raw.contains("SwapToGlobalEnvironment()"),
             "{} must call SwapToGlobalEnvironment() — bridge files \
@@ -420,6 +433,7 @@ fn store_ui_inbound_outbound_secure_bridge_files_exist() {
         );
     }
 
+    let secure = store_ui_dir().join(selected("Blizzard_StoreUISecure.lua"));
     let secure_raw = std::fs::read_to_string(&secure).expect("secure file reads");
     assert!(
         !secure_raw.contains("SwapToGlobalEnvironment()"),
