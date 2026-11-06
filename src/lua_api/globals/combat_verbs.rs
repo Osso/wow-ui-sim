@@ -39,8 +39,7 @@ use crate::lua_api::game_data::{
 use crate::lua_api::globals::spell_api::spell_cast_time;
 use crate::lua_api::globals::spellbook_data;
 use crate::lua_api::methods::{
-    borrow_state, borrow_state_mut, call_function_state, create_string, create_table,
-    extract_frame_id, table_get, table_set,
+    borrow_state, borrow_state_mut, call_function_state, create_string, extract_frame_id, table_get,
 };
 use crate::lua_api::script_helpers::fire_named_event_state;
 use crate::lua_bridge::{FromStack, stack_val};
@@ -271,21 +270,13 @@ fn apply_spell_to_target(state: &mut LuaState, spell_id: u32) -> LuaResult<()> {
             fire_named_event_state(state, "UNIT_HEALTH", &[unit]);
         }
         Some(SpellEffectResult::PlayerAurasChanged) => {
+            let update_info = crate::c_api::unit_aura_access::full_update_payload(state, "player")?;
             let unit = create_string(state, "player");
-            let update_info = aura_full_update_info(state);
-            let update_info =
-                crate::c_api::unit_aura_access::unit_aura_event_payload(state, update_info)?;
             fire_named_event_state(state, "UNIT_AURA", &[unit, update_info]);
         }
         None => {}
     }
     Ok(())
-}
-
-fn aura_full_update_info(state: &mut LuaState) -> Val {
-    let info = create_table(state);
-    table_set(state, info, "isFullUpdate", Val::Bool(true));
-    info
 }
 
 fn read_action_slot(state: &mut LuaState, button: Val) -> Option<u32> {
