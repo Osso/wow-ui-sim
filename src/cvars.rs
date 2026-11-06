@@ -258,6 +258,7 @@ impl Default for CVarStorage {
 
 fn parse_default_cvars() -> (HashMap<String, String>, HashMap<String, String>) {
     let (mut defaults, mut original_names) = parse_cvar_yaml(include_str!("cvars.yaml"));
+    insert_collected_journal_cvar(&mut defaults, &mut original_names);
     if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::WowForever {
         // Forever 1.60.1.70707 WM77b native registration.
         defaults.insert("minimaptrackedinfov4".into(), "2162728".into());
@@ -288,6 +289,33 @@ fn parse_default_cvars() -> (HashMap<String, String>, HashMap<String, String>) {
     insert_profile_cvars(&mut defaults, &mut original_names);
     remove_profile_cvars(&mut defaults, &mut original_names);
     (defaults, original_names)
+}
+
+/// Collections journal CVar shipped by the PTR and WowForever pins only.
+///
+/// The pinned CVar dumps list it with `default=1` and `scope=Account`:
+/// `data/patch-api/source-cache/legacy-2026-10-09/1.60.1-wikitext.txt:2046`
+/// and `data/patch-api/sources/12.1.7-inherited-1.60.1.wikitext:1986`. The
+/// Wowless catalogs carry the same account flag on PTR
+/// (`crates/sim-data-profile/data/cvar_info_ptr.rs:1153`) and WowForever
+/// (`cvar_info_wowforever.rs:1161`). The Retail 12.1.5 catalog omits the name
+/// and no Retail pin consumes it, so it stays unregistered on the other
+/// profiles.
+fn insert_collected_journal_cvar(
+    defaults: &mut HashMap<String, String>,
+    original_names: &mut HashMap<String, String>,
+) {
+    if !matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Ptr
+            | crate::client_profile::ClientProfile::WowForever
+    ) {
+        return;
+    }
+    let name = "onlyShowCollectedItemsInJournal";
+    let key = name.to_lowercase();
+    original_names.insert(key.clone(), name.to_string());
+    defaults.insert(key, "1".to_string());
 }
 
 #[cfg(feature = "retail-12-0-5")]

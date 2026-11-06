@@ -219,7 +219,9 @@ fn register_toy_box_info(lua: &mut rilua::Lua) -> LuaResult<()> {
             let source_index = i32::from_stack(state, 1)?;
             (source_index > 0).into_stack(state)
         })?;
-    let table = crate::c_api::c_toy_box_info::register_fanfare(table)?.build();
+    let table = crate::c_api::c_toy_box_info::register_fanfare(table)?;
+    let table = crate::c_api::journal_collected::register_has_any_toy(table)?;
+    let table = table.build();
     set_global_val(lua.state_mut(), "C_ToyBoxInfo", table);
     Ok(())
 }
