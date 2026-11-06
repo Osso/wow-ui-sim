@@ -11,6 +11,10 @@ use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
 use std::collections::BTreeMap;
 
+/// Client affix array capacity: the getter fills a fixed four-slot array and
+/// stops at the first zero slot (decomp answer, 12.1.5).
+const ACTIVE_KEYSTONE_AFFIX_SLOTS: usize = 4;
+
 #[derive(Debug, Clone)]
 pub(crate) struct ActiveRun {
     pub map_id: i32,
@@ -108,7 +112,8 @@ fn is_active(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 /// Without a run the three non-nil outputs are level 0, an empty affix list
-/// and `false`; see docs/specs/challenge-mode-run.md, inactive keystone.
+/// and `false`; see docs/specs/challenge-mode-run.md, inactive keystone. The
+/// affix list fills at most four slots and stops at the first zero slot.
 fn active_keystone(state: &mut LuaState) -> LuaResult<u32> {
     let run = borrow_state(state)?.challenge_run.active.clone();
     let Some(run) = run else {
@@ -121,7 +126,13 @@ fn active_keystone(state: &mut LuaState) -> LuaResult<u32> {
     state.push(Val::Num(f64::from(run.level)));
     let affixes = create_table(state);
     state.push(affixes);
-    for (index, id) in run.affixes.iter().enumerate() {
+    for (index, id) in run
+        .affixes
+        .iter()
+        .take(ACTIVE_KEYSTONE_AFFIX_SLOTS)
+        .take_while(|id| **id != 0)
+        .enumerate()
+    {
         super::helpers::set_table_array(state, affixes, index as i64 + 1, Val::Num(f64::from(*id)));
     }
     state.push(Val::Bool(run.charged));

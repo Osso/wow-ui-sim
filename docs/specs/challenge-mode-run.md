@@ -38,7 +38,7 @@ Retail selects `Blizzard_ObjectiveTracker.toc` and `Blizzard_ChallengesUI_Mainli
 
 So without an active run the getter reports whatever that state holds, and a fresh session holds level `0`, an empty affix list and `false`. Pinned Retail `Blizzard_PTRFeedback/Blizzard_Reports.lua:339-341` reads it for any encounter report and treats `keystoneLevel > 0` as a keystone run, which agrees with a non-positive inactive level. `GetDeathCount` returns nothing when inactive; the active-map query returns nil.
 
-Not proved: whether the client clears those values when a run ends or only when the next run starts. The simulator clears them at run end and publishes the supplied affix list verbatim, including any zero entry and any length, so it does not yet reproduce the four-slot truncation.
+Not proved: whether the client clears those values when a run ends or only when the next run starts. The simulator clears them at run end. The affix list reproduces the client's four-slot array: at most four IDs, stopping at the first zero.
 
 ## InTimeBL boundary
 
