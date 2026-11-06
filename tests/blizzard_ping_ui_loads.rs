@@ -135,7 +135,7 @@ fn blizzard_ping_ui_find_toc_resolves_bare_variant() {
 }
 }
 
-post_wrath_ui_fixture! {
+classic_secur_residue_mainline_cache_fixture! {
 #[test]
 fn blizzard_ping_ui_toc_declares_eager_secure_mainline_only_with_sharedxml_dep() {
     let toc = TocFile::from_file(&ping_ui_toc()).expect("Blizzard_PingUI TOC parses");

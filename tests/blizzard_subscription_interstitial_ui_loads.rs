@@ -105,7 +105,7 @@ fn toc_is_load_on_demand_with_no_dependencies() {
 }
 }
 
-post_wrath_ui_fixture! {
+classic_secur_residue_mainline_cache_fixture! {
 #[test]
 fn toc_has_no_allow_load_or_game_type_restriction_or_secure_env() {
     let toc = TocFile::from_file(&subscription_interstitial_toc()).expect("TOC parses");

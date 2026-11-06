@@ -155,6 +155,7 @@ fn each_lane_addon_directory_resolves_with_a_toc() {
     }
 }
 
+classic_secur_residue_map_lane_secure_util_fixture! {
 #[test]
 fn map_canvas_secure_util_uses_load_first_so_it_runs_before_mapcanvas_mixin_code() {
     if cfg!(feature = "client-wrath") {
@@ -184,6 +185,7 @@ fn map_canvas_secure_util_uses_load_first_so_it_runs_before_mapcanvas_mixin_code
          in turn or stall. Got: {:?}",
         secure_util.dependencies()
     );
+}
 }
 
 #[test]
@@ -450,8 +452,8 @@ fn startup_lane_addons_appear_in_eager_game_discovery() {
     }
 }
 
-// Only cached-tree/named-addon inputs absent in Wrath; behavior cases stay enabled.
-post_wrath_ui_fixture! {
+// Only cached-tree/named-addon inputs absent outside the Mainline cache; behavior cases stay enabled.
+classic_secur_residue_mainline_cache_fixture! {
 #[test]
 fn map_canvas_secure_util_emerges_before_other_lane_addons_in_eager_order() {
     let ui = blizzard_ui_dir();
@@ -493,6 +495,7 @@ fn map_canvas_secure_util_emerges_before_other_lane_addons_in_eager_order() {
 }
 }
 
+classic_secur_residue_map_lane_secure_util_fixture! {
 #[test]
 fn world_map_dependency_closure_pulls_in_canvas_secure_util_and_data_providers() {
     if cfg!(feature = "client-wrath") {
@@ -535,6 +538,7 @@ fn world_map_dependency_closure_pulls_in_canvas_secure_util_and_data_providers()
              provider mixin or secure-util globals are undefined. Got closure: {closure:?}"
         );
     }
+}
 }
 
 #[test]

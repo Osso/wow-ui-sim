@@ -686,3 +686,66 @@ macro_rules! classic_target_frame_fixture {
         )*
     };
 }
+
+// classic-secur-residue
+
+/// `Blizzard_MapCanvasSecureUtil`, `Blizzard_PingUI` and
+/// `Blizzard_SubscriptionInterstitialUI` ship only to the Mainline cache
+/// (`data/blizzard-ui-files/retail.txt:2381-2382`, `:2672-2674`, `:3567-3569`;
+/// PTR and WowForever list them too). Mists, Era, Anniversary and Wrath list
+/// none of the three (grep count 0) and the directories are absent from those
+/// caches, so no TOC or frame of theirs exists to inspect there.
+#[macro_export]
+macro_rules! classic_secur_residue_mainline_cache_fixture {
+    ($($item:item)*) => {
+        $(
+            #[cfg(any(
+                feature = "profile-retail",
+                feature = "client-ptr",
+                feature = "client-wowforever"
+            ))]
+            $item
+        )*
+    };
+}
+
+/// The map-lane secure-util cases keep their Wrath native FrameXML branch
+/// (`tests/blizzard_map_lane.rs`), so Wrath stays enabled here. The addon
+/// assertions below it describe `Blizzard_MapCanvasSecureUtil`, which has no
+/// entry in the Mists/Era/Anniversary manifests
+/// (`data/blizzard-ui-files/{mists,era,anniversary}.txt` grep count 0).
+#[macro_export]
+macro_rules! classic_secur_residue_map_lane_secure_util_fixture {
+    ($($item:item)*) => {
+        $(
+            #[cfg(any(
+                feature = "profile-retail",
+                feature = "client-ptr",
+                feature = "client-wrath",
+                feature = "client-wowforever"
+            ))]
+            $item
+        )*
+    };
+}
+
+/// Pinned `Blizzard_APIDocumentationGenerated/SimpleFrameScriptObjectAPIDocumentation.lua`
+/// declares `SetForbidden` with `HasRestrictions = true` on Retail/PTR/WowForever
+/// (`retail.txt` cache `:288-292`) but without it on Mists, Era and Anniversary
+/// (same file `:116-121`). Only the Mainline-family clients treat an insecure
+/// `SetForbidden` as a no-op. Wrath has no pinned documentation file, so its
+/// existing case stays enabled.
+#[macro_export]
+macro_rules! classic_secur_residue_set_forbidden_restriction_fixture {
+    ($($item:item)*) => {
+        $(
+            #[cfg(any(
+                feature = "profile-retail",
+                feature = "client-ptr",
+                feature = "client-wrath",
+                feature = "client-wowforever"
+            ))]
+            $item
+        )*
+    };
+}

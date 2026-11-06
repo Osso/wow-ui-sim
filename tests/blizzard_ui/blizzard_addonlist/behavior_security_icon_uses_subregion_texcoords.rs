@@ -5,6 +5,7 @@ use crate::common::blizzard_addon_harness::with_blizzard_addon_smoke_shape;
 const ROOT: &str = "Blizzard_AddOnList";
 
 // Wrath has no AddonList vendor widget/handler input; mixed and modeled probes remain enabled.
+timerunning_util_panel_fixture! {
 post_wrath_ui_fixture! {
 #[test]
 fn security_icon_uses_indexed_sixteen_pixel_subregions() {
@@ -31,6 +32,7 @@ fn security_icon_uses_indexed_sixteen_pixel_subregions() {
 
         assert_security_icon_texcoords(&actual_texcoords);
     });
+}
 }
 }
 
