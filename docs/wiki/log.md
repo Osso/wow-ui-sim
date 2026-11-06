@@ -1,3 +1,7 @@
+## [2026-11-06] investigation | Screen-qualified TOC dependency lines
+
+[Addon loading](systems/addon-loading.md#screen-qualified-dependency-declarations) records that runtime dependency resolution applies a dependency line's `[AllowLoad Game]`/`[AllowLoad Glue]` annotation. PTR and Forever `Blizzard_UnitPopupShared` reach Glue-only `Blizzard_GlueXML` through `## Dep: Blizzard_GlueXML [AllowLoad glue]` while declaring `## AllowLoad: both`; the runtime resolver previously failed the whole `Blizzard_MailFrame` load. Unannotated required dependencies still block. Evidence is shipped TOCs, not a native-client trace.
+
 ## [2026-11-05] maintenance | Agent skills location and single instruction file
 
 Moved the flamegraph skill to [`.agents/skills/flamegraph/SKILL.md`](../../.agents/skills/flamegraph/SKILL.md), the cross-tool Agent Skills location that pi discovers, and removed the legacy `CLAUDE` instruction symlink so `AGENTS.md` is the only tracked instruction file. Live user-facing references in `AGENTS.md`, `docs/` and `tests/` now name `AGENTS.md` and `.agents/skills/`; historical evidence and baseline capture records keep their original paths.
