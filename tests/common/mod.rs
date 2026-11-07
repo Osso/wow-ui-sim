@@ -246,12 +246,67 @@ pub fn load_blizzard_addon_bootstrap(
     addon_name: &str,
     bootstrap_file: &str,
 ) {
-    let path = ui.join(addon_name).join(bootstrap_file);
-    let source = std::fs::read_to_string(&path)
+    exec_addon_lua_file(
+        env,
+        addon_name,
+        create_addon_table(env, addon_name),
+        &ui.join(addon_name).join(bootstrap_file),
+    );
+}
+
+/// Load named Lua files of one Blizzard addon the way `load_addon` does: every file
+/// receives the addon name and one private addon table as varargs, shares that table,
+/// and loads in TOC order. A name the active profile's TOC does not declare is not
+/// loaded, so profile-specific producers (`[Family]`/`[Game]` variants) resolve without
+/// per-profile test code; the files a test depends on still fail loudly when missing.
+pub fn load_blizzard_addon_lua_files(
+    env: &WowLuaEnv,
+    ui: &Path,
+    addon_name: &str,
+    files: &[&str],
+) {
+    let addon_dir = ui.join(addon_name);
+    let toc_path = find_toc_file(&addon_dir).unwrap_or_else(|| {
+        panic!(
+            "required Blizzard addon `{addon_name}` has no compatible TOC under {}",
+            addon_dir.display()
+        )
+    });
+    let toc = wow_ui_sim::toc::TocFile::from_file(&toc_path)
+        .unwrap_or_else(|error| panic!("failed to parse {}: {error}", toc_path.display()));
+    let wanted: Vec<String> = files.iter().map(|file| addon_path_key(file)).collect();
+    let addon_table = create_addon_table(env, addon_name);
+    for entry in &toc.files {
+        let relative = addon_path_key(&entry.to_string_lossy());
+        if !wanted
+            .iter()
+            .any(|file| relative == *file || relative.ends_with(&format!("/{file}")))
+        {
+            continue;
+        }
+        exec_addon_lua_file(env, addon_name, addon_table, &addon_dir.join(entry));
+    }
+}
+
+/// Compare addon file names the way the loader resolves them: separators are `/` and
+/// case does not matter.
+fn addon_path_key(path: &str) -> String {
+    path.replace('\\', "/").to_ascii_lowercase()
+}
+
+fn create_addon_table(env: &WowLuaEnv, addon_name: &str) -> rilua::Val {
+    env.create_addon_table()
+        .unwrap_or_else(|error| panic!("failed to create addon table for {addon_name}: {error}"))
+}
+
+fn exec_addon_lua_file(
+    env: &WowLuaEnv,
+    addon_name: &str,
+    addon_table: rilua::Val,
+    path: &Path,
+) {
+    let source = std::fs::read_to_string(path)
         .unwrap_or_else(|error| panic!("failed to read {}: {error}", path.display()));
-    let addon_table = env
-        .create_addon_table()
-        .unwrap_or_else(|error| panic!("failed to create addon table for {addon_name}: {error}"));
     let chunk_name = path.display().to_string();
     env.loader_env()
         .exec_with_varargs(&source, &chunk_name, addon_name, addon_table)

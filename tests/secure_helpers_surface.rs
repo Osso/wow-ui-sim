@@ -74,8 +74,15 @@ fn selected_mixin_wraps_every_function_argument_with_caller_source() {
 fn original_unit_frame_delegate_reports_target_errors() {
     let env = WowLuaEnv::new().unwrap();
     let addons = wow_ui_sim::blizzard_ui_sync::default_cache_addons_path().unwrap();
-    let source = std::fs::read_to_string(addons.join("Blizzard_UnitFrame/Shared/UnitFrameUtil.lua")).unwrap();
-    env.exec(&source).unwrap();
+    crate::common::load_blizzard_addon_lua_files(
+        &env,
+        &addons,
+        "Blizzard_UnitFrame",
+        &[
+            "UnitFramePvPIndicatorStyle.lua",
+            "Shared/UnitFrameUtil.lua",
+        ],
+    );
     env.exec(
         r#"
         local reported
