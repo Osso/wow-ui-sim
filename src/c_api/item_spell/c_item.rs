@@ -566,10 +566,20 @@ fn resolve_equipped_location_item(sim: &SimState, slot: i32) -> Option<(u32, Opt
         .or_else(|| bag.and_then(|bag| bag.item_id.map(|id| (id, bag.hyperlink.clone()))))
 }
 
-/// Sockets the item's own record declares (`ItemSparse.SocketType`). The client
-/// handler also adds a bonus/instance socket count when the item info carries a
-/// resolving bonus key (PTR 12.1.7 decomp); the simulator has no such table, so
-/// only the record half contributes. An unresolved item publishes `0`.
+/// Fixed socket slots an item record carries: `ItemSparse.SocketType_0..2`.
+/// Native counts only these three (Q2.e: a schema `SocketType_0..2` run).
+const RECORD_SOCKET_SLOTS: usize = 3;
+
+/// Sockets the item's own record declares (`ItemSparse.SocketType`).
+///
+/// Native (`pr46-49-decomp-answers.md` Round 2 Q2, Retail 70688, PTR 70668 and
+/// Forever 70707) counts the non-zero entries of the record's three fixed socket
+/// slots, then adds the effect-points dword of the `SpellItemEnchantment` entry
+/// whose selector is 8 (first match of three). That second half is keyed by an
+/// `itemInfo` dword that nothing writes in those builds: code-live, data-dead,
+/// so it contributes 0 and the simulator models only the fixed half. The client
+/// adds the two halves without a clamp; the sum cannot exceed three while the
+/// bonus half stays zero. An unresolved item publishes `0`.
 fn c_item_get_item_num_sockets(state: &mut LuaState) -> LuaResult<u32> {
     let item_id = parse_item_id_key(state, stack_val(state, 1));
     let count = {
@@ -577,6 +587,7 @@ fn c_item_get_item_num_sockets(state: &mut LuaState) -> LuaResult<u32> {
         item_id.and_then(|id| host.item_info(id)).map_or(0, |item| {
             item.socket_types
                 .iter()
+                .take(RECORD_SOCKET_SLOTS)
                 .filter(|socket_type| **socket_type != 0)
                 .count()
         })
