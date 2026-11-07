@@ -964,6 +964,8 @@ mod tests {
         assert_eq!(field_count, CURRENCY_INFO_HASH_FIELDS as i32);
     }
 
+    // Wrath pins no generated documentation; the reader is unpublished there.
+    #[cfg(not(feature = "client-wrath"))]
     #[test]
     fn currency_list_link_names_the_row_currency_in_its_quality_colour() {
         let env = WowLuaEnv::new().expect("env should initialize");
@@ -988,6 +990,8 @@ mod tests {
         assert_eq!(link, expected);
     }
 
+    // Wrath pins no generated documentation; the reader is unpublished there.
+    #[cfg(not(feature = "client-wrath"))]
     #[test]
     fn currency_list_link_covers_header_rows_like_any_other_row() {
         let env = WowLuaEnv::new().expect("env should initialize");
@@ -1014,6 +1018,8 @@ mod tests {
         assert_eq!(link, expected);
     }
 
+    // Wrath pins no generated documentation; the reader is unpublished there.
+    #[cfg(not(feature = "client-wrath"))]
     #[test]
     fn currency_list_link_returns_one_nil_past_the_list() {
         let env = WowLuaEnv::new().expect("env should initialize");

@@ -54,11 +54,14 @@ fn get_current_affixes_reflects_mutation() {
 fn challenge_mode_map_table_seeds_mists_challenge_map() {
     let env = env();
     // Explicit fixture metadata, not a native/default challenge catalogue.
-    env.exec(r#"
+    env.exec(
+        r#"
         assert(next(C_ChallengeMode.GetMapTable()) == nil)
         A_Admin.SetChallengeModeMapInfo(2, {name='Temple of the Jade Serpent', id=2,
             timeLimit=1530, texture=321, backgroundTexture=654, mapID=429})
-    "#).unwrap();
+    "#,
+    )
+    .unwrap();
     let (count, challenge_id, name, map_id): (i32, i32, String, i32) = env
         .eval(
             r#"
@@ -72,10 +75,14 @@ fn challenge_mode_map_table_seeds_mists_challenge_map() {
     assert_eq!(challenge_id, 2);
     assert_eq!(name, "Temple of the Jade Serpent");
     assert_eq!(map_id, 429);
-    let (id, limit, texture, background): (i32, f64, f64, f64) = env.eval(r#"
+    let (id, limit, texture, background): (i32, f64, f64, f64) = env
+        .eval(
+            r#"
         local _, id, limit, texture, background = C_ChallengeMode.GetMapUIInfo(2)
         return id, limit, texture, background
-    "#).unwrap();
+    "#,
+        )
+        .unwrap();
     assert_eq!(id, 2);
     assert_eq!(limit, 1530.0);
     assert_eq!(texture, 321.0);
@@ -226,7 +233,12 @@ fn get_run_history_returns_seeded_runs() {
             duration_sec: 1800,
             #[cfg(feature = "retail-12-0-7")]
             completion_date: Some(wow_ui_sim::c_api::c_mythic_plus_calendar::CalendarTime {
-                month_day: 3, month: 10, weekday: 7, year: 2026, hour: 12, minute: 34,
+                month_day: 3,
+                month: 10,
+                weekday: 7,
+                year: 2026,
+                hour: 12,
+                minute: 34,
             }),
         }];
     }
@@ -316,6 +328,8 @@ fn get_owned_keystone_level_returns_level_when_set() {
 
 // ── GetOwnedKeystoneChallengeMapID ────────────────────────────────────────────
 
+// Wrath pins no generated documentation; the reader is unpublished there.
+#[cfg(not(feature = "client-wrath"))]
 #[test]
 fn get_owned_keystone_challenge_map_id_returns_zero_without_a_key() {
     let env = env();
@@ -329,6 +343,8 @@ fn get_owned_keystone_challenge_map_id_returns_zero_without_a_key() {
     assert_eq!(map_id, 0, "no matching key entry carries 0");
 }
 
+// Wrath pins no generated documentation; the reader is unpublished there.
+#[cfg(not(feature = "client-wrath"))]
 #[test]
 fn get_owned_keystone_challenge_map_id_returns_the_owned_key_map() {
     let env = env();
@@ -378,7 +394,12 @@ fn get_weekly_best_for_map_returns_seeded_data() {
                 score: 180.0,
                 #[cfg(feature = "retail-12-0-7")]
                 completion_date: Some(wow_ui_sim::c_api::c_mythic_plus_calendar::CalendarTime {
-                    month_day: 3, month: 10, weekday: 7, year: 2026, hour: 12, minute: 34,
+                    month_day: 3,
+                    month: 10,
+                    weekday: 7,
+                    year: 2026,
+                    hour: 12,
+                    minute: 34,
                 }),
                 #[cfg(feature = "retail-12-0-7")]
                 affix_ids: vec![],

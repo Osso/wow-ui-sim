@@ -166,6 +166,8 @@ fn c_item_probes_accept_item_hyperlinks() {
     assert_eq!(quality, 3);
 }
 
+// Wrath pins no generated documentation; the reader is unpublished there.
+#[cfg(not(feature = "client-wrath"))]
 #[test]
 fn get_item_num_sockets_counts_the_record_sockets() {
     let env = env();
