@@ -190,7 +190,11 @@ fn anchor_cursor_follows_a_known_mouse_position() {
     ) {
         assert_eq!(point, "BOTTOM", "CURSOR uses the tooltip bottom point");
         assert_eq!(relative_point, "BOTTOMLEFT", "cursor root BOTTOMLEFT");
-        assert_eq!((x, y), (100.0, 600.0), "CURSOR ignores stored displacements");
+        assert_eq!(
+            (x, y),
+            (100.0, 600.0),
+            "CURSOR ignores stored displacements"
+        );
     } else {
         assert_eq!(point, "TOPLEFT");
         assert_eq!(relative_point, "TOPLEFT");

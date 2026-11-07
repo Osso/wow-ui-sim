@@ -2,6 +2,8 @@
 //! displacements for Retail/PTR. Spec: `docs/specs/tooltip-owner-anchors.md`.
 #![cfg(any(feature = "client-retail", feature = "client-ptr"))]
 
+mod tooltip_full_env_helpers;
+
 use wow_ui_sim::lua_api::WowLuaEnv;
 
 fn env() -> WowLuaEnv {
@@ -17,7 +19,11 @@ fn env() -> WowLuaEnv {
     env
 }
 
-fn owner_anchor_point(env: &WowLuaEnv, mode: &str, explicit_zero: bool) -> (String, String, f64, f64) {
+fn owner_anchor_point(
+    env: &WowLuaEnv,
+    mode: &str,
+    explicit_zero: bool,
+) -> (String, String, f64, f64) {
     let call = if explicit_zero {
         format!("OwnerAnchorTip:SetOwner(OwnerAnchorFrame, {mode:?}, 0, 0)")
     } else {
@@ -98,7 +104,10 @@ fn tooltip_owner_anchor_absent_empty_and_unknown_names_select_left() {
         )
         .unwrap();
     assert_eq!(point, "BOTTOMRIGHT", "absent anchor uses the LEFT pair");
-    assert_eq!(relative_point, "TOPLEFT", "absent anchor uses the LEFT pair");
+    assert_eq!(
+        relative_point, "TOPLEFT",
+        "absent anchor uses the LEFT pair"
+    );
     assert_eq!(anchor_type, "ANCHOR_LEFT", "stored mode is LEFT");
 }
 
@@ -106,7 +115,16 @@ fn tooltip_owner_anchor_absent_empty_and_unknown_names_select_left() {
 /// passes `ANCHOR_BOTTOMRIGHT` for a plain button owner.
 #[test]
 fn tooltip_owner_anchor_totem_button_enter_anchors_bottomright() {
-    let env = env();
+    let env = tooltip_full_env_helpers::setup_full_env();
+    env.state().borrow_mut().totem_slots =
+        vec![Some(wow_ui_sim::lua_api::globals::real::totems::Totem {
+            name: "Searing Totem".into(),
+            start_time: 90.0,
+            duration: 60.0,
+            icon: 0,
+            mod_rate: 1.0,
+            spell_id: 19750,
+        })];
     let addons = wow_ui_sim::paths::default_blizzard_ui_addons_path().unwrap();
     let source =
         std::fs::read_to_string(addons.join("Blizzard_UnitFrame/Mainline/TotemFrame.lua")).unwrap();
