@@ -226,23 +226,30 @@ fn estimated_tooltip_size(
         return None;
     }
 
-    let mut width = td.min_width.max(wrapped_min_width(td));
+    let native = matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail | crate::client_profile::ClientProfile::Ptr
+    );
+    let reservations = estimated_row_reservations(td);
+    let width = if native {
+        estimated_native_content_width(td, &reservations, &sim.widgets)
+    } else {
+        let mut width = td.min_width.max(wrapped_min_width(td));
+        for (index, line) in td.lines.iter().enumerate() {
+            let font_size = tooltip_line_font_size(index);
+            width = width.max(
+                estimated_line_width(td, line, font_size, &sim.widgets, index)
+                    + line.inset
+                    + reservations[index].width(),
+            );
+        }
+        width
+    };
     let mut height = 0.0;
     let line_spacing = td.line_spacing.unwrap_or(TOOLTIP_LINE_SPACING);
-    let reservations = estimated_row_reservations(td);
     for (index, line) in td.lines.iter().enumerate() {
         let font_size = tooltip_line_font_size(index);
         let reservation = reservations[index];
-        width = width.max(
-            estimated_line_width(td, line, font_size, &sim.widgets, index)
-                + line.inset
-                + reservation.width(),
-        );
-        let native = matches!(
-            crate::client_profile::ACTIVE,
-            crate::client_profile::ClientProfile::Retail
-                | crate::client_profile::ClientProfile::Ptr
-        );
         if native && td.left_line_is_hidden(&sim.widgets, index) {
             continue;
         }
@@ -252,15 +259,66 @@ fn estimated_tooltip_size(
         height += estimated_line_height(line, font_size) + reservation.top + reservation.bottom;
     }
 
-    let (horizontal_padding, vertical_padding) = if matches!(
-        crate::client_profile::ACTIVE,
-        crate::client_profile::ClientProfile::Retail | crate::client_profile::ClientProfile::Ptr
-    ) {
+    let (horizontal_padding, vertical_padding) = if native {
         td.native_outer_padding()
     } else {
         (TOOLTIP_PADDING_H * 2.0, TOOLTIP_PADDING_V * 2.0)
     };
     Some((width + horizontal_padding, height + vertical_padding))
+}
+
+/// WM63 L23 section 2 with estimated text widths instead of glyph measurement:
+/// the same intrinsic cap, floors and shrink floors. A wrapped row cannot be
+/// fitted below its assigned width without metrics, so its fitted width is its
+/// intrinsic width limited to the assignment.
+fn estimated_native_content_width(
+    td: &TooltipData,
+    reservations: &[TooltipRowReservation],
+    widgets: &crate::widget::WidgetRegistry,
+) -> f32 {
+    let rows: Vec<crate::lua_api::tooltip::TooltipWidthRow> = td
+        .lines
+        .iter()
+        .enumerate()
+        .map(|(index, line)| {
+            let font_size = tooltip_line_font_size(index);
+            let left = if td.left_line_is_hidden(widgets, index) {
+                0.0
+            } else {
+                estimated_line_side_width(line, font_size, false)
+            };
+            let right = if td.right_line_is_hidden(widgets, index) {
+                0.0
+            } else {
+                estimated_line_side_width(line, font_size, true)
+            };
+            crate::lua_api::tooltip::TooltipWidthRow {
+                reserved: line.inset + reservations[index].width(),
+                left,
+                right,
+                hidden: td.left_line_is_hidden(widgets, index),
+            }
+        })
+        .collect();
+    td.select_content_width(&rows, |index, assigned| rows[index].left.min(assigned))
+}
+
+/// Estimated intrinsic width of one row side, including the texture row
+/// profiles without native attachments append.
+fn estimated_line_side_width(line: &TooltipLine, font_size: f32, right: bool) -> f32 {
+    let width = if right {
+        line.right_text
+            .as_deref()
+            .map(|text| estimated_text_width(text, font_size))
+            .unwrap_or(0.0)
+    } else {
+        estimated_text_width(&line.left_text, font_size)
+    };
+    if !right && has_texture_row(line) {
+        width.max(TEXTURE_LINE_SIZE)
+    } else {
+        width
+    }
 }
 
 fn wrapped_min_width(td: &TooltipData) -> f32 {
@@ -434,6 +492,65 @@ mod tests {
         assert!(
             sim.widgets.is_rect_dirty_self(tooltip_id),
             "tooltip content refresh should invalidate stale layout even when measured size is unchanged"
+        );
+    }
+
+    #[cfg(any(feature = "client-retail", feature = "client-ptr"))]
+    fn estimated_width_for_wrapped(text: &str, custom: Option<f32>) -> f32 {
+        let mut sim = SimState::default();
+        let tooltip_id = 11;
+        sim.widgets.register(Frame {
+            id: tooltip_id,
+            widget_type: WidgetType::GameTooltip,
+            visible: true,
+            ..Default::default()
+        });
+        sim.tooltips.insert(
+            tooltip_id,
+            TooltipData {
+                lines: vec![TooltipLine {
+                    wrap: true,
+                    ..tooltip_line(text)
+                }],
+                custom_word_wrap_min_width: custom,
+                ..Default::default()
+            },
+        );
+        refresh_tooltip_geometry(&mut sim, tooltip_id);
+        sim.widgets
+            .get(tooltip_id)
+            .map(|frame| frame.width)
+            .expect("tooltip frame should exist")
+    }
+
+    /// WM63 L23 section 2 for geometry estimated without glyph measurement: the
+    /// intrinsic width of a wrapped row is capped at 230.4, or at the custom
+    /// wrap value, and a custom value never raises the width.
+    #[cfg(any(feature = "client-retail", feature = "client-ptr"))]
+    #[test]
+    fn estimated_wrapped_width_caps_at_the_intrinsic_cap() {
+        const OUTER_PADDING: f32 = 20.48;
+        let long = "word ".repeat(40);
+
+        let default_capped = estimated_width_for_wrapped(&long, None);
+        assert!(
+            (default_capped - (230.4 + OUTER_PADDING)).abs() < 0.01,
+            "default wrapped cap: {default_capped}"
+        );
+
+        let custom_capped = estimated_width_for_wrapped(&long, Some(200.0));
+        assert!(
+            (custom_capped - (200.0 + OUTER_PADDING)).abs() < 0.01,
+            "custom wrapped cap: {custom_capped}"
+        );
+
+        let short = "Short";
+        let short_expected =
+            super::estimated_text_width(short, super::TOOLTIP_HEADER_FONT_SIZE) + OUTER_PADDING;
+        let short_width = estimated_width_for_wrapped(short, Some(200.0));
+        assert!(
+            (short_width - short_expected).abs() < 0.01,
+            "a custom wrap value is a cap, not a floor: {short_width} vs {short_expected}"
         );
     }
 }

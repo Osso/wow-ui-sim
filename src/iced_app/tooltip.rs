@@ -199,54 +199,43 @@ fn measure_native_tooltip(state: &mut SimState, id: u64, fonts: &mut WowFontSyst
         .iter()
         .map(|line| attachment_width_groups(line.attachments()))
         .collect();
-    let reserved: Vec<f32> = td
+    let rows: Vec<crate::lua_api::tooltip::TooltipWidthRow> = td
         .lines
         .iter()
-        .zip(&reservations)
-        .map(|(line, reservation)| line.inset + reservation.width())
+        .enumerate()
+        .map(|(index, line)| crate::lua_api::tooltip::TooltipWidthRow {
+            reserved: line.inset + reservations[index].width(),
+            left: native_line_width(state, &td, index, false, &line.left_text, fonts),
+            right: line.right_text.as_deref().map_or(0.0, |text| {
+                native_line_width(state, &td, index, true, text, fonts)
+            }),
+            hidden: td.left_line_is_hidden(&state.widgets, index),
+        })
         .collect();
-    let mut floor = td.min_width;
-    let mut width = floor;
-    let cap = td.custom_word_wrap_min_width.unwrap_or(230.4).max(0.0);
-    let mut has_right = false;
-    for (index, line) in td.lines.iter().enumerate() {
-        let left = native_line_width(state, &td, index, false, &line.left_text, fonts);
-        let right = line.right_text.as_deref().map_or(0.0, |text| {
-            native_line_width(state, &td, index, true, text, fonts)
-        });
-        has_right |= right > 0.0;
-        if line.wrap || td.force_min_width {
-            width = width.max((left + reserved[index]).min(cap));
-        } else {
-            let gap = if left > 0.0 && right > 0.0 { 38.4 } else { 0.0 };
-            floor = floor.max(left + right + gap + reserved[index]);
-            width = width.max(floor);
-        }
-    }
-    if td.shrink_to_fit_wrapped && !td.force_min_width && !has_right {
-        let mut fitted = floor;
-        for (index, line) in td.lines.iter().enumerate().filter(|(_, line)| line.wrap) {
-            if td.left_line_is_hidden(&state.widgets, index) {
-                continue;
-            }
+    // WM63 L23: the selected content width, capped and shrunk to the fitted
+    // wrapped rows, then assigned to the wrapped left FontStrings.
+    let wrap_fonts: Vec<_> = (0..td.lines.len())
+        .map(|index| {
             let (font, size, scale, _, _) = native_line_font(state, &td, index, false);
-            let text = native_line_text(state, &td, index, false, &line.left_text);
-            fitted = fitted.max(
-                fonts.measure_fitted_text_width(
-                    &text,
-                    font.as_deref(),
-                    size,
-                    (width - reserved[index]).max(0.0) / scale,
-                ) * scale
-                    + reserved[index],
-            );
-        }
-        width = width.min(fitted);
-    }
+            (font, size, scale)
+        })
+        .collect();
+    let wrap_texts: Vec<String> = (0..td.lines.len())
+        .map(|index| native_line_text(state, &td, index, false, &td.lines[index].left_text))
+        .collect();
+    let width = td.select_content_width(&rows, |index, assigned| {
+        let (font, size, scale) = &wrap_fonts[index];
+        fonts.measure_fitted_text_width(
+            &wrap_texts[index],
+            font.as_deref(),
+            *size,
+            assigned / scale,
+        ) * scale
+    });
     let mut height = 0.0;
     for (index, line) in td.lines.iter().enumerate() {
-        let wrapped = line.wrap || td.force_min_width;
-        let wrap_width = (width - reserved[index]).max(0.0);
+        let wrapped = td.row_wraps(index);
+        let wrap_width = (width - rows[index].reserved).max(0.0);
         if wrapped {
             if let Some(line_id) = td.left_line_ids.get(index).copied() {
                 if let Some(frame) = state.widgets.get_mut_visual(line_id) {
@@ -256,7 +245,7 @@ fn measure_native_tooltip(state: &mut SimState, id: u64, fonts: &mut WowFontSyst
                 state.widgets.mark_rect_dirty(line_id);
             }
         }
-        if td.left_line_is_hidden(&state.widgets, index) {
+        if rows[index].hidden {
             continue;
         }
         let (font, size, scale, spacing, smooth) = native_line_font(state, &td, index, false);
