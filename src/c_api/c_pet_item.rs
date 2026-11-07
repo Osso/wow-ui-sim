@@ -1,4 +1,16 @@
-//! Retail pet-item lookup from the pinned WM78 data chain.
+//! Retail and PTR pet-item lookup from the pinned WM78 data chain.
+//!
+//! `GetPetInfoByItemID` is absent from both pinned `Blizzard_APIDocumentationGenerated`
+//! caches (`PetJournalInfoDocumentation.lua` jumps from `GetPetInfoTableBySpeciesID` to
+//! `GetPetLoadOutInfo`), so the contract comes from the pinned consumers:
+//! `Blizzard_PlayerChoice/Blizzard_PlayerChoiceOptionBase.lua:691` calls it unguarded,
+//! `Blizzard_UIPanels_Game/Mainline/DressUpFrames.lua:178` reads creatureID (4), displayID (12)
+//! and speciesID (13), and the PTR `Blizzard_SharedXML/LinkUtil.lua:127` reads the displayID.
+//!
+//! Known data gap: `data/pet-item-catalog.json` is derived from build 12.1.5.70391 while the
+//! pinned PTR UI is 12.1.7.70493. Regenerating this generator over the 70493 tables adds 9 items
+//! and changes 3 records (one renamed species), so PTR answers for those ids are stale.
+//! See `docs/specs/pet-info-by-item.md`.
 
 use std::collections::HashMap;
 use std::sync::OnceLock;
@@ -42,8 +54,10 @@ fn catalog() -> &'static HashMap<u32, PetItem> {
 }
 
 pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
-    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail
-        && cfg!(feature = "retail-12-1-5")
+    if matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail | crate::client_profile::ClientProfile::Ptr
+    ) && cfg!(feature = "retail-12-1-5")
     {
         let namespace = super::ensure_namespace(state, "C_PetJournal")?;
         table_set_rust_fn_static(state, namespace, "GetPetInfoByItemID", get_pet_info_by_item)?;
