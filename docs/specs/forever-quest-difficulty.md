@@ -10,7 +10,22 @@ Pinned Retail, PTR and Forever `Blizzard_APIDocumentationGenerated/QuestLogDocum
 
 WM89 found that Forever 1.60.1.70707 prepares 5 for both unit trivial-range APIs. `C_QuestLog.GetTrivialRange` prepares 0 without a player and evaluates GlobalCurve selection keys 47 and 0 with a player; an absent configuration row selects 5. The simulator leaves these APIs unchanged and has no configured curve input.
 
-For `C_PlayerInfo.GetContentDifficultyQuestForPlayer`, WM89 establishes Impossible at difference ≥5, Difficult at 3–4, and Fair at −2 through 2. Below −2, Forever uses Easy through the inclusive negative curve range and Trivial below it. Populated curve values are unknown. The simulator emulates an absent configuration row with range 5; this is not a normal-client guarantee. Retail/PTR use fixed Easy −4 through −3 and Trivial at −5 or lower. Both paths currently use stored quest and player levels as emulated substitutes for ContentTuning and effective-level inputs.
+For `C_PlayerInfo.GetContentDifficultyQuestForPlayer`, WM89 establishes Impossible at difference ≥5, Difficult at 3–4, and Fair at −2 through 2. Below −2, Forever uses Easy through the inclusive negative curve range and Trivial below it. Populated curve values are unknown. The simulator emulates an absent configuration row with range 5; this is not a normal-client guarantee. Retail/PTR use fixed Easy −4 through −3 and Trivial at −5 or lower.
+
+## Native comparison inputs and bands — 2026-11-07
+
+Implementation: `src/c_api/quest_difficulty.rs`. Labels follow the WM89 handoff.
+
+- VERIFIED (Forever 1.60.1.70707): the lower Easy boundary comes from the `GlobalCurve` row selected by the key pair 47 and 0. The evaluated value is truncated toward zero and negated in 32-bit arithmetic, so 5.9 and 5.0 both give −5 and 4.9 gives −4. An absent configuration row selects the constant 5.
+- UNKNOWN: the populated curve identifier, its points and its value at any player level. The simulator holds no `GlobalCurve`, `Curve` or `CurvePoint` data, so `forever_curve_value` returns `None` and the absent-row constant 5 applies. `boundary_from_curve_value` performs the verified truncation and negation on any value the seam returns. The absent-row constant is not evidence that a loaded client uses range 5.
+- VERIFIED: that curve is evaluated at the player's own level. No quest field and no ContentTuning field enters it.
+- VERIFIED: with a ContentTuning record the quest comparison level is the player level clamped into the record's bracket. `MinLevelSquish`/`MaxLevelSquish` are adjusted by the scaling-offset modes: mode 1 adds 1, mode 2 adds an expansion-relative level, mode 3 adds the same after first lowering the expansion index, and every other mode adds nothing. A level below the lower bound uses that bound, otherwise the smaller of the level and the upper bound is used.
+- EMULATED: the simulator supplies no quest tuning key, so no ContentTuning record can exist and the clamp is unreachable. `quest_comparison_level` implements only the verified no-record arms: Forever compares the stored quest level, while Retail and PTR supply 0, so their difference is minus the player level. The stored level is not a substitute for a tuning-backed comparison level.
+- VERIFIED: a missing player, a missing quest entry or an unresolved quest cache entry prepares Fair (2), and a numeric quest ID below 1 prepares Fair instead of an argument-range error. The simulator returns Fair for those inputs instead of raising.
+- Not modelled: the legacy gate that forces Trivial when a quest flag field is below 8, the comparison level is 45 and the player level is 50. The simulator models no quest flag field.
+- Order of decisions (VERIFIED): the fixed upper bands are tested first, then Easy at difference ≥ the negated boundary, then Trivial. If the Forever boundary is smaller than 3, the earlier Fair decision leaves no Easy band.
+
+Tests: `tests/user_defaults_batch2.rs` `user_defaults_batch2_quest_difficulty_untuned_bands` asserts the Retail untuned bands and colors through the original `DifficultyUtil.GetDifficultyColor` consumer. `tests/wowforever_quest_difficulty.rs` adds `declared_profile_quest_difficulty_missing_inputs_prepare_fair` and, on Forever, `forever_quest_difficulty_stored_level_without_tuning`. Unit tests in `src/c_api/quest_difficulty.rs` assert the truncation, negation and absent-row arms.
 
 ## What it must do
 
@@ -52,6 +67,7 @@ Current source `f91eb7aab` has **18 quest model PASS**: membership8 + revised pr
 ## Implementation inventory
 
 - `src/c_api/c_quest_log.rs`: shared declared-profile supplied-state difficulty lookup; Forever elite and existing Retail/PTR eligibility queries remain separate.
+- `src/c_api/quest_difficulty.rs`: `C_PlayerInfo.GetContentDifficultyQuestForPlayer` bands, the verified no-record comparison-level arms, the Fair preparation for missing inputs, and the UNKNOWN GlobalCurve (47, 0) seam.
 - `src/c_api/mod.rs`: narrowly extends the module and utility call gate to Forever.
 - `src/lua_api/globals/quest_surface/{register,handlers}.rs`: omit replaced static watch handlers only on Forever, preserving initial modeled publication.
 - `tests/wowforever_quest_difficulty.rs`: shared declared-profile live-row/isolation/error assertions and Forever-only whole-consumer assertions.

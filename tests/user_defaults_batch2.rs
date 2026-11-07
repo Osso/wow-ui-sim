@@ -5,14 +5,14 @@ mod keybinding_panel_fixtures;
 
 #[test]
 #[cfg(any(feature = "client-retail", feature = "client-ptr"))]
-fn user_defaults_batch2_quest_difficulty_boundaries() {
+fn user_defaults_batch2_quest_difficulty_untuned_bands() {
     let env = keybinding_panel_fixtures::setup_env();
     {
         let state = env.state();
         let mut sim = state.borrow_mut();
         sim.player.level = 80;
         let base = sim.quest_log_entries.entries[0].clone();
-        sim.quest_log_entries.entries = [85, 84, 83, 82, 78, 77, 76, 75, 74]
+        sim.quest_log_entries.entries = [85, 78, 74]
             .into_iter()
             .enumerate()
             .map(|(index, level)| {
@@ -23,15 +23,36 @@ fn user_defaults_batch2_quest_difficulty_boundaries() {
             })
             .collect();
     }
-    env.exec(r#"
-        local expected = { 'Impossible', 'Difficult', 'Difficult', 'Fair', 'Fair', 'Easy', 'Easy', 'Trivial', 'Trivial' }
-        local colors = { 'impossible', 'verydifficult', 'verydifficult', 'difficult', 'difficult', 'standard', 'standard', 'trivial', 'trivial' }
-        for i, name in ipairs(expected) do
+    // WM89 §4: with no ContentTuning record this build supplies comparison level 0, so the
+    // difference is minus the player level and the stored quest level is unused. The consumer
+    // is the original DifficultyUtil mapping that QuestMapFrame.lua:1751 applies at runtime.
+    env.exec(
+        r#"
+        for i = 1, 3 do
             local difficulty = C_PlayerInfo.GetContentDifficultyQuestForPlayer(49999 + i)
-            assert(GetDifficultyColor(difficulty) == QuestDifficultyColors[colors[i]], colors[i])
-            assert(difficulty == Enum.RelativeContentDifficulty[name], name)
+            assert(difficulty == Enum.RelativeContentDifficulty.Trivial, "stored level is unused")
+            assert(GetDifficultyColor(difficulty) == QuestDifficultyColors.trivial)
         end
-    "#).expect("quest levels must select each difficulty boundary");
+        "#,
+    )
+    .expect("untuned quest comparison level ignores the stored level");
+    for (player_level, expected, color) in [
+        (1, "Fair", "difficult"),
+        (2, "Fair", "difficult"),
+        (3, "Easy", "standard"),
+        (4, "Easy", "standard"),
+        (5, "Trivial", "trivial"),
+    ] {
+        env.state().borrow_mut().player.level = player_level;
+        env.exec(&format!(
+            r#"
+            local difficulty = C_PlayerInfo.GetContentDifficultyQuestForPlayer(50000)
+            assert(difficulty == Enum.RelativeContentDifficulty.{expected}, "player {player_level}")
+            assert(GetDifficultyColor(difficulty) == QuestDifficultyColors.{color}, "player {player_level}")
+            "#
+        ))
+        .expect("player level selects the fixed native band");
+    }
 }
 
 #[test]
