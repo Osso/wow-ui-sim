@@ -17,6 +17,7 @@ publication is not expanded by this change.
 - [x] Common text is copied with markup intact, without synthetic segment arrays.
 - [x] Supplied sides, including empty strings, publish text and RGB color; absent sides publish neither.
 - [x] RGB uses packed bytes multiplied in single precision by `1/255`, without alpha; preserve usable color methods.
+- [x] Both sides take that same RGB publication: a supplied right side publishes the packed color, not the raw factory color.
 - [x] Populated identity omits zero `id`; later common identity assignments append ordered type-19 rows with `tooltipType`, nonzero-only `tooltipID`, empty left text and supplied left color.
 - [x] Original `ProcessInfo`, GameTooltip line handlers and TooltipUtil retain their payloads; presentation parses inline markup independently.
 
@@ -39,9 +40,22 @@ changes here.
 
 ## Proof
 
+- `tests/tooltip_data_identity.rs` drives the original accessors only:
+  `GameTooltip:SetItemByID` (`TooltipDataHandler.lua:525` -> `C_TooltipInfo.GetItemByID`,
+  producer `tooltip_for_item_context` -> `tooltip_for_item_info`) proves fresh data and
+  line tables, `second.dataInstanceID == first.dataInstanceID + 1`, top-level
+  `type`/`id`, present-left-only publication and packed RGB on every item row;
+  `GameTooltip:SetEquipmentSet` (`TooltipDataHandler.lua:585` -> `C_TooltipInfo.GetEquipmentSet`)
+  proves the double-line header publishes the same packed, alpha-free RGB on its right side.
 - `tests/tooltip_d56_serialization.rs`: direct getters and original consumers.
 - `src/c_api/tooltip_data_tests.rs`: nested identity order and present/absent sides.
 - Existing tooltip builder, GC and presentation tests remain regression coverage.
+
+**Proved:** the shared publication helpers (`stamp_instance`, `publish_rgb`,
+`publish_side`, `assign_identity`) and the item and equipment-set producers that
+call them. **Unproved:** that each remaining getter's native producer uses these
+same common builders, producer-specific miss shapes, producer-specific auxiliary
+keys, and any getter that would request a second identity assignment.
 
 ## Related
 

@@ -274,6 +274,8 @@ fn append_line_with_right(
                 .or_else(|| builders::global_color(state, b"NORMAL_FONT_COLOR"))
                 .unwrap_or((1.0, 0.82, 0.0));
             let color = builders::color_table(state, rgb.0, rgb.1, rgb.2, 1.0);
+            state.push(color);
+            crate::c_api::tooltip_data::publish_rgb(state, color, rgb);
             crate::c_api::tooltip_data::publish_side(state, line, true, Some(right_text), color);
         } else {
             let text = create_string(state, right_text);
