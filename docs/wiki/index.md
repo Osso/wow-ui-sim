@@ -1,3 +1,7 @@
+## [2026-11-06] system | Collections collected-only journal tabs
+
+[Collections collected-only journal tabs](systems/collections-collected-only.md) records the PTR/WowForever CVar registration, the three predicates that answer from supplied collection state, and both pinned consumers: `CollectionsJournal_ValidateTab` and `CollectionsUtil.IsJournalDisabled()`. The [contract](../specs/collections-collected-only.md) keeps Retail, Wrath, Mists, Era and Anniversary out of scope because their pins declare no predicate and have no collected-only branch.
+
 ## [2026-11-04] investigation | NECESSARY Retail scheduling
 
 [Runtime optimization](investigations/test-runtime-optimization.md#necessary-retail-scheduling-profile--2026-11-04) records integration timing, timeout-fixture contention, the 672-name native inventory, configured harness permits, memory envelopes and the complete 1146.645s budget proof. The [warm-run target](../specs/necessary-suite-runtime.md) still requires two complete sub-600-second proofs.

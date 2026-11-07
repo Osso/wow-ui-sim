@@ -63,11 +63,17 @@ with none and with one collected entry per collection, on Retail, PTR and
 WowForever. It also reads the registered default and account flag through
 `C_CVar.GetCVarInfo` on the two profiles that pin the CVar.
 
+`tests/test_showuipanel_toggles.rs::journal_collections_util_disables_journal_only_for_empty_collected_state`
+drives `CollectionsUtil.IsJournalDisabled()` on PTR and WowForever with the CVar
+on and off and the same supplied collection-count fixtures.
+
 ## Known gaps (current cycle)
 
-- [ ] `Blizzard_FrameXMLUtil/CollectionsUtil.lua:544`
+- [x] `Blizzard_FrameXMLUtil/CollectionsUtil.lua:543`
       `CollectionsUtil.IsJournalDisabled()` is the second pinned consumer of the
-      same predicates and CVar. No test drives it yet.
+      same predicates and CVar. It is driven by
+      `tests/test_showuipanel_toggles.rs::journal_collections_util_disables_journal_only_for_empty_collected_state`
+      on PTR and WowForever.
 - [ ] Native semantics and session mutability of the three predicates; an
       aso/decomp answer is pending.
 - [ ] Retail 12.1.5 CVar absence rests on the pinned Wowless catalog
