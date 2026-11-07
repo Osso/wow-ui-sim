@@ -39,11 +39,7 @@ fn test_secure_action_button_template_is_protected_tuple_after_blizzard_framexml
     }
 }
 
-#[cfg(any(
-    feature = "client-retail",
-    feature = "client-ptr",
-    feature = "client-wowforever"
-))]
+#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
 #[test]
 fn test_c_addons_load_addon_preserves_account_store_mixin_methods() {
     test_timeout! {
@@ -113,6 +109,93 @@ fn test_c_addons_load_addon_preserves_account_store_mixin_methods() {
         assert_eq!(
             set_fullscreen_ty, "function",
             "AccountStoreFrame.SetFullscreenMode should exist after runtime load"
+        );
+    }
+}
+
+// Native 1.60.1.70707 activates {mainline, camelot}: `standard` is recognised but inactive and
+// `wowlabs` is an unknown token, so `## AllowLoadGameType: standard, wowlabs` fails closed and
+// Blizzard_AccountStore must not load (evidence: native-evidence-70707/TOC_AllowLoadGameType.md).
+#[cfg(feature = "client-wowforever")]
+#[test]
+fn test_wowforever_game_type_restriction_rejects_account_store_load_addon() {
+    test_timeout! {
+        let env = load_all_addons();
+
+        let account_store_toc =
+            blizzard_ui_dir().join("Blizzard_AccountStore/Blizzard_AccountStore.toc");
+        let rejected_peer_toc =
+            blizzard_ui_dir().join("Blizzard_HousingMarketCart/Blizzard_HousingMarketCart.toc");
+        assert!(
+            TocFile::from_file(&account_store_toc)
+                .expect("Blizzard_AccountStore TOC should parse")
+                .is_game_type_restricted(),
+            "`standard` is not active on Forever, so the AccountStore game-type gate rejects it"
+        );
+        assert!(
+            TocFile::from_file(&rejected_peer_toc)
+                .expect("Blizzard_HousingMarketCart TOC should parse")
+                .is_game_type_restricted(),
+            "Blizzard_HousingMarketCart is the reference standard-only addon for this profile"
+        );
+
+        let (
+            ok,
+            load_ok,
+            load_reason,
+            loaded_or_loading,
+            loaded,
+            peer_load_ok,
+            peer_load_reason,
+            frame_ty,
+            mixin_ty,
+            err,
+        ): (
+            bool,
+            bool,
+            Option<String>,
+            bool,
+            bool,
+            bool,
+            Option<String>,
+            String,
+            String,
+            Option<String>,
+        ) = env
+            .eval(
+                r#"
+                local ok, err = pcall(function()
+                    C_AddOns.LoadAddOn("Blizzard_AccountStore")
+                end)
+                local load_ok, load_reason = C_AddOns.LoadAddOn("Blizzard_AccountStore")
+                local loaded_or_loading, loaded = C_AddOns.IsAddOnLoaded("Blizzard_AccountStore")
+                local peer_load_ok, peer_load_reason = C_AddOns.LoadAddOn("Blizzard_HousingMarketCart")
+                return ok,
+                    load_ok,
+                    load_reason,
+                    loaded_or_loading,
+                    loaded,
+                    peer_load_ok,
+                    peer_load_reason,
+                    type(AccountStoreFrame),
+                    type(AccountStoreMixin),
+                    ok and nil or tostring(err)
+                "#,
+            )
+            .expect("C_AddOns.LoadAddOn inspection should be callable");
+
+        assert!(ok, "C_AddOns.LoadAddOn should not error: {:?}", err);
+        assert!(!load_ok, "Blizzard_AccountStore must not load on Forever");
+        assert!(
+            !loaded_or_loading && !loaded,
+            "C_AddOns.IsAddOnLoaded must report Blizzard_AccountStore as not loaded"
+        );
+        assert_eq!(frame_ty, "nil", "AccountStoreFrame must not exist on Forever");
+        assert_eq!(mixin_ty, "nil", "AccountStoreMixin must not exist on Forever");
+        assert!(!peer_load_ok, "the standard-only peer addon must not load either");
+        assert_eq!(
+            load_reason, peer_load_reason,
+            "a game-type-rejected addon must report the same load reason as its peer"
         );
     }
 }
