@@ -46,7 +46,7 @@ Core reads map ID and active flag on addon load/start/resync, key level and deat
 
 ## Criteria rendering boundary
 
-Original modern ScenarioObjectiveTracker initialization calls `C_Scenario.ShouldShowCriteria` unguarded at line 74. Neither pinned Retail nor PTR generated documentation declares this member or its namespace, and neither pinned addon tree defines a Lua alias. Original criteria rendering remains blocked before its query producer. Native clarification and any missing producer belong to a separate lane. Do not swallow the initialization error, replace vendor behavior or report direct query tests as rendering proof.
+Original modern ScenarioObjectiveTracker initialization calls `C_Scenario.ShouldShowCriteria` unguarded at line 74 on Retail, PTR and Forever. The member is a real native function in 1.60.1 Forever and 12.1.5 Retail; the generated documentation omits the whole `C_Scenario` namespace, so its silence is not evidence of absence. The producer is modeled on Retail, PTR and Forever, and original criteria rendering has a producer. Do not swallow an initialization error or replace vendor behavior.
 
 ## Proof requirements
 
@@ -54,6 +54,16 @@ Each original-consumer selector must contradict constant/no-op producers indepen
 
 ## Scenario criteria visibility
 
-- [x] `C_Scenario.ShouldShowCriteria()` (Retail/PTR; undocumented native read by `ScenarioObjectiveTracker:InitModule`) returns `true` unless `A_Admin.SetScenarioCriteriaShown(false)` supplied otherwise.
+Native evidence for `C_Scenario.ShouldShowCriteria` comes from decompilation `623b7b8c` of Forever 1.60.1.70707 and Retail 12.1.5.70688 (VERIFIED):
+
+- `C_Scenario` is created at start-up with exactly nine members, the same nine in the same order in both builds: `GetInfo`, `GetStepInfo`, `IsInScenario`, `TreatScenarioAsDungeon`, `GetProvingGroundsInfo`, `GetBonusSteps`, `GetBonusStepRewardQuestID`, `GetSupersededObjectives`, `ShouldShowCriteria`. Nothing about them is version-scoped between the two builds.
+- `ShouldShowCriteria` loads one process-wide cached flag and pushes exactly one real boolean. It has one path, so it cannot return nothing or `nil`. It never reads the scenario, the step or the criteria table.
+- The flag lives in statically initialized data, its initializer is true in both builds, and no start-up code writes it. Nothing resets it when a scenario ends, so a call before any payload returns true with or without a running scenario.
+- Two writers maintain it. One mirrors a boolean carried by an internal client payload and notifies the observer the client pairs with `SCENARIO_CRITERIA_SHOW_STATE_UPDATE(bool)`. One forces the flag to true under a local condition. The payload identity, the origin of its boolean, whether it ever carries false in normal play, and the local condition are all UNKNOWN.
+- Pinned Forever FrameXML consumes the event but passes the global `show` instead of its local `shouldShow`, so its own setter receives `nil` after the event. That is a consumer quirk, not a native contract.
+
+Simulator contract: one flag per environment, default true, held independently of scenario data. Supplying or replacing scenario criteria does not change it, and the getter always returns one boolean.
+
+- [x] `C_Scenario.ShouldShowCriteria()` (Retail, PTR, Forever) returns one boolean, true by default, unaffected by scenario presence.
 - [x] `A_Admin.SetScenarioCriteriaShown(shown)` stores the flag and fires `SCENARIO_CRITERIA_SHOW_STATE_UPDATE(shown)`.
-- Best-guess basis: best-guess, native UNKNOWN. Standard scenarios (Delves, Mythic+) show objectives; no hidden-criteria scenario data is modeled.
+- [ ] The other eight native `C_Scenario` members are not modeled here; `TreatScenarioAsDungeon`, `GetProvingGroundsInfo` and `GetSupersededObjectives` are absent, and `GetInfo`, `GetStepInfo` and `IsInScenario` remain temporary not-in-scenario defaults.

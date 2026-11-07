@@ -1,3 +1,7 @@
+## [2026-11-07] investigation | Forever C_Scenario.ShouldShowCriteria
+
+[Challenge run](systems/challenge-mode-run.md#original-criteria-initialization) records native evidence from decompilation `623b7b8c`: Forever 1.60.1 and Retail 12.1.5 register the same nine `C_Scenario` members in the same order, `ShouldShowCriteria` pushes one boolean from a process-wide cached flag whose static default is true and which no scenario state resets, and the generated documentation omits the whole namespace. The producer now registers on Forever, and the other eight members are inventoried in [the spec](../specs/challenge-mode-run.md#scenario-criteria-visibility).
+
 ## [2026-11-06] system | Collections collected-only journal tabs
 
 Created [Collections collected-only journal tabs](systems/collections-collected-only.md) for the `onlyShowCollectedItemsInJournal` contract the [spec](../specs/collections-collected-only.md) already linked: CVar default and scope, the three PTR/WowForever predicates over supplied journal state, and both original consumers (`CollectionsJournal_ValidateTab`, `CollectionsUtil.IsJournalDisabled`). PTR slot-1 proof: the `IsJournalDisabled` consumer test passes in 36.05s and the ValidateTab test in 6.16s, with zero compiler warnings.
