@@ -103,7 +103,7 @@ use crate::saved_variables::SavedVariablesManager;
 
 #[cfg(feature = "gui")]
 pub use app::App;
-#[cfg(all(test, feature = "gui"))]
+#[cfg(all(test, feature = "gui", unix))]
 pub(crate) use app::AppInit;
 #[cfg(feature = "gui")]
 pub use benchmark::{

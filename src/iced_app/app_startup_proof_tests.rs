@@ -1,5 +1,7 @@
 //! App-level oracles for startup budgets and the CPU-to-first-quad boundary.
-use super::app_tests::{build_test_app, complete_gui_startup, draw_test_canvas};
+#[cfg(target_os = "linux")]
+use super::app_tests::complete_gui_startup;
+use super::app_tests::{build_test_app, draw_test_canvas};
 use super::*;
 use crate::iced_app::Message;
 use crate::render::WowUiPrimitive;
