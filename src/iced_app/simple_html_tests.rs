@@ -8,11 +8,11 @@ use crate::screen::ScreenKind;
 use iced::{Point, Rectangle, Size};
 
 fn cached_source(profile: &str, relative: &str) -> String {
-    let path = dirs::home_dir()
-        .unwrap()
-        .join(".cache/wow-ui-sim/blizzard-ui")
-        .join(profile)
-        .join(relative);
+    // Production cache root (`%LOCALAPPDATA%`-based on Windows), not a POSIX home path.
+    let root = crate::blizzard_ui_sync::default_cache_root_path().unwrap_or_else(|error| {
+        panic!("Blizzard UI cache root unavailable: {error}; run `wow-cli casc sync-blizzard-ui`")
+    });
+    let path = root.join(profile).join(relative);
     std::fs::read_to_string(&path).unwrap_or_else(|error| panic!("{}: {error}", path.display()))
 }
 
