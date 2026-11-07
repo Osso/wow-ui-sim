@@ -153,26 +153,53 @@ fn anchor_none_clears_anchors_without_adding_new_ones() {
     assert_eq!(count, 0);
 }
 
-/// Documented gap: ANCHOR_CURSOR currently falls through to the
-/// no-anchor branch. If this test starts failing because `GetNumPoints`
-/// returns 1, the cursor-follow wiring has landed — delete this test
-/// and the PLAN item.
+/// WM63 O17: ANCHOR_CURSOR follows the cursor relative to the coordinate
+/// root's BOTTOMLEFT. Without a known mouse position no anchor is installed.
 #[test]
-fn anchor_cursor_falls_through_to_no_anchor_for_now() {
+fn anchor_cursor_follows_a_known_mouse_position() {
     let env = env();
     setup_tooltip_and_owner(&env);
-    let count: i64 = env
+    let without_mouse: i64 = env
         .eval(
             r#"
-            Tip:SetOwner(OwnerFrame, "ANCHOR_CURSOR", 5, 5)
+            Tip:SetOwner(OwnerFrame, "ANCHOR_CURSOR")
             return Tip:GetNumPoints()
             "#,
         )
         .unwrap();
-    assert_eq!(
-        count, 0,
-        "ANCHOR_CURSOR is an acknowledged gap — if this now returns 1, cursor-follow is wired up."
-    );
+    assert_eq!(without_mouse, 0, "no cursor position to anchor to");
+
+    env.set_screen_size(1000.0, 800.0);
+    env.state()
+        .borrow_mut()
+        .set_mouse_position(Some((100.0, 200.0)));
+    let (count, point, relative_point, x, y): (i64, String, String, f64, f64) = env
+        .eval(
+            r#"
+            Tip:SetOwner(OwnerFrame, "ANCHOR_CURSOR", 5, 5)
+            local point, _, relativePoint, x, y = Tip:GetPoint(1)
+            return Tip:GetNumPoints(), point, relativePoint, x, y
+            "#,
+        )
+        .unwrap();
+    assert_eq!(count, 1, "cursor mode installs one anchor");
+    if matches!(
+        wow_ui_sim::client_profile::ACTIVE,
+        wow_ui_sim::client_profile::ClientProfile::Retail
+            | wow_ui_sim::client_profile::ClientProfile::Ptr
+    ) {
+        assert_eq!(point, "BOTTOM", "CURSOR uses the tooltip bottom point");
+        assert_eq!(relative_point, "BOTTOMLEFT", "cursor root BOTTOMLEFT");
+        assert_eq!(
+            (x, y),
+            (100.0, 600.0),
+            "CURSOR ignores stored displacements"
+        );
+    } else {
+        assert_eq!(point, "TOPLEFT");
+        assert_eq!(relative_point, "TOPLEFT");
+        assert_eq!((x, y), (105.0, 205.0));
+    }
 }
 
 #[test]

@@ -9,6 +9,8 @@ without an explicit hide, while changing owners hides first. A non-table
 owner is rejected before mutation. Rejected empty/ownerless `Show` also runs
 hiding. See the [current timing and admission contract](tooltip-layout-timing.md).
 Native execution, callback re-entry and owner-auto-hide remain unverified.
+Anchor placement (mode point pairs, default displacements, cursor modes) is
+specified separately in [tooltip owner anchors](tooltip-owner-anchors.md).
 
 ## Historical legacy-profile contract
 
