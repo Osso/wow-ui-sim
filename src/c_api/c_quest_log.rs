@@ -21,7 +21,8 @@ pub struct QuestAdditionalHighlights {
 pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
     super::c_map_bounties::register_quest_queries(state)?;
     let namespace = ensure_namespace(state, "C_QuestLog")?;
-    if ACTIVE == ClientProfile::Retail {
+    // Retail and Forever QuestLogDocumentation.lua:46 declare this query.
+    if matches!(ACTIVE, ClientProfile::Retail | ClientProfile::WowForever) {
         table_set_rust_fn_static(state, namespace, "CanAbandonQuest", can_abandon_quest)?;
     }
     if matches!(ACTIVE, ClientProfile::Retail | ClientProfile::WowForever) {
