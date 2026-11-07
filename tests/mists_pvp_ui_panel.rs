@@ -3,6 +3,9 @@
 use std::path::PathBuf;
 use std::process::Command;
 
+#[path = "common/bounded_process.rs"]
+mod bounded_process;
+
 /// Cargo sets `CARGO_BIN_EXE_wow-sim` when it builds this test target, so the
 /// path is fixed at compile time. Reading the variable at run time falls back
 /// to `<manifest>/target/debug/wow-sim`, which does not exist when the test
@@ -14,9 +17,9 @@ fn wow_sim_binary() -> PathBuf {
 
 #[test]
 fn mists_pvp_ui_supports_honor_battleground_and_conquest_panels() {
-    let output = Command::new("timeout")
-        .arg("90")
-        .arg(wow_sim_binary())
+    let output = bounded_process::output(
+        90,
+        Command::new(wow_sim_binary())
         .args([
             "--no-addons",
             "--no-saved-vars",
@@ -63,7 +66,7 @@ fn mists_pvp_ui_supports_honor_battleground_and_conquest_panels() {
             "#,
             "lua-errors",
         ])
-        .output()
+        )
         .expect("failed to run wow-sim");
 
     let stdout = String::from_utf8_lossy(&output.stdout);
@@ -78,10 +81,9 @@ fn mists_pvp_ui_supports_honor_battleground_and_conquest_panels() {
 
 #[test]
 fn mists_toggle_pvp_frame_routes_through_group_finder_without_errors() {
-    let output = Command::new("timeout")
-        .arg("90")
-        .arg(wow_sim_binary())
-        .args([
+    let output = bounded_process::output(
+        90,
+        Command::new(wow_sim_binary()).args([
             "--no-addons",
             "--no-saved-vars",
             "--exec-lua",
@@ -98,9 +100,9 @@ fn mists_toggle_pvp_frame_routes_through_group_finder_without_errors() {
             end
             "#,
             "lua-errors",
-        ])
-        .output()
-        .expect("failed to run wow-sim");
+        ]),
+    )
+    .expect("failed to run wow-sim");
 
     let stdout = String::from_utf8_lossy(&output.stdout);
     let stderr = String::from_utf8_lossy(&output.stderr);

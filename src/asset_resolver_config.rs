@@ -3,6 +3,10 @@ use std::path::PathBuf;
 #[cfg(feature = "casc")]
 use std::sync::OnceLock;
 
+#[cfg(all(test, feature = "casc"))]
+#[path = "../tests/common/bounded_process.rs"]
+mod bounded_process;
+
 #[cfg(feature = "casc")]
 static RESOLVER: OnceLock<asset_resolver::CascListfileResolver> = OnceLock::new();
 
@@ -103,6 +107,7 @@ pub fn prepare_gui_casc_resolution_cache() -> Result<(), String> {
 
 #[cfg(all(test, feature = "casc"))]
 mod tests {
+    use super::bounded_process;
     use std::path::Path;
     use std::process::Command;
 
@@ -170,20 +175,20 @@ mod tests {
     }
 
     fn run_gui_cache_test(mode: &str, install: &Path, cache: &Path, disabled: bool) {
-        let output = Command::new("timeout")
-            .arg("90")
-            .arg(std::env::current_exe().unwrap())
-            .args([
-                "--exact",
-                "asset_resolver_config::tests::gui_resolution_cache_preparation",
-                "--nocapture",
-            ])
-            .env("WOW_SIM_GUI_CACHE_TEST_MODE", mode)
-            .env("WOW_INSTALL_PATH", install)
-            .env("ASSET_RESOLVER_CACHE_DIR", cache)
-            .env("WOW_SIM_CASC", if disabled { "0" } else { "1" })
-            .output()
-            .unwrap();
+        let output = bounded_process::output(
+            90,
+            Command::new(std::env::current_exe().unwrap())
+                .args([
+                    "--exact",
+                    "asset_resolver_config::tests::gui_resolution_cache_preparation",
+                    "--nocapture",
+                ])
+                .env("WOW_SIM_GUI_CACHE_TEST_MODE", mode)
+                .env("WOW_INSTALL_PATH", install)
+                .env("ASSET_RESOLVER_CACHE_DIR", cache)
+                .env("WOW_SIM_CASC", if disabled { "0" } else { "1" }),
+        )
+        .unwrap();
         eprintln!("{mode} child: {}", String::from_utf8_lossy(&output.stderr));
         assert!(
             output.status.success(),

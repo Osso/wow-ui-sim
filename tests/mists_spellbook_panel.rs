@@ -2,6 +2,9 @@
 
 use std::process::Command;
 
+#[path = "common/bounded_process.rs"]
+mod bounded_process;
+
 const SPELLBOOK_PANEL_PROBE_LUA: &str = r#"
 ToggleSpellBook(BOOKTYPE_SPELL)
 if SpellBookFrame and SpellBookFrame.Update then
@@ -201,10 +204,9 @@ end
 
 #[test]
 fn mists_spellbook_populates_visible_spell_buttons() {
-    let output = Command::new("timeout")
-        .arg("90")
-        .arg(env!("CARGO_BIN_EXE_wow-sim"))
-        .args([
+    let output = bounded_process::output(
+        90,
+        Command::new(env!("CARGO_BIN_EXE_wow-sim")).args([
             "--no-addons",
             "--no-saved-vars",
             "--exec-lua",
@@ -212,9 +214,9 @@ fn mists_spellbook_populates_visible_spell_buttons() {
             "dump-tree",
             "--filter-key",
             "SpellBookFrame",
-        ])
-        .output()
-        .expect("failed to run wow-sim");
+        ]),
+    )
+    .expect("failed to run wow-sim");
 
     let stdout = String::from_utf8_lossy(&output.stdout);
     let stderr = String::from_utf8_lossy(&output.stderr);

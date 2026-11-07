@@ -10,6 +10,9 @@ use wow_ui_sim::lua_api::WowLuaEnv;
 use wow_ui_sim::saved_variables::{SavedVariablesManager, WtfConfig};
 use wow_ui_sim::screen::ScreenKind;
 
+#[path = "common/bounded_process.rs"]
+mod bounded_process;
+
 const ACCOUNT_CACHE: &[u8] =
     include_bytes!("fixtures/frame_position_replay/edit-mode-cache-account.txt");
 const CHARACTER_CACHE: &[u8] = b"2 2 2 2 0 0\0";
@@ -155,8 +158,10 @@ fn truncated_account_cache_warns_during_default_startup() {
             let cache = format!("{count} {}", header[1..].join(" "));
             std::fs::write(account.join("edit-mode-cache-account.txt"), cache).expect("write cache");
             std::fs::write(character.join("edit-mode-cache-character.txt"), CHARACTER_CACHE).expect("write character cache");
-            let output = Command::new("timeout")
-                .args(["90", env!("CARGO_BIN_EXE_wow-sim"), "--session-wtf-path"])
+            let output =bounded_process::output(
+                90,
+                Command::new(env!("CARGO_BIN_EXE_wow-sim"))
+                .arg("--session-wtf-path")
                 .arg(temp.path().join("data/wow-sim"))
                 .args(["--no-addons", "--no-saved-vars", "lua-errors"])
                 .env("WOW_SIM_WTF_PATH", &wtf)
@@ -165,7 +170,7 @@ fn truncated_account_cache_warns_during_default_startup() {
                 .env("WOW_SIM_WTF_CHARACTER", "Testchar")
                 .env_remove("RUST_LOG")
                 .env_remove("WOW_SIM_EDIT_MODE_LAYOUT")
-                .output().expect("run default startup");
+                ).expect("run default startup");
             assert!(output.status.success(),
                 "startup failed for count {count}: {}\nstdout: {}\nstderr: {}",
                 output.status,

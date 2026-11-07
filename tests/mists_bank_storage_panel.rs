@@ -3,6 +3,9 @@
 use std::path::PathBuf;
 use std::process::Command;
 
+#[path = "common/bounded_process.rs"]
+mod bounded_process;
+
 use crate::common::blizzard_addon_harness::{
     blizzard_ui_dir, load_blizzard_addon_closure_into_env, new_blizzard_addon_env,
 };
@@ -57,9 +60,9 @@ fn wow_sim_binary() -> PathBuf {
 
 #[test]
 fn mists_bank_and_guild_bank_support_storage_flow() {
-    let output = Command::new("timeout")
-        .arg("90")
-        .arg(wow_sim_binary())
+    let output = bounded_process::output(
+        90,
+        Command::new(wow_sim_binary())
         .args([
             "--no-addons",
             "--no-saved-vars",
@@ -147,7 +150,7 @@ fn mists_bank_and_guild_bank_support_storage_flow() {
             "#,
             "lua-errors",
         ])
-        .output()
+        )
         .expect("failed to run wow-sim");
 
     let stdout = String::from_utf8_lossy(&output.stdout);

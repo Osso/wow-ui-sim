@@ -2,12 +2,14 @@
 
 use std::process::Command;
 
+#[path = "common/bounded_process.rs"]
+mod bounded_process;
+
 #[test]
 fn mists_character_panel_populates_gear_and_reputation() {
-    let output = Command::new("timeout")
-        .arg("90")
-        .arg(env!("CARGO_BIN_EXE_wow-sim"))
-        .args([
+    let output = bounded_process::output(
+        90,
+        Command::new(env!("CARGO_BIN_EXE_wow-sim")).args([
             "--no-addons",
             "--no-saved-vars",
             "--exec-lua",
@@ -62,9 +64,9 @@ fn mists_character_panel_populates_gear_and_reputation() {
             "dump-tree",
             "--filter-key",
             "CharacterFrame",
-        ])
-        .output()
-        .expect("failed to run wow-sim");
+        ]),
+    )
+    .expect("failed to run wow-sim");
 
     let stdout = String::from_utf8_lossy(&output.stdout);
     let stderr = String::from_utf8_lossy(&output.stderr);
@@ -78,10 +80,9 @@ fn mists_character_panel_populates_gear_and_reputation() {
 
 #[test]
 fn mists_character_bottom_tabs_size_their_text() {
-    let output = Command::new("timeout")
-        .arg("90")
-        .arg(env!("CARGO_BIN_EXE_wow-sim"))
-        .args([
+    let output = bounded_process::output(
+        90,
+        Command::new(env!("CARGO_BIN_EXE_wow-sim")).args([
             "--no-addons",
             "--no-saved-vars",
             "--exec-lua",
@@ -172,9 +173,9 @@ fn mists_character_bottom_tabs_size_their_text() {
             "dump-tree",
             "--filter",
             "CharacterFrameTab",
-        ])
-        .output()
-        .expect("failed to run wow-sim");
+        ]),
+    )
+    .expect("failed to run wow-sim");
 
     let stdout = String::from_utf8_lossy(&output.stdout);
     let stderr = String::from_utf8_lossy(&output.stderr);
@@ -188,10 +189,9 @@ fn mists_character_bottom_tabs_size_their_text() {
 
 #[test]
 fn mists_character_pet_tab_stays_visible_when_pet_ui_is_seeded() {
-    let output = Command::new("timeout")
-        .arg("90")
-        .arg(env!("CARGO_BIN_EXE_wow-sim"))
-        .args([
+    let output = bounded_process::output(
+        90,
+        Command::new(env!("CARGO_BIN_EXE_wow-sim")).args([
             "--no-addons",
             "--no-saved-vars",
             "--exec-lua",
@@ -217,9 +217,9 @@ fn mists_character_pet_tab_stays_visible_when_pet_ui_is_seeded() {
             "dump-tree",
             "--filter-key",
             "CharacterFrame",
-        ])
-        .output()
-        .expect("failed to run wow-sim");
+        ]),
+    )
+    .expect("failed to run wow-sim");
 
     let stdout = String::from_utf8_lossy(&output.stdout);
     let stderr = String::from_utf8_lossy(&output.stderr);
@@ -237,10 +237,9 @@ fn mists_character_pet_tab_stays_visible_when_pet_ui_is_seeded() {
 
 #[test]
 fn mists_character_pet_tab_hides_when_pet_ui_is_absent() {
-    let output = Command::new("timeout")
-        .arg("90")
-        .arg(env!("CARGO_BIN_EXE_wow-sim"))
-        .args([
+    let output = bounded_process::output(
+        90,
+        Command::new(env!("CARGO_BIN_EXE_wow-sim")).args([
             "--no-addons",
             "--no-saved-vars",
             "--exec-lua",
@@ -261,9 +260,9 @@ fn mists_character_pet_tab_hides_when_pet_ui_is_absent() {
             "dump-tree",
             "--filter-key",
             "CharacterFrame",
-        ])
-        .output()
-        .expect("failed to run wow-sim");
+        ]),
+    )
+    .expect("failed to run wow-sim");
 
     let stdout = String::from_utf8_lossy(&output.stdout);
     let stderr = String::from_utf8_lossy(&output.stderr);
@@ -281,10 +280,9 @@ fn mists_character_pet_tab_hides_when_pet_ui_is_absent() {
 
 #[test]
 fn mists_character_pet_tab_rehides_stale_tab_when_panel_opens() {
-    let output = Command::new("timeout")
-        .arg("90")
-        .arg(env!("CARGO_BIN_EXE_wow-sim"))
-        .args([
+    let output = bounded_process::output(
+        90,
+        Command::new(env!("CARGO_BIN_EXE_wow-sim")).args([
             "--no-addons",
             "--no-saved-vars",
             "--exec-lua",
@@ -303,9 +301,9 @@ fn mists_character_pet_tab_rehides_stale_tab_when_panel_opens() {
             "dump-tree",
             "--filter-key",
             "CharacterFrame",
-        ])
-        .output()
-        .expect("failed to run wow-sim");
+        ]),
+    )
+    .expect("failed to run wow-sim");
 
     let stdout = String::from_utf8_lossy(&output.stdout);
     let stderr = String::from_utf8_lossy(&output.stderr);
@@ -319,10 +317,9 @@ fn mists_character_pet_tab_rehides_stale_tab_when_panel_opens() {
 
 #[test]
 fn mists_character_subpanels_drive_titles_and_equipment_sets() {
-    let output = Command::new("timeout")
-        .arg("90")
-        .arg(env!("CARGO_BIN_EXE_wow-sim"))
-        .args([
+    let output = bounded_process::output(
+        90,
+        Command::new(env!("CARGO_BIN_EXE_wow-sim")).args([
             "--no-addons",
             "--no-saved-vars",
             "--exec-lua",
@@ -398,9 +395,9 @@ fn mists_character_subpanels_drive_titles_and_equipment_sets() {
             "dump-tree",
             "--filter-key",
             "CharacterFrame",
-        ])
-        .output()
-        .expect("failed to run wow-sim");
+        ]),
+    )
+    .expect("failed to run wow-sim");
 
     let stdout = String::from_utf8_lossy(&output.stdout);
     let stderr = String::from_utf8_lossy(&output.stderr);

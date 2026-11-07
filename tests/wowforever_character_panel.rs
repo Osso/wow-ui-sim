@@ -1,17 +1,21 @@
 #![cfg(feature = "client-wowforever")]
 
+#[path = "common/bounded_process.rs"]
+mod bounded_process;
+
 #[test]
 fn character_panel_movement_speed_survives_open_close_and_updates() {
     let root = tempfile::tempdir().unwrap();
-    let output = std::process::Command::new("timeout")
-        .args(["90", env!("CARGO_BIN_EXE_wow-sim")])
-        .arg("--session-wtf-path")
-        .arg(root.path().join("data/wow-sim"))
-        .args([
-            "--no-addons",
-            "--no-saved-vars",
-            "--exec-lua",
-            r#"
+    let output = bounded_process::output(
+        90,
+        Command::new(env!("CARGO_BIN_EXE_wow-sim"))
+            .arg("--session-wtf-path")
+            .arg(root.path().join("data/wow-sim"))
+            .args([
+                "--no-addons",
+                "--no-saved-vars",
+                "--exec-lua",
+                r#"
             for cycle = 1, 2 do
                 ToggleCharacter("PaperDollFrame")
                 assert(CharacterFrame:IsShown(), "character panel did not open")
@@ -39,12 +43,12 @@ fn character_panel_movement_speed_survives_open_close_and_updates() {
             end
             print("CHARACTER_MOVEMENT_SPEED_DONE")
             "#,
-            "lua-errors",
-        ])
-        .env("XDG_DATA_HOME", root.path().join("data"))
-        .env("WOW_SIM_WTF_PATH", root.path().join("wtf"))
-        .output()
-        .unwrap();
+                "lua-errors",
+            ])
+            .env("XDG_DATA_HOME", root.path().join("data"))
+            .env("WOW_SIM_WTF_PATH", root.path().join("wtf")),
+    )
+    .unwrap();
     let stdout = String::from_utf8_lossy(&output.stdout);
     let stderr = String::from_utf8_lossy(&output.stderr);
     assert!(output.status.success(), "{stdout}\n{stderr}");

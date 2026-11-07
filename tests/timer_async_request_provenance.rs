@@ -8,6 +8,9 @@ use std::time::Instant;
 use sha2::{Digest, Sha256};
 use wow_ui_sim::lua_api::WowLuaEnv;
 
+#[path = "common/bounded_process.rs"]
+mod bounded_process;
+
 const CHILD: &str = "WOW_SIM_ASYNC_REQUEST_PROVENANCE_CHILD";
 const TIMINGS: &str = "WOW_SIM_LOG_HANDLER_TIMINGS";
 const MUTATION: &str = "WOW_SIM_SHARED_INPUT_MUTATION";
@@ -48,10 +51,8 @@ fn original_async_request_correlates_timeout_and_cancellation_in_both_modes() {
 
 fn run_isolated(threshold: Option<&str>) -> String {
     let thread = std::thread::current();
-    let mut command = Command::new("timeout");
+    let mut command = Command::new(std::env::current_exe().unwrap());
     command
-        .arg("90")
-        .arg(std::env::current_exe().unwrap())
         .args([
             thread.name().unwrap(),
             "--exact",
@@ -63,7 +64,7 @@ fn run_isolated(threshold: Option<&str>) -> String {
     if let Some(threshold) = threshold {
         command.env(TIMINGS, threshold);
     }
-    let output = command.output().expect("run bounded AsyncRequest child");
+    let output = bounded_process::output(90, &mut command).expect("run bounded AsyncRequest child");
     let stderr = String::from_utf8(output.stderr).unwrap();
     assert!(
         output.status.success(),
