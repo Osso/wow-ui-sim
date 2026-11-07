@@ -182,7 +182,7 @@ fn tooltip_owner_clear_failed_lookup_reprocessing_notifies_once() {
             "the hide clears before the consumer OnHide handler runs")
         assert(_G.owner_clear_events[2] == "hidden")
         assert(not GameTooltip:IsShown() and GameTooltip:NumLines() == 0)
-        assert(GameTooltip:infoList == nil, "failed lookup clears handler info")
+        assert(GameTooltip.infoList == nil, "failed lookup clears handler info")
         assert(GameTooltip:GetOwner() == nil, "Hide releases the owner")
 
         -- TooltipDataHandler.lua:272-307: the next non-append info re-owns,
