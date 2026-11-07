@@ -513,33 +513,23 @@ fn test_secure_env_annotated_files_load_cleanly() {
             resolved_secure_publications.join("\n")
         );
 
-        // Downstream surfaces exposed by secure files.
-        let (
-            restricted_scope_ty,
-            secure_filters_delegate_ty,
-            cooldown_aura_map_ty,
-            cooldown_aura_map_value,
-            target_aura_container_ty,
-            aura_container_set_max_buffs_ty,
-            aura_button_icon_ty,
-            public_buff_aura_group_ty,
-            public_debuff_aura_group_ty,
-            forbidden_buff_aura_group_ty,
-            forbidden_debuff_aura_group_ty,
-        ): (
-            String,
-            String,
-            String,
-            String,
-            String,
-            String,
-            String,
-            String,
-            String,
-            String,
-            String,
-        ) = env
-            .eval(
+        // Downstream surfaces exposed by secure files. The CooldownViewer and Mainline
+        // TargetFrame aura surfaces exist only where those secure files are annotated
+        // (see the annotation audit above), so they are probed only there.
+        let secure_surface_types: String = env
+            .eval(if matches!(
+                wow_ui_sim::client_profile::ACTIVE,
+                wow_ui_sim::client_profile::ClientProfile::Mists
+                    | wow_ui_sim::client_profile::ClientProfile::Era
+                    | wow_ui_sim::client_profile::ClientProfile::Anniversary
+            ) {
+                r#"
+                return table.concat({
+                    type(CallRestrictedClosure),
+                    type(SecureTypes and SecureTypes.CreateSecureArray),
+                }, "|")
+                "#
+            } else {
                 r#"
                 -- RESTRICTED_FUNCTIONS_SCOPE lands on the addon table, not _G,
                 -- so we probe the scope via a known descendent global that
@@ -552,31 +542,36 @@ fn test_secure_env_annotated_files_load_cleanly() {
                 local auraButton = CreateFrame(
                     "AuraButton", nil, UIParent, "TargetFrameAuraButtonTemplate"
                 )
-                return type(CallRestrictedClosure),
-                       type(SecureTypes and SecureTypes.CreateSecureArray),
-                       type(auraMap),
-                       type(auraMap[42]),
-                       type(targetAuras),
-                       type(targetAuras.SetMaxBuffs),
-                       type(auraButton.GetIcon),
-                       type(targetAuras.buffAuraGroup),
-                       type(targetAuras.debuffAuraGroup),
-                       type(forbiddenTargetAuras.buffAuraGroup),
-                       type(forbiddenTargetAuras.debuffAuraGroup)
-                "#,
-            )
+                return table.concat({
+                    type(CallRestrictedClosure),
+                    type(SecureTypes and SecureTypes.CreateSecureArray),
+                    type(auraMap),
+                    type(auraMap[42]),
+                    type(targetAuras),
+                    type(targetAuras.SetMaxBuffs),
+                    type(auraButton.GetIcon),
+                    type(targetAuras.buffAuraGroup),
+                    type(targetAuras.debuffAuraGroup),
+                    type(forbiddenTargetAuras.buffAuraGroup),
+                    type(forbiddenTargetAuras.debuffAuraGroup),
+                }, "|")
+                "#
+            })
             .expect("secure surface should be introspectable");
-        assert_eq!(restricted_scope_ty, "function");
-        assert_eq!(secure_filters_delegate_ty, "function");
-        assert_eq!(cooldown_aura_map_ty, "table");
-        assert_eq!(cooldown_aura_map_value, "string");
-        assert_eq!(target_aura_container_ty, "table");
-        assert_eq!(aura_container_set_max_buffs_ty, "function");
-        assert_eq!(aura_button_icon_ty, "function");
-        assert_eq!(public_buff_aura_group_ty, "nil");
-        assert_eq!(public_debuff_aura_group_ty, "nil");
-        assert_eq!(forbidden_buff_aura_group_ty, "table");
-        assert_eq!(forbidden_debuff_aura_group_ty, "table");
+        let expected_surface_types = if matches!(
+            wow_ui_sim::client_profile::ACTIVE,
+            wow_ui_sim::client_profile::ClientProfile::Mists
+                | wow_ui_sim::client_profile::ClientProfile::Era
+                | wow_ui_sim::client_profile::ClientProfile::Anniversary
+        ) {
+            "function|function"
+        } else {
+            "function|function|table|string|table|function|function|nil|nil|table|table"
+        };
+        assert_eq!(
+            secure_surface_types, expected_surface_types,
+            "secure surface types exposed by the annotated files"
+        );
     }
 }
 
