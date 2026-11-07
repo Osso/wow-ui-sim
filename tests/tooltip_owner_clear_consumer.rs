@@ -172,9 +172,9 @@ fn tooltip_owner_clear_failed_lookup_reprocessing_notifies_once() {
         _G.owner_clear_events = {}
         -- TooltipDataHandler.lua:264-270: a non-append lookup that yields no
         -- data hides the tooltip.
-        assert(GameTooltip:ProcessInfo({
+        assert((GameTooltip:ProcessInfo({
             getterFunction = function() return nil end,
-        }) == false)
+        })) == false)
 
         assert(#_G.owner_clear_events == 2,
             "failed lookup clears its content once, then hides")
