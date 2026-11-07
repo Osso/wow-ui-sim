@@ -203,6 +203,11 @@ fn native_attachments() -> bool {
     )
 }
 
+/// Wrath 12340 uses the template-backed `<name>TextureN` slots instead.
+fn wrath_template_attachments() -> bool {
+    wow_ui_sim::client_profile::ACTIVE == wow_ui_sim::client_profile::ClientProfile::Wrath
+}
+
 /// Widget IDs of the attachment textures stored on GameTooltip rows.
 fn attachment_texture_ids(env: &WowLuaEnv) -> Vec<u64> {
     let state = env.state().borrow();
@@ -214,6 +219,20 @@ fn attachment_texture_ids(env: &WowLuaEnv) -> Vec<u64> {
         .collect()
 }
 
+/// Names of the Wrath template texture slots that AddTexture filled, in order.
+fn wrath_texture_slot_names(env: &WowLuaEnv) -> Vec<String> {
+    let state = env.state().borrow();
+    let gt_id = state.widgets.get_id_by_name("GameTooltip").unwrap();
+    state.tooltips[&gt_id]
+        .wrath_texture_rows
+        .iter()
+        .filter_map(|&(_, id)| state.widgets.get(id).and_then(|frame| frame.name.clone()))
+        .collect()
+}
+
+/// Stored filename of a Wrath template texture slot is not observable in the bare
+/// environment: the `TextureN` slots live in Blizzard XML, so `widgets_b6_u1.rs`
+/// owns the slot coverage. The Wrath branch here rejects the legacy FileDataID row.
 #[test]
 fn test_add_texture_increments_numlines() {
     let env = WowLuaEnv::new().unwrap();
@@ -230,6 +249,12 @@ fn test_add_texture_increments_numlines() {
     if native_attachments() {
         assert_eq!(count, 1, "AddTexture attaches to the existing row");
         assert_eq!(attachment_texture_ids(&env).len(), 1);
+    } else if wrath_template_attachments() {
+        // 12340 AddTexture rejects fewer than two rows, so this one-row
+        // tooltip keeps its single row and records no texture slot
+        // (handoff/laptop-labels-answers-20261018/tooltip-addtexture-12340.md).
+        assert_eq!(count, 1, "a one-row tooltip has no row to attach to");
+        assert_eq!(wrath_texture_slot_names(&env), Vec::<String>::new());
     } else {
         assert_eq!(count, 2, "AddTexture should add a line");
     }
@@ -269,6 +294,25 @@ fn test_add_texture_stores_file_data_id() {
         assert_eq!(texture.texture_file_data_id, Some(136243));
         return;
     }
+    if wrath_template_attachments() {
+        // 12340 reads the argument with lua_tolstring, so a number is a FILENAME
+        // and is never resolved as a FileDataID (tooltip-addtexture-12340.md).
+        // The filled `TextureN` slot is asserted in tests/widgets_b6_u1.rs.
+        env.exec(
+            "GameTooltip:AddLine('Header'); GameTooltip:AddLine('Body'); GameTooltip:AddTexture(136243)",
+        )
+        .unwrap();
+        let state = env.state().borrow();
+        let gt_id = state.widgets.get_id_by_name("GameTooltip").unwrap();
+        assert!(
+            state.tooltips[&gt_id]
+                .lines
+                .iter()
+                .all(|line| line.texture.is_none()),
+            "a numeric AddTexture argument must not become a FileDataID row"
+        );
+        return;
+    }
     env.exec("GameTooltip:AddTexture(136243)").unwrap();
 
     let state = env.state().borrow();
@@ -288,8 +332,10 @@ fn test_add_atlas_stores_atlas_name() {
     let env = WowLuaEnv::new().unwrap();
 
     if native_attachments() {
-        env.exec(r#"GameTooltip:AddLine("Header"); GameTooltip:AddAtlas("groupfinder-icon-friend")"#)
-            .unwrap();
+        env.exec(
+            r#"GameTooltip:AddLine("Header"); GameTooltip:AddAtlas("groupfinder-icon-friend")"#,
+        )
+        .unwrap();
         let ids = attachment_texture_ids(&env);
         let state = env.state().borrow();
         let texture = state.widgets.get(ids[0]).unwrap();
@@ -319,7 +365,7 @@ fn test_add_texture_with_string_id() {
     env.exec(r#"GameTooltip:AddTexture("136243")"#).unwrap();
 
     let count: i32 = env.eval("return GameTooltip:NumLines()").unwrap();
-    if native_attachments() {
+    if native_attachments() || wrath_template_attachments() {
         assert_eq!(count, 0, "an empty tooltip has no row to attach to");
     } else {
         assert_eq!(count, 1, "AddTexture with string ID should add a line");
@@ -437,27 +483,54 @@ fn prepare_tooltip_layout(env: &WowLuaEnv) {
     wow_ui_sim::iced_app::tooltip::prepare_tooltip_layout(&mut state, &mut font_sys);
 }
 
+const LONG_WRAP_LINE: &str = "This is a very very very very very very very very very long line that should word-wrap within the tooltip width rather than expanding it to be extremely wide";
+const WIDTH_PROBE_ROW: &str = "Short";
+
+/// Text inset of the profile's tooltip border, derived from one known unwrapped row
+/// (`WrapWidthProbe`) instead of a hard-coded border size.
+fn tooltip_text_inset(env: &WowLuaEnv, fonts: &mut wow_ui_sim::render::font::WowFontSystem) -> f32 {
+    let width = {
+        let state = env.state().borrow();
+        let id = state
+            .widgets
+            .get_id_by_name("WrapWidthProbe")
+            .expect("WrapWidthProbe should exist");
+        state.widgets.get(id).expect("probe geometry").width
+    };
+    width - fonts.measure_text_width(WIDTH_PROBE_ROW, None, 14.0)
+}
+
 #[test]
 fn test_wrapped_line_does_not_expand_width() {
     let env = WowLuaEnv::new().unwrap();
 
-    env.exec(
+    env.exec(&format!(
         r#"
         local owner = CreateFrame("Frame", "WrapWidthOwner", UIParent)
+        local probe = CreateFrame("GameTooltip", "WrapWidthProbe")
+        probe:SetOwner(owner, "ANCHOR_NONE")
+        probe:AddLine("{WIDTH_PROBE_ROW}")
+        probe:Show()
         GameTooltip:SetOwner(owner, "ANCHOR_NONE")
-        GameTooltip:AddLine("Short")
-        GameTooltip:AddLine("This is a very very very very very very very very very long line that should word-wrap within the tooltip width rather than expanding it to be extremely wide", 1, 1, 1, true)
+        GameTooltip:AddLine("{WIDTH_PROBE_ROW}")
+        GameTooltip:AddLine("{LONG_WRAP_LINE}", 1, 1, 1, true)
         GameTooltip:Show()
         assert(GameTooltip:IsShown())
-    "#,
-    )
+    "#
+    ))
     .unwrap();
 
     prepare_tooltip_layout(&env);
 
-    let state = env.state().borrow();
-    let gt_id = state.widgets.get_id_by_name("GameTooltip").unwrap();
-    let frame = state.widgets.get(gt_id).unwrap();
+    let (frame_width, line_width) = {
+        let state = env.state().borrow();
+        let gt_id = state.widgets.get_id_by_name("GameTooltip").unwrap();
+        let line_id = state.tooltips[&gt_id].left_line_ids[1];
+        (
+            state.widgets.get(gt_id).unwrap().width,
+            state.widgets.get(line_id).unwrap().width,
+        )
+    };
 
     if matches!(
         wow_ui_sim::client_profile::ACTIVE,
@@ -465,17 +538,31 @@ fn test_wrapped_line_does_not_expand_width() {
             | wow_ui_sim::client_profile::ClientProfile::Ptr
     ) {
         // WM63 L23:16-22: wrapped text contributes up to the default 230.4 cap.
-        let content_width = frame.width - 20.48;
-        let line_id = state.tooltips[&gt_id].left_line_ids[1];
-        let line_width = state.widgets.get(line_id).unwrap().width;
+        let content_width = frame_width - 20.48;
         assert!(content_width > 150.0 && content_width <= 230.4);
+        assert!((line_width - content_width).abs() < 0.01);
+    } else if wrath_template_attachments() {
+        // 12340 refines the shared width from each wrapped row up to the 230.4
+        // candidate and never to the full string, and the row's left line takes
+        // the shared width (batch8-tooltip-precision.md).
+        let mut fonts = wow_ui_sim::render::font::WowFontSystem::new();
+        let inset = tooltip_text_inset(&env, &mut fonts);
+        let content_width = frame_width - inset;
+        let full_width = fonts.measure_text_width(LONG_WRAP_LINE, None, 12.0);
+        assert!(
+            content_width > full_width * 0.1,
+            "the wrapped row must expand the width, got {content_width} of a {full_width} px line"
+        );
+        assert!(
+            content_width < full_width * 0.5,
+            "the wrapped row must not expand the width to the whole line, got {content_width}"
+        );
         assert!((line_width - content_width).abs() < 0.01);
     } else {
         // Legacy profiles retain the non-wrapped width rule.
         assert!(
-            frame.width < 200.0,
-            "Tooltip width should be small (non-wrapping lines only), got {}",
-            frame.width
+            frame_width < 200.0,
+            "Tooltip width should be small (non-wrapping lines only), got {frame_width}"
         );
     }
 }

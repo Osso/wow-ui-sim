@@ -150,6 +150,9 @@ fn b6_u1_numeric_legacy_input_attaches_not_new_row() {
         B6Tip:AddLine('header'); B6Tip:AddLine('body')
         B6Tip:AddTexture(136243)
         assert(B6Tip:NumLines()==2,'numeric file identifier must not add a row')
+        -- 12340 reads the argument with lua_tolstring: a number is a decimal
+        -- filename and is never resolved as a FileDataID.
+        assert(B6TipTexture1:GetTexture()=='136243','numeric argument must become the filename')
     "#,
     )
     .unwrap();
