@@ -46,27 +46,26 @@ const BACKPACK: i32 = 0;
 const FIRST_CARRIED_BAG: i32 = 1;
 const LAST_CARRIED_BAG: i32 = 4;
 
-/// The selected copy and the identity the request carries for it.
+/// The selected copy and the simulator instance identity the request carries.
 struct OwnedInstance {
-    item_id: u32,
     guid: Option<String>,
 }
 
 /// Where the selected copy sits in the modelled player inventory.
 enum Location {
     Bag { bag: i32, slot: i32 },
-    Equipment { slot: i32 },
+    Equipment,
 }
 
 impl Location {
-    /// The simulator instance identity, in the shape `C_Item.GetItemGUID`
-    /// publishes. The equipment range has no modelled GUID string.
+    /// The simulator identity, in the shape `C_Item.GetItemGUID` publishes. The
+    /// equipment range has no modelled GUID string.
     fn instance(self, item_id: u32) -> OwnedInstance {
         let guid = match self {
             Location::Bag { bag, slot } => Some(item_guid_for_bag_slot(bag, slot, item_id)),
-            Location::Equipment { .. } => None,
+            Location::Equipment => None,
         };
-        OwnedInstance { item_id, guid }
+        OwnedInstance { guid }
     }
 }
 
@@ -108,7 +107,7 @@ fn find_instance(state: &LuaState, item_id: u32) -> Option<OwnedInstance> {
             bag: BACKPACK,
             slot,
         })
-        .or_else(|| equipment_slot(&sim, item_id).map(|slot| Location::Equipment { slot }))
+        .or_else(|| equipment_slot(&sim, item_id).map(|_| Location::Equipment))
         .or_else(|| carried_bag_slot(&sim, item_id))?;
     Some(location.instance(item_id))
 }
