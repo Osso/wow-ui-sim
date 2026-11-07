@@ -60,10 +60,11 @@ unknown.
   entry without writing saved CVars. `GetCVar`/`GetCVarBool` and their namespace
   counterparts see the temporary scalar before the saved/base value. This does
   not establish native mutation events, validation or other temporary-CVar APIs.
-- `C_Spell.GetTargetSpellID()` reads a supplied numeric identifier. If no
-  target is supplied, the simulator returns nil as a best-guess scenario
-  default, not a native observation. This deviates from the declaration's
-  non-nilable return; native no-target behavior is unknown. See the
+- `C_Spell.GetTargetSpellID()` reads a supplied numeric identifier. The Forever
+  stock idle scenario supplies `0` as a researched best guess for the unknown
+  no-target sentinel, so the declaration's non-nilable return holds. An
+  explicitly unset input returns nil, which deviates from that declaration;
+  native no-target behavior remains unknown. See the
   [target-spell contract](spell-target-flyout.md).
 
 ## Events
