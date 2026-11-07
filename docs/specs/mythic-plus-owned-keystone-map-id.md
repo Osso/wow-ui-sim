@@ -2,7 +2,7 @@
 
 Status: implemented simulator policy backed by native decomp evidence.
 Authority: pinned declarations plus the clean-room decomp answers, round 3 Q3
-(`/home/osso/.local/state/wow-ui-sim/handoff/pr46-49-decomp-answers.md`).
+(`pr46-49-decomp-answers.md`, lane handoff).
 
 Evidence base: Forever 1.60.1.70707 for the getter path. Retail 12.1.5.70688 was
 reconstructed for the `GetActiveKeystoneInfo` globals only. PTR 12.1.7.70668 was
