@@ -496,6 +496,32 @@ fn forever_item_subclass_enums_match_raw_documented_scalars() {
     );
 }
 
+#[test]
+fn forever_container_and_quiver_subclass_names_match_item_subclass_rows() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        local containers = {"Bag", "Soul Bag", "Herb Bag", "Enchanting Bag", "Engineering Bag",
+            "Gem Bag", "Mining Bag", "Leatherworking Bag", "Inscription Bag", "Tackle Box",
+            "Cooking Bag", "Reagent Bag"}
+        for subclass, expected in ipairs(containers) do
+            local name, isArmor = C_Item.GetItemSubClassInfo(Enum.ItemClass.Container, subclass - 1)
+            assert(name == expected, "container subclass " .. (subclass - 1) .. ": " .. tostring(name))
+            assert(isArmor == false)
+        end
+        assert(C_Item.GetItemSubClassInfo(Enum.ItemClass.Container, 12) == nil)
+        local quivers = {"Quiver(OBSOLETE)", "Bolt(OBSOLETE)", "Quiver", "Ammo Pouch"}
+        for subclass, expected in ipairs(quivers) do
+            local name, isArmor = C_Item.GetItemSubClassInfo(Enum.ItemClass.Quiver, subclass - 1)
+            assert(name == expected, "quiver subclass " .. (subclass - 1) .. ": " .. tostring(name))
+            assert(isArmor == false)
+        end
+        assert(C_Item.GetItemSubClassInfo(Enum.ItemClass.Quiver, 4) == nil)
+        "#,
+    )
+    .unwrap();
+}
+
 /// Cross-checks published `Enum.<name>` and `Enum.<name>Meta` tables against
 /// the declarations in cached `Blizzard_APIDocumentationGenerated` files.
 fn assert_enums_match_documentation(env: &WowLuaEnv, wanted: &[&str], files: &[&str]) {

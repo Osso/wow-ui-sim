@@ -195,6 +195,10 @@ pub(super) fn item_subclass_name(class_id: i32, subclass_id: i32) -> &'static st
         return name;
     }
 
+    if let Some(name) = forever_item_subclass_name(class_id, subclass_id) {
+        return name;
+    }
+
     if let Some(name) = ITEM_SUBCLASS_NAMES
         .iter()
         .find_map(|(class, subclass, name)| {
@@ -246,8 +250,62 @@ fn mists_item_subclass_name(_class_id: i32, _subclass_id: i32) -> Option<&'stati
     None
 }
 
+/// Forever 1.60.1 ItemSubClass DB2 rows for item class 1 (Container) and class
+/// 11 (Quiver). The pinned `ItemConstantsDocumentation.lua:325-346` and
+/// `:493-506` declare 12 container and 4 quiver subclasses, which the shared
+/// mainline counts do not cover; Retail and PTR keep the shared table.
+#[cfg(feature = "client-wowforever")]
+const FOREVER_ITEM_SUBCLASS_NAMES: &[(i32, i32, &str)] = &[
+    (1, 0, "Bag"),
+    (1, 1, "Soul Bag"),
+    (1, 2, "Herb Bag"),
+    (1, 3, "Enchanting Bag"),
+    (1, 4, "Engineering Bag"),
+    (1, 5, "Gem Bag"),
+    (1, 6, "Mining Bag"),
+    (1, 7, "Leatherworking Bag"),
+    (1, 8, "Inscription Bag"),
+    (1, 9, "Tackle Box"),
+    (1, 10, "Cooking Bag"),
+    (1, 11, "Reagent Bag"),
+    (11, 0, "Quiver(OBSOLETE)"),
+    (11, 1, "Bolt(OBSOLETE)"),
+    (11, 2, "Quiver"),
+    (11, 3, "Ammo Pouch"),
+];
+
+#[cfg(feature = "client-wowforever")]
+fn forever_item_subclass_name(class_id: i32, subclass_id: i32) -> Option<&'static str> {
+    FOREVER_ITEM_SUBCLASS_NAMES
+        .iter()
+        .find_map(|(class, subclass, name)| {
+            (*class == class_id && *subclass == subclass_id).then_some(*name)
+        })
+}
+
+#[cfg(not(feature = "client-wowforever"))]
+fn forever_item_subclass_name(_class_id: i32, _subclass_id: i32) -> Option<&'static str> {
+    None
+}
+
+#[cfg(feature = "client-wowforever")]
+fn forever_item_subclass_count(class_id: i32) -> Option<i32> {
+    match class_id {
+        1 => Some(12),
+        11 => Some(4),
+        _ => None,
+    }
+}
+
+#[cfg(not(feature = "client-wowforever"))]
+fn forever_item_subclass_count(_class_id: i32) -> Option<i32> {
+    None
+}
+
 fn is_known_item_subclass_id(class_id: i32, subclass_id: i32) -> bool {
-    subclass_id >= 0 && subclass_id < standard_item_subclass_count(class_id)
+    let count = forever_item_subclass_count(class_id)
+        .unwrap_or_else(|| standard_item_subclass_count(class_id));
+    subclass_id >= 0 && subclass_id < count
 }
 
 fn standard_item_subclass_count(class_id: i32) -> i32 {
