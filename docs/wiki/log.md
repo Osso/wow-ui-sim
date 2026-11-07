@@ -3449,3 +3449,14 @@ evidence and the explicit nearest-even emulation seam.
 
 Linked the [install path settings contract](../specs/wow-install-path-settings.md)
 and per-product resolution order from the CASC asset cache page.
+
+## 2026-11-07 — Forever 1.60.1.70707 residuals
+
+Recorded three Forever-only publication gaps in the
+[Forever startup gaps](investigations/forever-startup-gaps.md#forever-160170707-residuals)
+investigation: item container/quiver subclasses consumed by the Camelot auction
+data at load, `C_QuestLog.CanAbandonQuest` consumed by the quest-map detail
+buttons, and the stock idle target spell. Contracts updated:
+[forever finite constants](../specs/forever-finite-constants.md),
+[quest abandonability](../specs/quest-abandonability.md) and
+[target spell and flyout membership](../specs/spell-target-flyout.md).
