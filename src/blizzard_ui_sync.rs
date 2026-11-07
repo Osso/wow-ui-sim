@@ -77,14 +77,18 @@ fn cache_version_is_allowed(provenance: &str, allow_mismatch: bool) -> bool {
             .any(|line| line == DISABLED_VERSION_MISMATCH)
 }
 
-pub fn default_cache_addons_path() -> crate::Result<PathBuf> {
+/// Root of the profile-scoped Blizzard UI cache, holding one subdirectory per profile.
+pub fn default_cache_root_path() -> crate::Result<PathBuf> {
     dirs::cache_dir()
-        .map(|dir| {
-            dir.join("wow-ui-sim/blizzard-ui")
-                .join(crate::client_profile::ACTIVE.cache_subdir())
-                .join("AddOns")
-        })
+        .map(|dir| dir.join("wow-ui-sim/blizzard-ui"))
         .ok_or_else(|| crate::Error::Other("could not determine user cache directory".to_string()))
+}
+
+pub fn default_cache_addons_path() -> crate::Result<PathBuf> {
+    default_cache_root_path().map(|root| {
+        root.join(crate::client_profile::ACTIVE.cache_subdir())
+            .join("AddOns")
+    })
 }
 
 #[cfg(feature = "client-ptr")]
