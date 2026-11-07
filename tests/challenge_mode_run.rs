@@ -297,6 +297,55 @@ fn challenge_admin_events_observe_updated_state_and_reject_invalid_input() {
     assert_eq!(env.state().borrow().lua_errors.len(), errors_before);
 }
 
+/// Client keystone globals have three writers and no reader derives them from
+/// run activity: the run-start applicator copies the decoded values, and the
+/// reset input stores zero unless its skip bit is set. Run clear and completion
+/// only remove run bookkeeping, so the getter keeps reporting the applied values
+/// until a reset runs. Pinned consumers that read the getter outside a run agree:
+/// `Blizzard_Reports.lua:339-341` builds the encounter report from the current
+/// values, and `UnitPopupSharedButtonMixins.lua:1190-1195` reads the charged byte
+/// to enable the challenge-mode reset button.
+#[test]
+fn keystone_globals_survive_run_end_and_only_the_reset_input_zeroes_them() {
+    let env = WowLuaEnv::new().unwrap();
+    let errors_before = env.state().borrow().lua_errors.len();
+    env.exec(r#"
+        local function read()
+            assert(select('#', C_ChallengeMode.GetActiveKeystoneInfo()) == 3)
+            local level, affixes, charged = C_ChallengeMode.GetActiveKeystoneInfo()
+            assert(type(affixes) == 'table')
+            return level, table.concat(affixes, ','), charged
+        end
+        local level, affixes, charged = read()
+        assert(level == 0 and affixes == '' and charged == false)
+        A_Admin.StartChallengeRun({mapChallengeModeID=9001, eventMapID=7001, level=14,
+            affixIDs={9,10,11,12}, wasActiveKeystoneCharged=true, numDeaths=0, timeLost=0})
+        level, affixes, charged = read()
+        assert(level == 14 and affixes == '9,10,11,12' and charged == true)
+        A_Admin.ClearChallengeRun()
+        assert(C_ChallengeMode.GetActiveChallengeMapID() == nil)
+        level, affixes, charged = read()
+        assert(level == 14 and affixes == '9,10,11,12' and charged == true)
+        A_Admin.StartChallengeRun({mapChallengeModeID=9002, eventMapID=7002, level=6,
+            affixIDs={3,0,7}, wasActiveKeystoneCharged=false, numDeaths=1, timeLost=5})
+        level, affixes, charged = read()
+        assert(level == 6 and affixes == '3' and charged == false)
+        A_Admin.ResetActiveKeystoneInfo(true)
+        level, affixes, charged = read()
+        assert(level == 6 and affixes == '3' and charged == false)
+        A_Admin.CompleteChallengeRun({mapChallengeModeID=9002, level=6,
+            time=1234000, onTime=true, keystoneUpgradeLevels=1, practiceRun=false,
+            isMapRecord=false, isAffixRecord=false, isEligibleForScore=true, members={}})
+        assert(not C_ChallengeMode.IsChallengeModeActive())
+        level, affixes, charged = read()
+        assert(level == 6 and affixes == '3' and charged == false)
+        A_Admin.ResetActiveKeystoneInfo()
+        level, affixes, charged = read()
+        assert(level == 0 and affixes == '' and charged == false)
+    "#).unwrap();
+    assert_eq!(env.state().borrow().lua_errors.len(), errors_before);
+}
+
 #[cfg(any(feature = "client-retail", feature = "client-ptr"))]
 #[test]
 fn original_scenario_tracker_reads_supplied_criteria_visibility_on_init() {

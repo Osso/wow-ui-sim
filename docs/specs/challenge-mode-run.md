@@ -32,13 +32,26 @@ Invalid metadata errors identify `mapInfo.<field>`, including missing required f
 
 Retail selects `Blizzard_ObjectiveTracker.toc` and `Blizzard_ChallengesUI_Mainline.toc`. PTR selects unified `Blizzard_ObjectiveTracker.toc` and `Blizzard_ChallengesUI.toc` (Standard family). Forever selects the objective tracker but its `camelot` game type excludes the ChallengesUI TOC (`standard, mists` only). Scenario criteria and timer proof use the unmodified selected `Blizzard_ScenarioObjectiveTracker.lua`, original XML frames and method identity. Mists has a Mists ChallengesUI and legacy WorldStateFrame timer consumer; Era/Anniversary exclude that mists-only TOC. Wrath is excluded.
 
-## Inactive keystone boundary
+## Keystone globals
 
-`GetActiveKeystoneInfo` publishes three non-nil outputs (declaration `ChallengeModeInfoDocumentation.lua:43-52`: number, table of numbers, bool) and never returns nothing. The client getter has no "is a run active" test (decomp answer, 12.1.5): it publishes the level, the affix list and the charged flag straight from client state. The affix list is built from a fixed-capacity array of four ID slots and stops at the first zero slot; the charged flag is a separate boolean byte that the getter reads and does not derive from keystone spending.
+`GetActiveKeystoneInfo` publishes three non-nil outputs (declaration `ChallengeModeInfoDocumentation.lua:43-52`: number, table of numbers, bool) and never returns nothing. The client getter has no "is a run active" test and derives no output from another: it reports the key level, the four-slot affix array and the charged byte verbatim (decomp answer 12.1.5, Round 1). The affix list fills at most four slots and stops at the first zero slot; the charged byte is separate and is not derived from keystone spending.
 
-So without an active run the getter reports whatever that state holds, and a fresh session holds level `0`, an empty affix list and `false`. Pinned Retail `Blizzard_PTRFeedback/Blizzard_Reports.lua:339-341` reads it for any encounter report and treats `keystoneLevel > 0` as a keystone run, which agrees with a non-positive inactive level. `GetDeathCount` returns nothing when inactive; the active-map query returns nil.
+The simulator stores those three globals apart from the active run, because the client has exactly three writers for them and none of them is run bookkeeping (decomp answer, Round 3, builds Retail 12.1.5.70688 and Forever 1.60.1.70707, whole-code writer sweep done twice by independent implementations, both agreeing):
 
-Not proved: whether the client clears those values when a run ends or only when the next run starts. The simulator clears them at run end. The affix list reproduces the client's four-slot array: at most four IDs, stopping at the first zero.
+1. one applicator that copies new run values — level, four affixes and charged byte — from a decoded server message;
+2. two complementary reset routines that store zero to all three.
+
+No fourth writer exists, and the charged byte has exactly one reader, this getter. **Proved.**
+
+`A_Admin.StartChallengeRun` is the applicator: it stores the supplied level, at most four affix IDs and `wasActiveKeystoneCharged` in the keystone store as well as the run record. `A_Admin.ResetActiveKeystoneInfo(preserveKeystoneFields)` models the reset pair together with its skip bit: a falsy argument stores level `0`, four zero affix slots and `false`; a truthy argument leaves all three unchanged. The routine-selection bit is not modelled, because both routines write the same zeros to the same three globals and nothing observable distinguishes them.
+
+`ClearChallengeRun` and `CompleteChallengeRun` remove only run bookkeeping. They do not zero the keystone globals: no writer is attributed to a named event, so the getter keeps reporting the applied values after a run ends until a reset input runs. A fresh environment returns level `0`, an empty affix list and `false`.
+
+Pinned Retail, PTR and Forever consumers read the getter outside a run and agree with that split. `Blizzard_PTRFeedback/Blizzard_Reports.lua:339-341` builds the encounter-report string from the current values and treats `keystoneLevel > 0` as a keystone run, so a report taken after a run ends still carries that run's level until a reset. `Blizzard_UnitPopupShared/UnitPopupSharedButtonMixins.lua:1190-1195` reads the charged byte to enable the challenge-mode reset button (`not energized`). `Blizzard_ObjectiveTracker/Blizzard_ScenarioObjectiveTracker.lua:795` reads level, affixes and charged when the tracker activates the challenge-mode block, and `GetDeathCount` returns nothing when no run is active.
+
+Proved: the three writer classes and the absence of a fourth (both builds); the charged byte's single reader; the four-slot array with its first-zero stop; both resets are doubly gated on one shared flags word, one bit selecting the routine and a second bit making both skip level, affixes and charged so the values persist.
+
+Not proved: PTR 12.1.7 was not analysed and Retail 12.1.5.70575 is not held, so both keep this contract on evidence from 70688 and 70707 rather than their own bytes. The specific event that reaches either reset routine cannot be separated (challenge completed, leaving the instance, an explicit reset and next-run start are indistinguishable in both images), and the identity of the server message that reaches the applicator is also unproved; the applicator is proved message-driven only as a class, through a handler slot whose sole call site is inside the client's server-message dispatcher. The meanings of the two flags bits are unproved. The companion integer and the neighbouring cluster entries that the skip bit also covers are not modelled.
 
 ## InTimeBL boundary
 

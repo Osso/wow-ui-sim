@@ -1,4 +1,4 @@
-use super::{ActiveRun, MapInfo};
+use super::{ActiveKeystone, ActiveRun, MapInfo};
 use crate::lua_api::globals::state_backed_queries::dispatch_event_now;
 use crate::lua_api::methods::{borrow_state, borrow_state_mut, table_get};
 use crate::lua_bridge::{FromStack, stack_val};
@@ -96,7 +96,12 @@ pub(super) fn start_run(state: &mut LuaState) -> LuaResult<u32> {
         time_lost: nonnegative(field(state, row, "timeLost")?)?,
     };
     let event_id = run.event_map_id;
-    borrow_state_mut(state)?.challenge_run.active = Some(run);
+    let keystone = ActiveKeystone::applied(run.level, &run.affixes, run.charged);
+    {
+        let mut sim = borrow_state_mut(state)?;
+        sim.challenge_run.active_keystone = keystone;
+        sim.challenge_run.active = Some(run);
+    }
     crate::c_api::restricted_actions::set_challenge_mode(state, true)?;
     dispatch_event_now(
         state,
@@ -141,6 +146,19 @@ pub(super) fn complete_run(state: &mut LuaState) -> LuaResult<u32> {
     remove_run(state)?;
     crate::c_api::restricted_actions::set_challenge_mode(state, false)?;
     dispatch_event_now(state, "CHALLENGE_MODE_COMPLETED", &[])?;
+    Ok(0)
+}
+
+/// The client zeroes the keystone globals from two complementary reset routines.
+/// One shared flags word selects the routine and lets both skip level, affixes
+/// and charged, so the pair is modelled as one input plus its skip bit. Neither
+/// routine touches run bookkeeping, so this does not clear the active run.
+pub(super) fn reset_active_keystone(state: &mut LuaState) -> LuaResult<u32> {
+    let preserve_fields = bool::from_stack(state, 1)?;
+    if preserve_fields {
+        return Ok(0);
+    }
+    borrow_state_mut(state)?.challenge_run.active_keystone = ActiveKeystone::default();
     Ok(0)
 }
 

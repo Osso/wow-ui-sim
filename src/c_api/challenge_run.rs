@@ -15,6 +15,33 @@ use std::collections::BTreeMap;
 /// stops at the first zero slot (decomp answer, 12.1.5).
 const ACTIVE_KEYSTONE_AFFIX_SLOTS: usize = 4;
 
+/// Client keystone globals behind `GetActiveKeystoneInfo`: the key level, a
+/// fixed four-slot affix array and the charged byte. The client has exactly
+/// three writers for them and no reader derives one from another, so they are
+/// stored apart from the run bookkeeping. A run start applies the decoded
+/// values; two complementary reset routines store zero; nothing else writes.
+#[derive(Debug, Clone, Default, PartialEq, Eq)]
+pub(crate) struct ActiveKeystone {
+    pub level: i32,
+    pub affixes: [i32; ACTIVE_KEYSTONE_AFFIX_SLOTS],
+    pub charged: bool,
+}
+
+impl ActiveKeystone {
+    /// Applicator: copy the decoded run values into the four client slots.
+    pub fn applied(level: i32, affixes: &[i32], charged: bool) -> Self {
+        let mut slots = [0; ACTIVE_KEYSTONE_AFFIX_SLOTS];
+        for (slot, id) in slots.iter_mut().zip(affixes) {
+            *slot = *id;
+        }
+        Self {
+            level,
+            affixes: slots,
+            charged,
+        }
+    }
+}
+
 #[derive(Debug, Clone)]
 pub(crate) struct ActiveRun {
     pub map_id: i32,
@@ -39,6 +66,7 @@ pub(crate) struct MapInfo {
 #[derive(Debug, Default)]
 pub(crate) struct ChallengeState {
     pub active: Option<ActiveRun>,
+    pub active_keystone: ActiveKeystone,
     pub maps: BTreeMap<i32, MapInfo>,
     pub timers: BTreeMap<i32, timers::ElapsedTimer>,
     pub criteria: BTreeMap<i32, Vec<scenario::Criterion>>,
@@ -84,7 +112,8 @@ pub(crate) fn register_admin(b: TableBuilder) -> LuaResult<TableBuilder> {
     if !supports_run() {
         return Ok(b);
     }
-    b.set_function("SetChallengeModeMapInfo", inputs::set_map)?
+    let b = b
+        .set_function("SetChallengeModeMapInfo", inputs::set_map)?
         .set_function("StartChallengeRun", inputs::start_run)?
         .set_function("ClearChallengeRun", inputs::clear_run)?
         .set_function("CompleteChallengeRun", inputs::complete_run)?
@@ -92,7 +121,11 @@ pub(crate) fn register_admin(b: TableBuilder) -> LuaResult<TableBuilder> {
         .set_function("SetScenarioCriteriaShown", scenario::set_criteria_shown)?
         .set_function("StartWorldElapsedTimer", timers::start)?
         .set_function("SetWorldElapsedTime", timers::set)?
-        .set_function("AdvanceWorldElapsedTime", timers::advance)
+        .set_function("AdvanceWorldElapsedTime", timers::advance)?;
+    if !supports_keystone() {
+        return Ok(b);
+    }
+    b.set_function("ResetActiveKeystoneInfo", inputs::reset_active_keystone)
 }
 
 fn active_map(state: &mut LuaState) -> LuaResult<u32> {
@@ -111,31 +144,24 @@ fn is_active(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
-/// Without a run the three non-nil outputs are level 0, an empty affix list
-/// and `false`; see docs/specs/challenge-mode-run.md, inactive keystone. The
-/// affix list fills at most four slots and stops at the first zero slot.
+/// The client getter has no "is a run active" test: it publishes the keystone
+/// globals verbatim and never returns nothing. A fresh session holds level 0, an
+/// empty affix list and `false`. The affix list fills four slots and stops at
+/// the first zero slot. See docs/specs/challenge-mode-run.md, keystone globals.
 fn active_keystone(state: &mut LuaState) -> LuaResult<u32> {
-    let run = borrow_state(state)?.challenge_run.active.clone();
-    let Some(run) = run else {
-        state.push(Val::Num(0.0));
-        let affixes = create_table(state);
-        state.push(affixes);
-        state.push(Val::Bool(false));
-        return Ok(3);
-    };
-    state.push(Val::Num(f64::from(run.level)));
+    let keystone = borrow_state(state)?.challenge_run.active_keystone.clone();
+    state.push(Val::Num(f64::from(keystone.level)));
     let affixes = create_table(state);
     state.push(affixes);
-    for (index, id) in run
+    for (index, id) in keystone
         .affixes
         .iter()
-        .take(ACTIVE_KEYSTONE_AFFIX_SLOTS)
         .take_while(|id| **id != 0)
         .enumerate()
     {
         super::helpers::set_table_array(state, affixes, index as i64 + 1, Val::Num(f64::from(*id)));
     }
-    state.push(Val::Bool(run.charged));
+    state.push(Val::Bool(keystone.charged));
     Ok(3)
 }
 

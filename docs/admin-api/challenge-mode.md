@@ -11,6 +11,7 @@ A_Admin.SetChallengeModeMapInfo(mapChallengeModeID, mapInfo)
 A_Admin.StartChallengeRun(run)
 A_Admin.ClearChallengeRun()
 A_Admin.CompleteChallengeRun(completionInfo)
+A_Admin.ResetActiveKeystoneInfo(preserveKeystoneFields)
 A_Admin.SetScenarioCriteria(stepInfo, orderedCriteria)
 A_Admin.StartWorldElapsedTimer(timerID, name, timerType, elapsedSeconds)
 A_Admin.SetWorldElapsedTime(timerID, elapsedSeconds)
@@ -20,6 +21,8 @@ A_Admin.AdvanceWorldElapsedTime(timerID, deltaSeconds)
 `mapInfo` requires `name` (string), `id` (integer), `timeLimit` (finite nonnegative seconds), `backgroundTexture` (number), and `mapID` (integer). Only `texture` is optional (number or nil); omission returns nil in getter result 4. `backgroundTexture` must be supplied; the simulator does not invent a texture value. The pinned Retail/PTR `ChallengeModeInfoDocumentation.lua:178-179` declares `texture` as nilable and `backgroundTexture` as non-nilable. See the [map metadata contract](../specs/challenge-mode-run.md#map-metadata-validation).
 
 `run` supplies `mapChallengeModeID`, `eventMapID`, `level`, `affixIDs`, `wasActiveKeystoneCharged`, `numDeaths`, and `timeLost`. A run must be clear before another start. Completion uses the documented `ChallengeCompletionInfo` fields, including milliseconds in `time`; it does not calculate a score or upgrade.
+
+Retail, PTR and Forever also store the key level, up to four affix IDs and the charged byte as the `GetActiveKeystoneInfo` globals. A run start applies those three from `run`; `ResetActiveKeystoneInfo` zeroes them, or leaves them unchanged when `preserveKeystoneFields` is truthy. Clearing or completing a run does not change them, because the client has no writer for them on a named run event. Those profiles only; the call is absent on Mists, Era, Anniversary and Wrath. See the [keystone globals contract](../specs/challenge-mode-run.md#keystone-globals).
 
 `stepInfo` supplies `stepID`, `title`, and `description`. Its ordered rows replace the previous rows for that step and select that step as current. Each criterion requires `criteriaID`, `description`, and `quantityString`; the other declared fields have the documented defaults: zero for numbers and false for booleans. Fields are `criteriaType`, `completed`, `quantity`, `totalQuantity`, `flags`, `assetID`, `duration`, `elapsed`, `failed`, `isWeightedProgress`, and `isFormatted`. Quantity text is supplied, not derived from quantity or locale.
 
