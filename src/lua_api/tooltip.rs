@@ -211,6 +211,17 @@ pub struct TooltipData {
     pub row_reservations: Vec<TooltipRowReservation>,
 }
 
+/// One tooltip row's measured contributions to the WM63 L23 content width.
+pub(crate) struct TooltipWidthRow {
+    /// Stored row inset plus the row's attachment width reservation.
+    pub(crate) reserved: f32,
+    /// Measured intrinsic left text width; zero when the row is hidden.
+    pub(crate) left: f32,
+    /// Measured intrinsic right text width; zero when absent or hidden.
+    pub(crate) right: f32,
+    pub(crate) hidden: bool,
+}
+
 impl TooltipData {
     /// Attachments across the whole tooltip; the native limit is 30 (WM63 S8L).
     pub(crate) fn attachment_count(&self) -> usize {
@@ -258,6 +269,57 @@ impl TooltipData {
         } else {
             20.0
         }
+    }
+
+    /// WM63 L23 section 2: the stored row wrap flag, or every row when a forced
+    /// minimum width is set.
+    pub(crate) fn row_wraps(&self, index: usize) -> bool {
+        self.force_min_width || self.lines.get(index).is_some_and(|line| line.wrap)
+    }
+
+    /// WM63 L23 section 2: the content width selected before outer padding.
+    ///
+    /// A wrapped row contributes its intrinsic left width capped at the custom
+    /// wrap value, or at 230.4 by default. Every other row contributes both
+    /// columns plus the 38.4 column reservation and sets the floor together
+    /// with the explicit minimum. `fitted_width` re-measures a wrapped row at
+    /// its assigned text width; when shrink-to-fit is enabled the selected width
+    /// shrinks to the widest fitted row without crossing the floor or growing.
+    pub(crate) fn select_content_width(
+        &self,
+        rows: &[TooltipWidthRow],
+        mut fitted_width: impl FnMut(usize, f32) -> f32,
+    ) -> f32 {
+        const WRAP_CAP: f32 = 230.4;
+        const DOUBLE_COLUMN: f32 = 38.4;
+        let cap = self.custom_word_wrap_min_width.unwrap_or(WRAP_CAP).max(0.0);
+        let mut floor = self.min_width;
+        let mut width = floor;
+        for (index, row) in rows.iter().enumerate() {
+            if self.row_wraps(index) {
+                width = width.max((row.left + row.reserved).min(cap));
+            } else {
+                let gap = if row.left > 0.0 && row.right > 0.0 {
+                    DOUBLE_COLUMN
+                } else {
+                    0.0
+                };
+                floor = floor.max(row.left + row.right + gap + row.reserved);
+                width = width.max(floor);
+            }
+        }
+        if self.shrink_to_fit_wrapped && !self.force_min_width {
+            let mut fitted = floor;
+            for (index, row) in rows.iter().enumerate() {
+                if row.hidden || !self.row_wraps(index) {
+                    continue;
+                }
+                let assigned = (width - row.reserved).max(0.0);
+                fitted = fitted.max(fitted_width(index, assigned) + row.reserved);
+            }
+            width = width.min(fitted);
+        }
+        width
     }
 
     /// WM63-L23: native outer allowance plus the explicitly stored sides.

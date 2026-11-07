@@ -226,23 +226,30 @@ fn estimated_tooltip_size(
         return None;
     }
 
-    let mut width = td.min_width.max(wrapped_min_width(td));
+    let native = matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail | crate::client_profile::ClientProfile::Ptr
+    );
+    let reservations = estimated_row_reservations(td);
+    let width = if native {
+        estimated_native_content_width(td, &reservations, &sim.widgets)
+    } else {
+        let mut width = td.min_width.max(wrapped_min_width(td));
+        for (index, line) in td.lines.iter().enumerate() {
+            let font_size = tooltip_line_font_size(index);
+            width = width.max(
+                estimated_line_width(td, line, font_size, &sim.widgets, index)
+                    + line.inset
+                    + reservations[index].width(),
+            );
+        }
+        width
+    };
     let mut height = 0.0;
     let line_spacing = td.line_spacing.unwrap_or(TOOLTIP_LINE_SPACING);
-    let reservations = estimated_row_reservations(td);
     for (index, line) in td.lines.iter().enumerate() {
         let font_size = tooltip_line_font_size(index);
         let reservation = reservations[index];
-        width = width.max(
-            estimated_line_width(td, line, font_size, &sim.widgets, index)
-                + line.inset
-                + reservation.width(),
-        );
-        let native = matches!(
-            crate::client_profile::ACTIVE,
-            crate::client_profile::ClientProfile::Retail
-                | crate::client_profile::ClientProfile::Ptr
-        );
         if native && td.left_line_is_hidden(&sim.widgets, index) {
             continue;
         }
@@ -252,15 +259,66 @@ fn estimated_tooltip_size(
         height += estimated_line_height(line, font_size) + reservation.top + reservation.bottom;
     }
 
-    let (horizontal_padding, vertical_padding) = if matches!(
-        crate::client_profile::ACTIVE,
-        crate::client_profile::ClientProfile::Retail | crate::client_profile::ClientProfile::Ptr
-    ) {
+    let (horizontal_padding, vertical_padding) = if native {
         td.native_outer_padding()
     } else {
         (TOOLTIP_PADDING_H * 2.0, TOOLTIP_PADDING_V * 2.0)
     };
     Some((width + horizontal_padding, height + vertical_padding))
+}
+
+/// WM63 L23 section 2 with estimated text widths instead of glyph measurement:
+/// the same intrinsic cap, floors and shrink floors. A wrapped row cannot be
+/// fitted below its assigned width without metrics, so its fitted width is its
+/// intrinsic width limited to the assignment.
+fn estimated_native_content_width(
+    td: &TooltipData,
+    reservations: &[TooltipRowReservation],
+    widgets: &crate::widget::WidgetRegistry,
+) -> f32 {
+    let rows: Vec<crate::lua_api::tooltip::TooltipWidthRow> = td
+        .lines
+        .iter()
+        .enumerate()
+        .map(|(index, line)| {
+            let font_size = tooltip_line_font_size(index);
+            let left = if td.left_line_is_hidden(widgets, index) {
+                0.0
+            } else {
+                estimated_line_side_width(line, font_size, false)
+            };
+            let right = if td.right_line_is_hidden(widgets, index) {
+                0.0
+            } else {
+                estimated_line_side_width(line, font_size, true)
+            };
+            crate::lua_api::tooltip::TooltipWidthRow {
+                reserved: line.inset + reservations[index].width(),
+                left,
+                right,
+                hidden: td.left_line_is_hidden(widgets, index),
+            }
+        })
+        .collect();
+    td.select_content_width(&rows, |index, assigned| rows[index].left.min(assigned))
+}
+
+/// Estimated intrinsic width of one row side, including the texture row
+/// profiles without native attachments append.
+fn estimated_line_side_width(line: &TooltipLine, font_size: f32, right: bool) -> f32 {
+    let width = if right {
+        line.right_text
+            .as_deref()
+            .map(|text| estimated_text_width(text, font_size))
+            .unwrap_or(0.0)
+    } else {
+        estimated_text_width(&line.left_text, font_size)
+    };
+    if !right && has_texture_row(line) {
+        width.max(TEXTURE_LINE_SIZE)
+    } else {
+        width
+    }
 }
 
 fn wrapped_min_width(td: &TooltipData) -> f32 {
