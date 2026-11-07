@@ -11,9 +11,9 @@
 - [ ] SetOwner and Hide also release attachments (implemented; no direct test).
 - [x] Anchor each attachment independently to the selected left or right text of that row. Equal settings overlay; there is no horizontal or vertical sequence.
 - [x] Apply the anchor ordinals: LeftTop moves left by the right margin; RightCenter moves right by the left margin; All spans the selected text with two points and no horizontal offset. `verticalOffset` raises the attachment.
-- [ ] LeftCenter, LeftBottom, RightTop and RightBottom placement (implemented from the same table; reservation only is tested for LeftBottom and RightTop).
+- [x] LeftCenter, LeftBottom, RightTop and RightBottom placement: each ordinal's texture point, text point, horizontal offset and vertical displacement, checked with resolved bottom edges.
 - [x] Read settings with defaults width 12, height 12, offset 0, margins left 0, right 8, top 0, bottom 0. Margins stay fractional and negative without clamping.
-- [ ] Anchor and region truncate toward zero; out-of-range values keep 0. Tint and desaturation clamp to 0 through 1. A zero dimension uses the resolved texture or atlas extent (implemented; no direct test).
+- [x] Anchor and region truncate toward zero; out-of-range values keep 0. Tint and desaturation clamp to 0 through 1. A zero dimension uses the resolved texture or atlas extent.
 
 ### Reservation
 
@@ -43,12 +43,14 @@
 ## Tests asserting this spec
 
 - `tests/tooltip_attachments_lane.rs`: original `TooltipDataRules` post-callbacks (horizontal groups, anchors, overflow), line offsets forwarded by `SharedTooltipTemplates`, the `ItemRefTooltip` close-button spacer, overflow, fractional margins, All, shared inward selection and the cap.
+- `tests/tooltip_texture_rows.rs`: the seven anchor ordinals with their resolved bottom edges, the setting defaults and conversions (truncation, out-of-range fallback, tint and desaturation clamps, explicit texture coordinates, zero-dimension atlas extent), and the original `TooltipDataRules.AzeriteEssenceSlot` essence-plus-border row (two attachments, outward-left maximum, bottom overflow).
 - `tests/tooltip_separator_u1.rs`: original `SocialUIUtil.AddSeparatorToTooltip` All divider and its rendered quad.
 - `tests/tooltip_text.rs`, `tests/tooltip_texture_secrecy.rs`: no appended rows on Retail/PTR.
 
 ## Known gaps (current cycle)
 
 - [x] RED (7/7 failing) and GREEN (7/7 passing) on Retail; GREEN 7/7 on PTR.
+- [x] `tooltip_texture_rows` 3/3 on Retail and PTR; `tooltip_` filter 572 Retail, 575 PTR, 317 Mists and 379 Forever (test-threads=1), all passing; Retail lib 2228 passing. SetOwner and Hide release remain untested here.
 
 ## Out of scope
 
