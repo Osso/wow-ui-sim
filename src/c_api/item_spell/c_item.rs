@@ -112,6 +112,17 @@ pub(super) fn register_c_item(state: &mut LuaState) -> LuaResult<()> {
     register_c_item_metadata_queries(state, table_ref)?;
     register_c_item_inventory_queries(state, table_ref)?;
     register_c_item_dressability_query(state, table_ref)?;
+    if ACTIVE != ClientProfile::Wrath {
+        // ItemDocumentation.lua:854-867 (Retail), 876-889 (PTR, Forever) and
+        // 586-598 (Mists, Era, Anniversary):
+        // GetItemNumSockets(itemInfo) -> socketCount.
+        table_set_rust_fn_static(
+            state,
+            table_ref,
+            "GetItemNumSockets",
+            c_item_get_item_num_sockets,
+        )?;
+    }
     if matches!(ACTIVE, ClientProfile::Retail | ClientProfile::Ptr) {
         table_set_rust_fn_static(
             state,
@@ -553,6 +564,25 @@ fn resolve_equipped_location_item(sim: &SimState, slot: i32) -> Option<(u32, Opt
             (item.item_id, link)
         })
         .or_else(|| bag.and_then(|bag| bag.item_id.map(|id| (id, bag.hyperlink.clone()))))
+}
+
+/// Sockets the item's own record declares (`ItemSparse.SocketType`). The client
+/// handler also adds a bonus/instance socket count when the item info carries a
+/// resolving bonus key (PTR 12.1.7 decomp); the simulator has no such table, so
+/// only the record half contributes. An unresolved item publishes `0`.
+fn c_item_get_item_num_sockets(state: &mut LuaState) -> LuaResult<u32> {
+    let item_id = parse_item_id_key(state, stack_val(state, 1));
+    let count = {
+        let host = borrow_state(state)?;
+        item_id.and_then(|id| host.item_info(id)).map_or(0, |item| {
+            item.socket_types
+                .iter()
+                .filter(|socket_type| **socket_type != 0)
+                .count()
+        })
+    };
+    state.push(Val::Num(count as f64));
+    Ok(1)
 }
 
 fn item_id_from_location_or_item_info(state: &mut LuaState, value: Val) -> Option<u32> {

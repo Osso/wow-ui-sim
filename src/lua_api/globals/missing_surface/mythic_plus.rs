@@ -9,7 +9,10 @@
 //! - `GetSeasonBestAffixScoreInfoForMap(mapID)` — returns affixScores
 //!   array + bestOverAllScore, or nothing if no data.
 //! - `GetWeeklyChestRewardLevel()` — returns four zeros when no run done.
-//! - `GetOwnedKeystoneLevel()` — returns owned keystone level or nothing.
+//! - `GetOwnedKeystoneLevel()` — returns the owned keystone level, or `0`
+//!   without a key.
+//! - `GetOwnedKeystoneChallengeMapID()` — returns the owned keystone's
+//!   challenge map, or `0` without a key (Retail, PTR, Forever).
 //! - `GetWeeklyBestForMap(mapChallengeModeID)` — returns
 //!   durationSec, level, completionDate=nil, fraction=0, affixIDs={},
 //!   members={}, or nothing if no data.
@@ -110,6 +113,19 @@ fn register_mythic_plus_probe_handlers(state: &mut LuaState, ns: GcRef<Table>) -
         get_weekly_chest_reward_level,
     )?;
     table_set_rust_fn_static(state, ns, "GetOwnedKeystoneLevel", get_owned_keystone_level)?;
+    // MythicPlusInfoDocumentation.lua:76-84 (Retail, PTR, Forever) and 75-83
+    // (Mists, Era, Anniversary); Wrath pins no generated documentation.
+    if !matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Wrath
+    ) {
+        table_set_rust_fn_static(
+            state,
+            ns,
+            "GetOwnedKeystoneChallengeMapID",
+            get_owned_keystone_challenge_map_id,
+        )?;
+    }
     #[cfg(not(feature = "retail-12-0-7"))]
     table_set_rust_fn_static(state, ns, "GetWeeklyBestForMap", get_weekly_best_for_map)?;
     Ok(())
@@ -346,13 +362,23 @@ fn get_weekly_chest_reward_level(state: &mut LuaState) -> LuaResult<u32> {
     Ok(4)
 }
 
+/// The client reader takes the level from the cached keystone context and
+/// publishes `0` when no entry matches (P5 decomp, proved). The absent-context
+/// arm is not proved.
 fn get_owned_keystone_level(state: &mut LuaState) -> LuaResult<u32> {
     let level = borrow_state(state)?.mythic_plus.owned_keystone_level;
-    if level == 0 {
-        // mayreturnnothing: return nothing when player has no key.
-        return Ok(0);
-    }
     state.push(Val::Num(level as f64));
+    Ok(1)
+}
+
+/// The client reader takes the owned keystone from a cached client-side keystone
+/// context, not from bag items, and publishes `0` when no entry carries the
+/// keystone marker (1.60.1 decomp). The null-context arm is not proved.
+fn get_owned_keystone_challenge_map_id(state: &mut LuaState) -> LuaResult<u32> {
+    let map_id = borrow_state(state)?
+        .mythic_plus
+        .owned_keystone_challenge_map_id;
+    state.push(Val::Num(f64::from(map_id)));
     Ok(1)
 }
 

@@ -67,6 +67,9 @@ pub struct MythicPlusState {
     /// Keystone level of the key the player currently owns.
     /// 0 = no key.
     pub owned_keystone_level: i32,
+    /// `ChallengeModeID` of the key the player currently owns.
+    /// 0 = no key.
+    pub owned_keystone_challenge_map_id: i32,
     /// Run history for the player.
     pub run_history: Vec<MythicPlusRun>,
     /// Per-map weekly best, keyed by mapChallengeModeID.
@@ -90,6 +93,7 @@ impl Default for MythicPlusState {
             current_season: 14,
             display_season_id: 0,
             owned_keystone_level: 0,
+            owned_keystone_challenge_map_id: 0,
             run_history: Vec::new(),
             weekly_best_per_map: HashMap::new(),
             #[cfg(feature = "retail-12-0-7")]

@@ -132,6 +132,16 @@ pub(super) fn register_c_currency_info(state: &mut LuaState) -> LuaResult<()> {
             query_currency_faction_grant,
         )?;
     }
+    if crate::client_profile::ACTIVE != crate::client_profile::ClientProfile::Wrath {
+        // CurrencyInfoDocumentation.lua:312-326 (Retail, PTR, Forever) and
+        // 117-128 (Mists, Era, Anniversary). Wrath pins no generated documentation.
+        table_set_rust_fn_static(
+            state,
+            table_ref,
+            "GetCurrencyListLink",
+            c_currency_get_list_link,
+        )?;
+    }
     #[cfg(feature = "client-mists")]
     table_set_rust_fn_static(
         state,
@@ -501,6 +511,42 @@ fn read_currency_list_display_info(
         .currency_info
         .get(&entry.currency_id)
         .cloned())
+}
+
+/// The currency hyperlink of a list row, coloured by the row's quality like
+/// `|cffffffff|Hcurrency:1744|h[Corrupted Memento]|h|r`.
+///
+/// The client getter range-checks the displayed count and publishes one nil for
+/// a null link. It has no header test, so a header row reaches the same link
+/// builder with its own ID. The link text is the model's best guess: the native
+/// builder is unmodelled, so neither the payload fields nor the colour source
+/// are proved.
+fn c_currency_get_list_link(state: &mut LuaState) -> LuaResult<u32> {
+    let index = i32::from_stack(state, 1)?;
+    match read_displayed_currency_link(state, index)? {
+        Some(link) => {
+            let link = create_string(state, &link);
+            state.push(link);
+        }
+        None => state.push(Val::Nil),
+    }
+    Ok(1)
+}
+
+/// Link text for a displayed row, or `None` when the row is outside the list or
+/// its supplied display data is missing.
+fn read_displayed_currency_link(state: &mut LuaState, index: i32) -> LuaResult<Option<String>> {
+    let Some(entry) = read_currency_list_entry(state, index)? else {
+        return Ok(None);
+    };
+    let Some(display) = read_currency_list_display_info(state, &entry)? else {
+        return Ok(None);
+    };
+    let color = crate::c_api::item_quality_color::quality_hex(state, display.quality);
+    Ok(Some(format!(
+        "|c{color}|Hcurrency:{}|h[{}]|h|r",
+        entry.currency_id, display.name
+    )))
 }
 
 fn write_currency_row_display_fields(state: &mut LuaState, table: Val, display: &CurrencyInfo) {
@@ -916,6 +962,73 @@ mod tests {
 
         assert_eq!(name, "Valorstones");
         assert_eq!(field_count, CURRENCY_INFO_HASH_FIELDS as i32);
+    }
+
+    #[test]
+    fn currency_list_link_names_the_row_currency_in_its_quality_colour() {
+        let env = WowLuaEnv::new().expect("env should initialize");
+        let (link, expected): (String, String) = env
+            .eval(
+                r#"
+                local link, expected
+                for index = 1, C_CurrencyInfo.GetCurrencyListSize() do
+                    local info = C_CurrencyInfo.GetCurrencyListInfo(index)
+                    if not info.isHeader and not link then
+                        local hex = select(4, C_Item.GetItemQualityColor(info.quality))
+                        link = C_CurrencyInfo.GetCurrencyListLink(index)
+                        expected = "|c" .. hex .. "|Hcurrency:" .. info.currencyTypesID
+                            .. "|h[" .. info.name .. "]|h|r"
+                    end
+                end
+                return link, expected
+                "#,
+            )
+            .expect("currency list link should evaluate");
+
+        assert_eq!(link, expected);
+    }
+
+    #[test]
+    fn currency_list_link_covers_header_rows_like_any_other_row() {
+        let env = WowLuaEnv::new().expect("env should initialize");
+        let (link, expected): (String, String) = env
+            .eval(
+                r#"
+                local index
+                for candidate = 1, C_CurrencyInfo.GetCurrencyListSize() do
+                    if C_CurrencyInfo.GetCurrencyListInfo(candidate).isHeader then
+                        index = candidate
+                        break
+                    end
+                end
+                assert(index, "the displayed list holds a header row")
+                local info = C_CurrencyInfo.GetCurrencyListInfo(index)
+                local hex = select(4, C_Item.GetItemQualityColor(info.quality))
+                return C_CurrencyInfo.GetCurrencyListLink(index),
+                    "|c" .. hex .. "|Hcurrency:" .. info.currencyTypesID
+                        .. "|h[" .. info.name .. "]|h|r"
+                "#,
+            )
+            .expect("header row link should evaluate");
+
+        assert_eq!(link, expected);
+    }
+
+    #[test]
+    fn currency_list_link_returns_one_nil_past_the_list() {
+        let env = WowLuaEnv::new().expect("env should initialize");
+        let (count, value_is_nil): (i32, bool) = env
+            .eval(
+                r#"
+                local size = C_CurrencyInfo.GetCurrencyListSize()
+                return select('#', C_CurrencyInfo.GetCurrencyListLink(size + 1)),
+                    C_CurrencyInfo.GetCurrencyListLink(size + 1) == nil
+                "#,
+            )
+            .expect("out-of-range link should evaluate");
+
+        assert_eq!(count, 1, "the publisher emits nil for a null link");
+        assert!(value_is_nil);
     }
 
     #[test]
