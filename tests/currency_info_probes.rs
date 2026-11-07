@@ -510,11 +510,12 @@ fn get_currency_list_link_matches_the_displayed_row() {
     // link and match `currency:<id>` out of it:
     // Blizzard_PTRFeedback/Blizzard_PTRFeedback_Tooltips.lua:44 (Mists cache) and
     // :180 (Retail cache).
+    // Native builder (decomp Round 2 Q1.b, builds 70688 / 70668 / 70707).
     if ACTIVE == ClientProfile::Wrath {
         return;
     }
     let env = env();
-    let (link, expected, past_the_list, header_returns_link): (String, String, i32, bool) = env
+    let (link, expected, past_the_list, header_kind): (String, String, i32, String) = env
         .eval(
             r#"
             local size = C_CurrencyInfo.GetCurrencyListSize()
@@ -529,22 +530,22 @@ fn get_currency_list_link_matches_the_displayed_row() {
                 end
             end
             assert(index, "a currency row")
-            local hex = select(4, C_Item.GetItemQualityColor(info.quality))
             local link = C_CurrencyInfo.GetCurrencyListLink(index)
             local consumerID = tonumber(string.match(link, "currency:(%d+)"))
             assert(consumerID == info.currencyTypesID,
                 "the consumer extracts the row currency id")
             return link,
-                "|c" .. hex .. "|Hcurrency:" .. info.currencyTypesID
-                    .. "|h[" .. info.name .. "]|h|r",
+                "|cnIQ" .. info.quality .. ":|Hcurrency:" .. info.currencyTypesID
+                    .. ":0|h[" .. info.name .. "]|h|r",
                 select('#', C_CurrencyInfo.GetCurrencyListLink(size + 1)),
                 headerIndex ~= nil
-                    and C_CurrencyInfo.GetCurrencyListLink(headerIndex) ~= nil
+                    and type(C_CurrencyInfo.GetCurrencyListLink(headerIndex))
+                    or "no-header-row"
             "#,
         )
         .expect("the currency list link should be readable on this profile");
 
     assert_eq!(link, expected);
     assert_eq!(past_the_list, 1, "the publisher emits nil for a null link");
-    assert!(header_returns_link, "a header row takes the same path");
+    assert_eq!(header_kind, "string", "a header row publishes the link buffer");
 }
