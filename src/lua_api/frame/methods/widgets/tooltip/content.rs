@@ -111,6 +111,11 @@ fn apply_tooltip_lines(
     td.unit_name = None;
     td.unit_guid = None;
     refresh_tooltip_geometry(sim, tooltip_id);
+    // 12340 content setters show the tooltip through `ShowThis`, which runs
+    // `CalculateSize` synchronously (tooltip-addtexture-12340.md).
+    if visible && crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Wrath {
+        super::sizing::size_wrath_tooltip_on_show(sim, tooltip_id);
+    }
     sim.set_frame_visible(tooltip_id, visible);
 }
 

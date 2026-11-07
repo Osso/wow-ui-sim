@@ -80,6 +80,32 @@ pub(crate) fn size_tooltip_on_native_trigger(
     }
 }
 
+/// 12340 `ShowThis` calls `CalculateSize` synchronously before showing a
+/// tooltip that has an owner and at least one row
+/// (handoff/laptop-labels-answers-20261018/tooltip-addtexture-12340.md).
+#[cfg(feature = "gui")]
+pub(crate) fn size_wrath_tooltip_on_show(
+    sim: &mut crate::lua_api::state::SimState,
+    tooltip_id: u64,
+) {
+    let mut font = crate::render::font::WowFontSystem::new();
+    let (width, height) = crate::iced_app::tooltip::measure_tooltip(sim, tooltip_id, &mut font);
+    if let Some(frame) = sim.widgets.get_mut_visual(tooltip_id) {
+        frame.width = width;
+        frame.height = height;
+    }
+    sim.widgets.mark_rect_dirty(tooltip_id);
+}
+
+/// Builds without glyph measurement keep the estimator and the deferred layout pass.
+#[cfg(not(feature = "gui"))]
+pub(crate) fn size_wrath_tooltip_on_show(
+    sim: &mut crate::lua_api::state::SimState,
+    tooltip_id: u64,
+) {
+    refresh_tooltip_geometry(sim, tooltip_id);
+}
+
 fn anchor_tooltip_lines(sim: &mut crate::lua_api::state::SimState, tooltip_id: u64, width: f32) {
     let Some(td) = sim.tooltips.get(&tooltip_id) else {
         return;

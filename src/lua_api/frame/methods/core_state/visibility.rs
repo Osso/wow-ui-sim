@@ -65,17 +65,11 @@ fn show_or_hide(state: &mut LuaState, id: u64, shown: bool) -> LuaResult<()> {
     // before sizing, including its content and ownership cleanup.
     let shown = shown && !tooltip_show_is_rejected(state, id)?;
     let (needs_change, in_handler, parent_id) = read_show_hide_state(state, id, shown)?;
-    if shown
-        && matches!(
-            crate::client_profile::ACTIVE,
-            crate::client_profile::ClientProfile::Retail
-                | crate::client_profile::ClientProfile::Ptr
-        )
-    {
+    if shown && tooltip_sizes_on_show(state, id)? {
         let mut sim = borrow_state_mut(state)?;
-        if sim.widgets.get(id).is_some_and(|frame| {
-            frame.widget_type == WidgetType::GameTooltip && frame.tooltip_owner_id.is_some()
-        }) {
+        if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Wrath {
+            crate::lua_api::frame::methods::widgets::size_wrath_tooltip_on_show(&mut sim, id);
+        } else {
             crate::lua_api::frame::methods::widgets::size_tooltip_on_native_trigger(&mut sim, id);
         }
     }
@@ -131,6 +125,32 @@ fn show_or_hide(state: &mut LuaState, id: u64, shown: bool) -> LuaResult<()> {
     result?;
     super::size::mark_nearest_layout_parent_dirty(state, id);
     Ok(())
+}
+
+/// WM63 L4: Retail sizes a shown tooltip that has an owner. 12340 `ShowThis`
+/// also needs at least one row and runs `CalculateSize` synchronously
+/// (handoff/laptop-labels-answers-20261018/tooltip-addtexture-12340.md).
+fn tooltip_sizes_on_show(state: &LuaState, id: u64) -> LuaResult<bool> {
+    let retail = matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail | crate::client_profile::ClientProfile::Ptr
+    );
+    let wrath = crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Wrath;
+    if !retail && !wrath {
+        return Ok(false);
+    }
+    let sim = borrow_state(state)?;
+    let Some(frame) = sim.widgets.get(id) else {
+        return Ok(false);
+    };
+    if frame.widget_type != WidgetType::GameTooltip || frame.tooltip_owner_id.is_none() {
+        return Ok(false);
+    }
+    Ok(retail
+        || sim
+            .tooltips
+            .get(&id)
+            .is_some_and(|tooltip| !tooltip.lines.is_empty()))
 }
 
 fn tooltip_show_is_rejected(state: &LuaState, id: u64) -> LuaResult<bool> {

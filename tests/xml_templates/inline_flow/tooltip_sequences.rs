@@ -485,7 +485,8 @@ fn test_create_frame_from_xml_inline_conditional_not_enabled_then_add_line_runs(
         r#"<Ui>
         <Button name="XmlInlineConditionalAddLineButton" parent="UIParent">
             <Scripts><OnEnter>
-                if ( not self:IsEnabled() ) then
+                -- 12340 returns 1/0, and 0 is truthy in Lua.
+                if ( self:IsEnabled() == false or self:IsEnabled() == 0 ) then
                     GameTooltip:AddLine(ALL_ASSIST_NOT_LEADER_ERROR, RED_FONT_COLOR.r, RED_FONT_COLOR.g, RED_FONT_COLOR.b, true);
                 end
             </OnEnter></Scripts>

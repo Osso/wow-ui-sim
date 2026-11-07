@@ -1069,6 +1069,29 @@ fn test_game_tooltip_process_info_with_constructed_tooltip_info_populates_lines(
 fn test_micro_menu_hover_shows_tooltip() {
     let env = setup_full_env();
 
+    // The inherited OnEnter is gated on `self:IsEnabled() == 1`
+    // (FrameXML/MainMenuBarMicroButtons.xml:13), so 12340 Button:IsEnabled must
+    // return the number 1 when enabled and 0 when disabled. Enabled rows also
+    // compare `== 1` and disabled rows `== 0` in UIPanelTemplates.xml:68-96,
+    // LootFrame.xml:71, LFDFrame.xml:59, KnowledgeBaseFrame.xml:258,
+    // ChannelFrame.lua:258, PaperDollFrame.xml:1440 and TutorialFrame.lua:835.
+    if wow_ui_sim::client_profile::ACTIVE == wow_ui_sim::client_profile::ClientProfile::Wrath {
+        let (enabled_type, enabled_is_one, disabled_is_zero): (String, bool, bool) = env
+            .eval(
+                r#"
+                local disabled = CreateFrame('Button', 'WrathDisabledProbe', UIParent)
+                disabled:Disable()
+                return type(CharacterMicroButton:IsEnabled()),
+                       CharacterMicroButton:IsEnabled() == 1,
+                       disabled:IsEnabled() == 0
+            "#,
+            )
+            .expect("IsEnabled values should be readable");
+        assert_eq!(enabled_type, "number", "12340 IsEnabled returns a number");
+        assert!(enabled_is_one, "an enabled button returns 1");
+        assert!(disabled_is_zero, "a disabled button returns 0");
+    }
+
     // Find the CharacterMicroButton frame ID
     let btn_id = {
         let state = env.state().borrow();

@@ -12,10 +12,7 @@ const MAX_TEXTURES: usize = 10;
 const ROW_GAP: f32 = 2.0;
 
 pub(super) fn attach_texture(state: &mut LuaState, tooltip_id: u64) -> LuaResult<u32> {
-    let value = stack_val(state, 2);
-    let Some(path) = val_to_string(state, value) else {
-        return Ok(0);
-    };
+    let filename = texture_filename(state, stack_val(state, 2));
     let Some((row, texture_id, adjacent)) = find_texture_slot(state, tooltip_id)? else {
         return Ok(0);
     };
@@ -24,7 +21,7 @@ pub(super) fn attach_texture(state: &mut LuaState, tooltip_id: u64) -> LuaResult
     };
     let uv = read_texture_coords(state)?;
     let mut sim = borrow_state_mut(state)?;
-    assign_slot_texture(&mut sim, texture_id, path, value, uv);
+    assign_slot_texture(&mut sim, texture_id, filename, uv);
     anchor_attachment(&mut sim, tooltip_id, left_id, (row, texture_id, adjacent));
     sim.tooltips
         .entry(tooltip_id)
@@ -32,6 +29,18 @@ pub(super) fn attach_texture(state: &mut LuaState, tooltip_id: u64) -> LuaResult
         .wrath_texture_rows
         .push((row, texture_id));
     Ok(0)
+}
+
+/// 12340 reads the argument with `lua_tolstring`: a string, a numeric string and
+/// a number (formatted as a decimal filename) all name a file, and a number is
+/// never resolved as a FileDataID. Any other value leaves the filename null
+/// without a type error (tooltip-addtexture-12340).
+fn texture_filename(state: &LuaState, value: Val) -> Option<String> {
+    match value {
+        Val::Str(_) => val_to_string(state, value),
+        Val::Num(_) => Some(value.to_string()),
+        _ => None,
+    }
 }
 
 fn find_texture_slot(state: &LuaState, tooltip_id: u64) -> LuaResult<Option<(usize, u64, bool)>> {
@@ -72,16 +81,12 @@ fn read_texture_coords(state: &mut LuaState) -> LuaResult<(f32, f32, f32, f32)> 
 fn assign_slot_texture(
     sim: &mut SimState,
     id: u64,
-    path: String,
-    value: Val,
+    filename: Option<String>,
     uv: (f32, f32, f32, f32),
 ) {
     if let Some(frame) = sim.widgets.get_mut_visual(id) {
-        frame.texture = (!path.is_empty()).then_some(path);
-        frame.texture_file_data_id = match value {
-            Val::Num(value) => Some(value as i64),
-            _ => None,
-        };
+        frame.texture = filename.filter(|name| !name.is_empty());
+        frame.texture_file_data_id = None;
         frame.atlas = None;
         frame.color_texture = None;
         frame.atlas_tex_coords = None;

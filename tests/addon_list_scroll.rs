@@ -390,10 +390,11 @@ fn test_minimal_scrollbar_atlas_textures() {
         assert(bar:GetThumbTexture():GetTextureFilePath() == "Interface\\Buttons\\UI-ScrollBar-Knob")
         local low, high = bar:GetMinMaxValues()
         assert(low == 0 and high == 300)
-        assert(not up:IsEnabled() and down:IsEnabled())
+        -- 12340 IsEnabled returns 1/0 (FrameXML/UIPanelTemplates.xml:68-96).
+        assert(up:IsEnabled() == 0 and down:IsEnabled() == 1)
         bar:SetValue(300)
         FauxScrollFrame_Update(sf, 20, 5, 20)
-        assert(up:IsEnabled() and not down:IsEnabled())
+        assert(up:IsEnabled() == 1 and down:IsEnabled() == 0)
         "#,
     )
     .unwrap();

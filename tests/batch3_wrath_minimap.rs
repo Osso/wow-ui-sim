@@ -66,10 +66,11 @@ fn m3_original_zoom_buttons_refresh_both_endpoints_without_set_event() {
         Minimap:SetZoom(0)
         for i = 1, 5 do Minimap_ZoomInClick() end
         assert(Minimap:GetZoom() == 5)
-        assert(not MinimapZoomIn:IsEnabled() and MinimapZoomOut:IsEnabled())
+        -- 12340 IsEnabled returns 1/0 (FrameXML/UIPanelTemplates.xml:68-96).
+        assert(MinimapZoomIn:IsEnabled() == 0 and MinimapZoomOut:IsEnabled() == 1)
         for i = 1, 5 do Minimap_ZoomOutClick() end
         assert(Minimap:GetZoom() == 0)
-        assert(MinimapZoomIn:IsEnabled() and not MinimapZoomOut:IsEnabled())
+        assert(MinimapZoomIn:IsEnabled() == 1 and MinimapZoomOut:IsEnabled() == 0)
         Minimap:SetZoom(0)
         Minimap:SetZoom(3)
         Minimap:SetZoom(3)
@@ -89,8 +90,8 @@ fn m3_original_zoom_event_handler_reads_state() {
         env.fire_event("MINIMAP_UPDATE_ZOOM").unwrap();
         env.exec(&format!(
             r#"
-            assert(MinimapZoomIn:IsEnabled() == ({zoom} ~= 5))
-            assert(MinimapZoomOut:IsEnabled() == ({zoom} ~= 0))
+            assert(MinimapZoomIn:IsEnabled() == (({zoom} ~= 5) and 1 or 0))
+            assert(MinimapZoomOut:IsEnabled() == (({zoom} ~= 0) and 1 or 0))
         "#
         ))
         .unwrap();

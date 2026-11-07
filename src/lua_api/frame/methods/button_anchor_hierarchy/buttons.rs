@@ -88,6 +88,15 @@ pub(super) fn is_enabled(state: &mut LuaState) -> LuaResult<u32> {
     };
     let value = if secret {
         rilua::table_security::wrap_host_secret_bool(state, enabled)
+    } else if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Wrath {
+        // 12340 Button:IsEnabled returns the numbers 1 and 0, not a boolean: the
+        // original consumers compare the result with those literals
+        // (FrameXML/MainMenuBarMicroButtons.xml:13,16 and :246,257;
+        // FrameXML/UIPanelTemplates.xml:68,76,84,92; FrameXML/LootFrame.xml:71;
+        // FrameXML/LFDFrame.xml:59; FrameXML/KnowledgeBaseFrame.xml:258;
+        // FrameXML/ChannelFrame.lua:258; FrameXML/PaperDollFrame.xml:1440;
+        // FrameXML/TutorialFrame.lua:835).
+        Val::Num(if enabled { 1.0 } else { 0.0 })
     } else {
         Val::Bool(enabled)
     };

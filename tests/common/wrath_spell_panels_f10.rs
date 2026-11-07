@@ -537,6 +537,9 @@ fn first_spell_hover_populates_native_tooltip() {
     exec_consumer(
         &env,
         r#"
+        -- SpellButton_OnEnter passes the 1-based book slot to SetSpell, which
+        -- reads the supplied slot records (wrath-spellbook-slot-presentation).
+        A_Admin.SetWrathSpellBookSlot('spell', 1, 6603, 'Auto Attack', '', 'Interface\\Icons\\INV_Sword_04')
         SpellButton1:GetScript('OnEnter')(SpellButton1)
         assert(GameTooltip:IsShown() and GameTooltip:NumLines() > 0)
         SpellButton1:GetScript('OnLeave')(SpellButton1)

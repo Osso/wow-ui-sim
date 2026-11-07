@@ -22,11 +22,7 @@ fn loaded_env() -> WowLuaEnv {
 
 #[test]
 fn protected_method_set_id_routes_blocked_event_and_allows_trusted_calls() {
-    crate::common::grouped_fixture::with_env(
-        "protected_method_coverage",
-        loaded_env,
-        |env| {
-
+    crate::common::grouped_fixture::with_env("protected_method_coverage", loaded_env, |env| {
         env.exec(
             r#"
             assert(type(GameEvent.HandleActionBlocked) == 'function')
@@ -61,16 +57,11 @@ fn protected_method_set_id_routes_blocked_event_and_allows_trusted_calls() {
         "#,
         )
         .unwrap();
-        },
-    );
+    });
 }
 
 fn assert_protected_input_method(method: &str, getter: &str) {
-    crate::common::grouped_fixture::with_env(
-        "protected_method_coverage",
-        loaded_env,
-        |env| {
-
+    crate::common::grouped_fixture::with_env("protected_method_coverage", loaded_env, |env| {
         env.exec(&format!(
             r#"
             assert(type(GameEvent.HandleActionBlocked) == 'function')
@@ -105,8 +96,7 @@ fn assert_protected_input_method(method: &str, getter: &str) {
         "#
         ))
         .unwrap();
-        },
-    );
+    });
 }
 
 macro_rules! protected_input_test {
@@ -207,11 +197,7 @@ fn assert_protected_transition(
     out_check: &str,
     secure_check: &str,
 ) {
-    crate::common::grouped_fixture::with_env(
-        "protected_method_coverage",
-        loaded_env,
-        |env| {
-
+    crate::common::grouped_fixture::with_env("protected_method_coverage", loaded_env, |env| {
         env.exec(&format!(
             r#"
             local frame = CreateFrame('{kind}', 'ProtectedTransition', UIParent)
@@ -246,8 +232,7 @@ fn assert_protected_transition(
         "#
         ))
         .unwrap();
-        },
-    );
+    });
 }
 
 #[test]
@@ -259,8 +244,8 @@ fn protected_transition_button_enabled() {
         "frame:SetEnabled(false)",
         "frame:SetEnabled(true)",
         "frame:SetEnabled(false)",
-        "not frame:IsEnabled()",
-        "frame:IsEnabled()",
+        "frame:IsEnabled() == false or frame:IsEnabled() == 0",
+        "frame:IsEnabled() == true or frame:IsEnabled() == 1",
     );
 }
 
@@ -343,8 +328,8 @@ fn protected_transition_button_enable() {
         "frame:Disable(); frame:Enable()",
         "frame:Disable()",
         "frame:Enable()",
-        "frame:IsEnabled()",
-        "not frame:IsEnabled()",
+        "frame:IsEnabled() == true or frame:IsEnabled() == 1",
+        "frame:IsEnabled() == false or frame:IsEnabled() == 0",
     );
 }
 
@@ -357,8 +342,8 @@ fn protected_transition_button_disable() {
         "frame:Disable()",
         "frame:Enable()",
         "frame:Disable()",
-        "not frame:IsEnabled()",
-        "frame:IsEnabled()",
+        "frame:IsEnabled() == false or frame:IsEnabled() == 0",
+        "frame:IsEnabled() == true or frame:IsEnabled() == 1",
     );
 }
 
@@ -532,11 +517,7 @@ fn protected_transition_clear_points_offset() {
 
 #[test]
 fn clear_attribute_reports_existence_and_dispatches_change() {
-    crate::common::grouped_fixture::with_env(
-        "protected_method_coverage",
-        loaded_env,
-        |env| {
-
+    crate::common::grouped_fixture::with_env("protected_method_coverage", loaded_env, |env| {
         env.exec(
             r#"
             local frame = CreateFrame('Frame')
@@ -552,17 +533,12 @@ fn clear_attribute_reports_existence_and_dispatches_change() {
         "#,
         )
         .unwrap();
-        },
-    );
+    });
 }
 
 #[test]
 fn clear_points_offset_resets_all_points_without_removing_them() {
-    crate::common::grouped_fixture::with_env(
-        "protected_method_coverage",
-        loaded_env,
-        |env| {
-
+    crate::common::grouped_fixture::with_env("protected_method_coverage", loaded_env, |env| {
         env.exec(r#"
             local frame = CreateFrame('Frame')
             frame:SetPoint('TOPLEFT', UIParent, 'TOPLEFT', 11, 12)
@@ -574,8 +550,7 @@ fn clear_points_offset_resets_all_points_without_removing_them() {
             point, relative, relative_point, x, y = frame:GetPoint(2)
             assert(point == 'BOTTOMRIGHT' and relative == UIParent and relative_point == 'BOTTOMRIGHT' and x == 0 and y == 0)
         "#).unwrap();
-        },
-    );
+    });
 }
 
 #[test]

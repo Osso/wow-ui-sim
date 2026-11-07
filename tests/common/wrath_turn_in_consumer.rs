@@ -239,7 +239,7 @@ pub fn open_progress(env: &ConsumerEnv) {
         r#"
         assert(QuestFrame:IsShown() and QuestFrameProgressPanel:IsShown(), 'original progress panel')
         assert(QuestProgressTitleText:GetText() == 'Wrath northern recovery', 'dialog title')
-        assert(not QuestFrameCompleteButton:IsEnabled(), 'original incomplete UI disables button')
+        assert(QuestFrameCompleteButton:IsEnabled() == false or QuestFrameCompleteButton:IsEnabled() == 0, 'original incomplete UI disables button')
         assert(not QuestFrameRewardPanel:IsShown(), 'not yet rewards')
         assert(GetNumQuestItems() == 0 and GetQuestMoneyToGet() == 0, 'supplied no-items no-cost fixture')
     "#,
