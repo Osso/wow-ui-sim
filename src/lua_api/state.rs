@@ -656,6 +656,8 @@ macro_rules! build_empty_sim_state {
             #[cfg(feature = "client-wowforever")]
             stable_reads: crate::c_api::c_stable_info::forever::StableReadState::default(),
             merchant_items: Vec::new(),
+            // No extended-cost record is observed until the host supplies one.
+            merchant_offer_costs: HashMap::new(),
             #[cfg(feature = "retail-12-0-7")]
             merchant_currencies: Vec::new(),
             // Explicit empty buyback scenario; not a native account-state default.

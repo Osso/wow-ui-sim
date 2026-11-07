@@ -801,6 +801,9 @@ pub struct SimState {
     #[cfg(feature = "client-wowforever")]
     pub stable_reads: crate::c_api::c_stable_info::forever::StableReadState,
     pub merchant_items: Vec<u32>,
+    /// Explicit extended-cost records keyed by zero-based merchant slot; a
+    /// missing key is not an observed record (decomp Round 6 §2b).
+    pub merchant_offer_costs: HashMap<u32, MerchantCostRecord>,
     #[cfg(feature = "retail-12-0-7")]
     pub merchant_currencies: Vec<i32>,
     pub merchant_buyback_items: Vec<crate::lua_api::globals::real::merchant_buyback::BuybackItem>,
