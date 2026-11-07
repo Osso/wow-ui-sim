@@ -29,6 +29,7 @@ mod texture;
 pub(crate) mod tooltip;
 pub(crate) use tooltip::{
     clear_tooltip_for_hide, release_tooltip_attachments, size_tooltip_on_native_trigger,
+    size_wrath_tooltip_on_show,
 };
 
 use crate::lua_api::methods::{borrow_state, frame_id_from_stack};
