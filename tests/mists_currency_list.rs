@@ -31,13 +31,19 @@ fn log_error_boundary(case: &str, error: &str) {
 }
 
 fn load_mists_token_ui_env() -> WowLuaEnv {
-    // TokenUI's bare TOC omits its implicit Game startup dependencies.
+    // TokenUI's bare TOC omits its implicit Game startup dependencies, including
+    // the chat and item-button addons that receive its currency links.
     let (env, _) = blizzard_addon_closure::build_blizzard_addon_closure_env(
         &blizzard_addon_closure::blizzard_ui_dir(),
         &["Blizzard_TokenUI"],
         &[BlizzardAddonOverride {
             addon: "Blizzard_TokenUI",
-            extra_roots: &["Blizzard_UIPanels_Game", "Blizzard_MoneyFrame"],
+            extra_roots: &[
+                "Blizzard_UIPanels_Game",
+                "Blizzard_MoneyFrame",
+                "Blizzard_ChatFrame",
+                "Blizzard_ItemButton",
+            ],
         }],
     );
     env.exec(
@@ -47,6 +53,11 @@ fn load_mists_token_ui_env() -> WowLuaEnv {
         assert(TokenFrameContainer:GetObjectType() == "ScrollFrame")
         assert(type(HybridScrollFrame_GetOffset) == "function")
         assert(type(HybridScrollFrame_Update) == "function")
+        -- Mists loads Cata/Blizzard_TokenUI.lua, whose TokenFrame_OnShow creates the
+        -- rows (lines 41-57); TokenFrame starts hidden, so none exist after load.
+        assert(TokenFrameContainer.buttons == nil)
+        ToggleCharacter("TokenFrame")
+        assert(TokenFrame:IsVisible())
         assert(#TokenFrameContainer.buttons > 0)
         "#,
     )
@@ -347,5 +358,64 @@ fn legacy_currency_list_size_wraps_c_currency_info() {
     assert!(
         update_ok,
         "TokenFrame_Update should complete with the legacy compatibility wrapper"
+    );
+}
+
+#[test]
+fn token_row_chat_link_click_inserts_supplied_currency_link_into_chat() {
+    let env = load_mists_token_ui_env();
+    {
+        let state = env.state();
+        let mut state = state.borrow_mut();
+        state
+            .currency_info
+            .get_mut(&2245)
+            .expect("Valorstones should already exist in the currency map")
+            .name = "Seeded Valorstones".to_string();
+        state.modifier_keys.shift = true;
+    }
+
+    // Consumers: TokenButton_OnClick (Cata/Blizzard_TokenUI.lua:242) and the row's
+    // LinkButton OnClick (Cata/Blizzard_TokenUI.xml:109) pass
+    // C_CurrencyInfo.GetCurrencyListLink(index) to HandleModifiedItemClick, which
+    // inserts it into the active chat edit box.
+    let (row_text, link_button_text, other_text, other_id): (String, String, String, i32) = env
+        .eval(
+            r#"
+            TokenFrame_Update()
+            ChatFrameUtil.OpenChat("")
+            local editBox = ChatFrameUtil.GetActiveWindow()
+            assert(editBox, "chat edit box should be active")
+            assert(IsModifiedClick("CHATLINK"))
+            local rows = TokenFrameContainer.buttons
+            assert(rows[2].name:GetText() == "Seeded Valorstones")
+            rows[2]:Click("LeftButton")
+            local rowText = editBox:GetText()
+            editBox:SetText("")
+            rows[2].LinkButton:Click("LeftButton")
+            local linkButtonText = editBox:GetText()
+            editBox:SetText("")
+            rows[3]:Click("LeftButton")
+            return rowText, linkButtonText, editBox:GetText(),
+                C_CurrencyInfo.GetCurrencyListInfo(3).currencyTypesID
+            "#,
+        )
+        .inspect_err(|err| log_error_boundary("chat-link-eval", &err.to_string()))
+        .expect("modified TokenUI row clicks should reach the chat edit box");
+
+    assert!(
+        row_text.contains("|Hcurrency:2245:0|h[Seeded Valorstones]|h"),
+        "row click should insert the seeded Valorstones link: {row_text:?}"
+    );
+    assert_eq!(
+        link_button_text, row_text,
+        "LinkButton click should insert the same row link"
+    );
+    assert_ne!(other_id, 2245);
+    assert!(
+        other_text.contains(&format!(
+            "|Hcurrency:{other_id}:0|h[Weathered Harbinger Crest]|h"
+        )),
+        "third row click should insert its own currency link: {other_text:?}"
     );
 }

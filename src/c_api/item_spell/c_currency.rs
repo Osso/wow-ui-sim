@@ -1,6 +1,5 @@
 use crate::c_api::ensure_namespace;
 use crate::lua_api::globals::currency_data;
-#[cfg(feature = "client-retail")]
 use crate::lua_api::methods::borrow_state_mut;
 use crate::lua_api::methods::{
     borrow_state, create_string, create_table, create_table_with_capacity, table_set,
@@ -140,6 +139,22 @@ pub(super) fn register_c_currency_info(state: &mut LuaState) -> LuaResult<()> {
             table_ref,
             "GetCurrencyListLink",
             c_currency_get_list_link,
+        )?;
+    }
+    #[cfg(any(
+        feature = "client-retail",
+        feature = "client-ptr",
+        feature = "client-wowforever"
+    ))]
+    {
+        // CurrencyInfoDocumentation.lua:281-296 (Retail and PTR) and the Forever
+        // 1.60.1 cache. Mists, Era and Anniversary pin no declaration, so the
+        // member stays unpublished there.
+        table_set_rust_fn_static(
+            state,
+            table_ref,
+            "GetCurrencyLink",
+            c_currency_get_currency_link,
         )?;
     }
     #[cfg(feature = "client-mists")]
@@ -513,40 +528,65 @@ fn read_currency_list_display_info(
         .cloned())
 }
 
-/// The currency hyperlink of a list row, coloured by the row's quality like
-/// `|cffffffff|Hcurrency:1744|h[Corrupted Memento]|h|r`.
+/// The currency hyperlink of a displayed list row, or one nil when the index is
+/// outside the displayed count.
 ///
 /// The client getter range-checks the displayed count and publishes one nil for
-/// a null link. It has no header test, so a header row reaches the same link
-/// builder with its own ID. The link text is the model's best guess: the native
-/// builder is unmodelled, so neither the payload fields nor the colour source
-/// are proved.
+/// a null link; it does not call the link builder in that case. It has no header
+/// test, so a header row reaches the shared builder with its own ID and passes a
+/// constant amount of zero.
 fn c_currency_get_list_link(state: &mut LuaState) -> LuaResult<u32> {
     let index = i32::from_stack(state, 1)?;
-    match read_displayed_currency_link(state, index)? {
-        Some(link) => {
-            let link = create_string(state, &link);
-            state.push(link);
-        }
-        None => state.push(Val::Nil),
-    }
+    let Some(entry) = read_currency_list_entry(state, index)? else {
+        state.push(Val::Nil);
+        return Ok(1);
+    };
+    let link = build_currency_link(state, entry.currency_id, 0)?;
+    let link = create_string(state, &link);
+    state.push(link);
     Ok(1)
 }
 
-/// Link text for a displayed row, or `None` when the row is outside the list or
-/// its supplied display data is missing.
-fn read_displayed_currency_link(state: &mut LuaState, index: i32) -> LuaResult<Option<String>> {
-    let Some(entry) = read_currency_list_entry(state, index)? else {
-        return Ok(None);
+/// `C_CurrencyInfo.GetCurrencyLink(type[, amount])`, published where the pinned
+/// APIDocumentation declares it (Retail, PTR, Forever). The optional amount is
+/// forwarded to the shared builder, zero when absent.
+#[cfg(any(
+    feature = "client-retail",
+    feature = "client-ptr",
+    feature = "client-wowforever"
+))]
+fn c_currency_get_currency_link(state: &mut LuaState) -> LuaResult<u32> {
+    let currency_id = i32::from_stack(state, 1)?;
+    let amount = Option::<i32>::from_stack(state, 2)?.unwrap_or(0);
+    let link = build_currency_link(state, currency_id, amount)?;
+    let link = create_string(state, &link);
+    state.push(link);
+    Ok(1)
+}
+
+/// The one native currency-link builder (decomp Round 2 Q1, builds 70688 / 70668 /
+/// 70707). Both link getters call it with a currency id and an amount and get
+/// `|cnIQ<n>:|Hcurrency:<id>:<amount>|h[<name>]|h|r`, where `<n>` is the resolved
+/// record's quality and `[<name>]` its plain name.
+///
+/// The builder formats into one destination buffer that is zero-initialised once
+/// and never cleared, and it formats only when the id resolves. An unresolved id
+/// (zero, or absent from currency data) therefore republishes the buffer itself:
+/// empty until the first link is built, then the last built link.
+fn build_currency_link(state: &mut LuaState, currency_id: i32, amount: i32) -> LuaResult<String> {
+    let record = borrow_state(state)?
+        .currency_info
+        .get(&currency_id)
+        .cloned();
+    let Some(record) = record else {
+        return Ok(borrow_state(state)?.currency_link_buffer.clone());
     };
-    let Some(display) = read_currency_list_display_info(state, &entry)? else {
-        return Ok(None);
-    };
-    let color = crate::c_api::item_quality_color::quality_hex(state, display.quality);
-    Ok(Some(format!(
-        "|c{color}|Hcurrency:{}|h[{}]|h|r",
-        entry.currency_id, display.name
-    )))
+    let link = format!(
+        "|cnIQ{}:|Hcurrency:{currency_id}:{amount}|h[{}]|h|r",
+        record.quality, record.name
+    );
+    borrow_state_mut(state)?.currency_link_buffer = link.clone();
+    Ok(link)
 }
 
 fn write_currency_row_display_fields(state: &mut LuaState, table: Val, display: &CurrencyInfo) {
@@ -964,10 +1004,13 @@ mod tests {
         assert_eq!(field_count, CURRENCY_INFO_HASH_FIELDS as i32);
     }
 
+    // Native link builder (decomp Round 2 Q1.b, builds 70688 / 70668 / 70707):
+    // `|cnIQ<n>:|Hcurrency:<id>:<amount>|h[<name>]|h|r`, named quality token,
+    // payload amount always present, list getter passes a constant zero.
     // Wrath pins no generated documentation; the reader is unpublished there.
     #[cfg(not(feature = "client-wrath"))]
     #[test]
-    fn currency_list_link_names_the_row_currency_in_its_quality_colour() {
+    fn currency_list_link_uses_the_native_quality_token_format() {
         let env = WowLuaEnv::new().expect("env should initialize");
         let (link, expected): (String, String) = env
             .eval(
@@ -976,10 +1019,9 @@ mod tests {
                 for index = 1, C_CurrencyInfo.GetCurrencyListSize() do
                     local info = C_CurrencyInfo.GetCurrencyListInfo(index)
                     if not info.isHeader and not link then
-                        local hex = select(4, C_Item.GetItemQualityColor(info.quality))
                         link = C_CurrencyInfo.GetCurrencyListLink(index)
-                        expected = "|c" .. hex .. "|Hcurrency:" .. info.currencyTypesID
-                            .. "|h[" .. info.name .. "]|h|r"
+                        expected = "|cnIQ" .. info.quality .. ":|Hcurrency:"
+                            .. info.currencyTypesID .. ":0|h[" .. info.name .. "]|h|r"
                     end
                 end
                 return link, expected
@@ -990,12 +1032,15 @@ mod tests {
         assert_eq!(link, expected);
     }
 
+    // Native shared destination buffer (decomp Round 2 Q1.c): the builder is
+    // zero-initialised once and never cleared, so an id that does not resolve
+    // publishes the buffer itself. A header row carries id zero.
     // Wrath pins no generated documentation; the reader is unpublished there.
     #[cfg(not(feature = "client-wrath"))]
     #[test]
-    fn currency_list_link_covers_header_rows_like_any_other_row() {
+    fn currency_list_link_header_row_publishes_the_untouched_buffer() {
         let env = WowLuaEnv::new().expect("env should initialize");
-        let (link, expected): (String, String) = env
+        let (kind, link): (String, String) = env
             .eval(
                 r#"
                 local index
@@ -1006,16 +1051,107 @@ mod tests {
                     end
                 end
                 assert(index, "the displayed list holds a header row")
-                local info = C_CurrencyInfo.GetCurrencyListInfo(index)
-                local hex = select(4, C_Item.GetItemQualityColor(info.quality))
-                return C_CurrencyInfo.GetCurrencyListLink(index),
-                    "|c" .. hex .. "|Hcurrency:" .. info.currencyTypesID
-                        .. "|h[" .. info.name .. "]|h|r"
+                local link = C_CurrencyInfo.GetCurrencyListLink(index)
+                return type(link), link
                 "#,
             )
             .expect("header row link should evaluate");
 
-        assert_eq!(link, expected);
+        assert_eq!(kind, "string", "the builder always publishes a cstring");
+        assert_eq!(link, "", "the shared buffer starts empty, and is not nil");
+    }
+
+    // Wrath pins no generated documentation; the reader is unpublished there.
+    #[cfg(not(feature = "client-wrath"))]
+    #[test]
+    fn currency_list_link_header_row_repeats_the_previous_link() {
+        let env = WowLuaEnv::new().expect("env should initialize");
+        let (header_link, previous): (String, String) = env
+            .eval(
+                r#"
+                local headerIndex, rowIndex
+                for candidate = 1, C_CurrencyInfo.GetCurrencyListSize() do
+                    local row = C_CurrencyInfo.GetCurrencyListInfo(candidate)
+                    if row.isHeader then
+                        headerIndex = headerIndex or candidate
+                    elseif not rowIndex then
+                        rowIndex = candidate
+                    end
+                end
+                assert(headerIndex and rowIndex, "the list holds a header and a currency row")
+                local previous = C_CurrencyInfo.GetCurrencyListLink(rowIndex)
+                return C_CurrencyInfo.GetCurrencyListLink(headerIndex), previous
+                "#,
+            )
+            .expect("header row link should evaluate");
+
+        assert!(!previous.is_empty(), "a currency row builds a link");
+        assert_eq!(header_link, previous, "the buffer keeps the last link");
+    }
+
+    // Native `GetCurrencyLink` forwards the optional amount, zero when absent
+    // (decomp Round 2 Q1.a), to the same builder as the list getter.
+    #[cfg(any(
+        feature = "client-retail",
+        feature = "client-ptr",
+        feature = "client-wowforever"
+    ))]
+    #[test]
+    fn currency_link_forwards_the_amount_to_the_shared_builder() {
+        let env = WowLuaEnv::new().expect("env should initialize");
+        let (plain, with_amount, head, name): (String, String, String, String) = env
+            .eval(
+                r#"
+                local info
+                for index = 1, C_CurrencyInfo.GetCurrencyListSize() do
+                    local row = C_CurrencyInfo.GetCurrencyListInfo(index)
+                    if not row.isHeader then
+                        info = row
+                        break
+                    end
+                end
+                assert(info, "the displayed list holds a currency row")
+                return C_CurrencyInfo.GetCurrencyLink(info.currencyTypesID),
+                    C_CurrencyInfo.GetCurrencyLink(info.currencyTypesID, 1847),
+                    "|cnIQ" .. info.quality .. ":|Hcurrency:" .. info.currencyTypesID .. ":",
+                    info.name
+                "#,
+            )
+            .expect("currency link should evaluate");
+
+        assert_eq!(plain, format!("{head}0|h[{name}]|h|r"));
+        assert_eq!(with_amount, format!("{head}1847|h[{name}]|h|r"));
+    }
+
+    #[cfg(any(
+        feature = "client-retail",
+        feature = "client-ptr",
+        feature = "client-wowforever"
+    ))]
+    #[test]
+    fn currency_link_reuses_the_shared_buffer_for_an_unknown_id() {
+        let env = WowLuaEnv::new().expect("env should initialize");
+        let (known, stale_kind, stale): (String, String, String) = env
+            .eval(
+                r#"
+                local info
+                for index = 1, C_CurrencyInfo.GetCurrencyListSize() do
+                    local row = C_CurrencyInfo.GetCurrencyListInfo(index)
+                    if not row.isHeader then
+                        info = row
+                        break
+                    end
+                end
+                local known = C_CurrencyInfo.GetCurrencyLink(info.currencyTypesID)
+                local stale = C_CurrencyInfo.GetCurrencyLink(999999)
+                return known, type(stale), stale
+                "#,
+            )
+            .expect("currency link should evaluate");
+
+        assert!(!known.is_empty(), "a known id builds a link");
+        assert_eq!(stale_kind, "string", "the builder publishes a cstring");
+        assert_eq!(stale, known, "an unresolved id leaves the buffer untouched");
     }
 
     // Wrath pins no generated documentation; the reader is unpublished there.

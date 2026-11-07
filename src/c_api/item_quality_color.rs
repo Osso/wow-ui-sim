@@ -40,12 +40,6 @@ fn get_color(state: &mut LuaState) -> LuaResult<u32> {
     (r, g, b, hex).into_stack(state)
 }
 
-/// `ffRRGGBB` of a quality, the colour `GetItemQualityColor` reports.
-pub(crate) fn quality_hex(state: &mut LuaState, quality: i32) -> String {
-    let (r, g, b) = named_quality_color(state, quality).unwrap_or(FALLBACK_RGB);
-    rgb_hex(r, g, b)
-}
-
 fn rgb_hex(r: f64, g: f64, b: f64) -> String {
     format!(
         "ff{:02x}{:02x}{:02x}",
