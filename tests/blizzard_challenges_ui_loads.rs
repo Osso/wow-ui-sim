@@ -247,3 +247,37 @@ fn challenges_keystone_frame_show_and_hide_run_without_errors(env: &WowLuaEnv) {
     );
 }
 }
+
+prefork_full_ui_case! {
+fn challenges_weekly_chest_reads_the_owned_keystone_context(env: &WowLuaEnv) {
+
+    load_addon(&env.loader_env(), &challenges_ui_toc()).expect("Blizzard_ChallengesUI should load");
+
+    {
+        let mut state = env.state().borrow_mut();
+        state.lua_errors.clear();
+        state.lua_error_records.clear();
+        state.lua_error_counts.clear();
+    }
+
+    // Original consumer: ChallengeModeWeeklyChestMixin:Update
+    // (Blizzard_ChallengesUI/Mainline/Blizzard_ChallengesUI.lua:295) tests
+    // C_MythicPlus.GetOwnedKeystoneLevel() for truthiness at :312. A Lua 0 is
+    // truthy, so publishing 0 instead of nothing changes the chest state from
+    // WALL_OF_TEXT (1) to INCOMPLETE (2) even when the player owns no key.
+    let chest_state_without_a_key: i32 = env
+        .eval("return ChallengesFrame.WeeklyInfo.Child.WeeklyChest:Update(0, nil)")
+        .expect("the weekly chest consumer should run");
+
+    let unexpected_errors: Vec<String> = env.state().borrow().lua_errors.clone();
+    assert!(
+        unexpected_errors.is_empty(),
+        "ChallengeModeWeeklyChestMixin:Update emitted Lua errors:\n  {}",
+        unexpected_errors.join("\n  ")
+    );
+    assert_eq!(
+        chest_state_without_a_key, 1,
+        "no owned key means no truthy level, so the chest stays wall-of-text"
+    );
+}
+}

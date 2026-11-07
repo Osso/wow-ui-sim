@@ -292,25 +292,17 @@ fn get_weekly_chest_reward_level_returns_four_zeros() {
 // ── GetOwnedKeystoneLevel ─────────────────────────────────────────────────────
 
 #[test]
-fn get_owned_keystone_level_publishes_zero_without_a_key() {
-    // The client reader takes the level from the same cached keystone context as
-    // the map ID and publishes 0 when no entry matches (P5, proved). Original
-    // consumer: Blizzard_ChallengesUI/Mainline/Blizzard_ChallengesUI.lua:383
-    // stores the result, and :246/:312 test it for truthiness.
+fn get_owned_keystone_level_publishes_nothing_without_an_owned_key() {
+    // The client searches a player-owned collection for a qualifying entry and,
+    // when none passes, has no keystone context at all and publishes nothing
+    // (Q3, proved). Original consumers take the same branch for nil and for 0:
+    // Blizzard_ChallengesUI/Mainline/Blizzard_ChallengesUI.lua:246 and :312 test
+    // the result for truthiness, and :383 stores it.
     let env = env();
-    let (count, level): (i32, i32) = env
-        .eval(
-            r#"
-            local function count_rets(...)
-                return select('#', ...)
-            end
-            return count_rets(C_MythicPlus.GetOwnedKeystoneLevel()),
-                C_MythicPlus.GetOwnedKeystoneLevel()
-            "#,
-        )
+    let count: i32 = env
+        .eval("return select('#', C_MythicPlus.GetOwnedKeystoneLevel())")
         .unwrap();
-    assert_eq!(count, 1, "the keystone context publishes one value");
-    assert_eq!(level, 0, "no matching key entry carries 0");
+    assert_eq!(count, 0, "an absent keystone context publishes nothing");
 }
 
 #[test]
@@ -331,16 +323,14 @@ fn get_owned_keystone_level_returns_level_when_set() {
 // Wrath pins no generated documentation; the reader is unpublished there.
 #[cfg(not(feature = "client-wrath"))]
 #[test]
-fn get_owned_keystone_challenge_map_id_returns_zero_without_a_key() {
+fn get_owned_keystone_challenge_map_id_publishes_nothing_without_an_owned_key() {
+    // Same absent-context arm as the level reader: nothing published (Q3,
+    // proved). No pinned Blizzard addon calls this reader.
     let env = env();
-    let (count, map_id): (i32, i32) = env
-        .eval(
-            "return select('#', C_MythicPlus.GetOwnedKeystoneChallengeMapID()), \
-             C_MythicPlus.GetOwnedKeystoneChallengeMapID()",
-        )
+    let count: i32 = env
+        .eval("return select('#', C_MythicPlus.GetOwnedKeystoneChallengeMapID())")
         .unwrap();
-    assert_eq!(count, 1, "the keystone context publishes one value");
-    assert_eq!(map_id, 0, "no matching key entry carries 0");
+    assert_eq!(count, 0, "an absent keystone context publishes nothing");
 }
 
 // Wrath pins no generated documentation; the reader is unpublished there.
