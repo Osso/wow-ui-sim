@@ -124,6 +124,49 @@ fn pet_info_by_item_uses_native_tuple_and_argument_contract() {
     .unwrap();
 }
 
+#[cfg(feature = "client-retail")]
+#[test]
+fn pet_item_catalog_answers_from_pinned_retail_build() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        local api = C_PetJournal.GetPetInfoByItemID
+        local name, _, petType, creature, source = api(277270)
+        assert(name == 'Kirin Tor Kitty', 'Retail 70391 name: ' .. tostring(name))
+        assert(petType == 8 and creature == 268609)
+        assert(source == '|cFFFFD200Trading Post|r',
+            'Retail 70391 source: ' .. tostring(source))
+        assert(select('#', api(283375)) == 0,
+            'item 283375 is absent from the 70391 catalog')
+        local squirrel, _, _, squirrelCreature = api(4401)
+        assert(squirrel == 'Mechanical Squirrel' and squirrelCreature == 2671)
+        "#,
+    )
+    .expect("Retail catalog must answer from the pinned 12.1.5.70391 build");
+}
+
+#[cfg(feature = "client-ptr")]
+#[test]
+fn pet_item_catalog_answers_from_pinned_ptr_build() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        local api = C_PetJournal.GetPetInfoByItemID
+        local name, _, petType, creature, source = api(277270)
+        assert(name == 'Bewitching Familiar', 'PTR 70493 name: ' .. tostring(name))
+        assert(petType == 8 and creature == 268609)
+        assert(source == '|cFFFFD200Vendor: Talebound|r ',
+            'PTR 70493 source: ' .. tostring(source))
+        local added = api(283375)
+        assert(added == "Slayer's Faithful Tracker",
+            'PTR 70493 added item 283375: ' .. tostring(added))
+        local squirrel, _, _, squirrelCreature = api(4401)
+        assert(squirrel == 'Mechanical Squirrel' and squirrelCreature == 2671)
+        "#,
+    )
+    .expect("PTR catalog must answer from the pinned 12.1.7.70493 build");
+}
+
 #[test]
 fn player_choice_recognizes_pet_item_from_real_catalog() {
     let ui = crate::common::blizzard_addon_harness::blizzard_ui_dir();

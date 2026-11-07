@@ -1,0 +1,22 @@
+{
+  "PROVENANCE": "Wago DB2 CSV, build 12.1.7.70493, enUS; WM78/WM78b/WM78c selection; SpellName presence EMULATED",
+  "generator": "python3 tools/generate_pet_item_catalog.py --build 12.1.7.70493 <csv_dir> <output> <provenance>",
+  "inputs": {
+    "ItemSparse.csv": "bad68071204e905bebe3c48debe24ffe1a10b504a8bc2b9a678f92113e2bbedc",
+    "ItemXItemEffect.csv": "da49d5a2dd11a7efa0de7c340615f276b6e6234da1a15a1f1531723b38ee4c49",
+    "ItemEffect.csv": "f57d288dd743961700a55714f84783eaa268ec3667d628d4163f137c663994e9",
+    "SpellName.csv": "506173317f588e4b0f6adfcd2c84f7267709eb3563c3e84d964563dd3ceff375",
+    "SpellEffect.csv": "1520313b6e35568297bd321a710fe4ce90ae72b6e786d95a562f928a763c5b40",
+    "SummonProperties.csv": "e98b2f8131aca5da7d564361f96128bc5a110869e7b7a34c61ccea50d6b7bdc6",
+    "BattlePetSpecies.csv": "ae8aea6d94ec128e526c20df1a9f78ffec2e99c6e37469076e484cd1c202a1f7",
+    "Creature.csv": "370d442bcd124b39e390217ff905b35bf136f62c605a15dc0072912846f95475",
+    "CreatureXDisplayInfo.csv": "4659451cffdf00a9da7045bb42c8586894d10ad3d4ea642bf7ab1e92fd88393c"
+  },
+  "output_sha256": "ad18acfed7c2ee19861fc7f8130646a1fed56385917a7c897ca20f9009397014",
+  "records": 1645,
+  "unresolved_equal_order_displays": [],
+  "notes": [
+    "EMULATED: SpellName IDs approximate spell presence; native presence equivalence is unverified.",
+    "Equal lowest OrderIndex with distinct displays has no known winner."
+  ]
+}

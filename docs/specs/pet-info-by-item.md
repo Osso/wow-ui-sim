@@ -25,26 +25,40 @@ pinned consumers:
 
 ## How it works
 
+- The catalog is profile-selected generated data. An `include_str!` cfg in
+  `src/c_api/c_pet_item.rs` embeds `data/pet-item-catalog/ptr.json` when the `client-ptr` feature
+  is enabled and `data/pet-item-catalog/retail.json` otherwise, so each profile answers from the
+  build its pinned UI cache was taken from.
 - [C API and Lua boundary](../lua-api.md)
 
 ## Implementation inventory
 
-- `tools/generate_pet_item_catalog.py` — derives the pinned item-to-species data.
-- `data/pet-item-catalog.json` and `.provenance.json` — generated catalog, input hashes, and unresolved display IDs.
-- `src/c_api/c_pet_item.rs` — Retail and PTR namespace registration, argument parsing, and tuple projection.
+- `tools/generate_pet_item_catalog.py --build <build>` — derives the item-to-species data from a
+  labelled DB2 CSV export and records that label in the provenance.
+- `data/pet-item-catalog/retail.json` and `retail.provenance.json` — 12.1.5.70391 export, 1636
+  records, input hashes, and unresolved display IDs.
+- `data/pet-item-catalog/ptr.json` and `ptr.provenance.json` — 12.1.7.70493 export, 1645 records,
+  same inputs regenerated from the 70493 tables. It adds 9 item ids (283375, 283378, 284094,
+  284103, 286652-286655, 286661), removes none, and changes 3 records: item 277270 renames
+  `Kirin Tor Kitty` to `Bewitching Familiar` with a new source line, and items 274923 and 275020
+  change description text. `output_sha256` is `ad18acfe...9009397014`.
+- `src/c_api/c_pet_item.rs` — Retail and PTR namespace registration, profile-selected catalog,
+  argument parsing, and tuple projection.
 
 ## Tests asserting this spec
 
 - `tests/mount_item_player_choice.rs` — original consumer, non-pet control, tuple, and argument checks.
+- `tests/mount_item_player_choice.rs::pet_item_catalog_answers_from_pinned_retail_build` — Retail keeps the 70391 name and source for item 277270 and has no record for 283375.
+- `tests/mount_item_player_choice.rs::pet_item_catalog_answers_from_pinned_ptr_build` — PTR answers 277270 as `Bewitching Familiar` with the 70493 source line and resolves the 70493-only item 283375.
 
 ## Known gaps (current cycle)
 
 - [ ] Equal lowest `OrderIndex` rows with distinct display IDs have an unknown winner. The 70391 export has no affected pet items. The generator records any future cases; the simulator returns no values for them rather than choosing an invented display.
 - [ ] EMULATED: SpellName record presence backs the native spell-presence check; their equivalence is unverified. A failed check does not resume at a later item-effect slot.
-- [ ] PTR uses the Retail catalog. `data/pet-item-catalog.json` derives from build 12.1.5.70391, but the pinned PTR UI is 12.1.7.70493. Running the same generator over the 70493 tables yields 1645 records instead of 1636: 9 added item IDs, 3 changed records (item 277270 renames `Kirin Tor Kitty` to `Bewitching Familiar`, items 274923 and 275020 change description text). Until a PTR catalog is generated, PTR answers for those 12 items reflect the older build.
 - [ ] Live item-cache request completion and event timing are unknown.
 - [ ] Secret-value and restriction behavior is unknown.
-- [ ] Native evidence is build 70688; the generated source data is 70391 and is not claimed to be identical.
+- [ ] Native evidence is build 70688; the generated source data is 70391 (Retail) and 70493 (PTR) and is not claimed to be identical.
+- [ ] The Retail provenance labels are updated from the existing 12.1.5.70391 record; its nine input CSVs are not in the repository, so only the PTR catalog was regenerated in this cycle.
 
 ## Out of scope
 

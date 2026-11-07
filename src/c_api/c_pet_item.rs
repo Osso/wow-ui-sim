@@ -7,10 +7,9 @@
 //! `Blizzard_UIPanels_Game/Mainline/DressUpFrames.lua:178` reads creatureID (4), displayID (12)
 //! and speciesID (13), and the PTR `Blizzard_SharedXML/LinkUtil.lua:127` reads the displayID.
 //!
-//! Known data gap: `data/pet-item-catalog.json` is derived from build 12.1.5.70391 while the
-//! pinned PTR UI is 12.1.7.70493. Regenerating this generator over the 70493 tables adds 9 items
-//! and changes 3 records (one renamed species), so PTR answers for those ids are stale.
-//! See `docs/specs/pet-info-by-item.md`.
+//! The catalog is profile-selected generated data: Retail reads the 12.1.5.70391 export and
+//! PTR reads the 12.1.7.70493 export that matches its pinned UI cache. Both files are produced
+//! by `tools/generate_pet_item_catalog.py --build <build>`; see `docs/specs/pet-info-by-item.md`.
 
 use std::collections::HashMap;
 use std::sync::OnceLock;
@@ -40,12 +39,16 @@ struct PetItem {
     species_id: u32,
 }
 
+#[cfg(feature = "client-ptr")]
+const CATALOG_JSON: &str = include_str!("../../data/pet-item-catalog/ptr.json");
+#[cfg(not(feature = "client-ptr"))]
+const CATALOG_JSON: &str = include_str!("../../data/pet-item-catalog/retail.json");
+
 fn catalog() -> &'static HashMap<u32, PetItem> {
     static CATALOG: OnceLock<HashMap<u32, PetItem>> = OnceLock::new();
     CATALOG.get_or_init(|| {
         let entries: Vec<PetItem> =
-            serde_json::from_str(include_str!("../../data/pet-item-catalog.json"))
-                .expect("generated pet-item catalog must be valid");
+            serde_json::from_str(CATALOG_JSON).expect("generated pet-item catalog must be valid");
         entries
             .into_iter()
             .map(|entry| (entry.item_id, entry))
