@@ -12,6 +12,16 @@ fn make_addon_dir(root: &std::path::Path, folder: &str, toc_names: &[&str]) -> s
     dir
 }
 
+/// NTFS (Windows, the native client platform) and default APFS/HFS+ volumes
+/// resolve names case-insensitively and keep one directory entry per folded
+/// name, so two TOC files that differ only in case cannot coexist there. Probe
+/// the filesystem instead of assuming the POSIX case-sensitive model.
+fn filesystem_is_case_insensitive() -> bool {
+    let probe = tempfile::tempdir().unwrap();
+    std::fs::write(probe.path().join("case_probe.toc"), "").unwrap();
+    probe.path().join("CASE_PROBE.TOC").exists()
+}
+
 #[test]
 fn find_toc_file_ignores_renamed_disabled_folder() {
     // CoreBehaviorProbe.disabled/CoreBehaviorProbe.toc loaded in the sim and
@@ -89,7 +99,15 @@ fn find_toc_file_case_matching_preserves_flavor_and_exact_name_priority() {
     let dir = make_addon_dir(tmp.path(), "MyAddon", &[&dash, &lower, "MyAddon.toc"]);
     assert_eq!(find_toc_file(&dir), Some(dir.join(&lower)));
     std::fs::write(dir.join(&canonical), "Core.lua\n").unwrap();
-    assert_eq!(find_toc_file(&dir), Some(dir.join(canonical)));
+    // Exact case wins where both spellings can coexist. Where they cannot, the
+    // write above reopens the stored entry, so its case is preserved and the
+    // case-insensitive match returns that single stored spelling.
+    let expected = if filesystem_is_case_insensitive() {
+        dir.join(&lower)
+    } else {
+        dir.join(canonical)
+    };
+    assert_eq!(find_toc_file(&dir), Some(expected));
 }
 
 #[test]
@@ -102,7 +120,15 @@ fn find_toc_file_case_collisions_ignore_directory_creation_order() {
         ("reverse", [upper.as_str(), lower.as_str()]),
     ] {
         let dir = make_addon_dir(&tmp.path().join(label), "MyAddon", &names);
-        assert_eq!(find_toc_file(&dir), Some(dir.join(&upper)));
+        // Exact upper case wins among coexisting spellings. Where only one entry
+        // can exist, the filesystem keeps the spelling written first and
+        // discovery returns that stored name, never an unbacked spelling.
+        let expected = if filesystem_is_case_insensitive() {
+            dir.join(names[0])
+        } else {
+            dir.join(&upper)
+        };
+        assert_eq!(find_toc_file(&dir), Some(expected));
     }
 }
 
