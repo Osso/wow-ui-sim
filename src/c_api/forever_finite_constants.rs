@@ -24,6 +24,7 @@ fn register_enums(state: &mut LuaState) {
         &[("MinValue", 0), ("MaxValue", 2), ("NumValues", 3)],
     );
     register_bag_indices(state, enums);
+    register_item_container_enums(state, enums);
     register_tracking_filters(state, enums);
     register_ping_results(state, enums);
     register_gamepad_overrides(state, enums);
@@ -174,6 +175,53 @@ fn register_bag_indices(state: &mut LuaState, enums: Val) {
         enums,
         "BagIndexMeta",
         &[("MinValue", -3), ("MaxValue", 23), ("NumValues", 27)],
+    );
+}
+
+fn register_item_container_enums(state: &mut LuaState, enums: Val) {
+    // Forever 1.60.1.70707 ItemConstantsDocumentation.lua:325-346.
+    publish(
+        state,
+        enums,
+        "ItemContainerSubclass",
+        &[
+            ("Bag", 0),
+            ("Soul", 1),
+            ("Herb", 2),
+            ("Enchanting", 3),
+            ("Engineering", 4),
+            ("Gem", 5),
+            ("Mining", 6),
+            ("Leatherworking", 7),
+            ("Inscription", 8),
+            ("Tacklebox", 9),
+            ("Cooking", 10),
+            ("Reagent", 11),
+        ],
+    );
+    publish(
+        state,
+        enums,
+        "ItemContainerSubclassMeta",
+        &[("MinValue", 0), ("MaxValue", 11), ("NumValues", 12)],
+    );
+    // Forever 1.60.1.70707 ItemConstantsDocumentation.lua:493-506.
+    publish(
+        state,
+        enums,
+        "ItemQuiverSubclass",
+        &[
+            ("ObsoleteQuiver", 0),
+            ("ObsoleteBolts", 1),
+            ("Quiver", 2),
+            ("Ammopouch", 3),
+        ],
+    );
+    publish(
+        state,
+        enums,
+        "ItemQuiverSubclassMeta",
+        &[("MinValue", 0), ("MaxValue", 3), ("NumValues", 4)],
     );
 }
 

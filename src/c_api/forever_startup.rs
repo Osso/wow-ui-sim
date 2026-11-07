@@ -42,6 +42,12 @@ impl StartupInputs {
             // PTR false is a user-decided scenario default, not native evidence.
             inputs.ammo_required = Some(false);
         }
+        if ACTIVE == ClientProfile::WowForever {
+            // Idle stock scenario: no targeting spell. The pinned declaration
+            // (SpellDocumentation.lua:631) returns a non-nilable number; zero is
+            // a researched best guess, not aso native evidence.
+            inputs.target_spell_id = Some(0);
+        }
         inputs
     }
 }

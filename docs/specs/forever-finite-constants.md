@@ -46,6 +46,14 @@ Forever `QuestConstantsDocumentation.lua` publishes `Constants.QuestLogConsts.MA
 
 The world-map runtime regression shows the real failure boundary: without the constant, `QuestLogQuests_ShowQuestCount()` aborts `WorldMapMixin:OnShow()` before `SetMapID()`. The scroll container consequently retains a nil `targetScale`, and every later `OnUpdate` fails in `IsZoomingOut()`. The test shows the map and runs sixty GUI-style updates, asserting a positive target scale and no collected errors; no vendor guard or scale fallback is added.
 
+## Item container and quiver subclasses
+
+Forever alone publishes `Enum.ItemContainerSubclass` (`Bag=0` through `Reagent=11`) and `Enum.ItemQuiverSubclass` (`ObsoleteQuiver=0`, `ObsoleteBolts=1`, `Quiver=2`, `Ammopouch=3`), with matching `*Meta` bounds/counts. Evidence: `Blizzard_APIDocumentationGenerated/ItemConstantsDocumentation.lua:325-346` and `:493-506` in the pinned Forever 1.60.1.70707 cache. Retail 12.1.5 does not declare either name in its `ItemConstantsDocumentation.lua`; PTR 12.1.7 declares both, but its selected `Mainline/Blizzard_AuctionData.lua` never indexes them, so both keep their previous surface and PTR keeps its unchanged output.
+
+The original consumer is cached `Blizzard_AuctionHouseUI/Camelot/Blizzard_AuctionData.lua:128-146`, which builds container and reagent auction filters from both enums at load. Without the publication, `C_AddOns.LoadAddOn("Blizzard_AuctionHouseUI")` aborts at line 128 and the dependency load reports a Lua error.
+
+Implementation: `src/c_api/forever_finite_constants.rs`, registered only for `client-wowforever`. Tests: `forever_item_subclass_enums_match_raw_documented_scalars` compares both enums field by field against the cached declaration; `blizzard_auction_house_dependencies::auction_house_load_addon_loads_toc_dependencies_before_root` loads the original addon and requires zero errors. This is enum-publication coverage, not auction-filter selection behavior.
+
 ## Bag indices
 
 Forever alone publishes nine character-bank tabs (`CharacterBankTab_1..9 = 6..14`) and nine account-bank enum slots (`AccountBankTab_1..9 = 15..23`). `BagIndexMeta` has MinValue=-3, MaxValue=23, NumValues=27. The nine non-bank-tab members retain their shared values (-3 through 5); enumeration terminates at each missing tenth tab. Other profiles retain their existing publication.

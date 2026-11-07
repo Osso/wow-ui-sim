@@ -479,12 +479,63 @@ fn forever_finite_constants_publish_source_values() {
 #[test]
 fn forever_provider_experience_enums_match_raw_documented_scalars() {
     let env = WowLuaEnv::new().unwrap();
+    assert_enums_match_documentation(
+        &env,
+        &["VoiceProviderID", "ForeverExperiencePreset"],
+        &["VoiceChatDocumentation.lua", "GameRulesDocumentation.lua"],
+    );
+}
+
+#[test]
+fn forever_item_subclass_enums_match_raw_documented_scalars() {
+    let env = WowLuaEnv::new().unwrap();
+    assert_enums_match_documentation(
+        &env,
+        &["ItemContainerSubclass", "ItemQuiverSubclass"],
+        &["ItemConstantsDocumentation.lua"],
+    );
+}
+
+#[test]
+fn forever_container_and_quiver_subclass_names_match_item_subclass_rows() {
+    let env = WowLuaEnv::new().unwrap();
     env.exec(
         r#"
-        checkedProviderExperienceEnums = 0
-        local wanted = {VoiceProviderID = true, ForeverExperiencePreset = true}
-        APIDocumentation = {AddDocumentationTable = function(_, doc)
-            for _, definition in ipairs(doc.Tables or {}) do
+        local containers = {"Bag", "Soul Bag", "Herb Bag", "Enchanting Bag", "Engineering Bag",
+            "Gem Bag", "Mining Bag", "Leatherworking Bag", "Inscription Bag", "Tackle Box",
+            "Cooking Bag", "Reagent Bag"}
+        for subclass, expected in ipairs(containers) do
+            local name, isArmor = C_Item.GetItemSubClassInfo(Enum.ItemClass.Container, subclass - 1)
+            assert(name == expected, "container subclass " .. (subclass - 1) .. ": " .. tostring(name))
+            assert(isArmor == false)
+        end
+        assert(C_Item.GetItemSubClassInfo(Enum.ItemClass.Container, 12) == nil)
+        local quivers = {"Quiver(OBSOLETE)", "Bolt(OBSOLETE)", "Quiver", "Ammo Pouch"}
+        for subclass, expected in ipairs(quivers) do
+            local name, isArmor = C_Item.GetItemSubClassInfo(Enum.ItemClass.Quiver, subclass - 1)
+            assert(name == expected, "quiver subclass " .. (subclass - 1) .. ": " .. tostring(name))
+            assert(isArmor == false)
+        end
+        assert(C_Item.GetItemSubClassInfo(Enum.ItemClass.Quiver, 4) == nil)
+        "#,
+    )
+    .unwrap();
+}
+
+/// Cross-checks published `Enum.<name>` and `Enum.<name>Meta` tables against
+/// the declarations in cached `Blizzard_APIDocumentationGenerated` files.
+fn assert_enums_match_documentation(env: &WowLuaEnv, wanted: &[&str], files: &[&str]) {
+    let wanted_list = wanted
+        .iter()
+        .map(|name| format!("{name} = true"))
+        .collect::<Vec<_>>()
+        .join(", ");
+    env.exec(&format!(
+        r#"
+        checkedDocumentedEnums = 0
+        local wanted = {{{wanted_list}}}
+        APIDocumentation = {{AddDocumentationTable = function(_, doc)
+            for _, definition in ipairs(doc.Tables or {{}}) do
                 if wanted[definition.Name] then
                     local enums = assert(rawget(_G, "Enum"))
                     local values = rawget(enums, definition.Name)
@@ -500,24 +551,23 @@ fn forever_provider_experience_enums_match_raw_documented_scalars() {
                     for _, field in ipairs(definition.Fields) do
                         assert(rawget(values, field.Name) == field.EnumValue, field.Name)
                     end
-                    for _, key in ipairs({"MinValue", "MaxValue", "NumValues"}) do
+                    for _, key in ipairs({{"MinValue", "MaxValue", "NumValues"}}) do
                         assert(type(rawget(meta, key)) == "number", key)
                         assert(rawget(meta, key) == definition[key], key)
                     end
-                    checkedProviderExperienceEnums = checkedProviderExperienceEnums + 1
+                    checkedDocumentedEnums = checkedDocumentedEnums + 1
                 end
             end
-        end}
-        "#,
-    )
+        end}}
+        "#
+    ))
     .unwrap();
-    for file in ["VoiceChatDocumentation.lua", "GameRulesDocumentation.lua"] {
-        load(&env, &format!("Blizzard_APIDocumentationGenerated/{file}"));
+    for file in files {
+        load(env, &format!("Blizzard_APIDocumentationGenerated/{file}"));
     }
     assert_eq!(
-        env.eval::<i32>("return checkedProviderExperienceEnums")
-            .unwrap(),
-        2
+        env.eval::<i32>("return checkedDocumentedEnums").unwrap(),
+        wanted.len() as i32
     );
 }
 

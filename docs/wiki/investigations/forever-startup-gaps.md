@@ -86,7 +86,9 @@ handling or vendor callback is changed.
 At this historical boundary, absent supplied input raised a native-unknown error.
 The later [target-spell contract](../../specs/spell-target-flyout.md) replaces that
 error with a nil scenario default; native no-target behavior remains unknown.
-Repairing earlier
+Since 2026-11-07 the Forever stock idle scenario supplies `0` (researched best
+guess for the unknown sentinel, matching the non-nilable declaration) while an
+explicitly unset input still returns nil. Repairing earlier
 PaperDoll/BagSlot errors lets more bag consumers reach this query; do not hide
 these reports by returning an invented zero. Native facts were requested from
 the laptop. Locality declaration/behavior is also pending that evidence.
@@ -102,6 +104,24 @@ native-unknown boundaries; the shared optional ammo observation adds another
 explicit missing-input boundary. Startup is not clean; no native idle value
 or locality catalog was invented. Profile checks and release evidence belong to
 the lane report.
+
+## Forever 1.60.1.70707 residuals
+
+Verified 2026-11-07 from the `ptr-toc-pins` Forever `toc` run (457 passed, 3
+failed). Each failure is a missing publication, not a consumer bug.
+
+| Symptom | Root cause | Fix |
+|---|---|---|
+| `LoadAddOn("Blizzard_AuctionHouseUI")` aborts at `Camelot/Blizzard_AuctionData.lua:128` | `Enum.ItemContainerSubclass` absent; `Enum.ItemQuiverSubclass` would fail next at :133 | Publish both enums and their `*Meta` bounds from `ItemConstantsDocumentation.lua:325-346` and `:493-506` |
+| `forever_stock_target_spell_reaches_original_item_context` panics with `assertion failed!` | Stock `target_spell_id` unset, so `C_Spell.GetTargetSpellID()` returned nil against a non-nilable declaration | Seed the Forever stock idle scenario with `0` |
+| `quest_readiness` QL2 autocomplete swallows `attempt to call field 'CanAbandonQuest' (a nil value)` | `C_QuestLog.CanAbandonQuest` registered for Retail only, but Forever declares it at `QuestLogDocumentation.lua:45-58` and `Mainline/QuestMapFrame.lua:1147` calls it | Extend the registration gate to Forever |
+
+All three remain Forever-only. Publication gates are `client_profile::ACTIVE`
+or the existing `client-wowforever` feature; Retail and PTR surfaces are
+unchanged. Contract details live in
+[forever finite constants](../../specs/forever-finite-constants.md),
+[target spell and flyout membership](../../specs/spell-target-flyout.md) and
+[quest abandonability](../../specs/quest-abandonability.md).
 
 ## Excluded and unmodeled branches
 

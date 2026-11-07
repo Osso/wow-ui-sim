@@ -1,3 +1,7 @@
+## [2026-11-07] fix | Forever 1.60.1.70707 residuals
+
+[Forever startup gaps](investigations/forever-startup-gaps.md#forever-160170707-residuals) records three missing Forever publications found by the PTR/Forever TOC lane: `Enum.ItemContainerSubclass`/`Enum.ItemQuiverSubclass` for the auction house data, `C_QuestLog.CanAbandonQuest` for the quest map detail buttons, and a zero stock idle target spell. Each cites its pinned declaration in `Blizzard_APIDocumentationGenerated`; Retail and PTR surfaces are unchanged.
+
 ## [2026-11-04] investigation | NECESSARY Retail scheduling
 
 [Runtime optimization](investigations/test-runtime-optimization.md#necessary-retail-scheduling-profile--2026-11-04) records integration timing, timeout-fixture contention, the 672-name native inventory, configured harness permits, memory envelopes and the complete 1146.645s budget proof. The [warm-run target](../specs/necessary-suite-runtime.md) still requires two complete sub-600-second proofs.
