@@ -156,7 +156,7 @@
 156. [best-effort] `added:HideGuildBankFrame` — stale-snapshot
 157. [best-effort] `added:HideInstanceBootDialog` — stale-snapshot
 158. [best-effort] `added:HideInstanceLockDialog` — stale-snapshot
-159. [best-effort] `added:HideItemUpgradeFrame` — reversed-snapshot
+159. [best-effort] `added:HideItemUpgradeFrame` — vendor-present
 160. [best-effort] `added:HideProfessionsCustomerOrdersFrame` — stale-snapshot
 161. [best-effort] `added:HideSummonConfirmationDialogs` — stale-snapshot
 162. [best-effort] `added:HouseFinderFrame_LoadUI` — stale-snapshot

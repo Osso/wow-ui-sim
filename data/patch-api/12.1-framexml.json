@@ -2682,31 +2682,37 @@
       "symbol": "HideItemUpgradeFrame",
       "change": "added",
       "status": "best-effort",
-      "resolution": "reversed-snapshot",
+      "resolution": "vendor-present",
       "owner": "Blizzard_ItemUpgradeUI",
       "evidence": [
         {
           "kind": "source",
-          "reference": "data/patch-api/sources/12.1.0-ptr-cache-manifest.txt",
-          "summary": "Classified as reversed-name snapshot mismatch: PTR defines and uses `ItemUpgradeFrame_Hide`, not `HideItemUpgradeFrame`; focused PTR test explicitly loads `Blizzard_ItemUpgradeUI` and verifies the reversed wrapper remains absent.",
-          "source_hash": "fa104a0f58bb1f86949aeec78fd82388b8d1cb8da39a1f3b51b4e3bd89e4ac66"
+          "reference": "data/blizzard-ui-files/ptr.txt",
+          "summary": "The pinned 70493 PTR manifest lists Blizzard_ItemUpgradeUI/Blizzard_ItemUpgradeUI_Bootstrap.lua at line 2537, whose line 13 defines `function HideItemUpgradeFrame()` guarding on C_AddOns.IsAddOnLoaded and delegating to ItemUpgradeFrame_Hide. The earlier reversed-snapshot classification came from the older local PTR snapshot and no longer holds.",
+          "source_hash": "ba4414999237ad7b50de73a2a61d7dd18fee31b2f2c3b70d5a21ad3cdc34d328"
+        },
+        {
+          "kind": "runtime",
+          "reference": "tests/blizzard_item_upgrade_ui_loads.rs::ptr_item_upgrade_publishes_hide_wrapper_from_pinned_bootstrap",
+          "summary": "Focused PTR test loads the full game UI plus the load-on-demand addon, asserts the global is a function whose debug source is the pinned bootstrap, invokes it, and confirms ItemUpgradeFrame stays hidden.",
+          "source_hash": "523e218e15ec952ac5b7926335826ab8ed53c0ecb6ecf034c70ae3ac238ce9d3"
         }
       ],
       "tests": [
-        "tests/blizzard_item_upgrade_ui_loads.rs::ptr_item_upgrade_does_not_publish_reversed_hide_wrapper"
+        "tests/blizzard_item_upgrade_ui_loads.rs::ptr_item_upgrade_publishes_hide_wrapper_from_pinned_bootstrap"
       ],
       "assertions": [
         {
           "flavor": "ptr",
           "phase": "after-addon",
-          "expected": "absent",
-          "expected_type": null,
+          "expected": "present",
+          "expected_type": "function",
           "addon": "Blizzard_ItemUpgradeUI"
         }
       ],
-      "commit": "e830dfdf4",
+      "commit": "f4b7047c1",
       "approval_id": null,
-      "notes": "Classified as reversed-name snapshot mismatch: PTR defines and uses `ItemUpgradeFrame_Hide`, not `HideItemUpgradeFrame`; focused PTR test explicitly loads `Blizzard_ItemUpgradeUI` and verifies the reversed wrapper remains absent.",
+      "notes": "Reclassified as vendor-present: the pinned PTR bootstrap defines and registers the wrapper, so the simulator needs no producer. The previous reversed-snapshot row tested a stale snapshot rather than the pinned cache.",
       "load_addon": null
     },
     {

@@ -3449,3 +3449,12 @@ evidence and the explicit nearest-even emulation seam.
 
 Linked the [install path settings contract](../specs/wow-install-path-settings.md)
 and per-product resolution order from the CASC asset cache page.
+
+## 2026-11-07 — 70493 PTR reclassifies HideItemUpgradeFrame
+
+The [12.1 FrameXML inventory](investigations/patch-12-1-framexml-symbol-inventory.md) now
+classifies `HideItemUpgradeFrame` as vendor-present. The pinned 70493 PTR cache ships
+`Blizzard_ItemUpgradeUI_Bootstrap.lua` ([path pin](../../data/blizzard-ui-files/ptr.txt)), whose
+line 13 defines the wrapper; the old reversed-name row described a stale local search list. The
+ItemUpgradeUI directory expectation follows the same pin: PTR ships four files and one unified
+`[Family]` TOC instead of Retail's five-entry flavor split.
