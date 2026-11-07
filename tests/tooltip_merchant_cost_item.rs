@@ -108,12 +108,13 @@ fn merchant_cost_misses_produce_no_tooltip_data() {
     let env = tooltip_full_env_helpers::setup_full_env();
     let mut state = env.state().borrow_mut();
     state.merchant_items = vec![229181, 229181, 229181];
-    state
-        .merchant_offer_costs
-        .insert(0, MerchantCostRecord {
+    state.merchant_offer_costs.insert(
+        0,
+        MerchantCostRecord {
             item_costs: [6948, 0, 0, 0, 0],
             currency_costs: [0, 0, 0, 0, 0],
-        });
+        },
+    );
     // Slot 2 is a purely monetary offer: no item or currency entry survives, so
     // it has no ordinal at all.
     state

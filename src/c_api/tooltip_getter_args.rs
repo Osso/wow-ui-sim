@@ -38,6 +38,29 @@ pub(crate) fn optional_unsigned(state: &LuaState, position: i32) -> LuaResult<Op
     }
 }
 
+/// One-based `luaIndex` argument converted to a zero-based ordinal.
+///
+/// The native index reader accepts the closed domain 0..4294967295 and converts
+/// by subtracting one, then truncating toward zero (decomp Round 6 §2a; WM82:
+/// "the index reader subtracts one before truncation"). A converted slot below
+/// zero is an absent target, not an argument error, so Lua index 0 and a
+/// fractional index below 1 select nothing and the first ordinal respectively.
+/// Wrong types and out-of-domain numbers keep the shared reader's error.
+pub(crate) fn lua_index(state: &LuaState, position: i32) -> LuaResult<Option<usize>> {
+    let value = unwrap_secret(state, stack_val(state, position))?;
+    let number = match value {
+        Val::Num(number) if number.is_finite() && (0.0..=f64::from(u32::MAX)).contains(&number) => {
+            number
+        }
+        _ => {
+            return Err(rilua::runtime_error(format!(
+                "expected unsigned integer at argument {position}"
+            )));
+        }
+    };
+    Ok(usize::try_from((number - 1.0) as i64).ok())
+}
+
 /// Optional boolean flag; a missing/nil value defaults false and a present value
 /// uses Lua truthiness (WM94 §6), after the shared secret-access check.
 /// Optional boolean flag; a missing/nil value defaults false and a present value

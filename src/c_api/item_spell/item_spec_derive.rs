@@ -63,7 +63,7 @@ pub(super) fn item_bonding(item_id: u32) -> Option<u8> {
 }
 
 /// Item class from the same resident base record.
-pub(super) fn item_class(item_id: u32) -> Option<u8> {
+pub(crate) fn item_class(item_id: u32) -> Option<u8> {
     find_item_row(item_id).map(|row| row.1)
 }
 

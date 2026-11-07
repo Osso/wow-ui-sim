@@ -5,6 +5,7 @@ mod spell;
 mod unit;
 
 use super::ensure_namespace;
+use crate::lua_api::globals::currency_data;
 use crate::lua_api::methods::{
     call_function_state, create_string, table_get, table_set, val_to_string,
 };
@@ -110,6 +111,19 @@ fn register_c_tooltip_info(state: &mut LuaState) -> LuaResult<()> {
         crate::c_api::c_tooltip_info_item_context::register(state, table_ref)?;
         crate::c_api::c_tooltip_info_outfit::register(state, table_ref)?;
     }
+    // Decomp Round 6 §2 decodes the merchant extended-cost selection block for
+    // Retail 12.1.5; Forever's block is undecoded, so the getter stays off the
+    // Forever surface.
+    #[cfg(feature = "retail-12-1-5")]
+    {
+        if matches!(
+            crate::client_profile::ACTIVE,
+            crate::client_profile::ClientProfile::Retail
+                | crate::client_profile::ClientProfile::Ptr
+        ) {
+            crate::c_api::c_tooltip_info_merchant_cost::register(state, table_ref)?;
+        }
+    }
     register_item_spell_aura_methods(state, table_ref)?;
     register_spell_aura_unit_methods(state, table_ref)?;
     #[cfg(feature = "retail-12-0-5")]
@@ -138,6 +152,34 @@ pub(crate) fn tooltip_for_item_context(
 /// line set stay in one place.
 pub(crate) fn tooltip_for_spell(state: &mut LuaState, spell_id: u32) -> Val {
     spell::tooltip_for_spell_id(state, spell_id)
+}
+
+/// Feed a merchant currency cost through the existing currency payload builder.
+/// The native cost getter passes an explicit zero quantity rather than the
+/// extended-cost amount (decomp Round 6 §2c), so the record's identity is the
+/// only composition input this path supplies. A currency identity with no
+/// resident currency row keeps the verified type-5 identity and publishes no
+/// lines, because the native post-title rows are UNKNOWN.
+pub(crate) fn tooltip_for_cost_currency(state: &mut LuaState, currency_id: u32) -> Val {
+    let saved_top = state.top;
+    let tooltip = match i32::try_from(currency_id)
+        .ok()
+        .and_then(currency_data::get_currency_by_id)
+    {
+        Some(currency) => sources::tooltip_for_currency(state, currency, Some(0)),
+        None => {
+            let tooltip = builders::create_identified_tooltip(
+                state,
+                super::TOOLTIP_TYPE_CURRENCY,
+                currency_id,
+            );
+            state.push(tooltip);
+            builders::stamp_data_instance(state, tooltip);
+            tooltip
+        }
+    };
+    state.top = saved_top;
+    tooltip
 }
 
 /// Resolved spell description text for getters that compose their own rows.
