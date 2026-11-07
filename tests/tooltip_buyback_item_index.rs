@@ -39,6 +39,12 @@ fn buyback_fixture() -> WowLuaEnv {
 /// `Blizzard_UIPanels_Game/Mainline/MerchantFrame.lua:717`
 /// (`MerchantItemButton_OnEnter`) and the shared handler mapping at
 /// `Blizzard_SharedXMLGame/Tooltip/TooltipDataHandler.lua:545`.
+///
+/// Forever is excluded: the same consumer calls `ShowBuybackSellCursor` on the
+/// next line (`:767`) and that global is not registered on the Forever profile,
+/// so the hover path cannot reach the getter there. The getter contract tests
+/// below still run on every profile that publishes it.
+#[cfg(not(feature = "client-wowforever"))]
 #[test]
 fn tooltip_buyback_item_original_hover_selects_the_entry() {
     let env = buyback_fixture();
