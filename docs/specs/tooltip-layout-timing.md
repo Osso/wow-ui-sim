@@ -41,6 +41,24 @@ the content-sizing routine. WM63 is evidence for
 Retail 70688, not Wrath, Forever, Mists, Era or Anniversary; those profiles'
 sizing behavior is unchanged.
 
+## Custom line spacing
+
+Inter-row spacing has an effective default of 2 layout units. With no explicit
+override, `GetCustomLineSpacing` publishes no values; it does not publish the
+effective default. The override is stored state of the receiving tooltip, and
+an explicit set publishes its exact value, including `0`: a fresh tooltip
+publishes nothing, `SetCustomLineSpacing(0)` reads back `0`, and
+`SetCustomLineSpacing(5)` reads back `5`. Layout uses the stored override when
+present and 2 otherwise. The original `GameTooltip_InsertFrame` consumer
+(`Blizzard_SharedXML/SharedTooltipTemplates.lua:200`) evaluates
+`GetCustomLineSpacing() or 2`, so absent values select 2 while an explicit 0
+remains 0 (zero is truthy in Lua) and reserves rows with no gap.
+Native evidence: WM63-L23 line 40, Retail 12.1.5.70688. This publication
+contract applies to Retail and PTR only; WM63 does not cover the other
+profiles, which keep publishing the numeric 0 that their baselines already
+accept. WM63 does not state whether `ClearLines` or `SetOwner` resets the
+override, so the simulator makes no such claim.
+
 ## Owner argument admission
 
 Retail/PTR `SetOwner` rejects missing, nil and other non-table owner arguments
