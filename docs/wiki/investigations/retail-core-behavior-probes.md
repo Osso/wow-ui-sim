@@ -14,7 +14,7 @@ Real retail `12.0.5.67823` showed these behaviors:
 - `RegisterUnitEvent("UNIT_HEALTH", "not_a_unit")` also registers, but `IsEventRegistered("UNIT_HEALTH")` reports `true, nil`; invalid filters fall back to an event-only registration rather than failing.
 - `SetAttribute("*type1", false)` must preserve explicit false through wildcard `GetAttribute("help", "type", "1")`.
 
-The simulator now matches the confirmed retail behavior for invalid `RegisterUnitEvent` filters, retail `SetForbidden` on addon-created normal frames, wildcard attribute lookup preserving explicit false, and Lua-visible `GetRaisedFrameLevel()` for the simple Raise/Lower sibling probe. Non-retail `SetForbidden` behavior remains available for classic-profile compatibility shims that create forbidden frames.
+The simulator now matches the confirmed retail behavior for invalid `RegisterUnitEvent` filters, retail `SetForbidden` on addon-created normal frames, wildcard attribute lookup preserving explicit false, and Lua-visible `GetRaisedFrameLevel()` for the simple Raise/Lower sibling probe. The insecure `SetForbidden` no-op is compiled for `profile-retail` and `client-ptr`; every other profile keeps the unrestricted behaviour for classic-profile compatibility shims that create forbidden frames. PTR carries the same restricted declaration, and its secure environment guards `MakeForbidden` with `issecure()`. WowForever publishes that declaration too, but its gate is not enabled. See [set-forbidden-restriction](../../specs/set-forbidden-restriction.md).
 
 The first Raise/Lower probe was too weak because both frames reported `GetRaisedFrameLevel() == 0` before and after. The improved probe creates paired low/high siblings under both a private parent and `UIParent`, snapshots `GetFrameLevel()`, `GetRaisedFrameLevel()`, strata, show/visible state before/after `Raise()` and `Lower()`, and records whether the relative raised levels changed.
 
@@ -28,7 +28,7 @@ The follow-up hit-order capture from `2026-06-10T16:52:38` kept mouse focus on t
 - [events.rs](../../../src/lua_api/frame/methods/text_attribute_event/events.rs) - `RegisterUnitEvent` implementation
 - [attributes.rs](../../../src/lua_api/frame/methods/text_attribute_event/attributes.rs) - `SetForbidden` / `IsForbidden` implementation
 - [admin_event_api.rs](../../../tests/admin_event_api.rs) - invalid unit-filter regression coverage
-- [protected_frame_enforcement.rs](../../../tests/protected_frame_enforcement.rs) - retail `SetForbidden` no-op regression coverage
+- [protected_frame_enforcement.rs](../../../tests/protected_frame_enforcement.rs) - Retail and PTR `SetForbidden` no-op regression coverage
 - [frame_level.rs](../../../tests/frame_level.rs) - `GetRaisedFrameLevel()` Raise/Lower regression coverage
 - [protected_attribute_enforcement.rs](../../../tests/protected_attribute_enforcement.rs) - wildcard `GetAttribute` explicit-false regression coverage
 

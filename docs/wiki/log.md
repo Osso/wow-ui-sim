@@ -3477,3 +3477,14 @@ classifies `HideItemUpgradeFrame` as vendor-present. The pinned 70493 PTR cache 
 line 13 defines the wrapper; the old reversed-name row described a stale local search list. The
 ItemUpgradeUI directory expectation follows the same pin: PTR ships four files and one unified
 `[Family]` TOC instead of Retail's five-entry flavor split.
+
+## 2026-11-07 — PTR shares the restricted SetForbidden declaration
+
+[Retail core behavior probes](investigations/retail-core-behavior-probes.md) now records that the
+insecure `SetForbidden` no-op is compiled for `profile-retail` and `client-ptr`. The PTR
+`12.1.7.70493` `SimpleFrameScriptObjectAPIDocumentation.lua` is byte-identical to the Retail copy
+(`HasRestrictions = true` at `:288-292`), and the pinned PTR
+`Blizzard_RestrictedAddOnEnvironment/RestrictedExecution.lua:397-400` guards its own
+`MakeForbidden` call with `issecure()`. New contract:
+[set-forbidden-restriction](../specs/set-forbidden-restriction.md). WowForever publishes the same
+declaration but is still gated out.
