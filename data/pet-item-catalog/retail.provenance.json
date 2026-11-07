@@ -1,6 +1,6 @@
 {
   "PROVENANCE": "Wago DB2 CSV, build 12.1.5.70391, enUS; WM78/WM78b/WM78c selection; SpellName presence EMULATED",
-  "generator": "python3 tools/generate_pet_item_catalog.py <csv_dir> <output> <provenance>",
+  "generator": "python3 tools/generate_pet_item_catalog.py --build 12.1.5.70391 <csv_dir> <output> <provenance>",
   "inputs": {
     "ItemSparse.csv": "b370bc7d3ac06e2142824da92311bcf0542740e6ffefef240103cd12bcb19a40",
     "ItemXItemEffect.csv": "6aea33911980910a3b3f4d3925608b774642d575351d6e4336e05e7b22ec85a2",

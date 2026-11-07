@@ -1,4 +1,8 @@
-//! Retail pet-item lookup from the pinned WM78 data chain.
+//! Retail and PTR pet-item lookup from the pinned WM78 data chain.
+//!
+//! The catalog is profile-selected generated data: Retail reads the 12.1.5.70391 export and
+//! PTR reads the 12.1.7.70493 export that matches its pinned UI cache. Both files are produced
+//! by `tools/generate_pet_item_catalog.py --build <build>`; see `docs/specs/pet-info-by-item.md`.
 
 use std::collections::HashMap;
 use std::sync::OnceLock;
@@ -28,12 +32,16 @@ struct PetItem {
     species_id: u32,
 }
 
+#[cfg(feature = "client-ptr")]
+const CATALOG_JSON: &str = include_str!("../../data/pet-item-catalog/ptr.json");
+#[cfg(not(feature = "client-ptr"))]
+const CATALOG_JSON: &str = include_str!("../../data/pet-item-catalog/retail.json");
+
 fn catalog() -> &'static HashMap<u32, PetItem> {
     static CATALOG: OnceLock<HashMap<u32, PetItem>> = OnceLock::new();
     CATALOG.get_or_init(|| {
         let entries: Vec<PetItem> =
-            serde_json::from_str(include_str!("../../data/pet-item-catalog.json"))
-                .expect("generated pet-item catalog must be valid");
+            serde_json::from_str(CATALOG_JSON).expect("generated pet-item catalog must be valid");
         entries
             .into_iter()
             .map(|entry| (entry.item_id, entry))
@@ -42,8 +50,10 @@ fn catalog() -> &'static HashMap<u32, PetItem> {
 }
 
 pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
-    if crate::client_profile::ACTIVE == crate::client_profile::ClientProfile::Retail
-        && cfg!(feature = "retail-12-1-5")
+    if matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail | crate::client_profile::ClientProfile::Ptr
+    ) && cfg!(feature = "retail-12-1-5")
     {
         let namespace = super::ensure_namespace(state, "C_PetJournal")?;
         table_set_rust_fn_static(state, namespace, "GetPetInfoByItemID", get_pet_info_by_item)?;

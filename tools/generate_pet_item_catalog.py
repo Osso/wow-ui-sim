@@ -105,16 +105,18 @@ def generate(directory):
 
 def main():
     parser = argparse.ArgumentParser()
+    parser.add_argument("--build", required=True, help="client build label of the CSV export")
     parser.add_argument("csv_dir", type=Path)
     parser.add_argument("output", type=Path)
     parser.add_argument("provenance", type=Path)
     args = parser.parse_args()
     result, unresolved = generate(args.csv_dir)
     output = (json.dumps(result, ensure_ascii=False, separators=(",", ":")) + "\n").encode()
+    args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_bytes(output)
     provenance = {
-        "PROVENANCE": "Wago DB2 CSV, build 12.1.5.70391, enUS; WM78/WM78b/WM78c selection; SpellName presence EMULATED", 
-        "generator": "python3 tools/generate_pet_item_catalog.py <csv_dir> <output> <provenance>",
+        "PROVENANCE": f"Wago DB2 CSV, build {args.build}, enUS; WM78/WM78b/WM78c selection; SpellName presence EMULATED",
+        "generator": f"python3 tools/generate_pet_item_catalog.py --build {args.build} <csv_dir> <output> <provenance>",
         "inputs": {f"{table}.csv": hashlib.sha256((args.csv_dir / f"{table}.csv").read_bytes()).hexdigest() for table in TABLES},
         "output_sha256": hashlib.sha256(output).hexdigest(),
         "records": len(result),
