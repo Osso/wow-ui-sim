@@ -76,9 +76,9 @@ fn get_buyback_item(state: &mut LuaState) -> LuaResult<u32> {
     };
     // Round 6 §GetBuybackItem(b): an unresolvable item is one of the same-arm
     // miss conditions, so a supplied entry never publishes an empty tooltip.
-    let Some((item_id, item)) = item_id.and_then(|item_id| {
-        crate::items::get_item(item_id).map(|item| (item_id, item))
-    }) else {
+    let Some((item_id, item)) =
+        item_id.and_then(|item_id| crate::items::get_item(item_id).map(|item| (item_id, item)))
+    else {
         return crate::c_api::tooltip_data::unknown_getter_failure();
     };
     let tooltip = tooltip_for_item_context(state, item_id, Some(item));
