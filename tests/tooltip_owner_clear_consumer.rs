@@ -57,19 +57,14 @@ fn assert_tooltip_consumer_selected() {
     );
 }
 
-/// Temporary probe: which tooltip script bindings exist at runtime.
+/// The original XML-bound `OnHide` handler is the live script, so these tests
+/// drive the cached consumer, not a substitute.
+#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
 const CONSUMER_BINDING_CHECK: &str = r#"
-    local out = {}
-    local ok_type, object_type = pcall(function() return GameTooltip:GetObjectType() end)
-    out[#out + 1] = "type=" .. tostring(ok_type and object_type)
-    local hide = GameTooltip:GetScript("OnHide")
-    out[#out + 1] = "hide=" .. tostring(type(hide))
-        .. ":" .. tostring(hide and debug.getinfo(hide, "S").source)
-    local cleared = GameTooltip:GetScript("OnTooltipCleared")
-    out[#out + 1] = "cleared=" .. tostring(type(cleared))
-    local scripts = rawget(GameTooltip, "__scripts")
-    out[#out + 1] = "scripts=" .. tostring(scripts and "table" or "nil")
-    error("PROBE " .. table.concat(out, " "))
+    local on_hide = GameTooltip:GetScript("OnHide")
+    assert(type(on_hide) == "function", "original OnHide handler is bound")
+    local source = debug.getinfo(on_hide, "S").source
+    assert(source:find("GameTooltip", 1, true), source)
 "#;
 
 /// Same-owner `SetOwner` clears without hiding, notifies once with the old
@@ -102,10 +97,17 @@ fn tooltip_owner_clear_same_owner_clears_without_hide() {
         local used = GameTooltip:GetLeftLine(1)
         assert(used:IsShown() and used:GetText() == "First")
         local info_list = GameTooltip.infoList
+        local inserted = CreateFrame("Frame", nil, UIParent)
+        inserted:Show()
+        GameTooltip.insertedFrames = { inserted }
 
         _G.owner_clear_events = {}
         GameTooltip:SetOwner(OwnerClearA, "ANCHOR_NONE")
 
+        assert(GameTooltip.insertedFrames == nil,
+            "original OnTooltipCleared cleanup clears inserted frames")
+        assert(not inserted:IsShown(),
+            "original OnTooltipCleared cleanup hides inserted frames")
         assert(#_G.owner_clear_events == 1, "same-owner clear notifies exactly once")
         assert(_G.owner_clear_events[1] == "cleared-a",
             "notification dispatches with the old owner still installed")
