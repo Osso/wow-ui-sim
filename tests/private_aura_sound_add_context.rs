@@ -1,5 +1,6 @@
 #![cfg(feature = "retail-12-0-5")]
 
+use crate::common;
 use rilua::LuaApiMut;
 use rilua::table_security::{wrap_host_secret_number, wrap_secret};
 use wow_ui_sim::lua_api::WowLuaEnv;
@@ -345,8 +346,7 @@ fn modern_authenticates_both_arguments_before_trigger_validation() {
 #[test]
 fn actual_full_deprecated_chunk_preserves_add_context_and_removal() {
     let env = fixture();
-    let path = std::path::PathBuf::from(std::env::var_os("HOME").expect("HOME"))
-        .join(".cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Deprecated/Shared/Deprecated_12_1_0.lua");
+    let path = common::blizzard_ui_dir().join("Blizzard_Deprecated/Shared/Deprecated_12_1_0.lua");
     let source = std::fs::read_to_string(&path).expect("actual complete cached deprecated chunk");
     env.exec("assert(GetCVarBool('loadDeprecationFallbacks'))")
         .unwrap();

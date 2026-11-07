@@ -1,6 +1,7 @@
 #![cfg(feature = "retail-12-0-7")]
 //! Public-API behavioral proof for bounded 12.0.7 party, solo and marker state.
 
+use crate::common;
 use wow_ui_sim::lua_api::WowLuaEnv;
 
 fn audit_env(grouped: bool) -> WowLuaEnv {
@@ -481,9 +482,7 @@ fn p1207_conditional_tm_and_cached_secure_action_observe_live_marker_state() {
     "#,
     )
     .unwrap();
-    let home = std::env::var_os("HOME").expect("HOME for authenticated retail cache");
-    let path = std::path::PathBuf::from(home)
-        .join(".cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXML/SecureTemplates.lua");
+    let path = common::blizzard_ui_dir().join("Blizzard_FrameXML/SecureTemplates.lua");
     let vendor =
         std::fs::read_to_string(&path).expect("cached SecureTemplates.lua required; no substitute");
     env.exec(&vendor)

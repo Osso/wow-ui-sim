@@ -2,6 +2,7 @@
 //! No producer is published here; compiled RED belongs to the parent.
 #![cfg(feature = "retail-12-0-5")]
 
+use crate::common;
 use std::collections::HashSet;
 
 use rilua::LuaApiMut;
@@ -225,8 +226,7 @@ fn actual_cached_deprecated_file_keeps_legacy_removal_durable_after_bootstrap() 
     "#,
     )
     .expect("actual vendor file prerequisites supplied by existing bootstrap");
-    let path = std::path::PathBuf::from(std::env::var_os("HOME").expect("HOME for runtime cache"))
-        .join(".cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Deprecated/Shared/Deprecated_12_1_0.lua");
+    let path = common::blizzard_ui_dir().join("Blizzard_Deprecated/Shared/Deprecated_12_1_0.lua");
     let source =
         std::fs::read_to_string(&path).expect("required actual cached Blizzard file, no fallback");
     env.exec_named(&source, &format!("@{}", path.display()))

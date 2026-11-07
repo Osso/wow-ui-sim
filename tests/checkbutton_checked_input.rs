@@ -40,8 +40,7 @@ fn checked_input_preserves_booleans_nil_and_strings_and_reads_numeric_flags() {
 #[test]
 fn wrath_original_update_state_consumes_numeric_checked_and_unchecked_branches() {
     let env = WowLuaEnv::new().unwrap();
-    let path = std::path::PathBuf::from(std::env::var_os("HOME").expect("HOME"))
-        .join(".cache/wow-ui-sim/blizzard-ui/wrath/FrameXML/ActionButton.lua");
+    let path = crate::common::blizzard_ui_cache_profile_dir().join("FrameXML/ActionButton.lua");
     let source = std::fs::read_to_string(&path).expect("original Wrath ActionButton consumer");
     env.exec(&source).unwrap();
     env.exec(

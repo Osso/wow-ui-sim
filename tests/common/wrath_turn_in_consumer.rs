@@ -47,8 +47,7 @@ pub fn exec(env: &ConsumerEnv, source: &str) {
 
 fn assert_originals() {
     let toc = wow_ui_sim::client_profile::blizzard_ui_framexml_toc().unwrap();
-    let expected_root = std::path::PathBuf::from(std::env::var_os("HOME").unwrap())
-        .join(".cache/wow-ui-sim/blizzard-ui/wrath/FrameXML");
+    let expected_root = super::blizzard_ui_cache_profile_dir().join("FrameXML");
     assert_eq!(toc.parent().unwrap(), expected_root);
     for (file, expected) in [
         (

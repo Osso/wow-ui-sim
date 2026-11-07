@@ -10,9 +10,8 @@ use wow_ui_sim::startup::fire_startup_events_for_screen;
 use wow_ui_sim::toc::TocFile;
 
 fn retail_cache() -> PathBuf {
-    dirs::home_dir()
-        .expect("home directory for retail vendor fixtures")
-        .join(".cache/wow-ui-sim/blizzard-ui/retail/AddOns")
+    wow_ui_sim::blizzard_ui_sync::default_cache_addons_path()
+        .expect("retail vendor cache for Retail fixtures")
 }
 
 fn load_game_ui(include_aura_header: bool, spec_index: i32) -> WowLuaEnv {

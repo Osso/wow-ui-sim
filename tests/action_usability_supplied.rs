@@ -3,13 +3,13 @@
 //! Retail Blizzard_DeprecatedActionBar/Deprecated_ActionBar.lua:4-6,56-58.
 #![cfg(any(feature = "client-wrath", feature = "client-retail"))]
 
-use std::path::PathBuf;
+use crate::common;
 use wow_ui_sim::c_api::action_usability::ActionUsability;
 use wow_ui_sim::lua_api::WowLuaEnv;
 
 fn load_cached_lua(env: &WowLuaEnv, relative: &str) {
-    let cache = PathBuf::from(std::env::var_os("HOME").expect("HOME"))
-        .join(".cache/wow-ui-sim/blizzard-ui");
+    // Cross-profile cache root: this fixture loads Wrath and Retail sources.
+    let cache = common::blizzard_ui_cache_root();
     let path = cache.join(relative);
     let source = std::fs::read_to_string(&path)
         .unwrap_or_else(|error| panic!("required original consumer {}: {error}", path.display()));

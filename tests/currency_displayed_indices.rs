@@ -11,9 +11,7 @@ pub(crate) fn with_token_ui(probe: &str) {
 }
 
 pub(crate) fn with_token_ui_env(probe: impl FnOnce(&wow_ui_sim::lua_api::WowLuaEnv) + Send + 'static) {
-    let cache = dirs::home_dir()
-        .expect("home directory")
-        .join(".cache/wow-ui-sim/blizzard-ui/retail/AddOns");
+    let cache = common::blizzard_ui_dir();
     assert!(
         cache
             .join("Blizzard_TokenUI/Blizzard_TokenUI.lua")
