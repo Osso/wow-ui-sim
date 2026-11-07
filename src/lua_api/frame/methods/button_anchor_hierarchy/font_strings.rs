@@ -313,7 +313,7 @@ fn apply_font_string_template(
     inherited_font_object
 }
 
-pub(super) fn project_font_object_for_frame(
+pub(crate) fn project_font_object_for_frame(
     state: &mut LuaState,
     frame_id: u64,
     font_object: Val,

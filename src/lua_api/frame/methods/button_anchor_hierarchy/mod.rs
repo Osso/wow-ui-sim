@@ -26,7 +26,7 @@ pub(crate) use animations::{
 };
 pub(crate) use font_strings::{
     apply_font_object_snapshot, ensure_button_text_child, font_object_snapshot_changes_frame,
-    read_font_object_fields,
+    project_font_object_for_frame, read_font_object_fields,
 };
 
 use crate::lua_bridge::table_set_rust_fn_static;

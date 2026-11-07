@@ -75,6 +75,7 @@ builds without GUI). Native evidence: WM63-L23 section 2 and WM72, Retail
 
 ## Out of scope
 
-- FontString height measurement and per-row fonts (WM63 L23 section 3).
+- FontString height measurement and per-row fonts (WM63 L23 section 3); see
+  [tooltip-measured-row-heights](tooltip-measured-row-heights.md).
 - Texture and atlas row attachment reservations (WM63 S8L).
 - Owner anchors, cursor placement and owner clearing.
