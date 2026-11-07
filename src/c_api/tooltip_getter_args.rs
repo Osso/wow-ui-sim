@@ -30,6 +30,35 @@ pub(crate) fn unsigned(state: &LuaState, position: i32) -> LuaResult<u32> {
     }
 }
 
+/// One-based index argument (Round 6 §GetBuybackItem(a); the same reader family
+/// serves the loot getters and `GetTotem`).
+///
+/// VERIFIED: a number is required, the accepted domain is 0 to 4294967295, and the
+/// value is reduced by 1.0 then truncated toward zero with no integral test, so 1.9
+/// selects the first entry. A raw 0 becomes unsigned all-ones, which the caller's
+/// live-count bound rejects like any other past-count index.
+///
+/// `None` means "past the end of the list": the caller publishes its miss arm.
+pub(crate) fn one_based_index(
+    state: &LuaState,
+    position: i32,
+    usage: &str,
+) -> LuaResult<Option<usize>> {
+    // VERIFIED: a non-number takes the same argument-error route as a missing one.
+    let Val::Num(number) = unwrap_secret(state, stack_val(state, position))? else {
+        return Err(rilua::runtime_error(usage.to_string()));
+    };
+    // VERIFIED: negatives, values above 4294967295 and non-finite values compose
+    // `outside of expected range 0 to 4294967295 - <usage>`.
+    if !(0.0..=f64::from(u32::MAX)).contains(&number) {
+        return Err(rilua::runtime_error(format!(
+            "outside of expected range 0 to 4294967295 - {usage}"
+        )));
+    }
+    let truncated = (number - 1.0).trunc();
+    Ok((truncated >= 0.0).then_some(truncated as usize))
+}
+
 /// Optional unsigned numeric argument; a missing/nil value is skipped (WM94 §1).
 pub(crate) fn optional_unsigned(state: &LuaState, position: i32) -> LuaResult<Option<u32>> {
     match stack_val(state, position) {
