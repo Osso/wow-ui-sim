@@ -1,3 +1,7 @@
+## [2026-11-07] investigation | WowForever insecure SetForbidden no-op
+
+[SetForbidden restriction](../specs/set-forbidden-restriction.md) extends the tainted-call no-op gate to `client-wowforever`: the pinned WowForever `1.60.1.70707` `SimpleFrameScriptObjectAPIDocumentation.lua` is byte-identical to the Retail and PTR copies (`:287-295`, `HasRestrictions = true`), and its `Blizzard_RestrictedAddOnEnvironment/RestrictedExecution.lua:397-400` reaches `MakeForbidden` only under `issecure()`. No native WowForever probe covers the method (`handoff/native-evidence-70707`), so the case stays INFERRED. The existing `protected_frame_enforcement` case failed on Forever before the change and passes after it.
+
 ## [2026-11-07] investigation | Forever C_Scenario.ShouldShowCriteria
 
 [Challenge run](systems/challenge-mode-run.md#original-criteria-initialization) records native evidence from decompilation `623b7b8c`: Forever 1.60.1 and Retail 12.1.5 register the same nine `C_Scenario` members in the same order, `ShouldShowCriteria` pushes one boolean from a process-wide cached flag whose static default is true and which no scenario state resets, and the generated documentation omits the whole namespace. The producer now registers on Forever, and the other eight members are inventoried in [the spec](../specs/challenge-mode-run.md#scenario-criteria-visibility).

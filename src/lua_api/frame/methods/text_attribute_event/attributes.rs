@@ -505,10 +505,15 @@ pub(super) fn get_frame_ref(state: &mut LuaState) -> LuaResult<u32> {
 
 pub(super) fn set_forbidden(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
-    // Pinned Mainline-family generated documentation (Retail and PTR) declares this
-    // method with `HasRestrictions = true`; the PTR secure environment also guards its
-    // own `MakeForbidden` call with `issecure()`. Tainted calls are therefore a no-op.
-    #[cfg(any(feature = "profile-retail", feature = "client-ptr"))]
+    // Pinned Mainline-family generated documentation (Retail, PTR and WowForever)
+    // declares this method with `HasRestrictions = true`; the PTR secure environment
+    // also guards its own `MakeForbidden` call with `issecure()`. Tainted calls are
+    // therefore a no-op.
+    #[cfg(any(
+        feature = "profile-retail",
+        feature = "client-ptr",
+        feature = "client-wowforever"
+    ))]
     {
         if !rilua::api::state_is_secure(state) {
             return Ok(0);
