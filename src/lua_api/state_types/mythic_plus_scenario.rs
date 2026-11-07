@@ -54,6 +54,22 @@ pub struct MythicPlusRun {
     pub completion_date: Option<crate::c_api::c_mythic_plus_calendar::CalendarTime>,
 }
 
+/// The cached client-side keystone context of the player: the challenge-mode
+/// entry the player owns that carries the keystone field marker.
+///
+/// The client searches a player-owned collection for such an entry and keeps the
+/// first match; with no player, or with no qualifying entry, there is no context
+/// at all (Q3 decomp, proved). `None` models that absent context, and both
+/// `GetOwnedKeystoneLevel` and `GetOwnedKeystoneChallengeMapID` then publish
+/// nothing.
+#[derive(Debug, Clone, Copy)]
+pub struct OwnedKeystone {
+    /// Keystone level carried by the context.
+    pub level: i32,
+    /// `ChallengeModeID` carried by the context.
+    pub challenge_map_id: i32,
+}
+
 /// Backing state for `C_MythicPlus.*` probes.
 #[derive(Debug, Clone)]
 pub struct MythicPlusState {
@@ -64,12 +80,10 @@ pub struct MythicPlusState {
     /// `C_SeasonInfo` display season; 0 means no active display season.
     /// The live value is server-supplied, so it stays unset until configured.
     pub display_season_id: i32,
-    /// Keystone level of the key the player currently owns.
-    /// 0 = no key.
-    pub owned_keystone_level: i32,
-    /// `ChallengeModeID` of the key the player currently owns.
-    /// 0 = no key.
-    pub owned_keystone_challenge_map_id: i32,
+    /// Cached keystone context of the key the player currently owns.
+    /// `None` = no context (nothing published); `Some` with a zero field models
+    /// the proved "context present, no matching field" arm that publishes `0`.
+    pub owned_keystone: Option<OwnedKeystone>,
     /// Run history for the player.
     pub run_history: Vec<MythicPlusRun>,
     /// Per-map weekly best, keyed by mapChallengeModeID.
@@ -92,8 +106,7 @@ impl Default for MythicPlusState {
             }],
             current_season: 14,
             display_season_id: 0,
-            owned_keystone_level: 0,
-            owned_keystone_challenge_map_id: 0,
+            owned_keystone: None,
             run_history: Vec::new(),
             weekly_best_per_map: HashMap::new(),
             #[cfg(feature = "retail-12-0-7")]

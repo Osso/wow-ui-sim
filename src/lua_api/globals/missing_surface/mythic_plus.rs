@@ -9,10 +9,11 @@
 //! - `GetSeasonBestAffixScoreInfoForMap(mapID)` — returns affixScores
 //!   array + bestOverAllScore, or nothing if no data.
 //! - `GetWeeklyChestRewardLevel()` — returns four zeros when no run done.
-//! - `GetOwnedKeystoneLevel()` — returns the owned keystone level, or `0`
-//!   without a key.
-//! - `GetOwnedKeystoneChallengeMapID()` — returns the owned keystone's
-//!   challenge map, or `0` without a key (Retail, PTR, Forever).
+//! - `GetOwnedKeystoneLevel()` — returns the level from the player's keystone
+//!   context, or nothing when that context is absent.
+//! - `GetOwnedKeystoneChallengeMapID()` — returns the map ID from the player's
+//!   keystone context, or nothing when that context is absent (Retail, PTR,
+//!   Forever).
 //! - `GetWeeklyBestForMap(mapChallengeModeID)` — returns
 //!   durationSec, level, completionDate=nil, fraction=0, affixIDs={},
 //!   members={}, or nothing if no data.
@@ -362,23 +363,28 @@ fn get_weekly_chest_reward_level(state: &mut LuaState) -> LuaResult<u32> {
     Ok(4)
 }
 
-/// The client reader takes the level from the cached keystone context and
-/// publishes `0` when no entry matches (P5 decomp, proved). The absent-context
-/// arm is not proved.
+/// The client reader searches the player's keystone context and publishes the
+/// level of its keystone field, or integer `0` when the context carries no such
+/// field (Q3 decomp, proved). With no player, or with no qualifying entry, the
+/// context is absent and the reader publishes nothing (Q3 decomp, proved).
 fn get_owned_keystone_level(state: &mut LuaState) -> LuaResult<u32> {
-    let level = borrow_state(state)?.mythic_plus.owned_keystone_level;
-    state.push(Val::Num(level as f64));
+    let Some(keystone) = borrow_state(state)?.mythic_plus.owned_keystone else {
+        return Ok(0);
+    };
+    state.push(Val::Num(keystone.level as f64));
     Ok(1)
 }
 
-/// The client reader takes the owned keystone from a cached client-side keystone
-/// context, not from bag items, and publishes `0` when no entry carries the
-/// keystone marker (1.60.1 decomp). The null-context arm is not proved.
+/// The client reader searches the player's keystone context for the entry that
+/// carries the keystone field marker and publishes that entry's map ID, or
+/// integer `0` when the context carries no such field (Q3 decomp, proved). With
+/// no player, or with no qualifying entry, the context is absent and the reader
+/// publishes nothing (Q3 decomp, proved). The reader never scans bag items.
 fn get_owned_keystone_challenge_map_id(state: &mut LuaState) -> LuaResult<u32> {
-    let map_id = borrow_state(state)?
-        .mythic_plus
-        .owned_keystone_challenge_map_id;
-    state.push(Val::Num(f64::from(map_id)));
+    let Some(keystone) = borrow_state(state)?.mythic_plus.owned_keystone else {
+        return Ok(0);
+    };
+    state.push(Val::Num(f64::from(keystone.challenge_map_id)));
     Ok(1)
 }
 

@@ -3,6 +3,7 @@ use std::path::PathBuf;
 
 use wow_ui_sim::loader::discover_blizzard_addons_for_screen;
 use wow_ui_sim::loader::load_addon;
+use wow_ui_sim::lua_api::state::OwnedKeystone;
 use wow_ui_sim::lua_api::WowLuaEnv;
 use wow_ui_sim::screen::ScreenKind;
 use wow_ui_sim::startup::fire_startup_events_for_screen;
@@ -279,5 +280,19 @@ fn challenges_weekly_chest_reads_the_owned_keystone_context(env: &WowLuaEnv) {
         chest_state_without_a_key, 1,
         "no owned key means no truthy level, so the chest stays wall-of-text"
     );
+
+    // With a keystone context present the same consumer takes the INCOMPLETE
+    // branch (:312) because the published level is truthy.
+    {
+        let mut state = env.state().borrow_mut();
+        state.mythic_plus.owned_keystone = Some(OwnedKeystone {
+            level: 10,
+            challenge_map_id: 0,
+        });
+    }
+    let chest_state_with_a_key: i32 = env
+        .eval("return ChallengesFrame.WeeklyInfo.Child.WeeklyChest:Update(0, nil)")
+        .expect("the weekly chest consumer should run with an owned key");
+    assert_eq!(chest_state_with_a_key, 2, "an owned key selects the incomplete chest");
 }
 }
