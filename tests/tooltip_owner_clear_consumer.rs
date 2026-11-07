@@ -57,15 +57,19 @@ fn assert_tooltip_consumer_selected() {
     );
 }
 
-/// The original XML-bound tooltip handlers are the live scripts.
-#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
+/// Temporary probe: which tooltip script bindings exist at runtime.
 const CONSUMER_BINDING_CHECK: &str = r#"
-    local on_hide = GameTooltip:GetScript("OnHide")
-    assert(type(on_hide) == "function", "original OnHide handler is bound")
-    local source = debug.getinfo(on_hide, "S").source
-    assert(source:find("GameTooltip", 1, true), source)
-    assert(type(GameTooltip:GetScript("OnTooltipCleared")) == "function",
-        "original OnTooltipCleared handler is bound")
+    local out = {}
+    local ok_type, object_type = pcall(function() return GameTooltip:GetObjectType() end)
+    out[#out + 1] = "type=" .. tostring(ok_type and object_type)
+    local hide = GameTooltip:GetScript("OnHide")
+    out[#out + 1] = "hide=" .. tostring(type(hide))
+        .. ":" .. tostring(hide and debug.getinfo(hide, "S").source)
+    local cleared = GameTooltip:GetScript("OnTooltipCleared")
+    out[#out + 1] = "cleared=" .. tostring(type(cleared))
+    local scripts = rawget(GameTooltip, "__scripts")
+    out[#out + 1] = "scripts=" .. tostring(scripts and "table" or "nil")
+    error("PROBE " .. table.concat(out, " "))
 "#;
 
 /// Same-owner `SetOwner` clears without hiding, notifies once with the old
