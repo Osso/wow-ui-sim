@@ -84,19 +84,29 @@ fn tooltip_loot_item_index_truncates_without_an_integral_test() {
     .unwrap();
 }
 
-/// Round 6-B §1(b): a slot at or past the live count takes the miss arm, which
-/// returns no values and never publishes an empty tooltip.
+/// Round 6-B §1(b): a slot at or past the live count, and an entry whose item
+/// identity is empty, take the miss arm, which returns no values and never
+/// publishes an empty tooltip.
 #[test]
 fn tooltip_loot_item_miss_arm_returns_no_values() {
     let env = loot_fixture();
+    env.state().borrow_mut().loot_slots.push(BagItem {
+        owned_identity: None,
+        item_id: 0,
+        stack_count: 1,
+        hyperlink: None,
+        durability: None,
+        applied_transmog: None,
+    });
     env.exec(
         r#"
         local getter = C_TooltipInfo.GetLootItem
         assert(select('#', getter(0)) == 0, 'slot 0 must miss')
-        assert(select('#', getter(3)) == 0, 'past-count slot must miss')
+        assert(select('#', getter(3)) == 0, 'an empty item identity must miss')
+        assert(select('#', getter(4)) == 0, 'past-count slot must miss')
         assert(select('#', getter(4294967295)) == 0, 'top of the domain must miss')
         GameTooltip:SetOwner(UIParent, 'ANCHOR_NONE')
-        GameTooltip:SetLootItem(3)
+        GameTooltip:SetLootItem(4)
         assert(GameTooltip:GetPrimaryTooltipData() == nil, 'miss must not publish a tooltip')
         "#,
     )

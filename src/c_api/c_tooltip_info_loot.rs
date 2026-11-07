@@ -46,15 +46,26 @@ fn get_loot_roll_item(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn get_loot_item(state: &mut LuaState) -> LuaResult<u32> {
-    let slot = i32::from_stack(state, 1)?;
-    let index = usize::try_from(slot)
-        .ok()
-        .and_then(|slot| slot.checked_sub(1));
+    // Round 6-B §1(a): the loot getters share the buyback one-based index reader.
+    // The bound is the live loot slot count, so slot 0 and every slot at or past
+    // the count share the miss arm.
+    let index = one_based_index(
+        state,
+        1,
+        "Usage: local data = C_TooltipInfo.GetLootItem(slot)",
+    )?;
     let item_id = {
         let model = borrow_state(state)?;
         index.and_then(|index| model.loot_slots.get(index).map(|item| item.item_id))
     };
-    publish_item(state, item_id)
+    // Round 6-B §1(b): an entry whose item identity is empty is one of the
+    // loot-item reader's miss conditions. INFERRED: an empty identity is id 0.
+    let Some(item_id) = item_id.filter(|item_id| *item_id != 0) else {
+        return crate::c_api::tooltip_data::unknown_getter_failure();
+    };
+    let tooltip = tooltip_for_item_context(state, item_id, crate::items::get_item(item_id));
+    state.push(tooltip);
+    Ok(1)
 }
 
 fn get_buyback_item(state: &mut LuaState) -> LuaResult<u32> {
@@ -82,15 +93,6 @@ fn get_buyback_item(state: &mut LuaState) -> LuaResult<u32> {
         return crate::c_api::tooltip_data::unknown_getter_failure();
     };
     let tooltip = tooltip_for_item_context(state, item_id, Some(item));
-    state.push(tooltip);
-    Ok(1)
-}
-
-fn publish_item(state: &mut LuaState, item_id: Option<u32>) -> LuaResult<u32> {
-    let Some(item_id) = item_id else {
-        return crate::c_api::tooltip_data::unknown_getter_failure();
-    };
-    let tooltip = tooltip_for_item_context(state, item_id, crate::items::get_item(item_id));
     state.push(tooltip);
     Ok(1)
 }

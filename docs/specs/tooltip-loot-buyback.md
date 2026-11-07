@@ -46,7 +46,51 @@ Evidence: Round 6 of `pr46-49-decomp-answers.md`, Retail 12.1.5 (**70688**) and 
       handler map at `Blizzard_SharedXMLGame/Tooltip/TooltipDataHandler.lua:545` routes to this
       getter (**INFERRED** from shipped Lua; asserted by `tests/tooltip_buyback_item_index.rs`).
 
+### `GetLootItem(slot)` index contract
+
+Evidence: Round 6-B §1 of `pr46-49-decomp-answers.md`, Retail 12.1.5 (**70688**) and Forever
+1.60.1 (**70707**), getter bodies decoded in both builds.
+
+- [x] The reader is the same one-based reader as `GetBuybackItem`: a Lua number is required, the
+      domain is `0` to `4294967295`, the value is reduced by `1.0` and truncated toward zero with no
+      integral test, so `1.9` selects slot 1 and `2.9` selects slot 2 (**VERIFIED** for the Forever
+      reader, **INFERRED** for 12.1.5 from the identical reason string and guard).
+- [x] A value in `(0,1)` truncates toward zero after the subtraction and therefore also selects
+      slot 1 (**INFERRED** from the verified subtract-then-truncate order).
+- [x] The bound is the live loot slot count, compared unsigned, so slot `0` and every slot at or
+      past the count take the miss arm (**VERIFIED** in both builds).
+- [x] An entry whose item identity is empty is a miss condition of the loot-item reader
+      (**VERIFIED**). INFERRED: an empty identity is item id `0`.
+- [x] A missing or non-number argument reports `Usage: local data = C_TooltipInfo.GetLootItem(slot)`
+      (**VERIFIED** literal, character for character, in both images).
+- [x] A negative, above-domain or non-finite number reports
+      `outside of expected range 0 to 4294967295` followed by the usage text (**VERIFIED**
+      composition). The final Lua envelope is **UNKNOWN**, so only those fragments are guaranteed.
+- [x] The getters never consult loot window or frame state: they read a process-global slot count
+      and entry array, and the tooltip service handle passed into the callback is never read
+      (**VERIFIED**). With an empty list every slot fails the bound test, so no window gating is
+      modelled and a closed window does not gate a slot the list still holds.
+- [x] A resolved entry publishes the shared item producer's table, identity type `Item` (0)
+      (**VERIFIED**).
+- [x] The original consumer reaches this getter: `LootFrameItemElementMixin:OnEnter`
+      (`Blizzard_UIPanels_Game/Mainline/LootFrame.lua:353` Retail, `:631` Forever) calls
+      `GameTooltip:SetLootItem`, which the handler map at
+      `Blizzard_SharedXMLGame/Tooltip/TooltipDataHandler.lua:537` routes to this getter
+      (**INFERRED** from shipped Lua; asserted by `tests/tooltip_loot_item_index.rs`).
+
 ## Not modelled (native behaviour with no simulator counterpart)
+
+- The loot entry's **kind byte** (item `0`, currency non-zero) is not modelled: `SimState.loot_slots`
+  holds item entries only, so no currency slot can exist and the loot-item reader's kind test has no
+  state to act on. `GetLootCurrency` is a separate lane and is not registered here.
+- Whether the client clears the global loot list when the loot frame closes is **UNKNOWN** (it
+  depends on the loot-frame writer, not on these getters). The simulator's `CloseLoot` clears only
+  `loot_frame_open`, so a slot the list still holds stays readable.
+- The native entry maps the Lua slot to a loot entry and requires a non-empty item identity; the
+  simulator stores the item id directly, so the entry lookup itself has no counterpart.
+- Top-level `guid` and `hyperlink` for these paths are **UNKNOWN** (nothing decoded sets them, and
+  the item producer is only partially decoded).
+- The ordered line-type vocabulary of the shared item producer is **UNKNOWN**.
 
 - The native entry maps the Lua index to the player's inventory slot through the buyback slot
   table, then requires a nonzero slot and a non-empty inventory GUID at that slot. Supplied
@@ -77,13 +121,15 @@ Evidence: Round 6 of `pr46-49-decomp-answers.md`, Retail 12.1.5 (**70688**) and 
 - `tests/tooltip_data_loot_consumer.rs`
 - `tests/tooltip_data_buyback_consumer.rs`
 - `tests/tooltip_buyback_item_index.rs`
+- `tests/tooltip_loot_item_index.rs`
 
 ## Known gaps (current cycle)
 
-- [ ] `GetLootItem` and `GetTotem` still parse their argument with the strict signed/unsigned
-      integer readers, so fractional and above-`2^31` indices are not accepted there. Round 6-B
-      records the same one-based reader family for the loot getters; the buyback getter is the only
-      one converted so far.
+- [x] `GetLootItem` uses the shared one-based reader, so fractional and above-`2^31` indices are
+      accepted and the live loot slot count bounds them. `GetTotem` still parses its argument with
+      the strict unsigned reader (`c_tooltip_info_totem.rs::read_slot`), so fractional and
+      above-`2^31` indices are not accepted there; Round 6 §GetTotem records the same reader family
+      with usage `Usage: local data = C_TooltipInfo.GetTotem(slot)`.
 - [x] Shared D56 publication and presentation-side markup parsing follow the [serialization contract](tooltip-data-serialization.md). Getter-specific nested-row eligibility remains unknown.
 
 ## Out of scope
