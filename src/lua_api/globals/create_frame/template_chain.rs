@@ -502,6 +502,7 @@ pub(crate) fn first_fast_install_miss(scripts: &crate::xml::ScriptsXml) -> Optio
         .or_else(|| first_fast_handler_miss_in_group(pointer_method_only_handlers(scripts)))
         .or_else(|| first_fast_handler_miss_in_group(text_method_only_handlers(scripts)))
         .or_else(|| first_fast_handler_miss_in_group(state_method_only_handlers(scripts)))
+        .or_else(|| first_fast_handler_miss_in_group(tooltip_method_only_handlers(scripts)))
 }
 
 fn apply_fast_scripts(
@@ -547,6 +548,11 @@ fn collect_fast_handlers(
     collect_fast_handler_group(
         &mut handlers,
         state_method_only_handlers(scripts),
+        intrinsic_default_scripts,
+    )?;
+    collect_fast_handler_group(
+        &mut handlers,
+        tooltip_method_only_handlers(scripts),
         intrinsic_default_scripts,
     )?;
     Some(handlers)
@@ -732,6 +738,28 @@ fn state_method_only_handlers(scripts: &crate::xml::ScriptsXml) -> [MethodOnlySc
         ("OnHyperlinkClick", scripts.on_hyperlink_click.last()),
         ("OnHyperlinkEnter", scripts.on_hyperlink_enter.last()),
         ("OnHyperlinkLeave", scripts.on_hyperlink_leave.last()),
+    ]
+}
+
+/// WM63 O17 §7: the tooltip script elements that `SetScript` accepts for a
+/// GameTooltip are also declared by `GameTooltipTemplate` and by the tooltip
+/// templates that share its scripts, so XML must bind them too.
+fn tooltip_method_only_handlers(scripts: &crate::xml::ScriptsXml) -> [MethodOnlyScript<'_>; 8] {
+    [
+        ("OnTooltipCleared", scripts.on_tooltip_cleared.last()),
+        ("OnTooltipAddMoney", scripts.on_tooltip_add_money.last()),
+        (
+            "OnTooltipSetDefaultAnchor",
+            scripts.on_tooltip_set_default_anchor.last(),
+        ),
+        (
+            "OnTooltipSetFramestack",
+            scripts.on_tooltip_set_framestack.last(),
+        ),
+        ("OnTooltipSetQuest", scripts.on_tooltip_set_quest.last()),
+        ("OnTooltipSetSpell", scripts.on_tooltip_set_spell.last()),
+        ("OnTooltipSetItem", scripts.on_tooltip_set_item.last()),
+        ("OnTooltipSetUnit", scripts.on_tooltip_set_unit.last()),
     ]
 }
 

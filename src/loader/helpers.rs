@@ -721,6 +721,20 @@ fn input_handlers_with_options(
             ("OnHyperlinkClick", scripts.on_hyperlink_click.last()),
             ("OnHyperlinkEnter", scripts.on_hyperlink_enter.last()),
             ("OnHyperlinkLeave", scripts.on_hyperlink_leave.last()),
+            ("OnTooltipCleared", scripts.on_tooltip_cleared.last()),
+            ("OnTooltipAddMoney", scripts.on_tooltip_add_money.last()),
+            (
+                "OnTooltipSetDefaultAnchor",
+                scripts.on_tooltip_set_default_anchor.last(),
+            ),
+            (
+                "OnTooltipSetFramestack",
+                scripts.on_tooltip_set_framestack.last(),
+            ),
+            ("OnTooltipSetQuest", scripts.on_tooltip_set_quest.last()),
+            ("OnTooltipSetSpell", scripts.on_tooltip_set_spell.last()),
+            ("OnTooltipSetItem", scripts.on_tooltip_set_item.last()),
+            ("OnTooltipSetUnit", scripts.on_tooltip_set_unit.last()),
         ],
         default_binding,
     )

@@ -275,6 +275,22 @@ pub struct ScriptsXml {
     pub on_loop: Vec<ScriptBodyXml>,
     #[serde(rename = "OnPause", default)]
     pub on_pause: Vec<ScriptBodyXml>,
+    #[serde(rename = "OnTooltipCleared", default)]
+    pub on_tooltip_cleared: Vec<ScriptBodyXml>,
+    #[serde(rename = "OnTooltipAddMoney", default)]
+    pub on_tooltip_add_money: Vec<ScriptBodyXml>,
+    #[serde(rename = "OnTooltipSetDefaultAnchor", default)]
+    pub on_tooltip_set_default_anchor: Vec<ScriptBodyXml>,
+    #[serde(rename = "OnTooltipSetFramestack", default)]
+    pub on_tooltip_set_framestack: Vec<ScriptBodyXml>,
+    #[serde(rename = "OnTooltipSetQuest", default)]
+    pub on_tooltip_set_quest: Vec<ScriptBodyXml>,
+    #[serde(rename = "OnTooltipSetSpell", default)]
+    pub on_tooltip_set_spell: Vec<ScriptBodyXml>,
+    #[serde(rename = "OnTooltipSetItem", default)]
+    pub on_tooltip_set_item: Vec<ScriptBodyXml>,
+    #[serde(rename = "OnTooltipSetUnit", default)]
+    pub on_tooltip_set_unit: Vec<ScriptBodyXml>,
     #[serde(rename = "PreClick", default)]
     pub pre_click: Vec<ScriptBodyXml>,
     #[serde(rename = "PostClick", default)]
