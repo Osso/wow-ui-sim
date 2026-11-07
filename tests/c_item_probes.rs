@@ -189,3 +189,64 @@ fn get_item_num_sockets_counts_the_record_sockets() {
     assert_eq!(plain, 0);
     assert_eq!(unknown, 0);
 }
+
+/// Round 2 of the native decomp (`pr46-49-decomp-answers.md`, Q2.e) counts the
+/// non-zero entries of the record's three fixed socket slots, so a record can
+/// never report more than three. The simulator stores exactly those three slots
+/// (`crates/sim-data/data/items.rs`: `pub socket_types: [u8; 3]`), which makes a
+/// wider record unrepresentable rather than countable-then-clamped.
+#[cfg(not(feature = "client-wrath"))]
+#[test]
+fn get_item_num_sockets_caps_at_the_three_fixed_slots() {
+    const FIXED_SLOTS: i32 = 3;
+    let env = env();
+    let (kind, count): (String, i32) = env
+        .eval(
+            r#"
+            local count = C_Item.GetItemNumSockets(120978)
+            return type(count), count
+            "#,
+        )
+        .unwrap();
+    assert_eq!(kind, "number");
+    assert_eq!(count, 2, "Ashbringer declares two non-zero socket slots");
+    assert!(count <= FIXED_SLOTS);
+}
+
+/// Q2.d: the bonus half indexes a `SpellItemEnchantment` entry by an `itemInfo`
+/// dword that nothing writes in 70688, 70668 or 70707, so it is code-live and
+/// data-dead. A link that carries bonus-id fields therefore still reports only
+/// the record count.
+#[cfg(not(feature = "client-wrath"))]
+#[test]
+fn get_item_num_sockets_ignores_the_unwritten_bonus_fields() {
+    let env = env();
+    let (without_bonus, with_bonus): (i32, i32) = env
+        .eval(
+            r#"
+            local plain = "|cnIQ4:|Hitem:128910::::::::90:::::::::|h[Strom'kar, the Warbreaker]|h|r"
+            local bonus = "|cnIQ4:|Hitem:128910::::::::90::::::::1:1234:5678|h[Strom'kar, the Warbreaker]|h|r"
+            return C_Item.GetItemNumSockets(plain), C_Item.GetItemNumSockets(bonus)
+            "#,
+        )
+        .unwrap();
+    assert_eq!(without_bonus, 2);
+    assert_eq!(with_bonus, 2, "the bonus addend stays zero in these builds");
+}
+
+/// Q2: an unknown or uncached item publishes the integer `0`, not nil.
+#[cfg(not(feature = "client-wrath"))]
+#[test]
+fn get_item_num_sockets_publishes_a_number_for_an_unknown_item() {
+    let env = env();
+    let (kind, count): (String, i32) = env
+        .eval(
+            r#"
+            local count = C_Item.GetItemNumSockets(999999999)
+            return type(count), count
+            "#,
+        )
+        .unwrap();
+    assert_eq!(kind, "number");
+    assert_eq!(count, 0);
+}
