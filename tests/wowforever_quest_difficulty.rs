@@ -100,6 +100,74 @@ fn forever_quest_difficulty_rejects_invalid_and_unrepresented_ids_explicitly() {
     .unwrap();
 }
 
+#[test]
+fn declared_profile_quest_difficulty_missing_inputs_prepare_fair() {
+    let env = WowLuaEnv::new().unwrap();
+    // WM89 §4: a quest ID below 1 and an unknown quest ID prepare Fair, not an error.
+    env.exec(
+        r#"
+        local fair = Enum.RelativeContentDifficulty.Fair
+        for _, id in ipairs({ 0, -1, 999999 }) do
+            assert(C_PlayerInfo.GetContentDifficultyQuestForPlayer(id) == fair, id)
+        end
+        "#,
+    )
+    .expect("missing quest rows must prepare Fair");
+    env.state().borrow_mut().player.present = false;
+    env.exec(
+        r#"
+        assert(C_PlayerInfo.GetContentDifficultyQuestForPlayer(80000)
+            == Enum.RelativeContentDifficulty.Fair)
+        "#,
+    )
+    .expect("a missing player must prepare Fair");
+    {
+        let mut state = env.state().borrow_mut();
+        state.player.present = true;
+        state.quest_log_entries.entries.clear();
+    }
+    env.exec(
+        r#"
+        assert(C_PlayerInfo.GetContentDifficultyQuestForPlayer(80000)
+            == Enum.RelativeContentDifficulty.Fair)
+        "#,
+    )
+    .expect("removed rows must prepare Fair, not use a catalog default");
+}
+
+#[cfg(feature = "client-wowforever")]
+#[test]
+fn forever_quest_difficulty_stored_level_without_tuning() {
+    let env = WowLuaEnv::new().unwrap();
+    {
+        let mut state = env.state().borrow_mut();
+        state.player.level = 50;
+        let base = state.quest_log_entries.entries[0].clone();
+        state.quest_log_entries.entries = [45, 44, 52, 53, 55]
+            .into_iter()
+            .enumerate()
+            .map(|(index, level)| {
+                let mut row = base.clone();
+                row.quest_id = 51000 + index as i32;
+                row.level = level;
+                row
+            })
+            .collect();
+    }
+    // WM89 §4: without a ContentTuning record Forever compares the stored quest level, and
+    // §3 keeps inclusive Easy at the absent-row boundary of 5.
+    env.exec(
+        r#"
+        local expected = { 'Easy', 'Trivial', 'Fair', 'Difficult', 'Impossible' }
+        for i, name in ipairs(expected) do
+            assert(C_PlayerInfo.GetContentDifficultyQuestForPlayer(50999 + i)
+                == Enum.RelativeContentDifficulty[name], name)
+        end
+        "#,
+    )
+    .expect("the stored quest level must drive the Forever difference");
+}
+
 #[cfg(feature = "client-wowforever")]
 #[test]
 fn forever_quest_difficulty_absent_curve_boundaries() {
