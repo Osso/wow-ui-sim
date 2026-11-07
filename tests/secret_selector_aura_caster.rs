@@ -3,6 +3,7 @@
     feature = "retail-12-1-5",
     any(feature = "profile-retail", feature = "client-ptr")
 ))]
+use crate::common;
 use rilua::{LuaApi, LuaApiMut};
 use wow_ui_sim::lua_api::{WowLuaEnv, state::AuraInfo};
 const GUID: &str = "Creature-0-1-2-3-19750-000000ABCD";
@@ -67,13 +68,10 @@ fn snapshot_caster_rows(env: &WowLuaEnv) -> (String, Option<String>) {
 }
 
 fn load_original_caster(env: &WowLuaEnv) {
-    let profile = if cfg!(feature = "client-ptr") {
-        "ptr"
-    } else {
-        "retail"
-    };
-    let root = std::path::PathBuf::from(std::env::var_os("HOME").unwrap());
-    let source=std::fs::read_to_string(root.join(format!(".cache/wow-ui-sim/blizzard-ui/{profile}/AddOns/Blizzard_AuraContainer/Blizzard_AuraContainerSources.lua"))).unwrap();
+    let source = std::fs::read_to_string(
+        common::blizzard_ui_dir().join("Blizzard_AuraContainer/Blizzard_AuraContainerSources.lua"),
+    )
+    .unwrap();
     let begin = source
         .find("function AuraContainerPublicAuraSourceMixin:GetAuraCasterGUID(")
         .unwrap();

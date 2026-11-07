@@ -1,4 +1,5 @@
 #![cfg(feature = "retail-12-0-7")]
+use crate::common;
 use rilua::LuaApiMut;
 use rilua::table_security::wrap_host_secret_number;
 use wow_ui_sim::lua_api::WowLuaEnv;
@@ -99,8 +100,7 @@ fn merchant_cached_deprecated_wrapper_unpacks_exact_host_ids() {
     let env = WowLuaEnv::new().unwrap();
     env.state().borrow_mut().merchant_currencies = vec![2815, 3008];
     env.exec("assert(GetMerchantCurrencies == nil)").unwrap();
-    let path = std::path::PathBuf::from(std::env::var_os("HOME").unwrap())
-        .join(".cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Deprecated/Mainline/Deprecated_12_0_7.lua");
+    let path = common::blizzard_ui_dir().join("Blizzard_Deprecated/Mainline/Deprecated_12_0_7.lua");
     let source = std::fs::read_to_string(path).expect("required cached wrapper, no fallback");
     // Execute the actual cached wrapper alone; unrelated MenuUtil migrations need UI addons.
     let start = source.find("function GetMerchantCurrencies()").expect("cached wrapper declaration");

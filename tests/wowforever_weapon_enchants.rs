@@ -1,5 +1,6 @@
 #![cfg(feature = "client-wowforever")]
 
+use crate::common;
 use wow_ui_sim::c_api::weapon_enchants::{TEMPORARY_ENCHANT_TYPE, WeaponEnchant};
 use wow_ui_sim::lua_api::WowLuaEnv;
 
@@ -84,10 +85,9 @@ fn forever_ranged_weapon_enchants_preserve_legacy_returns() {
 #[test]
 fn forever_buff_consumer_reads_current_enchants() {
     let env = WowLuaEnv::new().unwrap();
-    let source = std::fs::read_to_string(format!(
-        "{}/.cache/wow-ui-sim/blizzard-ui/wowforever/AddOns/Blizzard_BuffFrame/BuffFrame.lua",
-        std::env::var("HOME").unwrap()
-    ))
+    let source = std::fs::read_to_string(
+        common::blizzard_ui_dir().join("Blizzard_BuffFrame/BuffFrame.lua"),
+    )
     .unwrap();
     let mapping = source
         .split("local textureMapping = ")

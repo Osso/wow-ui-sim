@@ -3,6 +3,7 @@
     feature = "retail-12-0-5",
     any(feature = "profile-retail", feature = "client-ptr")
 ))]
+use crate::common;
 use rilua::LuaApiMut;
 use wow_ui_sim::lua_api::WowLuaEnv;
 
@@ -43,15 +44,9 @@ fn fixture(restricted: bool) -> WowLuaEnv {
 }
 
 fn original(env: &WowLuaEnv, file: &str, start: &str, end: &str) {
-    let profile = if cfg!(feature = "client-ptr") {
-        "ptr"
-    } else {
-        "retail"
-    };
-    let root = std::path::PathBuf::from(std::env::var_os("HOME").unwrap());
-    let path = root.join(format!(
-        ".cache/wow-ui-sim/blizzard-ui/{profile}/AddOns/Blizzard_CooldownViewer/{file}"
-    ));
+    let path = common::blizzard_ui_dir()
+        .join("Blizzard_CooldownViewer")
+        .join(file);
     let source = std::fs::read_to_string(path).unwrap();
     let begin = source.find(start).unwrap();
     let finish = begin + source[begin..].find(end).unwrap();

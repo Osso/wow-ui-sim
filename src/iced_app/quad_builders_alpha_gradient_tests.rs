@@ -213,9 +213,9 @@ mod consumer {
     }
 
     fn load_cached_consumer(env: &WowLuaEnv) {
-        let root = dirs::home_dir()
-            .unwrap()
-            .join(".cache/wow-ui-sim/blizzard-ui");
+        // Production cache root (`%LOCALAPPDATA%`-based on Windows), shared by profiles.
+        let root = crate::blizzard_ui_sync::default_cache_root_path()
+            .expect("Blizzard UI cache root should be resolvable");
         // Original whole public sources; no copied/reconstructed callback or vendor patch.
         // Wrath: FrameXML/QuestInfo.lua:3-16,479-492; QuestFrame.lua:4-6.
         // Mists: AddOns/Blizzard_UIPanels_Game/Classic/QuestFrame.lua:4-6,799-814.

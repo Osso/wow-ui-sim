@@ -3,6 +3,7 @@
     feature = "retail-12-0-5",
     any(feature = "profile-retail", feature = "client-ptr")
 ))]
+use crate::common;
 use rilua::LuaApiMut;
 use wow_ui_sim::c_api::aura_duration::SpellAuraDuration;
 use wow_ui_sim::lua_api::{WowLuaEnv, state::AuraInfo};
@@ -77,8 +78,11 @@ fn snapshot_duration_rows(
 fn original_ptr_pandemic_window_uses_secret_instance() {
     let env = fixture();
     let before_rows = snapshot_duration_rows(&env);
-    let root = std::path::PathBuf::from(std::env::var_os("HOME").unwrap());
-    let source = std::fs::read_to_string(root.join(".cache/wow-ui-sim/blizzard-ui/ptr/AddOns/Blizzard_AuraContainer/Blizzard_AuraContainerUtil.lua")).unwrap();
+    let addons = common::blizzard_ui_dir();
+    let source = std::fs::read_to_string(
+        addons.join("Blizzard_AuraContainer/Blizzard_AuraContainerUtil.lua"),
+    )
+    .unwrap();
     let begin = source
         .find("function AuraContainerUtil.GetPandemicWindow(")
         .unwrap();
@@ -86,7 +90,10 @@ fn original_ptr_pandemic_window_uses_secret_instance() {
         + source[begin..]
             .find("function AuraContainerUtil.AddUnitEventRegistration(")
             .unwrap();
-    let shared = std::fs::read_to_string(root.join(".cache/wow-ui-sim/blizzard-ui/ptr/AddOns/Blizzard_AuraContainer/Blizzard_AuraContainerShared.lua")).unwrap();
+    let shared = std::fs::read_to_string(
+        addons.join("Blizzard_AuraContainer/Blizzard_AuraContainerShared.lua"),
+    )
+    .unwrap();
     let enum_begin = shared.find("AuraContainerAuraDataType =").unwrap();
     let enum_end = enum_begin
         + shared[enum_begin..]

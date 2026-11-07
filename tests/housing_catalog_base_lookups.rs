@@ -1,6 +1,7 @@
 //! Bounded base selector behavior; parent owns compilation and acceptance gates.
 #![cfg(feature = "retail-12-0-5")]
 
+use crate::common;
 use rilua::LuaApiMut;
 use rilua::table_security::wrap_host_secret_number;
 use wow_ui_sim::c_api::c_housing::catalog::{
@@ -272,8 +273,7 @@ fn removed_trailing_arguments_do_not_change_base_selection() {
 #[test]
 fn cached_deprecated_wrapper_ignores_removed_args_for_missing_results() {
     let env = WowLuaEnv::new().unwrap();
-    let path = std::path::PathBuf::from(std::env::var_os("HOME").expect("HOME"))
-        .join(".cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Deprecated/Mainline/Deprecated_12_0_5.lua");
+    let path = common::blizzard_ui_dir().join("Blizzard_Deprecated/Mainline/Deprecated_12_0_5.lua");
     let source = std::fs::read_to_string(&path)
         .unwrap_or_else(|error| panic!("read cached wrapper {}: {error}", path.display()));
     // Execute the actual file, not a copied bridge or a fake full DTO.

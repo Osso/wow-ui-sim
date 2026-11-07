@@ -655,10 +655,8 @@ mod ssp1 {
     }
 
     fn load_original_action_button_consumer(env: &WowLuaEnv) {
-        let home = std::env::var_os("HOME").expect("HOME for original Retail cache");
-        let path = std::path::PathBuf::from(home).join(
-            ".cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ActionBar/Shared/ActionButton.lua",
-        );
+        let path = crate::common::blizzard_ui_dir()
+            .join("Blizzard_ActionBar/Shared/ActionButton.lua");
         let source =
             std::fs::read_to_string(path).expect("original cached Retail consumer required");
         let start = source

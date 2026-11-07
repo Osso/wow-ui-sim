@@ -61,10 +61,8 @@ fn install_secret_spell_selector(env: &WowLuaEnv) {
 }
 
 fn load_original_ptr_consumer(env: &WowLuaEnv) {
-    let home = std::env::var_os("HOME").expect("HOME for original PTR cache");
-    let path = std::path::PathBuf::from(home).join(
-        ".cache/wow-ui-sim/blizzard-ui/ptr/AddOns/Blizzard_ActionBar/Shared/ActionButton.lua",
-    );
+    let path = crate::common::blizzard_ui_dir()
+        .join("Blizzard_ActionBar/Shared/ActionButton.lua");
     let source = std::fs::read_to_string(&path).unwrap_or_else(|error| {
         panic!("required original PTR consumer {}: {error}", path.display())
     });

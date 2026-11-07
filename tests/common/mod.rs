@@ -217,10 +217,26 @@ pub fn try_create_gpu_device() -> Option<TestGpuDevice> {
     })
 }
 
-fn blizzard_ui_dir() -> PathBuf {
+/// Active profile's `AddOns` directory, resolved by production code.
+pub fn blizzard_ui_dir() -> PathBuf {
     wow_ui_sim::client_profile::blizzard_ui_addons_dir_under(std::path::Path::new(env!(
         "CARGO_MANIFEST_DIR"
     )))
+}
+
+/// Root of the Blizzard UI cache, holding one subdirectory per client profile.
+///
+/// Resolved by production code, so tests read the same tree as the loader on
+/// every platform (`%LOCALAPPDATA%` on Windows, `~/.cache` on Linux).
+pub fn blizzard_ui_cache_root() -> PathBuf {
+    wow_ui_sim::blizzard_ui_sync::default_cache_root_path()
+        .expect("Blizzard UI cache root should be resolvable")
+}
+
+/// Active profile's cache directory (`<root>/<profile>`), which holds `AddOns`
+/// and, for profiles that predate split addons, `FrameXML`.
+pub fn blizzard_ui_cache_profile_dir() -> PathBuf {
+    blizzard_ui_cache_root().join(wow_ui_sim::client_profile::ACTIVE.cache_subdir())
 }
 
 pub fn load_required_blizzard_addon(env: &WowLuaEnv, ui: &Path, addon_name: &str) {
