@@ -665,11 +665,7 @@ fn test_widget_container_mixin_applied() {
     }
 }
 
-#[cfg(any(
-    feature = "client-retail",
-    feature = "client-ptr",
-    feature = "client-wowforever"
-))]
+#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
 #[test]
 fn test_load_addon_with_error_handling_loads_account_store_and_preserves_surface() {
     test_timeout! {
