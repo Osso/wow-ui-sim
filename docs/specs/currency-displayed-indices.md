@@ -36,10 +36,13 @@ Observed tests-only RED: original collapse left 19 rows instead of 14 (`B5: chil
 ## Known gaps (current cycle)
 
 - [x] Retail behavioral RED/GREEN, existing currency preservation and startup observation executed; see the bounded proof limits.
-- [x] `GetCurrencyListLink` reads the same displayed index on every profile with a pinned declaration (Retail, PTR, Forever, Mists, Era, Anniversary; Wrath pins no generated documentation). An index past the displayed count publishes one nil, and a header row takes the same link-builder path as any other row (client getter decomp, 12.1.5: range check against the displayed count, no header test). Mists, Era and Anniversary `Blizzard_TokenUI` and `Blizzard_PTRFeedback` call it, so their rows now resolve a link instead of a nil call.
+- [x] `GetCurrencyListLink` reads the same displayed index on every profile with a pinned declaration (Retail, PTR, Forever, Mists, Era, Anniversary; Wrath pins no generated documentation). An index past the displayed count publishes one nil, and a header row takes the same link-builder path as any other row (client getter decomp, 12.1.5: range check against the displayed count, no header test). Mists, Era and Anniversary `Blizzard_TokenUI` and `Blizzard_PTRFeedback` call it, so their rows now resolve a link instead of a nil call. The link text itself is specified in [currency link builder](currency-link-builder.md).
 ## Link text boundary
 
-The native link builder is unmodelled, so the payload fields (`currency:<id>` only, or extra fields such as quantity) and the colour source are not proved. The simulator emits `|c<quality hex>|Hcurrency:<row id>|h[<row name>]|h|r` as a documented best guess: the row's own ID, the row's name, and the colour `GetItemQualityColor` reports for the row's quality. Header rows in this model carry ID zero, so their link names no currency.
+The link text is the shared native currency-link builder contract, now proved from the client and specified in
+[currency link builder](currency-link-builder.md): `|cnIQ<n>:|Hcurrency:<id>:<amount>|h[<name>]|h|r` with the
+row's quality token, the row's plain name and a constant amount of zero. Header rows in this model carry ID
+zero, so their link republishes the builder's shared destination buffer instead of a row link.
 
 - [ ] Other index-selected siblings without an existing modeled reader remain outside this producer; no blanket list API coverage.
 

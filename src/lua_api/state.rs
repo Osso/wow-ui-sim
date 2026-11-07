@@ -683,6 +683,7 @@ macro_rules! build_empty_sim_state {
             currency_list: crate::c_api::currency_list::CurrencyListState::default(),
             currency_war_mode_bonus: HashMap::new(),
             currency_faction_grants: HashMap::new(),
+            currency_link_buffer: String::new(),
             #[cfg(feature = "retail-12-0-0")]
             currency_transfer_in_progress: false,
             mount_item_relations: HashMap::new(),
