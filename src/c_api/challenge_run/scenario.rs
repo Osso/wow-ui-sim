@@ -59,15 +59,19 @@ pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
     let ns = crate::c_api::ensure_namespace(state, "C_ScenarioInfo")?;
     table_set_rust_fn_static(state, ns, "GetCriteriaInfo", current_criterion)?;
     table_set_rust_fn_static(state, ns, "GetCriteriaInfoByStep", step_criterion)?;
-    if matches!(ACTIVE, ClientProfile::Retail | ClientProfile::Ptr) {
+    if matches!(
+        ACTIVE,
+        ClientProfile::Retail | ClientProfile::Ptr | ClientProfile::WowForever
+    ) {
         let scenario = crate::c_api::ensure_namespace(state, "C_Scenario")?;
         table_set_rust_fn_static(state, scenario, "ShouldShowCriteria", should_show_criteria)?;
     }
     Ok(())
 }
 
-/// Undocumented native; consumed by the Retail/PTR scenario tracker. Best guess,
-/// native UNKNOWN: criteria are shown unless a scenario supplies otherwise.
+/// Native `C_Scenario.ShouldShowCriteria` (Forever 1.60.1, Retail 12.1.5): one
+/// process-wide cached flag, default true, never reset by scenario state. The
+/// simulator stores the same flag per environment; admin input supplies it.
 fn should_show_criteria(state: &mut LuaState) -> LuaResult<u32> {
     let shown = !borrow_state(state)?.challenge_run.criteria_hidden;
     state.push(Val::Bool(shown));
