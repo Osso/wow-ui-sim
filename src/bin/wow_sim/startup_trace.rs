@@ -1,4 +1,5 @@
 use wow_ui_sim::font::WowFontSystem;
+#[cfg(target_os = "linux")]
 use wow_ui_sim::logging;
 
 pub(super) fn time_load_step<T>(name: &str, action: impl FnOnce() -> T) -> T {
