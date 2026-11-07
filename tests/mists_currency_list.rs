@@ -349,3 +349,62 @@ fn legacy_currency_list_size_wraps_c_currency_info() {
         "TokenFrame_Update should complete with the legacy compatibility wrapper"
     );
 }
+
+#[test]
+fn token_row_chat_link_click_inserts_supplied_currency_link_into_chat() {
+    let env = load_mists_token_ui_env();
+    {
+        let state = env.state();
+        let mut state = state.borrow_mut();
+        state
+            .currency_info
+            .get_mut(&2245)
+            .expect("Valorstones should already exist in the currency map")
+            .name = "Seeded Valorstones".to_string();
+        state.modifier_keys.shift = true;
+    }
+
+    // Consumers: TokenButton_OnClick (Cata/Blizzard_TokenUI.lua:242) and the row's
+    // LinkButton OnClick (Cata/Blizzard_TokenUI.xml:109) pass
+    // C_CurrencyInfo.GetCurrencyListLink(index) to HandleModifiedItemClick, which
+    // inserts it into the active chat edit box.
+    let (row_text, link_button_text, other_text, other_id): (String, String, String, i32) = env
+        .eval(
+            r#"
+            TokenFrame_Update()
+            ChatFrameUtil.OpenChat("")
+            local editBox = ChatFrameUtil.GetActiveWindow()
+            assert(editBox, "chat edit box should be active")
+            assert(IsModifiedClick("CHATLINK"))
+            local rows = TokenFrameContainer.buttons
+            assert(rows[2].name:GetText() == "Seeded Valorstones")
+            rows[2]:Click("LeftButton")
+            local rowText = editBox:GetText()
+            editBox:SetText("")
+            rows[2].LinkButton:Click("LeftButton")
+            local linkButtonText = editBox:GetText()
+            editBox:SetText("")
+            rows[3]:Click("LeftButton")
+            return rowText, linkButtonText, editBox:GetText(),
+                C_CurrencyInfo.GetCurrencyListInfo(3).currencyTypesID
+            "#,
+        )
+        .inspect_err(|err| log_error_boundary("chat-link-eval", &err.to_string()))
+        .expect("modified TokenUI row clicks should reach the chat edit box");
+
+    assert!(
+        row_text.contains("|Hcurrency:2245|h[Seeded Valorstones]|h"),
+        "row click should insert the seeded Valorstones link: {row_text:?}"
+    );
+    assert_eq!(
+        link_button_text, row_text,
+        "LinkButton click should insert the same row link"
+    );
+    assert_ne!(other_id, 2245);
+    assert!(
+        other_text.contains(&format!(
+            "|Hcurrency:{other_id}|h[Weathered Harbinger Crest]|h"
+        )),
+        "third row click should insert its own currency link: {other_text:?}"
+    );
+}
