@@ -1,3 +1,7 @@
+## [2026-11-06] system | Collections collected-only journal tabs
+
+Created [Collections collected-only journal tabs](systems/collections-collected-only.md) for the `onlyShowCollectedItemsInJournal` contract the [spec](../specs/collections-collected-only.md) already linked: CVar default and scope, the three PTR/WowForever predicates over supplied journal state, and both original consumers (`CollectionsJournal_ValidateTab`, `CollectionsUtil.IsJournalDisabled`). PTR slot-1 proof: the `IsJournalDisabled` consumer test passes in 36.05s and the ValidateTab test in 6.16s, with zero compiler warnings.
+
 ## [2026-11-06] investigation | Screen-qualified TOC dependency lines
 
 [Addon loading](systems/addon-loading.md#screen-qualified-dependency-declarations) records that runtime dependency resolution applies a dependency line's `[AllowLoad Game]`/`[AllowLoad Glue]` annotation. PTR and Forever `Blizzard_UnitPopupShared` reach Glue-only `Blizzard_GlueXML` through `## Dep: Blizzard_GlueXML [AllowLoad glue]` while declaring `## AllowLoad: both`; the runtime resolver previously failed the whole `Blizzard_MailFrame` load. Unannotated required dependencies still block. Evidence is shipped TOCs, not a native-client trace.

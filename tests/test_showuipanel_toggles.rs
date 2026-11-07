@@ -1426,6 +1426,35 @@ fn wrath_reputation_panel_renders_supplied_factions() {
     }
 }
 
+/// Overwrite the four modeled collection sets with the first `n` collected
+/// entries so a consumer reads supplied state instead of a constant.
+#[cfg(any(
+    feature = "profile-retail",
+    feature = "client-ptr",
+    feature = "client-wowforever"
+))]
+fn set_journal_collection_counts(
+    env: &WowLuaEnv,
+    mounts: usize,
+    pets: usize,
+    toys: usize,
+    appearances: usize,
+) {
+    let mut state = env.state().borrow_mut();
+    for (index, mount) in state.world.mounts.iter_mut().enumerate() {
+        mount.is_collected = index < mounts;
+    }
+    for (index, pet) in state.world.pets.iter_mut().enumerate() {
+        pet.is_collected = index < pets;
+    }
+    for (index, toy) in state.world.toys.iter_mut().enumerate() {
+        toy.is_collected = index < toys;
+    }
+    for (index, appearance) in state.world.transmog_appearances.iter_mut().enumerate() {
+        appearance.is_collected = index < appearances;
+    }
+}
+
 /// `onlyShowCollectedItemsInJournal` gates the collected-only tab validation in
 /// `Blizzard_Collections/Shared/Blizzard_Collections.lua:32-49` (PTR) /
 /// `:28-45` (WowForever). The Retail pin's `CollectionsJournal_ValidateTab`
@@ -1460,19 +1489,7 @@ fn journal_only_show_collected_cvar_gates_tabs_on_collectible_state() {
         );
 
         let set_counts = |mounts: usize, pets: usize, toys: usize, appearances: usize| {
-            let mut state = env.state().borrow_mut();
-            for (index, mount) in state.world.mounts.iter_mut().enumerate() {
-                mount.is_collected = index < mounts;
-            }
-            for (index, pet) in state.world.pets.iter_mut().enumerate() {
-                pet.is_collected = index < pets;
-            }
-            for (index, toy) in state.world.toys.iter_mut().enumerate() {
-                toy.is_collected = index < toys;
-            }
-            for (index, appearance) in state.world.transmog_appearances.iter_mut().enumerate() {
-                appearance.is_collected = index < appearances;
-            }
+            set_journal_collection_counts(&env, mounts, pets, toys, appearances);
         };
         let validate_tabs = || -> (bool, bool, bool, bool) {
             env.eval(
@@ -1585,6 +1602,76 @@ fn journal_only_show_collected_cvar_gates_tabs_on_collectible_state() {
             validate_tabs(),
             (true, true, true, true),
             "an unset collected-only CVar keeps every tab visible"
+        );
+    }
+}
+
+/// Second pinned consumer of the same CVar: `CollectionsUtil.IsJournalDisabled()`
+/// (`Blizzard_FrameXMLUtil/CollectionsUtil.lua:543`) disables the Collections
+/// micro button from `Blizzard_MicroMenu/Mainline/MainMenuBarMicroButtons.lua:1744`
+/// (PTR) and `:1657` (WowForever). Both pins load `CollectionsUtil.lua` through
+/// `Blizzard_FrameXMLUtil.toc:42`. The Retail pin ships neither the CVar nor the
+/// function, so it is not asserted here.
+#[cfg(any(feature = "client-ptr", feature = "client-wowforever"))]
+#[test]
+fn journal_collections_util_disables_journal_only_for_empty_collected_state() {
+    test_timeout! {
+        let env = setup_env();
+        let available: bool = env
+            .eval(
+                r#"
+                return type(CollectionsUtil) == "table"
+                   and type(CollectionsUtil.IsJournalDisabled) == "function"
+                "#,
+            )
+            .expect("the pinned CollectionsUtil surface should be queryable");
+        assert!(
+            available,
+            "Blizzard_FrameXMLUtil must define CollectionsUtil.IsJournalDisabled"
+        );
+
+        let journal_disabled = || -> bool {
+            env.eval("return CollectionsUtil.IsJournalDisabled()")
+                .expect("the pinned consumer should answer")
+        };
+        let set_cvar = |value: &str| {
+            env.exec(&format!(
+                r#"C_CVar.SetCVar("onlyShowCollectedItemsInJournal", "{value}")"#
+            ))
+            .expect("the journal CVar should accept the supplied value");
+        };
+
+        set_journal_collection_counts(&env, 0, 0, 0, 0);
+        set_cvar("0");
+        assert!(
+            !journal_disabled(),
+            "a cleared collected-only CVar never disables the journal"
+        );
+
+        set_cvar("1");
+        assert!(
+            journal_disabled(),
+            "an empty collected state disables the journal"
+        );
+
+        for (mounts, pets, toys, appearances) in [
+            (1, 0, 0, 0),
+            (0, 1, 0, 0),
+            (0, 0, 1, 0),
+            (0, 0, 0, 1),
+        ] {
+            set_journal_collection_counts(&env, mounts, pets, toys, appearances);
+            assert!(
+                !journal_disabled(),
+                "one collected entry keeps the journal enabled with {mounts} mounts, \
+                 {pets} pets, {toys} toys and {appearances} appearances"
+            );
+        }
+
+        set_journal_collection_counts(&env, 0, 0, 0, 0);
+        assert!(
+            journal_disabled(),
+            "an emptied collected state disables the journal again"
         );
     }
 }
