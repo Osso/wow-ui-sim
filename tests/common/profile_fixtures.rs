@@ -396,19 +396,32 @@ macro_rules! pvp_ui_variant_toc_fixture {
 
 // classic-profiles-baseline
 
-/// `Blizzard_AccountStore` ships only on Retail/PTR/WowForever: their manifests
-/// contain `Blizzard_AccountStore/Blizzard_AccountStore.lua`, while
-/// `data/blizzard-ui-files/{mists,era,anniversary,wrath}.txt` contain no
-/// `Blizzard_AccountStore/` entry.
+/// Profile set where `Blizzard_AccountStore` actually loads, so only these
+/// profiles can assert the addon's surface and behaviour.
+///
+/// Retail and PTR ship the addon (`Blizzard_AccountStore/Blizzard_AccountStore.toc`
+/// in `data/blizzard-ui-files/{retail,ptr}.txt`) with no `## AllowLoadGameType`
+/// header, so the closure walker loads it as a LoadOnDemand dependency pool entry.
+///
+/// WowForever ships the addon too, but its pinned TOC carries
+/// `## AllowLoadGameType: standard, wowlabs`
+/// (`~/.cache/wow-ui-sim/blizzard-ui/wowforever/AddOns/Blizzard_AccountStore/Blizzard_AccountStore.toc`).
+/// Forever activates game types `{camelot, mainline}`
+/// (`src/toc/mod.rs::active_game_types`), neither of which the TOC allows, so
+/// `sim_toc::is_game_type_restricted` skips the addon in
+/// `src/loader/mod.rs::discover_blizzard_addon_closure`. Native 1.60.1.70707
+/// evidence: `handoff/native-evidence-70707/TOC_AllowLoadGameType.md`; the
+/// Forever-only rejection test lives in `tests/startup_warnings/late.rs`.
+///
+/// Mists, Era, Anniversary and Wrath pin no `Blizzard_AccountStore/` entry
+/// (`data/blizzard-ui-files/{mists,era,anniversary,wrath}.txt` list only
+/// `Blizzard_APIDocumentationGenerated/AccountStoreDocumentation.lua`), so the
+/// addon directory does not exist in their caches.
 #[macro_export]
 macro_rules! account_store_ui_fixture {
     ($($item:item)*) => {
         $(
-            #[cfg(any(
-                feature = "profile-retail",
-                feature = "client-ptr",
-                feature = "client-wowforever"
-            ))]
+            #[cfg(any(feature = "client-retail", feature = "client-ptr"))]
             $item
         )*
     };
