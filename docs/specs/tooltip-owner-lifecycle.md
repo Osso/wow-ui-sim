@@ -29,6 +29,20 @@ native anchor geometry, default anchors, or Hide-clears-lines behavior.
 - `Hide` clears content even when already hidden, releases the owner and resets
   its mode/displacements, without removing its existing points. This requirement
   applies only to Retail/PTR. Forever retains lines and its anchor mode on Hide.
+- Clear notification (WM63 O17 §7, Retail 12.1.5 / 70688): a clear dispatches
+  its notification only when the prior line count was nonzero, after the
+  per-line resets and before a new owner is recorded. Native `VERIFIED` order;
+  the public script name stays inferred, so tests assert dispatch count and
+  order rather than the name. The clear also empties and hides the used pooled
+  line FontStrings and keeps their allocation for reuse.
+- The pinned `Blizzard_GameTooltip/Mainline/GameTooltip.xml` binds that
+  notification with an `<OnTooltipCleared>` element to `GameTooltip_ClearMoney`
+  and `SharedTooltip_ClearInsertedFrames`. XML tooltip script elements
+  (`OnTooltipCleared`, `OnTooltipAddMoney`, `OnTooltipSetDefaultAnchor`,
+  `OnTooltipSetFramestack`, `OnTooltipSetQuest`, `OnTooltipSetSpell`,
+  `OnTooltipSetItem`, `OnTooltipSetUnit`) therefore bind for a GameTooltip,
+  using the same name set `SetScript` accepts (cached consumer, build
+  unverified for the exact element set beyond those pinned declarations).
 - Forever's original `Blizzard_GameTooltip/Mainline/GameTooltip.xml:27` binds
   `OnHide`; `GameTooltip.lua:395-431` clears handler information.
   `Blizzard_SharedXMLGame/Tooltip/TooltipDataHandler.lua:264-270` hides on a
@@ -65,11 +79,18 @@ attachments, other profiles and getter selection are unchanged by this extension
 ## Tests asserting this spec
 
 - `tests/tooltip_basic.rs` — owner replacement, hidden explicit hide, SetText, append, spell payload, and existing ownership controls.
+- `tests/tooltip_lifecycle_owner_lane.rs` — same-owner clear, notification count, and reassignment through the shared tooltip templates.
+- `tests/tooltip_owner_clear_consumer.rs` — clear notification count and order through the cached `GameTooltip.xml` handlers and `TooltipDataHandler.lua` reprocessing; the original `OnTooltipCleared` cleanup must release inserted frames; Forever owner-reassignment lifecycle.
 
 ## Known gaps (current cycle)
 
-- [ ] Native execution and callback observation order remain unverified.
+- [ ] Native execution and callback observation order remain unverified: the
+      evidence is static native analysis, and no live-client observation exists
+      for the notification's registered-callback lifetime.
+- [ ] Forever does not reset its pooled line FontStrings on clear. Its line
+      FontStrings come from tooltip XML and are recorded for clear-time reset
+      only on Wrath/Retail/PTR, so no Forever native evidence covers the reset.
 
 ## Out of scope
 
-- Parent-effective hiding, empty Show, profile conversion, line-registration changes, and `OnTooltipCleared` callback ordering are not changed by this slice.
+- Parent-effective hiding, empty Show, profile conversion, and line-registration changes are not changed by this slice.
