@@ -346,7 +346,6 @@ fn keystone_globals_survive_run_end_and_only_the_reset_input_zeroes_them() {
     assert_eq!(env.state().borrow().lua_errors.len(), errors_before);
 }
 
-#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
 #[test]
 fn original_scenario_tracker_reads_supplied_criteria_visibility_on_init() {
     let env = load_tracker();
@@ -366,4 +365,29 @@ fn original_scenario_tracker_reads_supplied_criteria_visibility_on_init() {
     let independent = WowLuaEnv::new().unwrap();
     let shown: bool = independent.eval("return C_Scenario.ShouldShowCriteria()").unwrap();
     assert!(shown, "criteria default to shown in a fresh environment");
+}
+
+#[test]
+fn scenario_should_show_criteria_returns_one_boolean_independent_of_scenario() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        assert(select('#', C_Scenario.ShouldShowCriteria()) == 1)
+        assert(C_Scenario.ShouldShowCriteria() == true)
+        -- One process-wide flag: supplying a scenario does not change it.
+        A_Admin.SetScenarioCriteria({stepID=1, title='Fixture stage', description='Fixture objectives'},
+            {{criteriaID=901, description='First boss', quantity=0, totalQuantity=1, quantityString='0'}})
+        assert(select('#', C_Scenario.ShouldShowCriteria()) == 1)
+        assert(C_Scenario.ShouldShowCriteria() == true)
+        A_Admin.SetScenarioCriteriaShown(false)
+        assert(select('#', C_Scenario.ShouldShowCriteria()) == 1)
+        assert(C_Scenario.ShouldShowCriteria() == false)
+        A_Admin.SetScenarioCriteria({stepID=2, title='Second stage', description='Second objectives'},
+            {{criteriaID=902, description='Second boss', quantity=1, totalQuantity=1, quantityString='1'}})
+        assert(C_Scenario.ShouldShowCriteria() == false)
+        A_Admin.SetScenarioCriteriaShown(true)
+        assert(C_Scenario.ShouldShowCriteria() == true)
+    "#,
+    )
+    .unwrap();
 }
