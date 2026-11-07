@@ -95,7 +95,7 @@ const ORIGINAL_ITEM_CONSUMER: &str = r#"
     return value, table.concat(observations, '\n')
 "#;
 
-#[cfg(feature = "client-retail")]
+#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
 #[test]
 fn pet_info_by_item_uses_native_tuple_and_argument_contract() {
     let env = WowLuaEnv::new().unwrap();

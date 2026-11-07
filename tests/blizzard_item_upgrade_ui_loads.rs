@@ -263,14 +263,42 @@ fn blizzard_item_upgrade_toc_lists_lua_then_xml_under_mainline_subdir() {
 }
 
 #[test]
-fn blizzard_item_upgrade_directory_holds_five_entries() {
-    let entries = std::fs::read_dir(item_upgrade_dir())
+fn blizzard_item_upgrade_directory_matches_pinned_profile_layout() {
+    let mut entries: Vec<String> = std::fs::read_dir(item_upgrade_dir())
         .expect("Blizzard_ItemUpgradeUI directory should read")
-        .count();
+        .map(|entry| {
+            entry
+                .expect("Blizzard_ItemUpgradeUI directory entry should read")
+                .file_name()
+                .to_string_lossy()
+                .into_owned()
+        })
+        .collect();
+    entries.sort();
+    let expected: Vec<&str> = if toc_layout::unified_toc_tree() {
+        vec![
+            "Blizzard_ItemUpgradeUI.toc",
+            "Blizzard_ItemUpgradeUI_Bootstrap.lua",
+            "Mainline",
+        ]
+    } else {
+        vec![
+            "Blizzard_ItemUpgradeUI_Bootstrap.lua",
+            "Blizzard_ItemUpgradeUI_Mainline.toc",
+            "Blizzard_ItemUpgradeUI_Mists.toc",
+            "Mainline",
+            "Mists",
+        ]
+    };
     assert_eq!(
-        entries, 5,
-        "Directory must hold exactly 5 entries: two flavor TOCs, the shared bootstrap, and the \
-         Mainline and Mists source directories"
+        entries, expected,
+        "Directory entries must match the active profile's pinned manifest. The Retail manifest \
+         lists 7 files under Blizzard_ItemUpgradeUI (data/blizzard-ui-files/retail.txt:2296-2302): \
+         the shared bootstrap, the `_Mainline` and `_Mists` flavor TOCs, and the Mainline and \
+         Mists source directories — 5 top-level entries. The pinned PTR manifest lists 4 files \
+         (data/blizzard-ui-files/ptr.txt:2536-2539) because PTR ships one unified \
+         Blizzard_ItemUpgradeUI.toc whose `[Family]` placeholders select the Mainline files, and \
+         no Mists source directory — 3 top-level entries"
     );
 }
 
@@ -562,15 +590,38 @@ fn blizzard_item_upgrade_publishes_two_free_helper_functions(env: &WowLuaEnv) {
 
 #[cfg(feature = "client-ptr")]
 #[test]
-fn ptr_item_upgrade_does_not_publish_reversed_hide_wrapper() {
+fn ptr_item_upgrade_publishes_hide_wrapper_from_pinned_bootstrap() {
     let env = load_full_game_ui_with_item_upgrade_lod();
 
-    let wrapper_is_absent: bool = env
-        .eval("return HideItemUpgradeFrame == nil")
-        .expect("item upgrade wrapper visibility should be queryable");
+    let (kind, source): (String, String) = env
+        .eval(
+            r#"
+            assert(type(HideItemUpgradeFrame) == 'function',
+                'pinned PTR bootstrap defines HideItemUpgradeFrame')
+            local info = debug.getinfo(HideItemUpgradeFrame, 'S')
+            return type(HideItemUpgradeFrame), (info and info.source or ''):gsub('\\', '/')
+            "#,
+        )
+        .expect("item upgrade hide wrapper provenance should be queryable");
+    assert_eq!(kind, "function");
     assert!(
-        wrapper_is_absent,
-        "snapshot-only HideItemUpgradeFrame unexpectedly exists after PTR addon load"
+        source.ends_with("Blizzard_ItemUpgradeUI/Blizzard_ItemUpgradeUI_Bootstrap.lua"),
+        "HideItemUpgradeFrame must come from the pinned PTR bootstrap, not from a simulator stub: \
+         data/blizzard-ui-files/ptr.txt:2537 pins \
+         Blizzard_ItemUpgradeUI/Blizzard_ItemUpgradeUI_Bootstrap.lua, whose line 13 defines \
+         `function HideItemUpgradeFrame()` guarding on C_AddOns.IsAddOnLoaded and delegating to \
+         ItemUpgradeFrame_Hide. Source reported: {source}"
+    );
+
+    env.exec("HideItemUpgradeFrame()")
+        .expect("pinned wrapper must run against the loaded addon without a Lua error");
+    let shown: bool = env
+        .eval("return ItemUpgradeFrame:IsShown()")
+        .expect("ItemUpgradeFrame:IsShown() probe should succeed");
+    assert!(
+        !shown,
+        "HideItemUpgradeFrame must delegate to ItemUpgradeFrame_Hide -> HideUIPanel, leaving the \
+         never-shown ItemUpgradeFrame hidden"
     );
 }
 
