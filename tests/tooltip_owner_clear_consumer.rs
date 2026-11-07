@@ -203,6 +203,9 @@ fn tooltip_owner_clear_failed_lookup_reprocessing_notifies_once() {
 /// Forever keeps the inferred owner-reassignment visibility lifecycle: the
 /// same owner keeps the tooltip shown and clears its lines, a different owner
 /// hides through the ordinary lifecycle before recording the new owner.
+///
+/// The pooled FontString's own shown flag is not asserted: only Retail/PTR
+/// (WM63 O17 §7) and Wrath reset it, and no Forever native evidence covers it.
 #[cfg(feature = "client-wowforever")]
 #[test]
 fn tooltip_owner_clear_forever_owner_reassignment_lifecycle() {
@@ -222,7 +225,7 @@ fn tooltip_owner_clear_forever_owner_reassignment_lifecycle() {
         tip:SetOwner(owner_a, "ANCHOR_NONE")
         assert(tip:IsShown(), "same owner retains visibility")
         assert(tip:NumLines() == 0, "same-owner SetOwner clears lines")
-        assert(not used:IsShown(), "cleared content hides the used FontString")
+        assert(used:GetText() == nil, "cleared content drops the used FontString text")
 
         tip:AddLine("Second")
         tip:SetOwner(owner_b, "ANCHOR_NONE")
