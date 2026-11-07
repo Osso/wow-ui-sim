@@ -31,13 +31,19 @@ fn log_error_boundary(case: &str, error: &str) {
 }
 
 fn load_mists_token_ui_env() -> WowLuaEnv {
-    // TokenUI's bare TOC omits its implicit Game startup dependencies.
+    // TokenUI's bare TOC omits its implicit Game startup dependencies, including
+    // the chat and item-button addons that receive its currency links.
     let (env, _) = blizzard_addon_closure::build_blizzard_addon_closure_env(
         &blizzard_addon_closure::blizzard_ui_dir(),
         &["Blizzard_TokenUI"],
         &[BlizzardAddonOverride {
             addon: "Blizzard_TokenUI",
-            extra_roots: &["Blizzard_UIPanels_Game", "Blizzard_MoneyFrame"],
+            extra_roots: &[
+                "Blizzard_UIPanels_Game",
+                "Blizzard_MoneyFrame",
+                "Blizzard_ChatFrame",
+                "Blizzard_ItemButton",
+            ],
         }],
     );
     env.exec(
@@ -47,6 +53,11 @@ fn load_mists_token_ui_env() -> WowLuaEnv {
         assert(TokenFrameContainer:GetObjectType() == "ScrollFrame")
         assert(type(HybridScrollFrame_GetOffset) == "function")
         assert(type(HybridScrollFrame_Update) == "function")
+        -- Mists loads Cata/Blizzard_TokenUI.lua, whose TokenFrame_OnShow creates the
+        -- rows (lines 41-57); TokenFrame starts hidden, so none exist after load.
+        assert(TokenFrameContainer.buttons == nil)
+        ToggleCharacter("TokenFrame")
+        assert(TokenFrame:IsVisible())
         assert(#TokenFrameContainer.buttons > 0)
         "#,
     )
