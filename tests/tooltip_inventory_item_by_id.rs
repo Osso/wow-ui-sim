@@ -1,6 +1,6 @@
-//! WM94 §1: the original `SetInventoryItemByID` accessor selects an owned
-//! instance (bag first, then the equipment range) and composes the ordinary
-//! item tooltip from it.
+//! WM94 §1 + Round 6 §GetInventoryItemByID: the original `SetInventoryItemByID`
+//! accessor selects an owned instance (backpack first, then the equipment range)
+//! and composes the ordinary item tooltip from that instance.
 
 #[path = "tooltip_full_env_helpers.rs"]
 mod tooltip_full_env_helpers;
@@ -61,6 +61,90 @@ tooltip_selection_getters_fixture! {
             GameTooltip:SetOwner(UIParent, 'ANCHOR_NONE')
             GameTooltip:SetInventoryItemByID(6948)
             assert(GameTooltip:GetPrimaryTooltipData() == nil, 'unowned item must not show a tooltip')
+            "#,
+        )
+        .unwrap();
+    }
+
+    // Round 6 §GetInventoryItemByID(c): the request carries the found item's own
+    // GUID in both GUID inputs, and the shared item producer publishes it as the
+    // top-level `guid` field of the resolved instance.
+    #[test]
+    fn tooltip_inventory_item_by_id_publishes_the_instance_guid() {
+        let env = tooltip_full_env_helpers::load_full_env_without_post_load();
+        env.exec(
+            r#"
+            A_Admin.AddBagItem(0, 3, 1728, 1)
+            local expected = C_Item.GetItemGUID({ bagID = 0, slotIndex = 3 })
+            assert(expected == 'Item-0-3-1728', 'fixture GUID shape changed: ' .. tostring(expected))
+            GameTooltip:SetOwner(UIParent, 'ANCHOR_NONE')
+            GameTooltip:SetInventoryItemByID(1728)
+            local data = GameTooltip:GetPrimaryTooltipData()
+            assert(data and data.guid == expected,
+                'resolved instance must publish its own GUID, got ' .. tostring(data and data.guid))
+            "#,
+        )
+        .unwrap();
+    }
+
+    // Round 6 §GetInventoryItemByID(a): one forward pass with the first
+    // acceptable candidate winning; the backpack range precedes the equipment
+    // range, so an equipped copy never outranks an earlier backpack copy.
+    #[test]
+    fn tooltip_inventory_item_by_id_prefers_the_backpack_over_the_equipment_range() {
+        let env = tooltip_full_env_helpers::load_full_env_without_post_load();
+        env.exec(
+            r#"
+            A_Admin.EquipItem(16, 231268)
+            A_Admin.AddBagItem(0, 2, 231268, 1)
+            GameTooltip:SetOwner(UIParent, 'ANCHOR_NONE')
+            GameTooltip:SetInventoryItemByID(231268)
+            local data = GameTooltip:GetPrimaryTooltipData()
+            assert(data and data.guid == 'Item-0-2-231268',
+                'backpack copy must win over the equipped copy, got ' .. tostring(data and data.guid))
+            "#,
+        )
+        .unwrap();
+    }
+
+    // Same forward pass: the backpack precedes the carried bags, and slots
+    // inside one container are visited in ascending order.
+    #[test]
+    fn tooltip_inventory_item_by_id_prefers_the_backpack_and_the_lowest_slot() {
+        let env = tooltip_full_env_helpers::load_full_env_without_post_load();
+        env.exec(
+            r#"
+            A_Admin.AddBagItem(1, 4, 1728, 1)
+            A_Admin.AddBagItem(0, 6, 1728, 1)
+            A_Admin.AddBagItem(0, 5, 1728, 1)
+            GameTooltip:SetOwner(UIParent, 'ANCHOR_NONE')
+            GameTooltip:SetInventoryItemByID(1728)
+            local data = GameTooltip:GetPrimaryTooltipData()
+            assert(data and data.guid == 'Item-0-5-1728',
+                'backpack lowest slot must win, got ' .. tostring(data and data.guid))
+            "#,
+        )
+        .unwrap();
+    }
+
+    // Round 6 §GetInventoryItemByID(a): the argument is read by the plain
+    // signed reader. A negative id passes the reader with no semantic bound test
+    // and then simply fails the inventory search; only the signed 32-bit range
+    // is rejected.
+    #[test]
+    fn tooltip_inventory_item_by_id_reads_a_signed_identifier() {
+        let env = tooltip_full_env_helpers::load_full_env_without_post_load();
+        env.exec(
+            r#"
+            A_Admin.AddBagItem(0, 1, 1728, 1)
+            assert(select('#', C_TooltipInfo.GetInventoryItemByID(-1)) == 0,
+                'a negative id passes the signed reader and misses')
+            assert(select('#', C_TooltipInfo.GetInventoryItemByID(-2147483648)) == 0,
+                'the signed range lower bound is accepted')
+            assert(not pcall(C_TooltipInfo.GetInventoryItemByID, 2147483648),
+                'the signed range upper bound is rejected')
+            assert(not pcall(C_TooltipInfo.GetInventoryItemByID, 1.5),
+                'the signed reader rejects a non-integer')
             "#,
         )
         .unwrap();
