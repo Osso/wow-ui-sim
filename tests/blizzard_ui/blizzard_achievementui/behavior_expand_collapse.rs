@@ -118,7 +118,11 @@
 //! row with the full sub-widget tree (PlusMinus, Background, Tracked,
 //! Tabard, GuildCornerL/R, Description, HiddenDescription, Highlight,
 //! Shield) exposing counter-bound `:Show`/`:Hide`/`:SetTexCoord` and
-//! a `_height` round-trip via `:SetHeight` / `:GetHeight`. Spies on
+//! a `_height` round-trip via `:SetHeight` / `:GetHeight`. `Highlight`
+//! is a real region: Retail hides it directly (`Highlight:Hide()`,
+//! lua:1364) while the newer sources route the same call through
+//! `SetHighlightShown` -> `Highlight:SetShown` (lua:1165-1167,
+//! reached from lua:1444), so only a real region satisfies both. Spies on
 //! `GetAchievementNumCriteria`, `GetPreviousAchievement`,
 //! `GetAchievementGuildRep`, and `InGuildView` drive the texture
 //! display gate and the guild-view branch deterministically.
@@ -132,6 +136,7 @@ const REQUESTED_EXPAND_HEIGHT: i64 = 200;
 const EXPECTED_COLLAPSE: &str = "first_collapsed_flag=true height=84 \
     plus_minus_show=1 plus_minus_hide=0 plus_minus_set_tex_coord_count=1 \
     description_show=1 hidden_description_hide=1 tabard_hide=1 \
+    highlight_shown=false \
     second_call_no_op_height=84 second_call_show_count=1";
 const EXPECTED_EXPAND: &str = "expanded_collapsed_flag=nil height=200 \
     plus_minus_show=1 plus_minus_set_tex_coord_count=1 \
@@ -195,7 +200,9 @@ const FAKE_ROW_BUILDER: &str = r#"
             Show = counter_show("hidden_description_show"),
             Hide = counter_hide("hidden_description_hide"),
         }
-        row.Highlight = {Hide = counter_hide("highlight_hide")}
+        local highlight_host = CreateFrame("Frame", nil, UIParent)
+        row.Highlight = highlight_host:CreateTexture(nil, "HIGHLIGHT")
+        row.Highlight:Show()
         row.Shield = {SetFrameLevel = function() end}
         row.SetHeight = function(self, h) row._height = h end
         row.GetHeight = function(self) return row._height end
@@ -255,6 +262,7 @@ fn collapse_writes_constant_collapsed_height_swaps_texture_via_helper_and_is_ide
                 fake_row:Collapse()
                 local first_collapsed_flag = tostring(fake_row.collapsed)
                 local first_height = fake_row._height
+                local highlight_shown = tostring(fake_row.Highlight:IsShown())
 
                 fake_row:Collapse()
                 local second_call_no_op_height = fake_row._height
@@ -268,12 +276,14 @@ fn collapse_writes_constant_collapsed_height_swaps_texture_via_helper_and_is_ide
                     "plus_minus_show=%d plus_minus_hide=%d " ..
                     "plus_minus_set_tex_coord_count=%d " ..
                     "description_show=%d hidden_description_hide=%d tabard_hide=%d " ..
+                    "highlight_shown=%s " ..
                     "second_call_no_op_height=%d second_call_show_count=%d",
                     first_collapsed_flag, first_height,
                     captures.plus_minus_show or 0, captures.plus_minus_hide or 0,
                     captures.plus_minus_set_tex_coord_count or 0,
                     captures.description_show or 0, captures.hidden_description_hide or 0,
                     captures.tabard_hide or 0,
+                    highlight_shown,
                     second_call_no_op_height, second_call_show_count)
 
                 return type(_G.AchievementTemplateMixin.Collapse),
@@ -339,7 +349,10 @@ fn collapse_writes_constant_collapsed_height_swaps_texture_via_helper_and_is_ide
              display branch. A `description_show=0` means lua:1324 didn't fire. A \
              `second_call_show_count=2` means the idempotent guard at lua:1309 leaked — \
              every repeated Collapse call would re-fire all the side effects, churning \
-             the layout."
+             the layout. A `highlight_shown=true` means the trailing highlight hide \
+             (`Highlight:Hide()` at lua:1364, or `SetHighlightShown(false)` -> \
+             `Highlight:SetShown(false)` at lua:1165-1167 reached from lua:1444) never \
+             reached the region."
         );
     });
 }
