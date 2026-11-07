@@ -98,12 +98,60 @@ fn ensure_tooltip_line_id(
         true,
         None,
     )?;
+    apply_body_font_to_synthesized_line(state, tooltip_id, child_id, right_side, line_index)?;
     {
         let mut sim = borrow_state_mut(state)?;
         configure_tooltip_line_child(&mut sim, child_id, right_side, line_index);
         record_tooltip_line_child_id(&mut sim, tooltip_id, child_id, right_side, line_index);
     }
     Ok(Some(child_id))
+}
+
+/// A tooltip declares two font slots: `textLeft1Font`/`textRight1Font` for row 1
+/// and `textLeft2Font`/`textRight2Font` for row 2
+/// (`Blizzard_SharedXML/SharedTooltipTemplates.xml` lines 12-15, applied by
+/// `SharedTooltip_OnLoad`, `SharedTooltipTemplates.lua` lines 16-19). Later rows
+/// have no declared font, so the synthesized FontString takes the declared body
+/// font instead of the frame default. WM63 L23 section 3: row height is the
+/// measured left FontString height, not a fixed font-size pair.
+fn apply_body_font_to_synthesized_line(
+    state: &mut LuaState,
+    tooltip_id: u64,
+    line_id: u64,
+    right_side: bool,
+    line_index: usize,
+) -> LuaResult<()> {
+    if line_index < 3 || !native_attachments() {
+        return Ok(());
+    }
+    let key = if right_side {
+        "textRight2Font"
+    } else {
+        "textLeft2Font"
+    };
+    let font_object = declared_font_object(state, tooltip_id, key)?;
+    if matches!(font_object, Val::Table(_)) {
+        crate::lua_api::frame::methods::button_anchor_hierarchy::project_font_object_for_frame(
+            state,
+            line_id,
+            font_object,
+        )?;
+    }
+    Ok(())
+}
+
+/// Reads a font-object field of the tooltip frame, resolving a font-object name
+/// through the global table the way `SetFontObject` accepts a string.
+fn declared_font_object(state: &mut LuaState, tooltip_id: u64, key: &str) -> LuaResult<Val> {
+    let tooltip = frame_ref(state, tooltip_id)?;
+    let value = table_get(state, tooltip, key);
+    let Val::Str(_) = value else {
+        return Ok(value);
+    };
+    let Some(name) = val_to_string(state, value) else {
+        return Ok(Val::Nil);
+    };
+    Ok(table_get(state, Val::Table(state.global), &name))
 }
 
 fn configure_tooltip_line_child(
