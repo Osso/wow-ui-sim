@@ -8,20 +8,25 @@
 //!
 //! Forking is only attempted when the test process is single-threaded. Otherwise
 //! the caller falls back to building the fixture in-process, exactly as before.
+//! Platforms without `fork` always take that in-process fallback.
 
 use std::any::TypeId;
 use std::cell::UnsafeCell;
 use std::collections::VecDeque;
 use std::fmt::Write as _;
 use std::io::Write as _;
+#[cfg(target_os = "linux")]
 use std::panic::{self, AssertUnwindSafe};
 use std::path::Path;
+#[cfg(target_os = "linux")]
 use std::time::{Duration, Instant};
 
 use wow_ui_sim::loader::BlizzardAddonOverride;
 use wow_ui_sim::lua_api::WowLuaEnv;
 
+#[cfg(target_os = "linux")]
 const CHILD_DEADLINE: Duration = Duration::from_secs(300);
+#[cfg(target_os = "linux")]
 const DEADLINE_ENV: &str = "WOW_SIM_GROUPED_FIXTURE_TIMEOUT_SECS";
 const ENABLE_ENV: &str = "WOW_SIM_GROUPED_FIXTURE";
 /// Comma-separated families verified for fork reuse. Empty means no grouping.
@@ -80,6 +85,7 @@ impl GlobalParents {
         self.entries.push_back(Parent { key: key.to_string(), env, loaded });
     }
 
+    #[cfg(target_os = "linux")]
     fn current(&self) -> &Parent {
         self.entries.back().expect("grouped fixture parent")
     }
@@ -105,7 +111,21 @@ fn fixture_key(
     key
 }
 
+/// Only Linux can fork a test child.
+#[cfg(target_os = "linux")]
+fn fork_available() -> Result<(), &'static str> {
+    Ok(())
+}
+
+#[cfg(not(target_os = "linux"))]
+fn fork_available() -> Result<(), &'static str> {
+    Err("fork is unavailable on this platform")
+}
+
 fn fork_enabled<R: 'static>() -> Result<(), &'static str> {
+    if let Err(reason) = fork_available() {
+        return Err(reason);
+    }
     if TypeId::of::<R>() != TypeId::of::<()>() {
         return Err("assertions return a value");
     }
@@ -140,6 +160,7 @@ fn record(reason: &str) {
     }
 }
 
+#[cfg(target_os = "linux")]
 fn child_deadline() -> Duration {
     std::env::var(DEADLINE_ENV)
         .ok()
@@ -194,6 +215,7 @@ where
 }
 
 /// Fork, run `assertions` in the child, and report its status against this test.
+#[cfg(target_os = "linux")]
 fn run_in_child<R, F>(key: &str, assertions: F) -> R
 where
     R: Default,
@@ -257,4 +279,15 @@ where
         panic!("grouped fixture: child for test `{name}` failed ({detail}, fixture {key})");
     }
     R::default()
+}
+
+/// `fork_available` rejects every non-Linux process, so `with_fixture` builds the
+/// fixture in-process and never reaches this path.
+#[cfg(not(target_os = "linux"))]
+fn run_in_child<R, F>(_key: &str, _assertions: F) -> R
+where
+    R: Default,
+    F: FnOnce(&WowLuaEnv, &[String]) -> R,
+{
+    unreachable!("grouped fixture: fork is unavailable on this platform")
 }
