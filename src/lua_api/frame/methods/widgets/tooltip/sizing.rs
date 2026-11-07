@@ -436,4 +436,63 @@ mod tests {
             "tooltip content refresh should invalidate stale layout even when measured size is unchanged"
         );
     }
+
+    #[cfg(any(feature = "client-retail", feature = "client-ptr"))]
+    fn estimated_width_for_wrapped(text: &str, custom: Option<f32>) -> f32 {
+        let mut sim = SimState::default();
+        let tooltip_id = 11;
+        sim.widgets.register(Frame {
+            id: tooltip_id,
+            widget_type: WidgetType::GameTooltip,
+            visible: true,
+            ..Default::default()
+        });
+        sim.tooltips.insert(
+            tooltip_id,
+            TooltipData {
+                lines: vec![TooltipLine {
+                    wrap: true,
+                    ..tooltip_line(text)
+                }],
+                custom_word_wrap_min_width: custom,
+                ..Default::default()
+            },
+        );
+        refresh_tooltip_geometry(&mut sim, tooltip_id);
+        sim.widgets
+            .get(tooltip_id)
+            .map(|frame| frame.width)
+            .expect("tooltip frame should exist")
+    }
+
+    /// WM63 L23 section 2 for geometry estimated without glyph measurement: the
+    /// intrinsic width of a wrapped row is capped at 230.4, or at the custom
+    /// wrap value, and a custom value never raises the width.
+    #[cfg(any(feature = "client-retail", feature = "client-ptr"))]
+    #[test]
+    fn estimated_wrapped_width_caps_at_the_intrinsic_cap() {
+        const OUTER_PADDING: f32 = 20.48;
+        let long = "word ".repeat(40);
+
+        let default_capped = estimated_width_for_wrapped(&long, None);
+        assert!(
+            (default_capped - (230.4 + OUTER_PADDING)).abs() < 0.01,
+            "default wrapped cap: {default_capped}"
+        );
+
+        let custom_capped = estimated_width_for_wrapped(&long, Some(200.0));
+        assert!(
+            (custom_capped - (200.0 + OUTER_PADDING)).abs() < 0.01,
+            "custom wrapped cap: {custom_capped}"
+        );
+
+        let short = "Short";
+        let short_expected =
+            super::estimated_text_width(short, super::TOOLTIP_HEADER_FONT_SIZE) + OUTER_PADDING;
+        let short_width = estimated_width_for_wrapped(short, Some(200.0));
+        assert!(
+            (short_width - short_expected).abs() < 0.01,
+            "a custom wrap value is a cap, not a floor: {short_width} vs {short_expected}"
+        );
+    }
 }
