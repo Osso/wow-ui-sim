@@ -404,7 +404,7 @@ fn token_row_chat_link_click_inserts_supplied_currency_link_into_chat() {
         .expect("modified TokenUI row clicks should reach the chat edit box");
 
     assert!(
-        row_text.contains("|Hcurrency:2245|h[Seeded Valorstones]|h"),
+        row_text.contains("|Hcurrency:2245:0|h[Seeded Valorstones]|h"),
         "row click should insert the seeded Valorstones link: {row_text:?}"
     );
     assert_eq!(
@@ -414,7 +414,7 @@ fn token_row_chat_link_click_inserts_supplied_currency_link_into_chat() {
     assert_ne!(other_id, 2245);
     assert!(
         other_text.contains(&format!(
-            "|Hcurrency:{other_id}|h[Weathered Harbinger Crest]|h"
+            "|Hcurrency:{other_id}:0|h[Weathered Harbinger Crest]|h"
         )),
         "third row click should insert its own currency link: {other_text:?}"
     );
