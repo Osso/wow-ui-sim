@@ -3460,3 +3460,12 @@ buttons, and the stock idle target spell. Contracts updated:
 [forever finite constants](../specs/forever-finite-constants.md),
 [quest abandonability](../specs/quest-abandonability.md) and
 [target spell and flyout membership](../specs/spell-target-flyout.md).
+
+## 2026-11-07 — 70493 PTR reclassifies HideItemUpgradeFrame
+
+The [12.1 FrameXML inventory](investigations/patch-12-1-framexml-symbol-inventory.md) now
+classifies `HideItemUpgradeFrame` as vendor-present. The pinned 70493 PTR cache ships
+`Blizzard_ItemUpgradeUI_Bootstrap.lua` ([path pin](../../data/blizzard-ui-files/ptr.txt)), whose
+line 13 defines the wrapper; the old reversed-name row described a stale local search list. The
+ItemUpgradeUI directory expectation follows the same pin: PTR ships four files and one unified
+`[Family]` TOC instead of Retail's five-entry flavor split.
