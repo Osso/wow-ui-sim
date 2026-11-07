@@ -322,7 +322,9 @@ fn test_create_frame_from_xml_inline_parent_field_method_with_self_result_runs()
     )
     .unwrap();
     let disabled: bool = env
-        .eval("return XmlInlineParentFieldMethodFrame.BuyButton:IsEnabled()")
+        .eval(
+            "local v = XmlInlineParentFieldMethodFrame.BuyButton:IsEnabled(); return v == true or v == 1",
+        )
         .unwrap();
     assert!(!disabled);
 
@@ -334,7 +336,9 @@ fn test_create_frame_from_xml_inline_parent_field_method_with_self_result_runs()
     )
     .unwrap();
     let enabled: bool = env
-        .eval("return XmlInlineParentFieldMethodFrame.BuyButton:IsEnabled()")
+        .eval(
+            "local v = XmlInlineParentFieldMethodFrame.BuyButton:IsEnabled(); return v == true or v == 1",
+        )
         .unwrap();
     assert!(enabled);
 }

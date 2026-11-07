@@ -438,7 +438,9 @@ fn test_button_enabled_by_default() {
     env.exec(r#"local btn = CreateFrame("Button", "TestEnabledDef", UIParent)"#)
         .unwrap();
 
-    let enabled: bool = env.eval("return TestEnabledDef:IsEnabled()").unwrap();
+    let enabled: bool = env
+        .eval("local v = TestEnabledDef:IsEnabled(); return v == true or v == 1")
+        .unwrap();
     assert!(enabled, "Buttons should be enabled by default");
 }
 
@@ -454,7 +456,9 @@ fn test_set_enabled_false() {
     )
     .unwrap();
 
-    let enabled: bool = env.eval("return TestSetEnFalse:IsEnabled()").unwrap();
+    let enabled: bool = env
+        .eval("local v = TestSetEnFalse:IsEnabled(); return v == true or v == 1")
+        .unwrap();
     assert!(
         !enabled,
         "Button should be disabled after SetEnabled(false)"
@@ -474,7 +478,9 @@ fn test_set_enabled_true() {
     )
     .unwrap();
 
-    let enabled: bool = env.eval("return TestSetEnTrue:IsEnabled()").unwrap();
+    let enabled: bool = env
+        .eval("local v = TestSetEnTrue:IsEnabled(); return v == true or v == 1")
+        .unwrap();
     assert!(enabled, "Button should be enabled after SetEnabled(true)");
 }
 
@@ -491,7 +497,9 @@ fn test_enable_method() {
     )
     .unwrap();
 
-    let enabled: bool = env.eval("return TestEnMethod:IsEnabled()").unwrap();
+    let enabled: bool = env
+        .eval("local v = TestEnMethod:IsEnabled(); return v == true or v == 1")
+        .unwrap();
     assert!(enabled, "Button should be enabled after Enable()");
 }
 
@@ -507,7 +515,9 @@ fn test_disable_method() {
     )
     .unwrap();
 
-    let enabled: bool = env.eval("return TestDisMethod:IsEnabled()").unwrap();
+    let enabled: bool = env
+        .eval("local v = TestDisMethod:IsEnabled(); return v == true or v == 1")
+        .unwrap();
     assert!(!enabled, "Button should be disabled after Disable()");
 }
 

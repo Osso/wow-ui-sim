@@ -45,15 +45,15 @@ fn wrath_friends_legacy_original_panel_displays_seeded_rows_and_selection() {
             assert(buttons[2].name:GetText() == 'Sylvara, '..format(FRIENDS_LEVEL_TEMPLATE, 60, 'Mage'))
             assert(buttons[4].name:GetText() == 'Durotan')
             assert(GetSelectedFriend() == 1 and FriendsFrame.selectedFriend == 1)
-            assert(FriendsFrameSendMessageButton:IsEnabled())
+            assert(FriendsFrameSendMessageButton:IsEnabled() == true or FriendsFrameSendMessageButton:IsEnabled() == 1)
             FriendsFrame_SelectFriend(FRIENDS_BUTTON_TYPE_WOW, 3)
             FriendsList_Update()
             assert(GetSelectedFriend() == 3 and FriendsFrame.selectedFriend == 3)
-            assert(not FriendsFrameSendMessageButton:IsEnabled(), 'offline selection disables tell')
+            assert(FriendsFrameSendMessageButton:IsEnabled() == false or FriendsFrameSendMessageButton:IsEnabled() == 0, 'offline selection disables tell')
             FriendsFrame_SelectFriend(FRIENDS_BUTTON_TYPE_WOW, 2)
             FriendsList_Update()
             assert(GetSelectedFriend() == 2 and FriendsFrame.selectedFriend == 2)
-            assert(FriendsFrameSendMessageButton:IsEnabled(), 'online selection enables tell')
+            assert(FriendsFrameSendMessageButton:IsEnabled() == true or FriendsFrameSendMessageButton:IsEnabled() == 1, 'online selection enables tell')
             "#,
         )
         .expect("original ToggleFriendsFrame/FriendsList_Update values");

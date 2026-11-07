@@ -7,6 +7,21 @@
 - [x] On an enabled-state change, run intrinsic precall, normal script/hooks, and intrinsic postcall for `OnEnable` or `OnDisable`, with the button as the sole argument and committed state visible to handlers.
 - [x] Retain unchanged-state no-ops and normal hook-only behavior.
 - [x] Report handler errors and continue later bindings without undoing the state change.
+- [x] On Wrath only, `IsEnabled()` returns the numbers `1` and `0`. Every other
+  profile keeps the boolean. The 3.3.5a consumer compares the result with those
+  literals in both directions: enabled must satisfy `== 1`
+  (`FrameXML/MainMenuBarMicroButtons.xml:13`, `FrameXML/UIPanelTemplates.xml:76,84,92`,
+  `FrameXML/LootFrame.xml:71`, `FrameXML/LFDFrame.xml:59`,
+  `FrameXML/KnowledgeBaseFrame.xml:258`) and disabled must satisfy `== 0`
+  (`FrameXML/ChannelFrame.lua:258`, `FrameXML/MainMenuBarMicroButtons.xml:246,257`,
+  `FrameXML/PaperDollFrame.xml:1440`, `FrameXML/TutorialFrame.lua:835`). The same
+  consumer set compares `IsEnabled() ~= 1` for disabled styling
+  (`FrameXML/UIPanelTemplates.xml:68`) and `not self:IsEnabled()`
+  (`FrameXML/VehicleMenuBar.lua:1006`), so the numeric shape is the wider match and
+  those two sites are consumer bugs under it. Mists-era consumers use truthiness
+  instead (`mists/AddOns/Blizzard_BuffFrame/BuffFrame.lua:602,1338-1343`), so the
+  numeric shape is legacy-only. Test:
+  `tests/tooltip_hover.rs::test_micro_menu_hover_shows_tooltip`.
 
 ## How it works
 

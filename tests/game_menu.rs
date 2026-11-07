@@ -177,7 +177,8 @@ fn test_game_menu_all_enabled_buttons_have_callable_callbacks() {
             .eval(&menu_button_chunk(r#"
                 local failures = {}
                 for btn in menu_buttons() do
-                    if btn:IsEnabled() then
+                    -- 12340 IsEnabled returns 1/0 and 0 is truthy in Lua.
+                    if btn:IsEnabled() == true or btn:IsEnabled() == 1 then
                         local text = btn:GetText() or "<unnamed>"
                         local onclick = btn:GetScript("OnClick")
                         if type(onclick) ~= "function" then
