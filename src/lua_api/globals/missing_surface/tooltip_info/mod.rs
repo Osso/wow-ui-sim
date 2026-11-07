@@ -5,7 +5,6 @@ mod spell;
 mod unit;
 
 use super::ensure_namespace;
-use crate::lua_api::globals::currency_data;
 use crate::lua_api::methods::{
     call_function_state, create_string, table_get, table_set, val_to_string,
 };
@@ -160,11 +159,15 @@ pub(crate) fn tooltip_for_spell(state: &mut LuaState, spell_id: u32) -> Val {
 /// only composition input this path supplies. A currency identity with no
 /// resident currency row keeps the verified type-5 identity and publishes no
 /// lines, because the native post-title rows are UNKNOWN.
+///
+/// Only the Retail/PTR merchant-cost getter calls this bridge, so it is compiled
+/// with that epoch to keep other profiles warning-free.
+#[cfg(feature = "retail-12-1-5")]
 pub(crate) fn tooltip_for_cost_currency(state: &mut LuaState, currency_id: u32) -> Val {
     let saved_top = state.top;
     let tooltip = match i32::try_from(currency_id)
         .ok()
-        .and_then(currency_data::get_currency_by_id)
+        .and_then(crate::lua_api::globals::currency_data::get_currency_by_id)
     {
         Some(currency) => sources::tooltip_for_currency(state, currency, Some(0)),
         None => {

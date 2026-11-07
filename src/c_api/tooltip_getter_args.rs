@@ -46,6 +46,10 @@ pub(crate) fn optional_unsigned(state: &LuaState, position: i32) -> LuaResult<Op
 /// zero is an absent target, not an argument error, so Lua index 0 and a
 /// fractional index below 1 select nothing and the first ordinal respectively.
 /// Wrong types and out-of-domain numbers keep the shared reader's error.
+///
+/// Only the Retail/PTR merchant-cost getter reads this conversion today, so the
+/// helper is compiled with that epoch to keep other profiles warning-free.
+#[cfg(feature = "retail-12-1-5")]
 pub(crate) fn lua_index(state: &LuaState, position: i32) -> LuaResult<Option<usize>> {
     let value = unwrap_secret(state, stack_val(state, position))?;
     let number = match value {
