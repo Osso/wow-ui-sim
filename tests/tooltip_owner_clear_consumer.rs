@@ -30,24 +30,43 @@ mod tooltip_full_env_helpers;
 #[cfg(any(feature = "client-retail", feature = "client-ptr"))]
 use tooltip_full_env_helpers::setup_full_env;
 
-/// The pinned consumer TOC selects the Mainline body for Retail/PTR.
+/// The profile-selected consumer TOC loads the tooltip XML body, and the same
+/// file list selects it at runtime (Retail: `_Mainline` TOC; PTR: unified TOC).
 #[cfg(any(feature = "client-retail", feature = "client-ptr"))]
-fn assert_mainline_tooltip_consumer_selected() {
+fn assert_tooltip_consumer_selected() {
+    use wow_ui_sim::client_profile::{ClientProfile, ACTIVE};
+
     let addons = wow_ui_sim::paths::default_blizzard_ui_addons_path().unwrap();
     let toc = wow_ui_sim::loader::find_toc_file(&addons.join("Blizzard_GameTooltip"))
         .expect("profile-selected Blizzard_GameTooltip TOC");
     let body = std::fs::read_to_string(&toc).unwrap();
-    assert!(
-        body.contains("AllowLoadGameType: mainline"),
-        "runtime selection guard: {} must be Mainline-only",
-        toc.display()
+    let expected_toc = if ACTIVE == ClientProfile::Retail {
+        "Blizzard_GameTooltip_Mainline.toc"
+    } else {
+        "Blizzard_GameTooltip.toc"
+    };
+    assert_eq!(
+        toc.file_name().and_then(|name| name.to_str()),
+        Some(expected_toc),
+        "runtime selection guard"
     );
     assert!(
-        body.contains("Mainline\\GameTooltip.xml"),
-        "runtime selection guard: {} must load Mainline/GameTooltip.xml",
+        body.contains("GameTooltip.xml"),
+        "runtime selection guard: {} must load the tooltip XML",
         toc.display()
     );
 }
+
+/// The original XML-bound tooltip handlers are the live scripts.
+#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
+const CONSUMER_BINDING_CHECK: &str = r#"
+    local on_hide = GameTooltip:GetScript("OnHide")
+    assert(type(on_hide) == "function", "original OnHide handler is bound")
+    local source = debug.getinfo(on_hide, "S").source
+    assert(source:find("GameTooltip", 1, true), source)
+    assert(type(GameTooltip:GetScript("OnTooltipCleared")) == "function",
+        "original OnTooltipCleared handler is bound")
+"#;
 
 /// Same-owner `SetOwner` clears without hiding, notifies once with the old
 /// owner still installed, and hides the used pooled FontString.
@@ -55,7 +74,8 @@ fn assert_mainline_tooltip_consumer_selected() {
 #[test]
 fn tooltip_owner_clear_same_owner_clears_without_hide() {
     let env = setup_full_env();
-    assert_mainline_tooltip_consumer_selected();
+    assert_tooltip_consumer_selected();
+    env.exec(CONSUMER_BINDING_CHECK).unwrap();
     env.exec(
         r#"
         OwnerClearA = CreateFrame("Frame", "OwnerClearA", UIParent)
@@ -103,7 +123,8 @@ fn tooltip_owner_clear_same_owner_clears_without_hide() {
 #[test]
 fn tooltip_owner_clear_reassignment_hides_before_owner_swap() {
     let env = setup_full_env();
-    assert_mainline_tooltip_consumer_selected();
+    assert_tooltip_consumer_selected();
+    env.exec(CONSUMER_BINDING_CHECK).unwrap();
     env.exec(
         r#"
         OwnerClearA = CreateFrame("Frame", "OwnerClearA", UIParent)
@@ -145,7 +166,8 @@ fn tooltip_owner_clear_reassignment_hides_before_owner_swap() {
 #[test]
 fn tooltip_owner_clear_failed_lookup_reprocessing_notifies_once() {
     let env = setup_full_env();
-    assert_mainline_tooltip_consumer_selected();
+    assert_tooltip_consumer_selected();
+    env.exec(CONSUMER_BINDING_CHECK).unwrap();
     env.exec(
         r#"
         OwnerClearA = CreateFrame("Frame", "OwnerClearA", UIParent)
