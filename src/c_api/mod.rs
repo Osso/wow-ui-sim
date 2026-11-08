@@ -479,7 +479,7 @@ mod c_gamepad_ui;
 pub(crate) mod forever_edit_mode_enums;
 #[cfg(feature = "client-wowforever")]
 pub(crate) mod forever_finite_constants;
-#[cfg(feature = "client-wowforever")]
+#[cfg(any(feature = "client-wowforever", feature = "client-ptr"))]
 mod gamepad_action_bar_constants;
 mod voice_provider_enum;
 

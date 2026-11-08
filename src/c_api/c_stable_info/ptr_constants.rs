@@ -23,7 +23,7 @@ pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
     Ok(())
 }
 
-fn resolve_declared_values() -> [(&'static str, u32); 5] {
+fn resolve_declared_values() -> [(&'static str, u32); 6] {
     // :11 is literal5; :12 aliases it; :14 aliases :12; :15 aliases :14.
     let learned_slots = 5_u32;
     let summonable_pets = learned_slots;
@@ -33,6 +33,7 @@ fn resolve_declared_values() -> [(&'static str, u32); 5] {
     let stable_slots = 200_u32;
     let hunter_slots = stable_slots + learned_slots;
     [
+        ("NUM_PET_SLOTS_THAT_NEED_LEARNED_SPELL", learned_slots),
         ("MAX_SUMMONABLE_HUNTER_PETS", summonable_pets),
         ("EXTRA_PET_STABLE_SLOT", extra_slot),
         ("STABLED_PETS_FIRST_SLOT_INDEX", first_stabled_slot),
