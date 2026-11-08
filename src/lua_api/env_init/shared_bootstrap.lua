@@ -150,6 +150,43 @@ local function createForbiddenObjectTable(object)
   })
 end
 
+-- Inbound container methods return public object references to the calling
+-- partition (Blizzard_CustomAuraContainer.lua:437,444,505,512). AuraButton
+-- display-element getters instead return the adopted private elements, so
+-- their results keep the forbidden view.
+local function __wow_inbound_publishes_public_results(object)
+  if type(object) ~= "table" then
+    return false
+  end
+  local getObjectType = object.GetObjectType
+  if type(getObjectType) ~= "function" then
+    return false
+  end
+  return getObjectType(object) ~= "AuraButton"
+end
+
+local function __wow_public_object(value)
+  if type(value) ~= "table" then
+    return value
+  end
+  local public = rawget(value, "__wowPublicObject")
+  if type(public) ~= "table" or __wow_forbidden_object_tables[public] ~= value then
+    return value
+  end
+  return public
+end
+
+local function __wow_project_inbound_results(project, ...)
+  local count = select("#", ...)
+  local results = { ... }
+  if project then
+    for index = 1, count do
+      results[index] = __wow_public_object(results[index])
+    end
+  end
+  return unpack(results, 1, count)
+end
+
 function GetForbiddenObjectTable(object)
   local public = type(object) == "table" and rawget(object, "__wowPublicObject")
   if public and __wow_forbidden_object_tables[public] == object then
@@ -254,10 +291,11 @@ function __wow_apply_xml_mixin(object, mixin, targetPartition, inboundPartition,
       local fn = value
       applied = function(_self, ...)
         local delegateSelf = wrapInbound and __wow_xml_object_partition(object, inboundName) or object
+        local projectResults = wrapInbound and __wow_inbound_publishes_public_results(delegateSelf)
         if projectArguments then
-          return callPrivateProjectionFactory(fn, delegateSelf, __wow_project_forbidden_arguments(...))
+          return __wow_project_inbound_results(projectResults, callPrivateProjectionFactory(fn, delegateSelf, __wow_project_forbidden_arguments(...)))
         end
-        return fn(delegateSelf, ...)
+        return __wow_project_inbound_results(projectResults, fn(delegateSelf, ...))
       end
     end
 
