@@ -5531,13 +5531,13 @@
           "kind": "source",
           "reference": "src/lua_api/state.rs",
           "summary": "Empty-map initialization; absent-key zero is simulator policy, not native-default proof.",
-          "source_hash": "3a009c91deda913b033616cdf8a30dcb44e2d2dea4935c64f4ed6b43a1f3f7a6"
+          "source_hash": "9c96877fabb7615bb6464664bbc385fe5c486c5b0ba660ab92754c5a7ad1f276"
         },
         {
           "kind": "source",
           "reference": "src/lua_api/state/sim_state.rs",
           "summary": "SimState owns an independent HashMap<(i32, i32), f64> for format-setting pairs per environment.",
-          "source_hash": "c3c9140e171b296f4370257309a852b049632c72af6145538967ac664037b945"
+          "source_hash": "08ccaf03b3be183f410cfdb1d05b9e817c89b89170f7fa5c2b045e4ff26caad8"
         },
         {
           "kind": "test",
@@ -5606,7 +5606,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/mod.rs",
-          "source_hash": "231cb47e9c71d7c9699c1707201f1aaa6ab3fd7774e8785b54cf407f5cfe6a2f",
+          "source_hash": "9385c09f8c9152ca9a20bee297e963e1ee931c2e20c671c66c6416e5ed17f723",
           "summary": "Modeled Rust module is gated at retail-12-0-0; this does not establish absence of generic fallback callability on earlier profiles."
         },
         {
@@ -5618,13 +5618,13 @@
         {
           "kind": "source",
           "reference": "src/lua_api/state.rs",
-          "source_hash": "3a009c91deda913b033616cdf8a30dcb44e2d2dea4935c64f4ed6b43a1f3f7a6",
+          "source_hash": "9c96877fabb7615bb6464664bbc385fe5c486c5b0ba660ab92754c5a7ad1f276",
           "summary": "Empty-state construction initializes speaker speed to 0.0 as simulator policy, not a native-default assertion."
         },
         {
           "kind": "source",
           "reference": "src/lua_api/state/sim_state.rs",
-          "source_hash": "c3c9140e171b296f4370257309a852b049632c72af6145538967ac664037b945",
+          "source_hash": "08ccaf03b3be183f410cfdb1d05b9e817c89b89170f7fa5c2b045e4ff26caad8",
           "summary": "SimState owns the numeric speaker-speed field independently per environment; no persistence or CVar identity is established."
         },
         {
@@ -5687,13 +5687,13 @@
         {
           "kind": "source",
           "reference": "src/lua_api/state.rs",
-          "source_hash": "3a009c91deda913b033616cdf8a30dcb44e2d2dea4935c64f4ed6b43a1f3f7a6",
+          "source_hash": "9c96877fabb7615bb6464664bbc385fe5c486c5b0ba660ab92754c5a7ad1f276",
           "summary": "Empty-state construction initializes speaker volume to 100.0 as simulator policy, not a native-default assertion."
         },
         {
           "kind": "source",
           "reference": "src/lua_api/state/sim_state.rs",
-          "source_hash": "c3c9140e171b296f4370257309a852b049632c72af6145538967ac664037b945",
+          "source_hash": "08ccaf03b3be183f410cfdb1d05b9e817c89b89170f7fa5c2b045e4ff26caad8",
           "summary": "SimState owns the numeric speaker-volume field independently per environment; no persistence or CVar identity is established."
         },
         {
@@ -5844,13 +5844,13 @@
           "kind": "source",
           "reference": "src/lua_api/state.rs",
           "summary": "Empty-map initialization; absent-key zero is simulator policy, not native-default proof.",
-          "source_hash": "3a009c91deda913b033616cdf8a30dcb44e2d2dea4935c64f4ed6b43a1f3f7a6"
+          "source_hash": "9c96877fabb7615bb6464664bbc385fe5c486c5b0ba660ab92754c5a7ad1f276"
         },
         {
           "kind": "source",
           "reference": "src/lua_api/state/sim_state.rs",
           "summary": "SimState owns an independent HashMap<(i32, i32), f64> for format-setting pairs per environment.",
-          "source_hash": "c3c9140e171b296f4370257309a852b049632c72af6145538967ac664037b945"
+          "source_hash": "08ccaf03b3be183f410cfdb1d05b9e817c89b89170f7fa5c2b045e4ff26caad8"
         },
         {
           "kind": "test",
@@ -5919,7 +5919,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/mod.rs",
-          "source_hash": "231cb47e9c71d7c9699c1707201f1aaa6ab3fd7774e8785b54cf407f5cfe6a2f",
+          "source_hash": "9385c09f8c9152ca9a20bee297e963e1ee931c2e20c671c66c6416e5ed17f723",
           "summary": "Modeled Rust module is gated at retail-12-0-0; this does not establish absence of generic fallback callability on earlier profiles."
         },
         {
@@ -5931,13 +5931,13 @@
         {
           "kind": "source",
           "reference": "src/lua_api/state.rs",
-          "source_hash": "3a009c91deda913b033616cdf8a30dcb44e2d2dea4935c64f4ed6b43a1f3f7a6",
+          "source_hash": "9c96877fabb7615bb6464664bbc385fe5c486c5b0ba660ab92754c5a7ad1f276",
           "summary": "Empty-state construction initializes speaker speed to 0.0 as simulator policy, not a native-default assertion."
         },
         {
           "kind": "source",
           "reference": "src/lua_api/state/sim_state.rs",
-          "source_hash": "c3c9140e171b296f4370257309a852b049632c72af6145538967ac664037b945",
+          "source_hash": "08ccaf03b3be183f410cfdb1d05b9e817c89b89170f7fa5c2b045e4ff26caad8",
           "summary": "SimState owns the numeric speaker-speed field independently per environment; no persistence or CVar identity is established."
         },
         {
@@ -6000,13 +6000,13 @@
         {
           "kind": "source",
           "reference": "src/lua_api/state.rs",
-          "source_hash": "3a009c91deda913b033616cdf8a30dcb44e2d2dea4935c64f4ed6b43a1f3f7a6",
+          "source_hash": "9c96877fabb7615bb6464664bbc385fe5c486c5b0ba660ab92754c5a7ad1f276",
           "summary": "Empty-state construction initializes speaker volume to 100.0 as simulator policy, not a native-default assertion."
         },
         {
           "kind": "source",
           "reference": "src/lua_api/state/sim_state.rs",
-          "source_hash": "c3c9140e171b296f4370257309a852b049632c72af6145538967ac664037b945",
+          "source_hash": "08ccaf03b3be183f410cfdb1d05b9e817c89b89170f7fa5c2b045e4ff26caad8",
           "summary": "SimState owns the numeric speaker-volume field independently per environment; no persistence or CVar identity is established."
         },
         {
@@ -26976,7 +26976,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/mod.rs",
-          "source_hash": "231cb47e9c71d7c9699c1707201f1aaa6ab3fd7774e8785b54cf407f5cfe6a2f",
+          "source_hash": "9385c09f8c9152ca9a20bee297e963e1ee931c2e20c671c66c6416e5ed17f723",
           "summary": "Bounded historical public enumeration: two tests cover seeded ordinary filters, blocked visibility, live removal, observed sort rules/directions and maxCount limits. Runtime ba31c6b94; tests 33f7fdb39 pass 2/2 each on retail 12.0.0/12.0.5/12.0.7. Default 5/5 regressions preserve existing later behavior, not new historical private/security credit. Native full filter domain, sort semantics, defaults, identity, security and full-LoD parity remain unproven. Historical E0432/E0425 helper-gate compilation failures remain recorded in development proof."
         },
         {
@@ -102617,7 +102617,7 @@
           "kind": "source",
           "reference": "src/lua_api/globals/missing_surface.rs",
           "summary": "Current simulator does not publish string.concat; legacy global strconcat is unrelated and is not an established alias.",
-          "source_hash": "61d42e8d8bd7c866559e44e349eecc0159ebf893c5114805f5b0ade9ded15b6e"
+          "source_hash": "e82dd0b9893278d8eebca39e8ddf8efa06acea024c7aaa612369c7a456ad2b5c"
         },
         {
           "kind": "source",
@@ -103429,7 +103429,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/mod.rs",
-          "source_hash": "231cb47e9c71d7c9699c1707201f1aaa6ab3fd7774e8785b54cf407f5cfe6a2f",
+          "source_hash": "9385c09f8c9152ca9a20bee297e963e1ee931c2e20c671c66c6416e5ed17f723",
           "summary": "C API registration surface; no method publication was found."
         },
         {
@@ -103523,7 +103523,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/mod.rs",
-          "source_hash": "231cb47e9c71d7c9699c1707201f1aaa6ab3fd7774e8785b54cf407f5cfe6a2f",
+          "source_hash": "9385c09f8c9152ca9a20bee297e963e1ee931c2e20c671c66c6416e5ed17f723",
           "summary": "C API module registry; no C_ItemInteraction module was found."
         },
         {
@@ -128907,7 +128907,7 @@
           "kind": "runtime",
           "reference": "src/lua_api/globals/missing_surface.rs",
           "summary": "Compatibility PlaySound accepts numeric sound IDs; audio output is not claimed.",
-          "source_hash": "61d42e8d8bd7c866559e44e349eecc0159ebf893c5114805f5b0ade9ded15b6e"
+          "source_hash": "e82dd0b9893278d8eebca39e8ddf8efa06acea024c7aaa612369c7a456ad2b5c"
         }
       ],
       "tests": [
