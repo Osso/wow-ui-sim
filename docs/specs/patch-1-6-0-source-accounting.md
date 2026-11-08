@@ -14,7 +14,7 @@ Bounded accounting of frozen page310843/revision2998524/timestamp2020-04-05T21:0
 ## How it works
 
 - [Literal audit and proof limits](../wiki/investigations/patch-1-6-0-api-audit.md)
-- [Portable replay](../../data/patch-api/evidence/1.6.0-session-2026-10-09/REPLAY.md)
+- [Portable replay](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/1.6.0-session-2026-10-09/REPLAY.md)
 
 ## Implementation inventory
 

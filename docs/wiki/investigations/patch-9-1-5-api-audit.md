@@ -8,7 +8,7 @@ Page 219137, revision 5920444 (January 1, 2024, 01:31:49 UTC), retrieved October
 
 The unchanged extractor retains 18 nonblank occurrences: ten metadata and eight substantive pending statements. [Ledger](../../../data/patch-api/sources/9.1.5-page-coverage.json) accounts for all 188 unique IDs: 169 inventory, 18 extract and one historical build-caption context. Statuses: 111 bounded-coverage, eleven partial-development-green, 55 audit-pending and eleven metadata-only. Publication/absence is not signature, DTO, security or runtime policy proof. Initial sweep is 111 OK / 58 gaps; final is 122 OK / 47 gaps.
 
-[Literal extract scout](../../../data/patch-api/evidence/9.1.5-session-2026-10-07/p915-extract-scout.json) assigns precise boundaries to tooltip inheritance, guild-bank mixin migration, legacy guild UI removal, Communities guild finder, hidden event trace logging, item-upgrade migration, hardware-event cursor deletion budget and NOSCRIPT protection. No static or unrelated test receives behavior credit. Two serialized historical CVar defaults differ: CameraFollowGamepadAdjustDelay and CameraFollowGamepadAdjustEaseIn `1.0` versus current `1.000000`. TTSUseCharacterSettings has neither value nor default (page default `1`); that remains an exact gap. Historical defaults are not overwritten.
+[Literal extract scout](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/9.1.5-session-2026-10-07/p915-extract-scout.json) assigns precise boundaries to tooltip inheritance, guild-bank mixin migration, legacy guild UI removal, Communities guild finder, hidden event trace logging, item-upgrade migration, hardware-event cursor deletion budget and NOSCRIPT protection. No static or unrelated test receives behavior credit. Two serialized historical CVar defaults differ: CameraFollowGamepadAdjustDelay and CameraFollowGamepadAdjustEaseIn `1.0` versus current `1.000000`. TTSUseCharacterSettings has neither value nor default (page default `1`); that remains an exact gap. Historical defaults are not overwritten.
 
 ## Bounded retirements
 
@@ -23,23 +23,23 @@ GetActivityInfo substring hits are GetActivityInfoTable; exact word-boundary sca
 
 Cached full-UI RED reproduces fabricated C_Commentator.SetBlacklistedAuras; GREEN passes all eleven raw/ordinary/repeated lookup assertions after unmodified full UI preload. Bare integration and Mists legacy lookup pass. Eleven publication gaps closed; no modeled added API implementation or placeholder introduced.
 
-[Per-ID review](../../../data/patch-api/evidence/9.1.5-session-2026-10-07/p915-gap-review.json) assigns all 47 remaining gaps to exact missing endpoint/model contracts. These include challenge score/map data, club focus state, commentator filters, gamepad vibration, item/upgrade metadata and transactions, LFG eligibility/keystone/title policy, mount filter mutation, MythicPlus season/keystone state, mentorship requirements, regional chat restrictions, TTS preferences, transmog source/visibility identity and widget processing GUID context. Three console commands are absent; four getters remain intentionally unsupported 3D/transmog model gaps. Dynamic `raw=nil; lookup=function` receives no native publication credit.
+[Per-ID review](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/9.1.5-session-2026-10-07/p915-gap-review.json) assigns all 47 remaining gaps to exact missing endpoint/model contracts. These include challenge score/map data, club focus state, commentator filters, gamepad vibration, item/upgrade metadata and transactions, LFG eligibility/keystone/title policy, mount filter mutation, MythicPlus season/keystone state, mentorship requirements, regional chat restrictions, TTS preferences, transmog source/visibility identity and widget processing GUID context. Three console commands are absent; four getters remain intentionally unsupported 3D/transmog model gaps. Dynamic `raw=nil; lookup=function` receives no native publication credit.
 
 ## Verification
 
 Compiled runtime/test acceptance revision `7d4d2588d`; subsequent data/docs and retirement-comment changes do not invalidate runtime proof. All 29 publication sweeps plus animation-owner factory regression pass: 30/30 cases, 6,632 inventory occurrences. Own sweep: 169 rows / 122 OK / 47 exact reviewed gaps. Bare retail integration, cached-prefork repeated lookup and Mists legacy assertions pass; no existing callers of changed identities require migration.
 
-Negative control changes only GAME_PAD_ACTIVE_CHANGED added → removed. Exactly 47 → 48 failures, one new ID, none resolved, unchanged 169 IDs and expected prefork exit 1. [Receipt](../../../data/patch-api/evidence/9.1.5-session-2026-10-07/p915-negative-result.json).
+Negative control changes only GAME_PAD_ACTIVE_CHANGED added → removed. Exactly 47 → 48 failures, one new ID, none resolved, unchanged 169 IDs and expected prefork exit 1. [Receipt](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/9.1.5-session-2026-10-07/p915-negative-result.json).
 
 All 39 extractor/register fixtures pass. cargo fmt/fmt --check, default cargo check, Mists `cargo check --no-default-features --features sound,gui,casc,client-mists --tests`, separate retail build and bounded startup pass. Mists has zero non-vendor warnings; six pre-existing iced manifest deprecations and summary remain unsuppressed. Retail startup exits zero and prints `[]`.
 
-[Proof ledger](../../../data/patch-api/evidence/9.1.5-session-2026-10-07/p915-proof.json) retains exact revisions/scopes, commands, output hashes, exits and invalidation state. All commands used this worktree cwd and its own target; no sibling/canonical working-file edits, cache/vendor/Wowless writes, agents/models, push or merge. Verification ran directly as requested. Changed Rust manually reviewed; input-only sweep specification, flat member data and named registration calls add no nested logic or suppressions. Existing fallible-registration length/path count remains an inherited registry-shape finding, not authorization for refactoring.
+[Proof ledger](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/9.1.5-session-2026-10-07/p915-proof.json) retains exact revisions/scopes, commands, output hashes, exits and invalidation state. All commands used this worktree cwd and its own target; no sibling/canonical working-file edits, cache/vendor/Wowless writes, agents/models, push or merge. Verification ran directly as requested. Changed Rust manually reviewed; input-only sweep specification, flat member data and named registration calls add no nested logic or suppressions. Existing fallible-registration length/path count remains an inherited registry-shape finding, not authorization for refactoring.
 
 ## Preservation and 9.2.0 integration
 
-All 148 prior source/register/ledger files remain byte-identical. All 56 prior extraction-mode exit/stdout outcomes are unchanged; sixteen existing failures remain, including both modes for 12.0.5/12.0.7/12.1.0. Own extract reproduces in both modes. All 29 registers regenerate byte-identically. Most historical provenance files omit generator_flags; [reproduction receipt](../../../data/patch-api/evidence/9.1.5-session-2026-10-07/p915-register-reproduction.json) explicitly separates recorded flags from verified inferred flags instead of modifying prior provenance.
+All 148 prior source/register/ledger files remain byte-identical. All 56 prior extraction-mode exit/stdout outcomes are unchanged; sixteen existing failures remain, including both modes for 12.0.5/12.0.7/12.1.0. Own extract reproduces in both modes. All 29 registers regenerate byte-identically. Most historical provenance files omit generator_flags; [reproduction receipt](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/9.1.5-session-2026-10-07/p915-register-reproduction.json) explicitly separates recorded flags from verified inferred flags instead of modifying prior provenance.
 
-Read-only p920-page tools were consulted before implementation. That worktree later became unavailable; the register is now readable from master. [Snapshot comparison](../../../data/patch-api/evidence/9.1.5-session-2026-10-07/p915-920-supersessions.json) finds no 9.2.0 inventory identity intersecting any of the 47 retained gap IDs. No predicted gap supersession. The requested one-line later-register placeholder remains for the integrating main thread; this branch does not merge or rewrite master.
+Read-only p920-page tools were consulted before implementation. That worktree later became unavailable; the register is now readable from master. [Snapshot comparison](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/9.1.5-session-2026-10-07/p915-920-supersessions.json) finds no 9.2.0 inventory identity intersecting any of the 47 retained gap IDs. No predicted gap supersession. The requested one-line later-register placeholder remains for the integrating main thread; this branch does not merge or rewrite master.
 
 ## Sweep table
 
@@ -78,14 +78,14 @@ Publication/absence only; exact known-gap fixtures match each passing case.
 | 12.1.0 | 778 | 773 | 5 | pass |
 
 
-[Artifact validator](../../../data/patch-api/evidence/9.1.5-session-2026-10-07/validate.py) passes: all 188 unique IDs, exact literals/defaults/provenance, eleven closures, 47 precise gaps, negative control, preserved hashes/modes/registers, 29 sweep receipts and non-vendor warning boundary. [Acceptance receipt](../../../data/patch-api/evidence/9.1.5-session-2026-10-07/p915-artifact-acceptance.json).
+[Artifact validator](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/9.1.5-session-2026-10-07/validate.py) passes: all 188 unique IDs, exact literals/defaults/provenance, eleven closures, 47 precise gaps, negative control, preserved hashes/modes/registers, 29 sweep receipts and non-vendor warning boundary. [Acceptance receipt](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/9.1.5-session-2026-10-07/p915-artifact-acceptance.json).
 
 ## Sources
 
-- [Pinned API response](../../../data/patch-api/evidence/9.1.5-session-2026-10-07/p915-fetch.json).
+- [Pinned API response](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/9.1.5-session-2026-10-07/p915-fetch.json).
 - [Register](../../../data/patch-api/sources/9.1.5-wikitext-register.json).
-- [Qualified/bare scan](../../../data/patch-api/evidence/9.1.5-session-2026-10-07/p915-removal-consumers.json).
-- [Exact-name scan](../../../data/patch-api/evidence/9.1.5-session-2026-10-07/p915-removal-exact-consumers.json).
+- [Qualified/bare scan](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/9.1.5-session-2026-10-07/p915-removal-consumers.json).
+- [Exact-name scan](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/9.1.5-session-2026-10-07/p915-removal-exact-consumers.json).
 - [Spec](../../specs/patch-9-1-5-publication-sweep.md).
 
 ## See Also

@@ -26,12 +26,12 @@ Own SOURCE RED6 and portable RED3 retained at base with exact scaffold/pre-forma
 
 ## Sources
 
-- [Ledger](../../../data/patch-api/evidence/1.5.0-session-2026-10-09/ledger.json)
-- [Later actual ledger](../../../data/patch-api/evidence/1.5.0-session-2026-10-09/later-proof-ledger.json)
-- [HANDOFF](../../../data/patch-api/evidence/1.5.0-session-2026-10-09/HANDOFF.md) / [REPLAY](../../../data/patch-api/evidence/1.5.0-session-2026-10-09/REPLAY.md)
-- [Proof ledger](../../../data/patch-api/evidence/1.5.0-session-2026-10-09/proof-ledger.json)
+- [Ledger](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/1.5.0-session-2026-10-09/ledger.json)
+- [Later actual ledger](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/1.5.0-session-2026-10-09/later-proof-ledger.json)
+- [HANDOFF](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/1.5.0-session-2026-10-09/HANDOFF.md) / [REPLAY](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/1.5.0-session-2026-10-09/REPLAY.md)
+- [Proof ledger](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/1.5.0-session-2026-10-09/proof-ledger.json)
 - [Spec](../../specs/patch-1-5-0-source-accounting.md)
-- [Governing handoff](../../../data/patch-api/evidence/handoff-laptop-to-agent-server/HANDOFF.md) — explicit child restrictions override operations
+- [Governing handoff](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/handoff-laptop-to-agent-server/HANDOFF.md) — explicit child restrictions override operations
 
 ## See Also
 

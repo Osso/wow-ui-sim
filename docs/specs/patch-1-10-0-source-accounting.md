@@ -14,7 +14,7 @@ Bounded accounting of page 385987/revision 3714298/timestamp 2020-04-05T21:06:58
 ## How it works
 
 - [Audit and proof limits](../wiki/investigations/patch-1-10-0-api-audit.md)
-- [Portable replay instructions](../../data/patch-api/evidence/1.10.0-session-2026-10-09/REPLAY.md)
+- [Portable replay instructions](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/1.10.0-session-2026-10-09/REPLAY.md)
 
 ## Implementation inventory
 

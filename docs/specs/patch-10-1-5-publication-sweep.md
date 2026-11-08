@@ -27,7 +27,7 @@ Historical epochs, placeholders, native parity, linked-page expansion, vendor/ca
 
 ## Local proof
 
-Runtime/test revision `2474d039a`: twenty isolated exact sweeps, retirement RED/GREEN, eight history regressions, campaign cases, one cached Game prefork, Mists history preservation, negative control 32 → 33, formatting, Mists test check zero non-vendor warnings and exit-0 startup `[]`. Twenty byte-identical registers, seventeen generated extracts and 122 preserved baseline inputs. External later captures are not extractor outputs. [Proof ledger](../../data/patch-api/evidence/10.1.5-session-2026-10-07/p1015-proof.json) owns commands, hashes and exact scope. Local development proof is not native or independent acceptance.
+Runtime/test revision `2474d039a`: twenty isolated exact sweeps, retirement RED/GREEN, eight history regressions, campaign cases, one cached Game prefork, Mists history preservation, negative control 32 → 33, formatting, Mists test check zero non-vendor warnings and exit-0 startup `[]`. Twenty byte-identical registers, seventeen generated extracts and 122 preserved baseline inputs. External later captures are not extractor outputs. [Proof ledger](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/10.1.5-session-2026-10-07/p1015-proof.json) owns commands, hashes and exact scope. Local development proof is not native or independent acceptance.
 
 | Patch | Rows | OK | Gaps | Isolated exit |
 |---|---:|---:|---:|---:|

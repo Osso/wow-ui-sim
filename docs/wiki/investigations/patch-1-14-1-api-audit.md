@@ -39,8 +39,8 @@ Own SOURCE RED8/8; development GREEN8/8 with353 omission controls and fabricated
 ## Sources
 
 - [Frozen manifest](../../../data/patch-api/source-cache/legacy-2026-10-09/manifest.json).
-- [Own evidence](../../../data/patch-api/evidence/1.14.1-session-2026-10-09/ledger.json) — frozen identity, literal inventory/limits and actual successor boundaries.
-- [State scan](../../../data/patch-api/evidence/1.14.1-session-2026-10-09/state-scan.json) — historical code locations, not native proof.
+- [Own evidence](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/1.14.1-session-2026-10-09/ledger.json) — frozen identity, literal inventory/limits and actual successor boundaries.
+- [State scan](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/1.14.1-session-2026-10-09/state-scan.json) — historical code locations, not native proof.
 
 ## See Also
 

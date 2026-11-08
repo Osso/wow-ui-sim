@@ -39,7 +39,7 @@ The saved `983f02fbf` default prefork sweep failed only on resolved/stale entrie
 
 ## Known gaps
 
-- [ ] Current170 publication gaps; historical173-gap review unchanged: [per-ID review](../../data/patch-api/evidence/10.0.0-session-2026-10-07/p1000-gap-review.json) owns reasons.
+- [ ] Current170 publication gaps; historical173-gap review unchanged: [per-ID review](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/10.0.0-session-2026-10-07/p1000-gap-review.json) owns reasons.
 - [ ] 424 pending extract statements/examples and three inventory-section migration summaries; no signature, populated output, payload, security, native or historical parity credit.
 - [ ] Eleven serialized CVar default comparisons differ from the historical page, including two absent variables. Publication accounting does not erase these differences.
 

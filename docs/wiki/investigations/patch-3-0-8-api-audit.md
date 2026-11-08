@@ -28,11 +28,11 @@ Frozen page 95599/revision 947144, timestamp 2021-12-04T02:32:44Z. This page des
 
 Sweep uses 71 actual integrated retail registers, oldest-first, starting at 3.3.3 / 3.3.5 / 4.0.1. Main adds queued 3.1.0, 3.2.0 and 3.3.0 registers at integration in the helper's oldest-first order; the declaration retains their placeholder. Wrath Classic 3.4.x never supersedes this retail history.
 
-[Queued literal mention scan](../../../data/patch-api/evidence/3.0.8-session-2026-10-09/queued-overlaps.json): 3.1.0 mentions GetGlyphLink and SetUpAnimation; 3.2.0/3.3.0 have no exact own-name mentions. These are possible overlaps, not registered direction/supersession or closure credit. Main must interpret actual integrated registers; frozen historical observations stay unchanged.
+[Queued literal mention scan](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/3.0.8-session-2026-10-09/queued-overlaps.json): 3.1.0 mentions GetGlyphLink and SetUpAnimation; 3.2.0/3.3.0 have no exact own-name mentions. These are possible overlaps, not registered direction/supersession or closure credit. Main must interpret actual integrated registers; frozen historical observations stay unchanged.
 
 ## Physical proof ledger
 
-[Original command ledger](../../../data/patch-api/evidence/3.0.8-session-2026-10-09/command-ledger.json) records argv, explicit owned cwd, revision, scope, env overrides, exit and physical logs. Scope is targeted development only.
+[Original command ledger](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/3.0.8-session-2026-10-09/command-ledger.json) records argv, explicit owned cwd, revision, scope, env overrides, exit and physical logs. Scope is targeted development only.
 
 | Receipt | Revision | Actual result |
 |---|---|---|
@@ -48,20 +48,20 @@ Headless aggregate registry errors concern existing `gui`-gated modules; default
 
 ## Portable immutable history
 
-[Validator](../../../data/patch-api/evidence/3.0.8-session-2026-10-09/validate.py) reads only its evidence directory, no Git, target, mutable sources/test gaps or external dependencies. [Manifest](../../../data/patch-api/evidence/3.0.8-session-2026-10-09/historical-inputs.json) seals 25 physical files by SHA-256 and byte length; its hash is pinned in validator. Original historical source, extract, register, ledger, known gaps, observations, command receipts and 301,514-byte compressed implementation/successor archive remain separate from current mutable copies.
+[Validator](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/3.0.8-session-2026-10-09/validate.py) reads only its evidence directory, no Git, target, mutable sources/test gaps or external dependencies. [Manifest](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/3.0.8-session-2026-10-09/historical-inputs.json) seals 25 physical files by SHA-256 and byte length; its hash is pinned in validator. Original historical source, extract, register, ledger, known gaps, observations, command receipts and 301,514-byte compressed implementation/successor archive remain separate from current mutable copies.
 
 Validation derives row/status/gap/header/signature/successor/receipt totals and replays archived parser/extractor exactly. It verifies raw response identity, literal line/signature completeness, domain proof limits and exact negative-control gap boundary. It cannot grant new current-runtime or native WoW credit.
 
-[Own portable development receipt](../../../data/patch-api/evidence/3.0.8-session-2026-10-09/validator-development-proof.json) and physical log cover relocated fresh Python processes with no Git/Cargo PATH and no original repository/target/current state. Synthetic future current ledger and target drift leave results identical. All 25 sealed-file tamper controls plus manifest tampering reject at the exact filename; each restores byte-identically and clean replay is reconfirmed. Deleted historical gap sidecar also rejects and restores. This is source/development-evidence proof, not a coordinator final gate.
+[Own portable development receipt](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/3.0.8-session-2026-10-09/validator-development-proof.json) and physical log cover relocated fresh Python processes with no Git/Cargo PATH and no original repository/target/current state. Synthetic future current ledger and target drift leave results identical. All 25 sealed-file tamper controls plus manifest tampering reject at the exact filename; each restores byte-identically and clean replay is reconfirmed. Deleted historical gap sidecar also rejects and restores. This is source/development-evidence proof, not a coordinator final gate.
 
 ## Main successor integration — 2026-10-09
 
-Actual retail 3.1.0, 3.2.0 and 3.3.0 now replace the queued placeholder. Exact symbol comparison finds 3.1.0 `GetGlyphLink` changed, 3.3.3 `UninviteUnit` changed and 4.0.1 `RestoreVideoStereoDefaults` removed; 3.2.0/3.3.0/3.3.5 have no overlap. The latter two actual successors were already applied in the historical slice. Ownerless `SetUpAnimation` prose remains unexpanded, with no registered successor identity. [Retained independent report](../../../data/patch-api/evidence/3.0.8-session-2026-10-09/integrated/p308-independent-report.md): fresh runtime at `dd8ca0f19` passes 2/2; all 56 rows unchanged, 22 matches/34 gaps, 25 historical seals unchanged. Recorded-option replay at `98f2ef228`: 81/81 registers exact, 78/81 extracts exact, three inherited extract failures. Default comparison at `efbe97f20`: 82 outcomes unchanged, 79 byte-identical outputs and three same errors. These are revision-bounded receipts, not broader replay at latest HEAD or final acceptance. No runtime changes or native credit.
+Actual retail 3.1.0, 3.2.0 and 3.3.0 now replace the queued placeholder. Exact symbol comparison finds 3.1.0 `GetGlyphLink` changed, 3.3.3 `UninviteUnit` changed and 4.0.1 `RestoreVideoStereoDefaults` removed; 3.2.0/3.3.0/3.3.5 have no overlap. The latter two actual successors were already applied in the historical slice. Ownerless `SetUpAnimation` prose remains unexpanded, with no registered successor identity. [Retained independent report](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/3.0.8-session-2026-10-09/integrated/p308-independent-report.md): fresh runtime at `dd8ca0f19` passes 2/2; all 56 rows unchanged, 22 matches/34 gaps, 25 historical seals unchanged. Recorded-option replay at `98f2ef228`: 81/81 registers exact, 78/81 extracts exact, three inherited extract failures. Default comparison at `efbe97f20`: 82 outcomes unchanged, 79 byte-identical outputs and three same errors. These are revision-bounded receipts, not broader replay at latest HEAD or final acceptance. No runtime changes or native credit.
 
 ## Sources
 
 - [Frozen literal page](../../../data/patch-api/sources/3.0.8-api-changes.wikitext).
-- [Source pin and attribution](../../../data/patch-api/evidence/3.0.8-session-2026-10-09/source-pin.json).
+- [Source pin and attribution](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/3.0.8-session-2026-10-09/source-pin.json).
 - [Spec](../../specs/patch-3-0-8-publication-sweep.md).
 
 ## See Also

@@ -23,15 +23,15 @@ Canonical1.10.0/1.10.1 docs/evidence supplied methodology only, not receipts or 
 
 Own SOURCE RED6 and portable RED3 at base retained exact fixtures, argv/cwd/revision/timestamps/full streams/hash scopes. Enhanced source/identity controls have separate scaffold RED6; this later epoch is not substituted for the first test-first proof. Own-base defaults captured once: generator bytes, extractor42 bytes, malformed-symbol ValueError and null-input AttributeError. Implementation manually formatted before commit. Own SOURCE GREEN6/6 at `0718bd85b`: three populated-boundary omissions,12 count changes, six invented categories, three fabricated model/runtime/native credits, one fabricated expansion; two body/four response/four manifest-registry mutations. Fresh copied replay at `702ddca36` passes validator exit0, own SOURCE6/6 and portable3/3 under isolated Python/PATH=/nonexistent. Both serialized ledger/log tampering controls reject and restore exact original bytes/hashes/map without resealing. Immutable46 original seals/47-member55,573-byte archive unchanged; later actual receipts separately sealed, never backfilled. Archived original docs preserve pre-copy epoch. No Rust build, broad/check/final gate or runtime changes.
 
-[Later proof ledger](../../../data/patch-api/evidence/1.7.0-session-2026-10-09/later-proof-ledger.json), [HANDOFF](../../../data/patch-api/evidence/1.7.0-session-2026-10-09/HANDOFF.md) and [REPLAY](../../../data/patch-api/evidence/1.7.0-session-2026-10-09/REPLAY.md) preserve actual execution revisions/cwd/argv/env-key names/times/full streams/hash scopes. Combined logs concatenate stdout then stderr, not chronological interleaving. Environment key names and scoped high-specificity credential patterns inspected; no retained matches, no values requested, scanner not exhaustive.
+[Later proof ledger](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/1.7.0-session-2026-10-09/later-proof-ledger.json), [HANDOFF](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/1.7.0-session-2026-10-09/HANDOFF.md) and [REPLAY](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/1.7.0-session-2026-10-09/REPLAY.md) preserve actual execution revisions/cwd/argv/env-key names/times/full streams/hash scopes. Combined logs concatenate stdout then stderr, not chronological interleaving. Environment key names and scoped high-specificity credential patterns inspected; no retained matches, no values requested, scanner not exhaustive.
 
 ## Sources
 
-- [Frozen pin](../../../data/patch-api/evidence/1.7.0-session-2026-10-09/source-pin.json)
-- [Literal ledger](../../../data/patch-api/evidence/1.7.0-session-2026-10-09/ledger.json)
-- [Proof ledger](../../../data/patch-api/evidence/1.7.0-session-2026-10-09/proof-ledger.json)
+- [Frozen pin](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/1.7.0-session-2026-10-09/source-pin.json)
+- [Literal ledger](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/1.7.0-session-2026-10-09/ledger.json)
+- [Proof ledger](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/1.7.0-session-2026-10-09/proof-ledger.json)
 - [Spec](../../specs/patch-1-7-0-source-accounting.md)
-- [Governing handoff](../../../data/patch-api/evidence/handoff-laptop-to-agent-server/HANDOFF.md), bounded by explicit child restrictions.
+- [Governing handoff](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/handoff-laptop-to-agent-server/HANDOFF.md), bounded by explicit child restrictions.
 
 ## See Also
 

@@ -23,7 +23,7 @@ Bounded simulator proof for [prose-2026-06-23-083; prose-2026-06-23-088](../../d
 - `tests/forbidden_aspect_creation.rs` — generic caller/guard and listener controls
 - `tests/forbidden_aspect_enforcement.rs::aura_container_intrinsic_event_registrations_block_addons_not_blizzard` — actual intrinsic and secure/addon controls
 
-[Saved c75 case/body reconciliation](../../data/test-perf/evidence/c75-pending-spec-reconciliation-2026-10-11/README.md): intrinsic case PASS at raw line5837; related guard cases PASS at5792–5793. Current requested source/test bodies match c75. These executions are already in the suite totals, not new reruns. The enclosing suite remains FAIL on Garrison.
+[Saved c75 case/body reconciliation](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/test-perf/evidence/c75-pending-spec-reconciliation-2026-10-11/README.md): intrinsic case PASS at raw line5837; related guard cases PASS at5792–5793. Current requested source/test bodies match c75. These executions are already in the suite totals, not new reruns. The enclosing suite remains FAIL on Garrison.
 
 ## Known gaps (current cycle)
 

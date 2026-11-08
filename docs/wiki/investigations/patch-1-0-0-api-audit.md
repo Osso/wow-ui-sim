@@ -30,11 +30,11 @@ Own SOURCE RED8/portable RED3 retained at base: absent literal/identity/default 
 
 ## Sources
 
-- [Literal ledger](../../../data/patch-api/evidence/1.0.0-session-2026-10-09/ledger.json) — own frozen input derivation only
-- [Own proof ledger](../../../data/patch-api/evidence/1.0.0-session-2026-10-09/proof-ledger.json) — actual command contexts/scoped hashes/full streams
+- [Literal ledger](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/1.0.0-session-2026-10-09/ledger.json) — own frozen input derivation only
+- [Own proof ledger](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/1.0.0-session-2026-10-09/proof-ledger.json) — actual command contexts/scoped hashes/full streams
 - [Spec](../../specs/patch-1-0-0-source-accounting.md) — bounded requirements
-- [HANDOFF](../../../data/patch-api/evidence/1.0.0-session-2026-10-09/HANDOFF.md) / [REPLAY](../../../data/patch-api/evidence/1.0.0-session-2026-10-09/REPLAY.md) — delivery and copied replay
-- [Governing handoff](../../../data/patch-api/evidence/handoff-laptop-to-agent-server/HANDOFF.md) — main-owned integration; explicit child restrictions override operations
+- [HANDOFF](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/1.0.0-session-2026-10-09/HANDOFF.md) / [REPLAY](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/1.0.0-session-2026-10-09/REPLAY.md) — delivery and copied replay
+- [Governing handoff](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/handoff-laptop-to-agent-server/HANDOFF.md) — main-owned integration; explicit child restrictions override operations
 
 ## See Also
 

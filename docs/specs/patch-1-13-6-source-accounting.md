@@ -1,6 +1,6 @@
 # Frozen Era 1.13.6 SOURCE accounting
 
-Account for the literal [frozen page](../../data/patch-api/evidence/1.13.6-session-2026-10-09/source.wikitext), page461367/revision4435603. [Audit](../wiki/investigations/patch-1-13-6-api-audit.md) describes evidence boundaries. This is an accounting contract, not historical runtime compatibility.
+Account for the literal [frozen page](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/1.13.6-session-2026-10-09/source.wikitext), page461367/revision4435603. [Audit](../wiki/investigations/patch-1-13-6-api-audit.md) describes evidence boundaries. This is an accounting contract, not historical runtime compatibility.
 
 ## What it must do
 

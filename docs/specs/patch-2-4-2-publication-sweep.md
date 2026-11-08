@@ -11,7 +11,7 @@ Frozen page 81145/revision 803933 (2021-12-28T02:03:05Z revision timestamp) docu
 
 ## How it works
 - [Audit and coverage matrix](../wiki/investigations/patch-2-4-2-api-audit.md).
-- [Handoff](../../data/patch-api/evidence/2.4.2-session-2026-10-09/handoff.md).
+- [Handoff](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/2.4.2-session-2026-10-09/handoff.md).
 
 ## Implementation inventory
 - `tools/gen_patch_wikitext_register.py`, `tools/extract_patch_non_inventory.py`: opt-in historical retail summary/markup.

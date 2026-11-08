@@ -18,7 +18,7 @@
 
 ## Implementation inventory
 
-- `SimState.bounty_set_maps`: explicit membership input, initialized empty after authentic initial public-query RED; no default associations. `src/c_api/c_map_bounties.rs` projects those explicit inputs through guarded C API registration and a fresh sequence result; Retail and PTR focused runs each report 11 passed; both normal-session publication/empty-model/retired-ID/Calendar-preservation probes report exit0/`[]`. [Independent GREEN](../../data/patch-api/evidence/bounty-set-map-relations-2026-10-11/green-independent-report.md) PASS: 11 logical cases across Retail/PTR, 22 executions; normal assertions and Rust checks verified.
+- `SimState.bounty_set_maps`: explicit membership input, initialized empty after authentic initial public-query RED; no default associations. `src/c_api/c_map_bounties.rs` projects those explicit inputs through guarded C API registration and a fresh sequence result; Retail and PTR focused runs each report 11 passed; both normal-session publication/empty-model/retired-ID/Calendar-preservation probes report exit0/`[]`. [Independent GREEN](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/bounty-set-map-relations-2026-10-11/green-independent-report.md) PASS: 11 logical cases across Retail/PTR, 22 executions; normal assertions and Rust checks verified.
 - `src/c_api/c_map.rs`: existing map surface registration seam.
 
 ## Tests asserting this spec
@@ -29,7 +29,7 @@
 ## Known gaps (current cycle)
 
 - [ ] Expanded RED's independently computed digest-comparison output was lost; authentication receipt gap remains explicit. Behavioral RED11 is confirmed; initial RED6 and all GREEN/publication artifact authentication are verified. No gap concealment or old-payload reread.
-- [x] Normal-session publication verified in Retail/PTR; only current Bounty row removed. [Independent owning-prefork proof](../../data/patch-api/evidence/bounty-set-map-relations-2026-10-11/publication/publication-independent-report.md): one case, 145 classified rows/90 OK/55 current gaps; frozen historical and earlier Calendar receipts unchanged.
+- [x] Normal-session publication verified in Retail/PTR; only current Bounty row removed. [Independent owning-prefork proof](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/bounty-set-map-relations-2026-10-11/publication/publication-independent-report.md): one case, 145 classified rows/90 OK/55 current gaps; frozen historical and earlier Calendar receipts unchanged.
 
 ## Out of scope
 

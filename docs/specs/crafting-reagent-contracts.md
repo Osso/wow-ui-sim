@@ -1,6 +1,6 @@
 # Crafting reagent contracts
 
-12.0.0 B08 nested reagent contracts from the [extract scout](../../data/patch-api/evidence/12.0.0-session-2026-10-05/p1200-extract-scout.md). Cached Retail TradeSkillUITypes/CraftingOrderUIShared declarations and Professions consumers define serialized inputs and outputs. [Model](../wiki/systems/crafting-reagents.md).
+12.0.0 B08 nested reagent contracts from the [extract scout](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/12.0.0-session-2026-10-05/p1200-extract-scout.md). Cached Retail TradeSkillUITypes/CraftingOrderUIShared declarations and Professions consumers define serialized inputs and outputs. [Model](../wiki/systems/crafting-reagents.md).
 
 ## What it must do
 
@@ -33,7 +33,7 @@
 
 ## Known gaps (current cycle)
 
-No unresolved B08 local model test failure. [Per-source outcomes and proof](../../data/patch-api/evidence/12.0.0-session-2026-10-05/p1200-b8-prose-report.md) distinguish bounded current-cache structure proof from historical/native parity.
+No unresolved B08 local model test failure. [Per-source outcomes and proof](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/12.0.0-session-2026-10-05/p1200-b8-prose-report.md) distinguish bounded current-cache structure proof from historical/native parity.
 
 ## Out of scope
 

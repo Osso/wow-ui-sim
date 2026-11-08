@@ -47,7 +47,7 @@ Required main-thread evidence must use a deliberately seeded map row with distin
 
 - [x] Authentic RED2FAIL/4PASS preserved; unchanged d97 target assertions reach GREEN6/6 under current Retail and PTR.
 - [x] Bounded historical Retail12.0.7 ordinary preservation reaches2/2; not all historical profiles.
-- [x] Saved five-profile ordinary preservation: Wrath/Mists/Era/Anniversary/Forever each2/2 PASS, five compile/execution exits0, independent source/artifact/feature admission. [Retained report](../../data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/map-scalar-five-profile-ordinary/final-report.md) distinguishes ten executions from two distinct tests and differing submission revisions.
+- [x] Saved five-profile ordinary preservation: Wrath/Mists/Era/Anniversary/Forever each2/2 PASS, five compile/execution exits0, independent source/artifact/feature admission. [Retained report](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/map-scalar-five-profile-ordinary/final-report.md) distinguishes ten executions from two distinct tests and differing submission revisions.
 - [ ] Wider other-profile runtime/native acceptance and full handoff remain OPEN. [Saved714 suite](../wiki/investigations/fullsuite-714-2026-10-10.md) FAIL15,017PASS/4FAIL/19skips includes allsix scalarPASS; later b061 export-only correction passes seven profilecompilerchecks, separate from five-profile ordinary runtime proof. Older956FAIL3/b048FAIL4 unchanged; no broad rerun for docs.
 
 ## Out of scope

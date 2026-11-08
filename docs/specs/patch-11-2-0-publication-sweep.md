@@ -24,7 +24,7 @@ Page-specific extract seeding recognizes five Deprecated resource links and the 
 
 ## Local proof — October 6, 2026
 
-Final runtime/test revision `2bd77f4d4`; subsequent changes only evidence/docs/validation. [Proof ledger](../../data/patch-api/evidence/11.2.0-session-2026-10-06/p1120-proof.json) retains exact commands, revisions, failures, invalidations and local log paths. Initial RED, extractor RED and intermediate Rust borrow-check failure remain visible. No agents/models/native acceptance.
+Final runtime/test revision `2bd77f4d4`; subsequent changes only evidence/docs/validation. [Proof ledger](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/11.2.0-session-2026-10-06/p1120-proof.json) retains exact commands, revisions, failures, invalidations and local log paths. Initial RED, extractor RED and intermediate Rust borrow-check failure remain visible. No agents/models/native acceptance.
 
 | Isolated sweep | Rows | OK | Exact gaps | Result |
 |---|---:|---:|---:|---|
@@ -45,4 +45,4 @@ Separate local debug build succeeds; bounded 90-second startup run exits 0 with 
 
 Coverage: 162 inventory + 82 extract = 244 unique IDs; 75 partial-development-green, 57 bounded-coverage, 91 audit-pending, 21 metadata-only. Of 57 successful unsuperseded removals, 47 establish absence/registration rejection and 10 accept exact cached deprecated wrappers/aliases, not strict raw absence. Extract: 65 pending / 17 editorial; scout batches 4, 8, 34, 9 and 10 rows.
 
-[Artifact validator](../../data/patch-api/evidence/11.2.0-session-2026-10-06/p1120-validate.py) checks hashes, source identities, chronological expectations, exact gaps, reviewed outcomes, negative control, ledger credit, complete scout allocation and revision-scoped proof. Local build/check logs are ignored artifacts, referenced by the retained proof ledger.
+[Artifact validator](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/11.2.0-session-2026-10-06/p1120-validate.py) checks hashes, source identities, chronological expectations, exact gaps, reviewed outcomes, negative control, ledger credit, complete scout allocation and revision-scoped proof. Local build/check logs are ignored artifacts, referenced by the retained proof ledger.

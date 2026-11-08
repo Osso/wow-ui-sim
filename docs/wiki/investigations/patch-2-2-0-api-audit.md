@@ -4,7 +4,7 @@ Frozen page 184149/revision 6428980 (2025-08-03T13:04:54Z) describes 2007 retail
 
 ## Source identity
 
-[Source pin](../../../data/patch-api/evidence/2.2.0-session-2026-10-09/source-pin.json) retains response SHA256 `b8f11baba49fa1fde43e31089b3da183c8c547475c97bdd4769493f51e10a3f4`; body SHA256 `8cbaf1b10b334913ff4a0f2c4ede58fad8b862c7f01f78d32088e5b8fe06590d`, 7,518 bytes. Manifest references `api-change-pages-remaining.json`, 101 rows through 1.0.0 (not the separate 138-page discovery index); registry SHA256 `e357f60af2c745b7797ab8f9e7ac151345cddb6bf43de7786ee25785ee92e91c`. The manifest has 65 retained page pins, not 101 fetched payloads.
+[Source pin](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/2.2.0-session-2026-10-09/source-pin.json) retains response SHA256 `b8f11baba49fa1fde43e31089b3da183c8c547475c97bdd4769493f51e10a3f4`; body SHA256 `8cbaf1b10b334913ff4a0f2c4ede58fad8b862c7f01f78d32088e5b8fe06590d`, 7,518 bytes. Manifest references `api-change-pages-remaining.json`, 101 rows through 1.0.0 (not the separate 138-page discovery index); registry SHA256 `e357f60af2c745b7797ab8f9e7ac151345cddb6bf43de7786ee25785ee92e91c`. The manifest has 65 retained page pins, not 101 fetched payloads.
 
 ## Coverage matrix
 
@@ -38,7 +38,7 @@ At `4f7a2c79797b95402e703e7e10ad87d677a3d926`: historical validator exits0 with 
 
 Directions: 13 added, 13 changed, 6 replaced, 4 context occurrences. Raw86 total/67 nonblank (53 UNPROVEN, 14 metadata); default extract67 nonblank. No explicit console command row, no concrete event member expansion. Every linked/full behavioral contract remains UNPROVEN; no publication/native/runtime observation.
 
-[Command ledger](../../../data/patch-api/evidence/2.2.0-session-2026-10-09/command-ledger.json) records commands, exact proof revisions/scopes and invalidation boundaries; [portable receipt](../../../data/patch-api/evidence/2.2.0-session-2026-10-09/portable-proof.json) records seals/counts/restoration. No rerun of already applicable SOURCE proof; no broad/final gates. Main owns native/integration/final acceptance. Zero model credit and no new runtime proposal.
+[Command ledger](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/2.2.0-session-2026-10-09/command-ledger.json) records commands, exact proof revisions/scopes and invalidation boundaries; [portable receipt](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/2.2.0-session-2026-10-09/portable-proof.json) records seals/counts/restoration. No rerun of already applicable SOURCE proof; no broad/final gates. Main owns native/integration/final acceptance. Zero model credit and no new runtime proposal.
 
 ## Integrated evidence retention — 2026-10-09
 
@@ -46,7 +46,7 @@ Directions: 13 added, 13 changed, 6 replaced, 4 context occurrences. Raw86 total
 
 ## Sources
 
-- [Frozen source/ledger/evidence](../../../data/patch-api/evidence/2.2.0-session-2026-10-09/) — offline inputs and owned receipts.
+- [Frozen source/ledger/evidence](https://github.com/Osso/wow-ui-sim/tree/183edc381/data/patch-api/evidence/2.2.0-session-2026-10-09) — offline inputs and owned receipts.
 - [Spec](../../specs/patch-2-2-0-source-accounting.md) — bounded requirements.
 
 ## See Also

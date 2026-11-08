@@ -54,13 +54,13 @@ Mists wrapper preservation probe in `tests/mists_currency_list.rs`:
 
 ## Known gaps (current cycle)
 
-[Bounded proof packet](../../data/patch-api/evidence/currency-supplied-state-2026-10-11/README.md): authentic default RED12PASS/fournewFAIL at `f4a6fb2e4`; default16/16 and Mists20/20 GREEN at `1dcc59c07`, independent gates, fmt/check0 and cached default stock `[]`/exit0. Initial unsupported test-decoder compile failure has zero executions. No broad test rerun supplies these targeted results.
+[Bounded proof packet](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/currency-supplied-state-2026-10-11/README.md): authentic default RED12PASS/fournewFAIL at `f4a6fb2e4`; default16/16 and Mists20/20 GREEN at `1dcc59c07`, independent gates, fmt/check0 and cached default stock `[]`/exit0. Initial unsupported test-decoder compile failure has zero executions. No broad test rerun supplies these targeted results.
 
 - [ ] Exhaustive catalog/default/order acceptance and native parity remain unproved. Mutated Mists unsupported slots9/10 are not explicitly asserted; wrapper source is unchanged and header/unwatched baseline comparisons cover all12 slots.
-[Seven-profile bounded proof](../../data/patch-api/evidence/currency-seven-profile-2026-10-11/README.md): Retail16/Mists20/PTR16/Wrath16/Era16/Anniversary16/Forever16 independently accepted;116 GREEN executions across seven configurations,20 distinct named tests. Shared supplied-state proof, not native-profile catalogs.
+[Seven-profile bounded proof](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/currency-seven-profile-2026-10-11/README.md): Retail16/Mists20/PTR16/Wrath16/Era16/Anniversary16/Forever16 independently accepted;116 GREEN executions across seven configurations,20 distinct named tests. Shared supplied-state proof, not native-profile catalogs.
 
-- [x] Remaining Era/Anniversary/Forever probes: retry2 epoch `20261011T082636Z` records16/16 PASS each, independently accepted. [Earlier profile follow-up](../../data/patch-api/evidence/currency-profile-followup-2026-10-11/README.md) preserves two zero-case Era resource blocks and initially unattempted Anniversary/Forever. Blocked vendor-input lanes are not reopened.
-- [x] Reconcile completed `1dcc59c07` [saved full suite](../../data/patch-api/evidence/currency-fullsuite-2026-10-11/README.md): 15,028 PASS/1 Garrison FAIL/19 skips/15,029 executions. Four new currency regressions PASS inside totals; source equality and accounting independently audited. Existing c75 FAIL remains history.
+- [x] Remaining Era/Anniversary/Forever probes: retry2 epoch `20261011T082636Z` records16/16 PASS each, independently accepted. [Earlier profile follow-up](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/currency-profile-followup-2026-10-11/README.md) preserves two zero-case Era resource blocks and initially unattempted Anniversary/Forever. Blocked vendor-input lanes are not reopened.
+- [x] Reconcile completed `1dcc59c07` [saved full suite](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/currency-fullsuite-2026-10-11/README.md): 15,028 PASS/1 Garrison FAIL/19 skips/15,029 executions. Four new currency regressions PASS inside totals; source equality and accounting independently audited. Existing c75 FAIL remains history.
 - [ ] Full-suite acceptance remains open: Garrison FAIL, skipped/native/other-profile behavior and external acceptance are not discharged by bounded currency proof.
 
 ## Out of scope

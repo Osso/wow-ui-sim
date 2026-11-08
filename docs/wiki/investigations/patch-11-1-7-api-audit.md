@@ -10,7 +10,7 @@ All eight inventory header counts match. Every later register, 11.2.0 through 12
 
 Initial cached sweep: 36 OK / 12 gaps. Two C_Debug methods were registered unconditionally after retirement. Move retained legacy output under `src/c_api/c_debug.rs`, exclude its registration on supported retail epochs, and mark removed keys against namespace autostubs. No cached Blizzard deprecation wrapper is deleted. Two graphics commands were missing from the existing typed console catalog; add Command records, not CVars. Execution and native graphics metadata remain unmodeled. Two behavioral tests reproduce four defects before implementation, then pass.
 
-An initial assisted-slot candidate fails compilation because the presumed action_spell_id field does not exist. Existing next_cast_spell_id is a recommendation, not the rotation-action identity. Candidate is withdrawn rather than fabricating a model. Remaining eight gaps: assisted-action identity; three call-profiler APIs; opted-in addon-table access/security; currency-transfer lifecycle; cooldown availability/failure reason; ButtonHeader widget DTO producer. [Per-ID review](../../../data/patch-api/evidence/11.1.7-session-2026-10-06/p1117-gap-review.json) records exact reasons and source boundaries.
+An initial assisted-slot candidate fails compilation because the presumed action_spell_id field does not exist. Existing next_cast_spell_id is a recommendation, not the rotation-action identity. Candidate is withdrawn rather than fabricating a model. Remaining eight gaps: assisted-action identity; three call-profiler APIs; opted-in addon-table access/security; currency-transfer lifecycle; cooldown availability/failure reason; ButtonHeader widget DTO producer. [Per-ID review](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/11.1.7-session-2026-10-06/p1117-gap-review.json) records exact reasons and source boundaries.
 
 ## Coverage matrix
 
@@ -35,9 +35,9 @@ Seven later observation maps match retained 11.2.0 evidence exactly. 11.2.7 diff
 - [Publication contract](../../specs/patch-11-1-7-publication-sweep.md)
 - [Source provenance](../../../data/patch-api/sources/11.1.7-api-changes.provenance.json)
 - [Coverage ledger](../../../data/patch-api/sources/11.1.7-page-coverage.json)
-- [Extract scout](../../../data/patch-api/evidence/11.1.7-session-2026-10-06/p1117-extract-scout.md)
-- [Proof ledger](../../../data/patch-api/evidence/11.1.7-session-2026-10-06/p1117-proof.json)
-- [Artifact validator](../../../data/patch-api/evidence/11.1.7-session-2026-10-06/p1117-validate.py)
+- [Extract scout](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/11.1.7-session-2026-10-06/p1117-extract-scout.md)
+- [Proof ledger](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/11.1.7-session-2026-10-06/p1117-proof.json)
+- [Artifact validator](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/11.1.7-session-2026-10-06/p1117-validate.py)
 
 ## See Also
 

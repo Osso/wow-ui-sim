@@ -20,17 +20,17 @@ Discovery: 83 OK / 46 gaps. Final: 93 OK / 36 gaps. Ten unused namespace autostu
 - C_LootHistory: CanMasterLoot, GetExpiration, GetItem, GetNumItems, GetPlayerInfo, GiveMasterLoot, SetExpiration.
 - C_TooltipInfo: GetQuestLogRewardSpell, GetQuestRewardSpell.
 
-[Qualified and bare cached searches](../../../data/patch-api/evidence/10.1.0-session-2026-10-07/p1010-retirement-consumers.json) retain all matches. No qualified retired-member consumers exist. Bare-name matches refer to unrelated APIs: for example global GiveMasterLoot at `Blizzard_UIPanels_Game/Mainline/GroupLootFrame.lua:781`, CommunitiesTicketManagerDialogMixin:SetExpirationTime at `Blizzard_Communities/CommunitiesTicketManagerDialog.lua:412`, and current C_QuestInfoSystem reward queries at `Blizzard_UIPanels_Game/Mainline/QuestInfo.lua:618,655`. These are not retired namespace calls.
+[Qualified and bare cached searches](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/10.1.0-session-2026-10-07/p1010-retirement-consumers.json) retain all matches. No qualified retired-member consumers exist. Bare-name matches refer to unrelated APIs: for example global GiveMasterLoot at `Blizzard_UIPanels_Game/Mainline/GroupLootFrame.lua:781`, CommunitiesTicketManagerDialogMixin:SetExpirationTime at `Blizzard_Communities/CommunitiesTicketManagerDialog.lua:412`, and current C_QuestInfoSystem reward queries at `Blizzard_UIPanels_Game/Mainline/QuestInfo.lua:618,655`. These are not retired namespace calls.
 
-[Whole src/tests caller scan](../../../data/patch-api/evidence/10.1.0-session-2026-10-07/p1010-final-whole-caller-scan.txt) keeps untruncated bare-name results, including embedded Lua, function references and guards. No pre-existing retail callers of the ten qualified members require migration. Mists' CanMasterLoot shim remains classic-only and unchanged. Existing loot-history successor shapes, repeated namespace lookup and one cached Game prefork pass. No Blizzard deprecation wrappers, cache files or vendor behavior changed.
+[Whole src/tests caller scan](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/10.1.0-session-2026-10-07/p1010-final-whole-caller-scan.txt) keeps untruncated bare-name results, including embedded Lua, function references and guards. No pre-existing retail callers of the ten qualified members require migration. Mists' CanMasterLoot shim remains classic-only and unchanged. Existing loot-history successor shapes, repeated namespace lookup and one cached Game prefork pass. No Blizzard deprecation wrappers, cache files or vendor behavior changed.
 
 ## Retained gaps and proof boundaries
 
-[Per-ID review](../../../data/patch-api/evidence/10.1.0-session-2026-10-07/p1010-gap-review.json) assigns every one of the 46 discovery failures exactly once: ten closed, 36 retained. Calendar transformations, roster-name matching, account service transitions, remote talent viewing, chat colors, map/vignette projection, quest reward producers, upgrade-track/high-watermark/binding state, recraft/enchant validation, generic-widget/party-pose/trial/spectating lifecycle and item-display DTOs require real modeled contracts rather than fabricated publication. Sound-entry count needs catalog data; pcallwithenv needs protected VM call-environment semantics. Two front-end ModelSceneActor methods remain at the permanent unsupported 3D boundary.
+[Per-ID review](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/10.1.0-session-2026-10-07/p1010-gap-review.json) assigns every one of the 46 discovery failures exactly once: ten closed, 36 retained. Calendar transformations, roster-name matching, account service transitions, remote talent viewing, chat colors, map/vignette projection, quest reward producers, upgrade-track/high-watermark/binding state, recraft/enchant validation, generic-widget/party-pose/trial/spectating lifecycle and item-display DTOs require real modeled contracts rather than fabricated publication. Sound-entry count needs catalog data; pcallwithenv needs protected VM call-environment semantics. Two front-end ModelSceneActor methods remain at the permanent unsupported 3D boundary.
 
 GetAddOnMetadata retains a modeled legacy registration and explicit retail test consumers (`tests/addon_api.rs:422,427`, `tests/patch_10_2_0_publication_fixes.rs:41`). Coordinated profile gating/caller migration is separate from unused autostub retirement; this bounded audit preserves it as an exact gap. Cached uses are C_AddOns successor calls, not evidence of old-global use. GetSpellLinkFromSpellID is superseded to absent by a later register, but existing SpellBook transition-alias retirement policy deliberately preserves that family. Ordinary fallback still fabricates the member; no absence credit granted.
 
-[Extract scout](../../../data/patch-api/evidence/10.1.0-session-2026-10-07/p1010-extract-scout.json) assigns all 287 extract occurrences once with literal text, line, section and proof boundary. Private aura secrecy/display/sound contracts, addon compartment callbacks/icon precedence, local-only chat link dispatch, Lua/XML scroll examples, deprecated-template/renamed-handler behavior, numeric enum/constant identities and populated DTO field changes remain unproved. Later subsystem tests are not credited as occurrence-specific proof.
+[Extract scout](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/10.1.0-session-2026-10-07/p1010-extract-scout.json) assigns all 287 extract occurrences once with literal text, line, section and proof boundary. Private aura secrecy/display/sound contracts, addon compartment callbacks/icon precedence, local-only chat link dispatch, Lua/XML scroll examples, deprecated-template/renamed-handler behavior, numeric enum/constant identities and populated DTO field changes remain unproved. Later subsystem tests are not credited as occurrence-specific proof.
 
 ## Verification
 
@@ -40,7 +40,7 @@ Negative control flips only AnimationGroup:GetElapsed from added to removed: exa
 
 Cargo fmt and fmt --check, default cargo check, Mists `--tests` check and separate retail build pass. Mists has zero non-vendor warnings; six iced vendor manifest deprecations and their summary remain unsuppressed. Bounded startup exits zero and returns `[]`. Changed Rust manually audited for readability: flat retirement data, one registration call and bounded assertions; no changed-line violations.
 
-[Proof ledger](../../../data/patch-api/evidence/10.1.0-session-2026-10-07/p1010-proof.json) records exact revisions/scopes, commands, logs, hashes and expected exits. Saved outputs inspected rather than rerun. Documentation/data-only follow-up commits preserve compiled proof scopes. Local targeted evidence is not native or independent acceptance. No agents or model CLIs, full suite, push, merge, canonical working-file changes, sibling target reuse or vendor/cache edits. Every command has explicit cwd `p1010-page` and uses its own target; worktree creation used only prescribed canonical Git metadata with cwd in the empty destination.
+[Proof ledger](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/10.1.0-session-2026-10-07/p1010-proof.json) records exact revisions/scopes, commands, logs, hashes and expected exits. Saved outputs inspected rather than rerun. Documentation/data-only follow-up commits preserve compiled proof scopes. Local targeted evidence is not native or independent acceptance. No agents or model CLIs, full suite, push, merge, canonical working-file changes, sibling target reuse or vendor/cache edits. Every command has explicit cwd `p1010-page` and uses its own target; worktree creation used only prescribed canonical Git metadata with cwd in the empty destination.
 
 | Patch | Rows | OK | Gaps | Isolated exit |
 |---|---:|---:|---:|---:|
@@ -67,15 +67,15 @@ Cargo fmt and fmt --check, default cargo check, Mists `--tests` check and separa
 | 12.0.7 | 174 | 171 | 3 | 0 |
 | 12.1.0 | 778 | 773 | 5 | 0 |
 
-Artifact validator passes at `a487dc982`: [result](../../../data/patch-api/evidence/10.1.0-session-2026-10-07/p1010-validation-result.json). It verifies all 416 source IDs/hashes, exact discovery/closure/gap sets, every chronological expectation, all 22 isolated fixtures, negative control, proof-log hashes, extraction-mode boundaries and 134 preserved inputs. Subsequent result/documentation-only changes preserve these scopes.
+Artifact validator passes at `a487dc982`: [result](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/10.1.0-session-2026-10-07/p1010-validation-result.json). It verifies all 416 source IDs/hashes, exact discovery/closure/gap sets, every chronological expectation, all 22 isolated fixtures, negative control, proof-log hashes, extraction-mode boundaries and 134 preserved inputs. Subsequent result/documentation-only changes preserve these scopes.
 
 ## Sources
 
 - [Provenance](../../../data/patch-api/sources/10.1.0-api-changes.provenance.json)
 - [Coverage ledger](../../../data/patch-api/sources/10.1.0-page-coverage.json)
 - [Publication contract](../../specs/patch-10-1-0-publication-sweep.md)
-- [Preservation](../../../data/patch-api/evidence/10.1.0-session-2026-10-07/p1010-preservation.json)
-- [Register reproduction](../../../data/patch-api/evidence/10.1.0-session-2026-10-07/p1010-register-reproduction.json)
+- [Preservation](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/10.1.0-session-2026-10-07/p1010-preservation.json)
+- [Register reproduction](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/10.1.0-session-2026-10-07/p1010-register-reproduction.json)
 
 ## See Also
 

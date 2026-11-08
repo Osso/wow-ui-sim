@@ -48,8 +48,8 @@ Copied inputs contain no Git/target/current tools/runtime/vendor/cache. Fresh ab
 ## Sources
 
 - [Spec](../../specs/patch-1-14-4-source-accounting.md).
-- [Frozen pin](../../../data/patch-api/evidence/1.14.4-session-2026-10-09/source-pin.json), [literal source](../../../data/patch-api/evidence/1.14.4-session-2026-10-09/source.wikitext), [attribution](../../../data/patch-api/evidence/1.14.4-session-2026-10-09/source-attribution.md) — Warcraft Wiki CC BY-SA4.0.
-- [Own ledger](../../../data/patch-api/evidence/1.14.4-session-2026-10-09/ledger.json), [original proof](../../../data/patch-api/evidence/1.14.4-session-2026-10-09/proof-ledger.json), [portable proof](../../../data/patch-api/evidence/1.14.4-session-2026-10-09/portable-proof.json), [replay instructions](../../../data/patch-api/evidence/1.14.4-session-2026-10-09/REPLAY.md).
+- [Frozen pin](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/1.14.4-session-2026-10-09/source-pin.json), [literal source](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/1.14.4-session-2026-10-09/source.wikitext), [attribution](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/1.14.4-session-2026-10-09/source-attribution.md) — Warcraft Wiki CC BY-SA4.0.
+- [Own ledger](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/1.14.4-session-2026-10-09/ledger.json), [original proof](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/1.14.4-session-2026-10-09/proof-ledger.json), [portable proof](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/1.14.4-session-2026-10-09/portable-proof.json), [replay instructions](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/1.14.4-session-2026-10-09/REPLAY.md).
 
 ## See Also
 

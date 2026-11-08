@@ -25,7 +25,7 @@ Every behavioral contract remains UNPROVEN. Static source inventory is neither s
 
 ## Targeted development proof
 
-[Proof ledger](../../data/patch-api/evidence/2.1.0-session-2026-10-09/development-proof-ledger.json): four distinct own source fixtures GREEN (parser/default/recorded-template 3/3 at `3f32a7629`, accounting/omission 1/1 at `ab51d7373`); own copied-process fixture GREEN 1/1 at `ab51d7373`. 971 individual omission controls, one fabricated capability control, 19 serialized seal/manifest reject-and-restore controls and missing-gap restoration. Synthetic mutable current drift leaves replay stdout identical. Original 18 seals/101 snapshots unchanged; GREEN logs/receipts separately sealed. No runtime or final acceptance.
+[Proof ledger](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/2.1.0-session-2026-10-09/development-proof-ledger.json): four distinct own source fixtures GREEN (parser/default/recorded-template 3/3 at `3f32a7629`, accounting/omission 1/1 at `ab51d7373`); own copied-process fixture GREEN 1/1 at `ab51d7373`. 971 individual omission controls, one fabricated capability control, 19 serialized seal/manifest reject-and-restore controls and missing-gap restoration. Synthetic mutable current drift leaves replay stdout identical. Original 18 seals/101 snapshots unchanged; GREEN logs/receipts separately sealed. No runtime or final acceptance.
 
 ## Missing
 

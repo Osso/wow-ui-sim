@@ -1,6 +1,6 @@
 # Friend info by name
 
-Current cached Retail/PTR `FriendListDocumentation.lua` declares `C_FriendList.GetFriendInfo(name: cstring)` with `AllowedWhenUntainted`. Unchanged Mainline `GameDialogDefs.lua` uses it to prefill `SET_FRIENDNOTE` from `info.notes`. Producer `be9c734a4` commits the exact Retail/PTR query over environment-owned `SocialFriend` records with the shared unchanged simulator DTO; the current alternate-name provider is removed, indexed/earlier providers retained, and C_Social unchanged. [Independent bounded Retail/PTR proof](../../data/patch-api/evidence/friend-info-exact-2026-10-12/README.md) accepts the query and unchanged popup, not native friend-system parity.
+Current cached Retail/PTR `FriendListDocumentation.lua` declares `C_FriendList.GetFriendInfo(name: cstring)` with `AllowedWhenUntainted`. Unchanged Mainline `GameDialogDefs.lua` uses it to prefill `SET_FRIENDNOTE` from `info.notes`. Producer `be9c734a4` commits the exact Retail/PTR query over environment-owned `SocialFriend` records with the shared unchanged simulator DTO; the current alternate-name provider is removed, indexed/earlier providers retained, and C_Social unchanged. [Independent bounded Retail/PTR proof](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/friend-info-exact-2026-10-12/README.md) accepts the query and unchanged popup, not native friend-system parity.
 
 ## What it must do
 
@@ -41,5 +41,5 @@ This bounded caller fix does not establish native catalogs, name normalization/c
 
 ## Current bounded GUI publication — 2026-10-12
 
-[New90-second WoW API publication only; not Pi/LLM provider diagnostics](../../data/patch-api/evidence/live-retail-gui-providers-2026-10-12/README.md) · [Independent publication gate; logged event, not pixels; intentional124 expiry, not assertion failure or service repair](../../data/patch-api/evidence/live-retail-gui-providers-2026-10-12/live-provider-report.md). [Owned-process/socket cleanup, existing display preserved;15 copies/39,405 bytes retention independently2905 PASS at5e1b7bab4; native/visual/authenticated-remote/user acceptance OPEN](../../data/patch-api/evidence/live-retail-gui-providers-2026-10-12/README.md).
+[New90-second WoW API publication only; not Pi/LLM provider diagnostics](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/live-retail-gui-providers-2026-10-12/README.md) · [Independent publication gate; logged event, not pixels; intentional124 expiry, not assertion failure or service repair](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/live-retail-gui-providers-2026-10-12/live-provider-report.md). [Owned-process/socket cleanup, existing display preserved;15 copies/39,405 bytes retention independently2905 PASS at5e1b7bab4; native/visual/authenticated-remote/user acceptance OPEN](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/live-retail-gui-providers-2026-10-12/README.md).
 

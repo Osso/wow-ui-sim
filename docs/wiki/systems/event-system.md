@@ -17,7 +17,7 @@ Registerability does not model an event producer, payload, or `C_ExternalEventUR
 
 ## State-based removal source checkpoint — 2026-10-13
 
-[Removal owner](../../specs/frame-event-removal.md#current-source-checkpoint--2026-10-13) links [Current bounded gate](../../../data/patch-api/evidence/ui-widget-spell-display-2026-10-13/README.md#current-bounded-runtime-gate--2026-10-13): independent Retail PASS; PTR independent PASS; selected retention PASS. Strict insertion/state-based removal are simulator policy; Classic preservation and native parity unproved, last requirement not fully checked.
+[Removal owner](../../specs/frame-event-removal.md#current-source-checkpoint--2026-10-13) links [Current bounded gate](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/ui-widget-spell-display-2026-10-13/README.md#current-bounded-runtime-gate--2026-10-13): independent Retail PASS; PTR independent PASS; selected retention PASS. Strict insertion/state-based removal are simulator policy; Classic preservation and native parity unproved, last requirement not fully checked.
 
 ## Script Handler Types (36+, `src/event/mod.rs`)
 

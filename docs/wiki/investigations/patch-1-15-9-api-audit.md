@@ -4,7 +4,7 @@ Frozen page 685352 / revision 6780591 / timestamp `2026-07-24T15:29:35Z`, audite
 
 ## Source identity
 
-[Own frozen inputs and ledger](../../../data/patch-api/evidence/1.15.9-session-2026-10-09/ledger.json) retain response, source, manifest and 101-page registry ending at 1.0.0. Raw source: 4,085 bytes / SHA256 `beea5ee3ad4a1a10c031cd02777a3d5bc1b5198e4637c713a088c4c9f94423db`; response SHA256 `2691663c5ffc7efbd0b862a8a94dd8632141c55eb7393f2aca8003d3448e6baf`. Page/revision/title/timestamp/content/manifest/registry identities are independently checked offline. Raw rows, duplicate C_CVar occurrences and exact spelling stay literal; no alias/default/signature reconstruction.
+[Own frozen inputs and ledger](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/1.15.9-session-2026-10-09/ledger.json) retain response, source, manifest and 101-page registry ending at 1.0.0. Raw source: 4,085 bytes / SHA256 `beea5ee3ad4a1a10c031cd02777a3d5bc1b5198e4637c713a088c4c9f94423db`; response SHA256 `2691663c5ffc7efbd0b862a8a94dd8632141c55eb7393f2aca8003d3448e6baf`. Page/revision/title/timestamp/content/manifest/registry identities are independently checked offline. Raw rows, duplicate C_CVar occurrences and exact spelling stay literal; no alias/default/signature reconstruction.
 
 ## Coverage matrix
 
@@ -34,7 +34,7 @@ Own serialized SOURCE fixtures: RED eight assertion failures against empty accou
 
 Original `seals.json`: **18 inputs**, 679,373 aggregate bytes; SHA256 `bc79b129b07ce32bd01b5f3e1676441ba8f041f903d0b5c5483e72a6bb021e69`, unchanged after controls. Largest retained artifact: 219,034 bytes; every file remains under 5 MB. Separate `receipt-seals.json` seals **five** later artifacts/map without extending or rewriting original seals.
 
-[Portable proof](../../../data/patch-api/evidence/1.15.9-session-2026-10-09/portable-proof.json) records exact commands, revision `308aeda25`, member hashes and restoration hashes. Serialized `ledger.json` contract omission rejects at its seal; serialized `green.log` fabricated success rejects at its seal. Both restored byte-for-byte with matching original SHA256; all 18 original seals remain valid.
+[Portable proof](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/1.15.9-session-2026-10-09/portable-proof.json) records exact commands, revision `308aeda25`, member hashes and restoration hashes. Serialized `ledger.json` contract omission rejects at its seal; serialized `green.log` fabricated success rejects at its seal. Both restored byte-for-byte with matching original SHA256; all 18 original seals remain valid.
 
 Fresh archive: **20 members**, 101,361 bytes, SHA256 `ebd2437a59df2ad9f210c1055d7657e5470d82ac3803b079b2da56f3dee32b52`. Copied process has no Git/target/current tools/runtime/cache inputs. Frozen validator exits 0; copied historical SOURCE fixtures pass 8/8; frozen default generator with flags `[]` reproduces its retained JSON bytes exactly. The stock empty register omits these prose contracts and is not parity credit. Shared parser/extractor were not changed; recorded shared flags remain untouched, no all-flags regression expansion was performed.
 
@@ -47,8 +47,8 @@ Replay retained `replay-archive.tar.gz` into a fresh directory and run its own `
 ## Sources
 
 - [Spec](../../specs/patch-1-15-9-source-accounting.md).
-- [Frozen source](../../../data/patch-api/evidence/1.15.9-session-2026-10-09/source.wikitext).
-- [Own tests](../../../data/patch-api/evidence/1.15.9-session-2026-10-09/test_source_accounting.py).
+- [Frozen source](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/1.15.9-session-2026-10-09/source.wikitext).
+- [Own tests](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/1.15.9-session-2026-10-09/test_source_accounting.py).
 
 ## See Also
 

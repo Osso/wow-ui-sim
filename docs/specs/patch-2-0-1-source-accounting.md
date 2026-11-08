@@ -18,7 +18,7 @@ Dedicated `tools/audit_patch_2_0_1_source.py` does not alter any shared generato
 - `tools/test_patch_2_0_1_source.py`: own literal source fixtures, complete raw row retention, signatures, duplicates, commands, handlers, event families and malformed boundary.
 - `tools/test_patch_2_0_1_replay.py`: original copied replay 2/2 at `717009936`; separate current case 1/1 at `939d8b73b`. Original 1,655/current 1,657 omission controls; original 19/current 10 disk tamper-restoration controls. SOURCE fixtures 6/6 at `5075cf42b`, also replayed from current sealed copies. No integration/final acceptance.
 
-Current accounting: 316 nonblank rows, 35 headers, 295 lexical occurrences, 206 signature fragments, 280 substantive UNPROVEN prose/example rows, 12 unexpanded references and 793 gap records. Original 18 seals/114 snapshots/792 gaps remain unchanged; current nine seals distinct. See [exact proof receipts](../../data/patch-api/evidence/2.0.1-session-2026-10-09/completion-proof.json). Zero publication/runtime/native/model credit.
+Current accounting: 316 nonblank rows, 35 headers, 295 lexical occurrences, 206 signature fragments, 280 substantive UNPROVEN prose/example rows, 12 unexpanded references and 793 gap records. Original 18 seals/114 snapshots/792 gaps remain unchanged; current nine seals distinct. See [exact proof receipts](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/2.0.1-session-2026-10-09/completion-proof.json). Zero publication/runtime/native/model credit.
 
 ## Sources
 

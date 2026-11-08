@@ -22,7 +22,7 @@ Require the exact observed non-OK ID set to equal `tests/data/patch_12_0_1_sweep
 
 ## Reviewed outcomes — 2026-10-06
 
-Development sweep at `3ddcc019c`: 225 rows, 174 OK, 51 exact reviewed gaps. Initial sweep: 170 OK / 55 gaps; retirement closes four, with no fabricated successor publication. Sixteen OK rows carry later-patch supersession. [Per-ID review](../../data/patch-api/evidence/12.0.1-session-2026-10-06/p1201-gap-review.json) retains every non-OK observation.
+Development sweep at `3ddcc019c`: 225 rows, 174 OK, 51 exact reviewed gaps. Initial sweep: 170 OK / 55 gaps; retirement closes four, with no fabricated successor publication. Sixteen OK rows carry later-patch supersession. [Per-ID review](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/12.0.1-session-2026-10-06/p1201-gap-review.json) retains every non-OK observation.
 
 | Gap class | Rows | Remaining boundary |
 |---|---:|---|
@@ -35,7 +35,7 @@ Development sweep at `3ddcc019c`: 225 rows, 174 OK, 51 exact reviewed gaps. Init
 
 The 12.0.0 baseline changes from 23 to 27 IDs: minimapTrackedInfov2, useCompactPartyFrames, CHAT_MSG_ENCOUNTER_EVENT and FrameScriptObject:SetPreventSecretValues now inherit 12.0.1 removal expectations and remain published. Two speaker-volume removal gaps exposed by supersession were fixed rather than baselined. No old page-coverage ledger is changed.
 
-Negative control flips unsuperseded `C_DamageMeter.GetSessionDurationSeconds` from added to removed: 51 → 52 gaps, exactly one new ID and exactly one changed observation; expected exit 101. [Control proof](../../data/patch-api/evidence/12.0.1-session-2026-10-06/p1201-negative-control.json).
+Negative control flips unsuperseded `C_DamageMeter.GetSessionDurationSeconds` from added to removed: 51 → 52 gaps, exactly one new ID and exactly one changed observation; expected exit 101. [Control proof](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/12.0.1-session-2026-10-06/p1201-negative-control.json).
 
 ## Final local verification — 2026-10-06
 
@@ -49,13 +49,13 @@ Verified code/data revision `a69dcfd66b08b853452fbe273c52735c545ba6dd`; subseque
 | patch_12_0_7_publication_sweep | 174 | 171 | 3 | PASS |
 | patch_12_1_0_publication_sweep | 778 | 773 | 5 | PASS |
 
-Each ran as its own command: `python3 /home/osso/.worktrees/wow-ui-sim-p1201-page/scripts/build-host.py --build-host local --test --test integration FILTER -- --nocapture --test-threads=1`. Output environment variables write `p1200/p1201/p1205/p1207/p1210-sweep-result.json` under [session evidence](../../data/patch-api/evidence/12.0.1-session-2026-10-06/).
+Each ran as its own command: `python3 /home/osso/.worktrees/wow-ui-sim-p1201-page/scripts/build-host.py --build-host local --test --test integration FILTER -- --nocapture --test-threads=1`. Output environment variables write `p1200/p1201/p1205/p1207/p1210-sweep-result.json` under [session evidence](https://github.com/Osso/wow-ui-sim/tree/183edc381/data/patch-api/evidence/12.0.1-session-2026-10-06).
 
 `patch_12_0_1_retirement`: 1 PASS. `audio_`: 11 PASS across the direct and cached-prefork phases. Four Python extract fixtures PASS (old plaintext, new templates/API identities, comparison operators, nested contracts). Artifact validation PASS: 477 unique IDs, exact seed/occurrence union, all hashes/header counts, 201 pending scout assignments, four unchanged old ledgers. All four pre-existing registers regenerate byte-identically with the unmodified register generator.
 
 `cargo fmt --manifest-path /home/osso/.worktrees/wow-ui-sim-p1201-page/Cargo.toml -- --check` PASS. Local helper `--check` PASS. Startup was built separately without a timeout, then run with `timeout 90 python3 /home/osso/.worktrees/wow-ui-sim-p1201-page/scripts/build-host.py --build-host local --no-build --run -- --no-addons --no-saved-vars lua-errors`: exit 0, Lua-error JSON `[]`, stderr CLEAN / zero errors. The helper's stdout artifact announcement was parsed separately from the JSON; saved output was inspected, not rerun.
 
-Six pre-existing `iced-wgpu-patched/Cargo.toml` deprecated manifest-key warnings match the initial RED build exactly; no warning suppression or vendor modification. Manual changed-Rust readability/scope audit found no added suppression, deep control flow or forbidden-file changes. [Proof ledger](../../data/patch-api/evidence/12.0.1-session-2026-10-06/p1201-proof.json) retains commands, revisions, outputs and proof limits; [477-row validation](../../data/patch-api/evidence/12.0.1-session-2026-10-06/p1201-page-validation.json).
+Six pre-existing `iced-wgpu-patched/Cargo.toml` deprecated manifest-key warnings match the initial RED build exactly; no warning suppression or vendor modification. Manual changed-Rust readability/scope audit found no added suppression, deep control flow or forbidden-file changes. [Proof ledger](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/12.0.1-session-2026-10-06/p1201-proof.json) retains commands, revisions, outputs and proof limits; [477-row validation](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/12.0.1-session-2026-10-06/p1201-page-validation.json).
 
 ## Inputs and tests
 
@@ -98,7 +98,7 @@ Comparison permission shares the existing UnitIsUnit token policy, moved into `c
 
 ## Gap closure result — verified runtime eeccdea61
 
-Original 51 IDs: **48 publication-closed / 3 retained**. Every ID retains baseline/current observations and its bounded behavior filter in [gap review](../../data/patch-api/evidence/12.0.1-session-2026-10-06/p1201-gap-review.json). This is not full 51-gap closure or native parity.
+Original 51 IDs: **48 publication-closed / 3 retained**. Every ID retains baseline/current observations and its bounded behavior filter in [gap review](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/12.0.1-session-2026-10-06/p1201-gap-review.json). This is not full 51-gap closure or native parity.
 
 | Retained ID | Evidence / boundary |
 |---|---|
@@ -120,6 +120,6 @@ Five final sweeps run independently with `--test-threads=1`, default debug retai
 
 Thirteen new targeted regressions pass. Overlapping subsystem filters: audio 12 across direct/prefork phases, prediction 17, death recap 6, outfits 24, secrets 6; lib frame security 1 and CVar storage 9 pass. The first prediction regression run had 16 pass / 1 fail: migrating the factory omitted the old identity `__tostring`. Source comparison against master `a3332a7fe` identified that omission; restored prefix/instance labels make all 17 pass. No full master runtime comparison was run.
 
-`cargo fmt --check` and local helper `--check` pass. Startup built separately, then `timeout 90 python3 <absolute-worktree>/scripts/build-host.py --build-host local --no-build --run -- --no-addons --no-saved-vars lua-errors`: exit 0, JSON `[]`, CLEAN / zero errors. Six pre-existing vendor-manifest warnings remain unchanged; no suppressions or vendor edits. Rust metrics/manual changed-line audit found no threshold blockers. [Proof ledger](../../data/patch-api/evidence/12.0.1-session-2026-10-06/p1201-gaps-proof.json) retains exact argv/revisions, original RED failures, final counts and inferred choices.
+`cargo fmt --check` and local helper `--check` pass. Startup built separately, then `timeout 90 python3 <absolute-worktree>/scripts/build-host.py --build-host local --no-build --run -- --no-addons --no-saved-vars lua-errors`: exit 0, JSON `[]`, CLEAN / zero errors. Six pre-existing vendor-manifest warnings remain unchanged; no suppressions or vendor edits. Rust metrics/manual changed-line audit found no threshold blockers. [Proof ledger](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/12.0.1-session-2026-10-06/p1201-gaps-proof.json) retains exact argv/revisions, original RED failures, final counts and inferred choices.
 
 Strict 12.0.0 preservation is source-gate inspected, not separately runtime-proven. No release, extra target directories, agents/models, push, merge, crafting/order changes, or page-coverage ledger edits. Current source/page ledgers are historical audit artifacts and were not relabeled as behavioral/native coverage.

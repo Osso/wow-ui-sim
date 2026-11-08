@@ -11,7 +11,7 @@ Audit frozen page 522376/revision 6055853, not Wrath Classic 3.4.x. [Audit](../w
 
 ## How it works
 - [Audit](../wiki/investigations/patch-3-3-0-api-audit.md)
-- [Portable handoff](../../data/patch-api/evidence/3.3.0-session-2026-10-09/handoff.md)
+- [Portable handoff](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/3.3.0-session-2026-10-09/handoff.md)
 
 ## Implementation inventory
 - `tools/gen_patch_wikitext_register.py`, `tools/extract_patch_non_inventory.py`: opt-in 2009 summary inventory/markup.

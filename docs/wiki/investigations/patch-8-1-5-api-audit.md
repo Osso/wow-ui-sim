@@ -6,7 +6,7 @@ Verified 2026-10-08. Warcraft Wiki page **394493**, current revision **3789732**
 
 ## Source and parsing
 
-[Source/provenance](../../../data/patch-api/sources/8.1.5-api-changes.provenance.json) pins raw SHA-256 `fc40dccee6ebfd304bce361e9251bcaab39e79e6fe2c6e3406c55fa4d6f5d8e4`; [fetch response](../../../data/patch-api/evidence/8.1.5-session-2026-10-08/p815-fetch.json) and HTTP receipt retain the current revision, not the revision listed in the older page inventory.
+[Source/provenance](../../../data/patch-api/sources/8.1.5-api-changes.provenance.json) pins raw SHA-256 `fc40dccee6ebfd304bce361e9251bcaab39e79e6fe2c6e3406c55fa4d6f5d8e4`; [fetch response](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/8.1.5-session-2026-10-08/p815-fetch.json) and HTTP receipt retain the current revision, not the revision listed in the older page inventory.
 
 This page uses level-four API/New and API/Removals bullets, plus two unqualified event additions. No caption tables or numerical headers. Independent opt-in **`--legacy-api-bullets`** in both tools preserves original occurrence line numbers and strips API/event inventory without swallowing namespace notes, source URLs or incomplete `?` markers. Generator/extractor fixtures reproduce the prior failure before the change. Defaults and prior recipes remain unchanged; merged 8.2.0 caption-table parsing remains independently opt-in via `--legacy-api-tables`.
 
@@ -30,7 +30,7 @@ This replaces the prior no-op ClearFanfare and missing raw NeedsFanfare registra
 
 ## Twelve retirements and retained removals
 
-[Pre-change scans](../../../data/patch-api/evidence/8.1.5-session-2026-10-08/p815-removal-consumers.json) and [final scans](../../../data/patch-api/evidence/8.1.5-session-2026-10-08/p815-whole-callers-after.json) retain untruncated `/usr/bin/grep -rnE` output: whole-word qualified and bare names in cached retail AddOns, excluding Documentation files/directories, and all bare occurrences in src/tests (including conditional references and pcall). All **28 removal candidates** are scanned. Host lacks rg; grep use is recorded explicitly.
+[Pre-change scans](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/8.1.5-session-2026-10-08/p815-removal-consumers.json) and [final scans](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/8.1.5-session-2026-10-08/p815-whole-callers-after.json) retain untruncated `/usr/bin/grep -rnE` output: whole-word qualified and bare names in cached retail AddOns, excluding Documentation files/directories, and all bare occurrences in src/tests (including conditional references and pcall). All **28 removal candidates** are scanned. Host lacks rg; grep use is recorded explicitly.
 
 Every newly retired member has **zero cached qualified/bare consumers and zero initial source/test callers**:
 
@@ -47,7 +47,7 @@ Retain CanReportPlayer: qualified scan is empty, but two current bare-name consu
 
 ## Recorded problematic contracts
 
-[Per-ID gap review](../../../data/patch-api/evidence/8.1.5-session-2026-10-08/p815-gap-review.json) retains each literal, expected current publication, observed lookup and closure reason for all **24** gaps.
+[Per-ID gap review](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/8.1.5-session-2026-10-08/p815-gap-review.json) retains each literal, expected current publication, observed lookup and closure reason for all **24** gaps.
 
 Missing producers require Battle.net account GUID/display identity, journal encounter completion, merchant refund eligibility/expiry, remote unit realm relationships, available brawl schedule DTOs, community selection, double-state icon-row visualization data, and unit PvP classification/selection/widget-set state. Fixed local realm names, generic widget defaults or boolean shims cannot model those contracts.
 
@@ -55,7 +55,7 @@ Legacy reporting InitiateReportPlayer/SendReportPlayer remains used by modeled r
 
 ## Proof and integration
 
-[Proof index](../../../data/patch-api/evidence/8.1.5-session-2026-10-08/p815-proof.json) and individual receipts retain command, revision, explicit worktree cwd, isolated target, custom environment, exit and complete log hash. Main thread performed verification because user prohibited agents. No push, merge, session-cwd changes, sibling-worktree mutation, vendor writes or full integration suite.
+[Proof index](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/8.1.5-session-2026-10-08/p815-proof.json) and individual receipts retain command, revision, explicit worktree cwd, isolated target, custom environment, exit and complete log hash. Main thread performed verification because user prohibited agents. No push, merge, session-cwd changes, sibling-worktree mutation, vendor writes or full integration suite.
 
 All **39 publication sweeps + factory regression pass (40/40)** across **8,434 inventory rows**. Bare retirement/toy tests pass 2/2; cached retirement 1/1; Mists classic lookup/toy transition 2/2. Targeted integration regressions: toy 29, area POI eight, calendar ten, club 21, PvP eight, reporting two, social eight, date/time one. Cached community regressions pass six/six. The date/time test is existing classification evidence, not additional behavioral parity.
 
@@ -63,7 +63,7 @@ Parser fixtures pass **31 extractor / 22 generator**. Requested combined `patch_
 
 Negative control changes only NEW_TOY_ADDED added → removed: **24 → 25 gaps**, exactly one new ID, zero resolved IDs, unchanged inventory identity and expected exit one. Discovery, behavioral RED and trial-retirement RED receipts remain explicitly historical; not acceptance evidence.
 
-[Dynamic validator](../../../data/patch-api/evidence/8.1.5-session-2026-10-08/validate.py) validates read-only. Counts derive from retained files and observations; complete register scope is pinned to integrated revision `ee2315426`, not a receipt-derived subset. Absolute worktree/target paths are retained execution metadata, not checkout equality gates. Shared preservation checks allow only exact attributable later-audit replacements. **16/16 retained validators pass**; 8.1.5 and 8.2.0 also pass under a relocated evidence root. [Validator matrix](../../../data/patch-api/evidence/8.1.5-session-2026-10-08/p815-validator-matrix.json) retains each command/result and unchanged-proof reuse. No merge was performed. All 39 registers regenerate byte-identically; 36 saved extracts reproduce, including 8.2.0 with its recorded `--legacy-api-tables` flags. Inherited **12.0.5 / 12.0.7 / 12.1.0** extract failures remain unchanged, not hidden or fixed by this page. All 194 earlier source files and 76 default/example outcomes are preserved.
+[Dynamic validator](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/8.1.5-session-2026-10-08/validate.py) validates read-only. Counts derive from retained files and observations; complete register scope is pinned to integrated revision `ee2315426`, not a receipt-derived subset. Absolute worktree/target paths are retained execution metadata, not checkout equality gates. Shared preservation checks allow only exact attributable later-audit replacements. **16/16 retained validators pass**; 8.1.5 and 8.2.0 also pass under a relocated evidence root. [Validator matrix](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/8.1.5-session-2026-10-08/p815-validator-matrix.json) retains each command/result and unchanged-proof reuse. No merge was performed. All 39 registers regenerate byte-identically; 36 saved extracts reproduce, including 8.2.0 with its recorded `--legacy-api-tables` flags. Inherited **12.0.5 / 12.0.7 / 12.1.0** extract failures remain unchanged, not hidden or fixed by this page. All 194 earlier source files and 76 default/example outcomes are preserved.
 
 The sweep now uses the real merged **8.2.0 register** (`ee2315426`), then 8.2.5 and the remaining later registers. Integrated 8.1.5 sweep passes with the same 42 OK / 24 exact gaps: no attributable later closures or new gaps, so the original ledger, gap fixture and review remain unchanged and later-gap closures remain `[]`. Both parser opt-ins coexist; 8.2.0 saved register and extract reproduce with their recorded `--legacy-api-tables` flags.
 
@@ -71,8 +71,8 @@ The sweep now uses the real merged **8.2.0 register** (`ee2315426`), then 8.2.5 
 
 - [Specification](../../specs/patch-8-1-5-publication-sweep.md).
 - [Pinned register](../../../data/patch-api/sources/8.1.5-wikitext-register.json) and [ledger](../../../data/patch-api/sources/8.1.5-page-coverage.json).
-- [Evidence directory](../../../data/patch-api/evidence/8.1.5-session-2026-10-08/).
-- [Binding handoff](../../../data/patch-api/evidence/handoff-laptop-to-agent-server/HANDOFF.md).
+- [Evidence directory](https://github.com/Osso/wow-ui-sim/tree/183edc381/data/patch-api/evidence/8.1.5-session-2026-10-08).
+- [Binding handoff](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/handoff-laptop-to-agent-server/HANDOFF.md).
 - [Collection producer documentation](../../admin-api/collections.md).
 
 ## See Also

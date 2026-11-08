@@ -22,15 +22,15 @@ Original Retail is distinct from Era/Forever and other Classic histories.1.4.0 `
 
 ## Development epochs
 
-Own SOURCE RED8 and portable RED3 at base `b02b9f544ada14ee5d229b74f4f819c6ab4d7f5f` retained exact fixtures/full streams/hash scopes. Initial ledger capture retained a TypeError from a helper parameter colliding with the literal category field; renamed helper parameter without changing source categories. Own SOURCE GREEN8/8 at `be25624b1` covers227 omissions,13 derived-count mutations,11 invention/expansion/proof controls and10 body/response/manifest-registry mutations. Own-base generator default bytes/extractor932 bytes and malformed-symbol ValueError/null-input AttributeError replay pass. Fresh extracted copied validator exit0/SOURCE8/8/portable3/3 at `3ea5b20ba` under isolated Python/PATH=/nonexistent pass default-byte/error replay and both serialized ledger/log rejection/exact restoration controls.46 original seals and47-member62,573-byte archive unchanged; later actual revision/cwd/argv/times/full streams/scope hashes remain separate. Archived original-docs preserve their pre-copy epoch. [HANDOFF](../../../data/patch-api/evidence/1.3.0-session-2026-10-09/HANDOFF.md) and [REPLAY](../../../data/patch-api/evidence/1.3.0-session-2026-10-09/REPLAY.md) give bounded limits and fresh-copy commands. No Rust builds, clients, checks, broad suites or final gates.
+Own SOURCE RED8 and portable RED3 at base `b02b9f544ada14ee5d229b74f4f819c6ab4d7f5f` retained exact fixtures/full streams/hash scopes. Initial ledger capture retained a TypeError from a helper parameter colliding with the literal category field; renamed helper parameter without changing source categories. Own SOURCE GREEN8/8 at `be25624b1` covers227 omissions,13 derived-count mutations,11 invention/expansion/proof controls and10 body/response/manifest-registry mutations. Own-base generator default bytes/extractor932 bytes and malformed-symbol ValueError/null-input AttributeError replay pass. Fresh extracted copied validator exit0/SOURCE8/8/portable3/3 at `3ea5b20ba` under isolated Python/PATH=/nonexistent pass default-byte/error replay and both serialized ledger/log rejection/exact restoration controls.46 original seals and47-member62,573-byte archive unchanged; later actual revision/cwd/argv/times/full streams/scope hashes remain separate. Archived original-docs preserve their pre-copy epoch. [HANDOFF](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/1.3.0-session-2026-10-09/HANDOFF.md) and [REPLAY](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/1.3.0-session-2026-10-09/REPLAY.md) give bounded limits and fresh-copy commands. No Rust builds, clients, checks, broad suites or final gates.
 
 ## Sources
 
-- [Frozen pin](../../../data/patch-api/evidence/1.3.0-session-2026-10-09/source-pin.json)
-- [Literal ledger](../../../data/patch-api/evidence/1.3.0-session-2026-10-09/ledger.json)
-- [Proof ledger](../../../data/patch-api/evidence/1.3.0-session-2026-10-09/proof-ledger.json)
+- [Frozen pin](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/1.3.0-session-2026-10-09/source-pin.json)
+- [Literal ledger](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/1.3.0-session-2026-10-09/ledger.json)
+- [Proof ledger](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/1.3.0-session-2026-10-09/proof-ledger.json)
 - [Spec](../../specs/patch-1-3-0-source-accounting.md)
-- [Governing handoff](../../../data/patch-api/evidence/handoff-laptop-to-agent-server/HANDOFF.md): explicit child restrictions control this slice.
+- [Governing handoff](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/handoff-laptop-to-agent-server/HANDOFF.md): explicit child restrictions control this slice.
 
 ## See Also
 

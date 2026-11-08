@@ -32,11 +32,11 @@ Fixtures committed before RED at `0af6dc600`: expected missing opt-in/validator 
 
 ## Original sealed boundary
 
-[Historical manifest](../../../data/patch-api/evidence/2.1.0-session-2026-10-09/historical-inputs.json) seals exact raw/response/pin/provenance, original ledger/gaps/register/extract/counts, both default controls, command ledger and four physical RED/GREEN logs. Compressed snapshots retain full manifest and 101-page handoff registry ending 1.0.0, selected tools/tests, current static profile source, template recorded flags/outputs and actual/queued successor inputs. Manifest SHA-256 anchored in [validator](../../../data/patch-api/evidence/2.1.0-session-2026-10-09/validate.py); integrity controls are not externally authenticated signatures.
+[Historical manifest](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/2.1.0-session-2026-10-09/historical-inputs.json) seals exact raw/response/pin/provenance, original ledger/gaps/register/extract/counts, both default controls, command ledger and four physical RED/GREEN logs. Compressed snapshots retain full manifest and 101-page handoff registry ending 1.0.0, selected tools/tests, current static profile source, template recorded flags/outputs and actual/queued successor inputs. Manifest SHA-256 anchored in [validator](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/2.1.0-session-2026-10-09/validate.py); integrity controls are not externally authenticated signatures.
 
 Actual 74 ordered retail registers (3.1.0/3.2.0/3.3.0 then retained 3.3.3 onward) contain 18 exact same-symbol occurrences; these are source comparisons, not automatic semantic closures or native retirements. Seven ordered main-owned placeholders: 2.2.0, 2.3.0, 2.4.0, 2.4.2, 3.0.2, 3.0.3, 3.0.8. Their raw inputs remain archived; no guessed membership or queued supersession. Classic 2.5/3.4/4.4/5.5 never supersedes retail. `PLAYER_LOGIN` timing stays literal in raw line 44, separate from the two event-order inventory references; no inferred new-event publication. All raw UI attributes and contextual methods also remain literal, not new publication inventory.
 
-Parser/default/template GREEN 3/3 at `3f32a7629`; own full accounting GREEN 1/1 and copied historical replay GREEN 1/1 at `ab51d7373`. Original command receipts include expected portable missing-validator RED at `322cac662`. No redundant rerun of parser controls after validator-only changes. [Separate current proof ledger](../../../data/patch-api/evidence/2.1.0-session-2026-10-09/development-proof-ledger.json) and [current receipt seals](../../../data/patch-api/evidence/2.1.0-session-2026-10-09/current-receipts.json) remain outside original seals.
+Parser/default/template GREEN 3/3 at `3f32a7629`; own full accounting GREEN 1/1 and copied historical replay GREEN 1/1 at `ab51d7373`. Original command receipts include expected portable missing-validator RED at `322cac662`. No redundant rerun of parser controls after validator-only changes. [Separate current proof ledger](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/2.1.0-session-2026-10-09/development-proof-ledger.json) and [current receipt seals](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/2.1.0-session-2026-10-09/current-receipts.json) remain outside original seals.
 
 Accounting asserts 392 source-ledger IDs (22 metadata, 220 UNPROVEN, 150 extract cross-references), plus 124 UNPROVEN signature IDs and 344 exact gap records. The 128 substantive raw rows include 80 inventory-bearing lines and 48 prose-only lines. Individual omission controls: 392 ledger + 124 signature + 19 headers + 344 gaps + 92 inventory = 971, plus invented-capability rejection. Every original spelling/span/return/line/status/note is compared, not silently corrected.
 
@@ -51,7 +51,7 @@ Raw SHA-256 `4731263a025f95ff2c7cdb3f734817d7eefa0e4d16b88231c809f2b11a9bed98` (
 ## Sources
 
 - [Exact source](../../../data/patch-api/sources/2.1.0-api-changes.wikitext), [register](../../../data/patch-api/sources/2.1.0-wikitext-register.json), [ledger](../../../data/patch-api/sources/2.1.0-page-coverage.json).
-- [Pin](../../../data/patch-api/evidence/2.1.0-session-2026-10-09/source-pin.json), [spec](../../specs/patch-2-1-0-source-accounting.md).
+- [Pin](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/2.1.0-session-2026-10-09/source-pin.json), [spec](../../specs/patch-2-1-0-source-accounting.md).
 
 ## See Also
 

@@ -23,7 +23,7 @@
 
 ## Tests asserting this spec
 
-`tests/currency_war_mode_bonus.rs`. Initial five controls have authenticated RED; expanded nine cases execute0PASS/9FAIL before getter. Nine logical tests pass under both Retail/PTR (18 executions). Both normal loaded query assertion runs exit0/`[]`; owning publication sweep passes one case with145 rows91OK/54gaps. Formatting/default check exit0; retained proof linked from the [evidence packet](../../data/patch-api/evidence/currency-war-mode-bonus-2026-10-12/README.md).
+`tests/currency_war_mode_bonus.rs`. Initial five controls have authenticated RED; expanded nine cases execute0PASS/9FAIL before getter. Nine logical tests pass under both Retail/PTR (18 executions). Both normal loaded query assertion runs exit0/`[]`; owning publication sweep passes one case with145 rows91OK/54gaps. Formatting/default check exit0; retained proof linked from the [evidence packet](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/currency-war-mode-bonus-2026-10-12/README.md).
 
 ## Known gaps (current cycle)
 

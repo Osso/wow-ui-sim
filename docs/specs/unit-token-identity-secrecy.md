@@ -31,7 +31,7 @@ Bounded model of [retained 12.0.5 prose](../../data/patch-api/sources/12.0.5-api
 
 Inputs and producer landed together in `92e4ea045`. RED with producers withheld: 1 PASS / 4 FAIL. GREEN: 5/5 inside a 62/62 narrow run; `cargo fmt --check` exit0; startup `lua-errors` `[]`. A broad run gave 1189 PASS / 3 FAIL: a parked bundle slice (since removed) and two tooltip tests that fail identically with this commit's tooltip change reverted.
 
-Main accepts an independent GPT-6.1-sol source review (it did not rerun tests): **ACCEPT WITH QUALIFICATIONS**, [report](../../data/patch-api/evidence/12.0.5-session-2026-10-03/b97-verify-tooltip-identity.md) SHA256 `c3581b79231718590e04709f79e717ba21d56434b8e1040ebcf9170098af6dab`. Partial by construction: party tokens only; target/focus overlap is unchanged by inspection and untested. Checked requirements are bounded simulator proof on the tested fixtures, not native parity.
+Main accepts an independent GPT-6.1-sol source review (it did not rerun tests): **ACCEPT WITH QUALIFICATIONS**, [report](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/12.0.5-session-2026-10-03/b97-verify-tooltip-identity.md) SHA256 `c3581b79231718590e04709f79e717ba21d56434b8e1040ebcf9170098af6dab`. Partial by construction: party tokens only; target/focus overlap is unchanged by inspection and untested. Checked requirements are bounded simulator proof on the tested fixtures, not native parity.
 
 [Page accounting](../../data/patch-api/sources/12.0.5-page-coverage.json): rows prose-2026-03-12-048, prose-2026-03-25-084 under new capability `unit-token-identity-secrecy`; **110 capabilities/362 IDs; 71 pending /243 bounded /15 partial /33 metadata**.
 

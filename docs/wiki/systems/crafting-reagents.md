@@ -25,7 +25,7 @@ See [out-of-scope contract](../../specs/crafting-reagent-contracts.md#out-of-sco
 - [Crafted-item contract](../../specs/crafted-item-quality-info.md)
 - [Quality getter and shared projection](../../../src/c_api/c_trade_skill_quality.rs)
 
-- [Extract scout](../../../data/patch-api/evidence/12.0.0-session-2026-10-05/p1200-extract-scout.md)
+- [Extract scout](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/12.0.0-session-2026-10-05/p1200-extract-scout.md)
 - `~/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/TradeSkillUITypesDocumentation.lua`, `CraftingOrderUISharedDocumentation.lua`, `TradeSkillUIDocumentation.lua`, `CraftingOrderUIDocumentation.lua`, `ProfessionConstantsDocumentation.lua`.
 - Cached `Blizzard_Professions/Blizzard_ProfessionsCraftingOutputLog.lua` and `Blizzard_ProfessionsCustomerOrders/Blizzard_ProfessionsCustomerOrdersForm.lua`.
 

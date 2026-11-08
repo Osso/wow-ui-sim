@@ -42,7 +42,7 @@ Own immutable inputs retain 1.13.7 in flight; 1.14.0/1.14.1 queued; actual 1.14.
 
 ## Sources
 
-- [Frozen SOURCE and ledger](../../../data/patch-api/evidence/1.13.6-session-2026-10-09/).
+- [Frozen SOURCE and ledger](https://github.com/Osso/wow-ui-sim/tree/183edc381/data/patch-api/evidence/1.13.6-session-2026-10-09).
 - [Specification](../../specs/patch-1-13-6-source-accounting.md).
 - [Read-only 1.14.3 template](patch-1-14-3-api-audit.md) and [1.14.2 template](patch-1-14-2-api-audit.md): boundaries only, no borrowed proof.
 

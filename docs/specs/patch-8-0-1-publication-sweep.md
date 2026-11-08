@@ -26,7 +26,7 @@ Audit Warcraft Wiki page 149302, revision 1463362 (2023-07-20T21:26:53Z), refetc
 
 - `tests/patch_8_0_1_publication_sweep.rs` — cached publication only.
 - `tests/patch_8_0_1_map_coordinates.rs` — concrete affine projection, input/missing-state boundaries and isolation.
-- [Audit evidence](../../data/patch-api/evidence/8.0.1-session-2026-10-08/) — discovery, scans, receipts, reproduction and validator.
+- [Audit evidence](https://github.com/Osso/wow-ui-sim/tree/183edc381/data/patch-api/evidence/8.0.1-session-2026-10-08) — discovery, scans, receipts, reproduction and validator.
 - [Wiki audit](../wiki/investigations/patch-8-0-1-api-audit.md) — final coverage matrix and unresolved contracts.
 
 No shims, vendor patches, agents, full integration suite, push or merge are authorized.

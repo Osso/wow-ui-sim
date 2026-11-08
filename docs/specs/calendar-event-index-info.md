@@ -25,13 +25,13 @@
 ## Tests asserting this spec
 
 - `tests/calendar_event_index_info.rs`: public Lua defaults/filtering/absence/snapshots/security, owned-state update/removal and cleanup restoration.
-- Test-stage `a4159ce53` executed authentic RED: nine failures; first positive fixture query returned no DTO. This does not prove later branches. Producer `fa66dd878` focused execution reports 11 passed; normal loaded demo/publication assertions and Lua-error smoke report exit0/`[]`. Independent GREEN verification PASS; [retained evidence](../../data/patch-api/evidence/calendar-event-index-2026-10-11/README.md). Independent publication verification PASS: one exact case, 145 classified identities (89 OK / 56 current known gaps). Bounded lookup acceptance verified; parent full handoff remains open.
+- Test-stage `a4159ce53` executed authentic RED: nine failures; first positive fixture query returned no DTO. This does not prove later branches. Producer `fa66dd878` focused execution reports 11 passed; normal loaded demo/publication assertions and Lua-error smoke report exit0/`[]`. Independent GREEN verification PASS; [retained evidence](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/calendar-event-index-2026-10-11/README.md). Independent publication verification PASS: one exact case, 145 classified identities (89 OK / 56 current known gaps). Bounded lookup acceptance verified; parent full handoff remains open.
 
 ## Verification
 
 - [x] Independent GREEN verification PASS: 11 behavioral cases, loaded normal-session assertions and required Rust checks.
-- [x] Separate [PTR behavioral execution](../../data/patch-api/evidence/calendar-event-index-2026-10-11/ptr-2026-10-12/README.md) reaches all eleven cases at the applicable f314 artifact, including secret-input controls; not a current-HEAD build or native/editor/catalog claim.
-- [x] Loaded normal-session publication assertion and owning prefork sweep verified; only the current event-index gap row removed. Frozen historical accounting preserved; [publication proof](../../data/patch-api/evidence/calendar-event-index-2026-10-11/publication/publication-independent-report.md).
+- [x] Separate [PTR behavioral execution](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/calendar-event-index-2026-10-11/ptr-2026-10-12/README.md) reaches all eleven cases at the applicable f314 artifact, including secret-input controls; not a current-HEAD build or native/editor/catalog claim.
+- [x] Loaded normal-session publication assertion and owning prefork sweep verified; only the current event-index gap row removed. Frozen historical accounting preserved; [publication proof](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/calendar-event-index-2026-10-11/publication/publication-independent-report.md).
 
 ## Out of scope
 

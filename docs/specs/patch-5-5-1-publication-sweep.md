@@ -30,7 +30,7 @@ Audit the pinned Warcraft Wiki page 686954 revision 6778077 as Mists Classic, no
 
 ## Known gaps (current cycle)
 
-None in the source-listed inventory. Own validator passes with 157 sealed inputs. Branch gate at `ea5fb94cd` passes 45/45 clean and 46/46 after the synthetic later audit; [gate summary](../../data/patch-api/evidence/5.5.1-session-2026-10-08/gate-summary.json). All requested runtime checks and negative controls pass. Three exact inherited extract-reproduction failures remain outside this page’s scope.
+None in the source-listed inventory. Own validator passes with 157 sealed inputs. Branch gate at `ea5fb94cd` passes 45/45 clean and 46/46 after the synthetic later audit; [gate summary](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/5.5.1-session-2026-10-08/gate-summary.json). All requested runtime checks and negative controls pass. Three exact inherited extract-reproduction failures remain outside this page’s scope.
 
 ## Out of scope
 

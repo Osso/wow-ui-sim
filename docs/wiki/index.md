@@ -974,11 +974,11 @@ mapping remains unknown. Producer and tests staged only; no build/slot/runtime p
 
 ## [2026-10-14] evidence | Seven-profile runtime revision/gate matrix
 
-[Owning matrix](../specs/store-product-group-shape.md#seven-profile-saved-runtime-matrix--2026-10-14) separates named item/vehicle and Store/bag/selected-unit outcomes, Mists authentication PARTIAL, seven-profile bounded runtime PASS, retained failures and classic consumer limits. [Separate495-text packet](../../data/patch-api/evidence/item-display-profile-preservation-2026-10-14/README.md) has independent private/public whole-copy integrity and bounded decoded privacy PASS;497 tracked files, packet CLOSED. Universal privacy and Mists authentication remain unproved. Historical public170-copy packet unchanged.
+[Owning matrix](../specs/store-product-group-shape.md#seven-profile-saved-runtime-matrix--2026-10-14) separates named item/vehicle and Store/bag/selected-unit outcomes, Mists authentication PARTIAL, seven-profile bounded runtime PASS, retained failures and classic consumer limits. [Separate495-text packet](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/item-display-profile-preservation-2026-10-14/README.md) has independent private/public whole-copy integrity and bounded decoded privacy PASS;497 tracked files, packet CLOSED. Universal privacy and Mists authentication remain unproved. Historical public170-copy packet unchanged.
 
 ## [2026-10-14] evidence | Public historical Store/macro packet
 
-[Store owner](../specs/store-product-group-shape.md#current-bounded-retail-receipt--2026-10-14) and [macro owner](../specs/macro-vehicle-ui-conditions.md#current-bounded-runtime-follow-up--2026-10-14) link the [public packet](../../data/patch-api/evidence/store-macro-20261014/README.md). Accepted copy/privacy only; recorded revision scopes and historical failures retained. Current item/display/PTR/UI, native/render and full-parent acceptance excluded.
+[Store owner](../specs/store-product-group-shape.md#current-bounded-retail-receipt--2026-10-14) and [macro owner](../specs/macro-vehicle-ui-conditions.md#current-bounded-runtime-follow-up--2026-10-14) link the [public packet](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/store-macro-20261014/README.md). Accepted copy/privacy only; recorded revision scopes and historical failures retained. Current item/display/PTR/UI, native/render and full-parent acceptance excluded.
 
 ## [2026-10-14] source | Featured Store display metadata
 
@@ -1018,7 +1018,7 @@ mapping remains unknown. Producer and tests staged only; no build/slot/runtime p
 
 ## [2026-10-13] runtime | Bullet / dressability supplied-model proof
 
-[Host-record matrix](../../data/patch-api/evidence/bullet-dress-host-records-2026-10-13/README.md): bounded Retail/PTR runtime, preservation, startup and check/format gates; historical failures retained. Public-copy and retained-gate copy checks pass; parent/native/render acceptance open.
+[Host-record matrix](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/bullet-dress-host-records-2026-10-13/README.md): bounded Retail/PTR runtime, preservation, startup and check/format gates; historical failures retained. Public-copy and retained-gate copy checks pass; parent/native/render acceptance open.
 
 ## [2026-10-13] source | Supplied dressability predicate after reached RED
 
@@ -1038,7 +1038,7 @@ mapping remains unknown. Producer and tests staged only; no build/slot/runtime p
 
 ## [2026-10-13] evidence | Texture XML bounded Mists acceptance
 
-[Owning contract](../specs/xml-self-relative-key.md#known-gaps-current-cycle) and [current evidence](../../data/patch-api/evidence/xml-self-relative-key-2026-10-13/README.md) separate accepted focused/startup/anchor/named-prefork gates from initial77-copy PASS and the corrected follow-up42 metadata-reuse frontier; historical process/metadata FAILs remain. Store fixture mismatches retain real FAILs and unproved target/card bounds; native/render/first-writer/full-parent gaps remain.
+[Owning contract](../specs/xml-self-relative-key.md#known-gaps-current-cycle) and [current evidence](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/xml-self-relative-key-2026-10-13/README.md) separate accepted focused/startup/anchor/named-prefork gates from initial77-copy PASS and the corrected follow-up42 metadata-reuse frontier; historical process/metadata FAILs remain. Store fixture mismatches retain real FAILs and unproved target/card bounds; native/render/first-writer/full-parent gaps remain.
 
 ## [2026-10-13] source | Texture XML published self-key producer
 
@@ -1054,7 +1054,7 @@ mapping remains unknown. Producer and tests staged only; no build/slot/runtime p
 
 ## [2026-10-13] docs | SpellDisplay and removal current bounded gate
 
-[Current owner](../specs/ui-widget-spell-display.md) links [runtime gate](../../data/patch-api/evidence/ui-widget-spell-display-2026-10-13/README.md#current-bounded-runtime-gate--2026-10-13): independent Retail PASS; PTR independent PASS; selected retention PASS. Historical RED/partial and 741-record erratum preserved; Classic/native/world-loot/render/full-parent unproved.
+[Current owner](../specs/ui-widget-spell-display.md) links [runtime gate](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/ui-widget-spell-display-2026-10-13/README.md#current-bounded-runtime-gate--2026-10-13): independent Retail PASS; PTR independent PASS; selected retention PASS. Historical RED/partial and 741-record erratum preserved; Classic/native/world-loot/render/full-parent unproved.
 
 ## [2026-10-13] source | State-based frame cleanup, execution pending
 
@@ -1066,19 +1066,19 @@ mapping remains unknown. Producer and tests staged only; no build/slot/runtime p
 
 ## [2026-10-13] source | TextWithState input-only stage
 
-[State inventory](systems/ui-widget-manager-state.md#textwithstate-input-only-checkpoint--2026-10-13) preserves the historical input-stage anchor and links [bounded saved GREEN](../../data/patch-api/evidence/ui-widget-text-with-state-2026-10-13/README.md#bounded-saved-green). Runtime and selected publication integrity PASS remain separate; parent OPEN.
+[State inventory](systems/ui-widget-manager-state.md#textwithstate-input-only-checkpoint--2026-10-13) preserves the historical input-stage anchor and links [bounded saved GREEN](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/ui-widget-text-with-state-2026-10-13/README.md#bounded-saved-green). Runtime and selected publication integrity PASS remain separate; parent OPEN.
 
 ## [2026-10-13] docs | Speak four-profile publication
 
-[Voice inventory](systems/lua-api.md) links the [profile-publication contract](../specs/voice-speak-for-me-active-input.md#documented-profile-publication) and [current profile proof](../../data/patch-api/evidence/voice-speak-for-me-active-2026-10-13/README.md#new-profile-green-runtime--2026-10-13). Query-only source, independent Mists/WoW Forever GREEN and profile publication integrity PASS are recorded there. [Current preservation](../../data/patch-api/evidence/voice-speak-for-me-active-2026-10-13/README.md#current-preservation-checkpoint--2026-10-13) owns revision-scoped Retail/PTR execution PASS and separate preservation retention status; no PTR cached voice-consumer claim.
+[Voice inventory](systems/lua-api.md) links the [profile-publication contract](../specs/voice-speak-for-me-active-input.md#documented-profile-publication) and [current profile proof](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/voice-speak-for-me-active-2026-10-13/README.md#new-profile-green-runtime--2026-10-13). Query-only source, independent Mists/WoW Forever GREEN and profile publication integrity PASS are recorded there. [Current preservation](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/voice-speak-for-me-active-2026-10-13/README.md#current-preservation-checkpoint--2026-10-13) owns revision-scoped Retail/PTR execution PASS and separate preservation retention status; no PTR cached voice-consumer claim.
 
 ## [2026-10-13] evidence | Current cached Speak consumer
 
-[Owning contract checkpoint](../specs/voice-speak-for-me-active-input.md#cached-consumer-checkpoint--2026-10-13) and [public GREEN packet](../../data/patch-api/evidence/voice-speak-for-me-active-2026-10-13/README.md#current-green-public-packet--2026-10-13) own bounded cached-consumer and separate query/transcription/startup/check proof. [Original retention checkpoint](../../data/patch-api/evidence/voice-speak-for-me-active-2026-10-13/README.md#initial-green-retention-and-current-path-follow-up--2026-10-13) owns bounded follow-up2 PASS and preserved historical failures; new profile publication integrity remains separate. [Separate PERF2 SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#separate-perf2-checkpoint--2026-10-13) preserves frozen CCD FAIL; no independent consumer RED, true-Show, event-producer/native/render acceptance.
+[Owning contract checkpoint](../specs/voice-speak-for-me-active-input.md#cached-consumer-checkpoint--2026-10-13) and [public GREEN packet](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/voice-speak-for-me-active-2026-10-13/README.md#current-green-public-packet--2026-10-13) own bounded cached-consumer and separate query/transcription/startup/check proof. [Original retention checkpoint](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/voice-speak-for-me-active-2026-10-13/README.md#initial-green-retention-and-current-path-follow-up--2026-10-13) owns bounded follow-up2 PASS and preserved historical failures; new profile publication integrity remains separate. [Separate PERF2 SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#separate-perf2-checkpoint--2026-10-13) preserves frozen CCD FAIL; no independent consumer RED, true-Show, event-producer/native/render acceptance.
 
 ## [2026-10-13] evidence | Speak RED and exact animation controls
 
-[Public packet](../../data/patch-api/evidence/voice-speak-for-me-active-2026-10-13/README.md) retains initial159/refinedc81 Speak 0 PASS/2 FAIL, exit101; exact Lua actual values unknown, later transitions unreached. Separate c81 ordered-delay/reverse1 PASS and bounce1 PASS controls update only bounded [animation requirements](../specs/animation-query-lifecycle.md). Wider reverse/repeat, current full six-case, native and parent acceptance remain open; Speak GREEN was pending at this historical RED-retention checkpoint; current status above.
+[Public packet](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/voice-speak-for-me-active-2026-10-13/README.md) retains initial159/refinedc81 Speak 0 PASS/2 FAIL, exit101; exact Lua actual values unknown, later transitions unreached. Separate c81 ordered-delay/reverse1 PASS and bounce1 PASS controls update only bounded [animation requirements](../specs/animation-query-lifecycle.md). Wider reverse/repeat, current full six-case, native and parent acceptance remain open; Speak GREEN was pending at this historical RED-retention checkpoint; current status above.
 
 ## [2026-10-13] docs | Speak For Me activity source checkpoint
 
@@ -1118,7 +1118,7 @@ mapping remains unknown. Producer and tests staged only; no build/slot/runtime p
 
 ## [2026-10-13] evidence | Retail cached bar lifecycle and atlas-result policy
 
-[Retained RED/GREEN](../../data/patch-api/evidence/ui-widget-manager-state-2026-10-13/README.md#atlas-application-result-red-and-retail-green) owns current Retail20 PASS, actual cached bar/HUD lifecycle and fresh clean startup/check. [Policy](../specs/texture-atlas-application-result.md) preserves native no-return conflict; historical failures remain unchanged. Affected profiles and full handoff OPEN.
+[Retained RED/GREEN](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/ui-widget-manager-state-2026-10-13/README.md#atlas-application-result-red-and-retail-green) owns current Retail20 PASS, actual cached bar/HUD lifecycle and fresh clean startup/check. [Policy](../specs/texture-atlas-application-result.md) preserves native no-return conflict; historical failures remain unchanged. Affected profiles and full handoff OPEN.
 
 ## [2026-10-13] docs | Explicit SetAtlas application-result policy
 
@@ -1126,7 +1126,7 @@ mapping remains unknown. Producer and tests staged only; no build/slot/runtime p
 
 ## [2026-10-13] evidence | Cached HUD OnLoad and remaining bar boundary
 
-[Retained consumer attempts](../../data/patch-api/evidence/ui-widget-manager-state-2026-10-13/README.md#later-consumer-attempts) own exact outcomes: b28 HUD2 PASS, bar1 FAIL at initial neutral visibility; later bar lifecycle unreached. [UI widget state](systems/ui-widget-manager-state.md) links the contract and separate atlas application-result investigation. Earlier failures and reused proof scopes remain distinct; parent OPEN.
+[Retained consumer attempts](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/ui-widget-manager-state-2026-10-13/README.md#later-consumer-attempts) own exact outcomes: b28 HUD2 PASS, bar1 FAIL at initial neutral visibility; later bar lifecycle unreached. [UI widget state](systems/ui-widget-manager-state.md) links the contract and separate atlas application-result investigation. Earlier failures and reused proof scopes remain distinct; parent OPEN.
 
 ## [2026-10-13] docs | UI widget manager source checkpoint
 
@@ -1134,7 +1134,7 @@ mapping remains unknown. Producer and tests staged only; no build/slot/runtime p
 
 ## [2026-10-12] docs | Executed query baseline and new source models
 
-[Integrated current checkpoint](investigations/integrated-source-and-factory-proof-2026-10-09.md#executed-staged-queries-and-new-producers) separates executed pre-producer failures, selected lifecycle/Vertex controls and committed query/Path source awaiting GREEN/startup/profile acceptance. [Frozen ccd packet](../../data/test-perf/evidence/fullsuite-ccd-2026-10-12/README.md) preserves broad FAIL; text retention verification is separate. Whole handoff OPEN.
+[Integrated current checkpoint](investigations/integrated-source-and-factory-proof-2026-10-09.md#executed-staged-queries-and-new-producers) separates executed pre-producer failures, selected lifecycle/Vertex controls and committed query/Path source awaiting GREEN/startup/profile acceptance. [Frozen ccd packet](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/test-perf/evidence/fullsuite-ccd-2026-10-12/README.md) preserves broad FAIL; text retention verification is separate. Whole handoff OPEN.
 
 ## [2026-10-12] docs | Current bounded producer and receiver proof
 
@@ -1158,7 +1158,7 @@ mapping remains unknown. Producer and tests staged only; no build/slot/runtime p
 
 ## [2026-10-12] docs | PTR packet and current-suite submission
 
-[PTR packet](../../data/patch-api/evidence/edit-mode-enter-ptr-2026-10-12/README.md), committed at `41cbf5005`, owns bounded runtime/check details; [current reconciliation](investigations/editmode-layout.md#ptr-packet-and-current-suite-submission--2026-10-12) retains submission metadata and later main-read terminal state: source `41cbf5005` broad suite FAIL, two EditMode fixture failures; [terminal packet](../../data/test-perf/evidence/fullsuite-41cb-2026-10-12/README.md) records 15,123 PASS / 2 FAIL / 19 reported skips. [Test-only repair](investigations/editmode-layout.md#test-only-fixture-repair--pending-verification-2026-10-12) `b41b42fc1` plus cached-fixture correction `ac170ecbf` was runtime-BLOCKED at that historical checkpoint. Main now reports bounded EditMode5/5 GREEN; this does not replace the frozen broad-suite FAIL or establish whole-suite/native acceptance. Earlier bounded proofs retain their scopes; whole handoff OPEN.
+[PTR packet](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/edit-mode-enter-ptr-2026-10-12/README.md), committed at `41cbf5005`, owns bounded runtime/check details; [current reconciliation](investigations/editmode-layout.md#ptr-packet-and-current-suite-submission--2026-10-12) retains submission metadata and later main-read terminal state: source `41cbf5005` broad suite FAIL, two EditMode fixture failures; [terminal packet](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/test-perf/evidence/fullsuite-41cb-2026-10-12/README.md) records 15,123 PASS / 2 FAIL / 19 reported skips. [Test-only repair](investigations/editmode-layout.md#test-only-fixture-repair--pending-verification-2026-10-12) `b41b42fc1` plus cached-fixture correction `ac170ecbf` was runtime-BLOCKED at that historical checkpoint. Main now reports bounded EditMode5/5 GREEN; this does not replace the frozen broad-suite FAIL or establish whole-suite/native acceptance. Earlier bounded proofs retain their scopes; whole handoff OPEN.
 
 ## [2026-10-12] docs | Bounded seven-profile coverage matrix
 
@@ -1178,7 +1178,7 @@ mapping remains unknown. Producer and tests staged only; no build/slot/runtime p
 
 ## [2026-10-12] observation | Live Retail GUI publication
 
-[Packet](../../data/patch-api/evidence/live-retail-gui-providers-2026-10-12/README.md) · [Current VNC access policy](../../data/patch-api/evidence/private-vnc-simulator-2026-10-12/README.md): user-approved LAN-only passwordless listener; historical loopback receipts unchanged, rendered-user acceptance separate. [Existing publication investigation](investigations/patch-8-1-0-api-audit.md#current-publication-reconciliation--2026-10-12).
+[Packet](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/live-retail-gui-providers-2026-10-12/README.md) · [Current VNC access policy](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/private-vnc-simulator-2026-10-12/README.md): user-approved LAN-only passwordless listener; historical loopback receipts unchanged, rendered-user acceptance separate. [Existing publication investigation](investigations/patch-8-1-0-api-audit.md#current-publication-reconciliation--2026-10-12).
 
 ## [2026-10-12] audit | Current full suite533c FAIL; publication reconciliation bounded PASS
 
@@ -1190,7 +1190,7 @@ mapping remains unknown. Producer and tests staged only; no build/slot/runtime p
 
 ## [2026-10-12] observation | Canonical paired startup
 
-[BA boundary](investigations/fullsuite-ba-2026-10-11.md#canonical-paired-startup--2026-10-12): independent2794 bounded current-run PASS; [packet](../../data/test-perf/evidence/startup-canonical-paired-2026-10-12/README.md) owns details, public retention/link/privacy independently passed at `da4bbc442`. Original compile failure retained; failed-assertion emission source-only. No historical equivalence, compatibility-clean/native or repair claim; frozen BA FAIL/full handoff OPEN.
+[BA boundary](investigations/fullsuite-ba-2026-10-11.md#canonical-paired-startup--2026-10-12): independent2794 bounded current-run PASS; [packet](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/test-perf/evidence/startup-canonical-paired-2026-10-12/README.md) owns details, public retention/link/privacy independently passed at `da4bbc442`. Original compile failure retained; failed-assertion emission source-only. No historical equivalence, compatibility-clean/native or repair claim; frozen BA FAIL/full handoff OPEN.
 
 ## [2026-10-12] observation | Talent handler-log capture
 
@@ -1218,7 +1218,7 @@ mapping remains unknown. Producer and tests staged only; no build/slot/runtime p
 
 ## [2026-10-11] investigation | Reduced anchor result and isolated performance controls
 
-[ProductChoice](../../data/patch-api/evidence/productchoice-declaration-probe-2026-10-11/README.md): reduced Icon returns self-anchor Err despite recorded[]; separate control resolves parent/sibling points. [Exact ba controls](../../data/patch-api/evidence/ba-isolated-perf-controls-2026-10-11/README.md): one startup and one talent case PASS; independent artifact gates2430/2438. No full-startup/native repair or causal attribution; loaded suite remains FAIL3 and handoffOPEN.
+[ProductChoice](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/productchoice-declaration-probe-2026-10-11/README.md): reduced Icon returns self-anchor Err despite recorded[]; separate control resolves parent/sibling points. [Exact ba controls](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/ba-isolated-perf-controls-2026-10-11/README.md): one startup and one talent case PASS; independent artifact gates2430/2438. No full-startup/native repair or causal attribution; loaded suite remains FAIL3 and handoffOPEN.
 
 ## [2026-10-11] audit | Frozen ba full suite — FAIL
 
@@ -1250,7 +1250,7 @@ mapping remains unknown. Producer and tests staged only; no build/slot/runtime p
 
 ## [2026-10-11] audit | Currency integration suite — FAIL
 
-[Saved suite packet](../../data/patch-api/evidence/currency-fullsuite-2026-10-11/README.md): 15,028 PASS/1 Garrison FAIL/19 skips/15,029 executions. Four new currency regressions PASS within totals; independent accounting/source audit, not native or full-handoff acceptance. c75 FAIL remains history.
+[Saved suite packet](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/currency-fullsuite-2026-10-11/README.md): 15,028 PASS/1 Garrison FAIL/19 skips/15,029 executions. Four new currency regressions PASS within totals; independent accounting/source audit, not native or full-handoff acceptance. c75 FAIL remains history.
 
 ## [2026-10-11] audit | Currency model — partial cross-profile handoff
 
@@ -1286,7 +1286,7 @@ mapping remains unknown. Producer and tests staged only; no build/slot/runtime p
 
 ## [2026-10-10] investigation | Saved469 method snapshots and alpha receiver
 
-[Method investigation](investigations/method-dispatch-refactor.md#current-investigation--saved469-and-alpha-receiver-2026-10-10): raw-log stale rows classified; intentional epoch retirements preserved. Diagnostic023000 independently passes six FontString states/exact arity and observational Frame/plain-table receivers; custody-restoration caveat retained. Native parity unproved; [corrected comparison accounting](investigations/method-dispatch-refactor.md#complete-method-result-files--2026-10-11-utc): original11,985extra+22missing=12,007; complete12,380extra+33missing=12,413,608changes (extra96removals+491additions; missing5removals+16additions). Six minimap setters×16types=96, not14/84. Partial excerpt omitted12extra removals/all491additions; Main4528's11,901+33=11,934 interim files and105-change claim are superseded, older data/receipts preserved. Fresh original030002 extraFAIL101(12rem+491add),missingPASS0; prior21/21docs gate was excerpt-only, alpha six-state PASS independent. Main reports full generator030142 completed one named helper case/exit0, actual12,380extra+33missing=12,413; original discovery/source artifact seal unchanged. [Corrected retained packet](../../data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/method-full-snapshots-complete/) includes original/complete files, whole panic/interimFAIL receipts; older packet annotated superseded. Generation independently audited, separate from assertion proof: corrected extra030409PASS, missing030002PASS reused unchanged; one fresh plus one saved case. Native625names/3,522typepairs/16types distinct from comparison rows; no runtime/native behavior claim. Saved suite FAIL/parent OPEN.
+[Method investigation](investigations/method-dispatch-refactor.md#current-investigation--saved469-and-alpha-receiver-2026-10-10): raw-log stale rows classified; intentional epoch retirements preserved. Diagnostic023000 independently passes six FontString states/exact arity and observational Frame/plain-table receivers; custody-restoration caveat retained. Native parity unproved; [corrected comparison accounting](investigations/method-dispatch-refactor.md#complete-method-result-files--2026-10-11-utc): original11,985extra+22missing=12,007; complete12,380extra+33missing=12,413,608changes (extra96removals+491additions; missing5removals+16additions). Six minimap setters×16types=96, not14/84. Partial excerpt omitted12extra removals/all491additions; Main4528's11,901+33=11,934 interim files and105-change claim are superseded, older data/receipts preserved. Fresh original030002 extraFAIL101(12rem+491add),missingPASS0; prior21/21docs gate was excerpt-only, alpha six-state PASS independent. Main reports full generator030142 completed one named helper case/exit0, actual12,380extra+33missing=12,413; original discovery/source artifact seal unchanged. [Corrected retained packet](https://github.com/Osso/wow-ui-sim/tree/183edc381/data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/method-full-snapshots-complete) includes original/complete files, whole panic/interimFAIL receipts; older packet annotated superseded. Generation independently audited, separate from assertion proof: corrected extra030409PASS, missing030002PASS reused unchanged; one fresh plus one saved case. Native625names/3,522typepairs/16types distinct from comparison rows; no runtime/native behavior claim. Saved suite FAIL/parent OPEN.
 
 ## [2026-10-11] observation | Four-profile stock startup — not clean
 
@@ -1486,7 +1486,7 @@ mapping remains unknown. Producer and tests staged only; no build/slot/runtime p
 
 ## [2026-10-09] integration | Source/factory receipts and narrow repairs
 
-[Integrated source/factory proof](investigations/integrated-source-and-factory-proof-2026-10-09.md) preserves mixed-checkout epochs, exact observation equality and native/model gaps. [Four-case audit](investigations/integrated-source-and-factory-proof-2026-10-09.md#native-four-case-audit--3-pass--1-tooltip-fail) at2d6: three exact PASS/one wrapped Tooltip FAIL; two screened receipts24,211 bytes, snapshot equality but only10 commit-file comparisons. Hidden tooltip skips glyph sizing; wrap-only ce ineffective. Fixture96baf restores original nonwrapped row/shows both controls without geometry/assertion or production changes; latest GREEN pending. Warning-report a2 source/docs separate, compiled pending; no clean-startup claim. [Completed 40d2 six-case audit](investigations/integrated-source-and-factory-proof-2026-10-09.md#marker-and-three-fixtures--independent-5-pass--1-fail): bounded5 PASS/1 FAIL101,33 screened files/54,638 bytes;3,839 snapshot equality/11 scoped commit hashes, full comparison INCOMPLETE and compile-time binary-hash gap. Old marker RED/later f448/0769/1fb/ce exclusions preserved; source-goal OPEN, no full/native/current-HEAD acceptance. [Narrow repairs](investigations/narrow-validator-discovery-and-forever-cfg-repairs.md) separates historical validator 87/87 + 88/88 proof from later integrations. [Forever failure/function gates](investigations/forever-cfg-failure-and-function-gates.md) retains E0609 RED and separate 1/1 configured pre-login name GREEN, not chat/removal/native acceptance. [Private browser readiness](../../data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/browser-vnc-independent-report.md) confirms loopback listeners and readable public page only; remote access and 403 cause unproven.
+[Integrated source/factory proof](investigations/integrated-source-and-factory-proof-2026-10-09.md) preserves mixed-checkout epochs, exact observation equality and native/model gaps. [Four-case audit](investigations/integrated-source-and-factory-proof-2026-10-09.md#native-four-case-audit--3-pass--1-tooltip-fail) at2d6: three exact PASS/one wrapped Tooltip FAIL; two screened receipts24,211 bytes, snapshot equality but only10 commit-file comparisons. Hidden tooltip skips glyph sizing; wrap-only ce ineffective. Fixture96baf restores original nonwrapped row/shows both controls without geometry/assertion or production changes; latest GREEN pending. Warning-report a2 source/docs separate, compiled pending; no clean-startup claim. [Completed 40d2 six-case audit](investigations/integrated-source-and-factory-proof-2026-10-09.md#marker-and-three-fixtures--independent-5-pass--1-fail): bounded5 PASS/1 FAIL101,33 screened files/54,638 bytes;3,839 snapshot equality/11 scoped commit hashes, full comparison INCOMPLETE and compile-time binary-hash gap. Old marker RED/later f448/0769/1fb/ce exclusions preserved; source-goal OPEN, no full/native/current-HEAD acceptance. [Narrow repairs](investigations/narrow-validator-discovery-and-forever-cfg-repairs.md) separates historical validator 87/87 + 88/88 proof from later integrations. [Forever failure/function gates](investigations/forever-cfg-failure-and-function-gates.md) retains E0609 RED and separate 1/1 configured pre-login name GREEN, not chat/removal/native acceptance. [Private browser readiness](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/browser-vnc-independent-report.md) confirms loopback listeners and readable public page only; remote access and 403 cause unproven.
 ## [2026-10-09] investigation | Patch 1.15.5 literal SOURCE audit
 
 [Audit](investigations/patch-1-15-5-api-audit.md): frozen610284/6235411, TOC11505; four nonblank rows, one header, two UNPROVEN diff links and unexpanded navigation. No local API/signature/prose declarations or literal client name. SOURCE GREEN8/8 at3ea25422f; portable3/3 at38fa9fba4, fresh copied8/8/default byte replay and both serialized tamper rejections/exact restorations. Original38 seals unchanged; later receipts separate. Queued1.15.6/1.15.7 and integrated-canonical1.15.8/1.15.9 inputs not applied here. Zero runtime/model/native credit; main owns integration/native/final gates.
@@ -1722,7 +1722,7 @@ mapping remains unknown. Producer and tests staged only; no build/slot/runtime p
 
 ## [2026-10-11] staging | Current Calendar event index
 
-[Stage handoff](investigations/integrated-source-and-factory-proof-2026-10-09.md#calendar-event-index--current-sourcespec-stage-2026-10-11): producer `fa66dd878` independent bounded GREEN **PASS11/11** ([report](../../data/patch-api/evidence/calendar-event-index-2026-10-11/green/green-independent-report.md)); source `a4159ce53` RED9 preserved. Current gap removed by `296b9ac77` after normal raw-publication assertion; independent publication/retention PASS ([public report](../../data/patch-api/evidence/calendar-event-index-2026-10-11/publication/publication-independent-report.md)), zero-test selector not proof. Frozen87OK/58gaps unchanged; broad3FAIL/full handoff OPEN.
+[Stage handoff](investigations/integrated-source-and-factory-proof-2026-10-09.md#calendar-event-index--current-sourcespec-stage-2026-10-11): producer `fa66dd878` independent bounded GREEN **PASS11/11** ([report](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/calendar-event-index-2026-10-11/green/green-independent-report.md)); source `a4159ce53` RED9 preserved. Current gap removed by `296b9ac77` after normal raw-publication assertion; independent publication/retention PASS ([public report](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/calendar-event-index-2026-10-11/publication/publication-independent-report.md)), zero-test selector not proof. Frozen87OK/58gaps unchanged; broad3FAIL/full handoff OPEN.
 
 ## [2026-10-08] evidence | 8.1.0 page audit
 
@@ -1870,7 +1870,7 @@ mapping remains unknown. Producer and tests staged only; no build/slot/runtime p
 
 ## [2026-10-07] evidence | Rilua capability rows
 
-[12.0.0 helpers](investigations/patch-12-0-0-api-audit.md#rilua-secret-helper-follow-up--2026-10-07) and [12.0.5 transforms/budgets](investigations/patch-12-0-5-api-audit.md#rilua-capability-follow-up--2026-10-07) link bounded secret/string closure and retained event-wide throttle gaps. [Proof](../../data/patch-api/evidence/rilua-rows-2026-10-07/proof.md) records scoped tests, grouped-sweep cache configuration and warning boundaries.
+[12.0.0 helpers](investigations/patch-12-0-0-api-audit.md#rilua-secret-helper-follow-up--2026-10-07) and [12.0.5 transforms/budgets](investigations/patch-12-0-5-api-audit.md#rilua-capability-follow-up--2026-10-07) link bounded secret/string closure and retained event-wide throttle gaps. [Proof](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/rilua-rows-2026-10-07/proof.md) records scoped tests, grouped-sweep cache configuration and warning boundaries.
 
 ## [2026-10-06] evidence | 11.2.5 page audit
 
@@ -1882,7 +1882,7 @@ mapping remains unknown. Producer and tests staged only; no build/slot/runtime p
 
 ## [2026-10-06] evidence | 11.2.7 page audit
 
-[Audit](investigations/patch-11-2-7-api-audit.md): 508 inventory / 19 extract rows; initial 14 publication fixes plus 27 follow-up closures, 94 remaining exact gaps, six isolated sweeps and startup `[]`. Per-ID retained model/source boundaries are explicit. [Scout](../../data/patch-api/evidence/11.2.7-session-2026-10-06/p1127-extract-scout.md) assigns ten pending statements without behavioral credit. Existing ledgers unchanged.
+[Audit](investigations/patch-11-2-7-api-audit.md): 508 inventory / 19 extract rows; initial 14 publication fixes plus 27 follow-up closures, 94 remaining exact gaps, six isolated sweeps and startup `[]`. Per-ID retained model/source boundaries are explicit. [Scout](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/11.2.7-session-2026-10-06/p1127-extract-scout.md) assigns ten pending statements without behavioral credit. Existing ledgers unchanged.
 
 ## [2026-10-06] evidence | Remaining 12.0.1 extract
 
@@ -1894,7 +1894,7 @@ mapping remains unknown. Producer and tests staged only; no build/slot/runtime p
 
 ## evidence | 12.0.1 producer closure
 
-[Follow-up](investigations/patch-12-0-1-api-audit.md#gap-closure-verification): 48/51 publication gaps closed, three retained model/scope boundaries; five isolated sweeps pass, startup `[]`. [Per-ID outcomes and proof](../../data/patch-api/evidence/12.0.1-session-2026-10-06/p1201-gap-review.json) distinguish bounded producers from native parity.
+[Follow-up](investigations/patch-12-0-1-api-audit.md#gap-closure-verification): 48/51 publication gaps closed, three retained model/scope boundaries; five isolated sweeps pass, startup `[]`. [Per-ID outcomes and proof](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/12.0.1-session-2026-10-06/p1201-gap-review.json) distinguish bounded producers from native parity.
 
 ## [2026-10-06] evidence | 12.0.1 extract B01–B04
 
@@ -1902,11 +1902,11 @@ mapping remains unknown. Producer and tests staged only; no build/slot/runtime p
 
 ## [2026-10-06] evidence | 12.0.1 page audit
 
-[Audit](investigations/patch-12-0-1-api-audit.md) links 225 inventory observations, 252 extract rows, four epoch-gated retirements and exact negative control. [Scout](../../data/patch-api/evidence/12.0.1-session-2026-10-06/p1201-extract-scout.md) assigns every non-inventory ID without behavioral credit; existing coverage ledgers unchanged.
+[Audit](investigations/patch-12-0-1-api-audit.md) links 225 inventory observations, 252 extract rows, four epoch-gated retirements and exact negative control. [Scout](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/12.0.1-session-2026-10-06/p1201-extract-scout.md) assigns every non-inventory ID without behavioral credit; existing coverage ledgers unchanged.
 
 ## [2026-10-06] system | Crafting reagent contracts
 
-[Typed reagent state](systems/crafting-reagents.md) replaces flattened entries, consumes nested inputs and requires host order metadata. [Per-source proof](../../data/patch-api/evidence/12.0.0-session-2026-10-05/p1200-b8-prose-report.md) records bounded tests, inferred policy, secret-operation resistance and historical compile blocker. Ledgers unchanged.
+[Typed reagent state](systems/crafting-reagents.md) replaces flattened entries, consumes nested inputs and requires host order metadata. [Per-source proof](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/12.0.0-session-2026-10-05/p1200-b8-prose-report.md) records bounded tests, inferred policy, secret-operation resistance and historical compile blocker. Ledgers unchanged.
 
 ## [2026-10-05] investigation | Retirement successor fallout
 
@@ -1914,7 +1914,7 @@ mapping remains unknown. Producer and tests staged only; no build/slot/runtime p
 
 ## [2026-10-06] evidence | 12.0.0 DTO extract producer proof
 
-[DTO follow-up](investigations/patch-12-0-0-api-audit.md#dto-extract-batches-b02b04b05b06) links 34 source-ID outcomes, full cached parent probes, LFG input roundtrips, host DTO snapshots and cast-driven recovery/GCD events. [Proof ledger](../../data/patch-api/evidence/12.0.0-session-2026-10-05/p1200-b2-proof.md) retains exact revisions, baseline comparisons, isolated sweep passes, startup `[]` and inferred/native limits. Page-coverage JSON unchanged.
+[DTO follow-up](investigations/patch-12-0-0-api-audit.md#dto-extract-batches-b02b04b05b06) links 34 source-ID outcomes, full cached parent probes, LFG input roundtrips, host DTO snapshots and cast-driven recovery/GCD events. [Proof ledger](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/12.0.0-session-2026-10-05/p1200-b2-proof.md) retains exact revisions, baseline comparisons, isolated sweep passes, startup `[]` and inferred/native limits. Page-coverage JSON unchanged.
 
 ## [2026-10-05] investigation | Cast duration precision
 
@@ -4385,7 +4385,7 @@ The three retail 12.0.0 changed globals `LE_GAME_ERR_HOUSING_RESULT_MISSING_EXPA
 
 ## [2026-10-08] investigation | Cataclysm Classic 4.4.1 source accounting
 
-[Audit](investigations/patch-4-4-1-api-audit.md): page 608915/revision 6234252, TOC 40401. Nineteen exact source rows: seventeen metadata/markup, two API occurrences UNPROVEN without a Cata profile. Direction 4.4.0 → 4.4.1, four literal x counts and incomplete date preserved. Source/serialized-ledger tests include negative controls; no runtime, shared tooling, register, retail retirement or supersession changes. [Receipt](../../data/patch-api/evidence/4.4.1-session-2026-10-08/source-proof.json): four tests/19 negative cases, extractor pass, clean 60/60 and later 61/61 at 8c93152af; zero failures.
+[Audit](investigations/patch-4-4-1-api-audit.md): page 608915/revision 6234252, TOC 40401. Nineteen exact source rows: seventeen metadata/markup, two API occurrences UNPROVEN without a Cata profile. Direction 4.4.0 → 4.4.1, four literal x counts and incomplete date preserved. Source/serialized-ledger tests include negative controls; no runtime, shared tooling, register, retail retirement or supersession changes. [Receipt](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/4.4.1-session-2026-10-08/source-proof.json): four tests/19 negative cases, extractor pass, clean 60/60 and later 61/61 at 8c93152af; zero failures.
 
 ## [2026-10-09] integration | Retail Patch 5.0.4 refresh
 
@@ -4405,7 +4405,7 @@ The three retail 12.0.0 changed globals `LE_GAME_ERR_HOUSING_RESULT_MISSING_EXPA
 
 ## [2026-10-09] integration | Patch 5.0.1 redirect audit
 
-[Audit](investigations/patch-5-0-1-api-audit.md#integration-and-portability--2026-10-09): canonical `60c203907` rebase, actual 5.0.4 successor at `4cfd86bb2`; zero API rows/one redirect context unchanged. Compact historical replay and absent-object fresh-clone proof recorded through `a0ca448c4`. Retained integrated [own-sweep receipt](../../data/patch-api/evidence/5.0.1-session-2026-10-08/integrated/own-sweep.proof.json) records 1 passed/0 failed with exit explicitly null. Shared gate at `a0ca448c4` [log](../../data/patch-api/evidence/5.0.1-session-2026-10-08/integrated/validator-gate.log)/[SHA-sealed receipt](../../data/patch-api/evidence/5.0.1-session-2026-10-08/integrated/validator-gate.proof.json): exit 0, clean 64/64 and synthetic-later 65/65, zero failures. Independent verifier 159 checked applicability at `189283bce`: 119 retained files/eight archive IDs/seals match, no integration blocker. Historical counts/gaps/extraction limits preserved; zero API rows/one context give no API/native parity or CI-green credit.
+[Audit](investigations/patch-5-0-1-api-audit.md#integration-and-portability--2026-10-09): canonical `60c203907` rebase, actual 5.0.4 successor at `4cfd86bb2`; zero API rows/one redirect context unchanged. Compact historical replay and absent-object fresh-clone proof recorded through `a0ca448c4`. Retained integrated [own-sweep receipt](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/5.0.1-session-2026-10-08/integrated/own-sweep.proof.json) records 1 passed/0 failed with exit explicitly null. Shared gate at `a0ca448c4` [log](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/5.0.1-session-2026-10-08/integrated/validator-gate.log)/[SHA-sealed receipt](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/5.0.1-session-2026-10-08/integrated/validator-gate.proof.json): exit 0, clean 64/64 and synthetic-later 65/65, zero failures. Independent verifier 159 checked applicability at `189283bce`: 119 retained files/eight archive IDs/seals match, no integration blocker. Historical counts/gaps/extraction limits preserved; zero API rows/one context give no API/native parity or CI-green credit.
 
 ## [2026-10-09] investigation | Patch 4.3.0 bounded API audit
 

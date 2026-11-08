@@ -24,12 +24,12 @@ Original SOURCE seals/map remain immutable. Fresh archive replay without Git/tar
 
 ## Sources
 
-- [Frozen source pin](../../../data/patch-api/evidence/1.14.2-session-2026-10-09/source-pin.json) — exact identity/hashes.
-- [Literal ledger](../../../data/patch-api/evidence/1.14.2-session-2026-10-09/ledger.json) — full rows, inventory, prose, links and boundaries.
-- [Own tests](../../../data/patch-api/evidence/1.14.2-session-2026-10-09/test_source_accounting.py) — bounded SOURCE controls.
+- [Frozen source pin](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/1.14.2-session-2026-10-09/source-pin.json) — exact identity/hashes.
+- [Literal ledger](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/1.14.2-session-2026-10-09/ledger.json) — full rows, inventory, prose, links and boundaries.
+- [Own tests](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/1.14.2-session-2026-10-09/test_source_accounting.py) — bounded SOURCE controls.
 - [Spec](../../specs/patch-1-14-2-source-accounting.md) — requirements.
-- [Portable controls](../../../data/patch-api/evidence/1.14.2-session-2026-10-09/portable-controls.json) — fresh replay, serialized tamper/restoration.
-- [Current Era observations](../../../data/patch-api/evidence/1.14.2-session-2026-10-09/current-era-observations.json) — bounded getters, separate from SOURCE.
+- [Portable controls](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/1.14.2-session-2026-10-09/portable-controls.json) — fresh replay, serialized tamper/restoration.
+- [Current Era observations](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/1.14.2-session-2026-10-09/current-era-observations.json) — bounded getters, separate from SOURCE.
 
 ## See Also
 

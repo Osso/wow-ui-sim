@@ -28,17 +28,17 @@ Target revision/content and patch-specific historical delta absent. Callable ide
 
 ## Development proof epochs
 
-Own SOURCE RED5 plus separate identity RED1 retained at base against missing-accounting scaffold; portable RED3 fails on absent immutable seal map. Implementation adds exact literal ledger, three populated omission controls, all derived count mutations, empty-category/model invention rejection, raw/response mutations and copied manifest/registry/pin mutation rejection/restoration. Own-base default register/extract bytes and two malformed-input errors captured; no acceptance credit from captures. SOURCE GREEN6/6 at `4e3807887` retains exact own revision/cwd/argv/env-key/times/fullstreams and input hashes. At `011964fcb`, fresh31-member51,931byte archive extraction passes copied SOURCE6/6, portable3/3 and historical replay exit0 under isolated Python/PATH=/nonexistent. Default bytes/errors and both serialized ledger/log seal rejection/exact-restoration controls pass. Original30 seals/map/archive unchanged; later actual receipts separately retained in [later ledger](../../../data/patch-api/evidence/1.9.0-session-2026-10-09/later-proof-ledger.json). [HANDOFF](../../../data/patch-api/evidence/1.9.0-session-2026-10-09/HANDOFF.md) and [REPLAY](../../../data/patch-api/evidence/1.9.0-session-2026-10-09/REPLAY.md) bound remaining work and replay scope. No proof epoch backfilled by later docs.
+Own SOURCE RED5 plus separate identity RED1 retained at base against missing-accounting scaffold; portable RED3 fails on absent immutable seal map. Implementation adds exact literal ledger, three populated omission controls, all derived count mutations, empty-category/model invention rejection, raw/response mutations and copied manifest/registry/pin mutation rejection/restoration. Own-base default register/extract bytes and two malformed-input errors captured; no acceptance credit from captures. SOURCE GREEN6/6 at `4e3807887` retains exact own revision/cwd/argv/env-key/times/fullstreams and input hashes. At `011964fcb`, fresh31-member51,931byte archive extraction passes copied SOURCE6/6, portable3/3 and historical replay exit0 under isolated Python/PATH=/nonexistent. Default bytes/errors and both serialized ledger/log seal rejection/exact-restoration controls pass. Original30 seals/map/archive unchanged; later actual receipts separately retained in [later ledger](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/1.9.0-session-2026-10-09/later-proof-ledger.json). [HANDOFF](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/1.9.0-session-2026-10-09/HANDOFF.md) and [REPLAY](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/1.9.0-session-2026-10-09/REPLAY.md) bound remaining work and replay scope. No proof epoch backfilled by later docs.
 
 Environment key names inspected, values omitted. No credential-bearing key names observed; original and later retained files/streams pattern-scanned with zero matches before publication. Pattern scanning is not exhaustive secret detection. No Rust build/runtime/shared-tool/vendor changes warranted. Main owns integration, independent acceptance, separate target research and parent meaningful-behavior/native closure.
 
 ## Sources
 
 - [Frozen manifest](../../../data/patch-api/source-cache/legacy-2026-10-09/manifest.json)
-- [Literal ledger](../../../data/patch-api/evidence/1.9.0-session-2026-10-09/ledger.json)
-- [Proof ledger](../../../data/patch-api/evidence/1.9.0-session-2026-10-09/proof-ledger.json)
+- [Literal ledger](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/1.9.0-session-2026-10-09/ledger.json)
+- [Proof ledger](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/1.9.0-session-2026-10-09/proof-ledger.json)
 - [Spec](../../specs/patch-1-9-0-source-accounting.md)
-- [Governing handoff](../../../data/patch-api/evidence/handoff-laptop-to-agent-server/HANDOFF.md) — child task excludes generic operations/delegation authority.
+- [Governing handoff](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/handoff-laptop-to-agent-server/HANDOFF.md) — child task excludes generic operations/delegation authority.
 
 ## See Also
 

@@ -71,7 +71,7 @@ These requirements are driven by unchanged Retail/PTR cached source, not evidenc
 
 Helper follows existing TextWithState/Discrete phase-tagged Lua error capture, historically using `eval::<()>`; `bde7ea277` corrects this statement-script helper to use `exec`. No source-substring or raw-registration assertions. Compilation and execution were unrun at the original test/spec checkpoint `3bd83b432`. Initial API RED is now independently classified for Retail at that source and PTR at `13a818ba5`: each executed two cases, 1 PASS / 1 FAIL, exit101. Empty unknown numeric one-nil policy passed; supplied nil was accepted, failing `nil: expected widgetID validation error`. String/bool/table and subsequent message checks were unreached. This proves the initial validation/default boundary only; fields, freshness, real-secret policy, feed and cached consumer have no new behavioral proof.
 
-[Initial PTR selected packet](../../data/patch-api/evidence/bullet-dress-initial-api-red-2026-10-13/README.md) retains whole initial API streams and independent classification; corrected bounded public-copy/privacy/link gate PASS at `a7439281a`, original invocation-ID privacy FAIL retained. Earlier Retail Bullet RED is separately recorded above, not duplicated by that packet.
+[Initial PTR selected packet](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/bullet-dress-initial-api-red-2026-10-13/README.md) retains whole initial API streams and independent classification; corrected bounded public-copy/privacy/link gate PASS at `a7439281a`, original invocation-ID privacy FAIL retained. Earlier Retail Bullet RED is separately recorded above, not duplicated by that packet.
 
 ### Passive supplied-record tests
 
@@ -83,7 +83,7 @@ Retail at `76e8b8309` now executed 0 PASS / 7 FAIL, exit101, after a separate 4G
 
 Retail and PTR each pass seven supplied-record/query/security/cached-consumer cases, plus the two original public-API cases. `bde7ea277` corrects the test helper to execute statement chunks with `exec`; historical fixture failures remain retained.
 
-The [whole host-record packet](../../data/patch-api/evidence/bullet-dress-host-records-2026-10-13/README.md) owns the mixed-revision matrix, complete diagnostics, startup and check/format evidence. Public-copy and retained-gate copy checks pass at their recorded scopes; native/render parity, earlier profiles and the parent handoff remain open.
+The [whole host-record packet](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/bullet-dress-host-records-2026-10-13/README.md) owns the mixed-revision matrix, complete diagnostics, startup and check/format evidence. Public-copy and retained-gate copy checks pass at their recorded scopes; native/render parity, earlier profiles and the parent handoff remain open.
 
 ## Known gaps (current cycle)
 

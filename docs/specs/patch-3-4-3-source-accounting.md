@@ -4,7 +4,7 @@ Account for frozen Warcraft Wiki page `152751`/revision `5983024` as Wrath Class
 
 ## What it must do
 
-- [x] Preserve response identity/hash, exact wikitext, reproducible plaintext and every nonblank source row. [Proof ledger](../../data/patch-api/evidence/3.4.3-session-2026-10-09/source-proof.json): seven targeted tests and extraction pass at `84274cf67`.
+- [x] Preserve response identity/hash, exact wikitext, reproducible plaintext and every nonblank source row. [Proof ledger](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/3.4.3-session-2026-10-09/source-proof.json): seven targeted tests and extraction pass at `84274cf67`.
 - [x] Keep both summary bullets UNPROVEN, with no invented API inventory, positive publication/behavior credit or cross-client successor; reject mutated accounting.
 - [x] Distinguish supported Wrath profile and historical documentation-only cache from native/runtime proof; preserve configured interface 38001 separately from source TOC 30403.
 - [x] Replay sealed own historical inputs and derive counts independently of later global audits/cache/tool changes. Independent verifier 216 reports fresh historical replay PASS: 16 seals, seven rows/five metadata/two UNPROVEN summary contracts, zero explicit API occurrences/runtime observations. Original `48ab8e1c3` sealed inputs unchanged; retained 7/7 GREEN and tamper proof remain applicable to source accounting only. No native/current-runtime or positive empty-API parity credit.
