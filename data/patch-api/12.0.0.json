@@ -5606,13 +5606,13 @@
         {
           "kind": "source",
           "reference": "src/c_api/mod.rs",
-          "source_hash": "9385c09f8c9152ca9a20bee297e963e1ee931c2e20c671c66c6416e5ed17f723",
+          "source_hash": "b36a31da88a992d477196b9dba5457cb9253f2c8bf0e19621114fa37145de28e",
           "summary": "Modeled Rust module is gated at retail-12-0-0; this does not establish absence of generic fallback callability on earlier profiles."
         },
         {
           "kind": "source",
           "reference": "src/c_api/registration.rs",
-          "source_hash": "8674c0efda7a759652c1dabea1a8815d955f7f7863802b0f2978525ad937fed6",
+          "source_hash": "6e45f58519bc1bbeb35ae697b4a9cc731a6f2d6ce97a006389c83c15ab666303",
           "summary": "Interaction-table registration wires the modeled speaker-speed functions under the retail-12-0-0 gate."
         },
         {
@@ -5919,13 +5919,13 @@
         {
           "kind": "source",
           "reference": "src/c_api/mod.rs",
-          "source_hash": "9385c09f8c9152ca9a20bee297e963e1ee931c2e20c671c66c6416e5ed17f723",
+          "source_hash": "b36a31da88a992d477196b9dba5457cb9253f2c8bf0e19621114fa37145de28e",
           "summary": "Modeled Rust module is gated at retail-12-0-0; this does not establish absence of generic fallback callability on earlier profiles."
         },
         {
           "kind": "source",
           "reference": "src/c_api/registration.rs",
-          "source_hash": "8674c0efda7a759652c1dabea1a8815d955f7f7863802b0f2978525ad937fed6",
+          "source_hash": "6e45f58519bc1bbeb35ae697b4a9cc731a6f2d6ce97a006389c83c15ab666303",
           "summary": "Interaction-table registration wires the modeled speaker-speed functions under the retail-12-0-0 gate."
         },
         {
@@ -26976,7 +26976,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/mod.rs",
-          "source_hash": "9385c09f8c9152ca9a20bee297e963e1ee931c2e20c671c66c6416e5ed17f723",
+          "source_hash": "b36a31da88a992d477196b9dba5457cb9253f2c8bf0e19621114fa37145de28e",
           "summary": "Bounded historical public enumeration: two tests cover seeded ordinary filters, blocked visibility, live removal, observed sort rules/directions and maxCount limits. Runtime ba31c6b94; tests 33f7fdb39 pass 2/2 each on retail 12.0.0/12.0.5/12.0.7. Default 5/5 regressions preserve existing later behavior, not new historical private/security credit. Native full filter domain, sort semantics, defaults, identity, security and full-LoD parity remain unproven. Historical E0432/E0425 helper-gate compilation failures remain recorded in development proof."
         },
         {
@@ -97786,7 +97786,7 @@
           "kind": "source",
           "reference": "src/cvars.rs",
           "summary": "Generic retail CVar storage exposes the seeded value and default through public getters.",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda"
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953"
         },
         {
           "kind": "test",
@@ -97835,7 +97835,7 @@
           "kind": "source",
           "reference": "src/cvars.rs",
           "summary": "Generic retail CVar storage exposes the seeded value and default through public getters.",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda"
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953"
         },
         {
           "kind": "test",
@@ -97884,7 +97884,7 @@
           "kind": "source",
           "reference": "src/cvars.rs",
           "summary": "Generic retail CVar storage exposes the seeded value and default through public getters.",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda"
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953"
         },
         {
           "kind": "test",
@@ -97933,7 +97933,7 @@
           "kind": "source",
           "reference": "src/cvars.rs",
           "summary": "Generic retail CVar storage exposes the seeded value and default through public getters.",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda"
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953"
         },
         {
           "kind": "test",
@@ -97982,7 +97982,7 @@
           "kind": "source",
           "reference": "src/cvars.rs",
           "summary": "Generic retail CVar storage exposes the seeded value and default through public getters.",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda"
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953"
         },
         {
           "kind": "test",
@@ -98031,7 +98031,7 @@
           "kind": "source",
           "reference": "src/cvars.rs",
           "summary": "Generic retail CVar storage exposes the seeded value and default through public getters.",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda"
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953"
         },
         {
           "kind": "test",
@@ -98080,7 +98080,7 @@
           "kind": "source",
           "reference": "src/cvars.rs",
           "summary": "Generic retail CVar storage exposes the seeded value and default through public getters.",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda"
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953"
         },
         {
           "kind": "test",
@@ -98129,7 +98129,7 @@
           "kind": "source",
           "reference": "src/cvars.rs",
           "summary": "Generic retail CVar storage exposes the seeded value and default through public getters.",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda"
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953"
         },
         {
           "kind": "test",
@@ -98178,7 +98178,7 @@
           "kind": "source",
           "reference": "src/cvars.rs",
           "summary": "Generic retail CVar storage exposes the seeded value and default through public getters.",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda"
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953"
         },
         {
           "kind": "test",
@@ -98227,7 +98227,7 @@
           "kind": "source",
           "reference": "src/cvars.rs",
           "summary": "Generic retail CVar storage exposes the seeded value and default through public getters.",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda"
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953"
         },
         {
           "kind": "test",
@@ -98276,7 +98276,7 @@
           "kind": "source",
           "reference": "src/cvars.rs",
           "summary": "Generic retail CVar storage exposes the seeded value and default through public getters.",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda"
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953"
         },
         {
           "kind": "test",
@@ -98325,7 +98325,7 @@
           "kind": "source",
           "reference": "src/cvars.rs",
           "summary": "Generic retail CVar storage exposes the seeded value and default through public getters.",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda"
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953"
         },
         {
           "kind": "test",
@@ -98374,7 +98374,7 @@
           "kind": "source",
           "reference": "src/cvars.rs",
           "summary": "Generic retail CVar storage exposes the seeded value and default through public getters.",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda"
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953"
         },
         {
           "kind": "test",
@@ -98423,7 +98423,7 @@
           "kind": "source",
           "reference": "src/cvars.rs",
           "summary": "Generic retail CVar storage exposes seeded values and defaults through public getters.",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda"
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953"
         },
         {
           "kind": "test",
@@ -98472,7 +98472,7 @@
           "kind": "source",
           "reference": "src/cvars.rs",
           "summary": "Generic CVar storage publishes only seeded runtime defaults; no old-name entry is introduced by the storage layer.",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda"
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953"
         },
         {
           "kind": "source",
@@ -98514,7 +98514,7 @@
           "kind": "source",
           "reference": "src/cvars.rs",
           "summary": "Generic retail CVar storage exposes seeded values and defaults through public getters.",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda"
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953"
         },
         {
           "kind": "test",
@@ -98563,7 +98563,7 @@
           "kind": "source",
           "reference": "src/cvars.rs",
           "summary": "Generic retail CVar storage exposes seeded values and defaults through public getters.",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda"
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953"
         },
         {
           "kind": "test",
@@ -98612,7 +98612,7 @@
           "kind": "source",
           "reference": "src/cvars.rs",
           "summary": "Generic retail CVar storage exposes seeded values and defaults through public getters.",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda"
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953"
         },
         {
           "kind": "test",
@@ -98661,7 +98661,7 @@
           "kind": "source",
           "reference": "src/cvars.rs",
           "summary": "Generic retail CVar storage exposes seeded values and defaults through public getters.",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda"
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953"
         },
         {
           "kind": "test",
@@ -98710,7 +98710,7 @@
           "kind": "source",
           "reference": "src/cvars.rs",
           "summary": "Generic retail CVar storage exposes seeded values and defaults through public getters.",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda"
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953"
         },
         {
           "kind": "test",
@@ -98759,7 +98759,7 @@
           "kind": "source",
           "reference": "src/cvars.rs",
           "summary": "Generic retail CVar storage exposes seeded values and defaults through public getters.",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda"
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953"
         },
         {
           "kind": "test",
@@ -98808,7 +98808,7 @@
           "kind": "source",
           "reference": "src/cvars.rs",
           "summary": "Generic retail CVar storage exposes seeded values and defaults through public getters.",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda"
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953"
         },
         {
           "kind": "test",
@@ -98857,7 +98857,7 @@
           "kind": "source",
           "reference": "src/cvars.rs",
           "summary": "Generic retail CVar storage exposes seeded values and defaults through public getters.",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda"
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953"
         },
         {
           "kind": "test",
@@ -98906,7 +98906,7 @@
           "kind": "source",
           "reference": "src/cvars.rs",
           "summary": "Generic retail CVar storage exposes seeded values and defaults through public getters.",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda"
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953"
         },
         {
           "kind": "test",
@@ -98955,7 +98955,7 @@
           "kind": "source",
           "reference": "src/cvars.rs",
           "summary": "Generic retail CVar storage exposes seeded values and defaults through public getters.",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda"
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953"
         },
         {
           "kind": "test",
@@ -99004,7 +99004,7 @@
           "kind": "source",
           "reference": "src/cvars.rs",
           "summary": "Generic retail CVar storage exposes seeded values and defaults through public getters.",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda"
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953"
         },
         {
           "kind": "test",
@@ -99053,7 +99053,7 @@
           "kind": "source",
           "reference": "src/cvars.rs",
           "summary": "Generic retail CVar storage exposes seeded values and defaults through public getters.",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda"
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953"
         },
         {
           "kind": "test",
@@ -99102,7 +99102,7 @@
           "kind": "source",
           "reference": "src/cvars.rs",
           "summary": "Generic retail CVar storage exposes seeded values and defaults through public getters.",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda"
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953"
         },
         {
           "kind": "test",
@@ -99151,7 +99151,7 @@
           "kind": "source",
           "reference": "src/cvars.rs",
           "summary": "Generic retail CVar storage exposes seeded values and defaults through public getters.",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda"
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953"
         },
         {
           "kind": "test",
@@ -99200,7 +99200,7 @@
           "kind": "source",
           "reference": "src/cvars.rs",
           "summary": "Generic retail CVar storage exposes the seeded value and default through public getters.",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda"
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953"
         },
         {
           "kind": "test",
@@ -99249,7 +99249,7 @@
           "kind": "source",
           "reference": "src/cvars.rs",
           "summary": "Generic retail CVar storage exposes the seeded value and default through public getters.",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda"
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953"
         },
         {
           "kind": "test",
@@ -99298,7 +99298,7 @@
           "kind": "source",
           "reference": "src/cvars.rs",
           "summary": "Generic retail CVar storage exposes the seeded value and default through public getters.",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda"
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953"
         },
         {
           "kind": "test",
@@ -99347,7 +99347,7 @@
           "kind": "source",
           "reference": "src/cvars.rs",
           "summary": "Generic retail CVar storage exposes the seeded value and default through public getters.",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda"
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953"
         },
         {
           "kind": "test",
@@ -99396,7 +99396,7 @@
           "kind": "source",
           "reference": "src/cvars.rs",
           "summary": "Generic retail CVar storage exposes the seeded value and default through public getters.",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda"
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953"
         },
         {
           "kind": "test",
@@ -99445,7 +99445,7 @@
           "kind": "source",
           "reference": "src/cvars.rs",
           "summary": "Generic retail CVar storage exposes the seeded value and default through public getters.",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda"
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953"
         },
         {
           "kind": "test",
@@ -99494,7 +99494,7 @@
           "kind": "source",
           "reference": "src/cvars.rs",
           "summary": "Generic retail CVar storage exposes the seeded value and default through public getters.",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda"
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953"
         },
         {
           "kind": "test",
@@ -99543,7 +99543,7 @@
           "kind": "source",
           "reference": "src/cvars.rs",
           "summary": "Generic retail CVar storage exposes the seeded value and default through public getters.",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda"
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953"
         },
         {
           "kind": "test",
@@ -99592,7 +99592,7 @@
           "kind": "source",
           "reference": "src/cvars.rs",
           "summary": "Generic retail CVar storage exposes the seeded value and default through public getters.",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda"
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953"
         },
         {
           "kind": "test",
@@ -99641,7 +99641,7 @@
           "kind": "source",
           "reference": "src/cvars.rs",
           "summary": "Generic retail CVar storage exposes the seeded value and default through public getters.",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda"
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953"
         },
         {
           "kind": "test",
@@ -99831,7 +99831,7 @@
           "kind": "source",
           "reference": "src/cvars.rs",
           "summary": "Generic retail CVar storage exposes seeded value/default through public getters.",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda"
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953"
         },
         {
           "kind": "test",
@@ -99880,7 +99880,7 @@
           "kind": "source",
           "reference": "src/cvars.rs",
           "summary": "Generic retail CVar storage exposes seeded value/default through public getters.",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda"
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953"
         },
         {
           "kind": "test",
@@ -99929,7 +99929,7 @@
           "kind": "source",
           "reference": "src/cvars.rs",
           "summary": "Generic retail CVar storage exposes seeded value/default through public getters.",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda"
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953"
         },
         {
           "kind": "test",
@@ -99978,7 +99978,7 @@
           "kind": "source",
           "reference": "src/cvars.rs",
           "summary": "Generic retail CVar storage exposes seeded value/default through public getters.",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda"
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953"
         },
         {
           "kind": "test",
@@ -100027,7 +100027,7 @@
           "kind": "source",
           "reference": "src/cvars.rs",
           "summary": "Generic retail CVar storage exposes seeded value/default through public getters.",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda"
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953"
         },
         {
           "kind": "test",
@@ -100076,7 +100076,7 @@
           "kind": "source",
           "reference": "src/cvars.rs",
           "summary": "Generic retail CVar storage exposes seeded value/default through public getters.",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda"
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953"
         },
         {
           "kind": "test",
@@ -100125,7 +100125,7 @@
           "kind": "source",
           "reference": "src/cvars.rs",
           "summary": "Generic retail CVar storage exposes seeded value/default through public getters.",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda"
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953"
         },
         {
           "kind": "test",
@@ -100174,7 +100174,7 @@
           "kind": "source",
           "reference": "src/cvars.rs",
           "summary": "Generic retail CVar storage exposes seeded value/default through public getters.",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda"
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953"
         },
         {
           "kind": "test",
@@ -100264,7 +100264,7 @@
           "kind": "source",
           "reference": "src/cvars.rs",
           "summary": "Generic retail CVar storage exposes seeded value/default through public getters.",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda"
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953"
         },
         {
           "kind": "test",
@@ -100313,7 +100313,7 @@
           "kind": "source",
           "reference": "src/cvars.rs",
           "summary": "Generic retail CVar storage exposes seeded value/default through public getters.",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda"
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953"
         },
         {
           "kind": "test",
@@ -100362,7 +100362,7 @@
           "kind": "source",
           "reference": "src/cvars.rs",
           "summary": "Generic retail CVar storage exposes seeded value/default through public getters.",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda"
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953"
         },
         {
           "kind": "test",
@@ -100411,7 +100411,7 @@
           "kind": "source",
           "reference": "src/cvars.rs",
           "summary": "Generic retail CVar storage exposes seeded value/default through public getters.",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda"
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953"
         },
         {
           "kind": "test",
@@ -100460,7 +100460,7 @@
           "kind": "source",
           "reference": "src/cvars.rs",
           "summary": "Generic retail CVar storage exposes seeded value/default through public getters.",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda"
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953"
         },
         {
           "kind": "test",
@@ -100509,7 +100509,7 @@
           "kind": "source",
           "reference": "src/cvars.rs",
           "summary": "Generic retail CVar storage exposes seeded value/default through public getters.",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda"
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953"
         },
         {
           "kind": "test",
@@ -100558,7 +100558,7 @@
           "kind": "source",
           "reference": "src/cvars.rs",
           "summary": "Generic retail CVar storage exposes seeded value/default through public getters.",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda"
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953"
         },
         {
           "kind": "test",
@@ -100607,7 +100607,7 @@
           "kind": "source",
           "reference": "src/cvars.rs",
           "summary": "Generic retail CVar storage exposes seeded value/default through public getters.",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda"
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953"
         },
         {
           "kind": "test",
@@ -100656,7 +100656,7 @@
           "kind": "source",
           "reference": "src/cvars.rs",
           "summary": "Generic retail CVar storage exposes seeded value/default through public getters.",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda"
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953"
         },
         {
           "kind": "test",
@@ -100705,7 +100705,7 @@
           "kind": "source",
           "reference": "src/cvars.rs",
           "summary": "Generic retail CVar storage exposes seeded value/default through public getters.",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda"
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953"
         },
         {
           "kind": "test",
@@ -100754,7 +100754,7 @@
           "kind": "source",
           "reference": "src/cvars.rs",
           "summary": "Generic retail CVar storage exposes seeded value/default through public getters.",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda"
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953"
         },
         {
           "kind": "test",
@@ -100803,7 +100803,7 @@
           "kind": "source",
           "reference": "src/cvars.rs",
           "summary": "Generic retail CVar storage exposes seeded value/default through public getters.",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda"
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953"
         },
         {
           "kind": "test",
@@ -100852,7 +100852,7 @@
           "kind": "source",
           "reference": "src/cvars.rs",
           "summary": "Generic retail CVar storage exposes seeded value/default through public getters.",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda"
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953"
         },
         {
           "kind": "test",
@@ -100901,7 +100901,7 @@
           "kind": "source",
           "reference": "src/cvars.rs",
           "summary": "Generic retail CVar storage exposes seeded value/default through public getters.",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda"
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953"
         },
         {
           "kind": "test",
@@ -100950,7 +100950,7 @@
           "kind": "source",
           "reference": "src/cvars.rs",
           "summary": "Generic retail CVar storage exposes seeded value/default through public getters.",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda"
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953"
         },
         {
           "kind": "test",
@@ -100999,7 +100999,7 @@
           "kind": "source",
           "reference": "src/cvars.rs",
           "summary": "Generic retail CVar storage exposes seeded value/default through public getters.",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda"
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953"
         },
         {
           "kind": "test",
@@ -101048,7 +101048,7 @@
           "kind": "source",
           "reference": "src/cvars.rs",
           "summary": "Generic retail CVar storage exposes seeded value/default through public getters.",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda"
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953"
         },
         {
           "kind": "test",
@@ -101097,7 +101097,7 @@
           "kind": "source",
           "reference": "src/cvars.rs",
           "summary": "Generic retail CVar storage exposes seeded value/default through public getters.",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda"
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953"
         },
         {
           "kind": "test",
@@ -101146,7 +101146,7 @@
           "kind": "source",
           "reference": "src/cvars.rs",
           "summary": "Generic retail CVar storage exposes seeded value/default through public getters.",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda"
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953"
         },
         {
           "kind": "test",
@@ -101195,7 +101195,7 @@
           "kind": "source",
           "reference": "src/cvars.rs",
           "summary": "Generic retail CVar storage exposes seeded value/default through public getters.",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda"
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953"
         },
         {
           "kind": "test",
@@ -101244,7 +101244,7 @@
           "kind": "source",
           "reference": "src/cvars.rs",
           "summary": "Generic retail CVar storage exposes seeded value/default through public getters.",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda"
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953"
         },
         {
           "kind": "test",
@@ -101293,7 +101293,7 @@
           "kind": "source",
           "reference": "src/cvars.rs",
           "summary": "Generic retail CVar storage exposes seeded value/default through public getters.",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda"
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953"
         },
         {
           "kind": "test",
@@ -101342,7 +101342,7 @@
           "kind": "source",
           "reference": "src/cvars.rs",
           "summary": "Generic retail CVar storage exposes seeded value/default through public getters.",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda"
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953"
         },
         {
           "kind": "test",
@@ -101391,7 +101391,7 @@
           "kind": "source",
           "reference": "src/cvars.rs",
           "summary": "Generic retail CVar storage exposes seeded value/default through public getters.",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda"
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953"
         },
         {
           "kind": "test",
@@ -101440,7 +101440,7 @@
           "kind": "source",
           "reference": "src/cvars.rs",
           "summary": "Generic retail CVar storage exposes seeded value/default through public getters.",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda"
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953"
         },
         {
           "kind": "test",
@@ -101489,7 +101489,7 @@
           "kind": "source",
           "reference": "src/cvars.rs",
           "summary": "Generic retail CVar storage exposes seeded value/default through public getters.",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda"
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953"
         },
         {
           "kind": "test",
@@ -101538,7 +101538,7 @@
           "kind": "source",
           "reference": "src/cvars.rs",
           "summary": "Generic retail CVar storage exposes seeded value/default through public getters.",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda"
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953"
         },
         {
           "kind": "test",
@@ -101587,7 +101587,7 @@
           "kind": "source",
           "reference": "src/cvars.rs",
           "summary": "Generic retail CVar storage exposes seeded value/default through public getters.",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda"
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953"
         },
         {
           "kind": "test",
@@ -101636,7 +101636,7 @@
           "kind": "source",
           "reference": "src/cvars.rs",
           "summary": "Generic retail CVar storage exposes seeded value/default through public getters.",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda"
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953"
         },
         {
           "kind": "test",
@@ -101685,7 +101685,7 @@
           "kind": "source",
           "reference": "src/cvars.rs",
           "summary": "Generic retail CVar storage exposes seeded value/default through public getters.",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda"
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953"
         },
         {
           "kind": "test",
@@ -102053,7 +102053,7 @@
           "kind": "source",
           "reference": "src/cvars.rs",
           "summary": "Generic retail CVar storage exposes seeded value/default through public getters.",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda"
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953"
         },
         {
           "kind": "test",
@@ -102102,7 +102102,7 @@
           "kind": "source",
           "reference": "src/cvars.rs",
           "summary": "Generic retail CVar storage exposes seeded value/default through public getters.",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda"
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953"
         },
         {
           "kind": "test",
@@ -102151,7 +102151,7 @@
           "kind": "source",
           "reference": "src/cvars.rs",
           "summary": "Generic retail CVar storage exposes seeded value/default through public getters.",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda"
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953"
         },
         {
           "kind": "test",
@@ -102200,7 +102200,7 @@
           "kind": "source",
           "reference": "src/cvars.rs",
           "summary": "Generic retail CVar storage exposes seeded value/default through public getters.",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda"
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953"
         },
         {
           "kind": "test",
@@ -102249,7 +102249,7 @@
           "kind": "source",
           "reference": "src/cvars.rs",
           "summary": "Generic retail CVar storage exposes seeded value/default through public getters.",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda"
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953"
         },
         {
           "kind": "test",
@@ -102427,7 +102427,7 @@
           "kind": "source",
           "reference": "src/cvars.rs",
           "summary": "Generic retail CVar storage exposes seeded value/default through public getters.",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda"
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953"
         },
         {
           "kind": "test",
@@ -102476,7 +102476,7 @@
           "kind": "source",
           "reference": "src/cvars.rs",
           "summary": "Generic retail CVar storage exposes seeded value/default through public getters.",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda"
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953"
         },
         {
           "kind": "test",
@@ -102525,7 +102525,7 @@
           "kind": "source",
           "reference": "src/cvars.rs",
           "summary": "Generic retail CVar storage exposes seeded value/default through public getters.",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda"
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953"
         },
         {
           "kind": "test",
@@ -102574,7 +102574,7 @@
           "kind": "source",
           "reference": "src/cvars.rs",
           "summary": "Generic retail CVar storage exposes seeded value/default through public getters.",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda"
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953"
         },
         {
           "kind": "test",
@@ -102658,7 +102658,7 @@
           "kind": "source",
           "reference": "src/cvars.rs",
           "summary": "Generic retail CVar storage exposes seeded value/default through public getters.",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda"
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953"
         },
         {
           "kind": "test",
@@ -102707,7 +102707,7 @@
           "kind": "source",
           "reference": "src/cvars.rs",
           "summary": "Generic retail CVar storage exposes seeded value/default through public getters.",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda"
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953"
         },
         {
           "kind": "test",
@@ -102756,7 +102756,7 @@
           "kind": "source",
           "reference": "src/cvars.rs",
           "summary": "Generic retail CVar storage exposes seeded value/default through public getters.",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda"
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953"
         },
         {
           "kind": "test",
@@ -103429,7 +103429,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/mod.rs",
-          "source_hash": "9385c09f8c9152ca9a20bee297e963e1ee931c2e20c671c66c6416e5ed17f723",
+          "source_hash": "b36a31da88a992d477196b9dba5457cb9253f2c8bf0e19621114fa37145de28e",
           "summary": "C API registration surface; no method publication was found."
         },
         {
@@ -103523,7 +103523,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/mod.rs",
-          "source_hash": "9385c09f8c9152ca9a20bee297e963e1ee931c2e20c671c66c6416e5ed17f723",
+          "source_hash": "b36a31da88a992d477196b9dba5457cb9253f2c8bf0e19621114fa37145de28e",
           "summary": "C API module registry; no C_ItemInteraction module was found."
         },
         {
@@ -105196,7 +105196,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Generic CVar storage exposes seeded value/default through public getters."
         },
         {
@@ -112626,7 +112626,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Generic CVar storage exposes seeded value/default through public getters."
         },
         {
@@ -114259,7 +114259,7 @@
           "kind": "source",
           "reference": "src/cvars.rs",
           "summary": "Generic retail CVar storage exposes seeded values and defaults through public getters.",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda"
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953"
         },
         {
           "kind": "test",
@@ -114308,7 +114308,7 @@
           "kind": "source",
           "reference": "src/cvars.rs",
           "summary": "Generic retail CVar storage exposes seeded values and defaults through public getters.",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda"
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953"
         },
         {
           "kind": "test",
@@ -114357,7 +114357,7 @@
           "kind": "source",
           "reference": "src/cvars.rs",
           "summary": "Generic retail CVar storage exposes seeded values and defaults through public getters.",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda"
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953"
         },
         {
           "kind": "test",
@@ -114406,7 +114406,7 @@
           "kind": "source",
           "reference": "src/cvars.rs",
           "summary": "Generic retail CVar storage exposes seeded values and defaults through public getters.",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda"
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953"
         },
         {
           "kind": "test",
@@ -114455,7 +114455,7 @@
           "kind": "source",
           "reference": "src/cvars.rs",
           "summary": "Generic retail CVar storage exposes seeded values and defaults through public getters.",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda"
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953"
         },
         {
           "kind": "test",
@@ -114504,7 +114504,7 @@
           "kind": "source",
           "reference": "src/cvars.rs",
           "summary": "Generic retail CVar storage exposes seeded values and defaults through public getters.",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda"
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953"
         },
         {
           "kind": "test",
@@ -114553,7 +114553,7 @@
           "kind": "source",
           "reference": "src/cvars.rs",
           "summary": "Generic retail CVar storage exposes seeded values and defaults through public getters.",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda"
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953"
         },
         {
           "kind": "test",
@@ -114602,7 +114602,7 @@
           "kind": "source",
           "reference": "src/cvars.rs",
           "summary": "Generic retail CVar storage exposes seeded values and defaults through public getters.",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda"
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953"
         },
         {
           "kind": "test",
@@ -114651,7 +114651,7 @@
           "kind": "source",
           "reference": "src/cvars.rs",
           "summary": "Generic retail CVar storage exposes seeded values and defaults through public getters.",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda"
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953"
         },
         {
           "kind": "test",
@@ -114699,7 +114699,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Generic retail CVar storage exposes seeded values and defaults through public getters."
         },
         {
@@ -114748,7 +114748,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Generic retail CVar storage exposes seeded values and defaults through public getters."
         },
         {
@@ -114797,7 +114797,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Generic retail CVar storage exposes seeded values and defaults through public getters."
         },
         {
@@ -114846,7 +114846,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Generic retail CVar storage exposes seeded values and defaults through public getters."
         },
         {
@@ -114895,7 +114895,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Generic retail CVar storage exposes seeded values and defaults through public getters."
         },
         {
@@ -114944,7 +114944,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Generic retail CVar storage exposes seeded values and defaults through public getters."
         },
         {
@@ -114993,7 +114993,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Generic retail CVar storage exposes seeded values and defaults through public getters."
         },
         {
@@ -115042,7 +115042,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Generic retail CVar storage exposes seeded values and defaults through public getters."
         },
         {
@@ -115091,7 +115091,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Generic retail CVar storage exposes seeded values and defaults through public getters."
         },
         {
@@ -115140,7 +115140,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Generic retail CVar storage exposes seeded values and defaults through public getters."
         },
         {
@@ -115189,7 +115189,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Generic retail CVar storage exposes seeded values and defaults through public getters."
         },
         {
@@ -115238,7 +115238,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Generic retail CVar storage exposes seeded values and defaults through public getters."
         },
         {
@@ -115287,7 +115287,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Generic retail CVar storage exposes seeded values and defaults through public getters."
         },
         {
@@ -115336,7 +115336,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Generic retail CVar storage exposes seeded values and defaults through public getters."
         },
         {
@@ -115385,7 +115385,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Generic retail CVar storage exposes seeded values and defaults through public getters."
         },
         {
@@ -115434,7 +115434,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Generic retail CVar storage exposes seeded values and defaults through public getters."
         },
         {
@@ -115483,7 +115483,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Generic retail CVar storage exposes seeded values and defaults through public getters."
         },
         {
@@ -115532,7 +115532,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Generic retail CVar storage exposes seeded values and defaults through public getters."
         },
         {
@@ -115581,7 +115581,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Generic retail CVar storage exposes seeded values and defaults through public getters."
         },
         {
@@ -115630,7 +115630,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Generic retail CVar storage exposes seeded values and defaults through public getters."
         },
         {
@@ -115679,7 +115679,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Generic retail CVar storage exposes seeded values and defaults through public getters."
         },
         {
@@ -115728,7 +115728,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Generic retail CVar storage exposes seeded values and defaults through public getters."
         },
         {
@@ -115777,7 +115777,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Generic retail CVar storage exposes seeded values and defaults through public getters."
         },
         {
@@ -115826,7 +115826,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Generic retail CVar storage exposes seeded values and defaults through public getters."
         },
         {
@@ -115911,7 +115911,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Generic retail CVar storage exposes seeded values and defaults through public getters."
         },
         {
@@ -116008,7 +116008,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Generic retail CVar storage exposes seeded values and defaults through public getters."
         },
         {
@@ -128448,7 +128448,7 @@
           "kind": "source",
           "reference": "src/cvars.rs",
           "summary": "Retail profile CVar filtering omits the removed nameplate CVar; the 12.0.0 scale removals are applied without changing Mists defaults.",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda"
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953"
         },
         {
           "kind": "test",
@@ -128491,7 +128491,7 @@
           "kind": "source",
           "reference": "src/cvars.rs",
           "summary": "Retail profile CVar filtering removes this scale CVar for 12.0.0 while preserving the base/Mists default.",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda"
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953"
         },
         {
           "kind": "test",
@@ -128534,7 +128534,7 @@
           "kind": "source",
           "reference": "src/cvars.rs",
           "summary": "Retail profile CVar filtering omits the removed nameplate CVar; the 12.0.0 scale removals are applied without changing Mists defaults.",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda"
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953"
         },
         {
           "kind": "test",
@@ -128577,7 +128577,7 @@
           "kind": "source",
           "reference": "src/cvars.rs",
           "summary": "Retail profile CVar filtering removes this scale CVar for 12.0.0 while preserving the base/Mists default.",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda"
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953"
         },
         {
           "kind": "test",
@@ -128620,7 +128620,7 @@
           "kind": "source",
           "reference": "src/cvars.rs",
           "summary": "Retail profile CVar filtering omits the removed nameplate CVar; the 12.0.0 scale removals are applied without changing Mists defaults.",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda"
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953"
         },
         {
           "kind": "test",
@@ -128663,7 +128663,7 @@
           "kind": "source",
           "reference": "src/cvars.rs",
           "summary": "Retail profile CVar filtering omits the removed nameplate CVar; the 12.0.0 scale removals are applied without changing Mists defaults.",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda"
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953"
         },
         {
           "kind": "test",
@@ -128706,7 +128706,7 @@
           "kind": "source",
           "reference": "src/cvars.rs",
           "summary": "Retail profile CVar filtering omits the removed nameplate CVar; the 12.0.0 scale removals are applied without changing Mists defaults.",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda"
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953"
         },
         {
           "kind": "test",
@@ -128749,7 +128749,7 @@
           "kind": "source",
           "reference": "src/cvars.rs",
           "summary": "Retail profile CVar filtering omits the removed nameplate CVar; the 12.0.0 scale removals are applied without changing Mists defaults.",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda"
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953"
         },
         {
           "kind": "test",
@@ -128792,7 +128792,7 @@
           "kind": "source",
           "reference": "src/cvars.rs",
           "summary": "Retail profile CVar filtering omits the removed nameplate CVar; the 12.0.0 scale removals are applied without changing Mists defaults.",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda"
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953"
         },
         {
           "kind": "test",
@@ -128835,7 +128835,7 @@
           "kind": "source",
           "reference": "src/cvars.rs",
           "summary": "Retail profile CVar filtering omits the removed nameplate CVar; the 12.0.0 scale removals are applied without changing Mists defaults.",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda"
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953"
         },
         {
           "kind": "test",
@@ -129136,7 +129136,7 @@
           "kind": "source",
           "reference": "src/cvars.rs",
           "summary": "Retail profile CVar filtering removes this CVar in retail 12.0.0 while preserving non-retail profile defaults where applicable.",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda"
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953"
         },
         {
           "kind": "test",
@@ -129179,7 +129179,7 @@
           "kind": "source",
           "reference": "src/cvars.rs",
           "summary": "Retail profile CVar filtering removes this CVar in retail 12.0.0 while preserving non-retail profile defaults where applicable.",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda"
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953"
         },
         {
           "kind": "test",
@@ -129222,7 +129222,7 @@
           "kind": "source",
           "reference": "src/cvars.rs",
           "summary": "Retail profile CVar filtering removes this CVar in retail 12.0.0 while preserving non-retail profile defaults where applicable.",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda"
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953"
         },
         {
           "kind": "test",
@@ -129441,7 +129441,7 @@
           "kind": "source",
           "reference": "src/cvars.rs",
           "summary": "Retail profile CVar filtering removes this CVar in retail 12.0.0 while preserving non-retail profile defaults where applicable.",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda"
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953"
         },
         {
           "kind": "test",
@@ -129484,7 +129484,7 @@
           "kind": "source",
           "reference": "src/cvars.rs",
           "summary": "Retail profile CVar filtering removes this CVar in retail 12.0.0 while preserving non-retail profile defaults where applicable.",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda"
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953"
         },
         {
           "kind": "test",
@@ -129556,7 +129556,7 @@
           "kind": "source",
           "reference": "src/cvars.rs",
           "summary": "CVar storage returns nil for unknown/removed old names in the active retail profile; no replacement semantics are claimed.",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda"
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953"
         },
         {
           "kind": "test",
@@ -129605,7 +129605,7 @@
           "kind": "source",
           "reference": "src/cvars.rs",
           "summary": "CVar storage returns nil for unknown/removed old names in the active retail profile; no replacement semantics are claimed.",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda"
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953"
         },
         {
           "kind": "test",
@@ -129654,7 +129654,7 @@
           "kind": "source",
           "reference": "src/cvars.rs",
           "summary": "CVar storage returns nil for unknown/removed old names in the active retail profile; no replacement semantics are claimed.",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda"
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953"
         },
         {
           "kind": "test",
@@ -129703,7 +129703,7 @@
           "kind": "source",
           "reference": "src/cvars.rs",
           "summary": "CVar storage returns nil for unknown/removed old names in the active retail profile; no replacement semantics are claimed.",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda"
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953"
         },
         {
           "kind": "test",
@@ -129752,7 +129752,7 @@
           "kind": "source",
           "reference": "src/cvars.rs",
           "summary": "CVar storage returns nil for unknown/removed old names in the active retail profile; no replacement semantics are claimed.",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda"
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953"
         },
         {
           "kind": "test",
@@ -129801,7 +129801,7 @@
           "kind": "source",
           "reference": "src/cvars.rs",
           "summary": "CVar storage returns nil for unknown/removed old names in the active retail profile; no replacement semantics are claimed.",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda"
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953"
         },
         {
           "kind": "test",
@@ -129850,7 +129850,7 @@
           "kind": "source",
           "reference": "src/cvars.rs",
           "summary": "CVar storage returns nil for unknown/removed old names in the active retail profile; no replacement semantics are claimed.",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda"
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953"
         },
         {
           "kind": "test",
@@ -129899,7 +129899,7 @@
           "kind": "source",
           "reference": "src/cvars.rs",
           "summary": "CVar storage returns nil for unknown/removed old names in the active retail profile; no replacement semantics are claimed.",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda"
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953"
         },
         {
           "kind": "test",
@@ -129948,7 +129948,7 @@
           "kind": "source",
           "reference": "src/cvars.rs",
           "summary": "CVar storage returns nil for unknown/removed old names in the active retail profile; no replacement semantics are claimed.",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda"
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953"
         },
         {
           "kind": "test",
@@ -129997,7 +129997,7 @@
           "kind": "source",
           "reference": "src/cvars.rs",
           "summary": "CVar storage returns nil for unknown/removed old names in the active retail profile; no replacement semantics are claimed.",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda"
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953"
         },
         {
           "kind": "test",
@@ -130046,7 +130046,7 @@
           "kind": "source",
           "reference": "src/cvars.rs",
           "summary": "CVar storage returns nil for unknown/removed old names in the active retail profile; no replacement semantics are claimed.",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda"
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953"
         },
         {
           "kind": "test",
@@ -130095,7 +130095,7 @@
           "kind": "source",
           "reference": "src/cvars.rs",
           "summary": "CVar storage returns nil for unknown/removed old names in the active retail profile; no replacement semantics are claimed.",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda"
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953"
         },
         {
           "kind": "test",
@@ -130144,7 +130144,7 @@
           "kind": "source",
           "reference": "src/cvars.rs",
           "summary": "CVar storage returns nil for unknown/removed old names in the active retail profile; no replacement semantics are claimed.",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda"
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953"
         },
         {
           "kind": "test",
@@ -130192,7 +130192,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Current retail CVar storage has no seeded default for the removed name."
         },
         {
@@ -130247,7 +130247,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Current retail CVar storage has no seeded default for the removed name."
         },
         {
@@ -130302,7 +130302,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Current retail CVar storage has no seeded default for the removed name."
         },
         {
@@ -130357,7 +130357,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Current retail CVar storage has no seeded default for the removed name."
         },
         {
@@ -130412,7 +130412,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Current retail CVar storage has no seeded default for the removed name."
         },
         {
@@ -130467,7 +130467,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Current retail CVar storage has no seeded default for the removed name."
         },
         {
@@ -130522,7 +130522,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Current retail CVar storage has no seeded default for the removed name."
         },
         {
@@ -130843,7 +130843,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Generic CVar storage exposes public current/default getters used by the focused absence proof."
         },
         {
@@ -130892,7 +130892,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Generic CVar storage exposes public current/default getters used by the focused absence proof."
         },
         {
@@ -130942,7 +130942,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Generic CVar getter/default storage is the runtime publication path; no endpoint behavior is claimed."
         },
         {
@@ -130983,7 +130983,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Generic CVar storage exposes public current/default getters used by the focused absence proof."
         },
         {
@@ -131032,7 +131032,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Generic CVar storage exposes public current/default getters used by the focused absence proof."
         },
         {
@@ -131081,7 +131081,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Generic CVar storage exposes public current/default getters used by the focused absence proof."
         },
         {
@@ -131130,7 +131130,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Generic CVar storage exposes public current/default getters used by the focused absence proof."
         },
         {
@@ -131179,7 +131179,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Generic CVar storage exposes public current/default getters used by the focused absence proof."
         },
         {
@@ -131228,7 +131228,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Generic CVar storage exposes public current/default getters used by the focused absence proof."
         },
         {
@@ -131277,7 +131277,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Generic CVar storage exposes public current/default getters used by the focused absence proof."
         },
         {
@@ -131326,7 +131326,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Generic CVar storage exposes public current/default getters used by the focused absence proof."
         },
         {
@@ -131375,7 +131375,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Generic CVar storage exposes public current/default getters used by the focused absence proof."
         },
         {
@@ -131424,7 +131424,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Generic CVar storage exposes public current/default getters used by the focused absence proof."
         },
         {
@@ -131473,7 +131473,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Generic CVar storage exposes public current/default getters used by the focused absence proof."
         },
         {
@@ -131522,7 +131522,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Generic CVar storage exposes public current/default getters used by the focused absence proof."
         },
         {
@@ -131571,7 +131571,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Generic CVar storage exposes public current/default getters used by the focused absence proof."
         },
         {
@@ -131620,7 +131620,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Generic CVar storage exposes public current/default getters used by the focused absence proof."
         },
         {
@@ -131670,7 +131670,7 @@
           "kind": "source",
           "reference": "src/cvars.rs",
           "summary": "The active retail CVar storage returns nil for the absent old name through public value/default getters.",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda"
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953"
         },
         {
           "kind": "test",
@@ -131718,7 +131718,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Generic CVar storage exposes public current/default getters used by the focused absence proof."
         },
         {
@@ -131767,7 +131767,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Generic CVar storage exposes public current/default getters used by the focused absence proof."
         },
         {
@@ -131816,7 +131816,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Generic CVar storage exposes public current/default getters used by the focused absence proof."
         },
         {
@@ -131865,7 +131865,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Generic CVar storage exposes public current/default getters used by the focused absence proof."
         },
         {
@@ -131915,7 +131915,7 @@
           "kind": "source",
           "reference": "src/cvars.rs",
           "summary": "The active retail CVar storage returns nil for the absent old name through public value/default getters.",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda"
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953"
         },
         {
           "kind": "test",
@@ -131963,7 +131963,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Generic CVar storage exposes public current/default getters used by the focused absence proof."
         },
         {
@@ -132012,7 +132012,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Generic CVar storage exposes public current/default getters used by the focused absence proof."
         },
         {
@@ -132061,7 +132061,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Generic CVar storage exposes public current/default getters used by the focused absence proof."
         },
         {
@@ -132110,7 +132110,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Generic CVar storage exposes public current/default getters used by the focused absence proof."
         },
         {
@@ -132159,7 +132159,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Generic CVar storage exposes public current/default getters used by the focused absence proof."
         },
         {
@@ -132208,7 +132208,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Generic CVar storage exposes public current/default getters used by the focused absence proof."
         },
         {
@@ -132257,7 +132257,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Current retail CVar storage has no seeded default for the removed name."
         },
         {
@@ -132312,7 +132312,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Current retail CVar storage has no seeded default for the removed name."
         },
         {
@@ -132367,7 +132367,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Current retail CVar storage has no seeded default for the removed name."
         },
         {
@@ -132422,7 +132422,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Generic CVar getter/default implementation is the runtime publication boundary; no row-specific absence proof exists."
         },
         {
@@ -132463,7 +132463,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Generic CVar getter/default implementation is the runtime publication boundary; no row-specific absence proof exists."
         },
         {
@@ -132504,7 +132504,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Generic CVar getter/default implementation is the runtime publication boundary; no row-specific absence proof exists."
         },
         {
@@ -132545,7 +132545,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Generic CVar getter/default implementation is the runtime publication boundary; no row-specific absence proof exists."
         },
         {
@@ -132586,7 +132586,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Generic CVar getter/default implementation is the runtime publication boundary; no row-specific absence proof exists."
         },
         {
@@ -132627,7 +132627,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Generic CVar getter/default implementation is the runtime publication boundary; no row-specific absence proof exists."
         },
         {
@@ -132668,7 +132668,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Generic CVar getter/default implementation is the runtime publication boundary; no row-specific absence proof exists."
         },
         {
@@ -132709,7 +132709,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Generic CVar getter/default implementation is the runtime publication boundary; no row-specific absence proof exists."
         },
         {
@@ -132750,7 +132750,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Generic CVar getter/default implementation is the runtime publication boundary; no row-specific absence proof exists."
         },
         {
@@ -132791,7 +132791,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Generic CVar getter/default implementation is the runtime publication boundary; no row-specific absence proof exists."
         },
         {
@@ -132832,7 +132832,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Generic CVar getter/default implementation is the runtime publication boundary; no row-specific absence proof exists."
         },
         {
@@ -132873,7 +132873,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Generic CVar getter/default implementation is the runtime publication boundary; no row-specific absence proof exists."
         },
         {
@@ -132914,7 +132914,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Generic CVar getter/default implementation is the runtime publication boundary; no row-specific absence proof exists."
         },
         {
@@ -132955,7 +132955,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Generic CVar getter/default implementation is the runtime publication boundary; no row-specific absence proof exists."
         },
         {
@@ -132996,7 +132996,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Generic CVar getter/default implementation is the runtime publication boundary; no row-specific absence proof exists."
         },
         {
@@ -133037,7 +133037,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Generic CVar getter/default implementation is the runtime publication boundary; no row-specific absence proof exists."
         },
         {
@@ -133078,7 +133078,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Generic CVar getter/default implementation is the runtime publication boundary; no row-specific absence proof exists."
         },
         {
@@ -133119,7 +133119,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Generic CVar getter/default implementation is the runtime publication boundary; no row-specific absence proof exists."
         },
         {
@@ -133160,7 +133160,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Generic CVar getter/default implementation is the runtime publication boundary; no row-specific absence proof exists."
         },
         {
@@ -133201,7 +133201,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Generic CVar getter/default implementation is the runtime publication boundary; no row-specific absence proof exists."
         },
         {
@@ -133242,7 +133242,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Generic CVar getter/default implementation is the runtime publication boundary; no row-specific absence proof exists."
         },
         {
@@ -133283,7 +133283,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Generic CVar getter/default implementation is the runtime publication boundary; no row-specific absence proof exists."
         },
         {
@@ -133324,7 +133324,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Generic CVar getter/default implementation is the runtime publication boundary; no row-specific absence proof exists."
         },
         {
@@ -133365,7 +133365,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Generic CVar getter/default implementation is the runtime publication boundary; no row-specific absence proof exists."
         },
         {
@@ -133406,7 +133406,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Generic CVar getter/default implementation is the runtime publication boundary; no row-specific absence proof exists."
         },
         {
@@ -133447,7 +133447,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Generic CVar getter/default implementation is the runtime publication boundary; no row-specific absence proof exists."
         },
         {
@@ -133488,7 +133488,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Generic CVar getter/default implementation is the runtime publication boundary; no row-specific absence proof exists."
         },
         {
@@ -133529,7 +133529,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Generic CVar getter/default implementation is the runtime publication boundary; no row-specific absence proof exists."
         },
         {
@@ -133570,7 +133570,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Generic CVar getter/default implementation is the runtime publication boundary; no row-specific absence proof exists."
         },
         {
@@ -133611,7 +133611,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Generic CVar getter/default implementation is the runtime publication boundary; no row-specific absence proof exists."
         },
         {
@@ -133652,7 +133652,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Generic CVar getter/default implementation is the runtime publication boundary; no row-specific absence proof exists."
         },
         {
@@ -133693,7 +133693,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Generic CVar getter/default implementation is the runtime publication boundary; no row-specific absence proof exists."
         },
         {
@@ -133734,7 +133734,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Generic CVar getter/default implementation is the runtime publication boundary; no row-specific absence proof exists."
         },
         {
@@ -133775,7 +133775,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Generic CVar getter/default implementation is the runtime publication boundary; no row-specific absence proof exists."
         },
         {
@@ -133816,7 +133816,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Current retail CVar storage has no seeded default for the removed name."
         },
         {
@@ -133871,7 +133871,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Current retail CVar storage has no seeded default for the removed name."
         },
         {
@@ -133926,7 +133926,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Current retail CVar storage has no seeded default for the removed name."
         },
         {
@@ -133981,7 +133981,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Current retail CVar storage has no seeded default for the removed name."
         },
         {
@@ -134036,7 +134036,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Current retail CVar storage has no seeded default for the removed name."
         },
         {
@@ -134091,7 +134091,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Current retail CVar storage has no seeded default for the removed name."
         },
         {
@@ -134146,7 +134146,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Current retail CVar storage has no seeded default for the removed name."
         },
         {
@@ -134201,7 +134201,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Current retail CVar storage has no seeded default for the removed name."
         },
         {
@@ -134256,7 +134256,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Current retail CVar storage has no seeded default for the removed name."
         },
         {
@@ -134311,7 +134311,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Current retail CVar storage has no seeded default for the removed name."
         },
         {
@@ -134366,7 +134366,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Current retail CVar storage has no seeded default for the removed name."
         },
         {
@@ -134421,7 +134421,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Current retail CVar storage has no seeded default for the removed name."
         },
         {
@@ -134476,7 +134476,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Current retail CVar storage has no seeded default for the removed name."
         },
         {
@@ -134531,7 +134531,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Current retail CVar storage has no seeded default for the removed name."
         },
         {
@@ -134586,7 +134586,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Current retail CVar storage has no seeded default for the removed name."
         },
         {
@@ -134641,7 +134641,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Current retail CVar storage has no seeded default for the removed name."
         },
         {
@@ -134696,7 +134696,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Current retail CVar storage has no seeded default for the removed name."
         },
         {
@@ -134751,7 +134751,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Current retail CVar storage has no seeded default for the removed name."
         },
         {
@@ -134806,7 +134806,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Current retail CVar storage has no seeded default for the removed name."
         },
         {
@@ -134861,7 +134861,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Current retail CVar storage has no seeded default for the removed name."
         },
         {
@@ -134916,7 +134916,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Current retail CVar storage has no seeded default for the removed name."
         },
         {
@@ -134971,7 +134971,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Current retail CVar storage has no seeded default for the removed name."
         },
         {
@@ -135026,7 +135026,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Current retail CVar storage has no seeded default for the removed name."
         },
         {
@@ -135081,7 +135081,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Current retail CVar storage has no seeded default for the removed name."
         },
         {
@@ -135136,7 +135136,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Current retail CVar storage has no seeded default for the removed name."
         },
         {
@@ -135191,7 +135191,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Current retail CVar storage has no seeded default for the removed name."
         },
         {
@@ -135246,7 +135246,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Current retail CVar storage has no seeded default for the removed name."
         },
         {
@@ -135301,7 +135301,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Current retail CVar storage has no seeded default for the removed name."
         },
         {
@@ -135444,7 +135444,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Current retail CVar storage has no seeded default for the removed name."
         },
         {
@@ -135499,7 +135499,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Current retail CVar storage has no seeded default for the removed name."
         },
         {
@@ -135554,7 +135554,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Current retail CVar storage has no seeded default for the removed name."
         },
         {
@@ -135609,7 +135609,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Current retail CVar storage has no seeded default for the removed name."
         },
         {
@@ -135664,7 +135664,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Current retail CVar storage has no seeded default for the removed name."
         },
         {
@@ -135719,7 +135719,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Current retail CVar storage has no seeded default for the removed name."
         },
         {
@@ -135774,7 +135774,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Current retail CVar storage has no seeded default for the removed name."
         },
         {
@@ -135829,7 +135829,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Current retail CVar storage has no seeded default for the removed name."
         },
         {
@@ -135884,7 +135884,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Current retail CVar storage has no seeded default for the removed name."
         },
         {
@@ -135939,7 +135939,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Current retail CVar storage has no seeded default for the removed name."
         },
         {
@@ -135994,7 +135994,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Current retail CVar storage has no seeded default for the removed name."
         },
         {
@@ -136049,7 +136049,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Current retail CVar storage has no seeded default for the removed name."
         },
         {
@@ -136104,7 +136104,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Current retail CVar storage has no seeded default for the removed name."
         },
         {
@@ -136159,7 +136159,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Current retail CVar storage has no seeded default for the removed name."
         },
         {
@@ -136214,7 +136214,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Current retail CVar storage has no seeded default for the removed name."
         },
         {
@@ -136269,7 +136269,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Current retail CVar storage has no seeded default for the removed name."
         },
         {
@@ -136324,7 +136324,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Current retail CVar storage has no seeded default for the removed name."
         },
         {
@@ -136379,7 +136379,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Current retail CVar storage has no seeded default for the removed name."
         },
         {
@@ -136434,7 +136434,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Current retail CVar storage has no seeded default for the removed name."
         },
         {
@@ -136489,7 +136489,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Generic CVar storage lowercases lookup keys, so the removed uppercase spelling currently resolves to the added lowercase spelling."
         },
         {
@@ -136536,7 +136536,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Current retail CVar storage has no seeded default for the removed name."
         },
         {
@@ -136591,7 +136591,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Current retail CVar storage has no seeded default for the removed name."
         },
         {
@@ -136646,7 +136646,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Current retail CVar storage has no seeded default for the removed name."
         },
         {
@@ -136701,7 +136701,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Current retail CVar storage has no seeded default for the removed name."
         },
         {
@@ -136756,7 +136756,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Current retail CVar storage has no seeded default for the removed name."
         },
         {
@@ -136811,7 +136811,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Current retail CVar storage has no seeded default for the removed name."
         },
         {
@@ -136866,7 +136866,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Current retail CVar storage has no seeded default for the removed name."
         },
         {
@@ -136921,7 +136921,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Current retail CVar storage has no seeded default for the removed name."
         },
         {
@@ -136976,7 +136976,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Current retail CVar storage has no seeded default for the removed name."
         },
         {
@@ -137031,7 +137031,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Current retail CVar storage has no seeded default for the removed name."
         },
         {
@@ -137086,7 +137086,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Current retail CVar storage has no seeded default for the removed name."
         },
         {
@@ -137141,7 +137141,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Current retail CVar storage has no seeded default for the removed name."
         },
         {
@@ -137196,7 +137196,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Current retail CVar storage has no seeded default for the removed name."
         },
         {
@@ -137295,7 +137295,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Current retail CVar storage has no seeded default for the removed name."
         },
         {
@@ -137350,7 +137350,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Current retail CVar storage has no seeded default for the removed name."
         },
         {
@@ -137405,7 +137405,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Current retail CVar storage has no seeded default for the removed name."
         },
         {
@@ -137460,7 +137460,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Current retail CVar storage has no seeded default for the removed name."
         },
         {
@@ -137515,7 +137515,7 @@
         {
           "kind": "source",
           "reference": "src/cvars.rs",
-          "source_hash": "2567b377d560e53edc8e2983f043dbb7982c5b236bf21eb306c814b159907dda",
+          "source_hash": "e32813c002aa1a660bdf9d2c1d3d81ca859571a67ccffe5dd59cf0e38148c953",
           "summary": "Current retail CVar storage has no seeded default for the removed name."
         },
         {
