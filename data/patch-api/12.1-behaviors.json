@@ -126,7 +126,7 @@
           "kind": "source",
           "reference": "src/lua_api/env_init/shared_bootstrap.lua",
           "summary": "Bounded simulator projection policy: public and forbidden Lua views are distinct and interned for one underlying frame; native parent/method calls preserve simulator identity and ordinary tables cannot impersonate it. Native private-object identity, authority, and security remain unverified.",
-          "source_hash": "b6cc0afe391de7a017c960310855d02682bd43c091fd4ba8a3e3bf4c630edb7c"
+          "source_hash": "eee7c6b7cd61a3030e36b6d175bacd3faae54e45b8a5966ebeac921a83186dc0"
         },
         {
           "kind": "source",
@@ -138,43 +138,43 @@
           "kind": "source",
           "reference": "docs/specs/script-object-environments.md",
           "summary": "Bounded simulator projection policy: public and forbidden Lua views are distinct and interned for one underlying frame; native parent/method calls preserve simulator identity and ordinary tables cannot impersonate it. Native private-object identity, authority, and security remain unverified.",
-          "source_hash": "4bdce083a97ad4c49181c7a7da71b7c2387327e86f0878d077b57a166c1ac274"
+          "source_hash": "ea48a15375eeeb418a0d45f78d1f72b3d8868102e6c7e73b1b7d24a0bf14ad91"
         },
         {
           "kind": "test",
           "reference": "tests/userdata_proxy.rs::forbidden_partition_interns_isolated_private_views",
           "summary": "Bounded simulator projection policy: public and forbidden Lua views are distinct and interned for one underlying frame; native parent/method calls preserve simulator identity and ordinary tables cannot impersonate it. Native private-object identity, authority, and security remain unverified.",
-          "source_hash": "1c39dfd4abc6b5a28f22e1d5b75668394c3efa903d8e970cd3dc1878353aea70"
+          "source_hash": "e4e308fab13fefe32a94c854c48c147ea19de91b4196580d3c60dcf2e2570399"
         },
         {
           "kind": "test",
           "reference": "tests/userdata_proxy.rs::forbidden_partition_preserves_native_parent_identity",
           "summary": "Bounded simulator projection policy: public and forbidden Lua views are distinct and interned for one underlying frame; native parent/method calls preserve simulator identity and ordinary tables cannot impersonate it. Native private-object identity, authority, and security remain unverified.",
-          "source_hash": "1c39dfd4abc6b5a28f22e1d5b75668394c3efa903d8e970cd3dc1878353aea70"
+          "source_hash": "e4e308fab13fefe32a94c854c48c147ea19de91b4196580d3c60dcf2e2570399"
         },
         {
           "kind": "test",
           "reference": "tests/userdata_proxy.rs::forbidden_partition_does_not_turn_ordinary_tables_into_frame_parents",
           "summary": "Bounded simulator projection policy: public and forbidden Lua views are distinct and interned for one underlying frame; native parent/method calls preserve simulator identity and ordinary tables cannot impersonate it. Native private-object identity, authority, and security remain unverified.",
-          "source_hash": "1c39dfd4abc6b5a28f22e1d5b75668394c3efa903d8e970cd3dc1878353aea70"
+          "source_hash": "e4e308fab13fefe32a94c854c48c147ea19de91b4196580d3c60dcf2e2570399"
         },
         {
           "kind": "test",
           "reference": "tests/userdata_proxy.rs::forbidden_partition_transfer_preserves_ordinary_frame_fields",
           "summary": "Bounded simulator projection policy: public and forbidden Lua views are distinct and interned for one underlying frame; native parent/method calls preserve simulator identity and ordinary tables cannot impersonate it. Native private-object identity, authority, and security remain unverified.",
-          "source_hash": "1c39dfd4abc6b5a28f22e1d5b75668394c3efa903d8e970cd3dc1878353aea70"
+          "source_hash": "e4e308fab13fefe32a94c854c48c147ea19de91b4196580d3c60dcf2e2570399"
         },
         {
           "kind": "test",
           "reference": "tests/userdata_proxy.rs::forbidden_partition_aura_provider_creates_children_through_outbound_bridge",
           "summary": "Bounded simulator projection policy: public and forbidden Lua views are distinct and interned for one underlying frame; native parent/method calls preserve simulator identity and ordinary tables cannot impersonate it. Native private-object identity, authority, and security remain unverified.",
-          "source_hash": "1c39dfd4abc6b5a28f22e1d5b75668394c3efa903d8e970cd3dc1878353aea70"
+          "source_hash": "e4e308fab13fefe32a94c854c48c147ea19de91b4196580d3c60dcf2e2570399"
         },
         {
           "kind": "test",
           "reference": "tests/userdata_proxy.rs::forbidden_partition_aura_initializer_keeps_public_and_private_views_isolated",
           "summary": "Bounded simulator projection policy: public and forbidden Lua views are distinct and interned for one underlying frame; native parent/method calls preserve simulator identity and ordinary tables cannot impersonate it. Native private-object identity, authority, and security remain unverified.",
-          "source_hash": "1c39dfd4abc6b5a28f22e1d5b75668394c3efa903d8e970cd3dc1878353aea70"
+          "source_hash": "e4e308fab13fefe32a94c854c48c147ea19de91b4196580d3c60dcf2e2570399"
         }
       ],
       "tests": [
@@ -203,7 +203,7 @@
           "kind": "source",
           "reference": "src/lua_api/env_init/shared_bootstrap.lua",
           "summary": "Bounded simulator partition policy: private fields and methods stay separate from same-named public assignments, while explicit public exports/delegates remain available. This does not establish a native inaccessible-key list, caller authority, or security enforcement.",
-          "source_hash": "b6cc0afe391de7a017c960310855d02682bd43c091fd4ba8a3e3bf4c630edb7c"
+          "source_hash": "eee7c6b7cd61a3030e36b6d175bacd3faae54e45b8a5966ebeac921a83186dc0"
         },
         {
           "kind": "source",
@@ -215,19 +215,19 @@
           "kind": "source",
           "reference": "docs/specs/script-object-environments.md",
           "summary": "Bounded simulator partition policy: private fields and methods stay separate from same-named public assignments, while explicit public exports/delegates remain available. This does not establish a native inaccessible-key list, caller authority, or security enforcement.",
-          "source_hash": "4bdce083a97ad4c49181c7a7da71b7c2387327e86f0878d077b57a166c1ac274"
+          "source_hash": "ea48a15375eeeb418a0d45f78d1f72b3d8868102e6c7e73b1b7d24a0bf14ad91"
         },
         {
           "kind": "test",
           "reference": "tests/userdata_proxy.rs::forbidden_partition_interns_isolated_private_views",
           "summary": "Bounded simulator partition policy: private fields and methods stay separate from same-named public assignments, while explicit public exports/delegates remain available. This does not establish a native inaccessible-key list, caller authority, or security enforcement.",
-          "source_hash": "1c39dfd4abc6b5a28f22e1d5b75668394c3efa903d8e970cd3dc1878353aea70"
+          "source_hash": "e4e308fab13fefe32a94c854c48c147ea19de91b4196580d3c60dcf2e2570399"
         },
         {
           "kind": "test",
           "reference": "tests/userdata_proxy.rs::forbidden_partition_aura_initializer_keeps_public_and_private_views_isolated",
           "summary": "Bounded simulator partition policy: private fields and methods stay separate from same-named public assignments, while explicit public exports/delegates remain available. This does not establish a native inaccessible-key list, caller authority, or security enforcement.",
-          "source_hash": "1c39dfd4abc6b5a28f22e1d5b75668394c3efa903d8e970cd3dc1878353aea70"
+          "source_hash": "e4e308fab13fefe32a94c854c48c147ea19de91b4196580d3c60dcf2e2570399"
         }
       ],
       "tests": [

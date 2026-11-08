@@ -37,11 +37,11 @@ Native evidence WM73, retail 12.1.5 build 70688 (partial):
 ## What it must do
 
 - [x] Preserve simulator frame identity in the forbidden partition: native parent arguments recognize the same frame while public and forbidden Lua tables remain distinct.
-- [ ] Return the new frame's parent-selected table view from `CreateFrame`, so an ordinary secure frame pool retains the same key when its consumer later releases it. TargetFrame consumer verification is pending.
+- [x] Return the new frame's parent-selected table view from `CreateFrame`; **INFERRED** for the full native call from the R10 verified local selection rule. TargetFrame consumer verification is pending.
 - [ ] Preserve the supplied frame-table identity across ordinary Lua environment crossings. Explicit XML delegates and native publication points retain their separate projection behavior; untraced engine callbacks remain UNKNOWN.
 - [ ] Publish `GetParent` in the receiver's view, independently of the calling environment; do not apply this selection to `GetChildren`, `GetRegions`, or `GetPoint`.
-- [x] Keep explicit native `GetObjectTable` results public for covered outbound addon initializers.
-- [x] Publish inbound delegate frame results in the public object view for container receivers whose pinned vendor passes document it (`Blizzard_CustomAuraContainer.lua:437,444,505,512`), while AuraButton display-element getters keep returning the adopted private elements.
+- [x] Return the public view from `GetObjectTable`, including for forbidden receivers. **VERIFIED:** R10 constructs selector 0; the complete native path is **INFERRED**.
+- [x] Publish each direct UI-object result from a public-target inbound delegate in the public view, including AuraButton display elements; do not walk nested tables. **VERIFIED:** R10 reconstructs the delegate in Retail 70688 and Forever 70707. R9-1 describes the raw getter before delegate result conversion.
 - [x] Pass the mixed-argument XML delegate and unchanged native AuraContainer initializer regressions after scoped inbound argument projection.
 - [x] Intern forbidden views and make repeated `GetForbiddenObjectTable` projection idempotent.
 - [ ] Engine proxy tables and bound-method adapters do not inherit the caller that creates or reads them. Invocation still preserves the active caller and underlying method's own addon taint.
@@ -52,7 +52,7 @@ Native evidence WM73, retail 12.1.5 build 70688 (partial):
 
 - The former simulator environment-transfer hook projected direct frame values on ordinary secure/global Lua crossings. This was an emulated partition policy, not a verified native rule. It changed pool object identities on the TargetFrame consumer path; ordinary crossings now retain their supplied values.
 - `src/lua_api/script_object_transfer.rs` registers the explicit projection constructor after secure-environment creation. Canonical registry mappings identify partitions, not user-controlled backlink fields alone.
-- `src/lua_api/env_init/shared_bootstrap.lua` constructs and interns forbidden tables. Its XML delegate wrapper uses a registered native argument projector only for the explicit forbidden secure-delegate boundary, and publishes frame results of container inbound calls in the public view; `AuraButton` receivers keep the forbidden result view because their display-element getters return adopted private elements.
+- `src/lua_api/env_init/shared_bootstrap.lua` constructs and interns forbidden tables. Its XML delegate wrapper projects direct arguments at the forbidden secure-delegate boundary and direct results to the public target view, including AuraButton results.
 - `src/lua_api/env_init/bootstrap.rs` registers that helper before either environment can use the wrapper and passes the compile-time capability into the bootstrap chunk; older profiles retain receiver-only XML behavior without a missing-helper fallback.
 
 ## Implementation inventory
