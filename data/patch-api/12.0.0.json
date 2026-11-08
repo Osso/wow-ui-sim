@@ -14496,7 +14496,7 @@
         {
           "kind": "source",
           "reference": "AGENTS.md",
-          "source_hash": "7b9c4b3a472a820a111641b4ee685deafcda0ef178a14aae3e91cbb332368a5f",
+          "source_hash": "fb2a23c3428ecf77404cb8ac94bf3c214979f0740cda4460aa1f0d3cdb4812e2",
           "summary": "AGENTS.md defines the permanent no-3D project scope; direct 3D camera/projection behavior is intentionally excluded."
         }
       ],
@@ -90805,7 +90805,7 @@
         {
           "kind": "source",
           "reference": "AGENTS.md",
-          "source_hash": "7b9c4b3a472a820a111641b4ee685deafcda0ef178a14aae3e91cbb332368a5f",
+          "source_hash": "fb2a23c3428ecf77404cb8ac94bf3c214979f0740cda4460aa1f0d3cdb4812e2",
           "summary": "AGENTS.md defines the permanent no-3D project scope; Model and related 3D widget behavior is intentionally out of scope."
         }
       ],
