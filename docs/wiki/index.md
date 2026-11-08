@@ -1,3 +1,7 @@
+## [2026-11-08] investigation | Mists encounter-journal summary parser
+
+[Mists encounter-journal summary parser](investigations/mists-ej-summary-parser.md) records that the triage's encounter-journal failure was a test-helper false positive, already fixed on master by `fe05a05f4` and `224474adf`. The native `EncounterJournal_SetBullets` `$bullet;` parser is correct; the seven cluster-A tests pass and none of the 40 `mists_` failures is caused by this defect.
+
 ## [2026-11-07] fix | Forever 1.60.1.70707 residuals
 
 [Forever startup gaps](investigations/forever-startup-gaps.md#forever-160170707-residuals) records three missing Forever publications found by the PTR/Forever TOC lane: `Enum.ItemContainerSubclass`/`Enum.ItemQuiverSubclass` for the auction house data, `C_QuestLog.CanAbandonQuest` for the quest map detail buttons, and a zero stock idle target spell. Each cites its pinned declaration in `Blizzard_APIDocumentationGenerated`; Retail and PTR surfaces are unchanged.

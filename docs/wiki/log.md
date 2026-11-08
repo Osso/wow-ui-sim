@@ -3507,3 +3507,14 @@ passed. Those profiles now supply false (the polling loop's not-ready branch); R
 keep their user-approved true default. See
 [voice settings access](systems/voice-settings-access.md) and
 [the contract](../specs/voice-settings-access.md).
+
+## 2026-11-08 — Mists encounter-journal summary parser was a test-helper false positive
+
+The mists-panels triage cluster A failure was `assert_no_lua_errors` matching the
+simulator's clean `Lua errors: 0 unique` summary line. Master already fixes it
+(`fe05a05f4`, `224474adf`); the seven affected tests, including
+`mists_encounter_journal_panel`, pass. The native
+`EncounterJournal_SetBullets` `$bullet;` parser
+(`Blizzard_EncounterJournal/Cata/Blizzard_EncounterJournal.lua:1277-1360`) is
+correct in the simulator. See
+[the investigation](investigations/mists-ej-summary-parser.md).
