@@ -147,6 +147,10 @@ fn seed_active_chat_edit_window(env: &wow_ui_sim::lua_api::WowLuaEnv) {
         function editBox:UpdateHeader() end
 
         chatFrame.editBox = editBox
+        -- Real chat frames are FloatingChatFrame instances; ChatFrameUtil indexes
+        -- this child without a nil guard.
+        chatFrame.clickAnywhereButton = CreateFrame("Button", nil, chatFrame)
+        function chatFrame.clickAnywhereButton:UpdateState() end
         DEFAULT_CHAT_FRAME = chatFrame
         GENERAL_CHAT_DOCK = {}
 
