@@ -3507,3 +3507,14 @@ passed. Those profiles now supply false (the polling loop's not-ready branch); R
 keep their user-approved true default. See
 [voice settings access](systems/voice-settings-access.md) and
 [the contract](../specs/voice-settings-access.md).
+
+## 2026-11-08 — PTR gamepad Edit Mode isolation expectation corrected
+
+The Forever isolation test `forever_gamepad_publication_is_absent_from_earlier_profiles`
+kept failing on PTR after the PTR Edit Mode declaration module published
+`EditModeSystem.GamepadMainActionBar=30`. PTR 12.1.7.70493 declares that value and the
+related gamepad settings, preset and RecentAllies filters natively, so PTR now runs a
+positive pinned-declaration case and the absence case covers Retail, Wrath, Mists, Era
+and Anniversary. See
+[PTR Edit Mode declarations](investigations/ptr-edit-mode-declarations.md) and
+[the contract](../specs/forever-edit-mode-enums.md).
