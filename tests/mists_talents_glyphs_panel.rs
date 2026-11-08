@@ -1,5 +1,8 @@
 #![cfg(feature = "client-mists")]
 
+#[path = "common/lua_error_output.rs"]
+mod lua_error_output;
+
 use std::process::Command;
 
 #[path = "common/bounded_process.rs"]
@@ -72,7 +75,7 @@ fn mists_talents_and_glyphs_panel_populates_rows_and_sockets() {
         output.status.success(),
         "wow-sim failed\nstdout:\n{stdout}\nstderr:\n{stderr}"
     );
-    assert_no_lua_errors(&stdout, &stderr);
+    lua_error_output::assert_no_lua_sink_errors("talents/glyphs opened", &stdout, &stderr);
     assert_no_texture_directory_errors(&stdout, &stderr);
 }
 
@@ -192,7 +195,7 @@ fn mists_talents_and_glyphs_mutate_selected_state() {
         output.status.success(),
         "wow-sim failed\nstdout:\n{stdout}\nstderr:\n{stderr}"
     );
-    assert_no_lua_errors(&stdout, &stderr);
+    lua_error_output::assert_no_lua_sink_errors("talents/glyphs opened", &stdout, &stderr);
     assert_no_texture_directory_errors(&stdout, &stderr);
 }
 
@@ -288,15 +291,8 @@ fn mists_specialization_learn_button_activates_spec_for_talents() {
         output.status.success(),
         "wow-sim failed\nstdout:\n{stdout}\nstderr:\n{stderr}"
     );
-    assert_no_lua_errors(&stdout, &stderr);
+    lua_error_output::assert_no_lua_sink_errors("talents/glyphs opened", &stdout, &stderr);
     assert_no_texture_directory_errors(&stdout, &stderr);
-}
-
-fn assert_no_lua_errors(stdout: &str, stderr: &str) {
-    assert!(
-        !stdout.contains("Lua error") && !stderr.contains("Lua error"),
-        "talents/glyphs opened with Lua errors\nstdout:\n{stdout}\nstderr:\n{stderr}"
-    );
 }
 
 fn assert_no_texture_directory_errors(stdout: &str, stderr: &str) {

@@ -1,5 +1,8 @@
 #![cfg(feature = "client-mists")]
 
+#[path = "common/lua_error_output.rs"]
+mod lua_error_output;
+
 use std::path::PathBuf;
 use std::process::Command;
 
@@ -60,12 +63,6 @@ fn mists_trade_window_supports_money_input_flow() {
         output.status.success(),
         "wow-sim failed\nstdout:\n{stdout}\nstderr:\n{stderr}"
     );
-    assert_no_lua_errors(&stdout, &stderr);
+    lua_error_output::assert_no_lua_errors("trade panel flow", &stdout, &stderr);
 }
 
-fn assert_no_lua_errors(stdout: &str, stderr: &str) {
-    assert!(
-        !stdout.contains("Lua error") && !stderr.contains("Lua error"),
-        "trade panel flow emitted Lua errors\nstdout:\n{stdout}\nstderr:\n{stderr}"
-    );
-}

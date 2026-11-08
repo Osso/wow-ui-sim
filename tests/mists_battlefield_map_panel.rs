@@ -1,5 +1,8 @@
 #![cfg(feature = "client-mists")]
 
+#[path = "common/lua_error_output.rs"]
+mod lua_error_output;
+
 use std::path::PathBuf;
 use std::process::Command;
 
@@ -57,11 +60,10 @@ fn mists_battlefield_map_screenshot_dispatch_avoids_zero_canvas_scale() {
     );
     assert!(
         !stdout.contains("SetScale(): Scale must be > 0")
-            && !stderr.contains("SetScale(): Scale must be > 0")
-            && !stdout.contains("Lua error")
-            && !stderr.contains("Lua error"),
-        "BattlefieldMapFrame screenshot emitted Lua errors\nstdout:\n{stdout}\nstderr:\n{stderr}"
+            && !stderr.contains("SetScale(): Scale must be > 0"),
+        "BattlefieldMapFrame screenshot emitted SetScale error\nstdout:\n{stdout}\nstderr:\n{stderr}"
     );
+    lua_error_output::assert_no_lua_sink_errors("BattlefieldMapFrame screenshot", &stdout, &stderr);
     assert!(
         parse_texture_request_count(&stderr).is_some_and(|count| count > 1),
         "BattlefieldMapFrame screenshot did not render map textures\nstderr:\n{stderr}"

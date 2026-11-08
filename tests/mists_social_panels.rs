@@ -1,5 +1,8 @@
 #![cfg(feature = "client-mists")]
 
+#[path = "common/lua_error_output.rs"]
+mod lua_error_output;
+
 use std::path::PathBuf;
 use std::process::Command;
 
@@ -183,12 +186,6 @@ fn mists_social_panels_support_friends_who_guild_and_communities() {
         output.status.success(),
         "wow-sim failed\nstdout:\n{stdout}\nstderr:\n{stderr}"
     );
-    assert_no_lua_errors(&stdout, &stderr);
+    lua_error_output::assert_no_lua_errors("social panel flow", &stdout, &stderr);
 }
 
-fn assert_no_lua_errors(stdout: &str, stderr: &str) {
-    assert!(
-        !stdout.contains("Lua error") && !stderr.contains("Lua error"),
-        "social panel flow emitted Lua errors\nstdout:\n{stdout}\nstderr:\n{stderr}"
-    );
-}

@@ -1,5 +1,8 @@
 #![cfg(feature = "client-mists")]
 
+#[path = "common/lua_error_output.rs"]
+mod lua_error_output;
+
 use std::process::Command;
 
 #[path = "common/bounded_process.rs"]
@@ -225,12 +228,6 @@ fn mists_spellbook_populates_visible_spell_buttons() {
         output.status.success(),
         "wow-sim failed\nstdout:\n{stdout}\nstderr:\n{stderr}"
     );
-    assert_no_lua_errors(&stdout, &stderr);
+    lua_error_output::assert_no_lua_sink_errors("spellbook opened", &stdout, &stderr);
 }
 
-fn assert_no_lua_errors(stdout: &str, stderr: &str) {
-    assert!(
-        !stdout.contains("Lua error") && !stderr.contains("Lua error"),
-        "spellbook opened with Lua errors\nstdout:\n{stdout}\nstderr:\n{stderr}"
-    );
-}
