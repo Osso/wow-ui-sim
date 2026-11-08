@@ -85,7 +85,9 @@ fn register_bootstrap_globals(lua: &mut rilua::Lua) -> crate::Result<()> {
     crate::c_api::c_unit_aura_spell_queries::register(lua.state_mut())?;
     #[cfg(feature = "retail-12-0-5")]
     crate::c_api::c_unit_aura_cooldown_spells::register(lua.state_mut())?;
-    #[cfg(feature = "retail-12-0-5")]
+    // Forever 1.60.1 VoiceChatDocumentation declares SpeakText/StopSpeakingText
+    // with the same five arguments as the retail slice.
+    #[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
     crate::c_api::c_voice_chat_speak::register(lua.state_mut())?;
     crate::c_api::c_achievement_telemetry::register(lua.state_mut())?;
     crate::c_api::c_social_contract_glue::register(lua.state_mut())?;

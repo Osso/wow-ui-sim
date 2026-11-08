@@ -115,12 +115,20 @@ fn register_constants(state: &mut LuaState) {
         let value = create_string(state, separator);
         table_set(state, separators, name, value);
     }
-    // Forever PetConstantsDocumentation: two stable slots plus one learned slot.
+    // Forever PetConstantsDocumentation 1.60.1 lines 49-54: one learned slot,
+    // two stable slots, and three hunter slots (2 + 1). MAX_SUMMONABLE_HUNTER_PETS
+    // and STABLED_PETS_FIRST_SLOT_INDEX alias the learned-slot value there.
     publish(
         state,
         constants,
         "PetConsts",
-        &[("MAX_STABLE_SLOTS", 2), ("NUM_PET_SLOTS_HUNTER", 3)],
+        &[
+            ("NUM_PET_SLOTS_THAT_NEED_LEARNED_SPELL", 1),
+            ("MAX_SUMMONABLE_HUNTER_PETS", 1),
+            ("STABLED_PETS_FIRST_SLOT_INDEX", 1),
+            ("MAX_STABLE_SLOTS", 2),
+            ("NUM_PET_SLOTS_HUNTER", 3),
+        ],
     );
     publish(state, constants, "Transmog", &[("NoTransmogID", 0)]);
     publish(
