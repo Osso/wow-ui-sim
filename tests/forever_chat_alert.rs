@@ -3,6 +3,11 @@
 //! Pinned consumer: `Blizzard_ChatFrameBase/Shared/ChatAlertFrameMixin.lua:4`
 //! reads `AlertContainerMixin`. Provider: `Blizzard_FrameXML/Mainline/AlertFrames.lua`
 //! (TOC `[Family]\AlertFrames.lua`, `[Family]` = Mainline on Forever).
+//!
+//! Regression guard: `ChatAlertFrame` inherits `AlertContainerTemplate`
+//! (`Blizzard_ChatFrame/Mainline/FloatingChatFrameAlertFrame.xml:4`), so a
+//! provider that loads after the consumer leaves `AlertContainerMixin` nil at
+//! `ChatAlertFrameMixin.lua:4` and the frame never receives the alert state.
 #![cfg(feature = "client-wowforever")]
 
 use std::path::PathBuf;
@@ -66,9 +71,7 @@ fn forever_chat_alert_consumer_finds_alert_container_mixin() {
     let env = load_full_game_ui();
 
     let (mixin_type, consumer_type): (String, String) = env
-        .eval(
-            "return type(AlertContainerMixin), type(ChatAlertFrameMixin)",
-        )
+        .eval("return type(AlertContainerMixin), type(ChatAlertFrameMixin)")
         .expect("mixin probe should succeed");
     assert_eq!(
         mixin_type, "table",
@@ -77,16 +80,36 @@ fn forever_chat_alert_consumer_finds_alert_container_mixin() {
     );
     assert_eq!(consumer_type, "table", "ChatAlertFrameMixin should load");
 
-    let frame_exists: bool = env
-        .eval("return ChatAlertFrame ~= nil")
+    // The consumer path under test: ChatAlertFrame exists, inherited the provider
+    // template mixin, and its OnLoad already ran through ChatAlertFrameMixin.
+    let (frame_type, has_flags, has_sub_systems): (String, bool, bool) = env
+        .eval(
+            "local frame = ChatAlertFrame; \
+             return type(frame), \
+                 frame ~= nil and type(frame.shouldQueueAlertsFlags) == 'table', \
+                 frame ~= nil and type(frame.alertFrameSubSystems) == 'table'",
+        )
         .expect("ChatAlertFrame probe should succeed");
-    if frame_exists {
-        let (ok, err): (bool, Option<String>) = env
-            .eval(
-                "local ok, err = pcall(ChatAlertFrameMixin.OnLoad, ChatAlertFrame); \
-                 return ok, ok and nil or tostring(err)",
-            )
-            .expect("ChatAlertFrameMixin.OnLoad probe should succeed");
-        assert!(ok, "ChatAlertFrameMixin.OnLoad failed: {err:?}");
-    }
+    assert_eq!(
+        frame_type, "table",
+        "Blizzard_ChatFrame/Mainline/FloatingChatFrameAlertFrame.xml:4 creates ChatAlertFrame"
+    );
+    assert!(
+        has_flags,
+        "ChatAlertFrameMixin:OnLoad must delegate to AlertContainerMixin:OnLoad, which sets \
+         shouldQueueAlertsFlags on the frame; nil AlertContainerMixin aborts at \
+         ChatAlertFrameMixin.lua:4"
+    );
+    assert!(
+        has_sub_systems,
+        "AlertContainerMixin:OnLoad must initialise ChatAlertFrame.alertFrameSubSystems"
+    );
+
+    let (ok, err): (bool, Option<String>) = env
+        .eval(
+            "local ok, err = pcall(ChatAlertFrameMixin.OnLoad, ChatAlertFrame); \
+             return ok, ok and nil or tostring(err)",
+        )
+        .expect("ChatAlertFrameMixin.OnLoad probe should succeed");
+    assert!(ok, "ChatAlertFrameMixin.OnLoad failed: {err:?}");
 }
