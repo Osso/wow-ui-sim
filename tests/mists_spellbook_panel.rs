@@ -8,6 +8,9 @@ use std::process::Command;
 #[path = "common/bounded_process.rs"]
 mod bounded_process;
 
+#[path = "common/wow_sim_binary.rs"]
+mod wow_sim_binary;
+
 const SPELLBOOK_PANEL_PROBE_LUA: &str = r#"
 ToggleSpellBook(BOOKTYPE_SPELL)
 if SpellBookFrame and SpellBookFrame.Update then
@@ -209,7 +212,7 @@ end
 fn mists_spellbook_populates_visible_spell_buttons() {
     let output = bounded_process::output(
         90,
-        Command::new(env!("CARGO_BIN_EXE_wow-sim")).args([
+        Command::new(wow_sim_binary::path()).args([
             "--no-addons",
             "--no-saved-vars",
             "--exec-lua",

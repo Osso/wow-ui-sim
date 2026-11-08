@@ -1,24 +1,18 @@
 #![cfg(feature = "client-mists")]
 
-use std::path::PathBuf;
 use std::process::Command;
 
 #[path = "common/bounded_process.rs"]
 mod bounded_process;
 
-/// Cargo sets `CARGO_BIN_EXE_wow-sim` when it builds this test target, so the
-/// path is fixed at compile time. Reading the variable at run time falls back
-/// to `<manifest>/target/debug/wow-sim`, which does not exist when the test
-/// binary is executed from a shared target directory.
-fn wow_sim_binary() -> PathBuf {
-    PathBuf::from(env!("CARGO_BIN_EXE_wow-sim"))
-}
+#[path = "common/wow_sim_binary.rs"]
+mod wow_sim_binary;
 
 #[test]
 fn mists_collections_tabs_render_without_wardrobe() {
     let output = bounded_process::output(
         90,
-        Command::new(wow_sim_binary()).args([
+        Command::new(wow_sim_binary::path()).args([
             "--no-addons",
             "--no-saved-vars",
             "--exec-lua",
@@ -92,7 +86,7 @@ fn mists_collections_tabs_render_without_wardrobe() {
 fn mists_collections_rows_drive_mount_toy_and_heirloom_actions() {
     let output = bounded_process::output(
         90,
-        Command::new(wow_sim_binary())
+        Command::new(wow_sim_binary::path())
         .args([
             "--no-addons",
             "--no-saved-vars",
@@ -180,7 +174,7 @@ fn mists_collections_rows_drive_mount_toy_and_heirloom_actions() {
 fn mists_collections_pet_row_selects_and_shows_tooltip() {
     let output = bounded_process::output(
         90,
-        Command::new(wow_sim_binary()).args([
+        Command::new(wow_sim_binary::path()).args([
             "--no-addons",
             "--no-saved-vars",
             "--exec-lua",

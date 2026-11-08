@@ -814,7 +814,6 @@ macro_rules! build_empty_sim_state {
             hidden_spell_item_enchantments: std::collections::HashSet::new(),
             #[cfg(feature = "retail-12-0-5")]
             bnet_presence: Default::default(),
-            #[cfg(feature = "retail-12-0-5")]
             voice_chat_speak_requests: Vec::new(),
             voice_chat_speak_stop_count: 0,
             achievement_telemetry: Vec::new(),

@@ -992,7 +992,6 @@ pub struct SimState {
     #[cfg(feature = "retail-12-0-5")]
     pub bnet_presence: crate::c_api::c_battle_net::Presence,
     /// Accepted public SpeakText requests in call order; no audio playback.
-    #[cfg(feature = "retail-12-0-5")]
     pub voice_chat_speak_requests: Vec<crate::c_api::c_voice_chat_speak::SpeakTextRequest>,
     /// `C_VoiceChat.StopSpeakingText` calls; no playback is modeled to stop.
     pub voice_chat_speak_stop_count: u32,

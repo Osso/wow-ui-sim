@@ -3,22 +3,13 @@
 #[path = "common/lua_error_output.rs"]
 mod lua_error_output;
 
-use std::path::PathBuf;
 use std::process::Command;
 use wow_ui_sim::loader::{discover_blizzard_startup_addons_for_screen, load_startup_addon};
 use wow_ui_sim::lua_api::WowLuaEnv;
 use wow_ui_sim::screen::ScreenKind;
 
-fn wow_sim_binary() -> PathBuf {
-    std::env::var_os("CARGO_BIN_EXE_wow-sim")
-        .map(PathBuf::from)
-        .unwrap_or_else(|| {
-            PathBuf::from(env!("CARGO_MANIFEST_DIR"))
-                .join("target")
-                .join("debug")
-                .join("wow-sim")
-        })
-}
+#[path = "common/wow_sim_binary.rs"]
+mod wow_sim_binary;
 
 fn assert_watched_reputation_bar(faction_id: u32, name: &str, value: u32, max: u32) {
     let ui = wow_ui_sim::paths::default_blizzard_ui_addons_path().unwrap();
@@ -104,7 +95,7 @@ fn mists_character_and_reputation_panels_have_backing_data() {
         end
     "#;
 
-    let output = Command::new(wow_sim_binary())
+    let output = Command::new(wow_sim_binary::path())
         .env("WOW_SIM_NO_SAVED_VARS", "1")
         .env("WOW_SIM_NO_ADDONS", "1")
         .arg("--exec-lua")

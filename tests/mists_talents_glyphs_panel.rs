@@ -8,11 +8,14 @@ use std::process::Command;
 #[path = "common/bounded_process.rs"]
 mod bounded_process;
 
+#[path = "common/wow_sim_binary.rs"]
+mod wow_sim_binary;
+
 #[test]
 fn mists_talents_and_glyphs_panel_populates_rows_and_sockets() {
     let output = bounded_process::output(
         90,
-        Command::new(env!("CARGO_BIN_EXE_wow-sim")).args([
+        Command::new(wow_sim_binary::path()).args([
             "--no-addons",
             "--no-saved-vars",
             "--exec-lua",
@@ -83,7 +86,7 @@ fn mists_talents_and_glyphs_panel_populates_rows_and_sockets() {
 fn mists_talents_and_glyphs_mutate_selected_state() {
     let output = bounded_process::output(
         90,
-        Command::new(env!("CARGO_BIN_EXE_wow-sim"))
+        Command::new(wow_sim_binary::path())
         .args([
             "--no-addons",
             "--no-saved-vars",
@@ -203,7 +206,7 @@ fn mists_talents_and_glyphs_mutate_selected_state() {
 fn mists_specialization_learn_button_activates_spec_for_talents() {
     let output = bounded_process::output(
         90,
-        Command::new(env!("CARGO_BIN_EXE_wow-sim"))
+        Command::new(wow_sim_binary::path())
         .args([
             "--no-addons",
             "--no-saved-vars",

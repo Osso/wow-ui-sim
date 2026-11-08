@@ -1,25 +1,18 @@
 #![cfg(feature = "client-mists")]
 
-use std::path::PathBuf;
 use std::process::Command;
 
 #[path = "common/bounded_process.rs"]
 mod bounded_process;
 
-/// Cargo sets `CARGO_BIN_EXE_wow-sim` when it builds this test target, so the
-/// path is fixed at compile time. Reading the variable at run time falls back
-/// to `<manifest>/target/debug/wow-sim`, which does not exist when the test
-/// binary is executed from a shared target directory (as `scripts/slot-build.py`
-/// does).
-fn wow_sim_binary() -> PathBuf {
-    PathBuf::from(env!("CARGO_BIN_EXE_wow-sim"))
-}
+#[path = "common/wow_sim_binary.rs"]
+mod wow_sim_binary;
 
 #[test]
 fn mists_pvp_ui_supports_honor_battleground_and_conquest_panels() {
     let output = bounded_process::output(
         90,
-        Command::new(wow_sim_binary())
+        Command::new(wow_sim_binary::path())
         .args([
             "--no-addons",
             "--no-saved-vars",
@@ -83,7 +76,7 @@ fn mists_pvp_ui_supports_honor_battleground_and_conquest_panels() {
 fn mists_toggle_pvp_frame_routes_through_group_finder_without_errors() {
     let output = bounded_process::output(
         90,
-        Command::new(wow_sim_binary()).args([
+        Command::new(wow_sim_binary::path()).args([
             "--no-addons",
             "--no-saved-vars",
             "--exec-lua",
