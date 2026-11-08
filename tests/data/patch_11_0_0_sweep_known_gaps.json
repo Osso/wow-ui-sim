@@ -74,7 +74,6 @@
   "wt-global-api-C_Social.GetScreenshotInfoByIndex-534",
   "wt-global-api-C_Spell.GetDeadlyDebuffInfo-282",
   "wt-global-api-C_Spell.GetSpellAutoCast-284",
-  "wt-global-api-C_Spell.GetSpellLevelLearned-291",
   "wt-global-api-C_Spell.GetSpellSkillLineAbilityRank-296",
   "wt-global-api-C_Spell.IsAutoRepeatSpell-301",
   "wt-global-api-C_Spell.IsClassTalentSpell-302",

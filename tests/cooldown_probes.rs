@@ -777,3 +777,22 @@ fn get_spell_level_learned_one_for_known_spell() {
     let level: i32 = env.eval("return GetSpellLevelLearned(12345)").unwrap();
     assert_eq!(level, 1);
 }
+
+#[test]
+fn c_spell_get_spell_level_learned_zero_for_unknown_spell() {
+    let env = env();
+    let level: i32 = env
+        .eval("return C_Spell.GetSpellLevelLearned(99999)")
+        .unwrap();
+    assert_eq!(level, 0);
+}
+
+#[test]
+fn c_spell_get_spell_level_learned_one_for_known_spell() {
+    let env = env();
+    env.state().borrow_mut().known_spells.insert(12345);
+    let level: i32 = env
+        .eval("return C_Spell.GetSpellLevelLearned(12345)")
+        .unwrap();
+    assert_eq!(level, 1);
+}
