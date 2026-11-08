@@ -273,7 +273,6 @@ fn write(path: &Path, bytes: &[u8]) {
     std::fs::write(path, bytes).unwrap();
 }
 
-
 // Windows checks out a repository with `LongPathsEnabled=0` only when every
 // tracked path fits `MAX_PATH` (260) including the clone root. Budget 60
 // characters for a `C:\Users\<user>\source\repos\wow-ui-sim\` clone root and
