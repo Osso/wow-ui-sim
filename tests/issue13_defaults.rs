@@ -13,9 +13,11 @@ fn interaction_replacement_default() {
 
 #[test]
 fn voice_settings_default() {
+    // Native: false until the voice service is ready; the simulator has no voice
+    // service, so it stays false. See docs/specs/voice-settings-access.md.
     WowLuaEnv::new()
         .unwrap()
-        .exec("assert(C_VoiceChat.CanAccessSettings() == true)")
+        .exec("assert(C_VoiceChat.CanAccessSettings() == false)")
         .unwrap();
 }
 

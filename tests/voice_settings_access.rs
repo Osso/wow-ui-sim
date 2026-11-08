@@ -42,8 +42,9 @@ fn original_audio_env_inner(extra_roots: &[&str], manual_clock: bool) -> WowLuaE
             .expect("manual clock must be enabled before the Audio registrant runs");
     }
     let expected = match ACTIVE {
-        ClientProfile::Retail | ClientProfile::WowForever => Some(true),
-        ClientProfile::Ptr
+        ClientProfile::Retail
+        | ClientProfile::Ptr
+        | ClientProfile::WowForever
         | ClientProfile::Mists
         | ClientProfile::Era
         | ClientProfile::Anniversary => Some(false),
@@ -79,6 +80,9 @@ fn exercise_original_branches(initial: bool) {
         return;
     }
     let first = original_audio_env();
+    // The initial observation is false on every declaring profile: the voice
+    // service is never ready, so the original polling loop stays in its wait branch.
+    assert!(!first.eval::<bool>("return ObserveOriginalVoiceSettings()").unwrap());
     assert_original_branch(&first, initial);
     assert_original_branch(&first, !initial);
     let second = original_audio_env();
@@ -143,9 +147,9 @@ fn original_audio_initially_unset_then_supplied() {
         return;
     }
     let env = original_audio_env();
-    if matches!(ACTIVE, ClientProfile::Retail | ClientProfile::WowForever) {
-        assert!(env.eval::<bool>("return ObserveOriginalVoiceSettings()").unwrap());
-    }
+    // Initially false: the original consumer keeps polling instead of initializing.
+    let enters_initialization: bool = env.eval("return ObserveOriginalVoiceSettings()").unwrap();
+    assert!(!enters_initialization);
     env.state().borrow_mut().voice_chat.can_access_settings = None;
     let error = env
         .eval::<bool>("return ObserveOriginalVoiceSettings()")
