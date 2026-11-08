@@ -25,7 +25,12 @@ pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
     if matches!(ACTIVE, ClientProfile::Retail | ClientProfile::WowForever) {
         table_set_rust_fn_static(state, namespace, "CanAbandonQuest", can_abandon_quest)?;
     }
-    if matches!(ACTIVE, ClientProfile::Retail | ClientProfile::WowForever) {
+    // Retail/PTR/Forever QuestLogDocumentation.lua declare these queries
+    // (IsUnitOnQuest :1033/:1066; UpdateCampaignHeaders :1269/:1302).
+    if matches!(
+        ACTIVE,
+        ClientProfile::Retail | ClientProfile::Ptr | ClientProfile::WowForever
+    ) {
         table_set_rust_fn_static(
             state,
             namespace,
