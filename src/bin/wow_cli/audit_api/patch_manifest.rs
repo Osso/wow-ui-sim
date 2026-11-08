@@ -13,6 +13,7 @@ const INTENTIONAL_GAPS_REFERENCE: &str = "AGENTS.md#intentional-gaps";
 const INTENTIONAL_GAPS_HEADING: &str = "## Intentional Gaps";
 const NO_3D_RULE_MARKER: &str = "**No 3D rendering**";
 const PROVENANCE_ONLY_NOTE: &str = "Provenance-only: no runtime behavior claimed.";
+const GIT_REFERENCE_PREFIX: &str = "git:";
 
 #[derive(Debug, Deserialize)]
 #[serde(deny_unknown_fields)]
@@ -906,10 +907,9 @@ fn validate_resolved_row_artifacts(
         .filter(|row| row.resolution != ResolutionKind::Untriaged)
     {
         for evidence in &row.evidence {
-            let path = reference_path(&evidence.reference);
             validate_file_hash(
                 root,
-                path,
+                &evidence.reference,
                 evidence.source_hash.as_deref().unwrap_or_default(),
             )?;
             if evidence.kind == EvidenceKind::Test {
@@ -1107,15 +1107,42 @@ fn reference_path(reference: &str) -> &str {
         .map_or(reference, |(path, _)| path)
 }
 
-fn validate_file_hash(root: &Path, relative: &str, expected: &str) -> Result<(), String> {
-    let path = root.join(relative);
-    let bytes = std::fs::read(&path)
-        .map_err(|error| format!("failed to read {}: {error}", path.display()))?;
+/// Split a `git:<revision>:<path>` evidence reference into its revision and path.
+fn git_reference(reference: &str) -> Option<(&str, &str)> {
+    let rest = reference.strip_prefix(GIT_REFERENCE_PREFIX)?;
+    let (revision, path) = rest.split_once(':')?;
+    if revision.is_empty() || path.is_empty() {
+        return None;
+    }
+    Some((revision, path))
+}
+
+fn read_reference(root: &Path, reference: &str) -> Result<Vec<u8>, String> {
+    if let Some((revision, path)) = git_reference(reference) {
+        let output = Command::new("git")
+            .args(["cat-file", "blob", &format!("{revision}:{path}")])
+            .current_dir(root)
+            .output()
+            .map_err(|error| format!("failed to read git reference {reference}: {error}"))?;
+        if !output.status.success() {
+            return Err(format!(
+                "git reference {reference} does not resolve: {}",
+                String::from_utf8_lossy(&output.stderr).trim()
+            ));
+        }
+        return Ok(output.stdout);
+    }
+    let path = reference_path(reference);
+    std::fs::read(root.join(path))
+        .map_err(|error| format!("failed to read {}: {error}", root.join(path).display()))
+}
+
+fn validate_file_hash(root: &Path, reference: &str, expected: &str) -> Result<(), String> {
+    let bytes = read_reference(root, reference)?;
     let actual = format!("{:x}", Sha256::digest(bytes));
     if actual != expected {
         return Err(format!(
-            "hash mismatch for {}: expected {expected}, observed {actual}",
-            path.display()
+            "hash mismatch for {reference}: expected {expected}, observed {actual}"
         ));
     }
     Ok(())
@@ -1126,8 +1153,7 @@ fn validate_test_reference(root: &Path, reference: &str) -> Result<(), String> {
     let (path, symbol) = reference
         .split_once("::")
         .map_or((reference, None), |(path, symbol)| (path, Some(symbol)));
-    let contents = std::fs::read_to_string(root.join(path))
-        .map_err(|error| format!("failed to read test {path}: {error}"))?;
+    let contents = String::from_utf8_lossy(&read_reference(root, path)?).into_owned();
     if let Some(symbol) = symbol {
         require_text("test symbol", symbol)?;
         let source = strip_rust_comments(&contents);
@@ -1907,7 +1933,8 @@ mod tests {
             let manifest = parse_manifest(&json).expect("manifest should parse");
             for row in manifest.rows {
                 for evidence in row.evidence {
-                    let reference = reference_path(&evidence.reference);
+                    let reference = git_reference(&evidence.reference)
+                        .map_or(reference_path(&evidence.reference), |(_, path)| path);
                     let reference_path = Path::new(reference);
                     assert_ne!(
                         reference_path,
@@ -1943,15 +1970,26 @@ mod tests {
             let manifest = parse_manifest(&json).expect("manifest should parse");
             for row in manifest.rows {
                 for evidence in row.evidence {
-                    let reference = reference_path(&evidence.reference);
-                    let output = std::process::Command::new("git")
-                        .args([
-                            "-C",
-                            root.to_str().expect("repository path should be UTF-8"),
-                        ])
-                        .args(["ls-files", "--error-unmatch", "--", reference])
-                        .output()
-                        .expect("git ls-files should run");
+                    let output = if let Some((revision, path)) = git_reference(&evidence.reference) {
+                        std::process::Command::new("git")
+                            .args([
+                                "-C",
+                                root.to_str().expect("repository path should be UTF-8"),
+                            ])
+                            .args(["cat-file", "-e", &format!("{revision}:{path}")])
+                            .output()
+                            .expect("git cat-file should run")
+                    } else {
+                        let reference = reference_path(&evidence.reference);
+                        std::process::Command::new("git")
+                            .args([
+                                "-C",
+                                root.to_str().expect("repository path should be UTF-8"),
+                            ])
+                            .args(["ls-files", "--error-unmatch", "--", reference])
+                            .output()
+                            .expect("git ls-files should run")
+                    };
                     assert!(
                         output.status.success(),
                         "{} row {} evidence reference {} is not Git-tracked: {}",
@@ -1963,6 +2001,18 @@ mod tests {
                 }
             }
         }
+    }
+
+    #[test]
+    fn git_history_evidence_references_read_committed_bytes() {
+        let root = Path::new(env!("CARGO_MANIFEST_DIR"));
+        let reference = "git:HEAD:Cargo.toml";
+        let committed = read_reference(root, reference).expect("git reference should read");
+        let working = std::fs::read(root.join("Cargo.toml")).expect("working file should read");
+        assert_eq!(committed, working);
+        let hash = format!("{:x}", Sha256::digest(&committed));
+        validate_file_hash(root, reference, &hash).expect("git reference hash should match");
+        assert!(read_reference(root, "git:HEAD:does/not/exist").is_err());
     }
 
     #[test]

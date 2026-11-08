@@ -14629,7 +14629,7 @@
       "probe_protocol": "deferred-security",
       "scope": "deferred-security",
       "basis_references": [
-        "data/patch-api/evidence/12.0.5/ProtectedRetailProbe.lua"
+        "git:c011c1d95bd869605ea80c46259df5093d992a11:data/patch-api/evidence/12.0.5/ProtectedRetailProbe.lua"
       ],
       "probe_plan": "retained-store-forbidden-boundary"
     },
@@ -14653,7 +14653,7 @@
       "probe_protocol": "store-population-capture",
       "scope": "non-secret observation only; enforcement excluded",
       "basis_references": [
-        "data/patch-api/evidence/12.0.5/StoreForbiddenProbe.lua"
+        "git:c011c1d95bd869605ea80c46259df5093d992a11:data/patch-api/evidence/12.0.5/StoreForbiddenProbe.lua"
       ],
       "probe_plan": "remaining-security-forbidden-store-observation"
     },
@@ -14665,7 +14665,7 @@
       "probe_protocol": "deferred-security",
       "scope": "deferred-security",
       "basis_references": [
-        "data/patch-api/evidence/12.0.5/StoreForbiddenProbe.lua"
+        "git:c011c1d95bd869605ea80c46259df5093d992a11:data/patch-api/evidence/12.0.5/StoreForbiddenProbe.lua"
       ],
       "probe_plan": "remaining-security-forbidden-store-observation"
     },
