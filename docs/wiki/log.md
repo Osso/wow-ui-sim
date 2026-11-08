@@ -1,3 +1,7 @@
+## [2026-11-07] investigation | Mists engraving mode native default
+
+[Mists engraving inputs](investigations/mists-engraving-inputs.md#supplied-input-boundary) records the INFERRED native defaults for the bag flow: availability false, engraving mode false and current rune nil. The declarations have no availability setter; the only mode producer is `Blizzard_EngravingUI` OnShow/OnHide; its TOC says the feature is for seasonal content, which Mists is not. `SimState::seed_default_game_state` seeds these three values under `client-mists`; the getters keep the named unsupplied-input errors and supplied state overrides. The unchanged bank and mail storage-flow tests now reach original `ContainerFrame_Shared.lua:315` without a Lua error. Other engraving members keep the explicit missing-input contract.
+
 ## [2026-11-07] investigation | Forever C_Scenario.ShouldShowCriteria
 
 [Challenge run](systems/challenge-mode-run.md#original-criteria-initialization) records native evidence from decompilation `623b7b8c`: Forever 1.60.1 and Retail 12.1.5 register the same nine `C_Scenario` members in the same order, `ShouldShowCriteria` pushes one boolean from a process-wide cached flag whose static default is true and which no scenario state resets, and the generated documentation omits the whole namespace. The producer now registers on Forever, and the other eight members are inventoried in [the spec](../specs/challenge-mode-run.md#scenario-criteria-visibility).

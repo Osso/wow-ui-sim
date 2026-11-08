@@ -1,4 +1,5 @@
-//! Explicit engraving inputs; absence is not a native inactive value.
+//! Explicit engraving inputs; absence is not a native inactive value. Mists
+//! seeds the native default state at startup (see `SimState::seed_default_game_state`).
 use std::collections::HashMap;
 
 /// Pinned EngravingInfoDocumentation.lua:329-340 (Mists).
@@ -17,6 +18,8 @@ pub struct EngravingData {
 #[derive(Default)]
 pub struct EngravingInputs {
     pub enabled: Option<bool>,
+    /// Mists engraving mode. Native default false: the pinned UI calls
+    /// `SetEngravingModeEnabled` only from Blizzard_EngravingUI OnShow/OnHide.
     pub mode_enabled: Option<bool>,
     pub current_rune: Option<Option<EngravingData>>,
     pub inventory_eligibility: HashMap<(i32, i32), bool>,
@@ -24,4 +27,19 @@ pub struct EngravingInputs {
     pub current_cast_eligibility: HashMap<(i32, i32), bool>,
     /// Request count only; no inferred native catalog refresh policy.
     pub refresh_requests: usize,
+}
+
+impl EngravingInputs {
+    /// INFERRED Mists native startup state; see docs/specs/mists-engraving-inputs.md.
+    /// Availability has no setter, the only mode producer is the LoadOnDemand
+    /// engraving UI, and the feature is seasonal content. Mists is neither, so
+    /// the flow sees false/false/nil until the host supplies other values.
+    pub fn mists_native_defaults() -> Self {
+        Self {
+            enabled: Some(false),
+            mode_enabled: Some(false),
+            current_rune: Some(None),
+            ..Self::default()
+        }
+    }
 }

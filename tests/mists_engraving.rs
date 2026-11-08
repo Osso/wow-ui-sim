@@ -169,11 +169,11 @@ fn direct_engraving_queries_project_records_and_reject_unsupplied_inputs() {
             assert(not ok and message:find("C_Engraving." .. name, 1, true), tostring(message))
             assert(message:find("unsupplied", 1, true), message)
         end
-        missing(function() C_Engraving.IsEngravingEnabled() end, "IsEngravingEnabled")
-        missing(function() C_Engraving.GetCurrentRuneCast() end, "GetCurrentRuneCast")
         missing(function() C_Engraving.IsInventorySlotEngravable(0, 1) end, "IsInventorySlotEngravable")
         missing(function() C_Engraving.GetRuneForInventorySlot(0, 1) end, "GetRuneForInventorySlot")
         missing(function() C_Engraving.IsInventorySlotEngravableByCurrentRuneCast(0, 1) end, "IsInventorySlotEngravableByCurrentRuneCast")
+        assert(C_Engraving.IsEngravingEnabled() == false)
+        assert(C_Engraving.GetCurrentRuneCast() == nil)
         assert(C_Engraving.GetEngravingModeEnabled() == false)
     "#).unwrap();
     {
@@ -219,13 +219,21 @@ fn direct_engraving_queries_project_records_and_reject_unsupplied_inputs() {
         .eval::<bool>("return C_Engraving.GetEngravingModeEnabled()")
         .unwrap());
     let other = WowLuaEnv::new().unwrap();
-    assert!(other.state().borrow().engraving.enabled.is_none());
+    assert_eq!(other.state().borrow().engraving.enabled, Some(false));
     assert_eq!(other.state().borrow().engraving.refresh_requests, 0);
     assert!(!other
         .eval::<bool>("return C_Engraving.GetEngravingModeEnabled()")
         .unwrap());
-    env.state().borrow_mut().engraving = EngravingInputs::default();
-    assert!(!env
-        .eval::<bool>("return C_Engraving.GetEngravingModeEnabled()")
+    assert!(other
+        .eval::<bool>("return C_Engraving.GetCurrentRuneCast() == nil")
         .unwrap());
+    env.state().borrow_mut().engraving.mode_enabled = None;
+    env.exec(
+        r#"
+        local ok, message = pcall(C_Engraving.GetEngravingModeEnabled)
+        assert(not ok and message:find("GetEngravingModeEnabled", 1, true), tostring(message))
+        assert(message:find("unsupplied", 1, true), message)
+    "#,
+    )
+    .unwrap();
 }
