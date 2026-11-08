@@ -100217,7 +100217,7 @@
           "kind": "source",
           "reference": "src/lua_api/env_init/shared_bootstrap.lua",
           "summary": "Shared bootstrap installs Lua compatibility helpers and wrappers; this source context does not establish native semantics, security, lifecycle, or consumer behavior.",
-          "source_hash": "79066b508cd501a592b4ab5571dff4d6c45fb4e022f45f53e1dcc798f0e10075"
+          "source_hash": "b6cc0afe391de7a017c960310855d02682bd43c091fd4ba8a3e3bf4c630edb7c"
         },
         {
           "kind": "source",
@@ -115954,7 +115954,7 @@
         {
           "kind": "source",
           "reference": "src/lua_api/env_init/shared_bootstrap.lua",
-          "source_hash": "79066b508cd501a592b4ab5571dff4d6c45fb4e022f45f53e1dcc798f0e10075",
+          "source_hash": "b6cc0afe391de7a017c960310855d02682bd43c091fd4ba8a3e3bf4c630edb7c",
           "summary": "Shared bootstrap installs Lua compatibility helpers and wrappers; this source context does not establish native semantics, security, lifecycle, or consumer behavior."
         },
         {
@@ -129061,7 +129061,7 @@
           "kind": "runtime",
           "reference": "src/lua_api/env_init/shared_bootstrap.lua",
           "summary": "Compatibility helper applies the tested portrait circular mask without duplicates.",
-          "source_hash": "79066b508cd501a592b4ab5571dff4d6c45fb4e022f45f53e1dcc798f0e10075"
+          "source_hash": "b6cc0afe391de7a017c960310855d02682bd43c091fd4ba8a3e3bf4c630edb7c"
         }
       ],
       "tests": [
@@ -137252,7 +137252,7 @@
           "kind": "runtime",
           "reference": "src/lua_api/env_init/shared_bootstrap.lua",
           "summary": "Runtime compatibility helper supports the tested default and custom trim characters.",
-          "source_hash": "79066b508cd501a592b4ab5571dff4d6c45fb4e022f45f53e1dcc798f0e10075"
+          "source_hash": "b6cc0afe391de7a017c960310855d02682bd43c091fd4ba8a3e3bf4c630edb7c"
         }
       ],
       "tests": [
