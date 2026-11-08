@@ -14,6 +14,36 @@ fn load_original_consumer(env: &WowLuaEnv, relative: &str) {
         .unwrap_or_else(|error| panic!("execute {}: {error}", path.display()));
 }
 
+// PTR 12.1.7.70493 declares these values natively, so it is not an earlier
+// profile: pinned Blizzard_APIDocumentationGenerated/EditModeManagerConstantsDocumentation.lua
+// declares EditModeSystem.GamepadMainActionBar at 782,
+// EditModeGamepadMainActionBarSetting at 498-509 and EditModePresetLayouts.Gamepad at 648;
+// RecentAlliesConstantsDocumentation.lua:6-18 declares the interaction filters.
+#[cfg(feature = "client-ptr")]
+#[test]
+fn ptr_edit_mode_gamepad_publication_matches_pinned_declarations() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        assert(Enum.EditModeSystem.ActionBar == 0, "base ActionBar changed")
+        assert(Enum.EditModeSystem.GamepadMainActionBar == 30, "PTR gamepad system")
+        local systemMeta = Enum.EditModeSystemMeta
+        assert(systemMeta.MinValue == 0 and systemMeta.MaxValue == 30)
+        assert(systemMeta.NumValues == 31)
+        local setting = Enum.EditModeGamepadMainActionBarSetting
+        assert(setting.Compact == 0 and setting.ShowEmptyBars == 1)
+        assert(setting.ShowButtonPrompts == 2 and setting.ShowHighlight == 3)
+        assert(setting.ShouldExpand == 4)
+        assert(Enum.EditModePresetLayouts.Gamepad == 2, "PTR gamepad preset")
+        local filters = Enum.RecentAlliesInteractionCategoryFilter
+        assert(filters.Professions == 0 and filters.PvP == 1 and filters.Raiding == 2)
+        assert(filters.Dungeons == 3 and filters.Delves == 4 and filters.Questing == 5)
+        "#,
+    )
+    .unwrap();
+}
+
+#[cfg(not(feature = "client-ptr"))]
 #[test]
 fn forever_gamepad_publication_is_absent_from_earlier_profiles() {
     let env = WowLuaEnv::new().unwrap();
