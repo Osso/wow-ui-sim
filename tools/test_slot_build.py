@@ -128,6 +128,18 @@ class SlotBuildTests(unittest.TestCase):
                          self.module.TARGET_ROOT / "slot-4")
         self.assertTrue(prune.call_args.kwargs["dry_run"])
 
+    def test_slot_cap_default_bounds_slot_size(self):
+        with patch.object(self.module, "prune_slot") as prune:
+            self.module.main(["--slot", "3", "--prune-dry-run"])
+        self.assertEqual(prune.call_args.args[2], 44 * 1024 ** 3)
+        self.assertEqual(self.module.execute_build.__defaults__[0], 44)
+
+    def test_slot_cap_override_is_forwarded_to_pruning(self):
+        with patch.object(self.module, "prune_slot") as prune:
+            self.module.main(["--slot", "3", "--prune-dry-run",
+                              "--slot-cap-gib", "40"])
+        self.assertEqual(prune.call_args.args[2], 40 * 1024 ** 3)
+
     def test_retired_slot_two_is_rejected_before_launch(self):
         with contextlib.redirect_stderr(io.StringIO()) as stderr, \
                 self.assertRaises(SystemExit) as exit_info:
