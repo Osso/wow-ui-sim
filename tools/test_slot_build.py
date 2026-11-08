@@ -1292,14 +1292,18 @@ class SourceFreshnessTests(unittest.TestCase):
             self.assertEqual(receipt["result"], "success")
 
     def test_library_certificate_compares_content_across_worktrees(self):
-        result, _ = self.run_library_step("retail")
+        result, first = self.run_library_step("retail")
         self.assertEqual(result.returncode, 0, result.stderr)
         other = self.slot / "other-tree"
         self.git("worktree", "add", "--detach", str(other), "HEAD")
         self.tree = other
-        result, receipt = self.run_library_step("retail", fresh=True)
+        # A switched worktree must re-fingerprint its path inputs even when the
+        # content matches, then certify the identical rebuilt bytes.
+        result, receipt = self.run_library_step("retail", fresh=False)
         self.assertEqual(result.returncode, 0, result.stderr)
-        self.assertEqual(receipt["changed_paths"], [])
+        self.assertIn("src/main.rs", receipt["changed_paths"])
+        self.assertEqual(receipt["artifact_certificates_sha256"],
+                         first["artifact_certificates_sha256"])
 
     def test_fresh_library_rejects_dep_info_input_set_replacement(self):
         result, _ = self.run_library_step("retail")
