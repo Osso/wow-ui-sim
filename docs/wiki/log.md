@@ -3492,3 +3492,15 @@ insecure `SetForbidden` no-op is compiled for `profile-retail` and `client-ptr`.
 `MakeForbidden` call with `issecure()`. New contract:
 [set-forbidden-restriction](../specs/set-forbidden-restriction.md). WowForever publishes the same
 declaration but is still gated out.
+
+## 2026-11-08 — Mists voice settings flake came from an unset observation
+
+The pinned `Blizzard_SettingsDefinitions_Shared/Audio.lua` registrant starts a five-second
+`C_Timer` ticker that calls `C_VoiceChat.CanAccessSettings()` until the voice proxy settings are
+ready. PTR, Mists, Era and Anniversary left the observation unset, so crossing that deadline made
+the original ticker raise `settings access has not been supplied`. Whether the deadline was crossed
+depended on real elapsed startup time, which is why slow parallel runs failed and isolated runs
+passed. Those profiles now supply false (the polling loop's not-ready branch); Retail and Forever
+keep their user-approved true default. See
+[voice settings access](systems/voice-settings-access.md) and
+[the contract](../specs/voice-settings-access.md).
