@@ -793,7 +793,14 @@ fn encounter_journal_display_dungeon_instance_does_not_recurse() {
 }
 }
 
-post_wrath_ui_fixture! {
+/// The Journeys panel is mainline content: only the Retail, PTR and Forever
+/// caches ship `Blizzard_EncounterJournal/Mainline/Blizzard_Journeys.lua` and
+/// `.xml` (`data/blizzard-ui-files/{retail,ptr,wowforever}.txt`). The Mists,
+/// Era and Anniversary caches contain only `Localization.lua` plus the
+/// `Cata`/`Mists` subdirectories, so they have no `JourneysFrame` and cannot
+/// seed a current-tier row. Gate on the profiles whose pinned caches ship
+/// those files.
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn encounter_journal_journeys_frame_seeds_current_major_factions_without_tww_leak() {
     let env = WowLuaEnv::new().expect("Failed to create Lua environment");
