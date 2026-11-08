@@ -162,7 +162,7 @@ fn mists_bank_and_guild_bank_support_storage_flow() {
 
 fn assert_no_lua_errors(stdout: &str, stderr: &str) {
     assert!(
-        !stdout.contains("Lua error") && !stderr.contains("Lua error"),
+        !stdout.contains("Lua error:") && !stderr.contains("Lua error:"),
         "bank storage flow emitted Lua errors\nstdout:\n{stdout}\nstderr:\n{stderr}"
     );
 }

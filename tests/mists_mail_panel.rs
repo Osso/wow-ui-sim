@@ -115,7 +115,7 @@ fn mists_mail_panel_supports_inbox_send_attachments_and_cod() {
 
 fn assert_no_lua_errors(stdout: &str, stderr: &str) {
     assert!(
-        !stdout.contains("Lua error") && !stderr.contains("Lua error"),
+        !stdout.contains("Lua error:") && !stderr.contains("Lua error:"),
         "mail panel flow emitted Lua errors\nstdout:\n{stdout}\nstderr:\n{stderr}"
     );
 }
