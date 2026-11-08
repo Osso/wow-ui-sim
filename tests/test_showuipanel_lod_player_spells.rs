@@ -5,6 +5,9 @@
 //! `test_showuipanel_lod_fixtures.rs` (harness/fixture coverage). All
 //! three share `tests/common/panel_fixtures.rs`.
 
+// The Mists manifest has no Blizzard_PlayerSpells entries; Mists uses the
+// separate SpellBookFrame and TalentUI consumers instead.
+retail_ptr_forever_toc_fixture! {
 use crate::common;
 
 use common::panel_fixtures::{
@@ -713,5 +716,6 @@ fn player_spells_view_loadout_uses_trait_tree_for_imported_spec() {
             "Protection export should round-trip through ViewLoadout using spec 66: {result}"
         );
     }
+}
 }
 }
