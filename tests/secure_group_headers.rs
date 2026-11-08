@@ -122,21 +122,49 @@ fn load_auto_hide_real_dependencies() -> WowLuaEnv {
         build_blizzard_addon_closure_env(&ui, &["Blizzard_RestrictedAddOnEnvironment"], &[]);
     // Classic `Blizzard_UIParent/Classic/WorldFrame.lua:47` ticks `ItemTextFrame` on every
     // OnUpdate; the eager `Blizzard_UIPanels_Game` addon owns that frame
-    // (`Classic/ItemTextFrame.xml:3`). Load that real eager root after the closure on Era and
-    // Anniversary. Mists' UIPanels_Game also selects `Wrath/WatchFrame.lua`, whose
-    // `:471` parent-relative height arithmetic is unresolved in this partial closure, so Mists
-    // keeps the bare RestrictedAddOnEnvironment fixture.
+    // (`Classic/ItemTextFrame.xml:3`). Load that real eager root after the closure on the
+    // classic profiles.
     if matches!(
         wow_ui_sim::client_profile::ACTIVE,
-        wow_ui_sim::client_profile::ClientProfile::Era
+        wow_ui_sim::client_profile::ClientProfile::Mists
+            | wow_ui_sim::client_profile::ClientProfile::Era
             | wow_ui_sim::client_profile::ClientProfile::Anniversary
     ) {
+        if matches!(
+            wow_ui_sim::client_profile::ACTIVE,
+            wow_ui_sim::client_profile::ClientProfile::Mists
+        ) {
+            // Native `Blizzard_UIParentPanelManager_Classic.toc:5` declares
+            // `## LoadWith: Blizzard_UIParent`, so it loads with UIParent before
+            // Blizzard_UIPanels_Game. Its `UIParent_ManageFramePositions` sizes
+            // `UIParentRightManagedFrameContainer`
+            // (`Shared/UIParentPanelManager.lua:780-787`), which
+            // `Wrath/WatchFrame.lua:471` reads.
+            loaded.extend(load_blizzard_addon_closure_into_env(
+                &env,
+                &ui,
+                &["Blizzard_UIParentPanelManager"],
+                &[],
+            ));
+        }
         loaded.extend(load_blizzard_addon_closure_into_env(
             &env,
             &ui,
             &["Blizzard_UIPanels_Game"],
             &[],
         ));
+        if matches!(
+            wow_ui_sim::client_profile::ACTIVE,
+            wow_ui_sim::client_profile::ClientProfile::Mists
+        ) {
+            // Native startup calls this from `Blizzard_ActionBar/Classic/MainMenuBar.xml:47`
+            // (OnShow) and again once `StatusTrackingBarManager` exists. The partial closure
+            // does not fire startup events, so apply the same native layout entry point.
+            assert!(
+                env.exec("UIParent_ManageFramePositions()").is_ok(),
+                "native UIParent layout entry point"
+            );
+        }
     }
     for prerequisite in ["Blizzard_FrameXML", "Blizzard_RestrictedAddOnEnvironment"] {
         assert!(
