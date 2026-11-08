@@ -1,6 +1,0 @@
-{
-  "source_revision": "89dca152df908d3977a9466b0e2e8ae1e25b7f13",
-  "production_delta_revision": "89dca152d",
-  "scope": "Retail TextureAndTextRow passive suppliedinputs plus eight behavioral contracts before modeledgetter; compile-only, no REDclaimed yet",
-  "git_status": " M docs/specs/ui-widget-text-with-subtext.md\n?? .code-index.db\n?? handoff/\n?? state/\n?? verification/\n"
-}

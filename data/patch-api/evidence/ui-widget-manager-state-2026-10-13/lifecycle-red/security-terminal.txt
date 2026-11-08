@@ -1,4 +1,0 @@
-Result=exit-code
-ExecMainCode=1
-ExecMainStatus=101
-MemoryPeak=68046848

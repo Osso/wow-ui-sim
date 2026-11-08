@@ -1,6 +1,0 @@
-{
-  "scope": "Initial tests/c_map_bounty_set_maps.rs only",
-  "method": "Manual changed-Rust skill audit: short pure assertion helper/orchestrator, concrete public-query outputs, no future state symbols/mock producer, no warning suppressions, bounded test bodies and nesting; numeric edges explicitly do not establish anti-aliasing absent positive records",
-  "violations": [],
-  "execution": "NOT_EXECUTED"
-}

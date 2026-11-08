@@ -1,7 +1,0 @@
-
-running 2 tests
-test friend_list_who::friend_list_friend_info_uses_social_friend_state ... ok
-test friend_list_who::friend_list_get_who_info_returns_seeded_who_rows ... ok
-
-test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 10783 filtered out; finished in 0.18s
-

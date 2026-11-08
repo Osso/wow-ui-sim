@@ -1,6 +1,0 @@
-{
-  "source_revision": "3170ac1ee109dc22f9f31429914f245aa067b7de",
-  "production_delta_revision": "Shared numericcurve ordering andsourcedcatalog; docs-only3170 after1b94 verifiedRetail",
-  "scope": "Fresh retry of Mists scoped integration no-run preservation after prior zero-launchdenial. jobs4CPU400%, limits unchanged; not native/profile/runtime acceptance.",
-  "git_status": "?? .code-index.db\n?? handoff/\n?? verification/\n"
-}

@@ -1,6 +1,0 @@
-{
-  "source_revision": "46f33b1c880ecb39ac00480081bfe2b02cf32a8a",
-  "production_delta_revision": "398c427fd",
-  "scope": "Row getter and phase-specific diagnostics; integration no-run only",
-  "git_status": " M docs/specs/ui-widget-text-with-subtext.md\n?? .code-index.db\n?? handoff/\n?? state/\n?? verification/\n"
-}

@@ -1,7 +1,0 @@
-{
-  "exit": 0,
-  "stdout": "{\"mode\": \"click\", \"display\": \":22\", \"window\": \"0x800002\", \"before\": {\"x\": 1783, \"y\": 926, \"mask\": 4}, \"point\": [1783, 926], \"native_backend\": \"XTest\", \"press_release_count\": 1}\n",
-  "stderr": "",
-  "stderr_start_offset": 17026,
-  "scope": "one actualXTestleftpress/release on previouslyverifiedLFDMicro nativehover; no LuaClick/MouseClickRPC"
-}

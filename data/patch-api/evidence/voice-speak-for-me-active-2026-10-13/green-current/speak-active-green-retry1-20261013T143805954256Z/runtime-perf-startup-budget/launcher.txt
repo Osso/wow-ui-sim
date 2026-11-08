@@ -1,6 +1,0 @@
-Running as unit: wow-current-perf-startup-budget-20261013t150401194213z.service
-          Finished with result: success
-Main processes terminated with: code=exited, status=0/SUCCESS
-               Service runtime: 7.510s
-             CPU time consumed: 6.204s
-                   Memory peak: 1.9G (swap: 0B)

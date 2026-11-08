@@ -1,7 +1,0 @@
-{
-  "Cargo.lock": "5577f98dd1c7b7124a51dae1ab30429366b58b2b065b54ac56dc1d0d69bc26f1",
-  "Cargo.toml": "91c80dd9d2ff4d59ddce10af38a1dc09bee5ef0c5c166ebc19ec6ad485dac1e9",
-  "tests/perf/base_game.rs": "6a1affa784e41c4b4ffedfe9bf8b4e93666482e590fcddfb898aa35d8143008c",
-  "tests/startup_perf.rs": "e06cb90eb12bd0a0f8f5c0f9c3176fad749657f0b364df86c235cb69699fb5b3",
-  "tests/startup_perf/observation.rs": "81d8dd0d7d547bbb21f974ca34e2f6e556345fa901437e1622e43340d4e25d5f"
-}

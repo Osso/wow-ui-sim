@@ -1,9 +1,0 @@
-{
-  "argv": [
-    "/usr/bin/timeout",
-    "90",
-    "/home/osso/.local/state/wow-ui-sim/verification/dev-harness-green-current/20261011T051913Z/mists/new-prefork",
-    "--list"
-  ],
-  "exit": 0
-}

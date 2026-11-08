@@ -1,5 +1,0 @@
-{
-  "failure": "initial controller expected flattened match/stat keys; actual independently persisted receipt has authentication_result and stat_after; KeyError before any admission or launch",
-  "fix": "read actual receipt schema and compare independent success booleans/stat_after",
-  "runtime_attempts_before_fix": 0
-}

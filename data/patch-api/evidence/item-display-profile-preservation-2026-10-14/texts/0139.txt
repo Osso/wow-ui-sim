@@ -1,8 +1,0 @@
-{
-  "stage": "receipt-schema validation before resource admission",
-  "exception": "KeyError: path",
-  "receipt_present_key": "pathliteral",
-  "required_key": "path",
-  "launched": false,
-  "scope": "setup failure, not test failure; no binary read/hash or workload launch"
-}

@@ -1,6 +1,0 @@
-{
-  "source_revision": "2bb6cdde16af4f49ada296b7a8f2e2509de38930",
-  "production_delta_revision": "50f6f0ea8",
-  "scope": "PTR TextWithState GREEN and current Speak query/transcription preservation compilation only; runtime unrun",
-  "git_status": "?? .code-index.db\n?? verification/\n"
-}

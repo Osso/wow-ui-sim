@@ -1,6 +1,0 @@
-{
-  "source_revision": "d9c7c6aa15ef7238e3f547e48989403eedeb5873",
-  "production_delta_revision": "d9c7c6aa1",
-  "scope": "Mists original cleanup regression RED compilation only; no producer fix",
-  "git_status": "?? .code-index.db\n?? verif/\n"
-}

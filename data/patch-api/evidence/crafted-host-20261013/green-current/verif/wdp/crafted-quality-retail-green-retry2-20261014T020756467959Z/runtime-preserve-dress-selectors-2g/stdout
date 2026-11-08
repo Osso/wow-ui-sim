@@ -1,6 +1,0 @@
-
-running 1 test
-test item_dressability::item_dressability_projects_explicit_numeric_and_link_booleans ... ok
-
-test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 11025 filtered out; finished in 0.21s
-

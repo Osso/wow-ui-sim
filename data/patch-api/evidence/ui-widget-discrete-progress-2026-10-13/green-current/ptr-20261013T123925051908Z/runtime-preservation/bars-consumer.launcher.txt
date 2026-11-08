@@ -1,6 +1,0 @@
-Running as unit: wow-discrete-bars-consumer-20261013t131949222774z.service
-          Finished with result: success
-Main processes terminated with: code=exited, status=0/SUCCESS
-               Service runtime: 1.535s
-             CPU time consumed: 1.522s
-                   Memory peak: 1G (swap: 0B)

@@ -1,3 +1,7 @@
+## [2026-11-08] process | Evidence trees removed from the repository
+
+`data/patch-api/evidence` and `data/test-perf/evidence` are removed and ignored. They were agent proof receipts, not product data. Proof receipts now live untracked under `~/.local/state/wow-ui-sim`. A patch-audit manifest that must cite a removed receipt uses a `git:<commit>:<path>` reference, which `wow-cli audit-api` resolves from Git history. The factory tests keep their minimal fixtures under `tests/data/patch-factory/`. The receipt re-checking Python validators were retired with the trees.
+
 ## [2026-11-07] investigation | WowForever insecure SetForbidden no-op
 
 [SetForbidden restriction](../specs/set-forbidden-restriction.md) extends the tainted-call no-op gate to `client-wowforever`: the pinned WowForever `1.60.1.70707` `SimpleFrameScriptObjectAPIDocumentation.lua` is byte-identical to the Retail and PTR copies (`:287-295`, `HasRestrictions = true`), and its `Blizzard_RestrictedAddOnEnvironment/RestrictedExecution.lua:397-400` reaches `MakeForbidden` only under `issecure()`. No native WowForever probe covers the method (`handoff/native-evidence-70707`), so the case stays INFERRED. The existing `protected_frame_enforcement` case failed on Forever before the change and passes after it.

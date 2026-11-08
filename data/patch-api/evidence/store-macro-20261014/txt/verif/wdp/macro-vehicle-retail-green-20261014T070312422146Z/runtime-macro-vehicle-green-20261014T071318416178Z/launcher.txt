@@ -1,6 +1,0 @@
-Running as unit: <RUNTIME_UNIT_018>.service
-          Finished with result: success
-Main processes terminated with: code=exited, status=0/SUCCESS
-               Service runtime: 1.647s
-             CPU time consumed: 1.326s
-                   Memory peak: 81.6M (swap: 0B)

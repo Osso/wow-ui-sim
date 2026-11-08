@@ -1,4 +1,0 @@
-running 1 tests
-test spell_casting::cast_bar_respects_edit_mode_lock_setting_after_startup_fix ... FAILED (panic: Mists startup cast bar should remain hidden)
-
-test result: FAILED. 0 passed; 1 failed; 1 total

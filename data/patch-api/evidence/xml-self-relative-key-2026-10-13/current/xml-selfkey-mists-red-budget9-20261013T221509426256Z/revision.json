@@ -1,6 +1,0 @@
-{
-  "source_revision": "a90f84c5de9d09aedcec93aeda24c6bf5463e2b2",
-  "production_delta_revision": "a90f84c5d",
-  "scope": "XMLtest-only fullcachedProductChoiceAST+realhandlers a90; 2sameprofiletests j4 unchangedscope; 9GiBworker frommeasured7.05GBpriorpeak, parentlimits/thresholdunchanged; previous2denialszeroLaunch preserved; producerblockeduntilgenuineRED",
-  "git_status": "?? .code-index.db\n?? verification/\n"
-}

@@ -1,6 +1,0 @@
-
-running 1 test
-test vertex_color_animation::vertex_color_animation_endpoints_are_scoped_to_vertex_color_receivers ... ok
-
-test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10899 filtered out; finished in 0.40s
-

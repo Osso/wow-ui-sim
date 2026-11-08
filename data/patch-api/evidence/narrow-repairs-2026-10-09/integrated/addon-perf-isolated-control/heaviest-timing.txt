@@ -1,1 +1,0 @@
-heaviest Blizzard addon loads: Blizzard_ProjectConstants=206.47ms, Blizzard_UIPanels_Game=188.89ms, Blizzard_ActionBar=165.99ms, Blizzard_CompactRaidFrames=115.58ms, Blizzard_GroupFinder=109.00ms, Blizzard_UnitFrame=88.90ms, Blizzard_Communities=72.12ms, Blizzard_FrameXML=49.70ms

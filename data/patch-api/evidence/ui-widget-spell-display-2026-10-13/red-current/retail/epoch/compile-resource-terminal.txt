@@ -1,5 +1,0 @@
-ExecMainStartTimestamp=Tue 2026-10-13 13:12:46 CDT
-ExecMainExitTimestamp=Tue 2026-10-13 13:17:36 CDT
-MemoryCurrent=[not set]
-MemoryPeak=7784865792
-CPUUsageNSec=767498163000

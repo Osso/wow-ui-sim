@@ -1,6 +1,0 @@
-Running as unit: <UNIT_029>.service; invocation ID: <INVOCATION_001>
-          Finished with result: success
-Main processes terminated with: code=exited, status=0/SUCCESS
-               Service runtime: 14.675s
-             CPU time consumed: 10.486s
-                   Memory peak: 1.5G (swap: 0B)

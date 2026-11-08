@@ -1,7 +1,0 @@
-{
-  "revision": "6a4801a40",
-  "scope": "24 added lines in tests/widget_slider.rs, test-only public API sequence",
-  "method": "Manual rust-readability changed-line audit",
-  "violations": [],
-  "notes": "No warning suppression, primitive parameter overload, nested branching, source-shape assertions, duplicated test, or hidden tick loop; concrete numeric fixtures express opposite clamping directions."
-}

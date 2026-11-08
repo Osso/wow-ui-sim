@@ -1,6 +1,0 @@
-Running as unit: wow-widget-green-texture-atlas-regressions-20261013t102206.service
-          Finished with result: success
-Main processes terminated with: code=exited, status=0/SUCCESS
-               Service runtime: 855ms
-             CPU time consumed: 834ms
-                   Memory peak: 65.8M (swap: 0B)

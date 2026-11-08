@@ -1,7 +1,0 @@
-
-running 2 tests
-test currency_list_info_preserves_max_quantity_in_namespace_and_legacy_tuple ... ok
-test currency_list_info_preserves_watched_flags_in_namespace_and_legacy_tuple ... ok
-
-test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 4 filtered out; finished in 0.28s
-

@@ -1,2 +1,0 @@
-    Checking wow-ui-sim v0.1.0 (/home/osso/Projects/wow/wow-ui-sim)
-    Finished `dev` profile [optimized + debuginfo] target(s) in 13.05s

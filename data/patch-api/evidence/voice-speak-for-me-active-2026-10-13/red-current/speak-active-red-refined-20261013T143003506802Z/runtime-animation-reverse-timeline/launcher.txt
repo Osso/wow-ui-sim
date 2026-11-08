@@ -1,6 +1,0 @@
-Running as unit: wow-animation-reverse-timeline-20261013t143327921013z.service
-          Finished with result: success
-Main processes terminated with: code=exited, status=0/SUCCESS
-               Service runtime: 1.622s
-             CPU time consumed: 225ms
-                   Memory peak: 122.1M (swap: 0B)

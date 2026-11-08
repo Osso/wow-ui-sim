@@ -1,6 +1,0 @@
-Running as unit: wow-speak-mists-red-runtime-20261013t160238403005z.service
-          Finished with result: exit-code
-Main processes terminated with: code=exited, status=1/FAILURE
-               Service runtime: 24ms
-             CPU time consumed: 6ms
-                   Memory peak: 2.2M (swap: 0B)

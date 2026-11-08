@@ -1,6 +1,0 @@
-
-running 1 test
-test unit_api::test_unit_guid_unknown_tokens_do_not_show_frame ... ok
-
-test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 8019 filtered out; finished in 0.12s
-

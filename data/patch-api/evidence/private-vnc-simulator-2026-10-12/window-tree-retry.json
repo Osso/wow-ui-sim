@@ -1,6 +1,0 @@
-{
-  "at": "2026-10-12T06:20:40.643224+00:00",
-  "exit": 0,
-  "stdout": "\nxwininfo: Window id: 0x3a7 (the root window) (has no name)\n\n  Root window id: 0x3a7 (the root window) (has no name)\n  Parent window id: 0x0 (none)\n     3 children:\n     0x1000000 (has no name): ()  1x1+0+0  +0+0\n     0xe00000 (has no name): ()  1x1+0+0  +0+0\n     0xc00002 \"WoW UI Simulator\": (\"com.ossonet.WowUiSim\" \"com.ossonet.WowUiSim\")  1024x768+0+0  +0+0\n\n",
-  "stderr": ""
-}

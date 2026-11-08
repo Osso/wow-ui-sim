@@ -1,7 +1,0 @@
-
-running 2 tests
-test cmd_option_selected_unit::cached_vendor_target_marker_handler_uses_selected_unit_and_default_target ... ok
-test cmd_option_selected_unit::cmd_option_returns_only_explicit_unit_from_the_selected_clause ... ok
-
-test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 11035 filtered out; finished in 0.44s
-

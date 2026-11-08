@@ -1,9 +1,0 @@
-{
-  "launched": true,
-  "systemd_run_exit_code": 255,
-  "unit_result": "signal",
-  "exec_main_code": 2,
-  "exec_main_status": 9,
-  "formatter_exit_code": null,
-  "timeout_seconds": 85
-}

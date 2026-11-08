@@ -1,9 +1,0 @@
-{
-  "scope": "Only expanded positive-RED artifact authentication; behavioral RED11 independently proven",
-  "status": "Computed digest comparison not retained in verifier output; no second payload read",
-  "recovery_attempts": [
-    "Installed agent-history executable unavailable at documented path and PATH; no installation performed",
-    "Original child session attach by supplied message session ID returned session not found; no manual transcript-store searches"
-  ],
-  "preservation": "Initial authenticated RED6 and Calendar proof unchanged; gap retained honestly, does not become a full-authentication claim"
-}

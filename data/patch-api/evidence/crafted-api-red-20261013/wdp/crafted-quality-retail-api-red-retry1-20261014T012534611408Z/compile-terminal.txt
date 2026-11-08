@@ -1,8 +1,0 @@
-ActiveState=active
-SubState=exited
-Result=success
-ExecMainStartTimestamp=Tue 2026-10-13 20:25:34 CDT
-ExecMainExitTimestamp=Tue 2026-10-13 20:27:22 CDT
-ExecMainCode=1
-ExecMainStatus=0
-MemoryPeak=5468069888

@@ -1,8 +1,0 @@
-
-running 3 tests
-test instance_info::get_instance_info_defaults_to_open_world ... ok
-test instance_info::get_instance_info_reports_all_ten_fields ... ok
-test instance_info::get_instance_info_returns_nil_for_absent_lfg_dungeon_id ... ok
-
-test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 10859 filtered out; finished in 0.73s
-

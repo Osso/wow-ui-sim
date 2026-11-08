@@ -1,6 +1,0 @@
-{
-  "source_revision": "ffb6d7d7d8ab5a13be9bdd5c603b963380002656",
-  "production_delta_revision": "ee1bc9038",
-  "scope": "Retail four item cooldown producer cases and namespace/inventory/default-off visibility preservation after genuine3RED1legacyPASS; macro/Store preservation after trace",
-  "git_status": "?? .code-index.db\n?? verification/\n"
-}

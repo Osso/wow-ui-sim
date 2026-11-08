@@ -1,6 +1,0 @@
-{
-  "source_revision": "22e83d052b0437c763199e868125c768dd40f5e1",
-  "production_delta_revision": "22e83d052",
-  "scope": "only Mists normal binary for original public Store query-input observation, no forcedgetter/handler, correctedfixture compile proof separate",
-  "git_status": "?? .code-index.db\n?? verification/\n"
-}

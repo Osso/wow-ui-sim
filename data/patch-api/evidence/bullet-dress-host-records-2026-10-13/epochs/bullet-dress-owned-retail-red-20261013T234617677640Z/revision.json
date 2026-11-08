@@ -1,6 +1,0 @@
-{
-  "source_revision": "76e8b830931d1489ad5a89a75306bcbaa2bc61f7",
-  "production_delta_revision": "76e8b8309",
-  "scope": "Combined passive Bullet7 and dressability5 plus unchanged whole PlayerChoice consumer RED; getter production unchanged; Retail full integration no-run compile",
-  "git_status": "?? .code-index.db\n?? verification/\n"
-}

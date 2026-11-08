@@ -1,6 +1,0 @@
-Running as unit: wow-widget-green-ui-widget-manager-lifecycle-20261013t102206.service
-          Finished with result: success
-Main processes terminated with: code=exited, status=0/SUCCESS
-               Service runtime: 3.300s
-             CPU time consumed: 3.246s
-                   Memory peak: 1G (swap: 0B)

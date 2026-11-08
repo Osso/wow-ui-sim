@@ -1,6 +1,0 @@
-Running as unit: wow-widget-green-ui-widget-manager-hud-selections-20261013t090502.service
-          Finished with result: success
-Main processes terminated with: code=exited, status=0/SUCCESS
-               Service runtime: 491ms
-             CPU time consumed: 470ms
-                   Memory peak: 107.4M (swap: 0B)

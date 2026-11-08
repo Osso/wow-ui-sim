@@ -1,7 +1,0 @@
-{
-  "at": "2026-10-12T04:36:56.326897+00:00",
-  "unit": "wow-startup-cost-observation-20261012t043629254903z.service",
-  "exit": 0,
-  "stdout": "ActiveState=active\nSubState=exited\nRuntimeMaxUSec=1min 30s\nResult=success\nExecMainStatus=0\nControlGroup=\nCPUQuotaPerSecUSec=12s\nMemoryMax=17179869184\nKillMode=control-group\n",
-  "stderr": ""
-}

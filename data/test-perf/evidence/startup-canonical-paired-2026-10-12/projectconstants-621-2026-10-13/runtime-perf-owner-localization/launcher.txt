@@ -1,6 +1,0 @@
-Running as unit: &amp;lt;PRIVATE_INVOCATION_05&amp;gt;.service; invocation ID: 01b4df8e086c46e8bd8a1512a5394de4
-          Finished with result: exit-code
-Main processes terminated with: code=exited, status=101/n/a
-               Service runtime: 7.883s
-             CPU time consumed: 6.829s
-                   Memory peak: 1.9G (swap: 0B)

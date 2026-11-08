@@ -1,6 +1,0 @@
-{
-  "source_revision": "d15126365dd3c3d207fea3a328599ea615672c4c",
-  "production_delta_revision": "b12f62435",
-  "scope": "One bounded retry of still-required original9.1.0prefork build after transientglobalpressureabort; no otherproofsubstitutes; abortownjobfullavg10>1%",
-  "git_status": " M docs/specs/ui-widget-text-with-subtext.md\n?? .code-index.db\n?? handoff/\n?? state/\n?? verif/\n"
-}

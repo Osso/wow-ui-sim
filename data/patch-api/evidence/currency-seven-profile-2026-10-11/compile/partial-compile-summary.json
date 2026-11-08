@@ -1,8 +1,0 @@
-{
-  "wall_seconds": 90.17807750999054,
-  "cgroup_cpu_seconds": 241.882989,
-  "cpu_equivalents": 2.682281499882303,
-  "observed_peak_rustc_processes": 4,
-  "sample_count": 19,
-  "limits": "Mid-build partial interval only; sampled process peak is lower bound, group includes worker and linker/test work; no complete compile/build/jobs12 speedup claim"
-}

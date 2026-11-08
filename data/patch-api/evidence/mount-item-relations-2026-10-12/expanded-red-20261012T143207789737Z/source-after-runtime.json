@@ -1,8 +1,0 @@
-{
-  "Cargo.lock": "5577f98dd1c7b7124a51dae1ab30429366b58b2b065b54ac56dc1d0d69bc26f1",
-  "Cargo.toml": "91c80dd9d2ff4d59ddce10af38a1dc09bee5ef0c5c166ebc19ec6ad485dac1e9",
-  "docs/specs/mount-item-relations.md": "6a5391045a8b19768605801ff5078c4bca5ee5823c6c482044ed9ad4f722f0c1",
-  "src/lua_api/state.rs": "71d062ba3b460ad85e78ef6298f02572634e8d753fe0341ac27753687cd3c365",
-  "src/lua_api/state/sim_state.rs": "dc701e094e0d3b9f9b0c23c7af1668b704a5fda57834077cb4b12d237823c867",
-  "tests/mount_from_item.rs": "f0eef03b36f83ccbec9ae5951f177e629b2c940b526033b53e60f75d9c1754b9"
-}

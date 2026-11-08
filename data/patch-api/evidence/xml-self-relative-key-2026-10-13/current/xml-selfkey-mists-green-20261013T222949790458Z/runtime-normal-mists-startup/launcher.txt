@@ -1,6 +1,0 @@
-Running as unit: <PRIVATE_INVOCATION>.service
-          Finished with result: success
-Main processes terminated with: code=exited, status=0/SUCCESS
-               Service runtime: 7.038s
-             CPU time consumed: 6.443s
-                   Memory peak: 2.1G (swap: 0B)

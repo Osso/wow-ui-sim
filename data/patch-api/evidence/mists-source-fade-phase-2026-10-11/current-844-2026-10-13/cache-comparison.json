@@ -1,7 +1,0 @@
-{
-  "cache_root": "<HOME>/.cache/wow-ui-sim/blizzard-ui/mists/AddOns",
-  "files_before": 2977,
-  "files_after": 2977,
-  "equal": true,
-  "scope": "Read-only content/stat snapshots; no cache repair/sync, not native parity or other cache proof"
-}

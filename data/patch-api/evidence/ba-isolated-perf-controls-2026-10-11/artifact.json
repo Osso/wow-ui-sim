@@ -1,8 +1,0 @@
-{
-  "source": "/home/osso/Projects/wow/full-suite-checkout/target/debug/deps/integration-9f07e4a55f2bbbf7",
-  "path": "/home/osso/.local/state/wow-ui-sim/verification/ba-perf-isolated-controls-current/20261011T220436Z/integration-sealed",
-  "bytes": 467417120,
-  "sha256": "040260cffd6334d2371d33b27c625976ff0e069ebd856be436226bf61e3060f3",
-  "source_checkout_revision": "ba413e8e177f04dc6fc7491834606ce36c750954",
-  "scope": "First binary seal for existing frozen integration executable; no Cargo rebuild"
-}

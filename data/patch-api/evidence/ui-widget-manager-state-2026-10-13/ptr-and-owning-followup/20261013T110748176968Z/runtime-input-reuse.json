@@ -1,7 +1,0 @@
-{
-  "snapshot": "39ce8969a",
-  "compiled": "1804d1c49",
-  "production": "5bd208dba",
-  "profile": "ptr",
-  "scope": "test-cfg/cache-print/direct-format plus docs only; external cache/filesystem inputs sourceunchanged; embedded currenttests; priorPTR26/normalstartup reused"
-}

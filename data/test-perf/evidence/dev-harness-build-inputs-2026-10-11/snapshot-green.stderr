@@ -1,6 +1,0 @@
-test_snapshot_preserves_workspace_harness_inputs (tools.test_build_host.SnapshotTests.test_snapshot_preserves_workspace_harness_inputs) ... ok
-
-----------------------------------------------------------------------
-Ran 1 test in 0.006s
-
-OK

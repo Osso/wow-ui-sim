@@ -1,9 +1,0 @@
-{
-  "argv": [
-    "/usr/bin/timeout",
-    "90",
-    "/home/osso/.local/state/wow-ui-sim/verification/achievement-reward-projection-current/20261011T044347Z/integration-test",
-    "--list"
-  ],
-  "exit": 0
-}

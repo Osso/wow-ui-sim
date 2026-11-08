@@ -1,6 +1,0 @@
-{
-  "source_revision": "4def990f697a664449f4b398e91ecd8743196129",
-  "production_delta_revision": "396f0c9a6",
-  "scope": "Final relevant defaultlib+binaries cargo check afterlastCalendarproducer396f, documentationHEAD4def; earlier733recordchecknotthissource, no broadtests/suite rerun",
-  "git_status": "?? .code-index.db\n?? data/test-perf/evidence/startup-canonical-paired-2026-10-12/projectconstants-621-2026-10-13/sampling-current/symbolizer-followup/\n?? verification/\n"
-}

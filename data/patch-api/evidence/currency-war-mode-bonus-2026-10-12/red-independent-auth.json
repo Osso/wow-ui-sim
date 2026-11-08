@@ -1,9 +1,0 @@
-{
-  "artifact": "/home/osso/.local/state/wow-ui-sim/verification/currency-war-mode-current/red-compile-20261012T073500599307Z/integration-sealed",
-  "computed_size": 467732696,
-  "computed_sha256": "35bc2c79e3b11052f0a79227eb7e3c377c4ba07e8aa0f91d7af452ee21e34789",
-  "expected_size": 467732696,
-  "expected_sha256": "35bc2c79e3b11052f0a79227eb7e3c377c4ba07e8aa0f91d7af452ee21e34789",
-  "authenticated": true,
-  "method": "single read-only streaming pass of this new sealed artifact; no execution"
-}

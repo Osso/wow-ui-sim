@@ -1,7 +1,0 @@
-{
-  "bytes": 501187360,
-  "copy": "/home/osso/.local/state/wow-ui-sim/verification/dev-harness-green-current/20261011T051913Z/retail/old-prefork",
-  "scope": "Previously unsealed local binary first copied/sealed for listing; Cargo fingerprint feature record, not whole-source/native provenance",
-  "sha256": "72ba27b6fec8092ea54570a931280fcb51b5dc2ea4d2fdecf61e2609c387ec9b",
-  "source": "/home/osso/Projects/wow/wow-ui-sim/target/debug/deps/prefork_full_ui-d84a52f78dca94c5"
-}

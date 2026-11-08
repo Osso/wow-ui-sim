@@ -1,6 +1,0 @@
-{
-  "source_revision": "174b86505e581d65e9d1fd96162ab3ecf758afa9",
-  "production_delta_revision": "0745fe84f",
-  "scope": "two-stage realHUDpublishers2 + actualbarwidthdiagnostic1; fivequeries/core19/startup/defaultcheck@5a869 relevant unchanged scopes reused",
-  "git_status": "?? .code-index.db\n?? verification/\n"
-}

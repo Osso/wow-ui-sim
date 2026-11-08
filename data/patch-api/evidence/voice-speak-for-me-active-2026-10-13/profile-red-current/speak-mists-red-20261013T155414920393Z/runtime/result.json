@@ -1,9 +1,0 @@
-{
-  "source": "abb979c4465efcf75c6731dd08077e90abaf5509",
-  "expected_cases": 2,
-  "launcher_exit": 1,
-  "summaries": [],
-  "stdout_bytes": 0,
-  "stderr_bytes": 90,
-  "scope": "Mists supplied result-boundary only; laterisolation/restoration unreached iftrueassertfails; no native/default/eventproducer/fullstartupclaim"
-}

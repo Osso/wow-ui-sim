@@ -1,6 +1,0 @@
-{
-  "source_revision": "c81f10375ae50b36f077757e9ba38f3a162b9d17",
-  "production_delta_revision": "50f6f0ea8",
-  "scope": "Refined Speak query-boundary RED diagnostics after159genericLuaassert; no queryproducer",
-  "git_status": "?? .code-index.db\n?? verification/\n"
-}

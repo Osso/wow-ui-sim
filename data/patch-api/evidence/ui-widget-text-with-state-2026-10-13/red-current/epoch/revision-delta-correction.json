@@ -1,6 +1,0 @@
-{
-  "source_revision": "64a2a57b27c5c2b021375cbfddda557ec145507c",
-  "original_production_delta_revision": "50f6f0ea8",
-  "correction": "64a2a57b2 passive input; voice query2630c0ccf",
-  "cause": "Reused scoped compiler launcher retained a hardcoded Discrete revision field; exact source HEAD and scope/compile features identify these builds. Original revision.json preserved. No source/archive authentication inferred."
-}

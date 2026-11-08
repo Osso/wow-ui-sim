@@ -1,7 +1,0 @@
-{
-  "source": "5bd208dba",
-  "launcher_exit": 0,
-  "stdout_bytes": 1798,
-  "stderr_bytes": 14703,
-  "scope": "normal startup once; complete diagnostic/fullstderr cleanliness must independently inspect; [] alone insufficient"
-}

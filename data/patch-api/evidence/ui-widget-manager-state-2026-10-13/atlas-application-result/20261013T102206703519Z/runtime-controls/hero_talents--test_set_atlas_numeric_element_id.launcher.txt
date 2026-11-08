@@ -1,6 +1,0 @@
-Running as unit: wow-widget-green-hero-talents-test-set-atlas-numeric-element-id-20261013t102206.service
-          Finished with result: success
-Main processes terminated with: code=exited, status=0/SUCCESS
-               Service runtime: 186ms
-             CPU time consumed: 169ms
-                   Memory peak: 65M (swap: 0B)

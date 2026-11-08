@@ -1,6 +1,0 @@
-{
-  "scope": "new private probe.rs after setup correction",
-  "method": "manual changed-line audit using rust-readability skill",
-  "violations": [],
-  "scope_correction": "Removed extra repository addon search path and scan/registration; original benchmark setup retained. Loader environment from actual env.loader_env()."
-}

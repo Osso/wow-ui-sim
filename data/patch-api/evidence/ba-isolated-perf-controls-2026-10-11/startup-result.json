@@ -1,7 +1,0 @@
-{
-  "status": "OBSERVED_PASS",
-  "logical_cases": 1,
-  "body_startup_seconds_displayed": 3.68,
-  "budget_seconds": 20,
-  "scope": "One unchanged isolated case; repeated parent/child recap counted once. Does not repair loaded-suite failure or establish cause."
-}

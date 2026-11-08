@@ -1,6 +1,0 @@
-Running as unit: wow-widget-green-methods-texture-test-set-atlas-unknown-20261013t102206.service
-          Finished with result: success
-Main processes terminated with: code=exited, status=0/SUCCESS
-               Service runtime: 317ms
-             CPU time consumed: 288ms
-                   Memory peak: 64.8M (swap: 0B)

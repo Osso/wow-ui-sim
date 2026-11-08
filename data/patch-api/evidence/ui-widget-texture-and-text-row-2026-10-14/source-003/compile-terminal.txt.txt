@@ -1,7 +1,0 @@
-ActiveState=active
-SubState=exited
-ExecMainStatus=0
-MemoryPeak=8590278656
-CPUUsageNSec=1040874572000
-MemoryHigh=8589934592
-MemoryMax=9663676416

@@ -1,7 +1,0 @@
-
-running 2 tests
-test map_scalar_secret_inputs::get_map_art_id_ordinary_fixture_absence_and_selector_compatibility ... ok
-test map_scalar_secret_inputs::get_map_info_ordinary_fixture_generic_and_selector_compatibility ... ok
-
-test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 8018 filtered out; finished in 0.17s
-

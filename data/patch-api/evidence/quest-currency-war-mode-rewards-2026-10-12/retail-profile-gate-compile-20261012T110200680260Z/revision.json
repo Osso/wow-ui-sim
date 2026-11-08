@@ -1,7 +1,0 @@
-{
-  "head": "298caf47a53eac18960c1cef6716489e54a351cc",
-  "phase": "retail-profile-gate",
-  "scope": "Consolidated PvP profile gate; affected13-case Quest caller and normal publication only; flag9 proof reused unchanged",
-  "test_commit": "91324b10380f9be3e8d196491e9a2d20bc597fa1",
-  "test_source_sha256": "ee2b5cedce9beaebc211353a01084cc6be127a7f23d1ea97450d209a851148a5"
-}

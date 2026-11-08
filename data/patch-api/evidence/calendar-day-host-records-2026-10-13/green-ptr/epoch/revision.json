@@ -1,6 +1,0 @@
-{
-  "source_revision": "eb453a078ffc1ba3b6c76de35ba4d27300566ef4",
-  "production_delta_revision": "396f0c9a6",
-  "scope": "Calendar committed396f producers; docsHEADeb; PTRgreen no-run integration+normalbinaries; authenticpreproducer0/9RED preserved; green/index/startup pending",
-  "git_status": "?? .code-index.db\n?? verification/\n"
-}

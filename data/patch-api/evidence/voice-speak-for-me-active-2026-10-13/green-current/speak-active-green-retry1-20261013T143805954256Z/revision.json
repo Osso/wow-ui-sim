@@ -1,6 +1,0 @@
-{
-  "source_revision": "a8a148e98d8dc32cf81e789fc8926830c9ed0161",
-  "production_delta_revision": "50f6f0ea8",
-  "scope": "Samea8 independentqueryGREEN afterfirst admissiondenied no launch; fresh admissionretry no parentlimit/capacity changes",
-  "git_status": " M docs/wiki/index.md\n M docs/wiki/log.md\n M docs/wiki/systems/lua-api.md\n?? .code-index.db\n?? verification/\n"
-}

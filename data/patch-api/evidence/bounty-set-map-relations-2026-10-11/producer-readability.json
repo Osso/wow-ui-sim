@@ -1,9 +1,0 @@
-{
-  "scope": [
-    "src/c_api/c_map_bounties.rs",
-    "src/c_api/c_map.rs",
-    "src/c_api/mod.rs"
-  ],
-  "method": "Manual changed-Rust skill audit: guarded current-channel registration, pure strict modeled ID validation, short authenticate/read/copy/project query with borrow dropped before table allocation, no suppression/inferred memberships/default seeds/alternate getter; one fresh ordered result",
-  "violations": []
-}

@@ -1,6 +1,0 @@
-
-running 1 test
-test aura_api::test_unit_aura_harmful_returns_nil ... ok
-
-test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 8338 filtered out; finished in 0.12s
-

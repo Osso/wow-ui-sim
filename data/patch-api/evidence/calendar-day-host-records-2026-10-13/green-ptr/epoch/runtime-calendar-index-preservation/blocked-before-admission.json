@@ -1,6 +1,0 @@
-{
-  "status": "BLOCKED_ZERO_LAUNCH",
-  "cause": "Receipt stat fields dev/inode/size/mtime_ns differ from harness st_* attribute names",
-  "boundary": "before admission, argv, or launch; actualcopiedreceipt preserved; no reauthentication",
-  "correction": "Explicit stat field-name consumption for actual PTR receipt; samevalues/authenticatedcopies, freshadmission required"
-}

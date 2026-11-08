@@ -1,6 +1,0 @@
-Running as unit: <ITEM_DISPLAY_COPY_UNIT_022>.service
-          Finished with result: success
-Main processes terminated with: code=exited, status=0/SUCCESS
-               Service runtime: 1.178s
-             CPU time consumed: 1.016s
-                   Memory peak: 120.8M (swap: 0B)

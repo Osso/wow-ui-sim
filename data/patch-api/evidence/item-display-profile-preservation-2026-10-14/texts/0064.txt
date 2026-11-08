@@ -1,7 +1,0 @@
-{
-  "stage": "main receipt prerequisite before helper/resource admission",
-  "missing_path": "<EVIDENCE-0063>",
-  "actual_original": "<PRIVATE_VERIFICATION_ROOT>/item-macro-anniversary-auth-current/receipt-integration.json",
-  "launched": false,
-  "correction": "whole UTF8 TEXT receipt copy beside seal; original preserved; zero new hash passes"
-}

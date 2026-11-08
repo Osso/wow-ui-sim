@@ -1,1 +1,0 @@
-src/lua_api/frame/methods/widgets/model.rs:737:    ("GetLight", stub_nil),

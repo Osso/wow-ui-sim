@@ -1,6 +1,0 @@
-{
-  "source_revision": "3170ac1ee109dc22f9f31429914f245aa067b7de",
-  "production_delta_revision": "Shared numericcurve/catalog repairs; defaultRetail49PASS, PTR currentpreservationpending",
-  "scope": "PTR scoped integration no-run preservation, jobs4CPU400%; no native/runtime/parent claim",
-  "git_status": "?? .code-index.db\n?? handoff/\n?? verification/\n"
-}

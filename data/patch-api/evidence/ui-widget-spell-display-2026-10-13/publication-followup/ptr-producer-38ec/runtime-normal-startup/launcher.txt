@@ -1,6 +1,0 @@
-Running as unit: wow-speak-ptr-green-runtime-20261013t192945043124z.service
-          Finished with result: success
-Main processes terminated with: code=exited, status=0/SUCCESS
-               Service runtime: 7.887s
-             CPU time consumed: 7.105s
-                   Memory peak: 1.5G (swap: 0B)

@@ -1,8 +1,0 @@
-{
-  "algorithm": "sha256",
-  "files": {
-    "checks.json": "d6f353db366fbeec8598189b88fc35a99b8bbd29dc18b39776b774a9ccd64bec",
-    "final-report.md": "25f9250e880304d200f4df85280f5dc6a7150de0ab59e82ca13e3441b9f55e71"
-  },
-  "scope": "retained payloads; manifest excluded"
-}

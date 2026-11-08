@@ -1,8 +1,0 @@
-ActiveState=failed
-SubState=failed
-Result=exit-code
-ExecMainExitTimestamp=Tue 2026-10-13 05:10:09 CDT
-ExecMainCode=1
-ExecMainStatus=101
-MemoryPeak=1771913216
-CPUUsageNSec=3245886000

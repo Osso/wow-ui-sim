@@ -1,7 +1,0 @@
-{
-  "fmt_exit": 0,
-  "runtime_exit": 101,
-  "scope": "Pre-producer original failure boundary retained; independent classification needed; no producer/caller proof",
-  "source_unchanged": true,
-  "status": "CAPTURED"
-}

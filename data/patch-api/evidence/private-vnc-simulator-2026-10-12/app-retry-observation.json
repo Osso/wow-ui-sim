@@ -1,5 +1,0 @@
-{
-  "at": "2026-10-12T06:20:44.173467+00:00",
-  "state": "ActiveState=active\nSubState=running\nMainPID=635145\nResult=success\nExecMainStatus=0\n",
-  "journal": "[ 18.129s] [Startup] Firing LFG_UPDATE_RANDOM_INFO\n[ 18.131s] [Startup] end post-login events in 195.43ms\n[ 18.131s] [Startup] begin close startup special windows\n[ 18.132s] [Startup] end close startup special windows in 422.17\u00b5s\n[ 18.132s] [Startup] begin FIRST_FRAME_RENDERED\n[ 18.132s] [Startup] Firing FIRST_FRAME_RENDERED\n[ 18.132s] [Startup] end FIRST_FRAME_RENDERED in 266.71\u00b5s\n[ 18.132s] [Startup] begin unblock hidden splash alerts\n[ 18.132s] [Startup] end unblock hidden splash alerts in 29.17\u00b5s\n[ 18.132s] [Startup] begin post-event workarounds\n[ 18.132s] [Startup] end post-event workarounds in 5.07\u00b5s\n[ 18.187s] [Startup] startup event dispatch complete\n[ 18.460s] [rebuild] layout=3.1\u00b5s buckets=25.5ms\n[ 18.484s] [draw] STALL total=1.7s quads=38.2ms textures=11.5ms other=1.7s\n[ 19.093s] Window size: 1010x576 (was 1010x602)\n"
-}

@@ -1,3 +1,5 @@
+> Proof receipts live untracked under `~/.local/state/wow-ui-sim`. The `data/patch-api/evidence` and `data/test-perf/evidence` trees were removed on 2026-11-08; historical links below are records, not live paths. Recover a file with `git show c011c1d95:<path>`.
+
 ## [2026-11-07] fix | Forever 1.60.1.70707 residuals
 
 [Forever startup gaps](investigations/forever-startup-gaps.md#forever-160170707-residuals) records three missing Forever publications found by the PTR/Forever TOC lane: `Enum.ItemContainerSubclass`/`Enum.ItemQuiverSubclass` for the auction house data, `C_QuestLog.CanAbandonQuest` for the quest map detail buttons, and a zero stock idle target spell. Each cites its pinned declaration in `Blizzard_APIDocumentationGenerated`; Retail and PTR surfaces are unchanged.

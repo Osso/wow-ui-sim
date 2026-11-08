@@ -1,7 +1,0 @@
-
-running 2 tests
-test ui_widget_bullet_text_list_api_red::bullet_text_list_empty_default_unknown_numeric_id_returns_one_nil_simulator_policy ... ok
-test ui_widget_bullet_text_list_api_red::bullet_text_list_public_api_rejects_non_numeric_widget_id_with_context ... ok
-
-test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 11016 filtered out; finished in 0.76s
-

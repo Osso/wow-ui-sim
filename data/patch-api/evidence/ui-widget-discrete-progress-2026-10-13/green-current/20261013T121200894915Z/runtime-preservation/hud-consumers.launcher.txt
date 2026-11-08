@@ -1,6 +1,0 @@
-Running as unit: wow-discrete-hud-consumers-20261013t122240108966z.service
-          Finished with result: success
-Main processes terminated with: code=exited, status=0/SUCCESS
-               Service runtime: 4.813s
-             CPU time consumed: 4.558s
-                   Memory peak: 1.4G (swap: 0B)

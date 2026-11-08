@@ -1,5 +1,0 @@
-ExecMainExitTimestamp=Tue 2026-10-13 02:22:02 CDT
-ExecMainCode=1
-ExecMainStatus=0
-MemoryPeak=4314738688
-CPUUsageNSec=146630361000

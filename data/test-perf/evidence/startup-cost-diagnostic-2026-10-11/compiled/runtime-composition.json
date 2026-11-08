@@ -1,6 +1,0 @@
-{
-  "compile_call_removed": "only final standalone compile_probe()",
-  "syntax_only": true,
-  "definitions": "/home/osso/.local/state/wow-ui-sim/verification/startup-cost-diagnostic-current/runtime-definitions.py",
-  "scope": "Caller preparation, no guard or runtime invoked"
-}

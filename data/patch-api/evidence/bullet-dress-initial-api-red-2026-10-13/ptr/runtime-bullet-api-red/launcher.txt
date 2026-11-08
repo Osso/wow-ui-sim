@@ -1,6 +1,0 @@
-Running as unit: TOKEN_IDENTIFIER_04.service
-          Finished with result: exit-code
-Main processes terminated with: code=exited, status=101/n/a
-               Service runtime: 880ms
-             CPU time consumed: 756ms
-                   Memory peak: 135.1M (swap: 0B)

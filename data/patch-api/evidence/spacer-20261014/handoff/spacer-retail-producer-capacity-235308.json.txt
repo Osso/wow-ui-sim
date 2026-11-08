@@ -1,9 +1,0 @@
-{
-  "utc": "2026-10-14T23:53:08.629556+00:00",
-  "cores": 25.938722704311324,
-  "psi_full_avg60": 0.08,
-  "available": 22038323200,
-  "disk_free": 465157484544,
-  "window": null,
-  "allowed": false
-}

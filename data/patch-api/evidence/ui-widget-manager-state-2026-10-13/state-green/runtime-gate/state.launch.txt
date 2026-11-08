@@ -1,8 +1,0 @@
-Running as unit: wow-widget-green-gate-state-20261013t073116.service
-          Finished with result: success
-Main processes terminated with: code=exited, status=0/SUCCESS
-               Service runtime: 5min 7.427s
-             CPU time consumed: 445ms
-                   Memory peak: 86M (swap: 0B)
-
-launcher_exit=0

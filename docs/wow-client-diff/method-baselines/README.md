@@ -1,6 +1,6 @@
 # Configuration-specific method baselines
 
-Byte-for-byte copies of reviewed `complete-diff_methods_{extra,missing}.txt` files from [comparison evidence](../../../data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/method-profile-comparisons/), under the corresponding source `<profile>/` directory. Counts are diff rows relative to the frozen native inventory whose epoch, build, and product are unknown; these are not normative native oracles or historical Retail fixtures.
+Byte-for-byte copies of reviewed `complete-diff_methods_{extra,missing}.txt` files from comparison evidence (removed evidence tree; recover with `git show c011c1d95:data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/method-profile-comparisons/`), under the corresponding source `<profile>/` directory. Counts are diff rows relative to the frozen native inventory whose epoch, build, and product are unknown; these are not normative native oracles or historical Retail fixtures.
 
 | Profile | Actual epoch | Forbidden | OnUpdate | Extra rows | Missing rows |
 |---|---|---:|---:|---:|---:|

@@ -1,8 +1,0 @@
-{
-  "source": "Retained prior matching entry bytes only; no .idx/archive reads",
-  "raw_entry_hex": "53dcc8beeb4c9e75b62bb29b1294af962c0b",
-  "archive": 174,
-  "offset": 849023636,
-  "encoded_size": 187471535,
-  "scope": "Derived correction of old11186 claim using already established packed-location decoder; current header/payload/effective historical lookup still unproved"
-}

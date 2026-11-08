@@ -1,6 +1,0 @@
-{
-  "source_revision": "baec199bad7f13db062502583268c98b57821df8",
-  "production_delta_revision": "ee1bc9038",
-  "scope": "PTR current item selectors including corrected ready bag-slot test, Store restoration/query/originalpublicShow and defaultofftrace preservation; previousPTRdenied0launch retained",
-  "git_status": "?? .code-index.db\n?? verification/\n"
-}

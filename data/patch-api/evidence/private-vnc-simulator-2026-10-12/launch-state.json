@@ -1,5 +1,0 @@
-{
-  "at": "2026-10-12T06:13:25.905118+00:00",
-  "exit": 0,
-  "state": "Id=wow-ui-vnc-display.service\nActiveState=active\nSubState=running\nRuntimeMaxUSec=infinity\nMainPID=599082\nResult=success\nExecMainStatus=0\nControlGroup=/user.slice/user-1000.slice/user@1000.service/app.slice/wow-ui-vnc-display.service\n\nId=wow-ui-vnc.service\nActiveState=active\nSubState=running\nRuntimeMaxUSec=infinity\nMainPID=606688\nResult=success\nExecMainStatus=0\nControlGroup=/user.slice/user-1000.slice/user@1000.service/app.slice/wow-ui-vnc.service\n\nId=wow-ui-vnc-app.service\nActiveState=active\nSubState=running\nRuntimeMaxUSec=1min 30s\nMainPID=612636\nResult=success\nExecMainStatus=0\nControlGroup=/user.slice/user-1000.slice/user@1000.service/app.slice/wow-ui-vnc-app.service\n"
-}
