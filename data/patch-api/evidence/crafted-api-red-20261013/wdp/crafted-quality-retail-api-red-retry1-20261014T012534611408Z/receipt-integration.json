@@ -1,0 +1,28 @@
+{
+  "status": "PASS",
+  "hash_reads": 1,
+  "path": "verif/wdp/crafted-quality-retail-api-red-retry1-20261014T012534611408Z/artifacts/deps/integration-9f07e4a55f2bbbf7",
+  "stat_before": {
+    "st_dev": 66306,
+    "st_ino": 148374833,
+    "st_size": 471375320,
+    "st_mtime_ns": 1791941241640759151
+  },
+  "stat_after": {
+    "st_dev": 66306,
+    "st_ino": 148374833,
+    "st_size": 471375320,
+    "st_mtime_ns": 1791941241640759151
+  },
+  "descriptor_stat_after": {
+    "st_dev": 66306,
+    "st_ino": 148374833,
+    "st_size": 471375320,
+    "st_mtime_ns": 1791941241640759151
+  },
+  "digest": "cbae6489645597ef075b9f6d6406b35731248afa92391975502064ad46902d33",
+  "sha256_matches_seal": true,
+  "source_revision": "8b46433a4568e26458a15907ea79636e38ff65f9",
+  "profile": "retail",
+  "scope": "new copied executable; external libraries/cache/settings and source archive not independently authenticated"
+}

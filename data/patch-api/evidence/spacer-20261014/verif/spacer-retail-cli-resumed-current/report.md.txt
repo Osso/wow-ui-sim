@@ -1,0 +1,453 @@
+# Resumed ordinary Retail CLI — independent saved-evidence verification
+
+## Verdict
+
+**PASS — limited to this saved ordinary CLI invocation.** `result.json` records launcher exit **0**; `launcher.txt` independently reports `Finished with result: success` and `code=exited, status=0/SUCCESS`. Exact stdout is **3 bytes**, Python `b'[]\n'`, hexadecimal **5b 5d 0a**: one JSON empty array followed by LF, with no other bytes. This is not libtest: `expected_cases: null`, `summaries: []`; no test count is inferred.
+
+Evidence directory: `[PRIVATE_EVIDENCE]/verif/wdp/widget-spacer-retail-owning-normal-retry1-20261015T010926059272Z/runtime-spacer-retail-ordinary-lua-errors-resumed`.
+
+Read all nine files in that directory in full: stdout, stderr, result.json, argv.json, launcher.txt, admission.json, fresh-main-admission.json, source-mount.json and pressure-context.json. All **14,709 stderr bytes / 219 LF-terminated lines** were inspected, not just the final summary. Complete retained stderr and metadata are appended below. Read/followed `[PRIVATE_AGENT_CONFIG]/skills/verify/SKILL.md` as verifier. No reruns, builds, executable reads, hash-copy reads, hashing, canonical mutations, process operations or delegation. Only this private report directory/file was written. Saved run timestamps are October 15, 2026 UTC; no fresh runtime proof was generated.
+
+## Retained diagnostics
+
+Stderr is substantial, not empty. It contains initialization, font fallback, addon loading, two post-load workaround passes, edit-mode initialization and GC restart. No actual warning/error/failure diagnostic is visible anywhere in the complete retained stream. Workaround names are progress, not reported failures. Final lines are exactly:
+
+```text
+=== Final observed Lua error summary ===
+Status: CLEAN
+Lua errors: 0 unique, 0 occurrence(s)
+Attributed owners: 0
+Unattributed Lua errors: 0 occurrence(s)
+```
+
+Run loaded **291 Blizzard addons**, reporting **1569/1569 bytecode-cache hits (100%, lookup_miss=0 replay_fail=0 stored=0 store_fail=0)**. It reports 2482 frames, sound disabled, font system `casc=false`, `SavedVariables loading disabled`, and `Addon loading disabled`. Real state was still read: `EditMode cache source (read-only): [PRIVATE_ACCOUNT_02] @ [PRIVATE_REALM_02]/[PRIVATE_CHARACTER_02]` and `Loaded EditMode layout cache from WTF`. This is neither an empty HOME nor a cache-free/WTF-free fixture.
+
+## Identity and exclusions
+
+**Explicit historical d151 artifact / d5 source mount.** Result source is `d15126365dd3c3d207fea3a328599ea615672c4c`; executable is the saved `artifacts/wow-sim-normal` under the owning-normal retry1 directory, not a newly built current binary. Mounted runtime source is the completed Retail producer snapshot `widget-spacer-retail-producer-green-20261014T235938300530Z/source`, identified by the earlier gate as **d5e3358a30ec63199e35d9bdc6481ab0cd061670**. `source-mount.json` records a successful empty `git diff --name-only d5e3358a3..918d1609f -- src tests data Cargo.toml Cargo.lock build.rs`. This is a saved comparison limited to those paths, not an independently recomputed comparison or full dependency/native/build authentication.
+
+**Later eba5a1617 passive TextColumn is explicitly excluded.** No current-HEAD or eba5 coverage claim. Reused receipt stat: device 66306, inode 152734263, size 408531264, mtime_ns 1792022460726887560. These are recorded values, not independent binary authentication. Prior `[PRIVATE_EVIDENCE]/verif/spacer-retail-normal-artifact-current/report.md` separately records the cached normal non-test artifact gate; its hash work was not repeated. That gate states the prefork compilation was SAFETY_ABORTED/INCOMPLETE, with no build-finished record. Successful cached ordinary CLI execution does not convert that build into PASS or prove prefork tests.
+
+## Prior startup scope gate and suppression boundary
+
+Read the full prior scope gate: `[PRIVATE_EVIDENCE]/verif/spacer-startup-diagnostics-current/report.md` (94 lines). It establishes one unique Retail and one unique PTR startup-warning case, with nonadditive parent/child summaries, plus a separate ordinary PTR CLI result. This resumed Retail CLI adds a separate ordinary invocation; it does not replace those startup cases or extend their assertion scope. Startup tests assert the collected warnings vector empty; nil observations and missing requirements need attribution but are **not asserted empty**. Neither the old gate nor this result proves missing-API absence, all-screen/all-LOD/all-addon coverage, GUI soak, arbitrary future updates or native parity.
+
+Re-read the mounted snapshot's `src/lua_errors.rs:27-84,216-285,351-377`. Ordinary CLI redirects fd **2 to /dev/null during collect_lua_error_startup**, then restores it before final output. Descriptor setup/restoration is not itself instrumented by these saved logs, so the source establishes the intended suppression interval, not a separate syscall-success proof. Retained stderr cannot reconstruct diagnostics discarded in that interval. Canonically collected errors may still survive in SimState; arbitrary stderr-only diagnostics do not become JSON errors. Unique JSON entries come from `state.lua_errors` with matching normalized keys in `lua_error_counts`; owner summary uses recorded owners. Exact empty JSON and CLEAN mean an empty final collected list, **not unsuppressed startup cleanliness**, zero loader warnings/nil observations/missing requirements, or absence of caught/unrecorded errors. Prior scope gate describes the bounded startup update/timer slice; this is not indefinite runtime/render coverage. No `--exec-lua` probe was used.
+
+## Admission, caps and pressure
+
+Actual argv: one systemd user unit under [PRIVATE_AGENT_CGROUP_SLICE]; CPUQuota=100%, MemoryMax=2G (**2147483648 bytes**), MemoryHigh=1536M (**1610612736 bytes**), KillMode=control-group. Timeout is TERM after **86s**, then kill after **2s** grace; observed completion was **6.668s**, CPU **5.950s**, peak **1.5G**, swap **0B**. Startup's printed `2 CPU core(s)` does not override the outer 100% quota. Rounded peak cannot establish or exclude crossing MemoryHigh; no exact worker peak/high-event series was retained.
+
+Bwrap argv uses read-only `/`, read-only completed d5 source overlay at canonical path, read-only canonical target, unshared network, tmpfs `/tmp`, fresh `/dev` and `/proc`, HOME `[PRIVATE_HOME]`, WOW_SIM_CASC=0, WOW_SIM_NO_SOUND=1. WTF/cache access is read-only inherited state, not prohibited reads or a clean-room fixture. CASC assets and sound are not verified.
+
+Fresh main admission at 2026-10-15T01:37:37.168291+00:00: approved/runtime_approved true; scope single serial 1CPU/2GiB/86s CLI, compiler PSI<1 guard unchanged. Host full pressure avg10 **0.45**, avg60 **0.82**, host available **31332659200**, disk free **579677876224** bytes. Helper admission at 01:37:37.176323+00:00: allowed true; parent memory.current **42948743168**, memory.high **42949672960**, memory.max **45097156608**; half-clean-file/slab reclaim **13933297152**, projected **31162929664**, host available **31328112640**. Projection is admission accounting, not an observed worker peak.
+
+Pressure context: parent high events **118968688 → 118980696** (**+12008**); max **11534891 unchanged**, oom **118 unchanged**, oom_kill **11 unchanged**. Parent memory PSI full avg10 **0.10 → 0.32**, avg60 **0.56 → 0.57**; total **7701113423 → 7701184811** (+71388). Host-after full avg10 **0.63**, avg60 **0.83**, avg300 **1.26**. Existing historical OOM counters are not new run OOMs; successful exit is not zero-pressure proof. Saved causality caveat: `Concurrent lead gates; global readings do not establish workload causality`. Parent high-event growth is real but cannot be attributed specifically to this worker. Runtime admission does not authorize new runs or loosen the compiler guard.
+
+## Complete saved evidence appendix
+
+### stdout bytes
+
+`b'[]\n'` / `5b5d0a` (3 bytes).
+
+### stderr
+
+```text
+[  0.000s] [startup] wow-sim process started pid=[PRIVATE_PROCESS_ID_07]
+[  0.000s] Resource limits: 2 CPU core(s)
+[  0.003s] [Startup] WowLuaEnv::new begin
+[  0.021s] [Startup] SimState::default complete in 17.41ms
+[  0.022s] [Startup] rilua VM created in 1.60ms
+[  0.024s] [Startup] builtin frames initialized in 1.22ms
+[  0.024s] [Startup] template registry cleared in 166.40µs
+[  0.024s] [Startup] intrinsic templates registered in 8.15µs
+[  0.024s] [Startup] initial app_data lua handle installed in 672.00ns
+[  0.265s] [Startup] init_lua_state complete in 241.14ms
+[  0.265s] [Startup] final app_data lua handle installed in 321.00ns
+[  0.265s] [Startup] initial screen globals installed in 130.02µs
+[  0.265s] [Startup] WowLuaEnv::new complete
+[  0.265s] [Startup] screen size set to 1600x1200 in 55.62µs
+[  0.265s] [Startup] WowFontSystem::new begin casc=false
+[  0.455s] [Startup] font system fallback loaded in 189.47ms
+[  0.455s] [Startup] cosmic font system built in 541.43µs
+[  0.456s] [Startup] swash cache created in 176.52µs
+[  0.456s] [Startup] WowFontSystem::new complete in 190.22ms
+[  0.456s] [Startup] font system created in 190.33ms
+[  0.456s] Sound disabled
+[  0.457s] [Startup] begin stop GC
+[  0.457s] [Startup] end stop GC in 210.00ns
+[  0.457s] [Startup] begin configure saved variables
+[  0.457s] SavedVariables loading disabled
+[  0.457s] [Startup] end configure saved variables in 1.89µs
+[  0.457s] [Startup] begin load keybindings
+[  0.457s] [Startup] end load keybindings in 180.00ns
+[  0.457s] [Startup] begin configure edit mode cache
+[  0.457s] EditMode cache source (read-only): [PRIVATE_ACCOUNT_02] @ [PRIVATE_REALM_02]/[PRIVATE_CHARACTER_02]
+[  0.457s] [Startup] end configure edit mode cache in 410.95µs
+[  0.457s] [Startup] begin read ServerSnapshot edit mode layout
+[  0.457s] [Startup] end read ServerSnapshot edit mode layout in 40.00ns
+[  0.457s] [Startup] begin load edit mode cache
+[  0.461s] Loaded EditMode layout cache from WTF
+[  0.461s] [Startup] end load edit mode cache in 3.36ms
+[  0.461s] [Startup] begin load ServerSnapshot character state
+[  0.461s] [Startup] end load ServerSnapshot character state in 50.00ns
+[  0.461s] [Startup] begin load Blizzard addons
+[  0.503s] Loading 291 Blizzard addons...
+[  4.274s] Blizzard addons loaded in 3.81s (io=267.18ms xml=325.71ms xmlproc=2.02s frames⊂xmlproc=2.01s lua=853.07ms [compile=714.18ms call=138.89ms] gc=deferred, bytecode cache: 1569/1569 hits (100%, lookup_miss=0 replay_fail=0 stored=0 store_fail=0))
+  frame breakdown: setup=946.04ms finalize=2.38s (2482 frames)
+  setup: code_build=10.77ms exec_lua=935.48ms props=10.22ms
+  finalize: layers=64.42ms (1151 tex, 689 fs) anim=18.74ms button=37.52ms lifecycle=898.02ms (1761 fires)
+[  4.274s] [Startup] end load Blizzard addons in 3.81s
+[  4.274s] [Startup] begin prepare chat frame for third-party addons
+[  4.275s] [Startup] end prepare chat frame for third-party addons in 805.31µs
+[  4.275s] [Startup] begin apply post-Blizzard load workarounds
+[  4.275s] [Startup] applying post-load workarounds
+[  4.271s] [Startup] apply_post_load_workarounds: begin
+[  4.271s] [Workarounds] starting patch_edit_mode_manager
+[  4.271s] [Workarounds] finished patch_edit_mode_manager in 429.05µs
+[  4.271s] [Workarounds] starting init_edit_mode_layout
+[  4.271s] [EditMode] starting setup_layout_info
+[  4.298s] [EditMode] finished setup_layout_info in 26.90ms
+[  4.298s] [EditMode] starting apply_system_anchors
+[  4.512s] [EditMode] finished apply_system_anchors in 213.63ms
+[  4.512s] [EditMode] starting finalize_action_bar_positions
+[  4.514s] [EditMode] finished finalize_action_bar_positions in 2.63ms
+[  4.514s] [EditMode] starting invoke_anchor_changed_hooks
+[  4.515s] [EditMode] finished invoke_anchor_changed_hooks in 790.32µs
+[  4.515s] [EditMode] starting fix_action_bar_nan_size
+[  4.515s] [EditMode] finished fix_action_bar_nan_size in 61.89µs
+[  4.515s] [EditMode] starting fix_action_bar_scale
+[  4.515s] [EditMode] finished fix_action_bar_scale in 6.27µs
+[  4.515s] [Workarounds] finished init_edit_mode_layout in 244.10ms
+[  4.515s] [Workarounds] starting patch_ui_parent_panel_toggles
+[  4.516s] [Workarounds] finished patch_ui_parent_panel_toggles in 326.78µs
+[  4.516s] [Workarounds] starting patch_uiparent_onupdate_worklists
+[  4.516s] [Workarounds] finished patch_uiparent_onupdate_worklists in 143.95µs
+[  4.516s] [Workarounds] starting init_chat_type_colors
+[  4.516s] [Workarounds] finished init_chat_type_colors in 165.04µs
+[  4.516s] [Workarounds] starting patch_chat_voice_button_surface
+[  4.516s] [Workarounds] finished patch_chat_voice_button_surface in 169.16µs
+[  4.516s] [Workarounds] starting patch_item_socketing_tooltips
+[  4.516s] [Workarounds] finished patch_item_socketing_tooltips in 92.01µs
+[  4.516s] [Workarounds] starting patch_character_select_selected_name
+[  4.516s] [Workarounds] finished patch_character_select_selected_name in 47.22µs
+[  4.516s] [Workarounds] starting patch_character_create_defaults
+[  4.517s] [Workarounds] finished patch_character_create_defaults in 344.83µs
+[  4.517s] [Workarounds] starting patch_character_frame_title_refresh
+[  4.527s] [Workarounds] finished patch_character_frame_title_refresh in 10.18ms
+[  4.527s] [Workarounds] starting patch_vignette_pin_template
+[  4.527s] [Workarounds] finished patch_vignette_pin_template in 142.73µs
+[  4.527s] [Workarounds] starting patch_fog_of_war_pin_mixin
+[  4.527s] [Workarounds] finished patch_fog_of_war_pin_mixin in 371.21µs
+[  4.527s] [Workarounds] starting patch_map_exploration_pin_mixin
+[  4.539s] [Workarounds] finished patch_map_exploration_pin_mixin in 11.57ms
+[  4.539s] [Workarounds] starting patch_map_canvas_data_provider_attachment
+[  4.539s] [Workarounds] finished patch_map_canvas_data_provider_attachment in 114.13µs
+[  4.539s] [Workarounds] starting ensure_adventure_map_frame_surface
+[  4.540s] [Workarounds] finished ensure_adventure_map_frame_surface in 659.60µs
+[  4.540s] [Workarounds] starting patch_action_bar_button_event_fanout
+[  4.540s] [Workarounds] finished patch_action_bar_button_event_fanout in 142.04µs
+[  4.540s] [Workarounds] starting patch_paging_controls_page_text
+[  4.540s] [Workarounds] finished patch_paging_controls_page_text in 52.82µs
+[  4.540s] [Workarounds] starting patch_talent_edge_frame_level_sync
+[  4.540s] [Workarounds] finished patch_talent_edge_frame_level_sync in 38.94µs
+[  4.540s] [Workarounds] starting patch_catalog_shop_product_card_defaults
+[  4.540s] [Workarounds] finished patch_catalog_shop_product_card_defaults in 83.61µs
+[  4.540s] [Workarounds] starting patch_game_time_defaults
+[  4.540s] [Workarounds] finished patch_game_time_defaults in 9.00µs
+[  4.540s] [Workarounds] starting patch_tooltip_nineslice_surface
+[  4.540s] [Workarounds] finished patch_tooltip_nineslice_surface in 61.40µs
+[  4.540s] [Workarounds] starting patch_container_frame_token_tracker
+[  4.540s] [Workarounds] finished patch_container_frame_token_tracker in 53.78µs
+[  4.540s] [Workarounds] starting patch_achievement_display_set_achievements
+[  4.540s] [Workarounds] finished patch_achievement_display_set_achievements in 10.94µs
+[  4.540s] [Workarounds] starting patch_housing_dashboard_preload
+[  4.540s] [Workarounds] finished patch_housing_dashboard_preload in 77.31µs
+[  4.540s] [Workarounds] starting patch_lfg_lock_list
+[  4.540s] [Workarounds] finished patch_lfg_lock_list in 48.28µs
+[  4.540s] [Workarounds] starting patch_auction_house_browse_results_event
+[  4.540s] [Workarounds] finished patch_auction_house_browse_results_event in 92.12µs
+[  4.540s] [Workarounds] starting patch_auction_house_search_context_aliases
+[  4.540s] [Workarounds] finished patch_auction_house_search_context_aliases in 41.41µs
+[  4.540s] [Workarounds] starting patch_auth_challenge_frame_parent
+[  4.540s] [Workarounds] finished patch_auth_challenge_frame_parent in 89.14µs
+[  4.540s] [Workarounds] starting patch_settings_surface_defaults
+[  4.541s] [Workarounds] finished patch_settings_surface_defaults in 481.17µs
+[  4.541s] [Workarounds] starting patch_settings_canvas_layout_visibility
+[  4.541s] [Workarounds] finished patch_settings_canvas_layout_visibility in 147.55µs
+[  4.541s] [Startup] apply_post_load_workarounds: workarounds complete
+[  4.636s] [Startup] apply_post_load_workarounds: globals restored
+[  4.636s] [Startup] apply_post_load_workarounds: patch 12.1 compatibility restored
+[  4.636s] [Startup] apply_post_load_workarounds: seterrorhandler restored
+[  4.641s] [Startup] post-load workarounds complete in 365.46ms
+[  4.641s] [Startup] end apply post-Blizzard load workarounds in 365.47ms
+[  4.641s] [Startup] begin load third-party addons
+[  4.641s] Addon loading disabled
+[  4.641s] [Startup] end load third-party addons in 1.51µs
+[  4.641s] [Startup] begin sync addon names to Lua
+[  4.641s] [Startup] end sync addon names to Lua in 362.15µs
+[  4.641s] [Startup] applying post-load workarounds
+[  4.637s] [Startup] apply_post_load_workarounds: begin
+[  4.637s] [Workarounds] starting patch_edit_mode_manager
+[  4.637s] [Workarounds] finished patch_edit_mode_manager in 422.89µs
+[  4.637s] [Workarounds] starting init_edit_mode_layout
+[  4.637s] [EditMode] starting setup_layout_info
+[  4.662s] [EditMode] finished setup_layout_info in 25.16ms
+[  4.662s] [EditMode] starting apply_system_anchors
+[  4.828s] [EditMode] finished apply_system_anchors in 165.96ms
+[  4.828s] [EditMode] starting finalize_action_bar_positions
+[  4.831s] [EditMode] finished finalize_action_bar_positions in 2.65ms
+[  4.831s] [EditMode] starting invoke_anchor_changed_hooks
+[  4.836s] [EditMode] finished invoke_anchor_changed_hooks in 4.98ms
+[  4.836s] [EditMode] starting fix_action_bar_nan_size
+[  4.836s] [EditMode] finished fix_action_bar_nan_size in 61.92µs
+[  4.836s] [EditMode] starting fix_action_bar_scale
+[  4.836s] [EditMode] finished fix_action_bar_scale in 6.47µs
+[  4.836s] [Workarounds] finished init_edit_mode_layout in 198.88ms
+[  4.836s] [Workarounds] starting patch_ui_parent_panel_toggles
+[  4.836s] [Workarounds] finished patch_ui_parent_panel_toggles in 302.68µs
+[  4.836s] [Workarounds] starting patch_uiparent_onupdate_worklists
+[  4.836s] [Workarounds] finished patch_uiparent_onupdate_worklists in 146.16µs
+[  4.836s] [Workarounds] starting init_chat_type_colors
+[  4.836s] [Workarounds] finished init_chat_type_colors in 157.59µs
+[  4.836s] [Workarounds] starting patch_chat_voice_button_surface
+[  4.837s] [Workarounds] finished patch_chat_voice_button_surface in 315.05µs
+[  4.837s] [Workarounds] starting patch_item_socketing_tooltips
+[  4.837s] [Workarounds] finished patch_item_socketing_tooltips in 81.62µs
+[  4.837s] [Workarounds] starting patch_character_select_selected_name
+[  4.837s] [Workarounds] finished patch_character_select_selected_name in 46.48µs
+[  4.837s] [Workarounds] starting patch_character_create_defaults
+[  4.837s] [Workarounds] finished patch_character_create_defaults in 318.39µs
+[  4.837s] [Workarounds] starting patch_character_frame_title_refresh
+[  4.848s] [Workarounds] finished patch_character_frame_title_refresh in 10.63ms
+[  4.848s] [Workarounds] starting patch_vignette_pin_template
+[  4.848s] [Workarounds] finished patch_vignette_pin_template in 143.97µs
+[  4.848s] [Workarounds] starting patch_fog_of_war_pin_mixin
+[  4.848s] [Workarounds] finished patch_fog_of_war_pin_mixin in 317.96µs
+[  4.848s] [Workarounds] starting patch_map_exploration_pin_mixin
+[  4.849s] [Workarounds] finished patch_map_exploration_pin_mixin in 423.73µs
+[  4.849s] [Workarounds] starting patch_map_canvas_data_provider_attachment
+[  4.849s] [Workarounds] finished patch_map_canvas_data_provider_attachment in 76.64µs
+[  4.849s] [Workarounds] starting ensure_adventure_map_frame_surface
+[  4.849s] [Workarounds] finished ensure_adventure_map_frame_surface in 201.93µs
+[  4.849s] [Workarounds] starting patch_action_bar_button_event_fanout
+[  4.849s] [Workarounds] finished patch_action_bar_button_event_fanout in 125.12µs
+[  4.849s] [Workarounds] starting patch_paging_controls_page_text
+[  4.849s] [Workarounds] finished patch_paging_controls_page_text in 47.31µs
+[  4.849s] [Workarounds] starting patch_talent_edge_frame_level_sync
+[  4.849s] [Workarounds] finished patch_talent_edge_frame_level_sync in 35.24µs
+[  4.849s] [Workarounds] starting patch_catalog_shop_product_card_defaults
+[  4.849s] [Workarounds] finished patch_catalog_shop_product_card_defaults in 75.11µs
+[  4.849s] [Workarounds] starting patch_game_time_defaults
+[  4.849s] [Workarounds] finished patch_game_time_defaults in 8.23µs
+[  4.849s] [Workarounds] starting patch_tooltip_nineslice_surface
+[  4.849s] [Workarounds] finished patch_tooltip_nineslice_surface in 57.55µs
+[  4.849s] [Workarounds] starting patch_container_frame_token_tracker
+[  4.850s] [Workarounds] finished patch_container_frame_token_tracker in 50.77µs
+[  4.850s] [Workarounds] starting patch_achievement_display_set_achievements
+[  4.850s] [Workarounds] finished patch_achievement_display_set_achievements in 10.92µs
+[  4.850s] [Workarounds] starting patch_housing_dashboard_preload
+[  4.850s] [Workarounds] finished patch_housing_dashboard_preload in 76.16µs
+[  4.850s] [Workarounds] starting patch_lfg_lock_list
+[  4.850s] [Workarounds] finished patch_lfg_lock_list in 7.86µs
+[  4.850s] [Workarounds] starting patch_auction_house_browse_results_event
+[  4.850s] [Workarounds] finished patch_auction_house_browse_results_event in 90.84µs
+[  4.850s] [Workarounds] starting patch_auction_house_search_context_aliases
+[  4.850s] [Workarounds] finished patch_auction_house_search_context_aliases in 41.50µs
+[  4.850s] [Workarounds] starting patch_auth_challenge_frame_parent
+[  4.850s] [Workarounds] finished patch_auth_challenge_frame_parent in 59.58µs
+[  4.850s] [Workarounds] starting patch_settings_surface_defaults
+[  4.850s] [Workarounds] finished patch_settings_surface_defaults in 461.34µs
+[  4.850s] [Workarounds] starting patch_settings_canvas_layout_visibility
+[  4.850s] [Workarounds] finished patch_settings_canvas_layout_visibility in 146.12µs
+[  4.850s] [Startup] apply_post_load_workarounds: workarounds complete
+[  4.944s] [Startup] apply_post_load_workarounds: globals restored
+[  4.945s] [Startup] apply_post_load_workarounds: patch 12.1 compatibility restored
+[  4.945s] [Startup] apply_post_load_workarounds: seterrorhandler restored
+[  4.949s] [Startup] post-load workarounds complete in 308.43ms
+[  4.949s] [Startup] restarting GC after bootstrap
+[  5.141s] [Startup] GC restart complete in 191.97ms
+=== Final observed Lua error summary ===
+Status: CLEAN
+Lua errors: 0 unique, 0 occurrence(s)
+Attributed owners: 0
+Unattributed Lua errors: 0 occurrence(s)
+```
+
+
+### result.json
+
+```json
+{
+  "source": "d15126365dd3c3d207fea3a328599ea615672c4c",
+  "profile": "retail",
+  "filter": "ordinary CLI lua-errors",
+  "expected_cases": null,
+  "launcher_exit": 0,
+  "summaries": [],
+  "stdout_bytes": 3,
+  "stderr_bytes": 14709,
+  "receipt_stat_reused": {
+    "st_dev": 66306,
+    "st_ino": 152734263,
+    "st_size": 408531264,
+    "st_mtime_ns": 1792022460726887560
+  },
+  "unit": "[PRIVATE_RETAIL_NORMAL_CLI_UNIT]",
+  "scope": "Historical d151 cached non-test Retail CLI, completed d5 source overlay, matched relevant source through918d. Later TextColumn passiveeba5 excluded. Prefork compilation incomplete."
+}
+```
+
+
+### launcher.txt
+
+```text
+Running as unit: [PRIVATE_RETAIL_NORMAL_CLI_UNIT].service; invocation ID: [PRIVATE_INVOCATION_10]
+          Finished with result: success
+Main processes terminated with: code=exited, status=0/SUCCESS
+               Service runtime: 6.668s
+             CPU time consumed: 5.950s
+                   Memory peak: 1.5G (swap: 0B)
+```
+
+
+### argv.json
+
+```json
+[
+  "systemd-run",
+  "--user",
+  "--wait",
+  "--unit=[PRIVATE_RETAIL_NORMAL_CLI_UNIT]",
+  "--slice=[PRIVATE_AGENT_CGROUP_SLICE]",
+  "-p",
+  "MemoryMax=2G",
+  "-p",
+  "MemoryHigh=1536M",
+  "-p",
+  "CPUQuota=100%",
+  "-p",
+  "KillMode=control-group",
+  "-p",
+  "StandardOutput=file:[PRIVATE_EVIDENCE]/verif/wdp/widget-spacer-retail-owning-normal-retry1-20261015T010926059272Z/runtime-spacer-retail-ordinary-lua-errors-resumed/stdout",
+  "-p",
+  "StandardError=file:[PRIVATE_EVIDENCE]/verif/wdp/widget-spacer-retail-owning-normal-retry1-20261015T010926059272Z/runtime-spacer-retail-ordinary-lua-errors-resumed/stderr",
+  "--working-directory=[SIM_REPO]",
+  "/usr/bin/timeout",
+  "--signal=TERM",
+  "--kill-after=2",
+  "86",
+  "/usr/bin/bwrap",
+  "--die-with-parent",
+  "--unshare-net",
+  "--ro-bind",
+  "/",
+  "/",
+  "--ro-bind",
+  "[PRIVATE_EVIDENCE]/verif/wdp/widget-spacer-retail-producer-green-20261014T235938300530Z/source",
+  "[SIM_REPO]",
+  "--ro-bind",
+  "[SIM_REPO]/target",
+  "[SIM_REPO]/target",
+  "--tmpfs",
+  "/tmp",
+  "--dev",
+  "/dev",
+  "--proc",
+  "/proc",
+  "--chdir",
+  "[SIM_REPO]",
+  "--setenv",
+  "HOME",
+  "[PRIVATE_HOME]",
+  "--setenv",
+  "WOW_SIM_CASC",
+  "0",
+  "--setenv",
+  "WOW_SIM_NO_SOUND",
+  "1",
+  "[PRIVATE_EVIDENCE]/verif/wdp/widget-spacer-retail-owning-normal-retry1-20261015T010926059272Z/artifacts/wow-sim-normal",
+  "--no-addons",
+  "--no-saved-vars",
+  "lua-errors"
+]
+```
+
+
+### admission.json
+
+```json
+{
+  "utc": "2026-10-15T01:37:37.176323+00:00",
+  "raw": {
+    "memory.current": "42948743168\n",
+    "memory.high": "42949672960\n",
+    "memory.max": "45097156608\n",
+    "memory.stat": "anon 11322044416\nfile 28146941952\nkernel 3367067648\nkernel_stack 8994816\npagetables 66342912\nsec_pagetables 0\npercpu 14429192\nsock 0\nvmalloc 4096\nshmem 1600286720\nzswap 645453212\nzswapped 2946179072\nzswap_incomp 5906432\nfile_mapped 980856832\nfile_dirty 160317440\nfile_writeback 0\nswapcached 666361856\nanon_thp 113246208\nfile_thp 27262976\nshmem_thp 0\ninactive_anon 3231989760\nactive_anon 9785253888\ninactive_file 24256323584\nactive_file 2290032640\nunevictable 0\nslab_reclaimable 2461113344\nslab_unreclaimable 39294720\nslab 2500408064\nhugetlb 0\nworkingset_refault_anon 1131933477\nworkingset_refault_file 1579680554\nworkingset_activate_anon 112585955\nworkingset_activate_file 67314089\nworkingset_restore_anon 115846385\nworkingset_restore_file 166165323\nworkingset_nodereclaim 511380240\npgdemote_kswapd 0\npgdemote_direct 0\npgdemote_khugepaged 0\npgdemote_proactive 0\npgsteal_kswapd 15271967568\npgsteal_direct 9731252667\npgsteal_khugepaged 126631\npgsteal_proactive 0\npgscan_kswapd 16802064056\npgscan_direct 13892545871\npgscan_khugepaged 150776\npgscan_proactive 0\npgrefill 13120009387\npgpromote_success 0\npgscan 30694760703\npgsteal 25003346866\npswpin 94952593\npswpout 354028247\npgfault 53663664127\npgmajfault 1379433581\npgactivate 7828817945\npgdeactivate 0\npglazyfree 0\npglazyfreed 1\nswpin_zero 5680368\nswpout_zero 35021550\nzswpin 678105745\nzswpout 2219631345\nzswpwb 354485426\nthp_fault_alloc 4871913\nthp_collapse_alloc 5522\nthp_swpout 0\nthp_swpout_fallback 38527\nnuma_pages_migrated 0\nnuma_pte_updates 0\nnuma_hint_faults 0\n",
+    "memory.pressure": "some avg10=0.10 avg60=0.57 avg300=0.86 total=8908619172\nfull avg10=0.10 avg60=0.56 avg300=0.77 total=7701113505\n",
+    "cpu.pressure": "some avg10=0.00 avg60=0.17 avg300=5.17 total=33694923670\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=3076612949\n",
+    "io.pressure": "some avg10=0.85 avg60=3.83 avg300=9.08 total=22399924366\nfull avg10=0.84 avg60=3.64 avg300=7.67 total=16954027302\n"
+  },
+  "half_clean_file_and_slab_reclaim": 13933297152,
+  "projected": 31162929664,
+  "host_available": 31328112640,
+  "allowed": true,
+  "worker_max": 2147483648,
+  "worker_high": 1610612736,
+  "profile": "retail"
+}
+```
+
+
+### fresh-main-admission.json
+
+```json
+{
+  "name": "spacer-retail-cli-resumed",
+  "utc": "2026-10-15T01:37:37.168291+00:00",
+  "approved": true,
+  "pool_cores": 9.000153629204297,
+  "host_full_avg10": 0.45,
+  "host_full_avg60": 0.82,
+  "host_available": 31332659200,
+  "slice_anon_kernel": 14687899648,
+  "disk_free": 579677876224,
+  "window_text": null,
+  "budget": 2147483648,
+  "monotonic_at": 443290.269683459,
+  "runtime_approved": true,
+  "runtime_scope": "single serial 1CPU/2GiB/86s CLI; compiler PSI<1 guard unchanged; original helper additionally checks shared cgroup projection"
+}
+```
+
+
+### source-mount.json
+
+```json
+{
+  "snapshot": "[PRIVATE_EVIDENCE]/verif/wdp/widget-spacer-retail-producer-green-20261014T235938300530Z/source",
+  "receipt_source": "d15126365",
+  "source_diff": "git diff --name-only d5e3358a3..918d1609f -- src tests data Cargo.toml Cargo.lock build.rs",
+  "source_diff_exit": 0,
+  "source_diff_stdout": "",
+  "later_source_not_covered": "eba5a1617 passive TextColumn"
+}
+```
+
+
+### pressure-context.json
+
+```json
+{
+  "parent_before": {
+    "memory.events": "low 0\nhigh 118968688\nmax 11534891\noom 118\noom_kill 11\noom_group_kill 0\nsock_throttled 1446720\n",
+    "memory.pressure": "some avg10=0.10 avg60=0.57 avg300=0.86 total=8908619090\nfull avg10=0.10 avg60=0.56 avg300=0.77 total=7701113423\n"
+  },
+  "parent_after": {
+    "memory.events": "low 0\nhigh 118980696\nmax 11534891\noom 118\noom_kill 11\noom_group_kill 0\nsock_throttled 1446720\n",
+    "memory.pressure": "some avg10=0.32 avg60=0.57 avg300=0.86 total=8908690516\nfull avg10=0.32 avg60=0.57 avg300=0.77 total=7701184811\n"
+  },
+  "host_after": "some avg10=0.63 avg60=0.87 avg300=1.39 total=11586594948\nfull avg10=0.63 avg60=0.83 avg300=1.26 total=10225727378\n",
+  "causality": "Concurrent lead gates; global readings do not establish workload causality"
+}
+```

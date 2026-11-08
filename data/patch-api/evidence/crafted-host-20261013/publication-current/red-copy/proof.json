@@ -1,0 +1,2104 @@
+{
+  "schema_version": 1,
+  "verified_at_utc": "2026-10-14T02:30:49.591040+00:00",
+  "gate": "public whole-text-copy/privacy/link/count/scope ONLY",
+  "commit": "51b64e72fd0ad5891135b6220441aa82eac0f492",
+  "status": "PASS",
+  "failures": [],
+  "inventory": {
+    "selected": 56,
+    "extra_readme_metadata": 2,
+    "total_public": 58,
+    "git_members": 58,
+    "git_blob_matches": 58,
+    "selected_json_parsed_without_reserializing_copy": 33
+  },
+  "map_authority": {
+    "count": 10,
+    "ordered_literal_replacements": true,
+    "occurrences": [
+      {
+        "category": "unit",
+        "actual_occurrences": 4,
+        "declared_occurrences": 4
+      },
+      {
+        "category": "unit",
+        "actual_occurrences": 3,
+        "declared_occurrences": 3
+      },
+      {
+        "category": "unit",
+        "actual_occurrences": 5,
+        "declared_occurrences": 5
+      },
+      {
+        "category": "unit",
+        "actual_occurrences": 5,
+        "declared_occurrences": 5
+      },
+      {
+        "category": "unit",
+        "actual_occurrences": 6,
+        "declared_occurrences": 6
+      },
+      {
+        "category": "unit",
+        "actual_occurrences": 6,
+        "declared_occurrences": 6
+      },
+      {
+        "category": "invocation",
+        "actual_occurrences": 1,
+        "declared_occurrences": 1
+      },
+      {
+        "category": "invocation",
+        "actual_occurrences": 1,
+        "declared_occurrences": 1
+      },
+      {
+        "category": "private-prefix",
+        "actual_occurrences": 5537,
+        "declared_occurrences": 5537
+      },
+      {
+        "category": "private-prefix",
+        "actual_occurrences": 0,
+        "declared_occurrences": 0
+      }
+    ],
+    "rejected_literal": "#0",
+    "old_stage_stat_only": {
+      "exists": true,
+      "mode": "0o700"
+    },
+    "old_stage_payloads_unopened": true,
+    "cargo_original_public_occurrences": [
+      24,
+      24
+    ]
+  },
+  "full_file_ledger": [
+    {
+      "path": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/admission.json",
+      "source_bytes": 2619,
+      "bytes": 2619,
+      "source_sha256": "e2258f8a32911dedf47cac628857eb32d4b94d9d4d1c34f5581d03ea9e3392d3",
+      "sha256": "e2258f8a32911dedf47cac628857eb32d4b94d9d4d1c34f5581d03ea9e3392d3",
+      "checks": {
+        "whole_utf8_ordered_literal_plus_lf": true,
+        "source_size": true,
+        "source_hash": true,
+        "public_size": true,
+        "public_hash": true,
+        "metadata": true
+      }
+    },
+    {
+      "path": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/submission.json",
+      "source_bytes": 1334,
+      "bytes": 1184,
+      "source_sha256": "c163bee8a2345611463726ac0292f687efafd449459504ba01a9607713962a54",
+      "sha256": "168bc865aa6efac81071db5d91365036df7298f293eb48369f6c690261f785c4",
+      "checks": {
+        "whole_utf8_ordered_literal_plus_lf": true,
+        "source_size": true,
+        "source_hash": true,
+        "public_size": true,
+        "public_hash": true,
+        "metadata": true
+      }
+    },
+    {
+      "path": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/revision.json",
+      "source_bytes": 383,
+      "bytes": 383,
+      "source_sha256": "a347a0bb25f59a429ab3a0a9c0bacdaaa63c2452edabc12b499c7778546964fc",
+      "sha256": "a347a0bb25f59a429ab3a0a9c0bacdaaa63c2452edabc12b499c7778546964fc",
+      "checks": {
+        "whole_utf8_ordered_literal_plus_lf": true,
+        "source_size": true,
+        "source_hash": true,
+        "public_size": true,
+        "public_hash": true,
+        "metadata": true
+      }
+    },
+    {
+      "path": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/toolchain.json",
+      "source_bytes": 331,
+      "bytes": 331,
+      "source_sha256": "f249bdcf5117f63071fbf830da47894a3df10049294e1e2e8292e7ed06a4527d",
+      "sha256": "f249bdcf5117f63071fbf830da47894a3df10049294e1e2e8292e7ed06a4527d",
+      "checks": {
+        "whole_utf8_ordered_literal_plus_lf": true,
+        "source_size": true,
+        "source_hash": true,
+        "public_size": true,
+        "public_hash": true,
+        "metadata": true
+      }
+    },
+    {
+      "path": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/compile.stdout",
+      "source_bytes": 574439,
+      "bytes": 585027,
+      "source_sha256": "378bf6062e0ddac719bc35bf1902dc6647e38c9b631c10dfcf3f8cf04ec8e99b",
+      "sha256": "6f6d393f8551ad4ff5c7541bbc1c863201aab887f66c34c1e323e4c077b824ee",
+      "checks": {
+        "whole_utf8_ordered_literal_plus_lf": true,
+        "source_size": true,
+        "source_hash": true,
+        "public_size": true,
+        "public_hash": true,
+        "metadata": true
+      }
+    },
+    {
+      "path": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/compile.stderr",
+      "source_bytes": 1376,
+      "bytes": 1384,
+      "source_sha256": "4ebdad45d62c1133324c9186636d0700fca791d72d9ccd2775035fc91f23f9a9",
+      "sha256": "d3e1105d99d9d12d519618914008006d81a482669a298df5747946eb639e8c0b",
+      "checks": {
+        "whole_utf8_ordered_literal_plus_lf": true,
+        "source_size": true,
+        "source_hash": true,
+        "public_size": true,
+        "public_hash": true,
+        "metadata": true
+      }
+    },
+    {
+      "path": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/compile-result.json",
+      "source_bytes": 309,
+      "bytes": 309,
+      "source_sha256": "c7d9ee1e9357665c01a6894c74c2dc2c84aefe1e9bcf2e36925564089e199a28",
+      "sha256": "c7d9ee1e9357665c01a6894c74c2dc2c84aefe1e9bcf2e36925564089e199a28",
+      "checks": {
+        "whole_utf8_ordered_literal_plus_lf": true,
+        "source_size": true,
+        "source_hash": true,
+        "public_size": true,
+        "public_hash": true,
+        "metadata": true
+      }
+    },
+    {
+      "path": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/compile-terminal.txt",
+      "source_bytes": 205,
+      "bytes": 205,
+      "source_sha256": "a324726db9842b8fecb92ba04a49d1c929a6b7f5e98add8dcc9864fdefd65c15",
+      "sha256": "a324726db9842b8fecb92ba04a49d1c929a6b7f5e98add8dcc9864fdefd65c15",
+      "checks": {
+        "whole_utf8_ordered_literal_plus_lf": true,
+        "source_size": true,
+        "source_hash": true,
+        "public_size": true,
+        "public_hash": true,
+        "metadata": true
+      }
+    },
+    {
+      "path": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/seal-integration.json",
+      "source_bytes": 1101,
+      "bytes": 1105,
+      "source_sha256": "a33459cca27b9e006d39c80941c4e958eed21c0b706a75800e193d6d79091b9f",
+      "sha256": "7b452f98252be5c186c96541ca40323b3c87f7347b08238324747d5dc1485233",
+      "checks": {
+        "whole_utf8_ordered_literal_plus_lf": true,
+        "source_size": true,
+        "source_hash": true,
+        "public_size": true,
+        "public_hash": true,
+        "metadata": true
+      }
+    },
+    {
+      "path": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/receipt-integration.json",
+      "source_bytes": 1097,
+      "bytes": 1105,
+      "source_sha256": "c9fcdfb994fcb4d571d46875d46ba51202cc3d9eadc415155db7e0740b54545f",
+      "sha256": "35cf1b01a7dbfc308aa51d2b0d806b4d204a4ae2459027010ef77b3efdef784e",
+      "checks": {
+        "whole_utf8_ordered_literal_plus_lf": true,
+        "source_size": true,
+        "source_hash": true,
+        "public_size": true,
+        "public_hash": true,
+        "metadata": true
+      }
+    },
+    {
+      "path": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/source-scope.json",
+      "source_bytes": 559,
+      "bytes": 563,
+      "source_sha256": "c529ceeb23712215fd84f92122f12acf295c4491a804dae29442be0ca8430827",
+      "sha256": "b453d3a01ba0e13236ade1dd165d3d805829a499c373548b16d0be8a7a102ea5",
+      "checks": {
+        "whole_utf8_ordered_literal_plus_lf": true,
+        "source_size": true,
+        "source_hash": true,
+        "public_size": true,
+        "public_hash": true,
+        "metadata": true
+      }
+    },
+    {
+      "path": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/runtime-crafted-owned-red-2g/admission.json",
+      "source_bytes": 2413,
+      "bytes": 2413,
+      "source_sha256": "4bce28d5be13793f2ca68ce09c6d1a9f1c6f3ef9be84913363d88a0cda697ba5",
+      "sha256": "4bce28d5be13793f2ca68ce09c6d1a9f1c6f3ef9be84913363d88a0cda697ba5",
+      "checks": {
+        "whole_utf8_ordered_literal_plus_lf": true,
+        "source_size": true,
+        "source_hash": true,
+        "public_size": true,
+        "public_hash": true,
+        "metadata": true
+      }
+    },
+    {
+      "path": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/runtime-crafted-owned-red-2g/argv.json",
+      "source_bytes": 1695,
+      "bytes": 1699,
+      "source_sha256": "292e7cea093f605e8b6ef4f77ba371a750f9dbeb08ca12594bc645c07f7d8873",
+      "sha256": "6cbe17c69be18f89b2ba033fc960ca0a3e30a871584900235be960cb8ffcd583",
+      "checks": {
+        "whole_utf8_ordered_literal_plus_lf": true,
+        "source_size": true,
+        "source_hash": true,
+        "public_size": true,
+        "public_hash": true,
+        "metadata": true
+      }
+    },
+    {
+      "path": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/runtime-crafted-owned-red-2g/launcher.txt",
+      "source_bytes": 307,
+      "bytes": 271,
+      "source_sha256": "fcbc0a70bbd31b055ca7a41e422b06f87276d0050549a1cb3bc8f9b03ac1c057",
+      "sha256": "72168b63f85ff76d39e3cbe4e29c199420916ea27f177c497f298c9b6b18b5e1",
+      "checks": {
+        "whole_utf8_ordered_literal_plus_lf": true,
+        "source_size": true,
+        "source_hash": true,
+        "public_size": true,
+        "public_hash": true,
+        "metadata": true
+      }
+    },
+    {
+      "path": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/runtime-crafted-owned-red-2g/result.json",
+      "source_bytes": 717,
+      "bytes": 681,
+      "source_sha256": "d569f680b4238dce7dce1d3e21af08ea1d2e114c50e1e16530177c8bbb1cc2d6",
+      "sha256": "db91cd1d6a005d9b3dac2f22cbd907907eda3f2e55099735e7dee78dbc42f8da",
+      "checks": {
+        "whole_utf8_ordered_literal_plus_lf": true,
+        "source_size": true,
+        "source_hash": true,
+        "public_size": true,
+        "public_hash": true,
+        "metadata": true
+      }
+    },
+    {
+      "path": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/runtime-crafted-owned-red-2g/stderr",
+      "source_bytes": 5913,
+      "bytes": 5933,
+      "source_sha256": "129972326db2572adab9b58f9ed02efdc646312a693423c04e31d1d796c131ab",
+      "sha256": "99eaccddde9cb39face1883f0b37349e47debf005529641667c11b4268b04b81",
+      "checks": {
+        "whole_utf8_ordered_literal_plus_lf": true,
+        "source_size": true,
+        "source_hash": true,
+        "public_size": true,
+        "public_hash": true,
+        "metadata": true
+      }
+    },
+    {
+      "path": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/runtime-crafted-owned-red-2g/stdout",
+      "source_bytes": 1221,
+      "bytes": 1221,
+      "source_sha256": "5bea0562da6510aeb6e3d1aba9ebedf36291527663c19bf0988f74be76ca478f",
+      "sha256": "5bea0562da6510aeb6e3d1aba9ebedf36291527663c19bf0988f74be76ca478f",
+      "checks": {
+        "whole_utf8_ordered_literal_plus_lf": true,
+        "source_size": true,
+        "source_hash": true,
+        "public_size": true,
+        "public_hash": true,
+        "metadata": true
+      }
+    },
+    {
+      "path": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/runtime-crafted-itembutton-red-2g/admission.json",
+      "source_bytes": 2414,
+      "bytes": 2414,
+      "source_sha256": "0065d64c495c8a104db7adf2968b7238615a7dc35f134918e344e506d4abbf33",
+      "sha256": "0065d64c495c8a104db7adf2968b7238615a7dc35f134918e344e506d4abbf33",
+      "checks": {
+        "whole_utf8_ordered_literal_plus_lf": true,
+        "source_size": true,
+        "source_hash": true,
+        "public_size": true,
+        "public_hash": true,
+        "metadata": true
+      }
+    },
+    {
+      "path": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/runtime-crafted-itembutton-red-2g/argv.json",
+      "source_bytes": 1711,
+      "bytes": 1715,
+      "source_sha256": "6e2a90d90205a68d4d1b8ec7efb21676eaad238ec69e77c3676d8da5ce601abf",
+      "sha256": "d3a3910e91b0684ee6a81fc5c26d8e978a2c78a7acb82dea5f79a493336d37f3",
+      "checks": {
+        "whole_utf8_ordered_literal_plus_lf": true,
+        "source_size": true,
+        "source_hash": true,
+        "public_size": true,
+        "public_hash": true,
+        "metadata": true
+      }
+    },
+    {
+      "path": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/runtime-crafted-itembutton-red-2g/launcher.txt",
+      "source_bytes": 305,
+      "bytes": 269,
+      "source_sha256": "632c55b1ae22c1c807e6283b5313109c12c8d1b5cda9223fc7efd959b45f07c1",
+      "sha256": "57efa20594bd4a407efc17852ea9904838241797e793a470c2ea93488cb57569",
+      "checks": {
+        "whole_utf8_ordered_literal_plus_lf": true,
+        "source_size": true,
+        "source_hash": true,
+        "public_size": true,
+        "public_hash": true,
+        "metadata": true
+      }
+    },
+    {
+      "path": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/runtime-crafted-itembutton-red-2g/result.json",
+      "source_bytes": 736,
+      "bytes": 700,
+      "source_sha256": "e2f2ccc86363a29a3b9af11b8479c0066238436a5cda2db2ce324ee0dd98f51c",
+      "sha256": "18526b24ec5e1baa0c02d2a09f6ab215246c9b9e8363886732ea4d72d3157c17",
+      "checks": {
+        "whole_utf8_ordered_literal_plus_lf": true,
+        "source_size": true,
+        "source_hash": true,
+        "public_size": true,
+        "public_hash": true,
+        "metadata": true
+      }
+    },
+    {
+      "path": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/runtime-crafted-itembutton-red-2g/stderr",
+      "source_bytes": 14307,
+      "bytes": 14411,
+      "source_sha256": "e5d8da16afe779b562c1e19f5d8d2728abffe669beec075a3d45b4f3be7e5150",
+      "sha256": "3899eb6251782eabe99b28072d30012a4b8de6cee011f92da2dcde725fe7ec40",
+      "checks": {
+        "whole_utf8_ordered_literal_plus_lf": true,
+        "source_size": true,
+        "source_hash": true,
+        "public_size": true,
+        "public_hash": true,
+        "metadata": true
+      }
+    },
+    {
+      "path": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/runtime-crafted-itembutton-red-2g/stdout",
+      "source_bytes": 376,
+      "bytes": 376,
+      "source_sha256": "947bd4866a82de5f98a981a949e79d7fc372628abc061e8ef88ece9a49f3e3a5",
+      "sha256": "947bd4866a82de5f98a981a949e79d7fc372628abc061e8ef88ece9a49f3e3a5",
+      "checks": {
+        "whole_utf8_ordered_literal_plus_lf": true,
+        "source_size": true,
+        "source_hash": true,
+        "public_size": true,
+        "public_hash": true,
+        "metadata": true
+      }
+    },
+    {
+      "path": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/admission.json",
+      "source_bytes": 2626,
+      "bytes": 2626,
+      "source_sha256": "331dc6ac0948ba5c33f83816efe0d07cc3f4d33f46b107872d7683dd670f2b06",
+      "sha256": "331dc6ac0948ba5c33f83816efe0d07cc3f4d33f46b107872d7683dd670f2b06",
+      "checks": {
+        "whole_utf8_ordered_literal_plus_lf": true,
+        "source_size": true,
+        "source_hash": true,
+        "public_size": true,
+        "public_hash": true,
+        "metadata": true
+      }
+    },
+    {
+      "path": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/submission.json",
+      "source_bytes": 1399,
+      "bytes": 1258,
+      "source_sha256": "eadf8fd6fd6113f655d4925c84bbcec33c36591c9b3d727695057030cd53cb4f",
+      "sha256": "83ae64971509fa400702b5f617c4921657e78d7693e2f26cf05d1f4199558ec3",
+      "checks": {
+        "whole_utf8_ordered_literal_plus_lf": true,
+        "source_size": true,
+        "source_hash": true,
+        "public_size": true,
+        "public_hash": true,
+        "metadata": true
+      }
+    },
+    {
+      "path": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/revision.json",
+      "source_bytes": 388,
+      "bytes": 388,
+      "source_sha256": "af105cc672a718103d2a7354e2ec13dc1e82701cb8b1dcb9ee6b580fb9d01532",
+      "sha256": "af105cc672a718103d2a7354e2ec13dc1e82701cb8b1dcb9ee6b580fb9d01532",
+      "checks": {
+        "whole_utf8_ordered_literal_plus_lf": true,
+        "source_size": true,
+        "source_hash": true,
+        "public_size": true,
+        "public_hash": true,
+        "metadata": true
+      }
+    },
+    {
+      "path": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/toolchain.json",
+      "source_bytes": 331,
+      "bytes": 331,
+      "source_sha256": "f249bdcf5117f63071fbf830da47894a3df10049294e1e2e8292e7ed06a4527d",
+      "sha256": "f249bdcf5117f63071fbf830da47894a3df10049294e1e2e8292e7ed06a4527d",
+      "checks": {
+        "whole_utf8_ordered_literal_plus_lf": true,
+        "source_size": true,
+        "source_hash": true,
+        "public_size": true,
+        "public_hash": true,
+        "metadata": true
+      }
+    },
+    {
+      "path": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/compile.stdout",
+      "source_bytes": 574600,
+      "bytes": 585188,
+      "source_sha256": "400abe0284927b0c1e3b9dfd66a228283e65b7d94e2a51b20696c013191bc58c",
+      "sha256": "9b8a1080dc24adf69fcd722f3acd0c4e998b966ebb46372867c0130b850b614f",
+      "checks": {
+        "whole_utf8_ordered_literal_plus_lf": true,
+        "source_size": true,
+        "source_hash": true,
+        "public_size": true,
+        "public_hash": true,
+        "metadata": true
+      }
+    },
+    {
+      "path": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/compile.stderr",
+      "source_bytes": 1275,
+      "bytes": 1279,
+      "source_sha256": "98c28cdac513c0c04900cf5ee9be27d32e2963b76a2f0d63e704b0ab20824d54",
+      "sha256": "f7b407962bcc6e134e59245b8c8fec7dea9eec9ad0a741550645675df570fdd9",
+      "checks": {
+        "whole_utf8_ordered_literal_plus_lf": true,
+        "source_size": true,
+        "source_hash": true,
+        "public_size": true,
+        "public_hash": true,
+        "metadata": true
+      }
+    },
+    {
+      "path": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/compile-result.json",
+      "source_bytes": 306,
+      "bytes": 306,
+      "source_sha256": "4f60321504df5d11b87d5664a10bdc3e83196773c58b5ca2ec1bd8593f54e0b3",
+      "sha256": "4f60321504df5d11b87d5664a10bdc3e83196773c58b5ca2ec1bd8593f54e0b3",
+      "checks": {
+        "whole_utf8_ordered_literal_plus_lf": true,
+        "source_size": true,
+        "source_hash": true,
+        "public_size": true,
+        "public_hash": true,
+        "metadata": true
+      }
+    },
+    {
+      "path": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/compile-terminal.txt",
+      "source_bytes": 205,
+      "bytes": 205,
+      "source_sha256": "5ecb07e03ed3c822ed396cda9f04ef9751d52999739378b8f2c8753a0a5cf05d",
+      "sha256": "5ecb07e03ed3c822ed396cda9f04ef9751d52999739378b8f2c8753a0a5cf05d",
+      "checks": {
+        "whole_utf8_ordered_literal_plus_lf": true,
+        "source_size": true,
+        "source_hash": true,
+        "public_size": true,
+        "public_hash": true,
+        "metadata": true
+      }
+    },
+    {
+      "path": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/seal-integration.json",
+      "source_bytes": 1113,
+      "bytes": 1117,
+      "source_sha256": "f7dd5e60b9d5bd182e85d9b237c085878be27b4f9dbc35f42c8c783c44a782f8",
+      "sha256": "6ca99b25fa5a753cc6ef100ce9c1ca0aac964f4c99636623d7b78f58077658d5",
+      "checks": {
+        "whole_utf8_ordered_literal_plus_lf": true,
+        "source_size": true,
+        "source_hash": true,
+        "public_size": true,
+        "public_hash": true,
+        "metadata": true
+      }
+    },
+    {
+      "path": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/receipt-integration.json",
+      "source_bytes": 921,
+      "bytes": 925,
+      "source_sha256": "f52fd5ef955aee2a644a1b24c82408a693c4b2e265835072aaf3533cee537ec6",
+      "sha256": "91e06b19549cd78f9c4ffef0c63566ab3f29e2f267470432b0bb302a72dc6a64",
+      "checks": {
+        "whole_utf8_ordered_literal_plus_lf": true,
+        "source_size": true,
+        "source_hash": true,
+        "public_size": true,
+        "public_hash": true,
+        "metadata": true
+      }
+    },
+    {
+      "path": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/source-scope.json",
+      "source_bytes": 556,
+      "bytes": 560,
+      "source_sha256": "b7596b605125d409fffe55852cebb96c59e7db6320533e9c2431911dfb59f32f",
+      "sha256": "2584ab38409884bf4e1924216eb31e6897667d39322f34018c22a6f50702b5a2",
+      "checks": {
+        "whole_utf8_ordered_literal_plus_lf": true,
+        "source_size": true,
+        "source_hash": true,
+        "public_size": true,
+        "public_hash": true,
+        "metadata": true
+      }
+    },
+    {
+      "path": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/runtime-crafted-owned-red-2g/admission.json",
+      "source_bytes": 2413,
+      "bytes": 2413,
+      "source_sha256": "78546adc63879f2e940c916bb72e288f6fd980db3cba0ef51464999dc3a5a153",
+      "sha256": "78546adc63879f2e940c916bb72e288f6fd980db3cba0ef51464999dc3a5a153",
+      "checks": {
+        "whole_utf8_ordered_literal_plus_lf": true,
+        "source_size": true,
+        "source_hash": true,
+        "public_size": true,
+        "public_hash": true,
+        "metadata": true
+      }
+    },
+    {
+      "path": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/runtime-crafted-owned-red-2g/argv.json",
+      "source_bytes": 1680,
+      "bytes": 1687,
+      "source_sha256": "7235ebb6e417f1cd89eaf91c3a902eecc315fc73b28816b05b6c55b1cede2e7a",
+      "sha256": "b547048ac05f17c13bb0b7f001601fadba51b8e740a81a4162502f644f3ee12b",
+      "checks": {
+        "whole_utf8_ordered_literal_plus_lf": true,
+        "source_size": true,
+        "source_hash": true,
+        "public_size": true,
+        "public_hash": true,
+        "metadata": true
+      }
+    },
+    {
+      "path": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/runtime-crafted-owned-red-2g/launcher.txt",
+      "source_bytes": 306,
+      "bytes": 273,
+      "source_sha256": "e23185d133758dd51c97ad9933a823bf120a3be06e9bc3b915529c4ecded12bc",
+      "sha256": "c387d4f0137a6d40b4a0b5ae5dd5c1c9778e58f194fc933a7a08a940f2391ff2",
+      "checks": {
+        "whole_utf8_ordered_literal_plus_lf": true,
+        "source_size": true,
+        "source_hash": true,
+        "public_size": true,
+        "public_hash": true,
+        "metadata": true
+      }
+    },
+    {
+      "path": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/runtime-crafted-owned-red-2g/result.json",
+      "source_bytes": 682,
+      "bytes": 649,
+      "source_sha256": "1970da536ba1c9e7de6f96149d62a4ed3fd31e7bcc97f128d62d07fce25d50d1",
+      "sha256": "d767dd305038c72840795d1980e22dd1450103214115eae9819c555fc90d6fce",
+      "checks": {
+        "whole_utf8_ordered_literal_plus_lf": true,
+        "source_size": true,
+        "source_hash": true,
+        "public_size": true,
+        "public_hash": true,
+        "metadata": true
+      }
+    },
+    {
+      "path": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/runtime-crafted-owned-red-2g/stderr",
+      "source_bytes": 5912,
+      "bytes": 5932,
+      "source_sha256": "519812f40ce5b767dc37fe7a13d315eed2aefc7722f58f0b74d4b0d3d818f830",
+      "sha256": "c2a62cc2a378df7855e3d95a9398a354580d510abceb57254457e37dd7025800",
+      "checks": {
+        "whole_utf8_ordered_literal_plus_lf": true,
+        "source_size": true,
+        "source_hash": true,
+        "public_size": true,
+        "public_hash": true,
+        "metadata": true
+      }
+    },
+    {
+      "path": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/runtime-crafted-owned-red-2g/stdout",
+      "source_bytes": 1221,
+      "bytes": 1221,
+      "source_sha256": "9f125dc27154e2cb40c7ab97b1f2211e857d829f348613aab81c3f63ad1a852f",
+      "sha256": "9f125dc27154e2cb40c7ab97b1f2211e857d829f348613aab81c3f63ad1a852f",
+      "checks": {
+        "whole_utf8_ordered_literal_plus_lf": true,
+        "source_size": true,
+        "source_hash": true,
+        "public_size": true,
+        "public_hash": true,
+        "metadata": true
+      }
+    },
+    {
+      "path": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/runtime-crafted-itembutton-red-2g/admission.json",
+      "source_bytes": 2418,
+      "bytes": 2418,
+      "source_sha256": "dd777f8d156eb8591e9b370b95ee26409137c8a826a1fc9ab0b71b4c4d933306",
+      "sha256": "dd777f8d156eb8591e9b370b95ee26409137c8a826a1fc9ab0b71b4c4d933306",
+      "checks": {
+        "whole_utf8_ordered_literal_plus_lf": true,
+        "source_size": true,
+        "source_hash": true,
+        "public_size": true,
+        "public_hash": true,
+        "metadata": true
+      }
+    },
+    {
+      "path": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/runtime-crafted-itembutton-red-2g/argv.json",
+      "source_bytes": 1696,
+      "bytes": 1703,
+      "source_sha256": "76c2aa30d38f0495f13608ce7186e60ea316b0cf086258bec5cdf82d63f8573d",
+      "sha256": "abbd03acde0246e4da4376f75391f9cbb064cfb81aa2db18885925a624bb6e2c",
+      "checks": {
+        "whole_utf8_ordered_literal_plus_lf": true,
+        "source_size": true,
+        "source_hash": true,
+        "public_size": true,
+        "public_hash": true,
+        "metadata": true
+      }
+    },
+    {
+      "path": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/runtime-crafted-itembutton-red-2g/launcher.txt",
+      "source_bytes": 304,
+      "bytes": 271,
+      "source_sha256": "4462c5453e131117a62691e006b10c8eb3cd9f833c54dc40bb38e5d5d9cea5b7",
+      "sha256": "41aac9911c126a76511a681e0314ccaf1d5234a602909d19d4d8abd214dcd378",
+      "checks": {
+        "whole_utf8_ordered_literal_plus_lf": true,
+        "source_size": true,
+        "source_hash": true,
+        "public_size": true,
+        "public_hash": true,
+        "metadata": true
+      }
+    },
+    {
+      "path": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/runtime-crafted-itembutton-red-2g/result.json",
+      "source_bytes": 722,
+      "bytes": 689,
+      "source_sha256": "63e20129988aa09b2d57f85abca110365ba473a5ab2732d21fc5b8c085379696",
+      "sha256": "c6e80ea1259d5a48cb6060ed65e0e87ae645b7037abecd06eb3bcbc8388294cc",
+      "checks": {
+        "whole_utf8_ordered_literal_plus_lf": true,
+        "source_size": true,
+        "source_hash": true,
+        "public_size": true,
+        "public_hash": true,
+        "metadata": true
+      }
+    },
+    {
+      "path": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/runtime-crafted-itembutton-red-2g/stderr",
+      "source_bytes": 14231,
+      "bytes": 14335,
+      "source_sha256": "36fae26070bb790781780a8a10ce315d4a844d157385d164d66e5bfdffaff41f",
+      "sha256": "2164d9c576124cd24954b28be0c1bc528fe086791c913040f0aef3526fc8e99b",
+      "checks": {
+        "whole_utf8_ordered_literal_plus_lf": true,
+        "source_size": true,
+        "source_hash": true,
+        "public_size": true,
+        "public_hash": true,
+        "metadata": true
+      }
+    },
+    {
+      "path": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/runtime-crafted-itembutton-red-2g/stdout",
+      "source_bytes": 376,
+      "bytes": 376,
+      "source_sha256": "ef96ed3b2d0afab0fa59494e4e0c14b3313f86be7dc1890b3294a7d73c200a31",
+      "sha256": "ef96ed3b2d0afab0fa59494e4e0c14b3313f86be7dc1890b3294a7d73c200a31",
+      "checks": {
+        "whole_utf8_ordered_literal_plus_lf": true,
+        "source_size": true,
+        "source_hash": true,
+        "public_size": true,
+        "public_hash": true,
+        "metadata": true
+      }
+    },
+    {
+      "path": "crafted-quality-owned-retail-red-auth-current/report.md",
+      "source_bytes": 2560,
+      "bytes": 2576,
+      "source_sha256": "2f92dba8267a6009c4235a10ee23b3c5cdf1f3d523e711cbf6518b6ac907bf34",
+      "sha256": "6c96d6fca2a65fd33fb1b926ab1925aa37bfdd071c4333315852c14d235715c6",
+      "checks": {
+        "whole_utf8_ordered_literal_plus_lf": true,
+        "source_size": true,
+        "source_hash": true,
+        "public_size": true,
+        "public_hash": true,
+        "metadata": true
+      }
+    },
+    {
+      "path": "crafted-quality-owned-retail-red-auth-current/proof.json",
+      "source_bytes": 4196,
+      "bytes": 4232,
+      "source_sha256": "268e8e51ded07c907034e732bbdea111e9e9335b8392e331c9762a0e09b8f52e",
+      "sha256": "d9748df859e0592e181042b8d50884735938c9f86b55d2c7423e7c7dcf059d9d",
+      "checks": {
+        "whole_utf8_ordered_literal_plus_lf": true,
+        "source_size": true,
+        "source_hash": true,
+        "public_size": true,
+        "public_hash": true,
+        "metadata": true
+      }
+    },
+    {
+      "path": "crafted-quality-owned-ptr-red-auth-current/report.md",
+      "source_bytes": 2195,
+      "bytes": 2207,
+      "source_sha256": "f608fa6653abd2fd3e30d96a646aaca812aa2d02a0b3287eee5ac06619dc8edd",
+      "sha256": "9f328d9989f0099c2e2663b3a41e86ca12ca882f21a34f5a281cd15e2174b012",
+      "checks": {
+        "whole_utf8_ordered_literal_plus_lf": true,
+        "source_size": true,
+        "source_hash": true,
+        "public_size": true,
+        "public_hash": true,
+        "metadata": true
+      }
+    },
+    {
+      "path": "crafted-quality-owned-ptr-red-auth-current/proof.json",
+      "source_bytes": 4206,
+      "bytes": 4182,
+      "source_sha256": "9604a54e2d6ca70638540a8c57c0974dcbed143fac0506462d67c202b0bfa185",
+      "sha256": "3c381b1268dfde6446082c0a2e09528fb14eee89acd3856069de9e313f73761a",
+      "checks": {
+        "whole_utf8_ordered_literal_plus_lf": true,
+        "source_size": true,
+        "source_hash": true,
+        "public_size": true,
+        "public_hash": true,
+        "metadata": true
+      }
+    },
+    {
+      "path": "crafted-quality-owned-retail-red-current/report.md",
+      "source_bytes": 8505,
+      "bytes": 8509,
+      "source_sha256": "174702df0285ebccf19976d3fc4731f3542841b2194f838d50cb9bbf7e90cba7",
+      "sha256": "7febd1b0dc798c990b3f6972dd3084bff658ed32f134fbce6092ce41b417b83c",
+      "checks": {
+        "whole_utf8_ordered_literal_plus_lf": true,
+        "source_size": true,
+        "source_hash": true,
+        "public_size": true,
+        "public_hash": true,
+        "metadata": true
+      }
+    },
+    {
+      "path": "crafted-quality-owned-retail-red-current/proof.json",
+      "source_bytes": 43276,
+      "bytes": 43272,
+      "source_sha256": "bd12c04873417759f5da49bbcccbda1a23f748281578aa13e6de1d36265531d4",
+      "sha256": "2db008507685ae76a493f91ea1fd4ad7cba2a2afd8a7b06ef187b871862bec97",
+      "checks": {
+        "whole_utf8_ordered_literal_plus_lf": true,
+        "source_size": true,
+        "source_hash": true,
+        "public_size": true,
+        "public_hash": true,
+        "metadata": true
+      }
+    },
+    {
+      "path": "crafted-quality-owned-ptr-red-current/report.md",
+      "source_bytes": 4589,
+      "bytes": 4593,
+      "source_sha256": "0048a399364b31d9a54f0c7f41e69c510fa81567c5a131374db103a351ed6e29",
+      "sha256": "2d382bf2dada622287e4efe9735eae12c83d4aa0bf525b195c0768fe6a53c5a4",
+      "checks": {
+        "whole_utf8_ordered_literal_plus_lf": true,
+        "source_size": true,
+        "source_hash": true,
+        "public_size": true,
+        "public_hash": true,
+        "metadata": true
+      }
+    },
+    {
+      "path": "crafted-quality-owned-ptr-red-current/proof.json",
+      "source_bytes": 32461,
+      "bytes": 32481,
+      "source_sha256": "0597857cccee7339366103790d1c7eb43f75f9efb9422a56d04986c924eef035",
+      "sha256": "e24dabb7afc0525e91f8f22dc1d0629489628eb071958c9083a5a901d3b49df1",
+      "checks": {
+        "whole_utf8_ordered_literal_plus_lf": true,
+        "source_size": true,
+        "source_hash": true,
+        "public_size": true,
+        "public_hash": true,
+        "metadata": true
+      }
+    },
+    {
+      "path": "crafted-quality-passive-source-current/report.md",
+      "source_bytes": 10868,
+      "bytes": 10872,
+      "source_sha256": "d1a79509930584a00f19f2f85335cef0c8fa88e13fb62f70dc1521a4cd746ad5",
+      "sha256": "0af44d9446f8ced453b272358ce6db4ff46bed717a4a181ad9496bcb2298afba",
+      "checks": {
+        "whole_utf8_ordered_literal_plus_lf": true,
+        "source_size": true,
+        "source_hash": true,
+        "public_size": true,
+        "public_hash": true,
+        "metadata": true
+      }
+    },
+    {
+      "path": "crafted-quality-passive-source-current/proof.json",
+      "source_bytes": 9026,
+      "bytes": 9062,
+      "source_sha256": "1a00421aa4437ffb5b53db08b0aec02db5234f53632174f43d8abec4b38b97ba",
+      "sha256": "70915ff1e21e02504e8cf9b71f133247128fb0cc9ded4d74be4cb3784b43d24b",
+      "checks": {
+        "whole_utf8_ordered_literal_plus_lf": true,
+        "source_size": true,
+        "source_hash": true,
+        "public_size": true,
+        "public_hash": true,
+        "metadata": true
+      }
+    }
+  ],
+  "privacy": {
+    "private_home_sync": {
+      "hits": [],
+      "count": 0
+    },
+    "email": {
+      "hits": [],
+      "count": 0
+    },
+    "invocation32": {
+      "hits": [],
+      "count": 0
+    },
+    "private_unit": {
+      "hits": [],
+      "count": 0
+    },
+    "all_hash_suffixes": {
+      "count": 1508,
+      "unique": 568,
+      "classified_tokens": {
+        "#": 6,
+        "`#0.1.0`": 1,
+        "##": 17,
+        "`#[allow(...)]`": 1,
+        "`#[expect(...)]`": 1,
+        "`select('#',": 1,
+        "###": 1,
+        "crates.io-index#quote@1.0.43": 10,
+        "crates.io-index#proc-macro2@1.0.105": 12,
+        "crates.io-index#unicode-ident@1.0.22": 4,
+        "crates.io-index#cfg-if@1.0.4": 2,
+        "crates.io-index#libc@0.2.180": 10,
+        "crates.io-index#log@0.4.29": 2,
+        "crates.io-index#bitflags@2.10.0": 2,
+        "crates.io-index#smallvec@1.15.1": 2,
+        "crates.io-index#libm@0.2.15": 6,
+        "crates.io-index#autocfg@1.5.0": 2,
+        "crates.io-index#syn@2.0.114": 4,
+        "crates.io-index#once_cell@1.21.3": 2,
+        "crates.io-index#scopeguard@1.2.0": 2,
+        "crates.io-index#pin-project-lite@0.2.16": 2,
+        "crates.io-index#find-msvc-tools@0.1.7": 2,
+        "crates.io-index#jobserver@0.1.34": 2,
+        "crates.io-index#lock_api@0.4.14": 2,
+        "crates.io-index#shlex@1.3.0": 2,
+        "crates.io-index#pkg-config@0.3.32": 2,
+        "crates.io-index#cc@1.2.52": 2,
+        "crates.io-index#num-traits@0.2.19": 6,
+        "crates.io-index#bytemuck_derive@1.10.2": 2,
+        "crates.io-index#memchr@2.7.6": 4,
+        "crates.io-index#bytemuck@1.24.0": 2,
+        "crates.io-index#crossbeam-utils@0.8.21": 6,
+        "crates.io-index#slab@0.4.11": 2,
+        "crates.io-index#arrayvec@0.7.6": 2,
+        "crates.io-index#futures-core@0.3.31": 2,
+        "crates.io-index#parking_lot_core@0.9.12": 6,
+        "crates.io-index#thiserror@2.0.17": 6,
+        "crates.io-index#version_check@0.9.5": 2,
+        "crates.io-index#rustix@1.1.3": 6,
+        "crates.io-index#thiserror-impl@2.0.17": 2,
+        "crates.io-index#linux-raw-sys@0.11.0": 2,
+        "crates.io-index#stable_deref_trait@1.2.1": 2,
+        "crates.io-index#parking_lot@0.12.5": 2,
+        "crates.io-index#libloading@0.8.9": 2,
+        "crates.io-index#errno@0.3.14": 2,
+        "crates.io-index#bytes@1.11.0": 2,
+        "crates.io-index#zerocopy@0.8.33": 6,
+        "crates.io-index#futures-io@0.3.31": 2,
+        "crates.io-index#signal-hook-registry@1.4.8": 2,
+        "crates.io-index#zerocopy-derive@0.8.33": 2,
+        "crates.io-index#simd-adler32@0.3.8": 2,
+        "crates.io-index#tokio-macros@2.6.0": 2,
+        "crates.io-index#mio@1.1.1": 2,
+        "crates.io-index#socket2@0.6.1": 2,
+        "crates.io-index#tokio@1.49.0": 2,
+        "crates.io-index#crc32fast@1.5.0": 6,
+        "crates.io-index#futures-sink@0.3.31": 2,
+        "crates.io-index#adler2@2.0.1": 2,
+        "crates.io-index#miniz_oxide@0.8.9": 2,
+        "crates.io-index#tracing-core@0.1.36": 2,
+        "crates.io-index#serde@1.0.228": 10,
+        "crates.io-index#tracing-attributes@0.1.31": 2,
+        "crates.io-index#futures-channel@0.3.31": 2,
+        "crates.io-index#serde_derive@1.0.228": 2,
+        "crates.io-index#flate2@1.1.9": 2,
+        "crates.io-index#tracing@0.1.44": 2,
+        "crates.io-index#dlib@0.5.2": 2,
+        "crates.io-index#wayland-sys@0.31.8": 6,
+        "crates.io-index#synstructure@0.13.2": 2,
+        "crates.io-index#futures-macro@0.3.31": 2,
+        "crates.io-index#futures-task@0.3.31": 2,
+        "crates.io-index#pin-utils@0.1.0": 2,
+        "crates.io-index#futures-util@0.3.31": 2,
+        "crates.io-index#wayland-backend@0.3.12": 6,
+        "crates.io-index#serde_core@1.0.228": 12,
+        "crates.io-index#zerofrom-derive@0.1.6": 2,
+        "crates.io-index#crossbeam-epoch@0.9.18": 2,
+        "crates.io-index#anyhow@1.0.100": 10,
+        "crates.io-index#downcast-rs@1.2.1": 2,
+        "crates.io-index#scoped-tls@1.0.1": 2,
+        "crates.io-index#rayon-core@1.13.0": 6,
+        "crates.io-index#crossbeam-deque@0.8.6": 2,
+        "crates.io-index#quick-xml@0.38.4": 2,
+        "crates.io-index#zerofrom@0.1.7": 2,
+        "crates.io-index#yoke-derive@0.8.1": 2,
+        "crates.io-index#num-integer@0.1.46": 2,
+        "crates.io-index#wayland-client@0.31.12": 6,
+        "crates.io-index#yoke@0.8.1": 2,
+        "crates.io-index#wayland-scanner@0.31.8": 2,
+        "crates.io-index#spin@0.9.8": 2,
+        "crates.io-index#memmap2@0.9.9": 2,
+        "crates.io-index#either@1.15.0": 4,
+        "crates.io-index#cfg_aliases@0.2.1": 2,
+        "crates.io-index#half@2.7.1": 2,
+        "crates.io-index#zerovec-derive@0.11.2": 2,
+        "crates.io-index#displaydoc@0.2.5": 2,
+        "crates.io-index#core_maths@0.1.1": 2,
+        "crates.io-index#foldhash@0.2.0": 2,
+        "crates.io-index#zerovec@0.11.5": 2,
+        "crates.io-index#lazy_static@1.5.0": 2,
+        "crates.io-index#hashbrown@0.16.1": 4,
+        "crates.io-index#rayon@1.11.0": 2,
+        "crates.io-index#itoa@1.0.17": 2,
+        "crates.io-index#typenum@1.19.0": 6,
+        "crates.io-index#writeable@0.6.3": 2,
+        "crates.io-index#equivalent@1.0.2": 4,
+        "crates.io-index#zeroize@1.8.2": 2,
+        "crates.io-index#indexmap@2.13.0": 4,
+        "crates.io-index#generic-array@0.14.7": 6,
+        "crates.io-index#profiling-procmacros@1.0.17": 2,
+        "crates.io-index#profiling@1.0.17": 2,
+        "crates.io-index#polling@3.11.0": 2,
+        "crates.io-index#equator-macro@0.4.2": 2,
+        "crates.io-index#num_cpus@1.17.0": 2,
+        "crates.io-index#getrandom@0.2.16": 2,
+        "crates.io-index#vcpkg@0.2.15": 2,
+        "crates.io-index#winnow@0.7.14": 4,
+        "crates.io-index#const-oid@0.9.6": 2,
+        "crates.io-index#futures-executor@0.3.31": 2,
+        "crates.io-index#equator@0.4.2": 2,
+        "crates.io-index#tinystr@0.8.2": 2,
+        "crates.io-index#num-bigint@0.4.6": 2,
+        "crates.io-index#raw-window-handle@0.6.2": 2,
+        "crates.io-index#fastrand@2.3.0": 2,
+        "crates.io-index#weezl@0.1.12": 2,
+        "crates.io-index#litemap@0.8.2": 2,
+        "crates.io-index#icu_locale_core@2.1.1": 2,
+        "crates.io-index#num-rational@0.4.2": 2,
+        "crates.io-index#aligned-vec@0.6.4": 2,
+        "crates.io-index#toml_parser@1.0.6+spec-1.1.0": 2,
+        "crates.io-index#futures@0.3.31": 2,
+        "crates.io-index#potential_utf@0.1.4": 2,
+        "crates.io-index#zerotrie@0.2.3": 2,
+        "crates.io-index#toml_datetime@0.7.5+spec-1.1.0": 2,
+        "crates.io-index#euclid@0.22.13": 2,
+        "crates.io-index#bitflags@1.3.2": 2,
+        "crates.io-index#smol_str@0.2.2": 2,
+        "crates.io-index#icu_provider@2.1.1": 2,
+        "crates.io-index#icu_collections@2.1.1": 2,
+        "crates.io-index#v_frame@0.3.9": 2,
+        "crates.io-index#ttf-parser@0.25.1": 2,
+        "crates.io-index#fdeflate@0.3.7": 2,
+        "crates.io-index#as-slice@0.2.1": 2,
+        "crates.io-index#paste@1.0.15": 6,
+        "crates.io-index#color_quant@1.1.0": 2,
+        "crates.io-index#rustc-hash@1.1.0": 2,
+        "crates.io-index#parking@2.2.1": 2,
+        "crates.io-index#atomic-waker@1.1.2": 2,
+        "crates.io-index#av-scenechange@0.14.1": 6,
+        "crates.io-index#built@0.8.0": 2,
+        "crates.io-index#rav1e@0.8.1": 6,
+        "crates.io-index#aligned@0.4.3": 2,
+        "crates.io-index#crypto-common@0.1.7": 2,
+        "crates.io-index#zune-inflate@0.2.54": 2,
+        "crates.io-index#concurrent-queue@2.5.0": 2,
+        "crates.io-index#font-types@0.10.1": 2,
+        "crates.io-index#core2@0.4.0": 2,
+        "crates.io-index#nom@8.0.0": 2,
+        "crates.io-index#arg_enum_proc_macro@0.3.4": 2,
+        "crates.io-index#encoding_rs@0.8.35": 2,
+        "crates.io-index#percent-encoding@2.3.2": 2,
+        "crates.io-index#y4m@0.8.0": 2,
+        "crates.io-index#quick-error@2.0.1": 2,
+        "crates.io-index#bit_field@0.10.3": 2,
+        "crates.io-index#lebe@0.5.3": 2,
+        "crates.io-index#foldhash@0.1.5": 2,
+        "crates.io-index#web-time@1.1.0": 2,
+        "crates.io-index#rustc-hash@2.1.2": 2,
+        "crates.io-index#pastey@0.1.1": 2,
+        "crates.io-index#lilt@0.8.1": 2,
+        "crates.io-index#exr@1.74.0": 2,
+        "crates.io-index#hashbrown@0.15.5": 2,
+        "crates.io-index#bitstream-io@4.9.0": 2,
+        "crates.io-index#av1-grain@0.2.5": 2,
+        "crates.io-index#read-fonts@0.35.0": 2,
+        "crates.io-index#maybe-rayon@0.1.1": 2,
+        "crates.io-index#wayland-protocols@0.32.10": 2,
+        "crates.io-index#itertools@0.14.0": 4,
+        "crates.io-index#slotmap@1.1.1": 6,
+        "crates.io-index#qoi@0.4.1": 2,
+        "crates.io-index#fax_derive@0.2.0": 2,
+        "crates.io-index#num-derive@0.4.2": 2,
+        "crates.io-index#simd_helpers@0.1.0": 2,
+        "crates.io-index#new_debug_unreachable@1.0.6": 2,
+        "crates.io-index#noop_proc_macro@0.3.0": 2,
+        "crates.io-index#imgref@1.12.0": 2,
+        "crates.io-index#zune-core@0.4.12": 2,
+        "crates.io-index#glam@0.25.0": 2,
+        "crates.io-index#icu_properties_data@2.1.2": 6,
+        "crates.io-index#zune-jpeg@0.4.21": 2,
+        "crates.io-index#iced_core@0.14.0": 2,
+        "crates.io-index#loop9@0.1.5": 2,
+        "crates.io-index#fax@0.2.6": 2,
+        "crates.io-index#lyon_geom@1.0.18": 2,
+        "crates.io-index#symphonia-core@0.5.5": 2,
+        "crates.io-index#block-buffer@0.10.4": 2,
+        "crates.io-index#http@1.4.0": 2,
+        "crates.io-index#pxfm@0.1.27": 2,
+        "crates.io-index#avif-serialize@0.8.6": 2,
+        "crates.io-index#ring@0.17.14": 6,
+        "crates.io-index#tinyvec_macros@0.1.1": 2,
+        "crates.io-index#byteorder-lite@0.1.0": 2,
+        "crates.io-index#zune-core@0.5.0": 2,
+        "crates.io-index#icu_normalizer_data@2.1.1": 6,
+        "crates.io-index#roxmltree@0.20.0": 2,
+        "crates.io-index#rgb@0.8.52": 2,
+        "crates.io-index#ravif@0.12.0": 2,
+        "crates.io-index#fontconfig-parser@0.5.8": 2,
+        "crates.io-index#zune-jpeg@0.5.8": 2,
+        "crates.io-index#tinyvec@1.10.0": 2,
+        "crates.io-index#image-webp@0.2.4": 2,
+        "crates.io-index#moxcms@0.7.11": 2,
+        "crates.io-index#lyon_path@1.0.16": 2,
+        "crates.io-index#digest@0.10.7": 2,
+        "crates.io-index#tiff@0.10.3": 2,
+        "crates.io-index#skrifa@0.37.0": 2,
+        "crates.io-index#gif@0.14.1": 2,
+        "crates.io-index#png@0.18.0": 2,
+        "crates.io-index#toml_edit@0.23.10+spec-1.0.0": 2,
+        "crates.io-index#rustls-pki-types@1.14.1": 2,
+        "crates.io-index#naga@27.0.3": 6,
+        "crates.io-index#enumflags2_derive@0.7.12": 2,
+        "crates.io-index#utf8_iter@1.0.4": 2,
+        "crates.io-index#zeno@0.3.3": 2,
+        "crates.io-index#as-raw-xcb-connection@1.0.1": 2,
+        "crates.io-index#khronos-egl@6.0.0": 6,
+        "crates.io-index#unicode-width@0.2.2": 2,
+        "crates.io-index#hex@0.4.3": 2,
+        "crates.io-index#yazi@0.2.1": 2,
+        "crates.io-index#bit-vec@0.8.0": 2,
+        "crates.io-index#owo-colors@4.3.0": 6,
+        "crates.io-index#ash@0.38.0+1.3.281": 6,
+        "crates.io-index#bit-set@0.8.0": 2,
+        "crates.io-index#swash@0.2.6": 2,
+        "crates.io-index#codespan-reporting@0.12.0": 2,
+        "crates.io-index#proc-macro-crate@3.4.0": 2,
+        "crates.io-index#image@0.25.9": 2,
+        "crates.io-index#icu_properties@2.1.2": 2,
+        "crates.io-index#fontdb@0.23.0": 2,
+        "crates.io-index#http-body@1.0.1": 2,
+        "crates.io-index#zvariant_utils@3.3.0": 4,
+        "crates.io-index#iced_futures@0.14.0": 2,
+        "crates.io-index#harfrust@0.3.2": 2,
+        "crates.io-index#event-listener@5.4.1": 2,
+        "crates.io-index#openssl-sys@0.9.117": 6,
+        "crates.io-index#wgpu-hal@27.0.4": 6,
+        "crates.io-index#tokio-util@0.7.18": 2,
+        "crates.io-index#gethostname@1.1.0": 2,
+        "crates.io-index#gpu-descriptor-types@0.2.0": 2,
+        "crates.io-index#gpu-alloc-types@0.3.0": 2,
+        "crates.io-index#spirv@0.3.0+sdk-1.3.268.0": 2,
+        "crates.io-index#alloc-no-stdlib@2.0.4": 2,
+        "crates.io-index#unicode-bidi@0.3.18": 2,
+        "crates.io-index#fnv@1.0.7": 2,
+        "crates.io-index#rangemap@1.7.1": 2,
+        "crates.io-index#unicode-segmentation@1.12.0": 2,
+        "crates.io-index#sys-locale@0.3.2": 2,
+        "crates.io-index#thiserror@1.0.69": 6,
+        "crates.io-index#utf16_iter@1.0.5": 2,
+        "crates.io-index#httparse@1.10.1": 6,
+        "crates.io-index#xkeysym@0.2.1": 2,
+        "crates.io-index#base64ct@1.8.3": 2,
+        "crates.io-index#binrw_derive@0.15.2": 6,
+        "crates.io-index#linebender_resource_handle@0.1.1": 2,
+        "crates.io-index#unicode-script@0.5.8": 2,
+        "crates.io-index#write16@1.0.0": 2,
+        "crates.io-index#hexf-parse@0.2.1": 2,
+        "crates.io-index#untrusted@0.9.0": 2,
+        "crates.io-index#self_cell@1.2.2": 2,
+        "crates.io-index#xcursor@0.3.10": 2,
+        "crates.io-index#unicode-linebreak@0.1.5": 2,
+        "crates.io-index#x11rb-protocol@0.13.2": 2,
+        "crates.io-index#cursor-icon@1.2.0": 2,
+        "crates.io-index#cosmic-text@0.15.0": 2,
+        "crates.io-index#wayland-cursor@0.31.12": 2,
+        "crates.io-index#x11rb@0.13.2": 2,
+        "crates.io-index#wayland-csd-frame@0.3.0": 2,
+        "crates.io-index#icu_normalizer@2.1.1": 2,
+        "crates.io-index#pem-rfc7468@0.7.0": 2,
+        "crates.io-index#gpu-alloc@0.6.0": 2,
+        "crates.io-index#gpu-descriptor@0.3.2": 2,
+        "crates.io-index#alloc-stdlib@0.2.4": 2,
+        "crates.io-index#zvariant_derive@5.9.2": 2,
+        "crates.io-index#event-listener-strategy@0.5.4": 2,
+        "crates.io-index#symphonia-metadata@0.5.5": 2,
+        "crates.io-index#wayland-protocols-wlr@0.3.10": 2,
+        "crates.io-index#futures-lite@2.6.1": 2,
+        "crates.io-index#inout@0.1.4": 2,
+        "crates.io-index#rand_core@0.6.4": 4,
+        "crates.io-index#wgpu-types@27.0.1": 2,
+        "crates.io-index#ordered-float@5.1.0": 2,
+        "crates.io-index#thiserror-impl@1.0.69": 2,
+        "crates.io-index#der_derive@0.7.3": 2,
+        "crates.io-index#mutate_once@0.1.2": 2,
+        "crates.io-index#openssl-probe@0.2.1": 2,
+        "crates.io-index#rustls@0.23.40": 6,
+        "crates.io-index#arrayref@0.3.9": 2,
+        "crates.io-index#strict-num@0.1.1": 2,
+        "crates.io-index#zmij@1.0.14": 6,
+        "crates.io-index#renderdoc-sys@1.1.0": 2,
+        "crates.io-index#flagset@0.4.7": 2,
+        "crates.io-index#rustix@0.38.44": 6,
+        "crates.io-index#subtle@2.6.1": 2,
+        "crates.io-index#base64@0.22.1": 2,
+        "crates.io-index#binrw@0.15.2": 6,
+        "crates.io-index#tower-service@0.3.3": 2,
+        "crates.io-index#glow@0.16.0": 2,
+        "crates.io-index#try-lock@0.2.5": 2,
+        "crates.io-index#want@0.3.1": 2,
+        "crates.io-index#der@0.7.10": 2,
+        "crates.io-index#tiny-skia-path@0.11.4": 2,
+        "crates.io-index#kamadak-exif@0.6.1": 2,
+        "crates.io-index#cipher@0.4.4": 2,
+        "crates.io-index#brotli-decompressor@5.0.3": 2,
+        "crates.io-index#rustls-webpki@0.103.13": 2,
+        "crates.io-index#h2@0.4.15": 2,
+        "crates.io-index#wgpu-core@27.0.3": 6,
+        "crates.io-index#ppv-lite86@0.2.21": 2,
+        "crates.io-index#async-io@2.6.0": 6,
+        "crates.io-index#serde_json@1.0.149": 6,
+        "crates.io-index#linux-raw-sys@0.4.15": 2,
+        "crates.io-index#getrandom@0.3.4": 6,
+        "crates.io-index#litrs@1.0.0": 2,
+        "crates.io-index#array-init@2.1.0": 2,
+        "crates.io-index#document-features@0.2.12": 2,
+        "crates.io-index#rand_chacha@0.3.1": 2,
+        "crates.io-index#hyper@1.9.0": 2,
+        "crates.io-index#brotli@8.0.4": 2,
+        "crates.io-index#iced_graphics@0.14.0": 2,
+        "crates.io-index#salsa20@0.10.2": 2,
+        "crates.io-index#tiny-skia@0.11.4": 2,
+        "crates.io-index#spki@0.7.3": 2,
+        "crates.io-index#wgpu-core-deps-windows-linux-android@27.0.0": 2,
+        "crates.io-index#idna_adapter@1.2.1": 2,
+        "crates.io-index#enumflags2@0.7.12": 4,
+        "crates.io-index#md-5@0.10.6": 2,
+        "crates.io-index#form_urlencoded@1.2.2": 2,
+        "crates.io-index#calloop@0.14.3": 2,
+        "crates.io-index#wgpu@27.0.1": 6,
+        "crates.io-index#tiny-xlib@0.2.4": 6,
+        "crates.io-index#async-trait@0.1.89": 2,
+        "crates.io-index#smithay-client-toolkit@0.20.0": 6,
+        "crates.io-index#ipnet@2.12.0": 2,
+        "crates.io-index#async-task@4.7.1": 2,
+        "crates.io-index#openssl@0.10.81": 6,
+        "crates.io-index#twox-hash@2.1.2": 2,
+        "crates.io-index#endi@1.1.1": 4,
+        "crates.io-index#compression-core@0.4.32": 2,
+        "crates.io-index#foreign-types-shared@0.1.1": 2,
+        "crates.io-index#svg_fmt@0.4.5": 2,
+        "crates.io-index#compression-codecs@0.4.38": 2,
+        "crates.io-index#zvariant@5.9.2": 4,
+        "crates.io-index#foreign-types@0.3.2": 2,
+        "crates.io-index#hyper-util@0.1.20": 2,
+        "crates.io-index#lz4_flex@0.12.1": 2,
+        "cascette-rs?rev=758d8dbfbc64d500b2f8f5b5c133d9f82fa79a48#cascette-crypto@0.2.0": 2,
+        "crates.io-index#calloop-wayland-source@0.4.1": 2,
+        "crates.io-index#idna@1.1.0": 2,
+        "crates.io-index#rand@0.8.5": 4,
+        "crates.io-index#calloop@0.13.0": 2,
+        "crates.io-index#symphonia-utils-xiph@0.5.5": 2,
+        "crates.io-index#async-channel@2.5.0": 2,
+        "crates.io-index#iced_debug@0.14.0": 2,
+        "crates.io-index#http-body-util@0.1.3": 2,
+        "crates.io-index#wayland-protocols-experimental@20250721.0.1": 2,
+        "crates.io-index#wayland-protocols-misc@0.3.10": 2,
+        "crates.io-index#sync_wrapper@1.0.2": 2,
+        "crates.io-index#openssl-macros@0.1.1": 2,
+        "crates.io-index#tower-layer@0.3.3": 2,
+        "crates.io-index#float_next_after@1.0.0": 2,
+        "crates.io-index#md5@0.8.0": 2,
+        "crates.io-index#static_assertions@1.1.0": 2,
+        "crates.io-index#native-tls@0.2.18": 6,
+        "crates.io-index#rand_core@0.10.1": 2,
+        "crates.io-index#hashbrown@0.14.5": 2,
+        "crates.io-index#ctor-lite@0.1.1": 2,
+        "crates.io-index#icu_locale_data@2.1.2": 6,
+        "crates.io-index#smithay-client-toolkit@0.19.2": 6,
+        "crates.io-index#getrandom@0.4.3": 6,
+        "crates.io-index#dashmap@6.1.0": 2,
+        "crates.io-index#lyon_tessellation@1.0.16": 2,
+        "cascette-rs?rev=758d8dbfbc64d500b2f8f5b5c133d9f82fa79a48#cascette-formats@0.2.0": 2,
+        "crates.io-index#tower@0.5.3": 2,
+        "crates.io-index#calloop-wayland-source@0.3.0": 2,
+        "crates.io-index#async-signal@0.2.13": 2,
+        "crates.io-index#url@2.5.8": 2,
+        "crates.io-index#async-compression@0.4.42": 2,
+        "crates.io-index#zbus_names@4.3.1": 4,
+        "crates.io-index#etagere@0.2.15": 2,
+        "crates.io-index#tokio-rustls@0.26.4": 2,
+        "crates.io-index#async-lock@3.4.2": 2,
+        "crates.io-index#webpki-roots@1.0.7": 2,
+        "crates.io-index#lyon_algorithms@1.0.16": 2,
+        "crates.io-index#piper@0.2.4": 2,
+        "crates.io-index#owned_ttf_parser@0.25.1": 2,
+        "crates.io-index#ahash@0.8.12": 6,
+        "crates.io-index#x11-dl@2.21.0": 6,
+        "crates.io-index#alsa-sys@0.3.1": 6,
+        "crates.io-index#ab_glyph_rasterizer@0.1.10": 2,
+        "crates.io-index#utf8parse@0.2.2": 2,
+        "crates.io-index#cpufeatures@0.3.0": 2,
+        "crates.io-index#lru@0.16.3": 2,
+        "crates.io-index#num-bigint-dig@0.8.6": 6,
+        "crates.io-index#ryu@1.0.23": 2,
+        "crates.io-index#android-build@0.1.3": 2,
+        "crates.io-index#cryoglyph@0.1.0": 2,
+        "crates.io-index#mundy@0.2.2": 6,
+        "crates.io-index#ab_glyph@0.2.32": 2,
+        "crates.io-index#chacha20@0.10.1": 2,
+        "crates.io-index#anstyle-parse@0.2.7": 2,
+        "crates.io-index#blocking@1.6.2": 2,
+        "crates.io-index#async-process@2.5.0": 2,
+        "crates.io-index#lyon@1.0.16": 2,
+        "crates.io-index#hyper-rustls@0.27.9": 2,
+        "crates.io-index#prost-derive@0.14.4": 2,
+        "crates.io-index#zbus_macros@5.13.2": 2,
+        "crates.io-index#tower-http@0.6.10": 2,
+        "crates.io-index#smithay-clipboard@0.7.3": 2,
+        "crates.io-index#softbuffer@0.4.8": 2,
+        "crates.io-index#guillotiere@0.6.2": 2,
+        "crates.io-index#async-executor@1.13.3": 2,
+        "crates.io-index#pkcs8@0.10.2": 2,
+        "crates.io-index#rustls-native-certs@0.8.4": 2,
+        "crates.io-index#async-broadcast@0.7.2": 2,
+        "crates.io-index#libsqlite3-sys@0.33.0": 6,
+        "crates.io-index#serde_spanned@1.1.1": 2,
+        "crates.io-index#winit@0.30.12": 6,
+        "crates.io-index#num-iter@0.1.45": 2,
+        "crates.io-index#uuid@1.20.0": 2,
+        "crates.io-index#kurbo@0.10.4": 2,
+        "crates.io-index#ordered-stream@0.2.0": 2,
+        "crates.io-index#aho-corasick@1.1.4": 2,
+        "crates.io-index#serde_repr@0.1.20": 2,
+        "crates.io-index#cpufeatures@0.2.17": 2,
+        "crates.io-index#anstyle@1.0.13": 2,
+        "crates.io-index#siphasher@1.0.2": 4,
+        "crates.io-index#regex-syntax@0.8.8": 2,
+        "crates.io-index#anstyle-query@1.1.5": 2,
+        "crates.io-index#is_terminal_polyfill@1.70.2": 2,
+        "crates.io-index#prometheus@0.14.0": 6,
+        "crates.io-index#glob@0.3.3": 4,
+        "crates.io-index#mime@0.3.17": 2,
+        "crates.io-index#colorchoice@1.0.4": 2,
+        "crates.io-index#libwebp-sys@0.9.6": 6,
+        "crates.io-index#phf_shared@0.11.3": 4,
+        "crates.io-index#anstream@0.6.21": 2,
+        "crates.io-index#regex-automata@0.4.13": 2,
+        "crates.io-index#zbus@5.13.2": 2,
+        "crates.io-index#sha2@0.10.9": 2,
+        "crates.io-index#iced_tiny_skia@0.14.0": 2,
+        "crates.io-index#toml@0.9.11+spec-1.1.0": 2,
+        "crates.io-index#pkcs1@0.7.5": 2,
+        "crates.io-index#rustls-platform-verifier@0.6.2": 2,
+        "iced-wgpu-patched#iced_wgpu@0.14.0": 2,
+        "crates.io-index#icu_locale@2.1.1": 2,
+        "crates.io-index#rand@0.10.1": 2,
+        "crates.io-index#clipboard_wayland@0.2.2": 2,
+        "crates.io-index#sctk-adwaita@0.10.1": 2,
+        "crates.io-index#tokio-native-tls@0.3.1": 2,
+        "crates.io-index#prost@0.14.4": 2,
+        "crates.io-index#x509-cert@0.2.5": 2,
+        "crates.io-index#signature@2.2.0": 2,
+        "crates.io-index#clipboard_x11@0.4.3": 2,
+        "crates.io-index#xkbcommon-dl@0.4.2": 2,
+        "crates.io-index#iced_runtime@0.14.0": 2,
+        "crates.io-index#wayland-protocols-plasma@0.3.10": 2,
+        "crates.io-index#hashify@0.2.9": 2,
+        "crates.io-index#jpeg-decoder@0.3.2": 2,
+        "crates.io-index#rmp@0.8.15": 2,
+        "crates.io-index#asn1_derive@0.23.1": 2,
+        "crates.io-index#icu_casemap_data@2.1.1": 6,
+        "crates.io-index#dpi@0.1.2": 2,
+        "crates.io-index#cpal@0.16.0": 6,
+        "crates.io-index#icu_collator_data@2.1.1": 6,
+        "crates.io-index#heck@0.5.0": 2,
+        "crates.io-index#icu_segmenter_data@2.1.1": 6,
+        "crates.io-index#extended@0.1.0": 2,
+        "crates.io-index#strsim@0.11.1": 2,
+        "crates.io-index#icu_plurals_data@2.1.1": 6,
+        "crates.io-index#clap_lex@0.7.7": 2,
+        "crates.io-index#symphonia-format-riff@0.5.5": 2,
+        "crates.io-index#clap_builder@4.5.56": 2,
+        "crates.io-index#clap_derive@4.5.55": 2,
+        "crates.io-index#rmp-serde@1.3.1": 2,
+        "crates.io-index#asn1@0.23.1": 2,
+        "crates.io-index#iced_program@0.14.0": 2,
+        "crates.io-index#mail-parser@0.11.4": 2,
+        "crates.io-index#tiff@0.9.1": 2,
+        "crates.io-index#rsa@0.9.10": 2,
+        "crates.io-index#window_clipboard@0.5.1": 2,
+        "crates.io-index#cms@0.2.3": 2,
+        "crates.io-index#alsa@0.9.1": 2,
+        "cascette-rs?rev=758d8dbfbc64d500b2f8f5b5c133d9f82fa79a48#cascette-client-storage@0.2.0": 2,
+        "crates.io-index#hyper-tls@0.6.0": 2,
+        "crates.io-index#reqwest@0.13.1": 2,
+        "crates.io-index#iced_renderer@0.14.0": 2,
+        "cascette-rs?rev=758d8dbfbc64d500b2f8f5b5c133d9f82fa79a48#cascette-cache@0.2.0": 2,
+        "crates.io-index#winresource@0.1.30": 2,
+        "crates.io-index#phf_generator@0.11.3": 4,
+        "crates.io-index#serde_urlencoded@0.7.1": 2,
+        "crates.io-index#symphonia-format-ogg@0.5.5": 2,
+        "crates.io-index#symphonia-codec-vorbis@0.5.5": 2,
+        "crates.io-index#symphonia-format-isomp4@0.5.5": 2,
+        "crates.io-index#symphonia-bundle-flac@0.5.5": 2,
+        "crates.io-index#symphonia-bundle-mp3@0.5.5": 2,
+        "crates.io-index#symphonia-codec-pcm@0.5.5": 2,
+        "crates.io-index#symphonia-codec-aac@0.5.5": 2,
+        "crates.io-index#hashlink@0.10.0": 2,
+        "crates.io-index#gif@0.13.3": 2,
+        "crates.io-index#png@0.17.16": 2,
+        "crates.io-index#option-ext@0.2.0": 2,
+        "crates.io-index#minimal-lexical@0.2.1": 2,
+        "crates.io-index#winapi@0.3.9": 6,
+        "crates.io-index#dasp_sample@0.11.0": 2,
+        "crates.io-index#byteorder@1.5.0": 2,
+        "crates.io-index#fallible-streaming-iterator@0.1.9": 2,
+        "crates.io-index#fallible-iterator@0.3.0": 2,
+        "crates.io-index#nom@7.1.3": 2,
+        "crates.io-index#image@0.24.9": 2,
+        "crates.io-index#rusqlite@0.35.0": 2,
+        "crates.io-index#dirs-sys@0.4.1": 2,
+        "crates.io-index#symphonia@0.5.5": 2,
+        "crates.io-index#reqwest@0.12.28": 2,
+        "cascette-rs?rev=758d8dbfbc64d500b2f8f5b5c133d9f82fa79a48#cascette-protocol@0.2.0": 2,
+        "crates.io-index#phf_macros@0.11.3": 2,
+        "wow-ui-sim#0.1.0": 20,
+        "crates.io-index#iced_widget@0.14.2": 2,
+        "crates.io-index#iced_winit@0.14.0": 2,
+        "peercred-ipc.git?tag=v0.2.0#peercred-ipc@0.1.0": 2,
+        "crates.io-index#clap@4.5.56": 2,
+        "crates.io-index#matchers@0.2.0": 2,
+        "crates.io-index#fixed_decimal@0.7.0": 2,
+        "crates.io-index#texpresso@2.0.2": 2,
+        "crates.io-index#sharded-slab@0.1.7": 2,
+        "crates.io-index#tracing-log@0.2.0": 2,
+        "crates.io-index#xattr@1.6.1": 2,
+        "crates.io-index#filetime@0.2.28": 2,
+        "crates.io-index#thread_local@1.1.9": 2,
+        "crates.io-index#same-file@1.0.6": 2,
+        "crates.io-index#nu-ansi-term@0.50.3": 2,
+        "crates.io-index#tar@0.4.45": 2,
+        "crates.io-index#walkdir@2.5.0": 2,
+        "crates.io-index#tracing-subscriber@0.3.22": 2,
+        "iced-layout-inspector.git?tag=v0.2.0#iced-layout-inspector@0.1.0": 2,
+        "crates.io-index#image-blp@1.2.0": 2,
+        "crates.io-index#icu_plurals@2.1.1": 2,
+        "crates.io-index#phf_codegen@0.11.3": 2,
+        "casc-extract?rev=bbfb184066531b6eb674b50b63a6052eb871ab2f#0.1.0": 2,
+        "crates.io-index#icu_segmenter@2.1.1": 2,
+        "crates.io-index#icu_casemap@2.1.1": 2,
+        "crates.io-index#iced@0.14.0": 2,
+        "crates.io-index#icu_collator@2.1.1": 2,
+        "crates.io-index#phf@0.11.3": 2,
+        "crates.io-index#webp@0.3.1": 2,
+        "crates.io-index#rodio@0.21.1": 2,
+        "crates.io-index#dirs@5.0.1": 2,
+        "asset-resolver?rev=462097bba2aa72d1afed8e0ca5b7c7315096427d#0.1.0": 2,
+        "crates.io-index#regex@1.12.2": 2,
+        "crates.io-index#quick-xml@0.37.5": 2,
+        "rilua.git?rev=842e4d3ff8592af45a5a93058eddf93419d29012#rilua@0.1.21": 2,
+        "crates.io-index#pollster@0.4.0": 2,
+        "crates.io-index#unicode-blocks@0.1.10": 2,
+        "crates.io-index#httpdate@1.0.3": 2,
+        "test-harness#wow-ui-sim-test-harness@0.1.0": 6,
+        "crates.io-index#tempfile@3.24.0": 2,
+        "crates.io-index#console@0.15.11": 2,
+        "crates.io-index#similar@2.7.0": 2,
+        "crates.io-index#insta@1.46.0": 2
+      },
+      "unclassified": []
+    },
+    "realm_character": {
+      "capitalized_hyphen_candidates": {
+        "ANTI-PATTERN": 1
+      },
+      "identity_keyword_contexts": {
+        "accounts. Public-copy gate is pending.": 1,
+        "REALM_LIST\\\" }, attribution: LoadDiagnosticAttribution { addon_name: \\\"Blizzard_Narration\\\", environment: Public, source: Som": 3,
+        "REALM_LIST; :46: NARRATION_OBJECT_BUTTON, NARRATION_OBJECT_CHECK_BUTTON, NARRATION_OBJECT_SLIDER.": 1,
+        "invocation ID: <PRIVATE_INVOCATION_01>\\n\"": 1,
+        "invocation ID: <PRIVATE_INVOCATION_02>\\n\"": 1,
+        "REALM_LIST\" }, attribution: LoadDiagnosticAttribution { addon_name: \"Blizzard_Narration\", environment: Public, source: Some(\"": 2
+      },
+      "classification": "ANTI-PATTERN is historical report heading; REALM_LIST is a nil symbol identifier, not a personal realm; invocation contexts contain approved placeholders; accounts context explains Cargo preservation. Other hyphen candidates are paths/package names/code flags, not personal Name-Realm values."
+    }
+  },
+  "public_source_url_checks": [
+    {
+      "path": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/admission.json",
+      "url_occurrences": 0,
+      "equal": true
+    },
+    {
+      "path": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/submission.json",
+      "url_occurrences": 0,
+      "equal": true
+    },
+    {
+      "path": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/revision.json",
+      "url_occurrences": 0,
+      "equal": true
+    },
+    {
+      "path": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/toolchain.json",
+      "url_occurrences": 0,
+      "equal": true
+    },
+    {
+      "path": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/compile.stdout",
+      "url_occurrences": 726,
+      "equal": true
+    },
+    {
+      "path": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/compile.stderr",
+      "url_occurrences": 0,
+      "equal": true
+    },
+    {
+      "path": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/compile-result.json",
+      "url_occurrences": 0,
+      "equal": true
+    },
+    {
+      "path": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/compile-terminal.txt",
+      "url_occurrences": 0,
+      "equal": true
+    },
+    {
+      "path": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/seal-integration.json",
+      "url_occurrences": 0,
+      "equal": true
+    },
+    {
+      "path": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/receipt-integration.json",
+      "url_occurrences": 0,
+      "equal": true
+    },
+    {
+      "path": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/source-scope.json",
+      "url_occurrences": 0,
+      "equal": true
+    },
+    {
+      "path": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/runtime-crafted-owned-red-2g/admission.json",
+      "url_occurrences": 0,
+      "equal": true
+    },
+    {
+      "path": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/runtime-crafted-owned-red-2g/argv.json",
+      "url_occurrences": 0,
+      "equal": true
+    },
+    {
+      "path": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/runtime-crafted-owned-red-2g/launcher.txt",
+      "url_occurrences": 0,
+      "equal": true
+    },
+    {
+      "path": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/runtime-crafted-owned-red-2g/result.json",
+      "url_occurrences": 0,
+      "equal": true
+    },
+    {
+      "path": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/runtime-crafted-owned-red-2g/stderr",
+      "url_occurrences": 0,
+      "equal": true
+    },
+    {
+      "path": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/runtime-crafted-owned-red-2g/stdout",
+      "url_occurrences": 0,
+      "equal": true
+    },
+    {
+      "path": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/runtime-crafted-itembutton-red-2g/admission.json",
+      "url_occurrences": 0,
+      "equal": true
+    },
+    {
+      "path": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/runtime-crafted-itembutton-red-2g/argv.json",
+      "url_occurrences": 0,
+      "equal": true
+    },
+    {
+      "path": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/runtime-crafted-itembutton-red-2g/launcher.txt",
+      "url_occurrences": 0,
+      "equal": true
+    },
+    {
+      "path": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/runtime-crafted-itembutton-red-2g/result.json",
+      "url_occurrences": 0,
+      "equal": true
+    },
+    {
+      "path": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/runtime-crafted-itembutton-red-2g/stderr",
+      "url_occurrences": 0,
+      "equal": true
+    },
+    {
+      "path": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/runtime-crafted-itembutton-red-2g/stdout",
+      "url_occurrences": 0,
+      "equal": true
+    },
+    {
+      "path": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/admission.json",
+      "url_occurrences": 0,
+      "equal": true
+    },
+    {
+      "path": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/submission.json",
+      "url_occurrences": 0,
+      "equal": true
+    },
+    {
+      "path": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/revision.json",
+      "url_occurrences": 0,
+      "equal": true
+    },
+    {
+      "path": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/toolchain.json",
+      "url_occurrences": 0,
+      "equal": true
+    },
+    {
+      "path": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/compile.stdout",
+      "url_occurrences": 726,
+      "equal": true
+    },
+    {
+      "path": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/compile.stderr",
+      "url_occurrences": 0,
+      "equal": true
+    },
+    {
+      "path": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/compile-result.json",
+      "url_occurrences": 0,
+      "equal": true
+    },
+    {
+      "path": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/compile-terminal.txt",
+      "url_occurrences": 0,
+      "equal": true
+    },
+    {
+      "path": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/seal-integration.json",
+      "url_occurrences": 0,
+      "equal": true
+    },
+    {
+      "path": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/receipt-integration.json",
+      "url_occurrences": 0,
+      "equal": true
+    },
+    {
+      "path": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/source-scope.json",
+      "url_occurrences": 0,
+      "equal": true
+    },
+    {
+      "path": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/runtime-crafted-owned-red-2g/admission.json",
+      "url_occurrences": 0,
+      "equal": true
+    },
+    {
+      "path": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/runtime-crafted-owned-red-2g/argv.json",
+      "url_occurrences": 0,
+      "equal": true
+    },
+    {
+      "path": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/runtime-crafted-owned-red-2g/launcher.txt",
+      "url_occurrences": 0,
+      "equal": true
+    },
+    {
+      "path": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/runtime-crafted-owned-red-2g/result.json",
+      "url_occurrences": 0,
+      "equal": true
+    },
+    {
+      "path": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/runtime-crafted-owned-red-2g/stderr",
+      "url_occurrences": 0,
+      "equal": true
+    },
+    {
+      "path": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/runtime-crafted-owned-red-2g/stdout",
+      "url_occurrences": 0,
+      "equal": true
+    },
+    {
+      "path": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/runtime-crafted-itembutton-red-2g/admission.json",
+      "url_occurrences": 0,
+      "equal": true
+    },
+    {
+      "path": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/runtime-crafted-itembutton-red-2g/argv.json",
+      "url_occurrences": 0,
+      "equal": true
+    },
+    {
+      "path": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/runtime-crafted-itembutton-red-2g/launcher.txt",
+      "url_occurrences": 0,
+      "equal": true
+    },
+    {
+      "path": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/runtime-crafted-itembutton-red-2g/result.json",
+      "url_occurrences": 0,
+      "equal": true
+    },
+    {
+      "path": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/runtime-crafted-itembutton-red-2g/stderr",
+      "url_occurrences": 0,
+      "equal": true
+    },
+    {
+      "path": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/runtime-crafted-itembutton-red-2g/stdout",
+      "url_occurrences": 0,
+      "equal": true
+    },
+    {
+      "path": "crafted-quality-owned-retail-red-auth-current/report.md",
+      "url_occurrences": 0,
+      "equal": true
+    },
+    {
+      "path": "crafted-quality-owned-retail-red-auth-current/proof.json",
+      "url_occurrences": 0,
+      "equal": true
+    },
+    {
+      "path": "crafted-quality-owned-ptr-red-auth-current/report.md",
+      "url_occurrences": 0,
+      "equal": true
+    },
+    {
+      "path": "crafted-quality-owned-ptr-red-auth-current/proof.json",
+      "url_occurrences": 0,
+      "equal": true
+    },
+    {
+      "path": "crafted-quality-owned-retail-red-current/report.md",
+      "url_occurrences": 0,
+      "equal": true
+    },
+    {
+      "path": "crafted-quality-owned-retail-red-current/proof.json",
+      "url_occurrences": 0,
+      "equal": true
+    },
+    {
+      "path": "crafted-quality-owned-ptr-red-current/report.md",
+      "url_occurrences": 0,
+      "equal": true
+    },
+    {
+      "path": "crafted-quality-owned-ptr-red-current/proof.json",
+      "url_occurrences": 0,
+      "equal": true
+    },
+    {
+      "path": "crafted-quality-passive-source-current/report.md",
+      "url_occurrences": 0,
+      "equal": true
+    },
+    {
+      "path": "crafted-quality-passive-source-current/proof.json",
+      "url_occurrences": 0,
+      "equal": true
+    }
+  ],
+  "links_stat_only": [
+    {
+      "from": "data/patch-api/evidence/crafted-host-20261013/red-current/README.md",
+      "label": "Initial API RED",
+      "target": "data/patch-api/evidence/crafted-api-red-20261013/README.md",
+      "exists": true,
+      "stat_size": 1801,
+      "inspection": "STAT target only"
+    },
+    {
+      "from": "data/patch-api/evidence/crafted-host-20261013/red-current/README.md",
+      "label": "owning contract",
+      "target": "docs/specs/crafted-item-quality-info.md",
+      "exists": true,
+      "stat_size": 6709,
+      "inspection": "STAT target only"
+    },
+    {
+      "from": "docs/specs/crafted-item-quality-info.md",
+      "label": "Whole supplied-record RED",
+      "target": "data/patch-api/evidence/crafted-host-20261013/red-current/README.md",
+      "exists": true,
+      "stat_size": 1670,
+      "inspection": "STAT target only"
+    }
+  ],
+  "runs": [
+    {
+      "profile": "ptr",
+      "kind": "whole-original-consumer",
+      "names": [
+        "crafted_quality_item_button::crafted_quality_original_item_button_observes_supplied_quality_and_visibility"
+      ],
+      "passed": 0,
+      "failed": 1,
+      "launcher_exit": 101,
+      "wait": "completed; recorded main code=exited status=101/n/a",
+      "source_revision": "c652aaa8824f87089f0747a3ad0e19a4dbe3350e",
+      "result": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/runtime-crafted-itembutton-red-2g/result.json",
+      "checks": {
+        "closure12": true,
+        "nil19": true,
+        "missing1": true,
+        "zero_loader_warnings": true,
+        "zero_collected_errors": true,
+        "actual_reagent_nil": true,
+        "empty_crafted_nil": true,
+        "positive_input": true,
+        "positive_effects": true,
+        "positive_flag_fail": true
+      },
+      "addons": [
+        "Blizzard_ScriptErrors",
+        "Blizzard_SharedXMLBase",
+        "Blizzard_Menu",
+        "Blizzard_Colors",
+        "Blizzard_LoadLocale",
+        "Blizzard_Fonts_Shared",
+        "Blizzard_HelpPlate",
+        "Blizzard_ProjectConstants",
+        "Blizzard_PrintHandler",
+        "Blizzard_Narration",
+        "Blizzard_SharedXML",
+        "Blizzard_ItemButton"
+      ],
+      "nil_observations": 19,
+      "missing_requirements": 1,
+      "boundary": "Whole cached handler baseline completed, real Button and host visibility Frame (recorded prior verification; not original professions panel); positive overlay nil, crafted/profession flags false false. Positive getter payload unprinted. Atlas/anchor/layer/visibility/clear/removal assertions unreached; callback unregister is NOT ASSERTED, not invented as acceptance."
+    },
+    {
+      "profile": "ptr",
+      "kind": "positive-query",
+      "names": [
+        "crafted_quality_owned::crafted_quality_detached_snapshots_survive_host_replacement_and_removal",
+        "crafted_quality_owned::crafted_quality_existing_item_selector_forms_share_the_supplied_record",
+        "crafted_quality_owned::crafted_quality_real_vm_secret_selectors_guard_lookup_and_recover_wrappers",
+        "crafted_quality_owned::crafted_quality_simulator_unknown_is_one_nil_and_inputs_are_environment_owned",
+        "crafted_quality_owned::crafted_quality_supplied_record_projects_exact_thirteen_fields_and_one_result"
+      ],
+      "passed": 0,
+      "failed": 5,
+      "launcher_exit": 101,
+      "wait": "completed; recorded main code=exited status=101/n/a",
+      "source_revision": "c652aaa8824f87089f0747a3ad0e19a4dbe3350e",
+      "result": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/runtime-crafted-owned-red-2g/result.json",
+      "boundary": "First positive table-type assertion FAIL; actual query payload unprinted. Exact fields/arity, remaining aliases, lifecycle and later security/denial/recovery unreached."
+    },
+    {
+      "profile": "retail",
+      "kind": "whole-original-consumer",
+      "names": [
+        "crafted_quality_item_button::crafted_quality_original_item_button_observes_supplied_quality_and_visibility"
+      ],
+      "passed": 0,
+      "failed": 1,
+      "launcher_exit": 101,
+      "wait": "completed; recorded main code=exited status=101/n/a",
+      "source_revision": "6c38a82739dbf27fc58c3c801c32a0f0fc98d21c",
+      "result": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/runtime-crafted-itembutton-red-2g/result.json",
+      "checks": {
+        "closure12": true,
+        "nil19": true,
+        "missing1": true,
+        "zero_loader_warnings": true,
+        "zero_collected_errors": true,
+        "actual_reagent_nil": true,
+        "empty_crafted_nil": true,
+        "positive_input": true,
+        "positive_effects": true,
+        "positive_flag_fail": true
+      },
+      "addons": [
+        "Blizzard_ScriptErrors",
+        "Blizzard_SharedXMLBase",
+        "Blizzard_Menu",
+        "Blizzard_Colors",
+        "Blizzard_LoadLocale",
+        "Blizzard_Fonts_Shared",
+        "Blizzard_HelpPlate",
+        "Blizzard_ProjectConstants",
+        "Blizzard_PrintHandler",
+        "Blizzard_Narration",
+        "Blizzard_SharedXML",
+        "Blizzard_ItemButton"
+      ],
+      "nil_observations": 19,
+      "missing_requirements": 1,
+      "boundary": "Whole cached handler baseline completed, real Button and host visibility Frame (recorded prior verification; not original professions panel); positive overlay nil, crafted/profession flags false false. Positive getter payload unprinted. Atlas/anchor/layer/visibility/clear/removal assertions unreached; callback unregister is NOT ASSERTED, not invented as acceptance."
+    },
+    {
+      "profile": "retail",
+      "kind": "positive-query",
+      "names": [
+        "crafted_quality_owned::crafted_quality_detached_snapshots_survive_host_replacement_and_removal",
+        "crafted_quality_owned::crafted_quality_existing_item_selector_forms_share_the_supplied_record",
+        "crafted_quality_owned::crafted_quality_real_vm_secret_selectors_guard_lookup_and_recover_wrappers",
+        "crafted_quality_owned::crafted_quality_simulator_unknown_is_one_nil_and_inputs_are_environment_owned",
+        "crafted_quality_owned::crafted_quality_supplied_record_projects_exact_thirteen_fields_and_one_result"
+      ],
+      "passed": 0,
+      "failed": 5,
+      "launcher_exit": 101,
+      "wait": "completed; recorded main code=exited status=101/n/a",
+      "source_revision": "6c38a82739dbf27fc58c3c801c32a0f0fc98d21c",
+      "result": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/runtime-crafted-owned-red-2g/result.json",
+      "boundary": "First positive table-type assertion FAIL; actual query payload unprinted. Exact fields/arity, remaining aliases, lifecycle and later security/denial/recovery unreached."
+    }
+  ],
+  "historical_scope": {
+    "retail_revision": "6c38a82739dbf27fc58c3c801c32a0f0fc98d21c",
+    "ptr_revision": "c652aaa8824f87089f0747a3ad0e19a4dbe3350e",
+    "no_getter_at_red": "Recorded in retained passive-source and RED reports; not reauthenticated against source tree. Retail source_delta.getter_implemented=false; PTR result scope says no getter.",
+    "later_producer_056": "User-supplied later stage, not inspected; GREEN is separate and cannot rewrite these twelve failures.",
+    "no_current_clean_claim": true
+  },
+  "line_references": [
+    {
+      "path": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/runtime-crafted-itembutton-red-2g/stderr",
+      "line": 90,
+      "text": "[crafted consumer full missing requirements] Blizzard_SharedXML: [MissingRequirement { kind: CNamespace { namespace: \"C_Reveal\" }, attribution: LoadDiagnosticAttribution { addon_name: \"Blizzard_SharedXML\", environment: Public, source: Some(\"DebugBarManager.lua\"), line: Some(106) } }]"
+    },
+    {
+      "path": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/runtime-crafted-itembutton-red-2g/stderr",
+      "line": 98,
+      "text": "[crafted consumer boundary] actual public sibling and empty-input baseline"
+    },
+    {
+      "path": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/runtime-crafted-itembutton-red-2g/stderr",
+      "line": 99,
+      "text": "[DEFAULT_CHAT_FRAME] [crafted consumer provenance] Lua @Interface/AddOns/Blizzard_ItemButton/Mainline/ItemButtonTemplate.lua 323 350"
+    },
+    {
+      "path": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/runtime-crafted-itembutton-red-2g/stderr",
+      "line": 100,
+      "text": "[DEFAULT_CHAT_FRAME] [crafted actual reagent baseline] nil nil"
+    },
+    {
+      "path": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/runtime-crafted-itembutton-red-2g/stderr",
+      "line": 101,
+      "text": "[DEFAULT_CHAT_FRAME] [crafted actual empty-input baseline] nil nil"
+    },
+    {
+      "path": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/runtime-crafted-itembutton-red-2g/stderr",
+      "line": 105,
+      "text": "[crafted consumer boundary] original handler positive-map RED boundary"
+    },
+    {
+      "path": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/runtime-crafted-itembutton-red-2g/stderr",
+      "line": 106,
+      "text": "[DEFAULT_CHAT_FRAME] [crafted positive host input] 900001 professions-icon-quality-tier3-small"
+    },
+    {
+      "path": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/runtime-crafted-itembutton-red-2g/stderr",
+      "line": 107,
+      "text": "[DEFAULT_CHAT_FRAME] [crafted original positive effects] nil false false"
+    },
+    {
+      "path": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/runtime-crafted-itembutton-red-2g/stderr",
+      "line": 112,
+      "text": "thread 'crafted_quality_item_button::crafted_quality_original_item_button_observes_supplied_quality_and_visibility' (3029837) panicked at <PRIVATE_HOME>/Projects/wow/wow-ui-sim/tests/crafted_quality_item_button.rs:172:35:"
+    },
+    {
+      "path": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/runtime-crafted-itembutton-red-2g/stderr",
+      "line": 90,
+      "text": "[crafted consumer full missing requirements] Blizzard_SharedXML: [MissingRequirement { kind: CNamespace { namespace: \"C_Reveal\" }, attribution: LoadDiagnosticAttribution { addon_name: \"Blizzard_SharedXML\", environment: Public, source: Some(\"DebugBarManager.lua\"), line: Some(106) } }]"
+    },
+    {
+      "path": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/runtime-crafted-itembutton-red-2g/stderr",
+      "line": 98,
+      "text": "[crafted consumer boundary] actual public sibling and empty-input baseline"
+    },
+    {
+      "path": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/runtime-crafted-itembutton-red-2g/stderr",
+      "line": 99,
+      "text": "[DEFAULT_CHAT_FRAME] [crafted consumer provenance] Lua @Interface/AddOns/Blizzard_ItemButton/Mainline/ItemButtonTemplate.lua 323 350"
+    },
+    {
+      "path": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/runtime-crafted-itembutton-red-2g/stderr",
+      "line": 100,
+      "text": "[DEFAULT_CHAT_FRAME] [crafted actual reagent baseline] nil nil"
+    },
+    {
+      "path": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/runtime-crafted-itembutton-red-2g/stderr",
+      "line": 101,
+      "text": "[DEFAULT_CHAT_FRAME] [crafted actual empty-input baseline] nil nil"
+    },
+    {
+      "path": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/runtime-crafted-itembutton-red-2g/stderr",
+      "line": 105,
+      "text": "[crafted consumer boundary] original handler positive-map RED boundary"
+    },
+    {
+      "path": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/runtime-crafted-itembutton-red-2g/stderr",
+      "line": 106,
+      "text": "[DEFAULT_CHAT_FRAME] [crafted positive host input] 900001 professions-icon-quality-tier3-small"
+    },
+    {
+      "path": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/runtime-crafted-itembutton-red-2g/stderr",
+      "line": 107,
+      "text": "[DEFAULT_CHAT_FRAME] [crafted original positive effects] nil false false"
+    },
+    {
+      "path": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/runtime-crafted-itembutton-red-2g/stderr",
+      "line": 112,
+      "text": "thread 'crafted_quality_item_button::crafted_quality_original_item_button_observes_supplied_quality_and_visibility' (2998933) panicked at <PRIVATE_HOME>/Projects/wow/wow-ui-sim/tests/crafted_quality_item_button.rs:172:35:"
+    }
+  ],
+  "proof_commands": [
+    {
+      "argv": [
+        "git",
+        "ls-tree",
+        "-r",
+        "--name-only",
+        "51b64e72fd0ad5891135b6220441aa82eac0f492",
+        "--",
+        "data/patch-api/evidence/crafted-host-20261013/red-current"
+      ],
+      "scope": "<PRIVATE_HOME>/Projects/wow/wow-ui-sim",
+      "exit_code": 0
+    },
+    {
+      "argv": [
+        "git",
+        "cat-file",
+        "--batch"
+      ],
+      "scope": "<PRIVATE_HOME>/Projects/wow/wow-ui-sim",
+      "exit_code": 0
+    },
+    {
+      "argv": [
+        "git",
+        "show",
+        "--format=",
+        "51b64e72fd0ad5891135b6220441aa82eac0f492",
+        "--",
+        "docs/specs/crafted-item-quality-info.md"
+      ],
+      "scope": "<PRIVATE_HOME>/Projects/wow/wow-ui-sim",
+      "exit_code": 0
+    }
+  ],
+  "excluded_actions": [
+    "No runtime/build/check/test/fmt/services/delegation/Bash/cwd tools/canonical edits",
+    "No initial accepted 62/Bullet300/Bullet26 reads",
+    "No old accepted payloads or binaries/libraries/archives read/hash/authentication",
+    "No source-tree authentication",
+    "No native/catalog/render or producer GREEN gate"
+  ],
+  "persistence_protocol": "New O_EXCL files mode 0600; fsync each; fsync directory; full binary readback and mode comparison, reported after creation."
+}

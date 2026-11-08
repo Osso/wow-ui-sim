@@ -1,9 +1,0 @@
-# Copied PTR executable authentication: PASS
-
-- Path: `[PRIVATE_EVIDENCE]/verification/widget-discrete-progress-current/widget-spacer-ptr-producer-green-20261015T001307838834Z/artifacts/deps/integration-020202567c2bd5a4`
-- SHA-256: `02647becc9f1ee914effcda8e629a828eb747aff45f430ae14552370ec508e7a`; matches seal: True; hash reads: 1.
-- Before/after stats stable and match seal: True.
-- Recorded PTR / client-ptr, no client-retail, retail-12-1-0 included: True.
-- Receipt: `[PRIVATE_EVIDENCE]/verification/widget-discrete-progress-current/widget-spacer-ptr-producer-green-20261015T001307838834Z/receipt-integration.json`
-- Scope: Copied executable association with seal only; not source, dependency, or native authentication.
-- No builds, tests, external commands, delegation, or other binary/library/archive/source/git-pack reads performed.

@@ -44,7 +44,7 @@ Independent saved-runtime gate at `0d819ea3ded9904e5a69757b66e67742a78c7635`:416
 
 No-run compile20.42s/exit0,741 Cargo records and six existing manifest deprecations retained. Peak4,307,513,344 bytes below8G high. Receipt reuses one producer digest with stable metadata; no independent executable-byte authentication. Complete runtime diagnostics reach FIRST_FRAME_RENDERED; no warning/error lines observed, not native/conformance/font/WTF/render proof. Sound/CASC disabled; caches/dependencies/settings unauthenticated.
 
-[Whole-TEXT owning-after retention](../../data/patch-api/evidence/ui-widget-text-with-subtext-2026-10-14/owning-after/README.md) preserves21 complete derivatives of this replay and its saved gates; the historical39 packet remains separate.
+[Whole-TEXT owning-after retention](../../data/patch-api/evidence/widget-text-20261014/owning-after/README.md) preserves21 complete derivatives of this replay and its saved gates; the historical39 packet remains separate.
 
 Publication is not signature/populated-output/security/native parity. Broader/all-profile/render/full-parent acceptance stays open; broad `4fc115b93` does not cover later type25 changes.
 

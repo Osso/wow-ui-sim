@@ -1,0 +1,36 @@
+{
+  "source": "a6b57273246430131060b64d2b02e6d50baea9a6",
+  "profile": "retail",
+  "features": [
+    "aura-containers",
+    "aura-instance-enumeration",
+    "aura-xml-widgets",
+    "base-spell-relationships",
+    "casc",
+    "client-retail",
+    "default",
+    "forbidden-aspects",
+    "gui",
+    "native-duration-formatting",
+    "numeric-rule-formatters",
+    "on-update-modes",
+    "player-cast-durations",
+    "prefork-full-ui",
+    "profile-retail",
+    "retail-12-0-0",
+    "retail-12-0-5",
+    "retail-12-0-7",
+    "retail-12-1-0",
+    "rodio",
+    "sound"
+  ],
+  "sealed_path": "<PRIVATE_VERIFICATION_ROOT>/wdp/macro-vehicle-retail-green-20261014T070312422146Z/artifacts/deps/integration-9f07e4a55f2bbbf7",
+  "sha256": "2803bd82f2be9b986c026537dc173540b48823766890e695b27bb7fb04f39673",
+  "stat": {
+    "st_dev": 66306,
+    "st_ino": 149827789,
+    "st_size": 471512904,
+    "st_mtime_ns": 1791961609891256485
+  },
+  "scope": "new copied executable; external libraries/cache/settings and source archive not independently authenticated"
+}

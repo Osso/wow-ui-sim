@@ -1,0 +1,35 @@
+# Spacer owning build: saved/source audit
+
+## Scope and evidence
+
+Saved evidence only: `[PRIVATE_EVIDENCE]/verif/wdp/widget-spacer-retail-owning-normal-20261015T010300829553Z`.
+Watcher source: `[PRIVATE_EVIDENCE]/handoff/watch-spacer-build-pressure.py` (read completely).
+Read `[PRIVATE_AGENT_CONFIG]/skills/verify/SKILL.md`; used artifact/source inspection within the requested restrictions, not a command verification or delegated gate.
+No commands, builds, tests, signals, binary/library/archive reads or hashes, or delegation performed. Python was used only for saved-text parsing and this private report's file I/O/permissions. An initial verbose parse display was truncated; a subsequent bounded summary inspected the complete saved stream. A separate attempted summary failed because prior evaluation variables were unavailable; no build or external command was rerun.
+
+## Build outcome: aborted; completion unproven
+
+- `submission.json`: source `d15126365dd3c3d207fea3a328599ea615672c4c`; owning `prefork_full_ui` compile-only command: `/usr/bin/cargo test --offline --locked --test prefork_full_ui --no-run --message-format=json -j 2`, with `RUSTC=/usr/bin/rustc`. Recorded limits: MemoryMax=6G, MemoryHigh=5G, CPUQuota=200%, KillMode=control-group, RemainAfterExit=yes. Launcher exit 0 proves submission, not build completion.
+- `compile-terminal.txt`: `ActiveState=active`, `SubState=exited`, `Result=success`, `ExecMainCode=2`, `ExecMainStatus=15`, `MemoryPeak=2400354304`, `CPUUsageNSec=12164500000`. Systemd Result=success is distinct from successful compilation: the main process was terminated by signal 15 (SIGTERM), not exit code 0. Active/exited is not evidence of a still-running compiler.
+- Complete `compile.stdout`: 573326 bytes, 739 JSON records: 664 compiler-artifact records, all fresh=true, and 75 build-script-executed records. Zero compiler-message records, zero build-finished records, zero prefork_full_ui target records. Cached dependency/library/bin artifact messages do not establish a completed owning test artifact. No artifact contents were inspected.
+- Complete `compile.stderr`: six manifest lint-name deprecation warnings, their summary, then `Compiling wow-ui-sim v0.1.0 (...)`; no compiler error observed. This is neither a compiler-error result nor a genuine behavioral RED, nor a build/test PASS. `--no-run` would not establish behavioral results even if compilation completed.
+
+## Guard observations and source wiring
+
+- `pressure-condition.json` records full avg10 limit 1.0, polling 0.25 seconds, the exact owning cgroup, and fresh_full_avg10=0.0. `pressure-watch-submission.json` invokes this watcher with that epoch and cgroup; watcher submission exit 0 is not itself proof of guard execution. Recorded watcher limits: 64M memory and 5% CPU.
+- `pressure-watch.jsonl` contains 41 samples, all cgroup_present=true: 32 at 0.0, eight at 0.54, one at 2.43. First/last epochs: 1792026181.1399994 / 1792026191.1527789. Observed maximum: 2.43% full avg10.
+- `pressure-abort.json` records `host memory PSI full avg10 > 1%`, observed 2.43, and the owning service. `pressure-watch-result.json` records safety_abort/max_full_avg10=2.43 and successful SIGTERM sends to PIDs [PRIVATE_PROCESS_ID_01] and [PRIVATE_PROCESS_ID_02] only. These matching records support that the threshold branch executed, not merely that a guard was configured. Both watcher stdout/stderr files are empty.
+- Source `watch` asserts the submission unit prefix and exact cgroup basename, derives expected membership from its /sys/fs/cgroup-relative path, reads host `/proc/pressure/memory`, and takes the abort branch only when the cgroup is present and full avg10 > 1.0. It writes the abort record before signaling, waits two seconds after SIGTERM, then enumerates again for SIGKILL and saves the result.
+- Source `signal_members` enumerates only that recorded cgroup's cgroup.procs, opens each pidfd, checks `/proc/<pid>/cgroup` for exact `0::<expected>` membership, then signals through that pidfd; descriptors are closed. Missing/empty cgroup membership produces no signal targets. The saved result has no signal-9 entries. With the inspected implementation, this is consistent with the second enumeration finding no targets; it does not directly record whether the cgroup was empty versus removed. The user's main-thread fresh check found the owning cgroup removed; this is supplied observation, not independently repeated here.
+
+## Safety scope and observation limits
+
+The source and saved run support narrowly scoped, recorded-owning-cgroup pidfd signaling, including executed threshold handling. They do not establish a general kernel-level isolation guarantee. Enumeration, pidfd acquisition, numeric-PID /proc membership lookup, and signal delivery are separate operations; membership checks are not atomic with signaling, and migration/PID-reuse races were not exercised or ruled out. Missing-process handling is explicit; membership assertion or other errors stop the watcher and write pressure-watch-error.json. No kernel behavior was tested.
+
+The two-second SIGKILL stage has no recorded targets in this run; its nonempty-target behavior was not observed. JSONL records cgroup presence rather than PID membership snapshots; the signal result records successful send calls, not independently observed per-process termination times. Sampling has finite granularity and ends at the threshold; it is not a complete pressure history. Current source inspection is not an immutable hash/provenance proof of the exact code executed earlier.
+
+No causal pressure attribution: worker MemoryPeak=2400354304 bytes is below its configured 5G MemoryHigh. The measured PSI is host-global; other-workload context is unknown. Neither that comparison nor the threshold abort proves the worker caused, or did not contribute to, host pressure. Cgroup removal likewise does not prove host-wide pressure recovery.
+
+## Conclusion
+
+Saved evidence substantiates an owning-build pressure safety abort and the inspected guard's limited targeting logic. Owning compilation did not produce a recorded completion or owning artifact; compiler-error, genuine RED, and PASS claims are unsupported. No live-state or general kernel-safety guarantee is made.

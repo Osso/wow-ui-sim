@@ -1,0 +1,17 @@
+{
+  "source": "85d8d7bd431a2c7edef239599ad5e22178522c4f",
+  "runtime_source_mount": "<PRIVATE_VERIFICATION_ROOT>/wdp/store-group-mists-green-20261014T052644661360Z/source",
+  "tracked_archive_paths": [
+    "Cargo.toml",
+    "Cargo.lock",
+    "build.rs",
+    "build",
+    "src",
+    "tests",
+    "data",
+    "Interface",
+    ".cargo"
+  ],
+  "target_mountpoint": "empty directory for read-only target overlay",
+  "scope": "selected tracked inputs; external libraries/cache/settings not authenticated"
+}

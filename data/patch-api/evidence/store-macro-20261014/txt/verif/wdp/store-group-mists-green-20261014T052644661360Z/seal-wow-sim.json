@@ -1,0 +1,21 @@
+{
+  "source": "85d8d7bd431a2c7edef239599ad5e22178522c4f",
+  "profile": "mists",
+  "features": [
+    "casc",
+    "client-mists",
+    "gui",
+    "prefork-full-ui",
+    "rodio",
+    "sound"
+  ],
+  "sealed_path": "<PRIVATE_VERIFICATION_ROOT>/wdp/store-group-mists-green-20261014T052644661360Z/artifacts/wow-sim",
+  "sha256": "64cf3dd8329ab608bdd2ff990f3acd62c7ae42329e45a44ba73b05b03ceb56aa",
+  "stat": {
+    "st_dev": 66306,
+    "st_ino": 141585165,
+    "st_size": 399491368,
+    "st_mtime_ns": 1791955804344628164
+  },
+  "scope": "new copied executable; external libraries/cache/settings and source archive not independently authenticated"
+}

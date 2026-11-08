@@ -933,7 +933,7 @@ Updated [rendering](../rendering-pipeline.md#geometry-repair-checkpoint--2026-10
 
 ## [2026-10-14] evidence | Public historical Store/macro packet
 
-[Store owner](../specs/store-product-group-shape.md#current-bounded-retail-receipt--2026-10-14) and [macro owner](../specs/macro-vehicle-ui-conditions.md#current-bounded-runtime-follow-up--2026-10-14) link the [public packet](../../data/patch-api/evidence/store-macro-lifecycle-2026-10-14/README.md). Accepted copy/privacy only; recorded revision scopes and historical failures retained. Current item/display/PTR/UI, native/render and full-parent acceptance excluded.
+[Store owner](../specs/store-product-group-shape.md#current-bounded-retail-receipt--2026-10-14) and [macro owner](../specs/macro-vehicle-ui-conditions.md#current-bounded-runtime-follow-up--2026-10-14) link the [public packet](../../data/patch-api/evidence/store-macro-20261014/README.md). Accepted copy/privacy only; recorded revision scopes and historical failures retained. Current item/display/PTR/UI, native/render and full-parent acceptance excluded.
 
 ## [2026-10-14] source | Featured Store display metadata
 

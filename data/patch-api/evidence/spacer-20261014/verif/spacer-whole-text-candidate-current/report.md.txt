@@ -1,0 +1,110 @@
+# Private candidate-only whole-TEXT audit
+
+Date: 2026-10-14
+
+Candidate: `[PRIVATE_EVIDENCE]/handoff/spacer-whole-text-candidate-current`
+
+Exact ordered UTF-8 replacement equality: 119/119. Rules: 40. Distinct original provenance paths: 119; distinct candidate payload paths: 119.
+Source bytes read: 3447133; candidate bytes: 3270035.
+All selected payload names end in `.txt`; README manifest navigation: PASS.
+Manifest rows: 119. Integrity/metadata issues: 0.
+
+## Verdict
+- PASS — whole-TEXT transformation, provenance preservation, manifest consistency, inert naming and README navigation.
+- NOT CLEARED — bounded privacy/context gate: two residual literal contexts, detailed privately below. Neither is an occurrence of an unchanged configured `old` literal; 0/40 configured old literals remain. This is not a claim that these generic contexts disclose a personal identity, nor that every possible private value was detected.
+
+## Byte-level proof
+For each of the 119 selected entries, read original bytes, strictly decode UTF-8, apply all 40 `str.replace(old, new)` operations in the supplied order, encode UTF-8, compare against complete derivative bytes. All 119 comparisons equal. No newline conversion, trimming, clipping, payload parsing/reserialization, or source modifications. Thus every byte not changed by those exact operations—including newline/final-byte structure—is preserved. All 119 derivatives retain final LF; the manifest records `final_lf=1` for all 119.
+
+119 distinct inventory source paths equal the ledger source-path set; 119 distinct output paths equal evidence-root plus inventory-relative path plus `.txt`. Each manifest row matches source-relative path, output-relative path, actual byte count, derivative SHA-256 and final LF in ledger/inventory order. 0 metadata mismatches. Source total 3,447,133 bytes; derivative total 3,270,035 bytes matches ledger. No original payload hashes were computed; derivative hashes are copy-consistency evidence only, not source authentication.
+
+## Precise residual literals — private
+### HOME-relative cache context
+- Location: `verif/spacer-first-selector-source-current/report.md.txt:15`
+- Exact remaining literal: `[PRIVATE_CACHE]/blizzard-ui/{retail,ptr}/AddOns/Blizzard_APIDocumentationGenerated/UIWidgetManagerDocumentation.lua:338-350`
+- Count: 1 contextual occurrence. The rules cover absolute HOME/cache paths, not this tilde spelling. No username is embedded here. Bounded HOME-context clearance remains unresolved; no candidate/rule edits made.
+
+### Service/cgroup slice context
+- Exact remaining literal: `[PRIVATE_AGENT_CGROUP_SLICE]`
+- Count: 12 contextual occurrences, in these files/lines:
+- `verif/spacer-first-selector-compile-current/proof.json.txt:103`
+- `verif/spacer-ptr-first-runtime-current/report.md.txt:52`
+- `verif/spacer-retail-controls-docs-current/report.md.txt:54`
+- `verif/spacer-retail-first-runtime-current/report.md.txt:67`
+- `verif/wdp/widget-spacer-ptr-producer-green-20261015T001307838834Z/runtime-spacer-seven-first-ptr/argv.json.txt:6`
+- `verif/wdp/widget-spacer-ptr-producer-green-20261015T001307838834Z/submission.json.txt:8`
+- `verif/wdp/widget-spacer-retail-populated-red-20261014T234012425170Z/runtime-spacer-seven-first-red/argv.json.txt:6`
+- `verif/wdp/widget-spacer-retail-populated-red-20261014T234012425170Z/submission.json.txt:8`
+- `verif/wdp/widget-spacer-retail-producer-green-20261014T235938300530Z/runtime-spacer-seven-first-producer/argv.json.txt:6`
+- `verif/wdp/widget-spacer-retail-producer-green-20261014T235938300530Z/submission.json.txt:8`
+- `verif/wdp/widget-spacer-selector-retail-red-20261014T224550944881Z/runtime-spacer-first-required-number-red/argv.json.txt:6`
+- `verif/wdp/widget-spacer-selector-retail-red-20261014T224550944881Z/submission.json.txt:8`
+- Full user-specific cgroup prefixes were absent in the derivative scan; this generic slice name remains in saved argv and narrative. It is not an unredacted unique service unit or invocation ID. Under the requested bounded service/cgroup-context check, report it rather than silently grant an exception.
+
+## Other contextual matches and limits
+Initial scan: 40 contextual matches (HOME/path 1; WTF/account/realm/character 0; service 28; invocation 7; project 3; cgroup 1). Service/invocation matches are placeholders or generic `systemctl` prose/metadata filenames; HOME environment assignments contain `[PRIVATE_HOME]`. The isolated `cgroup` prose match states resource-evidence scope, not an identifying cgroup path. No unchanged full configured literal remains in payloads or generated README/MANIFEST.
+
+Expanded case-insensitive identity/path review: 63 matching lines. Of those, 12 contain the residual slice context, one is generic cgroup prose, and 50 contain public dependency owner URLs (`github.com/Osso/` or `github.com/world-of-osso/`) in compiler-artifact text. Those public project/owner identifiers are still present; no claim is made that all project/owner context was removed. They are dependency identifiers, not demonstrated private HOME/account/realm/character/service/invocation values. No source/dependency authenticity follows from their presence. No remaining WTF/account/realm/character context was found by the bounded scans.
+
+Scan coverage: strict UTF-8 text of all selected derivatives plus generated README and MANIFEST, including their relative paths and digest/size fields. Patterns covered Unix HOME/user paths, Windows user paths, tilde paths, project/worktree roots, WTF/account paths and identity assignments, service/scope names, unit assignments, invocation labels/32-hex values, cgroup paths/names, known owner spellings and email-like forms. Expanded review also checked escaped Windows/selected Unicode path forms. This is bounded pattern/context review, not universal privacy certification. Private ledger/inventory/rules intentionally contain original private source paths; those control files were not treated as proposed public metadata.
+
+## Navigation and inertness
+README contains exactly one Markdown link, `MANIFEST.tsv`; target exists in the same evidence directory and parses into 119 rows, all pointing at the checked payloads. All 119 payload paths append `.txt`, with no executable permission bits. README/MANIFEST also have no executable bits. Payload content was treated solely as text, never executed or followed as navigation. Historical claims inside payloads remain historical claims; they were not adopted as current acceptance.
+
+## Scope and boundaries
+Candidate-only audit. Read only the named rule/inventory/ledger control documents, the 119 explicitly selected original text payloads and corresponding candidate derivatives, generated README/MANIFEST, and this private report. No executable/library/archive or closedRow/Subtext payload reads/hash; no recursive source-tree reads; no tests, builds, process commands, or delegation. No publication or parent-acceptance claim; no native parity, universal privacy, or original source/executable authenticity claim. Existing publication/startup/default-format/PTR/future privacy gates remain outside this audit. Candidate and rules unchanged.
+
+## Private report permissions
+Report directory: 0700. Report: 0600. Verified via filesystem stat after writing.
+
+## Retained public dependency owner context locations
+- `verif/spacer-ptr-producer-compile-current/cargo-artifacts.json.txt:14384`
+- `verif/spacer-ptr-producer-compile-current/cargo-artifacts.json.txt:15530`
+- `verif/spacer-ptr-producer-compile-current/cargo-artifacts.json.txt:20262`
+- `verif/spacer-ptr-producer-compile-current/cargo-artifacts.json.txt:20297`
+- `verif/spacer-ptr-producer-compile-current/cargo-artifacts.json.txt:21577`
+- `verif/spacer-ptr-producer-compile-current/cargo-artifacts.json.txt:21818`
+- `verif/spacer-ptr-producer-compile-current/cargo-artifacts.json.txt:22673`
+- `verif/spacer-ptr-producer-compile-current/cargo-artifacts.json.txt:22776`
+- `verif/spacer-ptr-producer-compile-current/cargo-artifacts.json.txt:22859`
+- `verif/spacer-ptr-producer-compile-current/cargo-artifacts.json.txt:23020`
+- `verif/wdp/widget-spacer-ptr-producer-green-20261015T001307838834Z/compile.stdout.txt:460`
+- `verif/wdp/widget-spacer-ptr-producer-green-20261015T001307838834Z/compile.stdout.txt:498`
+- `verif/wdp/widget-spacer-ptr-producer-green-20261015T001307838834Z/compile.stdout.txt:643`
+- `verif/wdp/widget-spacer-ptr-producer-green-20261015T001307838834Z/compile.stdout.txt:644`
+- `verif/wdp/widget-spacer-ptr-producer-green-20261015T001307838834Z/compile.stdout.txt:681`
+- `verif/wdp/widget-spacer-ptr-producer-green-20261015T001307838834Z/compile.stdout.txt:688`
+- `verif/wdp/widget-spacer-ptr-producer-green-20261015T001307838834Z/compile.stdout.txt:712`
+- `verif/wdp/widget-spacer-ptr-producer-green-20261015T001307838834Z/compile.stdout.txt:715`
+- `verif/wdp/widget-spacer-ptr-producer-green-20261015T001307838834Z/compile.stdout.txt:717`
+- `verif/wdp/widget-spacer-ptr-producer-green-20261015T001307838834Z/compile.stdout.txt:722`
+- `verif/wdp/widget-spacer-retail-populated-red-20261014T234012425170Z/compile.stdout.txt:457`
+- `verif/wdp/widget-spacer-retail-populated-red-20261014T234012425170Z/compile.stdout.txt:499`
+- `verif/wdp/widget-spacer-retail-populated-red-20261014T234012425170Z/compile.stdout.txt:640`
+- `verif/wdp/widget-spacer-retail-populated-red-20261014T234012425170Z/compile.stdout.txt:642`
+- `verif/wdp/widget-spacer-retail-populated-red-20261014T234012425170Z/compile.stdout.txt:681`
+- `verif/wdp/widget-spacer-retail-populated-red-20261014T234012425170Z/compile.stdout.txt:688`
+- `verif/wdp/widget-spacer-retail-populated-red-20261014T234012425170Z/compile.stdout.txt:710`
+- `verif/wdp/widget-spacer-retail-populated-red-20261014T234012425170Z/compile.stdout.txt:713`
+- `verif/wdp/widget-spacer-retail-populated-red-20261014T234012425170Z/compile.stdout.txt:715`
+- `verif/wdp/widget-spacer-retail-populated-red-20261014T234012425170Z/compile.stdout.txt:722`
+- `verif/wdp/widget-spacer-retail-producer-green-20261014T235938300530Z/compile.stdout.txt:459`
+- `verif/wdp/widget-spacer-retail-producer-green-20261014T235938300530Z/compile.stdout.txt:497`
+- `verif/wdp/widget-spacer-retail-producer-green-20261014T235938300530Z/compile.stdout.txt:643`
+- `verif/wdp/widget-spacer-retail-producer-green-20261014T235938300530Z/compile.stdout.txt:645`
+- `verif/wdp/widget-spacer-retail-producer-green-20261014T235938300530Z/compile.stdout.txt:681`
+- `verif/wdp/widget-spacer-retail-producer-green-20261014T235938300530Z/compile.stdout.txt:688`
+- `verif/wdp/widget-spacer-retail-producer-green-20261014T235938300530Z/compile.stdout.txt:706`
+- `verif/wdp/widget-spacer-retail-producer-green-20261014T235938300530Z/compile.stdout.txt:711`
+- `verif/wdp/widget-spacer-retail-producer-green-20261014T235938300530Z/compile.stdout.txt:715`
+- `verif/wdp/widget-spacer-retail-producer-green-20261014T235938300530Z/compile.stdout.txt:722`
+- `verif/wdp/widget-spacer-selector-retail-red-20261014T224550944881Z/compile.stdout.txt:457`
+- `verif/wdp/widget-spacer-selector-retail-red-20261014T224550944881Z/compile.stdout.txt:492`
+- `verif/wdp/widget-spacer-selector-retail-red-20261014T224550944881Z/compile.stdout.txt:640`
+- `verif/wdp/widget-spacer-selector-retail-red-20261014T224550944881Z/compile.stdout.txt:649`
+- `verif/wdp/widget-spacer-selector-retail-red-20261014T224550944881Z/compile.stdout.txt:673`
+- `verif/wdp/widget-spacer-selector-retail-red-20261014T224550944881Z/compile.stdout.txt:682`
+- `verif/wdp/widget-spacer-selector-retail-red-20261014T224550944881Z/compile.stdout.txt:701`
+- `verif/wdp/widget-spacer-selector-retail-red-20261014T224550944881Z/compile.stdout.txt:709`
+- `verif/wdp/widget-spacer-selector-retail-red-20261014T224550944881Z/compile.stdout.txt:712`
+- `verif/wdp/widget-spacer-selector-retail-red-20261014T224550944881Z/compile.stdout.txt:722`

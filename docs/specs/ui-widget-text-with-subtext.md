@@ -40,7 +40,7 @@ The contract requires `C_UIWidgetManager.GetTextWithSubtextWidgetVisualizationIn
 - Historical results preserved: preproduction `0a3a5ac20`1 PASS/7 FAIL; producer `e37f5426a`10 PASS/1 FAIL; diagnostic `e948624b0`1 FAIL. Update failure was a fixture expectation of tag refresh during ordinary setup; cached acquisition-only tag assignment is retained, without model/vendor changes.
 - Original extra-copy/path/mode and status-schema setup discrepancies remain recorded separately; corrections reuse authenticated bytes and stable metadata, with no hash reruns or invented runtime failures.
 
-[Whole-TEXT retention packet](../../data/patch-api/evidence/ui-widget-text-with-subtext-2026-10-14/README.md) preserves39 complete derivatives at their historical scopes. Independent corrected-candidate integrity/privacy gate passed; initial privacy FAIL retained. Owning-after publication proof is separate in the checkpoint above. No broader/native/parent closure.
+[Whole-TEXT retention packet](../../data/patch-api/evidence/widget-text-20261014/README.md) preserves39 complete derivatives at their historical scopes. Independent corrected-candidate integrity/privacy gate passed; initial privacy FAIL retained. Owning-after publication proof is separate in the checkpoint above. No broader/native/parent closure.
 
 ## Out of scope
 

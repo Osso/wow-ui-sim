@@ -50,7 +50,7 @@ Source `a6b572732` adds five Rust lines in `condition_matches`: `vehicleui` read
 
 ## Macro vehicle current Retail runtime follow-up — 2026-10-14
 
-[Public historical packet](../../../data/patch-api/evidence/store-macro-lifecycle-2026-10-14/README.md) retains macro RED/GREEN and separate selected-unit preservation without relabeling historical failures. [Owning status](../../specs/macro-vehicle-ui-conditions.md#current-bounded-runtime-follow-up--2026-10-14) owns recorded-runtime and accepted copy/privacy limits; no current item/display/PTR/UI, native/render or full-parent acceptance follows.
+[Public historical packet](../../../data/patch-api/evidence/store-macro-20261014/README.md) retains macro RED/GREEN and separate selected-unit preservation without relabeling historical failures. [Owning status](../../specs/macro-vehicle-ui-conditions.md#current-bounded-runtime-follow-up--2026-10-14) owns recorded-runtime and accepted copy/privacy limits; no current item/display/PTR/UI, native/render or full-parent acceptance follows.
 
 The full Retail macro / Store artifact verification report records bounded runtime at `a6b57273246430131060b64d2b02e6d50baea9a6`. The earlier input-only, producer-source and pending-proof checkpoints above remain historical. The [owning contract](../../specs/macro-vehicle-ui-conditions.md#current-bounded-runtime-follow-up--2026-10-14) now checks five literal requirements; it owns current acceptance limits.
 

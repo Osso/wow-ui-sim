@@ -1,0 +1,17 @@
+{
+  "source": "9cc2112267ea139e3e13408a16787edd53c232dd",
+  "runtime_source_mount": "verif/wdp/crafted-quality-ptr-api-red-retry1-20261014T013200049067Z/source",
+  "tracked_archive_paths": [
+    "Cargo.toml",
+    "Cargo.lock",
+    "build.rs",
+    "build",
+    "src",
+    "tests",
+    "data",
+    "Interface",
+    ".cargo"
+  ],
+  "target_mountpoint": "empty directory for read-only target overlay",
+  "scope": "selected tracked inputs; external libraries/cache/settings not authenticated"
+}

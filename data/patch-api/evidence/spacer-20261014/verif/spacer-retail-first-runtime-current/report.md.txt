@@ -1,0 +1,71 @@
+# Saved Retail Spacer runtime audit
+
+## Verdict and scope
+
+PASS — saved runtime reports seven unique primary PASS cases, zero failed, zero ignored, zero measured. Behavioral assertions in the supplied source snapshot substantiate the requested bounded contracts, subject to runtime/source association limits below. This is an output/source audit, not a new execution or proof of parent completion.
+
+Evidence directory (absolute):
+`[PRIVATE_EVIDENCE]/verif/wdp/widget-spacer-retail-producer-green-20261014T235938300530Z/runtime-spacer-seven-first-producer`
+
+Source root (absolute; all source paths below relative to it):
+`[PRIVATE_EVIDENCE]/verif/wdp/widget-spacer-retail-producer-green-20261014T235938300530Z/source`
+
+Read complete stdout, stderr, result.json, argv.json, admission.json, launcher.txt; complete exact Spacer test modules, fixtures, Lua assertions/registration and shared snapshot/numeric/secret helpers. Read dependency-closure harness and relevant timeout reexecution implementation. No reruns, tests, builds, executable/library/archive reads, hashes, process commands or delegation performed.
+
+## Runtime accounting and diagnostics
+
+Final stdout: `test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 11074 filtered out; finished in 3.14s`.
+Each of the seven exact names below also has a nested one-case PASS summary with 11080 filtered out. Those nested summaries are nonadditive: seven unique primary cases, not fourteen. Saved timeout helper explains the shape: parent selects the named test, child reexecutes that exact test, guarded closure executes there, successful child output is replayed for --nocapture. Parent fails on unsuccessful exit, timeout or missing/invalid handshake. This source explains output; no child handshake artifact was separately audited.
+
+Launcher: `Finished with result: success`; `code=exited, status=0/SUCCESS`; service runtime 3.189s, CPU 2.863s, memory peak 1.7G, swap 0B. result.json independently records launcher_exit 0, expected_cases 7 and the same eight summaries.
+
+No warnings, errors, skips, panic/failure/timeout messages observed in complete stdout/stderr/launcher. stderr contains startup timing diagnostics only, across nine environment initializations; multiple environments are expected from isolation coverage. The test name ending `_red` is a historical name, not a runtime failure. Filtered-out cases are outside the selected runtime, not passing or ignored cases. Negative pcall/is_err assertions intentionally expect rejection; those assertion strings are not emitted failure diagnostics. Shared assert_lua additionally requires recorded Lua errors empty after its phases. No early skip branch occurs in the seven exact test bodies. Security code is feature-gated in source, but its explicit runtime PASS confirms that case was selected in this run.
+
+## Exact primary cases and behavioral proof
+
+1. `ui_widget_spacer::queries::spacer_absent_returns_exactly_one_nil` — PASS, nested 0.16s.
+   Source: tests/widget_spacer/queries.rs. Callable getter; both 762201 and 762202 return exactly one nil via select-count assertion in an empty environment. No inferred populated record.
+
+2. `ui_widget_spacer::queries::spacer_full15_fresh_mutation_whole_replacement_and_environment_isolation` — PASS, nested 0.30s.
+   Source: tests/widget_spacer/queries.rs, fixtures.rs; tests/widget_two_records/helpers.rs.
+   Expected cardinality is explicitly 15. AssertSuppliedSnapshot checks exactly one return, table type, every field's actual type and value, iterates actual keys rejecting unexpected ones, and compares actual cardinality. Thus this is actual 15-field output verification, not expected-fixture cardinality alone.
+   Fields: shownState, widgetWidth, widgetHeight, widgetSizeSetting, textureKit, frameTextureKit, hasTimer, orderIndex, widgetTag, inAnimType, outAnimType, widgetScale, layoutDirection, modelSceneLayer, scriptedAnimationEffectID.
+   Two successive tables must differ by identity. Clearing every field and adding extra on the first leaves the retained second and a third fresh query intact. Adjacent absent ID returns one nil. Full replacement changes all fifteen supplied fields, produces a distinct table and leaves retained old snapshot unchanged. Two live environments start isolated and retain independent records through reversed replacements.
+   Limit: query replacement/isolation setup uses direct Rust record injection; it does not alone prove normal event-feed behavior. Separate feed case covers that boundary. Synthetic fixtures are not native observations.
+
+3. `ui_widget_spacer::queries::spacer_required_ordinary_number_and_fraction_selectors` — PASS, nested 0.13s.
+   Source: queries.rs; shared assert_selector_policy in helpers.rs.
+   Missing, nil, nonnumeric string, numeric string, boolean, table, function and coroutine selectors reject both in shared GetWidgetSetInfo and Spacer getter; Spacer error identifies required number. Zero, negative, fractional absent, positive/negative infinity and NaN return exactly one nil on both. Explicit injected 762201.5 is populated while integer 762201 stays absent: no truncation/integer-only policy.
+
+4. `ui_widget_spacer_selector_red::spacer_required_number_selectors_reject_non_numbers` — PASS, nested 0.12s.
+   Source: tests/ui_widget_spacer_selector_red.rs. Eight concrete invalid-call categories independently reject with string error containing `must be a number`, including numeric string '435' and true. Historical RED name does not change green result.
+
+5. `ui_widget_spacer::security::spacers_actual_secret_selectors_allow_secure_deny_tainted_preserve_state` — PASS, nested 0.12s.
+   Source: tests/widget_spacer/security.rs; shared assert_secret_selector_contract in helpers.rs.
+   Uses rilua wrap_host_secret_number, not a mock issecretvalue. Actual present and absent secret NUMBER wrappers are verified secret; secure lookup yields complete public snapshot or one nil. Snapshot table, keys and values must not be secret. Secure unwrap verifies numeric identity and wrapper retention.
+   Tainted closure verifies exact cumulative probe taint; both present and absent wrappers reject with `untainted caller`, remain wrapped, and cannot be declassified by tainted code. Ordinary-number present/absent lookup still works under taint without changing it. Secure outer caller is restored; secret lookups and unwrap recover. Rust set and Spacer-record maps are compared before/after for preservation.
+   Limit: shared ordinary-number policy has an explicit sibling comparison; secret helper exercises Spacer's contract directly, not a simultaneous GetWidgetSetInfo secret comparison. Simulator security behavior, not native parity.
+
+6. `ui_widget_spacer::feed::spacer_normal_feed_before_event_and_atomic_rejection` — PASS, nested 0.15s.
+   Source: tests/widget_spacer/feed.rs and fixtures.rs.
+   Normal replace_ui_widget_set and update_ui_widget typed Spacer feeds drive an ordinary public OnEvent subscriber, not a replacement event handler. During callbacks, published set metadata, membership, type22 payload and complete current visualization are already visible. One all-update and two typed updates are counted; second typed update exposes whole replacement. Removal emits all-update after membership is empty while visualization remains.
+   IMPORTANT ordering: proof is STATE BEFORE EVENT (equivalently event observes already-published state). It does NOT establish event-before-state; such a literal claim would contradict assertions.
+   Wrong type 8 and mismatched set ID reject; absent-member removal returns false. Rejection emits zero observer events, creates no set 423, leaves correct membership and complete original query unchanged. Exact cloned Rust set and Spacer maps compare equal before/after: atomic rejection, not merely silent callbacks.
+
+7. `ui_widget_spacer::consumer::spacer_cached_normal_activation_dimensions_hidden_reacquire_remove_live_unregister` — PASS, nested 1.94s.
+   Source: tests/widget_spacer/consumer.rs, consumer_assertions.lua, register.lua, fixtures.rs; tests/common/blizzard_addon_closure.rs.
+   Uses active-profile cache path and dependency closure for Blizzard_SharedXMLGame, Blizzard_Fonts_Shared, Blizzard_FrameEffects and Blizzard_UIWidgets, with empty overrides; asserts UIWidgets loaded. Actual type22 provider and UIWidgetContainerTemplate are used. Empty set registration precedes first populated feed/query. Registration manager membership and both public events are asserted. Source does not replace providers/vendor methods/event handlers.
+   Activation: normal typed feed yields 1 active/1 showing after actual OnUpdate; visible frame IDs/type/set, dimensions 173.25 x 41.5, scale .9, order/layout/animation/layer metadata are asserted. No timer, ticker or effect controller. Update retains same acquired frame; dimensions become 206.25 x 73.75; acquired tag stays original while query tag changes, and tag gathering confirms old versus new acquisition behavior.
+   Raw finite dimensions: crossed pairs (0,-11.5), (-7.25,0), (.25,1), (1,.5), (206.25,73.75) exercise each axis; queries preserve raw inputs while actual consumer dimensions clamp each sub-one axis to 1. Saved old snapshot remains intact. No NaN/infinity consumer-dimension policy is claimed.
+   Hidden record releases active/showing counts to 0 and hides old frame, while membership and hidden visualization remain. Showing reacquires current tag with correct dimensions and counts 1/1; no claim that reacquired identity must equal original. Membership removal empties membership/container frames and hides released frame but retains visualization. Refeed reactivates live container before unregister. Live unregister removes set registration, manager registration and both event subscriptions, empties/hides live frames, yields counts 0/0, and retains host membership/visualization. Every phase asserts zero timers and nil ticker.
+   Limit: all-field animated/timer/nonempty-kit replacement is query/feed-only, not cached-consumer coverage. No post-unregister future feed is asserted; proof is immediate unregister state and deferred cleanup.
+
+## Admission, argv and association limits
+
+Admission timestamp is 2026-10-15T00:04:53.604318+00:00, despite producer directory label 20261014T235938300530Z. These are different recorded timestamps, not evidence of an execution on October 14 UTC. Admission profile retail, allowed true; memory.current 33288425472, memory.high 42949672960, memory.max 45097156608; projected 25890325688, host_available 36204560384, worker_max 4294967296 and worker_high 3221225472. PSI includes nonzero historical/current pressure, not an emitted runtime warning or failure; resource record is admission evidence, not a performance guarantee.
+
+argv records systemd user unit `[PRIVATE_UNIT_08]`, [PRIVATE_AGENT_CGROUP_SLICE], MemoryMax=4G, MemoryHigh=3G, CPUQuota=200%, KillMode=control-group, redirected saved streams; outer timeout TERM 86s / kill-after 2s; bwrap die-with-parent, unshare-net, read-only root, supplied source snapshot bound at canonical repo path, canonical target mounted read-only, private tmpfs /tmp and /dev plus proc, canonical working directory; HOME=[PRIVATE_HOME], WOW_SIM_CASC=0, WOW_SIM_NO_SOUND=1. Selected saved artifact path ends artifacts/deps/integration-9f07e4a55f2bbbf7; filter ui_widget_spacer, --nocapture, --test-threads=1. These are saved launch parameters, not a new sandbox validation. Unit label 'speak' is an incidental label; selected filter and seven names establish Spacer scope.
+
+result.json declares source d5e3358a30ec63199e35d9bdc6481ab0cd061670 and reused receipt stat: st_dev 66306, st_ino 152595786, st_size 472880152, st_mtime_ns 1792022491681750064. Those are recorded association metadata only. This audit does not independently authenticate executable contents, compile-time revision/features, artifact/source identity, receipt freshness, or library provenance. Read-only source mount controls runtime filesystem view, not what was compiled into executable. No binary/library/archive was read or hashed; no receipt was independently regenerated or validated. External profile cache was not content-sealed by this audit. Source-backed behavioral interpretation is conditional on the supplied runtime-source association; saved outputs directly prove the named observed PASS results only.
+
+No PTR execution, native WoW parity, broad suite, historical RED rerun, parent-goal closure, or missing broader lifecycle/field variants are claimed. No new runtime freshness claim: this audit re-examines the saved run only.
