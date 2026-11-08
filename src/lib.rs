@@ -31,6 +31,7 @@ pub mod dungeon_score_rarity_runtime;
 pub mod forever_db2;
 pub mod forever_spell_data;
 mod forever_spell_runtime;
+mod fs_atomic;
 pub use sim_data::currencies;
 pub mod cvars;
 pub mod debug_helpers;

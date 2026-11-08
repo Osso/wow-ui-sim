@@ -59,7 +59,8 @@ pub(super) fn save_table_size_cache(
     if !contents.is_empty() {
         contents.push('\n');
     }
-    fs::write(cache_path, contents).map_err(|error| crate::Error::Other(error.to_string()))
+    crate::fs_atomic::write_atomic(&cache_path, contents.as_bytes())
+        .map_err(|error| crate::Error::Other(error.to_string()))
 }
 
 fn table_size_cache_path(storage_dir: &Path, source_key: &str) -> PathBuf {
