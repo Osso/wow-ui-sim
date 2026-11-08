@@ -42,7 +42,7 @@ local expectedTabs = {
     { frame = SpellBookFrameTabButton1, text = "Spellbook" },
     { frame = SpellBookFrameTabButton2, text = "Professions" },
     { frame = SpellBookFrameTabButton3, text = "Core Abilities" },
-    { frame = SpellBookFrameTabButton4, text = "What's Changed" },
+    { frame = SpellBookFrameTabButton4, text = WHAT_HAS_CHANGED },
 }
 local function assertVisibleTabChrome(index, tab)
     local name = tab:GetName()
