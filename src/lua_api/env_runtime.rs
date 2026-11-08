@@ -1,6 +1,5 @@
 use super::env::WowLuaAppData;
 use super::env::WowLuaEnv;
-use super::env::next_timer_id;
 use super::env_init::update_threshold_counters;
 use super::state::{AddonInfo, AppFrameMetrics, LoadDiagnostics, PendingTimer, SimState};
 use super::timer_processing::{reschedule_timer, timer_should_wait};
@@ -208,7 +207,7 @@ impl WowLuaEnv {
         interval: Option<Duration>,
         iterations: Option<i32>,
     ) -> Result<u64> {
-        let id = next_timer_id();
+        let id = self.state.borrow_mut().allocate_timer_id();
         {
             let mut lua = self.lua.borrow_mut();
             crate::lua_api::timer_layout::store_timer_callback(lua.state_mut(), id, callback);

@@ -122,7 +122,7 @@ fn schedule_lfg_queue_pop(state: &mut LuaState, delay: f64) -> LuaResult<()> {
         pop_lfg_queue,
         "LFG.QueuePop",
     ))));
-    let id = next_timer_id();
+    let id = next_timer_id(state)?;
     timer_layout::store_timer_callback(state, id, callback);
 
     let app = state

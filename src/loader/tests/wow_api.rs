@@ -589,6 +589,15 @@ fn test_c_timer_new_timer_id_shares_timer_id_space() {
 }
 
 #[test]
+fn test_c_timer_ids_are_per_environment() {
+    let env_a = WowLuaEnv::new().unwrap();
+    let a: f64 = env_a.eval("return C_Timer.NewTimerID()").unwrap();
+    let env_b = WowLuaEnv::new().unwrap();
+    let b: f64 = env_b.eval("return C_Timer.NewTimerID()").unwrap();
+    assert_eq!(a, b, "each environment must start its own timer-id space");
+}
+
+#[test]
 fn test_c_timer_new_timer_callback_receives_handle() {
     let env = WowLuaEnv::new().unwrap();
     let expected_id: f64 = env

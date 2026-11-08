@@ -71,7 +71,7 @@ pub(crate) fn defer_lfg_event_with_id(
             .gc
             .alloc_closure(Closure::Rust(RustClosure::new(dispatch, label))),
     );
-    let id = next_timer_id();
+    let id = next_timer_id(state)?;
     timer_layout::store_timer_callback(state, id, callback);
 
     let app = state

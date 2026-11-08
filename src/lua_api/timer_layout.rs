@@ -207,7 +207,7 @@ fn timer_after(state: &mut LuaState) -> LuaResult<u32> {
     };
     let callback = extract_callback(state, 2)?;
 
-    let id = next_timer_id();
+    let id = next_timer_id(state)?;
     store_timer_callback(state, id, callback);
 
     let fire_at = borrow_state(state)?.clock_now() + Duration::from_secs_f64(seconds);
@@ -292,7 +292,8 @@ fn timer_handle_cancel(state: &mut LuaState) -> LuaResult<u32> {
 
 /// `C_Timer.NewTimerID()` — hand out a fresh opaque timer id.
 fn timer_new_timer_id(state: &mut LuaState) -> LuaResult<u32> {
-    state.push(Val::Num(next_timer_id() as f64));
+    let id = next_timer_id(state)?;
+    state.push(Val::Num(id as f64));
     Ok(1)
 }
 
@@ -329,7 +330,7 @@ fn timer_new_ticker(state: &mut LuaState) -> LuaResult<u32> {
         _ => None,
     };
 
-    let id = next_timer_id();
+    let id = next_timer_id(state)?;
     store_timer_callback(state, id, callback);
     let handle = create_timer_handle_table(state, id)?;
 
@@ -357,7 +358,7 @@ fn timer_new_timer(state: &mut LuaState) -> LuaResult<u32> {
     let seconds = parse_validated_seconds(state, "NewTimer")?;
     let callback = extract_callback(state, 2)?;
 
-    let id = next_timer_id();
+    let id = next_timer_id(state)?;
     store_timer_callback(state, id, callback);
     let handle = create_timer_handle_table(state, id)?;
 

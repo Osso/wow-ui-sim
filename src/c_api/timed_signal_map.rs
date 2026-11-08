@@ -48,7 +48,7 @@ pub(crate) fn new_timed_signal_map(state: &mut LuaState) -> LuaResult<u32> {
             "bad argument #1 to 'NewTimedSignalMap' (function expected)",
         ));
     }
-    let id = crate::lua_api::next_timer_id();
+    let id = crate::lua_api::next_timer_id(state)?;
     crate::lua_api::timer_layout::store_timer_callback(state, id, callback);
     let mut sim = app_state(state)?;
     let owner_addon = sim.loading_addon_index.or(sim.executing_addon_index);
