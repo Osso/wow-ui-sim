@@ -152,7 +152,14 @@ are refreshed. This repository's root package also covers build-script inputs
 in `build/`, `installer/`, `native/intl/`, and `tests/`. If metadata fails, all
 tracked files are refreshed. A root package therefore also refreshes its docs;
 this conservative full refresh is needed when prior source is unknown or the
-previous build did not succeed.
+previous build did not succeed. When the verified worktree path differs from
+this build's worktree, every tracked package input is also refreshed once, even
+when HEAD and dirty content match. Each worktree has its own file mtimes, so a
+path crate that matches the previous tree can still be older than an artifact
+in this slot that an earlier worktree built from different content. Cargo would
+report that artifact `fresh=true` and reuse the wrong bytes. The refresh forces
+one re-fingerprint of the workspace and path crates; registry dependencies stay
+cached.
 
 Each unit writes `slot-N/receipts/UNIT.json` with its source identity, changed
 paths (`changed_paths`, the mtime refresh set), content changes

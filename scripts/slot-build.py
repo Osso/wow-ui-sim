@@ -362,8 +362,15 @@ def prepare_source(worktree, previous, attempted=None):
     changed = set(content_changed)
     last_attempt = attempted if attempted is not None else previous
     retry = bool(last_attempt and last_attempt.get("result", "success") != "success")
-    if not previous or identity != previous.get("identity") or retry:
-        if retry:
+    # A different worktree has its own files with the mtimes of its checkout, so
+    # a path crate whose content matches the previous tree is not refreshed by
+    # the content diff. Cargo then reuses an artifact of this slot that was
+    # built from an older tree when that artifact is newer than these files.
+    # Refresh every package input once per worktree switch.
+    switched = bool(previous) and os.path.realpath(
+        previous.get("worktree", "")) != os.path.realpath(worktree)
+    if not previous or identity != previous.get("identity") or retry or switched:
+        if retry or switched:
             changed.update(full_source_inputs(worktree))
         changed.update(dirty)
         now = time.time_ns()
@@ -371,7 +378,7 @@ def prepare_source(worktree, previous, attempted=None):
             path = worktree / name
             if path.is_file() and not path.is_symlink():
                 os.utime(path, ns=(path.stat().st_atime_ns, now))
-    return {"identity": identity, "dirty_paths": dirty,
+    return {"worktree": str(worktree), "identity": identity, "dirty_paths": dirty,
             "changed_paths": sorted(changed),
             "content_changed_paths": sorted(content_changed)}
 
