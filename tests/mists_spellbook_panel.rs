@@ -64,7 +64,10 @@ local function assertVisibleTabChrome(index, tab)
         "RightDisabled",
     }) do
         local texture = _G[name .. suffix]
-        if not texture or type(texture:GetTexture()) ~= "string" then
+        local asset = texture and texture:GetTexture()
+        -- GetTexture can return a file ID for Blizzard assets.
+        if not ((type(asset) == "number" and asset > 0)
+            or (type(asset) == "string" and asset ~= "")) then
             error(("spellbook bottom tab %d %s texture has no asset"):format(
                 index,
                 suffix
