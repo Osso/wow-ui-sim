@@ -1,12 +1,14 @@
 # Voice settings access
 
-The [supplied-observation contract](../../specs/voice-settings-access.md) exposes settings access without claiming native voice-proxy readiness. The Rust host supplies `Some(false)` or `Some(true)` on `SimState.voice_chat.can_access_settings`; `None` means unknown and raises a named error. Each environment owns its observation. No admin function or readiness side effect is added.
+The [supplied-observation contract](../../specs/voice-settings-access.md) exposes settings access without claiming native voice-proxy readiness. The Rust host supplies `Some(false)` or `Some(true)` on `SimState.voice_chat.can_access_settings`; `None` means unknown and raises a named error. Each environment owns its observation. Defaults are `Some(true)` on Retail and Forever and `Some(false)` on PTR, Mists, Era and Anniversary, matching the pinned polling loop's pre-ready branch; `None` is not the initial state of any profile that publishes the query. No admin function or readiness side effect is added.
 
 ## Original consumer
 
 The selected `Blizzard_SettingsDefinitions_Shared` TOC is enabled, allows both screens, and includes Audio.xml without a profile filter. Audio.xml:3 loads Audio.lua. SettingsRegistrar waits for VARIABLES_LOADED and PLAYER_ENTERING_WORLD on the game screen before calling the Audio registrant. The off-glue registration starts a five-second polling ticker.
 
 In Retail Audio.lua:565, false continues polling; true enters InitVoiceSettings and cancels only after initialization succeeds. PTR/Forever query at :657; Mists/Era/Anniversary at :549. The original note states that initialization requires the voice proxy process to be initialized. Existing connection/permission/channel state does not establish that dependency. Wrath has neither this addon nor its declaration.
+
+The simulator has no voice proxy, so false is the stable observation while the ticker polls. Leaving the observation unset makes the same original ticker raise `settings access has not been supplied`; whether that happens depends on real elapsed time crossing the five-second deadline, so slow parallel runs surfaced it as a flake.
 
 ## Bounded proof
 

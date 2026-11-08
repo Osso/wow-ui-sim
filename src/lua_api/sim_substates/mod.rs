@@ -421,14 +421,17 @@ impl Default for VoiceChatState {
         Self {
             // Retail and Forever VoiceChatDocumentation.lua:41-47. User-approved
             // default, not native evidence; explicit observations still override it.
-            can_access_settings: if matches!(
-                crate::client_profile::ACTIVE,
+            // The other declaring profiles share the pinned Audio.lua polling loop
+            // (Mists/Era/Anniversary :549, PTR :657): it polls until the voice proxy
+            // settings are ready, so the pre-ready observation is false, not unknown.
+            can_access_settings: match crate::client_profile::ACTIVE {
                 crate::client_profile::ClientProfile::Retail
-                    | crate::client_profile::ClientProfile::WowForever
-            ) {
-                Some(true)
-            } else {
-                None
+                | crate::client_profile::ClientProfile::WowForever => Some(true),
+                crate::client_profile::ClientProfile::Ptr
+                | crate::client_profile::ClientProfile::Mists
+                | crate::client_profile::ClientProfile::Era
+                | crate::client_profile::ClientProfile::Anniversary => Some(false),
+                crate::client_profile::ClientProfile::Wrath => None,
             },
             // Best-guess selected system default (docs/specs/voice-audio-devices.md).
             input_devices: Some(vec![VoiceAudioDevice::system_default()]),

@@ -41,7 +41,14 @@ fn original_audio_env_inner(extra_roots: &[&str], manual_clock: bool) -> WowLuaE
         env.exec("A_Admin.SetManualClock(0)")
             .expect("manual clock must be enabled before the Audio registrant runs");
     }
-    let expected = if matches!(ACTIVE, ClientProfile::Retail | ClientProfile::WowForever) { Some(true) } else { None };
+    let expected = match ACTIVE {
+        ClientProfile::Retail | ClientProfile::WowForever => Some(true),
+        ClientProfile::Ptr
+        | ClientProfile::Mists
+        | ClientProfile::Era
+        | ClientProfile::Anniversary => Some(false),
+        ClientProfile::Wrath => None,
+    };
     assert_eq!(env.state().borrow().voice_chat.can_access_settings, expected);
     let roots: Vec<&str> = extra_roots.iter().copied().chain(["Blizzard_SettingsDefinitions_Shared"]).collect();
     load_blizzard_addon_closure_into_env(&env, &ui, &roots, &[]);

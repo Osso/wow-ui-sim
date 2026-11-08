@@ -1,12 +1,13 @@
 # Supplied voice settings access
 
-`C_VoiceChat.CanAccessSettings()` exposes an environment-local supplied observation from `VoiceChatState.can_access_settings`. [Original consumer and model](../wiki/systems/voice-settings-access.md) describe the boundary. Retail and Forever start with true as a user-approved default, not native evidence; other profiles remain initially unknown.
+`C_VoiceChat.CanAccessSettings()` exposes an environment-local supplied observation from `VoiceChatState.can_access_settings`. [Original consumer and model](../wiki/systems/voice-settings-access.md) describe the boundary. Retail and Forever start with true as a user-approved default, not native evidence. PTR, Mists, Era and Anniversary start with false: their pinned Audio.lua polls this query until the voice proxy settings are ready, so false is the pre-ready observation (INFERRED from the pinned polling loop, not a direct native observation).
 
 ## What it must do
 
 - [x] Publish on Retail, PTR, Forever, Mists, Era and Anniversary; keep the member absent on Wrath.
 - [x] Return exactly one nonnil boolean equal to the current supplied observation. `None` raises `C_VoiceChat.CanAccessSettings: settings access has not been supplied` rather than selecting a readiness default.
 - [x] Preserve false/true transitions, unset recovery and independent environments through the original Audio.lua polling callback. Settings access is not derived from connection, permission, channel or host sound state.
+- [x] Keep the five-second polling ticker free of Lua errors on profiles whose voice proxy never initializes. The ticker must observe false and continue polling; it must not hit the unset error.
 
 ### Pinned declarations
 
@@ -24,7 +25,7 @@ Paths are relative to the active profile's `AddOns/Blizzard_APIDocumentationGene
 
 ## Implementation inventory
 
-- `src/lua_api/sim_substates/mod.rs`: optional host-supplied observation, initially true on Retail and Forever and unknown on other profiles.
+- `src/lua_api/sim_substates/mod.rs`: optional host-supplied observation, initially true on Retail and Forever and false on PTR, Mists, Era and Anniversary; Wrath does not publish the query.
 - `src/c_api/c_voice_chat_settings.rs`: profile-gated namespace query and named unset error.
 - `src/c_api/registration.rs`, `src/c_api/mod.rs`: namespace registration wiring.
 
