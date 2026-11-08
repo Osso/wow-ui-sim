@@ -272,3 +272,54 @@ fn write(path: &Path, bytes: &[u8]) {
     std::fs::create_dir_all(path.parent().unwrap()).unwrap();
     std::fs::write(path, bytes).unwrap();
 }
+
+
+// Windows checks out a repository with `LongPathsEnabled=0` only when every
+// tracked path fits `MAX_PATH` (260) including the clone root. Budget 60
+// characters for a `C:\Users\<user>\source\repos\wow-ui-sim\` clone root and
+// Git temporary names, leaving a hard limit of 200 characters per
+// repo-relative path. `git ls-files` covers tracked paths even when a Windows
+// checkout already dropped files.
+#[test]
+fn tracked_paths_fit_windows_max_path_budget() {
+    const MAX_REPO_RELATIVE_PATH: usize = 200;
+    let repo = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
+    let output = match std::process::Command::new("git")
+        .arg("-C")
+        .arg(&repo)
+        .args(["ls-files", "-z"])
+        .output()
+    {
+        Ok(output) => output,
+        Err(error) => {
+            eprintln!("skipping path guard: cannot run git: {error}");
+            return;
+        }
+    };
+    if !output.status.success() {
+        eprintln!(
+            "skipping path guard: git ls-files failed: {}",
+            String::from_utf8_lossy(&output.stderr).trim()
+        );
+        return;
+    }
+    let mut offenders: Vec<(usize, String)> = String::from_utf8_lossy(&output.stdout)
+        .split('\0')
+        .filter(|path| !path.is_empty())
+        .map(|path| (path.chars().count(), path.to_string()))
+        .filter(|(len, _)| *len > MAX_REPO_RELATIVE_PATH)
+        .collect();
+    offenders.sort_by(|a, b| b.cmp(a));
+    assert!(
+        offenders.is_empty(),
+        "{} tracked paths exceed the {MAX_REPO_RELATIVE_PATH}-character Windows path budget \
+         (clone root plus overhead is budgeted at {}):\n{}",
+        offenders.len(),
+        260 - MAX_REPO_RELATIVE_PATH,
+        offenders
+            .iter()
+            .map(|(len, path)| format!("  {len}  {path}"))
+            .collect::<Vec<_>>()
+            .join("\n"),
+    );
+}
