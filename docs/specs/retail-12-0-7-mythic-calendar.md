@@ -20,7 +20,7 @@
 - `src/c_api/patch_12_0_7_inputs.rs` — shared all-argument authentication and selector parsing.
 - `src/c_api/mod.rs` — feature-gated module.
 - `src/lua_api/state_types/mythic_plus_scenario.rs` — optional dates, affixes/members, independent season-best sides.
-- `src/lua_api/globals/missing_surface/mythic_plus.rs` — registration routes retail to the C API producers; existing older-profile producers remain unchanged.
+- `src/c_api/c_mythic_plus.rs` — registration routes retail to the C API producers; existing older-profile producers remain unchanged.
 
 ## Tests asserting this spec
 

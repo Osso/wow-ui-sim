@@ -23,7 +23,7 @@
 //! - `C_ChallengeMode.GetMapTable()` / `GetMapUIInfo()` — seeded Mists-era
 //!   challenge dungeon rows for the legacy ChallengesFrame.
 
-use super::{ensure_namespace, set_table_array};
+use super::helpers::{ensure_namespace, set_table_array};
 use crate::lua_api::methods::{borrow_state, create_string, create_table, table_set};
 #[cfg(not(feature = "retail-12-0-7"))]
 use crate::lua_api::state::MythicPlusWeeklyBest;
@@ -61,7 +61,7 @@ const AFFIX_NAMES: &[(i32, &str)] = &[
     (162, "Xal'atath's Bargain: Pulsar"),
 ];
 
-pub(super) fn register_mythic_plus_surface(state: &mut LuaState) -> LuaResult<()> {
+pub(crate) fn register_mythic_plus_surface(state: &mut LuaState) -> LuaResult<()> {
     table_set_rust_fn_static(state, state.global, "GetAffixInfo", get_affix_info)?;
     let ns = ensure_namespace(state, "C_MythicPlus")?;
     register_mythic_plus_probe_handlers(state, ns)?;

@@ -22,7 +22,8 @@ Bounded proof for B01, B07 and B03 in the [54-row scout slice](../../data/patch-
 - `tests/patch_12_0_0_deprecated.rs`, `tests/data/patch_12_0_0_deprecated.json`: native/cached retirement, conditional exact alias identity, bounded successor results and pending reasons.
 - `src/c_api/patch_retired_members.rs`: five deprecated namespace keys excluded from automatic fabrication.
 - `src/lua_api/globals/{register.rs,real/mod.rs,cooldown_probes.rs,spell_state_probes.rs}`: legacy tab/cooldown/usability publication gates.
-- `src/lua_api/globals/{missing_surface/item_socket_info.rs,missing_surface/mythic_plus.rs,quest_surface/register.rs}`: legacy global/late namespace registration gates; successor behavior unchanged.
+- `src/lua_api/globals/{missing_surface/item_socket_info.rs,quest_surface/register.rs}`: legacy global/late namespace registration gates; successor behavior unchanged.
+- `src/c_api/c_mythic_plus.rs`: legacy global/late namespace registration gates; successor behavior unchanged.
 - `src/lua_api/workarounds/temporary/{legacy_spell_globals.rs,inventory_query_defaults.rs}`: pre-12.0.0 wrappers cannot restore retired globals under Retail.
 
 ## Tests asserting this spec
