@@ -96,7 +96,7 @@ Mists/Era/Anniversary `75-93`.
 
 ## Implementation inventory
 
-- `src/lua_api/globals/missing_surface/mythic_plus.rs` —
+- `src/c_api/c_mythic_plus.rs` —
   `get_owned_keystone_level`, `get_owned_keystone_challenge_map_id`.
 - `src/lua_api/state_types/mythic_plus_scenario.rs` — `OwnedKeystone`,
   `MythicPlusState::owned_keystone`.

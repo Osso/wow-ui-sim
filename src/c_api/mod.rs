@@ -203,6 +203,7 @@ mod c_minimap_tracking;
 mod c_mount_item;
 #[cfg(feature = "retail-12-0-5")]
 pub(crate) mod c_mount_spell_lookup;
+pub mod c_mythic_plus;
 #[cfg(feature = "retail-12-0-7")]
 pub mod c_mythic_plus_calendar;
 #[cfg(feature = "retail-12-0-0")]
