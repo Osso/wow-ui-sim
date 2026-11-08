@@ -173,6 +173,8 @@ fn test_partitioned_mixins_use_forbidden_object_table() {
         .unwrap();
 }
 
+// useForbiddenObjectTable XML ships only in the Retail, PTR and Forever Blizzard UI.
+#[cfg(any(feature = "client-retail", feature = "client-ptr", feature = "client-wowforever"))]
 #[test]
 fn test_partitioned_inbound_mixin_returns_public_object_views() {
     let t = load_test_xml(
