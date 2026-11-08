@@ -47,6 +47,9 @@ pub struct SimState {
     pub engraving: crate::c_api::engraving_inputs::EngravingInputs,
     pub timers: VecDeque<PendingTimer>,
     pub rilua_timers: VecDeque<crate::lua_api::timer_layout::RiluaPendingTimer>,
+    /// Next opaque timer id for this environment. Native WoW has one timer-id
+    /// space per client; each `WowLuaEnv` is a separate simulated client.
+    pub(crate) next_timer_id: u64,
     /// Diagnostic strings only; remains empty without handler timing opt-in.
     pub(crate) timer_callback_sources:
         HashMap<u64, crate::lua_api::handler_timing::TimerCallbackSource>,

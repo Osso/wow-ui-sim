@@ -94,6 +94,7 @@ macro_rules! build_empty_sim_state {
             engraving: crate::c_api::engraving_inputs::EngravingInputs::default(),
             timers: $collections.timers,
             rilua_timers: ::std::collections::VecDeque::new(),
+            next_timer_id: 1,
             timer_callback_sources: ::std::collections::HashMap::new(),
             #[cfg(feature = "timed-signal-maps")]
             timed_signal_maps: ::std::collections::HashMap::new(),
@@ -1202,6 +1203,13 @@ impl SimState {
         self.item_overrides
             .get(&item_id)
             .or_else(|| crate::items::get_item(item_id))
+    }
+
+    /// Allocate the next opaque timer id for this environment.
+    pub(crate) fn allocate_timer_id(&mut self) -> u64 {
+        let id = self.next_timer_id;
+        self.next_timer_id += 1;
+        id
     }
 
     pub(crate) fn with_session_wtf_path(session_wtf_path: PathBuf) -> Self {

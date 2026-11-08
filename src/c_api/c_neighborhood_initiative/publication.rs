@@ -222,7 +222,7 @@ fn request_activity_log(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn defer_reply(state: &mut LuaState, deliver: RustFn) -> LuaResult<u32> {
-    let id = next_timer_id();
+    let id = next_timer_id(state)?;
     let callback = Val::Function(state.gc.alloc_closure(Closure::Rust(RustClosure::new(
         deliver,
         "NeighborhoodInitiative.Reply",

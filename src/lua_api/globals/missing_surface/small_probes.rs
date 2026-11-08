@@ -3,8 +3,8 @@
 //! Migrates 2 entries off the namespace stub tables:
 //!
 //! - `C_Timer.NewTimerID()` — returns a fresh monotonically-increasing
-//!   opaque number using the same `next_timer_id()` counter shared by
-//!   `C_Timer.NewTimer` / `NewTicker`. Replaces the `stub_nil` stub.
+//!   opaque number using the same per-environment `next_timer_id()` counter
+//!   shared by `C_Timer.NewTimer` / `NewTicker`. Replaces the `stub_nil` stub.
 //!
 //! - `C_System.GetFrameStack()` — returns an array of frames currently
 //!   under the mouse cursor. When `SimState.hovered_frame` is set the
@@ -34,7 +34,8 @@ pub(super) fn register_small_probes_surface(state: &mut LuaState) -> LuaResult<(
 
 /// `C_Timer.NewTimerID()` — hand out a fresh opaque timer id.
 fn c_timer_new_timer_id(state: &mut LuaState) -> LuaResult<u32> {
-    state.push(Val::Num(next_timer_id() as f64));
+    let id = next_timer_id(state)?;
+    state.push(Val::Num(id as f64));
     Ok(1)
 }
 

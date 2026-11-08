@@ -5,19 +5,24 @@ use super::env_init::{init_builtin_frames, init_lua_state};
 use super::state::SimState;
 use crate::Result;
 use crate::font::WowFontSystem;
-use crate::lua_api::methods::{create_string, registry_get, registry_set, table_set};
+use crate::lua_api::methods::{
+    borrow_state_mut, create_string, registry_get, registry_set, table_set,
+};
 use crate::xml::{clear_templates, register_intrinsic_templates};
-use rilua::{LuaApi, LuaApiMut, Val};
+use rilua::vm::state::LuaState;
+use rilua::{LuaApi, LuaApiMut, LuaResult, Val};
 use std::cell::RefCell;
 use std::rc::Rc;
-use std::sync::atomic::{AtomicU64, Ordering};
 
-static NEXT_TIMER_ID: AtomicU64 = AtomicU64::new(1);
 const EVAL_RESULTS_REGISTRY_KEY: &str = "__wow_eval_results";
 
-/// Generate a unique timer ID.
-pub(crate) fn next_timer_id() -> u64 {
-    NEXT_TIMER_ID.fetch_add(1, Ordering::Relaxed)
+/// Allocate the next opaque timer id for this environment.
+///
+/// Native WoW has one timer-id space per client. Each `WowLuaEnv` is a
+/// separate simulated client, so the counter lives in `SimState` instead of a
+/// process-global static that parallel environments would share.
+pub(crate) fn next_timer_id(state: &mut LuaState) -> LuaResult<u64> {
+    Ok(borrow_state_mut(state)?.allocate_timer_id())
 }
 
 #[derive(Clone)]
