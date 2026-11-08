@@ -150,6 +150,28 @@ local function createForbiddenObjectTable(object)
   })
 end
 
+-- Inbound methods run against the forbidden view, but a public caller receives
+-- public object references back (Blizzard_CustomAuraContainer.lua:437).
+local function __wow_public_object(value)
+  if type(value) ~= "table" then
+    return value
+  end
+  local public = rawget(value, "__wowPublicObject")
+  if type(public) ~= "table" or __wow_forbidden_object_tables[public] ~= value then
+    return value
+  end
+  return public
+end
+
+local function __wow_project_inbound_results(...)
+  local count = select("#", ...)
+  local results = { ... }
+  for index = 1, count do
+    results[index] = __wow_public_object(results[index])
+  end
+  return unpack(results, 1, count)
+end
+
 function GetForbiddenObjectTable(object)
   local public = type(object) == "table" and rawget(object, "__wowPublicObject")
   if public and __wow_forbidden_object_tables[public] == object then
@@ -255,9 +277,9 @@ function __wow_apply_xml_mixin(object, mixin, targetPartition, inboundPartition,
       applied = function(_self, ...)
         local delegateSelf = wrapInbound and __wow_xml_object_partition(object, inboundName) or object
         if projectArguments then
-          return callPrivateProjectionFactory(fn, delegateSelf, __wow_project_forbidden_arguments(...))
+          return __wow_project_inbound_results(callPrivateProjectionFactory(fn, delegateSelf, __wow_project_forbidden_arguments(...)))
         end
-        return fn(delegateSelf, ...)
+        return __wow_project_inbound_results(fn(delegateSelf, ...))
       end
     end
 
