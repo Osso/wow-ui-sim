@@ -4,7 +4,7 @@ use super::types::UiXml;
 
 /// Parse a WoW UI XML file from a string.
 pub fn parse_xml(xml: &str) -> Result<UiXml, quick_xml::DeError> {
-    let fixed = preprocess_xml(xml);
+    let fixed = preprocess_xml(xml)?;
     quick_xml::de::from_str(&fixed)
 }
 
@@ -96,16 +96,16 @@ fn record_binding_event(
     }
 }
 
-fn preprocess_xml(xml: &str) -> String {
+fn preprocess_xml(xml: &str) -> Result<String, quick_xml::DeError> {
     let contents = strip_packager_xml_comments(xml);
     let contents = strip_regular_xml_comments(&contents);
-    let fixed = strip_duplicate_self_closing(&contents, "Size");
-    let fixed = strip_duplicate_self_closing(&fixed, "TexCoords");
+    let fixed = strip_duplicate_self_closing(&contents, "Size")?;
+    let fixed = strip_duplicate_self_closing(&fixed, "TexCoords")?;
     let fixed = strip_duplicate_script_handlers(&fixed);
     let fixed = normalize_attribute_equals_spacing(&fixed);
     let fixed = normalize_whitespace_padded_bools(&fixed);
     let fixed = normalize_whitespace_padded_numbers(&fixed);
-    remove_empty_numeric_attrs(&fixed)
+    Ok(remove_empty_numeric_attrs(&fixed))
 }
 
 /// Normalize XML attributes whose equals sign has stray whitespace.
@@ -260,40 +260,46 @@ fn strip_packager_xml_comments(xml: &str) -> String {
 /// (e.g. two `<Size>` in GuildRewards.xml, two `<TexCoords>` in Wowless
 /// test.xml). quick-xml's serde can't handle duplicate fields. We keep only
 /// the last occurrence (matching WoW's behavior where the last one wins).
-fn strip_duplicate_self_closing(xml: &str, tag: &str) -> String {
+fn strip_duplicate_self_closing(xml: &str, tag: &str) -> Result<String, quick_xml::DeError> {
+    use quick_xml::events::Event;
     use std::collections::HashMap;
 
-    let prefix = format!("<{tag} ");
-    let lines: Vec<&str> = xml.lines().collect();
-    let mut remove = vec![false; lines.len()];
-    let mut seen_at_depth: HashMap<usize, usize> = HashMap::new();
-
-    for (i, line) in lines.iter().enumerate() {
-        let trimmed = line.trim();
-        let depth = line.len() - line.trim_start().len();
-
-        if trimmed.starts_with("</") {
-            seen_at_depth.retain(|&d, _| d <= depth);
-        }
-
-        if is_self_closing_tag(trimmed, &prefix) {
-            if let Some(prev_idx) = seen_at_depth.insert(depth, i) {
-                remove[prev_idx] = true;
+    let mut reader = quick_xml::Reader::from_str(xml);
+    let mut parents = vec![0usize];
+    let mut next_parent = 1usize;
+    let mut seen = HashMap::new();
+    let mut remove = Vec::new();
+    loop {
+        let start = reader.buffer_position() as usize;
+        match reader.read_event()? {
+            Event::Start(_) => {
+                parents.push(next_parent);
+                next_parent += 1;
             }
+            Event::End(_) => {
+                parents.pop();
+            }
+            Event::Empty(element) if element.name().as_ref() == tag.as_bytes() => {
+                let end = reader.buffer_position() as usize;
+                if let Some(previous) =
+                    seen.insert(*parents.last().expect("XML parent"), (start, end))
+                {
+                    remove.push(previous);
+                }
+            }
+            Event::Eof => break,
+            _ => {}
         }
     }
-
-    collect_kept_lines(&lines, &remove)
-}
-
-/// Check if a trimmed line is a self-closing instance of the target tag.
-///
-/// Strips trailing XML comments before checking (e.g. `<TexCoords .../> <!-- old -->`).
-fn is_self_closing_tag(trimmed: &str, prefix: &str) -> bool {
-    let effective = trimmed
-        .find("<!--")
-        .map_or(trimmed, |pos| trimmed[..pos].trim());
-    effective.starts_with(prefix) && effective.ends_with("/>")
+    remove.sort_unstable();
+    let mut result = String::with_capacity(xml.len());
+    let mut previous = 0;
+    for (start, end) in remove {
+        result.push_str(&xml[previous..start]);
+        previous = end;
+    }
+    result.push_str(&xml[previous..]);
+    Ok(result)
 }
 
 /// Remove duplicate script handler elements within `<Scripts>` blocks.
@@ -484,7 +490,7 @@ mod tests {
     <Size x="0" y="0"/>
     <Color r="0" g="1" b="0"/>
 </FontString>"#;
-        let result = strip_duplicate_self_closing(xml, "Size");
+        let result = strip_duplicate_self_closing(xml, "Size").unwrap();
         assert!(!result.contains(r#"<Size x="0" y="28"/>"#));
         assert!(result.contains(r#"<Size x="0" y="0"/>"#));
     }
@@ -495,7 +501,7 @@ mod tests {
     <Size x="10" y="20"/>
     <Color r="1" g="0" b="0"/>
 </FontString>"#;
-        let result = strip_duplicate_self_closing(xml, "Size");
+        let result = strip_duplicate_self_closing(xml, "Size").unwrap();
         assert!(result.contains(r#"<Size x="10" y="20"/>"#));
     }
 
@@ -587,7 +593,7 @@ mod tests {
     <Size x="2" y="2"/>
     <Size x="3" y="3"/>
 </Frame>"#;
-        let result = strip_duplicate_self_closing(xml, "Size");
+        let result = strip_duplicate_self_closing(xml, "Size").unwrap();
         assert!(!result.contains(r#"<Size x="1" y="1"/>"#));
         assert!(!result.contains(r#"<Size x="2" y="2"/>"#));
         assert!(result.contains(r#"<Size x="3" y="3"/>"#));
@@ -599,14 +605,14 @@ mod tests {
     <TexCoords left="0" right="1" top="0" bottom="0.5"/> <!-- old -->
     <TexCoords left="0" right="1" top="0" bottom="1"/>
 </Frame>"#;
-        let result = strip_duplicate_self_closing(xml, "TexCoords");
+        let result = strip_duplicate_self_closing(xml, "TexCoords").unwrap();
         assert!(!result.contains("bottom=\"0.5\""));
         assert!(result.contains(r#"bottom="1""#));
     }
 
     #[test]
     fn test_strip_self_closing_empty_input() {
-        let result = strip_duplicate_self_closing("", "Size");
+        let result = strip_duplicate_self_closing("", "Size").unwrap();
         assert_eq!(result, "");
     }
 
@@ -615,8 +621,29 @@ mod tests {
         let xml = r#"<Frame>
     <Color r="1" g="0" b="0"/>
 </Frame>"#;
-        let result = strip_duplicate_self_closing(xml, "Size");
+        let result = strip_duplicate_self_closing(xml, "Size").unwrap();
         assert!(result.contains(r#"<Color r="1" g="0" b="0"/>"#));
+    }
+
+    #[test]
+    fn preserves_parent_and_child_sizes_with_equal_indentation() {
+        let xml = r#"<Ui>
+  <CheckButton name="SpellButtonTemplate" virtual="true">
+    <Size x="37" y="37"/>
+    <NormalTexture>
+    <Size x="64" y="64"/>
+    </NormalTexture>
+  </CheckButton>
+</Ui>"#;
+        let ui = parse_xml(xml).unwrap();
+        let crate::XmlElement::CheckButton(frame) = &ui.elements[0] else {
+            panic!("expected check button");
+        };
+        let size = frame.size().unwrap();
+        assert_eq!((size.x, size.y), (Some(37.0), Some(37.0)));
+        let texture = frame.normal_texture().unwrap();
+        let size = texture.size.as_ref().unwrap();
+        assert_eq!((size.x, size.y), (Some(64.0), Some(64.0)));
     }
 
     #[test]
@@ -631,7 +658,7 @@ mod tests {
         </Layer>
     </Layers>
 </Frame>"#;
-        let result = strip_duplicate_self_closing(xml, "Size");
+        let result = strip_duplicate_self_closing(xml, "Size").unwrap();
         assert!(result.contains(r#"<Size x="100" y="50"/>"#));
         assert!(result.contains(r#"<Size x="10" y="10"/>"#));
     }

@@ -1,3 +1,7 @@
+## [2026-11-08] investigation | Mists spellbook button size
+
+Recorded the [XML parent identity failure](investigations/mists-spellbook-size.md) and its parser and consumer coverage.
+
 ## [2026-11-08] process | Evidence trees removed from the repository
 
 `data/patch-api/evidence` and `data/test-perf/evidence` are removed and ignored. They were agent proof receipts, not product data. Proof receipts now live untracked under `~/.local/state/wow-ui-sim`. A patch-audit manifest that must cite a removed receipt uses a `git:<commit>:<path>` reference, which `wow-cli audit-api` resolves from Git history. The factory tests keep their minimal fixtures under `tests/data/patch-factory/`. The receipt re-checking Python validators were retired with the trees.
