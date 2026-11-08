@@ -543,7 +543,8 @@ fn blizzard_player_spells_does_not_appear_in_eager_discovery_for_any_screen() {
     }
 }
 
-post_wrath_ui_fixture! {
+// The Mists cache has no Blizzard_PlayerSpells directory or manifest entries.
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn blizzard_player_spells_appears_in_full_addon_inventory() {
     let inventory = discover_all_blizzard_addons(&blizzard_ui_dir());
@@ -575,11 +576,13 @@ fn blizzard_player_spells_is_addon_loaded_after_explicit_load(env: &WowLuaEnv) {
 }
 }
 
+retail_ptr_forever_toc_fixture! {
 #[cfg(not(feature = "client-retail"))]
 #[test]
 fn blizzard_player_spells_is_addon_loaded_after_explicit_load() {
     let env = load_full_game_ui_with_player_spells();
     blizzard_player_spells_is_addon_loaded_after_explicit_load::run(&env);
+}
 }
 
 prefork_full_ui_case! {
@@ -604,7 +607,7 @@ fn blizzard_player_spells_dependencies_loaded_via_eager_discovery(env: &WowLuaEn
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[cfg(not(feature = "client-retail"))]
 #[test]
 fn blizzard_player_spells_dependencies_loaded_via_eager_discovery() {
@@ -649,7 +652,7 @@ fn blizzard_player_spells_creates_named_non_virtual_frames(env: &WowLuaEnv) {
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[cfg(not(feature = "client-retail"))]
 #[test]
 fn blizzard_player_spells_creates_named_non_virtual_frames() {
@@ -680,11 +683,13 @@ fn class_talent_load_system_inherits_dropdown_template_mixin_methods(env: &WowLu
 }
 }
 
+retail_ptr_forever_toc_fixture! {
 #[cfg(not(feature = "client-retail"))]
 #[test]
 fn class_talent_load_system_inherits_dropdown_template_mixin_methods() {
     let env = load_full_game_ui_with_player_spells();
     class_talent_load_system_inherits_dropdown_template_mixin_methods::run(&env);
+}
 }
 
 prefork_full_ui_case! {
@@ -705,11 +710,13 @@ fn blizzard_player_spells_panel_root_is_hidden_after_load(env: &WowLuaEnv) {
 }
 }
 
+retail_ptr_forever_toc_fixture! {
 #[cfg(not(feature = "client-retail"))]
 #[test]
 fn blizzard_player_spells_panel_root_is_hidden_after_load() {
     let env = load_full_game_ui_with_player_spells();
     blizzard_player_spells_panel_root_is_hidden_after_load::run(&env);
+}
 }
 
 prefork_full_ui_case! {
@@ -735,11 +742,13 @@ fn blizzard_player_spells_publishes_root_panel_mixins(env: &WowLuaEnv) {
 }
 }
 
+retail_ptr_forever_toc_fixture! {
 #[cfg(not(feature = "client-retail"))]
 #[test]
 fn blizzard_player_spells_publishes_root_panel_mixins() {
     let env = load_full_game_ui_with_player_spells();
     blizzard_player_spells_publishes_root_panel_mixins::run(&env);
+}
 }
 
 prefork_full_ui_case! {
@@ -766,11 +775,13 @@ fn blizzard_player_spells_publishes_class_talent_button_mixins(env: &WowLuaEnv) 
 }
 }
 
+retail_ptr_forever_toc_fixture! {
 #[cfg(not(feature = "client-retail"))]
 #[test]
 fn blizzard_player_spells_publishes_class_talent_button_mixins() {
     let env = load_full_game_ui_with_player_spells();
     blizzard_player_spells_publishes_class_talent_button_mixins::run(&env);
+}
 }
 
 prefork_full_ui_case! {
@@ -799,7 +810,7 @@ fn blizzard_player_spells_publishes_hero_talent_mixins(env: &WowLuaEnv) {
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[cfg(not(feature = "client-retail"))]
 #[test]
 fn blizzard_player_spells_publishes_hero_talent_mixins() {
@@ -831,11 +842,13 @@ fn blizzard_player_spells_publishes_spell_book_mixins(env: &WowLuaEnv) {
 }
 }
 
+retail_ptr_forever_toc_fixture! {
 #[cfg(not(feature = "client-retail"))]
 #[test]
 fn blizzard_player_spells_publishes_spell_book_mixins() {
     let env = load_full_game_ui_with_player_spells();
     blizzard_player_spells_publishes_spell_book_mixins::run(&env);
+}
 }
 
 prefork_full_ui_case! {
@@ -863,7 +876,7 @@ fn blizzard_player_spells_publishes_loadout_dialog_mixins(env: &WowLuaEnv) {
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[cfg(not(feature = "client-retail"))]
 #[test]
 fn blizzard_player_spells_publishes_loadout_dialog_mixins() {
@@ -937,11 +950,13 @@ fn blizzard_player_spells_publishes_player_spells_util_namespace(env: &WowLuaEnv
 }
 }
 
+retail_ptr_forever_toc_fixture! {
 #[cfg(not(feature = "client-retail"))]
 #[test]
 fn blizzard_player_spells_publishes_player_spells_util_namespace() {
     let env = load_full_game_ui_with_player_spells();
     blizzard_player_spells_publishes_player_spells_util_namespace::run(&env);
+}
 }
 
 prefork_full_ui_case! {
@@ -978,11 +993,13 @@ fn blizzard_player_spells_loads_without_unrelated_lua_errors(env: &WowLuaEnv) {
 }
 }
 
+retail_ptr_forever_toc_fixture! {
 #[cfg(not(feature = "client-retail"))]
 #[test]
 fn blizzard_player_spells_loads_without_unrelated_lua_errors() {
     let env = load_full_game_ui_with_player_spells();
     blizzard_player_spells_loads_without_unrelated_lua_errors::run(&env);
+}
 }
 
 // The Mists/Era/Anniversary caches ship 218 addons each and Wrath ships 23;
