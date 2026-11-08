@@ -1,5 +1,16 @@
 use super::*;
 
+/// Extended-cost record of one merchant offer. The two lists are the record's
+/// item-cost entries and currency-cost entries, in record order; zero is an
+/// absent identity. Native `C_TooltipInfo.GetMerchantCostItem` scans the item
+/// entries first and then the currency entries (decomp Round 6 §2c), so the
+/// selectable ordinals follow that order.
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
+pub struct MerchantCostRecord {
+    pub item_costs: [u32; 5],
+    pub currency_costs: [u32; 5],
+}
+
 /// Scenario-supplied Wrath talent tab data.
 #[derive(Clone, Debug)]
 pub struct WrathTalentTab {
