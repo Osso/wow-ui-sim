@@ -56,7 +56,10 @@ fn get_loot_item(state: &mut LuaState) -> LuaResult<u32> {
     )?;
     let item_id = {
         let model = borrow_state(state)?;
-        index.and_then(|index| model.loot_slots.get(index).map(|item| item.item_id))
+        index.and_then(|index| match model.loot_slots.get(index) {
+            Some(crate::lua_api::state::LootSlot::Item(item)) => Some(item.item_id),
+            Some(crate::lua_api::state::LootSlot::Currency { .. }) | None => None,
+        })
     };
     // Round 6-B §1(b): an entry whose item identity is empty is one of the
     // loot-item reader's miss conditions. INFERRED: an empty identity is id 0.

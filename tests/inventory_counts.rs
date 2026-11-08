@@ -277,34 +277,34 @@ fn get_num_loot_items_zero_when_no_loot_window() {
 
 #[test]
 fn get_num_loot_items_counts_seeded_slots() {
-    use wow_ui_sim::lua_api::state::BagItem;
+    use wow_ui_sim::lua_api::state::{BagItem, LootSlot};
 
     let env = env();
     env.state().borrow_mut().loot_slots = vec![
-        BagItem {
+        LootSlot::Item(BagItem {
             item_id: 6948,
             stack_count: 1,
             hyperlink: None,
             durability: None,
             applied_transmog: None,
             owned_identity: None,
-        },
-        BagItem {
+        }),
+        LootSlot::Item(BagItem {
             item_id: 19019,
             stack_count: 1,
             hyperlink: None,
             durability: None,
             applied_transmog: None,
             owned_identity: None,
-        },
-        BagItem {
+        }),
+        LootSlot::Item(BagItem {
             item_id: 36942,
             stack_count: 1,
             hyperlink: None,
             durability: None,
             applied_transmog: None,
             owned_identity: None,
-        },
+        }),
     ];
     let n: i32 = env.eval("return GetNumLootItems()").unwrap();
     assert_eq!(n, 3);

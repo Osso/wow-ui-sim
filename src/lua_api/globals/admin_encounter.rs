@@ -120,14 +120,15 @@ pub(super) fn add_loot_item(state: &mut LuaState) -> LuaResult<u32> {
     let hyperlink = opt_string_stack(state, 3, "");
     let hyperlink = (!hyperlink.is_empty()).then_some(hyperlink);
     let mut sim = borrow_state_mut(state)?;
-    sim.loot_slots.push(BagItem {
-        item_id,
-        stack_count,
-        hyperlink,
-        durability: None,
-        applied_transmog: None,
-        owned_identity: None,
-    });
+    sim.loot_slots
+        .push(crate::lua_api::state::LootSlot::Item(BagItem {
+            item_id,
+            stack_count,
+            hyperlink,
+            durability: None,
+            applied_transmog: None,
+            owned_identity: None,
+        }));
     sim.loot_frame_open = true;
     Ok(0)
 }

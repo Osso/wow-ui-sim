@@ -11,27 +11,27 @@
 mod tooltip_full_env_helpers;
 
 use wow_ui_sim::lua_api::WowLuaEnv;
-use wow_ui_sim::lua_api::state::BagItem;
+use wow_ui_sim::lua_api::state::{BagItem, LootSlot};
 
 fn loot_fixture() -> WowLuaEnv {
     let env = tooltip_full_env_helpers::setup_full_env();
     env.state().borrow_mut().loot_slots = vec![
-        BagItem {
+        LootSlot::Item(BagItem {
             owned_identity: None,
             item_id: 6948,
             stack_count: 1,
             hyperlink: None,
             durability: None,
             applied_transmog: None,
-        },
-        BagItem {
+        }),
+        LootSlot::Item(BagItem {
             owned_identity: None,
             item_id: 2840,
             stack_count: 1,
             hyperlink: None,
             durability: None,
             applied_transmog: None,
-        },
+        }),
     ];
     env.state().borrow_mut().loot_frame_open = true;
     env
@@ -90,14 +90,17 @@ fn tooltip_loot_item_index_truncates_without_an_integral_test() {
 #[test]
 fn tooltip_loot_item_miss_arm_returns_no_values() {
     let env = loot_fixture();
-    env.state().borrow_mut().loot_slots.push(BagItem {
-        owned_identity: None,
-        item_id: 0,
-        stack_count: 1,
-        hyperlink: None,
-        durability: None,
-        applied_transmog: None,
-    });
+    env.state()
+        .borrow_mut()
+        .loot_slots
+        .push(LootSlot::Item(BagItem {
+            owned_identity: None,
+            item_id: 0,
+            stack_count: 1,
+            hyperlink: None,
+            durability: None,
+            applied_transmog: None,
+        }));
     env.exec(
         r#"
         local getter = C_TooltipInfo.GetLootItem

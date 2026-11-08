@@ -804,7 +804,7 @@ pub struct SimState {
     #[cfg(feature = "retail-12-0-7")]
     pub merchant_currencies: Vec<i32>,
     pub merchant_buyback_items: Vec<crate::lua_api::globals::real::merchant_buyback::BuybackItem>,
-    pub loot_slots: Vec<BagItem>,
+    pub loot_slots: Vec<LootSlot>,
     pub last_loot_roll_choice: Option<i32>,
     pub auction_browse_items: Vec<u32>,
     pub loot_method: LootMethodState,

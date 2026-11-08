@@ -666,6 +666,21 @@ pub struct BagItem {
     pub applied_transmog: Option<AppliedTransmog>,
 }
 
+/// A loot-window entry.
+///
+/// Round 6-B §1: the native entry carries a kind byte (item `0`, currency
+/// non-zero), and the loot-item and loot-currency tooltip getters are mutually
+/// exclusive per slot because each reads a different member of the same entry.
+#[derive(Debug, Clone)]
+pub enum LootSlot {
+    Item(BagItem),
+    /// Currency row identity and the tooltip quantity supplied for it.
+    Currency {
+        currency_id: i32,
+        quantity: i32,
+    },
+}
+
 /// An equipped item in an inventory slot.
 #[derive(Debug, Clone)]
 pub struct EquippedItem {
