@@ -5,7 +5,7 @@ use sha2::{Digest, Sha256};
 use wow_ui_sim::lua_api::WowLuaEnv;
 
 const DEPRECATED: &str = include_str!(
-    "../data/patch-api/evidence/1.15.1-session-2026-10-09/external-primary-source/Deprecated_1_15_1.lua"
+    "../tests/data/patch-factory/1.15.1-session-2026-10-09/external-primary-source/Deprecated_1_15_1.lua"
 );
 
 #[test]

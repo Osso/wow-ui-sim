@@ -1,0 +1,92 @@
+[
+  {
+    "symbol": "CMAA2HalfFloat",
+    "page_default": "0",
+    "value": "1",
+    "default": "1"
+  },
+  {
+    "symbol": "SoftTargetEnemy",
+    "page_default": "0",
+    "value": "1",
+    "default": "1"
+  },
+  {
+    "symbol": "SoftTargetEnemyRange",
+    "page_default": "45",
+    "value": "45.000000",
+    "default": "45.000000"
+  },
+  {
+    "symbol": "SoftTargetFriendRange",
+    "page_default": "45",
+    "value": "45.000000",
+    "default": "45.000000"
+  },
+  {
+    "symbol": "SoftTargetInteract",
+    "page_default": "0",
+    "value": "1",
+    "default": "1"
+  },
+  {
+    "symbol": "SoftTargetInteractRange",
+    "page_default": "10",
+    "value": "10.000000",
+    "default": "10.000000"
+  },
+  {
+    "symbol": "SoftTargetWorldtextFarDist",
+    "page_default": "40",
+    "value": "40.000000",
+    "default": "40.000000"
+  },
+  {
+    "symbol": "SoftTargetWorldtextNearDist",
+    "page_default": "4",
+    "value": "4.000000",
+    "default": "4.000000"
+  },
+  {
+    "symbol": "SoftTargetWorldtextNearScale",
+    "page_default": "1",
+    "value": "1.000000",
+    "default": "1.000000"
+  },
+  {
+    "symbol": "SoftTargetWorldtextSize",
+    "page_default": "32",
+    "value": "32.000000",
+    "default": "32.000000"
+  },
+  {
+    "symbol": "TargetAutoEnemy",
+    "page_default": "0",
+    "value": "1",
+    "default": "1"
+  },
+  {
+    "symbol": "TargetAutoFriend",
+    "page_default": "0",
+    "value": "1",
+    "default": "1"
+  },
+  {
+    "symbol": "WorldTextMinSize",
+    "page_default": "0",
+    "value": "0.000000",
+    "default": "0.000000"
+  },
+  {
+    "symbol": "interactQuestItems",
+    "page_default": "0",
+    "value": "1",
+    "default": "1"
+  },
+  {
+    "symbol": "validateFrameXML",
+    "page_default": "0",
+    "value": "1",
+    "default": "1"
+  }
+]

@@ -1,0 +1,40 @@
+{
+  "schema": "patch-api-wikitext-register/v1",
+  "patch": "3.0.3",
+  "source": {
+    "path": "data/patch-api/sources/3.0.3-api-changes.wikitext",
+    "revid": 5407654,
+    "sha256": "434740b793ade76d3c459f142cf07577accd6da23c9f97be5fc4ff2d69d59911"
+  },
+  "header_counts": [],
+  "entries": [
+    {
+      "id": "wt-cvars-syncronizeConfig-4",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "syncronizeConfig",
+      "annotation": "; syncronizeConfig : Flag - 0/1 to disable/enable synchronization of UI settings.",
+      "wikitext_line": 4,
+      "description": "Flag - 0/1 to disable/enable synchronization of UI settings."
+    },
+    {
+      "id": "wt-cvars-synchronizeBindings-5",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "synchronizeBindings",
+      "annotation": "; synchronizeBindings : Flag - 0/1 to disable/enable synchronization of key bindings.",
+      "wikitext_line": 5,
+      "description": "Flag - 0/1 to disable/enable synchronization of key bindings."
+    },
+    {
+      "id": "wt-cvars-synchronizeMacros-6",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "synchronizeMacros",
+      "annotation": "; synchronizeMacros : Flag - 0/1 to disable/enable synchronization of macros.",
+      "wikitext_line": 6,
+      "description": "Flag - 0/1 to disable/enable synchronization of macros."
+    }
+  ],
+  "client_line": "retail"
+}

@@ -1,0 +1,59 @@
+{
+  "configured_interface": 11507,
+  "later_registers": [],
+  "observed_compatibility_identity": [
+    "12.0.7",
+    "68256",
+    "120007"
+  ],
+  "raw_getter_types": [
+    "function",
+    "function"
+  ],
+  "rows": [
+    {
+      "default": null,
+      "detail": "value/default queried",
+      "direction": "added",
+      "id": "wt-cvars-nameplateCommentatorMaxDistance-14",
+      "kind": "cvar",
+      "model_credit": false,
+      "native_credit": false,
+      "page_default": null,
+      "published": false,
+      "section": "cvars",
+      "symbol": "nameplateCommentatorMaxDistance",
+      "value": null
+    },
+    {
+      "default": "1",
+      "detail": "value/default queried",
+      "direction": "added",
+      "id": "wt-cvars-specular-15",
+      "kind": "cvar",
+      "model_credit": false,
+      "native_credit": false,
+      "page_default": null,
+      "published": true,
+      "section": "cvars",
+      "symbol": "specular",
+      "value": "1"
+    },
+    {
+      "default": "1",
+      "detail": "value/default queried",
+      "direction": "added",
+      "id": "wt-cvars-textureErrorColors-16",
+      "kind": "cvar",
+      "model_credit": false,
+      "native_credit": false,
+      "page_default": null,
+      "published": true,
+      "section": "cvars",
+      "symbol": "textureErrorColors",
+      "value": "1"
+    }
+  ],
+  "scope": "current bare Era getters only; no SOURCE ledger mutation",
+  "source_interface": 11306
+}
