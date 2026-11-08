@@ -20,8 +20,8 @@
     },
     {
       "path": "publication-current/red-copy/proof.json",
-      "bytes": 87988,
-      "sha256": "8ab7545951e1bfb87eff3d0aeb732e247757cbd4c6a3b67410f4821851a9b47e"
+      "bytes": 84567,
+      "sha256": "f3461e54eaee44534ca8491b5c71af9ec28ce02895128500b72a7668a312c44a"
     },
     {
       "path": "publication-current/green-copy/report.md",
@@ -30,8 +30,8 @@
     },
     {
       "path": "publication-current/green-copy/proof.json",
-      "bytes": 482174,
-      "sha256": "6707e77740e976c6bf6d1a2e39d5305f3a7a5df49185c8fdf98c2cecec9acdb2"
+      "bytes": 419701,
+      "sha256": "ee35aa78ec321ff8dfcfc46a444b02db38bf7386e367143d9240a5612bf6d5e1"
     }
   ]
 }

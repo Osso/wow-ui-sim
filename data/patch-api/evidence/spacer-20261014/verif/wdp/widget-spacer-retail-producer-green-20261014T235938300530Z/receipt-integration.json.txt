@@ -1,6 +1,6 @@
 {
   "status": "PASS",
-  "path": "[PRIVATE_EVIDENCE]/verification/widget-discrete-progress-current/widget-spacer-retail-producer-green-20261014T235938300530Z/artifacts/deps/integration-9f07e4a55f2bbbf7",
+  "path": "[PRIVATE_EVIDENCE]/verif/wdp/widget-spacer-retail-producer-green-20261014T235938300530Z/artifacts/deps/integration-9f07e4a55f2bbbf7",
   "sha256": "c8a8b465014a8c14616d4102835f2c901820e631ebe52e3d80a21e0f9991eae3",
   "sha256_matches_seal": true,
   "hash_reads": 1,

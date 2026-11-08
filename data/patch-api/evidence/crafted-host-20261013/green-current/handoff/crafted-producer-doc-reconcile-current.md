@@ -7,7 +7,7 @@ Scope: bounded read-only documentation reconciliation; not a new source or runti
 
 Documentation reconciliation: PASS at this revision. Prior 05665ddad6aa083406777f75887504a8e54c5725 Source PASS / Spec FAIL / Overall FAIL remains preserved unchanged. No retroactive PASS.
 
-Read full current docs/specs/crafted-item-quality-info.md and prior verification/crafted-quality-producer-source-current/report.md and proof.json. Existing source PASS is reused, not rerun; no manual metrics repeated.
+Read full current docs/specs/crafted-item-quality-info.md and prior verif/crafted-quality-producer-source-current/report.md and proof.json. Existing source PASS is reused, not rerun; no manual metrics repeated.
 
 ## Accepted findings
 
@@ -33,7 +33,7 @@ Prior literal source pins retained from source report: src/c_api/c_trade_skill_q
 ## Proof ledger and limits
 
 - Git rev-parse HEAD: exact requested revision, exit 0.
-- Git status: untracked .code-index.db and verification/ observed; untouched.
+- Git status: untracked .code-index.db and verif/ observed; untouched.
 - Full spec and prior report/proof reads; Git diff/stat/name-only inspections as above, exit 0 except explicitly recorded ambiguous-prefix probe.
 - No canonical edits, build, tests, checks, fmt, binaries, runtime, vendor/services, delegation, Bash or cwd-changing tools. Only this new handoff artifact written.
 - Historical RED evidence reused at its recorded scope; no execution logs reauthenticated. Required source gate already PASS; not rerun.

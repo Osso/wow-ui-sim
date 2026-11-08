@@ -1011,7 +1011,7 @@
       },
       {
         "path": "docs/wiki/investigations/integrated-source-and-factory-proof-2026-10-09.md",
-        "sha256": "ed5b1dfcde98b4316cde5e085b5cce5c92c5b23bd4d48fa1a9f009e1af41b65c"
+        "sha256": "729a1e69ccc786cd30e74172cc7e31090f64acf77555705eaec478e57141a3a7"
       },
       {
         "path": "docs/wiki/investigations/patch-8-1-0-api-audit.md",
@@ -1019,11 +1019,11 @@
       },
       {
         "path": "docs/wiki/index.md",
-        "sha256": "49fa279bdf35edce9e0519d2d34a41c47b26793b31323b4f8824f34d306cc426"
+        "sha256": "af810fd4b34a6d628ec1ace73abe0fc680ca25d0e83554c7419cd12d2f3ea8e3"
       },
       {
         "path": "docs/wiki/log.md",
-        "sha256": "0826d1afd7f402be8564d59756ce8ab52c0b6bf4baa45b4c4306329434fb07e7"
+        "sha256": "e34db042a0a34765898b0ca5cf1e86d552ed810a9edf98a820767478430f8de9"
       }
     ],
     "links": [

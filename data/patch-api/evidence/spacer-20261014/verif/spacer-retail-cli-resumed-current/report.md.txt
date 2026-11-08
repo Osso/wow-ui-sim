@@ -4,7 +4,7 @@
 
 **PASS — limited to this saved ordinary CLI invocation.** `result.json` records launcher exit **0**; `launcher.txt` independently reports `Finished with result: success` and `code=exited, status=0/SUCCESS`. Exact stdout is **3 bytes**, Python `b'[]\n'`, hexadecimal **5b 5d 0a**: one JSON empty array followed by LF, with no other bytes. This is not libtest: `expected_cases: null`, `summaries: []`; no test count is inferred.
 
-Evidence directory: `[PRIVATE_EVIDENCE]/verification/widget-discrete-progress-current/widget-spacer-retail-owning-normal-retry1-20261015T010926059272Z/runtime-spacer-retail-ordinary-lua-errors-resumed`.
+Evidence directory: `[PRIVATE_EVIDENCE]/verif/wdp/widget-spacer-retail-owning-normal-retry1-20261015T010926059272Z/runtime-spacer-retail-ordinary-lua-errors-resumed`.
 
 Read all nine files in that directory in full: stdout, stderr, result.json, argv.json, launcher.txt, admission.json, fresh-main-admission.json, source-mount.json and pressure-context.json. All **14,709 stderr bytes / 219 LF-terminated lines** were inspected, not just the final summary. Complete retained stderr and metadata are appended below. Read/followed `[PRIVATE_AGENT_CONFIG]/skills/verify/SKILL.md` as verifier. No reruns, builds, executable reads, hash-copy reads, hashing, canonical mutations, process operations or delegation. Only this private report directory/file was written. Saved run timestamps are October 15, 2026 UTC; no fresh runtime proof was generated.
 
@@ -26,11 +26,11 @@ Run loaded **291 Blizzard addons**, reporting **1569/1569 bytecode-cache hits (1
 
 **Explicit historical d151 artifact / d5 source mount.** Result source is `d15126365dd3c3d207fea3a328599ea615672c4c`; executable is the saved `artifacts/wow-sim-normal` under the owning-normal retry1 directory, not a newly built current binary. Mounted runtime source is the completed Retail producer snapshot `widget-spacer-retail-producer-green-20261014T235938300530Z/source`, identified by the earlier gate as **d5e3358a30ec63199e35d9bdc6481ab0cd061670**. `source-mount.json` records a successful empty `git diff --name-only d5e3358a3..918d1609f -- src tests data Cargo.toml Cargo.lock build.rs`. This is a saved comparison limited to those paths, not an independently recomputed comparison or full dependency/native/build authentication.
 
-**Later eba5a1617 passive TextColumn is explicitly excluded.** No current-HEAD or eba5 coverage claim. Reused receipt stat: device 66306, inode 152734263, size 408531264, mtime_ns 1792022460726887560. These are recorded values, not independent binary authentication. Prior `[PRIVATE_EVIDENCE]/verification/spacer-retail-normal-artifact-current/report.md` separately records the cached normal non-test artifact gate; its hash work was not repeated. That gate states the prefork compilation was SAFETY_ABORTED/INCOMPLETE, with no build-finished record. Successful cached ordinary CLI execution does not convert that build into PASS or prove prefork tests.
+**Later eba5a1617 passive TextColumn is explicitly excluded.** No current-HEAD or eba5 coverage claim. Reused receipt stat: device 66306, inode 152734263, size 408531264, mtime_ns 1792022460726887560. These are recorded values, not independent binary authentication. Prior `[PRIVATE_EVIDENCE]/verif/spacer-retail-normal-artifact-current/report.md` separately records the cached normal non-test artifact gate; its hash work was not repeated. That gate states the prefork compilation was SAFETY_ABORTED/INCOMPLETE, with no build-finished record. Successful cached ordinary CLI execution does not convert that build into PASS or prove prefork tests.
 
 ## Prior startup scope gate and suppression boundary
 
-Read the full prior scope gate: `[PRIVATE_EVIDENCE]/verification/spacer-startup-diagnostics-current/report.md` (94 lines). It establishes one unique Retail and one unique PTR startup-warning case, with nonadditive parent/child summaries, plus a separate ordinary PTR CLI result. This resumed Retail CLI adds a separate ordinary invocation; it does not replace those startup cases or extend their assertion scope. Startup tests assert the collected warnings vector empty; nil observations and missing requirements need attribution but are **not asserted empty**. Neither the old gate nor this result proves missing-API absence, all-screen/all-LOD/all-addon coverage, GUI soak, arbitrary future updates or native parity.
+Read the full prior scope gate: `[PRIVATE_EVIDENCE]/verif/spacer-startup-diagnostics-current/report.md` (94 lines). It establishes one unique Retail and one unique PTR startup-warning case, with nonadditive parent/child summaries, plus a separate ordinary PTR CLI result. This resumed Retail CLI adds a separate ordinary invocation; it does not replace those startup cases or extend their assertion scope. Startup tests assert the collected warnings vector empty; nil observations and missing requirements need attribution but are **not asserted empty**. Neither the old gate nor this result proves missing-API absence, all-screen/all-LOD/all-addon coverage, GUI soak, arbitrary future updates or native parity.
 
 Re-read the mounted snapshot's `src/lua_errors.rs:27-84,216-285,351-377`. Ordinary CLI redirects fd **2 to /dev/null during collect_lua_error_startup**, then restores it before final output. Descriptor setup/restoration is not itself instrumented by these saved logs, so the source establishes the intended suppression interval, not a separate syscall-success proof. Retained stderr cannot reconstruct diagnostics discarded in that interval. Canonically collected errors may still survive in SimState; arbitrary stderr-only diagnostics do not become JSON errors. Unique JSON entries come from `state.lua_errors` with matching normalized keys in `lua_error_counts`; owner summary uses recorded owners. Exact empty JSON and CLEAN mean an empty final collected list, **not unsuppressed startup cleanliness**, zero loader warnings/nil observations/missing requirements, or absence of caught/unrecorded errors. Prior scope gate describes the bounded startup update/timer slice; this is not indefinite runtime/render coverage. No `--exec-lua` probe was used.
 
@@ -329,9 +329,9 @@ Main processes terminated with: code=exited, status=0/SUCCESS
   "-p",
   "KillMode=control-group",
   "-p",
-  "StandardOutput=file:[PRIVATE_EVIDENCE]/verification/widget-discrete-progress-current/widget-spacer-retail-owning-normal-retry1-20261015T010926059272Z/runtime-spacer-retail-ordinary-lua-errors-resumed/stdout",
+  "StandardOutput=file:[PRIVATE_EVIDENCE]/verif/wdp/widget-spacer-retail-owning-normal-retry1-20261015T010926059272Z/runtime-spacer-retail-ordinary-lua-errors-resumed/stdout",
   "-p",
-  "StandardError=file:[PRIVATE_EVIDENCE]/verification/widget-discrete-progress-current/widget-spacer-retail-owning-normal-retry1-20261015T010926059272Z/runtime-spacer-retail-ordinary-lua-errors-resumed/stderr",
+  "StandardError=file:[PRIVATE_EVIDENCE]/verif/wdp/widget-spacer-retail-owning-normal-retry1-20261015T010926059272Z/runtime-spacer-retail-ordinary-lua-errors-resumed/stderr",
   "--working-directory=[SIM_REPO]",
   "/usr/bin/timeout",
   "--signal=TERM",
@@ -344,7 +344,7 @@ Main processes terminated with: code=exited, status=0/SUCCESS
   "/",
   "/",
   "--ro-bind",
-  "[PRIVATE_EVIDENCE]/verification/widget-discrete-progress-current/widget-spacer-retail-producer-green-20261014T235938300530Z/source",
+  "[PRIVATE_EVIDENCE]/verif/wdp/widget-spacer-retail-producer-green-20261014T235938300530Z/source",
   "[SIM_REPO]",
   "--ro-bind",
   "[SIM_REPO]/target",
@@ -366,7 +366,7 @@ Main processes terminated with: code=exited, status=0/SUCCESS
   "--setenv",
   "WOW_SIM_NO_SOUND",
   "1",
-  "[PRIVATE_EVIDENCE]/verification/widget-discrete-progress-current/widget-spacer-retail-owning-normal-retry1-20261015T010926059272Z/artifacts/wow-sim-normal",
+  "[PRIVATE_EVIDENCE]/verif/wdp/widget-spacer-retail-owning-normal-retry1-20261015T010926059272Z/artifacts/wow-sim-normal",
   "--no-addons",
   "--no-saved-vars",
   "lua-errors"
@@ -425,7 +425,7 @@ Main processes terminated with: code=exited, status=0/SUCCESS
 
 ```json
 {
-  "snapshot": "[PRIVATE_EVIDENCE]/verification/widget-discrete-progress-current/widget-spacer-retail-producer-green-20261014T235938300530Z/source",
+  "snapshot": "[PRIVATE_EVIDENCE]/verif/wdp/widget-spacer-retail-producer-green-20261014T235938300530Z/source",
   "receipt_source": "d15126365",
   "source_diff": "git diff --name-only d5e3358a3..918d1609f -- src tests data Cargo.toml Cargo.lock build.rs",
   "source_diff_exit": 0,

@@ -12,21 +12,21 @@ Scope: compile only, recorded source `9cc2112267ea139e3e13408a16787edd53c232dd`,
 
 Evidence files:
 
-- `verification/widget-discrete-progress-current/crafted-quality-ptr-api-red-retry1-20261014T013200049067Z/compile.stdout`
-- `verification/widget-discrete-progress-current/crafted-quality-ptr-api-red-retry1-20261014T013200049067Z/compile.stderr`
-- `verification/widget-discrete-progress-current/crafted-quality-ptr-api-red-retry1-20261014T013200049067Z/compile-terminal.txt`
-- `verification/widget-discrete-progress-current/crafted-quality-ptr-api-red-retry1-20261014T013200049067Z/compile-result.json`
-- `verification/widget-discrete-progress-current/crafted-quality-ptr-api-red-retry1-20261014T013200049067Z/submission.json`
-- `verification/widget-discrete-progress-current/crafted-quality-ptr-api-red-retry1-20261014T013200049067Z/admission.json`
-- `verification/widget-discrete-progress-current/crafted-quality-ptr-api-red-retry1-20261014T013200049067Z/revision.json`
+- `verif/wdp/crafted-quality-ptr-api-red-retry1-20261014T013200049067Z/compile.stdout`
+- `verif/wdp/crafted-quality-ptr-api-red-retry1-20261014T013200049067Z/compile.stderr`
+- `verif/wdp/crafted-quality-ptr-api-red-retry1-20261014T013200049067Z/compile-terminal.txt`
+- `verif/wdp/crafted-quality-ptr-api-red-retry1-20261014T013200049067Z/compile-result.json`
+- `verif/wdp/crafted-quality-ptr-api-red-retry1-20261014T013200049067Z/submission.json`
+- `verif/wdp/crafted-quality-ptr-api-red-retry1-20261014T013200049067Z/admission.json`
+- `verif/wdp/crafted-quality-ptr-api-red-retry1-20261014T013200049067Z/revision.json`
 
 ## New sealed copy
 
-Path: `verification/widget-discrete-progress-current/crafted-quality-ptr-api-red-retry1-20261014T013200049067Z/artifacts/deps/integration-020202567c2bd5a4`
+Path: `verif/wdp/crafted-quality-ptr-api-red-retry1-20261014T013200049067Z/artifacts/deps/integration-020202567c2bd5a4`
 
-Seal: `verification/widget-discrete-progress-current/crafted-quality-ptr-api-red-retry1-20261014T013200049067Z/seal-integration.json`
+Seal: `verif/wdp/crafted-quality-ptr-api-red-retry1-20261014T013200049067Z/seal-integration.json`
 
-Receipt: `verification/widget-discrete-progress-current/crafted-quality-ptr-api-red-retry1-20261014T013200049067Z/receipt-integration.json`
+Receipt: `verif/wdp/crafted-quality-ptr-api-red-retry1-20261014T013200049067Z/receipt-integration.json`
 
 SHA-256: `ab32a4174443cdc6efe7399d76eb49dd7c599e17ac055756a1570e96a0c42229`
 
@@ -34,10 +34,10 @@ Receipt absent before authentication. One complete file hash pass (`hash_reads=1
 
 ## Prior denial retained
 
-`verification/widget-discrete-progress-current/crafted-quality-ptr-api-red-20261014T012904034210Z`: admission `allowed=false`, submission absent. Prior 01:29:04 UTC denial remains separate from admitted 01:32:00 UTC retry. No launch performed during verification.
+`verif/wdp/crafted-quality-ptr-api-red-20261014T012904034210Z`: admission `allowed=false`, submission absent. Prior 01:29:04 UTC denial remains separate from admitted 01:32:00 UTC retry. No launch performed during verification.
 
 ## Limits
 
 No binaries executed; no build/test/check/formatter reruns, services, delegation, Bash, or cwd tools. No old binaries, libraries, archives, source trees, or external cache/settings authenticated. Runtime test result remains unverified.
 
-Proof: `verification/crafted-quality-ptr-api-red-auth-current/proof.json`
+Proof: `verif/crafted-quality-ptr-api-red-auth-current/proof.json`

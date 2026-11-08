@@ -2,7 +2,7 @@
   "status": "PASS",
   "sha256_matches_seal": true,
   "hash_reads": 1,
-  "path": "<PRIVATE_VERIFICATION_ROOT>/widget-discrete-progress-current/store-macro-retail-import-corrected-red-20261014T062008900856Z/artifacts/wow-sim",
+  "path": "<PRIVATE_VERIFICATION_ROOT>/wdp/store-macro-import-red-20261014T062008900856Z/artifacts/wow-sim",
   "stat_before": {
     "st_dev": 66306,
     "st_ino": 149827732,

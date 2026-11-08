@@ -24,7 +24,7 @@
     "rodio",
     "sound"
   ],
-  "sealed_path": "[PRIVATE_EVIDENCE]/verification/widget-discrete-progress-current/widget-spacer-retail-owning-normal-retry1-20261015T010926059272Z/artifacts/wow-sim-normal",
+  "sealed_path": "[PRIVATE_EVIDENCE]/verif/wdp/widget-spacer-retail-owning-normal-retry1-20261015T010926059272Z/artifacts/wow-sim-normal",
   "sha256": "ea3f162911b6d7667c63a627302b45c885369984b6a4bf88bec4acee3ae224af",
   "stat": {
     "st_dev": 66306,

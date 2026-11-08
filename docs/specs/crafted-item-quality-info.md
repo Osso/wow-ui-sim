@@ -39,15 +39,15 @@
 
 ### Initial crafted API RED checkpoint
 
-[Initial whole-text evidence](../../data/patch-api/evidence/crafted-item-quality-initial-api-red-2026-10-13/README.md) owns the Retail/PTR required-input failure matrix and reached/unreached boundaries. Both profiles have executed first-call rejection failures; both profiles subsequently reached five positive-query failures and one genuine original ItemButton consumer failure, after successful closure/empty-input baselines. Downstream field/security/visibility/clear assertions remained unreached. Initial public-copy and retained-gate copy checks pass at their recorded scopes; later producer GREEN passes at its recorded runtime scopes, without rewriting RED.
+[Initial whole-text evidence](../../data/patch-api/evidence/crafted-api-red-20261013/README.md) owns the Retail/PTR required-input failure matrix and reached/unreached boundaries. Both profiles have executed first-call rejection failures; both profiles subsequently reached five positive-query failures and one genuine original ItemButton consumer failure, after successful closure/empty-input baselines. Downstream field/security/visibility/clear assertions remained unreached. Initial public-copy and retained-gate copy checks pass at their recorded scopes; later producer GREEN passes at its recorded runtime scopes, without rewriting RED.
 
 ### Supplied-record RED checkpoint
 
-[Whole supplied-record RED](../../data/patch-api/evidence/crafted-item-quality-host-records-2026-10-13/red-current/README.md) retains five query and one original-consumer failure per profile, with successful closure/baseline and unreached downstream assertions distinguished. Public-copy acceptance passes at its recorded scope; later GREEN does not rewrite these failures.
+[Whole supplied-record RED](../../data/patch-api/evidence/crafted-host-20261013/red-current/README.md) retains five query and one original-consumer failure per profile, with successful closure/baseline and unreached downstream assertions distinguished. Public-copy acceptance passes at its recorded scope; later GREEN does not rewrite these failures.
 
 ### Retained GREEN and publication acceptance
 
-[Whole host-record evidence](../../data/patch-api/evidence/crafted-item-quality-host-records-2026-10-13/README.md) retains 24 GREEN outcomes (12 unique cases per profile), two separate startup passes, default check/format and source gates. Closing public-copy verification at `614ed7efb` passes for 211 selected texts across 217 files; prior accepted payload proofs are reused through unchanged Git metadata and current stat, not new runtime execution. Historical SOURCE/readability PASS / SPEC FAIL and additive documentation PASS remain distinct.
+[Whole host-record evidence](../../data/patch-api/evidence/crafted-host-20261013/README.md) retains 24 GREEN outcomes (12 unique cases per profile), two separate startup passes, default check/format and source gates. Closing public-copy verification at `614ed7efb` passes for 211 selected texts across 217 files; prior accepted payload proofs are reused through unchanged Git metadata and current stat, not new runtime execution. Historical SOURCE/readability PASS / SPEC FAIL and additive documentation PASS remain distinct.
 
 ## Known gaps (current cycle)
 

@@ -1,6 +1,6 @@
 {
   "source": "a6b57273246430131060b64d2b02e6d50baea9a6",
-  "runtime_source_mount": "<PRIVATE_VERIFICATION_ROOT>/widget-discrete-progress-current/macro-vehicle-retail-green-20261014T070312422146Z/source",
+  "runtime_source_mount": "<PRIVATE_VERIFICATION_ROOT>/wdp/macro-vehicle-retail-green-20261014T070312422146Z/source",
   "tracked_archive_paths": [
     "Cargo.toml",
     "Cargo.lock",

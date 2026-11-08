@@ -2,5 +2,5 @@
   "source_revision": "85d8d7bd431a2c7edef239599ad5e22178522c4f",
   "production_delta_revision": "85d8d7bd4",
   "scope": "CurrentMists integration/normal no-run afteractualAPIshapeRED; API/StorepopulationGREEN pending, no parentlimit increase",
-  "git_status": "?? .code-index.db\n?? verification/\n"
+  "git_status": "?? .code-index.db\n?? verif/\n"
 }

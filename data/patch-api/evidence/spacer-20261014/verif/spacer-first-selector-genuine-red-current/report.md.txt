@@ -1,6 +1,6 @@
 # Saved Spacer selector audit
 Verdict: GENUINE REQUIRED-SELECTOR RED only.
-Evidence root: [PRIVATE_EVIDENCE]/verification/widget-discrete-progress-current/widget-spacer-selector-retail-red-20261014T224550944881Z
+Evidence root: [PRIVATE_EVIDENCE]/verif/wdp/widget-spacer-selector-retail-red-20261014T224550944881Z
 Runtime: runtime-spacer-first-required-number-red
 Source label: 1ffab60b44706925b9b5cf6807681661168bf2f6; retail integration.
 

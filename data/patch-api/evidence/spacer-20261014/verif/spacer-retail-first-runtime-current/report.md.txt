@@ -5,10 +5,10 @@
 PASS — saved runtime reports seven unique primary PASS cases, zero failed, zero ignored, zero measured. Behavioral assertions in the supplied source snapshot substantiate the requested bounded contracts, subject to runtime/source association limits below. This is an output/source audit, not a new execution or proof of parent completion.
 
 Evidence directory (absolute):
-`[PRIVATE_EVIDENCE]/verification/widget-discrete-progress-current/widget-spacer-retail-producer-green-20261014T235938300530Z/runtime-spacer-seven-first-producer`
+`[PRIVATE_EVIDENCE]/verif/wdp/widget-spacer-retail-producer-green-20261014T235938300530Z/runtime-spacer-seven-first-producer`
 
 Source root (absolute; all source paths below relative to it):
-`[PRIVATE_EVIDENCE]/verification/widget-discrete-progress-current/widget-spacer-retail-producer-green-20261014T235938300530Z/source`
+`[PRIVATE_EVIDENCE]/verif/wdp/widget-spacer-retail-producer-green-20261014T235938300530Z/source`
 
 Read complete stdout, stderr, result.json, argv.json, admission.json, launcher.txt; complete exact Spacer test modules, fixtures, Lua assertions/registration and shared snapshot/numeric/secret helpers. Read dependency-closure harness and relevant timeout reexecution implementation. No reruns, tests, builds, executable/library/archive reads, hashes, process commands or delegation performed.
 

@@ -5,15 +5,15 @@
   "current_head_user_supplied": "dd10be4ff",
   "current_head_scope": "Later privacy-only changes per caller; no current-revision binary claim; no source-tree authentication",
   "evidence_paths": {
-    "compile.stdout": "verification/widget-discrete-progress-current/crafted-quality-retail-api-red-retry1-20261014T012534611408Z/compile.stdout",
-    "compile.stderr": "verification/widget-discrete-progress-current/crafted-quality-retail-api-red-retry1-20261014T012534611408Z/compile.stderr",
-    "compile-terminal.txt": "verification/widget-discrete-progress-current/crafted-quality-retail-api-red-retry1-20261014T012534611408Z/compile-terminal.txt",
-    "compile-result.json": "verification/widget-discrete-progress-current/crafted-quality-retail-api-red-retry1-20261014T012534611408Z/compile-result.json",
-    "submission.json": "verification/widget-discrete-progress-current/crafted-quality-retail-api-red-retry1-20261014T012534611408Z/submission.json",
-    "revision.json": "verification/widget-discrete-progress-current/crafted-quality-retail-api-red-retry1-20261014T012534611408Z/revision.json",
-    "toolchain.json": "verification/widget-discrete-progress-current/crafted-quality-retail-api-red-retry1-20261014T012534611408Z/toolchain.json",
-    "seal-integration.json": "verification/widget-discrete-progress-current/crafted-quality-retail-api-red-retry1-20261014T012534611408Z/seal-integration.json",
-    "receipt-integration.json": "verification/widget-discrete-progress-current/crafted-quality-retail-api-red-retry1-20261014T012534611408Z/receipt-integration.json"
+    "compile.stdout": "verif/wdp/crafted-quality-retail-api-red-retry1-20261014T012534611408Z/compile.stdout",
+    "compile.stderr": "verif/wdp/crafted-quality-retail-api-red-retry1-20261014T012534611408Z/compile.stderr",
+    "compile-terminal.txt": "verif/wdp/crafted-quality-retail-api-red-retry1-20261014T012534611408Z/compile-terminal.txt",
+    "compile-result.json": "verif/wdp/crafted-quality-retail-api-red-retry1-20261014T012534611408Z/compile-result.json",
+    "submission.json": "verif/wdp/crafted-quality-retail-api-red-retry1-20261014T012534611408Z/submission.json",
+    "revision.json": "verif/wdp/crafted-quality-retail-api-red-retry1-20261014T012534611408Z/revision.json",
+    "toolchain.json": "verif/wdp/crafted-quality-retail-api-red-retry1-20261014T012534611408Z/toolchain.json",
+    "seal-integration.json": "verif/wdp/crafted-quality-retail-api-red-retry1-20261014T012534611408Z/seal-integration.json",
+    "receipt-integration.json": "verif/wdp/crafted-quality-retail-api-red-retry1-20261014T012534611408Z/receipt-integration.json"
   },
   "compile": {
     "records": 741,
@@ -46,7 +46,7 @@
   "authentication": {
     "status": "PASS",
     "hash_reads": 1,
-    "path": "verification/widget-discrete-progress-current/crafted-quality-retail-api-red-retry1-20261014T012534611408Z/artifacts/deps/integration-9f07e4a55f2bbbf7",
+    "path": "verif/wdp/crafted-quality-retail-api-red-retry1-20261014T012534611408Z/artifacts/deps/integration-9f07e4a55f2bbbf7",
     "stat_before": {
       "st_dev": 66306,
       "st_ino": 148374833,
@@ -74,7 +74,7 @@
   "receipt_readback_matches": true,
   "receipt_mode": "0600",
   "receipt_fsynced": true,
-  "admission_denial_preserved": "verification/widget-discrete-progress-current/crafted-quality-retail-api-red-20261014T012431198439Z/admission.json",
+  "admission_denial_preserved": "verif/wdp/crafted-quality-retail-api-red-20261014T012431198439Z/admission.json",
   "exclusions": [
     "old binaries",
     "external libraries",

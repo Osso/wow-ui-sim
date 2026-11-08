@@ -8,4 +8,4 @@ Each consumer retains nineteen nil observations and one missing `C_Reveal`, sepa
 
 Complete selected texts use ordered literal privacy substitutions plus terminal LF only; selected JSON is not reserialized or clipped. Public Cargo package `#0.1.0` fragments and GitHub source URLs remain intact, not misclassified as private accounts. Public-copy gate is pending.
 
-[Initial API RED](../../crafted-item-quality-initial-api-red-2026-10-13/README.md) and [owning contract](../../../../../docs/specs/crafted-item-quality-info.md) remain separate. Later GREEN cannot rewrite these failures.
+[Initial API RED](../../crafted-api-red-20261013/README.md) and [owning contract](../../../../../docs/specs/crafted-item-quality-info.md) remain separate. Later GREEN cannot rewrite these failures.

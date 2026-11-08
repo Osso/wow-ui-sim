@@ -20,25 +20,25 @@ For each of the 119 selected entries, read original bytes, strictly decode UTF-8
 
 ## Precise residual literals — private
 ### HOME-relative cache context
-- Location: `verification/spacer-first-selector-source-current/report.md.txt:15`
+- Location: `verif/spacer-first-selector-source-current/report.md.txt:15`
 - Exact remaining literal: `[PRIVATE_CACHE]/blizzard-ui/{retail,ptr}/AddOns/Blizzard_APIDocumentationGenerated/UIWidgetManagerDocumentation.lua:338-350`
 - Count: 1 contextual occurrence. The rules cover absolute HOME/cache paths, not this tilde spelling. No username is embedded here. Bounded HOME-context clearance remains unresolved; no candidate/rule edits made.
 
 ### Service/cgroup slice context
 - Exact remaining literal: `[PRIVATE_AGENT_CGROUP_SLICE]`
 - Count: 12 contextual occurrences, in these files/lines:
-- `verification/spacer-first-selector-compile-current/proof.json.txt:103`
-- `verification/spacer-ptr-first-runtime-current/report.md.txt:52`
-- `verification/spacer-retail-controls-docs-current/report.md.txt:54`
-- `verification/spacer-retail-first-runtime-current/report.md.txt:67`
-- `verification/widget-discrete-progress-current/widget-spacer-ptr-producer-green-20261015T001307838834Z/runtime-spacer-seven-first-ptr/argv.json.txt:6`
-- `verification/widget-discrete-progress-current/widget-spacer-ptr-producer-green-20261015T001307838834Z/submission.json.txt:8`
-- `verification/widget-discrete-progress-current/widget-spacer-retail-populated-red-20261014T234012425170Z/runtime-spacer-seven-first-red/argv.json.txt:6`
-- `verification/widget-discrete-progress-current/widget-spacer-retail-populated-red-20261014T234012425170Z/submission.json.txt:8`
-- `verification/widget-discrete-progress-current/widget-spacer-retail-producer-green-20261014T235938300530Z/runtime-spacer-seven-first-producer/argv.json.txt:6`
-- `verification/widget-discrete-progress-current/widget-spacer-retail-producer-green-20261014T235938300530Z/submission.json.txt:8`
-- `verification/widget-discrete-progress-current/widget-spacer-selector-retail-red-20261014T224550944881Z/runtime-spacer-first-required-number-red/argv.json.txt:6`
-- `verification/widget-discrete-progress-current/widget-spacer-selector-retail-red-20261014T224550944881Z/submission.json.txt:8`
+- `verif/spacer-first-selector-compile-current/proof.json.txt:103`
+- `verif/spacer-ptr-first-runtime-current/report.md.txt:52`
+- `verif/spacer-retail-controls-docs-current/report.md.txt:54`
+- `verif/spacer-retail-first-runtime-current/report.md.txt:67`
+- `verif/wdp/widget-spacer-ptr-producer-green-20261015T001307838834Z/runtime-spacer-seven-first-ptr/argv.json.txt:6`
+- `verif/wdp/widget-spacer-ptr-producer-green-20261015T001307838834Z/submission.json.txt:8`
+- `verif/wdp/widget-spacer-retail-populated-red-20261014T234012425170Z/runtime-spacer-seven-first-red/argv.json.txt:6`
+- `verif/wdp/widget-spacer-retail-populated-red-20261014T234012425170Z/submission.json.txt:8`
+- `verif/wdp/widget-spacer-retail-producer-green-20261014T235938300530Z/runtime-spacer-seven-first-producer/argv.json.txt:6`
+- `verif/wdp/widget-spacer-retail-producer-green-20261014T235938300530Z/submission.json.txt:8`
+- `verif/wdp/widget-spacer-selector-retail-red-20261014T224550944881Z/runtime-spacer-first-required-number-red/argv.json.txt:6`
+- `verif/wdp/widget-spacer-selector-retail-red-20261014T224550944881Z/submission.json.txt:8`
 - Full user-specific cgroup prefixes were absent in the derivative scan; this generic slice name remains in saved argv and narrative. It is not an unredacted unique service unit or invocation ID. Under the requested bounded service/cgroup-context check, report it rather than silently grant an exception.
 
 ## Other contextual matches and limits
@@ -58,53 +58,53 @@ Candidate-only audit. Read only the named rule/inventory/ledger control document
 Report directory: 0700. Report: 0600. Verified via filesystem stat after writing.
 
 ## Retained public dependency owner context locations
-- `verification/spacer-ptr-producer-compile-current/cargo-artifacts.json.txt:14384`
-- `verification/spacer-ptr-producer-compile-current/cargo-artifacts.json.txt:15530`
-- `verification/spacer-ptr-producer-compile-current/cargo-artifacts.json.txt:20262`
-- `verification/spacer-ptr-producer-compile-current/cargo-artifacts.json.txt:20297`
-- `verification/spacer-ptr-producer-compile-current/cargo-artifacts.json.txt:21577`
-- `verification/spacer-ptr-producer-compile-current/cargo-artifacts.json.txt:21818`
-- `verification/spacer-ptr-producer-compile-current/cargo-artifacts.json.txt:22673`
-- `verification/spacer-ptr-producer-compile-current/cargo-artifacts.json.txt:22776`
-- `verification/spacer-ptr-producer-compile-current/cargo-artifacts.json.txt:22859`
-- `verification/spacer-ptr-producer-compile-current/cargo-artifacts.json.txt:23020`
-- `verification/widget-discrete-progress-current/widget-spacer-ptr-producer-green-20261015T001307838834Z/compile.stdout.txt:460`
-- `verification/widget-discrete-progress-current/widget-spacer-ptr-producer-green-20261015T001307838834Z/compile.stdout.txt:498`
-- `verification/widget-discrete-progress-current/widget-spacer-ptr-producer-green-20261015T001307838834Z/compile.stdout.txt:643`
-- `verification/widget-discrete-progress-current/widget-spacer-ptr-producer-green-20261015T001307838834Z/compile.stdout.txt:644`
-- `verification/widget-discrete-progress-current/widget-spacer-ptr-producer-green-20261015T001307838834Z/compile.stdout.txt:681`
-- `verification/widget-discrete-progress-current/widget-spacer-ptr-producer-green-20261015T001307838834Z/compile.stdout.txt:688`
-- `verification/widget-discrete-progress-current/widget-spacer-ptr-producer-green-20261015T001307838834Z/compile.stdout.txt:712`
-- `verification/widget-discrete-progress-current/widget-spacer-ptr-producer-green-20261015T001307838834Z/compile.stdout.txt:715`
-- `verification/widget-discrete-progress-current/widget-spacer-ptr-producer-green-20261015T001307838834Z/compile.stdout.txt:717`
-- `verification/widget-discrete-progress-current/widget-spacer-ptr-producer-green-20261015T001307838834Z/compile.stdout.txt:722`
-- `verification/widget-discrete-progress-current/widget-spacer-retail-populated-red-20261014T234012425170Z/compile.stdout.txt:457`
-- `verification/widget-discrete-progress-current/widget-spacer-retail-populated-red-20261014T234012425170Z/compile.stdout.txt:499`
-- `verification/widget-discrete-progress-current/widget-spacer-retail-populated-red-20261014T234012425170Z/compile.stdout.txt:640`
-- `verification/widget-discrete-progress-current/widget-spacer-retail-populated-red-20261014T234012425170Z/compile.stdout.txt:642`
-- `verification/widget-discrete-progress-current/widget-spacer-retail-populated-red-20261014T234012425170Z/compile.stdout.txt:681`
-- `verification/widget-discrete-progress-current/widget-spacer-retail-populated-red-20261014T234012425170Z/compile.stdout.txt:688`
-- `verification/widget-discrete-progress-current/widget-spacer-retail-populated-red-20261014T234012425170Z/compile.stdout.txt:710`
-- `verification/widget-discrete-progress-current/widget-spacer-retail-populated-red-20261014T234012425170Z/compile.stdout.txt:713`
-- `verification/widget-discrete-progress-current/widget-spacer-retail-populated-red-20261014T234012425170Z/compile.stdout.txt:715`
-- `verification/widget-discrete-progress-current/widget-spacer-retail-populated-red-20261014T234012425170Z/compile.stdout.txt:722`
-- `verification/widget-discrete-progress-current/widget-spacer-retail-producer-green-20261014T235938300530Z/compile.stdout.txt:459`
-- `verification/widget-discrete-progress-current/widget-spacer-retail-producer-green-20261014T235938300530Z/compile.stdout.txt:497`
-- `verification/widget-discrete-progress-current/widget-spacer-retail-producer-green-20261014T235938300530Z/compile.stdout.txt:643`
-- `verification/widget-discrete-progress-current/widget-spacer-retail-producer-green-20261014T235938300530Z/compile.stdout.txt:645`
-- `verification/widget-discrete-progress-current/widget-spacer-retail-producer-green-20261014T235938300530Z/compile.stdout.txt:681`
-- `verification/widget-discrete-progress-current/widget-spacer-retail-producer-green-20261014T235938300530Z/compile.stdout.txt:688`
-- `verification/widget-discrete-progress-current/widget-spacer-retail-producer-green-20261014T235938300530Z/compile.stdout.txt:706`
-- `verification/widget-discrete-progress-current/widget-spacer-retail-producer-green-20261014T235938300530Z/compile.stdout.txt:711`
-- `verification/widget-discrete-progress-current/widget-spacer-retail-producer-green-20261014T235938300530Z/compile.stdout.txt:715`
-- `verification/widget-discrete-progress-current/widget-spacer-retail-producer-green-20261014T235938300530Z/compile.stdout.txt:722`
-- `verification/widget-discrete-progress-current/widget-spacer-selector-retail-red-20261014T224550944881Z/compile.stdout.txt:457`
-- `verification/widget-discrete-progress-current/widget-spacer-selector-retail-red-20261014T224550944881Z/compile.stdout.txt:492`
-- `verification/widget-discrete-progress-current/widget-spacer-selector-retail-red-20261014T224550944881Z/compile.stdout.txt:640`
-- `verification/widget-discrete-progress-current/widget-spacer-selector-retail-red-20261014T224550944881Z/compile.stdout.txt:649`
-- `verification/widget-discrete-progress-current/widget-spacer-selector-retail-red-20261014T224550944881Z/compile.stdout.txt:673`
-- `verification/widget-discrete-progress-current/widget-spacer-selector-retail-red-20261014T224550944881Z/compile.stdout.txt:682`
-- `verification/widget-discrete-progress-current/widget-spacer-selector-retail-red-20261014T224550944881Z/compile.stdout.txt:701`
-- `verification/widget-discrete-progress-current/widget-spacer-selector-retail-red-20261014T224550944881Z/compile.stdout.txt:709`
-- `verification/widget-discrete-progress-current/widget-spacer-selector-retail-red-20261014T224550944881Z/compile.stdout.txt:712`
-- `verification/widget-discrete-progress-current/widget-spacer-selector-retail-red-20261014T224550944881Z/compile.stdout.txt:722`
+- `verif/spacer-ptr-producer-compile-current/cargo-artifacts.json.txt:14384`
+- `verif/spacer-ptr-producer-compile-current/cargo-artifacts.json.txt:15530`
+- `verif/spacer-ptr-producer-compile-current/cargo-artifacts.json.txt:20262`
+- `verif/spacer-ptr-producer-compile-current/cargo-artifacts.json.txt:20297`
+- `verif/spacer-ptr-producer-compile-current/cargo-artifacts.json.txt:21577`
+- `verif/spacer-ptr-producer-compile-current/cargo-artifacts.json.txt:21818`
+- `verif/spacer-ptr-producer-compile-current/cargo-artifacts.json.txt:22673`
+- `verif/spacer-ptr-producer-compile-current/cargo-artifacts.json.txt:22776`
+- `verif/spacer-ptr-producer-compile-current/cargo-artifacts.json.txt:22859`
+- `verif/spacer-ptr-producer-compile-current/cargo-artifacts.json.txt:23020`
+- `verif/wdp/widget-spacer-ptr-producer-green-20261015T001307838834Z/compile.stdout.txt:460`
+- `verif/wdp/widget-spacer-ptr-producer-green-20261015T001307838834Z/compile.stdout.txt:498`
+- `verif/wdp/widget-spacer-ptr-producer-green-20261015T001307838834Z/compile.stdout.txt:643`
+- `verif/wdp/widget-spacer-ptr-producer-green-20261015T001307838834Z/compile.stdout.txt:644`
+- `verif/wdp/widget-spacer-ptr-producer-green-20261015T001307838834Z/compile.stdout.txt:681`
+- `verif/wdp/widget-spacer-ptr-producer-green-20261015T001307838834Z/compile.stdout.txt:688`
+- `verif/wdp/widget-spacer-ptr-producer-green-20261015T001307838834Z/compile.stdout.txt:712`
+- `verif/wdp/widget-spacer-ptr-producer-green-20261015T001307838834Z/compile.stdout.txt:715`
+- `verif/wdp/widget-spacer-ptr-producer-green-20261015T001307838834Z/compile.stdout.txt:717`
+- `verif/wdp/widget-spacer-ptr-producer-green-20261015T001307838834Z/compile.stdout.txt:722`
+- `verif/wdp/widget-spacer-retail-populated-red-20261014T234012425170Z/compile.stdout.txt:457`
+- `verif/wdp/widget-spacer-retail-populated-red-20261014T234012425170Z/compile.stdout.txt:499`
+- `verif/wdp/widget-spacer-retail-populated-red-20261014T234012425170Z/compile.stdout.txt:640`
+- `verif/wdp/widget-spacer-retail-populated-red-20261014T234012425170Z/compile.stdout.txt:642`
+- `verif/wdp/widget-spacer-retail-populated-red-20261014T234012425170Z/compile.stdout.txt:681`
+- `verif/wdp/widget-spacer-retail-populated-red-20261014T234012425170Z/compile.stdout.txt:688`
+- `verif/wdp/widget-spacer-retail-populated-red-20261014T234012425170Z/compile.stdout.txt:710`
+- `verif/wdp/widget-spacer-retail-populated-red-20261014T234012425170Z/compile.stdout.txt:713`
+- `verif/wdp/widget-spacer-retail-populated-red-20261014T234012425170Z/compile.stdout.txt:715`
+- `verif/wdp/widget-spacer-retail-populated-red-20261014T234012425170Z/compile.stdout.txt:722`
+- `verif/wdp/widget-spacer-retail-producer-green-20261014T235938300530Z/compile.stdout.txt:459`
+- `verif/wdp/widget-spacer-retail-producer-green-20261014T235938300530Z/compile.stdout.txt:497`
+- `verif/wdp/widget-spacer-retail-producer-green-20261014T235938300530Z/compile.stdout.txt:643`
+- `verif/wdp/widget-spacer-retail-producer-green-20261014T235938300530Z/compile.stdout.txt:645`
+- `verif/wdp/widget-spacer-retail-producer-green-20261014T235938300530Z/compile.stdout.txt:681`
+- `verif/wdp/widget-spacer-retail-producer-green-20261014T235938300530Z/compile.stdout.txt:688`
+- `verif/wdp/widget-spacer-retail-producer-green-20261014T235938300530Z/compile.stdout.txt:706`
+- `verif/wdp/widget-spacer-retail-producer-green-20261014T235938300530Z/compile.stdout.txt:711`
+- `verif/wdp/widget-spacer-retail-producer-green-20261014T235938300530Z/compile.stdout.txt:715`
+- `verif/wdp/widget-spacer-retail-producer-green-20261014T235938300530Z/compile.stdout.txt:722`
+- `verif/wdp/widget-spacer-selector-retail-red-20261014T224550944881Z/compile.stdout.txt:457`
+- `verif/wdp/widget-spacer-selector-retail-red-20261014T224550944881Z/compile.stdout.txt:492`
+- `verif/wdp/widget-spacer-selector-retail-red-20261014T224550944881Z/compile.stdout.txt:640`
+- `verif/wdp/widget-spacer-selector-retail-red-20261014T224550944881Z/compile.stdout.txt:649`
+- `verif/wdp/widget-spacer-selector-retail-red-20261014T224550944881Z/compile.stdout.txt:673`
+- `verif/wdp/widget-spacer-selector-retail-red-20261014T224550944881Z/compile.stdout.txt:682`
+- `verif/wdp/widget-spacer-selector-retail-red-20261014T224550944881Z/compile.stdout.txt:701`
+- `verif/wdp/widget-spacer-selector-retail-red-20261014T224550944881Z/compile.stdout.txt:709`
+- `verif/wdp/widget-spacer-selector-retail-red-20261014T224550944881Z/compile.stdout.txt:712`
+- `verif/wdp/widget-spacer-selector-retail-red-20261014T224550944881Z/compile.stdout.txt:722`

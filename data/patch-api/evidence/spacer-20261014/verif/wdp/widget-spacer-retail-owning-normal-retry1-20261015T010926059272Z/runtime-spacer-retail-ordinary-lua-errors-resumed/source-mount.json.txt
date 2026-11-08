@@ -1,5 +1,5 @@
 {
-  "snapshot": "[PRIVATE_EVIDENCE]/verification/widget-discrete-progress-current/widget-spacer-retail-producer-green-20261014T235938300530Z/source",
+  "snapshot": "[PRIVATE_EVIDENCE]/verif/wdp/widget-spacer-retail-producer-green-20261014T235938300530Z/source",
   "receipt_source": "d15126365",
   "source_diff": "git diff --name-only d5e3358a3..918d1609f -- src tests data Cargo.toml Cargo.lock build.rs",
   "source_diff_exit": 0,

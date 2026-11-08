@@ -30,18 +30,18 @@
     },
     {
       "path": "docs/wiki/index.md",
-      "bytes": 702611,
-      "sha256": "c9c7a52ddeba7a15c318cf1355eb5f4c57b78db1ab530e962dd0fd7a12a1dbb3"
+      "bytes": 833802,
+      "sha256": "af810fd4b34a6d628ec1ace73abe0fc680ca25d0e83554c7419cd12d2f3ea8e3"
     },
     {
       "path": "docs/wiki/investigations/integrated-source-and-factory-proof-2026-10-09.md",
-      "bytes": 246208,
-      "sha256": "c6405b2c161e506fee5eb0297ed759e39045bab8fb27630c95f5d5744328cbd0"
+      "bytes": 246953,
+      "sha256": "729a1e69ccc786cd30e74172cc7e31090f64acf77555705eaec478e57141a3a7"
     },
     {
       "path": "docs/wiki/log.md",
-      "bytes": 270893,
-      "sha256": "342a6af5a656949e8a126e016b44036013b1958e1c08ae1def803e3e8b7dc247"
+      "bytes": 456465,
+      "sha256": "e34db042a0a34765898b0ca5cf1e86d552ed810a9edf98a820767478430f8de9"
     },
     {
       "path": "docs/wiki/systems/lua-api.md",

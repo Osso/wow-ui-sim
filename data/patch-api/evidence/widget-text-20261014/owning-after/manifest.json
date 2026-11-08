@@ -5,7 +5,7 @@
   "docs_revision": "e659807fae80aaa1411e3704bd377972375f2cc8",
   "producer_digest_retained": "2bc40bf8480a3b081b87244a13c4faa8f1937d616211f181f14d6f37e0aa35fa",
   "authentication": "single producer digest/stat reuse, not independent authentication; zero executable reads/hashes here",
-  "partition": "data/patch-api/evidence/ui-widget-text-with-subtext-2026-10-14/owning-after/",
+  "partition": "data/patch-api/evidence/widget-text-20261014/owning-after/",
   "derivative_count": 21,
   "staged_file_count": 23,
   "transform": "whole UTF-8 exact sequential str.replace; optional final LF only when absent",

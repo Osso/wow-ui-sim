@@ -16,7 +16,7 @@
     "ordinary_cli_stderr_bytes": 14670,
     "ordinary_cli_stderr_lf": 219,
     "results": "PASS at recorded scopes; stderr startup suppression and nil/missing requirement counts remain limited",
-    "byte_count_source": "verification/spacer-startup-diagnostics-current/report.md table C"
+    "byte_count_source": "verif/spacer-startup-diagnostics-current/report.md table C"
   },
   "format": {
     "source": "9427d0a80",
@@ -81,7 +81,7 @@
     "denial": "Fresh main window/serial-headless allowance required; zero launch/output",
     "executed_run": "[PRIVATE_PROVIDER_EOF_EXECUTED_RUN]",
     "observed": "one selected test PASS, exit0, HTTP200 SSE EOF failure diagnostic printed as JSONL after assertions",
-    "independent_gate": "PASS bounded offline scope; verification/provider-eof-runtime-current/report.md",
+    "independent_gate": "PASS bounded offline scope; verif/provider-eof-runtime-current/report.md",
     "scope": "offline synthetic event input to actual provider/SDK/JSONL; not installed/live/historical causal/credits proof",
     "retained_jsonl_snapshots": 1,
     "metadata_caveat": "Recipe names combined-stage serial lock; actual matching runner uses EOF-stage local lock. Main executed serially; no cross-stage mutex guarantee. Original evidence unchanged."

@@ -243,7 +243,7 @@
           "?? .code-index.db",
           "?? handoff/",
           "?? state/",
-          "?? verification/"
+          "?? verif/"
         ],
         "scope": "Only git show committed blobs/diff inspected; unknown dirty Source audit content not read or edited; no working-tree diff."
       }

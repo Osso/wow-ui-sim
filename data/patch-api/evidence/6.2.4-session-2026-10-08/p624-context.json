@@ -257,7 +257,7 @@
     },
     {
       "path": "data/patch-api/evidence/6.2.4-session-2026-10-08/p624-wiki-integrity.json",
-      "sha256": "3d3304962e06e1ec8d8ac7496d5280932bfdf6975fc8aff502ffe756158e4327"
+      "sha256": "9517a372cd88442754f48df853c1d8040eb8ca5e97408d39b2d3871d8f8327e7"
     },
     {
       "path": "data/patch-api/evidence/6.2.4-session-2026-10-08/patch_10_0_0_publication_sweep-results.json",

@@ -49,6 +49,6 @@ Regression coverage:
 
 ## Current bounded Retail receipt — 2026-10-14
 
-[Public historical packet](../../../data/patch-api/evidence/store-macro-lifecycle-2026-10-14/README.md) retains Store receipts and failures; [owning status](../../specs/store-product-group-shape.md#current-bounded-retail-receipt--2026-10-14) owns their scope and separate accepted copy/privacy limits. No later item/display, PTR, current UI, native/render or full-parent acceptance follows.
+[Public historical packet](../../../data/patch-api/evidence/store-macro-20261014/README.md) retains Store receipts and failures; [owning status](../../specs/store-product-group-shape.md#current-bounded-retail-receipt--2026-10-14) owns their scope and separate accepted copy/privacy limits. No later item/display, PTR, current UI, native/render or full-parent acceptance follows.
 
 [Owning current status](../../specs/store-product-group-shape.md#current-bounded-retail-receipt--2026-10-14) records independent existing-artifact PASS at `a6b572732`: normal public Show, record-contract/completion markers, one shown/visible Apprentice Rider Bundle card with positive reported bounds inside the shown/visible Store, CLI0/CLEAN/zero errors. Startup workarounds remain present; this is not vendor-free, native, rendering or parent proof. Mists query PASS remains separate from public Store UI FAIL; PTR preservation pending.

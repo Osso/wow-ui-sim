@@ -846,7 +846,7 @@
         "source_revision": "62f115d262613a848180143d6b30e2a0b3eb63b0",
         "production_delta_revision": "e37f5426a",
         "scope": "Postdiagnostic targetedtest correction only: cachedtag initializedonacquisition, preservedin-place, refreshedreacquire; productione37 unchanged. Retail11casefinalsubset aftercompile; normalstartup e37proofreusable ifsourcecodeunchanged",
-        "git_status": " M docs/specs/ui-widget-text-with-subtext.md\n?? .code-index.db\n?? handoff/\n?? state/\n?? verification/\n"
+        "git_status": " M docs/specs/ui-widget-text-with-subtext.md\n?? .code-index.db\n?? handoff/\n?? state/\n?? verif/\n"
       },
       "compile-result.json": {
         "source": "62f115d262613a848180143d6b30e2a0b3eb63b0",

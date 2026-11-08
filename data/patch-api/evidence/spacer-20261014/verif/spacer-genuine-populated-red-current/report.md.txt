@@ -4,7 +4,7 @@
 
 **Genuine populated runtime RED confirmed. Seven unique primary cases: 1 PASS (absent/nil control), 6 FAIL.** This is not a compile failure, launcher failure, timeout expiration, or missing-fixture/harness-start failure. Full-population query, normal feed callback, and secure wrapped-selector query actually reach a supplied-snapshot type assertion and fail. Cached registration succeeds; normal populated activation is attempted but fails its first active-count assertion (expected 1, actual 0). No successful activation/lifecycle credit.
 
-EPOCH: `[PRIVATE_EVIDENCE]/verification/widget-discrete-progress-current/widget-spacer-retail-populated-red-20261014T234012425170Z`
+EPOCH: `[PRIVATE_EVIDENCE]/verif/wdp/widget-spacer-retail-populated-red-20261014T234012425170Z`
 Runtime: `runtime-spacer-seven-first-red`
 Recorded revision: `2d95bb5a783485c00160d19c4d1b8968f61a5785` (runtime2d95bb5a7).
 

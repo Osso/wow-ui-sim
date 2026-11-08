@@ -24,7 +24,7 @@
     "sound",
     "timed-signal-maps"
   ],
-  "sealed_path": "[PRIVATE_EVIDENCE]/verification/widget-discrete-progress-current/widget-spacer-ptr-producer-green-20261015T001307838834Z/artifacts/wow-sim-normal",
+  "sealed_path": "[PRIVATE_EVIDENCE]/verif/wdp/widget-spacer-ptr-producer-green-20261015T001307838834Z/artifacts/wow-sim-normal",
   "sha256": "1b5e93c94553cf423607d44b0e0b5a3cf784b3452037d665c98aa7d98ca4c652",
   "stat": {
     "st_dev": 66306,

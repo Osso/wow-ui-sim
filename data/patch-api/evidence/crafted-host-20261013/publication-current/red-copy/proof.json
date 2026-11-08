@@ -81,7 +81,7 @@
   },
   "full_file_ledger": [
     {
-      "path": "widget-discrete-progress-current/crafted-quality-owned-retail-red-20261014T014209924708Z/admission.json",
+      "path": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/admission.json",
       "source_bytes": 2619,
       "bytes": 2619,
       "source_sha256": "e2258f8a32911dedf47cac628857eb32d4b94d9d4d1c34f5581d03ea9e3392d3",
@@ -96,7 +96,7 @@
       }
     },
     {
-      "path": "widget-discrete-progress-current/crafted-quality-owned-retail-red-20261014T014209924708Z/submission.json",
+      "path": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/submission.json",
       "source_bytes": 1334,
       "bytes": 1184,
       "source_sha256": "c163bee8a2345611463726ac0292f687efafd449459504ba01a9607713962a54",
@@ -111,7 +111,7 @@
       }
     },
     {
-      "path": "widget-discrete-progress-current/crafted-quality-owned-retail-red-20261014T014209924708Z/revision.json",
+      "path": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/revision.json",
       "source_bytes": 383,
       "bytes": 383,
       "source_sha256": "a347a0bb25f59a429ab3a0a9c0bacdaaa63c2452edabc12b499c7778546964fc",
@@ -126,7 +126,7 @@
       }
     },
     {
-      "path": "widget-discrete-progress-current/crafted-quality-owned-retail-red-20261014T014209924708Z/toolchain.json",
+      "path": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/toolchain.json",
       "source_bytes": 331,
       "bytes": 331,
       "source_sha256": "f249bdcf5117f63071fbf830da47894a3df10049294e1e2e8292e7ed06a4527d",
@@ -141,7 +141,7 @@
       }
     },
     {
-      "path": "widget-discrete-progress-current/crafted-quality-owned-retail-red-20261014T014209924708Z/compile.stdout",
+      "path": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/compile.stdout",
       "source_bytes": 574439,
       "bytes": 585027,
       "source_sha256": "378bf6062e0ddac719bc35bf1902dc6647e38c9b631c10dfcf3f8cf04ec8e99b",
@@ -156,7 +156,7 @@
       }
     },
     {
-      "path": "widget-discrete-progress-current/crafted-quality-owned-retail-red-20261014T014209924708Z/compile.stderr",
+      "path": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/compile.stderr",
       "source_bytes": 1376,
       "bytes": 1384,
       "source_sha256": "4ebdad45d62c1133324c9186636d0700fca791d72d9ccd2775035fc91f23f9a9",
@@ -171,7 +171,7 @@
       }
     },
     {
-      "path": "widget-discrete-progress-current/crafted-quality-owned-retail-red-20261014T014209924708Z/compile-result.json",
+      "path": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/compile-result.json",
       "source_bytes": 309,
       "bytes": 309,
       "source_sha256": "c7d9ee1e9357665c01a6894c74c2dc2c84aefe1e9bcf2e36925564089e199a28",
@@ -186,7 +186,7 @@
       }
     },
     {
-      "path": "widget-discrete-progress-current/crafted-quality-owned-retail-red-20261014T014209924708Z/compile-terminal.txt",
+      "path": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/compile-terminal.txt",
       "source_bytes": 205,
       "bytes": 205,
       "source_sha256": "a324726db9842b8fecb92ba04a49d1c929a6b7f5e98add8dcc9864fdefd65c15",
@@ -201,7 +201,7 @@
       }
     },
     {
-      "path": "widget-discrete-progress-current/crafted-quality-owned-retail-red-20261014T014209924708Z/seal-integration.json",
+      "path": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/seal-integration.json",
       "source_bytes": 1101,
       "bytes": 1105,
       "source_sha256": "a33459cca27b9e006d39c80941c4e958eed21c0b706a75800e193d6d79091b9f",
@@ -216,7 +216,7 @@
       }
     },
     {
-      "path": "widget-discrete-progress-current/crafted-quality-owned-retail-red-20261014T014209924708Z/receipt-integration.json",
+      "path": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/receipt-integration.json",
       "source_bytes": 1097,
       "bytes": 1105,
       "source_sha256": "c9fcdfb994fcb4d571d46875d46ba51202cc3d9eadc415155db7e0740b54545f",
@@ -231,7 +231,7 @@
       }
     },
     {
-      "path": "widget-discrete-progress-current/crafted-quality-owned-retail-red-20261014T014209924708Z/source-scope.json",
+      "path": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/source-scope.json",
       "source_bytes": 559,
       "bytes": 563,
       "source_sha256": "c529ceeb23712215fd84f92122f12acf295c4491a804dae29442be0ca8430827",
@@ -246,7 +246,7 @@
       }
     },
     {
-      "path": "widget-discrete-progress-current/crafted-quality-owned-retail-red-20261014T014209924708Z/runtime-crafted-owned-red-2g/admission.json",
+      "path": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/runtime-crafted-owned-red-2g/admission.json",
       "source_bytes": 2413,
       "bytes": 2413,
       "source_sha256": "4bce28d5be13793f2ca68ce09c6d1a9f1c6f3ef9be84913363d88a0cda697ba5",
@@ -261,7 +261,7 @@
       }
     },
     {
-      "path": "widget-discrete-progress-current/crafted-quality-owned-retail-red-20261014T014209924708Z/runtime-crafted-owned-red-2g/argv.json",
+      "path": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/runtime-crafted-owned-red-2g/argv.json",
       "source_bytes": 1695,
       "bytes": 1699,
       "source_sha256": "292e7cea093f605e8b6ef4f77ba371a750f9dbeb08ca12594bc645c07f7d8873",
@@ -276,7 +276,7 @@
       }
     },
     {
-      "path": "widget-discrete-progress-current/crafted-quality-owned-retail-red-20261014T014209924708Z/runtime-crafted-owned-red-2g/launcher.txt",
+      "path": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/runtime-crafted-owned-red-2g/launcher.txt",
       "source_bytes": 307,
       "bytes": 271,
       "source_sha256": "fcbc0a70bbd31b055ca7a41e422b06f87276d0050549a1cb3bc8f9b03ac1c057",
@@ -291,7 +291,7 @@
       }
     },
     {
-      "path": "widget-discrete-progress-current/crafted-quality-owned-retail-red-20261014T014209924708Z/runtime-crafted-owned-red-2g/result.json",
+      "path": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/runtime-crafted-owned-red-2g/result.json",
       "source_bytes": 717,
       "bytes": 681,
       "source_sha256": "d569f680b4238dce7dce1d3e21af08ea1d2e114c50e1e16530177c8bbb1cc2d6",
@@ -306,7 +306,7 @@
       }
     },
     {
-      "path": "widget-discrete-progress-current/crafted-quality-owned-retail-red-20261014T014209924708Z/runtime-crafted-owned-red-2g/stderr",
+      "path": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/runtime-crafted-owned-red-2g/stderr",
       "source_bytes": 5913,
       "bytes": 5933,
       "source_sha256": "129972326db2572adab9b58f9ed02efdc646312a693423c04e31d1d796c131ab",
@@ -321,7 +321,7 @@
       }
     },
     {
-      "path": "widget-discrete-progress-current/crafted-quality-owned-retail-red-20261014T014209924708Z/runtime-crafted-owned-red-2g/stdout",
+      "path": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/runtime-crafted-owned-red-2g/stdout",
       "source_bytes": 1221,
       "bytes": 1221,
       "source_sha256": "5bea0562da6510aeb6e3d1aba9ebedf36291527663c19bf0988f74be76ca478f",
@@ -336,7 +336,7 @@
       }
     },
     {
-      "path": "widget-discrete-progress-current/crafted-quality-owned-retail-red-20261014T014209924708Z/runtime-crafted-itembutton-red-2g/admission.json",
+      "path": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/runtime-crafted-itembutton-red-2g/admission.json",
       "source_bytes": 2414,
       "bytes": 2414,
       "source_sha256": "0065d64c495c8a104db7adf2968b7238615a7dc35f134918e344e506d4abbf33",
@@ -351,7 +351,7 @@
       }
     },
     {
-      "path": "widget-discrete-progress-current/crafted-quality-owned-retail-red-20261014T014209924708Z/runtime-crafted-itembutton-red-2g/argv.json",
+      "path": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/runtime-crafted-itembutton-red-2g/argv.json",
       "source_bytes": 1711,
       "bytes": 1715,
       "source_sha256": "6e2a90d90205a68d4d1b8ec7efb21676eaad238ec69e77c3676d8da5ce601abf",
@@ -366,7 +366,7 @@
       }
     },
     {
-      "path": "widget-discrete-progress-current/crafted-quality-owned-retail-red-20261014T014209924708Z/runtime-crafted-itembutton-red-2g/launcher.txt",
+      "path": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/runtime-crafted-itembutton-red-2g/launcher.txt",
       "source_bytes": 305,
       "bytes": 269,
       "source_sha256": "632c55b1ae22c1c807e6283b5313109c12c8d1b5cda9223fc7efd959b45f07c1",
@@ -381,7 +381,7 @@
       }
     },
     {
-      "path": "widget-discrete-progress-current/crafted-quality-owned-retail-red-20261014T014209924708Z/runtime-crafted-itembutton-red-2g/result.json",
+      "path": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/runtime-crafted-itembutton-red-2g/result.json",
       "source_bytes": 736,
       "bytes": 700,
       "source_sha256": "e2f2ccc86363a29a3b9af11b8479c0066238436a5cda2db2ce324ee0dd98f51c",
@@ -396,7 +396,7 @@
       }
     },
     {
-      "path": "widget-discrete-progress-current/crafted-quality-owned-retail-red-20261014T014209924708Z/runtime-crafted-itembutton-red-2g/stderr",
+      "path": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/runtime-crafted-itembutton-red-2g/stderr",
       "source_bytes": 14307,
       "bytes": 14411,
       "source_sha256": "e5d8da16afe779b562c1e19f5d8d2728abffe669beec075a3d45b4f3be7e5150",
@@ -411,7 +411,7 @@
       }
     },
     {
-      "path": "widget-discrete-progress-current/crafted-quality-owned-retail-red-20261014T014209924708Z/runtime-crafted-itembutton-red-2g/stdout",
+      "path": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/runtime-crafted-itembutton-red-2g/stdout",
       "source_bytes": 376,
       "bytes": 376,
       "source_sha256": "947bd4866a82de5f98a981a949e79d7fc372628abc061e8ef88ece9a49f3e3a5",
@@ -426,7 +426,7 @@
       }
     },
     {
-      "path": "widget-discrete-progress-current/crafted-quality-owned-ptr-red-20261014T014829545770Z/admission.json",
+      "path": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/admission.json",
       "source_bytes": 2626,
       "bytes": 2626,
       "source_sha256": "331dc6ac0948ba5c33f83816efe0d07cc3f4d33f46b107872d7683dd670f2b06",
@@ -441,7 +441,7 @@
       }
     },
     {
-      "path": "widget-discrete-progress-current/crafted-quality-owned-ptr-red-20261014T014829545770Z/submission.json",
+      "path": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/submission.json",
       "source_bytes": 1399,
       "bytes": 1258,
       "source_sha256": "eadf8fd6fd6113f655d4925c84bbcec33c36591c9b3d727695057030cd53cb4f",
@@ -456,7 +456,7 @@
       }
     },
     {
-      "path": "widget-discrete-progress-current/crafted-quality-owned-ptr-red-20261014T014829545770Z/revision.json",
+      "path": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/revision.json",
       "source_bytes": 388,
       "bytes": 388,
       "source_sha256": "af105cc672a718103d2a7354e2ec13dc1e82701cb8b1dcb9ee6b580fb9d01532",
@@ -471,7 +471,7 @@
       }
     },
     {
-      "path": "widget-discrete-progress-current/crafted-quality-owned-ptr-red-20261014T014829545770Z/toolchain.json",
+      "path": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/toolchain.json",
       "source_bytes": 331,
       "bytes": 331,
       "source_sha256": "f249bdcf5117f63071fbf830da47894a3df10049294e1e2e8292e7ed06a4527d",
@@ -486,7 +486,7 @@
       }
     },
     {
-      "path": "widget-discrete-progress-current/crafted-quality-owned-ptr-red-20261014T014829545770Z/compile.stdout",
+      "path": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/compile.stdout",
       "source_bytes": 574600,
       "bytes": 585188,
       "source_sha256": "400abe0284927b0c1e3b9dfd66a228283e65b7d94e2a51b20696c013191bc58c",
@@ -501,7 +501,7 @@
       }
     },
     {
-      "path": "widget-discrete-progress-current/crafted-quality-owned-ptr-red-20261014T014829545770Z/compile.stderr",
+      "path": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/compile.stderr",
       "source_bytes": 1275,
       "bytes": 1279,
       "source_sha256": "98c28cdac513c0c04900cf5ee9be27d32e2963b76a2f0d63e704b0ab20824d54",
@@ -516,7 +516,7 @@
       }
     },
     {
-      "path": "widget-discrete-progress-current/crafted-quality-owned-ptr-red-20261014T014829545770Z/compile-result.json",
+      "path": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/compile-result.json",
       "source_bytes": 306,
       "bytes": 306,
       "source_sha256": "4f60321504df5d11b87d5664a10bdc3e83196773c58b5ca2ec1bd8593f54e0b3",
@@ -531,7 +531,7 @@
       }
     },
     {
-      "path": "widget-discrete-progress-current/crafted-quality-owned-ptr-red-20261014T014829545770Z/compile-terminal.txt",
+      "path": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/compile-terminal.txt",
       "source_bytes": 205,
       "bytes": 205,
       "source_sha256": "5ecb07e03ed3c822ed396cda9f04ef9751d52999739378b8f2c8753a0a5cf05d",
@@ -546,7 +546,7 @@
       }
     },
     {
-      "path": "widget-discrete-progress-current/crafted-quality-owned-ptr-red-20261014T014829545770Z/seal-integration.json",
+      "path": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/seal-integration.json",
       "source_bytes": 1113,
       "bytes": 1117,
       "source_sha256": "f7dd5e60b9d5bd182e85d9b237c085878be27b4f9dbc35f42c8c783c44a782f8",
@@ -561,7 +561,7 @@
       }
     },
     {
-      "path": "widget-discrete-progress-current/crafted-quality-owned-ptr-red-20261014T014829545770Z/receipt-integration.json",
+      "path": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/receipt-integration.json",
       "source_bytes": 921,
       "bytes": 925,
       "source_sha256": "f52fd5ef955aee2a644a1b24c82408a693c4b2e265835072aaf3533cee537ec6",
@@ -576,7 +576,7 @@
       }
     },
     {
-      "path": "widget-discrete-progress-current/crafted-quality-owned-ptr-red-20261014T014829545770Z/source-scope.json",
+      "path": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/source-scope.json",
       "source_bytes": 556,
       "bytes": 560,
       "source_sha256": "b7596b605125d409fffe55852cebb96c59e7db6320533e9c2431911dfb59f32f",
@@ -591,7 +591,7 @@
       }
     },
     {
-      "path": "widget-discrete-progress-current/crafted-quality-owned-ptr-red-20261014T014829545770Z/runtime-crafted-owned-red-2g/admission.json",
+      "path": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/runtime-crafted-owned-red-2g/admission.json",
       "source_bytes": 2413,
       "bytes": 2413,
       "source_sha256": "78546adc63879f2e940c916bb72e288f6fd980db3cba0ef51464999dc3a5a153",
@@ -606,7 +606,7 @@
       }
     },
     {
-      "path": "widget-discrete-progress-current/crafted-quality-owned-ptr-red-20261014T014829545770Z/runtime-crafted-owned-red-2g/argv.json",
+      "path": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/runtime-crafted-owned-red-2g/argv.json",
       "source_bytes": 1680,
       "bytes": 1687,
       "source_sha256": "7235ebb6e417f1cd89eaf91c3a902eecc315fc73b28816b05b6c55b1cede2e7a",
@@ -621,7 +621,7 @@
       }
     },
     {
-      "path": "widget-discrete-progress-current/crafted-quality-owned-ptr-red-20261014T014829545770Z/runtime-crafted-owned-red-2g/launcher.txt",
+      "path": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/runtime-crafted-owned-red-2g/launcher.txt",
       "source_bytes": 306,
       "bytes": 273,
       "source_sha256": "e23185d133758dd51c97ad9933a823bf120a3be06e9bc3b915529c4ecded12bc",
@@ -636,7 +636,7 @@
       }
     },
     {
-      "path": "widget-discrete-progress-current/crafted-quality-owned-ptr-red-20261014T014829545770Z/runtime-crafted-owned-red-2g/result.json",
+      "path": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/runtime-crafted-owned-red-2g/result.json",
       "source_bytes": 682,
       "bytes": 649,
       "source_sha256": "1970da536ba1c9e7de6f96149d62a4ed3fd31e7bcc97f128d62d07fce25d50d1",
@@ -651,7 +651,7 @@
       }
     },
     {
-      "path": "widget-discrete-progress-current/crafted-quality-owned-ptr-red-20261014T014829545770Z/runtime-crafted-owned-red-2g/stderr",
+      "path": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/runtime-crafted-owned-red-2g/stderr",
       "source_bytes": 5912,
       "bytes": 5932,
       "source_sha256": "519812f40ce5b767dc37fe7a13d315eed2aefc7722f58f0b74d4b0d3d818f830",
@@ -666,7 +666,7 @@
       }
     },
     {
-      "path": "widget-discrete-progress-current/crafted-quality-owned-ptr-red-20261014T014829545770Z/runtime-crafted-owned-red-2g/stdout",
+      "path": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/runtime-crafted-owned-red-2g/stdout",
       "source_bytes": 1221,
       "bytes": 1221,
       "source_sha256": "9f125dc27154e2cb40c7ab97b1f2211e857d829f348613aab81c3f63ad1a852f",
@@ -681,7 +681,7 @@
       }
     },
     {
-      "path": "widget-discrete-progress-current/crafted-quality-owned-ptr-red-20261014T014829545770Z/runtime-crafted-itembutton-red-2g/admission.json",
+      "path": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/runtime-crafted-itembutton-red-2g/admission.json",
       "source_bytes": 2418,
       "bytes": 2418,
       "source_sha256": "dd777f8d156eb8591e9b370b95ee26409137c8a826a1fc9ab0b71b4c4d933306",
@@ -696,7 +696,7 @@
       }
     },
     {
-      "path": "widget-discrete-progress-current/crafted-quality-owned-ptr-red-20261014T014829545770Z/runtime-crafted-itembutton-red-2g/argv.json",
+      "path": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/runtime-crafted-itembutton-red-2g/argv.json",
       "source_bytes": 1696,
       "bytes": 1703,
       "source_sha256": "76c2aa30d38f0495f13608ce7186e60ea316b0cf086258bec5cdf82d63f8573d",
@@ -711,7 +711,7 @@
       }
     },
     {
-      "path": "widget-discrete-progress-current/crafted-quality-owned-ptr-red-20261014T014829545770Z/runtime-crafted-itembutton-red-2g/launcher.txt",
+      "path": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/runtime-crafted-itembutton-red-2g/launcher.txt",
       "source_bytes": 304,
       "bytes": 271,
       "source_sha256": "4462c5453e131117a62691e006b10c8eb3cd9f833c54dc40bb38e5d5d9cea5b7",
@@ -726,7 +726,7 @@
       }
     },
     {
-      "path": "widget-discrete-progress-current/crafted-quality-owned-ptr-red-20261014T014829545770Z/runtime-crafted-itembutton-red-2g/result.json",
+      "path": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/runtime-crafted-itembutton-red-2g/result.json",
       "source_bytes": 722,
       "bytes": 689,
       "source_sha256": "63e20129988aa09b2d57f85abca110365ba473a5ab2732d21fc5b8c085379696",
@@ -741,7 +741,7 @@
       }
     },
     {
-      "path": "widget-discrete-progress-current/crafted-quality-owned-ptr-red-20261014T014829545770Z/runtime-crafted-itembutton-red-2g/stderr",
+      "path": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/runtime-crafted-itembutton-red-2g/stderr",
       "source_bytes": 14231,
       "bytes": 14335,
       "source_sha256": "36fae26070bb790781780a8a10ce315d4a844d157385d164d66e5bfdffaff41f",
@@ -756,7 +756,7 @@
       }
     },
     {
-      "path": "widget-discrete-progress-current/crafted-quality-owned-ptr-red-20261014T014829545770Z/runtime-crafted-itembutton-red-2g/stdout",
+      "path": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/runtime-crafted-itembutton-red-2g/stdout",
       "source_bytes": 376,
       "bytes": 376,
       "source_sha256": "ef96ed3b2d0afab0fa59494e4e0c14b3313f86be7dc1890b3294a7d73c200a31",
@@ -1530,232 +1530,232 @@
   },
   "public_source_url_checks": [
     {
-      "path": "widget-discrete-progress-current/crafted-quality-owned-retail-red-20261014T014209924708Z/admission.json",
+      "path": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/admission.json",
       "url_occurrences": 0,
       "equal": true
     },
     {
-      "path": "widget-discrete-progress-current/crafted-quality-owned-retail-red-20261014T014209924708Z/submission.json",
+      "path": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/submission.json",
       "url_occurrences": 0,
       "equal": true
     },
     {
-      "path": "widget-discrete-progress-current/crafted-quality-owned-retail-red-20261014T014209924708Z/revision.json",
+      "path": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/revision.json",
       "url_occurrences": 0,
       "equal": true
     },
     {
-      "path": "widget-discrete-progress-current/crafted-quality-owned-retail-red-20261014T014209924708Z/toolchain.json",
+      "path": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/toolchain.json",
       "url_occurrences": 0,
       "equal": true
     },
     {
-      "path": "widget-discrete-progress-current/crafted-quality-owned-retail-red-20261014T014209924708Z/compile.stdout",
+      "path": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/compile.stdout",
       "url_occurrences": 726,
       "equal": true
     },
     {
-      "path": "widget-discrete-progress-current/crafted-quality-owned-retail-red-20261014T014209924708Z/compile.stderr",
+      "path": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/compile.stderr",
       "url_occurrences": 0,
       "equal": true
     },
     {
-      "path": "widget-discrete-progress-current/crafted-quality-owned-retail-red-20261014T014209924708Z/compile-result.json",
+      "path": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/compile-result.json",
       "url_occurrences": 0,
       "equal": true
     },
     {
-      "path": "widget-discrete-progress-current/crafted-quality-owned-retail-red-20261014T014209924708Z/compile-terminal.txt",
+      "path": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/compile-terminal.txt",
       "url_occurrences": 0,
       "equal": true
     },
     {
-      "path": "widget-discrete-progress-current/crafted-quality-owned-retail-red-20261014T014209924708Z/seal-integration.json",
+      "path": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/seal-integration.json",
       "url_occurrences": 0,
       "equal": true
     },
     {
-      "path": "widget-discrete-progress-current/crafted-quality-owned-retail-red-20261014T014209924708Z/receipt-integration.json",
+      "path": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/receipt-integration.json",
       "url_occurrences": 0,
       "equal": true
     },
     {
-      "path": "widget-discrete-progress-current/crafted-quality-owned-retail-red-20261014T014209924708Z/source-scope.json",
+      "path": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/source-scope.json",
       "url_occurrences": 0,
       "equal": true
     },
     {
-      "path": "widget-discrete-progress-current/crafted-quality-owned-retail-red-20261014T014209924708Z/runtime-crafted-owned-red-2g/admission.json",
+      "path": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/runtime-crafted-owned-red-2g/admission.json",
       "url_occurrences": 0,
       "equal": true
     },
     {
-      "path": "widget-discrete-progress-current/crafted-quality-owned-retail-red-20261014T014209924708Z/runtime-crafted-owned-red-2g/argv.json",
+      "path": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/runtime-crafted-owned-red-2g/argv.json",
       "url_occurrences": 0,
       "equal": true
     },
     {
-      "path": "widget-discrete-progress-current/crafted-quality-owned-retail-red-20261014T014209924708Z/runtime-crafted-owned-red-2g/launcher.txt",
+      "path": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/runtime-crafted-owned-red-2g/launcher.txt",
       "url_occurrences": 0,
       "equal": true
     },
     {
-      "path": "widget-discrete-progress-current/crafted-quality-owned-retail-red-20261014T014209924708Z/runtime-crafted-owned-red-2g/result.json",
+      "path": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/runtime-crafted-owned-red-2g/result.json",
       "url_occurrences": 0,
       "equal": true
     },
     {
-      "path": "widget-discrete-progress-current/crafted-quality-owned-retail-red-20261014T014209924708Z/runtime-crafted-owned-red-2g/stderr",
+      "path": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/runtime-crafted-owned-red-2g/stderr",
       "url_occurrences": 0,
       "equal": true
     },
     {
-      "path": "widget-discrete-progress-current/crafted-quality-owned-retail-red-20261014T014209924708Z/runtime-crafted-owned-red-2g/stdout",
+      "path": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/runtime-crafted-owned-red-2g/stdout",
       "url_occurrences": 0,
       "equal": true
     },
     {
-      "path": "widget-discrete-progress-current/crafted-quality-owned-retail-red-20261014T014209924708Z/runtime-crafted-itembutton-red-2g/admission.json",
+      "path": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/runtime-crafted-itembutton-red-2g/admission.json",
       "url_occurrences": 0,
       "equal": true
     },
     {
-      "path": "widget-discrete-progress-current/crafted-quality-owned-retail-red-20261014T014209924708Z/runtime-crafted-itembutton-red-2g/argv.json",
+      "path": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/runtime-crafted-itembutton-red-2g/argv.json",
       "url_occurrences": 0,
       "equal": true
     },
     {
-      "path": "widget-discrete-progress-current/crafted-quality-owned-retail-red-20261014T014209924708Z/runtime-crafted-itembutton-red-2g/launcher.txt",
+      "path": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/runtime-crafted-itembutton-red-2g/launcher.txt",
       "url_occurrences": 0,
       "equal": true
     },
     {
-      "path": "widget-discrete-progress-current/crafted-quality-owned-retail-red-20261014T014209924708Z/runtime-crafted-itembutton-red-2g/result.json",
+      "path": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/runtime-crafted-itembutton-red-2g/result.json",
       "url_occurrences": 0,
       "equal": true
     },
     {
-      "path": "widget-discrete-progress-current/crafted-quality-owned-retail-red-20261014T014209924708Z/runtime-crafted-itembutton-red-2g/stderr",
+      "path": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/runtime-crafted-itembutton-red-2g/stderr",
       "url_occurrences": 0,
       "equal": true
     },
     {
-      "path": "widget-discrete-progress-current/crafted-quality-owned-retail-red-20261014T014209924708Z/runtime-crafted-itembutton-red-2g/stdout",
+      "path": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/runtime-crafted-itembutton-red-2g/stdout",
       "url_occurrences": 0,
       "equal": true
     },
     {
-      "path": "widget-discrete-progress-current/crafted-quality-owned-ptr-red-20261014T014829545770Z/admission.json",
+      "path": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/admission.json",
       "url_occurrences": 0,
       "equal": true
     },
     {
-      "path": "widget-discrete-progress-current/crafted-quality-owned-ptr-red-20261014T014829545770Z/submission.json",
+      "path": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/submission.json",
       "url_occurrences": 0,
       "equal": true
     },
     {
-      "path": "widget-discrete-progress-current/crafted-quality-owned-ptr-red-20261014T014829545770Z/revision.json",
+      "path": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/revision.json",
       "url_occurrences": 0,
       "equal": true
     },
     {
-      "path": "widget-discrete-progress-current/crafted-quality-owned-ptr-red-20261014T014829545770Z/toolchain.json",
+      "path": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/toolchain.json",
       "url_occurrences": 0,
       "equal": true
     },
     {
-      "path": "widget-discrete-progress-current/crafted-quality-owned-ptr-red-20261014T014829545770Z/compile.stdout",
+      "path": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/compile.stdout",
       "url_occurrences": 726,
       "equal": true
     },
     {
-      "path": "widget-discrete-progress-current/crafted-quality-owned-ptr-red-20261014T014829545770Z/compile.stderr",
+      "path": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/compile.stderr",
       "url_occurrences": 0,
       "equal": true
     },
     {
-      "path": "widget-discrete-progress-current/crafted-quality-owned-ptr-red-20261014T014829545770Z/compile-result.json",
+      "path": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/compile-result.json",
       "url_occurrences": 0,
       "equal": true
     },
     {
-      "path": "widget-discrete-progress-current/crafted-quality-owned-ptr-red-20261014T014829545770Z/compile-terminal.txt",
+      "path": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/compile-terminal.txt",
       "url_occurrences": 0,
       "equal": true
     },
     {
-      "path": "widget-discrete-progress-current/crafted-quality-owned-ptr-red-20261014T014829545770Z/seal-integration.json",
+      "path": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/seal-integration.json",
       "url_occurrences": 0,
       "equal": true
     },
     {
-      "path": "widget-discrete-progress-current/crafted-quality-owned-ptr-red-20261014T014829545770Z/receipt-integration.json",
+      "path": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/receipt-integration.json",
       "url_occurrences": 0,
       "equal": true
     },
     {
-      "path": "widget-discrete-progress-current/crafted-quality-owned-ptr-red-20261014T014829545770Z/source-scope.json",
+      "path": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/source-scope.json",
       "url_occurrences": 0,
       "equal": true
     },
     {
-      "path": "widget-discrete-progress-current/crafted-quality-owned-ptr-red-20261014T014829545770Z/runtime-crafted-owned-red-2g/admission.json",
+      "path": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/runtime-crafted-owned-red-2g/admission.json",
       "url_occurrences": 0,
       "equal": true
     },
     {
-      "path": "widget-discrete-progress-current/crafted-quality-owned-ptr-red-20261014T014829545770Z/runtime-crafted-owned-red-2g/argv.json",
+      "path": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/runtime-crafted-owned-red-2g/argv.json",
       "url_occurrences": 0,
       "equal": true
     },
     {
-      "path": "widget-discrete-progress-current/crafted-quality-owned-ptr-red-20261014T014829545770Z/runtime-crafted-owned-red-2g/launcher.txt",
+      "path": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/runtime-crafted-owned-red-2g/launcher.txt",
       "url_occurrences": 0,
       "equal": true
     },
     {
-      "path": "widget-discrete-progress-current/crafted-quality-owned-ptr-red-20261014T014829545770Z/runtime-crafted-owned-red-2g/result.json",
+      "path": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/runtime-crafted-owned-red-2g/result.json",
       "url_occurrences": 0,
       "equal": true
     },
     {
-      "path": "widget-discrete-progress-current/crafted-quality-owned-ptr-red-20261014T014829545770Z/runtime-crafted-owned-red-2g/stderr",
+      "path": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/runtime-crafted-owned-red-2g/stderr",
       "url_occurrences": 0,
       "equal": true
     },
     {
-      "path": "widget-discrete-progress-current/crafted-quality-owned-ptr-red-20261014T014829545770Z/runtime-crafted-owned-red-2g/stdout",
+      "path": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/runtime-crafted-owned-red-2g/stdout",
       "url_occurrences": 0,
       "equal": true
     },
     {
-      "path": "widget-discrete-progress-current/crafted-quality-owned-ptr-red-20261014T014829545770Z/runtime-crafted-itembutton-red-2g/admission.json",
+      "path": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/runtime-crafted-itembutton-red-2g/admission.json",
       "url_occurrences": 0,
       "equal": true
     },
     {
-      "path": "widget-discrete-progress-current/crafted-quality-owned-ptr-red-20261014T014829545770Z/runtime-crafted-itembutton-red-2g/argv.json",
+      "path": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/runtime-crafted-itembutton-red-2g/argv.json",
       "url_occurrences": 0,
       "equal": true
     },
     {
-      "path": "widget-discrete-progress-current/crafted-quality-owned-ptr-red-20261014T014829545770Z/runtime-crafted-itembutton-red-2g/launcher.txt",
+      "path": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/runtime-crafted-itembutton-red-2g/launcher.txt",
       "url_occurrences": 0,
       "equal": true
     },
     {
-      "path": "widget-discrete-progress-current/crafted-quality-owned-ptr-red-20261014T014829545770Z/runtime-crafted-itembutton-red-2g/result.json",
+      "path": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/runtime-crafted-itembutton-red-2g/result.json",
       "url_occurrences": 0,
       "equal": true
     },
     {
-      "path": "widget-discrete-progress-current/crafted-quality-owned-ptr-red-20261014T014829545770Z/runtime-crafted-itembutton-red-2g/stderr",
+      "path": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/runtime-crafted-itembutton-red-2g/stderr",
       "url_occurrences": 0,
       "equal": true
     },
     {
-      "path": "widget-discrete-progress-current/crafted-quality-owned-ptr-red-20261014T014829545770Z/runtime-crafted-itembutton-red-2g/stdout",
+      "path": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/runtime-crafted-itembutton-red-2g/stdout",
       "url_occurrences": 0,
       "equal": true
     },
@@ -1812,15 +1812,15 @@
   ],
   "links_stat_only": [
     {
-      "from": "data/patch-api/evidence/crafted-item-quality-host-records-2026-10-13/red-current/README.md",
+      "from": "data/patch-api/evidence/crafted-host-20261013/red-current/README.md",
       "label": "Initial API RED",
-      "target": "data/patch-api/evidence/crafted-item-quality-initial-api-red-2026-10-13/README.md",
+      "target": "data/patch-api/evidence/crafted-api-red-20261013/README.md",
       "exists": true,
       "stat_size": 1801,
       "inspection": "STAT target only"
     },
     {
-      "from": "data/patch-api/evidence/crafted-item-quality-host-records-2026-10-13/red-current/README.md",
+      "from": "data/patch-api/evidence/crafted-host-20261013/red-current/README.md",
       "label": "owning contract",
       "target": "docs/specs/crafted-item-quality-info.md",
       "exists": true,
@@ -1830,7 +1830,7 @@
     {
       "from": "docs/specs/crafted-item-quality-info.md",
       "label": "Whole supplied-record RED",
-      "target": "data/patch-api/evidence/crafted-item-quality-host-records-2026-10-13/red-current/README.md",
+      "target": "data/patch-api/evidence/crafted-host-20261013/red-current/README.md",
       "exists": true,
       "stat_size": 1670,
       "inspection": "STAT target only"
@@ -1848,7 +1848,7 @@
       "launcher_exit": 101,
       "wait": "completed; recorded main code=exited status=101/n/a",
       "source_revision": "c652aaa8824f87089f0747a3ad0e19a4dbe3350e",
-      "result": "widget-discrete-progress-current/crafted-quality-owned-ptr-red-20261014T014829545770Z/runtime-crafted-itembutton-red-2g/result.json",
+      "result": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/runtime-crafted-itembutton-red-2g/result.json",
       "checks": {
         "closure12": true,
         "nil19": true,
@@ -1894,7 +1894,7 @@
       "launcher_exit": 101,
       "wait": "completed; recorded main code=exited status=101/n/a",
       "source_revision": "c652aaa8824f87089f0747a3ad0e19a4dbe3350e",
-      "result": "widget-discrete-progress-current/crafted-quality-owned-ptr-red-20261014T014829545770Z/runtime-crafted-owned-red-2g/result.json",
+      "result": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/runtime-crafted-owned-red-2g/result.json",
       "boundary": "First positive table-type assertion FAIL; actual query payload unprinted. Exact fields/arity, remaining aliases, lifecycle and later security/denial/recovery unreached."
     },
     {
@@ -1908,7 +1908,7 @@
       "launcher_exit": 101,
       "wait": "completed; recorded main code=exited status=101/n/a",
       "source_revision": "6c38a82739dbf27fc58c3c801c32a0f0fc98d21c",
-      "result": "widget-discrete-progress-current/crafted-quality-owned-retail-red-20261014T014209924708Z/runtime-crafted-itembutton-red-2g/result.json",
+      "result": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/runtime-crafted-itembutton-red-2g/result.json",
       "checks": {
         "closure12": true,
         "nil19": true,
@@ -1954,7 +1954,7 @@
       "launcher_exit": 101,
       "wait": "completed; recorded main code=exited status=101/n/a",
       "source_revision": "6c38a82739dbf27fc58c3c801c32a0f0fc98d21c",
-      "result": "widget-discrete-progress-current/crafted-quality-owned-retail-red-20261014T014209924708Z/runtime-crafted-owned-red-2g/result.json",
+      "result": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/runtime-crafted-owned-red-2g/result.json",
       "boundary": "First positive table-type assertion FAIL; actual query payload unprinted. Exact fields/arity, remaining aliases, lifecycle and later security/denial/recovery unreached."
     }
   ],
@@ -1967,92 +1967,92 @@
   },
   "line_references": [
     {
-      "path": "widget-discrete-progress-current/crafted-quality-owned-ptr-red-20261014T014829545770Z/runtime-crafted-itembutton-red-2g/stderr",
+      "path": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/runtime-crafted-itembutton-red-2g/stderr",
       "line": 90,
       "text": "[crafted consumer full missing requirements] Blizzard_SharedXML: [MissingRequirement { kind: CNamespace { namespace: \"C_Reveal\" }, attribution: LoadDiagnosticAttribution { addon_name: \"Blizzard_SharedXML\", environment: Public, source: Some(\"DebugBarManager.lua\"), line: Some(106) } }]"
     },
     {
-      "path": "widget-discrete-progress-current/crafted-quality-owned-ptr-red-20261014T014829545770Z/runtime-crafted-itembutton-red-2g/stderr",
+      "path": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/runtime-crafted-itembutton-red-2g/stderr",
       "line": 98,
       "text": "[crafted consumer boundary] actual public sibling and empty-input baseline"
     },
     {
-      "path": "widget-discrete-progress-current/crafted-quality-owned-ptr-red-20261014T014829545770Z/runtime-crafted-itembutton-red-2g/stderr",
+      "path": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/runtime-crafted-itembutton-red-2g/stderr",
       "line": 99,
       "text": "[DEFAULT_CHAT_FRAME] [crafted consumer provenance] Lua @Interface/AddOns/Blizzard_ItemButton/Mainline/ItemButtonTemplate.lua 323 350"
     },
     {
-      "path": "widget-discrete-progress-current/crafted-quality-owned-ptr-red-20261014T014829545770Z/runtime-crafted-itembutton-red-2g/stderr",
+      "path": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/runtime-crafted-itembutton-red-2g/stderr",
       "line": 100,
       "text": "[DEFAULT_CHAT_FRAME] [crafted actual reagent baseline] nil nil"
     },
     {
-      "path": "widget-discrete-progress-current/crafted-quality-owned-ptr-red-20261014T014829545770Z/runtime-crafted-itembutton-red-2g/stderr",
+      "path": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/runtime-crafted-itembutton-red-2g/stderr",
       "line": 101,
       "text": "[DEFAULT_CHAT_FRAME] [crafted actual empty-input baseline] nil nil"
     },
     {
-      "path": "widget-discrete-progress-current/crafted-quality-owned-ptr-red-20261014T014829545770Z/runtime-crafted-itembutton-red-2g/stderr",
+      "path": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/runtime-crafted-itembutton-red-2g/stderr",
       "line": 105,
       "text": "[crafted consumer boundary] original handler positive-map RED boundary"
     },
     {
-      "path": "widget-discrete-progress-current/crafted-quality-owned-ptr-red-20261014T014829545770Z/runtime-crafted-itembutton-red-2g/stderr",
+      "path": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/runtime-crafted-itembutton-red-2g/stderr",
       "line": 106,
       "text": "[DEFAULT_CHAT_FRAME] [crafted positive host input] 900001 professions-icon-quality-tier3-small"
     },
     {
-      "path": "widget-discrete-progress-current/crafted-quality-owned-ptr-red-20261014T014829545770Z/runtime-crafted-itembutton-red-2g/stderr",
+      "path": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/runtime-crafted-itembutton-red-2g/stderr",
       "line": 107,
       "text": "[DEFAULT_CHAT_FRAME] [crafted original positive effects] nil false false"
     },
     {
-      "path": "widget-discrete-progress-current/crafted-quality-owned-ptr-red-20261014T014829545770Z/runtime-crafted-itembutton-red-2g/stderr",
+      "path": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/runtime-crafted-itembutton-red-2g/stderr",
       "line": 112,
       "text": "thread 'crafted_quality_item_button::crafted_quality_original_item_button_observes_supplied_quality_and_visibility' (3029837) panicked at <PRIVATE_HOME>/Projects/wow/wow-ui-sim/tests/crafted_quality_item_button.rs:172:35:"
     },
     {
-      "path": "widget-discrete-progress-current/crafted-quality-owned-retail-red-20261014T014209924708Z/runtime-crafted-itembutton-red-2g/stderr",
+      "path": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/runtime-crafted-itembutton-red-2g/stderr",
       "line": 90,
       "text": "[crafted consumer full missing requirements] Blizzard_SharedXML: [MissingRequirement { kind: CNamespace { namespace: \"C_Reveal\" }, attribution: LoadDiagnosticAttribution { addon_name: \"Blizzard_SharedXML\", environment: Public, source: Some(\"DebugBarManager.lua\"), line: Some(106) } }]"
     },
     {
-      "path": "widget-discrete-progress-current/crafted-quality-owned-retail-red-20261014T014209924708Z/runtime-crafted-itembutton-red-2g/stderr",
+      "path": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/runtime-crafted-itembutton-red-2g/stderr",
       "line": 98,
       "text": "[crafted consumer boundary] actual public sibling and empty-input baseline"
     },
     {
-      "path": "widget-discrete-progress-current/crafted-quality-owned-retail-red-20261014T014209924708Z/runtime-crafted-itembutton-red-2g/stderr",
+      "path": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/runtime-crafted-itembutton-red-2g/stderr",
       "line": 99,
       "text": "[DEFAULT_CHAT_FRAME] [crafted consumer provenance] Lua @Interface/AddOns/Blizzard_ItemButton/Mainline/ItemButtonTemplate.lua 323 350"
     },
     {
-      "path": "widget-discrete-progress-current/crafted-quality-owned-retail-red-20261014T014209924708Z/runtime-crafted-itembutton-red-2g/stderr",
+      "path": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/runtime-crafted-itembutton-red-2g/stderr",
       "line": 100,
       "text": "[DEFAULT_CHAT_FRAME] [crafted actual reagent baseline] nil nil"
     },
     {
-      "path": "widget-discrete-progress-current/crafted-quality-owned-retail-red-20261014T014209924708Z/runtime-crafted-itembutton-red-2g/stderr",
+      "path": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/runtime-crafted-itembutton-red-2g/stderr",
       "line": 101,
       "text": "[DEFAULT_CHAT_FRAME] [crafted actual empty-input baseline] nil nil"
     },
     {
-      "path": "widget-discrete-progress-current/crafted-quality-owned-retail-red-20261014T014209924708Z/runtime-crafted-itembutton-red-2g/stderr",
+      "path": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/runtime-crafted-itembutton-red-2g/stderr",
       "line": 105,
       "text": "[crafted consumer boundary] original handler positive-map RED boundary"
     },
     {
-      "path": "widget-discrete-progress-current/crafted-quality-owned-retail-red-20261014T014209924708Z/runtime-crafted-itembutton-red-2g/stderr",
+      "path": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/runtime-crafted-itembutton-red-2g/stderr",
       "line": 106,
       "text": "[DEFAULT_CHAT_FRAME] [crafted positive host input] 900001 professions-icon-quality-tier3-small"
     },
     {
-      "path": "widget-discrete-progress-current/crafted-quality-owned-retail-red-20261014T014209924708Z/runtime-crafted-itembutton-red-2g/stderr",
+      "path": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/runtime-crafted-itembutton-red-2g/stderr",
       "line": 107,
       "text": "[DEFAULT_CHAT_FRAME] [crafted original positive effects] nil false false"
     },
     {
-      "path": "widget-discrete-progress-current/crafted-quality-owned-retail-red-20261014T014209924708Z/runtime-crafted-itembutton-red-2g/stderr",
+      "path": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/runtime-crafted-itembutton-red-2g/stderr",
       "line": 112,
       "text": "thread 'crafted_quality_item_button::crafted_quality_original_item_button_observes_supplied_quality_and_visibility' (2998933) panicked at <PRIVATE_HOME>/Projects/wow/wow-ui-sim/tests/crafted_quality_item_button.rs:172:35:"
     }
@@ -2066,7 +2066,7 @@
         "--name-only",
         "51b64e72fd0ad5891135b6220441aa82eac0f492",
         "--",
-        "data/patch-api/evidence/crafted-item-quality-host-records-2026-10-13/red-current"
+        "data/patch-api/evidence/crafted-host-20261013/red-current"
       ],
       "scope": "<PRIVATE_HOME>/Projects/wow/wow-ui-sim",
       "exit_code": 0

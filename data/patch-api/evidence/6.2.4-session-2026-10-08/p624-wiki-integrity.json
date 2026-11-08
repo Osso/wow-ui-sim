@@ -3,12 +3,12 @@
   "files": [
     {
       "path": "docs/wiki/index.md",
-      "sha256": "1dfe62806f76247e6e5f38e58f4d957321a7bcd1ebf8f3c67943ce379d32239e",
+      "sha256": "af810fd4b34a6d628ec1ace73abe0fc680ca25d0e83554c7419cd12d2f3ea8e3",
       "lines": 2671
     },
     {
       "path": "docs/wiki/log.md",
-      "sha256": "f6587541bf095ef0e0f3ecaaabd366e66bc3bf5b985b0476283f84115ee6c622",
+      "sha256": "e34db042a0a34765898b0ca5cf1e86d552ed810a9edf98a820767478430f8de9",
       "lines": 394
     }
   ]

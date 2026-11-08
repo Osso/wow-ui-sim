@@ -4,8 +4,8 @@
 
 PASS for the seven selected simulator cases and their explicitly bounded assertions. Not native parity, parent-goal completion, full-suite verification, or binary/source authentication.
 
-Evidence root (R): `[PRIVATE_EVIDENCE]/verification/widget-discrete-progress-current/widget-spacer-ptr-producer-green-20261015T001307838834Z/runtime-spacer-seven-first-ptr`.
-Source root (S): `[PRIVATE_EVIDENCE]/verification/widget-discrete-progress-current/widget-spacer-ptr-producer-green-20261015T001307838834Z/source`.
+Evidence root (R): `[PRIVATE_EVIDENCE]/verif/wdp/widget-spacer-ptr-producer-green-20261015T001307838834Z/runtime-spacer-seven-first-ptr`.
+Source root (S): `[PRIVATE_EVIDENCE]/verif/wdp/widget-spacer-ptr-producer-green-20261015T001307838834Z/source`.
 Cache root (C): `[PRIVATE_CACHE]/blizzard-ui/ptr/AddOns`.
 
 Read `[PRIVATE_AGENT_CONFIG]/skills/verify/SKILL.md`. Per explicit assignment, audited saved runtime and relevant text-only tests/setup directly; no delegation, commands, builds, test execution, reruns, binary/library/archive reads, or new hashes. Python filesystem operations used only to save this private report and check permissions. No repository changes.

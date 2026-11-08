@@ -94,7 +94,7 @@
   "assertion_label": "supplied dimensions versus actual consumer bounds",
   "parent_string_comparison": "NOT PERFORMED",
   "formatter": "not run; current supplied layout counted",
-  "prior_report_reused": "[PRIVATE_EVIDENCE]/verification/spacer-populated-tests-source-current/report.md",
+  "prior_report_reused": "[PRIVATE_EVIDENCE]/verif/spacer-populated-tests-source-current/report.md",
   "passive_authored_cases": 7,
   "case_status": "UNEXECUTED",
   "current_behavior_proof": false,

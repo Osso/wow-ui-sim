@@ -1,6 +1,6 @@
 {
   "scope": "Existing PTR actual FIRST-call RED only",
-  "source_bundle": "verification/widget-discrete-progress-current/crafted-quality-ptr-api-red-retry1-20261014T013200049067Z",
+  "source_bundle": "verif/wdp/crafted-quality-ptr-api-red-retry1-20261014T013200049067Z",
   "source_revision": "9cc2112267ea139e3e13408a16787edd53c232dd",
   "test_delta_revision": "8b46433a4",
   "current_revision_observed": "b03eaee384d9b90e2dd675a16572a588c0bc465f",
@@ -62,11 +62,11 @@
     "source_revision": "9cc2112267ea139e3e13408a16787edd53c232dd",
     "production_delta_revision": "8b46433a4",
     "scope": "PTR requirednil+VMsecretnil2TESTONLY nocraftedproducer; freshretry fullintegrationj4 9GiB8GiB sameparentlimits; prior012904denialzeroLaunchpreserved; later9ccpublicationonlychanges",
-    "git_status": "?? .code-index.db\n?? verification/\n"
+    "git_status": "?? .code-index.db\n?? verif/\n"
   },
   "source_scope_record": {
     "source": "9cc2112267ea139e3e13408a16787edd53c232dd",
-    "runtime_source_mount": "verification/widget-discrete-progress-current/crafted-quality-ptr-api-red-retry1-20261014T013200049067Z/source",
+    "runtime_source_mount": "verif/wdp/crafted-quality-ptr-api-red-retry1-20261014T013200049067Z/source",
     "tracked_archive_paths": [
       "Cargo.toml",
       "Cargo.lock",
@@ -100,9 +100,9 @@
         "-p",
         "KillMode=control-group",
         "-p",
-        "StandardOutput=file:verification/widget-discrete-progress-current/crafted-quality-ptr-api-red-retry1-20261014T013200049067Z/runtime-crafted-required-api-red-2g/stdout",
+        "StandardOutput=file:verif/wdp/crafted-quality-ptr-api-red-retry1-20261014T013200049067Z/runtime-crafted-required-api-red-2g/stdout",
         "-p",
-        "StandardError=file:verification/widget-discrete-progress-current/crafted-quality-ptr-api-red-retry1-20261014T013200049067Z/runtime-crafted-required-api-red-2g/stderr",
+        "StandardError=file:verif/wdp/crafted-quality-ptr-api-red-retry1-20261014T013200049067Z/runtime-crafted-required-api-red-2g/stderr",
         "--working-directory=/home/USER/Projects/wow/wow-ui-sim",
         "/usr/bin/timeout",
         "--signal=TERM",
@@ -115,7 +115,7 @@
         "/",
         "/",
         "--ro-bind",
-        "verification/widget-discrete-progress-current/crafted-quality-ptr-api-red-retry1-20261014T013200049067Z/source",
+        "verif/wdp/crafted-quality-ptr-api-red-retry1-20261014T013200049067Z/source",
         "/home/USER/Projects/wow/wow-ui-sim",
         "--ro-bind",
         "target",
@@ -137,7 +137,7 @@
         "--setenv",
         "WOW_SIM_NO_SOUND",
         "1",
-        "verification/widget-discrete-progress-current/crafted-quality-ptr-api-red-retry1-20261014T013200049067Z/artifacts/deps/integration-020202567c2bd5a4",
+        "verif/wdp/crafted-quality-ptr-api-red-retry1-20261014T013200049067Z/artifacts/deps/integration-020202567c2bd5a4",
         "crafted_quality_api::crafted_quality_required_item_info_errors_have_context",
         "--nocapture",
         "--test-threads=1"
@@ -208,9 +208,9 @@
         "-p",
         "KillMode=control-group",
         "-p",
-        "StandardOutput=file:verification/widget-discrete-progress-current/crafted-quality-ptr-api-red-retry1-20261014T013200049067Z/runtime-crafted-secret-api-red-2g/stdout",
+        "StandardOutput=file:verif/wdp/crafted-quality-ptr-api-red-retry1-20261014T013200049067Z/runtime-crafted-secret-api-red-2g/stdout",
         "-p",
-        "StandardError=file:verification/widget-discrete-progress-current/crafted-quality-ptr-api-red-retry1-20261014T013200049067Z/runtime-crafted-secret-api-red-2g/stderr",
+        "StandardError=file:verif/wdp/crafted-quality-ptr-api-red-retry1-20261014T013200049067Z/runtime-crafted-secret-api-red-2g/stderr",
         "--working-directory=/home/USER/Projects/wow/wow-ui-sim",
         "/usr/bin/timeout",
         "--signal=TERM",
@@ -223,7 +223,7 @@
         "/",
         "/",
         "--ro-bind",
-        "verification/widget-discrete-progress-current/crafted-quality-ptr-api-red-retry1-20261014T013200049067Z/source",
+        "verif/wdp/crafted-quality-ptr-api-red-retry1-20261014T013200049067Z/source",
         "/home/USER/Projects/wow/wow-ui-sim",
         "--ro-bind",
         "target",
@@ -245,7 +245,7 @@
         "--setenv",
         "WOW_SIM_NO_SOUND",
         "1",
-        "verification/widget-discrete-progress-current/crafted-quality-ptr-api-red-retry1-20261014T013200049067Z/artifacts/deps/integration-020202567c2bd5a4",
+        "verif/wdp/crafted-quality-ptr-api-red-retry1-20261014T013200049067Z/artifacts/deps/integration-020202567c2bd5a4",
         "crafted_quality_api::crafted_quality_secret_nil_authenticates_before_required_validation",
         "--nocapture",
         "--test-threads=1"
@@ -303,7 +303,7 @@
     "status": "PASS",
     "sha256_matches_seal": true,
     "hash_reads": 1,
-    "path": "verification/widget-discrete-progress-current/crafted-quality-ptr-api-red-retry1-20261014T013200049067Z/artifacts/deps/integration-020202567c2bd5a4",
+    "path": "verif/wdp/crafted-quality-ptr-api-red-retry1-20261014T013200049067Z/artifacts/deps/integration-020202567c2bd5a4",
     "stat_before": {
       "st_dev": 66306,
       "st_ino": 148408268,
@@ -319,7 +319,7 @@
     "digest": "ab32a4174443cdc6efe7399d76eb49dd7c599e17ac055756a1570e96a0c42229"
   },
   "initial_attempt": {
-    "path": "verification/widget-discrete-progress-current/crafted-quality-ptr-api-red-20261014T012904034210Z",
+    "path": "verif/wdp/crafted-quality-ptr-api-red-20261014T012904034210Z",
     "admission": {
       "utc": "2026-10-14T01:29:04.185791+00:00",
       "raw": {

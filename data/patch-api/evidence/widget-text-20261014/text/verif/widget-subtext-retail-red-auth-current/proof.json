@@ -95,7 +95,7 @@
     "source_revision": "0a3a5ac207e0b7698f80e61e548907346c80880c",
     "production_delta_revision": "39a454d09",
     "scope": "TextWithSubtext27 populated RED candidate: eight default-profile primary cases if security feature enabled; no getter implementation and no runtime evidence yet",
-    "git_status": "?? .code-index.db\n?? handoff/\n?? state/\n?? verification/\n"
+    "git_status": "?? .code-index.db\n?? handoff/\n?? state/\n?? verif/\n"
   },
   "submission": {
     "source": "0a3a5ac207e0b7698f80e61e548907346c80880c",

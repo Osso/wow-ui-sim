@@ -2,7 +2,7 @@
   "audit_date": "2026-10-14",
   "mode": "saved-artifact/no-run compile audit",
   "verdict": "COMPILE_PASS_ONLY",
-  "evidence_directory": "[PRIVATE_EVIDENCE]/verification/widget-discrete-progress-current/widget-spacer-selector-retail-red-20261014T224550944881Z",
+  "evidence_directory": "[PRIVATE_EVIDENCE]/verif/wdp/widget-spacer-selector-retail-red-20261014T224550944881Z",
   "full_text_files_read": {
     "compile.stdout": 574432,
     "compile.stderr": 1376,
@@ -112,9 +112,9 @@
       "-p",
       "KillMode=control-group",
       "-p",
-      "StandardOutput=append:[PRIVATE_EVIDENCE]/verification/widget-discrete-progress-current/widget-spacer-selector-retail-red-20261014T224550944881Z/compile.stdout",
+      "StandardOutput=append:[PRIVATE_EVIDENCE]/verif/wdp/widget-spacer-selector-retail-red-20261014T224550944881Z/compile.stdout",
       "-p",
-      "StandardError=append:[PRIVATE_EVIDENCE]/verification/widget-discrete-progress-current/widget-spacer-selector-retail-red-20261014T224550944881Z/compile.stderr",
+      "StandardError=append:[PRIVATE_EVIDENCE]/verif/wdp/widget-spacer-selector-retail-red-20261014T224550944881Z/compile.stderr",
       "--working-directory=[SIM_REPO]",
       "/usr/bin/env",
       "RUSTC=/usr/bin/rustc",
@@ -137,7 +137,7 @@
     "source_revision": "1ffab60b44706925b9b5cf6807681661168bf2f6",
     "production_delta_revision": "1ffab60b4",
     "scope": "FirstSpacer requirednumber selector compilation, no productionmodel/getter",
-    "git_status": " M docs/specs/ui-widget-text-with-subtext.md\n?? .code-index.db\n?? handoff/\n?? state/\n?? verification/\n"
+    "git_status": " M docs/specs/ui-widget-text-with-subtext.md\n?? .code-index.db\n?? handoff/\n?? state/\n?? verif/\n"
   },
   "toolchain": {
     "cargo": "cargo 1.99.0 (5f94df478 2026-08-27) (Arch Linux rust 1:1.99.0-1)\n",
@@ -190,7 +190,7 @@
     "retry_permitted_compile": true
   },
   "prior_source_gate": {
-    "directory": "[PRIVATE_EVIDENCE]/verification/spacer-first-selector-source-current",
+    "directory": "[PRIVATE_EVIDENCE]/verif/spacer-first-selector-source-current",
     "proof": {
       "requested_commit": "1ffab60b44706925b9b5cf6807681661168bf2f6",
       "revision_authenticated": false,

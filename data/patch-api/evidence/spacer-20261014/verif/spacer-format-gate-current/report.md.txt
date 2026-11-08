@@ -2,7 +2,7 @@
 
 ## Evidence and scope
 
-Audited only saved evidence under `[PRIVATE_EVIDENCE]/verification/spacer-format-current`: `argv.json`, `launcher.txt`, `result.json`, and stdout/stderr file metadata. No verification commands, tests, builds, binaries, archives, hashes, or delegation were run/read. Filesystem-only operations created this private report and checked empty-stream sizes.
+Audited only saved evidence under `[PRIVATE_EVIDENCE]/verif/spacer-format-current`: `argv.json`, `launcher.txt`, `result.json`, and stdout/stderr file metadata. No verification commands, tests, builds, binaries, archives, hashes, or delegation were run/read. Filesystem-only operations created this private report and checked empty-stream sizes.
 
 - `result.json` records source `9427d0a80e7af7ad206f56c7e63fabd0922ac164` and exit `0`.
 - `argv.json` records actual `/usr/bin/cargo fmt --check`, not a compilation or behavior check.

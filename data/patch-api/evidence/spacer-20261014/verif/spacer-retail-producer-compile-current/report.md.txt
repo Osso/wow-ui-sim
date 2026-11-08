@@ -5,7 +5,7 @@ PASS: terminal no-run compilation, exit 0; Cargo build-finished success=true. Ru
 ## Observation and provenance
 Waited 120 seconds without project workload, then exactly one systemctl sample at 2026-10-15T00:02:17.356824+00:00; systemctl exit 0, stderr empty. Active/exited is terminal (RemainAfterExit=yes), not running.
 
-Epoch: `[PRIVATE_EVIDENCE]/verification/widget-discrete-progress-current/widget-spacer-retail-producer-green-20261014T235938300530Z`
+Epoch: `[PRIVATE_EVIDENCE]/verif/wdp/widget-spacer-retail-producer-green-20261014T235938300530Z`
 Recorded source: d5e3358a30ec63199e35d9bdc6481ab0cd061670; production delta b12f62435. Attribution is from saved metadata, not a new source-content verification.
 
 ```text

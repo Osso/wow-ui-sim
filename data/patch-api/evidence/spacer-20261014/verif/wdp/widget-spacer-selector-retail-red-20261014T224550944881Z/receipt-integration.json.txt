@@ -1,6 +1,6 @@
 {
   "status": "PASS",
-  "path": "[PRIVATE_EVIDENCE]/verification/widget-discrete-progress-current/widget-spacer-selector-retail-red-20261014T224550944881Z/artifacts/deps/integration-9f07e4a55f2bbbf7",
+  "path": "[PRIVATE_EVIDENCE]/verif/wdp/widget-spacer-selector-retail-red-20261014T224550944881Z/artifacts/deps/integration-9f07e4a55f2bbbf7",
   "sha256": "bd2f96dcdf4d6a0ea189275ca7889eb0836ad30734df8424839f91f2866db28a",
   "sha256_matches_seal": true,
   "hash_reads": 1,

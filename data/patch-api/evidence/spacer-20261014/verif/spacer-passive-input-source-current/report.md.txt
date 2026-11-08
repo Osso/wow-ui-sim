@@ -52,7 +52,7 @@ Enums use numeric u32 host representation; this is not exhaustive enum-value val
 Audited every changed Rust line in manager.rs, feed.rs, inputs.rs, spacer_record.rs against rust-readability skill: no introduced violations. DTO fields are explicit, imports/export are direct, variant/type arm names explain enum value22, and insertion mutation is visible under supply_visualization(&mut SimState). No added nesting, conditionals, parameter overload, state accumulation, suppression, opaque effects or substantive duplicate function bodies. Existing long match body is not newly introduced complexity; no unrelated refactor required. No metrics/lint/formatter command run. Main's reported formatter exit0 is caller evidence only, not independently rechecked and not a compilation claim.
 
 ## Historical first behavioral RED — independently reported, not rerun
-Read report.md and proof.json directly from [PRIVATE_EVIDENCE]/verification/spacer-first-selector-genuine-red-current.
+Read report.md and proof.json directly from [PRIVATE_EVIDENCE]/verif/spacer-first-selector-genuine-red-current.
 Source label: 1ffab60b44706925b9b5cf6807681661168bf2f6 (before passive model).
 Report verdict GENUINE_REQUIRED_SELECTOR_RED: one unique test, 0 PASS/1 FAIL, raw exit101; two nested summaries NONADDITIVE. Callable getter assertion passed. First omitted-selector pcall succeeded, then assert(not ok) failed with exact message "Spacer accepted non-number selector case 1" at saved fixture:27. Return value unknown. Seven later invalid forms and diagnostic-text predicate were unreached. This audit consumes the independent report; it does not authenticate saved binary/source identity or reread runtime/compile streams. Historical no-run compilation is not current compilation evidence.
 

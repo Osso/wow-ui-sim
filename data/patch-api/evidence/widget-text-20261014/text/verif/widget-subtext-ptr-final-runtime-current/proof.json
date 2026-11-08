@@ -1838,7 +1838,7 @@
       "source_revision": "62f115d262613a848180143d6b30e2a0b3eb63b0",
       "production_delta_revision": "e37f5426a",
       "scope": "PTRsamecomplete27producer/testtagcontract source62, profilePTR andsecurity1210; compiled8new+3oldcontrols intended; no PTRruntimeclaim",
-      "git_status": " M docs/specs/ui-widget-text-with-subtext.md\n?? .code-index.db\n?? handoff/\n?? state/\n?? verification/\n"
+      "git_status": " M docs/specs/ui-widget-text-with-subtext.md\n?? .code-index.db\n?? handoff/\n?? state/\n?? verif/\n"
     },
     "source-scope.json": {
       "source": "62f115d262613a848180143d6b30e2a0b3eb63b0",

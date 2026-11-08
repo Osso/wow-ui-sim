@@ -9,10 +9,10 @@ PASS for the two added documentation claims, within their explicitly limited sav
 Read `[PRIVATE_AGENT_CONFIG]/skills/verify/SKILL.md`; acted as verifier without delegation. Read-only `git show --format=fuller --stat --patch 918d1609f` identifies full commit `918d1609f642b138eb3330b610a24d078d0ef861`: exactly two added lines in `docs/specs/ui-widget-spacer.md`, no code changes.
 
 Read both supplied reports completely:
-- `[PRIVATE_EVIDENCE]/verification/spacer-owning-pressure-abort-current/report.md`
-- `[PRIVATE_EVIDENCE]/verification/spacer-retail-normal-artifact-current/report.md`
+- `[PRIVATE_EVIDENCE]/verif/spacer-owning-pressure-abort-current/report.md`
+- `[PRIVATE_EVIDENCE]/verif/spacer-retail-normal-artifact-current/report.md`
 
-Read complete saved text in both named owning epochs under `[PRIVATE_EVIDENCE]/verification/widget-discrete-progress-current/`: 14 text files / 584327 bytes in the first; 17 / 596804 bytes in the second. Parsed every Cargo stdout JSON record, every watcher sample, and all saved JSON, including the entire seal/fingerprint (52 dependency entries). No binaries/archives, executable content, source packs, builds/tests, runtime commands, live-state probes, producer reruns, canonical edits, or delegation. One initial Python summary failed before reading evidence because variables were unavailable across evaluations. One verbose inspection display was truncated; its saved output and bounded complete-file summaries supplied the omitted evidence, without rerunning any producer command.
+Read complete saved text in both named owning epochs under `[PRIVATE_EVIDENCE]/verif/wdp/`: 14 text files / 584327 bytes in the first; 17 / 596804 bytes in the second. Parsed every Cargo stdout JSON record, every watcher sample, and all saved JSON, including the entire seal/fingerprint (52 dependency entries). No binaries/archives, executable content, source packs, builds/tests, runtime commands, live-state probes, producer reruns, canonical edits, or delegation. One initial Python summary failed before reading evidence because variables were unavailable across evaluations. One verbose inspection display was truncated; its saved output and bounded complete-file summaries supplied the omitted evidence, without rerunning any producer command.
 
 ## Exact added bullet 1 — PASS
 

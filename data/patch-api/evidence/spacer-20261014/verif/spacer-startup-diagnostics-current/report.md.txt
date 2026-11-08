@@ -10,7 +10,7 @@ Audit read `[PRIVATE_AGENT_CONFIG]/skills/verify/SKILL.md`; performed saved-text
 
 ## Evidence locations
 
-Base: `[PRIVATE_EVIDENCE]/verification/widget-discrete-progress-current`.
+Base: `[PRIVATE_EVIDENCE]/verif/widget-discrete-progress-current`.
 
 - **R:** `widget-spacer-retail-producer-green-20261014T235938300530Z/runtime-spacer-retail-startup-warnings-1cpu-2g`.
 - **P:** `widget-spacer-ptr-producer-green-20261015T001307838834Z/runtime-spacer-ptr-startup-warnings-1cpu-2g`.

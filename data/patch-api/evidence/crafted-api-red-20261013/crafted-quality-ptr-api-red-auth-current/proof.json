@@ -3,14 +3,14 @@
   "scope": "Existing PTR integration test compilation only; new sealed integration copy authenticated once. No runtime RED or current-HEAD binary claim.",
   "source_revision": "9cc2112267ea139e3e13408a16787edd53c232dd",
   "production_delta_revision": "8b46433a4",
-  "evidence_directory": "verification/widget-discrete-progress-current/crafted-quality-ptr-api-red-retry1-20261014T013200049067Z",
+  "evidence_directory": "verif/wdp/crafted-quality-ptr-api-red-retry1-20261014T013200049067Z",
   "compile": {
-    "stdout_path": "verification/widget-discrete-progress-current/crafted-quality-ptr-api-red-retry1-20261014T013200049067Z/compile.stdout",
-    "stderr_path": "verification/widget-discrete-progress-current/crafted-quality-ptr-api-red-retry1-20261014T013200049067Z/compile.stderr",
-    "terminal_path": "verification/widget-discrete-progress-current/crafted-quality-ptr-api-red-retry1-20261014T013200049067Z/compile-terminal.txt",
-    "result_path": "verification/widget-discrete-progress-current/crafted-quality-ptr-api-red-retry1-20261014T013200049067Z/compile-result.json",
-    "submission_path": "verification/widget-discrete-progress-current/crafted-quality-ptr-api-red-retry1-20261014T013200049067Z/submission.json",
-    "admission_path": "verification/widget-discrete-progress-current/crafted-quality-ptr-api-red-retry1-20261014T013200049067Z/admission.json",
+    "stdout_path": "verif/wdp/crafted-quality-ptr-api-red-retry1-20261014T013200049067Z/compile.stdout",
+    "stderr_path": "verif/wdp/crafted-quality-ptr-api-red-retry1-20261014T013200049067Z/compile.stderr",
+    "terminal_path": "verif/wdp/crafted-quality-ptr-api-red-retry1-20261014T013200049067Z/compile-terminal.txt",
+    "result_path": "verif/wdp/crafted-quality-ptr-api-red-retry1-20261014T013200049067Z/compile-result.json",
+    "submission_path": "verif/wdp/crafted-quality-ptr-api-red-retry1-20261014T013200049067Z/submission.json",
+    "admission_path": "verif/wdp/crafted-quality-ptr-api-red-retry1-20261014T013200049067Z/admission.json",
     "json_records": 741,
     "record_counts": {
       "compiler-artifact": 665,
@@ -95,13 +95,13 @@
     }
   },
   "authentication": {
-    "seal_path": "verification/widget-discrete-progress-current/crafted-quality-ptr-api-red-retry1-20261014T013200049067Z/seal-integration.json",
-    "receipt_path": "verification/widget-discrete-progress-current/crafted-quality-ptr-api-red-retry1-20261014T013200049067Z/receipt-integration.json",
+    "seal_path": "verif/wdp/crafted-quality-ptr-api-red-retry1-20261014T013200049067Z/seal-integration.json",
+    "receipt_path": "verif/wdp/crafted-quality-ptr-api-red-retry1-20261014T013200049067Z/receipt-integration.json",
     "receipt": {
       "status": "PASS",
       "sha256_matches_seal": true,
       "hash_reads": 1,
-      "path": "verification/widget-discrete-progress-current/crafted-quality-ptr-api-red-retry1-20261014T013200049067Z/artifacts/deps/integration-020202567c2bd5a4",
+      "path": "verif/wdp/crafted-quality-ptr-api-red-retry1-20261014T013200049067Z/artifacts/deps/integration-020202567c2bd5a4",
       "stat_before": {
         "st_dev": 66306,
         "st_ino": 148408268,
@@ -123,8 +123,8 @@
     "pre_post_stats_match_seal": true
   },
   "prior_denial": {
-    "directory": "verification/widget-discrete-progress-current/crafted-quality-ptr-api-red-20261014T012904034210Z",
-    "admission_path": "verification/widget-discrete-progress-current/crafted-quality-ptr-api-red-20261014T012904034210Z/admission.json",
+    "directory": "verif/wdp/crafted-quality-ptr-api-red-20261014T012904034210Z",
+    "admission_path": "verif/wdp/crafted-quality-ptr-api-red-20261014T012904034210Z/admission.json",
     "allowed": false,
     "submission_absent": true,
     "recorded_zero_launch_denial_retained": true

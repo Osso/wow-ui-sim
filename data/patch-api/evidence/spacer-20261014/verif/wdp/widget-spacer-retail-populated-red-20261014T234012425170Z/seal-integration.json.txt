@@ -25,7 +25,7 @@
     "rodio",
     "sound"
   ],
-  "sealed_path": "[PRIVATE_EVIDENCE]/verification/widget-discrete-progress-current/widget-spacer-retail-populated-red-20261014T234012425170Z/artifacts/deps/integration-9f07e4a55f2bbbf7",
+  "sealed_path": "[PRIVATE_EVIDENCE]/verif/wdp/widget-spacer-retail-populated-red-20261014T234012425170Z/artifacts/deps/integration-9f07e4a55f2bbbf7",
   "sha256": "5e4822f52f2759d6a6a65a3d9c2cd06f2f7951c20f03b981420be8ffe4b191d9",
   "stat": {
     "st_dev": 66306,

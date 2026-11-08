@@ -20,7 +20,7 @@
   "getter_query_registration_added": false,
   "manual_rust_readability": "no introduced violations; metrics not run",
   "historical_red": {
-    "report_root": "[PRIVATE_EVIDENCE]/verification/spacer-first-selector-genuine-red-current",
+    "report_root": "[PRIVATE_EVIDENCE]/verif/spacer-first-selector-genuine-red-current",
     "source_label": "1ffab60b44706925b9b5cf6807681661168bf2f6",
     "unique_failed_tests": 1,
     "raw_exit": 101,

@@ -34,45 +34,45 @@ Normal observations disable CASC/sound/third-party addons/ordinary SavedVariable
 
 | Number | Candidate path | Source role | Primary source revision |
 |---|---|---|---|
-| 01 | `text/verification/widget-subtext-populated-red-current/report.md` | populated RED outcome and exact failure boundaries | `0a3a5ac207e0b7698f80e61e548907346c80880c` |
-| 02 | `text/verification/widget-subtext-populated-red-current/proof.json` | full nested RED stdout/stderr/argv/result/admission and case classifications | `0a3a5ac207e0b7698f80e61e548907346c80880c` |
-| 03 | `text/verification/widget-subtext-retail-partial-runtime-current/report.md` | first producer failure, setup/auth-copy correction, complete normal Retail observation | `e37f5426a1da8d721b0ab3ff0341877f59100c02` |
-| 04 | `text/verification/widget-subtext-retail-partial-runtime-current/proof.json` | full nested partial-runtime and setup-correction evidence | `e37f5426a1da8d721b0ab3ff0341877f59100c02` |
-| 05 | `text/verification/widget-subtext-retail-final-runtime-current/report.md` | final Retail 11-case result, retained historical failures, status-schema prelaunch correction, limits | `62f115d262613a848180143d6b30e2a0b3eb63b0` |
-| 06 | `text/verification/widget-subtext-retail-final-runtime-current/proof.json` | full nested Retail evidence, history, controls, normal 219-line observation, exact output and argv | `62f115d262613a848180143d6b30e2a0b3eb63b0` |
-| 07 | `text/verification/widget-subtext-ptr-final-runtime-current/report.md` | PTR 11-case and normal diagnostics, historical Retail separation, cache/WTF limitations | `62f115d262613a848180143d6b30e2a0b3eb63b0` |
-| 08 | `text/verification/widget-subtext-ptr-final-runtime-current/proof.json` | full nested PTR source text, outputs, invocation/auth metadata, related history and normal diagnostic classification | `62f115d262613a848180143d6b30e2a0b3eb63b0` |
-| 09 | `text/verification/widget-subtext-final-checks-current/report.md` | format/default-check outcomes, six deprecations, resource-boundary caveats, readability result | `62f115d262613a848180143d6b30e2a0b3eb63b0` |
-| 10 | `text/verification/widget-subtext-final-checks-current/proof.json` | complete raw check submissions, terminal metadata, warning text, source-text inspection and exact limits | `62f115d262613a848180143d6b30e2a0b3eb63b0` |
-| 11 | `text/verification/widget-subtext-owning-before-runtime-current/report.md` | owning Retail sweep FAIL and exact delta/counts/setup limits | `62f115d262613a848180143d6b30e2a0b3eb63b0` |
-| 12 | `text/verification/widget-subtext-owning-before-runtime-current/proof.json` | complete 416-row decoded JSON, all expected/observed sets, stdout/stderr/argv/admission/auth/setup/terminal evidence | `62f115d262613a848180143d6b30e2a0b3eb63b0` |
-| 13 | `text/verification/widget-subtext-retail-red-auth-current/report.md` | supporting executable-auth scope and boundaries | `0a3a5ac207e0b7698f80e61e548907346c80880c` |
-| 14 | `text/verification/widget-subtext-retail-red-auth-current/proof.json` | supporting original Retail RED receipt/provenance controls | `0a3a5ac207e0b7698f80e61e548907346c80880c` |
-| 15 | `text/verification/widget-subtext-retail-diagnostic-auth-current/report.md` | supporting diagnostic failure and no-run authentication boundary | `e948624b0b3691b626c49369f5f93b7d2c2c1ae6` |
-| 16 | `text/verification/widget-subtext-retail-diagnostic-auth-current/proof.json` | supporting diagnostic receipt/correction control evidence | `e948624b0b3691b626c49369f5f93b7d2c2c1ae6` |
-| 17 | `text/verification/widget-subtext-ptr-auth-current/report.md` | supporting PTR auth scope | `62f115d262613a848180143d6b30e2a0b3eb63b0` |
-| 18 | `text/verification/widget-subtext-ptr-auth-current/proof.json` | supporting PTR receipt provenance and hash-once controls | `62f115d262613a848180143d6b30e2a0b3eb63b0` |
-| 19 | `text/verification/widget-discrete-progress-current/widget-subtext-retail-populated-red-20261014T172721968275Z/receipt-integration.json` | explicitly referenced whole RED executable receipt | `0a3a5ac207e0b7698f80e61e548907346c80880c` |
-| 20 | `text/verification/widget-discrete-progress-current/widget-subtext-retail-producer-green-20261014T173458823763Z/seal-integration.json` | whole original integration seal; preserves initial path discrepancy | `e37f5426a1da8d721b0ab3ff0341877f59100c02` |
-| 21 | `text/verification/widget-discrete-progress-current/widget-subtext-retail-producer-green-20261014T173458823763Z/receipt-integration.json` | whole original integration receipt; discrepancy/status history retained | `e37f5426a1da8d721b0ab3ff0341877f59100c02` |
-| 22 | `text/verification/widget-discrete-progress-current/widget-subtext-retail-producer-green-20261014T173458823763Z/seal-auth-integration.json` | whole corrected auth-copy seal; preserves path/mode correction provenance | `e37f5426a1da8d721b0ab3ff0341877f59100c02` |
-| 23 | `text/verification/widget-discrete-progress-current/widget-subtext-retail-producer-green-20261014T173458823763Z/receipt-auth-integration.json` | whole corrected auth-copy receipt | `e37f5426a1da8d721b0ab3ff0341877f59100c02` |
-| 24 | `text/verification/widget-discrete-progress-current/widget-subtext-retail-producer-green-20261014T173458823763Z/seal-wow-sim.json` | whole original normal binary seal | `e37f5426a1da8d721b0ab3ff0341877f59100c02` |
-| 25 | `text/verification/widget-discrete-progress-current/widget-subtext-retail-producer-green-20261014T173458823763Z/receipt-wow-sim.json` | whole original normal binary receipt | `e37f5426a1da8d721b0ab3ff0341877f59100c02` |
-| 26 | `text/verification/widget-discrete-progress-current/widget-subtext-retail-producer-green-20261014T173458823763Z/seal-auth-wow-sim.json` | whole corrected normal executable seal | `e37f5426a1da8d721b0ab3ff0341877f59100c02` |
-| 27 | `text/verification/widget-discrete-progress-current/widget-subtext-retail-producer-green-20261014T173458823763Z/receipt-auth-wow-sim.json` | whole corrected normal executable receipt | `e37f5426a1da8d721b0ab3ff0341877f59100c02` |
-| 28 | `text/verification/widget-discrete-progress-current/widget-subtext-retail-producer-green-20261014T173458823763Z/runtime-subtext-eight-and-lifecycle-controls/argv.json` | whole first-producer exact argv | `e37f5426a1da8d721b0ab3ff0341877f59100c02` |
-| 29 | `text/verification/widget-discrete-progress-current/widget-subtext-retail-producer-green-20261014T173458823763Z/runtime-subtext-eight-and-lifecycle-controls/result.json` | whole first-producer exact result | `e37f5426a1da8d721b0ab3ff0341877f59100c02` |
-| 30 | `text/verification/widget-discrete-progress-current/widget-subtext-retail-producer-green-20261014T173458823763Z/runtime-normal-retail-post-subtext/argv.json` | whole normal Retail exact argv | `e37f5426a1da8d721b0ab3ff0341877f59100c02` |
-| 31 | `text/verification/widget-discrete-progress-current/widget-subtext-retail-producer-green-20261014T173458823763Z/runtime-normal-retail-post-subtext/result.json` | whole normal Retail exact result | `e37f5426a1da8d721b0ab3ff0341877f59100c02` |
-| 32 | `text/verification/widget-discrete-progress-current/widget-subtext-retail-tag-lifecycle-green-20261014T175706489371Z/receipt-integration.json` | whole final Retail integration receipt | `62f115d262613a848180143d6b30e2a0b3eb63b0` |
-| 33 | `text/verification/widget-discrete-progress-current/widget-subtext-retail-update-diagnostic-20261014T174735853857Z/seal-integration.json` | whole diagnostic seal, distinct historical failure provenance | `e948624b0b3691b626c49369f5f93b7d2c2c1ae6` |
-| 34 | `text/verification/widget-discrete-progress-current/widget-subtext-retail-update-diagnostic-20261014T174735853857Z/receipt-integration.json` | whole diagnostic receipt | `e948624b0b3691b626c49369f5f93b7d2c2c1ae6` |
-| 35 | `text/verification/widget-discrete-progress-current/widget-subtext-ptr-final-20261014T181140348741Z/seal-integration.json` | whole PTR integration seal | `62f115d262613a848180143d6b30e2a0b3eb63b0` |
-| 36 | `text/verification/widget-discrete-progress-current/widget-subtext-ptr-final-20261014T181140348741Z/seal-wow-sim.json` | whole PTR normal executable seal | `62f115d262613a848180143d6b30e2a0b3eb63b0` |
-| 37 | `text/verification/widget-discrete-progress-current/widget-subtext-ptr-final-20261014T181140348741Z/receipt-integration.json` | whole PTR integration receipt | `62f115d262613a848180143d6b30e2a0b3eb63b0` |
-| 38 | `text/verification/widget-discrete-progress-current/widget-subtext-ptr-final-20261014T181140348741Z/receipt-wow-sim.json` | whole PTR normal executable receipt | `62f115d262613a848180143d6b30e2a0b3eb63b0` |
-| 39 | `text/verification/widget-discrete-progress-current/widget-subtext-retail-owning-before-20261014T182701792315Z/runtime-owning-10-0-2-before-gap-reconcile/publication-results.json` | whole owning sweep 416-entry machine output including row 309; never decoded-and-rewritten for retention | `62f115d262613a848180143d6b30e2a0b3eb63b0` |
+| 01 | `text/verif/widget-subtext-populated-red-current/report.md` | populated RED outcome and exact failure boundaries | `0a3a5ac207e0b7698f80e61e548907346c80880c` |
+| 02 | `text/verif/widget-subtext-populated-red-current/proof.json` | full nested RED stdout/stderr/argv/result/admission and case classifications | `0a3a5ac207e0b7698f80e61e548907346c80880c` |
+| 03 | `text/verif/widget-subtext-retail-partial-runtime-current/report.md` | first producer failure, setup/auth-copy correction, complete normal Retail observation | `e37f5426a1da8d721b0ab3ff0341877f59100c02` |
+| 04 | `text/verif/widget-subtext-retail-partial-runtime-current/proof.json` | full nested partial-runtime and setup-correction evidence | `e37f5426a1da8d721b0ab3ff0341877f59100c02` |
+| 05 | `text/verif/widget-subtext-retail-final-runtime-current/report.md` | final Retail 11-case result, retained historical failures, status-schema prelaunch correction, limits | `62f115d262613a848180143d6b30e2a0b3eb63b0` |
+| 06 | `text/verif/widget-subtext-retail-final-runtime-current/proof.json` | full nested Retail evidence, history, controls, normal 219-line observation, exact output and argv | `62f115d262613a848180143d6b30e2a0b3eb63b0` |
+| 07 | `text/verif/widget-subtext-ptr-final-runtime-current/report.md` | PTR 11-case and normal diagnostics, historical Retail separation, cache/WTF limitations | `62f115d262613a848180143d6b30e2a0b3eb63b0` |
+| 08 | `text/verif/widget-subtext-ptr-final-runtime-current/proof.json` | full nested PTR source text, outputs, invocation/auth metadata, related history and normal diagnostic classification | `62f115d262613a848180143d6b30e2a0b3eb63b0` |
+| 09 | `text/verif/widget-subtext-final-checks-current/report.md` | format/default-check outcomes, six deprecations, resource-boundary caveats, readability result | `62f115d262613a848180143d6b30e2a0b3eb63b0` |
+| 10 | `text/verif/widget-subtext-final-checks-current/proof.json` | complete raw check submissions, terminal metadata, warning text, source-text inspection and exact limits | `62f115d262613a848180143d6b30e2a0b3eb63b0` |
+| 11 | `text/verif/widget-subtext-owning-before-runtime-current/report.md` | owning Retail sweep FAIL and exact delta/counts/setup limits | `62f115d262613a848180143d6b30e2a0b3eb63b0` |
+| 12 | `text/verif/widget-subtext-owning-before-runtime-current/proof.json` | complete 416-row decoded JSON, all expected/observed sets, stdout/stderr/argv/admission/auth/setup/terminal evidence | `62f115d262613a848180143d6b30e2a0b3eb63b0` |
+| 13 | `text/verif/widget-subtext-retail-red-auth-current/report.md` | supporting executable-auth scope and boundaries | `0a3a5ac207e0b7698f80e61e548907346c80880c` |
+| 14 | `text/verif/widget-subtext-retail-red-auth-current/proof.json` | supporting original Retail RED receipt/provenance controls | `0a3a5ac207e0b7698f80e61e548907346c80880c` |
+| 15 | `text/verif/widget-subtext-retail-diagnostic-auth-current/report.md` | supporting diagnostic failure and no-run authentication boundary | `e948624b0b3691b626c49369f5f93b7d2c2c1ae6` |
+| 16 | `text/verif/widget-subtext-retail-diagnostic-auth-current/proof.json` | supporting diagnostic receipt/correction control evidence | `e948624b0b3691b626c49369f5f93b7d2c2c1ae6` |
+| 17 | `text/verif/widget-subtext-ptr-auth-current/report.md` | supporting PTR auth scope | `62f115d262613a848180143d6b30e2a0b3eb63b0` |
+| 18 | `text/verif/widget-subtext-ptr-auth-current/proof.json` | supporting PTR receipt provenance and hash-once controls | `62f115d262613a848180143d6b30e2a0b3eb63b0` |
+| 19 | `text/verif/wdp/widget-subtext-retail-populated-red-20261014T172721968275Z/receipt-integration.json` | explicitly referenced whole RED executable receipt | `0a3a5ac207e0b7698f80e61e548907346c80880c` |
+| 20 | `text/verif/wdp/widget-subtext-retail-producer-green-20261014T173458823763Z/seal-integration.json` | whole original integration seal; preserves initial path discrepancy | `e37f5426a1da8d721b0ab3ff0341877f59100c02` |
+| 21 | `text/verif/wdp/widget-subtext-retail-producer-green-20261014T173458823763Z/receipt-integration.json` | whole original integration receipt; discrepancy/status history retained | `e37f5426a1da8d721b0ab3ff0341877f59100c02` |
+| 22 | `text/verif/wdp/widget-subtext-retail-producer-green-20261014T173458823763Z/seal-auth-integration.json` | whole corrected auth-copy seal; preserves path/mode correction provenance | `e37f5426a1da8d721b0ab3ff0341877f59100c02` |
+| 23 | `text/verif/wdp/widget-subtext-retail-producer-green-20261014T173458823763Z/receipt-auth-integration.json` | whole corrected auth-copy receipt | `e37f5426a1da8d721b0ab3ff0341877f59100c02` |
+| 24 | `text/verif/wdp/widget-subtext-retail-producer-green-20261014T173458823763Z/seal-wow-sim.json` | whole original normal binary seal | `e37f5426a1da8d721b0ab3ff0341877f59100c02` |
+| 25 | `text/verif/wdp/widget-subtext-retail-producer-green-20261014T173458823763Z/receipt-wow-sim.json` | whole original normal binary receipt | `e37f5426a1da8d721b0ab3ff0341877f59100c02` |
+| 26 | `text/verif/wdp/widget-subtext-retail-producer-green-20261014T173458823763Z/seal-auth-wow-sim.json` | whole corrected normal executable seal | `e37f5426a1da8d721b0ab3ff0341877f59100c02` |
+| 27 | `text/verif/wdp/widget-subtext-retail-producer-green-20261014T173458823763Z/receipt-auth-wow-sim.json` | whole corrected normal executable receipt | `e37f5426a1da8d721b0ab3ff0341877f59100c02` |
+| 28 | `text/verif/wdp/widget-subtext-retail-producer-green-20261014T173458823763Z/runtime-subtext-eight-and-lifecycle-controls/argv.json` | whole first-producer exact argv | `e37f5426a1da8d721b0ab3ff0341877f59100c02` |
+| 29 | `text/verif/wdp/widget-subtext-retail-producer-green-20261014T173458823763Z/runtime-subtext-eight-and-lifecycle-controls/result.json` | whole first-producer exact result | `e37f5426a1da8d721b0ab3ff0341877f59100c02` |
+| 30 | `text/verif/wdp/widget-subtext-retail-producer-green-20261014T173458823763Z/runtime-normal-retail-post-subtext/argv.json` | whole normal Retail exact argv | `e37f5426a1da8d721b0ab3ff0341877f59100c02` |
+| 31 | `text/verif/wdp/widget-subtext-retail-producer-green-20261014T173458823763Z/runtime-normal-retail-post-subtext/result.json` | whole normal Retail exact result | `e37f5426a1da8d721b0ab3ff0341877f59100c02` |
+| 32 | `text/verif/wdp/widget-subtext-retail-tag-lifecycle-green-20261014T175706489371Z/receipt-integration.json` | whole final Retail integration receipt | `62f115d262613a848180143d6b30e2a0b3eb63b0` |
+| 33 | `text/verif/wdp/widget-subtext-retail-update-diagnostic-20261014T174735853857Z/seal-integration.json` | whole diagnostic seal, distinct historical failure provenance | `e948624b0b3691b626c49369f5f93b7d2c2c1ae6` |
+| 34 | `text/verif/wdp/widget-subtext-retail-update-diagnostic-20261014T174735853857Z/receipt-integration.json` | whole diagnostic receipt | `e948624b0b3691b626c49369f5f93b7d2c2c1ae6` |
+| 35 | `text/verif/wdp/widget-subtext-ptr-final-20261014T181140348741Z/seal-integration.json` | whole PTR integration seal | `62f115d262613a848180143d6b30e2a0b3eb63b0` |
+| 36 | `text/verif/wdp/widget-subtext-ptr-final-20261014T181140348741Z/seal-wow-sim.json` | whole PTR normal executable seal | `62f115d262613a848180143d6b30e2a0b3eb63b0` |
+| 37 | `text/verif/wdp/widget-subtext-ptr-final-20261014T181140348741Z/receipt-integration.json` | whole PTR integration receipt | `62f115d262613a848180143d6b30e2a0b3eb63b0` |
+| 38 | `text/verif/wdp/widget-subtext-ptr-final-20261014T181140348741Z/receipt-wow-sim.json` | whole PTR normal executable receipt | `62f115d262613a848180143d6b30e2a0b3eb63b0` |
+| 39 | `text/verif/wdp/widget-subtext-retail-owning-before-20261014T182701792315Z/runtime-owning-10-0-2-before-gap-reconcile/publication-results.json` | whole owning sweep 416-entry machine output including row 309; never decoded-and-rewritten for retention | `62f115d262613a848180143d6b30e2a0b3eb63b0` |
 
 ## Corrected private-candidate status
 

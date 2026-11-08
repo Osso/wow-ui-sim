@@ -7,7 +7,7 @@ PASS — compilation only. Runtime RED remains unverified; no tests executed.
 Read `[PRIVATE_AGENT_CONFIG]/skills/verify/SKILL.md`. No delegation.
 Waited once for 90 seconds without project workload, then took exactly one current systemctl sample of the recorded unit. No polling, builds, tests, cancellation, executable inspection, or executable hashing.
 
-Epoch: `[PRIVATE_EVIDENCE]/verification/widget-discrete-progress-current/widget-spacer-retail-populated-red-20261014T234012425170Z`.
+Epoch: `[PRIVATE_EVIDENCE]/verif/wdp/widget-spacer-retail-populated-red-20261014T234012425170Z`.
 Recorded source revision: `2d95bb5a783485c00160d19c4d1b8968f61a5785` (submission/revision metadata; not independent source sealing).
 Recorded command: `/usr/bin/env RUSTC=/usr/bin/rustc /usr/bin/cargo test --offline --locked --test integration --no-run --message-format=json -j 12`.
 

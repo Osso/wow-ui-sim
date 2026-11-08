@@ -9,7 +9,7 @@ Scope: saved output/source/documentation audit only. No tests, builds, process c
 ## Evidence and revision association
 
 Runtime directory:
-[PRIVATE_EVIDENCE]/verification/widget-discrete-progress-current/widget-spacer-retail-producer-green-20261014T235938300530Z/runtime-spacer-three-shared-controls
+[PRIVATE_EVIDENCE]/verif/wdp/widget-spacer-retail-producer-green-20261014T235938300530Z/runtime-spacer-three-shared-controls
 
 Read complete stdout, stderr, result.json, admission.json, argv.json and launcher.txt. Read complete current and saved tests/ui_widget_manager_state.rs (284 lines) and tests/ui_widget_manager_security.rs (242 lines), including all fixtures/helpers used by these controls. Text equality comparison confirms both complete files unchanged relative to supplied saved source snapshot. This is text comparison, not hashing or git execution.
 
@@ -17,7 +17,7 @@ Saved revision.json identifies source_revision d5e3358a30ec63199e35d9bdc6481ab0c
 
 Documentation inspected: [SIM_REPO]/docs/specs/ui-widget-spacer.md, supplied by request as current e8ba34ec2. No git command/object inspection used to authenticate that revision label.
 Independent saved report read completely:
-[PRIVATE_EVIDENCE]/verification/spacer-retail-first-runtime-current/report.md
+[PRIVATE_EVIDENCE]/verif/spacer-retail-first-runtime-current/report.md
 
 ## Exact runtime accounting
 

@@ -60,7 +60,7 @@
       "source_revision": "e948624b0b3691b626c49369f5f93b7d2c2c1ae6",
       "production_delta_revision": "e37f5426a",
       "scope": "Compile changed assertion diagnostics only for targeted cached TextWithSubtext update failure; production remains e37; no behavioralfix or runtimeclaim. Priorpreflightmissingephemeralholdfile causedzero-launchsetupfailure; currentabsenceobserved as no advertisedhold.",
-      "git_status": " M docs/specs/ui-widget-text-with-subtext.md\n?? .code-index.db\n?? handoff/\n?? state/\n?? verification/\n"
+      "git_status": " M docs/specs/ui-widget-text-with-subtext.md\n?? .code-index.db\n?? handoff/\n?? state/\n?? verif/\n"
     },
     "submission_source": "e948624b0b3691b626c49369f5f93b7d2c2c1ae6",
     "compile_result_source": "e948624b0b3691b626c49369f5f93b7d2c2c1ae6",

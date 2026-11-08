@@ -12,8 +12,8 @@
     },
     {
       "path": "proof.json",
-      "bytes": 53909,
-      "sha256": "40dc8e2aa544a2d3fffdbc99a60c07b3412ce2bf13550b311b3e1303c242e185",
+      "bytes": 53095,
+      "sha256": "d4aa723d22a96edcdcdefb0e1ea2e2b619a32e5a82303bb41b24b1d7bddfaddf",
       "source": "/home/osso/.local/state/wow-ui-sim/verification/retention-three-manifests/proof.json",
       "retention": "byte-identical screened audit"
     }

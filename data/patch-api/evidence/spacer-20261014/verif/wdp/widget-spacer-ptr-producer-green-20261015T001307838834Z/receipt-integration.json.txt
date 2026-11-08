@@ -1,6 +1,6 @@
 {
   "status": "PASS",
-  "path": "[PRIVATE_EVIDENCE]/verification/widget-discrete-progress-current/widget-spacer-ptr-producer-green-20261015T001307838834Z/artifacts/deps/integration-020202567c2bd5a4",
+  "path": "[PRIVATE_EVIDENCE]/verif/wdp/widget-spacer-ptr-producer-green-20261015T001307838834Z/artifacts/deps/integration-020202567c2bd5a4",
   "sha256": "02647becc9f1ee914effcda8e629a828eb747aff45f430ae14552370ec508e7a",
   "sha256_matches_seal": true,
   "hash_reads": 1,

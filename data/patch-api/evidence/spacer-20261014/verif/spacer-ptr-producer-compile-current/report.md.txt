@@ -4,7 +4,7 @@ Result: PASS — compile only, with warnings.
 No tests or runtime behavior executed by this verification. No runtime GREEN or PTR behavior claim. The seven-case scope is submission metadata, not evidence of seven passing cases.
 
 ## Identity and constraints
-- Epoch: `[PRIVATE_EVIDENCE]/verification/widget-discrete-progress-current/widget-spacer-ptr-producer-green-20261015T001307838834Z`
+- Epoch: `[PRIVATE_EVIDENCE]/verif/wdp/widget-spacer-ptr-producer-green-20261015T001307838834Z`
 - Source: `e8ba34ec2b7df268a274e08244cadbc367683c60`; production delta: `b12f62435` (saved metadata; not independently re-hashed).
 - Unit: `[PRIVATE_UNIT_01].service`
 - Wait: 240.001338 seconds, starting 2026-10-15T00:14:06.119216+00:00.
@@ -114,5 +114,5 @@ Cargo reported artifact only; artifact contents/existence were not read or hashe
 ]
 ```
 
-All 665 Cargo-reported artifacts, including each exact profile and full resolved feature list, preserved in `[PRIVATE_EVIDENCE]/verification/spacer-ptr-producer-compile-current/cargo-artifacts.json`; metadata only, no artifact files accessed.
-Raw single systemctl sample: `[PRIVATE_EVIDENCE]/verification/spacer-ptr-producer-compile-current/systemctl-sample.json`.
+All 665 Cargo-reported artifacts, including each exact profile and full resolved feature list, preserved in `[PRIVATE_EVIDENCE]/verif/spacer-ptr-producer-compile-current/cargo-artifacts.json`; metadata only, no artifact files accessed.
+Raw single systemctl sample: `[PRIVATE_EVIDENCE]/verif/spacer-ptr-producer-compile-current/systemctl-sample.json`.

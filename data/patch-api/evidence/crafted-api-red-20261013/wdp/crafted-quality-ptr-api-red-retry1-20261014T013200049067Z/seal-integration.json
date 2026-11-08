@@ -24,7 +24,7 @@
     "sound",
     "timed-signal-maps"
   ],
-  "sealed_path": "verification/widget-discrete-progress-current/crafted-quality-ptr-api-red-retry1-20261014T013200049067Z/artifacts/deps/integration-020202567c2bd5a4",
+  "sealed_path": "verif/wdp/crafted-quality-ptr-api-red-retry1-20261014T013200049067Z/artifacts/deps/integration-020202567c2bd5a4",
   "sha256": "ab32a4174443cdc6efe7399d76eb49dd7c599e17ac055756a1570e96a0c42229",
   "stat": {
     "st_dev": 66306,

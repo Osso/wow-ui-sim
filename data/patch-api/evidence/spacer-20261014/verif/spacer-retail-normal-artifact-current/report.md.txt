@@ -1,7 +1,7 @@
 # Cached normal artifact: PASS
 
-- Copy: `[PRIVATE_EVIDENCE]/verification/widget-discrete-progress-current/widget-spacer-retail-owning-normal-retry1-20261015T010926059272Z/artifacts/wow-sim-normal`
-- Receipt: `[PRIVATE_EVIDENCE]/verification/widget-discrete-progress-current/widget-spacer-retail-owning-normal-retry1-20261015T010926059272Z/receipt-wow-sim-normal.json`
+- Copy: `[PRIVATE_EVIDENCE]/verif/wdp/widget-spacer-retail-owning-normal-retry1-20261015T010926059272Z/artifacts/wow-sim-normal`
+- Receipt: `[PRIVATE_EVIDENCE]/verif/wdp/widget-spacer-retail-owning-normal-retry1-20261015T010926059272Z/receipt-wow-sim-normal.json`
 - SHA-256: `ea3f162911b6d7667c63a627302b45c885369984b6a4bf88bec4acee3ae224af`; matches seal: True; hash_reads: 1.
 - Before/open/after stats match seal and remain stable: True. stat_after: `{"st_dev": 66306, "st_ino": 152734263, "st_mtime_ns": 1792022460726887560, "st_size": 408531264}`.
 - Cargo stdout line 739 exactly matches sealed normal compiler-artifact: fresh=true, profile.test=false. Retail feature lists agree across artifact, seal and embedded fingerprint. Recorded source revision: `d15126365dd3c3d207fea3a328599ea615672c4c` (metadata only).

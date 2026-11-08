@@ -2,7 +2,7 @@
 
 ## Scope and evidence
 
-Saved evidence only: `[PRIVATE_EVIDENCE]/verification/widget-discrete-progress-current/widget-spacer-retail-owning-normal-20261015T010300829553Z`.
+Saved evidence only: `[PRIVATE_EVIDENCE]/verif/wdp/widget-spacer-retail-owning-normal-20261015T010300829553Z`.
 Watcher source: `[PRIVATE_EVIDENCE]/handoff/watch-spacer-build-pressure.py` (read completely).
 Read `[PRIVATE_AGENT_CONFIG]/skills/verify/SKILL.md`; used artifact/source inspection within the requested restrictions, not a command verification or delegated gate.
 No commands, builds, tests, signals, binary/library/archive reads or hashes, or delegation performed. Python was used only for saved-text parsing and this private report's file I/O/permissions. An initial verbose parse display was truncated; a subsequent bounded summary inspected the complete saved stream. A separate attempted summary failed because prior evaluation variables were unavailable; no build or external command was rerun.

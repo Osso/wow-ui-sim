@@ -1,7 +1,7 @@
 # Spacer copied integration artifact: PASS
 
-- Executable: `[PRIVATE_EVIDENCE]/verification/widget-discrete-progress-current/widget-spacer-retail-populated-red-20261014T234012425170Z/artifacts/deps/integration-9f07e4a55f2bbbf7`
-- Receipt: `[PRIVATE_EVIDENCE]/verification/widget-discrete-progress-current/widget-spacer-retail-populated-red-20261014T234012425170Z/receipt-integration.json`
+- Executable: `[PRIVATE_EVIDENCE]/verif/wdp/widget-spacer-retail-populated-red-20261014T234012425170Z/artifacts/deps/integration-9f07e4a55f2bbbf7`
+- Receipt: `[PRIVATE_EVIDENCE]/verif/wdp/widget-spacer-retail-populated-red-20261014T234012425170Z/receipt-integration.json`
 - SHA-256 matches seal: True; executable hash reads: 1. No rehash performed.
 - Stat before/after unchanged (path and open descriptor): True; matches sealed stat: True.
 - Recorded Cargo association: retail, integration test, opt-level 1, line-tables-only debug info, debug assertions and overflow checks enabled. Feature association consistent: True.
@@ -10,7 +10,7 @@ Features: aura-containers, aura-instance-enumeration, aura-xml-widgets, base-spe
 
 ## Production scope limitation
 
-Recorded revision metadata identifies `2d95bb5a783485c00160d19c4d1b8968f61a5785` and lists only a modified unrelated spec plus untracked `.code-index.db`, `handoff/`, `state/`, and `verification/`; no recorded production-scoped dirt. A fresh tracked-source comparison could not finish because Git tree object `84bbe10aeaa0a31188c0fb7121f6009b303d0e25` was unavailable as a loose object. No fresh source-cleanliness claim. No packed archive was opened to continue that check.
+Recorded revision metadata identifies `2d95bb5a783485c00160d19c4d1b8968f61a5785` and lists only a modified unrelated spec plus untracked `.code-index.db`, `handoff/`, `state/`, and `verif/`; no recorded production-scoped dirt. A fresh tracked-source comparison could not finish because Git tree object `84bbe10aeaa0a31188c0fb7121f6009b303d0e25` was unavailable as a loose object. No fresh source-cleanliness claim. No packed archive was opened to continue that check.
 
 ## Authentication boundary
 

@@ -16,9 +16,9 @@ Startup/PTR CLI paragraphs already preserve one unique startup PASS per profile,
 
 ## Saved sources
 
-- `[PRIVATE_EVIDENCE]/verification/spacer-startup-diagnostics-current/report.md`: Actual results; collector assertions; suppression; resource envelope; final claim.
-- `[PRIVATE_EVIDENCE]/verification/spacer-format-gate-current/report.md`: Proof validity and limits, including supplied unchanged-Rust premise.
-- `[PRIVATE_EVIDENCE]/verification/spacer-owning-pressure-abort-current/report.md`: Build outcome; guard observations; causality/safety limits.
-- `[PRIVATE_EVIDENCE]/verification/spacer-retail-normal-artifact-current/report.md`: Cached-copy checks; distinct retry abort; source/authentication limits. Hash evidence is reported from saved text only, not recomputed.
+- `[PRIVATE_EVIDENCE]/verif/spacer-startup-diagnostics-current/report.md`: Actual results; collector assertions; suppression; resource envelope; final claim.
+- `[PRIVATE_EVIDENCE]/verif/spacer-format-gate-current/report.md`: Proof validity and limits, including supplied unchanged-Rust premise.
+- `[PRIVATE_EVIDENCE]/verif/spacer-owning-pressure-abort-current/report.md`: Build outcome; guard observations; causality/safety limits.
+- `[PRIVATE_EVIDENCE]/verif/spacer-retail-normal-artifact-current/report.md`: Cached-copy checks; distinct retry abort; source/authentication limits. Hash evidence is reported from saved text only, not recomputed.
 
 No claim that the remaining gates passed or that current live state matches these saved records.

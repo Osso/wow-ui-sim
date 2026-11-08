@@ -112,7 +112,7 @@
   "files": [
     {
       "number": 1,
-      "path": "text/verification/widget-subtext-populated-red-current/report.md",
+      "path": "text/verif/widget-subtext-populated-red-current/report.md",
       "source_role": "populated RED outcome and exact failure boundaries",
       "source_revision_scope": {
         "primary": "0a3a5ac207e0b7698f80e61e548907346c80880c",
@@ -184,7 +184,7 @@
     },
     {
       "number": 2,
-      "path": "text/verification/widget-subtext-populated-red-current/proof.json",
+      "path": "text/verif/widget-subtext-populated-red-current/proof.json",
       "source_role": "full nested RED stdout/stderr/argv/result/admission and case classifications",
       "source_revision_scope": {
         "primary": "0a3a5ac207e0b7698f80e61e548907346c80880c",
@@ -256,7 +256,7 @@
     },
     {
       "number": 3,
-      "path": "text/verification/widget-subtext-retail-partial-runtime-current/report.md",
+      "path": "text/verif/widget-subtext-retail-partial-runtime-current/report.md",
       "source_role": "first producer failure, setup/auth-copy correction, complete normal Retail observation",
       "source_revision_scope": {
         "primary": "e37f5426a1da8d721b0ab3ff0341877f59100c02",
@@ -328,7 +328,7 @@
     },
     {
       "number": 4,
-      "path": "text/verification/widget-subtext-retail-partial-runtime-current/proof.json",
+      "path": "text/verif/widget-subtext-retail-partial-runtime-current/proof.json",
       "source_role": "full nested partial-runtime and setup-correction evidence",
       "source_revision_scope": {
         "primary": "e37f5426a1da8d721b0ab3ff0341877f59100c02",
@@ -400,7 +400,7 @@
     },
     {
       "number": 5,
-      "path": "text/verification/widget-subtext-retail-final-runtime-current/report.md",
+      "path": "text/verif/widget-subtext-retail-final-runtime-current/report.md",
       "source_role": "final Retail 11-case result, retained historical failures, status-schema prelaunch correction, limits",
       "source_revision_scope": {
         "primary": "62f115d262613a848180143d6b30e2a0b3eb63b0",
@@ -473,7 +473,7 @@
     },
     {
       "number": 6,
-      "path": "text/verification/widget-subtext-retail-final-runtime-current/proof.json",
+      "path": "text/verif/widget-subtext-retail-final-runtime-current/proof.json",
       "source_role": "full nested Retail evidence, history, controls, normal 219-line observation, exact output and argv",
       "source_revision_scope": {
         "primary": "62f115d262613a848180143d6b30e2a0b3eb63b0",
@@ -546,7 +546,7 @@
     },
     {
       "number": 7,
-      "path": "text/verification/widget-subtext-ptr-final-runtime-current/report.md",
+      "path": "text/verif/widget-subtext-ptr-final-runtime-current/report.md",
       "source_role": "PTR 11-case and normal diagnostics, historical Retail separation, cache/WTF limitations",
       "source_revision_scope": {
         "primary": "62f115d262613a848180143d6b30e2a0b3eb63b0",
@@ -619,7 +619,7 @@
     },
     {
       "number": 8,
-      "path": "text/verification/widget-subtext-ptr-final-runtime-current/proof.json",
+      "path": "text/verif/widget-subtext-ptr-final-runtime-current/proof.json",
       "source_role": "full nested PTR source text, outputs, invocation/auth metadata, related history and normal diagnostic classification",
       "source_revision_scope": {
         "primary": "62f115d262613a848180143d6b30e2a0b3eb63b0",
@@ -692,7 +692,7 @@
     },
     {
       "number": 9,
-      "path": "text/verification/widget-subtext-final-checks-current/report.md",
+      "path": "text/verif/widget-subtext-final-checks-current/report.md",
       "source_role": "format/default-check outcomes, six deprecations, resource-boundary caveats, readability result",
       "source_revision_scope": {
         "primary": "62f115d262613a848180143d6b30e2a0b3eb63b0",
@@ -765,7 +765,7 @@
     },
     {
       "number": 10,
-      "path": "text/verification/widget-subtext-final-checks-current/proof.json",
+      "path": "text/verif/widget-subtext-final-checks-current/proof.json",
       "source_role": "complete raw check submissions, terminal metadata, warning text, source-text inspection and exact limits",
       "source_revision_scope": {
         "primary": "62f115d262613a848180143d6b30e2a0b3eb63b0",
@@ -838,7 +838,7 @@
     },
     {
       "number": 11,
-      "path": "text/verification/widget-subtext-owning-before-runtime-current/report.md",
+      "path": "text/verif/widget-subtext-owning-before-runtime-current/report.md",
       "source_role": "owning Retail sweep FAIL and exact delta/counts/setup limits",
       "source_revision_scope": {
         "primary": "62f115d262613a848180143d6b30e2a0b3eb63b0",
@@ -911,7 +911,7 @@
     },
     {
       "number": 12,
-      "path": "text/verification/widget-subtext-owning-before-runtime-current/proof.json",
+      "path": "text/verif/widget-subtext-owning-before-runtime-current/proof.json",
       "source_role": "complete 416-row decoded JSON, all expected/observed sets, stdout/stderr/argv/admission/auth/setup/terminal evidence",
       "source_revision_scope": {
         "primary": "62f115d262613a848180143d6b30e2a0b3eb63b0",
@@ -984,7 +984,7 @@
     },
     {
       "number": 13,
-      "path": "text/verification/widget-subtext-retail-red-auth-current/report.md",
+      "path": "text/verif/widget-subtext-retail-red-auth-current/report.md",
       "source_role": "supporting executable-auth scope and boundaries",
       "source_revision_scope": {
         "primary": "0a3a5ac207e0b7698f80e61e548907346c80880c",
@@ -1056,7 +1056,7 @@
     },
     {
       "number": 14,
-      "path": "text/verification/widget-subtext-retail-red-auth-current/proof.json",
+      "path": "text/verif/widget-subtext-retail-red-auth-current/proof.json",
       "source_role": "supporting original Retail RED receipt/provenance controls",
       "source_revision_scope": {
         "primary": "0a3a5ac207e0b7698f80e61e548907346c80880c",
@@ -1128,7 +1128,7 @@
     },
     {
       "number": 15,
-      "path": "text/verification/widget-subtext-retail-diagnostic-auth-current/report.md",
+      "path": "text/verif/widget-subtext-retail-diagnostic-auth-current/report.md",
       "source_role": "supporting diagnostic failure and no-run authentication boundary",
       "source_revision_scope": {
         "primary": "e948624b0b3691b626c49369f5f93b7d2c2c1ae6",
@@ -1201,7 +1201,7 @@
     },
     {
       "number": 16,
-      "path": "text/verification/widget-subtext-retail-diagnostic-auth-current/proof.json",
+      "path": "text/verif/widget-subtext-retail-diagnostic-auth-current/proof.json",
       "source_role": "supporting diagnostic receipt/correction control evidence",
       "source_revision_scope": {
         "primary": "e948624b0b3691b626c49369f5f93b7d2c2c1ae6",
@@ -1274,7 +1274,7 @@
     },
     {
       "number": 17,
-      "path": "text/verification/widget-subtext-ptr-auth-current/report.md",
+      "path": "text/verif/widget-subtext-ptr-auth-current/report.md",
       "source_role": "supporting PTR auth scope",
       "source_revision_scope": {
         "primary": "62f115d262613a848180143d6b30e2a0b3eb63b0",
@@ -1347,7 +1347,7 @@
     },
     {
       "number": 18,
-      "path": "text/verification/widget-subtext-ptr-auth-current/proof.json",
+      "path": "text/verif/widget-subtext-ptr-auth-current/proof.json",
       "source_role": "supporting PTR receipt provenance and hash-once controls",
       "source_revision_scope": {
         "primary": "62f115d262613a848180143d6b30e2a0b3eb63b0",
@@ -1420,7 +1420,7 @@
     },
     {
       "number": 19,
-      "path": "text/verification/widget-discrete-progress-current/widget-subtext-retail-populated-red-20261014T172721968275Z/receipt-integration.json",
+      "path": "text/verif/wdp/widget-subtext-retail-populated-red-20261014T172721968275Z/receipt-integration.json",
       "source_role": "explicitly referenced whole RED executable receipt",
       "source_revision_scope": {
         "primary": "0a3a5ac207e0b7698f80e61e548907346c80880c",
@@ -1492,7 +1492,7 @@
     },
     {
       "number": 20,
-      "path": "text/verification/widget-discrete-progress-current/widget-subtext-retail-producer-green-20261014T173458823763Z/seal-integration.json",
+      "path": "text/verif/wdp/widget-subtext-retail-producer-green-20261014T173458823763Z/seal-integration.json",
       "source_role": "whole original integration seal; preserves initial path discrepancy",
       "source_revision_scope": {
         "primary": "e37f5426a1da8d721b0ab3ff0341877f59100c02",
@@ -1564,7 +1564,7 @@
     },
     {
       "number": 21,
-      "path": "text/verification/widget-discrete-progress-current/widget-subtext-retail-producer-green-20261014T173458823763Z/receipt-integration.json",
+      "path": "text/verif/wdp/widget-subtext-retail-producer-green-20261014T173458823763Z/receipt-integration.json",
       "source_role": "whole original integration receipt; discrepancy/status history retained",
       "source_revision_scope": {
         "primary": "e37f5426a1da8d721b0ab3ff0341877f59100c02",
@@ -1636,7 +1636,7 @@
     },
     {
       "number": 22,
-      "path": "text/verification/widget-discrete-progress-current/widget-subtext-retail-producer-green-20261014T173458823763Z/seal-auth-integration.json",
+      "path": "text/verif/wdp/widget-subtext-retail-producer-green-20261014T173458823763Z/seal-auth-integration.json",
       "source_role": "whole corrected auth-copy seal; preserves path/mode correction provenance",
       "source_revision_scope": {
         "primary": "e37f5426a1da8d721b0ab3ff0341877f59100c02",
@@ -1708,7 +1708,7 @@
     },
     {
       "number": 23,
-      "path": "text/verification/widget-discrete-progress-current/widget-subtext-retail-producer-green-20261014T173458823763Z/receipt-auth-integration.json",
+      "path": "text/verif/wdp/widget-subtext-retail-producer-green-20261014T173458823763Z/receipt-auth-integration.json",
       "source_role": "whole corrected auth-copy receipt",
       "source_revision_scope": {
         "primary": "e37f5426a1da8d721b0ab3ff0341877f59100c02",
@@ -1780,7 +1780,7 @@
     },
     {
       "number": 24,
-      "path": "text/verification/widget-discrete-progress-current/widget-subtext-retail-producer-green-20261014T173458823763Z/seal-wow-sim.json",
+      "path": "text/verif/wdp/widget-subtext-retail-producer-green-20261014T173458823763Z/seal-wow-sim.json",
       "source_role": "whole original normal binary seal",
       "source_revision_scope": {
         "primary": "e37f5426a1da8d721b0ab3ff0341877f59100c02",
@@ -1852,7 +1852,7 @@
     },
     {
       "number": 25,
-      "path": "text/verification/widget-discrete-progress-current/widget-subtext-retail-producer-green-20261014T173458823763Z/receipt-wow-sim.json",
+      "path": "text/verif/wdp/widget-subtext-retail-producer-green-20261014T173458823763Z/receipt-wow-sim.json",
       "source_role": "whole original normal binary receipt",
       "source_revision_scope": {
         "primary": "e37f5426a1da8d721b0ab3ff0341877f59100c02",
@@ -1924,7 +1924,7 @@
     },
     {
       "number": 26,
-      "path": "text/verification/widget-discrete-progress-current/widget-subtext-retail-producer-green-20261014T173458823763Z/seal-auth-wow-sim.json",
+      "path": "text/verif/wdp/widget-subtext-retail-producer-green-20261014T173458823763Z/seal-auth-wow-sim.json",
       "source_role": "whole corrected normal executable seal",
       "source_revision_scope": {
         "primary": "e37f5426a1da8d721b0ab3ff0341877f59100c02",
@@ -1996,7 +1996,7 @@
     },
     {
       "number": 27,
-      "path": "text/verification/widget-discrete-progress-current/widget-subtext-retail-producer-green-20261014T173458823763Z/receipt-auth-wow-sim.json",
+      "path": "text/verif/wdp/widget-subtext-retail-producer-green-20261014T173458823763Z/receipt-auth-wow-sim.json",
       "source_role": "whole corrected normal executable receipt",
       "source_revision_scope": {
         "primary": "e37f5426a1da8d721b0ab3ff0341877f59100c02",
@@ -2068,7 +2068,7 @@
     },
     {
       "number": 28,
-      "path": "text/verification/widget-discrete-progress-current/widget-subtext-retail-producer-green-20261014T173458823763Z/runtime-subtext-eight-and-lifecycle-controls/argv.json",
+      "path": "text/verif/wdp/widget-subtext-retail-producer-green-20261014T173458823763Z/runtime-subtext-eight-and-lifecycle-controls/argv.json",
       "source_role": "whole first-producer exact argv",
       "source_revision_scope": {
         "primary": "e37f5426a1da8d721b0ab3ff0341877f59100c02",
@@ -2140,7 +2140,7 @@
     },
     {
       "number": 29,
-      "path": "text/verification/widget-discrete-progress-current/widget-subtext-retail-producer-green-20261014T173458823763Z/runtime-subtext-eight-and-lifecycle-controls/result.json",
+      "path": "text/verif/wdp/widget-subtext-retail-producer-green-20261014T173458823763Z/runtime-subtext-eight-and-lifecycle-controls/result.json",
       "source_role": "whole first-producer exact result",
       "source_revision_scope": {
         "primary": "e37f5426a1da8d721b0ab3ff0341877f59100c02",
@@ -2212,7 +2212,7 @@
     },
     {
       "number": 30,
-      "path": "text/verification/widget-discrete-progress-current/widget-subtext-retail-producer-green-20261014T173458823763Z/runtime-normal-retail-post-subtext/argv.json",
+      "path": "text/verif/wdp/widget-subtext-retail-producer-green-20261014T173458823763Z/runtime-normal-retail-post-subtext/argv.json",
       "source_role": "whole normal Retail exact argv",
       "source_revision_scope": {
         "primary": "e37f5426a1da8d721b0ab3ff0341877f59100c02",
@@ -2284,7 +2284,7 @@
     },
     {
       "number": 31,
-      "path": "text/verification/widget-discrete-progress-current/widget-subtext-retail-producer-green-20261014T173458823763Z/runtime-normal-retail-post-subtext/result.json",
+      "path": "text/verif/wdp/widget-subtext-retail-producer-green-20261014T173458823763Z/runtime-normal-retail-post-subtext/result.json",
       "source_role": "whole normal Retail exact result",
       "source_revision_scope": {
         "primary": "e37f5426a1da8d721b0ab3ff0341877f59100c02",
@@ -2356,7 +2356,7 @@
     },
     {
       "number": 32,
-      "path": "text/verification/widget-discrete-progress-current/widget-subtext-retail-tag-lifecycle-green-20261014T175706489371Z/receipt-integration.json",
+      "path": "text/verif/wdp/widget-subtext-retail-tag-lifecycle-green-20261014T175706489371Z/receipt-integration.json",
       "source_role": "whole final Retail integration receipt",
       "source_revision_scope": {
         "primary": "62f115d262613a848180143d6b30e2a0b3eb63b0",
@@ -2429,7 +2429,7 @@
     },
     {
       "number": 33,
-      "path": "text/verification/widget-discrete-progress-current/widget-subtext-retail-update-diagnostic-20261014T174735853857Z/seal-integration.json",
+      "path": "text/verif/wdp/widget-subtext-retail-update-diagnostic-20261014T174735853857Z/seal-integration.json",
       "source_role": "whole diagnostic seal, distinct historical failure provenance",
       "source_revision_scope": {
         "primary": "e948624b0b3691b626c49369f5f93b7d2c2c1ae6",
@@ -2502,7 +2502,7 @@
     },
     {
       "number": 34,
-      "path": "text/verification/widget-discrete-progress-current/widget-subtext-retail-update-diagnostic-20261014T174735853857Z/receipt-integration.json",
+      "path": "text/verif/wdp/widget-subtext-retail-update-diagnostic-20261014T174735853857Z/receipt-integration.json",
       "source_role": "whole diagnostic receipt",
       "source_revision_scope": {
         "primary": "e948624b0b3691b626c49369f5f93b7d2c2c1ae6",
@@ -2575,7 +2575,7 @@
     },
     {
       "number": 35,
-      "path": "text/verification/widget-discrete-progress-current/widget-subtext-ptr-final-20261014T181140348741Z/seal-integration.json",
+      "path": "text/verif/wdp/widget-subtext-ptr-final-20261014T181140348741Z/seal-integration.json",
       "source_role": "whole PTR integration seal",
       "source_revision_scope": {
         "primary": "62f115d262613a848180143d6b30e2a0b3eb63b0",
@@ -2648,7 +2648,7 @@
     },
     {
       "number": 36,
-      "path": "text/verification/widget-discrete-progress-current/widget-subtext-ptr-final-20261014T181140348741Z/seal-wow-sim.json",
+      "path": "text/verif/wdp/widget-subtext-ptr-final-20261014T181140348741Z/seal-wow-sim.json",
       "source_role": "whole PTR normal executable seal",
       "source_revision_scope": {
         "primary": "62f115d262613a848180143d6b30e2a0b3eb63b0",
@@ -2721,7 +2721,7 @@
     },
     {
       "number": 37,
-      "path": "text/verification/widget-discrete-progress-current/widget-subtext-ptr-final-20261014T181140348741Z/receipt-integration.json",
+      "path": "text/verif/wdp/widget-subtext-ptr-final-20261014T181140348741Z/receipt-integration.json",
       "source_role": "whole PTR integration receipt",
       "source_revision_scope": {
         "primary": "62f115d262613a848180143d6b30e2a0b3eb63b0",
@@ -2794,7 +2794,7 @@
     },
     {
       "number": 38,
-      "path": "text/verification/widget-discrete-progress-current/widget-subtext-ptr-final-20261014T181140348741Z/receipt-wow-sim.json",
+      "path": "text/verif/wdp/widget-subtext-ptr-final-20261014T181140348741Z/receipt-wow-sim.json",
       "source_role": "whole PTR normal executable receipt",
       "source_revision_scope": {
         "primary": "62f115d262613a848180143d6b30e2a0b3eb63b0",
@@ -2867,7 +2867,7 @@
     },
     {
       "number": 39,
-      "path": "text/verification/widget-discrete-progress-current/widget-subtext-retail-owning-before-20261014T182701792315Z/runtime-owning-10-0-2-before-gap-reconcile/publication-results.json",
+      "path": "text/verif/wdp/widget-subtext-retail-owning-before-20261014T182701792315Z/runtime-owning-10-0-2-before-gap-reconcile/publication-results.json",
       "source_role": "whole owning sweep 416-entry machine output including row 309; never decoded-and-rewritten for retention",
       "source_revision_scope": {
         "primary": "62f115d262613a848180143d6b30e2a0b3eb63b0",

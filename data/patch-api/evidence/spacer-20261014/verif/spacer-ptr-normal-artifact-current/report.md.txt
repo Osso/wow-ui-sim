@@ -2,8 +2,8 @@
 
 Scope: copy association only.
 
-Copy: `[PRIVATE_EVIDENCE]/verification/widget-discrete-progress-current/widget-spacer-ptr-producer-green-20261015T001307838834Z/artifacts/wow-sim-normal`
-Receipt: `[PRIVATE_EVIDENCE]/verification/widget-discrete-progress-current/widget-spacer-ptr-producer-green-20261015T001307838834Z/receipt-wow-sim-normal.json`
+Copy: `[PRIVATE_EVIDENCE]/verif/wdp/widget-spacer-ptr-producer-green-20261015T001307838834Z/artifacts/wow-sim-normal`
+Receipt: `[PRIVATE_EVIDENCE]/verif/wdp/widget-spacer-ptr-producer-green-20261015T001307838834Z/receipt-wow-sim-normal.json`
 SHA-256: `1b5e93c94553cf423607d44b0e0b5a3cf784b3452037d665c98aa7d98ca4c652`
 
 Single hash pass: hash_reads=1. Seal digest match: True. Before/open-file/after stats match seal and remain stable: True.

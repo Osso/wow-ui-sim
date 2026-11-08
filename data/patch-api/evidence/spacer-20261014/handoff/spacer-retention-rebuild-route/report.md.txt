@@ -4,7 +4,7 @@ Private, read-only route report. No candidate rebuilt, no originals modified, no
 
 ## Existing mechanism
 
-- Existing candidate: `[PRIVATE_EVIDENCE]/handoff/spacer-whole-text-candidate-current/` (partial, 119 payloads). Candidate payload root: `files/data/patch-api/evidence/ui-widget-spacer-2026-10-14/`.
+- Existing candidate: `[PRIVATE_EVIDENCE]/handoff/spacer-whole-text-candidate-current/` (partial, 119 payloads). Candidate payload root: `files/data/patch-api/evidence/spacer-20261014/`.
 - Source-selection inventories: `[PRIVATE_EVIDENCE]/handoff/spacer-whole-text-plan-current/INVENTORY.json`, `INVENTORY-2.json`, `INVENTORY-3.json`. `INVENTORY-3.json` is the latest observed selection; each file row contains `source`, `relative`, `bytes`, and `final_lf`.
 - Current transform rules for that candidate are in `[PRIVATE_EVIDENCE]/handoff/spacer-whole-text-plan-current/ORDERED-RULES-3.private.json`, shaped as `{"rules":[{"old":...,"new":...,"kind":...}, ...]}`. Do not reuse its order blindly: apply the four exact substitutions in `spacer-retention-resumed/PROPOSED-DELTA.md` in the prescribed order, and retain the remaining reviewed exact rules after those additions as applicable.
 - The only manifest/schema-like artifact found in the candidate is `PRIVATE-LEDGER.json`: top-level `rules_path`, `payloads`, `count`, `bytes`, `scope`; each payload has absolute `source` and `output`, `source_bytes`, `output_bytes`, and `derivative_sha256`. The payload filenames append `.txt`; paths preserve source layout below `files/...`.

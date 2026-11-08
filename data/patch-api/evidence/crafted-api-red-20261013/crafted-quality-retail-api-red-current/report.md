@@ -2,7 +2,7 @@
 
 **Verdict: genuine first-call public-API RED in both actual waited Retail runs.** Each exits **101**, **0 PASS / 1 FAIL**, with 11,019 filtered tests. Verification launched nothing and rebuilt nothing.
 
-Epoch: `verification/widget-discrete-progress-current/crafted-quality-retail-api-red-retry1-20261014T012534611408Z`  
+Epoch: `verif/wdp/crafted-quality-retail-api-red-retry1-20261014T012534611408Z`  
 Recorded source: `8b46433a4568e26458a15907ea79636e38ff65f9`. Current HEAD observed: `9cc2112267ea139e3e13408a16787edd53c232dd`.
 
 ## Scope and provenance
