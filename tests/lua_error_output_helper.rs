@@ -3,7 +3,7 @@
 #[path = "common/lua_error_output.rs"]
 mod lua_error_output;
 
-use lua_error_output::assert_no_lua_errors;
+use lua_error_output::{assert_no_lua_errors, assert_no_lua_sink_errors};
 
 const CLEAN_STDERR: &str = "\
 === Final observed Lua error summary ===
@@ -61,4 +61,42 @@ fn rejects_missing_summary() {
 #[test]
 fn rejects_exec_lua_error() {
     assert_rejected("exec", "[]", &format!("{CLEAN_STDERR}[exec-lua] error: boom\n"));
+}
+
+#[test]
+fn rejects_lua_error_text_on_stdout() {
+    assert_rejected("stdout-lua-error", "Lua error: boom\n[]", CLEAN_STDERR);
+}
+
+#[test]
+fn rejects_exec_lua_error_on_stdout() {
+    assert_rejected(
+        "stdout-exec",
+        "[exec-lua] error: boom\n[]",
+        CLEAN_STDERR,
+    );
+}
+
+#[test]
+fn accepts_sink_output_without_summary() {
+    assert_no_lua_sink_errors("sink-clean", "frame tree\n", "[Startup] complete\n");
+}
+
+#[test]
+fn sink_rejects_lua_error_text() {
+    let result = std::panic::catch_unwind(|| {
+        assert_no_lua_sink_errors("sink-dirty", "", "Lua error: boom\n")
+    });
+    assert!(result.is_err(), "sink helper accepted a Lua error line");
+}
+
+#[test]
+fn sink_rejects_exec_lua_error_text() {
+    let result = std::panic::catch_unwind(|| {
+        assert_no_lua_sink_errors("sink-exec", "", "[exec-lua] error: boom\n")
+    });
+    assert!(
+        result.is_err(),
+        "sink helper accepted an exec-lua error line"
+    );
 }

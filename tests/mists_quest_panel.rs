@@ -1,5 +1,8 @@
 #![cfg(feature = "client-mists")]
 
+#[path = "common/lua_error_output.rs"]
+mod lua_error_output;
+
 use std::process::Command;
 
 #[test]
@@ -110,12 +113,6 @@ fn mists_quest_log_selects_entries_and_refreshes_tracker() {
         output.status.success(),
         "wow-sim failed\nstdout:\n{stdout}\nstderr:\n{stderr}"
     );
-    assert_no_lua_errors(&stdout, &stderr);
+    lua_error_output::assert_no_lua_errors("quest log opened", &stdout, &stderr);
 }
 
-fn assert_no_lua_errors(stdout: &str, stderr: &str) {
-    assert!(
-        !stdout.contains("Lua error") && !stderr.contains("Lua error"),
-        "quest log opened with Lua errors\nstdout:\n{stdout}\nstderr:\n{stderr}"
-    );
-}

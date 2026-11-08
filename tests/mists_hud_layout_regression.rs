@@ -1,5 +1,8 @@
 #![cfg(feature = "client-mists")]
 
+#[path = "common/lua_error_output.rs"]
+mod lua_error_output;
+
 use std::path::PathBuf;
 use std::process::Command;
 
@@ -36,17 +39,7 @@ fn mists_hud_keeps_unit_frames_and_bottom_bar_textured() {
         output.status.success(),
         "HUD layout regression probe failed\nstdout:\n{stdout}\nstderr:\n{stderr}"
     );
-    assert_no_lua_errors(&stdout, &stderr);
-}
-
-fn assert_no_lua_errors(stdout: &str, stderr: &str) {
-    assert!(
-        stdout.trim().ends_with("[]")
-            && !stdout.contains("Lua error")
-            && !stderr.contains("Lua error")
-            && !stderr.contains("[exec-lua] error"),
-        "HUD layout regression probe emitted Lua errors\nstdout:\n{stdout}\nstderr:\n{stderr}"
-    );
+    lua_error_output::assert_no_lua_errors("HUD layout regression probe", &stdout, &stderr);
 }
 
 const HUD_LAYOUT_REGRESSION_LUA: &str = r#"

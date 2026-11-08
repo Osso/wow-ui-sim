@@ -1,5 +1,8 @@
 #![cfg(feature = "client-mists")]
 
+#[path = "common/lua_error_output.rs"]
+mod lua_error_output;
+
 use std::path::PathBuf;
 use std::process::Command;
 
@@ -36,17 +39,7 @@ fn mists_store_catalog_checkout_and_token_surfaces_are_interactive() {
         output.status.success(),
         "store commercial flow failed\nstdout:\n{stdout}\nstderr:\n{stderr}"
     );
-    assert_no_lua_errors(&stdout, &stderr);
-}
-
-fn assert_no_lua_errors(stdout: &str, stderr: &str) {
-    assert!(
-        stdout.trim().ends_with("[]")
-            && !stdout.contains("Lua error")
-            && !stderr.contains("Lua error")
-            && !stderr.contains("[exec-lua] error"),
-        "store commercial flow emitted Lua errors\nstdout:\n{stdout}\nstderr:\n{stderr}"
-    );
+    lua_error_output::assert_no_lua_errors("store commercial flow", &stdout, &stderr);
 }
 
 const STORE_COMMERCIAL_LUA: &str = r#"

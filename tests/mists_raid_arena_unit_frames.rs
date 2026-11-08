@@ -1,5 +1,8 @@
 #![cfg(feature = "client-mists")]
 
+#[path = "common/lua_error_output.rs"]
+mod lua_error_output;
+
 use std::path::PathBuf;
 use std::process::Command;
 
@@ -87,12 +90,7 @@ fn assert_filtered_screenshot_has_unit_frame_textures(output: &std::process::Out
         output.status.success(),
         "{root} screenshot failed\nstdout:\n{stdout}\nstderr:\n{stderr}"
     );
-    assert!(
-        !stdout.contains("Lua error")
-            && !stderr.contains("Lua error")
-            && !stderr.contains("[exec-lua] error"),
-        "{root} screenshot emitted Lua errors\nstdout:\n{stdout}\nstderr:\n{stderr}"
-    );
+    lua_error_output::assert_no_lua_sink_errors(root, &stdout, &stderr);
 
     let texture_requests = parse_texture_request_count(&stderr)
         .unwrap_or_else(|| panic!("{root} screenshot did not report QuadBatch\nstderr:\n{stderr}"));
