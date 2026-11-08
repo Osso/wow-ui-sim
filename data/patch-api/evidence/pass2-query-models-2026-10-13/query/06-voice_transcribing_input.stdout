@@ -1,7 +1,0 @@
-
-running 3 tests
-test voice_transcribing_input::retained_transcription_query_reads_live_environment_input ... ok
-test voice_transcribing_input::transcription_default_is_one_false_boolean ... ok
-test voice_transcribing_input::transcription_input_is_independent_of_permission_and_channel_snapshots ... ok
-
-test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 10944 filtered out; finished in 0.28s

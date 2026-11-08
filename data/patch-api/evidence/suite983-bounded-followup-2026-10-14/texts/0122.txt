@@ -1,6 +1,0 @@
-{
-  "scope": "Runtime setup failure BEFORE admission/launch",
-  "launched": false,
-  "error": "Expected receipt-integration.json absent; child wrote auth-integration.json despite requested receipt name",
-  "source": "1b94ffff3210903b585ed4f5130977b6f075e413"
-}

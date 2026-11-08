@@ -1,6 +1,0 @@
-{
-  "source_revision": "2d4b7e56a06ea0fbb400a37f2aabb819337e5872",
-  "production_delta_revision": "480b9f934",
-  "scope": "New Mists prefork_full_ui compile after XML480; named cast-bar control only, no full suite",
-  "git_status": "?? .code-index.db\n?? verification/\n"
-}

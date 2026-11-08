@@ -38,10 +38,10 @@ No existing coverage ledger, catalog shop implementation, 11.2.7 fixture, vendor
 - [Publication contract](../../specs/patch-11-2-0-publication-sweep.md)
 - [Source provenance](../../../data/patch-api/sources/11.2.0-api-changes.provenance.json)
 - [Coverage ledger](../../../data/patch-api/sources/11.2.0-page-coverage.json)
-- [Per-ID gap review](../../../data/patch-api/evidence/11.2.0-session-2026-10-06/p1120-gap-review.json)
-- [Extract scout](../../../data/patch-api/evidence/11.2.0-session-2026-10-06/p1120-extract-scout.md)
-- [Proof ledger](../../../data/patch-api/evidence/11.2.0-session-2026-10-06/p1120-proof.json)
-- [Artifact validator](../../../data/patch-api/evidence/11.2.0-session-2026-10-06/p1120-validate.py)
+- [Per-ID gap review](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/11.2.0-session-2026-10-06/p1120-gap-review.json)
+- [Extract scout](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/11.2.0-session-2026-10-06/p1120-extract-scout.md)
+- [Proof ledger](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/11.2.0-session-2026-10-06/p1120-proof.json)
+- [Artifact validator](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/11.2.0-session-2026-10-06/p1120-validate.py)
 
 ## See Also
 

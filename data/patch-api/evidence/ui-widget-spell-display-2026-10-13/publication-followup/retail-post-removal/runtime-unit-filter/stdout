@@ -1,7 +1,0 @@
-
-running 2 tests
-test unit_event_second_unit::reregistering_and_unregistering_clear_the_second_unit_filter ... ok
-test unit_event_second_unit::second_unit_filter_receives_modeled_player_and_target_health_events ... ok
-
-test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 10992 filtered out; finished in 0.29s
-

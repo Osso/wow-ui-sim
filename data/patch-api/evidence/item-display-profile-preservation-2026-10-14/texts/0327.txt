@@ -1,6 +1,0 @@
-{
-  "source_revision": "d288c2701aa880648db73bba473db5dcc35c521b",
-  "production_delta_revision": "bc5cecffb",
-  "scope": "Third bounded fresh admission after two0launch denials; unchanged Retail current preservation source; no-run compile only",
-  "git_status": "?? .code-index.db\n?? handoff/\n?? verification/\n"
-}

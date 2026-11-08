@@ -1,6 +1,0 @@
-{
-  "source_revision": "64a2a57b27c5c2b021375cbfddda557ec145507c",
-  "production_delta_revision": "50f6f0ea8",
-  "scope": "Default Retail integration no-run: supplied TextWithState RED candidate plus current Speak query/transcription/cached consumer preservation; runtime unrun; not final check",
-  "git_status": "?? .code-index.db\n?? verification/\n"
-}

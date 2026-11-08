@@ -1,6 +1,0 @@
-ActiveState=active
-SubState=exited
-MainPID=0
-ExecMainExitTimestamp=Tue 2026-10-13 02:37:26 CDT
-ExecMainCode=1
-ExecMainStatus=0

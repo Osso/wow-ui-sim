@@ -28,7 +28,7 @@ Target revision/content, patch-specific delta, callable identities, arguments/re
 
 ## Development proof epochs
 
-Own SOURCE RED5 expected failures against missing-accounting scaffold; portable RED3 against absent seals. Tests cover three populated omission boundaries, every derived count, invented empty categories and model/runtime/native claims, body/response mutations and own-base default-byte/error replay. SOURCE GREEN5/5 at `3c927000f` after implementation commit; full streams, actual cwd/argv/revision/times/env-key names and code hashes retained in own proof ledger. At `cb9c8e5d8`, fresh extracted archive validator exit0, copied SOURCE5/5 and portable3/3 pass under isolated Python/PATH=/nonexistent; serialized ledger/log rejection and exact restoration pass.29 original seals/30-member51,670-byte archive unchanged; six later receipt seals separate. [Later ledger](../../../data/patch-api/evidence/1.10.1-session-2026-10-09/later-proof-ledger.json) retains actual revision/cwd/argv/env-key/time/fullstream/hash scope. [HANDOFF](../../../data/patch-api/evidence/1.10.1-session-2026-10-09/HANDOFF.md) and [REPLAY](../../../data/patch-api/evidence/1.10.1-session-2026-10-09/REPLAY.md) bound replay and main-owned gates. Original proof epochs not backfilled by later documentation. No broad or final gates.
+Own SOURCE RED5 expected failures against missing-accounting scaffold; portable RED3 against absent seals. Tests cover three populated omission boundaries, every derived count, invented empty categories and model/runtime/native claims, body/response mutations and own-base default-byte/error replay. SOURCE GREEN5/5 at `3c927000f` after implementation commit; full streams, actual cwd/argv/revision/times/env-key names and code hashes retained in own proof ledger. At `cb9c8e5d8`, fresh extracted archive validator exit0, copied SOURCE5/5 and portable3/3 pass under isolated Python/PATH=/nonexistent; serialized ledger/log rejection and exact restoration pass.29 original seals/30-member51,670-byte archive unchanged; six later receipt seals separate. [Later ledger](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/1.10.1-session-2026-10-09/later-proof-ledger.json) retains actual revision/cwd/argv/env-key/time/fullstream/hash scope. [HANDOFF](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/1.10.1-session-2026-10-09/HANDOFF.md) and [REPLAY](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/1.10.1-session-2026-10-09/REPLAY.md) bound replay and main-owned gates. Original proof epochs not backfilled by later documentation. No broad or final gates.
 
 Environment key names inspected; values omitted. Credential patterns scanned before retention; detector literal excluded from scanning itself, no matches. Not exhaustive secret detection; streams unaltered, no values dumped. Setup/exploration commands are not proof. No Rust build/runtime change justified by this redirect. Main owns ordered integration, independent full acceptance, historical/native and parent goal closure.
 
@@ -36,10 +36,10 @@ Environment key names inspected; values omitted. Credential patterns scanned bef
 
 - [Frozen manifest](../../../data/patch-api/source-cache/legacy-2026-10-09/manifest.json)
 - [Registry](../../../data/patch-api/sources/api-change-pages-remaining.json)
-- [Literal ledger](../../../data/patch-api/evidence/1.10.1-session-2026-10-09/ledger.json)
-- [Proof ledger](../../../data/patch-api/evidence/1.10.1-session-2026-10-09/proof-ledger.json)
+- [Literal ledger](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/1.10.1-session-2026-10-09/ledger.json)
+- [Proof ledger](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/1.10.1-session-2026-10-09/proof-ledger.json)
 - [Spec](../../specs/patch-1-10-1-source-accounting.md)
-- [Governing handoff](../../../data/patch-api/evidence/handoff-laptop-to-agent-server/HANDOFF.md) — explicit child task overrides generic operational authority.
+- [Governing handoff](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/handoff-laptop-to-agent-server/HANDOFF.md) — explicit child task overrides generic operational authority.
 
 ## See Also
 

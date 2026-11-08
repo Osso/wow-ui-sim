@@ -1,6 +1,0 @@
-Running as unit: wow-widget-red-ui-widget-manager-bars-consumer-retry1-20261013t083600.service
-          Finished with result: exit-code
-Main processes terminated with: code=exited, status=101/n/a
-               Service runtime: 1.757s
-             CPU time consumed: 1.428s
-                   Memory peak: 1.7G (swap: 0B)

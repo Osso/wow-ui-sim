@@ -30,7 +30,7 @@ An empty page is not evidence that the game patch changed no APIs. Nothing was r
 | Own `validate.py` | PASS, read-only |
 | `prove_portability.py` | Relocated snapshot PASS; unrelated future register/sweep/validator PASS; source-whitespace tamper rejected; exact restoration PASS |
 
-[Proof ledger](../../../data/patch-api/evidence/6.2.2-session-2026-10-08/p622-proof-ledger.md) records exact commands, revisions, hashes, complete logs, scope and invalidation. Long Cargo commands ran asynchronously into logs under the owned `p622-page` target; no full integration suite or poll-wait. Initial acceptance wrapper expected libtest exit 101, but the prefork harness returns 1 for failed cases. Only that wrapper expectation was corrected; actual negative proof remains valid, and no Cargo command was repeated for the correction.
+[Proof ledger](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/6.2.2-session-2026-10-08/p622-proof-ledger.md) records exact commands, revisions, hashes, complete logs, scope and invalidation. Long Cargo commands ran asynchronously into logs under the owned `p622-page` target; no full integration suite or poll-wait. Initial acceptance wrapper expected libtest exit 101, but the prefork harness returns 1 for failed cases. Only that wrapper expectation was corrected; actual negative proof remains valid, and no Cargo command was repeated for the correction.
 
 ## Historical portability and integration
 
@@ -42,12 +42,12 @@ Wiki index/log line counts were checked before every commit against 2675/398; bo
 
 ## Sources
 
-- [Pinned fetch](../../../data/patch-api/evidence/6.2.2-session-2026-10-08/p622-fetch.json).
+- [Pinned fetch](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/6.2.2-session-2026-10-08/p622-fetch.json).
 - [Provenance](../../../data/patch-api/sources/6.2.2-api-changes.provenance.json).
 - [Raw source](../../../data/patch-api/sources/6.2.2-api-changes.wikitext).
 - [Register](../../../data/patch-api/sources/6.2.2-wikitext-register.json) and [ledger](../../../data/patch-api/sources/6.2.2-page-coverage.json).
 - [Spec](../../specs/patch-6-2-2-publication-sweep.md).
-- [Validator and evidence](../../../data/patch-api/evidence/6.2.2-session-2026-10-08/validate.py).
+- [Validator and evidence](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/6.2.2-session-2026-10-08/validate.py).
 
 ## See Also
 

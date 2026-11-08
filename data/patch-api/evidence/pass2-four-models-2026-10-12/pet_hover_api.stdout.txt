@@ -1,7 +1,0 @@
-
-running 2 tests
-test pet_hover_api::pet_hover_authenticates_real_secrets_before_string_validation ... ok
-test pet_hover_api::pet_hover_requires_string_without_numeric_coercion ... ok
-
-test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 10860 filtered out; finished in 0.55s
-

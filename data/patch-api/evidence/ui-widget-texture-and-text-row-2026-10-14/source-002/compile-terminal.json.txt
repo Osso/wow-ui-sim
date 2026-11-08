@@ -1,5 +1,0 @@
-{
-  "stdout": "ActiveState=active\nSubState=exited\nExecMainStatus=0\nMemoryPeak=168218624\nCPUUsageNSec=209452000\nMemoryHigh=5368709120\nMemoryMax=6442450944\n",
-  "stderr": "",
-  "exit": 0
-}

@@ -1,9 +1,0 @@
-{
-  "src/lua_api/frame/methods/misc/alpha_gradient.rs": "c9ec63cee3aac5e746f3b160484356385da1a74fbf8115d6099bafc96315bc3a",
-  "src/lua_api/frame/methods/misc/secret.rs": "a9fee12aa2a2229b3e680db19564b93ccc34b6c5e738a2cc32f5096381a9ed6b",
-  "src/lua_api/frame/methods/map_frames.rs": "6fb125df0ce74861083e2360b143acfcf34339555ac83ecf0f4a485d1604e52e",
-  "tests/method_diff_coverage.rs": "a1dc2c865fee737b3746e00d80b44cec5db23b16712ce2ffeda441e1520d324d",
-  "tests/patch_11_2_0_publication_fixes.rs": "ad0eb93b99230ef5ee84d429ac2f9d9a39e6a962e305078dea26656dd6d950b4",
-  "tests/patch_12_0_1_retirement.rs": "ffb96a4b408e6b7a08e1190c043e1f57c516af3d587d414d292c54c3f6daccd5",
-  "Cargo.toml": "f439cb619c2bff21706e7c0f175cfb63701a0383c1dac732b2308ef759285961"
-}

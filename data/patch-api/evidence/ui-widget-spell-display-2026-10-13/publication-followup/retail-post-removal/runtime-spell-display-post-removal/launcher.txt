@@ -1,6 +1,0 @@
-Running as unit: wow-speak-retail-green-runtime-20261013t194852298298z.service
-          Finished with result: success
-Main processes terminated with: code=exited, status=0/SUCCESS
-               Service runtime: 6.436s
-             CPU time consumed: 5.744s
-                   Memory peak: 1.7G (swap: 0B)

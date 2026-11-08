@@ -1,6 +1,0 @@
-{
-  "at": "2026-10-12T06:13:45.574167+00:00",
-  "exit": 0,
-  "stdout": "\nxwininfo: Window id: 0x3a7 (the root window) (has no name)\n\n  Root window id: 0x3a7 (the root window) (has no name)\n  Parent window id: 0x0 (none)\n     0 children.\n\n",
-  "stderr": ""
-}

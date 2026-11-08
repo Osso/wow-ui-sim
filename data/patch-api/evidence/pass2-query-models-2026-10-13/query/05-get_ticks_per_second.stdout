@@ -1,7 +1,0 @@
-
-running 3 tests
-test get_ticks_per_second::frequency_converts_fixed_duration_nanoseconds_consistently ... ok
-test get_ticks_per_second::frequency_is_exact_nanosecond_policy_and_deterministic ... ok
-test get_ticks_per_second::zero_argument_query_returns_exactly_one_positive_number ... ok
-
-test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 10944 filtered out; finished in 0.28s

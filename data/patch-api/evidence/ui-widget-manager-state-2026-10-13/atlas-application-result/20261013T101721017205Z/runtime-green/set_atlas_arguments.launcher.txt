@@ -1,6 +1,0 @@
-Running as unit: wow-widget-green-set-atlas-arguments-20261013t101721.service
-          Finished with result: exit-code
-Main processes terminated with: code=exited, status=101/n/a
-               Service runtime: 430ms
-             CPU time consumed: 411ms
-                   Memory peak: 66.4M (swap: 0B)

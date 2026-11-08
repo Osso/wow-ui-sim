@@ -1,6 +1,0 @@
-Running as unit: wow-owning-current-10-2-5-20261013t103358.service
-          Finished with result: success
-Main processes terminated with: code=exited, status=0/SUCCESS
-               Service runtime: 9.045s
-             CPU time consumed: 10.561s
-                   Memory peak: 937.2M (swap: 0B)

@@ -1,6 +1,0 @@
-{
-  "source_revision": "bf1b61f1070b11e52d90afa0f427324c760904d1",
-  "production_delta_revision": "bf1b61f10",
-  "scope": "Mists explicitfeatured displayType0 afteractualnewcontractRED; originalpublicUI/nonvacuity and currentStoreRustcleanup/item/correctedbagfixture pending",
-  "git_status": "?? .code-index.db\n?? verification/\n"
-}

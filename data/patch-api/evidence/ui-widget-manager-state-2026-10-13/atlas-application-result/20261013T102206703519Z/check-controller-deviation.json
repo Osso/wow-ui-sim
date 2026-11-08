@@ -1,5 +1,0 @@
-{
-  "failure": "NameError re from separate exec globals/locals namespace",
-  "launches": 0,
-  "fix": "shared execution namespace before admission"
-}

@@ -1,4 +1,0 @@
-ActiveState=active
-SubState=exited
-Result=success
-ExecMainStatus=0

@@ -26,7 +26,7 @@ These are simulator policies corroborated in part by Solarity source, not native
 
 ## Known gaps (current cycle)
 
-- [x] `statusbar_reversed_range_clamps_pending_interpolation` asserts target7/displayed1/pending, then reversed `(8,2)` synchronously collapses both bounds/values to2 and clears interpolation. [Authenticated preservation proof](../../data/patch-api/evidence/reversed-range-interpolation-2026-10-11/README.md): 16 widget cases plus one separate interpolation lifecycle control PASS at `6a4801a40`; compile/fmt/check exit0 and manual readability clean. No producer or native-policy change; frozen broad suite remains FAIL and full handoff OPEN.
+- [x] `statusbar_reversed_range_clamps_pending_interpolation` asserts target7/displayed1/pending, then reversed `(8,2)` synchronously collapses both bounds/values to2 and clears interpolation. [Authenticated preservation proof](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/reversed-range-interpolation-2026-10-11/README.md): 16 widget cases plus one separate interpolation lifecycle control PASS at `6a4801a40`; compile/fmt/check exit0 and manual readability clean. No producer or native-policy change; frozen broad suite remains FAIL and full handoff OPEN.
 
 RED at `0e3c8157c`: four Rust panic failures and one passing control. Independent GREEN after `c72db371d`: 15 widget tests and one interpolation control, plus `cargo check`; `/tmp/cross-version-range-validation-verification-ledger.md` records exact scope and the formatting-only follow-up.
 

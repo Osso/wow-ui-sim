@@ -36,4 +36,7 @@ tests/rilua_bridge/target/
 # restricted listfile; keep the huge full files local and untracked.
 /data/full-community-listfile*.csv
 /data/community-listfile-full*.csv
+# Agent proof receipts live under ~/.local/state/wow-ui-sim, never in the repo.
+/data/patch-api/evidence/
+/data/test-perf/evidence/
 __pycache__/

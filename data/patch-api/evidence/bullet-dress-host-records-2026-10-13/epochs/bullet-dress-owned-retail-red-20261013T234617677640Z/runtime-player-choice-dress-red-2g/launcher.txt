@@ -1,6 +1,0 @@
-Running as unit: <UNIT_011>.service
-          Finished with result: exit-code
-Main processes terminated with: code=exited, status=101/n/a
-               Service runtime: 9.264s
-             CPU time consumed: 5.554s
-                   Memory peak: 1.5G (swap: 0B)

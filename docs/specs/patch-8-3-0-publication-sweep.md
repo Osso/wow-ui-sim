@@ -30,7 +30,7 @@ Audit Warcraft Wiki page 109654 revision 6471393 against current retail 12.1.0. 
 - `tests/patch_8_3_0_publication_fixes.rs`, `patch_8_3_0_cached_surfaces.rs`, `patch_8_3_0_classic_surfaces.rs` — bare/cached-retail and Mists regressions.
 - Existing `tests/mists_product_choice_compat.rs` and legacy startup API-shape test in `tests/mists_compat_bootstrap.rs` — every affected classic caller.
 - `tools/test_gen_patch_wikitext_register.py`, `tools/test_extract_patch_non_inventory.py` — concrete serialized-output fixtures.
-- [Proof ledger](../../data/patch-api/evidence/8.3.0-session-2026-10-08/p830-proof.json).
+- [Proof ledger](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/8.3.0-session-2026-10-08/p830-proof.json).
 
 ## Known gaps (current cycle)
 

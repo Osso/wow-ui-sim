@@ -1,6 +1,0 @@
-{
-  "head": "262987b1a65f049d5c3e158b18a8eb73cc22e4ba",
-  "phase": "ptr-green",
-  "scope": "Implemented explicit C_Map bounty query, current-channel guard and supplied-input/consumer tests",
-  "test_source_sha256": "1eec1a5c32e2b610c6e485972b55af6f2e906af41f903104d2a1e457c4c27f56"
-}

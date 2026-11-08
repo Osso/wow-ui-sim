@@ -1,7 +1,0 @@
-{
-  "head": "7e136499558625b6dcdc6ac6bda186b4caf52d5a",
-  "phase": "ptr-final",
-  "scope": "Final shared identity validator; Quest13 and flag-query9 changed-scope regressions",
-  "test_commit": "a5eaf4fc63e44027b1e9757b146b398c62e3a4b3",
-  "test_source_sha256": "ee2b5cedce9beaebc211353a01084cc6be127a7f23d1ea97450d209a851148a5"
-}

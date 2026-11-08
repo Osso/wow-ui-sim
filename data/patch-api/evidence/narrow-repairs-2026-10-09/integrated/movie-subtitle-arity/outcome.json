@@ -1,9 +1,0 @@
-{
-  "artifact_unchanged": true,
-  "ended": "2026-10-11T03:44:55.687879+00:00",
-  "errors": [],
-  "exit": 0,
-  "marker_present": true,
-  "probe_unchanged": true,
-  "scope": "Four exact-zero-return MovieFrame boolean setter calls, two rejected explicit receiver controls and hidden-state preservation; no native or playback claim"
-}

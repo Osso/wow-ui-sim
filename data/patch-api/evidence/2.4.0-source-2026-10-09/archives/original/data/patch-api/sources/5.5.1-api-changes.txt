@@ -1,5 +1,0 @@
-Patch 5.5.1 API changes
-
-== Resources ==
-* TOC: 50501
-* Diffs: wow-ui-source, BlizzardInterfaceResources

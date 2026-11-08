@@ -1,8 +1,0 @@
-{
-  "argv": [
-    "cargo",
-    "fmt",
-    "--check"
-  ],
-  "cwd": "/home/osso/.worktrees/wow-ui-sim-p420-source"
-}

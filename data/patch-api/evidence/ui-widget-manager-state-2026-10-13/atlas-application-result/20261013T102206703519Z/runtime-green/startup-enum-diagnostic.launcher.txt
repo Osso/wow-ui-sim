@@ -1,6 +1,0 @@
-Running as unit: wow-atlas-startup-enum-20261013t102206.service; invocation ID: 9e94f555c6a44c91a6550dbcbd377310
-          Finished with result: success
-Main processes terminated with: code=exited, status=0/SUCCESS
-               Service runtime: 10.036s
-             CPU time consumed: 9.208s
-                   Memory peak: 1.4G (swap: 1.6M)

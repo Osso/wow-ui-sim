@@ -9,7 +9,7 @@
 - [x] Re-registering with one unit replaces the two-unit filter; the former second unit no longer matches.
 - [x] `UnregisterEvent` and `UnregisterAllEvents` remove the complete filter and prevent delivery for both units.
 - [x] Keep existing `IsEventRegistered` first-unit reporting and invalid-first-unit policy unchanged; neither behavior is newly established native parity.
-- [x] Keep exact query return arity unchanged for the bounded current model. [Independent Retail CLI proof](../../data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/unit2-query-arity/final-report.md) passes 5/5 states with exactly two values: fresh, pair registration, single-target replacement, unregister, and invalid-first policy. Marker plus trailing `[]` and exit 0 establish execution; no other-profile arity or native query-parity claim.
+- [x] Keep exact query return arity unchanged for the bounded current model. [Independent Retail CLI proof](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/unit2-query-arity/final-report.md) passes 5/5 states with exactly two values: fresh, pair registration, single-target replacement, unregister, and invalid-first policy. Marker plus trailing `[]` and exit 0 establish execution; no other-profile arity or native query-parity claim.
 
 ## How it works
 
@@ -30,7 +30,7 @@
 
 ## Accepted bounded proof
 
-[Authentic RED](../../data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/unit2-red/final-report.md) records 1 FAIL/1 PASS: missing second-unit target damage delivery. [Independent GREEN](../../data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/unit2-green/final-report.md) accepts 119/119 cases across seven profiles and 49 commands, including both unit2 cases and first-unit/invalid-first query controls per profile. The separate Retail query receipt closes bounded current-model exact arity (5/5 states), not native query parity. Native query behavior, aliases, catalog identity, Mists startup and full handoff remain OPEN.
+[Authentic RED](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/unit2-red/final-report.md) records 1 FAIL/1 PASS: missing second-unit target damage delivery. [Independent GREEN](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/unit2-green/final-report.md) accepts 119/119 cases across seven profiles and 49 commands, including both unit2 cases and first-unit/invalid-first query controls per profile. The separate Retail query receipt closes bounded current-model exact arity (5/5 states), not native query parity. Native query behavior, aliases, catalog identity, Mists startup and full handoff remain OPEN.
 
 ## Known gaps (current cycle)
 

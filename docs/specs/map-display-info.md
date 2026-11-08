@@ -73,7 +73,7 @@ Exact private report: `/home/osso/.local/state/wow-ui-sim/verification/map-displ
 
 Exact epoch: `/home/osso/.local/state/wow-ui-sim/verification/map-display-prepublication-green-current/20261010T194147Z`.
 
-[Sanitized bounded report](../../data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/map-display-default-green/independent-report.md) and adjacent receipts/hashes retain default evidence without binaries, complete source manifests, or full sweep output.
+[Sanitized bounded report](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/map-display-default-green/independent-report.md) and adjacent receipts/hashes retain default evidence without binaries, complete source manifests, or full sweep output.
 
 | Boundary | Saved result | Limit |
 |---|---|---|
@@ -89,7 +89,7 @@ Saved checks retain six iced_wgpu manifest deprecation warnings; exit 0 does not
 
 Exact independent P801 report: `/home/osso/.local/state/wow-ui-sim/verification/p801-live-input-current/independent-green-report.md`. Saved native simulator test-binary epoch `20261010T195723Z` at `63f3a8a7373c8e52ffcc005bb443a9cf64b59fbf`: 1 PASS, exit 0; current publication 269 rows / 253 OK / 16 gaps. Historical validator PASS preserves frozen 269 / 252 OK / 17 gaps, sources and receipts unchanged; exact frozen/live digest pair retained in the [model investigation](../wiki/investigations/map-display-info-model.md). This supersedes current P801 pending status, not the older failed sweep receipt above.
 
-[Sanitized PTR receipts/correction/hashes](../../data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/map-display-ptr-green/README.md): exact epoch `/home/osso/.local/state/wow-ui-sim/verification/map-display-ptr-green-current/20261010T200242Z`, initial33 PASS + continuation51 PASS = **84 actual PASS**, all five MapDisplay targets PASS. Compile exit0/source equality true; unchanged artifacts; separate stored-error CLI `[]`, exit0, CASC disabled. Controller expected35 was wrong because two party tests are Retail-only; original error and correction JSON preserved. Final [independent PTR audit](../../data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/map-display-ptr-green/independent-report.md) admits bounded **84/84 PASS**; earlier PENDING inspection is superseded, not rewritten.
+[Sanitized PTR receipts/correction/hashes](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/map-display-ptr-green/README.md): exact epoch `/home/osso/.local/state/wow-ui-sim/verification/map-display-ptr-green-current/20261010T200242Z`, initial33 PASS + continuation51 PASS = **84 actual PASS**, all five MapDisplay targets PASS. Compile exit0/source equality true; unchanged artifacts; separate stored-error CLI `[]`, exit0, CASC disabled. Controller expected35 was wrong because two party tests are Retail-only; original error and correction JSON preserved. Final [independent PTR audit](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/map-display-ptr-green/independent-report.md) admits bounded **84/84 PASS**; earlier PENDING inspection is superseded, not rewritten.
 
 ## Known gaps (current cycle)
 

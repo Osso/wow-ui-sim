@@ -1,7 +1,0 @@
-{
-  "status": "setup-failure;zero-launch",
-  "source": "447cf777a",
-  "reason": "independent receipt has sealed_path but helper requires path; original preserved; no missing authentication or behavioral assertion",
-  "field": "path",
-  "runtime_launches": 0
-}

@@ -1,6 +1,0 @@
-{
-  "snapshot_revision": "39ce8969a",
-  "compiled_revision": "34ef9235d",
-  "production": "5bd208dba",
-  "scope": "unchanged externalrepo loading inputs; currentPTRbinary embedsprofile+RustSetAtlas; active profilecachePTR; Retail-onlybar/HUDconsumer3 excluded"
-}

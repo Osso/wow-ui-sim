@@ -1,9 +1,0 @@
-[  0.000s] [startup] wow-sim process started pid=1642612
-[  0.000s] Resource limits: 2 CPU core(s)
-error: unexpected argument '-- Bounded normal Retail/PTR loaded-publication probe for FriendInfo exact lookup.
--- Run only against normal Retail and PTR wow-sim binaries after build; do not seed state.
-local ns ' found
-
-Usage: normal-sealed --no-addons --no-saved-vars
-
-For more information, try '--help'.

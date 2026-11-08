@@ -1,6 +1,0 @@
-Running as unit: wow-widget-red-ui-widget-manager-hud-containers-20261013t083600.service
-          Finished with result: exit-code
-Main processes terminated with: code=exited, status=1/FAILURE
-               Service runtime: 5ms
-             CPU time consumed: 5ms
-                   Memory peak: 2.2M (swap: 0B)

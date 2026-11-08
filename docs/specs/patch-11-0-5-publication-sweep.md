@@ -23,13 +23,13 @@ Historical 11.0.5 emulation, 11.x epoch features, native signature/output/securi
 
 ## Known gaps
 
-- [ ] Ten exact publication/compatibility gaps: [per-ID review](../../data/patch-api/evidence/11.0.5-session-2026-10-06/p1105-gap-review.json).
-- [ ] 24 non-inventory enum/structure contracts: [exhaustive scout](../../data/patch-api/evidence/11.0.5-session-2026-10-06/p1105-extract-scout.md); candidates only, no behavior credit.
+- [ ] Ten exact publication/compatibility gaps: [per-ID review](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/11.0.5-session-2026-10-06/p1105-gap-review.json).
+- [ ] 24 non-inventory enum/structure contracts: [exhaustive scout](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/11.0.5-session-2026-10-06/p1105-extract-scout.md); candidates only, no behavior credit.
 - [ ] Native altered-form eligibility and peripheral lighting behavior. Snapshot availability and CVar configuration storage are bounded simulator contracts.
 
 ## Local proof
 
-[Proof ledger](../../data/patch-api/evidence/11.0.5-session-2026-10-06/p1105-proof.json) records command/cwd/environment/revision/outcome scopes. Runtime revision `5fb610fa3`; earlier retirement/barber revision `9ebd57076`. Later sweeps ran at `b3113d0f7`; subsequent Chroma-only registry/test/11.0.5-fixture change does not intersect their symbols/expectations. No later audit inputs changed. Local development proof, not independent/native acceptance.
+[Proof ledger](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/11.0.5-session-2026-10-06/p1105-proof.json) records command/cwd/environment/revision/outcome scopes. Runtime revision `5fb610fa3`; earlier retirement/barber revision `9ebd57076`. Later sweeps ran at `b3113d0f7`; subsequent Chroma-only registry/test/11.0.5-fixture change does not intersect their symbols/expectations. No later audit inputs changed. Local development proof, not independent/native acceptance.
 
 | Isolated sweep | Rows | OK | Exact gaps | Result |
 |---|---:|---:|---:|---|

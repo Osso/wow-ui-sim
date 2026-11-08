@@ -1,5 +1,0 @@
-{
-  "source_revision": "f835b158a57620662f73ac5c6ed13a68a353532c",
-  "scope": "client-mists headless integration compilation only; runtime unrun",
-  "git_status": "?? .code-index.db\n?? .code-index.db-shm\n?? .code-index.db-wal\n?? verification/\n"
-}

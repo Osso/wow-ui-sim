@@ -46,13 +46,13 @@ Initial PTR API RED at `13a818ba5` executed two cases: 0 PASS / 2 FAIL, exit101,
 
 The input-only successor authors three additional direct cases for supplied numeric/bare/generated-link booleans and uncatalogued identity, replacement/removal/isolation, and independent mount/equipment/consumable inputs. The security case now exercises supplied false and true. One added original PlayerChoice case preserves whole closure/template/method provenance and supplies false/true/false plus independent mount controls. Retail at `76e8b8309` now executed direct 0 PASS / 5 FAIL and unchanged whole cached PlayerChoice 0 PASS / 1 FAIL, each exit101. Direct supplied queries fail nonboolean results; the consumer preserves original methods/SetItem/link/provenance, accepts supplied-false baseline then returns false for supplied true. Independent Retail classification confirms five direct feature REDs plus the original-consumer feature RED. PTR at `733399c38` subsequently executed the same direct 0 PASS / 5 FAIL and original-consumer 0 PASS / 1 FAIL, each exit101; direct nonboolean/required-input and original false-versus-supplied-true boundaries retained. Independent PTR classification confirms five direct feature REDs plus the original-consumer feature RED; later secret/state/mount controls remain unreached. Native predicate source follows those reached REDs; GREEN remains pending.
 
-[Initial selected packet](../../data/patch-api/evidence/bullet-dress-initial-api-red-2026-10-13/README.md) retains whole Retail/PTR initial API streams and independent classification; corrected bounded public-copy/privacy/link gate PASS at `a7439281a`, original invocation-ID privacy FAIL retained.
+[Initial selected packet](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/bullet-dress-initial-api-red-2026-10-13/README.md) retains whole Retail/PTR initial API streams and independent classification; corrected bounded public-copy/privacy/link gate PASS at `a7439281a`, original invocation-ID privacy FAIL retained.
 
 ### Verified bounded runtime — 2026-10-13
 
 Retail and PTR each pass five explicit-boolean/input/security/isolation cases and the original PlayerChoice dressability/mount contrast. These prove the supplied model, not native item classification.
 
-The [whole host-record packet](../../data/patch-api/evidence/bullet-dress-host-records-2026-10-13/README.md) owns the mixed-revision matrix, preservation, complete diagnostics, startup and check/format evidence. Public-copy and retained-gate copy checks pass at their recorded scopes; native/render parity, earlier profiles and the parent handoff remain open.
+The [whole host-record packet](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/bullet-dress-host-records-2026-10-13/README.md) owns the mixed-revision matrix, preservation, complete diagnostics, startup and check/format evidence. Public-copy and retained-gate copy checks pass at their recorded scopes; native/render parity, earlier profiles and the parent handoff remain open.
 
 ## Known gaps (current cycle)
 

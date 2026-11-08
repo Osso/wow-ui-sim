@@ -376,15 +376,15 @@ Patch API audits use a checked-in JSON register for every patch-list occurrence.
 - The 33 12.0.0 structure declarations migrated in these slices are provenance-only metadata; their field/API rows remain separate and no payload behavior is claimed. The nine remaining behavior-linked or removal-sensitive structure declarations are evidence-required/unsafe; source metadata or method absence does not prove their exact runtime contracts or removal/replacement identity.
 - [x] Represent Lua observations as typed assertions with flavor, lifecycle phase, expected presence, optional expected Lua type, and optional addon identity; reject unknown assertion fields and invalid presence/type combinations.
 - [x] Restrict evidence kinds to `source`, `runtime`, `test`, and `manual`; classify checked-in discovery/register artifacts as `source` evidence.
-- [x] Require every evidence reference to be repository-relative, Git-tracked, and outside the manifest that contains it; reject home-directory paths, untracked files, and self-referential evidence.
-- [x] Hash evidence against the bytes in the current checkout; any stale or mismatched artifact hash fails repository validation.
-- [x] Keep retained manual captures as tracked evidence artifacts under `data/patch-api/evidence/<patch>/`, rather than relying on local probe backups.
+- [x] Require every evidence reference to be repository-relative, Git-tracked, and outside the manifest that contains it; reject home-directory paths, untracked files, and self-referential evidence. A `git:<commit>:<path>` reference instead resolves committed bytes from Git history and must hash to the same value.
+- [x] Hash evidence against the bytes in the current checkout or the referenced commit; any stale or mismatched artifact hash fails repository validation.
+- [x] Keep retained manual captures as untracked proof receipts under `~/.local/state/wow-ui-sim`, not in the repository. `data/patch-api/evidence/` and `data/test-perf/evidence/` are ignored; a manifest cites a removed receipt with a `git:<commit>:<path>` reference.
 - [x] Require the v2 manifest envelope to identify target flavor/build and cache manifest/hash, source path/hash/counts, and generated checklist/inventory outputs.
 - [x] Render each generated checklist canonically as one indexed line containing status, row identity, and resolution, then reject any checked-in output that differs byte-for-byte.
 - [x] Restrict exception requests to `unsafe` or `impossible` resolutions.
 - [x] Allow unsafe/impossible evidence-required or exception-requested rows to omit fabricated presence assertions only when item-specific evidence concerns a non-Lua boundary; evidence-required rows require no approval, commit, or focused test, while exception-requested rows retain their approval or allowlisted scope requirements.
 - [x] Record target flavor/build, source owner, distinct LoD addon identity, lifecycle assertions, evidence file hashes, tests, commit, and per-item approval provenance.
-- [x] Recompute patch-source, Blizzard manifest, and evidence hashes from repository files.
+- [x] Recompute patch-source, Blizzard manifest, and evidence hashes from repository files or Git-history references.
 - [x] Accept legacy direction arrays or a generic categorized `occurrences` array; validate each occurrence's direction, nonblank category, optional nonblank change detail, symbol path, and deterministic added/changed/removed ordering.
 - [x] Verify focused test references exist and named test cases occur in those files; accept ordinary `#[test]` functions and generated `prefork_full_ui_case!` marker cases.
 - [x] Verify implementation commits resolve and are ancestors of the audited checkout.

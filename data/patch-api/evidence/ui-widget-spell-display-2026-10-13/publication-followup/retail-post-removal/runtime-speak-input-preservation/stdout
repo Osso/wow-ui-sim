@@ -1,7 +1,0 @@
-
-running 2 tests
-test voice_speak_for_me_active_input::retained_speak_for_me_query_reads_live_independent_environment_input ... ok
-test voice_speak_for_me_active_input::speak_for_me_active_is_one_false_boolean_by_default ... ok
-
-test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 10992 filtered out; finished in 0.63s
-

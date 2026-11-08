@@ -1,9 +1,0 @@
-
-running 4 tests
-test item_cooldowns::item_cooldown_container_bag_slot ... ok
-test item_cooldowns::item_cooldown_container_item_id ... ok
-test item_cooldowns::item_cooldown_item_info_id_and_hyperlink ... ok
-test item_cooldowns::item_cooldown_legacy_equipment_slot_is_independent ... ok
-
-test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 11037 filtered out; finished in 1.24s
-

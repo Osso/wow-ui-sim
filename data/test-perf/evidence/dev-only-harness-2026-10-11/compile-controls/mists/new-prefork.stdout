@@ -1,5 +1,0 @@
-chat_frame::test_chat_editbox_click_type_and_submit: test
-chat_frame::test_chat_editbox_text_color_after_activation: test
-spell_casting::cast_bar_respects_edit_mode_lock_setting_after_startup_fix: test
-
-3 tests, 0 benchmarks

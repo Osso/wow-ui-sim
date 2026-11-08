@@ -1,6 +1,0 @@
-{
-  "source_revision": "bb9ea16fea58c467dcc41a23bca8a23d1a348c3e",
-  "production_delta_revision": "bb9ea16fe",
-  "scope": "Recompile originalRetailprefork test after observed Row134fixture52to51 reconciliation, no codebehaviorchange",
-  "git_status": " M docs/specs/patch-8-2-0-publication-sweep.md\n M docs/specs/texture-and-text-row.md\n M docs/specs/ui-widget-text-with-subtext.md\n M docs/wiki/systems/ui-widget-manager-state.md\n?? .code-index.db\n?? handoff/\n?? state/\n?? verification/\n"
-}

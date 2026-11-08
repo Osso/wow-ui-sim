@@ -1,9 +1,0 @@
-{
-  "observed_at": "2026-10-12T17:48:52.202668+00:00",
-  "owned_pid": 2270041,
-  "pid_absent": true,
-  "removed_only_owned_socket_paths": [
-    "/tmp/iced-debug-2270041.sock"
-  ],
-  "scope": "Administrative teardown of new bounded GUI socket residue only; no unrelated socket/unit/display stop; runtimecode unchanged"
-}

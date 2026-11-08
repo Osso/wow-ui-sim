@@ -1,6 +1,0 @@
-Complete incidental tool diagnostics:
-1. First follow-up Pyrun evaluation: Error: Error: name 'record_command' is not defined. No command executed in this follow-up.
-2. Second follow-up Pyrun evaluation: Error: Error: commands. Capture of git diff occurred before ctx.commands append failed; output was not surfaced/retained. Subsequent checks had not executed. git diff was later captured to command-1.json to recover missing proof.
-3. functions.find cached-doc discovery: fd is not available on PATH. Used bounded Path.rglob discovery instead.
-4. First nested-contracts extraction targeted SharedDocumentation, produced empty file. Readback detected it; actual UIWidgetSpellInfo was found/read in ManagerDocumentation, then private proof replaced with correct excerpts.
-No Cargo, runtime, old artifact hashing, delegation, commits, or tracked writes occurred.

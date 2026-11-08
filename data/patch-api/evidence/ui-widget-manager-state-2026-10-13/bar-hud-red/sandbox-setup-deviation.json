@@ -1,8 +1,0 @@
-{
-  "failure": "archived tracked source excludes target; bwrap cannot create a bind mount destination under read-only snapshot",
-  "failed_attempts": 4,
-  "test_cases_reached": 0,
-  "classification": "sandbox setup, not behavioral RED",
-  "fix": "create empty target mountpoint in snapshot before root read-only sandbox mount",
-  "retry": "runtime-red-retry1, same authenticated binary metadata; original runtime-red preserved"
-}

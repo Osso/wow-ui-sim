@@ -1,8 +1,0 @@
-{
-  "revision": "ce2c37ad5623642bec418733ac363600ea3e7b63",
-  "scope": ["src/c_api/item_spell/c_currency.rs changed registration/validator/query", "src/lua_api/state.rs empty map initializer", "src/lua_api/state/sim_state.rs map field", "tests/currency_war_mode_bonus.rs new helper and supplied controls"],
-  "method": "Manual changed-line audit against rust-readability checklist; independent final verification pending",
-  "violations": [],
-  "observations": "Pure validator has explicit numeric error and finite/integral/i32 bounds. Query authenticates before lookup, short-lived immutable borrow, copied scalars and exactly two pushes. Registration gates current Retail/PTR. Tests mutate real owned map; all nine nullable pairs use concrete assertions; fixture loop two nesting levels. No warning suppression, vendor mutation, mocked getter or generic bridge assumption.",
-  "limits": "Not full repository audit or final behavior proof; inherited iced manifest warnings remain."
-}

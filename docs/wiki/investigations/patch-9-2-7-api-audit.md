@@ -10,7 +10,7 @@ Three inventory occurrences: two added events, one changed event. Added header c
 
 ## Proof boundaries
 
-Event registration does not prove auction purchase/delivery state or the changed notification's `auctionID` payload. Five new enum tables, three AuctionHouseError additions, ReportType.PvPScoreboard, and ItemKeyInfo's itemID/battlePetSpeciesID additions need exact identity/populated DTO behavior proof. [Literal scout](../../../data/patch-api/evidence/9.2.7-session-2026-10-07/p927-extract-scout.json) assigns every extract occurrence a precise reason, literal line and original wikitext line. Enum tables/members exist in `src/lua_api/globals/enum_data/missing_enums.lua`; no page-specific value/flag parity test is credited. `registry_and_rows.rs:539-553` serializes GetItemKeyInfo name/icon/quality/commodity fields but omits itemID and battlePetSpeciesID. Existing round-trip tests assert those fields on **ItemKey**, not ItemKeyInfo. Populated item and pet DTO behavior remains pending rather than replaced with constants.
+Event registration does not prove auction purchase/delivery state or the changed notification's `auctionID` payload. Five new enum tables, three AuctionHouseError additions, ReportType.PvPScoreboard, and ItemKeyInfo's itemID/battlePetSpeciesID additions need exact identity/populated DTO behavior proof. [Literal scout](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/9.2.7-session-2026-10-07/p927-extract-scout.json) assigns every extract occurrence a precise reason, literal line and original wikitext line. Enum tables/members exist in `src/lua_api/globals/enum_data/missing_enums.lua`; no page-specific value/flag parity test is credited. `registry_and_rows.rs:539-553` serializes GetItemKeyInfo name/icon/quality/commodity fields but omits itemID and battlePetSpeciesID. Existing round-trip tests assert those fields on **ItemKey**, not ItemKeyInfo. Populated item and pet DTO behavior remains pending rather than replaced with constants.
 
 The read-only current native declaration confirms ItemKeyInfo's two non-nil fields at `Blizzard_APIDocumentationGenerated/AuctionHouseDocumentation.lua:1636-1637` and the notification's optional auctionID at `:1254`; declaration metadata is not execution proof. Documentation relocation is source metadata, not an API implementation. No placeholders, vendor patches or runtime surface changes introduced. One source-loss boundary fixed; zero runtime API gaps closed and zero publication gaps remain.
 
@@ -20,11 +20,11 @@ Whole `src/` and `tests/` scan retains 43 untruncated matches, including embedde
 
 Compiled source/test revision `cbc762757`. All 27 publication sweeps plus the existing animation-owner regression pass: 28/28 cases, covering 6,379 inventory rows with exact per-patch fixtures. Own sweep: three rows, three OK, zero gaps. AUCTION_HOUSE_PURCHASE_DELIVERY_DELAY_UPDATE correctly rejects registration because the 10.1.5 removal supersedes its historical addition; this is not a new retirement.
 
-Negative control changes only AUCTION_HOUSE_PURCHASE_COMPLETED added → removed. Exactly one new failure, zero resolved failures, unchanged three row IDs; expected prefork exit 1. [Exact result](../../../data/patch-api/evidence/9.2.7-session-2026-10-07/p927-negative-result.json).
+Negative control changes only AUCTION_HOUSE_PURCHASE_COMPLETED added → removed. Exactly one new failure, zero resolved failures, unchanged three row IDs; expected prefork exit 1. [Exact result](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/9.2.7-session-2026-10-07/p927-negative-result.json).
 
 Extractor RED reproduces section loss; GREEN passes all 23 extractor and eleven register fixtures. Format/fmt --check, default cargo check, Mists `cargo check --no-default-features --features sound,gui,casc,client-mists --tests`, separate retail build and bounded startup pass. Mists has zero non-vendor warnings; six pre-existing iced manifest deprecations plus their summary remain unsuppressed. Retail startup exits zero and prints `[]`. No global/method changed; no additional affected integration or prefork surface tests require migration. Changed Rust manually audited: flat input-only sweep specification, explicit source/fixture/env variables and chronological later inputs; no readability violations or warning suppressions introduced.
 
-[Proof ledger](../../../data/patch-api/evidence/9.2.7-session-2026-10-07/p927-proof.json) records exact commands, revision/scope, output artifacts, exits and invalidation state. Cargo output captured once per command, saved and searched with rg; no rerun to recover output. All commands explicitly use this worktree as cwd and its own `target`; no sibling build reuse, agents/models, push, merge, vendor/cache or canonical working-file edits.
+[Proof ledger](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/9.2.7-session-2026-10-07/p927-proof.json) records exact commands, revision/scope, output artifacts, exits and invalidation state. Cargo output captured once per command, saved and searched with rg; no rerun to recover output. All commands explicitly use this worktree as cwd and its own `target`; no sibling build reuse, agents/models, push, merge, vendor/cache or canonical working-file edits.
 
 ## Sweep table
 
@@ -62,15 +62,15 @@ All results are publication-only, not full API compatibility. Exact known-gap fi
 
 ## Preservation
 
-All 138 pre-existing source/register/ledger inputs remain byte-identical. Every one of the 52 previous `--check --text-only` outcomes, with and without `--preserve-examples`, is unchanged. Fifteen pre-existing mode failures remain, including both modes for 12.0.5/12.0.7/12.1.0 and historical example-mode differences. Own page reproduces in both modes. Parser unchanged; no prior register rewritten. [Artifact validator](../../../data/patch-api/evidence/9.2.7-session-2026-10-07/validate.py) checks exact IDs, counts, literals, source hashes, expectations, negative control, preserved inputs/outcomes, sweep receipts and Mists warning boundary without runtime reruns.
+All 138 pre-existing source/register/ledger inputs remain byte-identical. Every one of the 52 previous `--check --text-only` outcomes, with and without `--preserve-examples`, is unchanged. Fifteen pre-existing mode failures remain, including both modes for 12.0.5/12.0.7/12.1.0 and historical example-mode differences. Own page reproduces in both modes. Parser unchanged; no prior register rewritten. [Artifact validator](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/9.2.7-session-2026-10-07/validate.py) checks exact IDs, counts, literals, source hashes, expectations, negative control, preserved inputs/outcomes, sweep receipts and Mists warning boundary without runtime reruns.
 
 ## Sources
 
-- [Retained API response](../../../data/patch-api/evidence/9.2.7-session-2026-10-07/p927-fetch.json) — revision and original wikitext.
+- [Retained API response](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/9.2.7-session-2026-10-07/p927-fetch.json) — revision and original wikitext.
 - [Register](../../../data/patch-api/sources/9.2.7-wikitext-register.json) — exact inventory identities and lines.
 - [Spec](../../specs/patch-9-2-7-publication-sweep.md) — required proof boundaries.
-- [Caller scan](../../../data/patch-api/evidence/9.2.7-session-2026-10-07/p927-whole-caller-scan.txt) — untruncated simulator callers.
-- [Cached source scan](../../../data/patch-api/evidence/9.2.7-session-2026-10-07/p927-cached-source-scan.txt) — read-only retail references.
+- [Caller scan](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/9.2.7-session-2026-10-07/p927-whole-caller-scan.txt) — untruncated simulator callers.
+- [Cached source scan](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/9.2.7-session-2026-10-07/p927-cached-source-scan.txt) — read-only retail references.
 
 ## See Also
 

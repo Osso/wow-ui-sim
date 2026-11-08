@@ -1,6 +1,0 @@
-
-running 2 tests
-test set_atlas_arguments::test_set_atlas_argument_validation_matches_retail ... ok
-test set_atlas_arguments::test_set_atlas_reports_application_success_to_texture_kit_consumers ... ok
-
-test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 10965 filtered out; finished in 0.26s

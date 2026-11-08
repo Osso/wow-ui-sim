@@ -1,6 +1,0 @@
-{
-  "source_revision": "39ce8969a4c44e57ee98b9f5720220661af8bbba",
-  "production_delta_revision": "0745fe84f",
-  "scope": "correctedcachedHUD2 + localizedbar1; fivequeryPASS@5a869 reused unchanged; core/startup pendingseparate scopes",
-  "git_status": "?? .code-index.db\n?? verification/\n"
-}

@@ -1,6 +1,0 @@
-{
-  "launcher_exit": 0,
-  "elapsed_seconds": 16.535888620011974,
-  "formatter_launches": 1,
-  "unit": "private-unit-3.service"
-}

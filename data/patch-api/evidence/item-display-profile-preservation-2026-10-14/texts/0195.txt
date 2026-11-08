@@ -1,6 +1,0 @@
-{
-  "source_revision": "4d5572f241cce3d99a7b486709186a2638566a56",
-  "production_delta_revision": "bc5cecffb",
-  "scope": "Mists postretirement Store/display/item preservation plus newly enabled common vehicle5 tests; no-run compile only",
-  "git_status": "?? .code-index.db\n?? handoff/\n?? verification/\n"
-}

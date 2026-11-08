@@ -1,6 +1,0 @@
-{
-  "source_revision": "e4caa489928fabd7569b9000a5b090bbc2344b06",
-  "production_delta_revision": "e4caa4899",
-  "scope": "Retail item cooldown passive map/four-route contract tests, no query producer; no-run compile before genuine RED",
-  "git_status": "?? .code-index.db\n?? verification/\n"
-}

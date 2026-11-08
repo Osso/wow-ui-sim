@@ -42,9 +42,9 @@ No agents/models, push, merge, vendor edits, Blizzard monkey-patches or existing
 - [Publication contract](../../specs/patch-11-2-7-publication-sweep.md)
 - [Source provenance](../../../data/patch-api/sources/11.2.7-api-changes.provenance.json)
 - [Coverage ledger](../../../data/patch-api/sources/11.2.7-page-coverage.json)
-- [Per-ID review](../../../data/patch-api/evidence/11.2.7-session-2026-10-06/p1127-gap-review.json)
-- [Extract scout](../../../data/patch-api/evidence/11.2.7-session-2026-10-06/p1127-extract-scout.md)
-- [Proof ledger](../../../data/patch-api/evidence/11.2.7-session-2026-10-06/p1127-proof.json)
+- [Per-ID review](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/11.2.7-session-2026-10-06/p1127-gap-review.json)
+- [Extract scout](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/11.2.7-session-2026-10-06/p1127-extract-scout.md)
+- [Proof ledger](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/11.2.7-session-2026-10-06/p1127-proof.json)
 
 ## See Also
 
@@ -55,7 +55,7 @@ No agents/models, push, merge, vendor edits, Blizzard monkey-patches or existing
 
 ## Publication-gap follow-up — 2026-10-06
 
-At runtime `0523068b2`, 27 of the original 121 gaps close: 25 host/state-backed producers and two permanent unsupported-3D methods; 94 remain explicit gaps. See [per-ID outcomes](../../../data/patch-api/evidence/11.2.7-session-2026-10-06/p1127-gap-outcomes.json), [cached contract/consumer evidence](../../../data/patch-api/evidence/11.2.7-session-2026-10-06/p1127-gap-contracts.json), and [contract/proof](../../specs/patch-11-2-7-publication-sweep.md#follow-up-acceptance--runtime-0523068b2). Earlier counts above are historical; page-coverage ledgers remain frozen.
+At runtime `0523068b2`, 27 of the original 121 gaps close: 25 host/state-backed producers and two permanent unsupported-3D methods; 94 remain explicit gaps. See [per-ID outcomes](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/11.2.7-session-2026-10-06/p1127-gap-outcomes.json), [cached contract/consumer evidence](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/11.2.7-session-2026-10-06/p1127-gap-contracts.json), and [contract/proof](../../specs/patch-11-2-7-publication-sweep.md#follow-up-acceptance--runtime-0523068b2). Earlier counts above are historical; page-coverage ledgers remain frozen.
 
 | Exact surface | Outcome | Proof level / boundary |
 |---|---:|---|

@@ -30,12 +30,12 @@ Probe retained Warcraft Wiki page 609319, revision 6726777, against unmodified c
 - `tests/patch_11_0_7_publication_fixes.rs` — repeated retirement absence; multi-unit clear-all, callback-visible state, repeated empty operation and reassignment.
 - `tests/patch_11_0_7_cached_raid_targets.rs` — full cached secure-action path after preload, with no new Lua errors.
 - `tools/test_extract_patch_non_inventory.py` — retained transclusion reference, stable row ID, build-context classification; unknown templates still fail explicitly.
-- [Artifact validator](../../data/patch-api/evidence/11.0.7-session-2026-10-06/p1107-validate.py) — accounting/source/fixture/proof contract, not native parity.
+- [Artifact validator](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/11.0.7-session-2026-10-06/p1107-validate.py) — accounting/source/fixture/proof contract, not native parity.
 
 ## Known gaps (current cycle)
 
-- [ ] 28 exact publication gaps: [per-ID producer/model/policy boundaries](../../data/patch-api/evidence/11.0.7-session-2026-10-06/p1107-gap-review.json).
-- [ ] 69 non-inventory contract rows: [exhaustive scout](../../data/patch-api/evidence/11.0.7-session-2026-10-06/p1107-extract-scout.md); no behavior credit from names, registration or empty DTOs.
+- [ ] 28 exact publication gaps: [per-ID producer/model/policy boundaries](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/11.0.7-session-2026-10-06/p1107-gap-review.json).
+- [ ] 69 non-inventory contract rows: [exhaustive scout](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/11.0.7-session-2026-10-06/p1107-extract-scout.md); no behavior credit from names, registration or empty DTOs.
 - [ ] Native restricted-action authorization and raid-marker event timing; cached documentation declares restrictions but does not define authorization/timing policy.
 
 ## Out of scope
@@ -44,7 +44,7 @@ Historical 11.0.7 emulation, 11.x epoch features, native signature/output/securi
 
 ## Local proof
 
-[Proof ledger](../../data/patch-api/evidence/11.0.7-session-2026-10-06/p1107-proof.json) records exact command/cwd/revision/outcome and failed/superseded scopes. Runtime revision `9b4119c9e`; final cached-consumer fixture `e29e8b98f`. All commands/build artifacts use p1107-page; no sibling target reuse or copying. Later sources/fixtures/coverage ledgers remain unchanged from `6aba97a94`. Local development proof only, not independent/native acceptance.
+[Proof ledger](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/11.0.7-session-2026-10-06/p1107-proof.json) records exact command/cwd/revision/outcome and failed/superseded scopes. Runtime revision `9b4119c9e`; final cached-consumer fixture `e29e8b98f`. All commands/build artifacts use p1107-page; no sibling target reuse or copying. Later sources/fixtures/coverage ledgers remain unchanged from `6aba97a94`. Local development proof only, not independent/native acceptance.
 
 | Isolated sweep | Rows | OK | Exact gaps | Result |
 |---|---:|---:|---:|---|

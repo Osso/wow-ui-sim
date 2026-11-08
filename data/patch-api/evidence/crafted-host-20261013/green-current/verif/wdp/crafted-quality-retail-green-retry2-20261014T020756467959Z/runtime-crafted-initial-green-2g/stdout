@@ -1,7 +1,0 @@
-
-running 2 tests
-test crafted_quality_api::crafted_quality_required_item_info_errors_have_context ... ok
-test crafted_quality_api::crafted_quality_secret_nil_authenticates_before_required_validation ... ok
-
-test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 11024 filtered out; finished in 0.64s
-

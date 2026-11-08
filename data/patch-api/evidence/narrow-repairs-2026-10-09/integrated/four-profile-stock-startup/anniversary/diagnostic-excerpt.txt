@@ -1,3 +1,0 @@
-lua-errors.stderr:30: [  0.154s] Blizzard UI source missing; syncing Blizzard UI from CASC
-lua-errors.stderr:31: Could not find a World of Warcraft installation.
-completion.stderr:32: Could not find a World of Warcraft installation.

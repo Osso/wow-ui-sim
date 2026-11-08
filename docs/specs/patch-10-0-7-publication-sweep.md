@@ -34,8 +34,8 @@ Account for Warcraft Wiki page 108565, revision 1063344 (2023-05-09T20:31:43Z), 
 
 ## Known gaps (current cycle)
 
-- [ ] Twenty-six publication gaps require concrete producers or supported current graphics-CVar state; [per-ID review](../../data/patch-api/evidence/10.0.7-session-2026-10-07/p1007-gap-review.json) owns reasons.
-- [ ] 2,203 substantive extract occurrences need occurrence-specific behavioral proof; [scout](../../data/patch-api/evidence/10.0.7-session-2026-10-07/p1007-extract-scout.json) retains literal statements and boundaries.
+- [ ] Twenty-six publication gaps require concrete producers or supported current graphics-CVar state; [per-ID review](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/10.0.7-session-2026-10-07/p1007-gap-review.json) owns reasons.
+- [ ] 2,203 substantive extract occurrences need occurrence-specific behavioral proof; [scout](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/10.0.7-session-2026-10-07/p1007-extract-scout.json) retains literal statements and boundaries.
 - [x] Integration added 10.1.0; fixtures unchanged (26 gaps), matching the read-only no-intersection prediction.
 
 ## Out of scope

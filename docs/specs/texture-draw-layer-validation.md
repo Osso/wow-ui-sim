@@ -38,7 +38,7 @@ Retained full format and default Retail library/six-bin check pass: 733 JSON rec
 
 ## Known gaps (current cycle)
 
-- [x] [15-text public evidence packet](../../data/patch-api/evidence/texture-draw-layer-validation-2026-10-13/README.md): independent copy/privacy gate passed at d86c01f98, 15/15 whole texts/17 public files, 28 ordered literals and zero raw/decoded privacy findings. Prior rejected normalization/regex staging is not this packet. Bounded retention only; source/runtime/native/parent proof levels remain separate.
+- [x] [15-text public evidence packet](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/texture-draw-layer-validation-2026-10-13/README.md): independent copy/privacy gate passed at d86c01f98, 15/15 whole texts/17 public files, 28 ordered literals and zero raw/decoded privacy findings. Prior rejected normalization/regex staging is not this packet. Bounded retention only; source/runtime/native/parent proof levels remain separate.
 - [ ] Fresh earlier-profile coverage and native/render/full-parent acceptance remain open.
 
 ## Out of scope

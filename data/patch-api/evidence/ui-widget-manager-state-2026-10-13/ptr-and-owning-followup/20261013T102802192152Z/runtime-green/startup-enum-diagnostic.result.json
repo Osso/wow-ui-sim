@@ -1,9 +1,0 @@
-{
-  "source": "34ef9235d",
-  "production": "5bd208dba",
-  "profile": "ptr",
-  "launcher_exit": 0,
-  "stdout_bytes": 1798,
-  "stderr_bytes": 14696,
-  "scope": "onefreshnormalPTR;fullstderr/diagnosticindependentgatepending; []aloneinsufficient"
-}

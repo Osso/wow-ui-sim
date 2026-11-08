@@ -24,13 +24,13 @@ No 10.x/11.x epoch, new placeholder, vendor patch or Blizzard monkey-patch intro
 
 ## Retained boundaries
 
-[Per-ID review](../../../data/patch-api/evidence/10.2.0-session-2026-10-07/p1020-gap-review.json) assigns every discovery failure, ten closures and thirty precise remaining reasons. Three Button highlight owner-removal rows remain: current cached callers use inherited Frame methods, so removing them from Buttons would break current UI. Exact file:line citations and qualified/bare searches are retained. Two C_Console real producers remain registered pending migration of existing namespace consumers/tests; they are exact removal gaps, not attributed to Blizzard wrappers. Who queries, addon reset/dependency metadata, CVar metadata, LFG availability, party item-level aggregation, perks freeze state, display/transformation identity, brawl identity, atlas record IDs, staged trait cascades and weekly activity history need models/contracts rather than inert functions. Line hit thickness requires input hit-region behavior. Tabard/actor 3D behavior remains intentionally unsupported.
+[Per-ID review](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/10.2.0-session-2026-10-07/p1020-gap-review.json) assigns every discovery failure, ten closures and thirty precise remaining reasons. Three Button highlight owner-removal rows remain: current cached callers use inherited Frame methods, so removing them from Buttons would break current UI. Exact file:line citations and qualified/bare searches are retained. Two C_Console real producers remain registered pending migration of existing namespace consumers/tests; they are exact removal gaps, not attributed to Blizzard wrappers. Who queries, addon reset/dependency metadata, CVar metadata, LFG availability, party item-level aggregation, perks freeze state, display/transformation identity, brawl identity, atlas record IDs, staged trait cascades and weekly activity history need models/contracts rather than inert functions. Line hit thickness requires input hit-region behavior. Tabard/actor 3D behavior remains intentionally unsupported.
 
 Five CVars pass publication but differ in formatting: page `5.0`, `8.0`, `2.5`, `5.0`, `20.0` versus current six-decimal strings. Values are numerically equal; classifier reports literal mismatch separately. Ledger grants no historical serialized-default parity.
 
-[Extract scout](../../../data/patch-api/evidence/10.2.0-session-2026-10-07/p1020-extract-scout.json) assigns every non-inventory ID once. Numeric enum values/renames, constant identities, populated DTO additions/nilability, all legacy call migrations, texture slicing/render/XML examples, portrait argument restrictions, early addon-load ordering, new-character defaults, NaN keys and combat protection remain explicitly pending. Publication and source candidates are not behavioral proof.
+[Extract scout](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/10.2.0-session-2026-10-07/p1020-extract-scout.json) assigns every non-inventory ID once. Numeric enum values/renames, constant identities, populated DTO additions/nilability, all legacy call migrations, texture slicing/render/XML examples, portrait argument restrictions, early addon-load ordering, new-character defaults, NaN keys and combat protection remain explicitly pending. Publication and source candidates are not behavioral proof.
 
-Read-only inspection of the concurrently retained [10.2.5 register](../../../data/patch-api/evidence/10.2.0-session-2026-10-07/p1020-possible-1025-supersessions.json) finds no add/remove-symbol intersection with the final thirty gap IDs. This snapshot does not include future changes or effects of that branch's runtime fixes. Recompute exact fixture after integration, as required by the handoff.
+Read-only inspection of the concurrently retained [10.2.5 register](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/10.2.0-session-2026-10-07/p1020-possible-1025-supersessions.json) finds no add/remove-symbol intersection with the final thirty gap IDs. This snapshot does not include future changes or effects of that branch's runtime fixes. Recompute exact fixture after integration, as required by the handoff.
 
 ## Verification
 
@@ -40,18 +40,18 @@ Cargo fmt --check and Mists tests check pass with zero non-vendor warnings. Six 
 
 Changed Rust manually audited against the readability checklist: short state-clearing function, data-only markers, bounded profile registration and test probes; no changed-line violations found. All commands use explicit cwd `p1020-page` and its own target. No sibling target reuse, canonical working-file edits, other-worktree edits, full suite, agents/models/CLIs, push or merge. Worktree creation used only the prescribed canonical Git metadata operation, with cwd in the empty destination.
 
-Portable artifact validator checks hashes, every source ID, all chronological expectations/fixtures, ten closures, thirty gaps, five numeric-equal default mismatches, exact negative control, eighteen reproduced registers and 102 preserved inputs. Artifact validation passes at `18797a33c`: [result](../../../data/patch-api/evidence/10.2.0-session-2026-10-07/p1020-validation-result.json). Subsequent result/documentation-only changes preserve runtime and accounting scopes. Proof remains local targeted development evidence, not native or independent acceptance.
+Portable artifact validator checks hashes, every source ID, all chronological expectations/fixtures, ten closures, thirty gaps, five numeric-equal default mismatches, exact negative control, eighteen reproduced registers and 102 preserved inputs. Artifact validation passes at `18797a33c`: [result](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/10.2.0-session-2026-10-07/p1020-validation-result.json). Subsequent result/documentation-only changes preserve runtime and accounting scopes. Proof remains local targeted development evidence, not native or independent acceptance.
 
 ## Sources
 
 - [Provenance](../../../data/patch-api/sources/10.2.0-api-changes.provenance.json)
 - [Coverage ledger](../../../data/patch-api/sources/10.2.0-page-coverage.json)
 - [Publication contract](../../specs/patch-10-2-0-publication-sweep.md)
-- [Qualified/bare retirement searches](../../../data/patch-api/evidence/10.2.0-session-2026-10-07/p1020-retirement-consumers.json)
-- [Disambiguated legacy global calls](../../../data/patch-api/evidence/10.2.0-session-2026-10-07/p1020-legacy-global-consumers.json)
-- [Register reproduction](../../../data/patch-api/evidence/10.2.0-session-2026-10-07/p1020-register-reproduction.json)
-- [Proof ledger](../../../data/patch-api/evidence/10.2.0-session-2026-10-07/p1020-proof.json)
-- [Artifact validator](../../../data/patch-api/evidence/10.2.0-session-2026-10-07/p1020-validate.py)
+- [Qualified/bare retirement searches](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/10.2.0-session-2026-10-07/p1020-retirement-consumers.json)
+- [Disambiguated legacy global calls](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/10.2.0-session-2026-10-07/p1020-legacy-global-consumers.json)
+- [Register reproduction](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/10.2.0-session-2026-10-07/p1020-register-reproduction.json)
+- [Proof ledger](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/10.2.0-session-2026-10-07/p1020-proof.json)
+- [Artifact validator](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/10.2.0-session-2026-10-07/p1020-validate.py)
 
 ## See Also
 

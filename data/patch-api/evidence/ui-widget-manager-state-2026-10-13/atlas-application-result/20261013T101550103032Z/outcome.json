@@ -1,6 +1,0 @@
-{
-  "source": "d1c5b4cb8",
-  "compile": "FAIL",
-  "behavioral_cases": 0,
-  "cause": "raw Rust Lua delimiter collision select(\"#\") ended r# string; rustfmt via Cargo did not discover generated test source;21aabeaf1 fixes delimiter, direct rustfmt succeeded"
-}

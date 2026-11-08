@@ -1,6 +1,0 @@
-Running as unit: retained-unit-06.service; invocation ID: invocation-redacted-02
-          Finished with result: exit-code
-Main processes terminated with: code=exited, status=101/n/a
-               Service runtime: 495ms
-             CPU time consumed: 376ms
-                   Memory peak: 64.7M (swap: 0B)

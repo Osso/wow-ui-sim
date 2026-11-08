@@ -1,6 +1,0 @@
-{
-  "source_revision": "bde7ea277e86f9ad17f7135b3cd676f80e73057b",
-  "production_delta_revision": "6af710814",
-  "scope": "Defaultprofile lib+bins cargo check finalproducerintegration once bde; relevantproductionchanges sincepreviouscheck; not runtime/source/copy acceptance; sameparentlimits",
-  "git_status": "?? .code-index.db\n?? verification/\n"
-}

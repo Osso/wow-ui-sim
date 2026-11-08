@@ -149,7 +149,7 @@ binary builds. Sources verified by main on 2026-10-11 UTC (October 10 local);
 not fetched again for this update.
 
 The [existing jobs12 evidence](remote-builds.md#required-unit2-builds--measured-cgroup-cpu-window)
-and [seven-profile receipts](../data/test-perf/evidence/unit2-jobs12-2026-10-10/final-report.md)
+and [seven-profile receipts](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/test-perf/evidence/unit2-jobs12-2026-10-10/final-report.md)
 retain unchanged compile selection: each saved unit2 compile built six
 production binaries, the library, and integration target. Neither worker nor
 helper supplied `--bin` selectors. A direct integration-test consumer of
@@ -169,7 +169,7 @@ The [harness contract](specs/prefork-test-harness.md#dev-only-automatic-harness-
 
 Source ownership is confirmed at `256e54ef1`: unpublished workspace crate `crates/test-harness` is a root dev-dependency; its build script owns discovery/watches, while root `build.rs` retains production responsibilities. Macros expand at both integration/prefork item sites and the Retail registry expression.
 
-[Retained evidence](../data/test-perf/evidence/dev-only-harness-2026-10-11/README.md) separates compile/list parity, 13 selected cases, two original prefork bodies and generated-inner-byte preservation from the unchanged-content timestamp trial. That trial keeps the root library and six binaries 7/7 fresh; only helper library and integration are nonfresh, versus eight root artifacts before extraction. Helper RunCustomBuild is dirty while its compiled build-script artifact stays fresh.
+[Retained evidence](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/test-perf/evidence/dev-only-harness-2026-10-11/README.md) separates compile/list parity, 13 selected cases, two original prefork bodies and generated-inner-byte preservation from the unchanged-content timestamp trial. That trial keeps the root library and six binaries 7/7 fresh; only helper library and integration are nonfresh, versus eight root artifacts before extraction. Helper RunCustomBuild is dirty while its compiled build-script artifact stays fresh.
 
 Changed revisions and artifact graphs preclude normalized speedup. Cgroup CPU/wall ratios do not establish saturation, per-binary cost or native-host acceptance. One temporary new top-level marker is discovered, executed and removed with baseline registries restored; production artifacts stay fresh. Historical Mists cast-bar RED, full-suite/native gaps and parent handoff remain open.
 

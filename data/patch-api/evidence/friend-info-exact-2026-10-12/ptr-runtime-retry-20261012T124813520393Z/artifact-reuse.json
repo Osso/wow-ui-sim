@@ -1,8 +1,0 @@
-{
-  "compiled_epoch": "/home/osso/.local/state/wow-ui-sim/verification/friend-info-exact-current/ptr-green-20261012T123249639935Z",
-  "no_rebuild_reseal_rehash": true,
-  "receipts": [
-    "independent-auth-integration.json",
-    "independent-auth-normal.json"
-  ]
-}

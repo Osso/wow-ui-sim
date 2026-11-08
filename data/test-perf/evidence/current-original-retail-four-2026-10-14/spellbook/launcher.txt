@@ -1,6 +1,0 @@
-Running as unit: <UNIT_SPELLBOOK>.service
-          Finished with result: success
-Main processes terminated with: code=exited, status=0/SUCCESS
-               Service runtime: 31.976s
-             CPU time consumed: 31.154s
-                   Memory peak: 1G (swap: 9.8M)

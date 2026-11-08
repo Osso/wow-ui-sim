@@ -1,6 +1,0 @@
-Running as unit: wow-speak-mists-green-runtime-20261013t163601644096z.service
-          Finished with result: success
-Main processes terminated with: code=exited, status=0/SUCCESS
-               Service runtime: 450ms
-             CPU time consumed: 386ms
-                   Memory peak: 142.3M (swap: 0B)

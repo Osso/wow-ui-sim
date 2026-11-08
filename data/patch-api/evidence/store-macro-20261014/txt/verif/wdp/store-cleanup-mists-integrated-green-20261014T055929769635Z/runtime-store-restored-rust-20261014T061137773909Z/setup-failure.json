@@ -1,6 +1,0 @@
-{
-  "status": "setup-failure; zero runtime launch",
-  "error": "receipt-integration.json absent; verifier wrote authentication-integration.json",
-  "correction": "whole accepted receipt TEXT bytecopied to helper-required receipt basename; no executable reread/hash or new authentication",
-  "later_runtimes": "fresh directory/admission required"
-}

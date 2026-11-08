@@ -1,6 +1,0 @@
-{
-  "source_revision": "b2f161e6896b2b8e2f5ea521f55adbee1f1b9f81",
-  "production_delta_revision": "5bd208dba",
-  "scope": "fresh owning prefork_full_ui four publication selectors after f04 stale-gap reconciliation; currentproduction5bd; no broad suite",
-  "git_status": "?? .code-index.db\n?? verification/\n"
-}

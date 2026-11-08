@@ -1,9 +1,0 @@
-{
-  "artifact_unchanged": true,
-  "discovery_unchanged": true,
-  "ended": "2026-10-11T03:01:43.590489+00:00",
-  "exact_remaining_delta_counts": true,
-  "exit": 0,
-  "generation_one_case_passed": true,
-  "scope": "Two COMPLETE method snapshot result files, original discovery untouched; generation not native behavior or full-suite acceptance"
-}

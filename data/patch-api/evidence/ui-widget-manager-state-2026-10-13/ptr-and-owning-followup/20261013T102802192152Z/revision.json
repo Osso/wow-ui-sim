@@ -1,6 +1,0 @@
-{
-  "source_revision": "34ef9235dfd724ea2ffb7256cd879b2a6b38334a",
-  "production_delta_revision": "5bd208dba",
-  "scope": "PTR actual bar/HUD queries5 core state6/security1/lifecycle2; atlas application2/texture regressions10; no Retail-only consumer3 PTR credit; source5bd plusdocs34",
-  "git_status": "?? .code-index.db\n?? verification/\n"
-}

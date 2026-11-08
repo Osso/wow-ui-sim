@@ -1,6 +1,0 @@
-Running as unit: wow-widget-discrete-runtime-20261013t121929586041z.service; invocation ID: ce17f4ead6da4a208c20d39c9fb5e9ee
-          Finished with result: success
-Main processes terminated with: code=exited, status=0/SUCCESS
-               Service runtime: 7.346s
-             CPU time consumed: 3.986s
-                   Memory peak: 1.7G (swap: 0B)

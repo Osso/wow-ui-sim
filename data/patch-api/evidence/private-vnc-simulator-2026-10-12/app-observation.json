@@ -1,5 +1,0 @@
-{
-  "at": "2026-10-12T06:13:48.844658+00:00",
-  "state": "ActiveState=failed\nSubState=failed\nMainPID=0\nResult=exit-code\nExecMainStatus=101\n",
-  "journal": "[  8.162s] [Startup] apply_post_load_workarounds: patch 12.1 compatibility restored\n[  8.162s] [Startup] apply_post_load_workarounds: seterrorhandler restored\n[  8.170s] [Startup] post-load workarounds complete in 444.73ms\n[  8.170s] [Startup] restarting GC after bootstrap\n[  8.598s] [Startup] GC restart complete in 427.70ms\nCASC resolution cache: 1931507 entries\nthread 'main' (612636) panicked at /home/osso/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/xkbcommon-dl-0.4.2/src/x11.rs:59:28:\nLibrary libxkbcommon-x11.so could not be loaded.\nnote: run with `RUST_BACKTRACE=1` environment variable to display a backtrace\nwow-ui-vnc-app.service: Main process exited, code=exited, status=101/n/a\nwow-ui-vnc-app.service: Failed with result 'exit-code'.\nwow-ui-vnc-app.service: Consumed 8.498s CPU time over 11.330s wall clock time, 1.6G memory peak.\n"
-}

@@ -1,1 +1,0 @@
-CommandResult(stdout='Result=exit-code\nExecMainStatus=101\nMemoryPeak=69021696\nCPUUsageNSec=345390000\nCPUQuotaPerSecUSec=2s\nMemoryHigh=3221225472\nMemoryMax=4294967296\n', stderr='', exit_code=0, upstream_results=())

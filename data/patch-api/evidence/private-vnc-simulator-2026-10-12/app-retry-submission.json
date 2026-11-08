@@ -1,8 +1,0 @@
-{
-  "at": "2026-10-12T06:20:16.344374+00:00",
-  "unit": "wow-ui-vnc-app.service",
-  "reason": "Installed user-approved missing runtime library; display sized1280x960 to contain default GUI",
-  "runtime_limit_seconds": 90,
-  "existing_services": "5902/5903 untouched",
-  "scope": "Single retry of newly created VNC GUI session; no build/hash/fullsuite/proof replay"
-}

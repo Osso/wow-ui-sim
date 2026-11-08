@@ -1,6 +1,0 @@
-{
-  "at": "2026-10-12T00:41:54.059433+00:00",
-  "exit": 0,
-  "stdout": "ActiveState=active\nSubState=exited\nRuntimeMaxUSec=1min 30s\nResult=success\nExecMainStatus=0\nControlGroup=\nMemoryPeak=1969373184\nCPUUsageNSec=5825975000\nKillMode=control-group\n",
-  "stderr": ""
-}

@@ -38,7 +38,7 @@
 
 Commit `a4cce2db1`. RED: 0 PASS / 8 FAIL at 92e4ea045's parent; the miss policy changed in a4cce2db1 after a first review rejected raising. GREEN: 8/8 inside a 404/404 run with control suites; `cargo fmt --check` exit0; startup `lua-errors` `[]`. This section supersedes any wording above that describes the slice as staged, unapplied or unrun.
 
-Main accepts an independent GPT-6.1-sol source review (no test rerun): **ACCEPT WITH QUALIFICATIONS**, [report](../../data/patch-api/evidence/12.0.5-session-2026-10-03/b98-verify-events-commands.md) SHA256 `72c3dbad682b576a045792d498f279ba54e7ef7b6094d5364da3d8a5817b4ac3`. First review (b97-verify-quest-equipset.md) rejected the raising miss; zero-on-miss is inferred policy. Requirement checkboxes are left as authored; the report lists which are earned and to what bound. Bounded simulator proof, not native parity.
+Main accepts an independent GPT-6.1-sol source review (no test rerun): **ACCEPT WITH QUALIFICATIONS**, [report](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/12.0.5-session-2026-10-03/b98-verify-events-commands.md) SHA256 `72c3dbad682b576a045792d498f279ba54e7ef7b6094d5364da3d8a5817b4ac3`. First review (b97-verify-quest-equipset.md) rejected the raising miss; zero-on-miss is inferred policy. Requirement checkboxes are left as authored; the report lists which are earned and to what bound. Bounded simulator proof, not native parity.
 
 [Page accounting](../../data/patch-api/sources/12.0.5-page-coverage.json): global api-C_QuestInfoSystem-GetQuestLogRewardFavor-293 bounded-coverage under capability `quest-reward-favor`; **119 capabilities/362 IDs; 42 pending /262 bounded /23 partial /35 metadata**.
 

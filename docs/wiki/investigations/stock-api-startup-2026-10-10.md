@@ -21,7 +21,7 @@ Submission revision `9635468d994be53d1f3571a8005115a49864c18a`; independently ob
 
 ## Later four-profile normal captures — 2026-10-11 UTC
 
-Separate [independent report](../../../data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/four-profile-stock-startup/independent-verification-report.md) admits receipt provenance, **not clean startup**. Epoch003325 uses four separately sealed normal binaries, with `WOW_SIM_CASC=0`, no third-party addons or SavedVariables; completion and `lua-errors` are distinct invocations.
+Separate [independent report](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/four-profile-stock-startup/independent-verification-report.md) admits receipt provenance, **not clean startup**. Epoch003325 uses four separately sealed normal binaries, with `WOW_SIM_CASC=0`, no third-party addons or SavedVariables; completion and `lua-errors` are distinct invocations.
 
 | Profile | Completion exit / markers | Lua-error invocation | Acceptance |
 |---|---|---|---|
@@ -30,18 +30,18 @@ Separate [independent report](../../../data/patch-api/evidence/narrow-repairs-20
 | Era | 1 / 0 | exit1; no JSON result | Same missing-source/install abort; Lua compatibility unassessed |
 | Anniversary | 1 / 0 | exit1; no JSON result | Same missing-source/install abort; native BCC selection still unverified |
 
-Mists marker is in stderr, followed by Frame Tree progression. Empty filtered stdout alone proves nothing. [Exact Mists JSON](../../../data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/four-profile-stock-startup/mists/lua-errors.json) repeats `Cannot anchor to itself` on `__Blizzard_UIPanels_Game_20279`; two signatures are not two independently established causes. Candidate ProductChoice relativeKey attribution remains source-only. This capture does not execute or repair the [original hidden-state assertion](mists-cast-startup-visibility.md).
+Mists marker is in stderr, followed by Frame Tree progression. Empty filtered stdout alone proves nothing. [Exact Mists JSON](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/four-profile-stock-startup/mists/lua-errors.json) repeats `Cannot anchor to itself` on `__Blizzard_UIPanels_Game_20279`; two signatures are not two independently established causes. Candidate ProductChoice relativeKey attribution remains source-only. This capture does not execute or repair the [original hidden-state assertion](mists-cast-startup-visibility.md).
 
-[Compiler summary](../../../data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/four-profile-stock-startup/compiler-summary.json): four Cargo exits0; each653/653 artifacts fresh,74 build-script records,1 successful build-finished. Cached materialization totals1.672370s across four recorded compile windows, not a fresh recompilation or controlled speedup. Each invocation retains six manifest deprecations; zero compiler-message warnings does not mean warning-free. Earlier jobs12 integration costs remain separate. Compile cgroups quota12/16GiB; runtime logs2CPU, not measured core saturation or affinity.
+[Compiler summary](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/four-profile-stock-startup/compiler-summary.json): four Cargo exits0; each653/653 artifacts fresh,74 build-script records,1 successful build-finished. Cached materialization totals1.672370s across four recorded compile windows, not a fresh recompilation or controlled speedup. Each invocation retains six manifest deprecations; zero compiler-message warnings does not mean warning-free. Earlier jobs12 integration costs remain separate. Compile cgroups quota12/16GiB; runtime logs2CPU, not measured core saturation or affinity.
 
-All3,846 tracked proof-scope hashes match captured endpoints/current inspection, not dependency/data/vendor/cache/WTF/environment closure. Mists uses1094/1094 bytecode-cache hits and existing read-only EditMode cache. `WOW_SIM_CASC=0` does not prohibit source synchronization; missing-profile captures attempted it and aborted. Source caches were not historically snapshotted; main observed Wrath/Era/Anniversary absent and Mists present. [Retained summaries/excerpts](../../../data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/four-profile-stock-startup/retention-summary.json) exclude raw private runtime streams. No cold-state/GUI/assets/native/full-addon/all-profile cleanliness or parent completion.
+All3,846 tracked proof-scope hashes match captured endpoints/current inspection, not dependency/data/vendor/cache/WTF/environment closure. Mists uses1094/1094 bytecode-cache hits and existing read-only EditMode cache. `WOW_SIM_CASC=0` does not prohibit source synchronization; missing-profile captures attempted it and aborted. Source caches were not historically snapshotted; main observed Wrath/Era/Anniversary absent and Mists present. [Retained summaries/excerpts](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/four-profile-stock-startup/retention-summary.json) exclude raw private runtime streams. No cold-state/GUI/assets/native/full-addon/all-profile cleanliness or parent completion.
 
 ## Sources
 
-- [Sanitized independent report](../../../data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/count-api-startup/independent-report.md) — completed receipt inspection and bounded findings
-- [Execution receipts](../../../data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/count-api-startup/execution-results.json) — two actual exits and artifact checks
-- [Marker summary](../../../data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/count-api-startup/marker-summary.json) — completion, diagnostics and private-stream parent hashes
-- [SHA-256 manifest](../../../data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/count-api-startup/SHA256.json) — retained identities and original parent-report hash
+- [Sanitized independent report](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/count-api-startup/independent-report.md) — completed receipt inspection and bounded findings
+- [Execution receipts](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/count-api-startup/execution-results.json) — two actual exits and artifact checks
+- [Marker summary](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/count-api-startup/marker-summary.json) — completion, diagnostics and private-stream parent hashes
+- [SHA-256 manifest](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/count-api-startup/SHA256.json) — retained identities and original parent-report hash
 
 ## See Also
 

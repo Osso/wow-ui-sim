@@ -1,6 +1,0 @@
-Running as unit: wow-widget-green-ui-widget-manager-bars-consumer-20261013t101721.service; invocation ID: 3735dab9769546ebb66003de3168447d
-          Finished with result: exit-code
-Main processes terminated with: code=exited, status=101/n/a
-               Service runtime: 2.785s
-             CPU time consumed: 2.514s
-                   Memory peak: 1.5G (swap: 0B)

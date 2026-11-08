@@ -1,8 +1,0 @@
-{
-  "path": "<PRIVATE_VERIFICATION_ROOT>/widget-discrete-progress-current/text-state-retail-red-speak-preservation-20261013T163822997097Z/artifacts/wow-sim",
-  "exit_code": 0,
-  "stdout": "\tlinux-vdso.so.1 (0x00007ff539c70000)\n\tlibicui18n.so.78 => /usr/lib/libicui18n.so.78 (0x00007ff533200000)\n\tlibicuuc.so.78 => /usr/lib/libicuuc.so.78 (0x00007ff532e00000)\n\tlibasound.so.2 => /usr/lib/libasound.so.2 (0x00007ff539b5a000)\n\tlibssl.so.3 => /usr/lib/libssl.so.3 (0x00007ff533107000)\n\tlibcrypto.so.3 => /usr/lib/libcrypto.so.3 (0x00007ff532800000)\n\tlibgcc_s.so.1 => /usr/lib/libgcc_s.so.1 (0x00007ff539b2b000)\n\tlibm.so.6 => /usr/lib/libm.so.6 (0x00007ff5326c9000)\n\tlibc.so.6 => /usr/lib/libc.so.6 (0x00007ff532400000)\n\t/lib64/ld-linux-x86-64.so.2 => /usr/lib64/ld-linux-x86-64.so.2 (0x00007ff539c72000)\n\tlibstdc++.so.6 => /usr/lib/libstdc++.so.6 (0x00007ff532000000)\n\tlibicudata.so.78 => /usr/lib/libicudata.so.78 (0x00007ff530000000)\n\tlibz.so.1 => /usr/lib/libz.so.1 (0x00007ff539b0e000)\n\tlibbrotlienc.so.1 => /usr/lib/libbrotlienc.so.1 (0x00007ff533047000)\n\tlibbrotlidec.so.1 => /usr/lib/libbrotlidec.so.1 (0x00007ff539aff000)\n\tlibzstd.so.1 => /usr/lib/libzstd.so.1 (0x00007ff53231a000)\n\tlibbrotlicommon.so.1 => /usr/lib/libbrotlicommon.so.1 (0x00007ff5335dd000)\n",
-  "stderr": "",
-  "missing_dependencies": [],
-  "dependency_byte_authentication": false
-}

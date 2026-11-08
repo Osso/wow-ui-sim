@@ -24,7 +24,7 @@
 - `tests/ui_widget_manager_bars_consumer.rs`: actual cached Lua/XML initial geometry/visibility, updates, zero neutral zone, hidden/restore, removal and unregister.
 - `tests/texture_atlas_regressions.rs`: ten mutation/button-slot controls; additional known/unknown/numeric atlas controls preserve their original scopes.
 
-At `5bd208dba`, seventeen scoped cases pass (argument2, bar1, atlas-regression10, HUD2, lifecycle2); three separate known/unknown/numeric controls also pass. Fresh normal startup is clean across all219 stderr lines; default offline/locked check exits0 with six inherited manifest deprecations and no source warnings. [Retained evidence](../../data/patch-api/evidence/ui-widget-manager-state-2026-10-13/README.md#atlas-application-result-red-and-retail-green) owns exact receipts and historical failures. Native and parent acceptance remain OPEN.
+At `5bd208dba`, seventeen scoped cases pass (argument2, bar1, atlas-regression10, HUD2, lifecycle2); three separate known/unknown/numeric controls also pass. Fresh normal startup is clean across all219 stderr lines; default offline/locked check exits0 with six inherited manifest deprecations and no source warnings. [Retained evidence](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/ui-widget-manager-state-2026-10-13/README.md#atlas-application-result-red-and-retail-green) owns exact receipts and historical failures. Native and parent acceptance remain OPEN.
 
 ## Known gaps (current cycle)
 

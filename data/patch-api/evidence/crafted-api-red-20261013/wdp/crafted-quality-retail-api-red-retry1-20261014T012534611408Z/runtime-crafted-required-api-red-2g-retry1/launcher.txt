@@ -1,6 +1,0 @@
-Running as unit: retained-unit-05.service
-          Finished with result: exit-code
-Main processes terminated with: code=exited, status=101/n/a
-               Service runtime: 1.445s
-             CPU time consumed: 446ms
-                   Memory peak: 130.4M (swap: 0B)

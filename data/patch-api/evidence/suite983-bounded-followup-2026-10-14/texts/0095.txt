@@ -1,6 +1,0 @@
-{
-  "source_revision": "a915c9f1b7e1d35ee9a3f72df8889b99b350bd88",
-  "production_delta_revision": "a53fa04dc curve ordering and1b94ffff3 sourced catalog; current docs-onlya915",
-  "scope": "Final format-check for changed Rust/generated catalog; not runtime/native proof",
-  "git_status": "?? .code-index.db\n?? handoff/\n?? verification/\n"
-}

@@ -1,4 +1,0 @@
-running 1 tests
-test spell_casting::cast_bar_respects_edit_mode_lock_setting_after_startup_fix ... ok
-
-test result: ok. 1 passed; 0 failed; 1 total

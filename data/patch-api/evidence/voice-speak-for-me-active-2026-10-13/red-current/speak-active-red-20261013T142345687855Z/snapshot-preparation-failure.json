@@ -1,5 +1,0 @@
-{
-  "cause": "Pyrun output builder forwarded binary archive and failed; partial360448byte archive invalid; no extraction/runtime occurred",
-  "action": "git archive native --output argument writes archive without forwarding binary",
-  "failed_tool_log": "/tmp/pi-tool-bcf708a14f7377ce.log"
-}

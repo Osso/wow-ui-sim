@@ -21,18 +21,18 @@ Integrated canonical 1.10.2 evidence/docs (`d026c9e6a`, merged `f8da74e31`) supp
 
 ## Development proof epochs
 
-Own SOURCE RED at base: five intended failures against retained absent-accounting scaffold. SOURCE GREEN5/5 at `ea3ae8a44` exercises three occurrence omissions,12 count mutations, six invented categories, three fabricated model/runtime/native credits, one fabricated expansion and three raw/response mutations. Portable RED3 at that revision records absent original seals. [Original proof ledger](../../../data/patch-api/evidence/1.10.0-session-2026-10-09/proof-ledger.json) preserves actual argv/cwd/revision/times/full streams/scoped hashes.
+Own SOURCE RED at base: five intended failures against retained absent-accounting scaffold. SOURCE GREEN5/5 at `ea3ae8a44` exercises three occurrence omissions,12 count mutations, six invented categories, three fabricated model/runtime/native credits, one fabricated expansion and three raw/response mutations. Portable RED3 at that revision records absent original seals. [Original proof ledger](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/1.10.0-session-2026-10-09/proof-ledger.json) preserves actual argv/cwd/revision/times/full streams/scoped hashes.
 
-At `a60968689`, fresh extracted archive validator exits0, copied SOURCE5/5 and portable3/3 pass under isolated Python/PATH=/nonexistent. Both serialized ledger/log tampering controls reject and restore exact original bytes/hashes/map. Original25 seals/26-member49,534-byte archive unchanged; six later receipt artifacts plus one supplemental exact pre-format RED test fixture have seven separate seals; RED fixture matches the original invocation hash. [Later actual ledger](../../../data/patch-api/evidence/1.10.0-session-2026-10-09/later-proof-ledger.json), [HANDOFF](../../../data/patch-api/evidence/1.10.0-session-2026-10-09/HANDOFF.md) and [REPLAY](../../../data/patch-api/evidence/1.10.0-session-2026-10-09/REPLAY.md) record execution identity and limits. Original archived docs retain their earlier epoch; later docs do not backfill original proof.
+At `a60968689`, fresh extracted archive validator exits0, copied SOURCE5/5 and portable3/3 pass under isolated Python/PATH=/nonexistent. Both serialized ledger/log tampering controls reject and restore exact original bytes/hashes/map. Original25 seals/26-member49,534-byte archive unchanged; six later receipt artifacts plus one supplemental exact pre-format RED test fixture have seven separate seals; RED fixture matches the original invocation hash. [Later actual ledger](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/1.10.0-session-2026-10-09/later-proof-ledger.json), [HANDOFF](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/1.10.0-session-2026-10-09/HANDOFF.md) and [REPLAY](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/1.10.0-session-2026-10-09/REPLAY.md) record execution identity and limits. Original archived docs retain their earlier epoch; later docs do not backfill original proof.
 
 Own-base copied generator defaults/extractor function defaults reproduce exact bytes; malformed-symbol/null-input errors preserve exact types/messages. No shared-tool or extractor CLI coverage-ledger acceptance claim. Environment keys/credential patterns inspected; values omitted, no retained artifact matches found, detector not exhaustive. No broad/check/final gate or Rust compilation. These are bounded SOURCE development controls, not native/model/parent acceptance.
 
 ## Sources
 
-- [Frozen source pin](../../../data/patch-api/evidence/1.10.0-session-2026-10-09/source-pin.json)
-- [Literal ledger](../../../data/patch-api/evidence/1.10.0-session-2026-10-09/ledger.json)
+- [Frozen source pin](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/1.10.0-session-2026-10-09/source-pin.json)
+- [Literal ledger](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/1.10.0-session-2026-10-09/ledger.json)
 - [Spec](../../specs/patch-1-10-0-source-accounting.md)
-- [Governing handoff](../../../data/patch-api/evidence/handoff-laptop-to-agent-server/HANDOFF.md), bounded by this slice's explicit exclusions.
+- [Governing handoff](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/handoff-laptop-to-agent-server/HANDOFF.md), bounded by this slice's explicit exclusions.
 
 ## See Also
 

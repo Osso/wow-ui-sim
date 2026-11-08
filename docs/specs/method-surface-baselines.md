@@ -24,7 +24,7 @@ Method-surface comparisons must select the baseline for the current compiled con
 
 ## Tests asserting this spec
 
-- `tests/method_diff_coverage.rs` — both exact assertions pass for default Retail and explicitly selected Wrath (four cases). Wrath controls detect one deleted row and one absent fixture; ignored refresh passes with all protected bytes unchanged. Selected-only writes are additionally source-inspected. See [retained receipts](../../data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/method-baseline-selection/).
+- `tests/method_diff_coverage.rs` — both exact assertions pass for default Retail and explicitly selected Wrath (four cases). Wrath controls detect one deleted row and one absent fixture; ignored refresh passes with all protected bytes unchanged. Selected-only writes are additionally source-inspected. See [retained receipts](https://github.com/Osso/wow-ui-sim/tree/183edc381/data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/method-baseline-selection).
 
 ## Path receiver reconciliation
 

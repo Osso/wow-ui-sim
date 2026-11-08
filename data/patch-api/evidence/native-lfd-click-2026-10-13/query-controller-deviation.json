@@ -1,6 +1,0 @@
-{
-  "failed_host_alias": "<PRIVATE_G>/tmp/wow-lua-382142.sock",
-  "error": "AF_UNIX path too long; zeroqueries/inputs",
-  "corrected_process_namespace_path": "/proc/382142/root/tmp/wow-lua-382142.sock",
-  "same_inode": true
-}

@@ -1,7 +1,0 @@
-
-running 2 tests
-test c_item_api::c_container::test_c_container_get_item_cooldown_zero_when_ready ... ok
-test c_item_api::c_container::test_c_item_get_item_cooldown_zero_when_ready ... ok
-
-test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 11039 filtered out; finished in 0.45s
-

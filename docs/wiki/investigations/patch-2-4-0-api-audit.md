@@ -42,9 +42,9 @@ No broad/check/lint/readability/profile/startup/full-suite/final gates, Rust tes
 
 - [Spec](../../specs/patch-2-4-0-source-audit.md)
 - [Frozen literal source](../../../data/patch-api/sources/2.4.0-api-changes.wikitext)
-- [Original ledger](../../../data/patch-api/evidence/2.4.0-source-2026-10-09/original/ledger.json)
-- [Proof ledger](../../../data/patch-api/evidence/2.4.0-source-2026-10-09/proof-ledger.json)
-- [Replay and handoff](../../../data/patch-api/evidence/2.4.0-source-2026-10-09/handoff.md)
+- [Original ledger](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/2.4.0-source-2026-10-09/original/ledger.json)
+- [Proof ledger](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/2.4.0-source-2026-10-09/proof-ledger.json)
+- [Replay and handoff](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/2.4.0-source-2026-10-09/handoff.md)
 
 ## See Also
 

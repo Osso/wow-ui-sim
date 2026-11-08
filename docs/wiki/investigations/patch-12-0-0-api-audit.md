@@ -1,18 +1,18 @@
 ## Rilua secret helper follow-up — 2026-10-07
 
-[Contract](../../specs/rilua-capability-rows.md) and [revision-scoped proof](../../../data/patch-api/evidence/rilua-rows-2026-10-07/proof.md) close `dropsecretaccess`/`issecrettable` to bounded coverage using rilua caller revocation and metadata predicates. Revocation is independent of taint; `canaccesssecrets` now matches the VM unwrap guard. Wrapped tables differ from plain tables containing wrappers; SecretWrapContents is recognized without decoding. Addon predicate availability and descendant revocation lifetime remain explicit inferred policy, not native annotation/parity claims.
+[Contract](../../specs/rilua-capability-rows.md) and [revision-scoped proof](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/rilua-rows-2026-10-07/proof.md) close `dropsecretaccess`/`issecrettable` to bounded coverage using rilua caller revocation and metadata predicates. Revocation is independent of taint; `canaccesssecrets` now matches the VM unwrap guard. Wrapped tables differ from plain tables containing wrappers; SecretWrapContents is recognized without decoding. Addon predicate availability and descendant revocation lifetime remain explicit inferred policy, not native annotation/parity claims.
 
 Current 12.0.0 filter passes 21 tests with bytecode caching disabled for grouped-filter parent-bypass compatibility; sweep observes 989 OK / 21 exact gaps. Only these two helper IDs leave the known-gap fixture. Shared proof covers 8 new tests, 26 controls, Mists --tests check (zero non-vendor warnings), formatting and startup `[]`; no vendor/dependency changes.
 
 ## Non-inventory extract supplement
 
-Verified: 2026-10-05. [Scout and proof batches](../../../data/patch-api/evidence/12.0.0-session-2026-10-05/p1200-extract-scout.md) cover every retained non-inventory line from revision 6747189. [Extractor](../../../tools/extract_patch_non_inventory.py) produces [plaintext](../../../data/patch-api/sources/12.0.0-api-changes.txt) and seeds 143 supplemental rows: 32 ENUM, 56 STRUCT, 24 PROSE-MODELABLE remain audit-pending; 31 editorial/context rows are metadata-only. All 1,010 existing `wt-` row objects remain unchanged. This captured revision contains no Notes/Blue posts; linked pages are not expanded.
+Verified: 2026-10-05. [Scout and proof batches](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/12.0.0-session-2026-10-05/p1200-extract-scout.md) cover every retained non-inventory line from revision 6747189. [Extractor](../../../tools/extract_patch_non_inventory.py) produces [plaintext](../../../data/patch-api/sources/12.0.0-api-changes.txt) and seeds 143 supplemental rows: 32 ENUM, 56 STRUCT, 24 PROSE-MODELABLE remain audit-pending; 31 editorial/context rows are metadata-only. All 1,010 existing `wt-` row objects remain unchanged. This captured revision contains no Notes/Blue posts; linked pages are not expanded.
 
 Cached declarations and source-derived enum comparisons are frozen in the scout evidence. At scout time, historical test citations were reusable bounded evidence, not new acceptance: two enum seed conflicts required loaded-environment observation, while older no-producer notes for private-anchor/reward/appearance fields lagged inspected test bodies. The scout changed no simulator/test files and granted no runtime coverage credit. Its counts, classification and validation remain in the linked scout.
 
 ### Enum and deprecated extract proof
 
-Verified: 2026-10-05. [Contract](../../specs/patch-12-0-0-extract-enums-deprecated.md) defines B01/B07/B03; [per-source outcomes and revision-scoped proof](../../../data/patch-api/evidence/12.0.0-session-2026-10-05/p1200-enums-deprecated-report.md) distinguish current passes, historical supersession and pending successor results. Page-coverage JSON remains unchanged.
+Verified: 2026-10-05. [Contract](../../specs/patch-12-0-0-extract-enums-deprecated.md) defines B01/B07/B03; [per-source outcomes and revision-scoped proof](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/12.0.0-session-2026-10-05/p1200-enums-deprecated-report.md) distinguish current passes, historical supersession and pending successor results. Page-coverage JSON remains unchanged.
 
 B07 conflicts are falsified by real cached Game loading. The stale `PLAYER_INTERACTION_TYPE` and `UI_WIDGET_VISUALIZATION_TYPE` constants are not registered through `SEQUENTIAL_ENUMS`; the guarded cache-derived declarations supply the actual tables. Do not patch inactive constants based on the scout's assumed registration order.
 
@@ -26,7 +26,7 @@ Current cache republishes none of this extract's old names. The test nevertheles
 
 ### DTO extract batches B02/B04/B05/B06
 
-Verified: 2026-10-06. [Per-source outcomes and revision-scoped proof](../../../data/patch-api/evidence/12.0.0-session-2026-10-05/p1200-b2-proof.md) cover all 34 assigned DTO parent/delta rows; coverage ledgers remain unchanged. Cached parent type probes supplement field-specific fixtures, rather than treating publication sweeps or nil-only cooldown queries as behavioral proof.
+Verified: 2026-10-06. [Per-source outcomes and revision-scoped proof](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/12.0.0-session-2026-10-05/p1200-b2-proof.md) cover all 34 assigned DTO parent/delta rows; coverage ledgers remain unchanged. Cached parent type probes supplement field-specific fixtures, rather than treating publication sweeps or nil-only cooldown queries as behavioral proof.
 
 Observed causes: SaveAdvancedFilter never persisted state; active listing enum inputs truncated; search/faction parents lacked fields; GetSetInfo fabricated set zero; scheduler getters returned mutable host tables; cast producers omitted cooldown update events. Producers now live in C API modules, with host-input snapshots and cast-driven recovery metadata. Scheduler input state remains Lua-owned `_state`; Rust interaction/faction/catalog state remains explicit and independently queryable.
 
@@ -42,11 +42,11 @@ The old register is **not a crawler excerpt**: `tools/gen_patch_12_0_0_register.
 
 Literal set comparison: **39 wikitext symbols absent from the old register; 2,439 old symbols outside the swept tables**. After explicit representation normalization (widget dot/colon separators, UIObject/FrameScriptObject and two method-owner aliases, and Lua-prefixed object kinds), **four wikitext symbols remain absent**: `COMBAT_LOG_EVENT_INTERNAL_UNFILTERED`, `SETTINGS_LOADED`, `minimapTrackedInfov2`, `useCompactPartyFrames`. **2,404** normalized old symbols remain outside the swept tables. This is a scope mismatch, not evidence of missing implementations.
 
-Including Enums/Structures parent and colored-field subjects gives 1,103 page subjects; shortening namespaced structure subjects leaves **2,343 normalized old-register subjects outside all consolidated sections**. Those extra subjects are retained for comparison only, not swept or credited. [Comparison sets and normalization policy](../../../data/patch-api/evidence/12.0.0-session-2026-10-05/register-comparison.json) preserve exact names and scope.
+Including Enums/Structures parent and colored-field subjects gives 1,103 page subjects; shortening namespaced structure subjects leaves **2,343 normalized old-register subjects outside all consolidated sections**. Those extra subjects are retained for comparison only, not swept or credited. [Comparison sets and normalization policy](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/12.0.0-session-2026-10-05/register-comparison.json) preserve exact names and scope.
 
 ### Publication observations and fixes
 
-Initial RED: **740 OK / 270 non-OK**. Final: **812 OK / 198 non-OK**, matching the exact reviewed baseline. All initial non-OK IDs have a [row review](../../../data/patch-api/evidence/12.0.0-session-2026-10-05/p1200-row-review.json); [readable baseline index](../../../data/patch-api/evidence/12.0.0-session-2026-10-05/row-review.md) covers every remaining gap.
+Initial RED: **740 OK / 270 non-OK**. Final: **812 OK / 198 non-OK**, matching the exact reviewed baseline. All initial non-OK IDs have a [row review](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/12.0.0-session-2026-10-05/p1200-row-review.json); [readable baseline index](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/12.0.0-session-2026-10-05/row-review.md) covers every remaining gap.
 
 - **64 removed namespace members** were raw-absent but fabricated by ordinary `__index` lookup. `src/c_api/patch_retired_members.rs` now marks them removed from `retail-12-0-0`; later retirement lists remain gated at their own cumulative epochs. No Blizzard Lua or club code changed.
 - **Eight probe gaps**, not runtime defects: six script-object kinds now use their actual Lua constructors; abstract Region methods use a Texture. The generic parser now reads uncollapsed Added/Removed cells. Regenerated 12.0.5/12.0.7 bytes are unchanged; the existing 12.1.0 metadata omission requires explicit `--inventory-only`, and those bytes also match.
@@ -58,7 +58,7 @@ Fourteen rows have later add/remove supersession; changed later rows do not over
 
 ### Proof
 
-[Evidence directory](../../../data/patch-api/evidence/12.0.0-session-2026-10-05/) holds results, failure controls and [proof ledger](../../../data/patch-api/evidence/12.0.0-session-2026-10-05/proof-ledger.json). Runtime/test revision `d32f69b1a`:
+[Evidence directory](https://github.com/Osso/wow-ui-sim/tree/183edc381/data/patch-api/evidence/12.0.0-session-2026-10-05) holds results, failure controls and [proof ledger](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/12.0.0-session-2026-10-05/proof-ledger.json). Runtime/test revision `d32f69b1a`:
 
 | Isolated sweep | Rows | OK | Exact known gaps | Result |
 |---|---:|---:|---:|---|

@@ -78,7 +78,7 @@ pub struct LoadTiming {
 
 [`tests/startup_perf.rs`](../tests/startup_perf.rs) stores each successful `LoadResult` beside its same-call outer clock, stopping immediately after `load_addon` returns (including argument evaluation), before unwrap/recording. Typed rows and allocation remain inside canonical startup elapsed time; JSON encoding/emission follows the stopped startup clock and precedes original assertions. Returned timings overlap; diagnostic collection lengths are counts, not diagnostic text or compatibility-clean proof. Production loader behavior is unchanged.
 
-[Contract](specs/startup-addon-paired-observation.md) records independent2794 bounded current-run proof; [packet](../data/test-perf/evidence/startup-canonical-paired-2026-10-12/README.md) owns exact results/provenance, public retention/link/privacy independently passed at `da4bbc442`. Passing runtime evidence does not exercise failed-assertion emission, establish cache contents/historical equivalence/native parity, or repair frozen BA failures.
+[Contract](specs/startup-addon-paired-observation.md) records independent2794 bounded current-run proof; [packet](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/test-perf/evidence/startup-canonical-paired-2026-10-12/README.md) owns exact results/provenance, public retention/link/privacy independently passed at `da4bbc442`. Passing runtime evidence does not exercise failed-assertion emission, establish cache contents/historical equivalence/native parity, or repair frozen BA failures.
 
 ### Removed API compatibility
 

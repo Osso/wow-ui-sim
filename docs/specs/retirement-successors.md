@@ -53,7 +53,7 @@ Two additional assertions were exposed by corrected successor contracts: spell_a
 
 ## Verification — 2026-10-05
 
-[Revision-scoped proof ledger](../../data/patch-api/evidence/12.0.0-session-2026-10-05/retirement-fallout-proof.json) records commands, exact revisions, failures and scope invalidations. Raw logs remain locally at `target/retire-proof/`. All build-helper invocations selected `--build-host local`; debug/default Retail and the existing target directory only.
+[Revision-scoped proof ledger](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/12.0.0-session-2026-10-05/retirement-fallout-proof.json) records commands, exact revisions, failures and scope invalidations. Raw logs remain locally at `target/retire-proof/`. All build-helper invocations selected `--build-host local`; debug/default Retail and the existing target directory only.
 
 Runtime revision `d978182f0`; final test-only correction `130cfdd5d`:
 

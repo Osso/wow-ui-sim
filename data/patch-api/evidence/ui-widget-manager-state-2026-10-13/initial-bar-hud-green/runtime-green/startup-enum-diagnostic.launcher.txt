@@ -1,6 +1,0 @@
-Running as unit: wow-widget-startup-enum-20261013t090502.service
-          Finished with result: success
-Main processes terminated with: code=exited, status=0/SUCCESS
-               Service runtime: 6.139s
-             CPU time consumed: 5.517s
-                   Memory peak: 2G (swap: 0B)

@@ -56,15 +56,15 @@ Main owns integration, actual successor evaluation and any later native matching
 
 ## SOURCE proof ledger
 
-[Original proof receipts](../../../data/patch-api/evidence/2.5.1-session-2026-10-09/source-proof.json) record exact revision, argv, scope and logs. Initial tests committed at `08a957127`: nine SOURCE assertions RED because owned literal ledger absent. At `985fd2c95`, owned SOURCE fixtures GREEN 9/9, including all 627 single-row omission controls. At `eb48b0fc6`, historical validator PASS. At `c1391db3f`, fresh copied SOURCE replay PASS, both serialized ledger/log tamper controls rejected at exact seals and original bytes/hashes restored. [Consolidated proof ledger](../../../data/patch-api/evidence/2.5.1-session-2026-10-09/proof-ledger.json); [portable receipt](../../../data/patch-api/evidence/2.5.1-session-2026-10-09/portable-proof.json). No native/final acceptance credit.
+[Original proof receipts](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/2.5.1-session-2026-10-09/source-proof.json) record exact revision, argv, scope and logs. Initial tests committed at `08a957127`: nine SOURCE assertions RED because owned literal ledger absent. At `985fd2c95`, owned SOURCE fixtures GREEN 9/9, including all 627 single-row omission controls. At `eb48b0fc6`, historical validator PASS. At `c1391db3f`, fresh copied SOURCE replay PASS, both serialized ledger/log tamper controls rejected at exact seals and original bytes/hashes restored. [Consolidated proof ledger](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/2.5.1-session-2026-10-09/proof-ledger.json); [portable receipt](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/2.5.1-session-2026-10-09/portable-proof.json). No native/final acceptance credit.
 
 Historical replay retains 29 original source/config/tool/ledger/test/log seals unchanged. Archive contains those originals plus the seals map (30 members): 272,042 bytes, SHA-256 `091d3eff74d81539ef4b9de552bc9b69994e81f9775b413f83a15a7ffd3765cf`. Fresh isolated Python process uses `PATH=/nonexistent`, empty PYTHONPATH and a copied HOME; copied tree has no Git, target, current runtime/current tools/current root config. Historical config/tools exist only under owned evidence. No mutable original checkout reads are needed by the relocated validator.
 
-Ledger tamper changes linked contract native equivalence; log tamper fabricates native credit. Both exit 1 at the exact file seal. Exact original bytes and SHA-256 values restored; no original seal, log or source-proof receipt rewritten afterward. [Receipt seals](../../../data/patch-api/evidence/2.5.1-session-2026-10-09/receipt-seals.json) separately bind later validator/portable logs, proof ledgers, archive and original seals map. Seals are integrity assertions against committed maps, not external cryptographic authenticity or native correctness.
+Ledger tamper changes linked contract native equivalence; log tamper fabricates native credit. Both exit 1 at the exact file seal. Exact original bytes and SHA-256 values restored; no original seal, log or source-proof receipt rewritten afterward. [Receipt seals](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/2.5.1-session-2026-10-09/receipt-seals.json) separately bind later validator/portable logs, proof ledgers, archive and original seals map. Seals are integrity assertions against committed maps, not external cryptographic authenticity or native correctness.
 
 ## Main integration — 2026-10-09
 
-[Actual same-TBC successor comparison](../../../data/patch-api/evidence/2.5.1-session-2026-10-09/integrated/successor-comparison.json) retains three section/symbol row pairs with 2.5.2, two with 2.5.3 and three with 2.5.4. Integrated 2.5.5/2.5.6 have zero explicit API identities. These source directions earn no runtime retirement, modeled behavior or native compatibility credit. Original 29 seals and seven separate receipt seals remain unchanged; SOURCE replay gate pending. Source TOC 20501 remains distinct from configured Anniversary 11507.
+[Actual same-TBC successor comparison](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/2.5.1-session-2026-10-09/integrated/successor-comparison.json) retains three section/symbol row pairs with 2.5.2, two with 2.5.3 and three with 2.5.4. Integrated 2.5.5/2.5.6 have zero explicit API identities. These source directions earn no runtime retirement, modeled behavior or native compatibility credit. Original 29 seals and seven separate receipt seals remain unchanged; SOURCE replay gate pending. Source TOC 20501 remains distinct from configured Anniversary 11507.
 
 ## Integrated evidence retention — 2026-10-09
 
@@ -73,9 +73,9 @@ Ledger tamper changes linked contract native equivalence; log tamper fabricates 
 ## Sources
 
 - [Frozen original wikitext](../../../data/patch-api/source-cache/legacy-2026-10-09/2.5.1-wikitext.txt).
-- [Owned source pin/response/config snapshots](../../../data/patch-api/evidence/2.5.1-session-2026-10-09/source-pin.json).
-- [Full historical registry](../../../data/patch-api/evidence/2.5.1-session-2026-10-09/frozen-registry.json).
-- [Configured profile observation](../../../data/patch-api/evidence/2.5.1-session-2026-10-09/profile-observation.json).
+- [Owned source pin/response/config snapshots](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/2.5.1-session-2026-10-09/source-pin.json).
+- [Full historical registry](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/2.5.1-session-2026-10-09/frozen-registry.json).
+- [Configured profile observation](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/2.5.1-session-2026-10-09/profile-observation.json).
 
 ## See Also
 

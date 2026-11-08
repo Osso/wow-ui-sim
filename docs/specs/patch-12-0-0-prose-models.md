@@ -1,6 +1,6 @@
 # 12.0.0 prose model proof
 
-Unassigned PROSE-MODELABLE extract rows from the [scout](../../data/patch-api/evidence/12.0.0-session-2026-10-05/p1200-extract-scout.md). [Per-source report](../../data/patch-api/evidence/12.0.0-session-2026-10-05/p1200-b8-prose-report.md) owns results.
+Unassigned PROSE-MODELABLE extract rows from the [scout](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/12.0.0-session-2026-10-05/p1200-extract-scout.md). [Per-source report](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/12.0.0-session-2026-10-05/p1200-b8-prose-report.md) owns results.
 
 ## What it must do
 
@@ -44,11 +44,11 @@ Independent audit of stage `3c36b24546c0901837d4987b86ad33c634a8f671`, receipt `
 
 After `84dcf2723`, inspected cast implementation/module/registration and inverse shim gates are present from1200 onward. Ordinary pre125 output is simulator policy, not native proof. Display/max/secret125 behavior remains unchanged. Older API presence does not require a specific internal native backing model. **Historical checkpoint: post-repair GREEN was PENDING; superseded only within the bounded receipts below.** All21 retirement row assertions remain untouched; cached canonical case requires the separate prefork target, not prose-filter coverage. Historical failed compilations above remain separate epochs.
 
-[Sanitized receipts and independent audit](../../data/patch-api/evidence/12.0.0-session-2026-10-05/count-red-20261010/independent-report.md), with adjacent SHA-256 manifest, retain this RED without binaries, source snapshots or vendor stderr. Hashes establish retained bytes and the audit's recorded scope, not hermetic native provenance.
+[Sanitized receipts and independent audit](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/12.0.0-session-2026-10-05/count-red-20261010/independent-report.md), with adjacent SHA-256 manifest, retain this RED without binaries, source snapshots or vendor stderr. Hashes establish retained bytes and the audit's recorded scope, not hermetic native provenance.
 
 ## Bounded count receipt PASS — 2026-10-10
 
-[Retained independent audit](../../data/patch-api/evidence/12.0.0-session-2026-10-05/count-green-20261010/independent-report.md) and adjacent manifest/stdout/check receipts establish actual **5/5 exact1200 + 40/40 current-default PASS**, zero failures. Relevant code is `84dcf27231db5f06d8bf39cb6ba2ddaaf91fdc7c`; submission/check revision `095081101f04254270dee6805ac6b8cbb8e9ea3b` changes only docs/evidence. Both compilations, both fmt checks and exact/default Cargo checks exit0; source manifests match before/after and audited relevant bytes. Not warning-free: exact headless scope retains 10 preexisting project warnings; both scopes retain six iced manifest deprecations. No warnings repaired or suppressed.
+[Retained independent audit](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/12.0.0-session-2026-10-05/count-green-20261010/independent-report.md) and adjacent manifest/stdout/check receipts establish actual **5/5 exact1200 + 40/40 current-default PASS**, zero failures. Relevant code is `84dcf27231db5f06d8bf39cb6ba2ddaaf91fdc7c`; submission/check revision `095081101f04254270dee6805ac6b8cbb8e9ea3b` changes only docs/evidence. Both compilations, both fmt checks and exact/default Cargo checks exit0; source manifests match before/after and audited relevant bytes. Not warning-free: exact headless scope retains 10 preexisting project warnings; both scopes retain six iced manifest deprecations. No warnings repaired or suppressed.
 
 | Selected scope | Actual PASS | Boundary |
 | --- | ---: | --- |
@@ -58,7 +58,7 @@ After `84dcf2723`, inspected cast implementation/module/registration and inverse
 | Current-default count outputs | 30/30 | cast/display simulator contract |
 | Current-default maximum applications + metadata defaults | 8/8 + 2/2 | default includes125 and later features; not isolated exact125 |
 
-Separate historical cached21 case `patch_12_0_0_deprecated::patch_12_0_0_deprecated_retirement_and_successors` is actual PASS at **c6bc87c120**, saved full-suite log line13804; [retained exact line/provenance](../../data/patch-api/evidence/12.0.0-session-2026-10-05/count-green-20261010/cached21-historical.json). This historical receipt does not cover later84dcf2723. Subsequent accepted frozen BA output records the exact cached selector PASS at line13356 ([named receipt](../../data/patch-api/evidence/default-profile-retirement-reconciliation-2026-10-12/named-case.json)). That one prefork execution is already included in BA totals, not new acceptance credit; no rerun or exact1200/native parity implied. BARE21 remains a distinct boundary.
+Separate historical cached21 case `patch_12_0_0_deprecated::patch_12_0_0_deprecated_retirement_and_successors` is actual PASS at **c6bc87c120**, saved full-suite log line13804; [retained exact line/provenance](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/12.0.0-session-2026-10-05/count-green-20261010/cached21-historical.json). This historical receipt does not cover later84dcf2723. Subsequent accepted frozen BA output records the exact cached selector PASS at line13356 ([named receipt](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/default-profile-retirement-reconciliation-2026-10-12/named-case.json)). That one prefork execution is already included in BA totals, not new acceptance credit; no rerun or exact1200/native parity implied. BARE21 remains a distinct boundary.
 
 Ordinary pre125 output and display policies remain inferred simulator behavior; native secrecy/input permission remains unknown or unmodeled. Historical RED/storage/feature failures remain separate epochs. No native, full-suite, all-profile or hermetic provenance claim. Later AutoHide test963 is outside count proof scope.
 

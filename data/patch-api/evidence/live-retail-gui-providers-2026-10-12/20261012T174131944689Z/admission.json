@@ -1,7 +1,0 @@
-{
-  "available_gib": 27.884967803955078,
-  "load1": 11.61,
-  "minimum_available_gib": 12,
-  "maximum_load1": 24,
-  "scope": "Scheduling choice; 4GiB GUI cgroup, no source/native requirement"
-}

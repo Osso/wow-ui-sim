@@ -1,6 +1,6 @@
 # Supplied DiscreteProgressSteps visualization
 
-Host-supplied DiscreteProgressSteps records belong to `src/c_api/ui_widget_manager/`; [widget manager architecture](../wiki/systems/ui-widget-manager-state.md) describes existing supplied-record behavior. Complete snapshot producer and typed host-feed variant are implemented after genuine five-case RED at `42f206f66`: 0 PASS / 5 missing-supplied-record FAIL, before cache/atlas prerequisites. Bounded actual Retail/PTR query/feed/security/cached-consumer, preservation, fresh startup and default-check proof pass in separate scopes; [current packet](../../data/patch-api/evidence/ui-widget-discrete-progress-2026-10-13/README.md#retail-and-ptr-current-proof) owns receipts. Saved independent GREEN text-retention audit PASS at `a6723200be40145ec352666b538998bf4035a608`: 106 payloads, 302,209 public bytes, 63 JSON equivalents and 16 doc links/anchors; GREEN manifest and six modified docs included, original RED and other packets not rechecked. Cached Retail/PTR schema identifies visualization19 and all19 nonnil fields; native runtime/catalog/render parity remains unknown.
+Host-supplied DiscreteProgressSteps records belong to `src/c_api/ui_widget_manager/`; [widget manager architecture](../wiki/systems/ui-widget-manager-state.md) describes existing supplied-record behavior. Complete snapshot producer and typed host-feed variant are implemented after genuine five-case RED at `42f206f66`: 0 PASS / 5 missing-supplied-record FAIL, before cache/atlas prerequisites. Bounded actual Retail/PTR query/feed/security/cached-consumer, preservation, fresh startup and default-check proof pass in separate scopes; [current packet](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/ui-widget-discrete-progress-2026-10-13/README.md#retail-and-ptr-current-proof) owns receipts. Saved independent GREEN text-retention audit PASS at `a6723200be40145ec352666b538998bf4035a608`: 106 payloads, 302,209 public bytes, 63 JSON equivalents and 16 doc links/anchors; GREEN manifest and six modified docs included, original RED and other packets not rechecked. Cached Retail/PTR schema identifies visualization19 and all19 nonnil fields; native runtime/catalog/render parity remains unknown.
 
 ## What it must do
 
@@ -30,7 +30,7 @@ Complete snapshot fields: `shownState`, `tooltip`, `progressMin`, `progressMax`,
 
 ## Known gaps (current cycle)
 
-- [x] Bounded current [GREEN text-retention audit](../../data/patch-api/evidence/ui-widget-discrete-progress-2026-10-13/README.md#retail-and-ptr-current-proof) PASS at `a6723200be40145ec352666b538998bf4035a608`; original22-text RED retention independently passed earlier, not rechecked here. Preserve runner trailing spaces as exact evidence, not code-format failures.
+- [x] Bounded current [GREEN text-retention audit](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/ui-widget-discrete-progress-2026-10-13/README.md#retail-and-ptr-current-proof) PASS at `a6723200be40145ec352666b538998bf4035a608`; original22-text RED retention independently passed earlier, not rechecked here. Preserve runner trailing spaces as exact evidence, not code-format failures.
 - [ ] Native/catalog/render/tutorial/other-profile and full widget-system/parent acceptance remain open; this bounded record slice does not establish them.
 
 ## Out of scope

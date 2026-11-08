@@ -1,7 +1,0 @@
-{
-  "status": "HARNESS_SETUP_FAILED",
-  "compiled": false,
-  "executed_cases": 0,
-  "error": "Error: [Errno 17] File exists: '/home/osso/.local/state/wow-ui-sim/verification/talent-stage-diagnostic-current/20261011T233855Z'",
-  "scope": "Worker epoch collided with parent admission directory before source/library/compiler access; no Rust compile attempted"
-}

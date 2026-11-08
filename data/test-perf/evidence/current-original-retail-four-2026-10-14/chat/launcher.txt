@@ -1,6 +1,0 @@
-Running as unit: <UNIT_CHAT>.service; invocation ID: d2cc5e1590794baca182e8cc8142db70
-          Finished with result: success
-Main processes terminated with: code=exited, status=0/SUCCESS
-               Service runtime: 25.586s
-             CPU time consumed: 26.821s
-                   Memory peak: 1.4G (swap: 0B)

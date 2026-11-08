@@ -1,6 +1,0 @@
-{
-  "source_revision": "e8ba34ec2b7df268a274e08244cadbc367683c60",
-  "production_delta_revision": "b12f62435",
-  "scope": "PTR Spacer producer seven-case no-run build; behavior pending",
-  "git_status": " M docs/specs/ui-widget-text-with-subtext.md\n?? .code-index.db\n?? handoff/\n?? state/\n?? verif/\n"
-}

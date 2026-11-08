@@ -25,13 +25,13 @@ Retail/PTR `C_FriendList.SetFriendNotes` contract over existing environment-owne
 
 ## Tests asserting this spec
 
-- [friend_note_mutation.rs](../../tests/friend_note_mutation.rs): eight integrated Rust cases; genuine Retail RED failed8/8 at missing raw setter on `d61c78a2b`. Downstream assertions were unreached in RED. At `a883157c49`, all eight cases completed on each of Retail/PTR, including mutation/security/whole-popup assertions. Both normal probes exit0 with marker and literal `[]`; fmt exit0. [Retained packet](../../data/patch-api/evidence/friend-note-mutation-2026-10-12/README.md): initial retention issues corrected and independently passed; publication/capture-preservation/validator9 gate PASS at `cb77de086`.
+- [friend_note_mutation.rs](../../tests/friend_note_mutation.rs): eight integrated Rust cases; genuine Retail RED failed8/8 at missing raw setter on `d61c78a2b`. Downstream assertions were unreached in RED. At `a883157c49`, all eight cases completed on each of Retail/PTR, including mutation/security/whole-popup assertions. Both normal probes exit0 with marker and literal `[]`; fmt exit0. [Retained packet](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/friend-note-mutation-2026-10-12/README.md): initial retention issues corrected and independently passed; publication/capture-preservation/validator9 gate PASS at `cb77de086`.
 
 ## Known gaps (current cycle)
 
-- [x] Later default check and formatter each PASS once at `7d9d9f621`; [check packet](../../data/patch-api/evidence/edit-mode-enter-2026-10-12/README.md). The `a883157c49` attempt remains NEVER INVOKED (capacity BLOCKED, zero credit); no retroactive credit.
+- [x] Later default check and formatter each PASS once at `7d9d9f621`; [check packet](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/edit-mode-enter-2026-10-12/README.md). The `a883157c49` attempt remains NEVER INVOKED (capacity BLOCKED, zero credit); no retroactive credit.
 - [x] Real strict row60 BEFORE145/95OK/50gaps failed solely stale setter; exact one-ID reconciliation followed by distinct strict AFTER PASS with identical full records. Independent validator9/real validator/capture-preservation PASS at `cb77de086`; historical GUID145/94/51 unchanged.
-- [x] New retained validator-stream projection gate independently PASS through `b1c7c4348`; [gate](../../data/patch-api/evidence/edit-mode-enter-2026-10-12/public-retention-gate.json). Native, broader current-suite and whole-handoff acceptance remain excluded.
+- [x] New retained validator-stream projection gate independently PASS through `b1c7c4348`; [gate](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/edit-mode-enter-2026-10-12/public-retention-gate.json). Native, broader current-suite and whole-handoff acceptance remain excluded.
 
 ## Out of scope
 

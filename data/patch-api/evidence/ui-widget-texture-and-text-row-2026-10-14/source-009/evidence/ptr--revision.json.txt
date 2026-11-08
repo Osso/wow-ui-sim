@@ -1,6 +1,0 @@
-{
-  "source_revision": "7f44eb773c2a3911cfcbbd6af8c56c379b509dc4",
-  "production_delta_revision": "398c427fd",
-  "scope": "PTR row no-run; joint admission includes4G Retail controls",
-  "git_status": " M docs/specs/ui-widget-text-with-subtext.md\n?? .code-index.db\n?? handoff/\n?? state/\n?? verification/\n"
-}

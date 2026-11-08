@@ -19,7 +19,7 @@ Exact signature/annotation beside each contract identifies what is stated and wh
 
 ## Exact frozen identity
 
-[Identity verification](../../../data/patch-api/evidence/1.4.0-session-2026-10-09/identity-verification.json) precedes derivation. Body SHA256 `94fc69b008e0531c8630274dcf0ea03864fa2a3d5a8faab00fb93b40b45e9f52`; response `f9125fedab7a00d8a65b1a1b3ca69fe855d178982d31dc7ca47640be51d7f5fa`; manifest `b07fc204377842c8d5303f9cd4597acba02290bbe6874efe4ab160143c27d6ba`; registry `e357f60af2c745b7797ab8f9e7ac151345cddb6bf43de7786ee25785ee92e91c`,101 pages ending1.0.0. Retrieved2026-10-09T08:51:36.403283+00:00. Own copied inputs only; frozen cache untouched.
+[Identity verification](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/1.4.0-session-2026-10-09/identity-verification.json) precedes derivation. Body SHA256 `94fc69b008e0531c8630274dcf0ea03864fa2a3d5a8faab00fb93b40b45e9f52`; response `f9125fedab7a00d8a65b1a1b3ca69fe855d178982d31dc7ca47640be51d7f5fa`; manifest `b07fc204377842c8d5303f9cd4597acba02290bbe6874efe4ab160143c27d6ba`; registry `e357f60af2c745b7797ab8f9e7ac151345cddb6bf43de7786ee25785ee92e91c`,101 pages ending1.0.0. Retrieved2026-10-09T08:51:36.403283+00:00. Own copied inputs only; frozen cache untouched.
 
 ## Model candidate and history boundaries
 
@@ -37,12 +37,12 @@ Original sealed ledger carries last New category “Miscellaneous” into Change
 
 ## Sources
 
-- [Current literal ledger](../../../data/patch-api/evidence/1.4.0-session-2026-10-09/current-ledger.json)
-- [Original sealed ledger](../../../data/patch-api/evidence/1.4.0-session-2026-10-09/ledger.json) — historical pre-category-correction artifact
-- [Proof ledger](../../../data/patch-api/evidence/1.4.0-session-2026-10-09/proof-ledger.json) / [later actual receipts](../../../data/patch-api/evidence/1.4.0-session-2026-10-09/later-proof-ledger.json)
-- [HANDOFF](../../../data/patch-api/evidence/1.4.0-session-2026-10-09/HANDOFF.md) / [REPLAY](../../../data/patch-api/evidence/1.4.0-session-2026-10-09/REPLAY.md)
+- [Current literal ledger](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/1.4.0-session-2026-10-09/current-ledger.json)
+- [Original sealed ledger](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/1.4.0-session-2026-10-09/ledger.json) — historical pre-category-correction artifact
+- [Proof ledger](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/1.4.0-session-2026-10-09/proof-ledger.json) / [later actual receipts](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/1.4.0-session-2026-10-09/later-proof-ledger.json)
+- [HANDOFF](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/1.4.0-session-2026-10-09/HANDOFF.md) / [REPLAY](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/1.4.0-session-2026-10-09/REPLAY.md)
 - [Spec](../../specs/patch-1-4-0-source-accounting.md)
-- [Governing handoff](../../../data/patch-api/evidence/handoff-laptop-to-agent-server/HANDOFF.md) — explicit child restrictions override operations
+- [Governing handoff](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/handoff-laptop-to-agent-server/HANDOFF.md) — explicit child restrictions override operations
 
 ## See Also
 

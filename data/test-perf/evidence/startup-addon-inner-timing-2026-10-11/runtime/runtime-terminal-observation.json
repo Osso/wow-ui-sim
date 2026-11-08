@@ -1,7 +1,0 @@
-{
-  "at": "2026-10-12T05:22:29.040588+00:00",
-  "unit": "wow-startup-inner-observation-20261012t052154361130z.service",
-  "exit": 0,
-  "stdout": "ActiveState=active\nSubState=exited\nRuntimeMaxUSec=1min 30s\nResult=success\nExecMainStatus=0\nControlGroup=\nCPUQuotaPerSecUSec=12s\nMemoryMax=17179869184\nKillMode=control-group\n",
-  "stderr": ""
-}

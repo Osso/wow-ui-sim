@@ -48,13 +48,13 @@ Added defaults:12 exact strings;CMAA2Quality source2/current3;ShakeStrengthCamer
 
 ## Sources
 
-- [Frozen pin](../../../data/patch-api/evidence/1.14.3-session-2026-10-09/original/pin.json) — exact Warcraft Wiki request/retrieval/revision/hashes; CC BY-SA4.0.
-- [Literal ledger](../../../data/patch-api/evidence/1.14.3-session-2026-10-09/original/ledger.json) — full occurrence accounting.
-- [Identity before derivation](../../../data/patch-api/evidence/1.14.3-session-2026-10-09/identity-before-derivation.json).
-- [SOURCE fixtures](../../../data/patch-api/evidence/1.14.3-session-2026-10-09/test_source.py), [portable fixtures](../../../data/patch-api/evidence/1.14.3-session-2026-10-09/test_portable.py).
-- [Immutable original proof](../../../data/patch-api/evidence/1.14.3-session-2026-10-09/proof-ledger.json), [portable proof](../../../data/patch-api/evidence/1.14.3-session-2026-10-09/portable-proof.json), [isolation failure](../../../data/patch-api/evidence/1.14.3-session-2026-10-09/cargo-isolation-probe.json).
-- [Current final proof](../../../data/patch-api/evidence/1.14.3-session-2026-10-09/current-final-proof.json), [current observation](../../../data/patch-api/evidence/1.14.3-session-2026-10-09/factory-green-observations.json) and [separate receipt seals](../../../data/patch-api/evidence/1.14.3-session-2026-10-09/receipt-seals.json).
-- [Handoff](../../../data/patch-api/evidence/1.14.3-session-2026-10-09/HANDOFF.md) — exact execution constraints and remaining main-owned gates.
+- [Frozen pin](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/1.14.3-session-2026-10-09/original/pin.json) — exact Warcraft Wiki request/retrieval/revision/hashes; CC BY-SA4.0.
+- [Literal ledger](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/1.14.3-session-2026-10-09/original/ledger.json) — full occurrence accounting.
+- [Identity before derivation](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/1.14.3-session-2026-10-09/identity-before-derivation.json).
+- [SOURCE fixtures](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/1.14.3-session-2026-10-09/test_source.py), [portable fixtures](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/1.14.3-session-2026-10-09/test_portable.py).
+- [Immutable original proof](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/1.14.3-session-2026-10-09/proof-ledger.json), [portable proof](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/1.14.3-session-2026-10-09/portable-proof.json), [isolation failure](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/1.14.3-session-2026-10-09/cargo-isolation-probe.json).
+- [Current final proof](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/1.14.3-session-2026-10-09/current-final-proof.json), [current observation](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/1.14.3-session-2026-10-09/factory-green-observations.json) and [separate receipt seals](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/1.14.3-session-2026-10-09/receipt-seals.json).
+- [Handoff](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/1.14.3-session-2026-10-09/HANDOFF.md) — exact execution constraints and remaining main-owned gates.
 
 ## See Also
 

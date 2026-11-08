@@ -1,6 +1,0 @@
-Running as unit: wow-widget-green-ui-widget-manager-bars-20261013t090502.service
-          Finished with result: success
-Main processes terminated with: code=exited, status=0/SUCCESS
-               Service runtime: 512ms
-             CPU time consumed: 488ms
-                   Memory peak: 86.7M (swap: 0B)

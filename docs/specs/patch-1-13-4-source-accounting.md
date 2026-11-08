@@ -14,4 +14,4 @@ Own targeted SOURCE tests with per-occurrence omission and invented-credit contr
 
 ## Evidence
 
-[Audit](../wiki/investigations/patch-1-13-4-api-audit.md), [ledger](../../data/patch-api/evidence/1.13.4-session-2026-10-09/ledger.json), [model assessment](../../data/patch-api/evidence/1.13.4-session-2026-10-09/model-review.json). Main integrates1.13.4 before parallel1.13.3; native/full-goal integration remains outside this bounded task.
+[Audit](../wiki/investigations/patch-1-13-4-api-audit.md), [ledger](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/1.13.4-session-2026-10-09/ledger.json), [model assessment](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/1.13.4-session-2026-10-09/model-review.json). Main integrates1.13.4 before parallel1.13.3; native/full-goal integration remains outside this bounded task.

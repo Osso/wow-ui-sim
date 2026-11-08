@@ -21,7 +21,7 @@ Publication/absence only: no signature, output, security, behavior or native par
 
 ## Local proof
 
-Runtime/test revision `3859f4566`; later changes are evidence/docs only. [Proof ledger](../../data/patch-api/evidence/11.1.0-session-2026-10-06/p1110-proof.json) retains command, exact revision, outcome and invalidated RED scopes. No independent/native acceptance; no full suite.
+Runtime/test revision `3859f4566`; later changes are evidence/docs only. [Proof ledger](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/11.1.0-session-2026-10-06/p1110-proof.json) retains command, exact revision, outcome and invalidated RED scopes. No independent/native acceptance; no full suite.
 
 | Isolated sweep | Rows | OK | Exact gaps | Result |
 |---|---:|---:|---:|---|
@@ -43,4 +43,4 @@ Two new behavioral tests fail before implementation and pass afterward. Separate
 
 216 unique source IDs: 71 partial-development-green, 18 bounded-coverage, 106 audit-pending, 21 metadata-only. Non-inventory: 87 pending contracts, 13 editorial rows. Eight later reversals carry metadata-only credit. Ledger remains in-progress; publication accounting is not complete behavioral/native parity.
 
-[Gap review](../../data/patch-api/evidence/11.1.0-session-2026-10-06/p1110-gap-review.json) records three closures and 19 precise retained boundaries; [extract scout](../../data/patch-api/evidence/11.1.0-session-2026-10-06/p1110-extract-scout.md) assigns all 100 extract rows. [Audit](../wiki/investigations/patch-11-1-0-api-audit.md) records the parser omission and sibling build-cache path violation. Local Cargo logs are ignored artifacts; retained JSON captures result/command/revision summaries.
+[Gap review](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/11.1.0-session-2026-10-06/p1110-gap-review.json) records three closures and 19 precise retained boundaries; [extract scout](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/11.1.0-session-2026-10-06/p1110-extract-scout.md) assigns all 100 extract rows. [Audit](../wiki/investigations/patch-11-1-0-api-audit.md) records the parser omission and sibling build-cache path violation. Local Cargo logs are ignored artifacts; retained JSON captures result/command/revision summaries.

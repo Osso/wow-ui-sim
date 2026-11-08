@@ -1,6 +1,0 @@
-{
-  "at": "2026-10-12T00:10:22.162589+00:00",
-  "exit": 0,
-  "stdout": "ActiveState=failed\nSubState=failed\nRuntimeMaxUSec=1min 30s\nResult=exit-code\nExecMainStatus=101\nControlGroup=\nKillMode=control-group\n",
-  "stderr": ""
-}

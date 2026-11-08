@@ -46,12 +46,12 @@ Numeric/native correspondence; real realm seasonal state/C_Seasons; current Era 
 
 ## Sources
 
-- [Frozen source pin](../../../data/patch-api/evidence/1.15.1-session-2026-10-09/source-pin.json) — Warcraft Wiki CC BY-SA4.0; exact request/retrieval/hash.
-- [Literal ledger](../../../data/patch-api/evidence/1.15.1-session-2026-10-09/ledger.json).
-- [Model investigation](../../../data/patch-api/evidence/1.15.1-session-2026-10-09/model-investigation.json) — snapshot observations and limitations.
-- [Current bounded coverage](../../../data/patch-api/evidence/1.15.1-session-2026-10-09/current-contract-coverage.json) — separate from immutable SOURCE ledger.
-- [Portable proof](../../../data/patch-api/evidence/1.15.1-session-2026-10-09/portable-proof.json) and [headless proof](../../../data/patch-api/evidence/1.15.1-session-2026-10-09/headless-alias-proof.json) — exact commands/scopes.
-- [Separate external source pin](../../../data/patch-api/evidence/1.15.1-session-2026-10-09/external-primary-source/source-pin.json) — unchanged Blizzard Lua distribution mirrored by Gethe; supplied by main.
+- [Frozen source pin](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/1.15.1-session-2026-10-09/source-pin.json) — Warcraft Wiki CC BY-SA4.0; exact request/retrieval/hash.
+- [Literal ledger](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/1.15.1-session-2026-10-09/ledger.json).
+- [Model investigation](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/1.15.1-session-2026-10-09/model-investigation.json) — snapshot observations and limitations.
+- [Current bounded coverage](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/1.15.1-session-2026-10-09/current-contract-coverage.json) — separate from immutable SOURCE ledger.
+- [Portable proof](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/1.15.1-session-2026-10-09/portable-proof.json) and [headless proof](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/1.15.1-session-2026-10-09/headless-alias-proof.json) — exact commands/scopes.
+- [Separate external source pin](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/1.15.1-session-2026-10-09/external-primary-source/source-pin.json) — unchanged Blizzard Lua distribution mirrored by Gethe; supplied by main.
 
 ## See Also
 

@@ -1,6 +1,6 @@
 # Patch 1.13.2 frozen SOURCE accounting
 
-Bounded Classic Era source audit from the [immutable pin](../../data/patch-api/evidence/1.13.2-session-2026-10-09/source-pin.json). [Audit wiki](../wiki/investigations/patch-1-13-2-api-audit.md) separates literal SOURCE accounting, current model observations and proof epochs. No native parity inferred.
+Bounded Classic Era source audit from the [immutable pin](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/1.13.2-session-2026-10-09/source-pin.json). [Audit wiki](../wiki/investigations/patch-1-13-2-api-audit.md) separates literal SOURCE accounting, current model observations and proof epochs. No native parity inferred.
 
 ## What it must do
 

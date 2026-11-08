@@ -1,5 +1,0 @@
-running 2 tests
-test chat_frame::test_chat_editbox_click_type_and_submit ... ok
-test chat_frame::test_chat_editbox_text_color_after_activation ... ok
-
-test result: ok. 2 passed; 0 failed; 2 total

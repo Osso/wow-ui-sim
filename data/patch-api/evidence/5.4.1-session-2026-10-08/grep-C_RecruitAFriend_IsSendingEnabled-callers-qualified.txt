@@ -1,1 +1,0 @@
-tests/patch_8_2_5_publication_fixes.rs:15:    "C_RecruitAFriend.IsSendingEnabled",

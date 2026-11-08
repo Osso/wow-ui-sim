@@ -1,6 +1,0 @@
-{
-  "source_revision": "1804d1c49d5a54ca95a8099a75611450e79ca480",
-  "production_delta_revision": "5bd208dba",
-  "scope": "new actual activePTRcache bar1/HUD2 only; existingPTR26/normalstartup sourceunchanged reused, no rerun; production5bd unchanged",
-  "git_status": "?? .code-index.db\n?? verification/\n"
-}

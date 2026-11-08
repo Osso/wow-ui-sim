@@ -1,6 +1,0 @@
-{
-  "first_attempt": "cli.git archive output(path) streamed binary and assertion failed; source.tar only360448bytes",
-  "log": "<TMP>/pi-tool-37082505666605f8.log",
-  "recovery": "git native --output to separate archive; incomplete original preserved",
-  "runtime_started": false
-}

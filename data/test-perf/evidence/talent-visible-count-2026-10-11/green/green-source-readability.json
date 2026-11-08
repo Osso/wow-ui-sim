@@ -1,7 +1,0 @@
-{
-  "revision": "5d2e4ece1c08ec967cc8a7fd8f8bbe60d5a02ba4",
-  "scope": "Changedcollector7added/1removedlines; earlier99testlines red2469 assessment preserved",
-  "method": "Manualchangedlineaudit: fouriteratorcombinators, namedliveIDs, onepureancestor predicate, stable sort/names; functionbelow30lines; no nestedlogic/warningsuppression/cachefallback/publictypechanges",
-  "violations": [],
-  "execution": "GREENnotexecuted"
-}

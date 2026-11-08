@@ -1,6 +1,0 @@
-{
-  "source_revision": "9b027baaf8931e1e3780a33b0a7fd098e9476f87",
-  "production_delta_revision": "50f6f0ea8",
-  "scope": "Final default library/bin check forSpeakqueryproductiona8 (9bdocsonly); excludes integrationtesttargets so laterconsumer-testonlychange willnotinvalidate",
-  "git_status": " M data/test-perf/evidence/original-retail-prefork-2026-10-13/README.md\n M docs/specs/animation-query-lifecycle.md\n M docs/specs/prefork-test-harness.md\n M docs/wiki/index.md\n M docs/wiki/log.md\n M docs/wiki/systems/prefork-test-harness.md\n?? .code-index.db\n?? data/patch-api/evidence/voice-speak-for-me-active-2026-10-13/\n?? verification/\n"
-}

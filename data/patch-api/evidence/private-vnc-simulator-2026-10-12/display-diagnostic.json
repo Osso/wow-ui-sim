@@ -1,6 +1,0 @@
-{
-  "status_exit": 0,
-  "status": "ActiveState=active\nSubState=running\nMainPID=599082\nResult=success\nExecMainStatus=0\nControlGroup=/user.slice/user-1000.slice/user@1000.service/app.slice/wow-ui-vnc-display.service\n",
-  "journal_exit": 0,
-  "journal": "Starting Private WoW UI simulator X display :22...\nStarted Private WoW UI simulator X display :22.\nThe XKEYBOARD keymap compiler (xkbcomp) reports:\n> Warning:          Multiple symbols for level 1/group 1 on key <FK23>\n>                   Using F23, ignoring XF86TouchpadOff\n> Warning:          Symbol map for key <FK23> redefined\n>                   Using last definition for conflicting fields\n> Warning:          Symbol map for key <FK24> redefined\n>                   Using last definition for conflicting fields\nErrors from xkbcomp are not fatal to the X server\n"
-}

@@ -1,6 +1,0 @@
-{
-  "source_revision": "5c54297567689e0640f8817c4a076fda4226cef5",
-  "production_delta_revision": "test-only reconciliation and descending-curve RED; production unchanged since983f02",
-  "scope": "Default Retail no-run lib/integration/prefork compilation; targeted runtime pending. jobs4/CPU400% selected under reported contention; no causal performance claim.",
-  "git_status": "?? .code-index.db\n?? handoff/\n?? verification/\n"
-}

@@ -4,7 +4,7 @@ Account for the pinned Warcraft Wiki page `619773`, revision `6303388`, without 
 
 ## What it must do
 
-- [x] Preserve returned response identity, exact wikitext bytes/hash, reproducible plaintext, and all six source rows: five metadata-only and one substantive statement. [Recorded source proof](../../data/patch-api/evidence/4.4.2-session-2026-10-08/source-proof.json): five tests and extractor check pass at `b5ee99e5b`.
+- [x] Preserve returned response identity, exact wikitext bytes/hash, reproducible plaintext, and all six source rows: five metadata-only and one substantive statement. [Recorded source proof](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/4.4.2-session-2026-10-08/source-proof.json): five tests and extractor check pass at `b5ee99e5b`.
 - [ ] Keep the modern auction house and associated `C_AuctionHouse` APIs enabled in Cataclysm Classic contract **UNPROVEN**: no supported Cataclysm Classic runtime profile exists. Source identity proof cannot check off API compatibility.
 - [x] Preserve both linked diffs and navigation in exact metadata rows, with no runtime capabilities; source-proof test rejects the omitted external-reference row. No supersession behavior is tested or claimed.
 

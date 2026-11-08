@@ -1,6 +1,0 @@
-
-running 2 tests
-test voice_speak_for_me_profile_input::documented_profile_query_returns_one_false_boolean ... ok
-test voice_speak_for_me_profile_input::documented_profile_retained_query_reads_live_isolated_activity ... ok
-
-test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 7998 filtered out; finished in 0.81s

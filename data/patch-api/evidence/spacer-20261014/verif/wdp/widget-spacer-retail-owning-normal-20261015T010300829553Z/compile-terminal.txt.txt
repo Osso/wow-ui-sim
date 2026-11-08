@@ -1,7 +1,0 @@
-ActiveState=active
-SubState=exited
-Result=success
-ExecMainCode=2
-ExecMainStatus=15
-MemoryPeak=2400354304
-CPUUsageNSec=12164500000

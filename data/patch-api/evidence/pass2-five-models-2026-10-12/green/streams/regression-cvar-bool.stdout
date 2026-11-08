@@ -1,6 +1,0 @@
-
-running 1 test
-test set_cvar_global::set_cvar_accepts_boolean_as_one_zero ... ok
-
-test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10900 filtered out; finished in 0.24s
-

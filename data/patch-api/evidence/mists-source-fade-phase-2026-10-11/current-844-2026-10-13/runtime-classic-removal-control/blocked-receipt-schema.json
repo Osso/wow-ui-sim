@@ -1,6 +1,0 @@
-{
-  "status": "SETUP_BLOCKED_ZERO_LAUNCH",
-  "cause": "normalreceipt usespathstat_after notstat_after",
-  "fix": "Consume explicit existing pathstat_after field in next runtimehelper withoutreauthentication",
-  "scope": "No admission/argv/runtime performed"
-}

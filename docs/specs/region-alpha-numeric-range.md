@@ -23,7 +23,7 @@ Ordinary numeric `Region:SetAlpha` inputs follow the [10.0.0 change-note summary
 
 ## Tests asserting this spec
 
-[Retained evidence packet](../../data/patch-api/evidence/region-alpha-numeric-range-2026-10-13/README.md): 16 whole-text payloads/18 files; initial and closing public-copy/privacy gates passed. Prior 14 payload proofs were reused through Git/stat metadata at closing, not reopened.
+[Retained evidence packet](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/region-alpha-numeric-range-2026-10-13/README.md): 16 whole-text payloads/18 files; initial and closing public-copy/privacy gates passed. Prior 14 payload proofs were reused through Git/stat metadata at closing, not reopened.
 
 Producer `71127a8e1` has bounded Retail/PTR runtime acceptance: five unique Rust cases/profile, **10 passing outcomes**, comprising two numeric contracts and three no-op/dirty-state preservation cases. Frame, Texture and FontString reach all 9 valid and 21 invalid combinations/profile, including near-boundary numbers, infinities and NaN. Rejection preserves stored and effective alpha; getters are not replaced. Nested child summaries are not additional tests.
 

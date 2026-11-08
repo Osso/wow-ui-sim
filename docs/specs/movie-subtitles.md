@@ -22,7 +22,7 @@
 ## Tests asserting this spec
 
 - `tests/movie_subtitles.rs`: real temporary addon XML, both boolean settings, independent backing frame state, rejection of unsupported receivers and invalid arguments, and unchanged visibility. Saved469 log7781 records its PASS, already inside suite totals; its `== nil` expressions do not prove exact zero-return arity.
-- [Separate Retail arity capture](../../data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/movie-subtitle-arity/): one CLI execution034451 independently audited PASS; four `select('#', ...) == 0` calls (true/false on two Lua-created MovieFrames), two rejected explicit receivers (Frame/plain table), five hidden-pair checkpoints, marker/JSON[]/exit0. Prior XML state/isolation proof and new exact-arity/public-visibility proof are distinct. No native/default/playback/all-profile claim; historical suite FAIL and parent OPEN.
+- [Separate Retail arity capture](https://github.com/Osso/wow-ui-sim/tree/183edc381/data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/movie-subtitle-arity): one CLI execution034451 independently audited PASS; four `select('#', ...) == 0` calls (true/false on two Lua-created MovieFrames), two rejected explicit receivers (Frame/plain table), five hidden-pair checkpoints, marker/JSON[]/exit0. Prior XML state/isolation proof and new exact-arity/public-visibility proof are distinct. No native/default/playback/all-profile claim; historical suite FAIL and parent OPEN.
 
 ## Known gaps (current cycle)
 

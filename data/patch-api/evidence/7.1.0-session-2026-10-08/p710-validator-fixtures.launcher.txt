@@ -1,1 +1,0 @@
-p710-validator-fixtures 0

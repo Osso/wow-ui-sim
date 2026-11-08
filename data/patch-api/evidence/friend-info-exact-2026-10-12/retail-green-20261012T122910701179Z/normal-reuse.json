@@ -1,7 +1,0 @@
-{
-  "authentication": "independent-auth-normal.json",
-  "epoch": "/home/osso/.local/state/wow-ui-sim/verification/friend-info-exact-current/retail-green-20261012T122455266641Z",
-  "manifest": "normal-artifact.json",
-  "reason": "Only secret test assertions changed; no production/Cargo changes, no reseal or rehash",
-  "source_diff": ""
-}

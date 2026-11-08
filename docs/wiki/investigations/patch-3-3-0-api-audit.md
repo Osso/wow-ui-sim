@@ -50,7 +50,7 @@ Source `a6b572732` adds five Rust lines in `condition_matches`: `vehicleui` read
 
 ## Macro vehicle current Retail runtime follow-up — 2026-10-14
 
-[Public historical packet](../../../data/patch-api/evidence/store-macro-20261014/README.md) retains macro RED/GREEN and separate selected-unit preservation without relabeling historical failures. [Owning status](../../specs/macro-vehicle-ui-conditions.md#current-bounded-runtime-follow-up--2026-10-14) owns recorded-runtime and accepted copy/privacy limits; no current item/display/PTR/UI, native/render or full-parent acceptance follows.
+[Public historical packet](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/store-macro-20261014/README.md) retains macro RED/GREEN and separate selected-unit preservation without relabeling historical failures. [Owning status](../../specs/macro-vehicle-ui-conditions.md#current-bounded-runtime-follow-up--2026-10-14) owns recorded-runtime and accepted copy/privacy limits; no current item/display/PTR/UI, native/render or full-parent acceptance follows.
 
 The full Retail macro / Store artifact verification report records bounded runtime at `a6b57273246430131060b64d2b02e6d50baea9a6`. The earlier input-only, producer-source and pending-proof checkpoints above remain historical. The [owning contract](../../specs/macro-vehicle-ui-conditions.md#current-bounded-runtime-follow-up--2026-10-14) now checks five literal requirements; it owns current acceptance limits.
 
@@ -72,10 +72,10 @@ The full Retail macro / Store artifact verification report records bounded runti
 ## Sources
 - [Frozen source](../../../data/patch-api/sources/3.3.0-api-changes.wikitext)
 - [Spec](../../specs/patch-3-3-0-publication-sweep.md)
-- [Handoff and reproduction](../../../data/patch-api/evidence/3.3.0-session-2026-10-09/handoff.md)
-- [Original ledger](../../../data/patch-api/evidence/3.3.0-session-2026-10-09/historical-page-coverage.json)
+- [Handoff and reproduction](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/3.3.0-session-2026-10-09/handoff.md)
+- [Original ledger](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/3.3.0-session-2026-10-09/historical-page-coverage.json)
 - [Current ledger](../../../data/patch-api/sources/3.3.0-page-coverage.json)
-- [Portable summary](../../../data/patch-api/evidence/3.3.0-session-2026-10-09/validator-summary.json)
+- [Portable summary](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/3.3.0-session-2026-10-09/validator-summary.json)
 
 ## See Also
 - [[patch-4-1-0-api-audit]] — actual later Retail source.

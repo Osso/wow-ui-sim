@@ -1,4 +1,0 @@
-{
-  "excluded": [],
-  "scope": "Only supplied submit.* and ci.json; no live polling, suite log or result collected."
-}

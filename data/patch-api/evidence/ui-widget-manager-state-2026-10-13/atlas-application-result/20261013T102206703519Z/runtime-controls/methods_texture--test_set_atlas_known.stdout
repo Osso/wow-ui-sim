@@ -1,5 +1,0 @@
-
-running 1 test
-test methods_texture::test_set_atlas_known ... ok
-
-test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10966 filtered out; finished in 0.24s

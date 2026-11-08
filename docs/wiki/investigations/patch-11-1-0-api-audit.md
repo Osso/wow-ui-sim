@@ -16,7 +16,7 @@ GetSpecializationNameForSpecID was absent despite an existing specialization cat
 
 **Retained historical removal:** SetSpecialization remains published because current cached Blizzard_TalentUI/Mists/Blizzard_TalentUI.lua:70 calls it. Mainline's C_SpecializationInfo.SetSpecialization does not authorize deleting a classic consumer. Retain as exact gap, not cached deprecation-alias acceptance.
 
-Remaining gaps: achievement telemetry; per-addon load-error query; commentator charge classification; debug character view; delve preview quality; pet specialization mutation/catalog; profession-respec eligibility/transaction; native console echo; name declensions; native realm identity; PlayerLocation sex; seen-curio command. [Per-ID review](../../../data/patch-api/evidence/11.1.0-session-2026-10-06/p1110-gap-review.json) records all 22 initial/discovered defect outcomes and precise boundaries. No placeholders added.
+Remaining gaps: achievement telemetry; per-addon load-error query; commentator charge classification; debug character view; delve preview quality; pet specialization mutation/catalog; profession-respec eligibility/transaction; native console echo; name declensions; native realm identity; PlayerLocation sex; seen-curio command. [Per-ID review](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/11.1.0-session-2026-10-06/p1110-gap-review.json) records all 22 initial/discovered defect outcomes and precise boundaries. No placeholders added.
 
 ## Coverage matrix
 
@@ -32,22 +32,22 @@ Remaining gaps: achievement telemetry; per-addon load-error query; commentator c
 
 ## Development proof
 
-[Spec and sweep table](../../specs/patch-11-1-0-publication-sweep.md#local-proof) and [proof ledger](../../../data/patch-api/evidence/11.1.0-session-2026-10-06/p1110-proof.json) retain exact revision/command scopes. All eleven sweeps run alone and pass. Later observations match fixtures already present on p1115-page, including its 11.2.0 27-gap and 12.0.0 21-gap baseline; no later fixture edited. One-row negative control changes C_WarbandScene.SetFavorite added to removed: exactly one new gap, no resolutions, 19 → 20, expected exit 101.
+[Spec and sweep table](../../specs/patch-11-1-0-publication-sweep.md#local-proof) and [proof ledger](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/11.1.0-session-2026-10-06/p1110-proof.json) retain exact revision/command scopes. All eleven sweeps run alone and pass. Later observations match fixtures already present on p1115-page, including its 11.2.0 27-gap and 12.0.0 21-gap baseline; no later fixture edited. One-row negative control changes C_WarbandScene.SetFavorite added to removed: exactly one new gap, no resolutions, 19 → 20, expected exit 101.
 
 Two new behavioral tests GREEN after RED; two isolated prefork cases (Collections explicit load and deprecated specialization wrappers) pass. Fifteen extractor/register fixtures, deterministic extract reproduction, register regeneration and formatting pass. Mists test check has zero non-vendor warnings; six existing iced manifest warnings plus vendor summary stay unsuppressed. Separate retail build and bounded exit-0 startup return []. Changed Rust lines manually reviewed for readability. Later source changes are evidence/docs only; current runtime proofs stay valid. No full suite or independent/native acceptance.
 
 ## Process exception
 
-[Build-cache incident](../../../data/patch-api/evidence/11.1.0-session-2026-10-06/p1110-build-cache-incident.json): all commands used explicit required worktree cwd, but the initial sweep set CARGO_TARGET_DIR to the sibling p1115-page target. That wrote build artifacts outside the authorized worktree. Subsequent commands used p1110-page target; its cache was hardlinked from the sibling. Source files and canonical checkout remained untouched; artifact-path compliance was violated. This does not erase the violation. No agents/models, push, merge, vendor edits or Blizzard monkey-patching.
+[Build-cache incident](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/11.1.0-session-2026-10-06/p1110-build-cache-incident.json): all commands used explicit required worktree cwd, but the initial sweep set CARGO_TARGET_DIR to the sibling p1115-page target. That wrote build artifacts outside the authorized worktree. Subsequent commands used p1110-page target; its cache was hardlinked from the sibling. Source files and canonical checkout remained untouched; artifact-path compliance was violated. This does not erase the violation. No agents/models, push, merge, vendor edits or Blizzard monkey-patching.
 
 ## Sources
 
 - [Publication contract](../../specs/patch-11-1-0-publication-sweep.md)
 - [Source provenance](../../../data/patch-api/sources/11.1.0-api-changes.provenance.json)
 - [Page ledger](../../../data/patch-api/sources/11.1.0-page-coverage.json)
-- [Extract scout](../../../data/patch-api/evidence/11.1.0-session-2026-10-06/p1110-extract-scout.md)
-- [Retirement consumer searches](../../../data/patch-api/evidence/11.1.0-session-2026-10-06/p1110-retirement-consumers.json)
-- [Artifact validator](../../../data/patch-api/evidence/11.1.0-session-2026-10-06/p1110-validate.py)
+- [Extract scout](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/11.1.0-session-2026-10-06/p1110-extract-scout.md)
+- [Retirement consumer searches](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/11.1.0-session-2026-10-06/p1110-retirement-consumers.json)
+- [Artifact validator](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/11.1.0-session-2026-10-06/p1110-validate.py)
 
 ## See Also
 

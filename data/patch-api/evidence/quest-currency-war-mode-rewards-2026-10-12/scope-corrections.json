@@ -1,9 +1,0 @@
-{
-  "scope": "Metadata correction only; original submission/output files preserved",
-  "expanded_red": {
-    "compile_outcome": "compile stage only; runtime completed13cases1PASS12FAIL/101",
-    "actual_runtime_scope": "real owned inputs and actual positive QuestUtils cases; first checks failed downstream controls unreached"
-  },
-  "green_build_scope": "All four owned getters and actual13-case consumer/query controls; old compile revision.scope inherited initial-RED wording is not actual recipe scope",
-  "readability": "New helper duplicate accepted; consolidation pending active PTR build terminal; current13GREEN is precursor only"
-}

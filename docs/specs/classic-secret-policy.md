@@ -29,7 +29,7 @@ The 12.0.5 [source](../../data/patch-api/sources/12.0.5-api-changes.txt) lines 2
 
 Commit `ce418cbe4`. RED: 4 PASS / 3 FAIL under client-mists. GREEN: 7/7 new + 46 security_api + 15 admin_identity_api under client-mists; retail 122/122 after cherry-pick. This section supersedes wording above that describes the slice as staged, unapplied or unrun.
 
-Main accepts an independent GPT-6.1-sol source review (no test rerun), [report](../../data/patch-api/evidence/12.0.5-session-2026-10-03/classic-secrets-review.md) SHA256 `edae62bd107133e94808f39f7015ff1fe3cd032a3edb4778387da80e09eb1333`. One Classic profile executed; line 214's chat/guild/combat-log clauses untested. Row 215 (documentation cleanup) stays pending. Requirement checkboxes are left as authored; the report lists which are earned and to what bound. Bounded simulator proof, not native parity.
+Main accepts an independent GPT-6.1-sol source review (no test rerun), [report](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/12.0.5-session-2026-10-03/classic-secrets-review.md) SHA256 `edae62bd107133e94808f39f7015ff1fe3cd032a3edb4778387da80e09eb1333`. One Classic profile executed; line 214's chat/guild/combat-log clauses untested. Row 215 (documentation cleanup) stays pending. Requirement checkboxes are left as authored; the report lists which are earned and to what bound. Bounded simulator proof, not native parity.
 
 [Page accounting](../../data/patch-api/sources/12.0.5-page-coverage.json): prose-2026-04-17-213 partial-development-green, prose-2026-04-17-214 partial-development-green under capability `classic-secret-policy`; **131 capabilities/362 IDs; 28 pending /269 bounded /30 partial /35 metadata**.
 

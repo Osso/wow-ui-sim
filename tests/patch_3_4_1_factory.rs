@@ -9,10 +9,10 @@ use std::collections::BTreeMap;
 use wow_ui_sim::lua_api::WowLuaEnv;
 
 const INVENTORY: &str =
-    include_str!("../data/patch-api/evidence/3.4.1-factory-2026-10-09/inventory.json");
+    include_str!("data/patch-factory/3.4.1-factory-2026-10-09/inventory.json");
 const SPEC: SweepSpec = SweepSpec {
     register: INVENTORY,
-    known_gaps: include_str!("../data/patch-api/evidence/3.4.1-factory-2026-10-09/known-gaps.json"),
+    known_gaps: include_str!("data/patch-factory/3.4.1-factory-2026-10-09/known-gaps.json"),
     row_count: 333,
     register_env: "WOW_SIM_P341_FACTORY_REGISTER",
     out_env: "WOW_SIM_P341_FACTORY_OUT",
@@ -79,7 +79,7 @@ fn cvar_default_differences_are_not_publication_failures() {
     }
     assert_eq!(counts, (4, 42, 15));
     let expected: Value = serde_json::from_str(include_str!(
-        "../data/patch-api/evidence/3.4.1-factory-2026-10-09/published-default-differences.json"
+        "data/patch-factory/3.4.1-factory-2026-10-09/published-default-differences.json"
     ))
     .unwrap();
     assert_eq!(json!(differences), expected);

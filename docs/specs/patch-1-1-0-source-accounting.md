@@ -13,7 +13,7 @@ Bounded original historical Retail page271516/revision5913060/timestamp2023-12-2
 ## How it works
 
 - [Audit and source limits](../wiki/investigations/patch-1-1-0-api-audit.md)
-- [Replay instructions](../../data/patch-api/evidence/1.1.0-session-2026-10-09/REPLAY.md)
+- [Replay instructions](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/1.1.0-session-2026-10-09/REPLAY.md)
 
 ## Implementation inventory
 

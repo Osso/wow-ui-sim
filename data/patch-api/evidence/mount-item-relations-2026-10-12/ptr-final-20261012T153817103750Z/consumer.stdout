@@ -1,7 +1,0 @@
-
-running 2 tests
-test mount_item_player_choice::mount_item_player_choice_original_consumer_tracks_live_supplied_relation ... ok
-test mount_item_player_choice::mount_item_player_choice_real_item_consumer_returns_boolean ... ok
-
-test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 9972 filtered out; finished in 3.08s
-

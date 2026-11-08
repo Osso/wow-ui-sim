@@ -1,6 +1,6 @@
 # Patch 1.4.0 frozen SOURCE accounting
 
-Audit only frozen page316397/revision3052898 from the [own evidence](../../data/patch-api/evidence/1.4.0-session-2026-10-09/source-pin.json). [Wiki](../wiki/investigations/patch-1-4-0-api-audit.md) describes implementation and proof epochs. Historical original-Retail task scope does not invent literal client attribution.
+Audit only frozen page316397/revision3052898 from the [own evidence](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/1.4.0-session-2026-10-09/source-pin.json). [Wiki](../wiki/investigations/patch-1-4-0-api-audit.md) describes implementation and proof epochs. Historical original-Retail task scope does not invent literal client attribution.
 
 ## What it must do
 
@@ -15,7 +15,7 @@ Audit only frozen page316397/revision3052898 from the [own evidence](../../data/
 ## How it works
 
 - [Literal accounting and limits](../wiki/investigations/patch-1-4-0-api-audit.md)
-- [Portable replay](../../data/patch-api/evidence/1.4.0-session-2026-10-09/REPLAY.md)
+- [Portable replay](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/1.4.0-session-2026-10-09/REPLAY.md)
 
 ## Implementation inventory
 

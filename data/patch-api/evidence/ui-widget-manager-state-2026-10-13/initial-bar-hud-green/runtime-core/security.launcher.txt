@@ -1,6 +1,0 @@
-Running as unit: wow-widget-core-security-20261013t090502.service
-          Finished with result: success
-Main processes terminated with: code=exited, status=0/SUCCESS
-               Service runtime: 240ms
-             CPU time consumed: 229ms
-                   Memory peak: 88.5M (swap: 0B)

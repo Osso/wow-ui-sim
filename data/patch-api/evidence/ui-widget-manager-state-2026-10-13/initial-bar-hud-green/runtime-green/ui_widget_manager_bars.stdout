@@ -1,6 +1,0 @@
-
-running 2 tests
-test ui_widget_manager_bars::capture_bar_queries_complete_fresh_snapshots_and_supplied_updates ... ok
-test ui_widget_manager_bars::status_bar_queries_complete_ordered_fresh_snapshots_and_supplied_updates ... ok
-
-test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 10964 filtered out; finished in 0.46s

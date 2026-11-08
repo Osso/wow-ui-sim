@@ -16,7 +16,7 @@ Own evidence adapter and copied frozen/configured/historical inputs under `data/
 
 ## Tests asserting this spec
 
-Own `test_source_accounting.py` and `test_portable.py`; targeted only. SOURCE RED11 failures and portable RED3 failures retained; SOURCE GREEN11/11 at `183437dc5`; default generator flags[] produces empty inventory, not linked API absence. Original67 seals/732649 bytes unchanged;68-member/114575-byte archive. Portable GREEN3/3 at `fb6e6ba53`: copied SOURCE11/11, validator/default-byte replay, serialized ledger/log rejection and exact restoration; four archive/current receipt seals separate. [Exact receipts](../../data/patch-api/evidence/1.14.4-session-2026-10-09/portable-proof.json).
+Own `test_source_accounting.py` and `test_portable.py`; targeted only. SOURCE RED11 failures and portable RED3 failures retained; SOURCE GREEN11/11 at `183437dc5`; default generator flags[] produces empty inventory, not linked API absence. Original67 seals/732649 bytes unchanged;68-member/114575-byte archive. Portable GREEN3/3 at `fb6e6ba53`: copied SOURCE11/11, validator/default-byte replay, serialized ledger/log rejection and exact restoration; four archive/current receipt seals separate. [Exact receipts](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/1.14.4-session-2026-10-09/portable-proof.json).
 
 ## Known gaps
 

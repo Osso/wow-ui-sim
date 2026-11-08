@@ -80,8 +80,8 @@ Original source-only ledger and gaps are immutable: **19 original seals**, large
 
 ## Sources
 
-- [Frozen source pin](../../../data/patch-api/evidence/1.60.1-session-2026-10-09/original/source-pin.json)
-- [Exact source ledger](../../../data/patch-api/evidence/1.60.1-session-2026-10-09/original/ledger.json)
+- [Frozen source pin](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/1.60.1-session-2026-10-09/original/source-pin.json)
+- [Exact source ledger](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/1.60.1-session-2026-10-09/original/ledger.json)
 - [Spec](../../specs/patch-1-60-1-source-accounting.md)
 - Base `Cargo.toml`, `src/client_profile.rs`, `src/lua_api/globals/group_queries.rs`, `src/lua_api/workarounds/temporary/client_info_defaults.rs` (sparse sealed code snapshots).
 

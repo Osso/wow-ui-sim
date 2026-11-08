@@ -1,7 +1,0 @@
-{
-  "status": "FAIL before public writes",
-  "error": "ValueError unparseable nested JSON encoding",
-  "cause": "Diagnostic category keys [startup], [Startup], [Workarounds], [EditMode] were misclassified as serialized JSON",
-  "public_writes": 0,
-  "correction": "Explicit diagnostic category tag classification; full escaped privacy scan retained; originals unchanged"
-}

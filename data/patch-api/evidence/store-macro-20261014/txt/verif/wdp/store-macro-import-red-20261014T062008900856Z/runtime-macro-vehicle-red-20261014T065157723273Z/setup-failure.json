@@ -1,6 +1,0 @@
-{
-  "status": "setup-failure;zero-launch",
-  "cause": "verifier required receipt names saved in canonical untracked verification dir, not epoch; main wholeTEXTcopied to privateV and epoch withoutnewhash",
-  "original_untracked_evidence": "preserved;no deletion",
-  "runtime_admission": "mustbefresh onretry"
-}

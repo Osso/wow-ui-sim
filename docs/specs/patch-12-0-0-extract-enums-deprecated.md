@@ -1,6 +1,6 @@
 # Retail 12.0.0 extract enum and deprecated API proof
 
-Bounded proof for B01, B07 and B03 in the [54-row scout slice](../../data/patch-api/evidence/12.0.0-session-2026-10-05/p1200-extract-scout.md). The [investigation](../wiki/investigations/patch-12-0-0-api-audit.md#enum-and-deprecated-extract-proof) owns root causes; the [per-source report](../../data/patch-api/evidence/12.0.0-session-2026-10-05/p1200-enums-deprecated-report.md) owns outcomes and command/revision evidence. Coverage ledgers remain unchanged.
+Bounded proof for B01, B07 and B03 in the [54-row scout slice](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/12.0.0-session-2026-10-05/p1200-extract-scout.md). The [investigation](../wiki/investigations/patch-12-0-0-api-audit.md#enum-and-deprecated-extract-proof) owns root causes; the [per-source report](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/12.0.0-session-2026-10-05/p1200-enums-deprecated-report.md) owns outcomes and command/revision evidence. Coverage ledgers remain unchanged.
 
 ## What it must do
 
@@ -35,7 +35,7 @@ Bounded proof for B01, B07 and B03 in the [54-row scout slice](../../data/patch-
 
 ## Known gaps (current cycle)
 
-- [ ] Six successor results remain unproved; exact IDs, observed defects and ownership exclusions live in the [per-source report](../../data/patch-api/evidence/12.0.0-session-2026-10-05/p1200-enums-deprecated-report.md#outcomes), not duplicated here.
+- [ ] Six successor results remain unproved; exact IDs, observed defects and ownership exclusions live in the [per-source report](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/12.0.0-session-2026-10-05/p1200-enums-deprecated-report.md#outcomes), not duplicated here.
 - [ ] Historical execution remains blocked by the master-reproduced `on_update.rs:61` reference to `private_aura_sounds`, gated behind 12.0.5.
 - [ ] First patch that renumbered historical Tooltip members cannot be established from inspected registers; verified 12.1.0 cache supersedes the historical values without an invented earlier date.
 

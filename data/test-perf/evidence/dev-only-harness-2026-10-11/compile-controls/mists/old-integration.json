@@ -1,9 +1,0 @@
-{
-  "argv": [
-    "/usr/bin/timeout",
-    "90",
-    "/home/osso/.local/state/wow-ui-sim/verification/unit2-green-current/20261010T235452Z/mists/integration-test",
-    "--list"
-  ],
-  "exit": 0
-}

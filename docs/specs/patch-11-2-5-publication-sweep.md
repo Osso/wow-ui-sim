@@ -24,7 +24,7 @@ Treat the four nested Deprecated resource links and the 11.2.0→11.2.5 build co
 
 ## Final local proof — 2026-10-06
 
-Runtime/test/extractor revision `57b50a24cab703d3f006485ff7e28f215b90c33a`; subsequent coverage/evidence/docs changes do not invalidate these commands. [Proof ledger](../../data/patch-api/evidence/11.2.5-session-2026-10-06/p1125-proof.json) retains commands, revisions, exit codes and local log paths. No independent agent/model/native acceptance.
+Runtime/test/extractor revision `57b50a24cab703d3f006485ff7e28f215b90c33a`; subsequent coverage/evidence/docs changes do not invalidate these commands. [Proof ledger](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/11.2.5-session-2026-10-06/p1125-proof.json) retains commands, revisions, exit codes and local log paths. No independent agent/model/native acceptance.
 
 | Isolated sweep | Rows | OK | Exact gaps | Result |
 |---|---:|---:|---:|---|
