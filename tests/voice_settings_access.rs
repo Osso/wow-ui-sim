@@ -13,8 +13,18 @@ pub(crate) fn original_audio_env() -> WowLuaEnv {
     original_audio_env_with_roots(&[])
 }
 
+/// The original Audio registrant schedules its polling ticker on this clock, so a
+/// later `AdvanceTime` reaches the five-second deadline deterministically.
+pub(crate) fn original_audio_env_with_manual_clock() -> WowLuaEnv {
+    original_audio_env_inner(&[], true)
+}
+
 /// Extra roots load before the Audio closure, as the client loads them at startup.
 pub(crate) fn original_audio_env_with_roots(extra_roots: &[&str]) -> WowLuaEnv {
+    original_audio_env_inner(extra_roots, false)
+}
+
+fn original_audio_env_inner(extra_roots: &[&str], manual_clock: bool) -> WowLuaEnv {
     let ui = blizzard_ui_dir();
     let toc_path = find_toc_file(&ui.join("Blizzard_SettingsDefinitions_Shared")).unwrap();
     let toc = TocFile::from_file(&toc_path).unwrap();
@@ -27,6 +37,10 @@ pub(crate) fn original_audio_env_with_roots(extra_roots: &[&str]) -> WowLuaEnv {
             .any(|(name, _)| name == "Blizzard_SettingsDefinitions_Shared")
     );
     let env = new_blizzard_addon_env(&ui);
+    if manual_clock {
+        env.exec("A_Admin.SetManualClock(0)")
+            .expect("manual clock must be enabled before the Audio registrant runs");
+    }
     let expected = if matches!(ACTIVE, ClientProfile::Retail | ClientProfile::WowForever) { Some(true) } else { None };
     assert_eq!(env.state().borrow().voice_chat.can_access_settings, expected);
     let roots: Vec<&str> = extra_roots.iter().copied().chain(["Blizzard_SettingsDefinitions_Shared"]).collect();
@@ -77,6 +91,33 @@ fn exercise_original_branches(initial: bool) {
     assert_original_branch(&first, false);
     assert_original_branch(&first, true);
     assert_original_branch(&second, !initial);
+}
+
+/// The pinned Audio.lua polls `CanAccessSettings` from a five-second ticker and
+/// expects a boolean while the voice proxy is not ready. Crossing that deadline on
+/// a profile without a voice proxy must continue polling, not raise a Lua error.
+#[test]
+fn original_audio_ticker_past_polling_deadline_does_not_raise_unsupplied_access() {
+    if !matches!(
+        ACTIVE,
+        ClientProfile::Ptr | ClientProfile::Mists | ClientProfile::Era | ClientProfile::Anniversary
+    ) {
+        return;
+    }
+    let env = original_audio_env_with_manual_clock();
+    env.state().borrow_mut().lua_errors.clear();
+    env.exec("A_Admin.AdvanceTime(5)")
+        .expect("advancing to the original polling deadline must not fail");
+    let errors: Vec<String> = env.state().borrow().lua_errors.clone();
+    let access_errors: Vec<&String> = errors
+        .iter()
+        .filter(|error| error.contains("CanAccessSettings"))
+        .collect();
+    assert!(
+        access_errors.is_empty(),
+        "original polling ticker raised unsupplied settings access: {access_errors:?}"
+    );
+    assert_eq!(env.state().borrow().voice_chat.can_access_settings, Some(false));
 }
 
 #[test]
