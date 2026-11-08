@@ -8,6 +8,7 @@ import os
 import time
 from pathlib import Path
 import subprocess
+import sys
 import tempfile
 import unittest
 from unittest.mock import patch
@@ -195,16 +196,65 @@ class SlotBuildTests(unittest.TestCase):
                     self.module.check_capacity("lane-capacity")
 
     def test_status_reports_finished_wall_time(self):
-        output = ("SubState=exited\nResult=success\nCPUUsageNSec=434560000\n"
-                  "ExecMainStartTimestampMonotonic=1000000\n"
-                  "ExecMainExitTimestampMonotonic=2075731\n")
+        systemctl_output = (
+            "SubState=exited\nResult=success\nCPUUsageNSec=434560000\n"
+            "ExecMainStartTimestampMonotonic=1000000\n"
+            "ExecMainExitTimestampMonotonic=2075731\n")
+        receipts = self.slot / "slot-0/receipts"
+        receipts.mkdir(parents=True)
+        records = [
+            {"reason": "compiler-message", "message": {"level": "warning"}},
+            {"reason": "compiler-message", "message": {"level": "warning"}},
+            {"reason": "compiler-message", "message": {"level": "error"}},
+            {"reason": "build-finished", "success": True},
+        ]
+        stdout_file = receipts / "lane-build.cargo.jsonl"
+        stdout_file.write_text("".join(json.dumps(record) + "\n" for record in records))
         with patch.object(self.module.subprocess, "run", return_value=
-                          subprocess.CompletedProcess([], 0, output, "")), \
+                          subprocess.CompletedProcess([], 0, systemctl_output, "")), \
+                patch.object(self.module, "TARGET_ROOT", self.slot), \
                 contextlib.redirect_stdout(io.StringIO()) as stdout:
             self.module.print_status("lane-build")
         self.assertEqual(stdout.getvalue(),
                          "SubState=exited\nResult=success\nCPUUsageNSec=434560000\n"
-                         "WallTimeSec=1.075731\n")
+                         "WallTimeSec=1.075731\n"
+                         f"CargoOutput={stdout_file}\n"
+                         "BuildFinished=true\nSuccess=true\nWarnings=2\n")
+
+    def test_status_reports_missing_output_as_unavailable(self):
+        systemctl_output = ("SubState=running\nResult=success\nCPUUsageNSec=0\n"
+                            "ExecMainStartTimestampMonotonic=1000000\n"
+                            "ExecMainExitTimestampMonotonic=0\n")
+        with patch.object(self.module.subprocess, "run", return_value=
+                          subprocess.CompletedProcess([], 0, systemctl_output, "")), \
+                patch.object(self.module, "TARGET_ROOT", self.slot), \
+                contextlib.redirect_stdout(io.StringIO()) as stdout:
+            self.module.print_status("lane-build")
+        self.assertIn("CargoOutput=none\n"
+                      "BuildFinished=unavailable\nSuccess=unavailable\nWarnings=unavailable\n",
+                      stdout.getvalue())
+
+    def test_build_command_persists_complete_stdout_and_stderr(self):
+        receipts = self.slot / "receipts"
+        stdout_file = receipts / "lane-build.cargo.jsonl"
+        stderr_file = receipts / "lane-build.cargo.stderr"
+        script = (
+            "import json,sys\n"
+            "print(json.dumps({'reason':'compiler-message',\n"
+            "  'message':{'level':'warning','message':'unused'}}))\n"
+            "print(json.dumps({'reason':'compiler-artifact','target':{'name':'probe'}}))\n"
+            "print(json.dumps({'reason':'build-finished','success':True}))\n"
+            "sys.stderr.write('warning: unused variable\\n')\n"
+            "sys.stderr.flush()\n")
+        returncode, records = self.module.run_build_command(
+            [sys.executable, "-c", script], stdout_file, stderr_file)
+        self.assertEqual(returncode, 0)
+        self.assertEqual([record["reason"] for record in records], ["compiler-artifact"])
+        summary = self.module.cargo_output_summary(stdout_file)
+        self.assertEqual(summary, {"build_finished": True, "success": True,
+                                  "warning_count": 1})
+        self.assertEqual(stderr_file.read_text(), "warning: unused variable\n")
+        self.assertEqual(len(stdout_file.read_text().splitlines()), 3)
 
 
 class StaleGuardDecisionTests(unittest.TestCase):
@@ -919,6 +969,16 @@ class SourceFreshnessTests(unittest.TestCase):
                          first["artifact_certificates_sha256"])
         output = self.slot / "debug/deps/libprobe-retail.rmeta"
         self.assertTrue(output.read_bytes().endswith(b"original case"))
+
+    def test_receipt_records_cargo_output_paths(self):
+        result, receipt = self.run_library_step("retail")
+        self.assertEqual(result.returncode, 0, result.stderr)
+        stdout_file = self.slot / "library-step.cargo.jsonl"
+        stderr_file = self.slot / "library-step.cargo.stderr"
+        self.assertEqual(receipt["cargo_stdout_file"], str(stdout_file))
+        self.assertEqual(receipt["cargo_stderr_file"], str(stderr_file))
+        self.assertIn('"reason": "compiler-artifact"', stdout_file.read_text())
+        self.assertEqual(stderr_file.read_text(), "")
 
     def test_receipt_records_build_script_out_dirs_for_pruning(self):
         out = self.slot / "debug/build/quote-run456/out"
@@ -2094,12 +2154,15 @@ class SourceFreshnessTests(unittest.TestCase):
                                  "--execute", str(request)], capture_output=True)
         self.assertEqual(result.returncode, 0, result.stderr)
         self.assertEqual(result.stdout, b"stdout\xff\x00")
-        pruning_line, child_stderr = result.stderr.split(b"\n", 1)
+        pruning_line = result.stderr.split(b"\n", 1)[0]
         pruning = json.loads(pruning_line)
         self.assertEqual(pruning["slot"], str(self.slot))
         self.assertFalse(pruning["dry_run"])
         self.assertEqual(pruning["removed"], [])
-        self.assertEqual(child_stderr, b"stderr\xfe\x00")
+        self.assertEqual((self.slot / "streams.cargo.jsonl").read_bytes(),
+                         b"stdout\xff\x00")
+        self.assertEqual((self.slot / "streams.cargo.stderr").read_bytes(),
+                         b"stderr\xfe\x00")
 
     def test_hidden_stream_allows_diff_outside_package_roots(self):
         current = self.prepare()
