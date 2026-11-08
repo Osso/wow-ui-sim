@@ -1,4 +1,10 @@
 //! Merchant cursor presentation (WM86). Held cursor content remains separate.
+//!
+//! Retail, PTR and Forever register this surface. Forever's pinned
+//! `Blizzard_UIPanels_Game/Mainline/MerchantFrame.lua:767` consumes
+//! `ShowBuybackSellCursor`; no pinned Forever `Blizzard_APIDocumentationGenerated`
+//! file declares that name, so the contract follows the Retail 12.1.5/70688
+//! native evidence reused here. Forever-specific parity is INFERRED.
 use crate::lua_api::globals::real::cursor_model;
 use crate::lua_api::globals::state_backed_queries::dispatch_event_now;
 use crate::lua_api::methods::{borrow_state, borrow_state_mut, val_to_string};

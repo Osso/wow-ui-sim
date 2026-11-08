@@ -1,6 +1,8 @@
 # Merchant cursor presentation
 
-Retail and PTR cursor presentation is separate from held cursor content. WM86 describes the native behavior; native gates and listener timing remain unknown.
+Retail, PTR and Forever cursor presentation is separate from held cursor content. WM86 describes the Retail 12.1.5/70688 native behavior; native gates and listener timing remain unknown.
+
+Forever's pinned `Blizzard_UIPanels_Game/Mainline/MerchantFrame.lua:767` calls `ShowBuybackSellCursor(button:GetID())` on buyback hover, and no pinned Forever `Blizzard_APIDocumentationGenerated` file declares the name. Forever reuses this surface; its build-level parity is INFERRED from the shared legacy registration and consumer call sites.
 
 ## What it must do
 
@@ -22,6 +24,7 @@ Retail and PTR cursor presentation is separate from held cursor content. WM86 de
 
 - `tests/merchant_cursor_presentation.rs`
 - `tests/tooltip_data_buyback_consumer.rs`
+- `tests/forever_merchant_buyback_cursor.rs`
 
 ## Known gaps (current cycle)
 
