@@ -46,6 +46,8 @@ fn rewards_shop_tracks_mirrored_flags_and_integer_rule() {
     flags(true, false, false);
     check(true, false);
     flags(true, true, false);
+    check(true, false); // No active rule-set marker.
+    state.borrow_mut().game_rules.rule_set_marker = 1;
     for (rule, expected) in [
         ("nil", false),
         ("'1'", false),

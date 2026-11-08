@@ -134,6 +134,8 @@ pub struct GameRulesState {
     /// Glue screen name the current game mode opens on at the login flow.
     /// Default `"CharacterSelect"` (Standard).
     pub glue_screen_name: String,
+    /// Server-supplied rule-set marker; zero means no current rule set.
+    pub rule_set_marker: i32,
     /// Sparse rule store keyed by rule name. Missing key = inactive.
     pub rules: HashMap<String, GameRuleValue>,
     /// Supplied PTR capabilities, not inferred native realm/account defaults.
@@ -152,6 +154,7 @@ impl Default for GameRulesState {
         Self {
             active_game_mode: crate::c_api::game_mode::STANDARD,
             glue_screen_name: "CharacterSelect".into(),
+            rule_set_marker: 0,
             rules: HashMap::new(),
             hardcore_active: false,
             self_found_allowed: false,
