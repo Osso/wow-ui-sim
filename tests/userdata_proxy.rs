@@ -294,6 +294,14 @@ fn forbidden_partition_aura_initializer_keeps_public_and_private_views_isolated(
                             "public initializer must not receive the private method surface")
                         assert(GetForbiddenObjectTable(button) ~= button,
                             "public and private tables remain distinct")
+                        local privateButton = GetForbiddenObjectTable(button)
+                        assert(rawequal(privateButton:GetObjectTable(), button),
+                            "GetObjectTable returns the public view from a forbidden receiver")
+                        local icon = button:CreateTexture(nil, "BACKGROUND")
+                        button:SetIcon(icon)
+                        assert(rawequal(button:GetIcon(), icon), "public delegate returns public icon")
+                        assert(rawequal(privateButton:GetIcon(), GetForbiddenObjectTable(icon)),
+                            "raw private getter is not routed through the public delegate")
                         initializedCooldown = CreateFrame("Cooldown", nil, button)
                         button:SetDurationCooldown(initializedCooldown)
                         initializedBar = CreateFrame("StatusBar", nil, button)

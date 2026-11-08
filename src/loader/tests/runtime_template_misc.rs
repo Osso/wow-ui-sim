@@ -174,7 +174,11 @@ fn test_partitioned_mixins_use_forbidden_object_table() {
 }
 
 // useForbiddenObjectTable XML ships only in the Retail, PTR and Forever Blizzard UI.
-#[cfg(any(feature = "client-retail", feature = "client-ptr", feature = "client-wowforever"))]
+#[cfg(any(
+    feature = "client-retail",
+    feature = "client-ptr",
+    feature = "client-wowforever"
+))]
 #[test]
 fn test_partitioned_inbound_mixin_returns_public_object_views() {
     let t = load_test_xml(
@@ -188,6 +192,10 @@ fn test_partitioned_inbound_mixin_returns_public_object_views() {
                 end
                 function PartitionedReturnInboundMixin:GetOwnedChildSelfAndTail()
                     return self.OwnedChild, self, "tail";
+                end
+                function PartitionedReturnInboundMixin:EchoViews(child, nested)
+                    assert(child == GetForbiddenObjectTable(child));
+                    return child, nested;
                 end
             </Script>
             <ScopedModifier useForbiddenObjectTable="true">
@@ -220,6 +228,11 @@ fn test_partitioned_inbound_mixin_returns_public_object_views() {
             assert(child == frame.OwnedChild, "first inbound result should be public")
             assert(returnedSelf == frame, "inbound self result should be public")
             assert(tail == "tail", "non-frame inbound results should keep identity")
+            local nested = {child = forbidden.OwnedChild}
+            local direct, returnedNested = frame:EchoViews(frame.OwnedChild, nested)
+            assert(direct == frame.OwnedChild, "direct result is public")
+            assert(returnedNested == nested and nested.child == forbidden.OwnedChild,
+                "nested references are not projected")
         "#,
         )
         .unwrap();

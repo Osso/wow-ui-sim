@@ -456,7 +456,7 @@ fn duration_binding_assignment_supports_actual_custom_aura_button_duration_text(
                                 curve=curve, property=Enum.DurationTextBindingProperty.RemainingDuration}})
                             local privateButton = GetForbiddenObjectTable(button)
                             local stored = privateButton.durationText.element
-                            assert(button:GetDurationText() == stored and stored:GetObjectTable() == label)
+                            assert(button:GetDurationText() == label and stored == GetForbiddenObjectTable(label))
                             local ownedBinding = privateButton:GetDurationTextBinding()
                             assert(ownedBinding ~= source and ownedBinding:GetFontString() == stored)
                             assert(ownedBinding:GetUpdateInterval() == 0.25)

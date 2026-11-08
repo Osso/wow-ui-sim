@@ -217,7 +217,7 @@ fn aura_options_support_the_real_custom_button_public_initializer() {
                             button:SetApplicationCount(count)
                             local exported, options = button:GetApplicationCount()
                             local stored = GetForbiddenObjectTable(button).applicationCount.element
-                            assert(exported == stored and stored:GetObjectTable() == count)
+                            assert(exported == count and stored == GetForbiddenObjectTable(count))
                             assert(next(options) == nil)
                             auraOptionsInitializerRan = true
                         end })
