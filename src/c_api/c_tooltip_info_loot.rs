@@ -2,14 +2,20 @@
 //!
 //! Retail and PTR TooltipInfoDocumentation.lua:172,554 declare these getters.
 use crate::c_api::tooltip_getter_args::one_based_index;
-use crate::lua_api::globals::missing_surface::tooltip_info::tooltip_for_item_context;
+use crate::lua_api::globals::currency_data;
+use crate::lua_api::globals::missing_surface::tooltip_info::{
+    tooltip_for_currency, tooltip_for_item_context,
+};
 use crate::lua_api::methods::borrow_state;
+use crate::lua_api::state::LootSlot;
 use crate::lua_bridge::{FromStack, table_set_rust_fn_static};
 use rilua::LuaResult;
 use rilua::vm::{gc::arena::GcRef, state::LuaState, table::Table};
 
 pub(crate) fn register(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResult<()> {
     table_set_rust_fn_static(state, namespace, "GetLootItem", get_loot_item)?;
+    // Round 6-B §1: Retail, PTR and Forever decode the currency reader.
+    table_set_rust_fn_static(state, namespace, "GetLootCurrency", get_loot_currency)?;
     table_set_rust_fn_static(state, namespace, "GetLootRollItem", get_loot_roll_item)?;
     table_set_rust_fn_static(state, namespace, "GetBuybackItem", get_buyback_item)
 }
@@ -57,8 +63,8 @@ fn get_loot_item(state: &mut LuaState) -> LuaResult<u32> {
     let item_id = {
         let model = borrow_state(state)?;
         index.and_then(|index| match model.loot_slots.get(index) {
-            Some(crate::lua_api::state::LootSlot::Item(item)) => Some(item.item_id),
-            Some(crate::lua_api::state::LootSlot::Currency { .. }) | None => None,
+            Some(LootSlot::Item(item)) => Some(item.item_id),
+            Some(LootSlot::Currency { .. }) | None => None,
         })
     };
     // Round 6-B §1(b): an entry whose item identity is empty is one of the
@@ -67,6 +73,37 @@ fn get_loot_item(state: &mut LuaState) -> LuaResult<u32> {
         return crate::c_api::tooltip_data::unknown_getter_failure();
     };
     let tooltip = tooltip_for_item_context(state, item_id, crate::items::get_item(item_id));
+    state.push(tooltip);
+    Ok(1)
+}
+
+fn get_loot_currency(state: &mut LuaState) -> LuaResult<u32> {
+    // Round 6-B §1(a): the loot getters share the one-based index reader.
+    let index = one_based_index(
+        state,
+        1,
+        "Usage: local data = C_TooltipInfo.GetLootCurrency(slot)",
+    )?;
+    // Round 6-B §1(b): the loot-currency reader requires a non-zero kind byte
+    // and a currency row that resolves; both failures share the miss arm.
+    let currency = {
+        let model = borrow_state(state)?;
+        index.and_then(|index| match model.loot_slots.get(index) {
+            Some(LootSlot::Currency {
+                currency_id,
+                quantity,
+            }) => currency_data::get_currency_by_id(*currency_id).map(|row| (row, *quantity)),
+            Some(LootSlot::Item(_)) | None => None,
+        })
+    };
+    let Some((currency, quantity)) = currency else {
+        return crate::c_api::tooltip_data::unknown_getter_failure();
+    };
+    // Round 6-B §1(c): identity type 5 and the currency ID, built by the shared
+    // currency producer. The simulator model carries the tooltip quantity
+    // directly; the native amount/100 hundredths conversion has no supplied
+    // row flag in this model.
+    let tooltip = tooltip_for_currency(state, currency, Some(quantity));
     state.push(tooltip);
     Ok(1)
 }
