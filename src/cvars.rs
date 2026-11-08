@@ -245,7 +245,7 @@ impl CVarStorage {
             .filter(|(key, _)| !is_session_only_cvar_key(key))
             .collect();
         if let Ok(json) = serde_json::to_string_pretty(&persisted) {
-            let _ = std::fs::write(&self.storage_path, json);
+            let _ = crate::fs_atomic::write_atomic(&self.storage_path, json.as_bytes());
         }
     }
 }

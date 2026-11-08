@@ -86,7 +86,9 @@ numbers round-trip finite values, including signed zero. Repeated acyclic tables
 become independent copies. Cycles, unsupported values/keys, invalid identifiers or
 references, non-finite numbers and nesting beyond 128 tables fail explicitly.
 Metatables are not serialized and lookup metamethods are not invoked. Serializer
-and filesystem errors propagate through `save_addon`/`save_all`. These operations
-do not provide atomic replacement across multiple files. The
+and filesystem errors propagate through `save_addon`/`save_all`. Each file is
+written to a sibling temporary file and renamed into place, so a concurrent
+reader sees the previous complete file or the new one. These operations do not
+provide atomic replacement across multiple files. The
 [session finalizer](session-finalization.md) supplies the observable shutdown
 boundary around these operations.
