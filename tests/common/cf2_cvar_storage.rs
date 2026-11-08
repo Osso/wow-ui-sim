@@ -1,6 +1,9 @@
 //! Each case owns an empty persistent store, shared only by its environments.
 use std::process::Command;
 
+#[path = "executable_spawn.rs"]
+mod executable_spawn;
+
 pub fn run_isolated(selector: &str, body: impl FnOnce()) {
     let executable = std::env::current_exe().expect("locate integration executable");
     if executable
@@ -44,10 +47,11 @@ fn run_fixture_case(selector: &str, executable: &std::path::Path) -> std::proces
     let storage = data.join("wow-sim");
     std::fs::create_dir_all(&storage).expect("create child-only CVar directory");
     std::fs::write(storage.join("cvars.json"), b"{}").expect("seed empty CVar overrides");
-    Command::new(child)
-        .args([selector, "--exact", "--nocapture"])
-        .env("XDG_DATA_HOME", data)
-        .env_remove("CF2_TTS_ISOLATED_DATA_HOME")
-        .output()
-        .expect("run exact selector with case-owned storage")
+    executable_spawn::output_with_busy_retry(
+        Command::new(child)
+            .args([selector, "--exact", "--nocapture"])
+            .env("XDG_DATA_HOME", data)
+            .env_remove("CF2_TTS_ISOLATED_DATA_HOME"),
+    )
+    .expect("run exact selector with case-owned storage")
 }
