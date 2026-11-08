@@ -173,6 +173,58 @@ fn test_partitioned_mixins_use_forbidden_object_table() {
         .unwrap();
 }
 
+// useForbiddenObjectTable XML ships only in the Retail, PTR and Forever Blizzard UI.
+#[cfg(any(feature = "client-retail", feature = "client-ptr", feature = "client-wowforever"))]
+#[test]
+fn test_partitioned_inbound_mixin_returns_public_object_views() {
+    let t = load_test_xml(
+        "partitioned-inbound-mixin-public-results",
+        r#"
+        <Ui xmlns="http://www.blizzard.com/wow/ui/">
+            <Script>
+                PartitionedReturnInboundMixin = {};
+                function PartitionedReturnInboundMixin:GetOwnedChild()
+                    return self.OwnedChild;
+                end
+                function PartitionedReturnInboundMixin:GetOwnedChildSelfAndTail()
+                    return self.OwnedChild, self, "tail";
+                end
+            </Script>
+            <ScopedModifier useForbiddenObjectTable="true">
+                <Frame name="PartitionedInboundReturnFrame" parent="UIParent">
+                    <Frames>
+                        <Frame parentKey="OwnedChild"/>
+                    </Frames>
+                    <Mixins>
+                        <Mixin key="PartitionedReturnInboundMixin" source="secure" targetPartition="public" inboundPartition="forbidden" secureDelegates="true"/>
+                    </Mixins>
+                </Frame>
+            </ScopedModifier>
+        </Ui>
+        "#,
+    );
+
+    t.env
+        .exec(
+            r#"
+            local frame = PartitionedInboundReturnFrame
+            local forbidden = GetForbiddenObjectTable(frame)
+            assert(forbidden ~= frame, "forbidden partition should be distinct from public frame")
+            assert(forbidden.OwnedChild == GetForbiddenObjectTable(frame.OwnedChild),
+                "private self should hold the forbidden child view")
+            assert(frame:GetOwnedChild() == frame.OwnedChild,
+                "inbound result should publish the public object view")
+            assert(frame:GetOwnedChild() ~= forbidden.OwnedChild,
+                "inbound result should not leak the forbidden view")
+            local child, returnedSelf, tail = frame:GetOwnedChildSelfAndTail()
+            assert(child == frame.OwnedChild, "first inbound result should be public")
+            assert(returnedSelf == frame, "inbound self result should be public")
+            assert(tail == "tail", "non-frame inbound results should keep identity")
+        "#,
+        )
+        .unwrap();
+}
+
 #[test]
 fn test_plain_literal_mixins_block_still_applies_to_public_frame() {
     let t = load_test_xml(

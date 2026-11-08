@@ -126,7 +126,7 @@
           "kind": "source",
           "reference": "src/lua_api/env_init/shared_bootstrap.lua",
           "summary": "Bounded simulator projection policy: public and forbidden Lua views are distinct and interned for one underlying frame; native parent/method calls preserve simulator identity and ordinary tables cannot impersonate it. Native private-object identity, authority, and security remain unverified.",
-          "source_hash": "79066b508cd501a592b4ab5571dff4d6c45fb4e022f45f53e1dcc798f0e10075"
+          "source_hash": "b6cc0afe391de7a017c960310855d02682bd43c091fd4ba8a3e3bf4c630edb7c"
         },
         {
           "kind": "source",
@@ -138,7 +138,7 @@
           "kind": "source",
           "reference": "docs/specs/script-object-environments.md",
           "summary": "Bounded simulator projection policy: public and forbidden Lua views are distinct and interned for one underlying frame; native parent/method calls preserve simulator identity and ordinary tables cannot impersonate it. Native private-object identity, authority, and security remain unverified.",
-          "source_hash": "08e07726bc48a4999fc78599be5aae4bc57b4df973a656b35e0fe56e82a4c123"
+          "source_hash": "4bdce083a97ad4c49181c7a7da71b7c2387327e86f0878d077b57a166c1ac274"
         },
         {
           "kind": "test",
@@ -203,7 +203,7 @@
           "kind": "source",
           "reference": "src/lua_api/env_init/shared_bootstrap.lua",
           "summary": "Bounded simulator partition policy: private fields and methods stay separate from same-named public assignments, while explicit public exports/delegates remain available. This does not establish a native inaccessible-key list, caller authority, or security enforcement.",
-          "source_hash": "79066b508cd501a592b4ab5571dff4d6c45fb4e022f45f53e1dcc798f0e10075"
+          "source_hash": "b6cc0afe391de7a017c960310855d02682bd43c091fd4ba8a3e3bf4c630edb7c"
         },
         {
           "kind": "source",
@@ -215,7 +215,7 @@
           "kind": "source",
           "reference": "docs/specs/script-object-environments.md",
           "summary": "Bounded simulator partition policy: private fields and methods stay separate from same-named public assignments, while explicit public exports/delegates remain available. This does not establish a native inaccessible-key list, caller authority, or security enforcement.",
-          "source_hash": "08e07726bc48a4999fc78599be5aae4bc57b4df973a656b35e0fe56e82a4c123"
+          "source_hash": "4bdce083a97ad4c49181c7a7da71b7c2387327e86f0878d077b57a166c1ac274"
         },
         {
           "kind": "test",
