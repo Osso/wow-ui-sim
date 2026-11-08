@@ -25,6 +25,10 @@ SOURCE_ROOT = Path("/home/osso/.cache/wow-ui-sim-srcmount")
 SLOTS = (0, 1, 3, 4)
 CAPACITY = "/home/osso/.worktrees/logs/capacity.sh"
 LIBRARY_SUFFIXES = {".rlib", ".rmeta", ".so", ".a", ".dll", ".dylib"}
+# Cargo stdout/stderr is the warning-proof record; journald cannot preserve it.
+OUTPUT_FILE_SETS_KEPT = 20
+CARGO_STDOUT_SUFFIX = ".cargo.jsonl"
+CARGO_STDERR_SUFFIX = ".cargo.stderr"
 
 
 def check_owner(slot, owner):
@@ -1073,23 +1077,107 @@ def collect_artifacts(slot, started_ns, previous, records):
     return hash_artifacts(slot, paths)
 
 
-def run_build_command(command):
-    records = []
-    with subprocess.Popen(command, stdout=subprocess.PIPE) as child:
-        for line in child.stdout:
-            sys.stdout.buffer.write(line)
-            sys.stdout.buffer.flush()
+def cargo_output_paths(receipt, unit):
+    """Complete Cargo stdout/stderr files beside the receipt, named by unit."""
+    receipt = Path(receipt)
+    return (receipt.with_name(unit + CARGO_STDOUT_SUFFIX),
+            receipt.with_name(unit + CARGO_STDERR_SUFFIX))
+
+
+def stderr_sibling(stdout_path):
+    name = stdout_path.name
+    if not name.endswith(CARGO_STDOUT_SUFFIX):
+        raise ValueError(f"not a Cargo stdout file: {stdout_path}")
+    return stdout_path.with_name(name[:-len(CARGO_STDOUT_SUFFIX)] + CARGO_STDERR_SUFFIX)
+
+
+def prune_build_outputs(receipts, keep=OUTPUT_FILE_SETS_KEPT):
+    """Bound disk use by keeping only the newest Cargo output files."""
+    if keep < 0:
+        raise ValueError("kept output count must be nonnegative")
+    outputs = sorted(receipts.glob("*" + CARGO_STDOUT_SUFFIX),
+                     key=lambda path: path.stat().st_mtime, reverse=True)
+    for stdout in outputs[keep:]:
+        for path in (stdout, stderr_sibling(stdout)):
             try:
-                record = json.loads(line)
-            except (ValueError, UnicodeDecodeError):
-                continue
-            if isinstance(record, dict) and record.get("reason") in {
-                    "compiler-artifact", "build-script-executed"}:
-                records.append(record)
-        return child.wait(), records
+                path.unlink()
+            except FileNotFoundError:
+                pass
+    kept = {stderr_sibling(stdout) for stdout in outputs[:keep]}
+    for stderr in receipts.glob("*" + CARGO_STDERR_SUFFIX):
+        if stderr not in kept:
+            try:
+                stderr.unlink()
+            except FileNotFoundError:
+                pass
 
 
-def execute_build(request_path, cap_gib=130, recent_hours=2):
+def cargo_output_summary(stdout_path):
+    """Build-finished record, success flag and compiler warning count."""
+    try:
+        lines = Path(stdout_path).read_text(errors="replace").splitlines()
+    except FileNotFoundError:
+        return None
+    finished = None
+    warnings = 0
+    for line in lines:
+        try:
+            record = json.loads(line)
+        except ValueError:
+            continue
+        if not isinstance(record, dict):
+            continue
+        if record.get("reason") == "build-finished":
+            finished = bool(record.get("success"))
+        elif (record.get("reason") == "compiler-message"
+              and isinstance(record.get("message"), dict)
+              and record["message"].get("level") == "warning"):
+            warnings += 1
+    return {"build_finished": finished is not None, "success": finished,
+            "warning_count": warnings}
+
+
+def find_unit_cargo_output(unit):
+    candidates = []
+    for slot in SLOTS:
+        path = (TARGET_ROOT / f"slot-{slot}" / "receipts" / (unit + CARGO_STDOUT_SUFFIX))
+        try:
+            candidates.append((path.stat().st_mtime, path))
+        except FileNotFoundError:
+            continue
+    return max(candidates)[1] if candidates else None
+
+
+def run_build_command(command, stdout_path=None, stderr_path=None):
+    """Run Cargo, recording its complete stdout/stderr and the records it prints."""
+    for path in (stdout_path, stderr_path):
+        if path is not None:
+            Path(path).parent.mkdir(parents=True, exist_ok=True)
+    records = []
+    with ExitStack() as streams:
+        stdout_file = (streams.enter_context(open(stdout_path, "wb"))
+                       if stdout_path is not None else None)
+        stderr_file = (streams.enter_context(open(stderr_path, "wb"))
+                       if stderr_path is not None else None)
+        with subprocess.Popen(command, stdout=subprocess.PIPE,
+                              stderr=stderr_file) as child:
+            for line in child.stdout:
+                if stdout_file is not None:
+                    stdout_file.write(line)
+                    stdout_file.flush()
+                sys.stdout.buffer.write(line)
+                sys.stdout.buffer.flush()
+                try:
+                    record = json.loads(line)
+                except (ValueError, UnicodeDecodeError):
+                    continue
+                if isinstance(record, dict) and record.get("reason") in {
+                        "compiler-artifact", "build-script-executed"}:
+                    records.append(record)
+            return child.wait(), records
+
+
+def execute_build(request_path, cap_gib=44, recent_hours=2):
     request = json.loads(request_path.read_text())
     slot = Path(request["slot"])
     check_owner(slot, request["owner"])
@@ -1113,6 +1201,7 @@ def execute_build(request_path, cap_gib=130, recent_hours=2):
     try:
         return run_verified_build(slot, worktree, receipt, current, previous, request)
     finally:
+        prune_build_outputs(receipt.parent)
         save_stat_cache(stat_cache)
 
 
@@ -1123,7 +1212,10 @@ def run_verified_build(slot, worktree, receipt, current, previous, request):
     current["source_hashes"] = source_before
     pre_cpu = time.process_time() - guard_cpu
     started_ns = time.time_ns()
-    returncode, records = run_build_command(request["cargo"])
+    stdout_file, stderr_file = cargo_output_paths(receipt, request["unit"])
+    current["cargo_stdout_file"] = str(stdout_file)
+    current["cargo_stderr_file"] = str(stderr_file)
+    returncode, records = run_build_command(request["cargo"], stdout_file, stderr_file)
     guard_cpu = time.process_time()
     current["build_script_out_dirs"] = [record["out_dir"] for record in records
                                         if record.get("reason") == "build-script-executed"]
@@ -1157,6 +1249,17 @@ def print_status(unit):
     end = int(values[properties[4]]) or time.monotonic_ns() // 1000
     wall = f"{(end - start) / 1e6:.6f}" if start else "unavailable"
     print(f"WallTimeSec={wall}")
+    output = find_unit_cargo_output(unit)
+    summary = cargo_output_summary(output) if output is not None else None
+    print(f"CargoOutput={'none' if output is None else output}")
+    if summary is None:
+        print("BuildFinished=unavailable")
+        print("Success=unavailable")
+        print("Warnings=unavailable")
+        return
+    print(f"BuildFinished={'true' if summary['build_finished'] else 'false'}")
+    print(f"Success={'unavailable' if summary['success'] is None else str(summary['success']).lower()}")
+    print(f"Warnings={summary['warning_count']}")
 
 
 def requests_json_messages(cargo):
@@ -1176,8 +1279,8 @@ def main(argv=None):
     parser.add_argument("--unit")
     parser.add_argument("--owner")
     parser.add_argument("--capacity-id")
-    parser.add_argument("--slot-cap-gib", type=float, default=130,
-                        help="prune above this allocated size (default: 130 GiB)")
+    parser.add_argument("--slot-cap-gib", type=float, default=44,
+                        help="prune above this allocated size (default: 44 GiB)")
     parser.add_argument("--prune-recent-hours", type=float, default=2,
                         help="retain units modified within this age (default: 2 hours)")
     parser.add_argument("--prune-dry-run", action="store_true",

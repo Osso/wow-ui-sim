@@ -51,6 +51,22 @@ fn blizzard_ui_dir() -> PathBuf {
         .expect("Blizzard UI cache should be synced")
 }
 
+/// Whether the active profile's pinned Blizzard UI tree ships `addon_name`.
+///
+/// The manifest mirrors the client's own `Interface/AddOns` tree, so it is the
+/// authority for addon membership. Mists/Era/Anniversary do not ship
+/// `Blizzard_POIButton`, `Blizzard_GarrisonBase`, `Blizzard_ManagedFrameSystem`
+/// or `Blizzard_GameMenuEsc` (their manifests contain no entry, and the
+/// `wow_classic` CASC root has no `Blizzard_POIButton` fileDataIDs), so a
+/// harness that demands them describes the Retail client, not the active one.
+fn profile_ships_addon(addon_name: &str) -> bool {
+    wow_ui_sim::blizzard_ui_sync::manifest_entries().any(|entry| {
+        entry
+            .split_once('/')
+            .is_some_and(|(folder, _)| folder == addon_name)
+    })
+}
+
 fn load_blizzard_addon(env: &WowLuaEnv, addon_name: &str) {
     let addon_dir = blizzard_ui_dir().join(addon_name);
     let toc_path = find_toc_file(&addon_dir)
@@ -64,6 +80,9 @@ fn load_blizzard_addon(env: &WowLuaEnv, addon_name: &str) {
 fn load_panel_harness(env: &WowLuaEnv) {
     let ui = blizzard_ui_dir();
     for addon_name in PANEL_HARNESS_ADDONS {
+        if !profile_ships_addon(addon_name) {
+            continue;
+        }
         let toc_path = find_toc_file(&ui.join(addon_name))
             .unwrap_or_else(|| panic!("{addon_name} TOC for active profile should exist"));
         load_addon(&env.loader_env(), &toc_path)
@@ -774,7 +793,14 @@ fn encounter_journal_display_dungeon_instance_does_not_recurse() {
 }
 }
 
-post_wrath_ui_fixture! {
+// The Journeys panel is mainline content: only the Retail, PTR and Forever
+// caches ship `Blizzard_EncounterJournal/Mainline/Blizzard_Journeys.lua` and
+// `.xml` (`data/blizzard-ui-files/{retail,ptr,wowforever}.txt`). The Mists,
+// Era and Anniversary caches contain only `Localization.lua` plus the
+// `Cata`/`Mists` subdirectories, so they have no `JourneysFrame` and cannot
+// seed a current-tier row. Gate on the profiles whose pinned caches ship
+// those files.
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn encounter_journal_journeys_frame_seeds_current_major_factions_without_tww_leak() {
     let env = WowLuaEnv::new().expect("Failed to create Lua environment");

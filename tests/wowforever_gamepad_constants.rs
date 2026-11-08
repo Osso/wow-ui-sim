@@ -41,7 +41,10 @@ fn gamepad_constants_are_profile_scoped() {
     let published: bool = env
         .eval("return rawget(Constants, 'GamepadActionBarConstants') ~= nil")
         .unwrap();
-    assert_eq!(published, cfg!(feature = "client-wowforever"));
+    assert_eq!(
+        published,
+        cfg!(any(feature = "client-wowforever", feature = "client-ptr"))
+    );
 }
 
 #[test]

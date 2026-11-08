@@ -11,7 +11,7 @@ Forever publishes finite additions from its `EditModeManagerConstantsDocumentati
 - [x] Under `client-wowforever`, publish 70374 `EditModeSystem.GamepadMainActionBar=30` and system metadata `MinValue=0`, `MaxValue=30`, `NumValues=31`.
 - [x] Publish `EditModeGamepadMainActionBarSetting`: `Compact=0`, `ShowEmptyBars=1`, `ShowButtonPrompts=2`, `ShowHighlight=3`, `ShouldExpand=4`; metadata `MinValue=0`, `MaxValue=4`, `NumValues=5`.
 - [x] Execute actual 70374 Camelot preset constants, Mainline presets and shared setting-display consumers: `EDIT_MODE_GAMEPAD_SYSTEM_MAP[30].settings` has exactly five entries, values `0/1/0/1/1` at keys `0..4`, BOTTOM/UIParent anchor with offsetY 110, and five checkbox descriptors mapping settings `0..4`.
-- [x] Keep Forever GamepadMainActionBar, its settings/metadata, Gamepad preset and RecentAlliesInteractionCategoryFilter/metadata absent on Retail, PTR, Wrath, Mists, Era and Anniversary; preserve base ActionBar=0. Bounded runtime proof below, not exhaustive other-profile enum preservation.
+- [x] Keep Forever GamepadMainActionBar, its settings/metadata, Gamepad preset and RecentAlliesInteractionCategoryFilter/metadata absent on Retail, Wrath, Mists, Era and Anniversary; preserve base ActionBar=0. PTR 12.1.7.70493 declares them natively (`Blizzard_APIDocumentationGenerated/EditModeManagerConstantsDocumentation.lua:782`, `:498–509`, `:648`; `RecentAlliesConstantsDocumentation.lua:6–18`), so PTR asserts that declaration instead. Bounded runtime proof below, not exhaustive other-profile enum preservation.
 
 ## How it works
 
@@ -28,7 +28,7 @@ Forever publishes finite additions from its `EditModeManagerConstantsDocumentati
 ## Tests asserting this spec
 
 - `tests/wowforever_edit_mode_enums.rs` — existing exact source values, metadata, actual preset and display consumers. Includes executed `forever_edit_mode_gamepad_consumers`; bounded PASS on runtime source136, not the new import revision.
-- `tests/enum_isolation.rs` — six earlier-profile absence and original-consumer preservation cases; receipts below.
+- `tests/enum_isolation.rs` — earlier-profile absence cases, the PTR native gamepad/preset/RecentAllies declaration case, and original-consumer preservation cases; receipts below.
 
 ### Earlier-profile isolation receipt — 2026-10-18
 
@@ -43,7 +43,7 @@ Executed `cargo test --locked -j1 --no-default-features --features sound,gui,cas
 | Era | GREEN | 3 / 0 | `31f9eee9c` |
 | Anniversary | GREEN | 3 / 0 | `d28922a21` |
 
-All six execute `forever_gamepad_publication_is_absent_from_earlier_profiles`. Retail/PTR also execute `original_communities_sort_preserves_profile_stream_ids`, `original_account_consumer_keeps_friend_levels_and_ranks`, `original_sound_data_keeps_numeric_sound_ids_and_kits` and `original_visual_alert_lookup_keeps_numeric_style_ids`. Classic profiles execute `classic_profiles_keep_shared_modern_enum_group_absent`; Wrath adds `wrath_keeps_original_stream_numbers_without_discord`, while Mists/Era/Anniversary add the original Communities sort case. These are 22 executed cases, not empty cfg-filtered passes. See [shared enum contract](forever-shared-enums.md).
+All six executed `forever_gamepad_publication_is_absent_from_earlier_profiles` at the time; the PTR row is historical. The PTR Edit Mode declaration lane `8a23c562e` now publishes `EditModeSystem.GamepadMainActionBar=30` from the pinned PTR document, so current PTR runs `ptr_edit_mode_gamepad_publication_matches_pinned_declarations` instead. Retail/PTR also execute `original_communities_sort_preserves_profile_stream_ids`, `original_account_consumer_keeps_friend_levels_and_ranks`, `original_sound_data_keeps_numeric_sound_ids_and_kits` and `original_visual_alert_lookup_keeps_numeric_style_ids`. Classic profiles execute `classic_profiles_keep_shared_modern_enum_group_absent`; Wrath adds `wrath_keeps_original_stream_numbers_without_discord`, while Mists/Era/Anniversary add the original Communities sort case. These are 22 executed cases, not empty cfg-filtered passes. See [shared enum contract](forever-shared-enums.md).
 
 First five rows precede the requested rebase onto `032a3e7d8`; Anniversary follows it. Intervening changes concern timed-signal-map behavior and unrelated tests/docs, not enum publication or these fixtures. No earlier row is represented as rerun on the later revision. Logs and exact commands: `/home/osso/.local/state/wow-ui-sim/handoff/enum-isolation-run/{report.md,proof-ledger.md,<profile>.log}`. Original consumer files came from the active profile cache without edits; cache bytes were not independently resealed. No production changes, full-startup runs, native-client parity or full enum-surface proof.
 

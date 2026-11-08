@@ -66,6 +66,19 @@ The original `ArenaUnitFrameDebuffMixin:SetUnit` at455–467 assigns `self.unitT
 
 All seven full-feature all-target checks (PTR, Retail, Wrath, Mists, Era, Anniversary, Forever) have separate accepted canonical slot-build receipts, zero Cargo JSON/plain compiler warnings or errors, and no dep-info errors. They cover producer `d125680f0` and documentation-only `dd6ab124d`; later documentation does not invalidate Rust proof. Formatting and changed-Rust manual readability pass. Nine guarded runtime invocations preserve the current persisted CVar bytes and full recorded stat/hash, using fresh child-only copies and O_NOATIME reads.
 
+## Profile isolation expectation for PTR gamepad enums
+
+The Forever isolation test `forever_gamepad_publication_is_absent_from_earlier_profiles`
+predates this module's PTR publication. On PTR it failed with
+`Forever GamepadMainActionBar leaked outside Forever` at `tests/enum_isolation.rs` on
+master `f915f72b6`. PTR is not an earlier profile: the pinned
+`EditModeManagerConstantsDocumentation.lua:782` declares
+`EditModeSystem.GamepadMainActionBar=30`, `:498–509` the five gamepad settings, `:648`
+the Gamepad preset, and `RecentAlliesConstantsDocumentation.lua:6–18` the interaction
+filters. `tests/enum_isolation.rs` now runs
+`ptr_edit_mode_gamepad_publication_matches_pinned_declarations` on PTR and keeps the
+absence case for Retail, Wrath, Mists, Era and Anniversary.
+
 ## Sources
 
 - [Contract](../../specs/ptr-edit-mode-declarations.md).

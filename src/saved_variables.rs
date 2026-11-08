@@ -229,13 +229,7 @@ impl SavedVariablesManager {
         let path = self.storage_path(name, false);
         let mut output = String::new();
         serialize_assignment(&mut output, state, "preferences", value)?;
-        fs::create_dir_all(&self.storage_dir).map_err(|error| {
-            crate::Error::Other(format!(
-                "create model directory {}: {error}",
-                self.storage_dir.display()
-            ))
-        })?;
-        fs::write(&path, output).map_err(|error| {
+        crate::fs_atomic::write_atomic(&path, output.as_bytes()).map_err(|error| {
             crate::Error::Other(format!("write model {}: {error}", path.display()))
         })
     }
@@ -877,7 +871,8 @@ impl SavedVariablesManager {
         if let Some(parent) = path.parent() {
             fs::create_dir_all(parent).map_err(|e| crate::Error::Other(e.to_string()))?;
         }
-        fs::write(path, output).map_err(|e| crate::Error::Other(e.to_string()))?;
+        crate::fs_atomic::write_atomic(path, output.as_bytes())
+            .map_err(|e| crate::Error::Other(e.to_string()))?;
         Ok(())
     }
 

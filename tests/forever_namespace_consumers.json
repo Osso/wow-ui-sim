@@ -33,12 +33,12 @@
     "Blizzard_SharedXMLBase/TableUtil.lua": "ea8adddfb824c3d8493c66c8fd68d4fbc07dcbb45e6fe2cc94d89a80c5b2bb46"
   },
   "wowforever": {
-    "Blizzard_ActionBar/Shared/ActionButton.lua": "20e0f061a5a97427fd5b58d416c8291a5087ea73a1bccf416752a909df8ab936",
+    "Blizzard_ActionBar/Shared/ActionButton.lua": "89a82384a04755a5463c408b6ba9222d592893629d8f757db70c20478c305407",
     "Blizzard_ChatFrameBase/Mainline/ChatFrameUtilOverrides.lua": "c6bd33f1c12c6fae81b09ba1efc04b041c758197fd581c9568f7266d8c9e4d47",
     "Blizzard_CombatLogBase/CombatLogUtil.lua": "04b22c4ce9f2900923336c4fb89e8a72d10b7767fdfe4efb2d498e21f9a77999",
     "Blizzard_CombatText/Shared/CombatText.lua": "a79489457bf73cfc9af496ac35c09be07c791a2c7f4d5169e9fae9e646682ba5",
     "Blizzard_DeprecatedCombatLog/Deprecated_CombatLog.lua": "d13d4b67c78a4d907086be0840c3884e1e737ba14dcab3c2eee394bd16fe22eb",
-    "Blizzard_GamepadActionBars/ActionBarButton.lua": "a9b971712c7fb5cad8c2952a5ac9362275bce6ccde061ed762d484ef37d4c281",
+    "Blizzard_GamepadActionBars/ActionBarButton.lua": "10f7b93bacdea2d612ee2fb1f95fb728a0b2fa2bf070e13bcfbee2d2aa5caac4",
     "Blizzard_PlayerChoice/Blizzard_PlayerChoiceToggleButton.lua": "cc35a1ac7d9e15a18198c6e8184b6567f403830e9b98010ccf61af1d76a11271",
     "Blizzard_RecentAllies/Blizzard_RecentAlliesTemplates.lua": "132703122318b5f2dbe6b9efacdf051a183bcfe00f314b5589ee8ec7273820fb",
     "Blizzard_RecentAllies/Blizzard_RecentAlliesUtil.lua": "176839e776a0c27499d2166b7b5fc49f94e306fa85360f093402366e6409ed06",

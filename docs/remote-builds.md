@@ -63,6 +63,8 @@ runs in `agents.slice` with `MemoryMax=9G` and `MemorySwapMax=0`.
 `RUSTC_WRAPPER` is set to an empty value so Cargo configuration cannot select
 sccache instead of the incremental compiler. Status prints
 `SubState`, `Result`, `CPUUsageNSec`, and `WallTimeSec` (elapsed while running).
+It also prints `CargoOutput`, `BuildFinished`, `Success`, and `Warnings`, read from
+that unit's retained Cargo stdout file (see [receipts](#source-freshness-and-receipts)).
 Use the helper from the checkout that contains it; it builds `--worktree`.
 
 The freshness guard stores file digests and parsed dep-info in
@@ -88,9 +90,10 @@ While holding those locks it first removes superseded incremental sessions
 (every `incremental/<crate>-<hash>/s-*` directory and its `.lock` except the
 newest) regardless of the cap; rustc only reads the newest session. On
 2026-10-30 these were about 70 GiB of each ~100 GiB slot.
-The worker then prunes when allocated disk usage exceeds `--slot-cap-gib` (default 130 GiB; user decision 2026-10-29, one
-integration-target slot uses 100-120 GiB), stopping below 80% of the cap
-(default 104 GiB). Units with `deps` or `incremental` members go first, then
+The worker then prunes when allocated disk usage exceeds `--slot-cap-gib` (default 44 GiB;
+lowered from 130 GiB on 2026-11-08 because no slot ever reached the old cap and
+steady-state slots held 25-36 GiB of debug/incremental data), stopping below 80% of the cap
+(default 35.2 GiB). Units with `deps` or `incremental` members go first, then
 fingerprint/build-only units; each group is ordered by newest member mtime. Fingerprints,
 matching deps files, build directories, and incremental sessions are removed
 together per name/hash within each build-profile directory. Fingerprint
@@ -124,6 +127,30 @@ It prints the same removal plan and before/remaining byte totals without deletin
 anything. Inspecting an active slot gives a moving snapshot. Actual pruning
 requires the existing exclusive ownership claim and all profile locks; do not
 share a claim between concurrent builds. No `cargo clean` is used.
+
+Measured on 2026-11-08 in slot 0 with `cargo test --no-run --test integration`. At the
+new default the slot held 47.98 GiB (most of it `debug/incremental`) and the
+plan removed 14.23 GiB: 11.85 GiB superseded incremental hashes and 2.39 GiB stale
+test-binary hashes (`wow_cli`, benches, `wow_sim`). The slot dropped to 33.74 GiB
+and stayed at 34.26 GiB after the build. All planned units were older than
+`--prune-recent-hours`, and none of the current build's two rebuilt targets
+(`wow_ui_sim_test_harness`, `integration`) appeared in the removal list.
+The same two-target rebuild measured 34.9-41.3 CPU-s under the 130 GiB default and
+54.9 CPU-s in one no-prune sample under 44 GiB. The build that did
+prune cost 82.1 CPU-s wall 91 s, including the 14.23 GiB deletion; the rebuilt
+target set was identical in every sample. Slots at or below 44 GiB prune nothing.
+The superseded-session sweep is unchanged and always runs, even below the cap.
+
+Alternatives considered on the same evidence:
+
+- Pruning by worktree is not possible: incremental directories are named by
+  crate and metadata hash, not by worktree. The worktree-switch source refresh
+  already forces recompilation, and those old hashes age into the ordinary
+  oldest-first eviction.
+- Disabling `CARGO_INCREMENTAL` for test builds would remove the largest
+  directories (`integration-*`, `wow_ui_sim-*`), but every test build would then
+  recompile its dependencies. The cap alone removes only units older than the
+  protection window, so current work keeps its incremental caches.
 
 ### Source freshness and receipts
 
@@ -169,9 +196,19 @@ build produced. Cargo writes one unhashed dylib name per profile, so a later bui
 with another feature set replaces the library a finished test binary loads. A
 runner must compare `dylib_sha256` with the files under `debug/deps` before it
 starts a unit and refuse on a mismatch; otherwise the binary fails at runtime with
-an undefined-symbol error. The command arguments and
-stdout/stderr bytes are passed through unchanged, including wrappers that capture
-Cargo JSON internally. The worker reads visible stdout for this build's Cargo
+an undefined-symbol error. Each unit also writes
+`slot-N/receipts/UNIT.cargo.jsonl` (the complete Cargo stdout) and
+`slot-N/receipts/UNIT.cargo.stderr` (the complete Cargo stderr). The receipt
+records both absolute paths as `cargo_stdout_file` and `cargo_stderr_file`. These
+files are the authoritative record when journald rate-limits
+`user@1000.service` and drops `build-finished` or `compiler-message` lines from the
+unit journal. `--status` reads them for `BuildFinished` (presence of Cargo's
+`build-finished` record), `Success` (that record's flag) and `Warnings` (count of
+`compiler-message` records whose message level is `warning`). Only the newest 20
+output pairs per slot are retained; earlier pairs are deleted after each build.
+The command arguments are passed through unchanged and Cargo stdout is still
+echoed to the unit journal; only Cargo stderr goes to the file instead of the
+journal. The worker reads visible stdout for this build's Cargo
 `compiler-artifact` records, without changing the submitted arguments. Use Cargo's
 JSON message format to expose those records. Receipts retain the records and each
 package's metadata-derived manifest-parent and path-dependency roots.

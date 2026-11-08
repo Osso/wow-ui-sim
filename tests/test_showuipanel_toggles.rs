@@ -113,6 +113,17 @@ fn setup_env() -> WowLuaEnv {
 }
 
 fn load_lod_bootstrap(env: &WowLuaEnv, ui: &std::path::Path, addon_name: &str) {
+    let relative = format!("{addon_name}/{addon_name}_Bootstrap.lua");
+    // Only mainline clients split the LoD publisher into a `_Bootstrap.lua`.
+    // The classic TOCs load `Classic\Blizzard_Collections.lua` directly and
+    // ship no such file (`data/blizzard-ui-files/{mists,era,anniversary}.txt`
+    // contain no entry; only retail/ptr/wowforever do), so requiring it here
+    // would assert the Retail client's file layout on classic profiles.
+    let ships_bootstrap =
+        wow_ui_sim::blizzard_ui_sync::manifest_entries().any(|entry| entry == relative.as_str());
+    if !ships_bootstrap {
+        return;
+    }
     let path = ui
         .join(addon_name)
         .join(format!("{addon_name}_Bootstrap.lua"));
