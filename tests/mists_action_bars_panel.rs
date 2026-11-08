@@ -1,5 +1,8 @@
 #![cfg(feature = "client-mists")]
 
+#[path = "common/lua_error_output.rs"]
+mod lua_error_output;
+
 use std::path::PathBuf;
 use std::process::Command;
 
@@ -139,15 +142,6 @@ fn mists_action_bag_micro_and_status_bars_update_slots_and_hover_scripts() {
         output.status.success(),
         "wow-sim failed\nstdout:\n{stdout}\nstderr:\n{stderr}"
     );
-    assert_no_lua_errors(&stdout, &stderr);
+    lua_error_output::assert_no_lua_errors("Action/bag/micro/status bar flow", &stdout, &stderr);
 }
 
-fn assert_no_lua_errors(stdout: &str, stderr: &str) {
-    assert!(
-        stdout.trim().ends_with("[]")
-            && !stdout.contains("Lua error")
-            && !stderr.contains("Lua error")
-            && !stderr.contains("[exec-lua] error"),
-        "Action/bag/micro/status bar flow emitted Lua errors\nstdout:\n{stdout}\nstderr:\n{stderr}"
-    );
-}

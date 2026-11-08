@@ -1245,6 +1245,11 @@ impl SimState {
             "Hand of A'dal".to_string(),
             "the Argent Champion".to_string(),
         ];
+        #[cfg(feature = "client-mists")]
+        {
+            self.engraving =
+                crate::c_api::engraving_inputs::EngravingInputs::mists_native_defaults();
+        }
     }
 
     fn build_empty_state(

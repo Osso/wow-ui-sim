@@ -1,0 +1,60 @@
+{
+  "status": "PASS",
+  "sha256_matches_seal": true,
+  "hash_reads": 1,
+  "path": "<PRIVATE_VERIFICATION_ROOT>/wdp/store-macro-import-red-20261014T062008900856Z/artifacts/wow-sim",
+  "stat_before": {
+    "st_dev": 66306,
+    "st_ino": 149827732,
+    "st_size": 408594072,
+    "st_mtime_ns": 1791958364143583027
+  },
+  "stat_after": {
+    "st_dev": 66306,
+    "st_ino": 149827732,
+    "st_size": 408594072,
+    "st_mtime_ns": 1791958364143583027
+  },
+  "fd_stat_before": {
+    "st_dev": 66306,
+    "st_ino": 149827732,
+    "st_size": 408594072,
+    "st_mtime_ns": 1791958364143583027
+  },
+  "fd_stat_after": {
+    "st_dev": 66306,
+    "st_ino": 149827732,
+    "st_size": 408594072,
+    "st_mtime_ns": 1791958364143583027
+  },
+  "stat_matches_seal": true,
+  "sha256": "2f12063370bcaf3c5c8166f43c63fbb3a84e8d8bb310a3e8483ce7663ac6fdd4",
+  "seal_sha256": "2f12063370bcaf3c5c8166f43c63fbb3a84e8d8bb310a3e8483ce7663ac6fdd4",
+  "bytes_read": 408594072,
+  "source": "52fc18f4ef6d94d76a6068cfea306e0840b80fb7",
+  "profile": "retail",
+  "features": [
+    "aura-containers",
+    "aura-instance-enumeration",
+    "aura-xml-widgets",
+    "base-spell-relationships",
+    "casc",
+    "client-retail",
+    "default",
+    "forbidden-aspects",
+    "gui",
+    "native-duration-formatting",
+    "numeric-rule-formatters",
+    "on-update-modes",
+    "player-cast-durations",
+    "prefork-full-ui",
+    "profile-retail",
+    "retail-12-0-0",
+    "retail-12-0-5",
+    "retail-12-0-7",
+    "retail-12-1-0",
+    "rodio",
+    "sound"
+  ],
+  "scope": "New copied executable authentication only; association is not independent source provenance."
+}

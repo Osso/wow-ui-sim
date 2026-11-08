@@ -1,0 +1,17 @@
+{
+  "source": "d9c7c6aa15ef7238e3f547e48989403eedeb5873",
+  "runtime_source_mount": "<PRIVATE_VERIFICATION_ROOT>/wdp/store-cleanup-mists-red-20261014T053738754222Z/source",
+  "tracked_archive_paths": [
+    "Cargo.toml",
+    "Cargo.lock",
+    "build.rs",
+    "build",
+    "src",
+    "tests",
+    "data",
+    "Interface",
+    ".cargo"
+  ],
+  "target_mountpoint": "empty directory for read-only target overlay",
+  "scope": "selected tracked inputs; external libraries/cache/settings not authenticated"
+}

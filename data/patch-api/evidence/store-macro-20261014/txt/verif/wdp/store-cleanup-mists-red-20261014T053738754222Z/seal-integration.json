@@ -1,0 +1,21 @@
+{
+  "source": "d9c7c6aa15ef7238e3f547e48989403eedeb5873",
+  "profile": "mists",
+  "features": [
+    "casc",
+    "client-mists",
+    "gui",
+    "prefork-full-ui",
+    "rodio",
+    "sound"
+  ],
+  "sealed_path": "<PRIVATE_VERIFICATION_ROOT>/wdp/store-cleanup-mists-red-20261014T053738754222Z/artifacts/deps/integration-37489d648a0b36d0",
+  "sha256": "6583d9eb75ec85cfdce896945874958a7b50d137d018152ffb370916ce3e0532",
+  "stat": {
+    "st_dev": 66306,
+    "st_ino": 149568325,
+    "st_size": 439447128,
+    "st_mtime_ns": 1791956382004638085
+  },
+  "scope": "new copied executable; external libraries/cache/settings and source archive not independently authenticated"
+}

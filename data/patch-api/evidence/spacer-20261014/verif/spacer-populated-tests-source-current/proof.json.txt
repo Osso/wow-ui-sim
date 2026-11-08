@@ -1,0 +1,57 @@
+{
+  "mode": "SOURCE_ONLY",
+  "requested_revision": "f56922e5753e6e27889d3e6c00061438e7c79f46",
+  "observed_master_ref": "f56922e5753e6e27889d3e6c00061438e7c79f46",
+  "working_tree_commit_identity_authenticated": false,
+  "verdict": "SOURCE_COVERAGE_CONFIRMED_WITH_READABILITY_LENGTH_VIOLATION",
+  "additional_authored_cases": 6,
+  "retained_preliminary_cases": 1,
+  "new_case_execution": "UNEXECUTED",
+  "current_green": false,
+  "populated_red": false,
+  "discovery_executed": false,
+  "scoped_rust_files": 6,
+  "scoped_rust_functions": 22,
+  "scoped_private_helpers": 16,
+  "fixture_fields": 15,
+  "fixture_cardinality_basis": "explicit fixtures plus both cached API structures :1724-1744",
+  "readability_violations": [
+    {
+      "category": "LENGTH",
+      "file": "tests/widget_spacer/consumer.rs",
+      "line": 85,
+      "function": "assert_dimension_boundaries",
+      "physical_body_lines": 34,
+      "limit": 30
+    }
+  ],
+  "manual_rust_control_nesting_max": 1,
+  "manual_rust_closure_plus_block_nesting_max": 2,
+  "lua_validation": "manual syntax inspection only; no runtime or parser",
+  "consumer_order": [
+    "empty set",
+    "assertion function definitions/getter binding only",
+    "cached closure load with no overrides",
+    "actual provider/container registration",
+    "normal typed populated feed"
+  ],
+  "consumer_direct_populated_preseed": false,
+  "consumer_preload_populated_query": false,
+  "cached_profiles_read": [
+    "retail",
+    "ptr"
+  ],
+  "shared_helper_parent_diff_authenticated": false,
+  "historical_proof_source": "[PRIVATE_EVIDENCE]/verif/spacer-first-selector-genuine-red-current",
+  "historical_source_label": "1ffab60b44706925b9b5cf6807681661168bf2f6",
+  "historical_unique_failures": 1,
+  "historical_exit": 101,
+  "historical_only_executed_invalid_form": "omitted selector",
+  "historical_later_invalid_forms_unreached": 7,
+  "historical_summary_semantics": "NONADDITIVE",
+  "process_commands_executed": [],
+  "network_requests": 0,
+  "delegation": false,
+  "canonical_writes": false,
+  "persistence": "0700 directory;0600 files;file/directory fsync;exact readback/mode checks"
+}

@@ -1,0 +1,19 @@
+{
+  "status": "PASS",
+  "sha256_matches_seal": true,
+  "hash_reads": 1,
+  "path": "verif/wdp/crafted-quality-ptr-api-red-retry1-20261014T013200049067Z/artifacts/deps/integration-020202567c2bd5a4",
+  "stat_before": {
+    "st_dev": 66306,
+    "st_ino": 148408268,
+    "st_size": 471242424,
+    "st_mtime_ns": 1791941600097884955
+  },
+  "stat_after": {
+    "st_dev": 66306,
+    "st_ino": 148408268,
+    "st_size": 471242424,
+    "st_mtime_ns": 1791941600097884955
+  },
+  "digest": "ab32a4174443cdc6efe7399d76eb49dd7c599e17ac055756a1570e96a0c42229"
+}

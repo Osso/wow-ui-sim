@@ -1292,14 +1292,18 @@ class SourceFreshnessTests(unittest.TestCase):
             self.assertEqual(receipt["result"], "success")
 
     def test_library_certificate_compares_content_across_worktrees(self):
-        result, _ = self.run_library_step("retail")
+        result, first = self.run_library_step("retail")
         self.assertEqual(result.returncode, 0, result.stderr)
         other = self.slot / "other-tree"
         self.git("worktree", "add", "--detach", str(other), "HEAD")
         self.tree = other
-        result, receipt = self.run_library_step("retail", fresh=True)
+        # A switched worktree must re-fingerprint its path inputs even when the
+        # content matches, then certify the identical rebuilt bytes.
+        result, receipt = self.run_library_step("retail", fresh=False)
         self.assertEqual(result.returncode, 0, result.stderr)
-        self.assertEqual(receipt["changed_paths"], [])
+        self.assertIn("src/main.rs", receipt["changed_paths"])
+        self.assertEqual(receipt["artifact_certificates_sha256"],
+                         first["artifact_certificates_sha256"])
 
     def test_fresh_library_rejects_dep_info_input_set_replacement(self):
         result, _ = self.run_library_step("retail")
@@ -1349,6 +1353,69 @@ class SourceFreshnessTests(unittest.TestCase):
         os.utime(source, (1, 1))
         self.prepare(previous)
         self.assertEqual(source.stat().st_mtime_ns, 1_000_000_000)
+
+    def test_worktree_switch_refreshes_sources_at_same_identity(self):
+        previous = self.prepare()
+        other = self.slot / "other-tree"
+        self.git("worktree", "add", "-q", str(other), "HEAD")
+        source = other / "src/main.rs"
+        os.utime(source, (1, 1))
+        current = self.module.prepare_source(other, previous)
+        self.assertEqual(current["identity"], previous["identity"])
+        self.assertIn("src/main.rs", current["changed_paths"])
+        self.assertGreater(source.stat().st_mtime_ns, 1_000_000_000)
+
+    def test_two_worktrees_rebuild_stale_fresh_path_artifact(self):
+        target = self.slot / "shared-target"
+        repo = self.slot / "cargo-source"
+        for directory in ["dep/src", "app/src"]:
+            (repo / directory).mkdir(parents=True)
+        (repo / "Cargo.toml").write_text(
+            '[workspace]\nmembers=["dep","app"]\nresolver="2"\n')
+        (repo / "dep/Cargo.toml").write_text(
+            '[package]\nname="sim_dep"\nversion="0.1.0"\nedition="2021"\n')
+        (repo / "dep/src/lib.rs").write_text("pub struct Scripts;\n")
+        (repo / "app/Cargo.toml").write_text(
+            '[package]\nname="app"\nversion="0.1.0"\nedition="2021"\n'
+            '[dependencies]\nsim_dep={path="../dep"}\n')
+        (repo / "app/src/lib.rs").write_text(
+            "pub fn use_it(_: &sim_dep::Scripts) {}\n")
+        self.git("-C", str(repo), "init", "-q")
+        self.git("-C", str(repo), "config", "user.email", "test@example.com")
+        self.git("-C", str(repo), "config", "user.name", "Test")
+        self.git("-C", str(repo), "add", ".")
+        self.git("-C", str(repo), "commit", "-qm", "before field")
+        environment = dict(os.environ, CARGO_TARGET_DIR=str(target))
+
+        def build(tree):
+            result = subprocess.run(
+                ["cargo", "build", "--offline", "--message-format=json"],
+                cwd=tree, env=environment, capture_output=True, text=True)
+            records = [json.loads(line) for line in result.stdout.splitlines()
+                       if line.startswith("{")]
+            dep = [record for record in records
+                   if record.get("target", {}).get("name") == "sim_dep"]
+            return result, dep
+
+        result, dep = build(repo)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual(dep[0]["fresh"], False)
+        (repo / "dep/src/lib.rs").write_text(
+            "pub struct Scripts { pub on_tooltip_cleared: u8 }\n")
+        (repo / "app/src/lib.rs").write_text(
+            "pub fn use_it(s: &sim_dep::Scripts) -> u8 { s.on_tooltip_cleared }\n")
+        self.git("-C", str(repo), "commit", "-qam", "add field")
+        other = self.slot / "cargo-other"
+        self.git("-C", str(repo), "worktree", "add", "-q", str(other), "HEAD")
+        for name in ["dep/src/lib.rs", "app/src/lib.rs"]:
+            os.utime(other / name, (1, 1))
+        os.utime(other / "app/src/lib.rs", None)
+        identity, _ = self.module.source_identity(other)
+        previous = {"worktree": str(repo), "identity": identity, "result": "success"}
+        self.module.prepare_source(other, previous)
+        result, dep = build(other)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual(dep[0]["fresh"], False)
 
     def test_dirty_untracked_and_reverted_paths_are_invalidated(self):
         previous = self.prepare()

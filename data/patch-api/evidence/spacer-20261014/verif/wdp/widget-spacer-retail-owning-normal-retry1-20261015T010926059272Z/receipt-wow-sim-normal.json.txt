@@ -1,0 +1,37 @@
+{
+  "status": "PASS",
+  "path": "[PRIVATE_EVIDENCE]/verif/wdp/widget-spacer-retail-owning-normal-retry1-20261015T010926059272Z/artifacts/wow-sim-normal",
+  "sha256": "ea3f162911b6d7667c63a627302b45c885369984b6a4bf88bec4acee3ae224af",
+  "sha256_matches_seal": true,
+  "hash_reads": 1,
+  "stat_before": {
+    "st_dev": 66306,
+    "st_ino": 152734263,
+    "st_size": 408531264,
+    "st_mtime_ns": 1792022460726887560
+  },
+  "stat_after": {
+    "st_dev": 66306,
+    "st_ino": 152734263,
+    "st_size": 408531264,
+    "st_mtime_ns": 1792022460726887560
+  },
+  "stats_match_seal_and_stable": true,
+  "scope": "Cached normal copy only; not a completed build or source/dependency/native authentication.",
+  "metadata_checks": {
+    "one_normal_artifact": true,
+    "artifact_matches_seal": true,
+    "fresh_true": true,
+    "profile_test_false": true,
+    "retail_features_match": true,
+    "source_metadata_matches": true,
+    "recorded_precopy_same_inode": true,
+    "no_build_finished": true
+  },
+  "cargo_artifact_line": 739,
+  "overall_build_status": "SAFETY_ABORTED_INCOMPLETE",
+  "build_finished_present": false,
+  "source_revision_metadata_only": "d15126365dd3c3d207fea3a328599ea615672c4c",
+  "precopy_evidence": "Recorded original before/after and emitted stat agree in device/inode/size/mtime; no original executable inspected.",
+  "future_runtime_note": "May reuse explicit completed d5 RuntimeSourceSnapshot where Rust/tests/data unchanged; outside this hash proof."
+}

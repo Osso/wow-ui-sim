@@ -1,0 +1,32 @@
+# Saved-output format gate: PASS
+
+## Evidence and scope
+
+Audited only saved evidence under `[PRIVATE_EVIDENCE]/verif/spacer-format-current`: `argv.json`, `launcher.txt`, `result.json`, and stdout/stderr file metadata. No verification commands, tests, builds, binaries, archives, hashes, or delegation were run/read. Filesystem-only operations created this private report and checked empty-stream sizes.
+
+- `result.json` records source `9427d0a80e7af7ad206f56c7e63fabd0922ac164` and exit `0`.
+- `argv.json` records actual `/usr/bin/cargo fmt --check`, not a compilation or behavior check.
+- `launcher.txt` corroborates successful execution: `Main processes terminated with: code=exited, status=0/SUCCESS`.
+- Complete stdout: regular file, 0 bytes. Complete stderr: regular file, 0 bytes. Both streams are empty; no truncation or omitted output.
+
+## Allowed headless resource scope
+
+Saved invocation uses `systemd-run --user --wait` in `[PRIVATE_AGENT_CGROUP_SLICE]`, `CPUQuota=100%` (1 CPU quota), `MemoryMax=2G`, `MemoryHigh=1500M`, and `KillMode=control-group`. Execution is bounded by timeout 86 seconds with TERM and kill-after 2 seconds. Bubblewrap provides read-only root, private temporary directory, and unshared network; Cargo is offline. This is the allowed 1-CPU/2G headless formatting-only scope, not GUI, compilation, or native behavior verification. CPU quota does not imply CPU affinity. Saved admission records `light_exception: true`, cores `1.1369818247700918`, PSI `0.0`.
+
+Exact saved service measurements:
+
+```text
+Service runtime: 10.059s
+CPU time consumed: 10.003s
+Memory peak: 1.2G (swap: 0B)
+```
+
+Unit: `[PRIVATE_UNIT_12].service`.
+
+## Proof validity and limits
+
+PASS establishes the saved actual cargo formatting check at `9427d0a80`, exit 0, with complete empty stdout/stderr. No compilation, native behavior, test success, or broader compatibility claim is made.
+
+User supplies that source Rust is unchanged since b12. That premise was not independently rechecked under this saved-output-only audit. Fixture/docs changes do not by themselves invalidate Rust formatting proof; no rerun is required on that basis.
+
+No service/runtime/CPU/memory settings were changed, and nothing was rerun. Report directory mode verified 0700; report file initialized with mode 0600.

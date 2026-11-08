@@ -1,0 +1,6 @@
+{
+  "source_revision": "0d819ea3ded9904e5a69757b66e67742a78c7635",
+  "production_delta_revision": "e37f5426a1da8d721b0ab3ff0341877f59100c02",
+  "scope": "Post-reconciliation original normal Retail10.0.2 prefork publication sweep compile only; exact148 gap set at0d819; runtime pending",
+  "git_status": " M docs/specs/ui-widget-text-with-subtext.md\n?? .code-index.db\n?? handoff/\n?? state/\n?? verif/\n"
+}

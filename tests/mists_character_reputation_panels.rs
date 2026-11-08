@@ -1,5 +1,8 @@
 #![cfg(feature = "client-mists")]
 
+#[path = "common/lua_error_output.rs"]
+mod lua_error_output;
+
 use std::path::PathBuf;
 use std::process::Command;
 use wow_ui_sim::loader::{discover_blizzard_startup_addons_for_screen, load_startup_addon};
@@ -117,9 +120,7 @@ fn mists_character_and_reputation_panels_have_backing_data() {
         String::from_utf8_lossy(&output.stderr)
     );
 
+    let stdout = String::from_utf8_lossy(&output.stdout);
     let stderr = String::from_utf8_lossy(&output.stderr);
-    assert!(
-        !stderr.contains("Lua error"),
-        "Mists character/reputation probe emitted Lua errors:\n{stderr}"
-    );
+    lua_error_output::assert_no_lua_sink_errors("Mists character/reputation probe", &stdout, &stderr);
 }

@@ -1,6 +1,9 @@
 ## [2026-11-07] investigation | WowForever insecure SetForbidden no-op
 
 [SetForbidden restriction](../specs/set-forbidden-restriction.md) extends the tainted-call no-op gate to `client-wowforever`: the pinned WowForever `1.60.1.70707` `SimpleFrameScriptObjectAPIDocumentation.lua` is byte-identical to the Retail and PTR copies (`:287-295`, `HasRestrictions = true`), and its `Blizzard_RestrictedAddOnEnvironment/RestrictedExecution.lua:397-400` reaches `MakeForbidden` only under `issecure()`. No native WowForever probe covers the method (`handoff/native-evidence-70707`), so the case stays INFERRED. The existing `protected_frame_enforcement` case failed on Forever before the change and passes after it.
+## [2026-11-07] investigation | Mists engraving mode native default
+
+[Mists engraving inputs](investigations/mists-engraving-inputs.md#supplied-input-boundary) records the INFERRED native defaults for the bag flow: availability false, engraving mode false and current rune nil. The declarations have no availability setter; the only mode producer is `Blizzard_EngravingUI` OnShow/OnHide; its TOC says the feature is for seasonal content, which Mists is not. `SimState::seed_default_game_state` seeds these three values under `client-mists`; the getters keep the named unsupplied-input errors and supplied state overrides. The unchanged bank and mail storage-flow tests now reach original `ContainerFrame_Shared.lua:315` without a Lua error. Other engraving members keep the explicit missing-input contract.
 
 ## [2026-11-07] investigation | Forever C_Scenario.ShouldShowCriteria
 
@@ -933,7 +936,7 @@ Updated [rendering](../rendering-pipeline.md#geometry-repair-checkpoint--2026-10
 
 ## [2026-10-14] evidence | Public historical Store/macro packet
 
-[Store owner](../specs/store-product-group-shape.md#current-bounded-retail-receipt--2026-10-14) and [macro owner](../specs/macro-vehicle-ui-conditions.md#current-bounded-runtime-follow-up--2026-10-14) link the [public packet](../../data/patch-api/evidence/store-macro-lifecycle-2026-10-14/README.md). Accepted copy/privacy only; recorded revision scopes and historical failures retained. Current item/display/PTR/UI, native/render and full-parent acceptance excluded.
+[Store owner](../specs/store-product-group-shape.md#current-bounded-retail-receipt--2026-10-14) and [macro owner](../specs/macro-vehicle-ui-conditions.md#current-bounded-runtime-follow-up--2026-10-14) link the [public packet](../../data/patch-api/evidence/store-macro-20261014/README.md). Accepted copy/privacy only; recorded revision scopes and historical failures retained. Current item/display/PTR/UI, native/render and full-parent acceptance excluded.
 
 ## [2026-10-14] source | Featured Store display metadata
 

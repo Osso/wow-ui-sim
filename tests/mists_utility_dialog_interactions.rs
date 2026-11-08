@@ -1,5 +1,8 @@
 #![cfg(feature = "client-mists")]
 
+#[path = "common/lua_error_output.rs"]
+mod lua_error_output;
+
 use std::path::PathBuf;
 use std::process::Command;
 
@@ -38,17 +41,7 @@ fn mists_utility_and_dialog_panels_support_state_changing_interactions() {
         output.status.success(),
         "utility/dialog interaction flow failed\nstdout:\n{stdout}\nstderr:\n{stderr}"
     );
-    assert_no_lua_errors(&stdout, &stderr);
-}
-
-fn assert_no_lua_errors(stdout: &str, stderr: &str) {
-    assert!(
-        !stdout.contains("Lua error")
-            && !stderr.contains("Lua error")
-            && !stdout.contains("[exec-lua] error")
-            && !stderr.contains("[exec-lua] error"),
-        "utility/dialog interaction flow emitted Lua errors\nstdout:\n{stdout}\nstderr:\n{stderr}"
-    );
+    lua_error_output::assert_no_lua_errors("utility/dialog interaction flow", &stdout, &stderr);
 }
 
 const UTILITY_DIALOG_INTERACTIONS_LUA: &str = r#"

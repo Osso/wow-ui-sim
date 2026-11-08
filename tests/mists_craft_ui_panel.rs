@@ -1,5 +1,8 @@
 #![cfg(feature = "client-mists")]
 
+#[path = "common/lua_error_output.rs"]
+mod lua_error_output;
+
 use std::path::PathBuf;
 use std::process::{Command, Output};
 
@@ -115,17 +118,8 @@ fn assert_panel_screenshot_output(panel_name: &str, output: &Output) {
         output.status.success(),
         "{panel_name} screenshot failed\nstdout:\n{stdout}\nstderr:\n{stderr}"
     );
-    assert_panel_emitted_no_lua_errors(panel_name, &stdout, &stderr);
+    lua_error_output::assert_no_lua_sink_errors(panel_name, &stdout, &stderr);
     assert_panel_rendered_textures(panel_name, &stderr);
-}
-
-fn assert_panel_emitted_no_lua_errors(panel_name: &str, stdout: &str, stderr: &str) {
-    assert!(
-        !stdout.contains("Lua error")
-            && !stderr.contains("Lua error")
-            && !stderr.contains("[exec-lua] error"),
-        "{panel_name} screenshot emitted Lua errors\nstdout:\n{stdout}\nstderr:\n{stderr}"
-    );
 }
 
 fn assert_panel_rendered_textures(panel_name: &str, stderr: &str) {

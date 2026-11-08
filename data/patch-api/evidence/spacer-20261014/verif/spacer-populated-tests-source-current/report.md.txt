@@ -1,0 +1,101 @@
+# Spacer populated tests — source-only verification
+
+Requested revision: `f56922e5753e6e27889d3e6c00061438e7c79f46`.
+Inspection date: 2026-10-14.
+Verdict: SOURCE COVERAGE CONFIRMED WITH ONE READABILITY VIOLATION; NOT RUNTIME ACCEPTANCE.
+
+## Scope and provenance
+
+Read both requested skills completely. Inspected `tests/ui_widget_spacer.rs`, five Rust files and two Lua files in `tests/widget_spacer/`, and `docs/specs/ui-widget-spacer.md`. Supporting reads: retained preliminary selector, existing shared helpers/harness, Cargo/test entry, cached Retail/PTR widget/API source, and existing historical RED report/proof. No library source, executable, archive, network, build/test/formatter/linter command, delegation, hash, source copy, or canonical write. Filesystem-only Python numbered source function boundaries and persists this report/proof; it did not launch processes or evaluate project Rust/Lua.
+
+`.git/HEAD` names master; `.git/refs/heads/master` contains the requested full revision. This binds the observed checkout ref, NOT clean-working-tree status or independent commit/tree authentication. No git command, object/archive access, or parent diff was performed. Unchanged-relative-parent claims for shared helpers cannot be independently authenticated under those restrictions; their existing implementation and direct reuse were inspected.
+
+[EXIST] PASS: all nine scoped files opened successfully.
+[SUBSTANTIVE] PASS: concrete fixtures, six authored test functions and lifecycle assertions; no placeholder implementation in scoped tests.
+[WIRED] SOURCE: entry module explicitly includes consumer/feed/fixtures/queries/security and the existing widget_two_records helpers. Consumer includes both Lua assertion files. `tests/integration.rs:1` invokes `integration_tests!`; Cargo disables autotests and names the integration target. Macro-library inspection and test discovery/execution were excluded, so discovery is NOT independently proven.
+[ANTI-PATTERN] No TODO/FIXME/HACK/XXX or warning-suppression marker found in scoped test module files; no empty error handler or commented-out implementation seen manually. Scope excludes vendor patterns.
+
+## Authored coverage, not execution
+
+| Additional authored case | Source | Observable assertions authored | Proof |
+|---|---|---|---|
+| Absent selector | queries.rs:10–27 | Both 762201/762202 return exactly one nil in a newly constructed environment | UNEXECUTED |
+| Ordinary/fraction selector | queries.rs:30–46 | Inject 762201.5; shared required-number rejection first; integer 762201 absent; fractional complete snapshot | UNEXECUTED |
+| Complete/fresh/replacement/isolation | queries.rs:49–101 | 15-field exact snapshot; fresh identities; mutation isolation; retained old snapshot after full replacement; two independent environments and reversed records | UNEXECUTED |
+| Normal feed and rejection | feed.rs:8–120 | Public event observers inspect already-published set/membership/record; wrong type/set rejection and absent removal leave state/events unchanged | UNEXECUTED |
+| Actual host-secret selectors | security.rs:7–27 | Existing VM-backed helper; secure present/absent calls, tainted denial, public output and recovery; sets/spacers equal before/after | UNEXECUTED; additionally retail-12-1-0 gated |
+| Cached consumer lifecycle | consumer.rs:189–204 and private stages | Empty registration, normal activation/update, finite bounds, hide/reacquire, membership removal, live unregister | UNEXECUTED |
+
+Six additional authored cases plus ONE retained preliminary case: seven authored Rust test functions across these two entry files, NOT eight tests. No ordering between independent Rust tests is inferred. Module gate `tests/ui_widget_spacer.rs:2` and preliminary gate require client-retail OR client-ptr; security module additionally requires retail-12-1-0. Existing helper has the matching combined profile/epoch cfg. Cargo client-retail includes retail-12-1-0; client-ptr includes retail-12-1-5 which includes retail-12-1-0. No profile compilation verified.
+
+Preliminary `tests/ui_widget_spacer_selector_red.rs:9–34` creates an unseeded environment. Its forms use `'invalid-widget'`, `'435'`, and boolean true. Composite shared selector helper instead uses `'not a number'`, the formatted supplied fractional ID string, and boolean false. Other invalid forms are missing/nil/table/function/thread. These are distinct authored lists, not byte-identical tests. Composite has a supplied fractional record BEFORE invoking the shared selector assertions; preliminary has no supplied set/record. Absent control also starts without supplied records; those controls must not be conflated with populated proof.
+
+## Concrete fields, replacement, freshness, isolation
+
+`fixtures.rs:11–43,47–86` explicitly supplies every one of these 15 fields; replacement changes every field. Both cached `UIWidgetManagerDocumentation.lua:1724–1744` structures independently declare precisely the same 15 names. Getter contract at :338–350 declares required number, AllowedWhenUntainted and one nullable SpacerVisualizationInfo. Counts below are from inspected source, not invented model counts.
+
+| Field | Original | Replacement |
+|---|---|---|
+| shownState | 1 | 0 |
+| widgetWidth | 173.25 | -11.5 |
+| widgetHeight | 41.5 | 0.0 |
+| widgetSizeSetting | 180.5 | 206.25 |
+| textureKit | empty string | replacement-foreground |
+| frameTextureKit | empty string | replacement-background |
+| hasTimer | false | true |
+| orderIndex | 37.5 | -12.25 |
+| widgetTag | spacer-contract-731 | replacement-spacer-tag |
+| inAnimType | 0 | 1 |
+| outAnimType | 0 | 1 |
+| widgetScale | 1 | 0 |
+| layoutDirection | 1 | 2 |
+| modelSceneLayer | 0 | 1 |
+| scriptedAnimationEffectID | 731.25 | 947.5 |
+
+The existing helpers assert one return, table type, every field value/type, no extras, cardinality and new table identity. Caller clears FirstSnapshot/adds an extra key, then retained and subsequent snapshots must still match. Replacement retains SavedSnapshot against SavedExpected. `assert_environment_isolation` creates TWO other environments, checks initial absence in the second, then verifies different records in each and swaps them. These assert behavior; production success remains unknown.
+
+Feed test creates ordinary public frame subscribers, not cached handler replacements. Empty set event inspects padding=7 and zero members. Typed activation/replacement event inspects set 422, ID 762201, type22 membership and current full snapshot. Counts authored: after two typed feeds All=1/Updates=2; after removal All=2/Updates=2. It detaches the original observer, repopulates, then records both maps before wrong widget_type=8, nonexistent set423, and absent member removal. It requires errors/false, zero new events, preserved full snapshot, no set423 and exact map equality. This proves source intent to test atomicity/state-before-event, not actual host ordering.
+
+Security reuses `widget_two_records/helpers.rs::assert_secret_selector_contract` directly. Inspected helper calls actual rilua register_table_security and wrap_host_secret_number, roots the two NUMBER wrappers, verifies issecretvalue/secure unwrapping, stamps the addon closure with WidgetTwoRecordsSecurityProbe, checks untainted-caller denial for present/absent, preserved caller taint and outer recovery, and nonsecret snapshot keys/values. No local counterfeit wrapper/security implementation was added in scoped tests. Existing helper files were not modified by this audit; parent-diff identity remains unauthenticated.
+
+## Cached source linkage and actual authored ordering
+
+Cached roots read: `[PRIVATE_CACHE]/blizzard-ui/{retail,ptr}/AddOns/` only; not legacy Interface/BlizzardUI. No vendor mutation.
+
+Within consumer case: create cache-scoped environment → `supply_empty_set` → install assertion definitions/capture getter FUNCTION (no getter call) → load cached dependency closure with empty overrides slice → install observational Lua functions → inspect actual provider and register container → initial actual OnUpdate/counts → FIRST populated normal typed feed. No pre-load populated query, direct populated consumer preseed, custom provider, direct Setup/ProcessWidget invocation, fake OnUpdate, or vendor/handler override appears. Harness constructor only creates/configures environment, screen size/mode and addon base path; the test explicitly invokes the cached loader afterward.
+
+Both profiles' `Blizzard_UIWidgetTemplateSpacer.lua:1–15` register the actual type template/provider; provider calls the getter and returns nil for hidden. XML inherits UIWidgetBaseTemplate. Retail dimensions use Clamp(value,1,value); PTR uses math.max(value,1). Tests cross both axes at (0,-11.5),(-7.25,0),(.25,1),(1,.5), then (206.25,73.75), expecting each finite axis >=1 while getter preserves raw values. Nonfinite behavior is excluded.
+
+Both cached managers: :238–285 registration requires set info, processes current membership then registers events; :46–73 event/dirty/ordinary OnUpdate flow; :438–468 acquisition assigns widgetTag; :472–552 update invokes Setup without reassigning acquisition tag; :555–569 membership reconciliation; :389–421 removal releases pool; :287–321 unregister removes all/widgets/layout, event registration and manager mapping. Both base templates :295–308 update order/layout/scale and hide/clear on reset; :270–288 maps Ninty to .9. Thus source supports acquisition-tag retention during in-place update and new tag on reacquisition, not observed runtime success.
+
+`assert_phase_counts` calls `env.fire_on_update(0.0)` before reading active/showing counts and numTimers=0/ticker=nil; errors and assertions include the phase label. Authored phases: cached-empty 0/0; normal activation 1/1; dimension/tag update 1/1; five boundary updates 1/1; hidden 0/0; shown reacquire 1/1; membership removal 0/0; reactivated before live unregister 1/1; post-unregister 0/0. A fire_on_update call does not prove a container handler runs in clean/unregistered phases; these are ordinary dispatch calls, not substituted handler calls.
+
+Activation retains original full snapshot only AFTER actual acquisition assertion. Updates check same frame, old acquisition tag/new query tag; tag gather checks old/new visibility. Hidden releases frame but retains membership/record; reacquire checks current tag; removal leaves no members/frame while visualization survives. Live unregister starts active, checks unregistered set/manager/events, empty widgetFrames and hidden frame, then verifies HOST membership/record retained. Both cached sources implement that cleanup, so no narrower single-profile claim is needed. Timers, animations, effects, texture kits are deliberately inactive in consumer fixtures; all-field replacement with those alternate values is query/feed-only. No rendering/native/full-parent acceptance.
+
+Lua snippets were manually inspected, including Rust format-string doubled braces. No apparent Lua syntax defect found, but NO Lua parser/runtime validation or syntax PASS claimed.
+
+## Manual Rust readability
+
+Six scoped Rust files: entry 16 lines; consumer 204; queries 101; feed 120; security 27; fixtures 128. Twenty-two functions: six #[test], sixteen helpers. Physical body lines exclude opening-signature/final closing-brace lines, include comments/blank lines/embedded Lua. Test allowance is 200; private helpers retain 30-line allowance even in tests. No formatter was run and future rustfmt expansion is not included.
+
+| File | Function start: physical body lines |
+|---|---|
+| consumer.rs | assert_phase_counts 10:19; load_cached_consumer 32:24; activate_and_update 59:23; assert_dimension_boundaries 85:34; hide_and_reacquire 122:27; remove_membership 152:11; unregister_live_container 166:19; test 189:14 |
+| queries.rs | absent 10:16; selector 30:15; full15 49:19; assert_environment_isolation 71:20; assert_environment_snapshot 94:6 |
+| feed.rs | test 8:111 |
+| security.rs | test 7:19 |
+| fixtures.rs | supplied 47:17; replacement 68:17; entry 88:5; inject 96:5; supply_empty_set 104:9; supply 116:2; updated 122:5 |
+
+[LENGTH] tests/widget_spacer/consumer.rs:85 — assert_dimension_boundaries()
+Problem: 34 physical body lines exceeds private-helper limit30 (body :86–119). Test exemption does not apply to this unannotated helper.
+Fix suggestion only: extract per-boundary feed/observation assertion into one named helper; keep case iteration here. No edit authorized/performed.
+
+Manual control-flow review: Rust control nesting at most one explicit loop; closure-plus-borrow-block depth at most two; record/tuple/macro delimiters and embedded Lua are not Rust control nesting. No >3 control nesting or high-branch-density Rust function observed. This is manual inspection, not numeric cognitive/cyclomatic tool output. No other concrete scoped Rust readability violation identified. Repeated explicit fixtures intentionally show all-field contracts rather than hiding fixture contents behind defaults. No compiler/lint/format/readability command was launched.
+
+## Historical proof and remaining gates
+
+Read existing `[PRIVATE_EVIDENCE]/verif/spacer-first-selector-genuine-red-current/{report.md,proof.json}`; reused their audit, NOT a fresh raw-log or executable authentication. Historical source label `1ffab60b44706925b9b5cf6807681661168bf2f6`: one unique test FAIL, raw exit101, omitted selector pcall succeeded and `assert(not ok)` failed with `Spacer accepted non-number selector case 1`. Callable predicate was reached/passed; returned getter value unknown. Later seven invalid forms and diagnostic predicate unreached. Child/parent summaries NONADDITIVE. Existing compile audit records741, build success, six manifest warnings; not current compilation evidence.
+
+Spec explicitly leaves checkboxes incomplete and all six new cases unexecuted; it states no modeled getter/projector/query registration yet and no populated RED/GREEN. That implementation-status statement was not expanded into a production-source audit (library reads excluded). Populated RED, getter implementation, GREEN, compiler/formatter/default check, startup diagnostics, applicable publication/native gates remain unproved. Documentation's discovery wording is not execution evidence. No current GREEN, eight-tests claim, or populated/lifecycle runtime success is authorized by this report.
+
+Persistence: only this private report and proof.json written, directory0700/files0600, file and directory fsync, exact readback and mode checks. No source edits.

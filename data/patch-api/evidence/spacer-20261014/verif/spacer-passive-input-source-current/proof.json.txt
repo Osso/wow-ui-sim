@@ -1,0 +1,42 @@
+{
+  "verdict": "PASS_SOURCE_ONLY_PASSIVE_INPUT",
+  "revision": "1792d60cbe8887f33cdfdd39a3c1fe2465fa53ba",
+  "repo": "[SIM_REPO]",
+  "date": "2026-10-14",
+  "changed_files": 5,
+  "changed_rust_files": 4,
+  "cached_profiles": [
+    "retail",
+    "ptr"
+  ],
+  "cached_field_count_per_profile": 15,
+  "required_rust_fields": 15,
+  "record_default": false,
+  "map": "UiWidgetInputs.spacers: HashMap<WidgetId, SpacerRecord>",
+  "initial_map": "empty/environment-owned (source)",
+  "type": 22,
+  "feed": "existing validation then membership and record storage before notification (source)",
+  "existing_arms": "unchanged from target parent",
+  "getter_query_registration_added": false,
+  "manual_rust_readability": "no introduced violations; metrics not run",
+  "historical_red": {
+    "report_root": "[PRIVATE_EVIDENCE]/verif/spacer-first-selector-genuine-red-current",
+    "source_label": "1ffab60b44706925b9b5cf6807681661168bf2f6",
+    "unique_failed_tests": 1,
+    "raw_exit": 101,
+    "executed_invalid_forms": 1,
+    "unreached_forms": 7,
+    "boundary": "omitted selector accepted before model",
+    "fresh_execution": false
+  },
+  "source_diff_target_working": {
+    "exit": 0,
+    "empty": true
+  },
+  "main_formatter": "reported exit0; not rechecked; not compilation evidence",
+  "populated_proof": false,
+  "current_compile_proof": false,
+  "current_runtime_proof": false,
+  "forbidden_actions_performed": [],
+  "persistence": "0700 directory/0600 files; file and directory fsync; exact readback"
+}

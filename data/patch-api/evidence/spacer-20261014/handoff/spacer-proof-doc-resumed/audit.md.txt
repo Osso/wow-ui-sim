@@ -1,0 +1,24 @@
+# Spacer proof documentation audit — proposal only
+
+Canonical spec was read, not edited. No tests/builds, commands, binary reads or delegation.
+
+## Precise corrections
+
+`exact-edits.json` contains one unique exact replacement of the final proof bullet, retaining all other text and historical failed results.
+
+1. Qualify formatting source continuity: saved format audit explicitly treats unchanged Rust as a user-supplied premise, not independently verified continuity. Retain actual formatting PASS, source identifier, exit and empty streams.
+2. Record initial owning pressure abort separately: 2.43% host PSI; no owning artifact/completion; neither compiler-error failure nor behavioral RED/PASS.
+3. Record retry separately: 1.07% pressure abort; cached normal-copy seal verification is not whole-build success, source authentication or runtime proof. Retain pending Retail CLI/default-check/publication gates.
+
+## No other correction warranted by these four reports
+
+Startup/PTR CLI paragraphs already preserve one unique startup PASS per profile, nonadditive summaries, warning-vector rather than nil/requirement emptiness, collector/discovery limits, exact PTR JSON and stderr size, fd-2 suppression, persistent read-only state, serial resource scope, rounded-peak uncertainty and Retail swap. Do not broaden or replace them. Other historical/producer claims were not independently audited by this comparison.
+
+## Saved sources
+
+- `[PRIVATE_EVIDENCE]/verif/spacer-startup-diagnostics-current/report.md`: Actual results; collector assertions; suppression; resource envelope; final claim.
+- `[PRIVATE_EVIDENCE]/verif/spacer-format-gate-current/report.md`: Proof validity and limits, including supplied unchanged-Rust premise.
+- `[PRIVATE_EVIDENCE]/verif/spacer-owning-pressure-abort-current/report.md`: Build outcome; guard observations; causality/safety limits.
+- `[PRIVATE_EVIDENCE]/verif/spacer-retail-normal-artifact-current/report.md`: Cached-copy checks; distinct retry abort; source/authentication limits. Hash evidence is reported from saved text only, not recomputed.
+
+No claim that the remaining gates passed or that current live state matches these saved records.

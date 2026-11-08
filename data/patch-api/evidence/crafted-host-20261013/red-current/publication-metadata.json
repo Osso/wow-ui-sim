@@ -1,0 +1,286 @@
+{
+  "selected_text_records": 56,
+  "privacy_gate": "pending",
+  "entries": [
+    {
+      "path": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/admission.json",
+      "bytes": 2619,
+      "sha256": "e2258f8a32911dedf47cac628857eb32d4b94d9d4d1c34f5581d03ea9e3392d3"
+    },
+    {
+      "path": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/submission.json",
+      "bytes": 1184,
+      "sha256": "168bc865aa6efac81071db5d91365036df7298f293eb48369f6c690261f785c4"
+    },
+    {
+      "path": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/revision.json",
+      "bytes": 376,
+      "sha256": "38fd5354a04f3d4234426c3e265516ba5b2f55d251f7c0be8d3d4984ca090425"
+    },
+    {
+      "path": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/toolchain.json",
+      "bytes": 331,
+      "sha256": "f249bdcf5117f63071fbf830da47894a3df10049294e1e2e8292e7ed06a4527d"
+    },
+    {
+      "path": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/compile.stdout",
+      "bytes": 585027,
+      "sha256": "6f6d393f8551ad4ff5c7541bbc1c863201aab887f66c34c1e323e4c077b824ee"
+    },
+    {
+      "path": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/compile.stderr",
+      "bytes": 1384,
+      "sha256": "d3e1105d99d9d12d519618914008006d81a482669a298df5747946eb639e8c0b"
+    },
+    {
+      "path": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/compile-result.json",
+      "bytes": 309,
+      "sha256": "c7d9ee1e9357665c01a6894c74c2dc2c84aefe1e9bcf2e36925564089e199a28"
+    },
+    {
+      "path": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/compile-terminal.txt",
+      "bytes": 205,
+      "sha256": "a324726db9842b8fecb92ba04a49d1c929a6b7f5e98add8dcc9864fdefd65c15"
+    },
+    {
+      "path": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/seal-integration.json",
+      "bytes": 1105,
+      "sha256": "7b452f98252be5c186c96541ca40323b3c87f7347b08238324747d5dc1485233"
+    },
+    {
+      "path": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/receipt-integration.json",
+      "bytes": 1105,
+      "sha256": "35cf1b01a7dbfc308aa51d2b0d806b4d204a4ae2459027010ef77b3efdef784e"
+    },
+    {
+      "path": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/source-scope.json",
+      "bytes": 563,
+      "sha256": "b453d3a01ba0e13236ade1dd165d3d805829a499c373548b16d0be8a7a102ea5"
+    },
+    {
+      "path": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/runtime-crafted-owned-red-2g/admission.json",
+      "bytes": 2413,
+      "sha256": "4bce28d5be13793f2ca68ce09c6d1a9f1c6f3ef9be84913363d88a0cda697ba5"
+    },
+    {
+      "path": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/runtime-crafted-owned-red-2g/argv.json",
+      "bytes": 1699,
+      "sha256": "6cbe17c69be18f89b2ba033fc960ca0a3e30a871584900235be960cb8ffcd583"
+    },
+    {
+      "path": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/runtime-crafted-owned-red-2g/launcher.txt",
+      "bytes": 271,
+      "sha256": "72168b63f85ff76d39e3cbe4e29c199420916ea27f177c497f298c9b6b18b5e1"
+    },
+    {
+      "path": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/runtime-crafted-owned-red-2g/result.json",
+      "bytes": 681,
+      "sha256": "db91cd1d6a005d9b3dac2f22cbd907907eda3f2e55099735e7dee78dbc42f8da"
+    },
+    {
+      "path": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/runtime-crafted-owned-red-2g/stderr",
+      "bytes": 5933,
+      "sha256": "99eaccddde9cb39face1883f0b37349e47debf005529641667c11b4268b04b81"
+    },
+    {
+      "path": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/runtime-crafted-owned-red-2g/stdout",
+      "bytes": 1221,
+      "sha256": "5bea0562da6510aeb6e3d1aba9ebedf36291527663c19bf0988f74be76ca478f"
+    },
+    {
+      "path": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/runtime-crafted-itembutton-red-2g/admission.json",
+      "bytes": 2414,
+      "sha256": "0065d64c495c8a104db7adf2968b7238615a7dc35f134918e344e506d4abbf33"
+    },
+    {
+      "path": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/runtime-crafted-itembutton-red-2g/argv.json",
+      "bytes": 1715,
+      "sha256": "d3a3910e91b0684ee6a81fc5c26d8e978a2c78a7acb82dea5f79a493336d37f3"
+    },
+    {
+      "path": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/runtime-crafted-itembutton-red-2g/launcher.txt",
+      "bytes": 269,
+      "sha256": "57efa20594bd4a407efc17852ea9904838241797e793a470c2ea93488cb57569"
+    },
+    {
+      "path": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/runtime-crafted-itembutton-red-2g/result.json",
+      "bytes": 700,
+      "sha256": "18526b24ec5e1baa0c02d2a09f6ab215246c9b9e8363886732ea4d72d3157c17"
+    },
+    {
+      "path": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/runtime-crafted-itembutton-red-2g/stderr",
+      "bytes": 14411,
+      "sha256": "3899eb6251782eabe99b28072d30012a4b8de6cee011f92da2dcde725fe7ec40"
+    },
+    {
+      "path": "wdp/crafted-quality-owned-retail-red-20261014T014209924708Z/runtime-crafted-itembutton-red-2g/stdout",
+      "bytes": 376,
+      "sha256": "947bd4866a82de5f98a981a949e79d7fc372628abc061e8ef88ece9a49f3e3a5"
+    },
+    {
+      "path": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/admission.json",
+      "bytes": 2626,
+      "sha256": "331dc6ac0948ba5c33f83816efe0d07cc3f4d33f46b107872d7683dd670f2b06"
+    },
+    {
+      "path": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/submission.json",
+      "bytes": 1258,
+      "sha256": "83ae64971509fa400702b5f617c4921657e78d7693e2f26cf05d1f4199558ec3"
+    },
+    {
+      "path": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/revision.json",
+      "bytes": 381,
+      "sha256": "4eb0744b8147ceb13383f157b58e5f44038fa62d36ce5082a6eed44b705f1411"
+    },
+    {
+      "path": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/toolchain.json",
+      "bytes": 331,
+      "sha256": "f249bdcf5117f63071fbf830da47894a3df10049294e1e2e8292e7ed06a4527d"
+    },
+    {
+      "path": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/compile.stdout",
+      "bytes": 585188,
+      "sha256": "9b8a1080dc24adf69fcd722f3acd0c4e998b966ebb46372867c0130b850b614f"
+    },
+    {
+      "path": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/compile.stderr",
+      "bytes": 1279,
+      "sha256": "f7b407962bcc6e134e59245b8c8fec7dea9eec9ad0a741550645675df570fdd9"
+    },
+    {
+      "path": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/compile-result.json",
+      "bytes": 306,
+      "sha256": "4f60321504df5d11b87d5664a10bdc3e83196773c58b5ca2ec1bd8593f54e0b3"
+    },
+    {
+      "path": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/compile-terminal.txt",
+      "bytes": 205,
+      "sha256": "5ecb07e03ed3c822ed396cda9f04ef9751d52999739378b8f2c8753a0a5cf05d"
+    },
+    {
+      "path": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/seal-integration.json",
+      "bytes": 1117,
+      "sha256": "6ca99b25fa5a753cc6ef100ce9c1ca0aac964f4c99636623d7b78f58077658d5"
+    },
+    {
+      "path": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/receipt-integration.json",
+      "bytes": 925,
+      "sha256": "91e06b19549cd78f9c4ffef0c63566ab3f29e2f267470432b0bb302a72dc6a64"
+    },
+    {
+      "path": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/source-scope.json",
+      "bytes": 560,
+      "sha256": "2584ab38409884bf4e1924216eb31e6897667d39322f34018c22a6f50702b5a2"
+    },
+    {
+      "path": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/runtime-crafted-owned-red-2g/admission.json",
+      "bytes": 2413,
+      "sha256": "78546adc63879f2e940c916bb72e288f6fd980db3cba0ef51464999dc3a5a153"
+    },
+    {
+      "path": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/runtime-crafted-owned-red-2g/argv.json",
+      "bytes": 1687,
+      "sha256": "b547048ac05f17c13bb0b7f001601fadba51b8e740a81a4162502f644f3ee12b"
+    },
+    {
+      "path": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/runtime-crafted-owned-red-2g/launcher.txt",
+      "bytes": 273,
+      "sha256": "c387d4f0137a6d40b4a0b5ae5dd5c1c9778e58f194fc933a7a08a940f2391ff2"
+    },
+    {
+      "path": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/runtime-crafted-owned-red-2g/result.json",
+      "bytes": 649,
+      "sha256": "d767dd305038c72840795d1980e22dd1450103214115eae9819c555fc90d6fce"
+    },
+    {
+      "path": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/runtime-crafted-owned-red-2g/stderr",
+      "bytes": 5932,
+      "sha256": "c2a62cc2a378df7855e3d95a9398a354580d510abceb57254457e37dd7025800"
+    },
+    {
+      "path": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/runtime-crafted-owned-red-2g/stdout",
+      "bytes": 1221,
+      "sha256": "9f125dc27154e2cb40c7ab97b1f2211e857d829f348613aab81c3f63ad1a852f"
+    },
+    {
+      "path": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/runtime-crafted-itembutton-red-2g/admission.json",
+      "bytes": 2418,
+      "sha256": "dd777f8d156eb8591e9b370b95ee26409137c8a826a1fc9ab0b71b4c4d933306"
+    },
+    {
+      "path": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/runtime-crafted-itembutton-red-2g/argv.json",
+      "bytes": 1703,
+      "sha256": "abbd03acde0246e4da4376f75391f9cbb064cfb81aa2db18885925a624bb6e2c"
+    },
+    {
+      "path": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/runtime-crafted-itembutton-red-2g/launcher.txt",
+      "bytes": 271,
+      "sha256": "41aac9911c126a76511a681e0314ccaf1d5234a602909d19d4d8abd214dcd378"
+    },
+    {
+      "path": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/runtime-crafted-itembutton-red-2g/result.json",
+      "bytes": 689,
+      "sha256": "c6e80ea1259d5a48cb6060ed65e0e87ae645b7037abecd06eb3bcbc8388294cc"
+    },
+    {
+      "path": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/runtime-crafted-itembutton-red-2g/stderr",
+      "bytes": 14335,
+      "sha256": "2164d9c576124cd24954b28be0c1bc528fe086791c913040f0aef3526fc8e99b"
+    },
+    {
+      "path": "wdp/crafted-quality-owned-ptr-red-20261014T014829545770Z/runtime-crafted-itembutton-red-2g/stdout",
+      "bytes": 376,
+      "sha256": "ef96ed3b2d0afab0fa59494e4e0c14b3313f86be7dc1890b3294a7d73c200a31"
+    },
+    {
+      "path": "crafted-quality-owned-retail-red-auth-current/report.md",
+      "bytes": 2576,
+      "sha256": "6c96d6fca2a65fd33fb1b926ab1925aa37bfdd071c4333315852c14d235715c6"
+    },
+    {
+      "path": "crafted-quality-owned-retail-red-auth-current/proof.json",
+      "bytes": 4232,
+      "sha256": "d9748df859e0592e181042b8d50884735938c9f86b55d2c7423e7c7dcf059d9d"
+    },
+    {
+      "path": "crafted-quality-owned-ptr-red-auth-current/report.md",
+      "bytes": 2207,
+      "sha256": "9f328d9989f0099c2e2663b3a41e86ca12ca882f21a34f5a281cd15e2174b012"
+    },
+    {
+      "path": "crafted-quality-owned-ptr-red-auth-current/proof.json",
+      "bytes": 4182,
+      "sha256": "3c381b1268dfde6446082c0a2e09528fb14eee89acd3856069de9e313f73761a"
+    },
+    {
+      "path": "crafted-quality-owned-retail-red-current/report.md",
+      "bytes": 8509,
+      "sha256": "7febd1b0dc798c990b3f6972dd3084bff658ed32f134fbce6092ce41b417b83c"
+    },
+    {
+      "path": "crafted-quality-owned-retail-red-current/proof.json",
+      "bytes": 43272,
+      "sha256": "2db008507685ae76a493f91ea1fd4ad7cba2a2afd8a7b06ef187b871862bec97"
+    },
+    {
+      "path": "crafted-quality-owned-ptr-red-current/report.md",
+      "bytes": 4593,
+      "sha256": "2d382bf2dada622287e4efe9735eae12c83d4aa0bf525b195c0768fe6a53c5a4"
+    },
+    {
+      "path": "crafted-quality-owned-ptr-red-current/proof.json",
+      "bytes": 32481,
+      "sha256": "e24dabb7afc0525e91f8f22dc1d0629489628eb071958c9083a5a901d3b49df1"
+    },
+    {
+      "path": "crafted-quality-passive-source-current/report.md",
+      "bytes": 10872,
+      "sha256": "0af44d9446f8ced453b272358ce6db4ff46bed717a4a181ad9496bcb2298afba"
+    },
+    {
+      "path": "crafted-quality-passive-source-current/proof.json",
+      "bytes": 9062,
+      "sha256": "70915ff1e21e02504e8cf9b71f133247128fb0cc9ded4d74be4cb3784b43d24b"
+    }
+  ]
+}

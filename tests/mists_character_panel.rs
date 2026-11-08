@@ -1,5 +1,8 @@
 #![cfg(feature = "client-mists")]
 
+#[path = "common/lua_error_output.rs"]
+mod lua_error_output;
+
 use std::process::Command;
 
 #[path = "common/bounded_process.rs"]
@@ -75,7 +78,7 @@ fn mists_character_panel_populates_gear_and_reputation() {
         output.status.success(),
         "wow-sim failed\nstdout:\n{stdout}\nstderr:\n{stderr}"
     );
-    assert_no_lua_errors(&stdout, &stderr);
+    lua_error_output::assert_no_lua_sink_errors("character panel opened", &stdout, &stderr);
 }
 
 #[test]
@@ -184,7 +187,7 @@ fn mists_character_bottom_tabs_size_their_text() {
         output.status.success(),
         "wow-sim failed\nstdout:\n{stdout}\nstderr:\n{stderr}"
     );
-    assert_no_lua_errors(&stdout, &stderr);
+    lua_error_output::assert_no_lua_sink_errors("character panel opened", &stdout, &stderr);
 }
 
 #[test]
@@ -228,7 +231,7 @@ fn mists_character_pet_tab_stays_visible_when_pet_ui_is_seeded() {
         output.status.success(),
         "wow-sim failed\nstdout:\n{stdout}\nstderr:\n{stderr}"
     );
-    assert_no_lua_errors(&stdout, &stderr);
+    lua_error_output::assert_no_lua_sink_errors("character panel opened", &stdout, &stderr);
     assert!(
         stdout.contains("PetPaperDollFrame") && stdout.contains("CharacterFrameTab2"),
         "character dump did not include the visible pet panel/tab\nstdout:\n{stdout}\nstderr:\n{stderr}"
@@ -271,7 +274,7 @@ fn mists_character_pet_tab_hides_when_pet_ui_is_absent() {
         output.status.success(),
         "wow-sim failed\nstdout:\n{stdout}\nstderr:\n{stderr}"
     );
-    assert_no_lua_errors(&stdout, &stderr);
+    lua_error_output::assert_no_lua_sink_errors("character panel opened", &stdout, &stderr);
     assert!(
         !stdout.contains("CharacterFrameTab2Text [FontString] (14x10) visible"),
         "hidden pet tab leaked its text region as visible\nstdout:\n{stdout}\nstderr:\n{stderr}"
@@ -312,7 +315,7 @@ fn mists_character_pet_tab_rehides_stale_tab_when_panel_opens() {
         output.status.success(),
         "wow-sim failed\nstdout:\n{stdout}\nstderr:\n{stderr}"
     );
-    assert_no_lua_errors(&stdout, &stderr);
+    lua_error_output::assert_no_lua_sink_errors("character panel opened", &stdout, &stderr);
 }
 
 #[test]
@@ -406,16 +409,10 @@ fn mists_character_subpanels_drive_titles_and_equipment_sets() {
         output.status.success(),
         "wow-sim failed\nstdout:\n{stdout}\nstderr:\n{stderr}"
     );
-    assert_no_lua_errors(&stdout, &stderr);
+    lua_error_output::assert_no_lua_sink_errors("character panel opened", &stdout, &stderr);
     assert!(
         stdout.contains("EquipmentManagerPane") && stdout.contains("Codex Mists Set"),
         "character dump did not include the selected equipment-manager row\nstdout:\n{stdout}\nstderr:\n{stderr}"
     );
 }
 
-fn assert_no_lua_errors(stdout: &str, stderr: &str) {
-    assert!(
-        !stdout.contains("Lua error") && !stderr.contains("Lua error"),
-        "character panel opened with Lua errors\nstdout:\n{stdout}\nstderr:\n{stderr}"
-    );
-}

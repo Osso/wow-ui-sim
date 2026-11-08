@@ -26,8 +26,8 @@ fn original_mists_display_settings_reads_70268_enemy_castbar_name() {
         std::path::Path::new("Classic/InterfaceOverrides.lua")
     );
     let env = new_blizzard_addon_env(&ui);
-    // Supply only the preceding availability branch. Engraving remains unset so
-    // its original line 138 is the next boundary, not part of this localization fix.
+    // Supply only the preceding availability branch. Engraving uses the seeded
+    // Mists native defaults, so its original line 138 no longer stops this probe.
     env.state().borrow_mut().transmog_availability.enabled = Some(true);
     load_blizzard_addon_closure_into_env(
         &env,
@@ -70,16 +70,10 @@ fn original_mists_display_settings_reads_70268_enemy_castbar_name() {
         "#,
     )
     .unwrap();
-    let boundary = env
-        .exec("InterfaceOverrides.AdjustDisplaySettings(MistsStringsCategory)")
-        .expect_err("unsupplied engraving remains the next original-consumer boundary")
-        .to_string();
+    // The seeded Mists engraving defaults let the original consumer pass line 138.
+    env.exec("InterfaceOverrides.AdjustDisplaySettings(MistsStringsCategory)")
+        .expect("seeded engraving availability advances the original consumer past line 138");
     env.exec("debug.sethook()").unwrap();
-    eprintln!("next original-consumer boundary: {boundary}");
-    assert!(
-        boundary.contains("C_Engraving.IsEngravingEnabled: unsupplied input"),
-        "{boundary}"
-    );
     env.exec(
         r#"
         assert(MistsDisplayLines[131] and MistsDisplayLines[138])

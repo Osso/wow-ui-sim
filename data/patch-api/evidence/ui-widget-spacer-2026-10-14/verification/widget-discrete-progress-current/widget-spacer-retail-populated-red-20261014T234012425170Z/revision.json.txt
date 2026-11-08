@@ -1,6 +1,0 @@
-{
-  "source_revision": "2d95bb5a783485c00160d19c4d1b8968f61a5785",
-  "production_delta_revision": "1792d60cb",
-  "scope": "Retail Spacer seven-case passive-input no-run build; runtime RED pending",
-  "git_status": " M docs/specs/ui-widget-text-with-subtext.md\n?? .code-index.db\n?? handoff/\n?? state/\n?? verification/\n"
-}

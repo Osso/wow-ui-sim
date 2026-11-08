@@ -1,0 +1,113 @@
+{
+  "verdict": "SOURCE PASS",
+  "scope": "bounded consumer readability correction only",
+  "requested_revision": "96fd04b1063e03df768ea29d365ca5471263fe33",
+  "observed_branch_ref": "96fd04b1063e03df768ea29d365ca5471263fe33",
+  "committed_blob_authenticated": false,
+  "clean_tree_authenticated": false,
+  "source": "[SIM_REPO]/tests/widget_spacer/consumer.rs",
+  "source_lines": 210,
+  "function_body_counts": [
+    {
+      "name": "assert_phase_counts",
+      "signature_line": 10,
+      "body_lines": 19
+    },
+    {
+      "name": "load_cached_consumer",
+      "signature_line": 32,
+      "body_lines": 24
+    },
+    {
+      "name": "activate_and_update",
+      "signature_line": 59,
+      "body_lines": 23
+    },
+    {
+      "name": "assert_dimension_boundaries",
+      "signature_line": 85,
+      "body_lines": 11
+    },
+    {
+      "name": "assert_dimension_boundary",
+      "signature_line": 99,
+      "body_lines": 26
+    },
+    {
+      "name": "hide_and_reacquire",
+      "signature_line": 128,
+      "body_lines": 27
+    },
+    {
+      "name": "remove_membership",
+      "signature_line": 158,
+      "body_lines": 11
+    },
+    {
+      "name": "unregister_live_container",
+      "signature_line": 172,
+      "body_lines": 19
+    },
+    {
+      "name": "spacer_cached_normal_activation_dimensions_hidden_reacquire_remove_live_unregister",
+      "signature_line": 195,
+      "body_lines": 14
+    }
+  ],
+  "helper_limit": 30,
+  "all_eight_helpers_within_limit": true,
+  "extracted_helper_arguments": 3,
+  "boundary_cases_in_order": [
+    [
+      0,
+      -11.5,
+      1,
+      1
+    ],
+    [
+      -7.25,
+      0,
+      1,
+      1
+    ],
+    [
+      0.25,
+      1,
+      1,
+      1
+    ],
+    [
+      1,
+      0.5,
+      1,
+      1
+    ],
+    [
+      206.25,
+      73.75,
+      206.25,
+      73.75
+    ]
+  ],
+  "source_contract": "five cases/order, raw records, normal feed, actual OnUpdate dispatch, assert_lua and distinct expected/raw dimension placeholders preserved against prior reported contract",
+  "phase_string": "dimension boundary width={width}, height={height}",
+  "assertion_label": "supplied dimensions versus actual consumer bounds",
+  "parent_string_comparison": "NOT PERFORMED",
+  "formatter": "not run; current supplied layout counted",
+  "prior_report_reused": "[PRIVATE_EVIDENCE]/verif/spacer-populated-tests-source-current/report.md",
+  "passive_authored_cases": 7,
+  "case_status": "UNEXECUTED",
+  "current_behavior_proof": false,
+  "native_proof": false,
+  "parent_proof": false,
+  "commands_run": [],
+  "canonical_writes": [],
+  "persistence": {
+    "directory_mode": "0700",
+    "file_modes": "0600",
+    "file_fsync": true,
+    "directory_fsync": true,
+    "exact_readback": true
+  },
+  "evaluation_incident": "initial persistence evaluation missing Path import; stopped before writes, corrected import"
+}

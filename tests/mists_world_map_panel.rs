@@ -1,5 +1,8 @@
 #![cfg(feature = "client-mists")]
 
+#[path = "common/lua_error_output.rs"]
+mod lua_error_output;
+
 use std::process::Command;
 
 #[path = "common/bounded_process.rs"]
@@ -95,12 +98,6 @@ fn mists_world_map_opens_with_zone_art_and_quest_pins() {
         output.status.success(),
         "wow-sim failed\nstdout:\n{stdout}\nstderr:\n{stderr}"
     );
-    assert_no_lua_errors(&stdout, &stderr);
+    lua_error_output::assert_no_lua_errors("world map opened", &stdout, &stderr);
 }
 
-fn assert_no_lua_errors(stdout: &str, stderr: &str) {
-    assert!(
-        !stdout.contains("Lua error") && !stderr.contains("Lua error"),
-        "world map opened with Lua errors\nstdout:\n{stdout}\nstderr:\n{stderr}"
-    );
-}
