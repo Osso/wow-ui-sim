@@ -46,7 +46,90 @@ Evidence: Round 6 of `pr46-49-decomp-answers.md`, Retail 12.1.5 (**70688**) and 
       handler map at `Blizzard_SharedXMLGame/Tooltip/TooltipDataHandler.lua:545` routes to this
       getter (**INFERRED** from shipped Lua; asserted by `tests/tooltip_buyback_item_index.rs`).
 
+### `GetLootItem(slot)` index contract
+
+Evidence: Round 6-B §1 of `pr46-49-decomp-answers.md`, Retail 12.1.5 (**70688**) and Forever
+1.60.1 (**70707**), getter bodies decoded in both builds.
+
+- [x] The reader is the same one-based reader as `GetBuybackItem`: a Lua number is required, the
+      domain is `0` to `4294967295`, the value is reduced by `1.0` and truncated toward zero with no
+      integral test, so `1.9` selects slot 1 and `2.9` selects slot 2 (**VERIFIED** for the Forever
+      reader, **INFERRED** for 12.1.5 from the identical reason string and guard).
+- [x] A value in `(0,1)` truncates toward zero after the subtraction and therefore also selects
+      slot 1 (**INFERRED** from the verified subtract-then-truncate order).
+- [x] The bound is the live loot slot count, compared unsigned, so slot `0` and every slot at or
+      past the count take the miss arm (**VERIFIED** in both builds).
+- [x] An entry whose item identity is empty is a miss condition of the loot-item reader
+      (**VERIFIED**). INFERRED: an empty identity is item id `0`.
+- [x] A missing or non-number argument reports `Usage: local data = C_TooltipInfo.GetLootItem(slot)`
+      (**VERIFIED** literal, character for character, in both images).
+- [x] A negative, above-domain or non-finite number reports
+      `outside of expected range 0 to 4294967295` followed by the usage text (**VERIFIED**
+      composition). The final Lua envelope is **UNKNOWN**, so only those fragments are guaranteed.
+- [x] The getters never consult loot window or frame state: they read a process-global slot count
+      and entry array, and the tooltip service handle passed into the callback is never read
+      (**VERIFIED**). With an empty list every slot fails the bound test, so no window gating is
+      modelled and a closed window does not gate a slot the list still holds.
+- [x] A resolved entry publishes the shared item producer's table, identity type `Item` (0)
+      (**VERIFIED**).
+- [x] The original consumer reaches this getter: `LootFrameItemElementMixin:OnEnter`
+      (`Blizzard_UIPanels_Game/Mainline/LootFrame.lua:353` Retail, `:631` Forever) calls
+      `GameTooltip:SetLootItem`, which the handler map at
+      `Blizzard_SharedXMLGame/Tooltip/TooltipDataHandler.lua:537` routes to this getter
+      (**INFERRED** from shipped Lua; asserted by `tests/tooltip_loot_item_index.rs`).
+
+### `GetLootCurrency(slot)` and the loot-slot kind
+
+Evidence: Round 6-B §1 of `pr46-49-decomp-answers.md`, Retail 12.1.5 (**70688**) and Forever
+1.60.1 (**70707**), with the PTR registration table checked for the same member.
+
+- [x] The getter is registered on Retail, PTR and Forever, and it uses the same one-based reader
+      as `GetLootItem` with the literal
+      `Usage: local data = C_TooltipInfo.GetLootCurrency(slot)` (**VERIFIED** for the reader and
+      the two images; **VERIFIED** for the PTR and Forever registration tables).
+- [x] A loot entry carries a kind byte: item `0`, currency non-zero. The loot-item reader requires
+      kind `0` and the loot-currency reader requires a non-zero kind, so the two getters are
+      mutually exclusive per slot (**VERIFIED**).
+- [x] The loot-currency reader additionally requires the entry's currency row to resolve; an
+      unresolvable row takes the same miss arm as a wrong kind or an out-of-range slot
+      (**VERIFIED**).
+- [x] Success publishes identity type `Currency` (5) and the currency ID through the shared
+      currency producer (**VERIFIED**). The currency name line is created with base type `0`, and
+      the currency line carries a zero owner GUID (**VERIFIED**).
+- [x] `GetLootSlotType` reports `Enum.LootSlotType.Item` (1) for an item entry and
+      `Enum.LootSlotType.Currency` (3) for a currency entry, which is the query the original
+      `LootFrameItemElementMixin:OnEnter` uses to choose `GameTooltip:SetLootItem` or
+      `GameTooltip:SetLootCurrency` (**VERIFIED** constants and consumer shape; **INFERRED** from
+      shipped Lua for the consumer build).
+- [x] Like `GetLootItem`, the getter never consults loot window or frame state (**VERIFIED**).
+- [x] The simulated loot entry is `LootSlot::Item(BagItem)` or
+      `LootSlot::Currency { currency_id, quantity }` in `SimState.loot_slots`.
+
+**INFERRED (modelled, not native-proved):** the supplied `quantity` is published as the currency
+tooltip quantity. Native divides the entry amount by 100 with truncation toward zero when the
+currency row's hundredths flag is set (**VERIFIED**), but the simulator's currency data exposes no
+hundredths flag, so that conversion is not modelled and the supplied value is the display quantity.
+
+**UNKNOWN (left unimplemented):**
+- The final Lua envelope around either argument-error text.
+- The ordered line sequence after the currency name line.
+- Top-level `guid` and `hyperlink` for this path.
+- Which subsystem supplies the currency row's hundredths flag and whether the loot list is cleared
+  when the loot frame closes.
+- `GetLootSlotInfo`'s currency projection (icon, name, quality and the fourth `currencyID` return):
+  this lane only models the kind query that routes the tooltip consumer, so a currency slot still
+  takes the item-shaped slot-info path.
+
 ## Not modelled (native behaviour with no simulator counterpart)
+
+- Whether the client clears the global loot list when the loot frame closes is **UNKNOWN** (it
+  depends on the loot-frame writer, not on these getters). The simulator's `CloseLoot` clears only
+  `loot_frame_open`, so a slot the list still holds stays readable.
+- The native entry maps the Lua slot to a loot entry and requires a non-empty item identity; the
+  simulator stores the item id directly, so the entry lookup itself has no counterpart.
+- Top-level `guid` and `hyperlink` for these paths are **UNKNOWN** (nothing decoded sets them, and
+  the item producer is only partially decoded).
+- The ordered line-type vocabulary of the shared item producer is **UNKNOWN**.
 
 - The native entry maps the Lua index to the player's inventory slot through the buyback slot
   table, then requires a nonzero slot and a non-empty inventory GUID at that slot. Supplied
@@ -69,7 +152,10 @@ Evidence: Round 6 of `pr46-49-decomp-answers.md`, Retail 12.1.5 (**70688**) and 
 
 - `src/c_api/tooltip_getter_args.rs`: `one_based_index`, the shared subtract-then-truncate reader
   with the two verified argument-error texts.
-- `src/c_api/c_tooltip_info_loot.rs`: supplied item selection and the missing-result seam.
+- `src/c_api/c_tooltip_info_loot.rs`: supplied item and currency selection, the kind dispatch and
+  the missing-result seam.
+- `src/lua_api/state_types/collections.rs`: `LootSlot`, the item/currency loot entry model.
+- `src/lua_api/globals/state_backed_queries.rs`: `GetLootSlotType` reports the modelled kind.
 - `src/lua_api/globals/missing_surface/tooltip_info/`: item tooltip publication.
 
 ## Tests asserting this spec
@@ -77,13 +163,15 @@ Evidence: Round 6 of `pr46-49-decomp-answers.md`, Retail 12.1.5 (**70688**) and 
 - `tests/tooltip_data_loot_consumer.rs`
 - `tests/tooltip_data_buyback_consumer.rs`
 - `tests/tooltip_buyback_item_index.rs`
+- `tests/tooltip_loot_item_index.rs`
 
 ## Known gaps (current cycle)
 
-- [ ] `GetLootItem` and `GetTotem` still parse their argument with the strict signed/unsigned
-      integer readers, so fractional and above-`2^31` indices are not accepted there. Round 6-B
-      records the same one-based reader family for the loot getters; the buyback getter is the only
-      one converted so far.
+- [x] `GetLootItem` uses the shared one-based reader, so fractional and above-`2^31` indices are
+      accepted and the live loot slot count bounds them. `GetTotem` still parses its argument with
+      the strict unsigned reader (`c_tooltip_info_totem.rs::read_slot`), so fractional and
+      above-`2^31` indices are not accepted there; Round 6 §GetTotem records the same reader family
+      with usage `Usage: local data = C_TooltipInfo.GetTotem(slot)`.
 - [x] Shared D56 publication and presentation-side markup parsing follow the [serialization contract](tooltip-data-serialization.md). Getter-specific nested-row eligibility remains unknown.
 
 ## Out of scope

@@ -10,6 +10,7 @@ use crate::lua_api::methods::{
     borrow_state, borrow_state_mut, create_string, create_table, table_set,
 };
 use crate::lua_api::script_helpers::{dispatch_named_event_handlers, get_event_listeners};
+use crate::lua_api::state::LootSlot;
 use crate::lua_bridge::{FromStack, table_set_rust_fn_static};
 use crate::{c_api::item_spell::item_link_for_id, items};
 use rilua::vm::gc::arena::GcRef;
@@ -209,18 +210,27 @@ fn get_loot_slot_info(state: &mut LuaState) -> LuaResult<u32> {
         return Ok(1);
     };
 
-    let item = items::get_item(slot.item_id);
+    let item = match &slot {
+        LootSlot::Item(item) => items::get_item(item.item_id),
+        // GetLootSlotInfo's currency projection is not modelled in this lane;
+        // only GetLootSlotType routes the original loot consumer.
+        LootSlot::Currency { .. } => None,
+    };
     let texture = item
         .map(|item| item.icon_file_data_id)
         .filter(|texture| *texture != 0)
         .unwrap_or(134400);
     let name = item.map(|item| item.name).unwrap_or("Unknown Item");
     let quality = item.map(|item| item.quality).unwrap_or(1);
+    let quantity = match &slot {
+        LootSlot::Item(item) => item.stack_count.max(1),
+        LootSlot::Currency { quantity, .. } => *quantity,
+    };
 
     let name = create_string(state, name);
     state.push(Val::Num(texture as f64));
     state.push(name);
-    state.push(Val::Num(slot.stack_count.max(1) as f64));
+    state.push(Val::Num(quantity as f64));
     state.push(Val::Nil);
     state.push(Val::Num(quality as f64));
     state.push(Val::Bool(false));
@@ -232,11 +242,16 @@ fn get_loot_slot_link(state: &mut LuaState) -> LuaResult<u32> {
         state.push(Val::Nil);
         return Ok(1);
     };
-    let link = borrow_state(state)?.loot_slots.get(index).and_then(|slot| {
-        slot.hyperlink
-            .clone()
-            .or_else(|| item_link_for_id(slot.item_id))
-    });
+    let link = borrow_state(state)?
+        .loot_slots
+        .get(index)
+        .and_then(|slot| match slot {
+            LootSlot::Item(item) => item
+                .hyperlink
+                .clone()
+                .or_else(|| item_link_for_id(item.item_id)),
+            LootSlot::Currency { .. } => None,
+        });
     match link {
         Some(link) => {
             let link = create_string(state, &link);
@@ -252,10 +267,10 @@ fn get_loot_slot_type(state: &mut LuaState) -> LuaResult<u32> {
         state.push(Val::Num(0.0));
         return Ok(1);
     };
-    let slot_type = if borrow_state(state)?.loot_slots.get(index).is_some() {
-        1.0
-    } else {
-        0.0
+    let slot_type = match borrow_state(state)?.loot_slots.get(index) {
+        Some(LootSlot::Item(_)) => 1.0,
+        Some(LootSlot::Currency { .. }) => 3.0,
+        None => 0.0,
     };
     state.push(Val::Num(slot_type));
     Ok(1)
@@ -293,7 +308,7 @@ fn is_fishing_loot(state: &mut LuaState) -> LuaResult<u32> {
     let is_fishing = borrow_state(state)?
         .loot_slots
         .iter()
-        .any(|slot| slot.item_id == 6358);
+        .any(|slot| matches!(slot, LootSlot::Item(item) if item.item_id == 6358));
     state.push(Val::Bool(is_fishing));
     Ok(1)
 }

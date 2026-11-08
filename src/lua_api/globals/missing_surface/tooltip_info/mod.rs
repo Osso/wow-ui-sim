@@ -17,6 +17,7 @@ use rilua::vm::gc::arena::GcRef;
 use rilua::vm::state::LuaState;
 use rilua::vm::table::Table;
 use rilua::{LuaResult, Val};
+pub(crate) use sources::tooltip_for_currency;
 
 pub(super) fn register_tooltip_surface(state: &mut LuaState) -> LuaResult<()> {
     register_pet_info_surface(state)?;

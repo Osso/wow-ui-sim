@@ -6,28 +6,28 @@
 #[path = "tooltip_full_env_helpers.rs"]
 mod tooltip_full_env_helpers;
 
-use wow_ui_sim::lua_api::state::BagItem;
+use wow_ui_sim::lua_api::state::{BagItem, LootSlot};
 
 #[test]
 fn original_loot_hover_uses_the_selected_loot_item() {
     let env = tooltip_full_env_helpers::setup_full_env();
     env.state().borrow_mut().loot_slots = vec![
-        BagItem {
+        LootSlot::Item(BagItem {
             owned_identity: None,
             item_id: 6948,
             stack_count: 1,
             hyperlink: None,
             durability: None,
             applied_transmog: None,
-        },
-        BagItem {
+        }),
+        LootSlot::Item(BagItem {
             owned_identity: None,
             item_id: 2840,
             stack_count: 1,
             hyperlink: None,
             durability: None,
             applied_transmog: None,
-        },
+        }),
     ];
     env.exec(
         r#"

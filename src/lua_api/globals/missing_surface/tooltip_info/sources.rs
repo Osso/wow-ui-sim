@@ -122,7 +122,7 @@ pub(super) fn tooltip_for_inventory_slot(state: &mut LuaState, slot: i32) -> Val
     tooltip_for_item_id(state, item_id)
 }
 
-pub(super) fn tooltip_for_currency(
+pub(crate) fn tooltip_for_currency(
     state: &mut LuaState,
     currency: &currency_data::CurrencyEntry,
     amount_override: Option<i32>,
