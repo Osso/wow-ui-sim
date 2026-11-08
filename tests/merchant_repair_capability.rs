@@ -1,5 +1,7 @@
 #![cfg(feature = "client-wowforever")]
 
+use std::process::Command;
+
 use wow_ui_sim::lua_api::WowLuaEnv;
 
 #[path = "common/bounded_process.rs"]

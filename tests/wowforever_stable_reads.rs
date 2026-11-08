@@ -1,5 +1,7 @@
 #![cfg(feature = "client-wowforever")]
 
+use std::process::Command;
+
 use wow_ui_sim::c_api::c_stable_info::forever::{PetInfo, StableReadState};
 use wow_ui_sim::lua_api::WowLuaEnv;
 
