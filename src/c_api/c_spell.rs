@@ -110,6 +110,7 @@ const SPELL_QUERY_METHODS: &[(&str, SpellScriptFn)] = &[
     ),
     ("GetSpellQueueWindow", get_spell_queue_window),
     ("GetSpellInfo", get_spell_info),
+    ("GetSpellLevelLearned", get_spell_level_learned),
     ("GetSpellTexture", get_spell_texture),
     ("GetSpellPowerCost", get_spell_power_cost),
     ("GetSchoolString", get_school_string),
@@ -273,6 +274,34 @@ fn get_spell_queue_window(state: &mut LuaState) -> LuaResult<u32> {
         .get("SpellQueueWindow")
         .and_then(|value| value.parse::<f64>().ok());
     state.push(queue_window.map_or(Val::Nil, Val::Num));
+    Ok(1)
+}
+
+/// Shared legacy-global / `C_Spell` model for `GetSpellLevelLearned`.
+///
+/// The simulator has no per-spell learn-level data, so a known spell reports
+/// level 1 and an unknown spell reports 0.
+pub(crate) fn spell_level_learned(
+    known_spells: &std::collections::HashSet<u32>,
+    spell_id: u32,
+) -> f64 {
+    if known_spells.contains(&spell_id) {
+        1.0
+    } else {
+        0.0
+    }
+}
+
+/// `C_Spell.GetSpellLevelLearned(spellIdentifier)` → level learned.
+fn get_spell_level_learned(state: &mut LuaState) -> LuaResult<u32> {
+    let spell_id = read_modeled_numeric_spell_id(state)?;
+    let level = match spell_id {
+        Some(id) => borrow_state(state)
+            .map(|sim| spell_level_learned(&sim.known_spells, id))
+            .unwrap_or(0.0),
+        None => 0.0,
+    };
+    state.push(Val::Num(level));
     Ok(1)
 }
 
