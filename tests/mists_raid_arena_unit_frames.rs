@@ -3,6 +3,9 @@
 use std::path::PathBuf;
 use std::process::Command;
 
+#[path = "common/bounded_process.rs"]
+mod bounded_process;
+
 fn wow_sim_binary() -> PathBuf {
     std::env::var_os("CARGO_BIN_EXE_wow-sim")
         .map(PathBuf::from)
@@ -61,10 +64,9 @@ fn mists_arena_enemy_frames_emit_filtered_textures() {
 }
 
 fn run_filtered_screenshot(root: &str, lua: &str) -> std::process::Output {
-    Command::new("timeout")
-        .arg("90")
-        .arg(wow_sim_binary())
-        .args([
+    bounded_process::output(
+        90,
+        Command::new(wow_sim_binary()).args([
             "--no-addons",
             "--no-saved-vars",
             "--exec-lua",
@@ -74,9 +76,9 @@ fn run_filtered_screenshot(root: &str, lua: &str) -> std::process::Output {
             root,
             "--output",
             "/tmp/mists-unit-frame-test",
-        ])
-        .output()
-        .expect("failed to run wow-sim screenshot")
+        ]),
+    )
+    .expect("failed to run wow-sim screenshot")
 }
 
 fn assert_filtered_screenshot_has_unit_frame_textures(output: &std::process::Output, root: &str) {

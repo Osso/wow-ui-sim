@@ -2,12 +2,14 @@
 
 use std::process::Command;
 
+#[path = "common/bounded_process.rs"]
+mod bounded_process;
+
 #[test]
 fn mists_talents_and_glyphs_panel_populates_rows_and_sockets() {
-    let output = Command::new("timeout")
-        .arg("90")
-        .arg(env!("CARGO_BIN_EXE_wow-sim"))
-        .args([
+    let output = bounded_process::output(
+        90,
+        Command::new(env!("CARGO_BIN_EXE_wow-sim")).args([
             "--no-addons",
             "--no-saved-vars",
             "--exec-lua",
@@ -59,9 +61,9 @@ fn mists_talents_and_glyphs_panel_populates_rows_and_sockets() {
             "dump-tree",
             "--filter-key",
             "PlayerTalentFrame",
-        ])
-        .output()
-        .expect("failed to run wow-sim");
+        ]),
+    )
+    .expect("failed to run wow-sim");
 
     let stdout = String::from_utf8_lossy(&output.stdout);
     let stderr = String::from_utf8_lossy(&output.stderr);
@@ -76,9 +78,9 @@ fn mists_talents_and_glyphs_panel_populates_rows_and_sockets() {
 
 #[test]
 fn mists_talents_and_glyphs_mutate_selected_state() {
-    let output = Command::new("timeout")
-        .arg("90")
-        .arg(env!("CARGO_BIN_EXE_wow-sim"))
+    let output = bounded_process::output(
+        90,
+        Command::new(env!("CARGO_BIN_EXE_wow-sim"))
         .args([
             "--no-addons",
             "--no-saved-vars",
@@ -180,7 +182,7 @@ fn mists_talents_and_glyphs_mutate_selected_state() {
             "--filter-key",
             "PlayerTalentFrame",
         ])
-        .output()
+        )
         .expect("failed to run wow-sim");
 
     let stdout = String::from_utf8_lossy(&output.stdout);
@@ -196,9 +198,9 @@ fn mists_talents_and_glyphs_mutate_selected_state() {
 
 #[test]
 fn mists_specialization_learn_button_activates_spec_for_talents() {
-    let output = Command::new("timeout")
-        .arg("90")
-        .arg(env!("CARGO_BIN_EXE_wow-sim"))
+    let output = bounded_process::output(
+        90,
+        Command::new(env!("CARGO_BIN_EXE_wow-sim"))
         .args([
             "--no-addons",
             "--no-saved-vars",
@@ -276,7 +278,7 @@ fn mists_specialization_learn_button_activates_spec_for_talents() {
             "--filter-key",
             "PlayerTalentFrame",
         ])
-        .output()
+        )
         .expect("failed to run wow-sim");
 
     let stdout = String::from_utf8_lossy(&output.stdout);

@@ -2,12 +2,14 @@
 
 use std::process::Command;
 
+#[path = "common/bounded_process.rs"]
+mod bounded_process;
+
 #[test]
 fn mists_world_map_opens_with_zone_art_and_quest_pins() {
-    let output = Command::new("timeout")
-        .arg("90")
-        .arg(env!("CARGO_BIN_EXE_wow-sim"))
-        .args([
+    let output = bounded_process::output(
+        90,
+        Command::new(env!("CARGO_BIN_EXE_wow-sim")).args([
             "--no-addons",
             "--no-saved-vars",
             "--exec-lua",
@@ -82,9 +84,9 @@ fn mists_world_map_opens_with_zone_art_and_quest_pins() {
             end
             "#,
             "lua-errors",
-        ])
-        .output()
-        .expect("failed to run wow-sim");
+        ]),
+    )
+    .expect("failed to run wow-sim");
 
     let stdout = String::from_utf8_lossy(&output.stdout);
     let stderr = String::from_utf8_lossy(&output.stderr);

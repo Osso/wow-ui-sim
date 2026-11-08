@@ -7,6 +7,9 @@ use std::process::{Command, Output};
 use serde_json::Value;
 use tempfile::TempDir;
 
+#[path = "common/bounded_process.rs"]
+mod bounded_process;
+
 const FIXTURE: &str = "LuaErrorCliFixture";
 const NESTED: &str = "LuaErrorCliNested";
 const PROOF: &str = "LUA_ERROR_CLI_FIXTURE_LOADED";
@@ -277,24 +280,26 @@ fn run_cli(root: &Path, no_addons: bool, code: &str) -> Output {
         wtf.join("Account/LuaErrorCliAccount/LuaErrorCliRealm/LuaErrorCliCharacter"),
     )
     .expect("create selected WTF character directory");
-    let mut command = Command::new("timeout");
-    command.args(["90", env!("CARGO_BIN_EXE_wow-sim"), "--no-saved-vars"]);
+    let mut command = Command::new(env!("CARGO_BIN_EXE_wow-sim"));
+    command.arg("--no-saved-vars");
     command.arg("--session-wtf-path").arg(session.path());
     if no_addons {
         command.arg("--no-addons");
     }
-    command
-        .args(["--exec-lua", code, "lua-errors"])
-        .current_dir(env!("CARGO_MANIFEST_DIR"))
-        .env_remove("WOW_SIM_NO_ADDONS")
-        .env_remove("WOW_SIM_LOAD_OUT_OF_DATE_ADDONS")
-        .env("WOW_SIM_ADDONS_PATH", root)
-        .env("WOW_SIM_WTF_PATH", wtf)
-        .env("WOW_SIM_WTF_ACCOUNT", "LuaErrorCliAccount")
-        .env("WOW_SIM_WTF_REALM", "LuaErrorCliRealm")
-        .env("WOW_SIM_WTF_CHARACTER", "LuaErrorCliCharacter")
-        .output()
-        .expect("run bounded wow-sim lua-errors process")
+    bounded_process::output(
+        90,
+        command
+            .args(["--exec-lua", code, "lua-errors"])
+            .current_dir(env!("CARGO_MANIFEST_DIR"))
+            .env_remove("WOW_SIM_NO_ADDONS")
+            .env_remove("WOW_SIM_LOAD_OUT_OF_DATE_ADDONS")
+            .env("WOW_SIM_ADDONS_PATH", root)
+            .env("WOW_SIM_WTF_PATH", wtf)
+            .env("WOW_SIM_WTF_ACCOUNT", "LuaErrorCliAccount")
+            .env("WOW_SIM_WTF_REALM", "LuaErrorCliRealm")
+            .env("WOW_SIM_WTF_CHARACTER", "LuaErrorCliCharacter"),
+    )
+    .expect("run bounded wow-sim lua-errors process")
 }
 
 fn parse_errors(output: &Output, expect_proof: bool) -> Vec<Value> {

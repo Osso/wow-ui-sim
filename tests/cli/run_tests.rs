@@ -2,6 +2,9 @@ use std::io::Read;
 use std::path::Path;
 use std::process::{Command, Output};
 
+#[path = "../common/bounded_process.rs"]
+mod bounded_process;
+
 const ADDON: &str = "RunTestsOutputFixture";
 const FILE: &str = "failure_output.lua";
 
@@ -22,17 +25,18 @@ fn run_fixture(source: &str) -> Output {
     std::fs::write(tests.join(FILE), source).expect("write fixture tests");
     let data = root.path().join("data");
     copy_current_cvars(&data);
-    Command::new("timeout")
-        .args(["90", env!("CARGO_BIN_EXE_wow-sim")])
-        .arg("--session-wtf-path")
-        .arg(data.join("wow-sim"))
-        .args(["--no-addons", "--no-saved-vars", "--addons-path"])
-        .arg(addons)
-        .args(["run-tests", ADDON])
-        .env("XDG_DATA_HOME", data)
-        .env("WOW_SIM_WTF_PATH", root.path().join("wtf"))
-        .output()
-        .expect("run bounded real run-tests command")
+    bounded_process::output(
+        90,
+        Command::new(env!("CARGO_BIN_EXE_wow-sim"))
+            .arg("--session-wtf-path")
+            .arg(data.join("wow-sim"))
+            .args(["--no-addons", "--no-saved-vars", "--addons-path"])
+            .arg(addons)
+            .args(["run-tests", ADDON])
+            .env("XDG_DATA_HOME", data)
+            .env("WOW_SIM_WTF_PATH", root.path().join("wtf")),
+    )
+    .expect("run bounded real run-tests command")
 }
 
 fn copy_current_cvars(data: &Path) {
@@ -106,31 +110,29 @@ fn delay_dispatches_addon_timer_and_updates_before_exec_lua() {
     ] {
         let data = root.path().join(format!("data-{delay:?}"));
         copy_current_cvars(&data);
-        let mut command = Command::new("timeout");
+        let mut command = Command::new(env!("CARGO_BIN_EXE_wow-sim"));
         command
-            .args([
-                "90",
-                env!("CARGO_BIN_EXE_wow-sim"),
-                "--no-saved-vars",
-                "--addons-path",
-            ])
+            .args(["--no-saved-vars", "--addons-path"])
             .arg(&addons)
             .arg("--session-wtf-path")
             .arg(data.join("wow-sim"));
         if let Some(delay) = delay {
             command.args(["--delay", &delay.to_string()]);
         }
-        let output = command.args([
-                "--exec-lua",
-                "print('DELAY_RESULT', tostring(DelayFixtureScheduled), tostring(DelayFixtureFired), DelayFixtureElapsed)",
-                "dump-tree",
-                "--filter",
-                "UIParent",
-            ])
-            .env("XDG_DATA_HOME", data)
-            .env("WOW_SIM_WTF_PATH", root.path().join("wtf"))
-            .output()
-            .expect("run dump-tree fixture");
+        let output = bounded_process::output(
+            90,
+            command
+                .args([
+                    "--exec-lua",
+                    "print('DELAY_RESULT', tostring(DelayFixtureScheduled), tostring(DelayFixtureFired), DelayFixtureElapsed)",
+                    "dump-tree",
+                    "--filter",
+                    "UIParent",
+                ])
+                .env("XDG_DATA_HOME", data)
+                .env("WOW_SIM_WTF_PATH", root.path().join("wtf")),
+        )
+        .expect("run dump-tree fixture");
         let stdout = String::from_utf8_lossy(&output.stdout);
         let stderr = String::from_utf8_lossy(&output.stderr);
         let text = format!("{stdout}\n{stderr}");

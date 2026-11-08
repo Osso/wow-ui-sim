@@ -1,5 +1,8 @@
 use std::process::Command;
 
+#[path = "common/bounded_process.rs"]
+mod bounded_process;
+
 #[test]
 fn saved_variables_storage_env_precedence() {
     let fixture = tempfile::tempdir().unwrap();
@@ -37,8 +40,8 @@ fn saved_variables_storage_env_precedence() {
         (Some(root.join("legacy")), true, "explicit"),
         (None, false, "default"),
     ] {
-        let mut cmd = Command::new("timeout");
-        cmd.args(["90", env!("CARGO_BIN_EXE_wow-sim"), "--addons-path"])
+        let mut cmd = Command::new(env!("CARGO_BIN_EXE_wow-sim"));
+        cmd.arg("--addons-path")
             .arg(&addons)
             .env("XDG_DATA_HOME", root.join("data"))
             .env("WOW_SIM_WTF_PATH", root.join("missing-wtf"))
@@ -52,16 +55,17 @@ fn saved_variables_storage_env_precedence() {
         if explicit {
             cmd.arg("--session-wtf-path").arg(root.join("explicit"));
         }
-        let output = cmd
-            .args([
+        let output = bounded_process::output(
+            90,
+            cmd.args([
                 "--exec-lua",
                 "print('STORAGE_PROBE=' .. tostring(StorageProbeValue))",
                 "dump-tree",
                 "--filter",
                 "UIParent",
-            ])
-            .output()
-            .unwrap();
+            ]),
+        )
+        .unwrap();
         let text = format!(
             "{}\n{}",
             String::from_utf8_lossy(&output.stdout),

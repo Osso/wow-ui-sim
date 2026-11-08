@@ -3,6 +3,9 @@
 use wow_ui_sim::c_api::c_stable_info::forever::{PetInfo, StableReadState};
 use wow_ui_sim::lua_api::WowLuaEnv;
 
+#[path = "common/bounded_process.rs"]
+mod bounded_process;
+
 const DEFAULT_READS: &str = r#"
     assert(C_StableInfo.GetNumStableSlots() == 2, "default owned slots")
     assert(C_StableInfo.GetNextStableSlotCost() == 0, "unavailable purchase cost")
@@ -33,21 +36,22 @@ fn stable_reads_default_and_restore() {
 #[test]
 fn stable_reads_cached_money_event() {
     let root = tempfile::tempdir().unwrap();
-    let output = std::process::Command::new("timeout")
-        .args(["90", env!("CARGO_BIN_EXE_wow-sim")])
-        .arg("--session-wtf-path")
-        .arg(root.path().join("data/wow-sim"))
-        .args([
-            "--no-addons",
-            "--no-saved-vars",
-            "--exec-lua",
-            MONEY_EVENT,
-            "lua-errors",
-        ])
-        .env("XDG_DATA_HOME", root.path().join("data"))
-        .env("WOW_SIM_WTF_PATH", root.path().join("wtf"))
-        .output()
-        .unwrap();
+    let output = bounded_process::output(
+        90,
+        Command::new(env!("CARGO_BIN_EXE_wow-sim"))
+            .arg("--session-wtf-path")
+            .arg(root.path().join("data/wow-sim"))
+            .args([
+                "--no-addons",
+                "--no-saved-vars",
+                "--exec-lua",
+                MONEY_EVENT,
+                "lua-errors",
+            ])
+            .env("XDG_DATA_HOME", root.path().join("data"))
+            .env("WOW_SIM_WTF_PATH", root.path().join("wtf")),
+    )
+    .unwrap();
     let stdout = String::from_utf8_lossy(&output.stdout);
     let stderr = String::from_utf8_lossy(&output.stderr);
     assert!(output.status.success(), "{stdout}\n{stderr}");
@@ -212,7 +216,9 @@ fn forever_stable_native_record_flags_and_cost_keys() {
 
 #[test]
 fn forever_stable_slot_original_consumer_populated_and_empty() {
-    use crate::common::blizzard_addon_harness::{blizzard_ui_dir, load_blizzard_addon_closure_into_env, new_blizzard_addon_env};
+    use crate::common::blizzard_addon_harness::{
+        blizzard_ui_dir, load_blizzard_addon_closure_into_env, new_blizzard_addon_env,
+    };
     let ui = blizzard_ui_dir();
     let env = new_blizzard_addon_env(&ui);
     load_blizzard_addon_closure_into_env(&env, &ui, &["Blizzard_StableUI"], &[]);

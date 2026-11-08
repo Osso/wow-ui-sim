@@ -3,6 +3,9 @@
 use std::path::PathBuf;
 use std::process::{Command, Output};
 
+#[path = "common/bounded_process.rs"]
+mod bounded_process;
+
 fn wow_sim_binary() -> PathBuf {
     std::env::var_os("CARGO_BIN_EXE_wow-sim")
         .map(PathBuf::from)
@@ -87,10 +90,9 @@ fn assert_panel_loads_cleanly(panel_name: &str, filter_name: &str, exec_lua: &st
 }
 
 fn capture_panel_screenshot(filter_name: &str, exec_lua: &str, output_path: &str) -> Output {
-    Command::new("timeout")
-        .arg("90")
-        .arg(wow_sim_binary())
-        .args([
+    bounded_process::output(
+        90,
+        Command::new(wow_sim_binary()).args([
             "--no-addons",
             "--no-saved-vars",
             "--exec-lua",
@@ -100,9 +102,9 @@ fn capture_panel_screenshot(filter_name: &str, exec_lua: &str, output_path: &str
             filter_name,
             "--output",
             output_path,
-        ])
-        .output()
-        .expect("failed to run wow-sim screenshot")
+        ]),
+    )
+    .expect("failed to run wow-sim screenshot")
 }
 
 fn assert_panel_screenshot_output(panel_name: &str, output: &Output) {

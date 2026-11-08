@@ -2,6 +2,9 @@ use std::path::{Path, PathBuf};
 use std::process::Command;
 use wow_ui_sim::client_profile::{ACTIVE, ClientProfile};
 
+#[path = "common/bounded_process.rs"]
+mod bounded_process;
+
 fn isolated_data_dir(root: &Path) -> PathBuf {
     let data = root.join("data");
     if let Some(seed) = std::env::var_os("WOW_SIM_TEST_CVAR_SEED") {
@@ -23,28 +26,29 @@ fn cli_class_and_spec_are_visible_to_exec_lua() {
     ] {
         let root = tempfile::tempdir().unwrap();
         let data = isolated_data_dir(root.path());
-        let output = Command::new("timeout")
-            .args(["90", env!("CARGO_BIN_EXE_wow-sim")])
-            .arg("--session-wtf-path")
-            .arg(data.join("wow-sim"))
-            .args([
-                "--no-addons",
-                "--no-saved-vars",
-                "--class",
-                class,
-                "--spec",
-                spec,
-                "--exec-lua",
-                "print('CLI_CONTEXT:' .. UnitClass('player') .. ':' .. GetSpecialization())",
-                "dump-tree",
-                "--filter",
-                "__no_such_frame__",
-            ])
-            .env("XDG_DATA_HOME", data)
-            .env("WOW_SIM_WTF_PATH", root.path().join("wtf"))
-            .env("WOW_SIM_NO_SOUND", "1")
-            .output()
-            .unwrap();
+        let output = bounded_process::output(
+            90,
+            Command::new(env!("CARGO_BIN_EXE_wow-sim"))
+                .arg("--session-wtf-path")
+                .arg(data.join("wow-sim"))
+                .args([
+                    "--no-addons",
+                    "--no-saved-vars",
+                    "--class",
+                    class,
+                    "--spec",
+                    spec,
+                    "--exec-lua",
+                    "print('CLI_CONTEXT:' .. UnitClass('player') .. ':' .. GetSpecialization())",
+                    "dump-tree",
+                    "--filter",
+                    "__no_such_frame__",
+                ])
+                .env("XDG_DATA_HOME", data)
+                .env("WOW_SIM_WTF_PATH", root.path().join("wtf"))
+                .env("WOW_SIM_NO_SOUND", "1"),
+        )
+        .unwrap();
         let stdout = String::from_utf8_lossy(&output.stdout);
         let stderr = String::from_utf8_lossy(&output.stderr);
         assert!(output.status.success(), "{stdout}\n{stderr}");
@@ -58,8 +62,9 @@ fn assert_monk_specialization(spec: &str, expected: &str) {
     }
     let root = tempfile::tempdir().unwrap();
     let data = isolated_data_dir(root.path());
-    let output = Command::new("timeout")
-        .args(["90", env!("CARGO_BIN_EXE_wow-sim")])
+    let output =bounded_process::output(
+        90,
+        Command::new(env!("CARGO_BIN_EXE_wow-sim"))
         .arg("--session-wtf-path")
         .arg(data.join("wow-sim"))
         .args([
@@ -85,7 +90,7 @@ fn assert_monk_specialization(spec: &str, expected: &str) {
         .env("XDG_DATA_HOME", data)
         .env("WOW_SIM_WTF_PATH", root.path().join("wtf"))
         .env("WOW_SIM_NO_SOUND", "1")
-        .output()
+        )
         .unwrap();
     let stdout = String::from_utf8_lossy(&output.stdout);
     let stderr = String::from_utf8_lossy(&output.stderr);
@@ -132,8 +137,9 @@ fn spec_without_class_is_seeded_then_resolved_again_after_startup() {
         end)
     "#).unwrap();
     let data = isolated_data_dir(root.path());
-    let output = Command::new("timeout")
-        .args(["90", env!("CARGO_BIN_EXE_wow-sim")])
+    let output =bounded_process::output(
+        90,
+        Command::new(env!("CARGO_BIN_EXE_wow-sim"))
         .arg("--no-saved-vars")
         .arg("--session-wtf-path")
         .arg(data.join("wow-sim"))
@@ -142,7 +148,7 @@ fn spec_without_class_is_seeded_then_resolved_again_after_startup() {
         .env("XDG_DATA_HOME", data)
         .env("WOW_SIM_WTF_PATH", root.path().join("wtf"))
         .env("WOW_SIM_NO_SOUND", "1")
-        .output().unwrap();
+        ).unwrap();
     let stdout = String::from_utf8_lossy(&output.stdout);
     let stderr = String::from_utf8_lossy(&output.stderr);
     assert!(output.status.success(), "{stdout}\n{stderr}");
@@ -167,18 +173,19 @@ fn unknown_class_and_specialization_report_valid_choices() {
     ] {
         let root = tempfile::tempdir().unwrap();
         let data = isolated_data_dir(root.path());
-        let output = Command::new("timeout")
-            .args(["90", env!("CARGO_BIN_EXE_wow-sim")])
-            .arg("--session-wtf-path")
-            .arg(data.join("wow-sim"))
-            .args(["--no-addons", "--no-saved-vars"])
-            .args(args)
-            .arg("dump-tree")
-            .env("XDG_DATA_HOME", data)
-            .env("WOW_SIM_WTF_PATH", root.path().join("wtf"))
-            .env("WOW_SIM_NO_SOUND", "1")
-            .output()
-            .unwrap();
+        let output = bounded_process::output(
+            90,
+            Command::new(env!("CARGO_BIN_EXE_wow-sim"))
+                .arg("--session-wtf-path")
+                .arg(data.join("wow-sim"))
+                .args(["--no-addons", "--no-saved-vars"])
+                .args(args)
+                .arg("dump-tree")
+                .env("XDG_DATA_HOME", data)
+                .env("WOW_SIM_WTF_PATH", root.path().join("wtf"))
+                .env("WOW_SIM_NO_SOUND", "1"),
+        )
+        .unwrap();
         let stdout = String::from_utf8_lossy(&output.stdout);
         let stderr = String::from_utf8_lossy(&output.stderr);
         assert!(
@@ -196,28 +203,29 @@ fn numeric_class_and_spec_indices_are_visible_to_exec_lua() {
     }
     let root = tempfile::tempdir().unwrap();
     let data = isolated_data_dir(root.path());
-    let output = Command::new("timeout")
-        .args(["90", env!("CARGO_BIN_EXE_wow-sim")])
-        .arg("--session-wtf-path")
-        .arg(data.join("wow-sim"))
-        .args([
-            "--no-addons",
-            "--no-saved-vars",
-            "--class",
-            "8",
-            "--spec",
-            "2",
-            "--exec-lua",
-            "print('NUMERIC_CONTEXT:' .. UnitClass('player') .. ':' .. GetSpecialization())",
-            "dump-tree",
-            "--filter",
-            "__no_such_frame__",
-        ])
-        .env("XDG_DATA_HOME", data)
-        .env("WOW_SIM_WTF_PATH", root.path().join("wtf"))
-        .env("WOW_SIM_NO_SOUND", "1")
-        .output()
-        .unwrap();
+    let output = bounded_process::output(
+        90,
+        Command::new(env!("CARGO_BIN_EXE_wow-sim"))
+            .arg("--session-wtf-path")
+            .arg(data.join("wow-sim"))
+            .args([
+                "--no-addons",
+                "--no-saved-vars",
+                "--class",
+                "8",
+                "--spec",
+                "2",
+                "--exec-lua",
+                "print('NUMERIC_CONTEXT:' .. UnitClass('player') .. ':' .. GetSpecialization())",
+                "dump-tree",
+                "--filter",
+                "__no_such_frame__",
+            ])
+            .env("XDG_DATA_HOME", data)
+            .env("WOW_SIM_WTF_PATH", root.path().join("wtf"))
+            .env("WOW_SIM_NO_SOUND", "1"),
+    )
+    .unwrap();
     let stdout = String::from_utf8_lossy(&output.stdout);
     let stderr = String::from_utf8_lossy(&output.stderr);
     assert!(output.status.success(), "{stdout}\n{stderr}");

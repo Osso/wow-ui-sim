@@ -10,6 +10,9 @@ use wow_ui_sim::loader::{find_toc_file, load_addon};
 use wow_ui_sim::lua_api::WowLuaEnv;
 use wow_ui_sim::paths::default_blizzard_ui_addons_path;
 
+#[path = "common/bounded_process.rs"]
+mod bounded_process;
+
 fn blizzard_ui_dir() -> PathBuf {
     default_blizzard_ui_addons_path().expect("Blizzard UI cache should be available")
 }
@@ -710,19 +713,19 @@ fn micro_menu_ej_button_loads_and_opens_panel() {
         assert(not EncounterJournal:IsShown(), 'second click must close the journal')
         print('MICRO_MENU_EJ_CLICK_COMPLETE')
     "#;
-    let output = std::process::Command::new("timeout")
-        .args([
-            "90",
-            env!("CARGO_BIN_EXE_wow-sim"),
-            "--no-addons",
-            "--no-saved-vars",
-            "--exec-lua",
-            code,
-            "lua-errors",
-        ])
-        .current_dir(env!("CARGO_MANIFEST_DIR"))
-        .output()
-        .expect("run journal click through normal startup without injected bootstrap helpers");
+    let output = bounded_process::output(
+        90,
+        std::process::Command::new(env!("CARGO_BIN_EXE_wow-sim"))
+            .args([
+                "--no-addons",
+                "--no-saved-vars",
+                "--exec-lua",
+                code,
+                "lua-errors",
+            ])
+            .current_dir(env!("CARGO_MANIFEST_DIR")),
+    )
+    .expect("run journal click through normal startup without injected bootstrap helpers");
     let stdout = String::from_utf8(output.stdout).expect("UTF-8 journal click output");
     let stderr = String::from_utf8_lossy(&output.stderr);
     assert_eq!(output.status.code(), Some(0), "{stdout}\n{stderr}");

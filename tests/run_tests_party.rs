@@ -1,5 +1,8 @@
 use std::process::Command;
 
+#[path = "common/bounded_process.rs"]
+mod bounded_process;
+
 #[test]
 fn run_tests_starts_with_demo_party_and_respects_no_party() {
     let root = tempfile::tempdir().expect("create fixture");
@@ -33,15 +36,9 @@ fn run_tests_starts_with_demo_party_and_respects_no_party() {
             source.push_str("\ntest('solo macro group condition', function() assertEquals('solo', SecureCmdOptionParse('[group] grouped; solo')) end)");
         }
         std::fs::write(addon.join("tests/party.lua"), source).unwrap();
-        let mut command = Command::new("timeout");
+        let mut command = Command::new(env!("CARGO_BIN_EXE_wow-sim"));
         command
-            .args([
-                "90",
-                env!("CARGO_BIN_EXE_wow-sim"),
-                "--no-addons",
-                "--no-saved-vars",
-                "--addons-path",
-            ])
+            .args(["--no-addons", "--no-saved-vars", "--addons-path"])
             .arg(&addons)
             .arg("--session-wtf-path")
             .arg(root.path().join("data/wow-sim"))
@@ -52,7 +49,7 @@ fn run_tests_starts_with_demo_party_and_respects_no_party() {
         } else {
             command.env_remove("WOW_SIM_NO_PARTY");
         }
-        let output = command.output().expect("run addon test fixture");
+        let output = bounded_process::output(90, &mut command).expect("run addon test fixture");
         assert!(
             output.status.success(),
             "disabled={disabled}: {}\n{}",

@@ -3,6 +3,9 @@
 use std::path::PathBuf;
 use std::process::Command;
 
+#[path = "common/bounded_process.rs"]
+mod bounded_process;
+
 fn wow_sim_binary() -> PathBuf {
     std::env::var_os("CARGO_BIN_EXE_wow-sim")
         .map(PathBuf::from)
@@ -16,9 +19,9 @@ fn wow_sim_binary() -> PathBuf {
 
 #[test]
 fn mists_loot_group_and_bonus_roll_actions_record_state() {
-    let output = Command::new("timeout")
-        .arg("90")
-        .arg(wow_sim_binary())
+    let output = bounded_process::output(
+        90,
+        Command::new(wow_sim_binary())
         .args([
             "--no-addons",
             "--no-saved-vars",
@@ -117,7 +120,7 @@ fn mists_loot_group_and_bonus_roll_actions_record_state() {
             "#,
             "lua-errors",
         ])
-        .output()
+        )
         .expect("failed to run wow-sim");
 
     let stdout = String::from_utf8_lossy(&output.stdout);

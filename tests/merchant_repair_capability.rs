@@ -2,6 +2,9 @@
 
 use wow_ui_sim::lua_api::WowLuaEnv;
 
+#[path = "common/bounded_process.rs"]
+mod bounded_process;
+
 const CLOSED_QUERY: &str = r#"
     assert(CanMerchant() == false)
     assert(CanMerchantRepair() == false, "no merchant cannot repair")
@@ -80,21 +83,22 @@ fn merchant_repair_environments_are_independent() {
 #[test]
 fn merchant_repair_cached_bag_event() {
     let root = tempfile::tempdir().unwrap();
-    let output = std::process::Command::new("timeout")
-        .args(["90", env!("CARGO_BIN_EXE_wow-sim")])
-        .arg("--session-wtf-path")
-        .arg(root.path().join("data/wow-sim"))
-        .args([
-            "--no-addons",
-            "--no-saved-vars",
-            "--exec-lua",
-            BAG_EVENT,
-            "lua-errors",
-        ])
-        .env("XDG_DATA_HOME", root.path().join("data"))
-        .env("WOW_SIM_WTF_PATH", root.path().join("wtf"))
-        .output()
-        .unwrap();
+    let output = bounded_process::output(
+        90,
+        Command::new(env!("CARGO_BIN_EXE_wow-sim"))
+            .arg("--session-wtf-path")
+            .arg(root.path().join("data/wow-sim"))
+            .args([
+                "--no-addons",
+                "--no-saved-vars",
+                "--exec-lua",
+                BAG_EVENT,
+                "lua-errors",
+            ])
+            .env("XDG_DATA_HOME", root.path().join("data"))
+            .env("WOW_SIM_WTF_PATH", root.path().join("wtf")),
+    )
+    .unwrap();
     let stdout = String::from_utf8_lossy(&output.stdout);
     let stderr = String::from_utf8_lossy(&output.stderr);
     assert!(output.status.success(), "{stdout}\n{stderr}");

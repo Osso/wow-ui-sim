@@ -3,6 +3,9 @@
 use std::path::PathBuf;
 use std::process::Command;
 
+#[path = "common/bounded_process.rs"]
+mod bounded_process;
+
 fn wow_sim_binary() -> PathBuf {
     std::env::var_os("CARGO_BIN_EXE_wow-sim")
         .map(PathBuf::from)
@@ -16,9 +19,9 @@ fn wow_sim_binary() -> PathBuf {
 
 #[test]
 fn mists_action_micro_bag_and_status_bars_are_interactive() {
-    let output = Command::new("timeout")
-        .arg("90")
-        .arg(wow_sim_binary())
+    let output = bounded_process::output(
+        90,
+        Command::new(wow_sim_binary())
         .args([
             "--no-addons",
             "--no-saved-vars",
@@ -142,7 +145,7 @@ fn mists_action_micro_bag_and_status_bars_are_interactive() {
             "--filter-key",
             "MainMenuBar",
         ])
-        .output()
+        )
         .expect("failed to run wow-sim");
 
     let stdout = String::from_utf8_lossy(&output.stdout);
@@ -157,10 +160,9 @@ fn mists_action_micro_bag_and_status_bars_are_interactive() {
 
 #[test]
 fn mists_objective_tracker_hides_legacy_watch_frame() {
-    let output = Command::new("timeout")
-        .arg("90")
-        .arg(wow_sim_binary())
-        .args([
+    let output = bounded_process::output(
+        90,
+        Command::new(wow_sim_binary()).args([
             "--no-saved-vars",
             "--exec-lua",
             r#"
@@ -172,9 +174,9 @@ fn mists_objective_tracker_hides_legacy_watch_frame() {
             end
             "#,
             "lua-errors",
-        ])
-        .output()
-        .expect("failed to run wow-sim");
+        ]),
+    )
+    .expect("failed to run wow-sim");
 
     let stdout = String::from_utf8_lossy(&output.stdout);
     let stderr = String::from_utf8_lossy(&output.stderr);
