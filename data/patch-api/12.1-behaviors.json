@@ -383,63 +383,70 @@
         {
           "kind": "source",
           "reference": "src/lua_api/frame/methods/forbidden_aspects.rs",
-          "summary": "Simulator policy: EventRegistrations rejects all seven Lua registration mutations before listener, callback, unit-filter, all-event, or hlist changes. Existing registrations, queries, and delivery remain usable. The policy has no caller-taint exemption; native security, error wording, and engine-internal behavior remain unverified.",
-          "source_hash": "d8da11ac0228c7841b712120b2076ba9a7b744917193d272f2828273cf2ea75e"
+          "summary": "Simulator policy: EventRegistrations rejects the eight annotated Lua registration/query mutations from addon-tainted callers before membership, callback, unit-filter, all-event or hlist changes, while secure Blizzard callers are exempt (AuraContainer intrinsic registers under EventRegistrations). Existing listeners and callbacks keep delivering; native security, error wording, and engine-internal behavior remain unverified.",
+          "source_hash": "194355bce45ebbd99b204740d27f899ddc23f16fe6d3596f46edbc94f12f8318"
         },
         {
           "kind": "source",
           "reference": "src/lua_api/frame/methods/text_attribute_event/events.rs",
-          "summary": "Simulator policy: EventRegistrations rejects all seven Lua registration mutations before listener, callback, unit-filter, all-event, or hlist changes. Existing registrations, queries, and delivery remain usable. The policy has no caller-taint exemption; native security, error wording, and engine-internal behavior remain unverified.",
-          "source_hash": "1e5c3b1686027a656468a3d80addb739cf7063a4da635423677d791a787d0a85"
+          "summary": "Simulator policy: EventRegistrations rejects the eight annotated Lua registration/query mutations from addon-tainted callers before membership, callback, unit-filter, all-event or hlist changes, while secure Blizzard callers are exempt (AuraContainer intrinsic registers under EventRegistrations). Existing listeners and callbacks keep delivering; native security, error wording, and engine-internal behavior remain unverified.",
+          "source_hash": "ca46f18c491e47ed6cae9ea1bf89570ad2cd842489d538a55a5eaaeb2b1c7f64"
         },
         {
           "kind": "source",
           "reference": "docs/specs/forbidden-aspect-event-input.md",
-          "summary": "Simulator policy: EventRegistrations rejects all seven Lua registration mutations before listener, callback, unit-filter, all-event, or hlist changes. Existing registrations, queries, and delivery remain usable. The policy has no caller-taint exemption; native security, error wording, and engine-internal behavior remain unverified.",
-          "source_hash": "b1ef0c6cc94ca88d609b353a83f4fb8eec9123dcb2f5fed519434abaade583b2"
+          "summary": "Specified simulator policy for EventRegistrations: tainted-caller rejection before mutation, secure-caller exemption, AuraContainer intrinsic ownership, and unchanged existing delivery.",
+          "source_hash": "3d63ac927099c6c546eedc30295631f065ca9ac071b56f109490efa69d1d00ab"
         },
         {
           "kind": "test",
-          "reference": "tests/forbidden_aspect_creation.rs::event_registration_aspect_rejects_all_mutations_without_caller_exception",
-          "summary": "Simulator policy: EventRegistrations rejects all seven Lua registration mutations before listener, callback, unit-filter, all-event, or hlist changes. Existing registrations, queries, and delivery remain usable. The policy has no caller-taint exemption; native security, error wording, and engine-internal behavior remain unverified.",
-          "source_hash": "7fc6c62bfc3d4d500d1591e5e84882e37e901a6de78bf42d20b57d7d8f712fb1"
+          "reference": "tests/forbidden_aspect_creation.rs::event_registration_aspect_rejects_addon_callers_and_permits_secure_callers",
+          "summary": "Focused test: addon callers are rejected and secure callers may register.",
+          "source_hash": "dba9eb38fc9749c7b1bd4b099f566ee05adee79ccab1bb61020544ee1a71f0f8"
         },
         {
           "kind": "test",
           "reference": "tests/forbidden_aspect_creation.rs::event_registration_aspect_preserves_existing_listener_delivery",
-          "summary": "Simulator policy: EventRegistrations rejects all seven Lua registration mutations before listener, callback, unit-filter, all-event, or hlist changes. Existing registrations, queries, and delivery remain usable. The policy has no caller-taint exemption; native security, error wording, and engine-internal behavior remain unverified.",
-          "source_hash": "7fc6c62bfc3d4d500d1591e5e84882e37e901a6de78bf42d20b57d7d8f712fb1"
+          "summary": "Focused test: existing listener delivery is unchanged.",
+          "source_hash": "dba9eb38fc9749c7b1bd4b099f566ee05adee79ccab1bb61020544ee1a71f0f8"
         },
         {
           "kind": "test",
           "reference": "tests/forbidden_aspect_creation.rs::event_registration_aspect_preserves_callbacks_when_replacement_is_rejected",
-          "summary": "Simulator policy: EventRegistrations rejects all seven Lua registration mutations before listener, callback, unit-filter, all-event, or hlist changes. Existing registrations, queries, and delivery remain usable. The policy has no caller-taint exemption; native security, error wording, and engine-internal behavior remain unverified.",
-          "source_hash": "7fc6c62bfc3d4d500d1591e5e84882e37e901a6de78bf42d20b57d7d8f712fb1"
+          "summary": "Focused test: callbacks survive a rejected replacement.",
+          "source_hash": "dba9eb38fc9749c7b1bd4b099f566ee05adee79ccab1bb61020544ee1a71f0f8"
         },
         {
           "kind": "test",
           "reference": "tests/forbidden_aspect_creation.rs::event_registration_aspect_leaves_zero_mask_mutations_and_delivery_unchanged",
-          "summary": "Simulator policy: EventRegistrations rejects all seven Lua registration mutations before listener, callback, unit-filter, all-event, or hlist changes. Existing registrations, queries, and delivery remain usable. The policy has no caller-taint exemption; native security, error wording, and engine-internal behavior remain unverified.",
-          "source_hash": "7fc6c62bfc3d4d500d1591e5e84882e37e901a6de78bf42d20b57d7d8f712fb1"
+          "summary": "Focused zero-mask control: mutations and delivery are unchanged.",
+          "source_hash": "dba9eb38fc9749c7b1bd4b099f566ee05adee79ccab1bb61020544ee1a71f0f8"
         },
         {
           "kind": "test",
           "reference": "tests/forbidden_aspect_creation.rs::event_registration_aspect_leaves_zero_mask_callback_delivery_unchanged",
-          "summary": "Simulator policy: EventRegistrations rejects all seven Lua registration mutations before listener, callback, unit-filter, all-event, or hlist changes. Existing registrations, queries, and delivery remain usable. The policy has no caller-taint exemption; native security, error wording, and engine-internal behavior remain unverified.",
-          "source_hash": "7fc6c62bfc3d4d500d1591e5e84882e37e901a6de78bf42d20b57d7d8f712fb1"
+          "summary": "Focused zero-mask control: callback delivery is unchanged.",
+          "source_hash": "dba9eb38fc9749c7b1bd4b099f566ee05adee79ccab1bb61020544ee1a71f0f8"
+        },
+        {
+          "kind": "test",
+          "reference": "tests/forbidden_aspect_enforcement.rs::aura_container_intrinsic_event_registrations_block_addons_not_blizzard",
+          "summary": "Focused test: the AuraContainer intrinsic blocks addon callers but permits Blizzard secure callers.",
+          "source_hash": "919725e78a948da1e22d4f95893efaee057cde0a22ddd8796e763c956905c400"
         }
       ],
       "tests": [
-        "tests/forbidden_aspect_creation.rs::event_registration_aspect_rejects_all_mutations_without_caller_exception",
+        "tests/forbidden_aspect_creation.rs::event_registration_aspect_rejects_addon_callers_and_permits_secure_callers",
         "tests/forbidden_aspect_creation.rs::event_registration_aspect_preserves_existing_listener_delivery",
         "tests/forbidden_aspect_creation.rs::event_registration_aspect_preserves_callbacks_when_replacement_is_rejected",
         "tests/forbidden_aspect_creation.rs::event_registration_aspect_leaves_zero_mask_mutations_and_delivery_unchanged",
-        "tests/forbidden_aspect_creation.rs::event_registration_aspect_leaves_zero_mask_callback_delivery_unchanged"
+        "tests/forbidden_aspect_creation.rs::event_registration_aspect_leaves_zero_mask_callback_delivery_unchanged",
+        "tests/forbidden_aspect_enforcement.rs::aura_container_intrinsic_event_registrations_block_addons_not_blizzard"
       ],
       "assertions": [],
-      "commit": "5125e2407",
+      "commit": "4a303f6d0",
       "approval_id": null,
-      "notes": "Simulator policy: EventRegistrations rejects all seven Lua registration mutations before listener, callback, unit-filter, all-event, or hlist changes. Existing registrations, queries, and delivery remain usable. The policy has no caller-taint exemption; native security, error wording, and engine-internal behavior remain unverified."
+      "notes": "Simulator policy: EventRegistrations rejects addon-tainted callers before any listener, callback, unit-filter, all-event or hlist change, and exempts secure Blizzard callers so the AuraContainer intrinsic can register. Existing registrations and delivery remain usable. Native security, error wording, and engine-internal behavior remain unverified."
     },
     {
       "id": "changed:Patch12_1.ForbiddenAspects.AlwaysPropagateInput",

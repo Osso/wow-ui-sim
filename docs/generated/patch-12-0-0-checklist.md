@@ -1,4 +1,4 @@
-1. [evidence-required] `added:ADDON_RESTRICTION_STATE_CHANGED` — unsafe
+1. [best-effort] `added:ADDON_RESTRICTION_STATE_CHANGED` — behavioral
 2. [best-effort] `added:AbbreviateConfig` — behavioral
 3. [best-effort] `added:AbbreviateConfig.GetAbbreviateNumberData` — behavioral
 4. [best-effort] `added:AbbreviateConfig.SetAbbreviateNumberData` — behavioral
@@ -496,8 +496,8 @@
 496. [evidence-required] `added:C_QuestLog.GetActivePreyQuest` — unsafe
 497. [best-effort] `added:C_Reputation.IsFactionParagonForCurrentPlayer` — behavioral
 498. [evidence-required] `added:C_RestrictedActions.CheckAllowProtectedFunctions` — unsafe
-499. [evidence-required] `added:C_RestrictedActions.GetAddOnRestrictionState` — unsafe
-500. [evidence-required] `added:C_RestrictedActions.IsAddOnRestrictionActive` — unsafe
+499. [best-effort] `added:C_RestrictedActions.GetAddOnRestrictionState` — behavioral
+500. [best-effort] `added:C_RestrictedActions.IsAddOnRestrictionActive` — behavioral
 501. [evidence-required] `added:C_Secrets.GetPowerTypeSecrecy` — unsafe
 502. [evidence-required] `added:C_Secrets.GetSpellAuraSecrecy` — unsafe
 503. [evidence-required] `added:C_Secrets.GetSpellCastSecrecy` — unsafe

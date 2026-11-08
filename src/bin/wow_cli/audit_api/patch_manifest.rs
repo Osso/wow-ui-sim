@@ -1864,7 +1864,15 @@ mod tests {
         let mut manifests = Vec::new();
         for entry in std::fs::read_dir(&directory).expect("patch manifest directory should read") {
             let path = entry.expect("directory entry should read").path();
-            if path.extension().and_then(|extension| extension.to_str()) == Some("json") {
+            if path.extension().and_then(|extension| extension.to_str()) != Some("json") {
+                continue;
+            }
+            // The directory also holds non-manifest JSON assets (page index and
+            // known-gaps lists). Discover patch manifests by their schema instead
+            // of treating every JSON file as a manifest.
+            let json =
+                std::fs::read_to_string(&path).expect("patch manifest candidate should read");
+            if is_patch_manifest(&json) {
                 manifests.push(path);
             }
         }
@@ -1874,6 +1882,18 @@ mod tests {
             "at least one patch manifest is required"
         );
         manifests
+    }
+
+    fn is_patch_manifest(json: &str) -> bool {
+        serde_json::from_str::<serde_json::Value>(json)
+            .ok()
+            .and_then(|value| {
+                value
+                    .get("schema")
+                    .and_then(|schema| schema.as_str())
+                    .map(|schema| schema == PATCH_MANIFEST_SCHEMA)
+            })
+            .unwrap_or(false)
     }
 
     #[test]
