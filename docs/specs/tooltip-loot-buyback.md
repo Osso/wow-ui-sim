@@ -78,11 +78,50 @@ Evidence: Round 6-B §1 of `pr46-49-decomp-answers.md`, Retail 12.1.5 (**70688**
       `Blizzard_SharedXMLGame/Tooltip/TooltipDataHandler.lua:537` routes to this getter
       (**INFERRED** from shipped Lua; asserted by `tests/tooltip_loot_item_index.rs`).
 
+### `GetLootCurrency(slot)` and the loot-slot kind
+
+Evidence: Round 6-B §1 of `pr46-49-decomp-answers.md`, Retail 12.1.5 (**70688**) and Forever
+1.60.1 (**70707**), with the PTR registration table checked for the same member.
+
+- [x] The getter is registered on Retail, PTR and Forever, and it uses the same one-based reader
+      as `GetLootItem` with the literal
+      `Usage: local data = C_TooltipInfo.GetLootCurrency(slot)` (**VERIFIED** for the reader and
+      the two images; **VERIFIED** for the PTR and Forever registration tables).
+- [x] A loot entry carries a kind byte: item `0`, currency non-zero. The loot-item reader requires
+      kind `0` and the loot-currency reader requires a non-zero kind, so the two getters are
+      mutually exclusive per slot (**VERIFIED**).
+- [x] The loot-currency reader additionally requires the entry's currency row to resolve; an
+      unresolvable row takes the same miss arm as a wrong kind or an out-of-range slot
+      (**VERIFIED**).
+- [x] Success publishes identity type `Currency` (5) and the currency ID through the shared
+      currency producer (**VERIFIED**). The currency name line is created with base type `0`, and
+      the currency line carries a zero owner GUID (**VERIFIED**).
+- [x] `GetLootSlotType` reports `Enum.LootSlotType.Item` (1) for an item entry and
+      `Enum.LootSlotType.Currency` (3) for a currency entry, which is the query the original
+      `LootFrameItemElementMixin:OnEnter` uses to choose `GameTooltip:SetLootItem` or
+      `GameTooltip:SetLootCurrency` (**VERIFIED** constants and consumer shape; **INFERRED** from
+      shipped Lua for the consumer build).
+- [x] Like `GetLootItem`, the getter never consults loot window or frame state (**VERIFIED**).
+- [x] The simulated loot entry is `LootSlot::Item(BagItem)` or
+      `LootSlot::Currency { currency_id, quantity }` in `SimState.loot_slots`.
+
+**INFERRED (modelled, not native-proved):** the supplied `quantity` is published as the currency
+tooltip quantity. Native divides the entry amount by 100 with truncation toward zero when the
+currency row's hundredths flag is set (**VERIFIED**), but the simulator's currency data exposes no
+hundredths flag, so that conversion is not modelled and the supplied value is the display quantity.
+
+**UNKNOWN (left unimplemented):**
+- The final Lua envelope around either argument-error text.
+- The ordered line sequence after the currency name line.
+- Top-level `guid` and `hyperlink` for this path.
+- Which subsystem supplies the currency row's hundredths flag and whether the loot list is cleared
+  when the loot frame closes.
+- `GetLootSlotInfo`'s currency projection (icon, name, quality and the fourth `currencyID` return):
+  this lane only models the kind query that routes the tooltip consumer, so a currency slot still
+  takes the item-shaped slot-info path.
+
 ## Not modelled (native behaviour with no simulator counterpart)
 
-- The loot entry's **kind byte** (item `0`, currency non-zero) is not modelled: `SimState.loot_slots`
-  holds item entries only, so no currency slot can exist and the loot-item reader's kind test has no
-  state to act on. `GetLootCurrency` is a separate lane and is not registered here.
 - Whether the client clears the global loot list when the loot frame closes is **UNKNOWN** (it
   depends on the loot-frame writer, not on these getters). The simulator's `CloseLoot` clears only
   `loot_frame_open`, so a slot the list still holds stays readable.
@@ -113,7 +152,10 @@ Evidence: Round 6-B §1 of `pr46-49-decomp-answers.md`, Retail 12.1.5 (**70688**
 
 - `src/c_api/tooltip_getter_args.rs`: `one_based_index`, the shared subtract-then-truncate reader
   with the two verified argument-error texts.
-- `src/c_api/c_tooltip_info_loot.rs`: supplied item selection and the missing-result seam.
+- `src/c_api/c_tooltip_info_loot.rs`: supplied item and currency selection, the kind dispatch and
+  the missing-result seam.
+- `src/lua_api/state_types/collections.rs`: `LootSlot`, the item/currency loot entry model.
+- `src/lua_api/globals/state_backed_queries.rs`: `GetLootSlotType` reports the modelled kind.
 - `src/lua_api/globals/missing_surface/tooltip_info/`: item tooltip publication.
 
 ## Tests asserting this spec
