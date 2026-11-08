@@ -232,3 +232,107 @@ fn dfs_emit_keeps_wrapper_owned_regions_before_child_frames() {
         "wrapper-owned regions should render before descendant child frames"
     );
 }
+
+#[test]
+fn higher_level_cover_occludes_text_hoisted_from_nested_wrappers() {
+    for wrapper_type in [WidgetType::Frame, WidgetType::ScrollFrame] {
+        let mut widgets = WidgetRegistry::default();
+        for (id, kind, parent, level) in [
+            (1, WidgetType::Frame, None, 100),
+            (2, wrapper_type, Some(1), 101),
+            (3, WidgetType::Frame, Some(2), 102),
+            (4, WidgetType::FontString, Some(3), 0),
+            (5, WidgetType::Frame, Some(1), 120),
+            (6, WidgetType::Texture, Some(5), 0),
+            (7, WidgetType::FontString, Some(5), 0),
+        ] {
+            widgets.register(Frame {
+                frame_level: level,
+                ..test_frame(id, kind, parent)
+            });
+            if let Some(parent) = parent {
+                widgets.add_child(parent, id);
+            }
+        }
+        let visible = FxHashSet::from_iter(1..=7);
+        let mut emitted = Vec::new();
+        dfs_emit(
+            1,
+            FrameStrata::Medium.as_index(),
+            &widgets,
+            &visible,
+            &mut emitted,
+        );
+        let position = |id| emitted.iter().rposition(|&value| value == id).unwrap();
+        assert!(
+            position(4) < position(6),
+            "lower text must precede opaque cover: {emitted:?}"
+        );
+        assert!(
+            position(6) < position(7),
+            "cover's own label must remain visible: {emitted:?}"
+        );
+        let mut unique = emitted.clone();
+        unique.sort_unstable();
+        unique.dedup();
+        assert_eq!(unique.len(), 7);
+        assert_eq!(emitted.len(), 7, "each widget must be emitted exactly once");
+    }
+}
+
+#[test]
+fn higher_level_child_occludes_its_parents_text() {
+    let mut widgets = WidgetRegistry::default();
+    for (id, kind, parent, level) in [
+        (1, WidgetType::Frame, None, 100),
+        (2, WidgetType::FontString, Some(1), 0),
+        (3, WidgetType::Frame, Some(1), 120),
+        (4, WidgetType::Texture, Some(3), 0),
+    ] {
+        widgets.register(Frame {
+            frame_level: level,
+            ..test_frame(id, kind, parent)
+        });
+        if let Some(parent) = parent {
+            widgets.add_child(parent, id);
+        }
+    }
+    let visible = FxHashSet::from_iter(1..=4);
+    let mut emitted = Vec::new();
+    dfs_emit(
+        1,
+        FrameStrata::Medium.as_index(),
+        &widgets,
+        &visible,
+        &mut emitted,
+    );
+    assert_eq!(emitted, vec![1, 2, 3, 4]);
+}
+
+#[test]
+fn same_level_hoisting_emits_each_region_once_and_preserves_button_labels() {
+    let mut widgets = WidgetRegistry::default();
+    for (id, kind, parent) in [
+        (1, WidgetType::Frame, None),
+        (2, WidgetType::ScrollFrame, Some(1)),
+        (3, WidgetType::Frame, Some(2)),
+        (4, WidgetType::FontString, Some(3)),
+        (5, WidgetType::Button, Some(2)),
+        (6, WidgetType::FontString, Some(5)),
+    ] {
+        widgets.register(test_frame(id, kind, parent));
+        if let Some(parent) = parent {
+            widgets.add_child(parent, id);
+        }
+    }
+    let visible = FxHashSet::from_iter(1..=6);
+    let mut emitted = Vec::new();
+    dfs_emit(
+        1,
+        FrameStrata::Medium.as_index(),
+        &widgets,
+        &visible,
+        &mut emitted,
+    );
+    assert_eq!(emitted, vec![1, 2, 3, 5, 6, 4]);
+}

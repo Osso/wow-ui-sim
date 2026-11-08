@@ -3507,3 +3507,10 @@ passed. Those profiles now supply false (the polling loop's not-ready branch); R
 keep their user-approved true default. See
 [voice settings access](systems/voice-settings-access.md) and
 [the contract](../specs/voice-settings-access.md).
+
+## 2026-11-08 — Deferred text at frame-level boundaries
+
+Updated [rendering pipeline](systems/rendering-pipeline.md#deferred-text-and-nested-wrappers)
+with the lower-text/opaque-modal regression, same-level hoisting boundary,
+single emission of nested wrapper regions, and Lua-to-GPU image coverage.
+Render bucket tests also cover modal hide/show and cache repair.
