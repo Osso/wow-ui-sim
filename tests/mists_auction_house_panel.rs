@@ -1,27 +1,18 @@
 #![cfg(feature = "client-mists")]
 
-use std::path::PathBuf;
 use std::process::Command;
 
 #[path = "common/bounded_process.rs"]
 mod bounded_process;
 
-fn wow_sim_binary() -> PathBuf {
-    std::env::var_os("CARGO_BIN_EXE_wow-sim")
-        .map(PathBuf::from)
-        .unwrap_or_else(|| {
-            PathBuf::from(env!("CARGO_MANIFEST_DIR"))
-                .join("target")
-                .join("debug")
-                .join("wow-sim")
-        })
-}
+#[path = "common/wow_sim_binary.rs"]
+mod wow_sim_binary;
 
 #[test]
 fn mists_auction_house_supports_browse_bid_post_and_cancel() {
     let output = bounded_process::output(
         90,
-        Command::new(wow_sim_binary()).args([
+        Command::new(wow_sim_binary::path()).args([
             "--no-addons",
             "--no-saved-vars",
             "--exec-lua",

@@ -1,6 +1,5 @@
 #![cfg(feature = "client-mists")]
 
-use std::path::PathBuf;
 use std::process::Command;
 
 #[path = "common/bounded_process.rs"]
@@ -47,22 +46,14 @@ fn original_guild_bank_tabs_follow_empty_supplied_empty_catalog() {
     "##).expect("original Mists guild-bank tab setup must project the supplied catalog");
 }
 
-fn wow_sim_binary() -> PathBuf {
-    std::env::var_os("CARGO_BIN_EXE_wow-sim")
-        .map(PathBuf::from)
-        .unwrap_or_else(|| {
-            PathBuf::from(env!("CARGO_MANIFEST_DIR"))
-                .join("target")
-                .join("debug")
-                .join("wow-sim")
-        })
-}
+#[path = "common/wow_sim_binary.rs"]
+mod wow_sim_binary;
 
 #[test]
 fn mists_bank_and_guild_bank_support_storage_flow() {
     let output = bounded_process::output(
         90,
-        Command::new(wow_sim_binary())
+        Command::new(wow_sim_binary::path())
         .args([
             "--no-addons",
             "--no-saved-vars",

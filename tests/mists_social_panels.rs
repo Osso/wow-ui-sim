@@ -1,27 +1,18 @@
 #![cfg(feature = "client-mists")]
 
-use std::path::PathBuf;
 use std::process::Command;
 
 #[path = "common/bounded_process.rs"]
 mod bounded_process;
 
-fn wow_sim_binary() -> PathBuf {
-    std::env::var_os("CARGO_BIN_EXE_wow-sim")
-        .map(PathBuf::from)
-        .unwrap_or_else(|| {
-            PathBuf::from(env!("CARGO_MANIFEST_DIR"))
-                .join("target")
-                .join("debug")
-                .join("wow-sim")
-        })
-}
+#[path = "common/wow_sim_binary.rs"]
+mod wow_sim_binary;
 
 #[test]
 fn mists_social_panels_support_friends_who_guild_and_communities() {
     let output = bounded_process::output(
         90,
-        Command::new(wow_sim_binary())
+        Command::new(wow_sim_binary::path())
         .args([
             "--no-addons",
             "--no-saved-vars",
