@@ -1,5 +1,7 @@
 #![cfg(feature = "client-wowforever")]
 
+use std::process::Command;
+
 #[path = "common/bounded_process.rs"]
 mod bounded_process;
 
