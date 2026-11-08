@@ -419,16 +419,19 @@ pub struct VoiceChatState {
 impl Default for VoiceChatState {
     fn default() -> Self {
         Self {
-            // Retail and Forever VoiceChatDocumentation.lua:41-47. User-approved
-            // default, not native evidence; explicit observations still override it.
-            can_access_settings: if matches!(
-                crate::client_profile::ACTIVE,
+            // Native evidence (PTR 12.1.7, Retail 12.1.5, Forever 1.60.1): the
+            // query is the AND of voice-service readiness state and returns false
+            // until the service reaches ready. The simulator has no voice service,
+            // so false is the stable observation. Mists/Era/Anniversary share the
+            // pinned Audio.lua polling loop (:549) but have no binary evidence.
+            can_access_settings: match crate::client_profile::ACTIVE {
                 crate::client_profile::ClientProfile::Retail
-                    | crate::client_profile::ClientProfile::WowForever
-            ) {
-                Some(true)
-            } else {
-                None
+                | crate::client_profile::ClientProfile::Ptr
+                | crate::client_profile::ClientProfile::WowForever
+                | crate::client_profile::ClientProfile::Mists
+                | crate::client_profile::ClientProfile::Era
+                | crate::client_profile::ClientProfile::Anniversary => Some(false),
+                crate::client_profile::ClientProfile::Wrath => None,
             },
             // Best-guess selected system default (docs/specs/voice-audio-devices.md).
             input_devices: Some(vec![VoiceAudioDevice::system_default()]),
