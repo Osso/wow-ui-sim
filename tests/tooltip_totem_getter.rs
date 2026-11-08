@@ -125,3 +125,56 @@ fn tooltip_totem_original_accessor_preserves_rounding_units_expiry_and_clock_wra
     assert!(wrapped.exec("C_TooltipInfo.GetTotem(1)").is_err());
     assert!(wrapped.exec("C_TooltipInfo.GetTotem(-1)").is_err());
 }
+
+#[test]
+fn tooltip_totem_slot_reader_truncates_after_subtracting_one() {
+    let env = tooltip_full_env_helpers::load_full_env_without_post_load();
+    env.exec("A_Admin.SetManualClock(100)").unwrap();
+    env.state().borrow_mut().totem_slots = vec![
+        Some(Totem {
+            name: "Searing Totem".into(),
+            start_time: 90.0,
+            duration: 60.0,
+            icon: 0,
+            mod_rate: 1.0,
+            spell_id: 19750,
+        }),
+        Some(Totem {
+            name: "Healing Stream Totem".into(),
+            start_time: 95.0,
+            duration: 30.0,
+            icon: 0,
+            mod_rate: 2.0,
+            spell_id: 19750,
+        }),
+    ];
+    {
+        let mut sim = env.state().borrow_mut();
+        let occupied = sim.totem_slots[0].clone();
+        sim.totem_slots.resize(9, None);
+        sim.totem_slots[7] = occupied;
+    }
+    env.exec(
+        r#"
+        -- Round 6(a): the one-based index reader subtracts 1.0 and truncates; it has
+        -- no integral test, so a fractional slot selects the slot it truncates to.
+        assert(C_TooltipInfo.GetTotem(1.9).lines[1].leftText == 'Searing Totem')
+        assert(C_TooltipInfo.GetTotem(2.9).lines[1].leftText == 'Healing Stream Totem')
+        assert(C_TooltipInfo.GetTotem(8.9).lines[1].leftText == 'Searing Totem')
+        -- INFERRED (same truncation rule applied below 1): 0.5 becomes internal slot 0.
+        assert(C_TooltipInfo.GetTotem(0.5).lines[1].leftText == 'Searing Totem')
+        -- Out-of-range values keep taking the miss arm, never a diagnostic.
+        assert(select('#', C_TooltipInfo.GetTotem(9)) == 0)
+        assert(select('#', C_TooltipInfo.GetTotem(9.9)) == 0)
+        -- Round 6(a): a missing, non-number, negative, out-of-domain or non-finite
+        -- argument raises instead of returning nothing.
+        assert(not pcall(C_TooltipInfo.GetTotem))
+        assert(not pcall(C_TooltipInfo.GetTotem, nil))
+        assert(not pcall(C_TooltipInfo.GetTotem, 'searing'))
+        assert(not pcall(C_TooltipInfo.GetTotem, -1))
+        assert(not pcall(C_TooltipInfo.GetTotem, 4294967296))
+        assert(not pcall(C_TooltipInfo.GetTotem, 0 / 0))
+        "#,
+    )
+    .unwrap();
+}

@@ -8,6 +8,10 @@ use rilua::LuaResult;
 use rilua::table_security::unwrap_secret;
 use rilua::vm::{gc::arena::GcRef, state::LuaState, table::Table};
 
+/// Round 6a/b: the producer keeps a fixed table of eight totem slot records.
+const TOTEM_SLOT_COUNT: u32 = 8;
+const ARGUMENT_ERROR: &str = "GetTotem requires an unsigned integer slot";
+
 pub(crate) fn register(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResult<()> {
     table_set_rust_fn_static(state, namespace, "GetTotem", get_totem)
 }
@@ -36,22 +40,21 @@ fn get_totem(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
+/// Round 6a: the shared one-based index reader admits 0..=u32::MAX, subtracts
+/// 1.0 and truncates toward zero without an integral test, so a fractional Lua
+/// slot selects the slot it truncates to. The low 32 bits are then read as
+/// unsigned, so Lua 0 becomes all-ones and misses the slot bound. The message
+/// text is the simulator's shared reader wording (native wording: EMULATED).
 fn read_slot(state: &LuaState) -> LuaResult<Option<usize>> {
     let value = unwrap_secret(state, stack_val(state, 1))?;
-    if let rilua::Val::Num(number) = value {
-        if number.is_finite()
-            && number.fract() == 0.0
-            && (0.0..=f64::from(u32::MAX)).contains(&number)
-        {
-            return Ok((number as u32)
-                .checked_sub(1)
-                .filter(|index| *index < 8)
-                .map(|index| index as usize));
-        }
+    let rilua::Val::Num(number) = value else {
+        return Err(rilua::runtime_error(ARGUMENT_ERROR));
+    };
+    if !number.is_finite() || !(0.0..=f64::from(u32::MAX)).contains(&number) {
+        return Err(rilua::runtime_error(ARGUMENT_ERROR));
     }
-    Err(rilua::runtime_error(
-        "GetTotem requires an unsigned integer slot",
-    ))
+    let slot = ((number - 1.0) as i64) as u32;
+    Ok((slot < TOTEM_SLOT_COUNT).then_some(slot as usize))
 }
 
 fn remaining_milliseconds(totem: &Totem, now_ms: u32) -> LuaResult<u32> {
