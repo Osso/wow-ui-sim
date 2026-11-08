@@ -1,6 +1,0 @@
-{
-  "source_revision": "c35ddb7ed4fae7b3cba18c844029207051338aba",
-  "production_delta_revision": "398c427fd",
-  "scope": "Retail originalprefork8.2.0 observedowningsweep and normalCLI requireddiagnostics; no-run only",
-  "git_status": " M docs/specs/ui-widget-text-with-subtext.md\n?? .code-index.db\n?? handoff/\n?? state/\n?? verification/\n"
-}

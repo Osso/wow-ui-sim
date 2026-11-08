@@ -1,6 +1,0 @@
-{
-  "source_revision": "5bd208dbabe90828cf5c7b8f064457745650b0dd",
-  "production_delta_revision": "5bd208dba",
-  "scope": "atlas application-result GREEN: primitive2/cachedbar1/texture-regressions10/HUD2/lifecycle2/startup; unchanged bar/HUD query5 reused; default check requires refresh after source change",
-  "git_status": "?? .code-index.db\n?? verification/\n"
-}

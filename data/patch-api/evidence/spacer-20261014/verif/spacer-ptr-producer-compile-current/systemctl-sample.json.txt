@@ -1,9 +1,0 @@
-{
-  "wait_start_utc": "2026-10-15T00:14:06.119216+00:00",
-  "wait_elapsed_seconds": 240.00133844697848,
-  "sample_utc": "2026-10-15T00:18:06.121370+00:00",
-  "unit": "[PRIVATE_UNIT_01].service",
-  "exit_code": 0,
-  "stdout": "Id=[PRIVATE_UNIT_01].service\nLoadState=loaded\nActiveState=active\nSubState=exited\nResult=success\nExecMainStartTimestamp=Wed 2026-10-14 19:13:07 CDT\nExecMainStartTimestampMonotonic=438221024825\nExecMainExitTimestamp=Wed 2026-10-14 19:14:49 CDT\nExecMainExitTimestampMonotonic=438322831599\nExecMainCode=1\nExecMainStatus=0\nExecStart={ path=/usr/bin/env ; argv[]=/usr/bin/env RUSTC=/usr/bin/rustc /usr/bin/cargo test --offline --locked --no-default-features --features sound,gui,casc,client-ptr --test integration --no-run --message-format=json -j 12 ; ignore_errors=no ; start_time=[Wed 2026-10-14 19:13:07 CDT] ; stop_time=[Wed 2026-10-14 19:14:49 CDT] ; pid=[PRIVATE_PROCESS_ID_05] ; code=exited ; status=0 }\nMemoryPeak=8592904192\nCPUUsageNSec=614927743000\nCPUQuotaPerSecUSec=12s\nMemoryHigh=8589934592\nMemoryMax=9663676416\n",
-  "stderr": ""
-}

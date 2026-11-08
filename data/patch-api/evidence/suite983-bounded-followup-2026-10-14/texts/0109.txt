@@ -1,6 +1,0 @@
-{
-  "source_revision": "1b94ffff3210903b585ed4f5130977b6f075e413",
-  "production_delta_revision": "a53fa04dc curve ordering +1b94ffff3 sourced catalog; b60739204 alpha policy tests and1285d9eee exact resolved gap rows",
-  "scope": "Default Retail scoped no-run lib/integration/prefork compile for ten failed cases and new curve regression. jobs4/CPU400% under contention; no runtime/native/performance GREEN claim.",
-  "git_status": "?? .code-index.db\n?? handoff/\n?? verification/\n"
-}

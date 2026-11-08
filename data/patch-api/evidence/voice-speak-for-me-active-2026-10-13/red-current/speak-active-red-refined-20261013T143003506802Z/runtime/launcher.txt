@@ -1,6 +1,0 @@
-Running as unit: wow-speak-refined-runtime-20261013t143216721395z.service
-          Finished with result: exit-code
-Main processes terminated with: code=exited, status=101/n/a
-               Service runtime: 382ms
-             CPU time consumed: 367ms
-                   Memory peak: 86.1M (swap: 0B)

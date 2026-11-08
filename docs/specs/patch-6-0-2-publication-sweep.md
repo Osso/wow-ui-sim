@@ -14,4 +14,4 @@ Record exact remaining gaps and reasons, including unmodeled garrison missions/r
 
 Targeted gates: all publication sweeps, bare/cached own behavior and existing scenario regressions, Python fixtures, reproduction of all saved sources, Mists tests check, format, addons-enabled startup comparison, and clean/later-audit validator portability. No full integration suite or CASC texture acceptance on this host.
 
-See [audit](../wiki/investigations/patch-6-0-2-api-audit.md) and [evidence](../../data/patch-api/evidence/6.0.2-session-2026-10-08/).
+See [audit](../wiki/investigations/patch-6-0-2-api-audit.md) and [evidence](https://github.com/Osso/wow-ui-sim/tree/183edc381/data/patch-api/evidence/6.0.2-session-2026-10-08).

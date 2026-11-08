@@ -35,8 +35,8 @@ Serialized ledger contract omission rejects at `seal: ledger.json`; fabricated G
 ## Sources
 
 - [Spec](../../specs/patch-1-15-3-source-accounting.md).
-- [Frozen pin](../../../data/patch-api/evidence/1.15.3-session-2026-10-09/source-pin.json), [source](../../../data/patch-api/evidence/1.15.3-session-2026-10-09/source.wikitext), [attribution](../../../data/patch-api/evidence/1.15.3-session-2026-10-09/source-attribution.md) — Warcraft Wiki CC BY-SA4.0; exact frozen request in pin.
-- [Fixtures](../../../data/patch-api/evidence/1.15.3-session-2026-10-09/test_source_accounting.py), [original proof ledger](../../../data/patch-api/evidence/1.15.3-session-2026-10-09/proof-ledger.json), [portable proof](../../../data/patch-api/evidence/1.15.3-session-2026-10-09/portable-proof.json), [replay](../../../data/patch-api/evidence/1.15.3-session-2026-10-09/REPLAY.md) — SOURCE only.
+- [Frozen pin](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/1.15.3-session-2026-10-09/source-pin.json), [source](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/1.15.3-session-2026-10-09/source.wikitext), [attribution](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/1.15.3-session-2026-10-09/source-attribution.md) — Warcraft Wiki CC BY-SA4.0; exact frozen request in pin.
+- [Fixtures](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/1.15.3-session-2026-10-09/test_source_accounting.py), [original proof ledger](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/1.15.3-session-2026-10-09/proof-ledger.json), [portable proof](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/1.15.3-session-2026-10-09/portable-proof.json), [replay](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/1.15.3-session-2026-10-09/REPLAY.md) — SOURCE only.
 
 ## See Also
 

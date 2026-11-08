@@ -28,13 +28,13 @@ All eleven retained extract occurrences are accounted individually. Six metadata
 
 `src/c_api/spell_tooltip_cost.rs` owns the existing one-spell resource-cost fixture and shared WM98 gates. The C_TooltipInfo builder delegates to it; GameTooltip:SetHyperlink uses GetHyperlink rather than the direct spell producer. There is no profile-specific hyperlink cost exclusion. No shims or vendor edits.
 
-No explicitly removed member exists on this parent page; no retirement proposed. Full `/usr/bin/grep -w` src/tests caller scans are saved untruncated, including arbitrary call syntax. [Scan index](../../../data/patch-api/evidence/6.2.0-session-2026-10-08/p620-caller-scans.json) pins output hashes. [Retirement record](../../../data/patch-api/evidence/6.2.0-session-2026-10-08/p620-retirement-scans.json) records the empty member/cached-scan set and fixed master/p624 Git inventories; no later re-addition can apply to an empty set.
+No explicitly removed member exists on this parent page; no retirement proposed. Full `/usr/bin/grep -w` src/tests caller scans are saved untruncated, including arbitrary call syntax. [Scan index](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/6.2.0-session-2026-10-08/p620-caller-scans.json) pins output hashes. [Retirement record](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/6.2.0-session-2026-10-08/p620-retirement-scans.json) records the empty member/cached-scan set and fixed master/p624 Git inventories; no later re-addition can apply to an empty set.
 
 Extractor `--retain-patch-diff-reference` originates unchanged from **6.2.4 commit 9d153dc80**; fixture heading correction originates from **c79de9881**. No duplicate tool implementation or generator flag needed. Prior register/extract reproduction uses recorded provenance flags or historical verified flags where old provenance predates flag fields.
 
 ## Verification
 
-[Historical proof ledger](../../../data/patch-api/evidence/6.2.0-session-2026-10-08/p620-proof-ledger.md) retains original commands, revisions, full logs and invalidations. Original runtime `da30fc360` maps to `7c2173ccb` after rebasing onto master `8dd11c1b9`; [rebase mapping](../../../data/patch-api/evidence/6.2.0-session-2026-10-08/integrated/rebase-mapping.json) records patch IDs, changed blobs, trees and the upstream-dropped repair. Historical counts below remain frozen, not current integration counts.
+[Historical proof ledger](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/6.2.0-session-2026-10-08/p620-proof-ledger.md) retains original commands, revisions, full logs and invalidations. Original runtime `da30fc360` maps to `7c2173ccb` after rebasing onto master `8dd11c1b9`; [rebase mapping](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/6.2.0-session-2026-10-08/integrated/rebase-mapping.json) records patch IDs, changed blobs, trees and the upstream-dropped repair. Historical counts below remain frozen, not current integration counts.
 
 | Command / boundary | Result |
 |---|---|
@@ -49,7 +49,7 @@ Extractor `--retain-patch-diff-reference` originates unchanged from **6.2.4 comm
 | Separate branch / immutable master `846a30663` builds, `timeout 90 … --no-saved-vars lua-errors` | Both exit 0, addons enabled, identical `[]` |
 | Historical validators | All 30 `validate*.py` files present at fixed base pass; own gate adds the 31st |
 
-[Historical validator](../../../data/patch-api/evidence/6.2.0-session-2026-10-08/validate.py) remains read-only. Shared files and tool implementations now come from pinned Git objects; historical register/sweep inventories are retained explicitly in the rebase mapping. Prior-validator sets come from fixed `git ls-tree`, not live discovery. The formerly unmerged p624 inventory is proved against identical blobs at reachable master `8dd11c1b9`, avoiding a dangling commit dependency. Original validator bytes and all historical records are preserved under [integrated evidence](../../../data/patch-api/evidence/6.2.0-session-2026-10-08/integrated/). [Historical portability proof](../../../data/patch-api/evidence/6.2.0-session-2026-10-08/p620-validator-portability.json) remains available.
+[Historical validator](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/6.2.0-session-2026-10-08/validate.py) remains read-only. Shared files and tool implementations now come from pinned Git objects; historical register/sweep inventories are retained explicitly in the rebase mapping. Prior-validator sets come from fixed `git ls-tree`, not live discovery. The formerly unmerged p624 inventory is proved against identical blobs at reachable master `8dd11c1b9`, avoiding a dangling commit dependency. Original validator bytes and all historical records are preserved under [integrated evidence](https://github.com/Osso/wow-ui-sim/tree/183edc381/data/patch-api/evidence/6.2.0-session-2026-10-08/integrated). [Historical portability proof](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/6.2.0-session-2026-10-08/p620-validator-portability.json) remains available.
 
 The 7.0.3 integrated gate initially rejected the new shared module through a live runtime hash check. Final repair is copied exactly from master `15b417367` (validator and self-hash artifact), per coordination instruction; local alternative is superseded. Original failure logs remain retained.
 
@@ -59,13 +59,13 @@ Changed Rust readability review found no new suppressions, deep nesting or dupli
 
 ## Integrated proof on master 8dd11c1b9
 
-Runtime receipt scope is `ddd76addc`; subsequent changes are evidence/docs only. [Integrated receipts](../../../data/patch-api/evidence/6.2.0-session-2026-10-08/integrated/) preserve the historical session and add:
+Runtime receipt scope is `ddd76addc`; subsequent changes are evidence/docs only. [Integrated receipts](https://github.com/Osso/wow-ui-sim/tree/183edc381/data/patch-api/evidence/6.2.0-session-2026-10-08/integrated) preserve the historical session and add:
 
 | Boundary | Result |
 |---|---|
 | Own prefork sweep; integration/prefork `patch_6_2_0` | 1/1; 1/1 and 3/3 |
 | All publication sweeps | Branch 52/52; pinned master 51/51; 51 pages, 9,051 observations |
-| Other-page comparison | Every observation on all 50 other pages equals pinned master; [gap comparison](../../../data/patch-api/evidence/6.2.0-session-2026-10-08/integrated/gap-comparison.json) |
+| Other-page comparison | Every observation on all 50 other pages equals pinned master; [gap comparison](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/6.2.0-session-2026-10-08/integrated/gap-comparison.json) |
 | Register/extract reproduction | 51/51 registers, 48/51 extracts; exact three inherited failures unchanged |
 | Integration spell-line modules | Item/spell 88/88, basic 62/62, spell/mount identifiers 22/22, GC roots 10/10, item sources 6/6, talents 2/2 (190/190) |
 | Prefork tooltip cases | 34/34 |
@@ -76,7 +76,7 @@ Runtime receipt scope is `ddd76addc`; subsequent changes are evidence/docs only.
 
 Broader integration `tooltip_` diagnostic: 473 passed, one failed, one ignored. `tooltip_text_layout::test_tooltip_layout_is_clamped_to_viewport_edges` also fails on pinned master at the identical horizontal-width assertion. It uses custom `AddLine` text, not spell producers; retained as an existing layout failure, not an accepted spell-line regression or a silently skipped test.
 
-[Integrated validator](../../../data/patch-api/evidence/6.2.0-session-2026-10-08/integrated/validate.py) passes and checks committed, self-hashed receipts and pinned shared trees. [Command ledger](../../../data/patch-api/evidence/6.2.0-session-2026-10-08/integrated/command-ledger.md) records acceptance commands and separate diagnostic failures. `python3 tools/check_patch_validators.py` at `a8b719035` reports **PASS** in both phases: clean **31/31**, synthetic unrelated later audit **32/32**. [Full portability report](../../../data/patch-api/evidence/6.2.0-session-2026-10-08/integrated/portability.json) retains every validator result. Subsequent proof-output/wiki-only changes do not alter the sealed validator inputs.
+[Integrated validator](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/6.2.0-session-2026-10-08/integrated/validate.py) passes and checks committed, self-hashed receipts and pinned shared trees. [Command ledger](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/6.2.0-session-2026-10-08/integrated/command-ledger.md) records acceptance commands and separate diagnostic failures. `python3 tools/check_patch_validators.py` at `a8b719035` reports **PASS** in both phases: clean **31/31**, synthetic unrelated later audit **32/32**. [Full portability report](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/6.2.0-session-2026-10-08/integrated/portability.json) retains every validator result. Subsequent proof-output/wiki-only changes do not alter the sealed validator inputs.
 
 Zero parent inventory means no later-register intersection or gap replacement. Both pending item-link contracts remain unmodeled; merged 6.2.2/6.2.4 audits introduced no backing-model changes. Negative controls preserve the zero-row count invariant (injection rejected before probing) and independently reject a one-field retained-source title tamper. Neither invents a publication observation or weakens an invariant.
 
@@ -88,7 +88,7 @@ Two item-link contracts remain pending because static item IDs/context clones la
 
 - [Pinned provenance](../../../data/patch-api/sources/6.2.0-api-changes.provenance.json).
 - [Occurrence ledger](../../../data/patch-api/sources/6.2.0-page-coverage.json).
-- [Evidence](../../../data/patch-api/evidence/6.2.0-session-2026-10-08/).
+- [Evidence](https://github.com/Osso/wow-ui-sim/tree/183edc381/data/patch-api/evidence/6.2.0-session-2026-10-08).
 - [Spec](../../specs/patch-6-2-0-publication-sweep.md).
 
 ## See Also

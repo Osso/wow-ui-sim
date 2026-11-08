@@ -14,7 +14,7 @@ Initial cached sweep records 28 publication gaps. Two unused removed C_PvP membe
 
 ## Coverage ledger and boundaries
 
-[Ledger](../../../data/patch-api/sources/9.2.0-page-coverage.json) accounts for all **95 unique IDs**: 80 inventory, fourteen nonblank extract and one historical build caption. Twelve bounded-coverage rows prove current absence (including two closed retirements); 42 partial-development-green rows prove publication/registration only; 32 audit-pending rows comprise 26 publication gaps plus six summary contracts; nine metadata-only rows receive no runtime credit. [Gap review](../../../data/patch-api/evidence/9.2.0-session-2026-10-07/p920-gap-review.json) gives every retained ID its literal, observation and specific missing-model/scope reason. [Extract scout](../../../data/patch-api/evidence/9.2.0-session-2026-10-07/p920-extract-scout.json) maps all fourteen extract rows back to exact source lines.
+[Ledger](../../../data/patch-api/sources/9.2.0-page-coverage.json) accounts for all **95 unique IDs**: 80 inventory, fourteen nonblank extract and one historical build caption. Twelve bounded-coverage rows prove current absence (including two closed retirements); 42 partial-development-green rows prove publication/registration only; 32 audit-pending rows comprise 26 publication gaps plus six summary contracts; nine metadata-only rows receive no runtime credit. [Gap review](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/9.2.0-session-2026-10-07/p920-gap-review.json) gives every retained ID its literal, observation and specific missing-model/scope reason. [Extract scout](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/9.2.0-session-2026-10-07/p920-extract-scout.json) maps all fourteen extract rows back to exact source lines.
 
 Pending summary contracts: click-to-cast routing, mouseover target/modifier routing, device LED transitions, notch-aware layout, Cosmic combat-log school payload and raid-marker 9–18 rejection. No unrelated test or static declaration receives behavior credit. CMAA2Quality remains current default `3` versus historical page `2`; this is a separately reported default mismatch, not a new publication gap or justification to overwrite current retail state.
 
@@ -26,7 +26,7 @@ FIRST_FRAME_RENDERED added → removed negative control produces exactly **26 �
 
 First startup invocation accidentally used the Mists executable rebuilt by the preceding Mists test in this worktree's own target. Saved classic errors are explicitly invalid retail proof; fingerprint confirmed client-mists. Rebuilding the retail binary restored correct profile and clean startup. No simulator/vendor change made to hide those classic startup errors, and no sibling target used.
 
-[Proof ledger](../../../data/patch-api/evidence/9.2.0-session-2026-10-07/p920-proof.json) records commands, exact code scope/revision, exits, outputs and invalidation. Build-marker syntax failure was corrected before genuine retirement RED; its compiler failure is not credited as behavior proof. Changed Rust manually audited: flat retirement data and existing effect-revealing mark call; input-only sweep specification; bounded repeated-lookup tests. No readability violations, warning suppressions or new placeholders. Runtime proof remains valid after documentation/evidence-only updates.
+[Proof ledger](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/9.2.0-session-2026-10-07/p920-proof.json) records commands, exact code scope/revision, exits, outputs and invalidation. Build-marker syntax failure was corrected before genuine retirement RED; its compiler failure is not credited as behavior proof. Changed Rust manually audited: flat retirement data and existing effect-revealing mark call; input-only sweep specification; bounded repeated-lookup tests. No readability violations, warning suppressions or new placeholders. Runtime proof remains valid after documentation/evidence-only updates.
 
 ## Sweep table
 
@@ -67,18 +67,18 @@ Publication/absence only, not full API compatibility. Every fixture matches exac
 
 All **143 pre-existing source/register/ledger inputs remain byte-identical**. All 54 previous extract-mode outcomes are unchanged; fifteen pre-existing failures, including both modes for 12.0.5/12.0.7/12.1.0, remain untouched. Own extract passes both modes. Extractor unchanged; register parser changes are additive and covered by a concrete HTML/plain-label fixture. No prior register rewritten.
 
-[Artifact validator](../../../data/patch-api/evidence/9.2.0-session-2026-10-07/validate.py) checks every ID/count/literal/source hash, exact gap and negative-control identity, later fixtures, preserved bytes/mode outcomes and proof receipts without rerunning runtime tests.
+[Artifact validator](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/9.2.0-session-2026-10-07/validate.py) checks every ID/count/literal/source hash, exact gap and negative-control identity, later fixtures, preserved bytes/mode outcomes and proof receipts without rerunning runtime tests.
 
-Concurrent 9.2.5 register was read-only. **No retained gap has an add/remove supersession there**. Only `wt-global-api-C_LFGList.DoesEntryTitleMatchPrebuiltTitle-57` intersects: 9.2.5 changed row `wt-global-api-C_LFGList.DoesEntryTitleMatchPrebuiltTitle-145` corrects `Enum.LfgEntryPlaystyle` → `Enum.LFGEntryPlaystyle`, without altering publication. [Comparison](../../../data/patch-api/evidence/9.2.0-session-2026-10-07/p920-p925-intersections.json). One-line placeholder remains first in later-register list; main thread must insert 9.2.5 and recompute fixtures at integration.
+Concurrent 9.2.5 register was read-only. **No retained gap has an add/remove supersession there**. Only `wt-global-api-C_LFGList.DoesEntryTitleMatchPrebuiltTitle-57` intersects: 9.2.5 changed row `wt-global-api-C_LFGList.DoesEntryTitleMatchPrebuiltTitle-145` corrects `Enum.LfgEntryPlaystyle` → `Enum.LFGEntryPlaystyle`, without altering publication. [Comparison](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/9.2.0-session-2026-10-07/p920-p925-intersections.json). One-line placeholder remains first in later-register list; main thread must insert 9.2.5 and recompute fixtures at integration.
 
 All commands explicitly run with this worktree as cwd; own target only. No agents/models, push, merge, canonical working-file edits, sibling worktree edits, vendor/cache edits or hardware changes.
 
 ## Sources
 
-- [Source response](../../../data/patch-api/evidence/9.2.0-session-2026-10-07/p920-fetch.json) — original revision and wikitext.
+- [Source response](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/9.2.0-session-2026-10-07/p920-fetch.json) — original revision and wikitext.
 - [Register](../../../data/patch-api/sources/9.2.0-wikitext-register.json) — every inventory ID.
 - [Spec](../../specs/patch-9-2-0-publication-sweep.md) — proof requirements.
-- [Qualified scan](../../../data/patch-api/evidence/9.2.0-session-2026-10-07/p920-retirement-qualified.txt) and [bare scan](../../../data/patch-api/evidence/9.2.0-session-2026-10-07/p920-retirement-bare.txt) — read-only cached references.
+- [Qualified scan](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/9.2.0-session-2026-10-07/p920-retirement-qualified.txt) and [bare scan](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/9.2.0-session-2026-10-07/p920-retirement-bare.txt) — read-only cached references.
 
 ## See Also
 

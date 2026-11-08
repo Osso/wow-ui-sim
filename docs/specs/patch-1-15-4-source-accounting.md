@@ -20,7 +20,7 @@ Account frozen Warcraft Wiki page600355/revision6172581/timestamp `2024-11-13T21
 
 ## Tests asserting this spec
 
-Own `test_source_accounting.py`: retained RED nine assertion failures against empty-accounting scaffold. Own `test_portable.py`: RED three assertion failures for absent archive. SOURCE GREEN9/9 at `8bb569247`; 19 omission controls plus fabricated/foreign-credit and identity controls. Original44 seals/701134 bytes unchanged;45-member copied archive. Portable GREEN3/3 at `b6edd861e`, fresh copied SOURCE9/9/validator/default byte replay, both serialized seal tamper rejections/exact restorations. Six separate current receipt seals. [Exact command/results](../../data/patch-api/evidence/1.15.4-session-2026-10-09/portable-proof.json). No final gates.
+Own `test_source_accounting.py`: retained RED nine assertion failures against empty-accounting scaffold. Own `test_portable.py`: RED three assertion failures for absent archive. SOURCE GREEN9/9 at `8bb569247`; 19 omission controls plus fabricated/foreign-credit and identity controls. Original44 seals/701134 bytes unchanged;45-member copied archive. Portable GREEN3/3 at `b6edd861e`, fresh copied SOURCE9/9/validator/default byte replay, both serialized seal tamper rejections/exact restorations. Six separate current receipt seals. [Exact command/results](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/1.15.4-session-2026-10-09/portable-proof.json). No final gates.
 
 ## Known gaps (current cycle)
 

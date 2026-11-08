@@ -1,6 +1,0 @@
-{
-  "source_revision": "21aabeaf17f6b45677aa3fc3de0f1eb8b7a10e99",
-  "production_delta_revision": "0745fe84f",
-  "scope": "atlas result policy RED plus capture visibility diagnostic; production unchanged; earlier HUD2/query5/core19/startup/defaultcheck reused",
-  "git_status": "?? .code-index.db\n?? data/patch-api/evidence/ui-widget-manager-state-2026-10-13/later-consumer-attempts/\n?? verification/\n"
-}

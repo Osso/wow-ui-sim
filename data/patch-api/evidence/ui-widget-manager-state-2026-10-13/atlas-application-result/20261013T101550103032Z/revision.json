@@ -1,6 +1,0 @@
-{
-  "source_revision": "d1c5b4cb89cf86a9c4fc18e28dc35a3e294245fc",
-  "production_delta_revision": "0745fe84f",
-  "scope": "atlas result policy RED plus capture visibility diagnostic; production unchanged; earlier HUD2/query5/core19/startup/defaultcheck reused",
-  "git_status": "?? .code-index.db\n?? verification/\n"
-}

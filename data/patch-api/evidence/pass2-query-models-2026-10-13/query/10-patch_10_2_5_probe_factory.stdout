@@ -1,5 +1,0 @@
-
-running 1 test
-test patch_10_2_5_probe_factory::patch_10_2_5_vertex_color_probe_reaches_modeled_endpoint_methods ... ok
-
-test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10946 filtered out; finished in 0.10s

@@ -1,6 +1,0 @@
-{
-  "source_revision": "eba5a1617d82f47c46d4896c8473a280cad856f0",
-  "production_delta_revision": "b12f62435",
-  "scope": "Retail originalprefork owning9.1.0 compile-only; TextColumn passive included,no getter; lead serial200%/6G; anon+kernel working projection; hostlimits unchanged; ownPSIguard1%",
-  "git_status": " M docs/specs/ui-widget-text-with-subtext.md\n?? .code-index.db\n?? handoff/\n?? state/\n?? verification/\n"
-}

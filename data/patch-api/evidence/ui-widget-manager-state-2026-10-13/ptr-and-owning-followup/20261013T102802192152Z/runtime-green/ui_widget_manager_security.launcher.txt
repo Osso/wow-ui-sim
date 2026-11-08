@@ -1,6 +1,0 @@
-Running as unit: wow-widget-green-ui-widget-manager-security-20261013t102802.service
-          Finished with result: success
-Main processes terminated with: code=exited, status=0/SUCCESS
-               Service runtime: 305ms
-             CPU time consumed: 292ms
-                   Memory peak: 86.8M (swap: 0B)

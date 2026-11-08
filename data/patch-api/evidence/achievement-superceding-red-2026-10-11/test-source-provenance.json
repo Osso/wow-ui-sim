@@ -1,7 +1,0 @@
-{
-  "source": "git:37d17371b:tests/c_achievement_info_probes/superceding.rs",
-  "path": "initial-test-source.rs",
-  "sha256": "e3d90fca491481ae3c8a0f92aa68f1b8cad8698ab28ac737ffed8ab859b942bf",
-  "bytes": 601,
-  "matches_initial_input_seal": true
-}

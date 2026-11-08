@@ -1,5 +1,0 @@
-ActiveState=active
-SubState=exited
-Result=success
-ExecMainStatus=0
-MemoryPeak=8234831872

@@ -1,6 +1,0 @@
-{
-  "source_revision": "1ffab60b44706925b9b5cf6807681661168bf2f6",
-  "production_delta_revision": "1ffab60b4",
-  "scope": "FirstSpacer requirednumber selector compilation, no productionmodel/getter",
-  "git_status": " M docs/specs/ui-widget-text-with-subtext.md\n?? .code-index.db\n?? handoff/\n?? state/\n?? verif/\n"
-}

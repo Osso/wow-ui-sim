@@ -1,6 +1,0 @@
-{
-  "status": "OBSERVED_PASS",
-  "logical_cases": 16,
-  "new_case_passed": true,
-  "scope": "New pending-interpolation assertion plus15 existing widget_slider controls, one bounded command"
-}

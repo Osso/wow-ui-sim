@@ -4,7 +4,7 @@ Frozen page **686952 / revision 6778071**, timestamp `2026-07-22T05:34:51Z`, aud
 
 ## Source identity
 
-[Own ledger and frozen inputs](../../../data/patch-api/evidence/1.15.8-session-2026-10-09/ledger.json): raw 279 bytes, SHA256 `9ba11d7e93a8763efb4c4d430e5d44a2cf8711096970ff8170caf6cf190aaa45`; response SHA256 `93295622a450cb5faedb68d6ecf65617d987133d1a22ebe71294bbd74a5a92fc`. Manifest and 101-page registry ending 1.0.0 retained offline. Raw bytes and every occurrence remain literal; no malformed-source repair, deduplication, alias/signature/default reconstruction or expansion.
+[Own ledger and frozen inputs](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/1.15.8-session-2026-10-09/ledger.json): raw 279 bytes, SHA256 `9ba11d7e93a8763efb4c4d430e5d44a2cf8711096970ff8170caf6cf190aaa45`; response SHA256 `93295622a450cb5faedb68d6ecf65617d987133d1a22ebe71294bbd74a5a92fc`. Manifest and 101-page registry ending 1.0.0 retained offline. Raw bytes and every occurrence remain literal; no malformed-source repair, deduplication, alias/signature/default reconstruction or expansion.
 
 ## Literal coverage matrix
 
@@ -22,7 +22,7 @@ Frozen page **686952 / revision 6778071**, timestamp `2026-07-22T05:34:51Z`, aud
 
 Copied base Cargo/client-profile/manifests record **Era and Anniversary configured 11507**, their feature dependencies and manifest hashes separately. Static configuration is neither native11508 measurement nor an unsupported-client/API diagnosis. Source specifies no concrete model behavior: no model test justified, zero runtime/model/native credit.
 
-[Queued successor inputs](../../../data/patch-api/evidence/1.15.8-session-2026-10-09/queued-successor/status.json) retain own immutable copy of sibling 1.15.9 pin/raw source. Sibling source audit reports completion at `07c93b3b5`/`308aeda25`; main gates unperformed, awaiting main integration. Placeholder only: no applied successor register, retirement, equivalence or native credit. Never cross TBC2.5, Retail2.x, Wrath3.4 or WowForever1.60 histories. Main owns actual successors/native/integration.
+[Queued successor inputs](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/1.15.8-session-2026-10-09/queued-successor/status.json) retain own immutable copy of sibling 1.15.9 pin/raw source. Sibling source audit reports completion at `07c93b3b5`/`308aeda25`; main gates unperformed, awaiting main integration. Placeholder only: no applied successor register, retirement, equivalence or native credit. Never cross TBC2.5, Retail2.x, Wrath3.4 or WowForever1.60 histories. Main owns actual successors/native/integration.
 
 ## Development proof
 
@@ -31,11 +31,11 @@ Own eight fixtures: RED eight expected assertion failures against empty accounti
 ## Historical proof
 
 Original `seals.json` pins **23 inputs**, 660,202 bytes total; largest file 219,034 bytes, all under 5 MB. RED/GREEN logs and proof ledger included. Frozen default generator flags `[]` yields retained empty register; no all-flags expansion. Original seal map SHA256 `67df0a1ec34d3cad5b8457d3f08ca95f3f677e35eda351490b6a8d6461e6f0a4` remains unchanged after controls. Five later artifacts/map have independent `receipt-seals.json`; these do not extend or rewrite original seals. 
-[Portable proof](../../../data/patch-api/evidence/1.15.8-session-2026-10-09/portable-proof.json) at `b02477039`: historical validator exit0, both serialized `ledger.json` contract omission and `green.log` fabricated success rejected at exact seals (exit1); original bytes/hashes restored. All 23 originals/map unchanged afterward.
+[Portable proof](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/1.15.8-session-2026-10-09/portable-proof.json) at `b02477039`: historical validator exit0, both serialized `ledger.json` contract omission and `green.log` fabricated success rejected at exact seals (exit1); original bytes/hashes restored. All 23 originals/map unchanged afterward.
 
 Fresh archive **24 members**, **98,432 bytes**, SHA256 `53e386b8e40c862419533bb54d0de964340872461e5e96153a04a671451e2fed`; copied fresh-process validator exit0 and SOURCE8/8. No Git/target/current tools/runtime/cache inputs in archive. Frozen default generator flags `[]` reproduces retained JSON byte-for-byte; stock empty inventory is not parity. Frozen extractor retained unchanged, not executed or expanded. No all-flags regression or final gates performed.
 
-[Replay instructions](../../../data/patch-api/evidence/1.15.8-session-2026-10-09/REPLAY.md) use copied historical tools and source only. Exact commands, member hashes, restoration hashes and logs retained. Later portable receipts are separately sealed; no original proof rewritten. Zero native/final acceptance claim.
+[Replay instructions](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/1.15.8-session-2026-10-09/REPLAY.md) use copied historical tools and source only. Exact commands, member hashes, restoration hashes and logs retained. Later portable receipts are separately sealed; no original proof rewritten. Zero native/final acceptance claim.
 
 ## Integrated evidence retention — 2026-10-09
 
@@ -44,8 +44,8 @@ Fresh archive **24 members**, **98,432 bytes**, SHA256 `53e386b8e40c862419533bb5
 ## Sources
 
 - [Spec](../../specs/patch-1-15-8-source-accounting.md).
-- [Frozen raw source](../../../data/patch-api/evidence/1.15.8-session-2026-10-09/source.wikitext) — exact cached Warcraft Wiki content, attributed by source-pin request URL; cache README records CC BY-SA 4.0.
-- [Own fixtures](../../../data/patch-api/evidence/1.15.8-session-2026-10-09/test_source_accounting.py).
+- [Frozen raw source](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/1.15.8-session-2026-10-09/source.wikitext) — exact cached Warcraft Wiki content, attributed by source-pin request URL; cache README records CC BY-SA 4.0.
+- [Own fixtures](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/1.15.8-session-2026-10-09/test_source_accounting.py).
 
 ## See Also
 

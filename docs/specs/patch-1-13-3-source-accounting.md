@@ -1,6 +1,6 @@
 # Patch 1.13.3 frozen SOURCE accounting
 
-Bounded Classic Era page audit from the [immutable source pin](../../data/patch-api/evidence/1.13.3-session-2026-10-09/source-pin.json). [Audit wiki](../wiki/investigations/patch-1-13-3-api-audit.md) records derivation/proof epochs. Source accounting does not grant native or runtime parity.
+Bounded Classic Era page audit from the [immutable source pin](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/1.13.3-session-2026-10-09/source-pin.json). [Audit wiki](../wiki/investigations/patch-1-13-3-api-audit.md) records derivation/proof epochs. Source accounting does not grant native or runtime parity.
 
 ## What it must do
 

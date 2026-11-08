@@ -4,7 +4,7 @@ Bounded source/contract slice of the frozen full registry through 1.0.0. Base `a
 
 ## Provenance and literal identity
 
-Frozen page **686953**, revision **6838475**, timestamp **2026-08-20T15:48:09Z**. Response **681 bytes**; raw **399 bytes**, SHA-256 `1ded7ad90515d5437907eccd15d367592d10ef876414fa6801b8dd53d15177e2`; response SHA-256 `131f2318b95b29a9140f76c4fde87d9c3ed0564df7fbd5486cae8035075059bc`. Original committed manifest/input pair untouched. Own [evidence](../../../data/patch-api/evidence/2.5.5-session-2026-10-09/) retains exact response, source pin, full frozen manifest/registry, copied historical tools and actual configured inputs.
+Frozen page **686953**, revision **6838475**, timestamp **2026-08-20T15:48:09Z**. Response **681 bytes**; raw **399 bytes**, SHA-256 `1ded7ad90515d5437907eccd15d367592d10ef876414fa6801b8dd53d15177e2`; response SHA-256 `131f2318b95b29a9140f76c4fde87d9c3ed0564df7fbd5486cae8035075059bc`. Original committed manifest/input pair untouched. Own [evidence](https://github.com/Osso/wow-ui-sim/tree/183edc381/data/patch-api/evidence/2.5.5-session-2026-10-09) retains exact response, source pin, full frozen manifest/registry, copied historical tools and actual configured inputs.
 
 Literal source: “This is the pre-patch for” the linked **Burning Crusade Classic Anniversary Edition**, TOC **20505**. This explicitly establishes the Classic/TBC source boundary, not historical retail 2.x or an assumption based on version/profile name. The linked page's content, native build state and pre-patch behavior are unexpanded/unmeasured.
 
@@ -32,7 +32,7 @@ Retail 3.x, Cata 4.x, Wrath Classic 3.4.x and Era 1.x are foreign histories, not
 
 ## Actual configured interfaces, separately observed
 
-[Historical observation](../../../data/patch-api/evidence/2.5.5-session-2026-10-09/profile-observation.json) derives from copied base Rust interface/cache arms, complete Cargo feature graph and committed manifests; replay does not consult current runtime files.
+[Historical observation](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/2.5.5-session-2026-10-09/profile-observation.json) derives from copied base Rust interface/cache arms, complete Cargo feature graph and committed manifests; replay does not consult current runtime files.
 
 | Feature/cache | Configured interface | Manifest paths / TOCs / Mainline TOCs |
 |---|---:|---:|
@@ -50,9 +50,9 @@ Copied generator supports retail/mists-classic/classic-era; copied publication c
 
 ## Historical proof and ownership
 
-Own source tests exercise external serialized accounting, not runtime implementation shape. RED retained: required derived summary fails against the exact empty validator; test/stub/hash/log scope saved. Implementation, seals and source fixtures committed before GREEN verification. At `6566d762f`, SOURCE fixtures GREEN **10/10**, own historical validator exit **0** with **29 seals**. [Source proof ledger](../../../data/patch-api/evidence/2.5.5-session-2026-10-09/source-proof.json) records full tested revision, argv/cwd/logs and exact tested input hashes. Receipts add three seals (32 total) without changing tested bytes; no fresh test rerun or broad/final gate claimed.
+Own source tests exercise external serialized accounting, not runtime implementation shape. RED retained: required derived summary fails against the exact empty validator; test/stub/hash/log scope saved. Implementation, seals and source fixtures committed before GREEN verification. At `6566d762f`, SOURCE fixtures GREEN **10/10**, own historical validator exit **0** with **29 seals**. [Source proof ledger](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/2.5.5-session-2026-10-09/source-proof.json) records full tested revision, argv/cwd/logs and exact tested input hashes. Receipts add three seals (32 total) without changing tested bytes; no fresh test rerun or broad/final gate claimed.
 
-Historical replay uses relocated `__file__`, copied original source/tools/configuration/ledger/proof and byte seals, not original Git objects, target, current tools/source/runtime or live cache. At `4de916d8e`, serialized ledger and GREEN-log tamper controls each exit **1** at their exact seals and restore original bytes/hashes; fresh relocated replay exits **0**, derives the same source summary and validates **32 historical seals**, PATH `/nonexistent`, no Git/target/current tools/current runtime. [Portable receipt](../../../data/patch-api/evidence/2.5.5-session-2026-10-09/portable-proof.json) and [control log](../../../data/patch-api/evidence/2.5.5-session-2026-10-09/portable-controls.log) retain revision/argv/cwd, rejection traces, original/tampered/restored hashes and every archive member hash.
+Historical replay uses relocated `__file__`, copied original source/tools/configuration/ledger/proof and byte seals, not original Git objects, target, current tools/source/runtime or live cache. At `4de916d8e`, serialized ledger and GREEN-log tamper controls each exit **1** at their exact seals and restore original bytes/hashes; fresh relocated replay exits **0**, derives the same source summary and validates **32 historical seals**, PATH `/nonexistent`, no Git/target/current tools/current runtime. [Portable receipt](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/2.5.5-session-2026-10-09/portable-proof.json) and [control log](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/2.5.5-session-2026-10-09/portable-controls.log) retain revision/argv/cwd, rejection traces, original/tampered/restored hashes and every archive member hash.
 
 Archive **230038 bytes**, SHA-256 `c02af17f6b490e7c2f65cde9970b108e266d34543bab6f07eeff0955965f4cb8`; **33 members** include the original 32-input seal map. Outer map now records **35 seals**, including archive/receipts; no original source/test/validator/tool/configuration/ledger bytes changed. Original 10/10 proof remains applicable, not a fresh rerun or final acceptance. Capture refuses to overwrite a sealed archive; repeat replay by extracting it into a fresh root and running relocated `validate.py`. Archive freezes its own map; later receipt additions do not retroactively change proof scope.
 
@@ -69,7 +69,7 @@ Actual same-line 2.5.6 source is now integrated at `93bcc6afe`. It supplies no e
 ## Sources
 
 - [Raw](../../../data/patch-api/sources/2.5.5-api-changes.wikitext), [plaintext](../../../data/patch-api/sources/2.5.5-api-changes.txt), [ledger](../../../data/patch-api/sources/2.5.5-page-coverage.json).
-- [Own spec](../../specs/patch-2-5-5-source-accounting.md), [historical evidence](../../../data/patch-api/evidence/2.5.5-session-2026-10-09/).
+- [Own spec](../../specs/patch-2-5-5-source-accounting.md), [historical evidence](https://github.com/Osso/wow-ui-sim/tree/183edc381/data/patch-api/evidence/2.5.5-session-2026-10-09).
 - Read-only templates: canonical 3.4.3 source accounting, sibling `p256-source` source accounting. No foreign contracts copied as proof.
 
 ## See Also

@@ -13,8 +13,8 @@ Audit pinned Warcraft Wiki page 83383, revision 6471405, against current retailâ
 ## How it works
 
 - [Page audit](../wiki/investigations/patch-8-2-5-api-audit.md).
-- [Proof index](../../data/patch-api/evidence/8.2.5-session-2026-10-08/p825-proof.json).
-- [Per-ID gap review](../../data/patch-api/evidence/8.2.5-session-2026-10-08/p825-gap-review.json).
+- [Proof index](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/8.2.5-session-2026-10-08/p825-proof.json).
+- [Per-ID gap review](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/8.2.5-session-2026-10-08/p825-gap-review.json).
 
 ## Implementation inventory
 

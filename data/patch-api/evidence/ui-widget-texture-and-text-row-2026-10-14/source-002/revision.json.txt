@@ -1,6 +1,0 @@
-{
-  "source_revision": "484e93c0639ec3db0fe6f2c8db60a3e2e947c3bc",
-  "production_delta_revision": "398c427fd",
-  "scope": "OrdinaryPTR CLI build for fullnormalstartup diagnostic, no runtimeclaim",
-  "git_status": " M docs/specs/ui-widget-text-with-subtext.md\n?? .code-index.db\n?? handoff/\n?? state/\n?? verification/\n"
-}

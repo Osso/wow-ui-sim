@@ -1,1 +1,0 @@
-{"registers_reproduced": 38, "input_preservation": "pinned base/audit git trees"}

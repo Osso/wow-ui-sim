@@ -1,6 +1,0 @@
-{
-  "source_revision": "5ad0ecfcb0742a06e70f2ac053c05c90f4329064",
-  "production_delta_revision": "85b5494d2",
-  "scope": "Retry after shared headroom changed: passive SpellDisplay nine PTR RED candidates; no-run compile only, original denied admission retained; no getter producer",
-  "git_status": "?? .code-index.db\n?? verification/\n"
-}

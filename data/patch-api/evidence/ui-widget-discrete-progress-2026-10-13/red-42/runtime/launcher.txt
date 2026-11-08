@@ -1,6 +1,0 @@
-Running as unit: wow-widget-discrete-runtime-20261013t120502185797z.service
-          Finished with result: exit-code
-Main processes terminated with: code=exited, status=101/n/a
-               Service runtime: 841ms
-             CPU time consumed: 750ms
-                   Memory peak: 153.1M (swap: 0B)

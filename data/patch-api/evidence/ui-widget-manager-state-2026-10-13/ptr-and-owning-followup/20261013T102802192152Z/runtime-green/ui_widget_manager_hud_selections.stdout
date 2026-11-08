@@ -1,7 +1,0 @@
-
-running 3 tests
-test ui_widget_manager_hud_selections::hud_selection_defaults_return_exactly_one_number_zero ... ok
-test ui_widget_manager_hud_selections::hud_selection_queries_read_live_state_and_isolate_environments ... ok
-test ui_widget_manager_hud_selections::hud_selection_queries_return_distinct_supplied_values_without_set_catalog ... ok
-
-test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 10138 filtered out; finished in 0.43s

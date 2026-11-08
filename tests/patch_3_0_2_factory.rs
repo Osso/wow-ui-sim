@@ -9,7 +9,7 @@ use wow_ui_sim::lua_api::WowLuaEnv;
 const REGISTER: &str = include_str!("../data/patch-api/sources/3.0.2-wikitext-register.json");
 const SPEC: SweepSpec = SweepSpec {
     register: REGISTER,
-    known_gaps: include_str!("../data/patch-api/evidence/3.0.2-factory-2026-10-09/known-gaps.json"),
+    known_gaps: include_str!("data/patch-factory/3.0.2-factory-2026-10-09/known-gaps.json"),
     row_count: 373,
     register_env: "WOW_SIM_P302_FACTORY_REGISTER",
     out_env: "WOW_SIM_P302_FACTORY_OUT",
@@ -107,7 +107,7 @@ fn patch_3_0_2_exact_factory_publication_gaps() {
 fn literal_register_keeps_all_373_original_occurrences() {
     let current: serde_json::Value = serde_json::from_str(REGISTER).unwrap();
     let original: serde_json::Value = serde_json::from_str(include_str!(
-        "../data/patch-api/evidence/3.0.2-session-2026-10-09/original/register.json"
+        "data/patch-factory/3.0.2-session-2026-10-09/original/register.json"
     ))
     .unwrap();
     assert_eq!(current, original);

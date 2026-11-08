@@ -1,6 +1,0 @@
-{
-  "exit": 0,
-  "stdout": "{\"mode\": \"move\", \"display\": \":22\", \"window\": \"0x800002\", \"before\": {\"x\": 797, \"y\": 335, \"mask\": 4}, \"point\": [1783, 926], \"native_backend\": \"XTest\", \"press_release_count\": 0}\n",
-  "stderr": "",
-  "point_basis": "native screenshot plus canvasDumpTree; actual hover query must authenticate mapping before click"
-}

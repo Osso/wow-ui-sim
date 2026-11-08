@@ -30,7 +30,7 @@ Audit the pinned Warcraft Wiki page 686956 revision 6778080 as Mists Classic, no
 
 ## Known gaps (current cycle)
 
-None in the source-listed inventory. Committed proof at `0a030682a` passes the [branch gate](../../data/patch-api/evidence/5.5.2-session-2026-10-08/gate-summary.json): 44/44 clean and 45/45 after the synthetic later audit. All requested tests/checks and both negative controls pass within the documented boundaries.
+None in the source-listed inventory. Committed proof at `0a030682a` passes the [branch gate](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/5.5.2-session-2026-10-08/gate-summary.json): 44/44 clean and 45/45 after the synthetic later audit. All requested tests/checks and both negative controls pass within the documented boundaries.
 
 ## Out of scope
 

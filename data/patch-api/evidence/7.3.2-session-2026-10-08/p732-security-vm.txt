@@ -1,3 +1,0 @@
-
-STDERR:
-/usr/bin/grep: /home/osso/Repos/rilua/src/stdlib/taint.rs: No such file or directory

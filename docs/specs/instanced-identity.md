@@ -19,7 +19,7 @@ INFERRED policies: false/empty default map/player-owned/control context; existin
 
 - [x] `UnitCreatureID` returns nil whenever the shared host-backed unit identity is secret, for secure and tainted callers. Clearing the context restores the concrete creature ID without changing caller taint. Player GUIDs continue to yield nil.
 
-Implemented from `retail-12-0-5`, the first supported epoch after 12.0.1; earlier epochs preserve their existing behavior. `tests/patch_12_0_1_extract2.rs::patch_12_0_1_creature_id_follows_identity_visibility` uses Hogger creature ID 448 and the existing instance context. RED on unchanged `edb893503` production; GREEN after the getter consumes the existing predicate. No additional identity classifier or world acquisition is introduced. [Per-row proof](../../data/patch-api/evidence/12.0.1-session-2026-10-06/p1201-extract2-proof.json).
+Implemented from `retail-12-0-5`, the first supported epoch after 12.0.1; earlier epochs preserve their existing behavior. `tests/patch_12_0_1_extract2.rs::patch_12_0_1_creature_id_follows_identity_visibility` uses Hogger creature ID 448 and the existing instance context. RED on unchanged `edb893503` production; GREEN after the getter consumes the existing predicate. No additional identity classifier or world acquisition is introduced. [Per-row proof](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/12.0.1-session-2026-10-06/p1201-extract2-proof.json).
 
 ## How it works
 
@@ -45,7 +45,7 @@ Implemented from `retail-12-0-5`, the first supported epoch after 12.0.1; earlie
 
 Commit `a4cce2db1`. RED: 0 PASS / 6 FAIL. GREEN: 6/6 inside a 404/404 run with control suites; `cargo fmt --check` exit0; startup `lua-errors` `[]`. This section supersedes any wording above that describes the slice as staged, unapplied or unrun.
 
-Main accepts an independent GPT-6.1-sol source review (no test rerun): **ACCEPT WITH QUALIFICATIONS**, [report](../../data/patch-api/evidence/12.0.5-session-2026-10-03/b98-verify-identity.md) SHA256 `70f728554b59a734ba418b08dbe1c668e3fd38c851f8ca831e4f915357516b36`. Partial: raid/pet/vehicle identities unmodeled and precedence inferred; default party names changed from secret to public on retail 12.0.5. Requirement checkboxes are left as authored; the report lists which are earned and to what bound. Bounded simulator proof, not native parity.
+Main accepts an independent GPT-6.1-sol source review (no test rerun): **ACCEPT WITH QUALIFICATIONS**, [report](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/12.0.5-session-2026-10-03/b98-verify-identity.md) SHA256 `70f728554b59a734ba418b08dbe1c668e3fd38c851f8ca831e4f915357516b36`. Partial: raid/pet/vehicle identities unmodeled and precedence inferred; default party names changed from secret to public on retail 12.0.5. Requirement checkboxes are left as authored; the report lists which are earned and to what bound. Bounded simulator proof, not native parity.
 
 [Page accounting](../../data/patch-api/sources/12.0.5-page-coverage.json): prose-2026-04-10-197 partial-development-green, prose-2026-04-10-198 partial-development-green, prose-2026-04-10-199 partial-development-green under capability `instanced-identity`; **119 capabilities/362 IDs; 42 pending /262 bounded /23 partial /35 metadata**.
 

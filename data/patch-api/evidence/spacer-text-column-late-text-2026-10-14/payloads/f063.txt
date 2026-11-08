@@ -1,5 +1,0 @@
-{
-  "reason": "host memory PSI full avg10 > 1%",
-  "observed": 1.13,
-  "unit": "private-unit-5.service"
-}

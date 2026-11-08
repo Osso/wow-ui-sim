@@ -1,8 +1,0 @@
-[
-  {
-    "exit": 0,
-    "expected": 2,
-    "label": "consumer",
-    "selector": "mount_item_player_choice::"
-  }
-]

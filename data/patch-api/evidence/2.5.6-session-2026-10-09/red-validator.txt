@@ -1,5 +1,0 @@
-"""Temporary RED stub: source accounting not implemented yet."""
-
-
-def validate(**inputs):
-    return {}

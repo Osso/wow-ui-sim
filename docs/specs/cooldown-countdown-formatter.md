@@ -43,7 +43,7 @@
 
 Commit `a4cce2db1`. RED: none: existing implementation, no code change. GREEN: 8/8 public (rerun by the auditor on a prebuilt binary); 8 renderer cases from saved batch36 evidence, not rerun inside a 404/404 run with control suites; `cargo fmt --check` exit0; startup `lua-errors` `[]`. This section supersedes any wording above that describes the slice as staged, unapplied or unrun.
 
-Main accepts an independent GPT-6.1-sol source review (no test rerun): **ACCEPT WITH QUALIFICATIONS**, [report](../../data/patch-api/evidence/12.0.5-session-2026-10-03/b98-verify-outfit-formatter.md) SHA256 `b4386140882065dcdb77c094ae3f83ef204f4f74d76aee06633e0f01d657b870`. Credit from existing tests; the renderer cases were not re-executed on the current tree. Requirement checkboxes are left as authored; the report lists which are earned and to what bound. Bounded simulator proof, not native parity.
+Main accepts an independent GPT-6.1-sol source review (no test rerun): **ACCEPT WITH QUALIFICATIONS**, [report](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/12.0.5-session-2026-10-03/b98-verify-outfit-formatter.md) SHA256 `b4386140882065dcdb77c094ae3f83ef204f4f74d76aee06633e0f01d657b870`. Credit from existing tests; the renderer cases were not re-executed on the current tree. Requirement checkboxes are left as authored; the report lists which are earned and to what bound. Bounded simulator proof, not native parity.
 
 [Page accounting](../../data/patch-api/sources/12.0.5-page-coverage.json): prose-2026-03-25-115 bounded-coverage, prose-2026-03-31-161 bounded-coverage under capability `cooldown-countdown-formatter`; **119 capabilities/362 IDs; 42 pending /262 bounded /23 partial /35 metadata**.
 

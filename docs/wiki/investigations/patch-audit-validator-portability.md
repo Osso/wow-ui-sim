@@ -28,7 +28,7 @@ Merged audit validators prove historical executions, not new executions against 
 
 ## Historical inputs remain protected
 
-[Shared helper](../../../tools/patch_audit_validation.py) allows only the exact original-to-final SHA-256 pairs for the 9.2.5 ledger and known-gap fixture. Their replacement bytes are pinned to the merged [8.2.5 audit](patch-8-2-5-api-audit.md) endpoint `127aa3724035d9e668143d9b28aaa4cf6e176fa1`; original bytes are from `7ff3dc540^`. The sole closure is `wt-global-api-C_ClubFinder.ReportPosting-117`, listed in [later-gap closures](../../../data/patch-api/evidence/8.2.5-session-2026-10-08/p825-later-gap-closures.json).
+[Shared helper](../../../tools/patch_audit_validation.py) allows only the exact original-to-final SHA-256 pairs for the 9.2.5 ledger and known-gap fixture. Their replacement bytes are pinned to the merged [8.2.5 audit](patch-8-2-5-api-audit.md) endpoint `127aa3724035d9e668143d9b28aaa4cf6e176fa1`; original bytes are from `7ff3dc540^`. The sole closure is `wt-global-api-C_ClubFinder.ReportPosting-117`, listed in [later-gap closures](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/8.2.5-session-2026-10-08/p825-later-gap-closures.json).
 
 Original before-hashes stay unchanged. Arbitrary row edits, unrelated file replacements and even whitespace additions to the approved replacement fail. Historical accounting reads the old Git blob only after checking current bytes against that exact allowance. The 9.2.5 audit still proves its original 33 bounded rows and 34 gaps; current follow-up accounting remains 34 bounded rows and 33 gaps.
 
@@ -48,7 +48,7 @@ Evidence storage rule: never inline directory inventories; use Git tree IDs per 
 
 Rule: no live-file comparisons outside the audit's own session directory; prove shared files at recorded Git revisions. Historical register sets use `historical_registers`, not today's global glob. Own immutable session records retain their seals; missing history remains an error.
 
-At `45a64bef3`, 27 of 28 validators passed both phases. Integrated 6.2.4 failed on ignored scratch `PLAN.md` and also compared shared runtime/tool/source files and prior validators with live bytes. The repair pins those checks to recorded revisions, removes the two uncommitted scratch entries, and preserves counts, gap sets, negative control, receipts/log hashes and rebase mapping. Its [note](../../../data/patch-api/evidence/6.2.4-session-2026-10-08/integrated/validator-portability-note.md) explains preservation of the original historical-manifest seal.
+At `45a64bef3`, 27 of 28 validators passed both phases. Integrated 6.2.4 failed on ignored scratch `PLAN.md` and also compared shared runtime/tool/source files and prior validators with live bytes. The repair pins those checks to recorded revisions, removes the two uncommitted scratch entries, and preserves counts, gap sets, negative control, receipts/log hashes and rebase mapping. Its [note](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/6.2.4-session-2026-10-08/integrated/validator-portability-note.md) explains preservation of the original historical-manifest seal.
 
 ## Compact rebase evidence
 
@@ -61,8 +61,8 @@ The four remaining mappings have no `pinned_inputs`: 6.1.0 retains individual bl
 ## Sources
 
 - [Shared helper and tests](../../../tools/test_patch_audit_validation.py).
-- [8.2.5 input preservation](../../../data/patch-api/evidence/8.2.5-session-2026-10-08/p825-input-preservation.json).
-- [9.2.5 historical validator](../../../data/patch-api/evidence/9.2.5-session-2026-10-07/validate.py).
+- [8.2.5 input preservation](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/8.2.5-session-2026-10-08/p825-input-preservation.json).
+- [9.2.5 historical validator](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/9.2.5-session-2026-10-07/validate.py).
 
 ## See Also
 

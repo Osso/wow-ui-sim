@@ -28,12 +28,12 @@ No broad/final gate, client/build launch, native proof or parent acceptance. Mai
 
 ## Sources
 
-- [Literal ledger](../../../data/patch-api/evidence/1.6.0-session-2026-10-09/ledger.json) — derived only from own frozen inputs
-- [Own proof ledger](../../../data/patch-api/evidence/1.6.0-session-2026-10-09/proof-ledger.json) — original exact execution contexts and full streams
-- [Later actual ledger](../../../data/patch-api/evidence/1.6.0-session-2026-10-09/later-proof-ledger.json) — actual copied execution epoch, scoped hashes and unaltered full streams
-- [HANDOFF](../../../data/patch-api/evidence/1.6.0-session-2026-10-09/HANDOFF.md) / [REPLAY](../../../data/patch-api/evidence/1.6.0-session-2026-10-09/REPLAY.md) — bounded delivery and reproducible copied commands
+- [Literal ledger](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/1.6.0-session-2026-10-09/ledger.json) — derived only from own frozen inputs
+- [Own proof ledger](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/1.6.0-session-2026-10-09/proof-ledger.json) — original exact execution contexts and full streams
+- [Later actual ledger](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/1.6.0-session-2026-10-09/later-proof-ledger.json) — actual copied execution epoch, scoped hashes and unaltered full streams
+- [HANDOFF](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/1.6.0-session-2026-10-09/HANDOFF.md) / [REPLAY](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/1.6.0-session-2026-10-09/REPLAY.md) — bounded delivery and reproducible copied commands
 - [Spec](../../specs/patch-1-6-0-source-accounting.md) — bounded contract
-- [Governing handoff](../../../data/patch-api/evidence/handoff-laptop-to-agent-server/HANDOFF.md) — main workflow; explicit child restrictions override operations
+- [Governing handoff](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/handoff-laptop-to-agent-server/HANDOFF.md) — main workflow; explicit child restrictions override operations
 
 ## See Also
 

@@ -1,8 +1,0 @@
-lua-errors.stderr:48: Lua error: Failed to create frame __Blizzard_UIPanels_Game_20279: Lua error: layer children on __Blizzard_UIPanels_Game_20279: Action[SetPoint] failed because[Cannot anchor to itself]: attempted from: Frame:SetPoint.
-lua-errors.stderr:51: Lua error: Lua Error: Failed to create frame __Blizzard_UIPanels_Game_20279: Lua error: layer children on __Blizzard_UIPanels_Game_20279: Action[SetPoint] failed because[Cannot anchor to itself]: attempted from: Frame:SetPoint.
-lua-errors.stderr:235: Lua errors: 2 unique, 2 occurrence(s)
-lua-errors.stderr:237:   Blizzard_UIPanels_Game: 2 occurrence(s)
-completion.stderr:61: Lua error: Failed to create frame __Blizzard_UIPanels_Game_20279: Lua error: layer children on __Blizzard_UIPanels_Game_20279: Action[SetPoint] failed because[Cannot anchor to itself]: attempted from: Frame:SetPoint.
-completion.stderr:64: Lua error: Lua Error: Failed to create frame __Blizzard_UIPanels_Game_20279: Lua error: layer children on __Blizzard_UIPanels_Game_20279: Action[SetPoint] failed because[Cannot anchor to itself]: attempted from: Frame:SetPoint.
-completion.stderr:285: FOUR_PROFILE_STARTUP_COMPLETE
-completion.stderr:332: === Frame Tree ===

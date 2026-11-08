@@ -1,6 +1,0 @@
-Running as unit: wow-original-prefork-chat-20261013t141805978605z.service
-          Finished with result: success
-Main processes terminated with: code=exited, status=0/SUCCESS
-               Service runtime: 12.013s
-             CPU time consumed: 13.493s
-                   Memory peak: 1.4G (swap: 48K)

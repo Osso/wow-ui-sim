@@ -1,6 +1,0 @@
-{
-  "source_revision": "bde7ea277e86f9ad17f7135b3cd676f80e73057b",
-  "production_delta_revision": "bde7ea277",
-  "scope": "Fullcargoformatcheck once atfinalintegratedRustsourcebde; no writes or runtimeacceptance; parentlimits unchanged",
-  "git_status": "?? .code-index.db\n?? verification/\n"
-}

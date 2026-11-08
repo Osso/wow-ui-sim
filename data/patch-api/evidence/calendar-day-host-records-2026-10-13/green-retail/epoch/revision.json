@@ -1,6 +1,0 @@
-{
-  "source_revision": "396f0c9a6ba705f9fd610d0a2c198ef910f67c4f",
-  "production_delta_revision": "396f0c9a6",
-  "scope": "Calendar host-only day producers committed396f; Retail integration and normal binaries compile; green/runtime/security/realconsumer/indexregressions/startup pending; initialRED immutable",
-  "git_status": "?? .code-index.db\n?? verification/\n"
-}

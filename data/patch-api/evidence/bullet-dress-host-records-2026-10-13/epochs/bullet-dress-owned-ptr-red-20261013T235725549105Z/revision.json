@@ -1,6 +1,0 @@
-{
-  "source_revision": "733399c38f48158206f8b3144cb139a52c537d9f",
-  "production_delta_revision": "76e8b8309",
-  "scope": "PTR combined passive Bullet7/dressability5/unchanged cached PlayerChoice1 RED; getter production unchanged; full integration no-run",
-  "git_status": " M data/patch-api/evidence/bullet-dress-initial-api-red-2026-10-13/README.md\n M data/patch-api/evidence/bullet-dress-initial-api-red-2026-10-13/ptr/runtime-dressability-api-red/launcher.txt\n?? .code-index.db\n?? verification/\n"
-}

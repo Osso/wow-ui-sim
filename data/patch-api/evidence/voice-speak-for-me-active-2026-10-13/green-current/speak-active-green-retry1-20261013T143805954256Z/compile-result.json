@@ -1,7 +1,0 @@
-{
-  "source": "a8a148e98",
-  "json_records": 741,
-  "compiler_messages": [],
-  "terminal": "ActiveState=active\nSubState=exited\nResult=success\nExecMainExitTimestamp=Tue 2026-10-13 09:40:34 CDT\nExecMainCode=1\nExecMainStatus=0\nMemoryPeak=6446710784\nCPUUsageNSec=418878446000\n",
-  "build_finished": true
-}

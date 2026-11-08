@@ -1,5 +1,0 @@
-{
-  "exit": 1,
-  "stdout": "",
-  "stderr": "Traceback (most recent call last):\n  File \"<PRIVATE_G>/capture-native.py\", line 4, in <module>\n    from PIL import Image\nModuleNotFoundError: No module named 'PIL'\n"
-}

@@ -1,6 +1,0 @@
-
-running 1 test
-test admin_spell_effects_api::test_damage_fires_unit_health_event ... ok
-
-test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 8022 filtered out; finished in 0.15s
-

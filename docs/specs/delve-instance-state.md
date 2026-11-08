@@ -38,7 +38,7 @@ Cached retail `Blizzard_APIDocumentationGenerated/InstanceDocumentation.lua:170â
 
 Commit `a4cce2db1`. RED: 1 PASS / 4 FAIL. GREEN: 5/5 inside a 404/404 run with control suites; `cargo fmt --check` exit0; startup `lua-errors` `[]`. This section supersedes any wording above that describes the slice as staged, unapplied or unrun.
 
-Main accepts an independent GPT-6.1-sol source review (no test rerun): **ACCEPT WITH QUALIFICATIONS**, [report](../../data/patch-api/evidence/12.0.5-session-2026-10-03/b98-verify-events-commands.md) SHA256 `72c3dbad682b576a045792d498f279ba54e7ef7b6094d5364da3d8a5817b4ac3`. Composition with the world flag and the unchanged type string are inferred. Requirement checkboxes are left as authored; the report lists which are earned and to what bound. Bounded simulator proof, not native parity.
+Main accepts an independent GPT-6.1-sol source review (no test rerun): **ACCEPT WITH QUALIFICATIONS**, [report](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/12.0.5-session-2026-10-03/b98-verify-events-commands.md) SHA256 `72c3dbad682b576a045792d498f279ba54e7ef7b6094d5364da3d8a5817b4ac3`. Composition with the world flag and the unchanged type string are inferred. Requirement checkboxes are left as authored; the report lists which are earned and to what bound. Bounded simulator proof, not native parity.
 
 [Page accounting](../../data/patch-api/sources/12.0.5-page-coverage.json): prose-2026-03-31-181 bounded-coverage under capability `delve-instance-state`; **119 capabilities/362 IDs; 42 pending /262 bounded /23 partial /35 metadata**.
 

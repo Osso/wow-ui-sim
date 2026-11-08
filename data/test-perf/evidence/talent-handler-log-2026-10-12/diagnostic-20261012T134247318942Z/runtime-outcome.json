@@ -1,4 +1,0 @@
-{
-  "exit": 0,
-  "scope": "Keep original assertion/timeout outcome. Logging perturbs latency; do not promote observed PASS or erase FAIL."
-}

@@ -1,8 +1,0 @@
-{
-  "at": "2026-10-12T11:30:03.025121+00:00",
-  "unit": "wow-quest-currency-profile-gate-retry2-20261012t110200578005z.service",
-  "exit": 0,
-  "stdout": "ActiveState=active\nSubState=exited\nMainPID=0\nResult=success\nControlGroup=\n",
-  "stderr": "",
-  "scope": "Main controller terminal evidence; actual completed worker/full outputs independently2690verified, not service exit as testproof."
-}

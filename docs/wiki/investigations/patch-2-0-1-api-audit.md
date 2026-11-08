@@ -18,21 +18,21 @@ Explicit raw qualifications: 33 rows under/marked 2.0.3, four under 2.0.4, five 
 
 ## Successor boundary
 
-[Original successor receipt](../../../data/patch-api/evidence/2.0.1-session-2026-10-09/successor-boundary.json) seals 74 actual later retail registers from this checkout, 41 same-symbol mentions and zero supersession credit. Name overlap is not tuple/behavior parity or proof of indirect changes. Classic histories excluded. Queued 2.1.0/2.2.0/2.3.0/2.4.0/2.4.2/3.0.2/3.0.3/3.0.8 remain main-owned, ordered and unused for supersession even where template artifacts are available.
+[Original successor receipt](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/2.0.1-session-2026-10-09/successor-boundary.json) seals 74 actual later retail registers from this checkout, 41 same-symbol mentions and zero supersession credit. Name overlap is not tuple/behavior parity or proof of indirect changes. Classic histories excluded. Queued 2.1.0/2.2.0/2.3.0/2.4.0/2.4.2/3.0.2/3.0.3/3.0.8 remain main-owned, ordered and unused for supersession even where template artifacts are available.
 
 No backing-state/runtime probe performed. Existing modern simulator state cannot by itself establish historical secure execution, command transitions, event timing, Lua GC/performance or persistence. No new runtime/model proposal made; main owns supported publication, native comparison and integration/final gates.
 
 ## Original versus current immutable evidence
 
-[Original manifest](../../../data/patch-api/evidence/2.0.1-session-2026-10-09/historical-inputs.json): 18 sealed files, 114 independently hashed snapshots in a 371,564-byte archive. Includes original ledger/gaps/source/response/logs, full frozen manifest and 101-page registry, exact revision-specific source fixtures/tools, shared tools, actual successor registers, queued raw inputs and canonical 3.0.2/3.0.3/3.0.8/3.4.0 templates. Original ledger retains 295 lexical occurrences, 11 outer references and 792 gap records. Original signatures/headers/source unchanged.
+[Original manifest](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/2.0.1-session-2026-10-09/historical-inputs.json): 18 sealed files, 114 independently hashed snapshots in a 371,564-byte archive. Includes original ledger/gaps/source/response/logs, full frozen manifest and 101-page registry, exact revision-specific source fixtures/tools, shared tools, actual successor registers, queued raw inputs and canonical 3.0.2/3.0.3/3.0.8/3.4.0 templates. Original ledger retains 295 lexical occurrences, 11 outer references and 792 gap records. Original signatures/headers/source unchanged.
 
-[Original validator](../../../data/patch-api/evidence/2.0.1-session-2026-10-09/validate.py) reproduces six revision-specific SOURCE RED/GREEN command results from sealed code, preserving original physical logs. Timing/path normalization affects comparison only, never original logs. Four recorded register outputs reproduce byte-for-byte (default 2.0.1 plus opted-in 3.0.2/3.0.3/3.0.8); default own extract and three recorded template extracts reproduce. Shared parser/extractor untouched relative to `93bcc6afe`; no new shared opt-in required.
+[Original validator](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/2.0.1-session-2026-10-09/validate.py) reproduces six revision-specific SOURCE RED/GREEN command results from sealed code, preserving original physical logs. Timing/path normalization affects comparison only, never original logs. Four recorded register outputs reproduce byte-for-byte (default 2.0.1 plus opted-in 3.0.2/3.0.3/3.0.8); default own extract and three recorded template extracts reproduce. Shared parser/extractor untouched relative to `93bcc6afe`; no new shared opt-in required.
 
-[Separate current manifest](../../../data/patch-api/evidence/2.0.1-session-2026-10-09/current/inputs.json): nine sealed files, corrected `/alt` and `/command` classifications and separately retained nested forum reference; 12 references/793 gaps. [Current validator](../../../data/patch-api/evidence/2.0.1-session-2026-10-09/current/validate.py) verifies original 18 seals plus both original outer hashes, replays corrected accounting and six frozen own source cases. It never rewrites or consumes mutable current source ledgers. Manifests anchored in validators; seals are local integrity controls, not externally trusted signatures.
+[Separate current manifest](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/2.0.1-session-2026-10-09/current/inputs.json): nine sealed files, corrected `/alt` and `/command` classifications and separately retained nested forum reference; 12 references/793 gaps. [Current validator](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/2.0.1-session-2026-10-09/current/validate.py) verifies original 18 seals plus both original outer hashes, replays corrected accounting and six frozen own source cases. It never rewrites or consumes mutable current source ledgers. Manifests anchored in validators; seals are local integrity controls, not externally trusted signatures.
 
 ## Exact bounded development proof
 
-[Original command ledger](../../../data/patch-api/evidence/2.0.1-session-2026-10-09/original-command-ledger.json), [current command ledger](../../../data/patch-api/evidence/2.0.1-session-2026-10-09/current/command-ledger.json) and [completion receipt](../../../data/patch-api/evidence/2.0.1-session-2026-10-09/completion-proof.json) retain argv, cwd, exact revisions, logs and scope validity.
+[Original command ledger](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/2.0.1-session-2026-10-09/original-command-ledger.json), [current command ledger](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/2.0.1-session-2026-10-09/current/command-ledger.json) and [completion receipt](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/2.0.1-session-2026-10-09/completion-proof.json) retain argv, cwd, exact revisions, logs and scope validity.
 
 | Proof | RED | GREEN / scope |
 |---|---|---|
@@ -52,7 +52,7 @@ Copied fresh processes use isolated Python with unusable Git/tool PATH and empty
 - [Spec](../../specs/patch-2-0-1-source-accounting.md).
 - [Literal source](../../../data/patch-api/sources/2.0.1-api-changes.wikitext).
 - [Current source ledger](../../../data/patch-api/sources/2.0.1-page-coverage.json).
-- [Source pin](../../../data/patch-api/evidence/2.0.1-session-2026-10-09/source-pin.json).
+- [Source pin](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/2.0.1-session-2026-10-09/source-pin.json).
 
 ## See Also
 

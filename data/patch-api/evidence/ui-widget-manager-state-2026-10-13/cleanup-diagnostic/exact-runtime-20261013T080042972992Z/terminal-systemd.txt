@@ -1,8 +1,0 @@
-ActiveState=failed
-SubState=failed
-Result=exit-code
-ExecMainCode=1
-ExecMainStatus=101
-ControlGroup=
-MemoryPeak=1749614592
-CPUUsageNSec=3539830000

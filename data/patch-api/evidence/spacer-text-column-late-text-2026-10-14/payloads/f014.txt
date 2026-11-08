@@ -1,7 +1,0 @@
-{
-  "pool_average_cores": 10.269859666685305,
-  "sample_seconds": 30.00116252800217,
-  "denials": [],
-  "admitted": true,
-  "formatter_launches": 1
-}

@@ -1,1 +1,0 @@
-#REDIRECT Patch 6.0.2/API changes

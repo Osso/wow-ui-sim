@@ -34,7 +34,7 @@ Bounded Retail 12.0.0/12.0.5 contracts unlocked by rilua `842e4d3`. Source decla
 
 ## Verification — 2026-10-07
 
-[Revision-scoped proof](../../data/patch-api/evidence/rilua-rows-2026-10-07/proof.md): 8 new tests, 22 name controls, 4 security controls, 21/57 tests in the requested patch filters; Mists --tests check and formatting exit0, zero non-vendor warnings; startup exit0 `[]`. Patch filters require `WOW_SIM_ENABLE_BYTECODE_CACHE=0` because grouped tests otherwise initialize cache before prefork parent bypass. This preserves the same test scopes and source loading. Two helper fixture IDs removed; remaining exact gaps unchanged.
+[Revision-scoped proof](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/rilua-rows-2026-10-07/proof.md): 8 new tests, 22 name controls, 4 security controls, 21/57 tests in the requested patch filters; Mists --tests check and formatting exit0, zero non-vendor warnings; startup exit0 `[]`. Patch filters require `WOW_SIM_ENABLE_BYTECODE_CACHE=0` because grouped tests otherwise initialize cache before prefork parent bypass. This preserves the same test scopes and source loading. Two helper fixture IDs removed; remaining exact gaps unchanged.
 
 ## Out of scope
 

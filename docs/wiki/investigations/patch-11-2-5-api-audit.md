@@ -38,9 +38,9 @@ No vendor/Blizzard/Wowless files, existing coverage ledgers, concurrent 11.2.7 n
 - [Publication contract and final proof](../../specs/patch-11-2-5-publication-sweep.md)
 - [Source provenance](../../../data/patch-api/sources/11.2.5-api-changes.provenance.json)
 - [Coverage ledger](../../../data/patch-api/sources/11.2.5-page-coverage.json)
-- [Per-ID review](../../../data/patch-api/evidence/11.2.5-session-2026-10-06/p1125-gap-review.json)
-- [Extract scout](../../../data/patch-api/evidence/11.2.5-session-2026-10-06/p1125-extract-scout.md)
-- [Proof ledger](../../../data/patch-api/evidence/11.2.5-session-2026-10-06/p1125-proof.json)
+- [Per-ID review](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/11.2.5-session-2026-10-06/p1125-gap-review.json)
+- [Extract scout](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/11.2.5-session-2026-10-06/p1125-extract-scout.md)
+- [Proof ledger](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/11.2.5-session-2026-10-06/p1125-proof.json)
 
 ## See Also
 

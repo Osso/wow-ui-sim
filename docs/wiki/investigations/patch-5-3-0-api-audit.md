@@ -4,7 +4,7 @@ Pinned pageid 423274 revision 4065122 and separately pinned transcluded diff pag
 
 ## Source and parser coverage
 
-The main page describes loot specialization, stable expansion, embedded support browsing, trade-link encoding and an InterfaceOptions ordering bug. Its diff is a separate source, not silently expanded HTML. Original responses and both raw pages are retained in the [session evidence](../../../data/patch-api/evidence/5.3.0-session-2026-10-08/).
+The main page describes loot specialization, stable expansion, embedded support browsing, trade-link encoding and an InterfaceOptions ordering bug. Its diff is a separate source, not silently expanded HTML. Original responses and both raw pages are retained in the [session evidence](https://github.com/Osso/wow-ui-sim/tree/183edc381/data/patch-api/evidence/5.3.0-session-2026-10-08).
 
 The register contains 44 occurrences: 15 global APIs, 3 FrameXML functions, 9 events, 14 widget methods and 3 widget handlers. Every table header count matches the parsed count. After rebasing onto master `a82b8eb1c`, `parse_mists_automated_diff` and `--mists-diff` are inherited unchanged from master; their formerly byte-identical branch copies were dropped. Only `parse_mists_widget_handlers`/`--mists-widget-handlers` is additive and opt-in. Handler symbols retain Browser ownership and `widget-script` kind.
 
@@ -54,7 +54,7 @@ The initial cold-target launch lacked an output path and preceded the first comm
 - [Source provenance](../../../data/patch-api/sources/5.3.0-api-changes.provenance.json).
 - [Pinned register](../../../data/patch-api/sources/5.3.0-wikitext-register.json).
 - [Publication spec](../../specs/patch-5-3-0-publication-sweep.md).
-- [Parser origin](../../../data/patch-api/evidence/5.3.0-session-2026-10-08/parser-provenance.json).
+- [Parser origin](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/5.3.0-session-2026-10-08/parser-provenance.json).
 - [Validator portability](patch-audit-validator-portability.md).
 
 ## See Also
@@ -67,10 +67,10 @@ Runtime code is unchanged, so the conditional master-relative library and addons
 
 ## Rebased integration (2026-10-08)
 
-[Integrated receipts](../../../data/patch-api/evidence/5.3.0-session-2026-10-08/integrated/) pin master `a82b8eb1c` and preserve every historical session artifact. The compact mapping records original/rebased patch IDs, rebased commit trees and directory tree IDs, not per-file inventories. Parser-copy removal and wiki insertion conflicts retain their original patches. No `src/` or vendor changes.
+[Integrated receipts](https://github.com/Osso/wow-ui-sim/tree/183edc381/data/patch-api/evidence/5.3.0-session-2026-10-08/integrated) pin master `a82b8eb1c` and preserve every historical session artifact. The compact mapping records original/rebased patch IDs, rebased commit trees and directory tree IDs, not per-file inventories. Parser-copy removal and wiki insertion conflicts retain their original patches. No `src/` or vendor changes.
 
 All 65 registers and 62 main-page extracts reproduce with recorded flags; the three inherited extraction failures remain unchanged. The supplemental 5.4.0 diff extract also reproduces. Branch retail publication/factory cases pass 61/61 versus master 60/60. All 64 other retail and Classic Mists sweep observations are byte-equivalent JSON values versus the pinned master; Mists cases pass 6/6 on both revisions, including the retail-exclusion control. Own prefork/integration cases pass 2/2 each, Python fixtures 96/96, format and Mists check pass with zero non-vendor warnings. The negative control introduces exactly one missing GetPVPRoles observation: 15 → 16 gaps, all other observations unchanged.
 
 No supersession or known-gap edits were needed. Historical publication and prose limits remain pending. One pre-commit driver launch is explicitly diagnostic; committed-input acceptance replaces it. Shared compaction work is excluded; every file written for this integration is below 5 MB. Largest evidence file: 482,854 bytes.
 
-`python3 -B tools/check_patch_validators.py` passes at `e345059e1`: 54/54 clean and 55/55 after synthetic later audit, zero failures; all 52 pinned prior validators pass in both phases. The historical validator is unchanged and the additional integrated validator seals refreshed receipts against committed directory trees. [Gate summary](../../../data/patch-api/evidence/5.3.0-session-2026-10-08/integrated/gate-summary.json). Index/log retain 2,767/536 lines. No bytecode cache, runtime changes, push, merge or agents.
+`python3 -B tools/check_patch_validators.py` passes at `e345059e1`: 54/54 clean and 55/55 after synthetic later audit, zero failures; all 52 pinned prior validators pass in both phases. The historical validator is unchanged and the additional integrated validator seals refreshed receipts against committed directory trees. [Gate summary](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/5.3.0-session-2026-10-08/integrated/gate-summary.json). Index/log retain 2,767/536 lines. No bytecode cache, runtime changes, push, merge or agents.

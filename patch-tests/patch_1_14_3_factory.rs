@@ -12,10 +12,10 @@ use wow_ui_sim::client_profile::{ACTIVE, ACTIVE_INTERFACE_VERSION, ClientProfile
 use wow_ui_sim::lua_api::WowLuaEnv;
 
 const INVENTORY: &str = include_str!(
-    "../data/patch-api/evidence/1.14.3-session-2026-10-09/original/default-register.json"
+    "../tests/data/patch-factory/1.14.3-session-2026-10-09/original/default-register.json"
 );
 const KNOWN_GAPS: &str =
-    include_str!("../data/patch-api/evidence/1.14.3-session-2026-10-09/current-known-gaps.json");
+    include_str!("../tests/data/patch-factory/1.14.3-session-2026-10-09/current-known-gaps.json");
 const INVENTORY_ROWS: usize = 412;
 const OUTPUT_ENV: &str = "WOW_SIM_P1143_FACTORY_OUT";
 

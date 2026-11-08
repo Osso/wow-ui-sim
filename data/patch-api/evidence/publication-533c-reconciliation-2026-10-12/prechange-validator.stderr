@@ -1,8 +1,0 @@
-Traceback (most recent call last):
-  File "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/8.1.0-session-2026-10-08/validate.py", line 234, in <module>
-    summary = {**check_accounting(register, extractor, lines, text),
-                 ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/8.1.0-session-2026-10-08/validate.py", line 81, in check_accounting
-    assert {key for key, row in results.items() if not row['ok']} == known
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-AssertionError

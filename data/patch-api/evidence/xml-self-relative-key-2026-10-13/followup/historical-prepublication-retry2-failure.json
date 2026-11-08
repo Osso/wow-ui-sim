@@ -1,7 +1,0 @@
-{
-  "status": "FAIL before public writes",
-  "error": "recursive scan exceeds depth8",
-  "cause": "Guard counted ordinary JSON object/list depth as serialized JSON decoding layers; valid full proof structure exhausted assistant-created cap",
-  "public_writes": 0,
-  "correction": "Increment guard only when decoding nested serialized JSON; traverse every ordinary object key/value/list member; unchanged initial77 packet not revalidated"
-}

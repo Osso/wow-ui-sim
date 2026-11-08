@@ -1,8 +1,0 @@
-
-running 3 tests
-test garrison_damage_classes::adventures_combat_log_colors_bootstrap_with_mists_row_rgb_palette ... ok
-test garrison_damage_classes::garrison_damage_classes_returns_fresh_tables_and_rows_without_mutation_leaks ... ok
-test garrison_damage_classes::garrison_damage_classes_returns_one_table_with_en_us_pure_school_masks ... ok
-
-test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 9909 filtered out; finished in 0.35s
-

@@ -1,2 +1,0 @@
-[  0.175s] [Startup] WowFontSystem::new begin casc=false
-Status: CLEAN

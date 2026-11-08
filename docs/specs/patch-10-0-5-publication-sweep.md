@@ -32,8 +32,8 @@ Account for Warcraft Wiki page 75033, revision 742761 (2023-02-01T00:52:10Z), ag
 
 ## Known gaps (current cycle)
 
-- [ ] Twenty-seven publication gaps require concrete producers; [per-ID review](../../data/patch-api/evidence/10.0.5-session-2026-10-07/p1005-gap-review.json) owns precise reasons.
-- [ ] Sixty substantive extract occurrences require occurrence-specific behavioral proof; [scout](../../data/patch-api/evidence/10.0.5-session-2026-10-07/p1005-extract-scout.json) retains every literal and proof boundary.
+- [ ] Twenty-seven publication gaps require concrete producers; [per-ID review](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/10.0.5-session-2026-10-07/p1005-gap-review.json) owns precise reasons.
+- [ ] Sixty substantive extract occurrences require occurrence-specific behavioral proof; [scout](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/10.0.5-session-2026-10-07/p1005-extract-scout.json) retains every literal and proof boundary.
 
 ## Out of scope
 

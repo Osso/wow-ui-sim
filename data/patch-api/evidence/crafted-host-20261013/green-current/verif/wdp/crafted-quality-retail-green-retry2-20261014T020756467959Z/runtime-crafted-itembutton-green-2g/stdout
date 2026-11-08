@@ -1,6 +1,0 @@
-
-running 1 test
-test crafted_quality_item_button::crafted_quality_original_item_button_observes_supplied_quality_and_visibility ... ok
-
-test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 11025 filtered out; finished in 1.76s
-

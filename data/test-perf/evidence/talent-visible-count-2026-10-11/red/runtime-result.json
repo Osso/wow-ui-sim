@@ -1,6 +1,0 @@
-{
-  "status": "OBSERVED_TERMINAL",
-  "unit_result": "exit-code",
-  "exec_main_status": "101",
-  "scope": "Newexactregression once; rawstreams establishactualboundary, not assumedRED"
-}

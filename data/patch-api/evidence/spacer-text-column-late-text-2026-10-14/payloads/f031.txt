@@ -1,1 +1,0 @@
-Initial /proc/meminfo parser retained colon in key. Corrected before admission sampling; zero formatter launches at that point.

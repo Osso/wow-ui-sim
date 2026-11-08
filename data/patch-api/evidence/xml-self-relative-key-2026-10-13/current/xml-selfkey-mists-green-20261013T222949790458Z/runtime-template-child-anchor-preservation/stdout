@@ -1,8 +1,0 @@
-
-running 3 tests
-test template_child_anchor_override::child_inline_anchors_keep_expected_world_map_scroll_layout ... ok
-test template_child_anchor_override::child_inline_anchors_preserve_inherited_hero_nodes_top_anchor ... ok
-test template_child_anchor_override::template_scale_attribute_is_inherited_and_affects_layout ... ok
-
-test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 8245 filtered out; finished in 0.99s
-

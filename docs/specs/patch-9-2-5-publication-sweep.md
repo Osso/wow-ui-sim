@@ -15,7 +15,7 @@ Account for Warcraft Wiki page 237255 revision 2301036 against current retail 12
 ## How it works
 
 - [Page audit](../wiki/investigations/patch-9-2-5-api-audit.md).
-- [Proof ledger](../../data/patch-api/evidence/9.2.5-session-2026-10-07/p925-proof.json).
+- [Proof ledger](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/9.2.5-session-2026-10-07/p925-proof.json).
 
 ## Implementation inventory
 

@@ -1,6 +1,0 @@
-{
-  "unit": "wow-startup-cost-compile-20261012t035859120805z.service",
-  "exit": 0,
-  "stdout": "ActiveState=active\nSubState=exited\nResult=success\nExecMainStatus=0\nControlGroup=\n",
-  "stderr": ""
-}

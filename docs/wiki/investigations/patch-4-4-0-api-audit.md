@@ -1,6 +1,6 @@
 # Cataclysm Classic 4.4.0 source audit
 
-Verified source accounting 2026-10-08, not runtime compatibility. Pinned **CLASSIC4.4.0**, page `580953`, revision `6163701`, parent `6028368`, timestamp `2024-10-29T16:26:26Z`, literal TOC **40400**. Source acquisition commit `0c7a007e91e13c14b80209104dbb4c12533e10da`; no new network retrieval claimed. Read merged [4.4.2 audit](patch-4-4-2-api-audit.md), its spec/validator, repository rules and [handoff](../../../data/patch-api/evidence/handoff-laptop-to-agent-server/HANDOFF.md). This task's source-only constraints exclude the handoff's runtime/delegation/integration workflow.
+Verified source accounting 2026-10-08, not runtime compatibility. Pinned **CLASSIC4.4.0**, page `580953`, revision `6163701`, parent `6028368`, timestamp `2024-10-29T16:26:26Z`, literal TOC **40400**. Source acquisition commit `0c7a007e91e13c14b80209104dbb4c12533e10da`; no new network retrieval claimed. Read merged [4.4.2 audit](patch-4-4-2-api-audit.md), its spec/validator, repository rules and [handoff](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/handoff-laptop-to-agent-server/HANDOFF.md). This task's source-only constraints exclude the handoff's runtime/delegation/integration workflow.
 
 ## Exact occurrence/capability proof matrix
 
@@ -27,7 +27,7 @@ Totals: **12 rows = 6 metadata + 6 UNPROVEN prose rows, 7 contracts**. One named
 
 Returned response: **1646 bytes**, SHA-256 `3563e32d0abf16e7fa0e71d1d4b5cc4a8b62cba718ac91b5e73debdb32ee2497`. Main-slot content exactly equals pinned wikitext: **1348 bytes**, SHA-256 `f8598e92092793a0621ea26d5620fd910c178dcb1fccd0b0aa313b83a6b56d5e`. Plaintext: **964 bytes**, SHA-256 `e424ca462d923241d977198ad11f910afc9d7a85dcf172068f17bf4cba22de4d`.
 
-[Validator](../../../data/patch-api/evidence/4.4.0-session-2026-10-08/validate.py) checks returned page/title/revision/parent/timestamp, source TOC, exact row coverage, all reasons via ledger seal, plaintext reproduction and [source receipt](../../../data/patch-api/evidence/4.4.0-session-2026-10-08/source-proof.json). Nine development tests pass, including fabricated revision/credit, every omitted row and owned-byte/receipt/rationale tampering. These external serialized-data checks are source proof only. Own inputs have live SHA-256 seals; context uses three historical Git tree pins, never shared live hashes or verbose listings. Validator is root-relative and does not bind current HEAD or shared tree state.
+[Validator](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/4.4.0-session-2026-10-08/validate.py) checks returned page/title/revision/parent/timestamp, source TOC, exact row coverage, all reasons via ledger seal, plaintext reproduction and [source receipt](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/4.4.0-session-2026-10-08/source-proof.json). Nine development tests pass, including fabricated revision/credit, every omitted row and owned-byte/receipt/rationale tampering. These external serialized-data checks are source proof only. Own inputs have live SHA-256 seals; context uses three historical Git tree pins, never shared live hashes or verbose listings. Validator is root-relative and does not bind current HEAD or shared tree state.
 
 ## Runtime boundary and implementation observation
 
@@ -39,14 +39,14 @@ External references retained only where literally present: TOC format, linked 10
 
 ## Committed acceptance
 
-[Receipt](../../../data/patch-api/evidence/4.4.0-session-2026-10-08/acceptance.json) records source-accounting revision `aa465cba4bf6b33535207c9e0d2956ae7b2f0fe7`: nine source tests and extractor check pass; on-disk source and source-receipt tampering exit 1 and restore byte-exactly. [Shared gate output](../../../data/patch-api/evidence/4.4.0-session-2026-10-08/validator-gate.json): **60/60 clean, 61/61 synthetic later audit**, no failures/oversized evidence. [Clone adapter](../../../data/patch-api/evidence/4.4.0-session-2026-10-08/check-clone-gate.py) invokes unchanged `tools/check_patch_validators.py` checks, substituting disposable shared clones for prohibited temporary worktrees; synthetic mutations occur only inside the disposable clone. No other worktree touched.
+[Receipt](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/4.4.0-session-2026-10-08/acceptance.json) records source-accounting revision `aa465cba4bf6b33535207c9e0d2956ae7b2f0fe7`: nine source tests and extractor check pass; on-disk source and source-receipt tampering exit 1 and restore byte-exactly. [Shared gate output](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/4.4.0-session-2026-10-08/validator-gate.json): **60/60 clean, 61/61 synthetic later audit**, no failures/oversized evidence. [Clone adapter](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/4.4.0-session-2026-10-08/check-clone-gate.py) invokes unchanged `tools/check_patch_validators.py` checks, substituting disposable shared clones for prohibited temporary worktrees; synthetic mutations occur only inside the disposable clone. No other worktree touched.
 
 Final validator adds two acceptance tests (eleven total) that seal this receipt and owned historical logs and reject receipt/log tampering; shared files remain historical tree pins, not live hashes. The earlier nine-test evidence is not relabeled as eleven tests. Current committed-HEAD clean/later replay follows the proof-results commit and is reported separately. Largest own proof artifact is 113,415 bytes, below 5 MB. Source accounting is complete; native contracts remain open.
 
 ## Sources
 
 - [Wikitext](../../../data/patch-api/sources/4.4.0-api-changes.wikitext), [plaintext](../../../data/patch-api/sources/4.4.0-api-changes.txt), [ledger](../../../data/patch-api/sources/4.4.0-page-coverage.json).
-- [Response](../../../data/patch-api/evidence/4.4.0-session-2026-10-08/source-response.json), [provenance](../../../data/patch-api/evidence/4.4.0-session-2026-10-08/source-pin.json), [spec](../../specs/patch-4-4-0-source-accounting.md).
+- [Response](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/4.4.0-session-2026-10-08/source-response.json), [provenance](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/4.4.0-session-2026-10-08/source-pin.json), [spec](../../specs/patch-4-4-0-source-accounting.md).
 
 ## See Also
 

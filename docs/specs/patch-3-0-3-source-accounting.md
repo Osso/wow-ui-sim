@@ -31,8 +31,8 @@ Bounded audit of frozen page 560990/revision 5407654 (2010-03-28T14:26:47Z), fro
 ## Separate supported retail factory measurement
 
 - [x] Add standalone `tests/patch_3_0_3_factory.rs`, retail-only target, exact own three-name inventory and fabricated unknown-CVar boundary using the shared classifier. No spelling correction or aliases.
-- [x] Discover with empty known gaps: RED at `2f8f3596d` observes one match/two gaps; fabricated unknown nil/nil control passes. [Fresh measurement ledger](../../data/patch-api/evidence/3.0.3-factory-2026-10-09/measurement-ledger.json) preserves exact results.
-- [x] Targeted reviewed GREEN at `7ac3902cf`: 3/3 exit 0; all three sweep observations byte-identical to discovery. Only offline `--no-default-features --features client-retail`, no loaded UI/cache or native acceptance. [Exact revision/cwd/env/argv/full streams/hashes](../../data/patch-api/evidence/3.0.3-factory-2026-10-09/development-proof-ledger.json).
+- [x] Discover with empty known gaps: RED at `2f8f3596d` observes one match/two gaps; fabricated unknown nil/nil control passes. [Fresh measurement ledger](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/3.0.3-factory-2026-10-09/measurement-ledger.json) preserves exact results.
+- [x] Targeted reviewed GREEN at `7ac3902cf`: 3/3 exit 0; all three sweep observations byte-identical to discovery. Only offline `--no-default-features --features client-retail`, no loaded UI/cache or native acceptance. [Exact revision/cwd/env/argv/full streams/hashes](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/3.0.3-factory-2026-10-09/development-proof-ledger.json).
 
 | Exact source name | Bare retail published | Observed value / default | Source default |
 |---|---|---|---|
@@ -49,7 +49,7 @@ Original 16 seals and eight ledger IDs remain historical source accounting. Sepa
 
 ## Development proof
 
-[Exact command/revision ledger](../../data/patch-api/evidence/3.0.3-session-2026-10-09/development-proof-ledger.json): own source tests RED exit1 (two missing-flag failures / one template control pass) at `e2cf94de1`, GREEN exit0 3/3 at `ce0a0e863`; historical tests RED exit1 2/2 missing-validator failures at `f7582f153`, GREEN exit0 2/2 at `e50955ee3`. Seventeen serialized tamper/restoration controls, missing-gap restoration, seventeen omission controls and two overclaim/spelling controls pass. Original 16 seals/93 snapshots remain frozen; later documentation does not invalidate these scopes. No runtime or final acceptance.
+[Exact command/revision ledger](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/3.0.3-session-2026-10-09/development-proof-ledger.json): own source tests RED exit1 (two missing-flag failures / one template control pass) at `e2cf94de1`, GREEN exit0 3/3 at `ce0a0e863`; historical tests RED exit1 2/2 missing-validator failures at `f7582f153`, GREEN exit0 2/2 at `e50955ee3`. Seventeen serialized tamper/restoration controls, missing-gap restoration, seventeen omission controls and two overclaim/spelling controls pass. Original 16 seals/93 snapshots remain frozen; later documentation does not invalidate these scopes. No runtime or final acceptance.
 
 ## Out of scope
 

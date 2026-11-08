@@ -1,6 +1,0 @@
-{
-  "source_revision": "b28a45f917e19deb62f15fc766bbd6be498418de",
-  "production_delta_revision": "0745fe84f",
-  "scope": "f32geometrytolerancebar1 + correctsecureHUDpublisherassertions2; unchangedfivequery/core19/startup/defaultcheck proofs reused",
-  "git_status": "?? .code-index.db\n?? verification/\n"
-}

@@ -1,6 +1,0 @@
-{
-  "snapshot_revision": "39ce8969a",
-  "compiled_revision": "5bd208dba",
-  "snapshot_path": "<PRIVATE_VERIFICATION_ROOT>/ui-widget-bars-hud-green-current/20261013T093318797417Z/source-39ce8969a",
-  "scope": "external cached addons/assets and loader filesystem inputs unchanged; Rust SetAtlas policy embedded in authenticated compiled binary; tests compile-embedded; stale snapshot source is not claimed current production"
-}

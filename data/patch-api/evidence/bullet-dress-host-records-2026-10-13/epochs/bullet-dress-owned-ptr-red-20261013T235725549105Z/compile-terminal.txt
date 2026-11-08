@@ -1,5 +1,0 @@
-SubState=exited
-Result=success
-ExecMainStatus=0
-MemoryPeak=7075524608
-CPUUsageNSec=932486125000

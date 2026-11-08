@@ -42,7 +42,7 @@ Historical epochs, native parity, linked-page expansion, new placeholders, vendo
 
 ## Local proof
 
-Runtime/test revision `06326ad3e`. [Proof ledger](../../data/patch-api/evidence/10.2.0-session-2026-10-07/p1020-proof.json) binds commands, revisions and output hashes. Eight retirements and parent-key state have RED/GREEN proof; three behavior/probe tests, cached Game prefork, four existing SetParentKey cases and one cached groupfinder case pass at their recorded scopes. Negative control produces exactly one new failure, 30 → 31, expected exit 101. Twenty parser/extractor fixtures and eighteen byte-identical register regenerations pass. Formatting, Mists tests check (zero non-vendor warnings), retail build and exit-0 startup `[]` pass. Only existing iced vendor manifest warnings remain. Local targeted proof is not native or independent acceptance.
+Runtime/test revision `06326ad3e`. [Proof ledger](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/10.2.0-session-2026-10-07/p1020-proof.json) binds commands, revisions and output hashes. Eight retirements and parent-key state have RED/GREEN proof; three behavior/probe tests, cached Game prefork, four existing SetParentKey cases and one cached groupfinder case pass at their recorded scopes. Negative control produces exactly one new failure, 30 → 31, expected exit 101. Twenty parser/extractor fixtures and eighteen byte-identical register regenerations pass. Formatting, Mists tests check (zero non-vendor warnings), retail build and exit-0 startup `[]` pass. Only existing iced vendor manifest warnings remain. Local targeted proof is not native or independent acceptance.
 
 | Patch | Rows | OK | Gaps | Isolated exit |
 |---|---:|---:|---:|---:|

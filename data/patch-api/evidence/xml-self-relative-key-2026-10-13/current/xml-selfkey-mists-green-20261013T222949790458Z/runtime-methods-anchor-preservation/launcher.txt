@@ -1,6 +1,0 @@
-Running as unit: <PRIVATE_INVOCATION>.service; invocation ID: 4a8149c37e474ca1b979d831c1819a4d
-          Finished with result: success
-Main processes terminated with: code=exited, status=0/SUCCESS
-               Service runtime: 8.221s
-             CPU time consumed: 7.703s
-                   Memory peak: 115.9M (swap: 0B)

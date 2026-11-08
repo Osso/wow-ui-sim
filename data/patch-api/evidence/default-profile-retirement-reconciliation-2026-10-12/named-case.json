@@ -1,7 +1,0 @@
-{
-  "source": "/home/osso/Projects/wow/full-suite-results/ba413e8e177f04dc6fc7491834606ce36c750954.log",
-  "revision": "ba413e8e177f04dc6fc7491834606ce36c750954",
-  "line": 13356,
-  "text": "test patch_12_0_0_deprecated::patch_12_0_0_deprecated_retirement_and_successors ... ok",
-  "scope": "One existing cached prefork case, already within authenticated frozen BA counts. Main targeted retained-log lookup only; no new execution, rehash, current-HEAD/hermetic/native or exact1200 acceptance claim."
-}

@@ -1,8 +1,0 @@
-
-running 3 tests
-test test_addon_disable_blocks_load::disabled_addon_stays_unloaded_after_rejected_load ... ok
-test test_addon_disable_blocks_load::enabling_a_previously_disabled_addon_lets_load_addon_proceed ... ok
-test test_addon_disable_blocks_load::load_addon_returns_disabled_for_a_disabled_addon ... ok
-
-test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 10859 filtered out; finished in 1.00s
-

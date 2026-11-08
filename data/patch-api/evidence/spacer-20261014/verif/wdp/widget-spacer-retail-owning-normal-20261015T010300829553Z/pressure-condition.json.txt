@@ -1,9 +1,0 @@
-{
-  "full_avg10_limit": 1.0,
-  "poll_seconds": 0.25,
-  "watcher_script": "[PRIVATE_EVIDENCE]/handoff/watch-spacer-build-pressure.py",
-  "own_cgroup": "[PRIVATE_AGENT_CGROUP]/[PRIVATE_UNIT_10].service",
-  "window": "1792026938 [PRIVATE_TIMING_OWNER_TRADING]\n",
-  "authority": "game-engine lead explicit serial200%CPU6G/high5G exception and abort condition",
-  "fresh_full_avg10": 0.0
-}

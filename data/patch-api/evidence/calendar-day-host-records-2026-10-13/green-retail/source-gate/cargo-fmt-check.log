@@ -1,5 +1,0 @@
-COMMAND: cargo fmt --check
-
-STDERR:
-
-RESULT: CommandResult(stdout='', stderr='', exit_code=0, upstream_results=())

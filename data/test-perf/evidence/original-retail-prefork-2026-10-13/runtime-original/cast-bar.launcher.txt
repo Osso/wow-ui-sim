@@ -1,6 +1,0 @@
-Running as unit: wow-original-prefork-cast-bar-20261013t141818008227z.service
-          Finished with result: success
-Main processes terminated with: code=exited, status=0/SUCCESS
-               Service runtime: 9.847s
-             CPU time consumed: 11.890s
-                   Memory peak: 1.2G (swap: 0B)

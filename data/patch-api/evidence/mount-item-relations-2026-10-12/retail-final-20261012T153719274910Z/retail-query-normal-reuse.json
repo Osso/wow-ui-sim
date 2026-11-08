@@ -1,7 +1,0 @@
-{
-  "diff": "",
-  "exit": 0,
-  "prior_epoch": "retail-green-20261012T152010421981Z",
-  "revision": "ab8dd8739",
-  "scope": "8 query +16 preservation +normal source scope unchanged; consumer source changed and executed here. No old seal read/hash/execution."
-}

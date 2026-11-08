@@ -1,7 +1,0 @@
-D-Bus property CPUAccounting is deprecated, ignoring assignment: CPUAccounting=yes
-Running as unit: private-unit-4.service
-          Finished with result: signal
-Main processes terminated with: code=killed, status=9/KILL
-               Service runtime: 1min 25.025s
-             CPU time consumed: 27.427s
-                   Memory peak: 416.7M (swap: 1.1G)

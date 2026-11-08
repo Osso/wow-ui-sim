@@ -1,9 +1,0 @@
-{
-  "attempted_argv": [
-    "ruff",
-    "format",
-    "scripts/build-host.py",
-    "tools/test_build_host.py"
-  ],
-  "result": "ExecutableMissing before launch; no formatting proof"
-}

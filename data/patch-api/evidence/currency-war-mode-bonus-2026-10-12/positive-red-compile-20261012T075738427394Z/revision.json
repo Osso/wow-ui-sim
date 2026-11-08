@@ -1,6 +1,0 @@
-{
-  "head": "a1de57b4ea99f485bd77c430d9fea4301ed3764a",
-  "phase": "positive-red",
-  "scope": "Currency query test-stage; no getter producer or normal membership seed",
-  "test_source_sha256": "52f99b39c3e257bba9b1d248ea4d3d176a5ac560fb5e118c38e5d843015a408f"
-}

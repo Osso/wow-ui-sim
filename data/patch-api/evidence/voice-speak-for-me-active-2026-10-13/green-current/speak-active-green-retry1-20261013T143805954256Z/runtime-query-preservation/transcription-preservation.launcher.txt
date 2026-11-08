@@ -1,6 +1,0 @@
-Running as unit: wow-speak-transcription-preservation-20261013t144451018751z.service
-          Finished with result: success
-Main processes terminated with: code=exited, status=0/SUCCESS
-               Service runtime: 1.198s
-             CPU time consumed: 1.028s
-                   Memory peak: 85.8M (swap: 0B)

@@ -1,6 +1,6 @@
 # Retail 12.1.0 supplemental publication sweep
 
-A data-driven breadth probe covers all 778 entries in the [wikitext register](../../data/patch-api/sources/12.1.0-wikitext-register.json), guided by the [supplemental triage](../../data/patch-api/evidence/12.1.0-session-2026-10-04/triage-wikitext.md). This proves publication (or absence) only, not behavior. Added/changed rows earn at most `partial-development-green`; removed symbols may earn `bounded-coverage` only when their whole contract is absence.
+A data-driven breadth probe covers all 778 entries in the [wikitext register](../../data/patch-api/sources/12.1.0-wikitext-register.json), guided by the [supplemental triage](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/12.1.0-session-2026-10-04/triage-wikitext.md). This proves publication (or absence) only, not behavior. Added/changed rows earn at most `partial-development-green`; removed symbols may earn `bounded-coverage` only when their whole contract is absence.
 
 ## What it must do
 

@@ -1,1 +1,0 @@
-[click-dispatch] release frame=18750 LFDMicroButton(rect=Some(LayoutRect { x: 1760.0, y: 868.2, width: 32.0, height: 40.0 })) mouse_down_frame=Some(18750) Some("LFDMicroButton(rect=Some(LayoutRect { x: 1760.0, y: 868.2, width: 32.0, height: 40.0 }))") clicks_on_up=true registered=Some({"AnyUp"})

@@ -1,5 +1,0 @@
-
-running 1 test
-test ui_widget_manager_security::widget_queries_deny_tainted_secrets_and_recover_public_isolated_snapshots ... ok
-
-test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10965 filtered out; finished in 0.21s

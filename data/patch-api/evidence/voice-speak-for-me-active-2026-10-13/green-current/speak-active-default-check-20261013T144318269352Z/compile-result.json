@@ -1,9 +1,0 @@
-{
-  "source": "9b027baaf",
-  "production": "a8a148e98",
-  "json_records": 733,
-  "compiler_messages": [],
-  "terminal": "ActiveState=active\nSubState=exited\nResult=success\nExecMainExitTimestamp=Tue 2026-10-13 09:44:04 CDT\nExecMainCode=1\nExecMainStatus=0\nMemoryPeak=3223330816\nCPUUsageNSec=37859828000\n",
-  "build_finished": true,
-  "scope": "Default lib/bin check; no integration test targets, test-only additions do not invalidate"
-}

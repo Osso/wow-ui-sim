@@ -1,6 +1,0 @@
-Running as unit: [PRIVATE_RETAIL_NORMAL_CLI_UNIT].service; invocation ID: [PRIVATE_INVOCATION_10]
-          Finished with result: success
-Main processes terminated with: code=exited, status=0/SUCCESS
-               Service runtime: 6.668s
-             CPU time consumed: 5.950s
-                   Memory peak: 1.5G (swap: 0B)

@@ -34,7 +34,7 @@ Main independently read actual saved log lines 13799–13810. Line **13804** rea
 
 `test patch_12_0_0_deprecated::patch_12_0_0_deprecated_retirement_and_successors ... ok`
 
-That exact saved prefork case is PASS. The independent audit's Minimap/cached21 lookup is **incorrect as the answer to this requested case**, not a correct alias or replacement. The sanitized original audit remains preserved for traceability, alongside the explicit [main erratum](../../../data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/fullsuite-c6bc/main-erratum.md); its lookup must not be endorsed.
+That exact saved prefork case is PASS. The independent audit's Minimap/cached21 lookup is **incorrect as the answer to this requested case**, not a correct alias or replacement. The sanitized original audit remains preserved for traceability, alongside the explicit [main erratum](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/fullsuite-c6bc/main-erratum.md); its lookup must not be endorsed.
 
 ## Source and acceptance boundary
 
@@ -44,10 +44,10 @@ This is saved-source accounting, not current-HEAD PASS, native WoW parity, all-p
 
 ## Sources
 
-- [Sanitized original independent audit](../../../data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/fullsuite-c6bc/independent-report.md) — saved count/delta audit; erroneous retirement lookup explicitly superseded.
-- [Saved receipt JSON](../../../data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/fullsuite-c6bc/receipt.json) — source identity, timing, exits and failure metadata.
-- [Main erratum](../../../data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/fullsuite-c6bc/main-erratum.md) — direct main read of literal line 13804.
-- [Hash manifest](../../../data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/fullsuite-c6bc/hash-manifest.json) — retained derivatives and private source hashes; no raw/vendor log retained.
+- [Sanitized original independent audit](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/fullsuite-c6bc/independent-report.md) — saved count/delta audit; erroneous retirement lookup explicitly superseded.
+- [Saved receipt JSON](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/fullsuite-c6bc/receipt.json) — source identity, timing, exits and failure metadata.
+- [Main erratum](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/fullsuite-c6bc/main-erratum.md) — direct main read of literal line 13804.
+- [Hash manifest](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/fullsuite-c6bc/hash-manifest.json) — retained derivatives and private source hashes; no raw/vendor log retained.
 
 ## See Also
 

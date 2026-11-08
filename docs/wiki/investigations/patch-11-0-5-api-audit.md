@@ -16,7 +16,7 @@ C_BarberShop.HasAlteredForm lacked an explicit producer despite the existing cur
 
 ChromaEffectsEnable and ChromaEffectsFactionColor lacked CVar registry entries despite page default 1. Both now use existing mutable CVar storage, case-insensitive setters and immutable defaults. Tests cover global/C_CVar queries, mutation and restore. This models configuration, not physical peripheral lighting/faction colors.
 
-Three new behavior tests fail before their respective fixes and pass afterward. Five publication closures leave ten exact gaps. [Per-ID review](../../../data/patch-api/evidence/11.0.5-session-2026-10-06/p1105-gap-review.json) retains each initial defect, observation and precise closure/boundary.
+Three new behavior tests fail before their respective fixes and pass afterward. Five publication closures leave ten exact gaps. [Per-ID review](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/11.0.5-session-2026-10-06/p1105-gap-review.json) retains each initial defect, observation and precise closure/boundary.
 
 **Preserved deprecation surfaces:** cached Blizzard_DeprecatedGlue/Deprecated_Glue.lua:9 assigns `IsOnGlueScreen = C_Glue.IsOnGlueScreen();`, a boolean snapshot. Strict absence therefore remains an exact compatibility gap; neither vendor assignment nor classifier was changed to hide it. Cached Blizzard_DeprecatedSpecialization/Deprecated_Specialization_Standard.lua aliases GetNumSpecializationsForClassID to C_SpecializationInfo.GetNumSpecializationsForClassID. Shared sweep accepts that loaded alias identity, not strict absence or successor behavior. Both isolated prefork tests pass. A third prefork case proves new retirements, barber query and Chroma storage survive unmodified full cached Game preload without new Lua errors.
 
@@ -36,7 +36,7 @@ Remaining publication gaps: chat/combat logging lifecycle, four currency filter/
 
 ## Development proof
 
-[Proof ledger](../../../data/patch-api/evidence/11.0.5-session-2026-10-06/p1105-proof.json) records exact command/cwd/environment/revision/outcome and failed/superseded scopes. Runtime revision 5fb610fa3; earlier retirement/barber revision 9ebd57076. Later sweeps ran at b3113d0f7; subsequent change only adds two Chroma CVar defaults and corresponding tests/fixture, none of which occurs in later registers. Their publication proof remains valid without redundant reruns. Later evidence/docs edits do not invalidate runtime scope.
+[Proof ledger](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/11.0.5-session-2026-10-06/p1105-proof.json) records exact command/cwd/environment/revision/outcome and failed/superseded scopes. Runtime revision 5fb610fa3; earlier retirement/barber revision 9ebd57076. Later sweeps ran at b3113d0f7; subsequent change only adds two Chroma CVar defaults and corresponding tests/fixture, none of which occurs in later registers. Their publication proof remains valid without redundant reruns. Later evidence/docs edits do not invalidate runtime scope.
 
 All thirteen sweeps run alone and pass, matching unchanged later fixtures. [Sweep table](../../specs/patch-11-0-5-publication-sweep.md#local-proof) retains row/OK/gap counts. Negative control changes only C_BarberShop.HasAlteredForm added → removed: exactly one new gap, none resolved, 10 → 11, expected exit 101. Three new behavior tests GREEN after RED; three one-filter prefork cases GREEN. Seventeen extractor/register fixtures pass. All thirteen byte-identical register regenerations, deterministic extract reproduction, source hashes, exact fixture and exhaustive artifact accounting validate at 2bf022deb with newly generated reproduction/proof inputs. Later evidence/docs/result records do not change validated capability/source scopes.
 
@@ -47,9 +47,9 @@ Formatting passes. Mists test check has zero non-vendor warnings; six pre-existi
 - [Publication contract and sweep table](../../specs/patch-11-0-5-publication-sweep.md)
 - [Source provenance](../../../data/patch-api/sources/11.0.5-api-changes.provenance.json)
 - [Page ledger](../../../data/patch-api/sources/11.0.5-page-coverage.json)
-- [Extract scout](../../../data/patch-api/evidence/11.0.5-session-2026-10-06/p1105-extract-scout.md)
-- [Retirement consumer searches](../../../data/patch-api/evidence/11.0.5-session-2026-10-06/p1105-retirement-consumers.json)
-- [Artifact validator](../../../data/patch-api/evidence/11.0.5-session-2026-10-06/p1105-validate.py)
+- [Extract scout](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/11.0.5-session-2026-10-06/p1105-extract-scout.md)
+- [Retirement consumer searches](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/11.0.5-session-2026-10-06/p1105-retirement-consumers.json)
+- [Artifact validator](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/11.0.5-session-2026-10-06/p1105-validate.py)
 
 ## See Also
 

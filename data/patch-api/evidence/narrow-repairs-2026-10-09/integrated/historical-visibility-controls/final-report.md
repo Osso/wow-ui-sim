@@ -1,7 +1,0 @@
-# Mists/Era visibility controls — partial historical-artifact proof
-
-Main-observed232641 runtime, 2026-10-10: each profile9 Show/Hide script cases plus3 partial direct SetShown controls PASS, **24 logical cases /12 distinct tests**, eight command exits0. Timeout-wrapper noop test prints parent and child1PASS summaries for the same logical case; do not count them as independent samples. No rebuild. [Execution receipt](receipt.json) and eight stdout payloads retained; [hash manifest](hash-manifest.json).
-
-Uses sealed225705 integration artifacts at recorded0ed37cd1a, Mists features include prefork-full-ui; Era lacks it. Original map-scalar executions do not earn this visibility credit. Source snapshots equal original3845-entry baseline before/after each profile; original artifact hashes match before/after. Captured endpoint equality is not continuous immutability, full dependency provenance, or current-whole-tree acceptance. Resource guards/cgroup/service records remain private; independent admission report is separate.
-
-Nine cases exercise Show/Hide child dispatch, reentry, ordering, errors and recursion. Three direct setter controls prove texture SetShown(false) through a test mixin, Frame nil/string shown-state selection, and Frame same-true no-op dirty state. **No literal Frame boolean transition/callback, all-Region-kind, all-profile or native2012 parity claim.** Separate Mists startup cast hidden assertion remains FAIL; these tests do not repair it. Full handoff OPEN.

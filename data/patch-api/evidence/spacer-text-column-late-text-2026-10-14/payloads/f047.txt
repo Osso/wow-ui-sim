@@ -1,6 +1,0 @@
-{
-  "goal": "One corrective current noncompiling cargo fmt --check gate only",
-  "expected_revision": "c66bfa263",
-  "exclusions": "No rerun, compilation, test, runtime, binary hash, delegation, or canonical mutation",
-  "psi": "Context only for this explicitly authorized noncompiling formatter; compiler PSI 1% guard unchanged"
-}

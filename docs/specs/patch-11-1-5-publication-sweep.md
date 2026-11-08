@@ -26,7 +26,7 @@ IsInGlobalEnvironment must report actual caller environment: true in global chun
 
 ## Local proof
 
-[Proof ledger](../../data/patch-api/evidence/11.1.5-session-2026-10-06/p1115-proof.json) retains exact commands/revisions. Sweeps run at `1fb6571e1`; checks/build/startup at `bc72538b5`; subsequent changes are evidence/docs only. Each sweep runs alone with `--nocapture --test-threads=1`.
+[Proof ledger](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/11.1.5-session-2026-10-06/p1115-proof.json) retains exact commands/revisions. Sweeps run at `1fb6571e1`; checks/build/startup at `bc72538b5`; subsequent changes are evidence/docs only. Each sweep runs alone with `--nocapture --test-threads=1`.
 
 | Sweep | Rows | OK | Exact gaps | Result |
 |---|---:|---:|---:|---|
@@ -49,8 +49,8 @@ All ten registers regenerate byte-identically. Thirty-six later source/register/
 
 Coverage: 125 inventory + 99 extract = 224 IDs; 73 partial-development-green, 15 bounded-coverage, 121 audit-pending, 15 metadata-only. One later reversal is metadata-only; 15 removals establish strict absence/registration rejection, zero deprecated-wrapper acceptances. Eighty-five extract contracts remain pending; 14 editorial rows receive no runtime credit. Ledger remains in-progress; page-accounting/publication audit complete, not historical/native API completeness.
 
-[Artifact validator](../../data/patch-api/evidence/11.1.5-session-2026-10-06/p1115-validate.py) checks hashes, expectations, exact gaps, credit, allocation, proof summaries and preserved inputs. Raw Cargo logs are ignored local artifacts; retained result/summary files carry the portable evidence.
+[Artifact validator](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/11.1.5-session-2026-10-06/p1115-validate.py) checks hashes, expectations, exact gaps, credit, allocation, proof summaries and preserved inputs. Raw Cargo logs are ignored local artifacts; retained result/summary files carry the portable evidence.
 
 ## Process exception
 
-[Pyrun cwd incident](../../data/patch-api/evidence/11.1.5-session-2026-10-06/p1115-cwd-incident.json): first source capture/commit accidentally used canonical cwd. Exact commit moved to required worktree; canonical restored to clean original master before any tests. Subsequent commands explicitly select worktree cwd. This violates the never-touch-canonical process constraint despite restored final state. No agents/models, push, merge, vendor edits or Blizzard monkey-patching.
+[Pyrun cwd incident](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/11.1.5-session-2026-10-06/p1115-cwd-incident.json): first source capture/commit accidentally used canonical cwd. Exact commit moved to required worktree; canonical restored to clean original master before any tests. Subsequent commands explicitly select worktree cwd. This violates the never-touch-canonical process constraint despite restored final state. No agents/models, push, merge, vendor edits or Blizzard monkey-patching.

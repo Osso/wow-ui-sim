@@ -1,6 +1,0 @@
-{
-  "source_revision": "978e9bcd15b47ad53dcdfd7aadb0f9ae0afb95b8",
-  "production_delta_revision": "50f6f0ea8",
-  "scope": "Test-only cachedRetaileditboxconsumer compile; productiona8 unchanged; previousquery2+preservation3+startup/defaultcheck proofs notrerun",
-  "git_status": "?? .code-index.db\n?? verification/\n"
-}

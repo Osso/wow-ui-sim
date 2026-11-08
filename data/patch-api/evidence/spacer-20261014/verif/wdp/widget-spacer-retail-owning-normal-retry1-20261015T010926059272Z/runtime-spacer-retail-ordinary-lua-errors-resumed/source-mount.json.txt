@@ -1,8 +1,0 @@
-{
-  "snapshot": "[PRIVATE_EVIDENCE]/verif/wdp/widget-spacer-retail-producer-green-20261014T235938300530Z/source",
-  "receipt_source": "d15126365",
-  "source_diff": "git diff --name-only d5e3358a3..918d1609f -- src tests data Cargo.toml Cargo.lock build.rs",
-  "source_diff_exit": 0,
-  "source_diff_stdout": "",
-  "later_source_not_covered": "eba5a1617 passive TextColumn"
-}

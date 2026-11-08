@@ -11,7 +11,7 @@ Frozen page 707613/revision 6902509 (`2026-10-07T05:30:51Z`) lives in `data/patc
 
 ## How it works
 - [Source accounting and limits](../wiki/investigations/patch-1-60-1-api-audit.md)
-- [Portable evidence](../../data/patch-api/evidence/1.60.1-session-2026-10-09/)
+- [Portable evidence](https://github.com/Osso/wow-ui-sim/tree/183edc381/data/patch-api/evidence/1.60.1-session-2026-10-09)
 
 ## Implementation inventory
 - Evidence `accounting.py`: per-occurrence register enrichment, complete source/signature/prose/reference/header ledgers and literal mirror.

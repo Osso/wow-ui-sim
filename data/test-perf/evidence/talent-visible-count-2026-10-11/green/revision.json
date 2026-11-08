@@ -1,6 +1,0 @@
-{
-  "head": "5d2e4ece1c08ec967cc8a7fd8f8bbe60d5a02ba4",
-  "phase": "green",
-  "scope": "Test collector/regression only; no production or vendor change",
-  "test_source_sha256": "3e822fbe379a9245ba854a69b0e9ca07492ad89b8d0f507714b8675914e6e5fa"
-}

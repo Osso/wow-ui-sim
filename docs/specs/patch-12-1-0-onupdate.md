@@ -21,7 +21,7 @@ Bounded simulator proof for [prose-2026-06-18-058; prose-2026-06-18-059](../../d
 
 ## Tests asserting this spec
 
-- `tests/on_update_modes.rs` — prior proof had four passing tests and one ManagedAura failure. The 2026-10-09 fixture preserves Blizzard phases and uses `UpdateAllAuras()`. [Saved c75 case/body reconciliation](../../data/test-perf/evidence/c75-pending-spec-reconciliation-2026-10-11/README.md) records its named PASS at raw line7176; current test body/Cargo pin match. Assertions cover dirty flags and mode2 while hidden, then clean/mode0 after visible dispatch and another clean/disabled update, plus empty captured Lua errors. No rerun, registration-retention or native-client credit; enclosing suite remains FAIL.
+- `tests/on_update_modes.rs` — prior proof had four passing tests and one ManagedAura failure. The 2026-10-09 fixture preserves Blizzard phases and uses `UpdateAllAuras()`. [Saved c75 case/body reconciliation](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/test-perf/evidence/c75-pending-spec-reconciliation-2026-10-11/README.md) records its named PASS at raw line7176; current test body/Cargo pin match. Assertions cover dirty flags and mode2 while hidden, then clean/mode0 after visible dispatch and another clean/disabled update, plus empty captured Lua errors. No rerun, registration-retention or native-client credit; enclosing suite remains FAIL.
 
 ## Known gaps (current cycle)
 

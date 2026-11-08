@@ -1,7 +1,0 @@
-{
-  "unit": "<UNIT_002>",
-  "stdout": "ActiveState=active\nSubState=running\nResult=success\nExecMainExitTimestamp=\nExecMainCode=0\nExecMainStatus=0\nMemoryPeak=8115019776\n",
-  "stderr": "",
-  "exit": 0,
-  "scope": "unit snapshot only; active/running is not terminal success"
-}

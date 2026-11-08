@@ -16,7 +16,7 @@ Missing IsInGlobalEnvironment now compares actual Lua caller environment with th
 
 **Retained historical-removal conflict:** UpdateUIParentPosition stays published. Current cached `Blizzard_UIParentUtil/UIParentUtil.lua:13` defines it; `Blizzard_Game/Shared/EventImplementation.lua:48,304` calls it; `Blizzard_EditMode/Shared/EditModeUtil.lua:88` hooks it. No later register reverses that historical page row. It remains an exact gap, not an accepted deprecated alias.
 
-Remaining 36 publication gaps need explicit producers/policies: TOC interface-version selection; color override lifecycle; cooldown availability; game-mode catalogue/login; guild rename; upgrade DTOs; priority logging; world-map action; perks checkout; owned pets/search; spell-range subscriptions; telemetry; atlas elements; source location; unit ownership; hook prohibition; host attention; text-color invalidation. Two tabard-border getters remain intentional 3D/model scope gaps. [Per-ID review](../../../data/patch-api/evidence/11.1.5-session-2026-10-06/p1115-gap-review.json) records every initial defect and exact decision. Generic callable lookup is not modeled publication. No placeholders added.
+Remaining 36 publication gaps need explicit producers/policies: TOC interface-version selection; color override lifecycle; cooldown availability; game-mode catalogue/login; guild rename; upgrade DTOs; priority logging; world-map action; perks checkout; owned pets/search; spell-range subscriptions; telemetry; atlas elements; source location; unit ownership; hook prohibition; host attention; text-color invalidation. Two tabard-border getters remain intentional 3D/model scope gaps. [Per-ID review](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/11.1.5-session-2026-10-06/p1115-gap-review.json) records every initial defect and exact decision. Generic callable lookup is not modeled publication. No placeholders added.
 
 ## Coverage matrix
 
@@ -34,19 +34,19 @@ Remaining 36 publication gaps need explicit producers/policies: TOC interface-ve
 
 [Contract and sweep table](../../specs/patch-11-1-5-publication-sweep.md#local-proof) record ten isolated passing sweeps at runtime/test revision `1fb6571e1`, exact 36-gap fixture, and one-row negative control (36 → 37, expected exit 101). Two bounded behavior tests, existing environment regression, one isolated EditMode prefork consumer case, and thirteen extractor/register fixtures pass. Formatting, Mists test check without non-vendor warnings, separate default retail build and bounded exit-0 startup `[]` pass. Six pre-existing iced manifest warnings plus summary remain unsuppressed. Checks/build/startup run at `bc72538b5`; later changes are evidence/docs only. Changed Rust lines manually reviewed for readability.
 
-Seven later observation maps equal previous 11.1.7 evidence. Differences in 11.2.0 (Browser:NavigateTo retention) and 12.0.0 (two rilua secret-helper closures) already exist on starting master; this audit changes no later fixture. [Validator](../../../data/patch-api/evidence/11.1.5-session-2026-10-06/p1115-validate.py) checks hashes, exact expectations/gaps/credit, negative control, complete allocation, preserved inputs and revision-scoped proof summaries. Cargo logs are ignored local artifacts; result and verification-summary JSON are retained.
+Seven later observation maps equal previous 11.1.7 evidence. Differences in 11.2.0 (Browser:NavigateTo retention) and 12.0.0 (two rilua secret-helper closures) already exist on starting master; this audit changes no later fixture. [Validator](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/11.1.5-session-2026-10-06/p1115-validate.py) checks hashes, exact expectations/gaps/credit, negative control, complete allocation, preserved inputs and revision-scoped proof summaries. Cargo logs are ignored local artifacts; result and verification-summary JSON are retained.
 
 ## Process exception
 
-[Pyrun cwd incident](../../../data/patch-api/evidence/11.1.5-session-2026-10-06/p1115-cwd-incident.json): default command/filesystem cwd did not follow worktree switch. First source capture/commit accidentally modified canonical master. Exact commit moved into required worktree; canonical restored to clean original master before any tests. All subsequent commands/files use explicit worktree cwd/paths. The never-touch-canonical constraint was violated temporarily; restored final state does not erase it. No full suite, agents/models, push, merge, vendor edits or Blizzard monkey-patching.
+[Pyrun cwd incident](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/11.1.5-session-2026-10-06/p1115-cwd-incident.json): default command/filesystem cwd did not follow worktree switch. First source capture/commit accidentally modified canonical master. Exact commit moved into required worktree; canonical restored to clean original master before any tests. All subsequent commands/files use explicit worktree cwd/paths. The never-touch-canonical constraint was violated temporarily; restored final state does not erase it. No full suite, agents/models, push, merge, vendor edits or Blizzard monkey-patching.
 
 ## Sources
 
 - [Publication contract](../../specs/patch-11-1-5-publication-sweep.md)
 - [Source provenance](../../../data/patch-api/sources/11.1.5-api-changes.provenance.json)
 - [Coverage ledger](../../../data/patch-api/sources/11.1.5-page-coverage.json)
-- [Extract scout](../../../data/patch-api/evidence/11.1.5-session-2026-10-06/p1115-extract-scout.md)
-- [Proof ledger](../../../data/patch-api/evidence/11.1.5-session-2026-10-06/p1115-proof.json)
+- [Extract scout](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/11.1.5-session-2026-10-06/p1115-extract-scout.md)
+- [Proof ledger](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/11.1.5-session-2026-10-06/p1115-proof.json)
 
 ## See Also
 

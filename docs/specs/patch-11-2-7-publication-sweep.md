@@ -25,7 +25,7 @@ Earliest supported retail epoch is `retail-12-0-0`; no 11.x runtime exists. Defa
 
 - `data/patch-api/sources/11.2.7-api-changes.wikitext` and provenance.
 - `data/patch-api/sources/11.2.7-wikitext-register.json`.
-- [Session evidence](../../data/patch-api/evidence/11.2.7-session-2026-10-06/).
+- [Session evidence](https://github.com/Osso/wow-ui-sim/tree/183edc381/data/patch-api/evidence/11.2.7-session-2026-10-06).
 
 ## Retirement fixes
 
@@ -52,7 +52,7 @@ Rust/data runtime revision `9cc60a03dc2dc2b51ff2675b00f9e5688228b0e5`; later evi
 | 12.0.7 | 174 | 171 | 3 | PASS |
 | 12.1.0 | 778 | 773 | 5 | PASS |
 
-All six use local debug retail, one filter per process, `--nocapture --test-threads=1`. All five later baseline files remain byte-identical to base `ba5170301`. Results and exact commands are in [proof ledger](../../data/patch-api/evidence/11.2.7-session-2026-10-06/p1127-proof.json).
+All six use local debug retail, one filter per process, `--nocapture --test-threads=1`. All five later baseline files remain byte-identical to base `ba5170301`. Results and exact commands are in [proof ledger](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/11.2.7-session-2026-10-06/p1127-proof.json).
 
 Initial 508-row sweep: 373 OK / 135 non-OK. Per-ID review closes four removal defects and ten catalog omissions; 121 retained gaps: 110 namespace members, six globals, two acquisition failures, two 3D method gaps, one later-superseded event removal. All nine source removals now observe baseline absence. Fifty-one effective expectations are superseded, 50 OK. No page CVar default mismatches were reported; this remains publication-only proof.
 
@@ -81,7 +81,7 @@ C_DyeColor publishes six registered producers backed by explicit category/color 
 
 ## Follow-up acceptance — runtime `0523068b2`
 
-This bounded follow-up closes 27 of the original 121 gaps: 25 state-backed producers and two permanent unsupported-3D methods. **94 remain gaps**, not completed native capabilities. Exact per-ID outcomes/reasons and model boundaries are in [outcomes](../../data/patch-api/evidence/11.2.7-session-2026-10-06/p1127-gap-outcomes.json); [cached contracts](../../data/patch-api/evidence/11.2.7-session-2026-10-06/p1127-gap-contracts.json) retain declarations and direct consumer references. The original 135-row review now records 41 total historical fixes / 94 retained, including the earlier 14 fixes. Publication closure is not native or historical parity.
+This bounded follow-up closes 27 of the original 121 gaps: 25 state-backed producers and two permanent unsupported-3D methods. **94 remain gaps**, not completed native capabilities. Exact per-ID outcomes/reasons and model boundaries are in [outcomes](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/11.2.7-session-2026-10-06/p1127-gap-outcomes.json); [cached contracts](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/11.2.7-session-2026-10-06/p1127-gap-contracts.json) retain declarations and direct consumer references. The original 135-row review now records 41 total historical fixes / 94 retained, including the earlier 14 fixes. Publication closure is not native or historical parity.
 
 Only `tests/data/patch_11_2_7_sweep_known_gaps.json` changes, 121 → 94. All five later fixtures remain byte-identical to `dacd71799`; none contains a newly closed symbol. Six isolated local debug sweeps pass:
 
@@ -96,7 +96,7 @@ Only `tests/data/patch_11_2_7_sweep_known_gaps.json` changes, 121 → 94. All fi
 
 Eleven new behavioral tests have passing proof: ten passed in the group run; its sole failure was an invalid test call to bare-env `ColorMixin:SetRGB`, absent in byte-identical master defaults. Direct field mutation tests the intended DTO isolation; both dye tests then pass at the final revision. Concrete payloads cover catalog ownership (2 carried + 3 banked = 5, guild storage excluded), callback GC/error propagation, editor request/success/failure/leave, per-environment contexts/preferences, location/ownership separation, room counts, and permanent actor behavior.
 
-Master `dacd71799` and final revision both pass existing `housing_pending` 20 tests and `keybinding` 73 tests. Formatting and default local check pass. Mists `cargo check --tests --no-default-features --features "sound gui casc client-mists"` passes with zero errors/non-vendor warnings; unchanged six iced manifest deprecations remain vendor-owned. Startup build is separate and unbounded; subsequent `timeout 90` no-build local run exits 0 with `[]`. Exact commands/revisions/results, working RED scopes, proof validity and one advisory serializer-length readability finding are in [follow-up proof](../../data/patch-api/evidence/11.2.7-session-2026-10-06/p1127-gaps-proof.json). Evidence-only changes do not invalidate runtime proof.
+Master `dacd71799` and final revision both pass existing `housing_pending` 20 tests and `keybinding` 73 tests. Formatting and default local check pass. Mists `cargo check --tests --no-default-features --features "sound gui casc client-mists"` passes with zero errors/non-vendor warnings; unchanged six iced manifest deprecations remain vendor-owned. Startup build is separate and unbounded; subsequent `timeout 90` no-build local run exits 0 with `[]`. Exact commands/revisions/results, working RED scopes, proof validity and one advisory serializer-length readability finding are in [follow-up proof](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/11.2.7-session-2026-10-06/p1127-gaps-proof.json). Evidence-only changes do not invalidate runtime proof.
 
 Retained boundaries: 34 housing service/ownership/travel/validation APIs; 23 shared decor/editor controls; 12 layout GUID/transform APIs; three undocumented diagnostics; three turn/strafe migration APIs; three report-screenshot APIs; 13 other missing classification/catalog/eligibility/service producers; two native acquisition objects; one event-source conflict. These are still gaps, not intentionally unsupported features or permission to add generic placeholders. Per-ID reasons name the missing substrate.
 

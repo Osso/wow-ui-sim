@@ -1,9 +1,0 @@
-{
-  "at": "2026-10-12T19:19:11.932698+00:00",
-  "path": "/home/osso/.local/state/wow-ui-sim/verification/guid-is-player-current/publication-before-20261012T191820067096Z/prefork-sealed",
-  "sha256": "cd4df4e9920239cf2b0a6306275a571d9451306a870a4d332f4f14baa866bab2",
-  "bytes": 509486864,
-  "mode": "0o555",
-  "matches_artifact": true,
-  "scope": "Exactly one independent read/hash of fresh epoch executable; no execution, libraries, RED/GREEN or old seals inspected."
-}

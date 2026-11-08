@@ -100,7 +100,7 @@ Three additional cases remain integration after failed equivalence probes: cast-
 
 ## Separate current phase observation — 2026-10-13
 
-[Owning ProjectConstants packet](../../../data/test-perf/evidence/startup-canonical-paired-2026-10-12/projectconstants-621-2026-10-13/README.md) separates normal verbose bucket timing from the still-failing exact fixture; no causal repair claim.
+[Owning ProjectConstants packet](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/test-perf/evidence/startup-canonical-paired-2026-10-12/projectconstants-621-2026-10-13/README.md) separates normal verbose bucket timing from the still-failing exact fixture; no causal repair claim.
 
 ## Separate immediate-EOF symbolization control — 2026-10-14
 

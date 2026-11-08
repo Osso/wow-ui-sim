@@ -1,9 +1,0 @@
-{
-  "after_sha256": "0c9972c55b349023c18dc1dfb13f69cafe5c53c1eee65357edaac8c00248fa1a",
-  "assertion_limits": "Default fixture existence/nil/count and three non-nil fields, not exact tuple/caster/native parity",
-  "before_sha256": "0c9972c55b349023c18dc1dfb13f69cafe5c53c1eee65357edaac8c00248fa1a",
-  "maps_equal": true,
-  "scope": "Accepted prior unit2 identity composed with retry recorded pre/post guards and unchanged saved source maps; no live binary/source rehash or hermetic/continuous closure",
-  "source_entries": 3846,
-  "stderr_retained": false
-}

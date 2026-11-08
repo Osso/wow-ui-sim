@@ -1,6 +1,0 @@
-{
-  "source_revision": "a915c9f1b7e1d35ee9a3f72df8889b99b350bd88",
-  "production_delta_revision": "a53fa04dc curve ordering and1b94ffff3 sourced catalog; current docs-onlya915",
-  "scope": "Final default library/six-bin cargo check after scoped curve/catalog/test repairs; source compilation only",
-  "git_status": "?? .code-index.db\n?? handoff/\n?? verification/\n"
-}

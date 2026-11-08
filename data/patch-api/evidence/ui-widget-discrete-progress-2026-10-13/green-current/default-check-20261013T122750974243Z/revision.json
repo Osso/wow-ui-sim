@@ -1,6 +1,0 @@
-{
-  "source_revision": "7fbcd5e475b3c16ae24a5a247ac3949bc4d48b27",
-  "production_delta_revision": "50f6f0ea8",
-  "scope": "Current default cargo check after50 producer and Retail7+preservation5+normalstartup; source7fb docs-only over50",
-  "git_status": "?? .code-index.db\n?? verification/\n"
-}

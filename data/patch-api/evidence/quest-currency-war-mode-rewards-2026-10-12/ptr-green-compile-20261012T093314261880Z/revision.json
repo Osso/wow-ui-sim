@@ -1,7 +1,0 @@
-{
-  "head": "7d82b44a6271b93e8c77a8812faae5cac438b37e",
-  "phase": "ptr-green",
-  "scope": "Four supplied getters and actual unmodified QuestUtils caller GREEN scope",
-  "test_commit": "4e19a8bad30ffe039a7604f3dc0cff45334e46ee",
-  "test_source_sha256": "ee2b5cedce9beaebc211353a01084cc6be127a7f23d1ea97450d209a851148a5"
-}

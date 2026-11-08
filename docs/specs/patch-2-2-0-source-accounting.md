@@ -1,6 +1,6 @@
 # Historical retail Patch 2.2.0 source accounting
 
-Account the frozen 2007 retail page, not Classic 2.5 or modern retail runtime behavior. [Audit](../wiki/investigations/patch-2-2-0-api-audit.md) records scope and proof boundaries; [literal ledger](../../data/patch-api/evidence/2.2.0-session-2026-10-09/historical-page-coverage.json) retains every source row.
+Account the frozen 2007 retail page, not Classic 2.5 or modern retail runtime behavior. [Audit](../wiki/investigations/patch-2-2-0-api-audit.md) records scope and proof boundaries; [literal ledger](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/2.2.0-session-2026-10-09/historical-page-coverage.json) retains every source row.
 
 ## What it must do
 

@@ -1,6 +1,6 @@
 # Startup addon paired observation
 
-Test-only observation in [`tests/startup_perf.rs`](../../tests/startup_perf.rs) pairs each successful canonical addon load result with that same call's outer wall time. This is an observation contract, not a startup optimization. Independent2794 accepts bounded current-run proof at source `490bc1080`; [packet](../../data/test-perf/evidence/startup-canonical-paired-2026-10-12/README.md) owns exact results and provenance. Public retention/link/privacy independently passed at `da4bbc442` within retained-text scope.
+Test-only observation in [`tests/startup_perf.rs`](../../tests/startup_perf.rs) pairs each successful canonical addon load result with that same call's outer wall time. This is an observation contract, not a startup optimization. Independent2794 accepts bounded current-run proof at source `490bc1080`; [packet](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/test-perf/evidence/startup-canonical-paired-2026-10-12/README.md) owns exact results and provenance. Public retention/link/privacy independently passed at `da4bbc442` within retained-text scope.
 
 ## What it must do
 

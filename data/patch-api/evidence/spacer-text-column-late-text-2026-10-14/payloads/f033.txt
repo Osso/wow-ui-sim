@@ -1,7 +1,0 @@
-{
-  "unit_samples": 32,
-  "observed_memory_peak_bytes": 1249820672,
-  "observed_swap_peak_bytes": 847872,
-  "active_window_observed_during": false,
-  "pool_average_cores_during": 15.157128182670547
-}

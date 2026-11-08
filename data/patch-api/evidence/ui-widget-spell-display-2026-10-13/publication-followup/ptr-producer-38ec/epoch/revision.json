@@ -1,6 +1,0 @@
-{
-  "source_revision": "38ecbd8ee5dfae4315ca98001b7e794e324b1066",
-  "production_delta_revision": "38ecbd8ee",
-  "scope": "Producer38ec complete fresh SpellDisplay outer14/nested16 plus unchanged nine tests; no-run PTR compile and normalbinary for later startup; no runtimeGREEN yet",
-  "git_status": "?? .code-index.db\n?? verification/\n"
-}

@@ -1,9 +1,0 @@
-{
-  "status": "OBSERVED_EXECUTED",
-  "unit_result": "success",
-  "exec_main_status": "0",
-  "rows": 54,
-  "non_sample_stdout_lines": 0,
-  "remaining_probe_processes": [],
-  "scope": "One observational diagnostic54rows, not tests/acceptance cases or loaded/native causality proof"
-}

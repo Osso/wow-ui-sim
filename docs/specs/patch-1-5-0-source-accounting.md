@@ -14,7 +14,7 @@ Bounded page372076/revision3587158/timestamp2020-04-13T00:49:38Z from retained l
 ## How it works
 
 - [Literal audit](../wiki/investigations/patch-1-5-0-api-audit.md)
-- [Replay](../../data/patch-api/evidence/1.5.0-session-2026-10-09/REPLAY.md)
+- [Replay](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/1.5.0-session-2026-10-09/REPLAY.md)
 
 ## Implementation inventory
 

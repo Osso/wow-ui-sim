@@ -1,8 +1,0 @@
-ActiveState=inactive
-SubState=dead
-Result=success
-ExecMainExitTimestamp=
-ExecMainCode=0
-ExecMainStatus=0
-MemoryPeak=[not set]
-CPUUsageNSec=[not set]

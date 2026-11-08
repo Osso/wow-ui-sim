@@ -14,7 +14,7 @@ Bounded literal accounting of frozen page67688/revision5580410/timestamp2023-10-
 ## How it works
 
 - [Integrated literal SOURCE proof and retained epochs](../wiki/investigations/integrated-source-and-factory-proof-2026-10-09.md#final-literal-retail-pages--integrated-source-pass-only)
-- [Replay instructions](../../data/patch-api/evidence/1.0.0-session-2026-10-09/REPLAY.md)
+- [Replay instructions](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/1.0.0-session-2026-10-09/REPLAY.md)
 
 ## Implementation inventory
 

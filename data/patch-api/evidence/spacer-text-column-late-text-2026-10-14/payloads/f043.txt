@@ -1,7 +1,0 @@
-{
-  "argv": [
-    "/usr/bin/rustfmt",
-    "--version"
-  ],
-  "exit": 0
-}

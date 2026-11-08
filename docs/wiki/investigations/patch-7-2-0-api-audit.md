@@ -18,7 +18,7 @@ Initial prefork sweep reports exactly one gap: `wt-widgets-MaskTexture-5`. Runti
 
 ## Retirement review
 
-**No retirements.** Migration prose explicitly preserves old APIs through Blizzard_Deprecated. Removal prose names domains, not members. [Untruncated scans](../../../data/patch-api/evidence/7.2.0-session-2026-10-08/p720-scans.json) use `/usr/bin/grep -R -n -w -F` in retail cached AddOns, excluding `*Documentation*`, and src/tests. Bare-name scanning includes `pcall(Name, ...)` and `and Name then` without syntax filters. Current MaskTexture, SetVertexOffset and C_EquipmentSet consumers remain intact. [Later-register snapshots](../../../data/patch-api/evidence/7.2.0-session-2026-10-08/p720-later-register-scan.json) read master and p725-page Git objects only, never the parallel worktree. No named-identity intersection; voice-domain removal does not disable later voice APIs. The real merged 7.2.5 register replaces the first-position placeholder (`482612127`), followed by 7.3.0 and later pages in chronological order.
+**No retirements.** Migration prose explicitly preserves old APIs through Blizzard_Deprecated. Removal prose names domains, not members. [Untruncated scans](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/7.2.0-session-2026-10-08/p720-scans.json) use `/usr/bin/grep -R -n -w -F` in retail cached AddOns, excluding `*Documentation*`, and src/tests. Bare-name scanning includes `pcall(Name, ...)` and `and Name then` without syntax filters. Current MaskTexture, SetVertexOffset and C_EquipmentSet consumers remain intact. [Later-register snapshots](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/7.2.0-session-2026-10-08/p720-later-register-scan.json) read master and p725-page Git objects only, never the parallel worktree. No named-identity intersection; voice-domain removal does not disable later voice APIs. The real merged 7.2.5 register replaces the first-position placeholder (`482612127`), followed by 7.3.0 and later pages in chronological order.
 
 ## Historical verification
 
@@ -39,24 +39,24 @@ Targeted acceptance passes. No full integration suite, agents/model CLIs, push o
 | Separate branch/master builds and addons-enabled bounded `lua-errors` | Both exit 0; exact error arrays `[]` |
 | Negative namespace substitution | Expected exit 1; precisely 0 → 1 failed IDs; no resolved/stale IDs |
 
-[Proof ledger](../../../data/patch-api/evidence/7.2.0-session-2026-10-08/p720-proof-ledger.md) records exact commands, revisions, scope hashes and invalidations. Runtime/accounting snapshot is `8ae333df4`; source input preservation is pinned to master `1ade15b52`. Three inherited extract failures (12.0.5, 12.0.7, 12.1.0) remain unchanged. Vendor iced manifest deprecations remain unsuppressed. Rust readability audit found no new suppressions or deeply nested logic.
+[Proof ledger](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/7.2.0-session-2026-10-08/p720-proof-ledger.md) records exact commands, revisions, scope hashes and invalidations. Runtime/accounting snapshot is `8ae333df4`; source input preservation is pinned to master `1ade15b52`. Three inherited extract failures (12.0.5, 12.0.7, 12.1.0) remain unchanged. Vendor iced manifest deprecations remain unsuppressed. Rust readability audit found no new suppressions or deeply nested logic.
 
-[Startup comparison](../../../data/patch-api/evidence/7.2.0-session-2026-10-08/p720-startup-comparison.json) uses a separately built master Git-archive snapshot inside the owned target. Neither execution disables addons. Production src/Cargo/build/Interface/profile manifests are unchanged; shared probe changes have no runtime deployment. No other worktree was modified.
+[Startup comparison](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/7.2.0-session-2026-10-08/p720-startup-comparison.json) uses a separately built master Git-archive snapshot inside the owned target. Neither execution disables addons. Production src/Cargo/build/Interface/profile manifests are unchanged; shared probe changes have no runtime deployment. No other worktree was modified.
 
 ## Historical validator
 
-[Validator](../../../data/patch-api/evidence/7.2.0-session-2026-10-08/validate.py) passes read-only, without absolute checkout/target equality gates. Historical register/sweep scope comes from `historical_registers` and the fixed runtime revision, never the moving checkout or receipt-derived subsets. Counts derive from retained files; every historical input must exist, and artifact hashes reject arbitrary edits. All sealed logs are force-tracked despite the repository's log ignore rule.
+[Validator](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/7.2.0-session-2026-10-08/validate.py) passes read-only, without absolute checkout/target equality gates. Historical register/sweep scope comes from `historical_registers` and the fixed runtime revision, never the moving checkout or receipt-derived subsets. Counts derive from retained files; every historical input must exist, and artifact hashes reject arbitrary edits. All sealed logs are force-tracked despite the repository's log ignore rule.
 
-All twenty prior validators pass; together with this page, 21/21 pass. [Relocation proof](../../../data/patch-api/evidence/7.2.0-session-2026-10-08/p720-validator-portability.json) validates a complete Git-archive snapshot at a different root, then adds a hypothetical later-audit register/sweep: historical counts remain 44/45 and validation still passes. Tampered own ledger bytes fail. Original sealed artifacts remain byte-identical after validation/restoration. [All twenty prior validators also pass in that augmented relocated snapshot](../../../data/patch-api/evidence/7.2.0-session-2026-10-08/p720-relocated-prior-validator-matrix.json). Full Git history is required; no fallback or missing-history bypass was added.
+All twenty prior validators pass; together with this page, 21/21 pass. [Relocation proof](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/7.2.0-session-2026-10-08/p720-validator-portability.json) validates a complete Git-archive snapshot at a different root, then adds a hypothetical later-audit register/sweep: historical counts remain 44/45 and validation still passes. Tampered own ledger bytes fail. Original sealed artifacts remain byte-identical after validation/restoration. [All twenty prior validators also pass in that augmented relocated snapshot](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/7.2.0-session-2026-10-08/p720-relocated-prior-validator-matrix.json). Full Git history is required; no fallback or missing-history bypass was added.
 
 ## Integration onto merged 7.2.5
 
-[Integrated ledger](../../../data/patch-api/evidence/7.2.0-session-2026-10-08/integrated/p720-final-command-ledger.md) pins runtime/register/sweep scope to `0d92f4dbb` and compares an exact archived master `8b6131f36`. Later driver commits modify evidence/docs only. The additive parser retains all three opt-in modes, including 7.2.5's `--top-level-api-bullets`.
+[Integrated ledger](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/7.2.0-session-2026-10-08/integrated/p720-final-command-ledger.md) pins runtime/register/sweep scope to `0d92f4dbb` and compares an exact archived master `8b6131f36`. Later driver commits modify evidence/docs only. The additive parser retains all three opt-in modes, including 7.2.5's `--top-level-api-bullets`.
 
 | Boundary | Result | Evidence |
 |---|---|---|
 | Retained source reproduction | 45/45 registers; 42/45 extracts | Recorded/inherited flags and exact unchanged 12.0.5, 12.0.7, 12.1.0 failures |
-| Exact master / branch sweeps | 45/45 and 46/46 cases; 8,869 / 8,872 observations | [Every-page comparison](../../../data/patch-api/evidence/7.2.0-session-2026-10-08/integrated/gap-comparison.json): all 44 existing pages have unchanged known gaps and every row's `ok` status |
+| Exact master / branch sweeps | 45/45 and 46/46 cases; 8,869 / 8,872 observations | [Every-page comparison](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/7.2.0-session-2026-10-08/integrated/gap-comparison.json): all 44 existing pages have unchanged known gaps and every row's `ok` status |
 | Own publication / cached behavior | 1/1 sweep; 4/4 prefork cases; zero gaps | Real 7.2.5 register first, then later pages |
 | Requested bare `patch_7_2_0` filter | Zero cases; no coverage credited | Page defines cached cases only; scoped bare integration below supplies real coverage |
 | Texture / mask / equipment integration; equipment library | 25/25, 10/10, 6/6; 7/7 | Complete logs and scoped receipts |
@@ -65,7 +65,7 @@ All twenty prior validators pass; together with this page, 21/21 pass. [Relocati
 
 No own or existing-page gap changes, new supersession closures, `LATER_AUDIT_REPLACEMENTS` changes or weakened checks. Four substantive prose limits remain. Shared extender refreshes the real 7.2.5 register/sweep rows and records the actual extension revision separately from its copied template revision; saved-extract receipts cover all 45 registers.
 
-Historical scope remains fixed at `8ae333df4` (44 registers, 45 cases), with all 155 sealed artifacts byte-identical. Fresh [integrated validator](../../../data/patch-api/evidence/7.2.0-session-2026-10-08/validate_integrated.py) independently fixes the new 45-register scope. All 22 required historical validators and the separate integrated validator pass (23/23 total). The integrated gate passed at `ed80b2ef0`; exact revisions, command receipts and outputs are recorded in [validator matrix](../../../data/patch-api/evidence/7.2.0-session-2026-10-08/integrated/validator-matrix.json). No broad checks were rerun after evidence/docs-only milestones.
+Historical scope remains fixed at `8ae333df4` (44 registers, 45 cases), with all 155 sealed artifacts byte-identical. Fresh [integrated validator](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/7.2.0-session-2026-10-08/validate_integrated.py) independently fixes the new 45-register scope. All 22 required historical validators and the separate integrated validator pass (23/23 total). The integrated gate passed at `ed80b2ef0`; exact revisions, command receipts and outputs are recorded in [validator matrix](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/7.2.0-session-2026-10-08/integrated/validator-matrix.json). No broad checks were rerun after evidence/docs-only milestones.
 
 No runtime/vendor/profile changes versus master, no new startup or deployment claim, and no agents, push, merge, directory switching or `__pycache__`.
 
@@ -74,7 +74,7 @@ No runtime/vendor/profile changes versus master, no new startup or deployment cl
 - [Pinned provenance](../../../data/patch-api/sources/7.2.0-api-changes.provenance.json).
 - [Register](../../../data/patch-api/sources/7.2.0-wikitext-register.json).
 - [Publication spec](../../specs/patch-7-2-0-publication-sweep.md).
-- [Evidence](../../../data/patch-api/evidence/7.2.0-session-2026-10-08/).
+- [Evidence](https://github.com/Osso/wow-ui-sim/tree/183edc381/data/patch-api/evidence/7.2.0-session-2026-10-08).
 
 ## See Also
 

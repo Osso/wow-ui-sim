@@ -1,7 +1,0 @@
-{
-  "cpu.max": "1200000 100000\n",
-  "cpu.stat": "usage_usec 113971\nuser_usec 81135\nsystem_usec 32835\nnice_usec 0\ncore_sched.force_idle_usec 0\nnr_periods 1\nnr_throttled 0\nthrottled_usec 0\nnr_bursts 0\nburst_usec 0\n",
-  "membership": "/user.slice/user-1000.slice/user@1000.service/agents.slice/wow-legacy-aura-other-20261011t015231z.service",
-  "memory.max": "17179869184\n",
-  "memory.peak": "26845184\n"
-}

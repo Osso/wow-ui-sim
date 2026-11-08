@@ -38,7 +38,7 @@ Five rows are superseded: `lastLockedDelvesCompanionAbilities` (removed again in
 - Added globals as workarounds: the seven `C_PhotoSharing` service members (OAuth flow, capture, upload) are permanent shims, because the simulator has no external service. `GetCurrentCinematicSummary` (no cinematic playback model) and `C_Commentator.SendAddonMessageLogged` (no commentator comms model) are temporary inert defaults.
 - Methods: the 16 `SecondsFormatter` getters, curve setters, `Reset` and `FormatZero`; promotion and lowercase settings drive `Format`. `DurationObject:EvaluateTotalDuration` and `FontString:GetUnboundedStringWidthForText` (real text measurement in the font string's font) are also published. `ModelSceneActor:SetSheathedCategory`/`UseUnitSheatheCategory` and `ModelSceneActorBase:SetGradientMaskWithDyes` are permanent 3D no-ops.
 
-Default Retail sweep: GREEN against the reviewed gap set. 363 observations: 351 OK, 12 non-OK. Results are in [the sweep result file](../../data/patch-api/evidence/12.0.5-session-2026-10-03/p1205-wikitext-sweep-result.json).
+Default Retail sweep: GREEN against the reviewed gap set. 363 observations: 351 OK, 12 non-OK. Results are in [the sweep result file](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/12.0.5-session-2026-10-03/p1205-wikitext-sweep-result.json).
 
 ## Known gaps (current cycle)
 

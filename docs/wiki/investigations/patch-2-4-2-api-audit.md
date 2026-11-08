@@ -4,7 +4,7 @@ Frozen page 81145/revision 803933, revision timestamp **2021-12-28T02:03:05Z**, 
 
 ## Provenance
 
-[Source pin](../../../data/patch-api/evidence/2.4.2-session-2026-10-09/source-pin.json), committed source-cache manifest/response/raw retained independently. No network or mutable cache inputs used to reconstruct the page.
+[Source pin](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/2.4.2-session-2026-10-09/source-pin.json), committed source-cache manifest/response/raw retained independently. No network or mutable cache inputs used to reconstruct the page.
 
 | Input | SHA-256 | Bytes |
 |---|---|---:|
@@ -64,13 +64,13 @@ No runtime code changed, no retirement, new shim/fallback, alias, or speculative
 
 ## Successor boundaries
 
-Only actual retail registers **3.2.0, 3.3.0, 3.3.3, 3.3.5, 4.0.1**, ordered chronologically, participate. [Exact overlap review](../../../data/patch-api/evidence/2.4.2-session-2026-10-09/overlap-review.json): one tuple/bare-symbol overlap, 3.2.0's **changed** GetQuestLogSpellLink; it supplies no add/remove supersession. Other four registers overlap zero own identities. Nine gaps unchanged.
+Only actual retail registers **3.2.0, 3.3.0, 3.3.3, 3.3.5, 4.0.1**, ordered chronologically, participate. [Exact overlap review](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/2.4.2-session-2026-10-09/overlap-review.json): one tuple/bare-symbol overlap, 3.2.0's **changed** GetQuestLogSpellLink; it supplies no add/remove supersession. Other four registers overlap zero own identities. Nine gaps unchanged.
 
 Queued frozen 3.0.2/3.0.3/3.0.8/3.1.0 sources have zero exact own-symbol overlaps and receive no publication supersession credit. Original substring scout is preserved: 3.0.2 GetCoinTextureString is **not** GetCoinText. No Classic 2.5.x, Era or Wrath 3.4.x supersession.
 
 ## Sealed historical replay
 
-[Historical manifest](../../../data/patch-api/evidence/2.4.2-session-2026-10-09/historical-manifest.json) seals **23 original files** plus hashes for **2,229 archived blobs**. Compact deterministic archive is **4,287,031 bytes**. Original ledger, gaps, source/registry pins, original/current parsers, relevant original runtime source, build/test inputs and all owned command logs survive independently of future closures. Ignored `.log` receipts are force-tracked explicitly. Closure directory is separate; no closure claimed.
+[Historical manifest](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/2.4.2-session-2026-10-09/historical-manifest.json) seals **23 original files** plus hashes for **2,229 archived blobs**. Compact deterministic archive is **4,287,031 bytes**. Original ledger, gaps, source/registry pins, original/current parsers, relevant original runtime source, build/test inputs and all owned command logs survive independently of future closures. Ignored `.log` receipts are force-tracked explicitly. Closure directory is separate; no closure claimed.
 
 Historical validator materializes only sealed source/tool inputs into a fresh temporary root. No Git, target, current checkout, vendor or mutable UI-cache files are read; archived Rust code is provenance, not rebuilt native acceptance. Fresh-process fixture copies only evidence and runs with `PATH=/nonexistent`. Serialized ledger, log and compressed archive mutations each fail at their exact seal; restoration preserves original hashes and reproduces the same summary.
 
@@ -87,7 +87,7 @@ Historical validator materializes only sealed source/tool inputs into a fresh te
 | 1a5e3860d → 576d4dcca | `python3 -B tools/test_patch_2_4_2_replay.py` | Missing-validator RED → fresh-copy/tamper/restore GREEN 1/1 |
 | fbf655ef9 | Replay fixture now exposes its previously asserted summary | 1/1 GREEN; original 23 seals unchanged |
 
-Exact discovery revision and commands/environment scope are retained in [command ledger](../../../data/patch-api/evidence/2.4.2-session-2026-10-09/command-ledger.json); [portable summary](../../../data/patch-api/evidence/2.4.2-session-2026-10-09/portable-proof/summary.json) is separate from original evidence. Factory output paths use P242_SWEEP_OUT; scratch register uses P242_SWEEP_REGISTER; CARGO_TARGET_DIR is the owned worktree's target. Rust file formatted before commit. Six inherited iced manifest deprecations and six inherited headless non-vendor warnings retained, not suppressed/fixed outside scope.
+Exact discovery revision and commands/environment scope are retained in [command ledger](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/2.4.2-session-2026-10-09/command-ledger.json); [portable summary](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/2.4.2-session-2026-10-09/portable-proof/summary.json) is separate from original evidence. Factory output paths use P242_SWEEP_OUT; scratch register uses P242_SWEEP_REGISTER; CARGO_TARGET_DIR is the owned worktree's target. Rust file formatted before commit. Six inherited iced manifest deprecations and six inherited headless non-vendor warnings retained, not suppressed/fixed outside scope.
 
 No broad/check/lint/readability/profile/startup/full-suite/final gates, model CLI/delegation, push, merge, deploy or operational work. Later documentation/receipt additions do not invalidate earlier code-scope proof. Main owns integration and any changed publication/native acceptance.
 
@@ -98,7 +98,7 @@ No broad/check/lint/readability/profile/startup/full-suite/final gates, model CL
 ## Sources
 
 - [Frozen raw page](../../../data/patch-api/sources/2.4.2-api-changes.wikitext) and [rendered extract](../../../data/patch-api/sources/2.4.2-api-changes.txt).
-- [Spec](../../specs/patch-2-4-2-publication-sweep.md), [handoff](../../../data/patch-api/evidence/2.4.2-session-2026-10-09/handoff.md).
+- [Spec](../../specs/patch-2-4-2-publication-sweep.md), [handoff](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/2.4.2-session-2026-10-09/handoff.md).
 - [Current currency model](../../../src/c_api/item_spell/c_currency.rs) and [owned factory tests](../../../tests/patch_2_4_2_factory.rs).
 
 ## See Also

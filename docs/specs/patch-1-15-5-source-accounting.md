@@ -20,7 +20,7 @@ Account frozen Warcraft Wiki page 610284 / revision 6235411 / timestamp `2025-02
 
 ## Tests asserting this spec
 
-Own `test_source_accounting.py`: retained RED eight assertion failures; SOURCE GREEN8/8 at `3ea25422f`. `test_portable.py`: GREEN3/3 at `38fa9fba4`, fresh copied SOURCE8/8, default byte replay, serialized ledger/log seal rejection and exact restoration. Original38 seals unchanged; later receipts separate. [Exact commands and results](../../data/patch-api/evidence/1.15.5-session-2026-10-09/portable-proof.json). No final gates.
+Own `test_source_accounting.py`: retained RED eight assertion failures; SOURCE GREEN8/8 at `3ea25422f`. `test_portable.py`: GREEN3/3 at `38fa9fba4`, fresh copied SOURCE8/8, default byte replay, serialized ledger/log seal rejection and exact restoration. Original38 seals unchanged; later receipts separate. [Exact commands and results](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/1.15.5-session-2026-10-09/portable-proof.json). No final gates.
 
 ## Known gaps (current cycle)
 

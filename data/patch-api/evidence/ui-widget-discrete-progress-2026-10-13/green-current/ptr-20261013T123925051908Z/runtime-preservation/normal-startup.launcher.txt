@@ -1,6 +1,0 @@
-Running as unit: wow-discrete-normal-startup-20261013t131957878439z.service
-          Finished with result: success
-Main processes terminated with: code=exited, status=0/SUCCESS
-               Service runtime: 6.115s
-             CPU time consumed: 5.645s
-                   Memory peak: 1.4G (swap: 0B)

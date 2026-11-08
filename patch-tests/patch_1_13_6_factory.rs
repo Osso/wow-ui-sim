@@ -9,9 +9,9 @@ use wow_ui_sim::client_profile::{ACTIVE, ACTIVE_INTERFACE_VERSION, ClientProfile
 use wow_ui_sim::lua_api::WowLuaEnv;
 
 const REGISTER: &str =
-    include_str!("../data/patch-api/evidence/1.13.6-session-2026-10-09/default-register.json");
+    include_str!("../tests/data/patch-factory/1.13.6-session-2026-10-09/default-register.json");
 const KNOWN_GAPS: &str =
-    include_str!("../data/patch-api/evidence/1.13.6-session-2026-10-09/current-known-gaps.json");
+    include_str!("../tests/data/patch-factory/1.13.6-session-2026-10-09/current-known-gaps.json");
 
 #[test]
 fn exact_current_era_publication_gaps() {
@@ -58,7 +58,7 @@ fn exact_current_era_publication_gaps() {
     std::fs::write(output, serde_json::to_vec_pretty(&observed).unwrap())
         .expect("write separate current observations");
     let reviewed: Value = serde_json::from_str(include_str!(
-        "../data/patch-api/evidence/1.13.6-session-2026-10-09/current-reviewed-observations.json"
+        "../tests/data/patch-factory/1.13.6-session-2026-10-09/current-reviewed-observations.json"
     ))
     .expect("reviewed concrete current getter observations");
     assert_eq!(

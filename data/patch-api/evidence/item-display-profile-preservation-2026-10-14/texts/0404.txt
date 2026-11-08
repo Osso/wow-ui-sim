@@ -1,6 +1,0 @@
-{
-  "source_revision": "447cf777a9efd264d90746ad6276b5acb0f6fef8",
-  "production_delta_revision": "447cf777a",
-  "scope": "Mists normal Store natural query-input diagnostics; originalE0603 buildfailure separate; exportedpredicatefix; not itemcorrectedfixture integration proof",
-  "git_status": "?? .code-index.db\n?? verification/\n"
-}

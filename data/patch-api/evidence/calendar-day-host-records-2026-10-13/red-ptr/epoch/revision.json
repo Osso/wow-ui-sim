@@ -1,6 +1,0 @@
-{
-  "source_revision": "48902323e64bef2229376a1c1c8c8b4e4cf9e09a",
-  "production_delta_revision": "3df756436",
-  "scope": "Calendar day passive DTO/empty map and nine tests; PTR pre-producer compile only; runtime genuine RED pending; numeric index defaults/filtering unchanged",
-  "git_status": "?? .code-index.db\n?? verification/\n"
-}

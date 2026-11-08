@@ -14,7 +14,7 @@ Initial cached sweep: 65 OK / 33 gaps. Four removed members were fabricated by n
 
 RemoveRaidTargets was absent despite existing GUID-keyed marker state used by SetRaidTarget/GetRaidTargetIndex. The modeled global clears that map, returns no values, queues RAID_TARGET_UPDATE and dispatches notification after mutation. Concrete player/two-party-member/hostile-target fixtures verify clearing, callback-visible state, repeated empty clearing and reassignment. Notification timing follows simulator SetRaidTarget policy; native restricted-action authorization remains unmodeled. Cached RaidMarkersDocumentation.lua:89–92 documents removal of all markers with no arguments/results. Full cached SecureActionButton_OnClick dispatch now reaches the real clear-all producer without substituting Blizzard code.
 
-Two unit behavior tests fail before implementation and pass afterward. Five bounded publication closures leave 28 exact gaps. [Per-ID review](../../../data/patch-api/evidence/11.0.7-session-2026-10-06/p1107-gap-review.json) retains each initial defect, observation and closure/boundary.
+Two unit behavior tests fail before implementation and pass afterward. Five bounded publication closures leave 28 exact gaps. [Per-ID review](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/11.0.7-session-2026-10-06/p1107-gap-review.json) retains each initial defect, observation and closure/boundary.
 
 **Preserved deprecation wrappers:** cached Blizzard_DeprecatedLFG/Deprecated_LFG.lua:9 aliases C_LFGInfo.IsPremadeGroupEnabled; lines 10–15 define C_LFGList.GetSearchResultMemberInfo. Current search matches are these definitions, not active call sites. Shared sweep accepts loaded deprecation source/alias identity; this is not strict absence or successor DTO proof. Both wrappers remain untouched, and their two isolated prefork tests pass. GetSearchResultPlayerInfo remains a publication gap; its cached wrapper does not close it.
 
@@ -34,7 +34,7 @@ Remaining gaps cover role policy, match-result DTOs, game-rule frame-strata conv
 
 ## Development proof
 
-[Spec and sweep table](../../specs/patch-11-0-7-publication-sweep.md#local-proof) and [proof ledger](../../../data/patch-api/evidence/11.0.7-session-2026-10-06/p1107-proof.json) retain command/cwd/revision/result scopes. Runtime revision 9b4119c9e; final cached-consumer test revision e29e8b98f. Later edits are evidence/docs only.
+[Spec and sweep table](../../specs/patch-11-0-7-publication-sweep.md#local-proof) and [proof ledger](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/11.0.7-session-2026-10-06/p1107-proof.json) retain command/cwd/revision/result scopes. Runtime revision 9b4119c9e; final cached-consumer test revision e29e8b98f. Later edits are evidence/docs only.
 
 All twelve sweeps run alone and pass, matching unchanged later fixtures. Negative control changes only C_AccountStore.BeginPurchase added → removed: exactly one new gap, no resolutions, 28 → 29, expected exit 101. Two new unit tests GREEN after RED. Three isolated prefork cases pass: cached secure clear-all dispatch and both deprecated-LFG surfaces. Initial cached-consumer fixture incorrectly accessed SECURE_ACTIONS, a local table at SecureTemplates.lua:260; corrected fixture uses exported SecureActionButton_OnClick. Failed proof stays retained and marked superseded, not hidden.
 
@@ -45,9 +45,9 @@ Sixteen extractor/register fixtures, deterministic extract reproduction, all twe
 - [Publication contract](../../specs/patch-11-0-7-publication-sweep.md)
 - [Source provenance](../../../data/patch-api/sources/11.0.7-api-changes.provenance.json)
 - [Page ledger](../../../data/patch-api/sources/11.0.7-page-coverage.json)
-- [Extract scout](../../../data/patch-api/evidence/11.0.7-session-2026-10-06/p1107-extract-scout.md)
-- [Retirement consumer searches](../../../data/patch-api/evidence/11.0.7-session-2026-10-06/p1107-retirement-consumers.json)
-- [Artifact validator](../../../data/patch-api/evidence/11.0.7-session-2026-10-06/p1107-validate.py)
+- [Extract scout](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/11.0.7-session-2026-10-06/p1107-extract-scout.md)
+- [Retirement consumer searches](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/11.0.7-session-2026-10-06/p1107-retirement-consumers.json)
+- [Artifact validator](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/11.0.7-session-2026-10-06/p1107-validate.py)
 
 ## See Also
 

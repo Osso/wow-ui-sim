@@ -1,4 +1,0 @@
-[temp-casting-bar] phase=xml_properties_before id=13136 parent_id=Some(1) visible=true alpha=1
-[temp-casting-bar] phase=xml_properties_after id=13136 parent_id=Some(1) visible=true alpha=1
-[temp-casting-bar] phase=xml_onload_before id=13136 parent_id=Some(1) visible=true alpha=1
-[temp-casting-bar] phase=xml_onload_after success=true id=13136 parent_id=Some(1) visible=true alpha=1

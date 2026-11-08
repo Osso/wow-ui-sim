@@ -129,7 +129,7 @@ The existing ignored XML case is the color-table `AddLine` expansion TODO; no ne
 
 ## Texture XML bounded runtime checkpoint — 2026-10-13
 
-[Owning acceptance](../../specs/xml-self-relative-key.md#known-gaps-current-cycle) and [evidence index](../../../data/patch-api/evidence/xml-self-relative-key-2026-10-13/README.md) separate focused Mists GREEN, cached normal startup, shared anchor controls and named prefork proof from publication integrity. Historical source-only pending labels remain above. Store fixture mismatches retain both FAILs; actual sibling identity/card bounds, native/rendered and full-parent acceptance remain unproved.
+[Owning acceptance](../../specs/xml-self-relative-key.md#known-gaps-current-cycle) and [evidence index](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/xml-self-relative-key-2026-10-13/README.md) separate focused Mists GREEN, cached normal startup, shared anchor controls and named prefork proof from publication integrity. Historical source-only pending labels remain above. Store fixture mismatches retain both FAILs; actual sibling identity/card bounds, native/rendered and full-parent acceptance remain unproved.
 
 ## Sources
 

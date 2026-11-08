@@ -1,8 +1,0 @@
-{
-  "status": "FAIL before public writes",
-  "error": "JSONDecodeError Expecting comma delimiter line1column9char8",
-  "cause": "Nested JSON string contained complete timestamped stderr; classifier inferred JSONL merely because every log line began with [",
-  "original_gate_proofs": "unchanged",
-  "public_writes": 0,
-  "correction": "Explicitly classify timestamp-prefixed diagnostic text as TEXT, still scan all escaped privacy forms; actual nested JSON/JSONL parsing remains strict"
-}

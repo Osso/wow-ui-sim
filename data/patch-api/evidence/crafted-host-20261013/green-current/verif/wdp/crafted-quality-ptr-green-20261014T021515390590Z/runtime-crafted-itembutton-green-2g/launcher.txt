@@ -1,6 +1,0 @@
-Running as unit: <PRIVATE_UNIT_23>.service
-          Finished with result: success
-Main processes terminated with: code=exited, status=0/SUCCESS
-               Service runtime: 1.060s
-             CPU time consumed: 735ms
-                   Memory peak: 1.3G (swap: 0B)

@@ -1,9 +1,0 @@
-{
-  "artifact": "/home/osso/.local/state/wow-ui-sim/verification/calendar-event-index-current/publication-prefork-compile-20261012T020631000464Z/prefork-sealed",
-  "bytes": 509644120,
-  "sha256": "7edf35884969683b6b061030188095a07414b5f4b516d43bdfe55f2b1a29bc7f",
-  "matches": true,
-  "fresh": false,
-  "target": "prefork_full_ui",
-  "reads": 1
-}

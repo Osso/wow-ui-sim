@@ -22,7 +22,7 @@ Measure literal frozen-source inventory in current bare `WowLuaEnv::new`, `clien
 
 ## Tests asserting this spec
 
-`cargo test --no-default-features --features client-wrath --test patch_3_4_1_factory -- --nocapture --test-threads=1`: discovery RED exit 101 at `467acfa6e`; targeted GREEN 6/6 exit 0 at `da31b9ed1`. [Exact proof ledger and full streams](../../data/patch-api/evidence/3.4.1-factory-2026-10-09/proof-ledger.json). Historical 19-seal preservation checked directly, not by rewriting or rerunning historical validators. Receipt retention requirement above is administrative, not a native parity test.
+`cargo test --no-default-features --features client-wrath --test patch_3_4_1_factory -- --nocapture --test-threads=1`: discovery RED exit 101 at `467acfa6e`; targeted GREEN 6/6 exit 0 at `da31b9ed1`. [Exact proof ledger and full streams](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/3.4.1-factory-2026-10-09/proof-ledger.json). Historical 19-seal preservation checked directly, not by rewriting or rerunning historical validators. Receipt retention requirement above is administrative, not a native parity test.
 
 ## Known gaps (current cycle)
 

@@ -1,6 +1,0 @@
-Running as unit: wow-widget-core-header-20261013t090502.service
-          Finished with result: success
-Main processes terminated with: code=exited, status=0/SUCCESS
-               Service runtime: 896ms
-             CPU time consumed: 872ms
-                   Memory peak: 108.6M (swap: 0B)

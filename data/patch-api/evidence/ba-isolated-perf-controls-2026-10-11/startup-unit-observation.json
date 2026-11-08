@@ -1,6 +1,0 @@
-{
-  "at": "2026-10-11T22:05:20.613712+00:00",
-  "exit": 0,
-  "stdout": "ActiveState=active\nSubState=exited\nTimeoutStopUSec=3s\nRuntimeMaxUSec=1min 30s\nResult=success\nExecMainCode=1\nExecMainStatus=0\nSlice=agents.slice\nCPUQuotaPerSecUSec=12s\nMemoryMax=17179869184\nKillMode=control-group\n",
-  "stderr": ""
-}

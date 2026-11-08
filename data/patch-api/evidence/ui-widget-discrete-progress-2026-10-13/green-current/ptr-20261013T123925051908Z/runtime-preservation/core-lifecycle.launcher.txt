@@ -1,6 +1,0 @@
-Running as unit: wow-discrete-core-lifecycle-20261013t131954675689z.service
-          Finished with result: success
-Main processes terminated with: code=exited, status=0/SUCCESS
-               Service runtime: 3.191s
-             CPU time consumed: 3.159s
-                   Memory peak: 1G (swap: 0B)

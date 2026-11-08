@@ -16,7 +16,7 @@ The modeled legacy non-`C_*` global lives in `src/lua_api/globals/real/bnet_frie
 
 ## Historical development coverage matrix
 
-Counts derive from [results](../../../data/patch-api/evidence/4.2.0-session-2026-10-09/development-results.json) and [per-ID ledger](../../../data/patch-api/sources/4.2.0-page-coverage.json), not native receipts.
+Counts derive from [results](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/4.2.0-session-2026-10-09/development-results.json) and [per-ID ledger](../../../data/patch-api/sources/4.2.0-page-coverage.json), not native receipts.
 
 | Source / capability | Accounting | Proof scope |
 |---|---:|---|
@@ -47,15 +47,15 @@ Historical 31-gap breakdown below remains development evidence. Current ledger a
 
 ## Consumers and retirement boundary
 
-[Full scan](../../../data/patch-api/evidence/4.2.0-session-2026-10-09/caller-scan.json): 1,652 own source text files, 2,149 own test text files (embedded Lua included), and 2,551 cached-retail Lua files. Scanned both source removals and initial gap identities without truncating matches. All are globals, so fully qualified and bare names coincide. `KeyRingButtonIDToInvSlotID` and `strreplace` have no matches and are already absent; no retirement edits or Classic caller migrations. Cached root includes Mists/Glue/documentation paths; a match does not prove that the runtime loaded that file. Existing deprecated wrappers are unmodified.
+[Full scan](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/4.2.0-session-2026-10-09/caller-scan.json): 1,652 own source text files, 2,149 own test text files (embedded Lua included), and 2,551 cached-retail Lua files. Scanned both source removals and initial gap identities without truncating matches. All are globals, so fully qualified and bare names coincide. `KeyRingButtonIDToInvSlotID` and `strreplace` have no matches and are already absent; no retirement edits or Classic caller migrations. Cached root includes Mists/Glue/documentation paths; a match does not prove that the runtime loaded that file. Existing deprecated wrappers are unmodified.
 
 ## Integrated successors
 
-Actual 4.3.0/4.3.4 registers replace both placeholders. Sole overlap: `EJ_SetDifficultyByMask`, removed by 4.3.0 ID `wt-global-api-EJ_SetDifficultyByMask-88`. Current absence satisfies that expectation, moving one row to bounded publication/absence: 35 matching observations, 30 gaps. No difficulty-mask model or native parity credit. Historical [successor pins](../../../data/patch-api/evidence/4.2.0-session-2026-10-09/later-register-pins.json), 31-gap results and 32-gap negative remain unchanged; separate [current observations](../../../data/patch-api/evidence/4.2.0-session-2026-10-09/integrated/current-results.json) record the closure. Updated accounting fixtures pass 6/6. Integrated proof and pending gates are recorded below.
+Actual 4.3.0/4.3.4 registers replace both placeholders. Sole overlap: `EJ_SetDifficultyByMask`, removed by 4.3.0 ID `wt-global-api-EJ_SetDifficultyByMask-88`. Current absence satisfies that expectation, moving one row to bounded publication/absence: 35 matching observations, 30 gaps. No difficulty-mask model or native parity credit. Historical [successor pins](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/4.2.0-session-2026-10-09/later-register-pins.json), 31-gap results and 32-gap negative remain unchanged; separate [current observations](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/4.2.0-session-2026-10-09/integrated/current-results.json) record the closure. Updated accounting fixtures pass 6/6. Integrated proof and pending gates are recorded below.
 
 ## Development proof
 
-Own publication RED failed with 32 mismatches; local model RED failed 2/2 on missing `BNGetFriendIndex`, then GREEN passed 2/2. Own publication GREEN passed 1/1 with 31 retained gaps. Added-row negative was rejected at the row-count boundary (66 versus 65), without result output; a same-size replacement negative reached classification, added exactly `negative-p420-missing-global` (31 → 32 gaps), and failed. Both controls and historical RED bytes are retained. The initial copied zero-row count was rejected before observation; fixed to derive the count from register data. Source/accounting fixtures GREEN pass 6/6 at `a0db0fa0d`; [development proof ledger](../../../data/patch-api/evidence/4.2.0-session-2026-10-09/development-proof.json) records commands, exact revisions/scopes, exits and artifact/input hashes.
+Own publication RED failed with 32 mismatches; local model RED failed 2/2 on missing `BNGetFriendIndex`, then GREEN passed 2/2. Own publication GREEN passed 1/1 with 31 retained gaps. Added-row negative was rejected at the row-count boundary (66 versus 65), without result output; a same-size replacement negative reached classification, added exactly `negative-p420-missing-global` (31 → 32 gaps), and failed. Both controls and historical RED bytes are retained. The initial copied zero-row count was rejected before observation; fixed to derive the count from register data. Source/accounting fixtures GREEN pass 6/6 at `a0db0fa0d`; [development proof ledger](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/4.2.0-session-2026-10-09/development-proof.json) records commands, exact revisions/scopes, exits and artifact/input hashes.
 
 That historical development phase executed only targeted tests and changed-file formatting; it supplied no broad acceptance proof. Existing native/vendor warnings in build logs are not a clean-warning claim.
 
@@ -65,10 +65,10 @@ Coordinator-owned receipts are separate from historical development evidence:
 
 | Scope | Recorded proof | Limit |
 |---|---|---|
-| Integrated retail publication sweeps | [Result](../../../data/patch-api/evidence/4.2.0-session-2026-10-09/integrated/p420-integrated-publication-result.json), 68 passed, exit 0 | Publication accounting, not native behavior parity |
-| Mists check | [Result](../../../data/patch-api/evidence/4.2.0-session-2026-10-09/integrated/p420-mists-check-result.json), exit 0 | Compilation check, not Classic behavioral parity |
-| Runtime build / built startup | [Build](../../../data/patch-api/evidence/4.2.0-session-2026-10-09/integrated/p420-runtime-build-result.json), exit 0; [startup](../../../data/patch-api/evidence/4.2.0-session-2026-10-09/integrated/p420-runtime-lua-errors-result.json), `[]`, exit 0 | Startup receipt records binary build revision and later equivalent runtime scope; not a full suite |
-| Historical validator | [Archive manifest](../../../data/patch-api/evidence/4.2.0-session-2026-10-09/historical-inputs.json): 73 members, 64 original successors, 20 evidence seals in the inspected manifest (initial validator report: 19); 13 fixtures including 12 tamper cases reported passing | Relocated replay needs neither Git nor current files; no historical code compilation/native parity proof |
+| Integrated retail publication sweeps | [Result](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/4.2.0-session-2026-10-09/integrated/p420-integrated-publication-result.json), 68 passed, exit 0 | Publication accounting, not native behavior parity |
+| Mists check | [Result](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/4.2.0-session-2026-10-09/integrated/p420-mists-check-result.json), exit 0 | Compilation check, not Classic behavioral parity |
+| Runtime build / built startup | [Build](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/4.2.0-session-2026-10-09/integrated/p420-runtime-build-result.json), exit 0; [startup](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/4.2.0-session-2026-10-09/integrated/p420-runtime-lua-errors-result.json), `[]`, exit 0 | Startup receipt records binary build revision and later equivalent runtime scope; not a full suite |
+| Historical validator | [Archive manifest](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/4.2.0-session-2026-10-09/historical-inputs.json): 73 members, 64 original successors, 20 evidence seals in the inspected manifest (initial validator report: 19); 13 fixtures including 12 tamper cases reported passing | Relocated replay needs neither Git nor current files; no historical code compilation/native parity proof |
 | Portability / independent verifier | Running, coordinator-owned | No final, CI or full-suite acceptance claim |
 
 Historical replay retains the original 65 inventory rows, 66-row ledger, 31 gaps and 32-gap negative; it does not replace them with current successor results. See [[patch-audit-validator-portability]] for the separate portability boundary.
@@ -76,7 +76,7 @@ Historical replay retains the original 65 inventory rows, 66-row ledger, 31 gaps
 ## Sources
 
 - [Pinned source](../../../data/patch-api/sources/4.2.0-api-changes.wikitext)
-- [Source pin](../../../data/patch-api/evidence/4.2.0-session-2026-10-09/source-pin.json)
+- [Source pin](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/4.2.0-session-2026-10-09/source-pin.json)
 - [Coverage](../../../data/patch-api/sources/4.2.0-page-coverage.json)
 - [Spec](../../specs/patch-4-2-0-publication-sweep.md)
 

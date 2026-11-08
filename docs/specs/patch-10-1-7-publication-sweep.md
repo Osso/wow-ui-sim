@@ -31,7 +31,7 @@ Historical epoch reconstruction, native parity, expanding linked pages, invented
 
 ## Proof
 
-[Proof ledger](../../data/patch-api/evidence/10.1.7-session-2026-10-07/p1017-proof.json) records exact command/revision/scope, result and invalidation. [Gap review](../../data/patch-api/evidence/10.1.7-session-2026-10-07/p1017-gap-review.json) and [extract scout](../../data/patch-api/evidence/10.1.7-session-2026-10-07/p1017-extract-scout.json) retain every boundary. Local targeted development evidence only.
+[Proof ledger](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/10.1.7-session-2026-10-07/p1017-proof.json) records exact command/revision/scope, result and invalidation. [Gap review](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/10.1.7-session-2026-10-07/p1017-gap-review.json) and [extract scout](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/10.1.7-session-2026-10-07/p1017-extract-scout.json) retain every boundary. Local targeted development evidence only.
 
 ## Local proof
 

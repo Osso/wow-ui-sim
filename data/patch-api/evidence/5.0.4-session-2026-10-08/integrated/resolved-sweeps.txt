@@ -1,2 +1,0 @@
-all-sweeps 0
-own-prefork 0

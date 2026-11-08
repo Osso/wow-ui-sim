@@ -1,6 +1,0 @@
-{
-  "source_revision": "bc5cecffbd89d719aa68390f4f12246059f013c5",
-  "production_delta_revision": "bc5cecffb",
-  "scope": "Current PTR preservation after item producer, corrected bag result extraction, numeric Store display field and retirement of temporary diagnostics; build only, runtime pending",
-  "git_status": "?? .code-index.db\n?? handoff/\n?? verification/\n"
-}

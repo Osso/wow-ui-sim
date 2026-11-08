@@ -26,4 +26,4 @@ No native/model/runtime compatibility claim, new threat or entitlement model, ve
 
 ## Evidence
 
-[Own ledger](../../data/patch-api/evidence/1.13.5-session-2026-10-09/ledger.json), [source pin](../../data/patch-api/evidence/1.13.5-session-2026-10-09/source-pin.json), [wiki](../wiki/investigations/patch-1-13-5-api-audit.md).
+[Own ledger](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/1.13.5-session-2026-10-09/ledger.json), [source pin](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/1.13.5-session-2026-10-09/source-pin.json), [wiki](../wiki/investigations/patch-1-13-5-api-audit.md).

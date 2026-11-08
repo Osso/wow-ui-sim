@@ -1,6 +1,0 @@
-Running as unit: wow-speak-normal-startup-20261013t144452248810z.service; invocation ID: 8d36fece3eb44540a9d100aa23b07cf4
-          Finished with result: success
-Main processes terminated with: code=exited, status=0/SUCCESS
-               Service runtime: 9.183s
-             CPU time consumed: 8.209s
-                   Memory peak: 2.1G (swap: 0B)

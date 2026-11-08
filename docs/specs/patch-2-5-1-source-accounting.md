@@ -21,7 +21,7 @@ Account for frozen page 71215/revision 701879 (`2022-02-06T21:22:09Z`), separate
 
 ## Tests asserting this spec
 
-`data/patch-api/evidence/2.5.1-session-2026-10-09/test_source_accounting.py` asserts serialized source behavior and negative controls: 9/9 GREEN at `985fd2c95`. Owned `validate.py` reproduces historical accounting at `eb48b0fc6`; `replay_controls.py` passes fresh copied replay and both serialized seal rejection/restoration controls at `c1391db3f`. [Proof ledger](../../data/patch-api/evidence/2.5.1-session-2026-10-09/proof-ledger.json). These are SOURCE-only proofs, not native/runtime/final acceptance.
+`data/patch-api/evidence/2.5.1-session-2026-10-09/test_source_accounting.py` asserts serialized source behavior and negative controls: 9/9 GREEN at `985fd2c95`. Owned `validate.py` reproduces historical accounting at `eb48b0fc6`; `replay_controls.py` passes fresh copied replay and both serialized seal rejection/restoration controls at `c1391db3f`. [Proof ledger](https://github.com/Osso/wow-ui-sim/blob/183edc381/data/patch-api/evidence/2.5.1-session-2026-10-09/proof-ledger.json). These are SOURCE-only proofs, not native/runtime/final acceptance.
 
 ## Known gaps (current cycle)
 

@@ -1,7 +1,0 @@
-# Complete method comparison results
-
-Original full generator ran one named helper case at `20261011T030142Z`, exit0. Both complete result files were written: **12,380 extra + 33 missing = 12,413 rows**. Frozen `WowDiscovery.lua` unchanged; original comparison assertions unchanged. This is simulator method-key comparison against frozen discovery, not native receiver or behavior evidence.
-
-Compared with original 11,985 extra/22 missing: extra96 removed/491 added, missing5 removed/16 added, **608 changed rows**. Every full before/after set is retained. Main's earlier105-change reconstruction omitted the extra diagnostic tail; its files and failing interim assertion receipts are preserved and explicitly superseded.
-
-Reused sealed Retail integration artifact; no fresh build. Resource admission passed first attempt (29.023GiB available, load1 16.16, no relevant Cargo); service requested agents.slice/1200% CPU/16GiB and timeout90. Effective limits not independently established here. Generation is separate from verification: corrected extra assertion030409 passes one named case/exit0 after admission attempt5; unchanged missing assertion030002 passes one named case/exit0 and is reused by identical input hashes. Independent audit covers both original assertions via one fresh plus one saved case, not two new executions. Native epoch UNKNOWN, saved469 suite FAIL, Garrison/native/full handoff OPEN.

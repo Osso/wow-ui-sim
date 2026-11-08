@@ -1,2 +1,0 @@
-Generated 5506 spell entries
-Output: data/spells.rs

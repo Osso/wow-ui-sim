@@ -1,9 +1,0 @@
-
-running 4 tests
-test loader::tests::layout_alpha::test_set_alpha_above_1_obeys_profile_policy ... ok
-test loader::tests::layout_alpha::test_set_alpha_below_0_obeys_profile_policy ... ok
-test loader::tests::layout_alpha::test_set_alpha_updates_child_effective ... ok
-test loader::tests::layout_alpha::test_set_alpha_zero ... ok
-
-test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 1995 filtered out; finished in 1.54s
-

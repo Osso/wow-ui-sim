@@ -11,7 +11,7 @@ Separate publication/designed-absence measurement of the exact historical retail
 
 ## How it works
 - [Audit](../wiki/investigations/patch-3-0-2-api-audit.md).
-- [Evidence](../../data/patch-api/evidence/3.0.2-factory-2026-10-09/).
+- [Evidence](https://github.com/Osso/wow-ui-sim/tree/183edc381/data/patch-api/evidence/3.0.2-factory-2026-10-09).
 
 ## Implementation inventory
 - `tests/patch_3_0_2_factory.rs`: standalone whole-file retail guard and exact register/successor inputs.

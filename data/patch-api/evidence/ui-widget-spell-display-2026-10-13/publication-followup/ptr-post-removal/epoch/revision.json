@@ -1,6 +1,0 @@
-{
-  "source_revision": "844a63adb95c7111e1286fa668e632f7cd237806",
-  "production_delta_revision": "621649e56",
-  "scope": "Eventremoval621 withstrictregistration/aspectgates preserved; compile PTR integration Spell9+newpolicy1 andnormalbinary; post-fixruntimepending",
-  "git_status": "?? .code-index.db\n?? verification/\n"
-}

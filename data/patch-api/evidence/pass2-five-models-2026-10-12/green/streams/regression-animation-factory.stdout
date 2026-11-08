@@ -1,8 +1,0 @@
-
-running 3 tests
-test animation_factory::create_animation_applies_a_loader_declared_animation_template ... ok
-test animation_factory::create_animation_named_result_uses_its_owner_timeline ... ok
-test animation_factory::create_animation_optional_arguments_return_one_owned_object ... ok
-
-test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 10898 filtered out; finished in 2.33s
-

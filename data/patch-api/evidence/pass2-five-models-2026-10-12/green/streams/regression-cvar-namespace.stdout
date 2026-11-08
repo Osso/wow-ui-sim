@@ -1,6 +1,0 @@
-
-running 1 test
-test set_cvar_global::c_cvar_get_reads_back_the_value_set_via_global ... ok
-
-test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10900 filtered out; finished in 0.32s
-

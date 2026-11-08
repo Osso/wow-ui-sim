@@ -1,3 +1,0 @@
-        PASS [   1.431s] ( 8275/10703) wow-ui-sim::integration scroll_widgets::xml_arguments::runtime_template_inline_scroll_arguments_shadow_globals_and_preserve_varargs
-        PASS [   1.998s] ( 8276/10703) wow-ui-sim::integration scroll_widgets::xml_arguments::ordinary_xml_inline_scroll_arguments_shadow_globals_and_preserve_varargs
-        PASS [   2.665s] ( 8279/10703) wow-ui-sim::integration scroll_widgets::xml_arguments::cached_faux_scrollframe_inline_offset_and_wheel_delta_sync_scrollbar

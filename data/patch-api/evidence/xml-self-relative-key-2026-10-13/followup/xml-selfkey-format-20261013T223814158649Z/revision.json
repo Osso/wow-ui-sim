@@ -1,6 +1,0 @@
-{
-  "source_revision": "2d4b7e56a06ea0fbb400a37f2aabb819337e5872",
-  "production_delta_revision": "480b9f934",
-  "scope": "Final cargo fmt --check after XML480; formatting only",
-  "git_status": "?? .code-index.db\n?? verification/\n"
-}
