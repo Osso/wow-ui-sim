@@ -63,6 +63,8 @@ runs in `agents.slice` with `MemoryMax=9G` and `MemorySwapMax=0`.
 `RUSTC_WRAPPER` is set to an empty value so Cargo configuration cannot select
 sccache instead of the incremental compiler. Status prints
 `SubState`, `Result`, `CPUUsageNSec`, and `WallTimeSec` (elapsed while running).
+It also prints `CargoOutput`, `BuildFinished`, `Success`, and `Warnings`, read from
+that unit's retained Cargo stdout file (see [receipts](#source-freshness-and-receipts)).
 Use the helper from the checkout that contains it; it builds `--worktree`.
 
 The freshness guard stores file digests and parsed dep-info in
@@ -194,9 +196,19 @@ build produced. Cargo writes one unhashed dylib name per profile, so a later bui
 with another feature set replaces the library a finished test binary loads. A
 runner must compare `dylib_sha256` with the files under `debug/deps` before it
 starts a unit and refuse on a mismatch; otherwise the binary fails at runtime with
-an undefined-symbol error. The command arguments and
-stdout/stderr bytes are passed through unchanged, including wrappers that capture
-Cargo JSON internally. The worker reads visible stdout for this build's Cargo
+an undefined-symbol error. Each unit also writes
+`slot-N/receipts/UNIT.cargo.jsonl` (the complete Cargo stdout) and
+`slot-N/receipts/UNIT.cargo.stderr` (the complete Cargo stderr). The receipt
+records both absolute paths as `cargo_stdout_file` and `cargo_stderr_file`. These
+files are the authoritative record when journald rate-limits
+`user@1000.service` and drops `build-finished` or `compiler-message` lines from the
+unit journal. `--status` reads them for `BuildFinished` (presence of Cargo's
+`build-finished` record), `Success` (that record's flag) and `Warnings` (count of
+`compiler-message` records whose message level is `warning`). Only the newest 20
+output pairs per slot are retained; earlier pairs are deleted after each build.
+The command arguments are passed through unchanged and Cargo stdout is still
+echoed to the unit journal; only Cargo stderr goes to the file instead of the
+journal. The worker reads visible stdout for this build's Cargo
 `compiler-artifact` records, without changing the submitted arguments. Use Cargo's
 JSON message format to expose those records. Receipts retain the records and each
 package's metadata-derived manifest-parent and path-dependency roots.
