@@ -5,7 +5,7 @@
     "flavor": "retail",
     "build": "12.0.5",
     "cache_manifest": "data/blizzard-ui-files/retail.txt",
-    "cache_hash": "aa7dfec3fb3bc9440a8c737c2274363502cb3d22c7939b8a570a58e717202edd"
+    "cache_hash": "4c597e051c5162c6b0c33b61ceb7cc9927925e7d59eb938bf6c097a1f8af3e3b"
   },
   "source": {
     "path": "data/patch-api/sources/12.0.5-probes.json",
@@ -32,7 +32,7 @@
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/runtime_subsystems.rs::test_animation_script_handler_matrix_matches_retail_probe",
           "summary": "Frame, AnimationGroup, and all nine animation subtypes directly match the retained HasScript/SetScript handler matrix.",
-          "source_hash": "e725473130c206e1523dbf24280594be31fd4f021d2a8a115235e5d7d78ab552"
+          "source_hash": "d91042266e212c336baddb1c9238af0a9c2ccb7adc1ef5b5d43e82371eff5d2e"
         }
       ],
       "tests": [
@@ -56,7 +56,7 @@
           "kind": "test",
           "reference": "tests/protected_attribute_enforcement.rs::unchanged_scalar_attribute_refires_on_attribute_changed",
           "summary": "Repeated scalar and explicit-false SetAttribute dispatch is directly regression-tested.",
-          "source_hash": "d8bd52c7fd19dfa52f87f9d145d3a42ba6c8bd17849b24f6f75acd091531e50b"
+          "source_hash": "602fd40e39d1bd906f7041a93c734f4e813f38578982a89661e8bce0db42af02"
         }
       ],
       "tests": [
@@ -80,7 +80,7 @@
           "kind": "test",
           "reference": "tests/test_showuipanel.rs::repeated_show_ui_panel_pulse_closes_active_panel_stack",
           "summary": "Sequential center-panel shows replace the first panel, and CloseAllWindows hides the active second panel.",
-          "source_hash": "a0a16a0b58eb364b2c0e35f64c1801f6cf4ddf49ef9a6e6a86bb5b0332c9d3d0"
+          "source_hash": "dacaec191db2995c2b6f879429b61f67da4d257dd08fd1ebcfbbd2bc40a99632"
         }
       ],
       "tests": [
@@ -104,7 +104,7 @@
           "kind": "test",
           "reference": "tests/protected_frame_enforcement.rs::test_insecure_addon_created_normal_frame_set_forbidden_is_noop",
           "summary": "Normal addon-frame SetForbidden behavior is directly regression-tested.",
-          "source_hash": "eda8ab6d1fd1ac3105da7c810f9462239492268a6ec1b2d025aaa03ba3283c8e"
+          "source_hash": "e4ce7017795bf7015ac76491e9408e31e0c9b9254c02bdeb1c9cb77cb83d2ae9"
         }
       ],
       "tests": [
@@ -128,7 +128,7 @@
           "kind": "test",
           "reference": "tests/protected_frame_enforcement.rs::test_retail_create_forbidden_frame_is_absent",
           "summary": "Retail exposes no CreateForbiddenFrame constructor, so the probe's creation and enumeration branch is unreachable.",
-          "source_hash": "eda8ab6d1fd1ac3105da7c810f9462239492268a6ec1b2d025aaa03ba3283c8e"
+          "source_hash": "e4ce7017795bf7015ac76491e9408e31e0c9b9254c02bdeb1c9cb77cb83d2ae9"
         }
       ],
       "tests": [
@@ -152,7 +152,7 @@
           "kind": "test",
           "reference": "tests/admin_event_api.rs::test_register_unit_event_reports_registered_unit",
           "summary": "Valid and invalid RegisterUnitEvent filter behavior is directly regression-tested.",
-          "source_hash": "a6350441c6db6dcfee75a53bc7db80debdd21fc939dd3a71e3b6b31c70ca164c"
+          "source_hash": "a8a9d5c5e0253abd8b8e227553f9c1f6a409085fc3854427124ab4eb5d76e81c"
         }
       ],
       "tests": [
@@ -176,7 +176,7 @@
           "kind": "test",
           "reference": "tests/protected_attribute_enforcement.rs::get_attribute_wildcard_lookup_preserves_explicit_false",
           "summary": "Wildcard attribute lookup preserving explicit false is directly regression-tested.",
-          "source_hash": "d8bd52c7fd19dfa52f87f9d145d3a42ba6c8bd17849b24f6f75acd091531e50b"
+          "source_hash": "602fd40e39d1bd906f7041a93c734f4e813f38578982a89661e8bce0db42af02"
         }
       ],
       "tests": [
@@ -200,7 +200,7 @@
           "kind": "test",
           "reference": "tests/protected_attribute_enforcement.rs::get_attribute_wildcard_lookup_preserves_explicit_false",
           "summary": "Wildcard true/string values and lookup arity are directly regression-tested.",
-          "source_hash": "d8bd52c7fd19dfa52f87f9d145d3a42ba6c8bd17849b24f6f75acd091531e50b"
+          "source_hash": "602fd40e39d1bd906f7041a93c734f4e813f38578982a89661e8bce0db42af02"
         }
       ],
       "tests": [
@@ -249,7 +249,7 @@
           "kind": "test",
           "reference": "src/iced_app/mouse_tests.rs::mouse_focus_order_tracks_gui_hover_after_raise_and_lower",
           "summary": "GUI mouse-move hit testing keeps the higher raw-level frame as both GetMouseFocus and GetMouseFoci()[1] across Raise and Lower, then clears focus when hidden.",
-          "source_hash": "80ebeb6a62da8c78ab0261f67d39afcd64965b2099cade26baf43a49d898a3a0"
+          "source_hash": "7547737232f4e1779763829b063d0fdc49506472412a6307b5b24bc449c92c4d"
         }
       ],
       "tests": [
@@ -321,7 +321,7 @@
           "kind": "test",
           "reference": "tests/security_api.rs::test_frame_identity_slots_dispatch_surrogate_methods",
           "summary": "Frame slot zero redirects method/protection dispatch, while a slot-one-only surrogate is rejected.",
-          "source_hash": "27a79e6d77acd3592e58136e4fd359d2a86ae32a26108a4348ecc06dae8f8034"
+          "source_hash": "1dcb89aa8828b0142b1bf996af43d62c5d7e6aaf544f1546e170aea53bfcd3d8"
         }
       ],
       "tests": [
@@ -346,7 +346,7 @@
           "kind": "test",
           "reference": "tests/globals_legacy.rs::duplicate_named_frame_gets_fresh_identity_and_fields",
           "summary": "Duplicate named-frame identity and custom-field freshness is directly regression-tested.",
-          "source_hash": "c37c15152c0ceb59bd0a24b4e980ccb982c6d6c6ac292ecab9a7f4f8579e75f6"
+          "source_hash": "f02d57a04e287ea3ac782361564dafe74a24b29ea66748410cb749151d70d391"
         }
       ],
       "tests": [
@@ -370,7 +370,7 @@
           "kind": "test",
           "reference": "tests/hook_script.rs::test_hook_script_rejects_pre_and_post_binding_slots",
           "summary": "The normal binding slot chains while explicit slots 0 and 2 return false and remain absent from GetScript.",
-          "source_hash": "12fc97b39717a4823b363f5bd92965f85a7a7af216755236f583921d5a0e09f9"
+          "source_hash": "4765c6733be655a033a40653384c09246a1b66a3f6107ce0661181ceb66ecdd4"
         }
       ],
       "tests": [
@@ -395,7 +395,7 @@
           "kind": "test",
           "reference": "tests/security_api.rs::test_protect_methods_are_not_public_addon_surface",
           "summary": "Legacy Protect and SetProtected methods are absent and calls fail.",
-          "source_hash": "27a79e6d77acd3592e58136e4fd359d2a86ae32a26108a4348ecc06dae8f8034"
+          "source_hash": "1dcb89aa8828b0142b1bf996af43d62c5d7e6aaf544f1546e170aea53bfcd3d8"
         }
       ],
       "tests": [
@@ -419,7 +419,7 @@
           "kind": "test",
           "reference": "tests/startup_warnings/late.rs::test_secure_action_button_template_is_protected_tuple_after_blizzard_framexml_load",
           "summary": "SecureActionButtonTemplate instances report protected state after Blizzard FrameXML loads.",
-          "source_hash": "eadca6ddd3aa63fbf72ff4f73dbc8de4cdb249dc4b66158a308d305429422bbe"
+          "source_hash": "23b237b118eb2f37812cf997db6a170505a13962138e8148d8d180ab8836531d"
         }
       ],
       "tests": [
@@ -443,7 +443,7 @@
           "kind": "test",
           "reference": "tests/protected_frame_enforcement.rs::test_protected_state_does_not_propagate_to_descendants_or_anchors",
           "summary": "Directly protected roots return true/true while child, grandchild, frames anchored to the root or child, and the root-keyed anchored frame remain false/false.",
-          "source_hash": "eda8ab6d1fd1ac3105da7c810f9462239492268a6ec1b2d025aaa03ba3283c8e"
+          "source_hash": "e4ce7017795bf7015ac76491e9408e31e0c9b9254c02bdeb1c9cb77cb83d2ae9"
         }
       ],
       "tests": [
@@ -467,7 +467,7 @@
           "kind": "test",
           "reference": "src/loader/tests/xml_basics_extra.rs::layer_fontstring_without_anchors_uses_justify_h_default_point",
           "summary": "Unanchored frame-layer FontStrings receive one LEFT, CENTER, or RIGHT parent-relative point selected by justifyH while justifyV does not alter it.",
-          "source_hash": "e4c2ce85ca14941f8b46fb74246b5e845edfd2003d1f4c2e6740b09674d4a480"
+          "source_hash": "8ad833ad4b2a983bfc8a9a643d19cdb4c3d23c223272941f522179f074cf0890"
         }
       ],
       "tests": [
@@ -515,7 +515,7 @@
           "kind": "test",
           "reference": "src/loader/tests/xml_basics_extra.rs::layer_fontstring_size_variants_keep_justify_h_default_points",
           "summary": "No-size, width-only, height-only, and width-plus-height FontStrings retain justifyH-selected default points while configured dimensions remain intact.",
-          "source_hash": "e4c2ce85ca14941f8b46fb74246b5e845edfd2003d1f4c2e6740b09674d4a480"
+          "source_hash": "8ad833ad4b2a983bfc8a9a643d19cdb4c3d23c223272941f522179f074cf0890"
         }
       ],
       "tests": [
@@ -539,7 +539,7 @@
           "kind": "test",
           "reference": "src/loader/tests/xml_basics_extra.rs::layer_fontstring_explicit_anchors_remain_authoritative",
           "summary": "TOP, BOTTOM, LEFT, RIGHT, and TOPLEFT explicit anchors remain the sole point regardless of justifyH.",
-          "source_hash": "e4c2ce85ca14941f8b46fb74246b5e845edfd2003d1f4c2e6740b09674d4a480"
+          "source_hash": "8ad833ad4b2a983bfc8a9a643d19cdb4c3d23c223272941f522179f074cf0890"
         }
       ],
       "tests": [
@@ -611,7 +611,7 @@
           "kind": "test",
           "reference": "tests/protected_frame_enforcement.rs::test_retail_plain_frame_protection_probe",
           "summary": "A plain frame remains unprotected and unforbidden; legacy protection setters are absent, their calls fail, and protection state remains false.",
-          "source_hash": "eda8ab6d1fd1ac3105da7c810f9462239492268a6ec1b2d025aaa03ba3283c8e"
+          "source_hash": "e4ce7017795bf7015ac76491e9408e31e0c9b9254c02bdeb1c9cb77cb83d2ae9"
         }
       ],
       "tests": [
@@ -729,7 +729,7 @@
           "kind": "test",
           "reference": "tests/set_atlas_arguments.rs::test_set_atlas_argument_validation_matches_retail",
           "summary": "No-argument and boolean calls raise usage errors, nil clears successfully, and numeric atlas IDs are accepted.",
-          "source_hash": "7afbc0beb76a4b9f642d1d331d933d68628344067f95fd0d3406b64c8353208f"
+          "source_hash": "657a1aa59b5b4165aa4167aa1adc4bf3463bb8b38bbead088b760079b151b176"
         },
         {
           "kind": "test",

@@ -32,7 +32,7 @@
           "kind": "source",
           "reference": "src/lua_api/globals/auras.rs",
           "summary": "Public AuraData exists, but exact addon-vs-Blizzard secret error behavior is not modeled.",
-          "source_hash": "ecdf2b690624698e2e9dbd1ed448ecb5ed2882ebed3cd826b88913a77ca17d45"
+          "source_hash": "193e8887641f416818f47d6fa473c7e19c796a4d95b525b47308c923f60a8b33"
         }
       ],
       "tests": [],
@@ -54,7 +54,7 @@
           "kind": "source",
           "reference": "src/lua_api/globals/auras.rs",
           "summary": "Public AuraData exists, but exact caller-sensitive Blizzard/internal secret access behavior is not modeled.",
-          "source_hash": "ecdf2b690624698e2e9dbd1ed448ecb5ed2882ebed3cd826b88913a77ca17d45"
+          "source_hash": "193e8887641f416818f47d6fa473c7e19c796a4d95b525b47308c923f60a8b33"
         }
       ],
       "tests": [],
@@ -76,7 +76,7 @@
           "kind": "source",
           "reference": "src/lua_api/globals/auras.rs",
           "summary": "Public AuraData exists, but exact secret field accessibility and retail object behavior are not modeled.",
-          "source_hash": "ecdf2b690624698e2e9dbd1ed448ecb5ed2882ebed3cd826b88913a77ca17d45"
+          "source_hash": "193e8887641f416818f47d6fa473c7e19c796a4d95b525b47308c923f60a8b33"
         }
       ],
       "tests": [],
@@ -98,7 +98,7 @@
           "kind": "source",
           "reference": "src/lua_api/globals/auras.rs",
           "summary": "Public AuraData exists, but exact secret UNIT_AURA payload values and tuple behavior are not modeled.",
-          "source_hash": "ecdf2b690624698e2e9dbd1ed448ecb5ed2882ebed3cd826b88913a77ca17d45"
+          "source_hash": "193e8887641f416818f47d6fa473c7e19c796a4d95b525b47308c923f60a8b33"
         }
       ],
       "tests": [],
@@ -120,61 +120,61 @@
           "kind": "source",
           "reference": "src/lua_api/script_object_transfer.rs",
           "summary": "Bounded simulator projection policy: public and forbidden Lua views are distinct and interned for one underlying frame; native parent/method calls preserve simulator identity and ordinary tables cannot impersonate it. Native private-object identity, authority, and security remain unverified.",
-          "source_hash": "2950f655b50f612f7d0c42c21c0a589af5657135614b02d4b35cfc1ceace5fe7"
+          "source_hash": "3a9eb02f0595f3d47a6d831d41872f938d8baf2c5209a7e2dbcfabafc8488515"
         },
         {
           "kind": "source",
           "reference": "src/lua_api/env_init/shared_bootstrap.lua",
           "summary": "Bounded simulator projection policy: public and forbidden Lua views are distinct and interned for one underlying frame; native parent/method calls preserve simulator identity and ordinary tables cannot impersonate it. Native private-object identity, authority, and security remain unverified.",
-          "source_hash": "e767da39c8d3ce7aac3beb0f0f420c8684959438c29097d59ea54534b950a819"
+          "source_hash": "79066b508cd501a592b4ab5571dff4d6c45fb4e022f45f53e1dcc798f0e10075"
         },
         {
           "kind": "source",
           "reference": "src/lua_api/frame/methods/button_anchor_hierarchy/hierarchy.rs",
           "summary": "Bounded simulator projection policy: public and forbidden Lua views are distinct and interned for one underlying frame; native parent/method calls preserve simulator identity and ordinary tables cannot impersonate it. Native private-object identity, authority, and security remain unverified.",
-          "source_hash": "c72a3405601b43130abbcacfa0c6bd8d7c577525980fbb7b311cb2c3d5a7a8c2"
+          "source_hash": "cd515cd5e5c45c7d4811b1ee8c09242edae78c680515d12f244d39ec8c7afaa1"
         },
         {
           "kind": "source",
           "reference": "docs/specs/script-object-environments.md",
           "summary": "Bounded simulator projection policy: public and forbidden Lua views are distinct and interned for one underlying frame; native parent/method calls preserve simulator identity and ordinary tables cannot impersonate it. Native private-object identity, authority, and security remain unverified.",
-          "source_hash": "983f86c8036032b65946f4ba080b7d3c301c5f53d7643ed49a45dfcc3e7177b5"
+          "source_hash": "08e07726bc48a4999fc78599be5aae4bc57b4df973a656b35e0fe56e82a4c123"
         },
         {
           "kind": "test",
           "reference": "tests/userdata_proxy.rs::forbidden_partition_interns_isolated_private_views",
           "summary": "Bounded simulator projection policy: public and forbidden Lua views are distinct and interned for one underlying frame; native parent/method calls preserve simulator identity and ordinary tables cannot impersonate it. Native private-object identity, authority, and security remain unverified.",
-          "source_hash": "316cbfca2679463b3aeaaadb2fa296917285d44f849d2def53664752b9638aca"
+          "source_hash": "1c39dfd4abc6b5a28f22e1d5b75668394c3efa903d8e970cd3dc1878353aea70"
         },
         {
           "kind": "test",
           "reference": "tests/userdata_proxy.rs::forbidden_partition_preserves_native_parent_identity",
           "summary": "Bounded simulator projection policy: public and forbidden Lua views are distinct and interned for one underlying frame; native parent/method calls preserve simulator identity and ordinary tables cannot impersonate it. Native private-object identity, authority, and security remain unverified.",
-          "source_hash": "316cbfca2679463b3aeaaadb2fa296917285d44f849d2def53664752b9638aca"
+          "source_hash": "1c39dfd4abc6b5a28f22e1d5b75668394c3efa903d8e970cd3dc1878353aea70"
         },
         {
           "kind": "test",
           "reference": "tests/userdata_proxy.rs::forbidden_partition_does_not_turn_ordinary_tables_into_frame_parents",
           "summary": "Bounded simulator projection policy: public and forbidden Lua views are distinct and interned for one underlying frame; native parent/method calls preserve simulator identity and ordinary tables cannot impersonate it. Native private-object identity, authority, and security remain unverified.",
-          "source_hash": "316cbfca2679463b3aeaaadb2fa296917285d44f849d2def53664752b9638aca"
+          "source_hash": "1c39dfd4abc6b5a28f22e1d5b75668394c3efa903d8e970cd3dc1878353aea70"
         },
         {
           "kind": "test",
           "reference": "tests/userdata_proxy.rs::forbidden_partition_transfer_preserves_ordinary_frame_fields",
           "summary": "Bounded simulator projection policy: public and forbidden Lua views are distinct and interned for one underlying frame; native parent/method calls preserve simulator identity and ordinary tables cannot impersonate it. Native private-object identity, authority, and security remain unverified.",
-          "source_hash": "316cbfca2679463b3aeaaadb2fa296917285d44f849d2def53664752b9638aca"
+          "source_hash": "1c39dfd4abc6b5a28f22e1d5b75668394c3efa903d8e970cd3dc1878353aea70"
         },
         {
           "kind": "test",
           "reference": "tests/userdata_proxy.rs::forbidden_partition_aura_provider_creates_children_through_outbound_bridge",
           "summary": "Bounded simulator projection policy: public and forbidden Lua views are distinct and interned for one underlying frame; native parent/method calls preserve simulator identity and ordinary tables cannot impersonate it. Native private-object identity, authority, and security remain unverified.",
-          "source_hash": "316cbfca2679463b3aeaaadb2fa296917285d44f849d2def53664752b9638aca"
+          "source_hash": "1c39dfd4abc6b5a28f22e1d5b75668394c3efa903d8e970cd3dc1878353aea70"
         },
         {
           "kind": "test",
           "reference": "tests/userdata_proxy.rs::forbidden_partition_aura_initializer_keeps_public_and_private_views_isolated",
           "summary": "Bounded simulator projection policy: public and forbidden Lua views are distinct and interned for one underlying frame; native parent/method calls preserve simulator identity and ordinary tables cannot impersonate it. Native private-object identity, authority, and security remain unverified.",
-          "source_hash": "316cbfca2679463b3aeaaadb2fa296917285d44f849d2def53664752b9638aca"
+          "source_hash": "1c39dfd4abc6b5a28f22e1d5b75668394c3efa903d8e970cd3dc1878353aea70"
         }
       ],
       "tests": [
@@ -203,31 +203,31 @@
           "kind": "source",
           "reference": "src/lua_api/env_init/shared_bootstrap.lua",
           "summary": "Bounded simulator partition policy: private fields and methods stay separate from same-named public assignments, while explicit public exports/delegates remain available. This does not establish a native inaccessible-key list, caller authority, or security enforcement.",
-          "source_hash": "e767da39c8d3ce7aac3beb0f0f420c8684959438c29097d59ea54534b950a819"
+          "source_hash": "79066b508cd501a592b4ab5571dff4d6c45fb4e022f45f53e1dcc798f0e10075"
         },
         {
           "kind": "source",
           "reference": "src/loader/xml_frame_codegen.rs",
           "summary": "Bounded simulator partition policy: private fields and methods stay separate from same-named public assignments, while explicit public exports/delegates remain available. This does not establish a native inaccessible-key list, caller authority, or security enforcement.",
-          "source_hash": "30d4728186bbb94c97a2523ea3bf4f6e2416bf0288cb75135d59f48ceb96e60c"
+          "source_hash": "ce46441fd04838f5a1e7935df1880cec5c2f6b684fb2d256dfa587790801bed7"
         },
         {
           "kind": "source",
           "reference": "docs/specs/script-object-environments.md",
           "summary": "Bounded simulator partition policy: private fields and methods stay separate from same-named public assignments, while explicit public exports/delegates remain available. This does not establish a native inaccessible-key list, caller authority, or security enforcement.",
-          "source_hash": "983f86c8036032b65946f4ba080b7d3c301c5f53d7643ed49a45dfcc3e7177b5"
+          "source_hash": "08e07726bc48a4999fc78599be5aae4bc57b4df973a656b35e0fe56e82a4c123"
         },
         {
           "kind": "test",
           "reference": "tests/userdata_proxy.rs::forbidden_partition_interns_isolated_private_views",
           "summary": "Bounded simulator partition policy: private fields and methods stay separate from same-named public assignments, while explicit public exports/delegates remain available. This does not establish a native inaccessible-key list, caller authority, or security enforcement.",
-          "source_hash": "316cbfca2679463b3aeaaadb2fa296917285d44f849d2def53664752b9638aca"
+          "source_hash": "1c39dfd4abc6b5a28f22e1d5b75668394c3efa903d8e970cd3dc1878353aea70"
         },
         {
           "kind": "test",
           "reference": "tests/userdata_proxy.rs::forbidden_partition_aura_initializer_keeps_public_and_private_views_isolated",
           "summary": "Bounded simulator partition policy: private fields and methods stay separate from same-named public assignments, while explicit public exports/delegates remain available. This does not establish a native inaccessible-key list, caller authority, or security enforcement.",
-          "source_hash": "316cbfca2679463b3aeaaadb2fa296917285d44f849d2def53664752b9638aca"
+          "source_hash": "1c39dfd4abc6b5a28f22e1d5b75668394c3efa903d8e970cd3dc1878353aea70"
         }
       ],
       "tests": [
@@ -252,7 +252,7 @@
           "kind": "source",
           "reference": "docs/wiki/systems/xml-template-system.md",
           "summary": "Two-partition/delegate mechanics exist; exact private/forbidden child traversal visibility is unknown.",
-          "source_hash": "30afa77f8d9e43883dbb4948810d417a9d7888a39773e576637147f7ef65d2d2"
+          "source_hash": "2c3ef78050313c32db3fa3df465f1d3348855f535d6d2b0fb8048a6d3eb2939f"
         }
       ],
       "tests": [],
@@ -274,7 +274,7 @@
           "kind": "source",
           "reference": "docs/wiki/systems/xml-template-system.md",
           "summary": "Two-partition/delegate mechanics exist; exact private/forbidden hook and taint boundaries are unknown.",
-          "source_hash": "30afa77f8d9e43883dbb4948810d417a9d7888a39773e576637147f7ef65d2d2"
+          "source_hash": "2c3ef78050313c32db3fa3df465f1d3348855f535d6d2b0fb8048a6d3eb2939f"
         }
       ],
       "tests": [],
@@ -296,7 +296,7 @@
           "kind": "source",
           "reference": "docs/wiki/systems/xml-template-system.md",
           "summary": "Two-partition/delegate mechanics exist; exact private script storage and access behavior are unknown.",
-          "source_hash": "30afa77f8d9e43883dbb4948810d417a9d7888a39773e576637147f7ef65d2d2"
+          "source_hash": "2c3ef78050313c32db3fa3df465f1d3348855f535d6d2b0fb8048a6d3eb2939f"
         }
       ],
       "tests": [],
@@ -318,7 +318,7 @@
           "kind": "source",
           "reference": "docs/wiki/systems/xml-template-system.md",
           "summary": "Two-partition/delegate mechanics exist; exact secure delegate receiver and taint enforcement are unknown.",
-          "source_hash": "30afa77f8d9e43883dbb4948810d417a9d7888a39773e576637147f7ef65d2d2"
+          "source_hash": "2c3ef78050313c32db3fa3df465f1d3348855f535d6d2b0fb8048a6d3eb2939f"
         }
       ],
       "tests": [],
@@ -340,7 +340,7 @@
           "kind": "source",
           "reference": "src/lua_api/frame/methods/forbidden_aspects.rs",
           "summary": "Aspect masks, inheritance, and queries exist; runtime enforcement for trusted script execution is unknown.",
-          "source_hash": "d8da11ac0228c7841b712120b2076ba9a7b744917193d272f2828273cf2ea75e"
+          "source_hash": "194355bce45ebbd99b204740d27f899ddc23f16fe6d3596f46edbc94f12f8318"
         }
       ],
       "tests": [],
@@ -362,7 +362,7 @@
           "kind": "source",
           "reference": "src/lua_api/frame/methods/forbidden_aspects.rs",
           "summary": "Aspect masks, inheritance, and queries exist; runtime layout-script enforcement is unknown.",
-          "source_hash": "d8da11ac0228c7841b712120b2076ba9a7b744917193d272f2828273cf2ea75e"
+          "source_hash": "194355bce45ebbd99b204740d27f899ddc23f16fe6d3596f46edbc94f12f8318"
         }
       ],
       "tests": [],
@@ -454,43 +454,43 @@
           "kind": "source",
           "reference": "src/lua_api/frame/methods/forbidden_aspects.rs",
           "summary": "Simulator policy: AlwaysPropagateInput makes effective keyboard propagation true, including inherited and handler-added masks; disabling errors without state change. The existing post-handler parent OnKeyDown routing uses that effective state. Native routing, caller authority, other input paths, and security remain unverified.",
-          "source_hash": "d8da11ac0228c7841b712120b2076ba9a7b744917193d272f2828273cf2ea75e"
+          "source_hash": "194355bce45ebbd99b204740d27f899ddc23f16fe6d3596f46edbc94f12f8318"
         },
         {
           "kind": "source",
           "reference": "src/lua_api/frame/methods/text_attribute_event/events.rs",
           "summary": "Simulator policy: AlwaysPropagateInput makes effective keyboard propagation true, including inherited and handler-added masks; disabling errors without state change. The existing post-handler parent OnKeyDown routing uses that effective state. Native routing, caller authority, other input paths, and security remain unverified.",
-          "source_hash": "1e5c3b1686027a656468a3d80addb739cf7063a4da635423677d791a787d0a85"
+          "source_hash": "ca46f18c491e47ed6cae9ea1bf89570ad2cd842489d538a55a5eaaeb2b1c7f64"
         },
         {
           "kind": "source",
           "reference": "src/lua_api/key_dispatch.rs",
           "summary": "Simulator policy: AlwaysPropagateInput makes effective keyboard propagation true, including inherited and handler-added masks; disabling errors without state change. The existing post-handler parent OnKeyDown routing uses that effective state. Native routing, caller authority, other input paths, and security remain unverified.",
-          "source_hash": "87c0c13a18c2764c44b5bc46551a5b1265f0466f8b53f03a9c48043058984ecc"
+          "source_hash": "e9f82eb7423bc81c6e6d5156effe619ce67fe7c93527387807bc5b0c80823f88"
         },
         {
           "kind": "source",
           "reference": "docs/specs/forbidden-aspect-event-input.md",
           "summary": "Simulator policy: AlwaysPropagateInput makes effective keyboard propagation true, including inherited and handler-added masks; disabling errors without state change. The existing post-handler parent OnKeyDown routing uses that effective state. Native routing, caller authority, other input paths, and security remain unverified.",
-          "source_hash": "b1ef0c6cc94ca88d609b353a83f4fb8eec9123dcb2f5fed519434abaade583b2"
+          "source_hash": "3d63ac927099c6c546eedc30295631f065ca9ac071b56f109490efa69d1d00ab"
         },
         {
           "kind": "test",
           "reference": "tests/keyboard.rs::always_propagate_input_forces_state_and_rejects_disabling",
           "summary": "Simulator policy: AlwaysPropagateInput makes effective keyboard propagation true, including inherited and handler-added masks; disabling errors without state change. The existing post-handler parent OnKeyDown routing uses that effective state. Native routing, caller authority, other input paths, and security remain unverified.",
-          "source_hash": "d98231ef3f03bb0f5bc5f0d628a62387ebcd906ec3ea708b8f11586d63b820c2"
+          "source_hash": "02d0f7d02699d37c0aed790bd17443b06e5753dc07e257bf5fecf58a9d2d20c7"
         },
         {
           "kind": "test",
           "reference": "tests/keyboard.rs::always_propagate_input_inherited_by_new_child_forces_key_route",
           "summary": "Simulator policy: AlwaysPropagateInput makes effective keyboard propagation true, including inherited and handler-added masks; disabling errors without state change. The existing post-handler parent OnKeyDown routing uses that effective state. Native routing, caller authority, other input paths, and security remain unverified.",
-          "source_hash": "d98231ef3f03bb0f5bc5f0d628a62387ebcd906ec3ea708b8f11586d63b820c2"
+          "source_hash": "02d0f7d02699d37c0aed790bd17443b06e5753dc07e257bf5fecf58a9d2d20c7"
         },
         {
           "kind": "test",
           "reference": "tests/keyboard.rs::always_propagate_input_added_during_handler_applies_to_current_key",
           "summary": "Simulator policy: AlwaysPropagateInput makes effective keyboard propagation true, including inherited and handler-added masks; disabling errors without state change. The existing post-handler parent OnKeyDown routing uses that effective state. Native routing, caller authority, other input paths, and security remain unverified.",
-          "source_hash": "d98231ef3f03bb0f5bc5f0d628a62387ebcd906ec3ea708b8f11586d63b820c2"
+          "source_hash": "02d0f7d02699d37c0aed790bd17443b06e5753dc07e257bf5fecf58a9d2d20c7"
         }
       ],
       "tests": [
@@ -516,49 +516,49 @@
           "kind": "source",
           "reference": "src/lua_api/frame/methods/button_anchor_hierarchy/buttons.rs",
           "summary": "Uniform simulator policy rejects Button.Click and EditBox.SetFocus, ClearFocus, SetCursorPosition before state or callback changes. Actual GUI click-to-focus, button clicks and keyboard input remain usable. Native authority, error timing and security remain unverified.",
-          "source_hash": "8b3d445cfedcca4deb149c335191cbc724c54e7cc02547b3ba55e13c610e15c7"
+          "source_hash": "eb2e78dbaadd208d5eff64e8a315bcb89ded6f3d8d2122f2325c7ed983ee1374"
         },
         {
           "kind": "source",
           "reference": "src/lua_api/frame/methods/widgets/editbox.rs",
           "summary": "Uniform simulator policy rejects Button.Click and EditBox.SetFocus, ClearFocus, SetCursorPosition before state or callback changes. Actual GUI click-to-focus, button clicks and keyboard input remain usable. Native authority, error timing and security remain unverified.",
-          "source_hash": "ff809402e0323cb12121afd92f9b4d3e1144b17c5b631870df4ff949fb865802"
+          "source_hash": "bba6c3b9c2ed5a21a941293857480ba6c1f516baefe9512eb8621911ccf56504"
         },
         {
           "kind": "source",
           "reference": "src/lua_api/frame/methods/forbidden_aspects.rs",
           "summary": "Uniform simulator policy rejects Button.Click and EditBox.SetFocus, ClearFocus, SetCursorPosition before state or callback changes. Actual GUI click-to-focus, button clicks and keyboard input remain usable. Native authority, error timing and security remain unverified.",
-          "source_hash": "d8da11ac0228c7841b712120b2076ba9a7b744917193d272f2828273cf2ea75e"
+          "source_hash": "194355bce45ebbd99b204740d27f899ddc23f16fe6d3596f46edbc94f12f8318"
         },
         {
           "kind": "source",
           "reference": "docs/specs/forbidden-aspect-scripted-input-query-focus.md",
           "summary": "Uniform simulator policy rejects Button.Click and EditBox.SetFocus, ClearFocus, SetCursorPosition before state or callback changes. Actual GUI click-to-focus, button clicks and keyboard input remain usable. Native authority, error timing and security remain unverified.",
-          "source_hash": "54fad8899c65e8a81281957da9af018f425444ba38e6922856b1c9dfcf3e7e9b"
+          "source_hash": "c6a694d33f52d43c3a70ade9f0bc7dc9e64682b196e7dc459956fcdcec92d762"
         },
         {
           "kind": "test",
           "reference": "tests/forbidden_aspect_creation.rs::scripted_focus_aspect_rejects_click_before_checkbutton_or_handler_changes",
           "summary": "Uniform simulator policy rejects Button.Click and EditBox.SetFocus, ClearFocus, SetCursorPosition before state or callback changes. Actual GUI click-to-focus, button clicks and keyboard input remain usable. Native authority, error timing and security remain unverified.",
-          "source_hash": "7fc6c62bfc3d4d500d1591e5e84882e37e901a6de78bf42d20b57d7d8f712fb1"
+          "source_hash": "dba9eb38fc9749c7b1bd4b099f566ee05adee79ccab1bb61020544ee1a71f0f8"
         },
         {
           "kind": "test",
           "reference": "tests/forbidden_aspect_creation.rs::scripted_focus_aspect_preserves_focus_and_cursor_while_engine_typing_continues",
           "summary": "Uniform simulator policy rejects Button.Click and EditBox.SetFocus, ClearFocus, SetCursorPosition before state or callback changes. Actual GUI click-to-focus, button clicks and keyboard input remain usable. Native authority, error timing and security remain unverified.",
-          "source_hash": "7fc6c62bfc3d4d500d1591e5e84882e37e901a6de78bf42d20b57d7d8f712fb1"
+          "source_hash": "dba9eb38fc9749c7b1bd4b099f566ee05adee79ccab1bb61020544ee1a71f0f8"
         },
         {
           "kind": "test",
           "reference": "src/iced_app/mouse_tests/forbidden_aspects.rs::forbidden_aspect_mouse_scripted_click_rejects_lua_but_preserves_physical_click",
           "summary": "Uniform simulator policy rejects Button.Click and EditBox.SetFocus, ClearFocus, SetCursorPosition before state or callback changes. Actual GUI click-to-focus, button clicks and keyboard input remain usable. Native authority, error timing and security remain unverified.",
-          "source_hash": "2c7ecc0923d4c457db1c49b40382d1dad1e77edd87ad3dcb0d1180b7d54c0964"
+          "source_hash": "91625923dd14f39bb4c7edeb17c36d3b11971bb3b15a4f7805ad8b39922ca10a"
         },
         {
           "kind": "test",
           "reference": "src/iced_app/mouse_tests/forbidden_aspects.rs::forbidden_aspect_mouse_editbox_focus_and_typing_survive_scripted_rejections",
           "summary": "Uniform simulator policy rejects Button.Click and EditBox.SetFocus, ClearFocus, SetCursorPosition before state or callback changes. Actual GUI click-to-focus, button clicks and keyboard input remain usable. Native authority, error timing and security remain unverified.",
-          "source_hash": "2c7ecc0923d4c457db1c49b40382d1dad1e77edd87ad3dcb0d1180b7d54c0964"
+          "source_hash": "91625923dd14f39bb4c7edeb17c36d3b11971bb3b15a4f7805ad8b39922ca10a"
         }
       ],
       "tests": [
@@ -585,37 +585,37 @@
           "kind": "source",
           "reference": "src/lua_api/frame/methods/widgets/editbox.rs",
           "summary": "Uniform simulator policy rejects EditBox.HasFocus and Region.IsMouseMotionFocus without changing focus or hover delivery. GetMouseFocus, GetMouseFoci, IsMouseOver and actual keyboard/mouse input remain usable. Native authority, error timing and security remain unverified.",
-          "source_hash": "ff809402e0323cb12121afd92f9b4d3e1144b17c5b631870df4ff949fb865802"
+          "source_hash": "bba6c3b9c2ed5a21a941293857480ba6c1f516baefe9512eb8621911ccf56504"
         },
         {
           "kind": "source",
           "reference": "src/lua_api/frame/methods/core_state/region.rs",
           "summary": "Uniform simulator policy rejects EditBox.HasFocus and Region.IsMouseMotionFocus without changing focus or hover delivery. GetMouseFocus, GetMouseFoci, IsMouseOver and actual keyboard/mouse input remain usable. Native authority, error timing and security remain unverified.",
-          "source_hash": "36d847e716f4b9a56de99e20e4a213e5362c6bea02d735e74d5893135ea4c212"
+          "source_hash": "06ebdcbc28871f232414afc5b0685e9f90eb81f08d275932f63dd529424a3db4"
         },
         {
           "kind": "source",
           "reference": "src/lua_api/frame/methods/forbidden_aspects.rs",
           "summary": "Uniform simulator policy rejects EditBox.HasFocus and Region.IsMouseMotionFocus without changing focus or hover delivery. GetMouseFocus, GetMouseFoci, IsMouseOver and actual keyboard/mouse input remain usable. Native authority, error timing and security remain unverified.",
-          "source_hash": "d8da11ac0228c7841b712120b2076ba9a7b744917193d272f2828273cf2ea75e"
+          "source_hash": "194355bce45ebbd99b204740d27f899ddc23f16fe6d3596f46edbc94f12f8318"
         },
         {
           "kind": "source",
           "reference": "docs/specs/forbidden-aspect-scripted-input-query-focus.md",
           "summary": "Uniform simulator policy rejects EditBox.HasFocus and Region.IsMouseMotionFocus without changing focus or hover delivery. GetMouseFocus, GetMouseFoci, IsMouseOver and actual keyboard/mouse input remain usable. Native authority, error timing and security remain unverified.",
-          "source_hash": "54fad8899c65e8a81281957da9af018f425444ba38e6922856b1c9dfcf3e7e9b"
+          "source_hash": "c6a694d33f52d43c3a70ade9f0bc7dc9e64682b196e7dc459956fcdcec92d762"
         },
         {
           "kind": "test",
           "reference": "tests/forbidden_aspect_creation.rs::scripted_focus_aspect_query_rejection_preserves_real_keyboard_focus",
           "summary": "Uniform simulator policy rejects EditBox.HasFocus and Region.IsMouseMotionFocus without changing focus or hover delivery. GetMouseFocus, GetMouseFoci, IsMouseOver and actual keyboard/mouse input remain usable. Native authority, error timing and security remain unverified.",
-          "source_hash": "7fc6c62bfc3d4d500d1591e5e84882e37e901a6de78bf42d20b57d7d8f712fb1"
+          "source_hash": "dba9eb38fc9749c7b1bd4b099f566ee05adee79ccab1bb61020544ee1a71f0f8"
         },
         {
           "kind": "test",
           "reference": "src/iced_app/mouse_tests/forbidden_aspects.rs::forbidden_aspect_mouse_query_focus_rejects_only_annotated_query",
           "summary": "Uniform simulator policy rejects EditBox.HasFocus and Region.IsMouseMotionFocus without changing focus or hover delivery. GetMouseFocus, GetMouseFoci, IsMouseOver and actual keyboard/mouse input remain usable. Native authority, error timing and security remain unverified.",
-          "source_hash": "2c7ecc0923d4c457db1c49b40382d1dad1e77edd87ad3dcb0d1180b7d54c0964"
+          "source_hash": "91625923dd14f39bb4c7edeb17c36d3b11971bb3b15a4f7805ad8b39922ca10a"
         }
       ],
       "tests": [
@@ -640,7 +640,7 @@
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/frames_and_attributes.rs::test_patch_12_1_aura_frame_types_create",
           "summary": "AuraContainer, AuraButton, and ManagedAuraContainer creation returns the compatible frame object types.",
-          "source_hash": "79f256c7cd11d663d2973dbbcaad5f6ceab5c990f7be8eafd4d25c9323bd35e4"
+          "source_hash": "b6671ffcb6e55a511c740df4a18a703fef98bdd441ecbf3043de2e8990dbe244"
         }
       ],
       "tests": [
@@ -664,7 +664,7 @@
           "kind": "test",
           "reference": "patch-tests/patch_12_1/aura_container.rs::aura_container_group_assigns_and_releases_frames_by_aura_instance",
           "summary": "Aura groups assign aura data to frames by auraInstanceID and preserve retained frame ownership while removed frames are released.",
-          "source_hash": "aafe392ecbc2aa63306d2978235eb0735849f3ba650dab23fbe5fbf67d41a989"
+          "source_hash": "169ed21b32b483984efeb944b0595dcd59e204be55b96908bf0d434cdbd9538e"
         }
       ],
       "tests": [
@@ -688,7 +688,7 @@
           "kind": "test",
           "reference": "patch-tests/patch_12_1/aura_container.rs::aura_container_filters_helpful_harmful_and_player_auras",
           "summary": "Aura groups select HELPFUL, HARMFUL, and PLAYER aura subsets through compatible filter combinations.",
-          "source_hash": "aafe392ecbc2aa63306d2978235eb0735849f3ba650dab23fbe5fbf67d41a989"
+          "source_hash": "169ed21b32b483984efeb944b0595dcd59e204be55b96908bf0d434cdbd9538e"
         }
       ],
       "tests": [
@@ -712,7 +712,7 @@
           "kind": "test",
           "reference": "patch-tests/patch_12_1/aura_container.rs::aura_container_honors_configured_sort_order",
           "summary": "Aura groups honor a configured comparator ordering; this does not claim the retail default comparator.",
-          "source_hash": "aafe392ecbc2aa63306d2978235eb0735849f3ba650dab23fbe5fbf67d41a989"
+          "source_hash": "169ed21b32b483984efeb944b0595dcd59e204be55b96908bf0d434cdbd9538e"
         }
       ],
       "tests": [
@@ -736,7 +736,7 @@
           "kind": "test",
           "reference": "patch-tests/patch_12_1/aura_container.rs::aura_container_selects_public_private_and_edit_mode_partitions",
           "summary": "Aura containers select public-only, public-and-private, and edit-mode aura source partitions compatibly.",
-          "source_hash": "aafe392ecbc2aa63306d2978235eb0735849f3ba650dab23fbe5fbf67d41a989"
+          "source_hash": "169ed21b32b483984efeb944b0595dcd59e204be55b96908bf0d434cdbd9538e"
         }
       ],
       "tests": [
@@ -760,7 +760,7 @@
           "kind": "test",
           "reference": "patch-tests/patch_12_1/aura_container.rs::aura_container_group_assigns_and_releases_frames_by_aura_instance",
           "summary": "Aura groups acquire, release, and reacquire frames as auraInstanceID entries are removed and re-added.",
-          "source_hash": "aafe392ecbc2aa63306d2978235eb0735849f3ba650dab23fbe5fbf67d41a989"
+          "source_hash": "169ed21b32b483984efeb944b0595dcd59e204be55b96908bf0d434cdbd9538e"
         }
       ],
       "tests": [
@@ -808,7 +808,7 @@
           "kind": "source",
           "reference": "patch-tests/patch_12_1/aura_container.rs",
           "summary": "Public/private/EditMode mechanics are covered; secret exposure, taint, and error behavior are unknown.",
-          "source_hash": "aafe392ecbc2aa63306d2978235eb0735849f3ba650dab23fbe5fbf67d41a989"
+          "source_hash": "169ed21b32b483984efeb944b0595dcd59e204be55b96908bf0d434cdbd9538e"
         }
       ],
       "tests": [],
@@ -830,7 +830,7 @@
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/frames_and_attributes.rs::test_patch_12_1_texture_radial_progress_surface_and_state",
           "summary": "A created Texture exposes the radial method family without claiming a standalone RadialProgress constructor or object.",
-          "source_hash": "79f256c7cd11d663d2973dbbcaad5f6ceab5c990f7be8eafd4d25c9323bd35e4"
+          "source_hash": "b6671ffcb6e55a511c740df4a18a703fef98bdd441ecbf3043de2e8990dbe244"
         }
       ],
       "tests": [
@@ -854,7 +854,7 @@
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/frames_and_attributes.rs::test_patch_12_1_texture_radial_progress_surface_and_state",
           "summary": "Radial progress methods dispatch on a Texture receiver.",
-          "source_hash": "79f256c7cd11d663d2973dbbcaad5f6ceab5c990f7be8eafd4d25c9323bd35e4"
+          "source_hash": "b6671ffcb6e55a511c740df4a18a703fef98bdd441ecbf3043de2e8990dbe244"
         }
       ],
       "tests": [
@@ -878,7 +878,7 @@
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/frames_and_attributes.rs::test_patch_12_1_texture_radial_progress_surface_and_state",
           "summary": "Texture-backed radial progress defaults, setters/getters, visual mode, and Clear reset are modeled.",
-          "source_hash": "79f256c7cd11d663d2973dbbcaad5f6ceab5c990f7be8eafd4d25c9323bd35e4"
+          "source_hash": "b6671ffcb6e55a511c740df4a18a703fef98bdd441ecbf3043de2e8990dbe244"
         }
       ],
       "tests": [
@@ -902,7 +902,7 @@
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/startup_globals.rs::test_patch_12_1_duration_binding_reference_lifetime_and_identity",
           "summary": "A binding retained through a Lua table remains usable after the original local reference is released and garbage collection runs.",
-          "source_hash": "718ff378b5041ec3f84b3c8b647a90d3bbec7af79cbc691c7a6c28f26da2ca87"
+          "source_hash": "13e19008791e499a633c1b3cd551d39f7247030b457144cac90087132d9c36a1"
         }
       ],
       "tests": [
@@ -926,7 +926,7 @@
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/startup_globals.rs::test_patch_12_1_duration_binding_reference_lifetime_and_identity",
           "summary": "Factory calls return distinct userdata handles whose identity and methods remain stable while referenced; native ownership and finalization remain unverified.",
-          "source_hash": "718ff378b5041ec3f84b3c8b647a90d3bbec7af79cbc691c7a6c28f26da2ca87"
+          "source_hash": "13e19008791e499a633c1b3cd551d39f7247030b457144cac90087132d9c36a1"
         }
       ],
       "tests": [
@@ -950,19 +950,19 @@
           "kind": "source",
           "reference": "src/c_api/duration_text_binding.rs",
           "summary": "Modeled userdata binding identity, raw table-access rejection, independent copied configuration, and retained duration/clock/formatter/font-string/curve references through collection. Native metatable, finalization, ownership/invalidation, GC timing, and secrecy equivalence remain unverified.",
-          "source_hash": "37a12dd795e115697f5edf1e917b6e9cc27c244134d21d6ae078efbadd3e6406"
+          "source_hash": "fcae046ca8f601865f134dcb4e00ab8d414bfa475b01550b97e4bf0ffb763abf"
         },
         {
           "kind": "source",
           "reference": "docs/specs/duration-text-binding.md",
           "summary": "Modeled userdata binding identity, raw table-access rejection, independent copied configuration, and retained duration/clock/formatter/font-string/curve references through collection. Native metatable, finalization, ownership/invalidation, GC timing, and secrecy equivalence remain unverified.",
-          "source_hash": "5bae9fdb10ac13f82d90a791c6aa2e82868c53c24af37cb155e3cb57ec94cf70"
+          "source_hash": "5702e748484dc85acbfa881308569a8b4a031496b8dd0bc7f598c706af3b0347"
         },
         {
           "kind": "test",
           "reference": "tests/duration_text_binding_copy.rs::duration_binding_userdata_copy_retains_resources_through_collection",
           "summary": "Modeled userdata binding identity, raw table-access rejection, independent copied configuration, and retained duration/clock/formatter/font-string/curve references through collection. Native metatable, finalization, ownership/invalidation, GC timing, and secrecy equivalence remain unverified.",
-          "source_hash": "86f93656b6d3fbd1017f7791f390406b18640503022b7af6b3242f6ff036c5a3"
+          "source_hash": "fc03d77f6e9d4bddea2ee68a1d5108b1afa892db4e33fdf9793604feb1e7d8dd"
         }
       ],
       "tests": [
@@ -986,7 +986,7 @@
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/startup_globals.rs::test_patch_12_0_7_duration_objects_and_text_binding",
           "summary": "Duration binding formatting methods preserve the documented compatibility-table values.",
-          "source_hash": "718ff378b5041ec3f84b3c8b647a90d3bbec7af79cbc691c7a6c28f26da2ca87"
+          "source_hash": "13e19008791e499a633c1b3cd551d39f7247030b457144cac90087132d9c36a1"
         }
       ],
       "tests": [
@@ -1010,7 +1010,7 @@
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/startup_globals.rs::test_patch_12_1_safe_global_bridges",
           "summary": "Duration binding color-curve methods exist and preserve compatible state.",
-          "source_hash": "718ff378b5041ec3f84b3c8b647a90d3bbec7af79cbc691c7a6c28f26da2ca87"
+          "source_hash": "13e19008791e499a633c1b3cd551d39f7247030b457144cac90087132d9c36a1"
         }
       ],
       "tests": [
@@ -1034,7 +1034,7 @@
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/startup_globals.rs::test_patch_12_0_7_duration_objects_and_text_binding",
           "summary": "Duration binding FontString assignment and update-facing methods preserve the documented compatibility contract.",
-          "source_hash": "718ff378b5041ec3f84b3c8b647a90d3bbec7af79cbc691c7a6c28f26da2ca87"
+          "source_hash": "13e19008791e499a633c1b3cd551d39f7247030b457144cac90087132d9c36a1"
         }
       ],
       "tests": [
@@ -1058,7 +1058,7 @@
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/startup_globals.rs::test_patch_12_1_discord_state_surface",
           "summary": "Discord authorization and refresh operations update and expose local compatibility state.",
-          "source_hash": "718ff378b5041ec3f84b3c8b647a90d3bbec7af79cbc691c7a6c28f26da2ca87"
+          "source_hash": "13e19008791e499a633c1b3cd551d39f7247030b457144cac90087132d9c36a1"
         }
       ],
       "tests": [
@@ -1082,7 +1082,7 @@
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/startup_globals.rs::test_patch_12_1_discord_state_surface",
           "summary": "Discord guild link, unlink, settings, and lobby operations update local compatibility state.",
-          "source_hash": "718ff378b5041ec3f84b3c8b647a90d3bbec7af79cbc691c7a6c28f26da2ca87"
+          "source_hash": "13e19008791e499a633c1b3cd551d39f7247030b457144cac90087132d9c36a1"
         }
       ],
       "tests": [
@@ -1106,7 +1106,7 @@
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/startup_globals.rs::test_patch_12_1_discord_state_surface",
           "summary": "Discord server and channel getters return the seeded local compatibility payloads.",
-          "source_hash": "718ff378b5041ec3f84b3c8b647a90d3bbec7af79cbc691c7a6c28f26da2ca87"
+          "source_hash": "13e19008791e499a633c1b3cd551d39f7247030b457144cac90087132d9c36a1"
         }
       ],
       "tests": [
@@ -1130,7 +1130,7 @@
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/startup_globals.rs::test_patch_12_1_housing_inside_owned_state_and_reset",
           "summary": "Owned-house and plot queries plus ResetHouse follow the local housing state model.",
-          "source_hash": "718ff378b5041ec3f84b3c8b647a90d3bbec7af79cbc691c7a6c28f26da2ca87"
+          "source_hash": "13e19008791e499a633c1b3cd551d39f7247030b457144cac90087132d9c36a1"
         }
       ],
       "tests": [
@@ -1154,7 +1154,7 @@
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/startup_globals.rs::test_patch_12_1_housing_blueprint_best_effort_state",
           "summary": "Blueprint export, validation, import, rename, delete, and request calls follow the local housing blueprint model.",
-          "source_hash": "718ff378b5041ec3f84b3c8b647a90d3bbec7af79cbc691c7a6c28f26da2ca87"
+          "source_hash": "13e19008791e499a633c1b3cd551d39f7247030b457144cac90087132d9c36a1"
         }
       ],
       "tests": [
@@ -1178,7 +1178,7 @@
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/startup_globals.rs::test_patch_12_1_housing_blueprint_availability_state",
           "summary": "Housing blueprint availability helpers return configurable local result codes.",
-          "source_hash": "718ff378b5041ec3f84b3c8b647a90d3bbec7af79cbc691c7a6c28f26da2ca87"
+          "source_hash": "13e19008791e499a633c1b3cd551d39f7247030b457144cac90087132d9c36a1"
         }
       ],
       "tests": [
@@ -1202,7 +1202,7 @@
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/startup_globals.rs::test_patch_12_1_housing_editor_decor_layout_state",
           "summary": "Housing editor, decor, room, budget, and layout calls read or update the local housing state model.",
-          "source_hash": "718ff378b5041ec3f84b3c8b647a90d3bbec7af79cbc691c7a6c28f26da2ca87"
+          "source_hash": "13e19008791e499a633c1b3cd551d39f7247030b457144cac90087132d9c36a1"
         }
       ],
       "tests": [
@@ -1226,7 +1226,7 @@
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/startup_globals.rs::test_patch_12_1_safe_global_bridges",
           "summary": "Verified friend invites create one deduplicated local pending invite and expose modeled invite fields.",
-          "source_hash": "718ff378b5041ec3f84b3c8b647a90d3bbec7af79cbc691c7a6c28f26da2ca87"
+          "source_hash": "13e19008791e499a633c1b3cd551d39f7247030b457144cac90087132d9c36a1"
         }
       ],
       "tests": [
@@ -1250,13 +1250,13 @@
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/startup_globals.rs::test_patch_12_1_safe_global_bridges",
           "summary": "Title-friend custom names, tags, feature probes, and friend metadata use local compatibility state.",
-          "source_hash": "718ff378b5041ec3f84b3c8b647a90d3bbec7af79cbc691c7a6c28f26da2ca87"
+          "source_hash": "13e19008791e499a633c1b3cd551d39f7247030b457144cac90087132d9c36a1"
         },
         {
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/startup_globals.rs::test_patch_12_1_battle_net_presence_state",
           "summary": "Appear-offline intent is recorded in local Battle.net presence state.",
-          "source_hash": "718ff378b5041ec3f84b3c8b647a90d3bbec7af79cbc691c7a6c28f26da2ca87"
+          "source_hash": "13e19008791e499a633c1b3cd551d39f7247030b457144cac90087132d9c36a1"
         }
       ],
       "tests": [
@@ -1281,7 +1281,7 @@
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/startup_globals.rs::test_patch_12_1_battle_net_presence_state",
           "summary": "Title-friend unit invite eligibility returns the documented deterministic unsupported-state result.",
-          "source_hash": "718ff378b5041ec3f84b3c8b647a90d3bbec7af79cbc691c7a6c28f26da2ca87"
+          "source_hash": "13e19008791e499a633c1b3cd551d39f7247030b457144cac90087132d9c36a1"
         }
       ],
       "tests": [
@@ -1305,7 +1305,7 @@
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/startup_globals.rs::test_patch_12_1_safe_global_bridges",
           "summary": "Encounter Journal base and valid difficulty helpers return the generated-data compatibility guesses.",
-          "source_hash": "718ff378b5041ec3f84b3c8b647a90d3bbec7af79cbc691c7a6c28f26da2ca87"
+          "source_hash": "13e19008791e499a633c1b3cd551d39f7247030b457144cac90087132d9c36a1"
         }
       ],
       "tests": [
@@ -1329,7 +1329,7 @@
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_service_payloads.rs::test_patch_12_1_spell_cooldown_payload",
           "summary": "Seeded and inactive spell cooldown queries return the modeled start, duration, enabled, active, and rate fields.",
-          "source_hash": "d17024cc23874a88319ec47fd918df00f36dddf35d0a22b52ed8717eebed654a"
+          "source_hash": "c482d51c039ba4539619f784a9c092883814b834f6612a6f502c7c5df8bcb35e"
         }
       ],
       "tests": [
@@ -1353,7 +1353,7 @@
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_service_payloads.rs::test_patch_12_1_pet_and_lfg_payloads",
           "summary": "Seeded and unknown species queries verify the modeled 12.1 pet information fields and nil boundary.",
-          "source_hash": "d17024cc23874a88319ec47fd918df00f36dddf35d0a22b52ed8717eebed654a"
+          "source_hash": "c482d51c039ba4539619f784a9c092883814b834f6612a6f502c7c5df8bcb35e"
         }
       ],
       "tests": [
@@ -1377,7 +1377,7 @@
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_service_payloads.rs::test_patch_12_1_pet_and_lfg_payloads",
           "summary": "Seeded and unknown search-result queries verify the modeled LFG identity, activity, size, GUID, and censored fields.",
-          "source_hash": "d17024cc23874a88319ec47fd918df00f36dddf35d0a22b52ed8717eebed654a"
+          "source_hash": "c482d51c039ba4539619f784a9c092883814b834f6612a6f502c7c5df8bcb35e"
         }
       ],
       "tests": [
@@ -1401,7 +1401,7 @@
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_service_payloads.rs::test_patch_12_1_player_choice_payload_and_mutator_intent",
           "summary": "Default and seeded PlayerChoice queries expose the generated nested payload shape while response, reroll, and close calls record local intent.",
-          "source_hash": "d17024cc23874a88319ec47fd918df00f36dddf35d0a22b52ed8717eebed654a"
+          "source_hash": "c482d51c039ba4539619f784a9c092883814b834f6612a6f502c7c5df8bcb35e"
         }
       ],
       "tests": [
@@ -1425,7 +1425,7 @@
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/patch_12_1_service_payloads.rs::test_patch_12_1_tiered_entrance_payloads",
           "summary": "Seeded and default C_DelvesUI TieredEntrance queries expose the documented tier and nested reward fields.",
-          "source_hash": "d17024cc23874a88319ec47fd918df00f36dddf35d0a22b52ed8717eebed654a"
+          "source_hash": "c482d51c039ba4539619f784a9c092883814b834f6612a6f502c7c5df8bcb35e"
         }
       ],
       "tests": [
@@ -1449,7 +1449,7 @@
           "kind": "source",
           "reference": "src/lua_api/workarounds/temporary/private_aura_state.rs",
           "summary": "Deterministic private-aura mechanics exist; inaccessible and secret payload fidelity is unknown.",
-          "source_hash": "03b413196f536a74a69a286b11dac2bf4e22e19e4c7cd97d7a36c9c0e138384c"
+          "source_hash": "f7542ac2756c9866e1d226a99029a04b0d35e360fcf4933170635f9bd2bdff4f"
         }
       ],
       "tests": [],
@@ -1483,13 +1483,13 @@
           "kind": "source",
           "reference": "src/lua_api/env_events.rs",
           "summary": "Simulator policy: existing compatibility publications and CVar callable identities survive actual addon loading and all first PLAYER_ENTERING_WORLD handlers; retirement precedes later startup events and does not rewrap on repeated cleanup/world entry. BATTLETAG_INVITE_SHOW retains its distinct Blizzard-loader-only registration exception. Synthetic addon fixture exercises the real loader/dispatcher, not full Blizzard UI or native retirement timing.",
-          "source_hash": "47951284430b41aac64c114b020b39c3b86bbf31b417ca7d6a09f3acee82d9ad"
+          "source_hash": "c49d561881d9d3af2d35424abab70c0b613d2c97e1cfd5413a40a0fafcda1982"
         },
         {
           "kind": "source",
-          "reference": "src/ptr/strict_removals.lua",
+          "reference": "src/ptr/compat_bootstrap.rs",
           "summary": "Simulator policy: existing compatibility publications and CVar callable identities survive actual addon loading and all first PLAYER_ENTERING_WORLD handlers; retirement precedes later startup events and does not rewrap on repeated cleanup/world entry. BATTLETAG_INVITE_SHOW retains its distinct Blizzard-loader-only registration exception. Synthetic addon fixture exercises the real loader/dispatcher, not full Blizzard UI or native retirement timing.",
-          "source_hash": "58309e5384154e54c2c5f74727033cd85707dd3b744d45aac0b5c3cd14e60acd"
+          "source_hash": "68779a4d9701a65a6acfe3652836889d16b8b965854cd5d732ce360d03437956"
         }
       ],
       "tests": [
@@ -1537,7 +1537,7 @@
           "kind": "test",
           "reference": "src/loader/tests/wow_api_globals/startup_globals.rs::test_patch_12_1_strict_removed_symbols_are_hidden",
           "summary": "Strictly removed 12.1 symbols are absent from addon-facing globals after startup.",
-          "source_hash": "718ff378b5041ec3f84b3c8b647a90d3bbec7af79cbc691c7a6c28f26da2ca87"
+          "source_hash": "13e19008791e499a633c1b3cd551d39f7247030b457144cac90087132d9c36a1"
         }
       ],
       "tests": [
@@ -1573,13 +1573,13 @@
           "kind": "source",
           "reference": "src/lua_api/env_events.rs",
           "summary": "Simulator policy: existing compatibility publications and CVar callable identities survive actual addon loading and all first PLAYER_ENTERING_WORLD handlers; retirement precedes later startup events and does not rewrap on repeated cleanup/world entry. BATTLETAG_INVITE_SHOW retains its distinct Blizzard-loader-only registration exception. Synthetic addon fixture exercises the real loader/dispatcher, not full Blizzard UI or native retirement timing.",
-          "source_hash": "47951284430b41aac64c114b020b39c3b86bbf31b417ca7d6a09f3acee82d9ad"
+          "source_hash": "c49d561881d9d3af2d35424abab70c0b613d2c97e1cfd5413a40a0fafcda1982"
         },
         {
           "kind": "source",
-          "reference": "src/ptr/strict_removals.lua",
+          "reference": "src/ptr/compat_bootstrap.rs",
           "summary": "Simulator policy: existing compatibility publications and CVar callable identities survive actual addon loading and all first PLAYER_ENTERING_WORLD handlers; retirement precedes later startup events and does not rewrap on repeated cleanup/world entry. BATTLETAG_INVITE_SHOW retains its distinct Blizzard-loader-only registration exception. Synthetic addon fixture exercises the real loader/dispatcher, not full Blizzard UI or native retirement timing.",
-          "source_hash": "58309e5384154e54c2c5f74727033cd85707dd3b744d45aac0b5c3cd14e60acd"
+          "source_hash": "68779a4d9701a65a6acfe3652836889d16b8b965854cd5d732ce360d03437956"
         }
       ],
       "tests": [
