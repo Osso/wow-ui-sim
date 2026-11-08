@@ -1968,12 +1968,12 @@
     {
       "path": "docs/wiki/index.md",
       "revision": "eb39e1eb56c886966c402a2f167fd0c1f865717d",
-      "sha256": "af810fd4b34a6d628ec1ace73abe0fc680ca25d0e83554c7419cd12d2f3ea8e3"
+      "sha256": "fb504913e8589c0dca2d49c9f43a0f64e9ae3d0c0c06b424eae75b82ad90f8de"
     },
     {
       "path": "docs/wiki/log.md",
       "revision": "eb39e1eb56c886966c402a2f167fd0c1f865717d",
-      "sha256": "e34db042a0a34765898b0ca5cf1e86d552ed810a9edf98a820767478430f8de9"
+      "sha256": "694d2b8f9408580fa9ad9cdd5ceca70d8e1b6518edec58ed1e6e71aebfc1f0b7"
     },
     {
       "path": "docs/wiki/investigations/patch-5-1-0-api-audit.md",

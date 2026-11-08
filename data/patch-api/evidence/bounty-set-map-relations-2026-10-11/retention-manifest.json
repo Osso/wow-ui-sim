@@ -473,7 +473,7 @@
       "path": "publication/publication-independent-proof.json",
       "source": "/home/osso/.local/state/wow-ui-sim/verification/bounty-set-maps-current/publication-independent-proof.json",
       "bytes": 62770,
-      "sha256": "e162109a18d56c80fbb19fe7eae0d58b945847bd153105e5b21f82453136cc45"
+      "sha256": "01945bcb7f23691082e4121576caa73c9d191d5556176fecdfc7ac202d845bc4"
     },
     {
       "path": "publication/publication-independent-auth.json",
@@ -497,7 +497,7 @@
       "path": "publication/publication-independent-linkaudit.json",
       "source": "/home/osso/.local/state/wow-ui-sim/verification/bounty-set-maps-current/publication-independent-linkaudit.json",
       "bytes": 5999,
-      "sha256": "228dc360a7238c0de3844cb418fe469059c10944abf40399c5ad85019ef09619"
+      "sha256": "fe309d7cb318c307f107d5a08144c2e7795950ef7c8748794cc0fd65007a9b99"
     }
   ],
   "copy_count": 83,
