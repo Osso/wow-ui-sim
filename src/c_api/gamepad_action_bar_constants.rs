@@ -1,4 +1,8 @@
-//! Forever 1.60.1 GamepadUIDocumentation constants; no input-device behavior.
+//! Forever 1.60.1 and PTR GamepadUIDocumentation constants; no input-device behavior.
+//!
+//! Both pinned documents declare the same literal values: Forever
+//! `GamepadUIDocumentation.lua:146-156`, PTR
+//! `Blizzard_APIDocumentationGenerated/GamepadUIDocumentation.lua:146-156`.
 
 use crate::lua_api::methods::{create_table, table_set};
 use rilua::Val;

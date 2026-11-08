@@ -1,11 +1,11 @@
-# Forever gamepad action bar constants
+# Gamepad action bar constants
 
 ## Contract
 
-Forever 1.60.1.69913 publishes the eleven numeric members of
-`Constants.GamepadActionBarConstants` documented by its authenticated
-`Blizzard_APIDocumentationGenerated/GamepadUIDocumentation.lua`.
-Other profiles do not gain this table.
+Forever 1.60.1.69913 and PTR 12.1.7 publish the eleven numeric members of
+`Constants.GamepadActionBarConstants` documented by their authenticated
+`Blizzard_APIDocumentationGenerated/GamepadUIDocumentation.lua` (lines 146-156
+in both pinned files). Retail and the other profiles do not gain this table.
 
 The values describe four slots per group, two groups per bar, eight slots per
 bar, four pageable bars, 32 slots per standard page, four reserved slots,
