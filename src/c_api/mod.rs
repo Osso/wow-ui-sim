@@ -398,7 +398,7 @@ pub(crate) mod c_unit_aura_slot_query;
 pub(crate) mod c_unit_aura_spell_queries;
 #[cfg(feature = "aura-instance-enumeration")]
 pub mod c_unit_auras;
-#[cfg(feature = "retail-12-0-5")]
+#[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
 pub mod c_voice_chat_speak;
 pub(crate) mod c_weather;
 #[cfg(feature = "retail-12-0-0")]
