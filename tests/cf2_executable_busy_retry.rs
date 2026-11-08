@@ -7,6 +7,9 @@ use std::process::Command;
 use std::thread;
 use std::time::Duration;
 
+#[path = "common/executable_spawn.rs"]
+mod executable_spawn;
+
 #[test]
 fn output_with_busy_retry_waits_for_open_write_descriptor() {
     let fixture = tempfile::tempdir().expect("create executable fixture");
@@ -27,9 +30,7 @@ fn output_with_busy_retry_waits_for_open_write_descriptor() {
 
     let child = executable.clone();
     let waiter = thread::spawn(move || {
-        Command::new(child)
-            .arg("--list")
-            .output()
+        executable_spawn::output_with_busy_retry(Command::new(child).arg("--list"))
             .expect("spawn after the write descriptor is released")
     });
     thread::sleep(Duration::from_millis(400));
