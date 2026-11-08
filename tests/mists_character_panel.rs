@@ -8,11 +8,14 @@ use std::process::Command;
 #[path = "common/bounded_process.rs"]
 mod bounded_process;
 
+#[path = "common/wow_sim_binary.rs"]
+mod wow_sim_binary;
+
 #[test]
 fn mists_character_panel_populates_gear_and_reputation() {
     let output = bounded_process::output(
         90,
-        Command::new(env!("CARGO_BIN_EXE_wow-sim")).args([
+        Command::new(wow_sim_binary::path()).args([
             "--no-addons",
             "--no-saved-vars",
             "--exec-lua",
@@ -85,7 +88,7 @@ fn mists_character_panel_populates_gear_and_reputation() {
 fn mists_character_bottom_tabs_size_their_text() {
     let output = bounded_process::output(
         90,
-        Command::new(env!("CARGO_BIN_EXE_wow-sim")).args([
+        Command::new(wow_sim_binary::path()).args([
             "--no-addons",
             "--no-saved-vars",
             "--exec-lua",
@@ -194,7 +197,7 @@ fn mists_character_bottom_tabs_size_their_text() {
 fn mists_character_pet_tab_stays_visible_when_pet_ui_is_seeded() {
     let output = bounded_process::output(
         90,
-        Command::new(env!("CARGO_BIN_EXE_wow-sim")).args([
+        Command::new(wow_sim_binary::path()).args([
             "--no-addons",
             "--no-saved-vars",
             "--exec-lua",
@@ -242,7 +245,7 @@ fn mists_character_pet_tab_stays_visible_when_pet_ui_is_seeded() {
 fn mists_character_pet_tab_hides_when_pet_ui_is_absent() {
     let output = bounded_process::output(
         90,
-        Command::new(env!("CARGO_BIN_EXE_wow-sim")).args([
+        Command::new(wow_sim_binary::path()).args([
             "--no-addons",
             "--no-saved-vars",
             "--exec-lua",
@@ -285,7 +288,7 @@ fn mists_character_pet_tab_hides_when_pet_ui_is_absent() {
 fn mists_character_pet_tab_rehides_stale_tab_when_panel_opens() {
     let output = bounded_process::output(
         90,
-        Command::new(env!("CARGO_BIN_EXE_wow-sim")).args([
+        Command::new(wow_sim_binary::path()).args([
             "--no-addons",
             "--no-saved-vars",
             "--exec-lua",
@@ -322,7 +325,7 @@ fn mists_character_pet_tab_rehides_stale_tab_when_panel_opens() {
 fn mists_character_subpanels_drive_titles_and_equipment_sets() {
     let output = bounded_process::output(
         90,
-        Command::new(env!("CARGO_BIN_EXE_wow-sim")).args([
+        Command::new(wow_sim_binary::path()).args([
             "--no-addons",
             "--no-saved-vars",
             "--exec-lua",

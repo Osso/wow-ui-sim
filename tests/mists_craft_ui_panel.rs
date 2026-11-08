@@ -3,22 +3,13 @@
 #[path = "common/lua_error_output.rs"]
 mod lua_error_output;
 
-use std::path::PathBuf;
 use std::process::{Command, Output};
 
 #[path = "common/bounded_process.rs"]
 mod bounded_process;
 
-fn wow_sim_binary() -> PathBuf {
-    std::env::var_os("CARGO_BIN_EXE_wow-sim")
-        .map(PathBuf::from)
-        .unwrap_or_else(|| {
-            PathBuf::from(env!("CARGO_MANIFEST_DIR"))
-                .join("target")
-                .join("debug")
-                .join("wow-sim")
-        })
-}
+#[path = "common/wow_sim_binary.rs"]
+mod wow_sim_binary;
 
 #[test]
 fn mists_craft_frame_load_ui_creates_renderable_craft_frame() {
@@ -95,7 +86,7 @@ fn assert_panel_loads_cleanly(panel_name: &str, filter_name: &str, exec_lua: &st
 fn capture_panel_screenshot(filter_name: &str, exec_lua: &str, output_path: &str) -> Output {
     bounded_process::output(
         90,
-        Command::new(wow_sim_binary()).args([
+        Command::new(wow_sim_binary::path()).args([
             "--no-addons",
             "--no-saved-vars",
             "--exec-lua",

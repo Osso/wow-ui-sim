@@ -1,22 +1,13 @@
 #![cfg(feature = "client-mists")]
 
-use std::path::PathBuf;
 use std::process::Command;
 
-fn wow_sim_binary() -> PathBuf {
-    std::env::var_os("CARGO_BIN_EXE_wow-sim")
-        .map(PathBuf::from)
-        .unwrap_or_else(|| {
-            PathBuf::from(env!("CARGO_MANIFEST_DIR"))
-                .join("target")
-                .join("debug")
-                .join("wow-sim")
-        })
-}
+#[path = "common/wow_sim_binary.rs"]
+mod wow_sim_binary;
 
 #[test]
 fn mists_micro_menu_buttons_resolve_visible_textures() {
-    let output = Command::new(wow_sim_binary())
+    let output = Command::new(wow_sim_binary::path())
         .env("WOW_SIM_NO_SAVED_VARS", "1")
         .env("WOW_SIM_NO_ADDONS", "1")
         .arg("dump-tree")
