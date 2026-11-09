@@ -4,7 +4,7 @@ mod render;
 #[cfg(feature = "native-duration-formatting")]
 mod units;
 
-#[cfg(feature = "retail-12-0-5")]
+#[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
 use crate::lua_api::methods::{call_function_state, registry_get};
 use crate::lua_api::methods::{
     create_string, create_table, registry_set, table_set, table_set_static,
