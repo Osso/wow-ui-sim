@@ -135,6 +135,8 @@ fn automatic_binding_secret_numeric_formatter_blocks_conversion_leaks() {
         local formatter = C_StringUtil.CreateNumericRuleFormatter()
         formatter:SetBreakpoints({{threshold=0, format='%.0f'}})
         Binding:SetFormatter(formatter)
+        assert(Binding:HasSecretValues(), 'binding lost secret duration state')
+        assert(issecretvalue(Binding:GetFormattedText()), 'direct formatting lost secret output')
         Originals = {tostring, tonumber}
         ConversionLeak = false
         local function spy(original)
