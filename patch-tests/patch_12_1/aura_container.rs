@@ -229,12 +229,12 @@ fn aura_info(
     source_unit: &str,
     is_helpful: bool,
     is_from_player: bool,
-    id: u32,
+    id: i32,
 ) -> AuraInfo {
     AuraInfo {
         name: name.into(),
         spell_id: id,
-        icon: id as i32,
+        icon: id,
         duration: 30.0,
         expiration_time: 30.0,
         applications: 1,
@@ -246,6 +246,6 @@ fn aura_info(
         can_apply_aura: is_from_player,
         is_from_player_or_player_pet: is_from_player,
         dispel_type: None,
-        aura_instance_id: id as i32,
+        aura_instance_id: id,
     }
 }
