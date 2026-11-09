@@ -9,7 +9,8 @@ Retail 12.1+ exposes variadic `secretwrap`/`secretunwrap` to unchanged Blizzard 
 - [ ] Allow trusted custom-aura rendering to read wrapped asset-table fields and compare wrapped nil; reject those operations from tainted code. Fields return plain values under this bounded, native-unverified policy, not recursive information-flow tracking.
 - [ ] Mark native wrappers secret in `issecretvalue` and inaccessible in `canaccessvalue`/`canaccessallvalues`, without replacing existing taint-marker and closure checks.
 - [ ] Treat an ordinary table with addon-tainted slots as a public value and valid SecureMap key while `issecurevariable` still reports those slots insecure; deep `canaccesstable` rejects actual nested secret values, including native wrappers and explicitly marked strings.
-- [ ] Reject tainted wrapping and unwrapping of secrets; secret-duration timing and mutation remain inaccessible to tainted callers.
+- [ ] Allow tainted wrapping; reject tainted unwrapping. Secret-duration timing and mutation remain inaccessible to tainted callers.
+- [ ] Refuse tainted `settablesecurity` before argument parsing, report the forbidden call and return no values without changing the table.
 - [ ] Preserve Forever's native registration and older profiles' existing fallbacks; do not replace retail's pre-existing `settablesecurity` shim with the native table-security API.
 
 ## How it works
@@ -35,4 +36,4 @@ Retail 12.1+ exposes variadic `secretwrap`/`secretunwrap` to unchanged Blizzard 
 
 ## Out of scope
 
-- General VM secret arithmetic, `settablesecurity`, scrub behavior, native-conformance claims, and vendor changes.
+- General VM secret arithmetic, scrub behavior, and vendor changes.
