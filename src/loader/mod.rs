@@ -483,7 +483,9 @@ fn load_addon_path(
         format!("toc {}", toc_path.display()),
     );
     let toc = TocFile::from_file(toc_path)?;
-    load_addon_from_toc_path(env, toc_path, addon_name, &toc, saved_vars_mgr)
+    #[cfg(feature = "client-mists")]
+    trace_mists_preload(env, &toc, toc_path);
+    load_addon_path_from_toc(env, addon_name, &toc, saved_vars_mgr)
 }
 
 pub(super) fn load_addon_path_with_toc(
@@ -502,27 +504,31 @@ pub(super) fn load_addon_path_with_toc(
         LoadAddonTraceOrigin::Toc,
         format!("toc {}", toc_path.display()),
     );
-    load_addon_from_toc_path(env, toc_path, addon_name, toc, saved_vars_mgr)
+    #[cfg(feature = "client-mists")]
+    trace_mists_preload(env, toc, toc_path);
+    load_addon_path_from_toc(env, addon_name, toc, saved_vars_mgr)
 }
 
-fn load_addon_from_toc_path(
+fn load_addon_path_from_toc(
     env: &LoaderEnv<'_>,
-    toc_path: &Path,
     addon_name: &str,
     toc: &TocFile,
     saved_vars_mgr: Option<&mut SavedVariablesManager>,
 ) -> Result<LoadResult, LoadError> {
-    #[cfg(feature = "client-mists")]
-    if let Ok(Some(result)) =
-        crate::mists::character_frame_preload::ensure_before_addon(env, toc, toc_path)
-    {
-        trace_load_result_diagnostics(LoadAddonTraceOrigin::Toc, &result.name, &result);
-    }
     trace_load_addon(LoadAddonTraceOrigin::Toc, format!("files {addon_name}"));
     let result = addon::load_addon_internal(env, toc, saved_vars_mgr)?;
     trace_load_result_diagnostics(LoadAddonTraceOrigin::Toc, addon_name, &result);
     trace_load_addon(LoadAddonTraceOrigin::Toc, format!("loaded {addon_name}"));
     Ok(result)
+}
+
+#[cfg(feature = "client-mists")]
+fn trace_mists_preload(env: &LoaderEnv<'_>, toc: &TocFile, toc_path: &Path) {
+    if let Ok(Some(result)) =
+        crate::mists::character_frame_preload::ensure_before_addon(env, toc, toc_path)
+    {
+        trace_load_result_diagnostics(LoadAddonTraceOrigin::Toc, &result.name, &result);
+    }
 }
 
 pub(crate) fn trace_load_result_diagnostics(
@@ -706,14 +712,6 @@ pub fn discover_blizzard_addon_closure_for_screen_with_overrides(
         &extra_dependencies,
         screen,
     )
-}
-
-pub(crate) fn collect_declared_dependency_closure(
-    toc_map: &HashMap<String, (PathBuf, TocFile)>,
-    roots: &[&str],
-) -> HashSet<String> {
-    let extra_roots_by_addon: HashMap<&str, Vec<&str>> = HashMap::new();
-    collect_declared_dependency_closure_with_overrides(toc_map, roots, &extra_roots_by_addon, None)
 }
 
 pub(crate) fn collect_declared_dependency_closure_for_screen(
