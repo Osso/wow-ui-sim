@@ -27,13 +27,14 @@ Retail 12.1+ exposes variadic `secretwrap`/`secretunwrap` to unchanged Blizzard 
 
 ## Tests asserting this spec
 
-- `tests/duration_core.rs`: unchanged cached Blizzard AuraButton duration and custom texture consumers, wrapper arity/nil, security and duration-state checks (GREEN pending).
+- `tests/duration_core.rs`: unchanged cached Blizzard AuraButton duration and custom texture consumers, wrapper arity/nil, security and duration-state checks.
 - `tests/security_api.rs`: tainted public table slot/SecureMap key, native nested secret, and explicit string-marker controls.
 - `tests/secretwrap_taint_r12.rs`: tainted wrapping and caller-taint preservation; setter return count, event, and non-mutation.
 
-## Known gaps (current cycle)
+## Known gaps
 
-- [ ] Targeted compiled regression and cross-profile gates pending integration.
+- [ ] Native global secret-marking disable state is not modeled; this simulator returns secret wrappers for all `secretwrap` calls.
+- [x] R12 regressions, manifest validation, and requested profile gates pass; five Forever duration-filter failures also fail on master `75038d409`.
 
 ## Out of scope
 
