@@ -9450,7 +9450,7 @@
         {
           "kind": "test",
           "reference": "tests/duration_core.rs",
-          "source_hash": "6821010d616249e6f6d25f3ee31a5228f0ca52a5dc4d8ad29a3e6086a1c75ff5",
+          "source_hash": "8056bb935bdac45251acf7bb8e8d516c7aad2a91e7662da3ae17dbf0a0a71996",
           "summary": "With simulator elapsed time set at least 40 seconds after its origin, GetCurrentTime returns at least 40 and the unbound duration clock is no earlier. Native epoch, precision, pause, and synchronization semantics remain unverified."
         }
       ],
@@ -88694,7 +88694,7 @@
           "kind": "test",
           "reference": "tests/duration_core.rs::duration_curve_live_point_reconfiguration_changes_all_queries",
           "summary": "New color points after clearing produce RGBA (0.5, 0.5, 0.5, 0.25) through all four duration queries. Argument coercion and standalone insertion errors are not asserted.",
-          "source_hash": "6821010d616249e6f6d25f3ee31a5228f0ca52a5dc4d8ad29a3e6086a1c75ff5"
+          "source_hash": "8056bb935bdac45251acf7bb8e8d516c7aad2a91e7662da3ae17dbf0a0a71996"
         }
       ],
       "tests": [
@@ -88731,7 +88731,7 @@
           "kind": "test",
           "reference": "tests/duration_core.rs::duration_curve_live_point_reconfiguration_changes_all_queries",
           "summary": "Clearing and rebuilding a color curve replaces the observed midpoint RGBA result through all four duration queries. Standalone empty-curve/count behavior is not asserted.",
-          "source_hash": "6821010d616249e6f6d25f3ee31a5228f0ca52a5dc4d8ad29a3e6086a1c75ff5"
+          "source_hash": "8056bb935bdac45251acf7bb8e8d516c7aad2a91e7662da3ae17dbf0a0a71996"
         }
       ],
       "tests": [
@@ -88805,7 +88805,7 @@
           "kind": "test",
           "reference": "tests/duration_core.rs::duration_curve_color_results_preserve_rgba_for_all_four_queries",
           "summary": "Real registered color curves return the expected midpoint and endpoint ColorMixin channels through all four duration evaluations with tested modifiers.",
-          "source_hash": "6821010d616249e6f6d25f3ee31a5228f0ca52a5dc4d8ad29a3e6086a1c75ff5"
+          "source_hash": "8056bb935bdac45251acf7bb8e8d516c7aad2a91e7662da3ae17dbf0a0a71996"
         }
       ],
       "tests": [
@@ -89353,7 +89353,7 @@
           "kind": "test",
           "reference": "tests/duration_core.rs::duration_curve_live_point_reconfiguration_changes_all_queries",
           "summary": "Clearing and rebuilding a scalar curve changes its midpoint result from 20 to 70 through all four duration queries. Standalone empty-curve/count behavior is not asserted.",
-          "source_hash": "6821010d616249e6f6d25f3ee31a5228f0ca52a5dc4d8ad29a3e6086a1c75ff5"
+          "source_hash": "8056bb935bdac45251acf7bb8e8d516c7aad2a91e7662da3ae17dbf0a0a71996"
         }
       ],
       "tests": [
@@ -89825,7 +89825,7 @@
           "kind": "test",
           "reference": "tests/duration_core.rs::duration_copy_assign_preserves_receiver_identity_and_independent_timing",
           "summary": "This ordinary simulator test covers receiver timing transfer, independent later timing mutation, no returned values, and preserved receiver identity/custom fields; the other listed tests separately cover clocks, self-assignment, and invalid-source atomicity.",
-          "source_hash": "6821010d616249e6f6d25f3ee31a5228f0ca52a5dc4d8ad29a3e6086a1c75ff5"
+          "source_hash": "8056bb935bdac45251acf7bb8e8d516c7aad2a91e7662da3ae17dbf0a0a71996"
         }
       ],
       "tests": [
@@ -89866,7 +89866,7 @@
           "kind": "test",
           "reference": "tests/duration_core.rs::duration_copy_preserves_timing_and_returns_one_independent_object",
           "summary": "This ordinary simulator test covers one distinct return value, timing transfer, and independent later timing mutation; the separately listed clock test covers reference copying and independent clock bindings.",
-          "source_hash": "6821010d616249e6f6d25f3ee31a5228f0ca52a5dc4d8ad29a3e6086a1c75ff5"
+          "source_hash": "8056bb935bdac45251acf7bb8e8d516c7aad2a91e7662da3ae17dbf0a0a71996"
         }
       ],
       "tests": [
@@ -89904,7 +89904,7 @@
           "kind": "test",
           "reference": "tests/duration_core.rs::duration_curve_elapsed_seconds_follow_clock_and_modifiers",
           "summary": "Concrete scalar curve outputs follow modeled duration clock boundaries, expiry, rewind, and optional modifier handling. Other listed tests separately cover color results, live mutation, validation, and evaluator error propagation.",
-          "source_hash": "6821010d616249e6f6d25f3ee31a5228f0ca52a5dc4d8ad29a3e6086a1c75ff5"
+          "source_hash": "8056bb935bdac45251acf7bb8e8d516c7aad2a91e7662da3ae17dbf0a0a71996"
         }
       ],
       "tests": [
@@ -89947,7 +89947,7 @@
           "kind": "test",
           "reference": "tests/duration_core.rs::duration_curve_elapsed_percent_is_modifier_invariant",
           "summary": "Concrete scalar curve outputs follow modeled duration clock boundaries, expiry, rewind, and optional modifier handling. Other listed tests separately cover color results, live mutation, validation, and evaluator error propagation.",
-          "source_hash": "6821010d616249e6f6d25f3ee31a5228f0ca52a5dc4d8ad29a3e6086a1c75ff5"
+          "source_hash": "8056bb935bdac45251acf7bb8e8d516c7aad2a91e7662da3ae17dbf0a0a71996"
         }
       ],
       "tests": [
@@ -89990,7 +89990,7 @@
           "kind": "test",
           "reference": "tests/duration_core.rs::duration_curve_remaining_seconds_follow_clock_and_modifiers",
           "summary": "Concrete scalar curve outputs follow modeled duration clock boundaries, expiry, rewind, and optional modifier handling. Other listed tests separately cover color results, live mutation, validation, and evaluator error propagation.",
-          "source_hash": "6821010d616249e6f6d25f3ee31a5228f0ca52a5dc4d8ad29a3e6086a1c75ff5"
+          "source_hash": "8056bb935bdac45251acf7bb8e8d516c7aad2a91e7662da3ae17dbf0a0a71996"
         }
       ],
       "tests": [
@@ -90033,7 +90033,7 @@
           "kind": "test",
           "reference": "tests/duration_core.rs::duration_curve_remaining_percent_is_modifier_invariant",
           "summary": "Concrete scalar curve outputs follow modeled duration clock boundaries, expiry, rewind, and optional modifier handling. Other listed tests separately cover color results, live mutation, validation, and evaluator error propagation.",
-          "source_hash": "6821010d616249e6f6d25f3ee31a5228f0ca52a5dc4d8ad29a3e6086a1c75ff5"
+          "source_hash": "8056bb935bdac45251acf7bb8e8d516c7aad2a91e7662da3ae17dbf0a0a71996"
         }
       ],
       "tests": [
@@ -90075,7 +90075,7 @@
         {
           "kind": "test",
           "reference": "tests/duration_core.rs",
-          "source_hash": "6821010d616249e6f6d25f3ee31a5228f0ca52a5dc4d8ad29a3e6086a1c75ff5",
+          "source_hash": "8056bb935bdac45251acf7bb8e8d516c7aad2a91e7662da3ae17dbf0a0a71996",
           "summary": "Elapsed durations follow concrete clock boundaries and rewind, giving real/base values 5/10 at clock 15 for start 10, base 20, rate 2. Default-clock and span-configuration observations are also asserted."
         }
       ],
@@ -90116,7 +90116,7 @@
           "kind": "test",
           "reference": "tests/duration_core.rs",
           "summary": "Concrete elapsed/remaining fraction boundaries, clamping before/after the interval, rewind, zero-span behavior, invalid modifier rejection, and invalid bound-clock rejection; simulator policy only and no native conformance inferred.",
-          "source_hash": "6821010d616249e6f6d25f3ee31a5228f0ca52a5dc4d8ad29a3e6086a1c75ff5"
+          "source_hash": "8056bb935bdac45251acf7bb8e8d516c7aad2a91e7662da3ae17dbf0a0a71996"
         }
       ],
       "tests": [
@@ -90155,7 +90155,7 @@
         {
           "kind": "test",
           "reference": "tests/duration_core.rs",
-          "source_hash": "6821010d616249e6f6d25f3ee31a5228f0ca52a5dc4d8ad29a3e6086a1c75ff5",
+          "source_hash": "8056bb935bdac45251acf7bb8e8d516c7aad2a91e7662da3ae17dbf0a0a71996",
           "summary": "End is 20 for start 10/base 20/rate 2, changes to 30 with span 10..30, remains stable during clock movement, and resets to zero. Rejected configuration calls preserve end 30."
         }
       ],
@@ -90194,7 +90194,7 @@
         {
           "kind": "test",
           "reference": "tests/duration_core.rs",
-          "source_hash": "6821010d616249e6f6d25f3ee31a5228f0ca52a5dc4d8ad29a3e6086a1c75ff5",
+          "source_hash": "8056bb935bdac45251acf7bb8e8d516c7aad2a91e7662da3ae17dbf0a0a71996",
           "summary": "Rate is 2 after configured start intervals and remains 2 during clock movement; span configuration and Reset report rate 1."
         }
       ],
@@ -90233,7 +90233,7 @@
         {
           "kind": "test",
           "reference": "tests/duration_core.rs",
-          "source_hash": "6821010d616249e6f6d25f3ee31a5228f0ca52a5dc4d8ad29a3e6086a1c75ff5",
+          "source_hash": "8056bb935bdac45251acf7bb8e8d516c7aad2a91e7662da3ae17dbf0a0a71996",
           "summary": "Remaining durations follow concrete clock boundaries and rewind, giving real/base values 5/10 at clock 15 for start 10, base 20, rate 2; end configuration at clock 12 gives 8 and zero duration gives zero."
         }
       ],
@@ -90274,7 +90274,7 @@
           "kind": "test",
           "reference": "tests/duration_core.rs",
           "summary": "Concrete elapsed/remaining fraction boundaries, clamping before/after the interval, rewind, zero-span behavior, invalid modifier rejection, and invalid bound-clock rejection; simulator policy only and no native conformance inferred.",
-          "source_hash": "6821010d616249e6f6d25f3ee31a5228f0ca52a5dc4d8ad29a3e6086a1c75ff5"
+          "source_hash": "8056bb935bdac45251acf7bb8e8d516c7aad2a91e7662da3ae17dbf0a0a71996"
         }
       ],
       "tests": [
@@ -90313,7 +90313,7 @@
         {
           "kind": "test",
           "reference": "tests/duration_core.rs",
-          "source_hash": "6821010d616249e6f6d25f3ee31a5228f0ca52a5dc4d8ad29a3e6086a1c75ff5",
+          "source_hash": "8056bb935bdac45251acf7bb8e8d516c7aad2a91e7662da3ae17dbf0a0a71996",
           "summary": "Start is 10 for equivalent start/end configurations, stays 10 through clock boundaries and rewind, and resets to zero. Rejected configuration calls preserve start 10."
         }
       ],
@@ -90352,7 +90352,7 @@
         {
           "kind": "test",
           "reference": "tests/duration_core.rs",
-          "source_hash": "6821010d616249e6f6d25f3ee31a5228f0ca52a5dc4d8ad29a3e6086a1c75ff5",
+          "source_hash": "8056bb935bdac45251acf7bb8e8d516c7aad2a91e7662da3ae17dbf0a0a71996",
           "summary": "For start 10, base duration 20 and rate 2, total is 10 in RealTime and 20 in BaseTime throughout clock movement; span configuration gives 20 and reset gives zero."
         }
       ],
@@ -90457,7 +90457,7 @@
         {
           "kind": "test",
           "reference": "tests/duration_core.rs",
-          "source_hash": "6821010d616249e6f6d25f3ee31a5228f0ca52a5dc4d8ad29a3e6086a1c75ff5",
+          "source_hash": "8056bb935bdac45251acf7bb8e8d516c7aad2a91e7662da3ae17dbf0a0a71996",
           "summary": "Reset after a configured interval sets endpoints and total to zero, rate to 1, and all activity predicates false while retaining the manual clock and its time 12."
         }
       ],
@@ -90495,7 +90495,7 @@
         {
           "kind": "test",
           "reference": "tests/duration_core.rs",
-          "source_hash": "6821010d616249e6f6d25f3ee31a5228f0ca52a5dc4d8ad29a3e6086a1c75ff5",
+          "source_hash": "8056bb935bdac45251acf7bb8e8d516c7aad2a91e7662da3ae17dbf0a0a71996",
           "summary": "Configuring end 20, base duration 20 and rate 2 yields start 10/end 20 and remaining 8 at clock 12. Zero rate errors while existing endpoints 10..30 remain unchanged."
         }
       ],
@@ -90532,7 +90532,7 @@
         {
           "kind": "test",
           "reference": "tests/duration_core.rs",
-          "source_hash": "6821010d616249e6f6d25f3ee31a5228f0ca52a5dc4d8ad29a3e6086a1c75ff5",
+          "source_hash": "8056bb935bdac45251acf7bb8e8d516c7aad2a91e7662da3ae17dbf0a0a71996",
           "summary": "Configuring start 10, base duration 20 and rate 2 yields endpoints 10..20 and concrete progress. Negative duration, NaN start and infinite duration error while existing endpoints 10..30 remain unchanged; configured zero duration is observed."
         }
       ],
@@ -90571,7 +90571,7 @@
         {
           "kind": "test",
           "reference": "tests/duration_core.rs",
-          "source_hash": "6821010d616249e6f6d25f3ee31a5228f0ca52a5dc4d8ad29a3e6086a1c75ff5",
+          "source_hash": "8056bb935bdac45251acf7bb8e8d516c7aad2a91e7662da3ae17dbf0a0a71996",
           "summary": "Configuring span 10..30 after rate 2 yields rate 1, total 20 and elapsed 2 at clock 12. Reversed span 5..4 errors while endpoints 10..30 remain unchanged."
         }
       ],
@@ -90609,7 +90609,7 @@
           "kind": "test",
           "reference": "tests/duration_core.rs",
           "summary": "Starting with a bound manual clock at 15 and configured start 10, base duration 20, rate 2, SetToDefaults clears clock binding, sets endpoints/total to zero and rate to one, and reports zero, inactive state and zero fractions. These are simulator policies, not native reset semantics.",
-          "source_hash": "6821010d616249e6f6d25f3ee31a5228f0ca52a5dc4d8ad29a3e6086a1c75ff5"
+          "source_hash": "8056bb935bdac45251acf7bb8e8d516c7aad2a91e7662da3ae17dbf0a0a71996"
         }
       ],
       "tests": [
@@ -135356,7 +135356,7 @@
         {
           "kind": "source",
           "reference": "Cargo.lock",
-          "source_hash": "0a8377bc21bacbf70fa49677fdeebedae1526b1cbb625e9c755b4308e5e20410",
+          "source_hash": "cbcf575823c886b628fe9ab319341d8c89569ed49f51d7c94450234b5e83edc2",
           "summary": "Lockfile provenance only: rilua is pinned at the recorded git revision; this does not prove or disprove the removed math constants in the simulator or retail."
         },
         {
@@ -135403,7 +135403,7 @@
         {
           "kind": "source",
           "reference": "Cargo.lock",
-          "source_hash": "0a8377bc21bacbf70fa49677fdeebedae1526b1cbb625e9c755b4308e5e20410",
+          "source_hash": "cbcf575823c886b628fe9ab319341d8c89569ed49f51d7c94450234b5e83edc2",
           "summary": "Lockfile provenance only: rilua is pinned at the recorded git revision; this does not prove or disprove the removed math constants in the simulator or retail."
         },
         {

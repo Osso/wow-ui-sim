@@ -131,7 +131,9 @@ fn opaque_duration_modifier_and_formatter_inputs_preserve_secrecy_and_caller_gua
                     assert(d[name](d, formatter) == expected[index][column])
                 end
             end
-            assert(not pcall(secretwrap, 1) and not issecure())
+            local wrappedSecret = secretwrap(1)
+            assert(issecretvalue(wrappedSecret), 'tainted secretwrap returns a secret value')
+            assert(not issecure(), 'tainted secretwrap preserves caller taint')
         end
         debug.setobjecttaint(tainted, 'DurationNumericProbe')
         tainted()
@@ -191,7 +193,9 @@ fn seconds_curve_receives_opaque_time_and_retains_closure_taint() {
         local function taintedCurve(_, input)
             assert(not issecure() and issecretvalue(input))
             assert(not pcall(secretunwrap, input))
-            assert(not pcall(secretwrap, 1))
+            local wrapped = secretwrap(1)
+            assert(issecretvalue(wrapped), 'tainted curve can wrap without an error')
+            assert(not issecure(), 'tainted curve remains tainted after wrapping')
             error('tainted curve marker')
         end
         debug.setobjecttaint(taintedCurve, 'DurationCurveProbe')

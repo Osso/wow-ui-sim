@@ -152,7 +152,8 @@ fn allow_load_game_lowercase_resolves_correctly() {
 }
 }
 
-post_wrath_ui_fixture! {
+// Mists caches 3 SpellDiminishUI files, but its TOC only allows `mainline`.
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn allow_load_game_type_mainline_is_not_restricted() {
     let toc = TocFile::from_file(&spell_diminish_toc()).expect("TOC parses");
@@ -266,7 +267,7 @@ fn body_lists_lua_before_xml() {
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn appears_in_eager_discovery_on_game_screen_only() {
     let ui = blizzard_ui_dir();
@@ -352,7 +353,7 @@ fn is_addon_loaded_reports_true_after_eager_sweep(env: &WowLuaEnv) {
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[cfg(not(feature = "client-retail"))]
 #[test]
 fn is_addon_loaded_reports_true_after_eager_sweep() {
@@ -380,7 +381,7 @@ fn publishes_two_mixin_tables_at_global_scope(env: &WowLuaEnv) {
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[cfg(not(feature = "client-retail"))]
 #[test]
 fn publishes_two_mixin_tables_at_global_scope() {
@@ -416,7 +417,7 @@ fn tray_item_mixin_carries_seven_canonical_methods(env: &WowLuaEnv) {
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[cfg(not(feature = "client-retail"))]
 #[test]
 fn tray_item_mixin_carries_seven_canonical_methods() {
@@ -459,7 +460,7 @@ fn tray_mixin_carries_twenty_five_lifecycle_and_pool_methods(env: &WowLuaEnv) {
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[cfg(not(feature = "client-retail"))]
 #[test]
 fn tray_mixin_carries_twenty_five_lifecycle_and_pool_methods() {
@@ -497,7 +498,7 @@ fn tray_item_template_materializes_with_cooldown_and_immunity_children(env: &Wow
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[cfg(not(feature = "client-retail"))]
 #[test]
 fn tray_item_template_materializes_with_cooldown_and_immunity_children() {
@@ -532,7 +533,7 @@ fn tray_template_materializes_with_resize_layout_keyvalues(env: &WowLuaEnv) {
 }
 }
 
-post_wrath_ui_fixture! {
+retail_ptr_forever_toc_fixture! {
 #[cfg(not(feature = "client-retail"))]
 #[test]
 fn tray_template_materializes_with_resize_layout_keyvalues() {

@@ -21,6 +21,19 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
     let enums = super::helpers::ensure_global_table(state, "Enum");
     register_usage_locations(state, enums);
     if ACTIVE == ClientProfile::Ptr {
+        let store = super::helpers::ensure_namespace(state, "C_StorePublic")?;
+        table_set_rust_fn(
+            state,
+            store,
+            "IsRewardsShopEnabled",
+            is_rewards_shop_enabled_store,
+        )?;
+        table_set_rust_fn(
+            state,
+            namespace,
+            "IsRewardsShopEnabled",
+            is_rewards_shop_enabled_rules,
+        )?;
         table_set_rust_fn(state, namespace, "IsHardcoreActive", is_hardcore_active)?;
         table_set_rust_fn(
             state,
@@ -31,6 +44,30 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
         register_recent_allies_categories(state, enums);
     }
     Ok(())
+}
+
+fn is_rewards_shop_enabled_store(state: &mut LuaState) -> LuaResult<u32> {
+    let enabled = borrow_state(state)?.cvars.get_bool("rewardsShopEnabled");
+    state.push(Val::Bool(enabled));
+    Ok(1)
+}
+
+fn is_rewards_shop_enabled_rules(state: &mut LuaState) -> LuaResult<u32> {
+    let enabled = {
+        let sim = borrow_state(state)?;
+        sim.cvars.get_bool("rewardsShopEnabled")
+            && (sim.cvars.get_bool("bpayStoreEnable")
+                || sim.cvars.get_bool("rewardsShopOverrideEnabled"))
+            && sim.game_rules.rule_set_marker != 0
+            && sim
+                .game_rules
+                .rules
+                .get("RewardsShopFlags")
+                .and_then(|rule| rule.integer_value)
+                .is_some_and(|flags| flags & 1 != 0)
+    };
+    state.push(Val::Bool(enabled));
+    Ok(1)
 }
 
 fn is_hardcore_active(state: &mut LuaState) -> LuaResult<u32> {
