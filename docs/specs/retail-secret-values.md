@@ -9,7 +9,8 @@ Retail 12.1+ exposes variadic `secretwrap`/`secretunwrap` to unchanged Blizzard 
 - [ ] Allow trusted custom-aura rendering to read wrapped asset-table fields and compare wrapped nil; reject those operations from tainted code. Fields return plain values under this bounded, native-unverified policy, not recursive information-flow tracking.
 - [ ] Mark native wrappers secret in `issecretvalue` and inaccessible in `canaccessvalue`/`canaccessallvalues`, without replacing existing taint-marker and closure checks.
 - [ ] Treat an ordinary table with addon-tainted slots as a public value and valid SecureMap key while `issecurevariable` still reports those slots insecure; deep `canaccesstable` rejects actual nested secret values, including native wrappers and explicitly marked strings.
-- [ ] Reject tainted wrapping and unwrapping of secrets; secret-duration timing and mutation remain inaccessible to tainted callers.
+- [x] Let tainted callers use `secretwrap` without an error or clearing caller taint; returned values are secret. Continue to reject tainted `secretunwrap`. Secret-duration timing and mutation remain inaccessible to tainted callers.
+- [x] For addon-tainted `settablesecurity` calls, report `ADDON_ACTION_FORBIDDEN` before argument parsing and return zero values without an error or table mutation. Macro-source event classification remains unmodeled.
 - [ ] Preserve Forever's native registration and older profiles' existing fallbacks; do not replace retail's pre-existing `settablesecurity` shim with the native table-security API.
 
 ## How it works
@@ -26,13 +27,15 @@ Retail 12.1+ exposes variadic `secretwrap`/`secretunwrap` to unchanged Blizzard 
 
 ## Tests asserting this spec
 
-- `tests/duration_core.rs`: unchanged cached Blizzard AuraButton duration and custom texture consumers, wrapper arity/nil, security and duration-state checks (GREEN pending).
-- `tests/security_api.rs`: tainted public table slot/SecureMap key, native nested secret, and explicit string-marker controls (compiled GREEN pending).
+- `tests/duration_core.rs`: unchanged cached Blizzard AuraButton duration and custom texture consumers, wrapper arity/nil, security and duration-state checks.
+- `tests/security_api.rs`: tainted public table slot/SecureMap key, native nested secret, and explicit string-marker controls.
+- `tests/secretwrap_taint_r12.rs`: tainted wrapping and caller-taint preservation; setter return count, event, and non-mutation.
 
-## Known gaps (current cycle)
+## Known gaps
 
-- [ ] Targeted compiled regression and cross-profile gates pending integration.
+- [ ] Native global secret-marking disable state is not modeled; this simulator returns secret wrappers for all `secretwrap` calls.
+- [x] R12 regressions, manifest validation, and requested profile gates pass; five Forever duration-filter failures also fail on master `75038d409`.
 
 ## Out of scope
 
-- General VM secret arithmetic, `settablesecurity`, scrub behavior, native-conformance claims, and vendor changes.
+- General VM secret arithmetic, scrub behavior, and vendor changes.
