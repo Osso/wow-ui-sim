@@ -284,15 +284,15 @@ fn assert_chat_dock_layout(env: &WowLuaEnv) {
     let (chat_x, chat_y, chat_width, _) = frame_rect(env, "ChatFrame1");
     let (expected_x, expected_y, expected_width, anchor_check) = match ACTIVE {
         ClientProfile::Retail | ClientProfile::Ptr | ClientProfile::WowForever => {
-            let (scrollbar_width, quick_button_height): (f32, f32) = env
+            let (has_scrollbar, quick_button_height): (bool, f32) = env
                 .eval(
                     r#"
-                    return ChatFrame1.ScrollBar:GetWidth(),
-                        (CombatLogQuickButtonFrame and CombatLogQuickButtonFrame:IsShown())
-                            and CombatLogQuickButtonFrame:GetHeight() or 0
+                    return ChatFrame1.ScrollBar ~= nil,
+                        (CombatLogQuickButtonFrame and CombatLogQuickButtonFrame:GetHeight()) or 0
                     "#,
                 )
                 .expect("read native chat background extents");
+            let scrollbar_width = if has_scrollbar { 8.0 } else { 0.0 };
             (
                 chat_x - 2.0,
                 chat_y - 29.0 - quick_button_height,
@@ -386,11 +386,11 @@ fn assert_layout_state(env: &WowLuaEnv, test: &str) {
             "objective_tracker",
         ) => {
             r#"
-            assert(ObjectiveTrackerFrame:IsInDefaultPosition())
-            assert(ObjectiveTrackerFrame:GetParent() == RightManagedFrameContainer)
+            assert(ObjectiveTrackerFrame:IsInDefaultPosition(), "tracker default-position state")
+            assert(ObjectiveTrackerFrame:GetParent() == RightManagedFrameContainer, "tracker parent")
             local _, relative, _, _, offsetY = ObjectiveTrackerFrame:GetPoint(1)
-            assert(relative == RightManagedFrameContainer and offsetY == 0)
-            assert(math.abs(ObjectiveTrackerFrame:GetHeight() - RightManagedFrameContainer:GetHeight()) < 0.001)
+            assert(relative == RightManagedFrameContainer and offsetY == 0, "tracker anchor")
+            assert(math.abs(ObjectiveTrackerFrame:GetHeight() - RightManagedFrameContainer:GetHeight()) < 0.001, "tracker height")
             "#
         }
         _ => return,
