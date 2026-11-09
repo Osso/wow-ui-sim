@@ -6,7 +6,7 @@ use wow_ui_sim::paths::default_blizzard_ui_addons_path;
 #[path = "token_ui_fixtures.rs"]
 mod token_ui_fixtures;
 
-use token_ui_fixtures::load_token_ui;
+pub(crate) use token_ui_fixtures::load_token_ui;
 
 pub(crate) const BLIZZARD_ADDONS: &[&str] = &[
     "Blizzard_SharedXMLBase",

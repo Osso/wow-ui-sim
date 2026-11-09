@@ -375,15 +375,19 @@ pub fn load_game_startup_inventory(env: &WowLuaEnv) {
     env.sync_string_metatable_to_global_string();
 }
 
-/// Use production's selected startup TOCs for the three Classic profiles.
-/// Return true when the fixture no longer needs a hand-written addon list.
-pub fn load_classic_game_startup_inventory(env: &WowLuaEnv) -> bool {
-    if !matches!(
+pub fn is_classic_ui_profile() -> bool {
+    matches!(
         wow_ui_sim::client_profile::ACTIVE,
         wow_ui_sim::client_profile::ClientProfile::Mists
             | wow_ui_sim::client_profile::ClientProfile::Era
             | wow_ui_sim::client_profile::ClientProfile::Anniversary
-    ) {
+    )
+}
+
+/// Use production's selected startup TOCs for the three Classic profiles.
+/// Return true when the fixture no longer needs a hand-written addon list.
+pub fn load_classic_game_startup_inventory(env: &WowLuaEnv) -> bool {
+    if !is_classic_ui_profile() {
         return false;
     }
     load_game_startup_inventory(env);
