@@ -3536,3 +3536,10 @@ positive pinned-declaration case and the absence case covers Retail, Wrath, Mist
 and Anniversary. See
 [PTR Edit Mode declarations](investigations/ptr-edit-mode-declarations.md) and
 [the contract](../specs/forever-edit-mode-enums.md).
+
+## 2026-11-08 — Deferred text at frame-level boundaries
+
+Updated [rendering pipeline](systems/rendering-pipeline.md#deferred-text-and-nested-wrappers)
+with the lower-text/opaque-modal regression, same-level hoisting boundary,
+single emission of nested wrapper regions, and Lua-to-GPU image coverage.
+Render bucket tests also cover modal hide/show and cache repair.

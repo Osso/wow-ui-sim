@@ -254,3 +254,45 @@ fn show_tooltip_root_appends_without_invalidating_buckets() {
         "shown tooltip should be present in the cached tooltip bucket"
     );
 }
+
+#[test]
+fn higher_level_modal_covers_nested_text_after_repeated_show_and_bucket_repair() {
+    let mut state = SimState::default();
+    for (id, kind, parent, level) in [
+        (1, WidgetType::Frame, None, 0),
+        (10, WidgetType::Frame, Some(1), 1),
+        (11, WidgetType::ScrollFrame, Some(10), 2),
+        (12, WidgetType::Frame, Some(11), 3),
+        (13, WidgetType::FontString, Some(12), 0),
+        (20, WidgetType::Frame, Some(10), 21),
+        (21, WidgetType::Texture, Some(20), 0),
+        (22, WidgetType::FontString, Some(20), 0),
+    ] {
+        let mut frame = test_frame(id, kind, parent, true);
+        frame.frame_level = level;
+        if id == 1 {
+            frame.name = Some("UIParent".into());
+        }
+        state.widgets.register(frame);
+        if let Some(parent) = parent {
+            state.widgets.add_child(parent, id);
+        }
+    }
+    state.set_frame_toplevel(10, true);
+    state.raise_frame(10);
+    for _ in 0..3 {
+        let bucket = medium_bucket(&mut state);
+        let position = |id| bucket.iter().rposition(|&value| value == id).unwrap();
+        assert!(
+            position(13) < position(21),
+            "modal must cover lower text: {bucket:?}"
+        );
+        assert!(
+            position(21) < position(22),
+            "modal label must stay visible: {bucket:?}"
+        );
+        state.set_frame_visible(20, false);
+        assert!(!medium_bucket(&mut state).contains(&21));
+        state.set_frame_visible(20, true);
+    }
+}

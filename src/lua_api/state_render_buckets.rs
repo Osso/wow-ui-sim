@@ -35,8 +35,9 @@ pub(super) fn is_strata_root_boundary(frame: &crate::widget::Frame) -> bool {
 /// DFS emit: parent frame, then its Texture regions (sorted by draw_layer),
 /// then child frames (recursively), then its FontString regions.
 ///
-/// FontStrings are deferred past child frames so that parent text renders on top
-/// of child frame backgrounds. In WoW's flat render model, all regions at the
+/// FontStrings are deferred past same-level child frames so that parent text renders on top
+/// of child frame backgrounds. Deferral must stop before a higher-level frame.
+/// In WoW's flat render model, all regions at the
 /// same frame_level are interleaved by draw_layer, so we approximate this by
 /// splitting regions into textures before children and fontstrings after.
 /// EditBox is the exception: its internal text/caret are emitted by the frame
@@ -271,10 +272,18 @@ fn emit_child_frames_and_hoisted(
     sort_child_frames(child_frames, widgets);
     for &child_id in child_frames.iter() {
         let child = widgets.get(child_id);
-        let child_suppress = child.is_some_and(|frame| {
-            is_regionless_transparent_wrapper(frame, strata_idx, widgets, visible)
-        });
-        if !suppress_regions && child_suppress {
+        if let Some(child) = child {
+            emit_deferred_regions_below_level(deferred_regions, child.frame_level, widgets, out);
+        }
+        let hoist_child_regions = !suppress_regions
+            && child.is_some_and(|frame| {
+                is_regionless_transparent_wrapper(frame, strata_idx, widgets, visible)
+            });
+        // Regions collected by an ancestor must not be emitted again by nested
+        // Frame/ScrollFrame wrappers. Button/EditBox regions were not hoisted.
+        let child_suppress =
+            hoist_child_regions || (suppress_regions && child.is_some_and(is_transparent_wrapper));
+        if hoist_child_regions {
             let mut hoisted_regions = Vec::new();
             collect_transparent_wrapper_regions(
                 child_id,
@@ -289,6 +298,31 @@ fn emit_child_frames_and_hoisted(
         }
         dfs_emit_with_region_mode(child_id, strata_idx, widgets, visible, out, child_suppress);
     }
+}
+
+/// Hoisted FontStrings still belong to their original frames. Emitting them
+/// after every sibling would put lower-level text above an opaque modal.
+fn emit_deferred_regions_below_level(
+    regions: &mut Vec<RegionEntry>,
+    level: i32,
+    widgets: &WidgetRegistry,
+    out: &mut Vec<u64>,
+) {
+    let mut ready = Vec::new();
+    regions.retain(|entry| {
+        let owner = widgets
+            .get(entry.id)
+            .and_then(|region| region.parent_id)
+            .and_then(|id| widgets.get(id));
+        if owner.is_some_and(|frame| frame.frame_level < level) {
+            ready.push(*entry);
+            false
+        } else {
+            true
+        }
+    });
+    sort_regions(&mut ready, widgets);
+    out.extend(ready.into_iter().map(|entry| entry.id));
 }
 
 fn collect_frame_regions(
@@ -436,6 +470,40 @@ fn is_regionless_transparent_wrapper(
 ) -> bool {
     is_transparent_wrapper(frame)
         && !has_visible_same_strata_region_child(frame, strata_idx, widgets, visible)
+        && frame
+            .parent_id
+            .and_then(|id| widgets.get(id))
+            .is_some_and(|parent| {
+                frame.frame_level == parent.frame_level
+                    && subtree_stays_at_level(
+                        frame,
+                        frame.frame_level,
+                        strata_idx,
+                        widgets,
+                        visible,
+                    )
+            })
+}
+
+// Hoisting is only a same-level grouping rule. Crossing a level boundary loses
+// the owning frame's ordering relative to opaque siblings and nested buttons.
+fn subtree_stays_at_level(
+    frame: &crate::widget::Frame,
+    level: i32,
+    strata_idx: usize,
+    widgets: &WidgetRegistry,
+    visible: &FxHashSet<u64>,
+) -> bool {
+    frame.children.iter().all(|id| {
+        let Some(child) = widgets.get(*id) else {
+            return true;
+        };
+        !visible.contains(id)
+            || is_region(child.widget_type)
+            || child.frame_strata.as_index() != strata_idx
+            || (child.frame_level == level
+                && subtree_stays_at_level(child, level, strata_idx, widgets, visible))
+    })
 }
 
 fn has_visible_same_strata_region_child(
