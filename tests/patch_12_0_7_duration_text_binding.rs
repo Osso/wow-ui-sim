@@ -38,10 +38,18 @@ fn p1207_binding_defaults_and_exact_query_arity() {
                               {'IsEnabled',true},{'GetTimeModifier',0},{'GetUpdateInterval',1}}) do
             assert(select('#', a[item[1]](a)) == 1 and a[item[1]](a) == item[2], item[1])
         end
-        -- R17 verifies the current Retail 70688 empty-state decisions.
-        assert(a:GetFormattedText() == '')
+        -- Retail 12.1.5 shares the R17 empty-state result; 12.0.7 keeps its earlier contract.
+        if type(a.SetTextColorCurve) == 'function' then
+            assert(a:GetFormattedText() == '')
+        else
+            assert(not pcall(a.GetFormattedText, a))
+        end
         assert(select('#', a:SetZeroDurationText('unset')) == 0)
-        assert(not a:CanFormatText() and a:GetFormattedText() == 'unset')
+        if type(a.SetTextColorCurve) == 'function' then
+            assert(not a:CanFormatText() and a:GetFormattedText() == 'unset')
+        else
+            assert(a:CanFormatText() and a:GetFormattedText() == 'unset')
+        end
         assert(not a:CanUpdateFontString() and not b:CanFormatText())
         assert(select('#', a:Disable()) == 0 and not a:IsEnabled())
         assert(select('#', a:Enable()) == 0 and a:IsEnabled())
@@ -239,15 +247,25 @@ fn p1207_binding_invalid_setters_reject_before_mutation() {
         assert(Binding:GetExpiredText() == nil and Binding:GetZeroDurationText() == nil)
         local formatter = newproxy(true)
         getmetatable(formatter).__index = {FormatNumber = function() error('formatter boundary') end}
-        Binding:SetFormatter(formatter)
-        local ok, errorValue = pcall(Binding.GetFormattedText, Binding)
-        assert(not ok and tostring(errorValue):find('formatter boundary', 1, true))
-        assert(Label:GetText() == nil or Label:GetText() == '')
+        local strictFormatter = type(Binding.SetTextColorCurve) == 'function'
+        if strictFormatter then
+            assert(not pcall(Binding.SetFormatter, Binding, formatter))
+            assert(Binding:GetFormattedText() == '6s')
+        else
+            Binding:SetFormatter(formatter)
+            local ok, errorValue = pcall(Binding.GetFormattedText, Binding)
+            assert(not ok and tostring(errorValue):find('formatter boundary', 1, true))
+            assert(Label:GetText() == nil or Label:GetText() == '')
+        end
         for _, callback in ipairs({function() return nil end, function() return 12 end}) do
             local invalid = newproxy(true)
             getmetatable(invalid).__index = {FormatNumber=callback}
-            Binding:SetFormatter(invalid)
-            assert(not pcall(Binding.GetFormattedText, Binding))
+            if strictFormatter then
+                assert(not pcall(Binding.SetFormatter, Binding, invalid))
+            else
+                Binding:SetFormatter(invalid)
+                assert(not pcall(Binding.GetFormattedText, Binding))
+            end
         end
     "#).unwrap();
 }
