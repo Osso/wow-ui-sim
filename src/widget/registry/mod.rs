@@ -129,7 +129,7 @@ impl WidgetRegistry {
         let id = widget.id;
         let is_new = !self.widgets.contains_key(&id);
         if is_new {
-            self.inherit_creation_forbidden_aspects(&mut widget);
+            self.inherit_creation_state(&mut widget);
         }
         // Debug: check for re-registration that would lose children
         if let Some(existing) = self.widgets.get(&id)
@@ -181,12 +181,14 @@ impl WidgetRegistry {
         }
     }
 
-    fn inherit_creation_forbidden_aspects(&self, widget: &mut Frame) {
-        // Native SetToDefaults is implied by every nonempty forbidden mask.
-        const SET_TO_DEFAULTS: u64 = 1;
+    fn inherit_creation_state(&self, widget: &mut Frame) {
         let Some(parent) = widget.parent_id.and_then(|id| self.widgets.get(&id)) else {
             return;
         };
+        widget.full_lockdown |= parent.full_lockdown;
+
+        // Native SetToDefaults is implied by every nonempty forbidden mask.
+        const SET_TO_DEFAULTS: u64 = 1;
         let inherited = parent.inheritable_forbidden_aspects_parent;
         if inherited == 0 {
             return;

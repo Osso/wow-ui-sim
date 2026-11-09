@@ -216,7 +216,7 @@ fn duration_binding_rejects_full_lockdown_font_string_from_xml_scope() {
         r#"
         local label = DurationLockdownChild.Text
         assert(DurationLockdownParent:IsForbidden() and DurationLockdownChild:IsForbidden())
-        assert(label:IsForbidden(), 'fully locked parent state reaches a FontString created later')
+        assert(label:IsForbidden(), 'FontString inherits full lockdown at creation')
         local binding = C_DurationUtil.CreateDurationTextBinding()
         local function rejected(value)
             local ok, err = pcall(binding.SetFontString, binding, value)
@@ -227,6 +227,7 @@ fn duration_binding_rejects_full_lockdown_font_string_from_xml_scope() {
         local addon = function(value) rejected(value) end
         debug.setobjecttaint(addon, 'FullLockdownProbe')
         addon(label)
+        addon(GetForbiddenObjectTable(label))
         "#,
     )
     .expect("R18 full-lockdown state is inherited at creation and rejects all FontString views");

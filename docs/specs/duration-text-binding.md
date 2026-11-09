@@ -10,7 +10,7 @@ R17 compared Forever 1.60.1.70707 with Retail 12.1.5.70688. The measured decisio
 - [ ] `CanFormatText()` is true when duration is set and the format string is nonempty; it does not require a FontString or formatter. `SetFormatter` accepts a real NumericFormatter or its native copy, rejects tables and method-shaped user data before mutation, and resets the format to `"{}"` with that formatter.
 - [ ] `SetDuration(nil)` and wrong duration types fail before state changes. `SetToDefaults()` clears duration, FontString, format, formatter, and fallback text. Self-assignment preserves values.
 - [ ] `SetFontString` accepts either accessible FontString view; a tainted caller cannot pass a forbidden view. Wrong widget types and forged objects fail before replacing the previous value.
-- [ ] A fully locked-down FontString fails for secure and tainted callers with `Attempt to access fully locked-down object.`. The state comes from the XML `fullLockdown` ScopedModifier and inheritance at frame creation, not `SetForbidden`, access restrictions, or combat protection.
+- [x] A fully locked-down FontString fails for secure and tainted callers, including both public and forbidden views, with `Attempt to access fully locked-down object.`. XML `fullLockdown` state is stored separately from forbidden, access-restriction, and combat-protection state; children inherit it at creation. `IsForbidden()` reports true for either forbidden or fully locked-down objects. This lane enforces the full-lock error only in `DurationTextBinding:SetFontString`; other native consumers remain follow-ups.
 
 ## What it must do
 

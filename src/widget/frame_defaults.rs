@@ -288,6 +288,7 @@ macro_rules! frame_defaults {
 
             default_parent: false,
             forbidden: false,
+            full_lockdown: false,
             forbidden_aspects: 0,
             inheritable_forbidden_aspects_parent: 0,
             inheritable_forbidden_aspects_layout: 0,
