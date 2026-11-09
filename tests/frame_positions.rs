@@ -201,7 +201,10 @@ fn expected_position(test: TestCase) -> TestCase {
             (name, frame, 185.5, 1153.0, 562.0, 45.0, 1.0)
         }
         (ClientProfile::Mists, "paladin_power_bar") => {
-            (name, "PaladinPowerBar", 341.0, 815.0, 136.0, 39.0, 1.0)
+            // Mists/PaladinPowerBar.xml:49-51: 136x39, TOP to PlayerFrame
+            // BOTTOM (25,35). Classic/PlayerFrame.xml:14: height100.
+            // x = 268 + 232/2 + 25 - 136/2; y = 850 + 100 - 35.
+            (name, "PaladinPowerBar", 341.0, 915.0, 136.0, 39.0, 1.0)
         }
         (ClientProfile::Mists, "minimap")
         | (ClientProfile::Era, "minimap")
@@ -211,11 +214,21 @@ fn expected_position(test: TestCase) -> TestCase {
         | (ClientProfile::Anniversary, "minimap_cluster") => {
             (name, frame, 1423.0, 0.0, 177.0, 165.0, 1.0)
         }
-        (ClientProfile::Era, "party_frame") | (ClientProfile::Anniversary, "party_frame") => {
+        (ClientProfile::Mists, "party_frame")
+        | (ClientProfile::Era, "party_frame")
+        | (ClientProfile::Anniversary, "party_frame") => {
+            // Classic/Blizzard_CompactRaidFrameManager.lua:153-155 + XML:62:
+            // right = -182 + 200 = 18. Classic/EditModePresetLayouts.lua:292-297:
+            // TOPLEFT to manager TOPRIGHT (0,12): y = 140 - 12 = 128.
+            // Classic/PartyFrameTemplates.xml:70-71: members128x53;
+            // Shared/PartyFrame.xml:9,35: height = 4*53 + 3*10 + 2 = 244.
             (name, frame, 18.0, 128.0, 128.0, 244.0, 1.0)
         }
-        (ClientProfile::Era, "compact_party_frame")
+        (ClientProfile::Mists, "compact_party_frame")
+        | (ClientProfile::Era, "compact_party_frame")
         | (ClientProfile::Anniversary, "compact_party_frame") => {
+            // Shared/CompactPartyFrame.lua:5: parent PartyFrame; same origin.
+            // Keep its separate 98x234 compact-group size, not party width128.
             (name, frame, 18.0, 128.0, 98.0, 234.0, 1.0)
         }
         (ClientProfile::Mists, "chat_edit_box")
@@ -369,11 +382,38 @@ fn assert_chat_dock_layout(env: &WowLuaEnv) {
     );
 }
 
+/// Mists Classic/EditModePresetLayouts.lua:237-279 gives the modern preset
+/// anchors; Classic/PlayerFrame.xml:14 and TargetFrame.xml:147 give 232x100.
+/// At 1600x1200: Player=(800-300-232,1200-250-100),
+/// Target=(800+300,1200-250-100), Focus=(800+520,1200-265-100).
+fn assert_mists_unit_frame_anchor(env: &WowLuaEnv, test: &str) {
+    let (frame, point, relative_point, x, y) = match test {
+        "player_frame" => ("PlayerFrame", "BOTTOMRIGHT", "BOTTOM", -300, 250),
+        "target_frame" => ("TargetFrame", "BOTTOMLEFT", "BOTTOM", 300, 250),
+        "focus_frame" => ("FocusFrame", "BOTTOMLEFT", "BOTTOM", 520, 265),
+        _ => return,
+    };
+    env.exec(&format!(
+        r#"
+        local frame = {frame}
+        assert(frame:GetParent() == UIParent, "native unit-frame parent")
+        assert(frame:GetScale() == 1, "native default frame scale")
+        local point, relative, relativePoint, x, y = frame:GetPoint(1)
+        assert(point == "{point}" and relative == UIParent and relativePoint == "{relative_point}", "native unit-frame anchor")
+        assert(x == {x} and y == {y}, "native unit-frame anchor offsets")
+        "#
+    ))
+    .unwrap_or_else(|error| panic!("{test} native anchor: {error}"));
+}
+
 fn assert_layout_state(env: &WowLuaEnv, test: &str) {
     use wow_ui_sim::client_profile::{ACTIVE, ClientProfile};
 
     if matches!(test, "minimap" | "minimap_cluster") {
         assert_native_minimap_inputs(env);
+    }
+    if ACTIVE == ClientProfile::Mists {
+        assert_mists_unit_frame_anchor(env, test);
     }
     let assertion = match (ACTIVE, test) {
         (
@@ -399,7 +439,7 @@ fn assert_layout_state(env: &WowLuaEnv, test: &str) {
             "#
         }
         (
-            ClientProfile::Era | ClientProfile::Anniversary,
+            ClientProfile::Mists | ClientProfile::Era | ClientProfile::Anniversary,
             "party_frame" | "compact_party_frame",
         ) => {
             r#"
