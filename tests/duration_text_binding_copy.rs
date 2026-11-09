@@ -10,7 +10,7 @@ fn duration_binding_font_string_accepts_native_views_and_checks_taint() {
         r#"
         local label = CreateFrame('Frame'):CreateFontString()
         local forbidden = GetForbiddenObjectTable(label)
-        assert(label ~= forbidden)
+        assert(label ~= forbidden, 'FontString public and forbidden views are distinct')
         local binding = C_DurationUtil.CreateDurationTextBinding()
         binding:SetFontString(label)
         binding:SetFontString(forbidden)
@@ -18,7 +18,8 @@ fn duration_binding_font_string_accepts_native_views_and_checks_taint() {
         debug.setobjecttaint(addonSet, 'FontStringProbe')
         assert(pcall(addonSet, label))
         local ok, err = pcall(addonSet, forbidden)
-        assert(not ok and err:find('Attempt to access forbidden object from code tainted by an AddOn - Usage: self:SetFontString(fontString)', 1, true))
+        assert(not ok, 'tainted SetFontString rejects the forbidden view')
+        assert(err:find('Attempt to access forbidden object from code tainted by an AddOn - Usage: self:SetFontString(fontString)', 1, true), err)
         "#,
     )
     .unwrap();
@@ -413,13 +414,13 @@ fn duration_binding_assign_validates_atomically_clears_absent_values_and_handles
 
         local empty = C_DurationUtil.CreateDurationTextBinding()
         binding:Assign(empty)
-        assert(binding:GetDuration() == empty:GetDuration())
-        assert(binding:GetFontString() == nil and not binding:CanUpdateFontString())
-        assert(binding:GetExpiredText() == nil and binding:GetZeroDurationText() == nil)
-        assert(binding:GetTextColorCurve() == nil)
-        assert(not binding:CanFormatText() and not empty:CanFormatText())
-        assert(not pcall(binding.GetFormattedText, binding))
-        assert(not pcall(empty.GetFormattedText, empty))
+        assert(binding:GetDuration() == empty:GetDuration(), 'Assign copies empty duration')
+        assert(binding:GetFontString() == nil and not binding:CanUpdateFontString(), 'Assign clears FontString configuration')
+        assert(binding:GetExpiredText() == nil and binding:GetZeroDurationText() == nil, 'Assign clears fallback text')
+        assert(binding:GetTextColorCurve() == nil, 'Assign clears color curve')
+        assert(not binding:CanFormatText() and not empty:CanFormatText(), 'empty bindings cannot format text')
+        assert(not pcall(binding.GetFormattedText, binding), 'assigned empty binding cannot return formatted text')
+        assert(not pcall(empty.GetFormattedText, empty), 'new empty binding cannot return formatted text')
         "#,
     )
     .expect("invalid assignments leave state intact and empty configuration replaces old values");
