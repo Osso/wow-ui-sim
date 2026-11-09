@@ -7,9 +7,10 @@ use wow_ui_sim::c_api::charge_state::SpellChargeState;
 
 fn spellbook_fixture() -> (WowLuaEnv, u32) {
     let env = env();
-    let spell_id = env
+    let spell_id: i32 = env
         .eval("return C_SpellBook.GetSpellBookItemInfo(5, 0).spellID")
         .expect("player spellbook slot 5 resolves the fixture spell");
+    let spell_id = u32::try_from(spell_id).expect("spell ID is nonnegative");
     env.state().borrow_mut().gcd = None;
     (env, spell_id)
 }
