@@ -215,7 +215,7 @@ mod tests {
             "corrupt" => {
                 let error = super::prepare_gui_casc_resolution_cache()
                     .expect_err("corrupt indexed encoding content must fail preparation");
-                assert!(error.contains("read encoding file"), "{error}");
+                assert!(error.contains("parse encoding.bin"), "{error}");
                 assert!(!error.contains("missing archive location"), "{error}");
             }
             _ => panic!("unknown cache test mode: {mode}"),
