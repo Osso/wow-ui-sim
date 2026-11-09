@@ -37,7 +37,11 @@ Gating is permitted only for independently verified absent features or different
 
 VERIFIED: `Blizzard_UIParent/Classic/UIParent.xml:23` binds `UIParent_OnEvent`; Era/Anniversary `Vanilla/UIParent.lua:92` register `ADDON_ACTION_BLOCKED`, and `:657-658` call `DisplayInterfaceActionBlockedMessage`. Mists registers at `Mists/UIParent.lua:96` and calls the same function at `:842-843`. No `Blizzard_Game` addon exists in these three cache directories.
 
-Keep all existing protected-method state, taint, owner and event assertions. On classic, observe the real UIParent OnEvent route and its call to the original display function; do not synthesize GameEvent or replace a Blizzard handler. On Retail/PTR/Forever retain the existing GameEvent probe. A test-only hook may record the display call and the owner received by UIParent, but a listener alone is insufficient proof that the Blizzard consumer ran. Unrelated roleset availability is deferred unless the pinned declarations prove a gate; do not add missing methods to satisfy this fixture.
+Keep all existing protected-method state, taint, owner and event assertions. On classic, the test observer wraps the existing UIParent `OnEvent` script, records the owner, calls the original handler, and records that the hooked original display function runs; it does not synthesize GameEvent. On Retail/PTR/Forever it retains the GameEvent observer. A listener alone is insufficient proof that the Blizzard consumer ran. Unrelated roleset availability is deferred unless the pinned declarations prove a gate; do not add missing methods to satisfy this fixture.
+
+## Implementation: native blocked-action consumer
+
+The 41 direct RED cases now select their observer by profile surface. Classic tests call the existing UIParent handler and observe `DisplayInterfaceActionBlockedMessage`; Mainline tests keep the `GameEvent.HandleActionBlocked` observer. Existing owner, action, event-count, combat, and taint assertions remain in place. This changes the test's native consumer, not simulator or vendor behavior.
 
 ## Implementation: native startup roots
 
