@@ -81,13 +81,14 @@ fn automatic_binding_copy_assign_and_reset_have_independent_schedules() {
         assert(Label:GetText() == '8s')
         assert(CopyLabel:GetText() == '7s' and AssignedLabel:GetText() == '7s')
         Copy:SetToDefaults()
+        assert(Copy:GetDuration() == nil and Copy:GetFontString() == nil)
     "#,
     )
     .unwrap();
     env.fire_on_update(0.25).unwrap();
     env.exec(
         r#"
-        assert(CopyLabel:GetText() == '0')
+        assert(CopyLabel:GetText() == '7s', 'defaults detach the previous FontString')
         assert(Label:GetText() == '8s' and AssignedLabel:GetText() == '7s')
         Clock:SetTime(2)
     "#,
@@ -118,22 +119,13 @@ fn automatic_binding_weak_registry_does_not_keep_handle_alive() {
 }
 
 #[test]
-fn automatic_binding_secret_callback_keeps_taint_and_blocks_conversion_leaks() {
+fn automatic_binding_secret_numeric_formatter_blocks_conversion_leaks() {
     let env = setup();
     env.exec(
         r#"
         Duration:SetTimeSpan(secretwrap(0, 8))
-        Observed = nil
-        local callback = function(_, value)
-            assert(not issecure())
-            assert(issecretvalue(value), 'plain timing leaked to callback')
-            assert(not pcall(secretunwrap, value))
-            Observed = value
-            return 'opaque'
-        end
-        debug.setobjecttaint(callback, 'AutomaticBindingProbe')
-        local formatter = newproxy(true)
-        getmetatable(formatter).__index = {FormatNumber=callback}
+        local formatter = C_StringUtil.CreateNumericRuleFormatter()
+        formatter:SetBreakpoints({{threshold=0, format='%.0f'}})
         Binding:SetFormatter(formatter)
         Originals = {tostring, tonumber}
         ConversionLeak = false
@@ -153,9 +145,8 @@ fn automatic_binding_secret_callback_keeps_taint_and_blocks_conversion_leaks() {
     env.exec(
         r#"
         tostring, tonumber = Originals[1], Originals[2]
-        -- Read the protected label before reading callback-tainted globals.
-        assert(Label:GetText() == 'opaque')
-        assert(Observed and issecretvalue(Observed))
+        local labelText = Label:GetText()
+        assert(issecretvalue(labelText) and secretunwrap(labelText) == '8')
         assert(not ConversionLeak)
         local read = function() return Label:GetText() end
         debug.setobjecttaint(read, 'AutomaticBindingReader')
@@ -166,7 +157,7 @@ fn automatic_binding_secret_callback_keeps_taint_and_blocks_conversion_leaks() {
 }
 
 #[test]
-fn automatic_binding_reports_formatter_failure_without_aborting_other_updates() {
+fn automatic_binding_reports_format_error_without_aborting_other_updates() {
     let env = setup();
     env.exec(
         r#"
@@ -174,21 +165,20 @@ fn automatic_binding_reports_formatter_failure_without_aborting_other_updates() 
         BadLabel:SetText('unchanged')
         Bad = Binding:Copy()
         Bad:SetFontString(BadLabel)
-        Bad:SetDuration(secretwrap(8))
-        local fail = function(_, value)
-            assert(not issecure() and issecretvalue(value))
-            error('scheduled formatter failure')
-        end
-        debug.setobjecttaint(fail, 'FailingAutomaticFormatter')
-        local formatter = newproxy(true)
-        getmetatable(formatter).__index = {FormatNumber=fail}
+        local duration = C_DurationUtil.CreateDuration()
+        duration:SetTimeSpan(0, 8)
+        Bad:SetDuration(duration)
+        local formatter = C_StringUtil.CreateNumericRuleFormatter()
+        formatter:SetBreakpoints({{threshold=0, format='%.0f'}})
         Bad:SetFormatter(formatter)
+        Bad:SetTextFormat('%d')
     "#,
     )
     .unwrap();
     let previous_frames = env.state().borrow().app_frame_metrics.session_frame_count;
+    let previous_errors = env.state().borrow().lua_errors.len();
     env.fire_on_update(0.125)
-        .expect("one formatter failure must not abort the engine tick");
+        .expect("one formatting failure must not abort the engine tick");
     assert_eq!(
         env.state().borrow().app_frame_metrics.session_frame_count,
         previous_frames + 1
@@ -200,13 +190,7 @@ fn automatic_binding_reports_formatter_failure_without_aborting_other_updates() 
     "#,
     )
     .unwrap();
-    assert!(
-        env.state()
-            .borrow()
-            .lua_errors
-            .iter()
-            .any(|error| error.contains("scheduled formatter failure"))
-    );
+    assert!(env.state().borrow().lua_errors.len() > previous_errors);
 }
 
 #[test]

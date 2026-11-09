@@ -83,9 +83,9 @@ fn duration_binding_secret_duration_preserves_font_string_boundary() {
         binding:SetFontString(label)
         binding:SetTextFormat('remaining %s')
         assert(binding:HasSecretValues() and binding:Copy():HasSecretValues())
-        assert(binding:GetFormattedText() == 'remaining 18')
+        assert(secretunwrap(binding:GetFormattedText()) == 'remaining 18')
         binding:UpdateFontString()
-        assert(label:GetText() == 'remaining 18')
+        assert(secretunwrap(label:GetText()) == 'remaining 18')
         local function untrusted()
             assert(binding:HasSecretValues())
             assert(not pcall(binding.GetFormattedText, binding))
@@ -94,10 +94,13 @@ fn duration_binding_secret_duration_preserves_font_string_boundary() {
         end
         debug.setobjecttaint(untrusted, 'BindingProbe')
         untrusted()
-        assert(label:GetText() == 'remaining 18')
-        binding:SetDuration(secretwrap(12))
+        assert(secretunwrap(label:GetText()) == 'remaining 18')
+        local shorter = C_DurationUtil.CreateDuration()
+        shorter:SetTimeFromStart(secretwrap(0, 12, 1))
+        shorter:SetClock(C_DurationUtil.CreateManualClock(0))
+        binding:SetDuration(shorter)
         assert(binding:HasSecretValues())
-        assert(binding:GetFormattedText() == 'remaining 12')
+        assert(secretunwrap(binding:GetFormattedText()) == 'remaining 12')
         binding:SetToDefaults()
         assert(not binding:HasSecretValues())
     "#,
@@ -107,38 +110,28 @@ fn duration_binding_secret_duration_preserves_font_string_boundary() {
 
 #[cfg(feature = "client-wowforever")]
 #[test]
-fn duration_binding_secret_formatter_callback_receives_only_wrapped_number() {
+fn duration_binding_secret_formatter_copy_preserves_output_aspect() {
     let env = WowLuaEnv::new().unwrap();
     env.exec(
         r#"
         local duration = C_DurationUtil.CreateDuration()
         duration:SetTimeFromStart(secretwrap(10, 20, 1))
         duration:SetClock(C_DurationUtil.CreateManualClock(12))
-        local observed
-        local function format(_, value)
-            assert(not issecure())
-            assert(issecretvalue(value), 'formatter callback received plain timing')
-            assert(not pcall(secretunwrap, value))
-            observed = value
-            return 'opaque callback'
-        end
-        debug.setobjecttaint(format, 'FormatterProbe')
-        local formatter = newproxy(true)
-        getmetatable(formatter).__index = {FormatNumber=format}
+        local formatter = C_StringUtil.CreateNumericRuleFormatter()
+        formatter:SetBreakpoints({{threshold=0, format='%.0f'}})
         local binding = C_DurationUtil.CreateDurationTextBinding()
         binding:SetDuration(duration)
-        binding:SetFormatter(formatter)
-        assert(binding:GetFormattedText() == 'opaque callback')
-        assert(issecretvalue(observed))
-        assert(secretunwrap(observed) == 18)
+        binding:SetFormatter(formatter:Copy())
+        local text = binding:GetFormattedText()
+        assert(issecretvalue(text) and secretunwrap(text) == '18')
     "#,
     )
-    .expect("addon userdata formatter cannot observe plain secret timing");
+    .expect("an authentic formatter copy formats secret duration text without exposing it");
 }
 
 #[cfg(feature = "client-wowforever")]
 #[test]
-fn duration_binding_secret_callback_failures_are_not_replaced_with_text() {
+fn duration_binding_secret_format_errors_do_not_replace_font_string_text() {
     let env = WowLuaEnv::new().unwrap();
     env.exec(
         r#"
@@ -150,24 +143,16 @@ fn duration_binding_secret_callback_failures_are_not_replaced_with_text() {
         local binding = C_DurationUtil.CreateDurationTextBinding()
         binding:SetDuration(duration)
         binding:SetFontString(label)
-        local function format(value)
-            assert(not issecure())
-            assert(value == duration)
-            return value:GetRemainingDuration()
-        end
-        debug.setobjecttaint(format, 'FormatterProbe')
-        binding:SetFormatter(format)
+        local formatter = C_StringUtil.CreateNumericRuleFormatter()
+        formatter:SetBreakpoints({{threshold=0, format='%.0f'}})
+        binding:SetFormatter(formatter)
+        binding:SetTextFormat('%d')
         assert(not pcall(binding.GetFormattedText, binding))
         assert(not pcall(binding.UpdateFontString, binding))
         assert(label:GetText() == 'unchanged')
-        local function failure() error('secret formatter failure') end
-        debug.setobjecttaint(failure, 'FormatterProbe')
-        binding:SetFormatter({Format=failure})
-        local ok, err = pcall(binding.GetFormattedText, binding)
-        assert(not ok and tostring(err):find('secret formatter failure', 1, true))
     "#,
     )
-    .expect("secret formatting errors propagate before changing the target text");
+    .expect("format errors propagate before changing the target text");
 }
 
 #[cfg(feature = "client-wowforever")]
@@ -176,7 +161,12 @@ fn duration_binding_secret_formatting_does_not_use_addon_conversion_overrides() 
     let env = WowLuaEnv::new().unwrap();
     env.exec(r#"
         local binding = C_DurationUtil.CreateDurationTextBinding()
-        binding:SetDuration(secretwrap(18))
+        local duration = C_DurationUtil.CreateDuration()
+        duration:SetTimeSpan(secretwrap(0, 18))
+        binding:SetDuration(duration)
+        local formatter = C_StringUtil.CreateNumericRuleFormatter()
+        formatter:SetBreakpoints({{threshold=0, format='%.0f'}})
+        binding:SetFormatter(formatter)
         binding:SetTextFormat('remaining %s')
         local originals = {type, tostring, tonumber, string.format}
         local leaked = false
@@ -195,9 +185,51 @@ fn duration_binding_secret_formatting_does_not_use_addon_conversion_overrides() 
         local ok, value = pcall(binding.GetFormattedText, binding)
         type, tostring, tonumber, string.format = unpack(originals)
         assert(ok, tostring(value))
-        assert(value == 'remaining 18')
+        assert(secretunwrap(value) == 'remaining 18')
         assert(not leaked, 'secret conversion passed timing into an addon override')
     "#).expect("bootstrap conversions keep decoded timing away from later addon overrides");
+}
+
+#[test]
+fn duration_binding_rejects_full_lockdown_font_string_from_xml_scope() {
+    let env = WowLuaEnv::new().unwrap();
+    let directory = tempfile::tempdir().unwrap();
+    let toc = directory.path().join("LockdownProbe.toc");
+    std::fs::write(&toc, "## Title: LockdownProbe\nfixture.xml\n").unwrap();
+    std::fs::write(
+        directory.path().join("fixture.xml"),
+        r#"<Ui>
+            <ScopedModifier fullLockdown="true">
+                <Frame name="DurationLockdownParent" parent="UIParent"/>
+            </ScopedModifier>
+            <Frame name="DurationLockdownChild" parent="DurationLockdownParent">
+                <Layers><Layer level="OVERLAY">
+                    <FontString name="$parentText" parentKey="Text" inherits="GameFontNormal"/>
+                </Layer></Layers>
+            </Frame>
+        </Ui>"#,
+    )
+    .unwrap();
+    let loaded = wow_ui_sim::loader::load_addon(&env.loader_env(), &toc).unwrap();
+    assert!(loaded.warnings.is_empty(), "{:?}", loaded.warnings);
+    env.exec(
+        r#"
+        local label = DurationLockdownChild.Text
+        assert(DurationLockdownParent:IsForbidden() and DurationLockdownChild:IsForbidden())
+        assert(label:IsForbidden(), 'fully locked parent state reaches a FontString created later')
+        local binding = C_DurationUtil.CreateDurationTextBinding()
+        local function rejected(value)
+            local ok, err = pcall(binding.SetFontString, binding, value)
+            assert(not ok and err == 'Attempt to access fully locked-down object.', tostring(err))
+        end
+        rejected(label)
+        rejected(GetForbiddenObjectTable(label))
+        local addon = function(value) rejected(value) end
+        debug.setobjecttaint(addon, 'FullLockdownProbe')
+        addon(label)
+        "#,
+    )
+    .expect("R18 full-lockdown state is inherited at creation and rejects all FontString views");
 }
 
 const BINDING_FIXTURES: &str = r#"

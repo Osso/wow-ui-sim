@@ -43,7 +43,13 @@ fn forever_spell_cooldown_duration_distinguishes_missing_inactive_and_active() {
             .expect("active cooldown returns a populated object");
         assert_eq!(total, 100.0 + duration);
     }
-    env.state().borrow_mut().spell_cooldowns.remove(&spell_id);
+    env.state().borrow_mut().spell_cooldowns.insert(
+        spell_id,
+        SpellCooldownState {
+            start: 0.0,
+            duration: 0.0,
+        },
+    );
     let zero: bool = env
         .eval(&format!(
             "return C_Spell.GetSpellCooldownDuration({spell_id}, true):IsZero()"

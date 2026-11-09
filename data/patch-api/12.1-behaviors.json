@@ -969,7 +969,7 @@
           "kind": "test",
           "reference": "tests/duration_text_binding_copy.rs::duration_binding_userdata_copy_retains_resources_through_collection",
           "summary": "Modeled userdata binding identity, raw table-access rejection, independent copied configuration, and retained duration/clock/formatter/font-string/curve references through collection. Native metatable, finalization, ownership/invalidation, GC timing, and secrecy equivalence remain unverified.",
-          "source_hash": "b8858e6b72736d3b80ff97df0ac2f6f8f5bae1ec08f88d8d279d043b01ba65a4"
+          "source_hash": "b4e36de79d3333970e93d7f5a8a73aad103b837aa92b0b9c0af6a47bc4495a8a"
         }
       ],
       "tests": [

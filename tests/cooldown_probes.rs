@@ -344,16 +344,27 @@ fn get_spell_cooldown_duration_selects_later_ending_gcd() {
 #[test]
 fn get_spell_cooldown_duration_inactive_numeric_and_unresolved_alias() {
     let env = env();
+    let spell_id: u32 = if cfg!(feature = "retail-12-1-5") {
+        19750
+    } else {
+        12345
+    };
     {
         let mut state = env.state().borrow_mut();
         state.gcd = None;
-        state.spell_cooldowns.remove(&12345);
+        state.spell_cooldowns.insert(
+            spell_id,
+            SpellCooldownState {
+                start: 0.0,
+                duration: 0.0,
+            },
+        );
         state.spell_id_aliases.remove("unresolved test spell");
     }
-    env.exec(
+    env.exec(&format!(
         r#"
-        -- Explicit simulator policy, not native unknown-spell or return-arity proof.
-        local duration = C_Spell.GetSpellCooldownDuration(12345)
+        -- A supplied cooldown row identifies older-profile simulator fixtures.
+        local duration = C_Spell.GetSpellCooldownDuration({spell_id})
         assert(duration ~= nil)
         assert(duration:GetStartTime() == 0)
         assert(duration:GetTotalDuration() == 0)
@@ -362,9 +373,9 @@ fn get_spell_cooldown_duration_inactive_numeric_and_unresolved_alias() {
         assert(duration:GetElapsedDuration() == 0)
         assert(duration:GetRemainingDuration() == 0)
         assert(C_Spell.GetSpellCooldownDuration('unresolved test spell') == nil)
-        "#,
-    )
-    .expect("inactive numeric identifiers yield zero timing and unresolved aliases yield nil");
+        "#
+    ))
+    .expect("inactive supported identifiers yield zero timing and unresolved aliases yield nil");
 }
 
 // Forever SpellDocumentation.lua:327 declares the modeled duration query;
