@@ -5,16 +5,20 @@ use super::load_game_ui_without_player_choice;
 fn ui_parent_position_updates_for_debug_bar_and_notch() {
     let env = load_game_ui_without_player_choice();
 
-    let types: (String, String, String) = env
+    let types: (String, String, String, String) = env
         .eval(
             r#"
             return type(UpdateUIParentPosition),
                 type(GetNotchHeight),
+                type(GetUIParentOffset),
                 type(UIDoFramesIntersect)
             "#,
         )
         .expect("UI parent position publication probe succeeds");
-    assert_eq!(types, ("function".into(), "nil".into(), "nil".into()));
+    assert_eq!(
+        types,
+        ("function".into(), "nil".into(), "nil".into(), "nil".into())
+    );
 
     let (plain_offset, debug_offset, notch_offset): (f64, f64, f64) = env
         .eval(

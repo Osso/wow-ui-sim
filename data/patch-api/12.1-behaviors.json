@@ -1477,25 +1477,25 @@
         {
           "kind": "test",
           "reference": "patch-tests/patch_12_1/strict_removal_timing.rs::strict_removal_timing_retires_after_world_handlers_without_rewrapping",
-          "summary": "Simulator policy: existing compatibility publications and CVar callable identities survive actual addon loading and all first PLAYER_ENTERING_WORLD handlers; retirement precedes later startup events and does not rewrap on repeated cleanup/world entry. BATTLETAG_INVITE_SHOW retains its distinct Blizzard-loader-only registration exception. Synthetic addon fixture exercises the real loader/dispatcher, not full Blizzard UI or native retirement timing.",
+          "summary": "Simulator policy: CVar wrapper identities survive actual addon loading and all first PLAYER_ENTERING_WORLD handlers; retirement occurs after those handlers and repeated cleanup/world entry does not rewrap. BATTLETAG_INVITE_SHOW retains its Blizzard-loader-only registration exception. The fixture observes the old inventory, housing, enum and slugSupersampling names as absent during startup; after repeated cleanup it also checks lastLockedDelvesCompanionAbilities. This synthetic addon fixture uses the real loader/dispatcher and does not establish native retirement timing.",
           "source_hash": "1600bd84b62a77ff4dc1173bbc0af7cc7474fbd217ad41856284d024624c7cfd"
         },
         {
           "kind": "source",
           "reference": "docs/specs/strict-removal-timing.md",
-          "summary": "Simulator policy: existing compatibility publications and CVar callable identities survive actual addon loading and all first PLAYER_ENTERING_WORLD handlers; retirement precedes later startup events and does not rewrap on repeated cleanup/world entry. BATTLETAG_INVITE_SHOW retains its distinct Blizzard-loader-only registration exception. Synthetic addon fixture exercises the real loader/dispatcher, not full Blizzard UI or native retirement timing.",
+          "summary": "Simulator policy: CVar wrapper identities survive actual addon loading and all first PLAYER_ENTERING_WORLD handlers; retirement occurs after those handlers and repeated cleanup/world entry does not rewrap. BATTLETAG_INVITE_SHOW retains its Blizzard-loader-only registration exception. The fixture observes the old inventory, housing, enum and slugSupersampling names as absent during startup; after repeated cleanup it also checks lastLockedDelvesCompanionAbilities. This synthetic addon fixture uses the real loader/dispatcher and does not establish native retirement timing.",
           "source_hash": "75086bde97c5d5e80c857dd852e3c7da2ced41d451ce0716068ed36f274c9557"
         },
         {
           "kind": "source",
           "reference": "src/lua_api/env_events.rs",
-          "summary": "Simulator policy: existing compatibility publications and CVar callable identities survive actual addon loading and all first PLAYER_ENTERING_WORLD handlers; retirement precedes later startup events and does not rewrap on repeated cleanup/world entry. BATTLETAG_INVITE_SHOW retains its distinct Blizzard-loader-only registration exception. Synthetic addon fixture exercises the real loader/dispatcher, not full Blizzard UI or native retirement timing.",
+          "summary": "Simulator policy: CVar wrapper identities survive actual addon loading and all first PLAYER_ENTERING_WORLD handlers; retirement occurs after those handlers and repeated cleanup/world entry does not rewrap. BATTLETAG_INVITE_SHOW retains its Blizzard-loader-only registration exception. The fixture observes the old inventory, housing, enum and slugSupersampling names as absent during startup; after repeated cleanup it also checks lastLockedDelvesCompanionAbilities. This synthetic addon fixture uses the real loader/dispatcher and does not establish native retirement timing.",
           "source_hash": "c49d561881d9d3af2d35424abab70c0b613d2c97e1cfd5413a40a0fafcda1982"
         },
         {
           "kind": "source",
           "reference": "src/ptr/compat_bootstrap.rs",
-          "summary": "Simulator policy: existing compatibility publications and CVar callable identities survive actual addon loading and all first PLAYER_ENTERING_WORLD handlers; retirement precedes later startup events and does not rewrap on repeated cleanup/world entry. BATTLETAG_INVITE_SHOW retains its distinct Blizzard-loader-only registration exception. Synthetic addon fixture exercises the real loader/dispatcher, not full Blizzard UI or native retirement timing.",
+          "summary": "Simulator policy: CVar wrapper identities survive actual addon loading and all first PLAYER_ENTERING_WORLD handlers; retirement occurs after those handlers and repeated cleanup/world entry does not rewrap. BATTLETAG_INVITE_SHOW retains its Blizzard-loader-only registration exception. The fixture observes the old inventory, housing, enum and slugSupersampling names as absent during startup; after repeated cleanup it also checks lastLockedDelvesCompanionAbilities. This synthetic addon fixture uses the real loader/dispatcher and does not establish native retirement timing.",
           "source_hash": "68779a4d9701a65a6acfe3652836889d16b8b965854cd5d732ce360d03437956"
         }
       ],
@@ -1505,7 +1505,7 @@
       "assertions": [],
       "commit": "960877d1c",
       "approval_id": null,
-      "notes": "Simulator policy: existing compatibility publications and CVar callable identities survive actual addon loading and all first PLAYER_ENTERING_WORLD handlers; retirement precedes later startup events and does not rewrap on repeated cleanup/world entry. BATTLETAG_INVITE_SHOW retains its distinct Blizzard-loader-only registration exception. Synthetic addon fixture exercises the real loader/dispatcher, not full Blizzard UI or native retirement timing."
+      "notes": "Simulator policy: CVar wrapper identities survive actual addon loading and all first PLAYER_ENTERING_WORLD handlers; retirement occurs after those handlers and repeated cleanup/world entry does not rewrap. BATTLETAG_INVITE_SHOW retains its Blizzard-loader-only registration exception. The fixture observes the old inventory, housing, enum and slugSupersampling names as absent during startup; after repeated cleanup it also checks lastLockedDelvesCompanionAbilities. This synthetic addon fixture uses the real loader/dispatcher and does not establish native retirement timing."
     },
     {
       "id": "changed:Patch12_1.StrictRemoval.BlizzardLoadCompatibility",
@@ -1567,25 +1567,25 @@
         {
           "kind": "test",
           "reference": "patch-tests/patch_12_1/strict_removal_timing.rs::strict_removal_timing_retires_after_world_handlers_without_rewrapping",
-          "summary": "Simulator policy: existing compatibility publications and CVar callable identities survive actual addon loading and all first PLAYER_ENTERING_WORLD handlers; retirement precedes later startup events and does not rewrap on repeated cleanup/world entry. BATTLETAG_INVITE_SHOW retains its distinct Blizzard-loader-only registration exception. Synthetic addon fixture exercises the real loader/dispatcher, not full Blizzard UI or native retirement timing.",
+          "summary": "Simulator policy: CVar wrapper identities survive actual addon loading and all first PLAYER_ENTERING_WORLD handlers; retirement occurs after those handlers and repeated cleanup/world entry does not rewrap. BATTLETAG_INVITE_SHOW retains its Blizzard-loader-only registration exception. The fixture observes the old inventory, housing, enum and slugSupersampling names as absent during startup; after repeated cleanup it also checks lastLockedDelvesCompanionAbilities. This synthetic addon fixture uses the real loader/dispatcher and does not establish native retirement timing.",
           "source_hash": "1600bd84b62a77ff4dc1173bbc0af7cc7474fbd217ad41856284d024624c7cfd"
         },
         {
           "kind": "source",
           "reference": "docs/specs/strict-removal-timing.md",
-          "summary": "Simulator policy: existing compatibility publications and CVar callable identities survive actual addon loading and all first PLAYER_ENTERING_WORLD handlers; retirement precedes later startup events and does not rewrap on repeated cleanup/world entry. BATTLETAG_INVITE_SHOW retains its distinct Blizzard-loader-only registration exception. Synthetic addon fixture exercises the real loader/dispatcher, not full Blizzard UI or native retirement timing.",
+          "summary": "Simulator policy: CVar wrapper identities survive actual addon loading and all first PLAYER_ENTERING_WORLD handlers; retirement occurs after those handlers and repeated cleanup/world entry does not rewrap. BATTLETAG_INVITE_SHOW retains its Blizzard-loader-only registration exception. The fixture observes the old inventory, housing, enum and slugSupersampling names as absent during startup; after repeated cleanup it also checks lastLockedDelvesCompanionAbilities. This synthetic addon fixture uses the real loader/dispatcher and does not establish native retirement timing.",
           "source_hash": "75086bde97c5d5e80c857dd852e3c7da2ced41d451ce0716068ed36f274c9557"
         },
         {
           "kind": "source",
           "reference": "src/lua_api/env_events.rs",
-          "summary": "Simulator policy: existing compatibility publications and CVar callable identities survive actual addon loading and all first PLAYER_ENTERING_WORLD handlers; retirement precedes later startup events and does not rewrap on repeated cleanup/world entry. BATTLETAG_INVITE_SHOW retains its distinct Blizzard-loader-only registration exception. Synthetic addon fixture exercises the real loader/dispatcher, not full Blizzard UI or native retirement timing.",
+          "summary": "Simulator policy: CVar wrapper identities survive actual addon loading and all first PLAYER_ENTERING_WORLD handlers; retirement occurs after those handlers and repeated cleanup/world entry does not rewrap. BATTLETAG_INVITE_SHOW retains its Blizzard-loader-only registration exception. The fixture observes the old inventory, housing, enum and slugSupersampling names as absent during startup; after repeated cleanup it also checks lastLockedDelvesCompanionAbilities. This synthetic addon fixture uses the real loader/dispatcher and does not establish native retirement timing.",
           "source_hash": "c49d561881d9d3af2d35424abab70c0b613d2c97e1cfd5413a40a0fafcda1982"
         },
         {
           "kind": "source",
           "reference": "src/ptr/compat_bootstrap.rs",
-          "summary": "Simulator policy: existing compatibility publications and CVar callable identities survive actual addon loading and all first PLAYER_ENTERING_WORLD handlers; retirement precedes later startup events and does not rewrap on repeated cleanup/world entry. BATTLETAG_INVITE_SHOW retains its distinct Blizzard-loader-only registration exception. Synthetic addon fixture exercises the real loader/dispatcher, not full Blizzard UI or native retirement timing.",
+          "summary": "Simulator policy: CVar wrapper identities survive actual addon loading and all first PLAYER_ENTERING_WORLD handlers; retirement occurs after those handlers and repeated cleanup/world entry does not rewrap. BATTLETAG_INVITE_SHOW retains its Blizzard-loader-only registration exception. The fixture observes the old inventory, housing, enum and slugSupersampling names as absent during startup; after repeated cleanup it also checks lastLockedDelvesCompanionAbilities. This synthetic addon fixture uses the real loader/dispatcher and does not establish native retirement timing.",
           "source_hash": "68779a4d9701a65a6acfe3652836889d16b8b965854cd5d732ce360d03437956"
         }
       ],
@@ -1595,7 +1595,7 @@
       "assertions": [],
       "commit": "960877d1c",
       "approval_id": null,
-      "notes": "Simulator policy: existing compatibility publications and CVar callable identities survive actual addon loading and all first PLAYER_ENTERING_WORLD handlers; retirement precedes later startup events and does not rewrap on repeated cleanup/world entry. BATTLETAG_INVITE_SHOW retains its distinct Blizzard-loader-only registration exception. Synthetic addon fixture exercises the real loader/dispatcher, not full Blizzard UI or native retirement timing."
+      "notes": "Simulator policy: CVar wrapper identities survive actual addon loading and all first PLAYER_ENTERING_WORLD handlers; retirement occurs after those handlers and repeated cleanup/world entry does not rewrap. BATTLETAG_INVITE_SHOW retains its Blizzard-loader-only registration exception. The fixture observes the old inventory, housing, enum and slugSupersampling names as absent during startup; after repeated cleanup it also checks lastLockedDelvesCompanionAbilities. This synthetic addon fixture uses the real loader/dispatcher and does not establish native retirement timing."
     }
   ]
 }

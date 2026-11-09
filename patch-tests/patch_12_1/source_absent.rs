@@ -402,3 +402,16 @@ fn snapshot_symbols_published_by_ptr_have_source_evidence() {
         );
     }
 }
+
+#[test]
+fn snapshot_candidates_remain_unpublished_after_full_load() {
+    let env = load_full_game_ui_with_all_lod();
+    let published_symbols: String = env
+        .eval(SNAPSHOT_ONLY_RUNTIME_PROBE)
+        .expect("PTR runtime absence probe succeeds");
+
+    assert_eq!(
+        published_symbols, "",
+        "snapshot-only API proposals must remain absent after full PTR addon loading"
+    );
+}

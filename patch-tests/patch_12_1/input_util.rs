@@ -12,6 +12,8 @@ fn cursor_helpers_match_ptr_input_util_publications() {
                 and type(CursorUpdate) == "function"
                 and type(ShowInspectCursor) == "function"
                 and GetScaledCursorDelta == nil
+                and GetScaledCursorPosition == nil
+                and GetScaledCursorPositionForFrame == nil
                 and MouseIsOver == nil
                 and type(InputUtil.CursorOnUpdate) == "function"
                 and type(InputUtil.CursorUpdate) == "function"
