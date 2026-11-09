@@ -146,7 +146,7 @@ fn duration_binding_secret_format_errors_do_not_replace_font_string_text() {
         local formatter = C_StringUtil.CreateNumericRuleFormatter()
         formatter:SetBreakpoints({{threshold=0, format='%.0f'}})
         binding:SetFormatter(formatter)
-        binding:SetTextFormat('%d')
+        formatter:ClearBreakpoints()
         assert(not pcall(binding.GetFormattedText, binding))
         assert(not pcall(binding.UpdateFontString, binding))
         assert(label:GetText() == 'unchanged')

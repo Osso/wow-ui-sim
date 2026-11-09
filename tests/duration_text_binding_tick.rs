@@ -49,8 +49,16 @@ fn automatic_binding_disable_reenable_and_configuration_invalidate_interval() {
     env.exec("assert(Label:GetText() == '8s'); Binding:Enable()")
         .unwrap();
     env.fire_on_update(0.125).unwrap();
-    env.exec("assert(Label:GetText() == '6s'); Binding:SetDuration(4)")
-        .unwrap();
+    env.exec(
+        r#"
+        assert(Label:GetText() == '6s')
+        local replacement = C_DurationUtil.CreateDuration()
+        replacement:SetTimeSpan(0, 6)
+        replacement:SetClock(Clock)
+        Binding:SetDuration(replacement)
+    "#,
+    )
+    .unwrap();
     env.fire_on_update(0.125).unwrap();
     env.exec("assert(Label:GetText() == '4s'); Binding:SetTextFormat('left %s')")
         .unwrap();
@@ -146,8 +154,9 @@ fn automatic_binding_secret_numeric_formatter_blocks_conversion_leaks() {
         r#"
         tostring, tonumber = Originals[1], Originals[2]
         local labelText = Label:GetText()
-        assert(issecretvalue(labelText) and secretunwrap(labelText) == '8')
-        assert(not ConversionLeak)
+        assert(issecretvalue(labelText), 'automatic update exposed secret text')
+        assert(secretunwrap(labelText) == '8', 'automatic update produced wrong secret text')
+        assert(not ConversionLeak, 'automatic update called an addon conversion override')
         local read = function() return Label:GetText() end
         debug.setobjecttaint(read, 'AutomaticBindingReader')
         assert(not pcall(read), 'secret text became public')
@@ -171,7 +180,7 @@ fn automatic_binding_reports_format_error_without_aborting_other_updates() {
         local formatter = C_StringUtil.CreateNumericRuleFormatter()
         formatter:SetBreakpoints({{threshold=0, format='%.0f'}})
         Bad:SetFormatter(formatter)
-        Bad:SetTextFormat('%d')
+        formatter:ClearBreakpoints()
     "#,
     )
     .unwrap();
