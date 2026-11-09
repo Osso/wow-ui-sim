@@ -2,6 +2,10 @@
 
 Corrected the [Patch 12.1 FrameXML symbol inventory](investigations/patch-12-1-framexml-symbol-inventory.md): the full-load PTR 12.1.7 probe found 93 of 99 historical removed-symbol paths not callable, four `RaidNotice_*` aliases still published by `Blizzard_DeprecatedRaidWarning`, and `getglobal`/`setglobal` as Lua built-ins. These are simulator-runtime observations, not proof of native absence; the acceptance test now checks only the four current source publishers.
 
+## [2026-11-08] investigation | GUI CASC cache preparation
+
+Recorded that the selected Era encoding key was absent from the inspected supported-format local indices. The [investigation](investigations/gui-casc-cache-preparation.md) separates that install observation from resolver behavior and records deterministic fixture coverage plus the `optional-tests` live smoke.
+
 ## [2026-11-08] investigation | Mists spellbook button size
 
 Recorded the [XML parent identity failure](investigations/mists-spellbook-size.md) and its parser and consumer coverage.
@@ -3540,3 +3544,10 @@ positive pinned-declaration case and the absence case covers Retail, Wrath, Mist
 and Anniversary. See
 [PTR Edit Mode declarations](investigations/ptr-edit-mode-declarations.md) and
 [the contract](../specs/forever-edit-mode-enums.md).
+
+## 2026-11-08 — Deferred text at frame-level boundaries
+
+Updated [rendering pipeline](systems/rendering-pipeline.md#deferred-text-and-nested-wrappers)
+with the lower-text/opaque-modal regression, same-level hoisting boundary,
+single emission of nested wrapper regions, and Lua-to-GPU image coverage.
+Render bucket tests also cover modal hide/show and cache repair.

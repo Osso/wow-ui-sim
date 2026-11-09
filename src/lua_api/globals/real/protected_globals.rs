@@ -276,7 +276,38 @@ fn refuse_call(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
+fn set_table_security(state: &mut LuaState) -> LuaResult<u32> {
+    if refuse_tainted_caller(state)? {
+        return Ok(0);
+    }
+    let original = registry_get(state, "__sim_original_settablesecurity");
+    let arguments: Vec<_> = (state.base..state.top)
+        .map(|i| state.stack_get(i))
+        .collect();
+    let start = state.top;
+    state.push(original);
+    for argument in arguments {
+        state.push(argument);
+    }
+    state.call_function(start, rilua::vm::callinfo::LUA_MULTRET)?;
+    Ok((state.top - start) as u32)
+}
+
 pub(crate) fn install(lua: &mut rilua::Lua) -> crate::Result<()> {
+    if crate::client_profile::ACTIVE.uses_secret_values() {
+        let state = lua.state_mut();
+        let key = state.gc.intern_string(b"settablesecurity");
+        let original = state
+            .gc
+            .tables
+            .get(state.global)
+            .map(|table| table.get_str(key, &state.gc.string_arena))
+            .unwrap_or(Val::Nil);
+        if original != Val::Nil {
+            registry_set(state, "__sim_original_settablesecurity", original);
+            LuaApiMut::register_function(lua, "settablesecurity", set_table_security)?;
+        }
+    }
     LuaApiMut::register_function(lua, "__sim_protected_global_refused", refuse_call)?;
     LuaApiMut::register_function(lua, "__sim_securecall_with_origin", securecall_with_origin)?;
     let mut source = String::from(
