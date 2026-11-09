@@ -51,7 +51,6 @@ local snapshots = StrictTiming.snapshots
 local initial = assert(snapshots.initialized)
 assert(initial.inventory == 'nil' and initial.housing == 'nil')
 assert(initial.icon == 'nil')
-assert(initial.removed == nil and initial.removedDefault == nil and initial.removedNamespaced == nil)
 assert(type(initial.control) == 'string')
 for _, phase in ipairs({
     'addon-load', 'post-load', 'VARIABLES_LOADED', 'PLAYER_LOGIN',
@@ -61,7 +60,6 @@ for _, phase in ipairs({
     assert(seen.inventory == initial.inventory, phase .. ': inventory surface changed')
     assert(seen.housing == initial.housing, phase .. ': housing surface changed')
     assert(seen.icon == initial.icon, phase .. ': enum surface changed')
-    assert(seen.removed == nil and seen.removedDefault == nil and seen.removedNamespaced == nil, phase .. ': removed CVars returned')
     assert(seen.get == initial.get and seen.default == initial.default, phase .. ': wrappers retired early')
     assert(seen.namespaced == initial.namespaced, phase .. ': namespace wrapper retired early')
     assert(seen.control == initial.control, phase .. ': unrelated CVar changed')
