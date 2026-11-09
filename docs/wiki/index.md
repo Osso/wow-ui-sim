@@ -1,5 +1,9 @@
 > Proof receipts live untracked under `~/.local/state/wow-ui-sim`. The `data/patch-api/evidence` and `data/test-perf/evidence` trees were removed on 2026-11-08; historical links below are records, not live paths. Recover a file with `git show c011c1d95:<path>`.
 
+## [2026-11-08] design | Classic consumer fixture applicability
+
+[Classic consumer fixture applicability](design/classic-consumer-applicability.md) ranks the Era first-error clusters and separates native classic fixture selection from absent Retail features. Acceptance tests are committed before fixture changes; fresh profile baselines and final proof remain pending.
+
 ## [2026-11-08] investigation | Mists spellbook button size
 
 [Mists spellbook button size](investigations/mists-spellbook-size.md) traces a zero-size button to indentation-based XML duplicate removal and records the parent-aware fix and test expectation updates.

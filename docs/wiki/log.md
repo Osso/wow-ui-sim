@@ -1,3 +1,7 @@
+## [2026-11-08] design | Classic consumer fixture applicability
+
+Recorded the [classic fixture design](design/classic-consumer-applicability.md), historical first-error ranking, pinned TOC evidence and pre-implementation acceptance cases. No GREEN or fresh-baseline claim is made.
+
 ## [2026-11-08] investigation | Mists spellbook button size
 
 Recorded the [XML parent identity failure](investigations/mists-spellbook-size.md) and its parser and consumer coverage.

@@ -1,0 +1,74 @@
+# Classic consumer fixture applicability
+
+This bounded lane repairs test fixture selection before assigning classic integration failures to simulator APIs. It starts at `75038d409` and covers Era, Anniversary and Mists. No vendor behavior or native API contract changes are authorized by fixture failures alone.
+
+## Historical failure ranking
+
+VERIFIED: The inventory's final integration failure lists contain 1,003 Era names, 1,003 Anniversary names and 1,076 Mists names. These are older captures, not this lane's required fresh master baseline. Parse names only after the last `\nfailures:\n`, with `^    ([A-Za-z0-9_:]+)$`. For classification, select the first actual panic inside each named stdout block; ignore the outer timeout-reexecution panic and deduplicate repeated child headings.
+
+| Rank | Era first-error names | Decision | Scope |
+|---|---:|---|---|
+| 1 | 462 | (b) Wrong shared panel roots | `common::panel_fixtures` and its startup/smoke consumers |
+| 2 | 110, plus 7 micro-menu TOC assertions | (b) Retail dependency arrays | Shared keybinding/game-menu fixtures and action/guild/panel loaders |
+| 3 | 41 explicit routing failures; 3 further composite assertions need confirmation | (b) Wrong native blocked-action consumer | `protected_method_coverage` |
+| Later | 18 generic missing-TOC panics, 12 PlayerSpells loads, 12 ClickBinding bootstrap reads, other unique errors | Not one proven root cause | Separate consumer-specific triage |
+
+Mists and Anniversary have the same 462/110 first-error clusters. Mists also has 50 explicit `C_ArtifactUI` boolean-index failures, which are separate from this batch.
+
+## Decided rules
+
+### 1. Native classic startup, not Retail panel roots
+
+VERIFIED: In all three classic caches, `Blizzard_TimerunningUtil` contains two files and its TOC line 5 declares `## AllowLoadGameType: mainline`. `Blizzard_POIButton`, `Blizzard_GameMenuEsc`, `Blizzard_ClickBindingUI` and `Blizzard_Game` have no directory/files in these pins. This does not mean classic panels, action bars or menus are absent.
+
+VERIFIED: `Blizzard_ActionBar_Classic.toc:4-6` names classic dependencies, declares `classic` and allows Game. Each classic cache contains 46 ActionBar files. `Blizzard_GameMenu_Classic.toc:4-6` selects GameTooltip/UIPanelTemplates and `classic`; its directory contains six files. The profile's selected UIParent TOC loads `Vanilla/UIParent.lua` for Era/Anniversary and `Mists/UIParent.lua` for Mists.
+
+Use the existing production-backed `common::load_game_startup_inventory` for these three classic fixtures. Preserve Retail/PTR/Forever loading and Wrath's native FrameXML path. Do not make `load_required_blizzard_addon` silently skip missing roots, and do not filter an arbitrary Retail array until it happens to load. Retain dependency ordering from the selected startup inventory.
+
+`load_panel_addons` must work independently for closure harnesses. `setup_env` must not continue into absent Retail bootstrap reads after loading the classic inventory. Fixture-specific real LoD roots remain explicit, subject to native selection; missing applicable consumers are not replaced by stubs.
+
+### 2. Apply the same root choice to POI-blocked fixture families
+
+Use the same classic startup decision in keybinding, game-menu, action-bar and guild fixtures, then the direct POI-dependent variants where necessary. Keep existing test intent and startup events. Do not gate action/button/keyboard tests merely because their current fixture demands POIButton: their classic consumers exist.
+
+Gating is permitted only for independently verified absent features or different selected XML/Lua contracts. For example, Era/Anniversary ship nine AchievementUI files but have no vanilla-eligible AchievementUI TOC: the three TOCs allow cata, tbc/wrath or mists. Mists does have a native achievement panel, so a classic panel must not be removed simply because Retail coordinates differ. Inspect the specific selected XML before using existing profile-gate macros for Retail-only geometry or PlayerSpells assertions. Any such exclusions must be listed in the report.
+
+### 3. Observe the original classic blocked-action handler
+
+VERIFIED: `Blizzard_UIParent/Classic/UIParent.xml:23` binds `UIParent_OnEvent`; Era/Anniversary `Vanilla/UIParent.lua:92` register `ADDON_ACTION_BLOCKED`, and `:657-658` call `DisplayInterfaceActionBlockedMessage`. Mists registers at `Mists/UIParent.lua:96` and calls the same function at `:842-843`. No `Blizzard_Game` addon exists in these three cache directories.
+
+Keep all existing protected-method state, taint, owner and event assertions. On classic, observe the real UIParent OnEvent route and its call to the original display function; do not synthesize GameEvent or replace a Blizzard handler. On Retail/PTR/Forever retain the existing GameEvent probe. A test-only hook may record the display call and the owner received by UIParent, but a listener alone is insufficient proof that the Blizzard consumer ran. Unrelated roleset availability is deferred unless the pinned declarations prove a gate; do not add missing methods to satisfy this fixture.
+
+## Acceptance and execution order
+
+Commit `tests/classic_consumer_applicability.rs` before fixture changes. Its two cases execute original classic UIParent/action-button and menu consumers through the broken shared fixtures. Expected initial boundaries are TimerunningUtil and POIButton, respectively. Existing `protected_method_coverage::protected_input_clamped` is the third boundary. Historical logs already show these causes; fresh lane-owned RED runs remain required and must not be replaced by the historical evidence.
+
+VERIFIED historical RED excerpts from the inventory's Era log (source `183edc381`):
+
+- `achievement_panel_layout::achievement_frame_layout_stays_locked`, `tests/common/panel_fixtures.rs:128:9`: ``required panel addon `Blizzard_TimerunningUtil` has no eligible Game TOC under /home/osso/.cache/wow-ui-sim/blizzard-ui/era/AddOns``.
+- `action_bar::test_action_bar_env_can_bootstrap_twice_in_same_process`, `tests/common/mod.rs:244:9`: ``required Blizzard addon `Blizzard_POIButton` has no compatible TOC under /home/osso/.cache/wow-ui-sim/blizzard-ui/era/AddOns/Blizzard_POIButton``.
+- `protected_method_coverage::protected_input_clamped`, `tests/protected_method_coverage.rs:98:10`: `attempt to index global 'GameEvent' (a nil value)`.
+
+1. Claim one slot through `/var/tmp/osso/slot-claim.py`, retrying every two minutes. Keep a detached baseline checkout pinned to `75038d409`. Build/run each touched profile's full integration baseline in this lane's slot before switching that profile to changed sources. Include `optional-tests` so the historical modules remain covered. Run tests through `/var/tmp/osso/runtests.sh`.
+2. Commit each of the three fixes separately, formatted, with focused RED/GREEN receipts. Do not accumulate implementations while running checks.
+3. Run final full integration once for Era, Anniversary and Mists. Each failure set must be a strict subset of this lane's fresh master set, not just a lower count. New acceptance tests must pass.
+4. Run affected shared test files on Retail/PTR/Forever against fresh master comparisons. Run six `cargo check --all-targets` profiles with zero warnings and successful build-finished cargo JSON; compile Wrath. Rehash any edited file pinned by `data/patch-api/*.json` and run the manifest-artifact test if applicable.
+5. Record remaining clusters, native unknowns, SHAs and before/after names in the untracked lane report. No push, rebase, squash or stash; only no-ff merges if integration is requested.
+
+## Open native questions and limits
+
+- Roleset methods, incidental `FlashClientIcon` errors and other API gaps are not established producer defects by the routing fixture failure.
+- Classic selected panel geometry and generated Retail snapshot shapes need individual contracts; unblocking a fixture does not prove those tests applicable or passing.
+- Counts above classify the first observed boundary. Secondary failures may remain under the same names after fixture repair.
+
+## Sources
+
+- [Consumer selection and RED proof](../investigations/consumer-selection-and-red-proof.md) — applicability and original-consumer standards.
+- [Client profiles](../systems/client-profiles.md) — selected caches and native startup inventory.
+- [Classic startup cascades](../investigations/classic-startup-producer-cascades.md) — secondary failures and producer attribution.
+- `~/.local/state/wow-ui-sim/handoff/master-failure-inventory/REPORT.md`, cluster 2 and its three raw integration logs — historical first errors.
+- `~/.local/state/wow-ui-sim/handoff/classic-consumer-applicability/native-cache-inventory.tsv` and `*-ranked-clusters.md` — exact local file counts, TOC metadata and all historical names.
+
+## See Also
+
+- [[prefork-test-harness]] — full-UI and grouped fixture boundaries.
