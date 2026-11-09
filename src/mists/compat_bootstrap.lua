@@ -729,7 +729,7 @@ if rawget(_G, "SHOW_PET_MELEE_DAMAGE_TEXT") == nil then
 end
 
 if rawget(_G, "SHOW_AGGRO_PERCENTAGES") == nil then
-  SHOW_AGGRO_PERCENTAGES = "Show aggro percentages"
+  SHOW_AGGRO_PERCENTAGES = "Show Aggro Percentages"
 end
 
 if rawget(_G, "SHOW_COMBAT_HEALING_TEXT") == nil then
