@@ -3,9 +3,30 @@
 use wow_ui_sim::lua_api::WowLuaEnv;
 
 #[test]
-fn tainted_secretwrap_and_table_security_follow_native_restriction() {
+fn tainted_secretwrap_returns_secret_values() {
     let env = WowLuaEnv::new().unwrap();
-    env.exec(r#"
+    env.exec(
+        r#"
+        local function addon()
+            local a, b = secretwrap(42, 'payload')
+            assert(issecretvalue(a) and issecretvalue(b))
+            return a, b
+        end
+        debug.setobjecttaint(addon, 'R12Addon')
+        local a, b = addon()
+        assert(secretunwrap(a) == 42 and secretunwrap(b) == 'payload')
+        local wrapped = secretwrap('trusted')
+        assert(issecretvalue(wrapped) and secretunwrap(wrapped) == 'trusted')
+    "#,
+    )
+    .unwrap();
+}
+
+#[test]
+fn tainted_table_security_reports_and_does_not_mutate() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
         local events = {}
         local listener = CreateFrame('Frame')
         listener:RegisterEvent('ADDON_ACTION_FORBIDDEN')
@@ -14,18 +35,19 @@ fn tainted_secretwrap_and_table_security_follow_native_restriction() {
         end)
         local t = {key = 'value'}
         local function addon()
-            local a, b = secretwrap(42, 'payload')
-            assert(issecretvalue(a) and issecretvalue(b))
             assert(select('#', settablesecurity(t, 0)) == 0)
+            assert(select('#', settablesecurity(nil, 'invalid')) == 0)
         end
         debug.setobjecttaint(addon, 'R12Addon')
         addon()
-        assert(#events == 1 and events[1][1] == 'R12Addon')
-        assert(events[1][2] == 'settablesecurity()')
+        assert(#events == 2)
+        for _, event in ipairs(events) do
+            assert(event[1] == 'R12Addon' and event[2] == 'settablesecurity()')
+        end
         local function read() assert(t.key == 'value') end
         debug.setobjecttaint(read, 'R12Reader')
         read()
-        local wrapped = secretwrap('trusted')
-        assert(issecretvalue(wrapped) and secretunwrap(wrapped) == 'trusted')
-    "#).unwrap();
+    "#,
+    )
+    .unwrap();
 }
