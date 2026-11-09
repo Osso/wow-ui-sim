@@ -1,6 +1,6 @@
 ## [2026-11-09] update | Classic consumer fixture applicability
 
-Updated the [classic fixture design](design/classic-consumer-applicability.md) with per-profile Blizzard file counts for Mainline-only gates and the unresolved `GetNumFactions` native-evidence gap. Fresh 75038d409 name sets are available; changed-source comparisons and final profile checks remain open.
+Updated the [classic fixture design](design/classic-consumer-applicability.md) with per-profile Blizzard file counts, narrowly gated Mainline TimerunningUtil/POIButton inventory assertions, selected UIPanels_Game dependency checks and the unresolved `GetNumFactions` native-evidence gap. Fresh 75038d409 name sets are available; final profile comparisons remain open.
 
 ## [2026-11-08] design | Classic consumer fixture applicability
 

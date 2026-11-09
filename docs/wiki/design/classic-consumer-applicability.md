@@ -21,6 +21,8 @@ Mists and Anniversary have the same 462/110 first-error clusters. Mists also has
 
 VERIFIED: In all three classic caches, `Blizzard_TimerunningUtil` contains two files and its TOC line 5 declares `## AllowLoadGameType: mainline`. `Blizzard_POIButton`, `Blizzard_GameMenuEsc`, `Blizzard_ClickBindingUI` and `Blizzard_Game` have no directory/files in these pins. This does not mean classic panels, action bars or menus are absent.
 
+Gate only the `blizzard_timerunning_util_loads` discovery and Mainline dependency assertions and the `blizzard_poi_button_loads` TOC/discovery assertions to Retail/PTR/WowForever. The other TimerunningUtil TOC-shape tests remain active because those two files exist in Classic caches; the POIButton absence test remains active on Classic. `blizzard_ui_panels_game_loads::dep_directories_exist_on_disk` must use the selected `toc_dependencies()` list, not the Mainline dependency list.
+
 VERIFIED: `Blizzard_ActionBar_Classic.toc:4-6` names classic dependencies, declares `classic` and allows Game. Each classic cache contains 46 ActionBar files. `Blizzard_GameMenu_Classic.toc:4-6` selects GameTooltip/UIPanelTemplates and `classic`; its directory contains six files. The profile's selected UIParent TOC loads `Vanilla/UIParent.lua` for Era/Anniversary and `Mists/UIParent.lua` for Mists.
 
 Use the existing production-backed `common::load_game_startup_inventory` for these three classic fixtures. Preserve Retail/PTR/Forever loading and Wrath's native FrameXML path. Do not make `load_required_blizzard_addon` silently skip missing roots, and do not filter an arbitrary Retail array until it happens to load. Retain dependency ordering from the selected startup inventory.
