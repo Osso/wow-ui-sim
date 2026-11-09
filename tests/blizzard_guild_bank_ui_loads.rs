@@ -154,7 +154,7 @@ fn blizzard_guild_bank_ui_toc_lists_bootstrap_xml_then_localization() {
 }
 
 #[test]
-fn blizzard_guild_bank_ui_directory_ships_eight_entries() {
+fn blizzard_guild_bank_ui_directory_matches_profile_sources() {
     let dir = guild_bank_dir();
     let mut entries: Vec<String> = std::fs::read_dir(&dir)
         .expect("Blizzard_GuildBankUI directory should exist")
@@ -164,18 +164,27 @@ fn blizzard_guild_bank_ui_directory_ships_eight_entries() {
     entries.sort();
     assert_eq!(
         entries,
-        vec![
-            "Blizzard_GuildBankUI_Bootstrap.lua".to_string(),
-            "Blizzard_GuildBankUI_Classic.toc".to_string(),
-            "Blizzard_GuildBankUI_Mainline.toc".to_string(),
-            "Blizzard_GuildBankUI_Mists.toc".to_string(),
-            "Localization.lua".to_string(),
-            "Mainline".to_string(),
-            "Mists".to_string(),
-            "TBC".to_string(),
-        ],
-        "Blizzard_GuildBankUI ships its bootstrap, three flavor TOCs, Localization, and \
-         Mainline/Mists/TBC source directories"
+        if toc_layout::unified_toc_tree() {
+            vec![
+                "Blizzard_GuildBankUI.toc".to_string(),
+                "Blizzard_GuildBankUI_Bootstrap.lua".to_string(),
+                "Localization.lua".to_string(),
+                "Mainline".to_string(),
+            ]
+        } else {
+            vec![
+                "Blizzard_GuildBankUI_Bootstrap.lua".to_string(),
+                "Blizzard_GuildBankUI_Classic.toc".to_string(),
+                "Blizzard_GuildBankUI_Mainline.toc".to_string(),
+                "Blizzard_GuildBankUI_Mists.toc".to_string(),
+                "Localization.lua".to_string(),
+                "Mainline".to_string(),
+                "Mists".to_string(),
+                "TBC".to_string(),
+            ]
+        },
+        "Retail ships flavor TOCs plus Mainline/Mists/TBC sources; unified PTR and Forever \
+         caches ship one TOC and the selected Mainline source directory"
     );
 }
 

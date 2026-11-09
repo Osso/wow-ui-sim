@@ -55,7 +55,7 @@ fn blizzard_ui_dir() -> PathBuf {
         .expect("Blizzard UI cache should be available")
 }
 
-fn collect_ptr_source_files(path: &Path, files: &mut Vec<(PathBuf, String)>) {
+fn collect_ptr_source_files(path: &Path, files: &mut Vec<(PathBuf, Vec<u8>)>) {
     for entry in fs::read_dir(path).expect("PTR AddOns directory should be readable") {
         let entry = entry.expect("PTR source entry should be readable");
         let path = entry.path();
@@ -66,7 +66,7 @@ fn collect_ptr_source_files(path: &Path, files: &mut Vec<(PathBuf, String)>) {
 
         let extension = path.extension().and_then(|value| value.to_str());
         if matches!(extension, Some("lua" | "xml" | "toc")) {
-            let source = fs::read_to_string(&path).expect("PTR source file should be UTF-8 text");
+            let source = fs::read(&path).expect("PTR source file should be readable");
             files.push((path, source));
         }
     }
@@ -83,13 +83,13 @@ fn source_symbol_scan_accepts_non_utf8_comments() {
     let mut files = Vec::new();
     collect_ptr_source_files(directory.path(), &mut files);
     assert_eq!(files.len(), 1);
-    assert!(files[0].1.contains("BeforeComment"));
-    assert!(files[0].1.contains("AfterComment"));
-    assert!(!files[0].1.contains("AbsentSymbol"));
+    assert!(contains_ascii(&files[0].1, "BeforeComment"));
+    assert!(contains_ascii(&files[0].1, "AfterComment"));
+    assert!(!contains_ascii(&files[0].1, "AbsentSymbol"));
 }
 
-fn ptr_source_files() -> &'static Vec<(PathBuf, String)> {
-    static FILES: OnceLock<Vec<(PathBuf, String)>> = OnceLock::new();
+fn ptr_source_files() -> &'static Vec<(PathBuf, Vec<u8>)> {
+    static FILES: OnceLock<Vec<(PathBuf, Vec<u8>)>> = OnceLock::new();
     FILES.get_or_init(|| {
         let mut files = Vec::new();
         collect_ptr_source_files(&blizzard_ui_dir(), &mut files);
@@ -97,11 +97,17 @@ fn ptr_source_files() -> &'static Vec<(PathBuf, String)> {
     })
 }
 
+fn contains_ascii(source: &[u8], symbol: &str) -> bool {
+    source
+        .windows(symbol.len())
+        .any(|window| window == symbol.as_bytes())
+}
+
 fn assert_ptr_source_omits_symbols(symbols: &[&str]) {
     for (path, source) in ptr_source_files() {
         for symbol in symbols {
             assert!(
-                !source.contains(symbol),
+                !contains_ascii(source, symbol),
                 "snapshot-only symbol {symbol} unexpectedly appears in {}",
                 path.display(),
             );
@@ -148,7 +154,7 @@ fn assert_ptr_source_contains(symbol: &str) {
     assert!(
         ptr_source_files()
             .iter()
-            .any(|(_, source)| source.contains(symbol)),
+            .any(|(_, source)| contains_ascii(source, symbol)),
         "expected PTR source publication {symbol} was not found",
     );
 }
