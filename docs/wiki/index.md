@@ -60,6 +60,12 @@ ItemSparse misses. Retail original-accessor proof is separate from native parity
 records source-selected preset counts, cast-bar Show lifecycle and the separately
 repaired declared-profile quest difficulty publication, with bounded PTR/Retail proof.
 
+## [2026-11-08] implementation | Deferred text at frame-level boundaries
+
+[Rendering pipeline](systems/rendering-pipeline.md#deferred-text-and-nested-wrappers)
+describes higher-level modal occlusion, single emission of nested wrapper regions,
+and bucket plus Lua-to-GPU image regression coverage.
+
 ## [2026-11-04] investigation | Parallel GPU test lifetimes
 
 [GPU test lifetimes](investigations/parallel-gpu-test-lifetimes.md) records the reproduced Vulkan loader SIGSEGV, the shared lifetime lock, and the concurrent atlas/readback regression.

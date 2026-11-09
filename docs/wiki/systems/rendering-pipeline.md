@@ -58,6 +58,30 @@ The controlled retail 12.1.0.69587 capture classifies this at physical 1440-pixe
 
 Strata order: `WORLD < BACKGROUND < LOW < MEDIUM < HIGH < DIALOG < FULLSCREEN < FULLSCREEN_DIALOG < TOOLTIP`.
 
+### Deferred text and nested wrappers
+
+FontString deferral must stop before a child at a higher raw frame level, using
+the FontString's original owning frame level rather than the region's stored
+level. Hoisting regions out of regionless Frame/ScrollFrame wrappers is confined
+to same-level subtrees. Otherwise lower-level text can be emitted after an opaque
+modal. Within a hoisted subtree, nested wrapper regions are suppressed exactly
+once; Button/EditBox regions remain owned by those widgets.
+
+Regression coverage in `state_render_buckets_tests.rs` exercises higher-level
+opaque covers, parent text, same-level hoisting, and button labels. The
+`higher_level_modal_covers_nested_text_after_repeated_show_and_bucket_repair`
+test in `state_render_tests.rs` also covers the final strata buckets and repeated
+modal hide/show with cache repair.
+
+`tests/text_layer_order.rs` exercises the Lua API through the glyph atlas and
+headless GPU renderer for both Frame and ScrollFrame wrappers. It checks visible
+lower glyphs without the cover, no lower glyphs through an alpha-1 cover, a
+visible cover caption, and repeated hide/show. Colours are compared against the
+empty margin in the same image, not a platform-specific reference PNG. Fonts use
+the system fallback without CASC; the fixture loads no Blizzard UI or addons.
+As with the existing text-shadow test, image checks skip when no GPU adapter is
+available. Bucket tests remain independent of GPU availability.
+
 ## Alpha Propagation
 
 `collect_ancestor_visible_ids()` BFS from roots: `eff_alpha = parent_alpha * frame.alpha`. Frames with `eff_alpha <= 0` are skipped entirely.
