@@ -101,6 +101,10 @@ fn simulator_legacy_compat_globals_preserve_tested_behavior() {
                 or first.canEnter ~= true or first.isTrainingGround ~= false then
                 return "battleground-row"
             end
+            local zeroFraction = C_PvP.GetBattlegroundInfo("0.5")
+            if type(zeroFraction) ~= "table" or zeroFraction.name ~= "Wintergrasp" then
+                return "battleground-zero-fraction-index"
+            end
             local second = C_PvP.GetBattlegroundInfo(2.9)
             if type(second) ~= "table" or second.name ~= "Arena" or second.icon ~= 1300 then
                 return "battleground-fractional-index"
@@ -108,8 +112,9 @@ fn simulator_legacy_compat_globals_preserve_tested_behavior() {
             if C_PvP.GetBattlegroundInfo(0) ~= nil or C_PvP.GetBattlegroundInfo(999) ~= nil then
                 return "battleground-miss"
             end
-            if select('#', C_PvP.GetBattlegroundInfo(0)) ~= 1 then
-                return "battleground-miss-arity"
+            local upperBoundOK, upperBound = pcall(C_PvP.GetBattlegroundInfo, 4294967295)
+            if not upperBoundOK or upperBound ~= nil then
+                return "battleground-upper-bound"
             end
             if pcall(C_PvP.GetBattlegroundInfo) or pcall(C_PvP.GetBattlegroundInfo, nil) then
                 return "battleground-missing-index"
