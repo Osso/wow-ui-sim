@@ -310,6 +310,54 @@ fn higher_level_child_occludes_its_parents_text() {
 }
 
 #[test]
+fn same_level_text_hoists_past_empty_higher_level_wrapper_child() {
+    let mut widgets = WidgetRegistry::default();
+    for (id, kind, parent, level) in [
+        (1, WidgetType::Frame, None, 100),
+        (2, WidgetType::Frame, Some(1), 100),
+        (3, WidgetType::Frame, Some(2), 100),
+        (4, WidgetType::FontString, Some(3), 0),
+        (5, WidgetType::Frame, Some(2), 110),
+        (6, WidgetType::Frame, Some(1), 100),
+        (7, WidgetType::Texture, Some(6), 0),
+    ] {
+        widgets.register(Frame {
+            frame_level: level,
+            draw_layer: match id {
+                4 => DrawLayer::Overlay,
+                7 => DrawLayer::Background,
+                _ => DrawLayer::Artwork,
+            },
+            ..test_frame(id, kind, parent)
+        });
+        if let Some(parent) = parent {
+            widgets.add_child(parent, id);
+        }
+    }
+
+    let visible = FxHashSet::from_iter(1..=7);
+    let mut emitted = Vec::new();
+    dfs_emit(
+        1,
+        FrameStrata::Medium.as_index(),
+        &widgets,
+        &visible,
+        &mut emitted,
+    );
+
+    let fill_position = emitted.iter().position(|&id| id == 7).unwrap();
+    let text_position = emitted.iter().position(|&id| id == 4).unwrap();
+    assert!(
+        fill_position < text_position,
+        "same-level OVERLAY text must follow a sibling BACKGROUND fill: {emitted:?}"
+    );
+    let mut unique = emitted.clone();
+    unique.sort_unstable();
+    unique.dedup();
+    assert_eq!(unique.len(), 7, "each widget must be emitted exactly once");
+}
+
+#[test]
 fn same_level_hoisting_emits_each_region_once_and_preserves_button_labels() {
     let mut widgets = WidgetRegistry::default();
     for (id, kind, parent) in [
