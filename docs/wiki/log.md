@@ -1,6 +1,6 @@
 ## [2026-11-09] fix | Mists unit-frame Edit Mode replay ordering
 
-Updated the [frame-position investigation](investigations/frame-position-baseline-drift.md#mists-unit-frame-startup-replay--2026-11-09) and its [profile contract](../specs/frame-position-profile-baselines.md): the startup action-bar replay now initializes the native StanceBar state before the Classic dynamic-background-art refresh that reads it. The frame-position acceptance checks require selected Mists unit-frame anchors and source-derived Party/CompactParty/PaladinPowerBar rectangles. Native C layout-event timing remains UNKNOWN; see the lane report for proof and residual gates.
+Updated the [frame-position investigation](investigations/frame-position-baseline-drift.md#mists-unit-frame-startup-replay--2026-11-09) and its [profile contract](../specs/frame-position-profile-baselines.md): the startup action-bar replay now initializes the native StanceBar state before the Classic dynamic-background-art refresh that reads it. Acceptance also records source-derived Mists unit-frame anchors, party rectangles, and ChatFrame1 managed placement for the configured Paladin/aura-form state. Native C layout-event timing remains UNKNOWN; see the lane report for proof and residual gates.
 
 ## [2026-11-09] investigation | Reconcile profile frame-position baselines
 

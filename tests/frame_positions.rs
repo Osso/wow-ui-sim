@@ -206,6 +206,15 @@ fn expected_position(test: TestCase) -> TestCase {
             // x = 268 + 232/2 + 25 - 136/2; y = 850 + 100 - 35.
             (name, "PaladinPowerBar", 341.0, 915.0, 136.0, 39.0, 1.0)
         }
+        (ClientProfile::Mists, "chat_frame") => {
+            // Classic/EditModePresetLayouts.lua:398-409 anchors BOTTOMLEFT
+            // at (35,110). UIParentPanelManagerOverrides.lua:141-168:
+            // secondary status15 + stance30 + padding10 = 55; its :77 chat offset
+            // is clamp(55-30,0,28)=25. SetToLayoutAnchor adds 25
+            // (EditModeManager.lua:278-292), so bottom=135.
+            // Existing 430x170 frame rectangle: y=1200-135-170=895.
+            (name, frame, 35.0, 895.0, 430.0, 170.0, 1.0)
+        }
         (ClientProfile::Mists, "minimap")
         | (ClientProfile::Era, "minimap")
         | (ClientProfile::Anniversary, "minimap") => (name, frame, 1441.5, 22.0, 140.0, 140.0, 1.0),
@@ -406,6 +415,40 @@ fn assert_mists_unit_frame_anchor(env: &WowLuaEnv, test: &str) {
     .unwrap_or_else(|error| panic!("{test} native anchor: {error}"));
 }
 
+fn assert_mists_chat_frame_position_inputs(env: &WowLuaEnv) {
+    env.exec(
+        r#"
+        local className = UnitClass("player")
+        assert(className == "Paladin", "configured Mists fixture character is Paladin")
+        assert(GetNumShapeshiftForms() == 3, "three configured Paladin aura forms")
+
+        local chatInfo = EditModeManagerFrame:GetActiveLayoutSystemInfo(
+            Enum.EditModeSystem.ChatFrame,
+            nil
+        )
+        local anchor = chatInfo.anchorInfo
+        assert(anchor.point == "BOTTOMLEFT" and anchor.relativeTo == "UIParent")
+        assert(anchor.relativePoint == "BOTTOMLEFT" and anchor.offsetX == 35 and anchor.offsetY == 110)
+
+        assert(SecondaryStatusTrackingBarContainer:IsShown())
+        assert(SecondaryStatusTrackingBarContainer:IsInDefaultPosition())
+        assert(StanceBar:IsShown() and StanceBar:IsInDefaultPosition())
+        assert(StanceBar:GetHeight() == 30)
+        assert(StanceBar:IsSystemSettingDefault(Enum.EditModeActionBarSetting.Orientation))
+        assert(StanceBar:IsSystemSettingDefault(Enum.EditModeActionBarSetting.NumRows))
+        assert(StanceBar:IsSystemSettingDefault(Enum.EditModeActionBarSetting.IconSize))
+        assert(not MultiBarBottomLeft:IsShown() and not MultiBarBottomRight:IsShown())
+        assert(not PetActionBar:IsShown() and not PossessActionBar:IsShown())
+        assert(not MainMenuBarVehicleLeaveButton:IsShown())
+
+        local point, relative, relativePoint, x, y = ChatFrame1:GetPoint(1)
+        assert(point == "BOTTOMLEFT" and relative == UIParent and relativePoint == "BOTTOMLEFT")
+        assert(x == 35 and y == 135, "native managed chat anchor")
+        "#,
+    )
+    .expect("native Mists chat position inputs");
+}
+
 fn assert_layout_state(env: &WowLuaEnv, test: &str) {
     use wow_ui_sim::client_profile::{ACTIVE, ClientProfile};
 
@@ -414,6 +457,9 @@ fn assert_layout_state(env: &WowLuaEnv, test: &str) {
     }
     if ACTIVE == ClientProfile::Mists {
         assert_mists_unit_frame_anchor(env, test);
+        if test == "chat_frame" {
+            assert_mists_chat_frame_position_inputs(env);
+        }
     }
     let assertion = match (ACTIVE, test) {
         (
