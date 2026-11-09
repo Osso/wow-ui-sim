@@ -60,13 +60,8 @@ impl AddonTree {
         let addons = discover_blizzard_startup_addons_for_screen(self.root.path(), screen);
         let names = addons.iter().map(|addon| addon.name.clone()).collect();
         for addon in addons {
-            load_startup_addon(
-                &self.env.loader_env(),
-                &addon.toc_path,
-                addon.kind,
-                None,
-            )
-            .unwrap_or_else(|error| panic!("load startup {}: {error}", addon.name));
+            load_startup_addon(&self.env.loader_env(), &addon.toc_path, addon.kind, None)
+                .unwrap_or_else(|error| panic!("load startup {}: {error}", addon.name));
         }
         names
     }
@@ -88,7 +83,10 @@ fn game_load_of_required_glue_dependency_reports_wrong_interface() {
 
     let (loaded, reason) = tree.load("GameRuntimeProbe");
 
-    assert!(!loaded, "the parent must not load across a required screen mismatch");
+    assert!(
+        !loaded,
+        "the parent must not load across a required screen mismatch"
+    );
     assert_eq!(reason.as_deref(), Some("DEP_WRONG_ACTIVE_INTERFACE"));
     assert!(!tree.ran("GameRuntimeProbeRan"));
     assert!(!tree.ran("GlueOnlyProbeRan"));
@@ -109,8 +107,13 @@ fn addon_queries_ignore_screen_while_required_load_fails() {
     );
     tree.register_enabled("GameQueryProbe");
 
-    let (info_name, _, _, info_loadable, info_reason):
-        (String, String, Option<String>, bool, Option<String>) = tree
+    let (info_name, _, _, info_loadable, info_reason): (
+        String,
+        String,
+        Option<String>,
+        bool,
+        Option<String>,
+    ) = tree
         .env
         .eval("return C_AddOns.GetAddOnInfo('GameQueryProbe')")
         .unwrap();
@@ -126,7 +129,10 @@ fn addon_queries_ignore_screen_while_required_load_fails() {
     assert_eq!(info_name, "GameQueryProbe");
     assert!(info_loadable);
     assert_eq!(info_reason, None);
-    assert!(parent_loadable, "queries do not recursively validate dependencies");
+    assert!(
+        parent_loadable,
+        "queries do not recursively validate dependencies"
+    );
     assert_eq!(parent_reason, None);
     assert!(target_loadable, "query mode skips the active-screen test");
     assert_eq!(target_reason, None);
@@ -197,20 +203,14 @@ fn both_required_dependency_loads_on_game_and_glue_and_stays_required() {
 
 #[test]
 fn glue_dependency_annotation_filters_the_whole_startup_line() {
-    for (screen, expect_dependencies) in [
-        (ScreenKind::Game, false),
-        (ScreenKind::Login, true),
-    ] {
+    for (screen, expect_dependencies) in [(ScreenKind::Game, false), (ScreenKind::Login, true)] {
         let tree = AddonTree::new(screen);
         tree.add(
             "Blizzard_LineConditionParentProbe",
             "## AllowLoad: Both\n## RequiredDeps: Blizzard_LineConditionA, Blizzard_LineConditionB [AllowLoad glue]",
             "LineConditionParentRan = true",
         );
-        for name in [
-            "Blizzard_LineConditionA",
-            "Blizzard_LineConditionB",
-        ] {
+        for name in ["Blizzard_LineConditionA", "Blizzard_LineConditionB"] {
             tree.add(
                 name,
                 "## AllowLoad: Both\n## LoadOnDemand: 1",
@@ -372,7 +372,10 @@ fn allowload_header_condition_runs_before_directive_dispatch() {
         "## AllowLoad: Both [AllowLoad game]",
         "ConditionalAllowLoadProbeRan = true",
     );
-    assert_eq!(tree.load("Blizzard_ConditionalAllowLoadProbe"), (true, None));
+    assert_eq!(
+        tree.load("Blizzard_ConditionalAllowLoadProbe"),
+        (true, None)
+    );
     assert!(tree.ran("ConditionalAllowLoadProbeRan"));
 
     let tree = AddonTree::new(ScreenKind::Login);
@@ -414,11 +417,7 @@ fn required_dependency_names_split_only_on_ascii_space_and_comma() {
         &format!("## RequiredDeps: {dependency_name}"),
         "GameTabDependencyParentRan = true",
     );
-    tree.add(
-        dependency_name,
-        "",
-        "TabSeparatedProbeRan = true",
-    );
+    tree.add(dependency_name, "", "TabSeparatedProbeRan = true");
 
     assert_eq!(tree.load("GameTabDependencyParent"), (true, None));
     assert!(tree.ran("GameTabDependencyParentRan"));
