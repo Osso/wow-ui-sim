@@ -140,6 +140,70 @@ fn assert_modal_covers_text(wrapper_type: &str) {
     }
 }
 
+fn assert_same_level_text_after_sibling_background() {
+    if common::try_create_gpu_device().is_none() {
+        eprintln!("Skipping text layer image test: no GPU adapter available");
+        return;
+    }
+    let env = WowLuaEnv::new().expect("create Lua environment");
+    let fonts = Rc::new(RefCell::new(WowFontSystem::new_without_casc()));
+    env.set_font_system(Rc::clone(&fonts));
+    env.set_screen_size(WIDTH as f32, HEIGHT as f32);
+    env.exec(
+        r#"
+        local root = CreateFrame("Frame", "LayerHarness", UIParent)
+        root:SetAllPoints(UIParent)
+        root:SetFrameStrata("MEDIUM")
+        root:SetFrameLevel(100)
+
+        local wrapper = CreateFrame("Frame", "LayerWrapper", root)
+        wrapper:SetAllPoints()
+        wrapper:SetFrameLevel(100)
+        local textOwner = CreateFrame("Frame", "LayerTextOwner", wrapper)
+        textOwner:SetAllPoints()
+        textOwner:SetFrameLevel(100)
+        local text = textOwner:CreateFontString("LayerLowerText", "OVERLAY")
+        text:SetFont("Fonts\\FRIZQT__.TTF", 24, "")
+        text:SetPoint("TOPLEFT", 20, -80)
+        text:SetText("UNDERLAY")
+        text:SetTextColor(1, 1, 0, 1)
+
+        local higher = CreateFrame("Frame", "LayerEmptyHigher", wrapper)
+        higher:SetSize(1, 1)
+        higher:SetPoint("TOPLEFT")
+        higher:SetFrameLevel(110)
+
+        local cover = CreateFrame("Frame", "LayerCover", root)
+        cover:SetAllPoints()
+        cover:SetFrameLevel(100)
+        local fill = cover:CreateTexture("LayerCoverFill", "BACKGROUND")
+        fill:SetAllPoints()
+        fill:SetColorTexture(0.12, 0.18, 0.3, 1)
+        assert(textOwner:GetFrameLevel() == cover:GetFrameLevel())
+        "#,
+    )
+    .expect("build equal-level layer harness");
+
+    let shown = render(&env, &fonts);
+    assert!(
+        ink_pixels(&shown, 65, 115) > 30,
+        "same-level OVERLAY text must render after a sibling BACKGROUND fill"
+    );
+
+    env.exec("LayerEmptyHigher:Hide()")
+        .expect("hide empty higher-level child");
+    let hidden = render(&env, &fonts);
+    assert!(
+        ink_pixels(&hidden, 65, 115) > 30,
+        "hiding an empty higher-level child must not change same-level text ordering"
+    );
+}
+
+#[test]
+fn same_level_overlay_text_stays_above_sibling_background_with_empty_higher_child() {
+    assert_same_level_text_after_sibling_background();
+}
+
 #[test]
 fn opaque_sibling_covers_nested_frame_text() {
     assert_modal_covers_text("Frame");
