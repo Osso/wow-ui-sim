@@ -4,12 +4,12 @@
 
 ## What it must do
 
-- [ ] Keep all 28 case names and the one-pixel geometry and 0.02 alpha tolerances.
-- [ ] Use profile-native minimap dimensions, header extents and preset anchors, not the Retail rectangle for every profile.
-- [ ] Assert the default minimap parent, dimensions, scale and anchors before comparing rectangles.
-- [ ] Use native frame names and test absence when a profile's selected TOC excludes the Retail-only frame.
-- [ ] Change a baseline only with a native XML/Lua derivation; retain failures caused by missing or incorrect simulator inputs.
-- [ ] Keep Retail clean and reduce failure names on PTR, Forever, Mists, Era and Anniversary relative to master `3ca96ba58`.
+- [x] Keep all 28 case names and the one-pixel geometry and 0.02 alpha tolerances.
+- [x] Use profile-native minimap dimensions, header extents and preset anchors, not the Retail rectangle for every profile.
+- [x] Assert the default minimap parent, dimensions, scale and anchors before comparing rectangles.
+- [x] Use native frame names and test absence when a profile's selected TOC excludes the Retail-only frame.
+- [x] Change a baseline only with a native XML/Lua derivation; retain failures caused by missing or incorrect simulator inputs.
+- [x] Keep Retail clean and reduce failure names on PTR, Forever, Mists, Era and Anniversary relative to master `3ca96ba58`.
 
 ## How it works
 
@@ -25,8 +25,8 @@
 
 ## Known gaps (current cycle)
 
-- [ ] Reconcile source-proven stale expectations without accepting zero-anchor or placeholder geometry as native output.
-- [ ] Record residual per-profile failures and any native-C questions in the untracked lane report.
+- [x] Reconcile source-proven stale expectations without accepting zero-anchor or placeholder geometry as native output.
+- [x] Record residual per-profile failures and native-input questions in the untracked lane report.
 
 ## Out of scope
 

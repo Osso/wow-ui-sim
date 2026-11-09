@@ -1,3 +1,7 @@
+## [2026-11-09] investigation | Reconcile profile frame-position baselines
+
+Updated [frame-position baseline drift](investigations/frame-position-baseline-drift.md) and its [contract](../specs/frame-position-profile-baselines.md) with profile-native minimap, Classic party/cast/raid/chat, PTR/Forever dock and micro-menu expectations, source-absent frame tests, and PTR/Forever ObjectiveTracker top padding. Final targeted runs preserve Retail 28/28 and reduce every non-Retail failure-name set below master; unresolved simulator/input cases and native questions remain explicit in the lane report. No production layout code changed.
+
 ## [2026-11-08] investigation | Mists spellbook button size
 
 Recorded the [XML parent identity failure](investigations/mists-spellbook-size.md) and its parser and consumer coverage.

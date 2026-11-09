@@ -1,5 +1,9 @@
 > Proof receipts live untracked under `~/.local/state/wow-ui-sim`. The `data/patch-api/evidence` and `data/test-perf/evidence` trees were removed on 2026-11-08; historical links below are records, not live paths. Recover a file with `git show c011c1d95:<path>`.
 
+## [2026-11-09] investigation | Reconcile profile frame-position baselines
+
+[Frame-position baseline drift](investigations/frame-position-baseline-drift.md#verified-lane-result--2026-11-09) records source-derived PTR, Forever and Classic expectations, profile-specific absent-frame checks, the final six-profile failure matrix, and unresolved model/input divergences. Retail and PTR pass 28/28; other profile residuals are not treated as native geometry.
+
 ## [2026-11-08] investigation | Mists spellbook button size
 
 [Mists spellbook button size](investigations/mists-spellbook-size.md) traces a zero-size button to indentation-based XML duplicate removal and records the parent-aware fix and test expectation updates.
