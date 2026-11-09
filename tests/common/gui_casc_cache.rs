@@ -3,7 +3,7 @@ use std::path::Path;
 use cascette_client_storage::{index::IndexManager, storage::local_header::LocalHeader};
 use cascette_crypto::md5::{ContentKey, EncodingKey, FileDataId};
 use cascette_formats::{
-    encoding::{CKeyEntryData, EncodingBuilder},
+    encoding::{CKeyEntryData, EKeyEntryData, EncodingBuilder},
     root::{ContentFlags, LocaleFlags, RootBuilder, RootVersion},
 };
 
@@ -152,11 +152,21 @@ fn build_encoding(
         file_size: 0,
         encoding_keys: vec![root_encoding_key],
     });
+    builder.add_ekey_entry(EKeyEntryData {
+        encoding_key: root_encoding_key,
+        espec: "z".to_owned(),
+        file_size: 0,
+    });
     for (content_key, encoding_key, size) in assets {
         builder.add_ckey_entry(CKeyEntryData {
             content_key: *content_key,
             file_size: u64::try_from(*size).expect("fixture file size fits u64"),
             encoding_keys: vec![*encoding_key],
+        });
+        builder.add_ekey_entry(EKeyEntryData {
+            encoding_key: *encoding_key,
+            espec: "z".to_owned(),
+            file_size: u64::try_from(*size).expect("fixture file size fits u64"),
         });
     }
     builder
