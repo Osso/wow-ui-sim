@@ -68,11 +68,13 @@ fn setup_env() -> WowLuaEnv {
         return env;
     }
 
-    let ui = blizzard_ui_dir();
-    for addon_name in PANEL_ADDONS {
-        common::load_required_blizzard_addon(&env, &ui, addon_name);
-        if *addon_name == "Blizzard_UIParentPanelManager" {
-            load_ui_parent_panel_manager_global_pass(&env, &ui);
+    if !common::load_classic_game_startup_inventory(&env) {
+        let ui = blizzard_ui_dir();
+        for addon_name in PANEL_ADDONS {
+            common::load_required_blizzard_addon(&env, &ui, addon_name);
+            if *addon_name == "Blizzard_UIParentPanelManager" {
+                load_ui_parent_panel_manager_global_pass(&env, &ui);
+            }
         }
     }
 

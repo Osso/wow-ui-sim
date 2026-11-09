@@ -117,13 +117,7 @@ pub fn seed_addon_search_paths(env: &WowLuaEnv) {
 }
 
 pub fn load_panel_addons(env: &WowLuaEnv) {
-    if matches!(
-        wow_ui_sim::client_profile::ACTIVE,
-        wow_ui_sim::client_profile::ClientProfile::Mists
-            | wow_ui_sim::client_profile::ClientProfile::Era
-            | wow_ui_sim::client_profile::ClientProfile::Anniversary
-    ) {
-        crate::common::load_game_startup_inventory(env);
+    if crate::common::load_classic_game_startup_inventory(env) {
         return;
     }
 

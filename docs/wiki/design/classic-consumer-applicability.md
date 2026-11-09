@@ -43,6 +43,12 @@ Keep all existing protected-method state, taint, owner and event assertions. On 
 
 The shared panel fixture now calls `common::load_game_startup_inventory` on Mists, Era and Anniversary. This uses the same profile-selected startup TOCs and dependency ordering as simulator startup. It does not silently skip missing roots or fabricate TimerunningUtil/POIButton. Retail, PTR, WowForever and the existing Wrath branch keep their prior paths. The first lane-owned RED reproduced TimerunningUtil at `tests/common/panel_fixtures.rs:128:9`; the GREEN run and post-baseline profile counts are recorded in the untracked handoff report.
 
+## Implementation: POIButton-dependent fixtures
+
+The same native-startup selector now replaces the hard-coded Retail addon arrays in action-bar, game-menu, keybinding, guild, reputation-panel and micro-menu fixtures for Mists, Era and Anniversary. It retains their explicit arrays and bootstrap behavior on other profiles. This also avoids loading `Mainline/TargetFrame.lua` into a classic fixture. GuildControlUI remains an explicit LoD load at the guild consumer. Classic TOCs prove that ActionBar, GameMenu, MicroMenu and UnitFrame have native classic files; these consumers are not gated merely because the Retail-only POIButton root is absent.
+
+The lane-owned RED for `action_bar::test_action_bar_env_can_bootstrap_twice_in_same_process` reproduced the missing POIButton TOC at `tests/common/mod.rs:244:9`; the committed game-menu acceptance RED reproduced the same boundary. GREEN results remain pending targeted reruns.
+
 ## Acceptance and execution order
 
 Commit `tests/classic_consumer_applicability.rs` before fixture changes. Its two cases execute original classic UIParent/action-button and menu consumers through the broken shared fixtures. Expected initial boundaries are TimerunningUtil and POIButton, respectively. Existing `protected_method_coverage::protected_input_clamped` is the third boundary. Historical logs already show these causes; fresh lane-owned RED runs remain required and must not be replaced by the historical evidence.

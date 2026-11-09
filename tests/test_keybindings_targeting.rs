@@ -167,12 +167,19 @@ fn setup_env() -> common::LockedEnv {
             common::load_profile_framexml(&env);
             // Wrath Bindings.xml:455-457 calls TargetNearestEnemy(), unlike the
             // simulator's synthetic enemy1 binding. Supply a selectable enemy.
-            env.exec("A_Admin.SetEnemyPool({name='Targeting fixture enemy', level=11, class_index=1})")
-                .expect("seed the native nearest-enemy binding fixture");
-        } else {
+            env.exec(
+                "A_Admin.SetEnemyPool({name='Targeting fixture enemy', level=11, class_index=1})",
+            )
+            .expect("seed the native nearest-enemy binding fixture");
+        } else if !common::load_classic_game_startup_inventory(&env) {
             for name in BLIZZARD_ADDONS {
                 if *name == "Blizzard_UnitFrame" {
-                    common::load_blizzard_addon_bootstrap(&env, &ui, name, "Mainline/TargetFrame.lua");
+                    common::load_blizzard_addon_bootstrap(
+                        &env,
+                        &ui,
+                        name,
+                        "Mainline/TargetFrame.lua",
+                    );
                 }
                 common::load_required_blizzard_addon(&env, &ui, name);
                 env.apply_runtime_addon_load_workarounds(name);
