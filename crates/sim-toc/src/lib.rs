@@ -23,6 +23,12 @@ pub trait Selection: Clone + std::fmt::Debug {
     fn is_builtin_addon_folder(name: &str) -> bool;
 }
 
+#[derive(Clone)]
+struct DependencyLine {
+    names: Vec<String>,
+    allow_load: Option<String>,
+}
+
 /// Parsed TOC file contents.
 #[derive(Clone)]
 pub struct TocFile<P: Selection> {
@@ -46,10 +52,9 @@ pub struct TocFile<P: Selection> {
     pub file_env_allows: Vec<Option<bool>>,
     /// Per-file screen phase from `[AllowLoad Game]` or `[AllowLoad Glue]`.
     pub file_screen_allows: Vec<Option<String>>,
-    /// Per-dependency screen phase from `[AllowLoad Game]` or `[AllowLoad Glue]`
-    /// on metadata dependency lines. `None` means no phase annotation;
-    /// multiple entries preserve repeated declarations of the same dependency.
-    pub dependency_screen_phases: HashMap<String, Vec<Option<String>>>,
+    required_dependency_lines: Vec<DependencyLine>,
+    optional_dependency_lines: Vec<DependencyLine>,
+    allow_load_header_condition: Option<String>,
 }
 
 impl<P: Selection> std::fmt::Debug for TocFile<P> {
@@ -63,17 +68,25 @@ impl<P: Selection> std::fmt::Debug for TocFile<P> {
             .field("file_env_overrides", &self.file_env_overrides)
             .field("file_env_allows", &self.file_env_allows)
             .field("file_screen_allows", &self.file_screen_allows)
-            .field("dependency_screen_phases", &self.dependency_screen_phases)
+            .field(
+                "required_dependency_lines",
+                &self.required_dependency_lines.len(),
+            )
+            .field(
+                "optional_dependency_lines",
+                &self.optional_dependency_lines.len(),
+            )
             .finish()
     }
 }
 
 fn allows_screen_value<P: Selection>(value: Option<&str>, screen: P::Screen) -> bool {
     match value {
-        Some(v) if v.eq_ignore_ascii_case("both") => true,
-        Some(v) if v.eq_ignore_ascii_case("game") => P::is_game(screen),
-        Some(v) if v.eq_ignore_ascii_case("glue") => P::is_glue(screen),
-        _ => P::is_game(screen),
+        None => P::is_game(screen),
+        Some(value) if value.eq_ignore_ascii_case("both") => true,
+        Some(value) if value.eq_ignore_ascii_case("game") => P::is_game(screen),
+        Some(value) if value.eq_ignore_ascii_case("glue") => P::is_glue(screen),
+        Some(_) => false,
     }
 }
 
@@ -195,6 +208,14 @@ fn dependency_screen_phase(value: &str) -> Option<String> {
     annotation_value(&lower, "[allowload ").map(|phase| phase.trim().to_owned())
 }
 
+fn split_dependency_names(value: &str) -> Vec<String> {
+    value
+        .split([' ', ','])
+        .filter(|name| !name.is_empty())
+        .map(ToString::to_string)
+        .collect()
+}
+
 /// Process a `## Key: Value` metadata line into the map.
 ///
 /// Skips `Interface` lines whose value consists entirely of unresolved
@@ -202,7 +223,9 @@ fn dependency_screen_phase(value: &str) -> Option<String> {
 /// provides the real fallback version for source-form TOC files.
 fn insert_metadata<P: Selection>(
     metadata: &mut HashMap<String, String>,
-    dependency_screen_phases: &mut HashMap<String, Vec<Option<String>>>,
+    required_dependency_lines: &mut Vec<DependencyLine>,
+    optional_dependency_lines: &mut Vec<DependencyLine>,
+    allow_load_header_condition: &mut Option<String>,
     rest: &str,
 ) {
     let Some((key, value)) = rest.split_once(':') else {
@@ -210,7 +233,12 @@ fn insert_metadata<P: Selection>(
     };
     let key = key.trim();
     let game_type_header = matches!(key, "AllowLoadGameType" | "ExcludeLoadGameType");
-    if !game_type_header && (P::is_variable_metadata(rest) || !is_allowed_game_type::<P>(rest)) {
+    let has_game_type_condition = annotation_value(rest, "[AllowLoadGameType").is_some()
+        || annotation_value(rest, "[ExcludeLoadGameType").is_some();
+    if (game_type_header && has_game_type_condition && !is_allowed_game_type::<P>(rest))
+        || (!game_type_header
+            && (P::is_variable_metadata(rest) || !is_allowed_game_type::<P>(rest)))
+    {
         return;
     }
     let value = if game_type_header {
@@ -221,20 +249,21 @@ fn insert_metadata<P: Selection>(
     if key == "Interface" && is_all_template_versions(value) {
         return;
     }
+    if key == "AllowLoad" {
+        *allow_load_header_condition = dependency_screen_phase(value);
+    }
     if is_dependency_metadata_key(key) {
-        let screen_phase = dependency_screen_phase(value);
-        for name in split_metadata_list(strip_annotations(value)) {
-            dependency_screen_phases
-                .entry(name)
-                .or_default()
-                .push(screen_phase.clone());
+        let line = DependencyLine {
+            names: split_dependency_names(strip_annotations(value)),
+            allow_load: dependency_screen_phase(value),
+        };
+        if matches!(key, "OptionalDep" | "OptionalDeps") {
+            optional_dependency_lines.push(line);
+        } else {
+            required_dependency_lines.push(line);
         }
     }
-    let value = if game_type_header {
-        value.to_owned()
-    } else {
-        replace_template_vars(strip_annotations(value))
-    };
+    let value = replace_template_vars(strip_annotations(value));
     if is_dependency_metadata_key(key) {
         metadata
             .entry(key.to_string())
@@ -294,6 +323,28 @@ pub fn collect_metadata_lists(metadata: &HashMap<String, String>, keys: &[&str])
         .collect()
 }
 
+fn dependency_names(lines: &[DependencyLine]) -> Vec<String> {
+    lines
+        .iter()
+        .flat_map(|line| line.names.iter().cloned())
+        .collect()
+}
+
+fn dependency_names_for_screen<P: Selection>(
+    lines: &[DependencyLine],
+    screen: P::Screen,
+) -> Vec<String> {
+    lines
+        .iter()
+        .filter(|line| {
+            line.allow_load
+                .as_deref()
+                .is_none_or(|condition| allows_screen_value::<P>(Some(condition), screen))
+        })
+        .flat_map(|line| line.names.iter().cloned())
+        .collect()
+}
+
 #[derive(Default)]
 struct ParsedFileEntries {
     files: Vec<PathBuf>,
@@ -350,7 +401,9 @@ impl<P: Selection> TocFile<P> {
     pub fn parse(addon_dir: &Path, contents: &str) -> Self {
         let contents = contents.strip_prefix('\u{feff}').unwrap_or(contents);
         let mut metadata = HashMap::new();
-        let mut dependency_screen_phases = HashMap::new();
+        let mut required_dependency_lines = Vec::new();
+        let mut optional_dependency_lines = Vec::new();
+        let mut allow_load_header_condition = None;
         let mut file_entries = ParsedFileEntries::default();
 
         for line in contents.lines() {
@@ -361,7 +414,9 @@ impl<P: Selection> TocFile<P> {
             if let Some(rest) = line.strip_prefix("##") {
                 insert_metadata::<P>(
                     &mut metadata,
-                    &mut dependency_screen_phases,
+                    &mut required_dependency_lines,
+                    &mut optional_dependency_lines,
+                    &mut allow_load_header_condition,
                     rest.trim_start(),
                 );
                 continue;
@@ -383,7 +438,9 @@ impl<P: Selection> TocFile<P> {
             file_env_overrides: file_entries.file_env_overrides,
             file_env_allows: file_entries.file_env_allows,
             file_screen_allows: file_entries.file_screen_allows,
-            dependency_screen_phases,
+            required_dependency_lines,
+            optional_dependency_lines,
+            allow_load_header_condition,
         }
     }
 
@@ -415,10 +472,7 @@ impl<P: Selection> TocFile<P> {
     ///
     /// WoW TOC files use variant keys including Blizzard's repeated `Dep`.
     pub fn dependencies(&self) -> Vec<String> {
-        collect_metadata_lists(
-            &self.metadata,
-            &["Dep", "RequiredDep", "Dependencies", "RequiredDeps"],
-        )
+        dependency_names(&self.required_dependency_lines)
     }
 
     /// Get `LoadWith` triggers — addon names that, when loaded, should trigger
@@ -432,36 +486,17 @@ impl<P: Selection> TocFile<P> {
 
     /// Get optional dependencies.
     pub fn optional_deps(&self) -> Vec<String> {
-        collect_metadata_lists(&self.metadata, &["OptionalDep", "OptionalDeps"])
+        dependency_names(&self.optional_dependency_lines)
     }
 
-    fn dependency_admits_screen(&self, dependency: &str, screen: P::Screen) -> bool {
-        self.dependency_screen_phases
-            .get(dependency)
-            .is_none_or(|phases| {
-                phases.iter().any(|phase| match phase {
-                    None => true,
-                    Some(value) => allows_screen_value::<P>(Some(value.trim()), screen),
-                })
-            })
-    }
-
-    /// Required dependencies whose `[AllowLoad ...]` phase annotation admits `screen`.
-    ///
-    /// An unannotated dependency applies to every screen.
+    /// Required dependencies from whole header lines that pass the active screen condition.
     pub fn dependencies_for_screen(&self, screen: P::Screen) -> Vec<String> {
-        self.dependencies()
-            .into_iter()
-            .filter(|dependency| self.dependency_admits_screen(dependency, screen))
-            .collect()
+        dependency_names_for_screen::<P>(&self.required_dependency_lines, screen)
     }
 
-    /// Optional dependencies whose `[AllowLoad ...]` phase annotation admits `screen`.
+    /// Optional dependencies from whole header lines that pass the active screen condition.
     pub fn optional_deps_for_screen(&self, screen: P::Screen) -> Vec<String> {
-        self.optional_deps()
-            .into_iter()
-            .filter(|dependency| self.dependency_admits_screen(dependency, screen))
-            .collect()
+        dependency_names_for_screen::<P>(&self.optional_dependency_lines, screen)
     }
 
     /// Check if addon uses the secure Lua environment (UseSecureEnvironment: 1).
@@ -550,10 +585,11 @@ impl<P: Selection> TocFile<P> {
     /// Check if addon is glue-only (login/character-select screen).
     /// These addons have `AllowLoad: Glue` and should not load in game mode.
     pub fn is_glue_only(&self) -> bool {
-        self.metadata
-            .get("AllowLoad")
-            .map(|v| v.eq_ignore_ascii_case("glue"))
-            .unwrap_or(false)
+        self.folder_name().is_some_and(P::is_builtin_addon_folder)
+            && self
+                .metadata
+                .get("AllowLoad")
+                .is_some_and(|value| value.eq_ignore_ascii_case("glue"))
     }
 
     /// Check if addon is PTR/Beta-only and should not load on this profile.
@@ -601,7 +637,19 @@ impl<P: Selection> TocFile<P> {
 
     /// Whether this addon should load for the requested screen kind.
     pub fn allows_screen(&self, screen: P::Screen) -> bool {
-        allows_screen_value::<P>(self.metadata.get("AllowLoad").map(|v| v.trim()), screen)
+        if !self.folder_name().is_some_and(P::is_builtin_addon_folder) {
+            return P::is_game(screen);
+        }
+
+        let line_is_selected = self
+            .allow_load_header_condition
+            .as_deref()
+            .is_none_or(|condition| allows_screen_value::<P>(Some(condition), screen));
+        let allow_load = line_is_selected
+            .then(|| self.metadata.get("AllowLoad"))
+            .flatten()
+            .map(String::as_str);
+        allows_screen_value::<P>(allow_load, screen)
     }
 
     /// Get saved variables names (account-wide + machine-specific).

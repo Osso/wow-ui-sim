@@ -209,25 +209,38 @@ fn default_runtime_addon_bases() -> Vec<PathBuf> {
 }
 
 pub(super) fn find_runtime_addon_toc(state: &LuaState, addon_name: &str) -> Option<PathBuf> {
+    let screen = borrow_state(state).ok()?.screen_kind;
+    find_runtime_addon_toc_for_screen(state, addon_name, Some(screen))
+}
+
+pub(super) fn find_runtime_addon_toc_ignoring_screen(
+    state: &LuaState,
+    addon_name: &str,
+) -> Option<PathBuf> {
+    find_runtime_addon_toc_for_screen(state, addon_name, None)
+}
+
+fn find_runtime_addon_toc_for_screen(
+    state: &LuaState,
+    addon_name: &str,
+    screen: Option<crate::screen::ScreenKind>,
+) -> Option<PathBuf> {
     if crate::loader::is_addon_excluded_for_active_profile(addon_name) {
         return None;
     }
 
-    let (bases, screen_kind) = {
+    let bases = {
         let sim = borrow_state(state).ok()?;
-        (
-            if sim.addon_base_paths.is_empty() {
-                default_runtime_addon_bases()
-            } else {
-                sim.addon_base_paths.clone()
-            },
-            sim.screen_kind,
-        )
+        if sim.addon_base_paths.is_empty() {
+            default_runtime_addon_bases()
+        } else {
+            sim.addon_base_paths.clone()
+        }
     };
     for base in bases {
         let addon_dir = base.join(addon_name);
         if let Some(toc_path) = crate::loader::find_toc_file(&addon_dir)
-            && runtime_toc_allowed_on_current_screen(&toc_path, screen_kind)
+            && runtime_toc_matches_profile_and_screen(&toc_path, screen)
         {
             return Some(toc_path);
         }
@@ -235,14 +248,16 @@ pub(super) fn find_runtime_addon_toc(state: &LuaState, addon_name: &str) -> Opti
     None
 }
 
-fn runtime_toc_allowed_on_current_screen(
+fn runtime_toc_matches_profile_and_screen(
     toc_path: &Path,
-    screen_kind: crate::screen::ScreenKind,
+    screen: Option<crate::screen::ScreenKind>,
 ) -> bool {
     let Ok(toc) = crate::toc::TocFile::from_file(toc_path) else {
         return false;
     };
-    toc.allows_screen(screen_kind) && !toc.is_ptr_only() && !toc.is_game_type_restricted()
+    !toc.is_ptr_only()
+        && !toc.is_game_type_restricted()
+        && screen.is_none_or(|screen| toc.allows_screen(screen))
 }
 
 fn addon_exists(state: &LuaState, addon_name: &str) -> bool {
@@ -253,7 +268,7 @@ fn addon_exists(state: &LuaState, addon_name: &str) -> bool {
         };
         sim.addons.iter().any(|a| a.folder_name == addon_name)
     };
-    registered || find_runtime_addon_toc(state, addon_name).is_some()
+    registered || find_runtime_addon_toc_ignoring_screen(state, addon_name).is_some()
 }
 
 // ── C_AddOns function implementations ────────────────────────────────────────

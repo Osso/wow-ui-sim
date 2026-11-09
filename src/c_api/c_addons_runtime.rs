@@ -2,7 +2,7 @@ use crate::loader::LoadError;
 use crate::lua_api::LoaderEnv;
 use crate::lua_api::methods::{borrow_lua, borrow_state, create_string, state_handle};
 use rilua::vm::state::LuaState;
-use std::{collections::HashSet, io};
+use std::io;
 
 pub(super) fn load_runtime_addon(state: &mut LuaState, addon_name: &str) -> Result<(), LoadError> {
     let loader_env = LoaderEnv::from_parts_active(
@@ -57,10 +57,16 @@ fn load_runtime_addon_with_dependencies(
             .unwrap_or(0),
     );
     crate::loader::trace_load_addon(origin, format!("begin {addon_name}"));
-    let toc_path = super::find_runtime_addon_toc(state, addon_name)
+    let toc_path = super::find_runtime_addon_toc_ignoring_screen(state, addon_name)
         .ok_or_else(|| missing_runtime_addon_error(addon_name))?;
     crate::loader::trace_load_addon(origin, format!("toc {}", toc_path.display()));
     let toc = crate::toc::TocFile::from_file(&toc_path).map_err(LoadError::Toc)?;
+    let screen = borrow_state(state)
+        .map(|sim| sim.screen_kind)
+        .unwrap_or(crate::screen::ScreenKind::Game);
+    if !toc.allows_screen(screen) {
+        return Err(LoadError::WrongActiveInterface);
+    }
     let loading_guard = crate::loader::begin_addon_load(loader_env, addon_name, &toc);
     apply_mists_runtime_preload(loader_env, &toc, &toc_path, origin)?;
 
@@ -69,12 +75,24 @@ fn load_runtime_addon_with_dependencies(
         load_runtime_addon_recursive(state, loader_env, dependency)?;
     }
 
-    for dependency in runtime_addon_dependencies(state, &toc) {
+    for dependency in toc.dependencies_for_screen(screen) {
         crate::loader::trace_load_addon(origin, format!("{addon_name} -> dep {dependency}"));
         if super::addon_is_disabled(state, &dependency) {
             return Err(disabled_dep_error(&dependency));
         }
-        load_runtime_addon_recursive(state, loader_env, &dependency)?;
+        match load_runtime_addon_recursive(state, loader_env, &dependency) {
+            Err(LoadError::WrongActiveInterface) => {
+                return Err(LoadError::DepWrongActiveInterface(dependency));
+            }
+            result => result?,
+        }
+    }
+    for dependency in toc.optional_deps_for_screen(screen) {
+        crate::loader::trace_load_addon(origin, format!("{addon_name} -> optional {dependency}"));
+        if !super::addon_is_disabled(state, &dependency) {
+            // Native R13 ignores failures from optional dependency loads.
+            let _ = load_runtime_addon_recursive(state, loader_env, &dependency);
+        }
     }
 
     crate::loader::trace_load_addon(origin, format!("files {addon_name}"));
@@ -176,38 +194,6 @@ fn load_runtime_addon_files(
     let result = crate::loader::load_addon_from_toc(loader_env, toc);
     crate::lua_api::taint::restore_active_stack_taint(state, saved_taints);
     result
-}
-
-fn runtime_addon_dependencies(state: &LuaState, toc: &crate::toc::TocFile) -> Vec<String> {
-    let mut deps = Vec::new();
-    let mut seen = HashSet::new();
-    let screen = borrow_state(state)
-        .map(|sim| sim.screen_kind)
-        .unwrap_or(crate::screen::ScreenKind::Game);
-
-    for dep in toc.dependencies_for_screen(screen) {
-        if required_dependency_applies_to_screen(state, &dep) && seen.insert(dep.clone()) {
-            deps.push(dep);
-        }
-    }
-    for dep in toc.optional_deps_for_screen(screen) {
-        if super::find_runtime_addon_toc(state, &dep).is_some() && seen.insert(dep.clone()) {
-            deps.push(dep);
-        }
-    }
-    deps
-}
-
-fn required_dependency_applies_to_screen(state: &LuaState, dependency: &str) -> bool {
-    let is_glue = borrow_state(state)
-        .map(|sim| sim.screen_kind.is_glue())
-        .unwrap_or(false);
-
-    match (dependency, is_glue) {
-        ("Blizzard_GlueParent", false) => false,
-        ("Blizzard_UIParent", true) => false,
-        _ => true,
-    }
 }
 
 fn runtime_foundation_dependencies(state: &LuaState, addon_name: &str) -> Vec<&'static str> {

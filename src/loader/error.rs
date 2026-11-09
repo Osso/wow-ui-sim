@@ -24,6 +24,10 @@ pub enum LoadError {
     /// the disabled dependency name for diagnostics (logged but not
     /// surfaced through `Display`, matching retail's flat reason code).
     DepDisabled(String),
+    /// The addon itself is not valid on the active UI screen.
+    WrongActiveInterface,
+    /// A required dependency is not valid on the active UI screen.
+    DepWrongActiveInterface(String),
 }
 
 impl LoadError {
@@ -59,6 +63,8 @@ impl std::fmt::Display for LoadError {
             LoadError::Xml(e) => write!(f, "XML error: {}", e),
             LoadError::Lua(e) => write!(f, "Lua error: {}", e),
             LoadError::DepDisabled(_) => write!(f, "DEP_DISABLED"),
+            LoadError::WrongActiveInterface => write!(f, "WRONG_ACTIVE_INTERFACE"),
+            LoadError::DepWrongActiveInterface(_) => write!(f, "DEP_WRONG_ACTIVE_INTERFACE"),
         }
     }
 }
