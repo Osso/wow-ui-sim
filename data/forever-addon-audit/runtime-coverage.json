@@ -11597,7 +11597,8 @@
         ],
         "errorRecords": 6,
         "hostCvarsUnchanged": true,
-        "currentFailure": "@Interface/AddOns/CursorCooldown/GCD.lua: table security operation requires an untainted caller"
+        "currentFailure": "@Interface/AddOns/CursorCooldown/GCD.lua: table security operation requires an untainted caller",
+        "currentFailureEvidenceStatus": "Historical observation; R12 removes this error from secretwrap and settablesecurity, but this addon has not been replayed."
       },
       "interactions": {
         "status": "not-run",
@@ -15783,7 +15784,8 @@
         ],
         "errorRecords": 1,
         "hostCvarsUnchanged": true,
-        "currentFailure": "Lua Error: table security operation requires an untainted caller"
+        "currentFailure": "Lua Error: table security operation requires an untainted caller",
+        "currentFailureEvidenceStatus": "Historical observation; R12 removes this error from secretwrap and settablesecurity, but this addon has not been replayed."
       },
       "interactions": {
         "status": "bounded-pass",
