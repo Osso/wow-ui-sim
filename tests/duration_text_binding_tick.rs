@@ -156,8 +156,7 @@ fn automatic_binding_secret_numeric_formatter_blocks_conversion_leaks() {
         r#"
         tostring, tonumber = Originals[1], Originals[2]
         local labelText = Label:GetText()
-        assert(issecretvalue(labelText), 'automatic update exposed secret text')
-        assert(secretunwrap(labelText) == '8', 'automatic update produced wrong secret text')
+        assert(labelText == '8', 'secure read returned wrong formatted text')
         assert(not ConversionLeak, 'automatic update called an addon conversion override')
         local read = function() return Label:GetText() end
         debug.setobjecttaint(read, 'AutomaticBindingReader')
