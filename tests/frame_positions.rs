@@ -307,7 +307,7 @@ fn assert_chat_dock_layout(env: &WowLuaEnv) {
 
     let (chat_x, chat_y, chat_width, _) = frame_rect(env, "ChatFrame1");
     let (expected_x, expected_y, expected_width, anchor_check) = match ACTIVE {
-        ClientProfile::Retail | ClientProfile::Ptr | ClientProfile::WowForever => {
+        ClientProfile::Ptr | ClientProfile::WowForever => {
             let (has_scrollbar, quick_button_height): (bool, f32) = env
                 .eval(
                     r#"
@@ -338,7 +338,9 @@ fn assert_chat_dock_layout(env: &WowLuaEnv) {
             assert(x == 0 and y == 6)
             "#,
         ),
-        ClientProfile::Wrath => unreachable!("Wrath is outside this lane"),
+        ClientProfile::Retail | ClientProfile::Wrath => {
+            unreachable!("Retail keeps its committed baseline; Wrath is outside this lane")
+        }
     };
     env.exec(anchor_check)
         .expect("check native chat dock anchor");
@@ -433,7 +435,14 @@ fn run_tests(env: &WowLuaEnv) -> (usize, usize) {
             if expects_missing_frame(name) {
                 assert_frame_absent(env, frame);
             } else if name == "general_dock_manager" {
-                assert_chat_dock_layout(env);
+                if wow_ui_sim::client_profile::ACTIVE
+                    == wow_ui_sim::client_profile::ClientProfile::Retail
+                {
+                    let (_, frame, ex, ey, ew, eh, ea) = expected_position(*test);
+                    assert_frame_rect(env, frame, ex, ey, ew, eh, ea);
+                } else {
+                    assert_chat_dock_layout(env);
+                }
             } else if name == "chat_edit_box"
                 && matches!(
                     wow_ui_sim::client_profile::ACTIVE,
