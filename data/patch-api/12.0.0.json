@@ -135356,7 +135356,7 @@
         {
           "kind": "source",
           "reference": "Cargo.lock",
-          "source_hash": "0a8377bc21bacbf70fa49677fdeebedae1526b1cbb625e9c755b4308e5e20410",
+          "source_hash": "cbcf575823c886b628fe9ab319341d8c89569ed49f51d7c94450234b5e83edc2",
           "summary": "Lockfile provenance only: rilua is pinned at the recorded git revision; this does not prove or disprove the removed math constants in the simulator or retail."
         },
         {
@@ -135403,7 +135403,7 @@
         {
           "kind": "source",
           "reference": "Cargo.lock",
-          "source_hash": "0a8377bc21bacbf70fa49677fdeebedae1526b1cbb625e9c755b4308e5e20410",
+          "source_hash": "cbcf575823c886b628fe9ab319341d8c89569ed49f51d7c94450234b5e83edc2",
           "summary": "Lockfile provenance only: rilua is pinned at the recorded git revision; this does not prove or disprove the removed math constants in the simulator or retail."
         },
         {

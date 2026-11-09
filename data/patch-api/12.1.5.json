@@ -314,13 +314,13 @@
         {
           "kind": "source",
           "reference": "Cargo.toml",
-          "source_hash": "bf5fa96909795334263798f02f2d5a97dfce390bf0993043eef2c1d09115a1e5",
+          "source_hash": "15322d6833ae0425406bf44494c992d96beb6efc10431e15fbd2921ffea6edaa",
           "summary": "Direct ICU 2.1.1 collator dependency is pinned with compiled data for modeled collation without unrelated upgrades."
         },
         {
           "kind": "source",
           "reference": "Cargo.lock",
-          "source_hash": "0a8377bc21bacbf70fa49677fdeebedae1526b1cbb625e9c755b4308e5e20410",
+          "source_hash": "cbcf575823c886b628fe9ab319341d8c89569ed49f51d7c94450234b5e83edc2",
           "summary": "Cargo.lock records the resolved ICU 2.1.1 collator dependency used by modeled comparison and sort-key behavior."
         },
         {
@@ -406,13 +406,13 @@
         {
           "kind": "source",
           "reference": "Cargo.toml",
-          "source_hash": "bf5fa96909795334263798f02f2d5a97dfce390bf0993043eef2c1d09115a1e5",
+          "source_hash": "15322d6833ae0425406bf44494c992d96beb6efc10431e15fbd2921ffea6edaa",
           "summary": "Direct ICU 2.1.1 segmenter dependency is pinned with compiled data for modeled segmentation without unrelated upgrades."
         },
         {
           "kind": "source",
           "reference": "Cargo.lock",
-          "source_hash": "0a8377bc21bacbf70fa49677fdeebedae1526b1cbb625e9c755b4308e5e20410",
+          "source_hash": "cbcf575823c886b628fe9ab319341d8c89569ed49f51d7c94450234b5e83edc2",
           "summary": "Cargo.lock records the resolved ICU 2.1.1 segmenter dependency used by modeled FindBreaks behavior."
         },
         {
@@ -541,13 +541,13 @@
         {
           "kind": "source",
           "reference": "Cargo.toml",
-          "source_hash": "bf5fa96909795334263798f02f2d5a97dfce390bf0993043eef2c1d09115a1e5",
+          "source_hash": "15322d6833ae0425406bf44494c992d96beb6efc10431e15fbd2921ffea6edaa",
           "summary": "Direct ICU casing and locale-core dependencies are pinned to 2.1.1 with narrowly selected features, without unrelated dependency upgrades."
         },
         {
           "kind": "source",
           "reference": "Cargo.lock",
-          "source_hash": "0a8377bc21bacbf70fa49677fdeebedae1526b1cbb625e9c755b4308e5e20410",
+          "source_hash": "cbcf575823c886b628fe9ab319341d8c89569ed49f51d7c94450234b5e83edc2",
           "summary": "Cargo.lock records the resolved ICU casing and locale-core dependencies used by the modeled implementation."
         },
         {
@@ -1015,13 +1015,13 @@
         {
           "kind": "source",
           "reference": "Cargo.toml",
-          "source_hash": "bf5fa96909795334263798f02f2d5a97dfce390bf0993043eef2c1d09115a1e5",
+          "source_hash": "15322d6833ae0425406bf44494c992d96beb6efc10431e15fbd2921ffea6edaa",
           "summary": "Exact-pinned ICU properties and unicode-blocks dependencies provide the modeled property and block datasets without unrelated upgrades."
         },
         {
           "kind": "source",
           "reference": "Cargo.lock",
-          "source_hash": "0a8377bc21bacbf70fa49677fdeebedae1526b1cbb625e9c755b4308e5e20410",
+          "source_hash": "cbcf575823c886b628fe9ab319341d8c89569ed49f51d7c94450234b5e83edc2",
           "summary": "Cargo.lock records the resolved ICU properties and unicode-blocks packages used by the modeled implementation."
         },
         {
@@ -1331,13 +1331,13 @@
         {
           "kind": "source",
           "reference": "Cargo.toml",
-          "source_hash": "bf5fa96909795334263798f02f2d5a97dfce390bf0993043eef2c1d09115a1e5",
+          "source_hash": "15322d6833ae0425406bf44494c992d96beb6efc10431e15fbd2921ffea6edaa",
           "summary": "Direct ICU 2.1.1 collator dependency is pinned with compiled data for modeled collation without unrelated upgrades."
         },
         {
           "kind": "source",
           "reference": "Cargo.lock",
-          "source_hash": "0a8377bc21bacbf70fa49677fdeebedae1526b1cbb625e9c755b4308e5e20410",
+          "source_hash": "cbcf575823c886b628fe9ab319341d8c89569ed49f51d7c94450234b5e83edc2",
           "summary": "Cargo.lock records the resolved ICU 2.1.1 collator dependency used by modeled comparison and sort-key behavior."
         },
         {
@@ -1386,13 +1386,13 @@
         {
           "kind": "source",
           "reference": "Cargo.toml",
-          "source_hash": "bf5fa96909795334263798f02f2d5a97dfce390bf0993043eef2c1d09115a1e5",
+          "source_hash": "15322d6833ae0425406bf44494c992d96beb6efc10431e15fbd2921ffea6edaa",
           "summary": "The direct icu_normalizer dependency is pinned to 2.1.1 with compiled_data, avoiding a handwritten Unicode normalizer or unrelated dependency upgrade."
         },
         {
           "kind": "source",
           "reference": "Cargo.lock",
-          "source_hash": "0a8377bc21bacbf70fa49677fdeebedae1526b1cbb625e9c755b4308e5e20410",
+          "source_hash": "cbcf575823c886b628fe9ab319341d8c89569ed49f51d7c94450234b5e83edc2",
           "summary": "Cargo.lock records the resolved icu_normalizer 2.1.1 dependency used by the modeled implementation."
         },
         {
@@ -1486,13 +1486,13 @@
         {
           "kind": "source",
           "reference": "Cargo.toml",
-          "source_hash": "bf5fa96909795334263798f02f2d5a97dfce390bf0993043eef2c1d09115a1e5",
+          "source_hash": "15322d6833ae0425406bf44494c992d96beb6efc10431e15fbd2921ffea6edaa",
           "summary": "The direct icu_normalizer dependency is pinned to 2.1.1 with compiled_data, avoiding a handwritten Unicode normalizer or unrelated dependency upgrade."
         },
         {
           "kind": "source",
           "reference": "Cargo.lock",
-          "source_hash": "0a8377bc21bacbf70fa49677fdeebedae1526b1cbb625e9c755b4308e5e20410",
+          "source_hash": "cbcf575823c886b628fe9ab319341d8c89569ed49f51d7c94450234b5e83edc2",
           "summary": "Cargo.lock records the resolved icu_normalizer 2.1.1 dependency used by the modeled implementation."
         },
         {
@@ -1705,13 +1705,13 @@
         {
           "kind": "source",
           "reference": "Cargo.toml",
-          "source_hash": "bf5fa96909795334263798f02f2d5a97dfce390bf0993043eef2c1d09115a1e5",
+          "source_hash": "15322d6833ae0425406bf44494c992d96beb6efc10431e15fbd2921ffea6edaa",
           "summary": "Direct ICU plural and fixed-decimal dependencies are pinned to the modeled implementation versions without unrelated dependency upgrades."
         },
         {
           "kind": "source",
           "reference": "Cargo.lock",
-          "source_hash": "0a8377bc21bacbf70fa49677fdeebedae1526b1cbb625e9c755b4308e5e20410",
+          "source_hash": "cbcf575823c886b628fe9ab319341d8c89569ed49f51d7c94450234b5e83edc2",
           "summary": "Cargo.lock records the resolved ICU plural and fixed-decimal dependencies used by the modeled implementation."
         },
         {
@@ -1760,13 +1760,13 @@
         {
           "kind": "source",
           "reference": "Cargo.toml",
-          "source_hash": "bf5fa96909795334263798f02f2d5a97dfce390bf0993043eef2c1d09115a1e5",
+          "source_hash": "15322d6833ae0425406bf44494c992d96beb6efc10431e15fbd2921ffea6edaa",
           "summary": "Direct ICU casing and locale-core dependencies are pinned to 2.1.1 with narrowly selected features, without unrelated dependency upgrades."
         },
         {
           "kind": "source",
           "reference": "Cargo.lock",
-          "source_hash": "0a8377bc21bacbf70fa49677fdeebedae1526b1cbb625e9c755b4308e5e20410",
+          "source_hash": "cbcf575823c886b628fe9ab319341d8c89569ed49f51d7c94450234b5e83edc2",
           "summary": "Cargo.lock records the resolved ICU casing and locale-core dependencies used by the modeled implementation."
         },
         {
@@ -1815,13 +1815,13 @@
         {
           "kind": "source",
           "reference": "Cargo.toml",
-          "source_hash": "bf5fa96909795334263798f02f2d5a97dfce390bf0993043eef2c1d09115a1e5",
+          "source_hash": "15322d6833ae0425406bf44494c992d96beb6efc10431e15fbd2921ffea6edaa",
           "summary": "Direct ICU 2.1.1 casing, locale-core, and segmenter dependencies are pinned with focused compiled-data features for modeled titlecasing without unrelated upgrades."
         },
         {
           "kind": "source",
           "reference": "Cargo.lock",
-          "source_hash": "0a8377bc21bacbf70fa49677fdeebedae1526b1cbb625e9c755b4308e5e20410",
+          "source_hash": "cbcf575823c886b628fe9ab319341d8c89569ed49f51d7c94450234b5e83edc2",
           "summary": "Cargo.lock records the resolved ICU 2.1.1 dependencies used by the modeled titlecase implementation."
         },
         {
@@ -1870,13 +1870,13 @@
         {
           "kind": "source",
           "reference": "Cargo.toml",
-          "source_hash": "bf5fa96909795334263798f02f2d5a97dfce390bf0993043eef2c1d09115a1e5",
+          "source_hash": "15322d6833ae0425406bf44494c992d96beb6efc10431e15fbd2921ffea6edaa",
           "summary": "Direct ICU casing and locale-core dependencies are pinned to 2.1.1 with narrowly selected features, without unrelated dependency upgrades."
         },
         {
           "kind": "source",
           "reference": "Cargo.lock",
-          "source_hash": "0a8377bc21bacbf70fa49677fdeebedae1526b1cbb625e9c755b4308e5e20410",
+          "source_hash": "cbcf575823c886b628fe9ab319341d8c89569ed49f51d7c94450234b5e83edc2",
           "summary": "Cargo.lock records the resolved ICU casing and locale-core dependencies used by the modeled implementation."
         },
         {
@@ -1925,13 +1925,13 @@
         {
           "kind": "source",
           "reference": "Cargo.toml",
-          "source_hash": "bf5fa96909795334263798f02f2d5a97dfce390bf0993043eef2c1d09115a1e5",
+          "source_hash": "15322d6833ae0425406bf44494c992d96beb6efc10431e15fbd2921ffea6edaa",
           "summary": "Direct ICU locale dependency is pinned at 2.1.1 with compiled data for modeled locale transforms without unrelated upgrades."
         },
         {
           "kind": "source",
           "reference": "Cargo.lock",
-          "source_hash": "0a8377bc21bacbf70fa49677fdeebedae1526b1cbb625e9c755b4308e5e20410",
+          "source_hash": "cbcf575823c886b628fe9ab319341d8c89569ed49f51d7c94450234b5e83edc2",
           "summary": "Cargo.lock records the resolved ICU 2.1.1 locale dependency used by modeled TransformLocale behavior."
         },
         {
@@ -2378,13 +2378,13 @@
         {
           "kind": "source",
           "reference": "Cargo.toml",
-          "source_hash": "bf5fa96909795334263798f02f2d5a97dfce390bf0993043eef2c1d09115a1e5",
+          "source_hash": "15322d6833ae0425406bf44494c992d96beb6efc10431e15fbd2921ffea6edaa",
           "summary": "Exact-pinned ICU properties and unicode-blocks dependencies provide the modeled property and block datasets without unrelated upgrades."
         },
         {
           "kind": "source",
           "reference": "Cargo.lock",
-          "source_hash": "0a8377bc21bacbf70fa49677fdeebedae1526b1cbb625e9c755b4308e5e20410",
+          "source_hash": "cbcf575823c886b628fe9ab319341d8c89569ed49f51d7c94450234b5e83edc2",
           "summary": "Cargo.lock records the resolved ICU properties and unicode-blocks packages used by the modeled implementation."
         },
         {
@@ -9488,13 +9488,13 @@
         {
           "kind": "source",
           "reference": "Cargo.toml",
-          "source_hash": "bf5fa96909795334263798f02f2d5a97dfce390bf0993043eef2c1d09115a1e5",
+          "source_hash": "15322d6833ae0425406bf44494c992d96beb6efc10431e15fbd2921ffea6edaa",
           "summary": "Direct ICU 2.1.1 collator dependency is pinned with compiled data for modeled collation without unrelated upgrades."
         },
         {
           "kind": "source",
           "reference": "Cargo.lock",
-          "source_hash": "0a8377bc21bacbf70fa49677fdeebedae1526b1cbb625e9c755b4308e5e20410",
+          "source_hash": "cbcf575823c886b628fe9ab319341d8c89569ed49f51d7c94450234b5e83edc2",
           "summary": "Cargo.lock records the resolved ICU 2.1.1 collator dependency used by modeled comparison and sort-key behavior."
         },
         {
@@ -9543,13 +9543,13 @@
         {
           "kind": "source",
           "reference": "Cargo.toml",
-          "source_hash": "bf5fa96909795334263798f02f2d5a97dfce390bf0993043eef2c1d09115a1e5",
+          "source_hash": "15322d6833ae0425406bf44494c992d96beb6efc10431e15fbd2921ffea6edaa",
           "summary": "Direct ICU 2.1.1 segmenter dependency is pinned with compiled data for modeled segmentation without unrelated upgrades."
         },
         {
           "kind": "source",
           "reference": "Cargo.lock",
-          "source_hash": "0a8377bc21bacbf70fa49677fdeebedae1526b1cbb625e9c755b4308e5e20410",
+          "source_hash": "cbcf575823c886b628fe9ab319341d8c89569ed49f51d7c94450234b5e83edc2",
           "summary": "Cargo.lock records the resolved ICU 2.1.1 segmenter dependency used by modeled FindBreaks behavior."
         },
         {
@@ -9678,13 +9678,13 @@
         {
           "kind": "source",
           "reference": "Cargo.toml",
-          "source_hash": "bf5fa96909795334263798f02f2d5a97dfce390bf0993043eef2c1d09115a1e5",
+          "source_hash": "15322d6833ae0425406bf44494c992d96beb6efc10431e15fbd2921ffea6edaa",
           "summary": "Direct ICU casing and locale-core dependencies are pinned to 2.1.1 with narrowly selected features, without unrelated dependency upgrades."
         },
         {
           "kind": "source",
           "reference": "Cargo.lock",
-          "source_hash": "0a8377bc21bacbf70fa49677fdeebedae1526b1cbb625e9c755b4308e5e20410",
+          "source_hash": "cbcf575823c886b628fe9ab319341d8c89569ed49f51d7c94450234b5e83edc2",
           "summary": "Cargo.lock records the resolved ICU casing and locale-core dependencies used by the modeled implementation."
         },
         {
@@ -10326,13 +10326,13 @@
         {
           "kind": "source",
           "reference": "Cargo.toml",
-          "source_hash": "bf5fa96909795334263798f02f2d5a97dfce390bf0993043eef2c1d09115a1e5",
+          "source_hash": "15322d6833ae0425406bf44494c992d96beb6efc10431e15fbd2921ffea6edaa",
           "summary": "Direct ICU 2.1.1 collator dependency is pinned with compiled data for modeled collation without unrelated upgrades."
         },
         {
           "kind": "source",
           "reference": "Cargo.lock",
-          "source_hash": "0a8377bc21bacbf70fa49677fdeebedae1526b1cbb625e9c755b4308e5e20410",
+          "source_hash": "cbcf575823c886b628fe9ab319341d8c89569ed49f51d7c94450234b5e83edc2",
           "summary": "Cargo.lock records the resolved ICU 2.1.1 collator dependency used by modeled comparison and sort-key behavior."
         },
         {
@@ -10590,13 +10590,13 @@
         {
           "kind": "source",
           "reference": "Cargo.toml",
-          "source_hash": "bf5fa96909795334263798f02f2d5a97dfce390bf0993043eef2c1d09115a1e5",
+          "source_hash": "15322d6833ae0425406bf44494c992d96beb6efc10431e15fbd2921ffea6edaa",
           "summary": "Direct ICU plural and fixed-decimal dependencies are pinned to the modeled implementation versions without unrelated dependency upgrades."
         },
         {
           "kind": "source",
           "reference": "Cargo.lock",
-          "source_hash": "0a8377bc21bacbf70fa49677fdeebedae1526b1cbb625e9c755b4308e5e20410",
+          "source_hash": "cbcf575823c886b628fe9ab319341d8c89569ed49f51d7c94450234b5e83edc2",
           "summary": "Cargo.lock records the resolved ICU plural and fixed-decimal dependencies used by the modeled implementation."
         },
         {
@@ -10682,13 +10682,13 @@
         {
           "kind": "source",
           "reference": "Cargo.toml",
-          "source_hash": "bf5fa96909795334263798f02f2d5a97dfce390bf0993043eef2c1d09115a1e5",
+          "source_hash": "15322d6833ae0425406bf44494c992d96beb6efc10431e15fbd2921ffea6edaa",
           "summary": "Direct ICU casing and locale-core dependencies are pinned to 2.1.1 with narrowly selected features, without unrelated dependency upgrades."
         },
         {
           "kind": "source",
           "reference": "Cargo.lock",
-          "source_hash": "0a8377bc21bacbf70fa49677fdeebedae1526b1cbb625e9c755b4308e5e20410",
+          "source_hash": "cbcf575823c886b628fe9ab319341d8c89569ed49f51d7c94450234b5e83edc2",
           "summary": "Cargo.lock records the resolved ICU casing and locale-core dependencies used by the modeled implementation."
         },
         {
@@ -10737,13 +10737,13 @@
         {
           "kind": "source",
           "reference": "Cargo.toml",
-          "source_hash": "bf5fa96909795334263798f02f2d5a97dfce390bf0993043eef2c1d09115a1e5",
+          "source_hash": "15322d6833ae0425406bf44494c992d96beb6efc10431e15fbd2921ffea6edaa",
           "summary": "Direct ICU 2.1.1 casing, locale-core, and segmenter dependencies are pinned with focused compiled-data features for modeled titlecasing without unrelated upgrades."
         },
         {
           "kind": "source",
           "reference": "Cargo.lock",
-          "source_hash": "0a8377bc21bacbf70fa49677fdeebedae1526b1cbb625e9c755b4308e5e20410",
+          "source_hash": "cbcf575823c886b628fe9ab319341d8c89569ed49f51d7c94450234b5e83edc2",
           "summary": "Cargo.lock records the resolved ICU 2.1.1 dependencies used by the modeled titlecase implementation."
         },
         {
@@ -10792,13 +10792,13 @@
         {
           "kind": "source",
           "reference": "Cargo.toml",
-          "source_hash": "bf5fa96909795334263798f02f2d5a97dfce390bf0993043eef2c1d09115a1e5",
+          "source_hash": "15322d6833ae0425406bf44494c992d96beb6efc10431e15fbd2921ffea6edaa",
           "summary": "Direct ICU casing and locale-core dependencies are pinned to 2.1.1 with narrowly selected features, without unrelated dependency upgrades."
         },
         {
           "kind": "source",
           "reference": "Cargo.lock",
-          "source_hash": "0a8377bc21bacbf70fa49677fdeebedae1526b1cbb625e9c755b4308e5e20410",
+          "source_hash": "cbcf575823c886b628fe9ab319341d8c89569ed49f51d7c94450234b5e83edc2",
           "summary": "Cargo.lock records the resolved ICU casing and locale-core dependencies used by the modeled implementation."
         },
         {
@@ -10847,13 +10847,13 @@
         {
           "kind": "source",
           "reference": "Cargo.toml",
-          "source_hash": "bf5fa96909795334263798f02f2d5a97dfce390bf0993043eef2c1d09115a1e5",
+          "source_hash": "15322d6833ae0425406bf44494c992d96beb6efc10431e15fbd2921ffea6edaa",
           "summary": "Direct ICU locale dependency is pinned at 2.1.1 with compiled data for modeled locale transforms without unrelated upgrades."
         },
         {
           "kind": "source",
           "reference": "Cargo.lock",
-          "source_hash": "0a8377bc21bacbf70fa49677fdeebedae1526b1cbb625e9c755b4308e5e20410",
+          "source_hash": "cbcf575823c886b628fe9ab319341d8c89569ed49f51d7c94450234b5e83edc2",
           "summary": "Cargo.lock records the resolved ICU 2.1.1 locale dependency used by modeled TransformLocale behavior."
         },
         {
