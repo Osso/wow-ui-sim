@@ -55,29 +55,44 @@ fn blizzard_ui_dir() -> PathBuf {
         .expect("Blizzard UI cache should be available")
 }
 
+fn collect_ptr_source_files(path: &Path, files: &mut Vec<(PathBuf, String)>) {
+    for entry in fs::read_dir(path).expect("PTR AddOns directory should be readable") {
+        let entry = entry.expect("PTR source entry should be readable");
+        let path = entry.path();
+        if path.is_dir() {
+            collect_ptr_source_files(&path, files);
+            continue;
+        }
+
+        let extension = path.extension().and_then(|value| value.to_str());
+        if matches!(extension, Some("lua" | "xml" | "toc")) {
+            let source = fs::read_to_string(&path).expect("PTR source file should be UTF-8 text");
+            files.push((path, source));
+        }
+    }
+}
+
+#[test]
+fn source_symbol_scan_accepts_non_utf8_comments() {
+    let directory = tempfile::tempdir().expect("create source fixture");
+    fs::write(
+        directory.path().join("Fixture.lua"),
+        b"BeforeComment = function() end\n-- player\x92s note\nAfterComment = function() end\n",
+    )
+    .expect("write byte-exact Lua fixture");
+    let mut files = Vec::new();
+    collect_ptr_source_files(directory.path(), &mut files);
+    assert_eq!(files.len(), 1);
+    assert!(files[0].1.contains("BeforeComment"));
+    assert!(files[0].1.contains("AfterComment"));
+    assert!(!files[0].1.contains("AbsentSymbol"));
+}
+
 fn ptr_source_files() -> &'static Vec<(PathBuf, String)> {
     static FILES: OnceLock<Vec<(PathBuf, String)>> = OnceLock::new();
     FILES.get_or_init(|| {
-        fn collect(path: &Path, files: &mut Vec<(PathBuf, String)>) {
-            for entry in fs::read_dir(path).expect("PTR AddOns directory should be readable") {
-                let entry = entry.expect("PTR source entry should be readable");
-                let path = entry.path();
-                if path.is_dir() {
-                    collect(&path, files);
-                    continue;
-                }
-
-                let extension = path.extension().and_then(|value| value.to_str());
-                if matches!(extension, Some("lua" | "xml" | "toc")) {
-                    let source =
-                        fs::read_to_string(&path).expect("PTR source file should be UTF-8 text");
-                    files.push((path, source));
-                }
-            }
-        }
-
         let mut files = Vec::new();
-        collect(&blizzard_ui_dir(), &mut files);
+        collect_ptr_source_files(&blizzard_ui_dir(), &mut files);
         files
     })
 }
