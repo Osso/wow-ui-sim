@@ -1,5 +1,9 @@
 > Proof receipts live untracked under `~/.local/state/wow-ui-sim`. The `data/patch-api/evidence` and `data/test-perf/evidence` trees were removed on 2026-11-08; historical links below are records, not live paths. Recover a file with `git show c011c1d95:<path>`.
 
+## [2026-11-08] investigation | GUI CASC cache preparation
+
+[GUI CASC cache preparation](investigations/gui-casc-cache-preparation.md) records the absent selected Era encoding key, supported local index headers, bounded consistency finding, and decision to use synthetic inputs in the required regression while retaining an `optional-tests` live smoke.
+
 ## [2026-11-08] investigation | Mists spellbook button size
 
 [Mists spellbook button size](investigations/mists-spellbook-size.md) traces a zero-size button to indentation-based XML duplicate removal and records the parent-aware fix and test expectation updates.

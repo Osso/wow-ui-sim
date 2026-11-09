@@ -1,3 +1,7 @@
+## [2026-11-08] investigation | GUI CASC cache preparation
+
+Recorded that the selected Era encoding key was absent from the inspected supported-format local indices. The [investigation](investigations/gui-casc-cache-preparation.md) separates that install observation from resolver behavior and records deterministic fixture coverage plus the `optional-tests` live smoke.
+
 ## [2026-11-08] investigation | Mists spellbook button size
 
 Recorded the [XML parent identity failure](investigations/mists-spellbook-size.md) and its parser and consumer coverage.
