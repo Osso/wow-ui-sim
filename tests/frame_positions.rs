@@ -142,12 +142,12 @@ const POSITION_TESTS: &[TestCase] = &[
 ];
 
 /// ActionButton1 only checks x position (y/size depend on bar layout).
-fn check_action_button(env: &WowLuaEnv) {
+fn check_action_button(env: &WowLuaEnv, expected_x: f32) {
     let (x, _y, _w, _h) = frame_rect(env, "ActionButton1");
     let alpha = frame_alpha(env, "ActionButton1");
     assert!(
-        (x - 519.0).abs() <= 1.0,
-        "ActionButton1 x: expected 519, got {x}"
+        (x - expected_x).abs() <= 1.0,
+        "ActionButton1 x: expected {expected_x}, got {x}"
     );
     assert!(
         (alpha - 1.0).abs() <= 0.02,
@@ -155,9 +155,240 @@ fn check_action_button(env: &WowLuaEnv) {
     );
 }
 
+fn assert_native_minimap_inputs(env: &WowLuaEnv) {
+    use wow_ui_sim::client_profile::{ACTIVE, ClientProfile};
+
+    let side = match ACTIVE {
+        ClientProfile::Mists | ClientProfile::Era | ClientProfile::Anniversary => 140,
+        _ => 198,
+    };
+    env.exec(&format!(
+        r#"
+        assert(UIParent:GetEffectiveScale() == 1, "default canvas scale")
+        assert(Minimap:GetParent() == MinimapCluster.MinimapContainer, "native minimap parent")
+        assert(Minimap:GetWidth() == {side} and Minimap:GetHeight() == {side}, "native minimap dimensions")
+        assert(MinimapCluster.MinimapContainer:GetScale() == 1, "default minimap scale")
+        local point, relative, relativePoint, x, y = Minimap:GetPoint(1)
+        assert(point == "CENTER" and relative == MinimapCluster.MinimapContainer and relativePoint == "CENTER")
+        assert(x == 0 and y == 0, "native minimap center")
+        point, relative, relativePoint, x, y = MinimapCluster:GetPoint(1)
+        assert(point == "TOPRIGHT" and relative == UIParent and relativePoint == "TOPRIGHT")
+        assert(x == 0 and y == 0, "native minimap preset anchor")
+        "#
+    ))
+    .expect("native minimap fixture inputs");
+}
+
+fn expected_position(test: TestCase) -> TestCase {
+    use wow_ui_sim::client_profile::{ACTIVE, ClientProfile};
+
+    let (name, frame, ..) = test;
+    match (ACTIVE, name) {
+        (ClientProfile::Ptr, "minimap") => (name, frame, 1389.5, 44.0, 198.0, 198.0, 1.0),
+        (ClientProfile::Ptr, "minimap_cluster") => (name, frame, 1357.0, 0.0, 243.0, 252.5, 1.0),
+        (ClientProfile::Ptr, "micro_menu_container") => {
+            (name, frame, 1265.0, 1154.0, 329.0, 40.0, 1.0)
+        }
+        (ClientProfile::WowForever, "minimap") => (name, frame, 1393.5, 44.0, 198.0, 198.0, 1.0),
+        (ClientProfile::WowForever, "minimap_cluster") => {
+            (name, frame, 1365.0, 0.0, 235.0, 256.0, 1.0)
+        }
+        (ClientProfile::WowForever, "micro_menu")
+        | (ClientProfile::WowForever, "micro_menu_container") => {
+            (name, frame, 752.0, 1154.0, 329.0, 40.0, 1.0)
+        }
+        (ClientProfile::WowForever, "main_action_bar") => {
+            (name, frame, 185.5, 1153.0, 562.0, 45.0, 1.0)
+        }
+        (ClientProfile::Mists, "paladin_power_bar") => {
+            (name, "PaladinPowerBar", 341.0, 815.0, 136.0, 39.0, 1.0)
+        }
+        (ClientProfile::Mists, "minimap")
+        | (ClientProfile::Era, "minimap")
+        | (ClientProfile::Anniversary, "minimap") => (name, frame, 1441.5, 22.0, 140.0, 140.0, 1.0),
+        (ClientProfile::Mists, "minimap_cluster")
+        | (ClientProfile::Era, "minimap_cluster")
+        | (ClientProfile::Anniversary, "minimap_cluster") => {
+            (name, frame, 1423.0, 0.0, 177.0, 165.0, 1.0)
+        }
+        (ClientProfile::Era, "party_frame") | (ClientProfile::Anniversary, "party_frame") => {
+            (name, frame, 18.0, 128.0, 128.0, 244.0, 1.0)
+        }
+        (ClientProfile::Era, "compact_party_frame")
+        | (ClientProfile::Anniversary, "compact_party_frame") => {
+            (name, frame, 18.0, 128.0, 98.0, 234.0, 1.0)
+        }
+        (ClientProfile::Mists, "chat_edit_box")
+        | (ClientProfile::Era, "chat_edit_box")
+        | (ClientProfile::Anniversary, "chat_edit_box") => {
+            (name, frame, 30.0, 1152.0, 440.0, 32.0, 0.35)
+        }
+        (ClientProfile::Era, "casting_bar") | (ClientProfile::Anniversary, "casting_bar") => {
+            (name, frame, 702.5, 593.5, 195.0, 13.0, 1.0)
+        }
+        (ClientProfile::Mists, "raid_boss_emote_anchor")
+        | (ClientProfile::Era, "raid_boss_emote_anchor")
+        | (ClientProfile::Anniversary, "raid_boss_emote_anchor") => {
+            (name, "RaidBossEmoteFrame", 544.0, 252.0, 512.0, 80.0, 1.0)
+        }
+        (ClientProfile::Mists, "right_managed_container")
+        | (ClientProfile::Era, "right_managed_container")
+        | (ClientProfile::Anniversary, "right_managed_container") => (
+            name,
+            "UIParentRightManagedFrameContainer",
+            test.2,
+            test.3,
+            test.4,
+            test.5,
+            test.6,
+        ),
+        _ => test,
+    }
+}
+
+fn expects_missing_frame(test: &str) -> bool {
+    use wow_ui_sim::client_profile::{ACTIVE, ClientProfile};
+
+    match test {
+        "paladin_power_bar" => matches!(
+            ACTIVE,
+            ClientProfile::WowForever | ClientProfile::Era | ClientProfile::Anniversary
+        ),
+        "critical_encounter_warnings"
+        | "medium_encounter_warnings"
+        | "minor_encounter_warnings" => matches!(
+            ACTIVE,
+            ClientProfile::WowForever
+                | ClientProfile::Mists
+                | ClientProfile::Era
+                | ClientProfile::Anniversary
+        ),
+        _ => false,
+    }
+}
+
+fn assert_frame_absent(env: &WowLuaEnv, name: &str) {
+    let global_exists: bool = env
+        .eval(&format!("return _G[{name:?}] ~= nil"))
+        .expect("read native frame global");
+    let widget_exists = env.state().borrow().widgets.get_id_by_name(name).is_some();
+    assert!(
+        !global_exists && !widget_exists,
+        "{name} is excluded from this profile's selected Blizzard UI source"
+    );
+}
+
+fn assert_chat_edit_box_layout(env: &WowLuaEnv) {
+    let (chat_x, chat_y, chat_width, chat_height) = frame_rect(env, "ChatFrame1");
+    env.exec(
+        r#"
+        local point, relative, relativePoint, x, y = ChatFrame1EditBox:GetPoint(1)
+        assert(point == "TOPLEFT" and relative == ChatFrame1 and relativePoint == "BOTTOMLEFT")
+        assert(x == -5 and y == -2)
+        point, relative, relativePoint, x, y = ChatFrame1EditBox:GetPoint(2)
+        assert(point == "TOPRIGHT" and relative == ChatFrame1 and relativePoint == "BOTTOMRIGHT")
+        assert(x == 5 and y == -2)
+        "#,
+    )
+    .expect("check native chat edit-box anchors");
+    assert_frame_rect(
+        env,
+        "ChatFrame1EditBox",
+        chat_x - 5.0,
+        chat_y + chat_height + 2.0,
+        chat_width + 10.0,
+        32.0,
+        0.35,
+    );
+}
+
+fn assert_objective_tracker_layout(env: &WowLuaEnv) {
+    let (container_x, container_y, container_width, container_height) =
+        frame_rect(env, "RightManagedFrameContainer");
+    assert_frame_rect(
+        env,
+        "ObjectiveTrackerFrame",
+        container_x,
+        container_y + 15.0,
+        container_width,
+        container_height - 15.0,
+        1.0,
+    );
+}
+
+fn assert_chat_dock_layout(env: &WowLuaEnv) {
+    use wow_ui_sim::client_profile::{ACTIVE, ClientProfile};
+
+    let (chat_x, chat_y, chat_width, _) = frame_rect(env, "ChatFrame1");
+    let (expected_x, expected_y, expected_width, anchor_check) = match ACTIVE {
+        ClientProfile::Ptr | ClientProfile::WowForever => {
+            let (has_scrollbar, quick_button_height): (bool, f32) = env
+                .eval(
+                    r#"
+                    return ChatFrame1.ScrollBar ~= nil,
+                        (CombatLogQuickButtonFrame and CombatLogQuickButtonFrame:GetHeight()) or 0
+                    "#,
+                )
+                .expect("read native chat background extents");
+            let scrollbar_width = if has_scrollbar { 8.0 } else { 0.0 };
+            (
+                chat_x - 2.0,
+                chat_y - 29.0 - quick_button_height,
+                chat_width + 9.0 + scrollbar_width,
+                r#"
+                local point, relative, relativePoint, x, y = GeneralDockManager:GetPoint(1)
+                assert(point == "BOTTOMLEFT" and relative == ChatFrame1.Background and relativePoint == "TOPLEFT")
+                assert(x == 0 and y == 0)
+                "#,
+            )
+        }
+        ClientProfile::Mists | ClientProfile::Era | ClientProfile::Anniversary => (
+            chat_x,
+            chat_y - 32.0,
+            chat_width,
+            r#"
+            local point, relative, relativePoint, x, y = GeneralDockManager:GetPoint(1)
+            assert(point == "BOTTOMLEFT" and relative == ChatFrame1 and relativePoint == "TOPLEFT")
+            assert(x == 0 and y == 6)
+            "#,
+        ),
+        ClientProfile::Retail | ClientProfile::Wrath => {
+            unreachable!("Retail keeps its committed baseline; Wrath is outside this lane")
+        }
+    };
+    env.exec(anchor_check)
+        .expect("check native chat dock anchor");
+    assert_frame_rect(
+        env,
+        "GeneralDockManager",
+        expected_x,
+        expected_y,
+        expected_width,
+        26.0,
+        1.0,
+    );
+}
+
 fn assert_layout_state(env: &WowLuaEnv, test: &str) {
-    let assertion = match test {
-        "raid_boss_emote_anchor" => {
+    use wow_ui_sim::client_profile::{ACTIVE, ClientProfile};
+
+    if matches!(test, "minimap" | "minimap_cluster") {
+        assert_native_minimap_inputs(env);
+    }
+    let assertion = match (ACTIVE, test) {
+        (
+            ClientProfile::Mists | ClientProfile::Era | ClientProfile::Anniversary,
+            "raid_boss_emote_anchor",
+        ) => {
+            r#"
+            local point, relative, relativePoint = RaidBossEmoteFrame:GetPoint(1)
+            assert(point == "TOP" and relative == RaidWarningFrame and relativePoint == "BOTTOM")
+            "#
+        }
+        (
+            ClientProfile::Retail | ClientProfile::Ptr | ClientProfile::WowForever,
+            "raid_boss_emote_anchor",
+        ) => {
             r#"
             assert(UIParent:GetEffectiveScale() == 1)
             assert(RaidWarningFrame:GetLowestMessage() == nil)
@@ -165,16 +396,48 @@ fn assert_layout_state(env: &WowLuaEnv, test: &str) {
             local point, relative, relativePoint, x, y = PrivateRaidBossEmoteFrameAnchor:GetPoint(1)
             assert(point == "TOP" and relative == RaidWarningFrame and relativePoint == "TOP")
             assert(x == 0 and y == 0)
-        "#
+            "#
         }
-        "objective_tracker" => {
+        (
+            ClientProfile::Era | ClientProfile::Anniversary,
+            "party_frame" | "compact_party_frame",
+        ) => {
             r#"
-            assert(ObjectiveTrackerFrame:IsInDefaultPosition())
-            assert(ObjectiveTrackerFrame:GetParent() == RightManagedFrameContainer)
+            assert(CompactRaidFrameManager.collapsed == true)
+            local point, relative, relativePoint, x, y = CompactRaidFrameManager:GetPoint(1)
+            assert(point == "TOPLEFT" and relative == UIParent and relativePoint == "TOPLEFT")
+            assert(x == -182 and y == -140)
+            point, relative, relativePoint, x, y = PartyFrame:GetPoint(1)
+            assert(point == "TOPLEFT" and relative == CompactRaidFrameManager and relativePoint == "TOPRIGHT")
+            assert(x == 0 and y == 12)
+            "#
+        }
+        (ClientProfile::Mists, "paladin_power_bar") => {
+            r#"
+            assert(PaladinPowerBar:GetParent() == PlayerFrame)
+            assert(PaladinPowerBar:GetWidth() == 136 and PaladinPowerBar:GetHeight() == 39)
+            local point, relative, relativePoint, x, y = PaladinPowerBar:GetPoint(1)
+            assert(point == "TOP" and relative == PlayerFrame and relativePoint == "BOTTOM")
+            assert(x == 25 and y == 35)
+            "#
+        }
+        (ClientProfile::Retail, "objective_tracker") => {
+            r#"
+            assert(ObjectiveTrackerFrame:IsInDefaultPosition(), "tracker default-position state")
+            assert(ObjectiveTrackerFrame:GetParent() == RightManagedFrameContainer, "tracker parent")
             local _, relative, _, _, offsetY = ObjectiveTrackerFrame:GetPoint(1)
-            assert(relative == RightManagedFrameContainer and offsetY == 0)
-            assert(math.abs(ObjectiveTrackerFrame:GetHeight() - RightManagedFrameContainer:GetHeight()) < 0.001)
-        "#
+            assert(relative == RightManagedFrameContainer and offsetY == 0, "tracker anchor")
+            assert(math.abs(ObjectiveTrackerFrame:GetHeight() - RightManagedFrameContainer:GetHeight()) < 0.001, "tracker height")
+            "#
+        }
+        (ClientProfile::Ptr | ClientProfile::WowForever, "objective_tracker") => {
+            r#"
+            assert(ObjectiveTrackerFrame:IsInDefaultPosition(), "tracker default-position state")
+            assert(ObjectiveTrackerFrame:GetParent() == RightManagedFrameContainer, "tracker parent")
+            local _, relative, _, _, offsetY = ObjectiveTrackerFrame:GetPoint(1)
+            assert(relative == RightManagedFrameContainer and offsetY == -15, "tracker native top padding")
+            assert(math.abs(ObjectiveTrackerFrame:GetHeight() - (RightManagedFrameContainer:GetHeight() - 15)) < 0.001, "tracker native top-padded height")
+            "#
         }
         _ => return,
     };
@@ -186,16 +449,53 @@ fn run_tests(env: &WowLuaEnv) -> (usize, usize) {
     let mut passed = 0;
     let mut failed = 0;
 
-    for (name, frame, ex, ey, ew, eh, ea) in POSITION_TESTS {
+    for test in POSITION_TESTS {
+        let (name, frame, ..) = *test;
         let result = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
-            assert_layout_state(env, name);
-            assert_frame_rect(env, frame, *ex, *ey, *ew, *eh, *ea);
+            if expects_missing_frame(name) {
+                assert_frame_absent(env, frame);
+            } else if name == "general_dock_manager" {
+                if wow_ui_sim::client_profile::ACTIVE
+                    == wow_ui_sim::client_profile::ClientProfile::Retail
+                {
+                    let (_, frame, ex, ey, ew, eh, ea) = expected_position(*test);
+                    assert_frame_rect(env, frame, ex, ey, ew, eh, ea);
+                } else {
+                    assert_chat_dock_layout(env);
+                }
+            } else if name == "objective_tracker"
+                && matches!(
+                    wow_ui_sim::client_profile::ACTIVE,
+                    wow_ui_sim::client_profile::ClientProfile::Ptr
+                        | wow_ui_sim::client_profile::ClientProfile::WowForever
+                )
+            {
+                assert_layout_state(env, name);
+                assert_objective_tracker_layout(env);
+            } else if name == "chat_edit_box"
+                && matches!(
+                    wow_ui_sim::client_profile::ACTIVE,
+                    wow_ui_sim::client_profile::ClientProfile::Mists
+                        | wow_ui_sim::client_profile::ClientProfile::Era
+                        | wow_ui_sim::client_profile::ClientProfile::Anniversary
+                )
+            {
+                assert_chat_edit_box_layout(env);
+            } else {
+                assert_layout_state(env, name);
+                let (_, frame, ex, ey, ew, eh, ea) = expected_position(*test);
+                assert_frame_rect(env, frame, ex, ey, ew, eh, ea);
+            }
         }));
         report_result(&result, name, &mut passed, &mut failed);
     }
 
+    let expected_action_button_x = match wow_ui_sim::client_profile::ACTIVE {
+        wow_ui_sim::client_profile::ClientProfile::WowForever => 185.5,
+        _ => 519.0,
+    };
     let result = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
-        check_action_button(env);
+        check_action_button(env, expected_action_button_x);
     }));
     report_result(
         &result,
