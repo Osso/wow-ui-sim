@@ -302,6 +302,20 @@ fn assert_chat_edit_box_layout(env: &WowLuaEnv) {
     );
 }
 
+fn assert_objective_tracker_layout(env: &WowLuaEnv) {
+    let (container_x, container_y, container_width, container_height) =
+        frame_rect(env, "RightManagedFrameContainer");
+    assert_frame_rect(
+        env,
+        "ObjectiveTrackerFrame",
+        container_x,
+        container_y + 15.0,
+        container_width,
+        container_height - 15.0,
+        1.0,
+    );
+}
+
 fn assert_chat_dock_layout(env: &WowLuaEnv) {
     use wow_ui_sim::client_profile::{ACTIVE, ClientProfile};
 
@@ -407,20 +421,22 @@ fn assert_layout_state(env: &WowLuaEnv, test: &str) {
             assert(x == 25 and y == 35)
             "#
         }
-        (
-            ClientProfile::Retail | ClientProfile::Ptr | ClientProfile::WowForever,
-            "objective_tracker",
-        ) => {
+        (ClientProfile::Retail, "objective_tracker") => {
             r#"
             assert(ObjectiveTrackerFrame:IsInDefaultPosition(), "tracker default-position state")
             assert(ObjectiveTrackerFrame:GetParent() == RightManagedFrameContainer, "tracker parent")
             local _, relative, _, _, offsetY = ObjectiveTrackerFrame:GetPoint(1)
-            assert(
-                relative == RightManagedFrameContainer and offsetY == 0,
-                "tracker anchor: parent_matches=" .. tostring(relative == RightManagedFrameContainer)
-                    .. ", offsetY=" .. tostring(offsetY)
-            )
+            assert(relative == RightManagedFrameContainer and offsetY == 0, "tracker anchor")
             assert(math.abs(ObjectiveTrackerFrame:GetHeight() - RightManagedFrameContainer:GetHeight()) < 0.001, "tracker height")
+            "#
+        }
+        (ClientProfile::Ptr | ClientProfile::WowForever, "objective_tracker") => {
+            r#"
+            assert(ObjectiveTrackerFrame:IsInDefaultPosition(), "tracker default-position state")
+            assert(ObjectiveTrackerFrame:GetParent() == RightManagedFrameContainer, "tracker parent")
+            local _, relative, _, _, offsetY = ObjectiveTrackerFrame:GetPoint(1)
+            assert(relative == RightManagedFrameContainer and offsetY == -15, "tracker native top padding")
+            assert(math.abs(ObjectiveTrackerFrame:GetHeight() - (RightManagedFrameContainer:GetHeight() - 15)) < 0.001, "tracker native top-padded height")
             "#
         }
         _ => return,
@@ -447,6 +463,15 @@ fn run_tests(env: &WowLuaEnv) -> (usize, usize) {
                 } else {
                     assert_chat_dock_layout(env);
                 }
+            } else if name == "objective_tracker"
+                && matches!(
+                    wow_ui_sim::client_profile::ACTIVE,
+                    wow_ui_sim::client_profile::ClientProfile::Ptr
+                        | wow_ui_sim::client_profile::ClientProfile::WowForever
+                )
+            {
+                assert_layout_state(env, name);
+                assert_objective_tracker_layout(env);
             } else if name == "chat_edit_box"
                 && matches!(
                     wow_ui_sim::client_profile::ACTIVE,
