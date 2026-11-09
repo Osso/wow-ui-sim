@@ -753,23 +753,28 @@ fn read_duration_spell_identifier(state: &LuaState) -> LuaResult<Option<u32>> {
     if !uses_r17_duration_behavior() {
         return read_modeled_cooldown_identifier(state);
     }
-    if let Some(spell_id) =
-        inspect_modeled_spell_selector(state, |number| Ok((number as i32) as u32))?
-    {
-        return Ok(Some(spell_id));
+    if let Some(spell_id) = inspect_modeled_spell_selector(state, |number| {
+        read_spell_identifier_value(state, Val::Num(number))
+    })? {
+        return Ok(spell_id);
     }
 
     match stack_val(state, 1) {
-        Val::Num(number) if number.is_finite() => Ok(Some((number as i32) as u32)),
+        Val::Num(number) if number.is_finite() => {
+            read_spell_identifier_value(state, Val::Num(number))
+        }
         Val::Str(_) => {
-            let text = val_to_string(state, stack_val(state, 1))
+            let value = stack_val(state, 1);
+            if let Some(spell_id) = read_spell_identifier_value(state, value)? {
+                return Ok(Some(spell_id));
+            }
+            let text = val_to_string(state, value)
                 .ok_or_else(|| rilua::runtime_error("spellIdentifier must be a string"))?;
             let spell_id = text
                 .parse::<i32>()
                 .ok()
                 .map(|number| number as u32)
                 .or_else(|| parse_prefixed_id(&text, "spell"))
-                .or(read_spell_identifier_at(state, 1)?)
                 .or_else(|| spell_id_by_name(&text, None));
             Ok(spell_id)
         }
