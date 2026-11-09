@@ -688,6 +688,16 @@
                 systemFrame:RefreshDividers()
             end
             if systemFrame.RefreshBarArt then
+                -- Simulator replay ordering: update Classic StanceBar before its native artwork refresh:
+                -- ActionBarController.lua:143-145 calls StanceBar:Update();
+                -- Shared/StanceBar.lua:27-43 supplies numForms read by
+                -- Classic/StanceBarOverrides.lua:14. The native C
+                -- layout-event schedule is UNKNOWN; remove this when it is modeled.
+                if StanceBar
+                    and systemFrame == StanceBar
+                    and systemFrame.dynamicBackgroundArt then
+                    StanceBar:Update()
+                end
                 systemFrame:RefreshBarArt()
             end
         end

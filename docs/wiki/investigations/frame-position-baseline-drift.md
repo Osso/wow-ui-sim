@@ -58,6 +58,12 @@ The still-failing names are not converted into new expected geometry:
 
 For Mists unit frames, pinned Edit Mode anchors exist but the simulator reports `(0,0)`; its corrected PaladinPowerBar case reports `(73,65,136×39)` while the native preset predicts the parent at `(268,850)`. Mists/Era/Anniversary do not have a selected `Blizzard_ObjectiveTracker` addon directory; their `(0,0,248×600)` frame is the simulator's placeholder, not accepted native geometry. Other listed failures show profile-specific bag/menu/aura/bar/container rectangles that still need source-to-input tracing. The lane makes no claim of full non-Retail parity.
 
+## Mists unit-frame startup replay — 2026-11-09
+
+The Mists follow-up branch records a RED acceptance in `tests/frame_positions.rs`: PlayerFrame, TargetFrame and FocusFrame must receive their selected `Blizzard_EditMode/Classic/EditModePresetLayouts.lua:237-279` anchor tuples; PartyFrame uses the same file's Party entry. The baseline now uses Party `(18,128,128,244)`, CompactParty `(18,128,98,234)`, and PaladinPowerBar `(341,915,136,39)` from the Classic manager, party templates and Mists paladin XML. Paladin y includes PlayerFrame's 100-unit height: 850+100-35=915. The lane design and report are at `/home/osso/.local/state/wow-ui-sim/handoff/mists-unitframe-anchors/`.
+
+The simulator's existing action-bar Edit Mode bootstrap reaches `refresh_action_bar_system` before StanceBar has `numForms`; the Classic `RefreshBarArt` path reads that value. The branch adds a source-preserving `StanceBar:Update()` replay immediately before the existing final dynamic-background-art refresh, gated by the StanceBar object and its `dynamicBackgroundArt` flag. Native source links: `Blizzard_ActionBar/Shared/StanceBar.lua:27-43`, `Blizzard_ActionBarController/ActionBarController.lua:143-145`, and `Blizzard_ActionBar/Classic/StanceBarOverrides.lua:14`. This is simulator replay ordering only. The native C layout-event schedule remains UNKNOWN; remove the replay when that schedule is established and modeled.
+
 ## Edges and exclusions
 
 No simulator layout primitive or Blizzard code changed. The Retail table, 28 case names, ±1 geometry tolerance, ±0.02 alpha tolerance and custom failure-name parser remain. Expected rectangles come from profile source, presets, or source-defined relationships; none is copied from observed simulator output. Unknown `C_EditMode` default-state outputs are questions in the lane report, not guessed coordinates. All profile source caches and Cargo dependency files remain unchanged.
