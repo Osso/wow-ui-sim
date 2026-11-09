@@ -216,6 +216,81 @@ fn split_dependency_names(value: &str) -> Vec<String> {
         .collect()
 }
 
+fn is_game_type_metadata_header(key: &str) -> bool {
+    matches!(key, "AllowLoadGameType" | "ExcludeLoadGameType")
+}
+
+fn has_game_type_header_condition(rest: &str) -> bool {
+    annotation_value(rest, "[AllowLoadGameType").is_some()
+        || annotation_value(rest, "[ExcludeLoadGameType").is_some()
+}
+
+fn should_skip_game_type_metadata<P: Selection>(key: &str, rest: &str) -> bool {
+    if !is_game_type_metadata_header(key) {
+        return false;
+    }
+    if !has_game_type_header_condition(rest) {
+        return false;
+    }
+    !is_allowed_game_type::<P>(rest)
+}
+
+fn should_skip_other_metadata<P: Selection>(key: &str, rest: &str) -> bool {
+    if is_game_type_metadata_header(key) {
+        return false;
+    }
+    let is_variable_metadata = P::is_variable_metadata(rest);
+    let is_allowed = is_allowed_game_type::<P>(rest);
+    is_variable_metadata || !is_allowed
+}
+
+fn should_skip_metadata<P: Selection>(key: &str, rest: &str) -> bool {
+    should_skip_game_type_metadata::<P>(key, rest) || should_skip_other_metadata::<P>(key, rest)
+}
+
+fn trim_metadata_value<'a>(key: &str, value: &'a str) -> &'a str {
+    if is_game_type_metadata_header(key) {
+        value.trim_start_matches(' ')
+    } else {
+        value.trim()
+    }
+}
+
+fn append_dependency_line(
+    key: &str,
+    value: &str,
+    required_dependency_lines: &mut Vec<DependencyLine>,
+    optional_dependency_lines: &mut Vec<DependencyLine>,
+) {
+    if !is_dependency_metadata_key(key) {
+        return;
+    }
+    let line = DependencyLine {
+        names: split_dependency_names(strip_annotations(value)),
+        allow_load: dependency_screen_phase(value),
+    };
+    if matches!(key, "OptionalDep" | "OptionalDeps") {
+        optional_dependency_lines.push(line);
+    } else {
+        required_dependency_lines.push(line);
+    }
+}
+
+fn store_metadata_value(metadata: &mut HashMap<String, String>, key: &str, value: &str) {
+    let value = replace_template_vars(strip_annotations(value));
+    if is_dependency_metadata_key(key) {
+        metadata
+            .entry(key.to_string())
+            .and_modify(|existing| {
+                existing.push(',');
+                existing.push_str(&value);
+            })
+            .or_insert(value);
+    } else {
+        metadata.insert(key.to_string(), value);
+    }
+}
+
 /// Process a `## Key: Value` metadata line into the map.
 ///
 /// Skips `Interface` lines whose value consists entirely of unresolved
@@ -232,49 +307,23 @@ fn insert_metadata<P: Selection>(
         return;
     };
     let key = key.trim();
-    let game_type_header = matches!(key, "AllowLoadGameType" | "ExcludeLoadGameType");
-    let has_game_type_condition = annotation_value(rest, "[AllowLoadGameType").is_some()
-        || annotation_value(rest, "[ExcludeLoadGameType").is_some();
-    if (game_type_header && has_game_type_condition && !is_allowed_game_type::<P>(rest))
-        || (!game_type_header
-            && (P::is_variable_metadata(rest) || !is_allowed_game_type::<P>(rest)))
-    {
+    if should_skip_metadata::<P>(key, rest) {
         return;
     }
-    let value = if game_type_header {
-        value.trim_start_matches(' ')
-    } else {
-        value.trim()
-    };
+    let value = trim_metadata_value(key, value);
     if key == "Interface" && is_all_template_versions(value) {
         return;
     }
     if key == "AllowLoad" {
         *allow_load_header_condition = dependency_screen_phase(value);
     }
-    if is_dependency_metadata_key(key) {
-        let line = DependencyLine {
-            names: split_dependency_names(strip_annotations(value)),
-            allow_load: dependency_screen_phase(value),
-        };
-        if matches!(key, "OptionalDep" | "OptionalDeps") {
-            optional_dependency_lines.push(line);
-        } else {
-            required_dependency_lines.push(line);
-        }
-    }
-    let value = replace_template_vars(strip_annotations(value));
-    if is_dependency_metadata_key(key) {
-        metadata
-            .entry(key.to_string())
-            .and_modify(|existing| {
-                existing.push(',');
-                existing.push_str(&value);
-            })
-            .or_insert(value);
-    } else {
-        metadata.insert(key.to_string(), value);
-    }
+    append_dependency_line(
+        key,
+        value,
+        required_dependency_lines,
+        optional_dependency_lines,
+    );
+    store_metadata_value(metadata, key, value);
 }
 
 fn parse_load_into_environment(line: &str) -> Option<bool> {

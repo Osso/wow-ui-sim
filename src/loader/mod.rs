@@ -742,33 +742,48 @@ fn collect_declared_dependency_closure_with_overrides(
         if !wanted.insert(name.clone()) {
             continue;
         }
-
-        if let Some(extra_roots) = extra_roots_by_addon.get(name.as_str()) {
-            for extra_root in extra_roots {
-                queue_pending_addon((*extra_root).to_string(), &mut pending, &mut queued);
-            }
-        }
-
-        let Some((_, toc)) = toc_map.get(&name) else {
-            continue;
-        };
-
-        let required = screen.map_or_else(
-            || toc.dependencies(),
-            |screen| toc.dependencies_for_screen(screen),
+        queue_declared_dependency_roots(
+            &name,
+            toc_map,
+            extra_roots_by_addon,
+            screen,
+            &mut pending,
+            &mut queued,
         );
-        let optional = screen.map_or_else(
-            || toc.optional_deps(),
-            |screen| toc.optional_deps_for_screen(screen),
-        );
-        for dep in required.into_iter().chain(optional) {
-            if toc_map.contains_key(&dep) {
-                queue_pending_addon(dep, &mut pending, &mut queued);
-            }
+    }
+    wanted
+}
+
+fn queue_declared_dependency_roots(
+    name: &str,
+    toc_map: &HashMap<String, (PathBuf, TocFile)>,
+    extra_roots_by_addon: &HashMap<&str, Vec<&str>>,
+    screen: Option<ScreenKind>,
+    pending: &mut Vec<String>,
+    queued: &mut HashSet<String>,
+) {
+    if let Some(extra_roots) = extra_roots_by_addon.get(name) {
+        for extra_root in extra_roots {
+            queue_pending_addon((*extra_root).to_string(), pending, queued);
         }
     }
 
-    wanted
+    let Some((_, toc)) = toc_map.get(name) else {
+        return;
+    };
+    let required = screen.map_or_else(
+        || toc.dependencies(),
+        |screen| toc.dependencies_for_screen(screen),
+    );
+    let optional = screen.map_or_else(
+        || toc.optional_deps(),
+        |screen| toc.optional_deps_for_screen(screen),
+    );
+    for dependency in required.into_iter().chain(optional) {
+        if toc_map.contains_key(&dependency) {
+            queue_pending_addon(dependency, pending, queued);
+        }
+    }
 }
 
 fn queue_pending_addon(name: String, pending: &mut Vec<String>, queued: &mut HashSet<String>) {
@@ -927,7 +942,19 @@ fn pull_required_dependency_addons(
     extra_dependencies: &HashMap<String, Vec<String>>,
     screen: ScreenKind,
 ) {
-    let mut needed: Vec<String> = addons
+    let mut needed = collect_required_addon_names(addons, lod_pool, extra_dependencies, screen);
+    while let Some(name) = needed.pop() {
+        pull_required_dependency_addon(&name, addons, lod_pool, &mut needed, screen);
+    }
+}
+
+fn collect_required_addon_names(
+    addons: &HashMap<String, (PathBuf, TocFile)>,
+    lod_pool: &HashMap<String, (PathBuf, TocFile)>,
+    extra_dependencies: &HashMap<String, Vec<String>>,
+    screen: ScreenKind,
+) -> Vec<String> {
+    addons
         .values()
         .flat_map(|(_, toc)| toc.dependencies_for_screen(screen))
         .chain(
@@ -941,23 +968,29 @@ fn pull_required_dependency_addons(
                 .filter(|name| lod_pool.contains_key(*name))
                 .cloned(),
         )
-        .filter(|dep| lod_pool.contains_key(dep))
-        .collect();
+        .filter(|dependency| lod_pool.contains_key(dependency))
+        .collect()
+}
 
-    while let Some(name) = needed.pop() {
-        if addons.contains_key(&name) {
-            continue;
-        }
-        if let Some((toc_path, toc)) = lod_pool.remove(&name) {
-            // This LOD addon may itself depend on other LOD addons
-            for dep in toc.dependencies_for_screen(screen) {
-                if lod_pool.contains_key(&dep) {
-                    needed.push(dep);
-                }
-            }
-            addons.insert(name, (toc_path, toc));
+fn pull_required_dependency_addon(
+    name: &str,
+    addons: &mut HashMap<String, (PathBuf, TocFile)>,
+    lod_pool: &mut HashMap<String, (PathBuf, TocFile)>,
+    needed: &mut Vec<String>,
+    screen: ScreenKind,
+) {
+    if addons.contains_key(name) {
+        return;
+    }
+    let Some((toc_path, toc)) = lod_pool.remove(name) else {
+        return;
+    };
+    for dependency in toc.dependencies_for_screen(screen) {
+        if lod_pool.contains_key(&dependency) {
+            needed.push(dependency);
         }
     }
+    addons.insert(name.to_string(), (toc_path, toc));
 }
 
 #[cfg(test)]
