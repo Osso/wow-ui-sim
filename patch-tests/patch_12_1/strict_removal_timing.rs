@@ -48,10 +48,10 @@ fn load_timing_fixture(env: &WowLuaEnv) -> tempfile::TempDir {
 
 const ASSERT_LIFECYCLE: &str = r#"
 local snapshots = StrictTiming.snapshots
-local initial = assert(snapshots.initialized)
-assert(initial.inventory == 'nil' and initial.housing == 'nil')
-assert(initial.icon == 'nil')
-assert(type(initial.control) == 'string')
+local initial = assert(snapshots.initialized, 'initialized snapshot missing')
+assert(initial.inventory == 'nil' and initial.housing == 'nil', 'old global surfaces absent initially')
+assert(initial.icon == 'nil', 'old enum member absent initially')
+assert(type(initial.control) == 'string', 'unrelated CVar initialized')
 for _, phase in ipairs({
     'addon-load', 'post-load', 'VARIABLES_LOADED', 'PLAYER_LOGIN',
     'PLAYER_ENTERING_WORLD', 'second-world-handler',
@@ -68,9 +68,9 @@ assert(snapshots['addon-load'].eventAccepted, 'Blizzard load compatibility event
 for phase, seen in pairs(snapshots) do
     if phase ~= 'addon-load' then assert(not seen.eventAccepted, phase .. ': removed event accepted') end
 end
-local retired = assert(snapshots.BAG_UPDATE_DELAYED)
-assert(retired.get ~= initial.get and retired.default ~= initial.default)
-assert(retired.namespaced ~= initial.namespaced)
+local retired = assert(snapshots.BAG_UPDATE_DELAYED, 'BAG_UPDATE_DELAYED snapshot missing')
+assert(retired.get ~= initial.get and retired.default ~= initial.default, 'global CVar wrappers should retire at BAG_UPDATE_DELAYED')
+assert(retired.namespaced ~= initial.namespaced, 'C_CVar wrapper should retire at BAG_UPDATE_DELAYED')
 for _, phase in ipairs({'BAG_UPDATE_DELAYED', 'FIRST_FRAME_RENDERED', 'settled'}) do
     local seen = assert(snapshots[phase], phase)
     assert(seen.inventory == 'nil' and seen.housing == 'nil' and seen.icon == 'nil', phase .. ': absent PTR names appeared')
@@ -81,15 +81,15 @@ for _, phase in ipairs({'BAG_UPDATE_DELAYED', 'FIRST_FRAME_RENDERED', 'settled'}
 end
 local position = {}
 for index, phase in ipairs(StrictTiming.order) do position[phase] = index end
-assert(position.initialized < position['addon-load'])
-assert(position['addon-load'] < position['post-load'])
-assert(position['post-load'] < position.VARIABLES_LOADED)
-assert(position.VARIABLES_LOADED < position.PLAYER_LOGIN)
-assert(position.PLAYER_LOGIN < position.PLAYER_ENTERING_WORLD)
-assert(position.PLAYER_ENTERING_WORLD < position.BAG_UPDATE_DELAYED)
-assert(position['second-world-handler'] < position.BAG_UPDATE_DELAYED)
-assert(position.BAG_UPDATE_DELAYED < position.FIRST_FRAME_RENDERED)
-assert(position.FIRST_FRAME_RENDERED < position.settled)
+assert(position.initialized < position['addon-load'], 'fixture loads after initialization')
+assert(position['addon-load'] < position['post-load'], 'post-load follows addon load')
+assert(position['post-load'] < position.VARIABLES_LOADED, 'variables event follows post-load')
+assert(position.VARIABLES_LOADED < position.PLAYER_LOGIN, 'login follows variables')
+assert(position.PLAYER_LOGIN < position.PLAYER_ENTERING_WORLD, 'world entry follows login')
+assert(position.PLAYER_ENTERING_WORLD < position.BAG_UPDATE_DELAYED, 'cleanup follows first world entry')
+assert(position['second-world-handler'] < position.BAG_UPDATE_DELAYED, 'cleanup follows second world handler')
+assert(position.BAG_UPDATE_DELAYED < position.FIRST_FRAME_RENDERED, 'first frame follows cleanup')
+assert(position.FIRST_FRAME_RENDERED < position.settled, 'settled snapshot follows first frame')
 "#;
 
 #[test]

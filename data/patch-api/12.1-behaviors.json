@@ -1478,7 +1478,7 @@
           "kind": "test",
           "reference": "patch-tests/patch_12_1/strict_removal_timing.rs::strict_removal_timing_retires_after_world_handlers_without_rewrapping",
           "summary": "Simulator policy: CVar wrapper identities remain stable through addon loading and all first PLAYER_ENTERING_WORLD handlers. Cleanup changes the wrappers at BAG_UPDATE_DELAYED; repeated cleanup and world entry do not wrap them again. BATTLETAG_INVITE_SHOW retains its Blizzard-loader-only registration exception. The fixture observes the old inventory, housing and enum names as absent throughout, and the removed CVar aliases as absent after retirement. It uses the real loader/dispatcher and does not establish native retirement timing.",
-          "source_hash": "90df7873c65ae09d875c3cb9de4353220f6a3782cca59eb6da46f9cd15d021f2"
+          "source_hash": "f7ec270249a6eead77ac83802b28dd1360fe5ebfa7d875d1a68b77e1985ee0bb"
         },
         {
           "kind": "source",
@@ -1568,7 +1568,7 @@
           "kind": "test",
           "reference": "patch-tests/patch_12_1/strict_removal_timing.rs::strict_removal_timing_retires_after_world_handlers_without_rewrapping",
           "summary": "Simulator policy: CVar wrapper identities remain stable through addon loading and all first PLAYER_ENTERING_WORLD handlers. Cleanup changes the wrappers at BAG_UPDATE_DELAYED; repeated cleanup and world entry do not wrap them again. BATTLETAG_INVITE_SHOW retains its Blizzard-loader-only registration exception. The fixture observes the old inventory, housing and enum names as absent throughout, and the removed CVar aliases as absent after retirement. It uses the real loader/dispatcher and does not establish native retirement timing.",
-          "source_hash": "90df7873c65ae09d875c3cb9de4353220f6a3782cca59eb6da46f9cd15d021f2"
+          "source_hash": "f7ec270249a6eead77ac83802b28dd1360fe5ebfa7d875d1a68b77e1985ee0bb"
         },
         {
           "kind": "source",
