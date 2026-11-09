@@ -354,7 +354,8 @@ fn same_level_text_hoists_past_empty_higher_level_wrapper_child() {
     let mut unique = emitted.clone();
     unique.sort_unstable();
     unique.dedup();
-    assert_eq!(unique.len(), 7, "each widget must be emitted exactly once");
+    assert_eq!(unique.len(), 7, "each widget must be present in the bucket");
+    assert_eq!(emitted.len(), 7, "each widget must be emitted exactly once");
 }
 
 #[test]
