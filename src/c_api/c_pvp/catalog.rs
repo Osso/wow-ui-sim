@@ -1,5 +1,7 @@
 //! Explicit PvP catalog/eligibility snapshots; queue requests use the existing queue.
-use crate::lua_api::methods::{borrow_state, create_string, create_table, table_set};
+use crate::lua_api::methods::{
+    borrow_state, create_string, create_table, table_set, val_to_string,
+};
 use crate::lua_api::state::BattlefieldStatus;
 use crate::lua_bridge::{stack_val, table_set_rust_fn_static};
 use rilua::vm::{gc::arena::GcRef, state::LuaState, table::Table};
@@ -68,15 +70,44 @@ fn read_id(state: &LuaState) -> LuaResult<u32> {
         )),
     }
 }
+fn read_battleground_index(state: &LuaState) -> LuaResult<i32> {
+    let value = rilua::table_security::unwrap_secret(state, stack_val(state, 1))?;
+    let number = match value {
+        Val::Num(number) => Some(number),
+        Val::Str(_) => val_to_string(state, value).and_then(|text| text.trim().parse::<f64>().ok()),
+        _ => None,
+    }
+    .ok_or_else(|| {
+        rilua::runtime_error(
+            "Usage: local battlegroundInfo = C_PvP.GetBattlegroundInfo(battlegroundIndex)",
+        )
+    })?;
+
+    if !number.is_finite() || !(0.0..=f64::from(u32::MAX)).contains(&number) {
+        return Err(rilua::runtime_error(
+            "battleground index must be between 0 and 4294967295",
+        ));
+    }
+
+    Ok((number - 1.0).trunc() as i32)
+}
+
 fn battleground_info(state: &mut LuaState) -> LuaResult<u32> {
-    let index = read_id(state)?;
-    let record = borrow_state(state)?
-        .pvp_catalog
-        .battlegrounds
-        .get(index as usize - 1)
-        .cloned();
+    let index = read_battleground_index(state)?;
+    let record = if index >= 0 {
+        borrow_state(state)?
+            .pvp_catalog
+            .battlegrounds
+            .get(index as usize)
+            .cloned()
+    } else {
+        None
+    };
     if let Some(record) = record {
-        publish(state, &record);
+        let result = publish(state, &record);
+        if record.icon == Some(0) {
+            table_set(state, result, "icon", Val::Nil);
+        }
     } else {
         state.push(Val::Nil);
     }
