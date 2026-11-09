@@ -155,7 +155,34 @@ fn check_action_button(env: &WowLuaEnv) {
     );
 }
 
+fn assert_native_minimap_inputs(env: &WowLuaEnv) {
+    use wow_ui_sim::client_profile::{ACTIVE, ClientProfile};
+
+    let side = match ACTIVE {
+        ClientProfile::Mists | ClientProfile::Era | ClientProfile::Anniversary => 140,
+        _ => 198,
+    };
+    env.exec(&format!(
+        r#"
+        assert(UIParent:GetEffectiveScale() == 1, "default canvas scale")
+        assert(Minimap:GetParent() == MinimapCluster.MinimapContainer, "native minimap parent")
+        assert(Minimap:GetWidth() == {side} and Minimap:GetHeight() == {side}, "native minimap dimensions")
+        assert(MinimapCluster.MinimapContainer:GetScale() == 1, "default minimap scale")
+        local point, relative, relativePoint, x, y = Minimap:GetPoint(1)
+        assert(point == "CENTER" and relative == MinimapCluster.MinimapContainer and relativePoint == "CENTER")
+        assert(x == 0 and y == 0, "native minimap center")
+        point, relative, relativePoint, x, y = MinimapCluster:GetPoint(1)
+        assert(point == "TOPRIGHT" and relative == UIParent and relativePoint == "TOPRIGHT")
+        assert(x == 0 and y == 0, "native minimap preset anchor")
+        "#
+    ))
+    .expect("native minimap fixture inputs");
+}
+
 fn assert_layout_state(env: &WowLuaEnv, test: &str) {
+    if matches!(test, "minimap" | "minimap_cluster") {
+        assert_native_minimap_inputs(env);
+    }
     let assertion = match test {
         "raid_boss_emote_anchor" => {
             r#"
