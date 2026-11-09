@@ -120,7 +120,7 @@ Static implementation and fixture tests are staged; execution remains pending. T
 - Pinned cascette `758d8dbf` `product_db` — 8/8, zero warnings; parser selection/validation proof against the actual install.
 - `src/asset_resolver_config.rs::tests::gui_resolution_cache_preparation` — isolated synthetic cold build, warm reuse, two FDID mappings, disabled CASC, missing index entry, corrupt content and invalid install; targeted Era test passes.
 - `src/asset_resolver_config.rs::tests::gui_resolution_cache_preparation_ignores_ambient_install` — verifies that an unindexed ambient install does not affect the synthetic regression; targeted Era test passes.
-- `src/asset_resolver_config.rs::tests::gui_resolution_cache_preparation_uses_live_install` — `optional-tests`-gated live smoke; current proof pending.
+- `src/asset_resolver_config.rs::tests::gui_resolution_cache_preparation_uses_live_install` — `optional-tests`-gated live smoke; its Era run reported the missing selected encoding index as a test failure. A valid-install pass remains unverified.
 - `tests/casc_loading.rs` — integration tests for the CASC tier (skip when `/syncthing/World of Warcraft/Data` is missing or `WOW_SIM_CASC=0`)
 - `examples/casc_smoke.rs` — manual verifier for ad-hoc probes (not run by `cargo test`)
 - `src/render/font.rs::tests::resolves_friz_quadrata` — asserts FRIZQT__ resolves with or without CASC

@@ -14,6 +14,8 @@ INFERRED: The selected local index set could not locate the selected build's enc
 
 The ordinary library regression builds a synthetic product database, build config, root file, encoding file, local archive and index. It checks cold cache creation, two FDID mappings, warm reuse, disabled CASC, a missing bootstrap index entry and corrupt indexed content. It does not skip a resolver error or depend on the current game installation. The optional live-install smoke test reports its selected product and path; it skips only when no install is discoverable and fails when preparation fails.
 
+VERIFIED: The `optional-tests` smoke test ran on November 8, 2026, against the selected Era install and failed with the same missing encoding-key index location. This confirms the live test does not hide that resolver error. A successful live smoke against an install with complete local bootstrap content remains unverified.
+
 ## Sources
 
 - [CASC loading contract](../../specs/casc-loading.md#gui-resolution-cache-preparation) — preparation behavior and test coverage.
