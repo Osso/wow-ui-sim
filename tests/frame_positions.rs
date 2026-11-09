@@ -278,6 +278,30 @@ fn assert_frame_absent(env: &WowLuaEnv, name: &str) {
     );
 }
 
+fn assert_chat_edit_box_layout(env: &WowLuaEnv) {
+    let (chat_x, chat_y, chat_width, chat_height) = frame_rect(env, "ChatFrame1");
+    env.exec(
+        r#"
+        local point, relative, relativePoint, x, y = ChatFrame1EditBox:GetPoint(1)
+        assert(point == "TOPLEFT" and relative == ChatFrame1 and relativePoint == "BOTTOMLEFT")
+        assert(x == -5 and y == -2)
+        point, relative, relativePoint, x, y = ChatFrame1EditBox:GetPoint(2)
+        assert(point == "TOPRIGHT" and relative == ChatFrame1 and relativePoint == "BOTTOMRIGHT")
+        assert(x == 5 and y == -2)
+        "#,
+    )
+    .expect("check native chat edit-box anchors");
+    assert_frame_rect(
+        env,
+        "ChatFrame1EditBox",
+        chat_x - 5.0,
+        chat_y + chat_height + 2.0,
+        chat_width + 10.0,
+        32.0,
+        0.35,
+    );
+}
+
 fn assert_chat_dock_layout(env: &WowLuaEnv) {
     use wow_ui_sim::client_profile::{ACTIVE, ClientProfile};
 
@@ -410,6 +434,15 @@ fn run_tests(env: &WowLuaEnv) -> (usize, usize) {
                 assert_frame_absent(env, frame);
             } else if name == "general_dock_manager" {
                 assert_chat_dock_layout(env);
+            } else if name == "chat_edit_box"
+                && matches!(
+                    wow_ui_sim::client_profile::ACTIVE,
+                    wow_ui_sim::client_profile::ClientProfile::Mists
+                        | wow_ui_sim::client_profile::ClientProfile::Era
+                        | wow_ui_sim::client_profile::ClientProfile::Anniversary
+                )
+            {
+                assert_chat_edit_box_layout(env);
             } else {
                 assert_layout_state(env, name);
                 let (_, frame, ex, ey, ew, eh, ea) = expected_position(*test);
