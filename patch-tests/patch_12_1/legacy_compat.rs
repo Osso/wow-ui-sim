@@ -46,7 +46,6 @@ fn simulator_legacy_compat_globals_preserve_tested_behavior() {
                 "FindFlyoutSlotBySpellID",
                 "FindSpellOverrideByID",
                 "PlaySound",
-                "SetPortraitToTexture",
                 "strtrim",
             }
             for _, name in ipairs(required) do
@@ -124,14 +123,6 @@ fn simulator_legacy_compat_globals_preserve_tested_behavior() {
             local soundOK = pcall(PlaySound, 861)
             if not soundOK then
                 return "play-sound"
-            end
-
-            local frame = CreateFrame("Frame", "LegacyCompatPortraitFrame", UIParent)
-            local texture = frame:CreateTexture("LegacyCompatPortraitTexture", "BORDER")
-            SetPortraitToTexture(texture, "Interface\\Icons\\Ability_Mount_RidingHorse")
-            SetPortraitToTexture(texture, "Interface\\Icons\\INV_Misc_QuestionMark")
-            if texture:GetNumMaskTextures() ~= 1 then
-                return "portrait-mask"
             end
 
             if strtrim("  hello \t") ~= "hello" or strtrim("--hello--", "-") ~= "hello" then

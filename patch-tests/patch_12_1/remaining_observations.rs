@@ -1,6 +1,6 @@
 use super::{load_full_game_ui_with_all_lod, missing_runtime_functions, present_runtime_symbols};
 
-const EXPECTED_ABSENT_ADDITIONS: &[&str] = &[
+const EXPECTED_PTR_SOURCE_PUBLICATIONS: &[&str] = &[
     "CompactUnitFrameLayoutTemplates_LayoutFrameElement",
     "CompactUnitFrameUtil.ApplyConfig",
     "GameRulesUtil.IsPlayerAtEffectiveMaxLevel",
@@ -167,8 +167,12 @@ fn remaining_symbols_match_observed_publications() {
         "pinned Blizzard sources require compatibility symbols before strict removal"
     );
 
-    let present_additions = present_runtime_symbols(&env, EXPECTED_ABSENT_ADDITIONS);
-    assert_eq!(present_additions, "", "PTR additions must stay absent");
+    let missing_source_publications =
+        missing_runtime_functions(&env, EXPECTED_PTR_SOURCE_PUBLICATIONS);
+    assert_eq!(
+        missing_source_publications, "",
+        "PTR source-declared publications must remain callable"
+    );
 
     let missing_removals = missing_runtime_functions(&env, EXPECTED_PRESENT_REMOVALS);
     assert_eq!(

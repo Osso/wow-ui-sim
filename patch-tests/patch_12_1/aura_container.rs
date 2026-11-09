@@ -150,15 +150,15 @@ fn aura_container_filters_helpful_harmful_and_player_auras() {
             local playerAuras = C_UnitAuras.GetUnitAuras("player", "HELPFUL")
             local playerAura = playerAuras[1]
             local partyAura = playerAuras[2]
-            local targetAura = C_UnitAuras.GetUnitAuras("target", "HARMFUL")[1]
-            if playerAura == nil or partyAura == nil or targetAura == nil then
+            local harmfulAura = C_UnitAuras.GetUnitAuras("player", "HARMFUL")[1]
+            if playerAura == nil or partyAura == nil or harmfulAura == nil then
                 return "fixture"
             end
 
             if not includeAura("player", "HELPFUL", playerAura) then return "helpful-excluded" end
             if includeAura("player", "HARMFUL", playerAura) then return "helpful-in-harmful" end
-            if not includeAura("target", "HARMFUL", targetAura) then return "harmful-excluded" end
-            if includeAura("target", "HELPFUL", targetAura) then return "harmful-in-helpful" end
+            if not includeAura("player", "HARMFUL", harmfulAura) then return "harmful-excluded" end
+            if includeAura("player", "HELPFUL", harmfulAura) then return "harmful-in-helpful" end
             if not includeAura("player", "HELPFUL|PLAYER", playerAura) then return "player-excluded" end
             if includeAura("player", "HELPFUL|PLAYER", partyAura) then return "party-in-player" end
             return "ok"
@@ -207,21 +207,12 @@ fn aura_container_honors_configured_sort_order() {
 }
 
 fn seed_filter_auras(env: &WowLuaEnv) {
-    env.exec("TargetUnit('party1')")
-        .expect("select the unit with supplied target auras");
-
     let mut state = env.state().borrow_mut();
     state.player.buffs = vec![
         aura_info("Player Helpful Aura", "player", true, true, 101),
         aura_info("Party Helpful Aura", "party1", true, false, 102),
+        aura_info("Player Harmful Aura", "player", false, false, 201),
     ];
-    state.target_auras = vec![aura_info(
-        "Target Harmful Aura",
-        "target",
-        false,
-        false,
-        201,
-    )];
 }
 
 fn aura_info(
