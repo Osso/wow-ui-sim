@@ -58,7 +58,7 @@ Static implementation and fixture tests are staged; execution remains pending. T
 - [ ] The community lookup catalog initializes before rendering too; catalog-load errors retain the resolver's explicit diagnostic. This moves initialization to startup, not out of total startup time.
 - [x] `WOW_SIM_CASC=0`, a build without `casc`, or an undiscoverable install does not prepare a cache and preserves existing startup behavior.
 - [ ] Preparation does not initialize the lazy runtime archive reader or extract textures before the first render.
-- [ ] The required library regression builds a test-owned local install and checks cold creation, warm reuse, concrete FDID mappings, disabled CASC, missing bootstrap index entries, and corrupt indexed bootstrap content; it does not depend on the mutable installed game.
+- [x] The required library regression builds a test-owned local install and checks cold creation, warm reuse, concrete FDID mappings, disabled CASC, missing bootstrap index entries, and corrupt indexed bootstrap content; it does not depend on the mutable installed game.
 - [ ] The live-install smoke test is gated by `optional-tests`. It reports the selected product and install, skips only when no install is discoverable, and fails when cache preparation fails.
 
 ### Texture resolution
@@ -118,8 +118,8 @@ Static implementation and fixture tests are staged; execution remains pending. T
 - `src/blizzard_ui_sync/tests.rs::build_identity_reads_forever_when_build_info_omits_the_product` — file-backed missing-row regression without metadata writes.
 - `src/blizzard_ui_sync/tests.rs::build_identity_uses_selected_product_not_stale_build_info` — selected-product identity, optional install key, and absent-product failure.
 - Pinned cascette `758d8dbf` `product_db` — 8/8, zero warnings; parser selection/validation proof against the actual install.
-- `src/asset_resolver_config.rs::tests::gui_resolution_cache_preparation` — isolated child cases for synthetic cold build, warm reuse, two FDID mappings, disabled CASC, missing index entry, corrupt content and invalid install; current proof pending.
-- `src/asset_resolver_config.rs::tests::gui_resolution_cache_preparation_ignores_ambient_install` — verifies that an unindexed ambient install does not affect the synthetic regression; current proof pending.
+- `src/asset_resolver_config.rs::tests::gui_resolution_cache_preparation` — isolated synthetic cold build, warm reuse, two FDID mappings, disabled CASC, missing index entry, corrupt content and invalid install; targeted Era test passes.
+- `src/asset_resolver_config.rs::tests::gui_resolution_cache_preparation_ignores_ambient_install` — verifies that an unindexed ambient install does not affect the synthetic regression; targeted Era test passes.
 - `src/asset_resolver_config.rs::tests::gui_resolution_cache_preparation_uses_live_install` — `optional-tests`-gated live smoke; current proof pending.
 - `tests/casc_loading.rs` — integration tests for the CASC tier (skip when `/syncthing/World of Warcraft/Data` is missing or `WOW_SIM_CASC=0`)
 - `examples/casc_smoke.rs` — manual verifier for ad-hoc probes (not run by `cargo test`)
