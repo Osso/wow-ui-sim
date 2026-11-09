@@ -415,7 +415,11 @@ fn assert_layout_state(env: &WowLuaEnv, test: &str) {
             assert(ObjectiveTrackerFrame:IsInDefaultPosition(), "tracker default-position state")
             assert(ObjectiveTrackerFrame:GetParent() == RightManagedFrameContainer, "tracker parent")
             local _, relative, _, _, offsetY = ObjectiveTrackerFrame:GetPoint(1)
-            assert(relative == RightManagedFrameContainer and offsetY == 0, "tracker anchor")
+            assert(
+                relative == RightManagedFrameContainer and offsetY == 0,
+                "tracker anchor: parent_matches=" .. tostring(relative == RightManagedFrameContainer)
+                    .. ", offsetY=" .. tostring(offsetY)
+            )
             assert(math.abs(ObjectiveTrackerFrame:GetHeight() - RightManagedFrameContainer:GetHeight()) < 0.001, "tracker height")
             "#
         }
