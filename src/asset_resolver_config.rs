@@ -112,6 +112,59 @@ mod tests {
     use std::process::Command;
 
     #[test]
+    fn gui_resolution_cache_preparation_ignores_ambient_install() {
+        let ambient = tempfile::tempdir().unwrap();
+        let cache = tempfile::tempdir().unwrap();
+        write_unindexed_install(ambient.path());
+        let output = bounded_process::output(
+            90,
+            Command::new(std::env::current_exe().unwrap())
+                .args([
+                    "--exact",
+                    "asset_resolver_config::tests::gui_resolution_cache_preparation",
+                    "--nocapture",
+                ])
+                .env_remove("WOW_SIM_GUI_CACHE_TEST_MODE")
+                .env("WOW_INSTALL_PATH", ambient.path())
+                .env("WOW_PRODUCT", "wow")
+                .env("ASSET_RESOLVER_CACHE_DIR", cache.path())
+                .env("WOW_SIM_CASC", "1"),
+        )
+        .unwrap();
+        assert!(
+            output.status.success(),
+            "cache regression must use its own install, not ambient unindexed content:\n{}\n{}",
+            String::from_utf8_lossy(&output.stdout),
+            String::from_utf8_lossy(&output.stderr),
+        );
+        assert!(
+            !cache.path().join("casc").exists(),
+            "the library regression must not prepare the ambient install's cache"
+        );
+    }
+
+    fn write_unindexed_install(root: &Path) {
+        std::fs::create_dir_all(root.join("Data/data")).unwrap();
+        std::fs::write(
+            root.join(".product.db"),
+            include_bytes!("../tests/fixtures/casc-installed-products.db"),
+        )
+        .unwrap();
+        std::fs::write(
+            root.join(".build.info"),
+            "Branch!STRING:0|Active!DEC:1|Build Key!HEX:16|Version!STRING:0|Product!STRING:0\n",
+        )
+        .unwrap();
+        let config = root.join("Data/config/dc/fc/dcfc90fffd79ba00406ae46f5f657592");
+        std::fs::create_dir_all(config.parent().unwrap()).unwrap();
+        std::fs::write(
+            config,
+            "root = 11111111111111111111111111111111\nencoding = 22222222222222222222222222222222 6f1851167dd66bfc2e85297b68ef2afd\n",
+        )
+        .unwrap();
+    }
+
+    #[test]
     fn gui_resolution_cache_preparation() {
         if let Ok(mode) = std::env::var("WOW_SIM_GUI_CACHE_TEST_MODE") {
             match mode.as_str() {
