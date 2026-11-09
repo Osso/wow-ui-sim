@@ -11,6 +11,10 @@ mod charge_duration;
 #[path = "cooldown_probes/ignore_gcd.rs"]
 mod ignore_gcd;
 
+#[cfg(feature = "client-wowforever")]
+#[path = "cooldown_probes/forever_duration.rs"]
+mod forever_duration;
+
 fn env() -> WowLuaEnv {
     let env = WowLuaEnv::new().expect("WowLuaEnv init");
     // Fixtures subtract up to 40 seconds; valid live cooldowns need positive starts.
@@ -18,7 +22,9 @@ fn env() -> WowLuaEnv {
     env
 }
 
-#[cfg(not(feature = "retail-12-0-5"))]
+// Forever SpellDocumentation.lua:274 and SpellBookDocumentation.lua:198 declare
+// charge duration queries; R17 verifies their native Game registration.
+#[cfg(not(any(feature = "retail-12-0-5", feature = "client-wowforever")))]
 #[test]
 fn charge_duration_earlier_profiles_preserve_spell_book_publication_boundaries() {
     env()
@@ -361,7 +367,9 @@ fn get_spell_cooldown_duration_inactive_numeric_and_unresolved_alias() {
     .expect("inactive numeric identifiers yield zero timing and unresolved aliases yield nil");
 }
 
-#[cfg(not(feature = "retail-12-0-0"))]
+// Forever SpellDocumentation.lua:327 declares the modeled duration query;
+// R17 verifies native Game registration, so the older nil control does not apply.
+#[cfg(not(any(feature = "retail-12-0-0", feature = "client-wowforever")))]
 #[test]
 fn get_spell_cooldown_duration_keeps_pre_retail_12_0_0_nil_result() {
     let env = env();
@@ -503,7 +511,8 @@ fn get_action_cooldown_active_is_false_for_zero_start() {
         "InactiveIntervalIsZero = true"
     } else {
         "InactiveIntervalIsZero = false"
-    }).unwrap();
+    })
+    .unwrap();
     {
         let mut state = env.state().borrow_mut();
         state.start_time = std::time::Instant::now() - std::time::Duration::from_secs(1);

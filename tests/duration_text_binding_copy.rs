@@ -25,6 +25,46 @@ fn duration_binding_font_string_accepts_native_views_and_checks_taint() {
     .unwrap();
 }
 
+/// Native decisions shared by Forever 70707 and Retail 70688 (R17).
+#[test]
+fn duration_binding_native_empty_state_and_typed_setters_are_atomic() {
+    let env = binding_environment();
+    env.exec(
+        r#"
+        local binding = C_DurationUtil.CreateDurationTextBinding()
+        assert(binding:GetDuration() == nil, 'fresh binding has no duration')
+        assert(not binding:CanFormatText() and binding:GetFormattedText() == '')
+        binding:SetZeroDurationText('unset')
+        assert(not binding:CanFormatText() and binding:GetFormattedText() == 'unset')
+        local duration = CreateBindingDuration(6)
+        binding:SetDuration(duration)
+        assert(not binding:CanFormatText(), 'duration alone is not sufficient')
+        binding:SetTextFormat('remaining %s', {})
+        assert(binding:CanFormatText(), 'duration and nonempty format are sufficient')
+        local formatter = CreateBindingFormatter('%.0f')
+        binding:SetFormatter(formatter)
+        assert(binding:GetFormattedText() == '6', 'SetFormatter resets the prior format')
+        assert(not pcall(binding.SetDuration, binding, nil))
+        assert(binding:GetDuration() == duration and binding:GetFormattedText() == '6')
+        local fake = newproxy(true)
+        getmetatable(fake).__index = {FormatNumber=function() return 'forged' end}
+        for _, value in ipairs({{}, {FormatNumber=function() return 'forged' end}, fake}) do
+            assert(not pcall(binding.SetFormatter, binding, value), 'formatter identity is authenticated')
+            assert(binding:GetFormattedText() == '6', 'rejected formatter preserves configuration')
+        end
+        assert(not pcall(binding.SetFormatter, binding, nil))
+        binding:SetFormatter(formatter:Copy())
+        assert(binding:GetFormattedText() == '6')
+        binding:Assign(binding)
+        assert(binding:GetDuration() == duration and binding:GetFormattedText() == '6')
+        binding:SetToDefaults()
+        assert(binding:GetDuration() == nil and not binding:CanFormatText())
+        assert(binding:GetFormattedText() == '' and not binding:CanUpdateFontString())
+        "#,
+    )
+    .expect("R17 native empty/reset state, predicate and atomic typed setter behavior");
+}
+
 #[cfg(feature = "client-wowforever")]
 #[test]
 fn duration_binding_secret_duration_preserves_font_string_boundary() {
@@ -419,8 +459,9 @@ fn duration_binding_assign_validates_atomically_clears_absent_values_and_handles
         assert(binding:GetExpiredText() == nil and binding:GetZeroDurationText() == nil, 'Assign clears fallback text')
         assert(binding:GetTextColorCurve() == nil, 'Assign clears color curve')
         assert(not binding:CanFormatText() and not empty:CanFormatText(), 'empty bindings cannot format text')
-        assert(not pcall(binding.GetFormattedText, binding), 'assigned empty binding cannot return formatted text')
-        assert(not pcall(empty.GetFormattedText, empty), 'new empty binding cannot return formatted text')
+        -- R17: native Forever 70707 and Retail 70688 return empty text here.
+        assert(binding:GetFormattedText() == '', 'assigned empty binding returns empty text')
+        assert(empty:GetFormattedText() == '', 'new empty binding returns empty text')
         "#,
     )
     .expect("invalid assignments leave state intact and empty configuration replaces old values");
