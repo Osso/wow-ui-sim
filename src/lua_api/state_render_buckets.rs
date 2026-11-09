@@ -49,7 +49,7 @@ pub(super) fn dfs_emit(
     visible: &FxHashSet<u64>,
     out: &mut Vec<u64>,
 ) {
-    dfs_emit_with_region_mode(id, strata_idx, widgets, visible, out, false);
+    dfs_emit_with_region_mode(id, strata_idx, widgets, visible, out, None);
 }
 
 fn dfs_emit_with_region_mode(
@@ -58,11 +58,14 @@ fn dfs_emit_with_region_mode(
     widgets: &WidgetRegistry,
     visible: &FxHashSet<u64>,
     out: &mut Vec<u64>,
-    suppress_regions: bool,
+    suppressed_region_level: Option<i32>,
 ) {
     let Some(frame) = widgets.get(id) else {
         return;
     };
+    let suppressed_region_level =
+        suppressed_region_level.filter(|level| *level == frame.frame_level);
+    let suppress_regions = suppressed_region_level.is_some();
     let tooltip_nineslice_id = tooltip_nineslice_child(frame, strata_idx, widgets, visible);
     emit_tooltip_nineslice(
         tooltip_nineslice_id,
@@ -70,7 +73,7 @@ fn dfs_emit_with_region_mode(
         widgets,
         visible,
         out,
-        suppress_regions,
+        suppressed_region_level,
     );
 
     let (regions, mut child_frames) =
@@ -89,7 +92,7 @@ fn dfs_emit_with_region_mode(
             widgets,
             visible,
             out,
-            suppress_regions,
+            suppressed_region_level,
         },
         region_placement,
     );
@@ -101,7 +104,7 @@ fn emit_tooltip_nineslice(
     widgets: &WidgetRegistry,
     visible: &FxHashSet<u64>,
     out: &mut Vec<u64>,
-    suppress_regions: bool,
+    suppressed_region_level: Option<i32>,
 ) {
     if let Some(nineslice_id) = tooltip_nineslice_id {
         dfs_emit_with_region_mode(
@@ -110,7 +113,7 @@ fn emit_tooltip_nineslice(
             widgets,
             visible,
             out,
-            suppress_regions,
+            suppressed_region_level,
         );
     }
 }
@@ -140,7 +143,7 @@ struct RegionEmitContext<'a> {
     widgets: &'a WidgetRegistry,
     visible: &'a FxHashSet<u64>,
     out: &'a mut Vec<u64>,
-    suppress_regions: bool,
+    suppressed_region_level: Option<i32>,
 }
 
 fn emit_frame_with_regions(
@@ -158,7 +161,7 @@ fn emit_frame_with_regions(
         ctx.widgets,
         ctx.visible,
         ctx.out,
-        ctx.suppress_regions,
+        ctx.suppressed_region_level,
         &mut deferred_font_regions,
     );
     sort_regions(&mut deferred_font_regions, ctx.widgets);
@@ -266,7 +269,7 @@ fn emit_child_frames_and_hoisted(
     widgets: &WidgetRegistry,
     visible: &FxHashSet<u64>,
     out: &mut Vec<u64>,
-    suppress_regions: bool,
+    suppressed_region_level: Option<i32>,
     deferred_regions: &mut Vec<RegionEntry>,
 ) {
     sort_child_frames(child_frames, widgets);
@@ -275,28 +278,45 @@ fn emit_child_frames_and_hoisted(
         if let Some(child) = child {
             emit_deferred_regions_below_level(deferred_regions, child.frame_level, widgets, out);
         }
-        let hoist_child_regions = !suppress_regions
+        let hoist_child_regions = suppressed_region_level.is_none()
             && child.is_some_and(|frame| {
                 is_regionless_transparent_wrapper(frame, strata_idx, widgets, visible)
             });
-        // Regions collected by an ancestor must not be emitted again by nested
-        // Frame/ScrollFrame wrappers. Button/EditBox regions were not hoisted.
-        let child_suppress =
-            hoist_child_regions || (suppress_regions && child.is_some_and(is_transparent_wrapper));
+        // Suppress only regions at the level collected by an ancestor. A
+        // different-level subtree keeps its own regions and can hoist them.
+        let child_suppressed_region_level = if hoist_child_regions {
+            child.map(|frame| frame.frame_level)
+        } else {
+            suppressed_region_level.filter(|level| {
+                child.is_some_and(|frame| {
+                    frame.frame_level == *level && is_transparent_wrapper(frame)
+                })
+            })
+        };
         if hoist_child_regions {
-            let mut hoisted_regions = Vec::new();
-            collect_transparent_wrapper_regions(
-                child_id,
-                strata_idx,
-                widgets,
-                visible,
-                1,
-                &mut hoisted_regions,
-            );
-            let deferred_hoisted = emit_immediate_regions(hoisted_regions, widgets, out);
-            deferred_regions.extend(deferred_hoisted);
+            if let Some(owner_level) = child.map(|frame| frame.frame_level) {
+                let mut hoisted_regions = Vec::new();
+                collect_transparent_wrapper_regions(
+                    child_id,
+                    owner_level,
+                    strata_idx,
+                    widgets,
+                    visible,
+                    1,
+                    &mut hoisted_regions,
+                );
+                let deferred_hoisted = emit_immediate_regions(hoisted_regions, widgets, out);
+                deferred_regions.extend(deferred_hoisted);
+            }
         }
-        dfs_emit_with_region_mode(child_id, strata_idx, widgets, visible, out, child_suppress);
+        dfs_emit_with_region_mode(
+            child_id,
+            strata_idx,
+            widgets,
+            visible,
+            out,
+            child_suppressed_region_level,
+        );
     }
 }
 
@@ -396,6 +416,7 @@ fn collect_child_for_emit(
 
 fn collect_transparent_wrapper_regions(
     id: u64,
+    owner_level: i32,
     strata_idx: usize,
     widgets: &WidgetRegistry,
     visible: &FxHashSet<u64>,
@@ -419,9 +440,13 @@ fn collect_transparent_wrapper_regions(
             });
             continue;
         }
-        if child.frame_strata.as_index() == strata_idx && is_transparent_wrapper(child) {
+        if child.frame_strata.as_index() == strata_idx
+            && child.frame_level == owner_level
+            && is_transparent_wrapper(child)
+        {
             collect_transparent_wrapper_regions(
                 child_id,
+                owner_level,
                 strata_idx,
                 widgets,
                 visible,
@@ -473,37 +498,7 @@ fn is_regionless_transparent_wrapper(
         && frame
             .parent_id
             .and_then(|id| widgets.get(id))
-            .is_some_and(|parent| {
-                frame.frame_level == parent.frame_level
-                    && subtree_stays_at_level(
-                        frame,
-                        frame.frame_level,
-                        strata_idx,
-                        widgets,
-                        visible,
-                    )
-            })
-}
-
-// Hoisting is only a same-level grouping rule. Crossing a level boundary loses
-// the owning frame's ordering relative to opaque siblings and nested buttons.
-fn subtree_stays_at_level(
-    frame: &crate::widget::Frame,
-    level: i32,
-    strata_idx: usize,
-    widgets: &WidgetRegistry,
-    visible: &FxHashSet<u64>,
-) -> bool {
-    frame.children.iter().all(|id| {
-        let Some(child) = widgets.get(*id) else {
-            return true;
-        };
-        !visible.contains(id)
-            || is_region(child.widget_type)
-            || child.frame_strata.as_index() != strata_idx
-            || (child.frame_level == level
-                && subtree_stays_at_level(child, level, strata_idx, widgets, visible))
-    })
+            .is_some_and(|parent| frame.frame_level == parent.frame_level)
 }
 
 fn has_visible_same_strata_region_child(
