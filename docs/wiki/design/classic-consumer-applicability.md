@@ -39,6 +39,10 @@ VERIFIED: `Blizzard_UIParent/Classic/UIParent.xml:23` binds `UIParent_OnEvent`; 
 
 Keep all existing protected-method state, taint, owner and event assertions. On classic, observe the real UIParent OnEvent route and its call to the original display function; do not synthesize GameEvent or replace a Blizzard handler. On Retail/PTR/Forever retain the existing GameEvent probe. A test-only hook may record the display call and the owner received by UIParent, but a listener alone is insufficient proof that the Blizzard consumer ran. Unrelated roleset availability is deferred unless the pinned declarations prove a gate; do not add missing methods to satisfy this fixture.
 
+## Implementation: native startup roots
+
+The shared panel fixture now calls `common::load_game_startup_inventory` on Mists, Era and Anniversary. This uses the same profile-selected startup TOCs and dependency ordering as simulator startup. It does not silently skip missing roots or fabricate TimerunningUtil/POIButton. Retail, PTR, WowForever and the existing Wrath branch keep their prior paths. The first lane-owned RED reproduced TimerunningUtil at `tests/common/panel_fixtures.rs:128:9`; the GREEN run and post-baseline profile counts are recorded in the untracked handoff report.
+
 ## Acceptance and execution order
 
 Commit `tests/classic_consumer_applicability.rs` before fixture changes. Its two cases execute original classic UIParent/action-button and menu consumers through the broken shared fixtures. Expected initial boundaries are TimerunningUtil and POIButton, respectively. Existing `protected_method_coverage::protected_input_clamped` is the third boundary. Historical logs already show these causes; fresh lane-owned RED runs remain required and must not be replaced by the historical evidence.
