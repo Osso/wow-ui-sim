@@ -112,6 +112,9 @@ fn fire_startup_events(env: &WowLuaEnv) {
     }
 }
 
+// Era/Anniversary select `Blizzard_CharacterFrame/Vanilla/CharacterFrame.lua`,
+// which does not define the Retail/Cata `CharacterFrame:RefreshDisplay` method.
+#[cfg(not(any(feature = "client-era", feature = "client-anniversary")))]
 #[test]
 fn show_ui_panel_locks_reputation_frame_layout() {
     test_timeout! {
@@ -335,7 +338,8 @@ fn show_ui_panel_locks_reputation_frame_layout() {
     }
 }
 
-post_wrath_ui_fixture! {
+// The filter dropdown is only in the Mainline/Camelot ReputationFrame consumer.
+retail_ptr_forever_toc_fixture! {
 #[test]
 fn reputation_filter_dropdown_mouse_down_materializes_menu_rows() {
     test_timeout! {

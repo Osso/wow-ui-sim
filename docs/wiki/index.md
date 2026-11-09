@@ -2,7 +2,7 @@
 
 ## [2026-11-08] design | Classic consumer fixture applicability
 
-[Classic consumer fixture applicability](design/classic-consumer-applicability.md) ranks the Era first-error clusters and separates native classic fixture selection from absent Retail features. Acceptance tests are committed before fixture changes; fresh profile baselines and final proof remain pending.
+[Classic consumer fixture applicability](design/classic-consumer-applicability.md) ranks the Era first-error clusters and separates native classic fixture selection from absent Retail features. Fresh 75038d409 failure-name sets are saved for Era, Anniversary, and Mists; changed-source comparisons and final profile checks remain pending.
 
 ## [2026-11-08] investigation | Mists spellbook button size
 

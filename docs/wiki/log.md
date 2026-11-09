@@ -1,3 +1,7 @@
+## [2026-11-09] update | Classic consumer fixture applicability
+
+Updated the [classic fixture design](design/classic-consumer-applicability.md) with per-profile Blizzard file counts for Mainline-only gates and the unresolved `GetNumFactions` native-evidence gap. Fresh 75038d409 name sets are available; changed-source comparisons and final profile checks remain open.
+
 ## [2026-11-08] design | Classic consumer fixture applicability
 
 Recorded the [classic fixture design](design/classic-consumer-applicability.md), historical first-error ranking, pinned TOC evidence and pre-implementation acceptance cases. No GREEN or fresh-baseline claim is made.
