@@ -117,6 +117,10 @@ pub fn seed_addon_search_paths(env: &WowLuaEnv) {
 }
 
 pub fn load_panel_addons(env: &WowLuaEnv) {
+    if crate::common::load_classic_game_startup_inventory(env) {
+        return;
+    }
+
     let ui = blizzard_ui_dir();
     let addons = wow_ui_sim::loader::discover_blizzard_addon_closure_for_screen_with_overrides(
         &ui,
