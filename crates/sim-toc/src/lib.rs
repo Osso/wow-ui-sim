@@ -220,65 +220,38 @@ fn is_game_type_metadata_header(key: &str) -> bool {
     matches!(key, "AllowLoadGameType" | "ExcludeLoadGameType")
 }
 
-fn has_game_type_header_condition(rest: &str) -> bool {
-    annotation_value(rest, "[AllowLoadGameType").is_some()
-        || annotation_value(rest, "[ExcludeLoadGameType").is_some()
-}
-
-fn should_skip_game_type_metadata<P: Selection>(key: &str, rest: &str) -> bool {
-    if !is_game_type_metadata_header(key) {
-        return false;
-    }
-    if !has_game_type_header_condition(rest) {
-        return false;
-    }
-    !is_allowed_game_type::<P>(rest)
-}
-
-fn should_skip_other_metadata<P: Selection>(key: &str, rest: &str) -> bool {
-    if is_game_type_metadata_header(key) {
-        return false;
-    }
-    let is_variable_metadata = P::is_variable_metadata(rest);
-    let is_allowed = is_allowed_game_type::<P>(rest);
-    is_variable_metadata || !is_allowed
-}
-
 fn should_skip_metadata<P: Selection>(key: &str, rest: &str) -> bool {
-    should_skip_game_type_metadata::<P>(key, rest) || should_skip_other_metadata::<P>(key, rest)
-}
-
-fn trim_metadata_value<'a>(key: &str, value: &'a str) -> &'a str {
-    if is_game_type_metadata_header(key) {
-        value.trim_start_matches(' ')
-    } else {
-        value.trim()
+    let is_game_type_header = is_game_type_metadata_header(key);
+    if is_game_type_header {
+        let has_game_type_condition = annotation_value(rest, "[AllowLoadGameType").is_some()
+            || annotation_value(rest, "[ExcludeLoadGameType").is_some();
+        return has_game_type_condition && !is_allowed_game_type::<P>(rest);
     }
+    P::is_variable_metadata(rest) || !is_allowed_game_type::<P>(rest)
 }
 
-fn append_dependency_line(
+fn insert_metadata_value(
+    metadata: &mut HashMap<String, String>,
     key: &str,
     value: &str,
     required_dependency_lines: &mut Vec<DependencyLine>,
     optional_dependency_lines: &mut Vec<DependencyLine>,
 ) {
-    if !is_dependency_metadata_key(key) {
-        return;
+    let is_dependency_header = is_dependency_metadata_key(key);
+    if is_dependency_header {
+        let line = DependencyLine {
+            names: split_dependency_names(strip_annotations(value)),
+            allow_load: dependency_screen_phase(value),
+        };
+        if matches!(key, "OptionalDep" | "OptionalDeps") {
+            optional_dependency_lines.push(line);
+        } else {
+            required_dependency_lines.push(line);
+        }
     }
-    let line = DependencyLine {
-        names: split_dependency_names(strip_annotations(value)),
-        allow_load: dependency_screen_phase(value),
-    };
-    if matches!(key, "OptionalDep" | "OptionalDeps") {
-        optional_dependency_lines.push(line);
-    } else {
-        required_dependency_lines.push(line);
-    }
-}
 
-fn store_metadata_value(metadata: &mut HashMap<String, String>, key: &str, value: &str) {
     let value = replace_template_vars(strip_annotations(value));
-    if is_dependency_metadata_key(key) {
+    if is_dependency_header {
         metadata
             .entry(key.to_string())
             .and_modify(|existing| {
@@ -310,20 +283,24 @@ fn insert_metadata<P: Selection>(
     if should_skip_metadata::<P>(key, rest) {
         return;
     }
-    let value = trim_metadata_value(key, value);
+    let value = if is_game_type_metadata_header(key) {
+        value.trim_start_matches(' ')
+    } else {
+        value.trim()
+    };
     if key == "Interface" && is_all_template_versions(value) {
         return;
     }
     if key == "AllowLoad" {
         *allow_load_header_condition = dependency_screen_phase(value);
     }
-    append_dependency_line(
+    insert_metadata_value(
+        metadata,
         key,
         value,
         required_dependency_lines,
         optional_dependency_lines,
     );
-    store_metadata_value(metadata, key, value);
 }
 
 fn parse_load_into_environment(line: &str) -> Option<bool> {

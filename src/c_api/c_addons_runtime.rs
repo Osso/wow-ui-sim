@@ -63,17 +63,9 @@ fn load_runtime_addon_with_dependencies(
     let (toc_path, toc, screen) = read_runtime_addon_toc(state, addon_name, origin)?;
     let loading_guard = crate::loader::begin_addon_load(loader_env, addon_name, &toc);
     apply_mists_runtime_preload(loader_env, &toc, &toc_path, origin)?;
-    load_runtime_foundation_dependencies(state, loader_env, addon_name, origin)?;
-    load_required_runtime_dependencies(state, loader_env, addon_name, &toc, screen, origin)?;
-    load_optional_runtime_dependencies(state, loader_env, addon_name, &toc, screen, origin);
-
-    crate::loader::trace_load_addon(origin, format!("files {addon_name}"));
-    let mut result = load_runtime_addon_files(state, loader_env, addon_name, &toc)?;
-    loader_env
-        .state()
-        .borrow_mut()
-        .mark_addon_initialized(addon_name);
-    crate::lua_api::workarounds::apply_for_runtime_addon_load(loader_env, addon_name);
+    load_runtime_addon_dependencies(state, loader_env, addon_name, &toc, screen, origin)?;
+    let mut result =
+        load_runtime_addon_files_and_mark(state, loader_env, addon_name, &toc, origin)?;
     loading_guard.commit_loaded();
     fire_addon_loaded(state, loader_env, addon_name);
     finalize_runtime_addon_load(
@@ -104,20 +96,7 @@ fn read_runtime_addon_toc(
     Ok((toc_path, toc, screen))
 }
 
-fn load_runtime_foundation_dependencies(
-    state: &mut LuaState,
-    loader_env: &LoaderEnv<'_>,
-    addon_name: &str,
-    origin: crate::loader::LoadAddonTraceOrigin,
-) -> Result<(), LoadError> {
-    for dependency in runtime_foundation_dependencies(state, addon_name) {
-        crate::loader::trace_load_addon(origin, format!("{addon_name} -> foundation {dependency}"));
-        load_runtime_addon_recursive(state, loader_env, dependency)?;
-    }
-    Ok(())
-}
-
-fn load_required_runtime_dependencies(
+fn load_runtime_addon_dependencies(
     state: &mut LuaState,
     loader_env: &LoaderEnv<'_>,
     addon_name: &str,
@@ -125,6 +104,10 @@ fn load_required_runtime_dependencies(
     screen: ScreenKind,
     origin: crate::loader::LoadAddonTraceOrigin,
 ) -> Result<(), LoadError> {
+    for dependency in runtime_foundation_dependencies(state, addon_name) {
+        crate::loader::trace_load_addon(origin, format!("{addon_name} -> foundation {dependency}"));
+        load_runtime_addon_recursive(state, loader_env, dependency)?;
+    }
     for dependency in toc.dependencies_for_screen(screen) {
         crate::loader::trace_load_addon(origin, format!("{addon_name} -> dep {dependency}"));
         if super::addon_is_disabled(state, &dependency) {
@@ -137,17 +120,6 @@ fn load_required_runtime_dependencies(
             result => result?,
         }
     }
-    Ok(())
-}
-
-fn load_optional_runtime_dependencies(
-    state: &mut LuaState,
-    loader_env: &LoaderEnv<'_>,
-    addon_name: &str,
-    toc: &TocFile,
-    screen: ScreenKind,
-    origin: crate::loader::LoadAddonTraceOrigin,
-) {
     for dependency in toc.optional_deps_for_screen(screen) {
         crate::loader::trace_load_addon(origin, format!("{addon_name} -> optional {dependency}"));
         if !super::addon_is_disabled(state, &dependency) {
@@ -155,6 +127,24 @@ fn load_optional_runtime_dependencies(
             let _ = load_runtime_addon_recursive(state, loader_env, &dependency);
         }
     }
+    Ok(())
+}
+
+fn load_runtime_addon_files_and_mark(
+    state: &mut LuaState,
+    loader_env: &LoaderEnv<'_>,
+    addon_name: &str,
+    toc: &TocFile,
+    origin: crate::loader::LoadAddonTraceOrigin,
+) -> Result<crate::loader::LoadResult, LoadError> {
+    crate::loader::trace_load_addon(origin, format!("files {addon_name}"));
+    let result = load_runtime_addon_files(state, loader_env, addon_name, toc)?;
+    loader_env
+        .state()
+        .borrow_mut()
+        .mark_addon_initialized(addon_name);
+    crate::lua_api::workarounds::apply_for_runtime_addon_load(loader_env, addon_name);
+    Ok(result)
 }
 
 fn finalize_runtime_addon_load(
