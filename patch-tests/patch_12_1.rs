@@ -144,15 +144,6 @@ fn assert_ptr_source_omits_qualified_methods(namespace: &str, methods: &[&str]) 
     assert_ptr_source_omits_symbols(&publications);
 }
 
-fn assert_ptr_source_contains(symbol: &str) {
-    assert!(
-        ptr_source_files()
-            .iter()
-            .any(|(_, source)| contains_ascii(source, symbol)),
-        "expected PTR source publication {symbol} was not found",
-    );
-}
-
 fn missing_runtime_functions(env: &WowLuaEnv, symbols: &[&str]) -> String {
     runtime_functions_matching(env, symbols, false)
 }
