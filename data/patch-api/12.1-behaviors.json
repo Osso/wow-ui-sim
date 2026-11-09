@@ -671,7 +671,7 @@
           "kind": "test",
           "reference": "patch-tests/patch_12_1/aura_container.rs::aura_container_group_assigns_and_releases_frames_by_aura_instance",
           "summary": "Aura groups assign aura data to frames by auraInstanceID and preserve retained frame ownership while removed frames are released.",
-          "source_hash": "169ed21b32b483984efeb944b0595dcd59e204be55b96908bf0d434cdbd9538e"
+          "source_hash": "3305711b1e51c8c9d70c5dcc6a8db0f77e8f2afb8fee1e9fae21d7a60bd0aa6d"
         }
       ],
       "tests": [
@@ -695,7 +695,7 @@
           "kind": "test",
           "reference": "patch-tests/patch_12_1/aura_container.rs::aura_container_filters_helpful_harmful_and_player_auras",
           "summary": "Aura groups select HELPFUL, HARMFUL, and PLAYER aura subsets through compatible filter combinations.",
-          "source_hash": "169ed21b32b483984efeb944b0595dcd59e204be55b96908bf0d434cdbd9538e"
+          "source_hash": "3305711b1e51c8c9d70c5dcc6a8db0f77e8f2afb8fee1e9fae21d7a60bd0aa6d"
         }
       ],
       "tests": [
@@ -719,7 +719,7 @@
           "kind": "test",
           "reference": "patch-tests/patch_12_1/aura_container.rs::aura_container_honors_configured_sort_order",
           "summary": "Aura groups honor a configured comparator ordering; this does not claim the retail default comparator.",
-          "source_hash": "169ed21b32b483984efeb944b0595dcd59e204be55b96908bf0d434cdbd9538e"
+          "source_hash": "3305711b1e51c8c9d70c5dcc6a8db0f77e8f2afb8fee1e9fae21d7a60bd0aa6d"
         }
       ],
       "tests": [
@@ -743,7 +743,7 @@
           "kind": "test",
           "reference": "patch-tests/patch_12_1/aura_container.rs::aura_container_selects_public_private_and_edit_mode_partitions",
           "summary": "Aura containers select public-only, public-and-private, and edit-mode aura source partitions compatibly.",
-          "source_hash": "169ed21b32b483984efeb944b0595dcd59e204be55b96908bf0d434cdbd9538e"
+          "source_hash": "3305711b1e51c8c9d70c5dcc6a8db0f77e8f2afb8fee1e9fae21d7a60bd0aa6d"
         }
       ],
       "tests": [
@@ -767,7 +767,7 @@
           "kind": "test",
           "reference": "patch-tests/patch_12_1/aura_container.rs::aura_container_group_assigns_and_releases_frames_by_aura_instance",
           "summary": "Aura groups acquire, release, and reacquire frames as auraInstanceID entries are removed and re-added.",
-          "source_hash": "169ed21b32b483984efeb944b0595dcd59e204be55b96908bf0d434cdbd9538e"
+          "source_hash": "3305711b1e51c8c9d70c5dcc6a8db0f77e8f2afb8fee1e9fae21d7a60bd0aa6d"
         }
       ],
       "tests": [
@@ -815,7 +815,7 @@
           "kind": "source",
           "reference": "patch-tests/patch_12_1/aura_container.rs",
           "summary": "Public/private/EditMode mechanics are covered; secret exposure, taint, and error behavior are unknown.",
-          "source_hash": "169ed21b32b483984efeb944b0595dcd59e204be55b96908bf0d434cdbd9538e"
+          "source_hash": "3305711b1e51c8c9d70c5dcc6a8db0f77e8f2afb8fee1e9fae21d7a60bd0aa6d"
         }
       ],
       "tests": [],
