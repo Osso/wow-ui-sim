@@ -74,10 +74,7 @@ const REMOVED_PING_SECURE_METHODS: &[&str] = &[
     "GetDefaultPingOptions",
     "GetTextureKitForType",
 ];
-const REMOVED_PLAYER_INFO_METHODS: &[&str] = &[
-    "CanPlayerUseEventScheduler",
-    "IsExpansionLandingPageUnlockedForPlayer",
-];
+const REMOVED_PLAYER_INFO_METHODS: &[&str] = &["CanPlayerUseEventScheduler"];
 const REMOVED_PVP_METHODS: &[&str] = &[
     "CanDisplayDamage",
     "CanDisplayHealing",
@@ -384,7 +381,6 @@ fn removed_remaining_runtime_apis_are_absent_after_full_lod_load() {
                 {"C_PingSecure", "GetDefaultPingOptions"},
                 {"C_PingSecure", "GetTextureKitForType"},
                 {"C_PlayerInfo", "CanPlayerUseEventScheduler"},
-                {"C_PlayerInfo", "IsExpansionLandingPageUnlockedForPlayer"},
                 {"C_PvP", "CanDisplayDamage"},
                 {"C_PvP", "CanDisplayHealing"},
                 {"C_PvP", "CanDisplayKillingBlows"},
@@ -398,6 +394,7 @@ fn removed_remaining_runtime_apis_are_absent_after_full_lod_load() {
                 {"C_CatalogShop", "IsShop2Enabled"},
                 {"C_PingSecure", "CreateFrame"},
                 {"C_PlayerInfo", "GetAlternateFormInfo"},
+                {"C_PlayerInfo", "IsExpansionLandingPageUnlockedForPlayer"},
                 {"C_StorePublic", "IsEnabled"},
             }
             local removedPublished = {}

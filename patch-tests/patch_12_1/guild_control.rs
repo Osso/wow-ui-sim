@@ -1,6 +1,6 @@
-use super::{assert_ptr_source_omits_symbols, load_game_ui_without_player_choice};
+use super::{load_full_game_ui_with_all_lod, missing_runtime_functions};
 
-const SNAPSHOT_ONLY_GLOBALS: &[&str] = &[
+const PTR_GLOBALS: &[&str] = &[
     "GuildControlUI_Discord_HideAll",
     "GuildControlUI_Discord_Update",
     "GuildControlUI_DiscordFrame_OnLoad",
@@ -13,37 +13,10 @@ const SNAPSHOT_ONLY_GLOBALS: &[&str] = &[
     "GuildControlUI_UnlinkDiscord",
 ];
 
-/// Proves all proposed GuildControlUI globals are absent from PTR source and runtime.
+/// Proves the pinned PTR GuildControlUI globals are published after their LoD owner loads.
 #[test]
-fn snapshot_only_guild_control_globals_remain_absent() {
-    assert_ptr_source_omits_symbols(SNAPSHOT_ONLY_GLOBALS);
-
-    let env = load_game_ui_without_player_choice();
-    let absent_count: i32 = env
-        .eval(
-            r#"
-            local names = {
-                "GuildControlUI_Discord_HideAll",
-                "GuildControlUI_Discord_Update",
-                "GuildControlUI_DiscordFrame_OnLoad",
-                "GuildControlUI_LoadUI",
-                "GuildControlUI_OnShow",
-                "GuildControlUI_SetupDiscord",
-                "GuildControlUI_SetupSelected",
-                "GuildControlUI_Setup",
-                "GuildControlUI_Show",
-                "GuildControlUI_UnlinkDiscord",
-            }
-            local absentCount = 0
-            for _, name in ipairs(names) do
-                if _G[name] == nil then
-                    absentCount = absentCount + 1
-                end
-            end
-            return absentCount
-            "#,
-        )
-        .expect("GuildControlUI runtime probe succeeds");
-
-    assert_eq!(absent_count, SNAPSHOT_ONLY_GLOBALS.len() as i32);
+fn ptr_guild_control_globals_are_published_by_the_loaded_owner() {
+    let env = load_full_game_ui_with_all_lod();
+    let missing = missing_runtime_functions(&env, PTR_GLOBALS);
+    assert_eq!(missing, "", "pinned PTR globals must remain published");
 }

@@ -29,9 +29,10 @@ fn aura_container_selects_public_private_and_edit_mode_partitions() {
     let result = run_secure_probe(
         &env,
         r#"
-            local container = CreateFromMixins(AuraContainerManagedMixin)
+            local container = CreateFromMixins(ManagedAuraContainerPrivateMixin)
+            container.editModePreviewEnabled = true
             container.useEditModeSource = false
-            container.privateAurasEnabled = false
+            container.ShouldIncludePrivateAuraSource = function() return false end
 
             local publicOnly = container:GetAuraSources()
             if publicOnly ~= AuraContainerAuraSourceLists.PublicOnly then return "public-list" end
@@ -39,7 +40,7 @@ fn aura_container_selects_public_private_and_edit_mode_partitions() {
                 return "public-members"
             end
 
-            container.privateAurasEnabled = true
+            container.ShouldIncludePrivateAuraSource = function() return true end
             local publicAndPrivate = container:GetAuraSources()
             if publicAndPrivate ~= AuraContainerAuraSourceLists.PublicAndPrivate then
                 return "private-list"
@@ -81,28 +82,27 @@ fn aura_container_group_assigns_and_releases_frames_by_aura_instance() {
                 end,
             }
 
-            local container = CreateFromMixins(AuraContainerAuraGroupsMixin)
-            container:InitAuraGroups()
-            container.ShouldIncludeAuraInGroup = function() return true end
-            container.InitializeAuraFrameForGroup = function(_, frame, auraData)
+            local owner = CreateFromMixins(AuraContainerAuraGroupOwnerMixin)
+            owner.ShouldIncludeAuraInGroup = function() return true end
+            owner.InitializeAuraGroupFrame = function(_, _, frame, _, auraData)
                 frame.assignedAuraInstanceID = auraData.auraInstanceID
             end
-
-            local group = container:AddAuraGroup({
+            local manager = AuraContainerUtil.CreateAuraGroupManager(owner)
+            local group = manager:RegisterAuraGroup("test", {
                 filterString = "HELPFUL",
                 frameProvider = provider,
                 maxFrameCount = 2,
-                compareFunc = function(a, b)
+                auraComparator = function(a, b)
                     return a.auraInstanceID < b.auraInstanceID
                 end,
             })
 
-            container:AddAura({ auraInstanceID = 22 })
-            container:AddAura({ auraInstanceID = 11 })
-            container:RefreshAuraFrameGroup(group)
+            manager:AddAura("player", { auraInstanceID = 22 })
+            manager:AddAura("player", { auraInstanceID = 11 })
+            manager:RefreshFrameAssignments("player")
 
-            local firstFrame = group:GetFramesByAuraInstanceID()[11]
-            local secondFrame = group:GetFramesByAuraInstanceID()[22]
+            local firstFrame = group:GetFramesByAura()[11]
+            local secondFrame = group:GetFramesByAura()[22]
             if firstFrame == nil or firstFrame.token ~= 1 or firstFrame.assignedAuraInstanceID ~= 11 then
                 return "initial-first-ownership"
             end
@@ -110,17 +110,17 @@ fn aura_container_group_assigns_and_releases_frames_by_aura_instance() {
                 return "initial-second-ownership"
             end
 
-            container:RemoveAura(11)
-            container:RefreshAuraFrameGroup(group)
+            manager:RemoveAura("player", 11)
+            manager:RefreshFrameAssignments("player")
             if releasedTokens[1] ~= 1 then return "released-removed-frame" end
-            if group:GetFramesByAuraInstanceID()[11] ~= nil then return "removed-map-entry" end
-            if group:GetFramesByAuraInstanceID()[22] ~= secondFrame then return "retained-frame" end
+            if group:GetFramesByAura()[11] ~= nil then return "removed-map-entry" end
+            if group:GetFramesByAura()[22] ~= secondFrame then return "retained-frame" end
 
-            container:AddAura({ auraInstanceID = 11 })
-            container:RefreshAuraFrameGroup(group)
-            local reboundFrame = group:GetFramesByAuraInstanceID()[11]
+            manager:AddAura("player", { auraInstanceID = 11 })
+            manager:RefreshFrameAssignments("player")
+            local reboundFrame = group:GetFramesByAura()[11]
             if reboundFrame == nil or reboundFrame.token ~= 3 then return "rebound-frame" end
-            if group:GetFramesByAuraInstanceID()[22] ~= secondFrame then return "rebound-retained-frame" end
+            if group:GetFramesByAura()[22] ~= secondFrame then return "rebound-retained-frame" end
             return "ok"
             "#,
     );
@@ -131,20 +131,19 @@ fn aura_container_group_assigns_and_releases_frames_by_aura_instance() {
 #[test]
 fn aura_container_filters_helpful_harmful_and_player_auras() {
     let env = load_aura_container_ui();
-    seed_player_filter_auras(&env);
+    seed_filter_auras(&env);
 
     let result = run_secure_probe(
         &env,
         r#"
             local function includeAura(unit, filterString, auraData)
-                local container = CreateFromMixins(AuraContainerAuraGroupsMixin)
-                container:InitAuraGroups()
-                container.GetUnit = function() return unit end
-                local group = container:AddAuraGroup({
+                local owner = CreateFromMixins(AuraContainerAuraGroupOwnerMixin)
+                local manager = AuraContainerUtil.CreateAuraGroupManager(owner)
+                local group = manager:RegisterAuraGroup("test", {
                     filterString = filterString,
                     frameProvider = {},
                 })
-                container:AddAura(auraData)
+                manager:AddAura(unit, auraData)
                 return group:GetAuras()[auraData.auraInstanceID] ~= nil
             end
 
@@ -175,13 +174,13 @@ fn aura_container_honors_configured_sort_order() {
     let result = run_secure_probe(
         &env,
         r#"
-            local container = CreateFromMixins(AuraContainerAuraGroupsMixin)
-            container:InitAuraGroups()
-            container.ShouldIncludeAuraInGroup = function() return true end
-            local group = container:AddAuraGroup({
+            local owner = CreateFromMixins(AuraContainerAuraGroupOwnerMixin)
+            owner.ShouldIncludeAuraInGroup = function() return true end
+            local manager = AuraContainerUtil.CreateAuraGroupManager(owner)
+            local group = manager:RegisterAuraGroup("test", {
                 filterString = "HELPFUL",
                 frameProvider = {},
-                compareFunc = function(a, b)
+                auraComparator = function(a, b)
                     return a.auraInstanceID < b.auraInstanceID
                 end,
             })
@@ -193,11 +192,11 @@ fn aura_container_honors_configured_sort_order() {
                 { auraInstanceID = 43, sourceUnit = "target", isPriorityAura = false, canApplyAura = true },
             }
             for _, auraData in ipairs(auras) do
-                container:AddAura(auraData)
+                manager:AddAura("player", auraData)
             end
 
             local ordered = {}
-            group.auras:Iterate(function(auraInstanceID)
+            group:GetAuras():Iterate(function(auraInstanceID)
                 table.insert(ordered, tostring(auraInstanceID))
             end)
             return table.concat(ordered, ",")
@@ -207,41 +206,46 @@ fn aura_container_honors_configured_sort_order() {
     assert_eq!(result, "40,41,42,43");
 }
 
-fn seed_player_filter_auras(env: &WowLuaEnv) {
-    env.state().borrow_mut().player.buffs = vec![
-        AuraInfo {
-            name: "Player Helpful Aura".into(),
-            spell_id: 1001,
-            icon: 1,
-            duration: 30.0,
-            expiration_time: 30.0,
-            applications: 1,
-            source_unit: "player".into(),
-            is_helpful: true,
-            is_raid: true,
-            is_nameplate_only: false,
-            is_stealable: false,
-            can_apply_aura: true,
-            is_from_player_or_player_pet: true,
-            dispel_type: None,
-            aura_instance_id: 101,
-        },
-        AuraInfo {
-            name: "Party Helpful Aura".into(),
-            spell_id: 1002,
-            icon: 2,
-            duration: 30.0,
-            expiration_time: 30.0,
-            applications: 1,
-            source_unit: "party1".into(),
-            is_helpful: true,
-            is_raid: true,
-            is_nameplate_only: false,
-            is_stealable: false,
-            can_apply_aura: true,
-            is_from_player_or_player_pet: false,
-            dispel_type: None,
-            aura_instance_id: 102,
-        },
+fn seed_filter_auras(env: &WowLuaEnv) {
+    env.exec("TargetUnit('party1')")
+        .expect("select the unit with supplied target auras");
+
+    let mut state = env.state().borrow_mut();
+    state.player.buffs = vec![
+        aura_info("Player Helpful Aura", "player", true, true, 101),
+        aura_info("Party Helpful Aura", "party1", true, false, 102),
     ];
+    state.target_auras = vec![aura_info(
+        "Target Harmful Aura",
+        "target",
+        false,
+        false,
+        201,
+    )];
+}
+
+fn aura_info(
+    name: &str,
+    source_unit: &str,
+    is_helpful: bool,
+    is_from_player: bool,
+    id: u32,
+) -> AuraInfo {
+    AuraInfo {
+        name: name.into(),
+        spell_id: id,
+        icon: id as i32,
+        duration: 30.0,
+        expiration_time: 30.0,
+        applications: 1,
+        source_unit: source_unit.into(),
+        is_helpful,
+        is_raid: true,
+        is_nameplate_only: false,
+        is_stealable: false,
+        can_apply_aura: is_from_player,
+        is_from_player_or_player_pet: is_from_player,
+        dispel_type: None,
+        aura_instance_id: id as i32,
+    }
 }

@@ -1,6 +1,6 @@
 use super::{
     assert_ptr_source_omits_qualified_methods, assert_ptr_source_omits_qualified_symbols,
-    assert_ptr_source_omits_tokens, load_full_game_ui_with_all_lod, ptr_source_files,
+    contains_ascii, load_full_game_ui_with_all_lod, ptr_source_files,
 };
 
 include!("strict_removals.rs");
@@ -379,13 +379,26 @@ const SNAPSHOT_ONLY_RUNTIME_PROBE: &str = r#"
             "#;
 
 #[test]
-fn source_absent_additions_remain_absent() {
-    assert_ptr_source_omits_tokens(SNAPSHOT_ONLY_SYMBOLS);
-
+fn snapshot_symbols_published_by_ptr_have_source_evidence() {
     let env = load_full_game_ui_with_all_lod();
     let published_symbols: String = env
         .eval(SNAPSHOT_ONLY_RUNTIME_PROBE)
-        .expect("source-absent runtime probe succeeds");
+        .expect("PTR source publication probe succeeds");
 
-    assert_eq!(published_symbols, "", "unexpected PTR publications");
+    for symbol in published_symbols
+        .split(',')
+        .filter(|symbol| !symbol.is_empty())
+    {
+        assert!(
+            SNAPSHOT_ONLY_SYMBOLS.contains(&symbol),
+            "runtime publication {symbol} is outside the audited snapshot candidates"
+        );
+        let token = symbol.split_once('.').map_or(symbol, |(_, method)| method);
+        assert!(
+            ptr_source_files()
+                .iter()
+                .any(|(_, source)| contains_ascii(source, token)),
+            "runtime publication {symbol} has no spelling in the pinned PTR source"
+        );
+    }
 }

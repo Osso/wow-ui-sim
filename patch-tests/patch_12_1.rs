@@ -17,6 +17,8 @@ mod aura_container;
 mod aura_tooltip;
 #[path = "patch_12_1/combat_audio.rs"]
 mod combat_audio;
+#[path = "patch_12_1/death_recap.rs"]
+mod death_recap;
 #[path = "patch_12_1/friends_list.rs"]
 mod friends_list;
 #[path = "patch_12_1/guild_control.rs"]
@@ -115,14 +117,6 @@ fn assert_ptr_source_omits_symbols(symbols: &[&str]) {
     }
 }
 
-fn assert_ptr_source_omits_tokens(symbols: &[&str]) {
-    let tokens = symbols
-        .iter()
-        .map(|symbol| symbol.split_once('.').map_or(*symbol, |(_, method)| method))
-        .collect::<Vec<_>>();
-    assert_ptr_source_omits_symbols(&tokens);
-}
-
 fn assert_ptr_source_omits_qualified_symbols(symbols: &[&str]) {
     for symbol in symbols {
         let (namespace, method) = symbol
@@ -157,6 +151,49 @@ fn assert_ptr_source_contains(symbol: &str) {
             .any(|(_, source)| contains_ascii(source, symbol)),
         "expected PTR source publication {symbol} was not found",
     );
+}
+
+fn missing_runtime_functions(env: &WowLuaEnv, symbols: &[&str]) -> String {
+    runtime_functions_matching(env, symbols, false)
+}
+
+fn present_runtime_symbols(env: &WowLuaEnv, symbols: &[&str]) -> String {
+    runtime_functions_matching(env, symbols, true)
+}
+
+fn runtime_functions_matching(env: &WowLuaEnv, symbols: &[&str], present: bool) -> String {
+    let symbols = symbols
+        .iter()
+        .map(|symbol| format!("\"{symbol}\""))
+        .collect::<Vec<_>>()
+        .join(",");
+    let matches_value = if present {
+        "value ~= nil"
+    } else {
+        "type(value) ~= \"function\""
+    };
+    let probe = format!(
+        r#"
+        local matchingSymbols = {{}}
+        for _, symbol in ipairs({{{symbols}}}) do
+            local namespaceName, methodName = string.match(symbol, "^([^.]+)%.(.+)$")
+            local value
+            if namespaceName then
+                local namespace = rawget(_G, namespaceName)
+                value = type(namespace) == "table" and rawget(namespace, methodName) or nil
+            else
+                value = rawget(_G, symbol)
+            end
+            local matches = {matches_value}
+            if matches then
+                table.insert(matchingSymbols, symbol)
+            end
+        end
+        return table.concat(matchingSymbols, ",")
+        "#
+    );
+    env.eval(&probe)
+        .expect("runtime publication probe succeeds")
 }
 
 fn player_choice_toc() -> PathBuf {

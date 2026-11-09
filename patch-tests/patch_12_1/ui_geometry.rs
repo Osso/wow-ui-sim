@@ -1,82 +1,61 @@
 use super::load_game_ui_without_player_choice;
 
-/// Proves the proposed removals are reversed: PTR retains the UI geometry globals.
+/// Proves PTR keeps the UI-parent positioning entry point and applies its supplied inputs.
 #[test]
-fn ui_geometry_helpers_remain_global() {
+fn ui_parent_position_updates_for_debug_bar_and_notch() {
     let env = load_game_ui_without_player_choice();
 
-    let (intersect_type, notch_type, offset_type): (String, String, String) = env
+    let types: (String, String, String) = env
         .eval(
             r#"
-            return type(UIDoFramesIntersect), type(GetNotchHeight), type(GetUIParentOffset)
+            return type(UpdateUIParentPosition),
+                type(GetNotchHeight),
+                type(UIDoFramesIntersect)
             "#,
         )
-        .expect("UI geometry publication probe succeeds");
+        .expect("UI parent position publication probe succeeds");
+    assert_eq!(types, ("function".into(), "nil".into(), "nil".into()));
 
-    assert_eq!(intersect_type, "function");
-    assert_eq!(notch_type, "function");
-    assert_eq!(offset_type, "function");
-
-    let (overlaps, separated, edge_touch): (bool, bool, bool) = env
-        .eval(
-            r#"
-            local function Rect(left, right, bottom, top)
-                return {
-                    GetLeft = function() return left end,
-                    GetRight = function() return right end,
-                    GetBottom = function() return bottom end,
-                    GetTop = function() return top end,
-                }
-            end
-
-            local base = Rect(0, 10, 0, 10)
-            return UIDoFramesIntersect(base, Rect(5, 15, 5, 15)),
-                UIDoFramesIntersect(base, Rect(20, 30, 20, 30)),
-                UIDoFramesIntersect(base, Rect(10, 20, 0, 10))
-            "#,
-        )
-        .expect("frame intersection behavior probe succeeds");
-
-    assert!(overlaps);
-    assert!(!separated);
-    assert!(!edge_touch);
-
-    let (plain_notch, scaled_notch, debug_offset, notch_offset): (f64, f64, f64, f64) = env
+    let (plain_offset, debug_offset, notch_offset): (f64, f64, f64) = env
         .eval(
             r#"
             local originalShouldAvoidNotch = C_UI.ShouldUIParentAvoidNotch
             local originalSafeRegion = C_UI.GetTopLeftNotchSafeRegion
             local originalPhysicalSize = GetPhysicalScreenSize
-            local originalGetSize = UIParent.GetSize
+            local originalGetHeight = UIParent.GetHeight
             local originalDebugHeight = DebugBarManager.GetTotalHeight
+            local function currentOffset()
+                return -select(5, UIParent:GetPoint(1))
+            end
 
             C_UI.ShouldUIParentAvoidNotch = function() return false end
-            local plainNotch = GetNotchHeight()
+            DebugBarManager.GetTotalHeight = function() return 40 end
+            UpdateUIParentPosition()
+            local plainOffset = currentOffset()
 
             C_UI.ShouldUIParentAvoidNotch = function() return true end
             C_UI.GetTopLeftNotchSafeRegion = function() return 0, 0, 0, 120 end
             GetPhysicalScreenSize = function() return 1920, 1080 end
-            UIParent.GetSize = function() return 1024, 720 end
-            local scaledNotch = GetNotchHeight()
-
+            UIParent.GetHeight = function() return 720 end
             DebugBarManager.GetTotalHeight = function() return 100 end
-            local debugOffset = GetUIParentOffset()
+            UpdateUIParentPosition()
+            local debugOffset = currentOffset()
+
             DebugBarManager.GetTotalHeight = function() return 40 end
-            local notchOffset = GetUIParentOffset()
+            UpdateUIParentPosition()
+            local notchOffset = currentOffset()
 
             C_UI.ShouldUIParentAvoidNotch = originalShouldAvoidNotch
             C_UI.GetTopLeftNotchSafeRegion = originalSafeRegion
             GetPhysicalScreenSize = originalPhysicalSize
-            UIParent.GetSize = originalGetSize
+            UIParent.GetHeight = originalGetHeight
             DebugBarManager.GetTotalHeight = originalDebugHeight
-
-            return plainNotch, scaledNotch, debugOffset, notchOffset
+            return plainOffset, debugOffset, notchOffset
             "#,
         )
-        .expect("notch and UI parent offset behavior probe succeeds");
+        .expect("UpdateUIParentPosition should apply supplied offsets");
 
-    assert_eq!(plain_notch, 0.0);
-    assert_eq!(scaled_notch, 80.0);
+    assert_eq!(plain_offset, 40.0);
     assert_eq!(debug_offset, 100.0);
     assert_eq!(notch_offset, 80.0);
 }
