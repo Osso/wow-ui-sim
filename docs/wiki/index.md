@@ -1,5 +1,9 @@
 > Proof receipts live untracked under `~/.local/state/wow-ui-sim`. The `data/patch-api/evidence` and `data/test-perf/evidence` trees were removed on 2026-11-08; historical links below are records, not live paths. Recover a file with `git show c011c1d95:<path>`.
 
+## [2026-11-09] investigation | Reconcile profile frame-position baselines
+
+[Frame-position baseline drift](investigations/frame-position-baseline-drift.md#verified-lane-result--2026-11-09) records source-derived PTR, Forever and Classic expectations, profile-specific absent-frame checks, the final six-profile failure matrix, and unresolved model/input divergences. Retail and PTR pass 28/28; other profile residuals are not treated as native geometry.
+
 ## [2026-11-08] investigation | GUI CASC cache preparation
 
 [GUI CASC cache preparation](investigations/gui-casc-cache-preparation.md) records the absent selected Era encoding key, supported local index headers, bounded consistency finding, and decision to use synthetic inputs in the required regression while retaining an `optional-tests` live smoke.
