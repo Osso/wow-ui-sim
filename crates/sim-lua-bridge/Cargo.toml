@@ -5,4 +5,4 @@ edition = "2024"
 license = "GPL-3.0-only"
 
 [dependencies]
-rilua = { git = "https://github.com/Osso/rilua.git", rev = "56daca9c586ed0dfb15a5448b50e36d0b50e5179" }
+rilua = { git = "https://github.com/Osso/rilua.git", rev = "35e9917974c79da3242c8bd076aaa37ccfaf07eb" }
