@@ -19224,7 +19224,7 @@
           "kind": "source",
           "reference": "src/c_api/c_spell.rs",
           "summary": "Clean current `src/c_api/c_spell.rs` registers no matching 12.0.0 duration method; duration-object lifecycle and semantics are not modeled or focused-tested.",
-          "source_hash": "4d087f5bd59befe6df9453669b99264c43b6f3e094993a6c1f165ba75dfdc134"
+          "source_hash": "550391bdac3c60f9b53d34ec7f27ad3bcf3ef1365b1a82e9059a1f440e1ce648"
         }
       ],
       "tests": [],
@@ -19253,7 +19253,7 @@
           "kind": "source",
           "reference": "src/c_api/c_spell.rs",
           "summary": "Registers the modeled duration producer for retail 12.0.0+, sharing identifier resolution with GetSpellIDForSpellIdentifier and using existing spell/GCD interval selection.",
-          "source_hash": "4d087f5bd59befe6df9453669b99264c43b6f3e094993a6c1f165ba75dfdc134"
+          "source_hash": "550391bdac3c60f9b53d34ec7f27ad3bcf3ef1365b1a82e9059a1f440e1ce648"
         },
         {
           "kind": "source",
@@ -19317,7 +19317,7 @@
           "kind": "source",
           "reference": "src/c_api/c_spell.rs",
           "summary": "Clean current `src/c_api/c_spell.rs` registers no matching 12.0.0 display-count method; spell metadata/display semantics are not modeled or focused-tested.",
-          "source_hash": "4d087f5bd59befe6df9453669b99264c43b6f3e094993a6c1f165ba75dfdc134"
+          "source_hash": "550391bdac3c60f9b53d34ec7f27ad3bcf3ef1365b1a82e9059a1f440e1ce648"
         }
       ],
       "tests": [],
@@ -19346,7 +19346,7 @@
           "kind": "source",
           "reference": "src/c_api/c_spell.rs",
           "summary": "Clean current `src/c_api/c_spell.rs` registers no matching 12.0.0 duration method; duration-object lifecycle and semantics are not modeled or focused-tested.",
-          "source_hash": "4d087f5bd59befe6df9453669b99264c43b6f3e094993a6c1f165ba75dfdc134"
+          "source_hash": "550391bdac3c60f9b53d34ec7f27ad3bcf3ef1365b1a82e9059a1f440e1ce648"
         }
       ],
       "tests": [],
@@ -19375,7 +19375,7 @@
           "kind": "source",
           "reference": "src/c_api/c_spell.rs",
           "summary": "Clean current `src/c_api/c_spell.rs` registers no matching 12.0.0 metadata method; spell metadata semantics are not modeled or focused-tested.",
-          "source_hash": "4d087f5bd59befe6df9453669b99264c43b6f3e094993a6c1f165ba75dfdc134"
+          "source_hash": "550391bdac3c60f9b53d34ec7f27ad3bcf3ef1365b1a82e9059a1f440e1ce648"
         }
       ],
       "tests": [],
@@ -19404,7 +19404,7 @@
           "kind": "source",
           "reference": "src/c_api/c_spell.rs",
           "summary": "Clean current `src/c_api/c_spell.rs` registers no matching 12.0.0 metadata method; spell metadata semantics are not modeled or focused-tested.",
-          "source_hash": "4d087f5bd59befe6df9453669b99264c43b6f3e094993a6c1f165ba75dfdc134"
+          "source_hash": "550391bdac3c60f9b53d34ec7f27ad3bcf3ef1365b1a82e9059a1f440e1ce648"
         }
       ],
       "tests": [],
@@ -19433,7 +19433,7 @@
           "kind": "source",
           "reference": "src/c_api/c_spell.rs",
           "summary": "Clean current `src/c_api/c_spell.rs` registers no matching 12.0.0 boolean method; boolean semantics are not modeled or focused-tested.",
-          "source_hash": "4d087f5bd59befe6df9453669b99264c43b6f3e094993a6c1f165ba75dfdc134"
+          "source_hash": "550391bdac3c60f9b53d34ec7f27ad3bcf3ef1365b1a82e9059a1f440e1ce648"
         }
       ],
       "tests": [],
@@ -19462,7 +19462,7 @@
           "kind": "source",
           "reference": "src/c_api/c_spell.rs",
           "summary": "Clean current `src/c_api/c_spell.rs` registers no matching 12.0.0 boolean method; boolean semantics are not modeled or focused-tested.",
-          "source_hash": "4d087f5bd59befe6df9453669b99264c43b6f3e094993a6c1f165ba75dfdc134"
+          "source_hash": "550391bdac3c60f9b53d34ec7f27ad3bcf3ef1365b1a82e9059a1f440e1ce648"
         }
       ],
       "tests": [],
@@ -19491,7 +19491,7 @@
           "kind": "source",
           "reference": "src/c_api/c_spell.rs",
           "summary": "Clean current `src/c_api/c_spell.rs` registers no matching 12.0.0 boolean method; boolean semantics are not modeled or focused-tested.",
-          "source_hash": "4d087f5bd59befe6df9453669b99264c43b6f3e094993a6c1f165ba75dfdc134"
+          "source_hash": "550391bdac3c60f9b53d34ec7f27ad3bcf3ef1365b1a82e9059a1f440e1ce648"
         }
       ],
       "tests": [],
@@ -19520,7 +19520,7 @@
           "kind": "source",
           "reference": "src/c_api/c_spell.rs",
           "summary": "Registered namespace classifier returns whether spell metadata implicit_target is 1; three direct fixtures exercise seeded self-target, enemy-target, and unknown IDs. This does not establish the native hasSelfEffectsOnly contract.",
-          "source_hash": "4d087f5bd59befe6df9453669b99264c43b6f3e094993a6c1f165ba75dfdc134"
+          "source_hash": "550391bdac3c60f9b53d34ec7f27ad3bcf3ef1365b1a82e9059a1f440e1ce648"
         },
         {
           "kind": "test",
@@ -19571,7 +19571,7 @@
           "kind": "source",
           "reference": "src/c_api/c_spell.rs",
           "summary": "Clean current `src/c_api/c_spell.rs` registers no matching 12.0.0 boolean method; boolean semantics are not modeled or focused-tested.",
-          "source_hash": "4d087f5bd59befe6df9453669b99264c43b6f3e094993a6c1f165ba75dfdc134"
+          "source_hash": "550391bdac3c60f9b53d34ec7f27ad3bcf3ef1365b1a82e9059a1f440e1ce648"
         }
       ],
       "tests": [],
@@ -19600,7 +19600,7 @@
           "kind": "source",
           "reference": "src/c_api/c_spell.rs",
           "summary": "Clean current `src/c_api/c_spell.rs` registers no matching 12.0.0 boolean method; boolean semantics are not modeled or focused-tested.",
-          "source_hash": "4d087f5bd59befe6df9453669b99264c43b6f3e094993a6c1f165ba75dfdc134"
+          "source_hash": "550391bdac3c60f9b53d34ec7f27ad3bcf3ef1365b1a82e9059a1f440e1ce648"
         }
       ],
       "tests": [],
@@ -92743,7 +92743,7 @@
           "kind": "source",
           "reference": "src/c_api/c_spell.rs",
           "summary": "Current implementation does not provide authoritative focused proof for SpellCooldownInfo.isOnGCD; the field is absent, nil-only, or generic/placeholder-backed.",
-          "source_hash": "4d087f5bd59befe6df9453669b99264c43b6f3e094993a6c1f165ba75dfdc134"
+          "source_hash": "550391bdac3c60f9b53d34ec7f27ad3bcf3ef1365b1a82e9059a1f440e1ce648"
         }
       ],
       "tests": [],
@@ -92772,7 +92772,7 @@
           "kind": "source",
           "reference": "src/c_api/c_spell.rs",
           "summary": "Current implementation does not provide authoritative focused proof for SpellCooldownInfo.timeUntilEndOfStartRecovery; the field is absent, nil-only, or generic/placeholder-backed.",
-          "source_hash": "4d087f5bd59befe6df9453669b99264c43b6f3e094993a6c1f165ba75dfdc134"
+          "source_hash": "550391bdac3c60f9b53d34ec7f27ad3bcf3ef1365b1a82e9059a1f440e1ce648"
         }
       ],
       "tests": [],

@@ -233,7 +233,7 @@ fn retain_host_dispatch(state: &mut LuaState, results: &[Val]) -> LuaResult<()> 
     Ok(())
 }
 
-#[cfg(feature = "retail-12-0-5")]
+#[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
 pub(crate) fn is_formatter(state: &mut LuaState, object: Val) -> LuaResult<bool> {
     let validator = registry_get(state, IDENTITY);
     if validator == Val::Nil {

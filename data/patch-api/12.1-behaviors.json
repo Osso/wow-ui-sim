@@ -957,7 +957,7 @@
           "kind": "source",
           "reference": "src/c_api/duration_text_binding.rs",
           "summary": "Modeled userdata binding identity, raw table-access rejection, independent copied configuration, and retained duration/clock/formatter/font-string/curve references through collection. Native metatable, finalization, ownership/invalidation, GC timing, and secrecy equivalence remain unverified.",
-          "source_hash": "fcae046ca8f601865f134dcb4e00ab8d414bfa475b01550b97e4bf0ffb763abf"
+          "source_hash": "452e2be83deedeb3c191cdd6e576d202fb79867db9b079f2ef4ff4f71128c48d"
         },
         {
           "kind": "source",

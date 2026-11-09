@@ -2,6 +2,16 @@
 
 `C_DurationUtil.CreateDurationTextBinding` creates userdata handles backed by configuration in `src/c_api/duration_text_binding.rs`. The pinned `DurationTextBindingObjectAPIDocumentation.lua` declares `ObjectType = "Userdata"`. Documented `Assign` and `Copy` operations retain existing constructor, formatting, clock, and update scheduling behavior. See [the 12.0.7 API audit](../wiki/investigations/patch-12-0-7-api-audit.md) for existing compatibility limits.
 
+## R17: Forever and Retail 12.1.5 contract
+
+R17 compared Forever 1.60.1.70707 with Retail 12.1.5.70688. The measured decisions match. The full-lockdown XML state is modeled separately from ordinary forbidden state; its testable setter boundary is listed below. Exact binding clock, finalization, and all secret branches remain outside this measured contract.
+
+- [ ] Fresh/default-reset bindings have no duration or FontString; `CanFormatText()` is false and `GetFormattedText()` returns `""`. A configured zero-duration text is returned while `CanFormatText()` stays false.
+- [ ] `CanFormatText()` is true when duration is set and the format string is nonempty; it does not require a FontString or formatter. `SetFormatter` accepts a real NumericFormatter or its native copy, rejects tables and method-shaped user data before mutation, and resets the format to `"{}"` with that formatter.
+- [ ] `SetDuration(nil)` and wrong duration types fail before state changes. `SetToDefaults()` clears duration, FontString, format, formatter, and fallback text. Self-assignment preserves values.
+- [ ] `SetFontString` accepts either accessible FontString view; a tainted caller cannot pass a forbidden view. Wrong widget types and forged objects fail before replacing the previous value.
+- [ ] A fully locked-down FontString fails for secure and tainted callers with `Attempt to access fully locked-down object.`. The state comes from the XML `fullLockdown` ScopedModifier and inheritance at frame creation, not `SetForbidden`, access restrictions, or combat protection.
+
 ## What it must do
 
 - [ ] Expose the existing binding factory on Forever and Retail-family 12.0.7+. Keep color-curve methods limited to Forever and Retail-family 12.1+; earlier profiles do not gain a modeled binding factory. Rust profile selection controls availability without changing `GetBuildInfo`.
@@ -25,9 +35,9 @@ These are explicitly **simulator guesses**, not Forever-client probe results. Th
 
 - A binding reports secret state when its input is a VM-owned secret wrapper or a duration with secret timing. Copy/Assign retain the same input handle and therefore its secrecy; defaults replace it with ordinary duration state.
 - Formatting a secret input requires an untainted caller. Remaining-time reads and callback errors propagate; they are not replaced with `"0"` or prior/default text. Plain-input formatting keeps its existing behavior.
-- Userdata `FormatNumber` callbacks receive a wrapped number. The legacy function/table formatting branch retains its duration-object/input argument, not a decoded numeric value. This does not authorize such inputs through the modern setter: the pinned API declares non-nil `NumericFormatter`, and modern `SetFormatter` rejects custom tables/functions. Legacy branch reachability and older-profile behavior remain separate gaps. Callback closure taint is not cleared.
+- The Forever/Retail 12.1.5 setter accepts authentic NumericFormatter objects (including NumericRuleFormatter copies), not arbitrary function/table/userdata callbacks (R17). Older-profile setter behavior remains separate.
 - Native NumericRuleFormatter accepts only authenticated wrapped numbers through rilua's checked unwrap, then applies its existing finite validation and rounding model. Plain numbers retain their existing path. Returning a plain formatted result is permitted only after the secret argument's untainted authorization check; this is not a native-return-secrecy claim.
-- An untainted binding caller may receive plain formatted text. `UpdateFontString` wraps that text before invoking the widget setter, preserving the [secret-origin widget readout boundary](aura-secret-display.md). A tainted caller cannot format/update the secret binding or read its secret-origin text through the covered widget getter.
+- R17 confirms duration-derived text carries the internal secret aspect. `UpdateFontString` preserves the existing [secret-origin widget readout boundary](aura-secret-display.md); exact live secret policies and every secrecy branch remain unverified.
 - The secret branch captures bootstrap numeric/string conversion functions and private host wrap/unwrap callbacks. Later addon replacements must not receive plaintext timing through these conversions.
 
 The existing formatter choice/clock/update model is not redesigned. General secret arithmetic, arbitrary userdata coercion, and native output-secrecy equivalence are not established. Native default SecondsFormatter behavior remains the existing bounded model, not newly claimed native formatting parity.
@@ -56,9 +66,9 @@ Development RED: `/tmp/forever-addon-audit/binding-tick-red-8ubmhouy/` records s
 
 ## Tests asserting this spec
 
-- `tests/duration_text_binding_tick.rs` — seven automatic-update cases: native CustomAuraButton display, manual duration-clock progression, engine interval boundaries, disable/re-enable/configuration invalidation, independent copy/reset schedules, weak lifetime, tainted callback/conversion boundaries, and propagated formatter-error isolation.
+- `tests/duration_text_binding_tick.rs` — automatic updates, native CustomAuraButton display, manual duration-clock progression, engine interval boundaries, disable/re-enable/configuration invalidation, independent copy/reset schedules, weak lifetime, secret conversion boundaries, and format-error isolation.
 
-- `tests/duration_text_binding_copy.rs` — configuration/copy cases plus retained resources; the `duration_binding_secret_` cases cover duration → formatter → FontString, tainted readout, wrapped-number input, malicious userdata callback capture, and unsuppressed callback failure.
+- `tests/duration_text_binding_copy.rs` — configuration/copy cases, R17 typed setters and empty state, both FontString views, XML full-lockdown rejection, and retained resources. Secret tests use authentic duration and formatter objects; arbitrary callback inputs are rejected.
 - `tests/numeric_rule_formatter.rs::numeric_rule_formatter_secret_numbers_require_untainted_caller` — authenticated input, arbitrary userdata/wrapped-string rejection, and tainted-caller rejection.
 - `src/loader/tests/wow_api_globals/startup_globals.rs::test_patch_12_1_duration_binding_reference_lifetime_and_identity` — retained identity and duration access; userdata expectation replaces the stale table expectation.
 - `tests/numeric_rule_formatter.rs` — existing formatter-to-font-string binding behavior, including Forever.
@@ -70,6 +80,8 @@ Development RED: `/tmp/forever-addon-audit/binding-tick-red-8ubmhouy/` records s
 WM79 verifies that `SetFontString` resolves the native FontString rather than requiring one cached Lua view. It infers that an untainted caller may use either view and that a tainted caller cannot use the forbidden view. The tainted-view error uses the native forbidden-object reason and `self:SetFontString(fontString)` usage suffix. Full restriction and secret-value behavior remains unknown.
 
 ## Known gaps (current cycle)
+
+- [ ] Confirm the XML ScopedModifier full-lockdown flag and parent-at-creation inheritance are preserved as separate state, then prove unconditional SetFontString rejection and native error text. R18 identifies the native predicate; the simulator model is still pending.
 
 The availability RED recorded a nil binding before formatting. PTR automatic scheduler runtime remains unproven because `duration_text_binding_tick.rs` is Forever-gated; PTR proof covers compilation, binding copy, and native formatter regression only. Native timing cadence, first-update behavior, expiry behavior, and output equivalence remain unverified. Existing plain function/table formatter error suppression remains unchanged. At `9476efcf5`, `secure-chain-tests-ledger.json` records the Forever native binding/copy group 7/7 and `c_api::duration_text_binding::tests::` 1/1 after profile availability sharing. This proves factory publication and existing binding behavior, not formatter threshold parity, broader GUI aura display, or new formatting/clock/color/scheduling semantics.
 

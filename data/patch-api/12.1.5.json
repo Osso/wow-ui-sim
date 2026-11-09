@@ -19475,7 +19475,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/seconds_formatter.rs",
-          "source_hash": "d446f9b0a4bc3b09e8d3744f06c4f0232a5e60ba81da86c94d02ac78d3f4b662",
+          "source_hash": "4318cf80426408559e4f8daf90c92cd42fe2283f2328aab616d66993c6715fa9",
           "summary": "The modeled per-proxy configuration layer validates evaluation input and implements the ordinary evaluator state transitions."
         },
         {
@@ -19518,7 +19518,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/seconds_formatter.rs",
-          "source_hash": "d446f9b0a4bc3b09e8d3744f06c4f0232a5e60ba81da86c94d02ac78d3f4b662",
+          "source_hash": "4318cf80426408559e4f8daf90c92cd42fe2283f2328aab616d66993c6715fa9",
           "summary": "The modeled per-proxy configuration layer validates evaluation input and implements the ordinary evaluator state transitions."
         },
         {
@@ -19561,7 +19561,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/seconds_formatter.rs",
-          "source_hash": "d446f9b0a4bc3b09e8d3744f06c4f0232a5e60ba81da86c94d02ac78d3f4b662",
+          "source_hash": "4318cf80426408559e4f8daf90c92cd42fe2283f2328aab616d66993c6715fa9",
           "summary": "The modeled per-proxy configuration layer validates evaluation input and implements the ordinary evaluator state transitions."
         },
         {
@@ -19604,7 +19604,7 @@
         {
           "kind": "source",
           "reference": "src/c_api/seconds_formatter.rs",
-          "source_hash": "d446f9b0a4bc3b09e8d3744f06c4f0232a5e60ba81da86c94d02ac78d3f4b662",
+          "source_hash": "4318cf80426408559e4f8daf90c92cd42fe2283f2328aab616d66993c6715fa9",
           "summary": "The modeled per-proxy configuration layer validates evaluation input and implements the ordinary evaluator state transitions."
         },
         {
@@ -19678,7 +19678,7 @@
           "kind": "source",
           "reference": "src/c_api/seconds_formatter.rs",
           "summary": "Formatter configuration supplies the private Format closure only for the PTR-native feature while earlier profiles retain the existing proxy behavior.",
-          "source_hash": "d446f9b0a4bc3b09e8d3744f06c4f0232a5e60ba81da86c94d02ac78d3f4b662"
+          "source_hash": "4318cf80426408559e4f8daf90c92cd42fe2283f2328aab616d66993c6715fa9"
         },
         {
           "kind": "test",
@@ -19727,7 +19727,7 @@
           "kind": "source",
           "reference": "src/c_api/seconds_formatter.rs",
           "summary": "Simulator model installs per-proxy numeric configuration for the four affected getters/setters through the existing temporary factory integration.",
-          "source_hash": "d446f9b0a4bc3b09e8d3744f06c4f0232a5e60ba81da86c94d02ac78d3f4b662"
+          "source_hash": "4318cf80426408559e4f8daf90c92cd42fe2283f2328aab616d66993c6715fa9"
         },
         {
           "kind": "test",
@@ -19764,7 +19764,7 @@
           "kind": "source",
           "reference": "src/c_api/seconds_formatter.rs",
           "summary": "Simulator model installs per-proxy numeric configuration for the four affected getters/setters through the existing temporary factory integration.",
-          "source_hash": "d446f9b0a4bc3b09e8d3744f06c4f0232a5e60ba81da86c94d02ac78d3f4b662"
+          "source_hash": "4318cf80426408559e4f8daf90c92cd42fe2283f2328aab616d66993c6715fa9"
         },
         {
           "kind": "test",
@@ -19801,7 +19801,7 @@
           "kind": "source",
           "reference": "src/c_api/seconds_formatter.rs",
           "summary": "Simulator model installs per-proxy numeric configuration for the four affected getters/setters through the existing temporary factory integration.",
-          "source_hash": "d446f9b0a4bc3b09e8d3744f06c4f0232a5e60ba81da86c94d02ac78d3f4b662"
+          "source_hash": "4318cf80426408559e4f8daf90c92cd42fe2283f2328aab616d66993c6715fa9"
         },
         {
           "kind": "test",
@@ -19838,7 +19838,7 @@
           "kind": "source",
           "reference": "src/c_api/seconds_formatter.rs",
           "summary": "Simulator model installs per-proxy numeric configuration for the four affected getters/setters through the existing temporary factory integration.",
-          "source_hash": "d446f9b0a4bc3b09e8d3744f06c4f0232a5e60ba81da86c94d02ac78d3f4b662"
+          "source_hash": "4318cf80426408559e4f8daf90c92cd42fe2283f2328aab616d66993c6715fa9"
         },
         {
           "kind": "test",

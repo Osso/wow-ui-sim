@@ -112,6 +112,23 @@ pub(super) fn validate_duration(state: &mut LuaState) -> LuaResult<u32> {
     Ok(0)
 }
 
+pub(super) fn validate_formatter(state: &mut LuaState) -> LuaResult<u32> {
+    let value = stack_val(state, 1);
+    #[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
+    let is_seconds_formatter = crate::c_api::seconds_formatter::is_formatter(state, value)?;
+    #[cfg(not(any(feature = "retail-12-0-5", feature = "client-wowforever")))]
+    let is_seconds_formatter = false;
+    #[cfg(feature = "numeric-rule-formatters")]
+    let is_numeric_rule_formatter =
+        crate::c_api::numeric_rule_formatter::is_formatter(state, value);
+    #[cfg(not(feature = "numeric-rule-formatters"))]
+    let is_numeric_rule_formatter = false;
+    if !is_seconds_formatter && !is_numeric_rule_formatter {
+        return Err(runtime_error("NumericFormatter expected"));
+    }
+    Ok(0)
+}
+
 pub(super) fn validate_font_string(state: &mut LuaState) -> LuaResult<u32> {
     use crate::lua_api::methods::{borrow_state, native_frame_id_from_val};
     use crate::widget::WidgetType;
