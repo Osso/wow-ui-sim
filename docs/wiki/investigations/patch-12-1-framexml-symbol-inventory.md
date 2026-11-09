@@ -10,6 +10,8 @@ Exhaustive human-readable status inventory for the local 12.1 FrameXML API snaps
 
 **Current totals:** 1 implemented, 431 best-effort, 0 exception-requested, 0 untriaged.
 
+**PTR runtime recheck (`verified: 2026-11-09`):** A full-load probe of the selected PTR 12.1.7 cache found 93 of the 99 removed-symbol paths previously labeled vendor-present were not callable. Four `RaidNotice_*` aliases are present in the current `Blizzard_DeprecatedRaidWarning` Lua when the CVar is enabled; `getglobal` and `setglobal` remain Lua built-ins. This is simulator-runtime evidence only; the 93 misses do not establish native absence. The historical 12.1 snapshot dataset remains unchanged.
+
 ### Added symbols
 
 | Symbol | Status | Reason |
@@ -339,37 +341,37 @@ Exhaustive human-readable status inventory for the local 12.1 FrameXML API snaps
 
 | Symbol | Status | Reason |
 |---|---|---|
-| `AddFrameLock` | best-effort | Vendor-present despite proposed removal: all-LoD PTR runtime retains a global function. |
-| `AnimatedShine_OnUpdate` | best-effort | Vendor-present despite proposed removal: all-LoD PTR runtime retains a global function. |
-| `AnimateTexCoords` | best-effort | Vendor-present despite proposed removal: all-LoD PTR runtime retains a global function. |
-| `BattleTagInviteFrame_Show` | best-effort | Vendor-present despite proposed removal: all-LoD PTR runtime retains a global function. |
-| `BetterDate` | best-effort | Vendor-present despite proposed removal: all-LoD PTR runtime retains a global function. |
-| `BFAMissionFrame_EscapePressed` | best-effort | Vendor-present despite proposed removal: all-LoD PTR runtime retains a global function. |
-| `BoostTutorial_AttemptLoad` | best-effort | Vendor-present despite proposed removal: all-LoD PTR runtime retains a global function. |
-| `BuildColoredListString` | best-effort | Vendor-present despite proposed removal: all-LoD PTR runtime retains a global function. |
-| `BuildIconArray` | best-effort | Vendor-present despite proposed removal: all-LoD PTR runtime retains a global function. |
-| `BuildListString` | best-effort | Vendor-present despite proposed removal: all-LoD PTR runtime retains a global function. |
-| `BuildMultilineTooltip` | best-effort | Vendor-present despite proposed removal: all-LoD PTR runtime retains a global function. |
-| `BuildNewLineListString` | best-effort | Vendor-present despite proposed removal: all-LoD PTR runtime retains a global function. |
-| `ButtonPulse_OnUpdate` | best-effort | Vendor-present despite proposed removal: all-LoD PTR runtime retains a global function. |
-| `ClassTrainerFrame_Hide` | best-effort | Vendor-present despite proposed removal: all-LoD PTR runtime retains a global function. |
-| `ClassTrainerFrame_Show` | best-effort | Vendor-present despite proposed removal: all-LoD PTR runtime retains a global function. |
-| `CloseCalendarMenus` | best-effort | Vendor-present despite proposed removal: all-LoD PTR runtime retains a global function. |
-| `CommunitiesFrame_IsEnabled` | best-effort | Vendor-present despite proposed removal: all-LoD PTR runtime retains a global function. |
-| `CompactUnitFrame_GetOptionDisplayOnlyHealerPowerBars` | best-effort | Vendor-present despite proposed removal: all-LoD PTR runtime retains a global function. |
-| `CompactUnitFrame_GetOptionDisplayPowerBar` | best-effort | Vendor-present despite proposed removal: all-LoD PTR runtime retains a global function. |
-| `CompactUnitFrame_GetOptionShowDispelIndicatorOverlay` | best-effort | Vendor-present despite proposed removal: all-LoD PTR runtime retains a global function. |
-| `ConvertRGBtoColorString` | best-effort | Vendor-present despite proposed removal: all-LoD PTR runtime retains a global function. |
-| `DisplayTypeUnassignedSupported` | best-effort | Vendor-present despite proposed removal: all-LoD PTR runtime retains a global function. |
-| `EventUtil.AreVariablesLoaded` | best-effort | Vendor-present despite proposed removal: all-LoD PTR runtime retains a global function. |
-| `ExpansionTrial_CheckLoadUI` | best-effort | Vendor-present despite proposed removal: all-LoD PTR runtime retains a global function. |
-| `FriendsFrame_CloseQuickJoinHelpTip` | best-effort | Vendor-present despite proposed removal: all-LoD PTR runtime retains a global function. |
-| `FriendsFrameAddFriendButton_OnClick` | best-effort | Vendor-present despite proposed removal: all-LoD PTR runtime retains a global function. |
-| `FriendsFriends_InitButton` | best-effort | Vendor-present despite proposed removal: all-LoD PTR runtime retains a global function. |
-| `FriendsFriends_SetSelection` | best-effort | Vendor-present despite proposed removal: all-LoD PTR runtime retains a global function. |
-| `FriendsFriendsButton_SetSelected` | best-effort | Vendor-present despite proposed removal: all-LoD PTR runtime retains a global function. |
-| `FriendsFriendsFrame_Close` | best-effort | Vendor-present despite proposed removal: all-LoD PTR runtime retains a global function. |
-| `GetDungeonNameWithDifficulty` | best-effort | Vendor-present despite proposed removal: all-LoD PTR runtime retains a global function. |
+| `AddFrameLock` | best-effort | Not callable in the current PTR 12.1.7 environment; this runtime observation does not prove native absence. |
+| `AnimatedShine_OnUpdate` | best-effort | Not callable in the current PTR 12.1.7 environment; this runtime observation does not prove native absence. |
+| `AnimateTexCoords` | best-effort | Not callable in the current PTR 12.1.7 environment; this runtime observation does not prove native absence. |
+| `BattleTagInviteFrame_Show` | best-effort | Not callable in the current PTR 12.1.7 environment; this runtime observation does not prove native absence. |
+| `BetterDate` | best-effort | Not callable in the current PTR 12.1.7 environment; this runtime observation does not prove native absence. |
+| `BFAMissionFrame_EscapePressed` | best-effort | Not callable in the current PTR 12.1.7 environment; this runtime observation does not prove native absence. |
+| `BoostTutorial_AttemptLoad` | best-effort | Not callable in the current PTR 12.1.7 environment; this runtime observation does not prove native absence. |
+| `BuildColoredListString` | best-effort | Not callable in the current PTR 12.1.7 environment; this runtime observation does not prove native absence. |
+| `BuildIconArray` | best-effort | Not callable in the current PTR 12.1.7 environment; this runtime observation does not prove native absence. |
+| `BuildListString` | best-effort | Not callable in the current PTR 12.1.7 environment; this runtime observation does not prove native absence. |
+| `BuildMultilineTooltip` | best-effort | Not callable in the current PTR 12.1.7 environment; this runtime observation does not prove native absence. |
+| `BuildNewLineListString` | best-effort | Not callable in the current PTR 12.1.7 environment; this runtime observation does not prove native absence. |
+| `ButtonPulse_OnUpdate` | best-effort | Not callable in the current PTR 12.1.7 environment; this runtime observation does not prove native absence. |
+| `ClassTrainerFrame_Hide` | best-effort | Not callable in the current PTR 12.1.7 environment; this runtime observation does not prove native absence. |
+| `ClassTrainerFrame_Show` | best-effort | Not callable in the current PTR 12.1.7 environment; this runtime observation does not prove native absence. |
+| `CloseCalendarMenus` | best-effort | Not callable in the current PTR 12.1.7 environment; this runtime observation does not prove native absence. |
+| `CommunitiesFrame_IsEnabled` | best-effort | Not callable in the current PTR 12.1.7 environment; this runtime observation does not prove native absence. |
+| `CompactUnitFrame_GetOptionDisplayOnlyHealerPowerBars` | best-effort | Not callable in the current PTR 12.1.7 environment; this runtime observation does not prove native absence. |
+| `CompactUnitFrame_GetOptionDisplayPowerBar` | best-effort | Not callable in the current PTR 12.1.7 environment; this runtime observation does not prove native absence. |
+| `CompactUnitFrame_GetOptionShowDispelIndicatorOverlay` | best-effort | Not callable in the current PTR 12.1.7 environment; this runtime observation does not prove native absence. |
+| `ConvertRGBtoColorString` | best-effort | Not callable in the current PTR 12.1.7 environment; this runtime observation does not prove native absence. |
+| `DisplayTypeUnassignedSupported` | best-effort | Not callable in the current PTR 12.1.7 environment; this runtime observation does not prove native absence. |
+| `EventUtil.AreVariablesLoaded` | best-effort | Not callable in the current PTR 12.1.7 environment; this runtime observation does not prove native absence. |
+| `ExpansionTrial_CheckLoadUI` | best-effort | Not callable in the current PTR 12.1.7 environment; this runtime observation does not prove native absence. |
+| `FriendsFrame_CloseQuickJoinHelpTip` | best-effort | Not callable in the current PTR 12.1.7 environment; this runtime observation does not prove native absence. |
+| `FriendsFrameAddFriendButton_OnClick` | best-effort | Not callable in the current PTR 12.1.7 environment; this runtime observation does not prove native absence. |
+| `FriendsFriends_InitButton` | best-effort | Not callable in the current PTR 12.1.7 environment; this runtime observation does not prove native absence. |
+| `FriendsFriends_SetSelection` | best-effort | Not callable in the current PTR 12.1.7 environment; this runtime observation does not prove native absence. |
+| `FriendsFriendsButton_SetSelected` | best-effort | Not callable in the current PTR 12.1.7 environment; this runtime observation does not prove native absence. |
+| `FriendsFriendsFrame_Close` | best-effort | Not callable in the current PTR 12.1.7 environment; this runtime observation does not prove native absence. |
+| `GetDungeonNameWithDifficulty` | best-effort | Not callable in the current PTR 12.1.7 environment; this runtime observation does not prove native absence. |
 | `GetNotchHeight` | best-effort | Vendor-present global: focused PTR proof verifies the function remains published and exercises its UI geometry behavior. |
 | `GetScaledCursorDelta` | best-effort | Vendor-present global: focused PTR proof verifies the function remains published and exercises its cursor behavior. |
 | `GetScaledCursorPositionForFrame` | best-effort | Vendor-present global: focused PTR proof verifies the function remains published and exercises its cursor behavior. |
@@ -377,80 +379,80 @@ Exhaustive human-readable status inventory for the local 12.1 FrameXML API snaps
 | `GetScreenHeightScale` | best-effort | Vendor-present despite snapshot removal; focused PTR proof verifies function publication and `1.0` at the 768-pixel fixture height. |
 | `GetScreenWidthScale` | best-effort | Vendor-present despite snapshot removal; focused PTR proof verifies function publication and `1.0` at the 1024-pixel fixture width. |
 | `GetSmoothProgressChange` | best-effort | Vendor-present despite the snapshot removal: PTR UIParent retains this global function; focused PTR proof verifies representative input `(100, 0, 100, 1)` returns `70`. |
-| `GetSocialColoredName` | best-effort | Vendor-present despite proposed removal: all-LoD PTR runtime retains a global function. |
-| `GetSortedSelfResurrectOptions` | best-effort | Vendor-present despite proposed removal: all-LoD PTR runtime retains a global function. |
+| `GetSocialColoredName` | best-effort | Not callable in the current PTR 12.1.7 environment; this runtime observation does not prove native absence. |
+| `GetSortedSelfResurrectOptions` | best-effort | Not callable in the current PTR 12.1.7 environment; this runtime observation does not prove native absence. |
 | `GetUIParentOffset` | best-effort | Vendor-present global: focused PTR proof verifies the function remains published and exercises its UI geometry behavior. |
-| `HelpPlatesSupported` | best-effort | Vendor-present despite proposed removal: all-LoD PTR runtime retains a global function. |
-| `HousingControlsUtil.CanActivateHousingControls` | best-effort | Vendor-present despite proposed removal: all-LoD PTR runtime retains a global function. |
-| `IsFrameLockActive` | best-effort | Vendor-present despite proposed removal: all-LoD PTR runtime retains a global function. |
-| `IsFrameSmartShown` | best-effort | Vendor-present despite proposed removal: all-LoD PTR runtime retains a global function. |
-| `IsLevelAtEffectiveMaxLevel` | best-effort | Vendor-present despite proposed removal: all-LoD PTR runtime retains a global function. |
-| `IsPlayerAtEffectiveMaxLevel` | best-effort | Vendor-present despite proposed removal: all-LoD PTR runtime retains a global function. |
-| `KeyBindingFrame_LoadUI` | best-effort | Vendor-present despite proposed removal: all-LoD PTR runtime retains a global function. |
-| `LocalizePlayerFrame` | best-effort | Vendor-present despite proposed removal: all-LoD PTR runtime retains a global function. |
-| `LocalizezhCN` | best-effort | Vendor-present despite proposed removal: all-LoD PTR runtime retains a global function. |
-| `LocalizezhTW` | best-effort | Vendor-present despite proposed removal: all-LoD PTR runtime retains a global function. |
+| `HelpPlatesSupported` | best-effort | Not callable in the current PTR 12.1.7 environment; this runtime observation does not prove native absence. |
+| `HousingControlsUtil.CanActivateHousingControls` | best-effort | Not callable in the current PTR 12.1.7 environment; this runtime observation does not prove native absence. |
+| `IsFrameLockActive` | best-effort | Not callable in the current PTR 12.1.7 environment; this runtime observation does not prove native absence. |
+| `IsFrameSmartShown` | best-effort | Not callable in the current PTR 12.1.7 environment; this runtime observation does not prove native absence. |
+| `IsLevelAtEffectiveMaxLevel` | best-effort | Not callable in the current PTR 12.1.7 environment; this runtime observation does not prove native absence. |
+| `IsPlayerAtEffectiveMaxLevel` | best-effort | Not callable in the current PTR 12.1.7 environment; this runtime observation does not prove native absence. |
+| `KeyBindingFrame_LoadUI` | best-effort | Not callable in the current PTR 12.1.7 environment; this runtime observation does not prove native absence. |
+| `LocalizePlayerFrame` | best-effort | Not callable in the current PTR 12.1.7 environment; this runtime observation does not prove native absence. |
+| `LocalizezhCN` | best-effort | Not callable in the current PTR 12.1.7 environment; this runtime observation does not prove native absence. |
+| `LocalizezhTW` | best-effort | Not callable in the current PTR 12.1.7 environment; this runtime observation does not prove native absence. |
 | `MacroFrame_SaveMacro` | best-effort | PTR lifecycle proof verifies the eager UIParent no-op placeholder is harmless, then explicit `Blizzard_MacroUI` loading replaces it with the `MacroFrame:SaveMacro()` delegate. |
-| `MajorFactions_LoadUI` | best-effort | Vendor-present despite proposed removal: all-LoD PTR runtime retains a global function. |
+| `MajorFactions_LoadUI` | best-effort | Not callable in the current PTR 12.1.7 environment; this runtime observation does not prove native absence. |
 | `MouseIsOver` | best-effort | Vendor-present global: focused PTR proof verifies the function remains published and exercises its cursor behavior. |
-| `NPE_CheckTutorials` | best-effort | Vendor-present despite proposed removal: all-LoD PTR runtime retains a global function. |
-| `NPETutorial_AttemptToBegin` | best-effort | Vendor-present despite proposed removal: all-LoD PTR runtime retains a global function. |
-| `OpenAchievementFrameToAchievement` | best-effort | Vendor-present despite proposed removal: all-LoD PTR runtime retains a global function. |
-| `OrderHallMissionFrame_EscapePressed` | best-effort | Vendor-present despite proposed removal: all-LoD PTR runtime retains a global function. |
-| `OrderHallTalentFrame_EscapePressed` | best-effort | Vendor-present despite proposed removal: all-LoD PTR runtime retains a global function. |
-| `OutfitterUI_LoadUI` | best-effort | Vendor-present despite proposed removal: all-LoD PTR runtime retains a global function. |
+| `NPE_CheckTutorials` | best-effort | Not callable in the current PTR 12.1.7 environment; this runtime observation does not prove native absence. |
+| `NPETutorial_AttemptToBegin` | best-effort | Not callable in the current PTR 12.1.7 environment; this runtime observation does not prove native absence. |
+| `OpenAchievementFrameToAchievement` | best-effort | Not callable in the current PTR 12.1.7 environment; this runtime observation does not prove native absence. |
+| `OrderHallMissionFrame_EscapePressed` | best-effort | Not callable in the current PTR 12.1.7 environment; this runtime observation does not prove native absence. |
+| `OrderHallTalentFrame_EscapePressed` | best-effort | Not callable in the current PTR 12.1.7 environment; this runtime observation does not prove native absence. |
+| `OutfitterUI_LoadUI` | best-effort | Not callable in the current PTR 12.1.7 environment; this runtime observation does not prove native absence. |
 | `PingUtil.GetContextualPingTypeForUnit` | best-effort | Vendor-present colon-defined helper: focused PTR proof verifies GUID/result delegation to `C_Ping` despite the proposed removal. |
 | `PlayerChoiceToggle_TryShow` | best-effort | Retained PTR LoD behavior despite snapshot removal: absent before `Blizzard_PlayerChoice`, published afterward with focused button-state proof. |
-| `QuickJoin_JoinQueueButtonOnClick` | best-effort | Vendor-present despite proposed removal: all-LoD PTR runtime retains a global function. |
-| `RaidBossEmoteFrame_OnEvent` | best-effort | Vendor-present despite proposed removal: all-LoD PTR runtime retains a global function. |
-| `RaidBossEmoteFrame_OnLoad` | best-effort | Vendor-present despite proposed removal: all-LoD PTR runtime retains a global function. |
-| `RaidBrowser_IsEmpowered` | best-effort | Vendor-present despite proposed removal: all-LoD PTR runtime retains a global function. |
-| `RaidNotice_AddMessage` | best-effort | Vendor-present despite proposed removal: all-LoD PTR runtime retains a global function. |
-| `RaidNotice_ClearSlot` | best-effort | Vendor-present despite proposed removal: all-LoD PTR runtime retains a global function. |
-| `RaidNotice_Clear` | best-effort | Vendor-present despite proposed removal: all-LoD PTR runtime retains a global function. |
-| `RaidNotice_FadeInit` | best-effort | Vendor-present despite proposed removal: all-LoD PTR runtime retains a global function. |
-| `RaidNotice_OnUpdate` | best-effort | Vendor-present despite proposed removal: all-LoD PTR runtime retains a global function. |
-| `RaidNotice_SetSlot` | best-effort | Vendor-present despite proposed removal: all-LoD PTR runtime retains a global function. |
-| `RaidNotice_UpdateSlot` | best-effort | Vendor-present despite proposed removal: all-LoD PTR runtime retains a global function. |
-| `RaidWarningFrame_OnEvent` | best-effort | Vendor-present despite proposed removal: all-LoD PTR runtime retains a global function. |
-| `RaidWarningFrame_OnLoad` | best-effort | Vendor-present despite proposed removal: all-LoD PTR runtime retains a global function. |
-| `RecentTimeDate` | best-effort | Vendor-present despite proposed removal: all-LoD PTR runtime retains a global function. |
-| `RefreshAuras` | best-effort | Vendor-present despite proposed removal: all-LoD PTR runtime retains a global function. |
-| `RegisterNewFrameLock` | best-effort | Vendor-present despite proposed removal: all-LoD PTR runtime retains a global function. |
-| `RemoveFrameLock` | best-effort | Vendor-present despite proposed removal: all-LoD PTR runtime retains a global function. |
-| `ReverseQuestObjective` | best-effort | Vendor-present despite proposed removal: all-LoD PTR runtime retains a global function. |
-| `SetDesaturation` | best-effort | Vendor-present despite proposed removal: all-LoD PTR runtime retains a global function. |
-| `SetFrameLock` | best-effort | Vendor-present despite proposed removal: all-LoD PTR runtime retains a global function. |
-| `ShowResurrectRequest` | best-effort | Vendor-present despite proposed removal: all-LoD PTR runtime retains a global function. |
-| `SmartHide` | best-effort | Vendor-present despite proposed removal: all-LoD PTR runtime retains a global function. |
-| `SmartShow` | best-effort | Vendor-present despite proposed removal: all-LoD PTR runtime retains a global function. |
-| `TalentFrame_LoadUI` | best-effort | Vendor-present despite proposed removal: all-LoD PTR runtime retains a global function. |
-| `TargetFrame_UpdateBuffAnchor` | best-effort | Vendor-present despite proposed removal: all-LoD PTR runtime retains a global function. |
-| `TargetFrame_UpdateDebuffAnchor` | best-effort | Vendor-present despite proposed removal: all-LoD PTR runtime retains a global function. |
-| `ToggleLFGFrame` | best-effort | Vendor-present despite proposed removal: all-LoD PTR runtime retains a global function. |
-| `ToggleRafPanel` | best-effort | Vendor-present despite proposed removal: all-LoD PTR runtime retains a global function. |
-| `ToggleRaidBrowser` | best-effort | Vendor-present despite proposed removal: all-LoD PTR runtime retains a global function. |
-| `ToggleWoWHackCharacterUI` | best-effort | Vendor-present despite proposed removal: all-LoD PTR runtime retains a global function. |
-| `TokenFrame_LoadUI` | best-effort | Vendor-present despite proposed removal: all-LoD PTR runtime retains a global function. |
-| `TrialAccountCapReached_Inform` | best-effort | Vendor-present despite proposed removal: all-LoD PTR runtime retains a global function. |
+| `QuickJoin_JoinQueueButtonOnClick` | best-effort | Not callable in the current PTR 12.1.7 environment; this runtime observation does not prove native absence. |
+| `RaidBossEmoteFrame_OnEvent` | best-effort | Not callable in the current PTR 12.1.7 environment; this runtime observation does not prove native absence. |
+| `RaidBossEmoteFrame_OnLoad` | best-effort | Not callable in the current PTR 12.1.7 environment; this runtime observation does not prove native absence. |
+| `RaidBrowser_IsEmpowered` | best-effort | Not callable in the current PTR 12.1.7 environment; this runtime observation does not prove native absence. |
+| `RaidNotice_AddMessage` | best-effort | Published by `Blizzard_DeprecatedRaidWarning/Deprecated_RaidWarning.lua` when `loadDeprecationFallbacks` is enabled; source and full-load PTR runtime agree. |
+| `RaidNotice_ClearSlot` | best-effort | Not callable in the current PTR 12.1.7 environment; this runtime observation does not prove native absence. |
+| `RaidNotice_Clear` | best-effort | Published by `Blizzard_DeprecatedRaidWarning/Deprecated_RaidWarning.lua` when `loadDeprecationFallbacks` is enabled; source and full-load PTR runtime agree. |
+| `RaidNotice_FadeInit` | best-effort | Published by `Blizzard_DeprecatedRaidWarning/Deprecated_RaidWarning.lua` when `loadDeprecationFallbacks` is enabled; source and full-load PTR runtime agree. |
+| `RaidNotice_OnUpdate` | best-effort | Not callable in the current PTR 12.1.7 environment; this runtime observation does not prove native absence. |
+| `RaidNotice_SetSlot` | best-effort | Not callable in the current PTR 12.1.7 environment; this runtime observation does not prove native absence. |
+| `RaidNotice_UpdateSlot` | best-effort | Published by `Blizzard_DeprecatedRaidWarning/Deprecated_RaidWarning.lua` when `loadDeprecationFallbacks` is enabled; source and full-load PTR runtime agree. |
+| `RaidWarningFrame_OnEvent` | best-effort | Not callable in the current PTR 12.1.7 environment; this runtime observation does not prove native absence. |
+| `RaidWarningFrame_OnLoad` | best-effort | Not callable in the current PTR 12.1.7 environment; this runtime observation does not prove native absence. |
+| `RecentTimeDate` | best-effort | Not callable in the current PTR 12.1.7 environment; this runtime observation does not prove native absence. |
+| `RefreshAuras` | best-effort | Not callable in the current PTR 12.1.7 environment; this runtime observation does not prove native absence. |
+| `RegisterNewFrameLock` | best-effort | Not callable in the current PTR 12.1.7 environment; this runtime observation does not prove native absence. |
+| `RemoveFrameLock` | best-effort | Not callable in the current PTR 12.1.7 environment; this runtime observation does not prove native absence. |
+| `ReverseQuestObjective` | best-effort | Not callable in the current PTR 12.1.7 environment; this runtime observation does not prove native absence. |
+| `SetDesaturation` | best-effort | Not callable in the current PTR 12.1.7 environment; this runtime observation does not prove native absence. |
+| `SetFrameLock` | best-effort | Not callable in the current PTR 12.1.7 environment; this runtime observation does not prove native absence. |
+| `ShowResurrectRequest` | best-effort | Not callable in the current PTR 12.1.7 environment; this runtime observation does not prove native absence. |
+| `SmartHide` | best-effort | Not callable in the current PTR 12.1.7 environment; this runtime observation does not prove native absence. |
+| `SmartShow` | best-effort | Not callable in the current PTR 12.1.7 environment; this runtime observation does not prove native absence. |
+| `TalentFrame_LoadUI` | best-effort | Not callable in the current PTR 12.1.7 environment; this runtime observation does not prove native absence. |
+| `TargetFrame_UpdateBuffAnchor` | best-effort | Not callable in the current PTR 12.1.7 environment; this runtime observation does not prove native absence. |
+| `TargetFrame_UpdateDebuffAnchor` | best-effort | Not callable in the current PTR 12.1.7 environment; this runtime observation does not prove native absence. |
+| `ToggleLFGFrame` | best-effort | Not callable in the current PTR 12.1.7 environment; this runtime observation does not prove native absence. |
+| `ToggleRafPanel` | best-effort | Not callable in the current PTR 12.1.7 environment; this runtime observation does not prove native absence. |
+| `ToggleRaidBrowser` | best-effort | Not callable in the current PTR 12.1.7 environment; this runtime observation does not prove native absence. |
+| `ToggleWoWHackCharacterUI` | best-effort | Not callable in the current PTR 12.1.7 environment; this runtime observation does not prove native absence. |
+| `TokenFrame_LoadUI` | best-effort | Not callable in the current PTR 12.1.7 environment; this runtime observation does not prove native absence. |
+| `TrialAccountCapReached_Inform` | best-effort | Not callable in the current PTR 12.1.7 environment; this runtime observation does not prove native absence. |
 | `UIDoFramesIntersect` | best-effort | Vendor-present global: focused PTR proof verifies the function remains published and exercises its UI geometry behavior. |
-| `UIParent_ManageFramePositions` | best-effort | Vendor-present despite proposed removal: all-LoD PTR runtime retains a global function. |
-| `UIParent_OnEvent` | best-effort | Vendor-present despite proposed removal: all-LoD PTR runtime retains a global function. |
-| `UIParent_OnHide` | best-effort | Vendor-present despite proposed removal: all-LoD PTR runtime retains a global function. |
-| `UIParent_OnLoad` | best-effort | Vendor-present despite proposed removal: all-LoD PTR runtime retains a global function. |
-| `UIParent_OnShow` | best-effort | Vendor-present despite proposed removal: all-LoD PTR runtime retains a global function. |
-| `UIParent_Shared_OnEvent` | best-effort | Vendor-present despite proposed removal: all-LoD PTR runtime retains a global function. |
-| `UIParent_Shared_OnLoad` | best-effort | Vendor-present despite proposed removal: all-LoD PTR runtime retains a global function. |
-| `UIParent_UpdateTopFramePositions` | best-effort | Vendor-present despite proposed removal: all-LoD PTR runtime retains a global function. |
-| `UIParentLoadAddOn` | best-effort | Vendor-present despite proposed removal: all-LoD PTR runtime retains a global function. |
-| `UnitHasMana` | best-effort | Vendor-present despite proposed removal: all-LoD PTR runtime retains a global function. |
-| `UpdateFrameLock` | best-effort | Vendor-present despite proposed removal: all-LoD PTR runtime retains a global function. |
-| `UpdateUIElementsForClientScene` | best-effort | Vendor-present despite proposed removal: all-LoD PTR runtime retains a global function. |
-| `WorldFrame_OnLoad` | best-effort | Vendor-present despite proposed removal: all-LoD PTR runtime retains a global function. |
-| `WorldFrame_OnUpdate` | best-effort | Vendor-present despite proposed removal: all-LoD PTR runtime retains a global function. |
-| `WoWHackSpellsUI_LoadUI` | best-effort | Vendor-present despite proposed removal: all-LoD PTR runtime retains a global function. |
-| `getglobal` | best-effort | Vendor-present despite proposed removal: all-LoD PTR runtime retains a global function. |
-| `setglobal` | best-effort | Vendor-present despite proposed removal: all-LoD PTR runtime retains a global function. |
+| `UIParent_ManageFramePositions` | best-effort | Not callable in the current PTR 12.1.7 environment; this runtime observation does not prove native absence. |
+| `UIParent_OnEvent` | best-effort | Not callable in the current PTR 12.1.7 environment; this runtime observation does not prove native absence. |
+| `UIParent_OnHide` | best-effort | Not callable in the current PTR 12.1.7 environment; this runtime observation does not prove native absence. |
+| `UIParent_OnLoad` | best-effort | Not callable in the current PTR 12.1.7 environment; this runtime observation does not prove native absence. |
+| `UIParent_OnShow` | best-effort | Not callable in the current PTR 12.1.7 environment; this runtime observation does not prove native absence. |
+| `UIParent_Shared_OnEvent` | best-effort | Not callable in the current PTR 12.1.7 environment; this runtime observation does not prove native absence. |
+| `UIParent_Shared_OnLoad` | best-effort | Not callable in the current PTR 12.1.7 environment; this runtime observation does not prove native absence. |
+| `UIParent_UpdateTopFramePositions` | best-effort | Not callable in the current PTR 12.1.7 environment; this runtime observation does not prove native absence. |
+| `UIParentLoadAddOn` | best-effort | Not callable in the current PTR 12.1.7 environment; this runtime observation does not prove native absence. |
+| `UnitHasMana` | best-effort | Not callable in the current PTR 12.1.7 environment; this runtime observation does not prove native absence. |
+| `UpdateFrameLock` | best-effort | Not callable in the current PTR 12.1.7 environment; this runtime observation does not prove native absence. |
+| `UpdateUIElementsForClientScene` | best-effort | Not callable in the current PTR 12.1.7 environment; this runtime observation does not prove native absence. |
+| `WorldFrame_OnLoad` | best-effort | Not callable in the current PTR 12.1.7 environment; this runtime observation does not prove native absence. |
+| `WorldFrame_OnUpdate` | best-effort | Not callable in the current PTR 12.1.7 environment; this runtime observation does not prove native absence. |
+| `WoWHackSpellsUI_LoadUI` | best-effort | Not callable in the current PTR 12.1.7 environment; this runtime observation does not prove native absence. |
+| `getglobal` | best-effort | Lua built-in callable in the simulator; not a FrameXML publisher. |
+| `setglobal` | best-effort | Lua built-in callable in the simulator; not a FrameXML publisher. |
 
 ## Sources
 
@@ -472,7 +474,8 @@ Exhaustive human-readable status inventory for the local 12.1 FrameXML API snaps
 - [Guild control snapshot proof](../../../patch-tests/patch_12_1/guild_control.rs) — PTR source and runtime absence proof for ten stale proposed globals.
 - [Utility namespace snapshot proof](../../../patch-tests/patch_12_1/utility_namespaces.rs) — colon-aware source/runtime proof for 29 stale additions and one retained Ping helper.
 - [Conservative source-absence proof](../../../patch-tests/patch_12_1/source_absent.rs) — itemized bare-token source and full-load runtime absence proof for 175 proposed additions.
-- [Final publication matrix](../../../patch-tests/patch_12_1/remaining_observations.rs) — exact all-LoD type contract for seven absent additions and 99 retained removals.
+- [PTR source-audit contract](../../specs/ptr-source-audit-fixtures.md) — pinned 12.1.7 evidence, conditional deprecated RaidWarning publishers and the limit on native-absence claims.
+- [Final publication matrix](../../../patch-tests/patch_12_1/remaining_observations.rs) — seven source-declared publications, four conditional deprecated RaidWarning aliases, and three absent native members; it does not claim native absence for historical paths that are not callable in the simulator.
 
 ## See Also
 

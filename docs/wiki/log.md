@@ -1,3 +1,7 @@
+## [2026-11-09] correction | PTR 12.1.7 FrameXML removed-symbol runtime rows
+
+Corrected the [Patch 12.1 FrameXML symbol inventory](investigations/patch-12-1-framexml-symbol-inventory.md): the full-load PTR 12.1.7 probe found 93 of 99 historical removed-symbol paths not callable, four `RaidNotice_*` aliases still published by `Blizzard_DeprecatedRaidWarning`, and `getglobal`/`setglobal` as Lua built-ins. These are simulator-runtime observations, not proof of native absence; the acceptance test now checks only the four current source publishers.
+
 ## [2026-11-08] investigation | Mists spellbook button size
 
 Recorded the [XML parent identity failure](investigations/mists-spellbook-size.md) and its parser and consumer coverage.
