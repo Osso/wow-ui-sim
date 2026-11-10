@@ -66,12 +66,12 @@ fn mists_r21_currency_original_backpack_ui_observes_watch_changes() {
                         name and button:IsShown() and button.itemID == id,
                         'slot ' .. i .. ': name=' .. tostring(name) ..
                             ' shown=' .. tostring(button:IsShown()) ..
-                            ' itemID=' .. tostring(button.itemID) .. ' id=' .. tostring(id),
+                            ' itemID=' .. tostring(button.itemID) .. ' id=' .. tostring(id)
                     )
                     assert(button.icon:GetTexture() == icon, 'slot ' .. i .. ' icon mismatch')
                     assert(
                         button.count:GetText() == (count <= 99999 and tostring(count) or '*'),
-                        'slot ' .. i .. ' count mismatch',
+                        'slot ' .. i .. ' count mismatch'
                     )
                 end
                 local oldFirst = BackpackTokenFrameToken1.itemID
