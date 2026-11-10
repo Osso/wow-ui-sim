@@ -1970,7 +1970,8 @@ mod tests {
             let manifest = parse_manifest(&json).expect("manifest should parse");
             for row in manifest.rows {
                 for evidence in row.evidence {
-                    let output = if let Some((revision, path)) = git_reference(&evidence.reference) {
+                    let output = if let Some((revision, path)) = git_reference(&evidence.reference)
+                    {
                         std::process::Command::new("git")
                             .args([
                                 "-C",
