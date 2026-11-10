@@ -113,6 +113,11 @@ pub(super) fn validate_duration(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 pub(super) fn validate_formatter(state: &mut LuaState) -> LuaResult<u32> {
+    #[cfg(any(
+        feature = "retail-12-0-5",
+        feature = "client-wowforever",
+        feature = "numeric-rule-formatters"
+    ))]
     let value = stack_val(state, 1);
     #[cfg(any(feature = "retail-12-0-5", feature = "client-wowforever"))]
     let is_seconds_formatter = crate::c_api::seconds_formatter::is_formatter(state, value)?;
