@@ -31,12 +31,22 @@ impl Fixture {
         }
         sliced.save(addon.join("sliced.png")).unwrap();
         let mut tiled = RgbaImage::from_pixel(12, 12, Rgba([0, 255, 0, 255]));
-        for y in 3..11 {
+        for y in 0..11 {
             for x in 2..6 {
                 tiled.put_pixel(x, y, Rgba([255, 0, 0, 255]));
             }
             for x in 6..8 {
                 tiled.put_pixel(x, y, Rgba([0, 0, 255, 255]));
+            }
+        }
+        for y in 3..8 {
+            for x in 0..2 {
+                tiled.put_pixel(x, y, Rgba([0, 0, 255, 255]));
+            }
+        }
+        for y in 8..11 {
+            for x in 0..2 {
+                tiled.put_pixel(x, y, Rgba([255, 0, 0, 255]));
             }
         }
         tiled.save(addon.join("tiled.png")).unwrap();
@@ -186,13 +196,16 @@ fn issue52_texture_slice_corners_keep_pixel_size_as_frame_grows() {
         assert_pixel(&image, x + 1, 3, [0, 255, 0, 255], 0);
     }
     // Geometry is part of the renderer contract: asymmetric documented L,T,R,B margins.
-    for origin in [0.0, 32.0] {
-        let corner = batch
-            .vertices
-            .chunks_exact(4)
-            .find(|q| q[0].position == [origin, 0.0])
-            .unwrap();
-        assert_eq!(corner[2].position, [origin + 2.0, 3.0]);
+    let quads = batch.vertices.chunks_exact(4).collect::<Vec<_>>();
+    assert_eq!(quads.len(), 18);
+    for (frame_index, (origin, size)) in [(0.0, 24.0), (32.0, 48.0)].into_iter().enumerate() {
+        let first = frame_index * 9;
+        assert_eq!(quads[first][2].position, [origin + 2.0, 3.0]);
+        assert_eq!(quads[first + 1][2].position, [origin + size - 4.0, 3.0]);
+        assert_eq!(
+            quads[first + 4][2].position,
+            [origin + size - 4.0, size - 1.0]
+        );
     }
 }
 
@@ -206,7 +219,9 @@ fn issue52_texture_slice_tiled_mode_repeats_the_center() {
         bounds(0.0, 0.0, 32.0, 32.0),
     );
     let image = fixture.image(&batch, 32, 32);
+    assert_pixel(&image, 16, 1, [255, 0, 0, 255], 0);
     assert_pixel(&image, 16, 5, [255, 0, 0, 255], 0);
+    assert_pixel(&image, 1, 16, [255, 0, 0, 255], 0);
 }
 
 #[test]
